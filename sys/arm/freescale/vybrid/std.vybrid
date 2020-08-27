@@ -1,0 +1,7 @@
+# $FreeBSD: releng/11.3/sys/arm/freescale/vybrid/std.vybrid 327658 2018-01-07 00:04:13Z ian $
+
+cpu		CPU_CORTEXA
+machine		arm armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
+
+files		"../freescale/vybrid/files.vybrid"

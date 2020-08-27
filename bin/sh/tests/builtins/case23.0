@@ -1,0 +1,5 @@
+# $FreeBSD: releng/11.3/bin/sh/tests/builtins/case23.0 333224 2018-05-03 19:47:25Z jilles $
+
+case [ in
+[[:alpha:]]) echo bad
+esac

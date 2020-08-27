@@ -1,0 +1,13 @@
+#
+# std.zynq7		- Generic configuration for Xilinx Zynq-7000 PS.
+#
+# $FreeBSD: releng/11.3/sys/arm/xilinx/std.zynq7 327658 2018-01-07 00:04:13Z ian $
+
+cpu		CPU_CORTEXA
+machine		arm	armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
+
+files		"../xilinx/files.zynq7"
+
+options		IPI_IRQ_START=0
+options		IPI_IRQ_END=15

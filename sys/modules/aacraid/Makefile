@@ -1,0 +1,18 @@
+# $FreeBSD: releng/11.3/sys/modules/aacraid/Makefile 331636 2018-03-27 17:51:45Z brooks $
+
+.PATH: ${SRCTOP}/sys/dev/aacraid
+
+.if ${MACHINE_CPUARCH} == "i386"
+SUBDIR= aacraid_linux
+.endif
+
+KMOD=	aacraid
+SRCS=	aacraid.c aacraid_pci.c aacraid_cam.c
+SRCS+=	opt_scsi.h opt_cam.h opt_compat.h opt_aacraid.h
+SRCS+=	device_if.h bus_if.h pci_if.h
+
+# To enable debug output from the driver, uncomment these two lines.
+#CFLAGS+= -DAACRAID_DEBUG=2
+#SRCS+=	aacraid_debug.c
+
+.include <bsd.kmod.mk>

@@ -1,0 +1,7 @@
+# $FreeBSD: releng/11.3/contrib/llvm/tools/lld/FREEBSD-Xlist 346296 2019-04-16 20:05:24Z dim $
+MinGW/
+cmake/
+test/
+unittests/
+utils/
+wasm/

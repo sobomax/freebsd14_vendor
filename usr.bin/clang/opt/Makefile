@@ -1,0 +1,17 @@
+# $FreeBSD: releng/11.3/usr.bin/clang/opt/Makefile 344213 2019-02-16 15:57:29Z dim $
+
+PROG_CXX=	opt
+
+SRCDIR=		tools/opt
+SRCS+=		AnalysisWrappers.cpp
+SRCS+=		BreakpointPrinter.cpp
+SRCS+=		Debugify.cpp
+SRCS+=		GraphPrinters.cpp
+SRCS+=		NewPMDriver.cpp
+SRCS+=		PassPrinters.cpp
+SRCS+=		PrintSCC.cpp
+SRCS+=		opt.cpp
+
+LIBADD+=	z
+
+.include "../llvm.prog.mk"
