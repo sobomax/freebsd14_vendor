@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/aarch64/_fpmath.h 281197 2015-04-07 09:52:14Z andrew $
+ * $FreeBSD: releng/12.2/lib/libc/aarch64/_fpmath.h 281197 2015-04-07 09:52:14Z andrew $
  */
 
 union IEEEl2bits {

@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/aarch64/gen/fabs.S 282909 2015-05-14 17:12:45Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/aarch64/gen/fabs.S 282909 2015-05-14 17:12:45Z emaste $");
 
 ENTRY(fabs)
 	fabs d0, d0

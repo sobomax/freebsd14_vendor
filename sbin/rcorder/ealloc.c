@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sbin/rcorder/ealloc.c 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sbin/rcorder/ealloc.c 325966 2017-11-18 14:26:50Z pfg $	*/
 /*	$NetBSD: ealloc.c,v 1.1.1.1 1999/11/19 04:30:56 mrg Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1988, 1989, 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  * Copyright (c) 1989 by Berkeley Softworks

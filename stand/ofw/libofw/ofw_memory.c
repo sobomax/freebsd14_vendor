@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/ofw/libofw/ofw_memory.c 329183 2018-02-12 20:51:28Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/ofw/libofw/ofw_memory.c 328835 2018-02-03 23:49:21Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/types.h>

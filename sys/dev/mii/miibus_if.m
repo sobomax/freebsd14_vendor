@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/dev/mii/miibus_if.m 84140 2001-09-29 18:40:06Z jlemon $
+# $FreeBSD: releng/12.2/sys/dev/mii/miibus_if.m 84140 2001-09-29 18:40:06Z jlemon $
 
 #include <sys/bus.h>
 

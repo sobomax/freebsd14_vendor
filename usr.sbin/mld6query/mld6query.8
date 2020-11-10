@@ -27,7 +27,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/usr.sbin/mld6query/mld6query.8 186847 2009-01-07 00:59:34Z danger $
+.\" $FreeBSD: releng/12.2/usr.sbin/mld6query/mld6query.8 333501 2018-05-11 19:37:18Z shurd $
 .\"
 .Dd May 17, 1998
 .Dt MLD6QUERY 8
@@ -39,7 +39,7 @@
 .\"
 .Sh SYNOPSIS
 .Nm
-.Op Fl dr
+.Op Fl dgr
 .Ar intface
 .Op Ar maddr
 .\"
@@ -65,6 +65,10 @@ prints it with its type and then waits for another reply.
 This program is provided only for debugging.
 It is not necessary for normal use.
 .Pp
+With
+.Fl g ,
+.Nm
+will transmit a General Query instead of the default Multicast-Address-Specific Query.
 With
 .Fl d ,
 .Nm

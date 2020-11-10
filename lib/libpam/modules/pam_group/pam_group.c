@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Networks Associates Technology, Inc.
  * Copyright (c) 2004-2011 Dag-Erling Smørgrav
  * All rights reserved.
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libpam/modules/pam_group/pam_group.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libpam/modules/pam_group/pam_group.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <sys/types.h>
 

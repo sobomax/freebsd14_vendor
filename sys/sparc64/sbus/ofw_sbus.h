@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  *
  *	from: NetBSD: sbusvar.h,v 1.15 2008/04/28 20:23:36 martin Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/sbus/ofw_sbus.h 220939 2011-04-22 09:31:40Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/sbus/ofw_sbus.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_SBUS_OFW_SBUS_H_

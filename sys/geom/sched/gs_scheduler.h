@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2010 Fabio Checconi
  * Copyright (c) 2009-2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved.
@@ -27,7 +29,7 @@
 
 /*
  * $Id$
- * $FreeBSD: releng/11.3/sys/geom/sched/gs_scheduler.h 218909 2011-02-21 09:01:34Z brucec $
+ * $FreeBSD: releng/12.2/sys/geom/sched/gs_scheduler.h 326270 2017-11-27 15:17:37Z pfg $
  *
  * Prototypes for GEOM-based disk scheduling algorithms.
  * See g_sched.c for generic documentation.

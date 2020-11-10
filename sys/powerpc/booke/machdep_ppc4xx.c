@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011-2012 Semihalf.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/powerpc/booke/machdep_ppc4xx.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/powerpc/booke/machdep_ppc4xx.c 326261 2017-11-27 15:09:59Z pfg $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -111,11 +113,6 @@ booke_enable_l1_cache(void)
 
 void
 booke_enable_l2_cache(void)
-{
-}
-
-void
-booke_enable_l3_cache(void)
 {
 }
 

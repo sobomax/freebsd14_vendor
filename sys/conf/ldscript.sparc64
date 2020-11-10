@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/conf/ldscript.sparc64 317145 2017-04-19 15:33:24Z emaste $ */
+/* $FreeBSD: releng/12.2/sys/conf/ldscript.sparc64 360814 2020-05-08 14:48:45Z jhb $ */
 OUTPUT_FORMAT("elf64-sparc-freebsd", "elf64-sparc-freebsd",
 	      "elf64-sparc-freebsd")
 OUTPUT_ARCH(sparc:v9)
@@ -146,6 +146,11 @@ SECTIONS
   PROVIDE (etext = .);
   .rodata   : { *(.rodata) *(.rodata.*) *(.gnu.linkonce.r.*) }
   .rodata1   : { *(.rodata1) }
+  .note.gnu.build-id : {
+    PROVIDE (__build_id_start = .);
+    *(.note.gnu.build-id)
+    PROVIDE (__build_id_end = .);
+  }
   .sdata2   : { *(.sdata2) *(.sdata2.*) *(.gnu.linkonce.s2.*) }
   .sbss2   : { *(.sbss2) *(.sbss2.*) *(.gnu.linkonce.sb2.*) }
   . = ALIGN(0x2000) + (. & (0x2000 - 1));

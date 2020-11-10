@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Doug Rabson
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/imgact_elf32.c 116182 2003-06-11 00:56:59Z obrien $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/imgact_elf32.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #define __ELF_WORD_SIZE 32
 #include <kern/imgact_elf.c>

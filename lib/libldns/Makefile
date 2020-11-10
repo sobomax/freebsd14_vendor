@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libldns/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libldns/Makefile 339325 2018-10-12 05:27:58Z des $
 
 # Vendor sources and generated files
 LDNSDIR = ${SRCTOP}/contrib/ldns
@@ -19,7 +19,7 @@ SRCS=	buffer.c dane.c dname.c dnssec.c dnssec_sign.c dnssec_verify.c \
 
 SRCS+=	b64_ntop.c b64_pton.c
 
-LIBADD=	crypto
+LIBADD=	ssl crypto
 
 WARNS ?= 3
 

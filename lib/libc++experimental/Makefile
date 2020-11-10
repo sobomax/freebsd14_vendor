@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/lib/libc++experimental/Makefile 344213 2019-02-16 15:57:29Z dim $
+# $FreeBSD: releng/12.2/lib/libc++experimental/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 .include <src.opts.mk>
 
 PACKAGE=	clibs
-SRCDIR=		${SRCTOP}/contrib/libc++
+SRCDIR=		${SRCTOP}/contrib/llvm-project/libcxx
 
 LIB=		c++experimental
 NO_PIC=
@@ -20,8 +20,6 @@ CXXFLAGS+=	-nostdinc++
 CXXFLAGS+=	-nostdlib
 CXXFLAGS+=	-D_LIBCPP_BUILDING_LIBRARY
 CXXFLAGS+=	-DLIBCXXRT
-.if empty(CXXFLAGS:M-std=*)
-CXXFLAGS+=	-std=c++14
-.endif
+CXXSTD?=	c++14
 
 .include <bsd.lib.mk>

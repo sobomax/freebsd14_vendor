@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/fsck_ffs/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/fsck_ffs/Makefile 314656 2017-03-04 11:33:01Z ngie $
 #	@(#)Makefile	8.2 (Berkeley) 4/27/95
 
 PACKAGE=runtime

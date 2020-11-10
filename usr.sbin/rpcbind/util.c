@@ -1,6 +1,6 @@
 /*
  * $NetBSD: util.c,v 1.4 2000/08/03 00:04:30 fvdl Exp $
- * $FreeBSD: releng/11.3/usr.sbin/rpcbind/util.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/rpcbind/util.c 327464 2018-01-01 09:41:18Z delphij $
  */
 
 /*-
@@ -42,10 +42,8 @@
 #include <ifaddrs.h>
 #include <sys/poll.h>
 #include <rpc/rpc.h>
-#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <netdb.h>
 #include <netconfig.h>
 #include <stdio.h>

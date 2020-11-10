@@ -1,5 +1,5 @@
 #       @(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/pax/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/bin/pax/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -33,8 +33,7 @@ SRCS=	ar_io.c ar_subs.c buf_subs.c cache.c cpio.c file_subs.c ftree.c \
 	gen_subs.c getoldopt.c options.c pat_rep.c pax.c sel_subs.c \
 	tables.c tar.c tty_subs.c
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=    tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

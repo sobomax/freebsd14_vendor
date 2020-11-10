@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libdpv/util.c 335406 2018-06-20 05:45:41Z dteske $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libdpv/util.c 330943 2018-03-14 19:23:17Z dteske $");
 
 #include <err.h>
 #include <limits.h>

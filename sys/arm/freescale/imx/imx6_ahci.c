@@ -26,7 +26,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx6_ahci.c 346525 2019-04-22 04:58:01Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx6_ahci.c 336079 2018-07-08 00:27:28Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

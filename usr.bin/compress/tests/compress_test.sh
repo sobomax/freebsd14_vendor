@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/compress/tests/compress_test.sh 319362 2017-05-31 21:54:21Z jilles $
+# $FreeBSD: releng/12.2/usr.bin/compress/tests/compress_test.sh 318592 2017-05-21 14:35:16Z jilles $
 
 atf_test_case uncompress_file_1
 uncompress_file_1_head()

@@ -32,7 +32,7 @@
 #include USB_GLOBAL_INCLUDE_FILE
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_combiner.c 291405 2015-11-27 18:22:04Z zbb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_combiner.c 351674 2019-09-02 00:29:14Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -314,7 +314,7 @@ combiner_setup_intr(char *source_name, void (*ih)(void *), void *ih_user)
 	sc = combiner_sc;
 
 	if (sc == NULL) {
-		device_printf(sc->dev, "Error: combiner is not attached\n");
+		printf("%s: error: combiner is not attached\n", __func__);
 		return;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * This module derived from code donated to the FreeBSD Project by 
+ * This module derived from code donated to the FreeBSD Project by
  * Matthew Dillon <dillon@backplane.com>
  *
  * Copyright (c) 1998 The FreeBSD Project
@@ -26,30 +26,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/zalloc_defs.h 329132 2018-02-11 19:51:29Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/zalloc_defs.h 353501 2019-10-14 19:17:00Z tsoome $
  */
 
 /*
  * DEFS.H
  */
 
-#define USEGUARD		/* use stard/end guard bytes */
-#define USEENDGUARD
-#define DMALLOCDEBUG		/* add debugging code to gather stats */
-#define ZALLOCDEBUG
+#ifndef _ZALLOC_DEFS_H
+#define	_ZALLOC_DEFS_H
+
+#define	USEGUARD		/* use stard/end guard bytes */
+#define	USEENDGUARD
+#define	DMALLOCDEBUG		/* add debugging code to gather stats */
+#define	ZALLOCDEBUG
 
 #include <sys/stdint.h>
 #include "stand.h"
 #include "zalloc_mem.h"
 
-#define Library extern
+#define	Library extern
 
 /*
  * block extension for sbrk()
  */
 
-#define BLKEXTEND	(4 * 1024)
-#define BLKEXTENDMASK	(BLKEXTEND - 1)
+#define	BLKEXTEND	(4 * 1024)
+#define	BLKEXTENDMASK	(BLKEXTEND - 1)
 
 /*
  * Required malloc alignment.
@@ -68,11 +71,13 @@
 #define	MALLOCALIGN_MASK	(MALLOCALIGN - 1)
 
 typedef struct Guard {
-    size_t	ga_Bytes;
-    size_t	ga_Magic;	/* must be at least 32 bits */
+	size_t	ga_Bytes;
+	size_t	ga_Magic;	/* must be at least 32 bits */
 } Guard;
 
-#define GAMAGIC		0x55FF44FD
-#define GAFREE		0x5F54F4DF
+#define	GAMAGIC		0x55FF44FD
+#define	GAFREE		0x5F54F4DF
 
 #include "zalloc_protos.h"
+
+#endif	/* _ZALLOC_DEFS_H */

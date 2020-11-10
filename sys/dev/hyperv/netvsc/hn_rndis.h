@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/netvsc/hn_rndis.h 324477 2017-10-10 05:52:28Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/netvsc/hn_rndis.h 323728 2017-09-19 06:38:57Z sephe $
  */
 
 #ifndef _HN_RNDIS_H_

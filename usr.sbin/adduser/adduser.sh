@@ -26,7 +26,7 @@
 #
 #       Email: Mike Makonnen <mtm@FreeBSD.Org>
 #
-# $FreeBSD: releng/11.3/usr.sbin/adduser/adduser.sh 330449 2018-03-05 07:26:05Z eadler $
+# $FreeBSD: releng/12.2/usr.sbin/adduser/adduser.sh 360390 2020-04-27 19:29:48Z kevans $
 #
 
 # err msg
@@ -733,10 +733,10 @@ input_interactive() {
 					trap 'stty echo; exit' 0 1 2 3 15
 					stty -echo
 					echo -n "Enter password: "
-					read -r upass
+					IFS= read -r upass
 					echo''
 					echo -n "Enter password again: "
-					read -r _passconfirm
+					IFS= read -r _passconfirm
 					echo ''
 					stty echo
 					# if user entered a blank password

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Jonathan Mini <mini@freebsd.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libthr/thread/thr_printf.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_printf.c 328493 2018-01-27 22:27:55Z pfg $");
 
 #include <stdarg.h>
 #include <string.h>
@@ -93,6 +95,7 @@ next:			c = *fmt++;
 			case 'p':
 				pstr(fd, "0x");
 				islong = 1;
+				/* FALLTHROUGH */
 			case 'd':
 			case 'u':
 			case 'x':

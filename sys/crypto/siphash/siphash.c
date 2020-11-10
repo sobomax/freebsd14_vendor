@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/crypto/siphash/siphash.c 300773 2016-05-26 19:29:29Z cem $");
+__FBSDID("$FreeBSD: releng/12.2/sys/crypto/siphash/siphash.c 300773 2016-05-26 19:29:29Z cem $");
 
 #include <sys/param.h>
 #include <sys/types.h>

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,11 +29,9 @@
  * SUCH DAMAGE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)scandir.c	8.3 (Berkeley) 1/2/94";
-#endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/scandir.c 331722 2018-03-29 02:50:57Z eadler $");
+__SCCSID("@(#)scandir.c	8.3 (Berkeley) 1/2/94");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/scandir.c 364311 2020-08-17 16:27:02Z kib $");
 
 /*
  * Scan the directory dirname calling select to make a list of selected
@@ -50,25 +50,13 @@ __FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/scandir.c 331722 2018-03-29 02:50:5
 #include "block_abi.h"
 #define	SELECT(x)	CALL_BLOCK(select, x)
 #ifndef __BLOCKS__
-void
-qsort_b(void *, size_t, size_t, void*);
+void qsort_b(void *, size_t, size_t, void *);
 #endif
 #else
 #define	SELECT(x)	select(x)
 #endif
 
 static int alphasort_thunk(void *thunk, const void *p1, const void *p2);
-
-/*
- * The DIRSIZ macro is the minimum record length which will hold the directory
- * entry.  This requires the amount of space in struct dirent without the
- * d_name field, plus enough space for the name and a terminating nul byte
- * (dp->d_namlen + 1), rounded up to a 4 byte boundary.
- */
-#undef DIRSIZ
-#define DIRSIZ(dp)							\
-	((sizeof(struct dirent) - sizeof(dp)->d_name) +			\
-	    (((dp)->d_namlen + 1 + 3) &~ 3))
 
 int
 #ifdef I_AM_SCANDIR_B
@@ -100,7 +88,7 @@ scandir(const char *dirname, struct dirent ***namelist,
 		/*
 		 * Make a minimum size copy of the data
 		 */
-		p = (struct dirent *)malloc(DIRSIZ(d));
+		p = (struct dirent *)malloc(_GENERIC_DIRSIZ(d));
 		if (p == NULL)
 			goto fail;
 		p->d_fileno = d->d_fileno;
@@ -145,6 +133,7 @@ fail:
 	return (-1);
 }
 
+#ifndef I_AM_SCANDIR_B
 /*
  * Alphabetic order comparison routine for those who want it.
  * POSIX 2008 requires that alphasort() uses strcoll().
@@ -164,3 +153,4 @@ alphasort_thunk(void *thunk, const void *p1, const void *p2)
 	dc = *(int (**)(const struct dirent **, const struct dirent **))thunk;
 	return (dc((const struct dirent **)p1, (const struct dirent **)p2));
 }
+#endif

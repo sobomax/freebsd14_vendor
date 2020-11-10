@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
  *
  * This software is available to you under a choice of one of two
@@ -30,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/iw_cxgbe/device.c 346923 2019-04-29 20:10:28Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/iw_cxgbe/device.c 345587 2019-03-27 18:46:47Z np $");
 
 #include "opt_inet.h"
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1993
  *	The Regents of the University of California.  All rights reserved.
  * Modifications/enhancements:
@@ -12,7 +14,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/vfs_cluster.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_cluster.c 352946 2019-10-01 23:26:52Z mckusick $");
 
 #include "opt_debug_cluster.h"
 
@@ -81,9 +83,6 @@ static int read_min = 1;
 SYSCTL_INT(_vfs, OID_AUTO, read_min, CTLFLAG_RW, &read_min, 0,
     "Cluster read min block count");
 
-/* Page expended to mark partially backed buffers */
-extern vm_page_t	bogus_page;
-
 /*
  * Read data to a buf, including read-ahead if we find this to be beneficial.
  * cluster_read replaces bread.
@@ -95,12 +94,14 @@ cluster_read(struct vnode *vp, u_quad_t filesize, daddr_t lblkno, long size,
 {
 	struct buf *bp, *rbp, *reqbp;
 	struct bufobj *bo;
+	struct thread *td;
 	daddr_t blkno, origblkno;
 	int maxra, racluster;
 	int error, ncontig;
 	int i;
 
 	error = 0;
+	td = curthread;
 	bo = &vp->v_bufobj;
 	if (!unmapped_buf_allowed)
 		gbflags &= ~GB_UNMAPPED;
@@ -119,10 +120,14 @@ cluster_read(struct vnode *vp, u_quad_t filesize, daddr_t lblkno, long size,
 	/*
 	 * get the requested block
 	 */
-	*bpp = reqbp = bp = getblk(vp, lblkno, size, 0, 0, gbflags);
-	if (bp == NULL)
-		return (EBUSY);
+	error = getblkx(vp, lblkno, size, 0, 0, gbflags, &bp);
+	if (error != 0) {
+		*bpp = NULL;
+		return (error);
+	}
+	gbflags &= ~GB_NOSPARSE;
 	origblkno = lblkno;
+	*bpp = reqbp = bp;
 
 	/*
 	 * if it is in the cache, then check to see if the reads have been
@@ -244,12 +249,12 @@ cluster_read(struct vnode *vp, u_quad_t filesize, daddr_t lblkno, long size,
 		bstrategy(bp);
 #ifdef RACCT
 		if (racct_enable) {
-			PROC_LOCK(curproc);
-			racct_add_buf(curproc, bp, 0);
-			PROC_UNLOCK(curproc);
+			PROC_LOCK(td->td_proc);
+			racct_add_buf(td->td_proc, bp, 0);
+			PROC_UNLOCK(td->td_proc);
 		}
 #endif /* RACCT */
-		curthread->td_ru.ru_inblock++;
+		td->td_ru.ru_inblock++;
 	}
 
 	/*
@@ -304,12 +309,12 @@ cluster_read(struct vnode *vp, u_quad_t filesize, daddr_t lblkno, long size,
 		bstrategy(rbp);
 #ifdef RACCT
 		if (racct_enable) {
-			PROC_LOCK(curproc);
-			racct_add_buf(curproc, rbp, 0);
-			PROC_UNLOCK(curproc);
+			PROC_LOCK(td->td_proc);
+			racct_add_buf(td->td_proc, rbp, 0);
+			PROC_UNLOCK(td->td_proc);
 		}
 #endif /* RACCT */
-		curthread->td_ru.ru_inblock++;
+		td->td_ru.ru_inblock++;
 	}
 
 	if (reqbp) {
@@ -556,8 +561,7 @@ clean_sbusy:
  * that we will need to shift around.
  */
 static void
-cluster_callback(bp)
-	struct buf *bp;
+cluster_callback(struct buf *bp)
 {
 	struct buf *nbp, *tbp;
 	int error = 0;
@@ -702,6 +706,14 @@ cluster_write(struct vnode *vp, struct buf *bp, u_quad_t filesize, int seqcount,
 				struct cluster_save *buflist;
 
 				buflist = cluster_collectbufs(vp, bp, gbflags);
+				if (buflist == NULL) {
+					/*
+					 * Cluster build failed so just write
+					 * it now.
+					 */
+					bawrite(bp);
+					return;
+				}
 				endbp = &buflist->bs_children
 				    [buflist->bs_nchildren - 1];
 				if (VOP_REALLOCBLKS(vp, buflist)) {
@@ -836,12 +848,6 @@ cluster_wbuild(struct vnode *vp, long size, daddr_t start_lbn, int len,
 			--len;
 			continue;
 		}
-		if (tbp->b_pin_count >  0) {
-			BUF_UNLOCK(tbp);
-			++start_lbn;
-			--len;
-			continue;
-		}
 		bremfree(tbp);
 		tbp->b_flags &= ~B_DONE;
 
@@ -954,14 +960,6 @@ cluster_wbuild(struct vnode *vp, long size, daddr_t start_lbn, int len,
 				}
 
 				/*
-				 * Do not pull in pinned buffers.
-				 */
-				if (tbp->b_pin_count > 0) {
-					BUF_UNLOCK(tbp);
-					break;
-				}
-
-				/*
 				 * Ok, it's passed all the tests,
 				 * so remove it from the free list
 				 * and mark it busy. We will use it.
@@ -1022,6 +1020,7 @@ cluster_wbuild(struct vnode *vp, long size, daddr_t start_lbn, int len,
 			reassignbuf(tbp);		/* put on clean list */
 			bufobj_wref(tbp->b_bufobj);
 			BUF_KERNPROC(tbp);
+			buf_track(tbp, __func__);
 			TAILQ_INSERT_TAIL(&bp->b_cluster.cluster_head,
 				tbp, b_cluster.cluster_entry);
 		}
@@ -1054,7 +1053,7 @@ cluster_collectbufs(struct vnode *vp, struct buf *last_bp, int gbflags)
 	struct cluster_save *buflist;
 	struct buf *bp;
 	daddr_t lbn;
-	int i, len;
+	int i, j, len, error;
 
 	len = vp->v_lastw - vp->v_cstart + 1;
 	buflist = malloc(sizeof(struct buf *) * (len + 1) + sizeof(*buflist),
@@ -1062,8 +1061,18 @@ cluster_collectbufs(struct vnode *vp, struct buf *last_bp, int gbflags)
 	buflist->bs_nchildren = 0;
 	buflist->bs_children = (struct buf **) (buflist + 1);
 	for (lbn = vp->v_cstart, i = 0; i < len; lbn++, i++) {
-		(void)bread_gb(vp, lbn, last_bp->b_bcount, NOCRED,
+		error = bread_gb(vp, lbn, last_bp->b_bcount, NOCRED,
 		    gbflags, &bp);
+		if (error != 0) {
+			/*
+			 * If read fails, release collected buffers
+			 * and return failure.
+			 */
+			for (j = 0; j < i; j++)
+				brelse(buflist->bs_children[j]);
+			free(buflist, M_SEGMENT);
+			return (NULL);
+		}
 		buflist->bs_children[i] = bp;
 		if (bp->b_blkno == bp->b_lblkno)
 			VOP_BMAP(vp, bp->b_lblkno, NULL, &bp->b_blkno,

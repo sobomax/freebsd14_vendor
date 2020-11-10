@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Codel/FQ_Codel and PIE/FQ-PIE Code:
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_dummynet.c 318154 2017-05-10 20:46:55Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_dummynet.c 363414 2020-07-22 10:00:13Z thj $");
 
 /*
  * Configuration and internal object management for dummynet.
@@ -2509,7 +2511,6 @@ ip_dn_init(void)
 {
 	if (dn_cfg.init_done)
 		return;
-	printf("DUMMYNET %p with IPv6 initialized (100409)\n", curvnet);
 	dn_cfg.init_done = 1;
 	/* Set defaults here. MSVC does not accept initializers,
 	 * and this is also useful for vimages

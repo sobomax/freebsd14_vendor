@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2018 Warner Losh <imp@freebd.org>
- * All rights reserved.
+ * Copyright (c) 2018 M. Warner Losh <imp@freebd.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/zfs_cmd.c 344377 2019-02-20 19:13:09Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/zfs_cmd.c 336085 2018-07-08 07:42:58Z imp $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous

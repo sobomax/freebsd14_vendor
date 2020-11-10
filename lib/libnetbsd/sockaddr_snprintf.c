@@ -33,7 +33,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libnetbsd/sockaddr_snprintf.c 316098 2017-03-28 13:39:04Z vangyzen $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libnetbsd/sockaddr_snprintf.c 315640 2017-03-20 16:44:55Z vangyzen $");
 
 #include <sys/param.h>
 #include <sys/types.h>

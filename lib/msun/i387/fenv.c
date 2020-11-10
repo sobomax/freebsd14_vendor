@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2005 David Schultz <das@FreeBSD.ORG>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/msun/i387/fenv.c 334771 2018-06-07 09:03:42Z dim $
+ * $FreeBSD: releng/12.2/lib/msun/i387/fenv.c 334445 2018-05-31 20:22:47Z dim $
  */
 
 #include <sys/cdefs.h>

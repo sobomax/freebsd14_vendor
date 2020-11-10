@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/pms/RefTisa/tisa/sassata/common/tdioctl.c 315221 2017-03-14 02:06:03Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/pms/RefTisa/tisa/sassata/common/tdioctl.c 313982 2017-02-20 03:43:12Z pfg $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>

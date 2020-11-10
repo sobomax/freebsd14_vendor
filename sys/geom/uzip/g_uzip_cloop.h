@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/uzip/g_uzip_cloop.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: releng/12.2/sys/geom/uzip/g_uzip_cloop.h 295943 2016-02-23 23:59:08Z sobomax $
  */
 
 /* CLOOP format and related constants */

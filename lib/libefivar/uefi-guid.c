@@ -1,5 +1,5 @@
 /* This generated file is in the public domain */
-/* $FreeBSD: releng/11.3/lib/libefivar/uefi-guid.c 318576 2017-05-20 16:12:44Z kib $ */
+/* $FreeBSD: releng/12.2/lib/libefivar/uefi-guid.c 314926 2017-03-09 00:31:31Z imp $ */
 
 #include <uuid.h>
 #include <stdint.h>

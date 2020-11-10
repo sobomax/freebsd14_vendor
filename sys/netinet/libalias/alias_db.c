@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_db.c 298066 2016-04-15 15:46:41Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_db.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /*
     Alias_db.c encapsulates all data structures used for storing

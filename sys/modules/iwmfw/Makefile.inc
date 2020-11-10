@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/iwmfw/Makefile.inc 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/iwmfw/Makefile.inc 351875 2019-09-05 17:20:20Z bdrewery $
 #
 # Common rules for building firmware.  Note this gets auto-included
 # by the subdir Makefile's as a consequence of included bsd.kmod.mk.
@@ -15,4 +15,4 @@ FIRMWS=	${_FIRM}:${KMOD}
 #FIRMWARE_LICENSE=
 
 ${_FIRM}: ${SRCTOP}/sys/contrib/dev/iwm/${_FIRM}.uu
-	uudecode -p $? > ${.TARGET}
+	uudecode -p ${.ALLSRC} > ${.TARGET}

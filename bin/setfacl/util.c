@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/setfacl/util.c 204819 2010-03-07 07:59:05Z joel $");
+__FBSDID("$FreeBSD: releng/12.2/bin/setfacl/util.c 332396 2018-04-10 23:29:57Z emaste $");
 
 #include <err.h>
 #include <stdlib.h>
@@ -42,6 +42,17 @@ zmalloc(size_t size)
 	if (ptr == NULL)
 		err(1, "calloc() failed");
 	return (ptr);
+}
+
+void *
+zrealloc(void *ptr, size_t size)
+{
+	void *newptr;
+
+	newptr = realloc(ptr, size);
+	if (newptr == NULL)
+		err(1, "realloc() failed");
+	return (newptr);
 }
 
 const char *

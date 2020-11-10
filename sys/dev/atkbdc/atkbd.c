@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Kazutaka YOKOTA <yokota@zodiac.mech.utsunomiya-u.ac.jp>
  * All rights reserved.
  *
@@ -26,9 +28,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/atkbdc/atkbd.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/atkbdc/atkbd.c 356013 2019-12-22 17:15:48Z kevans $");
 
-#include "opt_compat.h"
 #include "opt_kbd.h"
 #include "opt_atkbd.h"
 #include "opt_evdev.h"
@@ -230,25 +231,23 @@ static kbd_set_state_t	atkbd_set_state;
 static kbd_poll_mode_t	atkbd_poll;
 
 static keyboard_switch_t atkbdsw = {
-	atkbd_probe,
-	atkbd_init,
-	atkbd_term,
-	atkbd_intr,
-	atkbd_test_if,
-	atkbd_enable,
-	atkbd_disable,
-	atkbd_read,
-	atkbd_check,
-	atkbd_read_char,
-	atkbd_check_char,
-	atkbd_ioctl,
-	atkbd_lock,
-	atkbd_clear_state,
-	atkbd_get_state,
-	atkbd_set_state,
-	genkbd_get_fkeystr,
-	atkbd_poll,
-	genkbd_diag,
+	.probe =	atkbd_probe,
+	.init =		atkbd_init,
+	.term =		atkbd_term,
+	.intr =		atkbd_intr,
+	.test_if =	atkbd_test_if,
+	.enable =	atkbd_enable,
+	.disable =	atkbd_disable,
+	.read =		atkbd_read,
+	.check =	atkbd_check,
+	.read_char =	atkbd_read_char,
+	.check_char =	atkbd_check_char,
+	.ioctl =	atkbd_ioctl,
+	.lock =		atkbd_lock,
+	.clear_state =	atkbd_clear_state,
+	.get_state =	atkbd_get_state,
+	.set_state =	atkbd_set_state,
+	.poll =		atkbd_poll,
 };
 
 KEYBOARD_DRIVER(atkbd, atkbdsw, atkbd_configure);
@@ -266,8 +265,10 @@ static int		typematic_delay(int delay);
 static int		typematic_rate(int rate);
 
 #ifdef EVDEV_SUPPORT
+static evdev_event_t atkbd_ev_event;
+
 static const struct evdev_methods atkbd_evdev_methods = {
-	.ev_event = evdev_ev_kbd_event,
+	.ev_event = atkbd_ev_event,
 };
 #endif
 
@@ -481,7 +482,7 @@ atkbd_init(int unit, keyboard_t **kbdp, void *arg, int flags)
 			evdev_support_led(evdev, LED_CAPSL);
 			evdev_support_led(evdev, LED_SCROLLL);
 
-			if (evdev_register(evdev))
+			if (evdev_register_mtx(evdev, &Giant))
 				evdev_free(evdev);
 			else
 				state->ks_evdev = evdev;
@@ -1203,6 +1204,22 @@ atkbd_reset(KBDC kbdc, int flags, int c)
 	}
 	return (0);
 }
+
+#ifdef EVDEV_SUPPORT
+static void
+atkbd_ev_event(struct evdev_dev *evdev, uint16_t type, uint16_t code,
+    int32_t value)
+{
+	keyboard_t *kbd = evdev_get_softc(evdev);
+
+	if (evdev_rcpt_mask & EVDEV_RCPT_HW_KBD &&
+	    (type == EV_LED || type == EV_REP)) {
+		mtx_lock(&Giant);
+		kbd_ev_event(kbd, type, code, value);
+		mtx_unlock(&Giant);
+	}
+}
+#endif
 
 /* local functions */
 

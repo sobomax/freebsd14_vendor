@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/lib/Makefile 300618 2016-05-24 16:41:37Z br $
+# $FreeBSD: releng/12.2/cddl/lib/Makefile 337995 2018-08-18 03:20:59Z kevans $
 
 .include <src.opts.mk>
 
@@ -12,11 +12,8 @@ SUBDIR=	${_drti} \
 	${_libzfs_core} \
 	${_libzfs} \
 	${_libzpool} \
-	${_tests}
 
-.if ${MK_TESTS} != "no"
-_tests=		tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_ZFS} != "no"
 _libzfs_core=	libzfs_core

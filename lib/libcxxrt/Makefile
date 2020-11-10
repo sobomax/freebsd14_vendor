@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libcxxrt/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libcxxrt/Makefile 350400 2019-07-29 06:13:22Z dim $
 
 PACKAGE=	clibs
 SRCDIR=		${SRCTOP}/contrib/libcxxrt
@@ -22,9 +22,7 @@ SRCS+=		libelftc_dem_gnu3.c\
 
 WARNS=		0
 CFLAGS+=	-isystem ${SRCDIR} -nostdinc++
-.if empty(CXXFLAGS:M-std=*)
-CXXFLAGS+=	-std=c++11
-.endif
+CXXSTD?=	c++14
 VERSION_MAP=	${.CURDIR}/Version.map
 
 .include <bsd.lib.mk>

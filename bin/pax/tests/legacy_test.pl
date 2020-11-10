@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/pax/tests/legacy_test.pl 260634 2014-01-14 18:39:30Z jmmv $
+# $FreeBSD: releng/12.2/bin/pax/tests/legacy_test.pl 260634 2014-01-14 18:39:30Z jmmv $
 
 use strict;
 use warnings;

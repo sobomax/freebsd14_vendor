@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/liblua/lutils.h 344220 2019-02-17 02:39:17Z kevans $
+ * $FreeBSD: releng/12.2/stand/liblua/lutils.h 329499 2018-02-18 01:13:58Z cem $
  */
 
 #include <lua.h>

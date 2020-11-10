@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/xdr/xdr_mbuf.c 248318 2013-03-15 10:21:18Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/xdr/xdr_mbuf.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

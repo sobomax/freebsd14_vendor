@@ -1,7 +1,8 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2018 Alan Somers. All rights reserved.
+ * Copyright (c) 2018 Alan Somers.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -25,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/tftpd/tests/functional.c 332609 2018-04-16 16:33:35Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/tftpd/tests/functional.c 348460 2019-05-31 16:20:00Z asomers $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

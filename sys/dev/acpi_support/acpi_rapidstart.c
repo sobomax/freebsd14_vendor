@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpi_support/acpi_rapidstart.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpi_support/acpi_rapidstart.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Poul-Henning Kamp
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/vfs_hash.c 299412 2016-05-11 06:32:22Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_hash.c 364048 2020-08-07 23:32:42Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,7 +43,7 @@ static MALLOC_DEFINE(M_VFS_HASH, "vfs_hash", "VFS hash table");
 static LIST_HEAD(vfs_hash_head, vnode)	*vfs_hash_tbl;
 static LIST_HEAD(,vnode)		vfs_hash_side;
 static u_long				vfs_hash_mask;
-static struct rwlock			vfs_hash_lock;
+static struct rwlock __exclusive_cache_line vfs_hash_lock;
 
 static void
 vfs_hashinit(void *dummy __unused)

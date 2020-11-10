@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/ttydisc.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/ttydisc.h 360258 2020-04-24 13:31:22Z kevans $
  */
 
 #ifndef _SYS_TTYDISC_H_
@@ -70,7 +72,7 @@ static __inline size_t
 ttydisc_read_poll(struct tty *tp)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	return ttyinq_bytescanonicalized(&tp->t_inq);
 }
@@ -79,7 +81,7 @@ static __inline size_t
 ttydisc_write_poll(struct tty *tp)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	return ttyoutq_bytesleft(&tp->t_outq);
 }

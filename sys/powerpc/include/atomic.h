@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Marcel Moolenaar
  * Copyright (c) 2001 Benno Rice
  * Copyright (c) 2001 David E. O'Brien
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/powerpc/include/atomic.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/powerpc/include/atomic.h 354027 2019-10-24 15:46:00Z avg $
  */
 
 #ifndef _MACHINE_ATOMIC_H_
@@ -448,7 +450,6 @@ atomic_readandclear_int(volatile u_int *addr)
 {
 	u_int result,temp;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 		"\tsync\n"			/* drain writes */
 		"1:\tlwarx %0, 0, %3\n\t"	/* load old value */
@@ -458,7 +459,6 @@ atomic_readandclear_int(volatile u_int *addr)
 		: "=&r"(result), "=&r"(temp), "=m" (*addr)
 		: "r" (addr), "m" (*addr)
 		: "cr0", "memory");
-#endif
 
 	return (result);
 }
@@ -469,7 +469,6 @@ atomic_readandclear_long(volatile u_long *addr)
 {
 	u_long result,temp;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 		"\tsync\n"			/* drain writes */
 		"1:\tldarx %0, 0, %3\n\t"	/* load old value */
@@ -479,7 +478,6 @@ atomic_readandclear_long(volatile u_long *addr)
 		: "=&r"(result), "=&r"(temp), "=m" (*addr)
 		: "r" (addr), "m" (*addr)
 		: "cr0", "memory");
-#endif
 
 	return (result);
 }
@@ -567,7 +565,6 @@ atomic_cmpset_int(volatile u_int* p, u_int cmpval, u_int newval)
 {
 	int	ret;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 		"1:\tlwarx %0, 0, %2\n\t"	/* load old value */
 		"cmplw %3, %0\n\t"		/* compare */
@@ -583,7 +580,6 @@ atomic_cmpset_int(volatile u_int* p, u_int cmpval, u_int newval)
 		: "=&r" (ret), "=m" (*p)
 		: "r" (p), "r" (cmpval), "r" (newval), "m" (*p)
 		: "cr0", "memory");
-#endif
 
 	return (ret);
 }
@@ -592,7 +588,6 @@ atomic_cmpset_long(volatile u_long* p, u_long cmpval, u_long newval)
 {
 	int ret;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 	    #ifdef __powerpc64__
 		"1:\tldarx %0, 0, %2\n\t"	/* load old value */
@@ -619,7 +614,6 @@ atomic_cmpset_long(volatile u_long* p, u_long cmpval, u_long newval)
 		: "=&r" (ret), "=m" (*p)
 		: "r" (p), "r" (cmpval), "r" (newval), "m" (*p)
 		: "cr0", "memory");
-#endif
 
 	return (ret);
 }
@@ -687,7 +681,6 @@ atomic_fcmpset_int(volatile u_int *p, u_int *cmpval, u_int newval)
 {
 	int	ret;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 		"lwarx %0, 0, %3\n\t"	/* load old value */
 		"cmplw %4, %0\n\t"		/* compare */
@@ -704,7 +697,6 @@ atomic_fcmpset_int(volatile u_int *p, u_int *cmpval, u_int newval)
 		: "=&r" (ret), "=m" (*p), "=m" (*cmpval)
 		: "r" (p), "r" (*cmpval), "r" (newval), "m" (*p), "r"(cmpval)
 		: "cr0", "memory");
-#endif
 
 	return (ret);
 }
@@ -713,7 +705,6 @@ atomic_fcmpset_long(volatile u_long *p, u_long *cmpval, u_long newval)
 {
 	int ret;
 
-#ifdef __GNUCLIKE_ASM
 	__asm __volatile (
 	    #ifdef __powerpc64__
 		"ldarx %0, 0, %3\n\t"	/* load old value */
@@ -742,7 +733,6 @@ atomic_fcmpset_long(volatile u_long *p, u_long *cmpval, u_long newval)
 		: "=&r" (ret), "=m" (*p), "=m" (*cmpval)
 		: "r" (p), "r" (*cmpval), "r" (newval), "m" (*p), "r"(cmpval)
 		: "cr0", "memory");
-#endif
 
 	return (ret);
 }
@@ -862,6 +852,9 @@ atomic_swap_64(volatile u_long *p, u_long v)
 #define	atomic_fetchadd_64	atomic_fetchadd_long
 #define	atomic_swap_long	atomic_swap_64
 #define	atomic_swap_ptr		atomic_swap_64
+#else
+#define	atomic_swap_long(p,v)	atomic_swap_32((volatile u_int *)(p), v)
+#define	atomic_swap_ptr(p,v)	atomic_swap_32((volatile u_int *)(p), v)
 #endif
 
 #undef __ATOMIC_REL

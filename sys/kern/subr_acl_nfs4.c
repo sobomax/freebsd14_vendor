@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2010 Edward Tomasz Napierała <trasz@FreeBSD.org>
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
 
 #ifdef _KERNEL
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_acl_nfs4.c 287445 2015-09-04 00:14:20Z delphij $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_acl_nfs4.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

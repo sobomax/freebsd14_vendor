@@ -1,6 +1,8 @@
-/* $FreeBSD: releng/11.3/sys/compat/netbsd/dvcfg.h 139743 2005-01-05 22:34:37Z imp $ */
+/* $FreeBSD: releng/12.2/sys/compat/netbsd/dvcfg.h 326266 2017-11-27 15:13:23Z pfg $ */
 /*	$NetBSD$	*/
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * [NetBSD for NEC PC98 series]
  *  Copyright (c) 1996 NetBSD/pc98 porting staff.
  *  All rights reserved.

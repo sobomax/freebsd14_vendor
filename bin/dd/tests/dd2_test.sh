@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/bin/dd/tests/dd2_test.sh 321139 2017-07-18 17:35:29Z ngie $
+# $FreeBSD: releng/12.2/bin/dd/tests/dd2_test.sh 319551 2017-06-03 18:29:18Z asomers $
 
 
 atf_test_case max_seek

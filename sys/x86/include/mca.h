@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/mca.h 281887 2015-04-23 14:22:20Z jhb $
+ * $FreeBSD: releng/12.2/sys/x86/include/mca.h 326263 2017-11-27 15:11:47Z pfg $
  */
 
 #ifndef __X86_MCA_H__

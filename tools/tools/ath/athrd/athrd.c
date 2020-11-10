@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/tools/tools/ath/athrd/athrd.c 287297 2015-08-29 19:47:20Z rodrigc $
+ * $FreeBSD: releng/12.2/tools/tools/ath/athrd/athrd.c 287297 2015-08-29 19:47:20Z rodrigc $
  */
 #include "opt_ah.h"
 

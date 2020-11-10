@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2008, 2009 Reinoud Zandijk
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  *
  * From: NetBSD: nilfs_mount.h,v 1.1 2009/07/18 16:31:42 reinoud
  *
- * $FreeBSD: releng/11.3/sys/fs/nandfs/nandfs_mount.h 235537 2012-05-17 10:11:18Z gber $
+ * $FreeBSD: releng/12.2/sys/fs/nandfs/nandfs_mount.h 326268 2017-11-27 15:15:37Z pfg $
  */
 
 #ifndef _FS_NANDFS_NANDFS_MOUNT_H_

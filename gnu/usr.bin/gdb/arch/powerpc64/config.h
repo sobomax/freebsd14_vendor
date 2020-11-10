@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/gnu/usr.bin/gdb/arch/powerpc64/config.h 251512 2013-06-07 21:40:02Z emaste $ */
+/* $FreeBSD: releng/12.2/gnu/usr.bin/gdb/arch/powerpc64/config.h 338860 2018-09-21 17:44:05Z brooks $ */
 
 /* config.h.  Generated automatically by configure.  */
 /* config.in.  Generated automatically from configure.in by autoheader.  */
@@ -227,7 +227,7 @@
 #define HAVE_REALPATH 1
 
 /* Define if you have the sbrk function.  */
-#define HAVE_SBRK 1
+/* #undef HAVE_SBRK */
 
 /* Define if you have the setenv function.  */
 #define HAVE_SETENV 1

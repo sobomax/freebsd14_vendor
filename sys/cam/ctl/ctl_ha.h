@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003-2009 Silicon Graphics International Corp.
  * Copyright (c) 2011 Spectra Logic Corporation
  * Copyright (c) 2015 Alexander Motin <mav@FreeBSD.org>
@@ -30,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ha.h#1 $
- * $FreeBSD: releng/11.3/sys/cam/ctl/ctl_ha.h 288146 2015-09-23 15:49:27Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/ctl/ctl_ha.h 326265 2017-11-27 15:12:43Z pfg $
  */
 
 #ifndef _CTL_HA_H_

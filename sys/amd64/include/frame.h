@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/include/frame.h 329462 2018-02-17 18:00:01Z kib $
+ * $FreeBSD: releng/12.2/sys/amd64/include/frame.h 328083 2018-01-17 11:44:21Z kib $
  */
 
 #ifndef	_AMD64_FRAME_H

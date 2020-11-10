@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/sockets/zerosend/Makefile 294127 2016-01-16 02:18:36Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/sockets/zerosend/Makefile 294127 2016-01-16 02:18:36Z ngie $
 
 PROG=	zerosend
 MAN=

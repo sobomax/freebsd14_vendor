@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/xen/pvcpu/pvcpu.c 267536 2014-06-16 08:54:04Z royger $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/xen/pvcpu/pvcpu.c 336472 2018-07-19 08:00:52Z royger $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,8 +49,8 @@ xenpvcpu_identify(driver_t *driver, device_t parent)
 {
 	int i;
 
-	/* Only attach to PV guests, HVM guests use the ACPI CPU devices */
-	if (!xen_pv_domain())
+	/* Only attach in case the per-CPU device is not set. */
+	if (!xen_domain() || PCPU_GET(device) != NULL)
 		return;
 
 	CPU_FOREACH(i) {

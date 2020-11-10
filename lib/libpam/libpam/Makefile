@@ -33,7 +33,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/lib/libpam/libpam/Makefile 348980 2019-06-12 01:53:14Z des $
+# $FreeBSD: releng/12.2/lib/libpam/libpam/Makefile 313975 2017-02-20 00:56:46Z des $
 
 PACKAGE=lib${LIB}
 OPENPAM=	${SRCTOP}/contrib/openpam

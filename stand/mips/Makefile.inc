@@ -1,3 +1,3 @@
-# $FreeBSD: releng/11.3/stand/mips/Makefile.inc 262197 2014-02-18 23:18:32Z rwatson $
+# $FreeBSD: releng/12.2/stand/mips/Makefile.inc 262197 2014-02-18 23:18:32Z rwatson $
 
 .include "../Makefile.inc"

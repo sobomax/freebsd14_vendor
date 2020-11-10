@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/sbin/restore/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/restore/Makefile 314656 2017-03-04 11:33:01Z ngie $
 
 .PATH: ${.CURDIR:H}/dump
 

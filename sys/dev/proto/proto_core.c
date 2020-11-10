@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/proto/proto_core.c 340916 2018-11-25 00:34:00Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/proto/proto_core.c 340915 2018-11-25 00:32:23Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

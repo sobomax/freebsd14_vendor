@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause
+ *
  * Copyright (c) 1996, 1997, 1998, 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -62,7 +64,7 @@
  *	and
  *	from: FreeBSD: src/sys/alpha/include/bus.h,v 1.9 2001/01/09
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/bus.h 297792 2016-04-10 22:43:36Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/bus.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_BUS_H_

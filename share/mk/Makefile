@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/Makefile 331730 2018-03-29 12:52:58Z emaste $
+# $FreeBSD: releng/12.2/share/mk/Makefile 357107 2020-01-25 05:17:44Z kevans $
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
 
 # Only parse this if executing make in this directory, not in other places
@@ -23,6 +23,7 @@ FILES=	\
 	bsd.cpu.mk \
 	bsd.crunchgen.mk \
 	bsd.dep.mk \
+	bsd.dirs.mk \
 	bsd.doc.mk \
 	bsd.dtb.mk \
 	bsd.endian.mk \
@@ -50,10 +51,14 @@ FILES=	\
 	bsd.progs.mk \
 	bsd.snmpmod.mk \
 	bsd.subdir.mk \
+	bsd.suffixes-posix.mk \
+	bsd.suffixes.mk \
 	bsd.symver.mk \
 	bsd.sys.mk \
+	bsd.sysdir.mk \
 	bsd.test.mk \
 	dirdeps.mk \
+	dirdeps-options.mk \
 	gendirdeps.mk \
 	install-new.mk \
 	meta.autodep.mk \
@@ -69,6 +74,8 @@ FILESDIR=	${BINDIR}/mk
 
 .if ${MK_TESTS} != "no"
 FILES+=	atf.test.mk
+FILES+=	googletest.test.inc.mk
+FILES+=	googletest.test.mk
 FILES+=	plain.test.mk
 FILES+=	suite.test.mk
 FILES+=	tap.test.mk

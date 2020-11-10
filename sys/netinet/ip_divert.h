@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Sam Leffler, Errno Consulting
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/sys/netinet/ip_divert.h 201527 2010-01-04 19:01:22Z luigi $
+ * $FreeBSD: releng/12.2/sys/netinet/ip_divert.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NETINET_IP_DIVERT_H_

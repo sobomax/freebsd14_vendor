@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/11.3/usr.bin/procstat/tests/while1.c 346920 2019-04-29 19:36:46Z ngie $");
+__RCSID("$FreeBSD: releng/12.2/usr.bin/procstat/tests/while1.c 352491 2019-09-18 19:21:20Z jilles $");
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -33,7 +33,8 @@ int
 main(void)
 {
 
+	if (write(STDOUT_FILENO, "started\n", 8) != 8)
+		abort();
 	for (;;)
-		usleep(100);
-	exit(1);
+		pause();
 }

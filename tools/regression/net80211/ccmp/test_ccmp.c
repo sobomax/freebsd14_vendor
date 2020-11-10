@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/net80211/ccmp/test_ccmp.c 289762 2015-10-22 17:08:12Z avos $
+ * $FreeBSD: releng/12.2/tools/regression/net80211/ccmp/test_ccmp.c 289762 2015-10-22 17:08:12Z avos $
  */
 
 /*

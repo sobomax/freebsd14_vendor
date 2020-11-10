@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/device.h 345910 2019-04-05 11:07:29Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/device.h 360544 2020-05-01 19:07:26Z hselasky $
  */
 #ifndef	_LINUX_DEVICE_H_
 #define	_LINUX_DEVICE_H_
@@ -40,7 +40,6 @@
 #include <linux/types.h>
 #include <linux/module.h>
 #include <linux/workqueue.h>
-#include <linux/sysfs.h>
 #include <linux/kdev_t.h>
 #include <asm/atomic.h>
 
@@ -55,12 +54,16 @@ struct class {
 	struct kobject	kobj;
 	devclass_t	bsdclass;
 	const struct dev_pm_ops *pm;
+	const struct attribute_group **dev_groups;
 	void		(*class_release)(struct class *class);
 	void		(*dev_release)(struct device *dev);
 	char *		(*devnode)(struct device *dev, umode_t *mode);
 };
 
 struct dev_pm_ops {
+#if defined(LINUXKPI_VERSION) && LINUXKPI_VERSION >= 50000
+	int (*prepare)(struct device *dev);
+#endif
 	int (*suspend)(struct device *dev);
 	int (*suspend_late)(struct device *dev);
 	int (*resume)(struct device *dev);
@@ -105,12 +108,15 @@ struct device {
 	struct class	*class;
 	void		(*release)(struct device *dev);
 	struct kobject	kobj;
-	uint64_t	*dma_mask;
+	union {
+		const u64 *dma_mask;	/* XXX for backwards compat */
+		void	*dma_priv;
+	};
 	void		*driver_data;
 	unsigned int	irq;
 #define	LINUX_IRQ_INVALID	65535
-	unsigned int	msix;
-	unsigned int	msix_max;
+	unsigned int	irq_start;
+	unsigned int	irq_end;
 	const struct attribute_group **groups;
 	struct fwnode_handle *fwnode;
 
@@ -315,6 +321,10 @@ device_add(struct device *dev)
 			dev->devt = makedev(0, device_get_unit(dev->bsddev));
 	}
 	kobject_add(&dev->kobj, &dev->class->kobj, dev_name(dev));
+
+	if (dev->groups)
+		return (sysfs_create_groups(&dev->kobj, dev->groups));
+
 	return (0);
 }
 
@@ -420,6 +430,8 @@ done:
 	kobject_init(&dev->kobj, &linux_dev_ktype);
 	kobject_add(&dev->kobj, &dev->class->kobj, dev_name(dev));
 
+	sysfs_create_groups(&dev->kobj, dev->class->dev_groups);
+
 	return (0);
 }
 
@@ -427,6 +439,8 @@ static inline void
 device_unregister(struct device *dev)
 {
 	device_t bsddev;
+
+	sysfs_remove_groups(&dev->kobj, dev->class->dev_groups);
 
 	bsddev = dev->bsddev;
 	dev->bsddev = NULL;

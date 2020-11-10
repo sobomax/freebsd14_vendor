@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
  *
@@ -25,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_dn_glue.c 300779 2016-05-26 21:40:13Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_dn_glue.c 326272 2017-11-27 15:23:17Z pfg $
  *
  * Binary compatibility support for /sbin/ipfw RELENG_7 and RELENG_8
  */

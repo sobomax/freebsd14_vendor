@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1993, David Greenman
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_exec.c 338369 2018-08-29 08:35:23Z oshogbo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_exec.c 355051 2019-11-24 12:27:13Z kib $");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -33,41 +35,41 @@ __FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_exec.c 338369 2018-08-29 08:35:23Z
 #include "opt_vm.h"
 
 #include <sys/param.h>
-#include <sys/capsicum.h>
 #include <sys/systm.h>
-#include <sys/eventhandler.h>
-#include <sys/lock.h>
-#include <sys/mutex.h>
-#include <sys/sysproto.h>
-#include <sys/signalvar.h>
-#include <sys/kernel.h>
-#include <sys/mount.h>
-#include <sys/filedesc.h>
-#include <sys/fcntl.h>
 #include <sys/acct.h>
+#include <sys/capsicum.h>
+#include <sys/eventhandler.h>
 #include <sys/exec.h>
+#include <sys/fcntl.h>
+#include <sys/filedesc.h>
 #include <sys/imgact.h>
 #include <sys/imgact_elf.h>
-#include <sys/wait.h>
+#include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mman.h>
+#include <sys/mount.h>
+#include <sys/mutex.h>
+#include <sys/namei.h>
+#include <sys/pioctl.h>
 #include <sys/priv.h>
 #include <sys/proc.h>
-#include <sys/pioctl.h>
 #include <sys/ptrace.h>
-#include <sys/namei.h>
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
 #include <sys/sdt.h>
 #include <sys/sf_buf.h>
-#include <sys/syscallsubr.h>
-#include <sys/sysent.h>
 #include <sys/shm.h>
+#include <sys/signalvar.h>
 #include <sys/smp.h>
-#include <sys/sysctl.h>
-#include <sys/vnode.h>
 #include <sys/stat.h>
+#include <sys/syscallsubr.h>
+#include <sys/sysctl.h>
+#include <sys/sysent.h>
+#include <sys/sysproto.h>
+#include <sys/vnode.h>
+#include <sys/wait.h>
 #ifdef KTRACE
 #include <sys/ktrace.h>
 #endif
@@ -317,7 +319,7 @@ post_execve(struct thread *td, int error, struct vmspace *oldvmspace)
 		 * If success, we upgrade to SINGLE_EXIT state to
 		 * force other threads to suicide.
 		 */
-		if (error == 0)
+		if (error == EJUSTRETURN)
 			thread_single(p, SINGLE_EXIT);
 		else
 			thread_single_end(p, SINGLE_BOUNDARY);
@@ -361,7 +363,6 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p)
 	struct ucred *oldcred;
 	struct uidinfo *euip = NULL;
 	register_t *stack_base;
-	int error, i;
 	struct image_params image_params, *imgp;
 	struct vattr attr;
 	int (*img_first)(struct image_params *);
@@ -372,9 +373,7 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p)
 	struct ucred *tracecred = NULL;
 #endif
 	struct vnode *oldtextvp = NULL, *newtextvp;
-	cap_rights_t rights;
 	int credential_changing;
-	int textset;
 #ifdef MAC
 	struct label *interpvplabel = NULL;
 	int will_transition;
@@ -382,6 +381,8 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p)
 #ifdef HWPMC_HOOKS
 	struct pmckern_procexec pe;
 #endif
+	int error, i, orig_osrel;
+	uint32_t orig_fctl0;
 	static const char fexecv_proc_title[] = "(fexecv)";
 
 	imgp = &image_params;
@@ -407,6 +408,8 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p)
 	imgp->attr = &attr;
 	imgp->args = args;
 	oldcred = p->p_ucred;
+	orig_osrel = p->p_osrel;
+	orig_fctl0 = p->p_fctl0;
 
 #ifdef MAC
 	error = mac_execve_enter(imgp, mac_p);
@@ -422,8 +425,8 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p)
 	 * interpreter if this is an interpreted binary.
 	 */
 	if (args->fname != NULL) {
-		NDINIT(&nd, LOOKUP, ISOPEN | LOCKLEAF | FOLLOW | SAVENAME
-		    | AUDITVNODE1, UIO_SYSSPACE, args->fname, td);
+		NDINIT(&nd, LOOKUP, ISOPEN | LOCKLEAF | LOCKSHARED | FOLLOW |
+		    SAVENAME | AUDITVNODE1, UIO_SYSSPACE, args->fname, td);
 	}
 
 	SDT_PROBE1(proc, , , exec, args->fname);
@@ -453,17 +456,17 @@ interpret:
 		/*
 		 * Descriptors opened only with O_EXEC or O_RDONLY are allowed.
 		 */
-		error = fgetvp_exec(td, args->fd,
-		    cap_rights_init(&rights, CAP_FEXECVE), &newtextvp);
+		error = fgetvp_exec(td, args->fd, &cap_fexecve_rights, &newtextvp);
 		if (error)
 			goto exec_fail;
-		vn_lock(newtextvp, LK_EXCLUSIVE | LK_RETRY);
+		vn_lock(newtextvp, LK_SHARED | LK_RETRY);
 		AUDIT_ARG_VNODE1(newtextvp);
 		imgp->vp = newtextvp;
 	}
 
 	/*
-	 * Check file permissions (also 'opens' file)
+	 * Check file permissions.  Also 'opens' file and sets its vnode to
+	 * text mode.
 	 */
 	error = exec_check_permissions(imgp);
 	if (error)
@@ -473,21 +476,12 @@ interpret:
 	if (imgp->object != NULL)
 		vm_object_reference(imgp->object);
 
-	/*
-	 * Set VV_TEXT now so no one can write to the executable while we're
-	 * activating it.
-	 *
-	 * Remember if this was set before and unset it in case this is not
-	 * actually an executable image.
-	 */
-	textset = VOP_IS_TEXT(imgp->vp);
-	VOP_SET_TEXT(imgp->vp);
-
 	error = exec_map_first_page(imgp);
 	if (error)
 		goto exec_fail_dealloc;
 
 	imgp->proc->p_osrel = 0;
+	imgp->proc->p_fctl0 = 0;
 
 	/*
 	 * Implement image setuid/setgid.
@@ -537,7 +531,7 @@ interpret:
 			euip = uifind(attr.va_uid);
 			change_euid(imgp->newcred, euip);
 		}
-		vn_lock(imgp->vp, LK_EXCLUSIVE | LK_RETRY);
+		vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
 		if (attr.va_mode & S_ISGID)
 			change_egid(imgp->newcred, attr.va_gid);
 		/*
@@ -566,7 +560,7 @@ interpret:
 		    oldcred->cr_svgid != oldcred->cr_gid) {
 			VOP_UNLOCK(imgp->vp, 0);
 			imgp->newcred = crdup(oldcred);
-			vn_lock(imgp->vp, LK_EXCLUSIVE | LK_RETRY);
+			vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
 			change_svuid(imgp->newcred, imgp->newcred->cr_uid);
 			change_svgid(imgp->newcred, imgp->newcred->cr_gid);
 		}
@@ -583,7 +577,7 @@ interpret:
 		if (vn_fullpath(td, imgp->vp, &imgp->execpath,
 		    &imgp->freepath) != 0)
 			imgp->execpath = args->fname;
-		vn_lock(imgp->vp, LK_EXCLUSIVE | LK_RETRY);
+		vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
 	}
 
 	/*
@@ -609,11 +603,8 @@ interpret:
 	}
 
 	if (error) {
-		if (error == -1) {
-			if (textset == 0)
-				VOP_UNSET_TEXT(imgp->vp);
+		if (error == -1)
 			error = ENOEXEC;
-		}
 		goto exec_fail_dealloc;
 	}
 
@@ -624,12 +615,15 @@ interpret:
 	if (imgp->interpreted) {
 		exec_unmap_first_page(imgp);
 		/*
-		 * VV_TEXT needs to be unset for scripts.  There is a short
-		 * period before we determine that something is a script where
-		 * VV_TEXT will be set. The vnode lock is held over this
-		 * entire period so nothing should illegitimately be blocked.
+		 * The text reference needs to be removed for scripts.
+		 * There is a short period before we determine that
+		 * something is a script where text reference is active.
+		 * The vnode lock is held over this entire period
+		 * so nothing should illegitimately be blocked.
 		 */
-		VOP_UNSET_TEXT(imgp->vp);
+		MPASS(imgp->textset);
+		VOP_UNSET_TEXT_CHECKED(newtextvp);
+		imgp->textset = false;
 		/* free name buffer and old vnode */
 		if (args->fname != NULL)
 			NDFREE(&nd, NDF_ONLY_PNBUF);
@@ -652,7 +646,7 @@ interpret:
 		free(imgp->freepath, M_TEMP);
 		imgp->freepath = NULL;
 		/* set new name to that of the interpreter */
-		NDINIT(&nd, LOOKUP, LOCKLEAF | FOLLOW | SAVENAME,
+		NDINIT(&nd, LOOKUP, ISOPEN | LOCKLEAF | FOLLOW | SAVENAME,
 		    UIO_SYSSPACE, imgp->interpreter_name, td);
 		args->fname = imgp->interpreter_name;
 		goto interpret;
@@ -691,9 +685,14 @@ interpret:
 	 * Else stuff argument count as first item on stack
 	 */
 	if (p->p_sysent->sv_fixup != NULL)
-		(*p->p_sysent->sv_fixup)(&stack_base, imgp);
+		error = (*p->p_sysent->sv_fixup)(&stack_base, imgp);
 	else
-		suword(--stack_base, imgp->args->argc);
+		error = suword(--stack_base, imgp->args->argc) == 0 ?
+		    0 : EFAULT;
+	if (error != 0) {
+		vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
+		goto exec_fail_dealloc;
+	}
 
 	if (args->fdp != NULL) {
 		/* Install a brand new file descriptor table. */
@@ -762,6 +761,8 @@ interpret:
 	p->p_flag |= P_EXEC;
 	if ((p->p_flag2 & P2_NOTRACE_EXEC) == 0)
 		p->p_flag2 &= ~P2_NOTRACE;
+	if ((p->p_flag2 & P2_STKGAP_DISABLE_EXEC) == 0)
+		p->p_flag2 &= ~P2_STKGAP_DISABLE;
 	if (p->p_flag & P_PPWAIT) {
 		p->p_flag &= ~(P_PPWAIT | P_PPTRACE);
 		cv_broadcast(&p->p_pwait);
@@ -854,28 +855,23 @@ interpret:
 	p->p_args = newargs;
 	newargs = NULL;
 
+	PROC_UNLOCK(p);
+
 #ifdef	HWPMC_HOOKS
 	/*
 	 * Check if system-wide sampling is in effect or if the
 	 * current process is using PMCs.  If so, do exec() time
 	 * processing.  This processing needs to happen AFTER the
 	 * P_INEXEC flag is cleared.
-	 *
-	 * The proc lock needs to be released before taking the PMC
-	 * SX.
 	 */
 	if (PMC_SYSTEM_SAMPLING_ACTIVE() || PMC_PROC_IS_USING_PMCS(p)) {
-		PROC_UNLOCK(p);
 		VOP_UNLOCK(imgp->vp, 0);
 		pe.pm_credentialschanged = credential_changing;
 		pe.pm_entryaddr = imgp->entry_addr;
 
 		PMC_CALL_HOOK_X(td, PMC_FN_PROCESS_EXEC, (void *) &pe);
 		vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
-	} else
-		PROC_UNLOCK(p);
-#else  /* !HWPMC_HOOKS */
-	PROC_UNLOCK(p);
+	}
 #endif
 
 	/* Set values passed into the program in registers. */
@@ -890,6 +886,11 @@ interpret:
 	SDT_PROBE1(proc, , , exec__success, args->fname);
 
 exec_fail_dealloc:
+	if (error != 0) {
+		p->p_osrel = orig_osrel;
+		p->p_fctl0 = orig_fctl0;
+	}
+
 	if (imgp->firstpage != NULL)
 		exec_unmap_first_page(imgp);
 
@@ -898,6 +899,8 @@ exec_fail_dealloc:
 			NDFREE(&nd, NDF_ONLY_PNBUF);
 		if (imgp->opened)
 			VOP_CLOSE(imgp->vp, FREAD, td->td_ucred, td);
+		if (imgp->textset)
+			VOP_UNSET_TEXT_CHECKED(imgp->vp);
 		if (error != 0)
 			vput(imgp->vp);
 		else
@@ -910,10 +913,12 @@ exec_fail_dealloc:
 	free(imgp->freepath, M_TEMP);
 
 	if (error == 0) {
-		PROC_LOCK(p);
-		if (p->p_ptevents & PTRACE_EXEC)
-			td->td_dbgflags |= TDB_EXEC;
-		PROC_UNLOCK(p);
+		if (p->p_ptevents & PTRACE_EXEC) {
+			PROC_LOCK(p);
+			if (p->p_ptevents & PTRACE_EXEC)
+				td->td_dbgflags |= TDB_EXEC;
+			PROC_UNLOCK(p);
+		}
 
 		/*
 		 * Stop the process here if its stop event mask has
@@ -968,12 +973,17 @@ exec_fail:
 		ktrprocctor(p);
 #endif
 
-	return (error);
+	/*
+	 * We don't want cpu_set_syscall_retval() to overwrite any of
+	 * the register values put in place by exec_setregs().
+	 * Implementations of cpu_set_syscall_retval() will leave
+	 * registers unmodified when returning EJUSTRETURN.
+	 */
+	return (error == 0 ? EJUSTRETURN : error);
 }
 
 int
-exec_map_first_page(imgp)
-	struct image_params *imgp;
+exec_map_first_page(struct image_params *imgp)
 {
 	int rv, i, after, initial_pagein;
 	vm_page_t ma[VM_INITIAL_PAGEIN];
@@ -994,7 +1004,10 @@ exec_map_first_page(imgp)
 		vm_page_xbusy(ma[0]);
 		if (!vm_pager_has_page(object, 0, NULL, &after)) {
 			vm_page_lock(ma[0]);
-			vm_page_free(ma[0]);
+			if (!vm_page_wired(ma[0]))
+				vm_page_free(ma[0]);
+			else
+				vm_page_xunbusy_maybelocked(ma[0]);
 			vm_page_unlock(ma[0]);
 			VM_OBJECT_WUNLOCK(object);
 			return (EIO);
@@ -1021,7 +1034,10 @@ exec_map_first_page(imgp)
 		if (rv != VM_PAGER_OK) {
 			for (i = 0; i < initial_pagein; i++) {
 				vm_page_lock(ma[i]);
-				vm_page_free(ma[i]);
+				if (!vm_page_wired(ma[i]))
+					vm_page_free(ma[i]);
+				else
+					vm_page_xunbusy_maybelocked(ma[i]);
 				vm_page_unlock(ma[i]);
 			}
 			VM_OBJECT_WUNLOCK(object);
@@ -1092,13 +1108,18 @@ exec_new_vmspace(struct image_params *imgp, struct sysentvec *sv)
 	else
 		sv_minuser = MAX(sv->sv_minuser, PAGE_SIZE);
 	if (vmspace->vm_refcnt == 1 && vm_map_min(map) == sv_minuser &&
-	    vm_map_max(map) == sv->sv_maxuser) {
+	    vm_map_max(map) == sv->sv_maxuser &&
+	    cpu_exec_vmspace_reuse(p, map)) {
 		shmexit(vmspace);
 		pmap_remove_pages(vmspace_pmap(vmspace));
 		vm_map_remove(map, vm_map_min(map), vm_map_max(map));
-		/* An exec terminates mlockall(MCL_FUTURE). */
+		/*
+		 * An exec terminates mlockall(MCL_FUTURE), ASLR state
+		 * must be re-evaluated.
+		 */
 		vm_map_lock(map);
-		vm_map_modflags(map, 0, MAP_WIREFUTURE);
+		vm_map_modflags(map, 0, MAP_WIREFUTURE | MAP_ASLR |
+		    MAP_ASLR_IGNSTART);
 		vm_map_unlock(map);
 	} else {
 		error = vmspace_exec(p, sv_minuser, sv->sv_maxuser);
@@ -1107,6 +1128,7 @@ exec_new_vmspace(struct image_params *imgp, struct sysentvec *sv)
 		vmspace = p->p_vmspace;
 		map = &vmspace->vm_map;
 	}
+	map->flags |= imgp->map_flags;
 
 	/* Map a shared page */
 	obj = sv->sv_shared_page_obj;
@@ -1140,6 +1162,9 @@ exec_new_vmspace(struct image_params *imgp, struct sysentvec *sv)
 	} else {
 		ssiz = maxssiz;
 	}
+	imgp->eff_stack_sz = lim_cur(curthread, RLIMIT_STACK);
+	if (ssiz < imgp->eff_stack_sz)
+		imgp->eff_stack_sz = ssiz;
 	stack_addr = sv->sv_usrstack - ssiz;
 	error = vm_map_stack(map, stack_addr, (vm_size_t)ssiz,
 	    obj != NULL && imgp->stack_prot != 0 ? imgp->stack_prot :
@@ -1326,7 +1351,7 @@ struct exec_args_kva {
 	SLIST_ENTRY(exec_args_kva) next;
 };
 
-static DPCPU_DEFINE(struct exec_args_kva *, exec_args_kva);
+DPCPU_DEFINE_STATIC(struct exec_args_kva *, exec_args_kva);
 
 static SLIST_HEAD(, exec_args_kva) exec_args_kva_freelist;
 static struct mtx exec_args_kva_mtx;
@@ -1375,7 +1400,7 @@ exec_release_args_kva(struct exec_args_kva *argkva, u_int gen)
 
 	base = argkva->addr;
 	if (argkva->gen != gen) {
-		vm_map_madvise(exec_map, base, base + exec_map_entry_size,
+		(void)vm_map_madvise(exec_map, base, base + exec_map_entry_size,
 		    MADV_FREE);
 		argkva->gen = gen;
 	}
@@ -1534,6 +1559,9 @@ exec_copyout_strings(struct image_params *imgp)
 	destp = rounddown2(destp, sizeof(void *));
 
 	vectp = (char **)destp;
+	if (imgp->sysent->sv_stackgap != NULL)
+		imgp->sysent->sv_stackgap(imgp, (u_long *)&vectp);
+
 	if (imgp->auxargs) {
 		/*
 		 * Allocate room on the stack for the ELF auxargs
@@ -1612,7 +1640,7 @@ exec_check_permissions(struct image_params *imgp)
 	struct vnode *vp = imgp->vp;
 	struct vattr *attr = imgp->attr;
 	struct thread *td;
-	int error, writecount;
+	int error;
 
 	td = curthread;
 
@@ -1656,12 +1684,17 @@ exec_check_permissions(struct image_params *imgp)
 	/*
 	 * Check number of open-for-writes on the file and deny execution
 	 * if there are any.
+	 *
+	 * Add a text reference now so no one can write to the
+	 * executable while we're activating it.
+	 *
+	 * Remember if this was set before and unset it in case this is not
+	 * actually an executable image.
 	 */
-	error = VOP_GET_WRITECOUNT(vp, &writecount);
+	error = VOP_SET_TEXT(vp);
 	if (error != 0)
 		return (error);
-	if (writecount != 0)
-		return (ETXTBSY);
+	imgp->textset = true;
 
 	/*
 	 * Call filesystem specific open routine (which does nothing in the
@@ -1680,7 +1713,7 @@ int
 exec_register(const struct execsw *execsw_arg)
 {
 	const struct execsw **es, **xs, **newexecsw;
-	int count = 2;	/* New slot and trailing NULL */
+	u_int count = 2;	/* New slot and trailing NULL */
 
 	if (execsw)
 		for (es = execsw; *es; es++)

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/iscsid/iscsid.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/iscsid/iscsid.h 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #ifndef ISCSID_H
@@ -46,8 +46,6 @@
 
 #define	CONN_MUTUAL_CHALLENGE_LEN	1024
 #define	SOCKBUF_SIZE			1048576
-#define	MAX_BURST_LENGTH		(256 * 1024)
-#define	FIRST_BURST_LENGTH		(128 * 1024)
 
 struct connection {
 	int			conn_iscsi_fd;
@@ -63,9 +61,10 @@ struct connection {
 	int			conn_data_digest;
 	bool			conn_initial_r2t;
 	bool			conn_immediate_data;
-	size_t			conn_max_data_segment_length;
-	size_t			conn_max_burst_length;
-	size_t			conn_first_burst_length;
+	int			conn_max_recv_data_segment_length;
+	int			conn_max_send_data_segment_length;
+	int			conn_max_burst_length;
+	int			conn_first_burst_length;
 	struct chap		*conn_mutual_chap;
 };
 

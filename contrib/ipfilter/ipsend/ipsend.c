@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/contrib/ipfilter/ipsend/ipsend.c 344833 2019-03-06 02:37:25Z cy $ */
+/* $FreeBSD: releng/12.2/contrib/ipfilter/ipsend/ipsend.c 363768 2020-08-02 04:25:11Z cy $ */
 /*
  * ipsend.c (C) 1995-1998 Darren Reed
  *
@@ -33,15 +33,7 @@ extern	void	iplang __P((FILE *));
 
 char	options[68];
 int	opts;
-# ifdef ultrix
-char	default_device[] = "ln0";
-# else
-#  ifdef __bsdi__
-char	default_device[] = "ef0";
-#  else
 char	default_device[] = "le0";
-#  endif /* __bsdi__ */
-# endif /* ultrix */
 
 
 static	void	usage __P((char *));

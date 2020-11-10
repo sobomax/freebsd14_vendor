@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/netrate/Makefile 141762 2005-02-12 20:04:23Z rwatson $
+# $FreeBSD: releng/12.2/tools/tools/netrate/Makefile 141762 2005-02-12 20:04:23Z rwatson $
 #
 
 SUBDIR=	netreceive netsend netblast

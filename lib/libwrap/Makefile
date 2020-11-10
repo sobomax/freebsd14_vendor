@@ -1,9 +1,10 @@
 #
-# $FreeBSD: releng/11.3/lib/libwrap/Makefile 313431 2017-02-08 08:34:59Z ngie $
+# $FreeBSD: releng/12.2/lib/libwrap/Makefile 338887 2018-09-22 13:17:30Z brd $
 #
 
 .include <src.opts.mk>
 
+CONFS=	hosts.allow
 PACKAGE=lib${LIB}
 LIB=	wrap
 SHLIB_MAJOR= 6

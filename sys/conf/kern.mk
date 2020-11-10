@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/sys/conf/kern.mk 345186 2019-03-15 15:16:31Z markj $
+# $FreeBSD: releng/12.2/sys/conf/kern.mk 360780 2020-05-07 14:20:52Z jhb $
 
 #
 # Warning flags for compiling the kernel and components of the kernel:
 #
 CWARNFLAGS?=	-Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes \
-		-Wmissing-prototypes -Wpointer-arith -Winline -Wcast-qual \
+		-Wmissing-prototypes -Wpointer-arith -Wcast-qual \
 		-Wundef -Wno-pointer-sign ${FORMAT_EXTENSIONS} \
 		-Wmissing-include-dirs -fdiagnostics-show-option \
 		-Wno-unknown-pragmas \
@@ -17,13 +17,15 @@ CWARNFLAGS?=	-Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes \
 # kernel where fixing them is more trouble than it is worth, or where there is
 # a false positive.
 .if ${COMPILER_TYPE} == "clang"
-NO_WCONSTANT_CONVERSION=	-Wno-constant-conversion
+NO_WCONSTANT_CONVERSION=	-Wno-error-constant-conversion
 NO_WSHIFT_COUNT_NEGATIVE=	-Wno-shift-count-negative
 NO_WSHIFT_COUNT_OVERFLOW=	-Wno-shift-count-overflow
 NO_WSELF_ASSIGN=		-Wno-self-assign
-NO_WUNNEEDED_INTERNAL_DECL=	-Wno-unneeded-internal-declaration
+NO_WUNNEEDED_INTERNAL_DECL=	-Wno-error-unneeded-internal-declaration
 NO_WSOMETIMES_UNINITIALIZED=	-Wno-error-sometimes-uninitialized
-NO_WCAST_QUAL=			-Wno-cast-qual
+NO_WCAST_QUAL=			-Wno-error-cast-qual
+NO_WTAUTOLOGICAL_POINTER_COMPARE= -Wno-tautological-pointer-compare
+NO_WARRAY_BOUNDS=		-Wno-error-array-bounds
 # Several other warnings which might be useful in some cases, but not severe
 # enough to error out the whole kernel build.  Display them anyway, so there is
 # some incentive to fix them eventually.
@@ -34,7 +36,10 @@ CWARNEXTRA?=	-Wno-error-tautological-compare -Wno-error-empty-body \
 CWARNEXTRA+=	-Wno-error-shift-negative-value
 .endif
 .if ${COMPILER_VERSION} >= 40000
-CWARNEXTRA+=	-Wno-error-address-of-packed-member
+CWARNEXTRA+=	-Wno-address-of-packed-member
+.endif
+.if ${COMPILER_VERSION} >= 100000
+NO_WMISLEADING_INDENTATION=	-Wno-misleading-indentation
 .endif
 
 CLANG_NO_IAS= -no-integrated-as
@@ -48,6 +53,7 @@ CLANG_NO_IAS34= -no-integrated-as
 .if ${COMPILER_VERSION} >= 40800
 # Catch-all for all the things that are in our tree, but for which we're
 # not yet ready for this compiler.
+NO_WUNUSED_BUT_SET_VARIABLE = -Wno-unused-but-set-variable
 CWARNEXTRA?=	-Wno-error=address				\
 		-Wno-error=aggressive-loop-optimizations	\
 		-Wno-error=array-bounds				\
@@ -65,9 +71,18 @@ CWARNEXTRA+=	-Wno-error=misleading-indentation		\
 		-Wno-error=shift-overflow			\
 		-Wno-error=tautological-compare
 .endif
+.if ${COMPILER_VERSION} >= 70200
+CWARNEXTRA+=	-Wno-error=memset-elt-size
+.endif
+.if ${COMPILER_VERSION} >= 80000
+CWARNEXTRA+=	-Wno-error=packed-not-aligned
+.endif
 .else
 # For gcc 4.2, eliminate the too-often-wrong warnings about uninitialized vars.
 CWARNEXTRA?=	-Wno-uninitialized
+# GCC 4.2 doesn't have -Wno-error=cast-qual, so just disable the warning for
+# the few files that are already known to generate cast-qual warnings.
+NO_WCAST_QUAL= -Wno-cast-qual
 .endif
 .endif
 
@@ -116,11 +131,26 @@ INLINE_LIMIT?=	8000
 CFLAGS += -mgeneral-regs-only
 # Reserve x18 for pcpu data
 CFLAGS += -ffixed-x18
+INLINE_LIMIT?=	8000
 .endif
 
+#
+# For RISC-V we specify the soft-float ABI (lp64) to avoid the use of floating
+# point registers within the kernel. We also specify the "medium" code model,
+# which generates code suitable for a 2GiB addressing range located at any
+# offset, allowing modules to be located anywhere in the 64-bit address space.
+# Note that clang and GCC refer to this code model as "medium" and "medany"
+# respectively.
+#
 .if ${MACHINE_CPUARCH} == "riscv"
+CFLAGS+=	-march=rv64imafdc -mabi=lp64
+CFLAGS.clang+=	-mcmodel=medium
 CFLAGS.gcc+=	-mcmodel=medany
 INLINE_LIMIT?=	8000
+
+.if ${LINKER_FEATURES:Mriscv-relaxations} == ""
+CFLAGS+=	-mno-relax
+.endif
 .endif
 
 #
@@ -166,11 +196,21 @@ CFLAGS+=	-mno-altivec -msoft-float
 INLINE_LIMIT?=	15000
 .endif
 
+.if ${MACHINE_ARCH} == "powerpcspe"
+CFLAGS.gcc+=	-mno-spe
+.endif
+
 #
-# Use dot symbols on powerpc64 to make ddb happy
+# Use dot symbols (or, better, the V2 ELF ABI) on powerpc64 to make
+# DDB happy. ELFv2, if available, has some other efficiency benefits.
 #
 .if ${MACHINE_ARCH} == "powerpc64"
+.if ${COMPILER_VERSION} >= 40900
+CFLAGS.gcc+=	-mabi=elfv2
+.else
 CFLAGS.gcc+=	-mcall-aixdesc
+.endif
+CFLAGS.clang+=	-mabi=elfv2
 .endif
 
 #
@@ -231,7 +271,7 @@ PHONY_NOTMAIN = afterdepend afterinstall all beforedepend beforeinstall \
 		beforelinking build build-tools buildfiles buildincludes \
 		checkdpadd clean cleandepend cleandir cleanobj configure \
 		depend distclean distribute exe \
-		html includes install installfiles installincludes lint \
+		html includes install installfiles installincludes \
 		obj objlink objs objwarn \
 		realinstall regress \
 		tags whereobj
@@ -253,21 +293,25 @@ CFLAGS+=        -std=iso9899:1999
 CFLAGS+=        -std=${CSTD}
 .endif # CSTD
 
-# Set target-specific linker emulation name. Used by ld -b binary to convert
-# binary files into ELF objects.
+# Set target-specific linker emulation name.
 LD_EMULATION_aarch64=aarch64elf
 LD_EMULATION_amd64=elf_x86_64_fbsd
 LD_EMULATION_arm=armelf_fbsd
-LD_EMULATION_armeb=armelfb_fbsd
 LD_EMULATION_armv6=armelf_fbsd
+LD_EMULATION_armv7=armelf_fbsd
 LD_EMULATION_i386=elf_i386_fbsd
 LD_EMULATION_mips= elf32btsmip_fbsd
+LD_EMULATION_mipshf= elf32btsmip_fbsd
 LD_EMULATION_mips64= elf64btsmip_fbsd
+LD_EMULATION_mips64hf= elf64btsmip_fbsd
 LD_EMULATION_mipsel= elf32ltsmip_fbsd
+LD_EMULATION_mipselhf= elf32ltsmip_fbsd
 LD_EMULATION_mips64el= elf64ltsmip_fbsd
+LD_EMULATION_mips64elhf= elf64ltsmip_fbsd
 LD_EMULATION_mipsn32= elf32btsmipn32_fbsd
 LD_EMULATION_mipsn32el= elf32btsmipn32_fbsd   # I don't think this is a thing that works
 LD_EMULATION_powerpc= elf32ppc_fbsd
+LD_EMULATION_powerpcspe= elf32ppc_fbsd
 LD_EMULATION_powerpc64= elf64ppc_fbsd
 LD_EMULATION_riscv64= elf64lriscv
 LD_EMULATION_sparc64= elf64_sparc_fbsd

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/altera/pio/pio.c 276670 2015-01-04 23:14:04Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/altera/pio/pio.c 276670 2015-01-04 23:14:04Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

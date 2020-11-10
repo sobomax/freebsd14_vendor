@@ -1,5 +1,7 @@
 /*-
- * Copyright (c) 2012 Warner Losh.  All rights reserved.
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
+ * Copyright (c) 2012 M. Warner Losh.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/arm/include/board.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/arm/include/board.h 333142 2018-05-01 16:21:01Z imp $ */
 
 #ifndef _ARM_INCLUDE_BOARD_H_
 #define _ARM_INCLUDE_BOARD_H_

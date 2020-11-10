@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/label/g_label.c 346559 2019-04-22 15:09:47Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/label/g_label.c 346509 2019-04-22 00:45:09Z ian $");
 
 #include "opt_geom.h"
 
@@ -212,7 +214,11 @@ g_label_create(struct gctl_req *req, struct g_class *mp, struct g_provider *pp,
 	}
 	gp = NULL;
 	cp = NULL;
-	snprintf(name, sizeof(name), "%s/%s", dir, label);
+	if (snprintf(name, sizeof(name), "%s/%s", dir, label) >= sizeof(name)) {
+		if (req != NULL)
+			gctl_error(req, "Label name %s is too long.", label);
+		return (NULL);
+	}
 	LIST_FOREACH(gp, &mp->geom, geom) {
 		pp2 = LIST_FIRST(&gp->provider);
 		if (pp2 == NULL)

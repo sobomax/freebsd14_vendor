@@ -1,7 +1,9 @@
-/*	$OpenBSD: extern.h,v 1.54 2014/05/12 19:11:19 espie Exp $	*/
+/*	$OpenBSD: extern.h,v 1.55 2017/06/15 13:48:42 bcallah Exp $	*/
 /*	$NetBSD: extern.h,v 1.3 1996/01/13 23:25:24 pk Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -33,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.bin/m4/extern.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/m4/extern.h 352277 2019-09-13 07:10:50Z bapt $
  */
 
 /* eval.c */
@@ -58,6 +60,8 @@ extern void doprintfilename(struct input_file *);
 extern void doesyscmd(const char *);
 extern void getdivfile(const char *);
 extern void doformat(const char *[], int);
+
+extern void m4_warnx(const char *, ...);
 
 /* look.c */
 
@@ -103,16 +107,16 @@ extern void	pbnumbase(int, int, int);
 extern void	pbunsigned(unsigned long);
 extern void	pbstr(const char *);
 extern void	pushback(int);
-extern void	*xalloc(size_t, const char *, ...);
-extern void	*xcalloc(size_t, size_t, const char *, ...);
-extern void	*xrealloc(void *, size_t, const char *, ...);
-extern void	*xreallocarray(void *, size_t, size_t, const char *, ...);
+extern void	*xalloc(size_t, const char *, ...) __printf0like(2, 3);
+extern void	*xcalloc(size_t, size_t, const char *, ...) __printf0like(3, 4);
+extern void	*xrealloc(void *, size_t, const char *, ...) __printf0like(3, 4);
+extern void	*xreallocarray(void *, size_t, size_t, const char *, ...) __printf0like(4, 5);
 extern char	*xstrdup(const char *);
 extern void	usage(void);
 extern void	resizedivs(int);
 extern size_t	buffer_mark(void);
 extern void	dump_buffer(FILE *, size_t);
-extern void	m4errx(int, const char *, ...);
+extern void	m4errx(int, const char *, ...) __dead2 __printf0like(2, 3);
 
 extern int	obtain_char(struct input_file *);
 extern void	set_input(struct input_file *, FILE *, const char *);
@@ -176,4 +180,5 @@ extern int  synch_lines;	/* line synchronisation directives */
 
 extern int mimic_gnu;		/* behaves like gnu-m4 */
 extern int prefix_builtins;	/* prefix builtin macros with m4_ */
-
+extern int error_warns;		/* make warnings cause exit_code = 1 */
+extern int fatal_warns;		/* make warnings fatal */

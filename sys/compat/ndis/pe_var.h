@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2003
  *	Bill Paul <wpaul@windriver.com>.  All rights reserved.
  *
@@ -29,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/ndis/pe_var.h 346656 2019-04-25 00:58:11Z gonzo $
+ * $FreeBSD: releng/12.2/sys/compat/ndis/pe_var.h 345459 2019-03-23 22:44:11Z gonzo $
  */
 
 #ifndef _PE_VAR_H_

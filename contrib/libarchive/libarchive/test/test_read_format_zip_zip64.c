@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/test/test_read_format_zip_zip64.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_read_format_zip_zip64.c 358087 2020-02-19 01:46:43Z mm $");
 
 /*
  * Sample file was created with:
@@ -88,7 +88,7 @@ DEFINE_TEST(test_read_format_zip_zip64a)
 	size_t s;
 
 	extract_reference_file(refname);
-	p = slurpfile(&s, refname);
+	p = slurpfile(&s, "%s", refname);
 
 	/* First read with seeking. */
 	assert((a = archive_read_new()) != NULL);
@@ -112,7 +112,7 @@ DEFINE_TEST(test_read_format_zip_zip64b)
 	size_t s;
 
 	extract_reference_file(refname);
-	p = slurpfile(&s, refname);
+	p = slurpfile(&s, "%s", refname);
 
 	/* First read with seeking. */
 	assert((a = archive_read_new()) != NULL);

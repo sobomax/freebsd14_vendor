@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/cavium/octeon_cop2.S 229677 2012-01-06 01:23:26Z gonzo $
+ * $FreeBSD: releng/12.2/sys/mips/cavium/octeon_cop2.S 331254 2018-03-20 17:58:51Z emaste $
  */
 
 #include <machine/asm.h>
 #include <mips/cavium/octeon_cop2.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 .set noreorder
 

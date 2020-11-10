@@ -28,26 +28,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/inet_ntoa.c 139815 2005-01-07 00:24:33Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/inet_ntoa.c 313822 2017-02-16 20:50:01Z vangyzen $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 
 #include <netinet/in.h>
-
-char *
-inet_ntoa(struct in_addr ina)
-{
-	static char buf[4*sizeof "123"];
-	unsigned char *ucp = (unsigned char *)&ina;
-
-	sprintf(buf, "%d.%d.%d.%d",
-		ucp[0] & 0xff,
-		ucp[1] & 0xff,
-		ucp[2] & 0xff,
-		ucp[3] & 0xff);
-	return buf;
-}
 
 char *
 inet_ntoa_r(struct in_addr ina, char *buf)

@@ -189,7 +189,7 @@ enum {
 #define	GATE_SERVER	""	/* default server */
 #endif
 
-#define	DEFAULTPAGER	"more"	/* default pager if $PAGER isn't set */
+#define	DEFAULTPAGER	"less"	/* default pager if $PAGER isn't set */
 #define	DEFAULTPROMPT	"ftp> "	/* default prompt  if `set prompt' is empty */
 #define	DEFAULTRPROMPT	""	/* default rprompt if `set rprompt' is empty */
 
@@ -298,6 +298,8 @@ GLOBAL	int	options;	/* used during socket creation */
 
 GLOBAL	int	sndbuf_size;	/* socket send buffer size */
 GLOBAL	int	rcvbuf_size;	/* socket receive buffer size */
+GLOBAL	int	auto_sndbuf;	/* flag: if != 0 then use auto sndbuf size */
+GLOBAL	int	auto_rcvbuf;	/* flag: if != 0 then use auto rcvbuf size */
 
 GLOBAL	int	macnum;		/* number of defined macros */
 GLOBAL	struct macel macros[16];

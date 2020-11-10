@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/amlogic/aml8726/aml8726_wdt.c 314506 2017-03-01 19:55:04Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/amlogic/aml8726/aml8726_wdt.c 310021 2016-12-13 13:43:22Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/amlogic/aml8726/aml8726_wdt.c 314506 201
 
 #include <machine/bus.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 

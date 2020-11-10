@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/aarch64/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+# $FreeBSD: releng/12.2/lib/libc/aarch64/Makefile.inc 314557 2017-03-02 17:07:28Z brooks $
 #
 # Machine dependent definitions for the arm 64-bit architecture.
 #

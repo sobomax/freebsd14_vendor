@@ -3,7 +3,7 @@
  *
  *	Block cache for dump
  *
- * $FreeBSD: releng/11.3/sbin/dump/cache.c 109825 2003-01-25 19:06:30Z dillon $
+ * $FreeBSD: releng/12.2/sbin/dump/cache.c 109825 2003-01-25 19:06:30Z dillon $
  */
 
 #include <sys/param.h>

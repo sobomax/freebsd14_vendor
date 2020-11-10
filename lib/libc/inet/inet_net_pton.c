@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (C) 2004, 2005, 2008  Internet Systems Consortium, Inc. ("ISC")
  * Copyright (C) 1996, 1998, 1999, 2001, 2003  Internet Software Consortium.
  *
@@ -19,7 +21,7 @@
 static const char rcsid[] = "$Id: inet_net_pton.c,v 1.10 2008/11/14 02:36:51 marka Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/inet/inet_net_pton.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/inet/inet_net_pton.c 326695 2017-12-08 15:57:29Z pfg $");
 
 #include "port_before.h"
 

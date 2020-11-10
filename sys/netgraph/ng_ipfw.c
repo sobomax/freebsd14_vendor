@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2005, Gleb Smirnoff <glebius@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_ipfw.c 297793 2016-04-10 23:07:00Z pfg $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_ipfw.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include "opt_inet.h"

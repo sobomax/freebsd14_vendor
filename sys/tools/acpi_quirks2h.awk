@@ -1,8 +1,10 @@
 #!/usr/bin/awk -f
 #
-# $FreeBSD: releng/11.3/sys/tools/acpi_quirks2h.awk 167814 2007-03-22 18:16:43Z jkim $
+# $FreeBSD: releng/12.2/sys/tools/acpi_quirks2h.awk 326272 2017-11-27 15:23:17Z pfg $
 
 #-
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2004 Mark Santcroos <marks@ripe.net>
 # All rights reserved.
 #

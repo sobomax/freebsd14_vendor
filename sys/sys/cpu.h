@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2007 Nate Lawson (SDG)
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/cpu.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/cpu.h 335481 2018-06-21 14:26:43Z jhibbits $
  */
 
 #ifndef _SYS_CPU_H_
@@ -85,7 +87,7 @@ struct cf_setting {
 };
 
 /* Maximum number of settings a given driver can have. */
-#define MAX_SETTINGS		24
+#define MAX_SETTINGS		256
 
 /* A combination of settings is a level. */
 struct cf_level {

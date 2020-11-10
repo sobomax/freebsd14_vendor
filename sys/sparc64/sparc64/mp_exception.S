@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/mp_exception.S 292943 2015-12-30 13:49:20Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/mp_exception.S 331254 2018-03-20 17:58:51Z emaste $");
 
 #include <machine/asi.h>
 #include <machine/asmacros.h>
@@ -33,7 +33,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/mp_exception.S 292943 2015-1
 #include <machine/ktr.h>
 #include <machine/pstate.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 	.register	%g2, #ignore
 	.register	%g3, #ignore

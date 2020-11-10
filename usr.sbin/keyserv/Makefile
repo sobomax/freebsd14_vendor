@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/keyserv/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/keyserv/Makefile 320122 2017-06-19 20:47:24Z bdrewery $
 
 PROG=	keyserv
 MAN=	keyserv.8
@@ -10,7 +10,7 @@ LIBADD=	mp rpcsvc
 
 WARNS?=	1
 
-RPCDIR=	${DESTDIR}/usr/include/rpcsvc
+RPCDIR=	${SYSROOT:U${DESTDIR}}/usr/include/rpcsvc
 
 CLEANFILES= crypt_svc.c crypt.h
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/termcap/Makefile 291734 2015-12-04 03:17:14Z bdrewery $
+# $FreeBSD: releng/12.2/share/termcap/Makefile 335762 2018-06-28 13:48:59Z brd $
 
 # reorder gives an editor command for most common terminals
 # (in reverse order from n'th to 1'st most commonly used)
@@ -12,13 +12,6 @@ FILESDIR=	${BINDIR}/misc
 CLEANFILES+=	termcap.db
 
 .include <bsd.endian.mk>
-.if ${TARGET_ENDIANNESS} == "1234"
-CAP_MKDB_ENDIAN= -l
-.elif ${TARGET_ENDIANNESS} == "4321"
-CAP_MKDB_ENDIAN= -b
-.else
-CAP_MKDB_ENDIAN=
-.endif
 
 termcap.db: termcap
 	cap_mkdb ${CAP_MKDB_ENDIAN} -f ${.TARGET:R} ${.ALLSRC}

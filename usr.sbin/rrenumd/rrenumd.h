@@ -1,6 +1,8 @@
 /*	$KAME: rrenumd.h,v 1.2 2000/07/03 02:54:09 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 1998 WIDE Project.
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/rrenumd/rrenumd.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/rrenumd/rrenumd.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 struct dst_list {

@@ -1,7 +1,20 @@
-# $FreeBSD: releng/11.3/usr.sbin/services_mkdb/Makefile 299284 2016-05-09 20:04:22Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/services_mkdb/Makefile 338212 2018-08-22 21:22:40Z brd $
 
+CONFS=	services
 PROG=	services_mkdb
 MAN=	services_mkdb.8
 SRCS=	services_mkdb.c uniq.c extern.h
+
+.include <bsd.endian.mk>
+.include <src.opts.mk>
+.if ${MK_SERVICESDB} != "no"
+afterinstallconfig:
+	services_mkdb ${CAP_MKDB_ENDIAN} -q -o ${DESTDIR}/var/db/services.db \
+		${DESTDIR}/etc/services
+.if defined(NO_ROOT) && defined(METALOG)
+	echo "./var/db/services.db type=file mode=0644 uname=root gname=wheel" | \
+		cat -l >> ${METALOG}
+.endif
+.endif
 
 .include <bsd.prog.mk>

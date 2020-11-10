@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/crypto/aesni/aesni_wrap.c 300773 2016-05-26 19:29:29Z cem $");
+__FBSDID("$FreeBSD: releng/12.2/sys/crypto/aesni/aesni_wrap.c 352235 2019-09-11 23:45:58Z mav $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -219,7 +219,7 @@ aesni_encrypt_icm(int rounds, const void *key_schedule, size_t len,
 
 	BSWAP_EPI64 = _mm_set_epi8(8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7);
 
-	ctr1 = _mm_loadu_si128((__m128i*)iv);
+	ctr1 = _mm_loadu_si128((const __m128i *)iv);
 	ctr1 = _mm_shuffle_epi8(ctr1, BSWAP_EPI64);
 
 	cnt = len / AES_BLOCK_LEN / 8;
@@ -446,6 +446,7 @@ aesni_cipher_setup_common(struct aesni_session *ses, const uint8_t *key,
 	switch (ses->algo) {
 	case CRYPTO_AES_ICM:
 	case CRYPTO_AES_NIST_GCM_16:
+	case CRYPTO_AES_CCM_16:
 		decsched = 0;
 		/* FALLTHROUGH */
 	case CRYPTO_AES_CBC:

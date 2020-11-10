@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/arm/efibind.h 298826 2016-04-30 00:26:38Z pfg $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/arm/efibind.h 298826 2016-04-30 00:26:38Z pfg $ */
 /*++
 
 Copyright (c) 2004 - 2012, Intel Corporation. All rights reserved.

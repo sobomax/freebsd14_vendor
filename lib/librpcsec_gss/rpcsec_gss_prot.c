@@ -1,4 +1,6 @@
 /*
+  SPDX-License-Identifier: BSD-3-Clause
+
   rpcsec_gss_prot.c
   
   Copyright (c) 2000 The Regents of the University of Michigan.
@@ -34,7 +36,7 @@
 
   $Id: authgss_prot.c,v 1.18 2000/09/01 04:14:03 dugsong Exp $
 */
-/* $FreeBSD: releng/11.3/lib/librpcsec_gss/rpcsec_gss_prot.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/librpcsec_gss/rpcsec_gss_prot.c 326025 2017-11-20 19:49:47Z pfg $ */
 
 #include <stdio.h>
 #include <stdlib.h>

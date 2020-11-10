@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/camcontrol/epc.c 317374 2017-04-24 16:07:30Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/camcontrol/epc.c 350727 2019-08-08 02:18:14Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -767,7 +767,7 @@ epc(struct cam_device *device, int argc, char **argv, char *combinedopt,
 
 	switch (devtype) {
 	case CC_DT_ATA:
-	case CC_DT_ATA_BEHIND_SCSI:
+	case CC_DT_SATL:
 		break;
 	default:
 		warnx("The epc subcommand only works with ATA protocol "

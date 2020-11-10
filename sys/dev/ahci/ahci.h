@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 - 2008 Søren Schmidt <sos@FreeBSD.org>
  * Copyright (c) 2009-2012 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -24,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ahci/ahci.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/ahci/ahci.h 359972 2020-04-15 13:59:51Z mav $
  */
 
 /* ATA register defines */
@@ -212,6 +214,14 @@
 #define		AHCI_CAP2_SADM	0x00000010
 #define		AHCI_CAP2_DESO	0x00000020
 
+#define AHCI_BOHC                   0x28
+#define		AHCI_BOHC_BOS	0x00000001
+#define		AHCI_BOHC_OOS	0x00000002
+#define		AHCI_BOHC_SOOE	0x00000004
+#define		AHCI_BOHC_OOC	0x00000008
+#define		AHCI_BOHC_BB	0x00000010
+
+#define AHCI_VSCAP                  0xa4
 #define AHCI_OFFSET                 0x100
 #define AHCI_STEP                   0x80
 
@@ -315,6 +325,11 @@
 #define AHCI_CT_SIZE                (128 + AHCI_SG_ENTRIES * 16)
 /* Total main work area. */
 #define AHCI_WORK_SIZE              (AHCI_CT_OFFSET + AHCI_CT_SIZE * ch->numslots)
+
+/* ivars value fields */
+#define AHCI_REMAPPED_UNIT	(1 << 31)	/* NVMe remapped device. */
+#define AHCI_EM_UNIT		(1 << 30)	/* Enclosure Mgmt device. */
+#define AHCI_UNIT		0xff		/* Channel number. */
 
 struct ahci_dma_prd {
     u_int64_t                   dba;
@@ -459,6 +474,8 @@ struct ahci_channel {
 	struct mtx_padalign	mtx;		/* state lock */
 	STAILQ_HEAD(, ccb_hdr)	doneq;		/* queue of completed CCBs */
 	int			batch;		/* doneq is in use */
+
+	int			disablephy;	/* keep PHY disabled */
 };
 
 struct ahci_enclosure {
@@ -514,11 +531,17 @@ struct ahci_controller {
 	int			cccv;		/* CCC vector */
 	int			direct;		/* Direct command completion */
 	int			msi;		/* MSI interupts */
+	int			remapped_devices; /* Remapped NVMe devices */
+	uint32_t		remap_offset;
+	uint32_t		remap_size;
 	struct {
 		void			(*function)(void *);
 		void			*argument;
 	} interrupt[AHCI_MAX_PORTS];
 	void			(*ch_start)(struct ahci_channel *);
+	int			dma_coherent;	/* DMA is cache-coherent */
+	struct mtx		ch_mtx;		/* Lock for attached channels */
+	struct ahci_channel	*ch[AHCI_MAX_PORTS];	/* Attached channels */
 };
 
 enum ahci_err_type {
@@ -598,6 +621,7 @@ enum ahci_err_type {
 #define AHCI_Q_FORCE_PI		0x00040000
 #define AHCI_Q_RESTORE_CAP	0x00080000
 #define AHCI_Q_NOMSIX		0x00100000
+#define AHCI_Q_MRVL_SR_DEL	0x00200000
 #define AHCI_Q_NOCCS		0x00400000
 #define AHCI_Q_NOAUX		0x00800000
 
@@ -624,6 +648,7 @@ enum ahci_err_type {
 	"\023FORCE_PI"          \
 	"\024RESTORE_CAP"	\
 	"\025NOMSIX"		\
+	"\026MRVL_SR_DEL"	\
 	"\027NOCCS"		\
 	"\030NOAUX"
 
@@ -646,6 +671,12 @@ bus_dma_tag_t ahci_get_dma_tag(device_t dev, device_t child);
 int ahci_ctlr_reset(device_t dev);
 int ahci_ctlr_setup(device_t dev);
 void ahci_free_mem(device_t dev);
+
+/* Functions to allow AHCI EM to access other channels. */
+void ahci_attached(device_t dev, struct ahci_channel *ch);
+void ahci_detached(device_t dev, struct ahci_channel *ch);
+struct ahci_channel * ahci_getch(device_t dev, int n);
+void ahci_putch(struct ahci_channel *ch);
 
 extern devclass_t ahci_devclass;
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/gcore/elf32core.c 325029 2017-10-27 04:38:42Z bdrewery $ */
+/* $FreeBSD: releng/12.2/usr.bin/gcore/elf32core.c 320481 2017-06-29 21:31:13Z jhb $ */
 #ifndef __LP64__
 #error "this file must be compiled for LP64."
 #endif

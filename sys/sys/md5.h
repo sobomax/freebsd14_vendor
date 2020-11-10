@@ -1,8 +1,10 @@
 /* MD5.H - header file for MD5C.C
- * $FreeBSD: releng/11.3/sys/sys/md5.h 310372 2016-12-21 18:42:04Z emaste $
+ * $FreeBSD: releng/12.2/sys/sys/md5.h 326828 2017-12-13 16:30:39Z pfg $
  */
 
 /*-
+ SPDX-License-Identifier: RSA-MD
+
  Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
 rights reserved.
 

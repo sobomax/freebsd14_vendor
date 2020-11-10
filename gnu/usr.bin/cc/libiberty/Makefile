@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/cc/libiberty/Makefile 245539 2013-01-17 05:56:28Z andrew $
+# $FreeBSD: releng/12.2/gnu/usr.bin/cc/libiberty/Makefile 245539 2013-01-17 05:56:28Z andrew $
 
 .include <bsd.own.mk>
 

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -39,7 +41,7 @@ static char sccsid[] = "@(#)tftpd.c	8.1 (Berkeley) 6/4/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/tftpd/tftpd.c 339051 2018-10-01 15:47:34Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/tftpd/tftpd.c 336605 2018-07-22 16:14:30Z asomers $");
 
 /*
  * Trivial file transfer protocol server.

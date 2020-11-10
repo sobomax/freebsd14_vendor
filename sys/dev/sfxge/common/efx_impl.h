@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_impl.h 342441 2018-12-25 07:21:35Z arybchik $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_impl.h 342348 2018-12-21 17:18:33Z arybchik $
  */
 
 #ifndef	_SYS_EFX_IMPL_H

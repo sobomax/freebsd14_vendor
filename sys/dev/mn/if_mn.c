@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -23,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mn/if_mn.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mn/if_mn.c 326408 2017-11-30 20:33:45Z pfg $");
 
 /*
  * Stuff to describe the MUNIC32X and FALC54 chips.

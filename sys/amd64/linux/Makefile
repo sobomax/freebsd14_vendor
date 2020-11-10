@@ -1,12 +1,7 @@
 # Makefile for syscall tables
 #
-# $FreeBSD: releng/11.3/sys/amd64/linux/Makefile 315062 2017-03-11 08:39:24Z dchagin $
+# $FreeBSD: releng/12.2/sys/amd64/linux/Makefile 357108 2020-01-25 05:47:56Z kevans $
 
-all:
-	@echo "make sysent only"
+GENERATED_PREFIX=	linux_
 
-sysent:  linux_sysent.c linux_syscall.h linux_proto.h linux_syscalls.c linux_systrace_args.c
-
-linux_sysent.c linux_syscall.h linux_proto.h linux_syscalls.c linux_systrace_args.c: \
-		../../kern/makesyscalls.sh syscalls.master syscalls.conf
-	sh ../../kern/makesyscalls.sh syscalls.master syscalls.conf
+.include "../../conf/sysent.mk"

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/contrib/smbfs/smbutil/print.c 295118 2016-02-01 07:09:08Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/smbfs/smbutil/print.c 295118 2016-02-01 07:09:08Z ngie $");
 
 #include <sys/param.h>
 #include <sys/errno.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libc/mips/softfloat/milieu.h 178580 2008-04-26 12:08:02Z imp $ */
+/* $FreeBSD: releng/12.2/lib/libc/mips/softfloat/milieu.h 178580 2008-04-26 12:08:02Z imp $ */
 
 /*
 ===============================================================================

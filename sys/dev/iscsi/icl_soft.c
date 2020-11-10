@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iscsi/icl_soft.c 332612 2018-04-16 17:08:58Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iscsi/icl_soft.c 361735 2020-06-02 20:42:25Z mav $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -913,7 +913,8 @@ icl_conn_send_pdus(struct icl_conn *ic, struct icl_pdu_stailq *queue)
 				    "have %ld, need %ld",
 				    available, size);
 #endif
-				so->so_snd.sb_lowat = size;
+				so->so_snd.sb_lowat = max(size,
+				    so->so_snd.sb_hiwat / 8);
 				SOCKBUF_UNLOCK(&so->so_snd);
 				return;
 			}
@@ -1447,10 +1448,13 @@ icl_soft_conn_transfer_done(struct icl_conn *ic, void *prv)
 }
 
 static int
-icl_soft_limits(size_t *limitp)
+icl_soft_limits(struct icl_drv_limits *idl)
 {
 
-	*limitp = 128 * 1024;
+	idl->idl_max_recv_data_segment_length = 128 * 1024;
+	idl->idl_max_send_data_segment_length = 128 * 1024;
+	idl->idl_max_burst_length = 262144;
+	idl->idl_first_burst_length = 65536;
 
 	return (0);
 }

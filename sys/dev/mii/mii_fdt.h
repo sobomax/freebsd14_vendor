@@ -25,7 +25,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mii/mii_fdt.h 323414 2017-09-11 01:59:24Z ian $
+ * $FreeBSD: releng/12.2/sys/dev/mii/mii_fdt.h 319815 2017-06-11 00:16:21Z ian $
  */
 
 #ifndef _DEV_MII_FDT_H_

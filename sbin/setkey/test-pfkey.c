@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sbin/setkey/test-pfkey.c 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sbin/setkey/test-pfkey.c 326025 2017-11-20 19:49:47Z pfg $	*/
 /*	$KAME: test-pfkey.c,v 1.4 2000/06/07 00:29:14 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
  * All rights reserved.
  *

@@ -10,11 +10,11 @@
 # + 16MB RAM
 # + uboot environment
 
-# $FreeBSD: releng/11.3/sys/mips/conf/AP91 345344 2019-03-20 18:49:45Z kib $
+# $FreeBSD: releng/12.2/sys/mips/conf/AP91 345301 2019-03-19 17:16:37Z kib $
 
 #NO_UNIVERSE
 
-include		"AR724X_BASE"
+include		"std.AR724X"
 ident		"AP91"
 hints		"AP91.hints"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.sbin/apmd/contrib/pccardq.c 208075 2010-05-14 14:26:56Z uqs $ */
+/* $FreeBSD: releng/12.2/usr.sbin/apmd/contrib/pccardq.c 208075 2010-05-14 14:26:56Z uqs $ */
 
 #include <err.h>
 #include <errno.h>

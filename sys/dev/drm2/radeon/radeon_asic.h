@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/radeon_asic.h 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/radeon_asic.h 338285 2018-08-24 00:02:00Z imp $");
 
 #ifndef __RADEON_ASIC_H__
 #define __RADEON_ASIC_H__

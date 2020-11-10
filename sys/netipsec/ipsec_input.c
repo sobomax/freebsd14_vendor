@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netipsec/ipsec_input.c 322741 2017-08-21 09:03:20Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netipsec/ipsec_input.c 321779 2017-07-31 11:04:35Z ae $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

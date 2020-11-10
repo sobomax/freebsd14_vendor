@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libc/iconv/citrus_none.c 349621 2019-07-03 00:00:39Z gordon $ */
-/*	$NetBSD: citrus_none.c,v 1.22 2017/07/13 16:00:30 christos Exp $	*/
+/* $FreeBSD: releng/12.2/lib/libc/iconv/citrus_none.c 349622 2019-07-03 00:01:38Z emaste $ */
+/* $NetBSD: citrus_none.c,v 1.18 2008/06/14 16:01:07 tnozaki Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2002 Citrus Project,
  * Copyright (c) 2010 Gabor Kovesdan <gabor@FreeBSD.org>,
  * All rights reserved.

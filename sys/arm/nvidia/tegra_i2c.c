@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_i2c.c 308335 2016-11-05 10:56:32Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra_i2c.c 308638 2016-11-14 11:41:22Z andrew $");
 
 /*
  * I2C driver for Tegra SoCs.
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_i2c.c 308335 2016-11-05 10:
 
 #include <dev/extres/clk/clk.h>
 #include <dev/extres/hwreset/hwreset.h>
-#include <dev/fdt/fdt_common.h>
 #include <dev/iicbus/iiconf.h>
 #include <dev/iicbus/iicbus.h>
 #include <dev/ofw/ofw_bus.h>

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/test/test_write_disk_secure744.c 305188 2016-09-01 07:53:59Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_write_disk_secure744.c 304075 2016-08-14 09:26:10Z mm $");
 
 #define UMASK 022
 

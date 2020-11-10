@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004, 2005 Intel Corporation.  All rights reserved.
  * Copyright (c) 2004 Topspin Corporation.  All rights reserved.
  * Copyright (c) 2004 Voltaire Corporation.  All rights reserved.
@@ -32,7 +34,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/include/rdma/ib_cm.h 338557 2018-09-10 08:19:38Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/include/rdma/ib_cm.h 338541 2018-09-09 07:20:15Z hselasky $
  */
 
 #if !defined(IB_CM_H)

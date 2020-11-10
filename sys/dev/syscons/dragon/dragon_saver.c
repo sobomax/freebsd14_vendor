@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2000 Chiharu Shibata
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/syscons/dragon/dragon_saver.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/syscons/dragon/dragon_saver.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include	<sys/param.h>
@@ -47,17 +49,10 @@
 static u_char	*vid;
 static int	blanked;
 
-#ifdef PC98
-#define	VIDEO_MODE	M_PC98_EGC640x400
-#define	VIDEO_MODE_NAME	"M_PC98_EGC640x400"
-#define	SCRW	640
-#define	SCRH	400
-#else
 #define	VIDEO_MODE	M_VGA_CG320
 #define	VIDEO_MODE_NAME	"M_VGA_CG320"
 #define	SCRW	320
 #define	SCRH	200
-#endif
 #define	ORDER	13
 #define	CURVE	3
 #define	OUT	100
@@ -72,11 +67,7 @@ gpset(int x, int y, int val)
 	if (x < 0 || y < 0 || SCRW <= x || SCRH <= y) {
 		return 0;
 	}
-#ifdef PC98
-	vid[(x + y * SCRW) >> 3] = (0x80 >> (x & 7));	/* write new dot */
-#else
 	vid[x + y * SCRW] = val;
-#endif
 	return 1;
 }
 
@@ -86,11 +77,6 @@ gdraw(int dx, int dy, int val)
 	int	i;
 	int	set = 0;
 
-#ifdef PC98
-	outb(0x7c, 0xcc);	/* GRCG on & RMW mode(disable planeI,G) */
-	outb(0x7e, (val & 1) ? 0xff: 0);	/* tile B */
-	outb(0x7e, (val & 2) ? 0xff: 0);	/* tile R */
-#endif
 	if (dx != 0) {
 		i = cur_x;
 		cur_x += dx;
@@ -115,9 +101,6 @@ gdraw(int dx, int dy, int val)
 			set |= gpset(cur_x, i, val);
 		} 
 	}
-#ifdef PC98
-	outb(0x7c, 0);		/* GRCG off */
-#endif
 	return set;
 }
 

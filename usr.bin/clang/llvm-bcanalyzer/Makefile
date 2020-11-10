@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-bcanalyzer/Makefile 331838 2018-03-31 11:38:16Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-bcanalyzer/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-bcanalyzer
 
-SRCDIR=		tools/llvm-bcanalyzer
+SRCDIR=		llvm/tools/llvm-bcanalyzer
 SRCS+=		llvm-bcanalyzer.cpp
 
 .include "../llvm.prog.mk"

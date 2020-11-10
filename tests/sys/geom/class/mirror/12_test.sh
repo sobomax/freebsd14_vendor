@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tests/sys/geom/class/mirror/12_test.sh 327553 2018-01-04 16:19:56Z markj $
+# $FreeBSD: releng/12.2/tests/sys/geom/class/mirror/12_test.sh 327769 2018-01-10 15:55:07Z markj $
 
 # Test handling of write errors.
 

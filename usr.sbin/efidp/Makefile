@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/efidp/Makefile 332123 2018-04-06 18:10:38Z kevans $
+# $FreeBSD: releng/12.2/usr.sbin/efidp/Makefile 326459 2017-12-02 07:29:24Z imp $
 
 PROG=	efidp
 MAN=	efidp.8

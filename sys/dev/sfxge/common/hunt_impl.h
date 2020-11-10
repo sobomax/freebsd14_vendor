@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/hunt_impl.h 310944 2016-12-31 11:26:29Z arybchik $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/hunt_impl.h 310717 2016-12-28 17:56:03Z arybchik $
  */
 
 #ifndef _SYS_HUNT_IMPL_H

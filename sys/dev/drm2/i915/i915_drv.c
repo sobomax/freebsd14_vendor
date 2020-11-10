@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/i915/i915_drv.c 317609 2017-04-30 18:39:31Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/i915/i915_drv.c 338948 2018-09-26 17:12:14Z imp $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_pciids.h>
@@ -1236,6 +1236,8 @@ MODULE_DEPEND(i915kms, agp, 1, 1, 1);
 MODULE_DEPEND(i915kms, iicbus, 1, 1, 1);
 MODULE_DEPEND(i915kms, iic, 1, 1, 1);
 MODULE_DEPEND(i915kms, iicbb, 1, 1, 1);
+MODULE_PNP_INFO("U32:vendor;U32:device;P:#;D:#", vgapci, i915, pciidlist,
+    nitems(pciidlist) - 1);
 
 /* We give fast paths for the really cool registers */
 #define NEEDS_FORCE_WAKE(dev_priv, reg) \

@@ -2,6 +2,8 @@
  * Copyright (C) 1996
  *	Peter Wemm.  All rights reserved.
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *-
- * $FreeBSD: releng/11.3/libexec/rtld-aout/shlib.h 140241 2005-01-14 12:22:57Z delphij $
+ * $FreeBSD: releng/12.2/libexec/rtld-aout/shlib.h 326274 2017-11-27 15:25:02Z pfg $
  */
 
 /*

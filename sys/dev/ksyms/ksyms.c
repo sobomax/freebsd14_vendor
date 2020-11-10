@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2009, Stacey Son <sson@freebsd.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ksyms/ksyms.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/ksyms/ksyms.c 354608 2019-11-11 14:07:11Z markj $
  */
 
 #include <sys/param.h>
@@ -71,7 +73,7 @@ static d_mmap_single_t ksyms_mmap_single;
 
 static struct cdevsw ksyms_cdevsw = {
 	.d_version =	D_VERSION,
-	.d_flags =	D_TRACKCLOSE,
+	.d_flags =	0,
 	.d_open =	ksyms_open,
 	.d_read =	ksyms_read,
 	.d_mmap_single = ksyms_mmap_single,
@@ -395,6 +397,7 @@ ksyms_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)
 {
 	struct tsizes ts;
 	struct ksyms_softc *sc;
+	vm_object_t object;
 	vm_size_t elfsz;
 	int error, try;
 
@@ -432,8 +435,9 @@ ksyms_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)
 		ksyms_size_calc(&ts);
 		elfsz = sizeof(struct ksyms_hdr) + ts.ts_symsz + ts.ts_strsz;
 
-		sc->sc_obj = vm_object_allocate(OBJT_DEFAULT,
+		object = vm_object_allocate(OBJT_PHYS,
 		    OFF_TO_IDX(round_page(elfsz)));
+		sc->sc_obj = object;
 		sc->sc_objsz = elfsz;
 
 		error = ksyms_snapshot(sc, &ts);

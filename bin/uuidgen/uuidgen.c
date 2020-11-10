@@ -26,8 +26,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/uuidgen/uuidgen.c 330329 2018-03-03 11:02:34Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/bin/uuidgen/uuidgen.c 335395 2018-06-19 23:43:14Z oshogbo $");
 
+#include <sys/capsicum.h>
+
+#include <capsicum_helpers.h>
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,6 +82,12 @@ main(int argc, char *argv[])
 
 	if (argc)
 		usage();
+
+	caph_cache_catpages();
+	if (caph_limit_stdio() < 0)
+		err(1, "Unable to limit stdio");
+	if (caph_enter() < 0)
+		err(1, "Unable to enter capability mode");
 
 	if (count == -1)
 		count = 1;

@@ -28,7 +28,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/mediatek/uart_dev_mtk.h 297669 2016-04-07 11:16:32Z sgalabov $
+ * $FreeBSD: releng/12.2/sys/mips/mediatek/uart_dev_mtk.h 297669 2016-04-07 11:16:32Z sgalabov $
  */
 #ifndef	_MTKUART_H
 #define	_MTKUART_H

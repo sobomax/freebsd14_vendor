@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/fifolog/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/fifolog/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
 SUBDIR=	lib .WAIT \
 	fifolog_create fifolog_writer fifolog_reader

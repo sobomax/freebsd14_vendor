@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2007 The DragonFly Project.  All rights reserved.
  * 
  * This code is derived from software contributed to The DragonFly Project
@@ -32,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/bwi/if_bwivar.h,v 1.14 2008/02/15 11:15:38 sephe Exp $
- * $FreeBSD: releng/11.3/sys/dev/bwi/if_bwivar.h 345636 2019-03-28 09:50:25Z avos $
+ * $FreeBSD: releng/12.2/sys/dev/bwi/if_bwivar.h 345634 2019-03-28 09:16:00Z avos $
  */
 
 #ifndef _IF_BWIVAR_H

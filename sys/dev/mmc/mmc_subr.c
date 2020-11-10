@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mmc/mmc_subr.c 322119 2017-08-06 16:07:25Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mmc/mmc_subr.c 321948 2017-08-02 21:11:51Z marius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

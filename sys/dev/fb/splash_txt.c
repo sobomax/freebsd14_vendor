@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Michael Smith <msmith@freebsd.org>
  * Copyright (c) 1999 Kazutaka YOKOTA <yokota@freebsd.org>
  * Copyright (c) 2005 Antony Mawer <antony@mawer.org>
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/fb/splash_txt.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/fb/splash_txt.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/param.h>

@@ -9,7 +9,7 @@ use and modify. Please send modifications and/or suggestions + bug fixes to
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/bootparamd/bootparamd/bootparamd.c 323296 2017-09-08 04:32:02Z ngie $";
+  "$FreeBSD: releng/12.2/usr.sbin/bootparamd/bootparamd/bootparamd.c 322636 2017-08-17 20:41:28Z ngie $";
 #endif /* not lint */
 
 #ifdef YP

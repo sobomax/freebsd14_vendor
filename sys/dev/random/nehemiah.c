@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/random/nehemiah.c 298102 2016-04-16 06:10:47Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/random/nehemiah.c 329878 2018-02-23 20:15:19Z cem $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -101,17 +101,14 @@ random_nehemiah_read(void *buf, u_int c)
 	size_t count, ret;
 	uint64_t tmp;
 
-	if ((fpu_kern_enter(curthread, fpu_ctx_save, FPU_KERN_NORMAL) == 0)) {
-		b = buf;
-		for (count = c; count > 0; count -= ret) {
-			ret = MIN(VIA_RNG_store(&tmp), count);
-			memcpy(b, &tmp, ret);
-			b += ret;
-		}
-		fpu_kern_leave(curthread, fpu_ctx_save);
+	fpu_kern_enter(curthread, fpu_ctx_save, FPU_KERN_NORMAL);
+	b = buf;
+	for (count = c; count > 0; count -= ret) {
+		ret = MIN(VIA_RNG_store(&tmp), count);
+		memcpy(b, &tmp, ret);
+		b += ret;
 	}
-	else
-		c = 0;
+	fpu_kern_leave(curthread, fpu_ctx_save);
 
 	return (c);
 }

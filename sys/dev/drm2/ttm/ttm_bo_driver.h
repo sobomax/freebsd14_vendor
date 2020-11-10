@@ -27,7 +27,7 @@
 /*
  * Authors: Thomas Hellstrom <thellstrom-at-vmware-dot-com>
  */
-/* $FreeBSD: releng/11.3/sys/dev/drm2/ttm/ttm_bo_driver.h 273862 2014-10-30 14:26:36Z tijl $ */
+/* $FreeBSD: releng/12.2/sys/dev/drm2/ttm/ttm_bo_driver.h 338285 2018-08-24 00:02:00Z imp $ */
 
 #ifndef _TTM_BO_DRIVER_H_
 #define _TTM_BO_DRIVER_H_

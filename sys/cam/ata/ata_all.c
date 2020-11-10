@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,12 +27,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/ata/ata_all.c 347525 2019-05-13 13:30:34Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/ata/ata_all.c 350735 2019-08-08 02:29:42Z mav $");
 
 #include <sys/param.h>
 
 #ifdef _KERNEL
-#include <opt_scsi.h>
+#include "opt_scsi.h"
 
 #include <sys/systm.h>
 #include <sys/libkern.h>
@@ -182,7 +184,13 @@ ata_op_string(struct ata_cmd *cmd)
 		return ("SEP_ATTN");
 	case 0x70: return ("SEEK");
 	case 0x77: return ("SET_DATE_TIME_EXT");
-	case 0x78: return ("ACCESSIBLE_MAX_ADDRESS_CONFIGURATION");
+	case 0x78:
+		switch (cmd->features) {
+		case 0x00: return ("GET_NATIVE_MAX_ADDRESS_EXT");
+		case 0x01: return ("SET_ACCESSIBLE_MAX_ADDRESS_EXT");
+		case 0x02: return ("FREEZE_ACCESSIBLE_MAX_ADDRESS_EXT");
+		}
+		return ("ACCESSIBLE_MAX_ADDRESS_CONFIGURATION");
 	case 0x7C: return ("REMOVE_ELEMENT_AND_TRUNCATE");
 	case 0x87: return ("CFA_TRANSLATE_SECTOR");
 	case 0x90: return ("EXECUTE_DEVICE_DIAGNOSTIC");
@@ -207,7 +215,16 @@ ata_op_string(struct ata_cmd *cmd)
 		return ("SMART");
 	case 0xb1: return ("DEVICE CONFIGURATION");
 	case 0xb2: return ("SET_SECTOR_CONFIGURATION_EXT");
-	case 0xb4: return ("SANITIZE_DEVICE");
+	case 0xb4:
+		switch(cmd->features) {
+		case 0x00: return ("SANITIZE_STATUS_EXT");
+		case 0x11: return ("CRYPTO_SCRAMBLE_EXT");
+		case 0x12: return ("BLOCK_ERASE_EXT");
+		case 0x14: return ("OVERWRITE_EXT");
+		case 0x20: return ("SANITIZE_FREEZE_LOCK_EXT");
+		case 0x40: return ("SANITIZE_ANTIFREEZE_LOCK_EXT");
+		}
+		return ("SANITIZE_DEVICE");
 	case 0xc0: return ("CFA_ERASE");
 	case 0xc4: return ("READ_MUL");
 	case 0xc5: return ("WRITE_MUL");
@@ -402,12 +419,10 @@ void
 ata_print_ident(struct ata_params *ident_data)
 {
 	const char *proto;
-	char product[48], revision[16], ata[12], sata[12];
+	char ata[12], sata[12];
 
-	cam_strvis(product, ident_data->model, sizeof(ident_data->model),
-		   sizeof(product));
-	cam_strvis(revision, ident_data->revision, sizeof(ident_data->revision),
-		   sizeof(revision));
+	ata_print_ident_short(ident_data);
+
 	proto = (ident_data->config == ATA_PROTO_CFA) ? "CFA" :
 		(ident_data->config & ATA_PROTO_ATAPI) ? "ATAPI" : "ATA";
 	if (ata_version(ident_data->version_major) == 0) {
@@ -432,7 +447,55 @@ ata_print_ident(struct ata_params *ident_data)
 			snprintf(sata, sizeof(sata), " SATA");
 	} else
 		sata[0] = 0;
-	printf("<%s %s> %s%s device\n", product, revision, ata, sata);
+	printf(" %s%s device\n", ata, sata);
+}
+
+void
+ata_print_ident_sbuf(struct ata_params *ident_data, struct sbuf *sb)
+{
+	const char *proto, *sata;
+	int version;
+
+	ata_print_ident_short_sbuf(ident_data, sb);
+	sbuf_printf(sb, " ");
+
+	proto = (ident_data->config == ATA_PROTO_CFA) ? "CFA" :
+		(ident_data->config & ATA_PROTO_ATAPI) ? "ATAPI" : "ATA";
+	version = ata_version(ident_data->version_major);
+
+	switch (version) {
+	case 0:
+		sbuf_printf(sb, "%s", proto);
+		break;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		sbuf_printf(sb, "%s-%d", proto, version);
+		break;
+	case 8:
+		sbuf_printf(sb, "%s8-ACS", proto);
+		break;
+	default:
+		sbuf_printf(sb, "ACS-%d %s", version - 7, proto);
+		break;
+	}
+
+	if (ident_data->satacapabilities && ident_data->satacapabilities != 0xffff) {
+		if (ident_data->satacapabilities & ATA_SATA_GEN3)
+			sata = " SATA 3.x";
+		else if (ident_data->satacapabilities & ATA_SATA_GEN2)
+			sata = " SATA 2.x";
+		else if (ident_data->satacapabilities & ATA_SATA_GEN1)
+			sata = " SATA 1.x";
+		else
+			sata = " SATA";
+	} else
+		sata = "";
+	sbuf_printf(sb, "%s device\n", sata);
 }
 
 void
@@ -448,18 +511,38 @@ ata_print_ident_short(struct ata_params *ident_data)
 }
 
 void
+ata_print_ident_short_sbuf(struct ata_params *ident_data, struct sbuf *sb)
+{
+
+	sbuf_printf(sb, "<");
+	cam_strvis_sbuf(sb, ident_data->model, sizeof(ident_data->model), 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, ident_data->revision, sizeof(ident_data->revision), 0);
+	sbuf_printf(sb, ">");
+}
+
+void
 semb_print_ident(struct sep_identify_data *ident_data)
 {
-	char vendor[9], product[17], revision[5], fw[5], in[7], ins[5];
+	char in[7], ins[5];
 
-	cam_strvis(vendor, ident_data->vendor_id, 8, sizeof(vendor));
-	cam_strvis(product, ident_data->product_id, 16, sizeof(product));
-	cam_strvis(revision, ident_data->product_rev, 4, sizeof(revision));
-	cam_strvis(fw, ident_data->firmware_rev, 4, sizeof(fw));
+	semb_print_ident_short(ident_data);
 	cam_strvis(in, ident_data->interface_id, 6, sizeof(in));
 	cam_strvis(ins, ident_data->interface_rev, 4, sizeof(ins));
-	printf("<%s %s %s %s> SEMB %s %s device\n",
-	    vendor, product, revision, fw, in, ins);
+	printf(" SEMB %s %s device\n", in, ins);
+}
+
+void
+semb_print_ident_sbuf(struct sep_identify_data *ident_data, struct sbuf *sb)
+{
+
+	semb_print_ident_short_sbuf(ident_data, sb);
+
+	sbuf_printf(sb, " SEMB ");
+	cam_strvis_sbuf(sb, ident_data->interface_id, 6, 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, ident_data->interface_rev, 4, 0);
+	sbuf_printf(sb, " device\n");
 }
 
 void
@@ -472,6 +555,21 @@ semb_print_ident_short(struct sep_identify_data *ident_data)
 	cam_strvis(revision, ident_data->product_rev, 4, sizeof(revision));
 	cam_strvis(fw, ident_data->firmware_rev, 4, sizeof(fw));
 	printf("<%s %s %s %s>", vendor, product, revision, fw);
+}
+
+void
+semb_print_ident_short_sbuf(struct sep_identify_data *ident_data, struct sbuf *sb)
+{
+
+	sbuf_printf(sb, "<");
+	cam_strvis_sbuf(sb, ident_data->vendor_id, 8, 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, ident_data->product_id, 16, 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, ident_data->product_rev, 4, 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, ident_data->firmware_rev, 4, 0);
+	sbuf_printf(sb, ">");
 }
 
 uint32_t
@@ -1154,4 +1252,29 @@ ata_zac_mgmt_in(struct ccb_ataio *ataio, uint32_t retries,
 		ataio->ata_flags |= ATA_FLAG_AUX;
 		ataio->aux = auxiliary;
 	}
+}
+
+void
+ata_param_fixup(struct ata_params *ident_buf)
+{
+	int16_t *ptr;
+
+	for (ptr = (int16_t *)ident_buf;
+	     ptr < (int16_t *)ident_buf + sizeof(struct ata_params)/2; ptr++) {
+		*ptr = le16toh(*ptr);
+	}
+	if (strncmp(ident_buf->model, "FX", 2) &&
+	    strncmp(ident_buf->model, "NEC", 3) &&
+	    strncmp(ident_buf->model, "Pioneer", 7) &&
+	    strncmp(ident_buf->model, "SHARP", 5)) {
+		ata_bswap(ident_buf->model, sizeof(ident_buf->model));
+		ata_bswap(ident_buf->revision, sizeof(ident_buf->revision));
+		ata_bswap(ident_buf->serial, sizeof(ident_buf->serial));
+	}
+	ata_btrim(ident_buf->model, sizeof(ident_buf->model));
+	ata_bpack(ident_buf->model, ident_buf->model, sizeof(ident_buf->model));
+	ata_btrim(ident_buf->revision, sizeof(ident_buf->revision));
+	ata_bpack(ident_buf->revision, ident_buf->revision, sizeof(ident_buf->revision));
+	ata_btrim(ident_buf->serial, sizeof(ident_buf->serial));
+	ata_bpack(ident_buf->serial, ident_buf->serial, sizeof(ident_buf->serial));
 }

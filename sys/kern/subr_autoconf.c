@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -14,7 +16,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_autoconf.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_autoconf.c 327430 2017-12-31 09:23:52Z cperciva $");
 
 #include "opt_ddb.h"
 
@@ -153,6 +155,7 @@ boot_run_interrupt_driven_config_hooks(void *dummy)
 	run_interrupt_driven_config_hooks();
 
 	/* Block boot processing until all hooks are disestablished. */
+	TSWAIT("config hooks");
 	mtx_lock(&intr_config_hook_lock);
 	warned = 0;
 	while (!TAILQ_EMPTY(&intr_config_hook_list)) {
@@ -166,6 +169,7 @@ boot_run_interrupt_driven_config_hooks(void *dummy)
 		}
 	}
 	mtx_unlock(&intr_config_hook_lock);
+	TSUNWAIT("config hooks");
 }
 
 SYSINIT(intr_config_hooks, SI_SUB_INT_CONFIG_HOOKS, SI_ORDER_FIRST,
@@ -181,6 +185,7 @@ config_intrhook_establish(struct intr_config_hook *hook)
 {
 	struct intr_config_hook *hook_entry;
 
+	TSHOLD("config hooks");
 	mtx_lock(&intr_config_hook_lock);
 	TAILQ_FOREACH(hook_entry, &intr_config_hook_list, ich_links)
 		if (hook_entry == hook)
@@ -237,6 +242,7 @@ config_intrhook_disestablish(struct intr_config_hook *hook)
 	if (next_to_notify == hook)
 		next_to_notify = TAILQ_NEXT(hook, ich_links);
 	TAILQ_REMOVE(&intr_config_hook_list, hook, ich_links);
+	TSRELEASE("config hooks");
 
 	/* Wakeup anyone watching the list */
 	wakeup(&intr_config_hook_list);

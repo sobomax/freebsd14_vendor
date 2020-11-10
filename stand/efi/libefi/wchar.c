@@ -1,5 +1,5 @@
 /*-
- * Copyright 2016 Netflix, Inc. All Rights Reserved.
+ * Copyright 2016 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/wchar.c 329099 2018-02-10 04:37:44Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/wchar.c 351913 2019-09-05 23:27:59Z imp $");
 
 #include <efi.h>
 #include <efilib.h>

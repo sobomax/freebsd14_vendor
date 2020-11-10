@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/zonectl/zonectl.c 300207 2016-05-19 14:08:36Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/zonectl/zonectl.c 300207 2016-05-19 14:08:36Z ken $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>

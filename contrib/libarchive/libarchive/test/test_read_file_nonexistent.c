@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/test/test_read_file_nonexistent.c 232153 2012-02-25 10:58:02Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_read_file_nonexistent.c 232153 2012-02-25 10:58:02Z mm $");
 
 DEFINE_TEST(test_read_file_nonexistent)
 {

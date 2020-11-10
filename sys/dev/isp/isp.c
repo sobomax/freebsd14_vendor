@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  *  Copyright (c) 2009-2018 Alexander Motin <mav@FreeBSD.org>
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -48,7 +50,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/isp/isp.c 348483 2019-05-31 20:36:32Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/isp/isp.c 348480 2019-05-31 20:15:29Z ken $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -4488,7 +4490,7 @@ isp_start(XS_T *xs)
 
 	/*
 	 * Now see if we need to synchronize the ISP with respect to anything.
-	 * We do dual duty here (cough) for synchronizing for busses other
+	 * We do dual duty here (cough) for synchronizing for buses other
 	 * than which we got here to send a command to.
 	 */
 	reqp = (ispreq_t *) local;

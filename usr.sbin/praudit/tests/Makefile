@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/praudit/tests/Makefile 335290 2018-06-17 17:31:16Z asomers $
+# $FreeBSD: releng/12.2/usr.sbin/praudit/tests/Makefile 335290 2018-06-17 17:31:16Z asomers $
 
 PACKAGE=	tests
 

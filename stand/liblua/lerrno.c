@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/liblua/lerrno.c 344220 2019-02-17 02:39:17Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/liblua/lerrno.c 357296 2020-01-30 16:11:19Z mav $");
 
 #define _WANT_KERNEL_ERRNO	1
 #include <errno.h>
@@ -146,6 +146,7 @@ static const struct err_name_number {
 	ENTRY(ECAPMODE),
 	ENTRY(ENOTRECOVERABLE),
 	ENTRY(EOWNERDEAD),
+	ENTRY(EINTEGRITY),
 	ENTRY(ELAST),
 	ENTRY(ERESTART),
 	ENTRY(EJUSTRETURN),

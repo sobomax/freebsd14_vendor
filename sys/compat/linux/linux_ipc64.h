@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_ipc64.h 346812 2019-04-28 09:53:08Z dchagin $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_ipc64.h 328890 2018-02-05 17:29:12Z emaste $
  */
 
 #ifndef _LINUX_IPC64_H_

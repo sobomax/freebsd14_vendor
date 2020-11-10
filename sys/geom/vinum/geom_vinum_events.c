@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  *  Copyright (c) 2007 Lukas Ertl
  *  All rights reserved.
  * 
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/vinum/geom_vinum_events.c 222283 2011-05-25 11:14:26Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/vinum/geom_vinum_events.c 356576 2020-01-10 00:41:15Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -192,6 +194,20 @@ failed:
 }
 
 /*
+ * Count completed BIOs and handle orphanization when all are done.
+ */
+void
+gv_drive_done(struct gv_drive *d)
+{
+
+	KASSERT(d->active >= 0, ("Negative number of BIOs (%d)", d->active));
+	if (--d->active == 0 && (d->flags & GV_DRIVE_ORPHANED)) {
+		d->flags &= ~GV_DRIVE_ORPHANED;
+		gv_post_event(d->vinumconf, GV_EVENT_DRIVE_LOST, d, NULL, 0, 0);
+	}
+}
+
+/*
  * When losing a drive (e.g. hardware failure), we cut down the consumer
  * attached to the underlying device and bring the drive itself to a
  * "referenced" state so that normal tasting could bring it up cleanly if it
@@ -211,10 +227,10 @@ gv_drive_lost(struct gv_softc *sc, struct gv_drive *d)
 	cp = d->consumer;
 
 	if (cp != NULL) {
-		if (cp->nstart != cp->nend) {
-			G_VINUM_DEBUG(0, "dead drive '%s' has still active "
+		if (d->active > 0) {
+			G_VINUM_DEBUG(2, "dead drive '%s' has still active "
 			    "requests, unable to detach consumer", d->name);
-			gv_post_event(sc, GV_EVENT_DRIVE_LOST, d, NULL, 0, 0);
+			d->flags |= GV_DRIVE_ORPHANED;
 			return;
 		}
 		g_topology_lock();

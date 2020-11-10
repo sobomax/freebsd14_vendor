@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2003-2011 Netlogic Microsystems (Netlogic). All rights
  * reserved.
  *
@@ -28,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/nlm/usb_init.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/nlm/usb_init.c 343709 2019-02-03 08:53:03Z gonzo $");
 #include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -50,8 +52,7 @@ nlm_usb_intr_en(int node, int port)
 	port_addr = nlm_get_usb_regbase(node, port);
 	val = nlm_read_usb_reg(port_addr, USB_INT_EN);
 	val = USB_CTRL_INTERRUPT_EN  | USB_OHCI_INTERRUPT_EN |
-		USB_OHCI_INTERRUPT1_EN | USB_CTRL_INTERRUPT_EN  |
-		USB_OHCI_INTERRUPT_EN | USB_OHCI_INTERRUPT2_EN;
+		USB_OHCI_INTERRUPT1_EN | USB_OHCI_INTERRUPT2_EN;
         nlm_write_usb_reg(port_addr, USB_INT_EN, val);
 }
 

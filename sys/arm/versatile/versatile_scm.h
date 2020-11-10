@@ -28,7 +28,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/versatile/versatile_scm.h 331402 2018-03-23 01:37:31Z gonzo $
+ * $FreeBSD: releng/12.2/sys/arm/versatile/versatile_scm.h 316370 2017-04-01 20:10:08Z gonzo $
  */
 
 #ifndef _VERSATILE_SCM_H_

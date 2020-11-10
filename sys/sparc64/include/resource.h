@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/resource.h 139825 2005-01-07 02:29:27Z imp $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/resource.h 139825 2005-01-07 02:29:27Z imp $
  */
 
 #ifndef _MACHINE_RESOURCE_H_

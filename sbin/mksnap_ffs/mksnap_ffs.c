@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/mksnap_ffs/mksnap_ffs.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/mksnap_ffs/mksnap_ffs.c 361589 2020-05-28 17:08:39Z freqlabs $
  */
 
 #include <sys/param.h>
@@ -81,8 +81,7 @@ issamefs(const char *path, struct statfs *stfsp)
 		return (-1);
 	if (statfs(path, &stfsbuf) < 0)
 		return (-1);
-	if ((stfsbuf.f_fsid.val[0] != stfsp->f_fsid.val[0]) ||
-	    (stfsbuf.f_fsid.val[1] != stfsp->f_fsid.val[1]))
+	if (fsidcmp(&stfsbuf.f_fsid, &stfsp->f_fsid) != 0)
 		return (0);
 	return (1);
 }

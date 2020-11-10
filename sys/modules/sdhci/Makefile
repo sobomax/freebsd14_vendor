@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/sys/modules/sdhci/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/sdhci/Makefile 320856 2017-07-10 03:38:07Z imp $
 
 .PATH: ${SRCTOP}/sys/dev/sdhci
 
 KMOD=	sdhci
-SRCS=	sdhci.c sdhci.h sdhci_if.c sdhci_if.h device_if.h bus_if.h mmcbr_if.h
+SRCS=	sdhci.c sdhci.h sdhci_if.c sdhci_if.h device_if.h bus_if.h mmcbr_if.h opt_mmccam.h opt_cam.h
 
 .include <bsd.kmod.mk>

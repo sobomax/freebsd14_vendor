@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2013 The FreeBSD Foundation
  * Copyright (c) 2013-2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/contrib/libnv/nvlist.c 346905 2019-04-29 18:52:04Z oshogbo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/contrib/libnv/nvlist.c 346906 2019-04-29 18:54:39Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -52,7 +54,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/contrib/libnv/nvlist.c 346905 2019-04-29 18:
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
-#define	_WITH_DPRINTF
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/dosfs.h 332154 2018-04-06 21:37:25Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/dosfs.h 330864 2018-03-13 16:33:00Z imp $
  */
 
 #ifndef DOSIO_H

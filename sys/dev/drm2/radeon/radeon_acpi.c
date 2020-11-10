@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/radeon_acpi.c 303689 2016-08-03 00:03:03Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/radeon_acpi.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc_helper.h>

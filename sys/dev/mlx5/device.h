@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/device.h 347868 2019-05-16 18:19:08Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/device.h 361412 2020-05-23 11:56:42Z kib $
  */
 
 #ifndef MLX5_DEVICE_H
@@ -32,8 +32,10 @@
 #include <rdma/ib_verbs.h>
 #include <dev/mlx5/mlx5_ifc.h>
 
-#define FW_INIT_TIMEOUT_MILI 2000
-#define FW_INIT_WAIT_MS 2
+#define	FW_INIT_TIMEOUT_MILI		2000
+#define	FW_INIT_WAIT_MS			2
+#define	FW_PRE_INIT_TIMEOUT_MILI	120000
+#define	FW_INIT_WARN_MESSAGE_INTERVAL	20000
 
 #if defined(__LITTLE_ENDIAN)
 #define MLX5_SET_HOST_ENDIANNESS	0
@@ -210,7 +212,7 @@ enum {
 };
 
 enum {
-	MLX5_MKEY_INBOX_PG_ACCESS = 1 << 31
+	MLX5_MKEY_INBOX_PG_ACCESS = 1U << 31
 };
 
 enum {
@@ -234,7 +236,7 @@ enum {
 	MLX5_MKEY_REMOTE_INVAL	= 1 << 24,
 	MLX5_MKEY_FLAG_SYNC_UMR = 1 << 29,
 	MLX5_MKEY_BSF_EN	= 1 << 30,
-	MLX5_MKEY_LEN64		= 1 << 31,
+	MLX5_MKEY_LEN64		= 1U << 31,
 };
 
 enum {
@@ -537,7 +539,7 @@ enum {
 	MLX5_MODULE_STATUS_PLUGGED_ENABLED      = 0x1,
 	MLX5_MODULE_STATUS_UNPLUGGED            = 0x2,
 	MLX5_MODULE_STATUS_ERROR                = 0x3,
-	MLX5_MODULE_STATUS_PLUGGED_DISABLED     = 0x4,
+	MLX5_MODULE_STATUS_NUM			,
 };
 
 enum {
@@ -549,7 +551,14 @@ enum {
 	MLX5_MODULE_EVENT_ERROR_UNSUPPORTED_CABLE                     = 0x5,
 	MLX5_MODULE_EVENT_ERROR_HIGH_TEMPERATURE                      = 0x6,
 	MLX5_MODULE_EVENT_ERROR_CABLE_IS_SHORTED                      = 0x7,
-	MLX5_MODULE_EVENT_ERROR_PCIE_SYSTEM_POWER_SLOT_EXCEEDED       = 0xc,
+	MLX5_MODULE_EVENT_ERROR_PMD_TYPE_NOT_ENABLED                  = 0x8,
+	MLX5_MODULE_EVENT_ERROR_LASTER_TEC_FAILURE                    = 0x9,
+	MLX5_MODULE_EVENT_ERROR_HIGH_CURRENT                          = 0xa,
+	MLX5_MODULE_EVENT_ERROR_HIGH_VOLTAGE                          = 0xb,
+	MLX5_MODULE_EVENT_ERROR_PCIE_SYS_POWER_SLOT_EXCEEDED          = 0xc,
+	MLX5_MODULE_EVENT_ERROR_HIGH_POWER                            = 0xd,
+	MLX5_MODULE_EVENT_ERROR_MODULE_STATE_MACHINE_FAULT            = 0xe,
+	MLX5_MODULE_EVENT_ERROR_NUM		                      ,
 };
 
 struct mlx5_eqe_port_module_event {
@@ -659,6 +668,8 @@ struct mlx5_cqe64 {
 	u8		signature;
 	u8		op_own;
 };
+
+#define	MLX5_CQE_TSTMP_PTP	(1ULL << 63)
 
 static inline bool get_cqe_lro_timestamp_valid(struct mlx5_cqe64 *cqe)
 {
@@ -822,6 +833,7 @@ static inline int mlx5_host_is_le(void)
 enum {
 	VPORT_STATE_DOWN		= 0x0,
 	VPORT_STATE_UP			= 0x1,
+	VPORT_STATE_FOLLOW		= 0x2,
 };
 
 enum {
@@ -1050,6 +1062,9 @@ enum mlx5_mcam_feature_groups {
 
 #define MLX5_CAP_PCAM_FEATURE(mdev, fld) \
 	MLX5_GET(pcam_reg, (mdev)->caps.pcam, feature_cap_mask.enhanced_features.fld)
+
+#define	MLX5_CAP_PCAM_REG(mdev, reg) \
+	MLX5_GET(pcam_reg, (mdev)->caps.pcam, port_access_reg_cap_mask.regs_5000_to_507f.reg)
 
 #define MLX5_CAP_MCAM_FEATURE(mdev, fld) \
 	MLX5_GET(mcam_reg, (mdev)->caps.mcam, mng_feature_cap_mask.enhanced_features.fld)

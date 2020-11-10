@@ -28,7 +28,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/iscsi/icl_conn_if.m 332601 2018-04-16 16:22:00Z trasz $
+# $FreeBSD: releng/12.2/sys/dev/iscsi/icl_conn_if.m 328341 2018-01-24 16:58:26Z trasz $
 #
 
 #include <sys/socket.h>

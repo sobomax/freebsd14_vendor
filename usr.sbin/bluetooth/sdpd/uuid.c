@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: uuid.c,v 1.1 2004/12/09 18:20:26 max Exp $
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/sdpd/uuid.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/sdpd/uuid.c 326276 2017-11-27 15:37:16Z pfg $
  */
 #define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>

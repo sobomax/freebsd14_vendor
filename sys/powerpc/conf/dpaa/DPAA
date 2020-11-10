@@ -5,14 +5,14 @@
 # This is not standalone kernel config. Use it only for including
 # purposes.
 #
-# $FreeBSD: releng/11.3/sys/powerpc/conf/dpaa/DPAA 310427 2016-12-22 20:16:10Z jhibbits $
+# $FreeBSD: releng/12.2/sys/powerpc/conf/dpaa/DPAA 352094 2019-09-09 18:27:52Z imp $
 
 cpu		BOOKE
 cpu		BOOKE_E500
 
 machine		powerpc powerpc
 #makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
-makeoptions	WERROR="-Werror -Wno-format -Wno-redundant-decls"
+#makeoptions	WERROR="-Werror -Wno-format -Wno-redundant-decls"
 makeoptions	NO_MODULES=yes
 
 # Platform support
@@ -74,6 +74,7 @@ device		sdhci
 
 # Network devices
 device		miibus		# MII bus support
+device		iflib
 device		em
 
 

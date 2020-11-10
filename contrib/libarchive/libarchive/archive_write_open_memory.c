@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_write_open_memory.c 311041 2017-01-02 01:41:31Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_write_open_memory.c 310185 2016-12-17 02:07:08Z mm $");
 
 #include <errno.h>
 #include <stdlib.h>

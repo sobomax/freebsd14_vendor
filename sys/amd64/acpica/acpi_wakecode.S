@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/acpica/acpi_wakecode.S 319133 2017-05-29 13:17:00Z kib $
+ * $FreeBSD: releng/12.2/sys/amd64/acpica/acpi_wakecode.S 331254 2018-03-20 17:58:51Z emaste $
  */
 
 #include <machine/asmacros.h>
@@ -34,7 +34,7 @@
 #include <machine/specialreg.h>
 #include <machine/timerreg.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 /*
  * Resume entry point for real mode.

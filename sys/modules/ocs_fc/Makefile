@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ocs_fc/Makefile 334029 2018-05-22 10:23:12Z ram $
+# $FreeBSD: releng/12.2/sys/modules/ocs_fc/Makefile 351894 2019-09-05 20:39:05Z bdrewery $
 
 .PATH:	${SRCTOP}/sys/dev/ocs_fc
 KMOD = ocs_fc
@@ -41,6 +41,6 @@ SRCS += ocs_cam.c
 
 CINCS = -I. 
 
-CLEANFILES += ${PROG}.debug ${PROG}.symbols cscope.* .depend.*
+CLEANFILES += ${PROG}.debug ${PROG}.symbols cscope.*
 
 .include <bsd.kmod.mk>

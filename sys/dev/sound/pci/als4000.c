@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Orion Hodson <oho@acm.org>
  * All rights reserved.
  *
@@ -46,7 +48,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pci/als4000.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/als4000.c 326255 2017-11-27 14:52:40Z pfg $");
 
 /* Debugging macro's */
 #undef DEB

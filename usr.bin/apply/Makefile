@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/apply/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/apply/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -7,8 +7,7 @@ PROG=	apply
 
 LIBADD=	sbuf
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

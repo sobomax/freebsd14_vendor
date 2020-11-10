@@ -1,4 +1,4 @@
-$FreeBSD: releng/11.3/stand/powerpc/ofw/version 174722 2007-12-17 22:18:07Z marcel $
+$FreeBSD: releng/12.2/stand/powerpc/ofw/version 174722 2007-12-17 22:18:07Z marcel $
 
 NOTE ANY CHANGES YOU MAKE TO THE BOOTBLOCKS HERE.  The format of this
 file is important.  Make sure the current version number is on line 6.

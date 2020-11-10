@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/devd/devd.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/devd/devd.h 334095 2018-05-23 13:48:16Z eadler $
  */
 
 #ifndef DEVD_H
@@ -52,6 +52,7 @@ void set_variable(const char *, const char *);
 void yyerror(const char *s);
 int  yylex(void);
 int  yyparse(void);
+extern int lineno;
 __END_DECLS
 
 #define PATH_DEVCTL	"/dev/devctl"

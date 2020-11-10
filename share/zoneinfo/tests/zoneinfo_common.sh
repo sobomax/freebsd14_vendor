@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/share/zoneinfo/tests/zoneinfo_common.sh 346920 2019-04-29 19:36:46Z ngie $
+# $FreeBSD: releng/12.2/share/zoneinfo/tests/zoneinfo_common.sh 346918 2019-04-29 19:34:09Z ngie $
 
 ZONEINFO_DIR=/usr/share/zoneinfo
 

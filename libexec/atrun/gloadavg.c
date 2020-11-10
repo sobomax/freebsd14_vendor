@@ -1,6 +1,8 @@
-/* 
+/*-
  *  gloadavg.c - get load average for Linux
  *  Copyright (C) 1993  Thomas Koenig
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/libexec/atrun/gloadavg.c 170768 2007-06-15 10:12:37Z yar $";
+  "$FreeBSD: releng/12.2/libexec/atrun/gloadavg.c 326274 2017-11-27 15:25:02Z pfg $";
 #endif /* not lint */
 
 #ifndef __FreeBSD__

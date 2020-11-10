@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2009 Stacey Son sson@FreeBSD.org
  *
- * $FreeBSD: releng/11.3/cddl/lib/libdtrace/regs_x86.d 333617 2018-05-15 00:00:44Z dteske $
+ * $FreeBSD: releng/12.2/cddl/lib/libdtrace/regs_x86.d 329188 2018-02-12 23:53:38Z dteske $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

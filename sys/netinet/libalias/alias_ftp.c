@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_ftp.c 360974 2020-05-12 16:54:39Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_ftp.c 360973 2020-05-12 16:52:08Z emaste $");
 
 /*
     Alias_ftp.c performs special processing for FTP sessions under

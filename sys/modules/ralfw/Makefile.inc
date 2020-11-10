@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ralfw/Makefile.inc 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/ralfw/Makefile.inc 351875 2019-09-05 17:20:20Z bdrewery $
 
 #
 # Common rules for building firmware.  Note this gets auto-included
@@ -12,4 +12,4 @@ CLEANFILES+=	${_FIRM}
 FIRMWS=	${_FIRM}:${KMOD}
 
 ${_FIRM}: ${SRCTOP}/sys/contrib/dev/ral/${_FIRM}.uu
-	uudecode -p $? > ${.TARGET}
+	uudecode -p ${.ALLSRC} > ${.TARGET}

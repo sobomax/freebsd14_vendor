@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/bsd.incs.mk 311201 2017-01-03 23:25:55Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/bsd.incs.mk 325493 2017-11-06 19:33:50Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.
@@ -89,7 +89,6 @@ _${group}INS: ${_${group}INCS}
 .if defined(INCSLINKS) && !empty(INCSLINKS)
 installincludes:
 .for s t in ${INCSLINKS}
-	@${ECHO} "${DESTDIR}${t} -> ${s}" ; \
 	${INSTALL_SYMLINK} ${TAG_ARGS:D${TAG_ARGS},development} ${s} ${DESTDIR}${t}
 .endfor
 .endif

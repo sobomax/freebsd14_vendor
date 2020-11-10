@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2011 Alexander V. Chernikov <melifaro@ipfw.ru>
  * Copyright (c) 2004 Gleb Smirnoff <glebius@FreeBSD.org>
  * All rights reserved.
@@ -25,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	 $SourceForge: netflow.h,v 1.8 2004/09/16 17:05:11 glebius Exp $
- *	 $FreeBSD: releng/11.3/sys/netgraph/netflow/netflow.h 219182 2011-03-02 16:15:11Z glebius $
+ *	 $FreeBSD: releng/12.2/sys/netgraph/netflow/netflow.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /* netflow timeouts in seconds */

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008,	Jeffrey Roberson <jeff@freebsd.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/cpuset.h 333338 2018-05-07 21:42:22Z shurd $
+ * $FreeBSD: releng/12.2/sys/sys/cpuset.h 331723 2018-03-29 02:54:50Z jeff $
  */
 
 #ifndef _SYS_CPUSET_H_
@@ -110,6 +112,7 @@ LIST_HEAD(setlist, cpuset);
  */
 struct cpuset {
 	cpuset_t		cs_mask;	/* bitmask of valid cpus. */
+	struct domainset	*cs_domain;	/* (c) NUMA policy. */
 	volatile u_int		cs_ref;		/* (a) Reference count. */
 	int			cs_flags;	/* (s) Flags from below. */
 	cpusetid_t		cs_id;		/* (s) Id or INVALID. */
@@ -136,6 +139,7 @@ int	cpuset_create_root(struct prison *, struct cpuset **);
 int	cpuset_setproc_update_set(struct proc *, struct cpuset *);
 int	cpuset_which(cpuwhich_t, id_t, struct proc **,
 	    struct thread **, struct cpuset **);
+void	cpuset_kernthread(struct thread *);
 
 char	*cpusetobj_strprint(char *, const cpuset_t *);
 int	cpusetobj_strscan(cpuset_t *, const char *);

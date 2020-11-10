@@ -6,7 +6,7 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD: releng/11.3/share/examples/BSD_daemon/poster.sh 81262 2001-08-07 22:09:47Z phk $
+# $FreeBSD: releng/12.2/share/examples/BSD_daemon/poster.sh 325096 2017-10-29 08:17:03Z eadler $
 #
 
 echo '%!'
@@ -50,7 +50,7 @@ center 90 moveto
 /FreeBSD findfont 50 scalefont setfont
 
 center 50 moveto 
-(http://www.FreeBSD.org) cshow
+(https://www.FreeBSD.org) cshow
 
 % Do not forget Kirks copyright string.
 10 105 moveto 

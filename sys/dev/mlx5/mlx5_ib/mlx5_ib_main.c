@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_ib/mlx5_ib_main.c 347883 2019-05-16 18:33:30Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_ib/mlx5_ib_main.c 363150 2020-07-13 15:33:06Z hselasky $
  */
 
 #include <linux/module.h>
@@ -52,9 +52,9 @@
 
 #define DRIVER_NAME "mlx5ib"
 #ifndef DRIVER_VERSION
-#define DRIVER_VERSION "3.5.1"
+#define DRIVER_VERSION "3.5.2"
 #endif
-#define DRIVER_RELDATE	"April 2019"
+#define DRIVER_RELDATE	"September 2019"
 
 MODULE_DESCRIPTION("Mellanox Connect-IB HCA IB driver");
 MODULE_LICENSE("Dual BSD/GPL");
@@ -199,6 +199,7 @@ static int translate_eth_proto_oper(u32 eth_proto_oper, u8 *active_speed,
 		break;
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_CR2):
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_KR2):
+	case MLX5E_PROT_MASK(MLX5E_50GBASE_KR4):
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_SR2):
 		*active_width = IB_WIDTH_1X;
 		*active_speed = IB_SPEED_HDR;
@@ -636,6 +637,7 @@ static int mlx5_ib_query_device(struct ib_device *ibdev,
 	struct mlx5_ib_dev *dev = to_mdev(ibdev);
 	struct mlx5_core_dev *mdev = dev->mdev;
 	int err = -ENOMEM;
+	int max_sq_desc;
 	int max_rq_sg;
 	int max_sq_sg;
 	u64 min_page_size = 1ull << MLX5_CAP_GEN(mdev, log_pg_sz);
@@ -758,9 +760,10 @@ static int mlx5_ib_query_device(struct ib_device *ibdev,
 	props->max_qp_wr	   = 1 << MLX5_CAP_GEN(mdev, log_max_qp_sz);
 	max_rq_sg =  MLX5_CAP_GEN(mdev, max_wqe_sz_rq) /
 		     sizeof(struct mlx5_wqe_data_seg);
-	max_sq_sg = (MLX5_CAP_GEN(mdev, max_wqe_sz_sq) -
-		     sizeof(struct mlx5_wqe_ctrl_seg)) /
-		     sizeof(struct mlx5_wqe_data_seg);
+	max_sq_desc = min_t(int, MLX5_CAP_GEN(mdev, max_wqe_sz_sq), 512);
+	max_sq_sg = (max_sq_desc - sizeof(struct mlx5_wqe_ctrl_seg) -
+		     sizeof(struct mlx5_wqe_raddr_seg)) /
+		sizeof(struct mlx5_wqe_data_seg);
 	props->max_sge = min(max_rq_sg, max_sq_sg);
 	props->max_sge_rd	   = MLX5_MAX_SGE_RD;
 	props->max_cq		   = 1 << MLX5_CAP_GEN(mdev, log_max_cq);
@@ -2923,7 +2926,7 @@ static int mlx5_enable_roce(struct mlx5_ib_dev *dev)
 	VNET_FOREACH(vnet_iter) {
 		IFNET_RLOCK();
 		CURVNET_SET_QUIET(vnet_iter);
-		TAILQ_FOREACH(idev, &V_ifnet, if_link) {
+		CK_STAILQ_FOREACH(idev, &V_ifnet, if_link) {
 			/* check if network interface belongs to mlx5en */
 			if (!mlx5_netdev_match(idev, dev->mdev, "mce"))
 				continue;
@@ -3198,7 +3201,6 @@ static void *mlx5_ib_add(struct mlx5_core_dev *mdev)
 	dev->ib_dev.get_dma_mr		= mlx5_ib_get_dma_mr;
 	dev->ib_dev.reg_user_mr		= mlx5_ib_reg_user_mr;
 	dev->ib_dev.rereg_user_mr	= mlx5_ib_rereg_user_mr;
-	dev->ib_dev.reg_phys_mr		= mlx5_ib_reg_phys_mr;
 	dev->ib_dev.dereg_mr		= mlx5_ib_dereg_mr;
 	dev->ib_dev.attach_mcast	= mlx5_ib_mcg_attach;
 	dev->ib_dev.detach_mcast	= mlx5_ib_mcg_detach;
@@ -3397,5 +3399,5 @@ mlx5_ib_show_version(void __unused *arg)
 }
 SYSINIT(mlx5_ib_show_version, SI_SUB_DRIVERS, SI_ORDER_ANY, mlx5_ib_show_version, NULL);
 
-module_init_order(mlx5_ib_init, SI_ORDER_THIRD);
-module_exit_order(mlx5_ib_cleanup, SI_ORDER_THIRD);
+module_init_order(mlx5_ib_init, SI_ORDER_SEVENTH);
+module_exit_order(mlx5_ib_cleanup, SI_ORDER_SEVENTH);

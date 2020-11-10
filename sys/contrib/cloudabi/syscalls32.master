@@ -1,4 +1,4 @@
- $FreeBSD: releng/11.3/sys/contrib/cloudabi/syscalls32.master 325858 2017-11-15 15:56:08Z ed $
+ $FreeBSD: releng/12.2/sys/contrib/cloudabi/syscalls32.master 325555 2017-11-08 14:21:52Z ed $
 
 ; Copyright (c) 2016 Nuxi (https://nuxi.nl/) and contributors.
 ;

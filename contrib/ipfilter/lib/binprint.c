@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/lib/binprint.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/lib/binprint.c 255332 2013-09-06 23:11:19Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

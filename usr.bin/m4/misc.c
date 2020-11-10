@@ -1,7 +1,9 @@
-/*	$OpenBSD: misc.c,v 1.46 2015/12/07 14:12:46 espie Exp $	*/
+/*	$OpenBSD: misc.c,v 1.47 2017/06/15 13:48:42 bcallah Exp $	*/
 /*	$NetBSD: misc.c,v 1.6 1995/09/28 05:37:41 tls Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/m4/misc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/m4/misc.c 352277 2019-09-13 07:10:50Z bapt $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -384,7 +386,7 @@ xstrdup(const char *s)
 void
 usage(void)
 {
-	fprintf(stderr, "usage: m4 [-gPs] [-Dname[=value]] [-d flags] "
+	fprintf(stderr, "usage: m4 [-EgPs] [-Dname[=value]] [-d flags] "
 			"[-I dirname] [-o filename]\n"
 			"\t[-t macro] [-Uname] [file ...]\n");
 	exit(1);

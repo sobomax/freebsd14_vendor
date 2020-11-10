@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/sbin/iscontrol/iscontrol.8 276360 2014-12-29 13:50:59Z joel $
+.\" $FreeBSD: releng/12.2/sbin/iscontrol/iscontrol.8 351335 2019-08-21 16:15:40Z markj $
 .\"
-.Dd October 9, 2014
+.Dd September 9, 2016
 .Dt ISCONTROL 8
 .Os
 .Sh NAME
@@ -125,7 +125,11 @@ whatever options are specified, and start an iscsi-session.
 .Xr iscsictl 8
 .Sh STANDARDS
 RFC 3720
-.\"Sh HISTORY
+.Sh HISTORY
+The
+.Nm
+utility appeared in
+.Fx 7.0 .
 .Sh BUGS
 .Nm
 should probably load the iscsi_initiator module if needed.

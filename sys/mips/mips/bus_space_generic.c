@@ -2,6 +2,8 @@
 /*-
  * $Id: bus.h,v 1.6 2007/08/09 11:23:32 katta Exp $
  *
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause
+ *
  * Copyright (c) 1996, 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -62,10 +64,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/bus.h,v 1.5 1999/08/28 00:38:40 peter
- * $FreeBSD: releng/11.3/sys/mips/mips/bus_space_generic.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/mips/bus_space_generic.c 326259 2017-11-27 15:07:26Z pfg $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/mips/bus_space_generic.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/mips/bus_space_generic.c 326259 2017-11-27 15:07:26Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

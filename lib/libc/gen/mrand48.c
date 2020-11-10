@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/mrand48.c 310319 2016-12-20 07:42:15Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/mrand48.c 309650 2016-12-06 19:08:29Z ed $");
 
 #include <stdint.h>
 

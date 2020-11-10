@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2012,2017 Microsoft Corp.
  * Copyright (c) 2012 NetApp Inc.
  * Copyright (c) 2012 Citrix Inc.
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/storvsc/hv_vstorage.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/storvsc/hv_vstorage.h 358384 2020-02-27 14:50:02Z avg $
  */
 
 #ifndef __HV_VSTORAGE_H__
@@ -243,7 +245,8 @@ struct vstor_packet {
 #define SRB_STATUS_SUCCESS		0x01
 #define SRB_STATUS_ABORTED		0x02
 #define SRB_STATUS_ERROR 		0x04
-#define SRB_STATUS_INVALID_LUN          0x20
+#define SRB_STATUS_DATA_OVERRUN		0x12
+#define SRB_STATUS_INVALID_LUN		0x20
 /**
  * SRB Status Masks (can be combined with above status codes)
  */

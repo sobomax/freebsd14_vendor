@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/pci/pci_iov.c 306461 2016-09-29 22:52:24Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/pci/pci_iov.c 303721 2016-08-03 17:09:12Z jhb $");
 
 #include "opt_bus.h"
 
@@ -107,7 +107,7 @@ pci_iov_attach_name(device_t dev, struct nvlist *pf_schema,
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap);
 	va_end(ap);
-	return (PCI_IOV_ATTACH_NAME(device_get_parent(dev), dev, pf_schema,
+	return (PCI_IOV_ATTACH(device_get_parent(dev), dev, pf_schema,
 	    vf_schema, buf));
 }
 

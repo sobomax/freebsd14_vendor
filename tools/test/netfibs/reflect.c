@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/test/netfibs/reflect.c 269097 2014-07-25 20:49:59Z delphij $
+ * $FreeBSD: releng/12.2/tools/test/netfibs/reflect.c 269097 2014-07-25 20:49:59Z delphij $
  */
 
 #include <sys/socket.h>

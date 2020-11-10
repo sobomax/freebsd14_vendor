@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsdinstall/partedit/part_wizard.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bsdinstall/partedit/part_wizard.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -282,7 +282,7 @@ query:
 		gpart_partition(disk, scheme);
 	}
 
-	if (strcmp(scheme, "PC98") == 0 || strcmp(scheme, "MBR") == 0) {
+	if (strcmp(scheme, "MBR") == 0) {
 		struct gmesh submesh;
 		geom_gettree(&submesh);
 		gpart_create(provider_for_name(&submesh, disk),

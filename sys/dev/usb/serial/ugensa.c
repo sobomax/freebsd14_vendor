@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/serial/ugensa.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/serial/ugensa.c 326255 2017-11-27 14:52:40Z pfg $ */
 /*	$NetBSD: ugensa.c,v 1.9.2.1 2007/03/24 14:55:50 yamt Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2004, 2005 The NetBSD Foundation, Inc.
  * All rights reserved.
  *

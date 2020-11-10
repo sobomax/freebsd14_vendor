@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/procstat/procstat_bin.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_bin.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -48,7 +48,7 @@ procstat_bin(struct procstat *prstat, struct kinfo_proc *kipp)
 	int osrel;
 	static char pathname[PATH_MAX];
 
-	if (!hflag)
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0)
 		xo_emit("{T:/%5s %-16s %8s %s}\n", "PID", "COMM", "OSREL",
 		    "PATH");
 

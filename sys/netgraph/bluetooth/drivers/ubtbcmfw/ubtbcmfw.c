@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003-2009 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ubtbcmfw.c,v 1.3 2003/10/10 19:15:08 max Exp $
- * $FreeBSD: releng/11.3/sys/netgraph/bluetooth/drivers/ubtbcmfw/ubtbcmfw.c 292080 2015-12-11 05:28:00Z imp $
+ * $FreeBSD: releng/12.2/sys/netgraph/bluetooth/drivers/ubtbcmfw/ubtbcmfw.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/stdint.h>

@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/11.3/usr.bin/sort/nls/C.msg 235434 2012-05-14 09:55:23Z gabor $
+$ $FreeBSD: releng/12.2/usr.bin/sort/nls/C.msg 235434 2012-05-14 09:55:23Z gabor $
 $
 $set 1
 $quote "

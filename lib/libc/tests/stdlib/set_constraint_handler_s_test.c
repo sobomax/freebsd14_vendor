@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/stdlib/set_constraint_handler_s_test.c 317342 2017-04-23 20:32:46Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/stdlib/set_constraint_handler_s_test.c 316213 2017-03-30 04:57:26Z kib $");
 
 #include <assert.h>
 #include <stdlib.h>

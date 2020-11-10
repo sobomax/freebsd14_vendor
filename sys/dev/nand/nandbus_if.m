@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/nand/nandbus_if.m 235537 2012-05-17 10:11:18Z gber $
+# $FreeBSD: releng/12.2/sys/dev/nand/nandbus_if.m 235537 2012-05-17 10:11:18Z gber $
 
 # NAND bus interface description
 #

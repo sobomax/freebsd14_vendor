@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/camcontrol/camcontrol.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/camcontrol/camcontrol.h 351530 2019-08-27 03:55:38Z mav $
  */
 
 #ifndef _CAMCONTROL_H
@@ -42,8 +42,10 @@ typedef enum {
 typedef enum {
 	CC_DT_NONE,
 	CC_DT_SCSI,
-	CC_DT_ATA_BEHIND_SCSI,
+	CC_DT_SATL,
 	CC_DT_ATA,
+	CC_DT_NVME,
+	CC_DT_MMCSD,
 	CC_DT_UNKNOWN
 } camcontrol_devtype;
 
@@ -86,16 +88,17 @@ int epc(struct cam_device *device, int argc, char **argv, char *combinedopt,
 int timestamp(struct cam_device *device, int argc, char **argv,
 	      char *combinedopt, int task_attr, int retry_count, int timeout,
 	      int verbosemode);
-void mode_sense(struct cam_device *device, int dbd, int pc, int page,
-		int subpage, int task_attr, int retry_count, int timeout,
-		uint8_t *data, int datalen);
-void mode_select(struct cam_device *device, int save_pages, int task_attr,
-		 int retry_count, int timeout, u_int8_t *data, int datalen);
-void mode_edit(struct cam_device *device, int dbd, int pc, int page,
-	       int subpage, int edit, int binary, int task_attr,
-	       int retry_count, int timeout);
-void mode_list(struct cam_device *device, int dbd, int pc, int subpages,
+void mode_sense(struct cam_device *device, int *cdb_len, int dbd, int llbaa,
+		int pc, int page, int subpage, int task_attr, int retry_count,
+		int timeout, uint8_t *data, int datalen);
+void mode_select(struct cam_device *device, int cdb_len, int save_pages,
+		 int task_attr, int retry_count, int timeout, u_int8_t *data,
+		 int datalen);
+void mode_edit(struct cam_device *device, int cdb_len, int desc, int dbd,
+	       int llbaa, int pc, int page, int subpage, int edit, int binary,
 	       int task_attr, int retry_count, int timeout);
+void mode_list(struct cam_device *device, int cdb_len, int dbd, int pc,
+	       int subpages, int task_attr, int retry_count, int timeout);
 int scsidoinquiry(struct cam_device *device, int argc, char **argv,
 		  char *combinedopt, int task_attr, int retry_count,
 		  int timeout);

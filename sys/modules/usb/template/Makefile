@@ -1,7 +1,7 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/usb/template/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/usb/template/Makefile 357433 2020-02-03 10:53:03Z hselasky $
 #
-# Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
+# Copyright (c) 2008-2020 Hans Petter Selasky. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -41,6 +41,13 @@ SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h vnode_if.h usbdevs.h \
 	usb_template_mtp.c \
 	usb_template_phone.c \
 	usb_template_serialnet.c \
-	usb_template_midi.c
+	usb_template_midi.c \
+	usb_template_multi.c \
+	usb_template_cdceem.c
+
+#
+# NOTE:
+# Keep source list above in sync with stand/usb/usbcore.mk
+#
 
 .include <bsd.kmod.mk>

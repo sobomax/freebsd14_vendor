@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/ddb/ddb_capture.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/ddb/ddb_capture.c 335271 2018-06-17 00:00:24Z eadler $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -83,12 +83,12 @@ kread(kvm_t *kvm, void *kvm_pointer, void *address, size_t size,
 }
 
 static int
-kread_symbol(kvm_t *kvm, int index, void *address, size_t size,
+kread_symbol(kvm_t *kvm, int read_index, void *address, size_t size,
     size_t offset)
 {
 	ssize_t ret;
 
-	ret = kvm_read(kvm, namelist[index].n_value + offset, address, size);
+	ret = kvm_read(kvm, namelist[read_index].n_value + offset, address, size);
 	if (ret < 0 || (size_t)ret != size)
 		return (-1);
 	return (0);

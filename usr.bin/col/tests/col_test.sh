@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/col/tests/col_test.sh 316256 2017-03-30 06:20:24Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/col/tests/col_test.sh 315776 2017-03-23 03:28:24Z ngie $
 
 atf_test_case rlf
 

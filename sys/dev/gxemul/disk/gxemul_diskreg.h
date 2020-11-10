@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2012 Juli Mallett <jmallett@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/gxemul/disk/gxemul_diskreg.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/gxemul/disk/gxemul_diskreg.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef	_DEV_GXEMUL_DISK_GXEMUL_DISK_H_

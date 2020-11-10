@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/powerpc/boot1.chrp/Makefile 329183 2018-02-12 20:51:28Z kevans $
+# $FreeBSD: releng/12.2/stand/powerpc/boot1.chrp/Makefile 328769 2018-02-02 06:32:26Z imp $
 
 .include <bsd.init.mk>
 

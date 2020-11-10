@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/service/Makefile 200743 2009-12-20 01:34:12Z dougb $
+# $FreeBSD: releng/12.2/usr.sbin/service/Makefile 200743 2009-12-20 01:34:12Z dougb $
 
 SCRIPTS=service.sh
 MAN=	service.8

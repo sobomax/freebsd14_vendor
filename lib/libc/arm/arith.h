@@ -1,7 +1,7 @@
 /*
  * MD header for contrib/gdtoa
  *
- * $FreeBSD: releng/11.3/lib/libc/arm/arith.h 255361 2013-09-07 14:04:10Z andrew $
+ * $FreeBSD: releng/12.2/lib/libc/arm/arith.h 255361 2013-09-07 14:04:10Z andrew $
  */
 
 /*

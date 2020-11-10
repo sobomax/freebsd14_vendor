@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/usr.sbin/rtadvd/if.c 347353 2019-05-08 16:07:43Z markj $	*/
+/*	$FreeBSD: releng/12.2/usr.sbin/rtadvd/if.c 347349 2019-05-08 16:04:33Z markj $	*/
 /*	$KAME: if.c,v 1.17 2001/01/21 15:27:30 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * Copyright (C) 2011 Hiroki Sato <hrs@FreeBSD.org>
  * All rights reserved.

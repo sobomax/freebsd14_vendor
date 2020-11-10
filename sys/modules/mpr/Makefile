@@ -1,11 +1,11 @@
-# $FreeBSD: releng/11.3/sys/modules/mpr/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/mpr/Makefile 332122 2018-04-06 17:35:35Z brooks $
 
 .PATH: ${SRCTOP}/sys/dev/mpr
 
 KMOD=	mpr
 SRCS=	mpr_pci.c mpr.c mpr_sas.c mpr_table.c mpr_user.c
 SRCS+=	mpr_config.c mpr_mapping.c mpr_sas_lsi.c
-SRCS+=	opt_cam.h opt_compat.h
+SRCS+=	opt_cam.h
 SRCS+=	device_if.h bus_if.h pci_if.h
 
 #CFLAGS += -DMPR_DEBUG

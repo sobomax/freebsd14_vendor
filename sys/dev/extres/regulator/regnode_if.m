@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/extres/regulator/regnode_if.m 337705 2018-08-13 08:47:54Z mmel $
+# $FreeBSD: releng/12.2/sys/dev/extres/regulator/regnode_if.m 355183 2019-11-28 18:44:06Z manu $
 #
 
 INTERFACE regnode;
@@ -88,6 +88,15 @@ METHOD int set_voltage {
 METHOD int get_voltage {
 	struct regnode	*regnode;
 	int		*uvolt;
+};
+
+#
+# Check if a given voltage is supported by the regulator
+# Returns 0 on success or a standard errno value.
+#
+METHOD int check_voltage {
+	struct regnode	*regnode;
+	int		uvolt;
 };
 
 #

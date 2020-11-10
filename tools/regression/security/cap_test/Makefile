@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/security/cap_test/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: releng/12.2/tools/regression/security/cap_test/Makefile 264400 2014-04-13 05:21:56Z imp $
 
 PROG=	cap_test
 SRCS=	cap_test.c \

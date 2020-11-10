@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/etc/mtree/BSD.root.dist 344419 2019-02-21 04:13:20Z kevans $
+# $FreeBSD: releng/12.2/etc/mtree/BSD.root.dist 350914 2019-08-12 17:48:14Z mav $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -11,7 +11,11 @@
         defaults
         ..
         dtb
+            allwinner             tags=package=runtime
+            ..
             overlays              tags=package=runtime
+            ..
+            rockchip              tags=package=runtime
             ..
         ..
         firmware
@@ -33,8 +37,6 @@
         autofs
         ..
         bluetooth
-        ..
-        casper
         ..
         cron.d
         ..
@@ -76,8 +78,6 @@
         ..
         security
         ..
-        skel
-        ..
         ssh
         ..
         ssl
@@ -91,6 +91,8 @@
         casper
         ..
         geom
+        ..
+        nvmecontrol
         ..
     ..
     libexec

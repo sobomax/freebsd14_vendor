@@ -1,4 +1,4 @@
-#$FreeBSD: releng/11.3/kerberos5/lib/libheimipcc/Makefile 284289 2015-06-11 21:13:05Z sjg $
+#$FreeBSD: releng/12.2/kerberos5/lib/libheimipcc/Makefile 284289 2015-06-11 21:13:05Z sjg $
 
 LIB=	heimipcc
 PRIVATELIB=

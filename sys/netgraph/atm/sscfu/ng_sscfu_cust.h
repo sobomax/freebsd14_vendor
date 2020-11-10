@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2003
  *	Fraunhofer Institute for Open Communication Systems (FhG Fokus).
  * 	All rights reserved.
@@ -28,7 +30,7 @@
  *
  * Customisation of the SSCFU code to ng_sscfu.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/atm/sscfu/ng_sscfu_cust.h 184205 2008-10-23 15:53:51Z des $
+ * $FreeBSD: releng/12.2/sys/netgraph/atm/sscfu/ng_sscfu_cust.h 326272 2017-11-27 15:23:17Z pfg $
  */
 #include <sys/param.h>
 #include <sys/types.h>

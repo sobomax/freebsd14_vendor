@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)rpc_parse.c 1.8 89/02/22 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/rpcgen/rpc_parse.c 313100 2017-02-02 18:27:20Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/rpcgen/rpc_parse.c 327265 2017-12-28 05:33:29Z imp $");
 
 /*
  * rpc_parse.c, Parser for the RPC protocol compiler
@@ -93,6 +93,7 @@ get_definition(void)
 		def_const(defp);
 		break;
 	case TOK_EOF:
+		free(defp);
 		return (NULL);
 	default:
 		error("definition keyword expected");

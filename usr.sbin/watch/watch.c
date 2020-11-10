@@ -1,6 +1,4 @@
 /*-
- * SPDX-License-Identifier: MIT
- *
  * Copyright (c) 1995 Ugen J.S.Antsilevich
  *
  * Redistribution and use in source forms, with and without modification,
@@ -16,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/watch/watch.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/watch/watch.c 327040 2017-12-20 20:25:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>

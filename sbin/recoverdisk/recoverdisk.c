@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
@@ -6,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/11.3/sbin/recoverdisk/recoverdisk.c 344091 2019-02-13 09:28:48Z avos $
+ * $FreeBSD: releng/12.2/sbin/recoverdisk/recoverdisk.c 344091 2019-02-13 09:28:48Z avos $
  */
 #include <sys/param.h>
 #include <sys/queue.h>

@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/enigma/enigma.c 279296 2015-02-25 20:47:25Z delphij $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/enigma/enigma.c 333395 2018-05-09 07:46:57Z eadler $");
 
 #include <sys/types.h>
 
@@ -22,7 +22,6 @@ __FBSDID("$FreeBSD: releng/11.3/usr.bin/enigma/enigma.c 279296 2015-02-25 20:47:
 
 #define MINUSKVAR "CrYpTkEy"
 
-#define ECHO 010
 #define ROTORSZ 256
 #define MASK 0377
 static char	t1[ROTORSZ];

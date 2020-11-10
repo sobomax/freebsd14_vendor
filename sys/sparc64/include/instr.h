@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994 David S. Miller, davem@nadzieja.rutgers.edu
  * Copyright (c) 1995 Paul Kranenburg
  * Copyright (c) 2001 Thomas Moestl <tmm@FreeBSD.org>
@@ -31,7 +33,7 @@
  *
  *	from: NetBSD: db_disasm.c,v 1.9 2000/08/16 11:29:42 pk Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/instr.h 139825 2005-01-07 02:29:27Z imp $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/instr.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _MACHINE_INSTR_H_

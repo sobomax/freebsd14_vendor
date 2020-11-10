@@ -22,8 +22,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_crc32.h 232153 2012-02-25 10:58:02Z mm $
+ * $FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_crc32.h 358087 2020-02-19 01:46:43Z mm $
  */
+
+#ifndef ARCHIVE_CRC32_H
+#define ARCHIVE_CRC32_H
 
 #ifndef __LIBARCHIVE_BUILD
 #error This header is only to be used internally to libarchive.
@@ -76,3 +79,5 @@ crc32(unsigned long crc, const void *_p, size_t len)
 		crc = crc_tbl[(crc ^ *p++) & 0xff] ^ (crc >> 8);
 	return (crc ^ 0xffffffffUL);
 }
+
+#endif

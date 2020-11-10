@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsdconfig/networking/Makefile 301973 2016-06-16 21:14:25Z dteske $
+# $FreeBSD: releng/12.2/usr.sbin/bsdconfig/networking/Makefile 301973 2016-06-16 21:14:25Z dteske $
 
 SUBDIR= include share
 

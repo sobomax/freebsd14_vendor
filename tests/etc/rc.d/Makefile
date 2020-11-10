@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/etc/rc.d/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/tests/etc/rc.d/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 TESTSDIR=	${TESTSBASE}/etc/rc.d
 

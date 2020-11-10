@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bhnd/bhndb_pci/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/bhnd/bhndb_pci/Makefile 326102 2017-11-22 20:27:46Z landonf $
 
 .PATH: ${SRCTOP}/sys/dev/bhnd/bhndb
 
@@ -6,7 +6,9 @@ KMOD=	bhndb_pci
 SRCS=	bhndb_pci.c bhndb_pci_hwdata.c \
 	bhndb_pci_sprom.c
 SRCS+=	bhnd_bus_if.h bhndb_bus_if.h bhndb_if.h
+SRCS+=	bhnd_erom_if.h
 SRCS+=	bhnd_nvram_if.h
+SRCS+=	bhnd_pwrctl_hostb_if.h
 
 SRCS+=	device_if.h bus_if.h pci_if.h
 

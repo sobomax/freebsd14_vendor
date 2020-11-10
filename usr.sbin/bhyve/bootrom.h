@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/bootrom.h 336189 2018-07-11 07:16:13Z araujo $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/bootrom.h 335104 2018-06-14 01:34:53Z araujo $
  */
 
 #ifndef	_BOOTROM_H_

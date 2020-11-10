@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/sys/modules/usb/upgt/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/usb/upgt/Makefile 330749 2018-03-10 23:16:24Z avos $
 
 .PATH: ${SRCTOP}/sys/dev/usb/wlan
 
 KMOD    = if_upgt
 SRCS    = if_upgt.c if_upgtvar.h	\
 	  bus_if.h device_if.h \
-	  opt_bus.h opt_usb.h usb_if.h usbdevs.h
+	  opt_bus.h opt_usb.h opt_wlan.h usb_if.h usbdevs.h
 
 .include <bsd.kmod.mk>

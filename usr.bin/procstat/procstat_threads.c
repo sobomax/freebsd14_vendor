@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/procstat/procstat_threads.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_threads.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -50,7 +50,7 @@ procstat_threads(struct procstat *procstat, struct kinfo_proc *kipp)
 	const char *str;
 	char *threadid;
 
-	if (!hflag)
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0)
 		xo_emit("{T:/%5s %6s %-19s %-19s %2s %4s %-7s %-9s}\n", "PID",
 		    "TID", "COMM", "TDNAME", "CPU", "PRI", "STATE", "WCHAN");
 

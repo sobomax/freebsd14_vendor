@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2005 Bruno Ducrot
  * Copyright (c) 2004 FUKUDA Nobuhiko <nfukuda@spa.is.uec.ac.jp>
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/cpufreq/powernow.c 305614 2016-09-08 15:05:25Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/cpufreq/powernow.c 326263 2017-11-27 15:11:47Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

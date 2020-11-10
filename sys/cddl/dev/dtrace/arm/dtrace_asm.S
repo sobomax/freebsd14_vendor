@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/11.3/sys/cddl/dev/dtrace/arm/dtrace_asm.S 284213 2015-06-10 09:59:26Z br $
+ * $FreeBSD: releng/12.2/sys/cddl/dev/dtrace/arm/dtrace_asm.S 331254 2018-03-20 17:58:51Z emaste $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -32,10 +32,10 @@
 #include <sys/cpuvar_defs.h>
 #include <sys/dtrace.h>
 
-#include <machine/armreg.h>
 #include <machine/asm.h>
+#include <machine/armreg.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 /*
 void dtrace_membar_producer(void)

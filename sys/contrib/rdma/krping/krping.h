@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/contrib/rdma/krping/krping.h 331769 2018-03-30 18:06:29Z hselasky $
+ * $FreeBSD: releng/12.2/sys/contrib/rdma/krping/krping.h 353180 2019-10-07 08:28:05Z hselasky $
  */
 
 struct krping_stats {
@@ -17,3 +17,4 @@ struct krping_stats {
 int krping_doit(char *);
 void krping_walk_cb_list(void (*)(struct krping_stats *, void *), void *);
 int krping_sigpending(void);
+void krping_cancel_all(void);

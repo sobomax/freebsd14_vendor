@@ -34,7 +34,7 @@
  * THIS SOFTWARE, EVEN IF WHISTLE COMMUNICATIONS IS ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/ngctl/status.c 160423 2006-07-17 08:35:47Z stefanf $
+ * $FreeBSD: releng/12.2/usr.sbin/ngctl/status.c 160423 2006-07-17 08:35:47Z stefanf $
  */
 
 #include <err.h>

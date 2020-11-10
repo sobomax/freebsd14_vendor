@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 The FreeBSD Foundation
  * Copyright (c) 2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libcasper/libcasper/libcasper_impl.h 301572 2016-06-08 02:03:53Z oshogbo $
+ * $FreeBSD: releng/12.2/lib/libcasper/libcasper/libcasper_impl.h 329452 2018-02-17 12:22:29Z oshogbo $
  */
 
 #ifndef	_LIBCASPER_IMPL_H_
@@ -52,6 +54,7 @@ void		 service_message(struct service *service,
 		    struct service_connection *sconn);
 void		 service_start(struct service *service, int sock, int procfd);
 const char	*service_name(struct service *service);
+int		 service_get_channel_flags(struct service *service);
 
 /* Private service connection functions. */
 struct service_connection	*service_connection_add(struct service *service,

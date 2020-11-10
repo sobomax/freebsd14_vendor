@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/riscv/include/kdb.h 292407 2015-12-17 18:44:30Z br $
+ * $FreeBSD: releng/12.2/sys/riscv/include/kdb.h 339367 2018-10-15 18:56:54Z jhb $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -47,7 +47,11 @@ static __inline void
 kdb_cpu_sync_icache(unsigned char *addr, size_t size)
 {
 
-	cpu_icache_sync_range((vm_offset_t)addr, size);
+	/*
+	 * Other CPUs flush their instruction cache when resuming from
+	 * IPI_STOP.
+	 */
+	fence_i();
 }
 
 static __inline void

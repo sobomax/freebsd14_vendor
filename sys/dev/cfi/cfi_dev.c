@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2007, Juniper Networks, Inc.
  * Copyright (c) 2012-2013, SRI International
  * All rights reserved.
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cfi/cfi_dev.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cfi/cfi_dev.c 355158 2019-11-28 02:12:33Z emaste $");
 
 #include "opt_cfi.h"
 
@@ -44,6 +46,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/cfi/cfi_dev.c 331722 2018-03-29 02:50:57
 #include <sys/conf.h>
 #include <sys/ioccom.h>
 #include <sys/kernel.h>
+#include <sys/limits.h>
 #include <sys/malloc.h>   
 #include <sys/proc.h>
 #include <sys/sysctl.h>
@@ -278,7 +281,8 @@ cfi_devioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 		rq = (struct cfiocqry *)data;
 		if (rq->offset >= sc->sc_size / sc->sc_width)
 			return (ESPIPE);
-		if (rq->offset + rq->count > sc->sc_size / sc->sc_width)
+		if (rq->offset > ULONG_MAX - rq->count ||
+		    rq->offset + rq->count > sc->sc_size / sc->sc_width)
 			return (ENOSPC);
 
 		while (!error && rq->count--) {

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/netvsc/if_hnvar.h 324578 2017-10-13 05:09:56Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/netvsc/if_hnvar.h 324489 2017-10-10 08:32:03Z sephe $
  */
 
 #ifndef _IF_HNVAR_H_

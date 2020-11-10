@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/sa/extern.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/sa/extern.h 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/types.h>
@@ -81,7 +81,7 @@ int	pacct_update(void);
 void	pacct_print(void);
 
 /* external functions in readrec.c */
-int	readrec_forward(FILE *f, struct acctv2 *av2);
+int	readrec_forward(FILE *f, struct acctv3 *av2);
 
 /* external functions in usrdb.c */
 int	usracct_init(void);

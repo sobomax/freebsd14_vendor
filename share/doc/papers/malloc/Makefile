@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	6.3 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/doc/papers/malloc/Makefile 106146 2002-10-29 15:01:59Z ru $
+# $FreeBSD: releng/12.2/share/doc/papers/malloc/Makefile 106146 2002-10-29 15:01:59Z ru $
 
 VOLUME=	papers
 DOC=	malloc

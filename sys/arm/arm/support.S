@@ -87,9 +87,9 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/support.S 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/support.S 331254 2018-03-20 17:58:51Z emaste $");
 
-#include "assym.s"
+#include "assym.inc"
 
 	.syntax	unified
 

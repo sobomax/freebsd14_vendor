@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/tools/tools/mwl/Makefile 193242 2009-06-01 18:27:16Z sam $
+#	$FreeBSD: releng/12.2/tools/tools/mwl/Makefile 193242 2009-06-01 18:27:16Z sam $
 
 SUBDIR=	mwlstats mwldebug
 

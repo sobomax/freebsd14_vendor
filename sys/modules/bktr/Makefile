@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bktr/Makefile 65697 2000-09-10 15:40:20Z roger $
+# $FreeBSD: releng/12.2/sys/modules/bktr/Makefile 65697 2000-09-10 15:40:20Z roger $
 
 SUBDIR =
 SUBDIR += bktr

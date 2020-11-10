@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/tests/net/ether_test.c 291038 2015-11-18 23:42:44Z ngie $
+ * $FreeBSD: releng/12.2/lib/libc/tests/net/ether_test.c 291038 2015-11-18 23:42:44Z ngie $
  */
 
 #include <sys/types.h>

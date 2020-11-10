@@ -1,5 +1,7 @@
 /* LINTLIBRARY */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright 2001 David E. O'Brien.
  * All rights reserved.
  * Copyright (c) 1995, 1998 Berkeley Software Design, Inc.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/sparc64/crt1.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/sparc64/crt1.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <stdlib.h>
 

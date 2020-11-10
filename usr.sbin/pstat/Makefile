@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.sbin/pstat/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/pstat/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	pstat
 LINKS=	${BINDIR}/pstat ${BINDIR}/swapinfo

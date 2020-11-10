@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/allwinner/axp209reg.h 309758 2016-12-09 20:17:07Z manu $
+ * $FreeBSD: releng/12.2/sys/arm/allwinner/axp209reg.h 308309 2016-11-04 20:02:52Z manu $
  */
 
 #ifndef _AXP209REG_H_

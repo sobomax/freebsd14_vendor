@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# SPDX-License-Identifier: BSD-3-Clause
+#
 # Copyright (c) 2012, Neville-Neil Consulting
 # All rights reserved.
 #
@@ -31,7 +33,7 @@
 #
 # Author: George V. Neville-Neil
 #
-# $FreeBSD: releng/11.3/tools/test/hwpmc/pmctest.py 331722 2018-03-29 02:50:57Z eadler $
+# $FreeBSD: releng/12.2/tools/test/hwpmc/pmctest.py 326025 2017-11-20 19:49:47Z pfg $
 
 # Description: A program to run a simple program against every available
 # pmc counter present in a system.

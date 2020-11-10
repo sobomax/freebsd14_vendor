@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/usr.sbin/iprop-log/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
+# $FreeBSD: releng/12.2/kerberos5/usr.sbin/iprop-log/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
 
 PROG=	iprop-log
 MAN=	iprop-log.8

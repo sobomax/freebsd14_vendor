@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/tls/libxx/Makefile 204311 2010-02-25 14:42:26Z ru $
+# $FreeBSD: releng/12.2/tools/regression/tls/libxx/Makefile 204311 2010-02-25 14:42:26Z ru $
 
 SHLIB_NAME=	libxx.so
 

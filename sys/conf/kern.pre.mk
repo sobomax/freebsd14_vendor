@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/conf/kern.pre.mk 347838 2019-05-16 17:48:36Z hselasky $
+# $FreeBSD: releng/12.2/sys/conf/kern.pre.mk 360793 2020-05-07 19:19:39Z jhb $
 
 # Part of a unified Makefile for building kernels.  This part contains all
 # of the definitions that need to be before %BEFORE_DEPEND.
@@ -27,6 +27,14 @@ _srcconf_included_:
 # The kernel build always expects .OBJDIR=.CURDIR.
 .OBJDIR: ${.CURDIR}
 
+.if defined(NO_OBJWALK) || ${MK_AUTO_OBJ} == "yes"
+NO_OBJWALK=		t
+NO_MODULES_OBJ=	t
+.endif
+.if !defined(NO_OBJWALK)
+_obj=		obj
+.endif
+
 # Can be overridden by makeoptions or /etc/make.conf
 KERNEL_KO?=	kernel
 KERNEL?=	kernel
@@ -38,7 +46,6 @@ M=		${MACHINE}
 
 AWK?=		awk
 CP?=		cp
-LINT?=		lint
 NM?=		nm
 OBJCOPY?=	objcopy
 SIZE?=		size
@@ -70,22 +77,31 @@ COPTFLAGS+= ${_CPUCFLAGS}
 .endif
 NOSTDINC= -nostdinc
 
-INCLUDES= ${NOSTDINC} ${INCLMAGIC} -I. -I$S
+INCLUDES= ${NOSTDINC} ${INCLMAGIC} -I. -I$S -I$S/contrib/ck/include
 
 CFLAGS=	${COPTFLAGS} ${DEBUG}
 CFLAGS+= ${INCLUDES} -D_KERNEL -DHAVE_KERNEL_OPTION_HEADERS -include opt_global.h
 CFLAGS_PARAM_INLINE_UNIT_GROWTH?=100
 CFLAGS_PARAM_LARGE_FUNCTION_GROWTH?=1000
 .if ${MACHINE_CPUARCH} == "mips"
-CFLAGS_ARCH_PARAMS?=--param max-inline-insns-single=1000
+CFLAGS_ARCH_PARAMS?=--param max-inline-insns-single=1000 -DMACHINE_ARCH='"${MACHINE_ARCH}"'
 .endif
-CFLAGS.gcc+= -fno-common -fms-extensions -finline-limit=${INLINE_LIMIT}
+CFLAGS.gcc+= -fms-extensions -finline-limit=${INLINE_LIMIT}
 CFLAGS.gcc+= --param inline-unit-growth=${CFLAGS_PARAM_INLINE_UNIT_GROWTH}
 CFLAGS.gcc+= --param large-function-growth=${CFLAGS_PARAM_LARGE_FUNCTION_GROWTH}
+CFLAGS.gcc+= -fms-extensions
 .if defined(CFLAGS_ARCH_PARAMS)
 CFLAGS.gcc+=${CFLAGS_ARCH_PARAMS}
 .endif
-WERROR?= -Werror
+.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} < 50000
+WERROR?=	-Wno-error
+.else
+WERROR?=	-Werror
+.endif
+# The following should be removed no earlier than LLVM11 being imported into the
+# tree, to ensure we don't regress the build.  LLVM11 and GCC10 will switch the
+# default over to -fno-common, making this redundant.
+CFLAGS+=	-fno-common
 
 # XXX LOCORE means "don't declare C stuff" not "for locore.s".
 ASM_CFLAGS= -x assembler-with-cpp -DLOCORE ${CFLAGS} ${ASM_CFLAGS.${.IMPSRC:T}} 
@@ -110,11 +126,33 @@ DEFINED_PROF=	${PROF}
 CFLAGS+=	${CONF_CFLAGS}
 
 .if defined(LINKER_FEATURES) && ${LINKER_FEATURES:Mbuild-id}
-LDFLAGS+=	-Wl,--build-id=sha1
+LDFLAGS+=	--build-id=sha1
 .endif
 
-# Optional linting. This can be overridden in /etc/make.conf.
-LINTFLAGS=	${LINTOBJKERNFLAGS}
+.if (${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
+    ${MACHINE_CPUARCH} == "i386") && \
+    defined(LINKER_FEATURES) && ${LINKER_FEATURES:Mifunc} == ""
+.error amd64/arm64/i386 kernel requires linker ifunc support
+.endif
+.if ${MACHINE_CPUARCH} == "amd64"
+LDFLAGS+=	-z max-page-size=2097152
+.if ${LINKER_TYPE} != "lld"
+LDFLAGS+=	-z common-page-size=4096
+.else
+LDFLAGS+=	-z notext -z ifunc-noplt
+.endif
+.endif
+
+.if ${MACHINE_CPUARCH} == "riscv"
+# Hack: Work around undefined weak symbols being out of range when linking with
+# LLD (address is a PC-relative calculation, and BFD works around this by
+# rewriting the instructions to generate an absolute address of 0); -fPIE
+# avoids this since it uses the GOT for all extern symbols, which is overly
+# inefficient for us. Drop once undefined weak symbols work with medany.
+.if ${LINKER_TYPE} == "lld"
+CFLAGS+=	-fPIE
+.endif
+.endif
 
 NORMAL_C= ${CC} -c ${CFLAGS} ${WERROR} ${PROF} ${.IMPSRC}
 NORMAL_S= ${CC:N${CCACHE_BIN}} -c ${ASM_CFLAGS} ${WERROR} ${.IMPSRC}
@@ -128,6 +166,9 @@ NORMAL_FW= uudecode -o ${.TARGET} ${.ALLSRC}
 NORMAL_FWO= ${LD} -b binary --no-warn-mismatch -d -warn-common -r \
 	-m ${LD_EMULATION} -o ${.TARGET} ${.ALLSRC:M*.fw}
 
+# for ZSTD in the kernel (include zstd/lib/freebsd before other CFLAGS)
+ZSTD_C= ${CC} -c -DZSTD_HEAPMODE=1 -I$S/contrib/zstd/lib/freebsd ${CFLAGS} -I$S/contrib/zstd/lib -I$S/contrib/zstd/lib/common ${WERROR} -Wno-inline -Wno-missing-prototypes ${PROF} -U__BMI__ ${.IMPSRC}
+
 # Common for dtrace / zfs
 CDDL_CFLAGS=	-DFREEBSD_NAMECACHE -nostdinc -I$S/cddl/compat/opensolaris -I$S/cddl/contrib/opensolaris/uts/common -I$S -I$S/cddl/contrib/opensolaris/common ${CFLAGS} -Wno-unknown-pragmas -Wno-missing-prototypes -Wno-undef -Wno-strict-prototypes -Wno-cast-qual -Wno-parentheses -Wno-redundant-decls -Wno-missing-braces -Wno-uninitialized -Wno-unused -Wno-inline -Wno-switch -Wno-pointer-arith -Wno-unknown-pragmas
 CDDL_CFLAGS+=	-include $S/cddl/compat/opensolaris/sys/debug_compat.h
@@ -137,6 +178,7 @@ CDDL_C=		${CC} -c ${CDDL_CFLAGS} ${WERROR} ${PROF} ${.IMPSRC}
 ZFS_CFLAGS=	-DBUILDING_ZFS -I$S/cddl/contrib/opensolaris/uts/common/fs/zfs
 ZFS_CFLAGS+=	-I$S/cddl/contrib/opensolaris/uts/common/fs/zfs/lua
 ZFS_CFLAGS+=	-I$S/cddl/contrib/opensolaris/uts/common/zmod
+ZFS_CFLAGS+=	-I$S/cddl/contrib/opensolaris/common/lz4
 ZFS_CFLAGS+=	-I$S/cddl/contrib/opensolaris/common/zfs
 ZFS_CFLAGS+=	${CDDL_CFLAGS}
 ZFS_ASM_CFLAGS= -x assembler-with-cpp -DLOCORE ${ZFS_CFLAGS}
@@ -168,8 +210,6 @@ NORMAL_CTFCONVERT=
 NORMAL_CTFCONVERT=	@:
 .endif
 
-NORMAL_LINT=	${LINT} ${LINTFLAGS} ${CFLAGS:M-[DIU]*} ${.IMPSRC}
-
 # Linux Kernel Programming Interface C-flags
 LINUXKPI_INCLUDES=	-I$S/compat/linuxkpi/common/include
 LINUXKPI_C=		${NORMAL_C} ${LINUXKPI_INCLUDES}
@@ -185,8 +225,8 @@ OFED_C=		${OFED_C_NOIMP} ${.IMPSRC}
 
 # mlxfw C flags.
 MLXFW_C=	${OFED_C_NOIMP} \
-		-I$S/contrib/xz-embedded/freebsd \
-		-I$S/contrib/xz-embedded/linux/lib/xz \
+		-I${SRCTOP}/sys/contrib/xz-embedded/freebsd \
+		-I${SRCTOP}/sys/contrib/xz-embedded/linux/lib/xz \
 		${.IMPSRC}
 
 GEN_CFILES= $S/$M/$M/genassym.c ${MFILES:T:S/.m$/.c/}
@@ -202,15 +242,17 @@ MD_ROOT_SIZE_CONFIGURED!=	grep MD_ROOT_SIZE opt_md.h || true ; echo
 SYSTEM_OBJS+= embedfs_${MFS_IMAGE:T:R}.o
 .endif
 .endif
-SYSTEM_LD= @${LD} -Bdynamic -T ${LDSCRIPT} ${_LDFLAGS} --no-warn-mismatch \
-	--warn-common --export-dynamic --dynamic-linker /red/herring \
+SYSTEM_LD= @${LD} -m ${LD_EMULATION} -Bdynamic -T ${LDSCRIPT} ${_LDFLAGS} \
+	--no-warn-mismatch --warn-common --export-dynamic \
+	--dynamic-linker /red/herring \
 	-o ${.TARGET} -X ${SYSTEM_OBJS} vers.o
 SYSTEM_LD_TAIL= @${OBJCOPY} --strip-symbol gcc2_compiled. ${.TARGET} ; \
 	${SIZE} ${.TARGET} ; chmod 755 ${.TARGET}
 SYSTEM_DEP+= ${LDSCRIPT}
 
 # Calculate path for .m files early, if needed.
-.if !defined(NO_MODULES) && !defined(__MPATH)
+.if !defined(NO_MODULES) && !defined(__MPATH) && !make(install) && \
+    (empty(.MAKEFLAGS:M-V) || defined(NO_SKIP_MPATH))
 __MPATH!=find ${S:tA}/ -name \*_if.m
 .endif
 
@@ -256,12 +298,13 @@ EMBEDFS_ARCH.${MACHINE_ARCH}!= sed -n '/OUTPUT_ARCH/s/.*(\(.*\)).*/\1/p' ${LDSCR
 
 EMBEDFS_FORMAT.arm?=		elf32-littlearm
 EMBEDFS_FORMAT.armv6?=		elf32-littlearm
+EMBEDFS_FORMAT.armv7?=		elf32-littlearm
 EMBEDFS_FORMAT.aarch64?=	elf64-littleaarch64
 EMBEDFS_FORMAT.mips?=		elf32-tradbigmips
 EMBEDFS_FORMAT.mipsel?=		elf32-tradlittlemips
 EMBEDFS_FORMAT.mips64?=		elf64-tradbigmips
 EMBEDFS_FORMAT.mips64el?=	elf64-tradlittlemips
-EMBEDFS_FORMAT.riscv?=		elf64-littleriscv
+EMBEDFS_FORMAT.riscv64?=	elf64-littleriscv
 .endif
 .endif
 

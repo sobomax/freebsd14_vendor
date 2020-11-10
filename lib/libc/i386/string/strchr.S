@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/i386/string/strchr.S 258451 2013-11-21 22:31:18Z andreast $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/i386/string/strchr.S 258451 2013-11-21 22:31:18Z andreast $");
 
 /*
  * strchr(s, c)

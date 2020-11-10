@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/sys/contrib/dev/mwl/Makefile 193240 2009-06-01 18:07:01Z sam $
+#	$FreeBSD: releng/12.2/sys/contrib/dev/mwl/Makefile 193240 2009-06-01 18:07:01Z sam $
 
 FILES=	mw88W8363.fw.uu mwlboot.fw.uu
 

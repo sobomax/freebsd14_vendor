@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Michael Smith
  * Copyright (c) 2000 Scott Long
  * Copyright (c) 2000 BSDi
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/sys/aac_ioctl.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/sys/aac_ioctl.h 330949 2018-03-14 21:11:41Z brooks $
  */
 
 /*

@@ -22,7 +22,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/ofw/libofw/libofw.h 334191 2018-05-24 23:11:25Z marius $
+ * $FreeBSD: releng/12.2/stand/ofw/libofw/libofw.h 333955 2018-05-21 01:20:19Z marius $
  */
 
 #include "openfirm.h"

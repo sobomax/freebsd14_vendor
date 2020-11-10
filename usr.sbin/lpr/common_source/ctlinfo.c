@@ -34,7 +34,7 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/lpr/common_source/ctlinfo.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/lpr/common_source/ctlinfo.c 330787 2018-03-12 01:41:16Z gad $");
 
 /*
  * ctlinfo - This collection of routines will know everything there is to
@@ -292,8 +292,10 @@ ctl_readcf(const char *ptrname, const char *cfname)
 	msize = sroom2 + CTI_LINEMAX;
 	msize = roundup(msize, 8);
 	cstart = malloc(msize);
-	if (cstart == NULL)
+	if (cstart == NULL) {
+		fclose(cfile);
 		return NULL;
+	}
 	memset(cstart, 0, msize);
 	cpriv = (struct cjprivate *)cstart;
 	cpriv->pub.cji_priv = cpriv;

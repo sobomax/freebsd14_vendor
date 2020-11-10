@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/net80211/stumbler/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: releng/12.2/tools/tools/net80211/stumbler/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	stumbler
 BINDIR=	/usr/local/bin

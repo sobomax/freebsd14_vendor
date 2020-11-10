@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/contrib/bzip2/FREEBSD-Xlist 240373 2012-09-11 21:16:22Z delphij $
+# $FreeBSD: releng/12.2/contrib/bzip2/FREEBSD-Xlist 240373 2012-09-11 21:16:22Z delphij $
 *Makefile*
 *README.XML.STUFF
 *bz-common.xsl

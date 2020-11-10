@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/loader/conf.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/loader/conf.c 354007 2019-10-24 03:57:56Z kevans $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -48,6 +48,7 @@ __FBSDID("$FreeBSD: releng/11.3/stand/i386/loader/conf.c 346476 2019-04-21 03:36
 #if defined(LOADER_FIREWIRE_SUPPORT)
 extern struct devsw fwohci;
 #endif
+extern struct devsw vdisk_dev;
 
 /* Exported for libstand */
 struct devsw *devsw[] = {
@@ -60,6 +61,7 @@ struct devsw *devsw[] = {
 #if defined(LOADER_FIREWIRE_SUPPORT)
     &fwohci,
 #endif
+    &vdisk_dev,
 #if defined(LOADER_ZFS_SUPPORT)
     &zfs_dev,
 #endif

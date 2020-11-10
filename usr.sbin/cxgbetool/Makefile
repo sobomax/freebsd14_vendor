@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/cxgbetool/Makefile 346805 2019-04-28 06:51:59Z np $
+# $FreeBSD: releng/12.2/usr.sbin/cxgbetool/Makefile 332506 2018-04-14 19:07:56Z np $
 
 PROG=	cxgbetool
 MAN=	cxgbetool.8

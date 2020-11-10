@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_common.h 263426 2014-03-20 17:07:14Z br $
+ * $FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_common.h 263426 2014-03-20 17:07:14Z br $
  */
 
 #define	READ4(_sc, _reg)	\

@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/sys/modules/filemon/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/filemon/Makefile 332122 2018-04-06 17:35:35Z brooks $
 
 .PATH: ${SRCTOP}/sys/dev/filemon
 
 KMOD=	filemon
 SRCS=	${KMOD}.c
-SRCS+=	opt_compat.h vnode_if.h
+SRCS+=	vnode_if.h
 
 .include <bsd.kmod.mk>

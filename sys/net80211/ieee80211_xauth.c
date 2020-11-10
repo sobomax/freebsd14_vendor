@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Video54 Technologies, Inc.
  * Copyright (c) 2004-2008 Sam Leffler, Errno Consulting
  * All rights reserved.
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net80211/ieee80211_xauth.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net80211/ieee80211_xauth.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /*
  * External authenticator placeholder module.

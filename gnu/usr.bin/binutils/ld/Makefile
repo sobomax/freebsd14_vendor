@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/binutils/ld/Makefile 316423 2017-04-02 17:24:58Z dim $
+# $FreeBSD: releng/12.2/gnu/usr.bin/binutils/ld/Makefile 352754 2019-09-26 16:05:57Z emaste $
 
 ELF_SCR_EXT=	x xbn xc xd xdc xdw xn xr xs xsc xsw xu xw
 .include "../Makefile.inc0"
@@ -7,7 +7,17 @@ ELF_SCR_EXT=	x xbn xc xd xdc xdw xn xr xs xsc xsw xu xw
 .PATH: ${SRCDIR}/ld
 
 PROG=	ld.bfd
+.if (!defined(TOOLS_PREFIX) && ${MK_LLD_IS_LD} == "no") || \
+    (defined(TOOLS_PREFIX) && ${MK_LLD_BOOTSTRAP} == "no")
 MAN=	ld.1
+LINKS=		${BINDIR}/ld.bfd ${BINDIR}/ld
+.else
+MAN=	ld.bfd.1
+CLEANFILES+=	ld.bfd.1
+ld.bfd.1:	ld.1
+	${CP} ${.ALLSRC} ${.TARGET}
+.endif
+
 SCRIPTDIR= /usr/libdata/ldscripts
 SRCS+=	ldcref.c \
 	ldctor.c \
@@ -41,17 +51,14 @@ CFLAGS+= -I${SRCDIR}/ld -I${SRCDIR}/bfd
 .if ${MK_SHARED_TOOLCHAIN} == "no"
 NO_SHARED?= yes
 .endif
-DPADD=	${RELTOP}/libbfd/libbfd.a
-DPADD+=	${RELTOP}/libiberty/libiberty.a
+DPADD=	${GNURELTOP}/libbfd/libbfd${PIE_SUFFIX}.a
+DPADD+=	${GNURELTOP}/libiberty/libiberty${PIE_SUFFIX}.a
 LDADD=	${DPADD}
 CLEANDIRS+=	ldscripts
 CLEANFILES+=	ldemul-list.h stringify.sed
 
 FILES=		${LDSCRIPTS:S|^|ldscripts/|}
 FILESDIR=	${SCRIPTDIR}
-.if ${MK_LLD_IS_LD} == "no"
-LINKS=		${BINDIR}/ld.bfd ${BINDIR}/ld
-.endif
 
 HOST=		${TARGET_TUPLE}
 LIBSEARCHPATH=	\"=/lib\":\"=/usr/lib\"

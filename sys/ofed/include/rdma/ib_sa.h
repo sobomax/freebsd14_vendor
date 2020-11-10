@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004 Topspin Communications.  All rights reserved.
  * Copyright (c) 2005 Voltaire, Inc.  All rights reserved.
  * Copyright (c) 2006 Intel Corporation.  All rights reserved.
@@ -31,7 +33,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/include/rdma/ib_sa.h 337097 2018-08-02 08:35:32Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/include/rdma/ib_sa.h 336964 2018-07-31 11:23:44Z hselasky $
  */
 
 #ifndef IB_SA_H

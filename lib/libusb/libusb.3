@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/lib/libusb/libusb.3 302125 2016-06-23 07:12:22Z hselasky $
+.\" $FreeBSD: releng/12.2/lib/libusb/libusb.3 362224 2020-06-16 12:21:55Z kevans $
 .\"
-.Dd June 23, 2016
+.Dd June 9, 2020
 .Dt LIBUSB 3
 .Os
 .Sh NAME
@@ -60,6 +60,33 @@ failure.
 Deinitialise libusb.
 Must be called at the end of the application.
 Other libusb routines may not be called after this function.
+.Pp
+.Ft int
+.Fn libusb_has_capability "uint32_t capability"
+This function checks the runtime capabilities of
+.Nm .
+This function will return non-zero if the given
+.Fa capability
+is supported, 0 if it is not supported.
+The valid values for
+.Fa capability
+are:
+.Bl -tag -width LIBUSB_CAP -offset indent
+.It Va LIBUSB_CAP_HAS_CAPABILITY
+.Nm
+supports
+.Fn libusb_has_capability .
+.It Va LIBUSB_CAP_HAS_HOTPLUG
+.Nm
+supports hotplug notifications.
+.It Va LIBUSB_CAP_HAS_HID_ACCESS
+.Nm
+can access HID devices without requiring user intervention.
+.It Va LIBUSB_CAP_SUPPORTS_DETACH_KERNEL_DRIVER
+.Nm
+supports detaching of the default USB driver with
+.Fn libusb_detach_kernel_driver .
+.El
 .Pp
 .Ft const char *
 .Fn libusb_strerror "int code"
@@ -330,7 +357,7 @@ and a LIBUSB_ERROR code on error.
 .Ft int
 .Fn libusb_get_config_descriptor "libusb_device *dev" "uint8_t config_index" "libusb_config_descriptor **config"
 Get a USB configuration descriptor based on its index
-.Fa idx.
+.Fa idx .
 Returns 0 on success, LIBUSB_ERROR_NOT_FOUND if the configuration does not exist
 and a LIBUSB_ERROR code on error.
 .Pp
@@ -581,7 +608,9 @@ are no threads currently handling events.
 Acquire the event_waiters lock.
 This lock is designed to be obtained in the
 situation where you want to be aware when events are completed, but some other
-thread is event handling so calling libusb_handle_events() is not allowed.
+thread is event handling so calling
+.Fn libusb_handle_events
+is not allowed.
 .Pp
 .Ft void
 .Fn libusb_unlock_event_waiters "libusb_context *ctx"
@@ -591,10 +620,12 @@ Release the event_waiters lock.
 .Fn libusb_wait_for_event "libusb_context *ctx" "struct timeval *tv"
 Wait for another thread to signal completion of an event.
 Must be called
-with the event waiters lock held, see libusb_lock_event_waiters().
+with the event waiters lock held, see
+.Fn libusb_lock_event_waiters .
 This will
 block until the timeout expires or a transfer completes or a thread releases
-the event handling lock through libusb_unlock_events().
+the event handling lock through
+.Fn libusb_unlock_events .
 Returns 0 after a
 transfer completes or another thread stops event handling, and 1 if the
 timeout expired.
@@ -662,7 +693,7 @@ that libusb uses as an event source.
 .Pp
 .Ft const struct libusb_pollfd **
 .Fn libusb_get_pollfds "libusb_context *ctx"
-Retrive a list of file descriptors that should be polled by your main loop as
+Retrieve a list of file descriptors that should be polled by your main loop as
 libusb event sources.
 Returns a NULL-terminated list on success or NULL on failure.
 .Pp
@@ -747,7 +778,7 @@ The library is also compliant with LibUSB version 0.1.12.
 .Xr usbconfig 8 ,
 .Xr usbdump 8
 .Pp
-.Pa http://libusb.sourceforge.net/
+.Lk https://libusb.info/
 .Sh HISTORY
 .Nm
 support first appeared in

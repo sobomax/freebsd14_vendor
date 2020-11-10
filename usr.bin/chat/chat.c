@@ -78,7 +78,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/chat/chat.c 313100 2017-02-02 18:27:20Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/chat/chat.c 311288 2017-01-04 16:24:40Z asomers $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

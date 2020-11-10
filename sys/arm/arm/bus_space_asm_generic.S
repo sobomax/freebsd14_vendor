@@ -36,7 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/bus_space_asm_generic.S 314530 2017-03-02 01:18:46Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/bus_space_asm_generic.S 312292 2017-01-16 16:44:13Z ian $");
 
 /*
  * Generic bus_space functions.

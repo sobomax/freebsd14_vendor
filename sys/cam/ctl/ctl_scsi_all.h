@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, 1998, 1999 Justin T. Gibbs.
  * Copyright (c) 1997, 1998, 2003 Kenneth D. Merry.
  * All rights reserved.
@@ -27,7 +29,7 @@
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_scsi_all.h#2 $
  */
 
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/ctl/ctl_scsi_all.h 229997 2012-01-12 00:34:33Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/ctl/ctl_scsi_all.h 326265 2017-11-27 15:12:43Z pfg $");
 
 __BEGIN_DECLS
 const char *	ctl_scsi_status_string(struct ctl_scsiio *ctsio);

@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/dev/wpi/if_wpivar.h 345636 2019-03-28 09:50:25Z avos $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/wpi/if_wpivar.h 345634 2019-03-28 09:16:00Z avos $	*/
 
 /*-
  * Copyright (c) 2006,2007
@@ -63,6 +63,7 @@ struct wpi_tx_data {
 	bus_addr_t		cmd_paddr;
 	struct mbuf		*m;
 	struct ieee80211_node	*ni;
+	int			hdrlen;
 };
 
 struct wpi_tx_ring {
@@ -170,6 +171,7 @@ struct wpi_softc {
 
 	struct mtx		sc_mtx;
 	struct ieee80211com	sc_ic;
+	struct ieee80211_ratectl_tx_status sc_txs;
 
 	struct mtx		tx_mtx;
 

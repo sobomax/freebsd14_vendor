@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/sort/sort.c 335742 2018-06-27 21:11:28Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/sort/sort.c 335404 2018-06-20 03:31:19Z kevans $");
 
 #include <sys/stat.h>
 #include <sys/sysctl.h>

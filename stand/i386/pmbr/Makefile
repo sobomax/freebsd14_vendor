@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/pmbr/Makefile 329183 2018-02-12 20:51:28Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/pmbr/Makefile 328769 2018-02-02 06:32:26Z imp $
 
 PROG=	pmbr
 STRIP=

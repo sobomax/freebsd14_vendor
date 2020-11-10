@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/ifconfig/ifipsec.c 339036 2018-10-01 08:49:47Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/ifconfig/ifipsec.c 338890 2018-09-22 16:30:48Z ae $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

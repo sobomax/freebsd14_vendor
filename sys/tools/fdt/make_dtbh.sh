@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/sys/tools/fdt/make_dtbh.sh 208749 2010-06-02 17:22:38Z raj $
+# $FreeBSD: releng/12.2/sys/tools/fdt/make_dtbh.sh 208749 2010-06-02 17:22:38Z raj $
 
 # Script generates a $2/fdt_static_dtb.h file.
 

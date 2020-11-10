@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ctld/Makefile 319152 2017-05-29 18:17:34Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ctld/Makefile 352276 2019-09-13 07:08:43Z bapt $
 
 .include <src.opts.mk>
 
@@ -15,7 +15,7 @@ CFLAGS+=	-I${SRCTOP}/sys/dev/iscsi
 #CFLAGS+=	-DICL_KERNEL_PROXY
 MAN=		ctld.8 ctl.conf.5
 
-LIBADD=		bsdxml l md sbuf util ucl m
+LIBADD=		bsdxml md sbuf util ucl m nv
 
 YFLAGS+=	-v
 CLEANFILES=	y.tab.c y.tab.h y.output

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/usr.bin/env/Makefile 203952 2010-02-16 09:10:21Z uqs $
+# $FreeBSD: releng/12.2/tools/regression/usr.bin/env/Makefile 203952 2010-02-16 09:10:21Z uqs $
 
 TESTPGM?=TestProgramNotSpecifed
 

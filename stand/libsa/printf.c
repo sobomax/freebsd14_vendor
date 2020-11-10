@@ -15,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/printf.c 346477 2019-04-21 03:43:27Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/printf.c 354330 2019-11-04 06:35:48Z tsoome $");
 
 /*
  * Standaloneified version of the FreeBSD kernel printf family.
@@ -247,7 +247,17 @@ ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper)
 static int
 kvprintf(char const *fmt, kvprintf_fn_t *func, void *arg, int radix, va_list ap)
 {
-#define PCHAR(c) {int cc=(c); if (func) (*func)(cc, arg); else *d++ = cc; retval++; }
+#define PCHAR(c) { \
+	int cc = (c);				\
+						\
+	if (func) {				\
+		(*func)(cc, arg);		\
+	} else if (d != NULL) {			\
+		*d++ = cc;			\
+	}					\
+	retval++;				\
+	}
+
 	char nbuf[MAXNBUF];
 	char *d;
 	const char *p, *percent, *q;

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/lib/libzfs_core/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/cddl/lib/libzfs_core/Makefile 337696 2018-08-13 03:38:32Z kevans $
 
 .PATH: ${SRCTOP}/cddl/compat/opensolaris/misc
 .PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/zfs

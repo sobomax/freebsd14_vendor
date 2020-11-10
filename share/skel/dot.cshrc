@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/skel/dot.cshrc 278616 2015-02-12 05:35:00Z cperciva $
+# $FreeBSD: releng/12.2/share/skel/dot.cshrc 363525 2020-07-25 11:57:39Z pstef $
 #
 # .cshrc - csh resource script, read at beginning of execution by each shell
 #
@@ -15,12 +15,11 @@ alias ll	ls -lAF
 # These are normally set through /etc/login.conf.  You may override them here
 # if wanted.
 # set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin $HOME/bin)
-# setenv	BLOCKSIZE	K
 # A righteous umask
 # umask 22
 
 setenv	EDITOR	vi
-setenv	PAGER	more
+setenv	PAGER	less
 
 if ($?prompt) then
 	# An interactive shell -- set some stuff up

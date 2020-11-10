@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 by Thomas Moestl <tmm@FreeBSD.org>.
  * Copyright (c) 2005 - 2010 by Marius Strobl <marius@FreeBSD.org>.
  * All rights reserved.
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/ofw_machdep.c 230632 2012-01-27 22:35:53Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/ofw_machdep.c 326262 2017-11-27 15:10:39Z pfg $");
 
 /*
  * Some Open Firmware helper functions that are likely machine dependent.

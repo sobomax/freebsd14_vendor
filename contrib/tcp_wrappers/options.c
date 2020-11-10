@@ -27,7 +27,7 @@
   * such options should clear the "dry_run" flag to inform the caller of this
   * course of action.
   *
-  * $FreeBSD: releng/11.3/contrib/tcp_wrappers/options.c 257404 2013-10-30 22:41:18Z sbruno $
+  * $FreeBSD: releng/12.2/contrib/tcp_wrappers/options.c 350296 2019-07-24 19:16:02Z brooks $
   */
 
 #ifndef lint
@@ -71,8 +71,8 @@ extern jmp_buf tcpd_buf;		/* tcpd_jump() support */
 static char whitespace_eq[] = "= \t\r\n";
 #define whitespace (whitespace_eq + 1)
 
-static char *get_field();		/* chew :-delimited field off string */
-static char *chop_string();		/* strip leading and trailing blanks */
+static char *get_field(char *string);		/* chew :-delimited field off string */
+static char *chop_string(char *string);		/* strip leading and trailing blanks */
 
 /* List of functions that implement the options. Add yours here. */
 

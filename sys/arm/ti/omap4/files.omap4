@@ -1,4 +1,4 @@
-#$FreeBSD: releng/11.3/sys/arm/ti/omap4/files.omap4 295627 2016-02-15 15:28:56Z skra $
+#$FreeBSD: releng/12.2/sys/arm/ti/omap4/files.omap4 308819 2016-11-19 00:55:46Z cognet $
 
 arm/ti/ti_smc.S					standard
 
@@ -13,6 +13,8 @@ arm/ti/omap4/omap4_prcm_clks.c			standard
 arm/ti/omap4/omap4_scm_padconf.c		standard
 arm/ti/omap4/omap4_mp.c				optional	smp
 arm/ti/omap4/omap4_wugen.c			standard
+
+arm/ti/omap4/pandaboard/pandaboard.c		standard
 
 arm/ti/twl/twl.c				optional	twl
 arm/ti/twl/twl_vreg.c				optional	twl twl_vreg

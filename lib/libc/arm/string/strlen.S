@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/arm/string/strlen.S 288373 2015-09-29 16:09:58Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/arm/string/strlen.S 288373 2015-09-29 16:09:58Z kib $");
 
 .syntax	unified
 

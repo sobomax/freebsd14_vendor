@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/grdc/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: releng/12.2/usr.bin/grdc/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	grdc
 MAN=	grdc.6

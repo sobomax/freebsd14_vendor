@@ -1,7 +1,6 @@
-# $FreeBSD: releng/11.3/usr.bin/proccontrol/Makefile 317997 2017-05-09 01:08:45Z brooks $
+# $FreeBSD: releng/12.2/usr.bin/proccontrol/Makefile 345067 2019-03-12 16:33:44Z kib $
 
 PROG=   proccontrol
 WARNS?=	6
-MAN=
 
 .include <bsd.prog.mk>

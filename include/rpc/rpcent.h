@@ -1,7 +1,9 @@
 /*	$NetBSD: rpcent.h,v 1.1 2000/06/02 22:57:56 fvdl Exp $	*/
-/*	$FreeBSD: releng/11.3/include/rpc/rpcent.h 331722 2018-03-29 02:50:57Z eadler $ */
+/*	$FreeBSD: releng/12.2/include/rpc/rpcent.h 326024 2017-11-20 19:45:28Z pfg $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2009, Sun Microsystems, Inc.
  * All rights reserved.
  *

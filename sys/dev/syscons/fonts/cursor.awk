@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/dev/syscons/fonts/cursor.awk 320805 2017-07-08 15:01:55Z bde $
+# $FreeBSD: releng/12.2/sys/dev/syscons/fonts/cursor.awk 320805 2017-07-08 15:01:55Z bde $
 #
 # awk script to convert a bdf file to C declarations in a form specialized
 # for the mouse cursors in syscons/scvgarndr.c.  Usage:

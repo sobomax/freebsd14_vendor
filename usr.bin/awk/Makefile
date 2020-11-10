@@ -1,4 +1,6 @@
-# $FreeBSD: releng/11.3/usr.bin/awk/Makefile 314012 2017-02-21 02:33:28Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/awk/Makefile 328550 2018-01-29 14:15:44Z kevans $
+
+.include <src.opts.mk>
 
 AWKSRC=	${SRCTOP}/contrib/one-true-awk
 .PATH: ${AWKSRC}
@@ -27,5 +29,9 @@ proctab.c: maketab
 
 build-tools: maketab
 maketab: ytab.h maketab.c ${BUILD_TOOLS_META}
+
+# awk needs some work before we can connect these tests to the build
+#HAS_TESTS=
+#SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

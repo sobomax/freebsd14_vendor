@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/libsa32/Makefile 329140 2018-02-11 20:58:00Z kevans $
+# $FreeBSD: releng/12.2/stand/libsa32/Makefile 325694 2017-11-10 23:54:58Z imp $
 
 DO32=1
 

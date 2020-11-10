@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bce/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/bce/Makefile 314651 2017-03-04 10:10:17Z ngie $
 .PATH:	${SRCTOP}/sys/dev/bce
 KMOD=	if_bce
 SRCS=	opt_bce.h if_bce.c miibus_if.h miidevs.h device_if.h bus_if.h pci_if.h

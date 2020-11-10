@@ -25,17 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/mkimg/raw.c 329059 2018-02-09 09:15:43Z manu $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/mkimg/raw.c 343765 2019-02-05 08:05:42Z delphij $");
 
 #include <sys/errno.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "image.h"
 #include "format.h"
-#include "mkimg.h"
 
 static int
 raw_resize(lba_t imgsz __unused)

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Scott Long
  * All rights reserved.
  *
@@ -24,11 +26,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/i386/include/bus_dma.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/i386/include/bus_dma.h 326260 2017-11-27 15:08:52Z pfg $ */
 
 #ifndef _I386_BUS_DMA_H_
 #define _I386_BUS_DMA_H_
 
-#include <sys/bus_dma.h>
+#include <x86/bus_dma.h> 
 
 #endif /* _I386_BUS_DMA_H_ */

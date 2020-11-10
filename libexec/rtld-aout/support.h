@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 1996
  *	Peter Wemm.  All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *-
- * $FreeBSD: releng/11.3/libexec/rtld-aout/support.h 140072 2005-01-11 16:40:29Z trhodes $
+ * $FreeBSD: releng/12.2/libexec/rtld-aout/support.h 326274 2017-11-27 15:25:02Z pfg $
  */
 
 /*

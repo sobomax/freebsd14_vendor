@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/sys/modules/rdma/krping/Makefile 331769 2018-03-30 18:06:29Z hselasky $
+# $FreeBSD: releng/12.2/sys/modules/rdma/krping/Makefile 359378 2020-03-27 20:06:40Z kib $
 .PATH: ${SRCTOP}/sys/contrib/rdma/krping
 
 KMOD= krping
 SRCS= krping.c krping_dev.c getopt.c
-SRCS+=  bus_if.h device_if.h pci_if.h pcib_if.h vnode_if.h
+SRCS+=	${LINUXKPI_GENSRCS}
 SRCS+=  opt_sched.h opt_inet.h opt_inet6.h
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

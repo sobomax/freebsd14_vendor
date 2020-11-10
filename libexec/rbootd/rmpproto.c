@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1988, 1992 The University of Utah and the Center
  *	for Software Science (CSS).
  * Copyright (c) 1992, 1993
@@ -45,7 +47,7 @@
 static const char sccsid[] = "@(#)rmpproto.c	8.1 (Berkeley) 6/4/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/libexec/rbootd/rmpproto.c 331722 2018-03-29 02:50:57Z eadler $";
+  "$FreeBSD: releng/12.2/libexec/rbootd/rmpproto.c 357517 2020-02-04 19:19:48Z dim $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -330,7 +332,8 @@ SendBootRepl(struct rmp_packet *req, RMPCONN *rconn, char *filelist[])
 	 *  stripped file name and spoof the client into thinking that it
 	 *  really got what it wanted.
 	 */
-	filename = (filename = strrchr(filepath,'/'))? ++filename: filepath;
+	filename = strrchr(filepath,'/');
+	filename = filename? filename + 1: filepath;
 
 	/*
 	 *  Check that this is a valid boot file name.

@@ -1,6 +1,8 @@
-/* $FreeBSD: releng/11.3/sys/dev/sound/usb/uaudio_pcm.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/sound/usb/uaudio_pcm.c 359888 2020-04-13 16:33:10Z hselasky $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2002 Hiroyuki Aizu <aizu@navi.org>
  * Copyright (c) 2006 Hans Petter Selasky
  *
@@ -144,7 +146,7 @@ ua_mixer_set(struct snd_mixer *m, unsigned type, unsigned left, unsigned right)
 		do_unlock = 1;
 		mtx_lock(mtx);
 	}
-	uaudio_mixer_set(mix_getdevinfo(m), type, left, right);
+	uaudio_mixer_set(mix_getdevinfo(m), m, type, left, right);
 	if (do_unlock) {
 		mtx_unlock(mtx);
 	}
@@ -164,7 +166,7 @@ ua_mixer_setrecsrc(struct snd_mixer *m, uint32_t src)
 		do_unlock = 1;
 		mtx_lock(mtx);
 	}
-	retval = uaudio_mixer_setrecsrc(mix_getdevinfo(m), src);
+	retval = uaudio_mixer_setrecsrc(mix_getdevinfo(m), m, src);
 	if (do_unlock) {
 		mtx_unlock(mtx);
 	}
@@ -174,7 +176,7 @@ ua_mixer_setrecsrc(struct snd_mixer *m, uint32_t src)
 static int
 ua_mixer_uninit(struct snd_mixer *m)
 {
-	return (uaudio_mixer_uninit_sub(mix_getdevinfo(m)));
+	return (uaudio_mixer_uninit_sub(mix_getdevinfo(m), m));
 }
 
 static kobj_method_t ua_mixer_methods[] = {

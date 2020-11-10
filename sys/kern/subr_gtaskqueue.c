@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_gtaskqueue.c 333338 2018-05-07 21:42:22Z shurd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_gtaskqueue.c 364386 2020-08-19 13:07:04Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,28 +51,32 @@ __FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_gtaskqueue.c 333338 2018-05-07 21:
 static MALLOC_DEFINE(M_GTASKQUEUE, "gtaskqueue", "Group Task Queues");
 static void	gtaskqueue_thread_enqueue(void *);
 static void	gtaskqueue_thread_loop(void *arg);
+static int	task_is_running(struct gtaskqueue *queue, struct gtask *gtask);
+static void	gtaskqueue_drain_locked(struct gtaskqueue *queue, struct gtask *gtask);
 
 TASKQGROUP_DEFINE(softirq, mp_ncpus, 1);
 
 struct gtaskqueue_busy {
-	struct gtask	*tb_running;
-	TAILQ_ENTRY(gtaskqueue_busy) tb_link;
+	struct gtask		*tb_running;
+	u_int			 tb_seq;
+	LIST_ENTRY(gtaskqueue_busy) tb_link;
 };
 
-static struct gtask * const TB_DRAIN_WAITER = (struct gtask *)0x1;
+typedef void (*gtaskqueue_enqueue_fn)(void *context);
 
 struct gtaskqueue {
 	STAILQ_HEAD(, gtask)	tq_queue;
+	LIST_HEAD(, gtaskqueue_busy) tq_active;
+	u_int			tq_seq;
+	int			tq_callouts;
+	struct mtx_padalign	tq_mutex;
 	gtaskqueue_enqueue_fn	tq_enqueue;
 	void			*tq_context;
 	char			*tq_name;
-	TAILQ_HEAD(, gtaskqueue_busy) tq_active;
-	struct mtx		tq_mutex;
 	struct thread		**tq_threads;
 	int			tq_tcount;
 	int			tq_spin;
 	int			tq_flags;
-	int			tq_callouts;
 	taskqueue_callback_fn	tq_callbacks[TASKQUEUE_NUM_CALLBACKS];
 	void			*tq_cb_contexts[TASKQUEUE_NUM_CALLBACKS];
 };
@@ -111,12 +115,11 @@ gtask_dump(struct gtask *gtask)
 #endif
 
 static __inline int
-TQ_SLEEP(struct gtaskqueue *tq, void *p, struct mtx *m, int pri, const char *wm,
-    int t)
+TQ_SLEEP(struct gtaskqueue *tq, void *p, const char *wm)
 {
 	if (tq->tq_spin)
-		return (msleep_spin(p, m, wm, t));
-	return (msleep(p, m, pri, wm, t));
+		return (msleep_spin(p, (struct mtx *)&tq->tq_mutex, wm, 0));
+	return (msleep(p, &tq->tq_mutex, 0, wm, 0));
 }
 
 static struct gtaskqueue *
@@ -140,7 +143,7 @@ _gtaskqueue_create(const char *name, int mflags,
 	}
 
 	STAILQ_INIT(&queue->tq_queue);
-	TAILQ_INIT(&queue->tq_active);
+	LIST_INIT(&queue->tq_active);
 	queue->tq_enqueue = enqueue;
 	queue->tq_context = context;
 	queue->tq_name = tq_name;
@@ -163,7 +166,7 @@ gtaskqueue_terminate(struct thread **pp, struct gtaskqueue *tq)
 
 	while (tq->tq_tcount > 0 || tq->tq_callouts > 0) {
 		wakeup(tq);
-		TQ_SLEEP(tq, pp, &tq->tq_mutex, PWAIT, "taskqueue_destroy", 0);
+		TQ_SLEEP(tq, pp, "gtq_destroy");
 	}
 }
 
@@ -174,12 +177,50 @@ gtaskqueue_free(struct gtaskqueue *queue)
 	TQ_LOCK(queue);
 	queue->tq_flags &= ~TQ_FLAGS_ACTIVE;
 	gtaskqueue_terminate(queue->tq_threads, queue);
-	KASSERT(TAILQ_EMPTY(&queue->tq_active), ("Tasks still running?"));
+	KASSERT(LIST_EMPTY(&queue->tq_active), ("Tasks still running?"));
 	KASSERT(queue->tq_callouts == 0, ("Armed timeout tasks"));
 	mtx_destroy(&queue->tq_mutex);
 	free(queue->tq_threads, M_GTASKQUEUE);
 	free(queue->tq_name, M_GTASKQUEUE);
 	free(queue, M_GTASKQUEUE);
+}
+
+/*
+ * Wait for all to complete, then prevent it from being enqueued
+ */
+void
+grouptask_block(struct grouptask *grouptask)
+{
+	struct gtaskqueue *queue = grouptask->gt_taskqueue;
+	struct gtask *gtask = &grouptask->gt_task;
+
+#ifdef INVARIANTS
+	if (queue == NULL) {
+		gtask_dump(gtask);
+		panic("queue == NULL");
+	}
+#endif
+	TQ_LOCK(queue);
+	gtask->ta_flags |= TASK_NOENQUEUE;
+  	gtaskqueue_drain_locked(queue, gtask);
+	TQ_UNLOCK(queue);
+}
+
+void
+grouptask_unblock(struct grouptask *grouptask)
+{
+	struct gtaskqueue *queue = grouptask->gt_taskqueue;
+	struct gtask *gtask = &grouptask->gt_task;
+
+#ifdef INVARIANTS
+	if (queue == NULL) {
+		gtask_dump(gtask);
+		panic("queue == NULL");
+	}
+#endif
+	TQ_LOCK(queue);
+	gtask->ta_flags &= ~TASK_NOENQUEUE;
+	TQ_UNLOCK(queue);
 }
 
 int
@@ -195,6 +236,10 @@ grouptaskqueue_enqueue(struct gtaskqueue *queue, struct gtask *gtask)
 	if (gtask->ta_flags & TASK_ENQUEUED) {
 		TQ_UNLOCK(queue);
 		return (0);
+	}
+	if (gtask->ta_flags & TASK_NOENQUEUE) {
+		TQ_UNLOCK(queue);
+		return (EAGAIN);
 	}
 	STAILQ_INSERT_TAIL(&queue->tq_queue, gtask, ta_link);
 	gtask->ta_flags |= TASK_ENQUEUED;
@@ -239,7 +284,7 @@ gtaskqueue_drain_tq_queue(struct gtaskqueue *queue)
 	 * have completed or are currently executing.
 	 */
 	while (t_barrier.ta_flags & TASK_ENQUEUED)
-		TQ_SLEEP(queue, &t_barrier, &queue->tq_mutex, PWAIT, "-", 0);
+		TQ_SLEEP(queue, &t_barrier, "gtq_qdrain");
 }
 
 /*
@@ -250,31 +295,24 @@ gtaskqueue_drain_tq_queue(struct gtaskqueue *queue)
 static void
 gtaskqueue_drain_tq_active(struct gtaskqueue *queue)
 {
-	struct gtaskqueue_busy tb_marker, *tb_first;
+	struct gtaskqueue_busy *tb;
+	u_int seq;
 
-	if (TAILQ_EMPTY(&queue->tq_active))
+	if (LIST_EMPTY(&queue->tq_active))
 		return;
 
 	/* Block taskq_terminate().*/
 	queue->tq_callouts++;
 
-	/*
-	 * Wait for all currently executing taskqueue threads
-	 * to go idle.
-	 */
-	tb_marker.tb_running = TB_DRAIN_WAITER;
-	TAILQ_INSERT_TAIL(&queue->tq_active, &tb_marker, tb_link);
-	while (TAILQ_FIRST(&queue->tq_active) != &tb_marker)
-		TQ_SLEEP(queue, &tb_marker, &queue->tq_mutex, PWAIT, "-", 0);
-	TAILQ_REMOVE(&queue->tq_active, &tb_marker, tb_link);
-
-	/*
-	 * Wakeup any other drain waiter that happened to queue up
-	 * without any intervening active thread.
-	 */
-	tb_first = TAILQ_FIRST(&queue->tq_active);
-	if (tb_first != NULL && tb_first->tb_running == TB_DRAIN_WAITER)
-		wakeup(tb_first);
+	/* Wait for any active task with sequence from the past. */
+	seq = queue->tq_seq;
+restart:
+	LIST_FOREACH(tb, &queue->tq_active, tb_link) {
+		if ((int)(tb->tb_seq - seq) <= 0) {
+			TQ_SLEEP(queue, tb->tb_running, "gtq_adrain");
+			goto restart;
+		}
+	}
 
 	/* Release taskqueue_terminate(). */
 	queue->tq_callouts--;
@@ -306,40 +344,27 @@ static void
 gtaskqueue_run_locked(struct gtaskqueue *queue)
 {
 	struct gtaskqueue_busy tb;
-	struct gtaskqueue_busy *tb_first;
 	struct gtask *gtask;
 
 	KASSERT(queue != NULL, ("tq is NULL"));
 	TQ_ASSERT_LOCKED(queue);
 	tb.tb_running = NULL;
+	LIST_INSERT_HEAD(&queue->tq_active, &tb, tb_link);
 
-	while (STAILQ_FIRST(&queue->tq_queue)) {
-		TAILQ_INSERT_TAIL(&queue->tq_active, &tb, tb_link);
-
-		/*
-		 * Carefully remove the first task from the queue and
-		 * clear its TASK_ENQUEUED flag
-		 */
-		gtask = STAILQ_FIRST(&queue->tq_queue);
-		KASSERT(gtask != NULL, ("task is NULL"));
+	while ((gtask = STAILQ_FIRST(&queue->tq_queue)) != NULL) {
 		STAILQ_REMOVE_HEAD(&queue->tq_queue, ta_link);
 		gtask->ta_flags &= ~TASK_ENQUEUED;
 		tb.tb_running = gtask;
+		tb.tb_seq = ++queue->tq_seq;
 		TQ_UNLOCK(queue);
 
 		KASSERT(gtask->ta_func != NULL, ("task->ta_func is NULL"));
 		gtask->ta_func(gtask->ta_context);
 
 		TQ_LOCK(queue);
-		tb.tb_running = NULL;
 		wakeup(gtask);
-
-		TAILQ_REMOVE(&queue->tq_active, &tb, tb_link);
-		tb_first = TAILQ_FIRST(&queue->tq_active);
-		if (tb_first != NULL &&
-		    tb_first->tb_running == TB_DRAIN_WAITER)
-			wakeup(tb_first);
 	}
+	LIST_REMOVE(&tb, tb_link);
 }
 
 static int
@@ -348,7 +373,7 @@ task_is_running(struct gtaskqueue *queue, struct gtask *gtask)
 	struct gtaskqueue_busy *tb;
 
 	TQ_ASSERT_LOCKED(queue);
-	TAILQ_FOREACH(tb, &queue->tq_active, tb_link) {
+	LIST_FOREACH(tb, &queue->tq_active, tb_link) {
 		if (tb->tb_running == gtask)
 			return (1);
 	}
@@ -377,6 +402,13 @@ gtaskqueue_cancel(struct gtaskqueue *queue, struct gtask *gtask)
 	return (error);
 }
 
+static void
+gtaskqueue_drain_locked(struct gtaskqueue *queue, struct gtask *gtask)
+{
+	while ((gtask->ta_flags & TASK_ENQUEUED) || task_is_running(queue, gtask))
+		TQ_SLEEP(queue, gtask, "gtq_drain");
+}
+
 void
 gtaskqueue_drain(struct gtaskqueue *queue, struct gtask *gtask)
 {
@@ -385,8 +417,7 @@ gtaskqueue_drain(struct gtaskqueue *queue, struct gtask *gtask)
 		WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL, __func__);
 
 	TQ_LOCK(queue);
-	while ((gtask->ta_flags & TASK_ENQUEUED) || task_is_running(queue, gtask))
-		TQ_SLEEP(queue, gtask, &queue->tq_mutex, PWAIT, "-", 0);
+	gtaskqueue_drain_locked(queue, gtask);
 	TQ_UNLOCK(queue);
 }
 
@@ -511,7 +542,7 @@ gtaskqueue_thread_loop(void *arg)
 		 */
 		if ((tq->tq_flags & TQ_FLAGS_ACTIVE) == 0)
 			break;
-		TQ_SLEEP(tq, tq, &tq->tq_mutex, 0, "-", 0);
+		TQ_SLEEP(tq, tq, "-");
 	}
 	gtaskqueue_run_locked(tq);
 	/*
@@ -537,7 +568,7 @@ gtaskqueue_thread_enqueue(void *context)
 
 	tqp = context;
 	tq = *tqp;
-	wakeup_one(tq);
+	wakeup_any(tq);
 }
 
 
@@ -560,7 +591,7 @@ struct taskqgroup_cpu {
 struct taskqgroup {
 	struct taskqgroup_cpu tqg_queue[MAXCPU];
 	struct mtx	tqg_lock;
-	char *		tqg_name;
+	const char *	tqg_name;
 	int		tqg_adjusting;
 	int		tqg_stride;
 	int		tqg_cnt;
@@ -630,7 +661,7 @@ taskqgroup_find(struct taskqgroup *qgroup, void *uniq)
 		}
 	}
 	if (idx == -1)
-		panic("taskqgroup_find: Failed to pick a qid.");
+		panic("%s: failed to pick a qid.", __func__);
 
 	return (idx);
 }
@@ -662,7 +693,7 @@ SYSINIT(tqg_record_smp_started, SI_SUB_SMP, SI_ORDER_FOURTH,
 
 void
 taskqgroup_attach(struct taskqgroup *qgroup, struct grouptask *gtask,
-    void *uniq, int irq, char *name)
+    void *uniq, int irq, const char *name)
 {
 	cpuset_t mask;
 	int qid, error;
@@ -683,7 +714,8 @@ taskqgroup_attach(struct taskqgroup *qgroup, struct grouptask *gtask,
 		mtx_unlock(&qgroup->tqg_lock);
 		error = intr_setaffinity(irq, CPU_WHICH_IRQ, &mask);
 		if (error)
-			printf("%s: setaffinity failed for %s: %d\n", __func__, gtask->gt_name, error);
+			printf("%s: binding interrupt failed for %s: %d\n",
+			    __func__, gtask->gt_name, error);
 	} else
 		mtx_unlock(&qgroup->tqg_lock);
 }
@@ -705,13 +737,12 @@ taskqgroup_attach_deferred(struct taskqgroup *qgroup, struct grouptask *gtask)
 		error = intr_setaffinity(gtask->gt_irq, CPU_WHICH_IRQ, &mask);
 		mtx_lock(&qgroup->tqg_lock);
 		if (error)
-			printf("%s: %s setaffinity failed: %d\n", __func__, gtask->gt_name, error);
+			printf("%s: binding interrupt failed for %s: %d\n",
+			    __func__, gtask->gt_name, error);
 
 	}
 	qgroup->tqg_queue[qid].tgc_cnt++;
-
-	LIST_INSERT_HEAD(&qgroup->tqg_queue[qid].tgc_tasks, gtask,
-			 gt_list);
+	LIST_INSERT_HEAD(&qgroup->tqg_queue[qid].tgc_tasks, gtask, gt_list);
 	MPASS(qgroup->tqg_queue[qid].tgc_taskq != NULL);
 	gtask->gt_taskqueue = qgroup->tqg_queue[qid].tgc_taskq;
 	mtx_unlock(&qgroup->tqg_lock);
@@ -719,7 +750,7 @@ taskqgroup_attach_deferred(struct taskqgroup *qgroup, struct grouptask *gtask)
 
 int
 taskqgroup_attach_cpu(struct taskqgroup *qgroup, struct grouptask *gtask,
-	void *uniq, int cpu, int irq, char *name)
+    void *uniq, int cpu, int irq, const char *name)
 {
 	cpuset_t mask;
 	int i, qid, error;
@@ -754,7 +785,8 @@ taskqgroup_attach_cpu(struct taskqgroup *qgroup, struct grouptask *gtask,
 	if (irq != -1 && tqg_smp_started) {
 		error = intr_setaffinity(irq, CPU_WHICH_IRQ, &mask);
 		if (error)
-			printf("%s: setaffinity failed: %d\n", __func__, error);
+			printf("%s: binding interrupt failed for %s: %d\n",
+			    __func__, gtask->gt_name, error);
 	}
 	return (0);
 }
@@ -792,7 +824,8 @@ taskqgroup_attach_cpu_deferred(struct taskqgroup *qgroup, struct grouptask *gtas
 	if (irq != -1) {
 		error = intr_setaffinity(irq, CPU_WHICH_IRQ, &mask);
 		if (error)
-			printf("%s: setaffinity failed: %d\n", __func__, error);
+			printf("%s: binding interrupt failed for %s: %d\n",
+			    __func__, gtask->gt_name, error);
 	}
 	return (0);
 }
@@ -802,16 +835,18 @@ taskqgroup_detach(struct taskqgroup *qgroup, struct grouptask *gtask)
 {
 	int i;
 
+	grouptask_block(gtask);
 	mtx_lock(&qgroup->tqg_lock);
 	for (i = 0; i < qgroup->tqg_cnt; i++)
 		if (qgroup->tqg_queue[i].tgc_taskq == gtask->gt_taskqueue)
 			break;
 	if (i == qgroup->tqg_cnt)
-		panic("taskqgroup_detach: task %s not in group\n", gtask->gt_name);
+		panic("%s: task %s not in group", __func__, gtask->gt_name);
 	qgroup->tqg_queue[i].tgc_cnt--;
 	LIST_REMOVE(gtask, gt_list);
 	mtx_unlock(&qgroup->tqg_lock);
 	gtask->gt_taskqueue = NULL;
+	gtask->gt_task.ta_flags &= ~TASK_NOENQUEUE;
 }
 
 static void
@@ -829,8 +864,7 @@ taskqgroup_binder(void *ctx)
 	thread_unlock(curthread);
 
 	if (error)
-		printf("%s: setaffinity failed: %d\n", __func__,
-		    error);
+		printf("%s: binding curthread failed: %d\n", __func__, error);
 	free(gtask, M_DEVBUF);
 }
 
@@ -960,7 +994,7 @@ taskqgroup_adjust(struct taskqgroup *qgroup, int cnt, int stride)
 }
 
 struct taskqgroup *
-taskqgroup_create(char *name)
+taskqgroup_create(const char *name)
 {
 	struct taskqgroup *qgroup;
 
@@ -975,5 +1009,5 @@ taskqgroup_create(char *name)
 void
 taskqgroup_destroy(struct taskqgroup *qgroup)
 {
-
 }
+

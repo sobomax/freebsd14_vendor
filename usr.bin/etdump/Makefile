@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/etdump/Makefile 332947 2018-04-24 17:35:13Z benno $
+# $FreeBSD: releng/12.2/usr.bin/etdump/Makefile 331949 2018-04-03 21:08:10Z benno $
 
 PROG=	etdump
 

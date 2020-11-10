@@ -4,7 +4,7 @@
  *
  * David Xu <davidxu@freebsd.org>
  *
- * $FreeBSD: releng/11.3/tools/regression/tls/ttls4/ttls4.c 291984 2015-12-08 05:27:22Z ngie $
+ * $FreeBSD: releng/12.2/tools/regression/tls/ttls4/ttls4.c 291984 2015-12-08 05:27:22Z ngie $
  */
 
 #include <stdio.h>

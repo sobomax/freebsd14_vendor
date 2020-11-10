@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)4.t	5.1 (Berkeley) 4/17/91
 .\"
-.\"	$FreeBSD: releng/11.3/share/doc/papers/sysperf/4.t 263142 2014-03-14 03:07:51Z eadler $
+.\"	$FreeBSD: releng/12.2/share/doc/papers/sysperf/4.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .ds RH Performance Improvements
 .NH

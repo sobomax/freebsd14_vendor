@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/allwinner/a10_dmac.c 309759 2016-12-09 20:21:48Z manu $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/a10_dmac.c 308235 2016-11-02 23:53:47Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

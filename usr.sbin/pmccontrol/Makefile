@@ -1,8 +1,8 @@
 #
-# $FreeBSD: releng/11.3/usr.sbin/pmccontrol/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/pmccontrol/Makefile 334749 2018-06-07 02:03:22Z mmacy $
 #
 
-PROG=	pmccontrol
+PROG_CXX=	pmccontrol
 MAN=	pmccontrol.8
 
 LIBADD+=	pmc

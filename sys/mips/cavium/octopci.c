@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2011 Juli Mallett <jmallett@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/cavium/octopci.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/cavium/octopci.c 326259 2017-11-27 15:07:26Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/cavium/octopci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/cavium/octopci.c 326259 2017-11-27 15:07:26Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -978,6 +980,7 @@ static device_method_t octopci_methods[] = {
 	DEVMETHOD(pcib_read_config,	octopci_read_config),
 	DEVMETHOD(pcib_write_config,	octopci_write_config),
 	DEVMETHOD(pcib_route_interrupt,	octopci_route_interrupt),
+	DEVMETHOD(pcib_request_feature,	pcib_request_feature_allow),
 
 	DEVMETHOD_END
 };

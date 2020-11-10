@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/utilities/vmbus_icvar.h 311379 2017-01-05 08:02:37Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/utilities/vmbus_icvar.h 310314 2016-12-20 05:26:38Z sephe $
  */
 
 #ifndef _VMBUS_ICVAR_H_

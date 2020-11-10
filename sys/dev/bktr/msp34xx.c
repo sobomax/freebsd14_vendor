@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997-2001 Gerd Knorr <kraxel@bytesex.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/bktr/msp34xx.c 332924 2018-04-24 10:07:13Z riggs $
+ * $FreeBSD: releng/12.2/sys/dev/bktr/msp34xx.c 332861 2018-04-21 18:43:09Z riggs $
  */
 
 /*

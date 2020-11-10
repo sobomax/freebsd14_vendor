@@ -1,5 +1,7 @@
 #!/bin/sh
 #-
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2010 iXsystems, Inc.  All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/pc-sysinstall/backend-query/detect-laptop.sh 209753 2010-07-07 00:03:06Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/pc-sysinstall/backend-query/detect-laptop.sh 326275 2017-11-27 15:28:26Z pfg $
 
 if devinfo | grep -q acpi_acad0; then
   echo "laptop: YES"

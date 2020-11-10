@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2011 Nexenta Systems, Inc.  All rights reserved.
  * Copyright 2012 Garrett D'Amore <garrett@damore.org>  All rights reserved.
  * Copyright 2015 John Marino <draco@marino.st>
@@ -35,7 +35,7 @@
  * this approach means that we need a method for each and every encoding.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/localedef/wide.c 321121 2017-07-18 08:35:22Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/localedef/wide.c 318278 2017-05-14 18:47:09Z ngie $");
 
 #include <ctype.h>
 #include <stdlib.h>

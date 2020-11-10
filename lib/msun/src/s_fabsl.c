@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Dag-Erling Smørgrav
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/msun/src/s_fabsl.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/msun/src/s_fabsl.c 326219 2017-11-26 02:00:33Z pfg $
  */
 
 #include <math.h>

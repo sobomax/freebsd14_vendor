@@ -1,6 +1,8 @@
 /*-
  * Data structures and definitions for the CAM system.
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -25,14 +27,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cam/cam.h 298810 2016-04-29 21:05:48Z pfg $
+ * $FreeBSD: releng/12.2/sys/cam/cam.h 326265 2017-11-27 15:12:43Z pfg $
  */
 
 #ifndef _CAM_CAM_H
 #define _CAM_CAM_H 1
 
 #ifdef _KERNEL
-#include <opt_cam.h>
+#include "opt_cam.h"
 #endif
 
 #include <sys/cdefs.h>
@@ -290,7 +292,7 @@ typedef enum {
 	/* SIM ready to take more commands */
 	CAM_RELEASE_SIMQ	= 0x100,
 
-	/* SIM has this command in it's queue */
+	/* SIM has this command in its queue */
 	CAM_SIM_QUEUED		= 0x200,
 
 	/* Quality of service data is valid */

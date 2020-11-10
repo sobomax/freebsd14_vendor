@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/allwinner/aw_wdog.h 296041 2016-02-25 16:50:36Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm/allwinner/aw_wdog.h 296041 2016-02-25 16:50:36Z andrew $
  *
  */
 #ifndef __AW_WDOG_H__

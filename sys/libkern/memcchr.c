@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/memcchr.c 229198 2012-01-01 20:26:11Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/memcchr.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/libkern.h>
 #include <sys/limits.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011-2015 LSI Corp.
  * Copyright (c) 2013-2015 Avago Technologies
  * All rights reserved.
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mps/mps_mapping.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mps/mps_mapping.c 328218 2018-01-21 15:42:36Z pfg $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
@@ -1149,9 +1151,6 @@ _mapping_get_dev_info(struct mps_softc *sc,
 				    "disk type (SSD or HDD) and SAS Address "
 				    "for SATA device with handle 0x%04x\n",
 				    __func__, phy_change->dev_handle);
-			} else {
-				mps_dprint(sc, MPS_INFO, "SAS Address for SATA "
-				    "device = %jx\n", sas_address);
 			}
 		}
 

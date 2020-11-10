@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/nexus.c 300173 2016-05-18 23:39:31Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/nexus.c 332310 2018-04-08 22:59:34Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -545,7 +545,7 @@ nexus_setup_dinfo(device_t dev, phandle_t node)
 		return (NULL);
 	}
 	resource_list_init(&ndi->ndi_rl);
-	nreg = OF_getprop_alloc(node, "reg", sizeof(*reg), (void **)&reg);
+	nreg = OF_getprop_alloc_multi(node, "reg", sizeof(*reg), (void **)&reg);
 	if (nreg == -1) {
 		device_printf(dev, "<%s>: incomplete\n",
 		    ndi->ndi_obdinfo.obd_name);
@@ -561,7 +561,7 @@ nexus_setup_dinfo(device_t dev, phandle_t node)
 	}
 	OF_prop_free(reg);
 
-	nintr = OF_getprop_alloc(node, "interrupts",  sizeof(*intr),
+	nintr = OF_getprop_alloc_multi(node, "interrupts",  sizeof(*intr),
 	    (void **)&intr);
 	if (nintr > 0) {
 		if (OF_getprop(node, PCPU_GET(impl) < CPU_IMPL_ULTRASPARCIII ?

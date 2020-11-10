@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/rmail/Makefile 319184 2017-05-30 04:15:40Z ngie $
+# $FreeBSD: releng/12.2/bin/rmail/Makefile 314655 2017-03-04 11:31:08Z ngie $
 
 PACKAGE=sendmail
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

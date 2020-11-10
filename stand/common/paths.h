@@ -23,17 +23,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/common/paths.h 348866 2019-06-10 15:55:38Z kevans $
+ * $FreeBSD: releng/12.2/stand/common/paths.h 353991 2019-10-24 03:21:30Z kevans $
  */
 
 #ifndef _PATHS_H_
 #define	_PATHS_H_
+
+#include <sys/boot.h>	/* To get kernel path */
 
 #define PATH_DOTCONFIG	"/boot.config"
 #define PATH_CONFIG	"/boot/config"
 #define PATH_LOADER	"/boot/loader"
 #define PATH_LOADER_EFI	"/boot/loader.efi"
 #define PATH_LOADER_ZFS	"/boot/zfsloader"
-#define PATH_KERNEL	"/boot/kernel/kernel"
+#define PATH_LOADER_CONF "/boot/loader.conf"
+#define PATH_DEFAULTS_LOADER_CONF "/boot/defaults/loader.conf"
 
 #endif /* _PATHS_H_ */

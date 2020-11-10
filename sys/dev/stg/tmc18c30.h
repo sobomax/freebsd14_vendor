@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/dev/stg/tmc18c30.h 194023 2009-06-11 17:14:28Z avg $
+ * $FreeBSD: releng/12.2/sys/dev/stg/tmc18c30.h 194023 2009-06-11 17:14:28Z avg $
  */
 
 extern devclass_t stg_devclass;

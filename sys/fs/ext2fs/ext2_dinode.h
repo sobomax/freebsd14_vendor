@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Aditya Sarawgi
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/ext2fs/ext2_dinode.h 305493 2016-09-06 19:51:24Z pfg $
+ * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_dinode.h 331095 2018-03-17 12:59:55Z emaste $
  */
 
 #ifndef _FS_EXT2FS_EXT2_DINODE_H_

@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_read_support_format_warc.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_support_format_warc.c 358087 2020-02-19 01:46:43Z mm $");
 
 /**
  * WARC is standardised by ISO TC46/SC4/WG12 and currently available as
@@ -626,7 +626,8 @@ _warc_rdver(const char *buf, size_t bsz)
 		if (ver >= 1200U) {
 			if (memcmp(c, "\r\n", 2U) != 0)
 				ver = 0U;
-		} else if (ver < 1200U) {
+		} else {
+			/* ver < 1200U */
 			if (*c != ' ' && *c != '\t')
 				ver = 0U;
 		}

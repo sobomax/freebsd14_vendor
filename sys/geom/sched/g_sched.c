@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2010 Fabio Checconi
  * Copyright (c) 2009-2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved.
@@ -27,7 +29,7 @@
 
 /*
  * $Id$
- * $FreeBSD: releng/11.3/sys/geom/sched/g_sched.c 297793 2016-04-10 23:07:00Z pfg $
+ * $FreeBSD: releng/12.2/sys/geom/sched/g_sched.c 326270 2017-11-27 15:17:37Z pfg $
  *
  * Main control module for geom-based disk schedulers ('sched').
  *

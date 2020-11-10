@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/drm.h 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/drm.h 365376 2020-09-06 11:23:58Z zeising $");
 
 /**
  * \mainpage
@@ -1144,5 +1144,14 @@ typedef struct drm_mm_type_arg drm_mm_type_arg_t;
 typedef struct drm_mm_init_arg drm_mm_init_arg_t;
 typedef enum drm_bo_type drm_bo_type_t;
 #endif
+
+#define DRM_OBSOLETE(dev)							\
+    do {									\
+	device_printf(dev, "=======================================================\n"); \
+	device_printf(dev, "This code is deprecated.\n"); \
+	device_printf(dev, "=======================================================\n"); \
+	gone_in_dev(dev, 13, "drm drivers");					\
+    } while (0)
+
 
 #endif

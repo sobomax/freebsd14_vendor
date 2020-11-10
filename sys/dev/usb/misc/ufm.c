@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 M. Warner Losh
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/misc/ufm.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/misc/ufm.c 364431 2020-08-20 17:35:09Z imp $");
 
 
 #include <sys/stdint.h>
@@ -163,6 +165,7 @@ ufm_attach(device_t dev)
 	if (error) {
 		goto detach;
 	}
+	gone_in_dev(dev, 13, "Driver no longer relevant");
 	return (0);			/* success */
 
 detach:

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/liblua32/Makefile 329166 2018-02-12 15:31:53Z imp $
+# $FreeBSD: releng/12.2/stand/liblua32/Makefile 329166 2018-02-12 15:31:53Z imp $
 
 DO32=1
 

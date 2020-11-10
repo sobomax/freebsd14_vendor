@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
 
 #include <isa/isavar.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/isa/sndbuf_dma.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/isa/sndbuf_dma.c 326255 2017-11-27 14:52:40Z pfg $");
 
 int
 sndbuf_dmasetup(struct snd_dbuf *b, struct resource *drq)

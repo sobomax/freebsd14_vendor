@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/rpc.rquotad/rquotad.c 339008 2018-09-29 00:44:23Z sef $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/rpc.rquotad/rquotad.c 336017 2018-07-05 22:56:13Z sef $");
 
 #include <sys/param.h>
 #include <sys/mount.h>

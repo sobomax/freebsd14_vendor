@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/fdt/fdt_pinctrl.h 271546 2014-09-13 19:03:32Z ian $
+ * $FreeBSD: releng/12.2/sys/dev/fdt/fdt_pinctrl.h 271546 2014-09-13 19:03:32Z ian $
  */
 
 #ifndef DEV_FDT_PINCTRL_H

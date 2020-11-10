@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.sbin/lpr/lpc/Makefile 321276 2017-07-20 01:07:15Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/lpr/lpc/Makefile 314475 2017-03-01 05:14:45Z ngie $
 
 .PATH: ${.CURDIR:H}/common_source
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998-2004 Dag-Erling Smørgrav
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libfetch/fetch.c 357217 2020-01-28 18:55:25Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libfetch/fetch.c 358750 2020-03-08 18:08:45Z emaste $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -323,6 +325,9 @@ fetch_pctdecode(char *dst, const char *src, size_t dlen)
 		    (d2 = fetch_hexval(s[2])) >= 0 && (d1 > 0 || d2 > 0)) {
 			c = d1 << 4 | d2;
 			s += 2;
+		} else if (s[0] == '%') {
+			/* Invalid escape sequence. */
+			return (NULL);
 		} else {
 			c = *s;
 		}

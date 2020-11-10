@@ -26,7 +26,7 @@
 #
 #	Email: Mike Makonnen <mtm@FreeBSD.Org>
 #
-# $FreeBSD: releng/11.3/usr.sbin/adduser/rmuser.sh 330449 2018-03-05 07:26:05Z eadler $
+# $FreeBSD: releng/12.2/usr.sbin/adduser/rmuser.sh 326276 2017-11-27 15:37:16Z pfg $
 #
 
 ATJOBDIR="/var/at/jobs"

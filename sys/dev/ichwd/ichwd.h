@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Texas A&M University
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ichwd/ichwd.h 342567 2018-12-28 08:50:27Z avg $
+ * $FreeBSD: releng/12.2/sys/dev/ichwd/ichwd.h 359360 2020-03-27 15:20:19Z jhibbits $
  */
 
 #ifndef _ICHWD_H_
@@ -65,6 +67,7 @@ struct ichwd_softc {
 
 #define	VENDORID_INTEL		0x8086
 #define	DEVICEID_BAYTRAIL	0x0f1c
+#define	DEVICEID_C3000		0x19df
 #define	DEVICEID_CPT0		0x1c40
 #define	DEVICEID_CPT1		0x1c41
 #define	DEVICEID_CPT2		0x1c42

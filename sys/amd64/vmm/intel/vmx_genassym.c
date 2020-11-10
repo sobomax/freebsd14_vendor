@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/intel/vmx_genassym.c 337794 2018-08-14 17:51:12Z kib $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmx_genassym.c 337785 2018-08-14 17:29:41Z kib $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/vmm/intel/vmx_genassym.c 337794 2018-08-14 17:51:12Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmx_genassym.c 337785 2018-08-14 17:29:41Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

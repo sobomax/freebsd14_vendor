@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/kshim/sysinit.h 269541 2014-08-04 23:00:13Z brooks $ */
+/* $FreeBSD: releng/12.2/stand/kshim/sysinit.h 269541 2014-08-04 23:00:13Z brooks $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *

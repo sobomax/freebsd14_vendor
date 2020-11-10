@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
@@ -6,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/11.3/sys/sys/timetc.h 305866 2016-09-16 10:04:28Z kib $
+ * $FreeBSD: releng/12.2/sys/sys/timetc.h 326823 2017-12-13 16:13:17Z pfg $
  */
 
 #ifndef _SYS_TIMETC_H_

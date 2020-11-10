@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/lib/libucl/Makefile 301339 2016-06-04 14:57:25Z bapt $
+# $FreeBSD: releng/12.2/lib/libucl/Makefile 353450 2019-10-12 01:02:45Z gjb $
 
-LIBUCL=	${.CURDIR}/../../contrib/libucl
+LIBUCL=	${SRCTOP}/contrib/libucl
 
 PACKAGE=lib${LIB}
 LIB=		ucl
@@ -17,7 +17,8 @@ SRCS=		ucl_emitter_streamline.c \
 		ucl_util.c
 
 .PATH:		${LIBUCL}/src \
-		${LIBUCL}/include
+		${LIBUCL}/include \
+		${LIBUCL}/doc
 
 INCS=		ucl.h
 LIBADD=		m
@@ -27,5 +28,7 @@ CFLAGS+=	-I${LIBUCL}/include \
 		-I${LIBUCL}/src \
 		-I${LIBUCL}/uthash \
 		-I${LIBUCL}/klib
+
+MAN+=		libucl.3
 
 .include <bsd.lib.mk>

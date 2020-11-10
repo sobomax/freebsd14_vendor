@@ -1,6 +1,7 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009, 2010 Xin LI <delphij@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/strlen.c 242506 2012-11-03 04:28:53Z delphij $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/strlen.c 333449 2018-05-10 06:41:08Z delphij $");
 
 #include <sys/libkern.h>
 #include <sys/limits.h>

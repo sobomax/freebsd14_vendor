@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/mntent.h 324062 2017-09-27 15:07:41Z asomers $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/mntent.h 323194 2017-09-05 19:40:04Z asomers $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.

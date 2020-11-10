@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/syscons/scrnmaps/Makefile 337477 2018-08-08 18:05:14Z bdrewery $
+# $FreeBSD: releng/12.2/share/syscons/scrnmaps/Makefile 335733 2018-06-27 19:29:15Z bdrewery $
 
 SCRMAPS = armscii8-2haik8.scm \
 	  iso-8859-1_to_cp437.scm iso-8859-4_for_vga9.scm \

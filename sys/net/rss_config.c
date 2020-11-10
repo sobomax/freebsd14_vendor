@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/net/rss_config.c 298995 2016-05-03 18:05:43Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/rss_config.c 324519 2017-10-11 06:08:01Z sephe $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"
@@ -489,7 +489,6 @@ rss_gethashconfig(void)
 	|    RSS_HASHTYPE_RSS_TCP_IPV6_EX
 #if 0
 	|    RSS_HASHTYPE_RSS_UDP_IPV4
-	|    RSS_HASHTYPE_RSS_UDP_IPV4_EX
 	|    RSS_HASHTYPE_RSS_UDP_IPV6
 	|    RSS_HASHTYPE_RSS_UDP_IPV6_EX
 #endif

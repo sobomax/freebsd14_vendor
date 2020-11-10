@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Fabien Thomas
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hwpmc/hwpmc_uncore.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/hwpmc/hwpmc_uncore.h 334456 2018-05-31 22:41:07Z mmacy $
  */
 
 #ifndef _DEV_HWPMC_UNCORE_H_
@@ -54,7 +56,6 @@ struct pmc_md_ucp_op_pmcallocate {
 #define	UCP_EN		(1 << 22)
 #define	UCP_INV		(1 << 23)
 #define	UCP_CMASK(C)	(((C) & 0xFF) << 24)
-
 #ifdef	_KERNEL
 
 #define	DCTL_FLAG_UNC_PMI	(1ULL << 13)

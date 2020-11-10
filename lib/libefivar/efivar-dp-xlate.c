@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 Netflix, Inc.
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libefivar/efivar-dp-xlate.c 332123 2018-04-06 18:10:38Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libefivar/efivar-dp-xlate.c 351913 2019-09-05 23:27:59Z imp $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>

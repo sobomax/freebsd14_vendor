@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libiconv_modules/EUCTW/citrus_euctw.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libiconv_modules/EUCTW/citrus_euctw.h 326219 2017-11-26 02:00:33Z pfg $ */
 /*	$NetBSD: citrus_euctw.h,v 1.2 2003/06/25 09:51:42 tshiozak Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c)2002 Citrus Project,
  * All rights reserved.
  *

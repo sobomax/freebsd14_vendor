@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nscd/parser.c 238094 2012-07-04 09:02:12Z se $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nscd/parser.c 238094 2012-07-04 09:02:12Z se $");
 
 #include <sys/time.h>
 

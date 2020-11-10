@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/vmware/Makefile 254738 2013-08-23 20:47:16Z bryanv $
+# $FreeBSD: releng/12.2/sys/modules/vmware/Makefile 331510 2018-03-25 00:57:00Z mp $
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,6 +23,6 @@
 # SUCH DAMAGE.
 #
 
-SUBDIR=	vmxnet3
+SUBDIR=	 vmci vmxnet3
 
 .include <bsd.subdir.mk>

@@ -1,6 +1,6 @@
 #!/bin/sh
 # This file is in the public domain
-# $FreeBSD: releng/11.3/tools/tools/build_option_survey/mkhtml.sh 157132 2006-03-25 21:51:46Z phk $
+# $FreeBSD: releng/12.2/tools/tools/build_option_survey/mkhtml.sh 338524 2018-09-07 15:48:01Z rgrimes $
 
 set -e
 
@@ -219,6 +219,3 @@ echo '
 
 ' >> $H
 echo "</HTML>" >> $H
-
-echo "rsync phk"
-rsync -r $HDIR/. phk@phk:www/misc/build_options

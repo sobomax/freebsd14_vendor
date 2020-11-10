@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/tests/sys/mqueue/mqtest5.c 282137 2015-04-28 10:56:59Z ngie $ */
+/* $FreeBSD: releng/12.2/tests/sys/mqueue/mqtest5.c 282137 2015-04-28 10:56:59Z ngie $ */
 
 #include <sys/types.h>
 #include <sys/event.h>

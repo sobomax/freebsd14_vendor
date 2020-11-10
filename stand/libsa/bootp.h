@@ -19,7 +19,7 @@
  * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
  *
- * $FreeBSD: releng/11.3/stand/libsa/bootp.h 344408 2019-02-21 02:43:48Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/bootp.h 337038 2018-08-01 12:06:39Z tsoome $
  */
 
 #ifndef _BOOTP_H_

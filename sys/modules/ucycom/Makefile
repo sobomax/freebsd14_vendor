@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ucycom/Makefile 346521 2019-04-22 04:11:37Z ian $
+# $FreeBSD: releng/12.2/sys/modules/ucycom/Makefile 336052 2018-07-06 22:07:26Z ian $
 
 S=	${SRCTOP}/sys
 .PATH: $S/dev/usb/serial

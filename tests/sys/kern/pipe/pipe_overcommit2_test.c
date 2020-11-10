@@ -35,7 +35,7 @@
 #include <unistd.h>
 
 /*
- * $FreeBSD: releng/11.3/tests/sys/kern/pipe/pipe_overcommit2_test.c 290914 2015-11-16 05:38:40Z ngie $
+ * $FreeBSD: releng/12.2/tests/sys/kern/pipe/pipe_overcommit2_test.c 337930 2018-08-16 22:04:00Z asomers $
  * This program tests how sys_pipe.c handles the case where there
  * is ample memory to allocate a pipe, but the file descriptor
  * limit for that user has been exceeded.

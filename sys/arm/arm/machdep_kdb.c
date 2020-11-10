@@ -31,7 +31,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/machdep_kdb.c 341491 2018-12-04 19:07:10Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/machdep_kdb.c 341490 2018-12-04 19:06:11Z markj $");
 
 #include <sys/param.h>
 #include <sys/proc.h>

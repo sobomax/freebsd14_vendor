@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_read_support_format_mtree.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_support_format_mtree.c 358087 2020-02-19 01:46:43Z mm $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -258,6 +258,7 @@ archive_read_support_format_mtree(struct archive *_a)
 		    "Can't allocate mtree data");
 		return (ARCHIVE_FATAL);
 	}
+	mtree->checkfs = 0;
 	mtree->fd = -1;
 
 	__archive_rb_tree_init(&mtree->rbtree, &rb_ops);

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/tests/sys/vfs/trailing_slash.sh 324404 2017-10-07 23:10:16Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/vfs/trailing_slash.sh 322214 2017-08-08 04:59:16Z ngie $
 #
 # Tests vfs_lookup()'s handling of trailing slashes for symlinks that
 # point to files.  See kern/21768 for details.  Fixed in r193028.

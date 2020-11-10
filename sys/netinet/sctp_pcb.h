@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001-2007, by Cisco Systems, Inc. All rights reserved.
  * Copyright (c) 2008-2012, by Randall Stewart. All rights reserved.
  * Copyright (c) 2008-2012, by Michael Tuexen. All rights reserved.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/sctp_pcb.h 347154 2019-05-05 12:28:39Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_pcb.h 364607 2020-08-24 07:55:46Z tuexen $");
 
 #ifndef _NETINET_SCTP_PCB_H_
 #define _NETINET_SCTP_PCB_H_
@@ -244,7 +246,7 @@ struct sctp_base_info {
 	 * All static structures that anchor the system must be here.
 	 */
 	struct sctp_epinfo sctppcbinfo;
-#if defined(__FreeBSD__) && defined(SMP) && defined(SCTP_USE_PERCPU_STAT)
+#if defined(SMP) && defined(SCTP_USE_PERCPU_STAT)
 	struct sctpstat *sctpstat;
 #else
 	struct sctpstat sctpstat;
@@ -257,6 +259,7 @@ struct sctp_base_info {
 	int packet_log_end;
 	uint8_t packet_log_buffer[SCTP_PACKET_LOG_SIZE];
 #endif
+	eventhandler_tag eh_tag;
 };
 
 /*-
@@ -270,11 +273,11 @@ struct sctp_pcb {
 	uint32_t secret_key[SCTP_HOW_MANY_SECRETS][SCTP_NUMBER_OF_SECRETS];
 	unsigned int size_of_a_cookie;
 
-	unsigned int sctp_timeoutticks[SCTP_NUM_TMRS];
-	unsigned int sctp_minrto;
-	unsigned int sctp_maxrto;
-	unsigned int initial_rto;
-	int initial_init_rto_max;
+	uint32_t sctp_timeoutticks[SCTP_NUM_TMRS];
+	uint32_t sctp_minrto;
+	uint32_t sctp_maxrto;
+	uint32_t initial_rto;
+	uint32_t initial_init_rto_max;
 
 	unsigned int sctp_sack_freq;
 	uint32_t sctp_sws_sender;
@@ -317,7 +320,7 @@ struct sctp_pcb {
 
 	uint32_t def_cookie_life;
 	/* defaults to 0 */
-	int auto_close_time;
+	uint32_t auto_close_time;
 	uint32_t initial_sequence_debug;
 	uint32_t adaptation_layer_indicator;
 	uint8_t adaptation_layer_indicator_provided;
@@ -360,7 +363,7 @@ struct sctp_inpcb {
 	 */
 	union {
 		struct inpcb inp;
-		char align[(sizeof(struct in6pcb) + SCTP_ALIGNM1) &
+		char align[(sizeof(struct inpcb) + SCTP_ALIGNM1) &
 		    ~SCTP_ALIGNM1];
 	}     ip_inp;
 
@@ -475,7 +478,6 @@ struct sctp_tcb {
 #include <netinet/sctp_lock_bsd.h>
 
 
-/* TODO where to put non-_KERNEL things for __Userspace__? */
 #if defined(_KERNEL) || defined(__Userspace__)
 
 /* Attention Julian, this is the extern that
@@ -576,9 +578,13 @@ int sctp_is_address_on_local_host(struct sockaddr *addr, uint32_t vrf_id);
 
 void sctp_inpcb_free(struct sctp_inpcb *, int, int);
 
+#define SCTP_DONT_INITIALIZE_AUTH_PARAMS	0
+#define SCTP_INITIALIZE_AUTH_PARAMS		1
+
 struct sctp_tcb *
 sctp_aloc_assoc(struct sctp_inpcb *, struct sockaddr *,
-    int *, uint32_t, uint32_t, uint16_t, uint16_t, struct thread *);
+    int *, uint32_t, uint32_t, uint16_t, uint16_t, struct thread *,
+    int);
 
 int sctp_free_assoc(struct sctp_inpcb *, struct sctp_tcb *, int, int);
 
@@ -639,7 +645,7 @@ sctp_initiate_iterator(inp_func inpf,
     end_func ef,
     struct sctp_inpcb *,
     uint8_t co_off);
-#if defined(__FreeBSD__) && defined(SCTP_MCORE_INPUT) && defined(SMP)
+#if defined(SCTP_MCORE_INPUT) && defined(SMP)
 void
      sctp_queue_to_mcore(struct mbuf *m, int off, int cpu_to_use);
 

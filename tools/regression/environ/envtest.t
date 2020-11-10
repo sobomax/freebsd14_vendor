@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/regression/environ/envtest.t 199983 2009-12-01 05:04:31Z green $
+# $FreeBSD: releng/12.2/tools/regression/environ/envtest.t 199983 2009-12-01 05:04:31Z green $
 
 
 # Initialization.

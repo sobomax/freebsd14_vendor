@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/gnu/usr.bin/gdb/libgdb/fbsd-threads.c 235714 2012-05-21 03:06:31Z davidxu $ */
+/* $FreeBSD: releng/12.2/gnu/usr.bin/gdb/libgdb/fbsd-threads.c 235714 2012-05-21 03:06:31Z davidxu $ */
 /* FreeBSD libthread_db assisted debugging support.
    Copyright 1999, 2000, 2001 Free Software Foundation, Inc.
 

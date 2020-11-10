@@ -29,7 +29,7 @@ SUCH DAMAGE.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/stdio/fmemopen2_test.c 298311 2016-04-19 23:59:10Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/stdio/fmemopen2_test.c 298311 2016-04-19 23:59:10Z ngie $");
 
 #include <errno.h>
 #include <stdio.h>

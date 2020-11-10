@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1995, David Greenman
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ed/if_ed.c 347962 2019-05-18 20:43:13Z brooks $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ed/if_ed.c 339735 2018-10-25 17:00:39Z brooks $");
 
 /*
  * Device driver for National Semiconductor DS8390/WD83C690 based ethernet
@@ -1702,7 +1704,7 @@ ed_ds_getmcaf(struct ed_softc *sc, uint32_t *mcaf)
 	mcaf[1] = 0;
 
 	if_maddr_rlock(sc->ifp);
-	TAILQ_FOREACH(ifma, &sc->ifp->if_multiaddrs, ifma_link) {
+	CK_STAILQ_FOREACH(ifma, &sc->ifp->if_multiaddrs, ifma_link) {
 		if (ifma->ifma_addr->sa_family != AF_LINK)
 			continue;
 		index = ether_crc32_be(LLADDR((struct sockaddr_dl *)

@@ -1,5 +1,5 @@
 /* bootptest.h */
-/* $FreeBSD: releng/11.3/libexec/bootpd/tools/bootptest/bootptest.h 97419 2002-05-28 18:39:53Z alfred $ */
+/* $FreeBSD: releng/12.2/libexec/bootpd/tools/bootptest/bootptest.h 315987 2017-03-26 14:37:12Z rwatson $ */
 /*
  * Hacks for sharing print-bootp.c between tcpdump and bootptest.
  */
@@ -20,4 +20,7 @@ extern int vflag; /* verbose flag */
 extern unsigned char *packetp;
 extern unsigned char *snapend;
 
-extern char *ipaddr_string(struct in_addr *);
+void	 bootp_print(struct bootp *bp, int length, u_short sport,
+	    u_short dport);
+char	*ipaddr_string(struct in_addr *);
+int	 printfn(u_char *s, u_char *ep);

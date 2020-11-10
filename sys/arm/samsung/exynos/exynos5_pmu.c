@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_pmu.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_pmu.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

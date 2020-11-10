@@ -1,9 +1,11 @@
 #
-# $FreeBSD: releng/11.3/usr.sbin/praudit/Makefile 336212 2018-07-11 20:11:06Z asomers $
+# $FreeBSD: releng/12.2/usr.sbin/praudit/Makefile 335290 2018-06-17 17:31:16Z asomers $
 #
 
 OPENBSMDIR=${SRCTOP}/contrib/openbsm
 .PATH: ${OPENBSMDIR}/bin/praudit
+
+CFLAGS+=	-I${OPENBSMDIR}
 
 PROG=	praudit
 MAN=	praudit.1

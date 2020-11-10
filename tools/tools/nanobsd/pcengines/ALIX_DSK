@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/pcengines/ALIX_DSK 276826 2015-01-08 15:20:42Z jhb $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/pcengines/ALIX_DSK 276826 2015-01-08 15:20:42Z jhb $
 #
 
 cpu		I586_CPU

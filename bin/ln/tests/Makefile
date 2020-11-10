@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/ln/tests/Makefile 319714 2017-06-08 19:09:55Z asomers $
+# $FreeBSD: releng/12.2/bin/ln/tests/Makefile 319714 2017-06-08 19:09:55Z asomers $
 
 ATF_TESTS_SH+=  ln_test
 

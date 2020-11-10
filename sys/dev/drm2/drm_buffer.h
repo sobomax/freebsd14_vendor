@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_buffer.h 254794 2013-08-24 16:14:20Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_buffer.h 338285 2018-08-24 00:02:00Z imp $");
 
 #ifndef _DRM_BUFFER_H_
 #define _DRM_BUFFER_H_

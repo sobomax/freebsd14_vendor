@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/sys/modules/asmc/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/asmc/Makefile 334170 2018-05-24 17:06:00Z cem $
 
 .PATH: ${SRCTOP}/sys/dev/asmc
 
 KMOD=	asmc
-SRCS=	asmc.c opt_acpi.h opt_intr_filter.h acpi_if.h bus_if.h device_if.h
+SRCS=	asmc.c opt_acpi.h acpi_if.h bus_if.h device_if.h
 
 .include <bsd.kmod.mk>

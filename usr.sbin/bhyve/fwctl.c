@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/fwctl.c 341486 2018-12-04 18:32:50Z gordon $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/fwctl.c 341485 2018-12-04 18:31:21Z gordon $
  */
 
 /*
@@ -33,7 +33,7 @@
  * but with a request/response messaging protocol.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/fwctl.c 341486 2018-12-04 18:32:50Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/fwctl.c 341485 2018-12-04 18:31:21Z gordon $");
 
 #include <sys/param.h>
 #include <sys/types.h>

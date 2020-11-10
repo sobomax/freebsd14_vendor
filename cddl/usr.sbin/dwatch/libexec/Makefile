@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/dwatch/libexec/Makefile 333617 2018-05-15 00:00:44Z dteske $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/dwatch/libexec/Makefile 337629 2018-08-11 16:06:32Z brd $
 
 FILESDIR=	${LIBEXECDIR}/dwatch
 FILES=		chmod \
@@ -12,8 +12,10 @@ FILES=		chmod \
 		rw \
 		sched \
 		sendrecv \
+		systop \
 		tcp \
 		udp \
+		udplite \
 		vop_create \
 		vop_readdir \
 		vop_rename \
@@ -78,6 +80,8 @@ LINKS+=	${LIBEXECDIR}/dwatch/tcp ${LIBEXECDIR}/dwatch/tcp-state-change
 LINKS+=	${LIBEXECDIR}/dwatch/tcp ${LIBEXECDIR}/dwatch/tcp-status
 LINKS+=	${LIBEXECDIR}/dwatch/udp ${LIBEXECDIR}/dwatch/udp-receive
 LINKS+=	${LIBEXECDIR}/dwatch/udp ${LIBEXECDIR}/dwatch/udp-send
+LINKS+=	${LIBEXECDIR}/dwatch/udplite ${LIBEXECDIR}/dwatch/udplite-receive
+LINKS+=	${LIBEXECDIR}/dwatch/udplite ${LIBEXECDIR}/dwatch/udplite-send
 LINKS+=	${LIBEXECDIR}/dwatch/vop_create ${LIBEXECDIR}/dwatch/vop_lookup
 LINKS+=	${LIBEXECDIR}/dwatch/vop_create ${LIBEXECDIR}/dwatch/vop_mkdir
 LINKS+=	${LIBEXECDIR}/dwatch/vop_create ${LIBEXECDIR}/dwatch/vop_mknod

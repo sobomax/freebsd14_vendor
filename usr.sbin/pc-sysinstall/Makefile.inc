@@ -1,3 +1,3 @@
-# $FreeBSD: releng/11.3/usr.sbin/pc-sysinstall/Makefile.inc 209554 2010-06-27 17:14:04Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/pc-sysinstall/Makefile.inc 209554 2010-06-27 17:14:04Z imp $
 
 .include "../Makefile.inc"

@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/if_mib.c 295126 2016-02-01 17:41:21Z glebius $
+ * $FreeBSD: releng/12.2/sys/net/if_mib.c 295126 2016-02-01 17:41:21Z glebius $
  */
 
 #include <sys/param.h>

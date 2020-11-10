@@ -25,25 +25,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/mkimg/vtoc8.c 329059 2018-02-09 09:15:43Z manu $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/mkimg/vtoc8.c 343765 2019-02-05 08:05:42Z delphij $");
 
 #include <sys/errno.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
-#include <sys/vtoc.h>
+#include <vtoc.h>
 
 #include "endian.h"
 #include "image.h"
 #include "mkimg.h"
 #include "scheme.h"
-
-#ifndef VTOC_TAG_FREEBSD_NANDFS
-#define	VTOC_TAG_FREEBSD_NANDFS	0x0905
-#endif
 
 static struct mkimg_alias vtoc8_aliases[] = {
     {	ALIAS_FREEBSD_NANDFS, ALIAS_INT2TYPE(VTOC_TAG_FREEBSD_NANDFS) },

@@ -11,7 +11,7 @@
  * modified 03-25-03 for 12 hour option
  *     - Samy Al Bahra <samy@kerneled.com>
  *
- * $FreeBSD: releng/11.3/usr.bin/grdc/grdc.c 283929 2015-06-02 20:53:17Z emaste $
+ * $FreeBSD: releng/12.2/usr.bin/grdc/grdc.c 283929 2015-06-02 20:53:17Z emaste $
  */
 
 #include <err.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/cpucontrol/Makefile 308760 2016-11-17 15:16:52Z avg $
+# $FreeBSD: releng/12.2/usr.sbin/cpucontrol/Makefile 308218 2016-11-02 16:15:49Z avg $
 
 PROG=	cpucontrol
 MAN=	cpucontrol.8

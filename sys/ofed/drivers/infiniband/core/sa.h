@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004 Topspin Communications.  All rights reserved.
  * Copyright (c) 2005 Voltaire, Inc.  All rights reserved.
  * Copyright (c) 2006 Intel Corporation.  All rights reserved.
@@ -31,7 +33,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/sa.h 331772 2018-03-30 18:17:33Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/sa.h 330490 2018-03-05 11:49:45Z hselasky $
  */
 
 #ifndef SA_H

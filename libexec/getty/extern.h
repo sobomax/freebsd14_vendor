@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -27,14 +29,15 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)extern.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: releng/11.3/libexec/getty/extern.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/libexec/getty/extern.h 328858 2018-02-04 19:05:13Z trasz $
  */
 
 struct delayval;
 struct termios;
 
+extern	char **environ;
+extern	char editedhost[];
 extern	char hostname[];
-extern	int hopcount;
 extern	struct termios tmode, omode;
 extern	struct gettyflags gettyflags[];
 extern	struct gettynums gettynums[];

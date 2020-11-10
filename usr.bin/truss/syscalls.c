@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright 1997 Sean Eric Fagan
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/truss/syscalls.c 332377 2018-04-10 15:38:16Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/truss/syscalls.c 363326 2020-07-19 15:16:57Z kaktus $");
 
 /*
  * This file has routines used to print out system calls and their
@@ -39,13 +41,17 @@ __FBSDID("$FreeBSD: releng/11.3/usr.bin/truss/syscalls.c 332377 2018-04-10 15:38
 
 #include <sys/capsicum.h>
 #include <sys/types.h>
+#define	_WANT_FREEBSD11_KEVENT
 #include <sys/event.h>
 #include <sys/ioccom.h>
 #include <sys/mount.h>
 #include <sys/ptrace.h>
 #include <sys/resource.h>
 #include <sys/socket.h>
+#define _WANT_FREEBSD11_STAT
 #include <sys/stat.h>
+#include <sys/sysctl.h>
+#include <sys/time.h>
 #include <sys/un.h>
 #include <sys/wait.h>
 #include <netinet/in.h>
@@ -55,6 +61,8 @@ __FBSDID("$FreeBSD: releng/11.3/usr.bin/truss/syscalls.c 332377 2018-04-10 15:38
 #include <assert.h>
 #include <ctype.h>
 #include <err.h>
+#define _WANT_KERNEL_ERRNO
+#include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
 #include <sched.h>
@@ -145,6 +153,18 @@ static struct syscall decoded_syscalls[] = {
 	  .args = { { Int, 0 }, { Timespec | OUT, 1 } } },
 	{ .name = "close", .ret_type = 1, .nargs = 1,
 	  .args = { { Int, 0 } } },
+	{ .name = "compat11.fstat", .ret_type = 1, .nargs = 2,
+	  .args = { { Int, 0 }, { Stat11 | OUT, 1 } } },
+	{ .name = "compat11.fstatat", .ret_type = 1, .nargs = 4,
+	  .args = { { Atfd, 0 }, { Name | IN, 1 }, { Stat11 | OUT, 2 },
+		    { Atflags, 3 } } },
+	{ .name = "compat11.kevent", .ret_type = 1, .nargs = 6,
+	  .args = { { Int, 0 }, { Kevent11, 1 }, { Int, 2 },
+		    { Kevent11 | OUT, 3 }, { Int, 4 }, { Timespec, 5 } } },
+	{ .name = "compat11.lstat", .ret_type = 1, .nargs = 2,
+	  .args = { { Name | IN, 0 }, { Stat11 | OUT, 1 } } },
+	{ .name = "compat11.stat", .ret_type = 1, .nargs = 2,
+	  .args = { { Name | IN, 0 }, { Stat11 | OUT, 1 } } },
 	{ .name = "connect", .ret_type = 1, .nargs = 3,
 	  .args = { { Int, 0 }, { Sockaddr | IN, 1 }, { Socklent, 2 } } },
 	{ .name = "connectat", .ret_type = 1, .nargs = 4,
@@ -213,6 +233,8 @@ static struct syscall decoded_syscalls[] = {
 		    { Atflags, 4 } } },
 	{ .name = "fcntl", .ret_type = 1, .nargs = 3,
 	  .args = { { Int, 0 }, { Fcntl, 1 }, { Fcntlflag, 2 } } },
+	{ .name = "fdatasync", .ret_type = 1, .nargs = 1,
+	  .args = { { Int, 0 } } },
 	{ .name = "flock", .ret_type = 1, .nargs = 2,
 	  .args = { { Int, 0 }, { Flockop, 1 } } },
 	{ .name = "fstat", .ret_type = 1, .nargs = 2,
@@ -222,6 +244,8 @@ static struct syscall decoded_syscalls[] = {
 		    { Atflags, 3 } } },
 	{ .name = "fstatfs", .ret_type = 1, .nargs = 2,
 	  .args = { { Int, 0 }, { StatFs | OUT, 1 } } },
+	{ .name = "fsync", .ret_type = 1, .nargs = 1,
+	  .args = { { Int, 0 } } },
 	{ .name = "ftruncate", .ret_type = 1, .nargs = 2,
 	  .args = { { Int | IN, 0 }, { QuadHex | IN, 1 } } },
 	{ .name = "futimens", .ret_type = 1, .nargs = 2,
@@ -243,6 +267,8 @@ static struct syscall decoded_syscalls[] = {
 	  .args = { { Int, 0 } } },
 	{ .name = "getpriority", .ret_type = 1, .nargs = 2,
 	  .args = { { Priowhich, 0 }, { Int, 1 } } },
+	{ .name = "getrandom", .ret_type = 1, .nargs = 3,
+	  .args = { { BinString | OUT, 0 }, { Sizet, 1 }, { UInt, 2 } } },
 	{ .name = "getrlimit", .ret_type = 1, .nargs = 2,
 	  .args = { { Resource, 0 }, { Rlimit | OUT, 1 } } },
 	{ .name = "getrusage", .ret_type = 1, .nargs = 2,
@@ -371,13 +397,13 @@ static struct syscall decoded_syscalls[] = {
 	  .args = { { Name, 0 }, { Quotactlcmd, 1 }, { Int, 2 }, { Ptr, 3 } } },
 	{ .name = "read", .ret_type = 1, .nargs = 3,
 	  .args = { { Int, 0 }, { BinString | OUT, 1 }, { Sizet, 2 } } },
-	{ .name = "readv", .ret_type = 1, .nargs = 3,
-	  .args = { { Int, 0 }, { Iovec | OUT, 1 }, { Int, 2 } } },
 	{ .name = "readlink", .ret_type = 1, .nargs = 3,
 	  .args = { { Name, 0 }, { Readlinkres | OUT, 1 }, { Sizet, 2 } } },
 	{ .name = "readlinkat", .ret_type = 1, .nargs = 4,
 	  .args = { { Atfd, 0 }, { Name, 1 }, { Readlinkres | OUT, 2 },
 		    { Sizet, 3 } } },
+	{ .name = "readv", .ret_type = 1, .nargs = 3,
+	  .args = { { Int, 0 }, { Iovec | OUT, 1 }, { Int, 2 } } },
 	{ .name = "reboot", .ret_type = 1, .nargs = 1,
 	  .args = { { Reboothowto, 0 } } },
 	{ .name = "recvfrom", .ret_type = 1, .nargs = 6,
@@ -442,6 +468,10 @@ static struct syscall decoded_syscalls[] = {
 	{ .name = "setsockopt", .ret_type = 1, .nargs = 5,
 	  .args = { { Int, 0 }, { Sockoptlevel, 1 }, { Sockoptname, 2 },
 		    { Ptr | IN, 3 }, { Socklent, 4 } } },
+	{ .name = "shm_open", .ret_type = 1, .nargs = 3,
+	  .args = { { Name | IN, 0 }, { Open, 1 }, { Octal, 2 } } },
+	{ .name = "shm_unlink", .ret_type = 1, .nargs = 1,
+	  .args = { { Name | IN, 0 } } },
 	{ .name = "shutdown", .ret_type = 1, .nargs = 2,
 	  .args = { { Int, 0 }, { Shutdown, 1 } } },
 	{ .name = "sigaction", .ret_type = 1, .nargs = 3,
@@ -476,6 +506,12 @@ static struct syscall decoded_syscalls[] = {
 	  .args = { { Name, 0 }, { Atfd, 1 }, { Name, 2 } } },
 	{ .name = "sysarch", .ret_type = 1, .nargs = 2,
 	  .args = { { Sysarch, 0 }, { Ptr, 1 } } },
+	{ .name = "__sysctl", .ret_type = 1, .nargs = 6,
+	  .args = { { Sysctl, 0 }, { Sizet, 1 }, { Ptr, 2 }, { Ptr, 3 },
+	            { Ptr, 4 }, { Sizet, 5 } } },
+	{ .name = "__sysctlbyname", .ret_type = 1, .nargs = 6,
+	  .args = { { Name, 0 }, { Sizet, 1 }, { Ptr, 2 }, { Ptr, 3 },
+	            { Ptr, 4}, { Sizet, 5 } } },
 	{ .name = "thr_kill", .ret_type = 1, .nargs = 2,
 	  .args = { { Long, 0 }, { Signal, 1 } } },
 	{ .name = "thr_self", .ret_type = 1, .nargs = 1,
@@ -562,7 +598,7 @@ static struct syscall decoded_syscalls[] = {
 	  .args = { { Int, 0 }, { CloudABIFDStat | OUT, 1 } } },
 	{ .name = "cloudabi_sys_fd_stat_put", .ret_type = 1, .nargs = 3,
 	  .args = { { Int, 0 }, { CloudABIFDStat | IN, 1 },
-	            { ClouduABIFDSFlags, 2 } } },
+	            { CloudABIFDSFlags, 2 } } },
 	{ .name = "cloudabi_sys_fd_sync", .ret_type = 1, .nargs = 1,
 	  .args = { { Int, 0 } } },
 	{ .name = "cloudabi_sys_file_advise", .ret_type = 1, .nargs = 4,
@@ -1107,6 +1143,7 @@ print_kevent(FILE *fp, struct kevent *ke)
 	case EVFILT_PROC:
 	case EVFILT_TIMER:
 	case EVFILT_PROCDESC:
+	case EVFILT_EMPTY:
 		fprintf(fp, "%ju", (uintmax_t)ke->ident);
 		break;
 	case EVFILT_SIGNAL:
@@ -1121,7 +1158,7 @@ print_kevent(FILE *fp, struct kevent *ke)
 	print_mask_arg(sysdecode_kevent_flags, fp, ke->flags);
 	fprintf(fp, ",");
 	sysdecode_kevent_fflags(fp, ke->filter, ke->fflags, 16);
-	fprintf(fp, ",%p,%p", (void *)ke->data, (void *)ke->udata);
+	fprintf(fp, ",%#jx,%p", (uintmax_t)ke->data, ke->udata);
 }
 
 static void
@@ -1520,6 +1557,38 @@ print_cmsgs(FILE *fp, pid_t pid, bool receive, struct msghdr *msghdr)
 	free(cmsgbuf);
 }
 
+static void
+print_sysctl_oid(FILE *fp, int *oid, size_t len)
+{
+	size_t i;
+	bool first;
+
+	first = true;
+	fprintf(fp, "{ ");
+	for (i = 0; i < len; i++) {
+		fprintf(fp, "%s%d", first ? "" : ".", oid[i]);
+		first = false;
+	}
+	fprintf(fp, " }");
+}
+
+static void
+print_sysctl(FILE *fp, int *oid, size_t len)
+{
+	char name[BUFSIZ];
+	int qoid[CTL_MAXNAME + 2];
+	size_t i;
+
+	qoid[0] = CTL_SYSCTL;
+	qoid[1] = CTL_SYSCTL_NAME;
+	memcpy(qoid + 2, oid, len * sizeof(int));
+	i = sizeof(name);
+	if (sysctl(qoid, len + 2, name, &i, 0, 0) == -1)
+		print_sysctl_oid(fp, oid, len);
+	else
+		fprintf(fp, "%s", name);
+}
+
 /*
  * Converts a syscall argument into a string.  Said string is
  * allocated via malloc(), so needs to be free()'d.  sc is
@@ -1527,7 +1596,7 @@ print_cmsgs(FILE *fp, pid_t pid, bool receive, struct msghdr *msghdr)
  * an array of all of the system call arguments.
  */
 char *
-print_arg(struct syscall_args *sc, unsigned long *args, long *retval,
+print_arg(struct syscall_args *sc, unsigned long *args, register_t *retval,
     struct trussinfo *trussinfo)
 {
 	FILE *fp;
@@ -2057,8 +2126,66 @@ print_arg(struct syscall_args *sc, unsigned long *args, long *retval,
 		free(ke);
 		break;
 	}
+	case Kevent11: {
+		struct kevent_freebsd11 *ke11;
+		struct kevent ke;
+		int numevents = -1;
+		size_t bytes;
+		int i;
+
+		if (sc->offset == 1)
+			numevents = args[sc->offset+1];
+		else if (sc->offset == 3 && retval[0] != -1)
+			numevents = retval[0];
+
+		if (numevents >= 0) {
+			bytes = sizeof(struct kevent_freebsd11) * numevents;
+			if ((ke11 = malloc(bytes)) == NULL)
+				err(1,
+				    "Cannot malloc %zu bytes for kevent array",
+				    bytes);
+		} else
+			ke11 = NULL;
+		memset(&ke, 0, sizeof(ke));
+		if (numevents >= 0 && get_struct(pid, (void *)args[sc->offset],
+		    ke11, bytes) != -1) {
+			fputc('{', fp);
+			for (i = 0; i < numevents; i++) {
+				fputc(' ', fp);
+				ke.ident = ke11[i].ident;
+				ke.filter = ke11[i].filter;
+				ke.flags = ke11[i].flags;
+				ke.fflags = ke11[i].fflags;
+				ke.data = ke11[i].data;
+				ke.udata = ke11[i].udata;
+				print_kevent(fp, &ke);
+			}
+			fputs(" }", fp);
+		} else {
+			fprintf(fp, "0x%lx", args[sc->offset]);
+		}
+		free(ke11);
+		break;
+	}
 	case Stat: {
 		struct stat st;
+
+		if (get_struct(pid, (void *)args[sc->offset], &st, sizeof(st))
+		    != -1) {
+			char mode[12];
+
+			strmode(st.st_mode, mode);
+			fprintf(fp,
+			    "{ mode=%s,inode=%ju,size=%jd,blksize=%ld }", mode,
+			    (uintmax_t)st.st_ino, (intmax_t)st.st_size,
+			    (long)st.st_blksize);
+		} else {
+			fprintf(fp, "0x%lx", args[sc->offset]);
+		}
+		break;
+	}
+	case Stat11: {
+		struct freebsd11_stat st;
 
 		if (get_struct(pid, (void *)args[sc->offset], &st, sizeof(st))
 		    != -1) {
@@ -2171,6 +2298,57 @@ print_arg(struct syscall_args *sc, unsigned long *args, long *retval,
 		print_integer_arg(sysdecode_sysarch_number, fp,
 		    args[sc->offset]);
 		break;
+	case Sysctl: {
+		char name[BUFSIZ];
+		int oid[CTL_MAXNAME + 2];
+		size_t len;
+
+		memset(name, 0, sizeof(name));
+		len = args[sc->offset + 1];
+		if (get_struct(pid, (void *)args[sc->offset], oid,
+		    len * sizeof(oid[0])) != -1) {
+		    	fprintf(fp, "\"");
+			if (oid[0] == CTL_SYSCTL) {
+				fprintf(fp, "sysctl.");
+				switch (oid[1]) {
+				case CTL_SYSCTL_DEBUG:
+					fprintf(fp, "debug");
+					break;
+				case CTL_SYSCTL_NAME:
+					fprintf(fp, "name ");
+					print_sysctl_oid(fp, oid + 2, len - 2);
+					break;
+				case CTL_SYSCTL_NEXT:
+					fprintf(fp, "next");
+					break;
+				case CTL_SYSCTL_NAME2OID:
+					fprintf(fp, "name2oid %s",
+					    get_string(pid,
+					        (void *)args[sc->offset + 4],
+						args[sc->offset + 5]));
+					break;
+				case CTL_SYSCTL_OIDFMT:
+					fprintf(fp, "oidfmt ");
+					print_sysctl(fp, oid + 2, len - 2);
+					break;
+				case CTL_SYSCTL_OIDDESCR:
+					fprintf(fp, "oiddescr ");
+					print_sysctl(fp, oid + 2, len - 2);
+					break;
+				case CTL_SYSCTL_OIDLABEL:
+					fprintf(fp, "oidlabel ");
+					print_sysctl(fp, oid + 2, len - 2);
+					break;
+				default:
+					print_sysctl(fp, oid + 1, len - 1);
+				}
+			} else {
+				print_sysctl(fp, oid, len);
+			}
+		    	fprintf(fp, "\"");
+		}
+		break;
+	}
 	case PipeFds:
 		/*
 		 * The pipe() system call in the kernel returns its
@@ -2183,7 +2361,7 @@ print_arg(struct syscall_args *sc, unsigned long *args, long *retval,
 		 * Overwrite the first retval to signal a successful
 		 * return as well.
 		 */
-		fprintf(fp, "{ %ld, %ld }", retval[0], retval[1]);
+		fprintf(fp, "{ %d, %d }", (int)retval[0], (int)retval[1]);
 		retval[0] = 0;
 		break;
 	case Utrace: {
@@ -2442,7 +2620,7 @@ print_arg(struct syscall_args *sc, unsigned long *args, long *retval,
 	case CloudABIClockID:
 		fputs(xlookup(cloudabi_clockid, args[sc->offset]), fp);
 		break;
-	case ClouduABIFDSFlags:
+	case CloudABIFDSFlags:
 		fputs(xlookup_bits(cloudabi_fdsflags, args[sc->offset]), fp);
 		break;
 	case CloudABIFDStat: {
@@ -2552,20 +2730,19 @@ print_syscall(struct trussinfo *trussinfo)
 }
 
 void
-print_syscall_ret(struct trussinfo *trussinfo, int errorp, long *retval)
+print_syscall_ret(struct trussinfo *trussinfo, int error, register_t *retval)
 {
 	struct timespec timediff;
 	struct threadinfo *t;
 	struct syscall *sc;
-	int error;
 
 	t = trussinfo->curthread;
 	sc = t->cs.sc;
 	if (trussinfo->flags & COUNTONLY) {
-		timespecsubt(&t->after, &t->before, &timediff);
+		timespecsub(&t->after, &t->before, &timediff);
 		timespecadd(&sc->time, &timediff, &sc->time);
 		sc->ncalls++;
-		if (errorp)
+		if (error != 0)
 			sc->nerror++;
 		return;
 	}
@@ -2582,11 +2759,14 @@ print_syscall_ret(struct trussinfo *trussinfo, int errorp, long *retval)
 		return;
 	}
 
-	if (errorp) {
-		error = sysdecode_abi_to_freebsd_errno(t->proc->abi->abi,
-		    retval[0]);
-		fprintf(trussinfo->outfile, " ERR#%ld '%s'\n", retval[0],
-		    error == INT_MAX ? "Unknown error" : strerror(error));
+	if (error == ERESTART)
+		fprintf(trussinfo->outfile, " ERESTART\n");
+	else if (error == EJUSTRETURN)
+		fprintf(trussinfo->outfile, " EJUSTRETURN\n");
+	else if (error != 0) {
+		fprintf(trussinfo->outfile, " ERR#%d '%s'\n",
+		    sysdecode_freebsd_to_abi_errno(t->proc->abi->abi, error),
+		    strerror(error));
 	}
 #ifndef __LP64__
 	else if (sc->ret_type == 2) {
@@ -2602,8 +2782,8 @@ print_syscall_ret(struct trussinfo *trussinfo, int errorp, long *retval)
 	}
 #endif
 	else
-		fprintf(trussinfo->outfile, " = %ld (0x%lx)\n", retval[0],
-		    retval[0]);
+		fprintf(trussinfo->outfile, " = %jd (0x%jx)\n",
+		    (intmax_t)retval[0], (intmax_t)retval[0]);
 }
 
 void

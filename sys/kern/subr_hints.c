@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000,2001 Peter Wemm <peter@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_hints.c 338289 2018-08-24 02:21:14Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_hints.c 338020 2018-08-18 19:45:56Z kevans $");
 
 #include <sys/param.h>
 #include <sys/lock.h>

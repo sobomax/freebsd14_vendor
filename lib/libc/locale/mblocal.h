@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2013 Garrett D'Amore <garrett@damore.org>
  * Copyright 2011 Nexenta Systems, Inc.  All rights reserved.
  * Copyright (c) 2004 Tim J. Robbins.
@@ -30,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/locale/mblocal.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libc/locale/mblocal.h 326193 2017-11-25 17:12:48Z pfg $
  */
 
 #ifndef _MBLOCAL_H_

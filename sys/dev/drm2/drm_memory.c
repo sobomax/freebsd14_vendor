@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_memory.c 317008 2017-04-16 07:58:41Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_memory.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drmP.h>
 

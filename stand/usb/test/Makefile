@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/stand/usb/test/Makefile 328990 2018-02-07 19:20:59Z hselasky $
+# $FreeBSD: releng/12.2/stand/usb/test/Makefile 328990 2018-02-07 19:20:59Z hselasky $
 #
 # Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
 #

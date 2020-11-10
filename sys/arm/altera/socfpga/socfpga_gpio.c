@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/altera/socfpga/socfpga_gpio.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/altera/socfpga/socfpga_gpio.c 308638 2016-11-14 11:41:22Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,7 +54,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/altera/socfpga/socfpga_gpio.c 281085 201
 #include <sys/mutex.h>
 #include <sys/gpio.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/gpio/gpiobusvar.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>

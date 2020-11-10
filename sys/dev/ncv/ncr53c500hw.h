@@ -1,8 +1,10 @@
-/*	$FreeBSD: releng/11.3/sys/dev/ncv/ncr53c500hw.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/ncv/ncr53c500hw.h 326255 2017-11-27 14:52:40Z pfg $	*/
 /*	$NecBSD: ncr53c500hw.h,v 1.6.18.1 2001/06/08 06:27:44 honda Exp $	*/
 /*	$NetBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * [NetBSD for NEC PC-98 series]
  *  Copyright (c) 1996, 1997, 1998
  *	NetBSD/pc98 porting staff. All rights reserved.

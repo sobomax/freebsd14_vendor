@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/crashinfo/Makefile 181335 2008-08-05 20:41:46Z jhb $
+# $FreeBSD: releng/12.2/usr.sbin/crashinfo/Makefile 181335 2008-08-05 20:41:46Z jhb $
 
 SCRIPTS= crashinfo.sh
 MAN=	crashinfo.8

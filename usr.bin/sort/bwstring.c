@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/sort/bwstring.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/sort/bwstring.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -270,7 +270,7 @@ bwscsbdup(const unsigned char *str, size_t len)
 			const char *s;
 			size_t charlen, chars, cptr;
 
-			charlen = chars = 0;
+			chars = 0;
 			cptr = 0;
 			s = (const char *) str;
 
@@ -583,7 +583,6 @@ bwsncmp(const struct bwstring *bws1, const struct bwstring *bws2,
 	size_t cmp_len, len1, len2;
 	int res = 0;
 
-	cmp_len = 0;
 	len1 = bws1->len;
 	len2 = bws2->len;
 

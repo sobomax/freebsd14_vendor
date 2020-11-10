@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/intr.h 305136 2016-08-31 17:36:43Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm64/include/intr.h 330582 2018-03-07 13:16:03Z andrew $
  */
 
 #ifndef _MACHINE_INTR_H_
@@ -46,6 +46,11 @@ arm_irq_memory_barrier(uintptr_t irq)
 
 #ifdef SMP
 void intr_ipi_dispatch(u_int, struct trapframe *);
+#endif
+
+#ifdef DEV_ACPI
+#define	ACPI_INTR_XREF	1
+#define	ACPI_MSI_XREF	2
 #endif
 
 #endif	/* _MACHINE_INTR_H */

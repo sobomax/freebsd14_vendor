@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ral/if_ral_pci.c 287197 2015-08-27 08:56:39Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ral/if_ral_pci.c 352562 2019-09-20 19:56:30Z mizhka $");
 
 /*
  * PCI/Cardbus front-end for the Ralink RT2560/RT2561/RT2561S/RT2661 driver.
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/ral/if_ral_pci.c 287197 2015-08-27 08:56
 
 #include <net80211/ieee80211_var.h>
 #include <net80211/ieee80211_radiotap.h>
+#include <net80211/ieee80211_ratectl.h>
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
@@ -99,6 +100,7 @@ static const struct ral_pci_ident ral_pci_ids[] = {
 	{ 0x1814, 0x5390, "Ralink Technology RT5390" },
 	{ 0x1814, 0x5392, "Ralink Technology RT5392" },
 	{ 0x1814, 0x539a, "Ralink Technology RT5390" },
+	{ 0x1814, 0x539b, "Ralink Technology RT5390" },
 	{ 0x1814, 0x539f, "Ralink Technology RT5390" },
 	{ 0x1a3b, 0x1059, "AWT RT2890" },
 	{ 0, 0, NULL }
@@ -177,6 +179,8 @@ static driver_t ral_pci_driver = {
 static devclass_t ral_devclass;
 
 DRIVER_MODULE(ral, pci, ral_pci_driver, ral_devclass, NULL, NULL);
+MODULE_PNP_INFO("U16:vendor;U16:device;D:#", pci, ral, ral_pci_ids,
+    nitems(ral_pci_ids) - 1);
 
 static int
 ral_pci_probe(device_t dev)

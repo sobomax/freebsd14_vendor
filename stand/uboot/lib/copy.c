@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/uboot/lib/copy.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/uboot/lib/copy.c 359735 2020-04-09 04:50:19Z sjg $");
 #include <sys/param.h>
 
 #include <stand.h>
@@ -160,7 +160,7 @@ uboot_copyout(const vm_offset_t src, void *dest, const size_t len)
 }
 
 ssize_t
-uboot_readin(const int fd, vm_offset_t dest, const size_t len)
+uboot_readin(readin_handle_t fd, vm_offset_t dest, const size_t len)
 {
-	return (read(fd, (void *)dest, len));
+	return (VECTX_READ(fd, (void *)dest, len));
 }

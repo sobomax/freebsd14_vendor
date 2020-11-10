@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/bsd.port.options.mk 170185 2007-06-01 15:17:51Z pav $
+# $FreeBSD: releng/12.2/share/mk/bsd.port.options.mk 170185 2007-06-01 15:17:51Z pav $
 
 USEOPTIONSMK=	yes
 INOPTIONSMK=	yes

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_fb_helper.c 346817 2019-04-28 13:21:01Z dchagin $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_fb_helper.c 338285 2018-08-24 00:02:00Z imp $");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 

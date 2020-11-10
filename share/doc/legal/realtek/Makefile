@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/share/doc/legal/realtek/Makefile 289399 2015-10-16 00:38:05Z bdrewery $
+# $FreeBSD: releng/12.2/share/doc/legal/realtek/Makefile 314652 2017-03-04 11:26:40Z ngie $
 
-FILES=		${.CURDIR}/../../../../sys/contrib/dev/urtwn/LICENSE
+FILES=		${SRCTOP}/sys/contrib/dev/rtwn/LICENSE
 FILESDIR=	${SHAREDIR}/doc/legal
 FILESNAME=	realtek.LICENSE
 

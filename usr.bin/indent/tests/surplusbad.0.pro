@@ -1,2 +1,2 @@
-/* $FreeBSD: releng/11.3/usr.bin/indent/tests/surplusbad.0.pro 331147 2018-03-18 22:19:52Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.bin/indent/tests/surplusbad.0.pro 314613 2017-03-03 20:15:22Z ngie $ */
 -bad

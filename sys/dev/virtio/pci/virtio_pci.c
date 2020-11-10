@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 /* Driver for the VirtIO PCI interface. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/virtio/pci/virtio_pci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/virtio/pci/virtio_pci.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

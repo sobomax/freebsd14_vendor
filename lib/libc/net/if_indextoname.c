@@ -1,6 +1,8 @@
 /*	$KAME: if_indextoname.c,v 1.7 2000/11/08 03:09:30 itojun Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-1-Clause
+ *
  * Copyright (c) 1997, 2000
  *	Berkeley Software Design, Inc.  All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/net/if_indextoname.c 235640 2012-05-19 02:39:43Z marcel $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/if_indextoname.c 360799 2020-05-07 21:14:11Z kp $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -63,6 +65,11 @@ if_indextoname(unsigned int ifindex, char *ifname)
 {
 	struct ifaddrs *ifaddrs, *ifa;
 	int error = 0;
+
+	if (ifindex == 0) {
+		errno = ENXIO;
+		return(NULL);
+	}
 
 	if (getifaddrs(&ifaddrs) < 0)
 		return(NULL);	/* getifaddrs properly set errno */

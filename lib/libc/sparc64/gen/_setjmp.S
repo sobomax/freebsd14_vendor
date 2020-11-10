@@ -14,7 +14,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -40,7 +40,7 @@
 #endif
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/sparc64/gen/_setjmp.S 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/sparc64/gen/_setjmp.S 314436 2017-02-28 23:42:47Z imp $");
 
 #include "assym.s"
 

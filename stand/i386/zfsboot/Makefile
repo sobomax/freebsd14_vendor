@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/zfsboot/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/zfsboot/Makefile 359155 2020-03-19 22:33:24Z dim $
 
 .include <bsd.init.mk>
 
@@ -27,6 +27,8 @@ CFLAGS+=-DBOOTPROG=\"zfsboot\" \
 	-I${ZFSSRC} \
 	-I${SYSDIR}/crypto/skein \
 	-I${SYSDIR}/cddl/boot/zfs \
+	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
+	-I${SYSDIR}/cddl/contrib/opensolaris/common/lz4 \
 	-I${BOOTSRC}/i386/boot2 \
 	-Wall -Waggregate-return -Wbad-function-cast -Wno-cast-align \
 	-Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
@@ -47,7 +49,7 @@ zfsboot1: zfsldr.out
 	${OBJCOPY} -S -O binary zfsldr.out ${.TARGET}
 
 zfsldr.out: zfsldr.o
-	${LD} ${LD_FLAGS} -e start -Ttext ${ORG1} -o ${.TARGET} zfsldr.o
+	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} zfsldr.o
 
 CLEANFILES+=	zfsboot2 zfsboot.ld zfsboot.ldr zfsboot.bin zfsboot.out \
 		zfsboot.o zfsboot.s zfsboot.s.tmp sio.o cons.o drv.o
@@ -73,7 +75,7 @@ zfsboot.bin: zfsboot.out
 	${OBJCOPY} -S -O binary zfsboot.out ${.TARGET}
 
 zfsboot.out: ${BTXCRT} zfsboot.o sio.o drv.o cons.o
-	${LD} ${LD_FLAGS} -Ttext ${ORG2} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
+	${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
 
 SRCS=	zfsboot.c
 

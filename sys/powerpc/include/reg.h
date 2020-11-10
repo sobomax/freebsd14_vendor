@@ -1,12 +1,8 @@
 /* $NetBSD: reg.h,v 1.4 2000/06/04 09:30:44 tsubai Exp $	*/
-/* $FreeBSD: releng/11.3/sys/powerpc/include/reg.h 295132 2016-02-01 23:12:04Z jhb $	*/
+/* $FreeBSD: releng/12.2/sys/powerpc/include/reg.h 332122 2018-04-06 17:35:35Z brooks $	*/
 
 #ifndef _POWERPC_REG_H_
 #define	_POWERPC_REG_H_
-
-#if defined(_KERNEL) && !defined(KLD_MODULE) && !defined(_STANDALONE)
-#include "opt_compat.h"
-#endif
 
 /* Must match struct trapframe */
 struct reg {

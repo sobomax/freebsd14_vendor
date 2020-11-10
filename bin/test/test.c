@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/test/test.c 298232 2016-04-19 00:38:07Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/bin/test/test.c 298232 2016-04-19 00:38:07Z araujo $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

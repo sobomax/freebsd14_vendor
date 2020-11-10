@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 4/17/94
-# $FreeBSD: releng/11.3/lib/libc/stdio/Makefile.inc 332736 2018-04-18 19:18:14Z cy $
+# $FreeBSD: releng/12.2/lib/libc/stdio/Makefile.inc 357852 2020-02-13 03:13:29Z kevans $
 
 # stdio sources
 .PATH: ${LIBC_SRCTOP}/stdio
@@ -48,13 +48,17 @@ MLINKS+=ferror.3 ferror_unlocked.3 \
 	ferror.3 clearerr.3 ferror.3 clearerr_unlocked.3 \
 	ferror.3 feof.3 ferror.3 feof_unlocked.3 \
 	ferror.3 fileno.3 ferror.3 fileno_unlocked.3
-MLINKS+=fflush.3 fpurge.3
+MLINKS+=fflush.3 fflush_unlocked.3 \
+	fflush.3 fpurge.3
 MLINKS+=fgets.3 gets.3
 MLINKS+=fgets.3 gets_s.3
 MLINKS+=flockfile.3 ftrylockfile.3 flockfile.3 funlockfile.3
 MLINKS+=fopen.3 fdopen.3 fopen.3 freopen.3 fopen.3 fmemopen.3
-MLINKS+=fputs.3 puts.3
-MLINKS+=fread.3 fwrite.3
+MLINKS+=fputs.3 fputs_unlocked.3 \
+	fputs.3 puts.3
+MLINKS+=fread.3 fread_unlocked.3 \
+	fread.3 fwrite.3 \
+	fread.3 fwrite_unlocked.3
 MLINKS+=fseek.3 fgetpos.3 fseek.3 fseeko.3 fseek.3 fsetpos.3 fseek.3 ftell.3 \
 	fseek.3 ftello.3 fseek.3 rewind.3
 MLINKS+=funopen.3 fropen.3 funopen.3 fwopen.3

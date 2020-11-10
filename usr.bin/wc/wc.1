@@ -12,7 +12,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -29,9 +29,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)wc.1	8.2 (Berkeley) 4/19/94
-.\" $FreeBSD: releng/11.3/usr.bin/wc/wc.1 291607 2015-12-01 19:18:53Z rodrigc $
+.\" $FreeBSD: releng/12.2/usr.bin/wc/wc.1 360005 2020-04-16 11:47:53Z eugen $
 .\"
-.Dd December 1, 2015
+.Dd April 11, 2020
 .Dt WC 1
 .Os
 .Sh NAME
@@ -76,8 +76,11 @@ See
 .Xr xo_parse_args 3
 for details on command line arguments.
 .It Fl L
-The number of characters in the longest input line
-is written to the standard output.
+Write the length of the line containing the most bytes (default) or characters
+(when
+.Fl m
+is provided)
+to standard output.
 When more than one
 .Ar file
 argument is specified, the longest input line of
@@ -123,6 +126,18 @@ file name is displayed.
 The prompt will accept input until receiving EOF, or
 .Bq ^D
 in most environments.
+.Pp
+If
+.Nm
+receives a
+.Dv SIGINFO
+(see the
+.Cm status
+argument for
+.Xr stty 1 )
+signal, the interim data will be written
+to the standard error output in the same format
+as the standard completion message.
 .Sh ENVIRONMENT
 The
 .Ev LANG , LC_ALL

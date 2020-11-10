@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001 Mark R V Murray
  * All rights reserved.
  * Copyright (c) 2001 Networks Associates Technology, Inc.
@@ -33,7 +35,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libpam/modules/pam_login_access/pam_login_access.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libpam/modules/pam_login_access/pam_login_access.h 359117 2020-03-19 03:37:02Z cy $
  */
 
-extern int login_access(const char *, const char *);
+#include <stdbool.h>
+
+struct pam_login_access_options {
+	bool		defgroup;
+	bool		audit;
+	const char	*accessfile;
+	/* Delimiters for fields and for lists of users, ttys or hosts. */
+	const char	*fieldsep; /* field separator */
+	const char	*listsep; /* list-element separator */
+};
+
+extern int login_access(const char *, const char *, struct pam_login_access_options *);

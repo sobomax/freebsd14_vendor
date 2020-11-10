@@ -40,9 +40,9 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/bcopy_page.S 288662 2015-10-04 09:39:40Z rwatson $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/bcopy_page.S 331254 2018-03-20 17:58:51Z emaste $");
 
-#include "assym.s"
+#include "assym.inc"
 
 #ifndef _ARM_ARCH_5E
 

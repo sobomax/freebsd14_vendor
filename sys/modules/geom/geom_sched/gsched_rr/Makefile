@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/geom/geom_sched/gsched_rr/Makefile 275948 2014-12-20 00:07:53Z imp $
+# $FreeBSD: releng/12.2/sys/modules/geom/geom_sched/gsched_rr/Makefile 275948 2014-12-20 00:07:53Z imp $
 
 KMOD=   gsched_rr
 SRCS=   gs_rr.c

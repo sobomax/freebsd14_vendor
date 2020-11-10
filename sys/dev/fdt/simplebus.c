@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Nathan Whitehorn
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/fdt/simplebus.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/fdt/simplebus.c 350600 2019-08-05 17:43:44Z manu $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -58,13 +60,6 @@ static struct resource_list *simplebus_get_resource_list(device_t bus,
  */
 static const struct ofw_bus_devinfo *simplebus_get_devinfo(device_t bus,
     device_t child);
-
-/*
- * local methods
- */
-
-static int simplebus_fill_ranges(phandle_t node,
-    struct simplebus_softc *sc);
 
 /*
  * Driver methods.
@@ -125,7 +120,7 @@ simplebus_probe(device_t dev)
 
 	/*
 	 * FDT data puts a "simple-bus" compatible string on many things that
-	 * have children but aren't really busses in our world.  Without a
+	 * have children but aren't really buses in our world.  Without a
 	 * ranges property we will fail to attach, so just fail to probe too.
 	 */
 	if (!(ofw_bus_is_compatible(dev, "simple-bus") &&
@@ -182,7 +177,7 @@ simplebus_init(device_t dev, phandle_t node)
 	OF_getencprop(node, "#size-cells", &sc->scells, sizeof(sc->scells));
 }
 
-static int
+int
 simplebus_fill_ranges(phandle_t node, struct simplebus_softc *sc)
 {
 	int host_address_cells;

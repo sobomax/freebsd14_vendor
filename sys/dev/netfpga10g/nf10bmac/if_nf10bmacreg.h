@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/netfpga10g/nf10bmac/if_nf10bmacreg.h 265766 2014-05-09 12:59:38Z bz $
+ * $FreeBSD: releng/12.2/sys/dev/netfpga10g/nf10bmac/if_nf10bmacreg.h 265766 2014-05-09 12:59:38Z bz $
  */
 
 #ifndef	_DEV_IF_NF10BMACREG_H

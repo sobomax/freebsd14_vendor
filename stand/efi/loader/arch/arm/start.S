@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/loader/arch/arm/start.S 329100 2018-02-10 04:56:07Z kevans $
+ * $FreeBSD: releng/12.2/stand/efi/loader/arch/arm/start.S 320482 2017-06-29 22:09:32Z andrew $
  */
 
 #include <machine/asm.h>

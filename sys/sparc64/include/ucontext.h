@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1999 Marcel Moolenaar
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/alpha/include/ucontext.h,v 1.3 1999/10/08
- * $FreeBSD: releng/11.3/sys/sparc64/include/ucontext.h 295561 2016-02-12 07:38:19Z kib $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/ucontext.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _MACHINE_UCONTEXT_H_

@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libiconv_modules/ISO2022/citrus_iso2022.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libiconv_modules/ISO2022/citrus_iso2022.c 328222 2018-01-21 21:09:08Z eadler $ */
 /*	$NetBSD: citrus_iso2022.c,v 1.20 2010/12/07 22:01:45 joerg Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c)1999, 2002 Citrus Project,
  * All rights reserved.
  *

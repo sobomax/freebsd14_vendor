@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Weongyo Jeong <weongyo@freebsd.org>
  * Copyright (c) 2007 Marvell Semiconductor, Inc.
  * Copyright (c) 2007 Sam Leffler, Errno Consulting
@@ -31,7 +33,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/malo/if_malo.c 344969 2019-03-09 12:54:10Z avos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/malo/if_malo.c 344969 2019-03-09 12:54:10Z avos $");
 #endif
 
 #include "opt_malo.h"
@@ -1533,7 +1535,7 @@ malo_setmcastfilter(struct malo_softc *sc)
 
 		ifp = vap->iv_ifp;
 		if_maddr_rlock(ifp);
-		TAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
+		CK_STAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
 			if (ifma->ifma_addr->sa_family != AF_LINK)
 				continue;
 

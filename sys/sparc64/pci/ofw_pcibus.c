@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
  * Copyright (c) 2000, Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000, BSDi
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/ofw_pcibus.c 298712 2016-04-27 17:49:42Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/pci/ofw_pcibus.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_ofw_pci.h"
 

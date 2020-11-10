@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/net80211/w00t/Makefile.inc 295981 2016-02-24 17:18:52Z bdrewery $
+# $FreeBSD: releng/12.2/tools/tools/net80211/w00t/Makefile.inc 295981 2016-02-24 17:18:52Z bdrewery $
 
 W00T=	../libw00t
 # NB: we get crc32 from -lz

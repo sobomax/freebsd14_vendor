@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/sockets/pr_atomic/pr_atomic.c 281409 2015-04-11 07:33:04Z ngie $
+ * $FreeBSD: releng/12.2/tools/regression/sockets/pr_atomic/pr_atomic.c 281409 2015-04-11 07:33:04Z ngie $
  */
 
 /*

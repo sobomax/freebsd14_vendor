@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/dev/drm2/drm_pciids.h 317609 2017-04-30 18:39:31Z markj $
+ * $FreeBSD: releng/12.2/sys/dev/drm2/drm_pciids.h 338285 2018-08-24 00:02:00Z imp $
  */
 
 /*

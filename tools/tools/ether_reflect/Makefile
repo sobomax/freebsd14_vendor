@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/ether_reflect/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: releng/12.2/tools/tools/ether_reflect/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 #
 # A Makefile that builds both the ether_reflect program and its manual page.
 

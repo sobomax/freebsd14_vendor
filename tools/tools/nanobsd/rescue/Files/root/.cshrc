@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/rescue/Files/root/.cshrc 278616 2015-02-12 05:35:00Z cperciva $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/rescue/Files/root/.cshrc 337497 2018-08-08 19:24:20Z asomers $
 #
 #csh .cshrc file
 
@@ -8,13 +8,13 @@
 	a la	ls -a
 	a lf	ls -FA
 	a ll	ls -lA
-	a lm	'll | more'
-	a m	more
+	a lm	'll | less'
+	a m	less
 
 set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin /usr/X11R6/bin /usr/local/jdk1.6.0/bin /usr/local/jdk1.5.0/bin $HOME/bin)
 setenv MANPATH "/usr/share/man:/usr/X11R6/man:/usr/local/man"
 
-setenv	PAGER	more
+setenv	PAGER	less
 setenv EDITOR	vi
 setenv	BLOCKSIZE	K
 setenv	FTP_PASSIVE_MODE YES

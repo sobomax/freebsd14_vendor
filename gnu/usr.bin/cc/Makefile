@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/cc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: releng/12.2/gnu/usr.bin/cc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 

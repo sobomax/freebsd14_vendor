@@ -1,5 +1,5 @@
 #	from: @(#)Makefile.inc	5.3 (Berkeley) 2/20/91
-# $FreeBSD: releng/11.3/lib/libc/yp/Makefile.inc 302255 2016-06-28 19:53:16Z bdrewery $
+# $FreeBSD: releng/12.2/lib/libc/yp/Makefile.inc 302255 2016-06-28 19:53:16Z bdrewery $
 
 # yp sources
 .PATH: ${LIBC_SRCTOP}/yp

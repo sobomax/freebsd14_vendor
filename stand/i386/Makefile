@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/Makefile 344413 2019-02-21 03:18:12Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/Makefile 345327 2019-03-20 15:34:40Z mmacy $
 
 NO_OBJ=t
 

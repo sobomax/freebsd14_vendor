@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/libi386/pxe.h 338078 2018-08-20 00:50:11Z kevans $
+ * $FreeBSD: releng/12.2/stand/i386/libi386/pxe.h 337524 2018-08-09 03:45:47Z kevans $
  */
 
 /*
@@ -245,7 +245,6 @@ typedef struct {
 #	define ETHER_TYPE	1
 #	define EXP_ETHER_TYPE	2
 #	define IEEE_TYPE	6
-#	define ARCNET_TYPE	7
 
 	uint16_t	HwAddrLen;		/* Length of hardware address */
 	MAC_ADDR	CurrentNodeAddress;	/* Current hardware address */

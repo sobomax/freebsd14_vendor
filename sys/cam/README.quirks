@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/cam/README.quirks 170485 2007-06-10 04:31:55Z mjacob $ */
+/* $FreeBSD: releng/12.2/sys/cam/README.quirks 170485 2007-06-10 04:31:55Z mjacob $ */
 
                      FreeBSD Quirk Guidelines
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/tar/tests/Makefile 348607 2019-06-04 10:35:54Z mm $
+# $FreeBSD: releng/12.2/usr.bin/tar/tests/Makefile 358087 2020-02-19 01:46:43Z mm $
 
 PACKAGE=	tests
 
@@ -72,6 +72,7 @@ TESTS_SRCS=	\
 	test_option_q.c				\
 	test_option_r.c				\
 	test_option_s.c				\
+	test_option_safe_writes.c		\
 	test_option_uid_uname.c			\
 	test_option_uuencode.c			\
 	test_option_xattrs.c			\

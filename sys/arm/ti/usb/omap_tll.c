@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/usb/omap_tll.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/usb/omap_tll.c 308638 2016-11-14 11:41:22Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/usb/omap_tll.c 283276 2015-05-22 03:1
 #include <sys/rman.h>
 #include <sys/module.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>

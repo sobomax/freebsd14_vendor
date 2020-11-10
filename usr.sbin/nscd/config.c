@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nscd/config.c 315599 2017-03-20 00:54:45Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nscd/config.c 315213 2017-03-13 20:34:53Z pfg $");
 
 #include <sys/stat.h>
 #include <sys/time.h>

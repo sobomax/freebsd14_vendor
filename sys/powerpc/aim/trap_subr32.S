@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/powerpc/aim/trap_subr32.S 316369 2017-04-01 19:27:06Z jhibbits $ */
+/* $FreeBSD: releng/12.2/sys/powerpc/aim/trap_subr32.S 348690 2019-06-05 14:19:54Z luporl $ */
 /* $NetBSD: trap_subr.S,v 1.20 2002/04/22 23:20:08 kleink Exp $	*/
 
 /*-
@@ -864,8 +864,8 @@ dbtrap:
 	mtsprg3	%r1
 
 	lwz	%r1,TRAP_TOCBASE(0)		/* get new SP */
-	lwz	%r1,tmpstk@got(%r1)
-	addi	%r1,%r1,TMPSTKSZ-16
+	lwz	%r1,trapstk@got(%r1)
+	addi	%r1,%r1,TRAPSTKSZ-16
 
 	FRAME_SETUP(PC_DBSAVE)
 /* Call C trap code: */

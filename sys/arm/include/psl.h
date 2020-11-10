@@ -1,6 +1,8 @@
 /*	$NetBSD: psl.h,v 1.6 2003/06/16 20:00:58 thorpej Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995 Mark Brinicombe.
  * All rights reserved.
  *
@@ -41,7 +43,7 @@
  *
  * Created      : 21/07/95
  *
- * $FreeBSD: releng/11.3/sys/arm/include/psl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/include/psl.h 326258 2017-11-27 15:04:10Z pfg $
  */
 
 #ifndef _MACHINE_PSL_H_

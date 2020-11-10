@@ -1,7 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/ia32/ia32_genassym.c 220238 2011-04-01 11:16:29Z kib $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/ia32/ia32_genassym.c 332122 2018-04-06 17:35:35Z brooks $");
 
 #include <sys/param.h>
 #include <sys/assym.h>

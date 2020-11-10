@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/loader/Makefile 344413 2019-02-21 03:18:12Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/loader/Makefile 359143 2020-03-19 16:51:57Z tsoome $
 
 LOADER_NET_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	yes
@@ -55,7 +55,7 @@ CFLAGS+=	-I${EFISRC}/include
 CFLAGS+=	-I${EFISRC}/include/${MACHINE}
 CFLAGS+=	-I${SYSDIR}/contrib/dev/acpica/include
 CFLAGS+=	-I${BOOTSRC}/i386/libi386
-CFLAGS+=	-DNO_PCI -DEFI
+CFLAGS+=	-DEFI
 
 .if !defined(BOOT_HIDE_SERIAL_NUMBERS)
 # Export serial numbers, UUID, and asset tag from loader.
@@ -79,6 +79,10 @@ HAVE_BCACHE=    yes
 
 .if defined(EFI_STAGING_SIZE)
 CFLAGS+=	-DEFI_STAGING_SIZE=${EFI_STAGING_SIZE}
+.endif
+
+.if ${MK_LOADER_EFI_SECUREBOOT} != "no"
+CFLAGS+= -DEFI_SECUREBOOT
 .endif
 
 NEWVERSWHAT=	"EFI loader" ${MACHINE}

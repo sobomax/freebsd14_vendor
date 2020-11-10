@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1996 Bruce D. Evans.
  * Copyright (c) 2002 by Thomas Moestl <tmm@FreeBSD.org>.
  * All rights reserved.
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/prof_machdep.c 181701 2008-08-13 20:30:28Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/prof_machdep.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #ifdef GUPROF
 

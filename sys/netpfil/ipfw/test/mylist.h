@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/test/mylist.h 294882 2016-01-27 02:22:31Z luigi $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/test/mylist.h 294882 2016-01-27 02:22:31Z luigi $
  *
  * linux-like bidirectional lists
  */

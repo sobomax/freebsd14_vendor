@@ -1,0 +1,6 @@
+# $FreeBSD: releng/12.2/bin/sh/tests/execution/unknown2.0 361646 2020-05-30 13:39:56Z jilles $
+
+{
+	: $(/var/empty/nosuchtool) 
+	: $(:)
+} 2>/dev/null

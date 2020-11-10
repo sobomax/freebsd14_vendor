@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/extres/hwreset/hwreset.c 308324 2016-11-05 04:17:32Z mmel $
+ * $FreeBSD: releng/12.2/sys/dev/extres/hwreset/hwreset.c 302528 2016-07-10 18:28:15Z mmel $
  */
 #include "opt_platform.h"
 #include <sys/cdefs.h>

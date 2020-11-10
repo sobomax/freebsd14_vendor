@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/amd/scripts/Makefile 80029 2001-07-20 06:20:32Z obrien $
+# $FreeBSD: releng/12.2/usr.sbin/amd/scripts/Makefile 305787 2016-09-14 01:47:01Z cy $
 
-.PATH: ${.CURDIR}/../../../contrib/amd/scripts
+.PATH: ${SRCTOP}/contrib/amd/scripts
 
 MAN=	amd.conf.5
 

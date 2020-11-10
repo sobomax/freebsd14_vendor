@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/i18n/esdb/UTF/Makefile 296702 2016-03-11 23:45:36Z bdrewery $
+# $FreeBSD: releng/12.2/share/i18n/esdb/UTF/Makefile 296702 2016-03-11 23:45:36Z bdrewery $
 # $NetBSD: Makefile.inc,v 1.5 2008/10/25 22:27:36 apb Exp $
 
 CODE=	UTF

@@ -1,7 +1,8 @@
 /*-
  * Copyright 2013 John-Mark Gurney <jmg@FreeBSD.org>
- * Copyright 2015 Netflix, Inc.
  * All rights reserved.
+ *
+ * Copyright 2015 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/crypto/aesni/aesencdec.h 285254 2015-07-07 20:31:09Z jmg $
+ * $FreeBSD: releng/12.2/sys/crypto/aesni/aesencdec.h 351913 2019-09-05 23:27:59Z imp $
  *
  */
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 David Chisnall
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/msun/src/imprecise.c 336767 2018-07-27 17:39:36Z dim $
+ * $FreeBSD: releng/12.2/lib/msun/src/imprecise.c 336299 2018-07-15 00:23:10Z mmacy $
  */
 
 #include <float.h>

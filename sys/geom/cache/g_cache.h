@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Ruslan Ermilov <ru@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/cache/g_cache.h 210046 2010-07-14 08:22:00Z ru $
+ * $FreeBSD: releng/12.2/sys/geom/cache/g_cache.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #ifndef	_G_CACHE_H_

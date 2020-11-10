@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bsdinstall/distextract/distextract.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bsdinstall/distextract/distextract.c 327486 2018-01-02 05:22:54Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <archive.h>
@@ -310,7 +310,15 @@ extract_files(struct dpv_file_node *file, int out __unused)
 		archive = NULL;
 		file->status = DPV_STATUS_DONE;
 		return (100);
-	} else if (retval != ARCHIVE_OK) {
+	} else if (retval != ARCHIVE_OK &&
+	    !(retval == ARCHIVE_WARN &&
+	    strcmp(archive_error_string(archive), "Can't restore time") == 0)) {
+		/*
+		 * Print any warning/error messages except inability to set
+		 * ctime/mtime, which is not fatal, or even interesting,
+		 * for our purposes. Would be nice if this were a libarchive
+		 * option.
+		 */
 		snprintf(errormsg, sizeof(errormsg),
 		    "Error while extracting %s: %s\n", file->name,
 		    archive_error_string(archive));

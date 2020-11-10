@@ -1,4 +1,4 @@
-#$FreeBSD: releng/11.3/sys/arm/ti/am335x/files.am335x 310856 2016-12-30 20:28:07Z loos $
+#$FreeBSD: releng/12.2/sys/arm/ti/am335x/files.am335x 351888 2019-09-05 19:25:44Z ian $
 
 arm/ti/aintc.c				standard
 
@@ -10,6 +10,7 @@ arm/ti/am335x/am335x_lcd_syscons.c	optional	sc
 arm/ti/am335x/am335x_pmic.c		optional	am335x_pmic
 arm/ti/am335x/am335x_prcm.c		standard
 arm/ti/am335x/am335x_pwmss.c		standard
+dev/pwm/pwmbus_if.m			standard
 arm/ti/am335x/am335x_ehrpwm.c		standard
 arm/ti/am335x/am335x_ecap.c		standard
 arm/ti/am335x/am335x_rtc.c		optional	am335x_rtc

@@ -1,5 +1,5 @@
 /*      $NetBSD: usbhidaction.c,v 1.8 2002/06/11 06:06:21 itojun Exp $ */
-/*	$FreeBSD: releng/11.3/usr.bin/usbhidaction/usbhidaction.c 330449 2018-03-05 07:26:05Z eadler $ */
+/*	$FreeBSD: releng/12.2/usr.bin/usbhidaction/usbhidaction.c 326276 2017-11-27 15:37:16Z pfg $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

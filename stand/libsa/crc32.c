@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/crc32.c 329134 2018-02-11 20:00:26Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/crc32.c 324554 2017-10-12 14:56:54Z imp $");
 
 #include <sys/types.h>
 

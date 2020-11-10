@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/bin/pkill/tests/pkill-j_test.sh 330332 2018-03-03 11:17:05Z eadler $
+# $FreeBSD: releng/12.2/bin/pkill/tests/pkill-j_test.sh 307629 2016-10-19 12:23:02Z br $
 
 jail_name_to_jid()
 {

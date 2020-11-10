@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2009 Robert N. M. Watson
  * Copyright (c) 2010-2011 Juniper Networks, Inc.
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/netisr_internal.h 222249 2011-05-24 12:34:19Z rwatson $
+ * $FreeBSD: releng/12.2/sys/net/netisr_internal.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NET_NETISR_INTERNAL_H_

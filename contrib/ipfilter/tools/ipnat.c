@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/tools/ipnat.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ipnat.c 359753 2020-04-09 20:35:35Z kevans $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -60,7 +60,6 @@ static const char rcsid[] = "@(#)$Id$";
 #define	bzero(a,b)	memset(a,0,b)
 #endif
 int	use_inet6 = 0;
-char	thishost[MAXHOSTNAMELEN];
 
 extern	char	*optarg;
 

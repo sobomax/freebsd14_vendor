@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libi386/spinconsole.c 329114 2018-02-11 02:27:50Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/spinconsole.c 322896 2017-08-25 17:29:48Z sobomax $");
 
 #include <stand.h>
 #include <bootstrap.h>

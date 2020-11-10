@@ -1,4 +1,6 @@
-/* mdXhl.c
+/*- mdXhl.c
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -8,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libmd/mdXhl.c 310372 2016-12-21 18:42:04Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libmd/mdXhl.c 334105 2018-05-23 17:01:28Z markj $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -77,11 +79,11 @@ MDXFdChunk(int fd, char *buf, off_t ofs, off_t len)
 			readrv = read(fd, buffer, sizeof(buffer));
 		else
 			readrv = read(fd, buffer, remain);
-		if (readrv <= 0) 
+		if (readrv <= 0)
 			break;
 		MDXUpdate(&ctx, buffer, readrv);
 		remain -= readrv;
-	} 
+	}
 error:
 	if (readrv < 0)
 		return NULL;

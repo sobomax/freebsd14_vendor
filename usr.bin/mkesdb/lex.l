@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/mkesdb/lex.l 330449 2018-03-05 07:26:05Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.bin/mkesdb/lex.l 326276 2017-11-27 15:37:16Z pfg $ */
 /* $NetBSD: lex.l,v 1.3 2006/02/09 22:03:15 dogcow Exp $	*/
 
 %{

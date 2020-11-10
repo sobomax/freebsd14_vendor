@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/usr.sbin/binmiscctl/Makefile 264269 2014-04-08 20:10:22Z sbruno $
+# $FreeBSD: releng/12.2/usr.sbin/binmiscctl/Makefile 264269 2014-04-08 20:10:22Z sbruno $
 #
 
 .include <bsd.own.mk>

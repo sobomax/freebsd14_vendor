@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Myson Technology Inc.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  *
  * Written by: yen_cw@myson.com.tw  available at: http://www.myson.com.tw/
  *
- * $FreeBSD: releng/11.3/sys/dev/my/if_myreg.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/my/if_myreg.h 326255 2017-11-27 14:52:40Z pfg $
  *
  * Myson MTD80x register definitions.
  *

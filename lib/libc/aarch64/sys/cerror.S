@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/aarch64/sys/cerror.S 319195 2017-05-30 10:50:15Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/aarch64/sys/cerror.S 312703 2017-01-24 18:56:09Z andrew $");
 
 ENTRY(cerror)
 	.hidden	cerror

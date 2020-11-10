@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: log.c,v 1.1 2004/01/07 23:15:00 max Exp $
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/sdpd/log.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/sdpd/log.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/types.h>

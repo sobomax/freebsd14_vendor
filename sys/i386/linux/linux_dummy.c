@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1994-1995 Søren Schmidt
  * All rights reserved.
  *
@@ -6,30 +8,26 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer
- *    in this position and unchanged.
+ *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/i386/linux/linux_dummy.c 346839 2019-04-28 14:19:31Z dchagin $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/i386/linux/linux_dummy.c 365034 2020-09-01 12:09:13Z trasz $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -66,7 +64,6 @@ UNIMPLEMENTED(vserver);
 DUMMY(stime);
 DUMMY(fstat);
 DUMMY(olduname);
-DUMMY(syslog);
 DUMMY(uname);
 DUMMY(vhangup);
 DUMMY(vm86old);
@@ -102,14 +99,10 @@ DUMMY(inotify_rm_watch);
 DUMMY(migrate_pages);
 DUMMY(unshare);
 /* Linux 2.6.17: */
-DUMMY(splice);
-DUMMY(sync_file_range);
 DUMMY(tee);
 DUMMY(vmsplice);
 /* Linux 2.6.18: */
 DUMMY(move_pages);
-/* Linux 2.6.19: */
-DUMMY(getcpu);
 /* Linux 2.6.22: */
 DUMMY(signalfd);
 /* Linux 2.6.27: */
@@ -117,7 +110,7 @@ DUMMY(signalfd4);
 DUMMY(inotify_init1);
 /* Linux 2.6.31: */
 DUMMY(perf_event_open);
-/* Linux 2.6.33: */
+/* Linux 2.6.36: */
 DUMMY(fanotify_init);
 DUMMY(fanotify_mark);
 /* Linux 2.6.39: */
@@ -135,11 +128,9 @@ DUMMY(kcmp);
 DUMMY(finit_module);
 DUMMY(sched_setattr);
 DUMMY(sched_getattr);
-/* Linux 3.14: */
-DUMMY(renameat2);
-/* Linux 3.15: */
-DUMMY(seccomp);
+/* Linux 3.17: */
 DUMMY(memfd_create);
+DUMMY(seccomp);
 /* Linux 3.18: */
 DUMMY(bpf);
 /* Linux 3.19: */

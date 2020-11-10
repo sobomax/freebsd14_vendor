@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/mm_types.h 329960 2018-02-25 10:24:59Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/mm_types.h 357435 2020-02-03 10:59:27Z hselasky $
  */
 
 #ifndef _LINUX_MM_TYPES_H_
@@ -34,6 +34,8 @@
 #include <linux/rwsem.h>
 
 #include <asm/atomic.h>
+
+typedef int vm_fault_t;
 
 struct vm_area_struct;
 struct task_struct;
@@ -53,6 +55,12 @@ mmdrop(struct mm_struct *mm)
 {
 	if (__predict_false(atomic_dec_and_test(&mm->mm_count)))
 		linux_mm_dtor(mm);
+}
+
+static inline bool
+mmget_not_zero(struct mm_struct *mm)
+{
+	return (atomic_inc_not_zero(&mm->mm_users));
 }
 
 static inline void

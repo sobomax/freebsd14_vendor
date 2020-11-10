@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/msun/i387/Makefile.inc 324006 2017-09-26 09:01:56Z dim $
+# $FreeBSD: releng/12.2/lib/msun/i387/Makefile.inc 305384 2016-09-04 14:12:19Z bde $
 
 ARCH_SRCS = e_exp.S e_fmod.S e_log.S e_log10.S \
 	    e_remainder.S e_sqrt.S s_ceil.S s_copysign.S \

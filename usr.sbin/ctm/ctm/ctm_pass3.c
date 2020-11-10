@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -6,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/11.3/usr.sbin/ctm/ctm/ctm_pass3.c 93150 2002-03-25 13:53:46Z phk $
+ * $FreeBSD: releng/12.2/usr.sbin/ctm/ctm/ctm_pass3.c 326408 2017-11-30 20:33:45Z pfg $
  *
  */
 

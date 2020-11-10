@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libnetbsd/netinet/in.h 273482 2014-10-22 21:04:54Z ngie $ */
+/* $FreeBSD: releng/12.2/lib/libnetbsd/netinet/in.h 273482 2014-10-22 21:04:54Z ngie $ */
 
 /*
  * Copyright (c) 1982, 1986, 1990, 1993

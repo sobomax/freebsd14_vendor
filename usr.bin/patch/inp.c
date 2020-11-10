@@ -23,8 +23,8 @@
  * -C option added in 1998, original code by Marc Espie, based on FreeBSD
  * behaviour
  *
- * $OpenBSD: inp.c,v 1.36 2012/04/10 14:46:34 ajacoutot Exp $
- * $FreeBSD: releng/11.3/usr.bin/patch/inp.c 328462 2018-01-27 06:20:27Z kevans $
+ * $OpenBSD: inp.c,v 1.44 2015/07/26 14:32:19 millert Exp $
+ * $FreeBSD: releng/12.2/usr.bin/patch/inp.c 327826 2018-01-11 15:01:48Z kevans $
  */
 
 #include <sys/types.h>
@@ -118,7 +118,7 @@ reallocate_lines(size_t *lines_allocated)
 	size_t	new_size;
 
 	new_size = *lines_allocated * 3 / 2;
-	p = realloc(i_ptr, (new_size + 2) * sizeof(char *));
+	p = reallocarray(i_ptr, new_size + 2, sizeof(char *));
 	if (p == NULL) {	/* shucks, it was a near thing */
 		munmap(i_womp, i_size);
 		i_womp = NULL;

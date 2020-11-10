@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1997, 1998, 1999
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -38,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/an/if_an.c 332288 2018-04-08 16:54:07Z brooks $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/an/if_an.c 365670 2020-09-12 19:33:25Z bz $");
 
 /*
  * The Aironet 4500/4800 series cards come in PCMCIA, ISA and PCI form.
@@ -1873,6 +1875,7 @@ an_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 	int			len;
 	int			i, max;
 	struct an_softc		*sc;
+	struct an_req		*areq;
 	struct ifreq		*ifr;
 	struct thread		*td = curthread;
 	struct ieee80211req	*ireq;
@@ -1932,17 +1935,21 @@ an_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 		error = 0;
 		break;
 	case SIOCGAIRONET:
-		error = copyin(ifr_data_get_ptr(ifr), &sc->areq,
-		    sizeof(sc->areq));
-		if (error != 0)
+		error = priv_check(td, PRIV_DRIVER);
+		if (error)
 			break;
+		areq = malloc(sizeof(*areq), M_TEMP, M_WAITOK);
+		error = copyin(ifr_data_get_ptr(ifr), areq, sizeof(*areq));
+		if (error != 0) {
+			free(areq, M_TEMP);
+			break;
+		}
 		AN_LOCK(sc);
+		memcpy(&sc->areq, areq, sizeof(sc->areq));
 #ifdef ANCACHE
 		if (sc->areq.an_type == AN_RID_ZERO_CACHE) {
-			error = priv_check(td, PRIV_DRIVER);
-			if (error)
-				break;
 			sc->an_sigitems = sc->an_nextitem = 0;
+			free(areq, M_TEMP);
 			break;
 		} else if (sc->areq.an_type == AN_RID_READ_CACHE) {
 			char *pt = (char *)&sc->areq.an_val;
@@ -1958,12 +1965,14 @@ an_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 #endif
 		if (an_read_record(sc, (struct an_ltv_gen *)&sc->areq)) {
 			AN_UNLOCK(sc);
+			free(areq, M_TEMP);
 			error = EINVAL;
 			break;
 		}
+		memcpy(areq, &sc->areq, sizeof(*areq));
 		AN_UNLOCK(sc);
-		error = copyout(&sc->areq, ifr_data_get_ptr(ifr),
-		    sizeof(sc->areq));
+		error = copyout(areq, ifr_data_get_ptr(ifr), sizeof(*areq));
+		free(areq, M_TEMP);
 		break;
 	case SIOCSAIRONET:
 		if ((error = priv_check(td, PRIV_DRIVER)))
@@ -2311,7 +2320,7 @@ an_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 		}
 		break;
 	case SIOCS80211:
-		if ((error = priv_check(td, PRIV_NET80211_MANAGE)))
+		if ((error = priv_check(td, PRIV_NET80211_VAP_MANAGE)))
 			goto out;
 		AN_LOCK(sc);
 		sc->areq.an_len = sizeof(sc->areq);

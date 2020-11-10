@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sys/netipsec/keysock.c 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/netipsec/keysock.c 336676 2018-07-24 16:35:52Z andrew $	*/
 /*	$KAME: keysock.c,v 1.25 2001/08/13 20:07:41 itojun Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *
@@ -69,7 +71,7 @@ struct key_cb {
 	int key_count;
 	int any_count;
 };
-static VNET_DEFINE(struct key_cb, key_cb);
+VNET_DEFINE_STATIC(struct key_cb, key_cb);
 #define	V_key_cb		VNET(key_cb)
 
 static struct sockaddr key_src = { 2, PF_KEY, };

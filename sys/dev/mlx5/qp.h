@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/qp.h 337115 2018-08-02 08:56:27Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/qp.h 356072 2019-12-25 09:32:55Z hselasky $
  */
 
 #ifndef MLX5_QP_H
@@ -143,11 +143,8 @@ enum {
 	MLX5_WQE_CTRL_SOLICITED		= 1 << 1,
 };
 
-enum {
-	MLX5_SEND_WQE_DS	= 16,
-	MLX5_SEND_WQE_BB	= 64,
-};
-
+#define	MLX5_SEND_WQE_DS	16
+#define	MLX5_SEND_WQE_BB	64
 #define MLX5_SEND_WQEBB_NUM_DS	(MLX5_SEND_WQE_BB / MLX5_SEND_WQE_DS)
 
 enum {
@@ -159,7 +156,7 @@ enum {
 	MLX5_WQE_FMR_PERM_LOCAL_WRITE	= 1 << 28,
 	MLX5_WQE_FMR_PERM_REMOTE_READ	= 1 << 29,
 	MLX5_WQE_FMR_PERM_REMOTE_WRITE	= 1 << 30,
-	MLX5_WQE_FMR_PERM_ATOMIC	= 1 << 31
+	MLX5_WQE_FMR_PERM_ATOMIC	= 1U << 31
 };
 
 enum {

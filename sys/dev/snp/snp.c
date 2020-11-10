@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/snp/snp.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/snp/snp.c 355355 2019-12-03 19:14:02Z kevans $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -59,6 +61,8 @@ SX_SYSINIT(snp_register_lock, &snp_register_lock,
 #define	SNP_LOCK()	sx_xlock(&snp_register_lock)
 #define	SNP_UNLOCK()	sx_xunlock(&snp_register_lock)
 #endif
+
+#define	SNPGTYY_32DEV	_IOR('T', 89, uint32_t)
 
 /*
  * There is no need to have a big input buffer. In most typical setups,
@@ -174,7 +178,7 @@ snp_read(struct cdev *dev, struct uio *uio, int flag)
 			error = EWOULDBLOCK;
 			break;
 		}
-		error = cv_wait_sig(&ss->snp_outwait, tp->t_mtx);
+		error = cv_wait_sig(&ss->snp_outwait, tty_getlock(tp));
 		if (error != 0)
 			break;
 		if (tty_gone(tp)) {
@@ -274,6 +278,12 @@ snp_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 			*(dev_t *)data = NODEV;
 		else
 			*(dev_t *)data = tty_udev(ss->snp_tty);
+		return (0);
+	case SNPGTYY_32DEV:
+		if (ss->snp_tty == NULL)
+			*(uint32_t *)data = -1;
+		else
+			*(uint32_t *)data = tty_udev(ss->snp_tty); /* trunc */
 		return (0);
 	case FIONREAD:
 		tp = ss->snp_tty;

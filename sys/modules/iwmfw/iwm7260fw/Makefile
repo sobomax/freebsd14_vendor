@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/iwmfw/iwm7260fw/Makefile 330230 2018-03-01 07:42:20Z eadler $
+# $FreeBSD: releng/12.2/sys/modules/iwmfw/iwm7260fw/Makefile 313426 2017-02-08 07:04:06Z adrian $
 
 KMOD=	iwm7260fw
 IMG=	iwm-7260-17

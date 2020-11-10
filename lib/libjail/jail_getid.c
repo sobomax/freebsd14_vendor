@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 James Gritton.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libjail/jail_getid.c 348546 2019-06-03 16:47:51Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libjail/jail_getid.c 348538 2019-06-03 15:28:37Z kevans $");
 
 #include <sys/param.h>
 #include <sys/types.h>

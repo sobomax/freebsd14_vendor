@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/radeon_family.h 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/radeon_family.h 338285 2018-08-24 00:02:00Z imp $");
 
 /* this file defines the CHIP_  and family flags used in the pciids,
  * its is common between kms and non-kms because duplicating it and

@@ -1,8 +1,8 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2019, Intel Corporation
+  Copyright (c) 2013-2018, Intel Corporation 
   All rights reserved.
-
+  
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
   
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixl/i40e_dcb.c 349181 2019-06-19 00:37:54Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_dcb.c 363876 2020-08-04 23:30:10Z erj $*/
 
 #include "i40e_adminq.h"
 #include "i40e_prototype.h"
@@ -907,7 +907,25 @@ enum i40e_status_code i40e_init_dcb(struct i40e_hw *hw, bool enable_mib_change)
 		return I40E_NOT_SUPPORTED;
 
 	/* Read LLDP NVM area */
-	ret = i40e_read_lldp_cfg(hw, &lldp_cfg);
+	if (hw->flags & I40E_HW_FLAG_FW_LLDP_PERSISTENT) {
+		u8 offset = 0;
+
+		if (hw->mac.type == I40E_MAC_XL710)
+			offset = I40E_LLDP_CURRENT_STATUS_XL710_OFFSET;
+		else if (hw->mac.type == I40E_MAC_X722)
+			offset = I40E_LLDP_CURRENT_STATUS_X722_OFFSET;
+		else
+			return I40E_NOT_SUPPORTED;
+
+		ret = i40e_read_nvm_module_data(hw,
+						I40E_SR_EMP_SR_SETTINGS_PTR,
+						offset,
+						I40E_LLDP_CURRENT_STATUS_OFFSET,
+						I40E_LLDP_CURRENT_STATUS_SIZE,
+						&lldp_cfg.adminstatus);
+	} else {
+		ret = i40e_read_lldp_cfg(hw, &lldp_cfg);
+	}
 	if (ret)
 		return I40E_ERR_NOT_READY;
 
@@ -1280,7 +1298,8 @@ enum i40e_status_code i40e_set_dcb_config(struct i40e_hw *hw)
 
 /**
  * i40e_dcb_config_to_lldp - Convert Dcbconfig to MIB format
- * @hw: pointer to the hw struct
+ * @lldpmib: pointer to mib to be output
+ * @miblen: pointer to u16 for length of lldpmib
  * @dcbcfg: store for LLDPDU data
  *
  * send DCB configuration to FW

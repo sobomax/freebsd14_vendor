@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/imgact_binmisc.c 318293 2017-05-15 14:41:47Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/imgact_binmisc.c 333806 2018-05-18 17:58:09Z emaste $");
 
 #include <sys/param.h>
 #include <sys/ctype.h>
@@ -747,11 +747,16 @@ imgact_binmisc_fini(void *arg)
 	sx_destroy(&interp_list_sx);
 }
 
-SYSINIT(imgact_binmisc, SI_SUB_EXEC, SI_ORDER_MIDDLE, imgact_binmisc_init, 0);
-SYSUNINIT(imgact_binmisc, SI_SUB_EXEC, SI_ORDER_MIDDLE, imgact_binmisc_fini, 0);
+SYSINIT(imgact_binmisc, SI_SUB_EXEC, SI_ORDER_MIDDLE, imgact_binmisc_init,
+    NULL);
+SYSUNINIT(imgact_binmisc, SI_SUB_EXEC, SI_ORDER_MIDDLE, imgact_binmisc_fini,
+    NULL);
 
 /*
  * Tell kern_execve.c about it, with a little help from the linker.
  */
-static struct execsw imgact_binmisc_execsw = { imgact_binmisc_exec, KMOD_NAME };
+static struct execsw imgact_binmisc_execsw = {
+	.ex_imgact = imgact_binmisc_exec,
+	.ex_name = KMOD_NAME
+};
 EXEC_SET(imgact_binmisc, imgact_binmisc_execsw);

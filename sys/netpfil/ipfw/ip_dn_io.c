@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Luigi Rizzo, Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
  *
@@ -28,7 +30,7 @@
  * Dummynet portions related to packet handling.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_dn_io.c 338082 2018-08-20 01:38:48Z loos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_dn_io.c 337860 2018-08-15 16:36:29Z loos $");
 
 #include "opt_inet6.h"
 

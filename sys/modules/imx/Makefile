@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/imx/Makefile 346526 2019-04-22 05:00:29Z ian $
+# $FreeBSD: releng/12.2/sys/modules/imx/Makefile 336096 2018-07-08 19:35:41Z ian $
 # Build modules specific to freescale/nxp imx-family SoCs.
 
 SUBDIR = \

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/mips/beri/common/mips.h 262197 2014-02-18 23:18:32Z rwatson $
+ * $FreeBSD: releng/12.2/stand/mips/beri/common/mips.h 262197 2014-02-18 23:18:32Z rwatson $
  */
 
 #ifndef _MIPS_H_

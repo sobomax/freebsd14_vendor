@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/tinybsd/conf/wireless/tinybsd.basefiles 171131 2007-07-01 10:25:07Z thompsa $
+# $FreeBSD: releng/12.2/tools/tools/tinybsd/conf/wireless/tinybsd.basefiles 171131 2007-07-01 10:25:07Z thompsa $
 # contents of ${WORKDIR}/boot
 boot/boot0
 boot/boot1

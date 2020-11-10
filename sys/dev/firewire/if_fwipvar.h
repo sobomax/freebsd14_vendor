@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2004
  *	Doug Rabson
  * Copyright (c) 2002-2003
@@ -33,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: releng/11.3/sys/dev/firewire/if_fwipvar.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/firewire/if_fwipvar.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #ifndef _NET_IF_FWIPVAR_H_

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1988, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -24,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)limits.h	8.3 (Berkeley) 1/4/94
- * $FreeBSD: releng/11.3/sys/sparc64/include/_limits.h 217145 2011-01-08 11:13:34Z tijl $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/_limits.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE__LIMITS_H_

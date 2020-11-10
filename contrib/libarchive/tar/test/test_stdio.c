@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/test/test_stdio.c 310569 2016-12-26 06:16:27Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_stdio.c 309869 2016-12-12 02:21:56Z ngie $");
 
 DEFINE_TEST(test_stdio)
 {

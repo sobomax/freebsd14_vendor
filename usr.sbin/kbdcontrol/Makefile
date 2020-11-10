@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/kbdcontrol/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/kbdcontrol/Makefile 352276 2019-09-13 07:08:43Z bapt $
 
 PROG=	kbdcontrol
 MAN=	kbdcontrol.1 kbdmap.5
@@ -7,7 +7,5 @@ SRCS=	kbdcontrol.c lex.l
 
 WARNS?=	4
 CFLAGS+= -I${.CURDIR}
-
-LIBADD=	l
 
 .include <bsd.prog.mk>

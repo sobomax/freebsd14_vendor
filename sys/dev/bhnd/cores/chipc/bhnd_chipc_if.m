@@ -22,7 +22,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/bhnd/cores/chipc/bhnd_chipc_if.m 302189 2016-06-25 04:33:00Z landonf $
+# $FreeBSD: releng/12.2/sys/dev/bhnd/cores/chipc/bhnd_chipc_if.m 304870 2016-08-27 00:03:02Z landonf $
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -46,6 +46,22 @@ CODE {
 	{
 		panic("bhnd_chipc_generic_get_caps unimplemented");
 	}
+}
+
+
+/**
+ * Return the current value of the chipstatus register.
+ *
+ * @param dev A bhnd(4) ChipCommon device.
+ *
+ * Drivers should only use function for functionality that is not
+ * available via another bhnd_chipc() function.
+ *
+ * @returns The chipstatus register value, or 0 if undefined by this
+ * hardware (e.g. if @p dev is an EXTIF core).
+ */
+METHOD uint32_t read_chipst {
+	device_t dev;
 }
 
 /**

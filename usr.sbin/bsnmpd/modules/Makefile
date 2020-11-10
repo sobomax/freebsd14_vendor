@@ -1,14 +1,10 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/Makefile 313239 2017-02-04 17:10:19Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/Makefile 317383 2017-04-24 21:21:49Z brooks $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/contrib/bsnmp/snmpd
 
-.if ${MK_ATM} != "no"
-_snmp_atm= snmp_atm
-.endif
-
-SUBDIR=	${_snmp_atm} \
+SUBDIR=	\
 	snmp_bridge \
 	snmp_hostres \
 	snmp_lm75 \

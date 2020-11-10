@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/atkbdc.c 336189 2018-07-11 07:16:13Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/atkbdc.c 335025 2018-06-13 03:22:08Z araujo $");
 
 #include <sys/types.h>
 

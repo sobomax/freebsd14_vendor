@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/11.3/stand/lua/core.lua 344220 2019-02-17 02:39:17Z kevans $
+-- $FreeBSD: releng/12.2/stand/lua/core.lua 366691 2020-10-14 01:47:00Z imp $
 --
 
 local config = require("config")
@@ -69,12 +69,28 @@ end
 -- try_include will return the loaded module on success, or false and the error
 -- message on failure.
 function try_include(module)
-	local status, ret = pcall(require, module)
-	-- ret is the module if we succeeded.
-	if status then
-		return ret
+	if module:sub(1, 1) ~= "/" then
+		local lua_path = loader.lua_path
+		-- XXX Temporary compat shim; this should be removed once the
+		-- loader.lua_path export has sufficiently spread.
+		if lua_path == nil then
+			lua_path = "/boot/lua"
+		end
+		module = lua_path .. "/" .. module
+		-- We only attempt to append an extension if an absolute path
+		-- wasn't specified.  This assumes that the caller either wants
+		-- to treat this like it would require() and specify just the
+		-- base filename, or they know what they're doing as they've
+		-- specified an absolute path and we shouldn't impede.
+		if module:match(".lua$") == nil then
+			module = module .. ".lua"
+		end
 	end
-	return false, ret
+	if lfs.attributes(module, "mode") ~= "file" then
+		return
+	end
+
+	return dofile(module)
 end
 
 -- Module exports
@@ -87,6 +103,7 @@ core.KEY_DELETE		= 127
 -- other contexts (outside of Lua) may mean 'octal'
 core.KEYSTR_ESCAPE	= "\027"
 core.KEYSTR_CSI		= core.KEYSTR_ESCAPE .. "["
+core.KEYSTR_RESET	= core.KEYSTR_ESCAPE .. "c"
 
 core.MENU_RETURN	= "return"
 core.MENU_ENTRY		= "entry"
@@ -310,11 +327,27 @@ function core.isSingleUserBoot()
 	return single_user ~= nil and single_user:lower() == "yes"
 end
 
+function core.isUEFIBoot()
+	local efiver = loader.getenv("efi-version")
+
+	return efiver ~= nil
+end
+
 function core.isZFSBoot()
 	local c = loader.getenv("currdev")
 
 	if c ~= nil then
 		return c:match("^zfs:") ~= nil
+	end
+	return false
+end
+
+function core.isSerialConsole()
+	local c = loader.getenv("console")
+	if c ~= nil then
+		if c:find("comconsole") ~= nil then
+			return true
+		end
 	end
 	return false
 end
@@ -375,6 +408,40 @@ function core.popFrontTable(tbl)
 	end
 
 	return first_value, new_tbl
+end
+
+function core.getConsoleName()
+	if loader.getenv("boot_multicons") ~= nil then
+		if loader.getenv("boot_serial") ~= nil then
+			return "Dual (Serial primary)"
+		else
+			return "Dual (Video primary)"
+		end
+	else
+		if loader.getenv("boot_serial") ~= nil then
+			return "Serial"
+		else
+			return "Video"
+		end
+	end
+end
+
+function core.nextConsoleChoice()
+	if loader.getenv("boot_multicons") ~= nil then
+		if loader.getenv("boot_serial") ~= nil then
+			loader.unsetenv("boot_serial")
+		else
+			loader.unsetenv("boot_multicons")
+			loader.setenv("boot_serial", "YES")
+		end
+	else
+		if loader.getenv("boot_serial") ~= nil then
+			loader.unsetenv("boot_serial")
+		else
+			loader.setenv("boot_multicons", "YES")
+			loader.setenv("boot_serial", "YES")
+		end
+	end
 end
 
 recordDefaults()

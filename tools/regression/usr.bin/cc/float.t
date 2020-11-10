@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/regression/usr.bin/cc/float.t 230368 2012-01-20 06:57:21Z das $
+# $FreeBSD: releng/12.2/tools/regression/usr.bin/cc/float.t 230368 2012-01-20 06:57:21Z das $
 
 cd `dirname $0`
 

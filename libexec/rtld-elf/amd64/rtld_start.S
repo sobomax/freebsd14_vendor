@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/libexec/rtld-elf/amd64/rtld_start.S 312789 2017-01-26 03:05:27Z emaste $
+ * $FreeBSD: releng/12.2/libexec/rtld-elf/amd64/rtld_start.S 312288 2017-01-16 14:49:29Z emaste $
  */
 
 	.text

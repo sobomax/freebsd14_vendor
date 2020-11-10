@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/builtins/getopts3.0 265616 2014-05-07 21:45:25Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/builtins/getopts3.0 265616 2014-05-07 21:45:25Z jilles $
 
 shift $#
 getopts x opt

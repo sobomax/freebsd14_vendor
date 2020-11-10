@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Peter Wemm
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * From: FreeBSD: src/sys/i386/include/minidump.h,v 1.1 2006/04/21 04:28:43
- * $FreeBSD: releng/11.3/sys/arm/include/minidump.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/include/minidump.h 326258 2017-11-27 15:04:10Z pfg $
  */
 
 #ifndef	_MACHINE_MINIDUMP_H_

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/altera/socfpga/socfpga_l3regs.h 271431 2014-09-11 18:12:28Z br $
+ * $FreeBSD: releng/12.2/sys/arm/altera/socfpga/socfpga_l3regs.h 271431 2014-09-11 18:12:28Z br $
  */
 
 #define	L3REGS_REMAP		0x0	/* Remap */

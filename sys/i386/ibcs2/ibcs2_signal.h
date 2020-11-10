@@ -1,6 +1,8 @@
 /*	$NetBSD: ibcs2_signal.h,v 1.7 1995/08/14 02:26:01 mycroft Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994, 1995 Scott Bartram
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/i386/ibcs2/ibcs2_signal.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/i386/ibcs2/ibcs2_signal.h 326260 2017-11-27 15:08:52Z pfg $
  */
 
 #ifndef	_IBCS2_SIGNAL_H

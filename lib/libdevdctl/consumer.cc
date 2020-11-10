@@ -58,7 +58,7 @@
 
 #include "consumer.h"
 
-__FBSDID("$FreeBSD: releng/11.3/lib/libdevdctl/consumer.cc 307792 2016-10-22 20:50:49Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libdevdctl/consumer.cc 307364 2016-10-15 13:16:52Z bapt $");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))

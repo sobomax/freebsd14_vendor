@@ -12,7 +12,7 @@
 # warranties of merchantability and fitness for a particular
 # purpose.
 #
-# $FreeBSD: releng/11.3/stand/i386/libi386/pxetramp.s 84461 2001-10-04 10:18:00Z jhb $
+# $FreeBSD: releng/12.2/stand/i386/libi386/pxetramp.s 84461 2001-10-04 10:18:00Z jhb $
 
 # ph33r this
 

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	$Id: acpiconf.c,v 1.5 2000/08/08 14:12:19 iwasaki Exp $
- *	$FreeBSD: releng/11.3/usr.sbin/acpi/acpiconf/acpiconf.c 330449 2018-03-05 07:26:05Z eadler $
+ *	$FreeBSD: releng/12.2/usr.sbin/acpi/acpiconf/acpiconf.c 359076 2020-03-18 18:02:33Z hrs $
  */
 
 #include <sys/param.h>
@@ -92,38 +92,65 @@ acpi_battinfo(int num)
 	uint32_t volt;
 
 	if (num < 0 || num > 64)
-		err(EX_USAGE, "invalid battery %d", num);
+		errx(EX_USAGE, "invalid battery %d", num);
 
 	/* Print battery design information. */
 	battio.unit = num;
-	if (ioctl(acpifd, ACPIIO_BATT_GET_BIF, &battio) == -1)
+	if (ioctl(acpifd, ACPIIO_BATT_GET_BIX, &battio) == -1)
 		err(EX_IOERR, "get battery info (%d) failed", num);
-	amp = battio.bif.units;
+	amp = battio.bix.units;
 	pwr_units = amp ? "mA" : "mW";
-	if (battio.bif.dcap == UNKNOWN_CAP)
+	if (battio.bix.dcap == UNKNOWN_CAP)
 		printf("Design capacity:\tunknown\n");
 	else
-		printf("Design capacity:\t%d %sh\n", battio.bif.dcap,
+		printf("Design capacity:\t%d %sh\n", battio.bix.dcap,
 		    pwr_units);
-	if (battio.bif.lfcap == UNKNOWN_CAP)
+	if (battio.bix.lfcap == UNKNOWN_CAP)
 		printf("Last full capacity:\tunknown\n");
 	else
-		printf("Last full capacity:\t%d %sh\n", battio.bif.lfcap,
+		printf("Last full capacity:\t%d %sh\n", battio.bix.lfcap,
 		    pwr_units);
-	printf("Technology:\t\t%s\n", battio.bif.btech == 0 ?
+	printf("Technology:\t\t%s\n", battio.bix.btech == 0 ?
 	    "primary (non-rechargeable)" : "secondary (rechargeable)");
-	if (battio.bif.dvol == UNKNOWN_CAP)
+	if (ACPI_BIX_REV_MIN_CHECK(battio.bix.rev, ACPI_BIX_REV_1)) {
+		printf("Battery Swappable Capability:\t");
+		if (battio.bix.scap == ACPI_BIX_SCAP_NO)
+			printf("Non-swappable\n");
+		else if (battio.bix.scap == ACPI_BIX_SCAP_COLD)
+			printf("cold swap\n");
+		else if (battio.bix.scap == ACPI_BIX_SCAP_HOT)
+			printf("hot swap\n");
+		else
+			printf("unknown\n");
+	}
+	if (battio.bix.dvol == UNKNOWN_CAP)
 		printf("Design voltage:\t\tunknown\n");
 	else
-		printf("Design voltage:\t\t%d mV\n", battio.bif.dvol);
-	printf("Capacity (warn):\t%d %sh\n", battio.bif.wcap, pwr_units);
-	printf("Capacity (low):\t\t%d %sh\n", battio.bif.lcap, pwr_units);
-	printf("Low/warn granularity:\t%d %sh\n", battio.bif.gra1, pwr_units);
-	printf("Warn/full granularity:\t%d %sh\n", battio.bif.gra2, pwr_units);
-	printf("Model number:\t\t%s\n", battio.bif.model);
-	printf("Serial number:\t\t%s\n", battio.bif.serial);
-	printf("Type:\t\t\t%s\n", battio.bif.type);
-	printf("OEM info:\t\t%s\n", battio.bif.oeminfo);
+		printf("Design voltage:\t\t%d mV\n", battio.bix.dvol);
+	printf("Capacity (warn):\t%d %sh\n", battio.bix.wcap, pwr_units);
+	printf("Capacity (low):\t\t%d %sh\n", battio.bix.lcap, pwr_units);
+	if (ACPI_BIX_REV_MIN_CHECK(battio.bix.rev, ACPI_BIX_REV_0)) {
+		if (battio.bix.cycles != ACPI_BATT_UNKNOWN)
+			printf("Cycle Count:\t\t%d\n", battio.bix.cycles);
+		printf("Mesurement Accuracy:\t%d %%\n",
+		    battio.bix.accuracy / 1000);
+		if (battio.bix.stmax != ACPI_BATT_UNKNOWN)
+			printf("Max Sampling Time:\t%d ms\n",
+			    battio.bix.stmax);
+		if (battio.bix.stmin != ACPI_BATT_UNKNOWN)
+			printf("Min Sampling Time:\t%d ms\n",
+			    battio.bix.stmin);
+		printf("Max Average Interval:\t%d ms\n",
+		    battio.bix.aimax);
+		printf("Min Average Interval:\t%d ms\n",
+		    battio.bix.aimin);
+	}
+	printf("Low/warn granularity:\t%d %sh\n", battio.bix.gra1, pwr_units);
+	printf("Warn/full granularity:\t%d %sh\n", battio.bix.gra2, pwr_units);
+	printf("Model number:\t\t%s\n", battio.bix.model);
+	printf("Serial number:\t\t%s\n", battio.bix.serial);
+	printf("Type:\t\t\t%s\n", battio.bix.type);
+	printf("OEM info:\t\t%s\n", battio.bix.oeminfo);
 
 	/* Fetch battery voltage information. */
 	volt = UNKNOWN_VOLTAGE;
@@ -205,8 +232,9 @@ usage(const char* prog)
 int
 main(int argc, char *argv[])
 {
-	char	*prog;
-	int	c, sleep_type;
+	char	*prog, *end;
+	int	c, sleep_type, battery, ack;
+	int	iflag = 0, kflag = 0, sflag = 0;
 
 	prog = argv[0];
 	if (argc < 2)
@@ -218,16 +246,24 @@ main(int argc, char *argv[])
 	while ((c = getopt(argc, argv, "hi:k:s:")) != -1) {
 		switch (c) {
 		case 'i':
-			acpi_battinfo(atoi(optarg));
+			iflag = 1;
+			battery = strtol(optarg, &end, 10);
+			if ((size_t)(end - optarg) != strlen(optarg))
+			    errx(EX_USAGE, "invalid battery");
 			break;
 		case 'k':
-			acpi_sleep_ack(atoi(optarg));
+			kflag = 1;
+			ack = strtol(optarg, &end, 10);
+			if ((size_t)(end - optarg) != strlen(optarg))
+			    errx(EX_USAGE, "invalid ack argument");
 			break;
 		case 's':
+			sflag = 1;
 			if (optarg[0] == 'S')
-				sleep_type = optarg[1] - '0';
-			else
-				sleep_type = optarg[0] - '0';
+				optarg++;
+			sleep_type = strtol(optarg, &end, 10);
+			if ((size_t)(end - optarg) != strlen(optarg))
+			    errx(EX_USAGE, "invalid sleep type");
 			if (sleep_type < 1 || sleep_type > 4)
 				errx(EX_USAGE, "invalid sleep type (%d)",
 				     sleep_type);
@@ -241,7 +277,25 @@ main(int argc, char *argv[])
 	argc -= optind;
 	argv += optind;
 
-	if (sleep_type != -1)
+	if (iflag != 0 && kflag != 0 && sflag != 0)
+			errx(EX_USAGE, "-i, -k and -s are mutually exclusive");
+
+	if (iflag  != 0) {
+		if (kflag != 0)
+			errx(EX_USAGE, "-i and -k are mutually exclusive");
+		if (sflag != 0)
+			errx(EX_USAGE, "-i and -s are mutually exclusive");
+		acpi_battinfo(battery);
+	}
+
+	if (kflag != 0) {
+		if (sflag != 0)
+			errx(EX_USAGE, "-k and -s are mutually exclusive");
+		acpi_sleep_ack(ack);
+	}
+
+
+	if (sflag != 0)
 		acpi_sleep(sleep_type);
 
 	close(acpifd);

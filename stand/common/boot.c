@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/boot.c 344378 2019-02-20 19:19:24Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/boot.c 346737 2019-04-26 11:12:51Z mw $");
 
 /*
  * Loading modules, booting the system
@@ -105,6 +105,13 @@ command_boot(int argc, char *argv[])
 	/* Hook for platform-specific autoloading of modules */
 	if (archsw.arch_autoload() != 0)
 		return(CMD_ERROR);
+
+#ifdef LOADER_VERIEXEC
+	verify_pcr_export();		/* for measured boot */
+#ifdef LOADER_VERIEXEC_PASS_MANIFEST
+	pass_manifest_export_envs();
+#endif
+#endif
 
 	/* Call the exec handler from the loader matching the kernel */
 	file_formats[fp->f_loader]->l_exec(fp);

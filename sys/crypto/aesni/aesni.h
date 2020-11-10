@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/crypto/aesni/aesni.h 309023 2016-11-22 20:28:17Z asomers $
+ * $FreeBSD: releng/12.2/sys/crypto/aesni/aesni.h 352235 2019-09-11 23:45:58Z mav $
  */
 
 #ifndef _AESNI_H_
@@ -35,7 +35,7 @@
 
 #include <opencrypto/cryptodev.h>
 
-#if defined(__amd64__) || (defined(__i386__) && !defined(PC98))
+#if defined(__amd64__) || defined(__i386__)
 #include <machine/cpufunc.h>
 #include <machine/cputypes.h>
 #include <machine/md_var.h>
@@ -56,14 +56,16 @@ struct aesni_session {
 	uint8_t enc_schedule[AES_SCHED_LEN] __aligned(16);
 	uint8_t dec_schedule[AES_SCHED_LEN] __aligned(16);
 	uint8_t xts_schedule[AES_SCHED_LEN] __aligned(16);
+	/* Same as the SHA256 Blocksize. */
+	uint8_t hmac_key[SHA1_BLOCK_LEN] __aligned(16);
 	int algo;
 	int rounds;
 	/* uint8_t *ses_ictx; */
 	/* uint8_t *ses_octx; */
 	/* int ses_mlen; */
 	int used;
-	uint32_t id;
-	TAILQ_ENTRY(aesni_session) next;
+	int auth_algo;
+	int mlen;
 };
 
 /*
@@ -109,9 +111,16 @@ int AES_GCM_decrypt(const unsigned char *in, unsigned char *out,
     const unsigned char *tag, uint32_t nbytes, uint32_t abytes, int ibytes,
     const unsigned char *key, int nr);
 
+/* CCM + CBC-MAC functions */
+void AES_CCM_encrypt(const unsigned char *in, unsigned char *out,
+    const unsigned char *addt, const unsigned char *ivec,
+    unsigned char *tag, uint32_t nbytes, uint32_t abytes, int ibytes,
+    const unsigned char *key, int nr);
+int AES_CCM_decrypt(const unsigned char *in, unsigned char *out,
+    const unsigned char *addt, const unsigned char *ivec,
+    const unsigned char *tag, uint32_t nbytes, uint32_t abytes, int ibytes,
+    const unsigned char *key, int nr);
 int aesni_cipher_setup_common(struct aesni_session *ses, const uint8_t *key,
     int keylen);
-uint8_t *aesni_cipher_alloc(struct cryptodesc *enccrd, struct cryptop *crp,
-    int *allocated);
 
 #endif /* _AESNI_H_ */

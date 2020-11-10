@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 Berkeley Software Design, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: asi.h,v 1.3 1997/08/08 14:31:42 torek
- * $FreeBSD: releng/11.3/sys/sparc64/include/asi.h 207537 2010-05-02 19:38:17Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/asi.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_ASI_H_

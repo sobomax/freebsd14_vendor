@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2008-2013 Solarflare Communications Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_regs_mcdi.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_regs_mcdi.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef _SIENA_MC_DRIVER_PCOL_H

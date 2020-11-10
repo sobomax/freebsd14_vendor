@@ -28,7 +28,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/aarch64/crti.S 280259 2015-03-19 13:53:47Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/aarch64/crti.S 280259 2015-03-19 13:53:47Z andrew $");
 
 	.section .init,"ax",@progbits
 	.align 4

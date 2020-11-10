@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)sprite.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/sbin/rcorder/sprite.h 330897 2018-03-14 03:19:51Z eadler $
+ * $FreeBSD: releng/12.2/sbin/rcorder/sprite.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 /*

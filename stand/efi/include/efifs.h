@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/efifs.h 292625 2015-12-22 20:40:34Z emaste $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/efifs.h 292625 2015-12-22 20:40:34Z emaste $ */
 #ifndef _EFI_FS_H
 #define _EFI_FS_H
 

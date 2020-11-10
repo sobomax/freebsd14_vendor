@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/netrate/tcpp/tcpp_client.c 228956 2011-12-29 15:34:59Z rwatson $
+ * $FreeBSD: releng/12.2/tools/tools/netrate/tcpp/tcpp_client.c 336914 2018-07-30 15:46:40Z asomers $
  */
 
 #include <sys/types.h>
@@ -56,16 +56,6 @@
 #include "tcpp.h"
 
 #define	min(x, y)	(x < y ? x : y)
-
-#define timespecsub(vvp, uvp)						\
-	do {								\
-		(vvp)->tv_sec -= (uvp)->tv_sec;				\
-		(vvp)->tv_nsec -= (uvp)->tv_nsec;			\
-		if ((vvp)->tv_nsec < 0) {				\
-			(vvp)->tv_sec--;				\
-			(vvp)->tv_nsec += 1000000000;			\
-		}							\
-	} while (0)
 
 
 /*
@@ -336,7 +326,7 @@ tcpp_client(void)
 	if (sysctlbyname(SYSCTLNAME_CPTIME, &cp_time_finish, &size, NULL, 0)
 	    < 0)
 		err(-1, "sysctlbyname: %s", SYSCTLNAME_CPTIME);
-	timespecsub(&ts_finish, &ts_start);
+	timespecsub(&ts_finish, &ts_start, &ts_finish);
 
 	if (failed)
 		errx(-1, "Too many errors");

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tests/sys/kern/pdeathsig_helper.c 333162 2018-05-02 07:57:36Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/tests/sys/kern/pdeathsig_helper.c 332825 2018-04-20 15:19:27Z kib $");
 
 #include <assert.h>
 #include <signal.h>

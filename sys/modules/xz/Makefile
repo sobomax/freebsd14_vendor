@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/xz/Makefile 344605 2019-02-26 19:55:03Z kib $
+# $FreeBSD: releng/12.2/sys/modules/xz/Makefile 344605 2019-02-26 19:55:03Z kib $
 
 .PATH:	${SRCTOP}/sys/dev/xz
 .PATH:	${SRCTOP}/sys/contrib/xz-embedded/freebsd

@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_write_set_format_ar.c 344673 2019-02-28 22:56:15Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_write_set_format_ar.c 358087 2020-02-19 01:46:43Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_write_set_
 #include "archive_entry.h"
 #include "archive_private.h"
 #include "archive_write_private.h"
+#include "archive_write_set_format_private.h"
 
 struct ar_w {
 	uint64_t	 entry_bytes_remaining;

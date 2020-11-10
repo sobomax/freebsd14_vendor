@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/Guid/ZeroGuid.h 342742 2019-01-03 20:27:50Z tsoome $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/Guid/ZeroGuid.h 342742 2019-01-03 20:27:50Z tsoome $ */
 /** @file
   GUID has all zero values.
 

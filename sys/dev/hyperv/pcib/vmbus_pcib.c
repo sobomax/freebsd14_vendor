@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/pcib/vmbus_pcib.c 337959 2018-08-17 06:31:30Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/pcib/vmbus_pcib.c 337322 2018-08-04 14:57:23Z dim $");
 
 #ifdef NEW_PCIB
 
@@ -1784,6 +1784,7 @@ static device_method_t vmbus_pcib_methods[] = {
 	DEVMETHOD(pcib_alloc_msix,		vmbus_pcib_alloc_msix),
 	DEVMETHOD(pcib_release_msix,		vmbus_pcib_release_msix),
 	DEVMETHOD(pcib_map_msi,			vmbus_pcib_map_msi),
+	DEVMETHOD(pcib_request_feature,		pcib_request_feature_allow),
 
 	DEVMETHOD_END
 };

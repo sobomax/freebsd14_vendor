@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2018 Netflix, Inc.
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/efienv.c 346483 2019-04-21 04:35:49Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/efienv.c 353982 2019-10-24 02:53:07Z kevans $");
 
 #include <stand.h>
 #include <efi.h>
@@ -69,6 +68,25 @@ efi_freebsd_getenv(const char *v, void *data, size_t *len)
 	return (efi_getenv(&FreeBSDBootVarGUID, v, data, len));
 }
 
+/*
+ * efi_setenv -- Sets an env variable.
+ */
+EFI_STATUS
+efi_setenv(EFI_GUID *guid, const char *varname, UINT32 attr, void *data, __size_t len)
+{
+	EFI_STATUS rv;
+	CHAR16 *uv;
+	size_t ul;
+
+	uv = NULL;
+	if (utf8_to_ucs2(varname, &uv, &ul) != 0)
+		return (EFI_OUT_OF_RESOURCES);
+
+	rv = RS->SetVariable(uv, guid, attr, len, data);
+	free(uv);
+	return (rv);
+}
+
 EFI_STATUS
 efi_setenv_freebsd_wcs(const char *varname, CHAR16 *valstr)
 {
@@ -85,3 +103,27 @@ efi_setenv_freebsd_wcs(const char *varname, CHAR16 *valstr)
 	return (rv);
 }
 
+/*
+ * efi_delenv -- deletes the specified env variable
+ */
+EFI_STATUS
+efi_delenv(EFI_GUID *guid, const char *name)
+{
+	CHAR16 *var;
+	size_t len;
+	EFI_STATUS rv;
+
+	var = NULL;
+	if (utf8_to_ucs2(name, &var, &len) != 0)
+		return (EFI_OUT_OF_RESOURCES);
+
+	rv = RS->SetVariable(var, guid, 0, 0, NULL);
+	free(var);
+	return (rv);
+}
+
+EFI_STATUS
+efi_freebsd_delenv(const char *name)
+{
+	return (efi_delenv(&FreeBSDBootVarGUID, name));
+}

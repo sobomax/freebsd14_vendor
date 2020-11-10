@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/in6.h 325612 2017-11-09 19:08:30Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/in6.h 325278 2017-11-01 12:21:28Z hselasky $
  */
 #ifndef	_LINUX_IN6_H_
 #define	_LINUX_IN6_H_

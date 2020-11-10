@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/uboot.mk 332150 2018-04-06 20:24:50Z kevans $
+# $FreeBSD: releng/12.2/stand/uboot.mk 329190 2018-02-13 03:44:50Z jhibbits $
 
 SRCS+=	main.c
 

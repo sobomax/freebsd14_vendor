@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2017 Alexander Motin <mav@FreeBSD.org>
  * Copyright (c) 1997-2009 by Matthew Jacob
  * All rights reserved.
@@ -29,7 +31,7 @@
  * Platform (FreeBSD) dependent common attachment code for Qlogic adapters.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/isp/isp_freebsd.c 348483 2019-05-31 20:36:32Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/isp/isp_freebsd.c 348480 2019-05-31 20:15:29Z ken $");
 
 #include <dev/isp/isp_freebsd.h>
 #include <sys/unistd.h>
@@ -4095,8 +4097,9 @@ uint64_t
 isp_nanotime_sub(struct timespec *b, struct timespec *a)
 {
 	uint64_t elapsed;
-	struct timespec x = *b;
-	timespecsub(&x, a);
+	struct timespec x;
+
+	timespecsub(b, a, &x);
 	elapsed = GET_NANOSEC(&x);
 	if (elapsed == 0)
 		elapsed++;

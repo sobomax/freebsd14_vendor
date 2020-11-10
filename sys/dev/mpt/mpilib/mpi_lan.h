@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/mpt/mpilib/mpi_lan.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/mpt/mpilib/mpi_lan.h 326022 2017-11-20 19:36:21Z pfg $ */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2000-2010, LSI Logic Corporation and its contributors.
  * All rights reserved.
  * 

@@ -20,7 +20,7 @@
 
     ---------------------------------------------------------------------- */
 
-/*  $FreeBSD: releng/11.3/sys/dev/usb/storage/rio500_usb.h 298932 2016-05-02 17:44:03Z pfg $ */
+/*  $FreeBSD: releng/12.2/sys/dev/usb/storage/rio500_usb.h 298932 2016-05-02 17:44:03Z pfg $ */
 
 #include <sys/ioccom.h>
 #ifndef USB_VENDOR_DIAMOND

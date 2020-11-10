@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/mkimg/scheme.h 332952 2018-04-24 17:53:27Z benno $
+ * $FreeBSD: releng/12.2/usr.bin/mkimg/scheme.h 332436 2018-04-12 15:47:47Z benno $
  */
 
 #ifndef _MKIMG_SCHEME_H_

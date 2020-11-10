@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/bf-586.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/bf-586.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from bf-586.pl. */
 #ifdef PIC
-.file	"bf-586.S"
 .text
 .globl	BF_encrypt
 .type	BF_encrypt,@function
@@ -898,7 +897,6 @@ BF_cbc_encrypt:
 .align	64
 .size	BF_cbc_encrypt,.-.L_BF_cbc_encrypt_begin
 #else
-.file	"bf-586.S"
 .text
 .globl	BF_encrypt
 .type	BF_encrypt,@function

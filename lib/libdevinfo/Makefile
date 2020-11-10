@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libdevinfo/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/lib/libdevinfo/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 PACKAGE=lib${LIB}
 LIB=	devinfo

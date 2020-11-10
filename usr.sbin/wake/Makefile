@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/wake/Makefile 203707 2010-02-09 17:16:13Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/wake/Makefile 203707 2010-02-09 17:16:13Z imp $
 
 PROG=	wake
 MAN=	wake.8

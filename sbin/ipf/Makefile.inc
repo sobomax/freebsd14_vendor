@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/sbin/ipf/Makefile.inc 319185 2017-05-30 04:17:22Z ngie $
+#	$FreeBSD: releng/12.2/sbin/ipf/Makefile.inc 314656 2017-03-04 11:33:01Z ngie $
 
 .include <src.opts.mk>
 

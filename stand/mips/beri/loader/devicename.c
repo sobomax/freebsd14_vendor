@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/mips/beri/loader/devicename.c 332154 2018-04-06 21:37:25Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/mips/beri/loader/devicename.c 330810 2018-03-12 21:39:59Z imp $");
 
 #include <stand.h>
 #include <string.h>

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/fstyp/fstyp.h 316470 2017-04-03 21:04:14Z trasz $
+ * $FreeBSD: releng/12.2/usr.sbin/fstyp/fstyp.h 312003 2017-01-13 02:12:58Z cem $
  */
 
 #ifndef FSTYP_H

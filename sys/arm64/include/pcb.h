@@ -23,13 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/pcb.h 297446 2016-03-31 11:07:24Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm64/include/pcb.h 322786 2017-08-22 13:16:14Z andrew $
  */
 
 #ifndef	_MACHINE_PCB_H_
 #define	_MACHINE_PCB_H_
 
 #ifndef LOCORE
+
+#include <machine/vfp.h>
 
 struct trapframe;
 
@@ -40,7 +42,7 @@ struct pcb {
 	/* These two need to be in order as we access them together */
 	uint64_t	pcb_sp;
 	uint64_t	pcb_tpidr_el0;
-	vm_offset_t	pcb_l0addr;
+	uint64_t	pcb_tpidrro_el0;
 
 	/* Fault handler, the error value is passed in x0 */
 	vm_offset_t	pcb_onfault;
@@ -49,13 +51,21 @@ struct pcb {
 #define	PCB_SINGLE_STEP_SHIFT	0
 #define	PCB_SINGLE_STEP		(1 << PCB_SINGLE_STEP_SHIFT)
 
-	/* Place last to simplify the asm to access the rest if the struct */
-	__uint128_t	pcb_vfp[32];
-	uint32_t	pcb_fpcr;
-	uint32_t	pcb_fpsr;
+	struct vfpstate	*pcb_fpusaved;
 	int		pcb_fpflags;
 #define	PCB_FP_STARTED	0x01
+#define	PCB_FP_KERN	0x02
+#define	PCB_FP_NOSAVE	0x04
+/* The bits passed to userspace in get_fpcontext */
+#define	PCB_FP_USERMASK	(PCB_FP_STARTED)
 	u_int		pcb_vfpcpu;	/* Last cpu this thread ran VFP code */
+
+	/*
+	 * The userspace VFP state. The pcb_fpusaved pointer will point to
+	 * this unless the kernel has allocated a VFP context.
+	 * Place last to simplify the asm to access the rest if the struct.
+	 */
+	struct vfpstate	pcb_fpustate;
 };
 
 #ifdef _KERNEL

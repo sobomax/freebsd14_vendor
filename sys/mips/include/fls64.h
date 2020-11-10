@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/include/fls64.h 330897 2018-03-14 03:19:51Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/include/fls64.h 326023 2017-11-20 19:43:44Z pfg $
  * RMI_BSD */
 #ifndef _MIPS_FLS64_H_
 #define _MIPS_FLS64_H_

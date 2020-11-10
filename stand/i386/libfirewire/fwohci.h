@@ -30,7 +30,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * 
- * $FreeBSD: releng/11.3/stand/i386/libfirewire/fwohci.h 332156 2018-04-06 21:50:09Z kevans $
+ * $FreeBSD: releng/12.2/stand/i386/libfirewire/fwohci.h 331852 2018-03-31 22:02:59Z imp $
  *
  */
 

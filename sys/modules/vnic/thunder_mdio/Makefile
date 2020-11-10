@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/vnic/thunder_mdio/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/vnic/thunder_mdio/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"

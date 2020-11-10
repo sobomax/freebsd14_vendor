@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2012 Yusuke Tanaka
  * All rights reserved.
  *
@@ -53,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/s35390a.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/s35390a.c 330433 2018-03-05 00:43:53Z ian $");
 
 /*
  * Driver for Seiko Instruments S-35390A Real-time Clock

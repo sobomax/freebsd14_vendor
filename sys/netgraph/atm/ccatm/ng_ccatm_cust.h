@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003-2004
  *	Hartmut Brandt
  * 	All rights reserved.
@@ -28,7 +30,7 @@
  *
  * Customisation of call control source to the NG environment.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/atm/ccatm/ng_ccatm_cust.h 139823 2005-01-07 01:45:51Z imp $
+ * $FreeBSD: releng/12.2/sys/netgraph/atm/ccatm/ng_ccatm_cust.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/param.h>

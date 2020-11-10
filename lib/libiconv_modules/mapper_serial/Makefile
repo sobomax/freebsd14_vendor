@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libiconv_modules/mapper_serial/Makefile 260334 2014-01-05 21:03:49Z dim $
+# $FreeBSD: releng/12.2/lib/libiconv_modules/mapper_serial/Makefile 260334 2014-01-05 21:03:49Z dim $
 
 SHLIB=	mapper_serial
 SRCS+=	citrus_mapper_serial.c

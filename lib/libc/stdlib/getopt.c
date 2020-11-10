@@ -1,6 +1,8 @@
 /*	$NetBSD: getopt.c,v 1.29 2014/06/05 22:00:22 christos Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -33,7 +35,7 @@
 static char sccsid[] = "@(#)getopt.c	8.3 (Berkeley) 4/27/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/stdlib/getopt.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdlib/getopt.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #include "namespace.h"
 #include <stdio.h>

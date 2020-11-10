@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Silicon Graphics International Corp.
  * Copyright (c) 2014-2015 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -29,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_io.h#5 $
- * $FreeBSD: releng/11.3/sys/cam/ctl/ctl_io.h 345114 2019-03-13 20:28:07Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/ctl/ctl_io.h 345113 2019-03-13 20:27:48Z mav $
  */
 /*
  * CAM Target Layer data movement structures/interface.
@@ -129,9 +131,9 @@ struct ctl_lba_len_flags {
 };
 
 struct ctl_ptr_len_flags {
-	uint8_t *ptr;
-	uint32_t len;
-	uint32_t flags;
+	uint8_t		*ptr;
+	uint32_t	len;
+	uint32_t	flags;
 };
 
 union ctl_priv {
@@ -405,10 +407,10 @@ typedef enum {
  * structure.
  */
 struct ctl_pr_info {
-	ctl_pr_action        action;
-	uint8_t              sa_res_key[8];
-	uint8_t              res_type;
-	uint32_t             residx;
+	ctl_pr_action		action;
+	uint8_t			sa_res_key[8];
+	uint8_t			res_type;
+	uint32_t		residx;
 };
 
 struct ctl_ha_msg_hdr {
@@ -569,15 +571,15 @@ union ctl_ha_msg {
 };
 
 struct ctl_prio {
-	struct ctl_io_hdr  io_hdr;
-	struct ctl_ha_msg_pr pr_msg;
+	struct ctl_io_hdr	io_hdr;
+	struct ctl_ha_msg_pr	pr_msg;
 };
 
 union ctl_io {
-	struct ctl_io_hdr io_hdr;	/* common to all I/O types */
-	struct ctl_scsiio scsiio;	/* Normal SCSI commands */
-	struct ctl_taskio taskio;	/* SCSI task management/reset */
-	struct ctl_prio   presio;	/* update per. res info on other SC */
+	struct ctl_io_hdr	io_hdr;	/* common to all I/O types */
+	struct ctl_scsiio	scsiio;	/* Normal SCSI commands */
+	struct ctl_taskio	taskio;	/* SCSI task management/reset */
+	struct ctl_prio		presio;	/* update per. res info on other SC */
 };
 
 #ifdef _KERNEL

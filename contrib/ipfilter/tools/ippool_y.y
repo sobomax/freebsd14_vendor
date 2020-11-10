@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/tools/ippool_y.y 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ippool_y.y 354111 2019-10-26 03:07:28Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -271,7 +271,7 @@ grouplist:
 	| addrmask next			{ $$ = calloc(1, sizeof(iphtent_t));
 					  $$->ipe_addr = $1[0].adf_addr;
 					  $$->ipe_mask = $1[1].adf_addr;
-#ifdef AF_INET6
+#ifdef USE_INET6
 					  if (use_inet6)
 						$$->ipe_family = AF_INET6;
 					  else
@@ -295,7 +295,7 @@ groupentry:
 					  $$->ipe_mask = $1[1].adf_addr;
 					  strncpy($$->ipe_group, $3,
 						  FR_GROUPLEN);
-#ifdef AF_INET6
+#ifdef USE_INET6
 					  if (use_inet6)
 						$$->ipe_family = AF_INET6;
 					  else
@@ -309,11 +309,27 @@ range:	addrmask			{ $$ = calloc(1, sizeof(*$$));
 					  $$->ipn_info = 0;
 					  $$->ipn_addr = $1[0];
 					  $$->ipn_mask = $1[1];
+#ifdef USE_INET6
+					  if (use_inet6)
+						$$->ipn_addr.adf_family =
+							AF_INET6;
+					  else
+#endif
+						$$->ipn_addr.adf_family =
+							AF_INET;
 					}
 	| '!' addrmask			{ $$ = calloc(1, sizeof(*$$));
 					  $$->ipn_info = 1;
 					  $$->ipn_addr = $2[0];
 					  $$->ipn_mask = $2[1];
+#ifdef USE_INET6
+					  if (use_inet6)
+						$$->ipn_addr.adf_family =
+							AF_INET6;
+					  else
+#endif
+						$$->ipn_addr.adf_family =
+							AF_INET;
 					}
 	| YY_STR			{ $$ = add_poolhosts($1);
 					  free($1);

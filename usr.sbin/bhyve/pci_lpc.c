@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/pci_lpc.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/pci_lpc.c 358184 2020-02-20 21:48:36Z vmaffione $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/pci_lpc.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_lpc.c 358184 2020-02-20 21:48:36Z vmaffione $");
 
 #include <sys/types.h>
 #include <machine/vmm.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/pci_lpc.c 330449 2018-03-05 07:26
 #include <vmmapi.h>
 
 #include "acpi.h"
+#include "debug.h"
 #include "bootrom.h"
 #include "inout.h"
 #include "pci_emul.h"
@@ -112,6 +113,16 @@ done:
 		free(cpy);
 
 	return (error);
+}
+
+void
+lpc_print_supported_devices()
+{
+	size_t i;
+
+	printf("bootrom\n");
+	for (i = 0; i < LPC_UART_NUM; i++)
+		printf("%s\n", lpc_uart_names[i]);
 }
 
 const char *
@@ -192,8 +203,8 @@ lpc_init(struct vmctx *ctx)
 		name = lpc_uart_names[unit];
 
 		if (uart_legacy_alloc(unit, &sc->iobase, &sc->irq) != 0) {
-			fprintf(stderr, "Unable to allocate resources for "
-			    "LPC device %s\n", name);
+			EPRINTLN("Unable to allocate resources for "
+			    "LPC device %s", name);
 			return (-1);
 		}
 		pci_irq_reserve(sc->irq);
@@ -202,8 +213,8 @@ lpc_init(struct vmctx *ctx)
 				    lpc_uart_intr_deassert, sc);
 
 		if (uart_set_backend(sc->uart_softc, sc->opts) != 0) {
-			fprintf(stderr, "Unable to initialize backend '%s' "
-			    "for LPC device %s\n", sc->opts, name);
+			EPRINTLN("Unable to initialize backend '%s' "
+			    "for LPC device %s", sc->opts, name);
 			return (-1);
 		}
 
@@ -388,7 +399,7 @@ pci_lpc_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	 * Do not allow more than one LPC bridge to be configured.
 	 */
 	if (lpc_bridge != NULL) {
-		fprintf(stderr, "Only one LPC bridge is allowed.\n");
+		EPRINTLN("Only one LPC bridge is allowed.");
 		return (-1);
 	}
 
@@ -398,7 +409,7 @@ pci_lpc_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	 * all legacy i/o ports behind bus 0.
 	 */
 	if (pi->pi_bus != 0) {
-		fprintf(stderr, "LPC bridge can be present only on bus 0.\n");
+		EPRINTLN("LPC bridge can be present only on bus 0.");
 		return (-1);
 	}
 

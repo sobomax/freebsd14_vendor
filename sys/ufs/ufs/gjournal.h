@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/ufs/ufs/gjournal.h 262678 2014-03-02 02:52:34Z pfg $
+ * $FreeBSD: releng/12.2/sys/ufs/ufs/gjournal.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _UFS_UFS_GJOURNAL_H_

@@ -1,3 +1,3 @@
-# $FreeBSD: releng/11.3/stand/uboot/Makefile.inc 329140 2018-02-11 20:58:00Z kevans $
+# $FreeBSD: releng/12.2/stand/uboot/Makefile.inc 325485 2017-11-06 15:22:24Z imp $
 
 .include "../Makefile.inc"

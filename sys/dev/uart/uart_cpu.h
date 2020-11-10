@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003, 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/uart/uart_cpu.h 340145 2018-11-04 23:28:56Z mmacy $
+ * $FreeBSD: releng/12.2/sys/dev/uart/uart_cpu.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef _DEV_UART_CPU_H_

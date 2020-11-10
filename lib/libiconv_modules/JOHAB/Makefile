@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libiconv_modules/JOHAB/Makefile 260334 2014-01-05 21:03:49Z dim $
+# $FreeBSD: releng/12.2/lib/libiconv_modules/JOHAB/Makefile 260334 2014-01-05 21:03:49Z dim $
 
 SHLIB=	JOHAB
 SRCS+=	citrus_johab.c

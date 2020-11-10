@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/ti_spi.c 346553 2019-04-22 14:10:40Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/ti_spi.c 346494 2019-04-21 19:49:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/ti_spi.c 346553 2019-04-22 14:10:40Z 
 #include <machine/resource.h>
 #include <machine/intr.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 

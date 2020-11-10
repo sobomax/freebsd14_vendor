@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/netvsc/hn_nvs.c 324578 2017-10-13 05:09:56Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/netvsc/hn_nvs.c 324489 2017-10-10 08:32:03Z sephe $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"

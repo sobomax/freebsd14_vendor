@@ -40,7 +40,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/xen/xenbus/xenbus.c 255040 2013-08-29 19:52:18Z gibbs $");
+__FBSDID("$FreeBSD: releng/12.2/sys/xen/xenbus/xenbus.c 255040 2013-08-29 19:52:18Z gibbs $");
 
 #include <sys/cdefs.h>
 #include <sys/param.h>

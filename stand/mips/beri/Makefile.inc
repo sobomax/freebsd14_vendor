@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/mips/beri/Makefile.inc 329146 2018-02-12 01:17:06Z kevans $
+# $FreeBSD: releng/12.2/stand/mips/beri/Makefile.inc 326038 2017-11-20 22:42:17Z imp $
 
 LDFLAGS+=	-nostdlib
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Poul-Henning Kamp
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/include/bitstring.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/include/bitstring.h 326192 2017-11-25 17:09:43Z pfg $
  */
 
 #ifndef _BITSTRING_H_

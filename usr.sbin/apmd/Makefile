@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/apmd/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/usr.sbin/apmd/Makefile 352276 2019-09-13 07:08:43Z bapt $
 
+CONFS=	apmd.conf
 PROG=	apmd
 MAN=	apmd.8
 MANSUBDIR= /i386
@@ -8,8 +9,6 @@ SRCS=	apmd.c apmdlex.l apmdparse.y y.tab.h
 PACKAGE=apm
 
 WARNS?=	3
-
-LIBADD=	l
 
 CFLAGS+= -I${.CURDIR}
 

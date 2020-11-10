@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2001 Boris Popov
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/iconv_xlat.c 206361 2010-04-07 16:50:38Z joel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/iconv_xlat.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

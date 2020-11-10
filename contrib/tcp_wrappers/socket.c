@@ -14,7 +14,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: releng/11.3/contrib/tcp_wrappers/socket.c 146187 2005-05-13 16:31:11Z ume $
+  * $FreeBSD: releng/12.2/contrib/tcp_wrappers/socket.c 350296 2019-07-24 19:16:02Z brooks $
   */
 
 #ifndef lint
@@ -42,7 +42,7 @@ extern char *inet_ntoa();
 
 /* Forward declarations. */
 
-static void sock_sink();
+static void sock_sink(int);
 
 #ifdef APPEND_DOT
 
@@ -406,8 +406,7 @@ struct host_info *host;
 
 /* sock_sink - absorb unreceived IP datagram */
 
-static void sock_sink(fd)
-int     fd;
+static void sock_sink(int fd)
 {
     char    buf[BUFSIZ];
 #ifdef INET6

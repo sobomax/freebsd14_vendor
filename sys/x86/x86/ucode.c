@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/x86/ucode.c 347700 2019-05-16 14:42:16Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/ucode.c 342199 2018-12-18 20:12:43Z markj $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -357,8 +357,7 @@ ucode_load_bsp(uintptr_t free)
 		if (match != NULL) {
 			addr = map_ucode(free, len);
 			/* We can't use memcpy() before ifunc resolution. */
-			for (i = 0; i < len; i++)
-				addr[i] = ((volatile uint8_t *)match)[i];
+			memcpy_early(addr, match, len);
 			match = addr;
 
 			error = ucode_loader->load(match, false, &nrev, &orev);

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001-2007, by Cisco Systems, Inc. All rights reserved.
  * Copyright (c) 2008-2012, by Randall Stewart. All rights reserved.
  * Copyright (c) 2008-2012, by Michael Tuexen. All rights reserved.
@@ -31,21 +33,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/sctp_crc32.c 332229 2018-04-07 20:27:11Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_crc32.c 364622 2020-08-24 08:27:35Z tuexen $");
 
 #include "opt_sctp.h"
 
-#ifdef SCTP
-#include <netinet/sctp_os.h>
-#include <netinet/sctp.h>
-#include <netinet/sctp_crc32.h>
-#include <netinet/sctp_pcb.h>
-#else
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/mbuf.h>
 
+#include <netinet/sctp.h>
 #include <netinet/sctp_crc32.h>
+#if defined(SCTP) || defined(SCTP_SUPPORT)
+#include <netinet/sctp_os.h>
+#include <netinet/sctp_pcb.h>
 #endif
 
 static uint32_t
@@ -114,7 +114,10 @@ sctp_calculate_cksum(struct mbuf *m, uint32_t offset)
 	return (base);
 }
 
-#ifdef SCTP
+#if defined(SCTP) || defined(SCTP_SUPPORT)
+
+VNET_DEFINE(struct sctp_base_info, system_base_info);
+
 /*
  * Compute and insert the SCTP checksum in network byte order for a given
  * mbuf chain m which contains an SCTP packet starting at offset.

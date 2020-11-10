@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Networks Associates Technology, Inc.
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/getpwent.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/getpwent.c 360414 2020-04-27 23:47:40Z brooks $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -93,8 +95,6 @@ static const ns_src defaultsrc[] = {
 int	__pw_match_entry(const char *, size_t, enum nss_lookup_type,
 	    const char *, uid_t);
 int	__pw_parse_entry(char *, size_t, struct passwd *, int, int *errnop);
-
-static	void	 pwd_init(struct passwd *);
 
 union key {
 	const char	*name;
@@ -213,7 +213,7 @@ pwd_id_func(char *buffer, size_t *buffer_size, va_list ap, void *cache_mdata)
 	int	res = NS_UNAVAIL;
 	enum nss_lookup_type lookup_type;
 
-	lookup_type = (enum nss_lookup_type)cache_mdata;
+	lookup_type = (enum nss_lookup_type)(uintptr_t)cache_mdata;
 	switch (lookup_type) {
 	case nss_lt_name:
 		name = va_arg(ap, char *);
@@ -267,7 +267,7 @@ pwd_marshal_func(char *buffer, size_t *buffer_size, void *retval, va_list ap,
 	size_t desired_size, size;
 	char *p;
 
-	switch ((enum nss_lookup_type)cache_mdata) {
+	switch ((enum nss_lookup_type)(uintptr_t)cache_mdata) {
 	case nss_lt_name:
 		name = va_arg(ap, char *);
 		break;
@@ -370,7 +370,7 @@ pwd_unmarshal_func(char *buffer, size_t buffer_size, void *retval, va_list ap,
 
 	char *p;
 
-	switch ((enum nss_lookup_type)cache_mdata) {
+	switch ((enum nss_lookup_type)(uintptr_t)cache_mdata) {
 	case nss_lt_name:
 		name = va_arg(ap, char *);
 		break;
@@ -525,7 +525,7 @@ getpwent_r(struct passwd *pwd, char *buffer, size_t bufsize,
 	};
 	int	rv, ret_errno;
 
-	pwd_init(pwd);
+	__pw_initpwd(pwd);
 	ret_errno = 0;
 	*result = NULL;
 	rv = _nsdispatch(result, dtab, NSDB_PASSWD, "getpwent_r", defaultsrc,
@@ -564,7 +564,7 @@ getpwnam_r(const char *name, struct passwd *pwd, char *buffer, size_t bufsize,
 	};
 	int	rv, ret_errno;
 
-	pwd_init(pwd);
+	__pw_initpwd(pwd);
 	ret_errno = 0;
 	*result = NULL;
 	rv = _nsdispatch(result, dtab, NSDB_PASSWD, "getpwnam_r", defaultsrc,
@@ -603,7 +603,7 @@ getpwuid_r(uid_t uid, struct passwd *pwd, char *buffer, size_t bufsize,
 	};
 	int	rv, ret_errno;
 
-	pwd_init(pwd);
+	__pw_initpwd(pwd);
 	ret_errno = 0;
 	*result = NULL;
 	rv = _nsdispatch(result, dtab, NSDB_PASSWD, "getpwuid_r", defaultsrc,
@@ -612,23 +612,6 @@ getpwuid_r(uid_t uid, struct passwd *pwd, char *buffer, size_t bufsize,
 		return (0);
 	else
 		return (ret_errno);
-}
-
-
-static void
-pwd_init(struct passwd *pwd)
-{
-	static char nul[] = "";
-
-	memset(pwd, 0, sizeof(*pwd));
-	pwd->pw_uid = (uid_t)-1;  /* Considered least likely to lead to */
-	pwd->pw_gid = (gid_t)-1;  /* a security issue.                  */
-	pwd->pw_name = nul;
-	pwd->pw_passwd = nul;
-	pwd->pw_class = nul;
-	pwd->pw_gecos = nul;
-	pwd->pw_dir = nul;
-	pwd->pw_shell = nul;
 }
 
 
@@ -781,7 +764,7 @@ files_setpwent(void *retval, void *mdata, va_list ap)
 	rv = files_getstate(&st);
 	if (rv != 0)
 		return (NS_UNAVAIL);
-	switch ((enum constants)mdata) {
+	switch ((enum constants)(uintptr_t)mdata) {
 	case SETPWENT:
 		stayopen = va_arg(ap, int);
 		st->keynum = 0;
@@ -819,7 +802,7 @@ files_passwd(void *retval, void *mdata, va_list ap)
 
 	name = NULL;
 	uid = (uid_t)-1;
-	how = (enum nss_lookup_type)mdata;
+	how = (enum nss_lookup_type)(uintptr_t)mdata;
 	switch (how) {
 	case nss_lt_name:
 		name = va_arg(ap, const char *);
@@ -1311,7 +1294,7 @@ nis_passwd(void *retval, void *mdata, va_list ap)
 
 	name = NULL;
 	uid = (uid_t)-1;
-	how = (enum nss_lookup_type)mdata;
+	how = (enum nss_lookup_type)(uintptr_t)mdata;
 	switch (how) {
 	case nss_lt_name:
 		name = va_arg(ap, const char *);
@@ -1612,7 +1595,7 @@ compat_redispatch(struct compat_state *st, enum nss_lookup_type how,
 	for (i = 0; i < (int)(nitems(dtab) - 1); i++)
 		dtab[i].mdata = (void *)lookup_how;
 more:
-	pwd_init(pwd);
+	__pw_initpwd(pwd);
 	switch (lookup_how) {
 	case nss_lt_all:
 		rv = _nsdispatch(&discard, dtab, NSDB_PASSWD_COMPAT,
@@ -1710,7 +1693,7 @@ compat_setpwent(void *retval, void *mdata, va_list ap)
 	rv = compat_getstate(&st);
 	if (rv != 0)
 		return (NS_UNAVAIL);
-	switch ((enum constants)mdata) {
+	switch ((enum constants)(uintptr_t)mdata) {
 	case SETPWENT:
 		stayopen = va_arg(ap, int);
 		st->keynum = 0;
@@ -1757,7 +1740,7 @@ compat_passwd(void *retval, void *mdata, va_list ap)
 	from_compat = 0;
 	name = NULL;
 	uid = (uid_t)-1;
-	how = (enum nss_lookup_type)mdata;
+	how = (enum nss_lookup_type)(uintptr_t)mdata;
 	switch (how) {
 	case nss_lt_name:
 		name = va_arg(ap, const char *);

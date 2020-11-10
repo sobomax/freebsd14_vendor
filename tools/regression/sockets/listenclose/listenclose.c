@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/sockets/listenclose/listenclose.c 281361 2015-04-10 09:27:23Z ngie $
+ * $FreeBSD: releng/12.2/tools/regression/sockets/listenclose/listenclose.c 281361 2015-04-10 09:27:23Z ngie $
  */
 
 #include <sys/types.h>

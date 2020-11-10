@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1980, 1986, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +35,7 @@ static const char sccsid[] = "@(#)pass1.c	8.6 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/fsck_ffs/pass1.c 347200 2019-05-06 19:15:59Z mckusick $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/fsck_ffs/pass1.c 350460 2019-07-31 00:16:12Z mckusick $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -96,7 +98,7 @@ pass1(void)
 	for (c = 0; c < sblock.fs_ncg; c++) {
 		inumber = c * sblock.fs_ipg;
 		setinodebuf(inumber);
-		cgbp = cgget(c);
+		cgbp = cglookup(c);
 		cgp = cgbp->b_un.b_cg;
 		rebuildcg = 0;
 		if (!check_cgmagic(c, cgbp))
@@ -166,7 +168,7 @@ pass1(void)
 		 * Scan the allocated inodes.
 		 */
 		for (i = 0; i < inosused; i++, inumber++) {
-			if (inumber < ROOTINO) {
+			if (inumber < UFS_ROOTINO) {
 				(void)getnextinode(inumber, rebuildcg);
 				continue;
 			}
@@ -249,20 +251,20 @@ checkinode(ino_t inumber, struct inodesc *idesc, int rebuildcg)
 	int j, ret, offset;
 
 	if ((dp = getnextinode(inumber, rebuildcg)) == NULL)
-		return (0);
+		goto unknown;
 	mode = DIP(dp, di_mode) & IFMT;
 	if (mode == 0) {
 		if ((sblock.fs_magic == FS_UFS1_MAGIC &&
 		     (memcmp(dp->dp1.di_db, ufs1_zino.di_db,
-			NDADDR * sizeof(ufs1_daddr_t)) ||
+			UFS_NDADDR * sizeof(ufs1_daddr_t)) ||
 		      memcmp(dp->dp1.di_ib, ufs1_zino.di_ib,
-			NIADDR * sizeof(ufs1_daddr_t)) ||
+			UFS_NIADDR * sizeof(ufs1_daddr_t)) ||
 		      dp->dp1.di_mode || dp->dp1.di_size)) ||
 		    (sblock.fs_magic == FS_UFS2_MAGIC &&
 		     (memcmp(dp->dp2.di_db, ufs2_zino.di_db,
-			NDADDR * sizeof(ufs2_daddr_t)) ||
+			UFS_NDADDR * sizeof(ufs2_daddr_t)) ||
 		      memcmp(dp->dp2.di_ib, ufs2_zino.di_ib,
-			NIADDR * sizeof(ufs2_daddr_t)) ||
+			UFS_NIADDR * sizeof(ufs2_daddr_t)) ||
 		      dp->dp2.di_mode || dp->dp2.di_size))) {
 			pfatal("PARTIALLY ALLOCATED INODE I=%lu",
 			    (u_long)inumber);
@@ -328,24 +330,24 @@ checkinode(ino_t inumber, struct inodesc *idesc, int rebuildcg)
 			else
 				ndb = howmany(DIP(dp, di_size),
 				    sizeof(ufs2_daddr_t));
-			if (ndb > NDADDR) {
-				j = ndb - NDADDR;
+			if (ndb > UFS_NDADDR) {
+				j = ndb - UFS_NDADDR;
 				for (ndb = 1; j > 1; j--)
 					ndb *= NINDIR(&sblock);
-				ndb += NDADDR;
+				ndb += UFS_NDADDR;
 			}
 		}
 	}
-	for (j = ndb; ndb < NDADDR && j < NDADDR; j++)
+	for (j = ndb; ndb < UFS_NDADDR && j < UFS_NDADDR; j++)
 		if (DIP(dp, di_db[j]) != 0) {
 			if (debug)
 				printf("bad direct addr[%d]: %ju\n", j,
 				    (uintmax_t)DIP(dp, di_db[j]));
 			goto unknown;
 		}
-	for (j = 0, ndb -= NDADDR; ndb > 0; j++)
+	for (j = 0, ndb -= UFS_NDADDR; ndb > 0; j++)
 		ndb /= NINDIR(&sblock);
-	for (; j < NIADDR; j++)
+	for (; j < UFS_NIADDR; j++)
 		if (DIP(dp, di_ib[j]) != 0) {
 			if (debug)
 				printf("bad indirect addr: %ju\n",
@@ -380,7 +382,7 @@ checkinode(ino_t inumber, struct inodesc *idesc, int rebuildcg)
 	if (sblock.fs_magic == FS_UFS2_MAGIC && dp->dp2.di_extsize > 0) {
 		idesc->id_type = ADDR;
 		ndb = howmany(dp->dp2.di_extsize, sblock.fs_bsize);
-		for (j = 0; j < NXADDR; j++) {
+		for (j = 0; j < UFS_NXADDR; j++) {
 			if (--ndb == 0 &&
 			    (offset = blkoff(&sblock, dp->dp2.di_extsize)) != 0)
 				idesc->id_numfrags = numfrags(&sblock,
@@ -435,7 +437,7 @@ checkinode(ino_t inumber, struct inodesc *idesc, int rebuildcg)
 	 * the last allocated block to avoid having it reference a hole
 	 * at its end.
 	 */
-	if (DIP(dp, di_size) > NDADDR * sblock.fs_bsize &&
+	if (DIP(dp, di_size) > UFS_NDADDR * sblock.fs_bsize &&
 	    idesc->id_lballoc < lblkno(&sblock, DIP(dp, di_size) - 1)) {
 		fixsize = lblktosize(&sblock, idesc->id_lballoc + 1);
 		pwarn("INODE %lu: FILE SIZE %ju BEYOND END OF ALLOCATED FILE, "

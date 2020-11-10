@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libfetch/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/lib/libfetch/Makefile 352042 2019-09-08 20:41:00Z markj $
 
 .include <src.opts.mk>
 
@@ -68,6 +68,7 @@ MLINKS+= fetch.3 fetchPutFTP.3
 MLINKS+= fetch.3 fetchPutFile.3
 MLINKS+= fetch.3 fetchPutHTTP.3
 MLINKS+= fetch.3 fetchPutURL.3
+MLINKS+= fetch.3 fetchReqHTTP.3
 MLINKS+= fetch.3 fetchStat.3
 MLINKS+= fetch.3 fetchStatFTP.3
 MLINKS+= fetch.3 fetchStatFile.3

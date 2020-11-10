@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/mips/uboot/Makefile 332131 2018-04-06 19:01:08Z kevans $
+# $FreeBSD: releng/12.2/stand/mips/uboot/Makefile 329345 2018-02-16 00:17:32Z imp $
 
 LOADER_CD9660_SUPPORT?=	no
 LOADER_EXT2FS_SUPPORT?=	no

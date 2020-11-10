@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/sbin/zfs/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/cddl/sbin/zfs/Makefile 337160 2018-08-02 18:55:55Z mav $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zfs
 

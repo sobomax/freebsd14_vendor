@@ -1,6 +1,8 @@
 /*
   rpcsec_gss.h
   
+  SPDX-License-Identifier: BSD-3-Clause
+
   Copyright (c) 2000 The Regents of the University of Michigan.
   All rights reserved.
   
@@ -34,7 +36,7 @@
 
   $Id: auth_gss.h,v 1.12 2001/04/30 19:44:47 andros Exp $
 */
-/* $FreeBSD: releng/11.3/sys/rpc/rpcsec_gss/rpcsec_gss_int.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/rpc/rpcsec_gss/rpcsec_gss_int.h 326023 2017-11-20 19:43:44Z pfg $ */
 
 #ifndef _RPCSEC_GSS_INT_H
 #define _RPCSEC_GSS_INT_H

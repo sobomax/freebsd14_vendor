@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/contrib/rdma/krping/krping.c 338555 2018-09-10 08:14:52Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/contrib/rdma/krping/krping.c 354993 2019-11-22 14:18:12Z hselasky $");
 
 #include <linux/module.h>
 #include <linux/moduleparam.h>
@@ -736,7 +736,7 @@ static u32 krping_rdma_rkey(struct krping_cb *cb, u64 buf, int post_inv)
 		post_inv,
 		cb->reg_mr_wr.key,
 		cb->reg_mr->page_size,
-		cb->reg_mr->length,
+		(unsigned)cb->reg_mr->length,
 	        (unsigned long long)cb->reg_mr->iova);
 
 	if (post_inv)
@@ -2189,3 +2189,17 @@ krping_walk_cb_list(void (*f)(struct krping_stats *, void *), void *arg)
 	    (*f)(cb->pd ? &cb->stats : NULL, arg);
 	mutex_unlock(&krping_mutex);
 }
+
+void
+krping_cancel_all(void)
+{
+	struct krping_cb *cb;
+
+	mutex_lock(&krping_mutex);
+	list_for_each_entry(cb, &krping_cbs, list) {
+		cb->state = ERROR;
+		wake_up_interruptible(&cb->sem);
+	}
+	mutex_unlock(&krping_mutex);
+}
+

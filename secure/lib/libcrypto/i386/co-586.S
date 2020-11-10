@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/co-586.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/co-586.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from co-586.pl. */
 #ifdef PIC
-.file	"co-586.S"
 .text
 .globl	bn_mul_comba8
 .type	bn_mul_comba8,@function
@@ -1256,7 +1255,6 @@ bn_sqr_comba4:
 	ret
 .size	bn_sqr_comba4,.-.L_bn_sqr_comba4_begin
 #else
-.file	"co-586.S"
 .text
 .globl	bn_mul_comba8
 .type	bn_mul_comba8,@function

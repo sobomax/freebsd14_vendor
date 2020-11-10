@@ -25,12 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/pw/pw.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/pw/pw.h 339380 2018-10-16 16:00:41Z yuripv $
  */
 
 #include <sys/stat.h>
 
-#define _WITH_GETLINE
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,7 +64,7 @@ enum _which
 };
 
 #define	_DEF_DIRMODE	(S_IRWXU | S_IRWXG | S_IRWXO)
-#define _PATH_PW_CONF	"/etc/pw.conf"
+#define	_PW_CONF	"pw.conf"
 #define _UC_MAXLINE	1024
 #define _UC_MAXSHELLS	32
 

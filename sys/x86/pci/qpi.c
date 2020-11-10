@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/pci/qpi.c 323609 2017-09-15 09:03:01Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/pci/qpi.c 326263 2017-11-27 15:11:47Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

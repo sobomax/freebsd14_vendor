@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/lastlogin/Makefile 338452 2018-09-04 09:58:13Z philip $
+# $FreeBSD: releng/12.2/usr.sbin/lastlogin/Makefile 338353 2018-08-28 17:12:37Z philip $
 
 PROG=	lastlogin
 MAN=	lastlogin.8

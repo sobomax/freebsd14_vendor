@@ -1,13 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/tr/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: releng/12.2/usr.bin/tr/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
 PROG=	tr
 SRCS=	cmap.c cset.c str.c tr.c
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

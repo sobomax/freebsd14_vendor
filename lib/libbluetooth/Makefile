@@ -1,7 +1,10 @@
 # $Id: Makefile,v 1.5 2003/07/22 18:38:04 max Exp $
-# $FreeBSD: releng/11.3/lib/libbluetooth/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libbluetooth/Makefile 338155 2018-08-21 19:28:53Z brd $
 
 PACKAGE=	lib${LIB}
+CONFS=		hosts protocols
+CONFSDIR=	/etc/bluetooth
+CONFSMODE_protocols=	444
 LIB=		bluetooth
 MAN=		bluetooth.3
 

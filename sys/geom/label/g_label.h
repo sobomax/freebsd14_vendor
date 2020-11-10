@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/label/g_label.h 346559 2019-04-22 15:09:47Z ian $
+ * $FreeBSD: releng/12.2/sys/geom/label/g_label.h 346509 2019-04-22 00:45:09Z ian $
  */
 
 #ifndef	_G_LABEL_H_

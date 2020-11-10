@@ -1,4 +1,8 @@
+/*	$NetBSD: chio.h,v 1.9 1997/09/29 17:32:26 mjacob Exp $	*/
+
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996 Jason R. Thorpe <thorpej@and.com>
  * All rights reserved.
  *
@@ -29,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/chio.h 343226 2019-01-20 21:38:24Z joerg $
+ * $FreeBSD: releng/12.2/sys/sys/chio.h 327288 2017-12-28 14:26:33Z pfg $
  */
 
 #ifndef	_SYS_CHIO_H_
@@ -262,7 +266,7 @@ struct changer_set_voltag_request {
 
 
 #define	CESTATUS_BITS	\
-	"\20\6INENAB\5EXENAB\4ACCESS\3EXCEPT\2IMPEXP\1FULL"
+	"\20\6INEAB\5EXENAB\4ACCESS\3EXCEPT\2IMPEXP\1FULL"
 
 #define	CHIOMOVE	_IOW('c', 0x01, struct changer_move)
 #define	CHIOEXCHANGE	_IOW('c', 0x02, struct changer_exchange)

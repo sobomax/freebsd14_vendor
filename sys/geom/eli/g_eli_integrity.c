@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2011 Pawel Jakub Dawidek <pawel@dawidek.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/eli/g_eli_integrity.c 332522 2018-04-16 00:42:45Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/eli/g_eli_integrity.c 336439 2018-07-18 00:56:25Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -485,7 +487,7 @@ g_eli_auth_run(struct g_eli_worker *wr, struct bio *bp)
 			plaindata += data_secsize;
 		}
 
-		crp->crp_sid = wr->w_sid;
+		crp->crp_session = wr->w_sid;
 		crp->crp_ilen = sc->sc_alen + data_secsize;
 		crp->crp_olen = data_secsize;
 		crp->crp_opaque = (void *)bp;

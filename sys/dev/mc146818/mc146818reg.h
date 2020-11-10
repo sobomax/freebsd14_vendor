@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: MIT-CMU
+ *
  * Copyright (c) 1995 Carnegie-Mellon University.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  *
  *	$NetBSD: mc146818reg.h,v 1.9 2006/03/08 23:46:25 lukem Exp $
  *
- * $FreeBSD: releng/11.3/sys/dev/mc146818/mc146818reg.h 201008 2009-12-25 22:53:46Z marius $
+ * $FreeBSD: releng/12.2/sys/dev/mc146818/mc146818reg.h 326403 2017-11-30 15:48:35Z pfg $
  */
 
 /*

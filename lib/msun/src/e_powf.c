@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/e_powf.c 336305 2018-07-15 15:28:23Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/e_powf.c 336362 2018-07-17 07:42:14Z bde $");
 
 #include "math.h"
 #include "math_private.h"
@@ -76,7 +76,7 @@ __ieee754_powf(float x, float y)
     /* y!=zero: result is NaN if either arg is NaN */
 	if(ix > 0x7f800000 ||
 	   iy > 0x7f800000)
-		return (x+0.0F)+(y+0.0F);
+	    return nan_mix(x, y);
 
     /* determine if y is an odd int when x < 0
      * yisint = 0	... y is not an integer

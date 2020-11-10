@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: (BSD-2-Clause AND BSD-2-Clause-NetBSD)
+ *
  * Copyright (c)1999 Citrus Project,
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/include/wchar.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/include/wchar.h 326695 2017-12-08 15:57:29Z pfg $
  */
 
 /*-

@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/regression/iscsi/iscsi-test.sh 255570 2013-09-14 15:29:06Z trasz $
+# $FreeBSD: releng/12.2/tools/regression/iscsi/iscsi-test.sh 255570 2013-09-14 15:29:06Z trasz $
 #
 
 #

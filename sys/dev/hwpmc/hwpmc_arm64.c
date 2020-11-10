@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hwpmc/hwpmc_arm64.c 283112 2015-05-19 15:25:47Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hwpmc/hwpmc_arm64.c 334831 2018-06-08 05:48:28Z mmacy $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -323,14 +323,15 @@ arm64_release_pmc(int cpu, int ri, struct pmc *pmc)
 }
 
 static int
-arm64_intr(int cpu, struct trapframe *tf)
+arm64_intr(struct trapframe *tf)
 {
 	struct arm64_cpu *pc;
 	int retval, ri;
 	struct pmc *pm;
 	int error;
-	int reg;
+	int reg, cpu;
 
+	cpu = curcpu;
 	KASSERT(cpu >= 0 && cpu < pmc_cpu_max(),
 	    ("[arm64,%d] CPU %d out of range", __LINE__, cpu));
 
@@ -357,8 +358,7 @@ arm64_intr(int cpu, struct trapframe *tf)
 		if (pm->pm_state != PMC_STATE_RUNNING)
 			continue;
 
-		error = pmc_process_interrupt(cpu, PMC_HR, pm, tf,
-		    TRAPF_USERMODE(tf));
+		error = pmc_process_interrupt(PMC_HR, pm, tf);
 		if (error)
 			arm64_stop_pmc(cpu, ri);
 

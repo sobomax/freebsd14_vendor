@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/ib_iwcm.c 341858 2018-12-12 10:19:47Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/ib_iwcm.c 363150 2020-07-13 15:33:06Z hselasky $");
 
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
@@ -1052,5 +1052,5 @@ static void __exit iw_cm_cleanup(void)
 	destroy_workqueue(iwcm_wq);
 }
 
-module_init(iw_cm_init);
-module_exit(iw_cm_cleanup);
+module_init_order(iw_cm_init, SI_ORDER_FIRST);
+module_exit_order(iw_cm_cleanup, SI_ORDER_FIRST);

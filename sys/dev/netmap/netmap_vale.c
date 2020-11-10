@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2013-2016 Universita` di Pisa
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/netmap/netmap_vale.c 344047 2019-02-12 09:26:05Z vmaffione $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/netmap/netmap_vale.c 344046 2019-02-12 09:07:46Z vmaffione $");
 
 #include <sys/types.h>
 #include <sys/errno.h>

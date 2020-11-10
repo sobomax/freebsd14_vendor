@@ -1,7 +1,7 @@
 #
 # This builds login and friends.
 #
-# $FreeBSD: releng/11.3/tools/bsdbox/Makefile.login 229675 2012-01-06 00:56:31Z adrian $
+# $FreeBSD: releng/12.2/tools/bsdbox/Makefile.login 229675 2012-01-06 00:56:31Z adrian $
 #
 
 CRUNCH_PROGS_libexec+=	getty

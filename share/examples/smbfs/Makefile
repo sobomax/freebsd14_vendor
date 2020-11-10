@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/share/examples/smbfs/Makefile 299293 2016-05-10 00:51:50Z gjb $
+# $FreeBSD: releng/12.2/share/examples/smbfs/Makefile 314652 2017-03-04 11:26:40Z ngie $
 
 PACKAGE=examples
 FILESDIR= ${SHAREDIR}/examples/smbfs
 FILES=	dot.nsmbrc
 
-.PATH: ${.CURDIR}/../../../contrib/smbfs/examples
+.PATH: ${SRCTOP}/contrib/smbfs/examples
 
 SUBDIR=	print
 

@@ -3,7 +3,7 @@
 #
 # This includes all the configurable parts of the kernel.
 #
-# $FreeBSD: releng/11.3/sys/mips/conf/RT5350_FDT 345344 2019-03-20 18:49:45Z kib $
+# $FreeBSD: releng/12.2/sys/mips/conf/RT5350_FDT 345301 2019-03-19 17:16:37Z kib $
 #
 
 #NO_UNIVERSE
@@ -70,5 +70,5 @@ device 		bpf
 device 		if_bridge
 
 # Extres
-device 		ext_resources
+options		EXT_RESOURCES
 device 		clk

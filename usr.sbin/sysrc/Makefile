@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/sysrc/Makefile 287979 2015-09-18 23:34:47Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/sysrc/Makefile 287979 2015-09-18 23:34:47Z bdrewery $
 
 SCRIPTS= sysrc
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
  * Copyright (c) 2000, Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000, BSDi
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/pci/pci_private.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/pci/pci_private.h 354107 2019-10-25 22:04:05Z jhb $
  *
  */
 
@@ -34,7 +36,7 @@
 
 /*
  * Export definitions of the pci bus so that we can more easily share
- * it with "subclass" busses.
+ * it with "subclass" buses.
  */
 DECLARE_CLASS(pci_driver);
 
@@ -56,7 +58,9 @@ void		pci_add_resources(device_t bus, device_t dev, int force,
 		    uint32_t prefetchmask);
 void		pci_add_resources_ea(device_t bus, device_t dev, int alloc_iov);
 struct pci_devinfo *pci_alloc_devinfo_method(device_t dev);
+int		pci_attach(device_t dev);
 int		pci_attach_common(device_t dev);
+int		pci_detach(device_t dev);
 int		pci_rescan_method(device_t dev);
 void		pci_driver_added(device_t dev, driver_t *driver);
 int		pci_ea_is_enabled(device_t dev, int rid);

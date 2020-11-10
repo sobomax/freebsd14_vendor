@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/mediatek/mtk_ehci.c 308401 2016-11-07 08:36:06Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/mediatek/mtk_ehci.c 307518 2016-10-17 10:20:38Z hselasky $");
 
 /*-
  * Copyright (c) 2015 Stanislav Galabov. All rights reserved.

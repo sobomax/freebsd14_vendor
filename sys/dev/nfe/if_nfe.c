@@ -21,7 +21,7 @@
 /* Driver for NVIDIA nForce MCP Fast Ethernet and Gigabit Ethernet */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/nfe/if_nfe.c 342294 2018-12-21 02:26:08Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/nfe/if_nfe.c 342293 2018-12-21 02:22:11Z markj $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"

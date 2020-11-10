@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1993 Andrew Moore, Talke Studio
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#) floatingpoint.h	1.0 (Berkeley) 9/23/93
- * $FreeBSD: releng/11.3/sys/mips/include/floatingpoint.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/include/floatingpoint.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #ifndef _FLOATINGPOINT_H_

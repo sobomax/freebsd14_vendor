@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: MIT-CMU
+ *
  * Mach Operating System
  * Copyright (c) 1991,1990 Carnegie Mellon University
  * All Rights Reserved.
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ddb/db_output.c 331643 2018-03-27 18:52:27Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ddb/db_output.c 326403 2017-11-30 15:48:35Z pfg $");
 
 #include "opt_ddb.h"
 

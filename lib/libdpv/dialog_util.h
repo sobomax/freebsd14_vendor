@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libdpv/dialog_util.h 294892 2016-01-27 06:16:53Z dteske $
+ * $FreeBSD: releng/12.2/lib/libdpv/dialog_util.h 294892 2016-01-27 06:16:53Z dteske $
  */
 
 #ifndef _DIALOG_UTIL_H_

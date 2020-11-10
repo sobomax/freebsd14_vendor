@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/fixwhite/Makefile 231071 2012-02-06 10:23:11Z ed $
+# $FreeBSD: releng/12.2/tools/tools/fixwhite/Makefile 231071 2012-02-06 10:23:11Z ed $
 
 PROG=	fixwhite
 BINDIR=	/usr/bin

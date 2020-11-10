@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libthread_db/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libthread_db/Makefile 312468 2017-01-20 04:28:16Z ngie $
 
 .PATH:	${.CURDIR}/arch/${MACHINE_CPUARCH}
 

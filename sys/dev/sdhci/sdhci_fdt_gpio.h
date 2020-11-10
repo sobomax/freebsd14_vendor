@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/sdhci/sdhci_fdt_gpio.h 314508 2017-03-01 20:22:25Z ian $
+ * $FreeBSD: releng/12.2/sys/dev/sdhci/sdhci_fdt_gpio.h 311734 2017-01-09 01:54:36Z ian $
  */
 
 /*

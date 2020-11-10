@@ -24,7 +24,7 @@
    THE SOFTWARE.
    */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/cudbg/fastlz.c 322014 2017-08-03 14:43:30Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/cudbg/fastlz.c 322014 2017-08-03 14:43:30Z np $");
 
 #include "osdep.h"
 #include "fastlz.h"

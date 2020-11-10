@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/ctld/isns.h 273635 2014-10-25 12:50:26Z mav $
+ * $FreeBSD: releng/12.2/usr.sbin/ctld/isns.h 273635 2014-10-25 12:50:26Z mav $
  */
 
 #ifndef	_ISNS_H

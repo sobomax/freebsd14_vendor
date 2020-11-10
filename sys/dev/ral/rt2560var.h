@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/dev/ral/rt2560var.h 345636 2019-03-28 09:50:25Z avos $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/ral/rt2560var.h 345634 2019-03-28 09:16:00Z avos $	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -105,6 +105,7 @@ struct rt2560_vap {
 
 struct rt2560_softc {
 	struct ieee80211com	sc_ic;
+	struct ieee80211_ratectl_tx_status sc_txs;
 	struct mtx		sc_mtx;
 	struct mbufq		sc_snd;
 	device_t		sc_dev;

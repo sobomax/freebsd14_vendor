@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/getconf/getconf.h 324124 2017-09-30 17:30:22Z jhb $
+ * $FreeBSD: releng/12.2/usr.bin/getconf/getconf.h 334070 2018-05-23 02:51:56Z wollman $
  */
 
 #ifdef STABLE
@@ -37,6 +37,7 @@ typedef long long intmax_t;
 #endif
 
 int	find_confstr(const char *name, int *key);
+int	find_unsigned_limit(const char *name, uintmax_t *value);
 int	find_limit(const char *name, intmax_t *value);
 int	find_pathconf(const char *name, int *key);
 int	find_progenv(const char *name, const char **alt_path);

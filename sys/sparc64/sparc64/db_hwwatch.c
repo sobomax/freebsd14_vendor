@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  * Copyright 2001 by Thomas Moestl <tmm@FreeBSD.org>.  All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/sparc64/db_hwwatch.c 149925 2005-09-10 03:01:25Z marcel $
+ * $FreeBSD: releng/12.2/sys/sparc64/sparc64/db_hwwatch.c 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #include <sys/param.h>

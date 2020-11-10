@@ -1,9 +1,11 @@
 /*
  * $NetBSD: rpcb_svc_4.c,v 1.1 2000/06/02 23:15:41 fvdl Exp $
- * $FreeBSD: releng/11.3/usr.sbin/rpcbind/rpcb_svc_4.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/rpcbind/rpcb_svc_4.c 327464 2018-01-01 09:41:18Z delphij $
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2009, Sun Microsystems, Inc.
  * All rights reserved.
  *
@@ -46,9 +48,7 @@
 #include <sys/stat.h>
 #include <rpc/rpc.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <netconfig.h>
-#include <syslog.h>
 #include <string.h>
 #include <stdlib.h>
 #include "rpcbind.h"

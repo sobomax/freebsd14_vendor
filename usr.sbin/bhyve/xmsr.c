@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/xmsr.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/xmsr.c 358184 2020-02-20 21:48:36Z vmaffione $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/xmsr.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/xmsr.c 358184 2020-02-20 21:48:36Z vmaffione $");
 
 #include <sys/types.h>
 
@@ -43,9 +43,10 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/xmsr.c 330449 2018-03-05 07:26:05
 #include <stdlib.h>
 #include <string.h>
 
+#include "debug.h"
 #include "xmsr.h"
 
-static int cpu_vendor_intel, cpu_vendor_amd;
+static int cpu_vendor_intel, cpu_vendor_amd, cpu_vendor_hygon;
 
 int
 emulate_wrmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t val)
@@ -63,7 +64,7 @@ emulate_wrmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t val)
 		default:
 			break;
 		}
-	} else if (cpu_vendor_amd) {
+	} else if (cpu_vendor_amd || cpu_vendor_hygon) {
 		switch (num) {
 		case MSR_HWCR:
 			/*
@@ -72,6 +73,7 @@ emulate_wrmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t val)
 			return (0);
 
 		case MSR_NB_CFG1:
+		case MSR_LS_CFG:
 		case MSR_IC_CFG:
 			return (0);	/* Ignore writes */
 
@@ -126,7 +128,7 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 			error = -1;
 			break;
 		}
-	} else if (cpu_vendor_amd) {
+	} else if (cpu_vendor_amd || cpu_vendor_hygon) {
 		switch (num) {
 		case MSR_BIOS_SIGN:
 			*val = 0;
@@ -141,6 +143,7 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 			break;
 
 		case MSR_NB_CFG1:
+		case MSR_LS_CFG:
 		case MSR_IC_CFG:
 			/*
 			 * The reset value is processor family dependent so
@@ -190,7 +193,7 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 		/*
 		 * OpenBSD guests test bit 0 of this MSR to detect if the
 		 * workaround for erratum 721 is already applied.
-		 * http://support.amd.com/TechDocs/41322_10h_Rev_Gd.pdf
+		 * https://support.amd.com/TechDocs/41322_10h_Rev_Gd.pdf
 		 */
 		case 0xC0011029:
 			*val = 1;
@@ -222,10 +225,12 @@ init_msr(void)
 	error = 0;
 	if (strcmp(cpu_vendor, "AuthenticAMD") == 0) {
 		cpu_vendor_amd = 1;
+	} else if (strcmp(cpu_vendor, "HygonGenuine") == 0) {
+		cpu_vendor_hygon = 1;
 	} else if (strcmp(cpu_vendor, "GenuineIntel") == 0) {
 		cpu_vendor_intel = 1;
 	} else {
-		fprintf(stderr, "Unknown cpu vendor \"%s\"\n", cpu_vendor);
+		EPRINTLN("Unknown cpu vendor \"%s\"", cpu_vendor);
 		error = -1;
 	}
 	return (error);

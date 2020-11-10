@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/cxgbe/tom/Makefile 345664 2019-03-28 23:43:38Z jhb $
+# $FreeBSD: releng/12.2/sys/modules/cxgbe/tom/Makefile 330884 2018-03-13 23:05:51Z jhb $
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
@@ -10,6 +10,7 @@ SRCS=	bus_if.h
 SRCS+=	device_if.h
 SRCS+=	opt_inet.h
 SRCS+=	opt_inet6.h
+SRCS+=	opt_ratelimit.h
 SRCS+=	pci_if.h
 SRCS+=	t4_connect.c
 SRCS+=	t4_cpl_io.c

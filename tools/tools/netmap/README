@@ -1,12 +1,10 @@
-$FreeBSD: releng/11.3/tools/tools/netmap/README 341434 2018-12-03 17:51:22Z vmaffione $
+$FreeBSD: releng/12.2/tools/tools/netmap/README 354471 2019-11-07 20:09:41Z vmaffione $
 
 This directory contains applications that use the netmap API
 
 	pkt-gen		a multi-function packet generator and traffic sink
 
 	bridge		a two-port jumper wire, also using the netmap API
-
-	vale-ctl	the program to control and inspect VALE switches
 
 	lb		an L3/L4 load balancer
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/journal/g_journal.h 322792 2017-08-22 15:20:48Z mckusick $
+ * $FreeBSD: releng/12.2/sys/geom/journal/g_journal.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #ifndef	_G_JOURNAL_H_

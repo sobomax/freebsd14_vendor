@@ -2,7 +2,7 @@
  * This file is freeware. You are free to use it and add your own
  * license.
  *
- * $FreeBSD: releng/11.3/sys/cddl/dev/prototype.c 324282 2017-10-04 15:47:16Z markj $
+ * $FreeBSD: releng/12.2/sys/cddl/dev/prototype.c 324066 2017-09-27 17:46:38Z markj $
  *
  */
 

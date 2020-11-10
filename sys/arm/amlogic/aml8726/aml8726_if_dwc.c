@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/amlogic/aml8726/aml8726_if_dwc.c 291683 2015-12-03 09:37:20Z ganbold $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/amlogic/aml8726/aml8726_if_dwc.c 365387 2020-09-06 18:48:50Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -66,7 +66,7 @@ static int
 aml8726_if_dwc_mac_type(device_t dev)
 {
 
-	return (DWC_GMAC_ALT_DESC);
+	return (DWC_GMAC_NORMAL_DESC);
 }
 
 static int

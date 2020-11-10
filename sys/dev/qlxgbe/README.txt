@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/dev/qlxgbe/README.txt 322972 2017-08-28 17:21:33Z davidcs $
+# $FreeBSD: releng/12.2/sys/dev/qlxgbe/README.txt 322771 2017-08-21 20:27:45Z davidcs $
 
 			README File
 		QLogic 8300 series Dual Port

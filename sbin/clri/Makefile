@@ -1,9 +1,10 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/sbin/clri/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/clri/Makefile 328426 2018-01-26 00:58:32Z mckusick $
 
 PACKAGE=runtime
 PROG=	clri
 MAN=	clri.8
+LIBADD=	ufs
 WARNS?=	2
 
 .include <bsd.prog.mk>

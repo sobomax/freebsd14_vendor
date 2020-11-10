@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2009 Bruce Simpson.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netinet6/mld6.h 191666 2009-04-29 11:31:23Z bms $
+ * $FreeBSD: releng/12.2/sys/netinet6/mld6.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NETINET6_MLD6_H_

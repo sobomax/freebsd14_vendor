@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/share/doc/llvm/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: releng/12.2/share/doc/llvm/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 SUBDIR=		clang
 
-SRCDIR=		${.CURDIR}/../../../contrib/llvm
+SRCDIR=		${SRCTOP}/contrib/llvm-project/llvm
 
 .PATH: ${SRCDIR} ${SRCDIR}/lib/Support
 

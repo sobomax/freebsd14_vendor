@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_fil.h	1.35 6/5/96
- * $FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_fil.h 348850 2019-06-10 12:40:38Z cy $
+ * $FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_fil.h 358664 2020-03-05 06:35:05Z cy $
  * Id: ip_fil.h,v 2.170.2.51 2007/10/10 09:48:03 darrenr Exp $
  */
 
@@ -560,7 +560,6 @@ typedef	struct	frdest	{
 	addrfamily_t	fd_addr;
 	fr_dtypes_t	fd_type;
 	int		fd_name;
-	int		fd_local;
 } frdest_t;
 
 #define	fd_ip6	fd_addr.adf_addr
@@ -585,20 +584,20 @@ typedef enum fr_ctypes_e {
  */
 typedef	struct	frpcmp	{
 	fr_ctypes_t	frp_cmp;	/* data for port comparisons */
-	u_32_t		frp_port;	/* top port for <> and >< */
-	u_32_t		frp_top;	/* top port for <> and >< */
+	u_32_t		frp_port;	/* low port for <> and >< */
+	u_32_t		frp_top;	/* high port for <> and >< */
 } frpcmp_t;
 
 
 /*
- * Structure containing all the relevant TCP things that can be checked in
+ * Structure containing all the relevant TCP/UDP things that can be checked in
  * a filter rule.
  */
 typedef	struct	frtuc	{
 	u_char		ftu_tcpfm;	/* tcp flags mask */
 	u_char		ftu_tcpf;	/* tcp flags */
-	frpcmp_t	ftu_src;
-	frpcmp_t	ftu_dst;
+	frpcmp_t	ftu_src;	/* source port */
+	frpcmp_t	ftu_dst;	/* destination port */
 } frtuc_t;
 
 #define	ftu_scmp	ftu_src.frp_cmp
@@ -736,12 +735,9 @@ typedef	struct	frentry {
 	u_char	fr_icode;	/* return ICMP code */
 	int	fr_group;	/* group to which this rule belongs */
 	int	fr_grhead;	/* group # which this rule starts */
-	int	fr_ifnames[4];
 	int	fr_isctag;
 	int	fr_rpc;		/* XID Filtering */ 
 	ipftag_t fr_nattag;
-	frdest_t fr_tifs[2];	/* "to"/"reply-to" interface */
-	frdest_t fr_dif;	/* duplicate packet interface */
 	/*
 	 * These are all options related to stateful filtering
 	 */
@@ -750,6 +746,12 @@ typedef	struct	frentry {
 	int	fr_statemax;	/* max reference count */
 	int	fr_icmphead;	/* ICMP group  for state options */
 	u_int	fr_age[2];	/* non-TCP state timeouts */
+	/*
+	 * These are compared separately.
+	 */
+	int	fr_ifnames[4];
+	frdest_t fr_tifs[2];	/* "to"/"reply-to" interface */
+	frdest_t fr_dif;	/* duplicate packet interface */
 	/*
 	 * How big is the name buffer at the end?
 	 */
@@ -828,9 +830,10 @@ typedef	struct	frentry {
 
 #define	FR_NOLOGTAG	0
 
-#define	FR_CMPSIZ	(sizeof(struct frentry) - \
-			 offsetof(struct frentry, fr_func))
+#define	FR_CMPSIZ	(offsetof(struct frentry, fr_ifnames) - \
+			offsetof(struct frentry, fr_func))
 #define	FR_NAME(_f, _n)	(_f)->fr_names + (_f)->_n
+#define FR_NUM(_a)	(sizeof(_a) / sizeof(*_a))
 
 
 /*
@@ -1417,8 +1420,7 @@ typedef	struct	ipftune	{
 ** HPUX Port
 */
 
-#if !defined(CDEV_MAJOR) && defined (__FreeBSD_version) && \
-    (__FreeBSD_version >= 220000)
+#if !defined(CDEV_MAJOR) && defined (__FreeBSD_version)
 # define	CDEV_MAJOR	79
 #endif
 
@@ -1836,6 +1838,10 @@ extern	int		ipf_matchicmpqueryreply __P((int, icmpinfo_t *,
 						     struct icmp *, int));
 extern	u_32_t		ipf_newisn __P((fr_info_t *));
 extern	u_int		ipf_pcksum __P((fr_info_t *, int, u_int));
+#ifdef	USE_INET6
+extern	u_int		ipf_pcksum6 __P((struct mbuf *, ip6_t *,
+						u_int32_t, u_int32_t));
+#endif
 extern	void		ipf_rule_expire __P((ipf_main_softc_t *));
 extern	int		ipf_scanlist __P((fr_info_t *, u_32_t));
 extern	frentry_t 	*ipf_srcgrpmap __P((fr_info_t *, u_32_t *));

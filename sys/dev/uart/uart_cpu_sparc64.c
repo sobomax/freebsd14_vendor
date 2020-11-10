@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003, 2004 Marcel Moolenaar
  * Copyright (c) 2004 - 2006 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_cpu_sparc64.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_cpu_sparc64.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

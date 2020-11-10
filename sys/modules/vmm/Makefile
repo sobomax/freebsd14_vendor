@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/sys/modules/vmm/Makefile 337507 2018-08-08 22:42:03Z bdrewery $
+# $FreeBSD: releng/12.2/sys/modules/vmm/Makefile 360496 2020-04-30 14:51:31Z kevans $
 
 KMOD=	vmm
 
-SRCS=	opt_acpi.h opt_ddb.h device_if.h bus_if.h pci_if.h
+SRCS=	opt_acpi.h opt_ddb.h device_if.h bus_if.h pci_if.h pcib_if.h acpi_if.h
 DPSRCS+=	vmx_assym.h svm_assym.h
-DPSRCS+=	vmx_genassym.c svm_genassym.c
+DPSRCS+=	vmx_genassym.c svm_genassym.c offset.inc
 
 CFLAGS+= -DVMM_KEEP_STATS -DSMP
 CFLAGS+= -I${SRCTOP}/sys/amd64/vmm
@@ -51,7 +51,8 @@ SRCS+=	vmcb.c		\
 	svm.c		\
 	svm_support.S	\
 	npt.c		\
-	amdv.c		\
+	ivrs_drv.c	\
+	amdvi_hw.c	\
 	svm_msr.c
 
 CLEANFILES=	vmx_assym.h vmx_genassym.o svm_assym.h svm_genassym.o
@@ -73,10 +74,10 @@ svm_support.o:
 	${CC} -c -x assembler-with-cpp -DLOCORE ${CFLAGS} \
 	    ${.IMPSRC} -o ${.TARGET}
 
-vmx_genassym.o:
-	${CC} -c ${CFLAGS:N-flto:N-fno-common} ${.IMPSRC}
+vmx_genassym.o: offset.inc
+	${CC} -c ${CFLAGS:N-flto:N-fno-common} -fcommon ${.IMPSRC}
 
-svm_genassym.o:
-	${CC} -c ${CFLAGS:N-flto:N-fno-common} ${.IMPSRC}
+svm_genassym.o: offset.inc
+	${CC} -c ${CFLAGS:N-flto:N-fno-common} -fcommon ${.IMPSRC}
 
 .include <bsd.kmod.mk>

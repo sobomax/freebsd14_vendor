@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libxo/xo_config.h 334458 2018-05-31 23:55:59Z gjb $ */
+/* $FreeBSD: releng/12.2/lib/libxo/xo_config.h 334068 2018-05-23 01:20:31Z phil $ */
 /* libxo/xo_config.h.  Generated from xo_config.h.in by configure.  */
 /* libxo/xo_config.h.in.  Generated from configure.ac by autoheader.  */
 

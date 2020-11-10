@@ -1,6 +1,8 @@
 /*	$NetBSD: parse.c,v 1.11 2000/09/24 02:19:54 augustss Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1999, 2001 Lennart Augustsson <augustss@netbsd.org>
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libusbhid/parse.c 361972 2020-06-09 16:13:54Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libusbhid/parse.c 361918 2020-06-08 09:32:57Z hselasky $");
 
 #include <assert.h>
 #include <stdlib.h>

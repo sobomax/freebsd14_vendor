@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Katsurajima Naoto <raven@katsurajima.seya.yokohama.jp>
  * Copyright (c) 2001 Cameron Grant <cg@freebsd.org>
  * All rights reserved.
@@ -36,7 +38,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pci/ich.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/ich.c 365298 2020-09-03 13:56:30Z markj $");
 
 /* -------------------------------------------------------------------- */
 
@@ -1188,16 +1190,17 @@ static int
 ich_pci_resume(device_t dev)
 {
 	struct sc_info *sc;
-	int i;
+	int err, i;
 
 	sc = pcm_getdevinfo(dev);
 
 	ICH_LOCK(sc);
 	/* Reinit audio device */
-    	if (ich_init(sc) == -1) {
+	err = ich_init(sc);
+	if (err != 0) {
 		device_printf(dev, "unable to reinitialize the card\n");
 		ICH_UNLOCK(sc);
-		return (ENXIO);
+		return (err);
 	}
 	/* Reinit mixer */
 	ich_pci_codec_reset(sc);

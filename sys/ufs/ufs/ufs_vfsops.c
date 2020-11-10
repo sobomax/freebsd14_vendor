@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1991, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  * (c) UNIX System Laboratories, Inc.
@@ -15,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ufs/ufs_vfsops.c 338943 2018-09-26 14:26:29Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ufs/ufs_vfsops.c 338798 2018-09-19 14:36:57Z kib $");
 
 #include "opt_quota.h"
 #include "opt_ufs.h"
@@ -74,7 +76,7 @@ ufs_root(mp, flags, vpp)
 	struct vnode *nvp;
 	int error;
 
-	error = VFS_VGET(mp, (ino_t)ROOTINO, flags, &nvp);
+	error = VFS_VGET(mp, (ino_t)UFS_ROOTINO, flags, &nvp);
 	if (error)
 		return (error);
 	*vpp = nvp;

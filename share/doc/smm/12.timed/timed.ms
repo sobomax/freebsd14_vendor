@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/11.3/share/doc/smm/12.timed/timed.ms 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/smm/12.timed/timed.ms 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .\" Copyright (c) 1986, 1993
 .\"	The Regents of the University of California.  All rights reserved.

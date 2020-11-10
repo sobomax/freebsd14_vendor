@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/rpc.sprayd/Makefile 332605 2018-04-16 16:27:08Z asomers $
+# $FreeBSD: releng/12.2/libexec/rpc.sprayd/Makefile 330514 2018-03-05 16:11:07Z asomers $
 
 PROG =	rpc.sprayd
 SRCS =	sprayd.c

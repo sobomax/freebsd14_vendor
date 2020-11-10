@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Poul-Henning Kamp
  * Copyright (c) 2013 iXsystems.com,
  *                    author: Alfred Perlstein <alfred@freebsd.org>
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/watchdog.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/watchdog.h 327505 2018-01-03 00:56:30Z karels $
  */
 #ifndef _SYS_WATCHDOG_H
 #define	_SYS_WATCHDOG_H

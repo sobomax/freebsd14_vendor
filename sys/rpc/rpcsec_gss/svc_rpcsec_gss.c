@@ -1,4 +1,7 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright (c) 1990 The Regents of the University of California.
+ *
  * Copyright (c) 2008 Doug Rabson
  * All rights reserved.
  *
@@ -61,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/rpc/rpcsec_gss/svc_rpcsec_gss.c 346343 2019-04-18 02:47:59Z rmacklem $");
+__FBSDID("$FreeBSD: releng/12.2/sys/rpc/rpcsec_gss/svc_rpcsec_gss.c 355966 2019-12-20 22:53:23Z rmacklem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -176,6 +179,11 @@ SYSCTL_NODE(_kern_rpc, OID_AUTO, gss, CTLFLAG_RW, 0, "GSS");
 SYSCTL_UINT(_kern_rpc_gss, OID_AUTO, client_max, CTLFLAG_RW,
     &svc_rpc_gss_client_max, 0,
     "Max number of rpc-gss clients");
+
+static u_int svc_rpc_gss_lifetime_max = 0;
+SYSCTL_UINT(_kern_rpc_gss, OID_AUTO, lifetime_max, CTLFLAG_RW,
+    &svc_rpc_gss_lifetime_max, 0,
+    "Maximum lifetime (seconds) of rpc-gss clients");
 
 static u_int svc_rpc_gss_client_count;
 SYSCTL_UINT(_kern_rpc_gss, OID_AUTO, client_count, CTLFLAG_RD,
@@ -947,8 +955,15 @@ svc_rpc_gss_accept_sec_context(struct svc_rpc_gss_client *client,
 		 * that out).
 		 */
 		if (cred_lifetime == GSS_C_INDEFINITE)
-			cred_lifetime = time_uptime + 24*60*60;
+			cred_lifetime = 24*60*60;
 
+		/*
+		 * Cap cred_lifetime if sysctl kern.rpc.gss.lifetime_max is set.
+		 */
+		if (svc_rpc_gss_lifetime_max > 0 && cred_lifetime >
+		    svc_rpc_gss_lifetime_max)
+			cred_lifetime = svc_rpc_gss_lifetime_max;
+		
 		client->cl_expiration = time_uptime + cred_lifetime;
 
 		/*

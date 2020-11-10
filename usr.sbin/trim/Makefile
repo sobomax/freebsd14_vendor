@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/trim/Makefile 343118 2019-01-17 18:07:59Z eugen $
+# $FreeBSD: releng/12.2/usr.sbin/trim/Makefile 343118 2019-01-17 18:07:59Z eugen $
 
 PROG=	trim
 MAN=	trim.8

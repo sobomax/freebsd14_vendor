@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/cam_machdep.c 228022 2011-11-27 15:43:40Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/cam_machdep.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

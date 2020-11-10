@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/ld128/e_powl.c 336767 2018-07-27 17:39:36Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/ld128/e_powl.c 336362 2018-07-17 07:42:14Z bde $");
 
 #include <float.h>
 #include <math.h>
@@ -182,7 +182,7 @@ powl(long double x, long double y)
       || (iy > 0x7fff0000)
       || ((iy == 0x7fff0000)
 	  && ((q.parts32.mswlo | q.parts32.lswhi | q.parts32.lswlo) != 0)))
-    return x + y;
+    return nan_mix(x, y);
 
   /* determine if y is an odd int when x < 0
    * yisint = 0       ... y is not an integer

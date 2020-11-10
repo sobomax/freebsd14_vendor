@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/locale/xlocale.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libc/locale/xlocale.c 359583 2020-04-03 00:32:48Z markj $
  */
 
 #include <pthread.h>
@@ -161,7 +163,7 @@ set_thread_locale(locale_t loc)
 	if (NULL != l) {
 		xlocale_retain((struct xlocale_refcounted*)l);
 	}
-	locale_t old = pthread_getspecific(locale_info_key);
+	locale_t old = get_thread_locale();
 	if ((NULL != old) && (l != old)) {
 		xlocale_release((struct xlocale_refcounted*)old);
 	}
@@ -273,7 +275,7 @@ locale_t newlocale(int mask, const char *locale, locale_t base)
 	for (type=0 ; type<XLC_LAST ; type++) {
 		if (mask & 1) {
 			if (useenv) {
-				realLocale = __get_locale_env(type);
+				realLocale = __get_locale_env(type + 1);
 			}
 			new->components[type] =
 			     constructors[type](realLocale, new);
@@ -325,20 +327,18 @@ locale_t duplocale(locale_t base)
  * Free a locale_t.  This is quite a poorly named function.  It actually
  * disclaims a reference to a locale_t, rather than freeing it.  
  */
-int
+void
 freelocale(locale_t loc)
 {
-	/* Fail if we're passed something that isn't a locale. */
-	if ((NULL == loc) || (LC_GLOBAL_LOCALE == loc)) {
-		return (-1);
-	}
-	/* If we're passed the global locale, pretend that we freed it but don't
-	 * actually do anything. */
-	if (&__xlocale_global_locale == loc) {
-		return (0);
-	}
-	xlocale_release(loc);
-	return (0);
+
+	/*
+	 * Fail if we're passed something that isn't a locale. If we're
+	 * passed the global locale, pretend that we freed it but don't
+	 * actually do anything.
+	 */
+	if (loc != NULL && loc != LC_GLOBAL_LOCALE &&
+	    loc != &__xlocale_global_locale)
+		xlocale_release(loc);
 }
 
 /*

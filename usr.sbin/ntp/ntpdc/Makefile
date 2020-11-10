@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/ntpdc/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/ntpdc/Makefile 358110 2020-02-19 14:37:56Z bapt $
 
 MAN=
 
@@ -18,8 +18,6 @@ CFLAGS+= -I${SRCTOP}/contrib/ntp/include \
 	-I${.CURDIR:H} -I${.CURDIR}
 
 LIBADD=	edit ntp m opts pthread
-CFLAGS+=	-DHAVE_LIBEDIT -DHAVE_READLINE_READLINE_H \
-		-I${DESTDIR}/${INCLUDEDIR}/edit
 
 .if ${MK_OPENSSL} != "no"
 LIBADD+=	crypto

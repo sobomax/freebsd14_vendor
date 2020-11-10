@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2014 Steven Lawrance <stl@koffein.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/fsl_ocotp.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/fsl_ocotp.c 331229 2018-03-20 00:03:49Z gonzo $");
 
 /*
  * Access to the Freescale i.MX6 On-Chip One-Time-Programmable Memory
@@ -70,7 +72,7 @@ fsl_ocotp_devmap(void)
 	phandle_t child, root;
 	u_long base, size;
 
-	if ((root = OF_finddevice("/")) == 0)
+	if ((root = OF_finddevice("/")) == -1)
 		goto fatal;
 	if ((child = fdt_depth_search_compatible(root, "fsl,imx6q-ocotp", 0)) == 0)
 		goto fatal;

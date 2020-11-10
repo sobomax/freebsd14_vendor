@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/locale/etc/charmaps/eucKR.TXT 286434 2015-08-08 00:28:23Z bapt $
+# $FreeBSD: releng/12.2/tools/tools/locale/etc/charmaps/eucKR.TXT 286434 2015-08-08 00:28:23Z bapt $
 #
 #    Name:     cp949 to Unicode table
 #    Unicode version: 2.0

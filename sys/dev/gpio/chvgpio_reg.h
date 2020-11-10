@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/gpio/chvgpio_reg.h 331832 2018-03-30 23:31:08Z gonzo $
+ * $FreeBSD: releng/12.2/sys/dev/gpio/chvgpio_reg.h 329926 2018-02-24 20:19:31Z gonzo $
  */
 
 /*

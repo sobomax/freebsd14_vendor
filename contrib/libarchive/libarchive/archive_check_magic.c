@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_check_magic.c 315432 2017-03-16 23:07:35Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_check_magic.c 314571 2017-03-02 22:59:35Z mm $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

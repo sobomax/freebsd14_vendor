@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_remquo.c 233973 2012-04-07 03:59:12Z das $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_remquo.c 336663 2018-07-24 10:10:16Z bde $");
 
 #include <float.h>
 
@@ -44,7 +44,7 @@ remquo(double x, double y, int *quo)
     /* purge off exception values */
 	if((hy|ly)==0||(hx>=0x7ff00000)||	/* y=0,or x not finite */
 	  ((hy|((ly|-ly)>>31))>0x7ff00000))	/* or y is NaN */
-	    return (x*y)/(x*y);
+	    return nan_mix_op(x, y, *)/nan_mix_op(x, y, *);
 	if(hx<=hy) {
 	    if((hx<hy)||(lx<ly)) {
 		q = 0;

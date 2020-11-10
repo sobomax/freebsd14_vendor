@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1996-1997 John D. Polstra.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/elf.h 325810 2017-11-14 16:03:07Z jhb $
+ * $FreeBSD: releng/12.2/sys/x86/include/elf.h 326263 2017-11-27 15:11:47Z pfg $
  */
 
 #ifndef _MACHINE_ELF_H_

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 EMC Corp.
  * Copyright (c) 2011 Jeffrey Roberson <jeff@freebsd.org>
  * Copyright (c) 2008 Mayur Shardul <mayur.shardul@gmail.com>
@@ -45,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_pctrie.c 321977 2017-08-03 07:28:54Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_pctrie.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include "opt_ddb.h"
 

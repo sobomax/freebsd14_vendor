@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Ian Lepore <ian@freebsd.org>
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
 #define IF_FFECREG_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ffec/if_ffecreg.h 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ffec/if_ffecreg.h 326255 2017-11-27 14:52:40Z pfg $");
 
 /*
  * Hardware defines for Freescale Fast Ethernet Controller.

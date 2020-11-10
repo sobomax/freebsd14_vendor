@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_rtc.c 308335 2016-11-05 10:56:32Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra_rtc.c 308638 2016-11-14 11:41:22Z andrew $");
 
 /*
  * RTC driver for Tegra SoCs.
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_rtc.c 308335 2016-11-05 10:
 #include <sys/rman.h>
 
 #include <dev/extres/clk/clk.h>
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 

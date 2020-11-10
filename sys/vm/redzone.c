@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/vm/redzone.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/vm/redzone.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

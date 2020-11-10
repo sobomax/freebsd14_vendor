@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/primes/spsp.c 320218 2017-06-22 05:26:08Z cperciva $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/primes/spsp.c 319561 2017-06-04 02:36:37Z cperciva $");
 
 #include <assert.h>
 #include <stddef.h>

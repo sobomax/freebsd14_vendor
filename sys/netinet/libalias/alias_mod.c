@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Paolo Pisati <piso@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_mod.c 259859 2013-12-25 03:24:20Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_mod.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #ifdef _KERNEL
 #include <sys/libkern.h>

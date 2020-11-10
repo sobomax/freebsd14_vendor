@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/ncurses/Makefile 276320 2014-12-27 21:11:42Z ngie $
+# $FreeBSD: releng/12.2/lib/ncurses/Makefile 276320 2014-12-27 21:11:42Z ngie $
 
 SUBDIR=	ncurses form menu panel \
 	ncursesw formw menuw panelw

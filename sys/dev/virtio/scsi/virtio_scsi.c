@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 /* Driver for VirtIO SCSI devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/virtio/scsi/virtio_scsi.c 346368 2019-04-19 03:47:59Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/virtio/scsi/virtio_scsi.c 358385 2020-02-27 14:52:55Z avg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -79,6 +81,7 @@ static void	vtscsi_read_config(struct vtscsi_softc *,
 		    struct virtio_scsi_config *);
 static int	vtscsi_maximum_segments(struct vtscsi_softc *, int);
 static int	vtscsi_alloc_virtqueues(struct vtscsi_softc *);
+static void	vtscsi_check_sizes(struct vtscsi_softc *);
 static void	vtscsi_write_device_config(struct vtscsi_softc *);
 static int	vtscsi_reinit(struct vtscsi_softc *);
 
@@ -312,6 +315,8 @@ vtscsi_attach(device_t dev)
 		goto fail;
 	}
 
+	vtscsi_check_sizes(sc);
+
 	error = vtscsi_init_event_vq(sc);
 	if (error) {
 		device_printf(dev, "cannot populate the eventvq\n");
@@ -476,6 +481,26 @@ vtscsi_alloc_virtqueues(struct vtscsi_softc *sc)
 	    "%s request", device_get_nameunit(dev));
 
 	return (virtio_alloc_virtqueues(dev, 0, nvqs, vq_info));
+}
+
+static void
+vtscsi_check_sizes(struct vtscsi_softc *sc)
+{
+	int rqsize;
+
+	if ((sc->vtscsi_flags & VTSCSI_FLAG_INDIRECT) == 0) {
+		/*
+		 * Ensure the assertions in virtqueue_enqueue(),
+		 * even if the hypervisor reports a bad seg_max.
+		 */
+		rqsize = virtqueue_size(sc->vtscsi_request_vq);
+		if (sc->vtscsi_max_nsegs > rqsize) {
+			device_printf(sc->vtscsi_dev,
+			    "clamping seg_max (%d %d)\n", sc->vtscsi_max_nsegs,
+			    rqsize);
+			sc->vtscsi_max_nsegs = rqsize;
+		}
+	}
 }
 
 static void
@@ -915,7 +940,7 @@ vtscsi_cam_path_inquiry(struct vtscsi_softc *sc, struct cam_sim *sim,
 
 	cpi->max_target = sc->vtscsi_max_target;
 	cpi->max_lun = sc->vtscsi_max_lun;
-	cpi->initiator_id = VTSCSI_INITIATOR_ID;
+	cpi->initiator_id = cpi->max_target + 1;
 
 	strlcpy(cpi->sim_vid, "FreeBSD", SIM_IDLEN);
 	strlcpy(cpi->hba_vid, "VirtIO", HBA_IDLEN);

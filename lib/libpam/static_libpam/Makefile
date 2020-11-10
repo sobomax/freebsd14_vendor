@@ -33,7 +33,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/lib/libpam/static_libpam/Makefile 337477 2018-08-08 18:05:14Z bdrewery $
+# $FreeBSD: releng/12.2/lib/libpam/static_libpam/Makefile 335733 2018-06-27 19:29:15Z bdrewery $
 
 .PATH: ${SRCTOP}/lib/libpam
 

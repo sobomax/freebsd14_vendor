@@ -26,12 +26,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libcasper/services/cap_random/cap_random.h 296047 2016-02-25 18:23:40Z oshogbo $
+ * $FreeBSD: releng/12.2/lib/libcasper/services/cap_random/cap_random.h 325062 2017-10-28 19:23:57Z oshogbo $
  */
 
 #ifndef	_CAP_RANDOM_H_
 #define	_CAP_RANDOM_H_
 
+#ifdef HAVE_CASPER
+#define WITH_CASPER
+#endif
+
+#ifdef WITH_CASPER
 int cap_random_buf(cap_channel_t *chan, void *buf, size_t nbytes);
+#else
+inline int
+cap_random_buf(cap_channel_t *chan, void *buf, size_t nbytes)
+{
+
+	arc4random_buf(buf, nbytes);
+	return(0);
+}
+#endif
 
 #endif	/* !_CAP_RANDOM_H_ */

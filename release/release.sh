@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: releng/11.3/release/release.sh 341995 2018-12-12 18:18:34Z gjb $
+# $FreeBSD: releng/12.2/release/release.sh 362414 2020-06-19 19:25:47Z manu $
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
@@ -211,8 +211,8 @@ env_check() {
 	CHROOT_MAKEENV="${CHROOT_MAKEENV} \
 		MAKEOBJDIRPREFIX=${CHROOTDIR}/tmp/obj"
 	CHROOT_WMAKEFLAGS="${MAKE_FLAGS} ${WORLD_FLAGS} ${CONF_FILES}"
-	CHROOT_IMAKEFLAGS="${CONF_FILES}"
-	CHROOT_DMAKEFLAGS="${CONF_FILES}"
+	CHROOT_IMAKEFLAGS="${WORLD_FLAGS} ${CONF_FILES}"
+	CHROOT_DMAKEFLAGS="${WORLD_FLAGS} ${CONF_FILES}"
 	RELEASE_WMAKEFLAGS="${MAKE_FLAGS} ${WORLD_FLAGS} ${ARCH_FLAGS} \
 		${CONF_FILES}"
 	RELEASE_KMAKEFLAGS="${MAKE_FLAGS} ${KERNEL_FLAGS} \
@@ -307,7 +307,7 @@ extra_chroot_setup() {
 		for _PORT in ${EMBEDDEDPORTS}; do
 			eval chroot ${CHROOTDIR} env ${PBUILD_FLAGS} make -C \
 				/usr/ports/${_PORT} \
-				FORCE_PKG_REGISTER=1 install clean distclean
+				FORCE_PKG_REGISTER=1 deinstall install clean distclean
 		done
 	fi
 
@@ -368,7 +368,7 @@ efi_boot_name()
 			echo "bootaa64.efi"
 			;;
 		amd64)
-			echo "bootx86.efi"
+			echo "bootx64.efi"
 			;;
 	esac
 }
@@ -376,7 +376,6 @@ efi_boot_name()
 # chroot_arm_build_release(): Create arm SD card image.
 chroot_arm_build_release() {
 	load_target_env
-	eval chroot ${CHROOTDIR} make -C /usr/src/release obj
 	case ${EMBEDDED_TARGET} in
 		arm|arm64)
 			if [ -e "${RELENGDIR}/tools/arm.subr" ]; then
@@ -387,11 +386,15 @@ chroot_arm_build_release() {
 			;;
 	esac
 	[ ! -z "${RELEASECONF}" ] && . "${RELEASECONF}"
-	WORLDDIR="$(eval chroot ${CHROOTDIR} make -C /usr/src/release -V WORLDDIR)"
-	OBJDIR="$(eval chroot ${CHROOTDIR} make -C /usr/src/release -V .OBJDIR)"
-	DESTDIR="${OBJDIR}/${KERNEL}"
-	IMGBASE="${CHROOTDIR}/${OBJDIR}/${KERNEL}.img"
-	OSRELEASE="$(eval chroot ${CHROOTDIR} make -C /usr/src/release \
+	export MAKE_FLAGS="${MAKE_FLAGS} TARGET=${EMBEDDED_TARGET}"
+	export MAKE_FLAGS="${MAKE_FLAGS} TARGET_ARCH=${EMBEDDED_TARGET_ARCH}"
+	export MAKE_FLAGS="${MAKE_FLAGS} ${CONF_FILES}"
+	eval chroot ${CHROOTDIR} env WITH_UNIFIED_OBJDIR=1 make ${MAKE_FLAGS} -C /usr/src/release obj
+	export WORLDDIR="$(eval chroot ${CHROOTDIR} make ${MAKE_FLAGS} -C /usr/src/release -V WORLDDIR)"
+	export OBJDIR="$(eval chroot ${CHROOTDIR} env WITH_UNIFIED_OBJDIR=1 make ${MAKE_FLAGS} -C /usr/src/release -V .OBJDIR)"
+	export DESTDIR="${OBJDIR}/${KERNEL}"
+	export IMGBASE="${CHROOTDIR}/${OBJDIR}/${BOARDNAME}.img"
+	export OSRELEASE="$(eval chroot ${CHROOTDIR} make ${MAKE_FLAGS} -C /usr/src/release \
 		TARGET=${EMBEDDED_TARGET} TARGET_ARCH=${EMBEDDED_TARGET_ARCH} \
 		-V OSRELEASE)"
 	chroot ${CHROOTDIR} mkdir -p ${DESTDIR}
@@ -404,11 +407,11 @@ chroot_arm_build_release() {
 	arm_install_uboot
 	mdconfig -d -u ${mddev}
 	chroot ${CHROOTDIR} rmdir ${DESTDIR}
-	mv ${IMGBASE} ${CHROOTDIR}/${OBJDIR}/${OSRELEASE}-${KERNEL}.img
+	mv ${IMGBASE} ${CHROOTDIR}/${OBJDIR}/${OSRELEASE}-${BOARDNAME}.img
 	chroot ${CHROOTDIR} mkdir -p /R
-	chroot ${CHROOTDIR} cp -p ${OBJDIR}/${OSRELEASE}-${KERNEL}.img \
-		/R/${OSRELEASE}-${KERNEL}.img
-	chroot ${CHROOTDIR} xz -T ${XZ_THREADS} /R/${OSRELEASE}-${KERNEL}.img
+	chroot ${CHROOTDIR} cp -p ${OBJDIR}/${OSRELEASE}-${BOARDNAME}.img \
+		/R/${OSRELEASE}-${BOARDNAME}.img
+	chroot ${CHROOTDIR} xz -T ${XZ_THREADS} /R/${OSRELEASE}-${BOARDNAME}.img
 	cd ${CHROOTDIR}/R && sha512 ${OSRELEASE}* \
 		> CHECKSUM.SHA512
 	cd ${CHROOTDIR}/R && sha256 ${OSRELEASE}* \

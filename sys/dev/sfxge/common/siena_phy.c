@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/siena_phy.c 342445 2018-12-25 07:27:45Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/siena_phy.c 342344 2018-12-21 16:57:59Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"

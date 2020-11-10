@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/rpc.ypupdated/yp_dbupdate.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/rpc.ypupdated/yp_dbupdate.c 351691 2019-09-02 08:20:02Z kib $");
 
 #include <sys/fcntl.h>
 
@@ -79,7 +81,7 @@ ypmap_update(char *netname, char *map, unsigned int op, unsigned int keylen,
 	DB *dbp;
 	DBT key = { NULL, 0 }, data = { NULL, 0 };
 	char *yp_last = "YP_LAST_MODIFIED";
-	char yplastbuf[YPMAXRECORD];
+	char yplastbuf[32];
 	char *domptr;
 	int rval = 0;
 

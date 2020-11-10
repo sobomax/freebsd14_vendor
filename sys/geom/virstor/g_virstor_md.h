@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Ivan Voras <ivoras@gmail.com>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/virstor/g_virstor_md.h 172302 2007-09-23 07:34:23Z pjd $
+ * $FreeBSD: releng/12.2/sys/geom/virstor/g_virstor_md.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 

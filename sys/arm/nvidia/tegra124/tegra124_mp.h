@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/nvidia/tegra124/tegra124_mp.h 296936 2016-03-16 13:01:48Z mmel $
+ * $FreeBSD: releng/12.2/sys/arm/nvidia/tegra124/tegra124_mp.h 296936 2016-03-16 13:01:48Z mmel $
  */
 
 #ifndef _TEGRA124_MP_H_

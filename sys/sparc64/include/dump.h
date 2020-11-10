@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/dump.h 290957 2015-11-16 23:02:33Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/dump.h 290957 2015-11-16 23:02:33Z marius $
  */
 
 #ifndef _MACHINE_DUMP_H_

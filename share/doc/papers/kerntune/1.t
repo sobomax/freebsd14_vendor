@@ -27,7 +27,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)1.t	1.2 (Berkeley) 11/8/90
-.\" $FreeBSD: releng/11.3/share/doc/papers/kerntune/1.t 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/papers/kerntune/1.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .ds RH Introduction
 .NH 1

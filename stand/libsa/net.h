@@ -17,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/net.h 332154 2018-04-06 21:37:25Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/net.h 354011 2019-10-24 04:08:24Z kevans $
  */
 
 #ifndef _STAND_NET_H
@@ -91,6 +91,7 @@ extern	struct in_addr rootip;
 extern	struct in_addr swapip;
 extern	struct in_addr gateip;
 extern	struct in_addr nameip;
+extern	struct in_addr servip;
 extern	n_long netmask;
 extern	u_int intf_mtu;
 

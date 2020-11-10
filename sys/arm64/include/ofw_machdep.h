@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/ofw_machdep.h 293057 2016-01-02 19:28:35Z nwhitehorn $
+ * $FreeBSD: releng/12.2/sys/arm64/include/ofw_machdep.h 293057 2016-01-02 19:28:35Z nwhitehorn $
  */
 
 #ifndef _MACHINE_OFW_MACHDEP_H_

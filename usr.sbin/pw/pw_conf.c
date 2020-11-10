@@ -28,7 +28,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/pw/pw_conf.c 330449 2018-03-05 07:26:05Z eadler $";
+  "$FreeBSD: releng/12.2/usr.sbin/pw/pw_conf.c 339380 2018-10-16 16:00:41Z yuripv $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -255,9 +255,6 @@ read_userconfig(char const * file)
 	buf = NULL;
 	linecap = 0;
 
-	if (file == NULL)
-		file = _PATH_PW_CONF;
-
 	if ((fp = fopen(file, "r")) == NULL)
 		return (&config);
 
@@ -417,9 +414,13 @@ write_userconfig(struct userconf *cnf, const char *file)
 	int             i, j;
 	struct sbuf	*buf;
 	FILE           *fp;
+	char		cfgfile[MAXPATHLEN];
 
-	if (file == NULL)
-		file = _PATH_PW_CONF;
+	if (file == NULL) {
+		snprintf(cfgfile, sizeof(cfgfile), "%s/" _PW_CONF,
+		    conf.etcpath);
+		file = cfgfile;
+	}
 
 	if ((fd = open(file, O_CREAT|O_RDWR|O_TRUNC|O_EXLOCK, 0644)) == -1)
 		return (0);

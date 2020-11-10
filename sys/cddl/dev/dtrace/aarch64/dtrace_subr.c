@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/11.3/sys/cddl/dev/dtrace/aarch64/dtrace_subr.c 328386 2018-01-25 02:45:21Z pkelsey $
+ * $FreeBSD: releng/12.2/sys/cddl/dev/dtrace/aarch64/dtrace_subr.c 316648 2017-04-09 02:00:03Z pkelsey $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cddl/dev/dtrace/aarch64/dtrace_subr.c 328386 2018-01-25 02:45:21Z pkelsey $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cddl/dev/dtrace/aarch64/dtrace_subr.c 316648 2017-04-09 02:00:03Z pkelsey $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -186,7 +186,7 @@ dtrace_trap(struct trapframe *frame, u_int type)
 	/*
 	 * A trap can occur while DTrace executes a probe. Before
 	 * executing the probe, DTrace blocks re-scheduling and sets
-	 * a flag in it's per-cpu flags to indicate that it doesn't
+	 * a flag in its per-cpu flags to indicate that it doesn't
 	 * want to fault. On returning from the probe, the no-fault
 	 * flag is cleared and finally re-scheduling is enabled.
 	 *

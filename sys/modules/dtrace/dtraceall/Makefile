@@ -1,18 +1,11 @@
-# $FreeBSD: releng/11.3/sys/modules/dtrace/dtraceall/Makefile 332566 2018-04-16 14:39:04Z lidl $
+# $FreeBSD: releng/12.2/sys/modules/dtrace/dtraceall/Makefile 332122 2018-04-06 17:35:35Z brooks $
 
 SYSDIR?=	${SRCTOP}/sys
 
 KMOD=		dtraceall
-SRCS=		dtraceall.c opt_compat.h opt_nfs.h
+SRCS=		dtraceall.c opt_nfs.h
 
 CFLAGS+=	-I${SYSDIR}
-
-.if !defined(KERNBUILDDIR)
-.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "mips64"
-opt_compat.h:
-	echo "#define COMPAT_FREEBSD32 1" >> ${.TARGET}
-.endif
-.endif
 
 .include <bsd.kmod.mk>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libsbuf/tests/Makefile 316557 2017-04-06 05:29:28Z ngie $
+# $FreeBSD: releng/12.2/lib/libsbuf/tests/Makefile 316557 2017-04-06 05:29:28Z ngie $
 
 ATF_TESTS_C+=	sbuf_core_test
 ATF_TESTS_C+=	sbuf_stdio_test

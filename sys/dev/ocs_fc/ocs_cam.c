@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ocs_fc/ocs_cam.c 344054 2019-02-12 17:05:59Z ram $
+ * $FreeBSD: releng/12.2/sys/dev/ocs_fc/ocs_cam.c 344055 2019-02-12 17:07:15Z ram $
  */
 
 /**

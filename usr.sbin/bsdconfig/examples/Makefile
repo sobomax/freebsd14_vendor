@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsdconfig/examples/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/bsdconfig/examples/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 
 FILESDIR=	${SHAREDIR}/examples/bsdconfig
 FILES=		add_some_packages.sh browse_packages_http.sh bsdconfigrc

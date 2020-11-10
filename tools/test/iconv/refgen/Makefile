@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/test/iconv/refgen/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: releng/12.2/tools/test/iconv/refgen/Makefile 264400 2014-04-13 05:21:56Z imp $
 
 .PATH: ${.CURDIR}/../tablegen
 

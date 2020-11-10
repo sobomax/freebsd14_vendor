@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/sa/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/sa/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -10,8 +10,7 @@ SRCS=	main.c db.c pdb.c usrdb.c readrec.c
 
 PACKAGE=acct
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

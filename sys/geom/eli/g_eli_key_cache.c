@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 Pawel Jakub Dawidek <pawel@dawidek.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/eli/g_eli_key_cache.c 344989 2019-03-11 01:12:23Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/eli/g_eli_key_cache.c 336255 2018-07-13 18:21:38Z imp $");
 
 #include <sys/param.h>
 #ifdef _KERNEL

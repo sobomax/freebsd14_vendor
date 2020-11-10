@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/gnu/usr.bin/gdb/arch/mips/init.c 214960 2010-11-07 23:22:22Z gonzo $ */
+/* $FreeBSD: releng/12.2/gnu/usr.bin/gdb/arch/mips/init.c 214960 2010-11-07 23:22:22Z gonzo $ */
 
 /* Do not modify this file.  */
 /* It is created automatically by the Makefile.  */

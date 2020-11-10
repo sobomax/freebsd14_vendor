@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE. */
 
-/* $FreeBSD: releng/11.3/libexec/ftpd/blacklist.c 318240 2017-05-12 15:03:09Z lidl $ */
+/* $FreeBSD: releng/12.2/libexec/ftpd/blacklist.c 317862 2017-05-06 04:17:48Z lidl $ */
 
 #include <ctype.h>
 #include <stdarg.h>

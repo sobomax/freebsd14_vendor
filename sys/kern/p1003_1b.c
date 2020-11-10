@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996, 1997, 1998
  *	HD Associates, Inc.  All rights reserved.
  *
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/p1003_1b.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/p1003_1b.c 325966 2017-11-18 14:26:50Z pfg $");
 
 #include "opt_posix.h"
 
@@ -292,8 +294,8 @@ int
 sys_sched_yield(struct thread *td, struct sched_yield_args *uap)
 {
 
-	sched_relinquish(curthread);
-	return 0;
+	sched_relinquish(td);
+	return (0);
 }
 
 int

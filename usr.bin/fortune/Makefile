@@ -1,6 +1,6 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
-# $FreeBSD: releng/11.3/usr.bin/fortune/Makefile 315349 2017-03-16 01:53:21Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/fortune/Makefile 314831 2017-03-07 04:33:17Z ngie $
 
 SUBDIR=	fortune strfile datfiles unstr
 

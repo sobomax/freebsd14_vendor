@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/ef10_nvram.c 342441 2018-12-25 07:21:35Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/ef10_nvram.c 350405 2019-07-29 09:25:16Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -394,7 +394,8 @@ tlv_write(
 	if (len > 0) {
 		ptr[(len - 1) / sizeof (uint32_t)] = 0;
 		memcpy(ptr, data, len);
-		ptr += P2ROUNDUP(len, sizeof (uint32_t)) / sizeof (*ptr);
+		ptr += EFX_P2ROUNDUP(uint32_t, len,
+		    sizeof (uint32_t)) / sizeof (*ptr);
 	}
 
 	return (ptr);

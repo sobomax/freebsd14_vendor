@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/11.3/usr.sbin/service/service.sh 330449 2018-03-05 07:26:05Z eadler $
+# $FreeBSD: releng/12.2/usr.sbin/service/service.sh 335029 2018-06-13 06:11:04Z imp $
 
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -165,7 +165,7 @@ cd /
 for dir in /etc/rc.d $local_startup; do
 	if [ -x "$dir/$script" ]; then
 		[ -n "$VERBOSE" ] && echo "$script is located in $dir"
-		exec env -i HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin $dir/$script $*
+		exec env -i HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin $dir/$script "$@"
 	fi
 done
 

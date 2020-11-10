@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2010 The FreeBSD Foundation
  * Copyright (c) 2011 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libpjdlog/pjdlog.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libpjdlog/pjdlog.h 326219 2017-11-26 02:00:33Z pfg $
  */
 
 #ifndef	_PJDLOG_H_

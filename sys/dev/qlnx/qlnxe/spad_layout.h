@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/qlnx/qlnxe/spad_layout.h 337517 2018-08-09 01:17:35Z davidcs $
+ * $FreeBSD: releng/12.2/sys/dev/qlnx/qlnxe/spad_layout.h 336695 2018-07-25 02:36:55Z davidcs $
  *
  */
 

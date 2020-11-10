@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/iscsi/icl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/iscsi/icl.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef ICL_H
@@ -126,12 +128,20 @@ struct icl_conn {
 	void			*ic_prv0;
 };
 
+struct icl_drv_limits {
+	int idl_max_recv_data_segment_length;
+	int idl_max_send_data_segment_length;
+	int idl_max_burst_length;
+	int idl_first_burst_length;
+	int spare[4];
+};
+
 struct icl_conn	*icl_new_conn(const char *offload, bool iser, const char *name,
 		    struct mtx *lock);
-int		icl_limits(const char *offload, bool iser, size_t *limitp);
-
+int		icl_limits(const char *offload, bool iser,
+		    struct icl_drv_limits *idl);
 int		icl_register(const char *offload, bool iser, int priority,
-		    int (*limits)(size_t *),
+		    int (*limits)(struct icl_drv_limits *),
 		    struct icl_conn *(*new_conn)(const char *, struct mtx *));
 int		icl_unregister(const char *offload, bool rdma);
 

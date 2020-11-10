@@ -1,5 +1,8 @@
-/* 
+/*-
  *  atrun.c - run jobs queued by at; run with root privileges.
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  *  Copyright (C) 1993, 1994 Thomas Koenig
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +28,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/libexec/atrun/atrun.c 295079 2016-01-30 17:54:18Z ngie $";
+  "$FreeBSD: releng/12.2/libexec/atrun/atrun.c 326274 2017-11-27 15:25:02Z pfg $";
 #endif /* not lint */
 
 /* System Headers */

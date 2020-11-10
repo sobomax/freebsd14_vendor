@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2010 Adaptec, Inc.
  * Copyright (c) 2010-2012 PMC-Sierra, Inc.
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/aacraid/aacraid_cam.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/aacraid/aacraid_cam.c 354964 2019-11-21 14:54:20Z emaste $");
 
 /*
  * CAM front-end for communicating with non-DASD devices
@@ -1015,8 +1017,8 @@ aac_cam_action(struct cam_sim *sim, union ccb *ccb)
 		cpi->version_num = 1;
 		cpi->target_sprt = 0;
 		cpi->hba_eng_cnt = 0;
-		cpi->max_target = camsc->inf->TargetsPerBus;
-		cpi->max_lun = 8;	/* Per the controller spec */
+		cpi->max_target = camsc->inf->TargetsPerBus - 1;
+		cpi->max_lun = 7;	/* Per the controller spec */
 		cpi->initiator_id = camsc->inf->InitiatorBusId;
 		cpi->bus_id = camsc->inf->BusNumber;
 #if __FreeBSD_version >= 800000
@@ -1387,15 +1389,9 @@ aacraid_startio(struct aac_softc *sc)
 		 * Try to get a command that's been put off for lack of
 		 * resources
 		 */
-		if (sc->flags & AAC_FLAGS_SYNC_MODE) {
-			/* sync. transfer mode */
-			if (sc->aac_sync_cm) 
-				break;
-			cm = aac_dequeue_ready(sc);
-			sc->aac_sync_cm = cm;
-		} else {
-			cm = aac_dequeue_ready(sc);
-		}
+		if ((sc->flags & AAC_FLAGS_SYNC_MODE) && sc->aac_sync_cm)
+			break;
+		cm = aac_dequeue_ready(sc);
 
 		/* nothing to do? */
 		if (cm == NULL)

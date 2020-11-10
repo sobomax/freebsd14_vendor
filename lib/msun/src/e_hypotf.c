@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/e_hypotf.c 226380 2011-10-15 07:00:28Z das $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/e_hypotf.c 355395 2019-12-04 17:45:34Z dim $");
 
 #include "math.h"
 #include "math_private.h"
@@ -37,7 +37,7 @@ __ieee754_hypotf(float x, float y)
 	if(ha > 0x58800000) {	/* a>2**50 */
 	   if(ha >= 0x7f800000) {	/* Inf or NaN */
 	       /* Use original arg order iff result is NaN; quieten sNaNs. */
-	       w = fabsf(x+0.0F)-fabsf(y+0.0F);
+	       w = fabsl(x+0.0L)-fabsf(y+0);
 	       if(ha == 0x7f800000) w = a;
 	       if(hb == 0x7f800000) w = b;
 	       return w;
@@ -77,7 +77,7 @@ __ieee754_hypotf(float x, float y)
 	    w  = __ieee754_sqrtf(t1*y1-(w*(-w)-(t1*y2+t2*b)));
 	}
 	if(k!=0) {
-	    SET_FLOAT_WORD(t1,0x3f800000+(k<<23));
+	    SET_FLOAT_WORD(t1,(127+k)<<23);
 	    return t1*w;
 	} else return w;
 }

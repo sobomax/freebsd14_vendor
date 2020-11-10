@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/etherswitch/mtkswitch/mtkswitch_rt3050.c 299910 2016-05-16 07:00:49Z sgalabov $
+ * $FreeBSD: releng/12.2/sys/dev/etherswitch/mtkswitch/mtkswitch_rt3050.c 313988 2017-02-20 08:10:41Z sgalabov $
  */
 
 #include <sys/param.h>
@@ -405,11 +405,38 @@ mtkswitch_vlan_setvgroup(struct mtkswitch_softc *sc, etherswitch_vlangroup_t *v)
 	MTKSWITCH_LOCK(sc);
 	/* First, see if we can accomodate the request at all */
 	val = MTKSWITCH_READ(sc, MTKSWITCH_POC2);
-	if ((val & POC2_UNTAG_VLAN) == 0 ||
-	    sc->sc_switchtype == MTK_SWITCH_RT3050) {
+	if (sc->sc_switchtype == MTK_SWITCH_RT3050 ||
+	    (val & POC2_UNTAG_VLAN) == 0) {
+		/*
+		 * There are 2 things we can't support in per-port untagging
+		 * mode:
+		 * 1. Adding a port as an untagged member if the port is not
+		 *    set up to do untagging.
+		 * 2. Adding a port as a tagged member if the port is set up
+		 *    to do untagging.
+		 */
 		val &= VUB_MASK;
+
+		/* get all untagged members from the member list */
 		tmp = v->es_untagged_ports & v->es_member_ports;
-		if (val != tmp) {
+		/* fail if untagged members are not a subset of all members */
+		if (tmp != v->es_untagged_ports) {
+			/* Cannot accomodate request */
+			MTKSWITCH_UNLOCK(sc);
+			return (ENOTSUP);
+		}
+
+		/* fail if any untagged member is set up to do tagging */
+		if ((tmp & val) != tmp) {
+			/* Cannot accomodate request */
+			MTKSWITCH_UNLOCK(sc);
+			return (ENOTSUP);
+		}
+
+		/* now, get the list of all tagged members */
+		tmp = v->es_member_ports & ~tmp;
+		/* fail if any tagged member is set up to do untagging */
+		if ((tmp & val) != 0) {
 			/* Cannot accomodate request */
 			MTKSWITCH_UNLOCK(sc);
 			return (ENOTSUP);

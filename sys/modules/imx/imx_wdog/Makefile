@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/imx/imx_wdog/Makefile 336070 2018-07-07 17:25:09Z ian $
+# $FreeBSD: releng/12.2/sys/modules/imx/imx_wdog/Makefile 336070 2018-07-07 17:25:09Z ian $
 
 .PATH: ${SRCTOP}/sys/arm/freescale/imx
 

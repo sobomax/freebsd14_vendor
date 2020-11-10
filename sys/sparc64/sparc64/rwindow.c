@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 Berkeley Software Design, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: trap.c,v 1.17.2.9 1999/10/19 15:29:52 cp Exp
- * $FreeBSD: releng/11.3/sys/sparc64/sparc64/rwindow.c 138129 2004-11-27 06:51:39Z das $
+ * $FreeBSD: releng/12.2/sys/sparc64/sparc64/rwindow.c 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #include <sys/param.h>

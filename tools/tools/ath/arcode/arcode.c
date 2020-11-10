@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tools/tools/ath/arcode/arcode.c 244960 2013-01-02 18:03:19Z adrian $
+ * $FreeBSD: releng/12.2/tools/tools/ath/arcode/arcode.c 244960 2013-01-02 18:03:19Z adrian $
  */
 
 #include <stdio.h>

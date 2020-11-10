@@ -1,6 +1,8 @@
 /*	$NetBSD: stringlist.h,v 1.2 1997/01/17 06:11:36 lukem Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1994 Christos Zoulas
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/include/stringlist.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/include/stringlist.h 326192 2017-11-25 17:09:43Z pfg $
  */
 
 #ifndef _STRINGLIST_H

@@ -1,7 +1,3 @@
-# $FreeBSD: releng/11.3/sys/modules/Makefile.inc 290665 2015-11-10 17:15:36Z bdrewery $
-
-.if ${MACHINE} == "pc98"
-CFLAGS+= -DPC98
-.endif
+# $FreeBSD: releng/12.2/sys/modules/Makefile.inc 312910 2017-01-28 02:22:15Z nyan $
 
 SUBDIR_PARALLEL=	yes

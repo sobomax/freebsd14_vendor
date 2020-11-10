@@ -30,7 +30,7 @@
  *      Jesse Barnes <jesse.barnes@intel.com>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_crtc.c 293851 2016-01-13 20:35:02Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_crtc.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>

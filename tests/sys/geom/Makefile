@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/geom/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/geom/Makefile 315230 2017-03-14 07:00:22Z ngie $
 
 TESTSDIR=	${TESTSBASE}/sys/geom
 

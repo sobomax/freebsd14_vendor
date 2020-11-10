@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/regression/zfs/zpool/add/files.t 274620 2014-11-17 11:35:30Z smh $
+# $FreeBSD: releng/12.2/tools/regression/zfs/zpool/add/files.t 274620 2014-11-17 11:35:30Z smh $
 
 dir=`dirname $0`
 . ${dir}/../../misc.sh

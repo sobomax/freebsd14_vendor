@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_sincosf.c 324006 2017-09-26 09:01:56Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_sincosf.c 319047 2017-05-28 06:13:38Z mmel $");
 
 #include <float.h>
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Matthew R. Green
  * All rights reserved.
  *
@@ -53,7 +55,7 @@
  *
  *	from: NetBSD: psychoreg.h,v 1.14 2008/05/30 02:29:37 mrg Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/ofw_nexus.h 219567 2011-03-12 14:33:32Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/ofw_nexus.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _MACHINE_OFW_NEXUS_H_

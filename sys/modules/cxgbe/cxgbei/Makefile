@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/cxgbe/cxgbei/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/cxgbe/cxgbei/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 CXGBE = ${SRCTOP}/sys/dev/cxgbe
 .PATH: ${CXGBE}/cxgbei
@@ -6,7 +6,6 @@ CXGBE = ${SRCTOP}/sys/dev/cxgbe
 KMOD=	cxgbei
 
 SRCS=	cxgbei.c
-SRCS+=	cxgbei_ulp2_ddp.c
 SRCS+=	icl_cxgbei.c
 SRCS+=	bus_if.h
 SRCS+=	device_if.h

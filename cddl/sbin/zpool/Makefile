@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/sbin/zpool/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/cddl/sbin/zpool/Makefile 337160 2018-08-02 18:55:55Z mav $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zpool
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/stat/common

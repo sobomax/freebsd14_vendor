@@ -2,6 +2,8 @@
  * Definitions for low level routines and data structures
  * for the Advanced Systems Inc. SCSI controllers chips.
  *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998, 1999, 2000 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/advansys/adwlib.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/advansys/adwlib.h 326255 2017-11-27 14:52:40Z pfg $
  */
 /*-
  * Ported from:

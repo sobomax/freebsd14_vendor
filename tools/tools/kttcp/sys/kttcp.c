@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/tools/tools/kttcp/sys/kttcp.c 241394 2012-10-10 08:36:38Z kevlo $	*/
+/*	$FreeBSD: releng/12.2/tools/tools/kttcp/sys/kttcp.c 241394 2012-10-10 08:36:38Z kevlo $	*/
 /*	$NetBSD: kttcp.c,v 1.3 2002/07/03 19:36:52 thorpej Exp $	*/
 
 /*

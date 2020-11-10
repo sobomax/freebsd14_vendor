@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/kthread.h 328653 2018-02-01 13:01:44Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/kthread.h 320078 2017-06-18 19:22:05Z markj $
  */
 #ifndef	_LINUX_KTHREAD_H_
 #define	_LINUX_KTHREAD_H_

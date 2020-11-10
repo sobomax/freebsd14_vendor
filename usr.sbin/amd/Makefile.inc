@@ -1,6 +1,6 @@
 # ex:ts=8
 #
-# $FreeBSD: releng/11.3/usr.sbin/amd/Makefile.inc 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/amd/Makefile.inc 314659 2017-03-04 11:38:03Z ngie $
 #
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998.

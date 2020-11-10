@@ -1,6 +1,10 @@
-# $FreeBSD: releng/11.3/usr.sbin/periodic/Makefile 75286 2001-04-07 11:21:35Z ru $
+# $FreeBSD: releng/12.2/usr.sbin/periodic/Makefile 338429 2018-09-02 15:53:56Z brd $
 
+CONFS=	periodic.conf
+CONFSDIR=	/etc/defaults
 SCRIPTS=periodic.sh
 MAN=	periodic.8
+
+SUBDIR=	etc
 
 .include <bsd.prog.mk>

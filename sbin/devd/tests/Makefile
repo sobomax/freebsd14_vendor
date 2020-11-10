@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/devd/tests/Makefile 320747 2017-07-06 17:34:53Z asomers $
+# $FreeBSD: releng/12.2/sbin/devd/tests/Makefile 320166 2017-06-20 19:34:21Z asomers $
 
 ATF_TESTS_C=	client_test
 TEST_METADATA.client_test=	required_files="/var/run/devd.pid"

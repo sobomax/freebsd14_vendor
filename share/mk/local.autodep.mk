@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/share/mk/local.autodep.mk 291725 2015-12-03 22:39:42Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/local.autodep.mk 337186 2018-08-02 21:33:45Z sjg $
 
 .if ${.MAKE.DEPENDFILE:M*.${MACHINE}} == ""
 # by default only MACHINE0 does updates
-UPDATE_DEPENDFILE_MACHINE?= ${MACHINE0}
+UPDATE_DEPENDFILE_MACHINE?= ${MACHINE0:U${MACHINE}}
 .if ${MACHINE} != ${UPDATE_DEPENDFILE_MACHINE}
 UPDATE_DEPENDFILE= no
 .endif

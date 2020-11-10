@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/makefs/cd9660/iso9660_rrip.h 332977 2018-04-25 01:12:40Z benno $
+ * $FreeBSD: releng/12.2/usr.sbin/makefs/cd9660/iso9660_rrip.h 326276 2017-11-27 15:37:16Z pfg $
  */
 #ifndef __ISO9660_RRIP_H__
 #define __ISO9660_RRIP_H__

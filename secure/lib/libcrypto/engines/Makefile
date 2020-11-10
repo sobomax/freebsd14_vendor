@@ -1,6 +1,9 @@
-# $FreeBSD: releng/11.3/secure/lib/libcrypto/engines/Makefile 292287 2015-12-15 19:57:56Z bdrewery $
+# $FreeBSD: releng/12.2/secure/lib/libcrypto/engines/Makefile 339270 2018-10-09 21:28:26Z gjb $
 
-SUBDIR=	lib4758cca libaep libatalla libcapi libchil libcswift libgost \
-	libnuron libsureware libubsec
+SUBDIR=		capi
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+SUBDIR+=	padlock
+.endif
 SUBDIR_PARALLEL=
+
 .include <bsd.subdir.mk>

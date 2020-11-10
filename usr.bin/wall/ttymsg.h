@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/wall/ttymsg.h 335059 2018-06-13 13:41:23Z ed $ */
+/* $FreeBSD: releng/12.2/usr.bin/wall/ttymsg.h 332510 2018-04-15 08:34:16Z ed $ */
 
 #define	TTYMSG_IOV_MAX	32
 

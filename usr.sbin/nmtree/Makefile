@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/usr.sbin/nmtree/Makefile 319119 2017-05-29 10:15:41Z ngie $
+#	$FreeBSD: releng/12.2/usr.sbin/nmtree/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -19,8 +19,7 @@ LIBADD=		netbsd md util
 LINKS=		${BINDIR}/mtree ${BINDIR}/nmtree
 MLINKS=		mtree.8 nmtree.8
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

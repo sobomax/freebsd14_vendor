@@ -46,14 +46,14 @@
  *
  */
 
-#include "assym.s"
+#include "assym.inc"
 
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include <machine/asmacros.h>
 #include <machine/trap.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/exception.S 300694 2016-05-25 19:44:26Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/exception.S 336783 2018-07-27 21:25:01Z imp $");
 
 #ifdef KDTRACE_HOOKS
 	.bss

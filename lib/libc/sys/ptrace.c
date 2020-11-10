@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/sys/ptrace.c 305329 2016-09-03 09:03:40Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/sys/ptrace.c 305012 2016-08-29 18:47:51Z kib $");
 
 #include <sys/types.h>
 #include <sys/ptrace.h>

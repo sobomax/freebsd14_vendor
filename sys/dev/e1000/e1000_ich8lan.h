@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/e1000/e1000_ich8lan.h 333213 2018-05-03 15:40:56Z marius $*/
+/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_ich8lan.h 327312 2017-12-28 21:26:40Z sbruno $*/
 
 #ifndef _E1000_ICH8LAN_H_
 #define _E1000_ICH8LAN_H_

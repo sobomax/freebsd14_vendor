@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/loader/arch/arm/ldscript.arm 329183 2018-02-12 20:51:28Z kevans $ */
+/* $FreeBSD: releng/12.2/stand/efi/loader/arch/arm/ldscript.arm 328156 2018-01-18 22:46:47Z kevans $ */
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 SECTIONS

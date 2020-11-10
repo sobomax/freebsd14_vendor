@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/mips/string/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+# $FreeBSD: releng/12.2/lib/libc/mips/string/Makefile.inc 314556 2017-03-02 17:05:52Z brooks $
 
 MDSRCS+= \
 	bcmp.S \

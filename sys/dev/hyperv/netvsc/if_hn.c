@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/netvsc/if_hn.c 339863 2018-10-29 15:12:15Z whu $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/netvsc/if_hn.c 356410 2020-01-06 09:50:44Z hselasky $");
 
 #include "opt_hn.h"
 #include "opt_inet6.h"
@@ -560,7 +560,7 @@ SYSCTL_INT(_hw_hn, OID_AUTO, tx_swq_depth, CTLFLAG_RDTUN,
 
 /* Enable sorted LRO, and the depth of the per-channel mbuf queue */
 #if __FreeBSD_version >= 1100095
-static u_int			hn_lro_mbufq_depth = 512;
+static u_int			hn_lro_mbufq_depth = 0;
 SYSCTL_UINT(_hw_hn, OID_AUTO, lro_mbufq_depth, CTLFLAG_RDTUN,
     &hn_lro_mbufq_depth, 0, "Depth of LRO mbuf queue");
 #endif
@@ -932,7 +932,7 @@ hn_rxfilter_config(struct hn_softc *sc)
 			filter |= NDIS_PACKET_TYPE_BROADCAST;
 		/* TODO: support multicast list */
 		if ((ifp->if_flags & IFF_ALLMULTI) ||
-		    !TAILQ_EMPTY(&ifp->if_multiaddrs))
+		    !CK_STAILQ_EMPTY(&ifp->if_multiaddrs))
 			filter |= NDIS_PACKET_TYPE_ALL_MULTICAST;
 	}
 	return (hn_set_rxfilter(sc, filter));
@@ -1331,7 +1331,7 @@ hn_xpnt_vf_saveifflags(struct hn_softc *sc)
 	HN_LOCK_ASSERT(sc);
 
 	/* XXX vlan(4) style mcast addr maintenance */
-	if (!TAILQ_EMPTY(&ifp->if_multiaddrs))
+	if (!CK_STAILQ_EMPTY(&ifp->if_multiaddrs))
 		allmulti = IFF_ALLMULTI;
 
 	/* Always set the VF's if_flags */
@@ -1506,7 +1506,7 @@ hn_vf_rss_fixup(struct hn_softc *sc, bool reconf)
 	strlcpy(ifrk.ifrk_name, vf_ifp->if_xname, sizeof(ifrk.ifrk_name));
 	error = vf_ifp->if_ioctl(vf_ifp, SIOCGIFRSSKEY, (caddr_t)&ifrk);
 	if (error) {
-		if_printf(ifp, "%s SIOCGRSSKEY failed: %d\n",
+		if_printf(ifp, "%s SIOCGIFRSSKEY failed: %d\n",
 		    vf_ifp->if_xname, error);
 		goto done;
 	}
@@ -5947,8 +5947,7 @@ hn_transmit(struct ifnet *ifp, struct mbuf *m)
 			int obytes, omcast;
 
 			obytes = m->m_pkthdr.len;
-			if (m->m_flags & M_MCAST)
-				omcast = 1;
+			omcast = (m->m_flags & M_MCAST) != 0;
 
 			if (sc->hn_xvf_flags & HN_XVFFLAG_ACCBPF) {
 				if (bpf_peers_present(ifp->if_bpf)) {

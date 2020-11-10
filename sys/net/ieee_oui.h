@@ -1,4 +1,6 @@
-/* 
+/* -
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/ieee_oui.h 346783 2019-04-27 04:39:41Z kevans $
+ * $FreeBSD: releng/12.2/sys/net/ieee_oui.h 350382 2019-07-27 17:59:30Z chuck $
  *
  * Author: George V. Neville-Neil
  *
@@ -75,4 +77,9 @@
  */
 #define	OUI_FREEBSD_GENERATED_MASK	0x10ffff
 #define	OUI_FREEBSD_GENERATED_LOW	OUI_FREEBSD(0x100000)
-#define	OUI_FREEBSD_GENERATED_HIGH	OUI_FREEBSD(OU_FREEBSD_GENERATED_MASK)
+#define	OUI_FREEBSD_GENERATED_HIGH	OUI_FREEBSD(OUI_FREEBSD_GENERATED_MASK)
+
+/* Allocate 16 bits for emulated NVMe devices */
+#define OUI_FREEBSD_NVME_MASK		0x20ffff
+#define OUI_FREEBSD_NVME_LOW		OUI_FREEBSD(0x200000)
+#define OUI_FRREBSD_NVME_HIGH		OUI_FREEBSD(OUI_FREEBSD_NVME_MASK)

@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/isp/ispreg.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/isp/ispreg.h 326255 2017-11-27 14:52:40Z pfg $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
  * 

@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: releng/11.3/stand/ficl/prefix.c 102657 2002-08-31 01:04:53Z scottl $ */
+/* $FreeBSD: releng/12.2/stand/ficl/prefix.c 102657 2002-08-31 01:04:53Z scottl $ */
 
 #include <string.h>
 #include <ctype.h>

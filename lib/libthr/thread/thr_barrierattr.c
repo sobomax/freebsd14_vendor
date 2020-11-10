@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 David Xu <davidxu@freebsd.org>.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libthr/thread/thr_barrierattr.c 338707 2018-09-17 02:51:08Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_barrierattr.c 337992 2018-08-18 01:05:38Z pfg $");
 
 #include "namespace.h"
 #include <errno.h>

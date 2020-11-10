@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998 Dag-Erling Coïdan Smørgrav
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/syscons/warp/warp_saver.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/syscons/warp/warp_saver.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/param.h>
@@ -129,10 +131,6 @@ warp_init(video_adapter_t *adp)
 	
 	if (!vidd_get_info(adp, M_VGA_CG320, &info)) {
 		scrmode = M_VGA_CG320;
-	} else if (!vidd_get_info(adp, M_PC98_PEGC640x480, &info)) {
-		scrmode = M_PC98_PEGC640x480;
-	} else if (!vidd_get_info(adp, M_PC98_PEGC640x400, &info)) {
-		scrmode = M_PC98_PEGC640x400;
 	} else {
 		log(LOG_NOTICE,
 		    "%s: the console does not support M_VGA_CG320\n",

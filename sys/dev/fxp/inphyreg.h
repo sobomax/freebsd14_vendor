@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001 Jonathan Lemon
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/dev/fxp/inphyreg.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/dev/fxp/inphyreg.h 326022 2017-11-20 19:36:21Z pfg $
  */
 
 #ifndef _INPHYREG_H

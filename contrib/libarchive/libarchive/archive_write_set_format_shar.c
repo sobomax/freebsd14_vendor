@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_write_set_format_shar.c 344673 2019-02-28 22:56:15Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_write_set_format_shar.c 358087 2020-02-19 01:46:43Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_write_set_
 #include "archive_entry.h"
 #include "archive_private.h"
 #include "archive_write_private.h"
+#include "archive_write_set_format_private.h"
 
 struct shar {
 	int			 dump;
@@ -194,8 +195,8 @@ archive_write_shar_header(struct archive_write *a, struct archive_entry *entry)
 		archive_entry_set_size(entry, 0);
 		if (archive_entry_hardlink(entry) == NULL &&
 		    archive_entry_symlink(entry) == NULL) {
-			archive_set_error(&a->archive, ARCHIVE_ERRNO_MISC,
-			    "shar format cannot archive this");
+			__archive_write_entry_filetype_unsupported(
+			    &a->archive, entry, "shar");
 			return (ARCHIVE_WARN);
 		}
 	}

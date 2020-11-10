@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm64/acpica/acpi_wakeup.c 284273 2015-06-11 15:45:33Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm64/acpica/acpi_wakeup.c 284273 2015-06-11 15:45:33Z andrew $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

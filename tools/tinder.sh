@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/tinder.sh 297434 2016-03-30 23:50:23Z bdrewery $
+# $FreeBSD: releng/12.2/tools/tinder.sh 297434 2016-03-30 23:50:23Z bdrewery $
 #
 
 #

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  * Copyright (c) 2014 Yandex LLC
  * Copyright (c) 2014 Alexander V. Chernikov
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_sockopt.c 346205 2019-04-14 12:05:08Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_sockopt.c 350582 2019-08-05 07:49:02Z ae $");
 
 /*
  * Control socket and rule management routines for ipfw.
@@ -179,7 +181,7 @@ static size_t ctl3_rsize;
  * static variables followed by global ones
  */
 
-static VNET_DEFINE(uma_zone_t, ipfw_cntr_zone);
+VNET_DEFINE_STATIC(uma_zone_t, ipfw_cntr_zone);
 #define	V_ipfw_cntr_zone		VNET(ipfw_cntr_zone)
 
 void
@@ -204,7 +206,7 @@ ipfw_alloc_rule(struct ip_fw_chain *chain, size_t rulesize)
 	struct ip_fw *rule;
 
 	rule = malloc(rulesize, M_IPFW, M_WAITOK | M_ZERO);
-	rule->cntr = uma_zalloc(V_ipfw_cntr_zone, M_WAITOK | M_ZERO);
+	rule->cntr = uma_zalloc_pcpu(V_ipfw_cntr_zone, M_WAITOK | M_ZERO);
 	rule->refcnt = 1;
 
 	return (rule);
@@ -222,7 +224,7 @@ ipfw_free_rule(struct ip_fw *rule)
 	 */
 	if (rule->refcnt > 1)
 		return;
-	uma_zfree(V_ipfw_cntr_zone, rule->cntr);
+	uma_zfree_pcpu(V_ipfw_cntr_zone, rule->cntr);
 	free(rule, M_IPFW);
 }
 
@@ -358,7 +360,7 @@ get_map(struct ip_fw_chain *chain, int extra, int locked)
 
 	for (;;) {
 		struct ip_fw **map;
-		int i, mflags;
+		u_int i, mflags;
 
 		mflags = M_ZERO | ((locked != 0) ? M_NOWAIT : M_WAITOK);
 
@@ -1175,7 +1177,9 @@ move_objects(struct ip_fw_chain *ch, ipfw_range_tlv *rt)
 		}
 	}
 	return (c);
-}/*
+}
+
+/*
  * Changes set of given rule rannge @rt
  * with each other.
  *
@@ -1212,6 +1216,35 @@ move_range(struct ip_fw_chain *chain, ipfw_range_tlv *rt)
 	IPFW_UH_WUNLOCK(chain);
 
 	return (0);
+}
+
+/*
+ * Returns pointer to action instruction, skips all possible rule
+ * modifiers like O_LOG, O_TAG, O_ALTQ.
+ */
+ipfw_insn *
+ipfw_get_action(struct ip_fw *rule)
+{
+	ipfw_insn *cmd;
+	int l, cmdlen;
+
+	cmd = ACTION_PTR(rule);
+	l = rule->cmd_len - rule->act_ofs;
+	while (l > 0) {
+		switch (cmd->opcode) {
+		case O_ALTQ:
+		case O_LOG:
+		case O_TAG:
+			break;
+		default:
+			return (cmd);
+		}
+		cmdlen = F_LEN(cmd);
+		l -= cmdlen;
+		cmd += cmdlen;
+	}
+	panic("%s: rule (%p) has not action opcode", __func__, rule);
+	return (NULL);
 }
 
 /*
@@ -1906,6 +1939,7 @@ check_ipfw_rule_body(ipfw_insn *cmd, int cmd_len, struct rule_check_info *ci)
 		case O_IPTTL:
 		case O_IPLEN:
 		case O_TCPDATALEN:
+		case O_TCPMSS:
 		case O_TCPWIN:
 		case O_TAGGED:
 			if (cmdlen < 1 || cmdlen > 31)

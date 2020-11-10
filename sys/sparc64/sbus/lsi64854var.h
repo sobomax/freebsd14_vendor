@@ -1,6 +1,8 @@
 /*	$NetBSD: lsi64854var.h,v 1.12 2008/04/28 20:23:50 martin Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*	$FreeBSD: releng/11.3/sys/sparc64/sbus/lsi64854var.h 226947 2011-10-30 21:17:42Z marius $ */
+/*	$FreeBSD: releng/12.2/sys/sparc64/sbus/lsi64854var.h 326262 2017-11-27 15:10:39Z pfg $ */
 
 struct lsi64854_softc {
 	device_t		sc_dev;

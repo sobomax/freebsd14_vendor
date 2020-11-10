@@ -47,7 +47,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: releng/11.3/stand/ficl/vm.c 167850 2007-03-23 22:26:01Z jkim $ */
+/* $FreeBSD: releng/12.2/stand/ficl/vm.c 167850 2007-03-23 22:26:01Z jkim $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>

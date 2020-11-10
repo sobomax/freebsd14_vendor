@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1980, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.sbin/config/config.h 337333 2018-08-04 21:57:17Z kevans $
+ * $FreeBSD: releng/12.2/usr.sbin/config/config.h 359753 2020-04-09 20:35:35Z kevans $
  */
 
 /*
@@ -43,7 +45,7 @@ struct cfgfile {
 	STAILQ_ENTRY(cfgfile)	cfg_next;
 	char	*cfg_path;
 };
-STAILQ_HEAD(, cfgfile) cfgfiles;
+extern STAILQ_HEAD(cfgfile_head, cfgfile) cfgfiles;
 
 struct file_list {
 	STAILQ_ENTRY(file_list) f_next;
@@ -84,6 +86,7 @@ struct files_name {
 struct device {
 	int	d_done;			/* processed */
 	char	*d_name;		/* name of device (e.g. rk11) */
+	char	*yyfile;		/* name of the file that first include the device */
 #define	UNKNOWN -2	/* -2 means not set yet */
 	STAILQ_ENTRY(device) d_next;	/* Next one in list */
 };
@@ -100,8 +103,8 @@ struct config {
  * in the makerules, etc.  machinearch is the global notion of the
  * MACHINE_ARCH for this MACHINE.
  */
-char	*machinename;
-char	*machinearch;
+extern char	*machinename;
+extern char	*machinearch;
 
 /*
  * For each machine, a set of CPU's may be specified as supported.
@@ -112,7 +115,7 @@ struct cputype {
 	SLIST_ENTRY(cputype) cpu_next;
 };
 
-SLIST_HEAD(, cputype) cputype;
+extern SLIST_HEAD(cputype_head, cputype) cputype;
 
 /*
  * A set of options may also be specified which are like CPU types,
@@ -123,11 +126,12 @@ struct opt {
 	char	*op_name;
 	char	*op_value;
 	int	op_ownfile;	/* true = own file, false = makefile */
+	char	*yyfile;	/* name of the file that first include the option */
 	SLIST_ENTRY(opt) op_next;
 	SLIST_ENTRY(opt) op_append;
 };
 
-SLIST_HEAD(opt_head, opt) opt, mkopt, rmopts;
+extern SLIST_HEAD(opt_head, opt) opt, mkopt, rmopts;
 
 struct opt_list {
 	char *o_name;
@@ -137,7 +141,7 @@ struct opt_list {
 	SLIST_ENTRY(opt_list) o_next;
 };
 
-SLIST_HEAD(, opt_list) otab;
+extern SLIST_HEAD(opt_list_head, opt_list) otab;
 
 struct envvar {
 	char	*env_str;
@@ -145,21 +149,21 @@ struct envvar {
 	STAILQ_ENTRY(envvar) envvar_next;
 };
 
-STAILQ_HEAD(envvar_head, envvar) envvars;
+extern STAILQ_HEAD(envvar_head, envvar) envvars;
 
 struct hint {
 	char	*hint_name;
 	STAILQ_ENTRY(hint) hint_next;
 };
 
-STAILQ_HEAD(hint_head, hint) hints;
+extern STAILQ_HEAD(hint_head, hint) hints;
 
 struct includepath {
 	char	*path;
 	SLIST_ENTRY(includepath) path_next;
 };
 
-SLIST_HEAD(, includepath) includepath;
+extern SLIST_HEAD(includepath_head, includepath) includepath;
 
 /*
  * Tag present in the kernconf.tmpl template file. It's mandatory for those

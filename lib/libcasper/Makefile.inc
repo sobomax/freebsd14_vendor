@@ -1,3 +1,9 @@
-# $FreeBSD: releng/11.3/lib/libcasper/Makefile.inc 296126 2016-02-26 22:14:08Z bdrewery $
+# $FreeBSD: releng/12.2/lib/libcasper/Makefile.inc 325062 2017-10-28 19:23:57Z oshogbo $
+
+.include <src.opts.mk>
+
+.if ${MK_CASPER} != "no"
+CFLAGS+=-DWITH_CASPER
+.endif
 
 .include "../Makefile.inc"

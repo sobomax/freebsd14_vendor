@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/amdsmn/Makefile 323184 2017-09-05 15:13:41Z cem $
+# $FreeBSD: releng/12.2/sys/modules/amdsmn/Makefile 323184 2017-09-05 15:13:41Z cem $
 
 .PATH:	${SRCTOP}/sys/dev/amdsmn
 

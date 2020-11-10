@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_en/mlx5_en_txrx.c 331590 2018-03-26 21:04:47Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_en/mlx5_en_txrx.c 353225 2019-10-07 09:25:14Z hselasky $
  */
 
 #include "en.h"
@@ -48,6 +48,6 @@ mlx5e_cq_error_event(struct mlx5_core_cq *mcq, int event)
 {
 	struct mlx5e_cq *cq = container_of(mcq, struct mlx5e_cq, mcq);
 
-	if_printf(cq->priv->ifp, "%s: cqn=0x%.6x event=0x%.2x\n",
-	    __func__, mcq->cqn, event);
+	mlx5_en_err(cq->priv->ifp, "cqn=0x%.6x event=0x%.2x\n",
+	    mcq->cqn, event);
 }

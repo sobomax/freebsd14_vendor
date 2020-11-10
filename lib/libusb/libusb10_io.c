@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/lib/libusb/libusb10_io.c 339189 2018-10-05 07:49:01Z hselasky $ */
+/* $FreeBSD: releng/12.2/lib/libusb/libusb10_io.c 338993 2018-09-28 10:28:22Z hselasky $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Sylvestre Gallon. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/usr.sbin/bsdconfig/examples/browse_packages_http.sh 268999 2014-07-22 23:10:12Z dteske $
+# $FreeBSD: releng/12.2/usr.sbin/bsdconfig/examples/browse_packages_http.sh 268999 2014-07-22 23:10:12Z dteske $
 #
 # This sample downloads the package digests.txz and packagesite.txz files from
 # HTTP to /tmp (if they don't already exist) and then displays the package

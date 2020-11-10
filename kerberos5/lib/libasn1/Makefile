@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/lib/libasn1/Makefile 344200 2019-02-16 03:18:52Z nyan $
+# $FreeBSD: releng/12.2/kerberos5/lib/libasn1/Makefile 344199 2019-02-16 03:18:09Z nyan $
 
 LIB=	asn1
 LDFLAGS=	-Wl,--no-undefined

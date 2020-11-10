@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Andriy Gapon <avg@FreeBSD.org>
  * All rights reserved.
  *
@@ -45,7 +47,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/amdsbwd/amdsbwd.c 335542 2018-06-22 09:25:24Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/amdsbwd/amdsbwd.c 358149 2020-02-20 01:42:11Z kib $");
+
+#include "opt_amdsbwd.h"
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -55,6 +59,8 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/amdsbwd/amdsbwd.c 335542 2018-06-22 09:2
 #include <sys/bus.h>
 #include <machine/bus.h>
 #include <sys/rman.h>
+#include <machine/cputypes.h>
+#include <machine/md_var.h>
 #include <machine/resource.h>
 #include <sys/watchdog.h>
 
@@ -264,7 +270,8 @@ amdsbwd_identify(driver_t *driver, device_t parent)
 		return;
 	if (pci_get_devid(smb_dev) != AMDSB_SMBUS_DEVID &&
 	    pci_get_devid(smb_dev) != AMDFCH_SMBUS_DEVID &&
-	    pci_get_devid(smb_dev) != AMDCZ_SMBUS_DEVID)
+	    pci_get_devid(smb_dev) != AMDCZ_SMBUS_DEVID &&
+	    pci_get_devid(smb_dev) != HYGONCZ_SMBUS_DEVID)
 		return;
 
 	child = BUS_ADD_CHILD(parent, ISA_ORDER_SPECULATIVE, "amdsbwd", -1);
@@ -373,6 +380,7 @@ static void
 amdsbwd_probe_fch41(device_t dev, struct resource *pmres, uint32_t *addr)
 {
 	uint8_t	val;
+	char buf[36];
 
 	val = pmio_read(pmres, AMDFCH41_PM_ISA_CTRL);
 	if ((val & AMDFCH41_MMIO_EN) != 0) {
@@ -411,7 +419,9 @@ amdsbwd_probe_fch41(device_t dev, struct resource *pmres, uint32_t *addr)
 	amdsbwd_verbose_printf(dev, "AMDFCH41_PM_DECODE_EN3 value = %#04x\n",
 	    val);
 #endif
-	device_set_desc(dev, "AMD FCH Rev 41h+ Watchdog Timer");
+	snprintf(buf, sizeof(buf), "%s FCH Rev 41h+ Watchdog Timer",
+	    cpu_vendor_id == CPU_VENDOR_HYGON ? "Hygon" : "AMD");
+	device_set_desc_copy(dev, buf);
 }
 
 static int

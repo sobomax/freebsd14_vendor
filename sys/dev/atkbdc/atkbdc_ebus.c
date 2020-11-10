@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Kazutaka YOKOTA <yokota@zodiac.mech.utsunomiya-u.ac.jp>
  * Copyright (c) 2005 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/atkbdc/atkbdc_ebus.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/atkbdc/atkbdc_ebus.c 332310 2018-04-08 22:59:34Z gonzo $");
 
 #include "opt_kbd.h"
 
@@ -236,7 +238,7 @@ atkbdc_ebus_attach(device_t dev)
 	children = 0;
 	for (child = OF_child(ofw_bus_get_node(dev)); child != 0;
 	    child = OF_peer(child)) {
-		if ((OF_getprop_alloc(child, "name", 1, (void **)&cname)) == -1)
+		if ((OF_getprop_alloc(child, "name", (void **)&cname)) == -1)
 			continue;
 		if (children >= 2) {
 			device_printf(dev,

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/rtc.c 227848 2011-11-22 21:55:40Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/rtc.c 328524 2018-01-29 00:22:30Z imp $");
 
 /*
  * The `rtc' device is found on the ISA bus and the EBus.  The ISA version
@@ -120,7 +122,13 @@ static driver_t rtc_isa_driver = {
 	sizeof(struct mc146818_softc),
 };
 
+static struct isa_pnp_id rtc_isa_ids[] = {
+	{ 0x000bd041, RTC_DESC }, /* PNP0B00 */
+	{ 0 }
+};
+
 DRIVER_MODULE(rtc, isa, rtc_isa_driver, rtc_devclass, 0, 0);
+ISA_PNP_INFO(rtc_isa_ids);
 #endif
 
 static u_int pc87317_getcent(device_t dev);
@@ -143,11 +151,6 @@ rtc_ebus_probe(device_t dev)
 }
 
 #ifdef DEV_ISA
-static struct isa_pnp_id rtc_isa_ids[] = {
-	{ 0x000bd041, RTC_DESC }, /* PNP0B00 */
-	{ 0 }
-};
-
 static int
 rtc_isa_probe(device_t dev)
 {

@@ -1,6 +1,8 @@
 # $Id: Makefile,v 1.7 2003/08/14 20:06:17 max Exp $
-# $FreeBSD: releng/11.3/usr.sbin/bluetooth/hccontrol/Makefile 281680 2015-04-18 04:53:17Z takawata $
+# $FreeBSD: releng/12.2/usr.sbin/bluetooth/hccontrol/Makefile 338155 2018-08-21 19:28:53Z brd $
 
+CONFS=		bluetooth.device.conf
+CONFSDIR=	/etc/defaults
 PROG=		hccontrol
 MAN=		hccontrol.8
 SRCS=		send_recv.c link_policy.c link_control.c le.c\

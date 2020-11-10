@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/usb/tools/sysinit.c 246145 2013-01-31 11:00:57Z hselasky $ */
+/* $FreeBSD: releng/12.2/stand/usb/tools/sysinit.c 246145 2013-01-31 11:00:57Z hselasky $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *

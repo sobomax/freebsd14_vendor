@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/net80211/w00t/ap/ap.c 260444 2014-01-08 08:06:56Z kevlo $
+ * $FreeBSD: releng/12.2/tools/tools/net80211/w00t/ap/ap.c 329599 2018-02-19 19:01:46Z eadler $
  */
 #include <sys/types.h>
 #include <sys/select.h>
@@ -389,7 +389,7 @@ void send_cts(struct params *p, char *mac)
 	wh->i_fc[0] |= IEEE80211_FC0_TYPE_CTL;
 	wh->i_fc[0] |= IEEE80211_FC0_SUBTYPE_CTS;
 	wh->i_dur[0] = 0x69;
-	wh->i_dur[0] = 0x00;
+	wh->i_dur[1] = 0x00;
 	memcpy(wh->i_addr1, mac, 6);
 
 	send_frame(p, wh, 10);

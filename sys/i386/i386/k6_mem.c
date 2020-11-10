@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Brian Fundakowski Feldman
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/i386/i386/k6_mem.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/i386/i386/k6_mem.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

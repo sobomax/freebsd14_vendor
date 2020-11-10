@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Semihalf.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/slicer.h 346557 2019-04-22 15:04:11Z ian $
+ * $FreeBSD: releng/12.2/sys/sys/slicer.h 346508 2019-04-22 00:38:25Z ian $
  */
 
 #ifndef _FLASH_SLICER_H_

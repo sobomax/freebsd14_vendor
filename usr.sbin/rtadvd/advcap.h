@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/usr.sbin/rtadvd/advcap.h 330449 2018-03-05 07:26:05Z eadler $	*/
+/*	$FreeBSD: releng/12.2/usr.sbin/rtadvd/advcap.h 326276 2017-11-27 15:37:16Z pfg $	*/
 /*	$KAME: advcap.h,v 1.5 2003/06/09 05:40:54 t-momose Exp $	*/
 
 /*-

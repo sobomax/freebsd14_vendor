@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/examples/pf/Makefile 299293 2016-05-10 00:51:50Z gjb $
+# $FreeBSD: releng/12.2/share/examples/pf/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
 PACKAGE=examples
 FILES=	faq-example1 faq-example2 faq-example3 \

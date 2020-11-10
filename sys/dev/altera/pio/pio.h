@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/altera/pio/pio.h 274656 2014-11-18 14:12:19Z br $
+ * $FreeBSD: releng/12.2/sys/dev/altera/pio/pio.h 274656 2014-11-18 14:12:19Z br $
  */
 
 #define	PIO_DATA	0x00

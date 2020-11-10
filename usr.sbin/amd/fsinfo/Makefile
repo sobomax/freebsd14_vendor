@@ -3,9 +3,9 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: releng/11.3/usr.sbin/amd/fsinfo/Makefile 310490 2016-12-23 22:42:14Z cy $
+# $FreeBSD: releng/12.2/usr.sbin/amd/fsinfo/Makefile 308493 2016-11-11 02:42:53Z cy $
 
-.PATH: ${.CURDIR}/../../../contrib/amd/fsinfo
+.PATH:	${SRCTOP}/contrib/amd/fsinfo
 
 PROG=	fsinfo
 MAN=	fsinfo.8

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/regression/sockets/unix_cmsg/unix_cmsg.c 339066 2018-10-01 17:26:41Z sobomax $");
+__FBSDID("$FreeBSD: releng/12.2/tools/regression/sockets/unix_cmsg/unix_cmsg.c 312296 2017-01-16 17:46:38Z sobomax $");
 
 #include <sys/types.h>
 #include <sys/limits.h>

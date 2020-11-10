@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Ryuichiro Imura
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/fs/udf/udf_iconv.c 122102 2003-11-05 06:56:08Z scottl $");
+__FBSDID("$FreeBSD: releng/12.2/sys/fs/udf/udf_iconv.c 326268 2017-11-27 15:15:37Z pfg $");
 
 #include <sys/param.h>
 #include <sys/iconv.h>

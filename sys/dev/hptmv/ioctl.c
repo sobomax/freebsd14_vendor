@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2005 HighPoint Technologies, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hptmv/ioctl.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/hptmv/ioctl.c 358079 2020-02-18 18:17:03Z dim $
  */
 /*
  * ioctl.c   ioctl interface implementation
@@ -233,7 +235,7 @@ int Kernel_DeviceIoControl(_VBUS_ARG
 		       	return -1;
 		
         	if(!mIsArray(pArray))
-			return -1;
+				return -1;
 
 			_vbus_p=pArray->pVBus;
 			pAdapter = (IAL_ADAPTER_T *)_vbus_p->OsExt;

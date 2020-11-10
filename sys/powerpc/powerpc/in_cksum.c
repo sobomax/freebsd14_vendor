@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/sys/powerpc/powerpc/in_cksum.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/powerpc/powerpc/in_cksum.c 325966 2017-11-18 14:26:50Z pfg $ */
 /* $NetBSD: in_cksum.c,v 1.7 1997/09/02 13:18:15 thorpej Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1988, 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  * Copyright (c) 1996

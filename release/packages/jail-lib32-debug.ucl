@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/release/packages/jail-lib32-debug.ucl 318249 2017-05-12 18:37:08Z gjb $
+# $FreeBSD: releng/12.2/release/packages/jail-lib32-debug.ucl 308945 2016-11-21 23:29:28Z gjb $
 #
 
 name = "FreeBSD-%PKGNAME%"

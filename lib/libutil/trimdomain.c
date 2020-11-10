@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Brian Somers <brian@Awfulhak.org>
  *   Based on original work by Atsushi Murai <amurai@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libutil/trimdomain.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libutil/trimdomain.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <sys/param.h>
 

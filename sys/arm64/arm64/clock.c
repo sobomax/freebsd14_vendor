@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm64/arm64/clock.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/clock.c 281494 2015-04-13 14:43:10Z andrew $");
 
 #include <sys/types.h>
 #include <sys/systm.h>

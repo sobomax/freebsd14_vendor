@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libnetbsd/pthread.h 314021 2017-02-21 03:46:43Z ngie $
+ * $FreeBSD: releng/12.2/lib/libnetbsd/pthread.h 313404 2017-02-07 19:42:41Z ngie $
  */
 
 #ifndef _LIBNETBSD_PTHREAD_H_

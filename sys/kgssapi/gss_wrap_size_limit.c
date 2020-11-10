@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/gss_wrap_size_limit.c 184588 2008-11-03 10:38:00Z dfr $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kgssapi/gss_wrap_size_limit.c 326279 2017-11-27 15:49:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

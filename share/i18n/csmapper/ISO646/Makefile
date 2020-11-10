@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/i18n/csmapper/ISO646/Makefile 219019 2011-02-25 00:04:39Z gabor $
+# $FreeBSD: releng/12.2/share/i18n/csmapper/ISO646/Makefile 219019 2011-02-25 00:04:39Z gabor $
 # $NetBSD: Makefile.inc,v 1.4 2008/10/25 22:35:36 apb Exp $
 
 CODE=	ISO646

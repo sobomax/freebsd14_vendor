@@ -1,8 +1,9 @@
-# $FreeBSD: releng/11.3/sys/modules/i2c/iicbb/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/i2c/iicbb/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm" || \
-    ${MACHINE_CPUARCH} == "mips" || ${MACHINE_CPUARCH} == "powerpc"
+    ${MACHINE_CPUARCH} == "mips" || ${MACHINE_CPUARCH} == "powerpc" || \
+    ${MACHINE_CPUARCH} == "riscv"
 ofw_bus_if=	ofw_bus_if.h
 .endif
 KMOD		= iicbb

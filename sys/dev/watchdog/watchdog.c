@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Poul-Henning Kamp
  * Copyright (c) 2013 iXsystems.com,
  *               author: Alfred Perlstein <alfred@freebsd.org>
@@ -31,7 +33,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/watchdog/watchdog.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/watchdog/watchdog.c 327505 2018-01-03 00:56:30Z karels $");
 
 #include <sys/param.h>
 #include <sys/types.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: releng/11.3/sys/sys/signalvar.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/signalvar.h 353789 2019-10-21 01:24:21Z kevans $
  */
 
 #ifndef _SYS_SIGNALVAR_H_
@@ -347,7 +349,7 @@ static inline int
 sigdeferstop(int mode)
 {
 
-	if (mode == SIGDEFERSTOP_NOP)
+	if (__predict_true(mode == SIGDEFERSTOP_NOP))
 		return (SIGDEFERSTOP_VAL_NCHG);
 	return (sigdeferstop_impl(mode));
 }
@@ -356,7 +358,7 @@ static inline void
 sigallowstop(int prev)
 {
 
-	if (prev == SIGDEFERSTOP_VAL_NCHG)
+	if (__predict_true(prev == SIGDEFERSTOP_VAL_NCHG))
 		return;
 	sigallowstop_impl(prev);
 }
@@ -379,6 +381,7 @@ void	sigacts_copy(struct sigacts *dest, struct sigacts *src);
 void	sigacts_free(struct sigacts *ps);
 struct sigacts *sigacts_hold(struct sigacts *ps);
 int	sigacts_shared(struct sigacts *ps);
+void	sig_drop_caught(struct proc *p);
 void	sigexit(struct thread *td, int sig) __dead2;
 int	sigev_findtd(struct proc *p, struct sigevent *sigev, struct thread **);
 int	sig_ffs(sigset_t *set);

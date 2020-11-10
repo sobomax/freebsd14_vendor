@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/tools/tools/mwl/mwlstats/main.c 193242 2009-06-01 18:27:16Z sam $
+ * $FreeBSD: releng/12.2/tools/tools/mwl/mwlstats/main.c 193242 2009-06-01 18:27:16Z sam $
  */
 
 /*

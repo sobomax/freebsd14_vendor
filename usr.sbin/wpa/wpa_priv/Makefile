@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/wpa/wpa_priv/Makefile 319190 2017-05-30 04:45:11Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/wpa/wpa_priv/Makefile 314541 2017-03-02 05:04:45Z ngie $
 
 .include "../Makefile.inc"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/at/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/usr.bin/at/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 LOCKFILE = .lockfile
 ATSPOOL_DIR=/var/at/spool

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/include/pmap_var.h 298457 2016-04-22 06:32:27Z skra $
+ * $FreeBSD: releng/12.2/sys/arm/include/pmap_var.h 298457 2016-04-22 06:32:27Z skra $
  */
 
 #ifndef _MACHINE_PMAP_VAR_H_

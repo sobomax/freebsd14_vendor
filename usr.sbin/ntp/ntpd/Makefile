@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/ntpd/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/ntpd/Makefile 340696 2018-11-20 20:08:51Z garga $
 
 MAN=
 
@@ -7,6 +7,13 @@ MAN=
 .PATH:	${SRCTOP}/contrib/ntp/ntpd \
 	${.OBJDIR}
 
+DIRS=	ETC_NTP
+ETC_NTP=	/etc/ntp
+ETC_NTP_MODE=	0700
+CONFS=	ntp.conf
+FILES=	leap-seconds
+FILESDIR=	ETC_NTP
+FILESMODE=	644
 PROG=	ntpd
 
 SRCS=	cmd_args.c ntp_config.c ntp_control.c ntp_crypto.c ntp_filegen.c \

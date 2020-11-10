@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/9/93
- * $FreeBSD: releng/11.3/release/picobsd/tinyware/login/pathnames.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/release/picobsd/tinyware/login/pathnames.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #include <paths.h>

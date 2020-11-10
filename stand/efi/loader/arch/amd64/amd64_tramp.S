@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/loader/arch/amd64/amd64_tramp.S 280950 2015-04-01 08:30:40Z andrew $
+ * $FreeBSD: releng/12.2/stand/efi/loader/arch/amd64/amd64_tramp.S 280950 2015-04-01 08:30:40Z andrew $
  */
 
 #include <machine/asmacros.h>

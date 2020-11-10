@@ -1,7 +1,7 @@
-# $FreeBSD: releng/11.3/usr.sbin/mpsutil/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/mpsutil/Makefile 354884 2019-11-20 08:44:29Z avg $
 
 PROG=	mpsutil
-SRCS=	mps_cmd.c mps_flash.c mps_show.c mpsutil.c
+SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_show.c mps_slot.c mpsutil.c
 MAN=	mpsutil.8
 
 WARNS?= 3

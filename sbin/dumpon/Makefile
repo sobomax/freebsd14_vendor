@@ -1,7 +1,15 @@
-# $FreeBSD: releng/11.3/sbin/dumpon/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/dumpon/Makefile 309818 2016-12-10 16:20:39Z def $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	dumpon
+
+.if ${MK_OPENSSL} != "no"
+LIBADD=	crypto
+CFLAGS+=-DHAVE_CRYPTO
+.endif
+
 MAN=	dumpon.8
 
 .include <bsd.prog.mk>

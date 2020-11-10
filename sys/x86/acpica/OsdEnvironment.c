@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000,2001 Michael Smith
  * Copyright (c) 2000 BSDi
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/acpica/OsdEnvironment.c 316303 2017-03-30 20:18:34Z jkim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/acpica/OsdEnvironment.c 326263 2017-11-27 15:11:47Z pfg $");
 
 #include <sys/types.h>
 #include <sys/bus.h>

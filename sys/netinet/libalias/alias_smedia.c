@@ -1,5 +1,7 @@
-/*
+/*-
  * alias_smedia.c
+ *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause
  *
  * Copyright (c) 2000 Whistle Communications, Inc.
  * All rights reserved.
@@ -64,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_smedia.c 298995 2016-05-03 18:05:43Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_smedia.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /*
    Alias_smedia.c is meant to contain the aliasing code for streaming media

@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sys/netipsec/key_debug.c 336334 2018-07-16 10:32:11Z ae $	*/
+/*	$FreeBSD: releng/12.2/sys/netipsec/key_debug.c 335796 2018-06-29 14:51:36Z emaste $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *

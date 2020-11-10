@@ -1,8 +1,10 @@
 /*
  * $NetBSD: rpcb_stat.c,v 1.2 2000/07/04 20:27:40 matt Exp $
- * $FreeBSD: releng/11.3/usr.sbin/rpcbind/rpcb_stat.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/rpcbind/rpcb_stat.c 327464 2018-01-01 09:41:18Z delphij $
  */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2009, Sun Microsystems, Inc.
  * All rights reserved.
  *
@@ -38,7 +40,6 @@
  * Copyright (c) 1990 by Sun Microsystems, Inc.
  */
 
-#include <stdio.h>
 #include <netconfig.h>
 #include <rpc/rpc.h>
 #include <rpc/rpcb_prot.h>

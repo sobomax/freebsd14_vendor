@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/tools/sound/emu10k1-mkalsa.sh 193889 2009-06-10 06:49:45Z ariff $
+# $FreeBSD: releng/12.2/sys/tools/sound/emu10k1-mkalsa.sh 193889 2009-06-10 06:49:45Z ariff $
 
 GREP=${GREP:-grep}
 CC=${CC:-cc}

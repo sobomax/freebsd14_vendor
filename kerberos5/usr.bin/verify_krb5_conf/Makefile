@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/usr.bin/verify_krb5_conf/Makefile 344200 2019-02-16 03:18:52Z nyan $
+# $FreeBSD: releng/12.2/kerberos5/usr.bin/verify_krb5_conf/Makefile 344199 2019-02-16 03:18:09Z nyan $
 
 PROG=	verify_krb5_conf
 MAN=	verify_krb5_conf.8

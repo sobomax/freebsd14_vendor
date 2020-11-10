@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_lock.c 315339 2017-03-16 00:51:24Z mjg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_lock.c 332285 2018-04-08 16:34:10Z mjg $");
 
 #include "opt_ddb.h"
 #include "opt_mprof.h"
@@ -154,8 +156,10 @@ void
 lock_delay_default_init(struct lock_delay_config *lc)
 {
 
-	lc->base = lock_roundup_2(mp_ncpus) / 4;
-	lc->max = lc->base * 1024;
+	lc->base = 1;
+	lc->max = lock_roundup_2(mp_ncpus) * 256;
+	if (lc->max > 32678)
+		lc->max = 32678;
 }
 
 #ifdef DDB

@@ -27,10 +27,10 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm64/arm64/bzero.S 297537 2016-04-04 07:11:33Z wma $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/bzero.S 331254 2018-03-20 17:58:51Z emaste $");
 
 
-#include "assym.s"
+#include "assym.inc"
 
 	/*
 	 * void bzero(void *p, size_t size)

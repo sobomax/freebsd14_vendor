@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Matthew N. Dodd <winter@jurai.net>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/dpt/dpt_pci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/dpt/dpt_pci.c 328523 2018-01-29 00:14:46Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -155,6 +157,7 @@ dpt_pci_attach (device_t dev)
 		error = ENXIO;
 		goto bad;
 	}
+	gone_in_dev(dev, 12, "dpt(4) driver");
 
 	return (error);
 

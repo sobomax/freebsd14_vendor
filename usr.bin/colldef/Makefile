@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/colldef/Makefile 291127 2015-11-21 10:52:32Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/colldef/Makefile 291127 2015-11-21 10:52:32Z bapt $
 
 PROG=	colldef
 SRCS=	parse.y scan.l y.tab.h

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/eli/pkcs5v2.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/eli/pkcs5v2.c 326443 2017-12-02 00:07:09Z imp $");
 
 #include <sys/param.h>
 #ifdef _KERNEL

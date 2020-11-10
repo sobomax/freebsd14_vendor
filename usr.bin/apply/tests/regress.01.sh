@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/usr.bin/apply/tests/regress.01.sh 204761 2010-03-05 15:23:01Z jh $
+# $FreeBSD: releng/12.2/usr.bin/apply/tests/regress.01.sh 204761 2010-03-05 15:23:01Z jh $
 
 SHELL=/bin/sh; export SHELL
 

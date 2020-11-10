@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libmilter/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libmilter/Makefile 318736 2017-05-23 09:29:05Z kib $
 
 .include <src.opts.mk>
 
@@ -29,6 +29,7 @@ SRCS+=	main.c engine.c listener.c handler.c comm.c monitor.c smfi.c \
 CLEANFILES+=sm_os.h
 
 WARNS?=	0
+SHLIB_MAJOR= 6
 
 sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}

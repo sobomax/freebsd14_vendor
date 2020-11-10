@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libsmdb/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libsmdb/Makefile 363465 2020-07-24 00:22:33Z gshapiro $
 
 PACKAGE=lib${LIB}
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail
@@ -15,7 +15,7 @@ WARNS?=	3
 LIB=	smdb
 
 SRCS+=	sm_os.h
-SRCS+=	smdb.c smdb1.c smdb2.c smndbm.c
+SRCS+=	smdb.c smdb1.c smdb2.c smndbm.c smcdb.c
 CLEANFILES+=sm_os.h
 
 INTERNALLIB=

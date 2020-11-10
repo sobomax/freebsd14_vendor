@@ -2,7 +2,7 @@
 # Ubiquiti Routerstation Pro: boot from first DOS-partitioned, BSD
 # sliced flash disk.
 #
-# $FreeBSD: releng/11.3/sys/mips/conf/RSPRO_STANDALONE 345344 2019-03-20 18:49:45Z kib $
+# $FreeBSD: releng/12.2/sys/mips/conf/RSPRO_STANDALONE 345301 2019-03-19 17:16:37Z kib $
 #
 
 include		"AR71XX_BASE"

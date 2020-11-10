@@ -1,15 +1,15 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/21/94
-# $FreeBSD: releng/11.3/sys/kern/Makefile 315062 2017-03-11 08:39:24Z dchagin $
-
+# $FreeBSD: releng/12.2/sys/kern/Makefile 358207 2020-02-21 04:41:22Z kevans $
+#
 # Makefile for init_sysent
 
-all:
-	@echo "make sysent only"
+SRCS+=		capabilities.conf
+SYSENT_CONF=
+GENERATED=	init_sysent.c			\
+		syscalls.c			\
+		systrace_args.c			\
+		${SYSDIR}/sys/syscall.h		\
+		${SYSDIR}/sys/syscall.mk	\
+		${SYSDIR}/sys/sysproto.h
 
-sysent: init_sysent.c syscalls.c ../sys/syscall.h ../sys/syscall.mk \
-../sys/sysproto.h
-
-init_sysent.c syscalls.c systrace_args.c ../sys/syscall.h \
-../sys/syscall.mk ../sys/sysproto.h: makesyscalls.sh syscalls.master \
-capabilities.conf
-	sh makesyscalls.sh syscalls.master
+.include "../conf/sysent.mk"

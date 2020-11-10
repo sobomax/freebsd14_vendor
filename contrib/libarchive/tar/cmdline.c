@@ -28,7 +28,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/cmdline.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/cmdline.c 358087 2020-02-19 01:46:43Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -123,6 +123,7 @@ static const struct bsdtar_option {
 	{ "no-fflags",            0, OPTION_NO_FFLAGS },
 	{ "no-mac-metadata",      0, OPTION_NO_MAC_METADATA },
 	{ "no-recursion",         0, 'n' },
+	{ "no-safe-writes",	  0, OPTION_NO_SAFE_WRITES },
 	{ "no-same-owner",	  0, OPTION_NO_SAME_OWNER },
 	{ "no-same-permissions",  0, OPTION_NO_SAME_PERMISSIONS },
 	{ "no-xattr",             0, OPTION_NO_XATTRS },
@@ -144,6 +145,7 @@ static const struct bsdtar_option {
 	{ "posix",		  0, OPTION_POSIX },
 	{ "preserve-permissions", 0, 'p' },
 	{ "read-full-blocks",	  0, 'B' },
+	{ "safe-writes",	  0, OPTION_SAFE_WRITES },
 	{ "same-owner",	          0, OPTION_SAME_OWNER },
 	{ "same-permissions",     0, 'p' },
 	{ "strip-components",	  1, OPTION_STRIP_COMPONENTS },

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/release/tools/vmimage.subr 347037 2019-05-03 00:45:31Z gjb $
+# $FreeBSD: releng/12.2/release/tools/vmimage.subr 365425 2020-09-07 18:47:25Z gonzo $
 #
 #
 # Common functions for virtual machine image build scripts.
@@ -14,20 +14,17 @@ write_partition_layout() {
 		SWAPOPT="-p freebsd-swap/swapfs::${SWAPSIZE}"
 	fi
 
-	_OBJDIR="$(make -C ${WORLDDIR} -V .OBJDIR)"
-	_OBJDIR="$(realpath ${_OBJDIR})"
-	_WORLDDIR="$(realpath ${WORLDDIR})"
-	if [ -d "${_OBJDIR%%${_WORLDDIR}}/${TARGET}.${TARGET_ARCH}" ]; then
-		BOOTFILES="/${_OBJDIR%%${_WORLDDIR}}/${TARGET}.${TARGET_ARCH}${_WORLDDIR}/stand"
-	else
-		BOOTFILES="/${_OBJDIR}/stand"
-	fi
+	BOOTFILES="$(env TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
+		WITH_UNIFIED_OBJDIR=yes \
+		make -C ${WORLDDIR}/stand -V .OBJDIR)"
+	BOOTFILES="$(realpath ${BOOTFILES})"
 
 	case "${TARGET}:${TARGET_ARCH}" in
 		amd64:amd64 | i386:i386)
 			mkimg -s gpt -f ${VMFORMAT} \
 				-b ${BOOTFILES}/i386/pmbr/pmbr \
 				-p freebsd-boot/bootfs:=${BOOTFILES}/i386/gptboot/gptboot \
+				-p efi:=${BOOTFILES}/efi/boot1/boot1.efifat \
 				${SWAPOPT} \
 				-p freebsd-ufs/rootfs:=${VMBASE} \
 				-o ${VMIMAGE}

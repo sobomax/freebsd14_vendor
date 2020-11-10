@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/dpaa/qman.h 296177 2016-02-29 03:38:00Z jhibbits $
+ * $FreeBSD: releng/12.2/sys/dev/dpaa/qman.h 296177 2016-02-29 03:38:00Z jhibbits $
  */
 
 #ifndef _QMAN_H

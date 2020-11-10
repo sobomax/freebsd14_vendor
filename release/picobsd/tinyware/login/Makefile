@@ -1,5 +1,5 @@
 # From:	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: releng/11.3/release/picobsd/tinyware/login/Makefile 275104 2014-11-26 08:12:21Z bapt $
+# $FreeBSD: releng/12.2/release/picobsd/tinyware/login/Makefile 275104 2014-11-26 08:12:21Z bapt $
 
 .include <src.opts.mk>
 

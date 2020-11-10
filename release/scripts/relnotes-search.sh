@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/release/scripts/relnotes-search.sh 275613 2014-12-08 15:45:07Z gjb $
+# $FreeBSD: releng/12.2/release/scripts/relnotes-search.sh 275613 2014-12-08 15:45:07Z gjb $
 #
 
 set -C

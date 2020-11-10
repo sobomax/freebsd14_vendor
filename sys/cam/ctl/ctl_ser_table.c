@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Silicon Graphics International Corp.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ser_table.c#1 $
- * $FreeBSD: releng/11.3/sys/cam/ctl/ctl_ser_table.c 288224 2015-09-25 18:49:25Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/ctl/ctl_ser_table.c 326265 2017-11-27 15:12:43Z pfg $
  */
 
 /*

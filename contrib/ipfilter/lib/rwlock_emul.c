@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/lib/rwlock_emul.c 314251 2017-02-25 08:07:28Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/lib/rwlock_emul.c 312787 2017-01-26 01:24:05Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

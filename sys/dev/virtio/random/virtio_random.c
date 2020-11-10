@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 /* Driver for VirtIO entropy device. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/virtio/random/virtio_random.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/virtio/random/virtio_random.c 338324 2018-08-26 12:51:46Z markm $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -215,8 +217,7 @@ vtrnd_harvest(struct vtrnd_softc *sc)
 	virtqueue_notify(vq);
 	virtqueue_poll(vq, NULL);
 
-	random_harvest_queue(&value, sizeof(value), sizeof(value) * NBBY / 2,
-	    RANDOM_PURE_VIRTIO);
+	random_harvest_queue(&value, sizeof(value), RANDOM_PURE_VIRTIO);
 }
 
 static void

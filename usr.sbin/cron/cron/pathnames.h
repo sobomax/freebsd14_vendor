@@ -16,7 +16,7 @@
  */
 
 /*
- * $FreeBSD: releng/11.3/usr.sbin/cron/cron/pathnames.h 346513 2019-04-22 03:04:39Z kevans $
+ * $FreeBSD: releng/12.2/usr.sbin/cron/cron/pathnames.h 334910 2018-06-10 02:30:09Z imp $
  */
 
 #if (defined(BSD)) && (BSD >= 199103) || defined(__linux) || defined(AIX)

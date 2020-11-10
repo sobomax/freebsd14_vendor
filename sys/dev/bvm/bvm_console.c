@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/bvm/bvm_console.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/bvm/bvm_console.c 360258 2020-04-24 13:31:22Z kevans $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bvm/bvm_console.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bvm/bvm_console.c 360258 2020-04-24 13:31:22Z kevans $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -128,7 +130,7 @@ static void
 bvm_tty_close(struct tty *tp)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	callout_stop(&bvm_timer);
 }
 
@@ -157,7 +159,7 @@ bvm_timeout(void *v)
 
 	tp = (struct tty *)v;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	while ((c = bvm_cngetc(NULL)) != -1)
 		ttydisc_rint(tp, c, 0);
 	ttydisc_rint_done(tp);

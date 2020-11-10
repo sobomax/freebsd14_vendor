@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/arm/uboot/start.S 326934 2017-12-18 17:17:07Z ian $
+ * $FreeBSD: releng/12.2/stand/arm/uboot/start.S 326752 2017-12-10 21:51:27Z ian $
  */
 
 #include <machine/asm.h>

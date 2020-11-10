@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/Makefile 344377 2019-02-20 19:13:09Z kevans $
+# $FreeBSD: releng/12.2/stand/Makefile 336084 2018-07-08 07:42:49Z imp $
 
 .include <src.opts.mk>
 

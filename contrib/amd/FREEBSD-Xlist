@@ -1,4 +1,4 @@
-$FreeBSD: releng/11.3/contrib/amd/FREEBSD-Xlist 174537 2007-12-11 19:16:51Z obrien $
+$FreeBSD: releng/12.2/contrib/amd/FREEBSD-Xlist 174537 2007-12-11 19:16:51Z obrien $
 *LSM.am-utils
 *Makefile.*
 *README.autofs

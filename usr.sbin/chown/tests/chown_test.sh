@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/chown/tests/chown_test.sh 322834 2017-08-24 13:37:22Z gjb $
+# $FreeBSD: releng/12.2/usr.sbin/chown/tests/chown_test.sh 322796 2017-08-22 17:23:29Z gjb $
 
 get_filesystem()
 {

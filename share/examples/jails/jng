@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/share/examples/jails/jng 295587 2016-02-13 00:28:48Z dteske $
+# $FreeBSD: releng/12.2/share/examples/jails/jng 354725 2019-11-15 07:01:04Z avg $
 #
 ############################################################ IDENT(1)
 #
@@ -51,7 +51,7 @@
 # 	#     arguments given to `jng bridge xxx' in exec.prestart value.
 # 	#
 # 	vnet;
-# 	vnet.interface = "ng0_xxx ng1_xxx ...";
+# 	vnet.interface = ng0_xxx, ng1_xxx, ...;
 # 
 # 	exec.clean;
 # 	exec.system_user = "root";
@@ -67,7 +67,7 @@
 # 
 # 	# Standard recipe
 # 	exec.start += "/bin/sh /etc/rc";
-# 	exec.stop = "/bin/sh /etc/rc.shutdown";
+# 	exec.stop = "/bin/sh /etc/rc.shutdown jail";
 # 	exec.consolelog = "/var/log/jail_xxx_console.log";
 # 	mount.devfs;
 #

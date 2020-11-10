@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -47,7 +49,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -66,7 +68,7 @@
  *	from: @(#)sbusvar.h	8.1 (Berkeley) 6/11/93
  *	from: NetBSD: sbusvar.h,v 1.15 2008/04/28 20:23:36 martin Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/sbus/sbusvar.h 219567 2011-03-12 14:33:32Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/sbus/sbusvar.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_SBUS_SBUSVAR_H_

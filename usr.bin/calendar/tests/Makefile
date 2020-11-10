@@ -1,8 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/calendar/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/calendar/tests/Makefile 359863 2020-04-13 14:43:35Z lwhsu $
 
 PACKAGE=	tests
 
 TAP_TESTS_SH=	legacy_test
+
+TEST_METADATA.legacy_test+=	timeout="600"
 
 ${PACKAGE}FILES+=		calendar.calibrate
 ${PACKAGE}FILES+=		regress.a1.out
@@ -19,6 +21,7 @@ ${PACKAGE}FILES+=		regress.s1.out
 ${PACKAGE}FILES+=		regress.s2.out
 ${PACKAGE}FILES+=		regress.s3.out
 ${PACKAGE}FILES+=		regress.s4.out
+${PACKAGE}FILES+=		regress.s5.out
 ${PACKAGE}FILES+=		regress.sh
 ${PACKAGE}FILES+=		regress.w0-1.out
 ${PACKAGE}FILES+=		regress.w0-2.out

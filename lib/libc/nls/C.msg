@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/11.3/lib/libc/nls/C.msg 250250 2013-05-04 19:07:22Z pluknet $
+$ $FreeBSD: releng/12.2/lib/libc/nls/C.msg 357296 2020-01-30 16:11:19Z mav $
 $
 $ Message catalog for C locale (template)
 $
@@ -197,6 +197,8 @@ $ ENOTRECOVERABLE
 95 State not recoverable
 $ EOWNERDEAD
 96 Previous owner died
+$ EINTEGRITY
+97 Integrity check failed
 $
 $ strsignal() support catalog
 $

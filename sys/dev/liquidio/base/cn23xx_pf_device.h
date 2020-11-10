@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/11.3/sys/dev/liquidio/base/cn23xx_pf_device.h 325618 2017-11-09 19:52:56Z sbruno $*/
+/*$FreeBSD: releng/12.2/sys/dev/liquidio/base/cn23xx_pf_device.h 323509 2017-09-12 23:36:58Z sbruno $*/
 
 /* \file  cn23xx_device.h
  * \brief Host Driver: Routines that perform CN23XX specific operations.

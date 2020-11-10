@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/ifconfig/ifpfsync.c 345397 2019-03-21 22:40:05Z asomers $
+ * $FreeBSD: releng/12.2/sbin/ifconfig/ifpfsync.c 344138 2019-02-14 20:33:35Z asomers $
  */
 
 #include <sys/param.h>

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/sockets/unix_cmsg/t_generic.h 339066 2018-10-01 17:26:41Z sobomax $
+ * $FreeBSD: releng/12.2/tools/regression/sockets/unix_cmsg/t_generic.h 309554 2016-12-05 17:21:04Z sobomax $
  */
 
 int t_generic(int (*client_func)(int), int (*server_func)(int));

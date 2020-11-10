@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011, 2016 Chelsio Communications, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/cxgbe/common/t4_tcb.h 345629 2019-03-28 06:10:41Z np $
+ * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/t4_tcb.h 329788 2018-02-22 02:02:31Z jhb $
  *
  */
 

@@ -1,9 +1,10 @@
 #
-# $FreeBSD: releng/11.3/usr.sbin/bhyve/Makefile 346716 2019-04-25 22:53:25Z mav $
+# $FreeBSD: releng/12.2/usr.sbin/bhyve/Makefile 350196 2019-07-21 11:28:40Z vmaffione $
 #
 
 .include <src.opts.mk>
 CFLAGS+=-I${SRCTOP}/sys
+.PATH:  ${SRCTOP}/sys/cam/ctl
 
 PROG=	bhyve
 PACKAGE=	bhyve
@@ -21,13 +22,18 @@ SRCS=	\
 	bootrom.c		\
 	console.c		\
 	consport.c		\
+	ctl_util.c		\
+	ctl_scsi_all.c		\
 	dbgport.c		\
 	fwctl.c			\
+	gdb.c			\
 	inout.c			\
 	ioapic.c		\
 	mem.c			\
 	mevent.c		\
 	mptbl.c			\
+	net_backends.c		\
+	net_utils.c		\
 	pci_ahci.c		\
 	pci_e82545.c		\
 	pci_emul.c		\
@@ -35,11 +41,13 @@ SRCS=	\
 	pci_hostbridge.c	\
 	pci_irq.c		\
 	pci_lpc.c		\
+	pci_nvme.c		\
 	pci_passthru.c		\
 	pci_virtio_block.c	\
 	pci_virtio_console.c	\
 	pci_virtio_net.c	\
 	pci_virtio_rnd.c	\
+	pci_virtio_scsi.c	\
 	pci_uart.c		\
 	pci_xhci.c		\
 	pm.c			\
@@ -57,12 +65,13 @@ SRCS=	\
 	virtio.c		\
 	vga.c			\
 	xmsr.c			\
-	spinup_ap.c
+	spinup_ap.c		\
+	iov.c
 
 .PATH:  ${BHYVE_SYSDIR}/sys/amd64/vmm
 SRCS+=	vmm_instruction_emul.c
 
-LIBADD=	vmmapi md pthread z
+LIBADD=	vmmapi md pthread z util sbuf cam
 
 .if ${MK_INET_SUPPORT} != "no"
 CFLAGS+=-DINET
@@ -79,6 +88,10 @@ LIBADD+=	crypto
 CFLAGS+= -I${BHYVE_SYSDIR}/sys/dev/e1000
 CFLAGS+= -I${BHYVE_SYSDIR}/sys/dev/mii
 CFLAGS+= -I${BHYVE_SYSDIR}/sys/dev/usb/controller
+
+.ifdef GDB_LOG
+CFLAGS+=-DGDB_LOG
+.endif
 
 WARNS?=	2
 

@@ -1,7 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/sbin/sysctl/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/sysctl/Makefile 337624 2018-08-11 13:28:03Z brd $
 
 PACKAGE=runtime
+CONFS=	sysctl.conf
 PROG=	sysctl
 WARNS?=	3
 MAN=	sysctl.8

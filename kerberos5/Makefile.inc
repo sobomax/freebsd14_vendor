@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/Makefile.inc 319183 2017-05-30 04:13:06Z ngie $
+# $FreeBSD: releng/12.2/kerberos5/Makefile.inc 339270 2018-10-09 21:28:26Z gjb $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,10 @@ NO_LINT=
 KRB5DIR=	${SRCTOP}/crypto/heimdal
 
 CFLAGS+=	-DHAVE_CONFIG_H -I${.CURDIR:H:H}/include
+
+WARNS?=		1
+CWARNFLAGS.clang+=	-Wno-error=absolute-value
+CWARNFLAGS+=	-Wno-error=deprecated-declarations
 
 .if ${MK_OPENLDAP} != "no" && !defined(COMPAT_32BIT)
 OPENLDAPBASE?=	/usr/local

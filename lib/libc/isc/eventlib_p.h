@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (c) 2005 by Internet Systems Consortium, Inc. ("ISC")
  * Copyright (c) 1995-1999 by Internet Software Consortium
  *
@@ -20,7 +22,7 @@
  * \author vix 09sep95 [initial]
  *
  * $Id: eventlib_p.h,v 1.9 2006/03/09 23:57:56 marka Exp $
- * $FreeBSD: releng/11.3/lib/libc/isc/eventlib_p.h 298226 2016-04-18 21:05:15Z avos $
+ * $FreeBSD: releng/12.2/lib/libc/isc/eventlib_p.h 326700 2017-12-08 17:52:53Z pfg $
  */
 
 #ifndef _EVENTLIB_P_H

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_proxy.c 315456 2017-03-17 14:54:10Z vangyzen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_proxy.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /* file: alias_proxy.c
 
@@ -720,7 +722,8 @@ LibAliasProxyRule(struct libalias *la, const char *cmd)
 				err = RuleNumberDelete(la, rule_to_delete);
 				if (err)
 					ret = -1;
-				ret = 0;
+				else
+					ret = 0;
 				goto getout;
 			}
 

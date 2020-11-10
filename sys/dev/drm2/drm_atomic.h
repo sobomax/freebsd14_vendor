@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_atomic.h 296548 2016-03-08 20:33:02Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_atomic.h 338285 2018-08-24 00:02:00Z imp $");
 
 typedef u_int		atomic_t;
 typedef uint64_t	atomic64_t;

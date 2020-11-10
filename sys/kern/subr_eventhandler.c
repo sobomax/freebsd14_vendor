@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Michael Smith <msmith@freebsd.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_eventhandler.c 331727 2018-03-29 04:41:45Z mjoras $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_eventhandler.c 331227 2018-03-19 22:43:27Z mjoras $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2010 Atheros Communications Inc.
  * Copyright (c) 2010-2011 Adrian Chadd, Xenion Pty Ltd.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ath/ath_hal/ar9002/ar9285_phy.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/ath/ath_hal/ar9002/ar9285_phy.c 326255 2017-11-27 14:52:40Z pfg $
  */
 #include "opt_ah.h"
 

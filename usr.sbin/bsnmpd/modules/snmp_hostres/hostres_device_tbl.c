@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/snmp_hostres/hostres_device_tbl.c 325395 2017-11-04 14:49:22Z pfg $
+ * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_hostres/hostres_device_tbl.c 325067 2017-10-28 21:26:49Z pfg $
  */
 
 /*

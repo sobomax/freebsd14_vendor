@@ -1,11 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/opt/Makefile 344213 2019-02-16 15:57:29Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/opt/Makefile 360545 2020-05-01 20:20:23Z dim $
 
 PROG_CXX=	opt
 
-SRCDIR=		tools/opt
+SRCDIR=		llvm/tools/opt
 SRCS+=		AnalysisWrappers.cpp
 SRCS+=		BreakpointPrinter.cpp
-SRCS+=		Debugify.cpp
 SRCS+=		GraphPrinters.cpp
 SRCS+=		NewPMDriver.cpp
 SRCS+=		PassPrinters.cpp

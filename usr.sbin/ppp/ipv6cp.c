@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/ppp/ipv6cp.c 330804 2018-03-12 17:36:37Z eugen $
+ * $FreeBSD: releng/12.2/usr.sbin/ppp/ipv6cp.c 329105 2018-02-10 17:09:51Z eugen $
  */
 
 #include <sys/param.h>

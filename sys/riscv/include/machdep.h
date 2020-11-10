@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Ruslan Bukin <br@bsdpad.com>
+ * Copyright (c) 2015-2017 Ruslan Bukin <br@bsdpad.com>
  * All rights reserved.
  *
  * Portions of this software were developed by SRI International and the
@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/riscv/include/machdep.h 292407 2015-12-17 18:44:30Z br $
+ * $FreeBSD: releng/12.2/sys/riscv/include/machdep.h 322361 2017-08-10 14:18:09Z br $
  */
 
 #ifndef _MACHINE_MACHDEP_H_
@@ -39,7 +39,10 @@
 
 struct riscv_bootparams {
 	vm_offset_t	kern_l1pt;	/* Kernel L1 base */
+	vm_offset_t	kern_phys;	/* Kernel base (physical) addr */
 	vm_offset_t	kern_stack;
+	vm_offset_t	dtbp_virt;	/* Device tree blob virtual addr */
+	vm_offset_t	dtbp_phys;	/* Device tree blob physical addr */
 };
 
 extern vm_paddr_t physmap[];

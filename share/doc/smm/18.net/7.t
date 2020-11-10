@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)7.t	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD: releng/11.3/share/doc/smm/18.net/7.t 263142 2014-03-14 03:07:51Z eadler $
+.\"	$FreeBSD: releng/12.2/share/doc/smm/18.net/7.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .nr H2 1
 .br

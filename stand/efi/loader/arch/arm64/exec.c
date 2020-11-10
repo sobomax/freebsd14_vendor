@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/loader/arch/arm64/exec.c 301306 2016-06-04 08:47:45Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/arch/arm64/exec.c 301306 2016-06-04 08:47:45Z andrew $");
 
 #include <stand.h>
 #include <string.h>

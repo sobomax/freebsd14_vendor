@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/ldd/sods.c 335521 2018-06-22 00:30:24Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/ldd/sods.c 335213 2018-06-15 16:28:50Z emaste $");
 
 #include <sys/types.h>
 #include <sys/mman.h>

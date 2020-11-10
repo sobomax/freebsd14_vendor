@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.sbin/usbconfig/dump.h 330449 2018-03-05 07:26:05Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.sbin/usbconfig/dump.h 356400 2020-01-06 09:23:54Z hselasky $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -37,6 +37,7 @@ void	dump_device_info(struct libusb20_device *pdev, uint8_t show_drv);
 void	dump_be_quirk_names(struct libusb20_backend *pbe);
 void	dump_be_dev_quirks(struct libusb20_backend *pbe);
 void	dump_device_desc(struct libusb20_device *pdev);
+void	dump_device_stats(struct libusb20_device *pdev);
 void	dump_config(struct libusb20_device *pdev, uint8_t all_cfg);
 
 #endif	/* _DUMP_H_ */

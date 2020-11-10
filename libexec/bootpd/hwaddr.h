@@ -1,7 +1,7 @@
 /* 
  * hwaddr.h
  *
- * $FreeBSD: releng/11.3/libexec/bootpd/hwaddr.h 97417 2002-05-28 18:36:43Z alfred $
+ * $FreeBSD: releng/12.2/libexec/bootpd/hwaddr.h 97417 2002-05-28 18:36:43Z alfred $
  */
 
 #ifndef	HWADDR_H

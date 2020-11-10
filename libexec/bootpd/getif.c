@@ -1,7 +1,7 @@
 /*
  * getif.c : get an interface structure
  *
- * $FreeBSD: releng/11.3/libexec/bootpd/getif.c 132848 2004-07-29 18:05:20Z kan $
+ * $FreeBSD: releng/12.2/libexec/bootpd/getif.c 315987 2017-03-26 14:37:12Z rwatson $
  */
 
 #include <sys/types.h>
@@ -36,7 +36,7 @@
 static struct ifreq ifreq[10];	/* Holds interface configuration */
 static struct ifconf ifconf;	/* points to ifreq */
 
-static int nmatch();
+static int nmatch(u_char *ca, u_char *cb);
 
 /* Return a pointer to the interface struct for the passed address. */
 struct ifreq *

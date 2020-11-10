@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/ver.h 205263 2010-03-17 21:00:39Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/ver.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_VER_H_

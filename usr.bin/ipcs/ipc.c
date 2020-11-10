@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/ipcs/ipc.c 347995 2019-05-20 16:31:45Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/ipcs/ipc.c 329390 2018-02-16 18:07:04Z lwhsu $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

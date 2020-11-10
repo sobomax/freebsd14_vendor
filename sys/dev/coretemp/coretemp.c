@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007, 2008 Rui Paulo <rpaulo@FreeBSD.org>
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/coretemp/coretemp.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/coretemp/coretemp.c 363629 2020-07-28 02:53:44Z freqlabs $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -143,6 +145,9 @@ coretemp_probe(device_t dev)
 
 	device_set_desc(dev, "CPU On-Die Thermal Sensors");
 
+	if (!bootverbose && device_get_unit(dev) != 0)
+		device_quiet(dev);
+
 	return (BUS_PROBE_GENERIC);
 }
 
@@ -160,7 +165,7 @@ coretemp_attach(device_t dev)
 	sc->sc_dev = dev;
 	pdev = device_get_parent(dev);
 	cpu_model = CPUID_TO_MODEL(cpu_id);
-	cpu_stepping = cpu_id & CPUID_STEPPING;
+	cpu_stepping = CPUID_TO_STEPPING(cpu_id);
 
 	/*
 	 * Some CPUs, namely the PIII, don't have thermal sensors, but

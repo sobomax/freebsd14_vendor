@@ -1,7 +1,9 @@
 /*	$OpenBSD: mdef.h,v 1.33 2015/11/03 16:21:47 deraadt Exp $	*/
 /*	$NetBSD: mdef.h,v 1.7 1996/01/13 23:25:27 pk Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -33,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mdef.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.bin/m4/mdef.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/m4/mdef.h 326025 2017-11-20 19:49:47Z pfg $
  */
 
 #ifdef __GNUC__

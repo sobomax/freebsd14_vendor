@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2012 Konstantin Belousov <kib@FreeBSD.ORG>.
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/vdso.h 237433 2012-06-22 07:06:40Z kib $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/vdso.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_VDSO_H

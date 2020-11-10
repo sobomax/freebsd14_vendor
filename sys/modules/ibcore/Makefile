@@ -1,9 +1,8 @@
-# $FreeBSD: releng/11.3/sys/modules/ibcore/Makefile 331769 2018-03-30 18:06:29Z hselasky $
+# $FreeBSD: releng/12.2/sys/modules/ibcore/Makefile 359378 2020-03-27 20:06:40Z kib $
 .PATH:  ${SRCTOP}/sys/ofed/drivers/infiniband/core
 
 KMOD=	ibcore
-SRCS=	vnode_if.h device_if.h bus_if.h pci_if.h \
-	opt_inet.h opt_inet6.h \
+SRCS= \
 	ib_addr.c \
 	ib_agent.c \
 	ib_cache.c \
@@ -32,6 +31,8 @@ SRCS=	vnode_if.h device_if.h bus_if.h pci_if.h \
 	ib_uverbs_main.c \
 	ib_uverbs_marshall.c \
 	ib_verbs.c
+SRCS+=	${LINUXKPI_GENSRCS}
+SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

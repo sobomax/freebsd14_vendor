@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -29,7 +31,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: releng/11.3/sys/dev/mps/mps_ioctl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/mps/mps_ioctl.h 326022 2017-11-20 19:36:21Z pfg $
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
@@ -59,7 +61,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/11.3/sys/dev/mps/mps_ioctl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/mps/mps_ioctl.h 326022 2017-11-20 19:36:21Z pfg $
  */
 
 #ifndef _MPS_IOCTL_H_

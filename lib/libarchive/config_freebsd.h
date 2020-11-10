@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003-2007 Tim Kientzle
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libarchive/config_freebsd.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libarchive/config_freebsd.h 349523 2019-06-28 22:31:53Z mm $
  */
 
 #include <osreldate.h>
@@ -207,6 +209,7 @@
 #define HAVE_TZSET 1
 #define HAVE_UINTMAX_T 1
 #define HAVE_UNISTD_H 1
+#define HAVE_UNLINKAT 1
 #define HAVE_UNSETENV 1
 #define HAVE_UNSIGNED_LONG_LONG 1
 #define HAVE_UNSIGNED_LONG_LONG_INT 1

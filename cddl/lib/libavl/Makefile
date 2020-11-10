@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/lib/libavl/Makefile 321268 2017-07-20 00:53:50Z ngie $
+# $FreeBSD: releng/12.2/cddl/lib/libavl/Makefile 314654 2017-03-04 11:30:04Z ngie $
 
 .PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/avl
 

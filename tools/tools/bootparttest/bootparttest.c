@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/tools/bootparttest/bootparttest.c 272565 2014-10-05 11:16:16Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/tools/tools/bootparttest/bootparttest.c 321848 2017-08-01 05:26:45Z ngie $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -124,7 +124,7 @@ main(int argc, char **argv)
 	printf("Mediasize: %ju Bytes (%ju sectors)\nSectorsize: %u Bytes\n",
 	    disk.mediasize, disk.mediasize / disk.sectorsize, disk.sectorsize);
 
-	if (disk_open(&dev, disk.mediasize, disk.sectorsize, 0) != 0)
+	if (disk_open(&dev, disk.mediasize, disk.sectorsize) != 0)
 		errx(1, "disk_open failed");
 	printf("\tdisk0:\n");
 	disk_print(&dev, "\tdisk0", 1);

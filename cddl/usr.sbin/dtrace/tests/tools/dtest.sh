@@ -1,4 +1,6 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/dtrace/tests/tools/dtest.sh 313126 2017-02-03 01:18:47Z markj $
+#!/bin/sh
+
+# $FreeBSD: releng/12.2/cddl/usr.sbin/dtrace/tests/tools/dtest.sh 321472 2017-07-25 13:18:28Z lwhsu $
 
 usage()
 {
@@ -83,6 +85,12 @@ runtest()
         retval=1
         ;;
     esac
+
+    if [ $retval -eq 0 ] && \
+        head -n 1 $STDOUT | grep -q -E '^#!/.*ksh$'; then
+        ksh $STDOUT
+        retval=$?
+    fi
 
     return $retval
 }

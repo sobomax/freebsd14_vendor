@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/share/man/man7/release.7 331835 2018-03-31 01:37:14Z gjb $
+.\" $FreeBSD: releng/12.2/share/man/man7/release.7 356917 2020-01-20 15:38:05Z gjb $
 .\"
-.Dd March 28, 2018
+.Dd January 16, 2020
 .Dt RELEASE 7
 .Os
 .Sh NAME
@@ -570,8 +570,10 @@ target invoked by
 Optional variables:
 .Bl -tag -width ".Ev TARGET_ARCH"
 .It Ev OSRELEASE
-Optional base name for generated media images
-.Pq e.g., FreeBSD-9.0-RC2-amd64 .
+Optional base name for generated media images when invoking the
+.Cm install
+target
+.Pq e.g., FreeBSD-12.1-RELEASE-amd64 .
 Defaults to the output of
 .Ic `uname -s`-`uname -r`-`uname -p`
 within the chroot.
@@ -612,10 +614,10 @@ This is analogous to the
 .Dq Nm uname Fl m
 output.
 This is necessary to cross-build some target architectures.
-For example, cross-building for PC98 machines requires
-.Ev TARGET_ARCH Ns = Ns Li i386
+For example, cross-building for ARM64 machines requires
+.Ev TARGET_ARCH Ns = Ns Li aarch64
 and
-.Ev TARGET Ns = Ns Li pc98 .
+.Ev TARGET Ns = Ns Li arm64 .
 If not set,
 .Ev TARGET
 defaults to the current hardware platform.
@@ -659,6 +661,7 @@ svn co svn://svn.freebsd.org/base/head src
 cd src
 make buildworld buildkernel
 cd release
+make obj
 make release
 make install DESTDIR=/var/freebsd-snapshot
 .Ed
@@ -730,7 +733,7 @@ variable in
 .Re
 .Rs
 .%T "FreeBSD Developers' Handbook"
-.%U http://www.FreeBSD.org/doc/en_US.ISO8859-1/books/developers-handbook/
+.%U https://www.FreeBSD.org/doc/en_US.ISO8859-1/books/developers-handbook/
 .Re
 .Sh HISTORY
 .Fx

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/tools/tools/net80211/wlanstats/main.c 297565 2016-04-04 22:10:52Z adrian $
+ * $FreeBSD: releng/12.2/tools/tools/net80211/wlanstats/main.c 365670 2020-09-12 19:33:25Z bz $
  */
 
 /*
@@ -63,7 +63,7 @@ static struct {
   },
   {
     "amsdu",
-    "input,output,amsdu_tooshort,amsdu_split,amsdu_decap,amsdu_encap,rssi,rate"
+    "input,output,amsdu_tooshort,amsdu_split,amsdu_decap,amsdu_encap,rx_amsdu_more,rx_amsdu_more_end,rssi,rate"
   },
 };
 
@@ -158,7 +158,7 @@ print_sta_stats(FILE *fd, const u_int8_t macaddr[IEEE80211_ADDR_LEN])
 
 void
 usage(void) {
-	printf("wlanstats: [-ah] [-i ifname] [-l] [-o fmt] [interval]\n");
+	printf("wlanstats: [-ah] [-i ifname] [-l] [-m station MAC address] [-o fmt] [interval]\n");
 }
 
 int

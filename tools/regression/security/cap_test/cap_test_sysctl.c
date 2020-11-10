@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/security/cap_test/cap_test_sysctl.c 263234 2014-03-16 11:04:44Z rwatson $
+ * $FreeBSD: releng/12.2/tools/regression/security/cap_test/cap_test_sysctl.c 263234 2014-03-16 11:04:44Z rwatson $
  */
 
 /*
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/regression/security/cap_test/cap_test_sysctl.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: releng/12.2/tools/regression/security/cap_test/cap_test_sysctl.c 263234 2014-03-16 11:04:44Z rwatson $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>

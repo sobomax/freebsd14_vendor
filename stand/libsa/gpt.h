@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/gpt.h 329134 2018-02-11 20:00:26Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/gpt.h 353988 2019-10-24 03:16:23Z kevans $
  */
 
 #ifndef _GPT_H_
@@ -34,7 +34,7 @@
 
 #define	MAXTBLENTS	128
 
-int gptread(const uuid_t *uuid, struct dsk *dskp, char *buf);
+int gptread(struct dsk *dskp, char *buf);
 int gptfind(const uuid_t *uuid, struct dsk *dskp, int part);
 void gptbootfailed(struct dsk *dskp);
 

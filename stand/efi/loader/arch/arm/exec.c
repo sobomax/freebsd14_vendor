@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/loader/arch/arm/exec.c 332154 2018-04-06 21:37:25Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/arch/arm/exec.c 354004 2019-10-24 03:48:28Z kevans $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -74,16 +74,19 @@ __elfN(arm_exec)(struct preloaded_file *fp)
 	e = (Elf_Ehdr *)&fmp->md_data;
 
 	efi_time_fini();
+
+	entry = efi_translate(e->e_entry);
+
+	printf("Kernel entry at 0x%x...\n", (unsigned)entry);
+	printf("Kernel args: %s\n", fp->f_args);
+
 	if ((error = bi_load(fp->f_args, &modulep, &kernend)) != 0) {
 		efi_time_init();
 		return (error);
 	}
 
-	entry = efi_translate(e->e_entry);
-	printf("Kernel entry at 0x%x...\n", (unsigned)entry);
-	printf("Kernel args: %s\n", fp->f_args);
-	printf("modulep: %#x\n", modulep);
-	printf("relocation_offset %llx\n", __elfN(relocation_offset));
+	/* At this point we've called ExitBootServices, so we can't call
+	 * printf or any other function that uses Boot Services */
 
 	dev_cleanup();
 

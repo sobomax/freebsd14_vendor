@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/Makefile 323302 2017-09-08 04:46:55Z ngie $
+# $FreeBSD: releng/12.2/bin/Makefile 324351 2017-10-06 08:43:14Z jlh $
 
 .include <src.opts.mk>
 
@@ -40,7 +40,6 @@ SUBDIR= cat \
 	test \
 	uuidgen
 
-SUBDIR.${MK_RCMDS}+=	rcp
 SUBDIR.${MK_SENDMAIL}+=	rmail
 SUBDIR.${MK_TCSH}+=	csh
 SUBDIR.${MK_TESTS}+=	tests

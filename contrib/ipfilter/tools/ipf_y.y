@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/tools/ipf_y.y 319175 2017-05-30 03:22:18Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ipf_y.y 320257 2017-06-23 02:42:04Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -2303,7 +2303,7 @@ makepool(list)
 
 	for (n = top, a = list; (n != NULL) && (a != NULL); a = a->al_next) {
 		if (use_inet6 == 1) {
-#ifdef AF_INET6
+#ifdef USE_INET6
 			n->ipn_addr.adf_family = AF_INET6;
 			n->ipn_addr.adf_addr = a->al_i6addr;
 			n->ipn_addr.adf_len = offsetof(addrfamily_t,

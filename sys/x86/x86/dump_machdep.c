@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Marcel Moolenaar
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/x86/dump_machdep.c 276772 2015-01-07 01:01:39Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/dump_machdep.c 326263 2017-11-27 15:11:47Z pfg $");
 
 #include "opt_watchdog.h"
 

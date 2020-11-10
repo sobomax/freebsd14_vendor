@@ -1,6 +1,3 @@
-# $FreeBSD: releng/11.3/libexec/rtld-elf/i386/Makefile.inc 286317 2015-08-05 12:53:55Z vangyzen $
+# $FreeBSD: releng/12.2/libexec/rtld-elf/i386/Makefile.inc 351779 2019-09-03 19:36:46Z kib $
 
 CFLAGS+=	${CFLAGS_NO_SIMD} -msoft-float
-# Uncomment this to build the dynamic linker as an executable instead
-# of a shared library:
-#LDSCRIPT=	${.CURDIR}/${MACHINE_CPUARCH}/elf_rtld.x

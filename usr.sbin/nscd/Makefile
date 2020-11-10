@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/nscd/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/nscd/Makefile 336850 2018-07-28 23:29:36Z brd $
 
+CONFS=	nscd.conf
 PROG=	nscd
 MAN=	nscd.conf.5 nscd.8
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/man/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/man/Makefile 336533 2018-07-20 05:17:49Z imp $
 
 .include <bsd.init.mk>
 

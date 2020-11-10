@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/sbin/newfs_msdos/newfs_msdos.c 336329 2018-07-16 04:06:34Z delphij $";
+  "$FreeBSD: releng/12.2/sbin/newfs_msdos/newfs_msdos.c 357513 2020-02-04 19:01:17Z dim $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -178,18 +178,17 @@ main(int argc, char *argv[])
     argv += optind;
     if (argc < 1 || argc > 2)
 	usage();
-	if (o.align) {
-		if (o.hidden_sectors_set)
-		    errx(1, "align (-A) is incompatible with -r");
-	}
+    if (o.align) {
+	if (o.reserved_sectors)
+	    errx(1, "align (-A) is incompatible with -r");
+    }
     fname = *argv++;
     if (!o.create_size && !strchr(fname, '/')) {
 	snprintf(buf, sizeof(buf), "%s%s", _PATH_DEV, fname);
-	if (!(fname = strdup(buf)))
-	    err(1, NULL);
+	fname = buf;
     }
     dtype = *argv;
-    return !!mkfs_msdos(fname, dtype, &o);
+    exit(!!mkfs_msdos(fname, dtype, &o));
 }
 
 /*

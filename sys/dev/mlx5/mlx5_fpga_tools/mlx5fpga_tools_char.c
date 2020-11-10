@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_fpga_tools/mlx5fpga_tools_char.c 347797 2019-05-16 17:11:02Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_fpga_tools/mlx5fpga_tools_char.c 347711 2019-05-16 15:41:04Z hselasky $
  */
 
 #include <sys/param.h>

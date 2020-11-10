@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, 1999 Kenneth D. Merry.
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cam/scsi/scsi_pass.h 291716 2015-12-03 20:54:55Z ken $
+ * $FreeBSD: releng/12.2/sys/cam/scsi/scsi_pass.h 326265 2017-11-27 15:12:43Z pfg $
  */
 
 #ifndef _SCSI_PASS_H

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/libsa/geli/Makefile.inc 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/libsa/geli/Makefile.inc 336252 2018-07-13 17:50:25Z ian $
 # Extra stuff for GELI
 
 .PATH: ${SASRC}/geli

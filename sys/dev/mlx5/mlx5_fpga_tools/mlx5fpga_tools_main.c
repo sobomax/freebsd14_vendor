@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_fpga_tools/mlx5fpga_tools_main.c 341573 2018-12-05 14:17:22Z slavash $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_fpga_tools/mlx5fpga_tools_main.c 363150 2020-07-13 15:33:06Z hselasky $
  */
 
 #include <linux/module.h>
@@ -139,5 +139,5 @@ static void __exit mlx5_fpga_tools_exit(void)
 	mlx5_fpga_tools_char_deinit();
 }
 
-module_init(mlx5_fpga_tools_init);
-module_exit(mlx5_fpga_tools_exit);
+module_init_order(mlx5_fpga_tools_init, SI_ORDER_SECOND);
+module_exit_order(mlx5_fpga_tools_exit, SI_ORDER_SECOND);

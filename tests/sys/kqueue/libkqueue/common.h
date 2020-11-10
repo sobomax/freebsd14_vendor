@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tests/sys/kqueue/libkqueue/common.h 341275 2018-11-30 02:06:30Z dab $
+ * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/common.h 359753 2020-04-09 20:35:35Z kevans $
  */
 
 #ifndef _COMMON_H
@@ -41,7 +41,8 @@
 #include <sys/event.h>
 
 extern char *cur_test_id;
-int vnode_fd;
+extern int vnode_fd;
+extern int kqfd;
 
 extern char * kevent_to_str(struct kevent *);
 struct kevent * kevent_get(int);

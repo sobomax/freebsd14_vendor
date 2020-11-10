@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/hastd/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/hastd/Makefile 313192 2017-02-04 06:12:48Z allanjude $
 
 .include <src.opts.mk>
 
@@ -31,11 +31,7 @@ CFLAGS+=-DINET
 CFLAGS+=-DINET6
 .endif
 
-LIBADD=	geom pthread util
-.if ${MK_OPENSSL} != "no"
-LIBADD+=	crypto
-CFLAGS+=-DHAVE_CRYPTO
-.endif
+LIBADD=	geom md pthread util
 
 YFLAGS+=-v
 

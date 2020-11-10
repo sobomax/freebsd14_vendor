@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bluetooth/Makefile.inc 314007 2017-02-21 02:23:57Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/bluetooth/Makefile.inc 313656 2017-02-11 20:27:53Z ngie $
 
 .include "${SRCTOP}/usr.bin/Makefile.inc"
 

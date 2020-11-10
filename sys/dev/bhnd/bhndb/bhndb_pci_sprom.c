@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/bhndb/bhndb_pci_sprom.c 300548 2016-05-24 01:12:19Z adrian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bhnd/bhndb/bhndb_pci_sprom.c 305375 2016-09-04 01:47:21Z landonf $");
 
 /*
  * BHNDB PCI SPROM driver.
@@ -60,16 +60,12 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/bhndb/bhndb_pci_sprom.c 300548 2016
 static int
 bhndb_pci_sprom_probe(device_t dev)
 {
-	device_t	bridge, bus;
+	device_t	bridge;
 	int		error;
 
-	/* Our parent must be a PCI-BHND bridge with an attached bhnd bus */
+	/* Our parent must be a PCI-BHND bridge */
 	bridge = device_get_parent(dev);
 	if (device_get_driver(bridge) != &bhndb_pci_driver)
-		return (ENXIO);
-	
-	bus = device_find_child(bridge, devclass_get_name(bhnd_devclass), 0);
-	if (bus == NULL)
 		return (ENXIO);
 
 	/* Defer to default driver implementation */

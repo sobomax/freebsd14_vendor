@@ -1,4 +1,7 @@
-# $FreeBSD: releng/11.3/tests/sys/fs/Makefile 307702 2016-10-21 05:24:08Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/fs/Makefile 352356 2019-09-15 14:37:50Z kevans $
+
+.include <src.opts.mk>
+.include <bsd.compiler.mk>
 
 PACKAGE=		tests
 
@@ -7,6 +10,10 @@ TESTSDIR=		${TESTSBASE}/sys/fs
 TESTSRC=		${SRCTOP}/contrib/netbsd-tests/fs
 
 #TESTS_SUBDIRS+=	nullfs	# XXX: needs rump
+# fusefs tests cannot be compiled/used without the googletest infrastructure.
+.if ${COMPILER_FEATURES:Mc++14} && ${MK_GOOGLETEST} != "no"
+TESTS_SUBDIRS+=		fusefs
+.endif
 TESTS_SUBDIRS+=		tmpfs
 
 ${PACKAGE}FILES+=	h_funcs.subr

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 IPNET Internet Communication Company
  * Copyright (c) 2011 - 2012 Rozhuk Ivan <rozhuk.im@gmail.com>
  * All rights reserved.
@@ -26,7 +28,7 @@
  *
  * Author: Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_vlan.c 298813 2016-04-29 21:25:05Z pfg $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_vlan.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/param.h>

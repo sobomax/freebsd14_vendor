@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * Copyright (c) 2002,2003 Henning Brauer
  * All rights reserved.
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf_ruleset.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/pf_ruleset.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

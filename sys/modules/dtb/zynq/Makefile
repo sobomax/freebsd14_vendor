@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/dtb/zynq/Makefile 298666 2016-04-26 21:11:01Z gonzo $
+# $FreeBSD: releng/12.2/sys/modules/dtb/zynq/Makefile 298666 2016-04-26 21:11:01Z gonzo $
 # All the dts files for Zynq systems we support.
 DTS=	\
 	zedboard.dts \

@@ -1,4 +1,4 @@
-.\"    $FreeBSD: releng/11.3/share/man/man5/pf.conf.5 342956 2019-01-12 05:44:10Z kp $
+.\"    $FreeBSD: releng/12.2/share/man/man5/pf.conf.5 361451 2020-05-25 12:45:10Z markj $
 .\"	$OpenBSD: pf.conf.5,v 1.406 2009/01/31 19:37:12 sobrado Exp $
 .\"
 .\" Copyright (c) 2002, Daniel Hartmeier
@@ -28,7 +28,7 @@
 .\" ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.Dd January 5, 2019
+.Dd March 10, 2019
 .Dt PF.CONF 5
 .Os
 .Sh NAME
@@ -189,6 +189,7 @@ The
 .Ar counters
 flag enables per-address packet and byte counters which can be displayed with
 .Xr pfctl 8 .
+Note that this feature carries significant memory overhead for large tables.
 .El
 .Pp
 For example,
@@ -673,9 +674,16 @@ for matching IP packets.
 .Em TOS
 may be
 given as one of
+.Ar critical ,
+.Ar inetcontrol ,
 .Ar lowdelay ,
+.Ar netcontrol ,
 .Ar throughput ,
 .Ar reliability ,
+or one of the DiffServ Code Points:
+.Ar ef ,
+.Ar af11 No ... Ar af43 ,
+.Ar cs0 No ... Ar cs7 ;
 or as either hex or decimal.
 .It Ar random-id
 Replaces the IP identification field with random values to compensate
@@ -1722,9 +1730,16 @@ bits set.
 .Em TOS
 may be
 given as one of
+.Ar critical ,
+.Ar inetcontrol ,
 .Ar lowdelay ,
+.Ar netcontrol ,
 .Ar throughput ,
 .Ar reliability ,
+or one of the DiffServ Code Points:
+.Ar ef ,
+.Ar af11 No ... Ar af43 ,
+.Ar cs0 No ... Ar cs7 ;
 or as either hex or decimal.
 .Pp
 For example, the following rules are identical:
@@ -1828,7 +1843,6 @@ pass in proto tcp to port 25 set prio 2
 pass in proto tcp to port 22 set prio (2, 5)
 .Ed
 .Pp
-
 .It Ar tag Aq Ar string
 Packets matching this rule will be tagged with the
 specified string.
@@ -1899,10 +1913,6 @@ route the packet according to the type of route option.
 When such a rule creates state, the route option is also applied to all
 packets matching the same connection.
 .Bl -tag -width xxxx
-.It Ar fastroute
-The
-.Ar fastroute
-option does a normal route lookup to find the next hop for the packet.
 .It Ar route-to
 The
 .Ar route-to
@@ -2860,7 +2870,7 @@ option         = "set" ( [ "timeout" ( timeout | "{" timeout-list "}" ) ] |
 
 pf-rule        = action [ ( "in" | "out" ) ]
                  [ "log" [ "(" logopts ")"] ] [ "quick" ]
-                 [ "on" ifspec ] [ "fastroute" | route ] [ af ] [ protospec ]
+                 [ "on" ifspec ] [ route ] [ af ] [ protospec ]
                  hosts [ filteropt-list ]
 
 logopts        = logopt [ "," logopts ]
@@ -3044,6 +3054,8 @@ include        = "include" filename
 Host name database.
 .It Pa /etc/pf.conf
 Default location of the ruleset file.
+The file has to be created manually as it is not installed with a
+standard installation.
 .It Pa /etc/pf.os
 Default location of OS fingerprints.
 .It Pa /etc/protocols

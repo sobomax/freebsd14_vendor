@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_pwmss.c 303772 2016-08-05 16:32:09Z loos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/am335x/am335x_pwmss.c 308638 2016-11-14 11:41:22Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_pwmss.c 303772 2016-08-
 
 #include <machine/bus.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/fdt/simplebus.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>

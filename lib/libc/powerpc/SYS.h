@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2002 Benno Rice.  All rights reserved.
  * Copyright (c) 2002 David E. O'Brien.  All rights reserved.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$NetBSD: SYS.h,v 1.8 2002/01/14 00:55:56 thorpej Exp $
- * $FreeBSD: releng/11.3/lib/libc/powerpc/SYS.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libc/powerpc/SYS.h 326025 2017-11-20 19:49:47Z pfg $
  */
 
 #include <sys/syscall.h>

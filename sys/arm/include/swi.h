@@ -1,5 +1,5 @@
 /*	$NetBSD: swi.h,v 1.1 2002/01/13 15:03:06 bjh21 Exp $	*/
-/* $FreeBSD: releng/11.3/sys/arm/include/swi.h 139735 2005-01-05 21:58:49Z imp $ */
+/* $FreeBSD: releng/12.2/sys/arm/include/swi.h 139735 2005-01-05 21:58:49Z imp $ */
 
 /*-
  * This file is in the Public Domain.

@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/psci/psci_arm64.S 281497 2015-04-13 16:41:33Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/psci/psci_arm64.S 337752 2018-08-14 13:56:49Z loos $");
 
 /*
  * uint64_t psci_hvc_despatch(uint64_t psci_fnid, uint64_t, uint64_t, uint64_t)
@@ -46,4 +46,4 @@ END(psci_hvc_despatch)
 ENTRY(psci_smc_despatch)
 	smc	#0
 	ret
-END(psci_hvc_despatch)
+END(psci_smc_despatch)

@@ -1,4 +1,6 @@
-# $FreeBSD: releng/11.3/share/examples/tests/tests/Makefile 321647 2017-07-28 03:32:36Z ngie $
+# $FreeBSD: releng/12.2/share/examples/tests/tests/Makefile 348138 2019-05-23 01:09:10Z ngie $
+
+.include <src.opts.mk>
 
 # Directory into which the Kyuafile provided by this directory will be
 # installed.
@@ -20,6 +22,10 @@
 TESTS_SUBDIRS+=	atf
 TESTS_SUBDIRS+=	plain
 TESTS_SUBDIRS+=	tap
+
+.if ${MK_GOOGLETEST} != no
+TESTS_SUBDIRS+= googletest
+.endif
 
 # We leave KYUAFILE unset so that bsd.test.mk auto-generates a Kyuafile
 # for us based on the contents of the TESTS_SUBDIRS line above.  The

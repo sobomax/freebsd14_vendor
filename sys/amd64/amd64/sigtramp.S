@@ -23,14 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/amd64/sigtramp.S 114349 2003-05-01 01:05:25Z peter $
+ * $FreeBSD: releng/12.2/sys/amd64/amd64/sigtramp.S 331254 2018-03-20 17:58:51Z emaste $
  */
 
 #include <sys/syscall.h>
 
 #include <machine/asmacros.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 	.text
 /**********************************************************************

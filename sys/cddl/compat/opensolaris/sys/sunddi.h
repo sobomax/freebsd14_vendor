@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/sunddi.h 325534 2017-11-08 08:53:44Z avg $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/sunddi.h 324163 2017-10-01 16:11:07Z avg $
  */
 
 #ifndef _OPENSOLARIS_SYS_SUNDDI_H_

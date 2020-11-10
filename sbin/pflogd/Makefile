@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/pflogd/Makefile 319279 2017-05-31 05:20:59Z delphij $
+# $FreeBSD: releng/12.2/sbin/pflogd/Makefile 314656 2017-03-04 11:33:01Z ngie $
 
 .PATH:	${SRCTOP}/contrib/pf/pflogd
 
@@ -8,7 +8,7 @@ SRCS= 	pflogd.c pidfile.c privsep.c privsep_fdpass.c
 MAN=	pflogd.8
 
 CFLAGS+=-include ${SRCTOP}/lib/libpcap/config.h
-CFLAGS+=-I${.CURDIR}/../../contrib/libpcap
+CFLAGS+=-I${SRCTOP}/contrib/libpcap
 
 LIBADD=	pcap
 

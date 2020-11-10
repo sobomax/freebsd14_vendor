@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/crypto/des/des_enc.c 331643 2018-03-27 18:52:27Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/crypto/des/des_enc.c 318389 2017-05-17 00:34:34Z emaste $");
 
 #include <sys/types.h>
 #include <crypto/des/des_locl.h>

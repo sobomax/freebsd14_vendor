@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2016 Michael Zhilin <mizhka@gmail.com>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/cores/chipc/chipc_cfi.c 302189 2016-06-25 04:33:00Z landonf $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bhnd/cores/chipc/chipc_cfi.c 326695 2017-12-08 15:57:29Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

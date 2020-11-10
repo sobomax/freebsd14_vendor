@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/tools/tools/mwl/mwlstats/mwlstats.h 262830 2014-03-06 07:48:43Z adrian $
+ * $FreeBSD: releng/12.2/tools/tools/mwl/mwlstats/mwlstats.h 262830 2014-03-06 07:48:43Z adrian $
  */
 
 #ifndef _MWLSTATS_H_

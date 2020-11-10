@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/ntpq/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/ntpq/Makefile 358110 2020-02-19 14:37:56Z bapt $
 
 MAN=
 
@@ -27,9 +27,6 @@ LIBADD+=	crypto
 .else
 LIBADD+=	md
 .endif
-
-CFLAGS+=	-DHAVE_LIBEDIT -DHAVE_READLINE_READLINE_H \
-		-I${DESTDIR}/${INCLUDEDIR}/edit
 
 CLEANFILES+= .version version.c
 

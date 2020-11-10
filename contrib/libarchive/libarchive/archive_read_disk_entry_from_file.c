@@ -249,11 +249,11 @@ archive_read_disk_entry_from_file(struct archive *_a,
 
 #if defined(HAVE_READLINK) || defined(HAVE_READLINKAT)
 	if (S_ISLNK(st->st_mode)) {
-		size_t linkbuffer_len = st->st_size + 1;
+		size_t linkbuffer_len = st->st_size;
 		char *linkbuffer;
 		int lnklen;
 
-		linkbuffer = malloc(linkbuffer_len);
+		linkbuffer = malloc(linkbuffer_len + 1);
 		if (linkbuffer == NULL) {
 			archive_set_error(&a->archive, ENOMEM,
 			    "Couldn't read link data");
@@ -280,7 +280,7 @@ archive_read_disk_entry_from_file(struct archive *_a,
 			free(linkbuffer);
 			return (ARCHIVE_FAILED);
 		}
-		linkbuffer[lnklen] = 0;
+		linkbuffer[lnklen] = '\0';
 		archive_entry_set_symlink(entry, linkbuffer);
 		free(linkbuffer);
 	}
@@ -616,9 +616,21 @@ setup_xattrs(struct archive_read_disk *a,
 	}
 
 	for (p = list; (p - list) < list_size; p += strlen(p) + 1) {
-		if (strncmp(p, "system.", 7) == 0 ||
-				strncmp(p, "xfsroot.", 8) == 0)
+#if ARCHIVE_XATTR_LINUX
+		/* Linux: skip POSIX.1e ACL extended attributes */
+		if (strncmp(p, "system.", 7) == 0 &&
+		   (strcmp(p + 7, "posix_acl_access") == 0 ||
+		    strcmp(p + 7, "posix_acl_default") == 0))
 			continue;
+		if (strncmp(p, "trusted.SGI_", 12) == 0 &&
+		   (strcmp(p + 12, "ACL_DEFAULT") == 0 ||
+		    strcmp(p + 12, "ACL_FILE") == 0))
+			continue;
+
+		/* Linux: xfsroot namespace is obsolete and unsupported */
+		if (strncmp(p, "xfsroot.", 8) == 0)
+			continue;
+#endif
 		setup_xattr(a, entry, p, *fd, path);
 	}
 

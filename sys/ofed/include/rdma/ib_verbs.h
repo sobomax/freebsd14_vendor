@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004 Mellanox Technologies Ltd.  All rights reserved.
  * Copyright (c) 2004 Infinicon Corporation.  All rights reserved.
  * Copyright (c) 2004 Intel Corporation.  All rights reserved.
@@ -35,7 +37,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/include/rdma/ib_verbs.h 347857 2019-05-16 18:08:33Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/include/rdma/ib_verbs.h 354995 2019-11-22 14:23:11Z hselasky $
  */
 
 #if !defined(IB_VERBS_H)
@@ -283,7 +285,7 @@ enum ib_cq_creation_flags {
 
 struct ib_cq_init_attr {
 	unsigned int	cqe;
-	int		comp_vector;
+	u32		comp_vector;
 	u32		flags;
 };
 
@@ -1326,11 +1328,6 @@ enum ib_access_flags {
 	IB_ACCESS_ON_DEMAND     = (1<<6),
 };
 
-struct ib_phys_buf {
-	u64	addr;
-	u64	size;
-};
-
 /*
  * XXX: these are apparently used for ->rereg_user_mr, no idea why they
  * are hidden here instead of a uapi header!
@@ -1562,7 +1559,7 @@ struct ib_mr {
 	u32		   lkey;
 	u32		   rkey;
 	u64		   iova;
-	u32		   length;
+	u64		   length;
 	unsigned int	   page_size;
 	bool		   need_inval;
 	union {
@@ -2003,11 +2000,6 @@ struct ib_device {
 						      int wc_cnt);
 	struct ib_mr *             (*get_dma_mr)(struct ib_pd *pd,
 						 int mr_access_flags);
-	struct ib_mr *		   (*reg_phys_mr)(struct ib_pd *pd,
-						  struct ib_phys_buf *phys_buf_array,
-						  int num_phys_buf,
-						  int mr_access_flags,
-						  u64 *iova_start);
 	struct ib_mr *             (*reg_user_mr)(struct ib_pd *pd,
 						  u64 start, u64 length,
 						  u64 virt_addr,

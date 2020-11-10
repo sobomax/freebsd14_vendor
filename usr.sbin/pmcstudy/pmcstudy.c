@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2014, 2015 Netflix Inc.
- * All rights reserved.
+ * Copyright (c) 2014-2015 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,7 +35,7 @@
 #include <sys/wait.h>
 #include <getopt.h>
 #include "eval_expr.h"
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/pmcstudy/pmcstudy.c 303675 2016-08-02 20:18:43Z bdrewery $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/pmcstudy/pmcstudy.c 351913 2019-09-05 23:27:59Z imp $");
 
 static int max_pmc_counters = 1;
 static int run_all = 0;

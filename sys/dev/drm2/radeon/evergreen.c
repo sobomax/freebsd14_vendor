@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/evergreen.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/evergreen.c 360303 2020-04-25 13:10:17Z dim $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -551,7 +551,7 @@ bool evergreen_hpd_sense(struct radeon_device *rdev, enum radeon_hpd_id hpd)
 	case RADEON_HPD_6:
 		if (RREG32(DC_HPD6_INT_STATUS) & DC_HPDx_SENSE)
 			connected = true;
-			break;
+		break;
 	default:
 		break;
 	}

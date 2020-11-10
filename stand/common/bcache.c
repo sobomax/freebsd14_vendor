@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/bcache.c 346483 2019-04-21 04:35:49Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/bcache.c 353983 2019-10-24 03:01:40Z kevans $");
 
 /*
  * Simple hashed block cache
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: releng/11.3/stand/common/bcache.c 346483 2019-04-21 04:35:49
 #ifdef BCACHE_DEBUG
 # define DPRINTF(fmt, args...)	printf("%s: " fmt "\n" , __func__ , ## args)
 #else
-# define DPRINTF(fmt, args...)
+# define DPRINTF(fmt, args...)	((void)0)
 #endif
 
 struct bcachectl
@@ -86,6 +86,7 @@ static u_int bcache_rablks;
 	((bc)->bcache_ctl[BHASH((bc), (blkno))].bc_blkno != (blkno))
 #define	BCACHE_READAHEAD	256
 #define	BCACHE_MINREADAHEAD	32
+#define	BCACHE_MARKER		0xdeadbeef
 
 static void	bcache_invalidate(struct bcache *bc, daddr_t blkno);
 static void	bcache_insert(struct bcache *bc, daddr_t blkno);
@@ -122,6 +123,7 @@ bcache_allocate(void)
     u_int i;
     struct bcache *bc = malloc(sizeof (struct bcache));
     int disks = bcache_numdev;
+    uint32_t *marker;
 
     if (disks == 0)
 	disks = 1;	/* safe guard */
@@ -140,7 +142,8 @@ bcache_allocate(void)
 
     bc->bcache_nblks = bcache_total_nblks >> i;
     bcache_unit_nblks = bc->bcache_nblks;
-    bc->bcache_data = malloc(bc->bcache_nblks * bcache_blksize);
+    bc->bcache_data = malloc(bc->bcache_nblks * bcache_blksize +
+	sizeof(uint32_t));
     if (bc->bcache_data == NULL) {
 	/* dont error out yet. fall back to 32 blocks and try again */
 	bc->bcache_nblks = 32;
@@ -155,6 +158,9 @@ bcache_allocate(void)
 	errno = ENOMEM;
 	return (NULL);
     }
+    /* Insert cache end marker. */
+    marker = (uint32_t *)(bc->bcache_data + bc->bcache_nblks * bcache_blksize);
+    *marker = BCACHE_MARKER;
 
     /* Flush the cache */
     for (i = 0; i < bc->bcache_nblks; i++) {
@@ -216,11 +222,14 @@ read_strategy(void *devdata, int rw, daddr_t blk, size_t size,
     int				result;
     daddr_t			p_blk;
     caddr_t			p_buf;
+    uint32_t			*marker;
 
     if (bc == NULL) {
 	errno = ENODEV;
 	return (-1);
     }
+
+    marker = (uint32_t *)(bc->bcache_data + bc->bcache_nblks * bcache_blksize);
 
     if (rsize != NULL)
 	*rsize = 0;
@@ -341,6 +350,12 @@ read_strategy(void *devdata, int rw, daddr_t blk, size_t size,
 	result = 0;
     }
 
+    if (*marker != BCACHE_MARKER) {
+	printf("BUG: bcache corruption detected: nblks: %zu p_blk: %lu, "
+	    "p_size: %zu, ra: %zu\n", bc->bcache_nblks,
+	    (long unsigned)BHASH(bc, p_blk), p_size, ra);
+    }
+
  done:
     if ((result == 0) && (rsize != NULL))
 	*rsize = size;
@@ -426,10 +441,8 @@ static void
 bcache_free_instance(struct bcache *bc)
 {
     if (bc != NULL) {
-	if (bc->bcache_ctl)
-	    free(bc->bcache_ctl);
-	if (bc->bcache_data)
-	    free(bc->bcache_data);
+	free(bc->bcache_ctl);
+	free(bc->bcache_data);
 	free(bc);
     }
 }
@@ -469,7 +482,7 @@ bcache_invalidate(struct bcache *bc, daddr_t blkno)
 COMMAND_SET(bcachestat, "bcachestat", "get disk block cache stats", command_bcache);
 
 static int
-command_bcache(int argc, char *argv[])
+command_bcache(int argc, char *argv[] __unused)
 {
     if (argc != 1) {
 	command_errmsg = "wrong number of arguments";

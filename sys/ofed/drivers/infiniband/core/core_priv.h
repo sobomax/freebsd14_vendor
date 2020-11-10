@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004 Topspin Communications.  All rights reserved.
  *
  * This software is available to you under a choice of one of two
@@ -29,7 +31,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/core_priv.h 331784 2018-03-30 18:36:44Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/core_priv.h 330508 2018-03-05 14:34:52Z hselasky $
  */
 
 #ifndef _CORE_PRIV_H

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/gptzfsboot/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/gptzfsboot/Makefile 359155 2020-03-19 22:33:24Z dim $
 
 .include <bsd.init.mk>
 
@@ -28,6 +28,8 @@ CFLAGS+=-DBOOTPROG=\"gptzfsboot\" \
 	-I${ZFSSRC} \
 	-I${SYSDIR}/crypto/skein \
 	-I${SYSDIR}/cddl/boot/zfs \
+	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
+	-I${SYSDIR}/cddl/contrib/opensolaris/common/lz4 \
 	-I${BOOTSRC}/i386/btx/lib \
 	-I${BOOTSRC}/i386/boot2 \
 	-Wall -Waggregate-return -Wbad-function-cast \
@@ -55,7 +57,7 @@ gptldr.bin: gptldr.out
 	${OBJCOPY} -S -O binary gptldr.out ${.TARGET}
 
 gptldr.out: gptldr.o
-	${LD} ${LD_FLAGS} -e start -Ttext ${ORG1} -o ${.TARGET} gptldr.o
+	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} gptldr.o
 
 CLEANFILES+=	gptzfsboot.bin gptzfsboot.out zfsboot.o sio.o cons.o \
 		drv.o gpt.o ${OPENCRYPTO_XTS}
@@ -65,7 +67,7 @@ gptzfsboot.bin: gptzfsboot.out
 
 gptzfsboot.out: ${BTXCRT} zfsboot.o sio.o gpt.o drv.o cons.o \
 	${OPENCRYPTO_XTS}
-	${LD} ${LD_FLAGS} -Ttext ${ORG2} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
+	${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
 
 zfsboot.o: ${ZFSSRC}/zfsimpl.c
 

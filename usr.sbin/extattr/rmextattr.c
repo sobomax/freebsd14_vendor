@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/extattr/rmextattr.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/extattr/rmextattr.c 357879 2020-02-13 20:45:32Z asomers $
  */
 
 #include <sys/types.h>
@@ -104,7 +104,7 @@ mkbuf(char **buf, int *oldlen, int newlen)
 int
 main(int argc, char *argv[])
 {
-#define STDIN_BUF_SZ 1024
+#define STDIN_BUF_SZ 4096
 	char	 stdin_data[STDIN_BUF_SZ];
 	char	*p;
 

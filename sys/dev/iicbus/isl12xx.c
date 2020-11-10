@@ -1,5 +1,7 @@
 /*-
- * Copyright (c) 2017 Ian Lepore.  All rights reserved.
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2017 Ian Lepore.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/isl12xx.c 331503 2018-03-24 23:01:10Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/isl12xx.c 356024 2019-12-22 20:06:08Z ian $");
 
 /*
  * Driver for ISL12xx family i2c realtime clocks:
@@ -356,3 +358,4 @@ static devclass_t isl12xx_devclass;
 DRIVER_MODULE(isl12xx, iicbus, isl12xx_driver, isl12xx_devclass, NULL, NULL);
 MODULE_VERSION(isl12xx, 1);
 MODULE_DEPEND(isl12xx, iicbus, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
+IICBUS_FDT_PNP_INFO(compat_data);

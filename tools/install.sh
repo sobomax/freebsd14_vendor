@@ -26,7 +26,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/install.sh 290960 2015-11-16 23:27:44Z bdrewery $
+# $FreeBSD: releng/12.2/tools/install.sh 326239 2017-11-27 02:28:40Z brd $
 
 # parse install's options and ignore them completely.
 dirmode=""
@@ -34,9 +34,9 @@ linkmode=""
 while [ $# -gt 0 ]; do
     case $1 in
     -d) dirmode="YES"; shift;;
-    -[bCcpSsv]) shift;;
-    -[BDfghMmNoTU]) shift; shift;;
-    -[BDfghMmNoTU]*) shift;;
+    -[bCcpSsUv]) shift;;
+    -[BDfghMmNoT]) shift; shift;;
+    -[BDfghMmNoT]*) shift;;
     -l)
 	shift
 	case $1 in

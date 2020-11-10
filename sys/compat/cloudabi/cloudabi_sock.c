@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/cloudabi/cloudabi_sock.c 338618 2018-09-12 19:13:32Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/cloudabi/cloudabi_sock.c 337423 2018-08-07 16:36:48Z markj $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>

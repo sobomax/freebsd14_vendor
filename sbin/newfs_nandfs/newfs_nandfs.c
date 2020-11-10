@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/newfs_nandfs/newfs_nandfs.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/newfs_nandfs/newfs_nandfs.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <sys/param.h>
 #include <sys/fdcio.h>
@@ -316,8 +316,8 @@ count_su_blocks(void)
 	}
 
 	debug("bad segment needs %#jx", blk);
-	if (blk >= NDADDR) {
-		printf("nandfs: file too big (%jd > %d)\n", blk, NDADDR);
+	if (blk >= NANDFS_NDADDR) {
+		printf("nandfs: file too big (%jd > %d)\n", blk, NANDFS_NDADDR);
 		exit(2);
 	}
 

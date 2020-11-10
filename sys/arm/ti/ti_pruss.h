@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Rui Paulo <rpaulo@FreeBSD.org>
  * Copyright (c) 2017 Manuel Stuehn
  * All rights reserved.
@@ -24,7 +26,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/ti/ti_pruss.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/ti/ti_pruss.h 326258 2017-11-27 15:04:10Z pfg $
  */
 #ifndef _TI_PRUSS_H_
 #define _TI_PRUSS_H_

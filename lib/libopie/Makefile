@@ -1,7 +1,10 @@
 # Makefile for libopie
 #
-# $FreeBSD: releng/11.3/lib/libopie/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libopie/Makefile 338823 2018-09-20 09:26:10Z brd $
 #
+
+CONFS=	opieaccess
+CONFSMODE=	600
 PACKAGE=lib${LIB}
 OPIE_DIST?=	${SRCTOP}/contrib/opie
 DIST_DIR=	${OPIE_DIST}/${.CURDIR:T}

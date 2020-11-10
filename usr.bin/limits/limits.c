@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/limits/limits.c 328502 2018-01-28 00:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/limits/limits.c 328212 2018-01-21 08:48:26Z eadler $");
 
 #include <err.h>
 #include <stdio.h>

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/dosfs.c 344408 2019-02-21 02:43:48Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/dosfs.c 337412 2018-08-07 10:48:36Z tsoome $");
 
 /*
  * Readonly filesystem for Microsoft FAT12/FAT16/FAT32 filesystems,

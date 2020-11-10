@@ -1,6 +1,8 @@
 # Makefile.inc
-# $FreeBSD: releng/11.3/libexec/bootpd/tools/Makefile.inc 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: releng/12.2/libexec/bootpd/tools/Makefile.inc 350469 2019-07-31 17:01:23Z brooks $
 
 BINDIR=		/usr/sbin
 
 WARNS?=		1
+
+.include "../Makefile.inc"

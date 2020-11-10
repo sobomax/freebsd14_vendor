@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/cloudabi/cloudabi_futex.c 328127 2018-01-18 13:43:09Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/cloudabi/cloudabi_futex.c 327560 2018-01-04 21:57:37Z ed $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

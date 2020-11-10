@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2001 Wind River Systems
  * Copyright (c) 2001
  *	Bill Paul <wpaul@bsdi.com>.  All rights reserved.
@@ -38,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mii/nsgphy.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mii/nsgphy.c 326255 2017-11-27 14:52:40Z pfg $");
 
 /*
  * Driver for the National Semiconductor DP83861, DP83865 and DP83891

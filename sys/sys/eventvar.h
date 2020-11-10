@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999,2000 Jonathan Lemon <jlemon@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,14 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/sys/eventvar.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/sys/eventvar.h 326256 2017-11-27 15:01:59Z pfg $
  */
 
 #ifndef _SYS_EVENTVAR_H_
 #define _SYS_EVENTVAR_H_
 
 #ifndef _KERNEL
-#error "no user-servicable parts inside"
+#error "no user-serviceable parts inside"
 #endif
 
 #include <sys/_task.h>

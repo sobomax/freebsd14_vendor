@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/amd64/locore.S 263002 2014-03-11 10:07:01Z royger $
+ * $FreeBSD: releng/12.2/sys/amd64/amd64/locore.S 331254 2018-03-20 17:58:51Z emaste $
  */
 
 #include <machine/asmacros.h>
@@ -31,7 +31,7 @@
 #include <machine/pmap.h>
 #include <machine/specialreg.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 /*
  * Compiled KERNBASE location

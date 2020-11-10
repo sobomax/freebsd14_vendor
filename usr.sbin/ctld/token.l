@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/ctld/token.l 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/ctld/token.l 352276 2019-09-13 07:08:43Z bapt $
  */
 
 #include <stdio.h>
@@ -45,6 +45,7 @@ extern int	yylex(void);
 
 %}
 
+%option noyywrap
 %option noinput
 %option nounput
 

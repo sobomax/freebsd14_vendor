@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/tap.test.mk 292507 2015-12-20 06:26:15Z ngie $
+# $FreeBSD: releng/12.2/share/mk/tap.test.mk 336758 2018-07-27 10:44:38Z eadler $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -18,7 +18,7 @@
 # PROGS, PROGS_CXX and SCRIPTS, respectively.
 #
 # Test programs registered in this manner are set to be installed into TESTSDIR
-# (which should be overriden by the Makefile) and are not required to provide a
+# (which should be overridden by the Makefile) and are not required to provide a
 # manpage.
 TAP_TESTS_C?=
 TAP_TESTS_CXX?=

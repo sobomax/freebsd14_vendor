@@ -1,9 +1,11 @@
-/*
+/*-
  * Generic "support" routines to replace those obtained from libiberty for ld.
  *
  * I've collected these from random bits of (published) code I've written
  * over the years, not that they are a big deal.  peter@freebsd.org
- *-
+ *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 1996
  *	Peter Wemm.  All rights reserved.
  *
@@ -28,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *-
- * $FreeBSD: releng/11.3/libexec/rtld-aout/support.c 201217 2009-12-29 21:07:17Z ed $
+ * $FreeBSD: releng/12.2/libexec/rtld-aout/support.c 326274 2017-11-27 15:25:02Z pfg $
  */
 #include <sys/types.h>
 #include <string.h>

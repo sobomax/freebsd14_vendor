@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/11.3/libexec/tftpd/Makefile 332608 2018-04-16 16:32:00Z asomers $
+# $FreeBSD: releng/12.2/libexec/tftpd/Makefile 330696 2018-03-09 15:30:20Z asomers $
 
 .include <src.opts.mk>
 

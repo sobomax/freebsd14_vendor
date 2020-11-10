@@ -4,12 +4,12 @@
 # configuration.  This kernel configration must be further specialized to
 # to include a root filesystem specification.
 #
-# $FreeBSD: releng/11.3/sys/mips/conf/BERI_DE4_BASE 276755 2015-01-06 16:15:57Z jhb $
+# $FreeBSD: releng/12.2/sys/mips/conf/BERI_DE4_BASE 332474 2018-04-13 15:59:24Z br $
 #
 
-include "BERI_TEMPLATE"
+#NO_UNIVERSE
 
-ident		BERI_DE4_BASE
+include "std.BERI"
 
 options 	NFSCL			# Network Filesystem Client
 options 	NFSLOCKD		# Network Lock Manager
@@ -40,6 +40,13 @@ device		uart
 
 device		miibus
 options 	DEVICE_POLLING
+
+#
+# DMA support
+#
+device		xdma
+device		altera_softdma
+device		altera_msgdma
 
 #
 # USB support

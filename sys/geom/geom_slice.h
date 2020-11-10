@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2002 Poul-Henning Kamp
  * Copyright (c) 2002 Networks Associates Technology, Inc.
  * All rights reserved.
@@ -32,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/geom_slice.h 243333 2012-11-20 12:32:18Z jh $
+ * $FreeBSD: releng/12.2/sys/geom/geom_slice.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #ifndef _GEOM_GEOM_SLICE_H_

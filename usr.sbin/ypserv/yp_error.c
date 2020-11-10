@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/ypserv/yp_error.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ypserv/yp_error.c 359753 2020-04-09 20:35:35Z kevans $");
 
 /*
  * error logging/reporting facilities
@@ -44,8 +46,6 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/ypserv/yp_error.c 331722 2018-03-29 02:
 #include <stdarg.h>
 #include <syslog.h>
 #include "yp_extern.h"
-
-int debug;
 
 extern int _rpcpmstart;
 extern char *progname;

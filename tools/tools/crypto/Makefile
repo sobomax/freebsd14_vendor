@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/tools/tools/crypto/Makefile 345028 2019-03-11 21:37:58Z jhb $
+#	$FreeBSD: releng/12.2/tools/tools/crypto/Makefile 342748 2019-01-03 22:51:14Z jhb $
 #
 # Copyright (c) 2018		Conrad Meyer <cem@FreeBSD.org>
 # Copyright (c) 2002, 2003	Sam Leffler, Errno Consulting
@@ -32,7 +32,7 @@ MAN=
 BINDIR?=	/usr/local/bin
 
 # cryptocheck: test symmetric crypto functions
-LIBADD.cryptocheck+=	crypto ssl util
+LIBADD.cryptocheck+=	crypto util
 
 # cryptokeytest: test asymmetric crypto functions
 LIBADD.cryptokeytest+=	crypto

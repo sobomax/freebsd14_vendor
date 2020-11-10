@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/dev/sf/starfire_tx.h 175525 2008-01-21 05:09:07Z yongari $ */
+/* $FreeBSD: releng/12.2/sys/dev/sf/starfire_tx.h 175525 2008-01-21 05:09:07Z yongari $ */
 /*
  *   MODULE: GFP_TX.H
  *

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/autofs/autounmountd.c 332597 2018-04-16 16:16:24Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/autofs/autounmountd.c 361589 2020-05-28 17:08:39Z freqlabs $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -67,8 +67,7 @@ automounted_find(fsid_t fsid)
 	struct automounted_fs *af;
 
 	TAILQ_FOREACH(af, &automounted, af_next) {
-		if (af->af_fsid.val[0] == fsid.val[0] &&
-		    af->af_fsid.val[1] == fsid.val[1])
+		if (fsidcmp(&af->af_fsid, &fsid) == 0)
 			return (af);
 	}
 
@@ -80,7 +79,7 @@ automounted_add(fsid_t fsid, const char *mountpoint)
 {
 	struct automounted_fs *af;
 
-	af = calloc(sizeof(*af), 1);
+	af = calloc(1, sizeof(*af));
 	if (af == NULL)
 		log_err(1, "calloc");
 	af->af_mount_time = time(NULL);

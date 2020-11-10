@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/genassym.c 254065 2013-08-07 16:36:38Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/genassym.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_kstack_pages.h"
 
@@ -134,7 +136,6 @@ ASSYM(PC_CPUID, offsetof(struct pcpu, pc_cpuid));
 ASSYM(PC_IRHEAD, offsetof(struct pcpu, pc_irhead));
 ASSYM(PC_IRTAIL, offsetof(struct pcpu, pc_irtail));
 ASSYM(PC_IRFREE, offsetof(struct pcpu, pc_irfree));
-ASSYM(PC_CNT, offsetof(struct pcpu, pc_cnt));
 ASSYM(PC_SIZEOF, sizeof(struct pcpu));
 
 ASSYM(PC_CACHE, offsetof(struct pcpu, pc_cache));

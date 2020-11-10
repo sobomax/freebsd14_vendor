@@ -1,6 +1,8 @@
-/*	$FreeBSD: releng/11.3/sys/dev/txp/3c990img.h 331722 2018-03-29 02:50:57Z eadler $	*/	
+/*	$FreeBSD: releng/12.2/sys/dev/txp/3c990img.h 326255 2017-11-27 14:52:40Z pfg $	*/	
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright 1999-2003 3Com Corporation.  All Rights Reserved.    
  *
  * Redistribution and use in source and binary forms of the 3c990img.h

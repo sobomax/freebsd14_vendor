@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/examples/libusb20/Makefile 299293 2016-05-10 00:51:50Z gjb $
+# $FreeBSD: releng/12.2/share/examples/libusb20/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/libusb20

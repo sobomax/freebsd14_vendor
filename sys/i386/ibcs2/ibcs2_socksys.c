@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1994, 1995 Scott Bartram
  * Copyright (c) 1994 Arne H Juul
  * All rights reserved.
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/i386/ibcs2/ibcs2_socksys.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/i386/ibcs2/ibcs2_socksys.c 326260 2017-11-27 15:08:52Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

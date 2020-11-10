@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/usb_request.c 343135 2019-01-18 08:48:30Z hselasky $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/usb_request.c 366693 2020-10-14 06:25:55Z martymac $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
@@ -455,8 +457,8 @@ usbd_do_request_flags(struct usb_device *udev, struct mtx *mtx,
 		return (USB_ERR_INVAL);
 #endif
 	if ((mtx != NULL) && (mtx != &Giant)) {
-		mtx_unlock(mtx);
-		mtx_assert(mtx, MA_NOTOWNED);
+		USB_MTX_UNLOCK(mtx);
+		USB_MTX_ASSERT(mtx, MA_NOTOWNED);
 	}
 
 	/*
@@ -710,7 +712,7 @@ done:
 		usbd_ctrl_unlock(udev);
 
 	if ((mtx != NULL) && (mtx != &Giant))
-		mtx_lock(mtx);
+		USB_MTX_LOCK(mtx);
 
 	switch (err) {
 	case USB_ERR_NORMAL_COMPLETION:
@@ -719,7 +721,8 @@ done:
 	case USB_ERR_CANCELLED:
 		break;
 	default:
-		DPRINTF("I/O error - waiting a bit for TT cleanup\n");
+		DPRINTF("error=%s - waiting a bit for TT cleanup\n",
+		    usbd_errstr(err));
 		usb_pause_mtx(mtx, hz / 16);
 		break;
 	}
@@ -1008,7 +1011,7 @@ usbd_req_get_desc(struct usb_device *udev,
 		USETW(req.wLength, min_len);
 
 		err = usbd_do_request_flags(udev, mtx, &req,
-		    desc, 0, NULL, 500 /* ms */);
+		    desc, 0, NULL, 1000 /* ms */);
 
 		if (err != 0 && err != USB_ERR_TIMEOUT &&
 		    min_len != max_len) {
@@ -1019,7 +1022,7 @@ usbd_req_get_desc(struct usb_device *udev,
 			USETW(req.wLength, max_len);
 
 			err = usbd_do_request_flags(udev, mtx, &req,
-			    desc, USB_SHORT_XFER_OK, NULL, 500 /* ms */);
+			    desc, USB_SHORT_XFER_OK, NULL, 1000 /* ms */);
 
 			if (err == 0) {
 				/* verify length */
@@ -1178,7 +1181,11 @@ usbd_req_get_string_any(struct usb_device *udev, struct mtx *mtx, char *buf,
 		    *s == '+' ||
 		    *s == ' ' ||
 		    *s == '.' ||
-		    *s == ',') {
+		    *s == ',' ||
+		    *s == ':' ||
+		    *s == '/' ||
+		    *s == '(' ||
+		    *s == ')') {
 			/* allowed */
 			s++;
 		}

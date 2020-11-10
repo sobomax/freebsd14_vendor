@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/sys/fdatasync.c 304980 2016-08-29 05:37:03Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/sys/fdatasync.c 304209 2016-08-16 08:27:03Z kib $");
 
 #include <sys/types.h>
 #include <sys/fcntl.h>

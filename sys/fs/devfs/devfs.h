@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  * Copyright (c) 2000
@@ -33,7 +35,7 @@
  *	@(#)kernfs.h	8.6 (Berkeley) 3/29/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs.h 1.14
  *
- * $FreeBSD: releng/11.3/sys/fs/devfs/devfs.h 231265 2012-02-09 10:09:12Z mm $
+ * $FreeBSD: releng/12.2/sys/fs/devfs/devfs.h 326268 2017-11-27 15:15:37Z pfg $
  */
 
 #ifndef _FS_DEVFS_DEVFS_H_

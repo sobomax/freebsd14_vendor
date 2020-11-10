@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/autofs/common.c 332597 2018-04-16 16:16:24Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/autofs/common.c 328338 2018-01-24 16:39:02Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/autofs/common.c 332597 2018-04-16 16:16
 #include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
-#define	_WITH_GETLINE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

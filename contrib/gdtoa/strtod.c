@@ -29,7 +29,7 @@ THIS SOFTWARE.
 /* Please send bug reports to David M. Gay (dmg at acm dot org,
  * with " at " changed at "@" and " dot " changed to ".").	*/
 
-/* $FreeBSD: releng/11.3/contrib/gdtoa/strtod.c 227753 2011-11-20 14:45:42Z theraven $ */
+/* $FreeBSD: releng/12.2/contrib/gdtoa/strtod.c 227753 2011-11-20 14:45:42Z theraven $ */
 
 #include "gdtoaimp.h"
 #ifndef NO_FENV_H

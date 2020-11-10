@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2010, LSI Corp.
  * All rights reserved.
  * Author : Manjunath Ranganathaiah
@@ -31,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/tws/tws_user.c 342970 2019-01-12 17:00:54Z markj $
+ * $FreeBSD: releng/12.2/sys/dev/tws/tws_user.c 342970 2019-01-12 17:00:54Z markj $
  */
 
 #include <dev/tws/tws.h>

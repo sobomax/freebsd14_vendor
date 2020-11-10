@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2019 Rob Wing
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libbe/tests/target_prog.c 346546 2019-04-22 13:45:08Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libbe/tests/target_prog.c 357667 2020-02-07 21:57:27Z kevans $");
 
 #include <be.h>
 

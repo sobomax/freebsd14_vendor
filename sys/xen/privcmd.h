@@ -29,7 +29,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/xen/privcmd.h 273476 2014-10-22 17:07:20Z royger $
+ * $FreeBSD: releng/12.2/sys/xen/privcmd.h 273476 2014-10-22 17:07:20Z royger $
  */
 
 #ifndef __XEN_PRIVCMD_H__

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/ti/am335x/tps65217x.h 284189 2015-06-09 19:17:33Z sobomax $
+ * $FreeBSD: releng/12.2/sys/arm/ti/am335x/tps65217x.h 284189 2015-06-09 19:17:33Z sobomax $
  */
 
 #ifndef __TPS65217X_H__

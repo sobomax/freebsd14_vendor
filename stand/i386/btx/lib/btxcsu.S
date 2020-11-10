@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD: releng/11.3/stand/i386/btx/lib/btxcsu.S 235154 2012-05-09 08:04:29Z avg $
+# $FreeBSD: releng/12.2/stand/i386/btx/lib/btxcsu.S 235154 2012-05-09 08:04:29Z avg $
 
 #include <bootargs.h>
 

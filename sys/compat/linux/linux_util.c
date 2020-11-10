@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1994 Christos Zoulas
  * Copyright (c) 1995 Frank van der Linden
  * Copyright (c) 1995 Scott Bartram
@@ -30,9 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/linux/linux_util.c 346819 2019-04-28 13:23:52Z dchagin $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/linux/linux_util.c 364667 2020-08-24 12:51:20Z trasz $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -46,11 +46,13 @@ __FBSDID("$FreeBSD: releng/11.3/sys/compat/linux/linux_util.c 346819 2019-04-28 
 #include <sys/proc.h>
 #include <sys/sdt.h>
 #include <sys/syscallsubr.h>
+#include <sys/sysctl.h>
 #include <sys/systm.h>
 #include <sys/vnode.h>
 
 #include <machine/stdarg.h>
 
+#include <compat/linux/linux_mib.h>
 #include <compat/linux/linux_util.h>
 
 MALLOC_DEFINE(M_LINUX, "linux", "Linux mode structures");
@@ -58,7 +60,11 @@ MALLOC_DEFINE(M_EPOLL, "lepoll", "Linux events structures");
 MALLOC_DEFINE(M_FUTEX, "futex", "Linux futexes");
 MALLOC_DEFINE(M_FUTEX_WP, "futex wp", "Linux futex waiting proc");
 
-const char      linux_emul_path[] = "/compat/linux";
+char linux_emul_path[MAXPATHLEN] = "/compat/linux";
+
+SYSCTL_STRING(_compat_linux, OID_AUTO, emul_path, CTLFLAG_RWTUN,
+    linux_emul_path, sizeof(linux_emul_path),
+    "Linux runtime environment path");
 
 /*
  * Search an alternate path before passing pathname arguments on to
@@ -84,6 +90,9 @@ linux_msg(const struct thread *td, const char *fmt, ...)
 {
 	va_list ap;
 	struct proc *p;
+
+	if (linux_debug == 0)
+		return;
 
 	p = td->td_proc;
 	printf("linux: pid %d (%s): ", (int)p->p_pid, p->p_comm);

@@ -1,9 +1,11 @@
 /*	$NetBSD: openfirmio.c,v 1.4 2002/09/06 13:23:19 gehenna Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ofw/openfirmio.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ofw/openfirmio.c 331229 2018-03-20 00:03:49Z gonzo $");
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -24,7 +26,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/ofw/openfirmio.c 331722 2018-03-29 02:50
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -100,8 +102,6 @@ openfirm_getstr(int len, const char *user, char **cpp)
 		return (ENAMETOOLONG);
 
 	*cpp = cp = malloc(len + 1, M_TEMP, M_WAITOK);
-	if (cp == NULL)
-		return (ENOMEM);
 	error = copyin(user, cp, len);
 	cp[len] = '\0';
 	return (error);
@@ -173,10 +173,6 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 		if (len <= 0)
 			break;
 		value = malloc(len, M_TEMP, M_WAITOK);
-		if (value == NULL) {
-			error = ENOMEM;
-			break;
-		}
 		len = OF_getprop(node, name, (void *)value, len);
 		error = copyout(value, of->of_buf, len);
 		break;
@@ -199,10 +195,6 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 		if (error)
 			break;
 		value = malloc(of->of_buflen, M_TEMP, M_WAITOK);
-		if (value == NULL) {
-			error = ENOMEM;
-			break;
-		}
 		error = copyin(of->of_buf, value, of->of_buflen);
 		if (error)
 			break;
@@ -255,7 +247,7 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 		if (error)
 			break;
 		node = OF_finddevice(name);
-		if (node == 0 || node == -1) {
+		if (node == -1) {
 			error = ENOENT;
 			break;
 		}

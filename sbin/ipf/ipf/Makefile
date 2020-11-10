@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/ipf/ipf/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/ipf/ipf/Makefile 325632 2017-11-10 07:52:58Z bdrewery $
 
 PACKAGE=	ipf
 PROG=		ipf
@@ -30,10 +30,7 @@ ipf_l.h: lexer.h
 	sed -e 's/yy/ipf_yy/g' \
 	    ${.ALLSRC} > ${.TARGET}
 
-.if defined(RESCUE)
-LIBIPF_SRCS!=	cd ${.CURDIR:H}/libipf && ${MAKE} -V SRCS
-SRCS+=	${LIBIPF_SRCS}
-.else
+.if !defined(RESCUE)
 LIBADD+=	pcap
 .endif
 

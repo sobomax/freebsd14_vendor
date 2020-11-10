@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Max Khon
  * Copyright (c) 2014 Juniper Networks, Inc.
  * Copyright (c) 2006-2016 Maxim Sobolev <sobomax@FreeBSD.org>
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/uzip/g_uzip.c 345344 2019-03-20 18:49:45Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/uzip/g_uzip.c 356578 2020-01-10 00:42:39Z mav $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -137,13 +139,12 @@ static void g_uzip_read_done(struct bio *bp);
 static void g_uzip_do(struct g_uzip_softc *, struct bio *bp);
 
 static void
-g_uzip_softc_free(struct g_uzip_softc *sc, struct g_geom *gp)
+g_uzip_softc_free(struct g_geom *gp)
 {
+	struct g_uzip_softc *sc = gp->softc;
 
-	if (gp != NULL) {
-		DPRINTF(GUZ_DBG_INFO, ("%s: %d requests, %d cached\n",
-		    gp->name, sc->req_total, sc->req_cached));
-	}
+	DPRINTF(GUZ_DBG_INFO, ("%s: %d requests, %d cached\n",
+	    gp->name, sc->req_total, sc->req_cached));
 
 	mtx_lock(&sc->queue_mtx);
 	sc->wrkthr_flags |= GUZ_SHUTDOWN;
@@ -160,6 +161,7 @@ g_uzip_softc_free(struct g_uzip_softc *sc, struct g_geom *gp)
 	mtx_destroy(&sc->last_mtx);
 	free(sc->last_buf, M_GEOM_UZIP);
 	free(sc, M_GEOM_UZIP);
+	gp->softc = NULL;
 }
 
 static int
@@ -464,6 +466,27 @@ g_uzip_start(struct bio *bp)
 	sc = gp->softc;
 	sc->req_total++;
 
+	if (bp->bio_cmd == BIO_GETATTR) {
+		struct bio *bp2;
+		struct g_consumer *cp;
+		struct g_geom *gp;
+		struct g_provider *pp;
+
+		/* pass on MNT:* requests and ignore others */
+		if (strncmp(bp->bio_attribute, "MNT:", 4) == 0) {
+			bp2 = g_clone_bio(bp);
+			if (bp2 == NULL) {
+				g_io_deliver(bp, ENOMEM);
+				return;
+			}
+			bp2->bio_done = g_std_done;
+			pp = bp->bio_to;
+			gp = pp->geom;
+			cp = LIST_FIRST(&gp->consumer);
+			g_io_request(bp2, cp);
+			return;
+		}
+	}
 	if (bp->bio_cmd != BIO_READ) {
 		g_io_deliver(bp, EOPNOTSUPP);
 		return;
@@ -480,13 +503,27 @@ g_uzip_orphan(struct g_consumer *cp)
 {
 	struct g_geom *gp;
 
-	g_trace(G_T_TOPOLOGY, "%s(%p/%s)", __func__, cp, cp->provider->name);
 	g_topology_assert();
-
+	G_VALID_CONSUMER(cp);
 	gp = cp->geom;
-	g_uzip_softc_free(gp->softc, gp);
-	gp->softc = NULL;
+	g_trace(G_T_TOPOLOGY, "%s(%p/%s)", __func__, cp, gp->name);
 	g_wither_geom(gp, ENXIO);
+
+	/*
+	 * We can safely free the softc now if there are no accesses,
+	 * otherwise g_uzip_access() will do that after the last close.
+	 */
+	if ((cp->acr + cp->acw + cp->ace) == 0)
+		g_uzip_softc_free(gp);
+}
+
+static void
+g_uzip_spoiled(struct g_consumer *cp)
+{
+
+	g_trace(G_T_TOPOLOGY, "%s(%p/%s)", __func__, cp, cp->geom->name);
+	cp->flags |= G_CF_ORPHAN;
+	g_uzip_orphan(cp);
 }
 
 static int
@@ -494,6 +531,7 @@ g_uzip_access(struct g_provider *pp, int dr, int dw, int de)
 {
 	struct g_geom *gp;
 	struct g_consumer *cp;
+	int error;
 
 	gp = pp->geom;
 	cp = LIST_FIRST(&gp->consumer);
@@ -502,22 +540,17 @@ g_uzip_access(struct g_provider *pp, int dr, int dw, int de)
 	if (cp->acw + dw > 0)
 		return (EROFS);
 
-	return (g_access(cp, dr, dw, de));
-}
+	error = g_access(cp, dr, dw, de);
 
-static void
-g_uzip_spoiled(struct g_consumer *cp)
-{
-	struct g_geom *gp;
+	/*
+	 * Free the softc if all providers have been closed and this geom
+	 * is being removed.
+	 */
+	if (error == 0 && (gp->flags & G_GEOM_WITHER) != 0 &&
+	    (cp->acr + cp->acw + cp->ace) == 0)
+		g_uzip_softc_free(gp);
 
-	G_VALID_CONSUMER(cp);
-	gp = cp->geom;
-	g_trace(G_T_TOPOLOGY, "%s(%p/%s)", __func__, cp, gp->name);
-	g_topology_assert();
-
-	g_uzip_softc_free(gp->softc, gp);
-	gp->softc = NULL;
-	g_wither_geom(gp, ENXIO);
+	return (error);
 }
 
 static int
@@ -878,10 +911,8 @@ g_uzip_destroy_geom(struct gctl_req *req, struct g_class *mp, struct g_geom *gp)
 	if (pp->acr > 0 || pp->acw > 0 || pp->ace > 0)
 		return (EBUSY);
 
-	g_uzip_softc_free(gp->softc, gp);
-	gp->softc = NULL;
 	g_wither_geom(gp, ENXIO);
-
+	g_uzip_softc_free(gp);
 	return (0);
 }
 

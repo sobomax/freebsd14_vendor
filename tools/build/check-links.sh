@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/build/check-links.sh 294357 2016-01-19 22:42:16Z bdrewery $
+# $FreeBSD: releng/12.2/tools/build/check-links.sh 294357 2016-01-19 22:42:16Z bdrewery $
 
 libkey() {
 	libkey="lib_symbols_$1"

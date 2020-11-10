@@ -13,12 +13,11 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tests/sys/kqueue/libkqueue/vnode.c 341275 2018-11-30 02:06:30Z dab $
+ * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/vnode.c 359753 2020-04-09 20:35:35Z kevans $
  */
 
 #include "common.h"
 
-int kqfd;
 int vnode_fd;
 
 void

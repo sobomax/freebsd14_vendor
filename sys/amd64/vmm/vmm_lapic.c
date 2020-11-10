@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/vmm_lapic.c 348271 2019-05-25 11:27:56Z rgrimes $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/vmm_lapic.c 351751 2019-09-03 16:18:07Z emaste $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/vmm/vmm_lapic.c 348271 2019-05-25 11:27:56Z rgrimes $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/vmm_lapic.c 351751 2019-09-03 16:18:07Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -135,13 +137,10 @@ lapic_intr_msi(struct vm *vm, uint64_t addr, uint64_t msg)
 	return (0);
 }
 
-static boolean_t
+static bool
 x2apic_msr(u_int msr)
 {
-	if (msr >= 0x800 && msr <= 0xBFF)
-		return (TRUE);
-	else
-		return (FALSE);
+	return (msr >= 0x800 && msr <= 0xBFF);
 }
 
 static u_int
@@ -151,14 +150,11 @@ x2apic_msr_to_regoff(u_int msr)
 	return ((msr - 0x800) << 4);
 }
 
-boolean_t
+bool
 lapic_msr(u_int msr)
 {
 
-	if (x2apic_msr(msr) || (msr == MSR_APICBASE))
-		return (TRUE);
-	else
-		return (FALSE);
+	return (x2apic_msr(msr) || msr == MSR_APICBASE);
 }
 
 int

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/release/Makefile.azure 285005 2015-07-01 14:51:26Z gjb $
+# $FreeBSD: releng/12.2/release/Makefile.azure 285005 2015-07-01 14:51:26Z gjb $
 #
 #
 # Makefile for uploading Microsoft Azure disk images.

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/pxeldr/Makefile 344413 2019-02-21 03:18:12Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/pxeldr/Makefile 337806 2018-08-14 18:44:41Z imp $
 
 .include <bsd.init.mk>
 

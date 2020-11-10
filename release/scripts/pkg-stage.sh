@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/release/scripts/pkg-stage.sh 338859 2018-09-21 15:58:08Z gjb $
+# $FreeBSD: releng/12.2/release/scripts/pkg-stage.sh 339290 2018-10-10 19:57:10Z gjb $
 #
 
 set -e
@@ -16,6 +16,8 @@ _DVD_PACKAGES="archivers/unzip
 devel/subversion
 devel/subversion-static
 emulators/linux_base-c6
+graphics/drm-legacy-kmod
+graphics/drm-stable-kmod
 misc/freebsd-doc-all
 net/mpd5
 net/rsync

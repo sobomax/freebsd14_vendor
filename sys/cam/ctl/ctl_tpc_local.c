@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2014 Alexander Motin <mav@FreeBSD.org>
  * Copyright (c) 2004, 2005 Silicon Graphics International Corp.
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/ctl/ctl_tpc_local.c 313368 2017-02-07 01:55:48Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/ctl/ctl_tpc_local.c 328070 2018-01-16 23:19:57Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -95,8 +97,6 @@ tpcl_init(void)
 	port->port_name = "tpc";
 	port->fe_datamove = tpcl_datamove;
 	port->fe_done = tpcl_done;
-	port->max_targets = 1;
-	port->max_target_id = 0;
 	port->targ_port = -1;
 	port->max_initiators = 1;
 

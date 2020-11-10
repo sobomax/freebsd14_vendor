@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_filter.c 342418 2018-12-25 06:55:13Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_filter.c 342321 2018-12-21 15:56:40Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"

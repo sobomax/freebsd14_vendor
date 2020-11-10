@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/crypto/rijndael/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: releng/12.2/sys/crypto/rijndael/Makefile 264400 2014-04-13 05:21:56Z imp $
 
 PROG=test00
 MAN=

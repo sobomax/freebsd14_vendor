@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/amlogic/aml8726/aml8726_machdep.h 280905 2015-03-31 11:50:46Z ganbold $
+ * $FreeBSD: releng/12.2/sys/arm/amlogic/aml8726/aml8726_machdep.h 280905 2015-03-31 11:50:46Z ganbold $
  */
 
 #ifndef	_ARM_AMLOGIC_AML8726_MACHDEP_H

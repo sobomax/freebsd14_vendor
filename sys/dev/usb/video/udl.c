@@ -1,5 +1,5 @@
 /*	$OpenBSD: udl.c,v 1.81 2014/12/09 07:05:06 doug Exp $ */
-/*	$FreeBSD: releng/11.3/sys/dev/usb/video/udl.c 308401 2016-11-07 08:36:06Z hselasky $ */
+/*	$FreeBSD: releng/12.2/sys/dev/usb/video/udl.c 355577 2019-12-10 07:06:32Z hselasky $ */
 
 /*-
  * Copyright (c) 2015 Hans Petter Selasky <hselasky@freebsd.org>
@@ -179,6 +179,7 @@ static const STRUCT_USB_HOST_ID udl_devs[] = {
 	{USB_VPI(USB_VENDOR_DISPLAYLINK, USB_PRODUCT_DISPLAYLINK_POLARIS2, DLUNK)},
 	{USB_VPI(USB_VENDOR_DISPLAYLINK, USB_PRODUCT_DISPLAYLINK_LT1421, DLUNK)},
 	{USB_VPI(USB_VENDOR_DISPLAYLINK, USB_PRODUCT_DISPLAYLINK_ITEC, DL165)},
+	{USB_VPI(USB_VENDOR_DISPLAYLINK, USB_PRODUCT_DISPLAYLINK_DVI_19, DL165)},
 };
 
 static void

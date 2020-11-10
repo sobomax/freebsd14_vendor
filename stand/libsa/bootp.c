@@ -16,7 +16,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/bootp.c 344408 2019-02-21 02:43:48Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/bootp.c 337038 2018-08-01 12:06:39Z tsoome $");
 
 #include <stddef.h>
 #include <sys/types.h>

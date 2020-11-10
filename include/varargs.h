@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Alexander Kabaev
  * All rights reserved.
  *
@@ -23,21 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/include/varargs.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/include/varargs.h 329164 2018-02-12 14:48:14Z imp $
  */
 
 #ifndef _VARARGS_H_
 #define	_VARARGS_H_
 
-#if defined(__GNUC__) && (__GNUC__ == 3 && __GNUC_MINOR__ > 2 || __GNUC__ >= 4)
-
-#error "<varargs.h> is obsolete with this version of GCC."
+#error "<varargs.h> is obsolete."
 #error "Change your code to use <stdarg.h> instead."
-
-#else	/* ! __GNUC__ post GCC 3.3 */
-
-#include <machine/varargs.h>
-
-#endif /* __GNUC__ post GCC 3.3 */
 
 #endif /* !_VARARGS_H_ */

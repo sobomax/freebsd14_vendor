@@ -1,6 +1,8 @@
 /*      $NetBSD: cache.c,v 1.33 2005/12/24 23:24:01 perry Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause AND BSD-3-Clause
+ *
  * Copyright 2001, 2002 Wasabi Systems, Inc.
  * All rights reserved.
  *
@@ -68,7 +70,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/mips/cache.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/mips/cache.c 326259 2017-11-27 15:07:26Z pfg $");
 
 #include <sys/types.h>
 #include <sys/systm.h>

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/opencrypto/cryptodev_if.m 167756 2007-03-21 03:43:33Z sam $
+# $FreeBSD: releng/12.2/sys/opencrypto/cryptodev_if.m 336439 2018-07-18 00:56:25Z cem $
 #
 
 #include <sys/malloc.h>
@@ -31,16 +31,34 @@
 
 INTERFACE cryptodev;
 
+CODE {
+	static int null_freesession(device_t dev,
+	    crypto_session_t crypto_session)
+	{
+		return 0;
+	}
+};
+
+/**
+ * Crypto driver method to initialize a new session object with the given
+ * initialization parameters (cryptoini).  The driver's session memory object
+ * is already allocated and zeroed, like driver softcs.  It is accessed with
+ * crypto_get_driver_session().
+ */
 METHOD int newsession {
 	device_t	dev;
-	uint32_t	*sid;
+	crypto_session_t crypto_session;
 	struct cryptoini *cri;
 };
 
-METHOD int freesession {
+/**
+ * Optional crypto driver method to release any additional allocations.  OCF
+ * owns session memory itself; it is zeroed before release.
+ */
+METHOD void freesession {
 	device_t	dev;
-	uint64_t	sid;
-};
+	crypto_session_t crypto_session;
+} DEFAULT null_freesession;
 
 METHOD int process {
 	device_t	dev;

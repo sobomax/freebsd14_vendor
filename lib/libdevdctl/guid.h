@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
  *
- * $FreeBSD: releng/11.3/lib/libdevdctl/guid.h 326321 2017-11-28 16:52:38Z asomers $
+ * $FreeBSD: releng/12.2/lib/libdevdctl/guid.h 360302 2020-04-25 13:03:37Z dim $
  */
 
 /**
@@ -70,9 +70,6 @@ public:
 	Guid(const std::string &guid);
 	static Guid InvalidGuid();
 
-	/* Assignment */
-	Guid& operator=(const Guid& rhs);
-
 	/* Test the validity of this guid. */
 	bool IsValid()			 const;
 
@@ -108,13 +105,6 @@ inline Guid
 Guid::InvalidGuid()
 {
 	return (Guid(INVALID_GUID));
-}
-
-inline Guid&
-Guid::operator=(const Guid &rhs)
-{
-	m_GUID = rhs.m_GUID;
-	return (*this);
 }
 
 inline bool

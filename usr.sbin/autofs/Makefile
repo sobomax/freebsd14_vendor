@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/autofs/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/autofs/Makefile 337340 2018-08-04 22:41:17Z brd $
 
+CONFS=	auto_master
 PACKAGE=autofs
 PROG=	automountd
 SRCS=	automount.c
@@ -29,5 +30,7 @@ LINKS=	${BINDIR}/automountd ${BINDIR}/automount
 LINKS+=	${BINDIR}/automountd ${BINDIR}/autounmountd
 
 .PATH:	${MOUNT}
+
+SUBDIR=	autofs
 
 .include <bsd.prog.mk>

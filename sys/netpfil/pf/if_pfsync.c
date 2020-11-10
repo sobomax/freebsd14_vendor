@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD AND ISC)
+ *
  * Copyright (c) 2002 Michael Shalayeff
  * Copyright (c) 2012 Gleb Smirnoff <glebius@FreeBSD.org>
  * All rights reserved.
@@ -58,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/if_pfsync.c 345439 2019-03-23 07:07:41Z kp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/if_pfsync.c 349762 2019-07-05 10:31:37Z hselasky $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -248,13 +250,13 @@ struct pfsync_softc {
 
 static const char pfsyncname[] = "pfsync";
 static MALLOC_DEFINE(M_PFSYNC, pfsyncname, "pfsync(4) data");
-static VNET_DEFINE(struct pfsync_softc	*, pfsyncif) = NULL;
+VNET_DEFINE_STATIC(struct pfsync_softc	*, pfsyncif) = NULL;
 #define	V_pfsyncif		VNET(pfsyncif)
-static VNET_DEFINE(void *, pfsync_swi_cookie) = NULL;
+VNET_DEFINE_STATIC(void *, pfsync_swi_cookie) = NULL;
 #define	V_pfsync_swi_cookie	VNET(pfsync_swi_cookie)
-static VNET_DEFINE(struct pfsyncstats, pfsyncstats);
+VNET_DEFINE_STATIC(struct pfsyncstats, pfsyncstats);
 #define	V_pfsyncstats		VNET(pfsyncstats)
-static VNET_DEFINE(int, pfsync_carp_adj) = CARP_MAXSKEW;
+VNET_DEFINE_STATIC(int, pfsync_carp_adj) = CARP_MAXSKEW;
 #define	V_pfsync_carp_adj	VNET(pfsync_carp_adj)
 
 static void	pfsync_timeout(void *);
@@ -262,7 +264,7 @@ static void	pfsync_push(struct pfsync_bucket *);
 static void	pfsync_push_all(struct pfsync_softc *);
 static void	pfsyncintr(void *);
 static int	pfsync_multicast_setup(struct pfsync_softc *, struct ifnet *,
-		    void *);
+		    struct in_mfilter *imf);
 static void	pfsync_multicast_cleanup(struct pfsync_softc *);
 static void	pfsync_pointers_init(void);
 static void	pfsync_pointers_uninit(void);
@@ -428,8 +430,7 @@ pfsync_clone_destroy(struct ifnet *ifp)
 	pfsync_drop(sc);
 
 	if_free(ifp);
-	if (sc->sc_imo.imo_membership)
-		pfsync_multicast_cleanup(sc);
+	pfsync_multicast_cleanup(sc);
 	mtx_destroy(&sc->sc_mtx);
 	mtx_destroy(&sc->sc_bulk_mtx);
 
@@ -1371,10 +1372,9 @@ pfsyncioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 
 	case SIOCSETPFSYNC:
 	    {
-		struct ip_moptions *imo = &sc->sc_imo;
+		struct in_mfilter *imf = NULL;
 		struct ifnet *sifp;
 		struct ip *ip;
-		void *mship = NULL;
 
 		if ((error = priv_check(curthread, PRIV_NETINET_PF)) != 0)
 			return (error);
@@ -1394,8 +1394,7 @@ pfsyncioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 		    pfsyncr.pfsyncr_syncpeer.s_addr == 0 ||
 		    pfsyncr.pfsyncr_syncpeer.s_addr ==
 		    htonl(INADDR_PFSYNC_GROUP)))
-			mship = malloc((sizeof(struct in_multi *) *
-			    IP_MIN_MEMBERSHIPS), M_PFSYNC, M_WAITOK | M_ZERO);
+			imf = ip_mfilter_alloc(M_WAITOK, 0, 0);
 
 		PFSYNC_LOCK(sc);
 		if (pfsyncr.pfsyncr_syncpeer.s_addr == 0)
@@ -1417,8 +1416,7 @@ pfsyncioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			if (sc->sc_sync_if)
 				if_rele(sc->sc_sync_if);
 			sc->sc_sync_if = NULL;
-			if (imo->imo_membership)
-				pfsync_multicast_cleanup(sc);
+			pfsync_multicast_cleanup(sc);
 			PFSYNC_UNLOCK(sc);
 			break;
 		}
@@ -1434,14 +1432,13 @@ pfsyncioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			PFSYNC_BUCKET_UNLOCK(&sc->sc_buckets[c]);
 		}
 
-		if (imo->imo_membership)
-			pfsync_multicast_cleanup(sc);
+		pfsync_multicast_cleanup(sc);
 
 		if (sc->sc_sync_peer.s_addr == htonl(INADDR_PFSYNC_GROUP)) {
-			error = pfsync_multicast_setup(sc, sifp, mship);
+			error = pfsync_multicast_setup(sc, sifp, imf);
 			if (error) {
 				if_rele(sifp);
-				free(mship, M_PFSYNC);
+				ip_mfilter_free(imf);
 				PFSYNC_UNLOCK(sc);
 				return (error);
 			}
@@ -2351,7 +2348,8 @@ pfsyncintr(void *arg)
 }
 
 static int
-pfsync_multicast_setup(struct pfsync_softc *sc, struct ifnet *ifp, void *mship)
+pfsync_multicast_setup(struct pfsync_softc *sc, struct ifnet *ifp,
+    struct in_mfilter *imf)
 {
 	struct ip_moptions *imo = &sc->sc_imo;
 	int error;
@@ -2359,16 +2357,14 @@ pfsync_multicast_setup(struct pfsync_softc *sc, struct ifnet *ifp, void *mship)
 	if (!(ifp->if_flags & IFF_MULTICAST))
 		return (EADDRNOTAVAIL);
 
-	imo->imo_membership = (struct in_multi **)mship;
-	imo->imo_max_memberships = IP_MIN_MEMBERSHIPS;
 	imo->imo_multicast_vif = -1;
 
 	if ((error = in_joingroup(ifp, &sc->sc_sync_peer, NULL,
-	    &imo->imo_membership[0])) != 0) {
-		imo->imo_membership = NULL;
+	    &imf->imf_inm)) != 0)
 		return (error);
-	}
-	imo->imo_num_memberships++;
+
+	ip_mfilter_init(&imo->imo_head);
+	ip_mfilter_insert(&imo->imo_head, imf);
 	imo->imo_multicast_ifp = ifp;
 	imo->imo_multicast_ttl = PFSYNC_DFLTTL;
 	imo->imo_multicast_loop = 0;
@@ -2380,10 +2376,13 @@ static void
 pfsync_multicast_cleanup(struct pfsync_softc *sc)
 {
 	struct ip_moptions *imo = &sc->sc_imo;
+	struct in_mfilter *imf;
 
-	in_leavegroup(imo->imo_membership[0], NULL);
-	free(imo->imo_membership, M_PFSYNC);
-	imo->imo_membership = NULL;
+	while ((imf = ip_mfilter_first(&imo->imo_head)) != NULL) {
+		ip_mfilter_remove(&imo->imo_head, imf);
+		in_leavegroup(imf->imf_inm, NULL);
+		ip_mfilter_free(imf);
+	}
 	imo->imo_multicast_ifp = NULL;
 }
 
@@ -2402,7 +2401,7 @@ pfsync_detach_ifnet(struct ifnet *ifp)
 		 * is going away. We do need to ensure we don't try to do
 		 * cleanup later.
 		 */
-		sc->sc_imo.imo_membership = NULL;
+		ip_mfilter_init(&sc->sc_imo.imo_head);
 		sc->sc_imo.imo_multicast_ifp = NULL;
 		sc->sc_sync_if = NULL;
 	}

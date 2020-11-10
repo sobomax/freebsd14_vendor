@@ -33,7 +33,7 @@
 static	char sccsid[] = "@(#)update.c 1.2 91/03/11 Copyr 1986 Sun Micro";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/rpc.ypupdated/update.c 344746 2019-03-04 03:30:39Z avos $";
+  "$FreeBSD: releng/12.2/usr.sbin/rpc.ypupdated/update.c 344746 2019-03-04 03:30:39Z avos $";
 #endif /* not lint */
 
 /*

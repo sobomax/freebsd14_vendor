@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra124/tegra124_mp.c 307344 2016-10-15 08:27:54Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra124/tegra124_mp.c 306756 2016-10-06 13:18:18Z mmel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/net80211/stumbler/stumbler.c 260444 2014-01-08 08:06:56Z kevlo $
+ * $FreeBSD: releng/12.2/tools/tools/net80211/stumbler/stumbler.c 260444 2014-01-08 08:06:56Z kevlo $
  */
 #include <sys/types.h>
 #include <sys/socket.h>

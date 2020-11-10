@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/random/random_infra.c 286839 2015-08-17 07:36:12Z markm $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/random/random_infra.c 286839 2015-08-17 07:36:12Z markm $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

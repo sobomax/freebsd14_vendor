@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: releng/11.3/gnu/usr.bin/gperf/config.h 228060 2011-11-28 12:29:16Z bapt $ */
+/* $FreeBSD: releng/12.2/gnu/usr.bin/gperf/config.h 228060 2011-11-28 12:29:16Z bapt $ */
 
 /* Define if the C++ compiler supports stack-allocated variable-size arrays.
    */

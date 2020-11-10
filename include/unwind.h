@@ -1,6 +1,10 @@
-/* $FreeBSD: releng/11.3/include/unwind.h 213290 2010-09-30 03:16:35Z davidxu $ */
+/* $FreeBSD: releng/12.2/include/unwind.h 326695 2017-12-08 15:57:29Z pfg $ */
 
-/* libunwind - a platform-independent unwind library
+/*-
+   libunwind - a platform-independent unwind library
+
+   SPDX-License-Identifier: ISC
+
    Copyright (C) 2003 Hewlett-Packard Co
 	Contributed by David Mosberger-Tang <davidm@hpl.hp.com>
 

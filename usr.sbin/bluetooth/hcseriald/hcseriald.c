@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hcseriald.c,v 1.3 2003/05/21 22:40:32 max Exp $
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/hcseriald/hcseriald.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/hcseriald/hcseriald.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/types.h>

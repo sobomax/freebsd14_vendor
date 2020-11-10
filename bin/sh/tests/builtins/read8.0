@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/builtins/read8.0 286826 2015-08-16 12:57:17Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/builtins/read8.0 286826 2015-08-16 12:57:17Z jilles $
 
 read a b c <<\EOF
 \

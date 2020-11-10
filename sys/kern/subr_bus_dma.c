@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 EMC Corp.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_bus_dma.c 328696 2018-02-01 18:57:10Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_bus_dma.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include "opt_bus.h"
 

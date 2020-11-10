@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD: releng/11.3/cddl/usr.sbin/zfsd/vdev_iterator.cc 326321 2017-11-28 16:52:38Z asomers $
+ * $FreeBSD: releng/12.2/cddl/usr.sbin/zfsd/vdev_iterator.cc 325011 2017-10-26 15:28:18Z asomers $
  */
 
 /**

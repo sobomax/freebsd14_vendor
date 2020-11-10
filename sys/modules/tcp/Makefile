@@ -1,21 +1,20 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/tcp/Makefile 319398 2017-06-01 08:25:45Z tuexen $
+# $FreeBSD: releng/12.2/sys/modules/tcp/Makefile 365470 2020-09-08 18:58:38Z jhb $
 #
 
-SYSDIR?=${SRCTOP}/sys
-.include "${SYSDIR}/conf/kern.opts.mk"
+.include <kmod.opts.mk>
 
 SUBDIR=	\
-	${_tcp_fastpath} \
+        ${_tcp_rack} \
 	${_tcpmd5} \
 
 .if ${MK_EXTRA_TCP_STACKS} != "no" || defined(ALL_MODULES)
-_tcp_fastpath=	fastpath
+_tcp_rack= 	rack
 .endif
 
 .if (${MK_INET_SUPPORT} != "no" || ${MK_INET6_SUPPORT} != "no") || \
 	defined(ALL_MODULES)
-.if ${MK_IPSEC_SUPPORT} != "no"
+.if ${KERN_OPTS:MIPSEC_SUPPORT} && !${KERN_OPTS:MTCP_SIGNATURE}
 _tcpmd5=	tcpmd5
 .endif
 .endif

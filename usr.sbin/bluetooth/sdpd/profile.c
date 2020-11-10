@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: profile.c,v 1.6 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/sdpd/profile.c 343901 2019-02-08 10:27:02Z hselasky $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/sdpd/profile.c 343900 2019-02-08 10:25:42Z hselasky $
  */
 
 #include <sys/queue.h>

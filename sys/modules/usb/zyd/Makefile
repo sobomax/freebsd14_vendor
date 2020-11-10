@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/usb/zyd/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/usb/zyd/Makefile 330749 2018-03-10 23:16:24Z avos $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -30,7 +30,7 @@ S=	${SRCTOP}/sys
 .PATH:	$S/dev/usb/wlan
 
 KMOD=	if_zyd
-SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h usbdevs.h \
-	if_zyd.c if_zydreg.h if_zydfw.h
+SRCS=	opt_bus.h opt_usb.h opt_wlan.h device_if.h bus_if.h usb_if.h \
+	usbdevs.h if_zyd.c if_zydreg.h if_zydfw.h
 
 .include <bsd.kmod.mk>

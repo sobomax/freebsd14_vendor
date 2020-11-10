@@ -17,7 +17,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/xen/blkif.h 289686 2015-10-21 10:44:07Z royger $
+ * $FreeBSD: releng/12.2/sys/xen/blkif.h 289686 2015-10-21 10:44:07Z royger $
  */
 
 #ifndef __XEN_BLKIF_H__

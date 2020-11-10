@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2011 George V. Neville-Neil. All rights reserved.
  *
  * The compilation of software known as FreeBSD is distributed under the
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/amd64/string/strcpy.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/amd64/string/strcpy.c 326193 2017-11-25 17:12:48Z pfg $");
 
 char *__stpcpy(char * __restrict, const char * __restrict);
 

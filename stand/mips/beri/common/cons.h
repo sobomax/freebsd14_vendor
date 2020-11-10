@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/mips/beri/common/cons.h 332149 2018-04-06 19:59:27Z kevans $
+ * $FreeBSD: releng/12.2/stand/mips/beri/common/cons.h 330788 2018-03-12 03:54:38Z kevans $
  */
 
 #ifndef _CONS_H_

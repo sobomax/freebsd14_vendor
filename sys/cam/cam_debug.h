@@ -1,6 +1,8 @@
 /*-
  * Macros for tracing/loging information in the CAM layer
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cam/cam_debug.h 260509 2014-01-10 12:18:05Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/cam_debug.h 326265 2017-11-27 15:12:43Z pfg $
  */
 #ifndef	_CAM_CAM_DEBUG_H
 #define _CAM_CAM_DEBUG_H 1

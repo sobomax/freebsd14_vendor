@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/io/vlapic.c 348271 2019-05-25 11:27:56Z rgrimes $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.c 360103 2020-04-19 17:19:29Z mr $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/vmm/io/vlapic.c 348271 2019-05-25 11:27:56Z rgrimes $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.c 360103 2020-04-19 17:19:29Z mr $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -314,7 +316,7 @@ vlapic_get_lvtptr(struct vlapic *vlapic, uint32_t offset)
 		return (&lapic->lvt_cmci);
 	case APIC_OFFSET_TIMER_LVT ... APIC_OFFSET_ERROR_LVT:
 		i = (offset - APIC_OFFSET_TIMER_LVT) >> 2;
-		return ((&lapic->lvt_timer) + i);;
+		return ((&lapic->lvt_timer) + i);
 	default:
 		panic("vlapic_get_lvt: invalid LVT\n");
 	}
@@ -545,6 +547,12 @@ vlapic_update_ppr(struct vlapic *vlapic)
 
 	vlapic->apic_page->ppr = ppr;
 	VLAPIC_CTR1(vlapic, "vlapic_update_ppr 0x%02x", ppr);
+}
+
+void
+vlapic_sync_tpr(struct vlapic *vlapic)
+{
+	vlapic_update_ppr(vlapic);
 }
 
 static VMM_STAT(VLAPIC_GRATUITOUS_EOI, "EOI without any in-service interrupt");
@@ -836,7 +844,8 @@ vlapic_calcdest(struct vm *vm, cpuset_t *dmask, uint32_t dest, bool phys,
 		 */
 		CPU_ZERO(dmask);
 		vcpuid = vm_apicid2vcpuid(vm, dest);
-		if (vcpuid < vm_get_maxcpus(vm))
+		amask = vm_active_cpus(vm);
+		if (vcpuid < vm_get_maxcpus(vm) && CPU_ISSET(vcpuid, &amask))
 			CPU_SET(vcpuid, dmask);
 	} else {
 		/*
@@ -859,7 +868,7 @@ vlapic_calcdest(struct vm *vm, cpuset_t *dmask, uint32_t dest, bool phys,
 
 		/*
 		 * Logical mode: match each APIC that has a bit set
-		 * in it's LDR that matches a bit in the ldest.
+		 * in its LDR that matches a bit in the ldest.
 		 */
 		CPU_ZERO(dmask);
 		amask = vm_active_cpus(vm);
@@ -1091,6 +1100,8 @@ vlapic_pending_intr(struct vlapic *vlapic, int *vecptr)
 	int	  	 idx, i, bitpos, vector;
 	uint32_t	*irrptr, val;
 
+	vlapic_update_ppr(vlapic);
+
 	if (vlapic->ops.pending_intr)
 		return ((*vlapic->ops.pending_intr)(vlapic, vecptr));
 
@@ -1148,7 +1159,6 @@ vlapic_intr_accepted(struct vlapic *vlapic, int vector)
 		panic("isrvec_stk_top overflow %d", stk_top);
 
 	vlapic->isrvec_stk[stk_top] = vector;
-	vlapic_update_ppr(vlapic);
 }
 
 void

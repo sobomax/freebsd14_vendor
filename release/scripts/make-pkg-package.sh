@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/release/scripts/make-pkg-package.sh 317259 2017-04-21 16:47:09Z gjb $
+# $FreeBSD: releng/12.2/release/scripts/make-pkg-package.sh 310181 2016-12-16 23:05:47Z matthew $
 #
 
 # Simulate the build environment.

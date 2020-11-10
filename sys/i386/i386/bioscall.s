@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/i386/i386/bioscall.s 103436 2002-09-17 01:49:00Z peter $
+ * $FreeBSD: releng/12.2/sys/i386/i386/bioscall.s 331254 2018-03-20 17:58:51Z emaste $
  */
 
 /*
@@ -32,7 +32,7 @@
 	
 #include <machine/asmacros.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 	.data
 	ALIGN_DATA

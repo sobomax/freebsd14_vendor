@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/uzip/g_uzip_dapi.h 302284 2016-06-29 18:19:05Z sobomax $
+ * $FreeBSD: releng/12.2/sys/geom/uzip/g_uzip_dapi.h 302284 2016-06-29 18:19:05Z sobomax $
  */
 
 struct g_uzip_dapi;

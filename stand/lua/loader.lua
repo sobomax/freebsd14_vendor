@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/11.3/stand/lua/loader.lua 344220 2019-02-17 02:39:17Z kevans $
+-- $FreeBSD: releng/12.2/stand/lua/loader.lua 359586 2020-04-03 01:31:48Z freqlabs $
 --
 
 -- The cli module should be included first here. Some of the functions that it
@@ -38,25 +38,21 @@ local color = require("color")
 local core = require("core")
 local config = require("config")
 local password = require("password")
--- The menu module will be brought in after config has loaded if we actually
--- need it.
-local menu
-
-try_include("local")
 
 config.load()
--- Our console may have been setup for a different color scheme before we get
--- here, so make sure we set the default.
+
+if core.isUEFIBoot() then
+	loader.perform("efi-autoresizecons")
+end
+-- Our console may have been setup with different settings before we get
+-- here, so make sure we reset everything back to default.
 if color.isEnabled() then
-	printc(color.default())
+	printc(core.KEYSTR_RESET)
 end
-if not core.isMenuSkipped() then
-	menu = require("menu")
-end
+try_include("local")
 password.check()
--- menu might be disabled
-if menu ~= nil then
-	menu.run()
+if not core.isMenuSkipped() then
+	require("menu").run()
 else
 	-- Load kernel/modules before we go
 	config.loadelf()

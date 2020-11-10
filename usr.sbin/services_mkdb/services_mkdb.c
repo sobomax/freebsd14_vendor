@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/services_mkdb/services_mkdb.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/services_mkdb/services_mkdb.c 358870 2020-03-11 05:45:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/services_mkdb/services_mkdb.c 330449 20
 #include <err.h>
 #include <fcntl.h>
 #include <netdb.h>
-#define _WITH_GETLINE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,7 +56,7 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/services_mkdb/services_mkdb.c 330449 20
 static char tname[MAXPATHLEN];
 
 #define	PMASK		0xffff
-#define PROTOMAX	5
+#define PROTOMAX	6
 
 static void	add(DB *, StringList *, size_t, const char *, size_t *, int);
 static StringList ***parseservices(const char *, StringList *);

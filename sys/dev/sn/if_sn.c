@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996 Gardner Buchanan <gbuchanan@shl.com>
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sn/if_sn.c 347962 2019-05-18 20:43:13Z brooks $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sn/if_sn.c 339735 2018-10-25 17:00:39Z brooks $");
 
 /*
  * This is a driver for SMC's 9000 series of Ethernet adapters.
@@ -1419,7 +1421,7 @@ sn_getmcf(struct ifnet *ifp, uint8_t *mcf)
 	bzero(mcf, MCFSZ);
 
 	if_maddr_rlock(ifp);
-	TAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
+	CK_STAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
 	    if (ifma->ifma_addr->sa_family != AF_LINK) {
 		if_maddr_runlock(ifp);
 		return 0;

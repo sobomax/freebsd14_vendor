@@ -54,7 +54,7 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.]
  *
- * $FreeBSD: releng/11.3/lib/libmd/sha.h 310372 2016-12-21 18:42:04Z emaste $
+ * $FreeBSD: releng/12.2/lib/libmd/sha.h 307521 2016-10-17 13:47:22Z emaste $
  */
 
 #ifndef _SHA_H_

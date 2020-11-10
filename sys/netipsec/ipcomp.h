@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sys/netipsec/ipcomp.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/netipsec/ipcomp.h 326023 2017-11-20 19:43:44Z pfg $	*/
 /*	$KAME: ipcomp.h,v 1.8 2000/09/26 07:55:14 itojun Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1999 WIDE Project.
  * All rights reserved.
  *

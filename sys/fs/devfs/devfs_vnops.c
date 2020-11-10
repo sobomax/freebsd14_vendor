@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2004
  *	Poul-Henning Kamp.  All rights reserved.
  * Copyright (c) 1989, 1992-1993, 1995
@@ -31,7 +33,7 @@
  *	@(#)kernfs_vnops.c	8.15 (Berkeley) 5/21/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vnops.c 1.43
  *
- * $FreeBSD: releng/11.3/sys/fs/devfs/devfs_vnops.c 328298 2018-01-23 20:08:25Z jhb $
+ * $FreeBSD: releng/12.2/sys/fs/devfs/devfs_vnops.c 357706 2020-02-09 22:15:35Z kevans $
  */
 
 /*
@@ -49,6 +51,7 @@
 #include <sys/filio.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
+#include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mman.h>
@@ -280,38 +283,27 @@ devfs_vptocnp(struct vop_vptocnp_args *ap)
 	if (error != 0)
 		return (error);
 
-	i = *buflen;
-	dd = vp->v_data;
-
-	if (vp->v_type == VCHR) {
-		i -= strlen(dd->de_cdp->cdp_c.si_name);
-		if (i < 0) {
-			error = ENOMEM;
-			goto finished;
-		}
-		bcopy(dd->de_cdp->cdp_c.si_name, buf + i,
-		    strlen(dd->de_cdp->cdp_c.si_name));
-		de = dd->de_dir;
-	} else if (vp->v_type == VDIR) {
-		if (dd == dmp->dm_rootdir) {
-			*dvp = vp;
-			vref(*dvp);
-			goto finished;
-		}
-		i -= dd->de_dirent->d_namlen;
-		if (i < 0) {
-			error = ENOMEM;
-			goto finished;
-		}
-		bcopy(dd->de_dirent->d_name, buf + i,
-		    dd->de_dirent->d_namlen);
-		de = dd;
-	} else {
+	if (vp->v_type != VCHR && vp->v_type != VDIR) {
 		error = ENOENT;
 		goto finished;
 	}
+
+	dd = vp->v_data;
+	if (vp->v_type == VDIR && dd == dmp->dm_rootdir) {
+		*dvp = vp;
+		vref(*dvp);
+		goto finished;
+	}
+
+	i = *buflen;
+	i -= dd->de_dirent->d_namlen;
+	if (i < 0) {
+		error = ENOMEM;
+		goto finished;
+	}
+	bcopy(dd->de_dirent->d_name, buf + i, dd->de_dirent->d_namlen);
 	*buflen = i;
-	de = devfs_parent_dirent(de);
+	de = devfs_parent_dirent(dd);
 	if (de == NULL) {
 		error = ENOENT;
 		goto finished;
@@ -755,50 +747,71 @@ devfs_getattr(struct vop_getattr_args *ap)
 static int
 devfs_ioctl_f(struct file *fp, u_long com, void *data, struct ucred *cred, struct thread *td)
 {
-	struct cdev *dev;
-	struct cdevsw *dsw;
-	struct vnode *vp;
-	struct vnode *vpold;
-	int error, i, ref;
-	const char *p;
-	struct fiodgname_arg *fgn;
 	struct file *fpop;
+	int error;
 
 	fpop = td->td_fpop;
-	error = devfs_fp_check(fp, &dev, &dsw, &ref);
-	if (error != 0) {
-		error = vnops.fo_ioctl(fp, com, data, cred, td);
-		return (error);
-	}
+	td->td_fpop = fp;
+	error = vnops.fo_ioctl(fp, com, data, cred, td);
+	td->td_fpop = fpop;
+	return (error);
+}
+
+static int
+devfs_ioctl(struct vop_ioctl_args *ap)
+{
+	struct fiodgname_arg *fgn;
+	struct vnode *vpold, *vp;
+	struct cdevsw *dsw;
+	struct thread *td;
+	struct cdev *dev;
+	int error, ref, i;
+	const char *p;
+	u_long com;
+
+	vp = ap->a_vp;
+	com = ap->a_command;
+	td = ap->a_td;
+
+	dsw = devvn_refthread(vp, &dev, &ref);
+	if (dsw == NULL)
+		return (ENXIO);
+	KASSERT(dev->si_refcount > 0,
+	    ("devfs: un-referenced struct cdev *(%s)", devtoname(dev)));
 
 	if (com == FIODTYPE) {
-		*(int *)data = dsw->d_flags & D_TYPEMASK;
-		td->td_fpop = fpop;
-		dev_relthread(dev, ref);
-		return (0);
+		*(int *)ap->a_data = dsw->d_flags & D_TYPEMASK;
+		error = 0;
+		goto out;
 	} else if (com == FIODGNAME) {
-		fgn = data;
+		fgn = ap->a_data;
 		p = devtoname(dev);
 		i = strlen(p) + 1;
 		if (i > fgn->len)
 			error = EINVAL;
 		else
 			error = copyout(p, fgn->buf, i);
-		td->td_fpop = fpop;
-		dev_relthread(dev, ref);
-		return (error);
+		goto out;
 	}
-	error = dsw->d_ioctl(dev, com, data, fp->f_flag, td);
-	td->td_fpop = NULL;
+
+	error = dsw->d_ioctl(dev, com, ap->a_data, ap->a_fflag, td);
+
+out:
 	dev_relthread(dev, ref);
 	if (error == ENOIOCTL)
 		error = ENOTTY;
-	if (error == 0 && com == TIOCSCTTY) {
-		vp = fp->f_vnode;
 
-		/* Do nothing if reassigning same control tty */
+	if (error == 0 && com == TIOCSCTTY) {
+		/*
+		 * Do nothing if reassigning same control tty, or if the
+		 * control tty has already disappeared.  If it disappeared,
+		 * it's because we were racing with TIOCNOTTY.  TIOCNOTTY
+		 * already took care of releasing the old vnode and we have
+		 * nothing left to do.
+		 */
 		sx_slock(&proctree_lock);
-		if (td->td_proc->p_session->s_ttyvp == vp) {
+		if (td->td_proc->p_session->s_ttyvp == vp ||
+		    td->td_proc->p_session->s_ttyp == NULL) {
 			sx_sunlock(&proctree_lock);
 			return (0);
 		}
@@ -906,8 +919,8 @@ devfs_lookupx(struct vop_lookup_args *ap, int *dm_unlock)
 	if ((flags & ISDOTDOT) && (dvp->v_vflag & VV_ROOT))
 		return (EIO);
 
-	error = VOP_ACCESS(dvp, VEXEC, cnp->cn_cred, td);
-	if (error)
+	error = vn_dir_check_exec(dvp, cnp);
+	if (error != 0)
 		return (error);
 
 	if (cnp->cn_namelen == 1 && *pname == '.') {
@@ -1172,7 +1185,7 @@ devfs_pathconf(struct vop_pathconf_args *ap)
 		*ap->a_retval = NAME_MAX;
 		return (0);
 	case _PC_LINK_MAX:
-		*ap->a_retval = LINK_MAX;
+		*ap->a_retval = INT_MAX;
 		return (0);
 	case _PC_SYMLINK_MAX:
 		*ap->a_retval = MAXPATHLEN;
@@ -1335,9 +1348,12 @@ devfs_readdir(struct vop_readdir_args *ap)
 		else
 			de = dd;
 		dp = dd->de_dirent;
+		MPASS(dp->d_reclen == GENERIC_DIRSIZ(dp));
 		if (dp->d_reclen > uio->uio_resid)
 			break;
 		dp->d_fileno = de->de_inode;
+		/* NOTE: d_off is the offset for the *next* entry. */
+		dp->d_off = off + dp->d_reclen;
 		if (off >= uio->uio_offset) {
 			error = vfs_read_dirent(ap, dp, off);
 			if (error)
@@ -1874,6 +1890,7 @@ static struct fileops devfs_ops_f = {
 	.fo_flags =	DFLAG_PASSABLE | DFLAG_SEEKABLE
 };
 
+/* Vops for non-CHR vnodes in /dev. */
 static struct vop_vector devfs_vnodeops = {
 	.vop_default =		&default_vnodeops,
 
@@ -1897,6 +1914,7 @@ static struct vop_vector devfs_vnodeops = {
 	.vop_vptocnp =		devfs_vptocnp,
 };
 
+/* Vops for VCHR vnodes in /dev. */
 static struct vop_vector devfs_specops = {
 	.vop_default =		&default_vnodeops,
 
@@ -1906,6 +1924,7 @@ static struct vop_vector devfs_specops = {
 	.vop_create =		VOP_PANIC,
 	.vop_fsync =		vop_stdfsync,
 	.vop_getattr =		devfs_getattr,
+	.vop_ioctl =		devfs_ioctl,
 	.vop_link =		VOP_PANIC,
 	.vop_mkdir =		VOP_PANIC,
 	.vop_mknod =		VOP_PANIC,

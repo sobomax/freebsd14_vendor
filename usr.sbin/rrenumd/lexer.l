@@ -1,6 +1,8 @@
 /*	$KAME: lexer.l,v 1.7 2000/11/08 02:40:53 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/rrenumd/lexer.l 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/rrenumd/lexer.l 352276 2019-09-13 07:08:43Z bapt $
  */
 
 %{
@@ -58,6 +60,7 @@ void yyerror(const char *);
 int yylex(void);
 %}
 
+%option noyywrap
 %option nounput
 
 /* common section */

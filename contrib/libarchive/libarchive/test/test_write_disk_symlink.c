@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/test/test_write_disk_symlink.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_write_disk_symlink.c 348605 2019-06-04 10:20:56Z mm $");
 
 /*
  * Exercise symlink recreation.

@@ -2,7 +2,6 @@
 -- SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 --
 -- Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
--- All rights reserved.
 --
 -- Redistribution and use in source and binary forms, with or without
 -- modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/11.3/stand/lua/logo-beastie.lua 344220 2019-02-17 02:39:17Z kevans $
+-- $FreeBSD: releng/12.2/stand/lua/logo-beastie.lua 354010 2019-10-24 04:05:53Z kevans $
 --
 
 local drawer = require("drawer")
@@ -49,7 +48,7 @@ local beastie_color = {
 "                \\       /       /\\",
 "           \027[36m______\027[31m( (_  / \\______/",
 "         \027[36m,'  ,-----'   |",
-"         `--{__________)\027[37m"
+"         `--{__________)\027[m"
 }
 
 drawer.addLogo("beastie", {

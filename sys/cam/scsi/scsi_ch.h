@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/sys/cam/scsi/scsi_ch.h 298810 2016-04-29 21:05:48Z pfg $ */
+/* $FreeBSD: releng/12.2/sys/cam/scsi/scsi_ch.h 326265 2017-11-27 15:12:43Z pfg $ */
 /*	$NetBSD: scsi_changer.h,v 1.11 1998/02/13 08:28:32 enami Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996 Jason R. Thorpe <thorpej@and.com>
  * All rights reserved.
  *

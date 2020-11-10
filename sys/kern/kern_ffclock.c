@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 The University of Melbourne
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_ffclock.c 298310 2016-04-19 23:48:27Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_ffclock.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include "opt_ffclock.h"
 

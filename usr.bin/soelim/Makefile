@@ -1,11 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/soelim/Makefile 282338 2015-05-02 11:09:58Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/soelim/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
 PROG=	soelim
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

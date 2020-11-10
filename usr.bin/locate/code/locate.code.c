@@ -1,4 +1,6 @@
 /*
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995 Wolfram Schneider <wosch@FreeBSD.org>. Berlin.
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -34,7 +36,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/locate/code/locate.code.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/locate/code/locate.code.c 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #if 0

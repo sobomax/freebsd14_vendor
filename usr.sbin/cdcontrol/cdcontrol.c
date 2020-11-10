@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/cdcontrol/cdcontrol.c 227225 2011-11-06 16:52:26Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/cdcontrol/cdcontrol.c 304814 2016-08-25 19:36:58Z ak $");
 
 #include <sys/cdio.h>
 #include <sys/cdrio.h>
@@ -1292,8 +1292,6 @@ open_cd(void)
 	    fd = open(dev = "/dev/cdrom", O_RDONLY);
 	    if (fd < 0 && errno == ENOENT)
 		fd = open(dev = "/dev/cd0", O_RDONLY);
-	    if (fd < 0 && errno == ENOENT)
-		fd = open(dev = "/dev/acd0", O_RDONLY);
 	}
 
 	if (fd < 0) {

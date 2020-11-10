@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marius Strobl, Joerg Wunsch
  *
  * derived from sys/i386/isa/pcf.c which is:
@@ -28,7 +30,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/pcf/pcf_ebus.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/pcf/pcf_ebus.c 326255 2017-11-27 14:52:40Z pfg $");
 
 /*
  * Device specific driver for the EBus i2c devices found on some sun4u

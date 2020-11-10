@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/isl/isl.h 285883 2015-07-25 20:17:19Z grembo $
+ * $FreeBSD: releng/12.2/sys/dev/isl/isl.h 285883 2015-07-25 20:17:19Z grembo $
  */
 
 #ifndef _ISL_H_

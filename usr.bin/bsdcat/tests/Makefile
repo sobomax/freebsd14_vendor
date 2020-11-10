@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bsdcat/tests/Makefile 328827 2018-02-03 02:17:04Z mm $
+# $FreeBSD: releng/12.2/usr.bin/bsdcat/tests/Makefile 328332 2018-01-24 14:24:17Z mm $
 
 PACKAGE=	tests
 

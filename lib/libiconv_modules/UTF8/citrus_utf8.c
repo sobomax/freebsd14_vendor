@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libiconv_modules/UTF8/citrus_utf8.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libiconv_modules/UTF8/citrus_utf8.c 326025 2017-11-20 19:49:47Z pfg $ */
 /*	$NetBSD: citrus_utf8.c,v 1.17 2008/06/14 16:01:08 tnozaki Exp $	*/
 
 /*-
@@ -28,6 +28,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1993
  *	The Regents of the University of California.  All rights reserved.
  *

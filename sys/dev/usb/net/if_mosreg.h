@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/net/if_mosreg.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/net/if_mosreg.h 325966 2017-11-18 14:26:50Z pfg $ */
 /*-
  * Copyright (c) 2010, 2011 Rick van der Zwet <info@rickvanderzwet.nl>
  *
@@ -32,6 +32,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1997, 1998, 1999, 2000-2003
  *	Bill Paul <wpaul@windriver.com>.  All rights reserved.
  *

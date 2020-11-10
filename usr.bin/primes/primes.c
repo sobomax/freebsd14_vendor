@@ -41,7 +41,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)primes.c	8.5 (Berkeley) 5/10/95";
 #endif
 static const char rcsid[] =
- "$FreeBSD: releng/11.3/usr.bin/primes/primes.c 320218 2017-06-22 05:26:08Z cperciva $";
+ "$FreeBSD: releng/12.2/usr.bin/primes/primes.c 360835 2020-05-09 05:04:02Z mckusick $";
 #endif /* not lint */
 
 /*
@@ -55,12 +55,13 @@ static const char rcsid[] =
  *	primes [-h] [start [stop]]
  *
  *	Print primes >= start and < stop.  If stop is omitted,
- *	the value 4294967295 (2^32-1) is assumed.  If start is
- *	omitted, start is read from standard input.
+ *	the value 18446744073709551615 (2^64-1) is assumed.  If
+ *	start is omitted, start is read from standard input.
  *
  * validation check: there are 664579 primes between 0 and 10^7
  */
 
+#include <capsicum_helpers.h>
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -70,6 +71,7 @@ static const char rcsid[] =
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <nl_types.h>
 #include <unistd.h>
 
 #include "primes.h"
@@ -98,6 +100,10 @@ main(int argc, char *argv[])
 	ubig stop;		/* don't generate at or above this value */
 	int ch;
 	char *p;
+
+	caph_cache_catpages();
+	if (caph_enter() < 0)
+		err(1, "cap_enter");
 
 	while ((ch = getopt(argc, argv, "h")) != -1)
 		switch (ch) {

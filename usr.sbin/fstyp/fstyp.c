@@ -29,12 +29,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fstyp/fstyp.c 318489 2017-05-18 20:36:07Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fstyp/fstyp.c 336307 2018-07-15 17:21:19Z oshogbo $");
 
 #include <sys/capsicum.h>
 #include <sys/disk.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
+#include <capsicum_helpers.h>
 #include <err.h>
 #include <errno.h>
 #include <stdbool.h>
@@ -191,8 +192,7 @@ main(int argc, char **argv)
 	if (fp == NULL)
 		err(1, "%s", path);
 
-	error = cap_enter();
-	if (error != 0 && errno != ENOSYS)
+	if (caph_enter() < 0)
 		err(1, "cap_enter");
 
 	if (ignore_type == false)

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002, 2003, 2004, 2005 Jeffrey Roberson <jeff@FreeBSD.org>
  * Copyright (c) 2004, 2005 Bosko Milekic <bmilekic@FreeBSD.org>
  * All rights reserved.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/vm/uma_dbg.c 301176 2016-06-01 22:31:35Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/vm/uma_dbg.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include "opt_vm.h"
 

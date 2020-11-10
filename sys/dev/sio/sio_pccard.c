@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 M. Warner Losh.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sio/sio_pccard.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sio/sio_pccard.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,9 +89,6 @@ sio_pccard_attach(device_t dev)
 {
 	int err;
 
-#ifdef PC98
-	SET_FLAG(dev, SET_IFTYPE(COM_IF_MODEM_CARD));
-#endif
 	/* Do not probe IRQ - pccard doesn't turn on the interrupt line */
 	/* until bus_setup_intr */
 	if ((err = sioprobe(dev, 0, 0UL, 1)) > 0)

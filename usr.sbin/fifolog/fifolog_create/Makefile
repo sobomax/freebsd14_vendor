@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/fifolog/fifolog_create/Makefile 321271 2017-07-20 01:02:30Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/fifolog/fifolog_create/Makefile 314479 2017-03-01 05:21:21Z ngie $
 
 PROG=	fifolog_create
 

@@ -6,7 +6,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/test/ppsapi/ppsapitest.c 323406 2017-09-11 00:19:09Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/tools/test/ppsapi/ppsapitest.c 315692 2017-03-21 22:21:29Z ian $");
 
 #include <stdio.h>
 #include <stdint.h>

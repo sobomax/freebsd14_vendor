@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/net/Makefile 329874 2018-02-23 18:18:42Z asomers $
+# $FreeBSD: releng/12.2/tests/sys/net/Makefile 357490 2020-02-04 04:29:54Z kp $
 
 .include <bsd.own.mk>
 
@@ -7,6 +7,8 @@ BINDIR=		${TESTSDIR}
 
 ATF_TESTS_SH+=	if_lagg_test
 ATF_TESTS_SH+=	if_clone_test
+ATF_TESTS_SH+=	if_tun_test
+ATF_TESTS_C+=	if_epair
 
 # The tests are written to be run in parallel, but doing so leads to random
 # panics.  I think it's because the kernel's list of interfaces isn't properly
@@ -14,7 +16,7 @@ ATF_TESTS_SH+=	if_clone_test
 TEST_METADATA+=	is_exclusive=true
 
 MAN=
-PROG=		randsleep
+PROGS+=		randsleep
 
 WARNS?=		6
 

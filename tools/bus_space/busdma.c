@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/bus_space/busdma.c 286176 2015-08-02 01:09:30Z marcel $");
+__FBSDID("$FreeBSD: releng/12.2/tools/bus_space/busdma.c 286176 2015-08-02 01:09:30Z marcel $");
 
 #include <sys/ioctl.h>
 #include <sys/mman.h>

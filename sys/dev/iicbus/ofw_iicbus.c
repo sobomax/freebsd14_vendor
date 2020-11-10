@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/ofw_iicbus.c 331501 2018-03-24 22:39:38Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/ofw_iicbus.c 329526 2018-02-18 19:33:28Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

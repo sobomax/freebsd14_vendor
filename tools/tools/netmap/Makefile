@@ -1,13 +1,13 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/netmap/Makefile 341434 2018-12-03 17:51:22Z vmaffione $
+# $FreeBSD: releng/12.2/tools/tools/netmap/Makefile 354471 2019-11-07 20:09:41Z vmaffione $
 #
 # For multiple programs using a single source file each,
 # we can just define 'progs' and create custom targets.
-PROGS	=	pkt-gen bridge vale-ctl lb
+PROGS	=	pkt-gen nmreplay bridge lb
 
 CLEANFILES = $(PROGS) *.o
 MAN=
-CFLAGS += -Werror -Wall # -nostdinc -I/usr/include -I../../../sys
+CFLAGS += -Werror -Wall
 CFLAGS += -Wextra
 
 LDFLAGS += -lpthread
@@ -16,6 +16,7 @@ CFLAGS += -DNO_PCAP
 .else
 LDFLAGS += -lpcap
 .endif
+LDFLAGS += -lm # used by nmreplay
 
 .include <bsd.prog.mk>
 .include <bsd.lib.mk>
@@ -28,8 +29,8 @@ pkt-gen: pkt-gen.o
 bridge: bridge.o
 	$(CC) $(CFLAGS) -o bridge bridge.o
 
-vale-ctl: vale-ctl.o
-	$(CC) $(CFLAGS) -o vale-ctl vale-ctl.o
+nmreplay: nmreplay.o
+	$(CC) $(CFLAGS) -o nmreplay nmreplay.o $(LDFLAGS)
 
 lb: lb.o pkt_hash.o
 	$(CC) $(CFLAGS) -o lb lb.o pkt_hash.o $(LDFLAGS)

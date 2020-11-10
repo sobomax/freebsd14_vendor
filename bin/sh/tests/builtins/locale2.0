@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/builtins/locale2.0 318279 2017-05-14 20:17:50Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/builtins/locale2.0 317912 2017-05-07 19:49:46Z jilles $
 
 $SH -c 'LC_ALL=C true; kill -INT $$; echo continued'
 r=$?

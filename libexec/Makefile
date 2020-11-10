@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/11.3/libexec/Makefile 301553 2016-06-07 16:31:03Z lidl $
+# $FreeBSD: releng/12.2/libexec/Makefile 355345 2019-12-03 18:25:16Z kevans $
 
 .include <src.opts.mk>
 
@@ -8,11 +8,13 @@ SUBDIR=	${_atf} \
 	${_blacklistd-helper} \
 	${_comsat} \
 	${_dma} \
+	flua \
 	getty \
 	${_mail.local} \
 	${_makewhatis.local} \
 	${_mknetid} \
 	${_pppoed} \
+	rc \
 	revnetgroup \
 	${_rlogind} \
 	rpc.rquotad \
@@ -77,11 +79,6 @@ _rtld-elf=	rtld-elf
 
 .if ${MK_RBOOTD} != "no"
 SUBDIR+=	rbootd
-.endif
-
-.if ${MK_RCMDS} != "no"
-_rlogind=	rlogind
-_rshd=		rshd
 .endif
 
 .if ${MK_SENDMAIL} != "no"

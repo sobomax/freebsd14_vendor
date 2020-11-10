@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/syscons/Makefile 293034 2016-01-01 04:04:40Z des $
+# $FreeBSD: releng/12.2/sys/modules/syscons/Makefile 293034 2016-01-01 04:04:40Z des $
 
 SUBDIR=	${_apm} \
 	${_beastie} \

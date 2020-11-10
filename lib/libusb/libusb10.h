@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/lib/libusb/libusb10.h 338791 2018-09-19 08:11:44Z hselasky $ */
+/* $FreeBSD: releng/12.2/lib/libusb/libusb10.h 349667 2019-07-03 18:23:36Z hselasky $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Sylvestre Gallon. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -87,6 +89,8 @@ struct libusb_hotplug_callback_handle_struct {
 	void *user_data;
 };
 
+TAILQ_HEAD(libusb_device_head, libusb_device);
+
 struct libusb_context {
 	int	debug;
 	int	debug_fixed;
@@ -104,7 +108,7 @@ struct libusb_context {
 	TAILQ_HEAD(, libusb_super_pollfd) pollfds;
 	TAILQ_HEAD(, libusb_super_transfer) tr_done;
 	TAILQ_HEAD(, libusb_hotplug_callback_handle_struct) hotplug_cbh;
-  	TAILQ_HEAD(, libusb_device) hotplug_devs;
+	struct libusb_device_head hotplug_devs;
 
 	struct libusb_super_pollfd ctx_poll;
 

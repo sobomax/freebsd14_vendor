@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2003
  *	Fraunhofer Institute for Open Communication Systems (FhG Fokus).
  * 	All rights reserved.
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/atm/ng_sscfu.h 139823 2005-01-07 01:45:51Z imp $
+ * $FreeBSD: releng/12.2/sys/netgraph/atm/ng_sscfu.h 326272 2017-11-27 15:23:17Z pfg $
  *
  * Netgraph module for ITU-T Q.2120 UNI SSCF.
  */

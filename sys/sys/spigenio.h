@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Doug Rabson
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/sys/spigenio.h 332942 2018-04-24 17:00:08Z ian $
+ *	$FreeBSD: releng/12.2/sys/sys/spigenio.h 332240 2018-04-07 20:53:34Z ian $
  */
 
 #ifndef _SYS_SPIGENIO_H_

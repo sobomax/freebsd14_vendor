@@ -13,7 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)input.c	8.3 (Berkeley) 6/9/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/sh/input.c 295937 2016-02-23 22:44:01Z jilles $");
+__FBSDID("$FreeBSD: releng/12.2/bin/sh/input.c 359753 2020-04-09 20:35:35Z kevans $");
 
 #include <stdio.h>	/* defines BUFSIZ */
 #include <fcntl.h>
@@ -101,8 +101,6 @@ static struct parsefile basepf = {	/* top level input file */
 };
 static struct parsefile *parsefile = &basepf;	/* current input file */
 int whichprompt;		/* 1 == PS1, 2 == PS2 */
-
-EditLine *el;			/* cookie for editline package */
 
 static void pushfile(void);
 static int preadfd(void);

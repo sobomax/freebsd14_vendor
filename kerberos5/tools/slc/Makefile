@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/tools/slc/Makefile 319183 2017-05-30 04:13:06Z ngie $
+# $FreeBSD: releng/12.2/kerberos5/tools/slc/Makefile 352754 2019-09-26 16:05:57Z emaste $
 
 PROG=	slc
 LIBROKEN_A=     ${.OBJDIR:H:H}/lib/libroken/libroken.a
@@ -6,6 +6,7 @@ LIBADD=	vers
 LDADD=  ${LIBROKEN_A}
 DPADD=  ${LIBROKEN_A}
 MAN=
+MK_PIE:=	no
 
 SRCS=	roken.h \
 	slc-gram.y \

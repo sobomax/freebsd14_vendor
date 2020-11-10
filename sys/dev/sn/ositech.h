@@ -3,6 +3,8 @@
     (Special thanks to Kevin MacPherson of OSITECH)
     (Thanks to Ositech Communications for permitting for BSDL distribution)
 
+ SPDX-License-Identifier: BSD-2-Clause
+
 Copyright 2002 Ositech Communications Inc.  All Rights Reserved
 
 Redistribution and use in source and binary forms, with or without
@@ -26,7 +28,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
-$FreeBSD: releng/11.3/sys/dev/sn/ositech.h 331722 2018-03-29 02:50:57Z eadler $
+$FreeBSD: releng/12.2/sys/dev/sn/ositech.h 326255 2017-11-27 14:52:40Z pfg $
 
 */
 

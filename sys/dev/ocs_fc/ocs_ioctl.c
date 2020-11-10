@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ocs_fc/ocs_ioctl.c 335291 2018-06-17 17:32:32Z dim $
+ * $FreeBSD: releng/12.2/sys/dev/ocs_fc/ocs_ioctl.c 336615 2018-07-22 18:31:15Z markj $
  */
 
 #include "ocs.h"
@@ -1080,7 +1080,7 @@ ocs_sysctl_init(ocs_t *ocs)
 	struct sysctl_oid *tree = device_get_sysctl_tree(ocs->dev);
 	struct sysctl_oid *vtree; 
 	const char *str = NULL;
-	char sli_intf[16], name[16];
+	char name[16];
 	uint32_t rev, if_type, family, i;
 	ocs_fcport *fcp = NULL;
 
@@ -1120,7 +1120,7 @@ ocs_sysctl_init(ocs_t *ocs)
 			0, "Firmware Revision");
 
 	memset(ocs->sli_intf, 0, sizeof(ocs->sli_intf));
-	snprintf(ocs->sli_intf, sizeof(sli_intf), "%08x",
+	snprintf(ocs->sli_intf, sizeof(ocs->sli_intf), "%08x",
 		 ocs_config_read32(ocs, SLI4_INTF_REG));
 	SYSCTL_ADD_STRING(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
 			  "sli_intf", CTLFLAG_RD,

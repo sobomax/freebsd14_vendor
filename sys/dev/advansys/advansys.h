@@ -2,6 +2,8 @@
  * Generic driver definitions and exported functions for the Advanced
  * Systems Inc. SCSI controllers
  * 
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1996-1997 Justin Gibbs.
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  * SUCH DAMAGE.
  * All rights reserved.
  *
- * $FreeBSD: releng/11.3/sys/dev/advansys/advansys.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/advansys/advansys.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef _ADVANSYS_H_

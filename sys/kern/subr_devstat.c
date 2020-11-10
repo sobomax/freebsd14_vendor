@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997, 1998, 1999 Kenneth D. Merry.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_devstat.c 300207 2016-05-19 14:08:36Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_devstat.c 355918 2019-12-20 00:25:56Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -222,7 +224,7 @@ devstat_remove_entry(struct devstat *ds)
  * here.
  */
 void
-devstat_start_transaction(struct devstat *ds, struct bintime *now)
+devstat_start_transaction(struct devstat *ds, const struct bintime *now)
 {
 
 	mtx_assert(&devstat_mutex, MA_NOTOWNED);
@@ -292,7 +294,7 @@ devstat_start_transaction_bio(struct devstat *ds, struct bio *bp)
 void
 devstat_end_transaction(struct devstat *ds, uint32_t bytes, 
 			devstat_tag_type tag_type, devstat_trans_flags flags,
-			struct bintime *now, struct bintime *then)
+			const struct bintime *now, const struct bintime *then)
 {
 	struct bintime dt, lnow;
 
@@ -301,8 +303,8 @@ devstat_end_transaction(struct devstat *ds, uint32_t bytes,
 		return;
 
 	if (now == NULL) {
+		binuptime(&lnow);
 		now = &lnow;
-		binuptime(now);
 	}
 
 	atomic_add_acq_int(&ds->sequence1, 1);
@@ -336,22 +338,27 @@ devstat_end_transaction(struct devstat *ds, uint32_t bytes,
 }
 
 void
-devstat_end_transaction_bio(struct devstat *ds, struct bio *bp)
+devstat_end_transaction_bio(struct devstat *ds, const struct bio *bp)
 {
 
 	devstat_end_transaction_bio_bt(ds, bp, NULL);
 }
 
 void
-devstat_end_transaction_bio_bt(struct devstat *ds, struct bio *bp,
-    struct bintime *now)
+devstat_end_transaction_bio_bt(struct devstat *ds, const struct bio *bp,
+    const struct bintime *now)
 {
 	devstat_trans_flags flg;
+	devstat_tag_type tag;
 
 	/* sanity check */
 	if (ds == NULL)
 		return;
 
+	if (bp->bio_flags & BIO_ORDERED)
+		tag = DEVSTAT_TAG_ORDERED;
+	else
+		tag = DEVSTAT_TAG_SIMPLE;
 	if (bp->bio_cmd == BIO_DELETE)
 		flg = DEVSTAT_FREE;
 	else if ((bp->bio_cmd == BIO_READ)
@@ -364,7 +371,7 @@ devstat_end_transaction_bio_bt(struct devstat *ds, struct bio *bp,
 		flg = DEVSTAT_NO_DATA;
 
 	devstat_end_transaction(ds, bp->bio_bcount - bp->bio_resid,
-				DEVSTAT_TAG_SIMPLE, flg, now, &bp->bio_t0);
+				tag, flg, now, &bp->bio_t0);
 	DTRACE_DEVSTAT_BIO_DONE();
 }
 

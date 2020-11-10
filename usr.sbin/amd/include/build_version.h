@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.sbin/amd/include/build_version.h 174304 2007-12-05 16:23:34Z obrien $ */
+/* $FreeBSD: releng/12.2/usr.sbin/amd/include/build_version.h 174304 2007-12-05 16:23:34Z obrien $ */
 
 #include <sys/param.h>
 /*#define AMU_BUILD_VERSION 1 */

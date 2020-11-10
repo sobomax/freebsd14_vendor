@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/execution/pipefail1.0 345561 2019-03-26 22:34:07Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/execution/pipefail1.0 345487 2019-03-24 22:10:26Z jilles $
 
 set -o pipefail
 : && : | : && : | : | : && : | : | : | :

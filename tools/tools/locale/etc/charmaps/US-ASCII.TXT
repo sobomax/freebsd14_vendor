@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/locale/etc/charmaps/US-ASCII.TXT 286434 2015-08-08 00:28:23Z bapt $
+# $FreeBSD: releng/12.2/tools/tools/locale/etc/charmaps/US-ASCII.TXT 286434 2015-08-08 00:28:23Z bapt $
 #
 #	Format:  Three tab-separated columns
 #		 Column #1 is the US-ASCII code (in hex as 0xXX)

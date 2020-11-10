@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_compat.h	1.8 1/14/96
- * $FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_compat.h 344837 2019-03-06 02:51:33Z cy $
+ * $FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_compat.h 358666 2020-03-05 06:38:03Z cy $
  * Id: ip_compat.h,v 2.142.2.57 2007/10/10 09:51:42 darrenr Exp $
  */
 
@@ -89,15 +89,6 @@
 				 (__NetBSD_Version__ > (x)))
 #define	NETBSD_LT_REV(x)	(defined(__NetBSD_Version__) && \
 				 (__NetBSD_Version__ < (x)))
-#define	FREEBSD_GE_REV(x)	(defined(__FreeBSD_version) && \
-				 (__FreeBSD_version >= (x)))
-#define	FREEBSD_GT_REV(x)	(defined(__FreeBSD_version) && \
-				 (__FreeBSD_version > (x)))
-#define	FREEBSD_LT_REV(x)	(defined(__FreeBSD_version) && \
-				 (__FreeBSD_version < (x)))
-#define	BSD_GE_YEAR(x)		(defined(BSD) && (BSD >= (x)))
-#define	BSD_GT_YEAR(x)		(defined(BSD) && (BSD > (x)))
-#define	BSD_LT_YEAR(x)		(defined(BSD) && (BSD < (x)))
 
 
 /* ----------------------------------------------------------------------- */
@@ -126,7 +117,7 @@
  * There may be other, safe, kernels but this is not extensively tested yet.
  */
 #   define HAVE_M_PULLDOWN
-#  if !defined(IPFILTER_LKM) && (__FreeBSD_version >= 300000)
+#  if !defined(IPFILTER_LKM) && defined(__FreeBSD_version)
 #   include "opt_ipfilter.h"
 #  endif
 #  define	COPYIN(a,b,c)	copyin((caddr_t)(a), (caddr_t)(b), (c))
@@ -161,6 +152,7 @@
 					} while (0)
 #  include <net/if_var.h>
 #  define	GETKTIME(x)	microtime((struct timeval *)x)
+#  define	if_addrlist	if_addrhead
 
 #   include <netinet/in_systm.h>
 #   include <netinet/ip.h>
@@ -197,7 +189,7 @@
 #  define	MSGDSIZE(m)	mbufchainlen(m)
 #  define	M_LEN(m)	(m)->m_len
 #  define	M_ADJ(m,x)	m_adj(m, x)
-#  define	M_COPY(x)	m_copy((x), 0, M_COPYALL)
+#  define	M_COPY(x)	m_copym((x), 0, M_COPYALL, M_NOWAIT)
 #  define	M_DUP(m)	m_dup(m, M_NOWAIT)
 #  define	IPF_PANIC(x,y)	if (x) { printf y; panic("ipf_panic"); }
 typedef struct mbuf mb_t;
@@ -211,7 +203,7 @@ struct route;
 struct mbuf;
 struct ifnet {
 	char			if_xname[IFNAMSIZ];
-	TAILQ_HEAD(, ifaddr)	if_addrlist;
+	STAILQ_HEAD(, ifaddr)	if_addrlist;
 	int	(*if_output)(struct ifnet *, struct mbuf *,
 	    const struct sockaddr *, struct route *);
 };
@@ -444,7 +436,7 @@ extern	mb_t	*allocmbt(size_t);
  * On BSD's use quad_t as a guarantee for getting at least a 64bit sized
  * object.
  */
-#if !defined(__amd64__) && BSD_GT_YEAR(199306)
+#if !defined(__amd64__) && !SOLARIS
 # define	USE_QUAD_T
 # define	U_QUAD_T	unsigned long long
 # define	QUAD_T		long long
@@ -507,16 +499,16 @@ MALLOC_DECLARE(M_IPFILTER);
 #   endif /* M_PFIL */
 #  endif /* IPFILTER_M_IPFILTER */
 #  if !defined(KMALLOC)
-#   define	KMALLOC(a, b)	MALLOC((a), b, sizeof(*(a)), _M_IPF, M_NOWAIT)
+#   define	KMALLOC(a, b)		(a) = (b)malloc(sizeof(*(a)), _M_IPF, M_NOWAIT)
 #  endif
 #  if !defined(KMALLOCS)
-#   define	KMALLOCS(a, b, c)	MALLOC((a), b, (c), _M_IPF, M_NOWAIT)
+#   define	KMALLOCS(a, b, c)	(a) = (b)malloc((c), _M_IPF, M_NOWAIT)
 #  endif
 #  if !defined(KFREE)
-#   define	KFREE(x)	FREE((x), _M_IPF)
+#   define	KFREE(x)	free((x), _M_IPF)
 #  endif
 #   if !defined(KFREES)
-#  define	KFREES(x,s)	FREE((x), _M_IPF)
+#  define	KFREES(x,s)	free((x), _M_IPF)
 #  endif
 #  define	UIOMOVE(a,b,c,d)	uiomove((caddr_t)a,b,d)
 #  define	SLEEP(id, n)	tsleep((id), PPAUSE|PCATCH, n, 0)
@@ -738,7 +730,7 @@ typedef	struct	tcpiphdr	tcpiphdr_t;
 #define	TCPF_ALL	(TH_FIN|TH_SYN|TH_RST|TH_PUSH|TH_ACK|TH_URG|\
 			 TH_ECN|TH_CWR)
 
-#if BSD_GE_YEAR(199306) && !defined(m_act)
+#if !SOLARIS && !defined(m_act)
 # define	m_act	m_nextpkt
 #endif
 
@@ -828,190 +820,9 @@ typedef	struct	tcpiphdr	tcpiphdr_t;
 #undef	IPOPT_AH
 #define	IPOPT_AH	256+IPPROTO_AH
 
-#ifndef TCPOPT_EOL
-# define TCPOPT_EOL		0
-#endif
-#ifndef TCPOPT_NOP
-# define TCPOPT_NOP		1
-#endif
-#ifndef TCPOPT_MAXSEG
-# define TCPOPT_MAXSEG		2
-#endif
-#ifndef TCPOLEN_MAXSEG
-# define TCPOLEN_MAXSEG		4
-#endif
-#ifndef TCPOPT_WINDOW
-# define TCPOPT_WINDOW		3
-#endif
-#ifndef TCPOLEN_WINDOW
-# define TCPOLEN_WINDOW		3
-#endif
-#ifndef TCPOPT_SACK_PERMITTED
-# define TCPOPT_SACK_PERMITTED	4
-#endif
-#ifndef TCPOLEN_SACK_PERMITTED
-# define TCPOLEN_SACK_PERMITTED	2
-#endif
-#ifndef TCPOPT_SACK
-# define TCPOPT_SACK		5
-#endif
-#ifndef TCPOPT_TIMESTAMP
-# define TCPOPT_TIMESTAMP	8
-#endif
+# define	ICMP_UNREACH_ADMIN_PROHIBIT	ICMP_UNREACH_FILTER_PROHIB
+# define	ICMP_UNREACH_FILTER	ICMP_UNREACH_FILTER_PROHIB
 
-#ifndef	ICMP_MINLEN
-# define	ICMP_MINLEN	8
-#endif
-#ifndef	ICMP_ECHOREPLY
-# define	ICMP_ECHOREPLY	0
-#endif
-#ifndef	ICMP_UNREACH
-# define	ICMP_UNREACH	3
-#endif
-#ifndef	ICMP_UNREACH_NET
-# define	ICMP_UNREACH_NET	0
-#endif
-#ifndef	ICMP_UNREACH_HOST
-# define	ICMP_UNREACH_HOST	1
-#endif
-#ifndef	ICMP_UNREACH_PROTOCOL
-# define	ICMP_UNREACH_PROTOCOL	2
-#endif
-#ifndef	ICMP_UNREACH_PORT
-# define	ICMP_UNREACH_PORT	3
-#endif
-#ifndef	ICMP_UNREACH_NEEDFRAG
-# define	ICMP_UNREACH_NEEDFRAG	4
-#endif
-#ifndef	ICMP_UNREACH_SRCFAIL
-# define	ICMP_UNREACH_SRCFAIL	5
-#endif
-#ifndef	ICMP_UNREACH_NET_UNKNOWN
-# define	ICMP_UNREACH_NET_UNKNOWN	6
-#endif
-#ifndef	ICMP_UNREACH_HOST_UNKNOWN
-# define	ICMP_UNREACH_HOST_UNKNOWN	7
-#endif
-#ifndef	ICMP_UNREACH_ISOLATED
-# define	ICMP_UNREACH_ISOLATED	8
-#endif
-#ifndef	ICMP_UNREACH_NET_PROHIB
-# define	ICMP_UNREACH_NET_PROHIB	9
-#endif
-#ifndef	ICMP_UNREACH_HOST_PROHIB
-# define	ICMP_UNREACH_HOST_PROHIB	10
-#endif
-#ifndef	ICMP_UNREACH_TOSNET
-# define	ICMP_UNREACH_TOSNET	11
-#endif
-#ifndef	ICMP_UNREACH_TOSHOST
-# define	ICMP_UNREACH_TOSHOST	12
-#endif
-#ifndef	ICMP_UNREACH_ADMIN_PROHIBIT
-# define	ICMP_UNREACH_ADMIN_PROHIBIT	13
-#endif
-#ifndef	ICMP_UNREACH_FILTER
-# define	ICMP_UNREACH_FILTER	13
-#endif
-#ifndef	ICMP_UNREACH_HOST_PRECEDENCE
-# define	ICMP_UNREACH_HOST_PRECEDENCE	14
-#endif
-#ifndef	ICMP_UNREACH_PRECEDENCE_CUTOFF
-# define	ICMP_UNREACH_PRECEDENCE_CUTOFF	15
-#endif
-#ifndef	ICMP_SOURCEQUENCH
-# define	ICMP_SOURCEQUENCH	4
-#endif
-#ifndef	ICMP_REDIRECT_NET
-# define	ICMP_REDIRECT_NET	0
-#endif
-#ifndef	ICMP_REDIRECT_HOST
-# define	ICMP_REDIRECT_HOST	1
-#endif
-#ifndef	ICMP_REDIRECT_TOSNET
-# define	ICMP_REDIRECT_TOSNET	2
-#endif
-#ifndef	ICMP_REDIRECT_TOSHOST
-# define	ICMP_REDIRECT_TOSHOST	3
-#endif
-#ifndef	ICMP_ALTHOSTADDR
-# define	ICMP_ALTHOSTADDR	6
-#endif
-#ifndef	ICMP_TIMXCEED
-# define	ICMP_TIMXCEED	11
-#endif
-#ifndef	ICMP_TIMXCEED_INTRANS
-# define	ICMP_TIMXCEED_INTRANS	0
-#endif
-#ifndef	ICMP_TIMXCEED_REASS
-# define		ICMP_TIMXCEED_REASS	1
-#endif
-#ifndef	ICMP_PARAMPROB
-# define	ICMP_PARAMPROB	12
-#endif
-#ifndef	ICMP_PARAMPROB_ERRATPTR
-# define	ICMP_PARAMPROB_ERRATPTR	0
-#endif
-#ifndef	ICMP_PARAMPROB_OPTABSENT
-# define	ICMP_PARAMPROB_OPTABSENT	1
-#endif
-#ifndef	ICMP_PARAMPROB_LENGTH
-# define	ICMP_PARAMPROB_LENGTH	2
-#endif
-#ifndef ICMP_TSTAMP
-# define	ICMP_TSTAMP	13
-#endif
-#ifndef ICMP_TSTAMPREPLY
-# define	ICMP_TSTAMPREPLY	14
-#endif
-#ifndef ICMP_IREQ
-# define	ICMP_IREQ	15
-#endif
-#ifndef ICMP_IREQREPLY
-# define	ICMP_IREQREPLY	16
-#endif
-#ifndef	ICMP_MASKREQ
-# define	ICMP_MASKREQ	17
-#endif
-#ifndef ICMP_MASKREPLY
-# define	ICMP_MASKREPLY	18
-#endif
-#ifndef	ICMP_TRACEROUTE
-# define	ICMP_TRACEROUTE	30
-#endif
-#ifndef	ICMP_DATACONVERR
-# define	ICMP_DATACONVERR	31
-#endif
-#ifndef	ICMP_MOBILE_REDIRECT
-# define	ICMP_MOBILE_REDIRECT	32
-#endif
-#ifndef	ICMP_IPV6_WHEREAREYOU
-# define	ICMP_IPV6_WHEREAREYOU	33
-#endif
-#ifndef	ICMP_IPV6_IAMHERE
-# define	ICMP_IPV6_IAMHERE	34
-#endif
-#ifndef	ICMP_MOBILE_REGREQUEST
-# define	ICMP_MOBILE_REGREQUEST	35
-#endif
-#ifndef	ICMP_MOBILE_REGREPLY
-# define	ICMP_MOBILE_REGREPLY	36
-#endif
-#ifndef	ICMP_SKIP
-# define	ICMP_SKIP	39
-#endif
-#ifndef	ICMP_PHOTURIS
-# define	ICMP_PHOTURIS	40
-#endif
-#ifndef	ICMP_PHOTURIS_UNKNOWN_INDEX
-# define	ICMP_PHOTURIS_UNKNOWN_INDEX	1
-#endif
-#ifndef	ICMP_PHOTURIS_AUTH_FAILED
-# define	ICMP_PHOTURIS_AUTH_FAILED	2
-#endif
-#ifndef	ICMP_PHOTURIS_DECRYPT_FAILED
-# define	ICMP_PHOTURIS_DECRYPT_FAILED	3
-#endif
 #ifndef	IPVERSION
 # define	IPVERSION	4
 #endif

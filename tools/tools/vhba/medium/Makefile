@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/vhba/medium/Makefile 208926 2010-06-08 22:26:47Z mjacob $
+# $FreeBSD: releng/12.2/tools/tools/vhba/medium/Makefile 208926 2010-06-08 22:26:47Z mjacob $
 KMOD=	vmedium
 SRCS=	vhba_medium.c vhba.c
 CFLAGS += -I${.CURDIR}/.. -DVHBA_MOD=\"vmedium\"

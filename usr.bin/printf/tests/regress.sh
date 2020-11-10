@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/printf/tests/regress.sh 338181 2018-08-22 04:27:33Z pfg $
+# $FreeBSD: releng/12.2/usr.bin/printf/tests/regress.sh 337728 2018-08-13 21:54:27Z jilles $
 
 REGRESSION_START($1)
 

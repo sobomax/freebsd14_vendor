@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/binutils/libopcodes/Makefile 218822 2011-02-18 20:54:12Z dim $
+# $FreeBSD: releng/12.2/gnu/usr.bin/binutils/libopcodes/Makefile 218822 2011-02-18 20:54:12Z dim $
 
 .include "../Makefile.inc0"
 

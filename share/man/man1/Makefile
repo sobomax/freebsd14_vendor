@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/share/man/man1/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/share/man/man1/Makefile 314652 2017-03-04 11:26:40Z ngie $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,7 @@ MAN=	builtin.1 intro.1
 PACKAGE=runtime-manuals
 
 .if ${MK_TESTS} != "no"
-ATF=	${.CURDIR}/../../../contrib/atf
+ATF=	${SRCTOP}/contrib/atf
 .PATH:	${ATF}/doc
 MAN+=	atf-test-program.1
 .endif

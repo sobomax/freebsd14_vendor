@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/sys/kern/genassym.sh 286793 2015-08-14 22:57:13Z rpaulo $
+# $FreeBSD: releng/12.2/sys/kern/genassym.sh 316764 2017-04-13 15:43:44Z andrew $
 
 usage()
 {
@@ -32,12 +32,15 @@ work()
 		sub("^0*", "", w)
 		if (w == "")
 			w = "0"
+		hex = ""
+		if (w != "0")
+			hex = "0x"
 		sub("w3$", "", $3)
 		# This still has minor problems representing INT_MIN, etc. 
 		# E.g.,
 		# with 32-bit 2''s complement ints, this prints -0x80000000,
 		# which has the wrong type (unsigned int).
-		printf("#define\t%s\t%s0x%s\n", $3, sign, w)
+		printf("#define\t%s\t%s%s%s\n", $3, sign, hex, w)
 	} '
 }
 

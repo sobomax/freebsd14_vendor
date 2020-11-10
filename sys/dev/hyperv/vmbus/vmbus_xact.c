@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/vmbus_xact.c 311367 2017-01-05 05:46:06Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/vmbus_xact.c 309240 2016-11-28 07:27:08Z sephe $");
 
 #include <sys/param.h>
 #include <sys/lock.h>

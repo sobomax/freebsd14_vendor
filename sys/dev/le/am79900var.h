@@ -1,6 +1,8 @@
 /*	$NetBSD: am79900var.h,v 1.4 2005/12/11 12:21:25 christos Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/le/am79900var.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/le/am79900var.h 326255 2017-11-27 14:52:40Z pfg $ */
 
 #ifndef _DEV_LE_AM79900VAR_H_
 #define	_DEV_LE_AM79900VAR_H_

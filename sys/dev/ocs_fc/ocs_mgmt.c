@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ocs_fc/ocs_mgmt.c 343371 2019-01-24 01:04:23Z markj $
+ * $FreeBSD: releng/12.2/sys/dev/ocs_fc/ocs_mgmt.c 343370 2019-01-24 01:03:12Z markj $
  */
 
 /**

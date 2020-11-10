@@ -25,6 +25,8 @@
  * SUCH DAMAGE.
  */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2002 Eric Moore
  * Copyright (c) 2002, 2004 LSI Logic Corporation
  * All rights reserved.
@@ -55,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/amr/amr_pci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/amr/amr_pci.c 338948 2018-09-26 17:12:14Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,15 +116,10 @@ static driver_t amr_pci_driver = {
 	sizeof(struct amr_softc)
 };
 
-static devclass_t	amr_devclass;
-DRIVER_MODULE(amr, pci, amr_pci_driver, amr_devclass, 0, 0);
-MODULE_DEPEND(amr, pci, 1, 1, 1);
-MODULE_DEPEND(amr, cam, 1, 1, 1);
-
 static struct amr_ident
 {
-    int		vendor;
-    int		device;
+    uint16_t		vendor;
+    uint16_t		device;
     int		flags;
 #define AMR_ID_PROBE_SIG	(1<<0)	/* generic i960RD, check signature */
 #define AMR_ID_DO_SG64		(1<<1)
@@ -141,6 +138,13 @@ static struct amr_ident
     {0x1028, 0x0013, AMR_ID_QUARTZ | AMR_ID_DO_SG64}, /* perc4/di */
     {0, 0, 0}
 };
+
+static devclass_t	amr_devclass;
+DRIVER_MODULE(amr, pci, amr_pci_driver, amr_devclass, 0, 0);
+MODULE_PNP_INFO("U16:vendor;U16:device", pci, amr, amr_device_ids,
+    nitems(amr_device_ids) - 1);
+MODULE_DEPEND(amr, pci, 1, 1, 1);
+MODULE_DEPEND(amr, cam, 1, 1, 1);
 
 static struct amr_ident *
 amr_find_ident(device_t dev)

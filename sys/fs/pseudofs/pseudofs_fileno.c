@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001 Dag-Erling Coïdan Smørgrav
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/fs/pseudofs/pseudofs_fileno.c 303906 2016-08-10 12:34:49Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/fs/pseudofs/pseudofs_fileno.c 326268 2017-11-27 15:15:37Z pfg $");
 
 #include "opt_pseudofs.h"
 

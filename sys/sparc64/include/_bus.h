@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 M. Warner Losh.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/_bus.h 159583 2006-06-13 19:18:09Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/_bus.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef SPARC64_INCLUDE__BUS_H

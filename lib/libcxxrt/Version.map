@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libcxxrt/Version.map 328583 2018-01-30 01:13:06Z emaste $
+# $FreeBSD: releng/12.2/lib/libcxxrt/Version.map 350400 2019-07-29 06:13:22Z dim $
 # Define the same version as the libsupc++ from gcc 4.2.1 so that we can use
 # libcxxrt as a drop-in replacement.
 
@@ -277,6 +277,10 @@ CXXABI_1.3.9 {
         "typeinfo name for unsigned __int128 const*";
         "typeinfo name for unsigned __int128";
         "typeinfo name for unsigned __int128*";
+        "operator delete[](void*, unsigned int)";
+        "operator delete(void*, unsigned int)";
+        "operator delete[](void*, unsigned long)";
+        "operator delete(void*, unsigned long)";
     };
 } CXXABI_1.3.6;
 
@@ -377,9 +381,15 @@ GLIBCXX_3.4.9 {
     };
 } GLIBCXX_3.4;
 
+GLIBCXX_3.4.20 {
+    extern "C++" {
+        "std::get_new_handler()";
+    };
+} GLIBCXX_3.4.9;
+
 GLIBCXX_3.4.22 {
     extern "C++" {
         "std::uncaught_exceptions()";
     };
-} GLIBCXX_3.4.9;
+} GLIBCXX_3.4.20;
 

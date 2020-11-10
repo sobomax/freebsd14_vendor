@@ -15,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/read.c 344291 2019-02-19 18:50:20Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/read.c 335126 2018-06-14 09:06:53Z tsoome $");
 
 #include <sys/param.h>
 #include "stand.h"

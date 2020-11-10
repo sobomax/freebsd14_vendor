@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdconfig/includes/includes.sh 291081 2015-11-19 17:57:31Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/bsdconfig/includes/includes.sh 291081 2015-11-19 17:57:31Z bdrewery $
 #
 ############################################################ INCLUDES
 

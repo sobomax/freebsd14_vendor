@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/cudbg/cudbg_lib.c 330307 2018-03-03 02:30:52Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/cudbg/cudbg_lib.c 364776 2020-08-25 18:21:13Z np $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -576,7 +576,7 @@ static int collect_rss(struct cudbg_init *pdbg_init,
 	u32 size;
 	int rc = 0;
 
-	size = RSS_NENTRIES  * sizeof(u16);
+	size = padap->chip_params->rss_nentries * sizeof(u16);
 	rc = get_scratch_buff(dbg_buff, size, &scratch_buff);
 	if (rc)
 		goto err;

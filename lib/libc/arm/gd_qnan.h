@@ -6,7 +6,7 @@
  *
  * XXX I don't have ARM hardware, so I just guessed.  --das
  *
- * $FreeBSD: releng/11.3/lib/libc/arm/gd_qnan.h 174680 2007-12-16 21:15:09Z das $
+ * $FreeBSD: releng/12.2/lib/libc/arm/gd_qnan.h 174680 2007-12-16 21:15:09Z das $
  */
 
 #define f_QNAN 0x7fc00000

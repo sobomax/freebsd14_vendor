@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/drm2/tegra_bo.c 310600 2016-12-26 14:36:05Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/drm2/tegra_bo.c 349139 2019-06-17 15:11:04Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -67,7 +67,7 @@ tegra_bo_destruct(struct tegra_bo *bo)
 		cdev_pager_free_page(bo->cdev_pager, m);
 		vm_page_lock(m);
 		m->flags &= ~PG_FICTITIOUS;
-		vm_page_unwire(m, PQ_NONE);
+		vm_page_unwire_noq(m);
 		vm_page_free(m);
 		vm_page_unlock(m);
 	}
@@ -114,7 +114,7 @@ retry:
 		if (tries < 3) {
 			if (!vm_page_reclaim_contig(pflags, npages, low, high,
 			    alignment, boundary))
-				VM_WAIT;
+				vm_wait(NULL);
 			tries++;
 			goto retry;
 		}

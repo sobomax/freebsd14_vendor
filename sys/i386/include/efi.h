@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain since it's just boilerplate.
  *
- * $FreeBSD: releng/11.3/sys/i386/include/efi.h 318576 2017-05-20 16:12:44Z kib $
+ * $FreeBSD: releng/12.2/sys/i386/include/efi.h 307189 2016-10-13 06:56:23Z imp $
  */
 
 #ifndef __I386_INCLUDE_EFI_H_

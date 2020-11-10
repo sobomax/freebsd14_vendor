@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Poul-Henning Kamp.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/devfs/devfs_int.h 277391 2015-01-19 17:36:52Z kib $
+ * $FreeBSD: releng/12.2/sys/fs/devfs/devfs_int.h 363506 2020-07-25 00:37:34Z mjg $
  */
 
 /*
@@ -68,6 +70,8 @@ struct cdev_priv {
 	void			*cdp_dtr_cb_arg;
 
 	LIST_HEAD(, cdev_privdata) cdp_fdpriv;
+
+	struct mtx		cdp_threadlock;
 };
 
 #define	cdev2priv(c)	__containerof(c, struct cdev_priv, cdp_c)

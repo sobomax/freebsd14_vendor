@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/liblua/Makefile 344220 2019-02-17 02:39:17Z kevans $
+# $FreeBSD: releng/12.2/stand/liblua/Makefile 355345 2019-12-03 18:25:16Z kevans $
 
 .include <bsd.init.mk>
 
@@ -23,17 +23,23 @@ SRCS+=	lauxlib.c lbaselib.c lstrlib.c loadlib.c
 #SRCS+=	lbitlib.c liolib.c lmathlib.c loslib.c ltablib.c
 
 # Our utilities.
-SRCS+=	lerrno.c lfs.c lstd.c lutils.c
+SRCS+=	lerrno.c lstd.c lutils.c
+
+.PATH:	${FLUASRC}/modules
+SRCS+=	lfs.c
 
 WARNS=	3
 
-CFLAGS+= -DLUA_PATH_DEFAULT=\"/boot/lua/\?.lua\"
+CFLAGS+= -DLUA_PATH=\"${LUAPATH}\" -DLUA_PATH_DEFAULT=\"${LUAPATH}/\?.lua\"
 CFLAGS+= -ffreestanding -nostdlib -DLUA_USE_POSIX
 CFLAGS+= -fno-stack-protector -D__BSD_VISIBLE
 CFLAGS+= -I${BOOTSRC}/include -I${LIBLUASRC} -I${LUASRC} -I${LDRSRC}
 
 .if ${MACHINE_CPUARCH} == "amd64" && ${DO32:U0} == 0
 CFLAGS+=	-fPIC
+.endif
+.if ${MK_LOADER_VERIEXEC} == "yes"
+CFLAGS+= -I${SRCTOP}/lib/libsecureboot/h -DLOADER_VERIEXEC
 .endif
 
 .include <bsd.lib.mk>

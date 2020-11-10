@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/lib/libusb/libusb_global_linux.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libusb/libusb_global_linux.h 358947 2020-03-13 09:17:04Z hselasky $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,6 +75,13 @@
     strncpy(d,s,len);				\
     ((char *)d)[(len) - 1] = 0;			\
 } while (0)
+#endif
+
+#ifndef TAILQ_FOREACH_SAFE
+#define	TAILQ_FOREACH_SAFE(var, head, field, tvar)			\
+	for ((var) = TAILQ_FIRST((head));				\
+	    (var) && ((tvar) = TAILQ_NEXT((var), field), 1);		\
+	    (var) = (tvar))
 #endif
 
 #endif					/* _LIBUSB_GLOBAL_LINUX_H_ */

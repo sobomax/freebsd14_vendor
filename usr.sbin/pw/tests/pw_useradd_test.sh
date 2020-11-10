@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/pw/tests/pw_useradd_test.sh 330694 2018-03-09 14:45:17Z dab $
+# $FreeBSD: releng/12.2/usr.sbin/pw/tests/pw_useradd_test.sh 330245 2018-03-01 17:47:28Z dab $
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin

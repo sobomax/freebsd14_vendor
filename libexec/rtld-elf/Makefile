@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/rtld-elf/Makefile 346485 2019-04-21 09:13:56Z kib $
+# $FreeBSD: releng/12.2/libexec/rtld-elf/Makefile 352754 2019-09-26 16:05:57Z emaste $
 
 # Use the following command to build local debug version of dynamic
 # linker:
@@ -6,15 +6,25 @@
 
 .include <src.opts.mk>
 PACKAGE=	clibs
+MK_PIE=		no # Always position independent using local rules
 MK_SSP=		no
 
+CONFS=		libmap.conf
 PROG?=		ld-elf.so.1
 .if (${PROG:M*ld-elf32*} != "")
 TAGS+=		lib32
 .endif
-SRCS=		rtld_start.S \
-		reloc.c rtld.c rtld_lock.c rtld_printf.c map_object.c \
-		malloc.c xmalloc.c debug.c libmap.c
+SRCS= \
+	rtld_start.S \
+	reloc.c \
+	rtld.c \
+	rtld_lock.c \
+	rtld_malloc.c \
+	rtld_printf.c \
+	map_object.c \
+	xmalloc.c \
+	debug.c \
+	libmap.c
 MAN=		rtld.1
 CSTD?=		gnu99
 CFLAGS+=	-Wall -DFREEBSD_ELF -DIN_RTLD -ffreestanding
@@ -30,7 +40,9 @@ LDFLAGS+=	-nostdlib -e _rtld_start
 .else
 LDFLAGS+=	-nostdlib -e .rtld_start
 .endif
-WARNS?=		2
+
+NO_WCAST_ALIGN=	yes
+WARNS?=		6
 INSTALLFLAGS=	-C -b
 PRECIOUSPROG=
 BINDIR=		/libexec
@@ -47,8 +59,11 @@ CFLAGS+=	-DPIC $(DEBUG)
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 CFLAGS+=	-fvisibility=hidden
 .endif
+.if ${MACHINE_CPUARCH} == "mips"
+CFLAGS.reloc.c+=-fno-jump-tables
+.endif
 LDFLAGS+=	-shared -Wl,-Bsymbolic -Wl,-z,defs
-LIBADD=		c_pic
+LIBADD=		c_nossp_pic
 .if ${MK_TOOLCHAIN} == "no"
 LDFLAGS+=	-L${LIBCDIR}
 .endif
@@ -85,10 +100,19 @@ beforeinstall:
 
 .PATH: ${.CURDIR}/${RTLD_ARCH}
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>
 ${PROG_FULL}:	${VERSION_MAP}
 .include <bsd.symver.mk>
+
+.if ${COMPILER_TYPE} == "gcc"
+# GCC warns about redeclarations even though they have __exported
+# and are therefore not identical to the ones from the system headers.
+CFLAGS+=	-Wno-redundant-decls
+.if ${COMPILER_VERSION} < 40300
+# Silence -Wshadow false positives in ancient GCC
+CFLAGS+=	-Wno-shadow
+.endif
+.endif

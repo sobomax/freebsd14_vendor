@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013-2016 Qlogic Corporation
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/qlxgbe/ql_isr.c 332052 2018-04-04 23:53:29Z davidcs $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/qlxgbe/ql_isr.c 351676 2019-09-02 00:31:03Z emaste $");
 
 
 #include "ql_os.h"
@@ -791,7 +793,7 @@ ql_mbx_isr(void *arg)
 	ha = arg;
 
 	if (ha == NULL) {
-		device_printf(ha->pci_dev, "%s: arg == NULL\n", __func__);
+		printf("%s: arg == NULL\n", __func__);
 		return;
 	}
 

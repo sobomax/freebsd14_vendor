@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/pw/tests/crypt.c 305741 2016-09-12 16:28:32Z asomers $
+ * $FreeBSD: releng/12.2/usr.sbin/pw/tests/crypt.c 302778 2016-07-13 17:09:20Z asomers $
  */
 
 #include <err.h>

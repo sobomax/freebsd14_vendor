@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/gptboot/gptboot.c 344399 2019-02-20 23:55:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/gptboot/gptboot.c 353988 2019-10-24 03:16:23Z kevans $");
 
 #include <sys/param.h>
 #include <sys/gpt.h>
@@ -232,7 +232,7 @@ static int
 gptinit(void)
 {
 
-	if (gptread(&freebsd_ufs_uuid, &gdsk.dsk, dmadat->secbuf) == -1) {
+	if (gptread(&gdsk.dsk, dmadat->secbuf) == -1) {
 		printf("%s: unable to load GPT\n", BOOTPROG);
 		return (-1);
 	}

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2012-2014 Intel Corporation
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/nvme/nvme_private.h 346244 2019-04-15 16:28:25Z mav $
+ * $FreeBSD: releng/12.2/sys/dev/nvme/nvme_private.h 362579 2020-06-24 13:49:30Z mav $
  */
 
 #ifndef __NVME_PRIVATE_H__
@@ -35,6 +37,7 @@
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/module.h>
 #include <sys/mutex.h>
 #include <sys/rman.h>
 #include <sys/systm.h>
@@ -112,12 +115,15 @@ MALLOC_DECLARE(M_NVME);
 
 extern uma_zone_t	nvme_request_zone;
 extern int32_t		nvme_retry_count;
+extern bool		nvme_verbose_cmd_dump;
 
 struct nvme_completion_poll_status {
 
 	struct nvme_completion	cpl;
 	int			done;
 };
+
+extern devclass_t nvme_devclass;
 
 #define NVME_REQUEST_VADDR	1
 #define NVME_REQUEST_NULL	2 /* For requests with no payload. */
@@ -135,7 +141,7 @@ struct nvme_request {
 	} u;
 	uint32_t			type;
 	uint32_t			payload_size;
-	boolean_t			timeout;
+	bool				timeout;
 	nvme_cb_fn_t			cb_fn;
 	void				*cb_arg;
 	int32_t				retries;
@@ -169,7 +175,8 @@ struct nvme_qpair {
 
 	struct nvme_controller	*ctrlr;
 	uint32_t		id;
-	uint32_t		phase;
+	int			domain;
+	int			cpu;
 
 	uint16_t		vector;
 	int			rid;
@@ -181,12 +188,15 @@ struct nvme_qpair {
 	uint32_t		sq_tdbl_off;
 	uint32_t		cq_hdbl_off;
 
+	uint32_t		phase;
 	uint32_t		sq_head;
 	uint32_t		sq_tail;
 	uint32_t		cq_head;
 
 	int64_t			num_cmds;
 	int64_t			num_intr_handler_calls;
+	int64_t			num_retries;
+	int64_t			num_failures;
 
 	struct nvme_command	*cmd;
 	struct nvme_completion	*cpl;
@@ -204,7 +214,7 @@ struct nvme_qpair {
 
 	struct nvme_tracker	**act_tr;
 
-	boolean_t		is_enabled;
+	bool			is_enabled;
 
 	struct mtx		lock __aligned(CACHE_LINE_SIZE);
 
@@ -218,7 +228,7 @@ struct nvme_namespace {
 	uint32_t			flags;
 	struct cdev			*cdev;
 	void				*cons_cookie[NVME_MAX_CONSUMERS];
-	uint32_t			stripesize;
+	uint32_t			boundary;
 	struct mtx			lock;
 };
 
@@ -230,7 +240,7 @@ struct nvme_controller {
 	device_t		dev;
 
 	struct mtx		lock;
-
+	int			domain;
 	uint32_t		ready_timeout_in_ms;
 	uint32_t		quirks;
 #define	QUIRK_DELAY_B4_CHK_RDY	1		/* Can't touch MMIO on disable */
@@ -250,11 +260,9 @@ struct nvme_controller {
 	struct resource		*bar4_resource;
 
 	uint32_t		msix_enabled;
-	uint32_t		force_intx;
 	uint32_t		enable_aborts;
 
 	uint32_t		num_io_queues;
-	uint32_t		num_cpus_per_ioq;
 	uint32_t		max_hw_pend_io;
 
 	/* Fields for tracking progress during controller initialization. */
@@ -271,9 +279,6 @@ struct nvme_controller {
 	struct resource		*res;
 	void			*tag;
 
-	bus_dma_tag_t		hw_desc_tag;
-	bus_dmamap_t		hw_desc_map;
-
 	/** maximum i/o size in bytes */
 	uint32_t		max_xfer_size;
 
@@ -289,6 +294,9 @@ struct nvme_controller {
 	/** timeout period in seconds */
 	uint32_t		timeout_period;
 
+	/** doorbell stride */
+	uint32_t		dstrd;
+
 	struct nvme_qpair	adminq;
 	struct nvme_qpair	*ioq;
 
@@ -299,8 +307,8 @@ struct nvme_controller {
 
 	struct cdev			*cdev;
 
-	/** bit mask of warning types currently enabled for async events */
-	union nvme_critical_warning_state	async_event_config;
+	/** bit mask of event types currently enabled for async events */
+	uint32_t			async_event_config;
 
 	uint32_t			num_aers;
 	struct nvme_async_event_request	aer[NVME_MAX_ASYNC_EVENTS];
@@ -311,8 +319,22 @@ struct nvme_controller {
 	uint32_t			is_initialized;
 	uint32_t			notification_sent;
 
-	boolean_t			is_failed;
+	bool				is_failed;
 	STAILQ_HEAD(, nvme_request)	fail_req;
+
+	/* Host Memory Buffer */
+	int				hmb_nchunks;
+	size_t				hmb_chunk;
+	bus_dma_tag_t			hmb_tag;
+	struct nvme_hmb_chunk {
+		bus_dmamap_t		hmbc_map;
+		void			*hmbc_vaddr;
+		uint64_t		hmbc_paddr;
+	} *hmb_chunks;
+	bus_dma_tag_t			hmb_desc_tag;
+	bus_dmamap_t			hmb_desc_map;
+	struct nvme_hmb_desc		*hmb_desc_vaddr;
+	uint64_t			hmb_desc_paddr;
 };
 
 #define nvme_mmio_offsetof(reg)						       \
@@ -326,13 +348,13 @@ struct nvme_controller {
 	bus_space_write_4((sc)->bus_tag, (sc)->bus_handle,		       \
 	    nvme_mmio_offsetof(reg), val)
 
-#define nvme_mmio_write_8(sc, reg, val) \
+#define nvme_mmio_write_8(sc, reg, val)					       \
 	do {								       \
 		bus_space_write_4((sc)->bus_tag, (sc)->bus_handle,	       \
 		    nvme_mmio_offsetof(reg), val & 0xFFFFFFFF); 	       \
 		bus_space_write_4((sc)->bus_tag, (sc)->bus_handle,	       \
 		    nvme_mmio_offsetof(reg)+4,				       \
-		    (val & 0xFFFFFFFF00000000UL) >> 32);		       \
+		    (val & 0xFFFFFFFF00000000ULL) >> 32);		       \
 	} while (0);
 
 #define nvme_printf(ctrlr, fmt, args...)	\
@@ -366,7 +388,7 @@ void	nvme_ctrlr_cmd_get_firmware_page(struct nvme_controller *ctrlr,
 					 nvme_cb_fn_t cb_fn,
 					 void *cb_arg);
 void	nvme_ctrlr_cmd_create_io_cq(struct nvme_controller *ctrlr,
-				    struct nvme_qpair *io_que, uint16_t vector,
+				    struct nvme_qpair *io_que,
 				    nvme_cb_fn_t cb_fn, void *cb_arg);
 void	nvme_ctrlr_cmd_create_io_sq(struct nvme_controller *ctrlr,
 				    struct nvme_qpair *io_que,
@@ -381,7 +403,7 @@ void	nvme_ctrlr_cmd_set_num_queues(struct nvme_controller *ctrlr,
 				      uint32_t num_queues, nvme_cb_fn_t cb_fn,
 				      void *cb_arg);
 void	nvme_ctrlr_cmd_set_async_event_config(struct nvme_controller *ctrlr,
-					      union nvme_critical_warning_state state,
+					      uint32_t state,
 					      nvme_cb_fn_t cb_fn, void *cb_arg);
 void	nvme_ctrlr_cmd_abort(struct nvme_controller *ctrlr, uint16_t cid,
 			     uint16_t sqid, nvme_cb_fn_t cb_fn, void *cb_arg);
@@ -402,9 +424,8 @@ void	nvme_ctrlr_submit_io_request(struct nvme_controller *ctrlr,
 void	nvme_ctrlr_post_failed_request(struct nvme_controller *ctrlr,
 				       struct nvme_request *req);
 
-int	nvme_qpair_construct(struct nvme_qpair *qpair, uint32_t id,
-			     uint16_t vector, uint32_t num_entries,
-			     uint32_t num_trackers,
+int	nvme_qpair_construct(struct nvme_qpair *qpair,
+			     uint32_t num_entries, uint32_t num_trackers,
 			     struct nvme_controller *ctrlr);
 void	nvme_qpair_submit_tracker(struct nvme_qpair *qpair,
 				  struct nvme_tracker *tr);
@@ -415,8 +436,7 @@ void	nvme_qpair_reset(struct nvme_qpair *qpair);
 void	nvme_qpair_fail(struct nvme_qpair *qpair);
 void	nvme_qpair_manual_complete_request(struct nvme_qpair *qpair,
 					   struct nvme_request *req,
-					   uint32_t sct, uint32_t sc,
-					   boolean_t print_on_error);
+                                           uint32_t sct, uint32_t sc);
 
 void	nvme_admin_qpair_enable(struct nvme_qpair *qpair);
 void	nvme_admin_qpair_disable(struct nvme_qpair *qpair);
@@ -434,6 +454,32 @@ void	nvme_sysctl_initialize_ctrlr(struct nvme_controller *ctrlr);
 
 void	nvme_dump_command(struct nvme_command *cmd);
 void	nvme_dump_completion(struct nvme_completion *cpl);
+
+int	nvme_attach(device_t dev);
+int	nvme_shutdown(device_t dev);
+int	nvme_detach(device_t dev);
+
+/*
+ * Wait for a command to complete using the nvme_completion_poll_cb.
+ * Used in limited contexts where the caller knows it's OK to block
+ * briefly while the command runs. The ISR will run the callback which
+ * will set status->done to true, usually within microseconds. If not,
+ * then after one second timeout handler should reset the controller
+ * and abort all outstanding requests including this polled one. If
+ * still not after ten seconds, then something is wrong with the driver,
+ * and panic is the only way to recover.
+ */
+static __inline
+void
+nvme_completion_poll(struct nvme_completion_poll_status *status)
+{
+	int sanity = hz * 10;
+
+	while (!atomic_load_acq_int(&status->done) && --sanity > 0)
+		pause("nvme", 1);
+	if (sanity <= 0)
+		panic("NVME polled command failed to complete within 10s.");
+}
 
 static __inline void
 nvme_single_map(void *arg, bus_dma_segment_t *seg, int nseg, int error)
@@ -454,7 +500,7 @@ _nvme_allocate_request(nvme_cb_fn_t cb_fn, void *cb_arg)
 	if (req != NULL) {
 		req->cb_fn = cb_fn;
 		req->cb_arg = cb_arg;
-		req->timeout = TRUE;
+		req->timeout = true;
 	}
 	return (req);
 }
@@ -520,8 +566,12 @@ void	nvme_notify_async_consumers(struct nvme_controller *ctrlr,
 				    uint32_t log_page_size);
 void	nvme_notify_fail_consumers(struct nvme_controller *ctrlr);
 void	nvme_notify_new_controller(struct nvme_controller *ctrlr);
+void	nvme_notify_ns(struct nvme_controller *ctrlr, int nsid);
 
 void	nvme_ctrlr_intx_handler(void *arg);
 void	nvme_ctrlr_poll(struct nvme_controller *ctrlr);
+
+int	nvme_ctrlr_suspend(struct nvme_controller *ctrlr);
+int	nvme_ctrlr_resume(struct nvme_controller *ctrlr);
 
 #endif /* __NVME_PRIVATE_H__ */

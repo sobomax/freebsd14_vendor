@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/powerpc/ofw/elf_freebsd.c 332154 2018-04-06 21:37:25Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/powerpc/ofw/elf_freebsd.c 348683 2019-06-05 12:34:28Z luporl $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -84,7 +84,7 @@ __elfN(ofw_exec)(struct preloaded_file *fp)
 	if ((error = md_load(fp->f_args, &mdp, &dtbp)) != 0)
 		return (error);
 
-	printf("Kernel entry at 0x%lx ...\n", e->e_entry);
+	printf("Kernel entry at 0x%x ...\n", entry);
 
 	dev_cleanup();
 	if (dtbp != 0) {

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/ahci.h 336161 2018-07-10 04:26:32Z araujo $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/ahci.h 335104 2018-06-14 01:34:53Z araujo $
  */
 
 #ifndef _AHCI_H_

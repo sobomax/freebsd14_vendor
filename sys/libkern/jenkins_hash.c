@@ -1,6 +1,6 @@
 /*
  * Taken from http://burtleburtle.net/bob/c/lookup3.c
- * $FreeBSD: releng/11.3/sys/libkern/jenkins_hash.c 240521 2012-09-14 22:00:03Z eadler $
+ * $FreeBSD: releng/12.2/sys/libkern/jenkins_hash.c 240521 2012-09-14 22:00:03Z eadler $
  */
 
 #include <sys/hash.h>

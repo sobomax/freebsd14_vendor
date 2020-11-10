@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/dtrace/tests/common/Makefile 295643 2016-02-16 02:13:59Z bdrewery $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/dtrace/tests/common/Makefile 326499 2017-12-03 16:57:28Z markj $
 
 # We exclude several subdirectories: nfs and sysevent do not compile on
 # FreeBSD, and docsExamples doesn't seem amenable to automated testing.
@@ -19,6 +19,7 @@ TESTS_SUBDIRS+= aggs \
 		drops \
 		dtraceUtil \
 		end \
+		env \
 		enum \
 		error \
 		exit \
@@ -69,6 +70,7 @@ TESTS_SUBDIRS+= aggs \
 		strlen \
 		strtoll \
 		struct \
+		sugar \
 		syscall \
 		tick-n \
 		trace \

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990 The Regents of the University of California.
  * All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -30,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: releng/11.3/sys/i386/include/pcb.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/i386/include/pcb.h 326023 2017-11-20 19:43:44Z pfg $
  */
 
 #ifndef _I386_PCB_H_
@@ -89,7 +91,7 @@ struct pcb {
 
 	caddr_t	pcb_onfault;	/* copyin/out fault recovery */
 	struct	pcb_ext	*pcb_ext;	/* optional pcb extension */
-	int	pcb_psl;	/* process status long */
+	int	pcb_waspsl;	/* unused padding for ABI and API compat */
 	u_long	pcb_vm86[2];	/* vm86bios scratch space */
 	union	savefpu *pcb_save;
 

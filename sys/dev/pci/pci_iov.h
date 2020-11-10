@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/pci/pci_iov.h 306461 2016-09-29 22:52:24Z jhb $
+ * $FreeBSD: releng/12.2/sys/dev/pci/pci_iov.h 303721 2016-08-03 17:09:12Z jhb $
  */
 
 #ifndef _PCI_IOV_H_
@@ -39,7 +39,7 @@ int	pci_iov_attach_name(device_t dev, struct nvlist *pf_schema,
 static __inline int
 pci_iov_attach(device_t dev, struct nvlist *pf_schema, struct nvlist *vf_schema)
 {
-	return (PCI_IOV_ATTACH_NAME(device_get_parent(dev), dev, pf_schema,
+	return (PCI_IOV_ATTACH(device_get_parent(dev), dev, pf_schema,
 	    vf_schema, device_get_nameunit(dev)));
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/sockets/unix_bindconnect/Makefile 281399 2015-04-11 03:38:49Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/sockets/unix_bindconnect/Makefile 281399 2015-04-11 03:38:49Z ngie $
 
 PROG=	unix_bindconnect
 MAN=

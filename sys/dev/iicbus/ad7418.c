@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Sam Leffler.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/ad7418.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/ad7418.c 350868 2019-08-11 21:12:29Z ian $");
 /*
  * Analog Devices AD7418 chip sitting on the I2C bus.
  */
@@ -33,17 +35,8 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/ad7418.c 331722 2018-03-29 02:50:
 #include <sys/lock.h>
 #include <sys/module.h>
 #include <sys/bus.h>
-#include <sys/resource.h>
-#include <sys/rman.h>
 #include <sys/sysctl.h>
 #include <sys/sx.h>
-
-#include <machine/bus.h>
-#include <machine/cpu.h>
-#include <machine/cpufunc.h>
-#include <machine/frame.h>
-#include <machine/resource.h>
-#include <machine/intr.h>
 
 #include <dev/iicbus/iiconf.h>
 

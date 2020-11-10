@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/lib/libxo/tests/functional_test.sh 322172 2017-08-07 17:23:44Z phil $
+# $FreeBSD: releng/12.2/lib/libxo/tests/functional_test.sh 320521 2017-06-30 23:53:40Z phil $
 
 SRCDIR=$(atf_get_srcdir)
 

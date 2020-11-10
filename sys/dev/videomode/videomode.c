@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/dev/videomode/videomode.c 278798 2015-02-15 11:37:40Z hselasky $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/videomode/videomode.c 278798 2015-02-15 11:37:40Z hselasky $	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.
@@ -8,7 +8,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/videomode/videomode.c 278798 2015-02-15 11:37:40Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/videomode/videomode.c 278798 2015-02-15 11:37:40Z hselasky $");
 
 #include <sys/types.h>
 #include <sys/module.h>

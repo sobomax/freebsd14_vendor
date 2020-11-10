@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: (BSD-3-Clause AND Beerware)
+ *
  * Copyright (c) 1998-2011 Dag-Erling Smørgrav
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libfetch/ftp.c 339250 2018-10-09 10:49:19Z des $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libfetch/ftp.c 334326 2018-05-29 13:07:36Z des $");
 
 /*
  * Portions of this code were taken from or based on ftpio.c:

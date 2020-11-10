@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/sys/sem.h 347995 2019-05-20 16:31:45Z kib $ */
+/* $FreeBSD: releng/12.2/sys/sys/sem.h 330299 2018-03-02 22:32:53Z brooks $ */
 /*	$NetBSD: sem.h,v 1.5 1994/06/29 06:45:15 cgd Exp $	*/
 
 /*
@@ -34,7 +34,7 @@ typedef	__time_t	time_t;
     defined(COMPAT_FREEBSD6) || defined(COMPAT_FREEBSD7)
 struct semid_ds_old {
 	struct ipc_perm_old sem_perm;	/* operation permission struct */
-	struct sem	*sem_base;	/* pointer to first semaphore in set */
+	struct sem	*__sem_base;	/* pointer to first semaphore in set */
 	unsigned short	sem_nsems;	/* number of sems in set */
 	time_t		sem_otime;	/* last operation time */
 	long		sem_pad1;	/* SVABI/386 says I need this here */
@@ -48,7 +48,7 @@ struct semid_ds_old {
 
 struct semid_ds {
 	struct ipc_perm	sem_perm;	/* operation permission struct */
-	struct sem	*sem_base;	/* pointer to first semaphore in set */
+	struct sem	*__sem_base;	/* pointer to first semaphore in set */
 	unsigned short	sem_nsems;	/* number of sems in set */
 	time_t		sem_otime;	/* last operation time */
 	time_t		sem_ctime;	/* last change time */
@@ -76,6 +76,7 @@ union semun_old {
 };
 #endif
 
+#if defined(_KERNEL) || defined(_WANT_SEMUN)
 /*
  * semctl's arg parameter structure
  */
@@ -84,6 +85,7 @@ union semun {
 	struct		semid_ds *buf;	/* buffer for IPC_STAT & IPC_SET */
 	unsigned short	*array;		/* array for GETALL & SETALL */
 };
+#endif
 
 /*
  * commands for semctl
@@ -109,15 +111,15 @@ union semun {
  * semaphore info struct
  */
 struct seminfo {
-	int	semmni,		/* # of semaphore identifiers */
-		semmns,		/* # of semaphores in system */
-		semmnu,		/* # of undo structures in system */
-		semmsl,		/* max # of semaphores per id */
-		semopm,		/* max # of operations per semop call */
-		semume,		/* max # of undo entries per process */
-		semusz,		/* size in bytes of undo structure */
-		semvmx,		/* semaphore maximum value */
-		semaem;		/* adjust on exit max value */
+	int	semmni;		/* # of semaphore identifiers */
+	int	semmns;		/* # of semaphores in system */
+	int	semmnu;		/* # of undo structures in system */
+	int	semmsl;		/* max # of semaphores per id */
+	int	semopm;		/* max # of operations per semop call */
+	int	semume;		/* max # of undo entries per process */
+	int	semusz;		/* size in bytes of undo structure */
+	int	semvmx;		/* semaphore maximum value */
+	int	semaem;		/* adjust on exit max value */
 };
 
 /*

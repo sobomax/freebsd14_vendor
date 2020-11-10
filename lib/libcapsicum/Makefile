@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libcapsicum/Makefile 331434 2018-03-23 16:15:07Z ian $
+# $FreeBSD: releng/12.2/lib/libcapsicum/Makefile 349425 2019-06-26 16:38:46Z ian $
 
 PACKAGE=lib${LIB}
 
@@ -6,6 +6,9 @@ INCS=	capsicum_helpers.h
 
 MAN+=	capsicum_helpers.3
 
+MLINKS+=capsicum_helpers.3 caph_enter.3
+MLINKS+=capsicum_helpers.3 caph_enter_casper.3
+MLINKS+=capsicum_helpers.3 caph_rights_limit.3
 MLINKS+=capsicum_helpers.3 caph_limit_stream.3
 MLINKS+=capsicum_helpers.3 caph_limit_stdin.3
 MLINKS+=capsicum_helpers.3 caph_limit_stderr.3

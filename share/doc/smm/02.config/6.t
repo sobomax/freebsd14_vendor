@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)6.t	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: releng/11.3/share/doc/smm/02.config/6.t 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/smm/02.config/6.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .\".ds RH "Adding New Devices
 .ne 2i

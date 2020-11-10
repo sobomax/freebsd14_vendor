@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2012,2016-2017 Microsoft Corp.
  * Copyright (c) 2012 NetApp Inc.
  * Copyright (c) 2012 Citrix Inc.
@@ -33,7 +35,7 @@
  * partition StorVSP driver over the Hyper-V VMBUS.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 332903 2018-04-24 03:06:05Z dexuan $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 358384 2020-02-27 14:50:02Z avg $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -62,7 +64,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 
 #include <sys/sglist.h>
 #include <sys/eventhandler.h>
 #include <machine/bus.h>
-#include <sys/bus_dma.h>
 
 #include <cam/cam.h>
 #include <cam/cam_ccb.h>
@@ -1914,6 +1915,7 @@ create_storvsc_request(union ccb *ccb, struct hv_storvsc_request *reqp)
 	reqp->sense_info_len = csio->sense_len;
 
 	reqp->ccb = ccb;
+	ccb->ccb_h.spriv_ptr0 = reqp;
 
 	if (0 == csio->dxfer_len) {
 		return (0);
@@ -2276,7 +2278,11 @@ storvsc_io_done(struct hv_storvsc_request *reqp)
 	}
 
 	ccb->csio.scsi_status = (vm_srb->scsi_status & 0xFF);
-	ccb->csio.resid = ccb->csio.dxfer_len - vm_srb->transfer_len;
+	if (srb_status == SRB_STATUS_SUCCESS ||
+	    srb_status == SRB_STATUS_DATA_OVERRUN)
+		ccb->csio.resid = ccb->csio.dxfer_len - vm_srb->transfer_len;
+	else
+		ccb->csio.resid = ccb->csio.dxfer_len;
 
 	if (reqp->sense_info_len != 0) {
 		csio->sense_resid = csio->sense_len - reqp->sense_info_len;
@@ -2350,10 +2356,7 @@ storvsc_ada_probe_veto(void *arg __unused, struct cam_path *path,
 	if (path->device->protocol == PROTO_ATA) {
 		struct ccb_pathinq cpi;
 
-		bzero(&cpi, sizeof(cpi));
-		xpt_setup_ccb(&cpi.ccb_h, path, CAM_PRIORITY_NONE);
-		cpi.ccb_h.func_code = XPT_PATH_INQ;
-		xpt_action((union ccb *)&cpi);
+		xpt_path_inq(&cpi, path);
 		if (cpi.ccb_h.status == CAM_REQ_CMP &&
 		    cpi.hba_vendor == PCI_VENDOR_INTEL &&
 		    cpi.hba_device == PCI_PRODUCT_PIIX4) {

@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/amdsmn/amdsmn.h 323184 2017-09-05 15:13:41Z cem $
+ * $FreeBSD: releng/12.2/sys/dev/amdsmn/amdsmn.h 323184 2017-09-05 15:13:41Z cem $
  */
 
 #pragma once

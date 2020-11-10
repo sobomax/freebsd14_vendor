@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/drm/drm/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/drm/drm/Makefile 338285 2018-08-24 00:02:00Z imp $
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD	= drm

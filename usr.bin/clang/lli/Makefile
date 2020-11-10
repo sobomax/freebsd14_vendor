@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/lli/Makefile 344213 2019-02-16 15:57:29Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/lli/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	lli
 
-SRCDIR=		tools/lli
+SRCDIR=		llvm/tools/lli
 SRCS+=		lli.cpp
 
 LIBADD+=	z

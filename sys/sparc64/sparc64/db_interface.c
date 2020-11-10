@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/sparc64/db_interface.c 163192 2006-10-10 07:26:54Z bde $
+ * $FreeBSD: releng/12.2/sys/sparc64/sparc64/db_interface.c 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #include <sys/param.h> 

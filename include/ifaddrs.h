@@ -1,6 +1,8 @@
-/*	$FreeBSD: releng/11.3/include/ifaddrs.h 250887 2013-05-21 21:20:10Z ed $	*/
+/*	$FreeBSD: releng/12.2/include/ifaddrs.h 326823 2017-12-13 16:13:17Z pfg $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-1-Clause
+ *
  * Copyright (c) 1995, 1999
  *	Berkeley Software Design, Inc.  All rights reserved.
  *

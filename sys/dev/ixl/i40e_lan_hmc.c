@@ -1,8 +1,8 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2019, Intel Corporation
+  Copyright (c) 2013-2018, Intel Corporation
   All rights reserved.
-
+  
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
   
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixl/i40e_lan_hmc.c 349181 2019-06-19 00:37:54Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_lan_hmc.c 363876 2020-08-04 23:30:10Z erj $*/
 
 #include "i40e_osdep.h"
 #include "i40e_register.h"

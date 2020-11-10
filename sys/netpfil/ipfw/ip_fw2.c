@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw2.c 360149 2020-04-21 15:52:22Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw2.c 364851 2020-08-27 00:28:41Z emaste $");
 
 /*
  * The FreeBSD IP packet firewall, main file
@@ -108,10 +110,10 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw2.c 360149 2020-04-21 15:5
  * All ipfw global variables are here.
  */
 
-static VNET_DEFINE(int, fw_deny_unknown_exthdrs);
+VNET_DEFINE_STATIC(int, fw_deny_unknown_exthdrs);
 #define	V_fw_deny_unknown_exthdrs	VNET(fw_deny_unknown_exthdrs)
 
-static VNET_DEFINE(int, fw_permit_single_frag6) = 1;
+VNET_DEFINE_STATIC(int, fw_permit_single_frag6) = 1;
 #define	V_fw_permit_single_frag6	VNET(fw_permit_single_frag6)
 
 #ifdef IPFIREWALL_DEFAULT_TO_ACCEPT
@@ -421,7 +423,7 @@ iface_match(struct ifnet *ifp, ipfw_insn_if *cmd, struct ip_fw_chain *chain,
 		struct ifaddr *ia;
 
 		if_addr_rlock(ifp);
-		TAILQ_FOREACH(ia, &ifp->if_addrhead, ifa_link) {
+		CK_STAILQ_FOREACH(ia, &ifp->if_addrhead, ifa_link) {
 			if (ia->ifa_addr->sa_family != AF_INET)
 				continue;
 			if (cmd->p.ip.s_addr == ((struct sockaddr_in *)
@@ -752,17 +754,17 @@ ipfw_send_pkt(struct mbuf *replyto, struct ipfw_flow_id *id, u_int32_t seq,
  * ipv6 specific rules here...
  */
 static __inline int
-icmp6type_match (int type, ipfw_insn_u32 *cmd)
+icmp6type_match(int type, ipfw_insn_u32 *cmd)
 {
 	return (type <= ICMP6_MAXTYPE && (cmd->d[type/32] & (1<<(type%32)) ) );
 }
 
 static int
-flow6id_match( int curr_flow, ipfw_insn_u32 *cmd )
+flow6id_match(int curr_flow, ipfw_insn_u32 *cmd)
 {
 	int i;
-	for (i=0; i <= cmd->o.arg1; ++i )
-		if (curr_flow == cmd->d[i] )
+	for (i=0; i <= cmd->o.arg1; ++i)
+		if (curr_flow == cmd->d[i])
 			return 1;
 	return 0;
 }
@@ -786,7 +788,7 @@ ipfw_localip6(struct in6_addr *in6)
 		return (in6_localip(in6));
 
 	IN6_IFADDR_RLOCK(&in6_ifa_tracker);
-	TAILQ_FOREACH(ia, &V_in6_ifaddrhead, ia_link) {
+	CK_STAILQ_FOREACH(ia, &V_in6_ifaddrhead, ia_link) {
 		if (!IN6_IS_ADDR_LINKLOCAL(&ia->ia_addr.sin6_addr))
 			continue;
 		if (IN6_ARE_MASKED_ADDR_EQUAL(&ia->ia_addr.sin6_addr,
@@ -934,7 +936,7 @@ send_reject6(struct ip_fw_args *args, int code, u_int hlen, struct ip6_hdr *ip6)
 				 * If the packet contains an ABORT chunk, don't
 				 * reply.
 				 * XXX: We should search through all chunks,
-				 *      but don't do to avoid attacks.
+				 * but do not do that to avoid attacks.
 				 */
 				v_tag = 0;
 				break;
@@ -1052,7 +1054,7 @@ send_reject(struct ip_fw_args *args, int code, int iplen, struct ip *ip)
 				 * If the packet contains an ABORT chunk, don't
 				 * reply.
 				 * XXX: We should search through all chunks,
-				 * but don't do to avoid attacks.
+				 * but do not do that to avoid attacks.
 				 */
 				v_tag = 0;
 				break;
@@ -1439,7 +1441,7 @@ ipfw_chk(struct ip_fw_args *args)
  * pointer might become stale after other pullups (but we never use it
  * this way).
  */
-#define PULLUP_TO(_len, p, T)	PULLUP_LEN(_len, p, sizeof(T))
+#define	PULLUP_TO(_len, p, T)	PULLUP_LEN(_len, p, sizeof(T))
 #define	_PULLUP_LOCKED(_len, p, T, unlock)			\
 do {								\
 	int x = (_len) + T;					\
@@ -1713,6 +1715,11 @@ do {						\
 
 			default:
 				break;
+			}
+		} else {
+			if (offset == 1 && proto == IPPROTO_TCP) {
+				/* RFC 3128 */
+				goto pullup_failed;
 			}
 		}
 
@@ -2061,6 +2068,8 @@ do {						\
 					uint32_t v = 0;
 					match = ipfw_lookup_table(chain,
 					    cmd->arg1, 0, &args->f_id, &v);
+					if (!match)
+						break;
 					if (cmdlen == F_INSN_SIZE(ipfw_insn_u32))
 						match = ((ipfw_insn_u32 *)cmd)->d[0] ==
 						    TARG_VAL(chain, v, tag);
@@ -2143,7 +2152,7 @@ do {						\
 				if ((proto == IPPROTO_UDP ||
 				    proto == IPPROTO_UDPLITE ||
 				    proto == IPPROTO_TCP ||
-				    proto==IPPROTO_SCTP) && offset == 0) {
+				    proto == IPPROTO_SCTP) && offset == 0) {
 					u_int16_t x =
 					    (cmd->opcode == O_IP_SRCPORT) ?
 						src_port : dst_port ;
@@ -2178,7 +2187,7 @@ do {						\
 				break;
 
 			case O_IPVER:
-				match = (is_ipv4 &&
+				match = ((is_ipv4 || is_ipv6) &&
 				    cmd->arg1 == ip->ip_v);
 				break;
 
@@ -2306,6 +2315,31 @@ do {						\
 				match = (proto == IPPROTO_TCP && offset == 0 &&
 				    ((ipfw_insn_u32 *)cmd)->d[0] ==
 					TCP(ulp)->th_ack);
+				break;
+
+			case O_TCPMSS:
+				if (proto == IPPROTO_TCP &&
+				    (args->f_id._flags & TH_SYN) != 0 &&
+				    ulp != NULL) {
+					uint16_t mss, *p;
+					int i;
+
+					PULLUP_LEN_LOCKED(hlen, ulp,
+					    (TCP(ulp)->th_off << 2));
+					if ((tcpopts_parse(TCP(ulp), &mss) &
+					    IP_FW_TCPOPT_MSS) == 0)
+						break;
+					if (cmdlen == 1) {
+						match = (cmd->arg1 == mss);
+						break;
+					}
+					/* Otherwise we have ranges. */
+					p = ((ipfw_insn_u16 *)cmd)->ports;
+					i = cmdlen - 1;
+					for (; !match && i > 0; i--, p += 2)
+						match = (mss >= p[0] &&
+						    mss <= p[1]);
+				}
 				break;
 
 			case O_TCPWIN:
@@ -3329,6 +3363,7 @@ vnet_ipfw_init(const void *unused)
 
 	/* fill and insert the default rule */
 	rule = ipfw_alloc_rule(chain, sizeof(struct ip_fw));
+	rule->flags |= IPFW_RULE_NOOPT;
 	rule->cmd_len = 1;
 	rule->cmd[0].len = 1;
 	rule->cmd[0].opcode = default_to_accept ? O_ACCEPT : O_DENY;

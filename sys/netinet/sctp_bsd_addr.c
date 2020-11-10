@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001-2007, by Cisco Systems, Inc. All rights reserved.
  * Copyright (c) 2008-2012, by Randall Stewart. All rights reserved.
  * Copyright (c) 2008-2012, by Michael Tuexen. All rights reserved.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/sctp_bsd_addr.c 347154 2019-05-05 12:28:39Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_bsd_addr.c 364548 2020-08-23 21:23:45Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -205,13 +207,13 @@ sctp_init_ifns_for_vrf(int vrfid)
 #endif
 
 	IFNET_RLOCK();
-	TAILQ_FOREACH(ifn, &MODULE_GLOBAL(ifnet), if_list) {
+	CK_STAILQ_FOREACH(ifn, &MODULE_GLOBAL(ifnet), if_link) {
 		if (sctp_is_desired_interface_type(ifn) == 0) {
 			/* non desired type */
 			continue;
 		}
 		IF_ADDR_RLOCK(ifn);
-		TAILQ_FOREACH(ifa, &ifn->if_addrlist, ifa_list) {
+		CK_STAILQ_FOREACH(ifa, &ifn->if_addrhead, ifa_link) {
 			if (ifa->ifa_addr == NULL) {
 				continue;
 			}
@@ -355,20 +357,9 @@ sctp_addr_change(struct ifaddr *ifa, int cmd)
 }
 
 void
-     sctp_add_or_del_interfaces(int (*pred) (struct ifnet *), int add){
-	struct ifnet *ifn;
-	struct ifaddr *ifa;
-
-	IFNET_RLOCK();
-	TAILQ_FOREACH(ifn, &MODULE_GLOBAL(ifnet), if_list) {
-		if (!(*pred) (ifn)) {
-			continue;
-		}
-		TAILQ_FOREACH(ifa, &ifn->if_addrlist, ifa_list) {
-			sctp_addr_change(ifa, add ? RTM_ADD : RTM_DELETE);
-		}
-	}
-	IFNET_RUNLOCK();
+sctp_addr_change_event_handler(void *arg __unused, struct ifaddr *ifa, int cmd)
+{
+	sctp_addr_change(ifa, cmd);
 }
 
 struct mbuf *

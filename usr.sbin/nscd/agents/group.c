@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nscd/agents/group.c 194104 2009-06-13 13:07:56Z des $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nscd/agents/group.c 194104 2009-06-13 13:07:56Z des $");
 
 #include <sys/param.h>
 

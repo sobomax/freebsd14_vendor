@@ -1,8 +1,10 @@
-/*	$FreeBSD: releng/11.3/sys/cam/scsi/scsi_dvcfg.h 139743 2005-01-05 22:34:37Z imp $	*/
+/*	$FreeBSD: releng/12.2/sys/cam/scsi/scsi_dvcfg.h 326265 2017-11-27 15:12:43Z pfg $	*/
 /*	$NecBSD: scsi_dvcfg.h,v 1.4 1998/03/14 07:05:06 kmatsuda Exp $	*/
 /*	$NetBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * [NetBSD for NEC PC-98 series]
  *  Copyright (c) 1994, 1995, 1996, 1997, 1998
  *	NetBSD/pc98 porting staff. All rights reserved.

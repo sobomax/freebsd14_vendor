@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/powerpc/psim/psim-tree 125443 2004-02-04 13:23:05Z grehan $
+# $FreeBSD: releng/12.2/sys/powerpc/psim/psim-tree 125443 2004-02-04 13:23:05Z grehan $
 #
 # Simple psim h/w description
 #

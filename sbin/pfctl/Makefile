@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/pfctl/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/pfctl/Makefile 337627 2018-08-11 13:58:26Z brd $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,7 @@
 .PATH: ${SRCTOP}/sys/netpfil/pf
 
 PACKAGE=pf
+CONFS=	pf.os
 PROG=	pfctl
 MAN=	pfctl.8
 
@@ -30,5 +31,8 @@ CFLAGS+= -DWITH_INET
 YFLAGS=
 
 LIBADD=	m md
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

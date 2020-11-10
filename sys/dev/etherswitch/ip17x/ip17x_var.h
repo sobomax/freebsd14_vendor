@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Luiz Otavio O Souza.
  * Copyright (c) 2011-2012 Stefan Bethke.
  * Copyright (c) 2012 Adrian Chadd.
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/etherswitch/ip17x/ip17x_var.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/etherswitch/ip17x/ip17x_var.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef	__IP17X_VAR_H__
@@ -53,6 +55,7 @@ struct ip17x_softc {
 	int		numports;	/* number of ports */
 	int		*portphy;
 	device_t	**miibus;
+	int		miipoll;
 	etherswitch_info_t	info;
 	ip17x_switch_type	sc_switchtype;
 	struct callout	callout_tick;

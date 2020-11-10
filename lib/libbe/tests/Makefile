@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libbe/tests/Makefile 346546 2019-04-22 13:45:08Z kevans $
+# $FreeBSD: releng/12.2/lib/libbe/tests/Makefile 346546 2019-04-22 13:45:08Z kevans $
 
 PACKAGE=	tests
 

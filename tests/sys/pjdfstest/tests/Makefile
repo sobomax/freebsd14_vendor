@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/pjdfstest/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/pjdfstest/tests/Makefile 320448 2017-06-28 09:22:45Z ngie $
 
 PACKAGE=	tests
 PJDFSTEST_SRCDIR=	${SRCTOP}/contrib/pjdfstest
@@ -35,5 +35,6 @@ TESTS_SUBDIRS+=	rmdir
 TESTS_SUBDIRS+=	symlink
 TESTS_SUBDIRS+=	truncate
 TESTS_SUBDIRS+=	unlink
+TESTS_SUBDIRS+=	utimensat
 
 .include <bsd.test.mk>

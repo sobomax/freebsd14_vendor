@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995 Terrence R. Lambert
  * All rights reserved.
  *
@@ -39,7 +41,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)kernel.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: releng/11.3/sys/sys/kernel.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/kernel.h 358962 2020-03-13 16:52:16Z markj $
  */
 
 #ifndef _SYS_KERNEL_H_
@@ -51,6 +53,9 @@
 
 /* for intrhook below */
 #include <sys/queue.h>
+
+/* for timestamping SYSINITs; other files may assume this is included here */
+#include <sys/tslog.h>
 
 /* Global variables for the kernel. */
 
@@ -86,7 +91,8 @@ enum sysinit_sub_id {
 	SI_SUB_DONE		= 0x0000001,	/* processed*/
 	SI_SUB_TUNABLES		= 0x0700000,	/* establish tunable values */
 	SI_SUB_COPYRIGHT	= 0x0800001,	/* first use of console*/
-	SI_SUB_VM		= 0x1000000,	/* virtual memory system init*/
+	SI_SUB_VM		= 0x1000000,	/* virtual memory system init */
+	SI_SUB_COUNTER		= 0x1100000,	/* counter(9) is initialized */
 	SI_SUB_KMEM		= 0x1800000,	/* kernel memory*/
 	SI_SUB_HYPERVISOR	= 0x1A40000,	/*
 						 * Hypervisor detection and
@@ -177,6 +183,10 @@ enum sysinit_elem_order {
 	SI_ORDER_SECOND		= 0x0000001,	/* second*/
 	SI_ORDER_THIRD		= 0x0000002,	/* third*/
 	SI_ORDER_FOURTH		= 0x0000003,	/* fourth*/
+	SI_ORDER_FIFTH		= 0x0000004,	/* fifth*/
+	SI_ORDER_SIXTH		= 0x0000005,	/* sixth*/
+	SI_ORDER_SEVENTH	= 0x0000006,	/* seventh*/
+	SI_ORDER_EIGHTH		= 0x0000007,	/* eighth*/
 	SI_ORDER_MIDDLE		= 0x1000000,	/* somewhere in the middle */
 	SI_ORDER_ANY		= 0xfffffff	/* last*/
 };
@@ -227,6 +237,35 @@ struct sysinit {
  * correct warnings when -Wcast-qual is used.
  *
  */
+#ifdef TSLOG
+struct sysinit_tslog {
+	sysinit_cfunc_t func;
+	const void * data;
+	const char * name;
+};
+static inline void
+sysinit_tslog_shim(const void * data)
+{
+	const struct sysinit_tslog * x = data;
+
+	TSRAW(curthread, TS_ENTER, "SYSINIT", x->name);
+	(x->func)(x->data);
+	TSRAW(curthread, TS_EXIT, "SYSINIT", x->name);
+}
+#define	C_SYSINIT(uniquifier, subsystem, order, func, ident)	\
+	static struct sysinit_tslog uniquifier ## _sys_init_tslog = {	\
+		func,						\
+		(ident),					\
+		#uniquifier					\
+	};							\
+	static struct sysinit uniquifier ## _sys_init = {	\
+		subsystem,					\
+		order,						\
+		sysinit_tslog_shim,				\
+		&uniquifier ## _sys_init_tslog			\
+	};							\
+	DATA_WSET(sysinit_set,uniquifier ## _sys_init)
+#else
 #define	C_SYSINIT(uniquifier, subsystem, order, func, ident)	\
 	static struct sysinit uniquifier ## _sys_init = {	\
 		subsystem,					\
@@ -234,7 +273,8 @@ struct sysinit {
 		func,						\
 		(ident)						\
 	};							\
-	DATA_SET(sysinit_set,uniquifier ## _sys_init)
+	DATA_WSET(sysinit_set,uniquifier ## _sys_init)
+#endif
 
 #define	SYSINIT(uniquifier, subsystem, order, func, ident)	\
 	C_SYSINIT(uniquifier, subsystem, order,			\
@@ -250,7 +290,7 @@ struct sysinit {
 		func,						\
 		(ident)						\
 	};							\
-	DATA_SET(sysuninit_set,uniquifier ## _sys_uninit)
+	DATA_WSET(sysuninit_set,uniquifier ## _sys_uninit)
 
 #define	SYSUNINIT(uniquifier, subsystem, order, func, ident)	\
 	C_SYSUNINIT(uniquifier, subsystem, order,		\

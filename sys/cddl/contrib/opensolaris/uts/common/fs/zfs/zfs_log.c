@@ -20,7 +20,7 @@
  */
 /*
  * Copyright (c) 2005, 2010, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2015 by Delphix. All rights reserved.
+ * Copyright (c) 2015, 2018 by Delphix. All rights reserved.
  * Copyright (c) 2014 Integros [integros.com]
  */
 
@@ -285,6 +285,8 @@ zfs_log_create(zilog_t *zilog, dmu_tx_t *tx, uint64_t txtype,
 	lr = (lr_create_t *)&itx->itx_lr;
 	lr->lr_doid = dzp->z_id;
 	lr->lr_foid = zp->z_id;
+	/* Store dnode slot count in 8 bits above object id. */
+	LR_FOID_SET_SLOTS(lr->lr_foid, zp->z_dnodesize >> DNODE_SHIFT);
 	lr->lr_mode = zp->z_mode;
 	if (!IS_EPHEMERAL(zp->z_uid)) {
 		lr->lr_uid = (uint64_t)zp->z_uid;
@@ -491,7 +493,14 @@ zfs_log_write(zilog_t *zilog, dmu_tx_t *tx, int txtype,
 		itx_wr_state_t wr_state = write_state;
 		ssize_t len = resid;
 
-		if (wr_state == WR_COPIED && resid > ZIL_MAX_COPIED_DATA)
+		/*
+		 * A WR_COPIED record must fit entirely in one log block.
+		 * Large writes can use WR_NEED_COPY, which the ZIL will
+		 * split into multiple records across several log blocks
+		 * if necessary.
+		 */
+		if (wr_state == WR_COPIED &&
+		    resid > zil_max_copied_data(zilog))
 			wr_state = WR_NEED_COPY;
 		else if (wr_state == WR_INDIRECT)
 			len = MIN(blocksize - P2PHASE(off, blocksize), resid);

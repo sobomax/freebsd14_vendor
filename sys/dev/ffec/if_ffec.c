@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Ian Lepore <ian@freebsd.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ffec/if_ffec.c 338992 2018-09-28 10:02:47Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ffec/if_ffec.c 338857 2018-09-21 13:44:05Z ae $");
 
 /*
  * Driver for Freescale Fast Ethernet Controller, found on imx-series SoCs among
@@ -993,7 +995,7 @@ ffec_setup_rxfilter(struct ffec_softc *sc)
 	else {
 		ghash = 0;
 		if_maddr_rlock(ifp);
-		TAILQ_FOREACH(ifma, &sc->ifp->if_multiaddrs, ifma_link) {
+		CK_STAILQ_FOREACH(ifma, &sc->ifp->if_multiaddrs, ifma_link) {
 			if (ifma->ifma_addr->sa_family != AF_LINK)
 				continue;
 			/* 6 bits from MSB in LE CRC32 are used for hash. */

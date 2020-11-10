@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/trm/trm.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/trm/trm.c 355028 2019-11-23 07:06:16Z scottl $");
 
 /*
  *	HISTORY:					
@@ -27,6 +27,8 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/trm/trm.c 331722 2018-03-29 02:50:57Z ea
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * (C)Copyright 1995-2001 Tekram Technology Co.,Ltd.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -3374,7 +3376,9 @@ trm_attach(device_t dev)
 	PACB	pACB = 0;
 	int	rid = 0;
 	int unit = device_get_unit(dev);
-	
+
+	gone_in(13, "Giant locked CAM drivers");
+
 	device_id = pci_get_devid(dev);
 	/*
 	 * These cards do not allow memory mapped accesses

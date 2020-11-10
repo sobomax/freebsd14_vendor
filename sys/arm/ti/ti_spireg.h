@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/ti/ti_spireg.h 297395 2016-03-29 19:11:04Z loos $
+ * $FreeBSD: releng/12.2/sys/arm/ti/ti_spireg.h 297395 2016-03-29 19:11:04Z loos $
  */
 
 #ifndef	_TI_SPIREG_H_

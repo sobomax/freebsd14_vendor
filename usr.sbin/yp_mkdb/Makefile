@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/yp_mkdb/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/yp_mkdb/Makefile 314453 2017-03-01 04:02:36Z ngie $
 
 .PATH: ${SRCTOP}/libexec/ypxfr ${SRCTOP}/usr.sbin/ypserv
 

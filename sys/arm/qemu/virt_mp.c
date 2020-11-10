@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/qemu/virt_mp.c 296158 2016-02-28 13:43:58Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/qemu/virt_mp.c 315450 2017-03-17 12:45:53Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,27 +48,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/qemu/virt_mp.c 296158 2016-02-28 13:43:5
 #include <arm/qemu/virt_mp.h>
 
 static int running_cpus;
-
-static boolean_t
-virt_maxid(u_int id, phandle_t node, u_int addr_cells, pcell_t *reg)
-{
-
-	if (mp_maxid < id)
-		mp_maxid = id;
-
-	return (true);
-}
-
-void
-virt_mp_setmaxid(platform_t plat)
-{
-
-	mp_maxid = PCPU_GET(cpuid);
-	mp_ncpus = ofw_cpu_early_foreach(virt_maxid, true);
-	if (mp_ncpus < 1)
-		mp_ncpus = 1;
-	mp_ncpus = MIN(mp_ncpus, MAXCPU);
-}
 
 static boolean_t
 virt_start_ap(u_int id, phandle_t node, u_int addr_cells, pcell_t *reg)

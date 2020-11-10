@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/indent/tests/surplusbad.0.stdout 313544 2017-02-10 09:31:39Z pstef $ */
+/* $FreeBSD: releng/12.2/usr.bin/indent/tests/surplusbad.0.stdout 313544 2017-02-10 09:31:39Z pstef $ */
 /* See r303599 */
 #if defined(__i386__)
 int		a;

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -31,9 +33,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mpt/mpt_user.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpt/mpt_user.c 360446 2020-04-28 17:59:37Z brooks $");
 
 #include <sys/param.h>
+#ifdef __amd64__
+#include <sys/abi_compat.h>
+#endif
 #include <sys/conf.h>
 #include <sys/errno.h>
 #include <sys/ioccom.h>
@@ -585,11 +590,6 @@ mpt_user_raid_action(struct mpt_softc *mpt, struct mpt_raid_action *raid_act,
 	mpt_free_request(mpt, req);
 	return (0);
 }
-
-#ifdef __amd64__
-#define	PTRIN(p)		((void *)(uintptr_t)(p))
-#define PTROUT(v)		((u_int32_t)(uintptr_t)(v))
-#endif
 
 static int
 mpt_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, struct thread *td)

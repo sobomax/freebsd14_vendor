@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/jexec/jexec.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/jexec/jexec.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -189,5 +189,5 @@ usage(void)
 
 	fprintf(stderr, "%s\n",
 	    "usage: jexec [-l] [-u username | -U username] jail [command ...]");
-	exit(1); 
+	exit(1);
 }

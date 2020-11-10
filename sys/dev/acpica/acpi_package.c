@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpica/acpi_package.c 315020 2017-03-10 19:33:37Z vangyzen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/acpi_package.c 359076 2020-03-18 18:02:33Z hrs $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -66,6 +66,19 @@ acpi_PkgInt32(ACPI_OBJECT *res, int idx, uint32_t *dst)
     error = acpi_PkgInt(res, idx, &tmp);
     if (error == 0)
 	*dst = (uint32_t)tmp;
+
+    return (error);
+}
+
+int
+acpi_PkgInt16(ACPI_OBJECT *res, int idx, uint16_t *dst)
+{
+    UINT64		tmp;
+    int			error;
+
+    error = acpi_PkgInt(res, idx, &tmp);
+    if (error == 0)
+	*dst = (uint16_t)tmp;
 
     return (error);
 }

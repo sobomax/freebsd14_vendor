@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 1995-1997, 1999 Wolfgang Solfrank.
  * Copyright (C) 1995-1997, 1999 TooLs GmbH.
  * All rights reserved.
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/powerpc/powerpc/syncicache.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/powerpc/powerpc/syncicache.c 326261 2017-11-27 15:09:59Z pfg $");
 
 #include <sys/param.h>
 #if	defined(_KERNEL) || defined(_STANDALONE)

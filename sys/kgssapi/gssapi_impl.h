@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/kgssapi/gssapi_impl.h 244370 2012-12-18 00:25:48Z rmacklem $
+ * $FreeBSD: releng/12.2/sys/kgssapi/gssapi_impl.h 326279 2017-11-27 15:49:00Z pfg $
  */
 
 #include "gssd.h"

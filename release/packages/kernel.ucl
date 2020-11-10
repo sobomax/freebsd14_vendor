@@ -1,11 +1,11 @@
 #
-# $FreeBSD: releng/11.3/release/packages/kernel.ucl 331308 2018-03-21 15:43:57Z kevans $
+# $FreeBSD: releng/12.2/release/packages/kernel.ucl 330929 2018-03-14 14:45:57Z kevans $
 #
 
 name = "FreeBSD-%PKGNAME%"
 origin = "base"
 version = "%VERSION%"
-comment = "%COMMENT%"
+comment = "%COMMENT% %VCS_REVISION%"
 categories = [ base ]
 maintainer = "re@FreeBSD.org"
 www = "https://www.FreeBSD.org"

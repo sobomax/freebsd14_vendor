@@ -23,7 +23,7 @@
  * Authors:
  *    Eric Anholt <eric@anholt.net>
  *
- * $FreeBSD: releng/11.3/sys/dev/drm2/i915/intel_bios.h 296548 2016-03-08 20:33:02Z dumbbell $
+ * $FreeBSD: releng/12.2/sys/dev/drm2/i915/intel_bios.h 338285 2018-08-24 00:02:00Z imp $
  */
 
 #ifndef _I830_BIOS_H_

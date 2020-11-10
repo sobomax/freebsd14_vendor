@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/ypserv/yp_access.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ypserv/yp_access.c 359753 2020-04-09 20:35:35Z kevans $");
 
 #include <stdlib.h>
 #include <rpc/rpc.h>
@@ -54,8 +56,6 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/ypserv/yp_access.c 331722 2018-03-29 02
 #ifdef TCP_WRAPPER
 #include "tcpd.h"
 #endif
-
-extern int debug;
 
 static const char *yp_procs[] = {
 	/* NIS v1 */

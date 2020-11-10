@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/ddb/ddb_script.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/ddb/ddb_script.c 335266 2018-06-16 23:44:18Z eadler $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -135,7 +135,7 @@ ddb_script(int argc, char *argv[])
 }
 
 void
-ddb_scripts(int argc, char *argv[])
+ddb_scripts(int argc, char *argv[] __unused)
 {
 
 	if (argc != 1)

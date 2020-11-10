@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008, 2009 Rui Paulo <rpaulo@FreeBSD.org>
  * Copyright (c) 2009 Norikatsu Shigemura <nork@FreeBSD.org>
  * Copyright (c) 2009-2012 Jung-uk Kim <jkim@FreeBSD.org>
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/amdtemp/amdtemp.c 343325 2019-01-22 21:35:25Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/amdtemp/amdtemp.c 355561 2019-12-09 17:13:17Z mav $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -94,6 +96,7 @@ struct amdtemp_softc {
 #define	DEVICEID_AMD_MISC16_M30H	0x1583
 #define	DEVICEID_AMD_HOSTB17H_ROOT	0x1450
 #define	DEVICEID_AMD_HOSTB17H_M10H_ROOT	0x15d0
+#define	DEVICEID_AMD_HOSTB17H_M30H_ROOT	0x1480
 
 static const struct amdtemp_product {
 	uint16_t	amdtemp_vendorid;
@@ -116,7 +119,7 @@ static const struct amdtemp_product {
 	{ VENDORID_AMD,	DEVICEID_AMD_MISC16_M30H, true },
 	{ VENDORID_AMD,	DEVICEID_AMD_HOSTB17H_ROOT, false },
 	{ VENDORID_AMD,	DEVICEID_AMD_HOSTB17H_M10H_ROOT, false },
-	{ 0, 0 }
+	{ VENDORID_AMD,	DEVICEID_AMD_HOSTB17H_M30H_ROOT, false },
 };
 
 /*
@@ -205,6 +208,8 @@ static devclass_t amdtemp_devclass;
 DRIVER_MODULE(amdtemp, hostb, amdtemp_driver, amdtemp_devclass, NULL, NULL);
 MODULE_VERSION(amdtemp, 1);
 MODULE_DEPEND(amdtemp, amdsmn, 1, 1, 1);
+MODULE_PNP_INFO("U16:vendor;U16:device", pci, amdtemp, amdtemp_products,
+    nitems(amdtemp_products));
 
 static bool
 amdtemp_match(device_t dev, const struct amdtemp_product **product_out)
@@ -215,7 +220,7 @@ amdtemp_match(device_t dev, const struct amdtemp_product **product_out)
 	vendor = pci_get_vendor(dev);
 	devid = pci_get_device(dev);
 
-	for (i = 0; amdtemp_products[i].amdtemp_vendorid != 0; i++) {
+	for (i = 0; i < nitems(amdtemp_products); i++) {
 		if (vendor == amdtemp_products[i].amdtemp_vendorid &&
 		    devid == amdtemp_products[i].amdtemp_deviceid) {
 			if (product_out != NULL)

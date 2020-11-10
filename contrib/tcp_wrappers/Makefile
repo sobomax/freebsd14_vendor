@@ -1,5 +1,5 @@
 # @(#) Makefile 1.23 97/03/21 19:27:20
-# $FreeBSD: releng/11.3/contrib/tcp_wrappers/Makefile 243933 2012-12-06 01:31:25Z eadler $
+# $FreeBSD: releng/12.2/contrib/tcp_wrappers/Makefile 243933 2012-12-06 01:31:25Z eadler $
 
 what:
 	@echo

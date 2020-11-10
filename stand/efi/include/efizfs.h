@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/include/efizfs.h 344371 2019-02-20 18:34:20Z kevans $
+ * $FreeBSD: releng/12.2/stand/efi/include/efizfs.h 353979 2019-10-24 02:43:38Z kevans $
  */
 
 #include <stdint.h>
@@ -33,6 +33,8 @@
 #define _EFIZFS_H_
 
 #ifdef EFI_ZFS_BOOT
+#include <libzfs.h>
+
 typedef STAILQ_HEAD(zfsinfo_list, zfsinfo) zfsinfo_list_t;
 
 typedef struct zfsinfo
@@ -48,8 +50,9 @@ void efi_zfs_probe(void);
 EFI_HANDLE efizfs_get_handle_by_guid(uint64_t);
 bool efizfs_get_guid_by_handle(EFI_HANDLE, uint64_t *);
 zfsinfo_list_t *efizfs_get_zfsinfo_list(void);
-void efizfs_set_preferred(EFI_HANDLE);
 
+#else
+#define efi_zfs_probe NULL
 #endif
 
 #endif

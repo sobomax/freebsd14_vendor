@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007 Lukas Ertl
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/vinum/geom_vinum_volume.c 190507 2009-03-28 17:20:08Z lulf $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/vinum/geom_vinum_volume.c 356576 2020-01-10 00:41:15Z mav $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -161,4 +163,6 @@ gv_bio_done(struct gv_softc *sc, struct bio *bp)
 		gv_plex_raid5_done(p, bp);
 		break;
 	}
+
+	gv_drive_done(s->drive_sc);
 }

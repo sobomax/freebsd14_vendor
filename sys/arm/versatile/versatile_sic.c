@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/versatile/versatile_sic.c 330897 2018-03-14 03:19:51Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/versatile/versatile_sic.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

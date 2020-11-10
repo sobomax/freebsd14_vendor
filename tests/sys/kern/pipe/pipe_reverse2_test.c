@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tests/sys/kern/pipe/pipe_reverse2_test.c 290914 2015-11-16 05:38:40Z ngie $
+ * $FreeBSD: releng/12.2/tests/sys/kern/pipe/pipe_reverse2_test.c 290914 2015-11-16 05:38:40Z ngie $
  */
 
 #include <sys/select.h>

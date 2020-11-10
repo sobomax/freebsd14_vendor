@@ -1,12 +1,12 @@
-# $FreeBSD: releng/11.3/sbin/gvinum/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/gvinum/Makefile 335273 2018-06-17 01:39:22Z eadler $
 
 PACKAGE=runtime
 PROG=	gvinum
 SRCS=	gvinum.c gvinum.h geom_vinum_share.c
 MAN=	gvinum.8
 
-WARNS?=	2
-CFLAGS+=	-I${SRCTOP}/sys -I${DESTDIR}/${INCLUDEDIR}/edit
+WARNS=		2
+CFLAGS+=	-I${SRCTOP}/sys -I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/edit
 
 LIBADD=	edit geom
 

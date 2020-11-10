@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/amd64/gdb_machdep.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/gdb_machdep.c 331252 2018-03-20 17:43:50Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -34,11 +36,14 @@ __FBSDID("$FreeBSD: releng/11.3/sys/amd64/amd64/gdb_machdep.c 331722 2018-03-29 
 #include <sys/proc.h>
 #include <sys/signal.h>
 
+#include <machine/cpufunc.h>
 #include <machine/frame.h>
 #include <machine/gdb_machdep.h>
+#include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/psl.h>
 #include <machine/reg.h>
+#include <machine/specialreg.h>
 #include <machine/trap.h>
 #include <machine/frame.h>
 #include <machine/endian.h>
@@ -119,3 +124,18 @@ gdb_cpu_signal(int type, int code)
 	}
 	return (SIGEMT);
 }
+
+void *
+gdb_begin_write(void)
+{
+
+	return (disable_wp() ? &gdb_begin_write : NULL);
+}
+
+void
+gdb_end_write(void *arg)
+{
+
+	restore_wp(arg != NULL);
+}
+

@@ -1,4 +1,6 @@
- /*-
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -31,7 +33,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mfi/mfi_tbolt.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mfi/mfi_tbolt.c 360843 2020-05-09 11:18:34Z dim $");
 
 #include "opt_mfi.h"
 
@@ -1107,7 +1109,7 @@ mfi_tbolt_send_frame(struct mfi_softc *sc, struct mfi_command *cm)
 
 	if (hdr->cmd == MFI_CMD_PD_SCSI_IO) {
 		/* check for inquiry commands coming from CLI */
-		if (cdb[0] != 0x28 || cdb[0] != 0x2A) {
+		if (cdb[0] != 0x28 && cdb[0] != 0x2A) {
 			if ((req_desc = mfi_tbolt_build_mpt_cmd(sc, cm)) ==
 			    NULL) {
 				device_printf(sc->mfi_dev, "Mapping from MFI "

@@ -3,16 +3,16 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: releng/11.3/usr.sbin/amd/pawd/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/amd/pawd/Makefile 305787 2016-09-14 01:47:01Z cy $
 
-.PATH: ${.CURDIR}/../../../contrib/amd/amq
+.PATH:	${SRCTOP}/contrib/amd/amq
 
 BINDIR=	/usr/bin
 
 PROG=	pawd
 SRCS=	pawd.c amq_clnt.c amq_xdr.c
 
-CFLAGS+= -I${.CURDIR}/../../../contrib/amd/amq
+CFLAGS+= -I${SRCTOP}/contrib/amd/amq
 
 LIBADD=	amu
 

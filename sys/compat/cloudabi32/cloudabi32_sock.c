@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/cloudabi32/cloudabi32_sock.c 324250 2017-10-04 07:35:01Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/cloudabi32/cloudabi32_sock.c 327684 2018-01-07 22:38:45Z ed $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -60,7 +60,7 @@ cloudabi32_sys_sock_recv(struct thread *td,
 	/* Convert iovecs to native format. */
 	if (ri.ri_data_len > UIO_MAXIOV)
 		return (EINVAL);
-	iov = malloc(ri.ri_data_len * sizeof(struct iovec),
+	iov = mallocarray(ri.ri_data_len, sizeof(struct iovec),
 	    M_SOCKET, M_WAITOK);
 	user_iov = TO_PTR(ri.ri_data);
 	for (i = 0; i < ri.ri_data_len; i++) {
@@ -104,7 +104,7 @@ cloudabi32_sys_sock_send(struct thread *td,
 	/* Convert iovecs to native format. */
 	if (si.si_data_len > UIO_MAXIOV)
 		return (EINVAL);
-	iov = malloc(si.si_data_len * sizeof(struct iovec),
+	iov = mallocarray(si.si_data_len, sizeof(struct iovec),
 	    M_SOCKET, M_WAITOK);
 	user_iov = TO_PTR(si.si_data);
 	for (i = 0; i < si.si_data_len; i++) {

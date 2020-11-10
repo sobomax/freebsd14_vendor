@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2018 Alexander Motin <mav@FreeBSD.org>
  * Copyright (c) 1997-2008 by Matthew Jacob
  * All rights reserved.
@@ -29,7 +31,7 @@
  * FreeBSD Version.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/isp/isp_pci.c 344911 2019-03-08 00:56:41Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/isp/isp_pci.c 344910 2019-03-08 00:56:07Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libc/iconv/_strtol.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libc/iconv/_strtol.h 326025 2017-11-20 19:49:47Z pfg $ */
 /* $NetBSD: _strtol.h,v 1.2 2009/05/20 22:03:29 christos Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *

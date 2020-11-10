@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011, 2016 Chelsio Communications, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/cxgbe/common/t4_msg.h 346863 2019-04-29 00:40:02Z np $
+ * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/t4_msg.h 348672 2019-06-04 21:06:34Z np $
  *
  */
 
@@ -921,7 +923,8 @@ struct cpl_get_tcb {
 	WR_HDR;
 	union opcode_tid ot;
 	__be16 reply_ctrl;
-	__be16 cookie;
+	__u8 rsvd;
+	__u8 cookie;
 };
 
 /* cpl_get_tcb.reply_ctrl fields */

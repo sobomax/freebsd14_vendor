@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/bzipfs.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/bzipfs.c 342165 2018-12-17 15:13:58Z sobomax $");
 
 #ifndef REGRESSION
 #include "stand.h"

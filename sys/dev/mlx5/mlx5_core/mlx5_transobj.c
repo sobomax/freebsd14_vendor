@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_core/mlx5_transobj.c 331807 2018-03-30 19:13:17Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/mlx5_transobj.c 330647 2018-03-08 10:43:42Z hselasky $
  */
 
 #include <dev/mlx5/driver.h>

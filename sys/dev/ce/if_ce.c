@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ce/if_ce.c 315221 2017-03-14 02:06:03Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ce/if_ce.c 313982 2017-02-20 03:43:12Z pfg $");
 
 #include <sys/param.h>
 

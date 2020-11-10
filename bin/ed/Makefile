@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/ed/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/bin/ed/Makefile 312927 2017-01-28 16:31:23Z bapt $
 
 .include <src.opts.mk>
 

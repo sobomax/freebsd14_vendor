@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bmake/tests/variables/t0/Makefile.test 263346 2014-03-19 12:29:20Z jmmv $
+# $FreeBSD: releng/12.2/usr.bin/bmake/tests/variables/t0/Makefile.test 263346 2014-03-19 12:29:20Z jmmv $
 #
 # A unsorted set of macro expansions. This should be sorted out.
 #

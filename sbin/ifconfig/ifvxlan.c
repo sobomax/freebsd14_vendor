@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/ifconfig/ifvxlan.c 327927 2018-01-13 17:21:45Z bryanv $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/ifconfig/ifvxlan.c 327375 2017-12-30 04:03:53Z bryanv $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

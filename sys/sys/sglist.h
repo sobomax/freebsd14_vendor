@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/sglist.h 345039 2019-03-11 22:48:51Z jhb $
+ * $FreeBSD: releng/12.2/sys/sys/sglist.h 326023 2017-11-20 19:43:44Z pfg $
  */
 
 /*
@@ -48,7 +50,7 @@ struct sglist_seg {
 
 struct sglist {
 	struct sglist_seg *sg_segs;
-	int		sg_refs;
+	u_int		sg_refs;
 	u_short		sg_nseg;
 	u_short		sg_maxseg;
 };

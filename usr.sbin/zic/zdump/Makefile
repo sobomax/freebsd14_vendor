@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/zic/zdump/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/zic/zdump/Makefile 314468 2017-03-01 04:35:21Z ngie $
 
 .PATH: ${SRCTOP}/contrib/tzcode/zic
 

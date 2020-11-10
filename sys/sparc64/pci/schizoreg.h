@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Jason L. Wright (jason@thought.net)
  * Copyright (c) 2005 by Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -25,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: OpenBSD: schizoreg.h,v 1.8 2005/05/19 18:28:59 mickey Exp
- * $FreeBSD: releng/11.3/sys/sparc64/pci/schizoreg.h 287726 2015-09-12 22:49:32Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/pci/schizoreg.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_PCI_SCHIZOREG_H_

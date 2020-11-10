@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1999, 2000 Matthew R. Green
  * Copyright (c) 2001 - 2003 by Thomas Moestl <tmm@FreeBSD.org>
  * Copyright (c) 2005 - 2011 by Marius Strobl <marius@FreeBSD.org>
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/schizo.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/pci/schizo.c 326262 2017-11-27 15:10:39Z pfg $");
 
 /*
  * Driver for `Schizo' Fireplane/Safari to PCI 2.1, `Tomatillo' JBus to
@@ -68,6 +70,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/schizo.c 294883 2016-01-27 02:23
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
+#include <dev/pci/pcib_private.h>
 
 #include <sparc64/pci/ofw_pci.h>
 #include <sparc64/pci/schizoreg.h>
@@ -138,6 +141,7 @@ static device_method_t schizo_methods[] = {
 	DEVMETHOD(pcib_read_config,	schizo_read_config),
 	DEVMETHOD(pcib_write_config,	schizo_write_config),
 	DEVMETHOD(pcib_route_interrupt,	schizo_route_interrupt),
+	DEVMETHOD(pcib_request_feature,	pcib_request_feature_allow),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_node,	ofw_pci_get_node),

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2004 Topspin Communications.  All rights reserved.
  * Copyright (c) 2005 Sun Microsystems, Inc. All rights reserved.
  * Copyright (c) 2004 Voltaire, Inc. All rights reserved.
@@ -725,7 +727,6 @@ ipoib_unicast_send(struct mbuf *mb, struct ipoib_dev_priv *priv, struct ipoib_he
 			}
 
 			if (!path->query && path_rec_start(priv, path)) {
-				spin_unlock_irqrestore(&priv->lock, flags);
 				if (new_path)
 					ipoib_path_free(priv, path);
 				return;
@@ -770,17 +771,13 @@ ipoib_send_one(struct ipoib_dev_priv *priv, struct mbuf *mb)
 	return 0;
 }
 
-
-static void
-_ipoib_start(struct ifnet *dev, struct ipoib_dev_priv *priv)
+void
+ipoib_start_locked(struct ifnet *dev, struct ipoib_dev_priv *priv)
 {
 	struct mbuf *mb;
 
-	if ((dev->if_drv_flags & (IFF_DRV_RUNNING|IFF_DRV_OACTIVE)) !=
-	    IFF_DRV_RUNNING)
-		return;
+	assert_spin_locked(&priv->lock);
 
-	spin_lock(&priv->lock);
 	while (!IFQ_DRV_IS_EMPTY(&dev->if_snd) &&
 	    (dev->if_drv_flags & IFF_DRV_OACTIVE) == 0) {
 		IFQ_DRV_DEQUEUE(&dev->if_snd, mb);
@@ -789,6 +786,18 @@ _ipoib_start(struct ifnet *dev, struct ipoib_dev_priv *priv)
 		IPOIB_MTAP(dev, mb);
 		ipoib_send_one(priv, mb);
 	}
+}
+
+static void
+_ipoib_start(struct ifnet *dev, struct ipoib_dev_priv *priv)
+{
+
+	if ((dev->if_drv_flags & (IFF_DRV_RUNNING|IFF_DRV_OACTIVE)) !=
+	    IFF_DRV_RUNNING)
+		return;
+
+	spin_lock(&priv->lock);
+	ipoib_start_locked(dev, priv);
 	spin_unlock(&priv->lock);
 }
 
@@ -1153,7 +1162,7 @@ ipoib_match_dev_addr(const struct sockaddr *addr, struct net_device *dev)
 
 	CURVNET_SET(dev->if_vnet);
 	IF_ADDR_RLOCK(dev);
-	TAILQ_FOREACH(ifa, &dev->if_addrhead, ifa_link) {
+	CK_STAILQ_FOREACH(ifa, &dev->if_addrhead, ifa_link) {
 		if (ifa->ifa_addr == NULL ||
 		    ifa->ifa_addr->sa_family != addr->sa_family ||
 		    ifa->ifa_addr->sa_len != addr->sa_len) {
@@ -1728,18 +1737,18 @@ ipoib_resolvemulti(struct ifnet *ifp, struct sockaddr **llsa,
 	}
 }
 
-module_init(ipoib_init_module);
-module_exit(ipoib_cleanup_module);
+module_init_order(ipoib_init_module, SI_ORDER_FIFTH);
+module_exit_order(ipoib_cleanup_module, SI_ORDER_FIFTH);
 
 static int
 ipoib_evhand(module_t mod, int event, void *arg)
 {
-	                return (0);
+	return (0);
 }
 
 static moduledata_t ipoib_mod = {
-	                .name = "ipoib",
-			                .evhand = ipoib_evhand,
+	.name = "ipoib",
+	.evhand = ipoib_evhand,
 };
 
 DECLARE_MODULE(ipoib, ipoib_mod, SI_SUB_LAST, SI_ORDER_ANY);

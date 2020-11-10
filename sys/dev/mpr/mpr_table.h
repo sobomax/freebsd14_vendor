@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mpr/mpr_table.h 322658 2017-08-18 14:25:07Z ken $
+ * $FreeBSD: releng/12.2/sys/dev/mpr/mpr_table.h 323380 2017-09-09 22:02:36Z scottl $
  */
 
 #ifndef _MPR_TABLE_H
@@ -41,6 +41,9 @@ extern struct mpr_table_lookup mpr_event_names[];
 extern struct mpr_table_lookup mpr_phystatus_names[];
 extern struct mpr_table_lookup mpr_linkrate_names[];
 extern struct mpr_table_lookup mpr_pcie_linkrate_names[];
+extern struct mpr_table_lookup mpr_iocstatus_string[];
+extern struct mpr_table_lookup mpr_scsi_status_string[];
+extern struct mpr_table_lookup mpr_scsi_taskmgmt_string[];
 
 void mpr_print_iocfacts(struct mpr_softc *, MPI2_IOC_FACTS_REPLY *);
 void mpr_print_portfacts(struct mpr_softc *, MPI2_PORT_FACTS_REPLY *);

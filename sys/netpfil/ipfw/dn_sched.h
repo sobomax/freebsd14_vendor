@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Riccardo Panicucci, Luigi Rizzo, Universita` di Pisa
  * All rights reserved
  *
@@ -27,7 +29,7 @@
 /*
  * The API to write a packet scheduling algorithm for dummynet.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_sched.h 302054 2016-06-21 13:48:49Z bz $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_sched.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _DN_SCHED_H

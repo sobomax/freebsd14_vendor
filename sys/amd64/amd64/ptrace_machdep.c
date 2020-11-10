@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 Konstantin Belousov <kib@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,9 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/amd64/ptrace_machdep.c 331735 2018-03-29 15:08:40Z kib $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/ptrace_machdep.c 332122 2018-04-06 17:35:35Z brooks $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

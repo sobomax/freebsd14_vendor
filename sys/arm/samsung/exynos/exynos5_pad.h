@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_pad.h 263936 2014-03-30 15:22:36Z br $
+ * $FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_pad.h 263936 2014-03-30 15:22:36Z br $
  */
 
 int pad_setup_intr(int gpio_number, void (*ih)(void *), void *ih_user);

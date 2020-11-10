@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -25,15 +27,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	@(#)sigsetops.c	8.1 (Berkeley) 6/4/93
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)sigsetops.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/sigsetops.c 331722 2018-03-29 02:50:57Z eadler $");
+__SCCSID("@(#)sigsetops.c	8.1 (Berkeley) 6/4/93");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/sigsetops.c 355898 2019-12-19 02:09:16Z kevans $");
 
 #include <errno.h>
 #include <signal.h>
@@ -80,6 +78,37 @@ sigfillset(sigset_t *set)
 	for (i = 0; i < _SIG_WORDS; i++)
 		set->__bits[i] = ~0U;
 	return (0);
+}
+
+int
+sigorset(sigset_t *dest, const sigset_t *left, const sigset_t *right)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		dest->__bits[i] = left->__bits[i] | right->__bits[i];
+	return (0);
+}
+
+int
+sigandset(sigset_t *dest, const sigset_t *left, const sigset_t *right)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		dest->__bits[i] = left->__bits[i] & right->__bits[i];
+	return (0);
+}
+
+int
+sigisemptyset(const sigset_t *set)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		if (set->__bits[i] != 0)
+			return (0);
+	return (1);
 }
 
 int

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/pwait/tests/pwait_test.sh 315723 2017-03-22 17:53:25Z bdrewery $
+# $FreeBSD: releng/12.2/bin/pwait/tests/pwait_test.sh 314944 2017-03-09 04:20:00Z bdrewery $
 
 atf_test_case basic
 basic_head()

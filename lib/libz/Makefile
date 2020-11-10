@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/lib/libz/Makefile 348261 2019-05-25 01:58:00Z delphij $
+# $FreeBSD: releng/12.2/lib/libz/Makefile 361068 2020-05-15 00:50:52Z delphij $
 #
 
 PACKAGE=lib${LIB}
@@ -51,6 +51,17 @@ CFLAGS+=	-DSYMBOL_VERSIONING
 INCS=		zconf.h zlib.h
 
 .PATH:		${ZLIBSRC}/test
+
+ZLIB_VERSION!=	sed -n '/define.*ZLIB_VERSION/{s,[^0-9.],,gp;q;}' ${ZLIBSRC}/zlib.h
+
+zlib.pc: zlib.pc.in
+	sed -e 's,@prefix@,/usr,g ; \
+		s,@exec_prefix@,$${prefix},g ; \
+		s,@libdir@,$${exec_prefix}/lib,g ; \
+		s,@sharedlibdir@,$${libdir},g ; \
+		s,@includedir@,$${prefix}/include,g ; \
+		s,@VERSION@,${ZLIB_VERSION},g ;' \
+		${.ALLSRC} > ${.TARGET}
 
 minigzip:	all minigzip.o
 	$(CC) -o minigzip minigzip.o -L. -lz

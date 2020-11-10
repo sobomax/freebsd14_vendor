@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/ypserv/yp_server.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ypserv/yp_server.c 351691 2019-09-02 08:20:02Z kib $");
 
 #include "yp.h"
 #include "yp_extern.h"
@@ -171,8 +173,9 @@ ypproc_match_2_svc(ypreq_key *argp, struct svc_req *rqstp)
 	if (do_dns && result.stat != YP_TRUE &&
 	    (strstr(argp->map, "hosts") || strstr(argp->map, "ipnodes"))) {
 #endif
-		char			nbuf[YPMAXRECORD];
+		char *nbuf;
 
+		nbuf = alloca(argp->key.keydat_len + 1);
 		/* NUL terminate! NUL terminate!! NUL TERMINATE!!! */
 		bcopy(argp->key.keydat_val, nbuf, argp->key.keydat_len);
 		nbuf[argp->key.keydat_len] = '\0';

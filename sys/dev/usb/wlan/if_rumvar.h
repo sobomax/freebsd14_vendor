@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/dev/usb/wlan/if_rumvar.h 345636 2019-03-28 09:50:25Z avos $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/usb/wlan/if_rumvar.h 345634 2019-03-28 09:16:00Z avos $	*/
 
 /*-
  * Copyright (c) 2005, 2006 Damien Bergamini <damien.bergamini@free.fr>
@@ -110,6 +110,7 @@ enum {
 
 struct rum_softc {
 	struct ieee80211com		sc_ic;
+	struct ieee80211_ratectl_tx_stats sc_txs;
 	struct mbufq			sc_snd;
 	device_t			sc_dev;
 	struct usb_device		*sc_udev;

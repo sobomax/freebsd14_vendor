@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/dtc/Makefile 328825 2018-02-03 01:20:01Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/dtc/Makefile 348138 2019-05-23 01:09:10Z ngie $
 
 PROG_CXX=dtc
 SRCS=	dtc.cc input_buffer.cc string.cc dtb.cc fdt.cc checking.cc
@@ -6,7 +6,9 @@ MAN=	dtc.1
 
 WARNS?=	3
 
-CXXFLAGS+=	-std=c++11 -fno-rtti -fno-exceptions
+CXXFLAGS+=	-fno-rtti -fno-exceptions
+
+CXXSTD=	c++11
 
 NO_SHARED?=NO
 

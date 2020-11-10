@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 David O'Brien <obrien@FreeBSD.org>
  * Copyright (c) 2003 Orlando Bassotto <orlando.bassotto@ieo-research.it>
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
@@ -41,7 +43,7 @@
 #include <dev/sound/midi/mpu401.h>
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pci/emu10k1.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/emu10k1.c 360305 2020-04-25 13:18:29Z dim $");
 
 /* -------------------------------------------------------------------- */
 
@@ -1255,11 +1257,12 @@ emu_intr(void *data)
 #endif
 		}
 
-	    if (stat & EMU_IPR_MIDIRECVBUFE)
-		if (sc->mpu_intr) {
-		    (sc->mpu_intr)(sc->mpu);
-		    ack |= EMU_IPR_MIDIRECVBUFE | EMU_IPR_MIDITRANSBUFE;
- 		}
+		if (stat & EMU_IPR_MIDIRECVBUFE) {
+			if (sc->mpu_intr) {
+				(sc->mpu_intr)(sc->mpu);
+				ack |= EMU_IPR_MIDIRECVBUFE | EMU_IPR_MIDITRANSBUFE;
+			}
+		}
 		if (stat & ~ack)
 			device_printf(sc->dev, "dodgy irq: %x (harmless)\n",
 			    stat & ~ack);

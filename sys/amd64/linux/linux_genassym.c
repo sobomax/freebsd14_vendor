@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/linux/linux_genassym.c 283424 2015-05-24 16:07:11Z dchagin $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/linux/linux_genassym.c 283424 2015-05-24 16:07:11Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/assym.h>

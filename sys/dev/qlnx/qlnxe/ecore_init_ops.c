@@ -29,7 +29,7 @@
  * File : ecore_init_ops.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/qlnx/qlnxe/ecore_init_ops.c 337517 2018-08-09 01:17:35Z davidcs $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/qlnx/qlnxe/ecore_init_ops.c 336695 2018-07-25 02:36:55Z davidcs $");
 
 /* include the precompiled configuration values - only once */
 #include "bcm_osal.h"

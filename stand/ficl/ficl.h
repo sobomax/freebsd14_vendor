@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: releng/11.3/stand/ficl/ficl.h 329011 2018-02-08 02:50:47Z kevans $ */
+/* $FreeBSD: releng/12.2/stand/ficl/ficl.h 346145 2019-04-12 01:03:00Z sjg $ */
 
 #if !defined (__FICL_H__)
 #define __FICL_H__
@@ -1156,6 +1156,10 @@ typedef void ficlCompileFcn(FICL_SYSTEM *);
 #define FICL_COMPILE_SET(func)	\
 	DATA_SET(Xficl_compile_set, func)
 SET_DECLARE(Xficl_compile_set, ficlCompileFcn);
+
+#ifdef LOADER_VERIEXEC
+#include <verify_file.h>
+#endif
 
 #ifdef __cplusplus
 }

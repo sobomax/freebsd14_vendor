@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/test/test_option_s.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_option_s.c 358087 2020-02-19 01:46:43Z mm $");
 
 DEFINE_TEST(test_option_s)
 {
@@ -92,10 +92,8 @@ DEFINE_TEST(test_option_s)
 	 * Test 5: Name-switching substitutions when extracting archive.
 	 */
 	assertMakeDir("test5", 0755);
-	systemf("%s -cf test5.tar in/d1/foo in/d1/bar",
-	    testprog, testprog);
-	systemf("%s -xf test5.tar -s /foo/bar/ -s }bar}foo} -C test5",
-	    testprog, testprog);
+	systemf("%s -cf test5.tar in/d1/foo in/d1/bar", testprog);
+	systemf("%s -xf test5.tar -s /foo/bar/ -s }bar}foo} -C test5", testprog);
 	assertFileContents("foo", 3, "test5/in/d1/bar");
 	assertFileContents("bar", 3, "test5/in/d1/foo");
 

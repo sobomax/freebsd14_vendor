@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/allwinner/aw_mp.h 331182 2018-03-19 06:40:11Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/allwinner/aw_mp.h 327184 2017-12-25 22:09:25Z manu $
  */
 
 #ifndef _AW_MP_H_

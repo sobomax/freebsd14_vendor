@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2004, 2007 Lukas Ertl
  * Copyright (c) 1997, 1998, 1999
  *      Nan Yang Computer Services Limited.  All rights reserved.
@@ -7,7 +9,7 @@
  * Parts written by Greg Lehey.
  *
  *  This software is distributed under the so-called ``Berkeley
- *  License'':                                                                   *
+ *  License'':                                                                    *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -35,7 +37,7 @@
  * otherwise) arising in any way out of the use of this software, even if
  * advised of the possibility of such damage.
  *  
- * $FreeBSD: releng/11.3/sys/geom/vinum/geom_vinum_var.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/geom/vinum/geom_vinum_var.h 356576 2020-01-10 00:41:15Z mav $
  */
 
 #ifndef	_GEOM_VINUM_VAR_H_
@@ -258,10 +260,12 @@ struct gv_drive {
 #define	GV_DRIVE_REFERENCED	0x01	/* The drive isn't really existing,
 					   but was referenced by a subdisk
 					   during taste. */
+#define	GV_DRIVE_ORPHANED	0x02	/* The drive was orphaned. */
 
 	struct gv_hdr	*hdr;		/* The drive header. */
 
 	struct g_consumer *consumer;	/* Consumer attached to this drive. */
+	int	active;			/* Number of active requests. */
 
 	int freelist_entries;			/* Count of freelist entries. */
 	LIST_HEAD(,gv_freelist)	freelist;	/* List of freelist entries. */

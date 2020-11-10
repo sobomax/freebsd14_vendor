@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Rick Macklem, University of Guelph
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/nfs/nfsdport.h 283635 2015-05-27 22:00:05Z rmacklem $
+ * $FreeBSD: releng/12.2/sys/fs/nfs/nfsdport.h 361589 2020-05-28 17:08:39Z freqlabs $
  */
 
 /*
@@ -83,8 +85,7 @@ struct nfsexstuff {
 #define	NFSVNO_SETEXRDONLY(e)	((e)->nes_exflag = (MNT_EXPORTED|MNT_EXRDONLY))
 
 #define	NFSVNO_CMPFH(f1, f2)						\
-    ((f1)->fh_fsid.val[0] == (f2)->fh_fsid.val[0] &&			\
-     (f1)->fh_fsid.val[1] == (f2)->fh_fsid.val[1] &&			\
+    (fsidcmp(&(f1)->fh_fsid, &(f2)->fh_fsid) == 0 &&			\
      bcmp(&(f1)->fh_fid, &(f2)->fh_fid, sizeof(struct fid)) == 0)
 
 #define	NFSLOCKHASH(f) 							\

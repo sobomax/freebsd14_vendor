@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/cpufunc.h 338514 2018-09-06 22:23:39Z jhb $
+ * $FreeBSD: releng/12.2/sys/arm64/include/cpufunc.h 336053 2018-07-06 23:49:17Z jhb $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -131,7 +131,6 @@ extern int64_t dczva_line_size;
 #define	cpu_setttb(a)			arm64_setttb(a)
 
 #define	cpu_tlb_flushID()		arm64_tlb_flushID()
-#define	cpu_tlb_flushID_SE(e)		arm64_tlb_flushID_SE(e)
 
 #define	cpu_dcache_wbinv_range(a, s)	arm64_dcache_wbinv_range((a), (s))
 #define	cpu_dcache_inv_range(a, s)	arm64_dcache_inv_range((a), (s))

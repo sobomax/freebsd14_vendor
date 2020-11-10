@@ -23,14 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_entry.h 348607 2019-06-04 10:35:54Z mm $
+ * $FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_entry.h 362132 2020-06-12 22:59:59Z mm $
  */
 
 #ifndef ARCHIVE_ENTRY_H_INCLUDED
 #define	ARCHIVE_ENTRY_H_INCLUDED
 
 /* Note: Compiler will complain if this does not match archive.h! */
-#define	ARCHIVE_VERSION_NUMBER 3003003
+#define	ARCHIVE_VERSION_NUMBER 3004003
 
 /*
  * Note: archive_entry.h is for use outside of libarchive; the
@@ -524,9 +524,6 @@ __LA_DECL int	 archive_entry_acl_reset(struct archive_entry *, int /* want_type 
 __LA_DECL int	 archive_entry_acl_next(struct archive_entry *, int /* want_type */,
 	    int * /* type */, int * /* permset */, int * /* tag */,
 	    int * /* qual */, const char ** /* name */);
-__LA_DECL int	 archive_entry_acl_next_w(struct archive_entry *, int /* want_type */,
-	    int * /* type */, int * /* permset */, int * /* tag */,
-	    int * /* qual */, const wchar_t ** /* name */);
 
 /*
  * Construct a text-format ACL.  The flags argument is a bitmask that

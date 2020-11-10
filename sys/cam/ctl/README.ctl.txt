@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/cam/ctl/README.ctl.txt 288310 2015-09-27 13:47:28Z mav $ */
+/* $FreeBSD: releng/12.2/sys/cam/ctl/README.ctl.txt 288310 2015-09-27 13:47:28Z mav $ */
 
 CTL - CAM Target Layer Description
 

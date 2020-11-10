@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994 David S. Miller, davem@nadzieja.rutgers.edu
  * Copyright (c) 1995 Paul Kranenburg
  * All rights reserved.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/db_disasm.c 297793 2016-04-10 23:07:00Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/db_disasm.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

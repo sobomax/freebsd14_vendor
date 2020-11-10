@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Matthew N. Dodd <winter@jurai.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/bios/vpd.c 227309 2011-11-07 15:43:11Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/bios/vpd.c 326263 2017-11-27 15:11:47Z pfg $");
 
 /*
  * VPD decoder for IBM systems (Thinkpads)

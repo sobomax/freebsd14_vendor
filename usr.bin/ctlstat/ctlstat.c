@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/ctlstat/ctlstat.c 345116 2019-03-13 20:29:10Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/ctlstat/ctlstat.c 345115 2019-03-13 20:28:48Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/types.h>

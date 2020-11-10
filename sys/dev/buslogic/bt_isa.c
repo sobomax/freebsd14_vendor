@@ -2,6 +2,8 @@
  * Product specific probe and attach routines for:
  *      Buslogic BT-54X and BT-445 cards
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998, 1999 Justin T. Gibbs
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/buslogic/bt_isa.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/buslogic/bt_isa.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -150,7 +152,7 @@ bt_isa_probe(device_t dev)
 
 		/*
 		 * Ensure this port has not already been claimed already
-		 * by a PCI, EISA or ISA adapter.
+		 * by a PCI, ISA adapter.
 		 */
 		if (bt_check_probed_iop(ioport) != 0)
 			continue;

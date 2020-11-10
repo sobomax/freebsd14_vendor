@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/vdso.h 305866 2016-09-16 10:04:28Z kib $
+ * $FreeBSD: releng/12.2/sys/arm64/include/vdso.h 326165 2017-11-24 13:50:53Z ed $
  */
 
 #ifndef _MACHINE_VDSO_H_
@@ -33,5 +33,7 @@
 	uint32_t	th_res[7];
 
 #define	VDSO_TH_ALGO_ARM_GENTIM	VDSO_TH_ALGO_1
+
+#define	VDSO_TIMEHANDS_MD32	VDSO_TIMEHANDS_MD
 
 #endif /* !_MACHINE_VDSO_H_ */

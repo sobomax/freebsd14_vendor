@@ -1,4 +1,6 @@
 /*
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2012 Andrew Turner
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/arm/ldivmod_helper.c 285338 2015-07-09 21:02:40Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/arm/ldivmod_helper.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <libkern/quad.h>
 

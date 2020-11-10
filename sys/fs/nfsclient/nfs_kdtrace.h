@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Robert N. M. Watson
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/nfsclient/nfs_kdtrace.h 258667 2013-11-26 22:41:40Z pluknet $
+ * $FreeBSD: releng/12.2/sys/fs/nfsclient/nfs_kdtrace.h 326268 2017-11-27 15:15:37Z pfg $
  */
 
 #ifndef _NFSCL_NFS_KDTRACE_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/zzz/Makefile 117557 2003-07-14 16:31:34Z njl $
+# $FreeBSD: releng/12.2/usr.sbin/zzz/Makefile 117557 2003-07-14 16:31:34Z njl $
 
 SCRIPTS=zzz.sh
 MAN=	zzz.8

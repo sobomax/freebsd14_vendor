@@ -1,1 +1,1 @@
-# $FreeBSD: releng/11.3/libexec/rtld-elf/powerpc/Makefile.inc 107572 2002-12-04 07:32:20Z grehan $
+# $FreeBSD: releng/12.2/libexec/rtld-elf/powerpc/Makefile.inc 107572 2002-12-04 07:32:20Z grehan $

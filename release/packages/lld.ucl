@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/release/packages/lld.ucl 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/release/packages/lld.ucl 309262 2016-11-28 20:13:56Z dim $
 #
 
 name = "FreeBSD-%PKGNAME%"

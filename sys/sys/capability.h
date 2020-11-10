@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2014 Robert N. M. Watson
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/capability.h 340291 2018-11-09 17:59:27Z emaste $
+ * $FreeBSD: releng/12.2/sys/sys/capability.h 340586 2018-11-18 14:58:01Z emaste $
  */
 
 /*

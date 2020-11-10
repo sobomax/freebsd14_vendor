@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/ib_cm.c 341878 2018-12-12 11:01:23Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/ib_cm.c 363150 2020-07-13 15:33:06Z hselasky $");
 
 #include <linux/completion.h>
 #include <linux/dma-mapping.h>
@@ -4180,5 +4180,5 @@ static void __exit ib_cm_cleanup(void)
 }
 
 module_init_order(ib_cm_init, SI_ORDER_SECOND);
-module_exit_order(ib_cm_cleanup, SI_ORDER_FIRST);
+module_exit_order(ib_cm_cleanup, SI_ORDER_SECOND);
 

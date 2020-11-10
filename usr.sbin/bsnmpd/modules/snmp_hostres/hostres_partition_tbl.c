@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/snmp_hostres/hostres_partition_tbl.c 344747 2019-03-04 03:38:43Z avos $
+ * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_hostres/hostres_partition_tbl.c 344747 2019-03-04 03:38:43Z avos $
  */
 
 /*
@@ -50,11 +50,7 @@
 #include "hostres_oid.h"
 #include "hostres_tree.h"
 
-#ifdef PC98
-#define	HR_FREEBSD_PART_TYPE	0xc494
-#else
 #define	HR_FREEBSD_PART_TYPE	165
-#endif
 
 /* Maximum length for label and id including \0 */
 #define	PART_STR_MLEN	(128 + 1)

@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/lib/libipsec/policy_token.l 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/lib/libipsec/policy_token.l 326025 2017-11-20 19:49:47Z pfg $	*/
 /*	$KAME: policy_token.l,v 1.13 2003/05/09 05:19:55 sakane Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
  * All rights reserved.
  *

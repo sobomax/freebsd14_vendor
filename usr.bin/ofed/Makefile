@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/ofed/Makefile 337682 2018-08-12 08:45:23Z kib $
+# $FreeBSD: releng/12.2/usr.bin/ofed/Makefile 336569 2018-07-20 23:52:11Z kib $
 
 .include <src.opts.mk>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/libexec/kfd/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: releng/12.2/kerberos5/libexec/kfd/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kfd
 MAN=	kfd.8

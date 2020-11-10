@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause
+ *
  * Copyright (c) 2006 IronPort Systems
  * All rights reserved.
  *
@@ -54,7 +56,7 @@
 #define _MFIREG_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mfi/mfireg.h 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mfi/mfireg.h 326255 2017-11-27 14:52:40Z pfg $");
 
 /*
  * MegaRAID SAS MFI firmware definitions

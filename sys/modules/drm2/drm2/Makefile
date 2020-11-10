@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/drm2/drm2/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/drm2/drm2/Makefile 338285 2018-08-24 00:02:00Z imp $
 
 .PATH:	${SRCTOP}/sys/dev/drm2 ${SRCTOP}/sys/dev/drm2/ttm
 KMOD	= drm2
@@ -53,7 +53,7 @@ SRCS	+= drm_ioc32.c
 .endif
 
 SRCS	+=device_if.h bus_if.h pci_if.h device_if.h iicbus_if.h opt_drm.h \
-	opt_vm.h opt_compat.h opt_syscons.h
+	opt_vm.h opt_syscons.h
 
 
 .if ${MACHINE_CPUARCH} == "powerpc"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/netgraph/vlan/Makefile 126447 2004-03-01 17:22:16Z ru $
+# $FreeBSD: releng/12.2/sys/modules/netgraph/vlan/Makefile 126447 2004-03-01 17:22:16Z ru $
 
 KMOD=	ng_vlan
 SRCS=	ng_vlan.c

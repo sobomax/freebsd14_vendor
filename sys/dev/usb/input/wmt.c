@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/input/wmt.c 340305 2018-11-09 21:26:26Z wulf $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/input/wmt.c 359055 2020-03-17 23:57:06Z wulf $");
 
 /*
  * MS Windows 7/8/10 compatible USB HID Multi-touch Device driver.
@@ -201,6 +201,7 @@ struct wmt_softc
 	uint32_t		caps;
 	uint32_t		isize;
 	uint32_t		nconts_max;
+	uint32_t		report_len;
 	uint8_t			report_id;
 
 	struct hid_location	cont_max_loc;
@@ -226,12 +227,22 @@ static device_probe_t	wmt_probe;
 static device_attach_t	wmt_attach;
 static device_detach_t	wmt_detach;
 
+#if __FreeBSD_version >= 1200077
 static evdev_open_t	wmt_ev_open;
 static evdev_close_t	wmt_ev_close;
+#else
+static evdev_open_t	wmt_ev_open_11;
+static evdev_close_t	wmt_ev_close_11;
+#endif
 
 static const struct evdev_methods wmt_evdev_methods = {
+#if __FreeBSD_version >= 1200077
 	.ev_open = &wmt_ev_open,
 	.ev_close = &wmt_ev_close,
+#else
+	.ev_open = &wmt_ev_open_11,
+	.ev_close = &wmt_ev_close_11,
+#endif
 };
 
 static const struct usb_config wmt_config[WMT_N_TRANSFER] = {
@@ -482,10 +493,11 @@ wmt_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 
 		DPRINTFN(6, "sc=%p actlen=%d\n", sc, len);
 
-		if (len >= (int)sc->isize || (len > 0 && sc->report_id != 0)) {
+		if (len >= (int)sc->report_len ||
+		    (len > 0 && sc->report_id != 0)) {
 			/* Limit report length to the maximum */
-			if (len > (int)sc->isize)
-				len = sc->isize;
+			if (len > (int)sc->report_len)
+				len = sc->report_len;
 
 			usbd_copy_out(pc, 0, buf, len);
 
@@ -494,8 +506,8 @@ wmt_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 				goto tr_ignore;
 
 			/* Make sure we don't process old data */
-			if (len < sc->isize)
-				bzero(buf + len, sc->isize - len);
+			if (len < sc->report_len)
+				bzero(buf + len, sc->report_len - len);
 
 			/* Strip leading "report ID" byte */
 			if (sc->report_id) {
@@ -511,7 +523,7 @@ tr_ignore:
 
 	case USB_ST_SETUP:
 tr_setup:
-		usbd_xfer_set_frame_len(xfer, 0, usbd_xfer_max_len(xfer));
+		usbd_xfer_set_frame_len(xfer, 0, sc->isize);
 		usbd_transfer_submit(xfer);
 		break;
 	default:
@@ -525,24 +537,45 @@ tr_setup:
 }
 
 static void
-wmt_ev_close(struct evdev_dev *evdev, void *ev_softc)
+wmt_ev_close_11(struct evdev_dev *evdev, void *ev_softc)
 {
-	struct wmt_softc *sc = (struct wmt_softc *)ev_softc;
+	struct wmt_softc *sc = ev_softc;
 
 	mtx_assert(&sc->mtx, MA_OWNED);
 	usbd_transfer_stop(sc->xfer[WMT_INTR_DT]);
 }
 
 static int
-wmt_ev_open(struct evdev_dev *evdev, void *ev_softc)
+wmt_ev_open_11(struct evdev_dev *evdev, void *ev_softc)
 {
-	struct wmt_softc *sc = (struct wmt_softc *)ev_softc;
+	struct wmt_softc *sc = ev_softc;
 
 	mtx_assert(&sc->mtx, MA_OWNED);
 	usbd_transfer_start(sc->xfer[WMT_INTR_DT]);
 
 	return (0);
 }
+
+#if __FreeBSD_version >= 1200077
+static int
+wmt_ev_close(struct evdev_dev *evdev)
+{
+	struct wmt_softc *sc = evdev_get_softc(evdev);
+
+	wmt_ev_close_11(evdev, sc);
+
+	return (0);
+}
+
+static int
+wmt_ev_open(struct evdev_dev *evdev)
+{
+	struct wmt_softc *sc = evdev_get_softc(evdev);
+
+	return (wmt_ev_open_11(evdev, sc));
+
+}
+#endif
 
 /* port of userland hid_report_size() from usbhid(3) to kernel */
 static int
@@ -624,9 +657,8 @@ wmt_hid_parse(struct wmt_softc *sc, const void *d_ptr, uint16_t d_len)
 				thqa_cert_rid = hi.report_ID;
 				break;
 			}
-			if (hi.collevel == 1 && touch_coll &&
-			    WMT_HI_ABSOLUTE(hi) && hi.usage ==
-			      HID_USAGE2(HUP_DIGITIZERS, HUD_CONTACT_MAX)) {
+			if (hi.collevel == 1 && touch_coll && hi.usage ==
+			    HID_USAGE2(HUP_DIGITIZERS, HUD_CONTACT_MAX)) {
 				cont_count_max = hi.logical_maximum;
 				cont_max_rid = hi.report_ID;
 				if (sc != NULL)
@@ -777,7 +809,9 @@ wmt_hid_parse(struct wmt_softc *sc, const void *d_ptr, uint16_t d_len)
 		sc->ai[WMT_ORIENTATION].max = 1;
 	}
 
-	sc->isize = wmt_hid_report_size(d_ptr, d_len, hid_input, report_id);
+	sc->isize = hid_report_size(d_ptr, d_len, hid_input, NULL);
+	sc->report_len = wmt_hid_report_size(d_ptr, d_len, hid_input,
+	    report_id);
 	sc->cont_max_rlen = wmt_hid_report_size(d_ptr, d_len, hid_feature,
 	    cont_max_rid);
 	if (thqa_cert_rid > 0)
@@ -825,6 +859,12 @@ wmt_cont_max_parse(struct wmt_softc *sc, const void *r_ptr, uint16_t r_len)
 	}
 }
 
+static const STRUCT_USB_HOST_ID wmt_devs[] = {
+	/* generic HID class w/o boot interface */
+	{USB_IFACE_CLASS(UICLASS_HID),
+	 USB_IFACE_SUBCLASS(0),},
+};
+
 static devclass_t wmt_devclass;
 
 static device_method_t wmt_methods[] = {
@@ -845,3 +885,4 @@ DRIVER_MODULE(wmt, uhub, wmt_driver, wmt_devclass, NULL, 0);
 MODULE_DEPEND(wmt, usb, 1, 1, 1);
 MODULE_DEPEND(wmt, evdev, 1, 1, 1);
 MODULE_VERSION(wmt, 1);
+USB_PNP_HOST_INFO(wmt_devs);

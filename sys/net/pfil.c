@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sys/net/pfil.c 332513 2018-04-15 15:22:28Z kp $ */
+/*	$FreeBSD: releng/12.2/sys/net/pfil.c 331436 2018-03-23 16:56:44Z kp $ */
 /*	$NetBSD: pfil.c,v 1.20 2001/11/12 23:49:46 lukem Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1996 Matthew R. Green
  * All rights reserved.
  *

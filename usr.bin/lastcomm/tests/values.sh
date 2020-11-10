@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/usr.bin/lastcomm/tests/values.sh 263226 2014-03-16 04:09:22Z jmmv $
+# $FreeBSD: releng/12.2/usr.bin/lastcomm/tests/values.sh 263226 2014-03-16 04:09:22Z jmmv $
 #
 
 ACCT=acct

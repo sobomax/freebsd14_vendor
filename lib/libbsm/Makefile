@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/lib/libbsm/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libbsm/Makefile 361124 2020-05-17 01:55:07Z asomers $
 #
 
 PACKAGE=	lib${LIB}
@@ -75,10 +75,11 @@ MAN+=	audit.2								\
 	setauid.2
 
 MLINKS=	libbsm.3 bsm.3							\
+	libbsm.3 au_fcntl_cmd_to_bsm.3					\
 	au_class.3 getauclassent.3					\
 	au_class.3 getauclassent_r.3					\
 	au_class.3 getauclassnam.3					\
-	au_class.3 getauclassnam_3.3					\
+	au_class.3 getauclassnam_r.3					\
 	au_class.3 setauclass.3						\
 	au_class.3 endauclass.3						\
 	au_control.3 setac.3						\
@@ -89,6 +90,7 @@ MLINKS=	libbsm.3 bsm.3							\
 	au_control.3 getacflg.3						\
 	au_control.3 getacna.3						\
 	au_control.3 getacpol.3						\
+	au_control.3 getacqsize.3					\
 	au_control.3 au_poltostr.3					\
 	au_control.3 au_strtopol.3					\
 	au_domain.3 au_bsm_to_domain.3					\
@@ -126,6 +128,7 @@ MLINKS=	libbsm.3 bsm.3							\
 	au_token.3 au_to_arg32.3					\
 	au_token.3 au_to_arg64.3					\
 	au_token.3 au_to_arg.3						\
+	au_token.3 au_to_attr32.3					\
 	au_token.3 au_to_attr64.3					\
 	au_token.3 au_to_data.3						\
 	au_token.3 au_to_exit.3						\
@@ -154,6 +157,7 @@ MLINKS=	libbsm.3 bsm.3							\
 	au_token.3 au_to_sock_inet32.3					\
 	au_token.3 au_to_sock_inet128.3					\
 	au_token.3 au_to_sock_inet.3					\
+	au_token.3 au_to_socket_ex.3					\
 	au_token.3 au_to_subject32.3					\
 	au_token.3 au_to_subject64.3					\
 	au_token.3 au_to_subject.3					\
@@ -165,6 +169,7 @@ MLINKS=	libbsm.3 bsm.3							\
 	au_token.3 au_to_exec_env.3					\
 	au_token.3 au_to_header.3					\
 	au_token.3 au_to_header32.3					\
+	au_token.3 au_to_header32_ex.3					\
 	au_token.3 au_to_header64.3					\
 	au_token.3 au_to_trailer.3					\
 	au_token.3 au_to_zonename.3					\
@@ -173,10 +178,17 @@ MLINKS=	libbsm.3 bsm.3							\
 	au_user.3 getauuserent.3					\
 	au_user.3 getauuserent_r.3					\
 	au_user.3 getauusernam.3					\
-	au_user.3 getauusernam_R.3					\
+	au_user.3 getauusernam_r.3					\
 	au_user.3 au_user_mask.3					\
 	au_user.3 getfauditflags.3					\
 	getaudit.2 getaudit_addr.2					\
 	setaudit.2 setaudit_addr.2
 
 .include <bsd.lib.mk>
+
+# Disable -Wcast-align.  Casting sa_local in au_to_socket_ex triggers this
+# warning, but it's ok because sa_local must've originally pointed to a
+# sockaddr_in or sockaddr_in6 anyway.
+# Better would be to disable this warning in just that one function, but GCC
+# 4.2 can't do that :( .
+CWARNFLAGS.bsm_token.c+=	-Wno-cast-align

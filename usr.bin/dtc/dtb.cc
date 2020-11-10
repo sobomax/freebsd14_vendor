@@ -29,13 +29,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/dtc/dtb.cc 345881 2019-04-04 17:27:01Z kevans $
+ * $FreeBSD: releng/12.2/usr.bin/dtc/dtb.cc 358206 2020-02-21 04:38:59Z kevans $
  */
 
 #include "dtb.hh"
 #include <sys/types.h>
 #include <inttypes.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 

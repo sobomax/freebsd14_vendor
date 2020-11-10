@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/release/picobsd/tinyware/vm/vm.c 164718 2006-11-28 12:46:02Z ru $
+ * $FreeBSD: releng/12.2/release/picobsd/tinyware/vm/vm.c 164718 2006-11-28 12:46:02Z ru $
  */
 
 #include <stdio.h>

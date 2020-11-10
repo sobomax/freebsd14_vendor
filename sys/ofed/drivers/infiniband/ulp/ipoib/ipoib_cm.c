@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2006 Mellanox Technologies. All rights reserved
  *
  * This software is available to you under a choice of one of two
@@ -616,8 +618,10 @@ void ipoib_cm_send(struct ipoib_dev_priv *priv, struct mbuf *mb, struct ipoib_cm
 	struct ipoib_cm_tx_buf *tx_req;
 	struct ifnet *dev = priv->dev;
 
-	if (unlikely(priv->tx_outstanding > MAX_SEND_CQE))
-		while (ipoib_poll_tx(priv)); /* nothing */
+	if (unlikely(priv->tx_outstanding > MAX_SEND_CQE)) {
+		while (ipoib_poll_tx(priv, false))
+			;	/* nothing */
+	}
 
 	m_adj(mb, sizeof(struct ipoib_pseudoheader));
 	if (unlikely(mb->m_pkthdr.len > tx->mtu)) {
@@ -1261,6 +1265,8 @@ static void ipoib_cm_mb_reap(struct work_struct *work)
 
 	spin_lock_irqsave(&priv->lock, flags);
 
+	CURVNET_SET_QUIET(priv->dev->if_vnet);
+
 	for (;;) {
 		IF_DEQUEUE(&priv->cm.mb_queue, mb);
 		if (mb == NULL)
@@ -1286,6 +1292,8 @@ static void ipoib_cm_mb_reap(struct work_struct *work)
 
 		spin_lock_irqsave(&priv->lock, flags);
 	}
+
+	CURVNET_RESTORE();
 
 	spin_unlock_irqrestore(&priv->lock, flags);
 }

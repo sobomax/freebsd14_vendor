@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/chvgpio/Makefile 329832 2018-02-22 19:12:32Z gonzo $
+# $FreeBSD: releng/12.2/sys/modules/chvgpio/Makefile 329832 2018-02-22 19:12:32Z gonzo $
 
 .PATH:	${SRCTOP}/sys/dev/gpio
 KMOD=	chvgpio

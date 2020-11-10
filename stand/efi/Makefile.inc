@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/Makefile.inc 344405 2019-02-21 02:32:30Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/Makefile.inc 336535 2018-07-20 05:18:03Z imp $
 
 # Options used when building app-specific efi components
 # See conf/kern.mk for the correct set of these

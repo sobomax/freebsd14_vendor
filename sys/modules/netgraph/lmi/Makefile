@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/netgraph/lmi/Makefile 89260 2002-01-11 15:49:02Z ru $
+# $FreeBSD: releng/12.2/sys/modules/netgraph/lmi/Makefile 89260 2002-01-11 15:49:02Z ru $
 # $Whistle: Makefile,v 1.1 1999/01/19 19:39:21 archie Exp $
 
 KMOD=	ng_lmi

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Luigi Rizzo, Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
  *
@@ -27,7 +29,7 @@
 /*
  * internal dummynet APIs.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_dn_private.h 325730 2017-11-12 01:26:43Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_dn_private.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _IP_DN_PRIVATE_H

@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: releng/11.3/cddl/lib/libdtrace/sched.d 333617 2018-05-15 00:00:44Z dteske $
+ * $FreeBSD: releng/12.2/cddl/lib/libdtrace/sched.d 329188 2018-02-12 23:53:38Z dteske $
  */
 /*
  * Copyright 2006 Sun Microsystems, Inc.  All rights reserved.

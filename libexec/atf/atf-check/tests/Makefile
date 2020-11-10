@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/atf/atf-check/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/libexec/atf/atf-check/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-sh

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bnxt/if_bnxt.c 333364 2018-05-08 15:51:40Z shurd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/if_bnxt.c 361761 2020-06-03 18:09:31Z kp $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -300,10 +300,12 @@ static struct if_shared_ctx bnxt_sctx_init = {
 	.isc_nfl = 2,				// Number of Free Lists
 	.isc_flags = IFLIB_HAS_RXCQ | IFLIB_HAS_TXCQ | IFLIB_NEED_ETHER_PAD,
 	.isc_q_align = PAGE_SIZE,
-	.isc_tx_maxsize = BNXT_TSO_SIZE,
-	.isc_tx_maxsegsize = BNXT_TSO_SIZE,
-	.isc_rx_maxsize = BNXT_TSO_SIZE,
-	.isc_rx_maxsegsize = BNXT_TSO_SIZE,
+	.isc_tx_maxsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
+	.isc_tx_maxsegsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
+	.isc_tso_maxsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
+	.isc_tso_maxsegsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
+	.isc_rx_maxsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
+	.isc_rx_maxsegsize = BNXT_TSO_SIZE + sizeof(struct ether_vlan_header),
 
 	// Only use a single segment to avoid page size constraints
 	.isc_rx_nsegments = 1,
@@ -313,11 +315,11 @@ static struct if_shared_ctx bnxt_sctx_init = {
 	.isc_nrxd_default = {PAGE_SIZE / sizeof(struct cmpl_base) * 8,
 	    PAGE_SIZE / sizeof(struct rx_prod_pkt_bd),
 	    PAGE_SIZE / sizeof(struct rx_prod_pkt_bd)},
-	.isc_nrxd_max = {INT32_MAX, INT32_MAX, INT32_MAX},
+	.isc_nrxd_max = {BNXT_MAX_RXD, BNXT_MAX_RXD, BNXT_MAX_RXD},
 	.isc_ntxd_min = {16, 16, 16},
 	.isc_ntxd_default = {PAGE_SIZE / sizeof(struct cmpl_base) * 2,
 	    PAGE_SIZE / sizeof(struct tx_bd_short)},
-	.isc_ntxd_max = {INT32_MAX, INT32_MAX, INT32_MAX},
+	.isc_ntxd_max = {BNXT_MAX_TXD, BNXT_MAX_TXD, BNXT_MAX_TXD},
 
 	.isc_admin_intrcnt = 1,
 	.isc_vendor_info = bnxt_vendor_info_array,
@@ -784,7 +786,7 @@ bnxt_attach_pre(if_ctx_t ctx)
 	scctx->isc_txrx = &bnxt_txrx;
 	scctx->isc_tx_csum_flags = (CSUM_IP | CSUM_TCP | CSUM_UDP |
 	    CSUM_TCP_IPV6 | CSUM_UDP_IPV6 | CSUM_TSO);
-	scctx->isc_capenable =
+	scctx->isc_capabilities = scctx->isc_capenable =
 	    /* These are translated to hwassit bits */
 	    IFCAP_TXCSUM | IFCAP_TXCSUM_IPV6 | IFCAP_TSO4 | IFCAP_TSO6 |
 	    /* These are checked by iflib */
@@ -1636,25 +1638,26 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 {
 	struct bnxt_softc *softc = iflib_get_softc(ctx);
 	struct ifreq *ifr = (struct ifreq *)data;
-	struct ifreq_buffer *ifbuf = &ifr->ifr_ifru.ifru_buffer;
-	struct bnxt_ioctl_header *ioh =
-	    (struct bnxt_ioctl_header *)(ifbuf->buffer);
+	struct bnxt_ioctl_header *ioh;
+	size_t iol;
 	int rc = ENOTSUP;
-	struct bnxt_ioctl_data *iod = NULL;
+	struct bnxt_ioctl_data iod_storage, *iod = &iod_storage;
+
 
 	switch (command) {
 	case SIOCGPRIVATE_0:
 		if ((rc = priv_check(curthread, PRIV_DRIVER)) != 0)
 			goto exit;
 
-		iod = malloc(ifbuf->length, M_DEVBUF, M_NOWAIT | M_ZERO);
-		if (!iod) {
-			rc = ENOMEM;
-			goto exit;
-		}
-		copyin(ioh, iod, ifbuf->length);
+		ioh = ifr_buffer_get_buffer(ifr);
+		iol = ifr_buffer_get_length(ifr);
+		if (iol > sizeof(iod_storage))
+			return (EINVAL);
 
-		switch (ioh->type) {
+		if ((rc = copyin(ioh, iod, iol)) != 0)
+			goto exit;
+
+		switch (iod->hdr.type) {
 		case BNXT_HWRM_NVM_FIND_DIR_ENTRY:
 		{
 			struct bnxt_ioctl_hwrm_nvm_find_dir_entry *find =
@@ -1672,7 +1675,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1712,7 +1715,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 				remain -= csize;
 			}
 			if (iod->hdr.rc == 0)
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 
 			iflib_dma_free(&dma_data);
 			rc = 0;
@@ -1732,7 +1735,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1752,7 +1755,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1774,7 +1777,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1793,7 +1796,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1813,7 +1816,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1840,7 +1843,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 				copyout(dma_data.idi_vaddr, get->data,
 				    get->entry_length * get->entries);
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 			iflib_dma_free(&dma_data);
 
@@ -1861,7 +1864,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1883,7 +1886,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1902,7 +1905,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1923,7 +1926,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1944,7 +1947,7 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 			}
 			else {
 				iod->hdr.rc = 0;
-				copyout(iod, ioh, ifbuf->length);
+				copyout(iod, ioh, iol);
 			}
 
 			rc = 0;
@@ -1955,8 +1958,6 @@ bnxt_priv_ioctl(if_ctx_t ctx, u_long command, caddr_t data)
 	}
 
 exit:
-	if (iod)
-		free(iod, M_DEVBUF);
 	return rc;
 }
 

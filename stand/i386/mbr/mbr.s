@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD: releng/11.3/stand/i386/mbr/mbr.s 134431 2004-08-28 08:39:35Z yar $
+# $FreeBSD: releng/12.2/stand/i386/mbr/mbr.s 134431 2004-08-28 08:39:35Z yar $
 
 # A 512 byte MBR boot manager that simply boots the active partition.
 

@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_read_add_passphrase.c 305188 2016-09-01 07:53:59Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_add_passphrase.c 362132 2020-06-12 22:59:59Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -57,6 +57,10 @@ insert_passphrase_to_head(struct archive_read *a,
 {
 	p->next = a->passphrases.first;
 	a->passphrases.first = p;
+	if (&a->passphrases.first == a->passphrases.last) {
+		a->passphrases.last = &p->next;
+		p->next = NULL;
+	}
 }
 
 static struct archive_read_passphrase *

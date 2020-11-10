@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/amd64/gen/rfork_thread.S 240178 2012-09-06 20:59:49Z jilles $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/amd64/gen/rfork_thread.S 334500 2018-06-01 22:09:27Z brooks $");
 
 /*
  * With thanks to John Dyson for the original version of this.
@@ -80,11 +80,7 @@ ENTRY(rfork_thread)
 	/*
 	 * Exit system call
 	 */
-#ifdef SYS_exit
 	movq	$SYS_exit, %rax
-#else
-	movq	$SYS_sys_exit, %rax
-#endif
 	KERNCALL
 
 	/*

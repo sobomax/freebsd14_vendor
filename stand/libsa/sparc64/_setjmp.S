@@ -14,7 +14,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -42,7 +42,7 @@
 #endif /* LIBC_SCCS and not lint */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/sparc64/_setjmp.S 165906 2007-01-09 01:02:06Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/sparc64/_setjmp.S 324551 2017-10-12 14:56:28Z imp $");
 
 #define	_JB_FP		0x0
 #define	_JB_PC		0x8

@@ -6,7 +6,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/sdiff/edit.c 307772 2016-10-22 13:15:19Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/sdiff/edit.c 307372 2016-10-15 13:45:09Z bapt $");
 
 #include <sys/types.h>
 #include <sys/wait.h>

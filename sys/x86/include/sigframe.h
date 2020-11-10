@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1999 Marcel Moolenaar
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/sigframe.h 247047 2013-02-20 17:39:52Z kib $
+ * $FreeBSD: releng/12.2/sys/x86/include/sigframe.h 326263 2017-11-27 15:11:47Z pfg $
  */
 
 #ifndef _X86_SIGFRAME_H_

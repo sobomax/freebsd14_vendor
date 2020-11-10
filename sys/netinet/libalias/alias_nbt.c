@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Written by Atsushi Murai <amurai@spec.co.jp>
  * Copyright (c) 1998, System Planning and Engineering Co.
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_nbt.c 315456 2017-03-17 14:54:10Z vangyzen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_nbt.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /*
     alias_nbt.c performs special processing for NetBios over TCP/IP

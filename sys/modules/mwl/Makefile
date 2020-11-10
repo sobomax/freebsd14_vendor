@@ -26,7 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: releng/11.3/sys/modules/mwl/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/mwl/Makefile 314651 2017-03-04 10:10:17Z ngie $
 #
 
 .PATH: ${SRCTOP}/sys/dev/mwl

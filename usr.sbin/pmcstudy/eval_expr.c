@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2015 Netflix Inc.
- * All rights reserved.
+ * Copyright (c) 2015 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,7 +32,7 @@
 #include <strings.h>
 #include <ctype.h>
 #include "eval_expr.h"
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/pmcstudy/eval_expr.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/pmcstudy/eval_expr.c 351913 2019-09-05 23:27:59Z imp $");
 
 static struct expression *
 alloc_and_hook_expr(struct expression **exp_p, struct expression **last_p)

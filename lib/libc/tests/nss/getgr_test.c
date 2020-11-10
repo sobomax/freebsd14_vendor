@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/nss/getgr_test.c 319299 2017-05-31 08:32:05Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/nss/getgr_test.c 353577 2019-10-15 17:30:12Z brooks $");
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -153,7 +153,7 @@ compare_group(struct group *grp1, struct group *grp2, void *mdata)
 		if (strcmp(*c1, *c2) != 0)
 			goto errfin;
 
-	if (*c1 != '\0' || *c2 != '\0')
+	if (*c1 != NULL || *c2 != NULL)
 		goto errfin;
 
 	return 0;
@@ -182,7 +182,7 @@ sdump_group(struct group *grp, char *buffer, size_t buflen)
 	buflen -= written;
 
 	if (grp->gr_mem != NULL) {
-		if (*(grp->gr_mem) != '\0') {
+		if (*(grp->gr_mem) != NULL) {
 			for (cp = grp->gr_mem; *cp; ++cp) {
 				written = snprintf(buffer, buflen, "%s%s",
 				    cp == grp->gr_mem ? "" : ",", *cp);

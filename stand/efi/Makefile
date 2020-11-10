@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/Makefile 344413 2019-02-21 03:18:12Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/Makefile 353988 2019-10-24 03:16:23Z kevans $
 
 NO_OBJ=t
 
@@ -9,7 +9,7 @@ NO_OBJ=t
 .if ${COMPILER_TYPE} != "gcc" || ${COMPILER_VERSION} >= 40500
 
 SUBDIR.${MK_FDT}+=	fdt
-SUBDIR.yes+=	libefi boot1
+SUBDIR.yes+=	libefi boot1 gptboot
 SUBDIR.${MK_FORTH}+= loader_4th
 SUBDIR.${MK_LOADER_LUA}+= loader_lua
 SUBDIR.yes+=	loader_simp

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/gen/dir2_test.c 327850 2018-01-11 23:57:55Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/gen/dir2_test.c 350332 2019-07-25 20:01:24Z brooks $");
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -73,7 +73,7 @@ ATF_TC_BODY(telldir_after_seekdir, tc)
 		char filename[16];
 
 		snprintf(filename, sizeof(filename), "%d", i);
-		fd = openat(dirfd, filename, O_WRONLY | O_CREAT);
+		fd = openat(dirfd, filename, O_WRONLY | O_CREAT, 0600);
 		ATF_REQUIRE(fd > 0);
 		close(fd);
 	}
@@ -150,7 +150,7 @@ ATF_TC_BODY(telldir_at_end_of_block, tc)
 		char filename[16];
 
 		snprintf(filename, sizeof(filename), "%d", i);
-		fd = openat(dirfd, filename, O_WRONLY | O_CREAT);
+		fd = openat(dirfd, filename, O_WRONLY | O_CREAT, 0600);
 		ATF_REQUIRE(fd > 0);
 		close(fd);
 	}

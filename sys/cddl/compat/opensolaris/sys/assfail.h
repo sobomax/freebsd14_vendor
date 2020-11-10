@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/assfail.h 272701 2014-10-07 14:15:50Z avg $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/assfail.h 329984 2018-02-25 14:29:43Z asomers $
  */
 
 #ifndef _OPENSOLARIS_SYS_ASSFAIL_H_
@@ -48,7 +48,9 @@ void assfail3(const char *, uintmax_t, const char *, uintmax_t, const char *,
 #ifndef HAVE_ASSFAIL
 extern int aok;
 
-static __inline int
+__inline int __assfail(const char *expr, const char *file, int line);
+
+__inline int
 __assfail(const char *expr, const char *file, int line)
 {
 

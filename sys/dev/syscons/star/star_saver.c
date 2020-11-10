@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1995-1998 Søren Schmidt
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/syscons/star/star_saver.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/syscons/star/star_saver.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/param.h>
@@ -58,9 +60,6 @@ star_saver(video_adapter_t *adp, int blank)
 	static u_char	pattern[] = {"...........++++***   "};
 	static char	color16[] = {FG_DARKGREY, FG_LIGHTGREY,
 				     FG_WHITE, FG_LIGHTCYAN};
-	static char	color8[] = {FG_BLUE, FG_BROWN,
-				    FG_LIGHTGREY, FG_CYAN};
-	static char	*colors;
 	static u_short 	stars[NUM_STARS][2];
 
 	sc = sc_find_softc(adp, NULL);
@@ -72,16 +71,6 @@ star_saver(video_adapter_t *adp, int blank)
 		if (adp->va_info.vi_flags & V_INFO_GRAPHICS)
 			return EAGAIN;
 		if (!blanked) {
-			switch (adp->va_mode) {
-			case M_PC98_80x25:
-			case M_PC98_80x30:
-				colors = color8;
-				break;
-			default:
-				colors = color16;
-				break;
-			}
-
 			/* clear the screen and set the border color */
 			sc_vtb_clear(&scp->scr, sc->scr_map[0x20],
 				     (FG_LIGHTGREY | BG_BLACK) << 8);
@@ -97,7 +86,7 @@ star_saver(video_adapter_t *adp, int blank)
 		cell = random() % NUM_STARS;
 		sc_vtb_putc(&scp->scr, stars[cell][0], 
 			    sc->scr_map[pattern[stars[cell][1]]],
-			    colors[random()%sizeof(color16)] << 8);
+			    color16[random()%sizeof(color16)] << 8);
 		if ((stars[cell][1]+=(random()%4)) >= sizeof(pattern)-1) {
 			stars[cell][0] = random() % (scp->xsize*scp->ysize);
 			stars[cell][1] = 0;

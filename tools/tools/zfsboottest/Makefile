@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/zfsboottest/Makefile 329145 2018-02-12 01:08:44Z kevans $
+# $FreeBSD: releng/12.2/tools/tools/zfsboottest/Makefile 325834 2017-11-14 23:02:19Z imp $
 
 .PATH:		${SRCTOP}/stand/zfs ${SRCTOP}/sys/cddl/boot/zfs
 

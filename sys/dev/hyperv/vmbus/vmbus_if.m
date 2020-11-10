@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/vmbus_if.m 311368 2017-01-05 05:51:00Z sephe $
+# $FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/vmbus_if.m 309316 2016-11-30 07:45:05Z sephe $
 #
 
 #include <sys/param.h>

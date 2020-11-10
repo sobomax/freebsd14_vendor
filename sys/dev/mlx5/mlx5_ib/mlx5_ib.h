@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_ib/mlx5_ib.h 337098 2018-08-02 08:36:51Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_ib/mlx5_ib.h 358281 2020-02-24 10:41:36Z hselasky $
  */
 
 #ifndef MLX5_IB_H
@@ -46,11 +46,11 @@ pr_debug("%s:%s:%d:(pid %d): " format, (dev)->ib_dev.name, __func__,	\
 	 __LINE__, current->pid, ##arg)
 
 #define mlx5_ib_err(dev, format, arg...)				\
-pr_err("%s:%s:%d:(pid %d): " format, (dev)->ib_dev.name, __func__,	\
+pr_err("%s: ERR: %s:%d:(pid %d): " format, (dev)->ib_dev.name, __func__,	\
 	__LINE__, current->pid, ##arg)
 
 #define mlx5_ib_warn(dev, format, arg...)				\
-pr_warn("%s:%s:%d:(pid %d): " format, (dev)->ib_dev.name, __func__,	\
+pr_warn("%s: WARN: %s:%d:(pid %d): " format, (dev)->ib_dev.name, __func__,	\
 	__LINE__, current->pid, ##arg)
 
 #define field_avail(type, fld, sz) (offsetof(type, fld) +		\
@@ -650,9 +650,13 @@ struct mlx5_ib_congestion {
 	struct sysctl_ctx_list ctx;
 	struct sx lock;
 	struct delayed_work dwork;
-	u64	arg [0];
-	MLX5_IB_CONG_PARAMS(MLX5_IB_STATS_VAR)
-	MLX5_IB_CONG_STATS(MLX5_IB_STATS_VAR)
+	union {
+		u64	arg[1];
+		struct {
+			MLX5_IB_CONG_PARAMS(MLX5_IB_STATS_VAR)
+			MLX5_IB_CONG_STATS(MLX5_IB_STATS_VAR)
+		};
+	};
 };
 
 struct mlx5_ib_dev {
@@ -835,11 +839,6 @@ int mlx5_ib_update_mtt(struct mlx5_ib_mr *mr, u64 start_page_index,
 int mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
 			  u64 length, u64 virt_addr, int access_flags,
 			  struct ib_pd *pd, struct ib_udata *udata);
-struct ib_mr *mlx5_ib_reg_phys_mr(struct ib_pd *pd,
-				  struct ib_phys_buf *buffer_list,
-				  int num_phys_buf,
-				  int access_flags,
-				  u64 *virt_addr);
 int mlx5_ib_dereg_mr(struct ib_mr *ibmr);
 struct ib_mr *mlx5_ib_alloc_mr(struct ib_pd *pd,
 			       enum ib_mr_type mr_type,

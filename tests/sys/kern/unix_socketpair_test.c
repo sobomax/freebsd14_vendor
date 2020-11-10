@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2018 Alan Somers
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tests/sys/kern/unix_socketpair_test.c 339067 2018-10-01 17:36:58Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/tests/sys/kern/unix_socketpair_test.c 348460 2019-05-31 16:20:00Z asomers $");
 
 #include <errno.h>
 #include <fcntl.h>

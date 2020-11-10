@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/sbni/if_sbnivar.h 180263 2008-07-04 20:53:41Z jhb $
+ * $FreeBSD: releng/12.2/sys/dev/sbni/if_sbnivar.h 180263 2008-07-04 20:53:41Z jhb $
  */
 
 /*

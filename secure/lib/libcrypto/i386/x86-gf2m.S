@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/x86-gf2m.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/x86-gf2m.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from x86-gf2m.pl. */
 #ifdef PIC
-.file	"x86-gf2m.S"
 .text
 .type	_mul_1x1_mmx,@function
 .align	16
@@ -348,7 +347,6 @@ bn_GF2m_mul_2x2:
 .byte	62,0
 .comm	OPENSSL_ia32cap_P,16,4
 #else
-.file	"x86-gf2m.S"
 .text
 .type	_mul_1x1_mmx,@function
 .align	16

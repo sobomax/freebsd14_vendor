@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bhnd/bhndb/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/bhnd/bhndb/Makefile 326102 2017-11-22 20:27:46Z landonf $
 
 .PATH: ${SRCTOP}/sys/dev/bhnd/bhndb
 
@@ -9,6 +9,8 @@ SRCS=	bhndb.c bhndb_subr.c bhndb_hwdata.c \
 	bhndb_if.c bhndb_if.h
 SRCS+=	bhnd_bus_if.h \
 	bhnd_chipc_if.h \
+	bhnd_erom_if.h \
+	bhnd_pwrctl_hostb_if.h \
 	bhnd_nvram_if.h
 
 SRCS+=	device_if.h bus_if.h pci_if.h

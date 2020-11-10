@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")
  * Copyright (c) 1995-1999 by Internet Software Consortium.
  *
@@ -19,7 +21,7 @@
 static const char rcsid[] = "$Id: res_data.c,v 1.7 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/resolv/res_data.c 298226 2016-04-18 21:05:15Z avos $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/resolv/res_data.c 326695 2017-12-08 15:57:29Z pfg $");
 
 #include "port_before.h"
 

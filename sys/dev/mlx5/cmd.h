@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/cmd.h 331923 2018-04-03 09:46:28Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/cmd.h 330655 2018-03-08 15:37:09Z hselasky $
  */
 
 #ifndef MLX5_CMD_H

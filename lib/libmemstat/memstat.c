@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Robert N. M. Watson
  * All rights reserved.
  *
@@ -23,10 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libmemstat/memstat.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libmemstat/memstat.c 333475 2018-05-11 00:01:43Z des $
  */
 
 #include <sys/param.h>
+#include <sys/queue.h>
 #include <sys/sysctl.h>
 
 #include <err.h>

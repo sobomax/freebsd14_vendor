@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2010 The FreeBSD Foundation
 # All rights reserved.
 #
@@ -27,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/share/examples/hast/ucarp.sh 204076 2010-02-18 23:16:19Z pjd $
+# $FreeBSD: releng/12.2/share/examples/hast/ucarp.sh 326275 2017-11-27 15:28:26Z pfg $
 
 # Shared IP address, unused for now.
 addr="10.99.0.3"

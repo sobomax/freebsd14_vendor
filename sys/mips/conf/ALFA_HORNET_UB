@@ -12,13 +12,13 @@
 # * 16MB flash
 # * Integrated 1x1 2GHz wifi and 10/100 bridge
 #
-# $FreeBSD: releng/11.3/sys/mips/conf/ALFA_HORNET_UB 345344 2019-03-20 18:49:45Z kib $
+# $FreeBSD: releng/12.2/sys/mips/conf/ALFA_HORNET_UB 345301 2019-03-19 17:16:37Z kib $
 #
 
 #NO_UNIVERSE
 
 # Include the default AR933x parameters
-include         "AR933X_BASE"
+include         "std.AR933X"
 
 ident           ALFA_HORNET_UB
 

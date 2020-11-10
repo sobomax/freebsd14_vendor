@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/stdio/Makefile 332736 2018-04-18 19:18:14Z cy $
+# $FreeBSD: releng/12.2/lib/libc/tests/stdio/Makefile 331936 2018-04-03 18:52:38Z cy $
 
 .include <bsd.own.mk>
 

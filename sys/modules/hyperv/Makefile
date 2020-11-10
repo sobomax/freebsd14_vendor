@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/hyperv/Makefile 307607 2016-10-19 06:45:53Z sephe $
+# $FreeBSD: releng/12.2/sys/modules/hyperv/Makefile 306426 2016-09-29 01:41:52Z sephe $
 
 SUBDIR = vmbus netvsc storvsc utilities
 

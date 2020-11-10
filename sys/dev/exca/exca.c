@@ -1,5 +1,7 @@
 /*-
- * Copyright (c) 2002-2005 M Warner Losh.  All rights reserved.
+ * SPDX-License-Identifier: BSD-4-Clause AND BSD-2-Clause-FreeBSD
+ *
+ * Copyright (c) 2002-2005 M. Warner Losh.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -53,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/exca/exca.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/exca/exca.c 333143 2018-05-01 16:29:22Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

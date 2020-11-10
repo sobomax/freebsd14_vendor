@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2004 Scott Long
  * All rights reserved.
  *
@@ -57,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sbus/lsi64854.c 227578 2011-11-16 18:42:43Z pjd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sbus/lsi64854.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra124/tegra124_cpufreq.c 308374 2016-11-06 15:25:46Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra124/tegra124_cpufreq.c 307637 2016-10-19 14:28:51Z mmel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

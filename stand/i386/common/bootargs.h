@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: releng/11.3/stand/i386/common/bootargs.h 344399 2019-02-20 23:55:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/i386/common/bootargs.h 346501 2019-04-21 22:13:07Z ian $
  */
 
 #ifndef _BOOT_I386_ARGS_H_

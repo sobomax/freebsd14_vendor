@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bzip2/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/bzip2/Makefile 351666 2019-09-01 16:57:19Z markj $
 
 BZ2DIR=	${SRCTOP}/contrib/bzip2
 .PATH: ${BZ2DIR}
@@ -12,7 +12,9 @@ LIBADD=	bz2
 
 LINKS=	${BINDIR}/bzip2 ${BINDIR}/bunzip2
 LINKS+=	${BINDIR}/bzip2 ${BINDIR}/bzcat
-MLINKS= bzip2.1 bunzip2.1 bzip2.1 bzcat.1
+MLINKS=	bzip2.1 bunzip2.1 \
+	bzip2.1 bzcat.1 \
+	bzip2.1 bzip2recover.1
 
 REFFILES=	sample1.ref sample2.ref sample3.ref 
 DREFFILES=	sample1.bz2 sample2.bz2 sample3.bz2 

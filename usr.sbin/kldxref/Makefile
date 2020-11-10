@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/kldxref/Makefile 275904 2014-12-18 16:57:19Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/kldxref/Makefile 275904 2014-12-18 16:57:19Z imp $
 
 PROG=	kldxref
 MAN=	kldxref.8

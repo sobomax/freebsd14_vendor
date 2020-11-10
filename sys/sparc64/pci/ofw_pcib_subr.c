@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 by Thomas Moestl <tmm@FreeBSD.org>
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/ofw_pcib_subr.c 259516 2013-12-17 15:11:24Z nwhitehorn $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/pci/ofw_pcib_subr.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_ofw_pci.h"
 

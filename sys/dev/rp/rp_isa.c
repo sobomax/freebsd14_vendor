@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) Comtrol Corporation <support@comtrol.com>
  * All rights reserved.
  *
@@ -35,16 +37,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/rp/rp_isa.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/rp/rp_isa.c 356020 2019-12-22 19:06:45Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/fcntl.h>
 #include <sys/malloc.h>
-#include <sys/tty.h>
 #include <sys/conf.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <machine/resource.h>
 #include <machine/bus.h>
 #include <sys/bus.h>

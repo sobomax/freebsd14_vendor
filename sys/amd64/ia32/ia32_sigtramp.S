@@ -23,10 +23,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/ia32/ia32_sigtramp.S 331839 2018-03-31 12:43:07Z kib $
+ * $FreeBSD: releng/12.2/sys/amd64/ia32/ia32_sigtramp.S 332122 2018-04-06 17:35:35Z brooks $
  */
-
-#include "opt_compat.h"
 
 #include <machine/asmacros.h>
 #include <sys/syscall.h>

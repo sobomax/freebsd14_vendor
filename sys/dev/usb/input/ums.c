@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/input/ums.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/input/ums.c 356020 2019-12-22 19:06:45Z kevans $");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf
@@ -77,7 +79,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/input/ums.c 331722 2018-03-29 02:50:
 
 #include <sys/ioccom.h>
 #include <sys/filio.h>
-#include <sys/tty.h>
 #include <sys/mouse.h>
 
 #ifdef USB_DEBUG
@@ -948,9 +949,9 @@ ums_reset_buf(struct ums_softc *sc)
 
 #ifdef EVDEV_SUPPORT
 static int
-ums_ev_open(struct evdev_dev *evdev, void *ev_softc)
+ums_ev_open(struct evdev_dev *evdev)
 {
-	struct ums_softc *sc = (struct ums_softc *)ev_softc;
+	struct ums_softc *sc = evdev_get_softc(evdev);
 
 	mtx_assert(&sc->sc_mtx, MA_OWNED);
 
@@ -964,10 +965,10 @@ ums_ev_open(struct evdev_dev *evdev, void *ev_softc)
 	return (0);
 }
 
-static void
-ums_ev_close(struct evdev_dev *evdev, void *ev_softc)
+static int
+ums_ev_close(struct evdev_dev *evdev)
 {
-	struct ums_softc *sc = (struct ums_softc *)ev_softc;
+	struct ums_softc *sc = evdev_get_softc(evdev);
 
 	mtx_assert(&sc->sc_mtx, MA_OWNED);
 
@@ -975,6 +976,8 @@ ums_ev_close(struct evdev_dev *evdev, void *ev_softc)
 
 	if (sc->sc_fflags == 0)
 		ums_stop_rx(sc);
+
+	return (0);
 }
 #endif
 

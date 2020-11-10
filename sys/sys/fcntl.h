@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  * (c) UNIX System Laboratories, Inc.
@@ -15,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -32,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: releng/11.3/sys/sys/fcntl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/fcntl.h 357706 2020-02-09 22:15:35Z kevans $
  */
 
 #ifndef _SYS_FCNTL_H_
@@ -117,9 +119,11 @@ typedef	__pid_t		pid_t;
 #if __POSIX_VISIBLE >= 200809
 #define	O_DIRECTORY	0x00020000	/* Fail if not directory */
 #define	O_EXEC		0x00040000	/* Open for execute only */
+#define	O_SEARCH	O_EXEC
 #endif
 #ifdef	_KERNEL
 #define	FEXEC		O_EXEC
+#define	FSEARCH		O_SEARCH
 #endif
 
 #if __POSIX_VISIBLE >= 200809

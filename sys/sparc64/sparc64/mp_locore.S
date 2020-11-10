@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/mp_locore.S 222828 2011-06-07 17:33:39Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/mp_locore.S 331254 2018-03-20 17:58:51Z emaste $");
 
 #include <machine/asi.h>
 #include <machine/asmacros.h>
@@ -36,7 +36,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/mp_locore.S 222828 2011-06-0
 #include <machine/smp.h>
 #include <machine/ver.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 	.register	%g2, #ignore
 	.register	%g3, #ignore

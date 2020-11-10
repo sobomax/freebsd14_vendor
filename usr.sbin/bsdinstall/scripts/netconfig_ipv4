@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/scripts/netconfig_ipv4 323336 2017-09-09 00:33:19Z emaste $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/scripts/netconfig_ipv4 362238 2020-06-16 20:23:57Z manu $
 #
 ############################################################ INCLUDES
 
@@ -49,6 +49,7 @@ esac
 dialog --backtitle 'FreeBSD Installer' --title 'Network Configuration' --yesno 'Would you like to use DHCP to configure this interface?' 0 0
 if [ $? -eq $DIALOG_OK ]; then
 	if [ ! -z $BSDINSTALL_CONFIGCURRENT ]; then
+		ifconfig $INTERFACE up
 		dialog --backtitle 'FreeBSD Installer' --infobox "Acquiring DHCP lease..." 0 0
 		err=$( dhclient $INTERFACE 2>&1 )
 		if [ $? -ne 0 ]; then
@@ -74,7 +75,7 @@ IF_CONFIG=$(dialog --backtitle 'FreeBSD Installer' --title 'Network Configuratio
 if [ $? -eq $DIALOG_CANCEL ]; then exit 1; fi
 exec 3>&-
 
-echo $INTERFACE $IF_CONFIG | 
+echo $INTERFACE $IF_CONFIG |
     awk -v prefix="$IFCONFIG_PREFIX" '{
 	printf("ifconfig_%s=\"%s\inet %s netmask %s\"\n", $1, prefix, $2, $3);
 	printf("defaultrouter=\"%s\"\n", $4);

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/opencrypto/gmac.h 281196 2015-04-07 09:00:03Z jmg $
+ *	$FreeBSD: releng/12.2/sys/opencrypto/gmac.h 281196 2015-04-07 09:00:03Z jmg $
  *
  */
 

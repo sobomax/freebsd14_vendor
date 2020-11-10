@@ -1,8 +1,10 @@
 #! /usr/bin/awk -f
 #	$NetBSD: devlist2h.awk,v 1.3 1998/09/05 14:42:06 christos Exp $
-# $FreeBSD: releng/11.3/sys/tools/pccarddevs2h.awk 263289 2014-03-18 01:40:25Z emaste $
+# $FreeBSD: releng/12.2/sys/tools/pccarddevs2h.awk 326272 2017-11-27 15:23:17Z pfg $
 
 #-
+# SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause
+#
 # Copyright (c) 1998 The NetBSD Foundation, Inc.
 # All rights reserved.
 #

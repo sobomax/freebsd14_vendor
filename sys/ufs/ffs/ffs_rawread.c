@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2003 Tor Egge
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ffs/ffs_rawread.c 318266 2017-05-14 11:51:30Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ffs/ffs_rawread.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

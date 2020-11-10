@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,12 +28,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libnv/common_impl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libnv/common_impl.h 341079 2018-11-27 17:00:47Z markj $
  */
 
 #ifndef	_COMMON_IMPL_H_
 #define	_COMMON_IMPL_H_
 
-#define	fd_is_valid(fd)	(fcntl((fd), F_GETFL) != -1 || errno != EBADF)
+#include <errno.h>
+#include <fcntl.h>
+#include <stdbool.h>
+
+static inline bool
+fd_is_valid(int fd)
+{
+
+	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+}
 
 #endif	/* !_COMMON_IMPL_H_ */

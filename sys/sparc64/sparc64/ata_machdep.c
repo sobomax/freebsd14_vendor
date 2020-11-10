@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/ata_machdep.c 240518 2012-09-14 21:28:56Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/ata_machdep.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <geom/geom_disk.h>

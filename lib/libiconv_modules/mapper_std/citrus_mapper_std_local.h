@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libiconv_modules/mapper_std/citrus_mapper_std_local.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libiconv_modules/mapper_std/citrus_mapper_std_local.h 326219 2017-11-26 02:00:33Z pfg $ */
 /*	$NetBSD: citrus_mapper_std_local.h,v 1.3 2006/09/09 14:35:17 tnozaki Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c)2003, 2006 Citrus Project,
  * All rights reserved.
  *

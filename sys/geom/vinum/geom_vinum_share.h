@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004, 2007 Lukas Ertl
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/vinum/geom_vinum_share.h 190881 2009-04-10 08:50:14Z lulf $
+ * $FreeBSD: releng/12.2/sys/geom/vinum/geom_vinum_share.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #ifndef _GEOM_VINUM_SHARE_H_

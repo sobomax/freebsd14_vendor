@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/11.3/usr.sbin/mptutil/mpt_cmd.c 331722 2018-03-29 02:50:57Z eadler $");
+__RCSID("$FreeBSD: releng/12.2/usr.sbin/mptutil/mpt_cmd.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #include <sys/param.h>
 #include <sys/errno.h>

@@ -1,13 +1,18 @@
-/* $FreeBSD: releng/11.3/crypto/openssh/umac128.c 255767 2013-09-21 21:36:09Z des $ */
-#define UMAC_OUTPUT_LEN		16
-#undef umac_ctx
-#define umac_ctx		umac128_ctx
+/* $OpenBSD: umac128.c,v 1.2 2018/02/08 04:12:32 dtucker Exp $ */
+/* $FreeBSD: releng/12.2/crypto/openssh/umac128.c 333490 2018-05-11 13:22:43Z des $ */
+
+/* undo ssh_namespace.h munging */
 #undef umac_new
-#define umac_new		umac128_new
 #undef umac_update
-#define umac_update		umac128_update
 #undef umac_final
-#define umac_final		umac128_final
 #undef umac_delete
-#define umac_delete		umac128_delete
+#undef umac_ctx
+
+#define UMAC_OUTPUT_LEN	16
+#define umac_new	umac128_new
+#define umac_update	umac128_update
+#define umac_final	umac128_final
+#define umac_delete	umac128_delete
+#define umac_ctx	umac128_ctx
+
 #include "umac.c"

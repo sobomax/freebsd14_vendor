@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008, Pyun YongHyeon <yongari@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/jme/if_jme.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/jme/if_jme.c 352880 2019-09-30 01:24:44Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -567,7 +569,7 @@ jme_map_intr_vector(struct jme_softc *sc)
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ3_COMP);
 	map[MSINUM_REG_INDEX(N_INTR_TXQ4_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ4_COMP);
-	map[MSINUM_REG_INDEX(N_INTR_TXQ4_COMP)] |=
+	map[MSINUM_REG_INDEX(N_INTR_TXQ5_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ5_COMP);
 	map[MSINUM_REG_INDEX(N_INTR_TXQ6_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ6_COMP);
@@ -3276,7 +3278,7 @@ jme_set_filter(struct jme_softc *sc)
 	bzero(mchash, sizeof(mchash));
 
 	if_maddr_rlock(ifp);
-	TAILQ_FOREACH(ifma, &sc->jme_ifp->if_multiaddrs, ifma_link) {
+	CK_STAILQ_FOREACH(ifma, &sc->jme_ifp->if_multiaddrs, ifma_link) {
 		if (ifma->ifma_addr->sa_family != AF_LINK)
 			continue;
 		crc = ether_crc32_be(LLADDR((struct sockaddr_dl *)

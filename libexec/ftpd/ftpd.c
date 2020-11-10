@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1985, 1988, 1990, 1992, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -42,7 +44,7 @@ static char sccsid[] = "@(#)ftpd.c	8.4 (Berkeley) 4/16/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/ftpd/ftpd.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/ftpd/ftpd.c 365781 2020-09-15 21:47:44Z gordon $");
 
 /*
  * FTP server.
@@ -1593,13 +1595,20 @@ skip:
 	 *    (uid 0 has no root power over NFS if not mapped explicitly.)
 	 */
 	if (seteuid(pw->pw_uid) < 0) {
-		reply(550, "Can't set uid.");
-		goto bad;
+		if (guest || dochroot) {
+			fatalerror("Can't set uid.");
+		} else {
+			reply(550, "Can't set uid.");
+			goto bad;
+		}
 	}
+	/*
+	 * Do not allow the session to live if we're chroot()'ed and chdir()
+	 * fails. Otherwise the chroot jail can be escaped.
+	 */
 	if (chdir(homedir) < 0) {
 		if (guest || dochroot) {
-			reply(550, "Can't change to base directory.");
-			goto bad;
+			fatalerror("Can't change to base directory.");
 		} else {
 			if (chdir("/") < 0) {
 				reply(550, "Root is inaccessible.");

@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/advansys/advmcode.c 139749 2005-01-06 01:43:34Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/advansys/advmcode.c 139749 2005-01-06 01:43:34Z imp $");
 
 #include <sys/param.h>
 

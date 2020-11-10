@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/share/doc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: releng/12.2/share/doc/Makefile 318881 2017-05-25 14:54:22Z bapt $
 
 .include <src.opts.mk>
 
@@ -21,11 +21,6 @@ _llvm=	llvm
 
 .if ${MK_INET6} != "no"
 _IPv6=	IPv6
-.endif
-
-# FIXME this is not a real solution ...
-.if ${MK_GROFF} != "no"
-_roffdocs=	papers psd smm usd
 .endif
 
 SUBDIR_PARALLEL=

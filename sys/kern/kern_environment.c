@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 Michael Smith
  * All rights reserved.
  *
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_environment.c 341644 2018-12-06 19:18:51Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_environment.c 364961 2020-08-29 16:23:00Z sjg $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -61,6 +63,9 @@ static MALLOC_DEFINE(M_KENV, "kenv", "kernel environment");
 
 #define KENV_SIZE	512	/* Maximum number of environment strings */
 
+static uma_zone_t kenv_zone;
+static int	kenv_mvallen = KENV_MVALLEN;
+
 /* pointer to the config-generated static environment */
 char		*kern_envp;
 
@@ -82,6 +87,8 @@ bool	dynamic_kenv;
 
 #define KENV_CHECK	if (!dynamic_kenv) \
 			    panic("%s: called before SI_SUB_KMEM", __func__)
+
+static char	*getenv_string_buffer(const char *);
 
 int
 sys_kenv(td, uap)
@@ -108,9 +115,9 @@ sys_kenv(td, uap)
 #endif
 		done = needed = 0;
 		buflen = uap->len;
-		if (buflen > KENV_SIZE * (KENV_MNAMELEN + KENV_MVALLEN + 2))
+		if (buflen > KENV_SIZE * (KENV_MNAMELEN + kenv_mvallen + 2))
 			buflen = KENV_SIZE * (KENV_MNAMELEN +
-			    KENV_MVALLEN + 2);
+			    kenv_mvallen + 2);
 		if (uap->len > 0 && uap->value != NULL)
 			buffer = malloc(buflen, M_TEMP, M_WAITOK|M_ZERO);
 		mtx_lock(&kenv_lock);
@@ -183,8 +190,8 @@ sys_kenv(td, uap)
 			error = EINVAL;
 			goto done;
 		}
-		if (len > KENV_MVALLEN + 1)
-			len = KENV_MVALLEN + 1;
+		if (len > kenv_mvallen + 1)
+			len = kenv_mvallen + 1;
 		value = malloc(len, M_TEMP, M_WAITOK);
 		error = copyinstr(uap->value, value, len, NULL);
 		if (error) {
@@ -245,9 +252,36 @@ done:
 void
 init_static_kenv(char *buf, size_t len)
 {
-	char *eval, *loader_eval;
+	char *eval;
 
 	KASSERT(!dynamic_kenv, ("kenv: dynamic_kenv already initialized"));
+	/*
+	 * Suitably sized means it must be able to hold at least one empty
+	 * variable, otherwise things go belly up if a kern_getenv call is
+	 * made without a prior call to kern_setenv as we have a malformed
+	 * environment.
+	 */
+	KASSERT(len == 0 || len >= 2,
+	    ("kenv: static env must be initialized or suitably sized"));
+	KASSERT(len == 0 || (*buf == '\0' && *(buf + 1) == '\0'),
+	    ("kenv: sized buffer must be initially empty"));
+
+	/*
+	 * We may be called twice, with the second call needed to relocate
+	 * md_envp after enabling paging.  md_envp is then garbage if it is
+	 * not null and the relocation will move it.  Discard it so as to
+	 * not crash using its old value in our first call to kern_getenv().
+	 *
+	 * The second call gives the same environment as the first except
+	 * in silly configurations where the static env disables itself.
+	 *
+	 * Other env calls don't handle possibly-garbage pointers, so must
+	 * not be made between enabling paging and calling here.
+	 */
+	md_envp = NULL;
+	md_env_len = 0;
+	md_env_pos = 0;
+
 	/*
 	 * Give the static environment a chance to disable the loader(8)
 	 * environment first.  This is done with loader_env.disabled=1.
@@ -264,42 +298,24 @@ init_static_kenv(char *buf, size_t len)
 	 *
 	 * As a warning, the static environment may not be disabled in any way
 	 * if the static environment has disabled the loader environment.
-	 *
-	 * We're setting up the static environment early here because it will
-	 * either be used or empty.
 	 */
 	kern_envp = static_env;
-	loader_eval = kern_getenv("loader_env.disabled");
-	if (loader_eval != NULL && strcmp(loader_eval, "1") == 0)
-		/* Bail out early, the loader environment is disabled. */
-		return;
+	eval = kern_getenv("loader_env.disabled");
+	if (eval == NULL || strcmp(eval, "1") != 0) {
+		md_envp = buf;
+		md_env_len = len;
+		md_env_pos = 0;
 
-	/*
-	 * Next, the loader env is checked for the status of the static env.  We
-	 * are allowing static_env and static_hints to disable themselves here for
-	 * the sake of simplicity.
-	 */
-	md_envp = buf;
-	md_env_len = len;
-	md_env_pos = 0;
-
-	eval = kern_getenv("static_env.disabled");
-	if (eval != NULL && strcmp(eval, "1") == 0)
-		*static_env = '\0';
-
+		eval = kern_getenv("static_env.disabled");
+		if (eval != NULL && strcmp(eval, "1") == 0) {
+			kern_envp[0] = '\0';
+			kern_envp[1] = '\0';
+		}
+	}
 	eval = kern_getenv("static_hints.disabled");
-	if (eval != NULL && strcmp(eval, "1") == 0)
-		*static_hints = '\0';
-
-	/*
-	 * Now we see if we need to tear the loader environment back down due
-	 * to the presence of a non-empty static environment and lack of request
-	 * to keep it enabled.
-	 */
-	if (*static_env != '\0' &&
-	    (loader_eval == NULL || strcmp(loader_eval, "0") != 0)) {
-		md_envp = NULL;
-		md_env_len = 0;
+	if (eval != NULL && strcmp(eval, "1") == 0) {
+		static_hints[0] = '\0';
+		static_hints[1] = '\0';
 	}
 }
 
@@ -316,7 +332,7 @@ init_dynamic_kenv_from(char *init_env, int *curpos)
 		for (cp = init_env; cp != NULL; cp = cpnext) {
 			cpnext = kernenv_next(cp);
 			len = strlen(cp) + 1;
-			if (len > KENV_MNAMELEN + 1 + KENV_MVALLEN + 1) {
+			if (len > KENV_MNAMELEN + 1 + kenv_mvallen + 1) {
 				printf(
 				"WARNING: too long kenv string, ignoring %s\n",
 				    cp);
@@ -364,6 +380,13 @@ static void
 init_dynamic_kenv(void *data __unused)
 {
 	int dynamic_envpos;
+	int size;
+
+	TUNABLE_INT_FETCH("kenv_mvallen", &kenv_mvallen);
+	size = KENV_MNAMELEN + 1 + kenv_mvallen + 1;
+
+	kenv_zone = uma_zcreate("kenv", size, NULL, NULL, NULL, NULL,
+	    UMA_ALIGN_PTR, 0);
 
 	kenvp = malloc((KENV_SIZE + 1) * sizeof(char *), M_KENV,
 		M_WAITOK | M_ZERO);
@@ -384,7 +407,7 @@ freeenv(char *env)
 
 	if (dynamic_kenv && env != NULL) {
 		explicit_bzero(env, strlen(env));
-		free(env, M_KENV);
+		uma_zfree(kenv_zone, env);
 	}
 }
 
@@ -459,14 +482,11 @@ _getenv_static(const char *name)
 char *
 kern_getenv(const char *name)
 {
-	char buf[KENV_MNAMELEN + 1 + KENV_MVALLEN + 1];
 	char *ret;
 
 	if (dynamic_kenv) {
-		if (getenv_string(name, buf, sizeof(buf))) {
-			ret = strdup(buf, M_KENV);
-		} else {
-			ret = NULL;
+		ret = getenv_string_buffer(name);
+		if (ret == NULL) {
 			WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
 			    "getenv");
 		}
@@ -537,7 +557,7 @@ kern_setenv(const char *name, const char *value)
 	if (namelen > KENV_MNAMELEN + 1)
 		return (-1);
 	vallen = strlen(value) + 1;
-	if (vallen > KENV_MVALLEN + 1)
+	if (vallen > kenv_mvallen + 1)
 		return (-1);
 	buf = malloc(namelen + vallen, M_KENV, M_WAITOK);
 	sprintf(buf, "%s=%s", name, value);
@@ -596,6 +616,33 @@ kern_unsetenv(const char *name)
 }
 
 /*
+ * Return a buffer containing the string value from an environment variable
+ */
+static char *
+getenv_string_buffer(const char *name)
+{
+	char *cp, *ret;
+	int len;
+
+	if (dynamic_kenv) {
+		len = KENV_MNAMELEN + 1 + kenv_mvallen + 1;
+		ret = uma_zalloc(kenv_zone, M_WAITOK | M_ZERO);
+		mtx_lock(&kenv_lock);
+		cp = _getenv_dynamic(name, NULL);
+		if (cp != NULL)
+			strlcpy(ret, cp, len);
+		mtx_unlock(&kenv_lock);
+		if (cp == NULL) {
+			uma_zfree(kenv_zone, ret);
+			ret = NULL;
+		}
+	} else
+		ret = _getenv_static(name);
+
+	return (ret);
+}
+
+/*
  * Return a string value from an environment variable.
  */
 int
@@ -624,17 +671,19 @@ int
 getenv_array(const char *name, void *pdata, int size, int *psize,
     int type_size, bool allow_signed)
 {
-	char buf[KENV_MNAMELEN + 1 + KENV_MVALLEN + 1];
 	uint8_t shift;
 	int64_t value;
 	int64_t old;
+	char *buf;
 	char *end;
 	char *ptr;
 	int n;
+	int rc;
 
-	if (getenv_string(name, buf, sizeof(buf)) == 0)
+	if ((buf = getenv_string_buffer(name)) == NULL)
 		return (0);
 
+	rc = 0;			  /* assume failure */
 	/* get maximum number of elements */
 	size /= type_size;
 
@@ -747,9 +796,11 @@ getenv_array(const char *name, void *pdata, int size, int *psize,
 	*psize = n * type_size;
 
 	if (n != 0)
-		return (1);	/* success */
+		rc = 1;	/* success */
 error:
-	return (0);	/* failure */
+	if (dynamic_kenv)
+		uma_zfree(kenv_zone, buf);
+	return (rc);
 }
 
 /*
@@ -848,29 +899,36 @@ getenv_ulong(const char *name, unsigned long *data)
 int
 getenv_quad(const char *name, quad_t *data)
 {
-	char	value[KENV_MNAMELEN + 1 + KENV_MVALLEN + 1];
-	char	*vtp;
+	char	*value, *vtp;
 	quad_t	iv;
 
-	if (!getenv_string(name, value, sizeof(value)))
+	value = getenv_string_buffer(name);
+	if (value == NULL)
 		return (0);
 	iv = strtoq(value, &vtp, 0);
-	if (vtp == value || (vtp[0] != '\0' && vtp[1] != '\0'))
+	if (vtp == value || (vtp[0] != '\0' && vtp[1] != '\0')) {
+		freeenv(value);
 		return (0);
+	}
 	switch (vtp[0]) {
 	case 't': case 'T':
 		iv *= 1024;
+		/* FALLTHROUGH */
 	case 'g': case 'G':
 		iv *= 1024;
+		/* FALLTHROUGH */
 	case 'm': case 'M':
 		iv *= 1024;
+		/* FALLTHROUGH */
 	case 'k': case 'K':
 		iv *= 1024;
 	case '\0':
 		break;
 	default:
+		freeenv(value);
 		return (0);
 	}
+	freeenv(value);
 	*data = iv;
 	return (1);
 }

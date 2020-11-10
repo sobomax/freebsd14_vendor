@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 2002
  * 	Hidetoshi Shimokawa. All rights reserved.
  * 
@@ -34,7 +36,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fwcontrol/fwcontrol.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fwcontrol/fwcontrol.c 353577 2019-10-15 17:30:12Z brooks $");
 #endif
 
 #include <sys/param.h>
@@ -127,7 +129,7 @@ str2node(int fd, const char *nodestr)
 	char *endptr;
 	int i, node;
 
-	if (nodestr == '\0')
+	if (nodestr == NULL || *nodestr == '\0')
 		return (-1);
 
 	/*

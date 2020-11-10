@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/cddl/compat/opensolaris/include/fcntl.h 219089 2011-02-27 19:41:40Z pjd $
+ * $FreeBSD: releng/12.2/cddl/compat/opensolaris/include/fcntl.h 219089 2011-02-27 19:41:40Z pjd $
  *
  */
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *
@@ -41,7 +43,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -58,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: releng/11.3/sys/netinet6/in6.h 337799 2018-08-14 18:10:25Z jtl $
+ * $FreeBSD: releng/12.2/sys/netinet6/in6.h 349762 2019-07-05 10:31:37Z hselasky $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_
@@ -497,6 +499,9 @@ struct route_in6 {
 #define	IPV6_RECVFLOWID		70 /* bool; receive IP6 flowid/flowtype w/ datagram */
 #define	IPV6_RECVRSSBUCKETID	71 /* bool; receive IP6 RSS bucket id w/ datagram */
 
+#define	IPV6_ORIGDSTADDR	72 /* bool: allow getting dstaddr /port info */
+#define	IPV6_RECVORIGDSTADDR	IPV6_ORIGDSTADDR
+
 /*
  * The following option is private; do not use it from user applications.
  * It is deliberately defined to the same value as IP_MSFILTER.
@@ -518,11 +523,8 @@ struct route_in6 {
 #define IPV6_DEFAULT_MULTICAST_LOOP 1	/* normally hear sends if a member */
 
 /*
- * The im6o_membership vector for each socket is now dynamically allocated at
- * run-time, bounded by USHRT_MAX, and is reallocated when needed, sized
- * according to a power-of-two increment.
+ * Limit for IPv6 multicast memberships
  */
-#define	IPV6_MIN_MEMBERSHIPS	31
 #define	IPV6_MAX_MEMBERSHIPS	4095
 
 /*

@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/makefs/ffs.h 330976 2018-03-15 09:04:23Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/makefs/ffs.h 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #ifndef _FFS_H
@@ -66,6 +66,7 @@ typedef struct {
 	int	version;	/* filesystem version (1 = FFS, 2 = UFS2) */
 	int	maxbsize;	/* maximum extent size */
 	int	maxblkspercg;	/* max # of blocks per cylinder group */
+	int	softupdates;	/* soft updates */
 		/* XXX: support `old' file systems ? */
 } ffs_opt_t;
 

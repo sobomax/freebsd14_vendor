@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/isp/isp_stds.h 347894 2019-05-16 22:03:25Z ken $ */
+/* $FreeBSD: releng/12.2/sys/dev/isp/isp_stds.h 347906 2019-05-17 14:29:56Z ken $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
  * 

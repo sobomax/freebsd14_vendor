@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/powerpc/uboot/ldscript.powerpc 272888 2014-10-10 06:24:09Z bapt $ */
+/* $FreeBSD: releng/12.2/stand/powerpc/uboot/ldscript.powerpc 272888 2014-10-10 06:24:09Z bapt $ */
 
 OUTPUT_FORMAT("elf32-powerpc-freebsd", "elf32-powerpc-freebsd",
 	      "elf32-powerpc-freebsd")

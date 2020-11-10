@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/bootparttest/Makefile 329145 2018-02-12 01:08:44Z kevans $
+# $FreeBSD: releng/12.2/tools/tools/bootparttest/Makefile 325834 2017-11-14 23:02:19Z imp $
 
 .PATH:		${SRCTOP}/stand/common
 
@@ -13,8 +13,6 @@ CFLAGS=		-I${SRCTOP}/stand/common \
 		-DLOADER_GPT_SUPPORT -DLOADER_MBR_SUPPORT -DPART_DEBUG \
 		-DDISK_DEBUG
 
-DPADD+=		${LIBGEOM}
-LDADD+=		${LIBGEOM}
-LDFLAGS+=	-lgeom
+LIBADD+=	geom
 
 .include <bsd.prog.mk>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/uzip/g_uzip_zlib.c 302284 2016-06-29 18:19:05Z sobomax $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/uzip/g_uzip_zlib.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/types.h>
 #include <sys/systm.h>

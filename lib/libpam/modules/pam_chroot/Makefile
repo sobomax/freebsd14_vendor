@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libpam/modules/pam_chroot/Makefile 112857 2003-03-30 22:58:23Z des $
+# $FreeBSD: releng/12.2/lib/libpam/modules/pam_chroot/Makefile 112857 2003-03-30 22:58:23Z des $
 
 LIB=		pam_chroot
 SRCS=		pam_chroot.c

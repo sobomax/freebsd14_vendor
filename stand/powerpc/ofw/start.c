@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/powerpc/ofw/start.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/powerpc/ofw/start.c 326490 2017-12-03 04:55:14Z imp $");
 
 #include <stand.h>
 #include "libofw.h"

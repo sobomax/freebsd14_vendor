@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/security/audit/audit_pipe.c 337122 2018-08-02 09:31:50Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/security/audit/audit_pipe.c 336641 2018-07-23 16:56:49Z avg $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>

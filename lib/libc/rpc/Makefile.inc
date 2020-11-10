@@ -1,7 +1,8 @@
 #	@(#)Makefile    5.11 (Berkeley) 9/6/90
-# $FreeBSD: releng/11.3/lib/libc/rpc/Makefile.inc 302255 2016-06-28 19:53:16Z bdrewery $
+# $FreeBSD: releng/12.2/lib/libc/rpc/Makefile.inc 338744 2018-09-18 01:38:44Z brd $
 
 .PATH: ${LIBC_SRCTOP}/rpc ${LIBC_SRCTOP}/.
+CONFS+=	rpc/netconfig rpc/rpc
 SRCS+=	auth_none.c auth_unix.c authunix_prot.c bindresvport.c clnt_bcast.c \
 	clnt_dg.c clnt_generic.c clnt_perror.c clnt_raw.c clnt_simple.c \
 	clnt_vc.c rpc_dtablesize.c getnetconfig.c getnetpath.c getrpcent.c \

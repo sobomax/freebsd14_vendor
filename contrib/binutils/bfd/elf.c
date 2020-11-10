@@ -20,7 +20,7 @@
    Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 
-/* $FreeBSD: releng/11.3/contrib/binutils/bfd/elf.c 295901 2016-02-22 22:16:32Z dim $ */
+/* $FreeBSD: releng/12.2/contrib/binutils/bfd/elf.c 310131 2016-12-16 00:23:59Z pfg $ */
 
 
 /*
@@ -8826,7 +8826,7 @@ _bfd_elf_get_synthetic_symtab (bfd *abfd,
   count = relplt->size / hdr->sh_entsize;
   size = count * sizeof (asymbol);
   p = relplt->relocation;
-  for (i = 0; i < count; i++, s++, p++)
+  for (i = 0; i < count; i++, p++)
     size += strlen ((*p->sym_ptr_ptr)->name) + sizeof ("@plt");
 
   s = *ret = bfd_malloc (size);

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -15,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ppbus/pps.c 187576 2009-01-21 23:10:06Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ppbus/pps.c 326408 2017-11-30 20:33:45Z pfg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>

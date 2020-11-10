@@ -1,9 +1,15 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/29/93
-#	$FreeBSD: releng/11.3/usr.bin/gprof/Makefile 201386 2010-01-02 10:27:05Z ed $
+#	$FreeBSD: releng/12.2/usr.bin/gprof/Makefile 356447 2020-01-07 16:47:25Z bz $
 
 PROG=	gprof
-SRCS=	gprof.c aout.c arcs.c dfn.c elf.c lookup.c hertz.c \
+SRCS=	gprof.c arcs.c dfn.c elf.c lookup.c hertz.c \
 	printgprof.c printlist.c kernel.c
+
+.if ${MACHINE_ARCH} != "aarch64" && ${MACHINE_ARCH} != "riscv" && \
+    ${MACHINE_ARCH} != "s390x"
+SRCS+=	aout.c
+CFLAGS+=	-DWITH_AOUT
+.endif
 FILES=	gprof.flat gprof.callg
 FILESDIR=	${SHAREDIR}/misc
 

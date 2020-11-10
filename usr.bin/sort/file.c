@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/sort/file.c 335742 2018-06-27 21:11:28Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/sort/file.c 335404 2018-06-20 03:31:19Z kevans $");
 
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -633,7 +633,6 @@ file_reader_init(const char *fsrc)
 			int fd, flags;
 
 			flags = MAP_NOCORE | MAP_NOSYNC;
-			addr = MAP_FAILED;
 
 			fd = open(fsrc, O_RDONLY);
 			if (fd < 0)

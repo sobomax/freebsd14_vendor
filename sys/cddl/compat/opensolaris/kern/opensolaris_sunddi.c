@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/kern/opensolaris_sunddi.c 325534 2017-11-08 08:53:44Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/kern/opensolaris_sunddi.c 324309 2017-10-05 12:25:18Z avg $");
 
 #include <sys/param.h>
 #include <sys/jail.h>

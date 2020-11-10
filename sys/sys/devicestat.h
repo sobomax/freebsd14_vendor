@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997, 1998, 1999 Kenneth D. Merry.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/devicestat.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/devicestat.h 338220 2018-08-23 01:42:45Z cem $
  */
 
 #ifndef _DEVICESTAT_H
@@ -192,15 +194,16 @@ struct devstat *devstat_new_entry(const void *dev_name, int unit_number,
 				  devstat_priority priority);
 
 void devstat_remove_entry(struct devstat *ds);
-void devstat_start_transaction(struct devstat *ds, struct bintime *now);
+void devstat_start_transaction(struct devstat *ds, const struct bintime *now);
 void devstat_start_transaction_bio(struct devstat *ds, struct bio *bp);
 void devstat_end_transaction(struct devstat *ds, u_int32_t bytes, 
 			     devstat_tag_type tag_type,
 			     devstat_trans_flags flags,
-			     struct bintime *now, struct bintime *then);
-void devstat_end_transaction_bio(struct devstat *ds, struct bio *bp);
-void devstat_end_transaction_bio_bt(struct devstat *ds, struct bio *bp,
-			     struct bintime *now);
+			     const struct bintime *now,
+			     const struct bintime *then);
+void devstat_end_transaction_bio(struct devstat *ds, const struct bio *bp);
+void devstat_end_transaction_bio_bt(struct devstat *ds, const struct bio *bp,
+			     const struct bintime *now);
 #endif
 
 #endif /* _DEVICESTAT_H */

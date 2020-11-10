@@ -1,8 +1,12 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/dtrace/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/dtrace/tests/Makefile 348428 2019-05-30 15:20:20Z markj $
 
 .include <bsd.own.mk>
 
 TESTS_SUBDIRS+=	common
+
+.if ${MACHINE_CPUARCH} == "i386"
+TESTS_SUBDIRS+= i386
+.endif
 
 .PATH:		${SRCTOP}/tests
 KYUAFILE=	yes

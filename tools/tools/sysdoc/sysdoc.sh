@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/tools/tools/sysdoc/sysdoc.sh 267667 2014-06-20 09:40:43Z bapt $
+# $FreeBSD: releng/12.2/tools/tools/sysdoc/sysdoc.sh 312910 2017-01-28 02:22:15Z nyan $
 #
 #################################################################
 # Missing Features:
@@ -210,7 +210,7 @@ EOF
 
 #
 # The nm(1) utility must only be used on the architecture which
-# we build it for.  Although i386 and pc98 are so; my only fear
+# we build it for.  Although i386 is so; my only fear
 # with this is that this will not work properly on cross-builds.
 
 while getopts k FLAG;

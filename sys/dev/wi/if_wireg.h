@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1997, 1998, 1999
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -29,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/wi/if_wireg.h 345636 2019-03-28 09:50:25Z avos $
+ * $FreeBSD: releng/12.2/sys/dev/wi/if_wireg.h 345634 2019-03-28 09:16:00Z avos $
  */
 
 #define WI_DELAY	5

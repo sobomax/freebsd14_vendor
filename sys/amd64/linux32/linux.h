@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2004 Tim J. Robbins
  * Copyright (c) 2001 Doug Rabson
  * Copyright (c) 1994-1996 Søren Schmidt
@@ -27,26 +29,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/linux32/linux.h 346832 2019-04-28 14:03:32Z dchagin $
+ * $FreeBSD: releng/12.2/sys/amd64/linux32/linux.h 364712 2020-08-24 17:06:34Z trasz $
  */
 
 #ifndef _AMD64_LINUX_H_
 #define	_AMD64_LINUX_H_
+
+#include <sys/abi_compat.h>
 
 #include <compat/linux/linux.h>
 #include <amd64/linux32/linux32_syscall.h>
 
 #define	LINUX_LEGACY_SYSCALLS
 
-/*
- * debugging support
- */
-extern u_char linux_debug_map[];
-#define	ldebug(name)	isclr(linux_debug_map, LINUX32_SYS_linux_ ## name)
-#define	ARGS(nm, fmt)	"linux(%ld/%ld): "#nm"("fmt")\n",			\
-			(long)td->td_proc->p_pid, (long)td->td_tid
-#define	LMSG(fmt)	"linux(%ld/%ld): "fmt"\n",				\
-			(long)td->td_proc->p_pid, (long)td->td_tid
 #define	LINUX_DTRACE	linuxulator32
 
 #define	LINUX32_MAXUSER		((1ul << 32) - PAGE_SIZE)
@@ -58,14 +53,6 @@ extern u_char linux_debug_map[];
 #define	LINUX32_MAXDSIZ		(512 * 1024 * 1024)	/* 512MB */
 #define	LINUX32_MAXSSIZ		(64 * 1024 * 1024)	/* 64MB */
 #define	LINUX32_MAXVMEM		0			/* Unlimited */
-
-#define	PTRIN(v)	(void *)(uintptr_t)(v)
-#define	PTROUT(v)	(l_uintptr_t)(uintptr_t)(v)
-
-#define	CP(src,dst,fld) do { (dst).fld = (src).fld; } while (0)
-#define	CP2(src,dst,sfld,dfld) do { (dst).dfld = (src).sfld; } while (0)
-#define	PTRIN_CP(src,dst,fld) \
-	do { (dst).fld = PTRIN((src).fld); } while (0)
 
 /*
  * Provide a separate set of types for the Linux types.
@@ -476,11 +463,6 @@ union l_semun {
 	l_uintptr_t	__pad;
 } __packed;
 
-struct l_sockaddr {
-	l_ushort	sa_family;
-	char		sa_data[14];
-} __packed;
-
 struct l_ifmap {
 	l_ulong		mem_start;
 	l_ulong		mem_end;
@@ -489,9 +471,6 @@ struct l_ifmap {
 	u_char		dma;
 	u_char		port;
 } __packed;
-
-#define	LINUX_IFHWADDRLEN	6
-#define	LINUX_IFNAMSIZ		16
 
 struct l_ifreq {
 	union {

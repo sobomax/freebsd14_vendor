@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003, 2005 Ryuichiro Imura
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/iconv_ucs.c 319284 2017-05-31 05:45:06Z delphij $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/iconv_ucs.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

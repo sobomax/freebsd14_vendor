@@ -1,5 +1,7 @@
 /*-
- * $FreeBSD: releng/11.3/sys/dev/bktr/bktr_reg.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/bktr/bktr_reg.h 335606 2018-06-24 19:01:01Z imp $
+ *
+ * SPDX-License-Identifier: BSD-4-Clause
  *
  * Copyright (c) 1999 Roger Hardiman
  * Copyright (c) 1998 Amancio Hasty
@@ -35,7 +37,7 @@
  */
 
 #ifdef __NetBSD__
-#include <machine/bus.h>		/* struct device */
+#include <machine/bus.h>		/* device_t */
 #include <sys/device.h>
 #include <sys/select.h>			/* struct selinfo */
 # ifdef DEBUG
@@ -86,15 +88,15 @@
  * Definitions for the Brooktree 848/878 video capture to pci interface.
  */
 #ifndef __NetBSD__
-#define PCI_VENDOR_SHIFT                        0
-#define PCI_VENDOR_MASK                         0xffff
-#define PCI_VENDOR(id) \
-            (((id) >> PCI_VENDOR_SHIFT) & PCI_VENDOR_MASK)
+#define BKTR_PCI_VENDOR_SHIFT                        0
+#define BKTR_PCI_VENDOR_MASK                         0xffff
+#define BKTR_PCI_VENDOR(id) \
+            (((id) >> BKTR_PCI_VENDOR_SHIFT) & BKTR_PCI_VENDOR_MASK)
 
-#define PCI_PRODUCT_SHIFT                       16
-#define PCI_PRODUCT_MASK                        0xffff
-#define PCI_PRODUCT(id) \
-            (((id) >> PCI_PRODUCT_SHIFT) & PCI_PRODUCT_MASK)
+#define BKTR_PCI_PRODUCT_SHIFT                       16
+#define BKTR_PCI_PRODUCT_MASK                        0xffff
+#define BKTR_PCI_PRODUCT(id) \
+            (((id) >> BKTR_PCI_PRODUCT_SHIFT) & BKTR_PCI_PRODUCT_MASK)
 
 /* PCI vendor ID */
 #define PCI_VENDOR_BROOKTREE    0x109e                /* Brooktree */

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, 1998 Justin T. Gibbs.
  * Copyright (c) 2002 by Thomas Moestl <tmm@FreeBSD.org>.
  * All rights reserved.
@@ -25,7 +27,7 @@
  *
  *	from: FreeBSD: src/sys/i386/i386/busdma_machdep.c,v 1.25 2002/01/05
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/bus_private.h 257066 2013-10-24 17:06:41Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/bus_private.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_BUS_PRIVATE_H_

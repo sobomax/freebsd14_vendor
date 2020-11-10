@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/common/part.h 332956 2018-04-24 18:19:30Z benno $
+ * $FreeBSD: releng/12.2/stand/common/part.h 332085 2018-04-05 19:45:30Z benno $
  */
 
 #ifndef _PART_H_

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/io/ppt.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/io/ppt.h 351751 2019-09-03 16:18:07Z emaste $
  */
 
 #ifndef _IO_PPT_H_
@@ -37,7 +39,7 @@ int	ppt_setup_msi(struct vm *vm, int vcpu, int bus, int slot, int func,
 int	ppt_setup_msix(struct vm *vm, int vcpu, int bus, int slot, int func,
 		int idx, uint64_t addr, uint64_t msg, uint32_t vector_control);
 int	ppt_assigned_devices(struct vm *vm);
-boolean_t ppt_is_mmio(struct vm *vm, vm_paddr_t gpa);
+bool	ppt_is_mmio(struct vm *vm, vm_paddr_t gpa);
 
 /*
  * Returns the number of devices sequestered by the ppt driver for assignment

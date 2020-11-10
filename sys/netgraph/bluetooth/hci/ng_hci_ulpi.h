@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_ulpi.h,v 1.2 2003/04/26 22:35:21 max Exp $
- * $FreeBSD: releng/11.3/sys/netgraph/bluetooth/hci/ng_hci_ulpi.h 290038 2015-10-27 03:42:26Z takawata $
+ * $FreeBSD: releng/12.2/sys/netgraph/bluetooth/hci/ng_hci_ulpi.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NETGRAPH_HCI_ULPI_H_

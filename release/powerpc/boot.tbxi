@@ -1,6 +1,6 @@
 <CHRP-BOOT>
 <LICENSE>
-$FreeBSD: releng/11.3/release/powerpc/boot.tbxi 133950 2004-08-18 11:08:19Z grehan $
+$FreeBSD: releng/12.2/release/powerpc/boot.tbxi 133950 2004-08-18 11:08:19Z grehan $
 </LICENSE>
 <COMPATIBLE>
 MacRISC MacRISC3 MacRISC4

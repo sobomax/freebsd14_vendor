@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/gdb_machdep.h 139825 2005-01-07 02:29:27Z imp $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/gdb_machdep.h 330539 2018-03-06 14:28:37Z jtl $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
@@ -49,6 +51,19 @@ static __inline int
 gdb_cpu_signal(int vector, int _)
 {
 	return (vector);
+}
+
+static __inline void *
+gdb_begin_write(void)
+{
+
+	return (NULL);
+}
+
+static __inline void
+gdb_end_write(void *arg __unused)
+{
+
 }
 
 void *gdb_cpu_getreg(int, size_t *);

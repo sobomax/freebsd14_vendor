@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/boot2/boot2.c 332130 2018-04-06 18:55:02Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/boot2/boot2.c 329740 2018-02-21 18:32:06Z benno $");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>

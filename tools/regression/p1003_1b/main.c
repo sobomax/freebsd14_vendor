@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/tools/regression/p1003_1b/main.c 287297 2015-08-29 19:47:20Z rodrigc $ */
+/* $FreeBSD: releng/12.2/tools/regression/p1003_1b/main.c 287297 2015-08-29 19:47:20Z rodrigc $ */
 
 #include <sys/param.h>
 

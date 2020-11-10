@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/kern/opensolaris_kmem.c 332528 2018-04-16 03:38:37Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/kern/opensolaris_kmem.c 329759 2018-02-21 23:15:06Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

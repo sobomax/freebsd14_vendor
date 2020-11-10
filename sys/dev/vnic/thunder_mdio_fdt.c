@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/vnic/thunder_mdio_fdt.c 308333 2016-11-05 10:23:02Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/vnic/thunder_mdio_fdt.c 304459 2016-08-19 10:52:39Z mmel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

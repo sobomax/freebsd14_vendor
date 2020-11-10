@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/liblua/lerrno.h 344220 2019-02-17 02:39:17Z kevans $
+ * $FreeBSD: releng/12.2/stand/liblua/lerrno.h 329656 2018-02-20 19:39:48Z cem $
  */
 
 #pragma once

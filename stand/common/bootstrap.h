@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/common/bootstrap.h 344413 2019-02-21 03:18:12Z kevans $
+ * $FreeBSD: releng/12.2/stand/common/bootstrap.h 363914 2020-08-05 14:42:45Z kevans $
  */
 
 #ifndef _BOOTSTRAP_H_
@@ -32,6 +32,8 @@
 #include <sys/types.h>
 #include <sys/queue.h>
 #include <sys/linker_set.h>
+
+#include "readin.h"
 
 /* Commands and return values; nonzero return sets command_errmsg != NULL */
 typedef int	(bootblk_cmd_t)(int argc, char *argv[]);
@@ -70,8 +72,8 @@ void	hexdump(caddr_t region, size_t len);
 size_t	strlenout(vm_offset_t str);
 char	*strdupout(vm_offset_t str);
 void	kern_bzero(vm_offset_t dest, size_t len);
-int	kern_pread(int fd, vm_offset_t dest, size_t len, off_t off);
-void	*alloc_pread(int fd, off_t off, size_t len);
+int	kern_pread(readin_handle_t fd, vm_offset_t dest, size_t len, off_t off);
+void	*alloc_pread(readin_handle_t fd, off_t off, size_t len);
 
 /* bcache.c */
 void	bcache_init(size_t nblks, size_t bsize);
@@ -303,7 +305,7 @@ struct arch_switch
     ssize_t	(*arch_copyout)(const vm_offset_t src, void *dest,
 				const size_t len);
     /* Read from file to module address space, same semantics as read() */
-    ssize_t	(*arch_readin)(const int fd, vm_offset_t dest,
+    ssize_t	(*arch_readin)(readin_handle_t fd, vm_offset_t dest,
 			       const size_t len);
     /* Perform ISA byte port I/O (only for systems with ISA) */
     int		(*arch_isainb)(int port);
@@ -330,6 +332,9 @@ struct arch_switch
     /* Probe ZFS pool(s), if needed. */
     void	(*arch_zfs_probe)(void);
 
+    /* Return the hypervisor name/type or NULL if not virtualized. */
+    const char *(*arch_hypervisor)(void);
+
     /* For kexec-type loaders, get ksegment structure */
     void	(*arch_kexec_kseg_get)(int *nseg, void **kseg);
 };
@@ -339,8 +344,6 @@ extern struct arch_switch archsw;
 void	delay(int delay);
 
 void	dev_cleanup(void);
-
-time_t	time(time_t *tloc);
 
 #ifndef CTASSERT
 #define	CTASSERT(x)	_Static_assert(x, "compile-time assertion failed")

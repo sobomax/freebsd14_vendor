@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libgeom/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/lib/libgeom/Makefile 324667 2017-10-16 17:21:52Z romain $
 
 PACKAGE=lib${LIB}
 LIB=	geom
@@ -33,6 +33,10 @@ MLINKS+= \
 	libgeom.3 gctl_issue.3 \
 	libgeom.3 gctl_free.3 \
 	libgeom.3 gctl_dump.3 \
+	libgeom.3 geom_getxml.3 \
+	libgeom.3 geom_xml2tree.3 \
+	libgeom.3 geom_gettree.3 \
+	libgeom.3 geom_deletetree.3 \
 	libgeom.3 g_close.3 \
 	libgeom.3 g_delete.3 \
 	libgeom.3 g_device_path.3 \

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sbin/mount_msdosfs/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/mount_msdosfs/Makefile 314656 2017-03-04 11:33:01Z ngie $
 #
 
 PACKAGE=runtime

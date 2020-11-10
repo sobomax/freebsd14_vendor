@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hwpmc/hwpmc_arm64_md.c 283112 2015-05-19 15:25:47Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hwpmc/hwpmc_arm64_md.c 283112 2015-05-19 15:25:47Z br $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>

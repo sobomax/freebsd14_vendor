@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/11.3/share/doc/papers/sysperf/appendix.ms 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/papers/sysperf/appendix.ms 263142 2014-03-14 03:07:51Z eadler $
 .am vS
 ..
 .am vE
@@ -843,7 +843,7 @@ rnd()
 
 .vE
 '-F
-.\" $FreeBSD: releng/11.3/share/doc/papers/sysperf/appendix.ms 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/papers/sysperf/appendix.ms 263142 2014-03-14 03:07:51Z eadler $
 .am vS
 ..
 .am vE

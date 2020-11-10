@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2003
  *	Bill Paul <wpaul@windriver.com>.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/ndis/subr_ndis.c 335472 2018-06-21 09:45:03Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/ndis/subr_ndis.c 335297 2018-06-17 19:24:40Z dim $");
 
 /*
  * This file implements a translation layer between the BSD networking

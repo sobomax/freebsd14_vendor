@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/netrate/netsend/netsend.c 244731 2012-12-27 09:15:21Z luigi $
+ * $FreeBSD: releng/12.2/tools/tools/netrate/netsend/netsend.c 244731 2012-12-27 09:15:21Z luigi $
  */
 
 #include <sys/endian.h>

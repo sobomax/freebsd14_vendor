@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_trunc.c 176450 2008-02-22 02:27:34Z das $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_trunc.c 176450 2008-02-22 02:27:34Z das $");
 
 /*
  * trunc(x)

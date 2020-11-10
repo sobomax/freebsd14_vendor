@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * Copyright (c) 2005 Topspin Communications.  All rights reserved.
  * Copyright (c) 2005, 2006 Cisco Systems.  All rights reserved.
  * Copyright (c) 2005 Mellanox Technologies. All rights reserved.
@@ -33,7 +35,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/uverbs.h 337071 2018-08-02 08:07:10Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/uverbs.h 336365 2018-07-17 08:52:29Z hselasky $
  */
 
 #ifndef UVERBS_H

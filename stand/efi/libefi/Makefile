@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/libefi/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/libefi/Makefile 354008 2019-10-24 04:00:49Z kevans $
 
 .include <bsd.init.mk>
 
@@ -12,6 +12,7 @@ SRCS=	delay.c \
 	efi_driver_utils.c \
 	efichar.c \
 	efienv.c \
+	efihttp.c \
 	efinet.c \
 	efipart.c \
 	efizfs.c \

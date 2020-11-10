@@ -24,9 +24,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/cloudabi/cloudabi_vdso.c 307144 2016-10-12 12:17:41Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/cloudabi/cloudabi_vdso.c 357760 2020-02-11 12:14:22Z kib $");
 
-#include <sys/types.h>
+#include <sys/param.h>
+#include <sys/systm.h>
 #include <sys/lock.h>
 #include <sys/sysent.h>
 #include <sys/rwlock.h>

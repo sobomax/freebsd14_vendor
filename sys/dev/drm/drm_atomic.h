@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/drm_atomic.h 183573 2008-10-03 16:59:11Z rnoland $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/drm_atomic.h 338285 2018-08-24 00:02:00Z imp $");
 
 /* Many of these implementations are rather fake, but good enough. */
 

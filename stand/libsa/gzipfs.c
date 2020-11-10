@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/gzipfs.c 344408 2019-02-21 02:43:48Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/gzipfs.c 337413 2018-08-07 10:53:51Z tsoome $");
 
 #include "stand.h"
 

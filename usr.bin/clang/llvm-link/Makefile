@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-link/Makefile 331838 2018-03-31 11:38:16Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-link/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-link
 
-SRCDIR=		tools/llvm-link
+SRCDIR=		llvm/tools/llvm-link
 SRCS+=		llvm-link.cpp
 
 .include "../llvm.prog.mk"

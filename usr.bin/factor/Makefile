@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/usr.bin/factor/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/factor/Makefile 315170 2017-03-12 18:58:44Z imp $
 
 .include <src.opts.mk>
 

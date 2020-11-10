@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/loader/Makefile 344413 2019-02-21 03:18:12Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/loader/Makefile 359155 2020-03-19 22:33:24Z dim $
 
 HAVE_ZFS=		${MK_LOADER_ZFS}
 
@@ -46,8 +46,10 @@ HELP_FILES=	${.CURDIR}/help.i386
 
 CLEANFILES+=	${LOADER} ${LOADER}.bin
 
+ORG=		0x0
+
 CFLAGS+=	-Wall
-LDFLAGS+=	-static -Ttext 0x0
+LDFLAGS+=	-static ${LDFLAGS_ORG} -Wl,--gc-sections
 
 # i386 standalone support library
 LIBI386=	${BOOTOBJ}/i386/libi386/libi386.a

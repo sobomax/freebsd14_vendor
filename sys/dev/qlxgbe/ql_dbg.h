@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013-2016 Qlogic Corporation
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/qlxgbe/ql_dbg.h 332052 2018-04-04 23:53:29Z davidcs $
+ * $FreeBSD: releng/12.2/sys/dev/qlxgbe/ql_dbg.h 331739 2018-03-29 17:36:34Z davidcs $
  */
 
 /*

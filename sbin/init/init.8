@@ -12,7 +12,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -29,9 +29,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)init.8	8.3 (Berkeley) 4/18/94
-.\" $FreeBSD: releng/11.3/sbin/init/init.8 346479 2019-04-21 04:00:19Z kevans $
+.\" $FreeBSD: releng/12.2/sbin/init/init.8 354725 2019-11-15 07:01:04Z avg $
 .\"
-.Dd August 15, 2018
+.Dd August 6, 2019
 .Dt INIT 8
 .Os
 .Sh NAME
@@ -270,6 +270,15 @@ The timeout can be configured via the
 variable
 .Va kern.init_shutdown_timeout .
 .Pp
+.Nm init
+passes
+.Dq Li single
+as the argument to the shutdown script if return to single-user mode
+is requested.
+Otherwise,
+.Dq Li reboot
+argument is used.
+.Pp
 The role of
 .Nm
 is so critical that if it dies, the system will reboot itself
@@ -295,6 +304,7 @@ as follows:
 .It Sy "Run-level	Signal	Action"
 .It Cm 0 Ta Dv SIGUSR1 Ta "Halt"
 .It Cm 0 Ta Dv SIGUSR2 Ta "Halt and turn the power off"
+.It Cm 0 Ta Dv SIGWINCH Ta "Halt and turn the power off and then back on"
 .It Cm 1 Ta Dv SIGTERM Ta "Go to single-user mode"
 .It Cm 6 Ta Dv SIGINT Ta "Reboot the machine"
 .It Cm c Ta Dv SIGTSTP Ta "Block further logins"

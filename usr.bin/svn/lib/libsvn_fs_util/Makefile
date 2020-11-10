@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/svn/lib/libsvn_fs_util/Makefile 251886 2013-06-18 02:53:45Z peter $
+# $FreeBSD: releng/12.2/usr.bin/svn/lib/libsvn_fs_util/Makefile 362180 2020-06-14 17:36:43Z dim $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -9,7 +9,9 @@ LIB=		svn_fs_util
 
 SRCS=		fs-util.c
 
-CFLAGS+=	-I${SVNDIR}/include -I${SVNDIR} -I${.CURDIR}/../.. \
+CFLAGS+=	-I${SVNDIR}/include \
+		-I${SVNDIR} \
+		-I${.CURDIR}/../.. \
 		-I${.CURDIR}/../libapr \
 		-I${APR}/include/arch/unix \
 		-I${APR}/include \

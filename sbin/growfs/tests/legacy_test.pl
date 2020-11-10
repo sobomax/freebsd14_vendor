@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/growfs/tests/legacy_test.pl 324691 2017-10-17 15:52:02Z ngie $
+# $FreeBSD: releng/12.2/sbin/growfs/tests/legacy_test.pl 324478 2017-10-10 05:58:33Z ngie $
 
 use strict;
 use warnings;
@@ -31,7 +31,7 @@ sub fsck_md {
 sub setsize {
     my ($partszMB, $unitszMB) = @_;
 
-    open my $fd, "|-", "disklabel -R md$unit /dev/stdin" or die;
+    open my $fd, "|-", "bsdlabel -R md$unit /dev/stdin" or die;
     print $fd "a: ", ($partszMB * BLKS_PER_MB), " 0 4.2BSD 1024 8192\n";
     print $fd "c: ", ($unitszMB * BLKS_PER_MB), " 0 unused 0 0\n";
     close $fd;

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/tools/track/track.sh 239927 2012-08-30 22:56:32Z des $
+# $FreeBSD: releng/12.2/tools/tools/track/track.sh 239927 2012-08-30 22:56:32Z des $
 #
 
 tail -10000 -F "$@" |

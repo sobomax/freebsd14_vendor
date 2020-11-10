@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/nss/getaddrinfo_test.c 321143 2017-07-18 18:09:16Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/nss/getaddrinfo_test.c 319048 2017-05-28 06:26:43Z ngie $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

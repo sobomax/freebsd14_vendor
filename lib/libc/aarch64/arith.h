@@ -1,7 +1,7 @@
 /*
  * MD header for contrib/gdtoa
  *
- * $FreeBSD: releng/11.3/lib/libc/aarch64/arith.h 281197 2015-04-07 09:52:14Z andrew $
+ * $FreeBSD: releng/12.2/lib/libc/aarch64/arith.h 281197 2015-04-07 09:52:14Z andrew $
  */
 
 /*

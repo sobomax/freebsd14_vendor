@@ -1,6 +1,6 @@
 # Here are some example (t)csh options and configurations that you may find interesting
 #
-# $FreeBSD: releng/11.3/share/examples/csh/dot.cshrc 298515 2016-04-23 16:19:34Z lme $
+# $FreeBSD: releng/12.2/share/examples/csh/dot.cshrc 298515 2016-04-23 16:19:34Z lme $
 #
 
 # Sets SSH_AUTH_SOCK to the user's ssh-agent socket path if running

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995 John Birrell <jb@cimlogic.com.au>.
  * Copyright (c) 2006 David Xu <davidxu@freebsd.org>.
  * Copyright (c) 2015, 2016 The FreeBSD Foundation
@@ -37,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libthr/thread/thr_mutex.c 346372 2019-04-19 12:31:16Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_mutex.c 352892 2019-09-30 07:42:07Z kib $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -63,11 +65,6 @@ _Static_assert(sizeof(struct pthread_mutex) <= PAGE_SIZE,
 /*
  * Prototypes
  */
-int	__pthread_mutex_consistent(pthread_mutex_t *mutex);
-int	__pthread_mutex_init(pthread_mutex_t * __restrict mutex,
-		const pthread_mutexattr_t * __restrict mutex_attr);
-int	__pthread_mutex_trylock(pthread_mutex_t *mutex);
-int	__pthread_mutex_lock(pthread_mutex_t *mutex);
 int	__pthread_mutex_timedlock(pthread_mutex_t * __restrict mutex,
 		const struct timespec * __restrict abstime);
 int	_pthread_mutex_getspinloops_np(pthread_mutex_t *mutex, int *count);
@@ -88,21 +85,27 @@ static int	mutex_qidx(struct pthread_mutex *m);
 static bool	is_robust_mutex(struct pthread_mutex *m);
 static bool	is_pshared_mutex(struct pthread_mutex *m);
 
-__weak_reference(__pthread_mutex_init, pthread_mutex_init);
-__strong_reference(__pthread_mutex_init, _pthread_mutex_init);
-__weak_reference(__pthread_mutex_lock, pthread_mutex_lock);
-__strong_reference(__pthread_mutex_lock, _pthread_mutex_lock);
+__weak_reference(__Tthr_mutex_init, pthread_mutex_init);
+__weak_reference(__Tthr_mutex_init, __pthread_mutex_init);
+__strong_reference(__Tthr_mutex_init, _pthread_mutex_init);
+__weak_reference(__Tthr_mutex_lock, pthread_mutex_lock);
+__weak_reference(__Tthr_mutex_lock, __pthread_mutex_lock);
+__strong_reference(__Tthr_mutex_lock, _pthread_mutex_lock);
 __weak_reference(__pthread_mutex_timedlock, pthread_mutex_timedlock);
 __strong_reference(__pthread_mutex_timedlock, _pthread_mutex_timedlock);
-__weak_reference(__pthread_mutex_trylock, pthread_mutex_trylock);
-__strong_reference(__pthread_mutex_trylock, _pthread_mutex_trylock);
-__weak_reference(_pthread_mutex_consistent, pthread_mutex_consistent);
-__strong_reference(_pthread_mutex_consistent, __pthread_mutex_consistent);
+__weak_reference(__Tthr_mutex_trylock, pthread_mutex_trylock);
+__weak_reference(__Tthr_mutex_trylock, __pthread_mutex_trylock);
+__strong_reference(__Tthr_mutex_trylock, _pthread_mutex_trylock);
+__weak_reference(_Tthr_mutex_consistent, pthread_mutex_consistent);
+__weak_reference(_Tthr_mutex_consistent, _pthread_mutex_consistent);
+__strong_reference(_Tthr_mutex_consistent, __pthread_mutex_consistent);
 
 /* Single underscore versions provided for libc internal usage: */
 /* No difference between libc and application usage of these: */
-__weak_reference(_pthread_mutex_destroy, pthread_mutex_destroy);
-__weak_reference(_pthread_mutex_unlock, pthread_mutex_unlock);
+__weak_reference(_thr_mutex_destroy, pthread_mutex_destroy);
+__weak_reference(_thr_mutex_destroy, _pthread_mutex_destroy);
+__weak_reference(_thr_mutex_unlock, pthread_mutex_unlock);
+__weak_reference(_thr_mutex_unlock, _pthread_mutex_unlock);
 
 __weak_reference(_pthread_mutex_getprioceiling, pthread_mutex_getprioceiling);
 __weak_reference(_pthread_mutex_setprioceiling, pthread_mutex_setprioceiling);
@@ -304,10 +307,11 @@ init_static(struct pthread *thread, pthread_mutex_t *mutex)
 	THR_LOCK_ACQUIRE(thread, &_mutex_static_lock);
 
 	if (*mutex == THR_MUTEX_INITIALIZER)
-		ret = mutex_init(mutex, &_pthread_mutexattr_default, calloc);
+		ret = mutex_init(mutex, &_pthread_mutexattr_default,
+		    __thr_calloc);
 	else if (*mutex == THR_ADAPTIVE_MUTEX_INITIALIZER)
 		ret = mutex_init(mutex, &_pthread_mutexattr_adaptive_default,
-		    calloc);
+		    __thr_calloc);
 	else
 		ret = 0;
 	THR_LOCK_RELEASE(thread, &_mutex_static_lock);
@@ -374,7 +378,7 @@ shared_mutex_init(struct pthread_mutex *pmtx, const struct
 }
 
 int
-__pthread_mutex_init(pthread_mutex_t * __restrict mutex,
+__Tthr_mutex_init(pthread_mutex_t * __restrict mutex,
     const pthread_mutexattr_t * __restrict mutex_attr)
 {
 	struct pthread_mutex *pmtx;
@@ -387,8 +391,9 @@ __pthread_mutex_init(pthread_mutex_t * __restrict mutex,
 	}
 	if (mutex_attr == NULL ||
 	    (*mutex_attr)->m_pshared == PTHREAD_PROCESS_PRIVATE) {
+		__thr_malloc_init();
 		return (mutex_init(mutex, mutex_attr ? *mutex_attr : NULL,
-		    calloc));
+		    __thr_calloc));
 	}
 	pmtx = __thr_pshared_offpage(__DECONST(void *, mutex), 1);
 	if (pmtx == NULL)
@@ -455,7 +460,7 @@ _mutex_fork(struct pthread *curthread)
 }
 
 int
-_pthread_mutex_destroy(pthread_mutex_t *mutex)
+_thr_mutex_destroy(pthread_mutex_t *mutex)
 {
 	pthread_mutex_t m, m1;
 	int ret;
@@ -469,7 +474,11 @@ _pthread_mutex_destroy(pthread_mutex_t *mutex)
 		if (m == THR_PSHARED_PTR) {
 			m1 = __thr_pshared_offpage(mutex, 0);
 			if (m1 != NULL) {
-				mutex_assert_not_owned(_get_curthread(), m1);
+				if ((uint32_t)m1->m_lock.m_owner !=
+				    UMUTEX_RB_OWNERDEAD) {
+					mutex_assert_not_owned(
+					    _get_curthread(), m1);
+				}
 				__thr_pshared_destroy(mutex);
 			}
 			*mutex = THR_MUTEX_DESTROYED;
@@ -481,7 +490,7 @@ _pthread_mutex_destroy(pthread_mutex_t *mutex)
 		} else {
 			*mutex = THR_MUTEX_DESTROYED;
 			mutex_assert_not_owned(_get_curthread(), m);
-			free(m);
+			__thr_free(m);
 			ret = 0;
 		}
 	}
@@ -604,7 +613,7 @@ check_and_init_mutex(pthread_mutex_t *mutex, struct pthread_mutex **m)
 }
 
 int
-__pthread_mutex_trylock(pthread_mutex_t *mutex)
+__Tthr_mutex_trylock(pthread_mutex_t *mutex)
 {
 	struct pthread *curthread;
 	struct pthread_mutex *m;
@@ -733,7 +742,7 @@ mutex_lock_common(struct pthread_mutex *m, const struct timespec *abstime,
 }
 
 int
-__pthread_mutex_lock(pthread_mutex_t *mutex)
+__Tthr_mutex_lock(pthread_mutex_t *mutex)
 {
 	struct pthread_mutex *m;
 	int ret;
@@ -760,7 +769,7 @@ __pthread_mutex_timedlock(pthread_mutex_t * __restrict mutex,
 }
 
 int
-_pthread_mutex_unlock(pthread_mutex_t *mutex)
+_thr_mutex_unlock(pthread_mutex_t *mutex)
 {
 	struct pthread_mutex *mp;
 
@@ -1163,7 +1172,7 @@ _mutex_owned(struct pthread *curthread, const struct pthread_mutex *mp)
 }
 
 int
-_pthread_mutex_consistent(pthread_mutex_t *mutex)
+_Tthr_mutex_consistent(pthread_mutex_t *mutex)
 {
 	struct pthread_mutex *m;
 	struct pthread *curthread;

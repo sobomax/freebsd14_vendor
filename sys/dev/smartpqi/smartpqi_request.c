@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/smartpqi/smartpqi_request.c 333019 2018-04-26 16:59:06Z sbruno $ */
+/* $FreeBSD: releng/12.2/sys/dev/smartpqi/smartpqi_request.c 336201 2018-07-11 16:44:14Z sbruno $ */
 
 #include "smartpqi_includes.h"
 
@@ -268,6 +268,8 @@ pqisrc_build_aio_io(pqisrc_softstate_t *softs, rcb_t *rcb,
 	aio_req->res3 = 0;
 	aio_req->err_idx = aio_req->req_id;
 	aio_req->cdb_len = rcb->cmdlen;
+	if(rcb->cmdlen > sizeof(aio_req->cdb))
+		rcb->cmdlen = sizeof(aio_req->cdb);
 	memcpy(aio_req->cdb, rcb->cdbp, rcb->cmdlen);
 #if 0
 	DBG_IO("CDB : \n");
@@ -565,7 +567,8 @@ int pqisrc_send_scsi_cmd_raidbypass(pqisrc_softstate_t *softs,
 
 	/* Calculate stripe information for the request. */
 	blks_per_row = data_disks_per_row * strip_sz;
-
+	if (!blks_per_row)
+		return PQI_STATUS_FAILURE;
 	/* use __udivdi3 ? */
 	fst_row = fst_blk / blks_per_row;
 	lst_row = lst_blk / blks_per_row;

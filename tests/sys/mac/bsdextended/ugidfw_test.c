@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tests/sys/mac/bsdextended/ugidfw_test.c 313235 2017-02-04 17:01:53Z ngie $
+ * $FreeBSD: releng/12.2/tests/sys/mac/bsdextended/ugidfw_test.c 312164 2017-01-14 10:38:39Z ngie $
  */
 
 #include <sys/param.h>

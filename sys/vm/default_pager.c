@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995, David Greenman
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/vm/default_pager.c 315473 2017-03-18 05:38:10Z alc $");
+__FBSDID("$FreeBSD: releng/12.2/sys/vm/default_pager.c 326402 2017-11-30 15:45:42Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

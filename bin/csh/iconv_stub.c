@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/bin/csh/iconv_stub.c 295147 2016-02-02 11:51:18Z ume $
+ * $FreeBSD: releng/12.2/bin/csh/iconv_stub.c 295147 2016-02-02 11:51:18Z ume $
  */
 
 #include <dlfcn.h>

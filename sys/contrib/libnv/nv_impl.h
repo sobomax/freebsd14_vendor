@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 The FreeBSD Foundation
  * Copyright (c) 2013-2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/contrib/libnv/nv_impl.h 336346 2018-07-16 15:02:21Z kevans $
+ * $FreeBSD: releng/12.2/sys/contrib/libnv/nv_impl.h 335347 2018-06-18 22:57:32Z oshogbo $
  */
 
 #ifndef	_NV_IMPL_H_

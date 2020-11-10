@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/contrib/rdma/krping/krping_dev.c 341893 2018-12-12 11:36:03Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/contrib/rdma/krping/krping_dev.c 353180 2019-10-07 08:28:05Z hselasky $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -40,6 +40,7 @@ static d_open_t      krping_open;
 static d_close_t     krping_close;
 static d_read_t      krping_read;
 static d_write_t     krping_write;
+static d_purge_t     krping_purge;
 
 /* Character device entry points */
 static struct cdevsw krping_cdevsw = {
@@ -48,6 +49,7 @@ static struct cdevsw krping_cdevsw = {
 	.d_close = krping_close,
 	.d_read = krping_read,
 	.d_write = krping_write,
+	.d_purge = krping_purge,
 	.d_name = "krping",
 };
 
@@ -208,6 +210,13 @@ krping_write(struct cdev *dev, struct uio *uio, int ioflag)
 done:
 	free(krpingmsg, M_DEVBUF);
 	return(err);
+}
+
+static void
+krping_purge(struct cdev *dev __unused)
+{
+
+	krping_cancel_all();
 }
 
 int

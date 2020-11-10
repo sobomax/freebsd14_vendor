@@ -1,7 +1,9 @@
 /*	$OpenBSD: vars.c,v 1.8 2006/08/18 03:06:18 jason Exp $	*/
 /*	$NetBSD: vars.c,v 1.3 1994/12/08 09:31:19 jtc Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/tip/tip/vars.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/tip/tip/vars.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #ifndef lint
 #if 0

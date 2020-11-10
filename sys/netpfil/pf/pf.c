@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * Copyright (c) 2002 - 2008 Henning Brauer
  * Copyright (c) 2012 Gleb Smirnoff <glebius@FreeBSD.org>
@@ -36,12 +38,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf.c 359135 2020-03-19 16:35:15Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/pf.c 364456 2020-08-21 13:11:33Z kp $");
 
+#include "opt_bpf.h"
 #include "opt_inet.h"
 #include "opt_inet6.h"
-#include "opt_bpf.h"
 #include "opt_pf.h"
+#include "opt_sctp.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -101,6 +104,10 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf.c 359135 2020-03-19 16:35:15Z 
 #include <netinet6/scope6_var.h>
 #endif /* INET6 */
 
+#if defined(SCTP) || defined(SCTP_SUPPORT)
+#include <netinet/sctp_crc32.h>
+#endif
+
 #include <machine/in_cksum.h>
 #include <security/mac/mac_framework.h>
 
@@ -111,10 +118,12 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf.c 359135 2020-03-19 16:35:15Z 
  */
 
 /* state tables */
-VNET_DEFINE(struct pf_altqqueue,	 pf_altqs[2]);
+VNET_DEFINE(struct pf_altqqueue,	 pf_altqs[4]);
 VNET_DEFINE(struct pf_palist,		 pf_pabuf);
 VNET_DEFINE(struct pf_altqqueue *,	 pf_altqs_active);
+VNET_DEFINE(struct pf_altqqueue *,	 pf_altq_ifs_active);
 VNET_DEFINE(struct pf_altqqueue *,	 pf_altqs_inactive);
+VNET_DEFINE(struct pf_altqqueue *,	 pf_altq_ifs_inactive);
 VNET_DEFINE(struct pf_kstatus,		 pf_status);
 
 VNET_DEFINE(u_int32_t,			 ticket_altqs_active);
@@ -132,6 +141,9 @@ VNET_DEFINE(int,			 pf_tcp_iss_off);
 #define	V_pf_tcp_iss_off		 VNET(pf_tcp_iss_off)
 VNET_DECLARE(int,			 pf_vnet_active);
 #define	V_pf_vnet_active		 VNET(pf_vnet_active)
+
+VNET_DEFINE_STATIC(uint32_t, pf_purge_idx);
+#define V_pf_purge_idx	VNET(pf_purge_idx)
 
 /*
  * Queue for pf_intr() sends.
@@ -154,7 +166,7 @@ struct pf_send_entry {
 };
 
 STAILQ_HEAD(pf_send_head, pf_send_entry);
-static VNET_DEFINE(struct pf_send_head, pf_sendqueue);
+VNET_DEFINE_STATIC(struct pf_send_head, pf_sendqueue);
 #define	V_pf_sendqueue	VNET(pf_sendqueue)
 
 static struct mtx pf_sendqueue_mtx;
@@ -174,9 +186,9 @@ struct pf_overload_entry {
 };
 
 SLIST_HEAD(pf_overload_head, pf_overload_entry);
-static VNET_DEFINE(struct pf_overload_head, pf_overloadqueue);
+VNET_DEFINE_STATIC(struct pf_overload_head, pf_overloadqueue);
 #define V_pf_overloadqueue	VNET(pf_overloadqueue)
-static VNET_DEFINE(struct task, pf_overloadtask);
+VNET_DEFINE_STATIC(struct task, pf_overloadtask);
 #define	V_pf_overloadtask	VNET(pf_overloadtask)
 
 static struct mtx pf_overloadqueue_mtx;
@@ -190,7 +202,7 @@ struct mtx pf_unlnkdrules_mtx;
 MTX_SYSINIT(pf_unlnkdrules_mtx, &pf_unlnkdrules_mtx, "pf unlinked rules",
     MTX_DEF);
 
-static VNET_DEFINE(uma_zone_t,	pf_sources_z);
+VNET_DEFINE_STATIC(uma_zone_t,	pf_sources_z);
 #define	V_pf_sources_z	VNET(pf_sources_z)
 uma_zone_t		pf_mtag_z;
 VNET_DEFINE(uma_zone_t,	 pf_state_z);
@@ -303,6 +315,7 @@ static void		 pf_route6(struct mbuf **, struct pf_rule *, int,
 int in4_cksum(struct mbuf *m, u_int8_t nxt, int off, int len);
 
 extern int pf_end_threads;
+extern struct proc *pf_purge_proc;
 
 VNET_DEFINE(struct pf_limit, pf_limits[PF_LIMIT_MAX]);
 
@@ -352,7 +365,7 @@ VNET_DEFINE(struct pf_limit, pf_limits[PF_LIMIT_MAX]);
 		counter_u64_add(s->rule.ptr->states_cur, -1);		\
 	} while (0)
 
-static MALLOC_DEFINE(M_PFHASH, "pf_hash", "pf(4) hash header structures");
+MALLOC_DEFINE(M_PFHASH, "pf_hash", "pf(4) hash header structures");
 VNET_DEFINE(struct pf_keyhash *, pf_keyhash);
 VNET_DEFINE(struct pf_idhash *, pf_idhash);
 VNET_DEFINE(struct pf_srchash *, pf_srchash);
@@ -369,7 +382,7 @@ SYSCTL_ULONG(_net_pf, OID_AUTO, states_hashsize, CTLFLAG_RDTUN,
     &pf_hashsize, 0, "Size of pf(4) states hashtable");
 SYSCTL_ULONG(_net_pf, OID_AUTO, source_nodes_hashsize, CTLFLAG_RDTUN,
     &pf_srchashsize, 0, "Size of pf(4) source nodes hashtable");
-SYSCTL_ULONG(_net_pf, OID_AUTO, request_maxcount, CTLFLAG_RDTUN,
+SYSCTL_ULONG(_net_pf, OID_AUTO, request_maxcount, CTLFLAG_RW,
     &pf_ioctl_maxcount, 0, "Maximum number of tables, addresses, ... in a single ioctl() call");
 
 VNET_DEFINE(void *, pf_swi_cookie);
@@ -854,9 +867,13 @@ pf_initialize()
 	/* ALTQ */
 	TAILQ_INIT(&V_pf_altqs[0]);
 	TAILQ_INIT(&V_pf_altqs[1]);
+	TAILQ_INIT(&V_pf_altqs[2]);
+	TAILQ_INIT(&V_pf_altqs[3]);
 	TAILQ_INIT(&V_pf_pabuf);
 	V_pf_altqs_active = &V_pf_altqs[0];
-	V_pf_altqs_inactive = &V_pf_altqs[1];
+	V_pf_altq_ifs_active = &V_pf_altqs[1];
+	V_pf_altqs_inactive = &V_pf_altqs[2];
+	V_pf_altq_ifs_inactive = &V_pf_altqs[3];
 
 	/* Send & overload+flush queues. */
 	STAILQ_INIT(&V_pf_sendqueue);
@@ -1455,52 +1472,53 @@ void
 pf_purge_thread(void *unused __unused)
 {
 	VNET_ITERATOR_DECL(vnet_iter);
-	u_int idx = 0;
 
-	PF_RULES_RLOCK_TRACKER;
-
-	for (;;) {
-		PF_RULES_RLOCK();
-		rm_sleep(pf_purge_thread, &pf_rules_lock, 0, "pftm", hz / 10);
-		PF_RULES_RUNLOCK();
+	sx_xlock(&pf_end_lock);
+	while (pf_end_threads == 0) {
+		sx_sleep(pf_purge_thread, &pf_end_lock, 0, "pftm", hz / 10);
 
 		VNET_LIST_RLOCK();
 		VNET_FOREACH(vnet_iter) {
 			CURVNET_SET(vnet_iter);
 
-		if (pf_end_threads) {
-			pf_end_threads++;
-			wakeup(pf_purge_thread);
-			kproc_exit(0);
-		}
 
-		/* Wait while V_pf_default_rule.timeout is initialized. */
-		if (V_pf_vnet_active == 0) {
-			CURVNET_RESTORE();
-			continue;
-		}
+			/* Wait until V_pf_default_rule is initialized. */
+			if (V_pf_vnet_active == 0) {
+				CURVNET_RESTORE();
+				continue;
+			}
 
-		/* Process 1/interval fraction of the state table every run. */
-		idx = pf_purge_expired_states(idx, pf_hashmask /
+			/*
+			 *  Process 1/interval fraction of the state
+			 * table every run.
+			 */
+			V_pf_purge_idx =
+			    pf_purge_expired_states(V_pf_purge_idx, pf_hashmask /
 			    (V_pf_default_rule.timeout[PFTM_INTERVAL] * 10));
 
-		/* Purge other expired types every PFTM_INTERVAL seconds. */
-		if (idx == 0) {
 			/*
-			 * Order is important:
-			 * - states and src nodes reference rules
-			 * - states and rules reference kifs
+			 * Purge other expired types every
+			 * PFTM_INTERVAL seconds.
 			 */
-			pf_purge_expired_fragments();
-			pf_purge_expired_src_nodes();
-			pf_purge_unlinked_rules();
-			pfi_kif_purge();
-		}
-		CURVNET_RESTORE();
+			if (V_pf_purge_idx == 0) {
+				/*
+				 * Order is important:
+				 * - states and src nodes reference rules
+				 * - states and rules reference kifs
+				 */
+				pf_purge_expired_fragments();
+				pf_purge_expired_src_nodes();
+				pf_purge_unlinked_rules();
+				pfi_kif_purge();
+			}
+			CURVNET_RESTORE();
 		}
 		VNET_LIST_RUNLOCK();
 	}
-	/* not reached */
+
+	pf_end_threads++;
+	sx_xunlock(&pf_end_lock);
+	kproc_exit(0);
 }
 
 void
@@ -1520,7 +1538,7 @@ pf_unload_vnet_purge(void)
 	 * Now purge everything.
 	 */
 	pf_purge_expired_states(0, pf_hashmask);
-	pf_purge_expired_fragments();
+	pf_purge_fragments(UINT_MAX);
 	pf_purge_expired_src_nodes();
 
 	/*
@@ -1677,7 +1695,9 @@ pf_unlink_state(struct pf_state *s, u_int flags)
 	PF_HASHROW_UNLOCK(ih);
 
 	pf_detach_state(s);
-	refcount_release(&s->refs);
+	/* pf_state_insert() initialises refs to 2, so we can never release the
+	 * last reference here, only in pf_release_state(). */
+	(void)refcount_release(&s->refs);
 
 	return (pf_release_state(s));
 }
@@ -3697,7 +3717,7 @@ pf_create_state(struct pf_rule *r, struct pf_rule *nr, struct pf_rule *a,
 		s->timeout = PFTM_OTHER_FIRST_PACKET;
 	}
 
-	if (r->rt && r->rt != PF_FASTROUTE) {
+	if (r->rt) {
 		if (pf_map_addr(pd->af, r, pd->src, &s->rt_addr, NULL, &sn)) {
 			REASON_SET(&reason, PFRES_MAPFAILED);
 			pf_src_tree_remove_state(s);
@@ -5247,7 +5267,7 @@ pf_test_state_other(struct pf_state **state, int direction, struct pfi_kif *kif,
 				    nk->addr[pd->didx].v4.s_addr,
 				    0);
 
-				break;
+			break;
 #endif /* INET */
 #ifdef INET6
 		case AF_INET6:
@@ -5523,43 +5543,26 @@ pf_route(struct mbuf **m, struct pf_rule *r, int dir, struct ifnet *oifp,
 	dst.sin_len = sizeof(dst);
 	dst.sin_addr = ip->ip_dst;
 
-	if (r->rt == PF_FASTROUTE) {
-		struct nhop4_basic nh4;
+	bzero(&naddr, sizeof(naddr));
 
-		if (s)
-			PF_STATE_UNLOCK(s);
-
-		if (fib4_lookup_nh_basic(M_GETFIB(m0), ip->ip_dst, 0,
-		    m0->m_pkthdr.flowid, &nh4) != 0) {
-			KMOD_IPSTAT_INC(ips_noroute);
-			error = EHOSTUNREACH;
-			goto bad;
-		}
-
-		ifp = nh4.nh_ifp;
-		dst.sin_addr = nh4.nh_addr;
+	if (TAILQ_EMPTY(&r->rpool.list)) {
+		DPFPRINTF(PF_DEBUG_URGENT,
+		    ("%s: TAILQ_EMPTY(&r->rpool.list)\n", __func__));
+		goto bad_locked;
+	}
+	if (s == NULL) {
+		pf_map_addr(AF_INET, r, (struct pf_addr *)&ip->ip_src,
+		    &naddr, NULL, &sn);
+		if (!PF_AZERO(&naddr, AF_INET))
+			dst.sin_addr.s_addr = naddr.v4.s_addr;
+		ifp = r->rpool.cur->kif ?
+		    r->rpool.cur->kif->pfik_ifp : NULL;
 	} else {
-		bzero(&naddr, sizeof(naddr));
-
-		if (TAILQ_EMPTY(&r->rpool.list)) {
-			DPFPRINTF(PF_DEBUG_URGENT,
-			    ("%s: TAILQ_EMPTY(&r->rpool.list)\n", __func__));
-			goto bad_locked;
-		}
-		if (s == NULL) {
-			pf_map_addr(AF_INET, r, (struct pf_addr *)&ip->ip_src,
-			    &naddr, NULL, &sn);
-			if (!PF_AZERO(&naddr, AF_INET))
-				dst.sin_addr.s_addr = naddr.v4.s_addr;
-			ifp = r->rpool.cur->kif ?
-			    r->rpool.cur->kif->pfik_ifp : NULL;
-		} else {
-			if (!PF_AZERO(&s->rt_addr, AF_INET))
-				dst.sin_addr.s_addr =
-				    s->rt_addr.v4.s_addr;
-			ifp = s->rt_kif ? s->rt_kif->pfik_ifp : NULL;
-			PF_STATE_UNLOCK(s);
-		}
+		if (!PF_AZERO(&s->rt_addr, AF_INET))
+			dst.sin_addr.s_addr =
+			    s->rt_addr.v4.s_addr;
+		ifp = s->rt_kif ? s->rt_kif->pfik_ifp : NULL;
+		PF_STATE_UNLOCK(s);
 	}
 	if (ifp == NULL)
 		goto bad;
@@ -5589,9 +5592,9 @@ pf_route(struct mbuf **m, struct pf_rule *r, int dir, struct ifnet *oifp,
 		in_delayed_cksum(m0);
 		m0->m_pkthdr.csum_flags &= ~CSUM_DELAY_DATA;
 	}
-#ifdef SCTP
+#if defined(SCTP) || defined(SCTP_SUPPORT)
 	if (m0->m_pkthdr.csum_flags & CSUM_SCTP & ~ifp->if_hwassist) {
-		sctp_delayed_cksum(m, (uint32_t)(ip->ip_hl << 2));
+		sctp_delayed_cksum(m0, (uint32_t)(ip->ip_hl << 2));
 		m0->m_pkthdr.csum_flags &= ~CSUM_SCTP;
 	}
 #endif
@@ -5701,16 +5704,6 @@ pf_route6(struct mbuf **m, struct pf_rule *r, int dir, struct ifnet *oifp,
 	dst.sin6_len = sizeof(dst);
 	dst.sin6_addr = ip6->ip6_dst;
 
-	/* Cheat. XXX why only in the v6 case??? */
-	if (r->rt == PF_FASTROUTE) {
-		if (s)
-			PF_STATE_UNLOCK(s);
-		m0->m_flags |= M_SKIP_FIREWALL;
-		ip6_output(m0, NULL, NULL, 0, NULL, NULL, NULL);
-		*m = NULL;
-		return;
-	}
-
 	bzero(&naddr, sizeof(naddr));
 
 	if (TAILQ_EMPTY(&r->rpool.list)) {
@@ -5794,8 +5787,7 @@ bad:
 
 /*
  * FreeBSD supports cksum offloads for the following drivers.
- *  em(4), fxp(4), ixgb(4), lge(4), ndis(4), nge(4), re(4),
- *   ti(4), txp(4), xl(4)
+ *  em(4), fxp(4), lge(4), ndis(4), nge(4), re(4), ti(4), txp(4), xl(4)
  *
  * CSUM_DATA_VALID | CSUM_PSEUDO_HDR :
  *  network driver performed cksum including pseudo header, need to verify
@@ -6010,7 +6002,7 @@ pf_test(int dir, int pflags, struct ifnet *ifp, struct mbuf **m0, struct inpcb *
 	pd.sidx = (dir == PF_IN) ? 0 : 1;
 	pd.didx = (dir == PF_IN) ? 1 : 0;
 	pd.af = AF_INET;
-	pd.tos = h->ip_tos;
+	pd.tos = h->ip_tos & ~IPTOS_ECN_MASK;
 	pd.tot_len = ntohs(h->ip_len);
 
 	/* handle fragments that didn't get reassembled by normalization */
@@ -6185,7 +6177,7 @@ done:
 	    pd.proto == IPPROTO_UDP) && s != NULL && s->nat_rule.ptr != NULL &&
 	    (s->nat_rule.ptr->action == PF_RDR ||
 	    s->nat_rule.ptr->action == PF_BINAT) &&
-	    (ntohl(pd.dst->v4.s_addr) >> IN_CLASSA_NSHIFT) == IN_LOOPBACKNET)
+	    IN_LOOPBACK(ntohl(pd.dst->v4.s_addr)))
 		m->m_flags |= M_SKIP_FIREWALL;
 
 	if (action == PF_PASS && r->divert.port && ip_divert_ptr != NULL &&

@@ -2,7 +2,7 @@
 /*
  * Copyright is disclaimed as to the contents of this file.
  *
- * $FreeBSD: releng/11.3/usr.bin/getconf/sysconf.gperf 345015 2019-03-11 18:17:12Z ngie $
+ * $FreeBSD: releng/12.2/usr.bin/getconf/sysconf.gperf 345016 2019-03-11 18:17:26Z ngie $
  */
 
 #include <sys/types.h>

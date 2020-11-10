@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/k_sincosf.h 324006 2017-09-26 09:01:56Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/k_sincosf.h 319047 2017-05-28 06:13:38Z mmel $");
 
 /* |sin(x)/x - s(x)| < 2**-37.5 (~[-4.89e-12, 4.824e-12]). */
 static const double

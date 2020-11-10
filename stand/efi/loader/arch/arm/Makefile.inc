@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/loader/arch/arm/Makefile.inc 329140 2018-02-11 20:58:00Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/loader/arch/arm/Makefile.inc 325689 2017-11-10 23:54:24Z imp $
 
 SRCS+=	exec.c \
 	start.S

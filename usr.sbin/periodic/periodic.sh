@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD: releng/11.3/usr.sbin/periodic/periodic.sh 326781 2017-12-11 20:36:01Z asomers $
+# $FreeBSD: releng/12.2/usr.sbin/periodic/periodic.sh 352489 2019-09-18 17:18:09Z asomers $
 #
 # Run nightly periodic scripts
 #
@@ -78,8 +78,13 @@ arg=$1
 
 if [ -z "$PERIODIC_ANTICONGESTION_FILE" ] ; then
 	export PERIODIC_ANTICONGESTION_FILE=`mktemp ${TMPDIR:-/tmp}/periodic.anticongestion.XXXXXXXXXX`
+	remove_periodic_anticongestion_file=yes
+else
+	# We might be in a recursive invocation; let the top-level invocation
+	# remove the file.
+	remove_periodic_anticongestion_file=no
 fi
-if tty > /dev/null 2>&1; then
+if [ -t 0 ]; then
 	export PERIODIC_IS_INTERACTIVE=1
 fi
 tmp_output=`mktemp ${TMPDIR:-/tmp}/periodic.XXXXXXXXXX`
@@ -147,4 +152,6 @@ esac
 } | output_pipe $arg "$context"
 
 rm -f $tmp_output
-rm -f $PERIODIC_ANTICONGESTION_FILE
+if [ $remove_periodic_anticongestion_file = "yes" ] ; then
+	rm -f $PERIODIC_ANTICONGESTION_FILE
+fi

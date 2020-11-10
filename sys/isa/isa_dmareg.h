@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2005 TAKAHASHI Yoshihiro. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/isa/isa_dmareg.h 146214 2005-05-14 10:14:56Z nyan $
+ * $FreeBSD: releng/12.2/sys/isa/isa_dmareg.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _ISA_ISA_DMAREG_H_

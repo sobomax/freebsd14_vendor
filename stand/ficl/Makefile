@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/ficl/Makefile 332131 2018-04-06 19:01:08Z kevans $
+# $FreeBSD: releng/12.2/stand/ficl/Makefile 330612 2018-03-07 17:18:46Z kevans $
 #
 
 .include <bsd.init.mk>

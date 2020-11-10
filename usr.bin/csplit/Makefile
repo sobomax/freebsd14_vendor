@@ -1,5 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/csplit/Makefile 95927 2002-05-02 07:54:04Z tjr $
+# $FreeBSD: releng/12.2/usr.bin/csplit/Makefile 322515 2017-08-14 19:21:37Z ngie $
+
+.include <src.opts.mk>
 
 PROG=	csplit
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

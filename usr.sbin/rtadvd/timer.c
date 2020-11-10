@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/usr.sbin/rtadvd/timer.c 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/usr.sbin/rtadvd/timer.c 326025 2017-11-20 19:49:47Z pfg $	*/
 /*	$KAME: timer.c,v 1.9 2002/06/10 19:59:47 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1998 WIDE Project.
  * Copyright (C) 2011 Hiroki Sato <hrs@FreeBSD.org>
  * All rights reserved.

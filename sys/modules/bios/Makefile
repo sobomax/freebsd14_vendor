@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bios/Makefile 309841 2016-12-11 02:01:57Z rpokala $
+# $FreeBSD: releng/12.2/sys/modules/bios/Makefile 309491 2016-12-03 17:54:08Z rpokala $
 #
 
 SUBDIR=	smbios vpd

@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/ispfw/asm_2100.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/ispfw/asm_2100.h 326255 2017-11-27 14:52:40Z pfg $ */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, 1998, 1999, 2000 Qlogic, Inc.
  * All rights reserved.
  *

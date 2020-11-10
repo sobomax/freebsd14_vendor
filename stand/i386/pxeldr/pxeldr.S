@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/pxeldr/pxeldr.S 261517 2014-02-05 17:22:54Z jhb $
+ * $FreeBSD: releng/12.2/stand/i386/pxeldr/pxeldr.S 261517 2014-02-05 17:22:54Z jhb $
  */
 
 /*

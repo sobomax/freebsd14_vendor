@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2012 Konstantin Belousov <kib@FreeBSD.org>
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/csu/common/notes.h 339300 2018-10-11 00:26:15Z emaste $
+ * $FreeBSD: releng/12.2/lib/csu/common/notes.h 339181 2018-10-04 17:35:32Z emaste $
  */
 
 #ifndef	CSU_COMMON_NOTES_H

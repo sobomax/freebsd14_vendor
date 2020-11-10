@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/ath/athsurvey/Makefile 234751 2012-04-28 08:17:19Z adrian $
+# $FreeBSD: releng/12.2/tools/tools/ath/athsurvey/Makefile 234751 2012-04-28 08:17:19Z adrian $
 
 PROG=	athsurvey
 

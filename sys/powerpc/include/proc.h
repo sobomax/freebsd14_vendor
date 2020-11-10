@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
  * Copyright (C) 1995, 1996 TooLs GmbH.
  * All rights reserved.
@@ -29,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: proc.h,v 1.2 1997/04/16 22:57:48 thorpej Exp $
- * $FreeBSD: releng/11.3/sys/powerpc/include/proc.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/powerpc/include/proc.h 326023 2017-11-20 19:43:44Z pfg $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -48,9 +50,9 @@ struct mdproc {
 
 #ifdef __powerpc64__
 #define	KINFO_PROC_SIZE 1088
-#define	KINFO_PROC32_SIZE 768
+#define	KINFO_PROC32_SIZE 816
 #else
-#define	KINFO_PROC_SIZE 768
+#define	KINFO_PROC_SIZE 816
 #endif
 
 struct syscall_args {

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/time_event.c 329010 2018-02-08 02:44:21Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/time_event.c 306159 2016-09-22 06:24:40Z stevek $");
 
 #include <efi.h>
 #include <efilib.h>

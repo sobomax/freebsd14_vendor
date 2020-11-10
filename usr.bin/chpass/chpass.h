@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1988, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  * Copyright (c) 2002 Networks Associates Technology, Inc.
@@ -38,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)chpass.h	8.4 (Berkeley) 4/2/94
- * $FreeBSD: releng/11.3/usr.bin/chpass/chpass.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/chpass/chpass.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 struct passwd;

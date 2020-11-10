@@ -1,8 +1,11 @@
-# $FreeBSD: releng/11.3/tests/sys/capsicum/Makefile 332657 2018-04-17 18:07:40Z jhb $
+# $FreeBSD: releng/12.2/tests/sys/capsicum/Makefile 356768 2020-01-15 21:05:43Z emaste $
 
 TESTSDIR=	${TESTSBASE}/sys/capsicum
 
+ATF_TESTS_C+=	bindat_connectat
 ATF_TESTS_C+=	ioctls_test
+
+CFLAGS+=	-I${SRCTOP}/tests
 
 WARNS?=	6
 

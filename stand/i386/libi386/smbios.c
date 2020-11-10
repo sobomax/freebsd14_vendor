@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libi386/smbios.c 329011 2018-02-08 02:50:47Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/smbios.c 308843 2016-11-19 16:08:40Z tsoome $");
 
 #include <stand.h>
 #include <bootstrap.h>

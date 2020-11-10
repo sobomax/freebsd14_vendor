@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/usb/runfw/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/usb/runfw/Makefile 351875 2019-09-05 17:20:20Z bdrewery $
 
 KMOD=	runfw
 FIRMWS=	run.fw:runfw:1
@@ -6,6 +6,6 @@ FIRMWS=	run.fw:runfw:1
 CLEANFILES=	run.fw
 
 run.fw: ${SRCTOP}/sys/contrib/dev/run/rt2870.fw.uu
-	uudecode -p $? > ${.TARGET}
+	uudecode -p ${.ALLSRC} > ${.TARGET}
 
 .include <bsd.kmod.mk>

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/beri/virtio/virtio.c 276710 2015-01-05 16:43:22Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/beri/virtio/virtio.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

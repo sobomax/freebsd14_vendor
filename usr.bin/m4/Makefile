@@ -1,5 +1,5 @@
 #	$OpenBSD: Makefile,v 1.13 2014/05/12 19:11:19 espie Exp $
-# $FreeBSD: releng/11.3/usr.bin/m4/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/m4/Makefile 352277 2019-09-13 07:10:50Z bapt $
 
 # -DEXTENDED 
 # 	if you want the paste & spaste macros.
@@ -8,7 +8,7 @@
 
 PROG=	m4
 CFLAGS+=-DEXTENDED -I${.CURDIR} -I${SRCTOP}/lib/libopenbsd
-LIBADD=	y l m openbsd
+LIBADD=	m openbsd
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
@@ -20,8 +20,7 @@ tokenizer.o: parser.h
 
 CLEANFILES+=	parser.c parser.h tokenizer.o
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

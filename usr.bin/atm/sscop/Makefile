@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/atm/sscop/Makefile 314009 2017-02-21 02:24:45Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/atm/sscop/Makefile 313653 2017-02-11 20:19:04Z ngie $
 
 CONTRIB= ${SRCTOP}/contrib/ngatm/sscop
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.sbin/kbdcontrol/path.h 266839 2014-05-29 14:39:25Z ray $ */
+/* $FreeBSD: releng/12.2/usr.sbin/kbdcontrol/path.h 266839 2014-05-29 14:39:25Z ray $ */
 
 #define KEYMAP_PATH	"/usr/share/syscons/keymaps/"
 #define FONT_PATH	"/usr/share/syscons/fonts/"

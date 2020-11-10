@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2008 Sam Leffler, Errno Consulting
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/11.3/sys/net80211/ieee80211_dfs.c 343894 2019-02-08 04:48:12Z avos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net80211/ieee80211_dfs.c 343894 2019-02-08 04:48:12Z avos $");
 #endif
 
 /*

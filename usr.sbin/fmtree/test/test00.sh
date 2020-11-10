@@ -5,7 +5,7 @@
 #
 # Please see src/share/examples/etc/bsd-style-copyright.
 #
-# $FreeBSD: releng/11.3/usr.sbin/fmtree/test/test00.sh 122141 2003-11-05 22:26:08Z phk $
+# $FreeBSD: releng/12.2/usr.sbin/fmtree/test/test00.sh 122141 2003-11-05 22:26:08Z phk $
 #
 
 set -e

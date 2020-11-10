@@ -1,5 +1,5 @@
-# $FreeBSD: releng/11.3/lib/clang/lldb.pre.mk 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/lib/clang/lldb.pre.mk 356462 2020-01-07 19:49:10Z dim $
 
 .include "clang.pre.mk"
 
-LLDB_SRCS=	${LLVM_SRCS}/tools/lldb
+LLDB_SRCS=	${LLVM_BASE}/lldb

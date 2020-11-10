@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/tls/Makefile 145467 2005-04-23 23:47:58Z davidxu $
+# $FreeBSD: releng/12.2/tools/regression/tls/Makefile 145467 2005-04-23 23:47:58Z davidxu $
 
 SUBDIR=libxx libyy ttls1 ttls2 ttls4
 

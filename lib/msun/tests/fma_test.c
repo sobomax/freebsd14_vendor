@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/tests/fma_test.c 319378 2017-06-01 06:35:37Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/tests/fma_test.c 319157 2017-05-29 18:45:10Z ngie $");
 
 #include <sys/param.h>
 #include <assert.h>

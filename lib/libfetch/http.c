@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2000-2014 Dag-Erling Smørgrav
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libfetch/http.c 339250 2018-10-09 10:49:19Z des $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libfetch/http.c 352042 2019-09-08 20:41:00Z markj $");
 
 /*
  * The following copyright applies to the base64 code:
@@ -2091,6 +2093,9 @@ fetchListHTTP(struct url *url __unused, const char *flags __unused)
 	return (NULL);
 }
 
+/*
+ * Arbitrary HTTP verb and content requests
+ */
 FILE *
 fetchReqHTTP(struct url *URL, const char *method, const char *flags,
 	const char *content_type, const char *body)

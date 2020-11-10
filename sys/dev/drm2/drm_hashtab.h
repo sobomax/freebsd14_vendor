@@ -27,7 +27,7 @@
  **************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_hashtab.h 235783 2012-05-22 11:07:44Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_hashtab.h 338285 2018-08-24 00:02:00Z imp $");
 
 /*
  * Simple open hash tab implementation.

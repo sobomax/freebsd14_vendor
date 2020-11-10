@@ -22,7 +22,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tests/sys/auditpipe/auditpipe_test.c 336728 2018-07-26 00:16:41Z asomers $
+ * $FreeBSD: releng/12.2/tests/sys/auditpipe/auditpipe_test.c 336728 2018-07-26 00:16:41Z asomers $
  */
 
 #include <sys/ioctl.h>

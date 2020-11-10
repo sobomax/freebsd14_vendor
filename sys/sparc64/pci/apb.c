@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1994,1995 Stefan Esser, Wolfgang StanglMeier
  * Copyright (c) 2000 Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000 BSDi
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/apb.c 297000 2016-03-18 01:28:41Z jhibbits $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/pci/apb.c 326262 2017-11-27 15:10:39Z pfg $");
 
 /*
  * Support for the Sun APB (Advanced PCI Bridge) PCI-PCI bridge.
@@ -92,6 +94,7 @@ static device_method_t apb_methods[] = {
 
 	/* pcib interface */
 	DEVMETHOD(pcib_route_interrupt,	ofw_pcib_gen_route_interrupt),
+	DEVMETHOD(pcib_request_feature,	pcib_request_feature_allow),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_node,	ofw_pcib_gen_get_node),

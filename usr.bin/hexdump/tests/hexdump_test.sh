@@ -1,6 +1,7 @@
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2017 Kyle Evans <kevans@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,7 +24,13 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/hexdump/tests/hexdump_test.sh 328463 2018-01-27 06:31:14Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/hexdump/tests/hexdump_test.sh 359290 2020-03-25 00:31:42Z kevans $
+
+ENDIAN=el
+ret=$(echo I | tr -d "[:space:]" | od -to2 | head -n1 | awk '{print $2}' | cut -c6)
+if [ "$ret" = "0" ]; then
+        ENDIAN=eb
+fi
 
 atf_test_case b_flag
 b_flag_head()
@@ -92,11 +99,11 @@ d_flag_head()
 }
 d_flag_body()
 {
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_a.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_a_$ENDIAN.out" \
 	    hexdump -d "$(atf_get_srcdir)/d_hexdump_a.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_b.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_b_$ENDIAN.out" \
 	    hexdump -d "$(atf_get_srcdir)/d_hexdump_b.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_c.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_dflag_c_$ENDIAN.out" \
 	    hexdump -d "$(atf_get_srcdir)/d_hexdump_c.in"
 }
 
@@ -119,11 +126,11 @@ o_flag_head()
 }
 o_flag_body()
 {
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_a.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_a_$ENDIAN.out" \
 	    hexdump -o "$(atf_get_srcdir)/d_hexdump_a.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_b.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_b_$ENDIAN.out" \
 	    hexdump -o "$(atf_get_srcdir)/d_hexdump_b.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_c.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_oflag_c_$ENDIAN.out" \
 	    hexdump -o "$(atf_get_srcdir)/d_hexdump_c.in"
 }
 
@@ -167,11 +174,11 @@ x_flag_head()
 }
 x_flag_body()
 {
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_a.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_a_$ENDIAN.out" \
 	    hexdump -x "$(atf_get_srcdir)/d_hexdump_a.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_b.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_b_$ENDIAN.out" \
 	    hexdump -x "$(atf_get_srcdir)/d_hexdump_b.in"
-	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_c.out" \
+	atf_check -o file:"$(atf_get_srcdir)/d_hexdump_xflag_c_$ENDIAN.out" \
 	    hexdump -x "$(atf_get_srcdir)/d_hexdump_c.in"
 }
 

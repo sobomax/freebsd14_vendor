@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_core/mlx5_fs_tree.c 341926 2018-12-12 12:06:25Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/mlx5_fs_tree.c 353223 2019-10-07 09:19:46Z hselasky $
  */
 
 #include <linux/module.h>
@@ -139,7 +139,6 @@ static struct mlx5_flow_root_namespace *find_root(struct fs_base *node)
 		node = parent;
 
 	if (node->type != FS_TYPE_NAMESPACE) {
-		printf("mlx5_core: WARN: ""mlx5: flow steering node %s is not in tree or garbaged\n", node->name);
 		return NULL;
 	}
 
@@ -477,7 +476,7 @@ static int connect_prev_fts(struct fs_prio *locked_prio,
 		err = fs_set_star_rule(dev, iter, next_ft);
 		if (err) {
 			mlx5_core_warn(dev,
-				       "mlx5: flow steering can't connect prev and next\n");
+			    "mlx5: flow steering can't connect prev and next\n");
 			goto unlock;
 		} else {
 			/* Assume ft's prio is locked */
@@ -605,7 +604,9 @@ static void destroy_star_rule(struct mlx5_flow_table *ft, struct fs_prio *prio)
 
 	root = find_root(&prio->base);
 	if (!root)
-		printf("mlx5_core: ERR: ""mlx5: flow steering failed to find root of priority %s", prio->base.name);
+		mlx5_core_err(dev,
+		    "flow steering failed to find root of priority %s",
+		    prio->base.name);
 
 	/* In order to ensure atomic deletion, first update
 	 * prev ft to point on the next ft.
@@ -765,11 +766,13 @@ static struct mlx5_flow_table *_create_ft_common(struct mlx5_flow_namespace *ns,
 	int log_table_sz;
 	int ft_size;
 	char gen_name[20];
-	struct mlx5_flow_root_namespace *root =
-		find_root(&ns->base);
+	struct mlx5_flow_root_namespace *root = find_root(&ns->base);
+	struct mlx5_core_dev *dev = fs_get_dev(&ns->base);
 
 	if (!root) {
-		printf("mlx5_core: ERR: ""mlx5: flow steering failed to find root of namespace %s", ns->base.name);
+		mlx5_core_err(dev,
+		    "flow steering failed to find root of namespace %s",
+		    ns->base.name);
 		return ERR_PTR(-ENODEV);
 	}
 
@@ -987,12 +990,16 @@ int mlx5_destroy_flow_table(struct mlx5_flow_table *ft)
 	struct fs_prio *prio;
 	struct mlx5_flow_root_namespace *root;
 	bool is_shared_prio;
+	struct mlx5_core_dev *dev;
 
 	fs_get_parent(prio, ft);
 	root = find_root(&prio->base);
+	dev = fs_get_dev(&prio->base);
 
 	if (!root) {
-		printf("mlx5_core: ERR: ""mlx5: flow steering failed to find root of priority %s", prio->base.name);
+		mlx5_core_err(dev,
+		    "flow steering failed to find root of priority %s",
+		    prio->base.name);
 		return -ENODEV;
 	}
 

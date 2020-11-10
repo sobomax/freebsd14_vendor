@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/vt/keymaps/KBDFILES.map 270934 2014-09-01 16:26:57Z se $
+# $FreeBSD: releng/12.2/tools/tools/vt/keymaps/KBDFILES.map 312910 2017-01-28 02:22:15Z nyan $
 #
 # The Files are converted by "convert-keymaps.pl" from the given encoding to UCS.
 #
@@ -78,8 +78,6 @@ ISO8859-1+EURO	it.iso.kbd			it.kbd
 
 ISO8859-1+YEN	jp.106.kbd			jp.kbd
 ISO8859-1+YEN	jp.106x.kbd			jp.capsctrl.kbd
-ISO8859-1+YEN	jp.pc98.kbd			jp.pc98.kbd
-ISO8859-1+YEN	jp.pc98.iso.kbd			jp.pc98.iso.kbd
 
 PT154		kk.pt154.kst.kbd		kz.kst.kbd
 PT154		kk.pt154.io.kbd			kz.io.kbd

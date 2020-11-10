@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/usr.bin/fortune/fortune/Makefile 321266 2017-07-20 00:50:01Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/fortune/fortune/Makefile 314893 2017-03-08 05:31:54Z ngie $
 
 PROG=	fortune
 MAN=	fortune.6

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/lockstat/Makefile 321268 2017-07-20 00:53:50Z ngie $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/lockstat/Makefile 314654 2017-03-04 11:30:04Z ngie $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/lockstat
 

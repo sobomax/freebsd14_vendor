@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/kldload/kldload.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/kldload/kldload.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -179,9 +179,9 @@ main(int argc, char** argv)
 						break;
 					case ENOEXEC:
 						warnx("an error occurred while "
-						    "loading the module. "
+						    "loading module %s. "
 						    "Please check dmesg(8) for "
-						    "more details.");
+						    "more details.", argv[0]);
 						break;
 					default:
 						warn("can't load %s", argv[0]);

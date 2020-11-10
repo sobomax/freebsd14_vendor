@@ -1,6 +1,8 @@
 /*-
  * CAM request queue management functions.
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/cam_queue.c 308352 2016-11-05 20:23:18Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/cam_queue.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

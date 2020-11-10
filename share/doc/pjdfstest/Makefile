@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/doc/pjdfstest/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: releng/12.2/share/doc/pjdfstest/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
 FILESDIR=	${SHAREDIR}/doc/pjdfstest
 FILES=		README

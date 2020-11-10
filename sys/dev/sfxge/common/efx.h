@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/efx.h 342453 2018-12-25 07:37:42Z arybchik $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/efx.h 350407 2019-07-29 09:34:47Z arybchik $
  */
 
 #ifndef	_SYS_EFX_H
@@ -49,6 +51,18 @@ extern "C" {
 
 #define	EFX_FIELD_OFFSET(_type, _field)		\
 	((size_t) &(((_type *)0)->_field))
+
+/* Round value up to the nearest power of two. */
+#define	EFX_P2ROUNDUP(_type, _value, _align)	\
+	(-(-(_type)(_value) & -(_type)(_align)))
+
+/* Align value down to the nearest power of two. */
+#define	EFX_P2ALIGN(_type, _value, _align)	\
+	((_type)(_value) & -(_type)(_align))
+
+/* Test if value is power of 2 aligned. */
+#define	EFX_IS_P2ALIGNED(_type, _value, _align)	\
+	((((_type)(_value)) & ((_type)(_align) - 1)) == 0)
 
 /* Return codes */
 
@@ -449,10 +463,10 @@ typedef enum efx_link_mode_e {
 	    + /* bug16011 */ 16)				\
 
 #define	EFX_MAC_PDU(_sdu)					\
-	P2ROUNDUP((_sdu) + EFX_MAC_PDU_ADJUSTMENT, 8)
+	EFX_P2ROUNDUP(size_t, (_sdu) + EFX_MAC_PDU_ADJUSTMENT, 8)
 
 /*
- * Due to the P2ROUNDUP in EFX_MAC_PDU(), EFX_MAC_SDU_FROM_PDU() may give
+ * Due to the EFX_P2ROUNDUP in EFX_MAC_PDU(), EFX_MAC_SDU_FROM_PDU() may give
  * the SDU rounded up slightly.
  */
 #define	EFX_MAC_SDU_FROM_PDU(_pdu)	((_pdu) - EFX_MAC_PDU_ADJUSTMENT)
@@ -538,8 +552,9 @@ efx_mac_stat_name(
 
 #define	EFX_MAC_STATS_MASK_BITS_PER_PAGE	(8 * sizeof (uint32_t))
 
-#define	EFX_MAC_STATS_MASK_NPAGES	\
-	(P2ROUNDUP(EFX_MAC_NSTATS, EFX_MAC_STATS_MASK_BITS_PER_PAGE) / \
+#define	EFX_MAC_STATS_MASK_NPAGES				\
+	(EFX_P2ROUNDUP(uint32_t, EFX_MAC_NSTATS,		\
+		       EFX_MAC_STATS_MASK_BITS_PER_PAGE) /	\
 	    EFX_MAC_STATS_MASK_BITS_PER_PAGE)
 
 /*

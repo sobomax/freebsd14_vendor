@@ -1,5 +1,7 @@
 /* LINTLIBRARY */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 1996-1998 John D. Polstra.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/amd64/crt1.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/amd64/crt1.c 339351 2018-10-13 23:52:55Z kib $");
 
 #include <stdlib.h>
 
@@ -57,10 +59,12 @@ _start(char **ap, void (*cleanup)(void))
 	env = ap + 2 + argc;
 	handle_argv(argc, argv, env);
 
-	if (&_DYNAMIC != NULL)
+	if (&_DYNAMIC != NULL) {
 		atexit(cleanup);
-	else
+	} else {
+		process_irelocs();
 		_init_tls();
+	}
 
 #ifdef GCRT
 	atexit(_mcleanup);

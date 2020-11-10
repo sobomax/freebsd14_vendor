@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/mmc/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/mmc/Makefile 315430 2017-03-16 22:23:04Z marius $
 
 .PATH: ${SRCTOP}/sys/dev/mmc
 

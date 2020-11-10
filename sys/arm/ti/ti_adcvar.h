@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/ti/ti_adcvar.h 307775 2016-10-22 15:26:32Z gonzo $
+ * $FreeBSD: releng/12.2/sys/arm/ti/ti_adcvar.h 306579 2016-10-02 03:20:31Z gonzo $
  */
 
 #ifndef _TI_ADCVAR_H_

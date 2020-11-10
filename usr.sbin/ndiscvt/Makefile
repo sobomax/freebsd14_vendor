@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ndiscvt/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ndiscvt/Makefile 352276 2019-09-13 07:08:43Z bapt $
 
 .PATH:	${SRCTOP}/sys/compat/ndis
 
@@ -12,8 +12,6 @@ MAN+=	ndisgen.8
 
 WARNS?=	4
 NO_WCAST_ALIGN=
-
-LIBADD=	l
 
 YFLAGS+=-v
 

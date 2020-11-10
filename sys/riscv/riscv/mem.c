@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/riscv/riscv/mem.c 295041 2016-01-29 15:12:31Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/riscv/riscv/mem.c 295041 2016-01-29 15:12:31Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_bpf.c 316446 2017-04-03 08:50:54Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_bpf.c 336676 2018-07-24 16:35:52Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,10 +48,10 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_bpf.c 316446 2017-04-03 0
 #include <netinet/ip_var.h>
 #include <netpfil/ipfw/ip_fw_private.h>
 
-static VNET_DEFINE(struct ifnet *, log_if);
-static VNET_DEFINE(struct ifnet *, pflog_if);
-static VNET_DEFINE(struct if_clone *, ipfw_cloner);
-static VNET_DEFINE(struct if_clone *, ipfwlog_cloner);
+VNET_DEFINE_STATIC(struct ifnet *, log_if);
+VNET_DEFINE_STATIC(struct ifnet *, pflog_if);
+VNET_DEFINE_STATIC(struct if_clone *, ipfw_cloner);
+VNET_DEFINE_STATIC(struct if_clone *, ipfwlog_cloner);
 #define	V_ipfw_cloner		VNET(ipfw_cloner)
 #define	V_ipfwlog_cloner	VNET(ipfwlog_cloner)
 #define	V_log_if		VNET(log_if)

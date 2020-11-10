@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2016 Adam Starak <starak.adam@gmail.com>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/cnv.h 336346 2018-07-16 15:02:21Z kevans $
+ * $FreeBSD: releng/12.2/sys/sys/cnv.h 335343 2018-06-18 21:26:58Z oshogbo $
  */
 
 #ifndef	_CNV_H_

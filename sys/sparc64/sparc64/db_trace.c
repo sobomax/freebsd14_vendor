@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/db_trace.c 298352 2016-04-20 15:45:55Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/db_trace.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

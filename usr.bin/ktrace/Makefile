@@ -1,5 +1,5 @@
 #	@(#)Makefile	1.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/ktrace/Makefile 226504 2011-10-18 08:26:12Z des $
+# $FreeBSD: releng/12.2/usr.bin/ktrace/Makefile 226504 2011-10-18 08:26:12Z des $
 
 PROG=	ktrace
 SRCS=	ktrace.c subr.c

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -29,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/libkern.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/flsll.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/flsll.c 326023 2017-11-20 19:43:44Z pfg $");
 
 /*
  * Find Last Set bit

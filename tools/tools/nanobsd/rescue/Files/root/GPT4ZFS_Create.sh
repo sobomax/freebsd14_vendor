@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/rescue/Files/root/GPT4ZFS_Create.sh 219823 2011-03-21 13:23:25Z mr $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/rescue/Files/root/GPT4ZFS_Create.sh 219823 2011-03-21 13:23:25Z mr $
 
 # some default sizes
 align=2048

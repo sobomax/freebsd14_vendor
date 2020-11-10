@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/mips/beri/common/cfi.c 329175 2018-02-12 17:44:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/mips/beri/common/cfi.c 326887 2017-12-15 23:16:53Z imp $
  */
 
 #include "stand.h"

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1994,1995 Stefan Esser, Wolfgang StanglMeier
  * Copyright (c) 2000 Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000 BSDi
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/pci/pci_pci.c 346382 2019-04-19 13:04:48Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/pci/pci_pci.c 363331 2020-07-19 22:23:54Z chuck $");
 
 /*
  * PCI:PCI bridge support.
@@ -77,6 +79,8 @@ static void		pcib_pcie_ab_timeout(void *arg);
 static void		pcib_pcie_cc_timeout(void *arg);
 static void		pcib_pcie_dll_timeout(void *arg);
 #endif
+static int		pcib_request_feature_default(device_t pcib, device_t dev,
+			    enum pci_feature feature);
 static int		pcib_reset_child(device_t dev, device_t child, int flags);
 
 static device_method_t pcib_methods[] = {
@@ -122,6 +126,7 @@ static device_method_t pcib_methods[] = {
     DEVMETHOD(pcib_try_enable_ari,	pcib_try_enable_ari),
     DEVMETHOD(pcib_ari_enabled,		pcib_ari_enabled),
     DEVMETHOD(pcib_decode_rid,		pcib_ari_decode_rid),
+    DEVMETHOD(pcib_request_feature,	pcib_request_feature_default),
 
     DEVMETHOD_END
 };
@@ -960,6 +965,16 @@ pcib_probe_hotplug(struct pcib_softc *sc)
 		}
 	}
 
+	/*
+	 * Now that we're sure we want to do hot plug, ask the
+	 * firmware, if any, if that's OK.
+	 */
+	if (pcib_request_feature(dev, PCI_FEATURE_HP) != 0) {
+		if (bootverbose)
+			device_printf(dev, "Unable to activate hot plug feature.\n");
+		return;
+	}
+
 	sc->flags |= PCIB_HOTPLUG;
 }
 
@@ -1055,14 +1070,6 @@ pcib_hotplug_present(struct pcib_softc *sc)
 	if (!pcib_hotplug_inserted(sc))
 		return (0);
 
-	/*
-	 * Require the Electromechanical Interlock to be engaged if
-	 * present.
-	 */
-	if (sc->pcie_slot_cap & PCIEM_SLOT_CAP_EIP &&
-	    (sc->pcie_slot_sta & PCIEM_SLOT_STA_EIS) == 0)
-		return (0);
-
 	/* Require the Data Link Layer to be active. */
 	if (!(sc->pcie_link_sta & PCIEM_LINK_STA_DL_ACTIVE))
 		return (0);
@@ -1148,13 +1155,15 @@ pcib_pcie_hotplug_update(struct pcib_softc *sc, uint16_t val, uint16_t mask,
 }
 
 static void
-pcib_pcie_intr(void *arg)
+pcib_pcie_intr_hotplug(void *arg)
 {
 	struct pcib_softc *sc;
 	device_t dev;
+	uint16_t old_slot_sta;
 
 	sc = arg;
 	dev = sc->dev;
+	old_slot_sta = sc->pcie_slot_sta;
 	sc->pcie_slot_sta = pcie_read_config(dev, PCIER_SLOT_STA, 2);
 
 	/* Clear the events just reported. */
@@ -1170,7 +1179,8 @@ pcib_pcie_intr(void *arg)
 			    "Attention Button Pressed: Detach Cancelled\n");
 			sc->flags &= ~PCIB_DETACH_PENDING;
 			callout_stop(&sc->pcie_ab_timer);
-		} else {
+		} else if (old_slot_sta & PCIEM_SLOT_STA_PDS) {
+			/* Only initiate detach sequence if device present. */
 			device_printf(dev,
 		    "Attention Button Pressed: Detaching in 5 seconds\n");
 			sc->flags |= PCIB_DETACH_PENDING;
@@ -1229,10 +1239,8 @@ static void
 pcib_pcie_ab_timeout(void *arg)
 {
 	struct pcib_softc *sc;
-	device_t dev;
 
 	sc = arg;
-	dev = sc->dev;
 	mtx_assert(&Giant, MA_OWNED);
 	if (sc->flags & PCIB_DETACH_PENDING) {
 		sc->flags |= PCIB_DETACHING;
@@ -1253,15 +1261,12 @@ pcib_pcie_cc_timeout(void *arg)
 	mtx_assert(&Giant, MA_OWNED);
 	sta = pcie_read_config(dev, PCIER_SLOT_STA, 2);
 	if (!(sta & PCIEM_SLOT_STA_CC)) {
-		device_printf(dev,
-		    "HotPlug Command Timed Out - forcing detach\n");
-		sc->flags &= ~(PCIB_HOTPLUG_CMD_PENDING | PCIB_DETACH_PENDING);
-		sc->flags |= PCIB_DETACHING;
-		pcib_pcie_hotplug_update(sc, 0, 0, true);
+		device_printf(dev, "HotPlug Command Timed Out\n");
+		sc->flags &= ~PCIB_HOTPLUG_CMD_PENDING;
 	} else {
 		device_printf(dev,
 	    "Missed HotPlug interrupt waiting for Command Completion\n");
-		pcib_pcie_intr(sc);
+		pcib_pcie_intr_hotplug(sc);
 	}
 }
 
@@ -1284,7 +1289,7 @@ pcib_pcie_dll_timeout(void *arg)
 	} else if (sta != sc->pcie_link_sta) {
 		device_printf(dev,
 		    "Missed HotPlug interrupt waiting for DLL Active\n");
-		pcib_pcie_intr(sc);
+		pcib_pcie_intr_hotplug(sc);
 	}
 }
 
@@ -1320,7 +1325,7 @@ pcib_alloc_pcie_irq(struct pcib_softc *sc)
 		rid = 0;
 
 	sc->pcie_irq = bus_alloc_resource_any(dev, SYS_RES_IRQ, &rid,
-	    RF_ACTIVE);
+	    RF_ACTIVE | RF_SHAREABLE);
 	if (sc->pcie_irq == NULL) {
 		device_printf(dev,
 		    "Failed to allocate interrupt for PCI-e events\n");
@@ -1330,7 +1335,7 @@ pcib_alloc_pcie_irq(struct pcib_softc *sc)
 	}
 
 	error = bus_setup_intr(dev, sc->pcie_irq, INTR_TYPE_MISC,
-	    NULL, pcib_pcie_intr, sc, &sc->pcie_ihand);
+	    NULL, pcib_pcie_intr_hotplug, sc, &sc->pcie_ihand);
 	if (error) {
 		device_printf(dev, "Failed to setup PCI-e interrupt handler\n");
 		bus_release_resource(dev, SYS_RES_IRQ, rid, sc->pcie_irq);
@@ -1472,16 +1477,14 @@ pcib_cfg_save(struct pcib_softc *sc)
 static void
 pcib_cfg_restore(struct pcib_softc *sc)
 {
-	device_t	dev;
 #ifndef NEW_PCIB
 	uint16_t command;
 #endif
-	dev = sc->dev;
 
 #ifdef NEW_PCIB
 	pcib_write_windows(sc, WIN_IO | WIN_MEM | WIN_PMEM);
 #else
-	command = pci_read_config(dev, PCIR_COMMAND, 2);
+	command = pci_read_config(sc->dev, PCIR_COMMAND, 2);
 	if (command & PCIM_CMD_PORTEN)
 		pcib_set_io_decode(sc);
 	if (command & PCIM_CMD_MEMEN)
@@ -1775,6 +1778,12 @@ pcib_resume(device_t dev)
 {
 
 	pcib_cfg_restore(device_get_softc(dev));
+
+	/*
+	 * Restore the Command register only after restoring the windows.
+	 * The bridge should not be claiming random windows.
+	 */
+	pci_write_config(dev, PCIR_COMMAND, pci_get_cmdreg(dev), 2);
 	return (bus_generic_resume(dev));
 }
 
@@ -2537,6 +2546,22 @@ pcib_enable_ari(struct pcib_softc *sc, uint32_t pcie_pos)
 int
 pcib_maxslots(device_t dev)
 {
+#if !defined(__amd64__) && !defined(__i386__)
+	uint32_t pcie_pos;
+	uint16_t val;
+
+	/*
+	 * If this is a PCIe rootport or downstream switch port, there's only
+	 * one slot permitted.
+	 */
+	if (pci_find_cap(dev, PCIY_EXPRESS, &pcie_pos) == 0) {
+		val = pci_read_config(dev, pcie_pos + PCIER_FLAGS, 2);
+		val &= PCIEM_FLAGS_TYPE;
+		if (val == PCIEM_TYPE_ROOT_PORT ||
+		    val == PCIEM_TYPE_DOWNSTREAM_PORT)
+			return (0);
+	}
+#endif
 	return (PCI_SLOTMAX);
 }
 
@@ -2550,7 +2575,7 @@ pcib_ari_maxslots(device_t dev)
 	if (sc->flags & PCIB_ENABLE_ARI)
 		return (PCIE_ARI_SLOTMAX);
 	else
-		return (PCI_SLOTMAX);
+		return (pcib_maxslots(dev));
 }
 
 static int
@@ -2831,6 +2856,58 @@ pcib_try_enable_ari(device_t pcib, device_t dev)
 	pcib_enable_ari(sc, pcie_pos);
 
 	return (0);
+}
+
+int
+pcib_request_feature_allow(device_t pcib, device_t dev,
+    enum pci_feature feature)
+{
+	/*
+	 * No host firmware we have to negotiate with, so we allow
+	 * every valid feature requested.
+	 */
+	switch (feature) {
+	case PCI_FEATURE_AER:
+	case PCI_FEATURE_HP:
+		break;
+	default:
+		return (EINVAL);
+	}
+
+	return (0);
+}
+
+int
+pcib_request_feature(device_t dev, enum pci_feature feature)
+{
+
+	/*
+	 * Invoke PCIB_REQUEST_FEATURE of this bridge first in case
+	 * the firmware overrides the method of PCI-PCI bridges.
+	 */
+	return (PCIB_REQUEST_FEATURE(dev, dev, feature));
+}
+
+/*
+ * Pass the request to use this PCI feature up the tree. Either there's a
+ * firmware like ACPI that's using this feature that will approve (or deny) the
+ * request to take it over, or the platform has no such firmware, in which case
+ * the request will be approved. If the request is approved, the OS is expected
+ * to make use of the feature or render it harmless.
+ */
+static int
+pcib_request_feature_default(device_t pcib, device_t dev,
+    enum pci_feature feature)
+{
+	device_t bus;
+
+	/*
+	 * Our parent is necessarily a pci bus. Its parent will either be
+	 * another pci bridge (which passes it up) or a host bridge that can
+	 * approve or reject the request.
+	 */
+	bus = device_get_parent(pcib);
+	return (PCIB_REQUEST_FEATURE(device_get_parent(bus), dev, feature));
 }
 
 static int

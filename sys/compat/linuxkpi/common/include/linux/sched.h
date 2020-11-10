@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/sched.h 345926 2019-04-05 11:21:00Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/sched.h 364390 2020-08-19 13:32:55Z hselasky $
  */
 #ifndef	_LINUX_SCHED_H_
 #define	_LINUX_SCHED_H_
@@ -76,10 +76,12 @@ struct task_struct {
 	unsigned bsd_ioctl_len;
 	struct completion parked;
 	struct completion exited;
-	TAILQ_ENTRY(task_struct) rcu_entry;
-	int rcu_recurse;
+#define	TS_RCU_TYPE_MAX 2
+	TAILQ_ENTRY(task_struct) rcu_entry[TS_RCU_TYPE_MAX];
+	int rcu_recurse[TS_RCU_TYPE_MAX];
 	int bsd_interrupt_value;
 	struct work_struct *work;	/* current work struct, if set */
+	struct task_struct *group_leader;
 };
 
 #define	current	({ \
@@ -95,7 +97,9 @@ struct task_struct {
 #define	get_pid(x)		(x)
 #define	put_pid(x)		do { } while (0)
 #define	current_euid()	(curthread->td_ucred->cr_uid)
+#define	task_euid(task)	((task)->task_thread->td_ucred->cr_uid)
 
+#define	get_task_state(task)		atomic_read(&(task)->state)
 #define	set_task_state(task, x)		atomic_set(&(task)->state, (x))
 #define	__set_task_state(task, x)	((task)->state.counter = (x))
 #define	set_current_state(x)		set_task_state(current, x)

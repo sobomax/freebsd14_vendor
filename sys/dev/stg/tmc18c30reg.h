@@ -1,8 +1,10 @@
-/*	$FreeBSD: releng/11.3/sys/dev/stg/tmc18c30reg.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/stg/tmc18c30reg.h 326255 2017-11-27 14:52:40Z pfg $	*/
 /*	$NecBSD: tmc18c30reg.h,v 1.4.24.1 2001/06/08 06:27:50 honda Exp $	*/
 /*	$NetBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * [NetBSD for NEC PC-98 series]
  *  Copyright (c) 1996, 1997, 1998
  *	NetBSD/pc98 porting staff. All rights reserved.

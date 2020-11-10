@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/dev/syscons/logo/beastie.c 206362 2010-04-07 17:03:05Z jkim $ */
+/* $FreeBSD: releng/12.2/sys/dev/syscons/logo/beastie.c 206362 2010-04-07 17:03:05Z jkim $ */
 
 #define logo_width 88
 #define logo_height 88

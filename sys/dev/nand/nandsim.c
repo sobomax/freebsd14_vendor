@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2009-2012 Semihalf
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 /* Simulated NAND controller driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/nand/nandsim.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/nand/nandsim.c 349657 2019-07-03 17:34:26Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -293,7 +295,7 @@ nandsim_chip_status(struct sim_chip *chip)
 	nand_debug(NDBG_SIM,"status for chip num:%d at ctrl:%d", chip->num,
 	    chip->ctrl_num);
 
-	if (chip->ctrl_num >= MAX_SIM_DEV &&
+	if (chip->ctrl_num >= MAX_SIM_DEV ||
 	    chip->num >= MAX_CTRL_CS)
 		return (EINVAL);
 

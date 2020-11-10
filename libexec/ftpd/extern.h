@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/4/94
- * $FreeBSD: releng/11.3/libexec/ftpd/extern.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/libexec/ftpd/extern.h 326025 2017-11-20 19:49:47Z pfg $
  */
 
 #include <sys/types.h>

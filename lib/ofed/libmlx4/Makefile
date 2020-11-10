@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/ofed/libmlx4/Makefile 335253 2018-06-16 15:05:05Z kib $
+# $FreeBSD: releng/12.2/lib/ofed/libmlx4/Makefile 335253 2018-06-16 15:05:05Z kib $
 
 _spath=	${SRCTOP}/contrib/ofed/libmlx4
 .PATH: ${_spath}

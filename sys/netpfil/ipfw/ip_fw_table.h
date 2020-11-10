@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_table.h 290332 2015-11-03 10:29:46Z ae $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_table.h 290332 2015-11-03 10:29:46Z ae $
  */
 
 #ifndef _IPFW2_TABLE_H

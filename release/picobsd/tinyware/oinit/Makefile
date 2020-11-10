@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/release/picobsd/tinyware/oinit/Makefile 275104 2014-11-26 08:12:21Z bapt $
+# $FreeBSD: releng/12.2/release/picobsd/tinyware/oinit/Makefile 275104 2014-11-26 08:12:21Z bapt $
 #
 PROG=		oinit
 

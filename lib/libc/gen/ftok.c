@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1994 SigmaSoft, Th. Lockert <tholo@sigmasoft.com>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/ftok.c 338124 2018-08-21 01:17:28Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/ftok.c 337422 2018-08-07 15:24:19Z pfg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

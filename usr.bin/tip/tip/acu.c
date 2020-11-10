@@ -1,7 +1,9 @@
 /*	$OpenBSD: acu.c,v 1.12 2006/03/17 14:43:06 moritz Exp $	*/
 /*	$NetBSD: acu.c,v 1.4 1996/12/29 10:34:03 cgd Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/tip/tip/acu.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/tip/tip/acu.c 353577 2019-10-15 17:30:12Z brooks $");
 
 #ifndef lint
 #if 0
@@ -188,7 +190,7 @@ acutype(char *s)
 	acu_t *p;
 	extern acu_t acutable[];
 
-	for (p = acutable; p->acu_name != '\0'; p++)
+	for (p = acutable; p->acu_name != NULL; p++)
 		if (!strcmp(s, p->acu_name))
 			return (p);
 	return (NOACU);

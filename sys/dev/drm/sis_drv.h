@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/sis_drv.h 182080 2008-08-23 20:59:12Z rnoland $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/sis_drv.h 338285 2018-08-24 00:02:00Z imp $");
 
 #ifndef _SIS_DRV_H_
 #define _SIS_DRV_H_

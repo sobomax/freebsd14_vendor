@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libiconv_modules/HZ/citrus_hz.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libiconv_modules/HZ/citrus_hz.h 326219 2017-11-26 02:00:33Z pfg $ */
 /* $NetBSD: citrus_hz.h,v 1.1 2006/11/22 23:38:27 tnozaki Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c)2004, 2006 Citrus Project,
  * All rights reserved.
  *

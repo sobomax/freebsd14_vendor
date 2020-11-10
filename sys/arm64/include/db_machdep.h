@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/db_machdep.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm64/include/db_machdep.h 316001 2017-03-26 18:46:35Z bde $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -117,9 +117,6 @@ typedef long		db_expr_t;
 				 (((ins) & 0x3bc00000u) == 0x29800000u)) /* pair (pre-indexed) */
 
 #define	next_instr_address(pc, bd)	((bd) ? (pc) : ((pc) + 4))
-
-#define	DB_SMALL_VALUE_MAX	(0x7fffffff)
-#define	DB_SMALL_VALUE_MIN	(-0x40001)
 
 #define	DB_ELFSIZE		64
 

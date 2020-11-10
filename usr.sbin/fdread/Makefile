@@ -1,10 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/fdread/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: releng/12.2/usr.sbin/fdread/Makefile 312910 2017-01-28 02:22:15Z nyan $
 
 PROG=	fdread
 SRCS=	fdread.c fdutil.c
-
-.if ${MACHINE} == "pc98"
-CFLAGS+= -DPC98
-.endif
 
 .include <bsd.prog.mk>

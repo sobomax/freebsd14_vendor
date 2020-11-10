@@ -23,13 +23,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/allwinner/aw_sid.h 305440 2016-09-05 21:11:27Z manu $
+ * $FreeBSD: releng/12.2/sys/arm/allwinner/aw_sid.h 337371 2018-08-06 05:35:24Z manu $
  */
 
 #ifndef __AW_SID_H__
 #define __AW_SID_H__
 
+enum aw_sid_fuse_id {
+	AW_SID_FUSE_ROOTKEY = 1,
+	AW_SID_FUSE_THSSENSOR,
+};
+
 int	aw_sid_read_tscalib(uint32_t *, uint32_t *);
-int	aw_sid_get_rootkey(u_char *out);
+int	aw_sid_get_fuse(enum aw_sid_fuse_id id, uint8_t *out, uint32_t *size);
 
 #endif /* !__AW_SID_H__ */

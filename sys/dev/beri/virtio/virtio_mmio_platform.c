@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/beri/virtio/virtio_mmio_platform.c 285093 2015-07-03 14:27:28Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/beri/virtio/virtio_mmio_platform.c 285093 2015-07-03 14:27:28Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

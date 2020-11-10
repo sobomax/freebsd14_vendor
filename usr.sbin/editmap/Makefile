@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/editmap/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/editmap/Makefile 314659 2017-03-04 11:38:03Z ngie $
 
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/editmap

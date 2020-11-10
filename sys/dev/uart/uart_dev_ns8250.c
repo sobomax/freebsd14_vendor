@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Marcel Moolenaar
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_dev_ns8250.c 340145 2018-11-04 23:28:56Z mmacy $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_dev_ns8250.c 365476 2020-09-08 22:19:06Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,6 +58,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_dev_ns8250.c 340145 2018-11-04
 #ifdef DEV_ACPI
 #include <dev/uart/uart_cpu_acpi.h>
 #endif
+
 #include <dev/ic/ns16550.h>
 
 #include "uart_if.h"
@@ -136,7 +139,7 @@ ns8250_divisor(int rclk, int baudrate)
 	actual_baud = rclk / (divisor << 4);
 
 	/* 10 times error in percent: */
-	error = ((actual_baud - baudrate) * 2000 / baudrate + 1) >> 1;
+	error = ((actual_baud - baudrate) * 2000 / baudrate + 1) / 2;
 
 	/* enforce maximum error tolerance: */
 	if (error < -UART_DEV_TOLERANCE_PCT || error > UART_DEV_TOLERANCE_PCT)
@@ -201,6 +204,9 @@ ns8250_flush(struct uart_bas *bas, int what)
 	uint8_t fcr;
 
 	fcr = FCR_ENABLE;
+#ifdef CPU_XBURST
+	fcr |= FCR_UART_ON;
+#endif
 	if (what & UART_FLUSH_TRANSMITTER)
 		fcr |= FCR_XMT_RST;
 	if (what & UART_FLUSH_RECEIVER)
@@ -271,6 +277,10 @@ ns8250_probe(struct uart_bas *bas)
 {
 	u_char val;
 
+#ifdef CPU_XBURST
+	uart_setreg(bas, REG_FCR, FCR_UART_ON);
+#endif
+
 	/* Check known 0 bits that don't depend on DLAB. */
 	val = uart_getreg(bas, REG_IIR);
 	if (val & 0x30)
@@ -292,7 +302,7 @@ static void
 ns8250_init(struct uart_bas *bas, int baudrate, int databits, int stopbits,
     int parity)
 {
-	u_char	ier;
+	u_char ier, val;
 
 	if (bas->rclk == 0)
 		bas->rclk = DEFAULT_RCLK;
@@ -309,7 +319,11 @@ ns8250_init(struct uart_bas *bas, int baudrate, int databits, int stopbits,
 	uart_barrier(bas);
 
 	/* Disable the FIFO (if present). */
-	uart_setreg(bas, REG_FCR, 0);
+	val = 0;
+#ifdef CPU_XBURST
+	val |= FCR_UART_ON;
+#endif
+	uart_setreg(bas, REG_FCR, val);
 	uart_barrier(bas);
 
 	/* Set RTS & DTR. */
@@ -479,8 +493,12 @@ ns8250_bus_attach(struct uart_softc *sc)
 
 	bas = &sc->sc_bas;
 
+	ns8250->busy_detect = bas->busy_detect;
 	ns8250->mcr = uart_getreg(bas, REG_MCR);
 	ns8250->fcr = FCR_ENABLE;
+#ifdef CPU_XBURST
+	ns8250->fcr |= FCR_UART_ON;
+#endif
 	if (!resource_int_value("uart", device_get_unit(sc->sc_dev), "flags",
 	    &ivar)) {
 		if (UART_FLAGS_FCR_RX_LOW(ivar)) 
@@ -773,6 +791,7 @@ ns8250_bus_probe(struct uart_softc *sc)
 	struct uart_bas *bas;
 	int count, delay, error, limit;
 	uint8_t lsr, mcr, ier;
+	uint8_t val;
 
 	ns8250 = (struct ns8250_softc *)sc;
 	bas = &sc->sc_bas;
@@ -806,7 +825,11 @@ ns8250_bus_probe(struct uart_softc *sc)
 	 * done. Since this is the first time we enable the FIFOs, we reset
 	 * them.
 	 */
-	uart_setreg(bas, REG_FCR, FCR_ENABLE);
+	val = FCR_ENABLE;
+#ifdef CPU_XBURST
+	val |= FCR_UART_ON;
+#endif
+	uart_setreg(bas, REG_FCR, val);
 	uart_barrier(bas);
 	if (!(uart_getreg(bas, REG_IIR) & IIR_FIFO_MASK)) {
 		/*
@@ -820,7 +843,11 @@ ns8250_bus_probe(struct uart_softc *sc)
 		return (0);
 	}
 
-	uart_setreg(bas, REG_FCR, FCR_ENABLE | FCR_XMT_RST | FCR_RCV_RST);
+	val = FCR_ENABLE | FCR_XMT_RST | FCR_RCV_RST;
+#ifdef CPU_XBURST
+	val |= FCR_UART_ON;
+#endif
+	uart_setreg(bas, REG_FCR, val);
 	uart_barrier(bas);
 
 	count = 0;
@@ -830,7 +857,11 @@ ns8250_bus_probe(struct uart_softc *sc)
 	error = ns8250_drain(bas, UART_DRAIN_RECEIVER|UART_DRAIN_TRANSMITTER);
 	if (error) {
 		uart_setreg(bas, REG_MCR, mcr);
-		uart_setreg(bas, REG_FCR, 0);
+		val = 0;
+#ifdef CPU_XBURST
+		val |= FCR_UART_ON;
+#endif
+		uart_setreg(bas, REG_FCR, val);
 		uart_barrier(bas);
 		goto describe;
 	}
@@ -860,12 +891,16 @@ ns8250_bus_probe(struct uart_softc *sc)
 			ier = uart_getreg(bas, REG_IER) & ns8250->ier_mask;
 			uart_setreg(bas, REG_IER, ier);
 			uart_setreg(bas, REG_MCR, mcr);
-			uart_setreg(bas, REG_FCR, 0);
+			val = 0;
+#ifdef CPU_XBURST
+			val |= FCR_UART_ON;
+#endif
+			uart_setreg(bas, REG_FCR, val);
 			uart_barrier(bas);
 			count = 0;
 			goto describe;
 		}
-	} while ((lsr & LSR_OE) == 0 && count < 130);
+	} while ((lsr & LSR_OE) == 0 && count < 260);
 	count--;
 
 	uart_setreg(bas, REG_MCR, mcr);
@@ -886,6 +921,9 @@ ns8250_bus_probe(struct uart_softc *sc)
 	} else if (count >= 112 && count <= 128) {
 		sc->sc_rxfifosz = 128;
 		device_set_desc(sc->sc_dev, "16950 or compatible");
+	} else if (count >= 224 && count <= 256) {
+		sc->sc_rxfifosz = 256;
+		device_set_desc(sc->sc_dev, "16x50 with 256 byte FIFO");
 	} else {
 		sc->sc_rxfifosz = 16;
 		device_set_desc(sc->sc_dev,
@@ -988,13 +1026,8 @@ ns8250_bus_transmit(struct uart_softc *sc)
 
 	bas = &sc->sc_bas;
 	uart_lock(sc->sc_hwmtx);
-	if (sc->sc_txdatasz > 1) {
-		if ((uart_getreg(bas, REG_LSR) & LSR_TEMT) == 0)
-			ns8250_drain(bas, UART_DRAIN_TRANSMITTER);
-	} else {
-		while ((uart_getreg(bas, REG_LSR) & LSR_THRE) == 0)
-			DELAY(4);
-	}
+	while ((uart_getreg(bas, REG_LSR) & LSR_THRE) == 0)
+		DELAY(4);
 	for (i = 0; i < sc->sc_txdatasz; i++) {
 		uart_setreg(bas, REG_DATA, sc->sc_txbuf[i]);
 		uart_barrier(bas);

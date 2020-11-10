@@ -1,5 +1,7 @@
 /*	BSDI inet.c,v 2.3 1995/10/24 02:19:29 prb Exp	*/
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1988, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -11,7 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +37,7 @@ static char sccsid[] = "@(#)inet6.c	8.4 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/netstat/inet6.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/netstat/inet6.c 356625 2020-01-11 01:56:57Z bz $");
 
 #ifdef INET6
 #include <sys/param.h>
@@ -389,6 +391,8 @@ ip6_stats(u_long off, const char *name, int af1 __unused, int proto __unused)
 	    "{N:/fragment%s dropped after timeout}\n");
 	p(ip6s_fragoverflow, "\t{:dropped-fragments-overflow/%ju} "
 	    "{N:/fragment%s that exceeded limit}\n");
+	p(ip6s_atomicfrags, "\t{:atomic-fragments/%ju} "
+	    "{N:/atomic fragment%s}\n");
 	p(ip6s_reassembled, "\t{:reassembled-packets/%ju} "
 	    "{N:/packet%s reassembled ok}\n");
 	p(ip6s_delivered, "\t{:received-local-packets/%ju} "
@@ -1306,7 +1310,7 @@ inet6print(const char *container, struct in6_addr *in6, int port,
  */
 
 char *
-inet6name(struct in6_addr *in6p)
+inet6name(struct in6_addr *ia6)
 {
 	struct sockaddr_in6 sin6;
 	char hbuf[NI_MAXHOST], *cp;
@@ -1315,7 +1319,7 @@ inet6name(struct in6_addr *in6p)
 	static int first = 1;
 	int flags, error;
 
-	if (IN6_IS_ADDR_UNSPECIFIED(in6p)) {
+	if (IN6_IS_ADDR_UNSPECIFIED(ia6)) {
 		strcpy(line, "*");
 		return (line);
 	}
@@ -1328,9 +1332,9 @@ inet6name(struct in6_addr *in6p)
 			domain[0] = 0;
 	}
 	memset(&sin6, 0, sizeof(sin6));
-	memcpy(&sin6.sin6_addr, in6p, sizeof(*in6p));
+	memcpy(&sin6.sin6_addr, ia6, sizeof(*ia6));
 	sin6.sin6_family = AF_INET6;
-	/* XXX: in6p.s6_addr[2] can contain scopeid. */
+	/* XXX: ia6.s6_addr[2] can contain scopeid. */
 	in6_fillscopeid(&sin6);
 	flags = (numeric_addr) ? NI_NUMERICHOST : 0;
 	error = getnameinfo((struct sockaddr *)&sin6, sizeof(sin6), hbuf,

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2009 University of Zagreb
  * Copyright (c) 2006-2009 FreeBSD Foundation
  * All rights reserved.
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net/vnet.c 340051 2018-11-02 14:07:06Z bz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/vnet.c 339951 2018-10-31 12:50:39Z bz $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -176,7 +178,7 @@ static MALLOC_DEFINE(M_VNET_DATA, "vnet_data", "VNET data");
  * Space to store virtualized global variables from loadable kernel modules,
  * and the free list to manage it.
  */
-static VNET_DEFINE(char, modspace[VNET_MODMIN]);
+VNET_DEFINE_STATIC(char, modspace[VNET_MODMIN] __aligned(__alignof(void *)));
 
 /*
  * Global lists of subsystem constructor and destructors for vnets.  They are
@@ -312,9 +314,8 @@ static void
 vnet0_init(void *arg __unused)
 {
 
-	/* Warn people before take off - in case we crash early. */
-	printf("WARNING: VIMAGE (virtualized network stack) is a highly "
-	    "experimental feature.\n");
+	if (bootverbose)
+		printf("VIMAGE (virtualized network stack) enabled\n");
 
 	/*
 	 * We MUST clear curvnet in vi_init_done() before going SMP,
@@ -348,7 +349,7 @@ vnet_data_startup(void *dummy __unused)
 	TAILQ_INSERT_HEAD(&vnet_data_free_head, df, vnd_link);
 	sx_init(&vnet_data_free_lock, "vnet_data alloc lock");
 }
-SYSINIT(vnet_data, SI_SUB_KLD, SI_ORDER_FIRST, vnet_data_startup, 0);
+SYSINIT(vnet_data, SI_SUB_KLD, SI_ORDER_FIRST, vnet_data_startup, NULL);
 
 /* Dummy VNET_SYSINIT to make sure we always reach the final end state. */
 static void

@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/e1000/e1000_82575.h 333213 2018-05-03 15:40:56Z marius $*/
+/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_82575.h 327865 2018-01-12 06:37:53Z eadler $*/
 
 #ifndef _E1000_82575_H_
 #define _E1000_82575_H_

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
@@ -8,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/i386/i386/mp_clock.c 170289 2007-06-04 18:25:08Z dwmalone $");
+__FBSDID("$FreeBSD: releng/12.2/sys/i386/i386/mp_clock.c 326408 2017-11-30 20:33:45Z pfg $");
 
 /*-
  * Just when we thought life were beautiful, reality pops its grim face over

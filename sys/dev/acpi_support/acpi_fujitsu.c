@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpi_support/acpi_fujitsu.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpi_support/acpi_fujitsu.c 246128 2013-01-30 18:01:20Z sbz $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

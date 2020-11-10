@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/libexec/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: releng/12.2/secure/libexec/Makefile 321912 2017-08-02 08:35:51Z ngie $
 
 .include <src.opts.mk>
 
@@ -7,9 +7,7 @@ SUBDIR=
 SUBDIR+=sftp-server ssh-keysign ssh-pkcs11-helper
 .endif
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 SUBDIR_PARALLEL=
 

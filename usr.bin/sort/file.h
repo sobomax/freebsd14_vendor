@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/usr.bin/sort/file.h 335742 2018-06-27 21:11:28Z kevans $	*/
+/*	$FreeBSD: releng/12.2/usr.bin/sort/file.h 335404 2018-06-20 03:31:19Z kevans $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD

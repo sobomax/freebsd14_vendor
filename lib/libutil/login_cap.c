@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libutil/login_cap.c 318121 2017-05-09 23:31:09Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libutil/login_cap.c 317265 2017-04-21 19:27:33Z pfg $");
 
 #include <sys/types.h>
 #include <sys/time.h>

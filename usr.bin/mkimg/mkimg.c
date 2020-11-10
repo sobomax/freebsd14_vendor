@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/mkimg/mkimg.c 332952 2018-04-24 17:53:27Z benno $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/mkimg/mkimg.c 332440 2018-04-12 17:16:13Z benno $");
 
 #include <sys/param.h>
 #include <sys/stat.h>

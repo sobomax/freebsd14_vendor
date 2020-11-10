@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/lm75.c 300421 2016-05-22 13:58:32Z loos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/lm75.c 300421 2016-05-22 13:58:32Z loos $");
 
 #include "opt_platform.h"
 

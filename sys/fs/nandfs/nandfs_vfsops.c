@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2012 Semihalf
  * Copyright (c) 2008, 2009 Reinoud Zandijk
  * All rights reserved.
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/fs/nandfs/nandfs_vfsops.c 298848 2016-04-30 14:41:18Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/fs/nandfs/nandfs_vfsops.c 328238 2018-01-22 02:08:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -559,7 +561,7 @@ nandfs_read_structures(struct nandfs_device *fsdev)
 {
 	struct nandfs_fsdata *fsdata, *fsdatat;
 	struct nandfs_super_block *sblocks, *ssblock;
-	int nsbs, nfsds, i;
+	u_int nsbs, nfsds, i;
 	int error = 0;
 	int nrsbs;
 

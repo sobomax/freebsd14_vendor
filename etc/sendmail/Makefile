@@ -1,12 +1,12 @@
 #	@(#)Makefile	8.19 (Berkeley) 1/14/97
-# $FreeBSD: releng/11.3/etc/sendmail/Makefile 289200 2015-10-12 21:02:36Z peter $
+# $FreeBSD: releng/12.2/etc/sendmail/Makefile 334700 2018-06-06 01:51:05Z brd $
 
 M4=		m4
 CHMOD=		chmod
 ROMODE=		444
 RM=		rm -f
 
-SENDMAIL_DIR=	${.CURDIR}/../../contrib/sendmail
+SENDMAIL_DIR=	${SRCTOP}/contrib/sendmail
 SMDIR=		${SENDMAIL_DIR}/src
 SENDMAIL_CF_DIR?=${SENDMAIL_DIR}/cf
 
@@ -70,8 +70,6 @@ distribution:
 	    ${.CURDIR}/freebsd.submit.mc freebsd.submit.cf ${DESTDIR}/etc/mail
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 444 \
 	    ${SMDIR}/helpfile ${DESTDIR}/etc/mail
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 640 \
-	    /dev/null ${DESTDIR}/var/log/sendmail.st
 .if defined(INSTALL_CF)
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
 	    ${INSTALL_CF} ${DEST_CF}

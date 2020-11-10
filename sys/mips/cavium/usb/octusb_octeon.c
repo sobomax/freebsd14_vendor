@@ -1,7 +1,9 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/cavium/usb/octusb_octeon.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/cavium/usb/octusb_octeon.c 349050 2019-06-15 09:25:40Z emaste $");
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2008 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -177,12 +179,12 @@ octusb_octeon_detach(device_t dev)
 	if (nports > OCTUSB_MAX_PORTS)
 		panic("octusb: too many USB ports %d", nports);
 	for (i = 0; i < nports; i++) {
-		if (sc->sc_dci.sc_irq_res[0] && sc->sc_dci.sc_intr_hdl[0]) {
+		if (sc->sc_dci.sc_irq_res[i] && sc->sc_dci.sc_intr_hdl[i]) {
 			err = bus_teardown_intr(dev, sc->sc_dci.sc_irq_res[i],
 			    sc->sc_dci.sc_intr_hdl[i]);
 			sc->sc_dci.sc_intr_hdl[i] = NULL;
 		}
-		if (sc->sc_dci.sc_irq_res) {
+		if (sc->sc_dci.sc_irq_res[i]) {
 			bus_release_resource(dev, SYS_RES_IRQ, 0,
 			    sc->sc_dci.sc_irq_res[i]);
 			sc->sc_dci.sc_irq_res[i] = NULL;

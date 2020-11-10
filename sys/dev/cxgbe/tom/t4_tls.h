@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/cxgbe/tom/t4_tls.h 345664 2019-03-28 23:43:38Z jhb $
+ * $FreeBSD: releng/12.2/sys/dev/cxgbe/tom/t4_tls.h 348213 2019-05-24 00:44:31Z jhb $
  *
  */
 
@@ -248,16 +248,6 @@ enum {
 	CH_MK_SIZE_512,
 	CH_MK_SIZE_NOP,
 };
-
-#define SCMD_ENCDECCTRL_ENCRYPT 0
-#define SCMD_ENCDECCTRL_DECRYPT 1
-
-#define SCMD_CIPH_MODE_NOP			0
-#define SCMD_CIPH_MODE_AES_CBC			1
-#define SCMD_CIPH_MODE_AES_GCM			2
-#define SCMD_CIPH_MODE_AES_CTR			3
-#define SCMD_CIPH_MODE_AES_GEN			4
-#define SCMD_CIPH_MODE_AES_CCM			7
 
 struct tls_scmd {
 	__be32 seqno_numivs;

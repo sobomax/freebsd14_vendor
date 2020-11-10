@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/dtc/input_buffer.hh 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/dtc/input_buffer.hh 328173 2018-01-19 21:20:24Z kevans $
  */
 
 #ifndef _INPUT_BUFFER_HH_

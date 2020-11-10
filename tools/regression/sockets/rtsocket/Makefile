@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/sockets/rtsocket/Makefile 281392 2015-04-11 02:59:45Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/sockets/rtsocket/Makefile 281392 2015-04-11 02:59:45Z ngie $
 
 PROG=	rtsocket
 MAN=

@@ -1,7 +1,6 @@
-# $FreeBSD: releng/11.3/stand/efi/loader/arch/i386/Makefile.inc 329140 2018-02-11 20:58:00Z kevans $
+# $FreeBSD: releng/12.2/stand/efi/loader/arch/i386/Makefile.inc 354004 2019-10-24 03:48:28Z kevans $
 
 SRCS+=	start.S \
-	efimd.c \
 	elf32_freebsd.c \
 	exec.c
 

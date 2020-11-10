@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/tools/makeroot/makeroot.sh 302146 2016-06-23 19:19:44Z emaste $
+# $FreeBSD: releng/12.2/tools/tools/makeroot/makeroot.sh 334381 2018-05-30 13:51:00Z emaste $
 
 usage()
 {
@@ -80,7 +80,7 @@ while getopts "B:de:f:g:K:k:l:p:s:" opt; do
 	B)	BFLAG="-B ${OPTARG}" ;;
 	d)	DEBUG=1 ;;
 	e)	EXTRAS="${EXTRAS} ${OPTARG}" ;;
-	f)	FILELIST="${OPTARG}"; DUPFLAG= ;;
+	f)	FILELIST="${OPTARG}";;
 	g)	GROUP="${OPTARG}" ;;
 	K)	KEYUSERS="${KEYUSERS} ${OPTARG}" ;;
 	k)	KEYDIR="${OPTARG}" ;;

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/krb5/krb5_mech.c 299008 2016-05-03 22:05:03Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kgssapi/krb5/krb5_mech.c 326279 2017-11-27 15:49:00Z pfg $");
 
 #include "opt_inet6.h"
 

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2013, 2016 Chelsio, Inc. All rights reserved.
  *
  * This software is available to you under a choice of one of two
@@ -28,7 +30,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 346950 2019-04-30 07:53:15Z np $
+ * $FreeBSD: releng/12.2/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 360548 2020-05-01 21:22:26Z np $
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__
@@ -89,6 +91,7 @@ static inline void *cplhdr(struct mbuf *m)
 
 #define C4IW_ID_TABLE_F_RANDOM 1       /* Pseudo-randomize the id's returned */
 #define C4IW_ID_TABLE_F_EMPTY  2       /* Table is initially empty */
+#define C4IW_MAX_PAGE_SIZE 0x8000000
 
 struct c4iw_id_table {
 	u32 flags;
@@ -258,6 +261,7 @@ out:
 
 struct c4iw_dev {
 	struct ib_device ibdev;
+	struct pci_dev pdev;
 	struct c4iw_rdev rdev;
 	u32 device_cap_flags;
 	struct idr cqidr;
@@ -860,7 +864,6 @@ struct c4iw_ep {
 	u32 tx_chan;
 	u32 mtu;
 	u16 mss;
-	u16 emss;
 	u16 plen;
 	u16 rss_qid;
 	u16 txq_idx;

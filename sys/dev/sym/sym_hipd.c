@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  *  Device driver optimized for the Symbios/LSI 53C896/53C895A/53C1010
  *  PCI-SCSI controllers.
  *
@@ -56,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sym/sym_hipd.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sym/sym_hipd.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #define SYM_DRIVER_NAME	"sym-1.6.5-20000902"
 
@@ -138,7 +140,7 @@ typedef	u_int32_t u32;
 #define MEMORY_BARRIER()	dmb()
 #elif	defined	__aarch64__
 #define MEMORY_BARRIER()	dmb(sy)
-#elif	defined __riscv__
+#elif	defined __riscv
 #define MEMORY_BARRIER()	fence()
 #else
 #error	"Not supported platform"

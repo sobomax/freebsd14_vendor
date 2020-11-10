@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/mips/conf/ROUTERSTATION.hints 254989 2013-08-28 14:43:04Z loos $
+# $FreeBSD: releng/12.2/sys/mips/conf/ROUTERSTATION.hints 254989 2013-08-28 14:43:04Z loos $
 #
 
 # arge0 mdio bus

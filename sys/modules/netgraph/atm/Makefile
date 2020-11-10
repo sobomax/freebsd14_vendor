@@ -1,7 +1,6 @@
-# $FreeBSD: releng/11.3/sys/modules/netgraph/atm/Makefile 179308 2008-05-25 22:11:40Z rwatson $
+# $FreeBSD: releng/12.2/sys/modules/netgraph/atm/Makefile 317383 2017-04-24 21:21:49Z brooks $
 
 SUBDIR=			\
-	atm 		\
 	atmbase		\
 	ccatm		\
 	sscfu		\

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/ttyio/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/tests/ttyio/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.own.mk>
 

@@ -1,4 +1,7 @@
-# $FreeBSD: releng/11.3/share/mk/local.init.mk 294349 2016-01-19 22:41:44Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/local.init.mk 359912 2020-04-14 01:05:11Z sjg $
+
+.if !target(__${_this}__)
+__${_this}__:
 
 .if ${.MAKE.MODE:Mmeta*} != ""
 .if !empty(SUBDIR) && !defined(LIB) && !defined(PROG) && ${.MAKE.MAKEFILES:M*bsd.prog.mk} == ""
@@ -33,3 +36,5 @@ CFLAGS+= ${HOST_CFLAGS}
 .endif
 
 .-include "src.init.mk"
+.-include "${.CURDIR}/local.init.mk"
+.endif

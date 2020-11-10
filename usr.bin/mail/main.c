@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1980, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -39,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.2 (Berkeley) 4/20/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/mail/main.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/mail/main.c 359763 2020-04-10 00:27:19Z kevans $");
 
 #include "rcv.h"
 #include <fcntl.h>
@@ -50,6 +52,49 @@ __FBSDID("$FreeBSD: releng/11.3/usr.bin/mail/main.c 331722 2018-03-29 02:50:57Z 
  *
  * Startup -- interface with user.
  */
+int	msgCount;
+int	rcvmode;
+int	sawcom;
+char	*Tflag;
+int	senderr;
+int	edit;
+int	readonly;
+int	noreset;
+int	sourcing;
+int	loading;
+int	cond;
+FILE	*itf;
+FILE	*otf;
+int	image;
+FILE	*input;
+char	mailname[PATHSIZE];
+char	prevfile[PATHSIZE];
+char	*homedir;
+char	*myname;
+off_t	mailsize;
+int	lexnumber;
+char	lexstring[STRINGLEN];
+int	regretp;
+int	regretstack[REGDEP];
+char	*string_stack[REGDEP];
+int	numberstack[REGDEP];
+struct	message	*dot;
+struct	message	*message;
+struct	var	*variables[HSHSIZE];
+struct	grouphead	*groups[HSHSIZE];
+struct	ignoretab	ignore[2];
+
+struct	ignoretab	saveignore[2];
+
+struct	ignoretab	ignoreall[2];
+char	**altnames;
+int	debug;
+int	screenwidth;
+int	screenheight;
+
+int	realscreenheight;
+
+jmp_buf	srbuf;
 
 static jmp_buf	hdrjmp;
 

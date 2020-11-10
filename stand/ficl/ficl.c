@@ -55,7 +55,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: releng/11.3/stand/ficl/ficl.c 315221 2017-03-14 02:06:03Z pfg $ */
+/* $FreeBSD: releng/12.2/stand/ficl/ficl.c 314068 2017-02-22 02:35:59Z pfg $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>

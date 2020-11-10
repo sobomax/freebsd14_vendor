@@ -25,7 +25,7 @@
 #
 # Merges FreeBSD's several CD installation medias to the single DVD disk.
 #
-# $FreeBSD: releng/11.3/tools/tools/cd2dvd/cd2dvd.sh 228975 2011-12-30 00:04:11Z uqs $
+# $FreeBSD: releng/12.2/tools/tools/cd2dvd/cd2dvd.sh 325096 2017-10-29 08:17:03Z eadler $
 
 ## Helper functions
 usage () {
@@ -259,7 +259,7 @@ rm "${tmpdirout}"/cdrom.inf~ || exit 1
 
 mkisofs -b boot/cdboot -no-emul-boot -r -J \
 	-V "FreeBSD_Install" \
-	-publisher "The FreeBSD Project.  http://www.freebsd.org/" \
+	-publisher "The FreeBSD Project.  https://www.freebsd.org/" \
 	-o ${DVDIMAGE} "${tmpdirout}" \
 	|| exit 1 
 

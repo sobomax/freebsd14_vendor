@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/rtwnfw/Makefile.inc 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/rtwnfw/Makefile.inc 351875 2019-09-05 17:20:20Z bdrewery $
 #
 # Common rules for building firmware.  Note this gets auto-included
 # by the subdir Makefile's as a consequence of included bsd.kmod.mk.
@@ -9,7 +9,7 @@ CLEANFILES+=	${_FIRM}
 
 FIRMWS=	${_FIRM}:${KMOD}:111
 
-FIRMWARE_LICENSE=	realtek
+# FIRMWARE_LICENSE=	realtek
 
 ${_FIRM}: ${SRCTOP}/sys/contrib/dev/rtwn/${_FIRM}.uu
-	uudecode -p $? > ${.TARGET}
+	uudecode -p ${.ALLSRC} > ${.TARGET}

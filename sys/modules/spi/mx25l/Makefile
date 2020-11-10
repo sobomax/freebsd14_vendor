@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/spi/mx25l/Makefile 332113 2018-04-06 16:48:07Z ian $
+# $FreeBSD: releng/12.2/sys/modules/spi/mx25l/Makefile 331868 2018-04-01 18:22:24Z ian $
 
 .PATH:	${SRCTOP}/sys/dev/flash
 

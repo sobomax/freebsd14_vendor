@@ -1,8 +1,10 @@
 /* 08 Nov 1998*/
-/*
+/*-
  * cdev.c
  *
  * 08 Nov 1998	Rajesh Vaidheeswarran
+ *
+ * SPDX-License-Identifier: BSD-4-Clause
  *
  * Copyright (c) 1998 Rajesh Vaidheeswarran
  * All rights reserved.
@@ -65,7 +67,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: releng/11.3/share/examples/kld/cdev/module/cdev.c 331085 2018-03-17 05:00:07Z eadler $
+ * $FreeBSD: releng/12.2/share/examples/kld/cdev/module/cdev.c 328428 2018-01-26 04:24:39Z eadler $
  */
 #include <sys/param.h>
 #include <sys/uio.h>

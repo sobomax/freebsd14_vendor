@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2005, Gleb Smirnoff <glebius@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_nat.h 248570 2013-03-21 08:36:15Z glebius $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_nat.h 359697 2020-04-07 16:44:14Z eugen $
  */
 
 #define NG_NAT_NODE_TYPE    "nat"
@@ -203,6 +205,8 @@ enum {
 	NGM_NAT_SET_IPADDR = 1,
 	NGM_NAT_SET_MODE,
 	NGM_NAT_SET_TARGET,
+	NGM_NAT_SET_DLT,
+	NGM_NAT_GET_DLT,
 	NGM_NAT_REDIRECT_PORT,
 	NGM_NAT_REDIRECT_ADDR,
 	NGM_NAT_REDIRECT_PROTO,

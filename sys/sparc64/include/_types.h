@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2002 Mike Barcroft <mike@FreeBSD.org>
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -11,7 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -29,7 +31,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: releng/11.3/sys/sparc64/include/_types.h 332135 2018-04-06 19:17:59Z kevans $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/_types.h 329859 2018-02-23 04:04:25Z imp $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -96,19 +98,5 @@ typedef	int		___wchar_t;
 
 #define	__WCHAR_MIN	__INT_MIN	/* min value for a wchar_t */
 #define	__WCHAR_MAX	__INT_MAX	/* max value for a wchar_t */
-
-/*
- * Unusual type definitions.
- */
-#ifdef __GNUCLIKE_BUILTIN_VARARGS
-typedef __builtin_va_list	__va_list;	/* internally known to gcc */
-#else
-typedef	char *			__va_list;
-#endif /* __GNUCLIKE_BUILTIN_VARARGS */
-#if defined(__GNUCLIKE_BUILTIN_VAALIST) && !defined(__GNUC_VA_LIST) \
-    && !defined(__NO_GNUC_VA_LIST)
-#define __GNUC_VA_LIST
-typedef __va_list		__gnuc_va_list;	/* compatibility w/GNU headers*/
-#endif
 
 #endif /* !_MACHINE__TYPES_H_ */

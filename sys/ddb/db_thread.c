@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ddb/db_thread.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ddb/db_thread.c 326267 2017-11-27 15:14:46Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

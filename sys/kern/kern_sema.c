@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2001 Jason Evans <jasone@freebsd.org>.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_sema.c 139804 2005-01-06 23:35:40Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_sema.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

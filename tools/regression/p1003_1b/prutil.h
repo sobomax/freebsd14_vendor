@@ -2,7 +2,7 @@
 #define _PRUTIL_H_
 
 /*
- * $FreeBSD: releng/11.3/tools/regression/p1003_1b/prutil.h 57257 2000-02-16 14:28:42Z dufault $
+ * $FreeBSD: releng/12.2/tools/regression/p1003_1b/prutil.h 57257 2000-02-16 14:28:42Z dufault $
  */
 
 struct sched_param;

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/libi386/Makefile 346476 2019-04-21 03:36:05Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/libi386/Makefile 342995 2019-01-13 07:25:55Z tsoome $
 
 .include <bsd.init.mk>
 

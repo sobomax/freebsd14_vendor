@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/usr.bin/m4/parser.y 283089 2015-05-18 22:40:12Z bapt $
+ * $FreeBSD: releng/12.2/usr.bin/m4/parser.y 283089 2015-05-18 22:40:12Z bapt $
  */
 
 #include <math.h>

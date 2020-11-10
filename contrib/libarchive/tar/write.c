@@ -25,7 +25,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/write.c 342360 2018-12-21 23:33:05Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/write.c 342359 2018-12-21 23:32:50Z mm $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

@@ -78,7 +78,7 @@
  *
  */
 
-#include "assym.s"
+#include "assym.inc"
 #include "opt_sched.h"
 
 #include <machine/asm.h>
@@ -87,7 +87,7 @@
 #include <machine/sysreg.h>
 #include <machine/vfp.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/swtch-v6.S 331988 2018-04-04 06:11:05Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/swtch-v6.S 331254 2018-03-20 17:58:51Z emaste $");
 
 #if defined(SMP)
 #define GET_PCPU(tmp, tmp2) \

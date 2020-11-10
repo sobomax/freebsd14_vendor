@@ -1,10 +1,8 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/regression/zfs/zpool/create/files.t 273633 2014-10-25 07:20:46Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/zfs/zpool/create/files.t 303575 2016-07-31 06:28:40Z ngie $
 
 dir=`dirname $0`
 . ${dir}/../../misc.sh
-
-[ "${os}" = "FreeBSD" ] && die "panics FreeBSD; see bug # 194589"
 
 echo "1..59"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libcuse/cuse_lib.c 298602 2016-04-26 01:20:16Z pfg $ */
+/* $FreeBSD: releng/12.2/lib/libcuse/cuse_lib.c 298602 2016-04-26 01:20:16Z pfg $ */
 /*-
  * Copyright (c) 2010-2012 Hans Petter Selasky. All rights reserved.
  *

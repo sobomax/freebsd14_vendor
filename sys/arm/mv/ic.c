@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Benno Rice.
  * Copyright (C) 2007-2008 MARVELL INTERNATIONAL LTD.
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/mv/ic.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/mv/ic.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/ctld/isns.c 332595 2018-04-16 16:14:05Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ctld/isns.c 328337 2018-01-24 16:37:29Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>

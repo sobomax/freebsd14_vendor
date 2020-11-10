@@ -2626,7 +2626,6 @@ static void *mlx4_ib_add(struct mlx4_dev *dev)
 	ibdev->ib_dev.get_dma_mr	= mlx4_ib_get_dma_mr;
 	ibdev->ib_dev.reg_user_mr	= mlx4_ib_reg_user_mr;
 	ibdev->ib_dev.rereg_user_mr	= mlx4_ib_rereg_user_mr;
-	ibdev->ib_dev.reg_phys_mr	= mlx4_ib_reg_phys_mr;
 	ibdev->ib_dev.dereg_mr		= mlx4_ib_dereg_mr;
 	ibdev->ib_dev.alloc_mr		= mlx4_ib_alloc_mr;
 	ibdev->ib_dev.map_mr_sg		= mlx4_ib_map_mr_sg;
@@ -3320,8 +3319,8 @@ static void __exit mlx4_ib_cleanup(void)
 	destroy_workqueue(wq);
 }
 
-module_init_order(mlx4_ib_init, SI_ORDER_THIRD);
-module_exit(mlx4_ib_cleanup);
+module_init_order(mlx4_ib_init, SI_ORDER_SEVENTH);
+module_exit_order(mlx4_ib_cleanup, SI_ORDER_SEVENTH);
 
 static int
 mlx4ib_evhand(module_t mod, int event, void *arg)

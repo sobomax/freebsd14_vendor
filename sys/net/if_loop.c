@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1982, 1986, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_loop.c	8.2 (Berkeley) 1/9/95
- * $FreeBSD: releng/11.3/sys/net/if_loop.c 335033 2018-06-13 07:17:10Z ae $
+ * $FreeBSD: releng/12.2/sys/net/if_loop.c 336676 2018-07-24 16:35:52Z andrew $
  */
 
 /*
@@ -36,6 +38,7 @@
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
+#include "opt_rss.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -96,7 +99,7 @@ static void	lo_clone_destroy(struct ifnet *);
 VNET_DEFINE(struct ifnet *, loif);	/* Used externally */
 
 #ifdef VIMAGE
-static VNET_DEFINE(struct if_clone *, lo_cloner);
+VNET_DEFINE_STATIC(struct if_clone *, lo_cloner);
 #define	V_lo_cloner		VNET(lo_cloner)
 #endif
 
@@ -223,6 +226,10 @@ looutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 
 	if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 	if_inc_counter(ifp, IFCOUNTER_OBYTES, m->m_pkthdr.len);
+
+#ifdef RSS
+	M_HASHTYPE_CLEAR(m);
+#endif
 
 	/* BPF writes need to be handled specially. */
 	if (dst->sa_family == AF_UNSPEC || dst->sa_family == pseudo_AF_HDRCMPLT)

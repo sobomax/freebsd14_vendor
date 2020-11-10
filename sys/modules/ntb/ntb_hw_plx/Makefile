@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ntb/ntb_hw_plx/Makefile 323032 2017-08-30 21:16:32Z mav $
+# $FreeBSD: releng/12.2/sys/modules/ntb/ntb_hw_plx/Makefile 323032 2017-08-30 21:16:32Z mav $
 
 .PATH:  ${SRCTOP}/sys/dev/ntb/ntb_hw
 

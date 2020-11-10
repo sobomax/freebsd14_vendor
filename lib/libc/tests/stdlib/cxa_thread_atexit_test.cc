@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/stdlib/cxa_thread_atexit_test.cc 304524 2016-08-20 11:58:23Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/stdlib/cxa_thread_atexit_test.cc 303795 2016-08-06 13:32:40Z kib $");
 
 #include <dlfcn.h>
 #include <atf-c++.hpp>

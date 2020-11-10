@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/dpaa/portals.h 296177 2016-02-29 03:38:00Z jhibbits $
+ * $FreeBSD: releng/12.2/sys/dev/dpaa/portals.h 325118 2017-10-30 03:41:04Z jhibbits $
  */
 
 typedef struct dpaa_portal {
@@ -37,7 +37,7 @@ typedef struct dpaa_portal {
 	vm_paddr_t	dp_ci_pa;		/* portal's CI area PA */
 	uint32_t	dp_ce_size;		/* portal's CE area size */
 	uint32_t	dp_ci_size;		/* portal's CI area size */
-	uint32_t	dp_intr_num;		/* portal's intr. number */
+	uintptr_t	dp_intr_num;		/* portal's intr. number */
 } dpaa_portal_t;
 
 struct dpaa_portals_softc {

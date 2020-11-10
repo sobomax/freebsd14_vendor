@@ -9,7 +9,7 @@
  *
  * Ari Suutari <suutari@iki.fi>
  *
- * $FreeBSD: releng/11.3/sbin/natd/icmp.c 131567 2004-07-04 12:53:54Z phk $
+ * $FreeBSD: releng/12.2/sbin/natd/icmp.c 131567 2004-07-04 12:53:54Z phk $
  */
 
 #include <stdlib.h>

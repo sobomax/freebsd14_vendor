@@ -24,7 +24,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/subst.c 307138 2016-10-12 10:28:22Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/subst.c 306670 2016-10-04 11:56:46Z mm $");
 
 #if defined(HAVE_REGEX_H) || defined(HAVE_PCREPOSIX_H)
 #include "bsdtar.h"

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: (BSD-4-Clause AND MIT-CMU)
+ *
  * Copyright (c) 1991 Regents of the University of California.
  * All rights reserved.
  * Copyright (c) 1994 John S. Dyson
@@ -69,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/vm/vm_swapout_dummy.c 325647 2017-11-10 13:17:40Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/vm/vm_swapout_dummy.c 326403 2017-11-30 15:48:35Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

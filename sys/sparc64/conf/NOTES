@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/sparc64/conf/NOTES 338546 2018-09-09 18:38:55Z eugen $
+# $FreeBSD: releng/12.2/sys/sparc64/conf/NOTES 316623 2017-04-07 21:06:50Z sevan $
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
@@ -121,7 +121,6 @@ nodevice	snd_vibes
 nodevice	snd_uaudio
 nodevice	aha
 nodevice	bt
-nodevice	wds
 nodevice	ep
 nodevice	ex
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/posix1e/Makefile.inc 313240 2017-02-04 17:17:38Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/posix1e/Makefile.inc 338745 2018-09-18 01:40:37Z brd $
 
 .PATH: ${LIBC_SRCTOP}/posix1e
 
@@ -8,6 +8,7 @@ CFLAGS+=-D_ACL_PRIVATE
 subr_acl_nfs4.c: ${SRCTOP}/sys/kern/subr_acl_nfs4.c
 	cat ${.ALLSRC} > ${.TARGET}
 
+CONFS+=	posix1e/mac.conf
 SRCS+=	acl_branding.c			\
 	acl_calc_mask.c			\
 	acl_copy.c			\

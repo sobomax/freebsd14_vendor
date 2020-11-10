@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Portions Copyright (c) Ryan Beasley <ryan.beasley@gmail.com> - GSoC 2006
  * Copyright (c) 1999 Cameron Grant <cg@FreeBSD.org>
@@ -35,7 +37,7 @@
 #include "feeder_if.h"
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pcm/mixer.c 336889 2018-07-30 09:25:56Z hselasky $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pcm/mixer.c 359885 2020-04-13 16:31:13Z hselasky $");
 
 static MALLOC_DEFINE(M_MIXER, "mixer", "mixer");
 
@@ -81,7 +83,7 @@ static u_int16_t snd_mixerdefaults[SOUND_MIXER_NRDEVICES] = {
 	[SOUND_MIXER_PCM]	= 75,
 	[SOUND_MIXER_SPEAKER]	= 75,
 	[SOUND_MIXER_LINE]	= 75,
-	[SOUND_MIXER_MIC] 	= 0,
+	[SOUND_MIXER_MIC] 	= 25,
 	[SOUND_MIXER_CD]	= 75,
 	[SOUND_MIXER_IGAIN]	= 0,
 	[SOUND_MIXER_LINE1]	= 75,
@@ -151,7 +153,7 @@ mixer_set_softpcmvol(struct snd_mixer *m, struct snddev_info *d,
 	struct pcm_channel *c;
 	int dropmtx, acquiremtx;
 
-	if (!PCM_REGISTERED(d))
+	if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 		return (EINVAL);
 
 	if (mtx_owned(m->lock))
@@ -204,7 +206,7 @@ mixer_set_eq(struct snd_mixer *m, struct snddev_info *d,
 	else
 		return (EINVAL);
 
-	if (!PCM_REGISTERED(d))
+	if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 		return (EINVAL);
 
 	if (mtx_owned(m->lock))
@@ -1030,6 +1032,14 @@ mix_get_type(struct snd_mixer *m)
 	return (m->type);
 }
 
+device_t
+mix_get_dev(struct snd_mixer *m)
+{
+	KASSERT(m != NULL, ("NULL snd_mixer"));
+
+	return (m->dev);
+}
+
 /* ----------------------------------------------------------------------- */
 
 static int
@@ -1044,7 +1054,7 @@ mixer_open(struct cdev *i_dev, int flags, int mode, struct thread *td)
 
 	m = i_dev->si_drv1;
 	d = device_get_softc(m->dev);
-	if (!PCM_REGISTERED(d))
+	if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 		return (EBADF);
 
 	/* XXX Need Giant magic entry ??? */
@@ -1200,7 +1210,7 @@ mixer_ioctl(struct cdev *i_dev, u_long cmd, caddr_t arg, int mode,
 		return (EBADF);
 
 	d = device_get_softc(((struct snd_mixer *)i_dev->si_drv1)->dev);
-	if (!PCM_REGISTERED(d))
+	if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 		return (EBADF);
 
 	PCM_GIANT_ENTER(d);
@@ -1409,7 +1419,7 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 	for (i = 0; pcm_devclass != NULL &&
 	    i < devclass_get_maxunit(pcm_devclass); i++) {
 		d = devclass_get_softc(pcm_devclass, i);
-		if (!PCM_REGISTERED(d))
+		if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 			continue;
 
 		/* XXX Need Giant magic entry */

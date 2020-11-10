@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/procstat/procstat_sigs.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_sigs.c 357519 2020-02-04 19:31:01Z dim $
  */
 
 #include <sys/param.h>
@@ -50,7 +50,7 @@ procstat_print_signame(int sig)
 	char name[12];
 	int i;
 
-	if (!nflag && sig < sys_nsig) {
+	if ((procstat_opts & PS_OPT_SIGNUM) == 0 && sig < sys_nsig) {
 		strlcpy(name, sys_signame[sig], sizeof(name));
 		for (i = 0; name[i] != 0; i++)
 			name[i] = toupper(name[i]);
@@ -69,14 +69,15 @@ procstat_close_signame(int sig)
 	char name[12];
 	int i;
 
-	if (!nflag && sig < sys_nsig) {
+	if ((procstat_opts & PS_OPT_SIGNUM) == 0 && sig < sys_nsig) {
 		strlcpy(name, sys_signame[sig], sizeof(name));
 		for (i = 0; name[i] != 0; i++)
 			name[i] = toupper(name[i]);
 		xo_close_container(name);
-	} else
+	} else {
 		snprintf(name, 12, "%d", sig);
 		xo_close_container(name);
+	}
 }
 
 static void
@@ -112,7 +113,7 @@ procstat_sigs(struct procstat *prstat __unused, struct kinfo_proc *kipp)
 {
 	int j;
 
-	if (!hflag)
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0)
 		xo_emit("{T:/%5s %-16s %-7s %4s}\n", "PID", "COMM", "SIG",
 		    "FLAGS");
 
@@ -141,7 +142,7 @@ procstat_threads_sigs(struct procstat *procstat, struct kinfo_proc *kipp)
 	unsigned int count, i;
 	char *threadid;
 
-	if (!hflag)
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0)
 		xo_emit("{T:/%5s %6s %-16s %-7s %4s}\n", "PID", "TID", "COMM",
 		     "SIG", "FLAGS");
 

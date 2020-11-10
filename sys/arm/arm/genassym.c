@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Olivier Houchard
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/genassym.c 331988 2018-04-04 06:11:05Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/genassym.c 328467 2018-01-27 11:19:41Z mmel $");
 #include <sys/param.h>
 #include <sys/cpuset.h>
 #include <sys/systm.h>

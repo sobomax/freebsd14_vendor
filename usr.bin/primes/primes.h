@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)primes.h	8.2 (Berkeley) 3/1/94
- * $FreeBSD: releng/11.3/usr.bin/primes/primes.h 320218 2017-06-22 05:26:08Z cperciva $
+ * $FreeBSD: releng/12.2/usr.bin/primes/primes.h 319561 2017-06-04 02:36:37Z cperciva $
  */
 
 /*

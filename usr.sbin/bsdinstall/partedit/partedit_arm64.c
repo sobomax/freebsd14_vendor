@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsdinstall/partedit/partedit_arm64.c 320088 2017-06-19 03:07:00Z emaste $
+ * $FreeBSD: releng/12.2/usr.sbin/bsdinstall/partedit/partedit_arm64.c 326674 2017-12-08 00:57:13Z nwhitehorn $
  */
 
 #include <sys/types.h>
@@ -77,7 +77,7 @@ bootpart_size(const char *scheme)
 }
 
 const char *
-bootpart_type(const char *scheme)
+bootpart_type(const char *scheme, const char **mountpoint)
 {
 
 	/* Only EFI is supported as boot partition */

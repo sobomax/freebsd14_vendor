@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/ypxfr/ypxfr_main.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/ypxfr/ypxfr_main.c 359753 2020-04-09 20:35:35Z kevans $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -50,6 +52,8 @@ __FBSDID("$FreeBSD: releng/11.3/libexec/ypxfr/ypxfr_main.c 331722 2018-03-29 02:
 #include <rpcsvc/ypclnt.h>
 #include <rpcsvc/ypxfrd.h>
 #include "ypxfr_extern.h"
+
+int debug = 1;
 
 char *progname = "ypxfr";
 char *yp_dir = _PATH_YP;
@@ -173,8 +177,6 @@ main(int argc, char *argv[])
 	int remoteport;
 	int interdom = 0;
 	int secure = 0;
-
-	debug = 1;
 
 	if (!isatty(fileno(stderr))) {
 		openlog("ypxfr", LOG_PID, LOG_DAEMON);

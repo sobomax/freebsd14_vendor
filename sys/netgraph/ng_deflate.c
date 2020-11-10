@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Alexander Motin <mav@alkar.net>
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_deflate.c 281855 2015-04-22 14:38:58Z rodrigc $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_deflate.c 328218 2018-01-21 15:42:36Z pfg $
  */
 
 /*

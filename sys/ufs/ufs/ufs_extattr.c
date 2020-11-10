@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999-2002 Robert N. M. Watson
  * Copyright (c) 2002-2003 Networks Associates Technology, Inc.
  * All rights reserved.
@@ -38,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ufs/ufs_extattr.c 298463 2016-04-22 08:09:27Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ufs/ufs_extattr.c 348991 2019-06-12 11:48:04Z kib $");
 
 #include "opt_ufs.h"
 
@@ -336,7 +338,12 @@ ufs_extattr_enable_with_open(struct ufsmount *ump, struct vnode *vp,
 		return (error);
 	}
 
-	VOP_ADD_WRITECOUNT(vp, 1);
+	error = VOP_ADD_WRITECOUNT(vp, 1);
+	if (error != 0) {
+		VOP_CLOSE(vp, FREAD | FWRITE, td->td_ucred, td);
+		VOP_UNLOCK(vp, 0);
+		return (error);
+	}
 	CTR3(KTR_VFS, "%s: vp %p v_writecount increased to %d", __func__, vp,
 	    vp->v_writecount);
 

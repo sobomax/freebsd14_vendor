@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: releng/11.3/usr.bin/bsdiff/bsdiff/config.h 309846 2016-12-11 06:08:01Z delphij $
+ * $FreeBSD: releng/12.2/usr.bin/bsdiff/bsdiff/config.h 303285 2016-07-25 03:58:19Z delphij $
  */
 
 #ifndef _CONFIG_H

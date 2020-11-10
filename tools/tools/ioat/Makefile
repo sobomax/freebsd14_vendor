@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/ioat/Makefile 300862 2016-05-27 18:40:38Z ngie $
+# $FreeBSD: releng/12.2/tools/tools/ioat/Makefile 300862 2016-05-27 18:40:38Z ngie $
 
 PROG=	ioatcontrol
 MAN=	ioatcontrol.8

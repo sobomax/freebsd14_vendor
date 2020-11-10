@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/i2c/ds1307/Makefile 323929 2017-09-22 15:40:56Z ian $
+# $FreeBSD: releng/12.2/sys/modules/i2c/ds1307/Makefile 323642 2017-09-16 16:09:05Z ian $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 KMOD		= ds1307

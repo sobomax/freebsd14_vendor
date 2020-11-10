@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/devd/token.l 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/devd/token.l 352276 2019-09-13 07:08:43Z bapt $
  */
 
 #include <ctype.h>
@@ -50,6 +50,7 @@ update_lineno(const char *cp)
 
 %}
 
+%option noyywrap
 %option nounput
 %option noinput
 

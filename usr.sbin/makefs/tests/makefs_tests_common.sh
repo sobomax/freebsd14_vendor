@@ -24,18 +24,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/makefs/tests/makefs_tests_common.sh 290267 2015-11-02 10:08:00Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/makefs/tests/makefs_tests_common.sh 352077 2019-09-09 17:22:11Z emaste $
 #
 
 KB=1024
 : ${TMPDIR=/tmp}
-# TODO: add mtree `time` support; get a lot of errors like this right now when
-# passing generating disk images with keyword mtree support, like:
-#
-# `[...]/mtree.spec:8: error: time: invalid value '1446458503'`
-#
-#DEFAULT_MTREE_KEYWORDS="type,mode,gid,uid,size,link,time"
-DEFAULT_MTREE_KEYWORDS="type,mode,gid,uid,size,link"
+DEFAULT_MTREE_KEYWORDS="type,mode,gid,uid,size,link,time"
 TEST_IMAGE="$TMPDIR/test.img"
 TEST_INPUTS_DIR="$TMPDIR/inputs"
 TEST_MD_DEVICE_FILE="$TMPDIR/md.output"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ip6addrctl/Makefile 241134 2012-10-02 14:48:03Z eadler $
+# $FreeBSD: releng/12.2/usr.sbin/ip6addrctl/Makefile 241134 2012-10-02 14:48:03Z eadler $
 
 PROG=	ip6addrctl
 MAN=	ip6addrctl.8

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/stdio/fdopen_test.c 290537 2015-11-08 06:37:50Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/stdio/fdopen_test.c 290537 2015-11-08 06:37:50Z ngie $");
 
 #include <errno.h>
 #include <fcntl.h>

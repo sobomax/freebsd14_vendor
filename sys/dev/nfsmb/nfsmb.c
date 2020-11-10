@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/nfsmb/nfsmb.c 272016 2014-09-23 05:54:18Z rpaulo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/nfsmb/nfsmb.c 272016 2014-09-23 05:54:18Z rpaulo $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

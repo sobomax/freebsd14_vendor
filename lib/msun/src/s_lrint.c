@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 David Schultz <das@FreeBSD.ORG>
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
 #include <math.h>
 
 #ifndef type
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_lrint.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_lrint.c 326219 2017-11-26 02:00:33Z pfg $");
 #define type		double
 #define	roundit		rint
 #define dtype		long

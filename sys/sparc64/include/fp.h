@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2001 by Thomas Moestl <tmm@FreeBSD.org>.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -21,7 +23,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/fp.h 112920 2003-04-01 04:02:45Z jake $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/fp.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_FP_H_

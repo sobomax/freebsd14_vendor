@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2015, Mellanox Technologies, Ltd.  All rights reserved.
+ * Copyright (c) 2013-2020, Mellanox Technologies, Ltd.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_ib/mlx5_ib_cong.c 341954 2018-12-12 12:34:35Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_ib/mlx5_ib_cong.c 358281 2020-02-24 10:41:36Z hselasky $
  */
 
 #include "mlx5_ib.h"
@@ -37,7 +37,9 @@ static const char *mlx5_ib_cong_stats_desc[] = {
 	MLX5_IB_CONG_STATS(MLX5_IB_STATS_DESC)
 };
 
-#define	MLX5_IB_INDEX(field) (__offsetof(struct mlx5_ib_congestion, field) / sizeof(u64))
+#define	MLX5_IB_INDEX(field) ( \
+    (__offsetof(struct mlx5_ib_congestion, field) - \
+     __offsetof(struct mlx5_ib_congestion, arg[0])) / sizeof(u64))
 #define	MLX5_IB_FLD_MAX(type, field) ((1ULL << __mlx5_bit_sz(type, field)) - 1ULL)
 #define	MLX5_IB_SET_CLIPPED(type, ptr, field, var) do { \
   /* rangecheck */					\

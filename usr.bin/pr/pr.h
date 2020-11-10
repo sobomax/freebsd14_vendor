@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1991 Keith Muller.
  * Copyright (c) 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -35,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *      @(#)pr.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.bin/pr/pr.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/pr/pr.h 326419 2017-12-01 03:22:40Z eadler $
  */
 
 /*

@@ -1,14 +1,14 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.sbin/inetd/Makefile 313203 2017-02-04 15:49:50Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/inetd/Makefile 356388 2020-01-05 21:35:02Z kevans $
 
 .include <src.opts.mk>
 
+CONFS=	inetd.conf
 PROG=	inetd
 MAN=	inetd.8
 MLINKS=	inetd.8 inetd.conf.5
 SRCS=	inetd.c builtins.c
 
-WARNS?=	3
 CFLAGS+= -DLOGIN_CAP
 #CFLAGS+= -DSANITY_CHECK
 

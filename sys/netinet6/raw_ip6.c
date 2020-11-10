@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *
@@ -40,7 +42,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -60,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet6/raw_ip6.c 347688 2019-05-16 11:20:02Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet6/raw_ip6.c 355870 2019-12-18 00:12:30Z bz $");
 
 #include "opt_ipsec.h"
 #include "opt_inet6.h"
@@ -159,102 +161,34 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 	struct ifnet *ifp;
 	struct mbuf *m = *mp;
 	struct ip6_hdr *ip6 = mtod(m, struct ip6_hdr *);
-	struct inpcb *in6p;
+	struct inpcb *inp;
 	struct inpcb *last = NULL;
 	struct mbuf *opts = NULL;
 	struct sockaddr_in6 fromsa;
+	struct epoch_tracker et;
 
 	RIP6STAT_INC(rip6s_ipackets);
 
-	init_sin6(&fromsa, m); /* general init */
+	init_sin6(&fromsa, m, 0); /* general init */
 
 	ifp = m->m_pkthdr.rcvif;
 
-	INP_INFO_RLOCK(&V_ripcbinfo);
-	LIST_FOREACH(in6p, &V_ripcb, inp_list) {
+	INP_INFO_RLOCK_ET(&V_ripcbinfo, et);
+	CK_LIST_FOREACH(inp, &V_ripcb, inp_list) {
 		/* XXX inp locking */
-		if ((in6p->inp_vflag & INP_IPV6) == 0)
+		if ((inp->inp_vflag & INP_IPV6) == 0)
 			continue;
-		if (in6p->inp_ip_p &&
-		    in6p->inp_ip_p != proto)
+		if (inp->inp_ip_p &&
+		    inp->inp_ip_p != proto)
 			continue;
-		if (!IN6_IS_ADDR_UNSPECIFIED(&in6p->in6p_laddr) &&
-		    !IN6_ARE_ADDR_EQUAL(&in6p->in6p_laddr, &ip6->ip6_dst))
+		if (!IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_laddr) &&
+		    !IN6_ARE_ADDR_EQUAL(&inp->in6p_laddr, &ip6->ip6_dst))
 			continue;
-		if (!IN6_IS_ADDR_UNSPECIFIED(&in6p->in6p_faddr) &&
-		    !IN6_ARE_ADDR_EQUAL(&in6p->in6p_faddr, &ip6->ip6_src))
+		if (!IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_faddr) &&
+		    !IN6_ARE_ADDR_EQUAL(&inp->in6p_faddr, &ip6->ip6_src))
 			continue;
-		if (jailed_without_vnet(in6p->inp_cred)) {
-			/*
-			 * Allow raw socket in jail to receive multicast;
-			 * assume process had PRIV_NETINET_RAW at attach,
-			 * and fall through into normal filter path if so.
-			 */
-			if (!IN6_IS_ADDR_MULTICAST(&ip6->ip6_dst) &&
-			    prison_check_ip6(in6p->inp_cred,
-			    &ip6->ip6_dst) != 0)
-				continue;
-		}
-		INP_RLOCK(in6p);
-		if (in6p->in6p_cksum != -1) {
-			RIP6STAT_INC(rip6s_isum);
-			if (m->m_pkthdr.len - (*offp + in6p->in6p_cksum) < 2 ||
-			    in6_cksum(m, proto, *offp,
-			    m->m_pkthdr.len - *offp)) {
-				INP_RUNLOCK(in6p);
-				RIP6STAT_INC(rip6s_badsum);
-				continue;
-			}
-		}
-		/*
-		 * If this raw socket has multicast state, and we
-		 * have received a multicast, check if this socket
-		 * should receive it, as multicast filtering is now
-		 * the responsibility of the transport layer.
-		 */
-		if (in6p->in6p_moptions &&
-		    IN6_IS_ADDR_MULTICAST(&ip6->ip6_dst)) {
-			/*
-			 * If the incoming datagram is for MLD, allow it
-			 * through unconditionally to the raw socket.
-			 *
-			 * Use the M_RTALERT_MLD flag to check for MLD
-			 * traffic without having to inspect the mbuf chain
-			 * more deeply, as all MLDv1/v2 host messages MUST
-			 * contain the Router Alert option.
-			 *
-			 * In the case of MLDv1, we may not have explicitly
-			 * joined the group, and may have set IFF_ALLMULTI
-			 * on the interface. im6o_mc_filter() may discard
-			 * control traffic we actually need to see.
-			 *
-			 * Userland multicast routing daemons should continue
-			 * filter the control traffic appropriately.
-			 */
-			int blocked;
-
-			blocked = MCAST_PASS;
-			if ((m->m_flags & M_RTALERT_MLD) == 0) {
-				struct sockaddr_in6 mcaddr;
-
-				bzero(&mcaddr, sizeof(struct sockaddr_in6));
-				mcaddr.sin6_len = sizeof(struct sockaddr_in6);
-				mcaddr.sin6_family = AF_INET6;
-				mcaddr.sin6_addr = ip6->ip6_dst;
-
-				blocked = im6o_mc_filter(in6p->in6p_moptions,
-				    ifp,
-				    (struct sockaddr *)&mcaddr,
-				    (struct sockaddr *)&fromsa);
-			}
-			if (blocked != MCAST_PASS) {
-				IP6STAT_INC(ip6s_notmember);
-				INP_RUNLOCK(in6p);
-				continue;
-			}
-		}
 		if (last != NULL) {
-			struct mbuf *n = m_copy(m, 0, (int)M_COPYALL);
+			struct mbuf *n = m_copym(m, 0, M_COPYALL, M_NOWAIT);
 
 #if defined(IPSEC) || defined(IPSEC_SUPPORT)
 			/*
@@ -287,10 +221,89 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 				opts = NULL;
 			}
 			INP_RUNLOCK(last);
+			last = NULL;
 		}
-		last = in6p;
+		INP_RLOCK(inp);
+		if (__predict_false(inp->inp_flags2 & INP_FREED))
+			goto skip_2;
+		if (jailed_without_vnet(inp->inp_cred)) {
+			/*
+			 * Allow raw socket in jail to receive multicast;
+			 * assume process had PRIV_NETINET_RAW at attach,
+			 * and fall through into normal filter path if so.
+			 */
+			if (!IN6_IS_ADDR_MULTICAST(&ip6->ip6_dst) &&
+			    prison_check_ip6(inp->inp_cred,
+			    &ip6->ip6_dst) != 0)
+				goto skip_2;
+		}
+		if (inp->in6p_cksum != -1) {
+			RIP6STAT_INC(rip6s_isum);
+			if (m->m_pkthdr.len - (*offp + inp->in6p_cksum) < 2 ||
+			    in6_cksum(m, proto, *offp,
+			    m->m_pkthdr.len - *offp)) {
+				RIP6STAT_INC(rip6s_badsum);
+				/*
+				 * Drop the received message, don't send an
+				 * ICMP6 message. Set proto to IPPROTO_NONE
+				 * to achieve that.
+				 */
+				proto = IPPROTO_NONE;
+				goto skip_2;
+			}
+		}
+		/*
+		 * If this raw socket has multicast state, and we
+		 * have received a multicast, check if this socket
+		 * should receive it, as multicast filtering is now
+		 * the responsibility of the transport layer.
+		 */
+		if (inp->in6p_moptions &&
+		    IN6_IS_ADDR_MULTICAST(&ip6->ip6_dst)) {
+			/*
+			 * If the incoming datagram is for MLD, allow it
+			 * through unconditionally to the raw socket.
+			 *
+			 * Use the M_RTALERT_MLD flag to check for MLD
+			 * traffic without having to inspect the mbuf chain
+			 * more deeply, as all MLDv1/v2 host messages MUST
+			 * contain the Router Alert option.
+			 *
+			 * In the case of MLDv1, we may not have explicitly
+			 * joined the group, and may have set IFF_ALLMULTI
+			 * on the interface. im6o_mc_filter() may discard
+			 * control traffic we actually need to see.
+			 *
+			 * Userland multicast routing daemons should continue
+			 * filter the control traffic appropriately.
+			 */
+			int blocked;
+
+			blocked = MCAST_PASS;
+			if ((m->m_flags & M_RTALERT_MLD) == 0) {
+				struct sockaddr_in6 mcaddr;
+
+				bzero(&mcaddr, sizeof(struct sockaddr_in6));
+				mcaddr.sin6_len = sizeof(struct sockaddr_in6);
+				mcaddr.sin6_family = AF_INET6;
+				mcaddr.sin6_addr = ip6->ip6_dst;
+
+				blocked = im6o_mc_filter(inp->in6p_moptions,
+				    ifp,
+				    (struct sockaddr *)&mcaddr,
+				    (struct sockaddr *)&fromsa);
+			}
+			if (blocked != MCAST_PASS) {
+				IP6STAT_INC(ip6s_notmember);
+				goto skip_2;
+			}
+		}
+		last = inp;
+		continue;
+skip_2:
+		INP_RUNLOCK(inp);
 	}
-	INP_INFO_RUNLOCK(&V_ripcbinfo);
+	INP_INFO_RUNLOCK_ET(&V_ripcbinfo, et);
 #if defined(IPSEC) || defined(IPSEC_SUPPORT)
 	/*
 	 * Check AH/ESP integrity.
@@ -336,9 +349,6 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 void
 rip6_ctlinput(int cmd, struct sockaddr *sa, void *d)
 {
-	struct ip6_hdr *ip6;
-	struct mbuf *m;
-	int off = 0;
 	struct ip6ctlparam *ip6cp = NULL;
 	const struct sockaddr_in6 *sa6_src = NULL;
 	void *cmdarg;
@@ -362,14 +372,9 @@ rip6_ctlinput(int cmd, struct sockaddr *sa, void *d)
 	 */
 	if (d != NULL) {
 		ip6cp = (struct ip6ctlparam *)d;
-		m = ip6cp->ip6c_m;
-		ip6 = ip6cp->ip6c_ip6;
-		off = ip6cp->ip6c_off;
 		cmdarg = ip6cp->ip6c_cmdarg;
 		sa6_src = ip6cp->ip6c_src;
 	} else {
-		m = NULL;
-		ip6 = NULL;
 		cmdarg = NULL;
 		sa6_src = &sa6_any;
 	}
@@ -388,9 +393,8 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 	struct mbuf *control;
 	struct m_tag *mtag;
 	struct sockaddr_in6 *dstsock;
-	struct in6_addr *dst;
 	struct ip6_hdr *ip6;
-	struct inpcb *in6p;
+	struct inpcb *inp;
 	u_int	plen = m->m_pkthdr.len;
 	int error = 0;
 	struct ip6_pktopts opt, *optp;
@@ -407,19 +411,18 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 	control = va_arg(ap, struct mbuf *);
 	va_end(ap);
 
-	in6p = sotoinpcb(so);
-	INP_WLOCK(in6p);
+	inp = sotoinpcb(so);
+	INP_WLOCK(inp);
 
-	dst = &dstsock->sin6_addr;
 	if (control != NULL) {
 		if ((error = ip6_setpktopts(control, &opt,
-		    in6p->in6p_outputopts, so->so_cred,
+		    inp->in6p_outputopts, so->so_cred,
 		    so->so_proto->pr_protocol)) != 0) {
 			goto bad;
 		}
 		optp = &opt;
 	} else
-		optp = in6p->in6p_outputopts;
+		optp = inp->in6p_outputopts;
 
 	/*
 	 * Check and convert scope zone ID into internal form.
@@ -462,12 +465,12 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 	/*
 	 * Source address selection.
 	 */
-	error = in6_selectsrc_socket(dstsock, optp, in6p, so->so_cred,
+	error = in6_selectsrc_socket(dstsock, optp, inp, so->so_cred,
 	    scope_ambiguous, &in6a, &hlim);
 
 	if (error)
 		goto bad;
-	error = prison_check_ip6(in6p->inp_cred, &in6a);
+	error = prison_check_ip6(inp->inp_cred, &in6a);
 	if (error != 0)
 		goto bad;
 	ip6->ip6_src = in6a;
@@ -478,18 +481,18 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 	 * Fill in the rest of the IPv6 header fields.
 	 */
 	ip6->ip6_flow = (ip6->ip6_flow & ~IPV6_FLOWINFO_MASK) |
-	    (in6p->inp_flow & IPV6_FLOWINFO_MASK);
+	    (inp->inp_flow & IPV6_FLOWINFO_MASK);
 	ip6->ip6_vfc = (ip6->ip6_vfc & ~IPV6_VERSION_MASK) |
 	    (IPV6_VERSION & IPV6_VERSION_MASK);
 
 	/*
 	 * ip6_plen will be filled in ip6_output, so not fill it here.
 	 */
-	ip6->ip6_nxt = in6p->inp_ip_p;
+	ip6->ip6_nxt = inp->inp_ip_p;
 	ip6->ip6_hlim = hlim;
 
 	if (so->so_proto->pr_protocol == IPPROTO_ICMPV6 ||
-	    in6p->in6p_cksum != -1) {
+	    inp->in6p_cksum != -1) {
 		struct mbuf *n;
 		int off;
 		u_int16_t *p;
@@ -498,7 +501,7 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 		if (so->so_proto->pr_protocol == IPPROTO_ICMPV6)
 			off = offsetof(struct icmp6_hdr, icmp6_cksum);
 		else
-			off = in6p->in6p_cksum;
+			off = inp->in6p_cksum;
 		if (plen < off + 2) {
 			error = EINVAL;
 			goto bad;
@@ -534,7 +537,7 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 		}
 	}
 
-	error = ip6_output(m, optp, NULL, 0, in6p->in6p_moptions, &oifp, in6p);
+	error = ip6_output(m, optp, NULL, 0, inp->in6p_moptions, &oifp, inp);
 	if (so->so_proto->pr_protocol == IPPROTO_ICMPV6) {
 		if (oifp)
 			icmp6_ifoutstat_inc(oifp, type, code);
@@ -553,7 +556,7 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 		ip6_clearpktopts(&opt, -1);
 		m_freem(control);
 	}
-	INP_WUNLOCK(in6p);
+	INP_WUNLOCK(inp);
 	return (error);
 }
 
@@ -743,23 +746,25 @@ rip6_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 		return (EINVAL);
 	if ((error = prison_check_ip6(td->td_ucred, &addr->sin6_addr)) != 0)
 		return (error);
-	if (TAILQ_EMPTY(&V_ifnet) || addr->sin6_family != AF_INET6)
+	if (CK_STAILQ_EMPTY(&V_ifnet) || addr->sin6_family != AF_INET6)
 		return (EADDRNOTAVAIL);
 	if ((error = sa6_embedscope(addr, V_ip6_use_defzone)) != 0)
 		return (error);
 
+	NET_EPOCH_ENTER();
 	if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr) &&
-	    (ifa = ifa_ifwithaddr((struct sockaddr *)addr)) == NULL)
+	    (ifa = ifa_ifwithaddr((struct sockaddr *)addr)) == NULL) {
+		NET_EPOCH_EXIT();
 		return (EADDRNOTAVAIL);
+	}
 	if (ifa != NULL &&
 	    ((struct in6_ifaddr *)ifa)->ia6_flags &
 	    (IN6_IFF_ANYCAST|IN6_IFF_NOTREADY|
 	     IN6_IFF_DETACHED|IN6_IFF_DEPRECATED)) {
-		ifa_free(ifa);
+		NET_EPOCH_EXIT();
 		return (EADDRNOTAVAIL);
 	}
-	if (ifa != NULL)
-		ifa_free(ifa);
+	NET_EPOCH_EXIT();
 	INP_INFO_WLOCK(&V_ripcbinfo);
 	INP_WLOCK(inp);
 	inp->in6p_laddr = addr->sin6_addr;
@@ -781,7 +786,7 @@ rip6_connect(struct socket *so, struct sockaddr *nam, struct thread *td)
 
 	if (nam->sa_len != sizeof(*addr))
 		return (EINVAL);
-	if (TAILQ_EMPTY(&V_ifnet))
+	if (CK_STAILQ_EMPTY(&V_ifnet))
 		return (EADDRNOTAVAIL);
 	if (addr->sin6_family != AF_INET6)
 		return (EAFNOSUPPORT);

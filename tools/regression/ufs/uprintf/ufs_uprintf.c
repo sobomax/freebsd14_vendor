@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/ufs/uprintf/ufs_uprintf.c 243316 2012-11-19 23:07:38Z emaste $
+ * $FreeBSD: releng/12.2/tools/regression/ufs/uprintf/ufs_uprintf.c 243316 2012-11-19 23:07:38Z emaste $
  */
 
 #include <err.h>

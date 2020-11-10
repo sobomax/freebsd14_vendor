@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/camcontrol/persist.c 317374 2017-04-24 16:07:30Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/camcontrol/persist.c 352287 2019-09-13 14:43:44Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -858,12 +858,6 @@ retry:
 	if (cam_send_ccb(device, ccb) < 0) {
 		warn("error sending PERSISTENT RESERVE %s", (in != 0) ?
 		    "IN" : "OUT");
-
-		if (verbosemode != 0) {
-			cam_error_print(device, ccb, CAM_ESF_ALL,
-					CAM_EPF_ALL, stderr);
-		}
-
 		error = 1;
 		goto bailout;
 	}

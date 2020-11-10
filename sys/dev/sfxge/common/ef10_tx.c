@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/ef10_tx.c 342445 2018-12-25 07:27:45Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/ef10_tx.c 342348 2018-12-21 17:18:33Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"

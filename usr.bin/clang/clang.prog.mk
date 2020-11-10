@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/clang.prog.mk 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/clang.prog.mk 356460 2020-01-07 18:08:09Z dim $
 
 .include "${SRCTOP}/lib/clang/clang.pre.mk"
 
@@ -17,6 +17,7 @@ LDADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 
 PACKAGE=	clang
 
+LIBADD+=	execinfo
 LIBADD+=	ncursesw
 LIBADD+=	pthread
 

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/autofs/token.l 332597 2018-04-16 16:16:24Z trasz $
+ * $FreeBSD: releng/12.2/usr.sbin/autofs/token.l 328338 2018-01-24 16:39:02Z trasz $
  */
 
 #include <stdio.h>

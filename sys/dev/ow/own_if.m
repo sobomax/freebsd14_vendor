@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/ow/own_if.m 287225 2015-08-27 23:33:38Z imp $
+# $FreeBSD: releng/12.2/sys/dev/ow/own_if.m 287225 2015-08-27 23:33:38Z imp $
 #
 
 #include <sys/bus.h>

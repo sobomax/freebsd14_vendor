@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2004-2009 Apple Inc.
  * Copyright (c) 2005 SPARTA, Inc.
  * All rights reserved.
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/security/audit/bsm_token.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/security/audit/bsm_token.c 326023 2017-11-20 19:43:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/types.h>

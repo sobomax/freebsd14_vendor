@@ -22,7 +22,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/drm2/drm_crtc_helper.h 280183 2015-03-17 18:50:33Z dumbbell $
+ * $FreeBSD: releng/12.2/sys/dev/drm2/drm_crtc_helper.h 338285 2018-08-24 00:02:00Z imp $
  */
 
 /*

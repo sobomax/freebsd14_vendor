@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995, 1996
  *	Bill Paul <wpaul@ctr.columbia.edu>.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/rpc.ypxfrd/ypxfrd_main.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/rpc.ypxfrd/ypxfrd_main.c 359753 2020-04-09 20:35:35Z kevans $");
 
 #include "ypxfrd.h"
 #include <err.h>
@@ -75,6 +77,8 @@ static int _rpcfdtype;
 #define	_SERVING 2
 
 extern int _rpcsvcstate;	 /* Set when a request is serviced */
+
+int debug;
 
 char *progname = "rpc.ypxfrd";
 char *yp_dir = "/var/yp/";

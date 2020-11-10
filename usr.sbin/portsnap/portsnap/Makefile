@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/portsnap/portsnap/Makefile 161809 2006-09-01 09:49:09Z cperciva $
+# $FreeBSD: releng/12.2/usr.sbin/portsnap/portsnap/Makefile 337339 2018-08-04 22:31:29Z brd $
 
+CONFS=	portsnap.conf
 SCRIPTS=portsnap.sh
 MAN=	portsnap.8
 

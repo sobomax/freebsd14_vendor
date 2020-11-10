@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/powerpc64/gen/Makefile.inc 277078 2015-01-12 18:13:38Z emaste $
+# $FreeBSD: releng/12.2/lib/libc/powerpc64/gen/Makefile.inc 277078 2015-01-12 18:13:38Z emaste $
 
 SRCS += _ctx_start.S fabs.S flt_rounds.c fpgetmask.c fpgetround.c \
 	fpgetsticky.c fpsetmask.c fpsetround.c \

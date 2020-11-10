@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/splitfs.c 329132 2018-02-11 19:51:29Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/splitfs.c 324551 2017-10-12 14:56:28Z imp $");
 
 #include "stand.h"
 

@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/stand/mips/beri/boot2/Makefile 337477 2018-08-08 18:05:14Z bdrewery $
+# $FreeBSD: releng/12.2/stand/mips/beri/boot2/Makefile 335733 2018-06-27 19:29:15Z bdrewery $
 
 .include <bsd.init.mk>
 

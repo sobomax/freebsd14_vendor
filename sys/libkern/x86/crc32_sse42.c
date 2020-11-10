@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/x86/crc32_sse42.c 317149 2017-04-19 16:16:41Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/x86/crc32_sse42.c 322407 2017-08-11 17:05:31Z rlibby $");
 
 /*
  * This file is compiled in userspace in order to run ATF unit tests.
@@ -52,19 +52,21 @@ _mm_crc32_u8(uint32_t x, uint8_t y)
 	return (x);
 }
 
-static __inline uint32_t
-_mm_crc32_u32(uint32_t x, uint32_t y)
-{
-	__asm("crc32l %1,%0" : "+r" (x) : "r" (y));
-	return (x);
-}
-
+#ifdef __amd64__
 static __inline uint64_t
 _mm_crc32_u64(uint64_t x, uint64_t y)
 {
 	__asm("crc32q %1,%0" : "+r" (x) : "r" (y));
 	return (x);
 }
+#else
+static __inline uint32_t
+_mm_crc32_u32(uint32_t x, uint32_t y)
+{
+	__asm("crc32l %1,%0" : "+r" (x) : "r" (y));
+	return (x);
+}
+#endif
 
 /* CRC-32C (iSCSI) polynomial in reversed bit order. */
 #define POLY	0x82f63b78

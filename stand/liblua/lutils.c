@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/liblua/lutils.c 344220 2019-02-17 02:39:17Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/liblua/lutils.c 355350 2019-12-03 18:50:18Z kevans $");
 
 #include <sys/param.h>
 
@@ -384,6 +384,8 @@ luaopen_loader(lua_State *L)
 	lua_setfield(L, -2, "machine");
 	lua_pushstring(L, MACHINE_ARCH);
 	lua_setfield(L, -2, "machine_arch");
+	lua_pushstring(L, LUA_PATH);
+	lua_setfield(L, -2, "lua_path");
 	/* Set global printc to loader.printc */
 	lua_register(L, "printc", lua_printc);
 	return 1;

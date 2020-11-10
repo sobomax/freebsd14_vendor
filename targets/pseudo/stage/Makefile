@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/targets/pseudo/stage/Makefile 296700 2016-03-11 23:45:28Z bdrewery $
+# $FreeBSD: releng/12.2/targets/pseudo/stage/Makefile 296700 2016-03-11 23:45:28Z bdrewery $
 
 # this makefile gets hooked into everyone's dependencies so that
 # distrib-dirs can be done in STAGE_OBJTOP

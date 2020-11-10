@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/r128_drm.h 182080 2008-08-23 20:59:12Z rnoland $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/r128_drm.h 338285 2018-08-24 00:02:00Z imp $");
 
 #ifndef __R128_DRM_H__
 #define __R128_DRM_H__

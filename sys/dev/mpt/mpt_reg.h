@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/mpt/mpt_reg.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/mpt/mpt_reg.h 326255 2017-11-27 14:52:40Z pfg $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ *
  * Generic defines for LSI '909 FC  adapters.
  * FreeBSD Version.
  *

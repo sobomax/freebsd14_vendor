@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/e1000/e1000_82543.c 331722 2018-03-29 02:50:57Z eadler $*/
+/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_82543.c 327231 2017-12-27 03:23:21Z eadler $*/
 
 /*
  * 82543GC Gigabit Ethernet Controller (Fiber)

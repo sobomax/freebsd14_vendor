@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/aic7xxx/aic79xx_reg_print.c 260401 2014-01-07 19:33:17Z scottl $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/aic7xxx/aic79xx_reg_print.c 260401 2014-01-07 19:33:17Z scottl $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 
 static ahd_reg_parse_entry_t MODE_PTR_parse_table[] = {

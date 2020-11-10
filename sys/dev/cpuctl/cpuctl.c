@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006-2008 Stanislav Sedov <stas@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cpuctl/cpuctl.c 354653 2019-11-12 18:13:04Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cpuctl/cpuctl.c 362376 2020-06-19 11:47:40Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -536,13 +538,16 @@ cpuctl_do_eval_cpu_features(int cpu, struct thread *td)
 	set_cpu(cpu, td);
 	identify_cpu1();
 	identify_cpu2();
-	hw_ibrs_recalculate();
 	restore_cpu(oldcpu, is_bound, td);
+	hw_ibrs_recalculate(true);
 	hw_ssb_recalculate(true);
 #ifdef __amd64__
+	amd64_syscall_ret_flush_l1d_recalc();
 	pmap_allow_2m_x_ept_recalculate();
 #endif
 	hw_mds_recalculate();
+	x86_taa_recalculate();
+	x86_rngds_mitg_recalculate(true);
 	printcpuinfo();
 	return (0);
 }

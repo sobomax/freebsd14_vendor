@@ -23,14 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/mips/mpboot.S 232630 2012-03-06 23:08:02Z jmallett $
+ * $FreeBSD: releng/12.2/sys/mips/mips/mpboot.S 331254 2018-03-20 17:58:51Z emaste $
  */
 
 #include <machine/asm.h>
 #include <machine/cpu.h>
 #include <machine/cpuregs.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 	.text
 	.set	noat

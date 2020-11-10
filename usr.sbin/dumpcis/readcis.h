@@ -25,13 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/dumpcis/readcis.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/dumpcis/readcis.h 327576 2018-01-05 07:09:40Z imp $
  */
 
 struct tuple {
 	struct tuple *next;
 	unsigned char code;
-	int     length;
+	unsigned char length;
 	unsigned char *data;
 };
 

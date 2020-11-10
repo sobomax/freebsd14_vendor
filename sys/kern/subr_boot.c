@@ -10,7 +10,7 @@
  * Copyright (c) 2014 Roger Pau Monné <roger.pau@citrix.com>
  * All Rights Reserved.
  * Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
- * Copyright (c) 2018 Netflix
+ * Copyright (c) 2018 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_boot.c 344378 2019-02-20 19:19:24Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_boot.c 351913 2019-09-05 23:27:59Z imp $");
 
 /* Note: This is compiled in both the kernel and boot loader contexts */
 

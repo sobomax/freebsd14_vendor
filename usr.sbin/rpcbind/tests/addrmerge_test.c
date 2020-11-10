@@ -27,7 +27,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/usr.sbin/rpcbind/tests/addrmerge_test.c 301967 2016-06-16 15:25:37Z asomers $
+ * $FreeBSD: releng/12.2/usr.sbin/rpcbind/tests/addrmerge_test.c 327464 2018-01-01 09:41:18Z delphij $
  */
 
 #include <rpc/rpc.h>
@@ -40,7 +40,6 @@
 
 #include <ifaddrs.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #include <atf-c.h>
 

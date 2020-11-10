@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/include/cpuinfo.h 331988 2018-04-04 06:11:05Z mmel $
+ * $FreeBSD: releng/12.2/sys/arm/include/cpuinfo.h 328467 2018-01-27 11:19:41Z mmel $
  */
 
 #ifndef	_MACHINE_CPUINFO_H_
@@ -117,6 +117,9 @@ struct cpuinfo {
 	int dcache_line_mask;
 	int icache_line_size;
 	int icache_line_mask;
+
+	/* mpidr */
+	int mp_ext;
 };
 
 extern struct cpuinfo cpuinfo;

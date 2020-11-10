@@ -1,12 +1,11 @@
-# $FreeBSD: releng/11.3/usr.bin/diff/Makefile 315051 2017-03-11 05:01:29Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/diff/Makefile 334894 2018-06-09 20:24:17Z bapt $
 
 .include <src.opts.mk>
 
 PROG=	diff
-SRCS=	diff.c diffdir.c diffreg.c xmalloc.c
+SRCS=	diff.c diffdir.c diffreg.c xmalloc.c pr.c
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

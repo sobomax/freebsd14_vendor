@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/contrib/ofed/libibverbs/config.h 331769 2018-03-30 18:06:29Z hselasky $ */
+/* $FreeBSD: releng/12.2/contrib/ofed/libibverbs/config.h 321936 2017-08-02 16:00:30Z hselasky $ */
 
 #include "alloca.h"
 

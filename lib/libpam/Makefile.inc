@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/lib/libpam/Makefile.inc 301602 2016-06-08 11:47:19Z des $
+# $FreeBSD: releng/12.2/lib/libpam/Makefile.inc 301602 2016-06-08 11:47:19Z des $
 
 CFLAGS+=	-DOPENPAM_DEBUG
 

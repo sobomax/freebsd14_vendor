@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/11.3/sys/dev/liquidio/lio_ioctl.c 325618 2017-11-09 19:52:56Z sbruno $*/
+/*$FreeBSD: releng/12.2/sys/dev/liquidio/lio_ioctl.c 333813 2018-05-18 20:13:34Z mmacy $*/
 
 #include "lio_bsd.h"
 #include "lio_common.h"
@@ -519,7 +519,7 @@ lio_set_mcast_list(struct ifnet *ifp)
 	/* to protect access to if_multiaddrs */
 	if_maddr_rlock(ifp);
 
-	TAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
+	CK_STAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
 		if (ifma->ifma_addr->sa_family != AF_LINK)
 			continue;
 		*mc = 0;

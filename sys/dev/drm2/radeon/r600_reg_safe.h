@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/r600_reg_safe.h 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/r600_reg_safe.h 338285 2018-08-24 00:02:00Z imp $");
 
 static const unsigned r600_reg_safe_bm[1952] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

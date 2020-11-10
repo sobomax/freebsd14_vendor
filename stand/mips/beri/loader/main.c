@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/mips/beri/loader/main.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/mips/beri/loader/main.c 359761 2020-04-10 00:23:34Z kevans $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -58,8 +58,6 @@ struct devsw *devsw[] = {
 #endif
 	NULL
 };
-
-struct arch_switch archsw;
 
 struct file_format *file_formats[] = {
 	&beri_elf,

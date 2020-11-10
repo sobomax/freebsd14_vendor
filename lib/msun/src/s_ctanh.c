@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 David Schultz
  * All rights reserved.
  *
@@ -64,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_ctanh.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_ctanh.c 336362 2018-07-17 07:42:14Z bde $");
 
 #include <complex.h>
 #include <math.h>
@@ -102,8 +104,8 @@ ctanh(double complex z)
 	 */
 	if (ix >= 0x7ff00000) {
 		if ((ix & 0xfffff) | lx)	/* x is NaN */
-			return (CMPLX((x + 0) * (y + 0),
-			    y == 0 ? y : (x + 0) * (y + 0)));
+			return (CMPLX(nan_mix(x, y),
+			    y == 0 ? y : nan_mix(x, y)));
 		SET_HIGH_WORD(x, hx - 0x40000000);	/* x = copysign(1, x) */
 		return (CMPLX(x, copysign(0, isinf(y) ? y : sin(y) * cos(y))));
 	}

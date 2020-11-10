@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.8 (Berkeley) 7/28/90
-# $FreeBSD: releng/11.3/usr.sbin/bootparamd/bootparamd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/bootparamd/bootparamd/Makefile 320122 2017-06-19 20:47:24Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -15,7 +15,7 @@ CFLAGS+= -DYP
 
 CLEANFILES= ${GENSRCS}
 
-RPCSRC=	${DESTDIR}/usr/include/rpcsvc/bootparam_prot.x
+RPCSRC=	${SYSROOT:U${DESTDIR}}/usr/include/rpcsvc/bootparam_prot.x
 
 bootparam_prot_svc.c: ${RPCSRC}
 	RPCGEN_CPP=${CPP:Q} rpcgen -C -m -o ${.TARGET} ${RPCSRC}

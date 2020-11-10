@@ -1,6 +1,6 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
 #
-# $FreeBSD: releng/11.3/sbin/umount/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/umount/Makefile 314656 2017-03-04 11:33:01Z ngie $
 
 PACKAGE=runtime
 PROG=	umount

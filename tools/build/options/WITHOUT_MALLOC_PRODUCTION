@@ -1,0 +1,4 @@
+.\" $FreeBSD: releng/12.2/tools/build/options/WITHOUT_MALLOC_PRODUCTION 365722 2020-09-14 14:53:09Z dim $
+Set to enable assertions and statistics gathering in
+.Xr malloc 3 .
+It also defaults the A and J runtime options to on.

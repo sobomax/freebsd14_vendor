@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -22,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/imgact_gzip.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/imgact_gzip.c 330842 2018-03-13 13:09:10Z emaste $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -67,8 +69,7 @@ static int do_aout_hdr(struct imgact_gzip *);
 static int Flush(void *vp, u_char *, u_long siz);
 
 static int
-exec_gzip_imgact(imgp)
-	struct image_params *imgp;
+exec_gzip_imgact(struct image_params *imgp)
 {
 	int             error;
 	const u_char   *p = (const u_char *) imgp->image_header;
@@ -386,5 +387,8 @@ Flush(void *vp, u_char * ptr, u_long siz)
 /*
  * Tell kern_execve.c about it, with a little help from the linker.
  */
-static struct execsw gzip_execsw = {exec_gzip_imgact, "gzip"};
+static struct execsw gzip_execsw = {
+	.ex_imgact = exec_gzip_imgact,
+	.ex_name = "gzip"
+};
 EXEC_SET(execgzip, gzip_execsw);

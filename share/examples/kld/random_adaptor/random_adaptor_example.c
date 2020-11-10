@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Arthur Mesh <arthurmesh@gmail.com>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/share/examples/kld/random_adaptor/random_adaptor_example.c 298094 2016-04-16 03:44:50Z gjb $");
+__FBSDID("$FreeBSD: releng/12.2/share/examples/kld/random_adaptor/random_adaptor_example.c 326275 2017-11-27 15:28:26Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1982, 1986, 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/11.3/sys/net/if.h 341241 2018-11-29 15:56:46Z markj $
+ * $FreeBSD: releng/12.2/sys/net/if.h 352647 2019-09-24 06:30:34Z kib $
  */
 
 #ifndef _NET_IF_H_
@@ -160,6 +162,9 @@ struct if_data {
 #define	IFF_STATICARP	0x80000		/* (n) static ARP */
 #define	IFF_DYING	0x200000	/* (n) interface is winding down */
 #define	IFF_RENAMING	0x400000	/* (n) interface is being renamed */
+#define	IFF_NOGROUP	0x800000	/* (n) interface is not part of any groups */
+
+
 /*
  * Old names for driver flags so that user space tools can continue to use
  * the old (portable) names.
@@ -232,13 +237,15 @@ struct if_data {
 #define	IFCAP_TOE4		0x04000	/* interface can offload TCP */
 #define	IFCAP_TOE6		0x08000	/* interface can offload TCP6 */
 #define	IFCAP_VLAN_HWFILTER	0x10000 /* interface hw can filter vlan tag */
-#define	IFCAP_POLLING_NOCOUNT	0x20000 /* polling ticks cannot be fragmented */
+/* 	available		0x20000 */
 #define	IFCAP_VLAN_HWTSO	0x40000 /* can do IFCAP_TSO on VLANs */
 #define	IFCAP_LINKSTATE		0x80000 /* the runtime link state is dynamic */
 #define	IFCAP_NETMAP		0x100000 /* netmap mode supported/enabled */
 #define	IFCAP_RXCSUM_IPV6	0x200000  /* can offload checksum on IPv6 RX */
 #define	IFCAP_TXCSUM_IPV6	0x400000  /* can offload checksum on IPv6 TX */
 #define	IFCAP_HWSTATS		0x800000 /* manages counters internally */
+#define	IFCAP_TXRTLMT		0x1000000 /* hardware supports TX rate limiting */
+#define	IFCAP_HWRXTSTMP		0x2000000 /* hardware rx timestamping */
 
 #define IFCAP_HWCSUM_IPV6	(IFCAP_RXCSUM_IPV6 | IFCAP_TXCSUM_IPV6)
 
@@ -573,6 +580,16 @@ struct ifrsshash {
 };
 
 #define	IFNET_PCP_NONE	0xff	/* PCP disabled */
+
+#define	IFDR_MSG_SIZE		64
+#define	IFDR_REASON_MSG		1
+#define	IFDR_REASON_VENDOR	2
+struct ifdownreason {
+	char		ifdr_name[IFNAMSIZ];
+	uint32_t	ifdr_reason;
+	uint32_t	ifdr_vendor;
+	char		ifdr_msg[IFDR_MSG_SIZE];
+};
 
 #endif /* __BSD_VISIBLE */
 

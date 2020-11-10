@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1990, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -36,7 +38,7 @@ static const char sccsid[] = "@(#)pw_copy.c	8.4 (Berkeley) 4/2/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/release/picobsd/tinyware/passwd/pw_copy.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/release/picobsd/tinyware/passwd/pw_copy.c 325966 2017-11-18 14:26:50Z pfg $");
 
 /*
  * This module is used to copy the master password file, replacing a single

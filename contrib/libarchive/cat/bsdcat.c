@@ -24,7 +24,7 @@
  */
 
 #include "bsdcat_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/cat/bsdcat.c 337351 2018-08-05 14:35:30Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/cat/bsdcat.c 336854 2018-07-29 00:12:16Z mm $");
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H

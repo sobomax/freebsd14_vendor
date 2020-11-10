@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/forth/Makefile 332115 2018-04-06 16:59:58Z kevans $
+# $FreeBSD: releng/12.2/stand/forth/Makefile 331326 2018-03-21 22:01:51Z kevans $
 
 .include <bsd.init.mk>
 
@@ -18,6 +18,7 @@ FILES+=	brand-fbsd.4th
 FILES+=	check-password.4th
 FILES+=	color.4th
 FILES+=	delay.4th
+FILES+=	efi.4th
 FILES+=	frames.4th
 FILES+=	loader.4th
 FILES+=	logo-beastie.4th

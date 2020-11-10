@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/doc/psd/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: releng/12.2/share/doc/psd/Makefile 307351 2016-10-15 12:07:37Z bapt $
 
 # The following modules do not build/install:
 # 10.gdb
@@ -20,7 +20,6 @@ SUBDIR=	title \
 	05.sysman \
 	06.Clang \
 	12.make \
-	13.rcs \
 	15.yacc \
 	16.lex \
 	17.m4 \

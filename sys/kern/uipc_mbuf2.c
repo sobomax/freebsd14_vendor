@@ -2,6 +2,8 @@
 /*	$NetBSD: uipc_mbuf.c,v 1.40 1999/04/01 00:23:25 thorpej Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1999 WIDE Project.
  * All rights reserved.
  * 
@@ -41,7 +43,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -61,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/uipc_mbuf2.c 351259 2019-08-20 17:49:33Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/uipc_mbuf2.c 356448 2020-01-07 16:49:50Z bz $");
 
 /*#define PULLDOWN_DEBUG*/
 
@@ -99,8 +101,8 @@ m_pulldown(struct mbuf *m, int off, int len, int *offp)
 	int writable;
 
 	/* check invalid arguments. */
-	if (m == NULL)
-		panic("m == NULL in m_pulldown()");
+	KASSERT(m != NULL, ("%s: fix caller: m is NULL off %d len %d offp %p\n",
+	    __func__, off, len, offp));
 	if (len > MCLBYTES) {
 		m_freem(m);
 		return NULL;	/* impossible */

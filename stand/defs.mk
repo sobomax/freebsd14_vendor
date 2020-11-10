@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/defs.mk 346482 2019-04-21 04:26:02Z kevans $
+# $FreeBSD: releng/12.2/stand/defs.mk 355345 2019-12-03 18:25:16Z kevans $
 
 .if !defined(__BOOT_DEFS_MK__)
 __BOOT_DEFS_MK__=${MFILE}
@@ -33,11 +33,16 @@ SASRC=		${BOOTSRC}/libsa
 SYSDIR=		${SRCTOP}/sys
 UBOOTSRC=	${BOOTSRC}/uboot
 ZFSSRC=		${SASRC}/zfs
+LIBCSRC=	${SRCTOP}/lib/libc
 
 BOOTOBJ=	${OBJTOP}/stand
 
 # BINDIR is where we install
 BINDIR?=	/boot
+
+# LUAPATH is where we search for and install lua scripts.
+LUAPATH?=	/boot/lua
+FLUASRC?=	${SRCTOP}/libexec/flua
 
 LIBSA=		${BOOTOBJ}/libsa/libsa.a
 .if ${MACHINE} == "i386"
@@ -64,6 +69,7 @@ CFLAGS+=	-Ddouble=jagged-little-pill -Dfloat=floaty-mcfloatface
 # Experience has shown that problems arise between ~520k to ~530k.
 CFLAGS.clang+=	-Oz
 CFLAGS.gcc+=	-Os
+CFLAGS+=	-ffunction-sections -fdata-sections
 .endif
 
 # GELI Support, with backward compat hooks (mostly)
@@ -165,12 +171,10 @@ CFLAGS+=	-mlittle-endian
 #
 # Have a sensible default
 #
-# XXX Do not change the ordering of this chain in this branch.  4th must remain
-# the default for the lifetime of stable/11.
-.if ${MK_FORTH} == "yes"
-LOADER_DEFAULT_INTERP?=4th
-.elif ${MK_LOADER_LUA} == "yes"
+.if ${MK_LOADER_LUA} == "yes"
 LOADER_DEFAULT_INTERP?=lua
+.elif ${MK_FORTH} == "yes"
+LOADER_DEFAULT_INTERP?=4th
 .else
 LOADER_DEFAULT_INTERP?=simp
 .endif
@@ -182,14 +186,15 @@ CFLAGS+=-I.
 all: ${PROG}
 
 .if !defined(NO_OBJ)
-_ILINKS=machine
+_ILINKS=include/machine
 .if ${MACHINE} != ${MACHINE_CPUARCH} && ${MACHINE} != "arm64"
-_ILINKS+=${MACHINE_CPUARCH}
+_ILINKS+=include/${MACHINE_CPUARCH}
 .endif
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-_ILINKS+=x86
+_ILINKS+=include/x86
 .endif
-CLEANFILES+=${_ILINKS}
+CFLAGS+= -Iinclude
+CLEANDIRS+= include
 
 beforedepend: ${_ILINKS}
 beforebuild: ${_ILINKS}
@@ -204,8 +209,8 @@ ${OBJS}:       ${_link}
 
 .NOPATH: ${_ILINKS}
 
-${_ILINKS}:
-	@case ${.TARGET} in \
+${_ILINKS}: .NOMETA
+	@case ${.TARGET:T} in \
 	machine) \
 		if [ ${DO32:U0} -eq 0 ]; then \
 			path=${SYSDIR}/${MACHINE}/include ; \
@@ -215,8 +220,11 @@ ${_ILINKS}:
 	*) \
 		path=${SYSDIR}/${.TARGET:T}/include ;; \
 	esac ; \
+	case ${.TARGET} in \
+	*/*) mkdir -p ${.TARGET:H};; \
+	esac ; \
 	path=`(cd $$path && /bin/pwd)` ; \
-	${ECHO} ${.TARGET:T} "->" $$path ; \
-	ln -fhs $$path ${.TARGET:T}
+	${ECHO} ${.TARGET} "->" $$path ; \
+	ln -fhs $$path ${.TARGET}
 .endif # !NO_OBJ
 .endif # __BOOT_DEFS_MK__

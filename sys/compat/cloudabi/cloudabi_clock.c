@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/cloudabi/cloudabi_clock.c 316327 2017-03-31 08:43:07Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/cloudabi/cloudabi_clock.c 315892 2017-03-24 07:09:33Z ed $");
 
 #include <sys/param.h>
 #include <sys/proc.h>

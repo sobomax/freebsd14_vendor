@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/distextract/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/distextract/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distextract

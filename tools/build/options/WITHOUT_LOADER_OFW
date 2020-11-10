@@ -1,2 +1,2 @@
-.\" $FreeBSD: releng/11.3/tools/build/options/WITHOUT_LOADER_OFW 332162 2018-04-07 02:56:59Z kevans $
+.\" $FreeBSD: releng/12.2/tools/build/options/WITHOUT_LOADER_OFW 330254 2018-03-01 22:00:38Z kevans $
 Disable building of openfirmware bootloader components.

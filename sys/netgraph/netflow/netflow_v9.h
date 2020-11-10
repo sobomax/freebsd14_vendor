@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Alexander V. Chernikov <melifaro@ipfw.ru>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	 $FreeBSD: releng/11.3/sys/netgraph/netflow/netflow_v9.h 219182 2011-03-02 16:15:11Z glebius $
+ *	 $FreeBSD: releng/12.2/sys/netgraph/netflow/netflow_v9.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef	_NETFLOW_V9_H_

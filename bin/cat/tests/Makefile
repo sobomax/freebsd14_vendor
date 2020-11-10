@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/cat/tests/Makefile 330738 2018-03-10 08:51:02Z eadler $
+# $FreeBSD: releng/12.2/bin/cat/tests/Makefile 323865 2017-09-21 14:14:49Z sevan $
 
 PACKAGE=	tests
 
@@ -16,11 +16,5 @@ ${PACKAGE}FILES+=		d_vt_output.in
 ${PACKAGE}FILES+=		d_vt_output.out
 
 .include <netbsd-tests.test.mk>
-
-d_align.out: ${TESTSRC}/d_align.out
-	sed -E -e 's,^[[:space:]]{7}\$$$$,\$$,' < ${.ALLSRC} > ${.TARGET}.tmp
-	mv ${.TARGET}.tmp ${.TARGET}
-
-CLEANFILES+=			d_align.out d_align.out.tmp
 
 .include <bsd.test.mk>

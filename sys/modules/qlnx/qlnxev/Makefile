@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: releng/11.3/sys/modules/qlnx/qlnxev/Makefile 336695 2018-07-25 02:36:55Z davidcs $
+# $FreeBSD: releng/12.2/sys/modules/qlnx/qlnxev/Makefile 359378 2020-03-27 20:06:40Z kib $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlnx/qlnxe
@@ -51,10 +51,7 @@ SRCS+=ecore_vf.c
 SRCS+=qlnx_ioctl.c
 SRCS+=qlnx_os.c
 
-SRCS+= device_if.h
-SRCS+= bus_if.h
-SRCS+= pci_if.h
-SRCS+= pci_iov_if.h
+SRCS+=	${LINUXKPI_GENSRCS}
 
 .include <bsd.kmod.mk>
 

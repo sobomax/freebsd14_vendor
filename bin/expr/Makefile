@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/expr/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/bin/expr/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -12,8 +12,7 @@ CFLAGS+= -fwrapv
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/iwmfw/iwm8000Cfw/Makefile 330230 2018-03-01 07:42:20Z eadler $
+# $FreeBSD: releng/12.2/sys/modules/iwmfw/iwm8000Cfw/Makefile 319588 2017-06-04 21:28:03Z adrian $
 
 KMOD=	iwm8000Cfw
 IMG=	iwm-8000C-22

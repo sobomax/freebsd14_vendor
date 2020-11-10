@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Peter Wemm.
  * Copyright (c) 1990 The Regents of the University of California.
  * All rights reserved.
@@ -14,7 +16,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -31,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: releng/11.3/sys/amd64/include/pcb.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/include/pcb.h 354569 2019-11-09 11:55:01Z kib $
  */
 
 #ifndef _AMD64_PCB_H_
@@ -113,6 +115,10 @@ struct susppcb {
 
 	/* fpu context for suspend/resume */
 	void		*sp_fpususpend;
+};
+#else	/* 32bit */
+struct pcb {
+	uint64_t pcb_dummy[40];
 };
 #endif
 

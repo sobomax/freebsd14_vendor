@@ -38,7 +38,7 @@
  */
 
 #include <sys/types.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/rcorder/rcorder.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/rcorder/rcorder.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <sys/stat.h>
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Maxim Ignatenko <gelraen.ua@gmail.com>
  * Copyright (c) 2015 Dmitry Vagin <daemon.hammer@ya.ru>
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_patch.h 310625 2016-12-27 08:31:40Z julian $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_patch.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NETGRAPH_NG_PATCH_H_

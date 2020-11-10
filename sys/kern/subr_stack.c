@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Antoine Brodin
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_stack.c 291059 2015-11-19 05:56:59Z markj $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_stack.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -50,11 +52,11 @@ static int stack_symbol(vm_offset_t pc, char *namebuf, u_int buflen,
 static int stack_symbol_ddb(vm_offset_t pc, const char **name, long *offset);
 
 struct stack *
-stack_create(void)
+stack_create(int flags)
 {
 	struct stack *st;
 
-	st = malloc(sizeof *st, M_STACK, M_WAITOK | M_ZERO);
+	st = malloc(sizeof(*st), M_STACK, flags | M_ZERO);
 	return (st);
 }
 

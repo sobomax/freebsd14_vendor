@@ -1,6 +1,8 @@
 /*	$OpenBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2002 Jason L. Wright (jason@thought.net)
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/rndtest/rndtest.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/rndtest/rndtest.c 338324 2018-08-26 12:51:46Z markm $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -147,7 +149,7 @@ rndtest_harvest(struct rndtest_state *rsp, void *buf, u_int len)
 		rndstats.rst_discard += len;
 	else
 	/* MarkM: FIX!! Check that this does not swamp the harvester! */
-	random_harvest_queue(buf, len, len*NBBY/2, RANDOM_PURE_RNDTEST);
+	random_harvest_queue(buf, len, RANDOM_PURE_RNDTEST);
 }
 
 static void

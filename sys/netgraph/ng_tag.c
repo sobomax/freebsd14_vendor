@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Vadim Goncharov <vadimnuclight@tpu.ru>
  * All rights reserved.
  * 
@@ -27,7 +29,7 @@
  * Portions Copyright (c) 1999 Whistle Communications, Inc.
  * (ng_bpf by Archie Cobbs <archie@freebsd.org>)
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_tag.c 230272 2012-01-17 18:10:25Z glebius $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_tag.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*

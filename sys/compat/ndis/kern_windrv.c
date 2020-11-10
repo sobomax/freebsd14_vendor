@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2005
  *      Bill Paul <wpaul@windriver.com>.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/ndis/kern_windrv.c 346656 2019-04-25 00:58:11Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/ndis/kern_windrv.c 345459 2019-03-23 22:44:11Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

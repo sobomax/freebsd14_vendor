@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libcasper/services/tests/Makefile 322715 2017-08-20 06:07:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libcasper/services/tests/Makefile 322451 2017-08-13 01:08:37Z ngie $
 
 .PATH:		${SRCTOP}/tests
 KYUAFILE=	yes

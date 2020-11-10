@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/iscontrol/iscontrol.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/iscontrol/iscontrol.c 359753 2020-04-09 20:35:35Z kevans $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -81,6 +81,9 @@ token_t	DigestMethods[] = {
      {"CRC32C",	1},
      {0, 0}
 };
+
+int	vflag;
+char	*iscsidev;
 
 u_char	isid[6 + 6];
 /*

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Michael Smith
  * Copyright (c) 2001 Scott Long
  * Copyright (c) 2000 BSDi
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/dev/aacraid/aacraid_var.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/dev/aacraid/aacraid_var.h 354964 2019-11-21 14:54:20Z emaste $
  */
 
 #include <sys/bio.h>
@@ -47,7 +49,7 @@
 
 #define	AAC_DRIVER_MAJOR_VERSION	3
 #define	AAC_DRIVER_MINOR_VERSION	2
-#define	AAC_DRIVER_BUGFIX_LEVEL		5
+#define	AAC_DRIVER_BUGFIX_LEVEL		10
 #define	AAC_DRIVER_TYPE			AAC_TYPE_RELEASE
 
 #ifndef AAC_DRIVER_BUILD
@@ -479,9 +481,12 @@ struct aac_softc
 	u_int32_t	aac_feature_bits;		/* feature bits from suppl. info */
 	u_int32_t	aac_support_opt2;		/* supp. options from suppl. info */
 	u_int32_t	aac_max_aif;			/* max. AIF count */
+	u_int32_t	doorbell_mask;			/* for IOP reset */
 	u_int32_t	aac_max_msix;			/* max. MSI-X vectors */
 	u_int32_t	aac_vector_cap;			/* MSI-X vector capab.*/
 	int		msi_enabled;			/* MSI/MSI-X enabled */
+	int		msi_tupelo;		/* Series 6 support for */
+						/* single MSI interrupt */
 #define AAC_CAM_TARGET_WILDCARD ~0
 	void			(*cam_rescan_cb)(struct aac_softc *, uint32_t,
 				    uint32_t);

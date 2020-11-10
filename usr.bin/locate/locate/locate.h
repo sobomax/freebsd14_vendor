@@ -1,4 +1,6 @@
 /*
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1995 Wolfram Schneider <wosch@FreeBSD.org>. Berlin.
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -32,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)locate.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.bin/locate/locate/locate.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/locate/locate/locate.h 359753 2020-04-09 20:35:35Z kevans $
  */
 
 /* Symbolic constants shared by locate.c and code.c */
@@ -63,7 +65,7 @@
    define TOLOWER(ch)	  tolower(ch)
 #else
 
-u_char myctype[UCHAR_MAX + 1];
+extern u_char myctype[UCHAR_MAX + 1];
 #define TOLOWER(ch)	(myctype[ch])
 #endif
 

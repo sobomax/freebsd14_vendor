@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1982, 1986, 1990, 1993, 1995
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ufs/ufs_quota.c 338943 2018-09-26 14:26:29Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ufs/ufs_quota.c 352321 2019-09-14 13:25:54Z kib $");
 
 #include "opt_ffs.h"
 
@@ -157,6 +159,7 @@ chkdq(struct inode *ip, ufs2_daddr_t change, struct ucred *cred, int flags)
 	struct vnode *vp = ITOV(ip);
 	int i, error, warn, do_check;
 
+	MPASS(cred != NOCRED || (flags & FORCE) != 0);
 	/*
 	 * Disk quotas must be turned off for system files.  Currently
 	 * snapshot and quota files.
@@ -309,6 +312,7 @@ chkiq(struct inode *ip, int change, struct ucred *cred, int flags)
 	struct dquot *dq;
 	int i, error, warn, do_check;
 
+	MPASS(cred != NOCRED || (flags & FORCE) != 0);
 #ifdef DIAGNOSTIC
 	if ((flags & CHOWN) == 0)
 		chkdquot(ip);
@@ -613,7 +617,7 @@ again:
 			MNT_VNODE_FOREACH_ALL_ABORT(mp, mvp);
 			goto again;
 		}
-		if (vp->v_type == VNON || vp->v_writecount == 0) {
+		if (vp->v_type == VNON || vp->v_writecount <= 0) {
 			VOP_UNLOCK(vp, 0);
 			vrele(vp);
 			continue;

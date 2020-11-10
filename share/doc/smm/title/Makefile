@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/doc/smm/title/Makefile 106151 2002-10-29 16:13:21Z ru $
+# $FreeBSD: releng/12.2/share/doc/smm/title/Makefile 106151 2002-10-29 16:13:21Z ru $
 
 VOLUME=	smm
 DOC=	Title

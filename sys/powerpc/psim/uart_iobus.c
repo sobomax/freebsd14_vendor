@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright 2002 by Peter Grehan. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/powerpc/psim/uart_iobus.c 340145 2018-11-04 23:28:56Z mmacy $
+ * $FreeBSD: releng/12.2/sys/powerpc/psim/uart_iobus.c 356020 2019-12-22 19:06:45Z kevans $
  */
 
 /*
@@ -40,7 +42,6 @@
 #include <sys/malloc.h>
 #include <sys/mutex.h>
 #include <sys/module.h>
-#include <sys/tty.h>
 #include <machine/bus.h>
 #include <sys/timepps.h>
 

@@ -1,7 +1,9 @@
 /*	$NetBSD: uipaq.c,v 1.4 2006/11/16 01:33:27 christos Exp $	*/
 /*	$OpenBSD: uipaq.c,v 1.1 2005/06/17 23:50:33 deraadt Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2000-2005 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -42,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/serial/uipaq.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/serial/uipaq.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>

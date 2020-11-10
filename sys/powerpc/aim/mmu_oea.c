@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-4-Clause
+ *
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -84,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/powerpc/aim/mmu_oea.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/powerpc/aim/mmu_oea.c 363391 2020-07-21 14:35:50Z markj $");
 
 /*
  * Manages physical address maps.
@@ -301,7 +303,6 @@ void moea_remove_write(mmu_t, vm_page_t);
 void moea_unwire(mmu_t, pmap_t, vm_offset_t, vm_offset_t);
 void moea_zero_page(mmu_t, vm_page_t);
 void moea_zero_page_area(mmu_t, vm_page_t, int, int);
-void moea_zero_page_idle(mmu_t, vm_page_t);
 void moea_activate(mmu_t, struct thread *);
 void moea_deactivate(mmu_t, struct thread *);
 void moea_cpu_bootstrap(mmu_t, int);
@@ -319,6 +320,11 @@ void moea_dumpsys_map(mmu_t mmu, vm_paddr_t pa, size_t sz, void **va);
 void moea_scan_init(mmu_t mmu);
 vm_offset_t moea_quick_enter_page(mmu_t mmu, vm_page_t m);
 void moea_quick_remove_page(mmu_t mmu, vm_offset_t addr);
+static int moea_map_user_ptr(mmu_t mmu, pmap_t pm,
+    volatile const void *uaddr, void **kaddr, size_t ulen, size_t *klen);
+static int moea_decode_kernel_ptr(mmu_t mmu, vm_offset_t addr,
+    int *is_user, vm_offset_t *decoded_addr);
+
 
 static mmu_method_t moea_methods[] = {
 	MMUMETHOD(mmu_clear_modify,	moea_clear_modify),
@@ -351,7 +357,6 @@ static mmu_method_t moea_methods[] = {
 	MMUMETHOD(mmu_unwire,		moea_unwire),
 	MMUMETHOD(mmu_zero_page,       	moea_zero_page),
 	MMUMETHOD(mmu_zero_page_area,	moea_zero_page_area),
-	MMUMETHOD(mmu_zero_page_idle,	moea_zero_page_idle),
 	MMUMETHOD(mmu_activate,		moea_activate),
 	MMUMETHOD(mmu_deactivate,      	moea_deactivate),
 	MMUMETHOD(mmu_page_set_memattr,	moea_page_set_memattr),
@@ -370,6 +375,8 @@ static mmu_method_t moea_methods[] = {
 	MMUMETHOD(mmu_dev_direct_mapped,moea_dev_direct_mapped),
 	MMUMETHOD(mmu_scan_init,	moea_scan_init),
 	MMUMETHOD(mmu_dumpsys_map,	moea_dumpsys_map),
+	MMUMETHOD(mmu_map_user_ptr,	moea_map_user_ptr),
+	MMUMETHOD(mmu_decode_kernel_ptr, moea_decode_kernel_ptr),
 
 	{ 0, 0 }
 };
@@ -1083,13 +1090,6 @@ moea_zero_page_area(mmu_t mmu, vm_page_t m, int off, int size)
 	bzero(va, size);
 }
 
-void
-moea_zero_page_idle(mmu_t mmu, vm_page_t m)
-{
-
-	moea_zero_page(mmu, m);
-}
-
 vm_offset_t
 moea_quick_enter_page(mmu_t mmu, vm_page_t m)
 {
@@ -1124,7 +1124,7 @@ moea_enter(mmu_t mmu, pmap_t pmap, vm_offset_t va, vm_page_t m, vm_prot_t prot,
 		if ((flags & PMAP_ENTER_NOSLEEP) != 0)
 			return (KERN_RESOURCE_SHORTAGE);
 		VM_OBJECT_ASSERT_UNLOCKED(m->object);
-		VM_WAIT;
+		vm_wait(NULL);
 	}
 }
 
@@ -1549,6 +1549,70 @@ moea_kremove(mmu_t mmu, vm_offset_t va)
 {
 
 	moea_remove(mmu, kernel_pmap, va, va + PAGE_SIZE);
+}
+
+/*
+ * Provide a kernel pointer corresponding to a given userland pointer.
+ * The returned pointer is valid until the next time this function is
+ * called in this thread. This is used internally in copyin/copyout.
+ */
+int
+moea_map_user_ptr(mmu_t mmu, pmap_t pm, volatile const void *uaddr,
+    void **kaddr, size_t ulen, size_t *klen)
+{
+	size_t l;
+	register_t vsid;
+
+	*kaddr = (char *)USER_ADDR + ((uintptr_t)uaddr & ~SEGMENT_MASK);
+	l = ((char *)USER_ADDR + SEGMENT_LENGTH) - (char *)(*kaddr);
+	if (l > ulen)
+		l = ulen;
+	if (klen)
+		*klen = l;
+	else if (l != ulen)
+		return (EFAULT);
+
+	vsid = va_to_vsid(pm, (vm_offset_t)uaddr);
+ 
+	/* Mark segment no-execute */
+	vsid |= SR_N;
+ 
+	/* If we have already set this VSID, we can just return */
+	if (curthread->td_pcb->pcb_cpu.aim.usr_vsid == vsid)
+		return (0);
+ 
+	__asm __volatile("isync");
+	curthread->td_pcb->pcb_cpu.aim.usr_segm =
+	    (uintptr_t)uaddr >> ADDR_SR_SHFT;
+	curthread->td_pcb->pcb_cpu.aim.usr_vsid = vsid;
+	__asm __volatile("mtsr %0,%1; isync" :: "n"(USER_SR), "r"(vsid));
+
+	return (0);
+}
+
+/*
+ * Figure out where a given kernel pointer (usually in a fault) points
+ * to from the VM's perspective, potentially remapping into userland's
+ * address space.
+ */
+static int
+moea_decode_kernel_ptr(mmu_t mmu, vm_offset_t addr, int *is_user,
+    vm_offset_t *decoded_addr)
+{
+	vm_offset_t user_sr;
+
+	if ((addr >> ADDR_SR_SHFT) == (USER_ADDR >> ADDR_SR_SHFT)) {
+		user_sr = curthread->td_pcb->pcb_cpu.aim.usr_segm;
+		addr &= ADDR_PIDX | ADDR_POFF;
+		addr |= user_sr << ADDR_SR_SHFT;
+		*decoded_addr = addr;
+		*is_user = 1;
+	} else {
+		*decoded_addr = addr;
+		*is_user = 0;
+	}
+
+	return (0);
 }
 
 /*
@@ -2056,23 +2120,26 @@ moea_pvo_remove(struct pvo_entry *pvo, int pteidx)
 		pvo->pvo_pmap->pm_stats.wired_count--;
 
 	/*
+	 * Remove this PVO from the PV and pmap lists.
+	 */
+	LIST_REMOVE(pvo, pvo_vlink);
+	RB_REMOVE(pvo_tree, &pvo->pvo_pmap->pmap_pvo, pvo);
+
+	/*
 	 * Save the REF/CHG bits into their cache if the page is managed.
+	 * Clear PGA_WRITEABLE if all mappings of the page have been removed.
 	 */
 	if ((pvo->pvo_vaddr & PVO_MANAGED) == PVO_MANAGED) {
-		struct	vm_page *pg;
+		struct vm_page *pg;
 
 		pg = PHYS_TO_VM_PAGE(pvo->pvo_pte.pte.pte_lo & PTE_RPGN);
 		if (pg != NULL) {
 			moea_attr_save(pg, pvo->pvo_pte.pte.pte_lo &
 			    (PTE_REF | PTE_CHG));
+			if (LIST_EMPTY(&pg->md.mdpg_pvoh))
+				vm_page_aflag_clear(pg, PGA_WRITEABLE);
 		}
 	}
-
-	/*
-	 * Remove this PVO from the PV and pmap lists.
-	 */
-	LIST_REMOVE(pvo, pvo_vlink);
-	RB_REMOVE(pvo_tree, &pvo->pvo_pmap->pmap_pvo, pvo);
 
 	/*
 	 * Remove this from the overflow list and return it to the pool
@@ -2615,6 +2682,7 @@ moea_unmapdev(mmu_t mmu, vm_offset_t va, vm_size_t size)
 		base = trunc_page(va);
 		offset = va & PAGE_MASK;
 		size = roundup(offset + size, PAGE_SIZE);
+		moea_qremove(mmu, base, atop(size));
 		kva_free(base, size);
 	}
 }

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/t4_smt.c 346876 2019-04-29 04:42:18Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/t4_smt.c 337659 2018-08-11 21:10:08Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: releng/11.3/sys/riscv/include/param.h 295972 2016-02-24 16:50:34Z br $
+ * $FreeBSD: releng/12.2/sys/riscv/include/param.h 348644 2019-06-04 17:31:05Z markj $
  */
 
 #ifndef _MACHINE_PARAM_H_
@@ -82,7 +82,7 @@
 #define	PAGE_SIZE	(1 << PAGE_SHIFT)	/* Page size */
 #define	PAGE_MASK	(PAGE_SIZE - 1)
 
-#define	MAXPAGESIZES	1		/* maximum number of supported page sizes */
+#define	MAXPAGESIZES	3	/* maximum number of supported page sizes */
 
 #ifndef KSTACK_PAGES
 #define	KSTACK_PAGES	4	/* pages of kernel stack (with pcb) */

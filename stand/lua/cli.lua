@@ -2,7 +2,6 @@
 -- SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 --
 -- Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
--- All rights reserved.
 --
 -- Redistribution and use in source and binary forms, with or without
 -- modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/11.3/stand/lua/cli.lua 344220 2019-02-17 02:39:17Z kevans $
+-- $FreeBSD: releng/12.2/stand/lua/cli.lua 360596 2020-05-03 03:53:38Z kevans $
 --
 
 local config = require("config")
@@ -124,6 +123,15 @@ cli['boot-conf'] = function(...)
 		config.selectKernel(kernel)
 	end
 	core.autoboot(argstr)
+end
+
+cli['read-conf'] = function(...)
+	local _, argv = cli.arguments(...)
+	config.readConf(assert(core.popFrontTable(argv)))
+end
+
+cli['reload-conf'] = function(...)
+	config.reload()
 end
 
 -- Used for splitting cli varargs into cmd_name and the rest of argv

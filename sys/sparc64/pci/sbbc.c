@@ -1,5 +1,7 @@
 /*	$OpenBSD: sbbc.c,v 1.7 2009/11/09 17:53:39 nicm Exp $	*/
 /*-
+ * SPDX-License-Identifier: (ISC AND BSD-2-Clause-FreeBSD)
+ *
  * Copyright (c) 2008 Mark Kettenis
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -41,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/pci/sbbc.c 340145 2018-11-04 23:28:56Z mmacy $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/pci/sbbc.c 338074 2018-08-19 21:10:21Z mmacy $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

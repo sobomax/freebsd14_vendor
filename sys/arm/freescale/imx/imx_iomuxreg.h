@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/freescale/imx/imx_iomuxreg.h 323468 2017-09-11 22:28:38Z ian $
+ * $FreeBSD: releng/12.2/sys/arm/freescale/imx/imx_iomuxreg.h 322015 2017-08-03 14:43:41Z ian $
  */
 
 #ifndef	IMX_IOMUXREG_H

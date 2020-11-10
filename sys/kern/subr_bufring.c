@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007, 2008 Kip Macy <kmacy@freebsd.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_bufring.c 207673 2010-05-05 20:39:02Z joel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_bufring.c 326271 2017-11-27 15:20:12Z pfg $");
 
 
 #include <sys/param.h>

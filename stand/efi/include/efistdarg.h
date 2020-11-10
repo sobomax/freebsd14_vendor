@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/efistdarg.h 163898 2006-11-02 02:42:48Z marcel $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/efistdarg.h 163898 2006-11-02 02:42:48Z marcel $ */
 #ifndef _EFISTDARG_H_
 #define _EFISTDARG_H_
 

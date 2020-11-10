@@ -2,7 +2,6 @@
 
 #
 # Copyright (c) 2015 M. Warner Losh.
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/mtree-dedup.awk 291915 2015-12-07 04:02:34Z imp $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/mtree-dedup.awk 333435 2018-05-09 20:41:03Z imp $
 #
 
 #

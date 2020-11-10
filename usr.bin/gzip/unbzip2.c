@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/gzip/unbzip2.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/gzip/unbzip2.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 /* This file is #included by gzip.c */

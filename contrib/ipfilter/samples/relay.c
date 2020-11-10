@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/samples/relay.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/samples/relay.c 255332 2013-09-06 23:11:19Z cy $	*/
 
 /*
  * Sample program to be used as a transparent proxy.

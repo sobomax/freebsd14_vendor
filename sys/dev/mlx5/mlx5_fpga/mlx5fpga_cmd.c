@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_fpga/mlx5fpga_cmd.c 341966 2018-12-12 12:54:43Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_fpga/mlx5fpga_cmd.c 341965 2018-12-12 12:54:21Z hselasky $
  */
 
 #include <dev/mlx5/cmd.h>

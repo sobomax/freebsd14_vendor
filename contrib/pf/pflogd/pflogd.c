@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/contrib/pf/pflogd/pflogd.c 293015 2015-12-31 22:52:11Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/pf/pflogd/pflogd.c 334418 2018-05-31 09:11:21Z hselasky $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

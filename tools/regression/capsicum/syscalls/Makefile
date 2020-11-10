@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/capsicum/syscalls/Makefile 247606 2013-03-02 01:00:26Z pjd $
+# $FreeBSD: releng/12.2/tools/regression/capsicum/syscalls/Makefile 247606 2013-03-02 01:00:26Z pjd $
 
 SYSCALLS=	cap_fcntls_limit cap_getmode cap_ioctls_limit
 

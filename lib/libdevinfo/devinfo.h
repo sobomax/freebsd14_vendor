@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000 Michael Smith
  * Copyright (c) 2000 BSDi
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/lib/libdevinfo/devinfo.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/lib/libdevinfo/devinfo.h 326219 2017-11-26 02:00:33Z pfg $
  */
 
 #ifndef _DEVINFO_H_INCLUDED

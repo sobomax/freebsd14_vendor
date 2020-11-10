@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/extres/hwreset/hwreset_if.m 294661 2016-01-24 11:03:35Z mmel $
+# $FreeBSD: releng/12.2/sys/dev/extres/hwreset/hwreset_if.m 294661 2016-01-24 11:03:35Z mmel $
 #
 
 #ifdef FDT

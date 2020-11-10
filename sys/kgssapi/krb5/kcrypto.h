@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/kgssapi/krb5/kcrypto.h 184588 2008-11-03 10:38:00Z dfr $
+ * $FreeBSD: releng/12.2/sys/kgssapi/krb5/kcrypto.h 351358 2019-08-21 22:42:08Z jhb $
  */
 
 #include <sys/_iovec.h>
@@ -99,6 +101,7 @@ extern struct krb5_encryption_class krb5_aes128_encryption_class;
 extern struct krb5_encryption_class krb5_aes256_encryption_class;
 extern struct krb5_encryption_class krb5_arcfour_encryption_class;
 extern struct krb5_encryption_class krb5_arcfour_56_encryption_class;
+extern struct timeval krb5_warn_interval;
 
 static __inline void
 krb5_set_key(struct krb5_key_state *ks, const void *keydata)

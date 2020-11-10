@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2009 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt_var.h,v 1.2 2003/03/22 23:44:36 max Exp $
- * $FreeBSD: releng/11.3/sys/netgraph/bluetooth/drivers/ubt/ng_ubt_var.h 196219 2009-08-14 20:03:53Z jhb $
+ * $FreeBSD: releng/12.2/sys/netgraph/bluetooth/drivers/ubt/ng_ubt_var.h 352101 2019-09-09 18:50:38Z wulf $
  */
 
 #ifndef _NG_UBT_VAR_H_
@@ -71,6 +73,35 @@ enum {
 
 	UBT_N_TRANSFER,		/* total number of transfers */
 };
+
+/* USB control request (HCI command) structure */
+struct ubt_hci_cmd {
+	uint16_t	opcode;
+	uint8_t		length;
+	uint8_t		data[];
+} __attribute__ ((packed));
+#define	UBT_HCI_CMD_SIZE(cmd) \
+	((cmd)->length + offsetof(struct ubt_hci_cmd, data))
+
+/* USB interrupt transfer HCI event header structure */
+struct ubt_hci_evhdr {
+	uint8_t		event;
+	uint8_t		length;
+} __attribute__ ((packed));
+/* USB interrupt transfer (generic HCI event) structure */
+struct ubt_hci_event {
+	struct ubt_hci_evhdr	header;
+	uint8_t			data[];
+} __attribute__ ((packed));
+/* USB interrupt transfer (HCI command completion event) structure */
+struct ubt_hci_event_command_compl {
+	struct ubt_hci_evhdr	header;
+	uint8_t			numpkt;
+	uint16_t		opcode;
+	uint8_t			data[];
+} __attribute__ ((packed));
+#define	UBT_HCI_EVENT_SIZE(evt) \
+	((evt)->header.length + offsetof(struct ubt_hci_event, data))
 
 /* USB device softc structure */
 struct ubt_softc {
@@ -126,6 +157,12 @@ struct ubt_softc {
 };
 typedef struct ubt_softc	ubt_softc_t;
 typedef struct ubt_softc *	ubt_softc_p;
+
+usb_error_t	ubt_do_hci_request(struct usb_device *, struct ubt_hci_cmd *,
+		    void *, usb_timeout_t);
+
+extern	devclass_t	ubt_devclass;
+extern	driver_t	ubt_driver;
 
 #endif /* ndef _NG_UBT_VAR_H_ */
 

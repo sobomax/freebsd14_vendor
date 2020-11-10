@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/security/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
+# $FreeBSD: releng/12.2/share/security/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 
 FILES=	lomac-policy.contexts
 FILESDIR=	${BINDIR}/security

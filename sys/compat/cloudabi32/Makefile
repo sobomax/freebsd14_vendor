@@ -1,14 +1,6 @@
-# $FreeBSD: releng/11.3/sys/compat/cloudabi32/Makefile 304564 2016-08-21 16:01:30Z ed $
+# $FreeBSD: releng/12.2/sys/compat/cloudabi32/Makefile 357108 2020-01-25 05:47:56Z kevans $
 
-all:
-	@echo "make sysent only"
+SYSENT_FILE=	${SYSDIR}/contrib/cloudabi/syscalls32.master
+GENERATED_PREFIX=	cloudabi32_
 
-sysent: cloudabi32_sysent.c cloudabi32_syscall.h cloudabi32_proto.h \
-    cloudabi32_syscalls.c cloudabi32_systrace_args.c
-
-cloudabi32_sysent.c cloudabi32_syscall.h cloudabi32_proto.h \
-    cloudabi32_syscalls.c cloudabi32_systrace_args.c: \
-    ../../kern/makesyscalls.sh ../../contrib/cloudabi/syscalls32.master \
-    syscalls.conf
-	sh ../../kern/makesyscalls.sh ../../contrib/cloudabi/syscalls32.master \
-	    syscalls.conf
+.include "../../conf/sysent.mk"

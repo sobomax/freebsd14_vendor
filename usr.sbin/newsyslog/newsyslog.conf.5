@@ -5,7 +5,7 @@
 .\" This file contains changes from the Open Software Foundation.
 .\"
 .\"     from: @(#)newsyslog.8
-.\" $FreeBSD: releng/11.3/usr.sbin/newsyslog/newsyslog.conf.5 328587 2018-01-30 04:50:23Z eadler $
+.\" $FreeBSD: releng/12.2/usr.sbin/newsyslog/newsyslog.conf.5 338165 2018-08-21 23:12:46Z cem $
 .\"
 .\" Copyright 1988, 1989 by the Massachusetts Institute of Technology
 .\"
@@ -21,7 +21,7 @@
 .\" the suitability of this software for any purpose.  It is
 .\" provided "as is" without express or implied warranty.
 .\"
-.Dd January 15, 2018
+.Dd August 21, 2018
 .Dt NEWSYSLOG.CONF 5
 .Os
 .Sh NAME
@@ -96,6 +96,11 @@ or
 .Pa /etc/group .
 .It Ar mode
 Specify the file mode of the log file and archives.
+Valid mode bits are
+.Dv 0666 .
+(That is, read and write permissions for the rotated log may be specified for
+the owner, group, and others.)
+All other mode bits are ignored.
 .It Ar count
 Specify the maximum number of archive files which may exist.
 This does not consider the current log file.
@@ -326,6 +331,12 @@ indicates that
 should attempt to save disk space by compressing the rotated
 log file using
 .Xr xz 1 .
+.It Cm Y
+indicates that
+.Xr newsyslog 8
+should attempt to save disk space by compressing the rotated
+log file using
+.Xr zstd 1 .
 .It Cm Z
 indicates that
 .Xr newsyslog 8

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -42,7 +44,7 @@ static char sccsid[] = "@(#)mount_nfs.c	8.11 (Berkeley) 5/4/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/mount_nfs/mount_nfs.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/mount_nfs/mount_nfs.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -153,18 +155,12 @@ main(int argc, char *argv[])
 	char *mntname, *p, *spec, *tmp;
 	char mntpath[MAXPATHLEN], errmsg[255];
 	char hostname[MAXHOSTNAMELEN + 1], gssn[MAXHOSTNAMELEN + 50];
-	const char *fstype, *gssname;
+	const char *gssname;
 
 	iov = NULL;
 	iovlen = 0;
 	memset(errmsg, 0, sizeof(errmsg));
 	gssname = NULL;
-
-	fstype = strrchr(argv[0], '_');
-	if (fstype == NULL)
-		errx(EX_USAGE, "argv[0] must end in _fstype");
-
-	++fstype;
 
 	while ((c = getopt(argc, argv,
 	    "23a:bcdD:g:I:iLlNo:PR:r:sTt:w:x:U")) != -1)
@@ -272,7 +268,6 @@ main(int argc, char *argv[])
 				} else if (strcmp(opt, "nfsv4") == 0) {
 					pass_flag_to_nmount=0;
 					mountmode = V4;
-					fstype = "nfs";
 					nfsproto = IPPROTO_TCP;
 					if (portspec == NULL)
 						portspec = "2049";
@@ -355,7 +350,6 @@ main(int argc, char *argv[])
 						break;
 					case 4:
 						mountmode = V4;
-						fstype = "nfs";
 						nfsproto = IPPROTO_TCP;
 						if (portspec == NULL)
 							portspec = "2049";
@@ -436,17 +430,11 @@ main(int argc, char *argv[])
 		/* The default is to keep retrying forever. */
 		retrycnt = 0;
 
-	/*
-	 * If the fstye is "oldnfs", run the old NFS client unless the
-	 * "nfsv4" option was specified.
-	 */
-	if (strcmp(fstype, "nfs") == 0) {
-		if (modfind("nfscl") < 0) {
-			/* Not present in kernel, try loading it */
-			if (kldload("nfscl") < 0 ||
-			    modfind("nfscl") < 0)
-				errx(1, "nfscl is not available");
-		}
+	if (modfind("nfscl") < 0) {
+		/* Not present in kernel, try loading it */
+		if (kldload("nfscl") < 0 ||
+		    modfind("nfscl") < 0)
+			errx(1, "nfscl is not available");
 	}
 
 	/*
@@ -470,8 +458,7 @@ main(int argc, char *argv[])
 	if (checkpath(mntname, mntpath) != 0)
 		err(1, "%s", mntpath);
 
-	build_iovec(&iov, &iovlen, "fstype", 
-	    __DECONST(void *, fstype), (size_t)-1);
+	build_iovec_argf(&iov, &iovlen, "fstype", "nfs");
 	build_iovec(&iov, &iovlen, "fspath", mntpath, (size_t)-1);
 	build_iovec(&iov, &iovlen, "errmsg", errmsg, sizeof(errmsg));
 

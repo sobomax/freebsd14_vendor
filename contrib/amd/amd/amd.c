@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/contrib/amd/amd/amd.c 310490 2016-12-23 22:42:14Z cy $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/amd/amd/amd.c 308493 2016-11-11 02:42:53Z cy $");
 
 /*
  * Automounter

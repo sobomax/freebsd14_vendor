@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/string/Makefile 317646 2017-05-01 12:41:10Z bapt $
+# $FreeBSD: releng/12.2/lib/libc/tests/string/Makefile 316213 2017-03-30 04:57:26Z kib $
 
 ATF_TESTS_C+=		memcmp_test
 ATF_TESTS_C+=		memset_s_test
@@ -6,6 +6,7 @@ ATF_TESTS_C+=		stpncpy_test
 ATF_TESTS_C+=		strerror2_test
 ATF_TESTS_C+=		wcscasecmp_test
 ATF_TESTS_C+=		wcsnlen_test
+ATF_TESTS_C+=		strxfrm_test
 ATF_TESTS_C+=		wcscoll_test
 
 # TODO: popcount, stresep

@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/11.3/stand/lua/drawer.lua 344220 2019-02-17 02:39:17Z kevans $
+-- $FreeBSD: releng/12.2/stand/lua/drawer.lua 361817 2020-06-05 02:52:07Z kevans $
 --
 
 local color = require("color")
@@ -144,13 +144,20 @@ local function drawmenu(menudef)
 	return alias_table
 end
 
+local function defaultframe()
+	if core.isSerialConsole() then
+		return "ascii"
+	end
+	return "double"
+end
+
 local function drawbox()
 	local x = menu_position.x - 3
 	local y = menu_position.y - 1
 	local w = frame_size.w
 	local h = frame_size.h
 
-	local framestyle = loader.getenv("loader_menu_frame") or "double"
+	local framestyle = loader.getenv("loader_menu_frame") or defaultframe()
 	local framespec = drawer.frame_styles[framestyle]
 	-- If we don't have a framespec for the current frame style, just don't
 	-- draw a box.
@@ -251,6 +258,11 @@ local function drawlogo()
 		else
 			logodef = getLogodef(drawer.default_bw_logodef)
 		end
+
+		-- Something has gone terribly wrong.
+		if logodef == nil then
+			logodef = getLogodef(drawer.default_fallback_logodef)
+		end
 	end
 
 	if logodef ~= nil and logodef.graphic == none then
@@ -348,6 +360,9 @@ shift = default_shift
 drawer.default_brand = 'fbsd'
 drawer.default_color_logodef = 'orb'
 drawer.default_bw_logodef = 'orbbw'
+-- For when things go terribly wrong; this def should be present here in the
+-- drawer module in case it's a filesystem issue.
+drawer.default_fallback_logodef = 'none'
 
 function drawer.addBrand(name, def)
 	branddefs[name] = def

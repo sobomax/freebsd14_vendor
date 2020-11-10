@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/csu/sparc64/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/csu/sparc64/Makefile 339351 2018-10-13 23:52:55Z kib $
 
 .PATH: ${.CURDIR:H}/common
 
@@ -7,6 +7,7 @@ OBJS=		${SRCS:N*.h:R:S/$/.o/g}
 OBJS+=		Scrt1.o gcrt1.o
 CFLAGS+=	-I${.CURDIR:H}/common \
 		-I${SRCTOP}/lib/libc/include
+CFLAGS+=	-DCRT_IRELOC_SUPPRESS
 
 FILES=		${OBJS}
 FILESMODE=	${LIBMODE}

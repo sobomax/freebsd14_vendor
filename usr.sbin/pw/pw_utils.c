@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/pw/pw_utils.c 297290 2016-03-26 11:41:35Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/pw/pw_utils.c 339369 2018-10-15 20:11:53Z yuripv $");
 
 #include <sys/wait.h>
 
@@ -71,7 +71,7 @@ get_userconfig(const char *config)
 
 	if (config != NULL)
 		return (read_userconfig(config));
-	snprintf(defaultcfg, sizeof(defaultcfg), "%s/pw.conf", conf.etcpath);
+	snprintf(defaultcfg, sizeof(defaultcfg), "%s/" _PW_CONF, conf.etcpath);
 	return (read_userconfig(defaultcfg));
 }
 

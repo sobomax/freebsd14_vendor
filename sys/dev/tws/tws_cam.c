@@ -1,4 +1,6 @@
 /*
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 LSI Corp. 
  * All rights reserved.
  * Author : Manjunath Ranganathaiah <manjunath.ranganathaiah@lsi.com>
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/tws/tws_cam.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/tws/tws_cam.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <dev/tws/tws.h>

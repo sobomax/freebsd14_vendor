@@ -27,7 +27,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: releng/11.3/usr.sbin/freebsd-update/freebsd-update.sh 345802 2019-04-02 13:58:31Z emaste $
+# $FreeBSD: releng/12.2/usr.sbin/freebsd-update/freebsd-update.sh 366214 2020-09-28 00:54:50Z cperciva $
 
 #### Usage function -- called from command-line handling code.
 
@@ -62,9 +62,11 @@ Commands:
   cron         -- Sleep rand(3600) seconds, fetch updates, and send an
                   email if updates were found
   upgrade      -- Fetch upgrades to FreeBSD version specified via -r option
+  updatesready -- Check if there are fetched updates ready to install
   install      -- Install downloaded updates or upgrades
   rollback     -- Uninstall most recently installed updates
-  IDS          -- Compare the system against an index of "known good" files.
+  IDS          -- Compare the system against an index of "known good" files
+  showconfig   -- Show configuration
 EOF
 	exit 0
 }
@@ -220,6 +222,14 @@ config_KeepModifiedMetadata () {
 
 # Add to the list of components which should be kept updated.
 config_Components () {
+	for C in $@; do
+		COMPONENTS="${COMPONENTS} ${C}"
+	done
+}
+
+# Remove src component from list if it isn't installed
+finalize_components_config () {
+	COMPONENTS=""
 	for C in $@; do
 		if [ "$C" = "src" ]; then
 			if [ -e "${BASEDIR}/usr/src/COPYRIGHT" ]; then
@@ -495,7 +505,8 @@ parse_cmdline () {
 			;;
 
 		# Commands
-		cron | fetch | upgrade | install | rollback | IDS)
+		cron | fetch | upgrade | updatesready | install | rollback |\
+		IDS | showconfig)
 			COMMANDS="${COMMANDS} $1"
 			;;
 
@@ -819,7 +830,7 @@ install_check_params () {
 		echo "No updates are available to install."
 		if [ $ISFETCHED -eq 0 ]; then
 			echo "Run '$0 fetch' first."
-			exit 1
+			exit 2
 		fi
 		exit 0
 	fi
@@ -1927,7 +1938,7 @@ fetch_files () {
 		echo ${NDEBUG} "files... "
 		lam -s "${FETCHDIR}/f/" - -s ".gz" < filelist |
 		    xargs ${XARGST} ${PHTTPGET} ${SERVERNAME}	\
-		    2>${QUIETREDIR}
+			2>${STATSREDIR} | fetch_progress
 
 		while read Y; do
 			if ! [ -f ${Y}.gz ]; then
@@ -2424,7 +2435,7 @@ upgrade_merge () {
 				cp merge/old/${F} merge/new/${F}
 				;;
 			*)
-				if ! merge -p -L "current version"	\
+				if ! diff3 -E -m -L "current version"	\
 				    -L "${OLDRELNUM}" -L "${RELNUM}"	\
 				    merge/old/${F}			\
 				    merge/${OLDRELNUM}/${F}		\
@@ -2865,7 +2876,7 @@ install_delete () {
 	rm newfiles killfiles
 }
 
-# Install new files, delete old files, and update linker.hints
+# Install new files, delete old files, and update generated files
 install_files () {
 	# If we haven't already dealt with the kernel, deal with it.
 	if ! [ -f $1/kerneldone ]; then
@@ -2932,6 +2943,11 @@ Kernel updates have been installed.  Please reboot and run
 		    grep -vE '^[^|]*/lib/[^|]*\.so\.[0-9]+\|' > INDEX-NEW
 		install_from_index INDEX-NEW || return 1
 		install_delete INDEX-OLD INDEX-NEW || return 1
+
+		# Rehash certs if we actually have certctl installed.
+		if which certctl>/dev/null; then
+			env DESTDIR=${BASEDIR} certctl rehash
+		fi
 
 		# Rebuild generated pwd files.
 		if [ ${BASEDIR}/etc/master.passwd -nt ${BASEDIR}/etc/spwd.db ] ||
@@ -3289,6 +3305,7 @@ get_params () {
 # Fetch command.  Make sure that we're being called
 # interactively, then run fetch_check_params and fetch_run
 cmd_fetch () {
+	finalize_components_config ${COMPONENTS}
 	if [ ! -t 0 -a $NOTTYOK -eq 0 ]; then
 		echo -n "`basename $0` fetch should not "
 		echo "be run non-interactively."
@@ -3309,6 +3326,7 @@ cmd_cron () {
 	sleep `jot -r 1 0 3600`
 
 	TMPFILE=`mktemp /tmp/freebsd-update.XXXXXX` || exit 1
+	finalize_components_config ${COMPONENTS} >> ${TMPFILE}
 	if ! fetch_run >> ${TMPFILE} ||
 	    ! grep -q "No updates needed" ${TMPFILE} ||
 	    [ ${VERBOSELEVEL} = "debug" ]; then
@@ -3320,26 +3338,64 @@ cmd_cron () {
 
 # Fetch files for upgrading to a new release.
 cmd_upgrade () {
+	finalize_components_config ${COMPONENTS}
 	upgrade_check_params
 	upgrade_run || exit 1
 }
 
+# Check if there are fetched updates ready to install.
+# Chdir into the working directory.
+cmd_updatesready () {
+	finalize_components_config ${COMPONENTS}
+	# Check if working directory exists (if not, no updates pending)
+	if ! [ -e "${WORKDIR}" ]; then
+		echo "No updates are available to install."
+		exit 2
+	fi
+	
+	# Change into working directory (fail if no permission/directory etc.)
+	cd ${WORKDIR} || exit 1
+
+	# Construct a unique name from ${BASEDIR}
+	BDHASH=`echo ${BASEDIR} | sha256 -q`
+
+	# Check that we have updates ready to install
+	if ! [ -L ${BDHASH}-install ]; then
+		echo "No updates are available to install."
+		exit 2
+	fi
+
+	echo "There are updates available to install."
+	echo "Run '$0 install' to proceed."
+}
+
 # Install downloaded updates.
 cmd_install () {
+	finalize_components_config ${COMPONENTS}
 	install_check_params
 	install_run || exit 1
 }
 
 # Rollback most recently installed updates.
 cmd_rollback () {
+	finalize_components_config ${COMPONENTS}
 	rollback_check_params
 	rollback_run || exit 1
 }
 
 # Compare system against a "known good" index.
 cmd_IDS () {
+	finalize_components_config ${COMPONENTS}
 	IDS_check_params
 	IDS_run || exit 1
+}
+
+# Output configuration.
+cmd_showconfig () {
+	finalize_components_config ${COMPONENTS}
+	for X in ${CONFIGOPTIONS}; do
+		echo $X=$(eval echo \$${X})
+	done
 }
 
 #### Entry point
@@ -3349,7 +3405,7 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:${PATH}
 
 # Set a pager if the user doesn't
 if [ -z "$PAGER" ]; then
-	PAGER=/usr/bin/more
+	PAGER=/usr/bin/less
 fi
 
 # Set LC_ALL in order to avoid problems with character ranges like [A-Z].

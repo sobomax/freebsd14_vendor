@@ -29,7 +29,7 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: releng/11.3/usr.sbin/mpsutil/mpr_ioctl.h 289366 2015-10-15 15:51:40Z bapt $
+ * $FreeBSD: releng/12.2/usr.sbin/mpsutil/mpr_ioctl.h 289366 2015-10-15 15:51:40Z bapt $
  */
 /*-
  * Copyright (c) 2011-2014 LSI Corp.
@@ -58,7 +58,7 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/11.3/usr.sbin/mpsutil/mpr_ioctl.h 289366 2015-10-15 15:51:40Z bapt $
+ * $FreeBSD: releng/12.2/usr.sbin/mpsutil/mpr_ioctl.h 289366 2015-10-15 15:51:40Z bapt $
  */
 
 #ifndef _MPR_IOCTL_H_

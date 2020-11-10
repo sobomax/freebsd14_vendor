@@ -1,6 +1,6 @@
 #! /usr/local/bin/perl
 #
-# $FreeBSD: releng/11.3/tools/tools/locale/tools/convert_map.pl 298116 2016-04-16 17:36:02Z bapt $
+# $FreeBSD: releng/12.2/tools/tools/locale/tools/convert_map.pl 317204 2017-04-20 18:21:50Z bapt $
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.

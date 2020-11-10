@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/extres/clk/clk_gate.h 294660 2016-01-24 11:00:38Z mmel $
+ * $FreeBSD: releng/12.2/sys/dev/extres/clk/clk_gate.h 294660 2016-01-24 11:00:38Z mmel $
  */
 
 #ifndef _DEV_EXTRES_CLK_GATE_H_

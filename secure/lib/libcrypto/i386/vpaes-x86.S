@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/vpaes-x86.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/vpaes-x86.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from vpaes-x86.pl. */
 #ifdef PIC
-.file	"vpaes-x86.S"
 .text
 .align	64
 .L_vpaes_consts:
@@ -663,7 +662,6 @@ vpaes_cbc_encrypt:
 	ret
 .size	vpaes_cbc_encrypt,.-.L_vpaes_cbc_encrypt_begin
 #else
-.file	"vpaes-x86.S"
 .text
 .align	64
 .L_vpaes_consts:

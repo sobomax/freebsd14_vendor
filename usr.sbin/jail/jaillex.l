@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/jail/jaillex.l 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/jail/jaillex.l 352276 2019-09-13 07:08:43Z bapt $");
 
 #include <err.h>
 #include <stddef.h>
@@ -48,6 +48,7 @@ static int lineno = 1;
 #define YY_DECL int yylex(void)
 %}
 
+%option noyywrap
 %option noinput
 %option nounput
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fdcontrol/fdcontrol.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fdcontrol/fdcontrol.c 327579 2018-01-05 07:28:48Z imp $");
 
 #include <sys/fdcio.h>
 #include <sys/file.h>
@@ -82,6 +82,7 @@ main(int argc, char **argv)
 
 		case 'a':
 			autofmt = 1;
+			/*FALLTHROUGH*/
 		case 'F':
 			showfmt = 1;
 			show = 0;

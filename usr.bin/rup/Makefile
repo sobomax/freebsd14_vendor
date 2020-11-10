@@ -1,8 +1,7 @@
-# $FreeBSD: releng/11.3/usr.bin/rup/Makefile 284064 2015-06-06 12:41:25Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/rup/Makefile 335905 2018-07-03 19:09:46Z jilles $
 
 PROG=	rup
 
-WARNS?=	3
 LIBADD=	rpcsvc
 
 .include <bsd.prog.mk>

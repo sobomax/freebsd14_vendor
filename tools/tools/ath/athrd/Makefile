@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/ath/athrd/Makefile 187322 2009-01-15 23:38:21Z sam $
+# $FreeBSD: releng/12.2/tools/tools/ath/athrd/Makefile 187322 2009-01-15 23:38:21Z sam $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 

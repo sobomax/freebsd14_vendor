@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Cameron Grant <gandalf@vilnya.demon.co.uk>
  * Copyright (c) 2003-2007 Yuriy Tsibizov <yuriy.tsibizov@gfk.ru>
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/sound/pci/emu10kx-pcm.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/sound/pci/emu10kx-pcm.c 360305 2020-04-25 13:18:29Z dim $
  */
 
 #include <sys/param.h>
@@ -261,11 +263,12 @@ emu_dspmixer_uninit(struct snd_mixer *m)
 
 	/* drop submixer for AC97 codec */
 	sc = mix_getdevinfo(m);
-	if (sc->sm != NULL)
+	if (sc->sm != NULL) {
 		err = mixer_delete(sc->sm);
 		if (err)
 			return (err);
 		sc->sm = NULL;
+	}
 	return (0);
 }
 

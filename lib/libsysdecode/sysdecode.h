@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libsysdecode/sysdecode.h 332248 2018-04-07 21:04:43Z tuexen $
+ * $FreeBSD: releng/12.2/lib/libsysdecode/sysdecode.h 328014 2018-01-15 20:37:11Z tuexen $
  */
 
 #ifndef __SYSDECODE_H__
@@ -35,7 +35,8 @@ enum sysdecode_abi {
 	SYSDECODE_ABI_FREEBSD32,
 	SYSDECODE_ABI_LINUX,
 	SYSDECODE_ABI_LINUX32,
-	SYSDECODE_ABI_CLOUDABI64
+	SYSDECODE_ABI_CLOUDABI64,
+	SYSDECODE_ABI_CLOUDABI32
 };
 
 int	sysdecode_abi_to_freebsd_errno(enum sysdecode_abi _abi, int _error);

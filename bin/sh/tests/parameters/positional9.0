@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/parameters/positional9.0 291903 2015-12-06 14:09:31Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/parameters/positional9.0 291903 2015-12-06 14:09:31Z jilles $
 # Although POSIX leaves the result of expanding ${#@} and ${#*} unspecified,
 # make sure it is at least numeric.
 

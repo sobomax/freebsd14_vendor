@@ -7,6 +7,8 @@
 #include <rpc/key_prot.h>
 #include "un-namespace.h"
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2009, Sun Microsystems, Inc.
  * All rights reserved.
  *
@@ -37,7 +39,7 @@
 
 /* #pragma ident	"@(#)key_prot.x	1.7	94/04/29 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/rpc/key_prot_xdr.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/rpc/key_prot_xdr.c 326025 2017-11-20 19:49:47Z pfg $");
 
 /* 
  * Compiled from key_prot.x using rpcgen.

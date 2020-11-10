@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/lib/libnvpair/Makefile 338080 2018-08-20 00:53:38Z kevans $
+# $FreeBSD: releng/12.2/cddl/lib/libnvpair/Makefile 337696 2018-08-13 03:38:32Z kevans $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libnvpair
 .PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/nvpair

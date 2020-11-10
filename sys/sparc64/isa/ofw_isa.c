@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1999, 2000 Matthew R. Green
  * All rights reserved.
  *
@@ -56,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/isa/ofw_isa.c 259516 2013-12-17 15:11:24Z nwhitehorn $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/isa/ofw_isa.c 326262 2017-11-27 15:10:39Z pfg $");
 
 /*
  * Helper functions which can be used in both ISA and EBus code.

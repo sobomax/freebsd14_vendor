@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/usr.sbin/rtadvd/config.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/usr.sbin/rtadvd/config.h 326025 2017-11-20 19:49:47Z pfg $	*/
 /*	$KAME: config.h,v 1.8 2003/06/17 08:26:22 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
  * All rights reserved.
  *

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/Makefile 333617 2018-05-15 00:00:44Z dteske $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/Makefile 330559 2018-03-06 23:44:19Z dteske $
 
 .include <src.opts.mk>
 
@@ -6,14 +6,11 @@ SUBDIR=	${_dtrace} \
 	${_dwatch} \
 	${_lockstat} \
 	${_plockstat} \
-	${_tests} \
 	${_zdb} \
 	${_zfsd} \
 	${_zhack}
 
-.if ${MK_TESTS} != "no"
-_tests=	tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_ZFS} != "no"
 .if ${MK_LIBTHR} != "no"

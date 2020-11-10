@@ -9,7 +9,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/xargs/strnsubst.c 245050 2013-01-05 00:23:58Z delphij $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/xargs/strnsubst.c 327230 2017-12-27 03:23:01Z eadler $");
 
 #include <err.h>
 #include <stdlib.h>
@@ -37,7 +37,7 @@ strnsubst(char **str, const char *match, const char *replstr, size_t maxsize)
 	if (s1 == NULL)
 		return;
 	/*
-	 * If maxsize is 0 then set it to to the length of s1, because we have
+	 * If maxsize is 0 then set it to the length of s1, because we have
 	 * to duplicate s1.  XXX we maybe should double-check whether the match
 	 * appears in s1.  If it doesn't, then we also have to set the length
 	 * to the length of s1, to avoid modifying the argument.  It may make

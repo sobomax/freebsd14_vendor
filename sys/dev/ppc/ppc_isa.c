@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997-2000 Nicolas Souchu
  * Copyright (c) 2001 Alcove - Nicolas Souchu
  * Copyright (c) 2006 Marcel Moolenaar
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ppc/ppc_isa.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ppc/ppc_isa.c 327102 2017-12-23 06:49:27Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -272,3 +274,4 @@ error:
 }
 
 DRIVER_MODULE(ppc, isa, ppc_isa_driver, ppc_devclass, 0, 0);
+ISA_PNP_INFO(lpc_ids);

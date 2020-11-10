@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999-2001 Robert N. M. Watson
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/ufs/ufs/acl.h 200796 2009-12-21 19:39:10Z trasz $
+ * $FreeBSD: releng/12.2/sys/ufs/ufs/acl.h 326272 2017-11-27 15:23:17Z pfg $
  */
 /*
  * Developed by the TrustedBSD Project.

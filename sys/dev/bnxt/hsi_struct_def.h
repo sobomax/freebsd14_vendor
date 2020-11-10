@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bnxt/hsi_struct_def.h 333364 2018-05-08 15:51:40Z shurd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/hsi_struct_def.h 323233 2017-09-06 20:19:30Z shurd $");
 
 /****************************************************************************
  *

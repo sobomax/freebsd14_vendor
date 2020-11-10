@@ -5,9 +5,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/input/uhid.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/input/uhid.c 363664 2020-07-29 14:30:42Z markj $");
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -448,10 +450,6 @@ uhid_get_report(struct uhid_softc *sc, uint8_t type,
 
 	if (kern_data == NULL) {
 		kern_data = malloc(len, M_USBDEV, M_WAITOK);
-		if (kern_data == NULL) {
-			err = ENOMEM;
-			goto done;
-		}
 		free_data = 1;
 	}
 	err = usbd_req_get_report(sc->sc_udev, NULL, kern_data,
@@ -484,10 +482,6 @@ uhid_set_report(struct uhid_softc *sc, uint8_t type,
 
 	if (kern_data == NULL) {
 		kern_data = malloc(len, M_USBDEV, M_WAITOK);
-		if (kern_data == NULL) {
-			err = ENOMEM;
-			goto done;
-		}
 		free_data = 1;
 		err = copyin(user_data, kern_data, len);
 		if (err) {
@@ -673,6 +667,8 @@ uhid_probe(device_t dev)
 {
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 	int error;
+	void *buf;
+	uint16_t len;
 
 	DPRINTFN(11, "\n");
 
@@ -698,6 +694,25 @@ uhid_probe(device_t dev)
 	     ((uaa->info.bInterfaceProtocol == UIPROTO_MOUSE) &&
 	      !usb_test_quirk(uaa, UQ_UMS_IGNORE))))
 		return (ENXIO);
+
+	/* Check for mandatory multitouch usages to give wmt(4) a chance */
+	if (!usb_test_quirk(uaa, UQ_WMT_IGNORE)) {
+		error = usbd_req_get_hid_desc(uaa->device, NULL,
+		    &buf, &len, M_USBDEV, uaa->info.bIfaceIndex);
+		/* Let HID decscriptor-less devices to be handled at attach */
+		if (!error) {
+			if (hid_locate(buf, len,
+			    HID_USAGE2(HUP_DIGITIZERS, HUD_CONTACT_MAX),
+			    hid_feature, 0, NULL, NULL, NULL) &&
+			    hid_locate(buf, len,
+			    HID_USAGE2(HUP_DIGITIZERS, HUD_CONTACTID),
+			    hid_input, 0, NULL, NULL, NULL)) {
+				free(buf, M_USBDEV);
+				return (ENXIO);
+			}
+			free(buf, M_USBDEV);
+		}
+	}
 
 	return (BUS_PROBE_GENERIC);
 }

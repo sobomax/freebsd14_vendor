@@ -1,18 +1,16 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: releng/11.3/sbin/Makefile 346429 2019-04-20 04:16:51Z kevans $
+# $FreeBSD: releng/12.2/sbin/Makefile 346145 2019-04-12 01:03:00Z sjg $
 
 .include <src.opts.mk>
 
-# XXX MISSING:		icheck ncheck
-
 SUBDIR=adjkerntz \
-	badsect \
 	camcontrol \
 	clri \
 	comcontrol \
 	conscontrol \
 	ddb \
 	devfs \
+	devmatch \
 	dhclient \
 	dmesg \
 	dump \
@@ -70,7 +68,6 @@ SUBDIR=adjkerntz \
 	tunefs \
 	umount
 
-SUBDIR.${MK_ATM}+=	atm
 SUBDIR.${MK_CCD}+=	ccdconfig
 SUBDIR.${MK_CXX}+=	devd
 SUBDIR.${MK_HAST}+=	hastctl
@@ -83,10 +80,13 @@ SUBDIR.${MK_IPFW}+=	natd
 SUBDIR.${MK_ISCSI}+=	iscontrol
 SUBDIR.${MK_NAND}+=	nandfs
 SUBDIR.${MK_NAND}+=	newfs_nandfs
+SUBDIR.${MK_NVME}+=	nvmecontrol
+SUBDIR.${MK_OPENSSL}+=	decryptcore
 SUBDIR.${MK_PF}+=	pfctl
 SUBDIR.${MK_PF}+=	pflogd
 SUBDIR.${MK_QUOTAS}+=	quotacheck
 SUBDIR.${MK_ROUTED}+=	routed
+SUBDIR.${MK_VERIEXEC}+=	veriexec
 SUBDIR.${MK_ZFS}+=	bectl
 SUBDIR.${MK_ZFS}+=	zfsbootcfg
 

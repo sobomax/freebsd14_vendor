@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/geom/class/mirror/sync_error.sh 345394 2019-03-21 22:23:52Z asomers $
+# $FreeBSD: releng/12.2/tests/sys/geom/class/mirror/sync_error.sh 344135 2019-02-14 20:26:59Z asomers $
 
 ATF_TEST=true
 . $(atf_get_srcdir)/conf.sh

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2015 Landon Fuller <landon@landonf.org>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/cores/pci/bhnd_pcib.c 300015 2016-05-17 06:52:53Z adrian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bhnd/cores/pci/bhnd_pcib.c 326695 2017-12-08 15:57:29Z pfg $");
 
 /*
  * Broadcom PCI/PCIe-Gen1 Host-PCI bridge.

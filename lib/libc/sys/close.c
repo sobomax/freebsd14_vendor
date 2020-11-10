@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/sys/close.c 288002 2015-09-20 03:45:57Z rodrigc $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/sys/close.c 288002 2015-09-20 03:45:57Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/fcntl.h>

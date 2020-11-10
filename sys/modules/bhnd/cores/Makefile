@@ -1,7 +1,6 @@
-# $FreeBSD: releng/11.3/sys/modules/bhnd/cores/Makefile 296078 2016-02-26 03:34:32Z adrian $
+# $FreeBSD: releng/12.2/sys/modules/bhnd/cores/Makefile 304870 2016-08-27 00:03:02Z landonf $
 
-SUBDIR=	bhnd_chipc \
-	bhnd_pci \
+SUBDIR=	bhnd_pci \
 	bhnd_pci_hostb \
 	bhnd_pcib
 

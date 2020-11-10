@@ -1,7 +1,7 @@
 #ifndef CTRS_H_
 #define CTRS_H_
 
-/* $FreeBSD: releng/11.3/tools/tools/netmap/ctrs.h 341434 2018-12-03 17:51:22Z vmaffione $ */
+/* $FreeBSD: releng/12.2/tools/tools/netmap/ctrs.h 340618 2018-11-19 08:53:52Z vmaffione $ */
 
 #include <sys/time.h>
 

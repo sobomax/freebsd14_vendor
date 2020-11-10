@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mrsas/mrsas_cam.c 346944 2019-04-30 07:12:30Z kadesai $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mrsas/mrsas_cam.c 360305 2020-04-25 13:18:29Z dim $");
 
 #include "dev/mrsas/mrsas.h"
 
@@ -120,8 +120,7 @@ MRSAS_REQUEST_DESCRIPTOR_UNION *
 extern int mrsas_reset_targets(struct mrsas_softc *sc);
 extern u_int16_t MR_TargetIdToLdGet(u_int32_t ldTgtId, MR_DRV_RAID_MAP_ALL * map);
 extern u_int32_t
-MR_LdBlockSizeGet(u_int32_t ldTgtId, MR_DRV_RAID_MAP_ALL * map,
-    struct mrsas_softc *sc);
+MR_LdBlockSizeGet(u_int32_t ldTgtId, MR_DRV_RAID_MAP_ALL * map);
 extern void mrsas_isr(void *arg);
 extern void mrsas_aen_handler(struct mrsas_softc *sc);
 extern u_int8_t
@@ -1063,7 +1062,7 @@ mrsas_setup_io(struct mrsas_softc *sc, struct mrsas_mpt_cmd *cmd,
 	}
 
 	map_ptr = sc->ld_drv_map[(sc->map_id & 1)];
-	ld_block_size = MR_LdBlockSizeGet(device_id, map_ptr, sc);
+	ld_block_size = MR_LdBlockSizeGet(device_id, map_ptr);
 
 	ld = MR_TargetIdToLdGet(device_id, map_ptr);
 	if ((ld >= MAX_LOGICAL_DRIVES_EXT) || (!sc->fast_path_io)) {
@@ -1909,13 +1908,14 @@ mrsas_track_scsiio(struct mrsas_softc *sc, target_id_t tgt_id, u_int32_t bus_id)
 	for (i = 0 ; i < sc->max_fw_cmds; i++) {
 		mpt_cmd = sc->mpt_cmd_list[i];
 
-	/*
-	 * Check if the target_id and bus_id is same as the timeout IO
-	 */
-	if (mpt_cmd->ccb_ptr) {
-		/* bus_id = 1 denotes a VD */
-		if (bus_id == 1)
-			tgt_id = (mpt_cmd->ccb_ptr->ccb_h.target_id - (MRSAS_MAX_PD - 1));
+		/*
+		 * Check if the target_id and bus_id is same as the timeout IO
+		 */
+		if (mpt_cmd->ccb_ptr) {
+			/* bus_id = 1 denotes a VD */
+			if (bus_id == 1)
+				tgt_id =
+				    (mpt_cmd->ccb_ptr->ccb_h.target_id - (MRSAS_MAX_PD - 1));
 
 			if (mpt_cmd->ccb_ptr->cpi.bus_id == bus_id &&
 			    mpt_cmd->ccb_ptr->ccb_h.target_id == tgt_id) {

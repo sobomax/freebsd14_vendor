@@ -1,7 +1,10 @@
-# $FreeBSD: releng/11.3/tests/sys/netinet/Makefile 308701 2016-11-15 22:18:52Z hiren $
+# $FreeBSD: releng/12.2/tests/sys/netinet/Makefile 340902 2018-11-24 17:08:49Z markj $
 
 TESTSDIR=	${TESTSBASE}/sys/netinet
 BINDIR=		${TESTSDIR}
+
+ATF_TESTS_C=	ip_reass_test \
+		so_reuseport_lb_test
 
 ATF_TESTS_SH=	fibs_test
 

@@ -29,7 +29,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/mediatek/mtk_intr_gic.c 300149 2016-05-18 15:05:44Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/mediatek/mtk_intr_gic.c 300149 2016-05-18 15:05:44Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

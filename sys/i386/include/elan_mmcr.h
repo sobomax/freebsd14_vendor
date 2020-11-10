@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 John Birrell
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  * bytes. Ignore fields with the 'pad' prefix - they are only present for
  * alignment purposes.
  *
- * $FreeBSD: releng/11.3/sys/i386/include/elan_mmcr.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/i386/include/elan_mmcr.h 326260 2017-11-27 15:08:52Z pfg $
  */
 
 #ifndef _MACHINE_ELAN_MMCR_H_

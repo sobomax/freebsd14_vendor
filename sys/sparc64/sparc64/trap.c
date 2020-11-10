@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001, Jake Burkholder
  * Copyright (C) 1994, David Greenman
  * Copyright (c) 1990, 1993
@@ -15,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -36,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/trap.c 337061 2018-08-01 20:38:01Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/trap.c 360392 2020-04-27 20:37:11Z jhb $");
 
 #include "opt_ddb.h"
 #include "opt_ktr.h"
@@ -89,7 +91,8 @@ void trap(struct trapframe *tf);
 void syscall(struct trapframe *tf);
 
 static int trap_cecc(void);
-static int trap_pfault(struct thread *td, struct trapframe *tf);
+static bool trap_pfault(struct thread *td, struct trapframe *tf, int *signo,
+    int *ucode);
 
 extern char copy_fault[];
 extern char copy_nofault_begin[];
@@ -98,8 +101,6 @@ extern char copy_nofault_end[];
 extern char fs_fault[];
 extern char fs_nofault_begin[];
 extern char fs_nofault_end[];
-extern char fs_nofault_intr_begin[];
-extern char fs_nofault_intr_end[];
 
 extern char fas_fault[];
 extern char fas_nofault_begin[];
@@ -267,7 +268,7 @@ trap(struct trapframe *tf)
 	    trap_msg[tf->tf_type & ~T_KERNEL],
 	    (TRAPF_USERMODE(tf) ? "user" : "kernel"), rdpr(pil));
 
-	PCPU_INC(cnt.v_trap);
+	VM_CNT_INC(v_trap);
 
 	if ((tf->tf_tstate & TSTATE_PRIV) == 0) {
 		KASSERT(td != NULL, ("trap: curthread NULL"));
@@ -287,7 +288,8 @@ trap(struct trapframe *tf)
 			addr = tf->tf_sfar;
 			/* FALLTHROUGH */
 		case T_INSTRUCTION_MISS:
-			sig = trap_pfault(td, tf);
+			if (trap_pfault(td, tf, &sig, &ucode))
+				sig = 0;
 			break;
 		case T_FILL:
 			sig = rwindow_load(td, tf, 2);
@@ -358,7 +360,7 @@ trap(struct trapframe *tf)
 		case T_DATA_MISS:
 		case T_DATA_PROTECTION:
 		case T_INSTRUCTION_MISS:
-			error = trap_pfault(td, tf);
+			error = !trap_pfault(td, tf, &sig, &ucode);
 			break;
 		case T_DATA_EXCEPTION:
 		case T_MEM_ADDRESS_NOT_ALIGNED:
@@ -443,8 +445,8 @@ trap_cecc(void)
 	return (0);
 }
 
-static int
-trap_pfault(struct thread *td, struct trapframe *tf)
+static bool
+trap_pfault(struct thread *td, struct trapframe *tf, int *signo, int *ucode)
 {
 	vm_map_t map;
 	struct proc *p;
@@ -481,14 +483,6 @@ trap_pfault(struct thread *td, struct trapframe *tf)
 	}
 
 	if (ctx != TLB_CTX_KERNEL) {
-		if ((tf->tf_tstate & TSTATE_PRIV) != 0 &&
-		    (tf->tf_tpc >= (u_long)fs_nofault_intr_begin &&
-		    tf->tf_tpc <= (u_long)fs_nofault_intr_end)) {
-			tf->tf_tpc = (u_long)fs_fault;
-			tf->tf_tnpc = tf->tf_tpc + 4;
-			return (0);
-		}
-
 		/* This is a fault on non-kernel virtual memory. */
 		map = &p->p_vmspace->vm_map;
 	} else {
@@ -516,27 +510,27 @@ trap_pfault(struct thread *td, struct trapframe *tf)
 	}
 
 	/* Fault in the page. */
-	rv = vm_fault(map, va, prot, VM_FAULT_NORMAL);
+	rv = vm_fault_trap(map, va, prot, VM_FAULT_NORMAL, signo, ucode);
 
 	CTR3(KTR_TRAP, "trap_pfault: return td=%p va=%#lx rv=%d",
 	    td, va, rv);
 	if (rv == KERN_SUCCESS)
-		return (0);
+		return (true);
 	if (ctx != TLB_CTX_KERNEL && (tf->tf_tstate & TSTATE_PRIV) != 0) {
 		if (tf->tf_tpc >= (u_long)fs_nofault_begin &&
 		    tf->tf_tpc <= (u_long)fs_nofault_end) {
 			tf->tf_tpc = (u_long)fs_fault;
 			tf->tf_tnpc = tf->tf_tpc + 4;
-			return (0);
+			return (true);
 		}
 		if (tf->tf_tpc >= (u_long)copy_nofault_begin &&
 		    tf->tf_tpc <= (u_long)copy_nofault_end) {
 			tf->tf_tpc = (u_long)copy_fault;
 			tf->tf_tnpc = tf->tf_tpc + 4;
-			return (0);
+			return (true);
 		}
 	}
-	return ((rv == KERN_PROTECTION_FAILURE) ? SIGBUS : SIGSEGV);
+	return (false);
 }
 
 /* Maximum number of arguments that can be passed via the out registers. */
@@ -603,7 +597,6 @@ void
 syscall(struct trapframe *tf)
 {
 	struct thread *td;
-	int error;
 
 	td = curthread;
 	td->td_frame = tf;
@@ -618,6 +611,6 @@ syscall(struct trapframe *tf)
 	td->td_pcb->pcb_tpc = tf->tf_tpc;
 	TF_DONE(tf);
 
-	error = syscallenter(td);
-	syscallret(td, error);
+	syscallenter(td);
+	syscallret(td);
 }

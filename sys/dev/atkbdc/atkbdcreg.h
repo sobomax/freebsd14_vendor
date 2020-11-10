@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1996-1999
  * Kazutaka YOKOTA (yokota@zodiac.mech.utsunomiya-u.ac.jp)
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/atkbdc/atkbdcreg.h 343158 2019-01-18 21:12:00Z wulf $
+ * $FreeBSD: releng/12.2/sys/dev/atkbdc/atkbdcreg.h 343157 2019-01-18 21:11:02Z wulf $
  * from kbdio.h,v 1.8 1998/09/25 11:55:46 yokota Exp
  */
 

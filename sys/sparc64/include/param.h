@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1990 The Regents of the University of California.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: releng/11.3/sys/sparc64/include/param.h 273783 2014-10-28 15:22:13Z kib $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/param.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_INCLUDE_PARAM_H_

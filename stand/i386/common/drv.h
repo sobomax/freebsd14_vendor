@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/common/drv.h 329100 2018-02-10 04:56:07Z kevans $
+ * $FreeBSD: releng/12.2/stand/i386/common/drv.h 316585 2017-04-06 18:17:29Z tsoome $
  */
 
 #ifndef _DRV_H_

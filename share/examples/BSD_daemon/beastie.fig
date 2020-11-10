@@ -1,4 +1,6 @@
 #FIG 3.2
+# SPDX-License-Identifier: Beerware
+#
 # ----------------------------------------------------------------------------
 # "THE BEER-WARE LICENSE" (Revision 42):
 # <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
@@ -6,7 +8,7 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD: releng/11.3/share/examples/BSD_daemon/beastie.fig 73489 2001-03-04 09:13:17Z phk $
+# $FreeBSD: releng/12.2/share/examples/BSD_daemon/beastie.fig 326408 2017-11-30 20:33:45Z pfg $
 #
 Landscape
 Center

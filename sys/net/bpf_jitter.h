@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 2002-2003 NetGroup, Politecnico di Torino (Italy)
  * Copyright (C) 2005-2009 Jung-uk Kim <jkim@FreeBSD.org>
  * All rights reserved.
@@ -28,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/bpf_jitter.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/net/bpf_jitter.h 335068 2018-06-13 17:04:41Z jtl $
  */
 
 #ifndef _NET_BPF_JITTER_H_
@@ -79,5 +81,12 @@ bpf_jit_filter	*bpf_jitter(struct bpf_insn *fp, int nins);
  * with a filtering function.
  */
 void		bpf_destroy_jit_filter(bpf_jit_filter *filter);
+
+/*
+ * Declarations for machine-dependent functions.
+ */
+struct bpf_insn;
+
+bpf_filter_func	bpf_jit_compile(struct bpf_insn *, u_int, size_t *);
 
 #endif	/* _NET_BPF_JITTER_H_ */

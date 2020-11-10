@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/capability/Makefile.inc 313240 2017-02-04 17:17:38Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/capability/Makefile.inc 312451 2017-01-20 03:23:24Z ngie $
 
 # capability sources
 .PATH: ${SRCTOP}/sys/kern ${LIBC_SRCTOP}/capability

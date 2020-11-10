@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-modextract/Makefile 331838 2018-03-31 11:38:16Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-modextract/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-modextract
 MAN=
 
-SRCDIR=		tools/llvm-modextract
+SRCDIR=		llvm/tools/llvm-modextract
 SRCS=		llvm-modextract.cpp
 
 .include "../llvm.prog.mk"

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libdevctl/devctl.h 346384 2019-04-19 13:18:54Z kib $
+ * $FreeBSD: releng/12.2/lib/libdevctl/devctl.h 346380 2019-04-19 12:54:05Z kib $
  */
 
 #ifndef __DEVCTL_H__
@@ -42,6 +42,8 @@ int	devctl_set_driver(const char *device, const char *driver, bool force);
 int	devctl_clear_driver(const char *device, bool force);
 int	devctl_rescan(const char *device);
 int	devctl_delete(const char *device, bool force);
+int	devctl_freeze(void);
+int	devctl_thaw(void);
 int	devctl_reset(const char *device, bool detach);
 __END_DECLS
 

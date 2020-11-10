@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 David Schultz <das@FreeBSD.ORG>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/msun/src/s_isnan.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/msun/src/s_isnan.c 354596 2019-11-10 17:33:10Z dim $
  */
 
 #include <math.h>
@@ -42,6 +44,12 @@ isnan(double d)
 	return (u.bits.exp == 2047 && (u.bits.manl != 0 || u.bits.manh != 0));
 }
 #endif /* !PIC */
+
+/*
+ * Because math.h defines __isnanf as an alias for compatibility with glibc and
+ * CUDA, we have to undefine it here to avoid redefinition errors.
+ */
+#undef __isnanf
 
 int
 __isnanf(float f)

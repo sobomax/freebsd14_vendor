@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/smartpqi/smartpqi_cam.c 346376 2019-04-19 12:40:21Z kib $ */
+/* $FreeBSD: releng/12.2/sys/dev/smartpqi/smartpqi_cam.c 346375 2019-04-19 12:38:48Z kib $ */
 /*
  * CAM interface for smartpqi driver
  */
@@ -137,7 +137,6 @@ void os_remove_device(pqisrc_softstate_t *softs,
 		xpt_async(AC_LOST_DEVICE, tmppath, NULL);
 		xpt_free_path(tmppath);
 		pqisrc_free_device(softs, device);
-		OS_SLEEP(10000);
 	}
 
 	DBG_FUNC("OUT\n");

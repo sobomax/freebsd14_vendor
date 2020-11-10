@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Bjoern A. Zeeb <bz@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net/if_debug.c 302086 2016-06-22 12:53:10Z bz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/if_debug.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include "opt_ddb.h"
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/vmm_util.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/vmm_util.h 358146 2020-02-20 01:38:56Z kib $
  */
 
 #ifndef _VMM_UTIL_H_
@@ -31,9 +33,9 @@
 
 struct trapframe;
 
-boolean_t	vmm_is_intel(void);
-boolean_t	vmm_is_amd(void);
-boolean_t	vmm_supports_1G_pages(void);
+bool		vmm_is_intel(void);
+bool		vmm_is_svm(void);
+bool		vmm_supports_1G_pages(void);
 
 void		dump_trapframe(struct trapframe *tf);
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/bsd.links.mk 322745 2017-08-21 10:26:11Z lwhsu $
+# $FreeBSD: releng/12.2/share/mk/bsd.links.mk 325493 2017-11-06 19:33:50Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.links.mk cannot be included directly.
@@ -15,10 +15,8 @@ afterinstall: _installlinks
 .ORDER: realinstall _installlinks
 _installlinks:
 .for s t in ${LINKS}
-	@${ECHO} "${t} -> ${s}" ;\
 	${INSTALL_LINK} ${TAG_ARGS} ${DESTDIR}${s} ${DESTDIR}${t}
 .endfor
 .for s t in ${SYMLINKS}
-	@${ECHO} "${t} -> ${s}" ;\
 	${INSTALL_SYMLINK} ${TAG_ARGS} ${s} ${DESTDIR}${t}
 .endfor

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009, M. Warner Losh
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mii/axphy.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mii/axphy.c 326255 2017-11-27 14:52:40Z pfg $");
 
 /*
  * driver for internal phy in the AX88x9x chips.

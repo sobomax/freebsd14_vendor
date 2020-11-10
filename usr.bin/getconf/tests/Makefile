@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/getconf/tests/Makefile 318436 2017-05-18 01:43:30Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/getconf/tests/Makefile 318436 2017-05-18 01:43:30Z ngie $
 
 ATF_TESTS_SH+=	getconf_test
 

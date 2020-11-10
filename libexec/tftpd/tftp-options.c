@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2008 Edwin Groothuis. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/tftpd/tftp-options.c 246139 2013-01-31 00:02:36Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/tftpd/tftp-options.c 326274 2017-11-27 15:25:02Z pfg $");
 
 #include <sys/socket.h>
 #include <sys/types.h>

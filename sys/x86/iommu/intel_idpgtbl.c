@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/iommu/intel_idpgtbl.c 286777 2015-08-14 13:51:59Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/iommu/intel_idpgtbl.c 355086 2019-11-25 09:43:36Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -64,6 +66,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/x86/iommu/intel_idpgtbl.c 286777 2015-08-14 
 #include <x86/include/busdma_impl.h>
 #include <x86/iommu/intel_reg.h>
 #include <x86/iommu/busdma_dmar.h>
+#include <dev/pci/pcireg.h>
 #include <x86/iommu/intel_dmar.h>
 
 static int domain_unmap_buf_locked(struct dmar_domain *domain,

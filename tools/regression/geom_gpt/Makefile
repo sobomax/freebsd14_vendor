@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/geom_gpt/Makefile 319013 2017-05-27 23:31:51Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/geom_gpt/Makefile 317294 2017-04-22 20:29:56Z ngie $
 
 PROG=	gctl_test_helper
 MAN=

@@ -1,7 +1,7 @@
 /* 
  * FQ_PIE - The FlowQueue-PIE scheduler/AQM
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_sched_fq_pie.c 325730 2017-11-12 01:26:43Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_sched_fq_pie.c 327829 2018-01-11 15:29:29Z pfg $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -1034,8 +1034,8 @@ fq_pie_new_sched(struct dn_sch_inst *_si)
 		return ENOMEM ; 
 	}
 	/* allocate memory for flows array */
-	si->si_extra->flows = malloc(schk->cfg.flows_cnt * sizeof(struct fq_pie_flow),
-		 M_DUMMYNET, M_NOWAIT | M_ZERO);
+	si->si_extra->flows = mallocarray(schk->cfg.flows_cnt,
+	    sizeof(struct fq_pie_flow), M_DUMMYNET, M_NOWAIT | M_ZERO);
 	flows = si->si_extra->flows;
 	if (flows == NULL) {
 		free(si->si_extra, M_DUMMYNET);

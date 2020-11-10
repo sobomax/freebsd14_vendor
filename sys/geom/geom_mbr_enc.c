@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Poul-Henning Kamp
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/geom_mbr_enc.c 298808 2016-04-29 20:56:58Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/geom_mbr_enc.c 326270 2017-11-27 15:17:37Z pfg $");
 
 #include <sys/types.h>
 #include <sys/diskmbr.h>

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $FreeBSD: releng/11.3/tools/tools/drm/gen-drm_pciids 254852 2013-08-25 12:20:57Z dumbbell $
+# $FreeBSD: releng/12.2/tools/tools/drm/gen-drm_pciids 254852 2013-08-25 12:20:57Z dumbbell $
 
 use strict;
 use warnings;

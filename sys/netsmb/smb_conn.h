@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2001 Boris Popov
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netsmb/smb_conn.h 250237 2013-05-04 14:18:10Z davide $
+ * $FreeBSD: releng/12.2/sys/netsmb/smb_conn.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*

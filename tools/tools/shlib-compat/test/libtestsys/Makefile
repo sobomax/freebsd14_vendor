@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/shlib-compat/test/libtestsys/Makefile 248693 2013-03-25 00:31:14Z gleb $
+# $FreeBSD: releng/12.2/tools/tools/shlib-compat/test/libtestsys/Makefile 248693 2013-03-25 00:31:14Z gleb $
 
 TESTNUM=	sys
 

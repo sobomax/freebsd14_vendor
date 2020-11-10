@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_types.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_types.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef	_SYS_EFX_TYPES_H

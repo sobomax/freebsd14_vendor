@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libnv/Makefile 337561 2018-08-10 01:43:05Z kevans $
+# $FreeBSD: releng/12.2/lib/libnv/Makefile 337549 2018-08-09 20:29:44Z kevans $
 
 PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
@@ -17,8 +17,7 @@ SRCS+=	msgio.c
 SRCS+=	nvlist.c
 SRCS+=	nvpair.c
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.lib.mk>

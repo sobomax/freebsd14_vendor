@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/cc/cc_int/Makefile 258507 2013-11-24 04:08:47Z pfg $
+# $FreeBSD: releng/12.2/gnu/usr.bin/cc/cc_int/Makefile 258507 2013-11-24 04:08:47Z pfg $
 
 .include <bsd.own.mk>
 

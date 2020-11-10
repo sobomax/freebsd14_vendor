@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/regression/sockets/zerosend/zerosend.c 294647 2016-01-23 22:51:22Z ngie $
+ * $FreeBSD: releng/12.2/tools/regression/sockets/zerosend/zerosend.c 294647 2016-01-23 22:51:22Z ngie $
  */
 
 #include <sys/select.h>

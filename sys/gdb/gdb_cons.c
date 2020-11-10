@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Sam Leffler
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/gdb/gdb_cons.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/gdb/gdb_cons.c 326269 2017-11-27 15:16:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

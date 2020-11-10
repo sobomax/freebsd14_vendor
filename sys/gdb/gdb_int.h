@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/gdb/gdb_int.h 271173 2014-09-05 16:40:47Z benno $
+ * $FreeBSD: releng/12.2/sys/gdb/gdb_int.h 326269 2017-11-27 15:16:59Z pfg $
  */
 
 #ifndef _GDB_GDB_INT_H_

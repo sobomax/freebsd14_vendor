@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/i386/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+# $FreeBSD: releng/12.2/lib/libc/i386/Makefile.inc 326908 2017-12-16 15:17:54Z emaste $
 
 # Long double is 80 bits
 GDTOASRCS+=strtorx.c

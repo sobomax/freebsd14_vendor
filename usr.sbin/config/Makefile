@@ -1,5 +1,5 @@
 # 	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.sbin/config/Makefile 337333 2018-08-04 21:57:17Z kevans $
+# $FreeBSD: releng/12.2/usr.sbin/config/Makefile 352276 2019-09-13 07:08:43Z bapt $
 
 SRCDIR:=${.PARSEDIR:tA}
 
@@ -18,7 +18,7 @@ CFLAGS+= -I. -I${SRCDIR}
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
-LIBADD=	l nv sbuf
+LIBADD=	nv sbuf
 
 CLEANFILES+=	kernconf.c
 

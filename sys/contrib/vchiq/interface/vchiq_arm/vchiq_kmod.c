@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/contrib/vchiq/interface/vchiq_arm/vchiq_kmod.c 307575 2016-10-18 19:15:43Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/contrib/vchiq/interface/vchiq_arm/vchiq_kmod.c 307095 2016-10-12 03:08:58Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

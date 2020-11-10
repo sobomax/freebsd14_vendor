@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2004-2005 Poul-Henning Kamp.
 # All rights reserved.
 #
@@ -24,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/tools/bus_macro.sh 150524 2005-09-24 20:11:07Z phk $
+# $FreeBSD: releng/12.2/sys/tools/bus_macro.sh 326272 2017-11-27 15:23:17Z pfg $
 #
 # Generate the convenience macros at the bottom of sys/bus.h
 #

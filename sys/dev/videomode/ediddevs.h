@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/dev/videomode/ediddevs.h 278798 2015-02-15 11:37:40Z hselasky $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/videomode/ediddevs.h 278798 2015-02-15 11:37:40Z hselasky $	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.

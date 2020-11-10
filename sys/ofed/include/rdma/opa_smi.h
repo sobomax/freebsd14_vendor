@@ -31,7 +31,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/include/rdma/opa_smi.h 331772 2018-03-30 18:17:33Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/include/rdma/opa_smi.h 330490 2018-03-05 11:49:45Z hselasky $
  */
 
 #if !defined(OPA_SMI_H)

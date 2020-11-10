@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2018 M Warner Losh
- * All rights reserved.
+ * Copyright (c) 2018 M. Warner Losh
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/liblua/math.h 329166 2018-02-12 15:31:53Z imp $
+ * $FreeBSD: releng/12.2/stand/liblua/math.h 333143 2018-05-01 16:29:22Z imp $
  */
 
 /*

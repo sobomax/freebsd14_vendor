@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/uuid_from_string.c 329132 2018-02-11 19:51:29Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/uuid_from_string.c 324551 2017-10-12 14:56:28Z imp $
  */
 
 /*

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/nat64/nat64clat_control.c 346212 2019-04-14 12:39:09Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/nat64/nat64clat_control.c 346202 2019-04-14 11:19:08Z ae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

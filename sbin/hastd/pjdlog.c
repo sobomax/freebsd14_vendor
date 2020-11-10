@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/hastd/pjdlog.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/hastd/pjdlog.c 335893 2018-07-03 15:48:34Z br $");
 
 #include <sys/types.h>
 #include <sys/socket.h>

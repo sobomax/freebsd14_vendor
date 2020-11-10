@@ -1,6 +1,8 @@
 /*	$NetBSD: bridgestp.c,v 1.5 2003/11/28 08:56:48 keihan Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2000 Jason L. Wright (jason@thought.net)
  * Copyright (c) 2006 Andrew Thompson (thompsa@FreeBSD.org)
  * All rights reserved.
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net/bridgestp.c 345683 2019-03-29 11:59:54Z kp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/bridgestp.c 345682 2019-03-29 11:59:53Z kp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2041,7 +2043,7 @@ bstp_reinit(struct bstp_state *bs)
 	 * bridges in the same STP domain.
 	 */
 	IFNET_RLOCK_NOSLEEP();
-	TAILQ_FOREACH(ifp, &V_ifnet, if_link) {
+	CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
 		if (ifp->if_type != IFT_ETHER)
 			continue;	/* Not Ethernet */
 

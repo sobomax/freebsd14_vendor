@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/dwc_otg_hisi.c 287373 2015-09-01 17:13:04Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/dwc_otg_hisi.c 287373 2015-09-01 17:13:04Z andrew $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

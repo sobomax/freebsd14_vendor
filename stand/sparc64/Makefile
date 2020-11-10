@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/sparc64/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/sparc64/Makefile 345327 2019-03-20 15:34:40Z mmacy $
 
 NO_OBJ=t
 

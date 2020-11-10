@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/doc/usd/11.vitut/Makefile 281994 2015-04-26 07:52:43Z bapt $
+# $FreeBSD: releng/12.2/share/doc/usd/11.vitut/Makefile 281994 2015-04-26 07:52:43Z bapt $
 
 VOLUME=		usd/11.edit
 SRCS=		edittut.ms

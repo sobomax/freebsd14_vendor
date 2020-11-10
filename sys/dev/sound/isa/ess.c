@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
  * Copyright (c) 1997,1998 Luigi Rizzo
  *
@@ -42,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/isa/ess.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/isa/ess.c 328524 2018-01-29 00:22:30Z imp $");
 
 #define ESS_BUFFSIZE (4096)
 #define ABS(x) (((x) < 0)? -(x) : (x))
@@ -1014,3 +1016,4 @@ static driver_t esscontrol_driver = {
 
 DRIVER_MODULE(esscontrol, isa, esscontrol_driver, esscontrol_devclass, 0, 0);
 DRIVER_MODULE(esscontrol, acpi, esscontrol_driver, esscontrol_devclass, 0, 0);
+ISA_PNP_INFO(essc_ids);

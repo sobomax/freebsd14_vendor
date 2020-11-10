@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 M. Warner Losh.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/libexec/talkd/extern.h 241777 2012-10-20 10:33:15Z ed $
+ * $FreeBSD: releng/12.2/libexec/talkd/extern.h 326274 2017-11-27 15:25:02Z pfg $
  */
 
 extern int debug;

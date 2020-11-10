@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/tools/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
+# $FreeBSD: releng/12.2/kerberos5/tools/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
 SUBDIR=	make-roken asn1_compile slc
 SUBDIR_PARALLEL=

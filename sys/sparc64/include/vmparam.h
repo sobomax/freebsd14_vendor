@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990 The Regents of the University of California.
  * All rights reserved.
  * Copyright (c) 1994 John S. Dyson
@@ -15,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +35,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: releng/11.3/sys/sparc64/include/vmparam.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/vmparam.h 336430 2018-07-17 21:18:49Z imp $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -85,14 +87,11 @@
 #define	VM_FREEPOOL_DIRECT	1
 
 /*
- * Create two free page lists: VM_FREELIST_DEFAULT is for physical
- * pages that are above the largest physical address that is
- * accessible by ISA DMA and VM_FREELIST_ISADMA is for physical pages
- * that are below that address.
+ * Create one free page list: VM_FREELIST_DEFAULT is for all physical
+ * pages.
  */
-#define	VM_NFREELIST		2
+#define	VM_NFREELIST		1
 #define	VM_FREELIST_DEFAULT	0
-#define	VM_FREELIST_ISADMA	1
 
 /*
  * An allocation size of 16MB is supported in order to optimize the
@@ -238,10 +237,12 @@ extern vm_offset_t vm_max_kernel_address;
  */
 #define	ZERO_REGION_SIZE	PAGE_SIZE
 
+#include <machine/tlb.h>
+
 #define	SFBUF
 #define	SFBUF_MAP
-#define	SFBUF_OPTIONAL_DIRECT_MAP	dcache_color_ignore
-#include <machine/tlb.h>
-#define	SFBUF_PHYS_DMAP(x)		TLB_PHYS_TO_DIRECT(x)
+
+#define	PMAP_HAS_DMAP	dcache_color_ignore
+#define	PHYS_TO_DMAP(x)	(TLB_PHYS_TO_DIRECT(x))
 
 #endif /* !_MACHINE_VMPARAM_H_ */

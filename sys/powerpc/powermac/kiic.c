@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001 Tsubai Masanari.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/powerpc/powermac/kiic.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/powerpc/powermac/kiic.c 326261 2017-11-27 15:09:59Z pfg $
  *	NetBSD: ki2c.c,v 1.11 2007/12/06 17:00:33 ad Exp
  *	Id: ki2c.c,v 1.7 2002/10/05 09:56:05 tsubai Exp
  */

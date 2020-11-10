@@ -30,7 +30,7 @@
 /*
  * FQ_Codel Structures and helper functions
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_sched_fq_codel.h 300779 2016-05-26 21:40:13Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_sched_fq_codel.h 300779 2016-05-26 21:40:13Z truckman $
  */
 
 #ifndef _IP_DN_SCHED_FQ_CODEL_H

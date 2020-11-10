@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/dev/syscons/logo/logo.c 206363 2010-04-07 17:07:06Z jkim $ */
+/* $FreeBSD: releng/12.2/sys/dev/syscons/logo/logo.c 206363 2010-04-07 17:07:06Z jkim $ */
 
 #define	LOGO_WIDTH	66
 #define	LOGO_HEIGHT	69

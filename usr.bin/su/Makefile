@@ -1,11 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: releng/11.3/usr.bin/su/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/su/Makefile 335535 2018-06-22 09:10:50Z eadler $
 
 .include <src.opts.mk>
 
 PROG=	su
-
-WARNS?=	5
 
 LIBADD=	util pam
 

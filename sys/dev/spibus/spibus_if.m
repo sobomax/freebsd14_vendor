@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/spibus/spibus_if.m 298274 2016-04-19 15:39:46Z br $
+# $FreeBSD: releng/12.2/sys/dev/spibus/spibus_if.m 298274 2016-04-19 15:39:46Z br $
 #
 
 #include <sys/bus.h>

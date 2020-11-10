@@ -1,3 +1,3 @@
-/* $FreeBSD: releng/11.3/lib/clang/freebsd_cc_version.h 346296 2019-04-16 20:05:24Z dim $ */
+/* $FreeBSD: releng/12.2/lib/clang/freebsd_cc_version.h 363494 2020-07-24 20:48:06Z dim $ */
 
-#define	FREEBSD_CC_VERSION		1100512
+#define	FREEBSD_CC_VERSION		1200023

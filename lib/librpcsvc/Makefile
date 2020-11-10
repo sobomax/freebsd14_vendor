@@ -1,5 +1,5 @@
 #	from: @(#)Makefile    5.10 (Berkeley) 6/24/90
-# $FreeBSD: releng/11.3/lib/librpcsvc/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/librpcsvc/Makefile 320122 2017-06-19 20:47:24Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -21,7 +21,7 @@ OTHERSRCS+= yp_passwd.c yp_update.c
 
 RPCCOM=	RPCGEN_CPP=${CPP:Q} rpcgen -C
 
-INCDIRS= -I${DESTDIR}/usr/include/rpcsvc
+INCDIRS= -I${SYSROOT:U${DESTDIR}}/usr/include/rpcsvc
 
 CFLAGS+= -DYP ${INCDIRS}
 

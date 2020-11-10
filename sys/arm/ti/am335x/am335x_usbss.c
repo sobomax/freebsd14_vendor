@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Oleksandr Tymoshenko <gonzo@freebsd.org>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_usbss.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/am335x/am335x_usbss.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -45,7 +47,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_usbss.c 331722 2018-03-
 #include <sys/malloc.h>
 #include <sys/priv.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/fdt/simplebus.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>

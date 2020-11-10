@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997-2000 Doug Rabson
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/linker.h 338867 2018-09-21 20:40:37Z markj $
+ * $FreeBSD: releng/12.2/sys/sys/linker.h 356833 2020-01-17 15:55:14Z ian $
  */
 
 #ifndef _SYS_LINKER_H_
@@ -73,6 +75,7 @@ struct linker_file {
     int			userrefs;	/* kldload(2) count */
     int			flags;
 #define LINKER_FILE_LINKED	0x1	/* file has been fully linked */
+#define LINKER_FILE_MODULES	0x2	/* file has >0 modules at preload */
     TAILQ_ENTRY(linker_file) link;	/* list of all loaded files */
     char*		filename;	/* file which was loaded */
     char*		pathname;	/* file name with full path */
@@ -94,6 +97,11 @@ struct linker_file {
      */
     int			nenabled;	/* number of enabled probes. */
     int			fbt_nentries;	/* number of fbt entries created. */
+
+#ifdef __arm__
+    caddr_t		exidx_addr;	/* Unwind data index table start */
+    size_t		exidx_size;	/* Unwind data index table size */
+#endif
 };
 
 /*

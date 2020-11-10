@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/share/misc/iso3166 345673 2019-03-29 01:51:41Z philip $
+# $FreeBSD: releng/12.2/share/misc/iso3166 345672 2019-03-29 01:50:16Z philip $
 #
-# Please consult with http://www.FreeBSD.org/internal/i18n.html before
+# Please consult with https://www.FreeBSD.org/internal/i18n.html before
 # making changes to this file.
 #
 # ISO 3166 country codes

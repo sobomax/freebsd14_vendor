@@ -23,7 +23,7 @@
    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
    THE SOFTWARE.
 
-   $FreeBSD: releng/11.3/sys/dev/cxgbe/cudbg/fastlz.h 322014 2017-08-03 14:43:30Z np $
+   $FreeBSD: releng/12.2/sys/dev/cxgbe/cudbg/fastlz.h 322014 2017-08-03 14:43:30Z np $
    */
 #ifndef FASTLZ_H
 #define FASTLZ_H

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1993 Christopher G. Demetriou
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/rpc.rwalld/rwalld.c 216560 2010-12-19 13:05:17Z charnier $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/rpc.rwalld/rwalld.c 326274 2017-11-27 15:25:02Z pfg $");
 
 #include <err.h>
 #include <pwd.h>

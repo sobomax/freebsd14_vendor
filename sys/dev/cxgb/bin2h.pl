@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w 
 
-#$FreeBSD: releng/11.3/sys/dev/cxgb/bin2h.pl 331722 2018-03-29 02:50:57Z eadler $
+#$FreeBSD: releng/12.2/sys/dev/cxgb/bin2h.pl 326255 2017-11-27 14:52:40Z pfg $
 
 if ($#ARGV != 1) {
   print "bin2h.pl <firmware> <headername>\n";
@@ -21,6 +21,8 @@ unless ($success) {
 
 my $license = <<END;
 /**************************************************************************
+
+SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 
 Copyright (c) 2007-2009, Chelsio Inc.
 All rights reserved.

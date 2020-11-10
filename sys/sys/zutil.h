@@ -9,7 +9,7 @@
  */
 
 /* From: zutil.h,v 1.16 1996/07/24 13:41:13 me Exp $ */
-/* $FreeBSD: releng/11.3/sys/sys/zutil.h 281855 2015-04-22 14:38:58Z rodrigc $ */
+/* $FreeBSD: releng/12.2/sys/sys/zutil.h 334534 2018-06-02 18:03:35Z mjg $ */
 
 #ifndef _Z_UTIL_H
 #define _Z_UTIL_H
@@ -32,9 +32,6 @@
 #include <sys/param.h>
 #include <sys/kernel.h>
 #  define HAVE_MEMCPY
-#  define memcpy(d, s, n)	bcopy((s), (d), (n))
-#  define memset(d, v, n)	bzero((d), (n))
-#  define memcmp		bcmp
 
 #else
 #if defined(__KERNEL__)

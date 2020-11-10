@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/rpc.statd/Makefile 321273 2017-07-20 01:03:43Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/rpc.statd/Makefile 320122 2017-06-19 20:47:24Z bdrewery $
 
 PROG=	rpc.statd
 MAN=	rpc.statd.8
@@ -11,7 +11,7 @@ LIBADD=	rpcsvc
 
 CLEANFILES= sm_inter_svc.c sm_inter.h
 
-RPCSRC= ${DESTDIR}/usr/include/rpcsvc/sm_inter.x
+RPCSRC= ${SYSROOT:U${DESTDIR}}/usr/include/rpcsvc/sm_inter.x
 RPCGEN= RPCGEN_CPP=${CPP:Q} rpcgen -L -C
 
 sm_inter_svc.c: ${RPCSRC}

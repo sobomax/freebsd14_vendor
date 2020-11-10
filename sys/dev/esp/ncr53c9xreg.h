@@ -1,6 +1,8 @@
 /*	$NetBSD: ncr53c9xreg.h,v 1.16 2009/09/07 13:31:44 tsutsui Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994 Peter Galbavy.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/esp/ncr53c9xreg.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/esp/ncr53c9xreg.h 326255 2017-11-27 14:52:40Z pfg $ */
 
 #ifndef _NCR53C9XREG_H_
 #define	_NCR53C9XREG_H_

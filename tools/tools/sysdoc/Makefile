@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/sysdoc/Makefile 241828 2012-10-22 02:12:11Z eadler $
+# $FreeBSD: releng/12.2/tools/tools/sysdoc/Makefile 241828 2012-10-22 02:12:11Z eadler $
 
 sysctl.5:
 	sh ${.CURDIR}/sysdoc.sh -k /boot/kernel

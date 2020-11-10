@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/pfsync/Makefile 336087 2018-07-08 10:54:11Z kp $
+# $FreeBSD: releng/12.2/sys/modules/pfsync/Makefile 335847 2018-07-01 18:09:16Z kp $
 
 .PATH: ${SRCTOP}/sys/netpfil/pf
 

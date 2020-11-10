@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/11.3/sys/dev/liquidio/lio_bsd.h 325618 2017-11-09 19:52:56Z sbruno $*/
+/*$FreeBSD: releng/12.2/sys/dev/liquidio/lio_bsd.h 334667 2018-06-05 19:23:23Z ae $*/
 
 #ifndef __LIO_BSD_H__
 #define __LIO_BSD_H__
@@ -52,6 +52,7 @@
 #include <net/if_vlan_var.h>
 #include <net/if_gif.h>
 
+#include <netinet/in.h>
 #include <netinet/tcp_lro.h>
 
 #include <sys/bus.h>

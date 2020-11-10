@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/lib/inet_addr.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/lib/inet_addr.c 344833 2019-03-06 02:37:25Z cy $	*/
 
 /*
  * ++Copyright++ 1983, 1990, 1993

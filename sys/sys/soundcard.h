@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright by Hannu Savolainen 1993 / 4Front Technologies 1993-2006
  * Modified for the new FreeBSD sound driver by Luigi Rizzo, 1997
  *
@@ -29,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/soundcard.h 301406 2016-06-04 18:57:00Z ed $
+ * $FreeBSD: releng/12.2/sys/sys/soundcard.h 326823 2017-12-13 16:13:17Z pfg $
  */
 
 /*

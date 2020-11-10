@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/bin/chmod/tests/chmod_test.sh 322685 2017-08-19 01:21:46Z ngie $
+# $FreeBSD: releng/12.2/bin/chmod/tests/chmod_test.sh 322101 2017-08-05 16:58:02Z ngie $
 
 get_filesystem()
 {

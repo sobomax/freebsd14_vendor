@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/libexec/kpasswdd/Makefile 322963 2017-08-28 06:17:04Z cy $
+# $FreeBSD: releng/12.2/kerberos5/libexec/kpasswdd/Makefile 322749 2017-08-21 12:42:05Z cy $
 
 PROG=	kpasswdd
 MAN=	kpasswdd.8

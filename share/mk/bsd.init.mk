@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/bsd.init.mk 320298 2017-06-23 20:38:21Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/bsd.init.mk 359714 2020-04-07 19:44:37Z bdrewery $
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the
@@ -10,11 +10,23 @@
 __<bsd.init.mk>__:
 .include <bsd.opts.mk>
 .-include "local.init.mk"
+
+.if ${MK_AUTO_OBJ} == "yes"
+# This is also done in bsd.obj.mk
+.if defined(NO_OBJ) && ${.OBJDIR} != ${.CURDIR}
+.OBJDIR: ${.CURDIR}
+.endif
+.endif
+
 .if exists(${.CURDIR}/../Makefile.inc)
 .include "${.CURDIR}/../Makefile.inc"
 .endif
 .include <bsd.own.mk>
 .MAIN: all
+
+# This is used in bsd.{dep,lib,prog}.mk as ${OBJS_SRCS_FILTER:ts:}
+# Some makefiles may want T as well to avoid nested objdirs.
+OBJS_SRCS_FILTER+= R
 
 # Handle INSTALL_AS_USER here to maximize the chance that
 # it has final authority over fooOWN and fooGRP.
@@ -46,13 +58,15 @@ $xGRP=	${_gid}
 #   things like 'make all install' or 'make foo install'.
 # - non-build targets are called
 .if ${MK_DIRDEPS_BUILD} == "yes" && ${.MAKE.LEVEL:U1} == 0 && \
-    ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*)
+    ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*) && !make(*clean)
 _SKIP_BUILD=	not building at level 0
 .elif !empty(.MAKEFLAGS:M-V${_V_DO_BUILD}) || \
     ${.TARGETS:M*install*} == ${.TARGETS} || \
     ${.TARGETS:Mclean*} == ${.TARGETS} || \
+    ${.TARGETS:M*clean} == ${.TARGETS} || \
     ${.TARGETS:Mdestroy*} == ${.TARGETS} || \
-    make(obj) || make(analyze) || make(print-dir)
+    ${.TARGETS:Mobj} == ${.TARGETS} || \
+    make(analyze) || make(print-dir)
 # Skip building, but don't show a warning.
 _SKIP_BUILD=
 .endif
@@ -68,7 +82,8 @@ all: beforebuild .WAIT
 .if ${MK_META_MODE} == "yes"
 .if !exists(/dev/filemon) && \
     ${UPDATE_DEPENDFILE:Uyes:tl} != "no" && !defined(NO_FILEMON) && \
-    !make(showconfig) && !make(print-dir) && ${.MAKEFLAGS:M-V} == ""
+    !make(test-system-*) && !make(showconfig) && !make(print-dir) && \
+    ${.MAKEFLAGS:M-V} == ""
 .warning The filemon module (/dev/filemon) is not loaded.
 .warning META_MODE is less useful for incremental builds without filemon.
 .warning 'kldload filemon' or pass -DNO_FILEMON to suppress this warning.

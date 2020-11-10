@@ -34,7 +34,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/sbin/mount_msdosfs/mount_msdosfs.c 340953 2018-11-26 11:22:04Z eugen $";
+  "$FreeBSD: releng/12.2/sbin/mount_msdosfs/mount_msdosfs.c 340952 2018-11-26 11:20:25Z eugen $";
 #endif /* not lint */
 
 #include <sys/param.h>

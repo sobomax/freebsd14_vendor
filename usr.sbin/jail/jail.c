@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/jail/jail.c 341790 2018-12-10 13:47:05Z eugen $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/jail/jail.c 361314 2020-05-21 02:04:10Z freqlabs $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -87,6 +87,7 @@ static struct permspec perm_sysctl[] = {
 
 static const enum intparam startcommands[] = {
     IP__NULL,
+    IP_EXEC_PREPARE,
 #ifdef INET
     IP__IP4_IFADDR,
 #endif
@@ -98,8 +99,9 @@ static const enum intparam startcommands[] = {
     IP_MOUNT_DEVFS,
     IP_MOUNT_FDESCFS,
     IP_MOUNT_PROCFS,
-    IP_EXEC_PRESTART, 
+    IP_EXEC_PRESTART,
     IP__OP,
+    IP_EXEC_CREATED,
     IP_VNET_INTERFACE,
     IP_EXEC_START,
     IP_COMMAND,
@@ -125,6 +127,7 @@ static const enum intparam stopcommands[] = {
 #ifdef INET
     IP__IP4_IFADDR,
 #endif
+    IP_EXEC_RELEASE,
     IP__NULL
 };
 
@@ -139,7 +142,6 @@ main(int argc, char **argv)
 	unsigned op, pi;
 	int ch, docf, error, i, oldcl, sysval;
 	int dflag, Rflag;
-	char enforce_statfs[4];
 #if defined(INET) || defined(INET6)
 	char *cs, *ncs;
 #endif
@@ -277,17 +279,9 @@ main(int argc, char **argv)
 				    &sysval, &sysvallen, NULL, 0) == 0)
 					add_param(NULL, NULL,
 					    perm_sysctl[pi].ipnum,
-					    (sysval ? 1 : 0) ^ 
+					    (sysval ? 1 : 0) ^
 					    perm_sysctl[pi].rev
 					    ? NULL : "false");
-			}
-			sysvallen = sizeof(sysval);
-			if (sysctlbyname("security.jail.enforce_statfs",
-			    &sysval, &sysvallen, NULL, 0) == 0) {
-				snprintf(enforce_statfs,
-				    sizeof(enforce_statfs), "%d", sysval);
-				add_param(NULL, NULL, KP_ENFORCE_STATFS,
-				    enforce_statfs);
 			}
 		}
 	} else if (op == JF_STOP || op == JF_SHOW) {
@@ -1048,10 +1042,11 @@ usage(void)
 	(void)fprintf(stderr,
 	    "usage: jail [-dhilqv] [-J jid_file] [-u username] [-U username]\n"
 	    "            -[cmr] param=value ... [command=command ...]\n"
-	    "       jail [-dqv] [-f file] [-e separator] -[cmr] [jail]\n"
+	    "       jail [-dqv] [-f file] -[cmr] [jail]\n"
 	    "       jail [-qv] [-f file] -[rR] ['*' | jail ...]\n"
 	    "       jail [-dhilqv] [-J jid_file] [-u username] [-U username]\n"
 	    "            [-n jailname] [-s securelevel]\n"
-	    "            path hostname [ip[,...]] command ...\n");
+	    "            path hostname [ip[,...]] command ...\n"
+	    "       jail [-f file] -e separator\n");
 	exit(1);
 }

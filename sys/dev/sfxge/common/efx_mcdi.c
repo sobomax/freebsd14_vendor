@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_mcdi.c 342445 2018-12-25 07:27:45Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_mcdi.c 342344 2018-12-21 16:57:59Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -1108,7 +1110,7 @@ efx_mcdi_read_assertion(
 
 	/*
 	 * Before we attempt to chat to the MC, we should verify that the MC
-	 * isn't in it's assertion handler, either due to a previous reboot,
+	 * isn't in its assertion handler, either due to a previous reboot,
 	 * or because we're reinitializing due to an eec_exception().
 	 *
 	 * Use GET_ASSERTS to read any assertion state that may be present.

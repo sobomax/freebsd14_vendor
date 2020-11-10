@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -30,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lockf.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: releng/11.3/sys/sys/lockf.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/lockf.h 353464 2019-10-13 06:58:39Z kib $
  */
 
 #ifndef _SYS_LOCKF_H_
@@ -79,7 +81,7 @@ struct lockf_entry {
 	struct	task *lf_async_task;/* (c) Async lock callback */
 	LIST_ENTRY(lockf_entry) lf_link;  /* (s) Linkage for lock lists */
 	struct lockf_edge_list lf_outedges; /* (s) list of out-edges */
-	struct lockf_edge_list lf_inedges; /* (s) list of out-edges */
+	struct lockf_edge_list lf_inedges; /* (s) list of in-edges */
 	int	lf_refs;	    /* (s) ref count */
 };
 LIST_HEAD(lockf_entry_list, lockf_entry);

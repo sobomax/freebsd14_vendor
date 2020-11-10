@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/atheros/ar71xx_bus_space_reversed.h 330897 2018-03-14 03:19:51Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/atheros/ar71xx_bus_space_reversed.h 326259 2017-11-27 15:07:26Z pfg $
  */
 
 #ifndef __AR71XX_BUS_SPACE_REVERSEDH__

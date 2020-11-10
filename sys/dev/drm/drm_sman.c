@@ -27,7 +27,7 @@
  **************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/drm_sman.c 207118 2010-04-23 14:48:30Z rnoland $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/drm_sman.c 338285 2018-08-24 00:02:00Z imp $");
 
 /*
  * Simple memory manager interface that keeps track on allocate regions on a

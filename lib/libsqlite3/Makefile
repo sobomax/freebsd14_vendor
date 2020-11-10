@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libsqlite3/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libsqlite3/Makefile 349650 2019-07-03 16:23:06Z cy $
 
 PACKAGE=lib${LIB}
 PRIVATELIB=	yes
@@ -7,6 +7,7 @@ SHLIB_MAJOR?=	0
 LIBADD+=	pthread
 
 SRCS=	sqlite3.c
+INCS=	sqlite3.h sqlite3ext.h
 
 SQLITE=	${SRCTOP}/contrib/sqlite3
 .PATH:	${SQLITE}
@@ -32,9 +33,6 @@ CFLAGS+=	-I${SQLITE} \
 		-DHAVE_STRERROR_R=1 \
 		-DHAVE_POSIX_FALLOCATE=1 \
 		-D_REENTRANT=1 \
-		-DSQLITE_THREADSAFE=1 \
-		-DSQLITE_ENABLE_FTS3 \
-		-DSQLITE_ENABLE_FTS4 \
-		-DSQLITE_ENABLE_RTREE
+		-DSQLITE_THREADSAFE=1
 
 .include <bsd.lib.mk>

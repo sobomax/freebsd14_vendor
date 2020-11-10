@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/usr.bin/ssh-keyscan/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/secure/usr.bin/ssh-keyscan/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 

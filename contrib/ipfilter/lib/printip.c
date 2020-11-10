@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/lib/printip.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/lib/printip.c 320257 2017-06-23 02:42:04Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -25,7 +25,7 @@ printip(family, addr)
 		else
 			PRINTF("%s", inet_ntoa(ipa));
 	}
-#ifdef AF_INET6
+#ifdef USE_INET6
 	else if (family == AF_INET6) {
 		char buf[INET6_ADDRSTRLEN + 1];
 		const char *str;

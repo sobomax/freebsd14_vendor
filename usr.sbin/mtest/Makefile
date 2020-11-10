@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/mtest/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: releng/12.2/usr.sbin/mtest/Makefile 333894 2018-05-19 20:57:22Z eadler $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ PROG=	mtest
 MAN=	mtest.8
 
 BINMODE= 555
-WARNS?=	2
+WARNS?=	3
 
 # XXX This assumes INET support in the base system.
 CFLAGS+=-DINET

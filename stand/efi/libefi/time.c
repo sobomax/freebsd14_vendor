@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/time.c 329114 2018-02-11 02:27:50Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/time.c 322074 2017-08-05 05:20:03Z tsoome $");
 
 #include <efi.h>
 #include <efilib.h>

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/setjmp.h 292659 2015-12-23 15:22:44Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm64/include/setjmp.h 309617 2016-12-06 13:46:12Z andrew $
  */
 
 #ifndef _MACHINE_SETJMP_H_
@@ -49,7 +49,7 @@
  * The registers to save are: r19 to r29, and d8 to d15.
  */
 #define	_JBLEN		31
-#define	_JB_SIGMASK	21
+#define	_JB_SIGMASK	22
 
 /* This should only be needed in libc and may change */
 #ifdef __ASSEMBLER__

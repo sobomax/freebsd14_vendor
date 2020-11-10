@@ -15,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +33,7 @@
  *
  *	@(#)rpcv2.h	8.1 (Berkeley) 6/10/93
  *
- * $FreeBSD: releng/11.3/stand/libsa/rpcv2.h 329132 2018-02-11 19:51:29Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/rpcv2.h 324551 2017-10-12 14:56:28Z imp $
  */
 
 /*

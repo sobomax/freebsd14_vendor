@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/netbsd-tests.test.mk 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/netbsd-tests.test.mk 291738 2015-12-04 03:17:47Z bdrewery $
 
 .if !target(__netbsd_tests.test.mk__)
 __netbsd_tests.test.mk__:

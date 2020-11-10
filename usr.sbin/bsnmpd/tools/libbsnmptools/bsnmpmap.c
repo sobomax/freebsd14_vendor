@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsnmpd/tools/libbsnmptools/bsnmpmap.c 310901 2016-12-31 10:32:49Z ngie $
+ * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/tools/libbsnmptools/bsnmpmap.c 310648 2016-12-27 23:32:54Z ngie $
  */
 
 #include <sys/param.h>

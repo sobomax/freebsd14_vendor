@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/du/tests/du_test.sh 346920 2019-04-29 19:36:46Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/du/tests/du_test.sh 346918 2019-04-29 19:34:09Z ngie $
 
 atf_test_case A_flag
 A_flag_head()

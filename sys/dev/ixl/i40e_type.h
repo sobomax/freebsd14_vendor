@@ -1,8 +1,8 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2019, Intel Corporation
+  Copyright (c) 2013-2018, Intel Corporation
   All rights reserved.
-
+  
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
   
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixl/i40e_type.h 349181 2019-06-19 00:37:54Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_type.h 365339 2020-09-04 21:21:23Z erj $*/
 
 #ifndef _I40E_TYPE_H_
 #define _I40E_TYPE_H_
@@ -95,8 +95,8 @@ typedef void (*I40E_ADMINQ_CALLBACK)(struct i40e_hw *, struct i40e_aq_desc *);
 #define I40E_HI_BYTE(x)		((u8)(((x) >> 8) & 0xFF))
 #define I40E_LO_BYTE(x)		((u8)((x) & 0xFF))
 
-/* Number of Transmit Descriptors must be a multiple of 8. */
-#define I40E_REQ_TX_DESCRIPTOR_MULTIPLE	8
+/* Number of Transmit Descriptors must be a multiple of 32. */
+#define I40E_REQ_TX_DESCRIPTOR_MULTIPLE	32
 /* Number of Receive Descriptors must be a multiple of 32 if
  * the number of descriptors is greater than 32.
  */
@@ -125,6 +125,8 @@ enum i40e_debug_mask {
 	I40E_DEBUG_DCB			= 0x00000400,
 	I40E_DEBUG_DIAG			= 0x00000800,
 	I40E_DEBUG_FD			= 0x00001000,
+
+	I40E_DEBUG_IWARP		= 0x00F00000,
 
 	I40E_DEBUG_AQ_MESSAGE		= 0x01000000,
 	I40E_DEBUG_AQ_DESCRIPTOR	= 0x02000000,
@@ -188,7 +190,6 @@ enum i40e_memcpy_type {
 	I40E_DMA_TO_NONDMA
 };
 
-
 /* These are structs for managing the hardware information and the operations.
  * The structures of function pointers are filled out at init time when we
  * know for sure exactly which hardware we're working with.  This gives us the
@@ -242,6 +243,7 @@ enum i40e_vsi_type {
 	I40E_VSI_MIRROR	= 5,
 	I40E_VSI_SRIOV	= 6,
 	I40E_VSI_FDIR	= 7,
+	I40E_VSI_IWARP	= 8,
 	I40E_VSI_TYPE_UNKNOWN
 };
 
@@ -379,6 +381,7 @@ struct i40e_hw_capabilities {
 #define I40E_CLOUD_FILTER_MODE1	0x6
 #define I40E_CLOUD_FILTER_MODE2	0x7
 #define I40E_CLOUD_FILTER_MODE3	0x8
+#define I40E_SWITCH_MODE_MASK	0xF
 
 	u32  management_mode;
 	u32  mng_protocols_over_mctp;
@@ -754,6 +757,9 @@ struct i40e_hw {
 #define I40E_HW_FLAG_NVM_READ_REQUIRES_LOCK BIT_ULL(3)
 #define I40E_HW_FLAG_FW_LLDP_STOPPABLE	    BIT_ULL(4)
 #define I40E_HW_FLAG_FW_LLDP_PERSISTENT     BIT_ULL(5)
+#define I40E_HW_FLAG_AQ_PHY_ACCESS_EXTENDED BIT_ULL(6)
+#define I40E_HW_FLAG_DROP_MODE		    BIT_ULL(7)
+#define I40E_HW_FLAG_X722_FEC_REQUEST_CAPABLE BIT_ULL(8)
 	u64 flags;
 
 	/* Used in set switch config AQ command */
@@ -1490,6 +1496,8 @@ struct i40e_hw_port_stats {
 	u32 rx_lpi_status;
 	u64 tx_lpi_count;		/* etlpic */
 	u64 rx_lpi_count;		/* erlpic */
+	u64 tx_lpi_duration;
+	u64 rx_lpi_duration;
 };
 
 /* Checksum and Shadow RAM pointers */
@@ -1542,6 +1550,7 @@ struct i40e_hw_port_stats {
 #define I40E_SR_FEATURE_CONFIGURATION_PTR	0x49
 #define I40E_SR_CONFIGURATION_METADATA_PTR	0x4D
 #define I40E_SR_IMMEDIATE_VALUES_PTR		0x4E
+#define I40E_SR_5TH_FREE_PROVISION_AREA_PTR	0x50
 
 /* Auxiliary field, mask and shift definition for Shadow RAM and NVM Flash */
 #define I40E_SR_VPD_MODULE_MAX_SIZE		1024
@@ -1728,7 +1737,6 @@ struct i40e_lldp_variables {
 #define I40E_FLEX_56_MASK		(0x1ULL << I40E_FLEX_56_SHIFT)
 #define I40E_FLEX_57_SHIFT		6
 #define I40E_FLEX_57_MASK		(0x1ULL << I40E_FLEX_57_SHIFT)
-
 #define I40E_BCM_PHY_PCS_STATUS1_PAGE	0x3
 #define I40E_BCM_PHY_PCS_STATUS1_REG	0x0001
 #define I40E_BCM_PHY_PCS_STATUS1_RX_LPI	BIT(8)

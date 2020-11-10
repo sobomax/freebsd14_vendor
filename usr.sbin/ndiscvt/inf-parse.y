@@ -1,5 +1,7 @@
 %{
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2003
  *	Bill Paul <wpaul@windriver.com>.  All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/ndiscvt/inf-parse.y 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ndiscvt/inf-parse.y 325966 2017-11-18 14:26:50Z pfg $");
 
 #include <stdio.h>
 #include <sys/types.h>

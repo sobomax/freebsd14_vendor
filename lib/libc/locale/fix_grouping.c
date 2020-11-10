@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Alexey Zelkin <phantom@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,13 +27,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/locale/fix_grouping.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/locale/fix_grouping.c 358751 2020-03-08 18:09:41Z emaste $");
 
 #include <ctype.h>
 #include <limits.h>
 #include <stddef.h>
 
-static const char nogrouping[] = { CHAR_MAX, '\0' };
+static const char nogrouping[] = { '\0' };
 
 /*
  * Internal helper used to convert grouping sequences from string

@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/contrib/libarchive/cpio/cpio.h 324417 2017-10-08 20:54:53Z mm $
+ * $FreeBSD: releng/12.2/contrib/libarchive/cpio/cpio.h 358925 2020-03-13 01:05:40Z mm $
  */
 
 #ifndef CPIO_H_INCLUDED
@@ -64,6 +64,7 @@ struct cpio {
 	int		  option_numeric_uid_gid; /* -n */
 	int		  option_rename; /* -r */
 	char		 *destdir;
+	size_t		  destdir_len;
 	size_t		  pass_destpath_alloc;
 	char		 *pass_destpath;
 	int		  uid_override;

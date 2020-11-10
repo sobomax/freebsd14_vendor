@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 2013 Emulex
  * All rights reserved.
  *
@@ -36,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/oce/oce_sysctl.c 343300 2019-01-22 04:20:52Z delphij $ */
+/* $FreeBSD: releng/12.2/sys/dev/oce/oce_sysctl.c 343299 2019-01-22 04:20:00Z delphij $ */
 
 #include "oce_if.h"
 

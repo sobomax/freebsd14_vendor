@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/usr.sbin/nfsuserd/nfsuserd.8 346465 2019-04-21 00:59:21Z rmacklem $
+.\" $FreeBSD: releng/12.2/usr.sbin/nfsuserd/nfsuserd.8 346462 2019-04-21 00:11:58Z rmacklem $
 .\"
 .Dd April 6, 2019
 .Dt NFSUSERD 8
@@ -44,7 +44,12 @@ services plus support manage-gids for all NFS versions
 .Sh DESCRIPTION
 .Nm
 loads user and group information into the kernel for NFSv4.
-It must be running for NFSv4 to function correctly, either client or server.
+For Kerberized NFSv4 mounts, it must be running on both client(s) and
+server for correct operation.
+For non-Kerberized NFSv4 mounts, this daemon must be running unless all
+client(s) plus the server are configured to put uid/gid numbers in the
+owner and owner_group strings.
+.Pp
 It also provides support for manage-gids and must be running on the server if
 this is being used for any version of NFS.
 .Pp

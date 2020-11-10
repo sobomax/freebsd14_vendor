@@ -9,6 +9,8 @@
 ********************************************************************************
 ********************************************************************************
 **
+** SPDX-License-Identifier: BSD-3-Clause
+**
 ** Copyright (C) 2002 - 2012, Areca Technology Corporation All rights reserved.
 **
 ** Redistribution and use in source and binary forms, with or without
@@ -83,7 +85,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/arcmsr/arcmsr.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/arcmsr/arcmsr.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #if 0
 #define ARCMSR_DEBUG1			1

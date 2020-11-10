@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/sys/fs/msdosfs/msdosfs_denode.c 346077 2019-04-10 10:50:48Z kib $ */
+/* $FreeBSD: releng/12.2/sys/fs/msdosfs/msdosfs_denode.c 352678 2019-09-25 12:58:49Z kevans $ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 1994, 1995, 1997 Wolfgang Solfrank.
  * Copyright (C) 1994, 1995, 1997 TooLs GmbH.
  * All rights reserved.
@@ -77,7 +79,7 @@ de_vncmpf(struct vnode *vp, void *arg)
 
 	a = arg;
 	de = VTODE(vp);
-	return (de->de_inode != *a);
+	return (de->de_inode != *a) || (de->de_refcnt <= 0);
 }
 
 /*
@@ -122,8 +124,9 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 	 * address of "." entry. For root dir (if not FAT32) use cluster
 	 * MSDOSFSROOT, offset MSDOSFSROOT_OFS
 	 *
-	 * NOTE: The check for de_refcnt > 0 below insures the denode being
-	 * examined does not represent an unlinked but still open file.
+	 * NOTE: de_vncmpf will explicitly skip any denodes that do not have
+	 * a de_refcnt > 0.  This insures that that we do not attempt to use
+	 * a denode that represents an unlinked but still open file.
 	 * These files are not to be accessible even when the directory
 	 * entry that represented the file happens to be reused while the
 	 * deleted file is still open.
@@ -160,7 +163,7 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 	ldep->de_diroffset = diroffset;
 	ldep->de_inode = inode;
 	lockmgr(nvp->v_vnlock, LK_EXCLUSIVE, NULL);
-	fc_purge(ldep, 0);	/* init the fat cache for this denode */
+	fc_purge(ldep, 0);	/* init the FAT cache for this denode */
 	error = insmntque(nvp, mntp);
 	if (error != 0) {
 		free(ldep, M_MSDOSFSNODE);
@@ -381,7 +384,7 @@ detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred)
 		dep->de_StartCluster = 0;
 		eofentry = ~0;
 	} else {
-		error = pcbmap(dep, de_clcount(pmp, length) - 1, 0, 
+		error = pcbmap(dep, de_clcount(pmp, length) - 1, 0,
 			       &eofentry, 0);
 		if (error) {
 #ifdef MSDOSFS_DEBUG
@@ -413,7 +416,7 @@ detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred)
 #endif
 			return (error);
 		}
-		bzero(bp->b_data + boff, pmp->pm_bpcluster - boff);
+		memset(bp->b_data + boff, 0, pmp->pm_bpcluster - boff);
 		if ((flags & IO_SYNC) != 0)
 			bwrite(bp);
 		else
@@ -427,7 +430,7 @@ detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred)
 	dep->de_FileSize = length;
 	if (!isadir)
 		dep->de_flag |= DE_UPDATE | DE_MODIFIED;
-	allerror = vtruncbuf(DETOV(dep), cred, length, pmp->pm_bpcluster);
+	allerror = vtruncbuf(DETOV(dep), length, pmp->pm_bpcluster);
 #ifdef MSDOSFS_DEBUG
 	if (allerror)
 		printf("detrunc(): vtruncbuf error %d\n", allerror);
@@ -592,8 +595,9 @@ msdosfs_inactive(struct vop_inactive_args *ap)
 	 * as empty.  (This may not be necessary for the dos filesystem.)
 	 */
 #ifdef MSDOSFS_DEBUG
-	printf("msdosfs_inactive(): dep %p, refcnt %ld, mntflag %x, MNT_RDONLY %x\n",
-	       dep, dep->de_refcnt, vp->v_mount->mnt_flag, MNT_RDONLY);
+	printf("msdosfs_inactive(): dep %p, refcnt %ld, mntflag %llx, MNT_RDONLY %llx\n",
+	    dep, dep->de_refcnt, (unsigned long long)vp->v_mount->mnt_flag,
+	    (unsigned long long)MNT_RDONLY);
 #endif
 	if (dep->de_refcnt <= 0 && (vp->v_mount->mnt_flag & MNT_RDONLY) == 0) {
 		error = detrunc(dep, (u_long) 0, 0, NOCRED);

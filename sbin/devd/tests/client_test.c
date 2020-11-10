@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/devd/tests/client_test.c 297838 2016-04-11 22:14:29Z asomers $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/devd/tests/client_test.c 334077 2018-05-23 07:39:02Z eadler $");
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -50,7 +50,7 @@ create_two_events(void)
 	FILE *create_stdout;
 	FILE *destroy_stdout;
 	char mdname[80];
-	char destroy_cmd[80];
+	char destroy_cmd[95];
 	char *error;
 
 	create_stdout = popen("mdconfig -a -s 64 -t null", "r");

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/ohci_pci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/ohci_pci.c 358016 2020-02-17 09:57:03Z hselasky $");
 
 /*
  * USB Open Host Controller driver.
@@ -81,6 +83,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/ohci_pci.c 331722 2018-03
 #define	PCI_OHCI_VENDORID_APPLE		0x106b
 #define	PCI_OHCI_VENDORID_ATI		0x1002
 #define	PCI_OHCI_VENDORID_CMDTECH	0x1095
+#define	PCI_OHCI_VENDORID_HYGON		0x1d94
 #define	PCI_OHCI_VENDORID_NEC		0x1033
 #define	PCI_OHCI_VENDORID_NVIDIA	0x12D2
 #define	PCI_OHCI_VENDORID_NVIDIA2	0x10DE
@@ -277,6 +280,9 @@ ohci_pci_attach(device_t self)
 		break;
 	case PCI_OHCI_VENDORID_CMDTECH:
 		sprintf(sc->sc_vendor, "CMDTECH");
+		break;
+	case PCI_OHCI_VENDORID_HYGON:
+		sprintf(sc->sc_vendor, "Hygon");
 		break;
 	case PCI_OHCI_VENDORID_NEC:
 		sprintf(sc->sc_vendor, "NEC");

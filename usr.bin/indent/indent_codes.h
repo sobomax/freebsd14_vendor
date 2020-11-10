@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1985 Sun Microsystems, Inc.
  * Copyright (c) 1980, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -33,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)indent_codes.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/11.3/usr.bin/indent/indent_codes.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/indent/indent_codes.h 334564 2018-06-03 16:21:15Z pstef $
  */
 
 #define newline		1
@@ -69,3 +71,7 @@
 #define elsehead	31
 #define period		32
 #define strpfx		33
+#define storage		34
+#define funcname	35
+#define type_def	36
+#define structure	37

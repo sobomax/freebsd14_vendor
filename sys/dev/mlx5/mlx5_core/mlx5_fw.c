@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/mlx5/mlx5_core/mlx5_fw.c 347855 2019-05-16 18:06:56Z hselasky $
+ * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/mlx5_fw.c 353223 2019-10-07 09:19:46Z hselasky $
  */
 
 #include <dev/mlx5/driver.h>
@@ -324,7 +324,7 @@ int mlx5_cmd_fast_teardown_hca(struct mlx5_core_dev *dev)
 	} while (!time_after(jiffies, end));
 
 	if (mlx5_get_nic_state(dev) != MLX5_NIC_IFC_DISABLED) {
-		dev_err(&dev->pdev->dev, "NIC IFC still %d after %ums.\n",
+		mlx5_core_err(dev, "NIC IFC still %d after %ums.\n",
 			mlx5_get_nic_state(dev), delay_ms);
 		return -EIO;
 	}

@@ -1,11 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/chmod/Makefile 321129 2017-07-18 16:03:39Z ngie $
+# $FreeBSD: releng/12.2/bin/chmod/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	chmod
 
+HAS_TESTS=
 SUBDIR.${MK_TESTS}+=	tests
 
 .include <bsd.prog.mk>

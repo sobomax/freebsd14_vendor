@@ -1,3 +1,3 @@
-# $FreeBSD: releng/11.3/sys/modules/drm/Makefile.inc 106496 2002-11-06 13:41:40Z nyan $
+# $FreeBSD: releng/12.2/sys/modules/drm/Makefile.inc 338285 2018-08-24 00:02:00Z imp $
 
 .include "../Makefile.inc"

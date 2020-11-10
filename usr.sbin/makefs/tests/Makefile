@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/makefs/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/makefs/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 ATF_TESTS_SH+=	makefs_cd9660_tests
 ATF_TESTS_SH+=	makefs_ffs_tests

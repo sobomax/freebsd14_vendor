@@ -1,6 +1,8 @@
 /* lint -save -library Flexelint comment for external headers */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netinet/libalias/alias.h 223080 2011-06-14 13:35:24Z ae $
+ * $FreeBSD: releng/12.2/sys/netinet/libalias/alias.h 359694 2020-04-07 16:27:58Z eugen $
  */
 
 /*
@@ -225,6 +227,14 @@ struct mbuf    *m_megapullup(struct mbuf *, int);
  * states in 'ipfw nat global' rule.
  */
 #define	PKT_ALIAS_SKIP_GLOBAL		0x200
+
+/*
+ * Like PKT_ALIAS_UNREGISTERED_ONLY, but includes the RFC 6598
+ * (Carrier Grade NAT) address range as follows:
+ *
+ *		100.64.0.0   ->   100.127.255.255
+ */
+#define	PKT_ALIAS_UNREGISTERED_CGN	0x400
 
 /* Function return codes. */
 #define	PKT_ALIAS_ERROR			-1

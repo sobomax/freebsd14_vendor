@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/beri/virtio/virtio.h 276710 2015-01-05 16:43:22Z br $
+ * $FreeBSD: releng/12.2/sys/dev/beri/virtio/virtio.h 276710 2015-01-05 16:43:22Z br $
  */
 
 #define READ2(_sc, _reg) \

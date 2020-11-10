@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fmtree/specspec.c 312072 2017-01-13 13:37:09Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fmtree/specspec.c 356532 2020-01-09 01:14:26Z bdrewery $");
 
 #include <err.h>
 #include <grp.h>
@@ -132,7 +132,7 @@ compare_nodes(NODE *n1, NODE *n2, char const *path)
 		return (1);
 	}
 	if (n1->type != n2->type) {
-		differs = 0;
+		differs = F_TYPE;
 		mismatch(n1, n2, differs, path);
 		return (1);
 	}

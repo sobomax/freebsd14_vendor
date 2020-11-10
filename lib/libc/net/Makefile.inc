@@ -1,9 +1,10 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 9/5/93
-# $FreeBSD: releng/11.3/lib/libc/net/Makefile.inc 297283 2016-03-26 03:46:12Z bdrewery $
+# $FreeBSD: releng/12.2/lib/libc/net/Makefile.inc 338729 2018-09-17 18:56:47Z brd $
 
 # machine-independent net sources
 .PATH: ${LIBC_SRCTOP}/net
 
+CONFS+=	net/hosts net/hosts.equiv net/networks net/nsswitch.conf net/protocols
 SRCS+=	base64.c ether_addr.c eui64.c \
 	gai_strerror.c getaddrinfo.c \
 	gethostbydns.c gethostbyht.c gethostbynis.c gethostnamadr.c \
@@ -123,3 +124,8 @@ SRCS+=	hesiod.c
 MAN+=	hesiod.3
 .endif
 
+.if ${MK_NIS} == "no"
+afterinstallconfig:
+	sed -i "" -e 's/.*_compat:/# &/' -e 's/compat$$/files/' \
+		${DESTDIR}/etc/nsswitch.conf
+.endif

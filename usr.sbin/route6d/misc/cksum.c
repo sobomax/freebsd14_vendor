@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/route6d/misc/cksum.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/route6d/misc/cksum.c 326025 2017-11-20 19:49:47Z pfg $
  */
 
 #include <stdio.h>

@@ -29,7 +29,7 @@
 #define	_TPM20_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/tpm/tpm20.h 346725 2019-04-26 01:58:36Z mw $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/tpm/tpm20.h 346724 2019-04-26 01:41:55Z mw $");
 
 #include <sys/endian.h>
 #include <sys/param.h>

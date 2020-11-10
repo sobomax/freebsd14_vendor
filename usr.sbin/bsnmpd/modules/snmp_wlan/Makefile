@@ -1,10 +1,9 @@
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/snmp_wlan/Makefile 222772 2011-06-06 20:24:17Z ed $
+# $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_wlan/Makefile 335885 2018-07-03 08:44:40Z harti $
 #
 
 MOD=	wlan
 SRCS=	wlan_snmp.c wlan_sys.c
-CFLAGS+= -DSNMPTREE_TYPES
 
 XSYM=	begemotWlan
 

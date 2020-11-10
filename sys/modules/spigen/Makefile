@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/spigen/Makefile 332942 2018-04-24 17:00:08Z ian $
+# $FreeBSD: releng/12.2/sys/modules/spigen/Makefile 336561 2018-07-20 17:46:55Z lwhsu $
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 KMOD=	spigen
@@ -9,6 +9,7 @@ SRCS+=	\
 	bus_if.h \
 	device_if.h \
 	opt_platform.h \
+	opt_spi.h \
 	spibus_if.h \
 
 .if !empty(OPT_FDT)

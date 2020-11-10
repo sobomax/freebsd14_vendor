@@ -9,7 +9,7 @@ use and modify. Please send modifications and/or suggestions + bug fixes to
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/bootparamd/callbootd/callbootd.c 256506 2013-10-15 07:37:30Z kevlo $";
+  "$FreeBSD: releng/12.2/usr.sbin/bootparamd/callbootd/callbootd.c 322635 2017-08-17 20:37:01Z ngie $";
 #endif /* not lint */
 
 #include "bootparam_prot.h"
@@ -32,15 +32,12 @@ int broadcast;
 char cln[MAX_MACHINE_NAME+1];
 char dmn[MAX_MACHINE_NAME+1];
 char path[MAX_PATH_LEN+1];
-extern char *inet_ntoa();
 static void usage(void);
 int printgetfile(bp_getfile_res *);
 int printwhoami(bp_whoami_res *);
 
-bool_t
-eachres_whoami(resultp, raddr)
-bp_whoami_res *resultp;
-struct sockaddr_in *raddr;
+static bool_t
+eachres_whoami(bp_whoami_res *resultp, struct sockaddr_in *raddr)
 {
   struct hostent *he;
 
@@ -51,10 +48,8 @@ struct sockaddr_in *raddr;
   return(0);
 }
 
-bool_t
-eachres_getfile(resultp, raddr)
-bp_getfile_res *resultp;
-struct sockaddr_in *raddr;
+static bool_t
+eachres_getfile(bp_getfile_res *resultp, struct sockaddr_in *raddr)
 {
   struct hostent *he;
 
@@ -67,9 +62,7 @@ struct sockaddr_in *raddr;
 
 
 int
-main(argc, argv)
-int argc;
-char **argv;
+main(int argc, char **argv)
 {
   char *server;
 

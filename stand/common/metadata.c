@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/metadata.c 344399 2019-02-20 23:55:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/metadata.c 336252 2018-07-13 17:50:25Z ian $");
 
 #include <stand.h>
 #include <sys/param.h>

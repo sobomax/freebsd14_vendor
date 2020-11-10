@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/net/rndis.h 321749 2017-07-31 02:57:39Z sephe $ */
+/*	$FreeBSD: releng/12.2/sys/net/rndis.h 321408 2017-07-24 03:59:50Z sephe $ */
 /*	$OpenBSD: if_urndisreg.h,v 1.19 2013/11/21 14:08:05 mpi Exp $ */
 
 /*

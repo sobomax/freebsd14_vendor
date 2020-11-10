@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/mpt/mpt_raid.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/mpt/mpt_raid.h 326255 2017-11-27 14:52:40Z pfg $ */
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Definitions for the integrated RAID features LSI MPT Fusion adapters.
  *
  * Copyright (c) 2005, WHEEL Sp. z o.o.

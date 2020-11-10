@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/utilities/hv_kvp.c 322612 2017-08-17 05:09:22Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/utilities/hv_kvp.c 322488 2017-08-14 06:00:50Z sephe $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

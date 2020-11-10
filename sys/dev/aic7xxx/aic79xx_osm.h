@@ -32,13 +32,13 @@
  *
  * $Id: //depot/aic7xxx/freebsd/dev/aic7xxx/aic79xx_osm.h#23 $
  *
- * $FreeBSD: releng/11.3/sys/dev/aic7xxx/aic79xx_osm.h 218909 2011-02-21 09:01:34Z brucec $
+ * $FreeBSD: releng/12.2/sys/dev/aic7xxx/aic79xx_osm.h 320860 2017-07-10 05:08:01Z imp $
  */
 
 #ifndef _AIC79XX_FREEBSD_H_
 #define _AIC79XX_FREEBSD_H_
 
-#include <opt_aic79xx.h>	/* for config options */
+#include "opt_aic79xx.h"	/* for config options */
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,7 +1,9 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/storage/umass.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/storage/umass.c 327173 2017-12-25 04:48:39Z kan $");
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 MAEKAWA Masahide <bishop@rr.iij4u.or.jp>,
  *		      Nick Hibma <n_hibma@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/storage/umass.c 331722 2018-03-29 02
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/sys/dev/usb/storage/umass.c 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/dev/usb/storage/umass.c 327173 2017-12-25 04:48:39Z kan $
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 
@@ -1087,7 +1089,6 @@ static void
 umass_init_shuttle(struct umass_softc *sc)
 {
 	struct usb_device_request req;
-	usb_error_t err;
 	uint8_t status[2] = {0, 0};
 
 	/*
@@ -1100,7 +1101,7 @@ umass_init_shuttle(struct umass_softc *sc)
 	req.wIndex[0] = sc->sc_iface_no;
 	req.wIndex[1] = 0;
 	USETW(req.wLength, sizeof(status));
-	err = usbd_do_request(sc->sc_udev, NULL, &req, &status);
+	usbd_do_request(sc->sc_udev, NULL, &req, &status);
 
 	DPRINTF(sc, UDMASS_GEN, "Shuttle init returned 0x%02x%02x\n",
 	    status[0], status[1]);
@@ -1141,7 +1142,7 @@ umass_cancel_ccb(struct umass_softc *sc)
 {
 	union ccb *ccb;
 
-	mtx_assert(&sc->sc_mtx, MA_OWNED);
+	USB_MTX_ASSERT(&sc->sc_mtx, MA_OWNED);
 
 	ccb = sc->sc_transfer.ccb;
 	sc->sc_transfer.ccb = NULL;

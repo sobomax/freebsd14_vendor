@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2003
  *	Fraunhofer Institute for Open Communication Systems (FhG Fokus).
  * 	All rights reserved.
@@ -28,7 +30,7 @@
  *
  * Customisation of signalling source to the NG environment.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/atm/uni/ng_uni_cust.h 280785 2015-03-28 12:50:24Z rrs $
+ * $FreeBSD: releng/12.2/sys/netgraph/atm/uni/ng_uni_cust.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/param.h>

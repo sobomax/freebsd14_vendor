@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/usb_ioctl.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/usb_ioctl.h 353173 2019-10-07 08:12:28Z hselasky $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -67,6 +69,8 @@ enum {
 	USB_TEMP_PHONE,		/* USB Phone */
 	USB_TEMP_SERIALNET,	/* USB CDC Ethernet and Modem */
 	USB_TEMP_MIDI,		/* USB MIDI */
+	USB_TEMP_MULTI,		/* USB Ethernet, serial, and storage */
+	USB_TEMP_CDCEEM,	/* USB Ethernet Emulation Model */
 	USB_TEMP_MAX,
 };
 
@@ -220,7 +224,7 @@ struct usb_fs_uninit {
 } USB_IOCTL_STRUCT_ALIGN(1);
 
 struct usb_fs_open {
-#define	USB_FS_MAX_BUFSIZE (1 << 18)
+#define	USB_FS_MAX_BUFSIZE (1 << 25)	/* 32 MBytes */
 	uint32_t max_bufsize;
 #define	USB_FS_MAX_FRAMES		(1U << 12)
 #define	USB_FS_MAX_FRAMES_PRE_SCALE	(1U << 31)	/* for ISOCHRONOUS transfers */

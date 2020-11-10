@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2011 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -36,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/share/examples/kld/khelp/h_example.c 218545 2011-02-11 07:26:17Z lstewart $");
+__FBSDID("$FreeBSD: releng/12.2/share/examples/kld/khelp/h_example.c 326275 2017-11-27 15:28:26Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/e1000/e1000_api.c 333213 2018-05-03 15:40:56Z marius $*/
+/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_api.c 362080 2020-06-12 00:42:05Z erj $*/
 
 #include "e1000_api.h"
 
@@ -308,6 +309,8 @@ s32 e1000_set_mac_type(struct e1000_hw *hw)
 	case E1000_DEV_ID_PCH_SPT_I219_V4:
 	case E1000_DEV_ID_PCH_SPT_I219_LM5:
 	case E1000_DEV_ID_PCH_SPT_I219_V5:
+	case E1000_DEV_ID_PCH_CMP_I219_LM12:
+	case E1000_DEV_ID_PCH_CMP_I219_V12:
 		mac->type = e1000_pch_spt;
 		break;
 	case E1000_DEV_ID_PCH_CNP_I219_LM6:
@@ -318,6 +321,10 @@ s32 e1000_set_mac_type(struct e1000_hw *hw)
 	case E1000_DEV_ID_PCH_ICP_I219_V8:
 	case E1000_DEV_ID_PCH_ICP_I219_LM9:
 	case E1000_DEV_ID_PCH_ICP_I219_V9:
+	case E1000_DEV_ID_PCH_CMP_I219_LM10:
+	case E1000_DEV_ID_PCH_CMP_I219_V10:
+	case E1000_DEV_ID_PCH_CMP_I219_LM11:
+	case E1000_DEV_ID_PCH_CMP_I219_V11:
 		mac->type = e1000_pch_cnp;
 		break;
 	case E1000_DEV_ID_82575EB_COPPER:

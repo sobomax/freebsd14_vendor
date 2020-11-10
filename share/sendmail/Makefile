@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/share/sendmail/Makefile 299293 2016-05-10 00:51:50Z gjb $
+# $FreeBSD: releng/12.2/share/sendmail/Makefile 314652 2017-03-04 11:26:40Z ngie $
 #
 # Doing a make install builds /usr/share/sendmail/
 
 PACKAGE=	sendmail
 FILESGROUPS+=	SM
-SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
+SENDMAIL_DIR=	${SRCTOP}/contrib/sendmail
 CFDIR=	cf
 CFPACKAGE=	sendmail
 CFDIRS!=	(cd ${SENDMAIL_DIR}; find -L ${CFDIR} \( \( -name CVS -o -name .svn \) -prune \) -o -type d -print)

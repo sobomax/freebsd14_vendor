@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright 2000 James Bloom
  * All rights reserved.
  * Based upon code Copyright 1998 Juniper Networks, Inc.
@@ -36,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libpam/modules/pam_opie/pam_opie.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libpam/modules/pam_opie/pam_opie.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <sys/types.h>
 #include <opie.h>

@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/freebsd-update/Makefile 161807 2006-09-01 09:07:11Z ru $
+# $FreeBSD: releng/12.2/usr.sbin/freebsd-update/Makefile 337338 2018-08-04 22:25:41Z brd $
 
+CONFS=	freebsd-update.conf
 SCRIPTS=freebsd-update.sh
 MAN=	freebsd-update.8
 

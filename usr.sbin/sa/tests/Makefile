@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/sa/tests/Makefile 302206 2016-06-26 00:53:31Z asomers $
+# $FreeBSD: releng/12.2/usr.sbin/sa/tests/Makefile 302206 2016-06-26 00:53:31Z asomers $
 
 PACKAGE=	tests
 

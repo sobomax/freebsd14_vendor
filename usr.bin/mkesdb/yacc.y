@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/mkesdb/yacc.y 330449 2018-03-05 07:26:05Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.bin/mkesdb/yacc.y 326276 2017-11-27 15:37:16Z pfg $ */
 /* $NetBSD: yacc.y,v 1.4 2005/06/02 02:09:25 lukem Exp $	*/
 
 %{

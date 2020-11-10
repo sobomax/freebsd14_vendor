@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/camcontrol/attrib.c 314220 2017-02-24 20:47:56Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/camcontrol/attrib.c 352287 2019-09-13 14:43:44Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -344,12 +344,6 @@ scsiattrib(struct cam_device *device, int argc, char **argv, char *combinedopt,
 	if (cam_send_ccb(device, ccb) < 0) {
 		warn("error sending %s ATTRIBUTE", (read_attr != 0) ?
 		    "READ" : "WRITE");
-
-		if (verbosemode != 0) {
-			cam_error_print(device, ccb, CAM_ESF_ALL,
-					CAM_EPF_ALL, stderr);
-		}
-
 		error = 1;
 		goto bailout;
 	}

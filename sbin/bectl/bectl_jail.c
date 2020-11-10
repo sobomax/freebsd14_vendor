@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/bectl/bectl_jail.c 348863 2019-06-10 14:47:56Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/bectl/bectl_jail.c 350338 2019-07-26 01:35:06Z kevans $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -155,7 +155,7 @@ build_jailcmd(char ***argvp, bool interactive, int argc, char *argv[])
 			nargv += argc;
 	}
 
-	jargv = *argvp = calloc(nargv, sizeof(jargv));
+	jargv = *argvp = calloc(nargv, sizeof(*jargv));
 	if (jargv == NULL)
 		err(2, "calloc");
 
@@ -346,6 +346,7 @@ bectl_cmd_jail(int argc, char *argv[])
 	case 0:
 		execv("/usr/sbin/jail", jargv);
 		fprintf(stderr, "bectl jail: failed to execute\n");
+		return (1);
 	default:
 		waitpid(pid, NULL, 0);
 	}

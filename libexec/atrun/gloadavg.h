@@ -1,6 +1,8 @@
-/* 
+/*-
  *  gloadavg.h -  header for atrun(8)
  *  Copyright (C) 1993  Thomas Koenig
+ *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,5 +27,5 @@
 
 double gloadavg(void);
 #if 0
-static char atrun_h_rcsid[] = "$FreeBSD: releng/11.3/libexec/atrun/gloadavg.h 50476 1999-08-28 00:22:10Z peter $";
+static char atrun_h_rcsid[] = "$FreeBSD: releng/12.2/libexec/atrun/gloadavg.h 326274 2017-11-27 15:25:02Z pfg $";
 #endif

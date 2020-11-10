@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libdl/Makefile 332027 2018-04-04 13:54:51Z kevans $
+# $FreeBSD: releng/12.2/lib/libdl/Makefile 331743 2018-03-29 19:43:29Z kevans $
 
 PACKAGE=clibs
 LIB=dl

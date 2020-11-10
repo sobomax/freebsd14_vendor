@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/vigr/Makefile 288199 2015-09-24 23:15:24Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/vigr/Makefile 288199 2015-09-24 23:15:24Z bdrewery $
 
 SCRIPTS=	vigr
 MAN=	vigr.8

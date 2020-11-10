@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/dev/iwn/if_iwn_ioctl.h 287312 2015-08-30 21:54:33Z adrian $
+ * $FreeBSD: releng/12.2/sys/dev/iwn/if_iwn_ioctl.h 287312 2015-08-30 21:54:33Z adrian $
  */
 #ifndef	__IF_IWN_IOCTL_H__
 #define	__IF_IWN_IOCTL_H__

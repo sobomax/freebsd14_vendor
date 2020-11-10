@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/bin/mv/tests/legacy_test.sh 259210 2013-12-11 04:09:17Z jmmv $
+# $FreeBSD: releng/12.2/bin/mv/tests/legacy_test.sh 259210 2013-12-11 04:09:17Z jmmv $
 
 # A directory in a device different from that where the tests are run
 TMPDIR=/tmp/regress.$$

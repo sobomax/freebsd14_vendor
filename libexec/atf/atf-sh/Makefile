@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/libexec/atf/atf-sh/Makefile 321754 2017-07-31 03:58:58Z ngie $
+# $FreeBSD: releng/12.2/libexec/atf/atf-sh/Makefile 356460 2020-01-07 18:08:09Z dim $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -65,6 +65,9 @@ CFLAGS+=	-DATF_PKGDATADIR='"${SHAREDIR}/atf"'
 CFLAGS+=	-DATF_SHELL='"/bin/sh"'
 CFLAGS+=	-I${ATF}
 
+# Silence warnings about usage of deprecated std::auto_ptr
+CXXWARNFLAGS+=	-Wno-deprecated-declarations
+
 LIBADD=		atf_cxx
 
 FILESGROUPS=	SUBR
@@ -72,9 +75,8 @@ FILESGROUPS=	SUBR
 SUBRDIR=	${SHAREDIR}/atf
 SUBR=		libatf-sh.subr
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include "../../../lib/atf/common.mk"
 .include <bsd.prog.mk>

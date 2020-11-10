@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -28,10 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/tty.c 350282 2019-07-24 12:53:06Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/tty.c 361356 2020-05-22 08:59:12Z hselasky $");
 
 #include "opt_capsicum.h"
-#include "opt_compat.h"
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -220,7 +221,7 @@ static void
 ttydev_leave(struct tty *tp)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	if (tty_opened(tp) || tp->t_flags & TF_OPENCLOSE) {
 		/* Device is still opened somewhere. */
@@ -404,7 +405,7 @@ static __inline int
 tty_is_ctty(struct tty *tp, struct proc *p)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	return (p->p_session == tp->t_session && p->p_flag & P_CONTROLT);
 }
@@ -418,7 +419,7 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 	int error;
 
 	MPASS(sig == SIGTTIN || sig == SIGTTOU);
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	for (;;) {
 		PROC_LOCK(p);
@@ -688,7 +689,7 @@ tty_kqops_read_event(struct knote *kn, long hint __unused)
 {
 	struct tty *tp = kn->kn_hook;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	if (tty_gone(tp) || tp->t_flags & TF_ZOMBIE) {
 		kn->kn_flags |= EV_EOF;
@@ -712,7 +713,7 @@ tty_kqops_write_event(struct knote *kn, long hint __unused)
 {
 	struct tty *tp = kn->kn_hook;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	if (tty_gone(tp)) {
 		kn->kn_flags |= EV_EOF;
@@ -1111,7 +1112,7 @@ tty_rel_free(struct tty *tp)
 {
 	struct cdev *dev;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 #define	TF_ACTIVITY	(TF_GONE|TF_OPENED|TF_HOOK|TF_OPENCLOSE)
 	if (tp->t_sessioncnt != 0 || (tp->t_flags & TF_ACTIVITY) != TF_GONE) {
@@ -1119,9 +1120,6 @@ tty_rel_free(struct tty *tp)
 		tty_unlock(tp);
 		return;
 	}
-
-	/* Stop asynchronous I/O. */
-	funsetown(&tp->t_sigio);
 
 	/* Stop asynchronous I/O. */
 	funsetown(&tp->t_sigio);
@@ -1145,7 +1143,7 @@ tty_rel_pgrp(struct tty *tp, struct pgrp *pg)
 {
 
 	MPASS(tp->t_sessioncnt > 0);
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	if (tp->t_pgrp == pg)
 		tp->t_pgrp = NULL;
@@ -1172,6 +1170,7 @@ void
 tty_rel_gone(struct tty *tp)
 {
 
+	tty_assert_locked(tp);
 	MPASS(!tty_gone(tp));
 
 	/* Simulate carrier removal. */
@@ -1186,6 +1185,71 @@ tty_rel_gone(struct tty *tp)
 	tty_rel_free(tp);
 }
 
+static int
+tty_drop_ctty(struct tty *tp, struct proc *p)
+{
+	struct session *session;
+	struct vnode *vp;
+
+	/*
+	 * This looks terrible, but it's generally safe as long as the tty
+	 * hasn't gone away while we had the lock dropped.  All of our sanity
+	 * checking that this operation is OK happens after we've picked it back
+	 * up, so other state changes are generally not fatal and the potential
+	 * for this particular operation to happen out-of-order in a
+	 * multithreaded scenario is likely a non-issue.
+	 */
+	tty_unlock(tp);
+	sx_xlock(&proctree_lock);
+	tty_lock(tp);
+	if (tty_gone(tp)) {
+		sx_xunlock(&proctree_lock);
+		return (ENODEV);
+	}
+
+	/*
+	 * If the session doesn't have a controlling TTY, or if we weren't
+	 * invoked on the controlling TTY, we'll return ENOIOCTL as we've
+	 * historically done.
+	 */
+	session = p->p_session;
+	if (session->s_ttyp == NULL || session->s_ttyp != tp) {
+		sx_xunlock(&proctree_lock);
+		return (ENOTTY);
+	}
+
+	if (!SESS_LEADER(p)) {
+		sx_xunlock(&proctree_lock);
+		return (EPERM);
+	}
+
+	PROC_LOCK(p);
+	SESS_LOCK(session);
+	vp = session->s_ttyvp;
+	session->s_ttyp = NULL;
+	session->s_ttyvp = NULL;
+	session->s_ttydp = NULL;
+	SESS_UNLOCK(session);
+
+	tp->t_sessioncnt--;
+	p->p_flag &= ~P_CONTROLT;
+	PROC_UNLOCK(p);
+	sx_xunlock(&proctree_lock);
+
+	/*
+	 * If we did have a vnode, release our reference.  Ordinarily we manage
+	 * these at the devfs layer, but we can't necessarily know that we were
+	 * invoked on the vnode referenced in the session (i.e. the vnode we
+	 * hold a reference to).  We explicitly don't check VBAD/VI_DOOMED here
+	 * to avoid a vnode leak -- in circumstances elsewhere where we'd hit a
+	 * VI_DOOMED vnode, release has been deferred until the controlling TTY
+	 * is either changed or released.
+	 */
+	if (vp != NULL)
+		vrele(vp);
+	return (0);
+}
+
 /*
  * Exposing information about current TTY's through sysctl
  */
@@ -1194,7 +1258,7 @@ static void
 tty_to_xtty(struct tty *tp, struct xtty *xt)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	xt->xt_size = sizeof(struct xtty);
 	xt->xt_insize = ttyinq_getsize(&tp->t_inq);
@@ -1208,7 +1272,7 @@ tty_to_xtty(struct tty *tp, struct xtty *xt)
 	xt->xt_pgid = tp->t_pgrp ? tp->t_pgrp->pg_id : 0;
 	xt->xt_sid = tp->t_session ? tp->t_session->s_sid : 0;
 	xt->xt_flags = tp->t_flags;
-	xt->xt_dev = tp->t_dev ? dev2udev(tp->t_dev) : NODEV;
+	xt->xt_dev = tp->t_dev ? dev2udev(tp->t_dev) : (uint32_t)NODEV;
 }
 
 static int
@@ -1386,7 +1450,7 @@ tty_signal_sessleader(struct tty *tp, int sig)
 {
 	struct proc *p;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	MPASS(sig >= 1 && sig < NSIG);
 
 	/* Make signals start output again. */
@@ -1405,7 +1469,7 @@ tty_signal_pgrp(struct tty *tp, int sig)
 {
 	ksiginfo_t ksi;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	MPASS(sig >= 1 && sig < NSIG);
 
 	/* Make signals start output again. */
@@ -1700,6 +1764,8 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 		MPASS(tp->t_session);
 		*(int *)data = tp->t_session->s_sid;
 		return (0);
+	case TIOCNOTTY:
+		return (tty_drop_ctty(tp, td->td_proc));
 	case TIOCSCTTY: {
 		struct proc *p = td->td_proc;
 
@@ -1742,7 +1808,6 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 		tp->t_session = p->p_session;
 		tp->t_session->s_ttyp = tp;
 		tp->t_sessioncnt++;
-		sx_xunlock(&proctree_lock);
 
 		/* Assign foreground process group. */
 		tp->t_pgrp = p->p_pgrp;
@@ -1750,6 +1815,7 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 		p->p_flag |= P_CONTROLT;
 		PROC_UNLOCK(p);
 
+		sx_xunlock(&proctree_lock);
 		return (0);
 	}
 	case TIOCSPGRP: {
@@ -1881,7 +1947,7 @@ tty_ioctl(struct tty *tp, u_long cmd, void *data, int fflag, struct thread *td)
 {
 	int error;
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 
 	if (tty_gone(tp))
 		return (ENXIO);
@@ -2048,7 +2114,7 @@ void
 ttyhook_unregister(struct tty *tp)
 {
 
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	MPASS(tp->t_flags & TF_HOOK);
 
 	/* Disconnect the hook. */

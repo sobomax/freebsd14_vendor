@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/mips/uboot/conf.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/mips/uboot/conf.c 328449 2018-01-26 22:22:21Z imp $");
 
 #include <stand.h>
 #include "bootstrap.h"

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Adrian Chadd <adrian@FreeBSD.org>
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/mips/atheros/ar933x_chip.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/mips/atheros/ar933x_chip.h 326259 2017-11-27 15:07:26Z pfg $ */
 
 #ifndef	__AR933X_CHIP_H__
 #define	__AR933X_CHIP_H__

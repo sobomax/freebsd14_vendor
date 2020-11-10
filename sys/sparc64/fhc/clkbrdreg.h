@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2004 Jason L. Wright (jason@thought.net)
  * Copyright (c) 2006 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -26,7 +28,7 @@
  *
  *	from: OpenBSD: clkbrdreg.h,v 1.2 2004/10/01 15:36:30 jason Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/fhc/clkbrdreg.h 157225 2006-03-28 19:46:48Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/fhc/clkbrdreg.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_FHC_CLKBRDREG_H_

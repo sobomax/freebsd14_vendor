@@ -28,7 +28,7 @@
 #include USB_GLOBAL_INCLUDE_FILE
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_ehci.c 346524 2019-04-22 04:56:41Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_ehci.c 333074 2018-04-27 21:05:58Z manu $");
 
 #include "opt_bus.h"
 
@@ -240,7 +240,7 @@ phy_init(struct exynos_ehci_softc *esc)
 	reg &= ~(HOST_CTRL_RESET_LINK);
 	bus_space_write_4(esc->host_bst, esc->host_bsh, 0x0, reg);
 
-	if ((hub = OF_finddevice("/hsichub")) != 0) {
+	if ((hub = OF_finddevice("/hsichub")) != -1) {
 		reset_hsic_hub(esc, hub);
 	}
 

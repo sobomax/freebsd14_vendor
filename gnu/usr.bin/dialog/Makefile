@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/dialog/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: releng/12.2/gnu/usr.bin/dialog/Makefile 315175 2017-03-12 18:59:16Z imp $
 
-DIALOG=	${.CURDIR}/../../../contrib/dialog
+DIALOG=	${SRCTOP}/contrib/dialog
 PROG=   dialog
 
 LIBADD=	dialog ncursesw m

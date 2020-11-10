@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2010 Fabio Checconi
  * Copyright (c) 2009-2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved.
@@ -30,7 +32,7 @@
 
 /*
  * $Id$
- * $FreeBSD: releng/11.3/sys/geom/sched/g_sched.h 275947 2014-12-20 00:04:01Z imp $
+ * $FreeBSD: releng/12.2/sys/geom/sched/g_sched.h 326270 2017-11-27 15:17:37Z pfg $
  *
  * Header for the geom_sched class (userland library and kernel part).
  * See g_sched.c for documentation.

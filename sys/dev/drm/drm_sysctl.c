@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/drm_sysctl.c 275856 2014-12-17 07:27:19Z gleb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/drm_sysctl.c 338285 2018-08-24 00:02:00Z imp $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting

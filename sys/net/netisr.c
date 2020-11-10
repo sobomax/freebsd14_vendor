@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2009 Robert N. M. Watson
  * Copyright (c) 2010-2011 Juniper Networks, Inc.
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net/netisr.c 339293 2018-10-10 21:28:04Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/netisr.c 358273 2020-02-24 09:57:47Z hselasky $");
 
 /*
  * netisr is a packet dispatch service, allowing synchronous (directly
@@ -223,7 +225,7 @@ static struct netisr_proto	netisr_proto[NETISR_MAXPROT];
  * mechanism to stop netisr processing for vnet teardown.
  * Apart from that we expect a VNET to always be enabled.
  */
-static VNET_DEFINE(u_int,	netisr_enable[NETISR_MAXPROT]);
+VNET_DEFINE_STATIC(u_int,	netisr_enable[NETISR_MAXPROT]);
 #define	V_netisr_enable		VNET(netisr_enable)
 #endif
 
@@ -1053,6 +1055,8 @@ netisr_queue_src(u_int proto, uintptr_t source, struct mbuf *m)
 	if (m != NULL) {
 		KASSERT(!CPU_ABSENT(cpuid), ("%s: CPU %u absent", __func__,
 		    cpuid));
+		VNET_ASSERT(m->m_pkthdr.rcvif != NULL,
+		    ("%s:%d rcvif == NULL: m=%p", __func__, __LINE__, m));
 		error = netisr_queue_internal(proto, m, cpuid);
 	} else
 		error = ENOBUFS;
@@ -1268,9 +1272,7 @@ netisr_start_swi(u_int cpuid, struct pcpu *pc)
 static void
 netisr_init(void *arg)
 {
-#ifdef EARLY_AP_STARTUP
 	struct pcpu *pc;
-#endif
 
 	NETISR_LOCK_INIT();
 	if (netisr_maxthreads == 0 || netisr_maxthreads < -1 )
@@ -1308,8 +1310,8 @@ netisr_init(void *arg)
 		netisr_start_swi(pc->pc_cpuid, pc);
 	}
 #else
-	KASSERT(curcpu == 0, ("%s: not on CPU 0", __func__));
-	netisr_start_swi(curcpu, pcpu_find(curcpu));
+	pc = get_pcpu();
+	netisr_start_swi(pc->pc_cpuid, pc);
 #endif
 }
 SYSINIT(netisr_init, SI_SUB_SOFTINTR, SI_ORDER_FIRST, netisr_init, NULL);

@@ -1,12 +1,11 @@
-# $FreeBSD: releng/11.3/usr.bin/truncate/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/truncate/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
 PROG=	truncate
 LIBADD=	util
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

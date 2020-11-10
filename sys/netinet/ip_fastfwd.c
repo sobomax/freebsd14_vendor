@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Andre Oppermann, Internet Business Solutions AG
  * All rights reserved.
  *
@@ -74,7 +76,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/ip_fastfwd.c 338611 2018-09-12 08:46:49Z eugen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/ip_fastfwd.c 338468 2018-09-05 13:59:36Z eugen $");
 
 #include "opt_ipstealth.h"
 

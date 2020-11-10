@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libexpat/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libexpat/Makefile 338190 2018-08-22 11:56:42Z arichardson $
 
 PACKAGE=lib${LIB}
 EXPAT=		${SRCTOP}/contrib/expat
@@ -18,14 +18,13 @@ CLEANFILES=	bsdxml.h bsdxml_external.h
 WARNS?=		2
 
 # OK, so it is not entirely unadulterated: we amend the COPYING to
-# point people to the right place, get rid of some VMS stuff and use
-# FreeBSD-style include guards.  We also want to point it at the new
-# bsdxml_external.h rather than the old expat_external.h file.
+# point people to the right place and use FreeBSD-style include guards.
+# We also want to point it at the new bsdxml_external.h rather than the
+# old expat_external.h file.
 bsdxml.h: expat.h
-	unifdef -U__VMS < ${.ALLSRC} | \
 	sed -e 's/XmlParse_INCLUDED/_BSD_XML_H_/' \
 	    -e 's/COPYING/src\/contrib\/expat\/COPYING/' \
-	    -e 's/expat_external/bsdxml_external/' \
+	    -e 's/expat_external/bsdxml_external/' ${.ALLSRC} \
 		> ${.TARGET}
 
 bsdxml_external.h: expat_external.h

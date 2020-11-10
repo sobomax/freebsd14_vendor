@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/bectl/Makefile 346429 2019-04-20 04:16:51Z kevans $
+# $FreeBSD: releng/12.2/sbin/bectl/Makefile 340751 2018-11-22 01:25:44Z kevans $
 
 .include <src.opts.mk>
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993, 2001
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -32,7 +34,7 @@
  *
  *	@(#)float.h	8.1 (Berkeley) 6/11/93
  *	from: NetBSD: float.h,v 1.3 2001/09/21 20:48:02 eeh Exp
- * $FreeBSD: releng/11.3/sys/sparc64/include/float.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/float.h 326023 2017-11-20 19:43:44Z pfg $
  */
 
 #ifndef _MACHINE_FLOAT_H_

@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.3 2000/06/20 13:56:43 fvdl Exp $
-# $FreeBSD: releng/11.3/usr.sbin/rpcbind/Makefile 319244 2017-05-30 17:47:19Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/rpcbind/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -23,9 +23,8 @@ CFLAGS+= -DLIBWRAP
 LIBADD+= wrap
 .endif
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 WARNS?=	1
 

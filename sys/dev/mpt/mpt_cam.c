@@ -2,6 +2,8 @@
  * FreeBSD/CAM specific routines for LSI '909 FC  adapters.
  * FreeBSD Version.
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ *
  * Copyright (c)  2000, 2001 by Greg Ansley
  *
  * Redistribution and use in source and binary forms, with or without
@@ -94,7 +96,7 @@
  * OWNER OR CONTRIBUTOR IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mpt/mpt_cam.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpt/mpt_cam.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h>

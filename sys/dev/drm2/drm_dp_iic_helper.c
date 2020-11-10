@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_dp_iic_helper.c 298951 2016-05-03 01:17:40Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_dp_iic_helper.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <sys/types.h>
 #include <sys/kobj.h>

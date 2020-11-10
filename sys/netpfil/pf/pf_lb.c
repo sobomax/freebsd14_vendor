@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * Copyright (c) 2002 - 2008 Henning Brauer
  * All rights reserved.
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf_lb.c 342543 2018-12-26 12:54:27Z kp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/pf_lb.c 342542 2018-12-26 12:54:24Z kp $");
 
 #include "opt_pf.h"
 #include "opt_inet.h"

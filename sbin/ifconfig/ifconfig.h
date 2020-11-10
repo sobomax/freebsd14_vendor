@@ -33,7 +33,7 @@
  *
  * so there!
  *
- * $FreeBSD: releng/11.3/sbin/ifconfig/ifconfig.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/ifconfig/ifconfig.h 332645 2018-04-17 12:54:58Z gallatin $
  */
 
 #define	__constructor	__attribute__((constructor))
@@ -136,6 +136,7 @@ extern	int printkeys;
 extern	int newaddr;
 extern	int verbose;
 extern	int printifname;
+extern	int exit_code;
 
 void	setifcap(const char *, int value, int s, const struct afswtch *);
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libopenbsd/unistd.h 290835 2015-11-14 23:07:38Z rodrigc $
+ * $FreeBSD: releng/12.2/lib/libopenbsd/unistd.h 290835 2015-11-14 23:07:38Z rodrigc $
  */
 
 #ifndef _LIBOPENBSD_UNISTD_H_

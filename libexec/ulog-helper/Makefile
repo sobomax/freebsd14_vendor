@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/ulog-helper/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: releng/12.2/libexec/ulog-helper/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	ulog-helper
 BINOWN=	root

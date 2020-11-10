@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libnv/tests/cnv_tests.cc 336346 2018-07-16 15:02:21Z kevans $
+ * $FreeBSD: releng/12.2/lib/libnv/tests/cnv_tests.cc 335343 2018-06-18 21:26:58Z oshogbo $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libnv/tests/cnv_tests.cc 336346 2018-07-16 15:02:21Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libnv/tests/cnv_tests.cc 335343 2018-06-18 21:26:58Z oshogbo $");
 
 #include <sys/cnv.h>
 #include <sys/nv.h>

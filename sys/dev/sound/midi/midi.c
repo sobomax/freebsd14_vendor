@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2003 Mathew Kanner
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -35,7 +37,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sound/midi/midi.c 351260 2019-08-20 17:50:33Z gordon $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sound/midi/midi.c 351264 2019-08-20 17:53:16Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

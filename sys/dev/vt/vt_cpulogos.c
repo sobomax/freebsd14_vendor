@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/vt/vt_cpulogos.c 330917 2018-03-14 07:51:33Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/vt/vt_cpulogos.c 350050 2019-07-16 16:05:42Z vangyzen $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -194,7 +194,7 @@ vt_fini_logos(void *dummy __unused)
 
 		if (vd->vd_curwindow == vw) {
 			vd->vd_flags |= VDF_INVALID;
-			vt_resume_flush_timer(vd, 0);
+			vt_resume_flush_timer(vw, 0);
 		}
 		VT_UNLOCK(vd);
 	}
@@ -227,9 +227,8 @@ vt_init_logos(void *dummy)
 		return;
 
 	VT_LOCK(vd);
-	KASSERT((vd->vd_flags & VDF_INITIALIZED) != 0,
-	    ("vd %p not initialized", vd));
-
+	if ((vd->vd_flags & VDF_INITIALIZED) == 0)
+		goto out;
 	if ((vd->vd_flags & (VDF_DEAD | VDF_TEXTMODE)) != 0)
 		goto out;
 	if (vd->vd_height <= vt_logo_sprite_height)
@@ -253,7 +252,7 @@ vt_init_logos(void *dummy)
 
 	if (vd->vd_curwindow == vw) {
 		vd->vd_flags |= VDF_INVALID;
-		vt_resume_flush_timer(vd, 0);
+		vt_resume_flush_timer(vw, 0);
 	}
 
 	callout_init(&vt_splash_cpu_callout, 1);

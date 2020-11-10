@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -44,7 +46,7 @@ static char sccsid[] = "@(#)xargs.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/xargs/xargs.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/xargs/xargs.c 359768 2020-04-10 01:37:00Z markj $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -648,7 +650,7 @@ waitchildren(const char *name, int waitall)
 		if (childerr != 0 && cause_exit == 0) {
 			errno = childerr;
 			waitall = 1;
-			cause_exit = ENOENT ? 127 : 126;
+			cause_exit = errno == ENOENT ? 127 : 126;
 			warn("%s", name);
 		} else if (WIFSIGNALED(status)) {
 			waitall = cause_exit = 1;

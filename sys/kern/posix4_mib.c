@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1998
  *	HD Associates, Inc.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/posix4_mib.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/posix4_mib.c 333806 2018-05-18 17:58:09Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -171,5 +173,5 @@ p31b_set_standard(void *dummy)
 }
 
 SYSINIT(p31b_set_standard, SI_SUB_P1003_1B, SI_ORDER_ANY, p31b_set_standard, 
-	0);
+    NULL);
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/ofed/libibverbs/srq_pingpong/Makefile 335253 2018-06-16 15:05:05Z kib $
+# $FreeBSD: releng/12.2/usr.bin/ofed/libibverbs/srq_pingpong/Makefile 335253 2018-06-16 15:05:05Z kib $
 
 PROG=	ibv_srq_pingpong
 MAN=	ibv_srq_pingpong.1

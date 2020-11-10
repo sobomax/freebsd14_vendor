@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Ian Lepore <ian@freebsd.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx_nop_usbphy.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx_nop_usbphy.c 326258 2017-11-27 15:04:10Z pfg $");
 
 /*
  * USBPHY "no-op" driver for Freescale family of SoCs.  This driver is used on

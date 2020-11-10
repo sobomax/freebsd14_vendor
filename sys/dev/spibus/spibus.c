@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/spibus/spibus.c 346557 2019-04-22 15:04:11Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/spibus/spibus.c 346510 2019-04-22 00:49:13Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -28,7 +28,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/pw/rm_r.c 330449 2018-03-05 07:26:05Z eadler $";
+  "$FreeBSD: releng/12.2/usr.sbin/pw/rm_r.c 365454 2020-09-08 12:38:34Z markj $";
 #endif /* not lint */
 
 #include <sys/stat.h>
@@ -57,6 +57,10 @@ rm_r(int rootfd, const char *path, uid_t uid)
 	}
 
 	d = fdopendir(dirfd);
+	if (d == NULL) {
+		(void)close(dirfd);
+		return;
+	}
 	while ((e = readdir(d)) != NULL) {
 		if (strcmp(e->d_name, ".") == 0 || strcmp(e->d_name, "..") == 0)
 			continue;
@@ -71,5 +75,8 @@ rm_r(int rootfd, const char *path, uid_t uid)
 	closedir(d);
 	if (fstatat(rootfd, path, &st, AT_SYMLINK_NOFOLLOW) != 0)
 		return;
-	unlinkat(rootfd, path, S_ISDIR(st.st_mode) ? AT_REMOVEDIR : 0);
+	if (S_ISLNK(st.st_mode))
+		unlinkat(rootfd, path, 0);
+	else if (st.st_uid == uid)
+		unlinkat(rootfd, path, AT_REMOVEDIR);
 }

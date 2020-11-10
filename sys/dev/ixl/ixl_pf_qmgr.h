@@ -1,8 +1,8 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2019, Intel Corporation
+  Copyright (c) 2013-2018, Intel Corporation
   All rights reserved.
-
+  
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
   
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixl/ixl_pf_qmgr.h 349181 2019-06-19 00:37:54Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixl/ixl_pf_qmgr.h 339338 2018-10-12 22:40:54Z erj $*/
 
 
 #include "ixl_pf.h"
@@ -53,11 +53,11 @@
 
 /* Manager */
 struct ixl_pf_qmgr_qinfo {
-	bool allocated;
-	bool tx_enabled;
-	bool rx_enabled;
-	bool tx_configured;
-	bool rx_configured;
+	u8 allocated;
+	u8 tx_enabled;
+	u8 rx_enabled;
+	u8 tx_configured;
+	u8 rx_configured;
 };
 
 struct ixl_pf_qmgr {
@@ -74,7 +74,10 @@ enum ixl_pf_qmgr_qalloc_type {
 struct ixl_pf_qtag {
 	struct ixl_pf_qmgr *qmgr;
 	enum ixl_pf_qmgr_qalloc_type type;
-	u16 qidx[IXL_MAX_SCATTERED_QUEUES];
+	union {
+		u16 qidx[IXL_MAX_SCATTERED_QUEUES];
+		u16 first_qidx;
+	};
 	u16 num_allocated;
 	u16 num_active;
 };
@@ -101,6 +104,7 @@ void	ixl_pf_qmgr_mark_queue_disabled(struct ixl_pf_qtag *qtag, u16 vsi_qidx, boo
 void	ixl_pf_qmgr_mark_queue_configured(struct ixl_pf_qtag *qtag, u16 vsi_qidx, bool tx);
 bool	ixl_pf_qmgr_is_queue_enabled(struct ixl_pf_qtag *qtag, u16 vsi_qidx, bool tx);
 bool	ixl_pf_qmgr_is_queue_configured(struct ixl_pf_qtag *qtag, u16 vsi_qidx, bool tx);
+void	ixl_pf_qmgr_clear_queue_flags(struct ixl_pf_qtag *qtag);
 
 /* Public tag functions */
 u16	ixl_pf_qidx_from_vsi_qidx(struct ixl_pf_qtag *qtag, u16 index);

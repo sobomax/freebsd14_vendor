@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/extres/regulator/regulator_fixed.h 296906 2016-03-15 15:30:17Z mmel $
+ * $FreeBSD: releng/12.2/sys/dev/extres/regulator/regulator_fixed.h 296906 2016-03-15 15:30:17Z mmel $
  */
 
 #ifndef _DEV_EXTRES_REGULATOR_FIXED_H_

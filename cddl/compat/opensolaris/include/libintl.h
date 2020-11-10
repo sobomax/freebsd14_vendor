@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/cddl/compat/opensolaris/include/libintl.h 178414 2008-04-22 07:43:00Z jb $ */
+/* $FreeBSD: releng/12.2/cddl/compat/opensolaris/include/libintl.h 178414 2008-04-22 07:43:00Z jb $ */
 
 #ifndef	_LIBINTL_H_
 #define	_LIBINTL_H_

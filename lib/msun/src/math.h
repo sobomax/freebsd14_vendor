@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: releng/11.3/lib/msun/src/math.h 324006 2017-09-26 09:01:56Z dim $
+ * $FreeBSD: releng/12.2/lib/msun/src/math.h 354596 2019-11-10 17:33:10Z dim $
  */
 
 #ifndef _MATH_H_
@@ -213,6 +213,12 @@ __inline_isnanl(__const long double __x)
 
 	return (__x != __x);
 }
+
+/*
+ * Define the following aliases, for compatibility with glibc and CUDA.
+ */
+#define __isnan __inline_isnan
+#define __isnanf __inline_isnanf
 
 /*
  * Version 2 of the Single UNIX Specification (UNIX98) defined isnan() and

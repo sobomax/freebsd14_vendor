@@ -64,7 +64,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-#	$FreeBSD: releng/11.3/share/examples/kld/Makefile 299293 2016-05-10 00:51:50Z gjb $
+#	$FreeBSD: releng/12.2/share/examples/kld/Makefile 299293 2016-05-10 00:51:50Z gjb $
 #
 
 PACKAGE=examples

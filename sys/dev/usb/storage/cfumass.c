@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/storage/cfumass.c 332617 2018-04-16 17:15:26Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/storage/cfumass.c 328342 2018-01-24 17:04:01Z trasz $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

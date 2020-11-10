@@ -25,7 +25,7 @@
  ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  ** POSSIBILITY OF SUCH DAMAGE.
  **/
-/* $FreeBSD: releng/11.3/tools/tools/netmap/pkt_hash.c 341434 2018-12-03 17:51:22Z vmaffione $ */
+/* $FreeBSD: releng/12.2/tools/tools/netmap/pkt_hash.c 340618 2018-11-19 08:53:52Z vmaffione $ */
 /* for func prototypes */
 #include "pkt_hash.h"
 

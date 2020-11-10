@@ -1,9 +1,12 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/sys/Makefile 344977 2019-03-10 16:13:00Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/tests/sys/Makefile 344978 2019-03-10 16:14:42Z ngie $
 
 PACKAGE=			tests
 
 .include <bsd.own.mk>
 
+.if ${MACHINE_CPUARCH} != "aarch64" && ${MACHINE_CPUARCH} != "riscv"
+ATF_TESTS_C+=			brk_test
+.endif
 ATF_TESTS_C+=			queue_test
 ATF_TESTS_C+=			sendfile_test
 

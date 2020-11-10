@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm283x_dwc_fdt.c 307575 2016-10-18 19:15:43Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm283x_dwc_fdt.c 330072 2018-02-27 15:01:17Z mmel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -53,6 +53,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm283x_dwc_fdt.c 30757
 
 static struct ofw_compat_data compat_data[] = {
 	{"broadcom,bcm2835-usb",	1},
+	{"brcm,bcm2835-usb",		1},
 	{"brcm,bcm2708-usb",		1},
 	{NULL,				0}
 };

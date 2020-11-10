@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/smartpqi/smartpqi_mem.c 333019 2018-04-26 16:59:06Z sbruno $ */
+/* $FreeBSD: releng/12.2/sys/dev/smartpqi/smartpqi_mem.c 336201 2018-07-11 16:44:14Z sbruno $ */
 
 #include "smartpqi_includes.h"
 
@@ -38,20 +38,6 @@ os_dma_map(void *arg, bus_dma_segment_t *segs, int nseg, int error)
 {
 	bus_addr_t *paddr = (bus_addr_t *)arg;
 	*paddr = segs[0].ds_addr;
-}
-
-int os_dma_setup(pqisrc_softstate_t *softs)
-{
-	DBG_FUNC("IN\n");
-	DBG_FUNC("OUT\n");
-	return PQI_STATUS_SUCCESS; 
-}
-
-int os_dma_destroy(pqisrc_softstate_t *softs)
-{
-	DBG_FUNC("IN\n");
-	DBG_FUNC("OUT\n");
-	return PQI_STATUS_SUCCESS;
 }
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libxo/Makefile 322172 2017-08-07 17:23:44Z phil $
+# $FreeBSD: releng/12.2/lib/libxo/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 PACKAGE=lib${LIB}
 SHLIBDIR?=      /lib
@@ -110,8 +110,7 @@ MLINKS=	xo_attr.3 xo_attr_h.3 \
 	xo_syslog.3 xo_set_logmask.3 \
 	xo_syslog.3 xo_vsyslog.3
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.lib.mk>

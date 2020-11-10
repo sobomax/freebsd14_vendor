@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ntb/ntb_hw/ntb_hw_intel.c 323456 2017-09-11 18:51:02Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ntb/ntb_hw/ntb_hw_intel.c 355391 2019-12-04 15:14:14Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -217,6 +217,9 @@ struct ntb_softc {
 	bool			peer_msix_done;
 	struct ntb_pci_bar_info	*peer_lapic_bar;
 	struct callout		peer_msix_work;
+
+	bus_dma_tag_t		bar0_dma_tag;
+	bus_dmamap_t		bar0_dma_map;
 
 	struct callout		heartbeat_timer;
 	struct callout		lr_timer;
@@ -495,8 +498,6 @@ static struct ntb_hw_info pci_ids[] = {
 	{ 0x6F0D8086, "BDX Xeon E5 V4 Non-Transparent Bridge B2B", NTB_XEON,
 		NTB_SDOORBELL_LOCKUP | NTB_B2BDOORBELL_BIT14 |
 		    NTB_SB01BASE_LOCKUP },
-
-	{ 0x00000000, NULL, NTB_ATOM, 0 }
 };
 
 static const struct ntb_reg atom_reg = {
@@ -783,37 +784,65 @@ bar_get_xlat_params(struct ntb_softc *ntb, enum ntb_bar bar, uint32_t *base,
 static int
 intel_ntb_map_pci_bars(struct ntb_softc *ntb)
 {
+	struct ntb_pci_bar_info *bar;
 	int rc;
 
-	ntb->bar_info[NTB_CONFIG_BAR].pci_resource_id = PCIR_BAR(0);
-	rc = map_mmr_bar(ntb, &ntb->bar_info[NTB_CONFIG_BAR]);
+	bar = &ntb->bar_info[NTB_CONFIG_BAR];
+	bar->pci_resource_id = PCIR_BAR(0);
+	rc = map_mmr_bar(ntb, bar);
 	if (rc != 0)
 		goto out;
 
-	ntb->bar_info[NTB_B2B_BAR_1].pci_resource_id = PCIR_BAR(2);
-	rc = map_memory_window_bar(ntb, &ntb->bar_info[NTB_B2B_BAR_1]);
-	if (rc != 0)
-		goto out;
-	ntb->bar_info[NTB_B2B_BAR_1].psz_off = XEON_PBAR23SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_1].ssz_off = XEON_SBAR23SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_1].pbarxlat_off = XEON_PBAR2XLAT_OFFSET;
+	/*
+	 * At least on Xeon v4 NTB device leaks to host some remote side
+	 * BAR0 writes supposed to update scratchpad registers.  I am not
+	 * sure why it happens, but it may be related to the fact that
+	 * on a link side BAR0 is 32KB, while on a host side it is 64KB.
+	 * Without this hack DMAR blocks those accesses as not allowed.
+	 */
+	if (bus_dma_tag_create(bus_get_dma_tag(ntb->device), 1, 0,
+	    BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR, NULL, NULL,
+	    bar->size, 1, bar->size, 0, NULL, NULL, &ntb->bar0_dma_tag)) {
+		device_printf(ntb->device, "Unable to create BAR0 tag\n");
+		return (ENOMEM);
+	}
+	if (bus_dmamap_create(ntb->bar0_dma_tag, 0, &ntb->bar0_dma_map)) {
+		device_printf(ntb->device, "Unable to create BAR0 map\n");
+		return (ENOMEM);
+	}
+	if (bus_dma_dmar_load_ident(ntb->bar0_dma_tag, ntb->bar0_dma_map,
+	    bar->pbase, bar->size, 0)) {
+		device_printf(ntb->device, "Unable to load BAR0 map\n");
+		return (ENOMEM);
+	}
 
-	ntb->bar_info[NTB_B2B_BAR_2].pci_resource_id = PCIR_BAR(4);
-	rc = map_memory_window_bar(ntb, &ntb->bar_info[NTB_B2B_BAR_2]);
+	bar = &ntb->bar_info[NTB_B2B_BAR_1];
+	bar->pci_resource_id = PCIR_BAR(2);
+	rc = map_memory_window_bar(ntb, bar);
 	if (rc != 0)
 		goto out;
-	ntb->bar_info[NTB_B2B_BAR_2].psz_off = XEON_PBAR4SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_2].ssz_off = XEON_SBAR4SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_2].pbarxlat_off = XEON_PBAR4XLAT_OFFSET;
+	bar->psz_off = XEON_PBAR23SZ_OFFSET;
+	bar->ssz_off = XEON_SBAR23SZ_OFFSET;
+	bar->pbarxlat_off = XEON_PBAR2XLAT_OFFSET;
+
+	bar = &ntb->bar_info[NTB_B2B_BAR_2];
+	bar->pci_resource_id = PCIR_BAR(4);
+	rc = map_memory_window_bar(ntb, bar);
+	if (rc != 0)
+		goto out;
+	bar->psz_off = XEON_PBAR4SZ_OFFSET;
+	bar->ssz_off = XEON_SBAR4SZ_OFFSET;
+	bar->pbarxlat_off = XEON_PBAR4XLAT_OFFSET;
 
 	if (!HAS_FEATURE(ntb, NTB_SPLIT_BAR))
 		goto out;
 
-	ntb->bar_info[NTB_B2B_BAR_3].pci_resource_id = PCIR_BAR(5);
-	rc = map_memory_window_bar(ntb, &ntb->bar_info[NTB_B2B_BAR_3]);
-	ntb->bar_info[NTB_B2B_BAR_3].psz_off = XEON_PBAR5SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_3].ssz_off = XEON_SBAR5SZ_OFFSET;
-	ntb->bar_info[NTB_B2B_BAR_3].pbarxlat_off = XEON_PBAR5XLAT_OFFSET;
+	bar = &ntb->bar_info[NTB_B2B_BAR_3];
+	bar->pci_resource_id = PCIR_BAR(5);
+	rc = map_memory_window_bar(ntb, bar);
+	bar->psz_off = XEON_PBAR5SZ_OFFSET;
+	bar->ssz_off = XEON_SBAR5SZ_OFFSET;
+	bar->pbarxlat_off = XEON_PBAR5XLAT_OFFSET;
 
 out:
 	if (rc != 0)
@@ -936,15 +965,20 @@ map_memory_window_bar(struct ntb_softc *ntb, struct ntb_pci_bar_info *bar)
 static void
 intel_ntb_unmap_pci_bar(struct ntb_softc *ntb)
 {
-	struct ntb_pci_bar_info *current_bar;
+	struct ntb_pci_bar_info *bar;
 	int i;
 
+	if (ntb->bar0_dma_map != NULL) {
+		bus_dmamap_unload(ntb->bar0_dma_tag, ntb->bar0_dma_map);
+		bus_dmamap_destroy(ntb->bar0_dma_tag, ntb->bar0_dma_map);
+	}
+	if (ntb->bar0_dma_tag != NULL)
+		bus_dma_tag_destroy(ntb->bar0_dma_tag);
 	for (i = 0; i < NTB_MAX_BARS; i++) {
-		current_bar = &ntb->bar_info[i];
-		if (current_bar->pci_resource != NULL)
+		bar = &ntb->bar_info[i];
+		if (bar->pci_resource != NULL)
 			bus_release_resource(ntb->device, SYS_RES_MEMORY,
-			    current_bar->pci_resource_id,
-			    current_bar->pci_resource);
+			    bar->pci_resource_id, bar->pci_resource);
 	}
 }
 
@@ -1390,12 +1424,11 @@ intel_ntb_get_msix_info(struct ntb_softc *ntb)
 static struct ntb_hw_info *
 intel_ntb_get_device_info(uint32_t device_id)
 {
-	struct ntb_hw_info *ep = pci_ids;
+	struct ntb_hw_info *ep;
 
-	while (ep->device_id) {
+	for (ep = pci_ids; ep < &pci_ids[nitems(pci_ids)]; ep++) {
 		if (ep->device_id == device_id)
 			return (ep);
-		++ep;
 	}
 	return (NULL);
 }
@@ -1980,6 +2013,44 @@ atom_perform_link_restart(struct ntb_softc *ntb)
 }
 
 static int
+intel_ntb_port_number(device_t dev)
+{
+	struct ntb_softc *ntb = device_get_softc(dev);
+
+	return (ntb->dev_type == NTB_DEV_USD ? 0 : 1);
+}
+
+static int
+intel_ntb_peer_port_count(device_t dev)
+{
+
+	return (1);
+}
+
+static int
+intel_ntb_peer_port_number(device_t dev, int pidx)
+{
+	struct ntb_softc *ntb = device_get_softc(dev);
+
+	if (pidx != 0)
+		return (-EINVAL);
+
+	return (ntb->dev_type == NTB_DEV_USD ? 1 : 0);
+}
+
+static int
+intel_ntb_peer_port_idx(device_t dev, int port)
+{
+	int peer_port;
+
+	peer_port = intel_ntb_peer_port_number(dev, 0);
+	if (peer_port == -EINVAL || port != peer_port)
+		return (-EINVAL);
+
+	return (0);
+}
+
+static int
 intel_ntb_link_enable(device_t dev, enum ntb_speed speed __unused,
     enum ntb_width width __unused)
 {
@@ -2373,6 +2444,14 @@ intel_ntb_sysctl_init(struct ntb_softc *ntb)
 	if (ntb->conn_type != NTB_CONN_B2B)
 		return;
 
+	SYSCTL_ADD_PROC(ctx, regpar, OID_AUTO, "outgoing_xlat01l",
+	    CTLFLAG_RD | CTLTYPE_OPAQUE, ntb,
+	    NTB_REG_32 | XEON_B2B_XLAT_OFFSETL,
+	    sysctl_handle_register, "IU", "Outgoing XLAT0L register");
+	SYSCTL_ADD_PROC(ctx, regpar, OID_AUTO, "outgoing_xlat01u",
+	    CTLFLAG_RD | CTLTYPE_OPAQUE, ntb,
+	    NTB_REG_32 | XEON_B2B_XLAT_OFFSETU,
+	    sysctl_handle_register, "IU", "Outgoing XLAT0U register");
 	SYSCTL_ADD_PROC(ctx, regpar, OID_AUTO, "outgoing_xlat23",
 	    CTLFLAG_RD | CTLTYPE_OPAQUE, ntb,
 	    NTB_REG_64 | ntb->bar_info[NTB_B2B_BAR_1].pbarxlat_off,
@@ -3088,7 +3167,12 @@ static device_method_t ntb_intel_methods[] = {
 	/* Bus interface */
 	DEVMETHOD(bus_child_location_str, ntb_child_location_str),
 	DEVMETHOD(bus_print_child,	ntb_print_child),
+	DEVMETHOD(bus_get_dma_tag,	ntb_get_dma_tag),
 	/* NTB interface */
+	DEVMETHOD(ntb_port_number,	intel_ntb_port_number),
+	DEVMETHOD(ntb_peer_port_count,	intel_ntb_peer_port_count),
+	DEVMETHOD(ntb_peer_port_number,	intel_ntb_peer_port_number),
+	DEVMETHOD(ntb_peer_port_idx, 	intel_ntb_peer_port_idx),
 	DEVMETHOD(ntb_link_is_up,	intel_ntb_link_is_up),
 	DEVMETHOD(ntb_link_enable,	intel_ntb_link_enable),
 	DEVMETHOD(ntb_link_disable,	intel_ntb_link_disable),
@@ -3122,3 +3206,5 @@ static DEFINE_CLASS_0(ntb_hw, ntb_intel_driver, ntb_intel_methods,
 DRIVER_MODULE(ntb_hw_intel, pci, ntb_intel_driver, ntb_hw_devclass, NULL, NULL);
 MODULE_DEPEND(ntb_hw_intel, ntb, 1, 1, 1);
 MODULE_VERSION(ntb_hw_intel, 1);
+MODULE_PNP_INFO("W32:vendor/device;D:#", pci, ntb_hw_intel, pci_ids,
+    nitems(pci_ids));

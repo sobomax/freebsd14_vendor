@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Takanori Watanabe
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/label/g_label_ntfs.c 250264 2013-05-05 08:00:16Z stas $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/label/g_label_ntfs.c 326270 2017-11-27 15:17:37Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

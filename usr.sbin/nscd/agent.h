@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/nscd/agent.h 194112 2009-06-13 14:12:55Z des $
+ * $FreeBSD: releng/12.2/usr.sbin/nscd/agent.h 194112 2009-06-13 14:12:55Z des $
  */
 
 #ifndef __NSCD_AGENT_H__

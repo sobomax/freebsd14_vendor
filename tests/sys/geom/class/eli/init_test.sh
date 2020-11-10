@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tests/sys/geom/class/eli/init_test.sh 348588 2019-06-03 21:04:23Z jhb $
+# $FreeBSD: releng/12.2/tests/sys/geom/class/eli/init_test.sh 348587 2019-06-03 21:03:28Z jhb $
 
 . $(atf_get_srcdir)/conf.sh
 

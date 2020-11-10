@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/fstyp/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/usr.sbin/fstyp/Makefile 337160 2018-08-02 18:55:55Z mav $
 
 .include <src.opts.mk>
 
@@ -13,9 +13,11 @@ MAN=	fstyp.8
 
 WARNS?=	2
 
+.include <bsd.endian.mk>
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
+.if ${TARGET_ENDIANNESS} == 1234
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 .endif
 
 .if ${MK_ZFS} != "no"
@@ -34,7 +36,7 @@ CFLAGS+= -I${SRCTOP}/cddl/contrib/opensolaris/head
 
 CFLAGS+=-I${SRCTOP}/sys
 
-LIBADD=	geom md
+LIBADD=	geom md ufs
 
 .if ${MK_ZFS} != "no"
 LIBADD+=nvpair zfs

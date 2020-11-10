@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1993 Paul Kranenburg
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/link_elf.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/link_elf.h 361564 2020-05-27 21:56:45Z kib $
  */
 
 /*
@@ -55,13 +57,15 @@
 #define	LA_SER_SECURE	0x80	/* default (secure) path prepended */
 
 typedef struct link_map {
-	caddr_t		l_addr;			/* Base Address of library */
+	caddr_t		l_base;			/* Base Address of library */
 #ifdef __mips__
-	caddr_t		l_offs;			/* Load Offset of library */
+	caddr_t		l_xxx;			/* unused */
 #endif
 	const char	*l_name;		/* Absolute Path to Library */
 	const void	*l_ld;			/* Pointer to .dynamic in memory */
 	struct link_map	*l_next, *l_prev;	/* linked list of of mapped libs */
+	caddr_t		l_addr;			/* Load Offset of library */
+	const char	*l_refname;		/* object we are filtering for */
 } Link_map;
 
 struct r_debug {

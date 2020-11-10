@@ -1,7 +1,7 @@
 /*
  * lifted from fs/ncpfs/getopt.c
  *
- * $FreeBSD: releng/11.3/sys/contrib/rdma/krping/getopt.h 178784 2008-05-05 18:35:55Z kmacy $
+ * $FreeBSD: releng/12.2/sys/contrib/rdma/krping/getopt.h 178784 2008-05-05 18:35:55Z kmacy $
  */
 #ifndef _KRPING_GETOPT_H
 #define _KRPING_GETOPT_H

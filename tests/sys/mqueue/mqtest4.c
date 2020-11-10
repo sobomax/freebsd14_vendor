@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/tests/sys/mqueue/mqtest4.c 306905 2016-10-09 12:34:56Z kib $ */
+/* $FreeBSD: releng/12.2/tests/sys/mqueue/mqtest4.c 306588 2016-10-02 17:02:59Z kib $ */
 
 #include <sys/types.h>
 #include <sys/event.h>

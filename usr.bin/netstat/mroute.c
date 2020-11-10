@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1989 Stephen Deering
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -38,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/netstat/mroute.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/netstat/mroute.c 355029 2019-11-23 13:20:24Z karels $");
 
 /*
  * Print multicast routing structures and statistics.
@@ -407,14 +409,12 @@ mrt_stats()
 
 	mstaddr = nl[N_MRTSTAT].n_value;
 
-	if (mstaddr == 0) {
-		fprintf(stderr, "No IPv4 MROUTING kernel support.\n");
+	if (fetch_stats("net.inet.ip.mrtstat", mstaddr, &mrtstat,
+	    sizeof(mrtstat), kread_counters) != 0) {
+		if ((live && errno == ENOENT) || (!live && mstaddr == 0))
+			fprintf(stderr, "No IPv4 MROUTING kernel support.\n");
 		return;
 	}
-
-	if (fetch_stats("net.inet.ip.mrtstat", mstaddr, &mrtstat,
-	    sizeof(mrtstat), kread_counters) != 0)
-		return;
 
 	xo_emit("{T:IPv4 multicast forwarding}:\n");
 

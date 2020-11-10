@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netinet/ip_fw.h 346212 2019-04-14 12:39:09Z ae $
+ * $FreeBSD: releng/12.2/sys/netinet/ip_fw.h 349572 2019-07-01 10:01:08Z ae $
  */
 
 #ifndef _IPFW2_H
@@ -291,6 +293,7 @@ enum ipfw_opcodes {		/* arguments (4 byte each)	*/
 	O_EXTERNAL_DATA,	/* variable length data */
 
 	O_SKIP_ACTION,		/* none				*/
+	O_TCPMSS,		/* arg1=MSS value */
 
 	O_LAST_OPCODE		/* not an opcode!		*/
 };

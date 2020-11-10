@@ -1,7 +1,8 @@
-# $FreeBSD: releng/11.3/usr.sbin/quot/Makefile 113091 2003-04-04 17:49:21Z obrien $
+# $FreeBSD: releng/12.2/usr.sbin/quot/Makefile 328426 2018-01-26 00:58:32Z mckusick $
 
 PROG=	quot
 MAN=	quot.8
+LIBADD=	ufs
 
 WARNS?=	2
 

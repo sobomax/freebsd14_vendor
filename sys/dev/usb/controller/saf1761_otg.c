@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/controller/saf1761_otg.c 321990 2017-08-03 13:45:26Z hselasky $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/controller/saf1761_otg.c 320773 2017-07-07 12:03:58Z hselasky $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.

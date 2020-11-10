@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/Makefile.inc 319189 2017-05-30 04:42:36Z ngie $
+# $FreeBSD: releng/12.2/secure/Makefile.inc 314658 2017-03-04 11:35:30Z ngie $
 
 .include <src.opts.mk>
 

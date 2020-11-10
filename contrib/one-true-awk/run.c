@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/contrib/one-true-awk/run.c 301289 2016-06-03 21:23:11Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/one-true-awk/run.c 323964 2017-09-24 05:04:02Z imp $");
 
 #define DEBUG
 #include <stdio.h>
@@ -918,7 +918,7 @@ int format(char **pbuf, int *pbufsize, const char *s, Node *a)	/* printf-like co
 			break;
 		case 'c':
 			if (isnum(x)) {
-				if (getfval(x))
+				if ((int)getfval(x))
 					sprintf(p, fmt, (int) getfval(x));
 				else {
 					*p++ = '\0'; /* explicit null byte */
@@ -1476,7 +1476,7 @@ Cell *bltin(Node **a, int n)	/* builtin functions. a[0] is type, a[1] is arg lis
 {
 	Cell *x, *y;
 	Awkfloat u;
-	int t;
+	int t, i;
 	Awkfloat tmp;
 	char *p, *buf;
 	Node *nextarg;
@@ -1515,6 +1515,76 @@ Cell *bltin(Node **a, int n)	/* builtin functions. a[0] is type, a[1] is arg lis
 			tempfree(y);
 			nextarg = nextarg->nnext;
 		}
+		break;
+	case FCOMPL:
+		u = ~((int)getfval(x));
+		break;
+	case FAND:
+		if (nextarg == NULL) {
+			WARNING("and requires two arguments; returning 0");
+			u = 0;
+			break;
+		}
+		i = ((int)getfval(x));
+		while (nextarg != NULL) {
+			y = execute(nextarg);
+			i &= (int)getfval(y);
+			tempfree(y);
+			nextarg = nextarg->nnext;
+		}
+		u = i;
+		break;
+	case FFOR:
+		if (nextarg == NULL) {
+			WARNING("or requires two arguments; returning 0");
+			u = 0;
+			break;
+		}
+		i = ((int)getfval(x));
+		while (nextarg != NULL) {
+			y = execute(nextarg);
+			i |= (int)getfval(y);
+			tempfree(y);
+			nextarg = nextarg->nnext;
+		}
+		u = i;
+		break;
+	case FXOR:
+		if (nextarg == NULL) {
+			WARNING("xor requires two arguments; returning 0");
+			u = 0;
+			break;
+		}
+		i = ((int)getfval(x));
+		while (nextarg != NULL) {
+			y = execute(nextarg);
+			i ^= (int)getfval(y);
+			tempfree(y);
+			nextarg = nextarg->nnext;
+		}
+		u = i;
+		break;
+	case FLSHIFT:
+		if (nextarg == NULL) {
+			WARNING("lshift requires two arguments; returning 0");
+			u = 0;
+			break;
+		}
+		y = execute(a[1]->nnext);
+		u = ((int)getfval(x)) << ((int)getfval(y));
+		tempfree(y);
+		nextarg = nextarg->nnext;
+		break;
+	case FRSHIFT:
+		if (nextarg == NULL) {
+			WARNING("rshift requires two arguments; returning 0");
+			u = 0;
+			break;
+		}
+		y = execute(a[1]->nnext);
+		u = ((int)getfval(x)) >> ((int)getfval(y));
+		tempfree(y);
+		nextarg = nextarg->nnext;
 		break;
 	case FSYSTEM:
 		fflush(stdout);		/* in case something is buffered already */

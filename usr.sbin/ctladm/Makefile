@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ctladm/Makefile 319152 2017-05-29 18:17:34Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ctladm/Makefile 333446 2018-05-10 03:50:20Z araujo $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,7 @@ CFLAGS+=	-I${SDIR}
 WARNS?= 3
 .endif
 
-LIBADD=		cam sbuf bsdxml util
+LIBADD=		cam sbuf bsdxml util nv
 MAN=		ctladm.8
 
 .if ${MK_ISCSI} != "no"

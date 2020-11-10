@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 - 2008 Søren Schmidt <sos@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ata/ata-card.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ata/ata-card.c 365539 2020-09-09 22:54:09Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -142,6 +144,7 @@ ata_pccard_attach(device_t dev)
     err = ata_probe(dev);
     if (err > 0)
 	return (err);
+    gone_in_dev(dev, 13, "pccard removed");
     return (ata_attach(dev));
 }
 

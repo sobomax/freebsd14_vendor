@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008, Juniper Networks, Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libkvm/kvm_powerpc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libkvm/kvm_powerpc.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #include <sys/param.h>
 #include <sys/endian.h>

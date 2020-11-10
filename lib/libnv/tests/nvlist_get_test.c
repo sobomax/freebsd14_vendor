@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libnv/tests/nvlist_get_test.c 285063 2015-07-02 21:58:10Z oshogbo $
+ * $FreeBSD: releng/12.2/lib/libnv/tests/nvlist_get_test.c 285063 2015-07-02 21:58:10Z oshogbo $
  */
 #include <sys/nv.h>
 

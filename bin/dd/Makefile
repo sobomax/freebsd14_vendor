@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/dd/Makefile 338364 2018-08-29 02:18:13Z kevans $
+# $FreeBSD: releng/12.2/bin/dd/Makefile 337865 2018-08-15 19:46:13Z kevans $
 
 .include <src.opts.mk>
 
@@ -39,8 +39,7 @@ test: ${PROG} gen
 
 	@rm -f gen 1M_zeroes* obs_zeroes
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

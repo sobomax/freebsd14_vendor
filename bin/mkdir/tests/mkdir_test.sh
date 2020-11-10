@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/bin/mkdir/tests/mkdir_test.sh 323275 2017-09-07 16:54:47Z asomers $
+# $FreeBSD: releng/12.2/bin/mkdir/tests/mkdir_test.sh 323275 2017-09-07 16:54:47Z asomers $
 #
 
 usage_output='usage: mkdir'

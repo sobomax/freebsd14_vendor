@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause OR GPL-2.0
+ *
  * This file is provided under a dual BSD/GPLv2 license.  When using or
  * redistributing this file, you may do so under either license.
  *
@@ -49,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/isci/scil/sati_design.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/isci/scil/sati_design.h 326255 2017-11-27 14:52:40Z pfg $
  */
 #ifndef _SATI_DESIGN_H_
 #define _SATI_DESIGN_H_
@@ -130,7 +132,7 @@ block devices (e.g. disks).
 
 @image html Use_Case_Diagram__SATI__SATI_-_SBC.jpg "SCSI Block Command Translation Use Cases"
 
-The SCSI-to-ATA Translation (SAT) specification defines a few of it's own
+The SCSI-to-ATA Translation (SAT) specification defines a few of its own
 commands, parameter data, and log pages.  This use case diagram, however, only
 captures the SAT specific commands being translated.
 

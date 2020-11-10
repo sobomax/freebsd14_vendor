@@ -58,7 +58,7 @@ ports attached to the switch)
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/netmap/netmap_bdg.c 344047 2019-02-12 09:26:05Z vmaffione $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/netmap/netmap_bdg.c 354471 2019-11-07 20:09:41Z vmaffione $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -1442,7 +1442,7 @@ put_out:
 
 
 /* nm_bdg_ctl callback for the bwrap.
- * Called on bridge-attach and detach, as an effect of vale-ctl -[ahd].
+ * Called on bridge-attach and detach, as an effect of valectl -[ahd].
  * On attach, it needs to provide a fake netmap_priv_d structure and
  * perform a netmap_do_regif() on the bwrap. This will put both the
  * bwrap and the hwna in netmap mode, with the netmap rings shared

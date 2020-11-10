@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/krb5/kcrypto_arcfour.c 184588 2008-11-03 10:38:00Z dfr $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kgssapi/krb5/kcrypto_arcfour.c 351358 2019-08-21 22:42:08Z jhb $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -44,8 +46,11 @@ __FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/krb5/kcrypto_arcfour.c 184588 2008-1
 static void
 arcfour_init(struct krb5_key_state *ks)
 {
+	static struct timeval lastwarn;
 
 	ks->ks_priv = NULL;
+	if (ratecheck(&lastwarn, &krb5_warn_interval))
+		gone_in(13, "RC4 cipher for Kerberos GSS");
 }
 
 static void

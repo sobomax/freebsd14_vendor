@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/getconf/tests/getconf_test.sh 318436 2017-05-18 01:43:30Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/getconf/tests/getconf_test.sh 318436 2017-05-18 01:43:30Z ngie $
 
 POSITIVE_EXP_EXPR_RE='match:[1-9][0-9]*'
 

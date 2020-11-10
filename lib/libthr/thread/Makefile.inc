@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libthr/thread/Makefile.inc 296162 2016-02-28 17:52:33Z kib $
+# $FreeBSD: releng/12.2/lib/libthr/thread/Makefile.inc 344011 2019-02-11 15:02:02Z kib $
 
 # thr sources
 .PATH: ${.CURDIR}/thread
@@ -31,6 +31,7 @@ SRCS+= \
 	thr_kern.c \
 	thr_kill.c \
 	thr_main_np.c \
+	thr_malloc.c \
 	thr_multi_np.c \
 	thr_mutex.c \
 	thr_mutexattr.c \

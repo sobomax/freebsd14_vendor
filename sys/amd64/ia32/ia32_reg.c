@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Peter Wemm
  * All rights reserved.
  *
@@ -23,13 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/ia32/ia32_reg.c 341491 2018-12-04 19:07:10Z markj $
+ * $FreeBSD: releng/12.2/sys/amd64/ia32/ia32_reg.c 341490 2018-12-04 19:06:11Z markj $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/ia32/ia32_reg.c 341491 2018-12-04 19:07:10Z markj $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/ia32/ia32_reg.c 341490 2018-12-04 19:06:11Z markj $");
 
 #include <sys/param.h>
 #include <sys/exec.h>

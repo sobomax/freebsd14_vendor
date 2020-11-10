@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008-2009 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/teken/demo/teken_demo.c 286797 2015-08-15 08:29:13Z ed $
+ * $FreeBSD: releng/12.2/sys/teken/demo/teken_demo.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/ioctl.h>

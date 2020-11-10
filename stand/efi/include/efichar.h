@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/include/efichar.h 329175 2018-02-12 17:44:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/efi/include/efichar.h 326854 2017-12-14 16:41:52Z tsoome $
  */
 
 #ifndef _BOOT_EFI_EFICHAR_H_

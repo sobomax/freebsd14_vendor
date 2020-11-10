@@ -24,7 +24,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/powerpc/crti.S 217399 2011-01-14 11:34:58Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/powerpc/crti.S 217399 2011-01-14 11:34:58Z kib $");
 
 	.section .init,"ax",@progbits
 	.align	2

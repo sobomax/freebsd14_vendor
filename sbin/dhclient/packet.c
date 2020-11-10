@@ -2,7 +2,9 @@
 
 /* Packet assembly code, originally contributed by Archie Cobbs. */
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1995, 1996, 1999 The Internet Software Consortium.
  * All rights reserved.
  *
@@ -41,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/dhclient/packet.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/dhclient/packet.c 349630 2019-07-03 00:32:42Z markj $");
 
 #include "dhcpd.h"
 
@@ -181,7 +183,7 @@ decode_udp_ip_header(unsigned char *buf, int bufix, struct sockaddr_in *from,
 	ip_packets_seen++;
 	if (wrapsum(checksum(buf + bufix, ip_len, 0)) != 0) {
 		ip_packets_bad_checksum++;
-		if (ip_packets_seen > 4 &&
+		if (ip_packets_seen > 4 && ip_packets_bad_checksum != 0 &&
 		    (ip_packets_seen / ip_packets_bad_checksum) < 2) {
 			note("%d bad IP checksums seen in %d packets",
 			    ip_packets_bad_checksum, ip_packets_seen);
@@ -233,7 +235,7 @@ decode_udp_ip_header(unsigned char *buf, int bufix, struct sockaddr_in *from,
 	udp_packets_seen++;
 	if (usum && usum != sum) {
 		udp_packets_bad_checksum++;
-		if (udp_packets_seen > 4 &&
+		if (udp_packets_seen > 4 && udp_packets_bad_checksum != 0 &&
 		    (udp_packets_seen / udp_packets_bad_checksum) < 2) {
 			note("%d bad udp checksums in %d packets",
 			    udp_packets_bad_checksum, udp_packets_seen);

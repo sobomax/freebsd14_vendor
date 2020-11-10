@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993, 1995
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/fs/nfsclient/nfs_clvfsops.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsclient/nfs_clvfsops.c 356238 2019-12-31 18:10:34Z rmacklem $");
 
 
 #include "opt_bootp.h"
@@ -84,6 +86,7 @@ extern enum nfsiod_state ncl_iodwant[NFS_MAXASYNCDAEMON];
 extern struct nfsmount *ncl_iodmount[NFS_MAXASYNCDAEMON];
 extern struct mtx ncl_iod_mutex;
 NFSCLSTATEMUTEX;
+extern struct mtx nfsrv_dslock_mtx;
 
 MALLOC_DEFINE(M_NEWNFSREQ, "newnfsclient_req", "NFS request header");
 MALLOC_DEFINE(M_NEWNFSMNT, "newnfsmnt", "NFS mount struct");
@@ -1390,10 +1393,10 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 	if (mp->mnt_flag & MNT_UPDATE) {
 		nmp = VFSTONFS(mp);
 		printf("%s: MNT_UPDATE is no longer handled here\n", __func__);
-		FREE(nam, M_SONAME);
+		free(nam, M_SONAME);
 		return (0);
 	} else {
-		MALLOC(nmp, struct nfsmount *, sizeof (struct nfsmount) +
+		nmp = malloc(sizeof (struct nfsmount) +
 		    krbnamelen + dirlen + srvkrbnamelen + 2,
 		    M_NEWNFSMNT, M_WAITOK | M_ZERO);
 		TAILQ_INIT(&nmp->nm_bufq);
@@ -1541,10 +1544,8 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 			if (error)
 				(void) nfs_catnap(PZERO, error, "nfsgetdirp");
 		} while (error && --trycnt > 0);
-		if (error) {
-			error = nfscl_maperr(td, error, (uid_t)0, (gid_t)0);
+		if (error)
 			goto bad;
-		}
 	}
 
 	/*
@@ -1553,7 +1554,7 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 	 * traversals of the mount point (i.e. "..") will not work if
 	 * the nfsnode gets flushed out of the cache. Ufs does not have
 	 * this problem, because one can identify root inodes by their
-	 * number == ROOTINO (2).
+	 * number == UFS_ROOTINO (2).
 	 */
 	if (nmp->nm_fhsize > 0) {
 		/*
@@ -1649,8 +1650,8 @@ bad:
 			newnfs_disconnect(dsp->nfsclds_sockp);
 		nfscl_freenfsclds(dsp);
 	}
-	FREE(nmp, M_NEWNFSMNT);
-	FREE(nam, M_SONAME);
+	free(nmp, M_NEWNFSMNT);
+	free(nam, M_SONAME);
 	return (error);
 }
 
@@ -1670,6 +1671,7 @@ nfs_unmount(struct mount *mp, int mntflags)
 	if (mntflags & MNT_FORCE)
 		flags |= FORCECLOSE;
 	nmp = VFSTONFS(mp);
+	error = 0;
 	/*
 	 * Goes something like this..
 	 * - Call vflush() to clear out vnodes for this filesystem
@@ -1678,6 +1680,12 @@ nfs_unmount(struct mount *mp, int mntflags)
 	 */
 	/* In the forced case, cancel any outstanding requests. */
 	if (mntflags & MNT_FORCE) {
+		NFSDDSLOCK();
+		if (nfsv4_findmirror(nmp) != NULL)
+			error = ENXIO;
+		NFSDDSUNLOCK();
+		if (error)
+			goto out;
 		error = newnfs_nmcancelreqs(nmp);
 		if (error)
 			goto out;
@@ -1704,13 +1712,13 @@ nfs_unmount(struct mount *mp, int mntflags)
 		mtx_unlock(&nmp->nm_mtx);
 	}
 	/* Make sure no nfsiods are assigned to this mount. */
-	mtx_lock(&ncl_iod_mutex);
+	NFSLOCKIOD();
 	for (i = 0; i < NFS_MAXASYNCDAEMON; i++)
 		if (ncl_iodmount[i] == nmp) {
 			ncl_iodwant[i] = NFSIOD_AVAILABLE;
 			ncl_iodmount[i] = NULL;
 		}
-	mtx_unlock(&ncl_iod_mutex);
+	NFSUNLOCKIOD();
 
 	/*
 	 * We can now set mnt_data to NULL and wait for
@@ -1726,7 +1734,7 @@ nfs_unmount(struct mount *mp, int mntflags)
 
 	newnfs_disconnect(&nmp->nm_sockreq);
 	crfree(nmp->nm_sockreq.nr_cred);
-	FREE(nmp->nm_nam, M_SONAME);
+	free(nmp->nm_nam, M_SONAME);
 	if (nmp->nm_sockreq.nr_auth != NULL)
 		AUTH_DESTROY(nmp->nm_sockreq.nr_auth);
 	mtx_destroy(&nmp->nm_sockreq.nr_mtx);
@@ -1737,7 +1745,7 @@ nfs_unmount(struct mount *mp, int mntflags)
 			newnfs_disconnect(dsp->nfsclds_sockp);
 		nfscl_freenfsclds(dsp);
 	}
-	FREE(nmp, M_NEWNFSMNT);
+	free(nmp, M_NEWNFSMNT);
 out:
 	return (error);
 }

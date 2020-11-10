@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/sort/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/sort/Makefile 338265 2018-08-23 18:18:43Z arichardson $
 
 .include <src.opts.mk>
 
@@ -7,7 +7,7 @@ PROG=	sort
 SRCS=	bwstring.c coll.c file.c mem.c radixsort.c sort.c vsort.c
 
 sort.1: sort.1.in
-	/usr/bin/sed ${MAN_SUB} ${.ALLSRC} >${.TARGET}
+	sed ${MAN_SUB} ${.ALLSRC} >${.TARGET}
 
 CLEANFILES+= sort.1
 
@@ -31,5 +31,8 @@ NLSSRCDIR_${lang}= ${.CURDIR}/nls
 CFLAGS+= -DWITHOUT_NLS
 MAN_SUB+= -e 's|%%NLS%%|\.\\"|g'
 .endif
+
+#HAS_TESTS=
+#SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

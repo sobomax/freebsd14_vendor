@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/usr.bin/mkimg/Makefile 329059 2018-02-09 09:15:43Z manu $
+# $FreeBSD: releng/12.2/usr.bin/mkimg/Makefile 362767 2020-06-29 00:34:11Z gonzo $
 
 .include <src.opts.mk>
 
 PROG=	mkimg
-SRCS=	format.c image.c mkimg.c scheme.c uuid.c
+SRCS+=	format.c image.c mkimg.c scheme.c uuid.c
 MAN=	mkimg.1
 
 MKIMG_VERSION=20161016
@@ -11,13 +11,14 @@ mkimg.o: Makefile
 
 CFLAGS+=-DMKIMG_VERSION=${MKIMG_VERSION}
 CFLAGS+=-DSPARSE_WRITE
-CFLAGS+=-I${.CURDIR:H:H}/sys
+CFLAGS+=-I${SRCTOP}/sys/sys/disk
 
 # List of formats to support
 SRCS+= \
 	qcow.c \
 	raw.c \
 	vhd.c \
+	vhdx.c \
 	vmdk.c
 
 # List of schemes to support
@@ -27,7 +28,6 @@ SRCS+=	\
 	ebr.c \
 	gpt.c \
 	mbr.c \
-	pc98.c \
 	vtoc8.c
 
 BINDIR?=/usr/bin
@@ -36,8 +36,7 @@ LIBADD=	util
 
 WARNS?=	6
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/tests/ctrig_test.c 324006 2017-09-26 09:01:56Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/tests/ctrig_test.c 360797 2020-05-07 20:27:32Z lwhsu $");
 
 #include <sys/param.h>
 #include <complex.h>
@@ -247,6 +247,9 @@ ATF_TC_BODY(test_inf_inputs, tc)
 	};
 	long double complex z, c, s;
 	unsigned i;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/244732");
 
 	/*
 	 * IN		CSINH		CCOSH		CTANH

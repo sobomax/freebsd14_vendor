@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Netflix, Inc. All Rights Reserved.
+ * Copyright (c) 2015 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/env.c 346482 2019-04-21 04:26:02Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/env.c 353971 2019-10-24 02:27:16Z kevans $");
 
 #include <stand.h>
 #include <string.h>

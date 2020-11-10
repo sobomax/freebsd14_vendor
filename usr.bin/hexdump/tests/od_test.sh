@@ -1,3 +1,4 @@
+#
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
 # Copyright 2018 (C) Yuri Pankov
@@ -24,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/hexdump/tests/od_test.sh 328500 2018-01-27 23:20:01Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/hexdump/tests/od_test.sh 333419 2018-05-09 16:52:28Z kevans $
 
 atf_test_case c_flag
 c_flag_head()

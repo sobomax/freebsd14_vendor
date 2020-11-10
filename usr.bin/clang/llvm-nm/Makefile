@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-nm/Makefile 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-nm/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-nm
 
-SRCDIR=		tools/llvm-nm
+SRCDIR=		llvm/tools/llvm-nm
 SRCS+=		llvm-nm.cpp
 
 LIBADD+=	z

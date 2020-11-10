@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/stand/mips/beri/loader/Makefile 332150 2018-04-06 20:24:50Z kevans $
+# $FreeBSD: releng/12.2/stand/mips/beri/loader/Makefile 329190 2018-02-13 03:44:50Z jhibbits $
 
 LOADER_MSDOS_SUPPORT?=	yes
 LOADER_UFS_SUPPORT?=	yes

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/dev/mdio/mdio_if.m 292750 2015-12-26 17:22:02Z adrian $
+# $FreeBSD: releng/12.2/sys/dev/mdio/mdio_if.m 292750 2015-12-26 17:22:02Z adrian $
 
 #include <sys/bus.h>
 

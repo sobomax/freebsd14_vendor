@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Texas A&M University
  * All rights reserved.
  *
@@ -57,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ichwd/ichwd.c 342569 2018-12-28 08:53:26Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ichwd/ichwd.c 359361 2020-03-27 15:26:30Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -294,6 +296,7 @@ static struct ichwd_device ichwd_devices[] = {
 static struct ichwd_device ichwd_smb_devices[] = {
 	{ DEVICEID_LEWISBURG_SMB, "Lewisburg watchdog timer",		10, 4 },
 	{ DEVICEID_SRPTLP_SMB,    "Sunrise Point-LP watchdog timer",	10, 4 },
+	{ DEVICEID_C3000,         "Intel Atom C3000 watchdog timer",	10, 4 },
 	{ 0, NULL, 0, 0 },
 };
 

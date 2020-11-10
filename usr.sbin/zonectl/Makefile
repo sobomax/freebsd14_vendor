@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/zonectl/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/zonectl/Makefile 314461 2017-03-01 04:19:04Z ngie $
 
 PROG=	zonectl
 SRCS=	zonectl.c

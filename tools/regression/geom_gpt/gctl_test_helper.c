@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/regression/geom_gpt/gctl_test_helper.c 321136 2017-07-18 17:16:55Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/tools/regression/geom_gpt/gctl_test_helper.c 319800 2017-06-10 19:48:45Z ngie $");
 
 #include <sys/param.h>
 #include <assert.h>

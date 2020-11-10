@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2003/09/08 02:27:27 max Exp $
-# $FreeBSD: releng/11.3/usr.sbin/bluetooth/sdpcontrol/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/bluetooth/sdpcontrol/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=		sdpcontrol
 MAN=		sdpcontrol.8

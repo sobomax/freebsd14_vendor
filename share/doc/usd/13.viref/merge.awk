@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/doc/usd/13.viref/merge.awk 284619 2015-06-20 00:13:28Z bapt $
+# $FreeBSD: releng/12.2/share/doc/usd/13.viref/merge.awk 284619 2015-06-20 00:13:28Z bapt $
 #	@(#)merge.awk	8.3 (Berkeley) 5/25/94
 #
 # merge index entries into one line per label

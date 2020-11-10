@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/kern/kern_racct.c 335536 2018-06-22 09:18:38Z avg $
+ * $FreeBSD: releng/12.2/sys/kern/kern_racct.c 332816 2018-04-20 13:08:04Z avg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_racct.c 335536 2018-06-22 09:18:38Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_racct.c 332816 2018-04-20 13:08:04Z avg $");
 
 #include "opt_sched.h"
 
@@ -443,12 +445,8 @@ racct_sub_racct(struct racct *dest, const struct racct *src)
 		}
 		if (RACCT_CAN_DROP(i)) {
 			dest->r_resources[i] -= src->r_resources[i];
-			if (dest->r_resources[i] < 0) {
-				KASSERT(RACCT_IS_SLOPPY(i) ||
-				    RACCT_IS_DECAYING(i),
-				    ("%s: resource %d usage < 0", __func__, i));
+			if (dest->r_resources[i] < 0)
 				dest->r_resources[i] = 0;
-			}
 		}
 	}
 }

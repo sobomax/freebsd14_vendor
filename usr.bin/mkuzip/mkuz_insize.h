@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/mkuzip/mkuz_insize.h 322983 2017-08-28 20:55:13Z sobomax $
+ * $FreeBSD: releng/12.2/usr.bin/mkuzip/mkuz_insize.h 320048 2017-06-17 02:58:31Z sobomax $
  */
 
 off_t mkuz_get_insize(struct mkuz_cfg *);

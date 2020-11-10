@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/src.opts.mk 346891 2019-04-29 16:14:24Z mhorne $
+# $FreeBSD: releng/12.2/share/mk/src.opts.mk 365722 2020-09-14 14:53:09Z dim $
 #
 # Option file for FreeBSD /usr/src builds.
 #
@@ -41,7 +41,16 @@ __<src.opts.mk>__:
 # that haven't been converted over.
 #
 
-# These options are used by src the builds
+# These options are used by the src builds. Those listed in
+# __DEFAULT_YES_OPTIONS default to 'yes' and will build unless turned
+# off.  __DEFAULT_NO_OPTIONS will default to 'no' and won't build
+# unless turned on. Any options listed in 'BROKEN_OPTIONS' will be
+# hard-wired to 'no'.  "Broken" here means not working or
+# not-appropriate and/or not supported. It doesn't imply something is
+# wrong with the code. There's not a single good word for this, so
+# BROKEN was selected as the least imperfect one considered at the
+# time. Options are added to BROKEN_OPTIONS list on a per-arch basis.
+# At this time, there's no provision for mutually incompatible options.
 
 __DEFAULT_YES_OPTIONS = \
     ACCT \
@@ -62,12 +71,12 @@ __DEFAULT_YES_OPTIONS = \
     BOOTPARAMD \
     BOOTPD \
     BSD_CPIO \
-    BSD_GREP_FASTMATCH \
     BSDINSTALL \
     BSNMP \
     BZIP2 \
     CALENDAR \
     CAPSICUM \
+    CAROOT \
     CASPER \
     CCD \
     CDDL \
@@ -83,7 +92,6 @@ __DEFAULT_YES_OPTIONS = \
     DYNAMICROOT \
     ED_CRYPTO \
     EE \
-    ELFCOPY_AS_OBJCOPY \
     EFI \
     ELFTOOLCHAIN_BOOTSTRAP \
     EXAMPLES \
@@ -99,16 +107,12 @@ __DEFAULT_YES_OPTIONS = \
     GAMES \
     GCOV \
     GDB \
-    GNU \
     GNU_DIFF \
     GNU_GREP \
-    GNU_GREP_COMPAT \
+    GOOGLETEST \
     GPIO \
-    GPL_DTC \
-    GROFF \
     HAST \
     HTML \
-    HYPERV \
     ICONV \
     INET \
     INET6 \
@@ -126,6 +130,7 @@ __DEFAULT_YES_OPTIONS = \
     LIBPTHREAD \
     LIBTHR \
     LLVM_COV \
+    LLVM_TARGET_ALL \
     LOADER_GELI \
     LOADER_LUA \
     LOADER_OFW \
@@ -138,13 +143,14 @@ __DEFAULT_YES_OPTIONS = \
     MAIL \
     MAILWRAPPER \
     MAKE \
-    MANDOCDB \
+    MALLOC_PRODUCTION \
     NDIS \
     NETCAT \
     NETGRAPH \
     NLS_CATALOGS \
     NS_CACHING \
     NTP \
+    OFED \
     OPENSSL \
     PAM \
     PC_SYSINSTALL \
@@ -155,12 +161,12 @@ __DEFAULT_YES_OPTIONS = \
     PPP \
     QUOTAS \
     RADIUS_SUPPORT \
-    RCMDS \
     RBOOTD \
-    RCS \
+    REPRODUCIBLE_BUILD \
     RESCUE \
     ROUTED \
     SENDMAIL \
+    SERVICESDB \
     SETUID_LOGIN \
     SHAREDOCS \
     SOURCELESS \
@@ -169,11 +175,11 @@ __DEFAULT_YES_OPTIONS = \
     SVNLITE \
     SYSCONS \
     SYSTEM_COMPILER \
+    SYSTEM_LINKER \
     TALK \
     TCP_WRAPPERS \
     TCSH \
     TELNET \
-    TESTS \
     TEXTPROC \
     TFTP \
     TIMED \
@@ -189,27 +195,54 @@ __DEFAULT_YES_OPTIONS = \
     ZONEINFO
 
 __DEFAULT_NO_OPTIONS = \
+    BEARSSL \
+    BSD_CRTBEGIN \
     BSD_GREP \
     CLANG_EXTRAS \
+    CLANG_FORMAT \
     DTRACE_TESTS \
-    EISA \
+    GH_BC \
+    GNU_GREP_COMPAT \
     HESIOD \
     LIBSOFT \
-    LINT \
+    LLVM_ASSERTIONS \
     LOADER_FIREWIRE \
     LOADER_FORCE_LE \
-    LOADER_VERBOSE \
+    LOADER_VERIEXEC_PASS_MANIFEST \
     NAND \
     OFED_EXTRA \
     OPENLDAP \
-    REPRODUCIBLE_BUILD \
     RPCBIND_WARMSTART_SUPPORT \
     SHARED_TOOLCHAIN \
     SORT_THREADS \
     SVN \
     ZONEINFO_LEAPSECONDS_SUPPORT \
-    ZONEINFO_OLD_TIMEZONES_SUPPORT \
 
+# LEFT/RIGHT. Left options which default to "yes" unless their corresponding
+# RIGHT option is disabled.
+__DEFAULT_DEPENDENT_OPTIONS= \
+	CLANG_FULL/CLANG \
+	LOADER_VERIEXEC/BEARSSL \
+	LOADER_EFI_SECUREBOOT/LOADER_VERIEXEC \
+	LOADER_VERIEXEC_VECTX/LOADER_VERIEXEC \
+	VERIEXEC/BEARSSL \
+
+# MK_*_SUPPORT options which default to "yes" unless their corresponding
+# MK_* variable is set to "no".
+#
+.for var in \
+    BLACKLIST \
+    BZIP2 \
+    INET \
+    INET6 \
+    KERBEROS \
+    KVM \
+    NETGRAPH \
+    PAM \
+    TESTS \
+    WIRELESS
+__DEFAULT_DEPENDENT_OPTIONS+= ${var}_SUPPORT/${var}
+.endfor
 
 #
 # Default behaviour of some options depends on the architecture.  Unfortunately
@@ -231,8 +264,34 @@ __TT=${TARGET}
 __TT=${MACHINE}
 .endif
 
+# All supported backends for LLVM_TARGET_XXX
+__LLVM_TARGETS= \
+		aarch64 \
+		arm \
+		mips \
+		powerpc \
+		riscv \
+		sparc \
+		x86
+__LLVM_TARGET_FILT=	C/(amd64|i386)/x86/:S/sparc64/sparc/:S/arm64/aarch64/
+.for __llt in ${__LLVM_TARGETS}
+# Default enable the given TARGET's LLVM_TARGET support
+.if ${__TT:${__LLVM_TARGET_FILT}} == ${__llt}
+__DEFAULT_YES_OPTIONS+=	LLVM_TARGET_${__llt:${__LLVM_TARGET_FILT}:tu}
+# Disable other targets for arm and armv6, to work around "relocation truncated
+# to fit" errors with BFD ld, since libllvm.a will get too large to link.
+.elif ${__T} == "arm"
+__DEFAULT_NO_OPTIONS+=LLVM_TARGET_${__llt:tu}
+# aarch64 needs arm for -m32 support.
+.elif ${__TT} == "arm64" && ${__llt} == "arm"
+__DEFAULT_DEPENDENT_OPTIONS+=	LLVM_TARGET_ARM/LLVM_TARGET_AARCH64
+# Default the rest of the LLVM_TARGETs to the value of MK_LLVM_TARGET_ALL.
+.else
+__DEFAULT_DEPENDENT_OPTIONS+=	LLVM_TARGET_${__llt:${__LLVM_TARGET_FILT}:tu}/LLVM_TARGET_ALL
+.endif
+.endfor
+
 __DEFAULT_NO_OPTIONS+=LLVM_TARGET_BPF
-__DEFAULT_NO_OPTIONS+=LLVM_TARGET_RISCV
 
 .include <bsd.compiler.mk>
 # If the compiler is not C++11 capable, disable Clang and use GCC instead.
@@ -240,31 +299,28 @@ __DEFAULT_NO_OPTIONS+=LLVM_TARGET_RISCV
 # build Clang without using an external compiler.
 
 .if ${COMPILER_FEATURES:Mc++11} && (${__T} == "aarch64" || \
-    ${__T} == "amd64" || ${__TT} == "arm" || ${__T} == "i386")
+    ${__T} == "amd64" || ${__TT} == "arm" || ${__T} == "i386" || \
+    ${__TT} == "riscv")
 # Clang is enabled, and will be installed as the default /usr/bin/cc.
-__DEFAULT_YES_OPTIONS+=CLANG CLANG_BOOTSTRAP CLANG_FULL CLANG_IS_CC LLD
-__DEFAULT_YES_OPTIONS+=LLVM_TARGET_AARCH64 LLVM_TARGET_ARM LLVM_TARGET_MIPS
-__DEFAULT_YES_OPTIONS+=LLVM_TARGET_POWERPC LLVM_TARGET_SPARC LLVM_TARGET_X86
-__DEFAULT_NO_OPTIONS+=GCC GCC_BOOTSTRAP GNUCXX
-.elif ${COMPILER_FEATURES:Mc++11} && ${__T} != "riscv64" && ${__T} != "sparc64"
+__DEFAULT_YES_OPTIONS+=CLANG CLANG_BOOTSTRAP CLANG_IS_CC LLD
+__DEFAULT_NO_OPTIONS+=GCC GCC_BOOTSTRAP GNUCXX GPL_DTC
+.elif ${COMPILER_FEATURES:Mc++11} && ${__T} != "sparc64"
 # If an external compiler that supports C++11 is used as ${CC} and Clang
 # supports the target, then Clang is enabled but GCC is installed as the
 # default /usr/bin/cc.
-__DEFAULT_YES_OPTIONS+=CLANG CLANG_FULL GCC GCC_BOOTSTRAP GNUCXX
-__DEFAULT_YES_OPTIONS+=LLVM_TARGET_AARCH64 LLVM_TARGET_ARM LLVM_TARGET_MIPS
-__DEFAULT_YES_OPTIONS+=LLVM_TARGET_POWERPC LLVM_TARGET_SPARC LLVM_TARGET_X86
-__DEFAULT_NO_OPTIONS+=CLANG_BOOTSTRAP CLANG_IS_CC LLD
+__DEFAULT_YES_OPTIONS+=CLANG GCC GCC_BOOTSTRAP GNUCXX GPL_DTC LLD
+__DEFAULT_NO_OPTIONS+=CLANG_BOOTSTRAP CLANG_IS_CC
 .else
 # Everything else disables Clang, and uses GCC instead.
-__DEFAULT_YES_OPTIONS+=GCC GCC_BOOTSTRAP GNUCXX
-__DEFAULT_NO_OPTIONS+=CLANG CLANG_BOOTSTRAP CLANG_FULL CLANG_IS_CC LLD
-__DEFAULT_NO_OPTIONS+=LLVM_TARGET_AARCH64 LLVM_TARGET_ARM LLVM_TARGET_MIPS
-__DEFAULT_NO_OPTIONS+=LLVM_TARGET_POWERPC LLVM_TARGET_SPARC LLVM_TARGET_X86
+__DEFAULT_YES_OPTIONS+=GCC GCC_BOOTSTRAP GNUCXX GPL_DTC
+__DEFAULT_NO_OPTIONS+=CLANG CLANG_BOOTSTRAP CLANG_IS_CC LLD
 .endif
-__DEFAULT_NO_OPTIONS+=LLVM_TARGET_BPF
 # In-tree binutils/gcc are older versions without modern architecture support.
-.if ${__T} == "aarch64" || ${__T} == "riscv64"
+.if ${__T} == "aarch64" || ${__T:Mriscv*} != ""
 BROKEN_OPTIONS+=BINUTILS BINUTILS_BOOTSTRAP GCC GCC_BOOTSTRAP GDB
+.endif
+.if ${__T:Mriscv*} != ""
+BROKEN_OPTIONS+=OFED
 .endif
 .if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "i386" || \
     ${__T:Mriscv*} != "" || ${__TT} == "mips"
@@ -272,32 +328,37 @@ __DEFAULT_YES_OPTIONS+=LLVM_LIBUNWIND
 .else
 __DEFAULT_NO_OPTIONS+=LLVM_LIBUNWIND
 .endif
-.if ${__T} == "riscv64"
-BROKEN_OPTIONS+=PROFILE # "sorry, unimplemented: profiler support for RISC-V"
-BROKEN_OPTIONS+=TESTS   # "undefined reference to `_Unwind_Resume'"
-BROKEN_OPTIONS+=CXX     # "libcxxrt.so: undefined reference to `_Unwind_Resume_or_Rethrow'"
-.endif
-.if ${__T} == "aarch64"
+.if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "armv6" || \
+    ${__T} == "armv7" || ${__T} == "i386" || ${__TT} == "riscv"
 __DEFAULT_YES_OPTIONS+=LLD_BOOTSTRAP LLD_IS_LD
 .else
 __DEFAULT_NO_OPTIONS+=LLD_BOOTSTRAP LLD_IS_LD
 .endif
-.if ${__T} == "aarch64" || ${__T} == "amd64"
+.if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "i386"
 __DEFAULT_YES_OPTIONS+=LLDB
 .else
 __DEFAULT_NO_OPTIONS+=LLDB
 .endif
 # LLVM lacks support for FreeBSD 64-bit atomic operations for ARMv4/ARMv5
-.if ${__T} == "arm" || ${__T} == "armeb"
+.if ${__T} == "arm"
 BROKEN_OPTIONS+=LLDB
 .endif
-# Only doing soft float API stuff on armv6
-.if ${__T} != "armv6"
+# GDB in base is generally less functional than GDB in ports.  Ports GDB
+# sparc64 kernel support has not been tested.
+.if ${__T} == "sparc64"
+__DEFAULT_NO_OPTIONS+=GDB_LIBEXEC
+.else
+__DEFAULT_YES_OPTIONS+=GDB_LIBEXEC
+.endif
+# Only doing soft float API stuff on armv6 and armv7
+.if ${__T} != "armv6" && ${__T} != "armv7"
 BROKEN_OPTIONS+=LIBSOFT
 .endif
-# EFI doesn't exist on mips, pc98, powerpc, sparc or riscv.
-.if ${__T:Mmips*} || ${__TT:Mpc98*} || ${__T:Mpowerpc*} || ${__T:Msparc64} || \
-    ${__T:Mriscv*}
+.if ${__T:Mmips*}
+BROKEN_OPTIONS+=SSP
+.endif
+# EFI doesn't exist on mips, powerpc, sparc or riscv.
+.if ${__T:Mmips*} || ${__T:Mpowerpc*} || ${__T:Msparc64} || ${__T:Mriscv*}
 BROKEN_OPTIONS+=EFI
 .endif
 # OFW is only for powerpc and sparc64, exclude others
@@ -315,11 +376,7 @@ BROKEN_OPTIONS+=LOADER_UBOOT
 .if ${__T} == "sparc64" || ${__T:Mpowerpc*}
 BROKEN_OPTIONS+=LOADER_GELI LOADER_LUA
 .endif
-# Both features are untested on pc98, so we'll mark them as disabled just to
-# be safe and make sure we keep pc98 stable.
-.if ${__TT:Mpc98*}
-BROKEN_OPTIONS+=LOADER_GELI LOADER_LUA
-.endif
+
 .if ${__T:Mmips64*}
 # profiling won't work on MIPS64 because there is only assembly for o32
 BROKEN_OPTIONS+=PROFILE
@@ -333,13 +390,28 @@ __DEFAULT_NO_OPTIONS+=CXGBETOOL
 __DEFAULT_NO_OPTIONS+=MLX5TOOL
 .endif
 
-.if ${__T} == "amd64"
-__DEFAULT_YES_OPTIONS+=OFED
+# HyperV is currently x86-only
+.if ${__T} == "amd64" || ${__T} == "i386"
+__DEFAULT_YES_OPTIONS+=HYPERV
 .else
-__DEFAULT_NO_OPTIONS+=OFED
+__DEFAULT_NO_OPTIONS+=HYPERV
 .endif
 
-.if ${COMPILER_FEATURES:Mc++11} && (${__T} == "amd64" || ${__T} == "i386")
+# NVME is only x86 and powerpc64
+.if ${__T} == "amd64" || ${__T} == "i386" || ${__T} == "powerpc64"
+__DEFAULT_YES_OPTIONS+=NVME
+.else
+__DEFAULT_NO_OPTIONS+=NVME
+.endif
+
+# Sparc64 need extra crt*.o files
+.if ${__T:Msparc64}
+BROKEN_OPTIONS+=BSD_CRTBEGIN
+.endif
+
+.if ${COMPILER_FEATURES:Mc++11} && \
+    (${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "i386" || \
+     ${__T} == "powerpc64")
 __DEFAULT_YES_OPTIONS+=OPENMP
 .else
 __DEFAULT_NO_OPTIONS+=OPENMP
@@ -374,7 +446,12 @@ MK_${var}:=	no
 # Order is somewhat important.
 #
 .if !${COMPILER_FEATURES:Mc++11}
+MK_GOOGLETEST:=	no
 MK_LLVM_LIBUNWIND:=	no
+.endif
+
+.if ${MK_BINUTILS} == "no"
+MK_GDB:=	no
 .endif
 
 .if ${MK_CAPSICUM} == "no"
@@ -383,11 +460,6 @@ MK_CASPER:=	no
 
 .if ${MK_LIBPTHREAD} == "no"
 MK_LIBTHR:=	no
-.endif
-
-.if ${MK_LDNS} == "no"
-MK_LDNS_UTILS:=	no
-MK_UNBOUND:= no
 .endif
 
 .if ${MK_SOURCELESS} == "no"
@@ -409,8 +481,8 @@ MK_KERBEROS:=	no
 
 .if ${MK_CXX} == "no"
 MK_CLANG:=	no
-MK_GROFF:=	no
 MK_GNUCXX:=	no
+MK_TESTS:=	no
 .endif
 
 .if ${MK_DIALOG} == "no"
@@ -433,29 +505,44 @@ MK_NLS_CATALOGS:= no
 .endif
 
 .if ${MK_OPENSSL} == "no"
+MK_DMAGENT:=	no
 MK_OPENSSH:=	no
 MK_KERBEROS:=	no
+MK_LDNS:=	no
+MK_PKGBOOTSTRAP:=	no
+MK_SVN:=		no
+MK_SVNLITE:=		no
+MK_WIRELESS:=		no
 .endif
 
-.if ${MK_OFED} == "no"
-MK_OFED_EXTRA:=	no
+.if ${MK_LDNS} == "no"
+MK_LDNS_UTILS:=	no
+MK_UNBOUND:= no
 .endif
 
 .if ${MK_PF} == "no"
 MK_AUTHPF:=	no
 .endif
 
+.if ${MK_OFED} == "no"
+MK_OFED_EXTRA:=	no
+.endif
+
+.if ${MK_PORTSNAP} == "no"
+# freebsd-update depends on phttpget from portsnap
+MK_FREEBSD_UPDATE:=	no
+.endif
+
 .if ${MK_TESTS} == "no"
 MK_DTRACE_TESTS:= no
 .endif
 
-.if ${MK_TEXTPROC} == "no"
-MK_GROFF:=	no
+.if ${MK_TESTS_SUPPORT} == "no"
+MK_GOOGLETEST:=	no
 .endif
 
 .if ${MK_ZONEINFO} == "no"
 MK_ZONEINFO_LEAPSECONDS_SUPPORT:= no
-MK_ZONEINFO_OLD_TIMEZONES_SUPPORT:= no
 .endif
 
 .if ${MK_CROSS_COMPILER} == "no"
@@ -464,10 +551,6 @@ MK_CLANG_BOOTSTRAP:= no
 MK_ELFTOOLCHAIN_BOOTSTRAP:= no
 MK_GCC_BOOTSTRAP:= no
 MK_LLD_BOOTSTRAP:= no
-.endif
-
-.if ${MK_META_MODE} == "yes"
-MK_SYSTEM_COMPILER:= no
 .endif
 
 .if ${MK_TOOLCHAIN} == "no"
@@ -482,8 +565,13 @@ MK_LLDB:=	no
 
 .if ${MK_CLANG} == "no"
 MK_CLANG_EXTRAS:= no
+MK_CLANG_FORMAT:= no
 MK_CLANG_FULL:= no
 MK_LLVM_COV:= no
+.endif
+
+.if ${MK_LOADER_VERIEXEC} == "no"
+MK_LOADER_VERIEXEC_PASS_MANIFEST := no
 .endif
 
 #
@@ -504,29 +592,6 @@ MK_${vv:H}:=	${MK_${vv:T}}
 #
 # Set defaults for the MK_*_SUPPORT variables.
 #
-
-#
-# MK_*_SUPPORT options which default to "yes" unless their corresponding
-# MK_* variable is set to "no".
-#
-.for var in \
-    BLACKLIST \
-    BZIP2 \
-    GNU \
-    INET \
-    INET6 \
-    KERBEROS \
-    KVM \
-    NETGRAPH \
-    PAM \
-    TESTS \
-    WIRELESS
-.if defined(WITHOUT_${var}_SUPPORT) || ${MK_${var}} == "no"
-MK_${var}_SUPPORT:= no
-.else
-MK_${var}_SUPPORT:= yes
-.endif
-.endfor
 
 .if !${COMPILER_FEATURES:Mc++11}
 MK_LLDB:=	no

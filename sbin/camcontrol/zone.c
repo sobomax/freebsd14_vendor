@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sbin/camcontrol/zone.c 314220 2017-02-24 20:47:56Z ken $");
+__FBSDID("$FreeBSD: releng/12.2/sbin/camcontrol/zone.c 350727 2019-08-08 02:18:14Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -466,7 +466,7 @@ restart_report:
 			    /*timeout*/ timeout ? timeout : 60000);
 			break;
 		case CC_DT_ATA:
-		case CC_DT_ATA_BEHIND_SCSI: {
+		case CC_DT_SATL: {
 			uint8_t command = 0;
 			uint8_t protocol = 0;
 			uint16_t features = 0, sector_count = 0;
@@ -558,7 +558,7 @@ restart_report:
 			    /*timeout*/ timeout ? timeout : 60000);
 			break;
 		case CC_DT_ATA:
-		case CC_DT_ATA_BEHIND_SCSI: {
+		case CC_DT_SATL: {
 			uint8_t command = 0;
 			uint8_t protocol = 0;
 			uint16_t features = 0, sector_count = 0;

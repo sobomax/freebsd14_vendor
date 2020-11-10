@@ -29,7 +29,7 @@
 #define __RV350D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/radeon/rv350d.h 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/rv350d.h 338285 2018-08-24 00:02:00Z imp $");
 
 /* RV350, RV380 registers */
 /* #define R_00000D_SCLK_CNTL                           0x00000D */

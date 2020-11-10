@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/tip/Makefile 88276 2001-12-20 14:25:46Z markm $
+# $FreeBSD: releng/12.2/usr.bin/tip/Makefile 88276 2001-12-20 14:25:46Z markm $
 
 SUBDIR=tip
 

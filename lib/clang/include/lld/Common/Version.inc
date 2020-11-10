@@ -1,10 +1,6 @@
-// $FreeBSD: releng/11.3/lib/clang/include/lld/Common/Version.inc 346296 2019-04-16 20:05:24Z dim $
+// $FreeBSD: releng/12.2/lib/clang/include/lld/Common/Version.inc 363494 2020-07-24 20:48:06Z dim $
 
-#define LLD_VERSION 8.0.0
-#define LLD_VERSION_STRING "8.0.0"
-#define LLD_VERSION_MAJOR 8
+#define LLD_VERSION 10.0.1
+#define LLD_VERSION_STRING "10.0.1"
+#define LLD_VERSION_MAJOR 10
 #define LLD_VERSION_MINOR 0
-
-#define LLD_REPOSITORY_STRING "FreeBSD"
-// <Upstream revision at import>-<Local identifier in __FreeBSD_version style>
-#define LLD_REVISION_STRING "356365-1100005"

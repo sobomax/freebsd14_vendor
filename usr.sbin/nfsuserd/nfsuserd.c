@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nfsuserd/nfsuserd.c 346464 2019-04-21 00:51:43Z rmacklem $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nfsuserd/nfsuserd.c 346461 2019-04-21 00:05:12Z rmacklem $");
 
 #include <sys/param.h>
 #include <sys/errno.h>

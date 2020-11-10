@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 John Birrell <jb@cimlogic.com.au>.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libthr/thread/thr_condattr.c 338707 2018-09-17 02:51:08Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_condattr.c 337992 2018-08-18 01:05:38Z pfg $");
 
 #include "namespace.h"
 #include <stdlib.h>

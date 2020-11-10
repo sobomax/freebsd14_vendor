@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/cc/cc_cubic/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/cc/cc_cubic/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 .PATH: ${SRCTOP}/sys/netinet/cc
 KMOD=	cc_cubic

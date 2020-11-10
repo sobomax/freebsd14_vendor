@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/fdt.mk 329145 2018-02-12 01:08:44Z kevans $
+# $FreeBSD: releng/12.2/stand/fdt.mk 325689 2017-11-10 23:54:24Z imp $
 
 .if ${MK_FDT} == "yes"
 CFLAGS+=	-I${FDTSRC}

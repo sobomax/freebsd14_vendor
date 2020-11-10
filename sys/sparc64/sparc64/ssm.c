@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/ssm.c 227848 2011-11-22 21:55:40Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/ssm.c 326262 2017-11-27 15:10:39Z pfg $");
 
 /*
  * Glue allowing devices beneath the scalable shared memory node to be

@@ -1,6 +1,8 @@
 /*	$NetBSD: ieee8023ad_impl.h,v 1.2 2005/12/10 23:21:39 elad Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c)2005 YAMAMOTO Takashi,
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/ieee8023ad_lacp.h 286700 2015-08-12 20:21:04Z hiren $
+ * $FreeBSD: releng/12.2/sys/net/ieee8023ad_lacp.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*
@@ -284,6 +286,9 @@ struct lacp_softc {
 
 struct mbuf	*lacp_input(struct lagg_port *, struct mbuf *);
 struct lagg_port *lacp_select_tx_port(struct lagg_softc *, struct mbuf *);
+#ifdef RATELIMIT
+struct lagg_port *lacp_select_tx_port_by_hash(struct lagg_softc *, uint32_t);
+#endif
 void		lacp_attach(struct lagg_softc *);
 void		lacp_detach(void *);
 void		lacp_init(struct lagg_softc *);

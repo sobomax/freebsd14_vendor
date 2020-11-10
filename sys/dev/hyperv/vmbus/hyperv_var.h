@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/hyperv_var.h 311373 2017-01-05 06:19:07Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/hyperv_var.h 309705 2016-12-08 05:37:39Z sephe $
  */
 
 #ifndef _HYPERV_VAR_H_

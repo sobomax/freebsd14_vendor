@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Oleksandr Tymoshenko <gonzo@freebsd.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_fb.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_fb.c 356110 2019-12-27 03:00:18Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,7 +43,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_fb.c 331722 201
 #include <vm/pmap.h>
 
 #include <dev/fb/fbreg.h>
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 #include <dev/syscons/syscons.h>
@@ -451,7 +452,7 @@ bcmfb_configure(int flags)
 	 * finally go with defaults if everything else has failed.
 	 */
 	chosen = OF_finddevice("/chosen");
-	if (chosen != 0 &&
+	if (chosen != -1 &&
 	    OF_getprop(chosen, "bootargs", &bootargs, sizeof(bootargs)) > 0) {
 		p = bootargs;
 		while ((v = strsep(&p, " ")) != NULL) {
@@ -471,7 +472,7 @@ bcmfb_configure(int flags)
 	}
 
 	root = OF_finddevice("/");
-	if ((root != 0) && 
+	if ((root != -1) && 
 	    (display = fdt_find_compatible(root, "broadcom,bcm2835-fb", 1))) {
 		if (sc->width == 0) {
 			if ((OF_getencprop(display, "broadcom,width",
@@ -480,7 +481,7 @@ bcmfb_configure(int flags)
 		}
 
 		if (sc->height == 0) {
-			if ((OF_getprop(display, "broadcom,height", 
+			if ((OF_getencprop(display, "broadcom,height", 
 			    &cell, sizeof(cell))) > 0)
 				sc->height = cell;
 		}
@@ -849,22 +850,3 @@ bcmfb_putm(video_adapter_t *adp, int x, int y, uint8_t *pixel_image,
 
 	return (0);
 }
-
-/*
- * Define a stub keyboard driver in case one hasn't been
- * compiled into the kernel
- */
-#include <sys/kbio.h>
-#include <dev/kbd/kbdreg.h>
-
-static int dummy_kbd_configure(int flags);
-
-keyboard_switch_t bcmdummysw;
-
-static int
-dummy_kbd_configure(int flags)
-{
-
-	return (0);
-}
-KEYBOARD_DRIVER(bcmdummy, bcmdummysw, dummy_kbd_configure);

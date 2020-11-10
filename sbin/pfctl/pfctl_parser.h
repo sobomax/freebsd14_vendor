@@ -30,7 +30,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/pfctl/pfctl_parser.h 338390 2018-08-29 20:49:56Z kp $
+ * $FreeBSD: releng/12.2/sbin/pfctl/pfctl_parser.h 344026 2019-02-11 23:13:38Z pkelsey $
  */
 
 #ifndef _PFCTL_PARSER_H_
@@ -134,7 +134,7 @@ struct node_os {
 };
 
 struct node_queue_bw {
-	u_int32_t	bw_absolute;
+	u_int64_t	bw_absolute;
 	u_int16_t	bw_percent;
 };
 
@@ -175,6 +175,24 @@ struct node_queue_opt {
 		struct node_hfsc_opts	hfsc_opts;
 		struct node_fairq_opts	fairq_opts;
 	}			 data;
+};
+
+#define QPRI_BITSET_SIZE	256
+BITSET_DEFINE(qpri_bitset, QPRI_BITSET_SIZE);
+LIST_HEAD(gen_sc, segment);
+
+struct pfctl_altq {
+	struct pf_altq	pa;
+	struct {
+		STAILQ_ENTRY(pfctl_altq)	link;
+		u_int64_t			bwsum;
+		struct qpri_bitset		qpris;
+		int				children;
+		int				root_classes;
+		int				default_classes;
+		struct gen_sc			lssc;
+		struct gen_sc			rtsc;
+	} meta;
 };
 
 #ifdef __FreeBSD__
@@ -313,10 +331,10 @@ void			 set_ipmask(struct node_host *, u_int8_t);
 int			 check_netmask(struct node_host *, sa_family_t);
 int			 unmask(struct pf_addr *, sa_family_t);
 void			 ifa_load(void);
-int			 get_socket_domain(void);
-struct node_host	*ifa_exists(const char *);
-struct node_host	*ifa_grouplookup(const char *ifa_name, int flags);
-struct node_host	*ifa_lookup(const char *, int);
+int			 get_query_socket(void);
+struct node_host	*ifa_exists(char *);
+struct node_host	*ifa_grouplookup(char *ifa_name, int flags);
+struct node_host	*ifa_lookup(char *, int);
 struct node_host	*host(const char *);
 
 int			 append_addr(struct pfr_buffer *, char *, int);

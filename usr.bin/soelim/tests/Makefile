@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/soelim/tests/Makefile 316256 2017-03-30 06:20:24Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/soelim/tests/Makefile 315776 2017-03-23 03:28:24Z ngie $
 
 PACKAGE=	tests
 

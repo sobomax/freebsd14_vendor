@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/dtb/nvidia/Makefile 306460 2016-09-29 22:01:09Z gonzo $
+# $FreeBSD: releng/12.2/sys/modules/dtb/nvidia/Makefile 306460 2016-09-29 22:01:09Z gonzo $
 # All the dts files for Nvidia ARM systems we support.
 DTS=	\
 	tegra124-jetson-tk1-fbsd.dts

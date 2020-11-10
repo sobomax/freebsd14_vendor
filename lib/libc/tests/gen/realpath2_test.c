@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/gen/realpath2_test.c 319418 2017-06-01 13:20:47Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/gen/realpath2_test.c 318450 2017-05-18 13:49:53Z kib $");
 
 #include <sys/param.h>
 #include <errno.h>

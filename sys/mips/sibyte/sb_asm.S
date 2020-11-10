@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/sibyte/sb_asm.S 205675 2010-03-26 07:15:27Z neel $
+ * $FreeBSD: releng/12.2/sys/mips/sibyte/sb_asm.S 205675 2010-03-26 07:15:27Z neel $
  */
 
 #include <machine/asm.h>

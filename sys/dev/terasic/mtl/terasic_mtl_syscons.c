@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Robert N. M. Watson
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/terasic/mtl/terasic_mtl_syscons.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/terasic/mtl/terasic_mtl_syscons.c 356110 2019-12-27 03:00:18Z kevans $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -403,22 +405,6 @@ terasic_mtl_vidsw_putm(video_adapter_t *adp, int x, int y,
 	printf("%s: not yet\n", __func__);
 	return (ENODEV);
 }
-
-/*
- * XXXRW: For historical reasons, syscons can't register video consoles
- * without a keyboard implementation.  Provide a dummy.
- */
-static keyboard_switch_t	terasic_mtl_keyboard_switch;
-
-static int
-terasic_mtl_kbd_configure(int flags)
-{
-
-	return (0);
-}
-
-KEYBOARD_DRIVER(mtl_kbd, terasic_mtl_keyboard_switch,
-    terasic_mtl_kbd_configure);
 
 int
 terasic_mtl_syscons_attach(struct terasic_mtl_softc *sc)

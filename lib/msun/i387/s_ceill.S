@@ -4,7 +4,7 @@
  */
 	
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/i387/s_ceill.S 217108 2011-01-07 16:13:12Z kib $")
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/i387/s_ceill.S 217108 2011-01-07 16:13:12Z kib $")
 
 ENTRY(ceill)
 	pushl	%ebp

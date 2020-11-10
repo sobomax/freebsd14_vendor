@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/include/vmbus_xact.h 311367 2017-01-05 05:46:06Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/include/vmbus_xact.h 309240 2016-11-28 07:27:08Z sephe $
  */
 
 #ifndef _VMBUS_XACT_H_

@@ -29,7 +29,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sbin/fsdb/fsdb.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/sbin/fsdb/fsdb.h 326276 2017-11-27 15:37:16Z pfg $
  */
 
 extern int blread(int fd, char *buf, ufs2_daddr_t blk, long size);

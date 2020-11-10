@@ -1,13 +1,13 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/misc/Makefile 284255 2015-06-11 04:22:17Z sjg $
+# $FreeBSD: releng/12.2/share/misc/Makefile 325742 2017-11-12 09:42:42Z bapt $
 
 .include <src.opts.mk>
 
 .PATH:	${.CURDIR}/../../sys/dev/usb
 
 FILES=	ascii birthtoken bsd-family-tree committers-doc.dot committers-ports.dot \
-	committers-src.dot eqnchar flowers init.ee \
-	iso3166 iso639 latin1 man.template mdoc.template operator pci_vendors \
+	committers-src.dot flowers init.ee \
+	iso3166 iso639 latin1 mdoc.template operator pci_vendors \
 	scsi_modes \
 	organization.dot
 

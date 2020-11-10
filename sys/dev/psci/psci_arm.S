@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/psci/psci_arm.S 321052 2017-07-16 19:16:02Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/psci/psci_arm.S 337752 2018-08-14 13:56:49Z loos $");
 
 .arch_extension sec	/* For smc */
 .arch_extension virt	/* For hvc */
@@ -45,4 +45,4 @@ END(psci_hvc_despatch)
 ENTRY(psci_smc_despatch)
 	smc	#0
 	RET
-END(psci_hvc_despatch)
+END(psci_smc_despatch)

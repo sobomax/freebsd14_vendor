@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2011, Justin Hibbits.
  * Copyright (c) 2002, Miodrag Vallat.
  * Copyright (C) 1999 Tsubai Masanari.  All rights reserved.
@@ -28,7 +30,7 @@
  * OpenBSD: abtn.c,v 1.12 2009/01/10 18:00:59 robert Exp
  * NetBSD: abtn.c,v 1.1 1999/07/12 17:48:26 tsubai Exp
  *
- * $FreeBSD: releng/11.3/sys/dev/adb/adb_buttons.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/adb/adb_buttons.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/param.h>

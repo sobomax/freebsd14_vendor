@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: releng/11.3/stand/i386/cdboot/cdboot.S 329011 2018-02-08 02:50:47Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/cdboot/cdboot.S 310726 2016-12-28 23:02:01Z emaste $
 
 #
 # This program is a freestanding boot program to load an a.out binary

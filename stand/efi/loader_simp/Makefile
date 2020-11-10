@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/efi/loader_simp/Makefile 337806 2018-08-14 18:44:41Z imp $
+# $FreeBSD: releng/12.2/stand/efi/loader_simp/Makefile 337806 2018-08-14 18:44:41Z imp $
 
 LOADER_INTERP=simp
 

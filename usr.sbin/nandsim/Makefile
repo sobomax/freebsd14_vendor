@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/nandsim/Makefile 235537 2012-05-17 10:11:18Z gber $
+# $FreeBSD: releng/12.2/usr.sbin/nandsim/Makefile 235537 2012-05-17 10:11:18Z gber $
 
 PROG=	nandsim
 SRCS=	nandsim.c nandsim_rcfile.c nandsim_cfgparse.c

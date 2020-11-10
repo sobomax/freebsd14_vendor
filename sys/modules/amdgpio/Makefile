@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/amdgpio/Makefile 339523 2018-10-21 04:52:37Z gonzo $
+# $FreeBSD: releng/12.2/sys/modules/amdgpio/Makefile 339523 2018-10-21 04:52:37Z gonzo $
 
 .PATH: ${SRCTOP}/sys/dev/amdgpio
 KMOD=  amdgpio

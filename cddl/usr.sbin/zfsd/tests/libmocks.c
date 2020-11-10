@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers     (Spectra Logic Corporation)
  *
- * $FreeBSD: releng/11.3/cddl/usr.sbin/zfsd/tests/libmocks.c 300906 2016-05-28 17:43:40Z asomers $
+ * $FreeBSD: releng/12.2/cddl/usr.sbin/zfsd/tests/libmocks.c 300906 2016-05-28 17:43:40Z asomers $
  */
 
 #include <stdio.h>

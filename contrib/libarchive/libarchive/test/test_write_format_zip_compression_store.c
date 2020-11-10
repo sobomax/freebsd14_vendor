@@ -28,7 +28,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/libarchive/test/test_write_format_zip_compression_store.c 318482 2017-05-18 19:47:43Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_write_format_zip_compression_store.c 317782 2017-05-04 00:04:17Z mm $");
 
 /* File data */
 static const char file_name[] = "file";

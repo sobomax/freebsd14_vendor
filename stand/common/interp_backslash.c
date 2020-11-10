@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/interp_backslash.c 329183 2018-02-12 20:51:28Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/interp_backslash.c 329019 2018-02-08 17:07:27Z imp $");
 
 #include <stand.h>
 #include <string.h>

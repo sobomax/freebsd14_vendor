@@ -7,7 +7,7 @@
 #
 # Mark Santcroos <marks@ripe.net>
 #
-# $FreeBSD: releng/11.3/usr.sbin/zzz/zzz.sh 118020 2003-07-25 17:11:15Z njl $
+# $FreeBSD: releng/12.2/usr.sbin/zzz/zzz.sh 118020 2003-07-25 17:11:15Z njl $
 
 PATH=/sbin:/usr/sbin:/usr/bin:/bin
 

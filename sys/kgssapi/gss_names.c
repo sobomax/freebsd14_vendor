@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Doug Rabson
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/gss_names.c 184588 2008-11-03 10:38:00Z dfr $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kgssapi/gss_names.c 326279 2017-11-27 15:49:00Z pfg $");
 
 #include <sys/param.h>
 #include <kgssapi/gssapi.h>

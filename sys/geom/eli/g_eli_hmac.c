@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/eli/g_eli_hmac.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/eli/g_eli_hmac.c 326584 2017-12-05 21:37:32Z imp $");
 
 #include <sys/param.h>
 #ifdef _KERNEL

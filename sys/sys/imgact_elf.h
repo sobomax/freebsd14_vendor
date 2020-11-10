@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1995-1996 Søren Schmidt
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/imgact_elf.h 346821 2019-04-28 13:28:05Z dchagin $
+ * $FreeBSD: releng/12.2/sys/sys/imgact_elf.h 351024 2019-08-14 09:56:58Z kib $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -35,7 +37,8 @@
 
 #ifdef _KERNEL
 
-#define	AUXARGS_ENTRY(pos, id, val) {suword(pos++, id); suword(pos++, val);}
+#define	AUXARGS_ENTRY(pos, id, val) \
+    {(pos)->a_type = (id); (pos)->a_un.a_val = (val); (pos)++;}
 
 struct image_params;
 struct thread;
@@ -95,6 +98,7 @@ int	__elfN(remove_brand_entry)(Elf_Brandinfo *entry);
 int	__elfN(freebsd_fixup)(register_t **, struct image_params *);
 int	__elfN(coredump)(struct thread *, struct vnode *, off_t, int);
 size_t	__elfN(populate_note)(int, void *, void *, size_t, void **);
+void	__elfN(stackgap)(struct image_params *, u_long *);
 
 /* Machine specific function to dump per-thread information. */
 void	__elfN(dump_thread)(struct thread *, void *, size_t *);

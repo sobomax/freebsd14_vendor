@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/extattr/Makefile 299085 2016-05-04 20:20:55Z asomers $
+# $FreeBSD: releng/12.2/usr.sbin/extattr/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 PROG=	rmextattr
 MAN=	rmextattr.8
@@ -15,8 +15,7 @@ MLINKS+=	rmextattr.8 lsextattr.8
 
 .include <src.opts.mk>
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

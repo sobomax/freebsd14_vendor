@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/terminal.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/terminal.h 333669 2018-05-16 09:01:02Z dumbbell $
  */
 
 #ifndef _SYS_TERMINAL_H_
@@ -149,6 +151,8 @@ typedef void tc_fill_t(struct terminal *tm, const term_rect_t *r,
     term_char_t c);
 typedef void tc_copy_t(struct terminal *tm, const term_rect_t *r,
     const term_pos_t *p);
+typedef void tc_pre_input_t(struct terminal *tm);
+typedef void tc_post_input_t(struct terminal *tm);
 typedef void tc_param_t(struct terminal *tm, int cmd, unsigned int arg);
 typedef void tc_done_t(struct terminal *tm);
 
@@ -171,6 +175,8 @@ struct terminal_class {
 	tc_putchar_t	*tc_putchar;
 	tc_fill_t	*tc_fill;
 	tc_copy_t	*tc_copy;
+	tc_pre_input_t	*tc_pre_input;
+	tc_post_input_t	*tc_post_input;
 	tc_param_t	*tc_param;
 	tc_done_t	*tc_done;
 

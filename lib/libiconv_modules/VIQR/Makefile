@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libiconv_modules/VIQR/Makefile 219019 2011-02-25 00:04:39Z gabor $
+# $FreeBSD: releng/12.2/lib/libiconv_modules/VIQR/Makefile 219019 2011-02-25 00:04:39Z gabor $
 
 SHLIB=	VIQR
 SRCS+=	citrus_viqr.c

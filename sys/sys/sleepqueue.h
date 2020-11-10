@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/sleepqueue.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/sleepqueue.h 349826 2019-07-07 18:49:39Z mav $
  */
 
 #ifndef _SYS_SLEEPQUEUE_H_
@@ -83,6 +85,7 @@ struct thread;
 #define	SLEEPQ_SX		0x03		/* Used by an sx lock. */
 #define	SLEEPQ_LK		0x04		/* Used by a lockmgr. */
 #define	SLEEPQ_INTERRUPTIBLE	0x100		/* Sleep is interruptible. */
+#define	SLEEPQ_UNFAIR		0x200		/* Unfair wakeup order. */
 
 void	init_sleepqueues(void);
 int	sleepq_abort(struct thread *td, int intrval);

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/stdlib/set_constraint_handler_s.c 322692 2017-08-19 09:38:43Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdlib/set_constraint_handler_s.c 322427 2017-08-12 15:18:17Z kib $");
 
 #include "namespace.h"
 #include <sys/types.h>

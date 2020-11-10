@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 - 2008 Søren Schmidt <sos@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ata/chipsets/ata-siliconimage.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ata/chipsets/ata-siliconimage.c 335894 2018-07-03 15:56:22Z sbruno $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -185,7 +187,7 @@ ata_cmd_ch_attach(device_t dev)
     if (ctlr->chip->cfg2 & SII_INTR)
 	ch->hw.status = ata_cmd_status;
 
-	ch->flags |= ATA_NO_ATAPI_DMA;
+    ch->flags |= ATA_NO_ATAPI_DMA;
 
     return 0;
 }

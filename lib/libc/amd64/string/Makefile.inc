@@ -1,9 +1,7 @@
-# $FreeBSD: releng/11.3/lib/libc/amd64/string/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+# $FreeBSD: releng/12.2/lib/libc/amd64/string/Makefile.inc 340684 2018-11-20 17:10:44Z mjg $
 
 MDSRCS+= \
 	bcmp.S \
-	bcopy.S \
-	bzero.S \
 	memcmp.S \
 	memcpy.S \
 	memmove.S \

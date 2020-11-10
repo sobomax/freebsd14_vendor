@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libkiconv/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libkiconv/Makefile 312500 2017-01-20 04:50:46Z ngie $
 
 SHLIBDIR?=	/lib
 

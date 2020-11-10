@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1994 Herb Peyerl <hpeyerl@novatel.ca>
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/vx/if_vx.c 347962 2019-05-18 20:43:13Z brooks $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/vx/if_vx.c 339735 2018-10-25 17:00:39Z brooks $");
 
 /*
  * Created from if_ep.c driver by Fred Gray (fgray@rice.edu) to support

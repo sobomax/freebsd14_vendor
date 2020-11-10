@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -32,7 +34,7 @@
 static const char sccsid[] = "@(#)getgrent.c	8.2 (Berkeley) 3/21/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/libexec/mknetid/parse_group.c 331722 2018-03-29 02:50:57Z eadler $";
+  "$FreeBSD: releng/12.2/libexec/mknetid/parse_group.c 326025 2017-11-20 19:49:47Z pfg $";
 #endif /* not lint */
 
 /*

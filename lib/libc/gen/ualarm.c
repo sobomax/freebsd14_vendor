@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1985, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,11 +29,9 @@
  * SUCH DAMAGE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)ualarm.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/ualarm.c 331722 2018-03-29 02:50:57Z eadler $");
+__SCCSID("@(#)ualarm.c	8.1 (Berkeley) 6/4/93");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/ualarm.c 357836 2020-02-12 18:40:29Z brooks $");
 
 #include <sys/time.h>
 #include <unistd.h>
@@ -56,6 +56,5 @@ ualarm(useconds_t usecs, useconds_t reload)
 
 	if (setitimer(ITIMER_REAL, &new, &old) == 0)
 		return (old.it_value.tv_sec * USPS + old.it_value.tv_usec);
-	/* else */
-		return (-1);
+	return (-1);
 }

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libi386/bio.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/bio.c 342995 2019-01-13 07:25:55Z tsoome $");
 
 #include <stand.h>
 #include "libi386.h"

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/mips/atheros/pcf2123reg.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/mips/atheros/pcf2123reg.h 326259 2017-11-27 15:07:26Z pfg $ */
 
 #ifndef __PCF2123REG_H__
 #define	__PCF2123REG_H__

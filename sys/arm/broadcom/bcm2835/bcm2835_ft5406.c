@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_ft5406.c 307778 2016-10-22 16:42:49Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_ft5406.c 355665 2019-12-12 19:21:16Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_ft5406.c 307778
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
@@ -173,20 +172,22 @@ out:
 	callout_reset(&sc->sc_callout, sc->sc_tick, ft5406ts_callout, sc);
 }
 
-static void
-ft5406ts_ev_close(struct evdev_dev *evdev, void *data)
+static int
+ft5406ts_ev_close(struct evdev_dev *evdev)
 {
-	struct ft5406ts_softc *sc = (struct ft5406ts_softc *)data;
+	struct ft5406ts_softc *sc = evdev_get_softc(evdev);
 
 	FT5406_LOCK_ASSERT(sc);
 
 	callout_stop(&sc->sc_callout);
+
+	return (0);
 }
 
 static int
-ft5406ts_ev_open(struct evdev_dev *evdev, void *data)
+ft5406ts_ev_open(struct evdev_dev *evdev)
 {
-	struct ft5406ts_softc *sc = (struct ft5406ts_softc *)data;
+	struct ft5406ts_softc *sc = evdev_get_softc(evdev);
 
 	FT5406_LOCK_ASSERT(sc);
 
@@ -226,7 +227,7 @@ ft5406ts_init(void *arg)
 		return;
 	}
 
-	touchbuf = VCBUS_TO_PHYS(msg.body.resp.address);
+	touchbuf = VCBUS_TO_ARMC(msg.body.resp.address);
 	sc->touch_buf = (uint8_t*)pmap_mapdev(touchbuf, FT5406_WINDOW_SIZE);
 
 	/* 60Hz */

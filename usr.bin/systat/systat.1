@@ -9,7 +9,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)systat.1	8.2 (Berkeley) 12/30/93
-.\" $FreeBSD: releng/11.3/usr.bin/systat/systat.1 318716 2017-05-23 07:27:30Z markj $
+.\" $FreeBSD: releng/12.2/usr.bin/systat/systat.1 365364 2020-09-05 17:02:48Z mr $
 .\"
 .Dd December 5, 2016
 .Dt SYSTAT 1
@@ -680,6 +680,7 @@ in Silicon Graphics'
 system.
 .Sh BUGS
 Certain displays presume a minimum of 80 characters per line.
+Ifstat does not detect new interfaces.
 The
 .Ic vmstat
 display looks out of place because it is (it was added in as

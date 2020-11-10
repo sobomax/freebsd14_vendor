@@ -1,5 +1,7 @@
 /* $Id: wj.h,v 1.1 2007/11/01 03:05:51 gmm Exp $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 HighPoint Technologies, Inc.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hptnr/wj.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/hptnr/wj.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <dev/hptnr/hptnr_config.h>

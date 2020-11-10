@@ -1,7 +1,7 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/gperf/Makefile 279520 2015-03-02 11:49:01Z bapt $
+# $FreeBSD: releng/12.2/gnu/usr.bin/gperf/Makefile 315175 2017-03-12 18:59:16Z imp $
 
 .include <bsd.own.mk>
-GPERFDIR=	${.CURDIR}/../../../contrib/gperf
+GPERFDIR=	${SRCTOP}/contrib/gperf
 
 .PATH: ${GPERFDIR}/src ${GPERFDIR}/lib ${GPERFDIR}/doc
 

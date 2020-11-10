@@ -1,6 +1,8 @@
 /*	$NetBSD: sysarch.h,v 1.5 2003/09/11 09:40:12 kleink Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996-1997 Mark Brinicombe.
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/arm/include/sysarch.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/arm/include/sysarch.h 350873 2019-08-11 22:11:59Z ian $ */
 
 #ifndef _ARM_SYSARCH_H_
 #define _ARM_SYSARCH_H_
@@ -63,12 +65,10 @@
 #ifndef LOCORE
 #ifndef __ASSEMBLER__
 
-#include <sys/cdefs.h>
-
 /*
- * Pickup definition of uintptr_t
+ * Pickup definition of various __types.
  */
-#include <sys/stdint.h>
+#include <sys/_types.h>
 
 /*
  * Architecture specific syscalls (arm)
@@ -81,19 +81,19 @@
 #define ARM_GET_VFPSTATE	4
 
 struct arm_sync_icache_args {
-	uintptr_t	addr;		/* Virtual start address */
-	size_t		len;		/* Region size */
+	__uintptr_t	addr;		/* Virtual start address */
+	__size_t	len;		/* Region size */
 };
 
 struct arm_get_vfpstate_args {
-	size_t		mc_vfp_size;
+	__size_t	mc_vfp_size;
 	void 		*mc_vfp;
 };
 
 #ifndef _KERNEL
 __BEGIN_DECLS
-int	arm_sync_icache (u_int addr, int len);
-int	arm_drain_writebuf (void);
+int	arm_sync_icache(unsigned int, int);
+int	arm_drain_writebuf(void);
 int	sysarch(int, void *);
 __END_DECLS
 #endif

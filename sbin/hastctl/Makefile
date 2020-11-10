@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/hastctl/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/hastctl/Makefile 314656 2017-03-04 11:33:01Z ngie $
 
 .include <src.opts.mk>
 
@@ -33,11 +33,7 @@ CFLAGS+=-DINET6
 CFLAGS+=-DYY_NO_UNPUT
 CFLAGS+=-DYY_NO_INPUT
 
-LIBADD=	util
-.if ${MK_OPENSSL} != "no"
-LIBADD+=	crypto
-CFLAGS+=-DHAVE_CRYPTO
-.endif
+LIBADD=	md util
 
 YFLAGS+=-v
 

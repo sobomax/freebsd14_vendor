@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001, 2002 Mike Barcroft <mike@FreeBSD.org>
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -27,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/_stdint.h 237517 2012-06-24 04:15:58Z andrew $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/_stdint.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE__STDINT_H_

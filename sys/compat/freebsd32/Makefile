@@ -1,16 +1,7 @@
 # Makefile for syscall tables
 #
-# $FreeBSD: releng/11.3/sys/compat/freebsd32/Makefile 315062 2017-03-11 08:39:24Z dchagin $
+# $FreeBSD: releng/12.2/sys/compat/freebsd32/Makefile 357108 2020-01-25 05:47:56Z kevans $
 
-all:
-	@echo "make sysent only"
+GENERATED_PREFIX=	freebsd32_
 
-sysent:  freebsd32_sysent.c freebsd32_syscall.h freebsd32_proto.h freebsd32_systrace_args.c
-
-freebsd32_sysent.c freebsd32_syscalls.c freebsd32_syscall.h freebsd32_proto.h freebsd32_systrace_args.c : \
-	    ../../kern/makesyscalls.sh syscalls.master syscalls.conf capabilities.conf
-	sh ../../kern/makesyscalls.sh syscalls.master syscalls.conf
-
-clean:
-	rm -f freebsd32_sysent.c freebsd32_syscalls.c freebsd32_syscall.h freebsd32_proto.h
-	rm -f freebsd32_systrace_args.c 
+.include "../../conf/sysent.mk"

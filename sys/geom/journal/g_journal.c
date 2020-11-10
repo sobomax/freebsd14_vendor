@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/journal/g_journal.c 328947 2018-02-06 19:17:05Z mckusick $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/journal/g_journal.c 359765 2020-04-10 01:23:06Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2621,15 +2623,15 @@ g_journal_dumpconf(struct sbuf *sb, const char *indent, struct g_geom *gp,
 
 		sbuf_printf(sb, "%s<Role>", indent);
 		if (cp == sc->sc_dconsumer) {
-			sbuf_printf(sb, "Data");
+			sbuf_cat(sb, "Data");
 			first = 0;
 		}
 		if (cp == sc->sc_jconsumer) {
 			if (!first)
-				sbuf_printf(sb, ",");
-			sbuf_printf(sb, "Journal");
+				sbuf_cat(sb, ",");
+			sbuf_cat(sb, "Journal");
 		}
-		sbuf_printf(sb, "</Role>\n");
+		sbuf_cat(sb, "</Role>\n");
 		if (cp == sc->sc_jconsumer) {
 			sbuf_printf(sb, "<Jstart>%jd</Jstart>\n",
 			    (intmax_t)sc->sc_jstart);
@@ -2747,7 +2749,8 @@ g_journal_fini(struct g_class *mp)
 	}
 	if (g_journal_event_lowmem != NULL)
 		EVENTHANDLER_DEREGISTER(vm_lowmem, g_journal_event_lowmem);
-	g_journal_stop_switcher();
+	if (g_journal_switcher_proc != NULL)
+		g_journal_stop_switcher();
 }
 
 DECLARE_GEOM_CLASS(g_journal_class, g_journal);

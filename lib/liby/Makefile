@@ -1,10 +1,8 @@
-# $FreeBSD: releng/11.3/lib/liby/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/lib/liby/Makefile 335270 2018-06-16 23:50:34Z eadler $
 
 PACKAGE=lib${LIB}
 LIB=	y
 SRCS=	main.c yyerror.c
 NO_PIC=
-
-WARNS?=	1
 
 .include <bsd.lib.mk>

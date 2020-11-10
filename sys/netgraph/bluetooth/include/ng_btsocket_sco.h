@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2002 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_sco.h,v 1.3 2005/10/31 18:08:52 max Exp $
- * $FreeBSD: releng/11.3/sys/netgraph/bluetooth/include/ng_btsocket_sco.h 181033 2008-07-30 22:41:23Z emax $
+ * $FreeBSD: releng/12.2/sys/netgraph/bluetooth/include/ng_btsocket_sco.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_SCO_H_

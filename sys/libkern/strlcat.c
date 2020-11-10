@@ -1,6 +1,8 @@
 /*	$OpenBSD: strlcat.c,v 1.2 1999/06/17 16:28:58 millert Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
 static char *rcsid = "$OpenBSD: strlcat.c,v 1.2 1999/06/17 16:28:58 millert Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/strlcat.c 141209 2005-02-03 15:51:39Z ru $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/strlcat.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/types.h>
 #include <sys/libkern.h>
@@ -44,10 +46,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/libkern/strlcat.c 141209 2005-02-03 15:51:39
  * If retval >= siz, truncation occurred.
  */
 size_t
-strlcat(dst, src, siz)
-	char *dst;
-	const char *src;
-	size_t siz;
+strlcat(char *dst, const char *src, size_t siz)
 {
 	char *d = dst;
 	const char *s = src;

@@ -1,5 +1,5 @@
 #! /bin/sh
-# $FreeBSD: releng/11.3/share/examples/tests/tests/plain/cp_test.sh 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/share/examples/tests/tests/plain/cp_test.sh 299094 2016-05-04 23:20:53Z ngie $
 #
 # Copyright 2013 Google Inc.
 # All rights reserved.

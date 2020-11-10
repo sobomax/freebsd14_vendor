@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Ruslan Bukin <br@bsdpad.com>
+ * Copyright (c) 2015-2016 Ruslan Bukin <br@bsdpad.com>
  * All rights reserved.
  *
  * Portions of this software were developed by SRI International and the
@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/riscv/include/reg.h 292407 2015-12-17 18:44:30Z br $
+ * $FreeBSD: releng/12.2/sys/riscv/include/reg.h 308731 2016-11-16 15:21:32Z br $
  */
 
 #ifndef	_MACHINE_REG_H_
@@ -50,7 +50,8 @@ struct reg {
 };
 
 struct fpreg {
-	int dummy;
+	uint64_t	fp_x[32][2];	/* Floating point registers */
+	uint64_t	fp_fcsr;	/* Floating point control reg */
 };
 
 struct dbreg {

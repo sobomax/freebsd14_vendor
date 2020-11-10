@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_rules.c 348822 2019-06-08 22:29:51Z cy $	*/
+/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_rules.c 348600 2019-06-04 03:04:30Z cy $	*/
 
 /*
 * Copyright (C) 2012 by Darren Reed.

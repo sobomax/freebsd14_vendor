@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2006 Juniper Networks.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/quicc/quicc_bfe_fdt.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/quicc/quicc_bfe_fdt.c 356020 2019-12-22 19:06:45Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,7 +40,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/quicc/quicc_bfe_fdt.c 331722 2018-03-29 
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/rman.h>
-#include <sys/tty.h>
 #include <machine/bus.h>
 
 #include <dev/ofw/ofw_bus.h>

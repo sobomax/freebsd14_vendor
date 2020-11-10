@@ -1,3 +1,5 @@
-# $FreeBSD: releng/11.3/tests/sys/Makefile.inc 313236 2017-02-04 17:02:54Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/Makefile.inc 322515 2017-08-14 19:21:37Z ngie $
 
 WARNS?=		6
+
+.include "${SRCTOP}/tests/Makefile.inc0"

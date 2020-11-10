@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/11.3/lib/libc/nls/mn_MN.UTF-8.msg 192653 2009-05-23 17:13:35Z des $
+$ $FreeBSD: releng/12.2/lib/libc/nls/mn_MN.UTF-8.msg 192653 2009-05-23 17:13:35Z des $
 $
 $ Message catalog for mn_MN.UTF-8 locale
 $

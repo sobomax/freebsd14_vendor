@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/Makefile.arm64 290556 2015-11-08 20:56:04Z emaste $
+# $FreeBSD: releng/12.2/usr.sbin/Makefile.arm64 290556 2015-11-08 20:56:04Z emaste $
 
 .if ${MK_ACPI} != "no"
 SUBDIR+=	acpi

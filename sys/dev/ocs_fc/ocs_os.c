@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ocs_fc/ocs_os.c 333991 2018-05-21 18:59:34Z ken $
+ * $FreeBSD: releng/12.2/sys/dev/ocs_fc/ocs_os.c 333492 2018-05-11 14:50:26Z ken $
  */
 
 /**

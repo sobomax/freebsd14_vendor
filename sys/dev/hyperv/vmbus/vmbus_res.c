@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/vmbus_res.c 318392 2017-05-17 01:48:44Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/vmbus_res.c 318136 2017-05-10 05:28:14Z sephe $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

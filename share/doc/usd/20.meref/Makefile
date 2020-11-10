@@ -1,10 +1,10 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: releng/11.3/share/doc/usd/20.meref/Makefile 106143 2002-10-29 14:56:09Z ru $
+# $FreeBSD: releng/12.2/share/doc/usd/20.meref/Makefile 314652 2017-03-04 11:26:40Z ngie $
 
 VOLUME=		usd/20.meref
 SRCS=		meref.me-sed
 MACROS=		-me
-GROFFDIR=	${.CURDIR}/../../../../contrib/groff
+GROFFDIR=	${SRCTOP}/contrib/groff
 SRCDIR=		${GROFFDIR}/doc
 
 version=`cat ${GROFFDIR}/VERSION`

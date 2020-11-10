@@ -1,5 +1,7 @@
-/*	$FreeBSD: releng/11.3/sys/netpfil/pf/pf_mtag.h 284777 2015-06-24 19:16:41Z eri $	*/
-/*
+/*	$FreeBSD: releng/12.2/sys/netpfil/pf/pf_mtag.h 326272 2017-11-27 15:23:17Z pfg $	*/
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * All rights reserved.
  *

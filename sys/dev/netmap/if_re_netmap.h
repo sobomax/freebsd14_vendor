@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2011-2014 Luigi Rizzo. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: releng/11.3/sys/dev/netmap/if_re_netmap.h 341477 2018-12-04 17:40:56Z vmaffione $
+ * $FreeBSD: releng/12.2/sys/dev/netmap/if_re_netmap.h 332423 2018-04-12 07:20:50Z vmaffione $
  *
  * netmap support for: re
  *

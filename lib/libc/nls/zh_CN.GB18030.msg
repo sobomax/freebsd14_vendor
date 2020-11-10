@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/11.3/lib/libc/nls/zh_CN.GB18030.msg 244757 2012-12-28 01:23:12Z delphij $
+$ $FreeBSD: releng/12.2/lib/libc/nls/zh_CN.GB18030.msg 244757 2012-12-28 01:23:12Z delphij $
 $
 $ Message catalog for zh_CN.GB18030 locale
 $

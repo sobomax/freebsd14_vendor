@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/sockets/unix_gc/Makefile 294128 2016-01-16 02:19:56Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/sockets/unix_gc/Makefile 294128 2016-01-16 02:19:56Z ngie $
 
 PROG=	unix_gc
 MAN=

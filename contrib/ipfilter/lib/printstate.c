@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/lib/printstate.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/lib/printstate.c 320455 2017-06-28 19:08:07Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -11,10 +11,7 @@
 
 
 ipstate_t *
-printstate(sp, opts, now)
-	ipstate_t *sp;
-	int opts;
-	u_long now;
+printstate(ipstate_t *sp, int opts, u_long now)
 {
 	struct protoent *pr;
 	synclist_t ipsync;
@@ -210,7 +207,7 @@ printstate(sp, opts, now)
 		if (kmemcpy((char *)&ipsync, (u_long)sp->is_sync,
 			    sizeof(ipsync))) {
 			PRINTF("status could not be retrieved\n");
-			return NULL;
+			return (NULL);
 		}
 
 		PRINTF("idx %d num %d v %d pr %d rev %d\n",
@@ -220,5 +217,5 @@ printstate(sp, opts, now)
 		PRINTF("not synchronized\n");
 	}
 
-	return sp->is_next;
+	return (sp->is_next);
 }

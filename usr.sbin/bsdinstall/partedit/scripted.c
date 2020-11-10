@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsdinstall/partedit/scripted.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bsdinstall/partedit/scripted.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -87,7 +87,7 @@ part_config(char *disk, const char *scheme, char *config)
 	LIST_FOREACH(classp, &mesh.lg_class, lg_class)
 		if (strcmp(classp->lg_name, "PART") == 0)
 			break;
-        if (classp != NULL) {
+	if (classp != NULL) {
 		LIST_FOREACH(gpart, &classp->lg_geom, lg_geom)
 		if (strcmp(gpart->lg_name, disk) == 0)
 			break;
@@ -96,7 +96,7 @@ part_config(char *disk, const char *scheme, char *config)
 		gpart_destroy(gpart);
 	gpart_partition(disk, scheme);
 
-	if (strcmp(scheme, "PC98") == 0 || strcmp(scheme, "MBR") == 0) {
+	if (strcmp(scheme, "MBR") == 0) {
 		struct gmesh submesh;
 		geom_gettree(&submesh);
 		gpart_create(provider_for_name(&submesh, disk),

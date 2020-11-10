@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2012 Semihalf.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/fs/nandfs/nandfs_cleaner.c 236188 2012-05-28 16:33:58Z marcel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/fs/nandfs/nandfs_cleaner.c 326268 2017-11-27 15:15:37Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

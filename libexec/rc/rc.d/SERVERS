@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# $FreeBSD: releng/12.2/libexec/rc/rc.d/SERVERS 364881 2020-08-27 19:37:28Z trasz $
+#
+
+# PROVIDE: SERVERS
+# REQUIRE: mountcritremote sysvipc linux ldconfig savecore watchdogd
+
+#	This is a dummy dependency, for early-start servers relying on
+#	some basic configuration.

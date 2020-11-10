@@ -1,17 +1,23 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/lld/Makefile 346296 2019-04-16 20:05:24Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/lld/Makefile 360545 2020-05-01 20:20:23Z dim $
 
 .include <src.opts.mk>
 
-LLVM_SRCS=	${SRCTOP}/contrib/llvm
-LLD_SRCS=	${LLVM_SRCS}/tools/lld
+LLVM_BASE=	${SRCTOP}/contrib/llvm-project
+LLVM_SRCS=	${LLVM_BASE}/llvm
+LLD_SRCS=	${LLVM_BASE}/lld
 
 PACKAGE=	lld
 PROG_CXX=	ld.lld
 # Man page directory
 .PATH:		${LLD_SRCS}/docs
-.if ${MK_LLD_IS_LD} != "no"
+.if (!defined(TOOLS_PREFIX) && ${MK_LLD_IS_LD} != "no") || \
+    (defined(TOOLS_PREFIX) && ${MK_LLD_BOOTSTRAP} != "no")
 SYMLINKS=	${PROG_CXX} ${BINDIR}/ld
 MLINKS=		ld.lld.1 ld.1
+.endif
+
+.if ${MK_SHARED_TOOLCHAIN} == "no"
+NO_SHARED?= yes
 .endif
 
 CFLAGS+=	-I${LLD_SRCS}/ELF
@@ -19,9 +25,11 @@ CFLAGS+=	-I${LLD_SRCS}/include
 CFLAGS+=	-I${.OBJDIR}
 CFLAGS+=	-I${OBJTOP}/lib/clang/libllvm
 
-SRCDIR=		tools/lld
+SRCDIR=		lld
 SRCS+=		Common/Args.cpp
+SRCS+=		Common/DWARF.cpp
 SRCS+=		Common/ErrorHandler.cpp
+SRCS+=		Common/Filesystem.cpp
 SRCS+=		Common/Memory.cpp
 SRCS+=		Common/Reproduce.cpp
 SRCS+=		Common/Strings.cpp
@@ -29,6 +37,7 @@ SRCS+=		Common/TargetOptionsCommandFlags.cpp
 SRCS+=		Common/Threads.cpp
 SRCS+=		Common/Version.cpp
 SRCS+=		ELF/AArch64ErrataFix.cpp
+SRCS+=		ELF/ARMErrataFix.cpp
 SRCS+=		ELF/Arch/AArch64.cpp
 SRCS+=		ELF/Arch/AMDGPU.cpp
 SRCS+=		ELF/Arch/ARM.cpp
@@ -48,7 +57,6 @@ SRCS+=		ELF/DWARF.cpp
 SRCS+=		ELF/Driver.cpp
 SRCS+=		ELF/DriverUtils.cpp
 SRCS+=		ELF/EhFrame.cpp
-SRCS+=		ELF/Filesystem.cpp
 SRCS+=		ELF/ICF.cpp
 SRCS+=		ELF/InputFiles.cpp
 SRCS+=		ELF/InputSection.cpp
@@ -95,6 +103,7 @@ TGHDRS+=	${INCFILE}
 DPSRCS+=	${TGHDRS}
 CLEANFILES+=	${TGHDRS} ${TGHDRS:C/$/.d/}
 
+LIBADD+=	execinfo
 LIBADD+=	ncursesw
 LIBADD+=	pthread
 LIBADD+=	z

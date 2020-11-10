@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/ifunc.h 339217 2018-10-07 00:40:56Z kib $
+ * $FreeBSD: releng/12.2/sys/x86/include/ifunc.h 339025 2018-09-30 16:57:30Z kib $
  */
 
 #ifndef __X86_IFUNC_H

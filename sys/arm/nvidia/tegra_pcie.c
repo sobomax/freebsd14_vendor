@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_pcie.c 332025 2018-04-04 13:23:06Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra_pcie.c 362404 2020-06-19 18:27:22Z manu $");
 
 /*
  * Nvidia Integrated PCI/PCI-Express controller driver.
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_pcie.c 332025 2018-04-04 13
 #include <dev/extres/hwreset/hwreset.h>
 #include <dev/extres/phy/phy.h>
 #include <dev/extres/regulator/regulator.h>
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 #include <dev/ofw/ofw_pci.h>
@@ -1396,8 +1395,8 @@ tegra_pcib_attach_msi(device_t dev)
 
 	sc = device_get_softc(dev);
 
-	sc->msi_page = kmem_alloc_contig(kernel_arena, PAGE_SIZE, M_WAITOK,
-	    0, BUS_SPACE_MAXADDR, PAGE_SIZE, 0, VM_MEMATTR_DEFAULT);
+	sc->msi_page = kmem_alloc_contig(PAGE_SIZE, M_WAITOK, 0,
+	    BUS_SPACE_MAXADDR, PAGE_SIZE, 0, VM_MEMATTR_DEFAULT);
 
 	/* MSI BAR */
 	tegra_pcib_set_bar(sc, 9, vtophys(sc->msi_page), vtophys(sc->msi_page),
@@ -1602,6 +1601,7 @@ static device_method_t tegra_pcib_methods[] = {
 	DEVMETHOD(pcib_alloc_msi,		tegra_pcib_alloc_msi),
 	DEVMETHOD(pcib_release_msi,		tegra_pcib_release_msi),
 	DEVMETHOD(pcib_map_msi,			tegra_pcib_map_msi),
+	DEVMETHOD(pcib_request_feature,		pcib_request_feature_allow),
 
 #ifdef TEGRA_PCIB_MSI_ENABLE
 	/* MSI/MSI-X */
@@ -1632,5 +1632,5 @@ static device_method_t tegra_pcib_methods[] = {
 static devclass_t pcib_devclass;
 DEFINE_CLASS_1(pcib, tegra_pcib_driver, tegra_pcib_methods,
     sizeof(struct tegra_pcib_softc), ofw_pci_driver);
-DRIVER_MODULE(pcib, simplebus, tegra_pcib_driver, pcib_devclass,
+DRIVER_MODULE(tegra_pcib, simplebus, tegra_pcib_driver, pcib_devclass,
     NULL, NULL);

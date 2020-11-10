@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/skel/dot.login 325815 2017-11-14 17:05:34Z trasz $
+# $FreeBSD: releng/12.2/share/skel/dot.login 320672 2017-07-05 13:08:07Z trasz $
 #
 # .login - csh login script, read by login shell, after `.cshrc' at login.
 #

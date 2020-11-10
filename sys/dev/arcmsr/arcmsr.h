@@ -8,6 +8,8 @@
 **                SATA/SAS RAID HOST Adapter
 ********************************************************************************
 ********************************************************************************
+** SPDX-License-Identifier: BSD-3-Clause
+**
 ** Copyright (C) 2002 - 2012, Areca Technology Corporation All rights reserved.
 **
 ** Redistribution and use in source and binary forms,with or without
@@ -32,7 +34,7 @@
 **(INCLUDING NEGLIGENCE OR OTHERWISE)ARISING IN ANY WAY OUT OF THE USE OF
 ** THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **************************************************************************
-* $FreeBSD: releng/11.3/sys/dev/arcmsr/arcmsr.h 331722 2018-03-29 02:50:57Z eadler $
+* $FreeBSD: releng/12.2/sys/dev/arcmsr/arcmsr.h 326255 2017-11-27 14:52:40Z pfg $
 */
 #define ARCMSR_SCSI_INITIATOR_ID	255
 #define ARCMSR_DEV_SECTOR_SIZE		512

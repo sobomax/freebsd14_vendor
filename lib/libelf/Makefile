@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libelf/Makefile 340320 2018-11-10 13:16:54Z emaste $
+# $FreeBSD: releng/12.2/lib/libelf/Makefile 361301 2020-05-20 21:41:36Z emaste $
 
 PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
@@ -60,6 +60,7 @@ SRCS=	elf.c							\
 	libelf_checksum.c					\
 	libelf_data.c						\
 	libelf_ehdr.c						\
+	libelf_elfmachine.c					\
 	libelf_extended.c					\
 	libelf_memory.c						\
 	libelf_open.c						\
@@ -77,6 +78,13 @@ INCS=		libelf.h gelf.h
 # part of the tree, e.g. a machine dependent header.
 #
 SRCS+=	sys/elf32.h sys/elf64.h sys/elf_common.h
+
+# Allow bootstrapping elftoolchain on Linux:
+.if defined(BOOTSTRAPPING) && ${.MAKE.OS} == "Linux"
+native-elf-format.h:
+	${ELFTCDIR}/common/native-elf-format > ${.TARGET} || rm ${.TARGET}
+SRCS+=	native-elf-format.h
+.endif
 
 GENSRCS=	libelf_fsize.c libelf_msize.c libelf_convert.c
 CLEANFILES=	${GENSRCS}

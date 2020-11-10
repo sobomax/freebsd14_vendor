@@ -1,6 +1,6 @@
 # ex:ts=8
 #
-# $FreeBSD: releng/11.3/usr.sbin/amd/include/Makefile 295663 2016-02-16 16:07:12Z bdrewery $
+# $FreeBSD: releng/12.2/usr.sbin/amd/include/Makefile 305787 2016-09-14 01:47:01Z cy $
 #
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998.
@@ -17,7 +17,7 @@ CLEANFILES=	${SRCS}
 
 all depend: ${SRCS}
 
-config_local.h: newvers.sh ${.CURDIR}/../../../sys/conf/newvers.sh
+config_local.h: newvers.sh ${SRCTOP}/sys/conf/newvers.sh
 	@rm -f ${.TARGET}
 	sh ${.ALLSRC} > ${.TARGET}
 

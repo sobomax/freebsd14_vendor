@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Pyun YongHyeon.
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/isa/isa_dma.c 141391 2005-02-06 13:46:39Z phk $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/isa/isa_dma.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

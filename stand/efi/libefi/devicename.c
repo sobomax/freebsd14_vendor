@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/devicename.c 332154 2018-04-06 21:37:25Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/devicename.c 353979 2019-10-24 02:43:38Z kevans $");
 
 #include <stand.h>
 #include <string.h>
@@ -34,12 +34,10 @@ __FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/devicename.c 332154 2018-04-06 
 #include <sys/param.h>
 #include <bootstrap.h>
 #include <disk.h>
-#ifdef EFI_ZFS_BOOT
-#include <libzfs.h>
-#endif
 
 #include <efi.h>
 #include <efilib.h>
+#include <efizfs.h>
 
 static int efi_parsedev(struct devdesc **, const char *, const char **);
 

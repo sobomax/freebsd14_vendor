@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/libsa/nandfs.c 329132 2018-02-11 19:51:29Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/libsa/nandfs.c 331095 2018-03-17 12:59:55Z emaste $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -85,7 +85,7 @@ struct nandfs {
 	struct nandfs_mdt		nf_datfile_mdt;
 	struct nandfs_mdt		nf_ifile_mdt;
 
-	int nf_nindir[NIADDR];
+	int nf_nindir[NANDFS_NIADDR];
 };
 
 static int nandfs_open(const char *, struct open_file *);
@@ -313,7 +313,7 @@ nandfs_mount(struct nandfs *fs, struct open_file *f)
 	nandfs_daddr_t mult;
 
 	mult = 1;
-	for (level = 0; level < NIADDR; level++) {
+	for (level = 0; level < NANDFS_NIADDR; level++) {
 		mult *= NINDIR(fs);
 		fs->nf_nindir[level] = mult;
 	}
@@ -392,7 +392,7 @@ nandfs_open(const char *path, struct open_file *f)
 	nandfs_daddr_t mult;
 
 	mult = 1;
-	for (level = 0; level < NIADDR; level++) {
+	for (level = 0; level < NANDFS_NIADDR; level++) {
 		mult *= NINDIR(fs);
 		fs->nf_nindir[level] = mult;
 	}
@@ -887,12 +887,12 @@ nandfs_bmap_lookup(struct nandfs *fs, struct nandfs_node *node,
 
 	ino = node->inode;
 
-	if (lblknr < NDADDR) {
+	if (lblknr < NANDFS_NDADDR) {
 		*vblknr = ino->i_db[lblknr];
 		return (0);
 	}
 
-	lblknr -= NDADDR;
+	lblknr -= NANDFS_NDADDR;
 
 	/*
 	 * nindir[0] = NINDIR
@@ -900,14 +900,14 @@ nandfs_bmap_lookup(struct nandfs *fs, struct nandfs_node *node,
 	 * nindir[2] = NINDIR**3
 	 *	etc
 	 */
-	for (level = 0; level < NIADDR; level++) {
+	for (level = 0; level < NANDFS_NIADDR; level++) {
 		NANDFS_DEBUG("lblknr=%jx fs->nf_nindir[%d]=%d\n", lblknr, level, fs->nf_nindir[level]);
 		if (lblknr < fs->nf_nindir[level])
 			break;
 		lblknr -= fs->nf_nindir[level];
 	}
 
-	if (level == NIADDR) {
+	if (level == NANDFS_NIADDR) {
 		/* Block number too high */
 		NANDFS_DEBUG("lblknr %jx too high\n", lblknr);
 		return (EFBIG);

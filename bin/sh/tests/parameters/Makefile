@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/parameters/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/bin/sh/tests/parameters/Makefile 306843 2016-10-08 13:40:12Z jilles $
 
 PACKAGE=	tests
 
@@ -9,6 +9,7 @@ ATF_TESTS_SH=	functional_test
 
 ${PACKAGE}FILES+=	env1.0
 ${PACKAGE}FILES+=	exitstatus1.0
+${PACKAGE}FILES+=	ifs1.0
 ${PACKAGE}FILES+=	mail1.0
 ${PACKAGE}FILES+=	mail2.0
 ${PACKAGE}FILES+=	optind1.0

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/ww_mutex.h 328653 2018-02-01 13:01:44Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/ww_mutex.h 348245 2019-05-24 17:14:07Z johalun $
  */
 #ifndef	_LINUX_WW_MUTEX_H_
 #define	_LINUX_WW_MUTEX_H_
@@ -45,6 +45,7 @@ struct ww_acquire_ctx {
 struct ww_mutex {
 	struct mutex base;
 	struct cv condvar;
+	struct ww_acquire_ctx *ctx;
 };
 
 #define	DEFINE_WW_CLASS(name)					\

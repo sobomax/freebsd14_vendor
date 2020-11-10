@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libc/iconv/citrus_stdenc.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libc/iconv/citrus_stdenc.c 326193 2017-11-25 17:12:48Z pfg $ */
 /*	$NetBSD: citrus_stdenc.c,v 1.4 2011/11/19 18:39:58 tnozaki Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c)2003 Citrus Project,
  * All rights reserved.
  *

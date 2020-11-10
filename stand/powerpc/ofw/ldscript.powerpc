@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/powerpc/ofw/ldscript.powerpc 329183 2018-02-12 20:51:28Z kevans $ */
+/* $FreeBSD: releng/12.2/stand/powerpc/ofw/ldscript.powerpc 328835 2018-02-03 23:49:21Z nwhitehorn $ */
 
 OUTPUT_FORMAT("elf32-powerpc-freebsd", "elf32-powerpc-freebsd",
 	      "elf32-powerpc-freebsd")

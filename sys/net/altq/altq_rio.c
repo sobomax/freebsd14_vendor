@@ -56,7 +56,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_rio.c,v 1.17 2003/07/10 12:07:49 kjc Exp $
- * $FreeBSD: releng/11.3/sys/net/altq/altq_rio.c 331643 2018-03-27 18:52:27Z dim $
+ * $FreeBSD: releng/12.2/sys/net/altq/altq_rio.c 318389 2017-05-17 00:34:34Z emaste $
  */
 
 #include "opt_altq.h"

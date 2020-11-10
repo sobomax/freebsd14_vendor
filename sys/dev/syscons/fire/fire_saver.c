@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Brad Forschinger
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/syscons/fire/fire_saver.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/syscons/fire/fire_saver.c 328218 2018-01-21 15:42:36Z pfg $
  */
 
 /*
@@ -143,10 +145,6 @@ fire_init(video_adapter_t *adp)
 
 	if (!vidd_get_info(adp, M_VGA_CG320, &info)) {
 		scrmode = M_VGA_CG320;
-	} else if (!vidd_get_info(adp, M_PC98_PEGC640x480, &info)) {
-		scrmode = M_PC98_PEGC640x480;
-	} else if (!vidd_get_info(adp, M_PC98_PEGC640x400, &info)) {
-		scrmode = M_PC98_PEGC640x400;
 	} else {
 		log(LOG_NOTICE,
 		    "%s: the console does not support M_VGA_CG320\n",

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 Doug Rabson
  * All rights reserved.
  *
@@ -24,10 +26,8 @@
  * SUCH DAMAGE.
  */
 
-#include "opt_compat.h"
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_module.c 289111 2015-10-10 09:21:55Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_module.c 333806 2018-05-18 17:58:09Z emaste $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -89,7 +89,7 @@ module_init(void *arg)
 	    SHUTDOWN_PRI_DEFAULT);
 }
 
-SYSINIT(module, SI_SUB_KLD, SI_ORDER_FIRST, module_init, 0);
+SYSINIT(module, SI_SUB_KLD, SI_ORDER_FIRST, module_init, NULL);
 
 static void
 module_shutdown(void *arg1, int arg2)

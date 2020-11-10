@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Silicon Graphics International Corp.
  * All rights reserved.
  *
@@ -36,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/ctl/ctl_util.c 312846 2017-01-26 21:08:27Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/ctl/ctl_util.c 361731 2020-06-02 20:38:18Z mav $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -859,7 +861,7 @@ ctl_data_print(union ctl_io *io)
 		return;
 	if (io->io_hdr.flags & CTL_FLAG_BUS_ADDR)
 		return;
-	if (io->scsiio.ext_sg_entries > 0)	/* XXX: Implement */
+	if (io->scsiio.kern_sg_entries > 0)	/* XXX: Implement */
 		return;
 	ctl_scsi_path_string(io, path_str, sizeof(path_str));
 	len = min(io->scsiio.kern_data_len, 4096);

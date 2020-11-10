@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997,1998 Maxim Bolotin and Oleg Sharoiko.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 /*
- * $FreeBSD: releng/11.3/sys/dev/cs/if_csreg.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/cs/if_csreg.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/rman.h>

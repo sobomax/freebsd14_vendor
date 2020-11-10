@@ -1,6 +1,8 @@
 /*	$NetBSD: regdef.h,v 1.12 2005/12/11 12:18:09 christos Exp $	*/
 
 /*
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -33,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regdef.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/11.3/sys/mips/include/regdef.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/include/regdef.h 326023 2017-11-20 19:43:44Z pfg $
  */
 
 #ifndef _MIPS_REGDEF_H

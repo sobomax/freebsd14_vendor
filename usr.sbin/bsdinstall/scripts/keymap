@@ -25,10 +25,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/scripts/keymap 287689 2015-09-11 21:01:26Z dteske $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/scripts/keymap 337628 2018-08-11 14:45:33Z kevlo $
 #
 ############################################################ INCLUDES
- 
+
 BSDCFG_SHARE="/usr/share/bsdconfig"
 . $BSDCFG_SHARE/common.subr || exit 1
 f_dprintf "%s: loading includes..." "$0"
@@ -42,11 +42,6 @@ f_include $BSDCFG_SHARE/sysrc.subr
 # Default file to store keymap selection in
 #
 : ${KEYMAPFILE:=$BSDINSTALL_TMPETC/rc.conf.keymap}
-
-#
-# Default path to keymap INDEX containing descriptions
-#
-: ${MAPDESCFILE:=/usr/share/syscons/keymaps/INDEX.keymaps}
 
 ############################################################ GLOBALS
 

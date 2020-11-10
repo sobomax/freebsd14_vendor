@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/tools/ipmon.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ipmon.c 349716 2019-07-04 03:08:14Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -1438,7 +1438,10 @@ printipflog:
 static void usage(prog)
 	char *prog;
 {
-	fprintf(stderr, "%s: [-NFhstvxX] [-f <logfile>]\n", prog);
+	fprintf(stderr, "Usage: %s [ -abDFhnpstvxX ] [ -B <binary-logfile> ] [ -C <config-file> ]\n"
+		"\t[ -f <device> ] [ -L <facility> ] [ -N <device> ]\n"
+		"\t[ -o [NSI] ] [ -O [NSI] ] [ -P <pidfile> ] [ -S <device> ]\n"
+		"\t[ <filename> ]\n", prog);
 	exit(1);
 }
 

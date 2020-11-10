@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2015-2016 Svatopluk Kraus
  * Copyright (c) 2015-2016 Michal Meloun
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/intr.h 308333 2016-11-05 10:23:02Z mmel $
+ * $FreeBSD: releng/12.2/sys/sys/intr.h 326823 2017-12-13 16:13:17Z pfg $
  */
 
 #ifndef _SYS_INTR_H_

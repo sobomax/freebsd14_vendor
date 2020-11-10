@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -25,13 +27,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/clock.c 230633 2012-01-27 23:21:54Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/clock.c 327446 2017-12-31 20:30:51Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/pcpu.h>
 #include <sys/proc.h>
 #include <sys/sched.h>
+#include <sys/tslog.h>
 
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
@@ -43,6 +46,7 @@ DELAY(int usec)
 
 	if (usec < 0)
 		return;
+	TSENTER();
 
 	/*
 	 * We avoid being migrated to another CPU with a possibly
@@ -55,5 +59,6 @@ DELAY(int usec)
 		cpu_spinwait();
 
 	sched_unpin();
+	TSEXIT();
 }
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/hexdump/Makefile 328463 2018-01-27 06:31:14Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/hexdump/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -10,8 +10,7 @@ MLINKS=	hexdump.1 hd.1
 LINKS=	${BINDIR}/hexdump ${BINDIR}/od
 LINKS+=	${BINDIR}/hexdump ${BINDIR}/hd
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

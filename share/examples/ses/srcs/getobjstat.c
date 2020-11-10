@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/share/examples/ses/srcs/getobjstat.c 235911 2012-05-24 14:07:44Z mav $ */
+/* $FreeBSD: releng/12.2/share/examples/ses/srcs/getobjstat.c 235911 2012-05-24 14:07:44Z mav $ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.

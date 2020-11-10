@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Oleksandr Tymoshenko
  * Copyright (c) 2002-2004 Juli Mallett <jmallett@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/mips/intr_machdep.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/mips/intr_machdep.c 336639 2018-07-23 15:36:55Z avg $");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -255,7 +257,7 @@ cpu_intr(struct trapframe *tf)
 			break;
 		}
 
-		if (!event || TAILQ_EMPTY(&event->ie_handlers)) {
+		if (!event || CK_SLIST_EMPTY(&event->ie_handlers)) {
 			printf("stray %s interrupt %d\n",
 			    hard ? "hard" : "soft", i);
 			continue;

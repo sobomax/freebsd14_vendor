@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sys/dev/rndtest/rndtest.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/rndtest/rndtest.h 326255 2017-11-27 14:52:40Z pfg $	*/
 /*	$OpenBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2002 Jason L. Wright (jason@thought.net)
  * All rights reserved.
  *

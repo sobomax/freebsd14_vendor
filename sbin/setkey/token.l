@@ -1,7 +1,9 @@
-/*	$FreeBSD: releng/11.3/sbin/setkey/token.l 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sbin/setkey/token.l 359590 2020-04-03 05:11:16Z bapt $	*/
 /*	$KAME: token.l,v 1.43 2003/07/25 09:35:28 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
  * All rights reserved.
  *
@@ -64,6 +66,8 @@ extern void parse_init(void);
 int parse(FILE **);
 int yyparse(void);
 %}
+
+%option noyywrap
 
 /* common section */
 nl		\n

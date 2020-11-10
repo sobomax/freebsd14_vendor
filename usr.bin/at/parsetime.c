@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/at/parsetime.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/at/parsetime.c 326698 2017-12-08 17:15:20Z asomers $");
 
 /* System Headers */
 

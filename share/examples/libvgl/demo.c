@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1991-1997 Søren Schmidt
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/share/examples/libvgl/demo.c 222175 2011-05-22 14:03:21Z uqs $
+ * $FreeBSD: releng/12.2/share/examples/libvgl/demo.c 326275 2017-11-27 15:28:26Z pfg $
  */
 
 #include <sys/types.h>

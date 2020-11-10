@@ -1,5 +1,6 @@
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2017 Alan Somers
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -22,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/cmp/tests/cmp_test2.sh 314427 2017-02-28 22:49:41Z asomers $
+# $FreeBSD: releng/12.2/usr.bin/cmp/tests/cmp_test2.sh 355456 2019-12-06 18:27:50Z markj $
 
 atf_test_case special
 special_head() {
@@ -31,11 +32,12 @@ special_head() {
 special_body() {
 	echo 0123456789abcdef > a
 	echo 0123456789abcdeg > b
-	cat a | atf_check -s exit:0 cmp a -
-	cat a | atf_check -s exit:0 cmp - a
-	cat b | atf_check -s not-exit:0 cmp a -
-	cat b | atf_check -s not-exit:0 cmp - a
-	true
+	atf_check -s exit:0 -o empty -e empty -x "cat a | cmp a -"
+	atf_check -s exit:0 -o empty -e empty -x "cat a | cmp - a"
+	atf_check -s exit:1 -o not-empty -e empty -x "cat b | cmp a -"
+	atf_check -s exit:1 -o not-empty -e empty -x "cat b | cmp - a"
+
+	atf_check -s exit:0 -o empty -e empty -x "cmp a a <&-"
 }
 
 atf_test_case symlink

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Assar Westerlund
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/share/examples/kld/syscall/test/call.c 253421 2013-07-17 13:13:44Z glebius $
+ * $FreeBSD: releng/12.2/share/examples/kld/syscall/test/call.c 326275 2017-11-27 15:28:26Z pfg $
  */
 
 #include <sys/types.h>

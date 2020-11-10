@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/execution/Makefile 345561 2019-03-26 22:34:07Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/execution/Makefile 362467 2020-06-21 16:06:01Z jilles $
 
 PACKAGE=	tests
 
@@ -17,6 +17,8 @@ ${PACKAGE}FILES+=		bg7.0
 ${PACKAGE}FILES+=		bg8.0
 ${PACKAGE}FILES+=		bg9.0
 ${PACKAGE}FILES+=		bg10.0 bg10.0.stdout
+${PACKAGE}FILES+=		bg11.0
+${PACKAGE}FILES+=		bg12.0
 ${PACKAGE}FILES+=		fork1.0
 ${PACKAGE}FILES+=		fork2.0
 ${PACKAGE}FILES+=		fork3.0
@@ -44,6 +46,7 @@ ${PACKAGE}FILES+=		redir4.0
 ${PACKAGE}FILES+=		redir5.0
 ${PACKAGE}FILES+=		redir6.0
 ${PACKAGE}FILES+=		redir7.0
+${PACKAGE}FILES+=		set-C1.0
 ${PACKAGE}FILES+=		set-n1.0
 ${PACKAGE}FILES+=		set-n2.0
 ${PACKAGE}FILES+=		set-n3.0
@@ -58,6 +61,7 @@ ${PACKAGE}FILES+=		subshell2.0
 ${PACKAGE}FILES+=		subshell3.0
 ${PACKAGE}FILES+=		subshell4.0
 ${PACKAGE}FILES+=		unknown1.0
+${PACKAGE}FILES+=		unknown2.0
 ${PACKAGE}FILES+=		var-assign1.0
 
 .include <bsd.test.mk>

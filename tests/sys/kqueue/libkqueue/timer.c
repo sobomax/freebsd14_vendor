@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tests/sys/kqueue/libkqueue/timer.c 341275 2018-11-30 02:06:30Z dab $
+ * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/timer.c 360257 2020-04-24 13:29:08Z kevans $
  */
 
 #include "common.h"
@@ -26,18 +26,18 @@
 #define	MS_TO_US(t)  ((t) * THOUSAND)	/* Convert milliseconds to microseconds. */
 #define	US_TO_NS(t)  ((t) * THOUSAND)	/* Convert microseconds to nanoseconds. */
 
-int kqfd;
 
 /* Get the current time with microsecond precision. Used for
  * sub-second timing to make some timer tests run faster.
  */
-static long
+static uint64_t
 now(void)
 {
     struct timeval tv;
 
     gettimeofday(&tv, NULL);
-    return SEC_TO_US(tv.tv_sec) + tv.tv_usec;
+    /* Promote potentially 32-bit time_t to uint64_t before conversion. */
+    return SEC_TO_US((uint64_t)tv.tv_sec) + tv.tv_usec;
 }
 
 /* Sleep for a given number of milliseconds. The timeout is assumed to
@@ -213,12 +213,47 @@ disable_and_enable(void)
 }
 
 static void
+test_abstime(void)
+{
+    const char *test_id = "kevent(EVFILT_TIMER, EV_ONESHOT, NOTE_ABSTIME)";
+    struct kevent kev;
+    uint64_t end, start, stop;
+    const int timeout_sec = 3;
+
+    test_begin(test_id);
+
+    test_no_kevents();
+
+    start = now();
+    end = start + SEC_TO_US(timeout_sec);
+    EV_SET(&kev, vnode_fd, EVFILT_TIMER, EV_ADD | EV_ONESHOT,
+      NOTE_ABSTIME | NOTE_USECONDS, end, NULL);
+    if (kevent(kqfd, &kev, 1, NULL, 0, NULL) < 0)
+        err(1, "%s", test_id);
+
+    /* Retrieve the event */
+    kev.flags = EV_ADD | EV_ONESHOT;
+    kev.data = 1;
+    kev.fflags = 0;
+    kevent_cmp(&kev, kevent_get(kqfd));
+
+    stop = now();
+    if (stop < end)
+        err(1, "too early %jd %jd", (intmax_t)stop, (intmax_t)end);
+    /* Check if the event occurs again */
+    sleep(3);
+    test_no_kevents();
+
+    success();
+}
+
+static void
 test_update(void)
 {
     const char *test_id = "kevent(EVFILT_TIMER (UPDATE), EV_ADD | EV_ONESHOT)";
     struct kevent kev;
     long elapsed;
-    long start;
+    uint64_t start;
 
     test_begin(test_id);
 
@@ -263,7 +298,7 @@ test_update_equal(void)
     const char *test_id = "kevent(EVFILT_TIMER (UPDATE=), EV_ADD | EV_ONESHOT)";
     struct kevent kev;
     long elapsed;
-    long start;
+    uint64_t start;
 
     test_begin(test_id);
 
@@ -307,7 +342,7 @@ test_update_expired(void)
     const char *test_id = "kevent(EVFILT_TIMER (UPDATE EXP), EV_ADD | EV_ONESHOT)";
     struct kevent kev;
     long elapsed;
-    long start;
+    uint64_t start;
 
     test_begin(test_id);
 
@@ -358,8 +393,7 @@ test_update_periodic(void)
     const char *test_id = "kevent(EVFILT_TIMER (UPDATE), periodic)";
     struct kevent kev;
     long elapsed;
-    long start;
-    long stop;
+    uint64_t start, stop;
 
     test_begin(test_id);
 
@@ -416,8 +450,7 @@ test_update_timing(void)
     int iteration;
     int sleeptime;
     long elapsed;
-    long start;
-    long stop;
+    uint64_t start, stop;
 
     test_begin(test_id);
 
@@ -483,6 +516,7 @@ test_evfilt_timer()
     test_kevent_timer_get();
     test_oneshot();
     test_periodic();
+    test_abstime();
     test_update();
     test_update_equal();
     test_update_expired();

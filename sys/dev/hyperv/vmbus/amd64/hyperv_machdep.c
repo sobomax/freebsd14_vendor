@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/amd64/hyperv_machdep.c 322612 2017-08-17 05:09:22Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/amd64/hyperv_machdep.c 358151 2020-02-20 01:45:55Z kib $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -188,6 +188,7 @@ hyperv_tsc_tcinit(void *dummy __unused)
 
 	switch (cpu_vendor_id) {
 	case CPU_VENDOR_AMD:
+	case CPU_VENDOR_HYGON:
 		hyperv_tsc_timecounter.tc_get_timecount =
 		    hyperv_tsc_timecount_mfence;
 		tc64 = hyperv_tc64_tsc_mfence;

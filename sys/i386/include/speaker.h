@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/i386/include/speaker.h 152306 2005-11-11 09:57:32Z ru $
+ * $FreeBSD: releng/12.2/sys/i386/include/speaker.h 152306 2005-11-11 09:57:32Z ru $
  */
 
 #ifndef	_MACHINE_SPEAKER_H_

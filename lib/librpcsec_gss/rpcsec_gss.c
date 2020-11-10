@@ -23,9 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/11.3/lib/librpcsec_gss/rpcsec_gss.c 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/lib/librpcsec_gss/rpcsec_gss.c 326025 2017-11-20 19:49:47Z pfg $
  */
 /*
+  SPDX-License-Identifier: BSD-3-Clause
+
   auth_gss.c
 
   RPCSEC_GSS client routines.

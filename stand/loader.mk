@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/loader.mk 346482 2019-04-21 04:26:02Z kevans $
+# $FreeBSD: releng/12.2/stand/loader.mk 359735 2020-04-09 04:50:19Z sjg $
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 
@@ -11,8 +11,6 @@ SRCS+=	module.c
 .if ${MACHINE} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 SRCS+=	load_elf32.c load_elf32_obj.c reloc_elf32.c
 SRCS+=	load_elf64.c load_elf64_obj.c reloc_elf64.c
-.elif ${MACHINE} == "pc98"
-SRCS+=	load_elf32.c load_elf32_obj.c reloc_elf32.c
 .elif ${MACHINE_CPUARCH} == "aarch64"
 SRCS+=	load_elf64.c reloc_elf64.c
 .elif ${MACHINE_CPUARCH} == "arm"
@@ -33,7 +31,7 @@ SRCS+=	metadata.c
 .endif
 
 .if ${LOADER_DISK_SUPPORT:Uyes} == "yes"
-SRCS+=	disk.c part.c
+SRCS+=	disk.c part.c vdisk.c
 .endif
 
 .if ${LOADER_NET_SUPPORT:Uno} == "yes"
@@ -64,6 +62,7 @@ SRCS+=	interp_lua.c
 .include "${BOOTSRC}/lua.mk"
 LDR_INTERP=	${LIBLUA}
 LDR_INTERP32=	${LIBLUA32}
+CFLAGS.interp_lua.c= -DLUA_PATH=\"${LUAPATH}\" -I${FLUASRC}/modules
 .elif ${LOADER_INTERP} == "4th"
 SRCS+=	interp_forth.c
 .include "${BOOTSRC}/ficl.mk"
@@ -73,6 +72,17 @@ LDR_INTERP32=	${LIBFICL32}
 SRCS+=	interp_simple.c
 .else
 .error Unknown interpreter ${LOADER_INTERP}
+.endif
+
+.if ${MK_LOADER_VERIEXEC} != "no"
+CFLAGS+= -DLOADER_VERIEXEC -I${SRCTOP}/lib/libsecureboot/h
+.if ${MK_LOADER_VERIEXEC_VECTX} != "no"
+CFLAGS+= -DLOADER_VERIEXEC_VECTX
+.endif
+.endif
+
+.if ${MK_LOADER_VERIEXEC_PASS_MANIFEST} != "no"
+CFLAGS+= -DLOADER_VERIEXEC_PASS_MANIFEST -I${SRCTOP}/lib/libsecureboot/h
 .endif
 
 .if defined(BOOT_PROMPT_123)
@@ -156,10 +166,6 @@ REPRO_FLAG=	-r
 vers.c: ${LDRSRC}/newvers.sh ${VERSION_FILE}
 	sh ${LDRSRC}/newvers.sh ${REPRO_FLAG} ${VERSION_FILE} \
 	    ${NEWVERSWHAT}
-
-.if ${MK_LOADER_VERBOSE} != "no"
-CFLAGS+=	-DELF_VERBOSE
-.endif
 
 .if !empty(HELP_FILES)
 HELP_FILES+=	${LDRSRC}/help.common

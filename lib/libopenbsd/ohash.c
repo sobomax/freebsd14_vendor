@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libopenbsd/ohash.c 269162 2014-07-27 22:54:13Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libopenbsd/ohash.c 269162 2014-07-27 22:54:13Z bapt $");
 
 #include <stddef.h>
 #include <stdint.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1999, 2000 Matthew R. Green
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  *
  *	from: NetBSD: psychovar.h,v 1.15 2008/05/29 14:51:26 mrg Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/pci/psychovar.h 287726 2015-09-12 22:49:32Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/pci/psychovar.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_PCI_PSYCHOVAR_H_

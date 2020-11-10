@@ -1,5 +1,7 @@
-# $FreeBSD: releng/11.3/lib/clang/llvm.pre.mk 310618 2016-12-26 20:36:37Z dim $
 
-LLVM_SRCS=	${SRCTOP}/contrib/llvm
+# $FreeBSD: releng/12.2/lib/clang/llvm.pre.mk 356462 2020-01-07 19:49:10Z dim $
+
+LLVM_BASE=	${SRCTOP}/contrib/llvm-project
+LLVM_SRCS=	${LLVM_BASE}/llvm
 
 LLVM_TBLGEN?=	llvm-tblgen

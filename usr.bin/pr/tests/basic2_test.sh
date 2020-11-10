@@ -1,5 +1,6 @@
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2017 Alan Somers
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -22,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/pr/tests/basic2_test.sh 316501 2017-04-04 20:03:57Z asomers $
+# $FreeBSD: releng/12.2/usr.bin/pr/tests/basic2_test.sh 348460 2019-05-31 16:20:00Z asomers $
 
 atf_test_case across
 across_head() {

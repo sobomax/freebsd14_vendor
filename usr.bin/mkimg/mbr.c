@@ -25,38 +25,24 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/mkimg/mbr.c 329059 2018-02-09 09:15:43Z manu $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/mkimg/mbr.c 343765 2019-02-05 08:05:42Z delphij $");
 
 #include <sys/errno.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
-#include <sys/diskmbr.h>
+#include <mbr.h>
 
 #include "endian.h"
 #include "image.h"
 #include "mkimg.h"
 #include "scheme.h"
 
-#ifndef DOSPTYP_FAT16B
-#define	DOSPTYP_FAT16B	0x06
-#endif
-#ifndef DOSPTYP_FAT32
-#define	DOSPTYP_FAT32	0x0b
-#endif
-#ifndef DOSPTYP_PPCBOOT
-#define	DOSPTYP_PPCBOOT	0x41
-#endif
-#ifndef DOSPTYP_EFI
-#define	DOSPTYP_EFI	0xef
-#endif
-
 static struct mkimg_alias mbr_aliases[] = {
     {	ALIAS_EBR, ALIAS_INT2TYPE(DOSPTYP_EXT) },
     {	ALIAS_EFI, ALIAS_INT2TYPE(DOSPTYP_EFI) },
-    {	ALIAS_FAT16B, ALIAS_INT2TYPE(DOSPTYP_FAT16B) },
+    {	ALIAS_FAT16B, ALIAS_INT2TYPE(DOSPTYP_FAT16) },
     {	ALIAS_FAT32, ALIAS_INT2TYPE(DOSPTYP_FAT32) },
     {	ALIAS_FREEBSD, ALIAS_INT2TYPE(DOSPTYP_386BSD) },
     {	ALIAS_NTFS, ALIAS_INT2TYPE(DOSPTYP_NTFS) },

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/loader/arch/amd64/trap.c 329114 2018-02-11 02:27:50Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/arch/amd64/trap.c 322542 2017-08-15 14:03:26Z tsoome $");
 
 #include <stand.h>
 #include <string.h>

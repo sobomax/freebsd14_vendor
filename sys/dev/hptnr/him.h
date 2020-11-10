@@ -1,5 +1,7 @@
 /* $Id: him.h,v 1.57 2011/02/21 06:03:21 zsf Exp $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2004-2005 HighPoint Technologies, Inc.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hptnr/him.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/hptnr/him.h 326255 2017-11-27 14:52:40Z pfg $
  */
 #include <dev/hptnr/hptnr_config.h>
 #ifndef _HPT_HIM_H_

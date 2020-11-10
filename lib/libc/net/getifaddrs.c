@@ -1,6 +1,8 @@
 /*	$KAME: getifaddrs.c,v 1.9 2001/08/20 02:31:20 itojun Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-1-Clause
+ *
  * Copyright (c) 1995, 1999
  *	Berkeley Software Design, Inc.  All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/net/getifaddrs.c 297790 2016-04-10 19:33:58Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/getifaddrs.c 326823 2017-12-13 16:13:17Z pfg $");
 
 #include "namespace.h"
 #include <sys/types.h>

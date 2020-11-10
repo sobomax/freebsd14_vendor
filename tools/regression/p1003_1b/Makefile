@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/p1003_1b/Makefile 282072 2015-04-27 08:34:46Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/p1003_1b/Makefile 282072 2015-04-27 08:34:46Z ngie $
 
 PROG=p1003_1b
 

@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/lib/lib80211/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/lib/lib80211/Makefile 338794 2018-09-19 09:29:06Z brd $
 
+CONFS=	regdomain.xml
 PACKAGE=lib${LIB}
 LIB=	80211
 SHLIBDIR?= /lib

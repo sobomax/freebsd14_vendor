@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/examples/ses/Makefile 299293 2016-05-10 00:51:50Z gjb $
+# $FreeBSD: releng/12.2/share/examples/ses/Makefile 299293 2016-05-10 00:51:50Z gjb $
 #
 # Copyright (c) 2000 by Matthew Jacob
 # All rights reserved.

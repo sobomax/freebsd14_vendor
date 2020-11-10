@@ -21,9 +21,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/share/man/man9/sleepqueue.9 274925 2014-11-23 21:00:00Z joel $
+.\" $FreeBSD: releng/12.2/share/man/man9/sleepqueue.9 349826 2019-07-07 18:49:39Z mav $
 .\"
-.Dd September 22, 2014
+.Dd June 19, 2019
 .Dt SLEEPQUEUE 9
 .Os
 .Sh NAME
@@ -291,7 +291,8 @@ and
 functions.
 The
 .Fn sleepq_signal
-function awakens the highest priority thread sleeping on a wait channel while
+function awakens the highest priority thread sleeping on a wait channel
+(if SLEEPQ_UNFAIR flag is set, thread that went to sleep recently) while
 .Fn sleepq_broadcast
 awakens all of the threads sleeping on a wait channel.
 The

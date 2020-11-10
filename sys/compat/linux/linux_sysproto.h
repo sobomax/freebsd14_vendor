@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2005 Travis Poppe
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_sysproto.h 143197 2005-03-07 00:18:06Z sobomax $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_sysproto.h 326266 2017-11-27 15:13:23Z pfg $
  */
 
 #ifndef LINUX_SYSPROTO

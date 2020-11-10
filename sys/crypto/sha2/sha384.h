@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/crypto/sha2/sha384.h 310372 2016-12-21 18:42:04Z emaste $
+ * $FreeBSD: releng/12.2/sys/crypto/sha2/sha384.h 307584 2016-10-18 23:20:49Z asomers $
  */
 
 #ifndef _SHA384_H_

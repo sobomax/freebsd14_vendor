@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Semihalf.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/fdt/fdt_slicer.c 346557 2019-04-22 15:04:11Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/fdt/fdt_slicer.c 353041 2019-10-03 12:47:05Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -83,12 +85,10 @@ fill_slices_from_node(phandle_t node, struct flash_slice *slices, int *count)
 		}
 
 		/* Retrieve label. */
-		nmlen = OF_getprop_alloc(child, "label", sizeof(char),
-		    (void **)&label);
+		nmlen = OF_getprop_alloc(child, "label", (void **)&label);
 		if (nmlen <= 0) {
 			/* Use node name if no label defined */
-			nmlen = OF_getprop_alloc(child, "name", sizeof(char),
-			    (void **)&label);
+			nmlen = OF_getprop_alloc(child, "name", (void **)&label);
 			if (nmlen <= 0) {
 				debugf("slice i=%d with no name\n", i);
 				label = NULL;
@@ -159,12 +159,12 @@ fdt_slicer_cleanup(void)
 }
 
 /*
- * Must be initialized after GEOM classes (SI_SUB_DRIVERS/SI_ORDER_FIRST),
+ * Must be initialized after GEOM classes (SI_SUB_DRIVERS/SI_ORDER_SECOND),
  * i. e. after g_init() is called, due to the use of the GEOM topology_lock
  * in flash_register_slicer().  However, must be before SI_SUB_CONFIGURE.
  */
-SYSINIT(fdt_slicer, SI_SUB_DRIVERS, SI_ORDER_SECOND, fdt_slicer_init, NULL);
-SYSUNINIT(fdt_slicer, SI_SUB_DRIVERS, SI_ORDER_SECOND, fdt_slicer_cleanup, NULL);
+SYSINIT(fdt_slicer, SI_SUB_DRIVERS, SI_ORDER_THIRD, fdt_slicer_init, NULL);
+SYSUNINIT(fdt_slicer, SI_SUB_DRIVERS, SI_ORDER_THIRD, fdt_slicer_cleanup, NULL);
 
 static int
 mod_handler(module_t mod, int type, void *data)
@@ -181,5 +181,5 @@ static moduledata_t fdt_slicer_mod = {
 	"fdt_slicer", mod_handler, NULL
 };
 
-DECLARE_MODULE(fdt_slicer, fdt_slicer_mod, SI_SUB_DRIVERS, SI_ORDER_SECOND);
+DECLARE_MODULE(fdt_slicer, fdt_slicer_mod, SI_SUB_DRIVERS, SI_ORDER_THIRD);
 MODULE_VERSION(fdt_slicer, 1);

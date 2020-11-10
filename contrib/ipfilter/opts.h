@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/opts.h 305138 2016-08-31 18:00:41Z dim $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/opts.h 304964 2016-08-28 19:35:29Z dim $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

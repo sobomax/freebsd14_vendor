@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_errno.inc 346830 2019-04-28 13:43:58Z dchagin $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_errno.inc 357296 2020-01-30 16:11:19Z mav $
  */
 
 /*
@@ -142,7 +142,8 @@ const int linux_errtbl[ELAST + 1] = {
 	-1,	/* ECAPMODE -> EPERM */
 	-131,	/* ENOTRECOVERABLE */
 	-130,	/* EOWNERDEAD */
+	-22,	/* EINTEGRITY -> EINVAL */
 };
 
-_Static_assert(ELAST == 96,
+_Static_assert(ELAST == 97,
     "missing errno entries in linux_errtbl");

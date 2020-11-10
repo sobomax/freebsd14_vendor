@@ -1,6 +1,8 @@
 /*-
  * Aic7xxx SCSI host adapter firmware asssembler symbol table implementation
  *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 Justin T. Gibbs.
  * Copyright (c) 2002 Adaptec Inc.
  * All rights reserved.
@@ -39,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.c#24 $
  *
- * $FreeBSD: releng/11.3/sys/dev/aic7xxx/aicasm/aicasm_symbol.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/aic7xxx/aicasm/aicasm_symbol.c 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #include <sys/types.h>

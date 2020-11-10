@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/sys/modules/sysvipc/sysvsem/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/sysvipc/sysvsem/Makefile 332122 2018-04-06 17:35:35Z brooks $
 
 .PATH: ${SRCTOP}/sys/kern
 
 KMOD=	sysvsem
-SRCS=	sysv_sem.c opt_sysvipc.h opt_compat.h
+SRCS=	sysv_sem.c opt_sysvipc.h
 
 .include <bsd.kmod.mk>

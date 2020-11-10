@@ -1,5 +1,7 @@
-/* $FreeBSD: releng/11.3/sys/dev/usb/controller/usb_controller.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/usb/controller/usb_controller.c 336770 2018-07-27 18:28:22Z imp $ */
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -129,7 +131,6 @@ DRIVER_MODULE(usbus, ehci, usb_driver, usb_devclass, 0, 0);
 DRIVER_MODULE(usbus, xhci, usb_driver, usb_devclass, 0, 0);
 
 /* Device Only Drivers */
-DRIVER_MODULE(usbus, at91_udp, usb_driver, usb_devclass, 0, 0);
 DRIVER_MODULE(usbus, musbotg, usb_driver, usb_devclass, 0, 0);
 DRIVER_MODULE(usbus, uss820dci, usb_driver, usb_devclass, 0, 0);
 DRIVER_MODULE(usbus, octusb, usb_driver, usb_devclass, 0, 0);

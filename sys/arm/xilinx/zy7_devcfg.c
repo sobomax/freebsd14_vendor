@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Thomas Skibo
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/xilinx/zy7_devcfg.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/xilinx/zy7_devcfg.c 326258 2017-11-27 15:04:10Z pfg $
  */
 
 /* 
@@ -36,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/xilinx/zy7_devcfg.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/xilinx/zy7_devcfg.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,7 +56,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/xilinx/zy7_devcfg.c 331722 2018-03-29 02
 #include <machine/resource.h>
 #include <machine/stdarg.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 

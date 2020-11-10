@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/string/strlcat.c 281135 2015-04-06 03:21:22Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/string/strlcat.c 281135 2015-04-06 03:21:22Z pfg $");
 
 #include <sys/types.h>
 #include <string.h>

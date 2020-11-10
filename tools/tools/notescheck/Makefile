@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/notescheck/Makefile 200941 2009-12-24 14:32:11Z jhb $
+# $FreeBSD: releng/12.2/tools/tools/notescheck/Makefile 200941 2009-12-24 14:32:11Z jhb $
 
 SCRIPTS=	notescheck.py
 

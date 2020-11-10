@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/extres/clk/clk_fixed.c 308324 2016-11-05 04:17:32Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/extres/clk/clk_fixed.c 302528 2016-07-10 18:28:15Z mmel $");
 
 #include <sys/param.h>
 #include <sys/conf.h>

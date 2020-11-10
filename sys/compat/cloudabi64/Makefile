@@ -1,14 +1,6 @@
-# $FreeBSD: releng/11.3/sys/compat/cloudabi64/Makefile 307144 2016-10-12 12:17:41Z ed $
+# $FreeBSD: releng/12.2/sys/compat/cloudabi64/Makefile 357108 2020-01-25 05:47:56Z kevans $
 
-all:
-	@echo "make sysent only"
+SYSENT_FILE=	${SYSDIR}/contrib/cloudabi/syscalls64.master
+GENERATED_PREFIX=	cloudabi64_
 
-sysent: cloudabi64_sysent.c cloudabi64_syscall.h cloudabi64_proto.h \
-    cloudabi64_syscalls.c cloudabi64_systrace_args.c
-
-cloudabi64_sysent.c cloudabi64_syscall.h cloudabi64_proto.h \
-    cloudabi64_syscalls.c cloudabi64_systrace_args.c: \
-    ../../kern/makesyscalls.sh ../../contrib/cloudabi/syscalls64.master \
-    syscalls.conf
-	sh ../../kern/makesyscalls.sh ../../contrib/cloudabi/syscalls64.master \
-	    syscalls.conf
+.include "../../conf/sysent.mk"

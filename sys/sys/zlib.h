@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/sys/zlib.h 281855 2015-04-22 14:38:58Z rodrigc $	*/
+/* $FreeBSD: releng/12.2/sys/sys/zlib.h 326823 2017-12-13 16:13:17Z pfg $	*/
 
 /*
  * This file is derived from zlib.h and zconf.h from the zlib-1.0.4
@@ -17,6 +17,8 @@
 
 /* +++ zlib.h */
 /*-
+  SPDX-License-Identifier: BSD-3-Clause
+
   zlib.h -- interface of the 'zlib' general purpose compression library
   version 1.0.4, Jul 24th, 1996.
 

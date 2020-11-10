@@ -30,7 +30,7 @@
 
 /*
  * $Id$
- * $FreeBSD: releng/11.3/sys/geom/sched/gs_delay.c 292436 2015-12-18 14:10:00Z imp $
+ * $FreeBSD: releng/12.2/sys/geom/sched/gs_delay.c 292436 2015-12-18 14:10:00Z imp $
  *
  * A simple scheduler that just delays certain transactions by a certain
  * amount. We collect all the transactions that are 'done' and put them on

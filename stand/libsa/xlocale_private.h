@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2018 Netflix
+ * Copyright (c) 2018 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/libsa/xlocale_private.h 329175 2018-02-12 17:44:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/libsa/xlocale_private.h 351913 2019-09-05 23:27:59Z imp $
  */
 
 #ifndef STAND_XLOCALE_PRIVATE_H

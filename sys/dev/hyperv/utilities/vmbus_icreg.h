@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/utilities/vmbus_icreg.h 311388 2017-01-05 08:41:29Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/utilities/vmbus_icreg.h 310462 2016-12-23 08:41:28Z sephe $
  */
 
 #ifndef _VMBUS_ICREG_H_

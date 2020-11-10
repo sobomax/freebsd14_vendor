@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/nptv6/ip_fw_nptv6.c 303012 2016-07-18 19:46:31Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/nptv6/ip_fw_nptv6.c 303012 2016-07-18 19:46:31Z ae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libkvm/tests/kvm_open_test.c 346920 2019-04-29 19:36:46Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libkvm/tests/kvm_open_test.c 346918 2019-04-29 19:34:09Z ngie $");
 
 #include <sys/param.h>
 #include <errno.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsnmpd/Makefile 216295 2010-12-08 14:30:25Z syrinx $
+# $FreeBSD: releng/12.2/usr.sbin/bsnmpd/Makefile 216295 2010-12-08 14:30:25Z syrinx $
 
 SUBDIR=	gensnmptree	\
 	bsnmpd		\

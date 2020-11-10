@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/expansion/local2.0 238468 2012-07-15 10:19:43Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/expansion/local2.0 238468 2012-07-15 10:19:43Z jilles $
 
 run_test() {
 	w='@ @'

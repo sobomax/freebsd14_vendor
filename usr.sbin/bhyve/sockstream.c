@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bhyve/sockstream.c 336189 2018-07-11 07:16:13Z araujo $
+ * $FreeBSD: releng/12.2/usr.sbin/bhyve/sockstream.c 339435 2018-10-19 00:24:23Z gjb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/sockstream.c 336189 2018-07-11 07:16:13Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/sockstream.c 339435 2018-10-19 00:24:23Z gjb $");
 
 #include <sys/types.h>
 #include <unistd.h>

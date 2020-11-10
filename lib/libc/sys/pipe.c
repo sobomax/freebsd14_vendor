@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/sys/pipe.c 302092 2016-06-22 21:11:27Z brooks $
+ * $FreeBSD: releng/12.2/lib/libc/sys/pipe.c 302092 2016-06-22 21:11:27Z brooks $
  */
 
 #include <sys/cdefs.h>

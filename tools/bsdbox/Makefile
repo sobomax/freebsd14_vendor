@@ -1,4 +1,4 @@
-#$FreeBSD: releng/11.3/tools/bsdbox/Makefile 275621 2014-12-08 17:14:01Z sbruno $
+#$FreeBSD: releng/12.2/tools/bsdbox/Makefile 325633 2017-11-10 07:53:02Z bdrewery $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 MAN=
@@ -70,8 +70,9 @@ CRUNCH_LIBS+= -lcrypt -ledit -ll -ltermcapw
 #
 CRUNCH_SRCDIRS+= sbin
 
-CRUNCH_LIBS+= -lalias -lcam -lcursesw -ldevstat -lipsec
+CRUNCH_LIBS+= -l80211 -lalias -lcam -lcursesw -ldevstat -lipsec
 # Don't forget this - ifconfig, etc -adrian
+CRUNCH_LIBS+= ${LDADD_ifconfig}
 CRUNCH_LIBS+= -lgeom -lbsdxml -ljail -lkiconv -lmd -lsbuf -lufs
 
 ##################################################################

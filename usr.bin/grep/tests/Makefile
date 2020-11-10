@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/grep/tests/Makefile 322587 2017-08-16 18:00:32Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/grep/tests/Makefile 317703 2017-05-02 20:39:33Z emaste $
 
 PACKAGE=	tests
 

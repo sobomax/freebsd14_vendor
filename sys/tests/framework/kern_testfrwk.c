@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2015
- *	Netflix Incorporated, All rights reserved.
+ * Copyright (c) 2015 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/tests/framework/kern_testfrwk.c 319174 2017-05-30 03:10:05Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/sys/tests/framework/kern_testfrwk.c 351913 2019-09-05 23:27:59Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

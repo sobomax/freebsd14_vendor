@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libstdthreads/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libstdthreads/Makefile 312477 2017-01-20 04:33:45Z ngie $
 
 PACKAGE=lib${LIB}
 LIB=	stdthreads

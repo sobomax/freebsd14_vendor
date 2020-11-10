@@ -1,5 +1,7 @@
-/*
+/*-
  * Most parts of this file are not covered by:
+ *
+ * SPDX-License-Identifier: Beerware
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -9,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_inflate.c 344379 2019-02-20 19:32:02Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_inflate.c 336250 2018-07-13 17:41:28Z imp $");
 
 #include <sys/param.h>
 #include <sys/inflate.h>

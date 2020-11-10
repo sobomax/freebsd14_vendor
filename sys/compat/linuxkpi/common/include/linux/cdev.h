@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/cdev.h 342804 2019-01-06 00:59:55Z kib $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/cdev.h 342801 2019-01-06 00:52:53Z kib $
  */
 #ifndef	_LINUX_CDEV_H_
 #define	_LINUX_CDEV_H_

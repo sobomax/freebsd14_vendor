@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999-2001 Brian Somers <brian@Awfulhak.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/libexec/pppoed/pppoed.c 228586 2011-12-16 16:07:39Z dim $
+ * $FreeBSD: releng/12.2/libexec/pppoed/pppoed.c 326274 2017-11-27 15:25:02Z pfg $
  */
 
 #include <sys/param.h>

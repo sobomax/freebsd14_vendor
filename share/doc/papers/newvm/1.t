@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)1.t	5.1 (Berkeley) 4/16/91
-.\" $FreeBSD: releng/11.3/share/doc/papers/newvm/1.t 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/papers/newvm/1.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .NH
 Motivations for a New Virtual Memory System

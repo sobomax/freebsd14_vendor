@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/sfxge_nvram.c 300607 2016-05-24 12:16:57Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/sfxge_nvram.c 300607 2016-05-24 12:16:57Z arybchik $");
 
 
 #include <sys/types.h>

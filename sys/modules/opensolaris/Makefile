@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/opensolaris/Makefile 346786 2019-04-27 05:35:51Z markj $
+# $FreeBSD: releng/12.2/sys/modules/opensolaris/Makefile 346785 2019-04-27 05:35:20Z markj $
 
 SYSDIR?=	${SRCTOP}/sys
 

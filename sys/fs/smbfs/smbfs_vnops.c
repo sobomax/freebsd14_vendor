@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2000-2001 Boris Popov
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/smbfs/smbfs_vnops.c 328298 2018-01-23 20:08:25Z jhb $
+ * $FreeBSD: releng/12.2/sys/fs/smbfs/smbfs_vnops.c 357706 2020-02-09 22:15:35Z kevans $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -280,7 +282,7 @@ smbfs_getattr(ap)
 	smbfs_attr_cachelookup(vp, va);
 	if (np->n_flag & NOPEN)
 		np->n_size = oldsize;
-		smbfs_free_scred(scred);
+	smbfs_free_scred(scred);
 	return 0;
 }
 
@@ -893,7 +895,7 @@ smbfs_pathconf (ap)
 {
 	struct smbmount *smp = VFSTOSMBFS(VTOVFS(ap->a_vp));
 	struct smb_vc *vcp = SSTOVC(smp->sm_share);
-	register_t *retval = ap->a_retval;
+	long *retval = ap->a_retval;
 	int error = 0;
 	
 	switch (ap->a_name) {
@@ -1118,8 +1120,8 @@ smbfs_advlock(ap)
 static int
 smbfs_pathcheck(struct smbmount *smp, const char *name, int nmlen, int nameiop)
 {
-	static const char *badchars = "*/:<>;?";
-	static const char *badchars83 = " +|,[]=";
+	static const char *badchars = "*/:<>?";
+	static const char *badchars83 = " +|,[]=;";
 	const char *cp;
 	int i, error;
 
@@ -1196,7 +1198,8 @@ smbfs_lookup(ap)
 	islastcn = flags & ISLASTCN;
 	if (islastcn && (mp->mnt_flag & MNT_RDONLY) && (nameiop != LOOKUP))
 		return EROFS;
-	if ((error = VOP_ACCESS(dvp, VEXEC, cnp->cn_cred, td)) != 0)
+	error = vn_dir_check_exec(dvp, cnp);
+	if (error != 0)
 		return error;
 	smp = VFSTOSMBFS(mp);
 	dnp = VTOSMB(dvp);

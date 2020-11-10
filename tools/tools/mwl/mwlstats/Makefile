@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/mwl/mwlstats/Makefile 283002 2015-05-16 06:18:39Z adrian $
+# $FreeBSD: releng/12.2/tools/tools/mwl/mwlstats/Makefile 283002 2015-05-16 06:18:39Z adrian $
 
 PROG=	mwlstats
 BINDIR=	/usr/local/bin

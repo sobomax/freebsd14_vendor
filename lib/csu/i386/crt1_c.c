@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/csu/i386/crt1_c.c 292000 2015-12-08 19:32:58Z emaste $
+ * $FreeBSD: releng/12.2/lib/csu/i386/crt1_c.c 339351 2018-10-13 23:52:55Z kib $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/i386/crt1_c.c 292000 2015-12-08 19:32:58Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/i386/crt1_c.c 339351 2018-10-13 23:52:55Z kib $");
 
 #include <stdlib.h>
 
@@ -56,10 +56,12 @@ _start1(fptr cleanup, int argc, char *argv[])
 
 	env = argv + argc + 1;
 	handle_argv(argc, argv, env);
-	if (&_DYNAMIC != NULL)
+	if (&_DYNAMIC != NULL) {
 		atexit(cleanup);
-	else
+	} else {
+		process_irelocs();
 		_init_tls();
+	}
 
 #ifdef GCRT
 	atexit(_mcleanup);

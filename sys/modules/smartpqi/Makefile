@@ -1,5 +1,5 @@
 # 5/10/2017
-# $FreeBSD: releng/11.3/sys/modules/smartpqi/Makefile 333417 2018-05-09 16:14:12Z sbruno $
+# $FreeBSD: releng/12.2/sys/modules/smartpqi/Makefile 333086 2018-04-28 17:43:51Z cem $
 
 KMOD = smartpqi
 

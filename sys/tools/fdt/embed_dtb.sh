@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2010 The FreeBSD Foundation
 # All rights reserved.
 #
@@ -27,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/tools/fdt/embed_dtb.sh 208749 2010-06-02 17:22:38Z raj $
+# $FreeBSD: releng/12.2/sys/tools/fdt/embed_dtb.sh 326272 2017-11-27 15:23:17Z pfg $
 
 # $1: kernel filename
 # $2: device tree blob filename

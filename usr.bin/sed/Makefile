@@ -1,15 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/sed/Makefile 276837 2015-01-08 17:23:59Z pfg $
+# $FreeBSD: releng/12.2/usr.bin/sed/Makefile 336929 2018-07-30 19:41:54Z pfg $
 
 .include <src.opts.mk>
 
 PROG=	sed
 SRCS=	compile.c main.c misc.c process.c
 
-WARNS?=	2
-
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

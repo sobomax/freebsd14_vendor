@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/crypto/siphash/siphash.h 309023 2016-11-22 20:28:17Z asomers $
+ * $FreeBSD: releng/12.2/sys/crypto/siphash/siphash.h 307584 2016-10-18 23:20:49Z asomers $
  */
 
 /*

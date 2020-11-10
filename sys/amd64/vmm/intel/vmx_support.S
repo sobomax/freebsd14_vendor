@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/intel/vmx_support.S 338427 2018-09-02 10:51:31Z kib $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmx_support.S 338068 2018-08-19 18:47:16Z kib $
  */
 
 #include <machine/asmacros.h>

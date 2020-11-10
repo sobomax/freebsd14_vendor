@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/wtap/vis_map/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: releng/12.2/tools/tools/wtap/vis_map/Makefile 264400 2014-04-13 05:21:56Z imp $
 
 BINDIR?=	/usr/local/bin/
 PROG=	vis_map

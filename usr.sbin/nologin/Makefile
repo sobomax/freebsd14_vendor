@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/22/94
-# $FreeBSD: releng/11.3/usr.sbin/nologin/Makefile 319016 2017-05-28 00:13:44Z rgrimes $
+# $FreeBSD: releng/12.2/usr.sbin/nologin/Makefile 314833 2017-03-07 05:10:38Z rgrimes $
 
 PROG=	nologin
 MAN=	nologin.5 nologin.8

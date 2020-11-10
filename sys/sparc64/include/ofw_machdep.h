@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 by Thomas Moestl <tmm@FreeBSD.org>.
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/ofw_machdep.h 293057 2016-01-02 19:28:35Z nwhitehorn $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/ofw_machdep.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _MACHINE_OFW_MACHDEP_H_

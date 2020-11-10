@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2017, Intel Corporation
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixgbe/ixgbe_dcb.c 331722 2018-03-29 02:50:57Z eadler $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixgbe/ixgbe_dcb.c 331224 2018-03-19 20:55:05Z erj $*/
 
 
 #include "ixgbe_type.h"
@@ -44,6 +45,10 @@
  * are the smallest unit programmable into the underlying
  * hardware. The IEEE 802.1Qaz specification do not use bandwidth
  * groups so this is much simplified from the CEE case.
+ * @bw: bandwidth index by traffic class
+ * @refill: refill credits index by traffic class
+ * @max: max credits by traffic class
+ * @max_frame_size: maximum frame size
  */
 s32 ixgbe_dcb_calculate_tc_credits(u8 *bw, u16 *refill, u16 *max,
 				   int max_frame_size)
@@ -78,8 +83,10 @@ s32 ixgbe_dcb_calculate_tc_credits(u8 *bw, u16 *refill, u16 *max,
 
 /**
  * ixgbe_dcb_calculate_tc_credits_cee - Calculates traffic class credits
- * @ixgbe_dcb_config: Struct containing DCB settings.
- * @direction: Configuring either Tx or Rx.
+ * @hw: pointer to hardware structure
+ * @dcb_config: Struct containing DCB settings
+ * @max_frame_size: Maximum frame size
+ * @direction: Configuring either Tx or Rx
  *
  * This function calculates the credits allocated to each traffic class.
  * It should be called only after the rules are checked by

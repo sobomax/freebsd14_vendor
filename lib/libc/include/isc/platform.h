@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (C) 2008  Internet Systems Consortium, Inc. ("ISC")
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -15,7 +17,7 @@
  */
 
 /* $Id: platform.h.in,v 1.2.6.2 2008/01/23 02:15:02 tbox Exp $ */
-/* $FreeBSD: releng/11.3/lib/libc/include/isc/platform.h 186090 2008-12-14 19:39:53Z ume $ */
+/* $FreeBSD: releng/12.2/lib/libc/include/isc/platform.h 326695 2017-12-08 15:57:29Z pfg $ */
 
 /*! \file */
 

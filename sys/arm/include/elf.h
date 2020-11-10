@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 David E. O'Brien
  * Copyright (c) 1996-1997 John D. Polstra.
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/include/elf.h 340556 2018-11-18 09:58:36Z kib $
+ * $FreeBSD: releng/12.2/sys/arm/include/elf.h 340555 2018-11-18 09:57:12Z kib $
  */
 
 #ifndef _MACHINE_ELF_H_

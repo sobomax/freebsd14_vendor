@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/procstat/procstat_rlimit.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_rlimit.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/param.h>
@@ -96,7 +96,7 @@ procstat_rlimit(struct procstat *prstat, struct kinfo_proc *kipp)
 	struct rlimit rlimit;
 	int i;
 
-	if (!hflag) {
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0) {
 		xo_emit("{T:/%5s %-16s %-16s %16s %16s}\n",
 		    "PID", "COMM", "RLIMIT", "SOFT     ", "HARD     ");
 	}

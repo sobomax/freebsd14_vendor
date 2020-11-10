@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/pcengines/Files/root/.cshrc 278616 2015-02-12 05:35:00Z cperciva $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/pcengines/Files/root/.cshrc 337497 2018-08-08 19:24:20Z asomers $
 #
 # .cshrc - csh resource script, read at beginning of execution by each shell
 #
@@ -17,7 +17,7 @@ umask 22
 set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin $HOME/bin)
 
 setenv	EDITOR	vi
-setenv	PAGER	more
+setenv	PAGER	less
 setenv	BLOCKSIZE	K
 
 if ($?prompt) then

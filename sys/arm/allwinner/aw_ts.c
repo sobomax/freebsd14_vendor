@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/allwinner/aw_ts.c 308276 2016-11-04 01:06:14Z manu $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/aw_ts.c 308638 2016-11-14 11:41:22Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/allwinner/aw_ts.c 308276 2016-11-04 01:0
 #include <sys/sysctl.h>
 #include <machine/bus.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>

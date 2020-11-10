@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/dwc_otg_fdt.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/dwc_otg_fdt.c 356648 2020-01-12 04:05:18Z kevans $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,7 +58,12 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/dwc_otg_fdt.c 331722 2018
 #include <dev/usb/controller/dwc_otg_fdt.h>
 
 static device_probe_t dwc_otg_probe;
-static device_detach_t dwc_otg_detach;
+
+static struct ofw_compat_data compat_data[] = {
+	{ "synopsys,designware-hs-otg2",	1 },
+	{ "snps,dwc2",				1 },
+	{ NULL,					0 }
+};
 
 static int
 dwc_otg_probe(device_t dev)
@@ -65,12 +72,26 @@ dwc_otg_probe(device_t dev)
 	if (!ofw_bus_status_okay(dev))
 		return (ENXIO);
 
-	if (!ofw_bus_is_compatible(dev, "synopsys,designware-hs-otg2"))
+	if (!ofw_bus_search_compatible(dev, compat_data)->ocd_data)
 		return (ENXIO);
 
 	device_set_desc(dev, "DWC OTG 2.0 integrated USB controller");
 
 	return (BUS_PROBE_DEFAULT);
+}
+
+static int
+dwc_otg_irq_index(device_t dev, int *rid)
+{
+	int idx, rv;
+	phandle_t node;
+
+	node = ofw_bus_get_node(dev);
+	rv = ofw_bus_find_string_index(node, "interrupt-names", "usb", &idx);
+	if (rv != 0)
+		return (rv);
+	*rid = idx;
+	return (0);
 }
 
 int
@@ -123,10 +144,16 @@ dwc_otg_attach(device_t dev)
 
 
 	/*
-	 * brcm,bcm2708-usb FDT provides two interrupts,
-	 * we need only second one (VC_USB)
+	 * brcm,bcm2708-usb FDT provides two interrupts, we need only the USB
+	 * interrupt (VC_USB).  The latest FDT for it provides an
+	 * interrupt-names property and swapped them around, while older ones
+	 * did not have interrupt-names and put the usb interrupt in the second
+	 * position.  We'll attempt to use interrupt-names first with a fallback
+	 * to the old method of assuming the index based on the compatible
+	 * string.
 	 */
-	rid = ofw_bus_is_compatible(dev, "brcm,bcm2708-usb") ? 1 : 0;
+	if (dwc_otg_irq_index(dev, &rid) != 0)
+		rid = ofw_bus_is_compatible(dev, "brcm,bcm2708-usb") ? 1 : 0;
 	sc->sc_otg.sc_irq_res =
 	    bus_alloc_resource_any(dev, SYS_RES_IRQ, &rid, RF_ACTIVE);
 	if (sc->sc_otg.sc_irq_res == NULL)
@@ -159,11 +186,10 @@ error:
 	return (ENXIO);
 }
 
-static int
+int
 dwc_otg_detach(device_t dev)
 {
 	struct dwc_otg_fdt_softc *sc = device_get_softc(dev);
-	int err;
 
 	/* during module unload there are lots of children leftover */
 	device_delete_children(dev);
@@ -174,7 +200,7 @@ dwc_otg_detach(device_t dev)
 		 */
 		dwc_otg_uninit(&sc->sc_otg);
 
-		err = bus_teardown_intr(dev, sc->sc_otg.sc_irq_res,
+		bus_teardown_intr(dev, sc->sc_otg.sc_irq_res,
 		    sc->sc_otg.sc_intr_hdl);
 		sc->sc_otg.sc_intr_hdl = NULL;
 	}

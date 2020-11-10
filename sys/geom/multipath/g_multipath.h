@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006-2007 Matthew Jacob <mjacob@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/multipath/g_multipath.h 258220 2013-11-16 14:31:49Z mav $
+ * $FreeBSD: releng/12.2/sys/geom/multipath/g_multipath.h 326270 2017-11-27 15:17:37Z pfg $
  */
 /*
  * Based upon work by Pawel Jakub Dawidek <pjd@FreeBSD.org> for all of the

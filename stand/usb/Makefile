@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/stand/usb/Makefile 329146 2018-02-12 01:17:06Z kevans $
+# $FreeBSD: releng/12.2/stand/usb/Makefile 326038 2017-11-20 22:42:17Z imp $
 #
 # Copyright (c) 2013 Hans Petter Selasky.
 # Copyright (c) 2014 SRI International

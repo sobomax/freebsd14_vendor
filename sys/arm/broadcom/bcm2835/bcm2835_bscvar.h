@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Oleksandr Tymoshenko <gonzo@freebsd.org>
  * Copyright (c) 2013 Luiz Otavio O Souza <loos@freebsd.org>
  * All rights reserved.
@@ -24,21 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_bscvar.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_bscvar.h 332262 2018-04-08 00:56:19Z gonzo $
  */
 
 #ifndef _BCM2835_BSCVAR_H
 #define _BCM2835_BSCVAR_H
-
-struct {
-	uint32_t	sda;
-	uint32_t	scl;
-	unsigned long	start;
-} bcm_bsc_pins[] = {
-	{ 0, 1, 0x205000 },	/* BSC0 GPIO pins and base address. */
-	{ 2, 3, 0x804000 }	/* BSC1 GPIO pins and base address. */
-};
-#define	BCM_BSC_BASE_MASK	0x00ffffff
 
 struct iic_msg;
 

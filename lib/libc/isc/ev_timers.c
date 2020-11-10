@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")
  * Copyright (c) 1995-1999 by Internet Software Consortium
  *
@@ -23,7 +25,7 @@
 static const char rcsid[] = "$Id: ev_timers.c,v 1.6 2005/04/27 04:56:36 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/isc/ev_timers.c 288147 2015-09-23 16:16:16Z rodrigc $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/isc/ev_timers.c 326700 2017-12-08 17:52:53Z pfg $");
 
 /* Import. */
 

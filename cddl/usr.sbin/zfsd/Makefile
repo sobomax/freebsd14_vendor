@@ -1,12 +1,13 @@
-# $FreeBSD: releng/11.3/cddl/usr.sbin/zfsd/Makefile 305909 2016-09-18 02:41:50Z ngie $
+# $FreeBSD: releng/12.2/cddl/usr.sbin/zfsd/Makefile 348138 2019-05-23 01:09:10Z ngie $
+
+.include <src.opts.mk>
 
 .include "Makefile.common"
 
 PROG_CXX=	zfsd
 MAN=		zfsd.8
 
-.include <bsd.prog.mk>
+HAS_TESTS=
+SUBDIR.${MK_GOOGLETEST}+= tests
 
-# The unittests require devel/googletest and devel/googlemock from ports.
-# Don't automatically build them.
-SUBDIR=
+.include <bsd.prog.mk>

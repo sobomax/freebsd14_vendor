@@ -1,4 +1,4 @@
-$FreeBSD: releng/11.3/usr.sbin/bluetooth/bcmfw/README 114900 2003-05-11 02:19:10Z julian $
+$FreeBSD: releng/12.2/usr.sbin/bluetooth/bcmfw/README 114900 2003-05-11 02:19:10Z julian $
 
 This directory will eventually also contain copies of the broadcom firmware.
 

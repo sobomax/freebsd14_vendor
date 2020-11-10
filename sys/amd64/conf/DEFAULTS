@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/amd64
 #
-# $FreeBSD: releng/11.3/sys/amd64/conf/DEFAULTS 232619 2012-03-06 20:01:25Z attilio $
+# $FreeBSD: releng/12.2/sys/amd64/conf/DEFAULTS 337967 2018-08-17 14:47:21Z imp $
 
 machine		amd64
 
@@ -20,5 +20,6 @@ options 	GEOM_PART_BSD
 options 	GEOM_PART_EBR
 options 	GEOM_PART_EBR_COMPAT
 options 	GEOM_PART_MBR
+options 	GEOM_PART_GPT
 
 options 	NEW_PCIB

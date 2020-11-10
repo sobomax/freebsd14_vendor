@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: releng/11.3/sys/netpfil/pf/pf.h 332513 2018-04-15 15:22:28Z kp $
+ *	$FreeBSD: releng/12.2/sys/netpfil/pf/pf.h 331436 2018-03-23 16:56:44Z kp $
  */
 
 #ifndef	_NET_PF_H_

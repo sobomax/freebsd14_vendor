@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Konstantin Belousov <kib@freebsd.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/gen/elf_utils.c 346156 2019-04-12 15:15:27Z kib $
+ * $FreeBSD: releng/12.2/lib/libc/gen/elf_utils.c 350299 2019-07-24 19:57:11Z brooks $
  */
 
 #include <sys/types.h>
@@ -36,7 +38,6 @@
 #include "libc_private.h"
 #include "static_tls.h"
 
-int __elf_phdr_match_addr(struct dl_phdr_info *, void *);
 void __pthread_map_stacks_exec(void);
 void __pthread_distribute_static_tls(size_t, void *, size_t, size_t);
 
@@ -48,8 +49,21 @@ __elf_phdr_match_addr(struct dl_phdr_info *phdr_info, void *addr)
 
 	for (i = 0; i < phdr_info->dlpi_phnum; i++) {
 		ph = &phdr_info->dlpi_phdr[i];
-		if (ph->p_type != PT_LOAD || (ph->p_flags & PF_X) == 0)
+		if (ph->p_type != PT_LOAD)
 			continue;
+
+		/* ELFv1 ABI for powerpc64 passes function descriptor
+		 * pointers around, not function pointers.  The function
+		 * descriptors live in .opd, which is a non-executable segment.
+		 * The PF_X check would therefore make all address checks fail,
+		 * causing a crash in some instances.  Don't skip over
+		 * non-executable segments in the ELFv1 powerpc64 case.
+		 */
+#if !defined(__powerpc64__) || (defined(_CALL_ELF) && _CALL_ELF == 2)
+		if ((ph->p_flags & PF_X) == 0)
+			continue;
+#endif
+
 		if (phdr_info->dlpi_addr + ph->p_vaddr <= (uintptr_t)addr &&
 		    (uintptr_t)addr + sizeof(addr) < phdr_info->dlpi_addr +
 		    ph->p_vaddr + ph->p_memsz)

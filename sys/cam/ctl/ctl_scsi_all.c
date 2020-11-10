@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Implementation of Utility functions for all SCSI device types.
  *
  * Copyright (c) 1997, 1998, 1999 Justin T. Gibbs.
@@ -31,7 +33,7 @@
 
 #include <sys/param.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/ctl/ctl_scsi_all.c 287620 2015-09-10 10:46:21Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/ctl/ctl_scsi_all.c 326265 2017-11-27 15:12:43Z pfg $");
 
 #include <sys/types.h>
 #ifdef _KERNEL

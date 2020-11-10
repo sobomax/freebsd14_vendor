@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/efigop.h 293724 2016-01-12 02:17:39Z smh $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/efigop.h 293724 2016-01-12 02:17:39Z smh $ */
 /*++
 
 Copyright (c)  1999 - 2002 Intel Corporation. All rights reserved

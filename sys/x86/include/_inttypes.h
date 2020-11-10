@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	From: $NetBSD: int_fmtio.h,v 1.2 2001/04/26 16:25:21 kleink Exp $
- * $FreeBSD: releng/11.3/sys/x86/include/_inttypes.h 217157 2011-01-08 18:09:48Z tijl $
+ * $FreeBSD: releng/12.2/sys/x86/include/_inttypes.h 326263 2017-11-27 15:11:47Z pfg $
  */
 
 #ifndef _MACHINE_INTTYPES_H_

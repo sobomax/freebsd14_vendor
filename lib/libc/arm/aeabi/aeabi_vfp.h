@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/arm/aeabi/aeabi_vfp.h 297620 2016-04-06 16:50:18Z andrew $
+ * $FreeBSD: releng/12.2/lib/libc/arm/aeabi/aeabi_vfp.h 297620 2016-04-06 16:50:18Z andrew $
  *
  */
 

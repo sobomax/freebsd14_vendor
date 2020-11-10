@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *	$FreeBSD: releng/11.3/sys/libkern/timingsafe_bcmp.c 275732 2014-12-12 19:56:36Z jmg $
+ *	$FreeBSD: releng/12.2/sys/libkern/timingsafe_bcmp.c 275732 2014-12-12 19:56:36Z jmg $
  *
  */
 

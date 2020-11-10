@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1996, by Steve Passe
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/mptable.h 259228 2013-12-11 21:19:04Z jhb $
+ * $FreeBSD: releng/12.2/sys/x86/include/mptable.h 326263 2017-11-27 15:11:47Z pfg $
  */
 
 #ifndef __MACHINE_MPTABLE_H__

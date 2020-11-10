@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/machdep_intr.c 298068 2016-04-15 16:05:41Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/machdep_intr.c 298068 2016-04-15 16:05:41Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

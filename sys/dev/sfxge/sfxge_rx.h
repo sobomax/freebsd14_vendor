@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/sfxge_rx.h 342406 2018-12-25 06:38:42Z arybchik $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/sfxge_rx.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef _SFXGE_RX_H

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999-2003 Robert N. M. Watson
  * All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ufs/ufs_acl.c 306553 2016-10-01 09:19:43Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ufs/ufs_acl.c 326272 2017-11-27 15:23:17Z pfg $");
 
 #include "opt_ufs.h"
 #include "opt_quota.h"

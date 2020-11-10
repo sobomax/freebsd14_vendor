@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/userboot/userboot/autoload.c 223695 2011-06-30 16:08:56Z dfr $");
+__FBSDID("$FreeBSD: releng/12.2/stand/userboot/userboot/autoload.c 223695 2011-06-30 16:08:56Z dfr $");
 
 int
 userboot_autoload(void)

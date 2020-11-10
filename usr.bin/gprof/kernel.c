@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/gprof/kernel.c 246783 2013-02-14 08:16:03Z charnier $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/gprof/kernel.c 246783 2013-02-14 08:16:03Z charnier $");
 
 #include <sys/param.h>
 #include <sys/linker.h>

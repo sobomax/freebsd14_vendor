@@ -1,9 +1,11 @@
 /* 08 Nov 1998*/
-/*
+/*-
  * cdev.h - header for sample kld module implementing a character device
  *          driver.
  *
  * 08 Nov 1998  Rajesh Vaidheeswarran
+ *
+ * SPDX-License-Identifier: BSD-4-Clause
  *
  * Copyright (c) 1998 Rajesh Vaidheeswarran
  * All rights reserved.
@@ -66,7 +68,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: releng/11.3/share/examples/kld/cdev/module/cdev.h 66549 2000-10-02 14:14:07Z sobomax $
+ * $FreeBSD: releng/12.2/share/examples/kld/cdev/module/cdev.h 326275 2017-11-27 15:28:26Z pfg $
  */
 
 #ifndef __CDEV_H_

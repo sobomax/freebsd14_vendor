@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/powerpc/powerpc/sigcode64.S 291668 2015-12-03 00:10:57Z nwhitehorn $ */
+/* $FreeBSD: releng/12.2/sys/powerpc/powerpc/sigcode64.S 331254 2018-03-20 17:58:51Z emaste $ */
 /* $NetBSD: sigcode.S,v 1.1 1999/11/17 14:56:11 kleink Exp $	*/
 
 /*-
@@ -34,7 +34,7 @@
 
 #include <machine/asm.h>
 #include <sys/syscall.h>
-#include "assym.s"
+#include "assym.inc"
 
 /*
  * The following code gets copied to the top of the user stack on process

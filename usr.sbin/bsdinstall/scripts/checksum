@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/scripts/checksum 323570 2017-09-14 00:41:27Z emaste $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/scripts/checksum 321226 2017-07-19 18:25:52Z emaste $
 
 test -f $BSDINSTALL_DISTDIR/MANIFEST || exit 0
 
@@ -32,7 +32,7 @@ percentage=0
 for dist in $DISTRIBUTIONS; do
 	distname=$(basename $dist .txz)
 	eval "status_$distname=7"
-	
+
 	items=""
 	for i in $DISTRIBUTIONS; do
 		items="$items $i `eval echo \\\${status_$(basename $i .txz):-Pending}`"

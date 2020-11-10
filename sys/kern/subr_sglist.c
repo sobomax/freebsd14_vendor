@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_sglist.c 345039 2019-03-11 22:48:51Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_sglist.c 326023 2017-11-20 19:43:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

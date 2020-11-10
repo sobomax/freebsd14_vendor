@@ -1,10 +1,10 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: releng/11.3/usr.sbin/pmcstudy/Makefile 280697 2015-03-26 15:40:47Z rrs $
+# $FreeBSD: releng/12.2/usr.sbin/pmcstudy/Makefile 352094 2019-09-09 18:27:52Z imp $
 
 PROG=	pmcstudy
 MAN=	pmcstudy.8
 SRCS= pmcstudy.c eval_expr.c
-CFLAGS+= -Wall -Werror
+CFLAGS+= -Wall ${WERROR}
 
 BINDIR= /usr/bin
 

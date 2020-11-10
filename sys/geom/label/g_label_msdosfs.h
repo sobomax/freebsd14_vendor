@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Tobias Reifenberger
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/label/g_label_msdosfs.h 162834 2006-09-30 08:16:49Z pjd $
+ * $FreeBSD: releng/12.2/sys/geom/label/g_label_msdosfs.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #include <sys/types.h>

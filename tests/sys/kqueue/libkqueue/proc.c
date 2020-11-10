@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tests/sys/kqueue/libkqueue/proc.c 341275 2018-11-30 02:06:30Z dab $
+ * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/proc.c 359753 2020-04-09 20:35:35Z kevans $
  */
 
 #include <sys/stat.h>
@@ -25,7 +25,6 @@
 
 static int sigusr1_caught = 0;
 
-int kqfd;
 
 static void
 sig_handler(int signum)

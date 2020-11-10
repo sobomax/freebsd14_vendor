@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/lib/libkadm5srv/Makefile 344200 2019-02-16 03:18:52Z nyan $
+# $FreeBSD: releng/12.2/kerberos5/lib/libkadm5srv/Makefile 344199 2019-02-16 03:18:09Z nyan $
 
 LIB=	kadm5srv
 LDFLAGS=	-Wl,--no-undefined

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Kazutaka YOKOTA <yokota@zodiac.mech.utsunomiya-u.ac.jp>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/kbd/kbdreg.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/kbd/kbdreg.h 356011 2019-12-22 17:04:16Z kevans $
  */
 
 #ifndef _DEV_KBD_KBDREG_H_
@@ -203,14 +205,19 @@ typedef struct keyboard_switch {
 #define kbdd_poll(kbd, on)						\
 	(*kbdsw[(kbd)->kb_index]->poll)((kbd), (on))
 #define kbdd_diag(kbd, level)						\
-	(*kbdsw[(kbd)->kb_index]->diag)((kbd), (leve))
+	(*kbdsw[(kbd)->kb_index]->diag)((kbd), (level))
 
-/* keyboard driver */
+/*
+ * Keyboard driver definition.  Some of these be immutable after definition
+ * time, e.g. one shouldn't be able to rename a driver or use a different kbdsw
+ * entirely, but patching individual methods is acceptable.
+ */
 typedef struct keyboard_driver {
     SLIST_ENTRY(keyboard_driver) link;
-    char		*name;
-    keyboard_switch_t	*kbdsw;
-    int			(*configure)(int); /* backdoor for the console driver */
+    const char * const		name;
+    keyboard_switch_t * const	kbdsw;
+    /* backdoor for the console driver */
+    int				(* const configure)(int);
 } keyboard_driver_t;
 
 #ifdef _KERNEL
@@ -250,6 +257,10 @@ keyboard_t 		*kbd_get_keyboard(int index);
 /* a back door for the console driver to tickle the keyboard driver XXX */
 int			kbd_configure(int flags);
 			/* see `kb_config' above for flag bit definitions */
+
+/* evdev2kbd mappings */
+void			kbd_ev_event(keyboard_t *kbd, uint16_t type,
+				    uint16_t code, int32_t value);
 
 #ifdef KBD_INSTALL_CDEV
 

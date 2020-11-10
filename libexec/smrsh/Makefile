@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/2/95
-# $FreeBSD: releng/11.3/libexec/smrsh/Makefile 321269 2017-07-20 00:58:19Z ngie $
+# $FreeBSD: releng/12.2/libexec/smrsh/Makefile 314653 2017-03-04 11:28:03Z ngie $
 
 PACKAGE=sendmail
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

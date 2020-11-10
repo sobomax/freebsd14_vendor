@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/dhcpd/os-base 264860 2014-04-24 02:02:37Z imp $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/dhcpd/os-base 333435 2018-05-09 20:41:03Z imp $
 
 #-
-# Copyright (c) 2014 Warner Losh. All Rights Reserved.
-# Copyright (c) 2010-2011 iXsystems, Inc., All rights reserved.
+# Copyright (c) 2014 M. Warner Losh.
+# Copyright (c) 2010-2011 iXsystems, Inc.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions

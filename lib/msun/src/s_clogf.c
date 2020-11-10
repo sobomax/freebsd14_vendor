@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/s_clogf.c 334654 2018-06-05 13:46:18Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_clogf.c 333577 2018-05-13 09:54:34Z kib $");
 
 #include <complex.h>
 #include <float.h>

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/linuxkpi/common/src/linux_idr.c 334764 2018-06-07 07:44:54Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_idr.c 336007 2018-07-05 17:13:37Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,7 +55,7 @@ struct linux_idr_cache {
 	unsigned count;
 };
 
-static DPCPU_DEFINE(struct linux_idr_cache, linux_idr_cache);
+DPCPU_DEFINE_STATIC(struct linux_idr_cache, linux_idr_cache);
 
 /*
  * IDR Implementation.

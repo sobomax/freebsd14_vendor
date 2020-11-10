@@ -1,6 +1,9 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/mips/crti.S 205112 2010-03-13 02:10:20Z jmallett $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/mips/crti.S 323028 2017-08-30 19:19:31Z jhb $");
 
+#ifndef __clang__
+	.gnu_attribute 4, 0
+#endif
 	.section .init,"ax",%progbits
 	.align 4
 	.globl	_init

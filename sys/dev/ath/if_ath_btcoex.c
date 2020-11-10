@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Adrian Chadd <adrian@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/11.3/sys/dev/ath/if_ath_btcoex.c 332303 2018-04-08 20:50:16Z emaste $
+ * $FreeBSD: releng/12.2/sys/dev/ath/if_ath_btcoex.c 365670 2020-09-12 19:33:25Z bz $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ath/if_ath_btcoex.c 332303 2018-04-08 20:50:16Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ath/if_ath_btcoex.c 365670 2020-09-12 19:33:25Z bz $");
 
 /*
  * This implements some very basic bluetooth coexistence methods for
@@ -53,7 +55,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/ath/if_ath_btcoex.c 332303 2018-04-08 20
 #include <sys/bus.h>
 
 #include <sys/socket.h>
- 
+
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_media.h>
@@ -479,4 +481,3 @@ bad:
 		free(outdata, M_TEMP);
 	return (error);
 }
-

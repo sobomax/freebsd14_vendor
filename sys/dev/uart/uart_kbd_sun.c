@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Jake Burkholder.
  * All rights reserved.
  *
@@ -25,9 +27,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_kbd_sun.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_kbd_sun.c 356013 2019-12-22 17:15:48Z kevans $");
 
-#include "opt_compat.h"
 #include "opt_kbd.h"
 #include "opt_sunkbd.h"
 
@@ -117,25 +118,24 @@ static int keycode2scancode(int keycode, int shift, int up);
 #endif
 
 static keyboard_switch_t sunkbdsw = {
-	sunkbd_probe,
-	sunkbd_init,
-	sunkbd_term,
-	sunkbd_intr,
-	sunkbd_test_if,
-	sunkbd_enable,
-	sunkbd_disable,
-	sunkbd_read,
-	sunkbd_check,
-	sunkbd_read_char,
-	sunkbd_check_char,
-	sunkbd_ioctl,
-	sunkbd_lock,
-	sunkbd_clear_state,
-	sunkbd_get_state,
-	sunkbd_set_state,
-	genkbd_get_fkeystr,
-	sunkbd_poll_mode,
-	sunkbd_diag
+	.probe =	sunkbd_probe,
+	.init =		sunkbd_init,
+	.term =		sunkbd_term,
+	.intr =		sunkbd_intr,
+	.test_if =	sunkbd_test_if,
+	.enable =	sunkbd_enable,
+	.disable =	sunkbd_disable,
+	.read =		sunkbd_read,
+	.check =	sunkbd_check,
+	.read_char =	sunkbd_read_char,
+	.check_char =	sunkbd_check_char,
+	.ioctl =	sunkbd_ioctl,
+	.lock =		sunkbd_lock,
+	.clear_state =	sunkbd_clear_state,
+	.get_state =	sunkbd_get_state,
+	.set_state =	sunkbd_set_state,
+	.poll =		sunkbd_poll_mode,
+	.diag =		sunkbd_diag
 };
 
 KEYBOARD_DRIVER(sunkbd, sunkbdsw, sunkbd_configure);

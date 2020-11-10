@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libkvm/kvm_amd64.h 291406 2015-11-27 18:58:26Z jhb $
+ * $FreeBSD: releng/12.2/lib/libkvm/kvm_amd64.h 325732 2017-11-12 01:36:48Z will $
  */
 
 #ifndef __KVM_AMD64_H__
@@ -55,7 +55,9 @@ typedef	uint64_t	amd64_pml4e_t;
 #define	AMD64_NPML4EPG		(AMD64_PAGE_SIZE / sizeof(amd64_pml4e_t))
 #define	AMD64_PML4SHIFT		39
 
+#define	AMD64_PG_NX		(1ULL << 63)
 #define	AMD64_PG_V		0x001
+#define	AMD64_PG_RW		0x002
 #define	AMD64_PG_PS		0x080
 #define	AMD64_PG_FRAME		(0x000ffffffffff000)
 #define	AMD64_PG_PS_FRAME	(0x000fffffffe00000)

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2000  Brian S. Dean <bsd@bsdhome.com>
  * All Rights Reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/i386/sys/i386_clr_watch.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/i386/sys/i386_clr_watch.c 326193 2017-11-25 17:12:48Z pfg $");
 
 #include <machine/reg.h>
 #include <machine/sysarch.h>

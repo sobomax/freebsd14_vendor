@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 Doug Rabson.
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
@@ -25,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/atomic.h,v 1.20 2001/02/11
- * $FreeBSD: releng/11.3/sys/sparc64/include/atomic.h 345906 2019-04-05 10:00:40Z hselasky $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/atomic.h 336832 2018-07-28 15:42:57Z marius $
  */
 
 #ifndef	_MACHINE_ATOMIC_H_

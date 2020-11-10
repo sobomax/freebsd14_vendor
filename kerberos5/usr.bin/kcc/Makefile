@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/usr.bin/kcc/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
+# $FreeBSD: releng/12.2/kerberos5/usr.bin/kcc/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
 
 PROG=	kcc
 MAN=	klist.1 kswitch.1

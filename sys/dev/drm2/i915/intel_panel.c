@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/i915/intel_panel.c 296548 2016-03-08 20:33:02Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/i915/intel_panel.c 338285 2018-08-24 00:02:00Z imp $");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 

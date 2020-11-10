@@ -1,8 +1,8 @@
-# $FreeBSD: releng/11.3/sys/arm/mv/std-pj4b.mv 289477 2015-10-18 01:03:43Z ian $
+# $FreeBSD: releng/12.2/sys/arm/mv/std-pj4b.mv 331995 2018-04-04 08:40:49Z mw $
 
-files		"../mv/files.mv"
+files		"../mv/files.arm7"
 cpu		CPU_MV_PJ4B
-machine 	arm	armv6
+machine 	arm	armv7
 makeoptions	CONF_CFLAGS="-march=armv7a"
 
 # This was originally defined as "(KERNBASE-(1024*1024*1024))" but that

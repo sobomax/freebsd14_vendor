@@ -12,7 +12,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -29,9 +29,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)tail.1	8.1 (Berkeley) 6/6/93
-.\" $FreeBSD: releng/11.3/usr.bin/tail/tail.1 332482 2018-04-13 17:57:00Z kevans $
+.\" $FreeBSD: releng/12.2/usr.bin/tail/tail.1 359297 2020-03-25 08:48:24Z 0mp $
 .\"
-.Dd April 10, 2018
+.Dd March 22, 2020
 .Dt TAIL 1
 .Os
 .Sh NAME
@@ -157,7 +157,7 @@ Keep
 .Pa /var/log/messages
 open, displaying to the standard output anything appended to the file:
 .Pp
-.Dl $ tail -f /var/log/messages
+.Dl $ tail -F /var/log/messages
 .Sh SEE ALSO
 .Xr cat 1 ,
 .Xr head 1 ,

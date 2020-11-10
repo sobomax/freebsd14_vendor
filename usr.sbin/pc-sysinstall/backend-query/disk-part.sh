@@ -1,5 +1,7 @@
 #!/bin/sh
 #-
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2010 iXsystems, Inc.  All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/pc-sysinstall/backend-query/disk-part.sh 217164 2011-01-08 20:25:00Z jpaetzel $
+# $FreeBSD: releng/12.2/usr.sbin/pc-sysinstall/backend-query/disk-part.sh 326275 2017-11-27 15:28:26Z pfg $
 
 # Query a disk for partitions and display them
 #############################

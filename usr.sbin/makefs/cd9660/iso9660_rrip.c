@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/makefs/cd9660/iso9660_rrip.c 332981 2018-04-25 01:48:15Z benno $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/makefs/cd9660/iso9660_rrip.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <sys/queue.h>
 #include <sys/types.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/dma/dmagent/Makefile 332337 2018-04-09 21:16:28Z emaste $
+# $FreeBSD: releng/12.2/libexec/dma/dmagent/Makefile 301166 2016-06-01 20:44:28Z gjb $
 
 .include <src.opts.mk>
 
@@ -20,7 +20,6 @@ SRCS=	aliases_parse.y \
 MAN8=	dma.8
 CONFS=	dma.conf
 CONFSDIR=	${CONFDIR}/dma
-CFLAGS+=	-D_WITH_GETLINE
 YFLAGS+=	-i
 CLEANFILES=	aliases_parse.i
 FILES=	mailer.conf

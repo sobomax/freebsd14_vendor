@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_persona.h 346812 2019-04-28 09:53:08Z dchagin $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_persona.h 328890 2018-02-05 17:29:12Z emaste $
  */
 
 #ifndef LINUX_PERSONALITY_H

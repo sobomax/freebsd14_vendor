@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/linux/linux_ipc.c 346838 2019-04-28 14:16:00Z dchagin $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/linux/linux_ipc.c 346842 2019-04-28 14:34:31Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

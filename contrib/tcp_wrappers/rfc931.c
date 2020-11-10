@@ -8,7 +8,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: releng/11.3/contrib/tcp_wrappers/rfc931.c 257398 2013-10-30 21:18:14Z sbruno $
+  * $FreeBSD: releng/12.2/contrib/tcp_wrappers/rfc931.c 350296 2019-07-24 19:16:02Z brooks $
   */
 
 #ifndef lint
@@ -66,8 +66,7 @@ int     protocol;
 
 /* timeout - handle timeouts */
 
-static void timeout(sig)
-int     sig;
+static void timeout(int sig)
 {
     longjmp(timebuf, sig);
 }

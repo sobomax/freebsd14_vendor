@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998-2016 Dag-Erling Smørgrav
  * Copyright (c) 2013 Michael Gmelin <freebsd@grem.de>
  * All rights reserved.
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libfetch/common.c 339250 2018-10-09 10:49:19Z des $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libfetch/common.c 339270 2018-10-09 21:28:26Z gjb $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -672,7 +674,11 @@ fetch_ssl_verify_altname(STACK_OF(GENERAL_NAME) *altnames,
 #else
 		name = sk_GENERAL_NAME_value(altnames, i);
 #endif
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
 		ns = (const char *)ASN1_STRING_data(name->d.ia5);
+#else
+		ns = (const char *)ASN1_STRING_get0_data(name->d.ia5);
+#endif
 		nslen = (size_t)ASN1_STRING_length(name->d.ia5);
 
 		if (name->type == GEN_DNS && ip == NULL &&

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/libntp/Makefile 359144 2020-03-19 16:52:41Z gordon $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/libntp/Makefile 358659 2020-03-04 23:54:13Z cy $
 
 .PATH: ${SRCTOP}/contrib/ntp/libntp \
 	${SRCTOP}/contrib/ntp/lib/isc \
@@ -82,11 +82,11 @@ CFLAGS+= -I${SRCTOP}/contrib/ntp/include \
 	-I${SRCTOP}/contrib/ntp/lib/isc/pthreads/include \
 	-I${SRCTOP}/contrib/ntp/sntp/libopts \
 	-I${SRCTOP}/lib/libc/${MACHINE_ARCH} \
-	-I${SRCTOP}/lib/libedit/edit \
+	-I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/edit \
 	-I${.CURDIR:H} \
 	-I${.CURDIR}/
 
-CFLAGS+= -DHAVE_BSD_NICE -DHAVE_STDINT_H
+CFLAGS+= -DHAVE_BSD_NICE -DHAVE_STDINT_H -DHAVE_CLOSEFROM
 
 CLEANFILES+= .version version.c
 

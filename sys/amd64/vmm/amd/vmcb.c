@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/amd64/vmm/amd/vmcb.c 336190 2018-07-11 07:19:42Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/amd/vmcb.c 335030 2018-06-13 07:02:58Z araujo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

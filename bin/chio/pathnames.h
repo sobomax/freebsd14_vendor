@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/bin/chio/pathnames.h 139969 2005-01-10 08:39:26Z imp $	*/
+/* $FreeBSD: releng/12.2/bin/chio/pathnames.h 139969 2005-01-10 08:39:26Z imp $	*/
 
 /*-
  * Copyright (c) 1996 Jason R. Thorpe <thorpej@and.com>

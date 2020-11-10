@@ -1,6 +1,9 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/mips/crtn.S 204674 2010-03-03 21:59:23Z imp $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/mips/crtn.S 323028 2017-08-30 19:19:31Z jhb $");
 
+#ifndef __clang__
+	.gnu_attribute 4, 0
+#endif
 	.section .init,"ax",%progbits
 	.align 4
 	.set noreorder

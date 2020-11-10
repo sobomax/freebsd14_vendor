@@ -54,7 +54,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/ofw/libofw/openfirm.h 329175 2018-02-12 17:44:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/ofw/libofw/openfirm.h 326484 2017-12-03 04:54:18Z imp $
  */
 #ifndef _OPENFIRM_H_
 #define	_OPENFIRM_H_

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/linuxkpi/common/src/linux_slab.c 330853 2018-03-13 16:20:59Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_slab.c 330387 2018-03-04 18:04:37Z hselasky $");
 
 #include <linux/slab.h>
 #include <linux/rcupdate.h>

@@ -1,12 +1,12 @@
 
-# $FreeBSD: releng/11.3/sys/modules/aic7xxx/ahd/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/aic7xxx/ahd/Makefile 326377 2017-11-29 23:41:49Z scottl $
 
 .PATH:	${SRCTOP}/sys/dev/aic7xxx
 KMOD=	ahd
 
 GENSRCS= aic79xx_seq.h aic79xx_reg.h
 REG_PRINT_OPT=
-AHD_REG_PRETTY_PRINT=1
+# AHD_REG_PRETTY_PRINT=1
 .ifdef AHD_REG_PRETTY_PRINT
 GENSRCS += aic79xx_reg_print.c
 CFLAGS+= -DAHD_REG_PRETTY_PRINT=1

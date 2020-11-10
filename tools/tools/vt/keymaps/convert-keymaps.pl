@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl
-# $FreeBSD: releng/11.3/tools/tools/vt/keymaps/convert-keymaps.pl 270232 2014-08-20 17:07:41Z se $
+# $FreeBSD: releng/12.2/tools/tools/vt/keymaps/convert-keymaps.pl 270232 2014-08-20 17:07:41Z se $
 
 use Text::Iconv;
 use Encode;

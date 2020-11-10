@@ -9,7 +9,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)config.8	8.2 (Berkeley) 4/19/94
-.\" $FreeBSD: releng/11.3/usr.sbin/config/config.8 277904 2015-01-29 22:49:30Z rodrigc $
+.\" $FreeBSD: releng/12.2/usr.sbin/config/config.8 363546 2020-07-26 09:52:04Z 0mp $
 .\"
-.Dd May 8, 2007
+.Dd June 29, 2020
 .Dt CONFIG 8
 .Os
 .Sh NAME
@@ -61,7 +61,7 @@ that give alternate files for a specific machine
 section below).
 .Pp
 Available options and operands:
-.Bl -tag -width ".Ar SYSTEM_NAME"
+.Bl -tag -width "SYSTEM_NAME"
 .It Fl V
 Print the
 .Nm
@@ -235,7 +235,7 @@ installs
 in the root file system.
 .El
 .Sh FILES
-.Bl -tag -width ".Pa /sys/ Ns Va ARCH Ns Pa /compile/ Ns Ar SYSTEM_NAME" -compact
+.Bl -tag -width "/sys/ARCH/compile/SYSTEM_NAME" -compact
 .It Pa /sys/conf/files
 list of common files system is built from
 .It Pa /sys/conf/Makefile. Ns Va ARCH

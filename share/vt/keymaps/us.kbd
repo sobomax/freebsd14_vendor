@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/vt/keymaps/us.kbd 329005 2018-02-08 00:40:56Z emaste $
+# $FreeBSD: releng/12.2/share/vt/keymaps/us.kbd 328412 2018-01-25 21:13:42Z emaste $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

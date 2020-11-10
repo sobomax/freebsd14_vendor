@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/libalias/modules/Makefile 162701 2006-09-27 12:30:27Z ru $
+# $FreeBSD: releng/12.2/sys/modules/libalias/modules/Makefile 162701 2006-09-27 12:30:27Z ru $
 
 .include "${.CURDIR}/modules.inc"
 

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/stdlib/strtold.c 331174 2018-03-19 03:55:42Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdlib/strtold.c 328785 2018-02-02 16:47:32Z emaste $");
 
 #include <stdlib.h>
 #include "xlocale_private.h"

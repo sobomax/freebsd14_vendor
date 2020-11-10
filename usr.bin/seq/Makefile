@@ -1,5 +1,5 @@
 #       $NetBSD: Makefile,v 1.3 2009/04/14 22:15:26 lukem Exp $
-# $FreeBSD: releng/11.3/usr.bin/seq/Makefile 335739 2018-06-27 21:03:05Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/seq/Makefile 330086 2018-02-27 22:01:40Z cem $
 
 .include <src.opts.mk>
 

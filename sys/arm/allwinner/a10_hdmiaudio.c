@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/allwinner/a10_hdmiaudio.c 296064 2016-02-25 20:17:18Z jmcneill $
+ * $FreeBSD: releng/12.2/sys/arm/allwinner/a10_hdmiaudio.c 296064 2016-02-25 20:17:18Z jmcneill $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/allwinner/a10_hdmiaudio.c 296064 2016-02-25 20:17:18Z jmcneill $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/a10_hdmiaudio.c 296064 2016-02-25 20:17:18Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

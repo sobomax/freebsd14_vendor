@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/imx/imx6_snvs/Makefile 336096 2018-07-08 19:35:41Z ian $
+# $FreeBSD: releng/12.2/sys/modules/imx/imx6_snvs/Makefile 336096 2018-07-08 19:35:41Z ian $
 
 .PATH: ${SRCTOP}/sys/arm/freescale/imx
 

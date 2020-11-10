@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Portions Copyright (c) Ryan Beasley <ryan.beasley@gmail.com> - GSoC 2006
  * Copyright (c) 1999 Cameron Grant <cg@FreeBSD.org>
@@ -41,7 +43,7 @@
 #include <vm/vm_page.h>
 #include <vm/vm_pager.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pcm/dsp.c 331722 2018-03-29 02:50:57Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pcm/dsp.c 361174 2020-05-18 09:07:14Z hselasky $");
 
 static int dsp_mmap_allow_prot_exec = 0;
 SYSCTL_INT(_hw_snd, OID_AUTO, compat_linux_mmap, CTLFLAG_RWTUN,
@@ -458,7 +460,7 @@ dsp_open(struct cdev *i_dev, int flags, int mode, struct thread *td)
 		return (ENODEV);
 
 	d = dsp_get_info(i_dev);
-	if (!PCM_REGISTERED(d))
+	if (PCM_DETACHING(d) || !PCM_REGISTERED(d))
 		return (EBADF);
 
 	PCM_GIANT_ENTER(d);
@@ -828,7 +830,7 @@ dsp_io_ops(struct cdev *i_dev, struct uio *buf)
 	    ("%s(): io train wreck!", __func__));
 
 	d = dsp_get_info(i_dev);
-	if (!DSP_REGISTERED(d, i_dev))
+	if (PCM_DETACHING(d) || !DSP_REGISTERED(d, i_dev))
 		return (EBADF);
 
 	PCM_GIANT_ENTER(d);
@@ -1073,7 +1075,7 @@ dsp_ioctl(struct cdev *i_dev, u_long cmd, caddr_t arg, int mode,
 	int *arg_i, ret, tmp;
 
 	d = dsp_get_info(i_dev);
-	if (!DSP_REGISTERED(d, i_dev))
+	if (PCM_DETACHING(d) || !DSP_REGISTERED(d, i_dev))
 		return (EBADF);
 
 	PCM_GIANT_ENTER(d);
@@ -1701,6 +1703,10 @@ dsp_ioctl(struct cdev *i_dev, u_long cmd, caddr_t arg, int mode,
 		*arg_i = PCM_CAP_REALTIME | PCM_CAP_MMAP | PCM_CAP_TRIGGER;
 		if (rdch && wrch && !(dsp_get_flags(i_dev) & SD_F_SIMPLEX))
 			*arg_i |= PCM_CAP_DUPLEX;
+		if (rdch && (rdch->flags & CHN_F_VIRTUAL) != 0)
+			*arg_i |= PCM_CAP_VIRTUAL;
+		if (wrch && (wrch->flags & CHN_F_VIRTUAL) != 0)
+			*arg_i |= PCM_CAP_VIRTUAL;
 		PCM_UNLOCK(d);
 		break;
 
@@ -2168,9 +2174,11 @@ dsp_poll(struct cdev *i_dev, int events, struct thread *td)
 	int ret, e;
 
 	d = dsp_get_info(i_dev);
-	if (!DSP_REGISTERED(d, i_dev))
-		return (EBADF);
-
+	if (PCM_DETACHING(d) || !DSP_REGISTERED(d, i_dev)) {
+		/* XXX many clients don't understand POLLNVAL */
+		return (events & (POLLHUP | POLLPRI | POLLIN |
+		    POLLRDNORM | POLLOUT | POLLWRNORM));
+	}
 	PCM_GIANT_ENTER(d);
 
 	wrch = NULL;
@@ -2203,7 +2211,10 @@ dsp_mmap(struct cdev *i_dev, vm_ooffset_t offset, vm_paddr_t *paddr,
     int nprot, vm_memattr_t *memattr)
 {
 
-	/* XXX memattr is not honored */
+	/*
+	 * offset is in range due to checks in dsp_mmap_single().
+	 * XXX memattr is not honored.
+	 */
 	*paddr = vtophys(offset);
 	return (0);
 }
@@ -2220,7 +2231,7 @@ dsp_mmap_single(struct cdev *i_dev, vm_ooffset_t *offset,
 	 * Unfortunately, we have to give up this one due to linux_mmap
 	 * changes.
 	 *
-	 * http://lists.freebsd.org/pipermail/freebsd-emulation/2007-June/003698.html
+	 * https://lists.freebsd.org/pipermail/freebsd-emulation/2007-June/003698.html
 	 *
 	 */
 #ifdef SV_ABI_LINUX
@@ -2241,7 +2252,7 @@ dsp_mmap_single(struct cdev *i_dev, vm_ooffset_t *offset,
 		return (EINVAL);
 
 	d = dsp_get_info(i_dev);
-	if (!DSP_REGISTERED(d, i_dev))
+	if (PCM_DETACHING(d) || !DSP_REGISTERED(d, i_dev))
 		return (EINVAL);
 
 	PCM_GIANT_ENTER(d);
@@ -2646,6 +2657,7 @@ dsp_oss_audioinfo(struct cdev *i_dev, oss_audioinfo *ai)
 			 *       these in pcmchan::caps?
 			 */
 			ai->caps = PCM_CAP_REALTIME | PCM_CAP_MMAP | PCM_CAP_TRIGGER |
+			    ((ch->flags & CHN_F_VIRTUAL) ? PCM_CAP_VIRTUAL : 0) |
 			    ((ch->direction == PCMDIR_PLAY) ? PCM_CAP_OUTPUT : PCM_CAP_INPUT);
 
 			/*

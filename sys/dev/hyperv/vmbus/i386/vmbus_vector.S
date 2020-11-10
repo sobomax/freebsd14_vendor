@@ -23,13 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/i386/vmbus_vector.S 329462 2018-02-17 18:00:01Z kib $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/i386/vmbus_vector.S 332489 2018-04-13 20:30:49Z kib $
  */
 
+#include "assym.inc"
+
+#include <machine/psl.h>
 #include <machine/asmacros.h>
 #include <machine/specialreg.h>
-
-#include "assym.s"
 
 /*
  * This is the Hyper-V vmbus channel direct callback interrupt.
@@ -42,6 +43,7 @@ IDTVEC(vmbus_isr)
 	PUSH_FRAME
 	SET_KERNEL_SREGS
 	cld
+	KENTER
 	FAKE_MCOUNT(TF_EIP(%esp))
 	pushl	%esp
 	call	vmbus_handle_intr

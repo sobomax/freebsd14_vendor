@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/drm2/tegra_host1x.c 310600 2016-12-26 14:36:05Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/drm2/tegra_host1x.c 310600 2016-12-26 14:36:05Z mmel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/wp-mmx.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/wp-mmx.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from wp-mmx.pl. */
 #ifdef PIC
-.file	"wp-mmx.S"
 .text
 .globl	whirlpool_block_mmx
 .type	whirlpool_block_mmx,@function
@@ -1109,7 +1108,6 @@ whirlpool_block_mmx:
 .byte	202,45,191,7,173,90,131,51
 .size	whirlpool_block_mmx,.-.L_whirlpool_block_mmx_begin
 #else
-.file	"wp-mmx.S"
 .text
 .globl	whirlpool_block_mmx
 .type	whirlpool_block_mmx,@function

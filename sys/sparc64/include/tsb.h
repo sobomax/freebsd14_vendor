@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 Berkeley Software Design, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: pmap.v9.h,v 1.10.2.6 1999/08/23 22:18:44 cp Exp
- * $FreeBSD: releng/11.3/sys/sparc64/include/tsb.h 223378 2011-06-21 20:48:14Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/tsb.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_TSB_H_

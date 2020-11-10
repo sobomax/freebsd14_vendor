@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2007 Stephan Uphoff <ups@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/rmlock.h 343420 2019-01-25 11:01:11Z kib $
+ * $FreeBSD: releng/12.2/sys/sys/rmlock.h 343419 2019-01-25 10:58:34Z kib $
  */
 
 #ifndef _SYS_RMLOCK_H_

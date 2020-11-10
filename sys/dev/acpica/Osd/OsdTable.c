@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpica/Osd/OsdTable.c 316303 2017-03-30 20:18:34Z jkim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/Osd/OsdTable.c 352566 2019-09-20 22:07:59Z jkim $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -55,7 +55,7 @@ AcpiOsPredefinedOverride(const ACPI_PREDEFINED_NAMES *InitVal,
 		return (AE_BAD_PARAMETER);
 
 	*NewVal = NULL;
-	if (ACPI_COMPARE_NAME(InitVal->Name, "_OS_") &&
+	if (ACPI_COMPARE_NAMESEG(InitVal->Name, "_OS_") &&
 	    InitVal->Type == ACPI_TYPE_STRING && strlen(acpi_osname) > 0) {
 		printf("ACPI: Overriding _OS definition with \"%s\"\n",
 		    acpi_osname);
@@ -77,9 +77,9 @@ AcpiOsTableOverride(ACPI_TABLE_HEADER *ExistingTable,
 		return (AE_BAD_PARAMETER);
 
 	*NewTable = NULL;
-	if (!ACPI_COMPARE_NAME(ExistingTable->Signature, ACPI_SIG_DSDT))
+	if (!ACPI_COMPARE_NAMESEG(ExistingTable->Signature, ACPI_SIG_DSDT))
 #ifdef notyet
-		for (int i = 0; i < ACPI_NAME_SIZE; i++)
+		for (int i = 0; i < ACPI_NAMESEG_SIZE; i++)
 			modname[i + 5] = tolower(ExistingTable->Signature[i]);
 #else
 		return (AE_SUPPORT);

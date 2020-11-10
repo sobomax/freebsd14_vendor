@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/uniq/tests/Makefile 312127 2017-01-14 06:51:31Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/uniq/tests/Makefile 312127 2017-01-14 06:51:31Z ngie $
 
 PACKAGE=		tests
 

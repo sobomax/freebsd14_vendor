@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/sparc64/sys_machdep.c 263233 2014-03-16 10:55:57Z rwatson $
+ * $FreeBSD: releng/12.2/sys/sparc64/sparc64/sys_machdep.c 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #include "opt_capsicum.h"

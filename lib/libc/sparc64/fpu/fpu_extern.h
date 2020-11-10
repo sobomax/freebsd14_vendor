@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1995 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: fpu_extern.h,v 1.4 2000/08/03 18:32:08 eeh Exp $
- * $FreeBSD: releng/11.3/lib/libc/sparc64/fpu/fpu_extern.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libc/sparc64/fpu/fpu_extern.h 326193 2017-11-25 17:12:48Z pfg $
  */
 
 #ifndef _SPARC64_FPU_FPU_EXTERN_H_

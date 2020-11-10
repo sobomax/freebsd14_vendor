@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Antoine Brodin
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/stack_machdep.c 332569 2018-04-16 14:42:25Z lidl $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/stack_machdep.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_kstack_pages.h"
 

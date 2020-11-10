@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Stacey D. Son
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/imgact_binmisc.h 298986 2016-05-03 16:37:09Z pfg $
+ * $FreeBSD: releng/12.2/sys/sys/imgact_binmisc.h 326823 2017-12-13 16:13:17Z pfg $
  */
 
 #ifndef	_IMGACT_BINMISC_H_

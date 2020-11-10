@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/usb/storage/umass_common.h 266886 2014-05-30 14:05:31Z hselasky $ */
+/* $FreeBSD: releng/12.2/stand/usb/storage/umass_common.h 266886 2014-05-30 14:05:31Z hselasky $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.

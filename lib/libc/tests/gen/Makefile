@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/gen/Makefile 327850 2018-01-11 23:57:55Z asomers $
+# $FreeBSD: releng/12.2/lib/libc/tests/gen/Makefile 362281 2020-06-17 16:22:08Z kevans $
 
 .include <bsd.own.mk>
 
@@ -10,14 +10,28 @@ ATF_TESTS_C+=		fmtmsg_test
 ATF_TESTS_C+=		fnmatch2_test
 ATF_TESTS_C+=		fpclassify2_test
 ATF_TESTS_C+=		ftw_test
+ATF_TESTS_C+=		getentropy_test
+ATF_TESTS_C+=		getmntinfo_test
+ATF_TESTS_C+=		glob2_test
+ATF_TESTS_C+=		makecontext_test
 ATF_TESTS_C+=		popen_test
 ATF_TESTS_C+=		posix_spawn_test
 ATF_TESTS_C+=		realpath2_test
+ATF_TESTS_C+=		sigsetops_test
 ATF_TESTS_C+=		wordexp_test
 
 # TODO: t_closefrom, t_cpuset, t_fmtcheck, t_randomid,
 # TODO: t_siginfo (fixes require further inspection)
 # TODO: t_sethostname_test (consistently screws up the hostname)
+
+FILESGROUPS+=		posix_spawn_test_FILES
+
+posix_spawn_test_FILES=	spawnp_enoexec.sh
+posix_spawn_test_FILESDIR=	${TESTSDIR}
+posix_spawn_test_FILESMODE= 0755
+posix_spawn_test_FILESOWN= root
+posix_spawn_test_FILESGRP= wheel
+posix_spawn_test_FILESPACKAGE=	${PACKAGE}
 
 CFLAGS+=	-DTEST_LONG_DOUBLE
 
@@ -58,6 +72,8 @@ NETBSD_ATF_TESTS_C+=	vis_test
 
 .include "../Makefile.netbsd-tests"
 
+CFLAGS.getentropy_test+=	-I${SRCTOP}/include
+LIBADD.getentropy_test+=	c
 LIBADD.humanize_number_test+=	util
 
 LIBADD.fpclassify_test+=m

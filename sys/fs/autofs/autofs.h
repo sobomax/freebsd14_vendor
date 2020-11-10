@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/autofs/autofs.h 332596 2018-04-16 16:15:31Z trasz $
+ * $FreeBSD: releng/12.2/sys/fs/autofs/autofs.h 328339 2018-01-24 16:40:26Z trasz $
  */
 
 #ifndef AUTOFS_H

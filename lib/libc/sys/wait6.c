@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/sys/wait6.c 281712 2015-04-18 21:35:41Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/sys/wait6.c 281712 2015-04-18 21:35:41Z kib $");
 
 #include <sys/types.h>
 #include <sys/wait.h>

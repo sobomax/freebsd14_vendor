@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/virtio/virtio_ids.h 331112 2018-03-17 20:37:01Z bryanv $
+ * $FreeBSD: releng/12.2/sys/dev/virtio/virtio_ids.h 327958 2018-01-14 06:03:40Z bryanv $
  */
 
 #ifndef _VIRTIO_IDS_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/mips/Makefile 330123 2018-02-28 18:31:35Z kevans $
+# $FreeBSD: releng/12.2/stand/mips/Makefile 330004 2018-02-26 03:16:04Z imp $
 
 NO_OBJ=t
 

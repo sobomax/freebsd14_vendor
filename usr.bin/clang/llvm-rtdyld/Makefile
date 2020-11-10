@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-rtdyld/Makefile 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-rtdyld/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-rtdyld
 MAN=
 
-SRCDIR=		tools/llvm-rtdyld
+SRCDIR=		llvm/tools/llvm-rtdyld
 SRCS+=		llvm-rtdyld.cpp
 
 LIBADD+=	z

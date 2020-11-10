@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/lib/libkafs5/Makefile 323693 2017-09-18 00:13:48Z cy $
+# $FreeBSD: releng/12.2/kerberos5/lib/libkafs5/Makefile 322112 2017-08-06 06:31:47Z cy $
 
 LIB=	kafs5
 LDFLAGS=	-Wl,--no-undefined
@@ -26,7 +26,7 @@ SRCS=	afssys.c afskrb5.c common.c
 
 CFLAGS+=	-I${KRB5DIR}/lib/kafs \
 		-I${KRB5DIR}/lib/krb5 \
-		-I${.OBJDIR:H}/libkrb5/ \
+		-I${.OBJDIR:H}/libkrb5 \
 		-I${KRB5DIR}/lib/roken
 
 CLEANFILES= kafs5.3

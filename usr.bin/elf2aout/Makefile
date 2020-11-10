@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/elf2aout/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: releng/12.2/usr.bin/elf2aout/Makefile 201386 2010-01-02 10:27:05Z ed $
 
 PROG=	elf2aout
 

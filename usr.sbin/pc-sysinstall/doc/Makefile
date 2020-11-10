@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/pc-sysinstall/doc/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: releng/12.2/usr.sbin/pc-sysinstall/doc/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
 FILES=	help-disk-list help-disk-size help-index help-start-autoinstall
 

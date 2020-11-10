@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/autofs/automountd.c 332597 2018-04-16 16:16:24Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/autofs/automountd.c 328338 2018-01-24 16:39:02Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -99,7 +99,7 @@ pick_option(const char *option, char **optionsp)
 
 	tofree = *optionsp;
 
-	newoptions = calloc(strlen(*optionsp) + 1, 1);
+	newoptions = calloc(1, strlen(*optionsp) + 1);
 	if (newoptions == NULL)
 		log_err(1, "calloc");
 

@@ -42,7 +42,7 @@ static const char sccsid[] = "@(#)fortune.c   8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/fortune/fortune/fortune.c 259057 2013-12-07 02:20:22Z marcel $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/fortune/fortune/fortune.c 364298 2020-08-17 12:38:35Z markj $");
 
 #include <sys/stat.h>
 #include <sys/endian.h>
@@ -289,35 +289,35 @@ getargs(int argc, char *argv[])
 #endif /* DEBUG */
 		switch(ch) {
 		case 'a':		/* any fortune */
-			All_forts++;
+			All_forts = TRUE;
 			break;
 #ifdef DEBUG
 		case 'D':
 			Debug++;
 			break;
 #endif /* DEBUG */
-		case 'e':
-			Equal_probs++;	/* scatter un-allocted prob equally */
+		case 'e':		/* scatter un-allocted prob equally */
+			Equal_probs = TRUE;
 			break;
 		case 'f':		/* find fortune files */
-			Find_files++;
+			Find_files = TRUE;
 			break;
 		case 'l':		/* long ones only */
-			Long_only++;
+			Long_only = TRUE;
 			Short_only = FALSE;
 			break;
 		case 'o':		/* offensive ones only */
-			Offend++;
+			Offend = TRUE;
 			break;
 		case 's':		/* short ones only */
-			Short_only++;
+			Short_only = TRUE;
 			Long_only = FALSE;
 			break;
 		case 'w':		/* give time to read */
-			Wait++;
+			Wait = TRUE;
 			break;
 		case 'm':			/* dump out the fortunes */
-			Match++;
+			Match = TRUE;
 			pat = optarg;
 			break;
 		case 'i':			/* case-insensitive match */
@@ -400,11 +400,12 @@ form_file_list(char **files, int file_cnt)
 			sp = files[i];
 		else {
 			percent = 0;
-			for (sp = files[i]; isdigit((unsigned char)*sp); sp++)
+			for (sp = files[i]; isdigit((unsigned char)*sp); sp++) {
 				percent = percent * 10 + *sp - '0';
-			if (percent > 100) {
-				fprintf(stderr, "percentages must be <= 100\n");
-				return (FALSE);
+				if (percent > 100) {
+					fprintf(stderr, "percentages must be <= 100\n");
+					return (FALSE);
+				}
 			}
 			if (*sp == '.') {
 				fprintf(stderr, "percentages must be integers\n");

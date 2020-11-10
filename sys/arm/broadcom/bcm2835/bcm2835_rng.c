@@ -26,7 +26,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/broadcom/bcm2835/bcm2835_rng.c 331905 2018-04-03 03:41:55Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_rng.c 338324 2018-08-26 12:51:46Z markm $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -289,8 +289,7 @@ bcm2835_rng_harvest(void *arg)
 
 	cnt = nread * sizeof(uint32_t);
 	if (cnt > 0)
-		random_harvest_queue(sc->sc_buf, cnt, cnt * NBBY / 2,
-		    RANDOM_PURE_BROADCOM);
+		random_harvest_queue(sc->sc_buf, cnt, RANDOM_PURE_BROADCOM);
 
 	callout_reset(&sc->sc_rngto, RNG_CALLOUT_TICKS, bcm2835_rng_harvest, sc);
 }

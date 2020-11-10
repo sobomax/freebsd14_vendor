@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/isa/elcr.c 261520 2014-02-05 18:13:27Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/isa/elcr.c 326263 2017-11-27 15:11:47Z pfg $");
 
 /*
  * The ELCR is a register that controls the trigger mode and polarity of

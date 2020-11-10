@@ -43,9 +43,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/crc32.c 319404 2017-06-01 09:00:38Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/crc32.c 323923 2017-09-22 12:45:15Z mckusick $");
 
 #include <sys/param.h>
+
+#ifdef _KERNEL
 #include <sys/libkern.h>
 #include <sys/systm.h>
 
@@ -57,6 +59,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/libkern/crc32.c 319404 2017-06-01 09:00:38Z 
 #if defined(__aarch64__)
 #include <machine/cpu.h>
 #endif
+#endif /* _KERNEL */
 
 const uint32_t crc32_tab[] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
@@ -759,7 +762,8 @@ calculate_crc32c(uint32_t crc32c,
     const unsigned char *buffer,
     unsigned int length)
 {
-#if defined(__amd64__) || (defined(__i386__) && !defined(PC98))
+#ifdef _KERNEL
+#if defined(__amd64__) || defined(__i386__)
 	if ((cpu_feature2 & CPUID2_SSE42) != 0) {
 		return (sse42_crc32c(crc32c, buffer, length));
 	} else
@@ -776,6 +780,7 @@ calculate_crc32c(uint32_t crc32c,
 		return (armv8_crc32c(crc32c, buffer, length));
 	} else
 #endif
+#endif /* _KERNEL */
 	if (length < 4) {
 		return (singletable_crc32c(crc32c, buffer, length));
 	} else {

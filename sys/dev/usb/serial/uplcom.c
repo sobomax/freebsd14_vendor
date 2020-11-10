@@ -1,9 +1,11 @@
 /*	$NetBSD: uplcom.c,v 1.21 2001/11/13 06:24:56 lukem Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/serial/uplcom.c 339852 2018-10-29 12:10:06Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/serial/uplcom.c 339851 2018-10-29 12:08:15Z hselasky $");
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2001-2003, 2005 Shunsuke Akiyama <akiyama@jp.FreeBSD.org>.
  * All rights reserved.
  *

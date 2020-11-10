@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2009 Sam Leffler, Errno Consulting
  * Copyright (c) 2007-2009 Marvell Semiconductor, Inc.
  * All rights reserved.
@@ -30,7 +32,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mwl/if_mwl_pci.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mwl/if_mwl_pci.c 365670 2020-09-12 19:33:25Z bz $");
 #endif
 
 /*
@@ -53,7 +55,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/mwl/if_mwl_pci.c 331722 2018-03-29 02:50
 #include <sys/rman.h>
 
 #include <sys/socket.h>
- 
+
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <net/if_media.h>
@@ -96,7 +98,6 @@ static const struct mwl_pci_ident mwl_pci_ids[] = {
 	{ 0x11ab, 0x2a0c, "Marvell 88W8363" },
 	{ 0x11ab, 0x2a21, "Marvell 88W8363" },
 	{ 0x11ab, 0x2a24, "Marvell 88W8363" },
-
 	{ 0, 0, NULL }
 };
 
@@ -278,7 +279,6 @@ static device_method_t mwl_pci_methods[] = {
 	DEVMETHOD(device_shutdown,	mwl_pci_shutdown),
 	DEVMETHOD(device_suspend,	mwl_pci_suspend),
 	DEVMETHOD(device_resume,	mwl_pci_resume),
-
 	{ 0,0 }
 };
 static driver_t mwl_pci_driver = {

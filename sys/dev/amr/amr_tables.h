@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ *
  * Copyright (c) 2000 Michael Smith
  * Copyright (c) 2000 BSDi
  * All rights reserved.
@@ -53,7 +55,7 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD: releng/11.3/sys/dev/amr/amr_tables.h 331722 2018-03-29 02:50:57Z eadler $
+ *	$FreeBSD: releng/12.2/sys/dev/amr/amr_tables.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 /*

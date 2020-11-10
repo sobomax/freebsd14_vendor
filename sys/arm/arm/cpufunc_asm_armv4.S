@@ -38,7 +38,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/cpufunc_asm_armv4.S 295122 2016-02-01 13:13:53Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/cpufunc_asm_armv4.S 337760 2018-08-14 15:42:27Z andrew $");
 
 /*
  * TLB functions
@@ -70,5 +70,5 @@ ENTRY(armv4_idcache_inv_all)
 	mov	r0, #0
 	mcr	p15, 0, r0, c7, c7, 0	/* invalidate all I+D cache */
 	RET
-END(armv4_drain_writebuf)
+END(armv4_idcache_inv_all)
 

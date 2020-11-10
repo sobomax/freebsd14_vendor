@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/dtc/string.cc 339159 2018-10-03 17:14:40Z kevans $
+ * $FreeBSD: releng/12.2/usr.bin/dtc/string.cc 338232 2018-08-23 02:26:40Z kevans $
  */
 
 #include <string>

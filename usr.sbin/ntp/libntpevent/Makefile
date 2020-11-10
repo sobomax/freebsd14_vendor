@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/libntpevent/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/libntpevent/Makefile 339261 2018-10-09 18:35:45Z emaste $
 
-.PATH: ${SRCTOP}/contrib/ntp/sntp/libevent
+.PATH: ${SRCTOP}/contrib/libevent
 
 LIB= ntpevent
 INTERNALLIB=
@@ -26,7 +26,7 @@ NTP_ATOMIC=noatomic
 .endif
 
 CFLAGS+= -I${SRCTOP}/contrib/ntp/include \
-	-I${SRCTOP}/contrib/ntp/sntp/libevent/include \
+	-I${SRCTOP}/contrib/libevent/include \
 	-I${.CURDIR}/
 
 CFLAGS+= -DHAVE_BSD_NICE -DHAVE_STDINT_H

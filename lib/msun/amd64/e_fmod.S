@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/amd64/e_fmod.S 324006 2017-09-26 09:01:56Z dim $")
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/amd64/e_fmod.S 305382 2016-09-04 12:22:14Z bde $")
 
 ENTRY(fmod)
 	movsd	%xmm0,-8(%rsp)

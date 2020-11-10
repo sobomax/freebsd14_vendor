@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/lib/libcuse/cuse.h 266581 2014-05-23 08:46:28Z hselasky $ */
+/* $FreeBSD: releng/12.2/lib/libcuse/cuse.h 266581 2014-05-23 08:46:28Z hselasky $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky. All rights reserved.
  *

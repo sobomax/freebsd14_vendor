@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/at/at.c 330637 2018-03-08 07:17:20Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/at/at.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #define _USE_BSD 1
 

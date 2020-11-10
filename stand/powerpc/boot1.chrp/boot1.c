@@ -16,13 +16,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/powerpc/boot1.chrp/boot1.c 332154 2018-04-06 21:37:25Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/powerpc/boot1.chrp/boot1.c 348683 2019-06-05 12:34:28Z luporl $");
 
 #include <sys/param.h>
 #include <sys/dirent.h>
 #include <machine/elf.h>
 #include <machine/stdarg.h>
 #include <machine/md_var.h>
+#include <ufs/ffs/fs.h>
 
 #include "paths.h"
 

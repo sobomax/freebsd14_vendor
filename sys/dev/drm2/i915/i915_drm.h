@@ -28,7 +28,7 @@
 #define _UAPI_I915_DRM_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/i915/i915_drm.h 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/i915/i915_drm.h 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drm.h>
 

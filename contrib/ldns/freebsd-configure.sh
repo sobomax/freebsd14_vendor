@@ -1,19 +1,30 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/11.3/contrib/ldns/freebsd-configure.sh 282088 2015-04-27 12:02:16Z des $
+# $FreeBSD: releng/12.2/contrib/ldns/freebsd-configure.sh 339303 2018-10-11 08:14:31Z des $
 #
 
 set -e
 
+error() {
+	echo "$@" >&2
+	exit 1
+}
+
 ldns=$(dirname $(realpath $0))
 cd $ldns
 
-libtoolize --copy
-autoheader
-autoconf
+# Run autotools before we drop LOCALBASE out of PATH
+(cd $ldns && libtoolize --copy && autoheader && autoconf)
+(cd $ldns/drill && aclocal && autoheader && autoconf)
+
+# Ensure we use the correct toolchain and clean our environment
+export CC=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCC)
+export CPP=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCPP)
+unset CFLAGS CPPFLAGS LDFLAGS LD_LIBRARY_PATH LIBS
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+cd $ldns
 ./configure --prefix= --exec-prefix=/usr
 
 cd $ldns/drill
-autoheader
-autoconf
 ./configure --prefix= --exec-prefix=/usr

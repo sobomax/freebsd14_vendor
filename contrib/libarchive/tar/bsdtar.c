@@ -24,7 +24,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/bsdtar.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/bsdtar.c 358087 2020-02-19 01:46:43Z mm $");
 
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
@@ -542,6 +542,9 @@ main(int argc, char **argv)
 			bsdtar->extract_flags &= ~ARCHIVE_EXTRACT_MAC_METADATA;
 			bsdtar->flags |= OPTFLAG_NO_MAC_METADATA;
 			break;
+		case OPTION_NO_SAFE_WRITES:
+			bsdtar->extract_flags &= ~ARCHIVE_EXTRACT_SAFE_WRITES;
+			break;
 		case OPTION_NO_SAME_OWNER: /* GNU tar */
 			bsdtar->extract_flags &= ~ARCHIVE_EXTRACT_OWNER;
 			break;
@@ -657,6 +660,9 @@ main(int argc, char **argv)
 			    "-s is not supported by this version of bsdtar");
 			usage();
 #endif
+			break;
+		case OPTION_SAFE_WRITES:
+			bsdtar->extract_flags |= ARCHIVE_EXTRACT_SAFE_WRITES;
 			break;
 		case OPTION_SAME_OWNER: /* GNU tar */
 			bsdtar->extract_flags |= ARCHIVE_EXTRACT_OWNER;

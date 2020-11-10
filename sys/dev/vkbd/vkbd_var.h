@@ -1,6 +1,8 @@
 /*-
  * vkbd_var.h
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd_var.h,v 1.4 2004/08/17 17:43:14 max Exp $
- * $FreeBSD: releng/11.3/sys/dev/vkbd/vkbd_var.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/vkbd/vkbd_var.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef _VKBD_VAR_H_

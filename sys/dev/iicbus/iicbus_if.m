@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/iicbus/iicbus_if.m 323931 2017-09-22 15:53:22Z ian $
+# $FreeBSD: releng/12.2/sys/dev/iicbus/iicbus_if.m 323474 2017-09-11 23:47:49Z ian $
 #
 
 #include <sys/bus.h>

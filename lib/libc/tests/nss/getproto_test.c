@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/nss/getproto_test.c 319299 2017-05-31 08:32:05Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/nss/getproto_test.c 353577 2019-10-15 17:30:12Z brooks $");
 
 #include <arpa/inet.h>
 #include <assert.h>
@@ -148,7 +148,7 @@ compare_protoent(struct protoent *pe1, struct protoent *pe2, void *mdata)
 		if (strcmp(*c1, *c2) != 0)
 			goto errfin;
 
-	if ((*c1 != '\0') || (*c2 != '\0'))
+	if ((*c1 != NULL) || (*c2 != NULL))
 		goto errfin;
 
 	return 0;
@@ -177,7 +177,7 @@ sdump_protoent(struct protoent *pe, char *buffer, size_t buflen)
 	buflen -= written;
 
 	if (pe->p_aliases != NULL) {
-		if (*(pe->p_aliases) != '\0') {
+		if (*(pe->p_aliases) != NULL) {
 			for (cp = pe->p_aliases; *cp; ++cp) {
 				written = snprintf(buffer, buflen, " %s", *cp);
 				buffer += written;

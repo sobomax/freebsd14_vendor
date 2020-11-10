@@ -1,8 +1,8 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2019, Intel Corporation
+  Copyright (c) 2013-2018, Intel Corporation
   All rights reserved.
-
+  
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
   
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixl/ixl_iw.c 349181 2019-06-19 00:37:54Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixl/ixl_iw.c 343864 2019-02-07 10:30:11Z marius $*/
 
 #include "ixl.h"
 #include "ixl_pf.h"
@@ -333,7 +333,7 @@ ixl_iw_pf_msix_init(void *pf_handle,
 
 	if ((msix_info->aeq_vector < IXL_IW_VEC_BASE(pf)) ||
 	    (msix_info->aeq_vector >= IXL_IW_VEC_LIMIT(pf))) {
-		printf("%s: invalid MSIX vector (%i) for AEQ\n",
+		printf("%s: invalid MSI-X vector (%i) for AEQ\n",
 		    __func__, msix_info->aeq_vector);
 		return (EINVAL);
 	}

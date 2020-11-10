@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $FreeBSD: releng/11.3/tools/tools/netrate/tcpp/runit.pl 209429 2010-06-22 10:46:57Z rwatson $
+# $FreeBSD: releng/12.2/tools/tools/netrate/tcpp/runit.pl 209429 2010-06-22 10:46:57Z rwatson $
 #
 
 if ($#ARGV != 0) {

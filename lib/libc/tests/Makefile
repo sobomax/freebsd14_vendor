@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/Makefile 309453 2016-12-03 00:38:35Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/tests/Makefile 307700 2016-10-21 04:54:43Z ngie $
 
 .include <src.opts.mk>
 

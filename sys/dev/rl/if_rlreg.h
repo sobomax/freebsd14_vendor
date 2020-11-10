@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/rl/if_rlreg.h 306309 2016-09-25 13:52:55Z kevlo $
+ * $FreeBSD: releng/12.2/sys/dev/rl/if_rlreg.h 306102 2016-09-21 14:15:15Z kevlo $
  */
 
 /*

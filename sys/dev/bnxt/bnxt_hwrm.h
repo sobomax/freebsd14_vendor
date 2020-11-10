@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bnxt/bnxt_hwrm.h 333364 2018-05-08 15:51:40Z shurd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/bnxt_hwrm.h 327000 2017-12-19 21:07:30Z shurd $");
 
 #ifndef _BNXT_HWRM_H
 #define _BNXT_HWRM_H

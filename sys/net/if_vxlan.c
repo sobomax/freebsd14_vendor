@@ -28,7 +28,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/net/if_vxlan.c 346783 2019-04-27 04:39:41Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/net/if_vxlan.c 349762 2019-07-05 10:31:37Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -587,7 +587,7 @@ vxlan_ftable_update_locked(struct vxlan_softc *sc,
     struct rm_priotracker *tracker)
 {
 	struct vxlan_ftable_entry *fe;
-	int error;
+	int error __unused;
 
 	VXLAN_LOCK_ASSERT(sc);
 
@@ -862,8 +862,9 @@ static void
 vxlan_socket_destroy(struct vxlan_socket *vso)
 {
 	struct socket *so;
-	struct vxlan_socket_mc_info *mc;
+#ifdef INVARIANTS
 	int i;
+	struct vxlan_socket_mc_info *mc;
 
 	for (i = 0; i < VXLAN_SO_MC_MAX_GROUPS; i++) {
 		mc = &vso->vxlso_mc[i];
@@ -877,7 +878,7 @@ vxlan_socket_destroy(struct vxlan_socket *vso)
 		    ("%s: socket %p vni_hash[%d] not empty",
 		     __func__, vso, i));
 	}
-
+#endif
 	so = vso->vxlso_sock;
 	if (so != NULL) {
 		vso->vxlso_sock = NULL;
@@ -1133,7 +1134,7 @@ vxlan_socket_mc_join_group(struct vxlan_socket *vso,
 		 * If we really need to, we can of course look in the INP's
 		 * membership list:
 		 *     sotoinpcb(vso->vxlso_sock)->inp_moptions->
-		 *         imo_membership[]->inm_ifp
+		 *         imo_head[]->imf_inm->inm_ifp
 		 * similarly to imo_match_group().
 		 */
 		source->in4.sin_addr = local->in4.sin_addr;
@@ -2504,7 +2505,7 @@ vxlan_rcv_udp_packet(struct mbuf *m, int offset, struct inpcb *inpcb,
 	struct vxlan_socket *vso;
 	struct vxlan_header *vxh, vxlanhdr;
 	uint32_t vni;
-	int error;
+	int error __unused;
 
 	M_ASSERTPKTHDR(m);
 	vso = xvso;

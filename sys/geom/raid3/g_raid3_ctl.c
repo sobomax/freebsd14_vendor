@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/raid3/g_raid3_ctl.c 245456 2013-01-15 10:06:35Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/raid3/g_raid3_ctl.c 326270 2017-11-27 15:17:37Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

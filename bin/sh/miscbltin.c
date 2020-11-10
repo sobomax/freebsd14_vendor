@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -36,7 +38,7 @@ static char sccsid[] = "@(#)miscbltin.c	8.4 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/sh/miscbltin.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/bin/sh/miscbltin.c 359077 2020-03-18 18:10:44Z hrs $");
 
 /*
  * Miscellaneous builtins.
@@ -64,9 +66,78 @@ __FBSDID("$FreeBSD: releng/11.3/bin/sh/miscbltin.c 331722 2018-03-29 02:50:57Z e
 
 #undef eflag
 
+#define	READ_BUFLEN	1024
+struct fdctx {
+	int	fd;
+	size_t	off;	/* offset in buf */
+	size_t	buflen;
+	char	*ep;	/* tail pointer */
+	char	buf[READ_BUFLEN];
+};
+
+static void fdctx_init(int, struct fdctx *);
+static void fdctx_destroy(struct fdctx *);
+static ssize_t fdgetc(struct fdctx *, char *);
 int readcmd(int, char **);
 int umaskcmd(int, char **);
 int ulimitcmd(int, char **);
+
+static void
+fdctx_init(int fd, struct fdctx *fdc)
+{
+	off_t cur;
+
+	/* Check if fd is seekable. */
+	cur = lseek(fd, 0, SEEK_CUR);
+	*fdc = (struct fdctx){
+		.fd = fd,
+		.buflen = (cur != -1) ? READ_BUFLEN : 1,
+		.ep = &fdc->buf[0],	/* No data */
+	};
+}
+
+static ssize_t
+fdgetc(struct fdctx *fdc, char *c)
+{
+	ssize_t nread;
+
+	if (&fdc->buf[fdc->off] == fdc->ep) {
+		nread = read(fdc->fd, fdc->buf, fdc->buflen);
+		if (nread > 0) {
+			fdc->off = 0;
+			fdc->ep = fdc->buf + nread;
+		} else
+			return (nread);
+	}
+	*c = fdc->buf[fdc->off++];
+
+	return (1);
+}
+
+static void
+fdctx_destroy(struct fdctx *fdc)
+{
+	off_t residue;
+
+	if (fdc->buflen > 1) {
+	/*
+	 * Reposition the file offset.  Here is the layout of buf:
+	 *
+	 *     | off
+	 *     v 
+	 * |*****************|-------|
+	 * buf               ep   buf+buflen
+	 *     |<- residue ->|
+	 *
+	 * off: current character
+	 * ep:  offset just after read(2)
+	 * residue: length for reposition
+	 */
+		residue = (fdc->ep - fdc->buf) - fdc->off;
+		if (residue > 0)
+			(void) lseek(fdc->fd, -residue, SEEK_CUR);
+	}
+}
 
 /*
  * The read builtin.  The -r option causes backslashes to be treated like
@@ -106,6 +177,7 @@ readcmd(int argc __unused, char **argv __unused)
 	fd_set ifds;
 	ssize_t nread;
 	int sig;
+	struct fdctx fdctx;
 
 	rflag = 0;
 	prompt = NULL;
@@ -171,8 +243,9 @@ readcmd(int argc __unused, char **argv __unused)
 	backslash = 0;
 	STARTSTACKSTR(p);
 	lastnonifs = lastnonifsws = -1;
+	fdctx_init(STDIN_FILENO, &fdctx);
 	for (;;) {
-		nread = read(STDIN_FILENO, &c, 1);
+		nread = fdgetc(&fdctx, &c);
 		if (nread == -1) {
 			if (errno == EINTR) {
 				sig = pendingsig;
@@ -258,6 +331,7 @@ readcmd(int argc __unused, char **argv __unused)
 		STARTSTACKSTR(p);
 		lastnonifs = lastnonifsws = -1;
 	}
+	fdctx_destroy(&fdctx);
 	STACKSTRNUL(p);
 
 	/*
@@ -367,7 +441,7 @@ struct limits {
 	const char *name;
 	const char *units;
 	int	cmd;
-	int	factor;	/* multiply by to get rlim_{cur,max} values */
+	short	factor;	/* multiply by to get rlim_{cur,max} values */
 	char	option;
 };
 

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/lib/libopenbsd/imsg.c 292023 2015-12-09 19:22:20Z rodrigc $
+ * $FreeBSD: releng/12.2/lib/libopenbsd/imsg.c 292023 2015-12-09 19:22:20Z rodrigc $
  */
 
 #include <sys/types.h>

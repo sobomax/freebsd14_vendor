@@ -1,6 +1,8 @@
 #ifndef _P1003_1B_P1003_1B_H_
 #define _P1003_1B_P1003_1B_H_
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1996, 1997, 1998
  *	HD Associates, Inc.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/posix4.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/posix4.h 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #include <sys/param.h>

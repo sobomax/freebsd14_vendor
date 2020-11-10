@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/sys/modules/mqueue/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/mqueue/Makefile 332122 2018-04-06 17:35:35Z brooks $
 
 .PATH: ${SRCTOP}/sys/kern
 
 KMOD=	mqueuefs
 SRCS=	uipc_mqueue.c \
 	vnode_if.h \
-	opt_posix.h opt_compat.h opt_capsicum.h
+	opt_posix.h opt_capsicum.h
 
 .include <bsd.kmod.mk>

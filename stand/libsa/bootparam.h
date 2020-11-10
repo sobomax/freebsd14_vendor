@@ -1,5 +1,5 @@
 /*	$NetBSD: bootparam.h,v 1.3 1998/01/05 19:19:41 perry Exp $	*/
-/*	$FreeBSD: releng/11.3/stand/libsa/bootparam.h 344376 2019-02-20 19:05:58Z kevans $ */
+/*	$FreeBSD: releng/12.2/stand/libsa/bootparam.h 324551 2017-10-12 14:56:28Z imp $ */
 
 int bp_whoami(int sock);
 int bp_getfile(int sock, char *key, struct in_addr *addrp, char *path);

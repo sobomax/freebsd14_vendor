@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/isl/isl.c 310072 2016-12-14 16:27:28Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/isl/isl.c 308104 2016-10-30 12:15:33Z avg $");
 
 /*
  * Driver for intersil I2C ISL29018 Digital Ambient Light Sensor and Proximity

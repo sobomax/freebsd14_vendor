@@ -1,6 +1,8 @@
 /*	$NetBSD: ncr53c9xvar.h,v 1.55 2011/07/31 18:39:00 jakllsch Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause
+ *
  * Copyright (c) 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -59,7 +61,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/esp/ncr53c9xvar.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/dev/esp/ncr53c9xvar.h 326255 2017-11-27 14:52:40Z pfg $ */
 
 #ifndef _NCR53C9XVAR_H_
 #define	_NCR53C9XVAR_H_

@@ -1,8 +1,10 @@
-/*	$FreeBSD: releng/11.3/sys/dev/nsp/nspreg.h 331722 2018-03-29 02:50:57Z eadler $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/nsp/nspreg.h 326255 2017-11-27 14:52:40Z pfg $	*/
 /*	$NecBSD: nspreg.h,v 1.4.14.3 2001/06/29 06:27:53 honda Exp $	*/
 /*	$NetBSD$	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * [NetBSD for NEC PC-98 series]
  *  Copyright (c) 1998
  *	NetBSD/pc98 porting staff. All rights reserved.

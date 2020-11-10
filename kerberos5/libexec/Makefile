@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/kerberos5/libexec/Makefile 311731 2017-01-09 01:31:16Z ngie $
+# $FreeBSD: releng/12.2/kerberos5/libexec/Makefile 311114 2017-01-02 19:02:00Z ngie $
 
 .include <src.opts.mk>
 

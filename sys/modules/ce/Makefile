@@ -1,5 +1,5 @@
 # $Cronyx: sys.modules.ce.Makefile,v 1.2 2005/04/23 20:10:22 rik Exp $
-# $FreeBSD: releng/11.3/sys/modules/ce/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/ce/Makefile 358077 2020-02-18 18:13:08Z dim $
 
 .PATH:  ${SRCTOP}/sys/dev/ce
 KMOD	= if_ce
@@ -27,4 +27,5 @@ opt_ng_cronyx.h:
 
 .include <bsd.kmod.mk>
 
-CWARNFLAGS.tau32-ddk.c=	${NO_WCONSTANT_CONVERSION}
+CWARNFLAGS.tau32-ddk.c+=	${NO_WCONSTANT_CONVERSION}
+CWARNFLAGS.tau32-ddk.c+=	${NO_WMISLEADING_INDENTATION}

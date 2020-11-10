@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/kdump/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/kdump/Makefile 323866 2017-09-21 14:41:41Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,7 @@ LIBADD=		sysdecode
 LIBADD+=	casper
 LIBADD+=	cap_grp
 LIBADD+=	cap_pwd
-CFLAGS+=-DHAVE_LIBCASPER
+CFLAGS+=-DWITH_CASPER
 .endif
 
 #NO_WERROR?=	YES

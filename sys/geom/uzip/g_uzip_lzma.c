@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/uzip/g_uzip_lzma.c 345344 2019-03-20 18:49:45Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/uzip/g_uzip_lzma.c 345301 2019-03-19 17:16:37Z kib $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>

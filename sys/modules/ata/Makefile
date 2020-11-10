@@ -1,12 +1,8 @@
-# $FreeBSD: releng/11.3/sys/modules/ata/Makefile 249083 2013-04-04 07:12:24Z mav $
+# $FreeBSD: releng/12.2/sys/modules/ata/Makefile 312910 2017-01-28 02:22:15Z nyan $
 
 SUBDIR = atacore
 SUBDIR += atacard
-.if ${MACHINE} == "pc98"
-SUBDIR += atacbus
-.else
 SUBDIR += ataisa
-.endif
 SUBDIR += atapci 
 
 .include <bsd.subdir.mk>

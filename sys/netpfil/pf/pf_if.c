@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2001 Daniel Hartmeier
  * Copyright (c) 2003 Cedric Berger
  * Copyright (c) 2005 Henning Brauer <henning@openbsd.org>
@@ -34,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf_if.c 344964 2019-03-09 10:28:36Z kp $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/pf_if.c 362064 2020-06-11 16:51:13Z kp $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -53,16 +55,16 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netpfil/pf/pf_if.c 344964 2019-03-09 10:28:3
 #include <net/route.h>
 
 VNET_DEFINE(struct pfi_kif *,	 pfi_all);
-static VNET_DEFINE(long, pfi_update);
+VNET_DEFINE_STATIC(long, pfi_update);
 #define	V_pfi_update	VNET(pfi_update)
 #define PFI_BUFFER_MAX	0x10000
 
 VNET_DECLARE(int, pf_vnet_active);
 #define V_pf_vnet_active	VNET(pf_vnet_active)
 
-static VNET_DEFINE(struct pfr_addr *, pfi_buffer);
-static VNET_DEFINE(int, pfi_buffer_cnt);
-static VNET_DEFINE(int,	pfi_buffer_max);
+VNET_DEFINE_STATIC(struct pfr_addr *, pfi_buffer);
+VNET_DEFINE_STATIC(int, pfi_buffer_cnt);
+VNET_DEFINE_STATIC(int,	pfi_buffer_max);
 #define	V_pfi_buffer		 VNET(pfi_buffer)
 #define	V_pfi_buffer_cnt	 VNET(pfi_buffer_cnt)
 #define	V_pfi_buffer_max	 VNET(pfi_buffer_max)
@@ -88,22 +90,22 @@ static int	 pfi_skip_if(const char *, struct pfi_kif *);
 static int	 pfi_unmask(void *);
 static void	 pfi_attach_ifnet_event(void * __unused, struct ifnet *);
 static void	 pfi_detach_ifnet_event(void * __unused, struct ifnet *);
-static void	 pfi_attach_group_event(void *, struct ifg_group *);
-static void	 pfi_change_group_event(void *, char *);
-static void	 pfi_detach_group_event(void *, struct ifg_group *);
+static void	 pfi_attach_group_event(void * __unused, struct ifg_group *);
+static void	 pfi_change_group_event(void * __unused, char *);
+static void	 pfi_detach_group_event(void * __unused, struct ifg_group *);
 static void	 pfi_ifaddr_event(void * __unused, struct ifnet *);
 
 RB_HEAD(pfi_ifhead, pfi_kif);
 static RB_PROTOTYPE(pfi_ifhead, pfi_kif, pfik_tree, pfi_if_compare);
 static RB_GENERATE(pfi_ifhead, pfi_kif, pfik_tree, pfi_if_compare);
-static VNET_DEFINE(struct pfi_ifhead, pfi_ifs);
+VNET_DEFINE_STATIC(struct pfi_ifhead, pfi_ifs);
 #define	V_pfi_ifs	VNET(pfi_ifs)
 
 #define	PFI_BUFFER_MAX		0x10000
 MALLOC_DEFINE(PFI_MTYPE, "pf_ifnet", "pf(4) interface database");
 
 LIST_HEAD(pfi_list, pfi_kif);
-static VNET_DEFINE(struct pfi_list, pfi_unlinked_kifs);
+VNET_DEFINE_STATIC(struct pfi_list, pfi_unlinked_kifs);
 #define	V_pfi_unlinked_kifs	VNET(pfi_unlinked_kifs)
 static struct mtx pfi_unlnkdkifs_mtx;
 MTX_SYSINIT(pfi_unlnkdkifs_mtx, &pfi_unlnkdkifs_mtx, "pf unlinked interfaces",
@@ -126,9 +128,9 @@ pfi_initialize_vnet(void)
 	PF_RULES_WUNLOCK();
 
 	IFNET_RLOCK();
-	TAILQ_FOREACH(ifg, &V_ifg_head, ifg_next)
+	CK_STAILQ_FOREACH(ifg, &V_ifg_head, ifg_next)
 		pfi_attach_ifgroup(ifg);
-	TAILQ_FOREACH(ifp, &V_ifnet, if_link)
+	CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link)
 		pfi_attach_ifnet(ifp);
 	IFNET_RUNLOCK();
 }
@@ -142,11 +144,11 @@ pfi_initialize(void)
 	pfi_detach_cookie = EVENTHANDLER_REGISTER(ifnet_departure_event,
 	    pfi_detach_ifnet_event, NULL, EVENTHANDLER_PRI_ANY);
 	pfi_attach_group_cookie = EVENTHANDLER_REGISTER(group_attach_event,
-	    pfi_attach_group_event, curvnet, EVENTHANDLER_PRI_ANY);
+	    pfi_attach_group_event, NULL, EVENTHANDLER_PRI_ANY);
 	pfi_change_group_cookie = EVENTHANDLER_REGISTER(group_change_event,
-	    pfi_change_group_event, curvnet, EVENTHANDLER_PRI_ANY);
+	    pfi_change_group_event, NULL, EVENTHANDLER_PRI_ANY);
 	pfi_detach_group_cookie = EVENTHANDLER_REGISTER(group_detach_event,
-	    pfi_detach_group_event, curvnet, EVENTHANDLER_PRI_ANY);
+	    pfi_detach_group_event, NULL, EVENTHANDLER_PRI_ANY);
 	pfi_ifaddr_event_cookie = EVENTHANDLER_REGISTER(ifaddr_event,
 	    pfi_ifaddr_event, NULL, EVENTHANDLER_PRI_ANY);
 }
@@ -297,11 +299,16 @@ pfi_kif_match(struct pfi_kif *rule_kif, struct pfi_kif *packet_kif)
 	if (rule_kif == NULL || rule_kif == packet_kif)
 		return (1);
 
-	if (rule_kif->pfik_group != NULL)
-		/* XXXGL: locking? */
-		TAILQ_FOREACH(p, &packet_kif->pfik_ifp->if_groups, ifgl_next)
-			if (p->ifgl_group == rule_kif->pfik_group)
+	if (rule_kif->pfik_group != NULL) {
+		IF_ADDR_RLOCK(packet_kif->pfik_ifp);
+		CK_STAILQ_FOREACH(p, &packet_kif->pfik_ifp->if_groups, ifgl_next)
+			if (p->ifgl_group == rule_kif->pfik_group) {
+				IF_ADDR_RUNLOCK(packet_kif->pfik_ifp);
 				return (1);
+			}
+		IF_ADDR_RUNLOCK(packet_kif->pfik_ifp);
+	}
+
 
 	return (0);
 }
@@ -456,7 +463,9 @@ static void
 pfi_kif_update(struct pfi_kif *kif)
 {
 	struct ifg_list		*ifgl;
+	struct ifg_member	*ifgm;
 	struct pfi_dynaddr	*p;
+	struct pfi_kif		*tmpkif;
 
 	PF_RULES_WASSERT();
 
@@ -464,10 +473,22 @@ pfi_kif_update(struct pfi_kif *kif)
 	TAILQ_FOREACH(p, &kif->pfik_dynaddrs, entry)
 		pfi_dynaddr_update(p);
 
+	/* Apply group flags to new members. */
+	if (kif->pfik_group != NULL) {
+		CK_STAILQ_FOREACH(ifgm, &kif->pfik_group->ifg_members,
+		    ifgm_next) {
+			tmpkif = (struct pfi_kif *)ifgm->ifgm_ifp->if_pf_kif;
+			if (tmpkif == NULL)
+				continue;
+
+			tmpkif->pfik_flags |= kif->pfik_flags;
+		}
+	}
+
 	/* again for all groups kif is member of */
 	if (kif->pfik_ifp != NULL) {
 		IF_ADDR_RLOCK(kif->pfik_ifp);
-		TAILQ_FOREACH(ifgl, &kif->pfik_ifp->if_groups, ifgl_next)
+		CK_STAILQ_FOREACH(ifgl, &kif->pfik_ifp->if_groups, ifgl_next)
 			pfi_kif_update((struct pfi_kif *)
 			    ifgl->ifgl_group->ifg_pf_kif);
 		IF_ADDR_RUNLOCK(kif->pfik_ifp);
@@ -507,7 +528,7 @@ pfi_table_update(struct pfr_ktable *kt, struct pfi_kif *kif, int net, int flags)
 		pfi_instance_add(kif->pfik_ifp, net, flags);
 	else if (kif->pfik_group != NULL) {
 		IFNET_RLOCK_NOSLEEP();
-		TAILQ_FOREACH(ifgm, &kif->pfik_group->ifg_members, ifgm_next)
+		CK_STAILQ_FOREACH(ifgm, &kif->pfik_group->ifg_members, ifgm_next)
 			pfi_instance_add(ifgm->ifgm_ifp, net, flags);
 		IFNET_RUNLOCK_NOSLEEP();
 	}
@@ -526,7 +547,7 @@ pfi_instance_add(struct ifnet *ifp, int net, int flags)
 	int		 net2, af;
 
 	IF_ADDR_RLOCK(ifp);
-	TAILQ_FOREACH(ia, &ifp->if_addrhead, ifa_list) {
+	CK_STAILQ_FOREACH(ia, &ifp->if_addrhead, ifa_link) {
 		if (ia->ifa_addr == NULL)
 			continue;
 		af = ia->ifa_addr->sa_family;
@@ -669,7 +690,7 @@ pfi_update_status(const char *name, struct pf_status *pfs)
 	struct pfi_kif		*p;
 	struct pfi_kif_cmp	 key;
 	struct ifg_member	 p_member, *ifgm;
-	TAILQ_HEAD(, ifg_member) ifg_members;
+	CK_STAILQ_HEAD(, ifg_member) ifg_members;
 	int			 i, j, k;
 
 	strlcpy(key.pfik_name, name, sizeof(key.pfik_name));
@@ -684,14 +705,14 @@ pfi_update_status(const char *name, struct pf_status *pfs)
 		/* build a temporary list for p only */
 		bzero(&p_member, sizeof(p_member));
 		p_member.ifgm_ifp = p->pfik_ifp;
-		TAILQ_INIT(&ifg_members);
-		TAILQ_INSERT_TAIL(&ifg_members, &p_member, ifgm_next);
+		CK_STAILQ_INIT(&ifg_members);
+		CK_STAILQ_INSERT_TAIL(&ifg_members, &p_member, ifgm_next);
 	}
 	if (pfs) {
 		bzero(pfs->pcounters, sizeof(pfs->pcounters));
 		bzero(pfs->bcounters, sizeof(pfs->bcounters));
 	}
-	TAILQ_FOREACH(ifgm, &ifg_members, ifgm_next) {
+	CK_STAILQ_FOREACH(ifgm, &ifg_members, ifgm_next) {
 		if (ifgm->ifgm_ifp == NULL || ifgm->ifgm_ifp->if_pf_kif == NULL)
 			continue;
 		p = (struct pfi_kif *)ifgm->ifgm_ifp->if_pf_kif;
@@ -751,7 +772,7 @@ pfi_skip_if(const char *filter, struct pfi_kif *p)
 		return (1);	/* group names may not end in a digit */
 	if (p->pfik_ifp != NULL) {
 		IF_ADDR_RLOCK(p->pfik_ifp);
-		TAILQ_FOREACH(i, &p->pfik_ifp->if_groups, ifgl_next) {
+		CK_STAILQ_FOREACH(i, &p->pfik_ifp->if_groups, ifgl_next) {
 			if (!strncmp(i->ifgl_group->ifg_group, filter,
 			      IFNAMSIZ)) {
 				IF_ADDR_RUNLOCK(p->pfik_ifp);
@@ -813,10 +834,8 @@ static void
 pfi_attach_ifnet_event(void *arg __unused, struct ifnet *ifp)
 {
 
-	CURVNET_SET(ifp->if_vnet);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 	pfi_attach_ifnet(ifp);
@@ -825,7 +844,6 @@ pfi_attach_ifnet_event(void *arg __unused, struct ifnet *ifp)
 	pf_altq_ifnet_event(ifp, 0);
 	PF_RULES_WUNLOCK();
 #endif
-	CURVNET_RESTORE();
 }
 
 static void
@@ -839,10 +857,8 @@ pfi_detach_ifnet_event(void *arg __unused, struct ifnet *ifp)
 	if (kif == NULL)
 		return;
 
-	CURVNET_SET(ifp->if_vnet);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 
@@ -859,32 +875,26 @@ pfi_detach_ifnet_event(void *arg __unused, struct ifnet *ifp)
 	pf_altq_ifnet_event(ifp, 1);
 #endif
 	PF_RULES_WUNLOCK();
-	CURVNET_RESTORE();
 }
 
 static void
-pfi_attach_group_event(void *arg , struct ifg_group *ifg)
+pfi_attach_group_event(void *arg __unused, struct ifg_group *ifg)
 {
 
-	CURVNET_SET((struct vnet *)arg);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 	pfi_attach_ifgroup(ifg);
-	CURVNET_RESTORE();
 }
 
 static void
-pfi_change_group_event(void *arg, char *gname)
+pfi_change_group_event(void *arg __unused, char *gname)
 {
 	struct pfi_kif *kif;
 
-	CURVNET_SET((struct vnet *)arg);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 
@@ -894,21 +904,18 @@ pfi_change_group_event(void *arg, char *gname)
 	kif = pfi_kif_attach(kif, gname);
 	pfi_kif_update(kif);
 	PF_RULES_WUNLOCK();
-	CURVNET_RESTORE();
 }
 
 static void
-pfi_detach_group_event(void *arg, struct ifg_group *ifg)
+pfi_detach_group_event(void *arg __unused, struct ifg_group *ifg)
 {
 	struct pfi_kif *kif = (struct pfi_kif *)ifg->ifg_pf_kif;
 
 	if (kif == NULL)
 		return;
 
-	CURVNET_SET((struct vnet *)arg);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 	PF_RULES_WLOCK();
@@ -917,7 +924,6 @@ pfi_detach_group_event(void *arg, struct ifg_group *ifg)
 	kif->pfik_group = NULL;
 	ifg->ifg_pf_kif = NULL;
 	PF_RULES_WUNLOCK();
-	CURVNET_RESTORE();
 }
 
 static void
@@ -926,10 +932,8 @@ pfi_ifaddr_event(void *arg __unused, struct ifnet *ifp)
 	if (ifp->if_pf_kif == NULL)
 		return;
 
-	CURVNET_SET(ifp->if_vnet);
 	if (V_pf_vnet_active == 0) {
 		/* Avoid teardown race in the least expensive way. */
-		CURVNET_RESTORE();
 		return;
 	}
 	PF_RULES_WLOCK();
@@ -938,5 +942,4 @@ pfi_ifaddr_event(void *arg __unused, struct ifnet *ifp)
 		pfi_kif_update(ifp->if_pf_kif);
 	}
 	PF_RULES_WUNLOCK();
-	CURVNET_RESTORE();
 }

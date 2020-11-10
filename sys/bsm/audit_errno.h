@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Apple Inc.
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE. 
  *
- * $FreeBSD: releng/11.3/sys/bsm/audit_errno.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/bsm/audit_errno.h 357296 2020-01-30 16:11:19Z mav $
  */
 
 #ifndef _BSM_AUDIT_ERRNO_H_
@@ -206,6 +208,7 @@
 #define	BSM_ERRNO_EKEYREJECTED		222	/* Linux-specific. */
 #define	BSM_ERRNO_ENOTCAPABLE		223	/* FreeBSD-specific. */
 #define	BSM_ERRNO_ECAPMODE		224	/* FreeBSD-specific. */
+#define	BSM_ERRNO_EINTEGRITY		225	/* FreeBSD-specific. */
 
 /*
  * In the event that OpenBSM doesn't have a file representation of a local

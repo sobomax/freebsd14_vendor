@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/indent_wrapper/indent_wrapper.c 291302 2015-11-25 14:51:44Z hselasky $
+ * $FreeBSD: releng/12.2/tools/tools/indent_wrapper/indent_wrapper.c 291302 2015-11-25 14:51:44Z hselasky $
  */
 
 #include <stdio.h>

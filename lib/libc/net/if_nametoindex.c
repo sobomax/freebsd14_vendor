@@ -1,6 +1,8 @@
 /*	$KAME: if_nametoindex.c,v 1.6 2000/11/24 08:18:54 itojun Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-1-Clause
+ *
  * Copyright (c) 1997, 2000
  *	Berkeley Software Design, Inc.  All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/net/if_nametoindex.c 287619 2015-09-10 10:23:23Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/if_nametoindex.c 326823 2017-12-13 16:13:17Z pfg $");
 
 #include "namespace.h"
 #include <sys/types.h>

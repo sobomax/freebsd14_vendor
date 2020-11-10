@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/security/mac_bsdextended/mac_bsdextended.c 321055 2017-07-16 19:24:09Z emaste $
+ * $FreeBSD: releng/12.2/sys/security/mac_bsdextended/mac_bsdextended.c 361589 2020-05-28 17:08:39Z freqlabs $
  */
 
 /*
@@ -301,9 +301,8 @@ ugidfw_rulecheck(struct mac_bsdextended_rule *rule,
 	}
 
 	if (rule->mbr_object.mbo_flags & MBO_FSID_DEFINED) {
-		match = (bcmp(&(vp->v_mount->mnt_stat.f_fsid),
-		    &(rule->mbr_object.mbo_fsid),
-		    sizeof(rule->mbr_object.mbo_fsid)) == 0);
+		match = (fsidcmp(&vp->v_mount->mnt_stat.f_fsid,
+		    &rule->mbr_object.mbo_fsid) == 0);
 		if (rule->mbr_object.mbo_neg & MBO_FSID_DEFINED)
 			match = !match;
 		if (!match)

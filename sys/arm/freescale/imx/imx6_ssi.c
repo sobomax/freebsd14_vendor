@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx6_ssi.c 318118 2017-05-09 21:25:49Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx6_ssi.c 310343 2016-12-21 01:32:19Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx6_ssi.c 318118 2017-05-
 #include <dev/sound/chip.h>
 #include <mixer_if.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>

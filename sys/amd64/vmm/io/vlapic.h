@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/io/vlapic.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.h 360103 2020-04-19 17:19:29Z mr $
  */
 
 #ifndef _VLAPIC_H_
@@ -72,6 +74,8 @@ void vlapic_post_intr(struct vlapic *vlapic, int hostcpu, int ipinum);
 void vlapic_set_error(struct vlapic *vlapic, uint32_t mask);
 void vlapic_fire_cmci(struct vlapic *vlapic);
 int vlapic_trigger_lvt(struct vlapic *vlapic, int vector);
+
+void vlapic_sync_tpr(struct vlapic *vlapic);
 
 uint64_t vlapic_get_apicbase(struct vlapic *vlapic);
 int vlapic_set_apicbase(struct vlapic *vlapic, uint64_t val);

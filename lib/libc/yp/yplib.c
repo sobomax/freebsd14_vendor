@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992/3 Theo de Raadt <deraadt@fsa.ca>
  * Copyright (c) 1998 Bill Paul <wpaul@ctr.columbia.edu>
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/yp/yplib.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/yp/yplib.c 352615 2019-09-23 07:22:22Z kib $");
 
 #include "namespace.h"
 #include "reentrant.h"
@@ -524,7 +526,7 @@ gotit:
 		tv.tv_usec = 0;
 		ysd->dom_socket = RPC_ANYSOCK;
 		ysd->dom_client = clntudp_bufcreate(&ysd->dom_server_addr,
-			YPPROG, YPVERS, tv, &ysd->dom_socket, 1280, 2304);
+		    YPPROG, YPVERS, tv, &ysd->dom_socket, 65507, 65507);
 		if (ysd->dom_client == NULL) {
 			clnt_pcreateerror("clntudp_create");
 			ysd->dom_vers = -1;

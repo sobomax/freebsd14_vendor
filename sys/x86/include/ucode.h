@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/ucode.h 347700 2019-05-16 14:42:16Z markj $
+ * $FreeBSD: releng/12.2/sys/x86/include/ucode.h 338687 2018-09-14 17:04:36Z markj $
  */
 
 #ifndef _MACHINE_UCODE_H_

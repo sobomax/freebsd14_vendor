@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/ib_uverbs_cmd.c 347807 2019-05-16 17:18:29Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/ib_uverbs_cmd.c 347721 2019-05-16 15:48:56Z hselasky $");
 
 #define	LINUXKPI_PARAM_PREFIX ibcore_
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_scm_padconf.h 285867 2015-07-25 03:03:32Z gonzo $
+ * $FreeBSD: releng/12.2/sys/arm/ti/am335x/am335x_scm_padconf.h 308822 2016-11-19 01:51:56Z cognet $
  */
 
 #ifndef AM335X_SCM_PADCONF_H
@@ -41,5 +41,7 @@
 #define PADCONF_INPUT_PULLUP		(RXACTIVE | PULLTYPESEL)
 #define PADCONF_INPUT_PULLDOWN		(RXACTIVE)
 #define PADCONF_INPUT_PULLUP_SLOW	(PADCONF_INPUT_PULLUP | SLEWCTRL)
+
+extern const struct ti_pinmux_device ti_am335x_pinmux_dev;
 
 #endif /* AM335X_SCM_PADCONF_H */

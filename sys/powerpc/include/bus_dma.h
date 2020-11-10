@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Scott Long
  * All rights reserved.
  *
@@ -23,12 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: releng/11.3/sys/powerpc/include/bus_dma.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/powerpc/include/bus_dma.h 326261 2017-11-27 15:09:59Z pfg $ */
 
 #ifndef _POWERPC_BUS_DMA_H_
 #define _POWERPC_BUS_DMA_H_
 
 #include <sys/bus_dma.h>
+#include <sys/bus_dma_internal.h>
 
 struct device;
 

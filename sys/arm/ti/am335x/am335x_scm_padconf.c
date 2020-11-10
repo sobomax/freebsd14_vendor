@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Damjan Marion <dmarion@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/ti/am335x/am335x_scm_padconf.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/am335x/am335x_scm_padconf.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -293,7 +295,7 @@ const static struct ti_pinmux_padconf ti_padconf_devmap[] = {
 	{  .ballname = NULL  },
 };
 
-const struct ti_pinmux_device ti_pinmux_dev = {
+const struct ti_pinmux_device ti_am335x_pinmux_dev = {
 	.padconf_muxmode_mask	= 0x7,
 	.padconf_sate_mask	= 0x78,
 	.padstate		= ti_padstate_devmap,

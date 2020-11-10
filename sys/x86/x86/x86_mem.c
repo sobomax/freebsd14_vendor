@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/x86/x86_mem.c 314591 2017-03-03 10:30:30Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/x86_mem.c 314252 2017-02-25 10:32:49Z kib $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

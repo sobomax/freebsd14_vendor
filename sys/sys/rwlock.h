@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/rwlock.h 343420 2019-01-25 11:01:11Z kib $
+ * $FreeBSD: releng/12.2/sys/sys/rwlock.h 343419 2019-01-25 10:58:34Z kib $
  */
 
 #ifndef _SYS_RWLOCK_H_

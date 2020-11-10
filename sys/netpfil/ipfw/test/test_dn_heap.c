@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998-2002,2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved
  *
@@ -27,7 +29,7 @@
 /*
  * Userland code for testing binary heaps and hash tables
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/test/test_dn_heap.c 204591 2010-03-02 17:40:48Z luigi $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/test/test_dn_heap.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #include <sys/cdefs.h>

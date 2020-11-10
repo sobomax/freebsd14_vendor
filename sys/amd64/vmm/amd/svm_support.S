@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/amd/svm_support.S 336190 2018-07-11 07:19:42Z araujo $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/amd/svm_support.S 335030 2018-06-13 07:02:58Z araujo $
  */
 #include <machine/asmacros.h>
 

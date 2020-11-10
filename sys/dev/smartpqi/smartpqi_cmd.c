@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/smartpqi/smartpqi_cmd.c 333019 2018-04-26 16:59:06Z sbruno $ */
+/* $FreeBSD: releng/12.2/sys/dev/smartpqi/smartpqi_cmd.c 333019 2018-04-26 16:59:06Z sbruno $ */
 
 #include "smartpqi_includes.h"
 

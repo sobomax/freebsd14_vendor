@@ -1,6 +1,8 @@
 /*	$NetBSD: frame.h,v 1.5 2002/10/19 00:10:54 bjh21 Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994-1997 Mark Brinicombe.
  * Copyright (c) 1994 Brini.
  * All rights reserved.
@@ -42,7 +44,7 @@
  *
  * Created      : 30/09/94
  *
- * $FreeBSD: releng/11.3/sys/arm/include/frame.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/include/frame.h 326258 2017-11-27 15:04:10Z pfg $
  *
  */
 

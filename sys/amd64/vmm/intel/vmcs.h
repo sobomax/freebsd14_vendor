@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/intel/vmcs.h 346707 2019-04-25 21:09:07Z mav $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmcs.h 346706 2019-04-25 21:04:38Z mav $
  */
 
 #ifndef _VMCS_H_

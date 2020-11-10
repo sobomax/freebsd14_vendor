@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998 - 2008 Søren Schmidt <sos@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ata/chipsets/ata-promise.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ata/chipsets/ata-promise.c 355964 2019-12-20 22:07:05Z brooks $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -793,7 +795,7 @@ ata_promise_mio_reset(device_t dev)
 	    if (ata_sata_phy_reset(dev, -1, 1)) {
 		u_int32_t signature = ch->hw.softreset(dev, ATA_PM);
 
-		if (1 | bootverbose)
+		if (bootverbose)
         	    device_printf(dev, "SIGNATURE: %08x\n", signature);
 
 		switch (signature >> 16) {

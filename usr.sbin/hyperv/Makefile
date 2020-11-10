@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/hyperv/Makefile 311353 2017-01-05 03:20:00Z sephe $
+# $FreeBSD: releng/12.2/usr.sbin/hyperv/Makefile 308664 2016-11-15 02:36:12Z sephe $
 
 .include <bsd.own.mk>
 

@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause and BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Networks Associates Technology, Inc.
  * All rights reserved.
  *
@@ -40,7 +42,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -57,7 +59,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fsck.h	8.4 (Berkeley) 5/9/95
- * $FreeBSD: releng/11.3/sbin/fsck_ffs/fsck.h 347475 2019-05-10 23:46:42Z mckusick $
+ * $FreeBSD: releng/12.2/sbin/fsck_ffs/fsck.h 359753 2020-04-09 20:35:35Z kevans $
  */
 
 #ifndef _FSCK_H_
@@ -125,7 +127,7 @@ struct inostat {
  * Inode state information is contained on per cylinder group lists
  * which are described by the following structure.
  */
-struct inostatlist {
+extern struct inostatlist {
 	long	il_numalloced;	/* number of inodes allocated in this cg */
 	struct inostat *il_stat;/* inostat info for this cylinder group */
 } *inostathead;
@@ -269,13 +271,13 @@ struct dups {
 	struct dups *next;
 	ufs2_daddr_t dup;
 };
-struct dups *duplist;		/* head of dup list */
-struct dups *muldup;		/* end of unique duplicate dup block numbers */
+extern struct dups *duplist;		/* head of dup list */
+extern struct dups *muldup;		/* end of unique duplicate dup block numbers */
 
 /*
  * Inode cache data structures.
  */
-struct inoinfo {
+extern struct inoinfo {
 	struct	inoinfo *i_nexthash;	/* next entry in hash chain */
 	ino_t	i_number;		/* inode number of this entry */
 	ino_t	i_parent;		/* inode number of parent */
@@ -309,7 +311,7 @@ extern u_int	real_dev_bsize;		/* actual disk sector size, not overridden */
 extern char	nflag;			/* assume a no response */
 extern char	yflag;			/* assume a yes response */
 extern int	bkgrdflag;		/* use a snapshot to run on an active system */
-extern ufs2_daddr_t bflag;		/* location of alternate super block */
+extern off_t	bflag;			/* location of alternate super block */
 extern int	debug;			/* output debugging info */
 extern int	Eflag;			/* delete empty data blocks */
 extern int	Zflag;			/* zero empty data blocks */
@@ -317,6 +319,7 @@ extern int	zflag;			/* zero unused directory space */
 extern int	inoopt;			/* trim out unused inodes */
 extern char	ckclean;		/* only do work if not cleanly unmounted */
 extern int	cvtlevel;		/* convert to newer file system format */
+extern int	ckhashadd;		/* check hashes to be added */
 extern int	bkgrdcheck;		/* determine if background check is possible */
 extern int	bkgrdsumadj;		/* whether the kernel have ability to adjust superblock summary */
 extern char	usedsoftdep;		/* just fix soft dependency inconsistencies */
@@ -329,6 +332,7 @@ extern char	skipclean;		/* skip clean file systems if preening */
 extern int	fsmodified;		/* 1 => write done to file system */
 extern int	fsreadfd;		/* file descriptor for reading file system */
 extern int	fswritefd;		/* file descriptor for writing file system */
+extern struct	uufsd disk;		/* libufs user-ufs disk structure */
 extern int	surrender;		/* Give up if reads fail */
 extern int	wantrestart;		/* Restart fsck on early termination */
 
@@ -439,7 +443,7 @@ void		freeinodebuf(void);
 void		fsutilinit(void);
 int		ftypeok(union dinode *dp);
 void		getblk(struct bufarea *bp, ufs2_daddr_t blk, long size);
-struct bufarea *cgget(int cg);
+struct bufarea *cglookup(int cg);
 struct bufarea *getdatablk(ufs2_daddr_t blkno, long size, int type);
 struct inoinfo *getinoinfo(ino_t inumber);
 union dinode   *getnextinode(ino_t inumber, int rebuildcg);

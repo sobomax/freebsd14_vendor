@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/drm_lock.c 288112 2015-09-22 15:32:27Z bz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_lock.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drmP.h>
 

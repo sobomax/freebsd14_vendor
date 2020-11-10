@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/release/Makefile.gce 334963 2018-06-11 17:22:27Z gjb $
+# $FreeBSD: releng/12.2/release/Makefile.gce 333473 2018-05-10 21:46:58Z gjb $
 #
 #
 # Makefile for uploading Google Compute Engine disk images.

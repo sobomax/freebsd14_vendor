@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/compat/linux/linux_sysctl.c 346836 2019-04-28 14:09:31Z dchagin $");
+__FBSDID("$FreeBSD: releng/12.2/sys/compat/linux/linux_sysctl.c 335644 2018-06-25 19:24:50Z emaste $");
 
 #include "opt_compat.h"
 

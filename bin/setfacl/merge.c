@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/bin/setfacl/merge.c 240087 2012-09-04 12:19:34Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/bin/setfacl/merge.c 333065 2018-04-27 15:25:24Z emaste $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
@@ -123,7 +123,7 @@ merge_acl(acl_t acl, acl_t *prev_acl, const char *filename)
 			err(1, "%s: acl_get_tag_type() failed - "
 			    "invalid ACL entry", filename);
 		if (tag == ACL_MASK)
-			have_mask = 1;
+			have_mask = true;
 
 		/* check against the existing ACL entries */
 		entry_id_new = ACL_FIRST_ENTRY;

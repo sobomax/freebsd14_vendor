@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/fe/if_fereg.h 142135 2005-02-20 19:33:13Z imp $ */
+/* $FreeBSD: releng/12.2/sys/dev/fe/if_fereg.h 312910 2017-01-28 02:22:15Z nyan $ */
 
 /*
  * Registers on FMV-180 series' ISA bus interface ASIC.
@@ -111,14 +111,6 @@
 
 #define FE_MBH0_INTR_ENABLE	0x10	/* Enable interrupts.	*/
 #define FE_MBH0_INTR_DISABLE	0x00	/* Disable interrupts.	*/
-
-
-/*
- * Registers on RE1000.  (*NOT* on RE1000 Plus.)
- */
-
-/* IRQ configuration.  */
-#define	FE_RE1000_IRQCONF	0x10
 
 
 /*

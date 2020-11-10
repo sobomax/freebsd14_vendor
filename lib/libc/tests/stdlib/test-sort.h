@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/tests/stdlib/test-sort.h 290538 2015-11-08 07:03:17Z ngie $
+ * $FreeBSD: releng/12.2/lib/libc/tests/stdlib/test-sort.h 290538 2015-11-08 07:03:17Z ngie $
  */
 
 #ifndef _TEST_SORT_H

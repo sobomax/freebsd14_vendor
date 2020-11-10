@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 1996-1998 John D. Polstra.
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/libexec/rtld-elf/debug.h 346485 2019-04-21 09:13:56Z kib $
+ * $FreeBSD: releng/12.2/libexec/rtld-elf/debug.h 346484 2019-04-21 09:11:22Z kib $
  */
 
 /*

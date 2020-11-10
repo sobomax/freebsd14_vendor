@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/slab.h 345930 2019-04-05 11:26:33Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/slab.h 365383 2020-09-06 17:40:35Z wulf $
  */
 #ifndef	_LINUX_SLAB_H_
 #define	_LINUX_SLAB_H_
@@ -152,6 +152,12 @@ static inline void
 kfree(const void *ptr)
 {
 	free(__DECONST(void *, ptr), M_KMALLOC);
+}
+
+static inline size_t
+ksize(const void *ptr)
+{
+	return (malloc_usable_size(ptr));
 }
 
 extern struct linux_kmem_cache *linux_kmem_cache_create(const char *name,

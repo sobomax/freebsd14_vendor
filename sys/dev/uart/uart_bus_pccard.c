@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 M. Warner Losh.  All rights reserved.
  * Copyright (c) 2003 Norikatsu Shigemura, Takenori Watanabe All rights reserved.
  *
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_bus_pccard.c 340145 2018-11-04 23:28:56Z mmacy $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_bus_pccard.c 365539 2020-09-09 22:54:09Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -96,9 +98,10 @@ uart_pccard_attach(device_t dev)
 	error = uart_bus_probe(dev, 0, 0, 0, 0, 0, 0);
 	if (error > 0)
 		return (error);
+	gone_in_dev(dev, 13, "pccard removed");
 	return (uart_bus_attach(dev));
 }
 
 DRIVER_MODULE(uart, pccard, uart_pccard_driver, uart_devclass, 0, 0);
 MODULE_PNP_INFO("U32:function_type;", pccard, uart, &uart_pccard_function,
-    sizeof(uart_pccard_function), 1);
+    1);

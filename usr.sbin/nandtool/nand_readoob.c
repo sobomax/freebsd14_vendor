@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nandtool/nand_readoob.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nandtool/nand_readoob.c 327211 2017-12-26 16:20:38Z jilles $");
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/common/ls.c 329099 2018-02-10 04:37:44Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/common/ls.c 316112 2017-03-28 21:50:11Z tsoome $");
 
 #include <sys/param.h>
 #include <ufs/ufs/dinode.h>

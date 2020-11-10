@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/include/hyperv_busdma.h 307466 2016-10-17 03:48:22Z sephe $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/include/hyperv_busdma.h 303470 2016-07-29 03:16:51Z sephe $
  */
 
 #ifndef _HYPERV_BUSDMA_H_

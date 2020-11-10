@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/stat/tests/stat_test.sh 321086 2017-07-17 21:01:10Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/stat/tests/stat_test.sh 320724 2017-07-06 07:37:03Z ngie $
 
 atf_test_case F_flag
 F_flag_head()

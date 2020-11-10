@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/clang/Makefile 344213 2019-02-16 15:57:29Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/clang/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 .include <src.opts.mk>
 
 PROG_CXX=	clang
 
-SRCDIR=		tools/clang/tools/driver
+SRCDIR=		clang/tools/driver
 SRCS+=		cc1_main.cpp
 SRCS+=		cc1as_main.cpp
 SRCS+=		cc1gen_reproducer_main.cpp

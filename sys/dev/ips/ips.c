@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Written by: David Jeffery
  * Copyright (c) 2002 Adaptec Inc.
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ips/ips.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ips/ips.c 360297 2020-04-25 12:39:28Z dim $");
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>
@@ -281,10 +283,11 @@ static int ips_diskdev_free(ips_softc_t *sc)
 	int i;
 	int error = 0;
 	for(i = 0; i < IPS_MAX_NUM_DRIVES; i++){
-		if(sc->diskdev[i])
+		if(sc->diskdev[i]) {
 			error = device_delete_child(sc->dev, sc->diskdev[i]);
 			if(error)
 				return error;
+		}
 	}
 	bus_generic_detach(sc->dev);
 	return 0;

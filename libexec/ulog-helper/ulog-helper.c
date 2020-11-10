@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/libexec/ulog-helper/ulog-helper.c 234469 2012-04-19 21:12:08Z ed $");
+__FBSDID("$FreeBSD: releng/12.2/libexec/ulog-helper/ulog-helper.c 326274 2017-11-27 15:25:02Z pfg $");
 
 #include <pwd.h>
 #include <unistd.h>

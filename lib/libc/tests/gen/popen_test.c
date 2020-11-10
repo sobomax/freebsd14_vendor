@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/gen/popen_test.c 290848 2015-11-15 05:02:41Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/gen/popen_test.c 290848 2015-11-15 05:02:41Z ngie $");
 
 #include <sys/param.h>
 #include <sys/wait.h>

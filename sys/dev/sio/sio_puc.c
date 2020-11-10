@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 JF Hay.  All rights reserved.
  * Copyright (c) 2001 M. Warner Losh.  All rights reserved.
  *
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sio/sio_puc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sio/sio_puc.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -89,9 +91,7 @@ sio_puc_probe(device_t dev)
 
 	if (BUS_READ_IVAR(parent, dev, PUC_IVAR_CLOCK, &rclk))
 		rclk = DEFAULT_RCLK;
-#ifdef PC98
-	SET_FLAG(dev, SET_IFTYPE(COM_IF_NS16550));
-#endif
+
 	error = sioprobe(dev, 0, rclk, 1);
 	return ((error > 0) ? error : BUS_PROBE_LOW_PRIORITY);
 }

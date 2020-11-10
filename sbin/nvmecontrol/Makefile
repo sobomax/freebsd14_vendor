@@ -1,11 +1,22 @@
-# $FreeBSD: releng/11.3/sbin/nvmecontrol/Makefile 328728 2018-02-01 19:46:41Z mav $
+# $FreeBSD: releng/12.2/sbin/nvmecontrol/Makefile 359838 2020-04-12 22:11:29Z dab $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	nvmecontrol
-SRCS=	nvmecontrol.c devlist.c firmware.c identify.c logpage.c	\
-	perftest.c reset.c nvme_util.c power.c util.c wdc.c
+SRCS=	comnd.c nvmecontrol.c
+SRCS+=	devlist.c firmware.c format.c identify.c logpage.c ns.c nsid.c
+SRCS+=	perftest.c power.c reset.c resv.c sanitize.c
+SRCS+=	passthru.c
+SRCS+=	identify_ext.c nvme_util.c nc_util.c
 MAN=	nvmecontrol.8
+LDFLAGS+= -rdynamic
+LIBADD+= util
+SUBDIR=	modules
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .PATH:	${SRCTOP}/sys/dev/nvme
 
 .include <bsd.prog.mk>
+.include <bsd.subdir.mk>

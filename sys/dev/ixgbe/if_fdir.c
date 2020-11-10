@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixgbe/if_fdir.c 347419 2019-05-10 00:46:43Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixgbe/if_fdir.c 327031 2017-12-20 18:15:06Z erj $*/
 
 #include "ixgbe.h"
 
@@ -52,8 +52,9 @@ ixgbe_init_fdir(struct adapter *adapter)
 void
 ixgbe_reinit_fdir(void *context)
 {
-	struct adapter *adapter = context;
-	struct ifnet   *ifp = adapter->ifp;
+	if_ctx_t       ctx = context;
+	struct adapter *adapter = iflib_get_softc(ctx);
+	struct ifnet   *ifp = iflib_get_ifp(ctx);
 
 	if (!(adapter->feat_en & IXGBE_FEATURE_FDIR))
 		return;
@@ -148,7 +149,7 @@ ixgbe_atr(struct tx_ring *txr, struct mbuf *mp)
 void
 ixgbe_reinit_fdir(void *context)
 {
-	UNREFERENCED_1PARAMETER(context);
+	UNREFERENCED_PARAMETER(context);
 } /* ixgbe_reinit_fdir */
 
 void

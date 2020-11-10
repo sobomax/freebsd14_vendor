@@ -1,7 +1,9 @@
-/* $FreeBSD: releng/11.3/lib/libc/iconv/citrus_bcs_strtoul.c 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libc/iconv/citrus_bcs_strtoul.c 326193 2017-11-25 17:12:48Z pfg $ */
 /* $NetBSD: citrus_bcs_strtoul.c,v 1.5 2013/04/26 21:20:48 joerg Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2005 The DragonFly Project.  All rights reserved.
  * Copyright (c) 2003, 2008 Citrus Project,
  * All rights reserved.

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libsm/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libsm/Makefile 363465 2020-07-24 00:22:33Z gshapiro $
 
 .include <src.opts.mk>
 
@@ -32,7 +32,7 @@ SRCS+=	assert.c debug.c errstring.c exc.c heap.c match.c rpool.c \
 	wbuf.c wsetup.c string.c stringf.c \
 	xtrap.c strto.c test.c strcasecmp.c strrevcmp.c \
 	signal.c clock.c config.c sem.c shm.c mbdb.c strexit.c cf.c ldap.c \
-	niprop.c mpeix.c memstat.c util.c inet6_ntop.c
+	niprop.c mpeix.c memstat.c util.c inet6_ntop.c notify.c
 CLEANFILES+=sm_os.h
 
 INTERNALLIB=

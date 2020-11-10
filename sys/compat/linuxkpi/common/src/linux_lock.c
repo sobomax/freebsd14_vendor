@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/src/linux_lock.c 329976 2018-02-25 10:40:41Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_lock.c 329825 2018-02-22 15:29:19Z hselasky $
  */
 
 #include <sys/queue.h>

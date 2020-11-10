@@ -23,12 +23,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/vnic/nic_main.c 300295 2016-05-20 11:02:04Z wma $
+ * $FreeBSD: releng/12.2/sys/dev/vnic/nic_main.c 327173 2017-12-25 04:48:39Z kan $
  *
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/vnic/nic_main.c 300295 2016-05-20 11:02:04Z wma $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/vnic/nic_main.c 327173 2017-12-25 04:48:39Z kan $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -761,9 +761,6 @@ static void
 nic_send_rss_size(struct nicpf *nic, int vf)
 {
 	union nic_mbx mbx = {};
-	uint64_t  *msg;
-
-	msg = (uint64_t *)&mbx;
 
 	mbx.rss_size.msg = NIC_MBOX_MSG_RSS_SIZE;
 	mbx.rss_size.ind_tbl_size = nic->rss_ind_tbl_size;

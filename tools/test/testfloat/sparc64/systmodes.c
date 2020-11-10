@@ -24,7 +24,7 @@ this code that are retained.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/test/testfloat/sparc64/systmodes.c 207151 2010-04-24 12:11:41Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/tools/test/testfloat/sparc64/systmodes.c 207151 2010-04-24 12:11:41Z marius $");
 
 #include <ieeefp.h>
 #include "milieu.h"

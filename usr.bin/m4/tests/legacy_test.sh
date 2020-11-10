@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/usr.bin/m4/tests/legacy_test.sh 263227 2014-03-16 08:04:06Z jmmv $
+# $FreeBSD: releng/12.2/usr.bin/m4/tests/legacy_test.sh 263227 2014-03-16 08:04:06Z jmmv $
 
 SRCDIR="$(dirname "${0}")"; export SRCDIR
 

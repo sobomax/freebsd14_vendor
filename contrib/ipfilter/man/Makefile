@@ -3,7 +3,7 @@
 #
 # See the IPFILTER.LICENCE file for details on licencing.
 #
-# $FreeBSD: releng/11.3/contrib/ipfilter/man/Makefile 255332 2013-09-06 23:11:19Z cy $
+# $FreeBSD: releng/12.2/contrib/ipfilter/man/Makefile 255332 2013-09-06 23:11:19Z cy $
 #
 
 all:

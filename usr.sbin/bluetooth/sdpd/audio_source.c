@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/sdpd/audio_source.c 343901 2019-02-08 10:27:02Z hselasky $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/sdpd/audio_source.c 343900 2019-02-08 10:25:42Z hselasky $
  */
 
 #include <sys/queue.h>

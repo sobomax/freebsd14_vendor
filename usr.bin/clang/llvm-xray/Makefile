@@ -1,9 +1,9 @@
-# $FreeBSD: releng/11.3/usr.bin/clang/llvm-xray/Makefile 344213 2019-02-16 15:57:29Z dim $
+# $FreeBSD: releng/12.2/usr.bin/clang/llvm-xray/Makefile 356462 2020-01-07 19:49:10Z dim $
 
 PROG_CXX=	llvm-xray
 MAN=
 
-SRCDIR=		tools/llvm-xray
+SRCDIR=		llvm/tools/llvm-xray
 SRCS+=		func-id-helper.cpp
 SRCS+=		llvm-xray.cpp
 SRCS+=		xray-account.cpp

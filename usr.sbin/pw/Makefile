@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/pw/Makefile 286196 2015-08-02 12:47:50Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/pw/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 PROG=	pw
 MAN=	pw.conf.5 pw.8
@@ -12,8 +12,7 @@ LIBADD=	crypt util sbuf
 
 .include <src.opts.mk>
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

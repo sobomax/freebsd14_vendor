@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/amdgpio/amdgpio.h 339523 2018-10-21 04:52:37Z gonzo $
+ * $FreeBSD: releng/12.2/sys/dev/amdgpio/amdgpio.h 339523 2018-10-21 04:52:37Z gonzo $
  */
 
 #ifdef	DEBUG

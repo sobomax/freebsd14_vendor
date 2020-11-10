@@ -1,7 +1,9 @@
 /*	$NetBSD: fpu_arith.h,v 1.4 2005/12/24 20:07:28 perry Exp $ */
-/* $FreeBSD: releng/11.3/sys/powerpc/fpu/fpu_arith.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/sys/powerpc/fpu/fpu_arith.h 326023 2017-11-20 19:43:44Z pfg $ */
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *

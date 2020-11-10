@@ -1,2 +1,2 @@
-/* $FreeBSD: releng/11.3/usr.bin/indent/tests/comments.0.pro 331147 2018-03-18 22:19:52Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.bin/indent/tests/comments.0.pro 321383 2017-07-23 15:07:52Z pstef $ */
 -bbb

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/cpio/test/test_option_z.c 318482 2017-05-18 19:47:43Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/cpio/test/test_option_z.c 317782 2017-05-04 00:04:17Z mm $");
 
 DEFINE_TEST(test_option_z)
 {

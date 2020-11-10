@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cddl/dev/dtrace/dtrace_test.c 258622 2013-11-26 08:46:27Z avg $
+ * $FreeBSD: releng/12.2/sys/cddl/dev/dtrace/dtrace_test.c 258622 2013-11-26 08:46:27Z avg $
  *
  */
 #include <sys/cdefs.h>

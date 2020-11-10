@@ -1,7 +1,9 @@
 /*	$OpenBSD: tip.c,v 1.30 2006/08/18 03:06:18 jason Exp $	*/
 /*	$NetBSD: tip.c,v 1.13 1997/04/20 00:03:05 mellon Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/tip/tip/tip.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/tip/tip/tip.c 359763 2020-04-10 00:27:19Z kevans $");
 
 #ifndef lint
 static const char copyright[] =
@@ -52,6 +54,7 @@ static const char rcsid[] = "$OpenBSD: tip.c,v 1.30 2006/08/18 03:06:18 jason Ex
  * or
  *  cu phone-number [-s speed] [-l line] [-a acu]
  */
+#define	EXTERN
 #include "tip.h"
 #include "pathnames.h"
 
@@ -250,7 +253,6 @@ cucommon:
 		tipin();
 	else
 		tipout();
-	/*NOTREACHED*/
 	exit(0);
 }
 
@@ -400,11 +402,16 @@ tipin(void)
 	}
 
 	while (1) {
-		gch = getchar()&STRIP_PAR;
-		/* XXX does not check for EOF */
+		gch = getchar();
+		if (gch == EOF)
+			return;
+		gch = gch & STRIP_PAR;
 		if ((gch == character(value(ESCAPE))) && bol) {
 			if (!noesc) {
-				if (!(gch = escape()))
+				gch = escape();
+				if (gch == EOF)
+					return;
+				if (gch == 0)
 					continue;
 			}
 		} else if (!cumode && gch == character(value(RAISECHAR))) {
@@ -417,8 +424,12 @@ tipin(void)
 			if (boolean(value(HALFDUPLEX)))
 				printf("\r\n");
 			continue;
-		} else if (!cumode && gch == character(value(FORCE)))
-			gch = getchar()&STRIP_PAR;
+		} else if (!cumode && gch == character(value(FORCE))) {
+			gch = getchar();
+			if (gch == EOF)
+				return;
+			gch = gch & STRIP_PAR;
+		}
 		bol = any(gch, value(EOL));
 		if (boolean(value(RAISE)) && islower(gch))
 			gch = toupper(gch);
@@ -442,8 +453,10 @@ escape(void)
 	esctable_t *p;
 	char c = character(value(ESCAPE));
 
-	gch = (getchar()&STRIP_PAR);
-	/* XXX does not check for EOF */
+	gch = getchar();
+	if (gch == EOF)
+		return (EOF);
+	gch = gch & STRIP_PAR;
 	for (p = etable; p->e_char; p++)
 		if (p->e_char == gch) {
 			if ((p->e_flags&PRIV) && uid)

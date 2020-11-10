@@ -38,7 +38,7 @@
 __RCSID("$NetBSD: asa.c,v 1.11 1997/09/20 14:55:00 lukem Exp $");
 #endif
 #endif
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/asa/asa.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/asa/asa.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <err.h>
 #include <stdio.h>

@@ -1,6 +1,8 @@
 /*-
  * CAM ioctl compatibility shims
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Scott Long
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/cam_compat.c 307264 2016-10-14 06:56:06Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/cam_compat.c 326265 2017-11-27 15:12:43Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

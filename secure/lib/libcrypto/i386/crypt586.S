@@ -1,7 +1,6 @@
-/* $FreeBSD: releng/11.3/secure/lib/libcrypto/i386/crypt586.S 305153 2016-08-31 20:33:59Z jkim $ */
+/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/crypt586.S 339270 2018-10-09 21:28:26Z gjb $ */
 /* Do not modify. This file is auto-generated from crypt586.pl. */
 #ifdef PIC
-.file	"crypt586.S"
 .text
 .globl	fcrypt_body
 .type	fcrypt_body,@function
@@ -881,7 +880,6 @@ fcrypt_body:
 	ret
 .size	fcrypt_body,.-.L_fcrypt_body_begin
 #else
-.file	"crypt586.S"
 .text
 .globl	fcrypt_body
 .type	fcrypt_body,@function

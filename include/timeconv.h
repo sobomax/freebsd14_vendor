@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  * (c) UNIX System Laboratories, Inc.
@@ -35,7 +37,7 @@
  */
 
 /*
- * $FreeBSD: releng/11.3/include/timeconv.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/include/timeconv.h 326024 2017-11-20 19:45:28Z pfg $
  */
 
 #ifndef _TIMECONV_H_

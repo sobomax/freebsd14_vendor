@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/etc/gss/Makefile 153838 2005-12-29 14:40:22Z dfr $
+# $FreeBSD: releng/12.2/etc/gss/Makefile 153838 2005-12-29 14:40:22Z dfr $
 
 FILES=	mech qop
 NO_OBJ=

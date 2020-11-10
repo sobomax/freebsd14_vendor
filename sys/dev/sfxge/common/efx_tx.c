@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/common/efx_tx.c 342438 2018-12-25 07:18:40Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/common/efx_tx.c 350405 2019-07-29 09:25:16Z arybchik $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -770,7 +772,7 @@ siena_tx_qpost(
 		 * Fragments must not span 4k boundaries.
 		 * Here it is a stricter requirement than the maximum length.
 		 */
-		EFSYS_ASSERT(P2ROUNDUP(start + 1,
+		EFSYS_ASSERT(EFX_P2ROUNDUP(efsys_dma_addr_t, start + 1,
 		    etp->et_enp->en_nic_cfg.enc_tx_dma_desc_boundary) >= end);
 
 		EFX_TX_DESC(etp, start, size, ebp->eb_eop, added);
@@ -1044,7 +1046,7 @@ siena_tx_qdesc_dma_create(
 	 * Fragments must not span 4k boundaries.
 	 * Here it is a stricter requirement than the maximum length.
 	 */
-	EFSYS_ASSERT(P2ROUNDUP(addr + 1,
+	EFSYS_ASSERT(EFX_P2ROUNDUP(efsys_dma_addr_t, addr + 1,
 	    etp->et_enp->en_nic_cfg.enc_tx_dma_desc_boundary) >= addr + size);
 
 	EFSYS_PROBE4(tx_desc_dma_create, unsigned int, etp->et_index,

@@ -1,13 +1,13 @@
-# $FreeBSD: releng/11.3/gnu/lib/libgcov/Makefile 309843 2016-12-11 03:57:21Z marcel $
+# $FreeBSD: releng/12.2/gnu/lib/libgcov/Makefile 315175 2017-03-12 18:59:16Z imp $
 
 MK_PROFILE=	no
 MK_SSP=		no
 
 .include <src.opts.mk>
 
-GCCDIR=	${.CURDIR}/../../../contrib/gcc
-GCCLIB=	${.CURDIR}/../../../contrib/gcclibs
-CCDIR=	${.CURDIR}/../../usr.bin/cc
+GCCDIR=	${SRCTOP}/contrib/gcc
+GCCLIB=	${SRCTOP}/contrib/gcclibs
+CCDIR=	${SRCTOP}/gnu/usr.bin/cc
 .include "${CCDIR}/Makefile.tgt"
 .include "${CCDIR}/cc_tools/Makefile.hdrs"
 

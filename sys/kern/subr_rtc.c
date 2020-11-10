@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1988 University of Utah.
  * Copyright (c) 1982, 1990, 1993
  *	The Regents of the University of California.
@@ -20,7 +22,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -53,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/subr_rtc.c 338594 2018-09-11 18:35:08Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_rtc.c 338435 2018-09-02 20:17:51Z kib $");
 
 #include "opt_ffclock.h"
 
@@ -143,7 +145,7 @@ settime_task_func(void *arg, int pending)
 		getnanotime(&ts);
 		if (!(rtc->flags & CLOCKF_SETTIME_NO_ADJ)) {
 			ts.tv_sec -= utc_offset();
-			timespecadd(&ts, &rtc->resadj);
+			timespecadd(&ts, &rtc->resadj, &ts);
 		}
 	} else {
 		ts.tv_sec  = 0;
@@ -302,7 +304,7 @@ read_clocks(struct timespec *ts, bool debug_read)
 			continue;
 		}
 		if (!(rtc->flags & CLOCKF_GETTIME_NO_ADJ)) {
-			timespecadd(ts, &rtc->resadj);
+			timespecadd(ts, &rtc->resadj, ts);
 			ts->tv_sec += utc_offset();
 		}
 		if (!debug_read) {

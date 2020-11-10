@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/mailwrapper/mailwrapper.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/mailwrapper/mailwrapper.c 327494 2018-01-02 16:50:57Z bapt $");
 
 #include <sys/param.h>
 

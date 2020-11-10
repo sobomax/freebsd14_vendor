@@ -29,13 +29,13 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm64/arm64/copyinout.S 319202 2017-05-30 12:26:36Z andrew $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/copyinout.S 331254 2018-03-20 17:58:51Z emaste $");
 
 #include <sys/errno.h>
 
 #include <machine/vmparam.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 /*
  * Fault handler for the copy{in,out} functions below.

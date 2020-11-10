@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/rpc.ypxfrd/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/rpc.ypxfrd/Makefile 314462 2017-03-01 04:22:23Z ngie $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv
 

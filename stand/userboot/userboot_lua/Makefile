@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/userboot/userboot_lua/Makefile 338418 2018-09-01 02:23:45Z kevans $
+# $FreeBSD: releng/12.2/stand/userboot/userboot_lua/Makefile 338418 2018-09-01 02:23:45Z kevans $
 
 LOADER_INTERP=lua
 

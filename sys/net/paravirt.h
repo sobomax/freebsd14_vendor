@@ -27,7 +27,7 @@
 #define NET_PARAVIRT_H
 
  /*
-  * $FreeBSD: releng/11.3/sys/net/paravirt.h 270063 2014-08-16 15:00:01Z luigi $
+  * $FreeBSD: releng/12.2/sys/net/paravirt.h 270063 2014-08-16 15:00:01Z luigi $
   *
  Support for virtio-like communication between host (H) and guest (G) NICs.
 

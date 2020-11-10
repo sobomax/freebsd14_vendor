@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/tcpd/Makefile 321269 2017-07-20 00:58:19Z ngie $
+# $FreeBSD: releng/12.2/libexec/tcpd/Makefile 314653 2017-03-04 11:28:03Z ngie $
 
 .include <src.opts.mk>
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.bin/procstat/procstat_auxv.c 342709 2019-01-02 23:57:37Z jhb $
+ * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_auxv.c 349491 2019-06-28 01:03:55Z mhorne $
  */
 
 #include <sys/param.h>
@@ -53,7 +53,7 @@ procstat_auxv(struct procstat *procstat, struct kinfo_proc *kipp)
 	u_int count, i;
 	static char prefix[256];
 
-	if (!hflag)
+	if ((procstat_opts & PS_OPT_NOHEADER) == 0)
 		xo_emit("{T:/%5s %-16s %-16s %-16s}\n", "PID", "COMM", "AUXV",
 		    "VALUE");
 
@@ -183,6 +183,18 @@ procstat_auxv(struct procstat *procstat, struct kinfo_proc *kipp)
 		case AT_EHDRFLAGS:
 			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_EHDRFLAGS/%#lx}\n",
 			    prefix, "AT_EHDRFLAGS", (u_long)auxv[i].a_un.a_val);
+			break;
+#endif
+#ifdef AT_HWCAP
+		case AT_HWCAP:
+			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_HWCAP/%#lx}\n",
+			    prefix, "AT_HWCAP", (u_long)auxv[i].a_un.a_val);
+			break;
+#endif
+#ifdef AT_HWCAP2
+		case AT_HWCAP2:
+			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_HWCAP2/%#lx}\n",
+			    prefix, "AT_HWCAP2", (u_long)auxv[i].a_un.a_val);
 			break;
 #endif
 		default:

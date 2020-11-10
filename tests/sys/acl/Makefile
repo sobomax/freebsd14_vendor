@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/acl/Makefile 302036 2016-06-20 23:17:00Z asomers $
+# $FreeBSD: releng/12.2/tests/sys/acl/Makefile 340523 2018-11-17 20:58:35Z markj $
 
 PACKAGE=	tests
 
@@ -30,8 +30,8 @@ _ACL_PROGS=		getfacl setfacl
 TEST_METADATA.$t+=	required_programs="perl zpool ${_ACL_PROGS}"
 .endfor
 
-.for t in 00 02
-TEST_METADATA.$t+=	required_programs="perl ${_ACL_PROGS}"
-.endfor
+# .for t in 00 02
+# TEST_METADATA.$t+=	required_programs="perl ${_ACL_PROGS}"
+# .endfor
 
 .include <bsd.test.mk>

@@ -1,4 +1,6 @@
-/* 
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2000 Peter Edwards
  * Copyright (c) 1988, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libprocstat/msdosfs.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libprocstat/msdosfs.c 325966 2017-11-18 14:26:50Z pfg $");
 
 #include <sys/param.h>
 #include <sys/time.h>

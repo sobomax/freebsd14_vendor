@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sys/refcount.h 339862 2018-10-29 14:37:27Z hselasky $
+ * $FreeBSD: releng/12.2/sys/sys/refcount.h 351786 2019-09-03 19:52:28Z kib $
  */
 
 #ifndef __SYS_REFCOUNT_H__
@@ -35,6 +37,7 @@
 #ifdef _KERNEL
 #include <sys/systm.h>
 #else
+#include <stdbool.h>
 #define	KASSERT(exp, msg)	/* */
 #endif
 
@@ -53,7 +56,21 @@ refcount_acquire(volatile u_int *count)
 	atomic_add_int(count, 1);
 }
 
-static __inline int
+static __inline __result_use_check bool
+refcount_acquire_checked(volatile u_int *count)
+{
+	u_int lcount;
+
+	for (lcount = *count;;) {
+		if (__predict_false(lcount + 1 < lcount))
+			return (false);
+		if (__predict_true(atomic_fcmpset_int(count, &lcount,
+		    lcount + 1) == 1))
+			return (true);
+	}
+}
+
+static __inline bool
 refcount_release(volatile u_int *count)
 {
 	u_int old;
@@ -62,7 +79,7 @@ refcount_release(volatile u_int *count)
 	old = atomic_fetchadd_int(count, -1);
 	KASSERT(old > 0, ("refcount %p is zero", count));
 	if (old > 1)
-		return (0);
+		return (false);
 
 	/*
 	 * Last reference.  Signal the user to call the destructor.
@@ -71,7 +88,7 @@ refcount_release(volatile u_int *count)
 	 * at the start of the function synchronized with this fence.
 	 */
 	atomic_thread_fence_acq();
-	return (1);
+	return (true);
 }
 
 /*
@@ -80,7 +97,7 @@ refcount_release(volatile u_int *count)
  *
  * A temporary hack until refcount_* APIs are sorted out.
  */
-static __inline __result_use_check int
+static __inline __result_use_check bool
 refcount_acquire_if_not_zero(volatile u_int *count)
 {
 	u_int old;
@@ -89,13 +106,13 @@ refcount_acquire_if_not_zero(volatile u_int *count)
 	for (;;) {
 		KASSERT(old < UINT_MAX, ("refcount %p overflowed", count));
 		if (old == 0)
-			return (0);
+			return (false);
 		if (atomic_fcmpset_int(count, &old, old + 1))
-			return (1);
+			return (true);
 	}
 }
 
-static __inline __result_use_check int
+static __inline __result_use_check bool
 refcount_release_if_not_last(volatile u_int *count)
 {
 	u_int old;
@@ -104,9 +121,9 @@ refcount_release_if_not_last(volatile u_int *count)
 	for (;;) {
 		KASSERT(old > 0, ("refcount %p is zero", count));
 		if (old == 1)
-			return (0);
+			return (false);
 		if (atomic_fcmpset_int(count, &old, old - 1))
-			return (1);
+			return (true);
 	}
 }
 

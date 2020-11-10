@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/ofed/libibnetdisc/Makefile 335253 2018-06-16 15:05:05Z kib $
+# $FreeBSD: releng/12.2/lib/ofed/libibnetdisc/Makefile 348138 2019-05-23 01:09:10Z ngie $
 
 .include <src.opts.mk>
 
@@ -32,7 +32,7 @@ CFLAGS+=	-DHAVE_CONFIG_H=1
 CFLAGS+=	-I${_spath}
 CFLAGS+=	-I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/infiniband
 .if ${COMPILER_FEATURES:Mc++11}
-CXXFLAGS+=	-std=c++11
+CXXSTD=		c++11
 .endif
 VERSION_MAP=	${_spath}/libibnetdisc.map
 

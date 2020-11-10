@@ -1,6 +1,7 @@
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
  * Copyright (c) 2013-2016 Avago Technologies
+ * Copyright 2000-2020 Broadcom Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
+ * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mpr/mpr_mapping.c 333415 2018-05-09 15:22:40Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpr/mpr_mapping.c 352735 2019-09-26 01:54:24Z imp $");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>
@@ -1188,9 +1189,6 @@ _mapping_get_dev_info(struct mpr_softc *sc,
 				    "disk type (SSD or HDD) and SAS Address "
 				    "for SATA device with handle 0x%04x\n",
 				    __func__, phy_change->dev_handle);
-			} else {
-				mpr_dprint(sc, MPR_INFO, "SAS Address for SATA "
-				    "device = %jx\n", sas_address);
 			}
 		}
 

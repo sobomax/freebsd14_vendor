@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997 Berkeley Software Design, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/tsb.c 247297 2013-02-26 01:00:11Z attilio $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/tsb.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_pmap.h"

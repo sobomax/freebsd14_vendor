@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_vdso.h 346807 2019-04-28 09:35:39Z dchagin $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_vdso.h 321728 2017-07-30 21:24:20Z dchagin $
  */
 
 #ifndef _LINUX_VDSO_H_

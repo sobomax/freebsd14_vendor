@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bhyveload/Makefile 329145 2018-02-12 01:08:44Z kevans $
+# $FreeBSD: releng/12.2/usr.sbin/bhyveload/Makefile 325834 2017-11-14 23:02:19Z imp $
 
 PROG=	bhyveload
 SRCS=	bhyveload.c

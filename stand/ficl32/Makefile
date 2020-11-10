@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/ficl32/Makefile 329140 2018-02-11 20:58:00Z kevans $
+# $FreeBSD: releng/12.2/stand/ficl32/Makefile 325480 2017-11-06 15:21:51Z imp $
 
 DO32=1
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/Makefile.arm 292553 2015-12-21 17:41:08Z ian $
+# $FreeBSD: releng/12.2/usr.sbin/Makefile.arm 292553 2015-12-21 17:41:08Z ian $
 
 SUBDIR+=	kgmon
 SUBDIR+=	ofwdump

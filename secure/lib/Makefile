@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/lib/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: releng/12.2/secure/lib/Makefile 321912 2017-08-02 08:35:51Z ngie $
 
 .include <src.opts.mk>
 
@@ -10,8 +10,6 @@ SUBDIR+=libssh
 .endif
 .endif
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.subdir.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/rtwnfw/rtwnrtl8192cU/Makefile 293011 2015-12-31 22:33:32Z adrian $
+# $FreeBSD: releng/12.2/sys/modules/rtwnfw/rtwnrtl8192cU/Makefile 293011 2015-12-31 22:33:32Z adrian $
 
 KMOD=	rtwn-rtl8192cfwU
 IMG=	rtwn-rtl8192cfwU

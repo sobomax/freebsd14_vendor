@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/rctl/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/rctl/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=   rctl
 MAN=	rctl.8

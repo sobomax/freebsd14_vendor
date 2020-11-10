@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/fb/boot_font.c 260047 2013-12-29 18:44:12Z emaste $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/fb/boot_font.c 260047 2013-12-29 18:44:12Z emaste $");
 
 #include <sys/param.h>
 

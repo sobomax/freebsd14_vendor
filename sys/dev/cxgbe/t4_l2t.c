@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Chelsio Communications, Inc.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/t4_l2t.c 346915 2019-04-29 19:23:27Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/t4_l2t.c 338874 2018-09-22 01:24:30Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

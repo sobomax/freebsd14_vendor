@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2015-2016 Landon Fuller <landon@landonf.org>
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/cores/chipc/bhnd_sprom_chipc.c 302189 2016-06-25 04:33:00Z landonf $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bhnd/cores/chipc/bhnd_sprom_chipc.c 326695 2017-12-08 15:57:29Z pfg $");
 
 /*
  * ChipCommon SPROM driver.
@@ -46,10 +48,9 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/bhnd/cores/chipc/bhnd_sprom_chipc.c 3021
 #include <dev/bhnd/nvram/bhnd_nvram.h>
 #include <dev/bhnd/nvram/bhnd_spromvar.h>
 
-#include "bhnd_nvram_if.h"
+#include <dev/bhnd/cores/chipc/chipc.h>
 
-#include "chipcvar.h"
-#include "chipc_private.h"
+#include "bhnd_nvram_if.h"
 
 #define	CHIPC_VALID_SPROM_SRC(_src)	\
 	((_src) == BHND_NVRAM_SRC_SPROM || (_src) == BHND_NVRAM_SRC_OTP)

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2008 Yahoo!, Inc.
  * All rights reserved.
  * Written by: John Baldwin <jhb@FreeBSD.org>
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/11.3/usr.sbin/mptutil/mptutil.c 331722 2018-03-29 02:50:57Z eadler $");
+__RCSID("$FreeBSD: releng/12.2/usr.sbin/mptutil/mptutil.c 350441 2019-07-30 14:18:05Z emaste $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -111,6 +113,10 @@ main(int ac, char **av)
 	/* getopt() eats av[0], so we can't use mpt_table_handler() directly. */
 	if (ac == 0)
 		usage();
+
+#if BYTE_ORDER == BIG_ENDIAN
+	warnx("mptutil is known to be broken on big-endian architectures");
+#endif
 
 	SET_FOREACH(cmd, MPT_DATASET(top)) {
 		if (strcmp((*cmd)->name, av[0]) == 0) {

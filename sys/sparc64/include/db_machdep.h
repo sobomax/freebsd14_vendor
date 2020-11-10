@@ -24,7 +24,7 @@
  * the rights to redistribute these changes.
  *
  *	from: FreeBSD: src/sys/i386/include/db_machdep.h,v 1.16 1999/10/04
- * $FreeBSD: releng/11.3/sys/sparc64/include/db_machdep.h 139825 2005-01-07 02:29:27Z imp $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/db_machdep.h 332563 2018-04-16 13:52:23Z imp $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -32,8 +32,6 @@
 
 #include <machine/frame.h>
 #include <machine/trap.h>
-
-#define	BYTE_MSF	(1)
 
 typedef vm_offset_t	db_addr_t;
 typedef long		db_expr_t;
@@ -60,9 +58,6 @@ typedef long		db_expr_t;
 #define	inst_call(ins)		(0)
 #define	inst_load(ins)		(0)
 #define	inst_store(ins)		(0)
-
-#define	DB_SMALL_VALUE_MAX	(0x7fffffff)
-#define	DB_SMALL_VALUE_MIN	(-0x40001)
 
 #define	DB_ELFSIZE		64
 

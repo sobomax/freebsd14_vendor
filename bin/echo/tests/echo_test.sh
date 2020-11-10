@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/bin/echo/tests/echo_test.sh 322873 2017-08-25 04:00:13Z asomers $
+# $FreeBSD: releng/12.2/bin/echo/tests/echo_test.sh 320269 2017-06-23 15:02:49Z asomers $
 #
 
 atf_test_case n_output

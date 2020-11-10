@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/tools/tools/ath/Makefile.inc 264400 2014-04-13 05:21:56Z imp $
+#	$FreeBSD: releng/12.2/tools/tools/ath/Makefile.inc 264400 2014-04-13 05:21:56Z imp $
 
 BINDIR=	/usr/local/bin
 MAN=

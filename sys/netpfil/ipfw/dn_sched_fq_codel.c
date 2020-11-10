@@ -1,7 +1,7 @@
 /* 
  * FQ_Codel - The FlowQueue-Codel scheduler/AQM
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_sched_fq_codel.c 325730 2017-11-12 01:26:43Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_sched_fq_codel.c 327895 2018-01-12 22:48:23Z jeff $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -44,6 +44,7 @@
 #include <netinet/ip_fw.h>	/* flow_id */
 #include <netinet/ip_dummynet.h>
 
+#include <sys/lock.h>
 #include <sys/proc.h>
 #include <sys/rwlock.h>
 
@@ -453,8 +454,8 @@ fq_codel_new_sched(struct dn_sch_inst *_si)
 	q->fs = _si->sched->fs;
 
 	/* allocate memory for flows array */
-	si->flows = malloc(schk->cfg.flows_cnt * sizeof(struct fq_codel_flow),
-		 M_DUMMYNET, M_NOWAIT | M_ZERO);
+	si->flows = mallocarray(schk->cfg.flows_cnt,
+	    sizeof(struct fq_codel_flow), M_DUMMYNET, M_NOWAIT | M_ZERO);
 	if (si->flows == NULL) {
 		D("cannot allocate memory for fq_codel configuration parameters");
 		return ENOMEM ; 

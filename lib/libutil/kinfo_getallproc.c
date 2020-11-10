@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007 Robert N. M. Watson
  * Copyright (c) 2009 Ulf Lilleengen
  * All rights reserved.
@@ -24,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libutil/kinfo_getallproc.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/lib/libutil/kinfo_getallproc.c 326219 2017-11-26 02:00:33Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libutil/kinfo_getallproc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libutil/kinfo_getallproc.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

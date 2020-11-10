@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/vybrid/vf_spi.c 331506 2018-03-24 23:23:31Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/vybrid/vf_spi.c 310229 2016-12-18 14:54:20Z manu $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/vybrid/vf_spi.c 331506 2018-03
 
 #include "spibus_if.h"
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>

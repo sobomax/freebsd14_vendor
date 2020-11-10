@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
  * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
  *
@@ -49,7 +51,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: releng/11.3/sys/dev/mmc/mmcbrvar.h 338476 2018-09-05 20:43:46Z marius $
+ * $FreeBSD: releng/12.2/sys/dev/mmc/mmcbrvar.h 338304 2018-08-24 21:08:05Z marius $
  */
 
 #ifndef DEV_MMC_MMCBRVAR_H

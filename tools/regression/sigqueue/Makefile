@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/sigqueue/Makefile 152186 2005-11-08 09:19:44Z davidxu $
+# $FreeBSD: releng/12.2/tools/regression/sigqueue/Makefile 152186 2005-11-08 09:19:44Z davidxu $
 
 SUBDIR=sigqtest1 sigqtest2
 

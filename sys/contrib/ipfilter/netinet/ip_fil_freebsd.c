@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 348892 2019-06-11 03:40:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 360591 2020-05-03 03:21:42Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -28,24 +28,24 @@ static const char rcsid[] = "@(#)$Id$";
 #include <sys/errno.h>
 #include <sys/types.h>
 #include <sys/file.h>
-# include <sys/fcntl.h>
-# include <sys/filio.h>
+#include <sys/fcntl.h>
+#include <sys/filio.h>
 #include <sys/time.h>
 #include <sys/systm.h>
 # include <sys/dirent.h>
 #if defined(__FreeBSD_version)
 #include <sys/jail.h>
 #endif
-# include <sys/malloc.h>
-# include <sys/mbuf.h>
-# include <sys/sockopt.h>
+#include <sys/malloc.h>
+#include <sys/mbuf.h>
+#include <sys/sockopt.h>
 #include <sys/socket.h>
-# include <sys/selinfo.h>
-# include <netinet/tcp_var.h>
+#include <sys/selinfo.h>
+#include <netinet/tcp_var.h>
 
 #include <net/if.h>
-# include <net/if_var.h>
-#  include <net/netisr.h>
+#include <net/if_var.h>
+#include <net/netisr.h>
 #include <net/route.h>
 #include <netinet/in.h>
 #include <netinet/in_fib.h>
@@ -75,7 +75,7 @@ static const char rcsid[] = "@(#)$Id$";
 #include "netinet/ip_scan.h"
 #endif
 #include "netinet/ip_pool.h"
-# include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/kernel.h>
 #ifdef CSUM_DATA_VALID
 #include <machine/in_cksum.h>
@@ -98,7 +98,10 @@ VNET_DEFINE(ipf_main_softc_t, ipfmain) = {
 # include <sys/conf.h>
 #  include <net/pfil.h>
 
-static eventhandler_tag ipf_arrivetag, ipf_departtag;
+VNET_DEFINE_STATIC(eventhandler_tag, ipf_arrivetag);
+VNET_DEFINE_STATIC(eventhandler_tag, ipf_departtag);
+#define	V_ipf_arrivetag		VNET(ipf_arrivetag)
+#define	V_ipf_departtag		VNET(ipf_departtag)
 #if 0
 /*
  * Disable the "cloner" event handler;  we are getting interface
@@ -108,7 +111,8 @@ static eventhandler_tag ipf_arrivetag, ipf_departtag;
  * If it turns out to be needed, well need a dedicated event handler
  * for it to deal with the ifc and the correct vnet.
  */
-static eventhandler_tag ipf_clonetag;
+VNET_DEFINE_STATIC(eventhandler_tag, ipf_clonetag);
+#define	V_ipf_clonetag		VNET(ipf_clonetag)
 #endif
 
 static void ipf_ifevent(void *arg, struct ifnet *ifp);
@@ -706,7 +710,6 @@ ipf_fastroute(m0, mpp, fin, fdp)
 	struct ifnet *ifp, *sifp;
 	struct sockaddr_in dst;
 	struct nhop4_extended nh4;
-	int has_nhop = 0;
 	u_long fibnum = 0;
 	u_short ip_off;
 	frdest_t node;
@@ -789,7 +792,6 @@ ipf_fastroute(m0, mpp, fin, fdp)
 		goto bad;
 	}
 
-	has_nhop = 1;
 	if (ifp == NULL)
 		ifp = nh4.nh_ifp;
 	if (nh4.nh_flags & NHF_GATEWAY)
@@ -893,7 +895,7 @@ ipf_fastroute(m0, mpp, fin, fdp)
 			mhip->ip_off |= IP_MF;
 		mhip->ip_len = htons((u_short)(len + mhlen));
 		*mnext = m;
-		m->m_next = m_copy(m0, off, len);
+		m->m_next = m_copym(m0, off, len, M_NOWAIT);
 		if (m->m_next == 0) {
 			error = ENOBUFS;	/* ??? */
 			goto sendorfree;
@@ -932,9 +934,6 @@ done:
 		V_ipfmain.ipf_frouteok[0]++;
 	else
 		V_ipfmain.ipf_frouteok[1]++;
-
-	if (has_nhop)
-		fib4_free_nh_ext(fibnum, &nh4);
 
 	return 0;
 bad:
@@ -975,7 +974,7 @@ ipf_ifpaddr(softc, v, atype, ifptr, inp, inpmask)
 	i6addr_t *inp, *inpmask;
 {
 #ifdef USE_INET6
-	struct in6_addr *inp6 = NULL;
+	struct in6_addr *ia6 = NULL;
 #endif
 	struct sockaddr *sock, *mask;
 	struct sockaddr_in *sin;
@@ -994,7 +993,7 @@ ipf_ifpaddr(softc, v, atype, ifptr, inp, inpmask)
 	else if (v == 6)
 		bzero((char *)inp, sizeof(*inp));
 #endif
-	ifa = TAILQ_FIRST(&ifp->if_addrhead);
+	ifa = CK_STAILQ_FIRST(&ifp->if_addrhead);
 
 	sock = ifa->ifa_addr;
 	while (sock != NULL && ifa != NULL) {
@@ -1003,13 +1002,13 @@ ipf_ifpaddr(softc, v, atype, ifptr, inp, inpmask)
 			break;
 #ifdef USE_INET6
 		if ((v == 6) && (sin->sin_family == AF_INET6)) {
-			inp6 = &((struct sockaddr_in6 *)sin)->sin6_addr;
-			if (!IN6_IS_ADDR_LINKLOCAL(inp6) &&
-			    !IN6_IS_ADDR_LOOPBACK(inp6))
+			ia6 = &((struct sockaddr_in6 *)sin)->sin6_addr;
+			if (!IN6_IS_ADDR_LINKLOCAL(ia6) &&
+			    !IN6_IS_ADDR_LOOPBACK(ia6))
 				break;
 		}
 #endif
-		ifa = TAILQ_NEXT(ifa, ifa_link);
+		ifa = CK_STAILQ_NEXT(ifa, ifa_link);
 		if (ifa != NULL)
 			sock = ifa->ifa_addr;
 	}
@@ -1384,14 +1383,14 @@ int ipf_pfil_hook(void) {
 void
 ipf_event_reg(void)
 {
-	ipf_arrivetag = EVENTHANDLER_REGISTER(ifnet_arrival_event, \
+	V_ipf_arrivetag = EVENTHANDLER_REGISTER(ifnet_arrival_event, \
 					       ipf_ifevent, NULL, \
 					       EVENTHANDLER_PRI_ANY);
-	ipf_departtag = EVENTHANDLER_REGISTER(ifnet_departure_event, \
+	V_ipf_departtag = EVENTHANDLER_REGISTER(ifnet_departure_event, \
 					       ipf_ifevent, NULL, \
 					       EVENTHANDLER_PRI_ANY);
 #if 0
-	ipf_clonetag  = EVENTHANDLER_REGISTER(if_clone_event, ipf_ifevent, \
+	V_ipf_clonetag  = EVENTHANDLER_REGISTER(if_clone_event, ipf_ifevent, \
 					       NULL, EVENTHANDLER_PRI_ANY);
 #endif
 }
@@ -1399,15 +1398,15 @@ ipf_event_reg(void)
 void
 ipf_event_dereg(void)
 {
-	if (ipf_arrivetag != NULL) {
-		EVENTHANDLER_DEREGISTER(ifnet_arrival_event, ipf_arrivetag);
+	if (V_ipf_arrivetag != NULL) {
+		EVENTHANDLER_DEREGISTER(ifnet_arrival_event, V_ipf_arrivetag);
 	}
-	if (ipf_departtag != NULL) {
-		EVENTHANDLER_DEREGISTER(ifnet_departure_event, ipf_departtag);
+	if (V_ipf_departtag != NULL) {
+		EVENTHANDLER_DEREGISTER(ifnet_departure_event, V_ipf_departtag);
 	}
 #if 0
-	if (ipf_clonetag != NULL) {
-		EVENTHANDLER_DEREGISTER(if_clone_event, ipf_clonetag);
+	if (V_ipf_clonetag != NULL) {
+		EVENTHANDLER_DEREGISTER(if_clone_event, V_ipf_clonetag);
 	}
 #endif
 }
@@ -1447,3 +1446,46 @@ ipf_pcksum(fin, hlen, sum)
 	sum2 = ~sum & 0xffff;
 	return sum2;
 }
+
+#ifdef	USE_INET6
+u_int
+ipf_pcksum6(m, ip6, off, len)
+	struct mbuf *m;
+	ip6_t *ip6;
+	u_int32_t off;
+	u_int32_t len;
+{
+#ifdef	_KERNEL
+	int sum;
+
+	if (m->m_len < sizeof(struct ip6_hdr)) {
+		return 0xffff;
+	}
+
+	sum = in6_cksum(m, ip6->ip6_nxt, off, len);
+	return(sum);
+#else
+	u_short *sp;
+	u_int sum;
+
+	sp = (u_short *)&ip6->ip6_src;
+	sum = *sp++;   /* ip6_src */
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;   /* ip6_dst */
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	return(ipf_pcksum(fin, off, sum));
+#endif
+}
+#endif

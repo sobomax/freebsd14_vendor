@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/tools/locale/etc/charmaps/ISO8859-7.TXT 286434 2015-08-08 00:28:23Z bapt $
+# $FreeBSD: releng/12.2/tools/tools/locale/etc/charmaps/ISO8859-7.TXT 286434 2015-08-08 00:28:23Z bapt $
 #
 #	Name:             ISO 8859-7:2003 to Unicode
 #	Unicode version:  4.0

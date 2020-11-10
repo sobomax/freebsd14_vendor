@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1985, 1989, 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -27,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)namei.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: releng/11.3/sys/sys/namei.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/namei.h 357706 2020-02-09 22:15:35Z kevans $
  */
 
 #ifndef _SYS_NAMEI_H_
@@ -36,7 +38,7 @@
 #include <sys/caprights.h>
 #include <sys/filedesc.h>
 #include <sys/queue.h>
-#include <sys/uio.h>
+#include <sys/_uio.h>
 
 struct componentname {
 	/*
@@ -85,6 +87,10 @@ struct nameidata {
 	 */
 	struct	vnode *ni_vp;		/* vnode of result */
 	struct	vnode *ni_dvp;		/* vnode of intermediate directory */
+	/*
+	 * Results: flags returned from namei
+	 */
+	u_int	ni_resflags;
 	/*
 	 * Shared between namei and lookup/commit routines.
 	 */
@@ -153,7 +159,13 @@ struct nameidata {
 #define	AUDITVNODE2	0x08000000 /* audit the looked up vnode information */
 #define	TRAILINGSLASH	0x10000000 /* path ended in a slash */
 #define	NOCAPCHECK	0x20000000 /* do not perform capability checks */
-#define	PARAMASK	0x3ffffe00 /* mask of parameter descriptors */
+#define	NOEXECCHECK	0x40000000 /* do not perform exec check on dir */
+#define	PARAMASK	0x7ffffe00 /* mask of parameter descriptors */
+
+/*
+ * Namei results flags
+ */
+#define	NIRES_ABS	0x00000001 /* Path was absolute */
 
 /*
  * Flags in ni_lcf, valid for the duration of the namei call.

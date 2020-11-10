@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Doug Rabson
  * All rights reserved.
  *
@@ -23,69 +25,45 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/freebsd32/freebsd32.h 338617 2018-09-12 18:52:18Z sobomax $
+ * $FreeBSD: releng/12.2/sys/compat/freebsd32/freebsd32.h 360446 2020-04-28 17:59:37Z brooks $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_H_
 #define _COMPAT_FREEBSD32_FREEBSD32_H_
 
+#include <sys/abi_compat.h>
 #include <sys/procfs.h>
 #include <sys/socket.h>
 #include <sys/user.h>
 
-#define PTRIN(v)	(void *)(uintptr_t) (v)
-#define PTROUT(v)	(u_int32_t)(uintptr_t) (v)
-
-#define CP(src,dst,fld) do { (dst).fld = (src).fld; } while (0)
-#define PTRIN_CP(src,dst,fld) \
-	do { (dst).fld = PTRIN((src).fld); } while (0)
-#define PTROUT_CP(src,dst,fld) \
-	do { (dst).fld = PTROUT((src).fld); } while (0)
-
 /*
- * Being a newer port, 32-bit FreeBSD/MIPS uses 64-bit time_t.
+ * i386 is the only arch with a 32-bit time_t
  */
-#ifdef __mips__
-typedef	int64_t	time32_t;
-#else
+#ifdef __amd64__
 typedef	int32_t	time32_t;
+#else
+typedef	int64_t	time32_t;
 #endif
 
 struct timeval32 {
 	time32_t tv_sec;
 	int32_t tv_usec;
 };
-#define TV_CP(src,dst,fld) do {			\
-	CP((src).fld,(dst).fld,tv_sec);		\
-	CP((src).fld,(dst).fld,tv_usec);	\
-} while (0)
 
 struct timespec32 {
 	time32_t tv_sec;
 	int32_t tv_nsec;
 };
-#define TS_CP(src,dst,fld) do {			\
-	CP((src).fld,(dst).fld,tv_sec);		\
-	CP((src).fld,(dst).fld,tv_nsec);	\
-} while (0)
 
 struct itimerspec32 {
 	struct timespec32  it_interval;
 	struct timespec32  it_value;
 };
-#define ITS_CP(src, dst) do {			\
-	TS_CP((src), (dst), it_interval);	\
-	TS_CP((src), (dst), it_value);		\
-} while (0)
 
 struct bintime32 {
-	uint32_t sec;
+	time32_t sec;
 	uint32_t frac[2];
 };
-#define BT_CP(src, dst, fld) do {				\
-	CP((src).fld, (dst).fld, sec);				\
-	*(uint64_t *)&(dst).fld.frac[0] = (src).fld.frac;	\
-} while (0)
 
 struct rusage32 {
 	struct timeval32 ru_utime;
@@ -116,7 +94,8 @@ struct itimerval32 {
 	struct timeval32 it_value;
 };
 
-#define FREEBSD4_MNAMELEN        (88 - 2 * sizeof(int32_t)) /* size of on/from name bufs */
+#define FREEBSD4_MFSNAMELEN	16
+#define FREEBSD4_MNAMELEN	(88 - 2 * sizeof(int32_t))
 
 /* 4.x version */
 struct statfs32 {
@@ -134,7 +113,7 @@ struct statfs32 {
 	int32_t	f_flags;
 	int32_t	f_syncwrites;
 	int32_t	f_asyncwrites;
-	char	f_fstypename[MFSNAMELEN];
+	char	f_fstypename[FREEBSD4_MFSNAMELEN];
 	char	f_mntonname[FREEBSD4_MNAMELEN];
 	int32_t	f_syncreads;
 	int32_t	f_asyncreads;
@@ -159,14 +138,51 @@ struct msghdr32 {
 	int		 msg_flags;
 };
 
+#if defined(__amd64__)
+#define	__STAT32_TIME_T_EXT	1
+#endif
+
 struct stat32 {
-	dev_t	st_dev;
-	ino_t	st_ino;
+	dev_t st_dev;
+	ino_t st_ino;
+	nlink_t st_nlink;
 	mode_t	st_mode;
-	nlink_t	st_nlink;
+	u_int16_t st_padding0;
 	uid_t	st_uid;
 	gid_t	st_gid;
-	dev_t	st_rdev;
+	u_int32_t st_padding1;
+	dev_t st_rdev;
+#ifdef	__STAT32_TIME_T_EXT
+	__int32_t st_atim_ext;
+#endif
+	struct timespec32 st_atim;
+#ifdef	__STAT32_TIME_T_EXT
+	__int32_t st_mtim_ext;
+#endif
+	struct timespec32 st_mtim;
+#ifdef	__STAT32_TIME_T_EXT
+	__int32_t st_ctim_ext;
+#endif
+	struct timespec32 st_ctim;
+#ifdef	__STAT32_TIME_T_EXT
+	__int32_t st_btim_ext;
+#endif
+	struct timespec32 st_birthtim;
+	off_t	st_size;
+	int64_t	st_blocks;
+	u_int32_t st_blksize;
+	u_int32_t st_flags;
+	u_int64_t st_gen;
+	u_int64_t st_spare[10];
+};
+struct freebsd11_stat32 {
+	u_int32_t st_dev;
+	u_int32_t st_ino;
+	mode_t	st_mode;
+	u_int16_t st_nlink;
+	uid_t	st_uid;
+	gid_t	st_gid;
+	u_int32_t st_rdev;
 	struct timespec32 st_atim;
 	struct timespec32 st_mtim;
 	struct timespec32 st_ctim;
@@ -183,9 +199,9 @@ struct stat32 {
 
 struct ostat32 {
 	__uint16_t st_dev;
-	ino_t	st_ino;
+	__uint32_t st_ino;
 	mode_t	st_mode;
-	nlink_t	st_nlink;
+	__uint16_t st_nlink;
 	__uint16_t st_uid;
 	__uint16_t st_gid;
 	__uint16_t st_rdev;
@@ -270,7 +286,7 @@ struct kinfo_proc32 {
 	pid_t	ki_tsid;
 	short	ki_jobc;
 	short	ki_spare_short1;
-	dev_t	ki_tdev;
+	uint32_t ki_tdev_freebsd11;
 	sigset_t ki_siglist;
 	sigset_t ki_sigmask;
 	sigset_t ki_sigignore;
@@ -318,6 +334,7 @@ struct kinfo_proc32 {
 	char	ki_moretdname[MAXCOMLEN-TDNAMLEN+1];
 	char	ki_sparestrings[46];
 	int	ki_spareints[KI_NSPARE_INT];
+	uint64_t ki_tdev;
 	int	ki_oncpu;
 	int	ki_lastcpu;
 	int	ki_tracer;

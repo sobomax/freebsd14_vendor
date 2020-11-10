@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/libexec/blacklistd-helper/Makefile 301226 2016-06-02 19:06:04Z lidl $
+# $FreeBSD: releng/12.2/libexec/blacklistd-helper/Makefile 301226 2016-06-02 19:06:04Z lidl $
 
 BLACKLIST_DIR=${SRCTOP}/contrib/blacklist
 

@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2017 Kyle J. Kneitinger <kyle@kneit.in>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libbe/be_error.c 346429 2019-04-20 04:16:51Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libbe/be_error.c 357667 2020-02-07 21:57:27Z kevans $");
 
 #include "be.h"
 #include "be_impl.h"
@@ -107,6 +106,9 @@ libbe_error_description(libbe_handle_t *lbh)
 
 	case BE_ERR_INVORIGIN:
 		return ("invalid origin");
+
+	case BE_ERR_HASCLONES:
+		return ("snapshot has clones");
 
 	default:
 		assert(lbh->error == BE_ERR_SUCCESS);

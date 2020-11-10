@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/11.3/sys/dev/sfxge/common/siena_impl.h 342425 2018-12-25 07:01:25Z arybchik $
+ * $FreeBSD: releng/12.2/sys/dev/sfxge/common/siena_impl.h 342315 2018-12-21 15:11:52Z arybchik $
  */
 
 #ifndef _SYS_SIENA_IMPL_H

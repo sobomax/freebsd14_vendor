@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/gssd/gssd.c 346768 2019-04-26 21:34:08Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/gssd/gssd.c 344995 2019-03-11 02:42:49Z sef $");
 
 #include <sys/param.h>
 #include <sys/stat.h>

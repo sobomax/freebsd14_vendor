@@ -1,7 +1,7 @@
 #! /bin/sh
 # ex:ts=8
 
-# $FreeBSD: releng/11.3/usr.bin/less/lesspipe.sh 294111 2016-01-15 23:13:01Z ak $
+# $FreeBSD: releng/12.2/usr.bin/less/lesspipe.sh 316979 2017-04-15 20:06:24Z bapt $
 
 case "$1" in
 	*.zip)
@@ -21,5 +21,8 @@ case "$1" in
 		;;
 	*.lzma)
 		exec lzma -d -c "$1"	2>/dev/null
+		;;
+	*.zst)
+		exec zstd -d -q -c "$1"	2>/dev/null
 		;;
 esac

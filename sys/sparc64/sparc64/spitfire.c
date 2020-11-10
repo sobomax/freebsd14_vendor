@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Jake Burkholder.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/spitfire.c 262471 2014-02-25 07:28:51Z dim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/spitfire.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include "opt_pmap.h"
 

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright 1997 Sean Eric Fagan
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,11 +35,15 @@
 /*
  * procfs ioctl definitions.
  *
- * $FreeBSD: releng/11.3/sys/sys/pioctl.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/pioctl.h 361020 2020-05-13 21:16:02Z jhb $
  */
 
 #ifndef _SYS_PIOCTL_H
 # define _SYS_PIOCTL_H
+
+#ifndef _KERNEL
+#warning "<sys/pioctl.h> is deprecated, ptrace() should be used instead"
+#endif
 
 # include <sys/ioccom.h>
 

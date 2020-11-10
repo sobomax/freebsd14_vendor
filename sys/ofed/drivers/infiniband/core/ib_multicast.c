@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ofed/drivers/infiniband/core/ib_multicast.c 341864 2018-12-12 10:26:49Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/ib_multicast.c 341863 2018-12-12 10:25:55Z hselasky $");
 
 #define	LINUXKPI_PARAM_PREFIX ibcore_
 

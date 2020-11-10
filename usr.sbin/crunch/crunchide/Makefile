@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/crunch/crunchide/Makefile 281674 2015-04-18 00:30:36Z emaste $
+# $FreeBSD: releng/12.2/usr.sbin/crunch/crunchide/Makefile 281674 2015-04-18 00:30:36Z emaste $
 
 PROG=   crunchide
 SRCS=	crunchide.c exec_elf32.c exec_elf64.c

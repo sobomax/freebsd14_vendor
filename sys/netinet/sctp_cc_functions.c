@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2001-2007, by Cisco Systems, Inc. All rights reserved.
  * Copyright (c) 2008-2012, by Randall Stewart. All rights reserved.
  * Copyright (c) 2008-2012, by Michael Tuexen. All rights reserved.
@@ -31,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/sctp_cc_functions.c 347154 2019-05-05 12:28:39Z tuexen $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_cc_functions.c 364574 2020-08-23 22:26:38Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -46,7 +48,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/netinet/sctp_cc_functions.c 347154 2019-05-0
 #include <netinet/sctp_timer.h>
 #include <netinet/sctp_auth.h>
 #include <netinet/sctp_asconf.h>
-#include <netinet/sctp_dtrace_declare.h>
+#include <netinet/sctp_kdtrace.h>
 
 #define SHIFT_MPTCP_MULTI_N 40
 #define SHIFT_MPTCP_MULTI_Z 16
@@ -1874,7 +1876,7 @@ htcp_cong_time(struct htcp *ca)
 static inline uint32_t
 htcp_ccount(struct htcp *ca)
 {
-	return (htcp_cong_time(ca) / ca->minRTT);
+	return (ca->minRTT == 0 ? htcp_cong_time(ca) : htcp_cong_time(ca) / ca->minRTT);
 }
 
 static inline void
@@ -1912,7 +1914,7 @@ measure_rtt(struct sctp_nets *net)
 	if (net->fast_retran_ip == 0 && net->ssthresh < 0xFFFF && htcp_ccount(&net->cc_mod.htcp_ca) > 3) {
 		if (net->cc_mod.htcp_ca.maxRTT < net->cc_mod.htcp_ca.minRTT)
 			net->cc_mod.htcp_ca.maxRTT = net->cc_mod.htcp_ca.minRTT;
-		if (net->cc_mod.htcp_ca.maxRTT < srtt && srtt <= net->cc_mod.htcp_ca.maxRTT + MSEC_TO_TICKS(20))
+		if (net->cc_mod.htcp_ca.maxRTT < srtt && srtt <= net->cc_mod.htcp_ca.maxRTT + sctp_msecs_to_ticks(20))
 			net->cc_mod.htcp_ca.maxRTT = srtt;
 	}
 }
@@ -1973,7 +1975,7 @@ htcp_beta_update(struct htcp *ca, uint32_t minRTT, uint32_t maxRTT)
 		}
 	}
 
-	if (ca->modeswitch && minRTT > (uint32_t)MSEC_TO_TICKS(10) && maxRTT) {
+	if (ca->modeswitch && minRTT > sctp_msecs_to_ticks(10) && maxRTT) {
 		ca->beta = (minRTT << 7) / maxRTT;
 		if (ca->beta < BETA_MIN)
 			ca->beta = BETA_MIN;

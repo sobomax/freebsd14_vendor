@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1999, 2000 Matthew R. Green
  * All rights reserved.
  *
@@ -54,7 +56,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/isa/ofw_isa.h 219567 2011-03-12 14:33:32Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/isa/ofw_isa.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_ISA_OFW_ISA_H_

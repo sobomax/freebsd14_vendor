@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1994 John S. Dyson
  * All rights reserved.
  *
@@ -18,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_physio.c 297633 2016-04-07 04:23:25Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_physio.c 333842 2018-05-19 04:09:58Z mmacy $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,6 +51,8 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 	vm_prot_t prot;
 
 	csw = dev->si_devsw;
+	npages = 0;
+	sa = NULL;
 	/* check if character device is being destroyed */
 	if (csw == NULL)
 		return (ENXIO);
@@ -175,7 +179,7 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 					error = EFAULT;
 					goto doerror;
 				}
-				if (pbuf) {
+				if (pbuf && sa) {
 					pmap_qenter((vm_offset_t)sa,
 					    pages, npages);
 					bp->bio_data = sa + poff;

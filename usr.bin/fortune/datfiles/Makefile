@@ -1,11 +1,7 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/19/94
-# $FreeBSD: releng/11.3/usr.bin/fortune/datfiles/Makefile 321266 2017-07-20 00:50:01Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/fortune/datfiles/Makefile 325828 2017-11-14 21:18:30Z benno $
 
-DB=	fortunes freebsd-tips murphy startrek zippy
-
-# TO AVOID INSTALLING THE POTENTIALLY OFFENSIVE FORTUNES, COMMENT OUT THE
-# NEXT LINE.
-DB+=	limerick murphy-o gerrold.limerick
+DB=	freebsd-tips
 
 BLDS=	${DB:S/$/.dat/}
 FILES=	${DB} ${BLDS}

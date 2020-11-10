@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bmake/tests/common.sh 263346 2014-03-19 12:29:20Z jmmv $
+# $FreeBSD: releng/12.2/usr.bin/bmake/tests/common.sh 263346 2014-03-19 12:29:20Z jmmv $
 #
 # Common code used run regression tests for usr.bin/make.
 

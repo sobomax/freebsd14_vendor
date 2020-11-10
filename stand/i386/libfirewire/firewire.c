@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libfirewire/firewire.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libfirewire/firewire.c 353972 2019-10-24 02:28:28Z kevans $");
 
 /*
  * FireWire disk device handling.

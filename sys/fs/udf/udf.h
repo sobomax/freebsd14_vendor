@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001, 2002 Scott Long <scottl@freebsd.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/udf/udf.h 189082 2009-02-26 18:58:41Z avg $
+ * $FreeBSD: releng/12.2/sys/fs/udf/udf.h 326268 2017-11-27 15:15:37Z pfg $
  */
 
 #define UDF_HASHTBLSIZE 100

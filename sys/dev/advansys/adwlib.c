@@ -2,6 +2,8 @@
  * Low level routines for Second Generation
  * Advanced Systems Inc. SCSI controllers chips
  *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1998, 1999, 2000 Justin Gibbs.
  * All rights reserved.
  *
@@ -43,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/advansys/adwlib.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/advansys/adwlib.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/conf.h>

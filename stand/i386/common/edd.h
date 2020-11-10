@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/common/edd.h 281887 2015-04-23 14:22:20Z jhb $
+ * $FreeBSD: releng/12.2/stand/i386/common/edd.h 281887 2015-04-23 14:22:20Z jhb $
  */
 
 #ifndef	_EDD_H_

@@ -1,7 +1,6 @@
-# $FreeBSD: releng/11.3/sys/arm/ti/std.ti 276520 2015-01-01 23:21:46Z ian $
+# $FreeBSD: releng/12.2/sys/arm/ti/std.ti 324341 2017-10-05 23:01:50Z imp $
 
-cpu 		CPU_CORTEXA
-machine 	arm	armv6
+machine 	arm	armv7
 makeoptions	CONF_CFLAGS="-march=armv7a"
 
 files		"../ti/files.ti"

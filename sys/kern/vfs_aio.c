@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 John S. Dyson.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -19,9 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/vfs_aio.c 345393 2019-03-21 22:18:22Z asomers $");
-
-#include "opt_compat.h"
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_aio.c 344131 2019-02-14 18:01:06Z asomers $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -960,7 +960,6 @@ aio_schedule_fsync(void *context, int pending)
 bool
 aio_cancel_cleared(struct kaiocb *job)
 {
-	struct kaioinfo *ki;
 
 	/*
 	 * The caller should hold the same queue lock held when
@@ -968,7 +967,6 @@ aio_cancel_cleared(struct kaiocb *job)
 	 * ensuring this check sees an up-to-date value.  However,
 	 * there is no way to assert that.
 	 */
-	ki = job->userproc->p_aioinfo;
 	return ((job->jobflags & KAIOCB_CLEARED) != 0);
 }
 
@@ -1452,7 +1450,6 @@ aio_aqueue(struct thread *td, struct aiocb *ujob, struct aioliojob *lj,
     int type, struct aiocb_ops *ops)
 {
 	struct proc *p = td->td_proc;
-	cap_rights_t rights;
 	struct file *fp;
 	struct kaiocb *job;
 	struct kaioinfo *ki;
@@ -1530,21 +1527,19 @@ aio_aqueue(struct thread *td, struct aiocb *ujob, struct aioliojob *lj,
 	fd = job->uaiocb.aio_fildes;
 	switch (opcode) {
 	case LIO_WRITE:
-		error = fget_write(td, fd,
-		    cap_rights_init(&rights, CAP_PWRITE), &fp);
+		error = fget_write(td, fd, &cap_pwrite_rights, &fp);
 		break;
 	case LIO_READ:
-		error = fget_read(td, fd,
-		    cap_rights_init(&rights, CAP_PREAD), &fp);
+		error = fget_read(td, fd, &cap_pread_rights, &fp);
 		break;
 	case LIO_SYNC:
-		error = fget(td, fd, cap_rights_init(&rights, CAP_FSYNC), &fp);
+		error = fget(td, fd, &cap_fsync_rights, &fp);
 		break;
 	case LIO_MLOCK:
 		fp = NULL;
 		break;
 	case LIO_NOP:
-		error = fget(td, fd, cap_rights_init(&rights), &fp);
+		error = fget(td, fd, &cap_no_rights, &fp);
 		break;
 	default:
 		error = EINVAL;
@@ -1600,7 +1595,7 @@ aio_aqueue(struct thread *td, struct aiocb *ujob, struct aioliojob *lj,
 	kev.flags = EV_ADD | EV_ENABLE | EV_FLAG1 | evflags;
 	kev.data = (intptr_t)job;
 	kev.udata = job->uaiocb.aio_sigevent.sigev_value.sival_ptr;
-	error = kqfd_register(kqfd, &kev, td, 1);
+	error = kqfd_register(kqfd, &kev, td, M_WAITOK);
 	if (error)
 		goto aqueue_fail;
 
@@ -1694,7 +1689,6 @@ aio_cancel_sync(struct kaiocb *job)
 int
 aio_queue_file(struct file *fp, struct kaiocb *job)
 {
-	struct aioliojob *lj;
 	struct kaioinfo *ki;
 	struct kaiocb *job2;
 	struct vnode *vp;
@@ -1702,7 +1696,6 @@ aio_queue_file(struct file *fp, struct kaiocb *job)
 	int error;
 	bool safe;
 
-	lj = job->lio;
 	ki = job->userproc->p_aioinfo;
 	error = aio_qbio(job->userproc, job);
 	if (error >= 0)
@@ -1963,14 +1956,13 @@ sys_aio_cancel(struct thread *td, struct aio_cancel_args *uap)
 	struct kaioinfo *ki;
 	struct kaiocb *job, *jobn;
 	struct file *fp;
-	cap_rights_t rights;
 	int error;
 	int cancelled = 0;
 	int notcancelled = 0;
 	struct vnode *vp;
 
 	/* Lookup file object. */
-	error = fget(td, uap->fd, cap_rights_init(&rights), &fp);
+	error = fget(td, uap->fd, &cap_no_rights, &fp);
 	if (error)
 		return (error);
 
@@ -2171,7 +2163,8 @@ kern_lio_listio(struct thread *td, int mode, struct aiocb * const *uacb_list,
 			/* pass user defined sigval data */
 			kev.udata = lj->lioj_signal.sigev_value.sival_ptr;
 			error = kqfd_register(
-			    lj->lioj_signal.sigev_notify_kqueue, &kev, td, 1);
+			    lj->lioj_signal.sigev_notify_kqueue, &kev, td,
+			    M_WAITOK);
 			if (error) {
 				uma_zfree(aiolio_zone, lj);
 				return (error);
@@ -2491,7 +2484,9 @@ sys_aio_fsync(struct thread *td, struct aio_fsync_args *uap)
 static int
 filt_aioattach(struct knote *kn)
 {
-	struct kaiocb *job = (struct kaiocb *)kn->kn_sdata;
+	struct kaiocb *job;
+
+	job = (struct kaiocb *)(uintptr_t)kn->kn_sdata;
 
 	/*
 	 * The job pointer must be validated before using it, so
@@ -2539,7 +2534,9 @@ filt_aio(struct knote *kn, long hint)
 static int
 filt_lioattach(struct knote *kn)
 {
-	struct aioliojob * lj = (struct aioliojob *)kn->kn_sdata;
+	struct aioliojob *lj;
+
+	lj = (struct aioliojob *)(uintptr_t)kn->kn_sdata;
 
 	/*
 	 * The aioliojob pointer must be validated before using it, so

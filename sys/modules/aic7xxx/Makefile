@@ -1,5 +1,5 @@
 
-# $FreeBSD: releng/11.3/sys/modules/aic7xxx/Makefile 260401 2014-01-07 19:33:17Z scottl $
+# $FreeBSD: releng/12.2/sys/modules/aic7xxx/Makefile 260401 2014-01-07 19:33:17Z scottl $
 
 SUBDIR= ahc ahd
 

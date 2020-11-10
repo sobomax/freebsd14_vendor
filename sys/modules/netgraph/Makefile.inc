@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/netgraph/Makefile.inc 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/netgraph/Makefile.inc 314651 2017-03-04 10:10:17Z ngie $
 # $Whistle: Makefile.inc,v 1.4 1999/01/19 23:46:16 archie Exp $
 
 .PATH:		${SRCTOP}/sys/netgraph

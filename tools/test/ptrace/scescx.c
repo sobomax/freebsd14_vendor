@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/test/ptrace/scescx.c 321346 2017-07-21 18:14:06Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/tools/test/ptrace/scescx.c 319876 2017-06-12 21:16:37Z kib $");
 
 #include <sys/types.h>
 #include <sys/ptrace.h>

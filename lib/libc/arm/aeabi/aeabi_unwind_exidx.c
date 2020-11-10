@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/arm/aeabi/aeabi_unwind_exidx.c 268893 2014-07-19 22:13:27Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/arm/aeabi/aeabi_unwind_exidx.c 268893 2014-07-19 22:13:27Z ian $");
 
 #include <sys/types.h>
 #include <machine/elf.h>

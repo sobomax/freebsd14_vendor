@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/binmiscctl/binmiscctl.c 299687 2016-05-13 17:48:04Z truckman $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/binmiscctl/binmiscctl.c 327262 2017-12-28 05:32:59Z imp $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: releng/11.3/usr.sbin/binmiscctl/binmiscctl.c 299687 2016-05-
 #include <sys/types.h>
 #include <sys/imgact_binmisc.h>
 #include <sys/linker.h>
+#include <sys/module.h>
 #include <sys/sysctl.h>
 
 enum cmd {
@@ -298,10 +299,12 @@ add_cmd(__unused int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
 			break;
 
 		case 'm':
+			free(magic);
 			magic = strdup(optarg);
 			break;
 
 		case 'M':
+			free(mask);
 			mask = strdup(optarg);
 			xbe->xbe_flags |= IBF_USE_MASK;
 			break;
@@ -401,7 +404,7 @@ main(int argc, char **argv)
 	size_t xbe_out_sz = 0, *xbe_out_szp = NULL;
 	uint32_t i;
 
-	if (kldfind(KMOD_NAME) == -1) {
+	if (modfind(KMOD_NAME) == -1) {
 		if (kldload(KMOD_NAME) == -1)
 			fatal("Can't load %s kernel module: %s",
 			    KMOD_NAME, strerror(errno));

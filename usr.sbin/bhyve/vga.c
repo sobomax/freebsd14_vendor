@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/bhyve/vga.c 336189 2018-07-11 07:16:13Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/vga.c 339435 2018-10-19 00:24:23Z gjb $");
 
 #include <sys/param.h>
 

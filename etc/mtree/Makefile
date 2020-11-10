@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/etc/mtree/Makefile 324138 2017-09-30 20:31:37Z ngie $
+# $FreeBSD: releng/12.2/etc/mtree/Makefile 321446 2017-07-25 00:28:23Z ngie $
 
 .include <src.opts.mk>
 
@@ -14,9 +14,6 @@ FILES=	\
 	BSD.usr.dist \
 	BSD.var.dist
 
-.if ${MK_GROFF} != "no"
-_BSD.groff.dist=	BSD.groff.dist
-.endif
 .if ${MK_LIB32} != "no"
 _BSD.lib32.dist=	BSD.lib32.dist
 .endif

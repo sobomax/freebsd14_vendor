@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/libefi/errno.c 329114 2018-02-11 02:27:50Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/errno.c 322040 2017-08-04 04:20:11Z imp $");
 
 #include <efi.h>
 #include <efilib.h>

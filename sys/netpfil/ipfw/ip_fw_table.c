@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Ruslan Ermilov and Vsevolod Lobko.
  * Copyright (c) 2014 Yandex LLC
  * Copyright (c) 2014 Alexander V. Chernikov
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_table.c 338082 2018-08-20 01:38:48Z loos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_table.c 332402 2018-04-11 11:12:20Z oleg $");
 
 /*
  * Lookup table support for ipfw.

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/regression/atm/RunTest.sh 170737 2007-06-14 20:11:48Z harti $
+# $FreeBSD: releng/12.2/tools/regression/atm/RunTest.sh 170737 2007-06-14 20:11:48Z harti $
 
 . ./Funcs.sh
 

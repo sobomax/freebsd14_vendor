@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011, 2016 Chelsio Communications, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/cxgbe/common/t4_regs_values.h 346855 2019-04-28 19:52:48Z np $
+ * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/t4_regs_values.h 355234 2019-11-30 17:56:04Z np $
  *
  */
 
@@ -144,6 +146,11 @@
 #define X_FETCHBURSTMIN_32B		1
 #define X_FETCHBURSTMIN_64B		2
 #define X_FETCHBURSTMIN_128B		3
+
+/* T6 and later use a single-bit encoding for FetchBurstMin */
+#define X_FETCHBURSTMIN_SHIFT_T6	6
+#define X_FETCHBURSTMIN_64B_T6		0
+#define X_FETCHBURSTMIN_128B_T6		1
 
 #define X_FETCHBURSTMAX_SHIFT		6
 #define X_FETCHBURSTMAX_64B		0

@@ -1,7 +1,7 @@
 /*
  * MD header for contrib/gdtoa
  *
- * $FreeBSD: releng/11.3/lib/libc/mips/arith.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: releng/12.2/lib/libc/mips/arith.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 /*

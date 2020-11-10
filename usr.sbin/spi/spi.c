@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/spi/spi.c 346518 2019-04-22 03:55:02Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/spi/spi.c 335529 2018-06-22 03:40:03Z ian $");
 
 #include <sys/types.h>
 #include <sys/ioccom.h>

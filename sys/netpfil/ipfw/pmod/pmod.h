@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/pmod/pmod.h 316435 2017-04-03 03:07:48Z ae $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/pmod/pmod.h 316435 2017-04-03 03:07:48Z ae $
  */
 
 #ifndef	_IP_FW_PMOD_H_

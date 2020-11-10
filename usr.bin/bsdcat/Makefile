@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bsdcat/Makefile 338795 2018-09-19 09:41:33Z mm $
+# $FreeBSD: releng/12.2/usr.bin/bsdcat/Makefile 362132 2020-06-12 22:59:59Z mm $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 _LIBARCHIVECONFDIR=	${SRCTOP}/lib/libarchive
 
 PROG=	bsdcat
-BSDCAT_VERSION_STRING=	3.3.3
+BSDCAT_VERSION_STRING=	3.4.3
 
 .PATH:	${_LIBARCHIVEDIR}/cat
 SRCS=	bsdcat.c cmdline.c
@@ -24,8 +24,7 @@ LIBADD=	archive
 CFLAGS+=	-DHAVE_ICONV=1 -DHAVE_ICONV_H=1 -DICONV_CONST=const
 .endif
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

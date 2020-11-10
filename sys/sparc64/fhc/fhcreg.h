@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause
+ *
  * Copyright (c) 2003 Jake Burkholder.
  * All rights reserved.
  *
@@ -50,7 +52,7 @@
  *
  *	from: OpenBSD: fhcreg.h,v 1.3 2004/09/28 16:26:03 jason Exp
  *
- * $FreeBSD: releng/11.3/sys/sparc64/fhc/fhcreg.h 143825 2005-03-19 00:48:34Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/fhc/fhcreg.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_FHC_FHCREG_H_

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2000 David E. O'Brien, John D. Polstra.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/csu/common/crtbrand.c 349754 2019-07-04 23:58:11Z gjb $");
+__FBSDID("$FreeBSD: releng/12.2/lib/csu/common/crtbrand.c 366954 2020-10-23 00:00:52Z gjb $");
 
 #include <sys/param.h>
 #include <sys/elf_common.h>
@@ -63,5 +65,20 @@ static const struct {
 	.descsz = sizeof(int32_t),
 	.type = NT_FREEBSD_ABI_TAG,
 	.name = NOTE_FREEBSD_VENDOR,
-	.desc = 1103000
+	.desc = 1202000
+};
+
+static const struct {
+	int32_t	namesz;
+	int32_t	descsz;
+	int32_t	type;
+	char	name[sizeof(NOTE_FREEBSD_VENDOR)];
+	uint32_t	desc[1];
+} crt_feature_ctl __attribute__ ((section (NOTE_SECTION),
+    aligned(4))) __used = {
+	.namesz = sizeof(NOTE_FREEBSD_VENDOR),
+	.descsz = sizeof(uint32_t),
+	.type = NT_FREEBSD_FEATURE_CTL,
+	.name = NOTE_FREEBSD_VENDOR,
+	.desc = { 0 }
 };

@@ -2,6 +2,8 @@
 #	$NetBSD: devlist2h.awk,v 1.2 1998/09/05 14:42:06 christos Exp $
 
 #-
+# SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause
+#
 # Copyright (c) 1998 The NetBSD Foundation, Inc.
 # All rights reserved.
 #
@@ -58,7 +60,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/tools/miidevs2h.awk 263289 2014-03-18 01:40:25Z emaste $
+# $FreeBSD: releng/12.2/sys/tools/miidevs2h.awk 326272 2017-11-27 15:23:17Z pfg $
 #
 function collectline(f, line) {
 	oparen = 0

@@ -1,8 +1,8 @@
 .\" Copyright (c) 1988, 1989, 1991 Carnegie Mellon University
 .\"
-.\" $FreeBSD: releng/11.3/libexec/bootpd/bootpd.8 267668 2014-06-20 09:57:27Z bapt $
+.\" $FreeBSD: releng/12.2/libexec/bootpd/bootpd.8 348326 2019-05-28 14:17:03Z markj $
 .\"
-.Dd February 10, 2004
+.Dd May 21, 2019
 .Dt BOOTPD 8
 .Os
 .Sh NAME
@@ -103,6 +103,8 @@ option may be used to force standalone or inetd mode respectively
 .Sh OPTIONS
 The following options are available:
 .Bl -tag -width indent
+.It Fl a
+Skip ARP table modifications.
 .It Fl t Ar timeout
 Specify the
 .Ar timeout

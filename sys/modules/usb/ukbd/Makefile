@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/usb/ukbd/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/usb/ukbd/Makefile 332122 2018-04-06 17:35:35Z brooks $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -30,7 +30,7 @@ S=     ${SRCTOP}/sys
 .PATH: $S/dev/usb/input
 
 KMOD=	ukbd
-SRCS=	opt_bus.h opt_compat.h opt_evdev.h opt_kbd.h opt_ukbd.h opt_usb.h \
+SRCS=	opt_bus.h opt_evdev.h opt_kbd.h opt_ukbd.h opt_usb.h \
 	device_if.h bus_if.h usb_if.h usbdevs.h \
 	ukbd.c
 

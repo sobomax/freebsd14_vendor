@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/wlan/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/wlan/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 .PATH: ${SRCTOP}/sys/net80211
 
@@ -12,7 +12,7 @@ SRCS=	ieee80211.c ieee80211_action.c ieee80211_ageq.c \
 	ieee80211_ratectl_none.c ieee80211_regdomain.c \
 	ieee80211_ht.c ieee80211_hwmp.c ieee80211_adhoc.c ieee80211_hostap.c \
 	ieee80211_monitor.c ieee80211_sta.c ieee80211_wds.c ieee80211_ddb.c \
-	ieee80211_tdma.c ieee80211_superg.c
+	ieee80211_tdma.c ieee80211_superg.c ieee80211_vht.c
 SRCS+=	bus_if.h device_if.h opt_ddb.h opt_inet.h opt_inet6.h \
 	opt_tdma.h opt_wlan.h
 

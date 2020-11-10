@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Jake Burkholder.
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ofw/openpromio.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ofw/openpromio.c 326255 2017-11-27 14:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -151,18 +153,10 @@ openprom_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 			break;
 		}
 		prop = malloc(len, M_TEMP, M_WAITOK | M_ZERO);
-		if (prop == NULL) {
-			error = ENOMEM;
-			break;
-		}
 		error = copyinstr(&oprom->oprom_array, prop, len, &done);
 		if (error != 0)
 			break;
 		buf = malloc(OPROMMAXPARAM, M_TEMP, M_WAITOK | M_ZERO);
-		if (buf == NULL) {
-			error = ENOMEM;
-			break;
-		}
 		node = openprom_node;
 		switch (cmd) {
 		case OPROMGETPROP:

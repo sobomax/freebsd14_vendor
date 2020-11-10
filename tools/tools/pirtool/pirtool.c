@@ -1,4 +1,6 @@
 /*
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2002-2006 Bruce M. Simpson.
  * All rights reserved
  *
@@ -28,7 +30,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/tools/pirtool/pirtool.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/tools/tools/pirtool/pirtool.c 326025 2017-11-20 19:49:47Z pfg $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

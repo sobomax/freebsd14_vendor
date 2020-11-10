@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/portsnap/phttpget/Makefile 276571 2015-01-02 21:02:41Z delphij $
+# $FreeBSD: releng/12.2/usr.sbin/portsnap/phttpget/Makefile 276571 2015-01-02 21:02:41Z delphij $
 
 PROG=	phttpget
 MAN=	phttpget.8

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libsbuf/Makefile 321114 2017-07-18 08:23:47Z ngie $
+# $FreeBSD: releng/12.2/lib/libsbuf/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 PACKAGE=lib${LIB}
 LIB=		sbuf
@@ -14,6 +14,7 @@ VERSION_DEF=	${.CURDIR}/Version.def
 
 .PATH:	${SRCTOP}/sys/kern
 
+HAS_TESTS=
 SUBDIR.${MK_TESTS}+=	tests
 
 .include <bsd.lib.mk>

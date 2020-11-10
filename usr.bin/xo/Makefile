@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/xo/Makefile 322172 2017-08-07 17:23:44Z phil $
+# $FreeBSD: releng/12.2/usr.bin/xo/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -18,8 +18,7 @@ CFLAGS+=-I${SRCTOP}/lib/libxo
 
 LIBADD=	xo util
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

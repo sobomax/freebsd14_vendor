@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)00.contents	8.1 (Berkeley) 7/5/93
-.\" $FreeBSD: releng/11.3/share/doc/smm/contents/contents.ms 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/smm/contents/contents.ms 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .OH '''SMM Contents'
 .EH 'SMM Contents'''

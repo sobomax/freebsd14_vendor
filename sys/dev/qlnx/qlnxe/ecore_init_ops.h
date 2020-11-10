@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/qlnx/qlnxe/ecore_init_ops.h 320164 2017-06-20 19:16:06Z davidcs $
+ * $FreeBSD: releng/12.2/sys/dev/qlnx/qlnxe/ecore_init_ops.h 319964 2017-06-15 02:45:43Z davidcs $
  *
  */
 

@@ -1,15 +1,9 @@
-# $FreeBSD: releng/11.3/sys/modules/apm/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/apm/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 .PATH: ${SRCTOP}/sys/i386/bios
-.if ${MACHINE} == "pc98"
-.PATH: ${.CURDIR}/../../pc98/apm
-.endif
 
 KMOD=	apm
 SRCS=	apm.c apm.h
-.if ${MACHINE} == "pc98"
-SRCS+=	apm_bioscall.S
-.endif
 SRCS+=	device_if.h bus_if.h
 
 EXPORT_SYMS=	apm_display	\

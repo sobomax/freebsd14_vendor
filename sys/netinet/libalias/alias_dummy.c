@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Paolo Pisati <piso@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netinet/libalias/alias_dummy.c 259858 2013-12-25 02:06:57Z glebius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netinet/libalias/alias_dummy.c 326272 2017-11-27 15:23:17Z pfg $");
 
 /*
  * Alias_dummy is just an empty skeleton used to demostrate how to write

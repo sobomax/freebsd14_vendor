@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/stdlib/hsearch.h 292767 2015-12-27 07:50:11Z ed $
+ * $FreeBSD: releng/12.2/lib/libc/stdlib/hsearch.h 292767 2015-12-27 07:50:11Z ed $
  */
 
 #ifndef HSEARCH_H

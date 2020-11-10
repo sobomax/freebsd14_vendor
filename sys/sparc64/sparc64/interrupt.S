@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/interrupt.S 245017 2013-01-03 23:12:08Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/interrupt.S 331254 2018-03-20 17:58:51Z emaste $");
 
 #include <machine/asi.h>
 #include <machine/asmacros.h>
@@ -33,7 +33,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/sparc64/sparc64/interrupt.S 245017 2013-01-0
 #include <machine/pstate.h>
 #include <machine/ver.h>
 
-#include "assym.s"
+#include "assym.inc"
 
 /*
  * Handle a vectored interrupt.

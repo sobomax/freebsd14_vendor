@@ -33,11 +33,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/netstat/netgraph.c 287407 2015-09-02 18:51:36Z hrs $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/netstat/netgraph.c 324227 2017-10-02 23:29:56Z glebius $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/socket.h>
+#define	_WANT_SOCKET
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
 #include <sys/linker.h>

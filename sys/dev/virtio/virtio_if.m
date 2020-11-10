@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/virtio/virtio_if.m 255110 2013-09-01 04:20:23Z bryanv $
+# $FreeBSD: releng/12.2/sys/dev/virtio/virtio_if.m 255110 2013-09-01 04:20:23Z bryanv $
 
 #include <sys/bus.h>
 

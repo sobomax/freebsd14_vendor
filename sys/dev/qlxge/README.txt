@@ -1,4 +1,4 @@
-#$FreeBSD: releng/11.3/sys/dev/qlxge/README.txt 252206 2013-06-25 17:50:22Z davidcs $
+#$FreeBSD: releng/12.2/sys/dev/qlxge/README.txt 252206 2013-06-25 17:50:22Z davidcs $
 
 			README File
 		QLogic 8100 series Dual Port

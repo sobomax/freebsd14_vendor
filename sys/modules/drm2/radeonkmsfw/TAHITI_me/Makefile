@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/drm2/radeonkmsfw/TAHITI_me/Makefile 254885 2013-08-25 19:37:15Z dumbbell $
+# $FreeBSD: releng/12.2/sys/modules/drm2/radeonkmsfw/TAHITI_me/Makefile 338285 2018-08-24 00:02:00Z imp $
 
 KMOD=	radeonkmsfw_TAHITI_me
 IMG=	TAHITI_me

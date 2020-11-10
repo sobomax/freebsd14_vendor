@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/xen/xen_nexus.c 340016 2018-11-01 18:34:26Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/xen/xen_nexus.c 338360 2018-08-28 21:09:19Z jhb $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

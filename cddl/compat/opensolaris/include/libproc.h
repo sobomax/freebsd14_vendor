@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/cddl/compat/opensolaris/include/libproc.h 179163 2008-05-21 00:26:38Z jb $
+ * $FreeBSD: releng/12.2/cddl/compat/opensolaris/include/libproc.h 309597 2016-12-06 04:22:38Z markj $
  *
  */
 
@@ -37,9 +37,6 @@
 
 #define PR_RLC		0x0001
 #define PR_KLC		0x0002
-
-#define	PGRAB_RDONLY	O_RDONLY
-#define	PGRAB_FORCE	0
 
 #include_next <libproc.h>
 

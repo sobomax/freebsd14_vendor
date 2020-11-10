@@ -1,9 +1,14 @@
-# $FreeBSD: releng/11.3/lib/csu/Makefile 283125 2015-05-19 21:00:53Z emaste $
+# $FreeBSD: releng/12.2/lib/csu/Makefile 352394 2019-09-16 13:41:24Z andrew $
+
+.include <src.opts.mk>
 
 .if exists(${.CURDIR}/${MACHINE_ARCH})
 SUBDIR+= ${MACHINE_ARCH}
 .else
 SUBDIR+= ${MACHINE_CPUARCH}
 .endif
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.subdir.mk>

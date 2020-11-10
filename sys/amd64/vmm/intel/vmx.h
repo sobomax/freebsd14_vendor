@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/intel/vmx.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmx.h 360713 2020-05-06 22:20:37Z jhb $
  */
 
 #ifndef _VMX_H_
@@ -85,6 +87,7 @@ struct vmxcap {
 	int	set;
 	uint32_t proc_ctls;
 	uint32_t proc_ctls2;
+	uint32_t exc_bitmap;
 };
 
 struct vmxstate {

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Silicon Graphics International Corp.
  * Copyright (c) 2014-2015 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -29,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_error.h#1 $
- * $FreeBSD: releng/11.3/sys/cam/ctl/ctl_error.h 313364 2017-02-07 01:42:13Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/ctl/ctl_error.h 326265 2017-11-27 15:12:43Z pfg $
  */
 /*
  * Function definitions for various error reporting routines used both

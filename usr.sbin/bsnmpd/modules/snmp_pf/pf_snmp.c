@@ -25,8 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/snmp_pf/pf_snmp.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_pf/pf_snmp.c 357523 2020-02-04 19:46:29Z dim $
  */
+
+#define PFIOC_USE_LATEST
 
 #include <sys/queue.h>
 #include <bsnmp/snmpmod.h>
@@ -43,6 +45,7 @@
 #include <syslog.h>
 #include <unistd.h>
 
+#define	SNMPTREE_TYPES
 #include "pf_oid.h"
 #include "pf_tree.h"
 
@@ -904,7 +907,7 @@ pf_tbladdr(struct snmp_context __unused *ctx, struct snmp_value __unused *val,
 }
 
 int
-pf_altq(struct snmp_context __unused *ctx, struct snmp_value *val,
+pf_altq_num(struct snmp_context __unused *ctx, struct snmp_value *val,
 	u_int sub, u_int __unused vindex, enum snmp_op op)
 {
 	asn_subid_t	which = val->var.subs[sub - 1];
@@ -981,7 +984,8 @@ pf_altqq(struct snmp_context __unused *ctx, struct snmp_value *val,
 			val->v.integer = e->altq.scheduler;
 			break;
 		case LEAF_pfAltqQueueBandwidth:
-			val->v.uint32 = e->altq.bandwidth;
+			val->v.uint32 = (e->altq.bandwidth > UINT_MAX) ?
+			    UINT_MAX : (u_int32_t)e->altq.bandwidth;
 			break;
 		case LEAF_pfAltqQueuePriority:
 			val->v.integer = e->altq.priority;
@@ -1227,7 +1231,7 @@ pfq_refresh(void)
 	}
 
 	bzero(&pa, sizeof(pa));
-
+	pa.version = PFIOC_ALTQ_VERSION;
 	if (ioctl(dev, DIOCGETALTQS, &pa)) {
 		syslog(LOG_ERR, "pfq_refresh: ioctl(DIOCGETALTQS): %s",
 		    strerror(errno));
@@ -1645,15 +1649,17 @@ altq_is_enabled(int pfdev)
 	struct pfioc_altq pa;
 
 	errno = 0;
+	pa.version = PFIOC_ALTQ_VERSION;
 	if (ioctl(pfdev, DIOCGETALTQS, &pa)) {
 		if (errno == ENODEV) {
 			syslog(LOG_INFO, "No ALTQ support in kernel\n"
 			    "ALTQ related functions disabled\n");
 			return (0);
-		} else
+		} else {
 			syslog(LOG_ERR, "DIOCGETALTQS returned an error: %s",
 			    strerror(errno));
 			return (-1);
+		}
 	}
 	return (1);
 }

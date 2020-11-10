@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpica/Osd/OsdHardware.c 335554 2018-06-22 10:39:22Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/Osd/OsdHardware.c 333222 2018-05-03 19:00:50Z jkim $");
 
 #include <contrib/dev/acpica/include/acpi.h>
 

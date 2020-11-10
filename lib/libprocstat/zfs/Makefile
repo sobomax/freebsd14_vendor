@@ -1,21 +1,21 @@
-# $FreeBSD: releng/11.3/lib/libprocstat/zfs/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/lib/libprocstat/zfs/Makefile 361823 2020-06-05 06:34:04Z avg $
 
 .PATH: ${.CURDIR:H}
 
-SRCS=	zfs.c
-OBJS=	zfs.o
+SRCS=	zfs_defs.c
+OBJS=	zfs_defs.o
 WARNS?=	1
 
 CFLAGS+= -I${SRCTOP}/sys/cddl/compat/opensolaris
 CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/include
 CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/lib/libumem
-CFLAGS+= -I${SRCTOP}/cddl/contrib/opensolaris/lib/libzpool/common
 CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/common/zfs
 CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/fs/zfs
 CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common
 CFLAGS+= -I${SRCTOP}/cddl/contrib/opensolaris/head
 CFLAGS+= -I${.CURDIR:H}
 CFLAGS+= -DNEED_SOLARIS_BOOLEAN
+CFLAGS+= -fno-builtin -nostdlib
 
 all: ${OBJS}
 CLEANFILES= ${OBJS}

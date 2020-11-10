@@ -15,7 +15,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: releng/11.3/crypto/openssh/sandbox-capsicum.c 263712 2014-03-25 11:05:34Z des $");
+__RCSID("$FreeBSD: releng/12.2/crypto/openssh/sandbox-capsicum.c 339216 2018-10-06 21:32:55Z emaste $");
 
 #ifdef SANDBOX_CAPSICUM
 
@@ -31,6 +31,7 @@ __RCSID("$FreeBSD: releng/11.3/crypto/openssh/sandbox-capsicum.c 263712 2014-03-
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <capsicum_helpers.h>
 
 #include "log.h"
 #include "monitor.h"
@@ -70,6 +71,8 @@ ssh_sandbox_child(struct ssh_sandbox *box)
 {
 	struct rlimit rl_zero;
 	cap_rights_t rights;
+
+	caph_cache_tzdata();
 
 	rl_zero.rlim_cur = rl_zero.rlim_max = 0;
 

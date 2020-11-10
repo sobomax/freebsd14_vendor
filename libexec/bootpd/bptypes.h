@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/libexec/bootpd/bptypes.h 53105 1999-11-12 10:11:48Z marcel $
+/* $FreeBSD: releng/12.2/libexec/bootpd/bptypes.h 53105 1999-11-12 10:11:48Z marcel $
  */
 
 #ifndef	BPTYPES_H

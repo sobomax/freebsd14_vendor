@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/mlx5tool/Makefile 330653 2018-03-08 15:21:56Z hselasky $
+# $FreeBSD: releng/12.2/usr.sbin/mlx5tool/Makefile 330653 2018-03-08 15:21:56Z hselasky $
 
 PROG=	mlx5tool
 MAN=	mlx5tool.8

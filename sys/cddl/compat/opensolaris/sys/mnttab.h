@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/mnttab.h 177698 2008-03-28 22:16:18Z jb $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/mnttab.h 177698 2008-03-28 22:16:18Z jb $
  */
 
 #ifndef _OPENSOLARIS_SYS_MNTTAB_H_

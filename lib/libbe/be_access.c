@@ -4,7 +4,6 @@
  * Copyright (c) 2017 Kyle J. Kneitinger <kyle@kneit.in>
  * Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
  * Copyright (c) 2019 Wes Maag <wes@jwmaag.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,7 +28,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libbe/be_access.c 348133 2019-05-22 23:34:41Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libbe/be_access.c 357667 2020-02-07 21:57:27Z kevans $");
+
+#include <sys/mntent.h>
 
 #include "be.h"
 #include "be_impl.h"
@@ -80,7 +81,6 @@ be_mount_iter(zfs_handle_t *zfs_hdl, void *data)
 	char *mountpoint;
 	char tmp[BE_MAXPATHLEN], zfs_mnt[BE_MAXPATHLEN];
 	struct be_mount_info *info;
-	char opt;
 
 	info = (struct be_mount_info *)data;
 
@@ -89,33 +89,37 @@ be_mount_iter(zfs_handle_t *zfs_hdl, void *data)
 		return (0);
 	}
 
-	if (zfs_prop_get_int(zfs_hdl, ZFS_PROP_CANMOUNT) == ZFS_CANMOUNT_OFF)
-		return (0);
-
-	if (zfs_prop_get(zfs_hdl, ZFS_PROP_MOUNTPOINT, zfs_mnt, BE_MAXPATHLEN,
-	    NULL, NULL, 0, 1))
-		return (1);
-
-	if (strcmp("none", zfs_mnt) == 0) {
-		/*
-		 * mountpoint=none; we'll mount it at info->mountpoint assuming
-		 * we're at the root.  If we're not at the root, we're likely
-		 * at some intermediate dataset (e.g. zroot/var) that will have
-		 * children that may need to be mounted.
-		 */
-		if (info->depth > 0)
-			goto skipmount;
-
+	/*
+	 * canmount and mountpoint are both ignored for the BE dataset, because
+	 * the rest of the system (kernel and loader) will effectively do the
+	 * same.
+	 */
+	if (info->depth == 0) {
 		snprintf(tmp, BE_MAXPATHLEN, "%s", info->mountpoint);
 	} else {
+		if (zfs_prop_get_int(zfs_hdl, ZFS_PROP_CANMOUNT) ==
+		    ZFS_CANMOUNT_OFF)
+			return (0);
+
+		if (zfs_prop_get(zfs_hdl, ZFS_PROP_MOUNTPOINT, zfs_mnt,
+		    BE_MAXPATHLEN, NULL, NULL, 0, 1))
+			return (1);
+
+		/*
+		 * We've encountered mountpoint=none at some intermediate
+		 * dataset (e.g. zroot/var) that will have children that may
+		 * need to be mounted.  Skip mounting it, but iterate through
+		 * the children.
+		 */
+		if (strcmp("none", zfs_mnt) == 0)
+			goto skipmount;
+
 		mountpoint = be_mountpoint_augmented(info->lbh, zfs_mnt);
 		snprintf(tmp, BE_MAXPATHLEN, "%s%s", info->mountpoint,
 		    mountpoint);
 	}
 
-	opt = '\0';
-	if ((err = zmount(zfs_get_name(zfs_hdl), tmp, info->mntflags,
-	    __DECONST(char *, MNTTYPE_ZFS), NULL, 0, &opt, 1)) != 0) {
+	if ((err = zfs_mount_at(zfs_hdl, NULL, info->mntflags, tmp)) != 0) {
 		switch (errno) {
 		case ENAMETOOLONG:
 			return (set_error(info->lbh, BE_ERR_PATHLEN));

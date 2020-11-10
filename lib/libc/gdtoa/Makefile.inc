@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/gdtoa/Makefile.inc 316423 2017-04-02 17:24:58Z dim $
+# $FreeBSD: releng/12.2/lib/libc/gdtoa/Makefile.inc 314564 2017-03-02 20:49:40Z dim $
 
 # netlib gdtoa sources
 .PATH: ${LIBC_SRCTOP}/gdtoa

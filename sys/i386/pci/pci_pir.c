@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
  * Copyright (c) 2000, Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000, BSDi
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/i386/pci/pci_pir.c 346817 2019-04-28 13:21:01Z dchagin $");
+__FBSDID("$FreeBSD: releng/12.2/sys/i386/pci/pci_pir.c 354058 2019-10-25 00:16:57Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -108,13 +110,8 @@ static int pir_interrupt_weight[NUM_ISA_INTERRUPTS];
 SYSCTL_DECL(_hw_pci);
 
 /* XXX this likely should live in a header file */
-#ifdef PC98
-/* IRQs 3, 5, 7, 9, 10, 11, 12, 13 */
-#define PCI_IRQ_OVERRIDE_MASK 0x3e68
-#else
 /* IRQs 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15 */
 #define PCI_IRQ_OVERRIDE_MASK 0xdef8
-#endif
 
 static uint32_t pci_irq_override_mask = PCI_IRQ_OVERRIDE_MASK;
 SYSCTL_INT(_hw_pci, OID_AUTO, irq_override_mask, CTLFLAG_RDTUN,
@@ -260,8 +257,8 @@ pci_pir_create_links(struct PIR_entry *entry, struct PIR_intpin *intpin,
 }
 
 /*
- * Look to see if any of the function on the PCI device at bus/device have
- * an interrupt routed to intpin 'pin' by the BIOS.
+ * Look to see if any of the functions on the PCI device at bus/device
+ * have an interrupt routed to intpin 'pin' by the BIOS.
  */
 static uint8_t
 pci_pir_search_irq(int bus, int device, int pin)
@@ -270,6 +267,9 @@ pci_pir_search_irq(int bus, int device, int pin)
 	uint8_t func, maxfunc;
 
 	/* See if we have a valid device at function 0. */
+	value = pci_cfgregread(bus, device, 0, PCIR_VENDOR, 2);
+	if (value == PCIV_INVALID)
+		return (PCI_INVALID_IRQ);
 	value = pci_cfgregread(bus, device, 0, PCIR_HDRTYPE, 1);
 	if ((value & PCIM_HDRTYPE) > PCI_MAXHDRTYPE)
 		return (PCI_INVALID_IRQ);
@@ -280,8 +280,8 @@ pci_pir_search_irq(int bus, int device, int pin)
 
 	/* Scan all possible functions at this device. */
 	for (func = 0; func <= maxfunc; func++) {
-		value = pci_cfgregread(bus, device, func, PCIR_DEVVENDOR, 4);
-		if (value == 0xffffffff)
+		value = pci_cfgregread(bus, device, func, PCIR_VENDOR, 2);
+		if (value == PCIV_INVALID)
 			continue;
 		value = pci_cfgregread(bus, device, func, PCIR_INTPIN, 1);
 

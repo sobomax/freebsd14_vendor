@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libc/gen/scandir_b.c 264042 2014-04-02 16:07:48Z theraven $
+ * $FreeBSD: releng/12.2/lib/libc/gen/scandir_b.c 264042 2014-04-02 16:07:48Z theraven $
  */
 #define I_AM_SCANDIR_B
 #include "scandir.c"

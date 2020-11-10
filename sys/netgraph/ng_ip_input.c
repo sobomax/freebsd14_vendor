@@ -3,6 +3,8 @@
  */
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause AND BSD-2-Clause
+ *
  * Copyright 2001 The Aerospace Corporation.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,7 +66,7 @@
  * Author:		Brooks Davis <brooks@FreeBSD.org>
  * Derived from:	ng_hole.c
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_ip_input.c 194012 2009-06-11 16:50:49Z zec $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_ip_input.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*

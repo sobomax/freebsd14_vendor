@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
@@ -32,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/sfxge/sfxge.c 342455 2018-12-25 07:39:34Z arybchik $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/sfxge/sfxge.c 342352 2018-12-21 17:26:22Z arybchik $");
 
 #include "opt_rss.h"
 

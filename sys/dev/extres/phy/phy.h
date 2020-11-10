@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/extres/phy/phy.h 332025 2018-04-04 13:23:06Z mmel $
+ * $FreeBSD: releng/12.2/sys/dev/extres/phy/phy.h 328201 2018-01-20 17:02:17Z mmel $
  */
 
 #ifndef DEV_EXTRES_PHY_H

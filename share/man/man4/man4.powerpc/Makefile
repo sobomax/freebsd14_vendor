@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/man/man4/man4.powerpc/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/share/man/man4/man4.powerpc/Makefile 325306 2017-11-02 04:17:10Z jhibbits $
 
 PACKAGE=runtime-manuals
 
@@ -8,6 +8,7 @@ MAN=	adb.4 \
 	ams.4 \
 	bm.4 \
 	cuda.4 \
+	dtsec.4 \
 	llan.4 \
 	pmu.4 \
 	powermac_nvram.4 \

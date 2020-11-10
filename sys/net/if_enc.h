@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 The FreeBSD Project.
  * All rights reserved.
  *
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/net/if_enc.h 322741 2017-08-21 09:03:20Z ae $
+ * $FreeBSD: releng/12.2/sys/net/if_enc.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _NET_IF_ENC_H

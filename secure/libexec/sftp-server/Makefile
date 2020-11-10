@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/libexec/sftp-server/Makefile 296633 2016-03-11 00:15:29Z des $
+# $FreeBSD: releng/12.2/secure/libexec/sftp-server/Makefile 296633 2016-03-11 00:15:29Z des $
 
 .include <src.opts.mk>
 

@@ -1,6 +1,8 @@
 /*-
  * Implementation of Utility functions for all SCSI device types.
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997, 1998, 1999 Justin T. Gibbs.
  * Copyright (c) 1997, 1998, 2003 Kenneth D. Merry.
  * All rights reserved.
@@ -28,14 +30,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/scsi/scsi_all.c 347335 2019-05-08 15:17:45Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/scsi/scsi_all.c 355335 2019-12-03 16:46:44Z mav $");
 
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/stdint.h>
 
 #ifdef _KERNEL
-#include <opt_scsi.h>
+#include "opt_scsi.h"
 
 #include <sys/systm.h>
 #include <sys/libkern.h>
@@ -377,7 +379,7 @@ static struct op_table_entry scsi_op_codes[] = {
 	{ 0x40,	D | T | L | P | W | R | O | M | S | C, "CHANGE DEFINITION" },
 	/* 41  O               WRITE SAME(10) */
 	{ 0x41,	D, "WRITE SAME(10)" },
-	/* 42       O          UNMAP */
+	/* 42  O               UNMAP */
 	{ 0x42,	D, "UNMAP" },
 	/* 42       O          READ SUB-CHANNEL */
 	{ 0x42,	R, "READ SUB-CHANNEL" },
@@ -392,7 +394,8 @@ static struct op_table_entry scsi_op_codes[] = {
 	{ 0x46,	R, "GET CONFIGURATION" },
 	/* 47       O          PLAY AUDIO MSF */
 	{ 0x47,	R, "PLAY AUDIO MSF" },
-	/* 48 */
+	/* 48  O               SANITIZE */
+	{ 0x48,	D, "SANITIZE" },
 	/* 49 */
 	/* 4A       M          GET EVENT STATUS NOTIFICATION */
 	{ 0x4A,	R, "GET EVENT STATUS NOTIFICATION" },
@@ -1109,7 +1112,7 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x04, 0x08, SS_FATAL | EBUSY,
 	    "Logical unit not ready, long write in progress") },
 	/* DTLPWROMAEBKVF */
-	{ SST(0x04, 0x09, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x09, SS_FATAL | EBUSY,
 	    "Logical unit not ready, self-test in progress") },
 	/* DTLPWROMAEBKVF */
 	{ SST(0x04, 0x0A, SS_WAIT | ENXIO,
@@ -1127,46 +1130,46 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x04, 0x0E, SS_RDEF,	/* XXX TBD */
 	    "Logical unit not ready, security session in progress") },
 	/* DT  WROM  B    */
-	{ SST(0x04, 0x10, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x10, SS_FATAL | ENODEV,
 	    "Logical unit not ready, auxiliary memory not accessible") },
 	/* DT  WRO AEB VF */
-	{ SST(0x04, 0x11, SS_WAIT | EBUSY,
+	{ SST(0x04, 0x11, SS_WAIT | ENXIO,
 	    "Logical unit not ready, notify (enable spinup) required") },
 	/*        M    V  */
-	{ SST(0x04, 0x12, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x12, SS_FATAL | ENXIO,
 	    "Logical unit not ready, offline") },
 	/* DT   R MAEBKV  */
-	{ SST(0x04, 0x13, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x13, SS_WAIT | EBUSY,
 	    "Logical unit not ready, SA creation in progress") },
 	/* D         B    */
-	{ SST(0x04, 0x14, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x14, SS_WAIT | ENOSPC,
 	    "Logical unit not ready, space allocation in progress") },
 	/*        M       */
-	{ SST(0x04, 0x15, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x15, SS_FATAL | ENXIO,
 	    "Logical unit not ready, robotics disabled") },
 	/*        M       */
-	{ SST(0x04, 0x16, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x16, SS_FATAL | ENXIO,
 	    "Logical unit not ready, configuration required") },
 	/*        M       */
-	{ SST(0x04, 0x17, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x17, SS_FATAL | ENXIO,
 	    "Logical unit not ready, calibration required") },
 	/*        M       */
-	{ SST(0x04, 0x18, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x18, SS_FATAL | ENXIO,
 	    "Logical unit not ready, a door is open") },
 	/*        M       */
-	{ SST(0x04, 0x19, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x19, SS_FATAL | ENODEV,
 	    "Logical unit not ready, operating in sequential mode") },
 	/* DT        B    */
-	{ SST(0x04, 0x1A, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x1A, SS_WAIT | EBUSY,
 	    "Logical unit not ready, START/STOP UNIT command in progress") },
 	/* D         B    */
-	{ SST(0x04, 0x1B, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x1B, SS_WAIT | EBUSY,
 	    "Logical unit not ready, sanitize in progress") },
 	/* DT     MAEB    */
-	{ SST(0x04, 0x1C, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x1C, SS_START | SSQ_DECREMENT_COUNT | ENXIO,
 	    "Logical unit not ready, additional power use not yet granted") },
 	/* D              */
-	{ SST(0x04, 0x1D, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x1D, SS_WAIT | EBUSY,
 	    "Logical unit not ready, configuration in progress") },
 	/* D              */
 	{ SST(0x04, 0x1E, SS_FATAL | ENXIO,
@@ -1175,14 +1178,20 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x04, 0x1F, SS_FATAL | ENXIO,
 	    "Logical unit not ready, microcode download required") },
 	/* DTLPWROMAEBKVF */
-	{ SST(0x04, 0x20, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x20, SS_FATAL | ENXIO,
 	    "Logical unit not ready, logical unit reset required") },
 	/* DTLPWROMAEBKVF */
-	{ SST(0x04, 0x21, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x21, SS_FATAL | ENXIO,
 	    "Logical unit not ready, hard reset required") },
 	/* DTLPWROMAEBKVF */
-	{ SST(0x04, 0x22, SS_RDEF,	/* XXX TBD */
+	{ SST(0x04, 0x22, SS_FATAL | ENXIO,
 	    "Logical unit not ready, power cycle required") },
+	/* D              */
+	{ SST(0x04, 0x23, SS_FATAL | ENXIO,
+	    "Logical unit not ready, affiliation required") },
+	/* D              */
+	{ SST(0x04, 0x24, SS_FATAL | EBUSY,
+	    "Depopulation in progress") },
 	/* DTL WROMAEBKVF */
 	{ SST(0x05, 0x00, SS_RDEF,
 	    "Logical unit does not respond to selection") },
@@ -1451,7 +1460,7 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x11, 0x14, SS_RDEF,	/* XXX TBD */
 	    "Read error - LBA marked bad by application client") },
 	/* D              */
-	{ SST(0x11, 0x15, SS_RDEF,	/* XXX TBD */
+	{ SST(0x11, 0x15, SS_FATAL | EIO,
 	    "Write after sanitize required") },
 	/* D   W O   BK   */
 	{ SST(0x12, 0x00, SS_RDEF,
@@ -2053,7 +2062,7 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x30, 0x13, SS_RDEF,	/* XXX TBD */
 	    "Cleaning volume expired") },
 	/* DT  WRO   BK   */
-	{ SST(0x31, 0x00, SS_RDEF,
+	{ SST(0x31, 0x00, SS_FATAL | ENXIO,
 	    "Medium format corrupted") },
 	/* D L  RO   B    */
 	{ SST(0x31, 0x01, SS_RDEF,
@@ -2062,7 +2071,7 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x31, 0x02, SS_RDEF,	/* XXX TBD */
 	    "Zoned formatting failed due to spare linking") },
 	/* D         B    */
-	{ SST(0x31, 0x03, SS_RDEF,	/* XXX TBD */
+	{ SST(0x31, 0x03, SS_FATAL | EIO,
 	    "SANITIZE command failed") },
 	/* D   W O   BK   */
 	{ SST(0x32, 0x00, SS_RDEF,
@@ -3381,7 +3390,7 @@ scsi_error_action(struct ccb_scsiio *csio, struct scsi_inquiry_data *inq_data,
 
 	if (!scsi_extract_sense_ccb((union ccb *)csio,
 	    &error_code, &sense_key, &asc, &ascq)) {
-		action = SS_RETRY | SSQ_DECREMENT_COUNT | SSQ_PRINT_SENSE | EIO;
+		action = SS_RDEF;
 	} else if ((error_code == SSD_DEFERRED_ERROR)
 	 || (error_code == SSD_DESC_DEFERRED_ERROR)) {
 		/*
@@ -3941,7 +3950,7 @@ scsi_set_sense_data_fixed_va(struct scsi_sense_data *sense_data,
 			}
 			if (len > sizeof(sense->cmd_spec_info)) {
 				data += len - sizeof(sense->cmd_spec_info);
-				len -= len - sizeof(sense->cmd_spec_info);
+				len = sizeof(sense->cmd_spec_info);
 			}
 			bcopy(data, &sense->cmd_spec_info[
 			    sizeof(sense->cmd_spec_info) - len], len);
@@ -5080,8 +5089,8 @@ scsi_sense_sbuf(struct cam_device *device, struct ccb_scsiio *csio,
 			 * errors on finicky architectures.  We don't
 			 * ensure that the sense data is pointer aligned.
 			 */
-			bcopy(&csio->sense_data, &sense, 
-			      sizeof(struct scsi_sense_data *));
+			bcopy((struct scsi_sense_data **)&csio->sense_data,
+			    &sense, sizeof(struct scsi_sense_data *));
 		}
 	} else {
 		/*
@@ -5149,7 +5158,7 @@ scsi_sense_print(struct ccb_scsiio *csio)
 
 	sbuf_finish(&sb);
 
-	printf("%s", sbuf_data(&sb));
+	sbuf_putbuf(&sb);
 }
 
 #else /* !_KERNEL */
@@ -5205,8 +5214,8 @@ scsi_extract_sense_ccb(union ccb *ccb,
 		return (0);
 
 	if (ccb->ccb_h.flags & CAM_SENSE_PTR)
-		bcopy(&ccb->csio.sense_data, &sense_data,
-		    sizeof(struct scsi_sense_data *));
+		bcopy((struct scsi_sense_data **)&ccb->csio.sense_data,
+		    &sense_data, sizeof(struct scsi_sense_data *));
 	else
 		sense_data = &ccb->csio.sense_data;
 	scsi_extract_sense_len(sense_data,
@@ -5341,11 +5350,10 @@ scsi_get_ascq(struct scsi_sense_data *sense_data, u_int sense_len,
  * for this routine to function properly.
  */
 void
-scsi_print_inquiry(struct scsi_inquiry_data *inq_data)
+scsi_print_inquiry_sbuf(struct sbuf *sb, struct scsi_inquiry_data *inq_data)
 {
 	u_int8_t type;
 	char *dtype, *qtype;
-	char vendor[16], product[48], revision[16], rstr[12];
 
 	type = SID_TYPE(inq_data);
 
@@ -5434,41 +5442,55 @@ scsi_print_inquiry(struct scsi_inquiry_data *inq_data)
 		break;
 	}
 
-	cam_strvis(vendor, inq_data->vendor, sizeof(inq_data->vendor),
-		   sizeof(vendor));
-	cam_strvis(product, inq_data->product, sizeof(inq_data->product),
-		   sizeof(product));
-	cam_strvis(revision, inq_data->revision, sizeof(inq_data->revision),
-		   sizeof(revision));
+	scsi_print_inquiry_short_sbuf(sb, inq_data);
+
+	sbuf_printf(sb, "%s %s ", SID_IS_REMOVABLE(inq_data) ? "Removable" : "Fixed", dtype);
 
 	if (SID_ANSI_REV(inq_data) == SCSI_REV_0)
-		snprintf(rstr, sizeof(rstr), "SCSI");
+		sbuf_printf(sb, "SCSI ");
 	else if (SID_ANSI_REV(inq_data) <= SCSI_REV_SPC) {
-		snprintf(rstr, sizeof(rstr), "SCSI-%d",
-		    SID_ANSI_REV(inq_data));
+		sbuf_printf(sb, "SCSI-%d ", SID_ANSI_REV(inq_data));
 	} else {
-		snprintf(rstr, sizeof(rstr), "SPC-%d SCSI",
-		    SID_ANSI_REV(inq_data) - 2);
+		sbuf_printf(sb, "SPC-%d SCSI ", SID_ANSI_REV(inq_data) - 2);
 	}
-	printf("<%s %s %s> %s %s %s device%s\n",
-	       vendor, product, revision,
-	       SID_IS_REMOVABLE(inq_data) ? "Removable" : "Fixed",
-	       dtype, rstr, qtype);
+	sbuf_printf(sb, "device%s\n", qtype);
+}
+
+void
+scsi_print_inquiry(struct scsi_inquiry_data *inq_data)
+{
+	struct sbuf	sb;
+	char		buffer[120];
+
+	sbuf_new(&sb, buffer, 120, SBUF_FIXEDLEN);
+	scsi_print_inquiry_sbuf(&sb, inq_data);
+	sbuf_finish(&sb);
+	sbuf_putbuf(&sb);
+}
+
+void
+scsi_print_inquiry_short_sbuf(struct sbuf *sb, struct scsi_inquiry_data *inq_data)
+{
+
+	sbuf_printf(sb, "<");
+	cam_strvis_sbuf(sb, inq_data->vendor, sizeof(inq_data->vendor), 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, inq_data->product, sizeof(inq_data->product), 0);
+	sbuf_printf(sb, " ");
+	cam_strvis_sbuf(sb, inq_data->revision, sizeof(inq_data->revision), 0);
+	sbuf_printf(sb, "> ");
 }
 
 void
 scsi_print_inquiry_short(struct scsi_inquiry_data *inq_data)
 {
-	char vendor[16], product[48], revision[16];
+	struct sbuf	sb;
+	char		buffer[84];
 
-	cam_strvis(vendor, inq_data->vendor, sizeof(inq_data->vendor),
-		   sizeof(vendor));
-	cam_strvis(product, inq_data->product, sizeof(inq_data->product),
-		   sizeof(product));
-	cam_strvis(revision, inq_data->revision, sizeof(inq_data->revision),
-		   sizeof(revision));
-
-	printf("<%s %s %s>", vendor, product, revision);
+	sbuf_new(&sb, buffer, 84, SBUF_FIXEDLEN);
+	scsi_print_inquiry_short_sbuf(&sb, inq_data);
+	sbuf_finish(&sb);
+	sbuf_putbuf(&sb);
 }
 
 /*
@@ -5559,6 +5581,7 @@ scsi_devid_is_naa_ieee_reg(uint8_t *bufp)
 {
 	struct scsi_vpd_id_descriptor *descr;
 	struct scsi_vpd_id_naa_basic *naa;
+	int n;
 
 	descr = (struct scsi_vpd_id_descriptor *)bufp;
 	naa = (struct scsi_vpd_id_naa_basic *)descr->identifier;
@@ -5566,7 +5589,8 @@ scsi_devid_is_naa_ieee_reg(uint8_t *bufp)
 		return 0;
 	if (descr->length < sizeof(struct scsi_vpd_id_naa_ieee_reg))
 		return 0;
-	if ((naa->naa >> SVPD_ID_NAA_NAA_SHIFT) != SVPD_ID_NAA_IEEE_REG)
+	n = naa->naa >> SVPD_ID_NAA_NAA_SHIFT;
+	if (n != SVPD_ID_NAA_LOCAL_REG && n != SVPD_ID_NAA_IEEE_REG)
 		return 0;
 	return 1;
 }
@@ -8263,10 +8287,10 @@ scsi_ata_identify(struct ccb_scsiio *csio, u_int32_t retries,
 		      tag_action,
 		      /*protocol*/AP_PROTO_PIO_IN,
 		      /*ata_flags*/AP_FLAG_TDIR_FROM_DEV |
-				   AP_FLAG_BYT_BLOK_BYTES |
+				   AP_FLAG_BYT_BLOK_BLOCKS |
 				   AP_FLAG_TLEN_SECT_CNT,
 		      /*features*/0,
-		      /*sector_count*/dxfer_len,
+		      /*sector_count*/dxfer_len / 512,
 		      /*lba*/0,
 		      /*command*/ATA_ATA_IDENTIFY,
 		      /*device*/ 0,
@@ -8368,6 +8392,38 @@ scsi_ata_read_log(struct ccb_scsiio *csio, uint32_t retries,
 			       timeout);
 
 	return (retval);
+}
+
+int scsi_ata_setfeatures(struct ccb_scsiio *csio, uint32_t retries,
+			 void (*cbfcnp)(struct cam_periph *, union ccb *),
+			 uint8_t tag_action, uint8_t feature,
+			 uint64_t lba, uint32_t count,
+			 uint8_t sense_len, uint32_t timeout)
+{
+	return (scsi_ata_pass(csio,
+		retries,
+		cbfcnp,
+		/*flags*/CAM_DIR_NONE,
+		tag_action,
+		/*protocol*/AP_PROTO_PIO_IN,
+		/*ata_flags*/AP_FLAG_TDIR_FROM_DEV |
+			     AP_FLAG_BYT_BLOK_BYTES |
+			     AP_FLAG_TLEN_SECT_CNT,
+		/*features*/feature,
+		/*sector_count*/count,
+		/*lba*/lba,
+		/*command*/ATA_SETFEATURES,
+		/*device*/ 0,
+		/*icc*/ 0,
+		/*auxiliary*/0,
+		/*control*/0,
+		/*data_ptr*/NULL,
+		/*dxfer_len*/0,
+		/*cdb_storage*/NULL,
+		/*cdb_storage_len*/0,
+		/*minimum_cmd_size*/0,
+		sense_len,
+		timeout));
 }
 
 /*

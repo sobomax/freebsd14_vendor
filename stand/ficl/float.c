@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: releng/11.3/stand/ficl/float.c 329175 2018-02-12 17:44:35Z kevans $ */
+/* $FreeBSD: releng/12.2/stand/ficl/float.c 326858 2017-12-14 18:57:17Z imp $ */
 
 #include "ficl.h"
 

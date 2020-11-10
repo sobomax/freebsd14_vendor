@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/syscons/plasma/plasma_saver.c 293049 2016-01-02 16:40:37Z des $
+ * $FreeBSD: releng/12.2/sys/dev/syscons/plasma/plasma_saver.c 312910 2017-01-28 02:22:15Z nyan $
  *
  * To CJA, in appreciation of Nighthawk brunches past and future.
  */
@@ -49,8 +49,6 @@
  */
 static int modes[] = {
 	M_VGA_CG640,
-	M_PC98_PEGC640x480,
-	M_PC98_PEGC640x400,
 	M_VGA_CG320,
 	-1
 };

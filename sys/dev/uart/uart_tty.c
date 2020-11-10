@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Marcel Moolenaar
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_tty.c 335659 2018-06-26 09:04:24Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_tty.c 334340 2018-05-29 16:16:24Z avg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

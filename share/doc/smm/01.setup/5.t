@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)5.t	8.1 (Berkeley) 7/27/93
-.\" $FreeBSD: releng/11.3/share/doc/smm/01.setup/5.t 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: releng/12.2/share/doc/smm/01.setup/5.t 263142 2014-03-14 03:07:51Z eadler $
 .\"
 .ds lq ``
 .ds rq ''

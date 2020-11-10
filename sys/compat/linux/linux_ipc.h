@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linux/linux_ipc.h 346839 2019-04-28 14:19:31Z dchagin $
+ * $FreeBSD: releng/12.2/sys/compat/linux/linux_ipc.h 346843 2019-04-28 14:37:20Z dchagin $
  */
 
 #ifndef _LINUX_IPC_H_

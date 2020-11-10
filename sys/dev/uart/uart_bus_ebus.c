@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 by Thomas Moestl <tmm@FreeBSD.org>.
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/uart/uart_bus_ebus.c 340145 2018-11-04 23:28:56Z mmacy $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_bus_ebus.c 338074 2018-08-19 21:10:21Z mmacy $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

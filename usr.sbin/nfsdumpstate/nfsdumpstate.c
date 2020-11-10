@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/nfsdumpstate/nfsdumpstate.c 347172 2019-05-06 03:13:22Z rmacklem $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nfsdumpstate/nfsdumpstate.c 347171 2019-05-06 03:06:22Z rmacklem $");
 
 #include <sys/param.h>
 #include <sys/linker.h>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/string/wcsnlen_test.c 290539 2015-11-08 07:53:31Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/string/wcsnlen_test.c 350526 2019-08-01 23:28:54Z brooks $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -65,7 +65,7 @@ test_wcsnlen(const wchar_t *s)
 	for (i = 0; i <= 1; i++) {
 		for (bufsize = 0; bufsize <= size + 10; bufsize++) {
 			s1 = makebuf(bufsize * sizeof(wchar_t), i);
-			wmemcpy(s1, s, bufsize);
+			wmemcpy(s1, s, bufsize <= size ? bufsize : size);
 			len = (size > bufsize) ? bufsize : size - 1;
 			ATF_CHECK(wcsnlen(s1, bufsize) == len);
 		}

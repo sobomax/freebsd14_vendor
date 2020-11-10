@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * SCSI Target Emulator
  *
  * Copyright (c) 2002 Nate Lawson.
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/share/examples/scsi_target/scsi_target.h 196955 2009-09-07 23:16:27Z sbruno $
+ * $FreeBSD: releng/12.2/share/examples/scsi_target/scsi_target.h 326275 2017-11-27 15:28:26Z pfg $
  */
 
 #ifndef _SCSI_TARGET_H

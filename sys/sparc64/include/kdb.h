@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/kdb.h 170473 2007-06-09 21:55:17Z marcel $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/kdb.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _MACHINE_KDB_H_

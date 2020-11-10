@@ -25,7 +25,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/include/acle-compat.h 269956 2014-08-14 04:20:13Z imp $
+ * $FreeBSD: releng/12.2/sys/arm/include/acle-compat.h 269956 2014-08-14 04:20:13Z imp $
  */
 
 #ifndef __ARM_ARCH

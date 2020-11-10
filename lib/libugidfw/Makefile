@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libugidfw/Makefile 325461 2017-11-05 22:36:02Z ngie $
+# $FreeBSD: releng/12.2/lib/libugidfw/Makefile 324929 2017-10-23 16:55:22Z ngie $
 
 PACKAGE=lib${LIB}
 LIB=		ugidfw

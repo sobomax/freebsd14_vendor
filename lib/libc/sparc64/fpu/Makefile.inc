@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/sparc64/fpu/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: releng/12.2/lib/libc/sparc64/fpu/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
 
 .PATH: ${LIBC_SRCTOP}/sparc64/fpu
 

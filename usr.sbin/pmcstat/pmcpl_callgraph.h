@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/pmcstat/pmcpl_callgraph.h 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/pmcstat/pmcpl_callgraph.h 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #ifndef	_PMCSTAT_PL_CALLGRAPH_H_
@@ -62,7 +62,7 @@ void pmcpl_cg_shutdown(FILE *mf);
 void pmcpl_cg_process(
     struct pmcstat_process *pp, struct pmcstat_pmcrecord *pmcr,
     uint32_t nsamples, uintfptr_t *cc, int usermode, uint32_t cpu);
-int pmcpl_cg_topkeypress(int c, WINDOW *w);
+int pmcpl_cg_topkeypress(int c, void *w);
 void pmcpl_cg_topdisplay(void);
 void pmcpl_cg_configure(char *opt);
 

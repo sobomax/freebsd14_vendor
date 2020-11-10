@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 5/31/93
-# $FreeBSD: releng/11.3/bin/ln/Makefile 320680 2017-07-05 15:58:23Z asomers $
+# $FreeBSD: releng/12.2/bin/ln/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -10,8 +10,7 @@ MAN=	ln.1 symlink.7
 LINKS=	${BINDIR}/ln ${BINDIR}/link
 MLINKS=	ln.1 link.1
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= 	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

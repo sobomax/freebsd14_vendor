@@ -1,6 +1,6 @@
-# $FreeBSD: releng/11.3/share/doc/legal/intel_ipw/Makefile 289399 2015-10-16 00:38:05Z bdrewery $
+# $FreeBSD: releng/12.2/share/doc/legal/intel_ipw/Makefile 314652 2017-03-04 11:26:40Z ngie $
 
-FILES=		${.CURDIR}/../../../../sys/contrib/dev/ipw/LICENSE
+FILES=		${SRCTOP}/sys/contrib/dev/ipw/LICENSE
 FILESDIR=	${SHAREDIR}/doc/legal
 FILESNAME=	intel_ipw.LICENSE
 

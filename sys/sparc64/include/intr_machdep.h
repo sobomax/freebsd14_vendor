@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/intr_machdep.h 241780 2012-10-20 12:07:48Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/intr_machdep.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_INTR_MACHDEP_H_

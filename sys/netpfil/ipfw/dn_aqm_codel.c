@@ -1,7 +1,7 @@
 /*
  * Codel - The Controlled-Delay Active Queue Management algorithm.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_aqm_codel.c 317488 2017-04-27 07:30:48Z truckman $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_aqm_codel.c 316777 2017-04-13 17:47:44Z cem $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.

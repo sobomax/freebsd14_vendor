@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/w/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/w/Makefile 315170 2017-03-12 18:58:44Z imp $
 
 PROG=	w
 SRCS=	fmt.c pr_time.c proc_compare.c w.c

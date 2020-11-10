@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/usb/controller/xhci_pci.c 345946 2019-04-05 11:39:21Z hselasky $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/xhci_pci.c 358016 2020-02-17 09:57:03Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -105,6 +107,9 @@ xhci_pci_match(device_t self)
 	case 0x78141022:
 		return ("AMD FCH USB 3.0 controller");
 
+	case 0x145f1d94:
+		return ("Hygon USB 3.0 controller");
+
 	case 0x01941033:
 		return ("NEC uPD720200 USB 3.0 controller");
 	case 0x00151912:
@@ -147,7 +152,7 @@ xhci_pci_match(device_t self)
 		return ("Intel Lewisburg USB 3.0 controller");
 	case 0xa2af8086:
 		return ("Intel Union Point USB 3.0 controller");
-	case 0x36d88086:
+	case 0xa36d8086:
 		return ("Intel Cannon Lake USB 3.1 controller");
 
 	case 0xa01b177d:

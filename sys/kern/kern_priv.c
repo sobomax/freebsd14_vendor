@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 nCircle Network Security, Inc.
  * Copyright (c) 2009 Robert N. M. Watson
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_priv.c 339446 2018-10-20 16:20:36Z jamie $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_priv.c 339409 2018-10-17 16:11:43Z jamie $");
 
 #include <sys/param.h>
 #include <sys/jail.h>

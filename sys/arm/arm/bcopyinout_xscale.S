@@ -36,7 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/bcopyinout_xscale.S 300694 2016-05-25 19:44:26Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/bcopyinout_xscale.S 336783 2018-07-27 21:25:01Z imp $");
 
 	.syntax	unified
 	.text

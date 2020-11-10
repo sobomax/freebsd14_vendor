@@ -22,8 +22,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/contrib/libarchive/tar/bsdtar.h 348607 2019-06-04 10:35:54Z mm $
+ * $FreeBSD: releng/12.2/contrib/libarchive/tar/bsdtar.h 358087 2020-02-19 01:46:43Z mm $
  */
+
+#ifndef BSDTAR_H_INCLUDED
+#define BSDTAR_H_INCLUDED
 
 #include "bsdtar_platform.h"
 #include <stdio.h>
@@ -161,6 +164,7 @@ enum {
 	OPTION_NO_ACLS,
 	OPTION_NO_FFLAGS,
 	OPTION_NO_MAC_METADATA,
+	OPTION_NO_SAFE_WRITES,
 	OPTION_NO_SAME_OWNER,
 	OPTION_NO_SAME_PERMISSIONS,
 	OPTION_NO_XATTRS,
@@ -174,6 +178,7 @@ enum {
 	OPTION_OPTIONS,
 	OPTION_PASSPHRASE,
 	OPTION_POSIX,
+	OPTION_SAFE_WRITES,
 	OPTION_SAME_OWNER,
 	OPTION_STRIP_COMPONENTS,
 	OPTION_TOTALS,
@@ -224,3 +229,5 @@ const char * passphrase_callback(struct archive *, void *);
 void	     passphrase_free(char *);
 void	list_item_verbose(struct bsdtar *, FILE *,
 		    struct archive_entry *);
+
+#endif

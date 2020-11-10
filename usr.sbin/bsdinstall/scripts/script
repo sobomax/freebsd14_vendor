@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/scripts/script 319124 2017-05-29 11:37:08Z royger $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/scripts/script 327487 2018-01-02 05:27:24Z nwhitehorn $
 #
 ############################################################ INCLUDES
 
@@ -116,8 +116,15 @@ fi
 bsdinstall checksum
 for set in $DISTRIBUTIONS; do
 	f_dprintf "Extracting $BSDINSTALL_DISTDIR/$set"
+	# XXX: this will fail if any mountpoints are FAT, due to inability to
+	# set ctime/mtime on the root of FAT partitions. tar has no option to
+	# ignore this. We probably need to switch back to distextract here
+	# to properly support EFI.
 	tar -xf "$BSDINSTALL_DISTDIR/$set" -C $BSDINSTALL_CHROOT
 done
+
+# Configure bootloader if needed
+bsdinstall bootconfig
 
 # Finalize install
 bsdinstall config

@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/e_jnf.c 279856 2015-03-10 17:10:54Z kargl $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/e_jnf.c 279856 2015-03-10 17:10:54Z kargl $");
 
 /*
  * See e_jn.c for complete comments.

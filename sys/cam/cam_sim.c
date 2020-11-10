@@ -1,6 +1,8 @@
 /*-
  * Common functions for SCSI Interface Modules (SIMs).
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/cam/cam_sim.c 316498 2017-04-04 17:59:10Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/cam/cam_sim.c 326265 2017-11-27 15:12:43Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

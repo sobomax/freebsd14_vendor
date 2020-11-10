@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/share/Makefile 302329 2016-07-03 18:21:11Z bapt $
+# $FreeBSD: releng/12.2/share/Makefile 321912 2017-08-02 08:35:51Z ngie $
 
 .include <src.opts.mk>
 
@@ -26,7 +26,6 @@ SUBDIR=	${_colldef} \
 	${_syscons} \
 	tabset \
 	termcap \
-	${_tests} \
 	${_timedef} \
 	${_vt} \
 	${_zoneinfo}
@@ -47,10 +46,6 @@ _dict=		dict
 
 .if ${MK_EXAMPLES} != "no"
 _examples=	examples
-.endif
-
-.if ${MK_GROFF} != "no"
-_me=		me
 .endif
 
 .if ${MK_ICONV} != "no"
@@ -86,9 +81,7 @@ _doc=		doc
 _syscons=	syscons
 .endif
 
-.if ${MK_TESTS} != "no"
-_tests=		tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_VT} != "no"
 _vt=		vt

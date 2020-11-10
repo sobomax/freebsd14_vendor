@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/sys/modules/cxgbe/t4_firmware/Makefile 346940 2019-04-30 01:25:02Z np $
+# $FreeBSD: releng/12.2/sys/modules/cxgbe/t4_firmware/Makefile 365961 2020-09-21 18:19:48Z np $
 #
 
 T4FW=	${SRCTOP}/sys/dev/cxgbe/firmware
@@ -17,11 +17,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T4FW_VER=	1.23.0.0
-FIRMWS+=	t4fw.fw:t4fw:${T4FW_VER}
-CLEANFILES+=	t4fw.fw
-
-t4fw.fw: t4fw-${T4FW_VER}.bin.uu
-	uudecode -o ${.TARGET} ${.ALLSRC}
+T4FW_VER=	1.25.0.0
+FIRMWS+=	t4fw-${T4FW_VER}.bin:t4fw:${T4FW_VER}
 
 .include <bsd.kmod.mk>

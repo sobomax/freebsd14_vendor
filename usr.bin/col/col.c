@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -13,7 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -43,10 +45,11 @@ static char sccsid[] = "@(#)col.c	8.5 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/col/col.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/col/col.c 335395 2018-06-19 23:43:14Z oshogbo $");
 
 #include <sys/capsicum.h>
 
+#include <capsicum_helpers.h>
 #include <err.h>
 #include <errno.h>
 #include <locale.h>
@@ -135,22 +138,13 @@ main(int argc, char **argv)
 	int nflushd_lines;		/* number of lines that were flushed */
 	int adjust, opt, warned, width;
 	const char *errstr;
-	cap_rights_t rights;
-	unsigned long cmd;
 
 	(void)setlocale(LC_CTYPE, "");
 
-	cap_rights_init(&rights, CAP_FSTAT, CAP_READ);
-	if (cap_rights_limit(STDIN_FILENO, &rights) < 0 && errno != ENOSYS)
-		err(1, "unable to limit rights for stdin");
-	cap_rights_init(&rights, CAP_FSTAT, CAP_WRITE, CAP_IOCTL);
-	if (cap_rights_limit(STDOUT_FILENO, &rights) < 0 && errno != ENOSYS)
-		err(1, "unable to limit rights for stdout");
-	cmd = TIOCGETA; /* required by isatty(3) in printf(3) */
-	if (cap_ioctls_limit(STDOUT_FILENO, &cmd, 1) < 0 && errno != ENOSYS)
-		err(1, "unable to limit ioctls for stdout");
+	if (caph_limit_stdio() == -1)
+		err(1, "unable to limit stdio");
 
-	if (cap_enter() < 0 && errno != ENOSYS)
+	if (caph_enter() < 0)
 		err(1, "unable to enter capability mode");
 
 	max_bufd_lines = 256;

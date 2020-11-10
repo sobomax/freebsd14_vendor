@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/11.3/sys/dev/smartpqi/smartpqi_event.c 333019 2018-04-26 16:59:06Z sbruno $ */
+/* $FreeBSD: releng/12.2/sys/dev/smartpqi/smartpqi_event.c 336201 2018-07-11 16:44:14Z sbruno $ */
 
 #include"smartpqi_includes.h"
 
@@ -47,6 +47,12 @@ pqisrc_rescan_devices(pqisrc_softstate_t *softs)
 	DBG_FUNC("OUT\n");
 
 	return ret;
+}
+
+void pqisrc_wait_for_rescan_complete(pqisrc_softstate_t *softs)
+{
+	os_sema_lock(&softs->scan_lock);
+	os_sema_unlock(&softs->scan_lock);
 }
 
 /*

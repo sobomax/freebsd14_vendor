@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Copyright (c) 2013 Spectra Logic Corporation
  *
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: releng/11.3/sys/fs/nfsserver/nfs_fha_new.h 249592 2013-04-17 21:00:22Z ken $ */
+/* $FreeBSD: releng/12.2/sys/fs/nfsserver/nfs_fha_new.h 326268 2017-11-27 15:15:37Z pfg $ */
 
 #ifndef	_NFS_FHA_NEW_H
 #define	_NFS_FHA_NEW_H 1

@@ -1,6 +1,8 @@
 /*-
  * alias_skinny.c
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002, 2003 MarcusCom, Inc.
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  *
  * Author: Joe Marcus Clarke <marcus@FreeBSD.org>
  *
- * $FreeBSD: releng/11.3/sys/netinet/libalias/alias_skinny.c 259858 2013-12-25 02:06:57Z glebius $
+ * $FreeBSD: releng/12.2/sys/netinet/libalias/alias_skinny.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifdef _KERNEL

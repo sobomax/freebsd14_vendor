@@ -32,7 +32,7 @@
 #include USB_GLOBAL_INCLUDE_FILE
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/samsung/exynos/exynos5_pad.c 297793 2016-04-10 23:07:00Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/samsung/exynos/exynos5_pad.c 351674 2019-09-02 00:29:14Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -410,7 +410,7 @@ pad_setup_intr(int gpio_number, void (*ih)(void *), void *ih_user)
 	sc = gpio_sc;
 
 	if (sc == NULL) {
-		device_printf(sc->dev, "Error: pad is not attached\n");
+		printf("%s: Error: pad is not attached\n", __func__);
 		return (-1);
 	}
 

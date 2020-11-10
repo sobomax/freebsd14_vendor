@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ancontrol/Makefile 319119 2017-05-29 10:15:41Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/ancontrol/Makefile 314659 2017-03-04 11:38:03Z ngie $
 
 PROG=	ancontrol
 MAN=	ancontrol.8

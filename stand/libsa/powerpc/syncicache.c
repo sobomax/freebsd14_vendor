@@ -33,7 +33,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/stand/libsa/powerpc/syncicache.c 279798 2015-03-09 02:19:44Z nwhitehorn $";
+  "$FreeBSD: releng/12.2/stand/libsa/powerpc/syncicache.c 324551 2017-10-12 14:56:28Z imp $";
 #endif /* not lint */
 
 #include <sys/param.h>

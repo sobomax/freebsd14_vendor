@@ -1,6 +1,8 @@
 /*-
  * ng_tcpmss.c
  *
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004, Alexey Popov <lollypop@flexuser.ru>
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * This software includes fragments of the following programs:
  *	tcpmssd		Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_tcpmss.c 206032 2010-04-01 10:41:01Z mav $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_tcpmss.c 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*

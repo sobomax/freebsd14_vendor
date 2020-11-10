@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/tests/trig_test.c 323298 2017-09-08 04:35:44Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/tests/trig_test.c 322921 2017-08-26 06:44:50Z ngie $");
 
 #include <sys/param.h>
 

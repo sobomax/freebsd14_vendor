@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: Beerware
+ *
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <phk@FreeBSD.org> wrote this file.  As long as you retain this notice you
@@ -9,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/led/led.c 283360 2015-05-24 07:45:42Z ganbold $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/led/led.c 343716 2019-02-03 14:55:21Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -259,7 +261,7 @@ led_set(char const *name, char const *cmd)
 	mtx_unlock(&led_mtx);
 	if (sb != NULL)
 		sbuf_delete(sb);
-	return (0);
+	return (error);
 }
 
 static struct cdevsw led_cdevsw = {

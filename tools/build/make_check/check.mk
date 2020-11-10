@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/build/make_check/check.mk 236340 2012-05-30 22:27:34Z obrien $
+# $FreeBSD: releng/12.2/tools/build/make_check/check.mk 236340 2012-05-30 22:27:34Z obrien $
 
 all:
 	${MK} ${MK_ARG}

@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/kbdcontrol/lex.l 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/kbdcontrol/lex.l 352276 2019-09-13 07:08:43Z bapt $
  */
 
 %{
@@ -36,6 +36,7 @@
 
 %}
 
+%option noyywrap
 %option nounput
 %option noinput
 

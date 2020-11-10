@@ -1,5 +1,6 @@
-# $FreeBSD: releng/11.3/usr.sbin/cron/cron/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/cron/cron/Makefile 338497 2018-09-06 14:55:54Z brd $
 
+CONFS=	crontab
 PROG=	cron
 MAN=	cron.8
 SRCS=	cron.c database.c do_command.c job.c user.c popen.c

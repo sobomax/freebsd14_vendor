@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: releng/11.3/sys/dev/pms/freebsd/driver/common/lxencrypt.c 285242 2015-07-07 13:17:02Z achim $
+* $FreeBSD: releng/12.2/sys/dev/pms/freebsd/driver/common/lxencrypt.c 324811 2017-10-21 07:23:45Z rlibby $
 *
 *******************************************************************************/
 /*******************************************************************************
@@ -41,8 +41,8 @@
 #include <vm/uma.h>
 
 
-static atomic_t ioerr_queue_count;
 #ifdef ENCRYPT_ENHANCE
+static atomic_t ioerr_queue_count;
 /******************************************************************************
 careful_write():
 

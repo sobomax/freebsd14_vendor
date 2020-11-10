@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/ntp/Makefile.inc 283542 2015-05-25 20:27:46Z bapt $
+# $FreeBSD: releng/12.2/usr.sbin/ntp/Makefile.inc 355896 2019-12-19 02:04:40Z kevans $
 
 .include <src.opts.mk>
 
@@ -15,5 +15,7 @@ CFLAGS+= -DOPENSSL -DUSE_OPENSSL_CRYPTO_RAND -DAUTOKEY
 .endif
 
 WARNS?=	0
+
+.export ECHO
 
 .include "../Makefile.inc"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/lex/version.awk 250881 2013-05-21 19:32:35Z jkim $
+# $FreeBSD: releng/12.2/usr.bin/lex/version.awk 250881 2013-05-21 19:32:35Z jkim $
 
 BEGIN {
 	FS = "[ \t\.\"]+"

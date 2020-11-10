@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2010 Nexenta Systems, Inc.  All rights reserved.
  * Copyright 2015 John Marino <draco@marino.st>
  *
@@ -32,7 +32,7 @@
  * LC_TIME database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/localedef/time.c 298878 2016-05-01 16:10:56Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/localedef/time.c 315007 2017-03-10 16:12:16Z pfg $");
 
 #include <stdio.h>
 #include <stdlib.h>

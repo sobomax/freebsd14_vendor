@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_private.h 346205 2019-04-14 12:05:08Z ae $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_private.h 350582 2019-08-05 07:49:02Z ae $
  */
 
 #ifndef _IPFW2_PRIVATE_H
@@ -674,6 +676,7 @@ struct ip_fw *ipfw_alloc_rule(struct ip_fw_chain *chain, size_t rulesize);
 void ipfw_free_rule(struct ip_fw *rule);
 int ipfw_match_range(struct ip_fw *rule, ipfw_range_tlv *rt);
 int ipfw_mark_object_kidx(uint32_t *bmask, uint16_t etlv, uint16_t kidx);
+ipfw_insn *ipfw_get_action(struct ip_fw *);
 
 typedef int (sopt_handler_f)(struct ip_fw_chain *ch,
     ip_fw3_opheader *op3, struct sockopt_data *sd);

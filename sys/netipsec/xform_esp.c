@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/netipsec/xform_esp.c 348482 2019-05-31 20:26:56Z jhb $	*/
+/*	$FreeBSD: releng/12.2/sys/netipsec/xform_esp.c 365277 2020-09-02 20:36:33Z jhb $	*/
 /*	$OpenBSD: ip_esp.c,v 1.69 2001/06/26 06:18:59 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -37,6 +37,7 @@
  */
 #include "opt_inet.h"
 #include "opt_inet6.h"
+#include "opt_ipsec.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -94,8 +95,7 @@ SYSCTL_VNET_PCPUSTAT(_net_inet_esp, IPSECCTL_STATS, stats,
     struct espstat, espstat,
     "ESP statistics (struct espstat, netipsec/esp_var.h");
 
-static struct timeval deswarn, blfwarn, castwarn, camelliawarn;
-static struct timeval warninterval = { .tv_sec = 1, .tv_usec = 0 };
+static struct timeval deswarn, blfwarn, castwarn, camelliawarn, tdeswarn;
 
 static int esp_input_cb(struct cryptop *op);
 static int esp_output_cb(struct cryptop *crp);
@@ -162,19 +162,23 @@ esp_init(struct secasvar *sav, struct xformsw *xsp)
 
 	switch (sav->alg_enc) {
 	case SADB_EALG_DESCBC:
-		if (ratecheck(&deswarn, &warninterval))
+		if (ratecheck(&deswarn, &ipsec_warn_interval))
 			gone_in(13, "DES cipher for IPsec");
 		break;
+	case SADB_EALG_3DESCBC:
+		if (ratecheck(&tdeswarn, &ipsec_warn_interval))
+			gone_in(13, "3DES cipher for IPsec");
+		break;
 	case SADB_X_EALG_BLOWFISHCBC:
-		if (ratecheck(&blfwarn, &warninterval))
+		if (ratecheck(&blfwarn, &ipsec_warn_interval))
 			gone_in(13, "Blowfish cipher for IPsec");
 		break;
 	case SADB_X_EALG_CAST128CBC:
-		if (ratecheck(&castwarn, &warninterval))
+		if (ratecheck(&castwarn, &ipsec_warn_interval))
 			gone_in(13, "CAST cipher for IPsec");
 		break;
 	case SADB_X_EALG_CAMELLIACBC:
-		if (ratecheck(&camelliawarn, &warninterval))
+		if (ratecheck(&camelliawarn, &ipsec_warn_interval))
 			gone_in(13, "Camellia cipher for IPsec");
 		break;
 	}
@@ -294,7 +298,7 @@ esp_input(struct mbuf *m, struct secasvar *sav, int skip, int protoff)
 	struct cryptop *crp;
 	struct newesp *esp;
 	uint8_t *ivp;
-	uint64_t cryptoid;
+	crypto_session_t cryptoid;
 	int alen, error, hlen, plen;
 
 	IPSEC_ASSERT(sav != NULL, ("null SA"));
@@ -308,8 +312,17 @@ esp_input(struct mbuf *m, struct secasvar *sav, int skip, int protoff)
 		ESPSTAT_INC(esps_badilen);
 		goto bad;
 	}
-	/* XXX don't pullup, just copy header */
-	IP6_EXTHDR_GET(esp, struct newesp *, m, skip, sizeof (struct newesp));
+
+	if (m->m_len < skip + sizeof(*esp)) {
+		m = m_pullup(m, skip + sizeof(*esp));
+		if (m == NULL) {
+			DPRINTF(("%s: cannot pullup header\n", __func__));
+			ESPSTAT_INC(esps_hdrops);	/*XXX*/
+			error = ENOBUFS;
+			goto bad;
+		}
+	}
+	esp = (struct newesp *)(mtod(m, caddr_t) + skip);
 
 	esph = sav->tdb_authalgxform;
 	espx = sav->tdb_encalgxform;
@@ -408,9 +421,11 @@ esp_input(struct mbuf *m, struct secasvar *sav, int skip, int protoff)
 	/* Crypto operation descriptor */
 	crp->crp_ilen = m->m_pkthdr.len; /* Total input length */
 	crp->crp_flags = CRYPTO_F_IMBUF | CRYPTO_F_CBIFSYNC;
+	if (V_async_crypto)
+		crp->crp_flags |= CRYPTO_F_ASYNC | CRYPTO_F_ASYNC_KEEPORDER;
 	crp->crp_buf = (caddr_t) m;
 	crp->crp_callback = esp_input_cb;
-	crp->crp_sid = cryptoid;
+	crp->crp_session = cryptoid;
 	crp->crp_opaque = (caddr_t) xd;
 
 	/* These are passed as-is to the callback */
@@ -463,14 +478,13 @@ esp_input_cb(struct cryptop *crp)
 	IPSEC_DEBUG_DECLARE(char buf[128]);
 	u_int8_t lastthree[3], aalg[AH_HMAC_MAXHASHLEN];
 	const struct auth_hash *esph;
-	const struct enc_xform *espx;
 	struct mbuf *m;
 	struct cryptodesc *crd;
 	struct xform_data *xd;
 	struct secasvar *sav;
 	struct secasindex *saidx;
 	caddr_t ptr;
-	uint64_t cryptoid;
+	crypto_session_t cryptoid;
 	int hlen, skip, protoff, error, alen;
 
 	crd = crp->crp_desc;
@@ -485,15 +499,14 @@ esp_input_cb(struct cryptop *crp)
 	cryptoid = xd->cryptoid;
 	saidx = &sav->sah->saidx;
 	esph = sav->tdb_authalgxform;
-	espx = sav->tdb_encalgxform;
 
 	/* Check for crypto errors */
 	if (crp->crp_etype) {
 		if (crp->crp_etype == EAGAIN) {
 			/* Reset the session ID */
-			if (ipsec_updateid(sav, &crp->crp_sid, &cryptoid) != 0)
+			if (ipsec_updateid(sav, &crp->crp_session, &cryptoid) != 0)
 				crypto_freesession(cryptoid);
-			xd->cryptoid = crp->crp_sid;
+			xd->cryptoid = crp->crp_session;
 			CURVNET_RESTORE();
 			return (crypto_dispatch(crp));
 		}
@@ -608,6 +621,13 @@ esp_input_cb(struct cryptop *crp)
 		}
 	}
 
+	/*
+	 * RFC4303 2.6:
+	 * Silently drop packet if next header field is IPPROTO_NONE.
+	 */
+	if (lastthree[2] == IPPROTO_NONE)
+		goto bad;
+
 	/* Trim the mbuf chain to remove trailing authenticator and padding */
 	m_adj(m, -(lastthree[1] + 2));
 
@@ -660,7 +680,8 @@ esp_output(struct mbuf *m, struct secpolicy *sp, struct secasvar *sav,
 	struct secasindex *saidx;
 	unsigned char *pad;
 	uint8_t *ivp;
-	uint64_t cntr, cryptoid;
+	uint64_t cntr;
+	crypto_session_t cryptoid;
 	int hlen, rlen, padding, blks, alen, i, roff;
 	int error, maxpacketsize;
 	uint8_t prot;
@@ -870,10 +891,12 @@ esp_output(struct mbuf *m, struct secpolicy *sp, struct secasvar *sav,
 	/* Crypto operation descriptor. */
 	crp->crp_ilen = m->m_pkthdr.len; /* Total input length. */
 	crp->crp_flags = CRYPTO_F_IMBUF | CRYPTO_F_CBIFSYNC;
+	if (V_async_crypto)
+		crp->crp_flags |= CRYPTO_F_ASYNC | CRYPTO_F_ASYNC_KEEPORDER;
 	crp->crp_buf = (caddr_t) m;
 	crp->crp_callback = esp_output_cb;
 	crp->crp_opaque = (caddr_t) xd;
-	crp->crp_sid = cryptoid;
+	crp->crp_session = cryptoid;
 
 	if (esph) {
 		/* Authentication descriptor. */
@@ -904,7 +927,7 @@ esp_output_cb(struct cryptop *crp)
 	struct secpolicy *sp;
 	struct secasvar *sav;
 	struct mbuf *m;
-	uint64_t cryptoid;
+	crypto_session_t cryptoid;
 	u_int idx;
 	int error;
 
@@ -920,9 +943,9 @@ esp_output_cb(struct cryptop *crp)
 	if (crp->crp_etype) {
 		if (crp->crp_etype == EAGAIN) {
 			/* Reset the session ID */
-			if (ipsec_updateid(sav, &crp->crp_sid, &cryptoid) != 0)
+			if (ipsec_updateid(sav, &crp->crp_session, &cryptoid) != 0)
 				crypto_freesession(cryptoid);
-			xd->cryptoid = crp->crp_sid;
+			xd->cryptoid = crp->crp_session;
 			CURVNET_RESTORE();
 			return (crypto_dispatch(crp));
 		}

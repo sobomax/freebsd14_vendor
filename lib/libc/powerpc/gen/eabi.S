@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/powerpc/gen/eabi.S 272362 2014-10-01 15:00:21Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/powerpc/gen/eabi.S 272362 2014-10-01 15:00:21Z bapt $");
 
 ENTRY(__eabi)
 	blr

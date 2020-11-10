@@ -1,7 +1,7 @@
 /*
  * trygetif.c - test program for getif.c
  *
- * $FreeBSD: releng/11.3/libexec/bootpd/trygetif.c 50476 1999-08-28 00:22:10Z peter $
+ * $FreeBSD: releng/12.2/libexec/bootpd/trygetif.c 50476 1999-08-28 00:22:10Z peter $
  */
 
 #include <sys/types.h>

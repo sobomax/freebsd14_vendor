@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/etherswitch/mtkswitch/mtkswitch_mt7620.c 301497 2016-06-06 10:07:57Z sgalabov $
+ * $FreeBSD: releng/12.2/sys/dev/etherswitch/mtkswitch/mtkswitch_mt7620.c 301497 2016-06-06 10:07:57Z sgalabov $
  */
 
 #include <sys/param.h>

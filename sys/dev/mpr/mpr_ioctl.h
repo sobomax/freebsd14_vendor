@@ -27,13 +27,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
+ * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: releng/11.3/sys/dev/mpr/mpr_ioctl.h 331903 2018-04-03 02:29:17Z mav $
+ * $FreeBSD: releng/12.2/sys/dev/mpr/mpr_ioctl.h 352735 2019-09-26 01:54:24Z imp $
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
  * Copyright (c) 2013-2016 Avago Technologies
+ * Copyright 2000-2020 Broadcom Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,9 +58,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
+ * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/11.3/sys/dev/mpr/mpr_ioctl.h 331903 2018-04-03 02:29:17Z mav $
+ * $FreeBSD: releng/12.2/sys/dev/mpr/mpr_ioctl.h 352735 2019-09-26 01:54:24Z imp $
  */
 
 #ifndef _MPR_IOCTL_H_

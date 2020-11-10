@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/contrib/pf/ftp-proxy/ftp-proxy.c 299354 2016-05-10 11:09:26Z bapt $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/pf/ftp-proxy/ftp-proxy.c 299354 2016-05-10 11:09:26Z bapt $");
 
 #include <sys/queue.h>
 #include <sys/types.h>

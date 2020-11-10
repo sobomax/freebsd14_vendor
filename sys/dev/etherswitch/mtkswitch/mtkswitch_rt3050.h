@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/etherswitch/mtkswitch/mtkswitch_rt3050.h 299910 2016-05-16 07:00:49Z sgalabov $
+ * $FreeBSD: releng/12.2/sys/dev/etherswitch/mtkswitch/mtkswitch_rt3050.h 299910 2016-05-16 07:00:49Z sgalabov $
  */
 
 #ifndef	__MTKSWITCH_RT3050_H__

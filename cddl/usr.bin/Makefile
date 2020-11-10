@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.bin/Makefile 288339 2015-09-28 12:38:57Z avg $
+# $FreeBSD: releng/12.2/cddl/usr.bin/Makefile 321912 2017-08-02 08:35:51Z ngie $
 
 .include <src.opts.mk>
 
@@ -6,15 +6,12 @@ SUBDIR= \
 	ctfconvert \
 	ctfdump \
 	ctfmerge \
-	${_tests} \
 	${_zinject} \
 	${_zlook} \
 	${_zstreamdump} \
 	${_ztest}
 
-.if ${MK_TESTS} != "no"
-_tests=	tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_ZFS} != "no"
 _zinject= zinject

@@ -1,12 +1,12 @@
-# $FreeBSD: releng/11.3/sbin/quotacheck/Makefile 319185 2017-05-30 04:17:22Z ngie $
+# $FreeBSD: releng/12.2/sbin/quotacheck/Makefile 335268 2018-06-16 23:47:59Z eadler $
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
 
 PACKAGE=quotacheck
 PROG=	quotacheck
 SRCS=	quotacheck.c preen.c fsutil.c utilities.c
-WARNS?=	2
+WARNS?=	3
 MAN=	quotacheck.8
-LIBADD=	util
+LIBADD=	util ufs
 
 .PATH:	${.CURDIR:H}/fsck ${.CURDIR:H}/fsck_ffs
 

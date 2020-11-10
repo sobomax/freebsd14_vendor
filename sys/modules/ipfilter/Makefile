@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ipfilter/Makefile 348825 2019-06-09 02:32:52Z cy $
+# $FreeBSD: releng/12.2/sys/modules/ipfilter/Makefile 348823 2019-06-09 01:26:56Z cy $
 
 .PATH: ${SRCTOP}/sys/contrib/ipfilter/netinet
 
@@ -21,7 +21,7 @@ CWARNFLAGS.fil.c=		${NO_WSELF_ASSIGN} -Wno-unused
 CWARNFLAGS.ip_auth.c=		-Wno-unused
 CWARNFLAGS.ip_fil_freebsd.c=	-Wno-unused
 CWARNFLAGS.ip_frag.c=		-Wno-unused
-CWARNFLAGS.ip_htable.c=		-Wno-unused
+CWARNFLAGS.ip_htable.c=		-Wno-unused ${NO_WTAUTOLOGICAL_POINTER_COMPARE}
 CWARNFLAGS.ip_dstlist.c=	-Wno-unused
 CWARNFLAGS.ip_lookup.c=		${NO_WSELF_ASSIGN} -Wno-unused
 CWARNFLAGS.ip_nat.c=		-Wno-unused

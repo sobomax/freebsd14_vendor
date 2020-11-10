@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/conf/kmod_syms.awk 101438 2002-08-06 19:31:04Z iedowse $
+# $FreeBSD: releng/12.2/sys/conf/kmod_syms.awk 101438 2002-08-06 19:31:04Z iedowse $
 
 # Read global symbols from object file.
 BEGIN {

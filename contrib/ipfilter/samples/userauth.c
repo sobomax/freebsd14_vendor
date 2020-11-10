@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/contrib/ipfilter/samples/userauth.c 145519 2005-04-25 18:20:15Z darrenr $	*/
+/*	$FreeBSD: releng/12.2/contrib/ipfilter/samples/userauth.c 145519 2005-04-25 18:20:15Z darrenr $	*/
 
 #include <sys/types.h>
 #include <sys/socket.h>

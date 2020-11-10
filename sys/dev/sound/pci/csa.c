@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1999 Seigo Tanimura
  * All rights reserved.
  *
@@ -52,7 +54,7 @@
 
 #include <dev/sound/pci/cs461x_dsp.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/11.3/sys/dev/sound/pci/csa.c 339296 2018-10-10 22:49:52Z avatar $");
+SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/csa.c 338200 2018-08-22 14:06:31Z avatar $");
 
 /* This is the pci device id. */
 #define CS4610_PCI_ID 0x60011013

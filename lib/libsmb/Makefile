@@ -1,7 +1,9 @@
-# $FreeBSD: releng/11.3/lib/libsmb/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libsmb/Makefile 338824 2018-09-20 09:31:27Z brd $
 
 .include <src.opts.mk>
 
+CONFS=	nsmb.conf
+CONFSMODE=	600
 PACKAGE=lib${LIB}
 CONTRIBDIR=	${SRCTOP}/contrib/smbfs
 .PATH: ${CONTRIBDIR}/lib/smb

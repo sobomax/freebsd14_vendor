@@ -1,9 +1,4 @@
-# $FreeBSD: releng/11.3/sys/arm/nvidia/tegra124/files.tegra124 332010 2018-04-04 11:30:20Z mmel $
-
-#
-# Standard ARM support.
-#
-kern/kern_clocksource.c			standard
+# $FreeBSD: releng/12.2/sys/arm/nvidia/tegra124/files.tegra124 350603 2019-08-05 18:13:13Z manu $
 
 #
 # Standard tegra124 devices and support.

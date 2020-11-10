@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bmake/Makefile.inc 331246 2018-03-20 15:57:52Z sjg $ 
+# $FreeBSD: releng/12.2/usr.bin/bmake/Makefile.inc 330260 2018-03-02 01:53:50Z sjg $ 
 
 .sinclude <src.opts.mk>
 

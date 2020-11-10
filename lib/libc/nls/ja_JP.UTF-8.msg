@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/11.3/lib/libc/nls/ja_JP.UTF-8.msg 199128 2009-11-10 03:56:51Z ume $
+$ $FreeBSD: releng/12.2/lib/libc/nls/ja_JP.UTF-8.msg 199128 2009-11-10 03:56:51Z ume $
 $
 $ Message catalog for ja_JP.UTF-8 locale
 $

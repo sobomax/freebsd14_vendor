@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ioat/ioat_test.h 292229 2015-12-14 22:02:01Z cem $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ioat/ioat_test.h 355197 2019-11-29 00:38:16Z mav $");
 
 #ifndef __IOAT_TEST_H__
 #define __IOAT_TEST_H__
@@ -44,6 +44,9 @@ enum ioat_test_kind {
 	IOAT_TEST_RAW_DMA,
 	IOAT_TEST_DMA_8K,
 	IOAT_TEST_MEMCPY,
+	IOAT_TEST_DMA_8K_PB,
+	IOAT_TEST_DMA_CRC,
+	IOAT_TEST_DMA_CRC_COPY,
 	IOAT_NUM_TESTKINDS
 };
 

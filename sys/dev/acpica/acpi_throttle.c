@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpica/acpi_throttle.c 283261 2015-05-21 19:31:10Z jkim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/acpi_throttle.c 283261 2015-05-21 19:31:10Z jkim $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

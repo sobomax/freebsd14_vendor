@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tests/sys/kern/acct/acct_test.c 304947 2016-08-28 07:10:48Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/tests/sys/kern/acct/acct_test.c 304238 2016-08-16 20:35:36Z ngie $");
 
 #include <sys/types.h>
 

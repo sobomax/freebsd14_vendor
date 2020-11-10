@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/acpi/acpidump/Makefile 272444 2014-10-02 19:11:18Z jkim $
+# $FreeBSD: releng/12.2/usr.sbin/acpi/acpidump/Makefile 272444 2014-10-02 19:11:18Z jkim $
 
 PROG=	acpidump
 MAN=	acpidump.8

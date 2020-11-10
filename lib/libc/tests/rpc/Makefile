@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/tests/rpc/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/lib/libc/tests/rpc/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 SRCS.xdr_test=		${RPCSRC:.x=_xdr.c} t_xdr.c ${RPCSRC:.x=.h} \
 			h_testbits.h

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/firewire/Makefile 132034 2004-07-12 13:13:17Z dfr $
+# $FreeBSD: releng/12.2/sys/modules/firewire/Makefile 132034 2004-07-12 13:13:17Z dfr $
 
 SUBDIR=	firewire \
 	fwe \

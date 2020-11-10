@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/security/audit/audit_ioctl.h 336210 2018-07-11 19:46:56Z asomers $
+ * $FreeBSD: releng/12.2/sys/security/audit/audit_ioctl.h 334403 2018-05-30 21:50:23Z asomers $
  */
 
 #ifndef _SECURITY_AUDIT_AUDIT_IOCTL_H_

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libopenbsd/getdtablecount.c 290835 2015-11-14 23:07:38Z rodrigc $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libopenbsd/getdtablecount.c 290835 2015-11-14 23:07:38Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

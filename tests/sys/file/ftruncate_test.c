@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tests/sys/file/ftruncate_test.c 319300 2017-05-31 08:36:43Z ngie $
+ * $FreeBSD: releng/12.2/tests/sys/file/ftruncate_test.c 319078 2017-05-28 17:50:29Z ngie $
  */
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/gnu/usr.bin/binutils/libbfd/Makefile.amd64 218822 2011-02-18 20:54:12Z dim $
+# $FreeBSD: releng/12.2/gnu/usr.bin/binutils/libbfd/Makefile.amd64 323365 2017-09-09 13:18:32Z jonathan $
 
 .include "${.CURDIR}/Makefile.i386"
 
@@ -9,7 +9,6 @@ DEFAULT_VECTOR=	bfd_elf64_x86_64_freebsd_vec
 
 SRCS+=	elf64-x86-64.c \
 	efi-app-x86_64.c \
-	efi-app-ia32.c \
 	elf64.c \
 	elf64-gen.c \
 	elf64-target.h \

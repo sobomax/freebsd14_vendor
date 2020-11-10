@@ -1,9 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.bin/nfsstat/Makefile 306632 2016-10-03 12:02:45Z rmacklem $
+# $FreeBSD: releng/12.2/usr.bin/nfsstat/Makefile 328588 2018-01-30 09:59:52Z manu $
 
 PROG=	nfsstat
 CFLAGS+=-DNFS
 
-LIBADD+= devstat
+LIBADD+= devstat xo
 
 .include <bsd.prog.mk>

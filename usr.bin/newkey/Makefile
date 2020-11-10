@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/newkey/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/newkey/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 

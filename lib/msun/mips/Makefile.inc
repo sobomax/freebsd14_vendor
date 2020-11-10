@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/msun/mips/Makefile.inc 178582 2008-04-26 12:20:29Z imp $
+# $FreeBSD: releng/12.2/lib/msun/mips/Makefile.inc 315424 2017-03-16 21:05:21Z brooks $
 
 LDBL_PREC = 53
 SYM_MAPS += ${.CURDIR}/mips/Symbol.map

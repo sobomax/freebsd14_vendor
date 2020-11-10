@@ -28,7 +28,7 @@
 /*
  * File: ql_minidump.h
  *
- * $FreeBSD: releng/11.3/sys/dev/qlxgbe/ql_minidump.h 305487 2016-09-06 19:15:44Z davidcs $
+ * $FreeBSD: releng/12.2/sys/dev/qlxgbe/ql_minidump.h 304248 2016-08-17 01:57:58Z davidcs $
  */
 #ifndef _QL_MINIDUMP_H_
 #define _QL_MINIDUMP_H_

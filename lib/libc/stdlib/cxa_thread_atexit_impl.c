@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/stdlib/cxa_thread_atexit_impl.c 312589 2017-01-21 11:47:30Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdlib/cxa_thread_atexit_impl.c 311651 2017-01-07 16:05:19Z kib $");
 
 #include <sys/queue.h>
 #include "namespace.h"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/lib/libc/riscv/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+# $FreeBSD: releng/12.2/lib/libc/riscv/Makefile.inc 332792 2018-04-19 20:36:15Z brooks $
 #
 # Machine dependent definitions for the RISC-V architecture.
 #

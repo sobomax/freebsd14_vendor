@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/nvidia/tegra_pmc.h 296936 2016-03-16 13:01:48Z mmel $
+ * $FreeBSD: releng/12.2/sys/arm/nvidia/tegra_pmc.h 296936 2016-03-16 13:01:48Z mmel $
  */
 
 #ifndef _TEGRA_PMC_H_

@@ -13,7 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -32,7 +32,7 @@
 
 #if defined(LIBC_RCS) && !defined(lint)
 	.text
-	.asciz "$FreeBSD: releng/11.3/stand/libsa/i386/_setjmp.S 192760 2009-05-25 14:37:10Z attilio $"
+	.asciz "$FreeBSD: releng/12.2/stand/libsa/i386/_setjmp.S 324551 2017-10-12 14:56:28Z imp $"
 #endif /* LIBC_RCS and not lint */
 
 /*

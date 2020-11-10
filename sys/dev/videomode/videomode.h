@@ -1,5 +1,5 @@
 /*	$NetBSD: videomode.h,v 1.2 2010/05/04 21:17:10 macallan Exp $	*/
-/*	$FreeBSD: releng/11.3/sys/dev/videomode/videomode.h 284533 2015-06-18 00:22:14Z gonzo $	*/
+/*	$FreeBSD: releng/12.2/sys/dev/videomode/videomode.h 284533 2015-06-18 00:22:14Z gonzo $	*/
 
 /*
  * Copyright (c) 2001, 2002 Bang Jun-Young

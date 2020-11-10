@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/if_enc/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/if_enc/Makefile 365467 2020-09-08 18:29:20Z jhb $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -6,6 +6,6 @@ SYSDIR?=${SRCTOP}/sys
 .PATH: ${SYSDIR}/net
 
 KMOD=	if_enc
-SRCS=	if_enc.c opt_inet.h opt_inet6.h
+SRCS=	if_enc.c opt_inet.h opt_inet6.h opt_ipsec.h
 
 .include <bsd.kmod.mk>

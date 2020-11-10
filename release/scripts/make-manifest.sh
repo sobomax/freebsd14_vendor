@@ -7,7 +7,7 @@
 # The output file looks like this (tab-delimited):
 #  foo1.txz SHA256-checksum Number-of-files foo1 Description Install-by-default
 #
-# $FreeBSD: releng/11.3/release/scripts/make-manifest.sh 303027 2016-07-19 16:22:50Z gjb $
+# $FreeBSD: releng/12.2/release/scripts/make-manifest.sh 340457 2018-11-15 16:42:59Z gjb $
 
 base="Base system"
 doc="Additional Documentation"
@@ -32,11 +32,12 @@ desc_tests="${tests}"
 
 default_doc=off
 default_src=off
+default_ports=off
 default_tests=off
 default_base_dbg=off
 default_lib32_dbg=off
 default_kernel_alt=off
-default_kernel_dbg=off
+default_kernel_dbg=on
 default_kernel_alt_dbg=off
 
 for i in ${*}; do
@@ -50,6 +51,9 @@ for i in ${*}; do
 	desc="$(eval echo \"\${desc_${distname}}\")"
 
 	case ${i} in
+		doc.txz)
+			continue
+			;;
 		kernel-dbg.txz)
 			desc="${desc_kernel_dbg}"
 			;;

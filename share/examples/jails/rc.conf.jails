@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/examples/jails/rc.conf.jails 310011 2016-12-13 04:53:25Z dteske $
+# $FreeBSD: releng/12.2/share/examples/jails/rc.conf.jails 308615 2016-11-13 17:28:32Z brd $
 
 ###############################################################################
 ############################# JAIL CONFIGURATIONS #############################

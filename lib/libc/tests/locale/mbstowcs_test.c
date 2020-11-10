@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/locale/mbstowcs_test.c 290532 2015-11-08 02:06:17Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/locale/mbstowcs_test.c 290532 2015-11-08 02:06:17Z ngie $");
 
 #include <errno.h>
 #include <limits.h>

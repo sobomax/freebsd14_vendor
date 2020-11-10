@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: releng/11.3/sbin/ifconfig/Makefile 345173 2019-03-15 08:18:02Z avos $
+# $FreeBSD: releng/12.2/sbin/ifconfig/Makefile 345173 2019-03-15 08:18:02Z avos $
 
 .include <src.opts.mk>
 
@@ -69,8 +69,7 @@ MAN=	ifconfig.8
 CFLAGS+= -Wall -Wmissing-prototypes -Wcast-qual -Wwrite-strings -Wnested-externs
 WARNS?=	2
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/gptboot/gptldr.S 329175 2018-02-12 17:44:35Z kevans $
+ * $FreeBSD: releng/12.2/stand/i386/gptboot/gptldr.S 357354 2020-01-31 21:20:22Z dim $
  *
  * Partly from: src/sys/boot/i386/boot2/boot1.S 1.31
  */
@@ -138,5 +138,5 @@ seta20.3:	sti				# Enable interrupts
  * Save drive number from BIOS so boot2 can see it and start BTX.
  */
 		movb %dl,MEM_ARG
-		jmp MEM_JMP			# Start BTX
+		jmp start+MEM_JMP-MEM_ORG	# Start BTX
 end:

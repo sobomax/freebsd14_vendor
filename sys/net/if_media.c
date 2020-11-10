@@ -1,7 +1,8 @@
 /*	$NetBSD: if_media.c,v 1.1 1997/03/17 02:55:15 thorpej Exp $	*/
-/* $FreeBSD: releng/11.3/sys/net/if_media.c 331643 2018-03-27 18:52:27Z dim $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1997
  *	Jonathan Stone and Jason R. Thorpe.  All rights reserved.
  *
@@ -45,6 +46,9 @@
  * Many thanks to Matt Thomas for providing the information necessary
  * to implement this interface.
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/12.2/sys/net/if_media.c 358627 2020-03-04 17:19:25Z kib $");
 
 #include "opt_ifmedia.h"
 
@@ -388,69 +392,50 @@ ifmedia_baudrate(int mword)
 }
  
 #ifdef IFMEDIA_DEBUG
-struct ifmedia_description ifm_type_descriptions[] =
+static const struct ifmedia_description ifm_type_descriptions[] =
     IFM_TYPE_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_ethernet_descriptions[] =
+static const struct ifmedia_description ifm_subtype_ethernet_descriptions[] =
     IFM_SUBTYPE_ETHERNET_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_ethernet_option_descriptions[] =
+static const struct ifmedia_description
+    ifm_subtype_ethernet_option_descriptions[] =
     IFM_SUBTYPE_ETHERNET_OPTION_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_tokenring_descriptions[] =
-    IFM_SUBTYPE_TOKENRING_DESCRIPTIONS;
-
-struct ifmedia_description ifm_subtype_tokenring_option_descriptions[] =
-    IFM_SUBTYPE_TOKENRING_OPTION_DESCRIPTIONS;
-
-struct ifmedia_description ifm_subtype_fddi_descriptions[] =
-    IFM_SUBTYPE_FDDI_DESCRIPTIONS;
-
-struct ifmedia_description ifm_subtype_fddi_option_descriptions[] =
-    IFM_SUBTYPE_FDDI_OPTION_DESCRIPTIONS;
-
-struct ifmedia_description ifm_subtype_ieee80211_descriptions[] =
+static const struct ifmedia_description ifm_subtype_ieee80211_descriptions[] =
     IFM_SUBTYPE_IEEE80211_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_ieee80211_option_descriptions[] =
+static const struct ifmedia_description
+    ifm_subtype_ieee80211_option_descriptions[] =
     IFM_SUBTYPE_IEEE80211_OPTION_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_ieee80211_mode_descriptions[] =
+static const struct ifmedia_description
+    ifm_subtype_ieee80211_mode_descriptions[] =
     IFM_SUBTYPE_IEEE80211_MODE_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_atm_descriptions[] =
+static const struct ifmedia_description ifm_subtype_atm_descriptions[] =
     IFM_SUBTYPE_ATM_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_atm_option_descriptions[] =
+static const struct ifmedia_description ifm_subtype_atm_option_descriptions[] =
     IFM_SUBTYPE_ATM_OPTION_DESCRIPTIONS;
 
-struct ifmedia_description ifm_subtype_shared_descriptions[] =
+static const struct ifmedia_description ifm_subtype_shared_descriptions[] =
     IFM_SUBTYPE_SHARED_DESCRIPTIONS;
 
-struct ifmedia_description ifm_shared_option_descriptions[] =
+static const struct ifmedia_description ifm_shared_option_descriptions[] =
     IFM_SHARED_OPTION_DESCRIPTIONS;
 
 struct ifmedia_type_to_subtype {
-	struct ifmedia_description *subtypes;
-	struct ifmedia_description *options;
-	struct ifmedia_description *modes;
+	const struct ifmedia_description *subtypes;
+	const struct ifmedia_description *options;
+	const struct ifmedia_description *modes;
 };
 
 /* must be in the same order as IFM_TYPE_DESCRIPTIONS */
-struct ifmedia_type_to_subtype ifmedia_types_to_subtypes[] = {
+static const struct ifmedia_type_to_subtype ifmedia_types_to_subtypes[] = {
 	{
 	  &ifm_subtype_ethernet_descriptions[0],
 	  &ifm_subtype_ethernet_option_descriptions[0],
-	  NULL,
-	},
-	{
-	  &ifm_subtype_tokenring_descriptions[0],
-	  &ifm_subtype_tokenring_option_descriptions[0],
-	  NULL,
-	},
-	{
-	  &ifm_subtype_fddi_descriptions[0],
-	  &ifm_subtype_fddi_option_descriptions[0],
 	  NULL,
 	},
 	{
@@ -472,8 +457,8 @@ static void
 ifmedia_printword(ifmw)
 	int ifmw;
 {
-	struct ifmedia_description *desc;
-	struct ifmedia_type_to_subtype *ttos;
+	const struct ifmedia_description *desc;
+	const struct ifmedia_type_to_subtype *ttos;
 	int seen_option = 0;
 
 	/* Find the top-level interface type. */

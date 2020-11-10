@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/ipfw/Makefile 332401 2018-04-11 10:36:20Z ae $
+# $FreeBSD: releng/12.2/sys/modules/ipfw/Makefile 328988 2018-02-07 18:59:54Z ae $
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw
 

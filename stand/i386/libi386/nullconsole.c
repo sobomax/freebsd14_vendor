@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libi386/nullconsole.c 119482 2003-08-25 23:28:32Z obrien $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/nullconsole.c 119482 2003-08-25 23:28:32Z obrien $");
 
 #include <stand.h>
 #include <bootstrap.h>

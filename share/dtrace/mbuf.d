@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/share/dtrace/mbuf.d 305781 2016-09-13 19:59:29Z markj $
+ * $FreeBSD: releng/12.2/share/dtrace/mbuf.d 305363 2016-09-03 20:43:59Z markj $
  *
  * Translators and flags for the mbuf structure.  FreeBSD specific code.
  */

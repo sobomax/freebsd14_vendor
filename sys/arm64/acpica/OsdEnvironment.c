@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm64/acpica/OsdEnvironment.c 316303 2017-03-30 20:18:34Z jkim $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm64/acpica/OsdEnvironment.c 306686 2016-10-04 20:27:15Z jkim $");
 
 #include <sys/types.h>
 #include <sys/bus.h>

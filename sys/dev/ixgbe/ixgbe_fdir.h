@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/ixgbe/ixgbe_fdir.h 347419 2019-05-10 00:46:43Z erj $*/
+/*$FreeBSD: releng/12.2/sys/dev/ixgbe/ixgbe_fdir.h 327031 2017-12-20 18:15:06Z erj $*/
 
 #ifndef _IXGBE_FDIR_H_
 #define _IXGBE_FDIR_H_

@@ -41,7 +41,7 @@
  * see ``http://www.vix.com/isc''.  To learn more about Vixie
  * Enterprises, see ``http://www.vix.com''.
  *
- * $FreeBSD: releng/11.3/sbin/dhclient/dhctoken.h 330897 2018-03-14 03:19:51Z eadler $
+ * $FreeBSD: releng/12.2/sbin/dhclient/dhctoken.h 326025 2017-11-20 19:49:47Z pfg $
  */
 
 #define SEMI ';'

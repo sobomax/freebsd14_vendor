@@ -22,10 +22,9 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.bin/procstat/tests/procstat_test.sh 346920 2019-04-29 19:36:46Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/procstat/tests/procstat_test.sh 352491 2019-09-18 19:21:20Z jilles $
 #
 
-MAX_TRIES=20
 PROG_PID=
 PROG_PATH=$(atf_get_srcdir)/while1
 
@@ -37,16 +36,13 @@ start_program()
 	PROG_COMM=while1
 	PROG_PATH=$(atf_get_srcdir)/$PROG_COMM
 
-	$PROG_PATH $* &
+	mkfifo wait_for_start || atf_fail "mkfifo"
+	$PROG_PATH $* >wait_for_start &
 	PROG_PID=$!
-	try=0
-	while [ $try -lt $MAX_TRIES ] && ! kill -0 $PROG_PID; do
-		sleep 0.5
-		: $(( try += 1 ))
-	done
-	if [ $try -ge $MAX_TRIES ]; then
-		atf_fail "Polled for program start $MAX_TRIES tries and failed"
+	if ! read dummy <wait_for_start; then
+		atf_fail "Program did not start properly"
 	fi
+	rm wait_for_start
 }
 
 atf_test_case binary_info
@@ -62,8 +58,11 @@ binary_info_body()
 	header_re=$(printf "$line_format" "PID" "COMM" "OSREL" "PATH")
 	line_re=$(printf "$line_format" $PROG_PID $PROG_COMM "[[:digit:]]+" "$PROG_PATH")
 
-	atf_check -o save:procstat.out procstat -b $PROG_PID
+	atf_check -o save:procstat.out procstat binary $PROG_PID
+	atf_check -o match:"$header_re" head -n 1 procstat.out
+	atf_check -o match:"$line_re" tail -n 1 procstat.out
 
+	atf_check -o save:procstat.out procstat -b $PROG_PID
 	atf_check -o match:"$header_re" head -n 1 procstat.out
 	atf_check -o match:"$line_re" tail -n 1 procstat.out
 }
@@ -82,6 +81,10 @@ command_line_arguments_body()
 	line_format="$SP*%s$SP+%s$SP+%s$SP*"
 	header_re=$(printf "$line_format" "PID" "COMM" "ARGS")
 	line_re=$(printf "$line_format" $PROG_PID "$PROG_COMM" "$PROG_PATH $arguments")
+
+	atf_check -o save:procstat.out procstat arguments $PROG_PID
+	atf_check -o match:"$header_re" head -n 1 procstat.out
+	atf_check -o match:"$line_re" tail -n 1 procstat.out
 
 	atf_check -o save:procstat.out procstat -c $PROG_PID
 	atf_check -o match:"$header_re" head -n 1 procstat.out
@@ -104,8 +107,11 @@ environment_body()
 	header_re=$(printf "$line_format" "PID" "COMM" "ENVIRONMENT")
 	line_re=$(printf "$line_format" $PROG_PID $PROG_COMM ".*$var.*")
 
-	atf_check -o save:procstat.out procstat -e $PROG_PID
+	atf_check -o save:procstat.out procstat environment $PROG_PID
+	atf_check -o match:"$header_re" head -n 1 procstat.out
+	atf_check -o match:"$line_re" tail -n 1 procstat.out
 
+	atf_check -o save:procstat.out procstat -e $PROG_PID
 	atf_check -o match:"$header_re" head -n 1 procstat.out
 	atf_check -o match:"$line_re" tail -n 1 procstat.out
 }
@@ -124,8 +130,11 @@ file_descriptor_body()
 	# XXX: write a more sensible feature test
 	line_re=$(printf "$line_format" $PROG_PID $PROG_COMM ".+" ".+" ".+" ".+" ".+" ".+" ".+" ".+")
 
-	atf_check -o save:procstat.out procstat -f $PROG_PID
+	atf_check -o save:procstat.out procstat files $PROG_PID
+	atf_check -o match:"$header_re" head -n 1 procstat.out
+	atf_check -o match:"$line_re" awk 'NR > 1' procstat.out
 
+	atf_check -o save:procstat.out procstat -f $PROG_PID
 	atf_check -o match:"$header_re" head -n 1 procstat.out
 	atf_check -o match:"$line_re" awk 'NR > 1' procstat.out
 }
@@ -137,9 +146,8 @@ kernel_stacks_head()
 }
 kernel_stacks_body()
 {
-	# Bug 237445: checks will fail because of missing MFCs on branch
-	#atf_check -o save:procstat.out procstat -a kstack
-	#atf_check -o not-empty awk '{if ($3 == "procstat") print}' procstat.out
+	atf_check -o save:procstat.out procstat -a kstack
+	atf_check -o not-empty awk '{if ($3 == "procstat") print}' procstat.out
 
 	atf_check -o save:procstat.out procstat -kka
 	atf_check -o not-empty awk '{if ($3 == "procstat") print}' procstat.out

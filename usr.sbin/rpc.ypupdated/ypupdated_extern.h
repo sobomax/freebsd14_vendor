@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/usr.sbin/rpc.ypupdated/ypupdated_extern.h 90665 2002-02-15 00:46:32Z des $
+ * $FreeBSD: releng/12.2/usr.sbin/rpc.ypupdated/ypupdated_extern.h 90665 2002-02-15 00:46:32Z des $
  */
 
 #include <db.h>

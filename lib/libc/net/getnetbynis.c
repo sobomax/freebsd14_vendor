@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1994, Garrett Wollman
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/net/getnetbynis.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/getnetbynis.c 351691 2019-09-02 08:20:02Z kib $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -56,7 +58,7 @@ _getnetbynis(const char *name, char *map, int af, struct netent *ne,
 	char *cp, **q;
 	char *result;
 	int resultlen, len;
-	char ypbuf[YPMAXRECORD + 2];
+	char *ypbuf;
 
 	switch(af) {
 	case AF_INET:
@@ -75,10 +77,11 @@ _getnetbynis(const char *name, char *map, int af, struct netent *ne,
 	    &resultlen))
 		return (-1);
 
-	bcopy((char *)result, (char *)&ypbuf, resultlen);
+	ypbuf = alloca(resultlen + 2);
+	bcopy(result, ypbuf, resultlen);
 	ypbuf[resultlen] = '\0';
 	free(result);
-	result = (char *)&ypbuf;
+	result = ypbuf;
 
 	if ((cp = strchr(result, '\n')))
 		*cp = '\0';

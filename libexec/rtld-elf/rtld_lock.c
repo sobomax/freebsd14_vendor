@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 1999, 2000 John D. Polstra.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: FreeBSD: src/libexec/rtld-elf/sparc64/lockdflt.c,v 1.3 2002/10/09
- * $FreeBSD: releng/11.3/libexec/rtld-elf/rtld_lock.c 312693 2017-01-24 11:13:41Z kib $
+ * $FreeBSD: releng/12.2/libexec/rtld-elf/rtld_lock.c 344011 2019-02-11 15:02:02Z kib $
  */
 
 /*
@@ -182,7 +184,7 @@ thread_mask_clear(int mask)
 }
 
 #define	RTLD_LOCK_CNT	3
-struct rtld_lock {
+static struct rtld_lock {
 	void	*handle;
 	int	 mask;
 } rtld_locks[RTLD_LOCK_CNT];

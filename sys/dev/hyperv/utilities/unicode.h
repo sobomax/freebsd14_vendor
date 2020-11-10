@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/hyperv/utilities/unicode.h 271493 2014-09-13 02:15:31Z delphij $
+ * $FreeBSD: releng/12.2/sys/dev/hyperv/utilities/unicode.h 271493 2014-09-13 02:15:31Z delphij $
  */
 
 #include <sys/types.h>

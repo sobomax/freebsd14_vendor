@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.bin/mkesdb/ldef.h 330449 2018-03-05 07:26:05Z eadler $ */
+/* $FreeBSD: releng/12.2/usr.bin/mkesdb/ldef.h 326276 2017-11-27 15:37:16Z pfg $ */
 /* $NetBSD: ldef.h,v 1.2 2005/06/27 01:23:59 fvdl Exp $	*/
 
 /*-

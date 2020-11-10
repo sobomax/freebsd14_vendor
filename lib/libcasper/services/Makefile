@@ -1,10 +1,13 @@
-# $FreeBSD: releng/11.3/lib/libcasper/services/Makefile 322715 2017-08-20 06:07:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libcasper/services/Makefile 325739 2017-11-12 08:34:25Z oshogbo $
+
+.include <src.opts.mk>
 
 SUBDIR=		cap_dns
 SUBDIR+=	cap_grp
 SUBDIR+=	cap_pwd
 SUBDIR+=	cap_random
 SUBDIR+=	cap_sysctl
+SUBDIR+=	cap_syslog
 
 SUBDIR.${MK_TESTS}+=	tests
 

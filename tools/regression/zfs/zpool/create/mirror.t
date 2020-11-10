@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/regression/zfs/zpool/create/mirror.t 185029 2008-11-17 20:49:29Z pjd $
+# $FreeBSD: releng/12.2/tools/regression/zfs/zpool/create/mirror.t 185029 2008-11-17 20:49:29Z pjd $
 
 dir=`dirname $0`
 . ${dir}/../../misc.sh

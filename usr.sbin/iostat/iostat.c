@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997, 1998, 2000, 2001  Kenneth D. Merry
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/iostat/iostat.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/iostat/iostat.c 332662 2018-04-18 02:25:03Z allanjude $
  */
 /*
  * Parts of this program are derived from the original FreeBSD iostat
@@ -800,11 +802,15 @@ devstats(int perf_select, long double etime, int havelast)
 	char *devicename;
 
 	if (xflag > 0) {
+		if (Cflag > 0) {
+			printf("      cpu\n");
+			printf(" us ni sy in id\n");
+			cpustats();
+			printf("\n");
+		}
 		printf("                        extended device statistics  ");
 		if (Tflag > 0)
 			printf("      tty ");
-		if (Cflag > 0)
-			printf("           cpu ");
 		printf("\n");
 		if (Iflag == 0) {
 			printf("device       r/s     w/s     kr/s     kw/s "
@@ -815,8 +821,6 @@ devstats(int perf_select, long double etime, int havelast)
 		}
 		if (Tflag > 0)
 			printf("tin  tout ");
-		if (Cflag > 0)
-			printf("us ni sy in id ");
 		printf("\n");
 	}
 
@@ -920,8 +924,6 @@ devstats(int perf_select, long double etime, int havelast)
 						printf("%4.0Lf%5.0Lf",
 						    cur.tk_nin / etime,
 						    cur.tk_nout / etime);
-					if (Cflag > 0)
-						cpustats();
 				}
 				printf("\n");
 			}

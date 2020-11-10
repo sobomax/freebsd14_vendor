@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Rick Macklem, University of Guelph
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/nfs/nfskpiport.h 207785 2010-05-08 14:50:12Z rmacklem $
+ * $FreeBSD: releng/12.2/sys/fs/nfs/nfskpiport.h 326268 2017-11-27 15:15:37Z pfg $
  */
 
 #ifndef _NFS_NFSKPIPORT_H_

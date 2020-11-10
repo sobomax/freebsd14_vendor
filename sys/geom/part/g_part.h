@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006-2008 Marcel Moolenaar
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/part/g_part.h 339286 2018-10-10 15:44:14Z emaste $
+ * $FreeBSD: releng/12.2/sys/geom/part/g_part.h 333233 2018-05-04 00:34:27Z emaste $
  */
 
 #ifndef _GEOM_PART_H_
@@ -36,6 +38,7 @@
 #define	G_PART_PROBE_PRI_HIGH	0
 
 enum g_part_alias {
+	G_PART_ALIAS_APPLE_APFS,	/* An Apple APFS partition. */
 	G_PART_ALIAS_APPLE_BOOT,	/* An Apple boot partition entry. */
 	G_PART_ALIAS_APPLE_CORE_STORAGE,/* An Apple Core Storage partition. */
 	G_PART_ALIAS_APPLE_HFS,		/* An HFS+ file system entry. */

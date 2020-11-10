@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/11.3/libexec/Makefile.inc 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: releng/12.2/libexec/Makefile.inc 201380 2010-01-02 09:50:19Z ed $
 
 BINDIR?=	/usr/libexec
 

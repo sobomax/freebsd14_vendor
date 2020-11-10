@@ -1,7 +1,10 @@
-# $FreeBSD: releng/11.3/usr.bin/at/Makefile 226420 2011-10-16 07:57:01Z ed $
+# $FreeBSD: releng/12.2/usr.bin/at/Makefile 337626 2018-08-11 13:52:23Z brd $
 
 .include "${.CURDIR}/Makefile.inc"
 
+CONFS=	atrun
+CONFSDIR=	/etc/cron.d
+CONFSNAME=	at
 PROG=	at
 SRCS=	at.c panic.c parsetime.c perm.c
 LINKS=	${BINDIR}/at ${BINDIR}/atq \

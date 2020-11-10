@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/msun/src/e_hypot.c 226380 2011-10-15 07:00:28Z das $");
+__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/e_hypot.c 355395 2019-12-04 17:45:34Z dim $");
 
 /* __ieee754_hypot(x,y)
  *
@@ -70,7 +70,7 @@ __ieee754_hypot(double x, double y)
 	   if(ha >= 0x7ff00000) {	/* Inf or NaN */
 	       u_int32_t low;
 	       /* Use original arg order iff result is NaN; quieten sNaNs. */
-	       w = fabs(x+0.0)-fabs(y+0.0);
+	       w = fabsl(x+0.0L)-fabs(y+0);
 	       GET_LOW_WORD(low,a);
 	       if(((ha&0xfffff)|low)==0) w = a;
 	       GET_LOW_WORD(low,b);
@@ -118,10 +118,8 @@ __ieee754_hypot(double x, double y)
 	    w  = sqrt(t1*y1-(w*(-w)-(t1*y2+t2*b)));
 	}
 	if(k!=0) {
-	    u_int32_t high;
-	    t1 = 1.0;
-	    GET_HIGH_WORD(high,t1);
-	    SET_HIGH_WORD(t1,high+(k<<20));
+	    t1 = 0.0;
+	    SET_HIGH_WORD(t1,(1023+k)<<20);
 	    return t1*w;
 	} else return w;
 }

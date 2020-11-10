@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1985, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,7 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -32,7 +34,7 @@
 static char sccsid[] = "@(#)networkdelta.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/11.3/usr.sbin/timed/timed/networkdelta.c 331722 2018-03-29 02:50:57Z eadler $";
+  "$FreeBSD: releng/12.2/usr.sbin/timed/timed/networkdelta.c 360338 2020-04-26 15:50:32Z dim $";
 #endif /* not lint */
 
 #include "globals.h"
@@ -155,8 +157,8 @@ median(float a, float *eps_ptr, long *x, long *xlim, unsigned int gnuf)
 	/* unsigned int gnuf; */	/* good enough estimate */
 {
 	long *xptr;
-	float ap = LONG_MAX;		/* bounds on the median */
-	float am = -LONG_MAX;
+	float ap = (float)LONG_MAX;		/* bounds on the median */
+	float am = -(float)LONG_MAX;
 	float aa;
 	int npts;			/* # of points above & below guess */
 	float xp;			/* closet point above the guess */
@@ -178,8 +180,8 @@ median(float a, float *eps_ptr, long *x, long *xlim, unsigned int gnuf)
 		sum = 0.0;
 		sumx = 0.0;
 		npts = 0;
-		xp = LONG_MAX;
-		xm = -LONG_MAX;
+		xp = (float)LONG_MAX;
+		xm = -(float)LONG_MAX;
 
 		for (xptr = x; xptr != xlim; xptr++) {
 			float xx = *xptr;

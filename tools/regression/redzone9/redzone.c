@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/regression/redzone9/redzone.c 155087 2006-01-31 11:20:13Z pjd $");
+__FBSDID("$FreeBSD: releng/12.2/tools/regression/redzone9/redzone.c 155087 2006-01-31 11:20:13Z pjd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

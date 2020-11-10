@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tests/sys/kern/kern_descrip_test.c 299508 2016-05-12 03:44:29Z cem $");
+__FBSDID("$FreeBSD: releng/12.2/tests/sys/kern/kern_descrip_test.c 299508 2016-05-12 03:44:29Z cem $");
 
 #include <sys/param.h>
 #include <errno.h>

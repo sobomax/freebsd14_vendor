@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/rescue/merge.sh 268246 2014-07-04 09:29:43Z mr $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/rescue/merge.sh 268246 2014-07-04 09:29:43Z mr $
 
 today=`date '+%Y%m%d'`
 

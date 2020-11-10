@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsdinstall/partedit/partedit_sparc64.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bsdinstall/partedit/partedit_sparc64.c 326674 2017-12-08 00:57:13Z nwhitehorn $
  */
 
 #include <string.h>
@@ -61,7 +61,7 @@ bootpart_size(const char *part_type) {
 }
 
 const char *
-bootpart_type(const char *scheme) {
+bootpart_type(const char *scheme, const char **mountpoint) {
 	return ("freebsd-boot");
 }
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/loader/framebuffer.h 329140 2018-02-11 20:58:00Z kevans $
+ * $FreeBSD: releng/12.2/stand/efi/loader/framebuffer.h 324995 2017-10-25 18:55:04Z manu $
  */
 
 #ifndef	_EFIFB_H_

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/efi/loader/arch/amd64/exc.S 306738 2016-10-05 22:04:22Z kib $
+ * $FreeBSD: releng/12.2/stand/efi/loader/arch/amd64/exc.S 306090 2016-09-21 10:22:46Z kib $
  */
 
 	.macro	EH	N, err=1

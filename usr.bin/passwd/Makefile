@@ -1,5 +1,5 @@
 # From:	@(#)Makefile	8.3 (Berkeley) 4/2/94
-# $FreeBSD: releng/11.3/usr.bin/passwd/Makefile 319016 2017-05-28 00:13:44Z rgrimes $
+# $FreeBSD: releng/12.2/usr.bin/passwd/Makefile 314833 2017-03-07 05:10:38Z rgrimes $
 
 .include <src.opts.mk>
 

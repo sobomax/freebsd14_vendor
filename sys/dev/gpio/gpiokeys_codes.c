@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/gpio/gpiokeys_codes.c 299475 2016-05-11 17:57:26Z gonzo $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/gpio/gpiokeys_codes.c 299475 2016-05-11 17:57:26Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

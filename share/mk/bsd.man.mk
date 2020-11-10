@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/bsd.man.mk 301284 2016-06-03 19:25:36Z bdrewery $
+# $FreeBSD: releng/12.2/share/mk/bsd.man.mk 335797 2018-06-29 16:07:56Z brooks $
 #
 # The include file <bsd.man.mk> handles installing manual pages and
 # their links.
@@ -227,7 +227,7 @@ maninstall: ${MAN}
 .endif
 .for l t in ${_MANLINKS}
 	rm -f ${DESTDIR}${t} ${DESTDIR}${t}${MCOMPRESS_EXT}; \
-	    ${INSTALL_LINK} ${TAG_ARGS} ${DESTDIR}${l}${ZEXT} ${DESTDIR}${t}${ZEXT}
+	    ${INSTALL_MANLINK} ${TAG_ARGS} ${DESTDIR}${l}${ZEXT} ${DESTDIR}${t}${ZEXT}
 .endfor
 
 manlint:

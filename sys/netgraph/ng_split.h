@@ -1,4 +1,5 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 1999-2000, Vitaly V Belekhov
  * All rights reserved.
@@ -25,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_split.h 298813 2016-04-29 21:25:05Z pfg $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_split.h 326272 2017-11-27 15:23:17Z pfg $
  *
  */
 

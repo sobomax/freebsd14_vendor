@@ -9,7 +9,7 @@
 .\" 2. Redistributions in binary form must reproduce the above copyright
 .\"    notice, this list of conditions and the following disclaimer in the
 .\"    documentation and/or other materials provided with the distribution.
-.\" 4. Neither the name of the University nor the names of its contributors
+.\" 3. Neither the name of the University nor the names of its contributors
 .\"    may be used to endorse or promote products derived from this software
 .\"    without specific prior written permission.
 .\"
@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)open.2	8.2 (Berkeley) 11/16/93
-.\" $FreeBSD: releng/11.3/lib/libc/sys/open.2 331678 2018-03-28 14:35:24Z emaste $
+.\" $FreeBSD: releng/12.2/lib/libc/sys/open.2 365473 2020-09-08 20:51:19Z jhb $
 .\"
-.Dd March 28, 2018
+.Dd March 30, 2020
 .Dt OPEN 2
 .Os
 .Sh NAME
@@ -126,6 +126,7 @@ O_RDONLY	open for reading only
 O_WRONLY	open for writing only
 O_RDWR		open for reading and writing
 O_EXEC		open for execute only
+O_SEARCH	open for search only, an alias for O_EXEC
 O_NONBLOCK	do not block on open
 O_APPEND	append on each write
 O_CREAT		create file if it does not exist
@@ -183,10 +184,7 @@ The descriptor remains in non-blocking mode for subsequent operations.
 If
 .Dv O_FSYNC
 is used in the mask, all writes will
-immediately be written to disk,
-the kernel will not cache written data
-and all writes on the descriptor will not return until
-the data to be written completes.
+immediately and synchronously be written to disk.
 .Pp
 .Dv O_SYNC
 is a synonym for
@@ -268,6 +266,19 @@ The details of what
 means is implementation specific.
 The run-time linker (rtld) uses this flag to ensure shared objects have
 been verified before operating on them.
+.Pp
+When
+.Fa fd
+is opened with
+.Dv O_SEARCH ,
+execute permissions are checked at open time.
+The
+.Fa fd
+may not be used for any read operations like
+.Xr getdirentries 2 .
+The primary use for this descriptor will be as the lookup descriptor for the
+.Fn *at
+family of functions.
 .Pp
 If successful,
 .Fn open
@@ -362,6 +373,11 @@ Too many symbolic links were encountered in translating the pathname.
 .It Bq Er EISDIR
 The named file is a directory, and the arguments specify
 it is to be modified.
+.It Bq Er EISDIR
+The named file is a directory, and the flags specified
+.Dv O_CREAT
+without
+.Dv O_DIRECTORY .
 .It Bq Er EROFS
 The named file resides on a read-only file system,
 and the file is to be modified.
@@ -434,6 +450,8 @@ which the file is being created has been exhausted.
 An I/O error occurred while making the directory entry or
 allocating the inode for
 .Dv O_CREAT .
+.It Bq Er EINTEGRITY
+Corrupted data was detected while reading from the file system.
 .It Bq Er ETXTBSY
 The file is a pure procedure (shared text) file that is being
 executed and the
@@ -456,9 +474,12 @@ An attempt was made to open a descriptor with an illegal combination
 of
 .Dv O_RDONLY ,
 .Dv O_WRONLY ,
-.Dv O_RDWR
+or
+.Dv O_RDWR ,
 and
-.Dv O_EXEC .
+.Dv O_EXEC
+or
+.Dv O_SEARCH .
 .It Bq Er EBADF
 The
 .Fa path
@@ -526,7 +547,7 @@ in one of its non-final components.
 The
 .Fn open
 function appeared in
-.At v6 .
+.At v1 .
 The
 .Fn openat
 function was introduced in

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/pw/tests/Makefile 321164 2017-07-18 18:48:58Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/pw/tests/Makefile 319026 2017-05-28 02:15:57Z ngie $
 
 PACKAGE=	tests
 

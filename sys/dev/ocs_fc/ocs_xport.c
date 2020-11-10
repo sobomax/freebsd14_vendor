@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/ocs_fc/ocs_xport.c 344014 2019-02-11 16:28:04Z ram $
+ * $FreeBSD: releng/12.2/sys/dev/ocs_fc/ocs_xport.c 336446 2018-07-18 07:01:34Z ram $
  */
 
 /**

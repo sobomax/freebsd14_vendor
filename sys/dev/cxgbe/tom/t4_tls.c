@@ -30,7 +30,7 @@
 #include "opt_inet.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/tom/t4_tls.c 348704 2019-06-05 21:46:56Z np $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/tom/t4_tls.c 360718 2020-05-06 22:49:21Z jhb $");
 
 #include <sys/param.h>
 #include <sys/sglist.h>
@@ -45,21 +45,9 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/tom/t4_tls.c 348704 2019-06-05 21:
 #ifdef TCP_OFFLOAD
 #include "common/common.h"
 #include "common/t4_tcb.h"
+#include "crypto/t4_crypto.h"
 #include "tom/t4_tom_l2t.h"
 #include "tom/t4_tom.h"
-
-VNET_DECLARE(int, tcp_do_autosndbuf);
-#define V_tcp_do_autosndbuf VNET(tcp_do_autosndbuf)
-VNET_DECLARE(int, tcp_autosndbuf_inc);
-#define V_tcp_autosndbuf_inc VNET(tcp_autosndbuf_inc)
-VNET_DECLARE(int, tcp_autosndbuf_max);
-#define V_tcp_autosndbuf_max VNET(tcp_autosndbuf_max)
-VNET_DECLARE(int, tcp_do_autorcvbuf);
-#define V_tcp_do_autorcvbuf VNET(tcp_do_autorcvbuf)
-VNET_DECLARE(int, tcp_autorcvbuf_inc);
-#define V_tcp_autorcvbuf_inc VNET(tcp_autorcvbuf_inc)
-VNET_DECLARE(int, tcp_autorcvbuf_max);
-#define V_tcp_autorcvbuf_max VNET(tcp_autorcvbuf_max)
 
 /*
  * The TCP sequence number of a CPL_TLS_DATA mbuf is saved here while
@@ -601,7 +589,7 @@ program_key_context(struct tcpcb *tp, struct toepcb *toep,
 	    "KEY_WRITE_TX", uk_ctx->proto_ver);
 
 	if (G_KEY_GET_LOC(uk_ctx->l_p_key) == KEY_WRITE_RX &&
-	    toep->ulp_mode != ULP_MODE_TLS)
+	    ulp_mode(toep) != ULP_MODE_TLS)
 		return (EOPNOTSUPP);
 
 	/* Don't copy the 'tx' and 'rx' fields. */
@@ -799,7 +787,7 @@ t4_ctloutput_tls(struct socket *so, struct sockopt *sopt)
 			INP_WUNLOCK(inp);
 			break;
 		case TCP_TLSOM_CLR_TLS_TOM:
-			if (toep->ulp_mode == ULP_MODE_TLS) {
+			if (ulp_mode(toep) == ULP_MODE_TLS) {
 				CTR2(KTR_CXGBE, "%s: tid %d CLR_TLS_TOM",
 				    __func__, toep->tid);
 				tls_clr_ofld_mode(toep);
@@ -808,7 +796,7 @@ t4_ctloutput_tls(struct socket *so, struct sockopt *sopt)
 			INP_WUNLOCK(inp);
 			break;
 		case TCP_TLSOM_CLR_QUIES:
-			if (toep->ulp_mode == ULP_MODE_TLS) {
+			if (ulp_mode(toep) == ULP_MODE_TLS) {
 				CTR2(KTR_CXGBE, "%s: tid %d CLR_QUIES",
 				    __func__, toep->tid);
 				tls_clr_quiesce(toep);
@@ -831,7 +819,7 @@ t4_ctloutput_tls(struct socket *so, struct sockopt *sopt)
 			 */
 			optval = TLS_TOM_NONE;
 			if (can_tls_offload(td_adapter(toep->td))) {
-				switch (toep->ulp_mode) {
+				switch (ulp_mode(toep)) {
 				case ULP_MODE_NONE:
 				case ULP_MODE_TCPDDP:
 					optval = TLS_TOM_TXONLY;
@@ -864,7 +852,7 @@ tls_init_toep(struct toepcb *toep)
 	tls_ofld->key_location = TLS_SFO_WR_CONTEXTLOC_DDR;
 	tls_ofld->rx_key_addr = -1;
 	tls_ofld->tx_key_addr = -1;
-	if (toep->ulp_mode == ULP_MODE_TLS)
+	if (ulp_mode(toep) == ULP_MODE_TLS)
 		callout_init_mtx(&tls_ofld->handshake_timer,
 		    &tls_handshake_lock, 0);
 }
@@ -893,7 +881,7 @@ void
 tls_uninit_toep(struct toepcb *toep)
 {
 
-	if (toep->ulp_mode == ULP_MODE_TLS)
+	if (ulp_mode(toep) == ULP_MODE_TLS)
 		tls_stop_handshake_timer(toep);
 	clear_tls_keyid(toep);
 }
@@ -1108,9 +1096,9 @@ t4_push_tls_records(struct adapter *sc, struct toepcb *toep, int drop)
 	KASSERT(toep->flags & TPF_FLOWC_WR_SENT,
 	    ("%s: flowc_wr not sent for tid %u.", __func__, toep->tid));
 
-	KASSERT(toep->ulp_mode == ULP_MODE_NONE ||
-	    toep->ulp_mode == ULP_MODE_TCPDDP || toep->ulp_mode == ULP_MODE_TLS,
-	    ("%s: ulp_mode %u for toep %p", __func__, toep->ulp_mode, toep));
+	KASSERT(ulp_mode(toep) == ULP_MODE_NONE ||
+	    ulp_mode(toep) == ULP_MODE_TCPDDP || ulp_mode(toep) == ULP_MODE_TLS,
+	    ("%s: ulp_mode %u for toep %p", __func__, ulp_mode(toep), toep));
 	KASSERT(tls_tx_key(toep),
 	    ("%s: TX key not set for toep %p", __func__, toep));
 
@@ -1361,7 +1349,7 @@ t4_push_tls_records(struct adapter *sc, struct toepcb *toep, int drop)
 		tp->snd_max += plen;
 
 		SOCKBUF_LOCK(sb);
-		sbsndptr(sb, tls_ofld->sb_off, plen, &sndptroff);
+		sbsndptr_adv(sb, sb->sb_sndptr, plen);
 		tls_ofld->sb_off += plen;
 		SOCKBUF_UNLOCK(sb);
 
@@ -1380,8 +1368,8 @@ t4_push_tls_records(struct adapter *sc, struct toepcb *toep, int drop)
 		}
 		toep->txsd_avail--;
 
-		atomic_add_long(&toep->vi->pi->tx_tls_records, 1);
-		atomic_add_long(&toep->vi->pi->tx_tls_octets, plen);
+		atomic_add_long(&toep->vi->pi->tx_toe_tls_records, 1);
+		atomic_add_long(&toep->vi->pi->tx_toe_tls_octets, plen);
 
 		t4_l2t_send(sc, wr, toep->l2te);
 	}
@@ -1416,7 +1404,7 @@ do_tls_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	m_adj(m, sizeof(*cpl));
 	len = m->m_pkthdr.len;
 
-	atomic_add_long(&toep->vi->pi->rx_tls_octets, len);
+	atomic_add_long(&toep->vi->pi->rx_toe_tls_octets, len);
 
 	KASSERT(len == G_CPL_TLS_DATA_LENGTH(be32toh(cpl->length_pkd)),
 	    ("%s: payload length mismatch", __func__));
@@ -1479,7 +1467,7 @@ do_rx_tls_cmp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	m_adj(m, sizeof(*cpl));
 	len = m->m_pkthdr.len;
 
-	atomic_add_long(&toep->vi->pi->rx_tls_records, 1);
+	atomic_add_long(&toep->vi->pi->rx_toe_tls_records, 1);
 
 	KASSERT(len == G_CPL_RX_TLS_CMP_LENGTH(be32toh(cpl->pdulength_length)),
 	    ("%s: payload length mismatch", __func__));
@@ -1552,6 +1540,8 @@ do_rx_tls_cmp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	SOCKBUF_LOCK(sb);
 
 	if (__predict_false(sb->sb_state & SBS_CANTRCVMORE)) {
+		struct epoch_tracker et;
+
 		CTR3(KTR_CXGBE, "%s: tid %u, excess rx (%d bytes)",
 		    __func__, tid, pdu_length);
 		m_freem(m);
@@ -1559,12 +1549,12 @@ do_rx_tls_cmp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 		INP_WUNLOCK(inp);
 
 		CURVNET_SET(toep->vnet);
-		INP_INFO_RLOCK(&V_tcbinfo);
+		INP_INFO_RLOCK_ET(&V_tcbinfo, et);
 		INP_WLOCK(inp);
 		tp = tcp_drop(tp, ECONNRESET);
 		if (tp)
 			INP_WUNLOCK(inp);
-		INP_INFO_RUNLOCK(&V_tcbinfo);
+		INP_INFO_RUNLOCK_ET(&V_tcbinfo, et);
 		CURVNET_RESTORE();
 
 		return (0);
@@ -1594,8 +1584,8 @@ do_rx_tls_cmp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	sbappendstream_locked(sb, m, 0);
 	rx_credits = sbspace(sb) > tp->rcv_wnd ? sbspace(sb) - tp->rcv_wnd : 0;
 #ifdef VERBOSE_TRACES
-	CTR5(KTR_CXGBE, "%s: tid %u PDU overhead %d rx_credits %u rcv_wnd %u",
-	    __func__, tid, pdu_overhead, rx_credits, tp->rcv_wnd);
+	CTR4(KTR_CXGBE, "%s: tid %u rx_credits %u rcv_wnd %u",
+	    __func__, tid, rx_credits, tp->rcv_wnd);
 #endif
 	if (rx_credits > 0 && sbused(sb) + tp->rcv_wnd < sb->sb_lowat) {
 		rx_credits = send_rx_credits(sc, toep, rx_credits);

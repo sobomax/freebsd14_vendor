@@ -1,11 +1,14 @@
-/* ----------------------------------------------------------------------------
+/*-
+ * SPDX-License-Identifier: Beerware
+ *
+ * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42) (by Poul-Henning Kamp):
  * <joerg@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.        Joerg Wunsch
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/11.3/share/examples/libusb20/control.c 257779 2013-11-07 07:22:51Z hselasky $
+ * $FreeBSD: releng/12.2/share/examples/libusb20/control.c 326408 2017-11-30 20:33:45Z pfg $
  */
 
 /*

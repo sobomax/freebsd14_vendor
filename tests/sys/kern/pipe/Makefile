@@ -1,10 +1,11 @@
-# $FreeBSD: releng/11.3/tests/sys/kern/pipe/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/kern/pipe/Makefile 360898 2020-05-11 15:21:03Z markj $
 
 TESTSDIR=	${TESTSBASE}/sys/kern/pipe
 
 PLAIN_TESTS_C+= big_pipe_test
 PLAIN_TESTS_C+= pipe_fstat_bug_test
 PLAIN_TESTS_C+= pipe_ino_test
+ATF_TESTS_C+=   pipe_kqueue_test
 PLAIN_TESTS_C+= pipe_overcommit1_test
 PLAIN_TESTS_C+= pipe_overcommit2_test
 PLAIN_TESTS_C+= pipe_reverse2_test

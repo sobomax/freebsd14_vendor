@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netinet/libalias/alias_local.h 315456 2017-03-17 14:54:10Z vangyzen $
+ * $FreeBSD: releng/12.2/sys/netinet/libalias/alias_local.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 /*

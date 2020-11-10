@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/efi/loader/arch/i386/exec.c 329135 2018-02-11 20:04:34Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/arch/i386/exec.c 324557 2017-10-12 15:16:16Z imp $");
 
 #include <stand.h>
 #include <machine/elf.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/i386/isoboot/Makefile 344399 2019-02-20 23:55:35Z kevans $
+# $FreeBSD: releng/12.2/stand/i386/isoboot/Makefile 359155 2020-03-19 22:33:24Z dim $
 
 .include <bsd.init.mk>
 
@@ -53,7 +53,7 @@ gptldr.bin: gptldr.out
 	${OBJCOPY} -S -O binary gptldr.out ${.TARGET}
 
 gptldr.out: gptldr.o
-	${LD} ${LD_FLAGS} -e start -Ttext ${ORG1} -o ${.TARGET} gptldr.o
+	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} gptldr.o
 
 CLEANFILES+=	isoboot.bin isoboot.out isoboot.o sio.o crc32.o drv.o \
 		cons.o ${OPENCRYPTO_XTS}
@@ -62,6 +62,6 @@ isoboot.bin: isoboot.out
 	${OBJCOPY} -S -O binary isoboot.out ${.TARGET}
 
 isoboot.out: ${BTXCRT} isoboot.o sio.o crc32.o drv.o cons.o ${OPENCRYPTO_XTS}
-	${LD} ${LD_FLAGS} -Ttext ${ORG2} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
+	${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
 
 .include <bsd.prog.mk>

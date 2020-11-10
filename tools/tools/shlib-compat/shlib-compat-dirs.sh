@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-# $FreeBSD: releng/11.3/tools/tools/shlib-compat/shlib-compat-dirs.sh 248693 2013-03-25 00:31:14Z gleb $
+# $FreeBSD: releng/12.2/tools/tools/shlib-compat/shlib-compat-dirs.sh 248693 2013-03-25 00:31:14Z gleb $
 
 SHLIB_COMPAT=$(dirname $0)/shlib-compat.py
 

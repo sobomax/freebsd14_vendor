@@ -1,10 +1,10 @@
-# $FreeBSD: releng/11.3/sbin/ddb/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/ddb/Makefile 337623 2018-08-11 13:25:39Z brd $
 
+CONFS=	ddb.conf
 PACKAGE=runtime
 PROG=	ddb
 SRCS=	ddb.c ddb_capture.c ddb_script.c
 MAN=	ddb.8
-WARNS?=	3
 
 LIBADD=	kvm
 

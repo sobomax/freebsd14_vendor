@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: releng/11.3/stand/forth/check-password.4th 339697 2018-10-24 23:17:17Z dteske $
+\ $FreeBSD: releng/12.2/stand/forth/check-password.4th 339696 2018-10-24 23:13:53Z dteske $
 
 marker task-check-password.4th
 

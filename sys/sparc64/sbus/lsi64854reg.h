@@ -1,6 +1,8 @@
 /*	$NetBSD: lsi64854reg.h,v 1.6 2008/04/28 20:23:50 martin Exp $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*	$FreeBSD: releng/11.3/sys/sparc64/sbus/lsi64854reg.h 219567 2011-03-12 14:33:32Z marius $ */
+/*	$FreeBSD: releng/12.2/sys/sparc64/sbus/lsi64854reg.h 326262 2017-11-27 15:10:39Z pfg $ */
 
 /*
  * LSI 64854 DMA engine. Contains three independent channels

@@ -1,6 +1,7 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.3/usr.sbin/lpr/lpd/Makefile 321276 2017-07-20 01:07:15Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/lpr/lpd/Makefile 338822 2018-09-20 09:21:05Z brd $
 
+CONFS=	hosts.lpd printcap
 PROG=	lpd
 MAN=	lpd.8
 SRCS=	lpd.c printjob.c recvjob.c lpdchar.c modes.c

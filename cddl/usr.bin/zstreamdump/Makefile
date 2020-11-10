@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/cddl/usr.bin/zstreamdump/Makefile 339118 2018-10-03 02:52:47Z mav $
+# $FreeBSD: releng/12.2/cddl/usr.bin/zstreamdump/Makefile 361383 2020-05-22 13:27:02Z avg $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zstreamdump
 
@@ -16,7 +16,7 @@ CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/fs/zfs
 CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common
 CFLAGS+= -I${SRCTOP}/cddl/contrib/opensolaris/head
 
-LIBADD=	m nvpair umem zpool pthread z avl
+LIBADD=	m nvpair umem zpool zfs pthread z avl
 
 CSTD=	c99
 

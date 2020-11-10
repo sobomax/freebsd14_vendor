@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2004 Jason L. Wright (jason@thought.net)
  * Copyright (c) 2005 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/sparc64/fhc/clkbrd.c 157225 2006-03-28 19:46:48Z marius $");
+__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/fhc/clkbrd.c 326262 2017-11-27 15:10:39Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,7 +54,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/sparc64/fhc/clkbrd.c 157225 2006-03-28 19:46
 #define	CLKBRD_CLKVER	2
 
 struct clkbrd_softc {
-	struct device		*sc_dev;
+	device_t		sc_dev;
 	struct resource		*sc_res[CLKBRD_NREG];
 	int			sc_rid[CLKBRD_NREG];
 	bus_space_tag_t		sc_bt[CLKBRD_NREG];

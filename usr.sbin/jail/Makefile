@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/jail/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/usr.sbin/jail/Makefile 352560 2019-09-20 19:45:37Z mizhka $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ PROG=	jail
 MAN=	jail.8 jail.conf.5
 SRCS=	jail.c command.c config.c state.c jailp.h jaillex.l jailparse.y y.tab.h
 
-LIBADD=	jail kvm util l
+LIBADD=	jail kvm util
 
 PACKAGE=jail
 
@@ -23,5 +23,8 @@ CFLAGS+= -DINET
 .endif
 
 CLEANFILES= y.output
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

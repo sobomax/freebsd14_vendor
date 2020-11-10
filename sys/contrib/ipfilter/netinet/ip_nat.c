@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_nat.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_nat.c 358666 2020-03-05 06:38:03Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -105,7 +105,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_nat.c 344833 2019-03-06 02:37:25Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_nat.c 358666 2020-03-05 06:38:03Z cy $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -1010,7 +1010,7 @@ ipf_nat_ioctl(softc, data, cmd, mode, uid, ctx)
 	ipnat_t natd;
 	SPL_INT(s);
 
-#if BSD_GE_YEAR(199306) && defined(_KERNEL)
+#if !SOLARIS && defined(_KERNEL)
 # if NETBSD_GE_REV(399002000)
 	if ((mode & FWRITE) &&
 	     kauth_authorize_network(curlwp->l_cred, KAUTH_NETWORK_FIREWALL,
@@ -3073,12 +3073,12 @@ ipf_nat_newrdr(fin, nat, ni)
 /* Attempts to create a new NAT entry.  Does not actually change the packet */
 /* in any way.                                                              */
 /*                                                                          */
-/* This fucntion is in three main parts: (1) deal with creating a new NAT   */
+/* This function is in three main parts: (1) deal with creating a new NAT   */
 /* structure for a "MAP" rule (outgoing NAT translation); (2) deal with     */
 /* creating a new NAT structure for a "RDR" rule (incoming NAT translation) */
 /* and (3) building that structure and putting it into the NAT table(s).    */
 /*                                                                          */
-/* NOTE: natsave should NOT be used top point back to an ipstate_t struct   */
+/* NOTE: natsave should NOT be used to point back to an ipstate_t struct    */
 /*       as it can result in memory being corrupted.                        */
 /* ------------------------------------------------------------------------ */
 nat_t *
@@ -3406,6 +3406,7 @@ ipf_nat_insert(softc, softn, nat)
 	u_int hv0, hv1;
 	u_int sp, dp;
 	ipnat_t *in;
+	int ret;
 
 	/*
 	 * Try and return an error as early as possible, so calculate the hash
@@ -3488,12 +3489,16 @@ ipf_nat_insert(softc, softn, nat)
 		nat->nat_mtu[1] = GETIFMTU_4(nat->nat_ifps[1]);
 	}
 
-	return ipf_nat_hashtab_add(softc, softn, nat);
+	ret = ipf_nat_hashtab_add(softc, softn, nat);
+	if (ret == -1)
+		MUTEX_DESTROY(&nat->nat_lock);
+	return ret;
 }
 
 
 /* ------------------------------------------------------------------------ */
 /* Function:    ipf_nat_hashtab_add                                         */
+/* Returns:     int - 0 == sucess, -1 == failure                            */
 /* Parameters:  softc(I) - pointer to soft context main structure           */
 /*              softn(I) - pointer to NAT context structure                 */
 /*              nat(I) - pointer to NAT structure                           */
@@ -5521,7 +5526,7 @@ inmatchfail:
 		/* retry_roundrobin loop failure */
 		/* FALLTHROUGH */
 	case -1 :
-		/* proxy failure detected by ipf_nat_out() */
+		/* proxy failure detected by ipf_nat_in() */
 		if (passp != NULL) {
 			DT2(frb_natv4in, fr_info_t *, fin, int, rval);
 			NBUMPSIDED(0, ns_drop);

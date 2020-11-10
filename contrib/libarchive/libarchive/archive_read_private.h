@@ -22,17 +22,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/contrib/libarchive/libarchive/archive_read_private.h 348607 2019-06-04 10:35:54Z mm $
+ * $FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_private.h 358087 2020-02-19 01:46:43Z mm $
  */
+
+#ifndef ARCHIVE_READ_PRIVATE_H_INCLUDED
+#define ARCHIVE_READ_PRIVATE_H_INCLUDED
 
 #ifndef __LIBARCHIVE_BUILD
 #ifndef __LIBARCHIVE_TEST
 #error This header is only to be used internally to libarchive.
 #endif
 #endif
-
-#ifndef ARCHIVE_READ_PRIVATE_H_INCLUDED
-#define	ARCHIVE_READ_PRIVATE_H_INCLUDED
 
 #include "archive.h"
 #include "archive_string.h"

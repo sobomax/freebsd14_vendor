@@ -13,11 +13,12 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/11.3/tools/tools/ath/athalq/ar9300_ds.h 248632 2013-03-23 01:25:11Z adrian $
+ * $FreeBSD: releng/12.2/tools/tools/ath/athalq/ar9300_ds.h 312611 2017-01-22 05:28:26Z adrian $
  */
 #ifndef	__AR9300_DS_H__
 #define	__AR9300_DS_H__
 
 extern	void ar9300_alq_payload(struct if_ath_alq_payload *a);
+extern	void ath_alq_print_edma_tx_fifo_push(struct if_ath_alq_payload *a);
 
 #endif	/* __AR9300_DS_H__ */

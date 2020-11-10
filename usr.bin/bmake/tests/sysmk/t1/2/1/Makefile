@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/bmake/tests/sysmk/t1/2/1/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/bmake/tests/sysmk/t1/2/1/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 PACKAGE=	tests
 

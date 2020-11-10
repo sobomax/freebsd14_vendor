@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause or GPL-2.0
+ *
  * Copyright (c) 2006 Intel Corporation.  All rights reserved.
  *
  * This software is available to you under a choice of one of two
@@ -29,7 +31,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/11.3/sys/ofed/include/rdma/rdma_cm_ib.h 331772 2018-03-30 18:17:33Z hselasky $
+ * $FreeBSD: releng/12.2/sys/ofed/include/rdma/rdma_cm_ib.h 330490 2018-03-05 11:49:45Z hselasky $
  */
 
 #if !defined(RDMA_CM_IB_H)

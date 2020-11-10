@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_proxy.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_proxy.c 358664 2020-03-05 06:35:05Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -51,7 +51,7 @@
 # include <sys/stream.h>
 # include <sys/kmem.h>
 #endif
-#if __FreeBSD_version >= 300000
+#ifdef __FreeBSD_version
 # include <sys/queue.h>
 #endif
 #include <net/if.h>

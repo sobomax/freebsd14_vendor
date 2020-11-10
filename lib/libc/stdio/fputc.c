@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -34,7 +36,7 @@
 static char sccsid[] = "@(#)fputc.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/stdio/fputc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdio/fputc.c 357852 2020-02-13 03:13:29Z kevans $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -42,14 +44,24 @@ __FBSDID("$FreeBSD: releng/11.3/lib/libc/stdio/fputc.c 331722 2018-03-29 02:50:5
 #include "local.h"
 #include "libc_private.h"
 
+#undef fputc_unlocked
+
+int
+fputc_unlocked(int c, FILE *fp)
+{
+
+	/* Orientation set by __sputc() when buffer is full. */
+	/* ORIENT(fp, -1); */
+	return (__sputc(c, fp));
+}
+
 int
 fputc(int c, FILE *fp)
 {
 	int retval;
+
 	FLOCKFILE_CANCELSAFE(fp);
-	/* Orientation set by __sputc() when buffer is full. */
-	/* ORIENT(fp, -1); */
-	retval = __sputc(c, fp);
+	retval = fputc_unlocked(c, fp);
 	FUNLOCKFILE_CANCELSAFE();
 	return (retval);
 }

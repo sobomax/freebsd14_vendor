@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/getconf/getconf.c 324124 2017-09-30 17:30:22Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/getconf/getconf.c 334070 2018-05-23 02:51:56Z wollman $");
 
 #include <sys/types.h>
 
@@ -65,6 +65,7 @@ main(int argc, char **argv)
 	int c, key, valid;
 	const char *name, *vflag, *alt_path;
 	intmax_t limitval;
+	uintmax_t ulimitval;
 
 	aflag = false;
 	vflag = NULL;
@@ -115,6 +116,13 @@ main(int argc, char **argv)
 	}
 
 	if (argv[optind + 1] == NULL) { /* confstr or sysconf */
+		if ((valid = find_unsigned_limit(name, &ulimitval)) != 0) {
+			if (valid > 0)
+				printf("%" PRIuMAX "\n", ulimitval);
+			else
+				printf("undefined\n");
+			return 0;
+		}
 		if ((valid = find_limit(name, &limitval)) != 0) {
 			if (valid > 0)
 				printf("%" PRIdMAX "\n", limitval);

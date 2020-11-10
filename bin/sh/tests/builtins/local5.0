@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/bin/sh/tests/builtins/local5.0 293635 2016-01-10 16:31:28Z jilles $
+# $FreeBSD: releng/12.2/bin/sh/tests/builtins/local5.0 293635 2016-01-10 16:31:28Z jilles $
 
 f() {
 	local PATH IFS elem

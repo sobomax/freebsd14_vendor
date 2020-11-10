@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/evdev/evdev_mt.c 324768 2017-10-19 20:16:40Z wulf $
+ * $FreeBSD: releng/12.2/sys/dev/evdev/evdev_mt.c 321399 2017-07-23 20:41:58Z wulf $
  */
 
 #include <sys/param.h>

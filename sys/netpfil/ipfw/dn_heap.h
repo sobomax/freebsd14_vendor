@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 1998-2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved
  *
@@ -27,7 +29,7 @@
 /*
  * Binary heap and hash tables, header file
  *
- * $FreeBSD: releng/11.3/sys/netpfil/ipfw/dn_heap.h 313725 2017-02-14 04:52:16Z ngie $
+ * $FreeBSD: releng/12.2/sys/netpfil/ipfw/dn_heap.h 326272 2017-11-27 15:23:17Z pfg $
  */
 
 #ifndef _IP_DN_HEAP_H

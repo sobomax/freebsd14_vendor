@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012, 2013 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx_wdog.c 346522 2019-04-22 04:15:22Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx_wdog.c 336073 2018-07-07 19:10:00Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,7 +45,6 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/freescale/imx/imx_wdog.c 346522 2019-04-
 #include <machine/bus.h>
 #include <machine/intr.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>

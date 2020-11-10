@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/amd64/vmm/vmm_lapic.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/amd64/vmm/vmm_lapic.h 351751 2019-09-03 16:18:07Z emaste $
  */
 
 #ifndef _VMM_LAPIC_H_
@@ -31,7 +33,7 @@
 
 struct vm;
 
-boolean_t lapic_msr(u_int num);
+bool	lapic_msr(u_int num);
 int	lapic_rdmsr(struct vm *vm, int cpu, u_int msr, uint64_t *rval,
 	    bool *retu);
 int	lapic_wrmsr(struct vm *vm, int cpu, u_int msr, uint64_t wval,

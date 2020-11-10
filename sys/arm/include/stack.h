@@ -26,7 +26,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/11.3/sys/arm/include/stack.h 278996 2015-02-19 12:06:57Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm/include/stack.h 356833 2020-01-17 15:55:14Z ian $
  */
 
 #ifndef _MACHINE_STACK_H_
@@ -55,6 +55,14 @@ struct unwind_state {
 #define	LR	14
 #define	PC	15
 
+#ifdef _KERNEL
+
 int unwind_stack_one(struct unwind_state *, int);
+
+struct linker_file;
+void unwind_module_loaded(struct linker_file *);
+void unwind_module_unloaded(struct linker_file *);
+
+#endif
 
 #endif /* !_MACHINE_STACK_H_ */

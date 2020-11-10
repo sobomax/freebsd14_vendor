@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2013 Thomas Skibo
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm/xilinx/zy7_l2cache.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/arm/xilinx/zy7_l2cache.c 326258 2017-11-27 15:04:10Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/xilinx/zy7_l2cache.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/xilinx/zy7_l2cache.c 326258 2017-11-27 15:04:10Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -39,22 +41,13 @@ __FBSDID("$FreeBSD: releng/11.3/sys/arm/xilinx/zy7_l2cache.c 331722 2018-03-29 0
 
 #include <machine/bus.h>
 #include <machine/pl310.h>
+#include <machine/platformvar.h>
+
+#include <arm/xilinx/zy7_machdep.h>
+
+#include "platform_pl310_if.h"
 
 void
-platform_pl310_init(struct pl310_softc *softc)
+zynq7_pl310_init(platform_t plat, struct pl310_softc *softc)
 {
-}
-
-void
-platform_pl310_write_ctrl(struct pl310_softc *sc, uint32_t val)
-{
-
-	pl310_write4(sc, PL310_CTRL, val);
-}
-
-void
-platform_pl310_write_debug(struct pl310_softc *sc, uint32_t val)
-{
-
-	pl310_write4(sc, PL310_DEBUG_CTRL, val);
 }

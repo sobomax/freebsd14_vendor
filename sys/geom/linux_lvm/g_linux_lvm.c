@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Andrew Thompson <thompsa@FreeBSD.org>
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/linux_lvm/g_linux_lvm.c 332640 2018-04-17 02:18:04Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/linux_lvm/g_linux_lvm.c 332387 2018-04-10 19:18:16Z kevans $");
 
 #include <sys/ctype.h>
 #include <sys/param.h>

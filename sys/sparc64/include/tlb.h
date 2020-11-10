@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Jake Burkholder.
  * Copyright (c) 2008, 2010 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -24,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/tlb.h 223719 2011-07-02 11:14:54Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/tlb.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_TLB_H_

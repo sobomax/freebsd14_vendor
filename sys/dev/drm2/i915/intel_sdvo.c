@@ -26,7 +26,7 @@
  *	Eric Anholt <eric@anholt.net>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/i915/intel_sdvo.c 296548 2016-03-08 20:33:02Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/i915/intel_sdvo.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>

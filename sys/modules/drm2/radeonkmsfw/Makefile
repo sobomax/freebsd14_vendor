@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/drm2/radeonkmsfw/Makefile 290665 2015-11-10 17:15:36Z bdrewery $
+# $FreeBSD: releng/12.2/sys/modules/drm2/radeonkmsfw/Makefile 338285 2018-08-24 00:02:00Z imp $
 
 SUBDIR=									\
 	ARUBA_me							\

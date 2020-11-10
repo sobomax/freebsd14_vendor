@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/crypto/ipsecstats.c 287297 2015-08-29 19:47:20Z rodrigc $
+ * $FreeBSD: releng/12.2/tools/tools/crypto/ipsecstats.c 334054 2018-05-22 15:54:25Z fabient $
  */
 
 #include <sys/param.h>
@@ -171,9 +171,9 @@ main(int argc, char *argv[])
 	STAT(ips.ips_out_noroute, "no route available %ju (output)");
 	STAT(ips.ips_out_inval, "generic error %ju (output)");
 	STAT(ips.ips_out_bundlesa, "bundled SA processed %ju (output)");
-	printf("m_clone processing: %ju mbufs + %ju clusters coalesced\n",
-	    (uintmax_t)ips.ips_mbcoalesced, (uintmax_t)ips.ips_clcoalesced);
 	STAT(ips.ips_clcopied, "m_clone processing: %ju clusters copied\n");
+	STAT(ips.ips_spdcache_hits, "spd cache hits %ju\n");
+	STAT(ips.ips_spdcache_misses, "spd cache misses %ju\n");
 	STAT(ips.ips_mbinserted, "m_makespace: %ju mbufs inserted\n");
 	printf("header position [front/middle/end]: %ju/%ju/%ju\n",
 	    (uintmax_t)ips.ips_input_front, (uintmax_t)ips.ips_input_middle,

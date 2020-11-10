@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/11.3/tools/regression/sockets/accept_fd_leak/Makefile 281358 2015-04-10 09:21:07Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/sockets/accept_fd_leak/Makefile 281358 2015-04-10 09:21:07Z ngie $
 #
 
 PROG=	accept_fd_leak

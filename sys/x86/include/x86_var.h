@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/x86/include/x86_var.h 347568 2019-05-14 17:05:02Z kib $
+ * $FreeBSD: releng/12.2/sys/x86/include/x86_var.h 362376 2020-06-19 11:47:40Z kib $
  */
 
 #ifndef _X86_X86_VAR_H_
@@ -44,6 +44,7 @@ extern	u_int	cpu_feature;
 extern	u_int	cpu_feature2;
 extern	u_int	amd_feature;
 extern	u_int	amd_feature2;
+extern	u_int	amd_rascap;
 extern	u_int	amd_pminfo;
 extern	u_int	amd_extended_feature_extensions;
 extern	u_int	via_feature_rng;
@@ -81,10 +82,14 @@ extern	int	_ufssel;
 extern	int	_ugssel;
 extern	int	use_xsave;
 extern	uint64_t xsave_mask;
+extern	u_int	max_apic_id;
 extern	int	pti;
-extern	int	hw_ibrs_active;
+extern	int	hw_ibrs_ibpb_active;
 extern	int	hw_mds_disable;
 extern	int	hw_ssb_active;
+extern	int	x86_taa_enable;
+extern	int	cpu_flush_rsb_ctxsw;
+extern	int	x86_rngds_mitg_enable;
 
 struct	pcb;
 struct	thread;
@@ -115,16 +120,20 @@ cpu_getmaxphyaddr(void)
 #endif
 }
 
+bool	acpi_get_fadt_bootflags(uint16_t *flagsp);
 void	*alloc_fpusave(int flags);
 void	busdma_swi(void);
 bool	cpu_mwait_usable(void);
 void	cpu_probe_amdc1e(void);
 void	cpu_setregs(void);
+bool	disable_wp(void);
+void	restore_wp(bool old_wp);
 void	dump_add_page(vm_paddr_t);
 void	dump_drop_page(vm_paddr_t);
 void	finishidentcpu(void);
 void	identify_cpu1(void);
 void	identify_cpu2(void);
+void	identify_cpu_fixup_bsp(void);
 void	identify_hypervisor(void);
 void	initializecpu(void);
 void	initializecpucache(void);
@@ -134,9 +143,11 @@ int	is_physical_memory(vm_paddr_t addr);
 int	isa_nmi(int cd);
 void	handle_ibrs_entry(void);
 void	handle_ibrs_exit(void);
-void	hw_ibrs_recalculate(void);
+void	hw_ibrs_recalculate(bool all_cpus);
 void	hw_mds_recalculate(void);
 void	hw_ssb_recalculate(bool all_cpus);
+void	x86_taa_recalculate(void);
+void	x86_rngds_mitg_recalculate(bool all_cpus);
 void	nmi_call_kdb(u_int cpu, u_int type, struct trapframe *frame);
 void	nmi_call_kdb_smp(u_int type, struct trapframe *frame);
 void	nmi_handle_intr(u_int type, struct trapframe *frame);
@@ -146,5 +157,13 @@ int	pti_get_default(void);
 int	user_dbreg_trap(register_t dr6);
 int	minidumpsys(struct dumperinfo *);
 struct pcb *get_pcb_td(struct thread *td);
+
+#define	MSR_OP_ANDNOT		0x00000001
+#define	MSR_OP_OR		0x00000002
+#define	MSR_OP_WRITE		0x00000003
+#define	MSR_OP_LOCAL		0x10000000
+#define	MSR_OP_SCHED		0x20000000
+#define	MSR_OP_RENDEZVOUS	0x30000000
+void x86_msr_op(u_int msr, u_int op, uint64_t arg1);
 
 #endif

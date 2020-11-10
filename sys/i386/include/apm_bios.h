@@ -1,6 +1,6 @@
 /*-
  * This file is in the public domain.
  */
-/* $FreeBSD: releng/11.3/sys/i386/include/apm_bios.h 215140 2010-11-11 19:36:21Z jkim $ */
+/* $FreeBSD: releng/12.2/sys/i386/include/apm_bios.h 215140 2010-11-11 19:36:21Z jkim $ */
 
 #include <x86/apm_bios.h>

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
  * Developed with Red Inc: Alfred Perlstein <alfred@freebsd.org>
@@ -26,12 +28,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kgssapi/krb5/kcrypto.c 298649 2016-04-26 15:38:17Z pfg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kgssapi/krb5/kcrypto.c 351358 2019-08-21 22:42:08Z jhb $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
 #include <sys/kobj.h>
 #include <sys/mbuf.h>
+#include <sys/sysctl.h>
 
 #include <kgssapi/gssapi.h>
 #include <kgssapi/gssapi_impl.h>
@@ -47,6 +50,11 @@ static struct krb5_encryption_class *krb5_encryption_classes[] = {
 	&krb5_arcfour_56_encryption_class,
 	NULL
 };
+
+struct timeval krb5_warn_interval = { .tv_sec = 3600, .tv_usec = 0 };
+SYSCTL_TIMEVAL_SEC(_kern, OID_AUTO, kgssapi_warn_interval, CTLFLAG_RW,
+    &krb5_warn_interval,
+    "Delay in seconds between warnings of deprecated KGSSAPI crypto.");
 
 struct krb5_encryption_class *
 krb5_find_encryption_class(int etype)

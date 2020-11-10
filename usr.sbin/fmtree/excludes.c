@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fmtree/excludes.c 298028 2016-04-15 03:38:58Z araujo $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fmtree/excludes.c 298028 2016-04-15 03:38:58Z araujo $");
 
 #include <sys/types.h>
 #include <sys/time.h>		/* XXX for mtree.h */

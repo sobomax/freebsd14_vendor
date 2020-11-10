@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009-2013 The FreeBSD Foundation
  * Copyright (c) 2013-2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
  * All rights reserved.
@@ -27,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/contrib/libnv/nvpair_impl.h 286796 2015-08-15 06:34:49Z oshogbo $
+ * $FreeBSD: releng/12.2/sys/contrib/libnv/nvpair_impl.h 328474 2018-01-27 12:58:21Z oshogbo $
  */
 
 #ifndef	_NVPAIR_IMPL_H_

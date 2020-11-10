@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/nvidia/tegra_lic.c 308335 2016-11-05 10:56:32Z mmel $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/nvidia/tegra_lic.c 306477 2016-09-30 05:25:15Z mmel $");
 
 /*
  * Local interrupt controller driver for Tegra SoCs.

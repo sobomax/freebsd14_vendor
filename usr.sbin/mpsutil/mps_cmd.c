@@ -2,7 +2,6 @@
  * Copyright (c) 2015 Baptiste Daroussin <bapt@FreeBSD.org>
  *
  * Copyright (c) 2015 Netflix, Inc.
- * All rights reserved.
  * Written by: Scott Long <scottl@freebsd.org>
  *
  * Copyright (c) 2008 Yahoo!, Inc.
@@ -35,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/11.3/usr.sbin/mpsutil/mps_cmd.c 315599 2017-03-20 00:54:45Z pfg $");
+__RCSID("$FreeBSD: releng/12.2/usr.sbin/mpsutil/mps_cmd.c 354884 2019-11-20 08:44:29Z avg $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -284,6 +283,29 @@ mps_map_btdh(int fd, uint16_t *devhandle, uint16_t *bus, uint16_t *target)
 }
 
 int
+mps_set_slot_status(int fd, U16 handle, U16 slot, U32 status)
+{
+	MPI2_SEP_REQUEST req;
+	MPI2_SEP_REPLY reply;
+
+	bzero(&req, sizeof(req));
+	req.Function = MPI2_FUNCTION_SCSI_ENCLOSURE_PROCESSOR;
+	req.Action = MPI2_SEP_REQ_ACTION_WRITE_STATUS;
+	req.Flags = MPI2_SEP_REQ_FLAGS_ENCLOSURE_SLOT_ADDRESS;
+	req.EnclosureHandle = handle;
+	req.Slot = slot;
+	req.SlotStatus = status;
+
+	if (mps_pass_command(fd, &req, sizeof(req), &reply, sizeof(reply),
+	    NULL, 0, NULL, 0, 30) != 0)
+		return (errno);
+
+	if (!IOC_STATUS_SUCCESS(reply.IOCStatus))
+		return (EIO);
+	return (0);
+}
+
+int
 mps_read_config_page_header(int fd, U8 PageType, U8 PageNumber, U32 PageAddress,
     MPI2_CONFIG_PAGE_HEADER *header, U16 *IOCStatus)
 {
@@ -365,8 +387,7 @@ mps_read_config_page(int fd, U8 PageType, U8 PageNumber, U32 PageAddress,
 	req.Action = MPI2_CONFIG_ACTION_PAGE_READ_CURRENT;
 	req.PageAddress = PageAddress;
 	req.Header = header;
-	req.Header.PageLength = reply.Header.PageLength;
-	if (reply.Header.PageLength == 0)
+	if (req.Header.PageLength == 0)
 		req.Header.PageLength = 4;
 
 	len = req.Header.PageLength * 4;
@@ -653,27 +674,32 @@ mps_pass_command(int fd, void *req, uint32_t req_len, void *reply,
 {
 	struct mprs_pass_thru pass;
 
+	bzero(&pass, sizeof(pass));
 	pass.PtrRequest = (uint64_t)(uintptr_t)req;
 	pass.PtrReply = (uint64_t)(uintptr_t)reply;
-	pass.PtrData = (uint64_t)(uintptr_t)data_in;
-	pass.PtrDataOut = (uint64_t)(uintptr_t)data_out;
 	pass.RequestSize = req_len;
 	pass.ReplySize = reply_len;
-	pass.DataSize = datain_len;
-	pass.DataOutSize = dataout_len;
 	if (datain_len && dataout_len) {
+		pass.PtrData = (uint64_t)(uintptr_t)data_in;
+		pass.PtrDataOut = (uint64_t)(uintptr_t)data_out;
+		pass.DataSize = datain_len;
+		pass.DataOutSize = dataout_len;
 		if (is_mps) {
 			pass.DataDirection = MPS_PASS_THRU_DIRECTION_BOTH;
 		} else {
 			pass.DataDirection = MPR_PASS_THRU_DIRECTION_BOTH;
 		}
 	} else if (datain_len) {
+		pass.PtrData = (uint64_t)(uintptr_t)data_in;
+		pass.DataSize = datain_len;
 		if (is_mps) {
 			pass.DataDirection = MPS_PASS_THRU_DIRECTION_READ;
 		} else {
 			pass.DataDirection = MPR_PASS_THRU_DIRECTION_READ;
 		}
 	} else if (dataout_len) {
+		pass.PtrData = (uint64_t)(uintptr_t)data_out;
+		pass.DataSize = dataout_len;
 		if (is_mps) {
 			pass.DataDirection = MPS_PASS_THRU_DIRECTION_WRITE;
 		} else {

@@ -25,9 +25,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/tests/stdio/getdelim_test.c 291981 2015-12-08 04:51:21Z ngie $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/stdio/getdelim_test.c 303528 2016-07-30 01:13:54Z bapt $");
 
-#define	_WITH_GETLINE
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>

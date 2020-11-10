@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2007-2009 Sam Leffler, Errno Consulting
  * Copyright (c) 2007-2008 Marvell Semiconductor, Inc.
  * All rights reserved.
@@ -29,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/mwl/if_mwl.c 344969 2019-03-09 12:54:10Z avos $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/mwl/if_mwl.c 365670 2020-09-12 19:33:25Z bz $");
 
 /*
  * Driver for the Marvell 88W8363 Wireless LAN controller.
@@ -57,7 +59,7 @@ __FBSDID("$FreeBSD: releng/11.3/sys/dev/mwl/if_mwl.c 344969 2019-03-09 12:54:10Z
 #include <sys/taskqueue.h>
 
 #include <machine/bus.h>
- 
+
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>
@@ -1468,16 +1470,17 @@ mwl_raw_xmit(struct ieee80211_node *ni, struct mbuf *m,
 static int
 mwl_media_change(struct ifnet *ifp)
 {
-	struct ieee80211vap *vap = ifp->if_softc;
+	struct ieee80211vap *vap;
 	int error;
 
-	error = ieee80211_media_change(ifp);
 	/* NB: only the fixed rate can change and that doesn't need a reset */
-	if (error == ENETRESET) {
-		mwl_setrates(vap);
-		error = 0;
-	}
-	return error;
+	error = ieee80211_media_change(ifp);
+	if (error != 0)
+		return (error);
+
+	vap = ifp->if_softc;
+	mwl_setrates(vap);
+	return (0);
 }
 
 #ifdef MWL_DEBUG
@@ -1529,7 +1532,7 @@ mwl_key_alloc(struct ieee80211vap *vap, struct ieee80211_key *k,
 			return 0;
 		}
 		/* give the caller what they requested */
-		*keyix = *rxkeyix = k - vap->iv_nw_keys;
+		*keyix = *rxkeyix = ieee80211_crypto_get_key_wepidx(vap, k);
 	} else {
 		/*
 		 * Firmware handles key allocation.
@@ -2434,13 +2437,13 @@ mwl_node_getmimoinfo(const struct ieee80211_node *ni,
 	if (mn->mn_ai.rssi_c > rssi_max)
 		rssi_max = mn->mn_ai.rssi_c;
 
-	CVT(mi->rssi[0], mn->mn_ai.rssi_a);
-	CVT(mi->rssi[1], mn->mn_ai.rssi_b);
-	CVT(mi->rssi[2], mn->mn_ai.rssi_c);
+	CVT(mi->ch[0].rssi[0], mn->mn_ai.rssi_a);
+	CVT(mi->ch[1].rssi[0], mn->mn_ai.rssi_b);
+	CVT(mi->ch[2].rssi[0], mn->mn_ai.rssi_c);
 
-	mi->noise[0] = mn->mn_ai.nf_a;
-	mi->noise[1] = mn->mn_ai.nf_b;
-	mi->noise[2] = mn->mn_ai.nf_c;
+	mi->ch[0].noise[0] = mn->mn_ai.nf_a;
+	mi->ch[1].noise[0] = mn->mn_ai.nf_b;
+	mi->ch[2].noise[0] = mn->mn_ai.nf_c;
 #undef CVT
 }
 
@@ -2522,12 +2525,12 @@ mwl_rxbuf_init(struct mwl_softc *sc, struct mwl_rxbuf *bf)
 }
 
 static void
-mwl_ext_free(struct mbuf *m, void *data, void *arg)
+mwl_ext_free(struct mbuf *m)
 {
-	struct mwl_softc *sc = arg;
+	struct mwl_softc *sc = m->m_ext.ext_arg1;
 
 	/* XXX bounds check data */
-	mwl_putrxdma(sc, data);
+	mwl_putrxdma(sc, m->m_ext.ext_buf);
 	/*
 	 * If we were previously blocked by a lack of rx dma buffers
 	 * check if we now have enough to restart rx interrupt handling.
@@ -2745,8 +2748,8 @@ mwl_rx_proc(void *arg, int npending)
 		 * descriptor using the replacement dma
 		 * buffer we just installed above.
 		 */
-		MEXTADD(m, data, MWL_AGGR_SIZE, mwl_ext_free,
-		    data, sc, 0, EXT_NET_DRV);
+		m_extadd(m, data, MWL_AGGR_SIZE, mwl_ext_free, sc, NULL, 0,
+		    EXT_NET_DRV);
 		m->m_data += off - hdrlen;
 		m->m_pkthdr.len = m->m_len = pktlen;
 		/* NB: dma buffer assumed read-only */
@@ -2883,10 +2886,14 @@ mwl_txq_update(struct mwl_softc *sc, int ac)
 {
 #define	MWL_EXPONENT_TO_VALUE(v)	((1<<v)-1)
 	struct ieee80211com *ic = &sc->sc_ic;
+	struct chanAccParams chp;
 	struct mwl_txq *txq = sc->sc_ac2q[ac];
-	struct wmeParams *wmep = &ic->ic_wme.wme_chanParams.cap_wmeParams[ac];
+	struct wmeParams *wmep;
 	struct mwl_hal *mh = sc->sc_mh;
 	int aifs, cwmin, cwmax, txoplim;
+
+	ieee80211_wme_ic_getparams(ic, &chp);
+	wmep = &chp.cap_wmeParams[ac];
 
 	aifs = wmep->wmep_aifsn;
 	/* XXX in sta mode need to pass log values for cwmin/max */

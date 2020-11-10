@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/bitmap.h 178414 2008-04-22 07:43:00Z jb $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/bitmap.h 178414 2008-04-22 07:43:00Z jb $
  */
 
 /*

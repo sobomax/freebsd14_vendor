@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/11.3/sys/cddl/compat/opensolaris/sys/byteorder.h 246586 2013-02-09 06:39:28Z delphij $
+ * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/byteorder.h 246586 2013-02-09 06:39:28Z delphij $
  */
 
 /*

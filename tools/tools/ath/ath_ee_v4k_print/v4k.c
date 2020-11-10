@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/tools/tools/ath/ath_ee_v4k_print/v4k.c 294600 2016-01-22 20:53:50Z avos $
+ * $FreeBSD: releng/12.2/tools/tools/ath/ath_ee_v4k_print/v4k.c 294600 2016-01-22 20:53:50Z avos $
  */
 
 #include <sys/types.h>

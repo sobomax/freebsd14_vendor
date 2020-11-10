@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/tools/nanobsd/fill_pkg.sh 275384 2014-12-01 22:39:35Z phk $
+# $FreeBSD: releng/12.2/tools/tools/nanobsd/fill_pkg.sh 275384 2014-12-01 22:39:35Z phk $
 #
 # Usage:
 # 	$0 PACKAGE_DUMP NANO_PACKAGE_DIR /usr/ports/foo/bar ...

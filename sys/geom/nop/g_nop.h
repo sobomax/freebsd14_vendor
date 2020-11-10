@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004-2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/nop/g_nop.h 329789 2018-02-22 02:12:47Z asomers $
+ * $FreeBSD: releng/12.2/sys/geom/nop/g_nop.h 328108 2018-01-18 05:57:10Z asomers $
  */
 
 #ifndef	_G_NOP_H_

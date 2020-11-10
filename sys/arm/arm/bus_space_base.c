@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/arm/arm/bus_space_base.c 300694 2016-05-25 19:44:26Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/bus_space_base.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/spi/Makefile 329546 2018-02-19 01:49:19Z ian $
+# $FreeBSD: releng/12.2/sys/modules/spi/Makefile 329546 2018-02-19 01:49:19Z ian $
 
 SUBDIR = \
 	../spigen \

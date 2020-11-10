@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/11.3/sys/dev/ida/idaio.h 124540 2004-01-15 06:37:52Z mdodd $
+ * $FreeBSD: releng/12.2/sys/dev/ida/idaio.h 124540 2004-01-15 06:37:52Z mdodd $
  */
 
 #include <sys/ioccom.h>

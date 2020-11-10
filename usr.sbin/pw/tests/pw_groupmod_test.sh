@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/pw/tests/pw_groupmod_test.sh 316256 2017-03-30 06:20:24Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/pw/tests/pw_groupmod_test.sh 315776 2017-03-23 03:28:24Z ngie $
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin

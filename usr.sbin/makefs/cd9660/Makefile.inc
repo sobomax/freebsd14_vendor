@@ -1,7 +1,7 @@
-#	$FreeBSD: releng/11.3/usr.sbin/makefs/cd9660/Makefile.inc 330976 2018-03-15 09:04:23Z eadler $
+#	$FreeBSD: releng/12.2/usr.sbin/makefs/cd9660/Makefile.inc 332844 2018-04-20 22:23:38Z emaste $
 #
 
-.PATH:	${SRCDIR}/cd9660 ${SRCTOP}/sys/fs/cd9660/
+.PATH:	${SRCDIR}/cd9660
 
 CFLAGS+=-I${SRCTOP}/sys/fs/cd9660/
 

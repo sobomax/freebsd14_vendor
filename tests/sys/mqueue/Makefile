@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/mqueue/Makefile 306905 2016-10-09 12:34:56Z kib $
+# $FreeBSD: releng/12.2/tests/sys/mqueue/Makefile 306588 2016-10-02 17:02:59Z kib $
 
 TESTSDIR=	${TESTSBASE}/sys/mqueue
 

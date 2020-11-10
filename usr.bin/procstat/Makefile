@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/procstat/Makefile 324932 2017-10-23 18:25:21Z bdrewery $
+# $FreeBSD: releng/12.2/usr.bin/procstat/Makefile 322515 2017-08-14 19:21:37Z ngie $
 
 .include <src.opts.mk>
 
@@ -22,8 +22,7 @@ SRCS=	procstat.c		\
 
 LIBADD+=	procstat xo util sbuf
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=	tests
-.endif
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

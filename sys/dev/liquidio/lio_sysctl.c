@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/11.3/sys/dev/liquidio/lio_sysctl.c 325618 2017-11-09 19:52:56Z sbruno $*/
+/*$FreeBSD: releng/12.2/sys/dev/liquidio/lio_sysctl.c 324994 2017-10-25 17:49:17Z sbruno $*/
 
 #include <sys/types.h>
 

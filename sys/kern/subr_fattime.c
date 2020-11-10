@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 Poul-Henning Kamp
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/kern/subr_fattime.c 331503 2018-03-24 23:01:10Z ian $
+ * $FreeBSD: releng/12.2/sys/kern/subr_fattime.c 328956 2018-02-06 22:17:01Z ian $
  *
  * Convert MS-DOS FAT format timestamps to and from unix timespecs
  *

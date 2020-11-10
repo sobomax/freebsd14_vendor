@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Mark Santcroos <marks@ripe.net>
  * Copyright (c) 2004-2005 Gleb Smirnoff <glebius@FreeBSD.org>
  *
@@ -27,7 +29,7 @@
  * This node presents a /dev/ngd%d device that interfaces to an other
  * netgraph node.
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_device.c 271856 2014-09-19 09:01:19Z glebius $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_device.c 326272 2017-11-27 15:23:17Z pfg $
  *
  */
 

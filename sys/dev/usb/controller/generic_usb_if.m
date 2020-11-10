@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/usb/controller/generic_usb_if.m 300068 2016-05-17 17:46:12Z manu $
+# $FreeBSD: releng/12.2/sys/dev/usb/controller/generic_usb_if.m 300068 2016-05-17 17:46:12Z manu $
 #
 
 INTERFACE generic_usb;

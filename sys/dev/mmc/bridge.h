@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,7 +50,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: releng/11.3/sys/dev/mmc/bridge.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/mmc/bridge.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 #ifndef DEV_MMC_BRIDGE_H
@@ -176,6 +178,7 @@ struct mmc_host {
 	struct mmc_ios ios;	/* Current state of the host */
 };
 
+#ifdef _KERNEL
 extern driver_t   mmc_driver;
 extern devclass_t mmc_devclass;
 
@@ -186,5 +189,6 @@ extern devclass_t mmc_devclass;
     MODULE_DEPEND(name, mmc, MMC_VERSION, MMC_VERSION, MMC_VERSION);
 #define	MMC_DEPEND(name)						\
     MODULE_DEPEND(name, mmc, MMC_VERSION, MMC_VERSION, MMC_VERSION);
+#endif /* _KERNEL */
 
 #endif /* DEV_MMC_BRIDGE_H */

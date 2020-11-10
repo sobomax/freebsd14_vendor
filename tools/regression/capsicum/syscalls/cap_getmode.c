@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/regression/capsicum/syscalls/cap_getmode.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: releng/12.2/tools/regression/capsicum/syscalls/cap_getmode.c 263234 2014-03-16 11:04:44Z rwatson $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>

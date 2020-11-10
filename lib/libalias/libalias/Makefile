@@ -1,7 +1,8 @@
-# $FreeBSD: releng/11.3/lib/libalias/libalias/Makefile 313538 2017-02-10 07:32:40Z ngie $
+# $FreeBSD: releng/12.2/lib/libalias/libalias/Makefile 338760 2018-09-18 20:54:37Z brd $
 
 .PATH: ${SRCTOP}/sys/netinet/libalias
 
+CONFS=	libalias.conf
 PACKAGE=lib${LIB}
 LIB=	alias
 SHLIBDIR?= /lib

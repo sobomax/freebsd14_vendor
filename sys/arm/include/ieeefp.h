@@ -1,5 +1,5 @@
 /*	$NetBSD: ieeefp.h,v 1.1 2001/01/10 19:02:06 bjh21 Exp $	*/
-/* $FreeBSD: releng/11.3/sys/arm/include/ieeefp.h 226607 2011-10-21 06:41:46Z das $ */
+/* $FreeBSD: releng/12.2/sys/arm/include/ieeefp.h 226607 2011-10-21 06:41:46Z das $ */
 /*-
  * Based on ieeefp.h written by J.T. Conklin, Apr 28, 1995
  * Public domain.

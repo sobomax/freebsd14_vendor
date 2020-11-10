@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/share/mk/local.gendirdeps.mk 310618 2016-12-26 20:36:37Z dim $
+# $FreeBSD: releng/12.2/share/mk/local.gendirdeps.mk 356775 2020-01-16 03:38:06Z kevans $
 
 # we need a keyword, this noise is to prevent it being expanded
 GENDIRDEPS_HEADER= echo '\# ${FreeBSD:L:@v@$$$v$$ @:M*F*}';
@@ -7,9 +7,15 @@ GENDIRDEPS_HEADER= echo '\# ${FreeBSD:L:@v@$$$v$$ @:M*F*}';
 # local.dirdeps.mk will put them in if necessary
 GENDIRDEPS_FILTER+= \
 	Nbin/cat.host \
-	Ngnu/lib/libssp/libssp_nonshared \
+	Nlib/libssp_nonshared \
 	Ncddl/usr.bin/ctf* \
 	Nlib/libc_nonshared \
+	Ngnu/lib/csu \
+	Ngnu/lib/libgcc \
+	Nlib/libgcc_eh \
+	Nlib/libgcc_s \
+	Nstand/libsa/* \
+	Nstand/libsa32/* \
 	Ntargets/pseudo/stage* \
 	Ntools/*
 

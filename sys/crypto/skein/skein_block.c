@@ -15,7 +15,7 @@
 ************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/crypto/skein/skein_block.c 300921 2016-05-29 01:15:36Z allanjude $");
+__FBSDID("$FreeBSD: releng/12.2/sys/crypto/skein/skein_block.c 300921 2016-05-29 01:15:36Z allanjude $");
 
 #include <sys/endian.h>
 #include <sys/types.h>

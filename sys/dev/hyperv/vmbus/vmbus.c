@@ -30,7 +30,7 @@
  * VM Bus Driver Implementation
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/vmbus/vmbus.c 329462 2018-02-17 18:00:01Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/vmbus.c 328083 2018-01-17 11:44:21Z kib $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

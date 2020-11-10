@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/lex/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/lex/Makefile 357521 2020-02-04 19:42:57Z dim $
 #
 # By default, flex will be configured to generate 8-bit scanners only if the
 # -8 flag is given.  If you want it to always generate 8-bit scanners, add
@@ -31,6 +31,8 @@ MLINKS+=	lex.1 flex++.1
 MLINKS+=	lex.1 lex++.1
 
 WARNS?=		3
+
+NO_WMISLEADING_INDENTATION=
 
 CLEANFILES=	scan.c skel.c
 GENFILES=	parse.c parse.h scan.c skel.c

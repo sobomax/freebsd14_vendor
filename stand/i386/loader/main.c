@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/loader/main.c 346476 2019-04-21 03:36:05Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/loader/main.c 354230 2019-10-31 21:32:59Z sjg $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -167,6 +167,7 @@ main(void)
     archsw.arch_readin = i386_readin;
     archsw.arch_isainb = isa_inb;
     archsw.arch_isaoutb = isa_outb;
+    archsw.arch_hypervisor = x86_hypervisor;
 #ifdef LOADER_ZFS_SUPPORT
     archsw.arch_zfs_probe = i386_zfs_probe;
 

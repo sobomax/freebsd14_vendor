@@ -1,6 +1,8 @@
 /*	$NetBSD: fparseln.c,v 1.7 2007/03/08 19:57:53 drochner Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1997 Christos Zoulas.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libutil/fparseln.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libutil/fparseln.c 326219 2017-11-26 02:00:33Z pfg $");
 
 #include <sys/types.h>
 #include <assert.h>

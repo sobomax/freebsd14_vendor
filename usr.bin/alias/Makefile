@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/alias/Makefile 284255 2015-06-11 04:22:17Z sjg $
+# $FreeBSD: releng/12.2/usr.bin/alias/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
 SCRIPTS=generic.sh
 SCRIPTSNAME=alias

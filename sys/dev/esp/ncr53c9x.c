@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause NetBSD
+ *
  * Copyright (c) 2004 Scott Long
  * Copyright (c) 2005, 2008 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -98,7 +100,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/esp/ncr53c9x.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/esp/ncr53c9x.c 328218 2018-01-21 15:42:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

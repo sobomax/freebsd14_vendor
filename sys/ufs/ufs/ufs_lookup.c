@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  * (c) UNIX System Laboratories, Inc.
@@ -15,7 +17,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/ufs/ufs/ufs_lookup.c 347475 2019-05-10 23:46:42Z mckusick $");
+__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ufs/ufs_lookup.c 362049 2020-06-11 11:36:49Z kib $");
 
 #include "opt_ufs.h"
 #include "opt_quota.h"
@@ -554,7 +556,7 @@ found:
 		ufs_dirbad(dp, i_offset, "i_size too small");
 		dp->i_size = i_offset + DIRSIZ(OFSFMT(vdp), ep);
 		DIP_SET(dp, i_size, dp->i_size);
-		dp->i_flag |= IN_CHANGE | IN_UPDATE;
+		dp->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_UPDATE;
 	}
 	brelse(bp);
 
@@ -771,7 +773,7 @@ ufs_dirbad(ip, offset, how)
  *	record length must be multiple of 4
  *	entry must fit in rest of its DIRBLKSIZ block
  *	record must be large enough to contain entry
- *	name is not longer than MAXNAMLEN
+ *	name is not longer than UFS_MAXNAMLEN
  *	name must be as long as advertised, and null terminated
  */
 int
@@ -792,7 +794,7 @@ ufs_dirbadentry(dp, ep, entryoffsetinblock)
 #	endif
 	if ((ep->d_reclen & 0x3) != 0 ||
 	    ep->d_reclen > DIRBLKSIZ - (entryoffsetinblock & (DIRBLKSIZ - 1)) ||
-	    ep->d_reclen < DIRSIZ(OFSFMT(dp), ep) || namlen > MAXNAMLEN) {
+	    ep->d_reclen < DIRSIZ(OFSFMT(dp), ep) || namlen > UFS_MAXNAMLEN) {
 		/*return (1); */
 		printf("First bad\n");
 		goto bad;
@@ -828,7 +830,7 @@ ufs_makedirentry(ip, cnp, newdirp)
 	namelen = (unsigned)cnp->cn_namelen;
 	KASSERT((cnp->cn_flags & SAVENAME) != 0,
 		("ufs_makedirentry: missing name"));
-	KASSERT(namelen <= MAXNAMLEN,
+	KASSERT(namelen <= UFS_MAXNAMLEN,
 		("ufs_makedirentry: name too long"));
 	newdirp->d_ino = ip->i_number;
 	newdirp->d_namlen = namelen;
@@ -916,7 +918,7 @@ ufs_direnter(dvp, tvp, dirp, cnp, newdirbp, isrename)
 		dp->i_size = dp->i_offset + DIRBLKSIZ;
 		DIP_SET(dp, i_size, dp->i_size);
 		dp->i_endoff = dp->i_size;
-		dp->i_flag |= IN_CHANGE | IN_UPDATE;
+		dp->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_UPDATE;
 		dirp->d_reclen = DIRBLKSIZ;
 		blkoff = dp->i_offset &
 		    (VFSTOUFS(dvp->v_mount)->um_mountp->mnt_stat.f_iosize - 1);
@@ -1002,6 +1004,7 @@ ufs_direnter(dvp, tvp, dirp, cnp, newdirbp, isrename)
 	if (dp->i_offset + dp->i_count > dp->i_size) {
 		dp->i_size = dp->i_offset + dp->i_count;
 		DIP_SET(dp, i_size, dp->i_size);
+		dp->i_flag |= IN_SIZEMOD | IN_MODIFIED;
 	}
 	/*
 	 * Get the block containing the space for the new directory entry.
@@ -1076,7 +1079,7 @@ ufs_direnter(dvp, tvp, dirp, cnp, newdirbp, isrename)
 		namlen = ep->d_namlen;
 #	endif
 	if (ep->d_ino == 0 ||
-	    (ep->d_ino == WINO && namlen == dirp->d_namlen &&
+	    (ep->d_ino == UFS_WINO && namlen == dirp->d_namlen &&
 	     bcmp(ep->d_name, dirp->d_name, dirp->d_namlen) == 0)) {
 		if (spacefree + dsize < newentrysize)
 			panic("ufs_direnter: compact1");
@@ -1167,6 +1170,7 @@ ufs_dirremove(dvp, ip, flags, isrmdir)
 	struct inode *dp;
 	struct direct *ep, *rep;
 	struct buf *bp;
+	off_t offset;
 	int error;
 
 	dp = VTOI(dvp);
@@ -1176,6 +1180,7 @@ ufs_dirremove(dvp, ip, flags, isrmdir)
 	 */
 	if (ip) {
 		ip->i_effnlink--;
+		ip->i_flag |= IN_CHANGE;
 		if (DOINGSOFTDEP(dvp)) {
 			softdep_setup_unlink(dp, ip);
 		} else {
@@ -1184,22 +1189,32 @@ ufs_dirremove(dvp, ip, flags, isrmdir)
 			ip->i_flag |= IN_CHANGE;
 		}
 	}
+	if (flags & DOWHITEOUT)
+		offset = dp->i_offset;
+	else
+		offset = dp->i_offset - dp->i_count;
+	if ((error = UFS_BLKATOFF(dvp, offset, (char **)&ep, &bp)) != 0) {
+		if (ip) {
+			ip->i_effnlink++;
+			ip->i_flag |= IN_CHANGE;
+			if (DOINGSOFTDEP(dvp)) {
+				softdep_change_linkcnt(ip);
+			} else {
+				ip->i_nlink++;
+				DIP_SET(ip, i_nlink, ip->i_nlink);
+				ip->i_flag |= IN_CHANGE;
+			}
+		}
+		return (error);
+	}
 	if (flags & DOWHITEOUT) {
 		/*
-		 * Whiteout entry: set d_ino to WINO.
+		 * Whiteout entry: set d_ino to UFS_WINO.
 		 */
-		if ((error =
-		    UFS_BLKATOFF(dvp, (off_t)dp->i_offset, (char **)&ep, &bp)) != 0)
-			return (error);
-		ep->d_ino = WINO;
+		ep->d_ino = UFS_WINO;
 		ep->d_type = DT_WHT;
 		goto out;
 	}
-
-	if ((error = UFS_BLKATOFF(dvp,
-	    (off_t)(dp->i_offset - dp->i_count), (char **)&ep, &bp)) != 0)
-		return (error);
-
 	/* Set 'rep' to the entry being removed. */
 	if (dp->i_count == 0)
 		rep = ep;
@@ -1250,7 +1265,7 @@ out:
 	} else {
 		if (flags & DOWHITEOUT)
 			error = bwrite(bp);
-		else if (DOINGASYNC(dvp) && dp->i_count != 0)
+		else if (DOINGASYNC(dvp))
 			bdwrite(bp);
 		else
 			error = bwrite(bp);
@@ -1289,6 +1304,7 @@ ufs_dirrewrite(dp, oip, newinum, newtype, isrmdir)
 	 * necessary.
 	 */
 	oip->i_effnlink--;
+	oip->i_flag |= IN_CHANGE;
 	if (DOINGSOFTDEP(vdp)) {
 		softdep_setup_unlink(dp, oip);
 	} else {
@@ -1298,12 +1314,22 @@ ufs_dirrewrite(dp, oip, newinum, newtype, isrmdir)
 	}
 
 	error = UFS_BLKATOFF(vdp, (off_t)dp->i_offset, (char **)&ep, &bp);
-	if (error)
-		return (error);
-	if (ep->d_namlen == 2 && ep->d_name[1] == '.' && ep->d_name[0] == '.' &&
-	    ep->d_ino != oip->i_number) {
+	if (error == 0 && ep->d_namlen == 2 && ep->d_name[1] == '.' &&
+	    ep->d_name[0] == '.' && ep->d_ino != oip->i_number) {
 		brelse(bp);
-		return (EIDRM);
+		error = EIDRM;
+	}
+	if (error) {
+		oip->i_effnlink++;
+		oip->i_flag |= IN_CHANGE;
+		if (DOINGSOFTDEP(vdp)) {
+			softdep_change_linkcnt(oip);
+		} else {
+			oip->i_nlink++;
+			DIP_SET(oip, i_nlink, oip->i_nlink);
+			oip->i_flag |= IN_CHANGE;
+		}
+		return (error);
 	}
 	ep->d_ino = newinum;
 	if (!OFSFMT(vdp))
@@ -1366,7 +1392,7 @@ ufs_dirempty(ip, parentino, cred)
 		if (dp->d_reclen == 0)
 			return (0);
 		/* skip empty entries */
-		if (dp->d_ino == 0 || dp->d_ino == WINO)
+		if (dp->d_ino == 0 || dp->d_ino == UFS_WINO)
 			continue;
 		/* accept only "." and ".." */
 #		if (BYTE_ORDER == LITTLE_ENDIAN)
@@ -1458,7 +1484,7 @@ ufs_checkpath(ino_t source_ino, ino_t parent_ino, struct inode *target, struct u
 		return (EEXIST);
 	if (target->i_number == parent_ino)
 		return (0);
-	if (target->i_number == ROOTINO)
+	if (target->i_number == UFS_ROOTINO)
 		return (0);
 	for (;;) {
 		error = ufs_dir_dd_ino(vp, cred, &dd_ino, &vp1);
@@ -1468,7 +1494,7 @@ ufs_checkpath(ino_t source_ino, ino_t parent_ino, struct inode *target, struct u
 			error = EINVAL;
 			break;
 		}
-		if (dd_ino == ROOTINO)
+		if (dd_ino == UFS_ROOTINO)
 			break;
 		if (dd_ino == parent_ino)
 			break;

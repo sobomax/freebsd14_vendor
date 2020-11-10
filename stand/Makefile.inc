@@ -1,3 +1,3 @@
-# $FreeBSD: releng/11.3/stand/Makefile.inc 329175 2018-02-12 17:44:35Z kevans $
+# $FreeBSD: releng/12.2/stand/Makefile.inc 326441 2017-12-02 00:06:58Z imp $
 
 .include "defs.mk"

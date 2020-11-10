@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/geom/geom_part/geom_part_gpt/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/geom/geom_part/geom_part_gpt/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 .PATH: ${SRCTOP}/sys/geom/part
 

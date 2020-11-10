@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/tools/regression/geom_gpt/gctl_test.t 321136 2017-07-18 17:16:55Z ngie $
+# $FreeBSD: releng/12.2/tools/regression/geom_gpt/gctl_test.t 319806 2017-06-10 20:56:31Z ngie $
 
 use strict;
 use warnings;

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/tls/ttls3/Makefile 133835 2004-08-16 09:35:49Z dfr $
+# $FreeBSD: releng/12.2/tools/regression/tls/ttls3/Makefile 133835 2004-08-16 09:35:49Z dfr $
 
 all: ttls3
 

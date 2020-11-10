@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/compat/linuxkpi/common/include/linux/mm.h 345927 2019-04-05 11:24:05Z hselasky $
+ * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/mm.h 356793 2020-01-16 15:33:54Z markj $
  */
 #ifndef	_LINUX_MM_H_
 #define	_LINUX_MM_H_
@@ -208,14 +208,6 @@ static inline void
 set_page_dirty(struct vm_page *page)
 {
 	vm_page_dirty(page);
-}
-
-static inline void
-set_page_dirty_lock(struct vm_page *page)
-{
-	vm_page_lock(page);
-	vm_page_dirty(page);
-	vm_page_unlock(page);
 }
 
 static inline void

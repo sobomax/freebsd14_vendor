@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/cxgbe/if_cc.c 309560 2016-12-05 20:43:25Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/if_cc.c 305852 2016-09-16 00:08:37Z np $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

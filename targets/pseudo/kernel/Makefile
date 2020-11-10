@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/targets/pseudo/kernel/Makefile 300798 2016-05-26 23:20:10Z bdrewery $
+# $FreeBSD: releng/12.2/targets/pseudo/kernel/Makefile 300798 2016-05-26 23:20:10Z bdrewery $
 
 # Build the kernel ${KERNCONF}
 KERNCONF?= ${KERNEL:UGENERIC}

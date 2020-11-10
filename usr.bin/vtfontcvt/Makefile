@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/vtfontcvt/Makefile 284062 2015-06-06 12:34:59Z bapt $
+# $FreeBSD: releng/12.2/usr.bin/vtfontcvt/Makefile 284062 2015-06-06 12:34:59Z bapt $
 
 PROG=	vtfontcvt
 MAN8=	vtfontcvt.8

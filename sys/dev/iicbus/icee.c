@@ -1,5 +1,7 @@
 /*-
- * Copyright (c) 2006 Warner Losh.  All rights reserved.
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
+ * Copyright (c) 2006 M. Warner Losh.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/iicbus/icee.c 346548 2019-04-22 13:51:25Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/icee.c 349314 2019-06-23 16:16:55Z ian $");
 /*
  * Generic IIC eeprom support, modeled after the AT24C family of products.
  */
@@ -390,3 +392,4 @@ static devclass_t icee_devclass;
 DRIVER_MODULE(icee, iicbus, icee_driver, icee_devclass, 0, 0);
 MODULE_VERSION(icee, 1);
 MODULE_DEPEND(icee, iicbus, 1, 1, 1);
+IICBUS_FDT_PNP_INFO(compat_data);

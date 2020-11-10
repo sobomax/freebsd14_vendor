@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (C) 2003
  * 	Hidetoshi Shimokawa. All rights reserved.
  * 
@@ -32,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $Id: dconschat.c,v 1.76 2003/10/23 06:21:13 simokawa Exp $
- * $FreeBSD: releng/11.3/usr.sbin/dconschat/dconschat.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/dconschat/dconschat.c 325966 2017-11-18 14:26:50Z pfg $
  */
 
 #include <sys/param.h>

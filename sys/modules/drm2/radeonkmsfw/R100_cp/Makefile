@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/drm2/radeonkmsfw/R100_cp/Makefile 254885 2013-08-25 19:37:15Z dumbbell $
+# $FreeBSD: releng/12.2/sys/modules/drm2/radeonkmsfw/R100_cp/Makefile 338285 2018-08-24 00:02:00Z imp $
 
 KMOD=	radeonkmsfw_R100_cp
 IMG=	R100_cp

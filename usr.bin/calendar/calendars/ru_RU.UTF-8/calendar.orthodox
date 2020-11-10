@@ -1,7 +1,7 @@
 /*
  * Православные праздники
  *
- * $FreeBSD: releng/11.3/usr.bin/calendar/calendars/ru_RU.UTF-8/calendar.orthodox 303659 2016-08-02 14:14:36Z glebius $
+ * $FreeBSD: releng/12.2/usr.bin/calendar/calendars/ru_RU.UTF-8/calendar.orthodox 303277 2016-07-24 20:47:57Z glebius $
  */
 
 #ifndef _ru_RU_UTF_8_orthodox_

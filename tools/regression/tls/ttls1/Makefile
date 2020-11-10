@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/regression/tls/ttls1/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: releng/12.2/tools/regression/tls/ttls1/Makefile 264400 2014-04-13 05:21:56Z imp $
 
 PROG=	ttls1
 LDFLAGS+= -L../libxx -lxx -Wl,--rpath=${.OBJDIR}/../libxx

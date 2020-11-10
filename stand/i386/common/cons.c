@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/common/cons.c 329175 2018-02-12 17:44:35Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/common/cons.c 326887 2017-12-15 23:16:53Z imp $");
 
 #include <sys/param.h>
 

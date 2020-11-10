@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fstyp/exfat.c 316470 2017-04-03 21:04:14Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fstyp/exfat.c 312003 2017-01-13 02:12:58Z cem $");
 
 #include <stdint.h>
 #include <stdio.h>

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sys/dev/ntb/ntb_if.m 317892 2017-05-07 00:26:57Z mav $
+# $FreeBSD: releng/12.2/sys/dev/ntb/ntb_if.m 351536 2019-08-27 04:13:22Z mav $
 #
 
 #include <sys/bus.h>
@@ -59,6 +59,24 @@ HEADER {
 		ntb_event_callback	link_event;
 		ntb_db_callback		db_event;
 	};
+};
+
+METHOD int port_number {
+	device_t	ntb;
+};
+
+METHOD int peer_port_count {
+	device_t	ntb;
+};
+
+METHOD int peer_port_number {
+	device_t	ntb;
+	int		pidx;
+};
+
+METHOD int peer_port_idx {
+	device_t	ntb;
+	int		port;
 };
 
 METHOD bool link_is_up {

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/secure/usr.sbin/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: releng/12.2/secure/usr.sbin/Makefile 321912 2017-08-02 08:35:51Z ngie $
 
 .include <src.opts.mk>
 
@@ -7,9 +7,7 @@ SUBDIR=
 SUBDIR+=sshd
 .endif
 
-.if ${MK_TESTS} != "no"
-SUBDIR+=tests
-.endif
+SUBDIR.${MK_TESTS}+= tests
 
 SUBDIR_PARALLEL=
 

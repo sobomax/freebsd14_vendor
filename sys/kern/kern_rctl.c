@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2010 The FreeBSD Foundation
  * All rights reserved.
  *
@@ -26,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/kern/kern_rctl.c 335536 2018-06-22 09:18:38Z avg $
+ * $FreeBSD: releng/12.2/sys/kern/kern_rctl.c 332816 2018-04-20 13:08:04Z avg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_rctl.c 335536 2018-06-22 09:18:38Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_rctl.c 332816 2018-04-20 13:08:04Z avg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/usr.sbin/ctm/mkCTM/mkctm.c 124994 2004-01-26 04:27:22Z mckay $ */
+/* $FreeBSD: releng/12.2/usr.sbin/ctm/mkCTM/mkctm.c 124994 2004-01-26 04:27:22Z mckay $ */
 
 /* Still missing:
  *
@@ -14,7 +14,7 @@
  *	dir1		"Soll"
  *	dir2		"Ist"
  *
- * $FreeBSD: releng/11.3/usr.sbin/ctm/mkCTM/mkctm.c 124994 2004-01-26 04:27:22Z mckay $
+ * $FreeBSD: releng/12.2/usr.sbin/ctm/mkCTM/mkctm.c 124994 2004-01-26 04:27:22Z mckay $
  */
 
 #include <sys/types.h>

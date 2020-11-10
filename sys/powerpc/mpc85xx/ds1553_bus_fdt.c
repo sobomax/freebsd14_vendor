@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (C) 2006-2008 Semihalf, Grzegorz Bernacki
  * All rights reserved.
  *
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/powerpc/mpc85xx/ds1553_bus_fdt.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/powerpc/mpc85xx/ds1553_bus_fdt.c 326261 2017-11-27 15:09:59Z pfg $");
 
 #include <sys/cdefs.h>
 #include <sys/param.h>

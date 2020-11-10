@@ -1,6 +1,8 @@
-/* $FreeBSD: releng/11.3/lib/libnetbsd/stdlib.h 331722 2018-03-29 02:50:57Z eadler $ */
+/* $FreeBSD: releng/12.2/lib/libnetbsd/stdlib.h 326219 2017-11-26 02:00:33Z pfg $ */
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2012 SRI International
  * Copyright (c) 2001-2002,2004 The NetBSD Foundation, Inc.
  * All rights reserved.

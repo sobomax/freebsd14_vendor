@@ -1,7 +1,9 @@
-/*	$OpenBSD: main.c,v 1.86 2015/11/03 16:21:47 deraadt Exp $	*/
+/*	$OpenBSD: main.c,v 1.87 2017/06/15 13:48:42 bcallah Exp $	*/
 /*	$NetBSD: main.c,v 1.12 1997/02/08 23:54:49 cgd Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1989, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -39,7 +41,7 @@
  * by: oz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/m4/main.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/m4/main.c 352277 2019-09-13 07:10:50Z bapt $");
 
 #include <assert.h>
 #include <signal.h>
@@ -79,6 +81,8 @@ char scommt[MAXCCHARS+1] = {SCOMMT};	/* start character for comment */
 char ecommt[MAXCCHARS+1] = {ECOMMT};	/* end character for comment   */
 int  synch_lines = 0;		/* line synchronisation for C preprocessor */
 int  prefix_builtins = 0;	/* -P option to prefix builtin keywords */
+int  error_warns = 0;		/* -E option to make warnings exit_code = 1 */
+int  fatal_warns = 0;		/* -E -E option to make warnings fatal */
 
 struct keyblk {
         const char    *knam;          /* keyword name */
@@ -184,7 +188,7 @@ main(int argc, char *argv[])
 	outfile = NULL;
 	resizedivs(MAXOUT);
 
-	while ((c = getopt(argc, argv, "gst:d:D:U:o:I:P")) != -1)
+	while ((c = getopt(argc, argv, "gst:d:D:EU:o:I:P")) != -1)
 		switch(c) {
 
 		case 'D':               /* define something..*/
@@ -194,6 +198,12 @@ main(int argc, char *argv[])
 			if (*p)
 				*p++ = EOS;
 			dodefine(optarg, p);
+			break;
+		case 'E':               /* like GNU m4 1.4.9+ */
+			if (error_warns == 0)
+				error_warns = 1;
+			else
+				fatal_warns = 1;
 			break;
 		case 'I':
 			addtoincludepath(optarg);

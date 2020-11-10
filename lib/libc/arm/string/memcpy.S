@@ -1,7 +1,7 @@
 /*	$NetBSD: memcpy.S,v 1.4 2003/10/14 07:51:45 scw Exp $	*/
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/arm/string/memcpy.S 172616 2007-10-13 12:06:31Z cognet $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/arm/string/memcpy.S 336783 2018-07-27 21:25:01Z imp $");
 #if !defined(_ARM_ARCH_5E) || defined(_STANDALONE)
 #include "memcpy_arm.S"
 #else

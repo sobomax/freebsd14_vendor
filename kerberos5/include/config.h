@@ -1,7 +1,7 @@
 /* include/config.h.  Generated from config.h.in by configure.  */
 /* include/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* $FreeBSD: releng/11.3/kerberos5/include/config.h 234027 2012-04-08 08:19:17Z stas $ */
+/* $FreeBSD: releng/12.2/kerberos5/include/config.h 234027 2012-04-08 08:19:17Z stas $ */
 
 #ifndef RCSID
 #define RCSID(msg) \

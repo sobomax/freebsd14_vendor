@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/sys/compat/linux/linux_errno.c 346827 2019-04-28 13:40:17Z dchagin $ */
+/* $FreeBSD: releng/12.2/sys/compat/linux/linux_errno.c 331356 2018-03-22 12:58:49Z emaste $ */
 
 #include <sys/cdefs.h>
 #include <sys/errno.h>

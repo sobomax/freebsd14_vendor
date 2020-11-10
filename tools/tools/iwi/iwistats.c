@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/tools/tools/iwi/iwistats.c 219527 2011-03-11 19:32:15Z brucec $	*/
+/*	$FreeBSD: releng/12.2/tools/tools/iwi/iwistats.c 219527 2011-03-11 19:32:15Z brucec $	*/
 
 /*-
  * Copyright (c) 2005
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/tools/tools/iwi/iwistats.c 219527 2011-03-11 19:32:15Z brucec $");
+__FBSDID("$FreeBSD: releng/12.2/tools/tools/iwi/iwistats.c 219527 2011-03-11 19:32:15Z brucec $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

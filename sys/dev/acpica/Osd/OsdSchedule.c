@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/acpica/Osd/OsdSchedule.c 337121 2018-08-02 09:29:39Z avg $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/Osd/OsdSchedule.c 335934 2018-07-04 09:07:18Z avg $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

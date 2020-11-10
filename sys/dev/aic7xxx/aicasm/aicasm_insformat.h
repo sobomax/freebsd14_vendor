@@ -2,6 +2,8 @@
  * Instruction formats for the sequencer program downloaded to
  * Aic7xxx SCSI host adapters
  *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1997, 1998, 2000 Justin T. Gibbs.
  * All rights reserved.
  *
@@ -39,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_insformat.h#11 $
  *
- * $FreeBSD: releng/11.3/sys/dev/aic7xxx/aicasm/aicasm_insformat.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/dev/aic7xxx/aicasm/aicasm_insformat.h 326255 2017-11-27 14:52:40Z pfg $
  */
 
 struct ins_format1 {

@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/lib/libefivar/Makefile 332123 2018-04-06 18:10:38Z kevans $
+# $FreeBSD: releng/12.2/lib/libefivar/Makefile 326458 2017-12-02 07:29:19Z imp $
 
 .include <src.opts.mk>
 

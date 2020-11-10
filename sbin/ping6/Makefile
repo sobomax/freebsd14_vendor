@@ -1,15 +1,24 @@
-# $FreeBSD: releng/11.3/sbin/ping6/Makefile 298107 2016-04-16 07:45:30Z gjb $
+# $FreeBSD: releng/12.2/sbin/ping6/Makefile 352252 2019-09-12 16:23:22Z asomers $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	ping6
 MAN=	ping6.8
 
-CFLAGS+=-DIPSEC -DKAME_SCOPEID -DUSE_RFC2292BIS
-WARNS?=	3
+CFLAGS+=-DIPSEC -DKAME_SCOPEID
 
 BINOWN=	root
 BINMODE=4555
 
 LIBADD=	ipsec m md
+
+.if ${MK_DYNAMICROOT} == "no"
+.warning ${PROG} built without libcasper support
+.elif ${MK_CASPER} != "no" && !defined(RESCUE)
+LIBADD+=	casper
+LIBADD+=	cap_dns
+CFLAGS+=-DWITH_CASPER
+.endif
 
 .include <bsd.prog.mk>

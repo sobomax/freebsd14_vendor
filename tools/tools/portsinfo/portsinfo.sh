@@ -3,11 +3,11 @@
 #
 # portsinfo - Generate list of new ports for last two weeks.
 #
-# $FreeBSD: releng/11.3/tools/tools/portsinfo/portsinfo.sh 50477 1999-08-28 01:08:13Z peter $
+# $FreeBSD: releng/12.2/tools/tools/portsinfo/portsinfo.sh 325096 2017-10-29 08:17:03Z eadler $
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH; export PATH
 
-host=http://www.freebsd.org
+host=https://www.freebsd.org
 url=$host/cgi/ports.cgi
 time='?type=new&time=2+week+ago&sektion=all'
 time2='?type=changed&time=2+week+ago&sektion=all'
@@ -31,9 +31,9 @@ type make install to install the application.
 
 For more information about using ports, see the ports collection
 
-	http://www.freebsd.org/handbook/ports.html
+	https://www.freebsd.org/handbook/ports.html
 and
-	http://www.freebsd.org/ports/
+	https://www.freebsd.org/ports/
 
 EOF
 

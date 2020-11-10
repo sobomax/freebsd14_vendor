@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/sed/tests/Makefile 321208 2017-07-19 15:58:27Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/sed/tests/Makefile 312521 2017-01-20 07:11:21Z ngie $
 
 PACKAGE=	tests
 

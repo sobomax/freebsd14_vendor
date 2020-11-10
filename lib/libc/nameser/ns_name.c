@@ -1,4 +1,6 @@
-/*
+/*-
+ * SPDX-License-Identifier: ISC
+ *
  * Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")
  * Copyright (c) 1996,1999 by Internet Software Consortium.
  *
@@ -19,7 +21,7 @@
 static const char rcsid[] = "$Id: ns_name.c,v 1.11 2009/01/23 19:59:16 each Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/nameser/ns_name.c 269873 2014-08-12 13:09:32Z ume $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/nameser/ns_name.c 352027 2019-09-08 01:58:02Z cy $");
 
 #include "port_before.h"
 
@@ -682,7 +684,7 @@ ns_name_skip(const u_char **ptrptr, const u_char *eom)
 {
 	const u_char *cp;
 	u_int n;
-	int l;
+	int l = 0;
 
 	cp = *ptrptr;
 	while (cp < eom && (n = *cp++) != 0) {
@@ -692,7 +694,7 @@ ns_name_skip(const u_char **ptrptr, const u_char *eom)
 			cp += n;
 			continue;
 		case NS_TYPE_ELT: /*%< EDNS0 extended label */
-			if ((l = labellen(cp - 1)) < 0) {
+			if (cp < eom && (l = labellen(cp - 1)) < 0) {
 				errno = EMSGSIZE; /*%< XXX */
 				return (-1);
 			}

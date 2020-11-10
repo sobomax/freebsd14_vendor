@@ -1,0 +1,21 @@
+# Doxyfile 1.5.2
+
+# $FreeBSD: releng/12.2/tools/kerneldoc/subsys/Doxyfile-dev_ice 365733 2020-09-14 22:42:17Z erj $
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "FreeBSD kernel ice device code"
+OUTPUT_DIRECTORY       = $(DOXYGEN_DEST_PATH)/dev_ice/
+EXTRACT_ALL            = YES    # TODO: ice has @file comments.. disable this?
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = $(DOXYGEN_SRC_PATH)/dev/ice/ \
+                         $(NOTREVIEWED)
+
+GENERATE_TAGFILE       = dev_ice/dev_ice.tag
+
+@INCLUDE_PATH          = $(DOXYGEN_INCLUDE_PATH)
+@INCLUDE               = common-Doxyfile
+

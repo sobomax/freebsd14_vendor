@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/11.3/sys/contrib/ipfilter/netinet/ip_sync.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_sync.c 358666 2020-03-05 06:38:03Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -30,7 +30,7 @@
 #  include <sys/mbuf.h>
 # endif
 # include <sys/select.h>
-# if __FreeBSD_version >= 500000
+# ifdef __FreeBSD_version
 #  include <sys/selinfo.h>
 # endif
 #endif
@@ -437,7 +437,7 @@ ipf_sync_write(softc, uio)
 
 	int err = 0;
 
-#  if BSD_GE_YEAR(199306) || defined(__FreeBSD__)
+#  if defined(__NetBSD__) || defined(__FreeBSD__)
 	uio->uio_rw = UIO_WRITE;
 #  endif
 
@@ -585,7 +585,7 @@ ipf_sync_read(softc, uio)
 		return EINVAL;
 	}
 
-#  if BSD_GE_YEAR(199306) || defined(__FreeBSD__)
+#  if defined(__NetBSD__) || defined(__FreeBSD__)
 	uio->uio_rw = UIO_READ;
 #  endif
 

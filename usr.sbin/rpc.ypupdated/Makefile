@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/rpc.ypupdated/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/rpc.ypupdated/Makefile 320122 2017-06-19 20:47:24Z bdrewery $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr
 
@@ -17,7 +17,7 @@ LIBADD=	rpcsvc
 
 CLEANFILES= ypupdate_prot_svc.c ypupdate_prot.h
 
-RPCDIR=	${DESTDIR}/usr/include/rpcsvc
+RPCDIR=	${SYSROOT:U${DESTDIR}}/usr/include/rpcsvc
 RPCGEN= RPCGEN_CPP=${CPP:Q} rpcgen -I -C
 
 # We need to remove the 'static' keyword from _rpcsvcstate so that

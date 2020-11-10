@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/sbin/bectl/tests/bectl_test.sh 348304 2019-05-27 13:12:51Z kevans $
+# $FreeBSD: releng/12.2/sbin/bectl/tests/bectl_test.sh 356593 2020-01-10 03:37:52Z kevans $
 
 ZPOOL_NAME_FILE=zpool_name
 get_zpool_name()
@@ -99,11 +99,35 @@ bectl_create_body()
 	mount=${cwd}/mnt
 
 	bectl_create_setup ${zpool} ${disk} ${mount}
+
+	# Create a child dataset that will be used to test creation
+	# of recursive and non-recursive boot environments.
+	atf_check zfs create -o mountpoint=/usr -o canmount=noauto \
+	    ${zpool}/ROOT/default/usr
+
 	# Test standard creation, creation of a snapshot, and creation from a
 	# snapshot.
 	atf_check bectl -r ${zpool}/ROOT create -e default default2
 	atf_check bectl -r ${zpool}/ROOT create default2@test_snap
 	atf_check bectl -r ${zpool}/ROOT create -e default2@test_snap default3
+
+	# Test standard creation, creation of a snapshot, and creation from a
+	# snapshot for recursive boot environments.
+	atf_check bectl -r ${zpool}/ROOT create -r -e default recursive
+	atf_check bectl -r ${zpool}/ROOT create -r recursive@test_snap
+	atf_check bectl -r ${zpool}/ROOT create -r -e recursive@test_snap recursive-snap
+
+	# Test that non-recursive boot environments have no child datasets.
+	atf_check -e not-empty -s not-exit:0 \
+		zfs list "${zpool}/ROOT/default2/usr"
+	atf_check -e not-empty -s not-exit:0 \
+		zfs list "${zpool}/ROOT/default3/usr"
+
+	# Test that recursive boot environments have child datasets.
+	atf_check -o not-empty \
+		zfs list "${zpool}/ROOT/recursive/usr"
+	atf_check -o not-empty \
+		zfs list "${zpool}/ROOT/recursive-snap/usr"
 }
 bectl_create_cleanup()
 {
@@ -138,6 +162,51 @@ bectl_destroy_body()
 	atf_check bectl -r ${zpool}/ROOT create -e default default3
 	atf_check bectl -r ${zpool}/ROOT destroy -o default3
 	atf_check bectl -r ${zpool}/ROOT unmount default
+
+	# create two be from the same parent and destroy the parent
+	atf_check bectl -r ${zpool}/ROOT create -e default default2
+	atf_check bectl -r ${zpool}/ROOT create -e default default3
+	atf_check bectl -r ${zpool}/ROOT destroy default
+	atf_check bectl -r ${zpool}/ROOT destroy default2
+	atf_check bectl -r ${zpool}/ROOT rename default3 default
+
+	# Create a BE, have it be the parent for another and repeat, then start
+	# deleting environments.  Arbitrarily chose default3 as the first.
+	# Sleeps are required to prevent conflicting snapshots- libbe will
+	# use the time with a serial at the end as needed to prevent collisions,
+	# but as BEs get promoted the snapshot names will convert and conflict
+	# anyways.  libbe should perhaps consider adding something extra to the
+	# default name to prevent collisions like this, but the default name
+	# includes down to the second and creating BEs this rapidly is perhaps
+	# uncommon enough.
+	atf_check bectl -r ${zpool}/ROOT create -e default default2
+	sleep 1
+	atf_check bectl -r ${zpool}/ROOT create -e default2 default3
+	sleep 1
+	atf_check bectl -r ${zpool}/ROOT create -e default3 default4
+	atf_check bectl -r ${zpool}/ROOT destroy default3
+	atf_check bectl -r ${zpool}/ROOT destroy default2
+	atf_check bectl -r ${zpool}/ROOT destroy default4
+
+	# Create two BEs, then create an unrelated snapshot on the originating
+	# BE and destroy it.  We shouldn't have promoted the second BE, and it's
+	# only possible to tell if we promoted it by making sure we didn't
+	# demote the first BE at some point -- if we did, it's origin will no
+	# longer be empty.
+	atf_check bectl -r ${zpool}/ROOT create -e default default2
+	atf_check bectl -r ${zpool}/ROOT create default@test
+
+	atf_check bectl -r ${zpool}/ROOT destroy default@test
+	atf_check -o inline:"-\n" zfs get -Ho value origin ${zpool}/ROOT/default
+	atf_check bectl -r ${zpool}/ROOT destroy default2
+
+	# As observed by beadm, if we explicitly try to destroy a snapshot that
+	# leads to clones, we shouldn't have allowed it.
+	atf_check bectl -r ${zpool}/ROOT create default@test
+	atf_check bectl -r ${zpool}/ROOT create -e default@test default2
+
+	atf_check -e  not-empty -s not-exit:0 bectl -r ${zpool}/ROOT destroy \
+	    default@test
 }
 bectl_destroy_cleanup()
 {

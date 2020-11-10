@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: releng/11.3/usr.sbin/unbound/config.h 363027 2020-07-08 20:20:59Z gordon $ */
+/* $FreeBSD: releng/12.2/usr.sbin/unbound/config.h 361457 2020-05-25 13:19:52Z cy $ */
 
 /* apply the noreturn attribute to a function that exits the program */
 #define ATTR_NORETURN __attribute__((__noreturn__))
@@ -72,7 +72,7 @@
 #define HAVE_CHROOT 1
 
 /* Define to 1 if you have the `CRYPTO_cleanup_all_ex_data' function. */
-#define HAVE_CRYPTO_CLEANUP_ALL_EX_DATA 1
+/* #undef HAVE_CRYPTO_CLEANUP_ALL_EX_DATA */
 
 /* Define to 1 if you have the `CRYPTO_THREADID_set_callback' function. */
 /* #undef HAVE_CRYPTO_THREADID_SET_CALLBACK */
@@ -121,7 +121,7 @@
 
 /* Define to 1 if you have the declaration of `reallocarray', and to 0 if you
    don't. */
-/* #undef HAVE_DECL_REALLOCARRAY */
+#define HAVE_DECL_REALLOCARRAY 1
 
 /* Define to 1 if you have the declaration of `redisConnect', and to 0 if you
    don't. */
@@ -155,7 +155,7 @@
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the `DSA_SIG_set0' function. */
-/* #undef HAVE_DSA_SIG_SET0 */
+#define HAVE_DSA_SIG_SET0 1
 
 /* Define to 1 if you have the <endian.h> header file. */
 /* #undef HAVE_ENDIAN_H */
@@ -170,10 +170,10 @@
 #define HAVE_ENDSERVENT 1
 
 /* Define to 1 if you have the `ERR_free_strings' function. */
-#define HAVE_ERR_FREE_STRINGS 1
+/* #undef HAVE_ERR_FREE_STRINGS */
 
 /* Define to 1 if you have the `ERR_load_crypto_strings' function. */
-#define HAVE_ERR_LOAD_CRYPTO_STRINGS 1
+/* #undef HAVE_ERR_LOAD_CRYPTO_STRINGS */
 
 /* Define to 1 if you have the `event_assign' function. */
 /* #undef HAVE_EVENT_ASSIGN */
@@ -197,19 +197,19 @@
 #define HAVE_EVP_AES_256_CBC 1
 
 /* Define to 1 if you have the `EVP_cleanup' function. */
-#define HAVE_EVP_CLEANUP 1
+/* #undef HAVE_EVP_CLEANUP */
 
 /* Define to 1 if you have the `EVP_DigestVerify' function. */
-/* #undef HAVE_EVP_DIGESTVERIFY */
+#define HAVE_EVP_DIGESTVERIFY 1
 
 /* Define to 1 if you have the `EVP_dss1' function. */
 /* #undef HAVE_EVP_DSS1 */
 
 /* Define to 1 if you have the `EVP_EncryptInit_ex' function. */
-/* #undef HAVE_EVP_ENCRYPTINIT_EX */
+#define HAVE_EVP_ENCRYPTINIT_EX 1
 
 /* Define to 1 if you have the `EVP_MD_CTX_new' function. */
-/* #undef HAVE_EVP_MD_CTX_NEW */
+#define HAVE_EVP_MD_CTX_NEW 1
 
 /* Define to 1 if you have the `EVP_sha1' function. */
 #define HAVE_EVP_SHA1 1
@@ -356,7 +356,7 @@
 /* #undef HAVE_NSS */
 
 /* Define to 1 if you have the `OpenSSL_add_all_digests' function. */
-#define HAVE_OPENSSL_ADD_ALL_DIGESTS 1
+/* #undef HAVE_OPENSSL_ADD_ALL_DIGESTS */
 
 /* Define to 1 if you have the <openssl/bn.h> header file. */
 #define HAVE_OPENSSL_BN_H 1
@@ -380,10 +380,10 @@
 #define HAVE_OPENSSL_ERR_H 1
 
 /* Define to 1 if you have the `OPENSSL_init_crypto' function. */
-/* #undef HAVE_OPENSSL_INIT_CRYPTO */
+#define HAVE_OPENSSL_INIT_CRYPTO 1
 
 /* Define to 1 if you have the `OPENSSL_init_ssl' function. */
-/* #undef HAVE_OPENSSL_INIT_SSL */
+#define HAVE_OPENSSL_INIT_SSL 1
 
 /* Define to 1 if you have the <openssl/rand.h> header file. */
 #define HAVE_OPENSSL_RAND_H 1
@@ -416,7 +416,7 @@
 #define HAVE_RANDOM 1
 
 /* Define to 1 if you have the `RAND_cleanup' function. */
-#define HAVE_RAND_CLEANUP 1
+/* #undef HAVE_RAND_CLEANUP */
 
 /* If we have reallocarray(3) */
 #define HAVE_REALLOCARRAY 1
@@ -476,19 +476,19 @@
 #define HAVE_SSL /**/
 
 /* Define to 1 if you have the `SSL_CTX_set_ciphersuites' function. */
-/* #undef HAVE_SSL_CTX_SET_CIPHERSUITES */
+#define HAVE_SSL_CTX_SET_CIPHERSUITES 1
 
 /* Define to 1 if you have the `SSL_CTX_set_security_level' function. */
-/* #undef HAVE_SSL_CTX_SET_SECURITY_LEVEL */
+#define HAVE_SSL_CTX_SET_SECURITY_LEVEL 1
 
 /* Define to 1 if you have the `SSL_CTX_set_tlsext_ticket_key_cb' function. */
 /* #undef HAVE_SSL_CTX_SET_TLSEXT_TICKET_KEY_CB */
 
 /* Define to 1 if you have the `SSL_get0_peername' function. */
-/* #undef HAVE_SSL_GET0_PEERNAME */
+#define HAVE_SSL_GET0_PEERNAME 1
 
 /* Define to 1 if you have the `SSL_set1_host' function. */
-/* #undef HAVE_SSL_SET1_HOST */
+#define HAVE_SSL_SET1_HOST 1
 
 /* Define to 1 if you have the <stdarg.h> header file. */
 #define HAVE_STDARG_H 1

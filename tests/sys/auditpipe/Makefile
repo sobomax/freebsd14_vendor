@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/auditpipe/Makefile 336728 2018-07-26 00:16:41Z asomers $
+# $FreeBSD: releng/12.2/tests/sys/auditpipe/Makefile 336728 2018-07-26 00:16:41Z asomers $
 
 TESTSDIR=	${TESTSBASE}/sys/auditpipe
 

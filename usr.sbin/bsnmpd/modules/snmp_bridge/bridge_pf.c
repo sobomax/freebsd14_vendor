@@ -28,7 +28,7 @@
  * Bridge MIB implementation for SNMPd.
  * Bridge pfil controls.
  *
- * $FreeBSD: releng/11.3/usr.sbin/bsnmpd/modules/snmp_bridge/bridge_pf.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_bridge/bridge_pf.c 335885 2018-07-03 08:44:40Z harti $
  */
 
 #include <sys/types.h>
@@ -48,6 +48,7 @@
 #include <bsnmp/snmpmod.h>
 #include <bsnmp/snmp_mibII.h>
 
+#define	SNMPTREE_TYPES
 #include "bridge_tree.h"
 #include "bridge_snmp.h"
 

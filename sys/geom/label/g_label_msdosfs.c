@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2004 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * Copyright (c) 2006 Tobias Reifenberger
  * All rights reserved.
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/geom/label/g_label_msdosfs.c 284582 2015-06-18 21:55:55Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/sys/geom/label/g_label_msdosfs.c 326270 2017-11-27 15:17:37Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

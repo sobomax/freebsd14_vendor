@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/ntb/ntb.c 323455 2017-09-11 18:50:36Z mav $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/ntb/ntb.c 355151 2019-11-28 00:40:42Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -205,6 +205,13 @@ ntb_print_child(device_t dev, device_t child)
 	return (retval);
 }
 
+bus_dma_tag_t
+ntb_get_dma_tag(device_t bus, device_t child)
+{
+
+	return (bus_get_dma_tag(bus));
+}
+
 void
 ntb_link_event(device_t dev)
 {
@@ -241,6 +248,30 @@ ntb_db_event(device_t dev, uint32_t vec)
 			nc->ctx_ops->db_event(nc->ctx, vec);
 		rm_runlock(&nc->ctx_lock, &ctx_tracker);
 	}
+}
+
+int
+ntb_port_number(device_t ntb)
+{
+	return (NTB_PORT_NUMBER(device_get_parent(ntb)));
+}
+
+int
+ntb_peer_port_count(device_t ntb)
+{
+	return (NTB_PEER_PORT_COUNT(device_get_parent(ntb)));
+}
+
+int
+ntb_peer_port_number(device_t ntb, int pidx)
+{
+	return (NTB_PEER_PORT_NUMBER(device_get_parent(ntb), pidx));
+}
+
+int
+ntb_peer_port_idx(device_t ntb, int port)
+{
+	return (NTB_PEER_PORT_IDX(device_get_parent(ntb), port));
 }
 
 bool

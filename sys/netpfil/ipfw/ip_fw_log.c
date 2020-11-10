@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netpfil/ipfw/ip_fw_log.c 346201 2019-04-14 11:06:42Z ae $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_log.c 343931 2019-02-09 11:05:03Z ae $");
 
 /*
  * Logging support for ipfw

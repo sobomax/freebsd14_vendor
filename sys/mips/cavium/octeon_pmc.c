@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2012 Oleksandr Tymoshenko <gonzo@freebsd.org>
  * All rights reserved.
  *
@@ -23,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/mips/cavium/octeon_pmc.c 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/mips/cavium/octeon_pmc.c 334827 2018-06-08 04:58:03Z mmacy $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/cavium/octeon_pmc.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/cavium/octeon_pmc.c 334827 2018-06-08 04:58:03Z mmacy $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -109,7 +111,7 @@ octeon_pmc_intr(void *arg)
 	struct trapframe *tf = PCPU_GET(curthread)->td_intr_frame;
 
 	if (pmc_intr)
-		(*pmc_intr)(PCPU_GET(cpuid), tf);
+		(*pmc_intr)(PCPU_GET(tf);
 
 	return (FILTER_HANDLED);
 }

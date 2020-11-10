@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2009 Neelkanth Natu
  * All rights reserved.
  *
@@ -25,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/mips/sibyte/sb_scd.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/mips/sibyte/sb_scd.c 326259 2017-11-27 15:07:26Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -207,7 +209,7 @@ sb_route_intsrc(int intsrc)
 	 * Use a deterministic mapping for the remaining sources.
 	 */
 #ifdef SMP
-	KASSERT(platform_ipi_intrnum() == 4,
+	KASSERT(platform_ipi_hardintr_num() == 4,
 		("Unexpected interrupt number used for IPI"));
 	intrnum = intsrc % 4;
 #else

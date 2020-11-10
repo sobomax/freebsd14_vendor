@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/bxe/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/bxe/Makefile 333848 2018-05-19 04:46:34Z mmacy $
 
 SYSDIR	?= ${SRCTOP}/sys
 
@@ -19,3 +19,4 @@ SRCS	+= bxe.c               \
 CFLAGS += -I${BXE}
 
 .include <bsd.kmod.mk>
+CWARNFLAGS+=	${NO_WUNUSED_BUT_SET_VARIABLE}

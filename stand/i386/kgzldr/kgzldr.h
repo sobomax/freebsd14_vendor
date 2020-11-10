@@ -23,7 +23,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/stand/i386/kgzldr/kgzldr.h 50477 1999-08-28 01:08:13Z peter $
+ * $FreeBSD: releng/12.2/stand/i386/kgzldr/kgzldr.h 50477 1999-08-28 01:08:13Z peter $
  */
 
 #define KGZ_CRT	 0x1		/* Video console */

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/gnu/usr.bin/gdb/kgdb/trgt.c 291525 2015-11-30 21:53:24Z jhb $");
+__FBSDID("$FreeBSD: releng/12.2/gnu/usr.bin/gdb/kgdb/trgt.c 358112 2020-02-19 14:42:21Z bapt $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -37,7 +37,6 @@ __FBSDID("$FreeBSD: releng/11.3/gnu/usr.bin/gdb/kgdb/trgt.c 291525 2015-11-30 21
 
 #include <defs.h>
 #include <readline/readline.h>
-#include <readline/tilde.h>
 #include <command.h>
 #include <exec.h>
 #include <frame-unwind.h>

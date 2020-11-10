@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/ldd/Makefile 211725 2010-08-23 22:24:11Z imp $
+# $FreeBSD: releng/12.2/usr.bin/ldd/Makefile 211725 2010-08-23 22:24:11Z imp $
 
 PROG?=		ldd
 SRCS=		ldd.c

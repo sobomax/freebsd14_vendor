@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Tim J. Robbins.
  * All rights reserved.
  *
@@ -41,7 +43,7 @@
 #include "un-namespace.h"
 #include "libc_private.h"
 
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/gen/wordexp.c 331722 2018-03-29 02:50:57Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/wordexp.c 326193 2017-11-25 17:12:48Z pfg $");
 
 static int	we_askshell(const char *, wordexp_t *, int);
 static int	we_check(const char *);

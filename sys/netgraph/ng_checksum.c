@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/netgraph/ng_checksum.c 309385 2016-12-02 05:36:37Z julian $");
+__FBSDID("$FreeBSD: releng/12.2/sys/netgraph/ng_checksum.c 303612 2016-08-01 12:09:04Z julian $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

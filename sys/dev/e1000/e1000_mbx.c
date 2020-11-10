@@ -1,4 +1,5 @@
 /******************************************************************************
+  SPDX-License-Identifier: BSD-3-Clause
 
   Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
@@ -30,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/11.3/sys/dev/e1000/e1000_mbx.c 333215 2018-05-03 15:47:42Z marius $*/
+/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_mbx.c 330803 2018-03-12 17:05:53Z tsoome $*/
 
 #include "e1000_mbx.h"
 

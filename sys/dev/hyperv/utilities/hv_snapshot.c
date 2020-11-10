@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/hyperv/utilities/hv_snapshot.c 311379 2017-01-05 08:02:37Z sephe $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/utilities/hv_snapshot.c 310314 2016-12-20 05:26:38Z sephe $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

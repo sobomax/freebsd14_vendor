@@ -1,12 +1,14 @@
-# $FreeBSD: releng/11.3/tools/regression/sockets/unix_cmsg/Makefile 339066 2018-10-01 17:26:41Z sobomax $
+# $FreeBSD: releng/12.2/tools/regression/sockets/unix_cmsg/Makefile 336466 2018-07-19 00:22:18Z asomers $
 
 PROG=	unix_cmsg
 SRCS=	${AUTOSRCS} unix_cmsg.c uc_common.h uc_common.c \
 	t_generic.h t_generic.c t_peercred.h t_peercred.c \
 	t_cmsgcred.h t_cmsgcred.c t_sockcred.h t_sockcred.c \
-	t_cmsgcred_sockcred.h t_cmsgcred_sockcred.c t_cmsg_len.h t_cmsg_len.c
+	t_cmsgcred_sockcred.h t_cmsgcred_sockcred.c t_cmsg_len.h t_cmsg_len.c \
+	uc_check_time.h uc_check_time.c
 CLEANFILES+=	${AUTOSRCS}
 MAN=
+CFLAGS+=	-I${.CURDIR} -I${.OBJDIR}
 WARNS?=	3
 
 REXP_bintime= 's|%%TTYPE%%|bintime|g ; s|%%DTYPE%%|bintime|g ; \

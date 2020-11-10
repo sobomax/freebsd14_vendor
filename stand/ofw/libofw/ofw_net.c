@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/ofw/libofw/ofw_net.c 329100 2018-02-10 04:56:07Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/ofw/libofw/ofw_net.c 348683 2019-06-05 12:34:28Z luporl $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -225,12 +225,12 @@ ofwn_init(struct iodesc *desc, void *machdep_hint)
 	dmabuf = NULL;
 	if (OF_call_method("dma-alloc", netinstance, 1, 1, (64 * 1024), &dmabuf)
 	    < 0) {   
-		printf("Failed to allocate DMA buffer (got %08x).\n", dmabuf);
+		printf("Failed to allocate DMA buffer (got %p).\n", dmabuf);
 		goto punt;
 	}
 
 #if defined(NETIF_DEBUG)
-	printf("ofwn_init: allocated DMA buffer: %08x\n", dmabuf);
+	printf("ofwn_init: allocated DMA buffer: %p\n", dmabuf);
 #endif
 #endif
 

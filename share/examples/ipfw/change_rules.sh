@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2000 Alexandre Peixoto
 # All rights reserved.
 #
@@ -24,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/share/examples/ipfw/change_rules.sh 119833 2003-09-07 07:52:56Z jmg $
+# $FreeBSD: releng/12.2/share/examples/ipfw/change_rules.sh 326275 2017-11-27 15:28:26Z pfg $
 
 # Change ipfw(8) rules with safety guarantees for remote operation
 #

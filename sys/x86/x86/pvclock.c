@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/x86/x86/pvclock.c 278184 2015-02-04 08:33:04Z bryanv $");
+__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/pvclock.c 278184 2015-02-04 08:33:04Z bryanv $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

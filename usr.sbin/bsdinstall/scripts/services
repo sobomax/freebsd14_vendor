@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/scripts/services 272173 2014-09-26 11:38:10Z des $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/scripts/services 326095 2017-11-22 15:27:47Z manu $
 
 : ${DIALOG_OK=0}
 
@@ -46,6 +46,8 @@ DAEMONS=$( dialog --backtitle "FreeBSD Installer" \
 	local_unbound "Local caching validating resolver" ${local_unbound:-off} \
 	sshd	"Secure shell daemon" ${sshd_enable:-off} \
 	moused	"PS/2 mouse pointer on console" ${moused_enable:-off} \
+	ntpdate	"Synchronize system and network time at bootime" \
+		${ntpdate_enable:-off} \
 	ntpd	"Synchronize system and network time" ${ntpd_enable:-off} \
 	powerd	"Adjust CPU frequency dynamically if supported" \
 		${powerd_enable:-off} \

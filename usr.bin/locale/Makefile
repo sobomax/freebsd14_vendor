@@ -1,6 +1,12 @@
-# $FreeBSD: releng/11.3/usr.bin/locale/Makefile 319186 2017-05-30 04:27:05Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/locale/Makefile 352416 2019-09-16 16:17:29Z yuripv $
+
+.include <src.opts.mk>
 
 PROG=	locale
 CFLAGS+= -I${SRCTOP}/lib/libc/locale
+LIBADD+= sbuf
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

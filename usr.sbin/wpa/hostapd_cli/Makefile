@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/wpa/hostapd_cli/Makefile 337817 2018-08-14 20:02:01Z cy $
+# $FreeBSD: releng/12.2/usr.sbin/wpa/hostapd_cli/Makefile 336203 2018-07-11 18:53:18Z cy $
 
 .include "../Makefile.inc"
 

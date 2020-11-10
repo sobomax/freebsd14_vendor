@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/arm64/include/memdev.h 305135 2016-08-31 17:30:21Z andrew $
+ * $FreeBSD: releng/12.2/sys/arm64/include/memdev.h 302789 2016-07-13 23:03:34Z andrew $
  */
 
 #ifndef _MACHINE_MEMDEV_H_

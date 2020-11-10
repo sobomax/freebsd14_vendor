@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tools/tools/decioctl/Makefile 301931 2016-06-15 21:01:53Z jhb $
+# $FreeBSD: releng/12.2/tools/tools/decioctl/Makefile 301931 2016-06-15 21:01:53Z jhb $
 
 PROG=	decioctl
 SRCS=	decioctl.c

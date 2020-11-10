@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.3/stand/efi/include/efipoint.h 346482 2019-04-21 04:26:02Z kevans $ */
+/* $FreeBSD: releng/12.2/stand/efi/include/efipoint.h 353971 2019-10-24 02:27:16Z kevans $ */
 /* Copyright (C) 2014 by John Cronin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -1,5 +1,7 @@
 #!/bin/sh -
 #
+# SPDX-License-Identifier: BSD-3-Clause
+#
 # Copyright (c) 1984, 1986, 1990, 1993
 #	The Regents of the University of California.  All rights reserved.
 #
@@ -28,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: releng/11.3/sys/conf/newvers.sh 363924 2020-08-05 17:14:37Z gordon $
+# $FreeBSD: releng/12.2/sys/conf/newvers.sh 366954 2020-10-23 00:00:52Z gjb $
 
 # Command line options:
 #
@@ -42,9 +44,12 @@
 #                      checkout from a version control system.  Metadata is
 #                      included if the tree is modified.
 
+# Note: usr.sbin/amd/include/newvers.sh assumes all variable assignments of
+# upper case variables starting in column 1 are on one line w/o continuation.
+
 TYPE="FreeBSD"
-REVISION="11.3"
-BRANCH="RELEASE-p12"
+REVISION="12.2"
+BRANCH="RELEASE"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi
@@ -63,7 +68,8 @@ findvcs()
 	cd ${SYSDIR}/..
 	while [ $(pwd) != "/" ]; do
 		if [ -e "./$1" ]; then
-			VCSDIR=$(pwd)"/$1"
+			VCSTOP=$(pwd)
+			VCSDIR=${VCSTOP}"/$1"
 			cd ${savedir}
 			return 0
 		fi
@@ -77,21 +83,15 @@ if [ -z "${SYSDIR}" ]; then
     SYSDIR=$(dirname $0)/..
 fi
 
-if [ -n "${PARAMFILE}" ]; then
-	RELDATE=$(awk '/__FreeBSD_version.*propagated to newvers/ {print $3}' \
-		${PARAMFILE})
-else
-	RELDATE=$(awk '/__FreeBSD_version.*propagated to newvers/ {print $3}' \
-		${SYSDIR}/sys/param.h)
-fi
+RELDATE=$(awk '/__FreeBSD_version.*propagated to newvers/ {print $3}' ${PARAMFILE:-${SYSDIR}/sys/param.h})
 
-b=share/examples/etc/bsd-style-copyright
 if [ -r "${SYSDIR}/../COPYRIGHT" ]; then
 	year=$(sed -Ee '/^Copyright .* The FreeBSD Project/!d;s/^.*1992-([0-9]*) .*$/\1/g' ${SYSDIR}/../COPYRIGHT)
 else
 	year=$(date +%Y)
 fi
 # look for copyright template
+b=share/examples/etc/bsd-style-copyright
 for bsd_copyright in ../$b ../../$b ../../../$b /usr/src/$b /usr/$b
 do
 	if [ -r "$bsd_copyright" ]; then
@@ -120,9 +120,7 @@ COPYRIGHT="$COPYRIGHT
 
 # VARS_ONLY means no files should be generated, this is just being
 # included.
-if [ -n "$VARS_ONLY" ]; then
-	return 0
-fi
+[ -n "$VARS_ONLY" ] && return 0
 
 LC_ALL=C; export LC_ALL
 if [ ! -r version ]
@@ -180,7 +178,7 @@ done
 if findvcs .git; then
 	for dir in /usr/bin /usr/local/bin; do
 		if [ -x "${dir}/git" ] ; then
-			git_cmd="${dir}/git --git-dir=${VCSDIR}"
+			git_cmd="${dir}/git -c help.autocorrect=0 --git-dir=${VCSDIR}"
 			break
 		fi
 	done
@@ -237,7 +235,7 @@ if [ -n "$git_cmd" ] ; then
 	if [ -n "$git_b" ] ; then
 		git="${git}(${git_b})"
 	fi
-	if $git_cmd --work-tree=${VCSDIR}/.. diff-index \
+	if $git_cmd --work-tree=${VCSTOP} diff-index \
 	    --name-only HEAD | read dummy; then
 		git="${git}-dirty"
 		modified=true
@@ -290,7 +288,7 @@ done
 shift $((OPTIND - 1))
 
 if [ -z "${include_metadata}" ]; then
-	VERINFO="${VERSION} ${svn}${git}${hg}${p4version}"
+	VERINFO="${VERSION}${svn}${git}${hg}${p4version} ${i}"
 	VERSTR="${VERINFO}\\n"
 else
 	VERINFO="${VERSION} #${v}${svn}${git}${hg}${p4version}: ${t}"

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Mark Santcroos <marks@ripe.net>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $FreeBSD: releng/11.3/sys/netgraph/ng_device.h 139823 2005-01-07 01:45:51Z imp $
+ * $FreeBSD: releng/12.2/sys/netgraph/ng_device.h 326272 2017-11-27 15:23:17Z pfg $
  *
  */
 

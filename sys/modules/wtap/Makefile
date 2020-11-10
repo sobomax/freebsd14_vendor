@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/wtap/Makefile 319182 2017-05-30 04:11:12Z ngie $
+# $FreeBSD: releng/12.2/sys/modules/wtap/Makefile 314651 2017-03-04 10:10:17Z ngie $
 
 
 # Declare Name of kernel module

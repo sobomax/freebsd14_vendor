@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/netinet/tcp_pcap.c 302374 2016-07-06 16:17:13Z jtl $
+ * $FreeBSD: releng/12.2/sys/netinet/tcp_pcap.c 302374 2016-07-06 16:17:13Z jtl $
  */
 
 #include <sys/queue.h>

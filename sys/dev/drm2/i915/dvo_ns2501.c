@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm2/i915/dvo_ns2501.c 296548 2016-03-08 20:33:02Z dumbbell $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/i915/dvo_ns2501.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include "dvo.h"
 #include "i915_reg.h"

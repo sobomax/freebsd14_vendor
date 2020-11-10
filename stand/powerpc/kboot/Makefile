@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/stand/powerpc/kboot/Makefile 332150 2018-04-06 20:24:50Z kevans $
+# $FreeBSD: releng/12.2/stand/powerpc/kboot/Makefile 348683 2019-06-05 12:34:28Z luporl $
 
 LOADER_CD9660_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	no
@@ -35,9 +35,6 @@ RELOC?=		0x0
 CFLAGS+=	-DRELOC=${RELOC}
 
 LDFLAGS=	-nostdlib -static -T ${.CURDIR}/ldscript.powerpc
-
-# 64-bit bridge extensions
-CFLAGS+= -Wa,-mppc64bridge
 
 DPADD=		${LDR_INTERP} ${LIBOFW} ${LIBFDT} ${LIBSA}
 LDADD=		${LDR_INTERP} ${LIBOFW} ${LIBFDT} ${LIBSA}

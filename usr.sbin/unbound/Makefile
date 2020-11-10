@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/unbound/Makefile 363027 2020-07-08 20:20:59Z gordon $
+# $FreeBSD: releng/12.2/usr.sbin/unbound/Makefile 333573 2018-05-12 17:10:36Z des $
 
 SUBDIR=	daemon anchor checkconf control
 SUBDIR+= setup

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 Silicon Graphics International Corp.
  * All rights reserved.
  *
@@ -28,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_debug.h#2 $
- * $FreeBSD: releng/11.3/sys/cam/ctl/ctl_debug.h 273163 2014-10-16 08:42:17Z mav $
+ * $FreeBSD: releng/12.2/sys/cam/ctl/ctl_debug.h 326265 2017-11-27 15:12:43Z pfg $
  */
 /*
  * CAM Target Layer debugging interface.

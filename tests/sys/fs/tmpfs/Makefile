@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/tests/sys/fs/tmpfs/Makefile 319005 2017-05-27 22:59:23Z ngie $
+# $FreeBSD: releng/12.2/tests/sys/fs/tmpfs/Makefile 336588 2018-07-21 20:14:01Z asomers $
 
 PACKAGE=		tests
 

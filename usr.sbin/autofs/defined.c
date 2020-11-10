@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/autofs/defined.c 332597 2018-04-16 16:16:24Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/autofs/defined.c 328338 2018-01-24 16:39:02Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -227,7 +227,7 @@ defined_add(const char *name, const char *value)
 
 	log_debugx("defining variable %s=%s", name, value);
 
-	d = calloc(sizeof(*d), 1);
+	d = calloc(1, sizeof(*d));
 	if (d == NULL)
 		log_err(1, "calloc");
 	d->d_name = checked_strdup(name);

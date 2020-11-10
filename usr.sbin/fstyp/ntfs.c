@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fstyp/ntfs.c 276704 2015-01-05 15:34:23Z trasz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fstyp/ntfs.c 276704 2015-01-05 15:34:23Z trasz $");
 
 #include <stdint.h>
 #include <stdio.h>

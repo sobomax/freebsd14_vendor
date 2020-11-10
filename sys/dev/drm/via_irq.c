@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/drm/via_irq.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/via_irq.c 338285 2018-08-24 00:02:00Z imp $");
 
 #include "dev/drm/drmP.h"
 #include "dev/drm/drm.h"

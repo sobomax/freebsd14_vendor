@@ -1,5 +1,5 @@
 /*	$NetBSD: queue.c,v 1.5 2011/08/31 16:24:57 plunky Exp $	*/
-/*	$FreeBSD: releng/11.3/usr.bin/grep/queue.c 330449 2018-03-05 07:26:05Z eadler $	*/
+/*	$FreeBSD: releng/12.2/usr.bin/grep/queue.c 326276 2017-11-27 15:37:16Z pfg $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/grep/queue.c 330449 2018-03-05 07:26:05Z eadler $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/grep/queue.c 326276 2017-11-27 15:37:16Z pfg $");
 
 #include <sys/param.h>
 #include <sys/queue.h>

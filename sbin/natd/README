@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sbin/natd/README 109727 2003-01-23 08:35:21Z ru $
+# $FreeBSD: releng/12.2/sbin/natd/README 109727 2003-01-23 08:35:21Z ru $
 
 	A Network Address Translation Daemon for FreeBSD
 

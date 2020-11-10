@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: l2cap.c,v 1.5 2003/05/16 19:52:37 max Exp $
- * $FreeBSD: releng/11.3/usr.sbin/bluetooth/l2control/l2cap.c 330449 2018-03-05 07:26:05Z eadler $
+ * $FreeBSD: releng/12.2/usr.sbin/bluetooth/l2control/l2cap.c 326276 2017-11-27 15:37:16Z pfg $
  */
 
 #include <sys/ioctl.h>

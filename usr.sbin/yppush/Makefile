@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/yppush/Makefile 319191 2017-05-30 05:15:09Z ngie $
+# $FreeBSD: releng/12.2/usr.sbin/yppush/Makefile 314464 2017-03-01 04:24:24Z ngie $
 
 RPCDIR=	${SRCTOP}/include/rpcsvc
 .PATH: ${RPCDIR} ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr

@@ -1,7 +1,8 @@
 /*-
  * Copyright (c) 1998 Michael Smith <msmith@freebsd.org>
- * Copyright (c) 2016 Netflix, Inc
  * All rights reserved.
+ *
+ * Copyright (c) 2016 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/libi386/biospci.c 329183 2018-02-12 20:51:28Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/biospci.c 351913 2019-09-05 23:27:59Z imp $");
 
 /*
  * PnP enumerator using the PCI BIOS.

@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2002 Networks Associates Technology, Inc.
  * All rights reserved.
  *
@@ -30,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/libkern/strvalid.c 140960 2005-01-29 13:34:22Z rwatson $");
+__FBSDID("$FreeBSD: releng/12.2/sys/libkern/strvalid.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include <sys/types.h>
 #include <sys/libkern.h>

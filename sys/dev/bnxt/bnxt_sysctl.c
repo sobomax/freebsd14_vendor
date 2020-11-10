@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/bnxt/bnxt_sysctl.c 333364 2018-05-08 15:51:40Z shurd $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/bnxt_sysctl.c 326999 2017-12-19 20:32:45Z shurd $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

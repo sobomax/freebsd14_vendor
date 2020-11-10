@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/beri/beri_ring.c 273278 2014-10-19 16:26:49Z br $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/beri/beri_ring.c 273278 2014-10-19 16:26:49Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

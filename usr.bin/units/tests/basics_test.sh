@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/11.3/usr.bin/units/tests/basics_test.sh 269084 2014-07-25 01:29:22Z jmmv $
+# $FreeBSD: releng/12.2/usr.bin/units/tests/basics_test.sh 269084 2014-07-25 01:29:22Z jmmv $
 
 base=`basename $0`
 

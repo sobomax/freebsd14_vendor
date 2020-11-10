@@ -1,5 +1,7 @@
 #!/bin/sh
 #-
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2010 iXsystems, Inc.  All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/11.3/usr.sbin/pc-sysinstall/backend/functions-packages.sh 247734 2013-03-03 23:01:46Z jpaetzel $
+# $FreeBSD: releng/12.2/usr.sbin/pc-sysinstall/backend/functions-packages.sh 326275 2017-11-27 15:28:26Z pfg $
 
 # Functions which runs commands on the system
 

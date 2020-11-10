@@ -15,7 +15,7 @@
  * all derivative works or modified versions.
  *
  * Cronyx Id: machdep.h,v 1.3.4.3 2003/11/27 14:21:58 rik Exp $
- * $FreeBSD: releng/11.3/sys/dev/cx/machdep.h 143063 2005-03-02 21:33:29Z joerg $
+ * $FreeBSD: releng/12.2/sys/dev/cx/machdep.h 334534 2018-06-02 18:03:35Z mjg $
  */
 
 /*
@@ -73,7 +73,6 @@
 #   include <machine/cpufunc.h>
 #   include <sys/libkern.h>
 #   include <sys/systm.h>
-#   define memset(a,b,c)	bzero (a,c)
 #   define port_t int
 
 #ifndef _SYS_CDEFS_H_

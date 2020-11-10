@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 2003 Poul-Henning Kamp
  * All rights reserved.
  *
@@ -26,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/geom_fox.c 332640 2018-04-17 02:18:04Z kevans $
+ * $FreeBSD: releng/12.2/sys/geom/geom_fox.c 332387 2018-04-10 19:18:16Z kevans $
  */
 
 /* This is a GEOM module for handling path selection for multi-path

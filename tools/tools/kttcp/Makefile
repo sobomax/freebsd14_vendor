@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/11.3/tools/tools/kttcp/Makefile 122628 2003-11-13 21:24:09Z sam $
+#	$FreeBSD: releng/12.2/tools/tools/kttcp/Makefile 122628 2003-11-13 21:24:09Z sam $
 
 SHELL=	/bin/sh
 

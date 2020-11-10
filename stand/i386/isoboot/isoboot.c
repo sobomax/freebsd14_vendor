@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/stand/i386/isoboot/isoboot.c 337816 2018-08-14 19:44:36Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/stand/i386/isoboot/isoboot.c 337520 2018-08-09 02:06:25Z kevans $");
 
 #include <sys/param.h>
 #include <sys/gpt.h>

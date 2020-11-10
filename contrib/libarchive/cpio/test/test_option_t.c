@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/cpio/test/test_option_t.c 344673 2019-02-28 22:56:15Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/cpio/test/test_option_t.c 344672 2019-02-28 22:55:44Z mm $");
 
 #ifdef HAVE_LOCALE_H
 #include <locale.h>

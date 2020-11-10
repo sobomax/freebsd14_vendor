@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/diff/tests/Makefile 339160 2018-10-03 17:16:18Z kevans $
+# $FreeBSD: releng/12.2/usr.bin/diff/tests/Makefile 338039 2018-08-19 03:57:20Z kevans $
 
 PACKAGE=	tests
 

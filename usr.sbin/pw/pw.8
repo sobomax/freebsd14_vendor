@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/11.3/usr.sbin/pw/pw.8 344017 2019-02-11 17:48:52Z bcr $
+.\" $FreeBSD: releng/12.2/usr.sbin/pw/pw.8 344016 2019-02-11 17:47:22Z bcr $
 .\"
 .Dd February 8, 2019
 .Dt PW 8
@@ -973,6 +973,11 @@ is created if it does not already exist.
 Finally, a random password is generated and displayed:
 .Bd -literal -offset indent
 pw useradd -n gsmith -c "Glurmo Smith" -s /bin/csh -m -w random
+.Ed
+.Pp
+Delete the gsmith user and their home directory, including contents.
+.Bd -literal -offset indent
+pw userdel -n gsmith -r
 .Ed
 .Pp
 Add the existing user jsmith to the wheel group,

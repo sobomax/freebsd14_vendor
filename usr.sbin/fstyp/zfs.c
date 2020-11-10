@@ -1,7 +1,6 @@
 /*-
  * Copyright (c) 2015 Allan Jude <allanjude@FreeBSD.org>
  * Copyright (c) 2015 Xin LI <delphij@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/fstyp/zfs.c 292757 2015-12-26 19:48:36Z allanjude $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fstyp/zfs.c 333449 2018-05-10 06:41:08Z delphij $");
 
 #include <sys/types.h>
 #include <cddl/compat/opensolaris/sys/types.h>

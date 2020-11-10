@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/11.3/contrib/libarchive/tar/test/test_copy.c 348607 2019-06-04 10:35:54Z mm $");
+__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_copy.c 358087 2020-02-19 01:46:43Z mm $");
 
 #if defined(__CYGWIN__)
 # include <limits.h>
@@ -256,13 +256,13 @@ verify_tree(size_t limit)
 					continue;
 				switch(dp[0]) {
 				case 'l': case 'm': case 'd':
-					failure("strlen(p)=%d", strlen(p));
+					failure("strlen(p)=%zu", strlen(p));
 					assert(strlen(p) < limit);
 					assertEqualString(p,
 					    filenames[strlen(p)]);
 					break;
 				case 'f': case 's':
-					failure("strlen(p)=%d", strlen(p));
+					failure("strlen(p)=%zu", strlen(p));
 					assert(strlen(p) < limit + 1);
 					assertEqualString(p,
 					    filenames[strlen(p)]);

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.bin/stat/tests/Makefile 321086 2017-07-17 21:01:10Z ngie $
+# $FreeBSD: releng/12.2/usr.bin/stat/tests/Makefile 319841 2017-06-12 00:21:55Z ngie $
 
 ATF_TESTS_SH+=	readlink_test
 ATF_TESTS_SH+=	stat_test

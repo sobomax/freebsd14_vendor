@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/usr.sbin/bsdinstall/partedit/Makefile 319016 2017-05-28 00:13:44Z rgrimes $
+# $FreeBSD: releng/12.2/usr.sbin/bsdinstall/partedit/Makefile 314833 2017-03-07 05:10:38Z rgrimes $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	partedit

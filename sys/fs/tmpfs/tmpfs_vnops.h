@@ -1,6 +1,8 @@
 /*	$NetBSD: tmpfs_vnops.h,v 1.7 2005/12/03 17:34:44 christos Exp $	*/
 
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ *
  * Copyright (c) 2005 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
@@ -29,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/fs/tmpfs/tmpfs_vnops.h 328298 2018-01-23 20:08:25Z jhb $
+ * $FreeBSD: releng/12.2/sys/fs/tmpfs/tmpfs_vnops.h 327004 2017-12-19 22:39:05Z jhb $
  */
 
 #ifndef _FS_TMPFS_TMPFS_VNOPS_H_

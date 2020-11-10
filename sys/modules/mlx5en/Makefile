@@ -1,4 +1,4 @@
-# $FreeBSD: releng/11.3/sys/modules/mlx5en/Makefile 347796 2019-05-16 17:09:06Z hselasky $
+# $FreeBSD: releng/12.2/sys/modules/mlx5en/Makefile 359378 2020-03-27 20:06:40Z kib $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en
@@ -9,9 +9,11 @@ mlx5_en_main.c \
 mlx5_en_tx.c \
 mlx5_en_flow_table.c \
 mlx5_en_rx.c \
+mlx5_en_rl.c \
 mlx5_en_txrx.c \
-device_if.h bus_if.h vnode_if.h pci_if.h \
-        opt_inet.h opt_inet6.h opt_rss.h
+mlx5_en_port_buffer.c
+SRCS+=	${LINUXKPI_GENSRCS}
+SRCS+=	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h
 
 .if defined(HAVE_PER_CQ_EVENT_PACKET)
 CFLAGS+= -DHAVE_PER_CQ_EVENT_PACKET

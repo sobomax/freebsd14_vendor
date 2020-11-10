@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001 Tobias Weingartner
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * $OpenBSD: hash.h,v 1.4 2004/05/25 18:37:23 jmc Exp $
- * $FreeBSD: releng/11.3/sys/sys/hash.h 331722 2018-03-29 02:50:57Z eadler $
+ * $FreeBSD: releng/12.2/sys/sys/hash.h 326256 2017-11-27 15:01:59Z pfg $
  */
 
 #ifndef _SYS_HASH_H_

@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/dev/vnic/thunder_bgx.c 300295 2016-05-20 11:02:04Z wma $
+ * $FreeBSD: releng/12.2/sys/dev/vnic/thunder_bgx.c 351679 2019-09-02 00:37:59Z emaste $
  *
  */
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/vnic/thunder_bgx.c 300295 2016-05-20 11:02:04Z wma $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/vnic/thunder_bgx.c 351679 2019-09-02 00:37:59Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -502,9 +502,8 @@ bgx_add_dmac_addr(uint64_t dmac, int node, int bgx_idx, int lmac)
 	bgx_idx += node * MAX_BGX_PER_CN88XX;
 	bgx = bgx_vnic[bgx_idx];
 
-	if (!bgx) {
-		device_printf(bgx->dev,
-		    "BGX%d not yet initialized, ignoring DMAC addition\n",
+	if (bgx == NULL) {
+		printf("BGX%d not yet initialized, ignoring DMAC addition\n",
 		    bgx_idx);
 		return;
 	}

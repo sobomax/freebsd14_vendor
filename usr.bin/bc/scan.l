@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.bin/bc/scan.l 264609 2014-04-17 14:15:53Z bz $");
+__FBSDID("$FreeBSD: releng/12.2/usr.bin/bc/scan.l 264609 2014-04-17 14:15:53Z bz $");
 
 #include <err.h>
 #include <errno.h>

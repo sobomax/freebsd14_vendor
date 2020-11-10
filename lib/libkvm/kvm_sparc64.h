@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/lib/libkvm/kvm_sparc64.h 291406 2015-11-27 18:58:26Z jhb $
+ * $FreeBSD: releng/12.2/lib/libkvm/kvm_sparc64.h 291406 2015-11-27 18:58:26Z jhb $
  */
 
 #ifndef __KVM_SPARC64_H__

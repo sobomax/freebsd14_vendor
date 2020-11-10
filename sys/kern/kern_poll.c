@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2001-2002 Luigi Rizzo
  *
  * Supported by: the Xorp Project (www.xorp.org)
@@ -26,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/kern/kern_poll.c 281528 2015-04-14 14:22:34Z gnn $");
+__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_poll.c 326271 2017-11-27 15:20:12Z pfg $");
 
 #include "opt_device_polling.h"
 

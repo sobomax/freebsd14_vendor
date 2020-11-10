@@ -6,7 +6,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/11.3/lib/libc/amd64/stdlib/lldiv.S 217106 2011-01-07 16:08:40Z kib $");
+__FBSDID("$FreeBSD: releng/12.2/lib/libc/amd64/stdlib/lldiv.S 217106 2011-01-07 16:08:40Z kib $");
 
 ENTRY(lldiv)
 	movq	%rdi,%rax

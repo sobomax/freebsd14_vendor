@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2003 by Thomas Moestl <tmm@FreeBSD.org>
  * All rights reserved.
  *
@@ -22,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/pci/ofw_pcib_subr.h 178279 2008-04-17 12:38:00Z marius $
+ * $FreeBSD: releng/12.2/sys/sparc64/pci/ofw_pcib_subr.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef _SPARC64_PCI_OFW_PCI_SUBR_H

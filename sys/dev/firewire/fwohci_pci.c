@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 2003 Hidetoshi Shimokawa
  * Copyright (c) 1998-2002 Katsushi Kobayashi and Hidetoshi Shimokawa
  * All rights reserved.
@@ -33,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/sys/dev/firewire/fwohci_pci.c 332156 2018-04-06 21:50:09Z kevans $");
+__FBSDID("$FreeBSD: releng/12.2/sys/dev/firewire/fwohci_pci.c 331858 2018-04-01 00:25:47Z imp $");
 
 #define BOUNCE_BUFFER_TEST	0
 

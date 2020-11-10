@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
  *
@@ -23,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/geom/shsec/g_shsec.h 155174 2006-02-01 12:06:01Z pjd $
+ * $FreeBSD: releng/12.2/sys/geom/shsec/g_shsec.h 326270 2017-11-27 15:17:37Z pfg $
  */
 
 #ifndef	_G_SHSEC_H_

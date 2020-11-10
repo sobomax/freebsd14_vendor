@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.3/usr.sbin/daemon/daemon.c 332943 2018-04-24 17:13:31Z ian $");
+__FBSDID("$FreeBSD: releng/12.2/usr.sbin/daemon/daemon.c 360128 2020-04-20 16:31:05Z mav $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -359,12 +359,13 @@ restart:
 			}
 		}
 	}
+	if (restart && !terminate)
+		daemon_sleep(restart, 0);
 	if (sigprocmask(SIG_BLOCK, &mask_term, NULL)) {
 		warn("sigprocmask");
 		goto exit;
 	}
 	if (restart && !terminate) {
-		daemon_sleep(restart, 0);
 		close(pfd[0]);
 		pfd[0] = -1;
 		goto restart;
@@ -384,7 +385,8 @@ static void
 daemon_sleep(time_t secs, long nsecs)
 {
 	struct timespec ts = { secs, nsecs };
-	while (nanosleep(&ts, &ts) == -1) {
+
+	while (!terminate && nanosleep(&ts, &ts) == -1) {
 		if (errno != EINTR)
 			err(1, "nanosleep");
 	}

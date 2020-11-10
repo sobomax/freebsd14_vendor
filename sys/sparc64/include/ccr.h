@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright 2001 by Thomas Moestl <tmm@FreeBSD.org>.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -21,7 +23,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/11.3/sys/sparc64/include/ccr.h 88618 2001-12-29 06:50:25Z jake $
+ * $FreeBSD: releng/12.2/sys/sparc64/include/ccr.h 326262 2017-11-27 15:10:39Z pfg $
  */
 
 #ifndef	_MACHINE_CCR_H_
