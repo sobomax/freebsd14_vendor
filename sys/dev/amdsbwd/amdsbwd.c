@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/amdsbwd/amdsbwd.c 358149 2020-02-20 01:42:11Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_amdsbwd.h"
 

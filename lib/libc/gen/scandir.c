@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)scandir.c	8.3 (Berkeley) 1/2/94");
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/scandir.c 364311 2020-08-17 16:27:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Scan the directory dirname calling select to make a list of selected

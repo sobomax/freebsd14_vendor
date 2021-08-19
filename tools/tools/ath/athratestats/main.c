@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/tools/tools/ath/athratestats/main.c 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 
 #include "opt_ah.h"

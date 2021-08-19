@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/evdev/evdev.c 360637 2020-05-04 18:40:56Z zeising $
+ * $FreeBSD$
  */
 
 #include "opt_evdev.h"

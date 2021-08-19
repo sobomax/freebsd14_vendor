@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_intr.c 364000 2020-08-07 00:40:28Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_kstack_usage_prof.h"

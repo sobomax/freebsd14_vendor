@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/ttydisc.h 360258 2020-04-24 13:31:22Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TTYDISC_H_

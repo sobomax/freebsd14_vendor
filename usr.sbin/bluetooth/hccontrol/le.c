@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.c,v 1.5 2003/09/05 00:38:24 max Exp $
- * $FreeBSD: releng/12.2/usr.sbin/bluetooth/hccontrol/le.c 361188 2020-05-18 09:17:05Z hselasky $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

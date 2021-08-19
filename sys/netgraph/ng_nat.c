@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netgraph/ng_nat.c 359707 2020-04-07 17:49:36Z eugen $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

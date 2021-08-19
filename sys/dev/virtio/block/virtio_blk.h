@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/virtio/block/virtio_blk.h 365702 2020-09-13 23:51:07Z allanjude $
+ * $FreeBSD$
  */
 
 #ifndef _VIRTIO_BLK_H

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sbin/setkey/Makefile 359590 2020-04-03 05:11:16Z bapt $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

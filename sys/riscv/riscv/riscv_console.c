@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/riscv/riscv/riscv_console.c 360854 2020-05-09 20:10:01Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kdb.h>

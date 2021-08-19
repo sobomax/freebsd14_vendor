@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/arm/ecp_nistz256-armv4.S 366177 2020-09-25 22:43:14Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from ecp_nistz256-armv4.pl. */
 #include "arm_arch.h"
 

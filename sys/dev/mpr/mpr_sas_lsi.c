@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpr/mpr_sas_lsi.c 352735 2019-09-26 01:54:24Z imp $");
+__FBSDID("$FreeBSD$");
 
 /* Communications core for Avago Technologies (LSI) MPT3 */
 

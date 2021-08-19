@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/yp_mkdb/yp_mkdb.c 364084 2020-08-10 17:35:58Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <fcntl.h>

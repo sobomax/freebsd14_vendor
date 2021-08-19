@@ -35,7 +35,7 @@
 /*
  * procfs ioctl definitions.
  *
- * $FreeBSD: releng/12.2/sys/sys/pioctl.h 361020 2020-05-13 21:16:02Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PIOCTL_H

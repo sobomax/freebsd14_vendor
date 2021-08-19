@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/diff/diff.c 360595 2020-05-03 03:44:58Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 

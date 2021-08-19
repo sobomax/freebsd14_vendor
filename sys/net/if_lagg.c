@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/if_lagg.c 362364 2020-06-19 05:54:15Z rpokala $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

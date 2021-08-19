@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/cxgbe/t6_firmware/Makefile 365961 2020-09-21 18:19:48Z np $
+# $FreeBSD$
 #
 
 T6FW=	${SRCTOP}/sys/dev/cxgbe/firmware

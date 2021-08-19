@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/libc/softfloat/templates/softfloat.h 129203 2004-05-14 12:13:06Z cognet $ */
+/* $FreeBSD$ */
 
 /*
 ===============================================================================

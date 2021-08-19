@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/t4_regs_values.h 355234 2019-11-30 17:56:04Z np $
+ * $FreeBSD$
  *
  */
 

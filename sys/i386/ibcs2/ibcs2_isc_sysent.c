@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/i386/ibcs2/ibcs2_isc_sysent.c 357109 2020-01-25 05:52:31Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

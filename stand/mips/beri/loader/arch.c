@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/mips/beri/loader/arch.c 359735 2020-04-09 04:50:19Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

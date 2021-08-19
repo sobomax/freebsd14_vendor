@@ -32,7 +32,7 @@
 #include "opt_printf.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cam/cam_xpt.c 364907 2020-08-28 10:01:03Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>

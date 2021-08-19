@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/usb/cp2112/Makefile 364913 2020-08-28 10:28:52Z avg $
+# $FreeBSD$
 #
 # Copyright (c) Andriy Gapon <avg@FreeBSD.org>
 #

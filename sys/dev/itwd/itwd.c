@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/itwd/itwd.c 353647 2019-10-16 14:57:38Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

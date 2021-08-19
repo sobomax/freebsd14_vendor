@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/clang/include/llvm/Config/config.h 363494 2020-07-24 20:48:06Z dim $ */
+/* $FreeBSD$ */
 #ifndef CONFIG_H
 #define CONFIG_H
 

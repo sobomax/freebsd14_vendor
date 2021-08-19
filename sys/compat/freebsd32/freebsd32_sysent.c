@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/freebsd32/freebsd32_sysent.c 363879 2020-08-05 03:53:57Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

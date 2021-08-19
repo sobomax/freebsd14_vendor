@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/xen/xen_apic.c 364000 2020-08-07 00:40:28Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>

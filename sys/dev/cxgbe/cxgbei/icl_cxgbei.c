@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 364750 2020-08-25 02:54:48Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mbuf.h	8.5 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.2/sys/sys/mbuf.h 364159 2020-08-12 11:49:35Z ae $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MBUF_H_

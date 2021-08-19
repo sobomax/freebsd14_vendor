@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_map.h 365007 2020-08-31 19:59:05Z markj $
+ * $FreeBSD$
  */
 
 /*

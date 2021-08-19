@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsserver/nfs_nfsdstate.c 366256 2020-09-29 15:09:38Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

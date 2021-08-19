@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.2/sys/dev/sume/adapter.h 364973 2020-08-30 07:34:32Z zec $ */
+/* $FreeBSD$ */
 
 #define	DEFAULT_ETHER_ADDRESS		"\02SUME\00"
 #define	SUME_ETH_DEVICE_NAME		"sume"

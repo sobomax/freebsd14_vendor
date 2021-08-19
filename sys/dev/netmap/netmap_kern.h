@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.2/sys/dev/netmap/netmap_kern.h 362304 2020-06-18 10:03:17Z vmaffione $
+ * $FreeBSD$
  *
  * The header contains the definitions of constants and function
  * prototypes used only in kernelspace.

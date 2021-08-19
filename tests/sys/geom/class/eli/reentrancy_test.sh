@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/geom/class/eli/reentrancy_test.sh 363486 2020-07-24 18:19:25Z asomers $
+# $FreeBSD$
 
 # Test various operations for geli-on-geli providers, to ensure that geli is
 # reentrant.

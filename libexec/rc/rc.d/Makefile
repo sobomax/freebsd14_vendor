@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/Makefile 364881 2020-08-27 19:37:28Z trasz $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

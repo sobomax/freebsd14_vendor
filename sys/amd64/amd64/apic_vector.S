@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD: releng/12.2/sys/amd64/amd64/apic_vector.S 364000 2020-08-07 00:40:28Z mav $
+ * $FreeBSD$
  */
 
 /*

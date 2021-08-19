@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/safexcel/safexcel.c 364060 2020-08-10 02:39:42Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>

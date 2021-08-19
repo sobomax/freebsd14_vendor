@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cam/scsi/scsi_da.c 364905 2020-08-28 08:52:00Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

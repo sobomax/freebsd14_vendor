@@ -33,7 +33,7 @@
  *
  *      @(#)bpf.h       7.1 (Berkeley) 5/7/91
  *
- * $FreeBSD: releng/12.2/sys/net/dlt.h 356340 2020-01-04 00:41:22Z cy $
+ * $FreeBSD$
  */
 
 #ifndef _NET_DLT_H_

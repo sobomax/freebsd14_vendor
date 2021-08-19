@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/riscv/gen/_set_tp.c 360932 2020-05-11 21:24:22Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <string.h>
 #include <sys/types.h>

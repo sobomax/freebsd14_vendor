@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/linux/linux_dummy.c 365034 2020-09-01 12:09:13Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

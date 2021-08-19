@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/iwmfw/Makefile 354927 2019-11-21 00:34:39Z markj $
+# $FreeBSD$
 
 SUBDIR=	iwm3160fw \
 	iwm3168fw \

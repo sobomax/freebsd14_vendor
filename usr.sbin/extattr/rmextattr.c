@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/extattr/rmextattr.c 357879 2020-02-13 20:45:32Z asomers $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

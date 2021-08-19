@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_sdhost.c 358653 2020-03-04 21:53:54Z manu $");
+__FBSDID("$FreeBSD$");
 
 /*
  * pin 48-53 - card slot

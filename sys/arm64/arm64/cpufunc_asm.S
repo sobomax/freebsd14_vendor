@@ -31,7 +31,7 @@
 
 #include <machine/asm.h>
 #include <machine/param.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/cpufunc_asm.S 352485 2019-09-18 14:38:42Z alc $");
+__FBSDID("$FreeBSD$");
 
 /*
  * FIXME:

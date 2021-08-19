@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_support_format_tar.c 362132 2020-06-12 22:59:59Z mm $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

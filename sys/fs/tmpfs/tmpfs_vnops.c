@@ -36,7 +36,7 @@
  * tmpfs vnode interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/tmpfs/tmpfs_vnops.c 362001 2020-06-10 03:57:10Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

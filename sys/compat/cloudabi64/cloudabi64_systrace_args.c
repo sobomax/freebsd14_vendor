@@ -2,7 +2,7 @@
  * System call argument to DTrace register array converstion.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/cloudabi64/cloudabi64_systrace_args.c 353067 2019-10-03 20:09:50Z brooks $
+ * $FreeBSD$
  * This file is part of the DTrace syscall provider.
  */
 

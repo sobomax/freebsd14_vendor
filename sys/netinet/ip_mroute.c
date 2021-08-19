@@ -69,7 +69,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/ip_mroute.c 362494 2020-06-22 10:52:30Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"

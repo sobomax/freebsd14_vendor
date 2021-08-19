@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/nvme/nvme_qpair.c 362579 2020-06-24 13:49:30Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>

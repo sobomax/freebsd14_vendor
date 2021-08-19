@@ -87,7 +87,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_witness.c 363506 2020-07-25 00:37:34Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"

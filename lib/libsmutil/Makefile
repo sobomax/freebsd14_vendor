@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libsmutil/Makefile 312479 2017-01-20 04:34:34Z ngie $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

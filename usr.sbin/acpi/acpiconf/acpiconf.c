@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	$Id: acpiconf.c,v 1.5 2000/08/08 14:12:19 iwasaki Exp $
- *	$FreeBSD: releng/12.2/usr.sbin/acpi/acpiconf/acpiconf.c 359076 2020-03-18 18:02:33Z hrs $
+ *	$FreeBSD$
  */
 
 #include <sys/param.h>

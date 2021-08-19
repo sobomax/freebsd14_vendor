@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: powerpc.h,v 1.3 2000/06/01 00:49:59 matt Exp $
- * $FreeBSD: releng/12.2/sys/powerpc/include/platform.h 365634 2020-09-11 15:30:47Z mav $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_PLATFORM_H_

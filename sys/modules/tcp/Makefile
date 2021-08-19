@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/tcp/Makefile 365470 2020-09-08 18:58:38Z jhb $
+# $FreeBSD$
 #
 
 .include <kmod.opts.mk>

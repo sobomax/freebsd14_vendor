@@ -8,7 +8,7 @@
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *
- * $FreeBSD: releng/12.2/usr.bin/top/display.c 362469 2020-06-21 20:23:39Z pstef $
+ * $FreeBSD$
  */
 
 /*

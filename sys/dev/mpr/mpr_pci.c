@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpr/mpr_pci.c 352735 2019-09-26 01:54:24Z imp $");
+__FBSDID("$FreeBSD$");
 
 /* PCI/PCI-X/PCIe bus interface for the Avago Tech (LSI) MPT3 controllers */
 

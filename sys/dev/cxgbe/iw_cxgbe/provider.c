@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/iw_cxgbe/provider.c 360548 2020-05-01 21:22:26Z np $");
+__FBSDID("$FreeBSD$");
 
 #define	LINUXKPI_PARAM_PREFIX iw_cxgbe_
 

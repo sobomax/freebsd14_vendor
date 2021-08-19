@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/ntp/ntpd/Makefile 340696 2018-11-20 20:08:51Z garga $
+# $FreeBSD$
 
 MAN=
 

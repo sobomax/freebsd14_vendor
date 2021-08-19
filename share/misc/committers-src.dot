@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/misc/committers-src.dot 359933 2020-04-14 18:24:59Z rscheff $
+# $FreeBSD$
 
 # This file is meant to list all FreeBSD src committers and describe the
 # mentor-mentee relationships between them.

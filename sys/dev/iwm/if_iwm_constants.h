@@ -69,7 +69,7 @@
  *
  *****************************************************************************/
 
-/* $FreeBSD: releng/12.2/sys/dev/iwm/if_iwm_constants.h 355608 2019-12-11 14:28:13Z markj $ */
+/* $FreeBSD$ */
 
 #ifndef __IF_IWM_CONSTANTS_H
 #define __IF_IWM_CONSTANTS_H

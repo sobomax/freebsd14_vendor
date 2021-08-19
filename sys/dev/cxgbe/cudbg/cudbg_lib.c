@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/cudbg/cudbg_lib.c 364776 2020-08-25 18:21:13Z np $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/param.h>

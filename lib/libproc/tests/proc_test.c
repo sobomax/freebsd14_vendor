@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libproc/tests/proc_test.c 361505 2020-05-26 14:06:07Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/wait.h>

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/linux/linux_ptrace.c 364510 2020-08-23 19:30:12Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>

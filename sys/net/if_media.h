@@ -1,5 +1,5 @@
 /*	$NetBSD: if_media.h,v 1.3 1997/03/26 01:19:27 thorpej Exp $	*/
-/* $FreeBSD: releng/12.2/sys/net/if_media.h 358628 2020-03-04 17:21:49Z kib $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libbe/be.c 363941 2020-08-06 04:54:59Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/mount.h>

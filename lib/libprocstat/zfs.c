@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libprocstat/zfs.c 361823 2020-06-05 06:34:04Z avg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

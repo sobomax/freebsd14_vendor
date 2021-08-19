@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_option_safe_writes.c 358087 2020-02-19 01:46:43Z mm $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_option_safe_writes)
 {

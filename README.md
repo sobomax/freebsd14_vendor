@@ -2,7 +2,7 @@ FreeBSD Source:
 ---------------
 This is the top level of the FreeBSD source directory.  This file
 was last revised on:
-$FreeBSD: releng/12.2/README.md 335299 2018-06-17 19:44:24Z eadler $
+$FreeBSD$
 
 FreeBSD is an operating system used to power modern servers,
 desktops, and embedded platforms. A large community has

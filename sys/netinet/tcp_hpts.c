@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/tcp_hpts.c 362880 2020-07-01 23:47:51Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

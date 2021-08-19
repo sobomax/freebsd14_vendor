@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/gpio/Makefile 356018 2019-12-22 18:51:05Z ian $
+# $FreeBSD$
 #
 # Copyright (c) 2011 Adrian Chadd.  All rights reserved.
 #

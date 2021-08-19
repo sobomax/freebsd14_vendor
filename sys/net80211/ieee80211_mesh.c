@@ -30,7 +30,7 @@
  */ 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/12.2/sys/net80211/ieee80211_mesh.c 361038 2020-05-14 17:56:43Z jhb $");
+__FBSDID("$FreeBSD$");
 #endif
 
 /*

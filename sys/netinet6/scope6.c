@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet6/scope6.c 361862 2020-06-06 03:54:06Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/malloc.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/ipsec/Makefile 365270 2020-09-02 19:02:48Z jhb $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net ${SRCTOP}/sys/netipsec
 

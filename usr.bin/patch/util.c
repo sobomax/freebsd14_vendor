@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: util.c,v 1.35 2010/07/24 01:10:12 ray Exp $
- * $FreeBSD: releng/12.2/usr.bin/patch/util.c 355351 2019-12-03 18:55:09Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/stat.h>

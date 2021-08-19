@@ -31,7 +31,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/script/script.c 364225 2020-08-14 00:55:48Z markj $");
+__FBSDID("$FreeBSD$");
 #ifndef lint
 static const char copyright[] =
 "@(#) Copyright (c) 1980, 1992, 1993\n\

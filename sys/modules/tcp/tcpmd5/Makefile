@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/tcp/tcpmd5/Makefile 365270 2020-09-02 19:02:48Z jhb $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netipsec
 

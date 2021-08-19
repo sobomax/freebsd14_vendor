@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/block_if.c 365702 2020-09-13 23:51:07Z allanjude $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/block_if.c 365702 2020-09-13 23:51:07Z allanjude $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM

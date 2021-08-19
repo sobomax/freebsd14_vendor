@@ -16,7 +16,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.2/usr.sbin/cron/cron/compat.h 358255 2020-02-23 03:13:38Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef __P

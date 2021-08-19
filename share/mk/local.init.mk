@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/local.init.mk 359912 2020-04-14 01:05:11Z sjg $
+# $FreeBSD$
 
 .if !target(__${_this}__)
 __${_this}__:

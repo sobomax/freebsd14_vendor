@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_read_format_zip_with_invalid_traditional_eocd.c 358087 2020-02-19 01:46:43Z mm $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Issue 869: zip files without a valid EOCD header aren't loaded even if they

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/efi/Makefile 353988 2019-10-24 03:16:23Z kevans $
+# $FreeBSD$
 
 NO_OBJ=t
 

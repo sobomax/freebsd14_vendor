@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/gpio/gpiokeys.c 365392 2020-09-07 06:14:42Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include "opt_kbd.h"

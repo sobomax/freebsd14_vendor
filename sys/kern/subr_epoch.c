@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_epoch.c 364389 2020-08-19 13:28:50Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>

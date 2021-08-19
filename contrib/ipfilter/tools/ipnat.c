@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ipnat.c 359753 2020-04-09 20:35:35Z kevans $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

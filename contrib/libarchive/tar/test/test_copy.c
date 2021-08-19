@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_copy.c 358087 2020-02-19 01:46:43Z mm $");
+__FBSDID("$FreeBSD$");
 
 #if defined(__CYGWIN__)
 # include <limits.h>

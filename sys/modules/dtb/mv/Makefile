@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/dtb/mv/Makefile 362241 2020-06-16 20:36:22Z manu $
+# $FreeBSD$
 # All the dts files for Marvell systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"

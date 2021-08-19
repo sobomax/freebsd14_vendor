@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/mac/bsdextended/Makefile 361126 2020-05-17 02:35:50Z asomers $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/mac/bsdextended
 

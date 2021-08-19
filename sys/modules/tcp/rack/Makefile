@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/tcp/rack/Makefile 362880 2020-07-01 23:47:51Z tuexen $
+# $FreeBSD$
 #
 
 .PATH: ${.CURDIR}/../../../netinet/tcp_stacks

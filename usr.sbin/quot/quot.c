@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/quot/quot.c 331095 2018-03-17 12:59:55Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stdint.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/allwinner/Makefile 362401 2020-06-19 18:10:39Z manu $
+# $FreeBSD$
 # Build modules specific to Allwinner.
 
 SUBDIR = \

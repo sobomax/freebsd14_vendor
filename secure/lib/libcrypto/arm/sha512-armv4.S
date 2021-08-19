@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/arm/sha512-armv4.S 359186 2020-03-20 21:43:08Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from sha512-armv4.pl. */
 @ Copyright 2007-2020 The OpenSSL Project Authors. All Rights Reserved.
 @

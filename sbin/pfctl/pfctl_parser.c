@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/pfctl/pfctl_parser.c 360341 2020-04-26 16:06:09Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

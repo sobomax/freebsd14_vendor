@@ -58,11 +58,11 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.2/sys/dev/mpr/mpr_user.c 363815 2020-08-03 23:06:33Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpr/mpr_user.c 363815 2020-08-03 23:06:33Z markj $");
+__FBSDID("$FreeBSD$");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>

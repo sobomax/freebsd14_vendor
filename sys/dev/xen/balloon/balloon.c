@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/xen/balloon/balloon.c 336470 2018-07-19 07:54:45Z royger $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -310,7 +310,8 @@ set_new_target(unsigned long target)
 
 static struct xs_watch target_watch =
 {
-	.node = "memory/target"
+	.node = "memory/target",
+	.max_pending = 1,
 };
 
 /* React to a change in the target key */

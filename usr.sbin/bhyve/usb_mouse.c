@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/usb_mouse.c 363239 2020-07-16 02:53:13Z grehan $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/time.h>
 

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/tip/tip/tip.c 359763 2020-04-10 00:27:19Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifndef lint
 static const char copyright[] =

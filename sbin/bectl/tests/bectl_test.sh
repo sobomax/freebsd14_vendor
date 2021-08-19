@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sbin/bectl/tests/bectl_test.sh 356593 2020-01-10 03:37:52Z kevans $
+# $FreeBSD$
 
 ZPOOL_NAME_FILE=zpool_name
 get_zpool_name()

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/googletest.test.inc.mk 357524 2020-02-04 19:51:26Z dim $
+# $FreeBSD$
 
 GTESTS_CXXFLAGS+= -DGTEST_HAS_POSIX_RE=1
 GTESTS_CXXFLAGS+= -DGTEST_HAS_PTHREAD=1

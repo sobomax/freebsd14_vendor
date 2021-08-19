@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/bsd.sysdir.mk 357107 2020-01-25 05:17:44Z kevans $
+# $FreeBSD$
 
 # Search for kernel source tree in standard places.
 .if !defined(SYSDIR)

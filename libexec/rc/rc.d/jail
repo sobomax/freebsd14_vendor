@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/jail 354725 2019-11-15 07:01:04Z avg $
+# $FreeBSD$
 #
 
 # PROVIDE: jail

@@ -25,16 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/linux32/linux32_support.s 337431 2018-08-07 18:29:10Z kib $
+ * $FreeBSD$
  */
 
 #include "linux32_assym.h"		/* system definitions */
 #include <machine/asmacros.h>		/* miscellaneous asm macros */
+#include <machine/specialreg.h>
 
 #include "assym.inc"
 
 futex_fault:
-	movq	$0,PCB_ONFAULT(%r8)
+	testl	$CPUID_STDEXT_SMAP,cpu_stdext_feature(%rip)
+	je	1f
+	clac
+1:	movq	$0,PCB_ONFAULT(%r8)
 	movl	$-EFAULT,%eax
 	ret
 

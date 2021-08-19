@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/ip.c 354000 2019-10-24 03:38:16Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/socket.h>

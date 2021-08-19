@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sys/contrib/ipfilter/netinet/ip_proxy.c 358664 2020-03-05 06:35:05Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/include/cpufunc.h 363633 2020-07-28 07:04:46Z mjg $
+ * $FreeBSD$
  */
 
 /*

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libutil/pidfile.c 363231 2020-07-15 17:34:08Z dab $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>

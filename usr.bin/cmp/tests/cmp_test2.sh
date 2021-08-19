@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.bin/cmp/tests/cmp_test2.sh 355456 2019-12-06 18:27:50Z markj $
+# $FreeBSD$
 
 atf_test_case special
 special_head() {

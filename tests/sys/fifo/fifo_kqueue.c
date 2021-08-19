@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/tests/sys/fifo/fifo_kqueue.c 361552 2020-05-27 15:06:03Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/event.h>

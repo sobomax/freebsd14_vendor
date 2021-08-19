@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/powerd/powerd.c 358990 2020-03-14 06:57:50Z cperciva $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

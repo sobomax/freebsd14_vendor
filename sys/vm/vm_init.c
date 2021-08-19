@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/vm/vm_init.c 365007 2020-08-31 19:59:05Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/domainset.h>

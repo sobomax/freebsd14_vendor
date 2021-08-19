@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/i386/gptzfsboot/Makefile 359155 2020-03-19 22:33:24Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

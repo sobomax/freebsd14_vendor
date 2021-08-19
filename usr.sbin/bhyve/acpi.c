@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/acpi.c 356500 2020-01-08 17:30:14Z jkim $
+ * $FreeBSD$
  */
 
 /*
@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/acpi.c 356500 2020-01-08 17:30:14Z jkim $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>

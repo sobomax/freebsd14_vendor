@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/overflow.h 363790 2020-08-03 09:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef __LINUX_OVERFLOW_H__

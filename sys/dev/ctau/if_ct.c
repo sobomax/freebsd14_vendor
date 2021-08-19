@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ctau/if_ct.c 358803 2020-03-09 13:04:47Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/proc.h>

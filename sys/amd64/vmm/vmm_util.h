@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/vmm_util.h 358146 2020-02-20 01:38:56Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _VMM_UTIL_H_

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/net/if_epair.c 357490 2020-02-04 04:29:54Z kp $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

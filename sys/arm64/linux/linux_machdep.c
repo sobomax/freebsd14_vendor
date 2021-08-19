@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/linux/linux_machdep.c 364715 2020-08-24 17:25:26Z trasz $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/linux/linux_machdep.c 364715 2020-08-24 17:25:26Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -37,6 +37,8 @@ __FBSDID("$FreeBSD: releng/12.2/sys/arm64/linux/linux_machdep.c 364715 2020-08-2
 #include <sys/ktr.h>
 #include <sys/proc.h>
 #include <sys/sdt.h>
+
+#include <security/audit/audit.h>
 
 #include <arm64/linux/linux.h>
 #include <arm64/linux/linux_proto.h>
@@ -74,6 +76,7 @@ linux_execve(struct thread *td, struct linux_execve_args *uap)
 	free(path, M_TEMP);
 	if (error == 0)
 		error = linux_common_execve(td, &eargs);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 

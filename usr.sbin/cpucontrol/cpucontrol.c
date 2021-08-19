@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/cpucontrol/cpucontrol.c 354768 2019-11-16 10:50:10Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #include <err.h>

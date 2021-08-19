@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsserver/nfs_nfsdkrpc.c 360141 2020-04-21 04:47:42Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet6.h"
 #include "opt_kgssapi.h"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/freebsd32/freebsd32_misc.c 363918 2020-08-05 17:07:13Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -440,6 +440,7 @@ freebsd32_execve(struct thread *td, struct freebsd32_execve_args *uap)
 	if (error == 0)
 		error = kern_execve(td, &eargs, NULL);
 	post_execve(td, error, oldvmspace);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 
@@ -460,6 +461,7 @@ freebsd32_fexecve(struct thread *td, struct freebsd32_fexecve_args *uap)
 		error = kern_execve(td, &eargs, NULL);
 	}
 	post_execve(td, error, oldvmspace);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 

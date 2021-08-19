@@ -59,7 +59,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/systat/devs.c 360383 2020-04-27 16:11:59Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifdef lint
 static const char sccsid[] = "@(#)disks.c	8.1 (Berkeley) 6/6/93";

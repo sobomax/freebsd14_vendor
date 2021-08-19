@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/21/94
-# $FreeBSD: releng/12.2/sys/kern/Makefile 358207 2020-02-21 04:41:22Z kevans $
+# $FreeBSD$
 #
 # Makefile for init_sysent
 

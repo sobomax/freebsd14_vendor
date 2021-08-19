@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libdevstat/devstat.c 358388 2020-02-27 15:22:18Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

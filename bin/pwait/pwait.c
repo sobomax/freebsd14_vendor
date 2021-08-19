@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/bin/pwait/pwait.c 357992 2020-02-16 06:34:45Z delphij $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/event.h>

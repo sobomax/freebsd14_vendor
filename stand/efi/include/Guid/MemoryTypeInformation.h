@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/Guid/MemoryTypeInformation.h 342742 2019-01-03 20:27:50Z tsoome $ */
+/* $FreeBSD$ */
 /** @file
   This file defines:
   * Memory Type Information GUID for HOB and Variable.

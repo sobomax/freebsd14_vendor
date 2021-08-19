@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/rtsold/rtsold.h 365673 2020-09-12 21:50:25Z bz $
+ * $FreeBSD$
  */
 
 struct script_msg {

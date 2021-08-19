@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/calendar/parsedata.c 359782 2020-04-10 22:18:13Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <math.h>

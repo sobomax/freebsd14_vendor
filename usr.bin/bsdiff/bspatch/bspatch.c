@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/bsdiff/bspatch/bspatch.c 353043 2019-10-03 13:02:04Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #ifndef WITHOUT_CAPSICUM
 #include <sys/capsicum.h>

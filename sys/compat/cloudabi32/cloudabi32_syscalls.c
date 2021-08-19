@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/cloudabi32/cloudabi32_syscalls.c 353067 2019-10-03 20:09:50Z brooks $
+ * $FreeBSD$
  */
 
 const char *cloudabi32_syscallnames[] = {

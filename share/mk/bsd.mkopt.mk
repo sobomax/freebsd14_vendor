@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/share/mk/bsd.mkopt.mk 352782 2019-09-27 00:11:09Z sjg $
+# $FreeBSD$
 #
 # Generic mechanism to deal with WITH and WITHOUT options and turn
 # them into MK_ options.

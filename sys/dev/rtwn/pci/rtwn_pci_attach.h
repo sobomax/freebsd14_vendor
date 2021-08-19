@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: releng/12.2/sys/dev/rtwn/pci/rtwn_pci_attach.h 364128 2020-08-11 17:54:10Z markj $
+ * $FreeBSD$
  */
 
 void	r92ce_attach(struct rtwn_pci_softc *);

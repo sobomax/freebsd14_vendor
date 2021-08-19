@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_physmem.c 360703 2020-05-06 19:50:27Z mhorne $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_ddb.h"

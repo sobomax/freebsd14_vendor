@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mmc/mmc_fdt_helpers.h 362400 2020-06-19 18:05:14Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _MMC_FDT_HELPERS_H_

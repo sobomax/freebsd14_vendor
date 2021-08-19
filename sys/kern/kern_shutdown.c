@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_shutdown.c 365300 2020-09-03 13:57:05Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ekcd.h"

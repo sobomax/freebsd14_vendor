@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/arm64/gic_v3_var.h 352501 2019-09-18 23:23:34Z jchandra $
+ * $FreeBSD$
  */
 
 #ifndef _GIC_V3_VAR_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libclang_rt/profile/Makefile 365426 2020-09-07 19:29:06Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

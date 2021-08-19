@@ -27,7 +27,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/tests/sys/sys/bitstring_test.c 356306 2020-01-02 23:16:27Z erj $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 

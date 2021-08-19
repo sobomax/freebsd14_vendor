@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/dtb/allwinner/Makefile 363695 2020-07-30 13:56:45Z avg $
+# $FreeBSD$
 # All the dts files for allwinner systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/kbdmap/kbdmap.c 358756 2020-03-08 18:13:16Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/queue.h>

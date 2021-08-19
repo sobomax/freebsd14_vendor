@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/common/disk.h 354006 2019-10-24 03:52:32Z kevans $
+ * $FreeBSD$
  */
 
 /*

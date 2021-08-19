@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/cam/scsi/scsi_enc_internal.h 355337 2019-12-03 16:48:21Z mav $
+ * $FreeBSD$
  */
 
 /*

@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)env.c	8.3 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/env/env.c 357791 2020-02-12 02:09:12Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

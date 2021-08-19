@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/bectl/bectl_list.c 365448 2020-09-08 07:37:45Z rew $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <stdbool.h>

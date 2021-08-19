@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/fdt/fdt_loader_cmd.c 356771 2020-01-16 03:11:25Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <libfdt.h>

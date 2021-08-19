@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/iov.h 358438 2020-02-28 17:41:46Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef _IOV_H_

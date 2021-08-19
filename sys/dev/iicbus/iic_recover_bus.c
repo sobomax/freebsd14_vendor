@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/iic_recover_bus.c 356024 2019-12-22 20:06:08Z ian $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Helper code to recover a hung i2c bus by bit-banging a recovery sequence.

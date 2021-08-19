@@ -1,4 +1,4 @@
-// $FreeBSD: releng/12.2/lib/libomp/kmp_config.h 356460 2020-01-07 18:08:09Z dim $
+// $FreeBSD$
 /*
  * kmp_config.h -- Feature macros
  */

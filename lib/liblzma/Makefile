@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/liblzma/Makefile 362915 2020-07-04 03:26:17Z delphij $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=		lzma

@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_extern.h	8.3 (Berkeley) 4/16/94
- * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_extern.h 358578 2020-03-03 14:58:53Z fsu $
+ * $FreeBSD$
  */
 
 #ifndef _FS_EXT2FS_EXT2_EXTERN_H_

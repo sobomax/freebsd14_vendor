@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/gcore/elfcore.c 355756 2019-12-14 18:32:00Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/param.h>

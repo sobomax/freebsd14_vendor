@@ -27,7 +27,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/rockchip/if_dwc_rk.c 365388 2020-09-06 19:03:19Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

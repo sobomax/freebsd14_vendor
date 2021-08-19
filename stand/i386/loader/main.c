@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/i386/loader/main.c 354230 2019-10-31 21:32:59Z sjg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MD bootstrap main() and assorted miscellaneous

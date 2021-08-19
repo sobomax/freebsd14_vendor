@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mmc/mmc_fdt_helpers.c 362402 2020-06-19 18:14:45Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/geom/eli/geom_eli.c 357863 2020-02-13 18:26:07Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/mman.h>

@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ofw/ofw_graph.c 362237 2020-06-16 20:22:56Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ofw/ofw_graph.c 362237 2020-06-16 20:22:56Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

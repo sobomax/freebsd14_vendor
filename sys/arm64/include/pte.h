@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/include/pte.h 355136 2019-11-27 19:34:33Z alc $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PTE_H_

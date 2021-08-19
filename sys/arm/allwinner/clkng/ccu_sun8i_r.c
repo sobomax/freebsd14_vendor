@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/allwinner/clkng/ccu_sun8i_r.c 364909 2020-08-28 10:17:09Z avg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/clkng/ccu_sun8i_r.c 364909 2020-08-28 10:17:09Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

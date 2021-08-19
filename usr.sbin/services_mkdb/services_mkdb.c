@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/services_mkdb/services_mkdb.c 358870 2020-03-11 05:45:33Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>

@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)dumprmt.c	8.3 (Berkeley) 4/28/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.2/sbin/dump/dumprmt.c 359946 2020-04-15 00:18:19Z mckusick $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>

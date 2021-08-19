@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/skel/dot.profile 363525 2020-07-25 11:57:39Z pstef $
+# $FreeBSD$
 #
 # .profile - Bourne Shell startup script for login shells
 #

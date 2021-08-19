@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/lib/libcrypto/Makefile.man 358188 2020-02-21 00:33:21Z jkim $
+# $FreeBSD$
 .for m in 3 5 7
 .include "man/man${m}/Makefile"
 .PATH:	${.CURDIR}/man/man${m}

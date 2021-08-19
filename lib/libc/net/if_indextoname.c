@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/if_indextoname.c 360799 2020-05-07 21:14:11Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>

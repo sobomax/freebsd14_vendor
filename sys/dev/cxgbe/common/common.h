@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/common.h 364848 2020-08-26 23:21:26Z np $
+ * $FreeBSD$
  *
  */
 

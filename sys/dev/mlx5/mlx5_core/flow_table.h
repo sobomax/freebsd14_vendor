@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/flow_table.h 359532 2020-04-01 19:38:46Z kib $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_FLOW_TABLE_H

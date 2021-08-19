@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/pmap.h 358790 2020-03-08 23:19:09Z emaste $
+ * $FreeBSD$
  */
 
 /*

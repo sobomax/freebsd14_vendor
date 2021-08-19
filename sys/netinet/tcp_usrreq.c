@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/tcp_usrreq.c 362446 2020-06-20 20:10:42Z karels $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"

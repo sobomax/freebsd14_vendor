@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/contrib/ipfilter/ipsend/sock.c 363768 2020-08-02 04:25:11Z cy $ */
+/* $FreeBSD$ */
 /*
  * sock.c (C) 1995-1998 Darren Reed
  *

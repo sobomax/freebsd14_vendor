@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/geom/gate/g_gate.h 356580 2020-01-10 00:43:40Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _G_GATE_H_

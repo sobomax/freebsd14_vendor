@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/xen/console/xen_console.c 362329 2020-06-18 15:15:04Z royger $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/module.h>

@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/sys/dev/ath/if_ath_misc.h 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 #ifndef	__IF_ATH_MISC_H__
 #define	__IF_ATH_MISC_H__

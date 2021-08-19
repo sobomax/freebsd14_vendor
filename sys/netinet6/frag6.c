@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet6/frag6.c 356625 2020-01-11 01:56:57Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

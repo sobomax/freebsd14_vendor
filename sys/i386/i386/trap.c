@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/i386/i386/trap.c 363877 2020-08-05 01:43:40Z mav $");
+__FBSDID("$FreeBSD$");
 
 /*
  * 386 Trap and System call handling

@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: releng/12.2/release/release.sh 362414 2020-06-19 19:25:47Z manu $
+# $FreeBSD$
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"

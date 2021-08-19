@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.2/sys/dev/aacraid/aacraid_reg.h 354964 2019-11-21 14:54:20Z emaste $
+ *	$FreeBSD$
  */
 
 /*

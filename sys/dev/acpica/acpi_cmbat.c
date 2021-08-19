@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/acpi_cmbat.c 359076 2020-03-18 18:02:33Z hrs $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

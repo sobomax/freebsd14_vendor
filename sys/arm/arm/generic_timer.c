@@ -40,7 +40,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/generic_timer.c 352502 2019-09-18 23:30:27Z jchandra $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

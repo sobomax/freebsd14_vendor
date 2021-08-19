@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/rtwn/rtl8821a/r21a.h 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 
 #ifndef RTL8821A_H

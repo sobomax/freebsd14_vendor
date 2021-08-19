@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netinet6/scapyi386.sh 356493 2020-01-08 16:32:16Z bz $
+# $FreeBSD$
 #-
 # SPDX-License-Identifier: BSD-2-Clause
 #

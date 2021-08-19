@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD: releng/12.2/release/picobsd/build/picobsd 354051 2019-10-24 21:43:01Z kevans $
+# $FreeBSD$
 # This file requires sysutils/makefs to run
 #
 # The PicoBSD build script. Invoked as

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libufs/Makefile 328426 2018-01-26 00:58:32Z mckusick $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	ufs

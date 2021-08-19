@@ -1,5 +1,5 @@
 /*	$OpenBSD: ypldap.h,v 1.16 2015/01/16 06:40:22 deraadt Exp $ */
-/*	$FreeBSD: releng/12.2/usr.sbin/ypldap/ypldap.h 359753 2020-04-09 20:35:35Z kevans $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>

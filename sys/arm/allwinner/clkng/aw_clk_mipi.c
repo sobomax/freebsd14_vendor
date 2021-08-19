@@ -22,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/allwinner/clkng/aw_clk_mipi.c 358232 2020-02-21 22:11:14Z dim $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/clkng/aw_clk_mipi.c 358232 2020-02-21 22:11:14Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

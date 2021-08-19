@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/arch/amd64/elf64_freebsd.c 360612 2020-05-03 17:50:24Z markj $");
+__FBSDID("$FreeBSD$");
 
 #define __ELF_WORD_SIZE 64
 #include <sys/param.h>

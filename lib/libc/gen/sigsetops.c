@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)sigsetops.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/sigsetops.c 355898 2019-12-19 02:09:16Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <signal.h>

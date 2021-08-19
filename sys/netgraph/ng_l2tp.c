@@ -36,7 +36,7 @@
  * 
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: releng/12.2/sys/netgraph/ng_l2tp.c 366223 2020-09-28 12:14:38Z markj $
+ * $FreeBSD$
  */
 
 /*

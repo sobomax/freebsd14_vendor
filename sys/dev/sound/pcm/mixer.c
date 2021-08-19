@@ -37,7 +37,7 @@
 #include "feeder_if.h"
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pcm/mixer.c 359885 2020-04-13 16:31:13Z hselasky $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static MALLOC_DEFINE(M_MIXER, "mixer", "mixer");
 

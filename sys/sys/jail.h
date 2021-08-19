@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/jail.h 365321 2020-09-04 00:24:31Z jamie $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_JAIL_H_
@@ -213,6 +213,7 @@ struct prison_racct {
 					/* primary jail address. */
 
 /* Internal flag bits */
+#define	PR_REMOVE	0x01000000	/* In process of being removed */
 #define	PR_IP4		0x02000000	/* IPv4 restricted or disabled */
 					/* by this jail or an ancestor */
 #define	PR_IP6		0x04000000	/* IPv6 restricted or disabled */

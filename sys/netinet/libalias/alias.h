@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/libalias/alias.h 359694 2020-04-07 16:27:58Z eugen $
+ * $FreeBSD$
  */
 
 /*

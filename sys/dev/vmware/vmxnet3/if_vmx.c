@@ -21,7 +21,7 @@
 /* Driver for VMware vmxnet3 virtual ethernet devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/vmware/vmxnet3/if_vmx.c 363844 2020-08-04 15:48:12Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

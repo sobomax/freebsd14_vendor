@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/if_llatbl.c 356620 2020-01-10 23:52:36Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"

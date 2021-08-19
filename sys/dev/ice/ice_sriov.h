@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/12.2/sys/dev/ice/ice_sriov.h 361541 2020-05-26 23:35:10Z erj $*/
+/*$FreeBSD$*/
 
 #ifndef _ICE_SRIOV_H_
 #define _ICE_SRIOV_H_

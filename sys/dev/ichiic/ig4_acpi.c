@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ichiic/ig4_acpi.c 361370 2020-05-22 12:01:29Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 

@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/md5/md5.c 363698 2020-07-30 14:41:41Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/time.h>

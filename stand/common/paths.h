@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/common/paths.h 353991 2019-10-24 03:21:30Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _PATHS_H_

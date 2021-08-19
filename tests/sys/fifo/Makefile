@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/fifo/Makefile 360898 2020-05-11 15:21:03Z markj $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/fifo
 

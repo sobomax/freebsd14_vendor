@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/include/elf.h 366301 2020-09-30 22:41:24Z mhorne $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_ELF_H_

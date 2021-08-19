@@ -32,7 +32,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ichiic/ig4_reg.h 355994 2019-12-22 00:46:07Z wulf $
+ * $FreeBSD$
  */
 /*
  * Intel fourth generation mobile cpus integrated I2C device.

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/lib/libcrypto/man/man7/Makefile 359186 2020-03-20 21:43:08Z jkim $
+# $FreeBSD$
 MAN+= Ed25519.7
 MAN+= RAND.7
 MAN+= RAND_DRBG.7

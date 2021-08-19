@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.2/sys/libkern/arc4random_uniform.c 364671 2020-08-24 12:59:55Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

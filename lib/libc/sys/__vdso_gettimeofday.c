@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/sys/__vdso_gettimeofday.c 360220 2020-04-23 09:48:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/elf.h>
 #include <sys/time.h>

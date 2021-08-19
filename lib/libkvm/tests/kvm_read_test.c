@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libkvm/tests/kvm_read_test.c 363990 2020-08-06 20:44:18Z alfredo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/config.mk 365281 2020-09-02 21:36:55Z jhb $
+# $FreeBSD$
 #
 # Common code to marry kernel config(8) goo and module building goo.
 #

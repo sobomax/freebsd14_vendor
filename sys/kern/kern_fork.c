@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_fork.c 360363 2020-04-27 04:47:02Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ktrace.h"
 #include "opt_kstack_pages.h"
@@ -1137,6 +1137,12 @@ fork_return(struct thread *td, struct trapframe *frame)
 		td->td_dbgflags &= ~(TDB_SCX | TDB_BORN);
 		PROC_UNLOCK(p);
 	}
+
+	/*
+	 * If the prison was killed mid-fork, die along with it.
+	 */
+	if (td->td_ucred->cr_prison->pr_flags & PR_REMOVE)
+		exit1(td, 0, SIGKILL);
 
 	userret(td, frame);
 

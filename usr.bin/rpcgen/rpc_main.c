@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)rpc_main.c 1.30 89/03/30 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/rpcgen/rpc_main.c 353901 2019-10-22 21:24:48Z brooks $");
+__FBSDID("$FreeBSD$");
 
 /*
  * rpc_main.c, Top level of the RPC protocol compiler.

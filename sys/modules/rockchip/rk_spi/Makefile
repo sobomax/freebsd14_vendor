@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/rockchip/rk_spi/Makefile 356277 2020-01-02 17:44:41Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm64/rockchip
 

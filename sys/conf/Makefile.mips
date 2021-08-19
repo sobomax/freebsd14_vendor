@@ -1,5 +1,5 @@
 # Makefile.mips
-# $FreeBSD: releng/12.2/sys/conf/Makefile.mips 360792 2020-05-07 18:47:54Z jhb $
+# $FreeBSD$
 #
 # Makefile for FreeBSD
 #

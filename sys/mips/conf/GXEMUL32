@@ -1,7 +1,7 @@
 #
 # GXEMUL "oldtestmips" sample kernel configuration.
 #
-# $FreeBSD: releng/12.2/sys/mips/conf/GXEMUL32 360681 2020-05-06 05:29:00Z jhb $
+# $FreeBSD$
 #
 
 ident		GXEMUL

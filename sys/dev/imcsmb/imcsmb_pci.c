@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/imcsmb/imcsmb_pci.c 355362 2019-12-03 22:49:24Z rpokala $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

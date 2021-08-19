@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/nvme/nvme_ctrlr_cmd.c 356961 2020-01-22 01:08:27Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "nvme_private.h"
 

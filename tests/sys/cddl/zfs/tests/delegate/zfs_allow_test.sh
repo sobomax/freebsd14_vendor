@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.2/tests/sys/cddl/zfs/tests/delegate/zfs_allow_test.sh 354165 2019-10-30 02:03:37Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.

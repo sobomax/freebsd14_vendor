@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fmtree/specspec.c 356532 2020-01-09 01:14:26Z bdrewery $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <grp.h>

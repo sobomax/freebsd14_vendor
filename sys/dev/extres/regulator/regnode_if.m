@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/dev/extres/regulator/regnode_if.m 355183 2019-11-28 18:44:06Z manu $
+# $FreeBSD$
 #
 
 INTERFACE regnode;

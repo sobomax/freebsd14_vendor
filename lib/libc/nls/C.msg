@@ -1,4 +1,4 @@
-$ $FreeBSD: releng/12.2/lib/libc/nls/C.msg 357296 2020-01-30 16:11:19Z mav $
+$ $FreeBSD$
 $
 $ Message catalog for C locale (template)
 $

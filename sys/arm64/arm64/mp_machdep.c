@@ -33,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/mp_machdep.c 361334 2020-05-21 15:28:35Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

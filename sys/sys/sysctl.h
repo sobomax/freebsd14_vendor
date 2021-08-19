@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sysctl.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.2/sys/sys/sysctl.h 363832 2020-08-04 12:42:55Z kaktus $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSCTL_H_

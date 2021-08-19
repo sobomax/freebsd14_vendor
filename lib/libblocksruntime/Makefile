@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libblocksruntime/Makefile 356462 2020-01-07 19:49:10Z dim $
+# $FreeBSD$
 
 PACKAGE=lib${LIB:tl}
 LIB=	BlocksRuntime

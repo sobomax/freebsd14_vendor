@@ -33,7 +33,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mfi/mfi_tbolt.c 360843 2020-05-09 11:18:34Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mfi.h"
 

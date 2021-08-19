@@ -37,7 +37,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.2/include/time.h 363385 2020-07-21 08:12:53Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _TIME_H_

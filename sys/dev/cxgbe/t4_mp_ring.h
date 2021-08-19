@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/t4_mp_ring.h 364848 2020-08-26 23:21:26Z np $
+ * $FreeBSD$
  *
  */
 

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/sed/compile.c 362715 2020-06-28 02:38:07Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifndef lint
 static const char sccsid[] = "@(#)compile.c	8.1 (Berkeley) 6/6/93";

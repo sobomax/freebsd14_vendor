@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/riscv/include/sbi.h 361086 2020-05-15 20:01:30Z mhorne $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_SBI_H_

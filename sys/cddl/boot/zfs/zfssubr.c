@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cddl/boot/zfs/zfssubr.c 356003 2019-12-22 08:22:02Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <lz4.h>
 

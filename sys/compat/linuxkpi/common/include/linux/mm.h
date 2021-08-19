@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/mm.h 356793 2020-01-16 15:33:54Z markj $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_MM_H_
 #define	_LINUX_MM_H_

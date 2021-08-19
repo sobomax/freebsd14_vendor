@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgb/cxgb_main.c 362511 2020-06-22 21:28:51Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 

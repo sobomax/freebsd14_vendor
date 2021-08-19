@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libc/locale/xlocale.c 359583 2020-04-03 00:32:48Z markj $
+ * $FreeBSD$
  */
 
 #include <pthread.h>

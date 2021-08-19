@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/uipc_accf.c 326271 2017-11-27 15:20:12Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #define ACCEPT_FILTER_MOD
 
@@ -298,6 +298,7 @@ accept_filt_setopt(struct socket *so, struct sockopt *sopt)
 	so->sol_accept_filter = afp;
 	so->sol_accept_filter_arg = accept_filter_arg;
 	so->sol_accept_filter_str = accept_filter_str;
+	accept_filter_str = NULL;
 	so->so_options |= SO_ACCEPTFILTER;
 out:
 	SOCK_UNLOCK(so);

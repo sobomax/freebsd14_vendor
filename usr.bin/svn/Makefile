@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/svn/Makefile 362180 2020-06-14 17:36:43Z dim $
+# $FreeBSD$
 
 SUBDIR=	lib \
 	.WAIT \

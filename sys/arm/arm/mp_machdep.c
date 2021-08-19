@@ -28,7 +28,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/mp_machdep.c 361008 2020-05-13 12:33:51Z markj $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>

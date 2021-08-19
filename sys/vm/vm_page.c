@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/vm/vm_page.c 365007 2020-08-31 19:59:05Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

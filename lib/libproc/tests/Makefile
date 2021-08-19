@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libproc/tests/Makefile 336591 2018-07-21 22:10:28Z markj $
+# $FreeBSD$
 
 ATF_TESTS_C+=	proc_test
 

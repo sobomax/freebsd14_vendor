@@ -41,7 +41,7 @@
  *
  *	@(#)ufs_vnops.c	8.7 (Berkeley) 2/3/94
  *	@(#)ufs_vnops.c 8.27 (Berkeley) 5/27/95
- * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_vnops.c 363604 2020-07-27 14:14:06Z markj $
+ * $FreeBSD$
  */
 
 #include "opt_suiddir.h"

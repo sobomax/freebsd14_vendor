@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: releng/12.2/lib/msun/src/math.h 354596 2019-11-10 17:33:10Z dim $
+ * $FreeBSD$
  */
 
 #ifndef _MATH_H_

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linux/linux_timer.h 360446 2020-04-28 17:59:37Z brooks $
+ * $FreeBSD$
  */
 
 #ifndef	_LINUX_TIMER_H

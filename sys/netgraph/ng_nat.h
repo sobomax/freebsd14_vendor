@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netgraph/ng_nat.h 359697 2020-04-07 16:44:14Z eugen $
+ * $FreeBSD$
  */
 
 #define NG_NAT_NODE_TYPE    "nat"

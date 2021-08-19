@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.2/usr.sbin/newsyslog/tests/legacy_test.sh 359693 2020-04-07 16:15:53Z markj $
+# $FreeBSD$
 
 # A regular expression matching the format of an RFC-5424 log line header,
 # including the timestamp up through the seconds indicator; it does not include

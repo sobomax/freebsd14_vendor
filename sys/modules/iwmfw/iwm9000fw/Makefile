@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/iwmfw/iwm9000fw/Makefile 354927 2019-11-21 00:34:39Z markj $
+# $FreeBSD$
 
 KMOD=	iwm9000fw
 IMG=	iwm-9000-34

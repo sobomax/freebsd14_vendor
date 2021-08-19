@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-# $FreeBSD: releng/12.2/usr.sbin/mixer/tests/mixer_test.sh 358955 2020-03-13 11:27:29Z 0mp $
+# $FreeBSD$
 
 mixer_unavailable()
 {

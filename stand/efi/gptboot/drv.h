@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/efi/gptboot/drv.h 348812 2019-06-08 19:02:17Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _DRV_H_

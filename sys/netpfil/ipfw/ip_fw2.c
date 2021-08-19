@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw2.c 364851 2020-08-27 00:28:41Z emaste $");
+__FBSDID("$FreeBSD$");
 
 /*
  * The FreeBSD IP packet firewall, main file

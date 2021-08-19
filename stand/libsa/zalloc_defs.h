@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/libsa/zalloc_defs.h 353501 2019-10-14 19:17:00Z tsoome $
+ * $FreeBSD$
  */
 
 /*

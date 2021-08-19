@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/geom/class/eli/attach_test.sh 357880 2020-02-13 20:46:05Z asomers $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/conf.sh
 

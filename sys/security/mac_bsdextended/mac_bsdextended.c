@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/security/mac_bsdextended/mac_bsdextended.c 361589 2020-05-28 17:08:39Z freqlabs $
+ * $FreeBSD$
  */
 
 /*

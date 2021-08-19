@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/options 365356 2020-09-05 02:16:10Z kevans $
+# $FreeBSD$
 #
 #        On the handling of kernel options
 #

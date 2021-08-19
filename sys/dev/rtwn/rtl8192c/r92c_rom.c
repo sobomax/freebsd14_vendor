@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/rtwn/rtl8192c/r92c_rom.c 365670 2020-09-12 19:33:25Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 

@@ -5,7 +5,7 @@
 # all of the Atheros MIPS platforms without a lot of configuration file
 # duplication.
 #
-# $FreeBSD: releng/12.2/sys/mips/conf/std.AR_MIPS_BASE 358331 2020-02-26 13:23:52Z kevans $
+# $FreeBSD$
 
 # debugging
 options 	EARLY_PRINTF

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linux/linux_misc.h 364712 2020-08-24 17:06:34Z trasz $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_MISC_H_

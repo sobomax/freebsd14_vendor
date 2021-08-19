@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.bin/dtc/fdt.cc 358205 2020-02-21 04:34:54Z kevans $
+ * $FreeBSD$
  */
 
 #define __STDC_LIMIT_MACROS 1

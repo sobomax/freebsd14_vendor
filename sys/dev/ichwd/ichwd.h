@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ichwd/ichwd.h 359360 2020-03-27 15:20:19Z jhibbits $
+ * $FreeBSD$
  */
 
 #ifndef _ICHWD_H_

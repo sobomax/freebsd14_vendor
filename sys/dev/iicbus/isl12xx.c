@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/isl12xx.c 356024 2019-12-22 20:06:08Z ian $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for ISL12xx family i2c realtime clocks:

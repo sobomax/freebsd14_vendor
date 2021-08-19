@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx51_ipuv3.c 356110 2019-12-27 03:00:18Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

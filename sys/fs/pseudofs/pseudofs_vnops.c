@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/pseudofs/pseudofs_vnops.c 357605 2020-02-05 21:30:31Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_pseudofs.h"
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/linker.h 356833 2020-01-17 15:55:14Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LINKER_H_

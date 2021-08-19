@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/12.2/sys/cddl/dev/dtrace/arm/dtrace_subr.c 363697 2020-07-30 14:05:24Z avg $
+ * $FreeBSD$
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cddl/dev/dtrace/arm/dtrace_subr.c 363697 2020-07-30 14:05:24Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/12.2/sys/dev/ice/virtchnl_inline_ipsec.h 365733 2020-09-14 22:42:17Z erj $*/
+/*$FreeBSD$*/
 
 #ifndef _VIRTCHNL_INLINE_IPSEC_H_
 #define _VIRTCHNL_INLINE_IPSEC_H_

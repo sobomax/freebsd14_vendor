@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/amd/ivrs_drv.c 359915 2020-04-14 08:34:34Z jkim $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

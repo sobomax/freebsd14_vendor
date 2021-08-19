@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/12.2/sys/cddl/dev/dtrace/amd64/dtrace_isa.c 365453 2020-09-08 12:37:46Z markj $
+ * $FreeBSD$
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.

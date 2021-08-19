@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/pf/pf.c 364456 2020-08-21 13:11:33Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bpf.h"
 #include "opt_inet.h"
@@ -382,7 +382,7 @@ SYSCTL_ULONG(_net_pf, OID_AUTO, states_hashsize, CTLFLAG_RDTUN,
     &pf_hashsize, 0, "Size of pf(4) states hashtable");
 SYSCTL_ULONG(_net_pf, OID_AUTO, source_nodes_hashsize, CTLFLAG_RDTUN,
     &pf_srchashsize, 0, "Size of pf(4) source nodes hashtable");
-SYSCTL_ULONG(_net_pf, OID_AUTO, request_maxcount, CTLFLAG_RW,
+SYSCTL_ULONG(_net_pf, OID_AUTO, request_maxcount, CTLFLAG_RWTUN,
     &pf_ioctl_maxcount, 0, "Maximum number of tables, addresses, ... in a single ioctl() call");
 
 VNET_DEFINE(void *, pf_swi_cookie);

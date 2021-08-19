@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/iov.c 358438 2020-02-28 17:41:46Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>

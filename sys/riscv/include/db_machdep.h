@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/riscv/include/db_machdep.h 360856 2020-05-09 21:32:44Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_

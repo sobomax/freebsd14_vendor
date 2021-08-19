@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/systat/zarc.c 361896 2020-06-07 16:42:03Z mr $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

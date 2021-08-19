@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: releng/12.2/stand/forth/loader.4th 359586 2020-04-03 01:31:48Z freqlabs $
+\ $FreeBSD$
 
 only forth definitions
 

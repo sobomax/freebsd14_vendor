@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/truss/Makefile 360468 2020-04-29 16:04:59Z jhb $
+# $FreeBSD$
 
 #NO_WERROR=
 PROG=	truss

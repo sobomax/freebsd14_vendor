@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libclang_rt/Makefile 356460 2020-01-07 18:08:09Z dim $
+# $FreeBSD$
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 SUBDIR+=	include

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linux/linux_ioctl.h 364670 2020-08-24 12:59:15Z trasz $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_IOCTL_H_

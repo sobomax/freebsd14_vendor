@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/ippool 363768 2020-08-02 04:25:11Z cy $
+# $FreeBSD$
 #
 
 # PROVIDE: ippool

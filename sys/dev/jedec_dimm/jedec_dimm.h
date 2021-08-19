@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/jedec_dimm/jedec_dimm.h 355362 2019-12-03 22:49:24Z rpokala $
+ * $FreeBSD$
  */
 
 #ifndef _DEV__JEDEC_DIMM__JEDEC_DIMM_H_

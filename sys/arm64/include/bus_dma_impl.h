@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/include/bus_dma_impl.h 360525 2020-05-01 09:46:27Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_BUS_DMA_IMPL_H_

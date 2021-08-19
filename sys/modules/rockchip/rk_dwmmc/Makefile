@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/rockchip/rk_dwmmc/Makefile 355626 2019-12-11 18:43:39Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mmc/host/
 

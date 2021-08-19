@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITHOUT_GH_BC 366227 2020-09-28 14:47:36Z se $
+.\" $FreeBSD$
 Set to not build and install the enhanced
 .Xr bc 1
 and

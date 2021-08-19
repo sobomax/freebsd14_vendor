@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/rfb.c 360965 2020-05-12 16:05:21Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/vt/keymaps/jp.kbd 359075 2020-03-18 17:42:18Z hrs $
+# $FreeBSD$
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

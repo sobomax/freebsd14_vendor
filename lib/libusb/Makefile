@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/lib/libusb/Makefile 362224 2020-06-16 12:21:55Z kevans $
+# $FreeBSD$
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #

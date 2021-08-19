@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ptrace.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD: releng/12.2/sys/sys/ptrace.h 360439 2020-04-28 15:44:39Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_PTRACE_H_

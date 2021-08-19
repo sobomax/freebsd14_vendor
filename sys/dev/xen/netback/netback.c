@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/xen/netback/netback.c 353728 2019-10-18 13:41:08Z markj $");
+__FBSDID("$FreeBSD$");
 
 /**
  * \file netback.c

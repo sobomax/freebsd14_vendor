@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/sysent.mk 357108 2020-01-25 05:47:56Z kevans $
+# $FreeBSD$
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}

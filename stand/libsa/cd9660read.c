@@ -33,7 +33,7 @@
 /*	$NetBSD: cd9660.c,v 1.5 1997/06/26 19:11:33 drochner Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/cd9660read.c 355927 2019-12-20 07:40:28Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <fs/cd9660/iso.h>

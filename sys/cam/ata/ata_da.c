@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cam/ata/ata_da.c 358489 2020-03-01 18:02:00Z scottl $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ada.h"
 

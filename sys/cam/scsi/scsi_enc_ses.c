@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/cam/scsi/scsi_enc_ses.c 364981 2020-08-31 00:59:02Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

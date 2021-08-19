@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/net_backends.h 358438 2020-02-28 17:41:46Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef __NET_BACKENDS_H__

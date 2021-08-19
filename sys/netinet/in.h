@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: releng/12.2/sys/netinet/in.h 363413 2020-07-22 06:47:38Z thj $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_IN_H_

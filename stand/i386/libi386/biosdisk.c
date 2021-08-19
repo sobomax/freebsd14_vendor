@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/biosdisk.c 357495 2020-02-04 07:15:33Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * BIOS disk device handling.

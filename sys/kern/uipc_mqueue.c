@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/uipc_mqueue.c 351255 2019-08-20 17:45:22Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 
@@ -1426,6 +1426,7 @@ mqfs_readdir(struct vop_readdir_args *ap)
 		if (!pn->mn_fileno)
 			mqfs_fileno_alloc(mi, pn);
 		entry.d_fileno = pn->mn_fileno;
+		entry.d_off = offset + entry.d_reclen;
 		for (i = 0; i < MQFS_NAMELEN - 1 && pn->mn_name[i] != '\0'; ++i)
 			entry.d_name[i] = pn->mn_name[i];
 		entry.d_namlen = i;

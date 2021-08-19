@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/i386/loader/conf.c 354007 2019-10-24 03:57:56Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <bootstrap.h>

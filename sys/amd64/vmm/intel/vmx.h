@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/intel/vmx.h 360713 2020-05-06 22:20:37Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _VMX_H_

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/netisr.c 358273 2020-02-24 09:57:47Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 /*
  * netisr is a packet dispatch service, allowing synchronous (directly

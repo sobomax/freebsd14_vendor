@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/bootinfo.c 352788 2019-09-27 05:12:28Z bcran $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <string.h>

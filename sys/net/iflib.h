@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/net/iflib.h 365064 2020-09-01 20:47:59Z vmaffione $
+ * $FreeBSD$
  */
 #ifndef __IFLIB_H_
 #define __IFLIB_H_

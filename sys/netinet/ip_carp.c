@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/ip_carp.c 356711 2020-01-14 00:50:30Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bpf.h"
 #include "opt_inet.h"

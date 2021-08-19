@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/mkimg/tests/img-1x1-4096-mbr.vhdf.hex 362776 2020-06-29 08:14:45Z gonzo $
+# $FreeBSD$
 00000000  42 0a 42 0a 42 0a 42 0a  42 0a 42 0a 42 0a 42 0a  |B.B.B.B.B.B.B.B.|
 *
 000001b0  42 0a 42 0a 42 0a 42 0a  42 0a 42 0a 42 0a 80 ff  |B.B.B.B.B.B.B...|

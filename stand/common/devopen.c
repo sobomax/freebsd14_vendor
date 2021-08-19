@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/common/devopen.c 355928 2019-12-20 08:12:44Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <string.h>

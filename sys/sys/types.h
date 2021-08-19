@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.2/sys/sys/types.h 360400 2020-04-27 22:27:46Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TYPES_H_

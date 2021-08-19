@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/include/pthread_np.h 358473 2020-02-29 21:42:34Z kib $
+ * $FreeBSD$
  */
 #ifndef _PTHREAD_NP_H_
 #define _PTHREAD_NP_H_

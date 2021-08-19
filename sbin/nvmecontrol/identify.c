@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/nvmecontrol/identify.c 363539 2020-07-26 01:11:30Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

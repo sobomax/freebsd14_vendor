@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_lookup.c	8.6 (Berkeley) 4/1/94
- * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_lookup.c 363604 2020-07-27 14:14:06Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

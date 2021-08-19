@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixgbe/if_ix.c 361053 2020-05-14 19:56:54Z erj $*/
+/*$FreeBSD$*/
 
 
 #include "opt_inet.h"

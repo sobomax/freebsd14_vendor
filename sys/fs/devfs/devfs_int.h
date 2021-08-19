@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/devfs/devfs_int.h 363506 2020-07-25 00:37:34Z mjg $
+ * $FreeBSD$
  */
 
 /*

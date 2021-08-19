@@ -1,7 +1,7 @@
 #
 # Custom kernel for Freescale MPC85XX development boards like the CDS etc.
 #
-# $FreeBSD: releng/12.2/sys/powerpc/conf/MPC85XX 354060 2019-10-25 01:10:08Z kevans $
+# $FreeBSD$
 #
 
 cpu		BOOKE

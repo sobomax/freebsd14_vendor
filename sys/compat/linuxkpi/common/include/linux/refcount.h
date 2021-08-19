@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/refcount.h 364672 2020-08-24 13:14:38Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_REFCOUNT_H

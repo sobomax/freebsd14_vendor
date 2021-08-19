@@ -1,6 +1,6 @@
 # FreeBSD system call object files.
 # DO NOT EDIT-- this file is automatically @generated.
-# $FreeBSD: releng/12.2/sys/sys/syscall.mk 363879 2020-08-05 03:53:57Z kevans $
+# $FreeBSD$
 MIASM =  \
 	syscall.o \
 	exit.o \

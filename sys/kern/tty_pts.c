@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/tty_pts.c 356020 2019-12-22 19:06:45Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT

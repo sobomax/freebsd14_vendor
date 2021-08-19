@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libomp/Makefile 360545 2020-05-01 20:20:23Z dim $
+# $FreeBSD$
 
 .include <bsd.compiler.mk>
 

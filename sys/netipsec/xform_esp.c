@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sys/netipsec/xform_esp.c 365277 2020-09-02 20:36:33Z jhb $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_esp.c,v 1.69 2001/06/26 06:18:59 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),

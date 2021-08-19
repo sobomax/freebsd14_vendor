@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.2/sys/amd64/include/smp.h 364000 2020-08-07 00:40:28Z mav $
+ * $FreeBSD$
  *
  */
 

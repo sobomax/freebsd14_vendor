@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/hpt27xx/hpt27xx_osm_bsd.c 355118 2019-11-26 19:04:19Z scottl $
+ * $FreeBSD$
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_proc.c 365359 2020-09-05 10:12:06Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ktrace.h"

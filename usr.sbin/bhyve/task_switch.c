@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/task_switch.c 358184 2020-02-20 21:48:36Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/_iovec.h>

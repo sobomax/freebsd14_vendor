@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/sed/tests/regress.multitest.out/Makefile 355902 2019-12-19 02:29:15Z kevans $
+# $FreeBSD$
 
 PACKAGE=	tests
 

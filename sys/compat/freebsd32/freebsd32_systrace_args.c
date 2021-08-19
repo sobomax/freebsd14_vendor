@@ -2,7 +2,7 @@
  * System call argument to DTrace register array converstion.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/freebsd32/freebsd32_systrace_args.c 363879 2020-08-05 03:53:57Z kevans $
+ * $FreeBSD$
  * This file is part of the DTrace syscall provider.
  */
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/pci_emul.h 361686 2020-06-01 05:14:01Z grehan $
+ * $FreeBSD$
  */
 
 #ifndef _PCI_EMUL_H_

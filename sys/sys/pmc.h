@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/pmc.h 360265 2020-04-24 15:02:05Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PMC_H_

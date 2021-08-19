@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/usr.sbin/sesutil/eltsub.c 364114 2020-08-11 15:05:02Z trasz $ */
+/* $FreeBSD$ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.

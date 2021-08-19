@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/fs/fusefs/utils.hh 362116 2020-06-12 20:32:26Z asomers $
+ * $FreeBSD$
  */
 
 struct _sem;

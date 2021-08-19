@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_malloc.c 365383 2020-09-06 17:40:35Z wulf $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"

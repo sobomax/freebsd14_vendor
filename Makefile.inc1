@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/Makefile.inc1 366125 2020-09-24 18:36:31Z kevans $
+# $FreeBSD$
 #
 # Make command line options:
 #	-DNO_CLEANDIR run ${MAKE} clean, instead of ${MAKE} cleandir

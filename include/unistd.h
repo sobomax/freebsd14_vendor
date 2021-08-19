@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD: releng/12.2/include/unistd.h 365684 2020-09-13 02:17:57Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _UNISTD_H_

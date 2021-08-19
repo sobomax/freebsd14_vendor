@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/pci/vga_pci.c 360917 2020-05-11 20:10:01Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple driver for PCI VGA display devices.  Drivers such as agp(4) and

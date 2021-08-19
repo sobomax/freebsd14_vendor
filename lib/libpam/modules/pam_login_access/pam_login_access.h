@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libpam/modules/pam_login_access/pam_login_access.h 359117 2020-03-19 03:37:02Z cy $
+ * $FreeBSD$
  */
 
 #include <stdbool.h>

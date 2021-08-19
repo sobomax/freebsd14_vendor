@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/include/dlfcn.h 361380 2020-05-22 13:14:21Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _DLFCN_H_

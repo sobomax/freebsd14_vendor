@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/acpica/acpi_wakeup.c 358579 2020-03-03 15:02:07Z kib $");
+__FBSDID("$FreeBSD$");
 
 #if defined(__amd64__)
 #define DEV_APIC

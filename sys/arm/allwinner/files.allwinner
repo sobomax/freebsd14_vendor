@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/arm/allwinner/files.allwinner 355179 2019-11-28 18:02:13Z manu $
+# $FreeBSD$
 
 arm/allwinner/a10_ahci.c		optional	ahci
 arm/allwinner/a10_codec.c		optional	sound

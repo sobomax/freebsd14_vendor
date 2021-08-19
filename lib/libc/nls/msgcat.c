@@ -32,7 +32,7 @@ up-to-date.  Many thanks.
 ******************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/nls/msgcat.c 360215 2020-04-23 04:51:32Z delphij $");
+__FBSDID("$FreeBSD$");
 
 #define _NLS_PRIVATE
 

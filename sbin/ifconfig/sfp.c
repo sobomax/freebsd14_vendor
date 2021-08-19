@@ -25,7 +25,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/12.2/sbin/ifconfig/sfp.c 356291 2020-01-02 21:58:34Z erj $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/types.h>

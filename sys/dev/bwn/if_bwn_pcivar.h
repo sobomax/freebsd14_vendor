@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: releng/12.2/sys/dev/bwn/if_bwn_pcivar.h 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 
 #ifndef _IF_BWN_PCIVAR_H_

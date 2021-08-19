@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/machdep.c 362376 2020-06-19 11:47:40Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_atpic.h"
 #include "opt_cpu.h"

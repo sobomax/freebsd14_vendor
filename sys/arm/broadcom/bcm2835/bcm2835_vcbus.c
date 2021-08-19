@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_vcbus.c 357000 2020-01-22 22:08:02Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_vcbus.c 357000 2020-01-22 22:08:02Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file contains facilities for runtime determination of address space

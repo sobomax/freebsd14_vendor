@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/io/vioapic.c 356543 2020-01-09 08:29:31Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/io/vioapic.c 356543 2020-01-09 08:29:31Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/queue.h>

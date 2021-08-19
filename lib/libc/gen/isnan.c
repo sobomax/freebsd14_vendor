@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libc/gen/isnan.c 354596 2019-11-10 17:33:10Z dim $
+ * $FreeBSD$
  */
 
 #include <math.h>

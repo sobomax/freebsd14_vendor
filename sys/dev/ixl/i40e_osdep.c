@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_osdep.c 363876 2020-08-04 23:30:10Z erj $*/
+/*$FreeBSD$*/
 
 #include <sys/limits.h>
 #include <sys/time.h>

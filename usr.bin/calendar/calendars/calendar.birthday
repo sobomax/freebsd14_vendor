@@ -1,7 +1,7 @@
 /*
  * Birthday
  *
- * $FreeBSD: releng/12.2/usr.bin/calendar/calendars/calendar.birthday 359199 2020-03-22 01:22:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_birthday_

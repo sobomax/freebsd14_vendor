@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.2/lib/libgcc_s/Symbol.map 356460 2020-01-07 18:08:09Z dim $
+ * $FreeBSD$
  */
 
 GCC_3.0 {

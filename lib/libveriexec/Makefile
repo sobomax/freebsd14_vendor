@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libveriexec/Makefile 359913 2020-04-14 01:07:58Z sjg $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

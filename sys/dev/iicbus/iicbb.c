@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/iicbb.c 363944 2020-08-06 08:06:07Z avg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Generic I2C bit-banging code

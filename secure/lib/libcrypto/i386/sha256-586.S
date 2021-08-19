@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/sha256-586.S 364963 2020-08-29 18:11:37Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from sha256-586.pl. */
 #ifdef PIC
 .text

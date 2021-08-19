@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/vmbus/amd64/hyperv_machdep.c 358151 2020-02-20 01:45:55Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/conf.h>

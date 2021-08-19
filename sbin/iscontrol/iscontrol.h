@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sbin/iscontrol/iscontrol.h 359753 2020-04-09 20:35:35Z kevans $
+ * $FreeBSD$
  */
 /*
  | $Id: iscontrol.h,v 2.3 2007/04/27 08:36:49 danny Exp danny $

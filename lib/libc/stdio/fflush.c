@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fflush.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/stdio/fflush.c 357852 2020-02-13 03:13:29Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <errno.h>

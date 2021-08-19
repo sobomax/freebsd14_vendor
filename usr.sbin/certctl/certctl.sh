@@ -25,7 +25,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.sbin/certctl/certctl.sh 365897 2020-09-19 02:12:04Z kevans $
+# $FreeBSD$
 
 ############################################################ CONFIGURATION
 

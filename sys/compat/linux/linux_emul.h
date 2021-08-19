@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linux/linux_emul.h 364505 2020-08-23 19:22:42Z trasz $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_EMUL_H_

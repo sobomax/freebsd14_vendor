@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/clang/llvm-cxxdump/Makefile 356462 2020-01-07 19:49:10Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-cxxdump
 MAN=

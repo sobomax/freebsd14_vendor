@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/sys/Makefile 356307 2020-01-02 23:18:43Z erj $
+# $FreeBSD$
 
 .include <bsd.compiler.mk>
 

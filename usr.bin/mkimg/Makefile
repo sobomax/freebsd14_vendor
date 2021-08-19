@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/mkimg/Makefile 362767 2020-06-29 00:34:11Z gonzo $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

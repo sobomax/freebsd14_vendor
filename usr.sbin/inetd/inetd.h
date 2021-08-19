@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/inetd/inetd.h 356388 2020-01-05 21:35:02Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/time.h>

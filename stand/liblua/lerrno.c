@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/liblua/lerrno.c 357296 2020-01-30 16:11:19Z mav $");
+__FBSDID("$FreeBSD$");
 
 #define _WANT_KERNEL_ERRNO	1
 #include <errno.h>

@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ipfstat.c 363526 2020-07-25 14:27:12Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

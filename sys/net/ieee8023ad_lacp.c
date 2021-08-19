@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/ieee8023ad_lacp.c 358628 2020-03-04 17:21:49Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ratelimit.h"
 

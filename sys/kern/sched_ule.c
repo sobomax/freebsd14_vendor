@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/sched_ule.c 355610 2019-12-11 15:15:21Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"

@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)quad.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: releng/12.2/lib/libc/quad/quad.h 358230 2020-02-21 21:57:24Z dim $
+ * $FreeBSD$
  */
 
 /*

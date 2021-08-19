@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: releng/12.2/sys/dev/oce/oce_if.c 362511 2020-06-22 21:28:51Z freqlabs $ */
+/* $FreeBSD$ */
 
 #include "opt_inet6.h"
 #include "opt_inet.h"

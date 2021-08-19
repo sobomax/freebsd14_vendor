@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_lm75/snmp_lm75.c 356865 2020-01-18 10:55:38Z syrinx $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/queue.h>

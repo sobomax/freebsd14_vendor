@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/rtld-elf/aarch64/reloc.c 358142 2020-02-20 01:27:35Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

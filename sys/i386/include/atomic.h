@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/i386/include/atomic.h 353880 2019-10-22 08:56:45Z avg $
+ * $FreeBSD$
  */
 #ifndef _MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/smbfs/smbfs_io.c 349699 2019-07-03 20:14:43Z markj $
+ * $FreeBSD$
  *
  */
 #include <sys/param.h>
@@ -103,6 +103,7 @@ smbfs_readvdir(struct vnode *vp, struct uio *uio, struct ucred *cred)
 		    (np->n_parent ? np->n_parentino : 2);
 		if (de.d_fileno == 0)
 			de.d_fileno = 0x7ffffffd + offset;
+		de.d_off = offset + 1;
 		de.d_namlen = offset + 1;
 		de.d_name[0] = '.';
 		de.d_name[1] = '.';
@@ -153,6 +154,7 @@ smbfs_readvdir(struct vnode *vp, struct uio *uio, struct ucred *cred)
 		bzero((caddr_t)&de, DE_SIZE);
 		de.d_reclen = DE_SIZE;
 		de.d_fileno = ctx->f_attr.fa_ino;
+		de.d_off = offset + 1;
 		de.d_type = (ctx->f_attr.fa_attr & SMB_FA_DIR) ? DT_DIR : DT_REG;
 		de.d_namlen = ctx->f_nmlen;
 		bcopy(ctx->f_name, de.d_name, de.d_namlen);

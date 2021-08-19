@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/12.2/sbin/newfs_msdos/newfs_msdos.c 357513 2020-02-04 19:01:17Z dim $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>

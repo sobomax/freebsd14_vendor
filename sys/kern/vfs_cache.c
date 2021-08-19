@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_cache.c 364047 2020-08-07 23:31:45Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ktrace.h"

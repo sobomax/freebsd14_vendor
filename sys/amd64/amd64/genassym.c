@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/genassym.c 354569 2019-11-09 11:55:01Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_kstack_pages.h"

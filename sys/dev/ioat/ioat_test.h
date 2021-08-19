@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ioat/ioat_test.h 355197 2019-11-29 00:38:16Z mav $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __IOAT_TEST_H__
 #define __IOAT_TEST_H__

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/allwinner/allwinner_pinctrl.h 362351 2020-06-18 23:23:21Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _ALLWINNER_PINCTRL_H_

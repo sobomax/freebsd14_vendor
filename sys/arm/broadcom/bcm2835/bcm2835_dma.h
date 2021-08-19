@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/broadcom/bcm2835/bcm2835_dma.h 355665 2019-12-12 19:21:16Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef	_BCM2835_DMA_H_

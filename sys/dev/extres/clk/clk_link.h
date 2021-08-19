@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/extres/clk/clk_link.h 358644 2020-03-04 21:01:25Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_EXTRES_CLK_LINK_H_

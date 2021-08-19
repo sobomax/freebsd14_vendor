@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.2/sys/net/if_clone.c 357325 2020-01-31 10:34:36Z kp $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

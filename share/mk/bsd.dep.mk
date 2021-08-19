@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/bsd.dep.mk 359712 2020-04-07 19:40:11Z bdrewery $
+# $FreeBSD$
 #
 # The include file <bsd.dep.mk> handles Makefile dependencies.
 #

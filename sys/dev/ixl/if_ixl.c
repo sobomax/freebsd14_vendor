@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixl/if_ixl.c 365339 2020-09-04 21:21:23Z erj $*/
+/*$FreeBSD$*/
 
 #include "ixl.h"
 #include "ixl_pf.h"

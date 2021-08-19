@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/e_hypot.c 355395 2019-12-04 17:45:34Z dim $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_hypot(x,y)
  *

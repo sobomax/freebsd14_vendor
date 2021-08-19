@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/flua/modules/lfs.c 354833 2019-11-18 23:21:13Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _STANDALONE
 #include <sys/stat.h>

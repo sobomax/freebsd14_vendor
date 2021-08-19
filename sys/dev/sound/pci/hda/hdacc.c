@@ -43,7 +43,7 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/hda/hdacc.c 363958 2020-08-06 15:25:11Z mav $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 struct hdacc_fg {
 	device_t	dev;

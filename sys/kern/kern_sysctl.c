@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_sysctl.c 363832 2020-08-04 12:42:55Z kaktus $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"

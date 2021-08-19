@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libedit/readline/tilde.h 352275 2019-09-13 06:50:02Z bapt $
+ * $FreeBSD$
  */
 
 #include <edit/readline/readline.h>

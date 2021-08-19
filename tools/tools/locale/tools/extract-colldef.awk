@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/tools/tools/locale/tools/extract-colldef.awk 358108 2020-02-19 14:29:47Z bapt $
+# $FreeBSD$
 
 BEGIN {
 	print "# Warning: Do not edit. This is automatically extracted"

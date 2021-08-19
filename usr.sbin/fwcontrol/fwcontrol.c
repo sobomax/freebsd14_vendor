@@ -36,7 +36,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/fwcontrol/fwcontrol.c 353577 2019-10-15 17:30:12Z brooks $");
+__FBSDID("$FreeBSD$");
 #endif
 
 #include <sys/param.h>

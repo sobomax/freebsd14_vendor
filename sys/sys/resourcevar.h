@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.2/sys/sys/resourcevar.h 363635 2020-07-28 07:07:38Z mjg $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_

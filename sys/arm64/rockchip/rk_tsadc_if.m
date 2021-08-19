@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/arm64/rockchip/rk_tsadc_if.m 358645 2020-03-04 21:04:57Z manu $
+# $FreeBSD$
 #
 
 #include <machine/bus.h>

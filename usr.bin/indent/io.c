@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)io.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/indent/io.c 359753 2020-04-09 20:35:35Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <err.h>

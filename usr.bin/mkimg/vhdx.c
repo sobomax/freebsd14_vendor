@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/mkimg/vhdx.c 363189 2020-07-14 18:31:00Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/errno.h>
 #include <stdlib.h>

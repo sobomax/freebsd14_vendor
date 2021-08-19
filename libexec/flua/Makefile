@@ -1,4 +1,4 @@
-#! $FreeBSD: releng/12.2/libexec/flua/Makefile 360320 2020-04-25 18:23:23Z dim $
+#! $FreeBSD$
 
 .include <src.lua.mk>
 

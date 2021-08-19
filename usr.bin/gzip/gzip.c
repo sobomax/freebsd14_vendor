@@ -34,7 +34,7 @@
 #ifndef lint
 __COPYRIGHT("@(#) Copyright (c) 1997, 1998, 2003, 2004, 2006, 2008,\
  2009, 2010, 2011, 2015, 2017 Matthew R. Green.  All rights reserved.");
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/gzip/gzip.c 360186 2020-04-22 05:54:46Z delphij $");
+__FBSDID("$FreeBSD$");
 #endif /* not lint */
 
 /*

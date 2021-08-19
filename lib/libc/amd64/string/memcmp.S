@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libc/amd64/string/memcmp.S 363505 2020-07-25 00:24:11Z mjg $
+ * $FreeBSD$
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/amd64/string/memcmp.S 363505 2020-07-25 00:24:11Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #define ALIGN_TEXT      .p2align 4,0x90 /* 16-byte alignment, nop filled */
 

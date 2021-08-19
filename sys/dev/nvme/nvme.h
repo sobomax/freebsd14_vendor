@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/nvme/nvme.h 356961 2020-01-22 01:08:27Z mav $
+ * $FreeBSD$
  */
 
 #ifndef __NVME_H__

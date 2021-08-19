@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/x86/include/acpica_machdep.h 364003 2020-08-07 01:05:10Z mav $
+ * $FreeBSD$
  */
 
 /******************************************************************************

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/fs/fusefs/write.cc 366211 2020-09-28 00:23:59Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {

@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/12.2/sys/dev/ice/ice_flow.h 365733 2020-09-14 22:42:17Z erj $*/
+/*$FreeBSD$*/
 
 #ifndef _ICE_FLOW_H_
 #define _ICE_FLOW_H_

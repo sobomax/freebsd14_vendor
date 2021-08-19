@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_cluster.c 352946 2019-10-01 23:26:52Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_debug_cluster.h"
 

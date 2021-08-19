@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libc/include/namespace.h 362264 2020-06-17 10:50:55Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _NAMESPACE_H_

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/bhnd/bhndb/bhndb_pci_sprom.c 305375 2016-09-04 01:47:21Z landonf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * BHNDB PCI SPROM driver.

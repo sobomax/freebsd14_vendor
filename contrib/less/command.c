@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/contrib/less/command.c 355503 2019-12-07 19:02:09Z delphij $ */
+/* $FreeBSD$ */
 /*
  * Copyright (C) 1984-2019  Mark Nudelman
  *

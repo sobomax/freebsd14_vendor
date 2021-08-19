@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixgbe/ix_txrx.c 355321 2019-12-03 07:22:16Z avg $*/
+/*$FreeBSD$*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD

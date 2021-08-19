@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/uart/uart_kbd_sun.c 356013 2019-12-22 17:15:48Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kbd.h"
 #include "opt_sunkbd.h"

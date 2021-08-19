@@ -1,5 +1,5 @@
 #	from: @(#)bsd.lib.mk	5.26 (Berkeley) 5/2/91
-# $FreeBSD: releng/12.2/share/mk/bsd.lib.mk 360780 2020-05-07 14:20:52Z jhb $
+# $FreeBSD$
 #
 
 .include <bsd.init.mk>

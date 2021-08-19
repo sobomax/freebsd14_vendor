@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/toecore.h 362863 2020-07-01 20:41:23Z tuexen $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_TOE_H_

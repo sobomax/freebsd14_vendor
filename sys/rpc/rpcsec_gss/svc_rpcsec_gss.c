@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/rpc/rpcsec_gss/svc_rpcsec_gss.c 355966 2019-12-20 22:53:23Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

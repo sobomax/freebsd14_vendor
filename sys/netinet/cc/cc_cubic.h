@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/cc/cc_cubic.h 362858 2020-07-01 20:09:34Z tuexen $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_CC_CUBIC_H_

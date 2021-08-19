@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/i2c/i2c.c 360317 2020-04-25 15:45:43Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <errno.h>

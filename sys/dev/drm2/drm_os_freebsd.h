@@ -4,7 +4,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/drm_os_freebsd.h 365377 2020-09-06 11:29:06Z zeising $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _DRM_OS_FREEBSD_H_
 #define	_DRM_OS_FREEBSD_H_

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)protosw.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.2/sys/sys/protosw.h 365059 2020-09-01 19:54:43Z bz $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PROTOSW_H_

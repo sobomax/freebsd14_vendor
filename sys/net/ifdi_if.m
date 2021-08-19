@@ -24,7 +24,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/net/ifdi_if.m 361053 2020-05-14 19:56:54Z erj $
+# $FreeBSD$
 #
 
 #include <sys/types.h>

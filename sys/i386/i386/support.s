@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/i386/i386/support.s 361557 2020-05-27 18:23:14Z kib $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>

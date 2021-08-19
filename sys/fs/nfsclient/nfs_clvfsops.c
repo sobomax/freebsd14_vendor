@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsclient/nfs_clvfsops.c 356238 2019-12-31 18:10:34Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 
 #include "opt_bootp.h"

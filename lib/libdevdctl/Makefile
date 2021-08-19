@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libdevdctl/Makefile 356460 2020-01-07 18:08:09Z dim $
+# $FreeBSD$
 
 LIB_CXX=	devdctl
 INCS=	consumer.h		\

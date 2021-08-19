@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/iw_cxgbe/cm.c 360188 2020-04-22 07:12:18Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 

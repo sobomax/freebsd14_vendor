@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/poly1305-x86.S 364963 2020-08-29 18:11:37Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from poly1305-x86.pl. */
 #ifdef PIC
 .text

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/cam/cam_ccb.h 366213 2020-09-28 00:53:45Z cperciva $
+ * $FreeBSD$
  */
 
 #ifndef _CAM_CAM_CCB_H

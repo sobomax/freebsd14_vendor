@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.2/sys/net/if.h 352647 2019-09-24 06:30:34Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _NET_IF_H_

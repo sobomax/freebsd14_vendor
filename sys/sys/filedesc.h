@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.2/sys/sys/filedesc.h 332657 2018-04-17 18:07:40Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -243,6 +243,7 @@ fd_modified(struct filedesc *fdp, int fd, seq_t seq)
 /* cdir/rdir/jdir manipulation functions. */
 void	pwd_chdir(struct thread *td, struct vnode *vp);
 int	pwd_chroot(struct thread *td, struct vnode *vp);
+int	pwd_chroot_chdir(struct thread *td, struct vnode *vp);
 void	pwd_ensure_dirs(void);
 
 #endif /* _KERNEL */

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bsnmpd/modules/snmp_pf/pf_snmp.c 357523 2020-02-04 19:46:29Z dim $
+ * $FreeBSD$
  */
 
 #define PFIOC_USE_LATEST

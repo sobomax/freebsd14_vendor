@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/sshd 363553 2020-07-26 10:01:27Z 0mp $
+# $FreeBSD$
 #
 
 # PROVIDE: sshd

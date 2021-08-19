@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/hme/if_hme.c 358084 2020-02-18 21:36:54Z brooks $");
+__FBSDID("$FreeBSD$");
 
 /*
  * HME Ethernet module driver.

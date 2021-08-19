@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sbin/setkey/token.l 359590 2020-04-03 05:11:16Z bapt $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: token.l,v 1.43 2003/07/25 09:35:28 itojun Exp $	*/
 
 /*-

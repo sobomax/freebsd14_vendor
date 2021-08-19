@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/fdt/Makefile 344609 2019-02-26 22:34:29Z ian $
+# $FreeBSD$
 # Build dev/fdt modules.
 
 SUBDIR = \

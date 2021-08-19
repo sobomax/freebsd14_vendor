@@ -30,7 +30,7 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/acpica/acpi_iort.c 352500 2019-09-18 23:18:26Z jchandra $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>

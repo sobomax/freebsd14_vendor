@@ -38,7 +38,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/xilinx/uart_dev_cdnc.c 356020 2019-12-22 19:06:45Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

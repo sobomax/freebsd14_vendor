@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_read_format_zip_nofiletype.c 358087 2020-02-19 01:46:43Z mm $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Issue 332:  Some epub files (which are really Zip archives) have

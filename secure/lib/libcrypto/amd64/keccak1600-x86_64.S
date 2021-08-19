@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/amd64/keccak1600-x86_64.S 359186 2020-03-20 21:43:08Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from keccak1600-x86_64.pl. */
 .text	
 

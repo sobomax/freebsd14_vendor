@@ -34,7 +34,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/gicv3_its.c 352503 2019-09-18 23:33:38Z jchandra $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

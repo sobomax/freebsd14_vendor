@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/linux/linux_file.c 365034 2020-09-01 12:09:13Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_compat.h"
 

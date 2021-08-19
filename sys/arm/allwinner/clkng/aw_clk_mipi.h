@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/allwinner/clkng/aw_clk_mipi.h 355174 2019-11-28 17:30:16Z manu $
+ * $FreeBSD$
  */
 
 #ifndef	__AW_CLK_MIPI_H__

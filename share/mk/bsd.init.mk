@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/bsd.init.mk 359714 2020-04-07 19:44:37Z bdrewery $
+# $FreeBSD$
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the

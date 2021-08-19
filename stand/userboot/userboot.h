@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/userboot/userboot.h 359735 2020-04-09 04:50:19Z sjg $
+ * $FreeBSD$
  */
 
 /*

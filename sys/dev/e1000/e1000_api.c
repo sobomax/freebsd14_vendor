@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/e1000/e1000_api.c 362080 2020-06-12 00:42:05Z erj $*/
+/*$FreeBSD$*/
 
 #include "e1000_api.h"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/tar/Makefile 362132 2020-06-12 22:59:59Z mm $
+# $FreeBSD$
 .include <src.opts.mk>
 
 _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive

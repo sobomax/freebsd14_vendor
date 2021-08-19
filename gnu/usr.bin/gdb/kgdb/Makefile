@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/gnu/usr.bin/gdb/kgdb/Makefile 352754 2019-09-26 16:05:57Z emaste $
+# $FreeBSD$
 
 PROG=	kgdb${GDB_SUFFIX}
 SRCS=	main.c kld.c kthr.c trgt.c trgt_${TARGET_CPUARCH}.c

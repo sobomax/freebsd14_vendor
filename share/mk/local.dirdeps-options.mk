@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/local.dirdeps-options.mk 355905 2019-12-19 04:49:34Z sjg $
+# $FreeBSD$
 
 # avoid duplication
 DIRDEPS.AUDIT.yes= lib/libbsm

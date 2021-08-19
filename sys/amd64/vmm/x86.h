@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/x86.h 361131 2020-05-17 11:09:38Z grehan $
+ * $FreeBSD$
  */
 
 #ifndef _X86_H_

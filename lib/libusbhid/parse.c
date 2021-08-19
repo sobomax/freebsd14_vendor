@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libusbhid/parse.c 361918 2020-06-08 09:32:57Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #include <stdlib.h>

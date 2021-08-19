@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/port.h 358885 2020-03-11 08:51:19Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __MLX5_PORT_H__

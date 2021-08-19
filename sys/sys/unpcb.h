@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unpcb.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.2/sys/sys/unpcb.h 359592 2020-04-03 13:25:53Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UNPCB_H_

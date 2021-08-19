@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/net/mppcc.c 361315 2020-05-21 02:08:34Z kevans $
+ * $FreeBSD$
  */
 
 /*

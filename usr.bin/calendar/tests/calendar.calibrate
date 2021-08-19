@@ -1,7 +1,7 @@
 /*
  * Calibration calendar for calendar(1)
  *
- * $FreeBSD: releng/12.2/usr.bin/calendar/tests/calendar.calibrate 359782 2020-04-10 22:18:13Z gonzo $
+ * $FreeBSD$
  */
 
 LANG=C

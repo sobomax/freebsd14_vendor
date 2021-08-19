@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/tftp/main.c 354163 2019-10-30 01:41:49Z asomers $");
+__FBSDID("$FreeBSD$");
 
 /* Many bug fixes are from Jim Guyton <guyton@rand-unix> */
 

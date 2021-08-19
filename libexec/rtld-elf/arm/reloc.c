@@ -1,7 +1,7 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/rtld-elf/arm/reloc.c 358142 2020-02-20 01:27:35Z kib $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>

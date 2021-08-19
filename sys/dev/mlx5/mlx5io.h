@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5io.h 353239 2019-10-07 09:45:20Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_MLX5_MLX5IO_H_

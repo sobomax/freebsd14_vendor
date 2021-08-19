@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/nctgpio/nctgpio.c 354883 2019-11-20 08:41:01Z avg $
+ * $FreeBSD$
  *
  */
 

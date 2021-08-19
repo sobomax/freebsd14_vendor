@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * __FBSDID("$FreeBSD: releng/12.2/sys/netinet/tcp_stacks/rack_bbr_common.h 362880 2020-07-01 23:47:51Z tuexen $");
+ * __FBSDID("$FreeBSD$");
  */
 /* Common defines and such used by both RACK and BBR */
 /* Special values for mss accounting array */

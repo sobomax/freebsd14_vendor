@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.2/sys/arm64/linux/linux.h 364712 2020-08-24 17:06:34Z trasz $
+ * $FreeBSD$
  */
 #ifndef _ARM64_LINUX_H_
 #define	_ARM64_LINUX_H_

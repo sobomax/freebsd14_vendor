@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/uipc_sockbuf.c 360255 2020-04-24 13:24:19Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 

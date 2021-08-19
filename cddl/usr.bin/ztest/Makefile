@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/cddl/usr.bin/ztest/Makefile 361383 2020-05-22 13:27:02Z avg $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/ztest
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/loader.mk 359735 2020-04-09 04:50:19Z sjg $
+# $FreeBSD$
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 

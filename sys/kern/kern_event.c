@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_event.c 360256 2020-04-24 13:25:02Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"

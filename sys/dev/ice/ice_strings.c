@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: releng/12.2/sys/dev/ice/ice_strings.c 365733 2020-09-14 22:42:17Z erj $*/
+/*$FreeBSD$*/
 
 /**
  * @file ice_strings.c

@@ -16,6 +16,111 @@ from older versions of FreeBSD, try WITHOUT_CLANG and WITH_GCC to bootstrap to
 the tip of head, and then rebuild without this option. The bootstrap process
 from older version of current across the gcc/clang cutover is a bit fragile.
 
+20210629:	p9	FreeBSD-EN-21:19.libcasper
+			FreeBSD-EN-21:22.linux_futex
+
+		libcasper assertion failures [EN-21:19.libcasper]
+
+		Linux compatibility layer futex(2) system call vulnerability [EN-21:22.linux_futex]
+
+20210601:	p8	FreeBSD-EN-21:17.libradius
+
+		Incorrect validation in rad_get_attr(3) [FreeBSD-EN-21:17.libradius]
+
+20210526:	p7	FreeBSD-EN-21:11.aesni
+			FreeBSD-EN-21:14.pms
+			FreeBSD-SA-21:11.smap
+			FreeBSD-SA-21:12.libradius
+
+		Race condition in aesni(4) encrypt-then-auth operations [FreeBSD-EN-21:11.aesni]
+
+		pms(4) data corruption [FreeBSD-EN-21:14.pms]
+
+		SMAP bypass [FreeBSD-SA-21:11.smap]
+
+		Missing message validation in libradius(3) [FreeBSD-SA-21:12.libradius]
+
+20210406:	p6	FreeBSD-EN-21:09.pf
+			FreeBSD-EN-21:10.lldb
+			FreeBSD-SA-21:08.vm
+			FreeBSD-SA-21:09.accept_filter
+			FreeBSD-SA-21:10.jail_mount
+
+		net.pf.request_maxcount not settable from loader.conf(5) [EN-21:09.pf]
+
+		lldb abort on print command [EN-21:10.lldb]
+
+		Memory disclosure by stale virtual memory mapping [SA-21:08.vm]
+
+		Double free in accept_filter(9) socket configuration interface [SA-21:09.accept_filter]
+
+		Jail escape possible by mounting over jail root [SA-21:10.jail_mount]
+
+20210325:	p5	FreeBSD-SA-21:07.openssl
+
+	Fix multiple OpenSSL issues [SA-21:07.openssl]
+
+20210223:	p4	FreeBSD-SA-21:03.pam_login_access
+			FreeBSD-SA-21:04.jail_remove
+			FreeBSD-SA-21:05.jail_chdir
+			FreeBSD-SA-21:06.xen
+			FreeBSD-EN-21:06.microcode
+			FreeBSD-EN-21:07.caroot
+			FreeBSD-EN-21:08.freebsd-update
+
+	login.access fails to apply rules [SA-21:03.pam_login_access]
+
+	jail_remove(2) fails to kill all jailed processes [SA-21:04.jail_remove]
+
+	jail_attach(2) relies on the caller to change the cwd [SA-21:05.jail_chdir]
+
+	Xen grant mapping error handling issues [SA-21:06.xen]
+
+	Boot-time microcode loading causes a boot hang [EN-21:06.microcode]
+
+	Root certificate bundle update [EN-21:07.caroot]
+
+	freebsd-update passwd regeneration [EN-21:08.freebsd-update]
+
+20210128:	p3	FreeBSD-EN-21:01.tzdata
+			FreeBSD-EN-21:03.vnet
+			FreeBSD-EN-21:04.zfs
+			FreeBSD-SA-21:01.fsdisclosure
+			FreeBSD-SA-21:02.xenoom
+
+       Update timezone database information [EN-21:01.tzdata]
+
+       Panic when destroying VNET and epair simultaneously [EN-21:03.vnet]
+
+       zfs recv fails to propagate snapshot deletion [EN-21:04.zfs]
+
+       Uninitialized file system kernel stack leaks [SA-21:01.fsdisclosure]
+
+       Xen guest-triggered out of memory [SA-21:02.xenoom]
+
+20201208:	p2	FreeBSD-SA-20:33.openssl
+
+        Fix OpenSSL NULL pointer de-reference. [SA-20:33.openssl]
+
+20201201:	p1	FreeBSD-EN-20:19.audit
+			FreeBSD-EN-20:20.tzdata
+			FreeBSD-EN-20:21.ipfw
+			FreeBSD-EN-20:22.callout
+			FreeBSD-SA-20:31.icmp6
+			FreeBSD-SA-20:32.rtsold
+
+        Fix execve/fexecve system call auditing. [EN-20:19.audit]
+
+        Update timezone database information. [EN-20:20.tzdata]
+
+        Fix uninitialized variable in ipfw. [EN-20:21.ipfw]
+
+        Fix race condition in callout CPU migration. [EN-20:22.callout]
+
+        Fix ICMPv6 use-after-free in error message handling. [SA-20:31.icmp6]
+
+        Fix multiple vulnerabilities in rtsold. [SA-20:32.rtsold]
+
 20201027:
 	12.2-RELEASE.
 
@@ -2067,4 +2172,4 @@ POSSIBILITY OF SUCH DAMAGE.
 Contact Warner Losh if you have any questions about your use of
 this document.
 
-$FreeBSD: releng/12.2/UPDATING 366954 2020-10-23 00:00:52Z gjb $
+$FreeBSD$

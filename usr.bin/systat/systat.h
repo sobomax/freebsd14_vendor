@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)systat.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.2/usr.bin/systat/systat.h 360383 2020-04-27 16:11:59Z kevans $
+ * $FreeBSD$
  */
 
 #include <curses.h>

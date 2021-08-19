@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/usr.bin/less/defines.h 355503 2019-12-07 19:02:09Z delphij $ */
+/* $FreeBSD$ */
 /* defines.h.  Generated from defines.h.in by configure.  */
 /* defines.h.in.  Generated from configure.ac by autoheader.  */
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/rtwn_usb/Makefile 342830 2019-01-07 04:23:06Z avos $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/rtwn/usb
 

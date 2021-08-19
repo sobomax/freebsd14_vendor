@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libc/stdlib/jemalloc/Makefile.inc 365722 2020-09-14 14:53:09Z dim $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/stdlib/jemalloc
 

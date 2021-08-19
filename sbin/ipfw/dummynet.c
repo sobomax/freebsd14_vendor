@@ -17,7 +17,7 @@
  *
  * This software is provided ``AS IS'' without any warranties of any kind.
  *
- * $FreeBSD: releng/12.2/sbin/ipfw/dummynet.c 363605 2020-07-27 14:15:50Z markj $
+ * $FreeBSD$
  *
  * dummynet support
  */
@@ -1279,8 +1279,8 @@ ipfw_config_pipe(int ac, char **av)
 	struct dn_profile *pf = NULL;
 	struct ipfw_flow_id *mask = NULL;
 #ifdef NEW_AQM
-	struct dn_extra_parms *aqm_extra;
-	struct dn_extra_parms *sch_extra;
+	struct dn_extra_parms *aqm_extra = NULL;
+	struct dn_extra_parms *sch_extra = NULL;
 	int lmax_extra;
 #endif
 	

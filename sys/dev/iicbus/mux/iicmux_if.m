@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/dev/iicbus/mux/iicmux_if.m 356278 2020-01-02 17:51:49Z ian $
+# $FreeBSD$
 #
 
 #include <sys/bus.h>

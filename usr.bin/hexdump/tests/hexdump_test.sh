@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.bin/hexdump/tests/hexdump_test.sh 359290 2020-03-25 00:31:42Z kevans $
+# $FreeBSD$
 
 ENDIAN=el
 ret=$(echo I | tr -d "[:space:]" | od -to2 | head -n1 | awk '{print $2}' | cut -c6)

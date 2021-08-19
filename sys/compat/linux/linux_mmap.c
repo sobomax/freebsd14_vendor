@@ -28,11 +28,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linux/linux_mmap.c 364729 2020-08-24 20:02:36Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/linux/linux_mmap.c 364729 2020-08-24 20:02:36Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/file.h>

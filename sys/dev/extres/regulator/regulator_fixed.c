@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/extres/regulator/regulator_fixed.c 362393 2020-06-19 17:49:49Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

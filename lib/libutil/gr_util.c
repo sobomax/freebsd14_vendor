@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libutil/gr_util.c 362673 2020-06-27 09:01:30Z pstef $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>

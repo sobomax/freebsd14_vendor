@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mmc/host/dwmmc_var.h 362400 2020-06-19 18:05:14Z manu $
+ * $FreeBSD$
  */
 
 #ifndef DEV_MMC_HOST_DWMMC_VAR_H

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/Protocol/Ip4Config2.h 354008 2019-10-24 04:00:49Z kevans $ */
+/* $FreeBSD$ */
 /** @file
   This file provides a definition of the EFI IPv4 Configuration II
   Protocol.

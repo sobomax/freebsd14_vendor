@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/dlfcn.c 364852 2020-08-27 00:32:11Z kib $");
+__FBSDID("$FreeBSD$");
 
 #if !defined(IN_LIBDL) || defined(PIC)
 

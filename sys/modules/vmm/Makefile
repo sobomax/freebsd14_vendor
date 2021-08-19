@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/vmm/Makefile 360496 2020-04-30 14:51:31Z kevans $
+# $FreeBSD$
 
 KMOD=	vmm
 

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/qp.h 356072 2019-12-25 09:32:55Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_QP_H

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libsmdb/Makefile 363465 2020-07-24 00:22:33Z gshapiro $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

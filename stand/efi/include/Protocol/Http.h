@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/Protocol/Http.h 354008 2019-10-24 04:00:49Z kevans $ */
+/* $FreeBSD$ */
 /** @file
   This file defines the EFI HTTP Protocol interface. It is split into
   the following two main sections:

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/if_bnxt.c 361761 2020-06-03 18:09:31Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/socket.h>

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_ifc.h 365406 2020-09-07 10:35:22Z kib $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_IFC_H

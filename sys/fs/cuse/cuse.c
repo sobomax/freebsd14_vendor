@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/fs/cuse/cuse.c 363701 2020-07-30 14:48:48Z markj $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2010-2020 Hans Petter Selasky. All rights reserved.
  *

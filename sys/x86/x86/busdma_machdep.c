@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/busdma_machdep.c 355384 2019-12-04 09:18:32Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 

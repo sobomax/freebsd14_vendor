@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/autofs/autounmountd.c 361589 2020-05-28 17:08:39Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/event.h>

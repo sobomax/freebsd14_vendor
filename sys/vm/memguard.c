@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/vm/memguard.c 365383 2020-09-06 17:40:35Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MemGuard is a simple replacement allocator for debugging only

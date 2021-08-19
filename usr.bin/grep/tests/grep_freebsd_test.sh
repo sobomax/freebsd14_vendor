@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.bin/grep/tests/grep_freebsd_test.sh 353139 2019-10-06 04:12:08Z kevans $
+# $FreeBSD$
 
 # What grep(1) are we working with?
 # - 0 : bsdgrep

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/kern.mk 360780 2020-05-07 14:20:52Z jhb $
+# $FreeBSD$
 
 #
 # Warning flags for compiling the kernel and components of the kernel:

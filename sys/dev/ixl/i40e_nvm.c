@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_nvm.c 363876 2020-08-04 23:30:10Z erj $*/
+/*$FreeBSD$*/
 
 #include "i40e_prototype.h"
 

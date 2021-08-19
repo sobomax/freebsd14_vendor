@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/bluetooth/iwmbtfw/Makefile 352102 2019-09-09 18:57:17Z wulf $
+# $FreeBSD$
 
 CONFS=		iwmbtfw.conf
 CONFSDIR=       /etc/devd

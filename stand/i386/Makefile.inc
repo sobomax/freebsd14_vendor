@@ -1,6 +1,6 @@
 # Common defines for all of stand/i386/
 #
-# $FreeBSD: releng/12.2/stand/i386/Makefile.inc 359155 2020-03-19 22:33:24Z dim $
+# $FreeBSD$
 
 .include "bsd.linker.mk"
 

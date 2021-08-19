@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/mevent.c 355117 2019-11-26 18:12:13Z vmaffione $
+ * $FreeBSD$
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/mevent.c 355117 2019-11-26 18:12:13Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #ifndef WITHOUT_CAPSICUM

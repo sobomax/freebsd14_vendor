@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/gh-bc/tests/Makefile 363811 2020-08-03 20:26:04Z se $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 

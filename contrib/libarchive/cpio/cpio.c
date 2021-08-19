@@ -26,7 +26,7 @@
 
 
 #include "cpio_platform.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/cpio/cpio.c 358925 2020-03-13 01:05:40Z mm $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <archive.h>

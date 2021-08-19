@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mman.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.2/sys/sys/mman.h 363271 2020-07-17 14:17:13Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MMAN_H_

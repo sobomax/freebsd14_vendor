@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/zoneinfo/Makefile 364902 2020-08-28 08:13:49Z philip $
+# $FreeBSD$
 
 #
 # HOW TO UPDATE THE ZONEINFO DATA

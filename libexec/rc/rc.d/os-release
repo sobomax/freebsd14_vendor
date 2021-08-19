@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/os-release 357333 2020-01-31 13:18:25Z imp $
+# $FreeBSD$
 #
 
 # PROVIDE: os-release

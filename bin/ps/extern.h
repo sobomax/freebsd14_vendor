@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: releng/12.2/bin/ps/extern.h 362924 2020-07-04 06:34:55Z pstef $
+ * $FreeBSD$
  */
 
 struct kinfo;

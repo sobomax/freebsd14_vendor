@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/pw/strtounum.c 365454 2020-09-08 12:38:34Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <inttypes.h>

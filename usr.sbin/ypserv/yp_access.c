@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/ypserv/yp_access.c 359753 2020-04-09 20:35:35Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <rpc/rpc.h>

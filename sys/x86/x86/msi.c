@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/msi.c 363049 2020-07-09 17:10:18Z gallatin $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 

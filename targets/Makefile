@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/targets/Makefile 355905 2019-12-19 04:49:34Z sjg $
+# $FreeBSD$
 
 # This is the top-level makefile - derived from the Junos version
 #

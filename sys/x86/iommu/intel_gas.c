@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/iommu/intel_gas.c 355384 2019-12-04 09:18:32Z kib $");
+__FBSDID("$FreeBSD$");
 
 #define	RB_AUGMENT(entry) dmar_gas_augment_entry(entry)
 

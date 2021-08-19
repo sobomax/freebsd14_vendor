@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm2/radeon/evergreen.c 360303 2020-04-25 13:10:17Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"

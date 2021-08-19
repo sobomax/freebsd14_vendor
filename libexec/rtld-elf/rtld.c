@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/rtld-elf/rtld.c 363372 2020-07-20 17:04:25Z luporl $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/mount.h>

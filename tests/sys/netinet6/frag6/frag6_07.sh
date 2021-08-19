@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netinet6/frag6/frag6_07.sh 356491 2020-01-08 16:14:20Z bz $
+# $FreeBSD$
 #-
 # SPDX-License-Identifier: BSD-2-Clause
 #

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.2/sys/contrib/rdma/krping/krping.h 353180 2019-10-07 08:28:05Z hselasky $
+ * $FreeBSD$
  */
 
 struct krping_stats {

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfs/nfs_commonacl.c 361236 2020-05-19 01:43:00Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <fs/nfs/nfsport.h>
 

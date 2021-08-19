@@ -41,7 +41,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: releng/12.2/crypto/openssh/ssh.c 360313 2020-04-25 15:38:48Z emaste $");
+__RCSID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifdef HAVE_SYS_STAT_H

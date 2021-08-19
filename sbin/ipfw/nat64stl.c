@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/ipfw/nat64stl.c 364156 2020-08-12 11:42:36Z ae $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>

@@ -32,7 +32,7 @@
 #include <math.h>
 
 #ifndef type
-__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_lround.c 353590 2019-10-15 20:08:19Z brooks $");
+__FBSDID("$FreeBSD$");
 #define type		double
 #define	roundit		round
 #define dtype		long

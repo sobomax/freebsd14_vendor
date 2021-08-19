@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/12.2/sbin/ipf/ipmon/Makefile 349715 2019-07-04 03:04:41Z cy $
+#	$FreeBSD$
 
 PACKAGE=	ipf
 PROG=		ipmon

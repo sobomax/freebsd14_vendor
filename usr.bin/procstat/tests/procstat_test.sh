@@ -22,7 +22,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.bin/procstat/tests/procstat_test.sh 352491 2019-09-18 19:21:20Z jilles $
+# $FreeBSD$
 #
 
 PROG_PID=

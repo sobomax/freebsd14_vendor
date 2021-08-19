@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/ldd/ldd.c 362423 2020-06-20 04:23:57Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/wait.h>
 

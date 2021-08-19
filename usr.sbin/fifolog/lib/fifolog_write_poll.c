@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/fifolog/lib/fifolog_write_poll.c 364921 2020-08-28 16:40:38Z gjb $
+ * $FreeBSD$
  */
 
 #include <assert.h>

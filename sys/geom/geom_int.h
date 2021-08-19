@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/geom/geom_int.h 355892 2019-12-19 01:28:05Z mav $
+ * $FreeBSD$
  */
 
 LIST_HEAD(class_list_head, g_class);

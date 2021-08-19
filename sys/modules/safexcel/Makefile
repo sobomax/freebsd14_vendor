@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/safexcel/Makefile 363180 2020-07-14 14:09:29Z markj $
+# $FreeBSD$
 .PATH: ${SRCTOP}/sys/dev/safexcel
 
 KMOD= safexcel

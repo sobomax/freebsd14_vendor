@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)floatdisf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/quad/floatdisf.c 358230 2020-02-21 21:57:24Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include "quad.h"
 

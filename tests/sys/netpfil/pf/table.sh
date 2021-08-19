@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netpfil/pf/table.sh 361454 2020-05-25 12:49:57Z markj $
+# $FreeBSD$
 #
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #

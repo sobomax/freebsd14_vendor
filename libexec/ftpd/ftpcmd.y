@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)ftpcmd.y	8.3 (Berkeley) 4/6/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/ftpd/ftpcmd.y 363535 2020-07-25 23:06:47Z truckman $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/socket.h>

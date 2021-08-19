@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.2/stand/lua/loader.lua 359586 2020-04-03 01:31:48Z freqlabs $
+-- $FreeBSD$
 --
 
 -- The cli module should be included first here. Some of the functions that it

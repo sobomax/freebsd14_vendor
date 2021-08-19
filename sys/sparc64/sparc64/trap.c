@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/sparc64/sparc64/trap.c 360392 2020-04-27 20:37:11Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ktr.h"

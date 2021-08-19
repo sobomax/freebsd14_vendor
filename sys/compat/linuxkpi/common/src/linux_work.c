@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_work.c 364671 2020-08-24 12:59:55Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/workqueue.h>
 #include <linux/wait.h>

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/rockchip/clk/rk_clk_composite.h 364938 2020-08-28 20:25:03Z gonzo $
+ * $FreeBSD$
  */
 
 #ifndef _RK_CLK_COMPOSITE_H_

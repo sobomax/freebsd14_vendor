@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/i2c/mux/iicmux/Makefile 356278 2020-01-02 17:51:49Z ian $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/iicbus/mux
 

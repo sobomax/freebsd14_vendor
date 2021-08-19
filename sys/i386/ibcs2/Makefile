@@ -1,6 +1,6 @@
 # Makefile for syscall tables
 #
-# $FreeBSD: releng/12.2/sys/i386/ibcs2/Makefile 357108 2020-01-25 05:47:56Z kevans $
+# $FreeBSD$
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}

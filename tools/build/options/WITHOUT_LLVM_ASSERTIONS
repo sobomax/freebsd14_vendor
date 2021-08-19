@@ -1,2 +1,2 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITHOUT_LLVM_ASSERTIONS 359748 2020-04-09 15:58:06Z kevans $
+.\" $FreeBSD$
 Set to disable debugging assertions in LLVM.

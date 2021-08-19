@@ -7,7 +7,7 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: releng/12.2/stand/ficl/i386/sysdep.c 354230 2019-10-31 21:32:59Z sjg $ */
+/* $FreeBSD$ */
 
 #ifdef TESTMAIN
 #include <stdio.h>

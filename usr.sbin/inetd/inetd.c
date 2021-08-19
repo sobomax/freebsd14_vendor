@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/inetd/inetd.c 356690 2020-01-13 18:18:24Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifndef lint
 __COPYRIGHT("@(#) Copyright (c) 1983, 1991, 1993, 1994\n\

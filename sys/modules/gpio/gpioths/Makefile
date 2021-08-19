@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/gpio/gpioths/Makefile 355499 2019-12-07 17:54:40Z ian $
+# $FreeBSD$
 #
 
 .PATH:	${SRCTOP}/sys/dev/gpio/

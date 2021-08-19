@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/mlx5tool/mlx5tool.c 353255 2019-10-07 10:23:27Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

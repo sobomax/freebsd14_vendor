@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/fuse/fuse_node.h 359214 2020-03-22 15:24:25Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef _FUSE_NODE_H_

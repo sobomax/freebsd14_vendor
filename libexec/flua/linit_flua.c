@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/libexec/flua/linit_flua.c 354833 2019-11-18 23:21:13Z kevans $ */
+/* $FreeBSD$ */
 /*
 ** $Id: linit.c,v 1.39.1.1 2017/04/19 17:20:42 roberto Exp $
 ** Initialization of libraries for lua.c and other clients

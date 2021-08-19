@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netpfil/pf/nat.sh 358964 2020-03-13 17:10:53Z lwhsu $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/utils.subr
 

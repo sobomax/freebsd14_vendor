@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/msun/src/s_cproj.c 352685 2019-09-25 14:33:08Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 #include <complex.h>
 #include <float.h>

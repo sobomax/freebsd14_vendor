@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/tests/sys/mac/bsdextended/matches_test.sh 361126 2020-05-17 02:35:50Z asomers $
+# $FreeBSD$
 #
 
 uidrange="60000:100000"

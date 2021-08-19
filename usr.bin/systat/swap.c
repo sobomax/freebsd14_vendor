@@ -32,7 +32,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/systat/swap.c 360383 2020-04-27 16:11:59Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #ifdef lint
 static const char sccsid[] = "@(#)swap.c	8.3 (Berkeley) 4/29/95";

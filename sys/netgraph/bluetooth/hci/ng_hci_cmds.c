@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_cmds.c,v 1.4 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: releng/12.2/sys/netgraph/bluetooth/hci/ng_hci_cmds.c 361164 2020-05-18 08:57:21Z hselasky $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

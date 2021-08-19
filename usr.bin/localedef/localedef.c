@@ -32,7 +32,7 @@
  * POSIX localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/localedef/localedef.c 363535 2020-07-25 23:06:47Z truckman $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/stat.h>

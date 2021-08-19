@@ -1,6 +1,6 @@
 # Doxyfile 1.5.2
 
-# $FreeBSD: releng/12.2/tools/kerneldoc/subsys/Doxyfile-dev_ice 365733 2020-09-14 22:42:17Z erj $
+# $FreeBSD$
 
 #---------------------------------------------------------------------------
 # Project related configuration options

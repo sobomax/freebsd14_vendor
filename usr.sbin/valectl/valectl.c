@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.2/usr.sbin/valectl/valectl.c 354229 2019-10-31 21:01:34Z vmaffione $ */
+/* $FreeBSD$ */
 
 #define NETMAP_WITH_LIBS
 #include <net/netmap_user.h>

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/tests/gen/posix_spawn_test.c 362281 2020-06-17 16:22:08Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/wait.h>
 #include <errno.h>

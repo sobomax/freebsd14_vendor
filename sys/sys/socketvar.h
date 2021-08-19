@@ -30,7 +30,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: releng/12.2/sys/sys/socketvar.h 361717 2020-06-02 00:57:48Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SOCKETVAR_H_

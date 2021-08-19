@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_util.c 358925 2020-03-13 01:05:40Z mm $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

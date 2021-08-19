@@ -30,7 +30,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_reserv.h 355445 2019-12-06 15:01:36Z markj $
+ * $FreeBSD$
  */
 
 /*

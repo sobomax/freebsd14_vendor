@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/elfctl/Makefile 358512 2020-03-02 02:36:41Z emaste $
+# $FreeBSD$
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 

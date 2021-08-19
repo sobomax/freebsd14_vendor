@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/cddl/lib/libzpool/Makefile 361383 2020-05-22 13:27:02Z avg $
+# $FreeBSD$
 
 .include "${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/Makefile.files"
 

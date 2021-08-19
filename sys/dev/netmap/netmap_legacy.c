@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.2/sys/dev/netmap/netmap_legacy.c 364755 2020-08-25 11:10:37Z vmaffione $ */
+/* $FreeBSD$ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */

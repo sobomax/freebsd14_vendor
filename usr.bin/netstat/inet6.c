@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)inet6.c	8.4 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/netstat/inet6.c 356625 2020-01-11 01:56:57Z bz $");
+__FBSDID("$FreeBSD$");
 
 #ifdef INET6
 #include <sys/param.h>

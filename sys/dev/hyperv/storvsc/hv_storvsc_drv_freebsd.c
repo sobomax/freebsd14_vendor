@@ -35,7 +35,7 @@
  * partition StorVSP driver over the Hyper-V VMBUS.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 358384 2020-02-27 14:50:02Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/proc.h>

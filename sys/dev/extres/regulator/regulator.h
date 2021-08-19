@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/extres/regulator/regulator.h 355183 2019-11-28 18:44:06Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_EXTRES_REGULATOR_H_

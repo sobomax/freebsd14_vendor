@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/bin/sh/profile 363525 2020-07-25 11:57:39Z pstef $
+# $FreeBSD$
 #
 # System-wide .profile file for sh(1).
 #

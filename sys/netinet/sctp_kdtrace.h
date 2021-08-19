@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_kdtrace.h 362850 2020-07-01 18:10:37Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_KDTRACE_H_
 #define _NETINET_SCTP_KDTRACE_H_

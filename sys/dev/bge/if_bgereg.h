@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/bge/if_bgereg.h 363016 2020-07-08 17:59:00Z mav $
+ * $FreeBSD$
  */
 
 /*

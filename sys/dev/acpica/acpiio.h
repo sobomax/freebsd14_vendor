@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/acpica/acpiio.h 359076 2020-03-18 18:02:33Z hrs $
+ * $FreeBSD$
  */
 
 #ifndef _ACPIIO_H_

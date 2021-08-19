@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/x86/hypervisor.c 354043 2019-10-24 20:02:48Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <machine/cpufunc.h>

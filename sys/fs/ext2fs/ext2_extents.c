@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_extents.c 363604 2020-07-27 14:14:06Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

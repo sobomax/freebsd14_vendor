@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_pcb.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.2/sys/netinet6/in6_pcb.h 362878 2020-07-01 22:22:26Z tuexen $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_IN6_PCB_H_

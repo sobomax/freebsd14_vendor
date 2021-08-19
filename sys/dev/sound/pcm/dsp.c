@@ -43,7 +43,7 @@
 #include <vm/vm_page.h>
 #include <vm/vm_pager.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pcm/dsp.c 361174 2020-05-18 09:07:14Z hselasky $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static int dsp_mmap_allow_prot_exec = 0;
 SYSCTL_INT(_hw_snd, OID_AUTO, compat_linux_mmap, CTLFLAG_RWTUN,

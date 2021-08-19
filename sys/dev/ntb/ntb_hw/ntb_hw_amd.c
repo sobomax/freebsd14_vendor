@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ntb/ntb_hw/ntb_hw_amd.c 358201 2020-02-21 04:29:50Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

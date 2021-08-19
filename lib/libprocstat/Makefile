@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libprocstat/Makefile 361823 2020-06-05 06:34:04Z avg $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

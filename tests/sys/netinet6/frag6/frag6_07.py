@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/tests/sys/netinet6/frag6/frag6_07.py 356491 2020-01-08 16:14:20Z bz $
+# $FreeBSD$
 #
 
 import argparse

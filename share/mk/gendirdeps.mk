@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/gendirdeps.mk 355905 2019-12-19 04:49:34Z sjg $
+# $FreeBSD$
 # $Id: gendirdeps.mk,v 1.41 2019/11/21 23:50:40 sjg Exp $
 
 # Copyright (c) 2010-2013, Juniper Networks, Inc.

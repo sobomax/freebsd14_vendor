@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.bin/procstat/procstat_sigs.c 357519 2020-02-04 19:31:01Z dim $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

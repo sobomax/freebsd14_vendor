@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/getnetnamadr.c 360414 2020-04-27 23:47:40Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include "reentrant.h"

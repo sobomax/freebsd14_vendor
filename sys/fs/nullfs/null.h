@@ -33,7 +33,7 @@
  *
  *	@(#)null.h	8.3 (Berkeley) 8/20/94
  *
- * $FreeBSD: releng/12.2/sys/fs/nullfs/null.h 357506 2020-02-04 17:12:09Z kib $
+ * $FreeBSD$
  */
 
 #ifndef	FS_NULL_H

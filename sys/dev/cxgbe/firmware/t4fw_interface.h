@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/firmware/t4fw_interface.h 365961 2020-09-21 18:19:48Z np $
+ * $FreeBSD$
  *
  */
 

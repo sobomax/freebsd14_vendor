@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libcompiler_rt/Makefile 356460 2020-01-07 18:08:09Z dim $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

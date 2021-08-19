@@ -44,7 +44,7 @@
 #include <dev/sound/pci/hda/hdaa.h>
 #include <dev/sound/pci/hda/hda_reg.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/hda/hdaa_patches.c 355805 2019-12-16 15:41:32Z markj $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static const struct {
 	uint32_t model;

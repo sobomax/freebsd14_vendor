@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/err.h 361162 2020-05-18 08:55:49Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_ERR_H_
 #define	_LINUX_ERR_H_

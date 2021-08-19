@@ -602,5 +602,5 @@
 #   MSI-X Vectors: 736
 #   Virtual Functions: 64
 #
-# $FreeBSD: releng/12.2/sys/dev/cxgbe/firmware/t6fw_cfg_uwire.txt 365961 2020-09-21 18:19:48Z np $
+# $FreeBSD$
 #

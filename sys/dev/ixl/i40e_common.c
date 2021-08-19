@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixl/i40e_common.c 365339 2020-09-04 21:21:23Z erj $*/
+/*$FreeBSD$*/
 
 #include "i40e_type.h"
 #include "i40e_adminq.h"

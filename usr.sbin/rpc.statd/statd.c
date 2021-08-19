@@ -38,7 +38,7 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/rpc.statd/statd.c 355365 2019-12-03 22:53:22Z rpokala $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <errno.h>

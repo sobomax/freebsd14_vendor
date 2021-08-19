@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: releng/12.2/usr.sbin/ntp/config.h 362716 2020-06-28 03:28:28Z cy $ */
+/* $FreeBSD$ */
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */

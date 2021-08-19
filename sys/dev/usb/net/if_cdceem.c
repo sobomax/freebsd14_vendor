@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/net/if_cdceem.c 362166 2020-06-14 05:25:06Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>

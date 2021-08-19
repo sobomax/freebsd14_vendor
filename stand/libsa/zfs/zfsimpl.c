@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/zfs/zfsimpl.c 366729 2020-10-15 15:07:25Z allanjude $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone ZFS file reader.

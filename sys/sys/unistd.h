@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.2 (Berkeley) 1/7/94
- * $FreeBSD: releng/12.2/sys/sys/unistd.h 353789 2019-10-21 01:24:21Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UNISTD_H_

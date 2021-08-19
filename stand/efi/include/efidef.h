@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/efidef.h 353979 2019-10-24 02:43:38Z kevans $ */
+/* $FreeBSD$ */
 #ifndef _EFI_DEF_H
 #define _EFI_DEF_H
 

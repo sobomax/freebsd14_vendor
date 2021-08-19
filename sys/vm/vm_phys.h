@@ -30,7 +30,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_phys.h 354041 2019-10-24 20:00:28Z mav $
+ * $FreeBSD$
  */
 
 /*

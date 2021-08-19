@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/fuse/fuse_node.c 359214 2020-03-22 15:24:25Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>

@@ -24,7 +24,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.2/sys/dev/netmap/if_vtnet_netmap.h 362554 2020-06-23 20:41:10Z vmaffione $
+ * $FreeBSD$
  */
 
 #include <net/netmap.h>

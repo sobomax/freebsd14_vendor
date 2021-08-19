@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/vm/page_fault_signal.c 353148 2019-10-06 20:36:25Z jilles $
+ * $FreeBSD$
  */
 
 #include <sys/mman.h>

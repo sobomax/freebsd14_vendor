@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ioat/ioat.c 356429 2020-01-07 00:54:23Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

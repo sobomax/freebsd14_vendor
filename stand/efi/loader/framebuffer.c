@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/framebuffer.c 353501 2019-10-14 19:17:00Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <bootstrap.h>
 #include <sys/endian.h>

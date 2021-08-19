@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsclient/nfs_clstate.c 361236 2020-05-19 01:43:00Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 /*
  * These functions implement the client side state handling for NFSv4.

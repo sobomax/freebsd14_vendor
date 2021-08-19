@@ -87,7 +87,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iwm/if_iwm_power.c 355608 2019-12-11 14:28:13Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 #include "opt_iwm.h"

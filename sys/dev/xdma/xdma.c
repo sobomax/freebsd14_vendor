@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/xdma/xdma.c 356282 2020-01-02 19:52:01Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

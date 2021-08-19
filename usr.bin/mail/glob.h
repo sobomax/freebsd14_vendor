@@ -30,7 +30,7 @@
  *
  *	@(#)glob.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: releng/12.2/usr.bin/mail/glob.h 359763 2020-04-10 00:27:19Z kevans $
+ * $FreeBSD$
  */
 
 /*

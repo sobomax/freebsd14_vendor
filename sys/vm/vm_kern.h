@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_kern.h 365007 2020-08-31 19:59:05Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _VM_VM_KERN_H_

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_join.c 358473 2020-02-29 21:42:34Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <errno.h>

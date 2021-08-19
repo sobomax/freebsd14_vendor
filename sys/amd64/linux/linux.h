@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/linux/linux.h 364712 2020-08-24 17:06:34Z trasz $
+ * $FreeBSD$
  */
 
 #ifndef _AMD64_LINUX_H_

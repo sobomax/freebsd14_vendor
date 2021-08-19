@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/contrib/rdma/krping/krping_dev.c 353180 2019-10-07 08:28:05Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/module.h>

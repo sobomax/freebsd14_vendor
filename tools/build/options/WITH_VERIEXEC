@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITH_VERIEXEC 353800 2019-10-21 17:45:00Z dim $
+.\" $FreeBSD$
 Enable building
 .Xr veriexec 8
 which loads the contents of verified manifests into the kernel

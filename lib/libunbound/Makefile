@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libunbound/Makefile 361435 2020-05-24 16:47:27Z cy $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 # Vendor sources and generated files

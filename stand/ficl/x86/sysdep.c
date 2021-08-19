@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/ficl/x86/sysdep.c 354043 2019-10-24 20:02:48Z sjg $ */
+/* $FreeBSD$ */
 
 #ifndef TESTMAIN
 #include <machine/cpufunc.h>

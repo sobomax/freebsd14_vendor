@@ -1,5 +1,5 @@
 /*	$NetBSD: ifconfig.c,v 1.34 1997/04/21 01:17:58 lukem Exp $	*/
-/* $FreeBSD: releng/12.2/sbin/ifconfig/ifmedia.c 352648 2019-09-24 06:31:56Z kib $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

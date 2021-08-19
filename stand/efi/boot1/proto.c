@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/boot1/proto.c 355284 2019-12-02 09:57:07Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <machine/elf.h>

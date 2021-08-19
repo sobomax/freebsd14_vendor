@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)proc.h	7.1 (Berkeley) 5/15/91
- * $FreeBSD: releng/12.2/sys/amd64/include/proc.h 354569 2019-11-09 11:55:01Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PROC_H_

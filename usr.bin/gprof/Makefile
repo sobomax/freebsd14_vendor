@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/29/93
-#	$FreeBSD: releng/12.2/usr.bin/gprof/Makefile 356447 2020-01-07 16:47:25Z bz $
+#	$FreeBSD$
 
 PROG=	gprof
 SRCS=	gprof.c arcs.c dfn.c elf.c lookup.c hertz.c \

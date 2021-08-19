@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_rcu.c 364390 2020-08-19 13:32:55Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>

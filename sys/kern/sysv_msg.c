@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/sysv_msg.c 363245 2020-07-16 13:38:20Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sysvipc.h"
 

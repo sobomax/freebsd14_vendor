@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/zalloc.c 353995 2019-10-24 03:29:01Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

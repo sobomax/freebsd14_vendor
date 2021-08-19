@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/kern/bus_if.m 360525 2020-05-01 09:46:27Z hselasky $
+# $FreeBSD$
 #
 
 #include <sys/types.h>

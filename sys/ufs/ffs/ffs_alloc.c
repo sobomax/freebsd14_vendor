@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ffs/ffs_alloc.c 362049 2020-06-11 11:36:49Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/tests/sys/kern/unix_passfd_test.c 353564 2019-10-15 14:51:22Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>

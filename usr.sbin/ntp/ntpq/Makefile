@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/ntp/ntpq/Makefile 358110 2020-02-19 14:37:56Z bapt $
+# $FreeBSD$
 
 MAN=
 

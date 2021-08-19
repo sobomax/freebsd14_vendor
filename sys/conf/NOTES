@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/NOTES 362961 2020-07-06 14:00:20Z markj $
+# $FreeBSD$
 #
 # NOTES -- Lines that can be cut/pasted into kernel and hints configs.
 #

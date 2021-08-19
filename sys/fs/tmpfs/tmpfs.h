@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/tmpfs/tmpfs.h 362001 2020-06-10 03:57:10Z freqlabs $
+ * $FreeBSD$
  */
 
 #ifndef _FS_TMPFS_TMPFS_H_

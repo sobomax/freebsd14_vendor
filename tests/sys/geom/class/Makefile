@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/geom/class/Makefile 364320 2020-08-17 17:48:28Z emaste $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

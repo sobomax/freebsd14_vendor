@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/riscv/riscv/db_trace.c 360926 2020-05-11 20:58:27Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kdb.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/libexpat/expat_config.h 355603 2019-12-11 06:30:26Z delphij $ */
+/* $FreeBSD$ */
 
 /* expat_config.h.  Generated from expat_config.h.in by configure.  */
 /* expat_config.h.in.  Generated from configure.ac by autoheader.  */

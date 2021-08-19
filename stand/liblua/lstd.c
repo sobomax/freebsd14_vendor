@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/liblua/lstd.c 359769 2020-04-10 05:13:15Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include "lstd.h"
 #include "math.h"

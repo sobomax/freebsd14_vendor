@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.2/sys/netinet6/ip6_var.h 356625 2020-01-11 01:56:57Z bz $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_IP6_VAR_H_

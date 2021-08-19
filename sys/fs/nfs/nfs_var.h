@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/nfs/nfs_var.h 360141 2020-04-21 04:47:42Z rmacklem $
+ * $FreeBSD$
  */
 
 /*

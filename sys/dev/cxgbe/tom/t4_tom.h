@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/tom/t4_tom.h 360189 2020-04-22 07:24:30Z np $
+ * $FreeBSD$
  *
  */
 

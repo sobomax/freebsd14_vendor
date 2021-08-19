@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/libsa/nfs.c 355364 2019-12-03 22:53:07Z rpokala $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/time.h>

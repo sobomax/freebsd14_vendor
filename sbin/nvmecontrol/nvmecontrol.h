@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sbin/nvmecontrol/nvmecontrol.h 360375 2020-04-27 14:02:24Z mav $
+ * $FreeBSD$
  */
 
 #ifndef __NVMECONTROL_H__

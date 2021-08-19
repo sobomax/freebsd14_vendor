@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/mlx5/Makefile 359532 2020-04-01 19:38:46Z kib $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/efi/loader/Makefile 359143 2020-03-19 16:51:57Z tsoome $
+# $FreeBSD$
 
 LOADER_NET_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	yes

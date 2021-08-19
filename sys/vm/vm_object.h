@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_object.h 354394 2019-11-06 14:41:07Z kib $
+ * $FreeBSD$
  */
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/gnu/usr.bin/gdb/Makefile.inc 360391 2020-04-27 19:49:35Z kevans $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

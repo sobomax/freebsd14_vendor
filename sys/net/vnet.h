@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/net/vnet.h 354609 2019-11-11 14:41:05Z hselasky $
+ * $FreeBSD$
  */
 
 /*-

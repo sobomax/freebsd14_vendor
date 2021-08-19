@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/fs/msdosfs/msdosfs_vnops.c 340970 2018-11-26 14:01:05Z markj $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -1687,6 +1687,7 @@ msdosfs_readdir(struct vop_readdir_args *ap)
 			dirbuf.d_reclen = GENERIC_DIRSIZ(&dirbuf);
 			/* NOTE: d_off is the offset of the *next* entry. */
 			dirbuf.d_off = offset + sizeof(struct direntry);
+			dirent_terminate(&dirbuf);
 			if (uio->uio_resid < dirbuf.d_reclen) {
 				brelse(bp);
 				goto out;

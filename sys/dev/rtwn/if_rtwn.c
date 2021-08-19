@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/rtwn/if_rtwn.c 365670 2020-09-12 19:33:25Z bz $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for Realtek RTL8188CE-VAU/RTL8188CUS/RTL8188EU/RTL8188RU/RTL8192CU/RTL8812AU/RTL8821AU.

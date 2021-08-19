@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/ipnat 364357 2020-08-18 20:41:03Z cy $
+# $FreeBSD$
 #
 
 # PROVIDE: ipnat

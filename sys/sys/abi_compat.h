@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/abi_compat.h 360446 2020-04-28 17:59:37Z brooks $
+ * $FreeBSD$
  */
 
 #ifndef _COMPAT_H_

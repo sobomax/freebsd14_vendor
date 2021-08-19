@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sbin/ggate/ggated/ggated.c 365436 2020-09-07 23:22:16Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

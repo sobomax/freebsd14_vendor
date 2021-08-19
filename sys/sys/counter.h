@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/counter.h 358962 2020-03-13 16:52:16Z markj $
+ * $FreeBSD$
  */
 
 #ifndef __SYS_COUNTER_H__

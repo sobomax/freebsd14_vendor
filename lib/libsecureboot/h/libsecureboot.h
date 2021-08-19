@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * $FreeBSD: releng/12.2/lib/libsecureboot/h/libsecureboot.h 359735 2020-04-09 04:50:19Z sjg $
+ * $FreeBSD$
  */
 #ifndef _LIBSECUREBOOT_H_
 #define _LIBSECUREBOOT_H_

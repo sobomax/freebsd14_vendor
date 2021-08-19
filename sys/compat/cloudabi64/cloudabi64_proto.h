@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/cloudabi64/cloudabi64_proto.h 353067 2019-10-03 20:09:50Z brooks $
+ * $FreeBSD$
  */
 
 #ifndef _CLOUDABI64_SYSPROTO_H_

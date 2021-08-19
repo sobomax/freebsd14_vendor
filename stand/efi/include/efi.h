@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/efi.h 353979 2019-10-24 02:43:38Z kevans $ */
+/* $FreeBSD$ */
 /*++
 
 Copyright (c)  1999 - 2002 Intel Corporation. All rights reserved

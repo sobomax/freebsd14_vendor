@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/nat64/nat64_translate.c 364158 2020-08-12 11:48:19Z ae $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ipstealth.h"
 

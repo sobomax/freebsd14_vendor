@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: kbdmux.c,v 1.4 2005/07/14 17:38:35 max Exp $
- * $FreeBSD: releng/12.2/sys/dev/kbdmux/kbdmux.c 356013 2019-12-22 17:15:48Z kevans $
+ * $FreeBSD$
  */
 
 #include "opt_evdev.h"

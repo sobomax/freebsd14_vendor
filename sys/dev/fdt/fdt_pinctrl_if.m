@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/dev/fdt/fdt_pinctrl_if.m 358653 2020-03-04 21:53:54Z manu $
+# $FreeBSD$
 #
 
 #include <sys/types.h>

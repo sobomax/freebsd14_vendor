@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/dirdeps-targets.mk 355905 2019-12-19 04:49:34Z sjg $
+# $FreeBSD$
 # RCSid:
 #       $Id: dirdeps-targets.mk,v 1.9 2019/10/06 20:07:50 sjg Exp $
 #

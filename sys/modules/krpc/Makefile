@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/krpc/Makefile 365356 2020-09-05 02:16:10Z kevans $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/rpc
 KMOD=	krpc

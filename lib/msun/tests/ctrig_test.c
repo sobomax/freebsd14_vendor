@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/msun/tests/ctrig_test.c 360797 2020-05-07 20:27:32Z lwhsu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <complex.h>

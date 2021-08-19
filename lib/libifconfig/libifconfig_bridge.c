@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libifconfig/libifconfig_bridge.c 363037 2020-07-09 09:33:32Z freqlabs $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/ioctl.h>

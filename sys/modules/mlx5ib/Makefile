@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/mlx5ib/Makefile 359378 2020-03-27 20:06:40Z kib $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_ib
 
 KMOD=mlx5ib

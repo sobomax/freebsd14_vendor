@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libpmc/pmu-events/jevents.c 359472 2020-03-30 22:07:11Z emaste $
+ * $FreeBSD$
  *
 */
 

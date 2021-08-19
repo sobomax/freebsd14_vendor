@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/pkg/Makefile 353409 2019-10-10 17:29:47Z gjb $
+# $FreeBSD$
 
 _BRANCH!=	${MAKE} -C ${SRCTOP}/release -V BRANCH
 BRANCH?=	${_BRANCH}

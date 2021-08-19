@@ -44,7 +44,7 @@
  *
  * Created      : 30/09/94
  *
- * $FreeBSD: releng/12.2/sys/arm/include/frame.h 326258 2017-11-27 15:04:10Z pfg $
+ * $FreeBSD$
  *
  */
 

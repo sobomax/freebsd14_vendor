@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/libexec/ypxfr/ypxfr_main.c 359753 2020-04-09 20:35:35Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <stdio.h>

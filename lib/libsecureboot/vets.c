@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libsecureboot/vets.c 359735 2020-04-09 04:50:19Z sjg $");
+__FBSDID("$FreeBSD$");
 
 /**
  * @file vets.c - trust store

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ata/chipsets/ata-promise.c 355964 2019-12-20 22:07:05Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/module.h>

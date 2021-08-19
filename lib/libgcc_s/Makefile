@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libgcc_s/Makefile 356460 2020-01-07 18:08:09Z dim $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SHLIB_NAME=	libgcc_s.so.1

@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.2/sys/modules/ice/Makefile 361541 2020-05-26 23:35:10Z erj $
+#$FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/ice
 

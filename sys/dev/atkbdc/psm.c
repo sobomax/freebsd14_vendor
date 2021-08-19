@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/atkbdc/psm.c 362208 2020-06-15 22:41:28Z wulf $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_isa.h"
 #include "opt_psm.h"

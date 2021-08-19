@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/pci_lpc.c 358184 2020-02-20 21:48:36Z vmaffione $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_lpc.c 358184 2020-02-20 21:48:36Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <machine/vmm.h>

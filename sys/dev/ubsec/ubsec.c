@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ubsec/ubsec.c 361044 2020-05-14 18:59:34Z jhb $");
+__FBSDID("$FreeBSD$");
 
 /*
  * uBsec 5[56]01, 58xx hardware crypto accelerator

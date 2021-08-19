@@ -43,7 +43,7 @@
  * UCL. This driver is based much more on read/write/poll mode of
  * operation though.
  *
- * $FreeBSD: releng/12.2/sys/net/if_tuntap.c 363443 2020-07-23 03:25:31Z kevans $
+ * $FreeBSD$
  */
 
 #include "opt_inet.h"

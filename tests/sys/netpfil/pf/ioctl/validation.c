@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/netpfil/pf/ioctl/validation.c 361312 2020-05-21 01:55:10Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

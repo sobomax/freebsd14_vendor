@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/common/interp_lua.c 361856 2020-06-06 01:56:30Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include "bootstrap.h"

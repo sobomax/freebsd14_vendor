@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_dummynet.c 363414 2020-07-22 10:00:13Z thj $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Configuration and internal object management for dummynet.

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm/allwinner/aw_sid.c 362408 2020-06-19 18:43:02Z manu $
+ * $FreeBSD$
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/aw_sid.c 362408 2020-06-19 18:43:02Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/param.h>

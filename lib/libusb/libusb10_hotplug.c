@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/libusb/libusb10_hotplug.c 357437 2020-02-03 11:04:18Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2016-2019 Hans Petter Selasky. All rights reserved.
  *

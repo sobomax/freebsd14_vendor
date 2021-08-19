@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/bsd.sys.mk 359714 2020-04-07 19:44:37Z bdrewery $
+# $FreeBSD$
 #
 # This file contains common settings used for building FreeBSD
 # sources.

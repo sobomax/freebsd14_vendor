@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.sbin/bsdconfig/include/messages.subr 358513 2020-03-02 02:44:21Z philip $
+# $FreeBSD$
 
 field_password="Password:"
 field_username="Username:"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/gnu/usr.bin/binutils/objcopy/Makefile 352754 2019-09-26 16:05:57Z emaste $
+# $FreeBSD$
 
 .include "../Makefile.inc0"
 

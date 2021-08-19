@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsclient/nfs_clrpcops.c 364097 2020-08-11 05:10:01Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Rpc op calls, generally called from the vnode op calls or through the

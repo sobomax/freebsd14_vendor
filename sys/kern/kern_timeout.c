@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_timeout.c 360633 2020-05-04 16:30:36Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_callout_profiling.h"
 #include "opt_ddb.h"
@@ -1271,7 +1271,7 @@ again:
 			 * just wait for the current invocation to
 			 * finish.
 			 */
-			while (cc_exec_curr(cc, direct) == c) {
+			if (cc_exec_curr(cc, direct) == c) {
 				/*
 				 * Use direct calls to sleepqueue interface
 				 * instead of cv/msleep in order to avoid
@@ -1319,7 +1319,7 @@ again:
 
 				/* Reacquire locks previously released. */
 				PICKUP_GIANT();
-				CC_LOCK(cc);
+				goto again;
 			}
 			c->c_flags &= ~CALLOUT_ACTIVE;
 		} else if (use_lock &&

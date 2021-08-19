@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netpfil/ipfw/ip_fw_table_algo.c 362302 2020-06-18 08:37:56Z eugen $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Lookup table algorithms.

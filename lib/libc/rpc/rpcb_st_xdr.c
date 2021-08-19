@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/rpc/rpcb_st_xdr.c 358121 2020-02-19 16:17:51Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <rpc/rpc.h>

@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: releng/12.2/sys/netgraph/ng_iface.c 364015 2020-08-07 13:42:47Z markj $
+ * $FreeBSD$
  * $Whistle: ng_iface.c,v 1.33 1999/11/01 09:24:51 julian Exp $
  */
 

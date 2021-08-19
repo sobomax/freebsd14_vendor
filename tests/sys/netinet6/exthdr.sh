@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netinet6/exthdr.sh 356619 2020-01-10 23:46:12Z bz $
+# $FreeBSD$
 #-
 # SPDX-License-Identifier: BSD-2-Clause
 #

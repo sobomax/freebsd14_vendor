@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/rpc.ypupdated/ypupdated_main.c 359753 2020-04-09 20:35:35Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "ypupdate_prot.h"
 #include <stdio.h>

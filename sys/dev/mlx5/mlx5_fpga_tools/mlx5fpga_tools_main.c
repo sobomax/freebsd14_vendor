@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_fpga_tools/mlx5fpga_tools_main.c 363150 2020-07-13 15:33:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/module.h>

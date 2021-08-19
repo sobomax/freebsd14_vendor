@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/db_interface.c 354586 2019-11-10 09:13:12Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Interface to new debugger.

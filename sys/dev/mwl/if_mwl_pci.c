@@ -32,7 +32,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mwl/if_mwl_pci.c 365670 2020-09-12 19:33:25Z bz $");
+__FBSDID("$FreeBSD$");
 #endif
 
 /*

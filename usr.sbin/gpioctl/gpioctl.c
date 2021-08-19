@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/gpioctl/gpioctl.c 362395 2020-06-19 17:56:05Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <fcntl.h>
 #include <getopt.h>

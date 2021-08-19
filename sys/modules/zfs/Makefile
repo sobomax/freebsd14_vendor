@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/zfs/Makefile 355285 2019-12-02 11:44:39Z tsoome $
+# $FreeBSD$
 
 SYSDIR?=${SRCTOP}/sys
 

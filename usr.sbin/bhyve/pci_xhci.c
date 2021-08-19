@@ -33,7 +33,7 @@
      tablet             USB tablet mouse
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_xhci.c 363239 2020-07-16 02:53:13Z grehan $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/uio.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/local.dirdeps.mk 356775 2020-01-16 03:38:06Z kevans $
+# $FreeBSD$
 .if !target(_DIRDEP_USE)
 # we are the 1st makefile
 

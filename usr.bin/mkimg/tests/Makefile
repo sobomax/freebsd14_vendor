@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/mkimg/tests/Makefile 362776 2020-06-29 08:14:45Z gonzo $
+# $FreeBSD$
 
 .PATH:	${.CURDIR}
 

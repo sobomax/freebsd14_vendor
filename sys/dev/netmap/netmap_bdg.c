@@ -58,7 +58,7 @@ ports attached to the switch)
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/netmap/netmap_bdg.c 354471 2019-11-07 20:09:41Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/errno.h>

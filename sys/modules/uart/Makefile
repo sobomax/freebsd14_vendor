@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/uart/Makefile 356068 2019-12-25 05:51:47Z markj $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/uart
 

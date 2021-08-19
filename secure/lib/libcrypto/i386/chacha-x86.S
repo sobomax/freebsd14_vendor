@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/chacha-x86.S 364963 2020-08-29 18:11:37Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from chacha-x86.pl. */
 #ifdef PIC
 .text

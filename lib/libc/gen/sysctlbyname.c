@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/sysctlbyname.c 364150 2020-08-12 10:03:10Z kaktus $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

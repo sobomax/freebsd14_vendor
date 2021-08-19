@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/libsa/stand.h 354230 2019-10-31 21:32:59Z sjg $
+ * $FreeBSD$
  * From	$NetBSD: stand.h,v 1.22 1997/06/26 19:17:40 drochner Exp $	
  */
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/linux64/Makefile 364712 2020-08-24 17:06:34Z trasz $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/compat/linux ${SRCTOP}/sys/${MACHINE}/linux
 

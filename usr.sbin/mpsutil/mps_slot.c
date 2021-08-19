@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/12.2/usr.sbin/mpsutil/mps_slot.c 354884 2019-11-20 08:44:29Z avg $");
+__RCSID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/param.h>

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/gpio/gpiobusvar.h 355490 2019-12-07 17:10:03Z ian $
+ * $FreeBSD$
  *
  */
 

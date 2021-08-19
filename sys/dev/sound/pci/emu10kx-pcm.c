@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/sound/pci/emu10kx-pcm.c 360305 2020-04-25 13:18:29Z dim $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

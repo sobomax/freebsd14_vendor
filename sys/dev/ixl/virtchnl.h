@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.2/sys/dev/ixl/virtchnl.h 365339 2020-09-04 21:21:23Z erj $*/
+/*$FreeBSD$*/
 
 #ifndef _VIRTCHNL_H_
 #define _VIRTCHNL_H_

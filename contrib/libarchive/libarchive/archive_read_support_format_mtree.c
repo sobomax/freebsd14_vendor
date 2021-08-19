@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/archive_read_support_format_mtree.c 358087 2020-02-19 01:46:43Z mm $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>

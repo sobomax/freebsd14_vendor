@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/ti/am335x/am335x_pmic.c 362398 2020-06-19 18:02:29Z manu $");
+__FBSDID("$FreeBSD$");
 /*
 * TI TPS65217 PMIC companion chip for AM335x SoC sitting on I2C bus
 */

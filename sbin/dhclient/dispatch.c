@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/dhclient/dispatch.c 361941 2020-06-08 21:35:24Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "dhcpd.h"
 #include "privsep.h"

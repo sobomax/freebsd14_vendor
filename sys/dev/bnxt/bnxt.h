@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/bnxt/bnxt.h 361761 2020-06-03 18:09:31Z kp $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _BNXT_H
 #define _BNXT_H

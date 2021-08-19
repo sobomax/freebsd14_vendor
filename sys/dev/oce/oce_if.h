@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: releng/12.2/sys/dev/oce/oce_if.h 356089 2019-12-26 16:56:42Z markj $ */
+/* $FreeBSD$ */
 
 #include <sys/param.h>
 #include <sys/endian.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/clang/include/clang/Config/config.h 363494 2020-07-24 20:48:06Z dim $ */
+/* $FreeBSD$ */
 /* This generated file is for internal use. Do not include it from headers. */
 
 #ifdef CLANG_CONFIG_H

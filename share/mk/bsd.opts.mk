@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/bsd.opts.mk 352754 2019-09-26 16:05:57Z emaste $
+# $FreeBSD$
 #
 # Option file for src builds.
 #

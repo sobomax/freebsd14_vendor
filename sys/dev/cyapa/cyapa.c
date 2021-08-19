@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cyapa/cyapa.c 355994 2019-12-22 00:46:07Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * CYAPA - Cypress APA trackpad with I2C Interface driver

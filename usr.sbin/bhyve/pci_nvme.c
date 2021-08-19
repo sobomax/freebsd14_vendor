@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_nvme.c 363359 2020-07-20 00:44:27Z chuck $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/errno.h>
 #include <sys/types.h>

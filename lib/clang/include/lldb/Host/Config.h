@@ -1,4 +1,4 @@
-// $FreeBSD: releng/12.2/lib/clang/include/lldb/Host/Config.h 363494 2020-07-24 20:48:06Z dim $
+// $FreeBSD$
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.

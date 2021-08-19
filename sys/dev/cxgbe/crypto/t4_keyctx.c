@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/crypto/t4_keyctx.c 364845 2020-08-26 22:11:22Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/malloc.h>

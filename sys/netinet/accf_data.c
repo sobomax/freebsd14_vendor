@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/accf_data.c 361717 2020-06-02 00:57:48Z markj $");
+__FBSDID("$FreeBSD$");
 
 #define ACCEPT_FILTER_MOD
 

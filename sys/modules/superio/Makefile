@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/superio/Makefile 349580 2019-07-01 17:05:41Z avg $
+# $FreeBSD$
 
 .PATH: ${.CURDIR}/../../dev/superio
 

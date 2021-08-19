@@ -1,7 +1,7 @@
 /*
  * USA holiday
  *
- * $FreeBSD: releng/12.2/usr.bin/calendar/calendars/calendar.usholiday 359782 2020-04-10 22:18:13Z gonzo $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_usholiday_

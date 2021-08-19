@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/vidconsole.c 353983 2019-10-24 03:01:40Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <bootstrap.h>

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)diff.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.2/usr.bin/diff/diff.h 360403 2020-04-27 22:32:16Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

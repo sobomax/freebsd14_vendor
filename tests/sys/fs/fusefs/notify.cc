@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/fs/fusefs/notify.cc 359212 2020-03-22 15:03:09Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {

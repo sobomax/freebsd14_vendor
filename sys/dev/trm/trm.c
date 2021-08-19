@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/trm/trm.c 355028 2019-11-23 07:06:16Z scottl $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	HISTORY:					

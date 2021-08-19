@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/bin/csh/csh.login 363525 2020-07-25 11:57:39Z pstef $
+# $FreeBSD$
 #
 # System-wide .login file for csh(1).
 #

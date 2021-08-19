@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/kstat.h 365917 2020-09-19 20:46:56Z allanjude $
+ * $FreeBSD$
  */
 
 #ifndef _OPENSOLARIS_SYS_KSTAT_H_

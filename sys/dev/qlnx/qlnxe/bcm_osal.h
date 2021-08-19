@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/qlnx/qlnxe/bcm_osal.h 364653 2020-08-24 10:42:04Z manu $
+ * $FreeBSD$
  */
 
 #ifndef __BCM_OSAL_ECORE_PACKAGE

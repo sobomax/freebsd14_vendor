@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/dhclient/options.c 365010 2020-08-31 21:28:09Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libucl/Makefile 353450 2019-10-12 01:02:45Z gjb $
+# $FreeBSD$
 
 LIBUCL=	${SRCTOP}/contrib/libucl
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/kmod.opts.mk 365465 2020-09-08 16:43:32Z jhb $
+# $FreeBSD$
 #
 # Handle options (KERN_OPTS) for kernel module options.  This can be included earlier in a kmod Makefile
 # to allow KERN_OPTS to control SRCS, etc.

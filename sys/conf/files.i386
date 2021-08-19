@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: releng/12.2/sys/conf/files.i386 364552 2020-08-23 21:38:48Z trasz $
+# $FreeBSD$
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and

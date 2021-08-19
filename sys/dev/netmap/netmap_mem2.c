@@ -38,7 +38,7 @@
 
 #ifdef __FreeBSD__
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/netmap/netmap_mem2.c 357277 2020-01-29 22:55:59Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/malloc.h>

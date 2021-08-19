@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/mixer/Makefile 358955 2020-03-13 11:27:29Z 0mp $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

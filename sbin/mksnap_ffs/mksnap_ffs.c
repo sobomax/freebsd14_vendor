@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sbin/mksnap_ffs/mksnap_ffs.c 361589 2020-05-28 17:08:39Z freqlabs $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/sys/modules/usb/Makefile 364912 2020-08-28 10:27:24Z avg $
+# $FreeBSD$
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #

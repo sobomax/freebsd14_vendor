@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/csu/common/crtbrand.c 366954 2020-10-23 00:00:52Z gjb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/elf_common.h>

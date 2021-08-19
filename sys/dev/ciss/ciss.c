@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.2/sys/dev/ciss/ciss.c 359551 2020-04-02 00:28:26Z mav $
+ *	$FreeBSD$
  */
 
 /*

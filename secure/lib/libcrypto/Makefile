@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/lib/libcrypto/Makefile 358188 2020-02-21 00:33:21Z jkim $
+# $FreeBSD$
 
 SHLIBDIR?=	/lib
 SUBDIR=		engines

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.c 360103 2020-04-19 17:19:29Z mr $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.c 360103 2020-04-19 17:19:29Z mr $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>

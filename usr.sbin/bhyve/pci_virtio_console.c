@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_virtio_console.c 358184 2020-02-20 21:48:36Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM

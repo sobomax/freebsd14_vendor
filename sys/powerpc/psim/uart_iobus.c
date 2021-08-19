@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/powerpc/psim/uart_iobus.c 356020 2019-12-22 19:06:45Z kevans $
+ * $FreeBSD$
  */
 
 /*

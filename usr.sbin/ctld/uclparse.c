@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/ctld/uclparse.c 361753 2020-06-03 14:54:54Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

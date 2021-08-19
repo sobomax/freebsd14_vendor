@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/netoptions 357210 2020-01-28 18:08:53Z bz $
+# $FreeBSD$
 #
 
 # PROVIDE: netoptions

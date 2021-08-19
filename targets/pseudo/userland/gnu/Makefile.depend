@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/targets/pseudo/userland/gnu/Makefile.depend 356775 2020-01-16 03:38:06Z kevans $
+# $FreeBSD$
 
 .if !defined(MK_GPL_DTC)
 .include "${SRCTOP}/share/mk/src.opts.mk"

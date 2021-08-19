@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/linux32/linux32_machdep.c 364715 2020-08-24 17:25:26Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_compat.h"
 
@@ -68,6 +68,8 @@ __FBSDID("$FreeBSD: releng/12.2/sys/amd64/linux32/linux32_machdep.c 364715 2020-
 #include <vm/pmap.h>
 #include <vm/vm.h>
 #include <vm/vm_map.h>
+
+#include <security/audit/audit.h>
 
 #include <compat/freebsd32/freebsd32_util.h>
 #include <amd64/linux32/linux.h>
@@ -138,6 +140,7 @@ linux_execve(struct thread *td, struct linux_execve_args *args)
 	free(path, M_TEMP);
 	if (error == 0)
 		error = linux_common_execve(td, &eargs);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 

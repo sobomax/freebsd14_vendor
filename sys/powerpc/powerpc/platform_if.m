@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sys/powerpc/powerpc/platform_if.m 365634 2020-09-11 15:30:47Z mav $
+# $FreeBSD$
 #
 
 #include <sys/param.h>

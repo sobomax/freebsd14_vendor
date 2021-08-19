@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: releng/12.2/sbin/ipfw/ipfw2.h 363605 2020-07-27 14:15:50Z markj $
+ * $FreeBSD$
  */
 
 /*

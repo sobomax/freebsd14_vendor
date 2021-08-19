@@ -1,5 +1,5 @@
 # $NetBSD: rc.subr,v 1.67 2006/10/07 11:25:15 elad Exp $
-# $FreeBSD: releng/12.2/libexec/rc/rc.subr 354160 2019-10-30 01:24:28Z cy $
+# $FreeBSD$
 #
 # Copyright (c) 1997-2004 The NetBSD Foundation, Inc.
 # All rights reserved.

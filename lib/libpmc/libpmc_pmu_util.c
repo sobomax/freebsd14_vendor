@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libpmc/libpmc_pmu_util.c 363831 2020-08-04 12:04:47Z freqlabs $
+ * $FreeBSD$
  *
  */
 

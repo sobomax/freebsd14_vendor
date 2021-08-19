@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/cxgbetool/cxgbetool.c 345595 2019-03-27 19:37:50Z np $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

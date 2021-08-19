@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/libarchive/test/test_read_format_zip.c 358925 2020-03-13 01:05:40Z mm $");
+__FBSDID("$FreeBSD$");
 
 #define __LIBARCHIVE_BUILD
 #include <archive_crc32.h>

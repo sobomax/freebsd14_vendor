@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/riscv/riscv/clock.c 352642 2019-09-24 02:41:39Z mhorne $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>

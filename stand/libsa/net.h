@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/libsa/net.h 354011 2019-10-24 04:08:24Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _STAND_NET_H

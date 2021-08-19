@@ -1,4 +1,4 @@
-$FreeBSD: releng/12.2/contrib/sendmail/FREEBSD-upgrade 363465 2020-07-24 00:22:33Z gshapiro $
+$FreeBSD$
 
 sendmail 8.16.1
 	originals can be found at: ftp://ftp.sendmail.org/pub/sendmail/

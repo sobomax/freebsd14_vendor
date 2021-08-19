@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.2/libexec/rc/rc.d/ntpd 356014 2019-12-22 17:57:59Z ian $
+# $FreeBSD$
 #
 
 # PROVIDE: ntpd

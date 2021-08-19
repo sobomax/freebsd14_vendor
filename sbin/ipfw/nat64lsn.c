@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/ipfw/nat64lsn.c 363605 2020-07-27 14:15:50Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -99,6 +99,7 @@ nat64lsn_print_states(void *buf)
 	stg = (ipfw_nat64lsn_stg_v1 *)(od + 1);
 	sz = od->head.length - sizeof(*od);
 	next_idx = 0;
+	proto = NULL;
 	while (sz > 0 && next_idx != 0xFF) {
 		next_idx = stg->next.index;
 		sz -= sizeof(*stg);

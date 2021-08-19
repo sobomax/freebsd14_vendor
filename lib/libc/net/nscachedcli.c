@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/nscachedcli.c 364200 2020-08-13 17:41:29Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/types.h>

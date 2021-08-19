@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/physmem.h 360703 2020-05-06 19:50:27Z mhorne $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_PHYSMEM_H_

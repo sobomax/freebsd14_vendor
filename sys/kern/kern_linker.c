@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_linker.c 361503 2020-05-26 14:05:06Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_kld.h"

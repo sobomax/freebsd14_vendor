@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/sbin/nvmecontrol/tests/basic.sh 359904 2020-04-13 21:23:39Z lwhsu $
+# $FreeBSD$
 
 #
 # A basic test for nvmecontrol. This isn't a thorough or complete test

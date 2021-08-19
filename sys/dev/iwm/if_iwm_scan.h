@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwm.c,v 1.39 2015/03/23 00:35:19 jsg Exp $	*/
-/*	$FreeBSD: releng/12.2/sys/dev/iwm/if_iwm_scan.h 355608 2019-12-11 14:28:13Z markj $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>

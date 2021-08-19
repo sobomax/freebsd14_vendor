@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/acpi_pxm.c 361334 2020-05-21 15:28:35Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

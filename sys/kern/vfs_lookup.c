@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_lookup.c 364983 2020-08-31 05:25:13Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/usb/controller/generic_ehci.h 355178 2019-11-28 17:52:25Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _GENERIC_EHCI_H_

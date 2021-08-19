@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/sockstat/sockstat.c 360601 2020-05-03 08:13:44Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/file.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/bsdcat/Makefile 362132 2020-06-12 22:59:59Z mm $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

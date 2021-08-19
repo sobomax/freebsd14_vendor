@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libsecureboot/veopen.c 359735 2020-04-09 04:50:19Z sjg $");
+__FBSDID("$FreeBSD$");
 #include <sys/queue.h>
 
 #include "libsecureboot-priv.h"

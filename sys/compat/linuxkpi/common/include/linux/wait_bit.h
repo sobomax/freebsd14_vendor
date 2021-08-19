@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/wait_bit.h 364674 2020-08-24 13:19:16Z manu $
+ * $FreeBSD$
  */
 
 #ifndef __LINUX_WAITBIT_H__

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/src.opts.mk 365722 2020-09-14 14:53:09Z dim $
+# $FreeBSD$
 #
 # Option file for FreeBSD /usr/src builds.
 #

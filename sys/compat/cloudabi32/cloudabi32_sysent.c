@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/cloudabi32/cloudabi32_sysent.c 353067 2019-10-03 20:09:50Z brooks $
+ * $FreeBSD$
  */
 
 #include <sys/sysent.h>

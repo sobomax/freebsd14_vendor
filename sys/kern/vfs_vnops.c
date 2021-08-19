@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/vfs_vnops.c 363017 2020-07-08 18:29:06Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_cancel.c 358140 2020-02-20 01:23:39Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <pthread.h>

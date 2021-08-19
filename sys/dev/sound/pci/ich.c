@@ -38,7 +38,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/ich.c 365298 2020-09-03 13:56:30Z markj $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* -------------------------------------------------------------------- */
 

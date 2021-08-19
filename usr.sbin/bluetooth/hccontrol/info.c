@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: info.c,v 1.3 2003/08/18 19:19:54 max Exp $
- * $FreeBSD: releng/12.2/usr.sbin/bluetooth/hccontrol/info.c 361168 2020-05-18 09:00:45Z hselasky $
+ * $FreeBSD$
  */
 
 #define L2CAP_SOCKET_CHECKED

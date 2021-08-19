@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/userboot/userboot/userboot_disk.c 354006 2019-10-24 03:52:32Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Userboot disk image handling.

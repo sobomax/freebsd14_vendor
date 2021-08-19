@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/sesutil/sesutil.c 364116 2020-08-11 15:08:32Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/param.h>

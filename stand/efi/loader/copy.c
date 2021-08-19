@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/copy.c 363632 2020-07-28 04:58:01Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

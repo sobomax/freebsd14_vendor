@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/include/counter.h 355263 2019-12-01 16:02:15Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __MACHINE_COUNTER_H__

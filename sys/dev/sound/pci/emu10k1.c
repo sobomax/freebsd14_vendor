@@ -43,7 +43,7 @@
 #include <dev/sound/midi/mpu401.h>
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.2/sys/dev/sound/pci/emu10k1.c 360305 2020-04-25 13:18:29Z dim $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* -------------------------------------------------------------------- */
 

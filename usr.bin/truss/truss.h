@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.bin/truss/truss.h 360468 2020-04-29 16:04:59Z jhb $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

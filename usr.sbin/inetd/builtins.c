@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/inetd/builtins.c 356388 2020-01-05 21:35:02Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/filio.h>
 #include <sys/ioccom.h>

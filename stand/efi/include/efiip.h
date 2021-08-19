@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/efiip.h 353971 2019-10-24 02:27:16Z kevans $ */
+/* $FreeBSD$ */
 #ifndef _EFI_IP_H
 #define _EFI_IP_H
 

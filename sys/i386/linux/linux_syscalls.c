@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/i386/linux/linux_syscalls.c 364716 2020-08-24 17:29:37Z trasz $
+ * $FreeBSD$
  */
 
 const char *linux_syscallnames[] = {

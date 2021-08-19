@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/igmp.c 364169 2020-08-12 16:16:17Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

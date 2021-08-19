@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/yp/yplib.c 352615 2019-09-23 07:22:22Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include "reentrant.h"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/lib/libcrypto/Makefile.inc 366177 2020-09-25 22:43:14Z jkim $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 

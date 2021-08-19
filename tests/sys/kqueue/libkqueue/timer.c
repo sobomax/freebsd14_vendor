@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/timer.c 360257 2020-04-24 13:29:08Z kevans $
+ * $FreeBSD$
  */
 
 #include "common.h"

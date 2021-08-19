@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/fs/fusefs/mknod.cc 354161 2019-10-30 01:35:00Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libthr/thread/thr_mutex.c 352892 2019-09-30 07:42:07Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <stdlib.h>

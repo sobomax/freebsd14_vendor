@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/nvdimm/nvdimm.c 361315 2020-05-21 02:08:34Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_ddb.h"

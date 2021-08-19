@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/dccp.h 363413 2020-07-22 06:47:38Z thj $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_DCCP_H_

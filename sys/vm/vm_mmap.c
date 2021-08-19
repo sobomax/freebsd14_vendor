@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/vm/vm_mmap.c 364715 2020-08-24 17:25:26Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_vm.h"

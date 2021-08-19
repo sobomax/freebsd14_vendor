@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/uipc_shm.c 363271 2020-07-17 14:17:13Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"

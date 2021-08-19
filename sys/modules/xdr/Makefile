@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/xdr/Makefile 360036 2020-04-17 06:04:20Z glebius $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/xdr
 KMOD=	xdr

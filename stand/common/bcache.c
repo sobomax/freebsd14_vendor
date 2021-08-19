@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/common/bcache.c 353983 2019-10-24 03:01:40Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple hashed block cache

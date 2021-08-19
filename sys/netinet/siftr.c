@@ -61,7 +61,7 @@
  ******************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/siftr.c 353402 2019-10-10 14:54:22Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/alq.h>

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/locale/collate.c 356769 2020-01-16 00:26:53Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 

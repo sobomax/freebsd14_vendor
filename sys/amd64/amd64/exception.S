@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/amd64/exception.S 363538 2020-07-26 01:04:53Z kib $
+ * $FreeBSD$
  */
 
 #include "opt_atpic.h"

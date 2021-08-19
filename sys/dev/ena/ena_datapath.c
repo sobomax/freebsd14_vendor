@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ena/ena_datapath.c 365381 2020-09-06 14:41:35Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/amd64/linux/linux_locore.asm 364552 2020-08-23 21:38:48Z trasz $ */
+/* $FreeBSD$ */
 
 #include "linux_assym.h"			/* system definitions */
 #include <machine/asmacros.h>			/* miscellaneous asm macros */

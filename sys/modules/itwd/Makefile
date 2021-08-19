@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/itwd/Makefile 353647 2019-10-16 14:57:38Z avg $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/itwd
 

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.2/sys/security/mac_veriexec/veriexec_fingerprint.c 364962 2020-08-29 16:27:21Z sjg $
+ * $FreeBSD$
  *
  * Copyright (c) 2011, 2012, 2013, 2015, 2016, Juniper Networks, Inc.
  * All rights reserved.

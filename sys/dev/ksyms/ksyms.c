@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ksyms/ksyms.c 354608 2019-11-11 14:07:11Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

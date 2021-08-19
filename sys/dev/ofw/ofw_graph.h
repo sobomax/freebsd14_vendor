@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ofw/ofw_graph.h 362237 2020-06-16 20:22:56Z manu $
+ * $FreeBSD$
  */
 
 #ifndef	_OFW_GRAPH_H_

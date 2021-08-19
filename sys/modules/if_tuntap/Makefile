@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/if_tuntap/Makefile 354060 2019-10-25 01:10:08Z kevans $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net
 

@@ -63,7 +63,7 @@
 #include "event_factory.h"
 #include "exception.h"
 
-__FBSDID("$FreeBSD: releng/12.2/lib/libdevdctl/event.cc 362638 2020-06-26 00:58:59Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))

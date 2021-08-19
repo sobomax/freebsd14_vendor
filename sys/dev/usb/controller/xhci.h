@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/dev/usb/controller/xhci.h 358018 2020-02-17 09:58:55Z hselasky $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD

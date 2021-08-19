@@ -48,7 +48,7 @@ divert(-1)
 #
 
 divert(0)
-VERSIONID(`$FreeBSD: releng/12.2/etc/sendmail/freebsd.mc 363465 2020-07-24 00:22:33Z gshapiro $')
+VERSIONID(`$FreeBSD$')
 OSTYPE(freebsd6)
 DOMAIN(generic)
 

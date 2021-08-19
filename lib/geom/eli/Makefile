@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/geom/eli/Makefile 357863 2020-02-13 18:26:07Z asomers $
+# $FreeBSD$
 
 PACKAGE=runtime
 .PATH: ${.CURDIR:H:H}/misc ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libprocstat/zfs_defs.c 361824 2020-06-05 07:37:52Z avg $");
+__FBSDID("$FreeBSD$");
 
 /* Pretend we are kernel to get the same binary layout. */
 #define _KERNEL

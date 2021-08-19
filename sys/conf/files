@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/files 365961 2020-09-21 18:19:48Z np $
+# $FreeBSD$
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and

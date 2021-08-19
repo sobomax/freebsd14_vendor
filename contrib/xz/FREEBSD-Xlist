@@ -1,4 +1,4 @@
-$FreeBSD: releng/12.2/contrib/xz/FREEBSD-Xlist 359635 2020-04-05 01:53:35Z delphij $
+$FreeBSD$
 */*/*/Makefile.*
 */*/Makefile.*
 */.gitignore

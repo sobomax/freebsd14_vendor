@@ -1,7 +1,7 @@
 /*
  * Fundamental constants relating to ethernet.
  *
- * $FreeBSD: releng/12.2/sys/net/ethernet.h 358209 2020-02-21 04:48:25Z pfg $
+ * $FreeBSD$
  *
  */
 

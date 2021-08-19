@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/debug.h 358184 2020-02-20 21:48:36Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef _DEBUG_H_

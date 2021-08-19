@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfsserver/nfs_nfsdsocket.c 361589 2020-05-28 17:08:39Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Socket operations for use by the nfs server.

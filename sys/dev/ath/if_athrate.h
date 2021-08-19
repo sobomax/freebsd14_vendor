@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/sys/dev/ath/if_athrate.h 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 #ifndef _ATH_RATECTRL_H_
 #define _ATH_RATECTRL_H_

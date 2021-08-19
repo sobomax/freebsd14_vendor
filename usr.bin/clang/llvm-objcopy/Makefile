@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/clang/llvm-objcopy/Makefile 363494 2020-07-24 20:48:06Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-objcopy
 

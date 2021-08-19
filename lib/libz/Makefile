@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/lib/libz/Makefile 361068 2020-05-15 00:50:52Z delphij $
+# $FreeBSD$
 #
 
 PACKAGE=lib${LIB}

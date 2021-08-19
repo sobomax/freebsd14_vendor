@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.8 (Berkeley) 3/28/97
-# $FreeBSD: releng/12.2/usr.sbin/sendmail/Makefile 363465 2020-07-24 00:22:33Z gshapiro $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

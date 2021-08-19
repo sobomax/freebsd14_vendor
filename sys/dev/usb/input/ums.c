@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/input/ums.c 356020 2019-12-22 19:06:45Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf

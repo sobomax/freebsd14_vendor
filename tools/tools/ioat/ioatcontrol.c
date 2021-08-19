@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/tools/tools/ioat/ioatcontrol.c 355197 2019-11-29 00:38:16Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/ioctl.h>
 #include <sys/queue.h>

@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_vmem.c 354101 2019-10-25 21:23:44Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

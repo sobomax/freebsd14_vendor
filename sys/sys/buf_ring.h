@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/buf_ring.h 365326 2020-09-04 11:22:18Z mw $
+ * $FreeBSD$
  *
  */
 

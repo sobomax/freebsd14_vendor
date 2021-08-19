@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)buf.h	8.9 (Berkeley) 3/30/95
- * $FreeBSD: releng/12.2/sys/sys/buf.h 355363 2019-12-03 22:51:25Z rpokala $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_BUF_H_

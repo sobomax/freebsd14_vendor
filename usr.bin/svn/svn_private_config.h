@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/usr.bin/svn/svn_private_config.h 362180 2020-06-14 17:36:43Z dim $ */
+/* $FreeBSD$ */
 
 /* subversion/svn_private_config.h.tmp.  Generated from svn_private_config.h.in by configure.  */
 /* subversion/svn_private_config.h.in.  Generated from configure.ac by autoheader.  */

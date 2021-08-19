@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/locale/tests/Makefile 352416 2019-09-16 16:17:29Z yuripv $
+# $FreeBSD$
 
 PACKAGE=	tests
 

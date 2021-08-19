@@ -1,4 +1,4 @@
- $FreeBSD: releng/12.2/sys/arm64/linux/syscalls.master 365034 2020-09-01 12:09:13Z trasz $
+ $FreeBSD$
 
 ; Linux ABI system call generic name/number map, based on Linux file
 ; include/uapi/asm-generic/unistd.h

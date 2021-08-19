@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/mux/ltc430x.c 356278 2020-01-02 17:51:49Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/qlxgb/qla_os.c 365329 2020-09-04 13:17:55Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "qla_os.h"
 #include "qla_reg.h"

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/fs/nfs/nfsport.h 361236 2020-05-19 01:43:00Z freqlabs $
+ * $FreeBSD$
  */
 
 #ifndef _NFS_NFSPORT_H_

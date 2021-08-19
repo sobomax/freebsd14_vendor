@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/libmagic/config.h 362842 2020-07-01 16:18:35Z delphij $ */
+/* $FreeBSD$ */
 
 /* Get __FreeBSD_version. */
 #include <osreldate.h>

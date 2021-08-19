@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iscsi_initiator/isc_subr.c 361038 2020-05-14 17:56:43Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_iscsi_initiator.h"
 

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/i386/libi386/comconsole.c 359143 2020-03-19 16:51:57Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <bootstrap.h>

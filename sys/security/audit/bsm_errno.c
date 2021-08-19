@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/security/audit/bsm_errno.c 357296 2020-01-30 16:11:19Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

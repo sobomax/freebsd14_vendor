@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netipsec/ipsec_output.c 362961 2020-07-06 14:00:20Z markj $
+ * $FreeBSD$
  */
 
 /*

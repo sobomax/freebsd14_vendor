@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/loader/autoload.c 353980 2019-10-24 02:46:36Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #if defined(LOADER_FDT_SUPPORT)
 #include <sys/param.h>

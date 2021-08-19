@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/superio/superio.h 354331 2019-11-04 09:49:58Z avg $
+ * $FreeBSD$
  */
 
 #ifndef SUPERIO_H

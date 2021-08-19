@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/hwpmc/hwpmc_intel.c 363629 2020-07-28 02:53:44Z freqlabs $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/pmc.h>

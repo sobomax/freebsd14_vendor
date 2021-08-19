@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: releng/12.2/stand/forth/support.4th 354012 2019-10-24 04:12:38Z kevans $
+\ $FreeBSD$
 
 \ Loader.rc support functions:
 \

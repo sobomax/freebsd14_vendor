@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/pf/Makefile 353885 2019-10-22 14:11:22Z markj $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netpfil/pf
 

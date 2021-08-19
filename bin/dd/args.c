@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)args.c	8.3 (Berkeley) 4/2/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/bin/dd/args.c 362830 2020-07-01 09:28:00Z rscheff $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

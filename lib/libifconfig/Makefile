@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libifconfig/Makefile 363037 2020-07-09 09:33:32Z freqlabs $
+# $FreeBSD$
 
 PACKAGE=	lib${LIB}
 LIB=		ifconfig

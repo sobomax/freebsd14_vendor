@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/efi/include/Protocol/ServiceBinding.h 354008 2019-10-24 04:00:49Z kevans $ */
+/* $FreeBSD$ */
 /** @file
   UEFI Service Binding Protocol is defined in UEFI specification.
 

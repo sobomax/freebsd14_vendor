@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/nscd/debug.h 364198 2020-08-13 17:36:52Z trasz $
+ * $FreeBSD$
  */
 
 #ifndef __NSCD_DEBUG_H__

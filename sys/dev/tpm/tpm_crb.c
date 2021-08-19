@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/tpm/tpm_crb.c 357526 2020-02-04 20:09:25Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include "tpm20.h"
 

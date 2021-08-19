@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/in_proto.c 362961 2020-07-06 14:00:20Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mrouting.h"
 #include "opt_ipsec.h"

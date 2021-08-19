@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/lib/libcrypto/man/man3/Makefile 366177 2020-09-25 22:43:14Z jkim $
+# $FreeBSD$
 MAN+= ADMISSIONS.3
 MAN+= ASN1_INTEGER_get_int64.3
 MAN+= ASN1_ITEM_lookup.3

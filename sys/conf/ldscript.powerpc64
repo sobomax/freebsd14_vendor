@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/conf/ldscript.powerpc64 360814 2020-05-08 14:48:45Z jhb $ */
+/* $FreeBSD$ */
 
 OUTPUT_FORMAT("elf64-powerpc-freebsd", "elf64-powerpc-freebsd",
 	      "elf64-powerpc-freebsd")

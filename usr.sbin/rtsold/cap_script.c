@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/rtsold/cap_script.c 365673 2020-09-12 21:50:25Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>

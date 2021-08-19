@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cxgbe/crypto/t4_crypto.c 360717 2020-05-06 22:44:53Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/bus.h>

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: releng/12.2/tools/tools/netmap/lb.c 354128 2019-10-27 09:28:33Z vmaffione $ */
+/* $FreeBSD$ */
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>

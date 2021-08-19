@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getlogin.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/getlogin.c 365684 2020-09-13 02:17:57Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <errno.h>

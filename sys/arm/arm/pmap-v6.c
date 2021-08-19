@@ -72,7 +72,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/arm/pmap-v6.c 360703 2020-05-06 19:50:27Z mhorne $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Manages physical address maps.

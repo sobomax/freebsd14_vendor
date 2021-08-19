@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/local_apic.c 363998 2020-08-07 00:26:16Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_atpic.h"
 #include "opt_hwpmc_hooks.h"

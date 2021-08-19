@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)segments.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: releng/12.2/sys/amd64/include/segments.h 354809 2019-11-18 13:34:27Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_SEGMENTS_H_

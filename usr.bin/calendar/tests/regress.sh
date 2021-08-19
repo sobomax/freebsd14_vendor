@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/calendar/tests/regress.sh 359782 2020-04-10 22:18:13Z gonzo $
+# $FreeBSD$
 
 CALENDAR_FILE="-f ${SRCDIR}/calendar.calibrate"
 CALENDAR_BIN="calendar"

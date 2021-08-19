@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/adb/adb_kbd.c 356013 2019-12-22 17:15:48Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>

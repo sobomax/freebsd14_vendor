@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.2/libexec/rtld-elf/libmap.c 344011 2019-02-11 15:02:02Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

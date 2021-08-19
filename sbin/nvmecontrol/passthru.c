@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/nvmecontrol/passthru.c 359751 2020-04-09 18:17:07Z dab $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>

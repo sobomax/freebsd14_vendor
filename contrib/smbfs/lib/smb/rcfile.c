@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/contrib/smbfs/lib/smb/rcfile.c 356565 2020-01-09 19:56:25Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/queue.h>

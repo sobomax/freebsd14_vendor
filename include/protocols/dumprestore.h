@@ -35,7 +35,7 @@
  *
  *	@(#)dumprestore.h	8.2 (Berkeley) 1/21/94
  *
- * $FreeBSD: releng/12.2/include/protocols/dumprestore.h 359946 2020-04-15 00:18:19Z mckusick $
+ * $FreeBSD$
  */
 
 #ifndef _PROTOCOLS_DUMPRESTORE_H_

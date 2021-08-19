@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vm_pager.h	8.4 (Berkeley) 1/12/94
- * $FreeBSD: releng/12.2/sys/vm/vm_pager.h 353787 2019-10-21 00:08:34Z kevans $
+ * $FreeBSD$
  */
 
 /*

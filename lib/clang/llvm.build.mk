@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/clang/llvm.build.mk 364897 2020-08-28 00:00:37Z gjb $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

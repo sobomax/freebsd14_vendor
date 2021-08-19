@@ -1,2 +1,2 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITH_CLANG_FORMAT 363494 2020-07-24 20:48:06Z dim $
+.\" $FreeBSD$
 Set to build clang-format.

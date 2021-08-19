@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.2/lib/libc/gen/Symbol.map 365684 2020-09-13 02:17:57Z kevans $
+ * $FreeBSD$
  */
 
 FBSD_1.0 {

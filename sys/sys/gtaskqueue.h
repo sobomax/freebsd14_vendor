@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/gtaskqueue.h 364386 2020-08-19 13:07:04Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_GTASKQUEUE_H_

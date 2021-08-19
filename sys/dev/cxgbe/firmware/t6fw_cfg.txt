@@ -274,5 +274,5 @@
 	version = 0x1
 	checksum = 0x13640470
 #
-# $FreeBSD: releng/12.2/sys/dev/cxgbe/firmware/t6fw_cfg.txt 365961 2020-09-21 18:19:48Z np $
+# $FreeBSD$
 #

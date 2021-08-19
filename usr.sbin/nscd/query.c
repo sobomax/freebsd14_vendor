@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/nscd/query.c 364200 2020-08-13 17:41:29Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/event.h>

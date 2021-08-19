@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/stand/i386/boot.ldscript 359155 2020-03-19 22:33:24Z dim $ */
+/* $FreeBSD$ */
 /* Simplified linker script for the boot loaders. */
 OUTPUT_FORMAT("elf32-i386-freebsd")
 OUTPUT_ARCH(i386)

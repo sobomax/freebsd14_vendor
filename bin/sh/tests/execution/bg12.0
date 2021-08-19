@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/bin/sh/tests/execution/bg12.0 363053 2020-07-09 17:42:31Z jilles $
+# $FreeBSD$
 
 T=`mktemp -d ${TMPDIR:-/tmp}/sh-test.XXXXXXXX`
 trap 'rm -rf $T' 0

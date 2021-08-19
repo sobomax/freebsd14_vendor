@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libc/tests/c063/Makefile 357706 2020-02-09 22:15:35Z kevans $
+# $FreeBSD$
 
 NETBSD_ATF_TESTS_C=	faccessat_test
 NETBSD_ATF_TESTS_C+=	fchmodat_test

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/irq_work.h 364671 2020-08-24 12:59:55Z manu $
+ * $FreeBSD$
  */
 
 #ifndef __LINUX_IRQ_WORK_H__

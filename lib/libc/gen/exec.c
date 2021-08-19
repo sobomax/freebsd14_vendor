@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)exec.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/exec.c 362281 2020-06-17 16:22:08Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/param.h>

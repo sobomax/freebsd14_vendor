@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)file.h	8.3 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.2/sys/sys/file.h 358202 2020-02-21 04:30:21Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_FILE_H_

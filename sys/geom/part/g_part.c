@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/geom/part/g_part.c 365944 2020-09-21 12:37:41Z eugen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>

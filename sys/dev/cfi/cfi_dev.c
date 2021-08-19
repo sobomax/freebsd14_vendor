@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/cfi/cfi_dev.c 355158 2019-11-28 02:12:33Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cfi.h"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/if_vlan/Makefile 365468 2020-09-08 18:33:41Z jhb $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net
 

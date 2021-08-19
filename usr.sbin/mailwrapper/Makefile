@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/mailwrapper/Makefile 363973 2020-08-06 18:13:45Z kevans $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

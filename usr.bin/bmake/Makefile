@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: releng/12.2/usr.bin/bmake/Makefile 363352 2020-07-20 00:17:08Z sjg $
+# $FreeBSD$
 
 SRCTOP?= ${.CURDIR:H:H}
 

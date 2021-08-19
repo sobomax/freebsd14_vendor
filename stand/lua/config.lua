@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.2/stand/lua/config.lua 360596 2020-05-03 03:53:38Z kevans $
+-- $FreeBSD$
 --
 
 local hook = require("hook")

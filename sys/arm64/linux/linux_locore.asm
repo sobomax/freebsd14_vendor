@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/linux/linux_locore.asm 364552 2020-08-23 21:38:48Z trasz $
+ * $FreeBSD$
  */
 
 /*

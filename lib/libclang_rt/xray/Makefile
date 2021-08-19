@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libclang_rt/xray/Makefile 365426 2020-09-07 19:29:06Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: releng/12.2/sys/netinet/tcp_var.h 365292 2020-09-03 08:38:04Z rscheff $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_TCP_VAR_H_

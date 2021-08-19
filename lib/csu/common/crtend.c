@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/csu/common/crtend.c 355353 2019-12-03 18:58:45Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "crt.h"
 

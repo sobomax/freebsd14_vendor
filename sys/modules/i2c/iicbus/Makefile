@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/i2c/iicbus/Makefile 359431 2020-03-29 23:38:55Z wulf $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/iicbus
 

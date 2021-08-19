@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/misc/ufm.c 364431 2020-08-20 17:35:09Z imp $");
+__FBSDID("$FreeBSD$");
 
 
 #include <sys/stdint.h>

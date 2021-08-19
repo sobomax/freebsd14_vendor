@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/fs/nfs/nfs_commonkrpc.c 359557 2020-04-02 03:35:05Z markj $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Socket operations for use by nfs

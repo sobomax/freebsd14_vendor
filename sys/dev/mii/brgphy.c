@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mii/brgphy.c 359843 2020-04-13 00:50:35Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the Broadcom BCM54xx/57xx 1000baseTX PHY.

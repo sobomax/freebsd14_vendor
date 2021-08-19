@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/lib/libbsm/Makefile 361124 2020-05-17 01:55:07Z asomers $
+# $FreeBSD$
 #
 
 PACKAGE=	lib${LIB}

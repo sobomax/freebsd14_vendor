@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lockf.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: releng/12.2/sys/sys/lockf.h 353464 2019-10-13 06:58:39Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LOCKF_H_

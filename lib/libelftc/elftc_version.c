@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/libelftc/elftc_version.c 358779 2020-03-08 20:40:38Z emaste $ */
+/* $FreeBSD$ */
 
 #include <sys/types.h>
 #include <libelftc.h>

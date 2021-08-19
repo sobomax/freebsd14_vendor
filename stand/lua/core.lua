@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.2/stand/lua/core.lua 366691 2020-10-14 01:47:00Z imp $
+-- $FreeBSD$
 --
 
 local config = require("config")

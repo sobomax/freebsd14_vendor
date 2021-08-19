@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/include/wchar.h 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 
 /*-

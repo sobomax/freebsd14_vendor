@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/elf_common.h 362728 2020-06-28 17:43:48Z mhorne $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_ELF_COMMON_H_

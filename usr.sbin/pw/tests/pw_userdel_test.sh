@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/pw/tests/pw_userdel_test.sh 359589 2020-04-03 05:08:06Z bapt $
+# $FreeBSD$
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin

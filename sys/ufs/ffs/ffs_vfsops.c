@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/ufs/ffs/ffs_vfsops.c 360029 2020-04-17 01:06:51Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 #include "opt_ufs.h"

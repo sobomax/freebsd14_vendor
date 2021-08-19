@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/dev/usb/storage/ustorage_fs.c 363664 2020-07-29 14:30:42Z markj $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *

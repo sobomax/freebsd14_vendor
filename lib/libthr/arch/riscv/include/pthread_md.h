@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/lib/libthr/arch/riscv/include/pthread_md.h 354263 2019-11-02 19:52:22Z mhorne $
+ * $FreeBSD$
  */
 
 /*

@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sys/netipsec/xform_ipcomp.c 365277 2020-09-02 20:36:33Z jhb $	*/
+/*	$FreeBSD$	*/
 /* $OpenBSD: ip_ipcomp.c,v 1.1 2001/07/05 12:08:52 jjbg Exp $ */
 
 /*-

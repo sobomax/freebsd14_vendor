@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/cam/cam_xpt.h 364907 2020-08-28 10:01:03Z avg $
+ * $FreeBSD$
  */
 
 #ifndef _CAM_CAM_XPT_H

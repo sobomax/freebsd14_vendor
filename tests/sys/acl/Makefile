@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/acl/Makefile 340523 2018-11-17 20:58:35Z markj $
+# $FreeBSD$
 
 PACKAGE=	tests
 

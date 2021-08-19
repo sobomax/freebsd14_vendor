@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet6/mld6_var.h 356619 2020-01-10 23:46:12Z bz $
+ * $FreeBSD$
  */
 #ifndef _NETINET6_MLD6_VAR_H_
 #define _NETINET6_MLD6_VAR_H_

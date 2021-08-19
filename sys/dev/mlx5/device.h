@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/device.h 361412 2020-05-23 11:56:42Z kib $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_DEVICE_H

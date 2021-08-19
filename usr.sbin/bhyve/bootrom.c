@@ -27,7 +27,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/bootrom.c 358184 2020-02-20 21:48:36Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/mman.h>

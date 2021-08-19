@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/pci/pci.c 364033 2020-08-07 17:32:53Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"
 

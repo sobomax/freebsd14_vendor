@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/if_media.c 358627 2020-03-04 17:19:25Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ifmedia.h"
 

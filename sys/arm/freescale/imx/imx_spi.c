@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/freescale/imx/imx_spi.c 356022 2019-12-22 19:30:13Z ian $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for imx Enhanced Configurable SPI; master-mode only.

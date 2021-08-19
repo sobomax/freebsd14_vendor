@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/pci_virtio_net.c 358438 2020-02-28 17:41:46Z vmaffione $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pci_virtio_net.c 358438 2020-02-28 17:41:46Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>

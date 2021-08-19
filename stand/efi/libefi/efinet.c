@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/efinet.c 354011 2019-10-24 04:08:24Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <net/ethernet.h>

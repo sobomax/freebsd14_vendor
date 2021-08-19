@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_pageout.h 361350 2020-05-21 22:47:39Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _VM_VM_PAGEOUT_H_

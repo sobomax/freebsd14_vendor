@@ -24,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.2/stand/lua/logo-orb.lua 354010 2019-10-24 04:05:53Z kevans $
+-- $FreeBSD$
 --
 
 local drawer = require("drawer")

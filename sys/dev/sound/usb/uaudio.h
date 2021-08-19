@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/dev/sound/usb/uaudio.h 359888 2020-04-13 16:33:10Z hselasky $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD

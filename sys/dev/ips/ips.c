@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ips/ips.c 360297 2020-04-25 12:39:28Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>

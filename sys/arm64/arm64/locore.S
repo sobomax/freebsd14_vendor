@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/arm64/arm64/locore.S 360259 2020-04-24 13:49:51Z markj $
+ * $FreeBSD$
  */
 
 #include "assym.inc"

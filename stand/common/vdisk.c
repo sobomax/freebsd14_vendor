@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/common/vdisk.c 355929 2019-12-20 08:15:55Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <stdarg.h>

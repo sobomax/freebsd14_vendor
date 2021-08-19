@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_exec.c 355051 2019-11-24 12:27:13Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -224,6 +224,7 @@ sys_execve(struct thread *td, struct execve_args *uap)
 	if (error == 0)
 		error = kern_execve(td, &args, NULL);
 	post_execve(td, error, oldvmspace);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 
@@ -251,6 +252,7 @@ sys_fexecve(struct thread *td, struct fexecve_args *uap)
 		error = kern_execve(td, &args, NULL);
 	}
 	post_execve(td, error, oldvmspace);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 }
 
@@ -279,6 +281,7 @@ sys___mac_execve(struct thread *td, struct __mac_execve_args *uap)
 	if (error == 0)
 		error = kern_execve(td, &args, uap->mac_p);
 	post_execve(td, error, oldvmspace);
+	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
 	return (error);
 #else
 	return (ENOSYS);

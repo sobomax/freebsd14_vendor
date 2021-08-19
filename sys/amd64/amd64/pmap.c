@@ -86,7 +86,7 @@
 #define	AMD64_NPT_AWARE
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/pmap.c 363500 2020-07-24 23:44:35Z mjg $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Manages physical address maps.

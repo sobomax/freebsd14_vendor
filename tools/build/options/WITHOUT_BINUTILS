@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITHOUT_BINUTILS 358748 2020-03-08 18:05:17Z emaste $
+.\" $FreeBSD$
 Do not build or install GNU
 .Xr as 1 ,
 .Xr ld.bfd 1 , and

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/vmm_host.h 354085 2019-10-25 17:54:37Z mav $
+ * $FreeBSD$
  */
 
 #ifndef	_VMM_HOST_H_

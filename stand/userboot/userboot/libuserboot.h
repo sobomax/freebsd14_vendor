@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/stand/userboot/userboot/libuserboot.h 359753 2020-04-09 20:35:35Z kevans $
+ * $FreeBSD$
  */
 
 #include "userboot.h"

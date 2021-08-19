@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/contrib/ipfilter/ipsend/iptests.c 363768 2020-08-02 04:25:11Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

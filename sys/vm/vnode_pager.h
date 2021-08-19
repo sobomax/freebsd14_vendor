@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode_pager.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: releng/12.2/sys/vm/vnode_pager.h 353787 2019-10-21 00:08:34Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef	_VNODE_PAGER_

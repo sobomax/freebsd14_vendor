@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/sound/pcm/mixer.h 359885 2020-04-13 16:31:13Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _PCM_MIXER_H_

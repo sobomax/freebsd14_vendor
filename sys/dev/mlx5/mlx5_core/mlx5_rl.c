@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/mlx5_rl.c 361923 2020-06-08 09:37:20Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/kernel.h>

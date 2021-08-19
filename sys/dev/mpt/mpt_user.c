@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mpt/mpt_user.c 360446 2020-04-28 17:59:37Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #ifdef __amd64__

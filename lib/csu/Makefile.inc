@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/csu/Makefile.inc 361046 2020-05-14 19:09:13Z dim $
+# $FreeBSD$
 
 SSP_CFLAGS=
 

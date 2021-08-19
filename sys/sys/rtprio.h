@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/rtprio.h 363405 2020-07-21 23:23:08Z mckusick $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_RTPRIO_H_

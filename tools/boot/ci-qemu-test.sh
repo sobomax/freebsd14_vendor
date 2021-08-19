@@ -7,7 +7,7 @@
 # a quick smoke-test.  The rootgen.sh and related scripts generate much more
 # extensive tests for many combinations of boot env (ufs, zfs, geli, etc).
 #
-# $FreeBSD: releng/12.2/tools/boot/ci-qemu-test.sh 359149 2020-03-19 18:15:09Z emaste $
+# $FreeBSD$
 
 set -e
 

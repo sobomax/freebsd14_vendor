@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/jail/Makefile 352560 2019-09-20 19:45:37Z mizhka $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_bmap.c	8.7 (Berkeley) 3/21/95
- * $FreeBSD: releng/12.2/sys/fs/ext2fs/ext2_bmap.c 362098 2020-06-12 13:54:41Z fsu $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/xhci_pci.c 358016 2020-02-17 09:57:03Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>

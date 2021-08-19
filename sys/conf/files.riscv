@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/files.riscv 360808 2020-05-08 05:30:10Z jhb $
+# $FreeBSD$
 cddl/dev/dtrace/riscv/dtrace_asm.S			optional dtrace compile-with "${DTRACE_S}"
 cddl/dev/dtrace/riscv/dtrace_subr.c			optional dtrace compile-with "${DTRACE_C}"
 cddl/dev/fbt/riscv/fbt_isa.c				optional dtrace_fbt | dtraceall compile-with "${FBT_C}"

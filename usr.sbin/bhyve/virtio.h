@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/virtio.h 355116 2019-11-26 18:10:45Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef	_VIRTIO_H_

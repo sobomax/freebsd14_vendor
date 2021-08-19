@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/contrib/ipfilter/tools/ippool_y.y 354111 2019-10-26 03:07:28Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

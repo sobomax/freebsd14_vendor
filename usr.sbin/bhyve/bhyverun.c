@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/bhyverun.c 363058 2020-07-09 20:54:16Z kaktus $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/bhyverun.c 363058 2020-07-09 20:54:16Z kaktus $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifndef WITHOUT_CAPSICUM

@@ -29,11 +29,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.2/sys/dev/mps/mps.c 363815 2020-08-03 23:06:33Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/mps/mps.c 363815 2020-08-03 23:06:33Z markj $");
+__FBSDID("$FreeBSD$");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 

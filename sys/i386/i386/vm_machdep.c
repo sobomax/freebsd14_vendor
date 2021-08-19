@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/i386/i386/vm_machdep.c 362572 2020-06-24 06:35:50Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_isa.h"
 #include "opt_npx.h"

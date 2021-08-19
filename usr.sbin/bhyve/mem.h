@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/bhyve/mem.h 353703 2019-10-17 23:17:56Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _MEM_H_

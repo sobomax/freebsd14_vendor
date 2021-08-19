@@ -1,5 +1,5 @@
 /* $NetBSD: cpu.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $ */
-/* $FreeBSD: releng/12.2/sys/arm/include/cpu.h 354184 2019-10-30 16:41:57Z avg $ */
+/* $FreeBSD$ */
 
 #ifndef MACHINE_CPU_H
 #define MACHINE_CPU_H

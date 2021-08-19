@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/gnu/usr.bin/gdb/kgdb/trgt.c 358112 2020-02-19 14:42:21Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/proc.h>

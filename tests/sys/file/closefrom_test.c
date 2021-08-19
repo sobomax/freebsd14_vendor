@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/tests/sys/file/closefrom_test.c 363879 2020-08-05 03:53:57Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Regression tests for the closefrom(2) system call.

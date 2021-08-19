@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/sys/dev/ath/if_ath_spectral.c 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ath/if_ath_spectral.c 365670 2020-09-12 19:33:25Z bz $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Implement some basic spectral scan control logic.

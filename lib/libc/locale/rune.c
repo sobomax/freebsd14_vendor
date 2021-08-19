@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)rune.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/locale/rune.c 356769 2020-01-16 00:26:53Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <arpa/inet.h>

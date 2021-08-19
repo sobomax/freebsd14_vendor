@@ -30,7 +30,7 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/gic_v3_acpi.c 352498 2019-09-18 23:08:51Z jchandra $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>

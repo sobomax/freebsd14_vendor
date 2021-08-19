@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/in_pcb.c 362878 2020-07-01 22:22:26Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"

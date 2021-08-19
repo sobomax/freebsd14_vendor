@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/lib/liblzma/config.h 362915 2020-07-04 03:26:17Z delphij $ */
+/* $FreeBSD$ */
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 

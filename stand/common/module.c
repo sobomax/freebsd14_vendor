@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/common/module.c 359735 2020-04-09 04:50:19Z sjg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * file/module function dispatcher, support, etc.

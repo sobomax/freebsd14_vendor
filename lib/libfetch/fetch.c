@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libfetch/fetch.c 358750 2020-03-08 18:08:45Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>

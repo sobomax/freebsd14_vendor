@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/kern.opts.mk 363044 2020-07-09 14:18:14Z markj $
+# $FreeBSD$
 
 # Options set in the build system that affect the kernel somehow.
 

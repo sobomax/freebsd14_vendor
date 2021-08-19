@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/kern_mbuf.c 364159 2020-08-12 11:49:35Z ae $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 

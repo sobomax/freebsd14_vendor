@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/controller/generic_ehci_fdt.c 362404 2020-06-19 18:27:22Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"
 

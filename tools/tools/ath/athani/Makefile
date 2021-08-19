@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tools/tools/ath/athani/Makefile 344842 2019-03-06 07:58:19Z adrian $
+# $FreeBSD$
 
 PROG=	athani
 MAN=

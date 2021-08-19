@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/googletest/gtest/Makefile 344420 2019-02-21 04:47:44Z ngie $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

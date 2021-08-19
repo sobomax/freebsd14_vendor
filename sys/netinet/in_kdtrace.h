@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/in_kdtrace.h 362850 2020-07-01 18:10:37Z tuexen $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_IN_KDTRACE_H_

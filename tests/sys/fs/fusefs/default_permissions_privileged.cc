@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/tests/sys/fs/fusefs/default_permissions_privileged.cc 361406 2020-05-22 22:13:55Z asomers $
+ * $FreeBSD$
  */
 
 /*

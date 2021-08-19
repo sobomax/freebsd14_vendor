@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netinet/tcp_hpts.h 362880 2020-07-01 23:47:51Z tuexen $
+ * $FreeBSD$
  */
 
 #ifndef __tcp_hpts_h__

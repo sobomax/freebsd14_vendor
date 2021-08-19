@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/bmake/unit-tests/Makefile 363352 2020-07-20 00:17:08Z sjg $
+# $FreeBSD$
 # $Id: Makefile,v 1.60 2020/07/10 00:48:32 sjg Exp $
 #
 # $NetBSD: Makefile,v 1.63 2020/07/09 22:40:14 sjg Exp $

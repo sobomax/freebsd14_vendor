@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/amd64/amd64/vm_machdep.c 354569 2019-11-09 11:55:01Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_isa.h"
 #include "opt_cpu.h"

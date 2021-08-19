@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/amd64/vmm/io/vlapic.h 360103 2020-04-19 17:19:29Z mr $
+ * $FreeBSD$
  */
 
 #ifndef _VLAPIC_H_

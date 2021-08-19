@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libssp/Makefile 359059 2020-03-18 01:55:27Z kevans $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SHLIBDIR?=	/lib

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/cddl/compat/opensolaris/sys/rwlock.h 359217 2020-03-22 17:13:19Z freqlabs $
+ * $FreeBSD$
  */
 
 #ifndef _OPENSOLARIS_SYS_RWLOCK_H_

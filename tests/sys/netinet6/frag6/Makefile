@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/netinet6/frag6/Makefile 356491 2020-01-08 16:14:20Z bz $
+# $FreeBSD$
 
 PACKAGE=	tests
 

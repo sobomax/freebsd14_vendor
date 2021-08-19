@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/compat/freebsd32/freebsd32_proto.h 363833 2020-08-04 12:44:47Z kaktus $
+ * $FreeBSD$
  */
 
 #ifndef _FREEBSD32_SYSPROTO_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/files.arm 360703 2020-05-06 19:50:27Z mhorne $
+# $FreeBSD$
 
 kern/kern_clocksource.c			standard
 

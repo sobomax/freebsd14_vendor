@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/sound/pci/hda/hdac.h 363958 2020-08-06 15:25:11Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _HDAC_H_

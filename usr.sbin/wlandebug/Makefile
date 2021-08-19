@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/wlandebug/Makefile 352754 2019-09-26 16:05:57Z emaste $
+# $FreeBSD$
 
 PROG=	wlandebug
 MAN=	wlandebug.8

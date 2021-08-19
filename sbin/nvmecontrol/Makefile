@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sbin/nvmecontrol/Makefile 359838 2020-04-12 22:11:29Z dab $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

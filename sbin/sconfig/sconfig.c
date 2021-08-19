@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/sconfig/sconfig.c 358078 2020-02-18 18:15:33Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <stdio.h>
 #include <stdlib.h>

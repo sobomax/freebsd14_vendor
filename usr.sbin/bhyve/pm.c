@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/bhyve/pm.c 363240 2020-07-16 03:05:10Z grehan $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <machine/vmm.h>

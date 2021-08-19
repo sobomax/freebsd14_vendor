@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/mkimg/tests/mkimg_test.sh 362776 2020-06-29 08:14:45Z gonzo $
+# $FreeBSD$
 
 mkimg_blksz_list="512 4096"
 mkimg_format_list="qcow qcow2 raw vhd vhdf vhdx vmdk"

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm/allwinner/axp209.c 362350 2020-06-18 23:21:12Z manu $");
+__FBSDID("$FreeBSD$");
 
 /*
 * X-Power AXP209/AXP211 PMU for Allwinner SoCs

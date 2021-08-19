@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/mlx4en/Makefile 359378 2020-03-27 20:06:40Z kib $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/dev/mlx4/mlx4_en
 
 KMOD=	mlx4en

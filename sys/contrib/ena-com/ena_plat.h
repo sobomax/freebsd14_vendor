@@ -35,7 +35,7 @@
 #define ENA_PLAT_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/contrib/ena-com/ena_plat.h 365381 2020-09-06 14:41:35Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

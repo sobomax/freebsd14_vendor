@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/io_apic.c 359517 2020-04-01 16:01:03Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_isa.h"

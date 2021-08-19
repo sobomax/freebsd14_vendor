@@ -14,7 +14,7 @@ static char sccsid[] = "%Z% %M% %I% %E% %U%";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libpam/modules/pam_login_access/login_access.c 359117 2020-03-19 03:37:02Z cy $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -137,10 +137,10 @@ list_match(char *list, const char *item,
     if (match != NO) {
 	while ((tok = strtok((char *) 0, listsep)) && strcmp(tok, "EXCEPT")) {
 	     /* VOID */ ;
-	    if (tok == NULL || list_match((char *) 0, item, match_fn,
-		login_access_opts) == NO) {
+	}
+	if (tok == NULL ||
+	    list_match((char *) 0, item, match_fn, login_access_opts) == NO) {
 		return (match);
-	    }
 	}
     }
     return (NO);

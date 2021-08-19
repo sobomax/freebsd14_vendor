@@ -2,7 +2,7 @@
 # Custom kernel for Freescale QorIQ (P5xxx, Txxxx) based boards, like
 # AmigaOne X5000
 #
-# $FreeBSD: releng/12.2/sys/powerpc/conf/QORIQ64 354060 2019-10-25 01:10:08Z kevans $
+# $FreeBSD$
 #
 
 cpu		BOOKE

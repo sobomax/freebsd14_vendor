@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.2/sys/vm/vm_param.h 353102 2019-10-04 12:18:03Z kib $
+ * $FreeBSD$
  */
 
 /*

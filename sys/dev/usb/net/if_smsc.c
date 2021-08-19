@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/net/if_smsc.c 362166 2020-06-14 05:25:06Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SMSC LAN9xxx devices (http://www.smsc.com/)

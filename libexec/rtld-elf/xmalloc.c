@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/libexec/rtld-elf/xmalloc.c 360067 2020-04-18 03:14:16Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.2/sys/sys/time.h 363385 2020-07-21 08:12:53Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TIME_H_

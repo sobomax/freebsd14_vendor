@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.2/sys/dev/md/md.c 362960 2020-07-06 13:54:44Z markj $
+ * $FreeBSD$
  *
  */
 

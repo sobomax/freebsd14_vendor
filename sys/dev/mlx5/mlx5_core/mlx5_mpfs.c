@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_core/mlx5_mpfs.c 359533 2020-04-01 19:40:14Z kib $
+ * $FreeBSD$
  */
 
 #include <linux/types.h>

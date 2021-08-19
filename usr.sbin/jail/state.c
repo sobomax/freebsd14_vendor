@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/jail/state.c 352560 2019-09-20 19:45:37Z mizhka $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/uio.h>
 

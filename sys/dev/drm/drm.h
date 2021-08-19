@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/drm/drm.h 365376 2020-09-06 11:23:58Z zeising $");
+__FBSDID("$FreeBSD$");
 
 /**
  * \mainpage

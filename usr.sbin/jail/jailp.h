@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/jail/jailp.h 361314 2020-05-21 02:04:10Z freqlabs $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

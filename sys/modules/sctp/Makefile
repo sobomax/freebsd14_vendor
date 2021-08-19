@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/sctp/Makefile 363079 2020-07-10 14:56:05Z markj $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netinet
 .PATH: ${SRCTOP}/sys/netinet6

@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: releng/12.2/sys/netgraph/ng_bridge.h 357206 2020-01-28 17:39:03Z bz $
+ * $FreeBSD$
  */
 
 #ifndef _NETGRAPH_NG_BRIDGE_H_

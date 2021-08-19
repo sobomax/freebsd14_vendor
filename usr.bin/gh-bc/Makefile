@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/gh-bc/Makefile 364052 2020-08-08 16:41:28Z se $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

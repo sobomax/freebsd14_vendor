@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.2/tools/tools/ath/athani/main.c 344842 2019-03-06 07:58:19Z adrian $
+ * $FreeBSD$
  */
 #include "diag.h"
 

@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/tools/tools/locale/tools/cldr2def.pl 358108 2020-02-19 14:29:47Z bapt $
+# $FreeBSD$
 
 use strict;
 use File::Copy;

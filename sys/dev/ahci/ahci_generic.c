@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/ahci/ahci_generic.c 362240 2020-06-16 20:35:01Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"

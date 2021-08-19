@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.2/release/Makefile.vm 356770 2020-01-16 01:13:32Z gjb $
+# $FreeBSD$
 #
 #
 # Makefile for building virtual machine and cloud provider disk images.

@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/tests/sys/geom/class/multipath/misc.sh 361407 2020-05-22 22:17:44Z asomers $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/conf.sh
 

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)restore.h	8.3 (Berkeley) 9/13/94
- * $FreeBSD: releng/12.2/sbin/restore/restore.h 359946 2020-04-15 00:18:19Z mckusick $
+ * $FreeBSD$
  */
 
 /*

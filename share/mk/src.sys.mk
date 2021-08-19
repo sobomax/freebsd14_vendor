@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/share/mk/src.sys.mk 360391 2020-04-27 19:49:35Z kevans $
+# $FreeBSD$
 
 # Note: This file is also duplicated in the sys/conf/kern.pre.mk so
 # it will always grab SRCCONF, even if it isn't being built in-tree

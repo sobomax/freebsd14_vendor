@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/tests/sys/capsicum/ioctls_test.c 356768 2020-01-15 21:05:43Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/filio.h>

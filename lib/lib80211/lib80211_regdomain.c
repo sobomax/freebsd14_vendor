@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #ifndef lint
-static const char rcsid[] = "$FreeBSD: releng/12.2/lib/lib80211/lib80211_regdomain.c 365670 2020-09-12 19:33:25Z bz $";
+static const char rcsid[] = "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/types.h>

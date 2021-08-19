@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/usr.bin/svn/lib/libapr/apr.h 362180 2020-06-14 17:36:43Z dim $ */
+/* $FreeBSD$ */
 
 /* Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with

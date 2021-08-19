@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/ofed/drivers/infiniband/core/ib_ucm.c 363150 2020-07-13 15:33:06Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/completion.h>
 #include <linux/fs.h>

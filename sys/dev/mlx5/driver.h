@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/driver.h 365405 2020-09-07 10:34:22Z kib $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_DRIVER_H

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/compat/linuxkpi/common/src/linux_current.c 363152 2020-07-13 15:36:57Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/compat.h>
 #include <linux/completion.h>

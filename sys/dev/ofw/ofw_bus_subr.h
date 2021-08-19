@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/ofw/ofw_bus_subr.h 355490 2019-12-07 17:10:03Z ian $
+ * $FreeBSD$
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_

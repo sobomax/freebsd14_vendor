@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/secure/caroot/blacklisted/Makefile 364792 2020-08-26 00:50:27Z kevans $
+# $FreeBSD$
 
 BINDIR=		/usr/share/certs/blacklisted
 

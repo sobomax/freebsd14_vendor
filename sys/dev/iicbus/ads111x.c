@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/iicbus/ads111x.c 356024 2019-12-22 20:06:08Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

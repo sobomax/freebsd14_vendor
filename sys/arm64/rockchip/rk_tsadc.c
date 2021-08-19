@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/rockchip/rk_tsadc.c 362410 2020-06-19 18:53:32Z manu $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Thermometer and thermal zones driver for RockChip SoCs.

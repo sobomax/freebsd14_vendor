@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libsecureboot/vectx.c 359911 2020-04-14 00:57:50Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _STANDALONE
 /* Avoid unwanted userlandish components */

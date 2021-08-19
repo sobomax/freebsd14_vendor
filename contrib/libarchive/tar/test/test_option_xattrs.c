@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.2/contrib/libarchive/tar/test/test_option_xattrs.c 353375 2019-10-09 22:18:01Z mm $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_option_xattrs)
 {

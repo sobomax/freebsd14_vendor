@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/iwm/Makefile 354927 2019-11-21 00:34:39Z markj $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/iwm
 

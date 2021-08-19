@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/dwc/if_dwcvar.h 365388 2020-09-06 19:03:19Z gonzo $
+ * $FreeBSD$
  */
 
 /*

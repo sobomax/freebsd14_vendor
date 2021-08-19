@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: host_controller_baseband.c,v 1.4 2003/08/18 19:19:53 max Exp $
- * $FreeBSD: releng/12.2/usr.sbin/bluetooth/hccontrol/host_controller_baseband.c 361184 2020-05-18 09:14:24Z hselasky $
+ * $FreeBSD$
  */
 
 #define L2CAP_SOCKET_CHECKED

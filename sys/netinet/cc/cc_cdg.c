@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/cc/cc_cdg.c 364377 2020-08-19 10:36:16Z rscheff $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/hhook.h>

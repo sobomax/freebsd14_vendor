@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/hptmv/ioctl.c 358079 2020-02-18 18:17:03Z dim $
+ * $FreeBSD$
  */
 /*
  * ioctl.c   ioctl interface implementation

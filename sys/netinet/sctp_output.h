@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/netinet/sctp_output.h 364605 2020-08-24 07:42:50Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_OUTPUT_H_
 #define _NETINET_SCTP_OUTPUT_H_

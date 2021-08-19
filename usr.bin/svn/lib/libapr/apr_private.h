@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/usr.bin/svn/lib/libapr/apr_private.h 362180 2020-06-14 17:36:43Z dim $ */
+/* $FreeBSD$ */
 
 /* include/arch/unix/apr_private.h.  Generated from apr_private.h.in by configure.  */
 /* include/arch/unix/apr_private.h.in.  Generated from configure.in by autoheader.  */

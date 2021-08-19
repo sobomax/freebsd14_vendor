@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/release/Makefile 356770 2020-01-16 01:13:32Z gjb $
+# $FreeBSD$
 #
 # Makefile for building releases and release media.
 #

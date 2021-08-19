@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/fsck_ffs/suj.c 356427 2020-01-06 21:14:27Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/disk.h>

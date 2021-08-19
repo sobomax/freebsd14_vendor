@@ -70,7 +70,7 @@ static char sccsid[] = "@(#)diff3.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.bin/diff3/diff3.c 355455 2019-12-06 18:26:34Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/procdesc.h>

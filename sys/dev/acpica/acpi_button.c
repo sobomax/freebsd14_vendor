@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/acpica/acpi_button.c 358883 2020-03-11 08:32:15Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_evdev.h"

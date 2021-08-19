@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/capsicum/Makefile 356768 2020-01-15 21:05:43Z emaste $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/capsicum
 

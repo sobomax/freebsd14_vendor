@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/x86/x86/ucode.c 342199 2018-12-18 20:12:43Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -260,7 +260,7 @@ restart:
 		goto restart;
 	}
 }
-SYSINIT(ucode_release, SI_SUB_KMEM + 1, SI_ORDER_ANY, ucode_release, NULL);
+SYSINIT(ucode_release, SI_SUB_SMP + 1, SI_ORDER_ANY, ucode_release, NULL);
 
 void
 ucode_load_ap(int cpu)

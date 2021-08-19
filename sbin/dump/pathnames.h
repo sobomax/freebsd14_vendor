@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/5/93
- * $FreeBSD: releng/12.2/sbin/dump/pathnames.h 359946 2020-04-15 00:18:19Z mckusick $
+ * $FreeBSD$
  */
 
 #include <paths.h>

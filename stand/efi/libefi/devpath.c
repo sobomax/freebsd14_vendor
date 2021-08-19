@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/stand/efi/libefi/devpath.c 355560 2019-12-09 16:21:26Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <efi.h>
 #include <efilib.h>

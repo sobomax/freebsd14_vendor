@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.2/sys/dev/e1000/if_em.c 366097 2020-09-23 23:56:49Z erj $ */
+/* $FreeBSD$ */
 #include "if_em.h"
 #include <sys/sbuf.h>
 #include <machine/_inttypes.h>

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.2/sys/netinet/accf_dns.c 361717 2020-06-02 00:57:48Z markj $
+ *	$FreeBSD$
  */
 
 #define ACCEPT_FILTER_MOD

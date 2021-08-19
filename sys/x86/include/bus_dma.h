@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/x86/include/bus_dma.h 360525 2020-05-01 09:46:27Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _X86_BUS_DMA_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/mkimg/tests/img-1x1-512-bsd.raw.hex 362776 2020-06-29 08:14:45Z gonzo $
+# $FreeBSD$
 00000000  42 0a 42 0a 42 0a 42 0a  42 0a 42 0a 42 0a 42 0a  |B.B.B.B.B.B.B.B.|
 *
 00000200  57 45 56 82 00 00 00 00  00 00 00 00 00 00 00 00  |WEV.............|

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/jail/config.c 365320 2020-09-04 00:22:24Z jamie $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/errno.h>

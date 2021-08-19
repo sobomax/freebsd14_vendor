@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/locale/fix_grouping.c 358751 2020-03-08 18:09:41Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <limits.h>

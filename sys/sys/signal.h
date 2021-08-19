@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.2/sys/sys/signal.h 353102 2019-10-04 12:18:03Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SIGNAL_H_

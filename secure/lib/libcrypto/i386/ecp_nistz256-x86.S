@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/secure/lib/libcrypto/i386/ecp_nistz256-x86.S 359186 2020-03-20 21:43:08Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from ecp_nistz256-x86.pl. */
 #ifdef PIC
 .text

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.bin/systat/devs.h 360383 2020-04-27 16:11:59Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef DEVS_H

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/sys/taskqueue.h 357684 2020-02-08 21:55:56Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TASKQUEUE_H_

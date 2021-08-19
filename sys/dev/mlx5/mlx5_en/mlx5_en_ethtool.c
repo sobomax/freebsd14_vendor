@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/mlx5/mlx5_en/mlx5_en_ethtool.c 361170 2020-05-18 09:03:12Z hselasky $
+ * $FreeBSD$
  */
 
 #include "en.h"

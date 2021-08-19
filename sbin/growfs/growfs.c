@@ -53,7 +53,7 @@ All rights reserved.\n";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sbin/growfs/growfs.c 366187 2020-09-26 21:45:33Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>

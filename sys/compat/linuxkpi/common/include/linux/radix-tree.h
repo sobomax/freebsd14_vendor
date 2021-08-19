@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/compat/linuxkpi/common/include/linux/radix-tree.h 364382 2020-08-19 12:25:34Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_RADIX_TREE_H_
 #define	_LINUX_RADIX_TREE_H_

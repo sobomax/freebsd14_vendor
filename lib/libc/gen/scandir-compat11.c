@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/scandir-compat11.c 364323 2020-08-17 19:17:54Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Scan the directory dirname calling select to make a list of selected

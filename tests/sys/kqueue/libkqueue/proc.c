@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.2/tests/sys/kqueue/libkqueue/proc.c 359753 2020-04-09 20:35:35Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/stat.h>

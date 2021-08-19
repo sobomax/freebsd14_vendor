@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/modules/i2c/Makefile 356838 2020-01-17 17:57:34Z ian $
+# $FreeBSD$
 
 SUBDIR = \
 	ads111x \

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/gen/memalign.c 361569 2020-05-28 01:53:35Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <stdlib.h>

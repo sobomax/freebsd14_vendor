@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.bin/tar/tests/Makefile 358087 2020-02-19 01:46:43Z mm $
+# $FreeBSD$
 
 PACKAGE=	tests
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/conf/ldscript.i386 360814 2020-05-08 14:48:45Z jhb $ */
+/* $FreeBSD$ */
 OUTPUT_FORMAT("elf32-i386-freebsd", "elf32-i386-freebsd", "elf32-i386-freebsd")
 OUTPUT_ARCH(i386)
 ENTRY(btext)

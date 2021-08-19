@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/flash/mx25l.c 355808 2019-12-16 17:59:02Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

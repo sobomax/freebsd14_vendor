@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)systags.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: releng/12.2/sys/conf/systags.sh 357331 2020-01-31 12:38:53Z nyan $
+# $FreeBSD$
 #
 # systags.sh - construct a system tags file using dependence relations
 #	in a .depend file

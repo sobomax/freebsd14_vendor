@@ -28,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/usb/net/if_muge.c 362166 2020-06-14 05:25:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/usb/net/if_muge.c 362166 2020-06-14 05:25:06Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 /*
  * USB-To-Ethernet adapter driver for Microchip's LAN78XX and related families.

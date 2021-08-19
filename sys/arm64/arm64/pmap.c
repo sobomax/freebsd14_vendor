@@ -84,7 +84,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/arm64/arm64/pmap.c 361285 2020-05-20 17:33:11Z markj $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Manages physical address maps.

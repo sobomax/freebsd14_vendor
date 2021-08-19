@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *      $FreeBSD: releng/12.2/sys/fs/procfs/procfs_ioctl.c 361020 2020-05-13 21:16:02Z jhb $
+ *      $FreeBSD$
  */
 
 #include <sys/param.h>

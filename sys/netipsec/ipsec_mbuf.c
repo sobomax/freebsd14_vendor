@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/netipsec/ipsec_mbuf.c 365277 2020-09-02 20:36:33Z jhb $
+ * $FreeBSD$
  */
 
 /*

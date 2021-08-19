@@ -26,7 +26,7 @@
 #
 #       Email: Mike Makonnen <mtm@FreeBSD.Org>
 #
-# $FreeBSD: releng/12.2/usr.sbin/adduser/adduser.sh 360390 2020-04-27 19:29:48Z kevans $
+# $FreeBSD$
 #
 
 # err msg

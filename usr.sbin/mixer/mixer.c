@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/usr.sbin/mixer/mixer.c 358955 2020-03-13 11:27:29Z 0mp $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <fcntl.h>

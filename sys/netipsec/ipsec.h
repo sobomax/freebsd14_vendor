@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sys/netipsec/ipsec.h 365277 2020-09-02 20:36:33Z jhb $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-

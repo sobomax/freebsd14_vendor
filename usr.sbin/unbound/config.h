@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: releng/12.2/usr.sbin/unbound/config.h 361457 2020-05-25 13:19:52Z cy $ */
+/* $FreeBSD$ */
 
 /* apply the noreturn attribute to a function that exits the program */
 #define ATTR_NORETURN __attribute__((__noreturn__))

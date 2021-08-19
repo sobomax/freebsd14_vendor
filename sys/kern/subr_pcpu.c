@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/kern/subr_pcpu.c 358962 2020-03-13 16:52:16Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

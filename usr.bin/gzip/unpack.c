@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/usr.bin/gzip/unpack.c 360186 2020-04-22 05:54:46Z delphij $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: unpack.c,v 1.3 2017/08/04 07:27:08 mrg Exp $	*/
 
 /*-
@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.bin/gzip/unpack.c 360186 2020-04-22 05:54:46Z delphij $
+ * $FreeBSD$
  */
 
 /* This file is #included by gzip.c */

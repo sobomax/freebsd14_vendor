@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/kern/pipe/Makefile 360898 2020-05-11 15:21:03Z markj $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/kern/pipe
 

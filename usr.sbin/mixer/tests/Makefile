@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/usr.sbin/mixer/tests/Makefile 351481 2019-08-25 17:55:31Z 0mp $
+# $FreeBSD$
 
 ATF_TESTS_SH+=		mixer_test
 

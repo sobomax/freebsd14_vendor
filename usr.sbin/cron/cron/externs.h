@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/usr.sbin/cron/cron/externs.h 358255 2020-02-23 03:13:38Z kevans $	*/
+/*	$FreeBSD$	*/
 
 /* Copyright 1993,1994 by Paul Vixie
  * All rights reserved

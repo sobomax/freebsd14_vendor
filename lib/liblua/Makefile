@@ -1,4 +1,4 @@
-#! $FreeBSD: releng/12.2/lib/liblua/Makefile 360677 2020-05-06 00:25:43Z emaste $
+#! $FreeBSD$
 
 LUASRC?=	${SRCTOP}/contrib/lua/src
 .PATH: ${LUASRC}

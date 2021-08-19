@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/12.2/usr.bin/procstat/tests/while1.c 352491 2019-09-18 19:21:20Z jilles $");
+__RCSID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <unistd.h>

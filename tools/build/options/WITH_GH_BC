@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.2/tools/build/options/WITH_GH_BC 366227 2020-09-28 14:47:36Z se $
+.\" $FreeBSD$
 Set this option to install the enhanced
 .Xr bc 1
 and

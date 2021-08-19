@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/mpsutil/mpsutil.h 354884 2019-11-20 08:44:29Z avg $
+ * $FreeBSD$
  */
 
 #ifndef __MPSUTIL_H__

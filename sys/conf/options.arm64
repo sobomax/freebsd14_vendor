@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/sys/conf/options.arm64 362349 2020-06-18 23:18:47Z manu $
+# $FreeBSD$
 
 ARM64				opt_global.h
 INTRNG				opt_global.h

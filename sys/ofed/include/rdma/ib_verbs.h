@@ -37,7 +37,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/12.2/sys/ofed/include/rdma/ib_verbs.h 354995 2019-11-22 14:23:11Z hselasky $
+ * $FreeBSD$
  */
 
 #if !defined(IB_VERBS_H)

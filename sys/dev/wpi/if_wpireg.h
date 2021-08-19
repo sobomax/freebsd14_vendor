@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.2/sys/dev/wpi/if_wpireg.h 365670 2020-09-12 19:33:25Z bz $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2006,2007

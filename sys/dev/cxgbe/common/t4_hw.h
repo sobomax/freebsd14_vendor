@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/cxgbe/common/t4_hw.h 364776 2020-08-25 18:21:13Z np $
+ * $FreeBSD$
  *
  */
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/lib/libmagic/Makefile 362842 2020-07-01 16:18:35Z delphij $
+# $FreeBSD$
 # Copyright (c) David E. O'Brien, 2000-2004, 2006, 2009
 
 PACKAGE=lib${LIB}

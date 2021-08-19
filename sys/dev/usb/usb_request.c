@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.2/sys/dev/usb/usb_request.c 366693 2020-10-14 06:25:55Z martymac $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

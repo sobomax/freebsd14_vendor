@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.2/sys/dev/rtwn/rtl8192c/r92c_priv.h 365670 2020-09-12 19:33:25Z bz $
+ * $FreeBSD$
  */
 
 #ifndef R92C_PRIV_H

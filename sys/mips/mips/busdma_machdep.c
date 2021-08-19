@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/mips/mips/busdma_machdep.c 355704 2019-12-13 09:19:24Z rlibby $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MIPS bus dma support routines

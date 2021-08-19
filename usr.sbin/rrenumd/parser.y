@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/usr.sbin/rrenumd/parser.y 363535 2020-07-25 23:06:47Z truckman $
+ * $FreeBSD$
  */
 
 %{

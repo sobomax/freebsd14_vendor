@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.2/sys/i386/ibcs2/ibcs2_xenix.h 357109 2020-01-25 05:52:31Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _IBCS2_XENIX_H_

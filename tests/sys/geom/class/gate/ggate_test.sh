@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/tests/sys/geom/class/gate/ggate_test.sh 361127 2020-05-17 02:36:42Z asomers $
+# $FreeBSD$
 
 PIDFILE=ggated.pid
 PLAINFILES=plainfiles

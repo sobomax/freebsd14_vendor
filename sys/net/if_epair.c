@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/net/if_epair.c 365669 2020-09-12 18:58:36Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/hash.h>

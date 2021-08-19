@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.2/usr.sbin/periodic/etc/security/520.pfdenied 357289 2020-01-30 09:56:56Z kp $
+# $FreeBSD$
 #
 
 # If there is a global system configuration file, suck it in.

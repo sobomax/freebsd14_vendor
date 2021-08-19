@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/defs.mk 355345 2019-12-03 18:25:16Z kevans $
+# $FreeBSD$
 
 .if !defined(__BOOT_DEFS_MK__)
 __BOOT_DEFS_MK__=${MFILE}

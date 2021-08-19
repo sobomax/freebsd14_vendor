@@ -91,7 +91,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/xen/control/control.c 362819 2020-07-01 01:12:23Z kib $");
+__FBSDID("$FreeBSD$");
 
 /**
  * \file control.c
@@ -432,6 +432,12 @@ xctrl_attach(device_t dev)
 	xctrl->xctrl_watch.node = "control/shutdown";
 	xctrl->xctrl_watch.callback = xctrl_on_watch_event;
 	xctrl->xctrl_watch.callback_data = (uintptr_t)xctrl;
+	/*
+	 * We don't care about the path updated, just about the value changes
+	 * on that single node, hence there's no need to queue more that one
+	 * event.
+	 */
+	xctrl->xctrl_watch.max_pending = 1;
 	xs_register_watch(&xctrl->xctrl_watch);
 
 	if (xen_pv_domain())

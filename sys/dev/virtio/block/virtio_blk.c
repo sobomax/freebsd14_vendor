@@ -29,7 +29,7 @@
 /* Driver for VirtIO block devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/sys/dev/virtio/block/virtio_blk.c 365702 2020-09-13 23:51:07Z allanjude $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

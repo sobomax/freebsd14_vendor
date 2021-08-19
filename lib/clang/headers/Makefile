@@ -1,5 +1,5 @@
 
-# $FreeBSD: releng/12.2/lib/clang/headers/Makefile 363494 2020-07-24 20:48:06Z dim $
+# $FreeBSD$
 
 .include "../clang.pre.mk"
 

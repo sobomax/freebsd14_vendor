@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.2/sys/dev/acpica/acpivar.h 361334 2020-05-21 15:28:35Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _ACPIVAR_H_

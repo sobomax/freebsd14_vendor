@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libc/net/sctp_sys_calls.c 364621 2020-08-24 08:26:07Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <stdbool.h>
 #include <stddef.h>

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)proc.h	8.15 (Berkeley) 5/19/95
- * $FreeBSD: releng/12.2/sys/sys/proc.h 365359 2020-09-05 10:12:06Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PROC_H_

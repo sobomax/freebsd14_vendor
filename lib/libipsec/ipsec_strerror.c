@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.2/lib/libipsec/ipsec_strerror.c 356450 2020-01-07 16:52:05Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.2/stand/efi/gptboot/Makefile 348812 2019-06-08 19:02:17Z imp $
+# $FreeBSD$
 
 # ZFS is not supported, we want debugging until this is vetted and
 # we don't want the gptboot.efifat thing created.
