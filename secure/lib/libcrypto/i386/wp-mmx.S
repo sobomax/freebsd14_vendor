@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8da4ba60d5b9f8efc63c3022acae61e961f610d8 $ */
 /* Do not modify. This file is auto-generated from wp-mmx.pl. */
 #ifdef PIC
 .text

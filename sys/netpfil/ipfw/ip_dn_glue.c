@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 7beb8525e30aa3e68633f6e17cd4d468e9586e88 $
  *
  * Binary compatibility support for /sbin/ipfw RELENG_7 and RELENG_8
  */

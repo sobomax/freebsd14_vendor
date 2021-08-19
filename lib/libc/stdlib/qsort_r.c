@@ -2,7 +2,7 @@
  * This file is in the public domain.  Originally written by Garrett
  * A. Wollman.
  *
- * $FreeBSD$
+ * $FreeBSD: f489d31c2335332eb7226f37bd4f3b418d2fcac2 $
  */
 #include "block_abi.h"
 #define I_AM_QSORT_R

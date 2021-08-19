@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: af18d97b0967438c6b7a31d22b414d114f1b642d $
 .cvsignore
 mkdep
 *-hp*

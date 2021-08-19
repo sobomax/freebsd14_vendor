@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 372870c1ecc95b21663e6daed1532726540f099c $
 
 PROG=	verify_krb5_conf
 MAN=	verify_krb5_conf.8

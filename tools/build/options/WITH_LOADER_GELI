@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 60cb732c7832ff9dec00947843bb62fef3202273 $
 Set to build GELI bootloader support.

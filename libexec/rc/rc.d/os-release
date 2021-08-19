@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 411348a436681afa074b9b408e1bc45aacab207f $
 #
 
 # PROVIDE: os-release

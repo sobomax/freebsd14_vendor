@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 9e69f9501ac5a8b172a1c935cb6d590beee8d243 $
  */
 /*
  * Definitions for the TrustedBSD LOMAC integrity policy module.

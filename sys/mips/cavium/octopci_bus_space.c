@@ -64,10 +64,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/bus.h,v 1.5 1999/08/28 00:38:40 peter
- * $FreeBSD$
+ * $FreeBSD: 3fc5497801223b9c688655fac597f57132a26e96 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3fc5497801223b9c688655fac597f57132a26e96 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

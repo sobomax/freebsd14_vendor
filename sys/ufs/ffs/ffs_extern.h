@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_extern.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD$
+ * $FreeBSD: 8121115f50add58097e2b3ec88e6859e3d35197c $
  */
 
 #ifndef _UFS_FFS_EXTERN_H

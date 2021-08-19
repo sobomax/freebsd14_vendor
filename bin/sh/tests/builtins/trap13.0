@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d90eb08eb2421bbdc5cd5429740469c393505300 $
 
 {
 	trap 'exit 0' INT

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 0124883d0fe0a9d45d0cbd24c80e0d3b8dcc8f95 $
 #
 # Obtained from libiconv-0.13.1
 #

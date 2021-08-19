@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5229feaeebfd36c15d9d5974023b530085576824 $");
 
 /*
  * Atsushi Onoe's rate control algorithm.

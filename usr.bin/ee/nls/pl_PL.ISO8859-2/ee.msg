@@ -3,7 +3,7 @@ $ ee.i18n.guide for more information
 $ 
 $ For ee patchlevel 3
 $ 
-$ $FreeBSD$
+$ $FreeBSD: 94a1eabc414bf9b08a86c03ad6c70c14725fc5aa $
 $ 
 $ 
 $set 1

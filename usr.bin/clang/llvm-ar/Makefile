@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 86d4538271a1d3d227afa1157233def40cbc021b $
 
 PROG_CXX=	llvm-ar
 MAN=		llvm-ar.1 llvm-ranlib.1

@@ -5,7 +5,7 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD$
+# $FreeBSD: b97bdd4448213434d3f94aa9f5054881633b3b0c $
 
 PROG=	fdwrite
 

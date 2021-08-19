@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 14c9b9396ada6e64060bb370e6fe8086a70e146b $
 
 v=$( ($SH -n <<'EOF'
 for

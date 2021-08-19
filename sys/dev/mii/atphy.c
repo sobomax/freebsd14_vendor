@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fa729b6a75caff129f0f4dcb3c1dd7aab1a70203 $");
 
 /*
  * Driver for the Attansic/Atheros F1 10/100/1000 PHY.

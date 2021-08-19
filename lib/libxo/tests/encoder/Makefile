@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2fe42457f2e827df43d000518a985838eaf6b139 $
 
 LIBXOSRC=	${SRCTOP}/contrib/libxo
 

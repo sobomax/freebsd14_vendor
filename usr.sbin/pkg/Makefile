@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ebfb71c1699b5b39b827bebd877457b3c41f2e3c $
 
 _BRANCH!=	${MAKE} -C ${SRCTOP}/release -V BRANCH
 BRANCH?=	${_BRANCH}

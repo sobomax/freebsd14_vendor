@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 7f654083a3c4d0d9af3f4a221d21d3484ba2657a $
 Set to not build or install
 .Xr finger 1
 and

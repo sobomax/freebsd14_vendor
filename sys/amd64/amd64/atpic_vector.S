@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD$
+ * $FreeBSD: d82ffd30e1c9ab3034a0dabf4b39c41bdd53b228 $
  */
 
 /*

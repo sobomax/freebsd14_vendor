@@ -16,7 +16,7 @@
 
 /* $Id$ */
 
-/*	$FreeBSD:  258945 2013-12-04 21:33:17Z roberto $	*/
+/*	$FreeBSD: 5a1d708febd25d72fb076af6bcccd1c651ddcf82 $	*/
 /*	$KAME: sha2.c,v 1.8 2001/11/08 01:07:52 itojun Exp $	*/
 
 /*

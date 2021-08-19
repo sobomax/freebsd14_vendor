@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD$
+ * $FreeBSD: 82a2e31e34e82acb0f29226aa1b780170475e621 $
  */
 
 #ifndef _UNISTD_H_

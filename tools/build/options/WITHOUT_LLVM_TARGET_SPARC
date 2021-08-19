@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 1f01ca1b22602f55d9b7ed6ff683f862ffa5c0e8 $
 Set to not build LLVM target support for SPARC.
 The
 .Va LLVM_TARGET_ALL

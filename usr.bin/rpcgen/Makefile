@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f78fa64968fded495e85443f82534db78f5a680a $
 
 PROG=	rpcgen
 SRCS=	rpc_main.c  rpc_clntout.c rpc_cout.c rpc_hout.c rpc_parse.c \

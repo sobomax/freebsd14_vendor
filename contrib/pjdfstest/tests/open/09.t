@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/open/09.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 5eab2f6d728a8efbdfb45ea473e573e28a7e806f $
 
 desc="O_CREAT is specified, the file does not exist, and the directory in which it is to be created has its immutable flag set"
 

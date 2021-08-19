@@ -24,7 +24,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 0f686ed607887e9bba333e43cfcbf27bb8de5710 $
  */
 
 #include <net/netmap.h>

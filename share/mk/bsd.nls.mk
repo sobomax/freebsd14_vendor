@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 684394b53889bf344476a78f070ff95489b27066 $
 #
 # This include file <bsd.nls.mk> handles building and installing Native
 # Language Support (NLS) catalogs

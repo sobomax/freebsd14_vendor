@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 497f1cd028d0143c540920a31345f36125e7bb76 $");
 
 #include <uchar.h>
 #include "xlocale_private.h"

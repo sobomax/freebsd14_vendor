@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 91a907de102c53bbf907182d7d4e8a85e65b5be2 $
  */
 
 int	sioattach(device_t dev, int xrid, u_long rclk);

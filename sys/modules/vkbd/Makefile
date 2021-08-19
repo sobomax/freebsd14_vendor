@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2004/08/13 18:30:24 max Exp $
-# $FreeBSD$
+# $FreeBSD: 00654c1136ebde0e048bb7795aac996153890693 $
 
 .PATH:	${SRCTOP}/sys/dev/vkbd
 

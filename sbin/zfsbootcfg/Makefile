@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
-# $FreeBSD$
+# $FreeBSD: d485d8dad8dc1e75417da282a07920a46d5a3960 $
 
 PROG=	zfsbootcfg
 WARNS?=	1

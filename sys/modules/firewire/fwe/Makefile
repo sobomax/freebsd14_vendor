@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8632ab2e16c5bb009d5e0b0f128e651bda82f776 $
 
 # Makefile for the fwe(4) module (Ethernet over IEEE1394)
 

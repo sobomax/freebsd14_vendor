@@ -38,7 +38,7 @@
 #include "opt_global.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 598635414278fc62f655e9e653394845e8ee1777 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

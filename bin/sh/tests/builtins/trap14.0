@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 97cce8d0d24436f65f425cd45a05990c3f69fccf $
 
 {
 	trap - INT

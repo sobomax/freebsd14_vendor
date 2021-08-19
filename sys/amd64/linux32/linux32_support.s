@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e035b4f156b424d32cc45d6b9f659e4a79db00e7 $
  */
 
 #include "linux32_assym.h"		/* system definitions */

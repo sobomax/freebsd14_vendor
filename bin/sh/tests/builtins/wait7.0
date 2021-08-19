@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0fb092f8f614dc8b7154fb666a6f0f6278495481 $
 
 : &
 wait -- $!

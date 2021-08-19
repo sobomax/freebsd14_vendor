@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_h4.c,v 1.10 2005/10/31 17:57:43 max Exp $
- * $FreeBSD$
+ * $FreeBSD: a747e6bce0d3f51338f91ead1a7f5ae0aa29cf98 $
  * 
  * Based on:
  * ---------

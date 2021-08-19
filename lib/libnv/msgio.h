@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 13592e4cd0fb30a3243ecab3bf9caccb4dbc754b $
  */
 
 #ifndef	_MSGIO_H_

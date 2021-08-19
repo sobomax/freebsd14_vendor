@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 04bb2c5a8f8ae2209a0a0987f618bab548e7c2c9 $
  */
 
 struct ifa_msghdr;

@@ -29,7 +29,7 @@
  *	from: NetBSD: gemvar.h,v 1.8 2002/05/15 02:36:12 matt Exp
  *	from: FreeBSD: if_gemvar.h 177560 2008-03-24 17:23:53Z marius
  *
- * $FreeBSD$
+ * $FreeBSD: 98a7bed3336de644cb9ed10a6ceaceeea287964a $
  */
 
 #ifndef	_IF_CASVAR_H

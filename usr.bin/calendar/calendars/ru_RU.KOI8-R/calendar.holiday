@@ -1,7 +1,7 @@
 /*
  * Российские праздники (нерабочие "красные" дни)
  *
- * $FreeBSD$
+ * $FreeBSD: 1d0595b9ca1904324eaf79b6eb61dc05c51544c1 $
  */
 
 #ifndef _ru_RU_KOI8_R_holiday_

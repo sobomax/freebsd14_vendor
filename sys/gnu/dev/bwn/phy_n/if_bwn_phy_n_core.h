@@ -26,7 +26,7 @@
 */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 72a9fb920789ccc2a2614cfcc1ad05f57ada92a2 $
  */
 
 #ifndef	__IF_BWN_PHY_N_CORE_H__

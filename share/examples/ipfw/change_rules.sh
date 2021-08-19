@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 6148630a37345ed7888f0cbce5eb415dc927bdd5 $
 
 # Change ipfw(8) rules with safety guarantees for remote operation
 #

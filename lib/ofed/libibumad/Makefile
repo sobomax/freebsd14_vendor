@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6ac9dafa8f57235048cb8b98ed2b1a23847b04d4 $
 
 _spath=	${SRCTOP}/contrib/ofed/libibumad
 .PATH: ${_spath}

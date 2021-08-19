@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 4932f08364d7d18daf5bb1e1145313688d5d2d44 $
 
 field_password="Password:"
 field_username="Username:"

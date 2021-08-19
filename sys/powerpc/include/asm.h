@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: asm.h,v 1.6.18.1 2000/07/25 08:37:14 kleink Exp $
- * $FreeBSD$
+ * $FreeBSD: e61cda2220cdbd5adf3b7a21b07e6d87cadee5a8 $
  */
 
 #ifndef _MACHINE_ASM_H_

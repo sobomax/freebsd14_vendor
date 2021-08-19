@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 250b8558acb9b7d5c9cbbaaef774e073a9dfb0b9 $");
 
 #include <stdlib.h>
 #include "xlocale_private.h"

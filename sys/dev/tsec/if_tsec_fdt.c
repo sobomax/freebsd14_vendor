@@ -32,7 +32,7 @@
  * FDT 'simple-bus' attachment for Freescale TSEC controller.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cfad15b533cf4e0e08b04c8dc6ccd790b0e76d12 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD$
+\ $FreeBSD: e7996227c5f9509de48c84935d4381debc5d31ba $
 
 marker task-check-password.4th
 

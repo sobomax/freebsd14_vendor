@@ -6,7 +6,7 @@
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
 **
-** $FreeBSD$
+** $FreeBSD: ab1397f31da21ca49adfc351a79e769389c36bfa $
 */
 
 /* Stuff moved from Makefile.inc to reduce clutter */

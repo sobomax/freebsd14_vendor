@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6d495462b0865960032769e9e8741dbf6fec35c5 $
 
 PACKAGE=lib${LIB}
 LIB=		figpar

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cc05decc9cc66df712d92e45ba27637d6747401c $
 
 PACKAGE=	tests
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libc/regex

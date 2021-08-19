@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2a5bbb369ece2a6df5563d6a40597555948aa509 $");
 
 /* Communications core for Avago Technologies (LSI) MPT3 */
 

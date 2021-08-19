@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 3613e1d5f4f1dff01f9144b9bfe3136f69077a84 $
 #!/bin/sh
 #
 # Copyright (c) 2014, Juniper Networks, Inc.

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)nfsm_subs.h	8.2 (Berkeley) 3/30/95
- * $FreeBSD$
+ * $FreeBSD: a821934da0a2563143f578bfc2e9764c1e7bdaed $
  */
 
 #ifndef _NFS_NFS_COMMON_H_

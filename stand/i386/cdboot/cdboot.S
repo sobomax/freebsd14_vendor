@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD$
+# $FreeBSD: 9c3fb15ddf5807df5717fb0488ad229edb18149c $
 
 #
 # This program is a freestanding boot program to load an a.out binary

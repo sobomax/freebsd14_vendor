@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: cb7ba605b5b49e07d1880fcfb0bbbb52ce967edf $*/
 
 /**
  * @file ice_osdep.h

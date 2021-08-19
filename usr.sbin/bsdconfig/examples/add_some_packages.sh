@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 8750908dbb2c63abbc7b38ff76926c6a33ab07d5 $
 #
 # This sample installs a short list of packages from the main HTTP site.
 #

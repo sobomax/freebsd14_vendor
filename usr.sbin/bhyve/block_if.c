@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 535407eb328138901fc6ac003d4350dbdd0619e1 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 535407eb328138901fc6ac003d4350dbdd0619e1 $");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM

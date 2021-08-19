@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)recno.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD$
+ * $FreeBSD: ae0eb85cc3ca2b4c87cc21166006d9c3192aace5 $
  */
 
 enum SRCHOP { SDELETE, SINSERT, SEARCH};	/* Rec_search operation. */

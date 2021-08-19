@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f7822da784d718a40a2c317a4148ff1672624cfc $
 
 .PATH: ${SRCTOP}/sys/dev/pccard
 

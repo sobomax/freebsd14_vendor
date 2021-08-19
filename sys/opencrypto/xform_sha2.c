@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0775247acb11b6f52c31d84c78f74096ad19efd3 $");
 
 #include <crypto/sha2/sha224.h>
 #include <crypto/sha2/sha256.h>

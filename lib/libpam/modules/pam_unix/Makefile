@@ -32,7 +32,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 5330ae4a5f9817daf139078a037f1e0db89e0348 $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>

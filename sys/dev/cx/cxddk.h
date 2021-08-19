@@ -15,7 +15,7 @@
  * all derivative works or modified versions.
  *
  * Cronyx Id: cxddk.h,v 1.1.2.1 2003/11/12 17:13:41 rik Exp $
- * $FreeBSD$
+ * $FreeBSD: 69f069364af31e7c6f7e3b1eb481390f4d3553e9 $
  */
 
 #ifndef port_t

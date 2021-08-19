@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e0575a43e3dc1e707462f65fcecc354fb77eaea6 $
  */
 
 #ifndef __tcp_log_buf_h__

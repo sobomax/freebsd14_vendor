@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * 
  * Obtained from: $NetBSD: msgtest.c,v 1.7 2002/07/20 08:36:25 grant Exp $
- * $FreeBSD$
+ * $FreeBSD: 058a32106642e97d7c6a3ab27c0c20e4d319480e $
  */
 
 /*

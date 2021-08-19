@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8c5d084d534322758511cd378244e62da4b4ff77 $ */
 /*	$NetBSD: denode.h,v 1.25 1997/11/17 15:36:28 ws Exp $	*/
 
 /*-

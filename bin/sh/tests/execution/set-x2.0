@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 56d54e38d2514d60e0de775e55d9e549002c1afd $
 
 key='must contain this'
 PS4="$key+ "

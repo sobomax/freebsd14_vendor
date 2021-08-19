@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tftp.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: 50147137db15d67c06a5a155503bad472a7b59b3 $
  */
 
 #ifndef _ARPA_TFTP_H_

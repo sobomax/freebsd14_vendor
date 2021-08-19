@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: cefefdb0cf0ff3204f2be37a8f0b99c241e63c2b $
 
 PACKAGE=	ipf
 PROG=		ipftest

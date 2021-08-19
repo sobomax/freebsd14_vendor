@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_ethersubr.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 23326d81f2449420a433cd87970236a4165e8d12 $
  */
 
 #include "opt_inet.h"

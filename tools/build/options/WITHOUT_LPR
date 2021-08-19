@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 9b6dabd7f2b10303cbb7aa6e0b9e3b50aa1aa884 $
 Set to not build
 .Xr lpr 1
 and related programs.

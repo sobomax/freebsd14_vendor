@@ -46,7 +46,7 @@
  * from: scsi.c,v 1.17 1998/01/12 07:57:57 charnier Exp $";
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 60293e499475da7058a44858ce78357f3bb54fd8 $");
 
 #include <sys/stdint.h>
 #include <sys/types.h>

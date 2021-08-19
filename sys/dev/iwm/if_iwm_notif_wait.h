@@ -66,7 +66,7 @@
  *
  *****************************************************************************/
 
-/* $FreeBSD$ */
+/* $FreeBSD: aa77023c45786a2e0903a73cb6bf8580519c64d9 $ */
 
 #ifndef __IF_IWN_NOTIF_WAIT_H__
 #define __IF_IWN_NOTIF_WAIT_H__

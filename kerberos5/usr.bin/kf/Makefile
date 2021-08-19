@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 44d91830baaf23033d8b9b3d80a1f7d063261546 $
 
 PROG=	kf
 MAN=	kf.1

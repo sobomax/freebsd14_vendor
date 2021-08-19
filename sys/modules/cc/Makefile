@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ec89d89e8c80cea14381fe99416b4e0bdc95b213 $
 
 SUBDIR=	cc_cubic \
 	cc_dctcp \

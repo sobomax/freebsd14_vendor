@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 5cca6b939c6736b74dabb271ca729a1de1223efa $
 #
 
 # PROVIDE: ippool

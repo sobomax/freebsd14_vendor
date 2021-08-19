@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2d7612754ac15c6058dfb33fae8c9ff585f4be6b $");
 /*
 * NXP TDA19988 HDMI encoder 
 */

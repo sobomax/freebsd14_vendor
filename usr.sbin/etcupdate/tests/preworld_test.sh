@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: b7241542784fc4c029b69ca3ac4ddaebad8df0a0 $
 
 # Regression tests for the pre-world (-p) mode 
 

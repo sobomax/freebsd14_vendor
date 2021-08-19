@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 65ea6915768d4ba76d4d6875b7dc328a211da709 $");
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>

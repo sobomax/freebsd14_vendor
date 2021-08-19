@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ttycom.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD$
+ * $FreeBSD: 5aabb074a009cc6b0a994f3d737971b97020551b $
  */
 
 #ifndef	_SYS_TTYCOM_H_

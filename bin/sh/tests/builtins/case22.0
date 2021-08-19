@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ddc80051fa0a4a30382a2ef78c29d900a3e64198 $
 
 case 5 in
 [0"$((-9))"]) echo bad1 ;;

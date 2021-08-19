@@ -46,7 +46,7 @@
 
 #include <machine/resource.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 84d0d51d114d1cb1c8b2a74ccb9856c81c92ad6f $");
 
 static int
 ata_zbbus_probe(device_t dev)

@@ -37,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)local.h	8.3 (Berkeley) 7/3/94
- * $FreeBSD$
+ * $FreeBSD: 336d00dfd8cc8db37574c73b195cdd4604d71f77 $
  */
 
 #ifndef _STDIO_LOCAL_H

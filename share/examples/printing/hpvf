@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: c900f31255e3e07a4b27b407b349344ab5a64986 $
 #
 #  hpvf - Convert GIF files into HP/PCL, then print
 #  Installed in /usr/local/libexec/hpvf

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 079377daedfad1c025a83aeea2926eee14c1c59b $
 
 # Part of a unified Makefile for building kernels.  This part contains all
 # of the definitions that need to be before %BEFORE_DEPEND.

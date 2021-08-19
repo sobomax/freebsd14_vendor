@@ -1,5 +1,5 @@
 #! /bin/sh
-# $FreeBSD$
+# $FreeBSD: b47d33d0a02c37b474cf3894303790da6bbfcd17 $
 #
 # Copyright 2013 Google Inc.
 # All rights reserved.

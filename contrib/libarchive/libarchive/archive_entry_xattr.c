@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f9e7236d0cb50ae03623b28cf4f10152be0b321b $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>

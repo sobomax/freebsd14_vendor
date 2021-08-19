@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sel_subs.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 7e1ddeedcb877fd2985e1d53dbdc8263bd782eb0 $
  */
 
 /*

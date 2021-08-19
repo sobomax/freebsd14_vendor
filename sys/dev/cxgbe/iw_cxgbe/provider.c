@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 53106073d10111ec49bc95ab75a81f313b5f1aaa $");
 
 #define	LINUXKPI_PARAM_PREFIX iw_cxgbe_
 

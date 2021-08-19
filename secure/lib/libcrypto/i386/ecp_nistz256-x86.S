@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: eb413d9f1a7366b6873c6763a9af6ec44aa98125 $ */
 /* Do not modify. This file is auto-generated from ecp_nistz256-x86.pl. */
 #ifdef PIC
 .text

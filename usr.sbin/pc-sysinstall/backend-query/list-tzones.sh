@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 987556cdf4780ab544455428fd6f6e01d559a608 $
 
 # Backend script which lists all the available timezones for front-ends to display
 egrep -v '^#' /usr/share/zoneinfo/zone.tab |\

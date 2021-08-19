@@ -34,7 +34,7 @@
 /* n25q Quad SPI Flash driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3ec4b12be9540d047f017367d80bbd265271b435 $");
 
 #include "opt_platform.h"
 

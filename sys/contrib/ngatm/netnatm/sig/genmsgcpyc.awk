@@ -36,7 +36,7 @@ function begin() {
 function first_entry() {
 	print "/* This file was created automatically"
 	print " * Source file: " id
-	print " * $FreeBSD$"
+	print " * $FreeBSD: be61925c977a9146a423f300481b370e04735aee $"
 	print " */"
 	print ""
 	print "#include <netnatm/msg/unistruct.h>"

@@ -26,7 +26,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 23b11dba79a620c41f3b4175ea16a361e6837bed $");
 
 DEFINE_TEST(test_write_filter_gzip_timestamp)
 {

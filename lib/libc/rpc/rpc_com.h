@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c0c144fc589d0da6ca055e3f86cb5a75d20f85b3 $
  */
 /*
  * Copyright (c) 1986 - 1991 by Sun Microsystems, Inc.

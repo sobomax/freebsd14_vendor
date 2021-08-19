@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 34573a403ab437565834bd5e8fe19b3a7c08eec1 $
 
 PACKAGE=	lib${LIB}
 LIB=		ifconfig

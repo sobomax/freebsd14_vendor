@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fd0592829079644f25a8549c5c553b8e0e5b12a3 $");
 
 #include <dev/aic7xxx/aic7xxx_osm.h>
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 67b32438ef95a3c915865d5b17c2b050b9a67514 $
 
 PROG=	dmardump
 SRCS=	dmardump.c

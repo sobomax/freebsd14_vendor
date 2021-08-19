@@ -41,7 +41,7 @@ extern "C" {
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: beb4a8e1678694b95f2a86291aecfe3becc6e6ea $
  */
 /*
  * Copyright (c) 1988 by Sun Microsystems, Inc.

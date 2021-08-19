@@ -26,7 +26,7 @@ Boston, MA 02110-1301, USA.  */
    Further work by David O'Brien <obrien@FreeBSD.org> and
    Loren J. Rittle <ljrittle@acm.org>.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 6486e11a5611967c0a060af5d94136fe32e313fa $ */
 
 /* In case we need to know.  */
 #define USING_CONFIG_FREEBSD 1

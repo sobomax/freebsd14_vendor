@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.c,v 1.43 2014/11/18 17:03:35 tobias Exp $
- * $FreeBSD$
+ * $FreeBSD: 70051640cf0c3728232246bcb3b309b1dedd52ec $
  */
 
 #include <sys/types.h>

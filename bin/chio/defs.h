@@ -1,4 +1,4 @@
-/* $FreeBSD$	*/
+/* $FreeBSD: 8f10c9d9243a77834b50746b7ac073694c974ad6 $	*/
 
 /*-
  * Copyright (c) 1996 Jason R. Thorpe <thorpej@and.com>

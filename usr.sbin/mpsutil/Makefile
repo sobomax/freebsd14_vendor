@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dd99f5814565816669694ae41a210505ba88b7f8 $
 
 PROG=	mpsutil
 SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_show.c mps_slot.c mpsutil.c

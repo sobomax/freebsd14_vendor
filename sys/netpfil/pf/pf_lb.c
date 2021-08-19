@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 46f91f8ff3ef551af94d7f8b2abf5926036ef9f7 $");
 
 #include "opt_pf.h"
 #include "opt_inet.h"

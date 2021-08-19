@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 427f479f3d3f5ee0803e5099cc5e0f2e953d9c99 $
  */
 
 extern	int use_ampm;

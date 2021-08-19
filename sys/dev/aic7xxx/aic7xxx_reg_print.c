@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 72f86678f5652f7a094a23c8d2166e288b4438b0 $");
 #include <dev/aic7xxx/aic7xxx_osm.h>
 
 static ahc_reg_parse_entry_t SCSISEQ_parse_table[] = {

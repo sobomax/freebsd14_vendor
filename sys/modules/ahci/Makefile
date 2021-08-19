@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7085927715dba11663cc489af5dc9edae73dfddf $
 
 .PATH: ${SRCTOP}/sys/dev/ahci
 

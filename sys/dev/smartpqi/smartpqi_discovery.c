@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: c86b47cc07d1eea3efeb5f99e7cf8f5bad74cd6f $ */
 
 #include "smartpqi_includes.h"
 

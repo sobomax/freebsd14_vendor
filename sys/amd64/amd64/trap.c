@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a73b924fdec4c74794f63787d0561dc908be7faf $");
 
 /*
  * AMD64 Trap and System call handling

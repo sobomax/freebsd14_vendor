@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b1ba469f5b644a37e76963c2805f96ac7f3b25ca $
  */
 /*
  * Definitions for the TrustedBSD MLS confidentiality policy module.

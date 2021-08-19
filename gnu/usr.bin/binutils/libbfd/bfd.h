@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: c6fcc4780c4436da846eb1a44239d205675b5d70 $ */
 
 /* DO NOT EDIT!  -*- buffer-read-only: t -*-  This file is automatically 
    generated from "bfd-in.h", "init.c", "opncls.c", "libbfd.c", 

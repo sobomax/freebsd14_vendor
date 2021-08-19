@@ -24,7 +24,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 60d1898fa1688d2b313366923d3b3eabd38cc474 $");
 
 DEFINE_TEST(test_write_format_warc)
 {

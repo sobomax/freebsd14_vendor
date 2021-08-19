@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ffe83b8f99cca9257a40b32f9f40f92e5cf45aa7 $");
 
 /*
  * RISC-V machine dependent routines for kvm and minidumps.

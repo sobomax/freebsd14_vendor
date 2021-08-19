@@ -4,7 +4,7 @@
  * from the file `ctau2.dat'
  *
  * Cronyx Id: ctau2fw.h,v 1.1 2002/06/03 10:19:39 rik Exp $
- * $FreeBSD$
+ * $FreeBSD: 6d43f972585840f71b33c0e213a37bd95fdfb399 $
  */
 long ctau2_fw_len = 98448;
 

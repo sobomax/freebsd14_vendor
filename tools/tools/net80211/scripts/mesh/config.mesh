@@ -1,7 +1,7 @@
 #
 # Common configuration settings for mesh test scripts.
 #
-# $FreeBSD$
+# $FreeBSD: c144218c06688a8322a05411e1d7d0ccf50b8942 $
 #
 
 NODE1_IP=10.0.1.100

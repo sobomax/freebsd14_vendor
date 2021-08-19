@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\"	$FreeBSD$
+.\"	$FreeBSD: 624ec7c2c69c20622ae958c1bf0ffad89c2ca422 $
 .\"	@(#)3.t	8.1 (Berkeley) 6/5/93
 .\"
 .ds RH Fixing corrupted file systems

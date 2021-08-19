@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1e5f7a8557d198e9300ddad6ed5764027a4feed1 $");
 
 /*
  * Driver for the National Semiconductor DP83861, DP83865 and DP83891

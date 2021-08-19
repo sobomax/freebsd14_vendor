@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 226f34ad301a4697411a17fcc654fc3c146118a1 $
  */
 
 #include <sys/types.h>
@@ -485,7 +485,7 @@ main(int argc, char *argv[])
 	int fd1, fd2, i, j, p;
 	struct utsname uts;
 
-	printf("version, juggle.c %s\n", "$FreeBSD$");
+	printf("version, juggle.c %s\n", "$FreeBSD: 226f34ad301a4697411a17fcc654fc3c146118a1 $");
 
 	if (uname(&uts) < 0)
 		err(-1, "utsname");

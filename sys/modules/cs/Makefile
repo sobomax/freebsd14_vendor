@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d457128a57e701001f20e120318285c80165b6b1 $
 
 .PATH: ${SRCTOP}/sys/dev/cs
 

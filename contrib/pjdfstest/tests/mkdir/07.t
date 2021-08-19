@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/07.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 611bfdab637bba6d261e8b90b00c700822c37cbf $
 
 desc="mkdir returns ELOOP if too many symbolic links were encountered in translating the pathname"
 

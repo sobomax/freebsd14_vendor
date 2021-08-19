@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cbdb87cb27605b694fa346c44d1145ad65f968c9 $
 
 PACKAGE=	lib${LIB}
 BZ2DIR=	${SRCTOP}/contrib/bzip2

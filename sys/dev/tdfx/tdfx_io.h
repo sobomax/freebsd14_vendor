@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *   $FreeBSD$
+ *   $FreeBSD: ced08f3e8a4409925ca78bd66643d5242b582078 $
  */
 
 /* This code originally came from <shocking@prth.pgs.com>

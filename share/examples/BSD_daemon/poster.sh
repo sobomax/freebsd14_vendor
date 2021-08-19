@@ -6,7 +6,7 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD$
+# $FreeBSD: 0f9dd6d33e6a67e7b6bcba89540a0d97cbf2fe1d $
 #
 
 echo '%!'

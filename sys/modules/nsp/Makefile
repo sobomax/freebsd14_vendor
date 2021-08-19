@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c519671152555a49a45160801cd1fdf4e979445b $
 
 .PATH: ${SRCTOP}/sys/dev/nsp
 

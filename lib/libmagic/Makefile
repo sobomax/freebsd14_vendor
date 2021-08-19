@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a8e734089135884b069a9f6e68d7ff87298f7c15 $
 # Copyright (c) David E. O'Brien, 2000-2004, 2006, 2009
 
 PACKAGE=lib${LIB}

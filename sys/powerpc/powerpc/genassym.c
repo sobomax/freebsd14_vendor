@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)genassym.c	5.11 (Berkeley) 5/10/91
- * $FreeBSD$
+ * $FreeBSD: 6847047dfdd2a14dd37f1151760bc2b2e7ab6552 $
  */
 
 #include <sys/param.h>

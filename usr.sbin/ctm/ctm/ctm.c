@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: 9674baf8e8bca19c8c15a8fb8db7e927c4a86326 $
  *
  * This is the client program of 'CTM'.  It will apply a CTM-patch to a
  * collection of files.

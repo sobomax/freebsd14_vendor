@@ -31,7 +31,7 @@
 /* Generic ECAM PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0af46a5b33ce9ca1c3b4c004f1d0c374ab352ef5 $");
 
 #include "opt_platform.h"
 

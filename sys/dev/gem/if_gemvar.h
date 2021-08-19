@@ -27,7 +27,7 @@
  *
  *	from: NetBSD: gemvar.h,v 1.8 2002/05/15 02:36:12 matt Exp
  *
- * $FreeBSD$
+ * $FreeBSD: a19f44be75e776881501e22cba31c9798c7b7b42 $
  */
 
 #ifndef	_IF_GEMVAR_H

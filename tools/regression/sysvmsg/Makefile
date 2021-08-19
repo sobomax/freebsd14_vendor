@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c4c09e991cb00cd7f72deb24768d32f986ae423c $
 # SysV Message Queue Regression Utility
 # Obtained from: $NetBSD: Makefile,v 1.3 2002/03/05 21:56:59 thorpej Exp $
 

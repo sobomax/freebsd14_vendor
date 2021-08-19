@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a46ab8cc1c88df43024629f69b45e1b97509f151 $
 
 include	"../mv/std-pj4b.mv"
 include "../mv/armadaxp/std.armadaxp"

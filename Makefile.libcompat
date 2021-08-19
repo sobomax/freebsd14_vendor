@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a2a6bb607fdced30b2e836f6768a0be3e9587299 $
 
 .if !targets(__<${_this:T}>__)
 __<${_this:T}>__:

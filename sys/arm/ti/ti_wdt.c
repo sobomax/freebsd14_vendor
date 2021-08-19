@@ -24,7 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 179b783029dbeeff08816a3951f7e4b69ded3387 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

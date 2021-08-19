@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7bb234e884d86eedf94cd8078b0d15d7819c211e $
 # See https://wiki.freebsd.org/LocaleNewApproach
 # Taken from FreeBSD svn [base]/user/edwin/locale/cldr
 #

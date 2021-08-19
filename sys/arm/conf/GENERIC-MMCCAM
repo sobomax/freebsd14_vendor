@@ -3,7 +3,7 @@
 #
 # Custom kernel for GENERIC plus MMCCAM as opposed to the prior MMC stack.
 #
-# $FreeBSD$
+# $FreeBSD: 20ca990d1c3e7cfbfdb66f9c2bf6fa31971b932f $
 
 include		GENERIC
 

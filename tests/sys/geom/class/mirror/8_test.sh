@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: d288190dde556b38aa9461833c740618ec75fe5c $
 
 # Regression test for r317712.
 

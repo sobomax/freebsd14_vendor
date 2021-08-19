@@ -20,7 +20,7 @@
    The author may be reached (Email) at the address mike@ai.mit.edu,
    or (US mail) as Mike Haertel c/o Free Software Foundation. */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 1724f68de11b29170e59ea6860b648d600cd30fe $ */
 
 struct kwsmatch
 {

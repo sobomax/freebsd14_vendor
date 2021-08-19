@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4a63cf647332b7672874f478d0a12048867186d7 $");
 
 #ifndef __RADEON_H__
 #define __RADEON_H__
@@ -65,7 +65,7 @@ __FBSDID("$FreeBSD$");
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4a63cf647332b7672874f478d0a12048867186d7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

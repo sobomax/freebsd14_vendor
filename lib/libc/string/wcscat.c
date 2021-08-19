@@ -34,7 +34,7 @@
 __RCSID("$NetBSD: wcscat.c,v 1.1 2000/12/23 23:14:36 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7428ba3364f2c30a991e21c419589f9952cf6de1 $");
 
 #include <wchar.h>
 

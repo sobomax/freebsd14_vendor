@@ -3,7 +3,7 @@
 # and compares their output against the .r files, which contain
 # the correct output
 #
-# $FreeBSD$
+# $FreeBSD: deab47555f7ad5e34357d3a4182b0b95cdc956f5 $
 
 PATH="/bin:/usr/bin:/usr/local/bin/:."
 ED=$1

@@ -30,7 +30,7 @@
  *
  *	@(#)rcv.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD$
+ * $FreeBSD: 7e290339fcafc96e5ac884f9245e96e74c643f8a $
  */
 
 /*

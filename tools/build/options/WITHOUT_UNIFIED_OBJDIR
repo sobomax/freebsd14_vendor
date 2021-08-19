@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 355730c4a17e544f6cbf63bff87d11d12974fbb0 $
 Set to use the historical object directory format for
 .Xr build 7
 targets.

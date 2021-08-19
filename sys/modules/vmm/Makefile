@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e4346447c840d9b23a5871d4baeea025da8051e5 $
 
 KMOD=	vmm
 

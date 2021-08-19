@@ -1,5 +1,5 @@
 # Auto-Generated pc-sysinstall configuration
-#$FreeBSD$
+#$FreeBSD: 2deb498016453628edc59b98a062d023982ec13c $
 installInteractive=no
 installMode=fresh
 installType=FreeBSD

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 89e415603bb913a5d364b2b866d23548e9444e04 $
 
 .PATH:  ${.CURDIR}/../../../../sys/dev/ath/ath_hal
 

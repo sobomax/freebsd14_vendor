@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 966b6e0630f31b872547488fee471cddda980855 $
 # $Id: meta.subdir.mk,v 1.11 2015/11/24 22:26:51 sjg Exp $
 
 #

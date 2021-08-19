@@ -28,7 +28,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5215a716cb5847d8a929e7825f9568408e795072 $");
 
 DEFINE_TEST(test_write_format_zip_empty_zip64)
 {

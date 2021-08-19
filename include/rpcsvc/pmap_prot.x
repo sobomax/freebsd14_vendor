@@ -36,7 +36,7 @@
 %
 %#pragma ident	"@(#)pmap_prot.x	1.6	94/04/29 SMI"
 %#include <sys/cdefs.h>
-%__FBSDID("$FreeBSD$");
+%__FBSDID("$FreeBSD: 19a4d8c5a2fda37cc04875b2b7ce463345513b4d $");
 %
 %#ifndef _KERNEL
 %

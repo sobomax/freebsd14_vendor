@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7dccfc55611ef728ca22f82b3b55c980d50978d0 $
 
 PACKAGE=lib${LIB}
 LIB=	rpcsec_gss

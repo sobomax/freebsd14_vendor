@@ -69,7 +69,7 @@
  *
  * OpenBSD: if_bridge.h,v 1.14 2001/03/22 03:48:29 jason Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 48f6c9ebbfcff5be7df23531a3ee04a3d569f400 $
  */
 
 /*

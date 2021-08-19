@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 16b175385b0ab6d5fa2b75f9aeba2b62122fd0ee $
 # A configuration file to run tests on qemu.
 # We disable SMP because it does not work well with qemu, and set HZ=1000
 # to avoid it being overridden.

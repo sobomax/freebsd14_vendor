@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 09d3aa8bba839d13ee6c8547a043f29a499cff29 $
 
 v=`printf %s 'a\
 b'`

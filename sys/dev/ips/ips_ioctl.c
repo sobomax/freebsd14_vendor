@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e495c639200b8376220ba3b44f32bd9d79b63782 $");
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9b265252f837371a883b1b53571cdc43f8c7df4d $");
 
 #include "qla_os.h"
 #include "qla_reg.h"

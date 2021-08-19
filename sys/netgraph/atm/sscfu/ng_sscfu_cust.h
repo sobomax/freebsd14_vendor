@@ -30,7 +30,7 @@
  *
  * Customisation of the SSCFU code to ng_sscfu.
  *
- * $FreeBSD$
+ * $FreeBSD: eb0250e5ec0296f69758c0cde7ef6e1e96beabac $
  */
 #include <sys/param.h>
 #include <sys/types.h>

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 391568210555d69023328b37e710aa68ebf37690 $");
 
 #include "opt_spx_hack.h"
 

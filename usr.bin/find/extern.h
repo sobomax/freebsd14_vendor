@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/16/94
- *	$FreeBSD$
+ *	$FreeBSD: 9abd97099ce956f3e275eb6f8373d9c27a060e4b $
  */
 
 #include <sys/cdefs.h>

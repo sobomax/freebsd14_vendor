@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b7b72ac076aac2672cd5249111a4ab68d2886dba $
 
 SHLIB_NAME?=	padlock.so
 

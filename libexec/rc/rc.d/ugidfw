@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 57efde90bfaed6dc1c5292cba09a5e90e889432f $
 
 # PROVIDE: ugidfw
 # REQUIRE: FILESYSTEMS

@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 44945b5701df8a40815ca70e9fcbc3d07b2d768b $ 
 # $NetBSD: CP942.src,v 1.1 2006/11/29 15:45:26 tnozaki Exp $
 
 NAME		"CP942"

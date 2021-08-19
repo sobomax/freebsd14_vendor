@@ -6,7 +6,7 @@
 #
 #   -Frédéric Praca <frederic.praca@freebsd-fr.org>
 #
-# $FreeBSD$
+# $FreeBSD: 38fd12401431de6ec090fae8e06ef8313ab5d3ea $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

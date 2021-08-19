@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5e9cbfa5ea45509ef45cafd5396d3bc37a5dbb3f $
 
 PROG=	asn1_compile
 MAN=

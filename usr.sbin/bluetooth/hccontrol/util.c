@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: util.c,v 1.2 2003/05/19 17:29:29 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 22beedaff51f11c7407f84e1e328b19cc63bcd3e $
  */
  
 #include <sys/param.h>

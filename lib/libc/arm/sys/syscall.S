@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c88d1aeb4b6534441da1fd1dcba91a3d7f9d986b $");
 #include "SYS.h"
 
 RSYSCALL(syscall)

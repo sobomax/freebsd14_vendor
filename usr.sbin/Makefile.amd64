@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c44b4401c89ed5d019176e5a2c96a799a931c11b $
 
 # kgzip: builds, but missing support files
 # mptable: broken (not 64 bit clean)

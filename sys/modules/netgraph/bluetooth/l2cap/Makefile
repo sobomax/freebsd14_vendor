@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2002/11/24 20:40:11 max Exp $
-# $FreeBSD$
+# $FreeBSD: 03ee080d01eee2137acde19d5c00f0f75318a863 $
 
 .PATH: ${SRCTOP}/sys/netgraph/bluetooth/l2cap
 

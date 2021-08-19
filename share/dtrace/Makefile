@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 86e47bc894694136e1b3327a8d029b048a760b81 $
 #
 # Hand installing our scripts and optionally (based on MK_CDDL) installing
 # the DTraceToolkit.

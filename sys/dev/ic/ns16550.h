@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)ns16550.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD$
+ * $FreeBSD: 8206a8cd95fa7f71a0286e62b8465e9538184810 $
  */
 
 /*

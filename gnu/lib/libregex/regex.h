@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 85410a2a749559b37be24993517bb5c82ce016d9 $ */
 #ifndef _REGEX_H
 
 #ifndef __USE_GNU

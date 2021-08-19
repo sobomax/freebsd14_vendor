@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 49150f9151bf0ca866dba6463eb0d150fafa0396 $");
 
 /*-
  * Intel(R) PRO/Wireless 2100 MiniPCI driver

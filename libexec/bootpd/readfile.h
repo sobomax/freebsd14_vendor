@@ -1,5 +1,5 @@
 /* readfile.h */
-/* $FreeBSD$ */
+/* $FreeBSD: be9cada23779021317e73694330032edc1678cbe $ */
 
 #include "bptypes.h"
 #include "hash.h"

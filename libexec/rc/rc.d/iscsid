@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 3b1cb6f40d1c57fe5a8bfabb91733ce0efb45d02 $
 #
 
 # PROVIDE: iscsid

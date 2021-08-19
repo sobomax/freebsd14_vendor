@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 5a7ab3a471efbd9c8f2e4a7fb4a7c1f4bae3eee0 $
  */
 
 #ifndef	_OFW_GRAPH_H_

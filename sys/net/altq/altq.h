@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq.h,v 1.10 2003/07/10 12:07:47 kjc Exp $
- * $FreeBSD$
+ * $FreeBSD: 35024461b851bb6589a4546b2e57f6fec6ed8cab $
  */
 #ifndef _ALTQ_ALTQ_H_
 #define	_ALTQ_ALTQ_H_

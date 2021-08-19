@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6624955ff124982b6e0403b308da079dd6a06905 $");
 
 /*
  * Driver for imx Enhanced Configurable SPI; master-mode only.

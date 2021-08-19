@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 255caf90160595f13ee2d9f2a3d919d5eab5b3a4 $
 #
 # Tests vfs_lookup()'s handling of trailing slashes for symlinks that
 # point to files.  See kern/21768 for details.  Fixed in r193028.

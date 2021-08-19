@@ -1,5 +1,5 @@
 /* $OpenBSD: ldapclient.c,v 1.31 2014/11/16 23:24:44 tedu Exp $ */
-/* $FreeBSD$ */
+/* $FreeBSD: 5f446a6f847e8ca339aeeefe0903fb46bc5b443c $ */
 
 /*
  * Copyright (c) 2008 Alexander Schrijver <aschrijver@openbsd.org>

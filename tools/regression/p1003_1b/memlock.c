@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3033fbbacfd5eb46df17643616152d89159dd397 $
  */
 #include <unistd.h>
 #include <stdio.h>

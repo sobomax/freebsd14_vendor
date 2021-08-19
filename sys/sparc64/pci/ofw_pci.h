@@ -58,7 +58,7 @@
  *
  *	from: NetBSD: psychoreg.h,v 1.14 2008/05/30 02:29:37 mrg Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 908e35d8fcd8cc82775f56fe8635b5ae697ca4b5 $
  */
 
 #ifndef _SPARC64_PCI_OFW_PCI_H_

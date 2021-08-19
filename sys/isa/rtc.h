@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)rtc.h	7.1 (Berkeley) 5/12/91
- * $FreeBSD$
+ * $FreeBSD: 6618872d70c171955193cbe35cedb33014eb1e6f $
  */
 
 #ifndef _I386_ISA_RTC_H_

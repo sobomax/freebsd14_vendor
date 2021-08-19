@@ -1,7 +1,7 @@
 /*-
  * Written by J.T. Conklin, Apr 6, 1995
  * Public domain.
- * $FreeBSD$
+ * $FreeBSD: bb0773730aa0682d784828836337d16351220901 $
  */
 
 #ifndef _MACHINE_IEEEFP_H_

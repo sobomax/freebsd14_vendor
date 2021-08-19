@@ -1,6 +1,6 @@
 #	@(#)README	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD$
+# $FreeBSD: 116a044a38f4c362223244a8c3f13cdc325f9a8f $
 
 col - filter out reverse line feeds.
 

@@ -30,7 +30,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 9a1959c6206e31fa6b1841fc53efd7286e077a5f $
  */
 /*
  *	ioctl constants for Matrox Meteor Capture card.

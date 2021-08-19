@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)global.c	8.1 (Berkeley) 6/4/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5a6fd0db780a1e0672fa4928cf3a3bb26187fe36 $");
 
 /*
  * Allocate global variables.  We do this

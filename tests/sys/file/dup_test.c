@@ -5,7 +5,7 @@
  *
  * Written by Artur Grabowski <art@openbsd.org> 2002 Public Domain.
  *
- * $FreeBSD$
+ * $FreeBSD: 81738188962548a03c39ec60a018b1ffbb3bdcf1 $
  */
 
 /*

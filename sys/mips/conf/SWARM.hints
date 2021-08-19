@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 00465ad41be98f94806646e20c2e565e5afcf09d $
 hint.zbbus.0.at="nexus0"
 hint.zbpci.0.at="zbbus0"
 hint.scd.0.at="zbbus0"

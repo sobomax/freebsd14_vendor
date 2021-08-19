@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: 77b4fe8a836f7b02a306681829a418f2ce54b3f2 $
  */
 
 #include <sys/param.h>

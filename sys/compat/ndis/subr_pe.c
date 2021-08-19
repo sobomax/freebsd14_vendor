@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1cd698fdd51ce98e2a0491483530f07bd0882202 $");
 
 /*
  * This file contains routines for relocating and dynamically linking

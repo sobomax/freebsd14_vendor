@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 92baad807c300231ff6e4942332d5e94a6e3de7c $*/
 
 #ifndef _IXGBE_DCB_H_
 #define _IXGBE_DCB_H_

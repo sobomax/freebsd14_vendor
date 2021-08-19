@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d25a64e7d6348ed10a446191cc8b4ba7b95f83fc $
 hint.bhnd.0.at="nexus0"
 hint.bhnd.0.maddr="0x18000000" 
 hint.bhnd.0.msize="0x00100000"

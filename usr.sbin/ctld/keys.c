@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: bcd3cbd4a8008f07a07d9ceb1ac8506dcb839b7b $");
 
 #include <assert.h>
 #include <stdio.h>

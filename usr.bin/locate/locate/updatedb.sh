@@ -28,7 +28,7 @@
 #
 # updatedb - update locate database for local mounted filesystems
 #
-# $FreeBSD$
+# $FreeBSD: c01dcf9fcf7d115a012d763dbafc11619a487a91 $
 
 if [ "$(id -u)" = "0" ]; then
 	echo ">>> WARNING" 1>&2

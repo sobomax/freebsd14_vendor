@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 245b2924ca06592665f0d9c6f00fb97bb1839a61 $	*/
 
 /*
  * lsock.c (C) 1995-1998 Darren Reed

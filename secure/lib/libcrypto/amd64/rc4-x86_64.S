@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: a084e9b9c993d73476df276d1a08a246e2ec667b $ */
 /* Do not modify. This file is auto-generated from rc4-x86_64.pl. */
 .text	
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dd28d13236cc16b278bd8cbdef5bad2d20c189b4 $
 
 .PATH:  ${SRCTOP}/sys/dev/hyperv/netvsc \
 	${SRCTOP}/sys/dev/hyperv/vmbus

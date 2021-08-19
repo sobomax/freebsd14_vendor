@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 51a82951376c0251fd6d4c0a893b91c3d62f60a6 $ */
 /*	$NetBSD: citrus_lookup.c,v 1.7 2012/05/04 16:45:05 joerg Exp $	*/
 
 /*-

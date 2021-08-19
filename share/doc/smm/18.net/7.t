@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)7.t	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD$
+.\"	$FreeBSD: 3eb0ad162baee80e1390710bdd1cb5acaa82f5e0 $
 .\"
 .nr H2 1
 .br

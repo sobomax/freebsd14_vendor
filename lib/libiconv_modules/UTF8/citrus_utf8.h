@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 033d4ad659e9a35c99e92d28105d93dd46cb8299 $ */
 /*	$NetBSD: citrus_utf8.h,v 1.2 2003/06/25 09:51:49 tshiozak Exp $	*/
 
 /*-

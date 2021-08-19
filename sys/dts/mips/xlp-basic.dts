@@ -25,7 +25,7 @@
  *
  * Netlogic Microsystems XLP8xx Device Tree Source.
  *
- * $FreeBSD$
+ * $FreeBSD: 19f08017686c42c99754fa32c880b46f506970a5 $
  */
 
 /dts-v1/;

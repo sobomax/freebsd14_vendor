@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 5bf4b15acfa5eaeb7ce32d16bd37630e9c027e88 $*/
 
 #include "e1000_api.h"
 /**

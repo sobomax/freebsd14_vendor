@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4265de008753cc92723fad6e3114d67a15546c78 $
 
 SRCS+=	mips-dis.c mips-opc.c mips16-opc.c
 CFLAGS+= -DARCH_mips

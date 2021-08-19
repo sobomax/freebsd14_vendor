@@ -9,7 +9,7 @@
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *  Copyright (c) 2016, Randy Westlund
  *
- * $FreeBSD$
+ * $FreeBSD: 0071fbe62fc63419d391821701e67e838d5e07aa $
  */
 #ifndef COMMANDS_H
 #define COMMANDS_H

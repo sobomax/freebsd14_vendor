@@ -2,7 +2,7 @@
 /*	$NetBSD$	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: eb65969bc93dd6524eb0a2379ed4fddb6de90739 $");
 
 #define	SCSI_LOW_STATICS
 #define	SCSI_LOW_DEBUG

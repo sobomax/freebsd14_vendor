@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD$
+ *	$FreeBSD: b0d1b6137ec6b749e215b23e4b9bf66ee20c395d $
  *
  */
 

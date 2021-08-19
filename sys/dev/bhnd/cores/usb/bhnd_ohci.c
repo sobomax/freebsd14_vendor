@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0308562e7ae6bd2e4bf683d8f6b51326ab7cadee $");
 
 /*
  * USB Open Host Controller driver.

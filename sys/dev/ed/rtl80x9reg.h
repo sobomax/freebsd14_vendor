@@ -30,7 +30,7 @@
  *
  * Based on patches subitted by: David Madole, edited by M. Warner Losh.
  *
- * $FreeBSD$
+ * $FreeBSD: 13d932b58d913996ddb164c3b77b3c3bc274bcde $
  */
 
 /*

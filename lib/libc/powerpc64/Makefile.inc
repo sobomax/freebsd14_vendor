@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a00ad7130436cfb6ea47ba55e1e5351a7b2d1270 $
 
 SRCS+=	trivial-vdso_tc.c
 

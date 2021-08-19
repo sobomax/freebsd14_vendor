@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_fsm.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: dcc4a4e8aa6338e07939db8dedfc0f4b522d631c $
  */
 
 #ifndef _NETINET_TCP_FSM_H_

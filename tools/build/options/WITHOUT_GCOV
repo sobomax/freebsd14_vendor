@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 1872e1479b558a9b8fb7de3ee1b4e3c41e01ec72 $
 Set to not build the
 .Xr gcov 1
 tool.

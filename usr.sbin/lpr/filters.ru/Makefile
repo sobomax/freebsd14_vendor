@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ee15541fae74e19b4000a2907fc4a1191bebf23d $
 
 SUBDIR=	koi2alt koi2855
 

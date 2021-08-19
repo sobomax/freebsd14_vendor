@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: e0789cb8d0501240dd678377f6d0d303bda0e183 $
 #
 
 # PROVIDE: automount

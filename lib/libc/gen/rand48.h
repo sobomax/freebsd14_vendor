@@ -10,7 +10,7 @@
  * of any kind. I shall in no event be liable for anything that happens
  * to anyone/anything when using this software.
  *
- * $FreeBSD$
+ * $FreeBSD: b6602dc5a9f704a16877ca1f33c64a1efebf72b3 $
  */
 
 #ifndef _RAND48_H_

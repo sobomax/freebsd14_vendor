@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5d8deb732c1fb475867a9fc49d02c01284cb77dd $");
 
 #include "ipoib.h"
 

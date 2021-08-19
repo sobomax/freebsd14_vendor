@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: eae6fbb72196fa7d58340d8052aeb3ff8fa3131a $
 # device.hints
 hint.obio.0.at="nexus0"
 hint.obio.0.maddr=0x0

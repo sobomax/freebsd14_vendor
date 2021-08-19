@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell SheevaPlug devices.
 #
-# $FreeBSD$
+# $FreeBSD: 02c42db1a4cc577135d738a531a2f566d9039522 $
 #
 #NO_UNIVERSE
 

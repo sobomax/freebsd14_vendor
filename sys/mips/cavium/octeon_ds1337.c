@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 349ed7a783d6ece2d58b52799d1872646815ec04 $");
 
 #include <sys/param.h>
 #include <sys/timespec.h>

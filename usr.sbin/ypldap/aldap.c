@@ -1,4 +1,4 @@
-/*	$FreeBSD$ */
+/*	$FreeBSD: 4fb6608ec3f0b9dbfae291f1883e5286ad8e0510 $ */
 /*	$Id: aldap.c,v 1.32 2016/04/27 10:53:27 schwarze Exp $ */
 /*	$OpenBSD: aldap.c,v 1.32 2016/04/27 10:53:27 schwarze Exp $ */
 

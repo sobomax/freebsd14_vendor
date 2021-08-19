@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1fb4604fc33add79e49b6f859cde4fedbe8aa9d3 $
 
 .PATH: ${SRCTOP}/sys/dev/nvme
 

@@ -24,7 +24,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0872e8930c0d91c20006c7406b7de5dc9db27e4b $");
 
 	.section	"rodata1",#alloc
 	.align	8

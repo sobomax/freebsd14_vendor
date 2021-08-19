@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 772efd38266f03bd872a9af3d5e9933a8afeac39 $
 
 CONFS=		include_ldap \
 		include_nis \

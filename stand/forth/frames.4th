@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD$
+\ $FreeBSD: b237afe7ac43aecc632233197249bb03d42bb0fb $
 
 marker task-frames.4th
 

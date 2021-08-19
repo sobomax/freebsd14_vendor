@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ed0074277d02707821c6a367188671aa8b61a97f $");
 
 /*
  * I2C driver for Tegra SoCs.

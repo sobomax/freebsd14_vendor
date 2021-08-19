@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5ab5a39cdc02446a479896d97db30da26b8303da $
 
 .PATH: ${SRCTOP}/sys/contrib/dev/iwi
 

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ptrace.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD$
+ * $FreeBSD: 1ee42318e57ebc1cdb6730229ea27ef7f4f17039 $
  */
 
 #ifndef	_SYS_PTRACE_H_

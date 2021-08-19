@@ -1,6 +1,6 @@
 /* This file was created automatically
  * Source file: $Begemot: libunimsg/atm/msg/msg.def,v 1.3 2003/09/19 11:58:15 hbb Exp $
- * $FreeBSD$
+ * $FreeBSD: f9991858b418dd6ecb76deb545b5c1e2a71e3c03 $
  */
 
 #include <sys/types.h>

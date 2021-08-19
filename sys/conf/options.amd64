@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1edb70164a8f33edbab844df84299a254894c643 $
 # Options specific to AMD64 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h

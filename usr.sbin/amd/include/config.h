@@ -1,5 +1,5 @@
 /*
- * $FreeBSD$
+ * $FreeBSD: 3d22033e18efc68a25ff3dea9334ed0ca01cdb83 $
  *
  * portions derived from
  *      $NetBSD: config.h,v 1.11 1998/08/08 22:33:37 christos Exp $

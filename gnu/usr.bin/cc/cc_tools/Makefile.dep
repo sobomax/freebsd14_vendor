@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a1a848b2413f0dc982e415be1d337db7f04cf7bf $
 
 OBJS_DEPEND_GUESS.errors.o+= bconfig.h auto-host.h
 

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e86efde1fe393f6ca95995db9bd1d8f10069a2bf $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"

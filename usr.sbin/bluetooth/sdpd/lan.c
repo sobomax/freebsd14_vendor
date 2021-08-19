@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: lan.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 86ef71f64f2e00ec5a9b730a425457e895714abc $
  */
 
 #include <arpa/inet.h>

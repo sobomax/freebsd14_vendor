@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 67bcec6f00d3395e661b1e8ebf81dfbce0a45db0 $
 #
 # Perform temporary directory cleaning so that long-lived systems
 # don't end up with excessively old files there.

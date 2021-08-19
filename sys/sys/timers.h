@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 01956bd3caaa8638f0271cb4b4b0b883fbb8f2b6 $
  *
  * Description : Basic timers header.
  */

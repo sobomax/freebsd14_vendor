@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cda5397ac22d2001bcc8319ddc0999a8f9f5b858 $");
 
 ENTRY(_ctx_start)
 	jalr	s0		/* Call func from makecontext */

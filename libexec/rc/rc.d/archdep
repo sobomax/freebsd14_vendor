@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 157df8bb5699d51b72d734cd7fdcd19957c784fe $
 #
 
 # PROVIDE: archdep

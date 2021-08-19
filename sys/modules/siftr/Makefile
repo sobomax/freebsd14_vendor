@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bb92bb2ac4c54aaefea9aa51729bec0f9a0e01d4 $
 
 .PATH:  ${SRCTOP}/sys/netinet
 KMOD=	siftr

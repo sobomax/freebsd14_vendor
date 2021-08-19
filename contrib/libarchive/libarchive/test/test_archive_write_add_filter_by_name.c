@@ -25,7 +25,7 @@
 
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ba8c1d0472f6676a08f10e8e38656fae89fa1243 $");
 
 static void
 test_filter_by_name(const char *filter_name, int filter_code,

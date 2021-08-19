@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD$
+\ $FreeBSD: 9adf30a46b6615ed5de284ff8b16ddc339361dc2 $
 
 marker task-menu-commands.4th
 

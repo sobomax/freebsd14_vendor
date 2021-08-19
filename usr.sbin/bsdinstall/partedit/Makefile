@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7d8f0659da252a5d6437af61229ae1552a93b54a $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	partedit

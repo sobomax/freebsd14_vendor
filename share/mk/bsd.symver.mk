@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7626274e59a5945e59ddbf7e1c795890e6af52d5 $
 
 .if !target(__<bsd.symver.mk>__)
 __<bsd.symver.mk>__:

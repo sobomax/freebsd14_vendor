@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_arp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 070dbafe10f0410132a262e18c7873326310839f $
  */
 
 #ifndef _NET_IF_ARP_H_

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *      @(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: e9d57b6e037222ea69a09ac34bbc578cad1ebbc6 $
  */
 
 extern bool     _escaped;             /* if last character was an escape */

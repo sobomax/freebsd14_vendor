@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 552afd45575c34f24b93d4e6575f5a2df72c7d14 $
 
 . ${PROGDIR}/backend/functions.sh
 . ${PROGDIR}/backend/functions-ftp.sh

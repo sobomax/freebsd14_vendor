@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5ad1c2c6667a66f86ff3ba70b3e8d7fde4a07b27 $");
 
 /*
  * I2C Bit-Banging over parallel port

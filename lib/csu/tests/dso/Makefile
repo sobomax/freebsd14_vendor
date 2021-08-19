@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cdfea2031c99b2058bf935ba2ecccff7a64eac13 $
 
 .PATH: ${.CURDIR:H}
 SHLIB=		h_csu

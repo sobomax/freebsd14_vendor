@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_unwrap.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: d0d18aca25b1c00edee4db80218856164cc522e3 $
  */
 
 #include "mech_locl.h"

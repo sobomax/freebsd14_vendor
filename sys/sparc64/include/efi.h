@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain since it's just boilerplate.
  *
- * $FreeBSD$
+ * $FreeBSD: 1f7ad0da18afa04ce9eef4388fdf933f90d29a89 $
  */
 
 #ifndef __SPARC64_INCLUDE_EFI_H_

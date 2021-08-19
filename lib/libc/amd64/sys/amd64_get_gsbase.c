@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 93a5b15d7448e627675f6dae49c8d2703eaff0f5 $");
 
 #define	IN_RTLD	1
 #include <sys/param.h>

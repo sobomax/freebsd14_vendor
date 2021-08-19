@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c43fc6d4bf331707418eff9162e8c1dfe43777a5 $");
 
 #ifndef MRSAS_IOCTL_H
 #define	MRSAS_IOCTL_H

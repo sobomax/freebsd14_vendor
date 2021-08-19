@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 2cefc8c123d6ef10f3e6edb3ce953031c913d1c3 $
  */
 
 #include <sys/syscall.h>

@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: ec4de74e146d40ea96164afcaf059f3ff37ce10e $
 Set to not install compressed system documentation.
 Only the uncompressed version will be installed.

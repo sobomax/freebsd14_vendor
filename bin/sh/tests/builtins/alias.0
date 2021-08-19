@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d9b27969cfd684155b1c5e16ce9fb9315e134be0 $
 set -e
 
 unalias -a

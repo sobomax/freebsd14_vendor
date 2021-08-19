@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: b76fae1d6299b011356cb0193535f2f06f474e5f $
  */
 #include "hal.h"
 #include "../if_medium.h"

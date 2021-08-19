@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 7bb3633be9d40baa599710684f1e92af6639b848 $
  */
 /*
  * This source file contains the state-engine which makes things happen in the

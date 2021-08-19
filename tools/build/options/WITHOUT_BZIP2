@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 20f025b7b9057d7bc4584fc540adfdac94a7aff6 $
 Set to not build contributed bzip2 software as a part of the base system.
 .Bf -symbolic
 The option has no effect yet.

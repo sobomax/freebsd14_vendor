@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 77c859aaee48fcf95024c2ebe4483cdbd3dcb139 $
 #
 # This file is in the public domain
 

@@ -7,7 +7,7 @@
 # override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 #
-# $FreeBSD$
+# $FreeBSD: a4e072c1ea1e5516115e0869a5bff283b652c861 $
 #
 
 machine         mips mips

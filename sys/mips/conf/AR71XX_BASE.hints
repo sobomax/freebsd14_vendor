@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 43f0aea76dbfc75d09f5118341c0c428a1ff7477 $
 #
 hint.apb.0.at="nexus0"
 hint.apb.0.irq=4

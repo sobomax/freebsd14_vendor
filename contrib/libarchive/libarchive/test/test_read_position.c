@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5e7f05fa666dbf3cb84b2316a936e264962c8c6f $");
 
 static unsigned char nulls[1000];
 static unsigned char tmp[1000];

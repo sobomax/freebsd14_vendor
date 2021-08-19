@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD$
+-- $FreeBSD: 8042a5d3d0b52baa5111b904391deae3b6d4127f $
 --
 
 local core = require("core")

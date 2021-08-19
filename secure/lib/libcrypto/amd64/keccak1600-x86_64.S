@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d36758807990b30e741affae18c6f58151bbb2cd $ */
 /* Do not modify. This file is auto-generated from keccak1600-x86_64.pl. */
 .text	
 

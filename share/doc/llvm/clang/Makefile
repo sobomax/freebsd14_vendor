@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4183264a0dc7eea180dd36ec23a5f2a137ee542d $
 
 SRCDIR=		${SRCTOP}/contrib/llvm-project/clang
 

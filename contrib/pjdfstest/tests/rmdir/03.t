@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/03.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: d3c5153fcaa994c2817ef2a67ecaca1d0ab1244f $
 
 desc="rmdir returns ENAMETOOLONG if an entire path name exceeded ${PATH_MAX} characters"
 

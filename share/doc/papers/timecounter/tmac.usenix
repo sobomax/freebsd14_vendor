@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: c0c13c20cd086cf602af7612e625dead7b2d4989 $
 .ds CC "
 .nr PS 10
 .nr FU 0.0i	\" priniter prints this much too low

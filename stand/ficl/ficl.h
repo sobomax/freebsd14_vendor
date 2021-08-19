@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a6f8f03c57320c4d8162085822142c96dde7d4db $ */
 
 #if !defined (__FICL_H__)
 #define __FICL_H__

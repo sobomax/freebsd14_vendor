@@ -2,7 +2,7 @@
 # All rights reserved.
 #	@(#)termcap.src	5.88 (Berkeley) 4/30/91
 #
-# $FreeBSD$
+# $FreeBSD: 5b8f9498cec454fb674030630732e8e87bf87b0c $
 #
 # for syscons
 # common entry without semigraphics

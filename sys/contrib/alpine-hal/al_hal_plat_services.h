@@ -57,7 +57,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <machine/atomic.h>
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 278a8fa71dda1c0a928bd83a8df8a55c706fa3cf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

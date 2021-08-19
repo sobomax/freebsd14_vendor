@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 565a5f608c0ee931952d38fe258170e2478773ae $");
 
 #include "opt_device_polling.h"
 #include "opt_netfpga.h"

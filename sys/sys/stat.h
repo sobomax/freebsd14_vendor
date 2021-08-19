@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stat.h	8.12 (Berkeley) 6/16/95
- * $FreeBSD$
+ * $FreeBSD: df9cbd4489cf87a226877d1fdedf86dcfb0d457a $
  */
 
 #ifndef _SYS_STAT_H_

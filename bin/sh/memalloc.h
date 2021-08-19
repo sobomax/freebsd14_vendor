@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)memalloc.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 6cb7bd818fb55993d06a45a64dcba1c48c25760e $
  */
 
 #include <string.h>

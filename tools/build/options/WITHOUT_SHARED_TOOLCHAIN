@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 4da9bf0c1859ae4391a10d877d739c793e829d4b $
 Set to build the toolchain binaries as statically linked executables.
 The set includes
 .Xr cc 1 ,

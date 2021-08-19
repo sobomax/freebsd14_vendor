@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 88667760b47bc291f1b6f14f23473a1f8d8e904b $
 
 set -- a b c d e f g h i j
 [ "${1\

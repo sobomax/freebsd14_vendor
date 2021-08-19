@@ -26,7 +26,7 @@
  *	Eric Anholt <eric@anholt.net>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 78b60d5196a6b2f47892d4683ecbc9a1381ef33b $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>

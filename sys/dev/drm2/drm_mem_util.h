@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 68bb3a9cd70d26f3c829fe6e5b8aef604ec3e1ea $");
 
 #ifndef _DRM_MEM_UTIL_H_
 #define _DRM_MEM_UTIL_H_

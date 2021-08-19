@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dcc034fd7564f5d8fbc0c2cab6167efc1046d26f $
 
 PACKAGE=runtime
 PROG=	gbde

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: df64b7dfc0b1989098a3a51ef99f7143077716da $
 
 # POSIX and C99 say D800-DFFF are undefined in a universal character name.
 # We reject this but many other shells expand to something that looks like

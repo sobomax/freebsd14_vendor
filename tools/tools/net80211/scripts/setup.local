@@ -2,7 +2,7 @@
 #
 # Script for testing traffic to the local host (as opposed to bridged).
 #
-# $FreeBSD$
+# $FreeBSD: f56e9d58533976962375edb4fa48ad1ae6c58a44 $
 #
 PATH=.:$PATH
 . config

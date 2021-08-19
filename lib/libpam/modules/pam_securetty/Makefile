@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 8eb3e6e7a6d1efa18d9f170afb54c2a2b3464d63 $
 
 LIB=	pam_securetty
 SRCS=	pam_securetty.c

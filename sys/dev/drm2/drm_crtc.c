@@ -30,7 +30,7 @@
  *      Jesse Barnes <jesse.barnes@intel.com>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 318a764805cb9614e4b571e1cdc0e91478e53a06 $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>

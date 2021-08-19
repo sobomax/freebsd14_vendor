@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bba2b97954a9f6099d19fe3f98f3bbf23577118e $
 
 .PATH:	${SRCTOP}/sys/dev/bhnd/siba
 

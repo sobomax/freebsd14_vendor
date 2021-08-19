@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/08.t 211474 2010-08-18 22:06:43Z pjd $
+# $FreeBSD: 336993591a7e55835f70b479d7881e4a7ca22c4e $
 
 desc="mknod returns EEXIST if the named file exists"
 

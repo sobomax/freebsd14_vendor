@@ -35,7 +35,7 @@
 /*
  * procfs ioctl definitions.
  *
- * $FreeBSD$
+ * $FreeBSD: ed8a93a3be09982f7433e01e004fca5a627f6d9b $
  */
 
 #ifndef _SYS_PIOCTL_H

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c7fecb0ab78d67413f5de535c8535803fe235c91 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

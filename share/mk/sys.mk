@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD$
+# $FreeBSD: 9099b63a61a02535427f2c334f927ac1f77dc37d $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true

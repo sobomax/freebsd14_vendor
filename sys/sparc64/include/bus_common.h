@@ -35,7 +35,7 @@
  *	form: @(#)sbusreg.h	8.1 (Berkeley) 6/11/93
  *	from: NetBSD: iommureg.h,v 1.6 2001/07/20 00:07:13 eeh Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 6d04a9cbe27d78f5c74d35d023898bbf1b4380d9 $
  */
 
 #ifndef _MACHINE_BUS_COMMON_H_

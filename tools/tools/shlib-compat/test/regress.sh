@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 0789fa8b3cf7489d1e44fb4d1dc5439e7995b77b $
 
 run() { ../shlib-compat.py --no-dump -vv libtest$1/libtest$1.so.0.full libtest$2/libtest$2.so.0.full; }
 echo 1..9

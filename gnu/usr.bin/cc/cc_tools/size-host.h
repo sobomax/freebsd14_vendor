@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8d5136f6541945eb500f4a8d6181a6f7588040d0 $ */
 
 #ifdef	SIZEOF_INT
 # undef	SIZEOF_INT

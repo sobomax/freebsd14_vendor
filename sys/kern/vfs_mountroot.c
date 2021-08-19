@@ -40,7 +40,7 @@
 #include "opt_rootdevname.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b383e66d701126c7cf1ec03599268a2af42a6794 $");
 
 #include <sys/param.h>
 #include <sys/conf.h>

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6cbb7c0000ae2518da9199d8094127b5577df71c $
  */
 
 #include <dev/mlx5/driver.h>

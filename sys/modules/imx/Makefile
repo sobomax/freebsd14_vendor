@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 096c9c3528b5d9089cfa237541c0556608c628d3 $
 # Build modules specific to freescale/nxp imx-family SoCs.
 
 SUBDIR = \

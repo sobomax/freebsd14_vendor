@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 504ece3cbe6ccd8561d43b29be3e195457f6d3c3 $
 
 .PATH: ${SRCTOP}/sys/dev/coretemp
 

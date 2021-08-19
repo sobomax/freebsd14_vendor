@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f7b1512893f42b46b6dfa6959b3dbf6e1be385e8 $
 # $NetBSD: Makefile.inc,v 1.3 2008/10/25 22:35:36 apb Exp $
 
 CODE=	Big5

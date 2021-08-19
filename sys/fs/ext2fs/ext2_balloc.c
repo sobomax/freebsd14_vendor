@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_balloc.c	8.4 (Berkeley) 9/23/93
- * $FreeBSD$
+ * $FreeBSD: 950419bc05073ae97adcac9e280336d9c5a20100 $
  */
 
 #include <sys/param.h>

@@ -1,6 +1,6 @@
 #! /usr/local/bin/perl
 #
-# $FreeBSD$
+# $FreeBSD: 88222531d0649afe7f3dfe93721bb7c2389fad9b $
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.

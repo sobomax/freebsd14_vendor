@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e26b689b4e11bbbf83c98109cfae0ab36ee7f5fd $");
 
 #include "opt_ktrace.h"
 

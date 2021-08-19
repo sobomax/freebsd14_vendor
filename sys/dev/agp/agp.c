@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 011c89afeb371078ef3779cf1f72f46f7731a44a $");
 
 #include "opt_agp.h"
 

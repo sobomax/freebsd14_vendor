@@ -30,7 +30,7 @@
  *
  *	@(#)rwhod.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD$
+ * $FreeBSD: f598ec7a7ac3483de3cf9ac6f264d4f9be90e374 $
  */
 
 #ifndef _PROTOCOLS_RWHOD_H_

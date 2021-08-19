@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 7be8dd0ca5633aac48321e4ce5c6c6f372b96316 $
  */
 
 void combiner_setup_intr(char *source_name, void (*ih)(void *), void *ih_user);

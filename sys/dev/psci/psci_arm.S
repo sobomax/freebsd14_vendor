@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 42769cfed5a4504d870fda609be5b4d7b5553c21 $");
 
 .arch_extension sec	/* For smc */
 .arch_extension virt	/* For hvc */

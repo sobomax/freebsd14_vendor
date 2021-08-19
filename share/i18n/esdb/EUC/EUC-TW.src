@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 50ae513326965f8d309db370a54e6ce0cbe6ce26 $ 
 # $NetBSD: EUC-TW.src,v 1.4 2007/03/05 16:58:35 tnozaki Exp $
 
 NAME		"EUC-TW"

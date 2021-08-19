@@ -30,7 +30,7 @@
 # Portions taken from:
 # ident	"@(#)replacement_001_pos.ksh	1.4	08/02/27 SMI"
 #
-# $FreeBSD$
+# $FreeBSD: 328c08e53c1eb3e1a15d0996d5749cb03ad37e15 $
 
 . $STF_SUITE/include/libtest.kshlib
 . $STF_SUITE/include/libgnop.kshlib

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 0cc155a0393c9a35e32bf813af7fa69862076d48 $
  *
  * Compatibility header for the GNU C Library-style nsswitch interface.
  */

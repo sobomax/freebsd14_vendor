@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD$
+ * $FreeBSD: 87fa705e2d966022cbf65bd44d9c7d085419ecd4 $
  *
  */
 

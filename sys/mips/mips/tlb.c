@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: d2df51cb018ca0f86dfdc5c9ca8585443cfd77af $
  */
 
 #include "opt_ddb.h"

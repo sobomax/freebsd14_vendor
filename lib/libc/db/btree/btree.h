@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)btree.h	8.11 (Berkeley) 8/17/94
- * $FreeBSD$
+ * $FreeBSD: 1db1e3485717fdd864cf53fcba24bfae386eced5 $
  */
 
 /* Macros to set/clear/test flags. */

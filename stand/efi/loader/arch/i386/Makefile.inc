@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 079c73d336a9ae9232c9846482a99e97a2892b32 $
 
 SRCS+=	start.S \
 	elf32_freebsd.c \

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 98b5e6fdf50983e9d3e8c3cc1845680171e217f9 $
 #
 
 # This is a wrapper script to run tools-posix.test on UFS filesystem.

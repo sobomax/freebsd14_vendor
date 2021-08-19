@@ -4,7 +4,7 @@
 # normally don't have a ksh, we make this test conditional. This means
 # one has to recreate the test results once ksh is installed.
 #
-# $FreeBSD$
+# $FreeBSD: 74d96e1d445ba68715a8e6d946545c1f775f6cbd $
 #
 
 .ifmake sh_test

@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 01612df72e7d0b5b57a346da73b4d62aa2ea1324 $ 
 # $NetBSD: CP950.src,v 1.1 2003/06/27 08:40:52 tshiozak Exp $
 
 NAME		"CP950"

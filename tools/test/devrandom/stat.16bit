@@ -8,7 +8,7 @@
 # Redirect the output from this to a file - and go to the movies while
 # it runs. This program is a CPU Hog!
 #
-# $FreeBSD$
+# $FreeBSD: 32a6a9caf55023c77ceb4f285b98051f2c323909 $
 #
 
 for ($i = 0; $i < (1024*64); $i++) {

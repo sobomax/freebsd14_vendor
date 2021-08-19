@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: b5a5f304fef515b5d6393e260f58d53fac42e69d $
 
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.

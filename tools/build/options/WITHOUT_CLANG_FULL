@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 418b7d657f672a03de1dde48164f646b1fcdc37b $
 Set to avoid building the ARCMigrate, Rewriter and StaticAnalyzer components of
 the Clang C/C++ compiler.

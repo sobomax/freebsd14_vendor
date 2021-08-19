@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7cf17a3e8fe1feac2a9a3e9cfb274583fbbc1f33 $
 
 a1=$(alias)
 : $(alias testalias=abcd)

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 579209bcd17f0852944b6d60e34c73ff582251c5 $
 Enable building
 .Xr veriexec 8
 which loads the contents of verified manifests into the kernel

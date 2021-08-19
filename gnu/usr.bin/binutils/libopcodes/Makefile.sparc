@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 190b76621cc0f1725288ead11bb7498808598a5d $
 #
 
 SRCS+=		sparc-dis.c sparc-opc.c

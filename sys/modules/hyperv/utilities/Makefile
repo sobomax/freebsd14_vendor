@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 53dc4b22ab967235410fdbde171bcf84d007b6be $
 
 .PATH:	${SRCTOP}/sys/dev/hyperv/utilities
 

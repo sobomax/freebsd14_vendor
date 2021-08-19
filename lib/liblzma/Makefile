@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 63424bd3dcc217d7e416c61e75904e19bcf7e69e $
 
 PACKAGE=lib${LIB}
 LIB=		lzma

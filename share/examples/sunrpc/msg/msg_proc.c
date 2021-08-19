@@ -1,5 +1,5 @@
 /* @(#)msg_proc.c	2.1 88/08/11 4.0 RPCSRC */
-/* $FreeBSD$ */
+/* $FreeBSD: 45ffe7cc1153d8e84ff31413c0c80373034a0ae2 $ */
 /*
  * msg_proc.c: implementation of the remote procedure "printmessage"
  */

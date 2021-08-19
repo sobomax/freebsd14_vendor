@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ea329589f1ab8ffca635c731aa9c55601570cb73 $");
 
 /*
  * AHB bus front-end for the Atheros Wireless LAN controller driver.

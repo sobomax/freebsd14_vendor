@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3f364eef9ad18924a409baaca3c096e23787e55b $");
 
 static const char *
 gname_lookup(void *d, int64_t g)

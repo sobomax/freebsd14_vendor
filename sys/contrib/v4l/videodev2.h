@@ -53,7 +53,7 @@
  *              Hans Verkuil <hverkuil@xs4all.nl>
  *		et al.
  *
- * $FreeBSD$
+ * $FreeBSD: 47904ba299e52e8b4be8788e82cc8ab28ee79c63 $
  */
 #ifndef __LINUX_VIDEODEV2_H
 #define __LINUX_VIDEODEV2_H

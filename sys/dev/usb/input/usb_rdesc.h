@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 889381e82c15ec0611e71fba3f8747167d4748ad $
  *
  * This file contains replacements for broken HID report descriptors.
  */

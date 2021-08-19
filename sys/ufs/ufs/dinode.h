@@ -64,7 +64,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dinode.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD$
+ * $FreeBSD: 0a201ce0b43b5fbff93e49a834feb4f7d97f2f81 $
  */
 
 #ifndef _UFS_UFS_DINODE_H_

@@ -5,7 +5,7 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD$
+# $FreeBSD: 5f72f05bac9edd65a1708751d647821989cdb17b $
 
 PROG=	ctm
 MAN=	ctm.1 ctm.5

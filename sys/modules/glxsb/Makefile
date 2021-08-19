@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 649901072caecce7aa5ad4dede2ddb297f38dd43 $
 
 .PATH:	${SRCTOP}/sys/dev/glxsb
 KMOD	= glxsb

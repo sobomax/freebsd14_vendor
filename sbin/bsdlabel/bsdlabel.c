@@ -55,7 +55,7 @@ static char sccsid[] = "@(#)disklabel.c	8.2 (Berkeley) 1/7/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f013cde3ef092d2d7672e6dc4ebaab5ce6bbe3f0 $");
 
 #include <sys/param.h>
 #include <stdint.h>

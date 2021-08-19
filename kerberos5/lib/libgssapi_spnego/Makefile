@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1ccf1377e8bca80366754a92aaf046a12b235cfe $
 
 LIB=	gssapi_spnego
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

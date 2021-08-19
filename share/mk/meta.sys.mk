@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8c39757e15af5d1321e9ce1aa6e4712bc3deeb9a $
 # $Id: meta.sys.mk,v 1.34 2019/01/24 19:36:25 sjg Exp $
 
 #

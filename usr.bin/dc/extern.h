@@ -1,4 +1,4 @@
-/*	$FreeBSD$						*/
+/*	$FreeBSD: 38f0c8c714ef922530a857443f3e2e024772960c $						*/
 /*	$OpenBSD: extern.h,v 1.4 2014/12/01 13:13:00 deraadt Exp $	*/
 
 /*

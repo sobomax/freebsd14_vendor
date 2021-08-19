@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 968533e210c4012da4952c7b655b929c1885a072 $");
 
 /*
  * PnP enumerator using the PCI BIOS.

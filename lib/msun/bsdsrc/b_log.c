@@ -35,7 +35,7 @@
 
 /* @(#)log.c	8.2 (Berkeley) 11/30/93 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 23dbde4edeaa8567b10b939d57e35e1a4de0b5fb $");
 
 #include <math.h>
 

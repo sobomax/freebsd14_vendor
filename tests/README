@@ -61,4 +61,4 @@ The goal in this specific case is for /usr/tests/lib/ to be generated
 entirely from src/lib/.
 
 -- 
-$FreeBSD$
+$FreeBSD: 2102dd1f9b186c1ac125db3ce629713e8410a18b $

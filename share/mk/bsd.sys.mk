@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dd7812c69468359f54fe4fcefc1c658f3bfc520f $
 #
 # This file contains common settings used for building FreeBSD
 # sources.

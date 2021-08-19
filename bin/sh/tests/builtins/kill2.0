@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 31e0ba362b80bf2d4faac0b3ab006dd2e757b78f $
 
 sleep 1 | sleep 1 &
 kill %+

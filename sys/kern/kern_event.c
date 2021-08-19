@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2a0852eae0ce1b7bba715abe70d5b553ec97050c $");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"

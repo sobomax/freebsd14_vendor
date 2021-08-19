@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: af9ed008615e2efc9aad8724bb3ed34efec49e1b $");
 
 /*
  * Abstract BHND Bridge Device Driver

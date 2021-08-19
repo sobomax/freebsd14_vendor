@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 80a7c7a982efdc1eb2e6695b7e14750c85e34f5b $");
 
 #ifndef _I915_REG_H_
 #define _I915_REG_H_

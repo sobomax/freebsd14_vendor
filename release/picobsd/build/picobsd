@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD$
+# $FreeBSD: 5e78602911a73ca07e832dd8c16b951b6545f688 $
 # This file requires sysutils/makefs to run
 #
 # The PicoBSD build script. Invoked as

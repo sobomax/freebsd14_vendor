@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 435106c7e9bd4bcf9fc6c1765bac363ba595b56a $
 
 .PATH:	${SRCTOP}/sys/dev/hyperv/vmbus \
 	${SRCTOP}/sys/dev/hyperv/vmbus/${MACHINE_CPUARCH}

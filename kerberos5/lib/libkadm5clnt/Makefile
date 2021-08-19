@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fecdf915070e57f160fbcd8a06dcda12db8684fc $
 
 LIB=	kadm5clnt
 LDFLAGS=	-Wl,--no-undefined

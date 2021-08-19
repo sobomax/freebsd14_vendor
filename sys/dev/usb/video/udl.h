@@ -1,5 +1,5 @@
 /*	$OpenBSD: udl.h,v 1.21 2013/04/15 09:23:02 mglocker Exp $ */
-/*	$FreeBSD$	*/
+/*	$FreeBSD: a7d50699bdf95592a40ffe82509e8a9732bde918 $	*/
 
 /*
  * Copyright (c) 2009 Marcus Glocker <mglocker@openbsd.org>

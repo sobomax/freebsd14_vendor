@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 445c9f2127b83483c54efcb0c1832b4f03f5675c $");
 
 /*-
  * Copyright (c) 1998, 2000 The NetBSD Foundation, Inc.

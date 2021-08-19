@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 1a53d8c44ae1d41fd97feb71a114678be06a4665 $
 #
 # Unpack an ACPI CA drop and restructure it to fit the FreeBSD layout
 #

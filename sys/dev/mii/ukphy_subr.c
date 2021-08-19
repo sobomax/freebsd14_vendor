@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b83b8e8a29f9118ca716821d340ea856f3c89878 $");
 
 /*
  * Subroutines shared by the ukphy driver and other PHY drivers.

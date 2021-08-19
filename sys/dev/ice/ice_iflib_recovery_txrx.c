@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: 500baf9540282ae8079726cda10f7b02accfe50f $*/
 
 /**
  * @file ice_iflib_recovery_txrx.c

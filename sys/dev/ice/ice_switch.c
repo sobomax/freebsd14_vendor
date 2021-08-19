@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: 2f5c076fce28232ed617a38f74d1db4eb9942a85 $*/
 
 #include "ice_switch.h"
 #include "ice_flex_type.h"

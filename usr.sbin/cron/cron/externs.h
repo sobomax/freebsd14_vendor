@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 8b1ff71b36e2171cff570374bb10685e1ff67cbd $	*/
 
 /* Copyright 1993,1994 by Paul Vixie
  * All rights reserved

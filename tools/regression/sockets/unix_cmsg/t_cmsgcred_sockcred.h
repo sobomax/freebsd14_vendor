@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: df849c65afd7f22f2c6c7b90833799f3c6c368d1 $
  */
 
 int t_cmsgcred_sockcred(void);

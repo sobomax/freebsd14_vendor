@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/link/14.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 34038a0ef8bffc1466b6a34f3e5c8ff5fb57ad22 $
 
 desc="link returns EXDEV if the source and the destination files are on different file systems"
 

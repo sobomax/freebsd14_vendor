@@ -29,7 +29,7 @@
 
 /*
  * $Id$
- * $FreeBSD$
+ * $FreeBSD: 75b75045c65645b35c37cd8093c0a2376dc9c97a $
  *
  * A round-robin (RR) anticipatory scheduler, with per-client queues.
  *

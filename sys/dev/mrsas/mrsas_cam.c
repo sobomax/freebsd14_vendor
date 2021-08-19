@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0ff897a01aa84801d6ae1d3f437613bb7c3b31eb $");
 
 #include "dev/mrsas/mrsas.h"
 

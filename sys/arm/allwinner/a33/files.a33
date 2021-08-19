@@ -1,3 +1,3 @@
-# $FreeBSD$
+# $FreeBSD: c80c476e7dd20829068695c31de552a1d8ffb598 $
 
 arm/allwinner/a33/a33_padconf.c		standard

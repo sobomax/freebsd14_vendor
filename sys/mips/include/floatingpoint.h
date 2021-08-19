@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#) floatingpoint.h	1.0 (Berkeley) 9/23/93
- * $FreeBSD$
+ * $FreeBSD: b7c154743d0ca6e7cb043534a28b9b73d4a0f8c2 $
  */
 
 #ifndef _FLOATINGPOINT_H_

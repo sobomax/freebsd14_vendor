@@ -1,7 +1,7 @@
 /*
  * Playstation 3 LV1 hypercall interface
  *
- * $FreeBSD$
+ * $FreeBSD: c2e45d2baafc3ee293b531d13ebfd0ac0641d45e $
  */
 
 #include <sys/types.h>

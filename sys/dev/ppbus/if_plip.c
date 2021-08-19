@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8b573254cb12b2d048ae9db89b5d28b732f1f89c $");
 
 /*
  * Parallel port TCP/IP interfaces added.  I looked at the driver from

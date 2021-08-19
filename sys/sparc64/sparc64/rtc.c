@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: abd5825f11b19e98c2ce5c97bfb635c7f11b7126 $");
 
 /*
  * The `rtc' device is found on the ISA bus and the EBus.  The ISA version

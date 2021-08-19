@@ -29,7 +29,7 @@
 /* Driver for VirtIO block devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 462b05905f81aec388f4440d422a4e827d9b5a09 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

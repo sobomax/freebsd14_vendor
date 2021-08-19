@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)locate.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 5ef97d36688ffb59db76304bed6fee264c2dc491 $
  */
 
 /* Symbolic constants shared by locate.c and code.c */

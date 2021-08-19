@@ -67,7 +67,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD$
+ * $FreeBSD: 7030cb15a95f3c8a2dd744ad3cdc4f4875e0df34 $
  */
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 8dcaf62f357682af386b454f8df89cafe3a07f89 $
 #
 # For each sysctl, repeat:
 #	if it has a short description

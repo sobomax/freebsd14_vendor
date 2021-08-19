@@ -65,7 +65,7 @@
 //	  - devd.conf needs more details on the supported statements.
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 24dbd6fe9106c206fb5f4a12a234dd5b38e4b417 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

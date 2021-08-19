@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: e9f6d70b5fc517e0fddfdf21e21ed8dc456e2f1f $
 
 libopenbsd is a thin compatibility layer intended to allow a limited
 set of OpenBSD software to compile as part of the FreeBSD build with

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 67d19516a5d99a5ee3d6ba2750d9707f15dd0636 $
 
 set -- a b c d e f g h i j
 [ "$1" = a ] || echo "error at line $LINENO"

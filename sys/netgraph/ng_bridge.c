@@ -33,7 +33,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: e2e533be2c1ec48ed7462ae457d8cf46538e29f9 $
  */
 
 /*

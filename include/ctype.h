@@ -37,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ctype.h	8.4 (Berkeley) 1/21/94
- *      $FreeBSD$
+ *      $FreeBSD: 13173139777beafaf909659446ffbedee5384ae3 $
  */
 
 #ifndef _CTYPE_H_

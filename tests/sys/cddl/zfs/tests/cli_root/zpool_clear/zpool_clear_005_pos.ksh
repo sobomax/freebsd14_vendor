@@ -31,7 +31,7 @@
 # ident	"@(#)replacement_001_pos.ksh	1.4	08/02/27 SMI"
 #
 # $Id$
-# $FreeBSD$
+# $FreeBSD: 059c1c56b5c0e6fd70f8189b869097a99c01caf7 $
 
 . $STF_SUITE/include/libtest.kshlib
 . $STF_SUITE/include/libgnop.kshlib

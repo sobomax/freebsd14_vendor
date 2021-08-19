@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 88856777fb39742885eba7b31a6d129e48dd340e $ */
 
 /*-
  * Copyright (C) 2010-2016 Nathan Whitehorn
@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 88856777fb39742885eba7b31a6d129e48dd340e $
  */
 
 #include "assym.inc"

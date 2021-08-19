@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)file.h	8.3 (Berkeley) 1/9/95
- * $FreeBSD$
+ * $FreeBSD: d17b9db275618cacbf46ed18d189555ae554a13f $
  */
 
 #ifndef _SYS_FILE_H_

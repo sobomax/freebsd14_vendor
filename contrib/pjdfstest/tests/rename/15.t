@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/15.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 5a8401361d9da59485305ee8e30d4e8dbcd259b2 $
 
 desc="rename returns EXDEV if the link named by 'to' and the file named by 'from' are on different file systems"
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 152b837cafd405e7f7e95c80d00a0750c5ca8b52 $
 
 .PATH: ${SRCTOP}/sys/dev/asmc
 

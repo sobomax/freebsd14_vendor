@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 7ba0bf1d950837eccd8b59f2d8021d16e68823e9 $
 Set to install
 .Xr gdb 1
 into

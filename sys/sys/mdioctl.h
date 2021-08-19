@@ -39,7 +39,7 @@
  *
  * From: src/sys/sys/vnioctl.h,v 1.4
  *
- * $FreeBSD$
+ * $FreeBSD: 37a3804fe79e03a11d190467cc8815e97ab2057a $
  */
 
 #ifndef _SYS_MDIOCTL_H_

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: client.c,v 1.7 2006/09/07 21:06:53 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 2d8a1162d4681268652e889dbd4774236e264c46 $
  */
 
 #include <sys/queue.h>

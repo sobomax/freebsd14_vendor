@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 19bcfca05b7ac681c893bae25aff0cc69ba594a0 $ */
 /*	$NetBSD: ugensa.c,v 1.9.2.1 2007/03/24 14:55:50 yamt Exp $	*/
 
 /*-

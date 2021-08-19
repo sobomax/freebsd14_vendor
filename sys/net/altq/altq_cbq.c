@@ -28,7 +28,7 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.c,v 1.19 2003/09/17 14:23:25 kjc Exp $
- * $FreeBSD$
+ * $FreeBSD: b0bd0af9ac7e2cc668c511e1704efa62a7946c94 $
  */
 
 #include "opt_altq.h"

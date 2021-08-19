@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9922481a239a8a22260d6329937a10eb77b02e0c $
 
 arm/freescale/vybrid/vf_machdep.c		standard
 arm/freescale/vybrid/vf_ccm.c			standard

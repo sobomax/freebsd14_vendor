@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 14e2c90fa496ccbabf56d36cf3a5b2fa1894e012 $
  */
 
 #define	MII_BIT_MDO		0	/* data out (host->PHY) */

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 5a9cf1b2f1be74b77bd9f9b8d9f90fa21ae88344 $
 #
 # Generic mechanism to deal with WITH and WITHOUT options and turn
 # them into MK_ options.

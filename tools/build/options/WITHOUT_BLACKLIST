@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 39ccd585aaa2949e1674cd7d6288662c7e9bd509 $
 Set this if you do not want to build
 .Xr blacklistd 8
 and

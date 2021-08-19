@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f3a3bba2e59b2bc39c2bcf3f4d55ba279bbd4268 $");
 
 /*
  * Cryptographic Subsystem.

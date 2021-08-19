@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9ecd03ed0ba537ff21ff991c4b3dad1cb183ff45 $
 
 .PATH: ${SRCTOP}/sys/dev/ata
 

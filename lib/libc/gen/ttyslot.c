@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)ttyslot.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fc1b0565afee9d119e0f9f825220f19f58c4b283 $");
 
 int __ttyslot(void);
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 530597948e4ab80be80fed814f0a4969e97ee95c $
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin

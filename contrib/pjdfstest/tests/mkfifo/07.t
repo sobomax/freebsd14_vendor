@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/07.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 1a11eb39321fa84b8e8084bab06037e2444ae898 $
 
 desc="mkfifo returns ELOOP if too many symbolic links were encountered in translating the pathname"
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 72fa049d4326ef8b1d35e8c44529a8564113325d $
 
 # Makefile for the IEEE1394 OHCI chipset
 

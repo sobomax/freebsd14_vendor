@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1e50554d25f6f3c96a0c1a169773200fdcf1d950 $
  */
 #include <dev/hptrr/hptrr_config.h>
 /*

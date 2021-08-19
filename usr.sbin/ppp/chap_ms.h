@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 014a2849f1376bb66b920fc4bad005cd3fc3d994 $
  */
 
 /* Max # of (Unicode) chars in an NT password */

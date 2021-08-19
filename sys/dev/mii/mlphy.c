@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 486a2fa0241d280f9384c936c7f8f27eaa677900 $");
 
 /*
  * driver for Micro Linear 6692 PHYs

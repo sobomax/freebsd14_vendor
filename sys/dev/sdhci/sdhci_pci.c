@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5d22a819410c2c9c339e3a62ce59e2869f140edf $");
 
 #include "opt_mmccam.h"
 

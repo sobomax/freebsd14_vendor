@@ -41,7 +41,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: 98217813eac12b5337c0167baa6cdb5122b091e5 $");
 
 #include <sys/types.h>
 #ifdef HAVE_SYS_STAT_H

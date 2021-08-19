@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c32c1c2ab8eada7c2d8ac02834f4b3b446aaf572 $
  */
 
 #define	FENV_MANGLE(x)	__softfp_ ##x

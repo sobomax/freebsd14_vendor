@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tables.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: fb5bc437b0a0a9eb4744af1af026dced93cc5db2 $
  */
 
 /*

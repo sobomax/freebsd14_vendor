@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 439788f6601f1725487cc9fa29c4bc1148033980 $
 
 .PATH: ${SRCTOP}/sys/dev/alc
 

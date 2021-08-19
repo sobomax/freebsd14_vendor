@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: a8b655718599ce88159d1181dedf93fe4a1b868b $ */
 #ifndef _EFI_ERR_H
 #define _EFI_ERR_H
 

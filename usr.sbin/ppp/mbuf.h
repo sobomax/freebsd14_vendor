@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 81d1116132eff7b2b6fee1bea4cd9f4c7cc47a90 $
  */
 
 struct mbuf {

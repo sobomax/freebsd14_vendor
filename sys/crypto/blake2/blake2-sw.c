@@ -1,7 +1,7 @@
 /* This file is in the public domain. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c25d4db50e29144306d5ede5c985d88396495134 $");
 
 #include <contrib/libb2/blake2.h>
 #include <opencrypto/xform_auth.h>

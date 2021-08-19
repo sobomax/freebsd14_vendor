@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 70c4c70e98cc967d873e921f838986f721f0a4ea $
 #
 
 # PROVIDE: ipropd_slave

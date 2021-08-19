@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b7a989656907ed463d8337cfe85a3532b7e20b87 $
 
 PROG_CXX=	llvm-diff
 

@@ -1,7 +1,7 @@
 /*
  * dumptab.c - handles dumping the database
  *
- * $FreeBSD$
+ * $FreeBSD: 43e94ec4cef2b01c9e1e367ab0c006b819c9290a $
  */
 
 #include <sys/types.h>

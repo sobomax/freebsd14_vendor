@@ -27,7 +27,7 @@
 #include <machine/asm.h>
 
 #ifndef fn
-__FBSDID("$FreeBSD$")
+__FBSDID("$FreeBSD: 5a5d28540c216509d09c11c677cc499d6bfb9b70 $")
 #define	fn	lrint
 #endif
 

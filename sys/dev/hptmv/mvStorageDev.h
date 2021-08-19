@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 2d7baa3075c3b938c1844090ff9f7c7fae680a91 $
  */
 #ifndef __INCmvStorageDevh
 #define __INCmvStorageDevh

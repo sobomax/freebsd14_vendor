@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 43d99a96b51ea8b63ea1acac01af209870626fb9 $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"

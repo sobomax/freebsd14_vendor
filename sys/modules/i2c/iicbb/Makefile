@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c7737f09e8b9f7ddc4ef214d26973f3dd9744dda $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm" || \

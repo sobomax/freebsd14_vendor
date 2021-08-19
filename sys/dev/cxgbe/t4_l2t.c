@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5e96579f17170d65ee0b7c39f8bf0c2942874cbe $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

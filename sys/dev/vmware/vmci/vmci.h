@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD$
+ * $FreeBSD: ca55bd395bb02aaa4e821dfacd09623c2f124c6f $
  */
 
 /* Driver for VMware Virtual Machine Communication Interface (VMCI) device. */

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: fbc0f5139c8814523e64286904b2fa5af6b8f6d2 $
 #
 
 configure_args="

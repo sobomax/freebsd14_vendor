@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e2b238d55e7f2a2554a0a977660a00a06d205239 $
 #
 # Option file for FreeBSD /usr/src builds.
 #

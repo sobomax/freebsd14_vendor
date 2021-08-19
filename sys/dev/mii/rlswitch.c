@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e21797a4c9a6aff102741f845559d9f50ae477e7 $");
 
 /*
  * driver for RealTek 8305 pseudo PHYs

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8b9a009a91e9e3b5a0211f4006d5c26abcffcad0 $
 
 CRTARCH=	${MACHINE_CPUARCH:C/amd64/x86_64/}
 

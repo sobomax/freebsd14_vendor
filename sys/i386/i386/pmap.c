@@ -83,7 +83,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 108f1ca36711681856c782ca919facf403df0818 $");
 
 /*
  *	Manages physical address maps.

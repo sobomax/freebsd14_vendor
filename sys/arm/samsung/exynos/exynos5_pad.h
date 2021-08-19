@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 4b83a025e2b8d68e1c4ede79e3b85ec8f1b23f24 $
  */
 
 int pad_setup_intr(int gpio_number, void (*ih)(void *), void *ih_user);

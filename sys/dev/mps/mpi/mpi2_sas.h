@@ -28,7 +28,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD$
+ * $FreeBSD: 427f924cf3cbbca5ae5c7bc0f79133552f0e7858 $
  */
 
 /*

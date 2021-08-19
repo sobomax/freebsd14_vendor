@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 1aa501694998f0860c06c9856670decadcf47f79 $
 Set to not build
 .Xr pmccontrol 8
 and related programs.

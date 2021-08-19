@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: c2d41b6b36d1addd20d485dd7c05d6eed9f9f53d $
 
 # Script generates a $2/fdt_static_dtb.h file.
 

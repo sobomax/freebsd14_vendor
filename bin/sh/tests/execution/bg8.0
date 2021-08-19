@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 33667cb1922bf9b70e3169eb976188ad0a4b4781 $
 # The redirection does not apply to the background command, and therefore
 # does not override the implicit </dev/null.
 

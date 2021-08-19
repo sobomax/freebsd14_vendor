@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f7687116c8fd221a8409eed04e3e95447067b30e $
 
 PROG=	xz
 

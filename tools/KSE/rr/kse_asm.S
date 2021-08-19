@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: ac571f7f1aee9441915bfa6c0275e0bb9c48847e $
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ac571f7f1aee9441915bfa6c0275e0bb9c48847e $");
 
 /*
  * Where do we define these?

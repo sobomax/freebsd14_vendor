@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d9bef05888a586aa142d6582ac887c22e8c65a99 $
 
 PACKAGE=lib${LIB}
 LIB=		dpv

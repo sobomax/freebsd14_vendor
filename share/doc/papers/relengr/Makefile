@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	1.6 (Berkeley) 6/8/93
-# $FreeBSD$
+# $FreeBSD: 88ab5afcc2878597fc7f6005dbb56d27a1a5c2a6 $
 
 VOLUME=		papers
 DOC=		releng

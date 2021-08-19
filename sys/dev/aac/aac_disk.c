@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1a547ed039abebf5cfbe90033a5e4d0e843ecb55 $");
 
 #include "opt_aac.h"
 

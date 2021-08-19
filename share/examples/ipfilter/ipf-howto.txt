@@ -8,7 +8,7 @@
 
               Brendan Conoboy <synk@swcp.com>
             Erik Fichtner <emf@obfuscation.org>
-            $FreeBSD$
+            $FreeBSD: 95b69dc5768679b4c62aac9db79209196929d6d7 $
 
                 Fri Apr 20 09:31:14 EDT 2001
 

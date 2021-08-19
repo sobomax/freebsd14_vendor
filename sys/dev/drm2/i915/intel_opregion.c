@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7e6cb91e8699770270341bd83ed26e100a948a1d $");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 

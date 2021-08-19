@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c6c37eba1b4f8109f23f4e643aff66647bae2da6 $");
 
 	.section .init,"ax",%progbits
 	.align 4

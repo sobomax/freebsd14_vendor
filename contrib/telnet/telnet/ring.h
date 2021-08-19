@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ring.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 305b9e09ce1b178478f84fc9de4b82495133b352 $
  */
 
 #if defined(P)

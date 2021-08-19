@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD$
+# $FreeBSD: 7ff49ad94892b004e3b031ecee1d713988276761 $
 
 SRCTOP?= ${.CURDIR:H:H}
 

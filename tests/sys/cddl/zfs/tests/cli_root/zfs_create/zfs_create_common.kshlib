@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: d6b4f4abf794dc9cc3db50be4d4f0d4208ba4b6e $
 
 #!/bin/ksh -p
 #

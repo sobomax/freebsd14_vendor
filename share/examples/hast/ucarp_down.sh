@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: f18df05d4d698e692273afedcded6b285d1b88e5 $
 
 # Resource name as defined in /etc/hast.conf.
 resource="test"

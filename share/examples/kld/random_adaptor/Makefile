@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8f14a281c1bcb2072e38fda47b04b76282fe8edd $
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/kld/${KMOD}

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b43bcb0ed27aad29015e47c39f0ca89c10a091a9 $");
 
 /*
  * Driver for ISL12xx family i2c realtime clocks:

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 083a06190e647fd370a6faa5c2d9abf800ea634b $
 
 set -e
 cd -P /bin

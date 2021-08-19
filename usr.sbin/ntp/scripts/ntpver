@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 6dbc510db8c215e40ed94222a49a9123f5116e5e $
 # print version string of NTP daemon
 # Copyright (c) 1997 by Ulrich Windl
 # Modified 970318: Harlan Stenn: rewritten...

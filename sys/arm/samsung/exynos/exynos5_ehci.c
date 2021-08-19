@@ -28,7 +28,7 @@
 #include USB_GLOBAL_INCLUDE_FILE
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6a9beb780b5c296c2f15b152b16796fbbdd99865 $");
 
 #include "opt_bus.h"
 

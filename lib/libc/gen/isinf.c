@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: ec62762c641a3fa90991a5ce69d1ccbb86d8494c $
  */
 
 #include <machine/float.h>

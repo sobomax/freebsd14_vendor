@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ecc26981e2b37da20679360a66e900ad17f9f8f2 $");
 
 /**
  * \file netback.c

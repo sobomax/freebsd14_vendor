@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: adffb6a1481d9f2acb9dd6e1a86599bcf19adadd $
 # Octeon Support Files
 #
 mips/cavium/asm_octeon.S			optional smp

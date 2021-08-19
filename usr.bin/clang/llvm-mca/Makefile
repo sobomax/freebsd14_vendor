@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9bde2446cab1593c7dfe356745972146cab22c05 $
 
 PROG_CXX=	llvm-mca
 

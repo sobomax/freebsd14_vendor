@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b4dfb50281b096d845fa6bdc27b0709d55ebd725 $");
 
 #ifndef _BNXT_H
 #define _BNXT_H

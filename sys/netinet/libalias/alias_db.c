@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cf85f40161e7f1c6c64328a54936824243177abb $");
 
 /*
     Alias_db.c encapsulates all data structures used for storing

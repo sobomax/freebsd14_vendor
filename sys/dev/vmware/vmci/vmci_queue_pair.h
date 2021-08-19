@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD$
+ * $FreeBSD: 70e02c4ee2724324e1a35835a4c2601e329bae93 $
  */
 
 /* VMCI QueuePair API definition. */

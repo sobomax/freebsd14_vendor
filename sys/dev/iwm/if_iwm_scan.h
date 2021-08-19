@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwm.c,v 1.39 2015/03/23 00:35:19 jsg Exp $	*/
-/*	$FreeBSD$ */
+/*	$FreeBSD: 7859a75ec6d622a72be1876702e62f506cd5ddc1 $ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)telnetd.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD$
+ * $FreeBSD: 84b55d71640f03263956425cd3703fbeb051c3d8 $
  */
 
 

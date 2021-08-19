@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 204039c2831119a8ec1ff153350bf948acf32f4b $
 #
 
 usage_output='usage: rmdir'

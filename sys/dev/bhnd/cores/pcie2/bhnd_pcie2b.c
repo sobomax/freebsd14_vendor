@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 807d1740985fd9cb2aec504fa074aaf7c818d458 $");
 
 /*
  * Broadcom PCI/PCIe-Gen1 Host-PCI bridge.

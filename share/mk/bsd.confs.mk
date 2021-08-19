@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 839631cf77560311828564504d8ee92fa3c686cc $
 
 .if !target(__<bsd.init.mk>__)
 .  error bsd.conf.mk cannot be included directly.

@@ -1,3 +1,3 @@
-# $FreeBSD$
+# $FreeBSD: a81b6b1edc371228b786f7bb0ba7b37e37b52ea2 $
 
 SUBDIR_PARALLEL=	yes

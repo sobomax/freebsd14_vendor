@@ -11,7 +11,7 @@
 #   -Frédéric Praca <frederic.praca@freebsd-fr.org>
 #   -Clément Pillias <clement.pillias@free.fr> for accent keys
 #
-# $FreeBSD$
+# $FreeBSD: 5e9eb92b9ac57e367ea7b8d6d1cc6fece7c5b5fa $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

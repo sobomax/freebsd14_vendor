@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: c5a1f45fc5de738ef15b5aedaf150a4ab65e3204 $ */
 /* Do not modify. This file is auto-generated from poly1305-x86_64.pl. */
 .text	
 

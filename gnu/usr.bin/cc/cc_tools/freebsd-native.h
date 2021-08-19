@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 7e11bd83537c365c93ed10531b4622cf4050d8ce $ */
 
 /* FREEBSD_NATIVE is defined when gcc is integrated into the FreeBSD
    source tree so it can be configured appropriately without using

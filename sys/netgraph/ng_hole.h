@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: 0c3f72d615fb1f29549cd23e40518b67b14d8b8a $
  * $Whistle: ng_hole.h,v 1.3 1999/01/20 00:22:13 archie Exp $
  */
 

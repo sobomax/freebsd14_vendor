@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a340de3b2951dc0eff9aa76354288726d96cc2da $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 

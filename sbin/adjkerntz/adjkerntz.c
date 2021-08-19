@@ -34,7 +34,7 @@ static const char copyright[] =
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e6cadcf7f1894325c5305080e67d25d142e3185d $");
 
 /*
  * Andrey A. Chernov   <ache@astral.msk.su>    Dec 20 1993

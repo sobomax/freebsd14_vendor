@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f3bdb76ed4c3619b1573fe3be84ad0a39477d40f $
 
 mips/ingenic/jz4780_mmc.c	optional mmc
 mips/ingenic/jz4780_uart.c	optional uart

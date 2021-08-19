@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4c9dc19e95a7d126d2e8caeff22d61bf37ffa088 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>

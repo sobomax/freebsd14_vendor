@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss3	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: fa06acb75b097d44fce84cd4a17657c2b254a17d $
 .SH
 3: Lexical Analysis
 .PP

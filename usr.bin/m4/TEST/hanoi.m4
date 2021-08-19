@@ -31,7 +31,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 5be47d1da5eeabac9c54f4aced560c558366c3fb $
 #
 #	@(#)hanoi.m4	8.1 (Berkeley) 6/6/93
 #

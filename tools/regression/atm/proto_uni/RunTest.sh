@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 8b9c9e5e38c96fb3ec85e788006807849b39c4da $
 
 . ../Funcs.sh
 

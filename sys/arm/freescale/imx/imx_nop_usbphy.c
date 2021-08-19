@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9b6986b0eca9af7d8ad5a32473c0e942d5ec031f $");
 
 /*
  * USBPHY "no-op" driver for Freescale family of SoCs.  This driver is used on

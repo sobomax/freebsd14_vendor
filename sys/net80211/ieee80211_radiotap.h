@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d4369e8e0cd1d1e511f6f3b5765fef3d4f896790 $ */
 /* $NetBSD: ieee80211_radiotap.h,v 1.16 2007/01/06 05:51:15 dyoung Exp $ */
 
 /*-

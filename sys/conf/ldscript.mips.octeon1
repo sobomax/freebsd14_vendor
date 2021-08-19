@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b787fe97bba5eb55d0123bd309de0bd9929d4637 $ */
 
 ENTRY(_start)
 

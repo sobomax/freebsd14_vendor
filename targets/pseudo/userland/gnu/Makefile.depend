@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 356014a4cdccb400ba734e929517bd0956c4f275 $
 
 .if !defined(MK_GPL_DTC)
 .include "${SRCTOP}/share/mk/src.opts.mk"

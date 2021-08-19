@@ -1,6 +1,6 @@
 # Slovenian keyboard
 # Blaz Zupan <blaz@amis.net>
-# $FreeBSD$
+# $FreeBSD: 1353027c1d3001468af70be8fec908aec5af52e1 $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c092b18169b5abef3ee77c6c1f70765f57b94e73 $
 
 .PATH: ${SRCTOP}/sys/dev/ffec
 

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)raw_cb.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: bd5e08fc3daadebf78ffc07c9b81657c70a6017d $
  */
 
 #ifndef _NET_RAW_CB_H_

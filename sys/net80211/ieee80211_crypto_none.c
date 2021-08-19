@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 062f398e207e71b2cb4cae450be65e17a5d5c04c $");
 
 /*
  * IEEE 802.11 NULL crypto support.

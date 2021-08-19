@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bd2bf7efe769d04a011f709a9ac4fc5f1bf05961 $
 
 v=$(
 	${SH} -c 'trap "echo ok; exit" USR1; kill -USR1 $$' &

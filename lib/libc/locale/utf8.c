@@ -34,7 +34,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 13f957989fa2053f25c7b0e79689b2c2323110e2 $");
 
 #include <errno.h>
 #include <limits.h>

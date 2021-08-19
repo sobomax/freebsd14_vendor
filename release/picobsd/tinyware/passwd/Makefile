@@ -1,5 +1,5 @@
 # From:	@(#)Makefile	8.3 (Berkeley) 4/2/94
-# $FreeBSD$
+# $FreeBSD: 806836c4fea37ffac04c8747582e6e9f60a766eb $
 
 # Only NO_PAM is used by PicoBSD and supported here
 

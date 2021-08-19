@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)utils.h	8.3 (Berkeley) 3/20/94
- * $FreeBSD$
+ * $FreeBSD: b2dba2ee4e93a48b98c11cd3bb3b248fd67a42fb $
  */
 
 /* utility definitions */

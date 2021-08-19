@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 434c81caba524f906d8a745420ee9643abef07c3 $
 
 _spath=	${SRCTOP}/contrib/ofed/libmlx4
 .PATH: ${_spath}

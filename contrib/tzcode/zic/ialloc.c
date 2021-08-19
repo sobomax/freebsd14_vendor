@@ -11,7 +11,7 @@ static const char	elsieid[] = "@(#)ialloc.c	8.30";
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 1694c2905c74d75d3797483ca87724ad918108c7 $";
 #endif /* not lint */
 
 /*LINTLIBRARY*/

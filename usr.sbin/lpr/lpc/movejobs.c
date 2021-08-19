@@ -35,7 +35,7 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 26c4d4fb5bcfb125d882a3ae9b10f474599047dd $");
 
 /*
  * movejobs.c - The lpc commands which move jobs around.

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 581fc25467d7291f5380ffb2f31c0f8471286133 $");
 
 #include <fenv.h>
 #include <float.h>

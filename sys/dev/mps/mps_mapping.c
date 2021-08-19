@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9330288acd065b6acc5e28a56387cc9f2ad98b5e $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>

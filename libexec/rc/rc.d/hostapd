@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 707316036604f3a172da75fc284794fd4f71d014 $
 #
 
 # PROVIDE: hostapd

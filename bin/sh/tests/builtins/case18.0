@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 470253f622eadd18c25e8a4cb8433888e1c8dcb7 $
 
 case x$(false) in
 x)	;&

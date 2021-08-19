@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 69870c2aedf1c8fc6357be10a033589326cbd64a $
  */
 
 /* Dlink chipset used on some Netgear and Dlink PCMCIA cards */

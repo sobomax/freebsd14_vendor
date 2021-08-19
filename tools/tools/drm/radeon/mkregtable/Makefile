@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 49bc2ec16e3c7d0b544bce6f576b7ae310ebff47 $
 
 all: regtables
 

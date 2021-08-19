@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 975b824c4ba06086cc7a3114de277e8f7e4fd957 $");
 
 /*
  * Verify our ability to read sample files created by GNU tar.

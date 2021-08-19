@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)buf.h	8.9 (Berkeley) 3/30/95
- * $FreeBSD$
+ * $FreeBSD: 209174b4c81a33e82567602f9c9f0b9d807e1171 $
  */
 
 #ifndef _SYS_BUF_H_

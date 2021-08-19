@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD$
+# $FreeBSD: fa002fb0a817425d56676dc9c9df148e812eb544 $
 
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #

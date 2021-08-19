@@ -24,7 +24,7 @@ if [ ! "$_MEDIA_UFS_SUBR" ]; then _MEDIA_UFS_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 27e2f275b1823acc812cd43ce548573dd8926f66 $
 #
 ############################################################ INCLUDES
 

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 0a7a1004f09154599d0f8cf346709b5f789fc159 $
 
 # Script which sets up password-less logins for ssh host
 ###########################################################################

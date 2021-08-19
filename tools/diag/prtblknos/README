@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8d347448338370e64b9c624a75586db167fccd4c $
 
 This is a little C-program that can be used to print out the list
 of blocks used by a requested list of inodes.

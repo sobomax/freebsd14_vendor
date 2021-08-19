@@ -3,7 +3,7 @@
 # RISC Implementation) FPGA soft core, as configured in its NetFPGA reference
 # configuration.
 #
-# $FreeBSD$
+# $FreeBSD: 5014c28dca2ed742726d294ccb998257611b5fb8 $
 #
 
 include "std.BERI"

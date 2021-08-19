@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 68af6c1b98d812f6edc84753ba531f8dca9024b9 $");
 
 #include <machine/asi.h>
 #include <machine/asmacros.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: e7ace8bcc977a3a43d21aec6e233f3811125e0f6 $ */
 /*	$OpenBSD: hifn7751var.h,v 1.42 2002/04/08 17:49:42 jason Exp $	*/
 
 /*-

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 29634e1565c4dcf3efac4ef8f145e7cf21a96c7d $
 .include <bsd.own.mk>
 
 INTERNALLIB=

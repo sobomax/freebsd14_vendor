@@ -36,7 +36,7 @@
 
   $Id: auth_gss.h,v 1.12 2001/04/30 19:44:47 andros Exp $
 */
-/* $FreeBSD$ */
+/* $FreeBSD: e247d70fc3c567b2f50d17ee216f54e0b462069a $ */
 
 #ifndef _RPCSEC_GSS_INT_H
 #define _RPCSEC_GSS_INT_H

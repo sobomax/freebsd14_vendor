@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)comreg.h	7.2 (Berkeley) 5/9/91
- * $FreeBSD$
+ * $FreeBSD: 64ba19e757bffc88ac7c579a4cb0cb2295113f88 $
  */
 
 /* Receiver clock frequency for "standard" pc serial ports. */

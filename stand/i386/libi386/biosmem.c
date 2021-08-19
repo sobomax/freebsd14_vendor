@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8596ce6abf44c6ba15de0bdf93d46b215b381009 $");
 
 /*
  * Obtain memory configuration information from the BIOS

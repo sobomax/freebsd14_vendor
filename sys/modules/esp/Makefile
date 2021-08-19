@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d582a2da5dbe1a932fd763b4d9e5e5f2b3c95a4e $
 
 .PATH: ${SRCTOP}/sys/dev/esp
 

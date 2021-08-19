@@ -29,7 +29,7 @@
 /* Generic NAND driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cc6ef9bd57b07c6563fc8aec12c8a2f876d31c21 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

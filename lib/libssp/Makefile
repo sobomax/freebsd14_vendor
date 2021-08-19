@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e09c4d3d2a2e8e49eed0c0d30d44c3359bb7f559 $
 
 PACKAGE=	clibs
 SHLIBDIR?=	/lib

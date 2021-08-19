@@ -50,7 +50,7 @@
 
 
 #include "lafe_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: edf72d147182470d5d4373d34a61f5ccce09be67 $");
 
 #include <errno.h>
 #ifdef HAVE_STDLIB_H

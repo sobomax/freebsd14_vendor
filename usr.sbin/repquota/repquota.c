@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)repquota.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 23abcca93752fca84e34c1b32a1a261b4b6e7768 $");
 
 /*
  * Quota report

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 83c1443939103beb3805eec7f6f65fd88b11ecb3 $
 
 machine 	arm	armv7
 makeoptions	CONF_CFLAGS="-march=armv7a"

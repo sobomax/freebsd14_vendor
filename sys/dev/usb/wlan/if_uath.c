@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c6a79614e914318b9edb8e5a6be88d3f77a16d88 $");
 
 /*-
  * Driver for Atheros AR5523 USB parts.

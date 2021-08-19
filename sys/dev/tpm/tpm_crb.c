@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1b18f8b561559aea2c6c407e21db064ddf029765 $");
 
 #include "tpm20.h"
 

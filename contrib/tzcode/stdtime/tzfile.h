@@ -6,7 +6,7 @@
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
 **
-** $FreeBSD$
+** $FreeBSD: 85b945e6dd75df247515a44f1216877cef137ae3 $
 */
 
 /*

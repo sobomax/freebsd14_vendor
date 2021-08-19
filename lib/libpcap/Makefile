@@ -1,5 +1,5 @@
 # Makefile for libpcap
-# $FreeBSD$
+# $FreeBSD: ea6405298c2e61304ba296a5abf58411dff6897b $
 
 SHLIBDIR?= /lib
 

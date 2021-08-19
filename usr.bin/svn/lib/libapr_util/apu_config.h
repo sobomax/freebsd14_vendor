@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1e709f71da7e7d4c093260134ca3b16fc28604a6 $ */
 
 /* include/private/apu_config.h.  Generated from apu_config.h.in by configure.  */
 /* include/private/apu_config.h.in.  Generated from configure.in by autoheader.  */

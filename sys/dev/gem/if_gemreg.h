@@ -28,7 +28,7 @@
  *
  *	from: NetBSD: gemreg.h,v 1.9 2006/11/24 13:01:07 martin Exp
  *
- * $FreeBSD$
+ * $FreeBSD: b5aa06edd5bfacf2744dbfb5d7c1884dbbbac617 $
  */
 
 #ifndef	_IF_GEMREG_H

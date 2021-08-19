@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 31f5aab012b7496b2cb14845932819e7ac294b26 $
 Set to not build radius support into various applications, like
 .Xr pam_radius 8
 and

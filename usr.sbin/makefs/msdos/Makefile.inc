@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: 6a33617a46fbb49293dc82b3cc6b2580593476ac $
 #
 
 MSDOS=		${SRCTOP}/sys/fs/msdosfs

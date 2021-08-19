@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c05a8b82eca58484d13259bd8bfd853f0efa142a $
  */
 #ifndef	ifinfo_h
 #define	ifinfo_h	1

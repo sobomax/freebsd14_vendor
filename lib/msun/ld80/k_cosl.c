@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6dde6adad2dd8c7f4b97c2e5d1e87b0c96c1c490 $");
 
 /*
  * ld80 version of k_cos.c.  See ../src/k_cos.c for most comments.

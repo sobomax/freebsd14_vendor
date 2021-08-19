@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 16afe5e5a489b447085abcf0d26eedce94b87f84 $
  *
  * XXX: Future stuff
  *

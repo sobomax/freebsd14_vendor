@@ -42,7 +42,7 @@
 #endif /* LIBC_SCCS and not lint */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8df29e6ba75011f59a85b49ebaa580d9b18acca7 $");
 
 #define	_JB_FP		0x0
 #define	_JB_PC		0x8

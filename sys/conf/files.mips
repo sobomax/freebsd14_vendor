@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD$
+# $FreeBSD: 1977fb9dcce2cab6d7a10a5e26e2791f43a8d85c $
 #
 
 # Arch dependent files

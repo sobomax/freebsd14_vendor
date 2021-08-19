@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c68f68ab54158db23bbd8b038c48f2bede0957c4 $
 
 PROG_CXX=	bugpoint
 

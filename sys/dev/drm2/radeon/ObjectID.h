@@ -25,7 +25,7 @@
 #define _OBJECTID_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: db559da6a2d0e59fd660b49e8cafa523dd94f54f $");
 
 #if defined(_X86_)
 #pragma pack(1)

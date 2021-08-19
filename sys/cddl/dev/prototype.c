@@ -2,7 +2,7 @@
  * This file is freeware. You are free to use it and add your own
  * license.
  *
- * $FreeBSD$
+ * $FreeBSD: 6e31f19d5ce6501b10e41c0e5090b732587b6dbf $
  *
  */
 

@@ -1,7 +1,7 @@
 /*
  * Intel 8237 DMA Controller
  *
- * $FreeBSD$
+ * $FreeBSD: 5d4b3f4c8ffcc6e42561d790867d2abd4569fca7 $
  */
 
 #define	DMA37MD_SINGLE	0x40	/* single pass mode */

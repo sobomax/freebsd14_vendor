@@ -30,7 +30,7 @@
  *
  *	@(#)stab.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD$
+ * $FreeBSD: 9abff130ff7d9e3a5333354b8dc16746df8382fb $
  */
 
 #ifndef _STAB_H_

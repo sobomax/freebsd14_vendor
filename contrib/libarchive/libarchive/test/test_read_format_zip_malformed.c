@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f1160648e759c9e2c5c07fd3bf0809a06c1eb661 $");
 
 static void
 test_malformed1(void)

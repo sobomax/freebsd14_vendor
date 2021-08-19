@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 12272e39d45dfc5d6d685485fa8145e43cbe4acf $");
 
 #include "opt_ddb.h"
 #include "opt_turnstile_profiling.h"

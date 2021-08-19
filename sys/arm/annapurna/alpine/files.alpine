@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4d97f40d973650f9ba71793c269f2e04828699b5 $
 
 arm/versatile/sp804.c				standard
 dev/uart/uart_dev_ns8250.c			optional	uart

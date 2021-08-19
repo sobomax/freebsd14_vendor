@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 69dd8083acce557c7bfc2d888b4bf6f14fb912a6 $
 
 .PATH: ${SRCTOP}/sys/geom/vinum
 

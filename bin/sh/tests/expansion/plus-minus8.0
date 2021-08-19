@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: beba009b06601475e27d424b75a228149122dce4 $
 
 set -- 1 2 3 4 5 6 7 8 9 10 11 12 13
 [ "${#+hi}" = hi ] || echo '${#+hi} wrong'

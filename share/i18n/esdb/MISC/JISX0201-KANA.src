@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 21f7f1ec21235f48a794570e7075f60c4734a77d $ 
 # $NetBSD: Shift_JIS.src,v 1.2 2003/07/16 06:57:36 tshiozak Exp $
 
 NAME		"JISX0201-KANA"

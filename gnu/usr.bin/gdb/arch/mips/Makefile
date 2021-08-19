@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 24e9cfce25e505d69c77b1a91fec927e66ebf5b7 $
 
 #
 # XXX Should set DEFAULT_BFD_VEC based on target.

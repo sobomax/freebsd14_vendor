@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 20d5e144574ebd79f7a0970619b1d92b5072caab $ */
 OUTPUT_FORMAT("elf64-x86-64-freebsd", "elf64-x86-64-freebsd", "elf64-x86-64-freebsd")
 OUTPUT_ARCH(i386:x86-64)
 ENTRY(btext)

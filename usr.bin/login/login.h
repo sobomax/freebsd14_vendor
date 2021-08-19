@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3a27d46d55204ecca67e06142a8afd0e1189a6ed $
  */
 
 void	login_fbtab(char *, uid_t, gid_t);

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD$
+# $FreeBSD: a16059b6fa9c8a1e42bafd23b70b39332d6eb902 $
 
 # A regular expression matching the format of an RFC-5424 log line header,
 # including the timestamp up through the seconds indicator; it does not include

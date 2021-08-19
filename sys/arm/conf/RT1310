@@ -1,7 +1,7 @@
 #
 # Custom kernel for RT1310 boards.
 #
-# $FreeBSD$
+# $FreeBSD: f2e219f2263ca5394edc7bdaa03b062f0be32d12 $
 #
 
 ident		RT1310

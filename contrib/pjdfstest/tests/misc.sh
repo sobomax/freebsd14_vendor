@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9dba27d81d3b11bb9c5b8dae73e2025a46a8ed54 $
 
 ntest=1
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fd0afdfa0300f2edbe45f373fc389b5b17c3217a $
 true() {
 	false
 }

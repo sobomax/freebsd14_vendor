@@ -34,7 +34,7 @@
  * bytes. Ignore fields with the 'pad' prefix - they are only present for
  * alignment purposes.
  *
- * $FreeBSD$
+ * $FreeBSD: a337d83839229d4105b35addf4303ee1c5faa041 $
  */
 
 #ifndef _MACHINE_ELAN_MMCR_H_

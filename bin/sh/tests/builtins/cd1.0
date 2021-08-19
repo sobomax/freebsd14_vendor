@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bc5108e6be3b483ea3e66d69549af267d2458489 $
 set -e
 
 P=${TMPDIR:-/tmp}

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: b80a72697a2690a63a208db95cbf5d8c9bab7efd $
 Set to not build or install
 .Xr bhyve 8 ,
 associated utilities, and examples.

@@ -1,5 +1,5 @@
 #	from: @(#)bsd.lib.mk	5.26 (Berkeley) 5/2/91
-# $FreeBSD$
+# $FreeBSD: 5990785716e878c459738a272dc10cb7f84e9c4c $
 #
 
 .include <bsd.init.mk>

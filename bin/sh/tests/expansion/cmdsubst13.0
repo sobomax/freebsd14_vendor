@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7fdc5b217f196f0d4686376def5553714d70963f $
 
 x=1 y=2
 [ "$(

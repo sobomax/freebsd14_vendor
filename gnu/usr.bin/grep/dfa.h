@@ -17,7 +17,7 @@
 
 /* Written June, 1988 by Mike Haertel */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 4cdbe7a4f7f981ba31fd4bb408ac95c192442386 $ */
 
 /* FIXME:
    2.  We should not export so much of the DFA internals.

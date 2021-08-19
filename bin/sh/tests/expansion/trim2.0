@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 619ef651cce68937ff562d181084478339190093 $
 
 e= q='?' a='*' t=texttext s='ast*que?non' p='/et[c]/' w='a b c' b='{{(#)}}'
 h='##'

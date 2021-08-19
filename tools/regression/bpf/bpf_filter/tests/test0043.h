@@ -1,7 +1,7 @@
 /*-
  * Test 0043:	Check boundary conditions (BPF_LD+BPF_H+BPF_ABS)
  *
- * $FreeBSD$
+ * $FreeBSD: be1855d3d8923c01d22b20102cecdf0fb550ee2a $
  */
 
 /* BPF program */

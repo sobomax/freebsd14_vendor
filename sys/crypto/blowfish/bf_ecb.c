@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a40c06e0c60ff5987976a048e624273a7cebe718 $");
 
 #include <sys/types.h>
 #include <crypto/blowfish/blowfish.h>

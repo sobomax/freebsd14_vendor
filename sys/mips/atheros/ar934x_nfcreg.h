@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 12894327bb4d9adac5e4f8390e6f6a134c8f3518 $
  */
 /*
  * Register definitions for the built-in NAND controller

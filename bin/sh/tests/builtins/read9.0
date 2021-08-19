@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 080549889839aae62644c32594a43375bb2fd07a $
 
 empty=''
 read a b c <<EOF

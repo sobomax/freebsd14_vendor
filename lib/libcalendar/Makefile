@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d217a10a7f5c1cd17088ab07d6d7d2822962ed9d $
 
 PACKAGE=	lib${LIB}
 LIB=	calendar

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cdb462c2a05a854f493a3cddbe6223c6c7cfecf0 $");
 
 #define	RB_AUGMENT(entry) dmar_gas_augment_entry(entry)
 

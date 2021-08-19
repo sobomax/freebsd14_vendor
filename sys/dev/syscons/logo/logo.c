@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1c5aa228e3fcf96d7ad063322f93949b577ad5e2 $ */
 
 #define	LOGO_WIDTH	66
 #define	LOGO_HEIGHT	69

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8f3455f2ebac7f259646adc5d7fdda00c7c35136 $
 
 PROG=	wlandebug
 MAN=	wlandebug.8

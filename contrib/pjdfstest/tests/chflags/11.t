@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/11.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 7fb7258ee6db9db2984a7e4c4f1921de41b4eb09 $
 
 desc="chflags returns EPERM if a user tries to set or remove the SF_SNAPSHOT flag"
 

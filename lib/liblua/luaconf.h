@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b24645b8915f370b3915efcb5d7a753067803d01 $ */
 /*
 ** $Id: luaconf.h,v 1.259.1.1 2017/04/19 17:29:57 roberto Exp $
 ** Configuration file for Lua

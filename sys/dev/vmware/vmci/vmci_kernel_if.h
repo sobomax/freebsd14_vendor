@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD$
+ * $FreeBSD: fc23eefe98e0363a0afe97536a683efd13907ac4 $
  */
 
 /* This file defines helper functions */

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: a656a88ac6641e9b3673652266a798a6e1c8d3d8 $
 #
 
 # PROVIDE: DAEMON

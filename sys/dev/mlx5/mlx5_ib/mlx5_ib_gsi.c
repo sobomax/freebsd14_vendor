@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 31d1c11a2d35f1a024752bf1dc45b5b9757161bd $
  */
 
 #include "mlx5_ib.h"

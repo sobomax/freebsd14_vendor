@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 76bbb6ad5dd105cb89435aa4f3637e196ef0429b $
 #
 
 # PROVIDE: ftp-proxy

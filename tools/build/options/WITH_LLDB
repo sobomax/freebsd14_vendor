@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: bbcba44b8eb8cb342f0dad1c373bf09168213760 $
 Set to build the LLDB debugger.

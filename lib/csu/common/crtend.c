@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 19fe5eb8780bdcddc5a347e418c74977fa39f7b7 $");
 
 #include "crt.h"
 

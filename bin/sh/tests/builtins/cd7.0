@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9adda86c1aedee1672264174383b5d662773b4f7 $
 
 set -e
 cd /usr/bin

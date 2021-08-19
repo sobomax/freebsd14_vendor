@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 01b924226c45d36492284c7aff7c5201c62fceae $
 
 CRUNCHED=	fixit
 

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)stat_flags.c	8.1 (Berkeley) 5/31/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 174c6742e23242ac43101ca8980473507b236bca $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

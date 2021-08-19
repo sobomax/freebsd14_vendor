@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2002/11/24 20:40:05 max Exp $
-# $FreeBSD$
+# $FreeBSD: 1e970c9a568ec22ef590014383d0827fd7c84962 $
 
 .PATH: ${SRCTOP}/sys/netgraph/bluetooth/hci
 

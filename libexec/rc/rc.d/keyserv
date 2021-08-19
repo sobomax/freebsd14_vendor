@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: d2f4a291fbca08a10cd6fa669c8664ad9dd4b4d9 $
 #
 
 # Start keyserv if we are running Secure RPC

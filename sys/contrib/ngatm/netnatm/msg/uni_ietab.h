@@ -1,6 +1,6 @@
 /* This file was created automatically
  * Source file: $Begemot: libunimsg/atm/msg/ie.def,v 1.3 2003/09/19 11:58:15 hbb Exp $
- * $FreeBSD$
+ * $FreeBSD: 62cba33cd91d2aea593d66a1c1227feff835a4f5 $
  */
 
 

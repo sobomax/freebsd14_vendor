@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 0e4fa4303b9845fce36f334e0f566814184e25bd $
 
 LIB=	wind
 LDFLAGS=	-Wl,--no-undefined

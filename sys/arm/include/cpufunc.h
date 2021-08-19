@@ -40,7 +40,7 @@
  *
  * Prototypes for cpu, mmu and tlb related functions.
  *
- * $FreeBSD$
+ * $FreeBSD: 00fc1ba5bba14a73c3adcef1740ee518e7350ecd $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_

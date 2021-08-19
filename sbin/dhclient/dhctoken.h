@@ -41,7 +41,7 @@
  * see ``http://www.vix.com/isc''.  To learn more about Vixie
  * Enterprises, see ``http://www.vix.com''.
  *
- * $FreeBSD$
+ * $FreeBSD: 26c81aa734dcf196d362c8672502600c41da6672 $
  */
 
 #define SEMI ';'

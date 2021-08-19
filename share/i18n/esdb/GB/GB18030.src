@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 0e7bed156f1d117353292843d2994403f6e8a347 $ 
 # $NetBSD: GB18030.src,v 1.1 2006/11/23 03:25:25 tnozaki Exp $
 
 NAME		"GB18030"

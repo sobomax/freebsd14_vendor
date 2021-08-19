@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)softdep.h	9.7 (McKusick) 6/21/00
- * $FreeBSD$
+ * $FreeBSD: 1e2946ab9fb9acedba3f3e2a4df23222125ce651 $
  */
 
 #include <sys/queue.h>

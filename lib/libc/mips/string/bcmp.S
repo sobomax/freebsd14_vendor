@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ffcaeeb1a3fafe04776111ecfc63c09797ccb6fa $");
 
 #define _LOCORE		/* XXX not really, just assembly-code source */
 #include <machine/endian.h>	/* LWLO/LWHI, SWLO/SWHI */

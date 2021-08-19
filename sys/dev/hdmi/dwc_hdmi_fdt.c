@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2bf717082f7160e8726154b5d9a2de75f6435afe $");
 
 /*
  * HDMI core module

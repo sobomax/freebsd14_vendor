@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 74a458ebf58eb844134a2ddf20e713d6fadcbb33 $
 
 .PATH:		${SRCTOP}/sys/dev/imcsmb
 KMOD		= imcsmb

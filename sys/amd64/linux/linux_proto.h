@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: a00267241499b74224484bc9b276d64173cb1603 $
  */
 
 #ifndef _LINUX_SYSPROTO_H_

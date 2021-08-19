@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2dbd1f7f4518f79bb1bc2017b9eae9a1d882b060 $
 #	from: @(#)gettytab	5.14 (Berkeley) 3/27/91
 #
 # Most of the table entries here are just copies of the old getty table,

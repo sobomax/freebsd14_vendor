@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 460d1a26790860533dcb23deb040a12eff8574bd $
 #
 # Remove stale persistent host status files
 #

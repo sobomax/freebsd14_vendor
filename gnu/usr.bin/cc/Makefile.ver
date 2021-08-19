@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c7f460560ff152ed3367b09ccbae85b8f2d0bf43 $
 
 BASEVER!=	cat ${GCCDIR}/BASE-VER
 DATESTAMP!=	cat ${GCCDIR}/DATESTAMP

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 00843943600ca9765007ccdd46b3c80ecfde1c9d $ */
 
 #define iprintf(ident,args...)	do { printf("%-" # ident "s", ""); \
 				printf(args);}while(0)

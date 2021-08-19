@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bdc25f711a67007a47a53587de768e8c9d06294b $
 
 PACKAGE=runtime
 NVMECONTROLDIR=	${SRCTOP}/sbin/nvmecontrol

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0e9464822e60c9de86b1964a52adc070e4c18eba $");
 
 /*
  * I2C support for the bti2c chipset.

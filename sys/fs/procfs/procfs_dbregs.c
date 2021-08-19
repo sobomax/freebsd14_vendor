@@ -42,7 +42,7 @@
  *
  * From:
  *	$Id: procfs_regs.c,v 3.2 1993/12/15 09:40:17 jsp Exp $
- * $FreeBSD$
+ * $FreeBSD: 8d2206d2995c5631289631e02c152767278bbfd6 $
  */
 
 #include <sys/param.h>

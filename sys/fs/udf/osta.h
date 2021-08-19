@@ -1,7 +1,7 @@
 /*
  * Prototypes for the OSTA functions
  *
- * $FreeBSD$
+ * $FreeBSD: 7a889c2bb8911d3386f47f7eca53ecb9af40afd1 $
  */
 
 /*-

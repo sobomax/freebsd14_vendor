@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cdab6d09e9db1e2cc47d85bcb71184ba05e6622d $");
 
 #include "efx.h"
 #include "efx_impl.h"

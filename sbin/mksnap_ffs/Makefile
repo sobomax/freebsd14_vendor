@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a79ae2f7341723fc7a01aa0b5ddbb7e965ab0749 $
 
 .PATH:	${.CURDIR:H}/mount
 

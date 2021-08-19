@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5cfd7e29edb06945400d7c5b1a83934a06b8d7bb $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zinject
 

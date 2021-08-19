@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 28f00cde0f9f5b5817e9f5190d5409f163cdaef8 $
 
 v=1
 eval ": $(printf '${v-${w\372}}')"

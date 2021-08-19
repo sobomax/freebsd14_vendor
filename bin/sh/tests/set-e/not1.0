@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 21c089a23221ff57a08847f9c843beb4671f47e0 $
 set -e
 ! true
 exit 0

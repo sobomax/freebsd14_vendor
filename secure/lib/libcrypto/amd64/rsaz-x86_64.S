@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 3ba29ea52dd9f9891db5bb315ecf6deb2c635a15 $ */
 /* Do not modify. This file is auto-generated from rsaz-x86_64.pl. */
 .text	
 

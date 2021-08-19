@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 93bf9672db040eaba20279277bee522033827723 $
 
 SSP_CFLAGS=
 

@@ -26,7 +26,7 @@
 /* Tests functions in lib/libcam/camlib.c */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5fdfbf19937672e03676c7283114650a71d2645a $");
 
 #include <errno.h>
 #include <fcntl.h>

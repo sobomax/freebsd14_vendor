@@ -3,7 +3,7 @@
 #
 # See the IPFILTER.LICENCE file for details on licencing.
 #
-# $FreeBSD$
+# $FreeBSD: 04e97fb30365fb25c4c19520c1ddd02485458777 $
 #
 
 all:

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdlib.h	8.5 (Berkeley) 5/19/95
- * $FreeBSD$
+ * $FreeBSD: b2264784ed80b81546f396da379f9ffe62eadfd4 $
  */
 
 #ifndef _STDLIB_H_

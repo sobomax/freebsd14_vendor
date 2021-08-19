@@ -1,4 +1,4 @@
-$ $FreeBSD$
+$ $FreeBSD: ca84929b9eeda8faf4572932e35068093dd7a5de $
 $
 $ Message catalog for C locale (template)
 $

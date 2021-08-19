@@ -18,7 +18,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
-# $FreeBSD$
+# $FreeBSD: 5f5424e71039e2e96ab420d8b6affd67741de9de $
 
 # The number of lines plus one in the on-the-fly decompression script
 lines=19

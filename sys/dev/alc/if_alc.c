@@ -30,7 +30,7 @@
 /* Driver for Atheros AR813x/AR815x PCIe Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1bafdab235d01aff5381d7911c8fe23c194e2ec6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

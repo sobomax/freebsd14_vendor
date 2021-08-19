@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD$
+# $FreeBSD: 6cc9b69d2b0e05153b728f4a2f9ea3f0cd684b25 $
 
 SRCS+=	\
 	__aeabi_read_tp.S \

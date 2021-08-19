@@ -1,6 +1,6 @@
 #!/bin/csh
 #
-# $FreeBSD$
+# $FreeBSD: 2534b01b5a0fd8d356253694d8dd049f00846c9e $
 #
 # Run tcpp -s -p 8 on the server, then this on the client.
 #

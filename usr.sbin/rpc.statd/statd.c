@@ -38,7 +38,7 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b44efafd3d10036cd7f170aabfe956c9af38b382 $");
 
 #include <err.h>
 #include <errno.h>

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 77c9870310225718b257bbac761666f774f98ec0 $
  *
  * Borrowed from FreeBSD's <sys/endian.h>
  */

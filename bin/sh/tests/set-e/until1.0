@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 71ea7f2cf704659d43b48e8278f1c51fd07ffedb $
 set -e
 until false; do
 	break

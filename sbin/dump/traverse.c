@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)traverse.c	8.7 (Berkeley) 6/15/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 46f7e8a854a8ed917ec88ccecdaefabbee5f5d61 $";
 #endif /* not lint */
 
 #include <sys/param.h>

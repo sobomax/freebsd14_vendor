@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d7ec0b93d0ee9beffa17285064d525fb151f672f $");
 
 /*
  * ld128 version of k_tan.c.  See ../src/k_tan.c for most comments.

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 39364efe31a2d04bc0d6963099920257b5b9098e $
 #XXX: This should be used once those bits are merged back in the FSF repo.
 #. ${srcdir}/emulparams/armelf_fbsd.sh
 #

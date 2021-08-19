@@ -1,6 +1,6 @@
 /*-
  *	$NetBSD: setjmp.h,v 1.3 1998/09/16 23:51:27 thorpej Exp $
- * $FreeBSD$
+ * $FreeBSD: b95a1115be9afb0f08ff0dc0ab87ea3b78b02bbe $
  */
 
 #ifndef _MACHINE_SETJMP_H_

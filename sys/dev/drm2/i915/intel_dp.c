@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 67dd543afb4700938276e254039cfd5404b38d41 $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>

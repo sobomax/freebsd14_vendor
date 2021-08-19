@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)banner.c	8.4 (Berkeley) 4/29/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3d887ae6d4f1b67e749c2618918851d105a411ca $");
 
 /*
  * banner - prints large signs

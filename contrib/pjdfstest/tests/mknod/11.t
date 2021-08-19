@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/11.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: e4d2da80121ab90d8e2ef31d59d2c6aed52de530 $
 
 desc="mknod creates device files"
 

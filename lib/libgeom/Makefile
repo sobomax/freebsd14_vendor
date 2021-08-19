@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b7877cc56ece693844e516810f7347e838ad3ad4 $
 
 PACKAGE=lib${LIB}
 LIB=	geom

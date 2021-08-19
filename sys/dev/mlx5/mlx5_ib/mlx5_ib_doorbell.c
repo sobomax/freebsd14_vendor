@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 490363fe3bc99a79973bd7eefbf901d3ff983907 $
  */
 
 #include <linux/kref.h>

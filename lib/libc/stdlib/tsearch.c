@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a15c2c20517b390cbd49c483ba53095e96b7d640 $");
 
 #define	_SEARCH_PRIVATE
 #include <search.h>

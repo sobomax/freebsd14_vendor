@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 60afe9501547a1788477c9c500c307c598352ba8 $");
 
 #include <opencrypto/cbc_mac.h>
 #include <opencrypto/xform_auth.h>

@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.8 (Berkeley) 7/28/90
-# $FreeBSD$
+# $FreeBSD: 0cc473d2d80e0728ae220dbebf53fab06a225891 $
 
 YPSERV=${SRCTOP}/usr.sbin/ypserv/common
 .PATH: ${YPSERV}

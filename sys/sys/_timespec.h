@@ -30,7 +30,7 @@
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
  * from: FreeBSD: src/sys/sys/time.h,v 1.43 2000/03/20 14:09:05 phk Exp
- *	$FreeBSD$
+ *	$FreeBSD: d12d1f740e613a6d270050508ac3734f24605648 $
  */
 
 #ifndef _SYS__TIMESPEC_H_

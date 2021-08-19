@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: db8db820036f2b2650cb76f4dda4e5f3a0db19a3 $
 
 .PATH:	${SRCTOP}/sys/dev/iicbus
 KMOD	= rtc8583

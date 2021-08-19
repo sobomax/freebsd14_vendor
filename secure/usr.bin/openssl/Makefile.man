@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 34951d63abb110bf67b720fb124ab5ec2ca5e7b8 $
 MAN+= CA.pl.1
 MAN+= asn1parse.1
 MAN+= ca.1

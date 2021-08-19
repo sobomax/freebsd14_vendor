@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 566794fa6f4b81f62aa89db6c991933f13c9a0c2 $
 
 PROG=	acpidb
 SRCS=	acpidb.c

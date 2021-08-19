@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: 0487532cbb018a1274b547c1511e394bfbafe0ce $
  */
 #include <sys/param.h>
 #include <sys/queue.h>

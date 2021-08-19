@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 2f63652d97994e75744fb16685b26f4191a11815 $
 
 This is a very cut down implementation of a "busybox" style binary
 for FreeBSD.

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap_raw.c,v 1.12 2003/09/14 23:29:06 max Exp $
- * $FreeBSD$
+ * $FreeBSD: a31bae225fce86b4c3f0b2baca76451b1bb8c0d0 $
  */
 
 #include <sys/param.h>

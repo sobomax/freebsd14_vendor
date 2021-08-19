@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 04723fd08ad3482e581c3b957bce44d6a4a549f8 $
 #
 
 usage_output='Usage: ctfconvert'

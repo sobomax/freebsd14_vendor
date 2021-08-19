@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 31ad0d9302be4421f42f337a195495e01e8d8d13 $
 
 .include "${.CURDIR}/Makefile.i386"
 

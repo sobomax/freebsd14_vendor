@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: beef3c429c914374879b352044a76bef1baad899 $
 
 #CFLAGS+=	-DGLXIIC_DEBUG
 

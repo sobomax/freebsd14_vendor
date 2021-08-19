@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: 5ace55491b744ab2fe849a2814ec7cc6680818d9 $
 
 #
 # ident	"@(#)cleanup.ksh	1.2	07/01/09 SMI"

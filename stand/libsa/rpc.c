@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0f011e13a309cba7357b270e7790e0284dc9709d $");
 
 /*
  * RPC functions used by NFS and bootparams.

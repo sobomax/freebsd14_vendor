@@ -1,5 +1,5 @@
 # @(#) Makefile 1.23 97/03/21 19:27:20
-# $FreeBSD$
+# $FreeBSD: e6973960d27db3be3268d2e28a09e394933c5251 $
 
 what:
 	@echo

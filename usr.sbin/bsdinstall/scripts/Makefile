@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 11c4564ea909bf6ddea58621017ab252628362d3 $
 
 SCRIPTS= auto adduser bootconfig checksum config docsinstall entropy hardening \
 	 hostname jail keymap mirrorselect mount netconfig netconfig_ipv4 \

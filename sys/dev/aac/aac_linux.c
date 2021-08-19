@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 02babb5c0576cb67f5c9b43eb8dae5a5026df057 $");
 
 /*
  * Linux ioctl handler for the aac device driver

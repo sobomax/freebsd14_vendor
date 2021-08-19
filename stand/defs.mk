@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6ae9069664ac7316b04c303559d54a90982c33eb $
 
 .if !defined(__BOOT_DEFS_MK__)
 __BOOT_DEFS_MK__=${MFILE}

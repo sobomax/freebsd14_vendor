@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: kbd.c,v 1.4 2006/09/07 21:06:53 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 814c130a7ccd73a445e9cc750edf1fd8689fe528 $
  */
 
 #include <sys/consio.h>

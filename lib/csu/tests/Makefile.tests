@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fa99e787fbea62fc68c22485d76da2e12ea43c32 $
 
 ATF_TESTS_C+=	init_test
 ATF_TESTS_C+=	fini_test

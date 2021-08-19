@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 05c1322b53a51042fe1a185df6e091db3179fef3 $
 
 # DCE 1.1 UUID implementation sources
 

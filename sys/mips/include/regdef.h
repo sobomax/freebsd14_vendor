@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regdef.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 5a6b57f3067263a9a237e2fef223140aa3b6210f $
  */
 
 #ifndef _MIPS_REGDEF_H

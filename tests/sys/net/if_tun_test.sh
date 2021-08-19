@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 64dc004e3a06fe95b3c05850205402339f7d2f60 $
 
 . $(atf_get_srcdir)/../common/vnet.subr
 

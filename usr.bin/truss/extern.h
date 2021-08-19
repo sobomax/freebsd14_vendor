@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: dd160a7d2cc2a474a8d005eeb53c7571e9c1e041 $
  */
 
 extern int print_line_prefix(struct trussinfo *);

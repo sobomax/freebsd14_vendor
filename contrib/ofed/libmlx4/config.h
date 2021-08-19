@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: af75292ef03ebc1fdd5c5fe8cacdedc9a9d37735 $ */
 
 #ifdef	__LP64__
 #define	SIZEOF_LONG 8

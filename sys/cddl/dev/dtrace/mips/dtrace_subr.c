@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD$
+ * $FreeBSD: 56ae129370fdff90884dcb50f5d68342ec625015 $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 56ae129370fdff90884dcb50f5d68342ec625015 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

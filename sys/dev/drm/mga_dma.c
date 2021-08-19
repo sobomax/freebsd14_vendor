@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b3a7a98a5d07f9ea32ef8a178c85d1acf96efc84 $");
 
 /**
  * \file mga_dma.c

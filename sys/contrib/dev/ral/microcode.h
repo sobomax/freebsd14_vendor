@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: c7109d0fe30ffba5f2bfd4b1b354c0588bd9840d $	*/
 /*	$OpenBSD: microcode.h,v 1.7 2010/04/05 14:14:02 damien Exp $	*/
 
 /*-

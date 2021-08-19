@@ -48,7 +48,7 @@ this code that are retained.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9187facc83016dcaa3232a09d16217115934c526 $");
 
 #pragma STDC FENV_ACCESS ON
 #include <fenv.h>

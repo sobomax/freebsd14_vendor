@@ -6,7 +6,7 @@
 # requires the cross-build world to be built the same.
 #   -adrian
 
-# $FreeBSD$
+# $FreeBSD: 5a77176fd3ac8781bd8fc240c1b5e5d9d6d49d0f $
 
 CRUNCH_PROGS_libexec+=	telnetd
 CRUNCH_PROGS_usr.bin+=	telnet

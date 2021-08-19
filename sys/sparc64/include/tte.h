@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: pmap.v9.h,v 1.10.2.6 1999/08/23 22:18:44 cp Exp
- * $FreeBSD$
+ * $FreeBSD: 527f1bad882c77338664d64c63e30895401d9c2a $
  */
 
 #ifndef	_MACHINE_TTE_H_

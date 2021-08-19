@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)lam.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 693e9903cd363d3b78eb6ca17cbdce4e02063b9a $");
 
 /*
  *	lam - laminate files

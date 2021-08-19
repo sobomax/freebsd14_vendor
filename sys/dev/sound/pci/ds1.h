@@ -5,7 +5,7 @@
  *	author		: Taichi Sugiyama
  *	create Data     : 28/Sep/99
  * =======================================================================
- * $FreeBSD$
+ * $FreeBSD: ad4e829cbfee177c5d90307ecd5f686ae5544c1f $
  */
 
 

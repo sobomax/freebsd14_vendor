@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: provider.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 532cdac8cd9fbcffbffd1a1c74fa6ffb48488dfb $
  */
 
 #include <sys/queue.h>

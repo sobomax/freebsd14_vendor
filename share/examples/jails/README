@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f3fea4b8d7b68488b8e47ec7ec736d4c04db8d94 $
 
 The below 4 samples require a VIMAGE enabled kernel:
 

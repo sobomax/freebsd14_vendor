@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e927b9278fe89978b50f7ded67812c6b90bde048 $
 
 .PATH:	${SRCTOP}/sys/dev/acpi_support
 

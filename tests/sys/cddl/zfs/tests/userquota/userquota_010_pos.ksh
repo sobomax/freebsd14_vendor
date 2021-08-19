@@ -50,7 +50,7 @@
 #
 ###############################################################################
 
-# $FreeBSD$
+# $FreeBSD: 10a72244e60890bc3bd9181d27dc1d371c48a1f4 $
 
 . $STF_SUITE/include/libtest.kshlib
 . $STF_SUITE/tests/userquota/userquota_common.kshlib

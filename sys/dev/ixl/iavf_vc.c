@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 2a77f390faaab3bf0e944a84f2010d4c51081b18 $*/
 
 /*
 **	Virtual Channel support

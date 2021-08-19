@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 219a7b67d6ece241697bc70e129358ba63c50162 $
  */
 
 /* CLOOP format and related constants */

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c6a98572564ddb1197905d59eb93976f53c46d38 $
 
 ATF_TESTS_C+=		memcmp_test
 ATF_TESTS_C+=		memset_s_test

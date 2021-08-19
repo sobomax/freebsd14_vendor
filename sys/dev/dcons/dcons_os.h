@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD$
+ * $FreeBSD: 7421b4734d78e5cd1d38f6cde5142a84d4621449 $
  */
 
 typedef void (*dcons_poll_fn)(void *, int);

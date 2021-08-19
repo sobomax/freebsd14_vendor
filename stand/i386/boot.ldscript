@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 2f2a2d3e936e801e4b95eba30a273011d544c9a9 $ */
 /* Simplified linker script for the boot loaders. */
 OUTPUT_FORMAT("elf32-i386-freebsd")
 OUTPUT_ARCH(i386)

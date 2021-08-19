@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e262b4d764b56fd06de2862aceb8ae1131b27557 $
 
 PROG=test00
 MAN=

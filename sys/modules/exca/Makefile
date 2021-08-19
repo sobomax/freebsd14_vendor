@@ -1,4 +1,4 @@
- # $FreeBSD$
+ # $FreeBSD: 5135ff24adb304e82154a577e2554b63fabb314b $
 
 .PATH: ${SRCTOP}/sys/dev/exca
 

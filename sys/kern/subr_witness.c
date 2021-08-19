@@ -87,7 +87,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3d140beb70cfe89dcbcf21a4ad0231347ff48bb2 $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"

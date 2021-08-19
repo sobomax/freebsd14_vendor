@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5aad7c9c9f9f959486f4a8163f983cbc2146bd9a $
 # $OpenBSD: queue1,v 1.4 2006/10/07 04:48:01 mcbride Exp $
 
 ext_if = "dc0"

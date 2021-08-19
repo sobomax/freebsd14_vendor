@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c37cd62e49ec110944a19e161dca7f26999beee6 $");
 
 /*
  * func_ptr_type

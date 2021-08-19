@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 0dc883a54c9241ea8852bfd9c9a97d935adef52b $ */
 /* $NetBSD: citrus_aliasname_local.h,v 1.2 2009/01/11 02:46:24 christos Exp $ */
 
 /*-

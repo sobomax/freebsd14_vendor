@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c18b9b7646c3a6b890d645386211364f3896fbbb $
 .if !target(_DIRDEP_USE)
 # we are the 1st makefile
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: daa93f68c36ec8d2e5457e5a616cb59f09ce1a49 $
 
 ARCH_SRCS = e_exp.S e_fmod.S e_log.S e_log10.S \
 	    e_remainder.S e_sqrt.S s_ceil.S s_copysign.S \

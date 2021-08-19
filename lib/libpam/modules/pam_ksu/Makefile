@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 26f3f850daaa448a63adf6eaefa4286cd68fabca $
 
 LIB=	pam_ksu
 SRCS=	pam_ksu.c

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 39969b9f5baa6d67cb50fd70a42bb41df39fcdb1 $");
 
 /*
  * Driver for SMSC LAN91C111, may work for older variants.

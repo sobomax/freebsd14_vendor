@@ -26,7 +26,7 @@
  *
  *	from: NetBSD: machfbreg.h,v 1.1 2002/10/24 18:15:57 junyoung Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 8990a4e3993a8f349c8233fbfc1fdac8de61b7cb $
  */
 
 #ifndef _DEV_FB_MACHFB_H_

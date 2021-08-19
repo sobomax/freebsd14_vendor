@@ -29,7 +29,7 @@
 #define __BXE_DUMP_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 49850035a037388da1d7c388e5b6a32f412ba08d $");
 
 /* WaitP Definitions */
 #define DRV_DUMP_XSTORM_WAITP_ADDRESS    0x2b8a80

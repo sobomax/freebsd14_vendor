@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dabba42b3f3137740fa9ecffc32f3137d4a1c8a7 $
 
 use strict;
 use warnings;

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7ae719e70ca90d22930acb655639f17619771994 $
 
 .PATH: ${SRCTOP}/sys/fs/tmpfs
 

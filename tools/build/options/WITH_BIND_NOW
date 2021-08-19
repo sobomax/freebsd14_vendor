@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 02e4c37352b4fc10b6d0d66b2a63245181c29a19 $
 Build all binaries with the
 .Dv DF_BIND_NOW
 flag set to indicate that the run-time loader should perform all relocation

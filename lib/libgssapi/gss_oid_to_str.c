@@ -32,7 +32,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/* $FreeBSD$ */
+/* $FreeBSD: 836b149676d864b8b8c1b6f248b44bfa06212c4b $ */
 
 #include <gssapi/gssapi.h>
 #include <stdio.h>

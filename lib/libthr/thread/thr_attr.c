@@ -94,7 +94,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 833cfbbbc22d6ad25e28d37b63333c3105f81692 $");
 
 #include "namespace.h"
 #include <errno.h>

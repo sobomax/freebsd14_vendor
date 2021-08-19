@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9fe573cad2192e5731fadc539fe7a6e4c8b5f724 $
 
 .if ${TARGET_ARCH:Marm*eb} != ""
 NATIVE_EMULATION= armelfb_fbsd

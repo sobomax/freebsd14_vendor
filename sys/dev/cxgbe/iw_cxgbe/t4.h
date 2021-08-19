@@ -30,7 +30,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: 70385b4ff6b6e8e7c3be7f27d4f16a9de3429313 $
  */
 #ifndef __T4_H__
 #define __T4_H__

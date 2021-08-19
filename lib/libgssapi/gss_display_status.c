@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD$
+ *	$FreeBSD: b8ff12c4c3cb663dcb30fe36bccdf29635b5f242 $
  */
 /*
  * Copyright (c) 1998 - 2005 Kungliga Tekniska Högskolan

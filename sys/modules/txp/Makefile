@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c867e56b5aae6ffe61143e7fc0617c01303a7a39 $
 
 .PATH: ${SRCTOP}/sys/dev/txp
 

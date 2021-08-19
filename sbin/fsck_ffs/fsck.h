@@ -59,7 +59,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fsck.h	8.4 (Berkeley) 5/9/95
- * $FreeBSD$
+ * $FreeBSD: b05bc5f7a3c2bae5a4114949dcbd3df303ddf9cb $
  */
 
 #ifndef _FSCK_H_

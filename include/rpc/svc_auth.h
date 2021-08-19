@@ -31,7 +31,7 @@
  *
  *	from: @(#)svc_auth.h 1.6 86/07/16 SMI
  *	@(#)svc_auth.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD$
+ * $FreeBSD: e9b6cd4be4f3d406077ec49e389ead973ce48f39 $
  */
 
 /*

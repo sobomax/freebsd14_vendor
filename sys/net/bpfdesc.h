@@ -35,7 +35,7 @@
  *
  *      @(#)bpfdesc.h	8.1 (Berkeley) 6/10/93
  *
- * $FreeBSD$
+ * $FreeBSD: 7d23e06ec3a3fc4086210e448db604e8883833c4 $
  */
 
 #ifndef _NET_BPFDESC_H_

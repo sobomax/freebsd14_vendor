@@ -2,7 +2,7 @@
 #
 # Script for testing WPA2 w/ TKIP.
 #
-# $FreeBSD$
+# $FreeBSD: 8e542cad669d2e6e4783dc0b3d06943b52a05e46 $
 #
 PATH=.:$PATH
 . config

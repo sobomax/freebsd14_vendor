@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 72dd0a8831af5902d36f636058395b8f29beeb29 $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3616777e79554b74fd016eac5d708defa51be9cd $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

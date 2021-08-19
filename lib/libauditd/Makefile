@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: c29c32ceb12b947629aab7e33cb44625298580d4 $
 #
 
 PACKAGE=lib${LIB}

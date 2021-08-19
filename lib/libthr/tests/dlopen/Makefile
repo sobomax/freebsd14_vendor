@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bea70ec7cbd5000154527ae7eb4f1c9f6f4cf037 $
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread/dlopen
 

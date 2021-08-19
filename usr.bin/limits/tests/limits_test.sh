@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 63f60e8eedf5a3a8aad1febba1e187cd91800e93 $
 #
 
 # Make sure time(1) is consistent with the FreeBSD time command and not the

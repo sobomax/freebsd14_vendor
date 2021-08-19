@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)nec765.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD$
+ * $FreeBSD: e6b4887d512881a18ccc3518eb1940a61c566f0a $
  */
 
 /*

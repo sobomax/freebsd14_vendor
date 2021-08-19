@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 51092cb792b791e5a92b62a7c9ba78765501f633 $ */
 /*	$NetBSD: citrus_memstream.c,v 1.5 2012/03/13 21:13:31 christos Exp $	*/
 
 /*-

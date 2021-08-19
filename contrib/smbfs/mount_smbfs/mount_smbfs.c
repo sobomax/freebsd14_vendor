@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: mount_smbfs.c,v 1.17 2002/04/10 04:17:51 bp Exp $
- * $FreeBSD$
+ * $FreeBSD: 99f1cee8ed2e3f12627f7a491de06e52aa5c3a72 $
  */
 #include <sys/param.h>
 #include <sys/stat.h>

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 86a2fe3ced00bf875562be1fd3becae77ff24082 $
 #
 
 # PROVIDE: ypbind

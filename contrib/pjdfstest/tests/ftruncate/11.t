@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/11.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 32c2138bc823bbc47c8a8ea3d95cc25fd5532f8e $
 
 desc="truncate returns ETXTBSY the file is a pure procedure (shared text) file that is being executed"
 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 81f7a9b953acae0fadd65f72c6e8f9b354c5a6ed $
 
 SUBDIR+=	eeprom
 SUBDIR+=	ofwdump

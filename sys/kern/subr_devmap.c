@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7dace37744e66ac93784d5d0d1f1c9dcaaefe661 $");
 
 /* Routines for mapping device memory. */
 

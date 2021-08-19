@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4c5c9c030830385fee9580bcb953a475c5f7f67b $
 
 mips/sibyte/sb_machdep.c			standard
 mips/sibyte/sb_zbbus.c				standard

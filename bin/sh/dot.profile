@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 76ebfd5e61682c8732b18ae525453843beefb0cc $
 #
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:~/bin
 export PATH

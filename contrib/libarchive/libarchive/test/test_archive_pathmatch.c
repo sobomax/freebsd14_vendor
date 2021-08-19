@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 21cbdd7e078031f3fdf9857d9d2958c3e5d2cf4e $");
 
 #define __LIBARCHIVE_TEST
 #include "archive_pathmatch.h"

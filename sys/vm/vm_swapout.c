@@ -71,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0781b6eb0fd07cf7561b0d0dbd0b19ade69ee061 $");
 
 #include "opt_kstack_pages.h"
 #include "opt_kstack_max_pages.h"

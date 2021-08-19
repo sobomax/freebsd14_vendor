@@ -14,7 +14,7 @@
  * Portions of this software were developed by Julien Ridoux at the University
  * of Melbourne under sponsorship from the FreeBSD Foundation.
  *
- * $FreeBSD$
+ * $FreeBSD: 99ea2207be35439c74c7f4aa78ffe48aaab1fe32 $
  *
  * The is a FreeBSD version of the RFC 2783 API for Pulse Per Second 
  * timing interfaces.  

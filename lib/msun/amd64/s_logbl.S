@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$")
+__FBSDID("$FreeBSD: 370af7ca4cc715b1449aeab7a8ed28bdb52229a5 $")
 
 ENTRY(logbl)
 	fldt	8(%rsp)

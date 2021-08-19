@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 4c6f4ff4fbf27ce29e8b0f32764df615d3999ea1 $ */
 /* Do not modify. This file is auto-generated from x86_64-gf2m.pl. */
 .text	
 

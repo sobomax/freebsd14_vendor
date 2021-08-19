@@ -4,7 +4,7 @@
 .\"
 .\"	@(#)p2	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 8373c0ed9d583526f1f53bfff4f6ff664cc04912 $
 .SH
 3.6 I/O calls
 .PP

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0161186fdb7f1370c68d495e72b7f320eaecb48b $");
 
 #include "opt_param.h"
 #include "opt_mbuf_stress_test.h"

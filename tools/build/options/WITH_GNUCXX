@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: c49e7cd9e1c466c49d50a9e2159dcfd232a0706b $
 Build the GNU C++ stack (g++, libstdc++).
 This is the default on platforms where gcc is the system compiler.

@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 51c9c514e68b598e0f262afd22de7f465aa31153 $
 Set to not build the Clang C/C++ compiler during the regular phase of the build.

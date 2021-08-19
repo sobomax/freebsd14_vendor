@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ef44036bf3d82c2331700a22f098351b42cc041d $
 
 TESTSDIR=	${TESTSBASE}/sys/aio
 

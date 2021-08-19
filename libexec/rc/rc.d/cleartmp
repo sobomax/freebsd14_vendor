@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 72e6c3ee881a875b5b948afb51a12ee2a232b9c0 $
 #
 
 # PROVIDE: cleartmp

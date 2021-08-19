@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b185b15dd6491a8d56daae8b091f4bc1ffc91950 $");
 
 #ifdef GUPROF
 

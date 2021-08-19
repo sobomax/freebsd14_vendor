@@ -35,7 +35,7 @@
 
 /* #pragma ident	"@(#)svc_simple.c	1.18	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fcf4199e611ece1ec9757800c79595d256b22288 $");
 
 /*
  * svc_simple.c

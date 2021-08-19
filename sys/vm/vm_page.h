@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD$
+ * $FreeBSD: 9a5ffb27c325b372322f8ee5eb5ed7e27fd36595 $
  */
 
 /*

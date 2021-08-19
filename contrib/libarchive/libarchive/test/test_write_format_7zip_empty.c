@@ -25,7 +25,7 @@
 
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9a503e9d6bacd16a6d60fc242c84506c08154c73 $");
 
 /*
  * Test writing an empty archive.

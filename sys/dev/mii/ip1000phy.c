@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ad0c4805a55235a0fba2288bcfc2bdc4445badf2 $");
 
 /*
  * Driver for the IC Plus IP1000A/IP1001 10/100/1000 PHY.

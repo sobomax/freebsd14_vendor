@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1cb65785442ac2e85f5a8829eaf9a3f02ee686b1 $
  */
 /*
  * Buffer encoding/decoding routines taken from the original FreeBSD SCSI

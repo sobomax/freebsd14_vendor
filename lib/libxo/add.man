@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 83726d75ce9098df7621ac62ef545adb6a8bd79b $
 .Sh ADDITIONAL DOCUMENTATION
 .Fx
 uses

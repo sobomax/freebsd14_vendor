@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9347bb8c549d3611ba1467affa176ca056c88a8d $
 
 .include "${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/Makefile.files"
 

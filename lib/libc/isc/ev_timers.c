@@ -25,7 +25,7 @@
 static const char rcsid[] = "$Id: ev_timers.c,v 1.6 2005/04/27 04:56:36 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 94a7b003f529fc5165436935ffd9de9ad1ecbcfa $");
 
 /* Import. */
 

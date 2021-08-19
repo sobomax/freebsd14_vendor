@@ -6,7 +6,7 @@
  * that we want it to.
  * XXX this is a work in progress.  It is not yet usable
  *
- * $FreeBSD$
+ * $FreeBSD: 5436f15dd0e926d00d71d4d2175f0a6492ed4a8c $
  */
 
 /* zfs:kernel:dbuf_fix_old_data:entry

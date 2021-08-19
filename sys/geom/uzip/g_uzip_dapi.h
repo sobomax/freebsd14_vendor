@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 8c7b3e81e5b0f90139f5fc2b6c586be75c57dba1 $
  */
 
 struct g_uzip_dapi;

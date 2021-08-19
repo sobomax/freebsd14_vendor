@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 03a4eb2c9a23baa8f25981d01b60b8c957e8ff2a $
 
 # Shells do not agree about what this pattern should match, but it is
 # certain that it must not crash and the missing close bracket must not

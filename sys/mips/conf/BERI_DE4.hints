@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 66dad52f3aed0e01122eecf8967d6be807c0cbf2 $
 
 # Hardwired location of bitfile
 hint.map.0.at="cfid0s.fpga0"

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 191804e8718e6d2e79a8238ff8283a45ff7a413c $");
 
 /*
  * CATC USB-EL1210A USB to ethernet driver. Used in the CATC Netmate

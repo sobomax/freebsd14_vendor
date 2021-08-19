@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stty.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: d48ccaa20b6e3fb157ab93f5a27c38ebab7fcfc7 $
  */
 
 #include <sys/ioctl.h>

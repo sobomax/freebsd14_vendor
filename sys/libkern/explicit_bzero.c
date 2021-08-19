@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: dc3cbd6e8c765c72339a3d1d1dd30c0ad4f7b623 $");
 
 #ifdef _KERNEL
 #include <sys/libkern.h>

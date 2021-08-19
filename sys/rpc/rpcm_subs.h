@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 0fe500ab521f807dca4c3338372af5323af4ff5c $ */
 /*	$OpenBSD: nfsm_subs.h,v 1.11 2000/01/05 20:50:52 millert Exp $	*/
 /*	$NetBSD: nfsm_subs.h,v 1.10 1996/03/20 21:59:56 fvdl Exp $	*/
 

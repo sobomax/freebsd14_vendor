@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/06.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: b6e49904d25aa1477447e8c39337741688cf3816 $
 
 desc="mknod returns EACCES when write permission is denied on the parent directory of the file to be created"
 

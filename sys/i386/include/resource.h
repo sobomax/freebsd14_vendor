@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: dfcc902a73161526e04088551205585acead84b6 $ */
 /*-
  * Copyright 1998 Massachusetts Institute of Technology
  *

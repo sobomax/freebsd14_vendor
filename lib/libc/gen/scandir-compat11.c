@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2c86b548f1d9d60bb4b07355afd11ba8187842c0 $");
 
 /*
  * Scan the directory dirname calling select to make a list of selected

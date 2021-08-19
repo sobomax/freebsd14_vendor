@@ -18,7 +18,7 @@
 
 /* Written August 1992 by Mike Haertel. */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 23fc32f8feba2053204fd5630a9f0f707decf87a $ */
 
 #ifndef _GNU_SOURCE
 # define _GNU_SOURCE 1

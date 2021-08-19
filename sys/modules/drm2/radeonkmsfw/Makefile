@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 167743c96e76103f3075d9cf95b6e5dd7267cd29 $
 
 SUBDIR=									\
 	ARUBA_me							\

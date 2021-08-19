@@ -28,7 +28,7 @@
  *
  * Textual conventions for OctetStrings
  *
- * $FreeBSD$
+ * $FreeBSD: dcc4361d21920fc5fa24eae09b83823febadd228 $
  */
 
 #include <sys/param.h>

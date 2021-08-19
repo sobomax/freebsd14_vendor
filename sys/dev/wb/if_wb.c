@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7b2eaf855083ff78b903599dfc90e2a38e6a1e65 $");
 
 /*
  * Winbond fast ethernet PCI NIC driver

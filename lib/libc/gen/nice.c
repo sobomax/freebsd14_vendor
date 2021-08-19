@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)nice.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7f217059fb1148cb1c401860984beeeea9a11e65 $");
 
 #include <sys/types.h>
 #include <sys/time.h>

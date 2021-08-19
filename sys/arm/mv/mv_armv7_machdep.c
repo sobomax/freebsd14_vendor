@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 810ebd26078287e33b3a6515632bee1f992584df $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>

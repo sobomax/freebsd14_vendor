@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a3961c2254b2593566f84bd0715ec777e83d1c82 $
 
 .PATH: ${SRCTOP}/sys/geom/bde
 .PATH: ${SRCTOP}/sys/crypto/rijndael

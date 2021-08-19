@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5d493542ea98026ac9b67f7340e313d93db9e4a8 $
 
 VOLUME=		papers
 DOC=		jail

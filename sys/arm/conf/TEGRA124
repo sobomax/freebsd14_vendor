@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD$
+# $FreeBSD: a830519d909e629f43a349c3d07c8c85c69b9f88 $
 
 include  	"std.armv7"
 include 	"../nvidia/tegra124/std.tegra124"

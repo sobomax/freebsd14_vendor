@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f24e406a52b4fedbf6c4f8bb9239b98bf7778956 $");
 
 #ifdef __i386__
 #include "opt_apic.h"

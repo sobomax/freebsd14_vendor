@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 41c52da551be7e103dcee68543a4f25f6ae5ea6a $
 
 PROG=	diskinfo
 MAN=	diskinfo.8

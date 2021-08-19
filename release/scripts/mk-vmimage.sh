@@ -29,7 +29,7 @@
 #
 # mk-vmimage.sh: Create virtual machine disk images in various formats.
 #
-# $FreeBSD$
+# $FreeBSD: fd84216a99fe39532dd251230fda1c64578fc1ea $
 #
 
 usage() {

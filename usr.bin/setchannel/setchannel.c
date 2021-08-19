@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *  $FreeBSD$
+ *  $FreeBSD: a229290c864a4c4986c93632f5553fe5ffe6a0f6 $
  */
 
 /* Set the channel of the tuner card. */

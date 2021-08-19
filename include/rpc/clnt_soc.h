@@ -1,5 +1,5 @@
 /*	$NetBSD: clnt_soc.h,v 1.1 2000/06/02 22:57:55 fvdl Exp $	*/
-/*	$FreeBSD$ */
+/*	$FreeBSD: c16609bb6aaca29f35ab61f81cbe6661a50c3bd3 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 9d6748adf529e522caea0d841b19252186785052 $
 #
 /set type=dir uname=root gname=wheel mode=0755
 .              

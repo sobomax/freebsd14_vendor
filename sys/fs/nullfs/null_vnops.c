@@ -38,7 +38,7 @@
  *	...and...
  *	@(#)null_vnodeops.c 1.20 92/07/07 UCLA Ficus project
  *
- * $FreeBSD$
+ * $FreeBSD: b663d8d718d31034aea37bff1100d38611d99a6f $
  */
 
 /*

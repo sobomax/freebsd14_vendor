@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d7a49d050db579dd377421507c4aa3dacadbe2a8 $
 
 PACKAGE=	iscsi
 PROG=		iscsictl

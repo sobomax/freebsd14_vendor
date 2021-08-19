@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e7a8c82b7a8fe1318610b368f96b977443385fdc $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #

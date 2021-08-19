@@ -36,7 +36,7 @@
  * tmpfs vnode interface for named pipes.
  */
 #include <sys/cdefs.h>
- __FBSDID("$FreeBSD$");
+ __FBSDID("$FreeBSD: a3c82bb2ba78280301e8812e8a8311587c0edf8e $");
 
 #include <sys/param.h>
 #include <sys/mount.h>

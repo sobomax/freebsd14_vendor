@@ -19,7 +19,7 @@
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ******************************************************************************/
-/* $FreeBSD$ */
+/* $FreeBSD: 365ba5ae41168a21163af238e734c1e8c419f601 $ */
 /******************************************************************************
 This program is part of PMC-Sierra initiator/target device driver. 
 The functions here are commonly used by different type of drivers that support

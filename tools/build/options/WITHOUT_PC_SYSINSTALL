@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 73b5ea3874d35c553369a3944c00d20c3a462372 $
 Set to not build
 .Xr pc-sysinstall 8
 and related programs.

@@ -13,7 +13,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b7531866dd995f12a2795af600260f54171e43d7 $");
 
 /*
  * See s_tanh.c for complete comments.

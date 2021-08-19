@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1105ded9b34ad583ab3a00f7f06482ef826e0a2b $
  */
 
 /* This is a GEOM module for handling path selection for multi-path

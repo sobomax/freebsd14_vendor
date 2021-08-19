@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 734bcf6be5e68c718fe4ffb7bbb0336b655823c7 $
 # Extra stuff for GELI
 
 .PATH: ${SASRC}/geli

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4529c416fff667d8a676e1538db91c9be9b89fb8 $
 # minimal config for sshd on picobsd
 Port 22
 ListenAddress 0.0.0.0

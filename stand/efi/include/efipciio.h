@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b42fa59395a059e96e1372f902d1983776d82d23 $ */
 /** @file
   EFI PCI I/O Protocol provides the basic Memory, I/O, PCI configuration, 
   and DMA interfaces that a driver uses to access its PCI controller.

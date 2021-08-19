@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0437d2643a34fb8a181c89dc666f3f612b97bedf $");
 
 /*
  * TLB functions

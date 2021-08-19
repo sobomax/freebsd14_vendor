@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_backend.h#2 $
- * $FreeBSD$
+ * $FreeBSD: 4d75a20f3559fd8888e345734b32f573136d70ef $
  */
 /*
  * CTL backend driver definitions

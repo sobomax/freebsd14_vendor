@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.3 (Berkeley) 3/27/94
-# $FreeBSD$
+# $FreeBSD: 5660af8b39a4ad802ac1b379110ad8caba0efc91 $
 
 PACKAGE=runtime
 PROG=	mount_cd9660

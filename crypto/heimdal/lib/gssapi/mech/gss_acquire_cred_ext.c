@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_acquire_cred.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: 1cbb29f141f39ecd6f1b6e7750c1005678ebaf91 $
  */
 
 #include "mech_locl.h"

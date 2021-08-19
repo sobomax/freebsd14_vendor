@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: aed296b1ca16a131879effceed8d7dcfd2036dc6 $ */
 #include <stdio.h>
 
 int main(void) {

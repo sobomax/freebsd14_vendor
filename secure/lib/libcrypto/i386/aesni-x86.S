@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8506890452f173458d679327f78560182cc8df58 $ */
 /* Do not modify. This file is auto-generated from aesni-x86.pl. */
 #ifdef PIC
 .text

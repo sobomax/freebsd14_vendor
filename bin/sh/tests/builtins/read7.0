@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e78f887b60b41e78110c70db64da3edfe5cc58dc $
 
 { errmsg=`read x <&- 2>&1 >&3`; } 3>&1
 r=$?

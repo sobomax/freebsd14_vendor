@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 8a86fec90e4dbf5c0d421f30cbddc67c59d02e0d $
 #
 
 # PROVIDE: wpa_supplicant

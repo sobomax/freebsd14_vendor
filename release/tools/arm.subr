@@ -29,7 +29,7 @@
 #
 # Common subroutines used to build arm SD card images.
 #
-# $FreeBSD$
+# $FreeBSD: 1d4d195ca24d0cdc16a87f19779ec091cc9d7460 $
 #
 
 cleanup() {

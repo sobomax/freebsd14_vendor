@@ -8,7 +8,7 @@
  *
  * $Cronyx: tau32-ddk.h,v 1.2 2006/02/01 09:14:40 ly Exp $
  * $Rik: tau32-ddk.h,v 1.7 2006/02/28 22:33:29 rik Exp $
- * $FreeBSD$
+ * $FreeBSD: 7c2e92b0914569fb5c61e91e3669e57fe9c41c1b $
  */
 
 #if defined(__GNUC__) || defined(__TURBOC__)

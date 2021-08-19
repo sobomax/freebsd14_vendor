@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 7663fc4f118a4509eaa6cc5fc6b6e18d14821cae $
 #
 
 # PROVIDE: nscd

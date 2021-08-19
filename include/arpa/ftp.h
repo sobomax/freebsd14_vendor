@@ -30,7 +30,7 @@
  *
  *	@(#)ftp.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD$
+ * $FreeBSD: 5ba431529404fa953e3b58aa4cb2ef4810f7ec4a $
  */
 
 #ifndef _ARPA_FTP_H_

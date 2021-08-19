@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 134775816a948af6f0f957c9ee8b28c3f4937ddb $");
 
 /*
  * Verify our ability to read sample files compatibly with 'zstd -d'.

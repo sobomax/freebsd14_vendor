@@ -35,7 +35,7 @@
  *
  *	@(#)machAsmDefs.h	8.1 (Berkeley) 6/10/93
  *	JNPR: asm.h,v 1.10 2007/08/09 11:23:32 katta
- * $FreeBSD$
+ * $FreeBSD: 78d2c029cf08868015dbbf75144fe6feb024c5c2 $
  */
 
 /*

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 72165d63fd1921f710d3c8e9154882542bdb0b0e $");
 
 /*
  * Portions of this code were taken from or based on ftpio.c:

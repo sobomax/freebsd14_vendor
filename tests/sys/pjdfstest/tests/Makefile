@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3e0f6a06d5e43de04e8e3c1b5a2d1b4bd6522dca $
 
 PACKAGE=	tests
 PJDFSTEST_SRCDIR=	${SRCTOP}/contrib/pjdfstest

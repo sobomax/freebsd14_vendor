@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b5f84bcf3665e9468eab4635e77067c9a21d452a $");
 
 #define _IP_VHL
 #include <netinet/sctp_os.h>

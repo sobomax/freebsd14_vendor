@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.h,v 1.4 2003/03/25 23:53:33 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 0017f8b6557a4363bf2fd8c173a0c7c0c3eb4d4f $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_L2CAP_H_

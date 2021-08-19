@@ -1,7 +1,7 @@
 /* 
  * FQ_Codel - The FlowQueue-Codel scheduler/AQM
  *
- * $FreeBSD$
+ * $FreeBSD: 44610aaf97405c36515c1a2f94194e0920e1f3e1 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.

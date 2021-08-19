@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b52481e86e8d85b93ab78c00bbe9fc7cb808e800 $
 
 ntest=1
 os=`uname -s`

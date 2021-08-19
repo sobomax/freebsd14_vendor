@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: c3fb23b3510e73a89f87542968a6f71342343754 $
 Set to build support for all LLVM targets.
 This option is always applied to the bootstrap compiler for buildworld when
 LLVM is used.

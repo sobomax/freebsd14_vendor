@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 18e5ad4c214995dcb9c197afc46d4afcd2799db5 $
 
 .PATH: ${SRCTOP}/sys/dev/bhnd
 .PATH: ${SRCTOP}/sys/dev/bhnd/cores/chipc

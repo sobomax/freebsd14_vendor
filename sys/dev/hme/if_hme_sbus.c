@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0ea789adac71e10c763be72ad3a456b6e273b00e $");
 
 /*
  * SBus front-end device driver for the HME ethernet device.

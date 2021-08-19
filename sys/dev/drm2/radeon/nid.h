@@ -25,7 +25,7 @@
 #define NI_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e68e3867655ba51e930adeafbc19faa73f04caec $");
 
 #define CAYMAN_MAX_SH_GPRS           256
 #define CAYMAN_MAX_TEMP_GPRS         16

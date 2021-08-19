@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 32427c30557d5f73145e71ce178fc4b4b66c1313 $
  */
 #ifndef __INCmvSatah
 #define __INCmvSatah

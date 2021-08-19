@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1ee2ece51a16eedfc61b1f699d29151aba3df292 $
 
 .PATH: ${SRCTOP}/sys/dev/amr
 

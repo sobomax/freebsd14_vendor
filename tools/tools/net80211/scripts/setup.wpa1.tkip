@@ -2,7 +2,7 @@
 #
 # Script for testing WPA1 w/ TKIP.
 #
-# $FreeBSD$
+# $FreeBSD: 35f78e2f04edf8edacaeb5d721b652849f909acf $
 #
 PATH=.:$PATH
 . config

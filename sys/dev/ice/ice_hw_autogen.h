@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: ccbed89893ee72a228b290818a7796169677b9dc $*/
 
 /* Machine-generated file; do not edit */
 #ifndef _ICE_HW_AUTOGEN_H_

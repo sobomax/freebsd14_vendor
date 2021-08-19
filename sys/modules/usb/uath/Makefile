@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b6f3308f1a06078e7ca22ca0b23b4d3653330a39 $
 
 .PATH: ${SRCTOP}/sys/dev/usb/wlan
 

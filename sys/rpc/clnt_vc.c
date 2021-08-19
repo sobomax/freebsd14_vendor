@@ -36,7 +36,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0231c303f089be2b009474b787b8d46ea20f7cf0 $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.

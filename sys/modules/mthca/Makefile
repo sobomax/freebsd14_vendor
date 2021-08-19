@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 584a86b6ada71b96fe54fecfa50a5d1a65c12a62 $
 .PATH:	${SRCTOP}/sys/dev/mthca
 
 KMOD=	mthca

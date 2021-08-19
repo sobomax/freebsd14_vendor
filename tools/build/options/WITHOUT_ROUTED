@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 323e55c5b071a22fb863f63bd120e0ebfe91fe1b $
 Set to not build
 .Xr routed 8
 utility.

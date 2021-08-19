@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8e5b1c48e9ade50278330c6c88f7270719401d8d $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga

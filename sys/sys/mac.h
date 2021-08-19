@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: bc12cb7530834e0db852843ce5657bccf2c4b0b8 $
  */
 /*
  * Userland interface for Mandatory Access Control.  Loosely based on the

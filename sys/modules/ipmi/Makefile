@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5a730ef7483030b67d95a9bd1cf906b210069dd9 $
 
 .PATH: ${SRCTOP}/sys/dev/ipmi
 

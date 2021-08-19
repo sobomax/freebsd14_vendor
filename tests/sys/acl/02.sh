@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: a989ee39702c46c7f1218a2a049685fdd4dafdc5 $
 #
 
 # This is a wrapper script to run tools-nfs4.test on UFS filesystem.

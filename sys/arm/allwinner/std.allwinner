@@ -1,5 +1,5 @@
 # Allwinner common options
-#$FreeBSD$
+#$FreeBSD: 4ba2ec7f0e1d192d906f41d18a5917ec224ea359 $
 
 cpu		CPU_CORTEXA
 machine 	arm armv7

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: c027141f4a7e322b69fc7cd233a82a4e17c82484 $
 #
 
 acct_COMMENT= 		Accounting Utilties

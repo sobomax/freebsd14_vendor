@@ -42,7 +42,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_macro_scan.l#8 $
  *
- * $FreeBSD$
+ * $FreeBSD: cabed636d66fed329b8abc4d57246d82ec60966d $
  */
 
 #include <sys/types.h>

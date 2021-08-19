@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 34485381abf7f26f721fd1a68915145a42972eb8 $
  *	@(#)fnmatch.h	8.1 (Berkeley) 6/2/93
  */
 

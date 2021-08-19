@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/sparc64
 #
-# $FreeBSD$
+# $FreeBSD: c99480c8f86ff88aa0f0339a739b53459a3edc40 $
 
 machine		sparc64
 

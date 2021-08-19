@@ -26,7 +26,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a1c392f4f3643ebf8147f61f54d65c1579d72e68 $");
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

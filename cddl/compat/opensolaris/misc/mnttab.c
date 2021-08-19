@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8f56d90f6232204ebf1880e55e17111daee9adf5 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD$
+# $FreeBSD: b6ad018e03ac89d1cd603a64c5e5efc876a0ea88 $
 
 .PATH: ${SRCTOP}/libexec/tftpd
 

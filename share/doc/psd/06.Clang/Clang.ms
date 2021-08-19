@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)Clang.ms	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 639591349e82c6ef331a6289767f5c6b9da8a62d $
 .nr Cl 2
 .TL
 The C Programming Language - Reference Manual

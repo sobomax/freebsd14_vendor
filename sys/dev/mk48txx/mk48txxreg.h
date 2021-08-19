@@ -30,7 +30,7 @@
  *
  *	$NetBSD: mk48txxreg.h,v 1.10 2008/04/28 20:23:50 martin Exp $
  *
- * $FreeBSD$
+ * $FreeBSD: 7ff432c4b3b7f22b6bb322fc459318796f6c8e86 $
  */
 
 /*

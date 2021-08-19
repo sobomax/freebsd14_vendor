@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 78819a743e51734bc0ceed385d73721271bb5c74 $ */
 /* FreeBSD libthread_db assisted debugging support.
    Copyright 1999, 2000, 2001 Free Software Foundation, Inc.
 

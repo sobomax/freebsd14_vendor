@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 67eb718ee614c35a978601758027a0a9def77ebf $
 set -e
 f() {
 	for i in a b c; do

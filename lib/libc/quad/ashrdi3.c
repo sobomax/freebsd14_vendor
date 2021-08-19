@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)ashrdi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a5e354684fbe8d0d34346905fe454e43f8bc6ab1 $");
 
 #include "quad.h"
 

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 71f16fabf35bcb6282170f4cd000cd839b2d0086 $
 
 # Various regression tests to run for the 'resolve' command.
 

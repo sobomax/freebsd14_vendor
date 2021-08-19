@@ -1,5 +1,5 @@
 /*
- * $FreeBSD$
+ * $FreeBSD: 27d07f39e2316df40f1064da48dbdc6a86c33958 $
  */
 
 #ifndef __SYS_DEV_ETHERSWITCH_ETHERSWITCH_H

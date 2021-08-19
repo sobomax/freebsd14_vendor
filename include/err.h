@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)err.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: 4b67275a34500d900b33eea8da39dcbe7ecbf763 $
  */
 
 #ifndef _ERR_H_

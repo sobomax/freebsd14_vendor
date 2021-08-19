@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: a97f29b672afb5d33d680029a337489875659eb6 $
  */
 /*
  * Definitions for the TrustedBSD Biba integrity policy module.

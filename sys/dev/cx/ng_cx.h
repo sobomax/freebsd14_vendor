@@ -13,7 +13,7 @@
  * works or modified versions.
  *
  * Cronyx Id: ng_cx.h,v 1.1.2.3 2004/01/27 14:39:11 rik Exp $
- * $FreeBSD$
+ * $FreeBSD: 30b3c14daa4eee985812031286fcab3a5ed26a0c $
  */
 
 #ifdef NETGRAPH

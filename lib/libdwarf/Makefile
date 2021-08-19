@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 03f40cdd85eed001eaa7d7a4e2c401143f8fd728 $
 .include <bsd.own.mk>
 
 PACKAGE=lib${LIB}

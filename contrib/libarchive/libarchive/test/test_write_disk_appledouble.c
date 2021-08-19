@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 706794ab95bf5e79d03ff9491d139fe8168923da $");
 
 #ifdef HAVE_SYS_ACL_H
 #include <sys/acl.h>

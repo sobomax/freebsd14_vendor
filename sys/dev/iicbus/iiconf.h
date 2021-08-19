@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b6a9c3b54fcf5c9784e0e8a48c9cd3cac21bd7c9 $
  */
 #ifndef __IICONF_H
 #define __IICONF_H

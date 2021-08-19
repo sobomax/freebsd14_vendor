@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1f6b90fe645d0d8cda7f835889969c7ab8e10fb1 $ */
 /* Do not modify. This file is auto-generated from rc4-md5-x86_64.pl. */
 .text	
 .align	16

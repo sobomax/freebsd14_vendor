@@ -43,7 +43,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: 39ad3dcbcf9cf75e484eb1773c0a62ced50a2f07 $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

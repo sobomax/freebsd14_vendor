@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 16d4ad3d46de79600bc936b1773c921bf8d92264 $
 
 .PATH: ${SRCTOP}/sys/dev/sound/isa
 

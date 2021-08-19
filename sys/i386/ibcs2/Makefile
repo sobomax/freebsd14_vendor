@@ -1,6 +1,6 @@
 # Makefile for syscall tables
 #
-# $FreeBSD$
+# $FreeBSD: 6894647801e8be7f45affe00e03cb26c789a2ae0 $
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}

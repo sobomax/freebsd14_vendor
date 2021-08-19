@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cd87740730e9340f448e480c9ffa294adbb59fb9 $
 
 # Setup variables for the compiler
 #

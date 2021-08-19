@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5989703894750d287d0c4d855ccbaac0c136c787 $
 
 .PATH: ${SRCTOP}/sys/dev/tx
 

@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/lib/libarchive/archive_write_set_compression_program.c 201104 2009-12-28 03:14:30Z kientzle $");
+__FBSDID("$FreeBSD: c096e7227ba4355123ae47096bf6a688daf2a199 $");
 
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>

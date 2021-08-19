@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 45f541e6eeea12a99ec3bfaf43a52185ba067326 $
 
 nosuchtool 2>/dev/null
 [ $? -ne 127 ] && exit 1

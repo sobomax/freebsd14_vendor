@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 820d86f70b3db1ad0f5fbfd679fb9b69a4d3ff32 $");
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif

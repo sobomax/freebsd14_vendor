@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $Id: dcons.c,v 1.65 2003/10/24 03:24:55 simokawa Exp $
- * $FreeBSD$
+ * $FreeBSD: 07dda2940621120a1a6f06c72a8efa224c43bdee $
  */
 
 #include <sys/param.h>

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: dddbf2af01ccbc80e63997ef772e5de2ee893064 $
 #
 
 # PROVIDE: dumpon

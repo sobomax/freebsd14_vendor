@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: f535ea2596f2657d40b846e5a3c400f9ac8f5eb4 $
 #
 
 # PROVIDE: hostid_save

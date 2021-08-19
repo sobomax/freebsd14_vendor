@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e36be05e7b71d5f69cacaf4289f14ce109e1c3d0 $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zlook
 

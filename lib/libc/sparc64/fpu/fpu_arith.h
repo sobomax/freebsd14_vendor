@@ -34,7 +34,7 @@
  *
  *	@(#)fpu_arith.h	8.1 (Berkeley) 6/11/93
  *	$NetBSD: fpu_arith.h,v 1.3 2000/07/24 04:11:03 mycroft Exp $
- * $FreeBSD$
+ * $FreeBSD: 4ecba92188fd62859a67131ea5fd2184e9dd9ba3 $
  */
 
 /*

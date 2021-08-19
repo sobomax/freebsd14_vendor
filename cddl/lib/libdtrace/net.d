@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD$
+ * $FreeBSD: ee22c8ffb0cc66ea767efd466d37804f7ee22c8a $
  */
 
 /*

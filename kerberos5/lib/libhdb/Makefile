@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 29ba7d2c58a23470fdaac24bff18beed1fda142b $
 
 LIB=	hdb
 LDFLAGS=	-Wl,--no-undefined ${LDAPLDFLAGS}

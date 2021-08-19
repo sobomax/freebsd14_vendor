@@ -27,7 +27,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a1a9758edec8d74bd8d48d8af75fbe07f9cc8b68 $ */
 
 #include <bluetooth.h>
 #include <sdp.h>

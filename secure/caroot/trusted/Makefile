@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: eb382ad1bc74e4f5b871b850005ab115bff966dc $
 
 BINDIR=		/usr/share/certs/trusted
 

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 4f1545872a4e67167607af9b245aa06380d52226 $ */
 
 #ifndef _MACHINE_SMP_H_
 #define _MACHINE_SMP_H_

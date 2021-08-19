@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: ebc8d85ea8e09fff965a4fc96a9a7fe173f99bff $
  */
 
 #ifndef _MPTBL_H_

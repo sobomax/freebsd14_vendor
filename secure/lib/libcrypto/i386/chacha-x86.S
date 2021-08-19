@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d6b2936a538182fe1e9c85fda10b1fc16897a3ad $ */
 /* Do not modify. This file is auto-generated from chacha-x86.pl. */
 #ifdef PIC
 .text

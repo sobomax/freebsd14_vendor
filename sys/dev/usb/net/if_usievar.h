@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8dc0506affbc9b2ff0ec46b08d0b7544c34a2fb7 $ */
 
 /*-
  * Copyright (c) 2011 Anybots Inc

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bfbd523aa0b7dd0ac998613eaeb3478a9fb2ce8b $
 
 .PATH: ${SRCTOP}/sys/netinet/libalias
 

@@ -2,7 +2,7 @@
 #define _PRUTIL_H_
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 3387b994b15131b0e6f81805c6acd2ad3fe6f091 $
  */
 
 struct sched_param;

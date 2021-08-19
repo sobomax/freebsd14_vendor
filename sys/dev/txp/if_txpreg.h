@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_txpreg.h,v 1.35 2003/06/04 19:36:33 deraadt Exp $ */
-/*	$FreeBSD$ */
+/*	$FreeBSD: a94a31769adc97f07f04d1c2c43fdb012a73d58a $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause

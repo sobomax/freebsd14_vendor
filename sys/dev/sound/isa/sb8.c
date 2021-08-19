@@ -44,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 9cdc1b230ab41f23b91b8b560d4c43852758b60b $");
 
 #define SB_DEFAULT_BUFSZ	4096
 

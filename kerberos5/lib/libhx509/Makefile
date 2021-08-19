@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1696ffb73cb80cb7e3742a67084848d5a0f1c36e $
 
 LIB=	hx509
 LDFLAGS=	-Wl,--no-undefined

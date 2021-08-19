@@ -1,5 +1,5 @@
 /*	$OpenBSD: dhcp.h,v 1.5 2004/05/04 15:49:49 deraadt Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: e4dcfb93271ecece73193107435d901662266caf $	*/
 
 /* Protocol structures... */
 

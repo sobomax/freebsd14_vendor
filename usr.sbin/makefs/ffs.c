@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 99b5ba06159dc91cb5dec4e53250cf1e9b7a795f $");
 
 #if HAVE_NBTOOL_CONFIG_H
 #include "nbtool_config.h"

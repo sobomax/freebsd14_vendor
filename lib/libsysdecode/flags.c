@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ae2b5ff057e1a92ec5bd1dcec19e6865778f7e8f $");
 
 #define L2CAP_SOCKET_CHECKED
 

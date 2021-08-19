@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)bltin.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 8149895815ddef65ba04e2f193ef3815bd0df98b $
  */
 
 /*

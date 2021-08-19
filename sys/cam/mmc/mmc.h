@@ -53,7 +53,7 @@
  * Inspired coded in sys/dev/mmc. Thanks to Warner Losh <imp@FreeBSD.org>,
  * Bernd Walter <tisco@FreeBSD.org>, and other authors.
  *
- * $FreeBSD$
+ * $FreeBSD: 44c4aad05e3390533801ff494b96f719ff4d8760 $
  */
 
 #ifndef CAM_MMC_H

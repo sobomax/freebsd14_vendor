@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	maestro_reg.h,v 1.13 2001/11/11 18:29:46 taku Exp
- * $FreeBSD$
+ * $FreeBSD: 7db2127f950915f42ceeaaeb5212c0dbda39a0c7 $
  */
 
 #ifndef	MAESTRO_REG_H_INCLUDED

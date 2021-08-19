@@ -1,6 +1,6 @@
 \ Example of the file which is automatically loaded by /boot/loader
 \ on startup.
-\ $FreeBSD$
+\ $FreeBSD: 617bc3db410462090b098c29497d304f9ef8f306 $
 
 cr .( Loading Forth extensions:)
 

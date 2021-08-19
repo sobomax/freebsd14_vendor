@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: info.c,v 1.3 2003/08/18 19:19:54 max Exp $
- * $FreeBSD$
+ * $FreeBSD: aa9ce17bc75b915690be72da5f57323eb809ae61 $
  */
 
 #define L2CAP_SOCKET_CHECKED

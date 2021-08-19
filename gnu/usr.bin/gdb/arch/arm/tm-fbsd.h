@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b010a969acf88d005b05fdd54172d4cea0f47e74 $ */
 
 /* Macro definitions for ARM running under NetBSD.
    Copyright 2003 Free Software Foundation, Inc.

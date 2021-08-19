@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_delete_sec_context.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: ce57a76682ab306670a2932e203749d3744918c1 $
  */
 
 #include "mech_locl.h"

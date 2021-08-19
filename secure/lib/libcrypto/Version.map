@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 33432019a0232cda6928cb5463daa841745a403c $
 
 OPENSSL_1_1_0 {
     global:

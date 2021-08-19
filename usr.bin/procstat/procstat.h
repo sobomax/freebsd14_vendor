@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 4fef4e3f6c8e0bd19c8e69c74ab6c5771c5d0040 $
  */
 
 #include <libxo/xo.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3520c38d965566f22f9bc95becaec7410ad5e5db $
 
 IGNORE_PRAGMA=	1
 

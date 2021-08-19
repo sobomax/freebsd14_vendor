@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6bda19837b90d038094ef6a2aaa5505cc22cbcf9 $
 # Test that -c executes command_string with the given name and arg
 
 ${SH} -c 'echo $0 $@' moo foo | grep -qx -- "moo foo"

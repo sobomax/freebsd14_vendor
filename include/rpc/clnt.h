@@ -31,7 +31,7 @@
  *
  *	from: @(#)clnt.h 1.31 94/04/29 SMI
  *	from: @(#)clnt.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD$
+ * $FreeBSD: 8d9ce1eccb09700d16b8aa01df92de8d320b0f4f $
  */
 
 /*

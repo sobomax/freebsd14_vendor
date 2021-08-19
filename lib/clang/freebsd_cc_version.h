@@ -1,3 +1,3 @@
-/* $FreeBSD$ */
+/* $FreeBSD: dbc436a341cc96f2318625bd500c96f8409c6e81 $ */
 
 #define	FREEBSD_CC_VERSION		1200023

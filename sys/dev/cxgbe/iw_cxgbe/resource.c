@@ -33,7 +33,7 @@
  */
 /* Crude resource management */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 42591f98717b782b8f714445316ecf70af6642b6 $");
 
 #include "opt_inet.h"
 

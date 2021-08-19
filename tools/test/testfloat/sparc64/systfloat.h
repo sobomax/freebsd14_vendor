@@ -23,7 +23,7 @@ this code that are retained.
 ===============================================================================
 */
 
-/* $FreeBSD$ */
+/* $FreeBSD: c1db1ebd361e011b2d6c75bb1a9a1275ea21bb58 $ */
 
 #include "softfloat.h"
 #include "milieu.h"

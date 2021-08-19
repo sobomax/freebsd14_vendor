@@ -3,7 +3,7 @@
 #
 # This includes all the required drivers for the SoCs.
 #
-# $FreeBSD$
+# $FreeBSD: 8040585e9cb948b27e498c12e408ee88b414b1dd $
 #
 
 # Include the standard file list for Mediatek SoCs.

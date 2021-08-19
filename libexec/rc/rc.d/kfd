@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 5a1a16c37af40e4a6a305c5acb3259b03401b73f $
 #
 
 # PROVIDE: kfd

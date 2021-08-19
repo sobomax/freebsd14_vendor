@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b79f9a560137e1438d69c8a79efa31e3cd512cda $ */
 
 #include <setjmp.h>
 #include <stdlib.h>

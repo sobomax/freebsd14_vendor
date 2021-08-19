@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: f1b270aacd4d71530171f3e52c987fba29d0e296 $
 
 name="$(mktemp -u graid3.XXXXXX)"
 class="raid3"

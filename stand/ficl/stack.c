@@ -40,7 +40,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD$ */
+/* $FreeBSD: f98a3b61db7de17b11961d605521601846e6c75e $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>

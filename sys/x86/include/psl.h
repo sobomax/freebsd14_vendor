@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)psl.h	5.2 (Berkeley) 1/18/91
- * $FreeBSD$
+ * $FreeBSD: c178821cc9a0c198b410eb8a12c70c5b61a97b01 $
  */
 
 #ifndef _MACHINE_PSL_H_

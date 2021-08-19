@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD$
+    $FreeBSD: 6640c4875167c9c54c3f75b366542fb427e8ac62 $
     A FreeBSD kern.flp image.
   </comment>
   <sectorsize>512</sectorsize>

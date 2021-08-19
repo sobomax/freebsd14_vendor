@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f5ba45e5bd4302b1c42ef9d1eda1ffbc8efb7bdd $
 
 .PATH: ${SRCTOP}/sys/arm/broadcom/bcm2835/
 

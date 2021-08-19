@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)raw_usrreq.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: f43de7dae9ca5bff4d5c23fbbd616e9e19291406 $
  */
 
 #include <sys/param.h>

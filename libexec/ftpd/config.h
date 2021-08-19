@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8e10bbb270dc638527acd8408b31dfc7dbcab4b0 $ */
 
 
 /* config.h.  Generated automatically by configure.  */

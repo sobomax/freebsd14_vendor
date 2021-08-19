@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)icu.h	5.6 (Berkeley) 5/9/91
- * $FreeBSD$
+ * $FreeBSD: cd3729b374b267f2beb6af7c94de5f3599a8d62c $
  */
 
 /*

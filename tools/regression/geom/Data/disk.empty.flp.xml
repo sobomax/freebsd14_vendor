@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD$
+    $FreeBSD: 88c603ac956779a5718fd37766043dcff8c45e01 $
     An empty floppy disk
   </comment>
   <sectorsize>512</sectorsize>

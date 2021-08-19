@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 7ce148742e7f0c1ac5c016e0a6e2a27d1f048d05 $ */
 
 #undef INIT_SECTION_ASM_OP
 #undef FINI_SECTION_ASM_OP

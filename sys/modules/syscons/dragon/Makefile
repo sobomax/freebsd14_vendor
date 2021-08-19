@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f72d534fec21906435dff99e02d25d4dacd41776 $
 
 .PATH:	${SRCTOP}/sys/dev/syscons/dragon
 

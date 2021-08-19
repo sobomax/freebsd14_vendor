@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/open/01.t 211474 2010-08-18 22:06:43Z pjd $
+# $FreeBSD: d11c92521bc29d3d93144245f875d19f5750becd $
 
 desc="open returns ENOTDIR if a component of the path prefix is not a directory"
 

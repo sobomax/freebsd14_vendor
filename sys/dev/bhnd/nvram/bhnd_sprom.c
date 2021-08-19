@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0eb17b4b1e88cab5a138290ad359b581835cf166 $");
 
 /*
  * BHND SPROM driver.

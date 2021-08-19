@@ -7,7 +7,7 @@
 \ locstate: 0 = looking for -- or }}
 \           1 = found --
 \
-\ $FreeBSD$
+\ $FreeBSD: c916089696c13716ade53b6f6a527802e91ca285 $
 
 hide
 0 constant zero

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 444b6399b815b82cc1ae6e7e63f3f17b8579cfcb $*/
 
 #ifndef _VIRTCHNL_H_
 #define _VIRTCHNL_H_

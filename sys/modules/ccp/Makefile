@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9113ad3119871b9ed4057b5c615229b92c1b69d6 $
 
 .PATH: ${SRCTOP}/sys/crypto/ccp
 

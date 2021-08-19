@@ -31,7 +31,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 1442ecf6cc7b379a8095fe1a0dcff408f5a37535 $
 #
 #	@(#)sqroot.m4	8.1 (Berkeley) 6/6/93
 #

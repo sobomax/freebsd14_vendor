@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6cc952bd6ee92f917aebdc85f0794d01fb52fae7 $
 
 arm/allwinner/a20/a20_padconf.c		standard
 arm/allwinner/clkng/ccu_a10.c		standard

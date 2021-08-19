@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c2aea381761ddd4caa96c18f5c6d6dfb8ca8698e $");
 
 #include <port_before.h>
 #ifdef DO_PTHREADS

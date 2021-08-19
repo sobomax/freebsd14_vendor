@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)pagesize.sh	8.1 (Berkeley) 4/3/94
-# $FreeBSD$
+# $FreeBSD: 9ac4bdaa723a71605bb81d5e89c05a1a716e1a49 $
 #
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin; export PATH

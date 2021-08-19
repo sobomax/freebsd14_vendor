@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bbd869715fa41497fc5b71b40deea462aa91104b $
 
 SRCS+= sysfake.c
 CLEANFILES+= sysfake.c

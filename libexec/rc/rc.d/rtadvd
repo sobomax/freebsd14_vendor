@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: ed9e8b948348024931f9150830a41753d1dde91d $
 #
 
 # PROVIDE: rtadvd

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6b9857df3d1a336897c788c5fe76d2c069c94c4a $
 
 (${SH} -c 'term(){ exit 5;}; trap term TERM; kill -TERM $$') &
 wait >/dev/null 2>&1 $!

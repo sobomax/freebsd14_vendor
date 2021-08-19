@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c1b1668df975a27254c3ed37e8e846e1ea754c6f $");
 
 /* __ieee754_gammaf(x)
  * Return the logarithm of the Gamma function of x.

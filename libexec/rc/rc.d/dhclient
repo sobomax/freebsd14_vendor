@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 520a0850ccbca0bb44f2f5b33eb39d1de06d4dc2 $
 #
 
 # PROVIDE: dhclient

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from BSDI $Id: ktr.h,v 1.10.2.7 2000/03/16 21:44:42 cp Exp $
- * $FreeBSD$
+ * $FreeBSD: 01bb6a2d384c807dd52e8f88de157d7a1430fd27 $
  */
 
 #ifndef _MACHINE_KTR_H_

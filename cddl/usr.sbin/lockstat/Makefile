@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3ffcc7049f35d3373cbdaf196823391fc7fea58c $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/lockstat
 

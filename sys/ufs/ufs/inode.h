@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)inode.h	8.9 (Berkeley) 5/14/95
- * $FreeBSD$
+ * $FreeBSD: 14b49f6a37963058c8f077d771721d2873b0ceb8 $
  */
 
 #ifndef _UFS_UFS_INODE_H_

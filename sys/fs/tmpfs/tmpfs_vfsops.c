@@ -43,7 +43,7 @@
  * allocate and release resources.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 942d2d499b26735a13098133cabb1a92c4c00f3c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

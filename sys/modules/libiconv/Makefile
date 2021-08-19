@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c1033b01e30e33c79ea0714a15db556f7f3d089f $
 
 .PATH: ${SRCTOP}/sys/libkern ${SRCTOP}/sys/sys
 

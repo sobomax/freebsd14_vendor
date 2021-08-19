@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 17ea84695d75ef81e0bad963fe19d6f1c5ef82e5 $");
 
 /* sin(x)
  * Return sine function of x.

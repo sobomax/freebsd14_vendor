@@ -1,5 +1,5 @@
 /*	$NetBSD: usbcdc.h,v 1.9 2004/10/23 13:24:24 augustss Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: d77c24bb7ad8d10f321bdcad8e64ddc0f2823c64 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

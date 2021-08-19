@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 084436cc4ea17e5c3d346cfe7a5538a342d82849 $");
 
 /*
  * Alias_dummy is just an empty skeleton used to demostrate how to write

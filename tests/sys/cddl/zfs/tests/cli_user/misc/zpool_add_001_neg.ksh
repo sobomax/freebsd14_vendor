@@ -1,6 +1,6 @@
 #!/usr/local/bin/ksh93 -p
 
-# $FreeBSD$
+# $FreeBSD: 36b149799dbe166f9a057a1b7708d25e2f078574 $
 
 # CDDL HEADER START
 #

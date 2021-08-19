@@ -30,7 +30,7 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD$
+ * $FreeBSD: ccccb497e91e5b4deb9b7ad5a39af31f08112cae $
  */
 
 #define	_PATH_EX	"/usr/bin/ex"

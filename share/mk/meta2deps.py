@@ -37,7 +37,7 @@ We only pay attention to a subset of the information in the
 
 """
 RCSid:
-	$FreeBSD$
+	$FreeBSD: 700dc2073b8a645ddfe8f167755e689d533cd843 $
 	$Id: meta2deps.py,v 1.27 2017/05/24 00:04:04 sjg Exp $
 
 	Copyright (c) 2011-2013, Juniper Networks, Inc.

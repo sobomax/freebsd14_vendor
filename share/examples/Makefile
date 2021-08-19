@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6b58daf5310e7eb7b5999bac4fbe1687e3143001 $
 #
 # Doing a make install builds /usr/share/examples
 

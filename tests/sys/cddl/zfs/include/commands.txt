@@ -19,7 +19,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: 774a29710e68464e6e91eeac8a81298e9670796f $
 
 #!/usr/local/bin/ksh93 -p
 #

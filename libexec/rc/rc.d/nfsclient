@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 2acfb84d8b092dca8c3ea48b589688670cf427fd $
 #
 
 # PROVIDE: nfsclient

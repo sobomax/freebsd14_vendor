@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7c455bb6652f2ef8e83b08f4b0642648504ddba7 $");
 
 /* __ieee754_hypot(x,y)
  *

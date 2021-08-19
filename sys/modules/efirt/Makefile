@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 58f4f9673c2e4f205372e08db9f5754f5898ddbe $
 
 .PATH: ${SRCTOP}/sys/${MACHINE}/${MACHINE}
 .PATH: ${SRCTOP}/sys/dev/efidev

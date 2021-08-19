@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0942090f5ac6b532d71003d9a8707983aaba6908 $
 
 Firmwares come from:
   git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git

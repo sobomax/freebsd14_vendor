@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 94a42492a4f0861d5b84c0e4a46cc62dbfacdf75 $
 
 OPENSOLARIS_USR_DISTDIR= ${.CURDIR}/../../../cddl/contrib/opensolaris
 OPENSOLARIS_SYS_DISTDIR= ${.CURDIR}/../../../sys/cddl/contrib/opensolaris

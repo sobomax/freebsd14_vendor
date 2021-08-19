@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 75dd9ab9b8f16c56f24bade5a7441674f7892a1f $
 
 alias alias0=exit
 eval 'alias0 0'

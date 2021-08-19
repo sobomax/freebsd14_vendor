@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 75e065a2192e3a28e0ae7d1bf670695994bf49ba $
 
 LIB=	krb5
 LDFLAGS=	-Wl,--no-undefined

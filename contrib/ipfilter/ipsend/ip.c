@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: c1bb73f0b16954e77a10353e86eef76af4305a4f $	*/
 
 /*
  * ip.c (C) 1995-1998 Darren Reed

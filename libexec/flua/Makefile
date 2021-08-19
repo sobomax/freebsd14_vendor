@@ -1,4 +1,4 @@
-#! $FreeBSD$
+#! $FreeBSD: 4b5c4ee55416719139856fbe96100325850c6f27 $
 
 .include <src.lua.mk>
 

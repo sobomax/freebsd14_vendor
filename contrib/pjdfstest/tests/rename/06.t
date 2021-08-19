@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/06.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 4ed418b2a96937e570f88cd27543dfb16fba8733 $
 
 desc="rename returns EPERM if the file pointed at by the 'from' argument has its immutable, undeletable or append-only flag set"
 

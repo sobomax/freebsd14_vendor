@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)rmt.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 308d41b14c6472904a474cc62572dc5ee553f3e4 $");
 
 /*
  * rmt

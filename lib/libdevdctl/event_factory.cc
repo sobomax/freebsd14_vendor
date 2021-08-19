@@ -44,7 +44,7 @@
 #include "event.h"
 #include "event_factory.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3901fd5837b3c6b602fbb13f06a4763bfdfec73c $");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 24119797ec8be64d64b1c792db87c40531eadbc5 $
 
 # Do not define -DKLUDGELINEMODE, as it does not interact well with many
 # telnet implementations.

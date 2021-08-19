@@ -27,10 +27,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: 2953eedc63b56611b2686840cf7411b7ff455584 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2953eedc63b56611b2686840cf7411b7ff455584 $");
 
 /*
  * This implements the MCI bluetooth coexistence handling.

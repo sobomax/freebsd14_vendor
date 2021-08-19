@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: c4b2b294593f1e84c0f78fa5c23731375004e048 $
 
 #
 # ident	"@(#)setup.ksh	1.2	07/01/09 SMI"

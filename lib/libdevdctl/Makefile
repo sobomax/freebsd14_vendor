@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 60c59c0ea929a3185978f3098f9ef0d66de9b421 $
 
 LIB_CXX=	devdctl
 INCS=	consumer.h		\

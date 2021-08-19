@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: a924aef52021b55cc8fa1479272e3136d070a0c8 $
 
 .PATH: ${SRCTOP}/sys/dev/mxge
 

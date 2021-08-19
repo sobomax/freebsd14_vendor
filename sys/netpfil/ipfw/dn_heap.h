@@ -29,7 +29,7 @@
 /*
  * Binary heap and hash tables, header file
  *
- * $FreeBSD$
+ * $FreeBSD: 1a7032cc3f80650cdd1a480a7f8882226c6bea18 $
  */
 
 #ifndef _IP_DN_HEAP_H

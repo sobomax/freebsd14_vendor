@@ -65,7 +65,7 @@
  *	@(#)if_lereg.h	8.1 (Berkeley) 6/10/93
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a2de33b3a89a4b3bfbb23ae98ed25b9cf19770f0 $ */
 
 #ifndef _DEV_LE_AM79900REG_H_
 #define	_DEV_LE_AM79900REG_H_

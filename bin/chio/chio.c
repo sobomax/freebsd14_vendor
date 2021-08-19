@@ -43,7 +43,7 @@ static const char copyright[] =
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5a2a7ba215c337e11527113c4819854c24a3eb17 $");
 
 #include <sys/param.h>
 #include <sys/chio.h> 

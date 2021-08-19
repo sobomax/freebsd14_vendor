@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 74c4826a269d918056bd072d43f681d2c9bc6718 $
 
 The files in this directory with suffixes `.t', `.d', `.r' and `.err' are
 used for testing ed.  To run the tests, set the ED variable in the Makefile

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 8492378b4aaf962c1e182e5fbd136dce93a9be20 $
  */
 
 void g_uzip_wrkthr(void *);

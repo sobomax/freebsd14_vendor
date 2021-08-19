@@ -33,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 54673d431d4cd2795eb2000611989cd980179b8a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

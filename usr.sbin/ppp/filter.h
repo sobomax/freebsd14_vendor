@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 74af3f99495217524bff75b25e99de2a9406ea9b $
  */
 
 /* Operations - f_srcop, f_dstop */

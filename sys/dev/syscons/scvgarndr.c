@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f7b66bbf76f617f2c565c469a2d3bcbc70e0ec70 $");
 
 #include "opt_syscons.h"
 #include "opt_vga.h"

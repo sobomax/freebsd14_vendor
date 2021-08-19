@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)ls.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 410246ec99034cd78351db6deaa5ff51d9fe910b $
  */
 
 #define NO_PRINT	1

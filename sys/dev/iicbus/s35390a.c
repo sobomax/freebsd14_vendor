@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3b026f5b8d877885df75115927ff34209b0868cd $");
 
 /*
  * Driver for Seiko Instruments S-35390A Real-time Clock

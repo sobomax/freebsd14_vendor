@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: f54ea086dde59a5ddf16877986f53190bfa018fd $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

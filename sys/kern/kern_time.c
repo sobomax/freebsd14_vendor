@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9c37ae6a2771b16462f4832e6483369b13793117 $");
 
 #include "opt_ktrace.h"
 

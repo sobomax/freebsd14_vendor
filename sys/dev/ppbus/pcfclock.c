@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7997e2883b6bb913c3a5456f942378a86bf26e07 $");
 
 #include "opt_pcfclock.h"
 

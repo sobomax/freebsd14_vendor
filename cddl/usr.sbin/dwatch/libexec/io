@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for dtrace_io(4) $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD$
+# $FreeBSD: 26c58593ead3bb6768e812107dc48886acb461be $
 #
 ############################################################ DESCRIPTION
 #

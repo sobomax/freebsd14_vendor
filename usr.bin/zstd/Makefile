@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6be99ab1f0f71255bf534c008c971aa952532095 $
 
 PROG=	zstd
 SRCS=	bench.c \

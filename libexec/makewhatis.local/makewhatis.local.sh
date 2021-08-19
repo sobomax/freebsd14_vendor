@@ -31,7 +31,7 @@
 # /usr may kill your NFS server -- all clients start makewhatis at the same
 # time! So use this wrapper instead calling makewhatis directly.
 #
-# $FreeBSD$
+# $FreeBSD: d6293a556e82d1c1594baa987fedba47408a144f $
 
 PATH=/bin:/usr/bin:$PATH; export PATH
 opt= dirs= localdirs=

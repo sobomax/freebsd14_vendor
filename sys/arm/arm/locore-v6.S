@@ -36,7 +36,7 @@
 #include <machine/sysreg.h>
 #include <machine/pte-v6.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 94737f1c5ccbd615aa1cbdefbfe75cf717de9af2 $");
 
 /* We map 64MB of kernel unless overridden in assym.inc by the kernel option. */
 #ifndef LOCORE_MAP_MB

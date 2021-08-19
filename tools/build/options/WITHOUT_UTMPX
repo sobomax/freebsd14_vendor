@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 80be74ebf02b72e618c44562a5fb3587b4c6e050 $
 Set to not build user accounting tools such as
 .Xr last 1 ,
 .Xr users 1 ,

@@ -1,5 +1,5 @@
 /*	$NetBSD: instr.h,v 1.4 2005/12/11 12:18:43 christos Exp $ */
-/* $FreeBSD$ */
+/* $FreeBSD: eb2d09989a53cf8f87c46d15fb31eda61874e1b0 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

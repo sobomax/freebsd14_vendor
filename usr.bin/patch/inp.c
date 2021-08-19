@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: inp.c,v 1.44 2015/07/26 14:32:19 millert Exp $
- * $FreeBSD$
+ * $FreeBSD: 6a01f782ce628be18e23a7c995e7abc60cb8efa0 $
  */
 
 #include <sys/types.h>

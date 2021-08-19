@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 06da99f086604bfe6d77fd77d175ba3706a336a4 $");
 
 #ifndef lint
 static const char copyright[] =

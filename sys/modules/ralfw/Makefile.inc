@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 678648a53fd30ab2bf48171b06f4c44f9444f091 $
 
 #
 # Common rules for building firmware.  Note this gets auto-included

@@ -4,7 +4,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f77e3febe5776d5f9d63c9f08af69265f76b0900 $");
 
 #ifndef _DRM_OS_FREEBSD_H_
 #define	_DRM_OS_FREEBSD_H_

@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: e39a07f76965f2afd7b232b2c442a3573a0d8509 $
 
 SRCDIR:=${.PARSEDIR:tA}
 

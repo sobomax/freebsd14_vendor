@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4a753fd27595c7223157886542a6003e168665ba $");
 
 #include "dhcpd.h"
 #include "privsep.h"

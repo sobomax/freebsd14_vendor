@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c05dc7f63dd0ff505b869ff86c142f011c4c5473 $
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>

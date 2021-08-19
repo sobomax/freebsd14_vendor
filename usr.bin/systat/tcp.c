@@ -39,7 +39,7 @@ static const char rcsid[] =
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4ab644deb6714f8a5c3d979de1c1d9b9819bfd3a $");
 
 #include <sys/param.h>
 #include <sys/types.h>

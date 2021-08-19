@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ed.h,v 1.5 1994/02/01 00:34:39 alm Exp
- * $FreeBSD$
+ * $FreeBSD: 597e3464e7fa36b19bc38b52242a37bf50ff765c $
  */
 
 #include <sys/param.h>

@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD$
+# $FreeBSD: 0de42ca51b26d7d9340dfc1d21cea91c4e27f69a $
 
 desc="utimensat with UTIME_NOW will set the will set typestamps to now"
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 579c6c4b3bae0f462db3b481d38c19eb20308f2a $");
 
 /*
  * AMD64 machine dependent routines for kvm and minidumps.

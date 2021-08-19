@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a2abfec40668fbc122b148e61514e2d4721064e9 $");
 
 #include <linux/dma-mapping.h>
 #include <linux/err.h>

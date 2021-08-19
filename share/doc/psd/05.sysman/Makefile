@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD$
+# $FreeBSD: 2c0ec7b8c9d38bb91f4507b888b06a79a2622e02 $
 
 VOLUME=		psd/05.sysman
 SRCS=		0.t 1.0.t 1.1.t 1.2.t 1.3.t 1.4.t 1.5.t 1.6.t 1.7.t \

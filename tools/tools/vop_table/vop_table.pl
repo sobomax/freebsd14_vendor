@@ -7,7 +7,7 @@
 # (c) 2004 Andrew R. Reiter <arr@watson.org>
 # All Rights Reserved.
 #
-# $FreeBSD$
+# $FreeBSD: 5ac979d7e1eda0920413f07aa96c8449f7421c94 $
 
 # XXX todo: Make $src_dir modificationable
 

@@ -12,7 +12,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: 5032fa6556d051372f306823b5178dda61870432 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>

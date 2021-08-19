@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bd164751c9ce8d86427ccc873bcb69d690629f13 $
 
 SUBDIR= \
 asyncwatch \

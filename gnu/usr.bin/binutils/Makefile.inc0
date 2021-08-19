@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c624a1b9f2b1156808fab9619b5b0d5e861faf47 $
 #
 # This is included explicitly at the top of each sub-Makefile.  We can't
 # use the normal "Makefile.inc" mechanism, because we need some of these

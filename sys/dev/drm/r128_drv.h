@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7ad34967fc45add6bf78e77caf719f468911886b $");
 
 #ifndef __R128_DRV_H__
 #define __R128_DRV_H__

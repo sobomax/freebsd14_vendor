@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c446ff32edd5fde3a9f323ba8611da956037d05b $");
 
 /*
  * This is part of the Driver for Video Capture Cards (Frame grabbers)

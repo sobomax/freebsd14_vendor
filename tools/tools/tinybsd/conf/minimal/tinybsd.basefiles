@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 446ef1f2afeacabbce9ccb8b53074702255f94b8 $
 # contents of ${WORKDIR}/boot
 boot/boot0
 boot/boot1

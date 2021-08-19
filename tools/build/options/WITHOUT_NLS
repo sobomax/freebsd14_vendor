@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: ae1aec8f221b37733086a0b43aa1b12f3fc3180d $
 Set to not build NLS catalogs.

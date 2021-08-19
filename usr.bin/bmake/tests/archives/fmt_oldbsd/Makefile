@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2dbfa64e1b82447aeba0b1050d7833146e52b8fc $
 
 PACKAGE=	tests
 TESTSDIR=	${TESTSBASE}/usr.bin/bmake/archives/fmt_oldbsd

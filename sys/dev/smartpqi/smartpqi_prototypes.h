@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 443383c8e5088e853a37d76b885acc6cbb323a24 $ */
 
 #ifndef _PQI_PROTOTYPES_H
 #define _PQI_PROTOTYPES_H

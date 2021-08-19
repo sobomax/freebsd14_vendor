@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: d72db2995c2faa98d5d4a45502024445f43a7d8f $
  */
 
 #define	WLAN_IFMODE_MAX				WlanIfaceOperatingModeType_tdma

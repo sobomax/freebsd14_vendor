@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8ac370cae6936791371d126a928d6fe39a4a50f6 $
 
 .PATH: ${SRCTOP}/contrib/ntp/libntp \
 	${SRCTOP}/contrib/ntp/lib/isc \

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: a76112e07fa4fea526055126c0be33695f81a7f3 $
 Set to neither build nor install
 .Lb libgmock ,
 .Lb libgtest ,

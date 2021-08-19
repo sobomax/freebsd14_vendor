@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode_pager.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD$
+ * $FreeBSD: 821da2c989062fe55ad090210d397fb110970dbb $
  */
 
 #ifndef	_VNODE_PAGER_

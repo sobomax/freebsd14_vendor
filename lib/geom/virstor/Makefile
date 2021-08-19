@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dfbe0aeddc4756b5a238a7d1a4419c08373257a7 $
 
 PACKAGE=runtime
 .PATH: ${.CURDIR:H:H}/misc ${SRCTOP}/sys/geom/virstor

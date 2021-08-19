@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: ab350f223f533174fb1d69a69c0305a33c4d35a4 $
 
 PACKAGE=	ipf
 PROG=		ippool

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1dadd9c64fe75c9aba38c4b76f5e9149df2e35b9 $
  */
 struct date {
 	int y;	/* year */

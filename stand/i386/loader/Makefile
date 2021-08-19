@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b74ef9007d97cdff7e6ad66a4e7ece264697068e $
 
 HAVE_ZFS=		${MK_LOADER_ZFS}
 

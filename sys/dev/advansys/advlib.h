@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: a7acf938ee793a1dbd6aa50d9603bbb0439dd56d $
  */
 /*-
  * Ported from:

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2093eed8bbd3c849f34c1ca40723eff660ffa8c9 $
 
 set -- 1 2 3 4 5 6 7 8 9 10 11 12 13
 [ "$#" = 13 ] || echo '$# wrong'

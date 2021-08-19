@@ -69,7 +69,7 @@
  *
  *****************************************************************************/
 
-/* $FreeBSD$ */
+/* $FreeBSD: b686fc58fd407a7faf42e87640070df9154aea3e $ */
 
 #ifndef __IF_IWM_CONSTANTS_H
 #define __IF_IWM_CONSTANTS_H

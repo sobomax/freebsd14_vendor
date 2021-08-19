@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 18219f51ee098e197be8023ca2f7a9220845d72c $
 
 set -- "*"
 case x in

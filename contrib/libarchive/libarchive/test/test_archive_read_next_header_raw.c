@@ -24,7 +24,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1c8af20f8c3ecb0fd35e4d919414901f46f043ed $");
 
 #define DATA "random garbage for testing purposes"
 

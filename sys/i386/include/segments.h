@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)segments.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD$
+ * $FreeBSD: cf851e75051d1ebd33d7b5e6c7fbc00d10c156f6 $
  */
 
 #ifndef _MACHINE_SEGMENTS_H_

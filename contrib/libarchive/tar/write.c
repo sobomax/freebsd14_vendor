@@ -25,7 +25,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6eaa85c9dbc076f9dda24149b1da804b81353d8b $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

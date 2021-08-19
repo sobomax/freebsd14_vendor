@@ -1,7 +1,7 @@
 /*
  * International and national calendar files
  *
- * $FreeBSD$
+ * $FreeBSD: 6ed1ccee6ea0140d4088bcce69af397545bdfc01 $
  */
 
 #ifndef _calendar_all_

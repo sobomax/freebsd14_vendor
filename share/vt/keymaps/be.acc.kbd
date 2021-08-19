@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8f43a0052120581a20883e09a4024f3ce5118b53 $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

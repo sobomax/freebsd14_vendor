@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e5f30040d5be5d3d4bdadc30aafe38e6a71155b9 $
 
 .PATH: ${SRCTOP}/sys/dev/trm
 

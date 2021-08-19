@@ -38,7 +38,7 @@
 #include "iso9660_rrip.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8d4df08275db60aaa77c593a2870e22b54aee174 $");
 
 #include <util.h>
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 94c0420e6737be126c4579d8f0530fd6ae25fb69 $");
 
 /*
  * Clocks and power control driver for Freescale i.MX6 family of SoCs.

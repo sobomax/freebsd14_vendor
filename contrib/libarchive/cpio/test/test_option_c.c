@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 013caed560307331491d76c4ff10c35dca3a9876 $");
 
 static int
 is_octal(const char *p, size_t l)

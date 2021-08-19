@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c69fe76bfb1364ff3cd5418624f0cf8497b27291 $
  */
 
 static void teken_subr_cursor_up(teken_t *, unsigned int);

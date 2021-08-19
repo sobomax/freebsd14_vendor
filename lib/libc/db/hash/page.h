@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)page.h	8.2 (Berkeley) 5/31/94
- * $FreeBSD$
+ * $FreeBSD: 17070e1ff5841b2204e028d8eeb2edcc63db5f4d $
  */
 
 /*

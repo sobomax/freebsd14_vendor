@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/01.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 7360a57f66188b829fb9f006208c07d8fff59174 $
 
 desc="truncate returns ENOTDIR if a component of the path prefix is not a directory"
 

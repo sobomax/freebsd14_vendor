@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 0cc16ab5d841e2105e0746544c83ed80ab911bbc $ */
 
 /*
  * Management interface for smartpqi driver

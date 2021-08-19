@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2c3bd568a2683b9411da5065249a212e367eb8d0 $");
 
 /*
  * Disk I/O routines using Open Firmware

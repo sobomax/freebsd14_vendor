@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/18.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 342596352ad9a66b8d5a717854793c7ea84511eb $
 
 desc="rename returns EINVAL when the 'from' argument is a parent directory of 'to'"
 

@@ -22,7 +22,7 @@
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  * Portions Copyright 2013 Howard Su howardsu@freebsd.org
  *
- * $FreeBSD$
+ * $FreeBSD: 0be28b56aa6aff31df91f232a72e6471b1124fe2 $
  *
  */
 

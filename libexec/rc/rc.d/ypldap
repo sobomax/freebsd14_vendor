@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: d5972dcb0a2368c3bf1f45ac06f906cce4b33a9a $
 #
 
 # PROVIDE: ypldap

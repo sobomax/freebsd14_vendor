@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 4f40f9ae291b6f106ffe09ffd6afc8a638335be2 $*/
 
 #ifndef _E1000_NVM_H_
 #define _E1000_NVM_H_

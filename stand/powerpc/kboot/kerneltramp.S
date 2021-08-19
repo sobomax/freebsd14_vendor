@@ -9,7 +9,7 @@
  * to the absolute address 0x60. Here we implement a loop waiting on the release
  * of a lock by the kernel at 0x40.
  * 
- * $FreeBSD$
+ * $FreeBSD: 15fdfc26bd90a035f99431b2f62be180d0fc1252 $
  */
 
 #include <machine/asm.h>

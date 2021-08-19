@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8b28d462a5b3f5d61a2cae119cf26edbae229cc9 $");
 
 /*
  * Pseudo-driver for internal NWAY support on DEC 21143 and workalike

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 48dd8939122946ac1c371c33cd20f576eec27502 $");
 
 /*
  * This code is created to match the formulas available at:

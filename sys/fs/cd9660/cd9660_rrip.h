@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cd9660_rrip.h	8.2 (Berkeley) 12/5/94
- * $FreeBSD$
+ * $FreeBSD: 67ec3c233a0c8781e632f115b5503462fde3804b $
  */
 
 typedef struct {

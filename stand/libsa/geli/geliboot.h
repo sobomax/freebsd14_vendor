@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: aeebde4b0a2ed71f97379ce11539cc78c41c4877 $
  */
 
 #include <crypto/intake.h>

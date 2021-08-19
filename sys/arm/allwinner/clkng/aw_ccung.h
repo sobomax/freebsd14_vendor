@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6a5c2fff2dde14daea62da4dd66b258ae8e028da $
  */
 
 #ifndef __CCU_NG_H__

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/open/13.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: b37bf663fb32d493138872b5ee9dc3202cfceb42 $
 
 desc="open returns EISDIR when trying to open a directory for writing"
 

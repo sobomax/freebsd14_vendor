@@ -1,5 +1,5 @@
 /*
- * $FreeBSD$
+ * $FreeBSD: 07e4ab6efa8e82fe2ce6473c563aa5a033e0f16d $
  */
 extern void setmodulus(char *modx);
 

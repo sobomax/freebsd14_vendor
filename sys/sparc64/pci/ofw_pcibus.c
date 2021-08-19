@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f214ce27696fe7345beaa6238b9dd7af3395a7fc $");
 
 #include "opt_ofw_pci.h"
 

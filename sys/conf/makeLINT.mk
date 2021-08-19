@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 52bac5fb37baf6e765e923bf6e159f270f397172 $
 
 # The LINT files need to end up in the kernel source directory.
 .OBJDIR: ${.CURDIR}

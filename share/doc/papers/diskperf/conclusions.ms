@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)conclusions.ms	6.2 (Berkeley) 4/16/91
-.\" $FreeBSD$
+.\" $FreeBSD: bdba05f99e544fed159fe540f14ff4434aaf01fe $
 .\"
 .ds RH Conclusions
 .NH

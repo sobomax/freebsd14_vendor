@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1e1589a853df1f81471cd5e84e733c9cb1d74882 $");
 
 /*
  * Common code for dealing with 3COM ethernet cards.

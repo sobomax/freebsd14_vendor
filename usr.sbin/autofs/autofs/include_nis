@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 5289984639a101c63f8803ead82abb7e679d48ab $
 #
 
 if [ -n "$2" ]; then

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mail.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 0bb565209c7f2f5d76a69213dfd5ffbabb2f1923 $
  */
 
 void chkmail(int);

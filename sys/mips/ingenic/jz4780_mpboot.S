@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: acd9658d8cccdff3b38d072e6c04b4d78cb3a931 $
  */
 
 #include <machine/asm.h>

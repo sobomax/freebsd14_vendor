@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 8e2be857e86f6e74a64f546dd46af44dd31ff2c6 $
 #
 
 # PROVIDE: sdpd

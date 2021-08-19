@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cabdae8ddc4355b6128208dae07d4c73100e71e4 $");
 
 static void
 group_cleanup(void *d)

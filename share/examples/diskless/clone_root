@@ -4,7 +4,7 @@
 #	<Standard BSD copyright>
 # Revised 2001.04.16
 #
-# $FreeBSD$
+# $FreeBSD: 22bd70c997965040fa30d5f06d5d78d08d3a7ab0 $
 #
 # clone root filesystem for diskless root stuff
 #

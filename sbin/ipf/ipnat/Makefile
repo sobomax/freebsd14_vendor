@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: ba9c50ee70e3fa39784ade46e87b19c035a2fa43 $
 
 PACKAGE=	ipf
 PROG=		ipnat

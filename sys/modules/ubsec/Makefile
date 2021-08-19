@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5eebe9749ccc2ae71a8ba08b62ddddefb3c7e3b0 $
 
 .PATH:	${SRCTOP}/sys/dev/ubsec
 KMOD	= ubsec

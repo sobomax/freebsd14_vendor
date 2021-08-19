@@ -5,7 +5,7 @@
  * this stuff is worth it, you can buy me a beer in return.        Joerg Wunsch
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: 4a24ee0cf8c90ac5eaaa41c619814ac53e52ce2c $
  */
 
 /*

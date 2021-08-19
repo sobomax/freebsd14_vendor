@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 50496a7b834a74d9f76464feef93bc84fb7dac1f $
 
 arm/rockchip/rk30xx_machdep.c		standard
 arm/rockchip/rk30xx_pmu.c		standard

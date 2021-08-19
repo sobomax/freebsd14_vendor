@@ -5,7 +5,7 @@
  * 
  * Copyright (c) 2002, K A Fraser
  *
- * $FreeBSD$
+ * $FreeBSD: 65d5a3eac978ed1597dedf62091c877688055203 $
  */
 
 #ifndef __XEN_HYPERVISOR_H__

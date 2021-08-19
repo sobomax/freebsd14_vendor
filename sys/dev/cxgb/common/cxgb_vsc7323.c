@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 22926b77fda2cca40309b5b058522c2f048734fd $");
 
 #include <common/cxgb_common.h>
 

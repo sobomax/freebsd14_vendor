@@ -30,7 +30,7 @@
  * Ulrich Drepper <drepper@redhat.com>. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8b23c6b224e7c2a680c8a202fa180b5858acf0c0 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>

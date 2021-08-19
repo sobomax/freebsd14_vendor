@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: f6e11f5a5821e678c648702568c73ae0eb2cb415 $
 
 . `dirname $0`/conf.sh
 

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 8623e01a3ea98c9bc78bc1369f6bf9d43fc10f71 $
 #
 
 .PATH: ${SRCTOP}/sys/tests/framework

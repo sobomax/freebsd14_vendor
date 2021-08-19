@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5a747f0507d3fc156d90368551345407429f2961 $");
 
 /*
     alias_nbt.c performs special processing for NetBios over TCP/IP

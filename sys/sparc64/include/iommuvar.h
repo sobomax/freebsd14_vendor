@@ -27,7 +27,7 @@
  *
  *	from: NetBSD: iommuvar.h,v 1.6 2008/05/29 14:51:26 mrg Exp
  *
- * $FreeBSD$
+ * $FreeBSD: f2fdd6c6dc75e8fd3b082b9f90c27d0748dfc21d $
  */
 
 #ifndef _MACHINE_IOMMUVAR_H_

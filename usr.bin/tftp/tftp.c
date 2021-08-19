@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)tftp.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7a0565c5bdcd6577ed8df540d35b561c920d7636 $");
 
 /* Many bug fixes are from Jim Guyton <guyton@rand-unix> */
 

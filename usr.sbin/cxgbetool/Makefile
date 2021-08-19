@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ee31cdda585867e43075f283e59fe15c22c8f7c0 $
 
 PROG=	cxgbetool
 MAN=	cxgbetool.8

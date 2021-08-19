@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2016-2018 Ruslan Bukin <br@bsdpad.com>
  *
- * $FreeBSD$
+ * $FreeBSD: 68d98db30c83061ddf5ab216c42e3df6ae78316d $
  *
  */
 /*
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 68d98db30c83061ddf5ab216c42e3df6ae78316d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

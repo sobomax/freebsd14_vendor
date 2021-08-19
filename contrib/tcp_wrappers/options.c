@@ -27,7 +27,7 @@
   * such options should clear the "dry_run" flag to inform the caller of this
   * course of action.
   *
-  * $FreeBSD$
+  * $FreeBSD: 64ad355faa619c740c500ff3219673b61d54340c $
   */
 
 #ifndef lint

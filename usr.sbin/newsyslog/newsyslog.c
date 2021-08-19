@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: dc3ea51c803269678f4a40bbef5fb46f7fdd5838 $");
 
 #define	OSF
 

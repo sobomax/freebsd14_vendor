@@ -9,7 +9,7 @@
  */
 
 /* From: zutil.h,v 1.16 1996/07/24 13:41:13 me Exp $ */
-/* $FreeBSD$ */
+/* $FreeBSD: 4b9541d4dab78ce26dd64004ee35ef4c3a4cb1b5 $ */
 
 #ifndef _Z_UTIL_H
 #define _Z_UTIL_H

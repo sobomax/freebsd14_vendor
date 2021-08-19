@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 424a0e3a0dedc487cad4d581c283ea06f86eb595 $
  *
  * Statically Defined Tracing (SDT) definitions.
  *

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 193676465aa3bee8a73de2f0bb0c9720c92f4ef9 $
 
 TESTSDIR=	${TESTSBASE}/sys/kern/pipe
 

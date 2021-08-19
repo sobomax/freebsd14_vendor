@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: b8461a6cf4e439b9850b136add087ae0716960eb $
  *
  */
 #ifndef	_SYS_INFLATE_H_

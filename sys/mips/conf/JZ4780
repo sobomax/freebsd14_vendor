@@ -1,6 +1,6 @@
 # JZ4780 -- Kernel config for Ingenic JZ47XX boards
 #
-# $FreeBSD$
+# $FreeBSD: c73ed9c789bf0a22e5b2a86fc609b1f4ed93be60 $
 
 #NO_UNIVERSE
 

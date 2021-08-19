@@ -29,11 +29,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: 25c1c82dca5b808c60f2566afb62295ecc998134 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 25c1c82dca5b808c60f2566afb62295ecc998134 $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>

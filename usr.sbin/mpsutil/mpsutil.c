@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: d7209afd175fe26116f221c7071fcff7f143b656 $");
 
 #include <sys/param.h>
 #include <sys/errno.h>

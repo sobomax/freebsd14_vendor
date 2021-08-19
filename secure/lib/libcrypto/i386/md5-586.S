@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8913b8831960f735e1019e9db459a4a0ecfbad96 $ */
 /* Do not modify. This file is auto-generated from md5-586.pl. */
 #ifdef PIC
 .text

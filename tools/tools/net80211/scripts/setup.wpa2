@@ -2,7 +2,7 @@
 #
 # Script for testing WPA2 w/ AES.
 #
-# $FreeBSD$
+# $FreeBSD: ba92a9bc1c45c056efdb7649cdd0832ffd4866cd $
 #
 PATH=.:$PATH
 . config

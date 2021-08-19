@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)2.t	8.1 (Berkeley) 7/27/93
-.\" $FreeBSD$
+.\" $FreeBSD: 9d1d28c6aa5f97c8f599c8534008c313f512c4e2 $
 .\"
 .ds lq ``
 .ds rq ''

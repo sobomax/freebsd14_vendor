@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4c4dbd5cf1a626e985351b4d6a0539dca1867ff1 $
 
 failures=''
 ok=''

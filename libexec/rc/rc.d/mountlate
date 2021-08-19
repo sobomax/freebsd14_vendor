@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: f0384ad4dea25f375df7f315dc163b29273417da $
 #
 
 # PROVIDE: mountlate

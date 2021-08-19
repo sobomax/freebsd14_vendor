@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain since it's just boilerplate.
  *
- * $FreeBSD$
+ * $FreeBSD: 02508f4d5188cf4cf0caeaaf719ed40e7469ecf0 $
  */
 
 #ifndef __I386_INCLUDE_EFI_H_

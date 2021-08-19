@@ -1,5 +1,5 @@
 
-# $FreeBSD$
+# $FreeBSD: 9bf3e52fd19629ca8994b0a8c633b199e8b1bc18 $
 
 SUBDIR= ahc ahd
 

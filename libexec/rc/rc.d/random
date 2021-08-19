@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: d275284e13d68e4d45b1a8204954762c7572f610 $
 #
 
 # PROVIDE: random

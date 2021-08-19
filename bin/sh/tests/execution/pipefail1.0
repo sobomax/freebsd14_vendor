@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: df23a012ca07a58c05b2edb0ee25b483a82aa382 $
 
 set -o pipefail
 : && : | : && : | : | : && : | : | : | :

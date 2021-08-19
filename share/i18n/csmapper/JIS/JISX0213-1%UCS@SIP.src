@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5ade2b7d2d84f09aa72ed67ef9f5267c5075a658 $
 # $NetBSD: JISX0213-1%UCS@SIP.src,v 1.1 2007/03/05 16:58:33 tnozaki Exp $
 
 TYPE		ROWCOL

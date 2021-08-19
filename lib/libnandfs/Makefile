@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e900c3c6eab477bddbae08ce0202bafcfb612e51 $
 
 PACKAGE=lib${LIB}
 LIB=	nandfs

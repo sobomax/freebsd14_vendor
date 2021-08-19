@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_rmclass.h,v 1.10 2003/08/20 23:30:23 itojun Exp $
- * $FreeBSD$
+ * $FreeBSD: 7e58ec49b9432f8b75b93372935fbd334a049ef3 $
  */
 
 #ifndef _ALTQ_ALTQ_RMCLASS_H_

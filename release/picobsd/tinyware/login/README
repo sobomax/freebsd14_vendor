@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 4dba3344e6daf346c4e8503078ff748c99855a60 $
 
 This is a modified login version for PicoBSD purposes, which does
 not demand PAM.

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: ef0c20450f8f791bd13b37d392fdc04a1d2a9e10 $
 #
 
 # PROVIDE: devd

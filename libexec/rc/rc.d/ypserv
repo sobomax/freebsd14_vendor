@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: bc1052b38bb9b13139a582538027092a89ec732b $
 #
 
 # PROVIDE: ypserv

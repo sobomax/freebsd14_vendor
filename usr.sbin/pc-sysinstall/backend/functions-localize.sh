@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 8279e589510680d1e269ea803d9c0dc07f1652f3 $
 
 # Functions which runs commands on the system
 

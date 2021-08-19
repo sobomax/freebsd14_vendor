@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/00.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: ec1ae24399e568c2427c5dc09baf8fe270a4ffd5 $
 
 desc="chflags changes flags"
 

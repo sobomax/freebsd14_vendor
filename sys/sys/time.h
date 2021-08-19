@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: fb55bfefd85e305c76f64ab6b4533b653c340663 $
  */
 
 #ifndef _SYS_TIME_H_

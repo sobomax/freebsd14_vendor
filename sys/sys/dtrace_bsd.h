@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 577e27333b6a0a24a34552c28f3fe5d32166ffcc $
  *
  * This file contains BSD shims for Sun's DTrace code.
  */

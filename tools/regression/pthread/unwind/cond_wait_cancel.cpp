@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 5975e028a5cab112a8c600e992a583888ef815cd $ */
 /* Test stack unwinding for pthread_cond_wait function */
 
 #include <pthread.h>

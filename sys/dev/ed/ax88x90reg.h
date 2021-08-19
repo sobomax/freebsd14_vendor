@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 245d0784f5fc9a8b9b66de341f63c50de9087b90 $
  */
 
 /* AX88x90 based miibus defines */

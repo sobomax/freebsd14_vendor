@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 4bab2d9e32191ab8847f9a46a895eee21aa50d77 $
 #
 
 from __future__ import print_function

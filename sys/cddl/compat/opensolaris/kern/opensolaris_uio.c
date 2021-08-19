@@ -37,7 +37,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: e6b760e69812948220ef714ef29cab4a51c38df0 $
  */
 
 #include <sys/types.h>

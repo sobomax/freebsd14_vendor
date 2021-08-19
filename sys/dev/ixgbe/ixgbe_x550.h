@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 44c9d06a42d94daad57b7a9515e5695de9428cca $*/
 
 #ifndef _IXGBE_X550_H_
 #define _IXGBE_X550_H_

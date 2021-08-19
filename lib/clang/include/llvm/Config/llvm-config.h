@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 580d5420479c3d87fb3ab839f624e623aef8d024 $ */
 /*===------- llvm/Config/llvm-config.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /* Part of the LLVM Project, under the Apache License v2.0 with LLVM          */

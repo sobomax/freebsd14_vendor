@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4d826afa4e63fa9b13c6dfc147cf7065f9b0e1b1 $");
 
 #include "ypupdate_prot.h"
 #include <stdio.h>

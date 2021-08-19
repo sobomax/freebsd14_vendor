@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 1d5aeba623fd5204493b4b4ebda3bb698697a87e $
 #
 # Generate the convenience macros at the bottom of sys/bus.h
 #

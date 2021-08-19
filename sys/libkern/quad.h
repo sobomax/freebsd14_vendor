@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)quad.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD$
+ * $FreeBSD: 452f331661b3c866f93324bb9bd184ee9293f9d2 $
  */
 
 #ifndef _LIBKERN_QUAD_H_

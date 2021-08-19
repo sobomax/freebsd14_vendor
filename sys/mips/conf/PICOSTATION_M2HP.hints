@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dd8e238e87a7aa9cb6256f48c398206341416d67 $
 
 # arge0 MDIO bus
 hint.argemdio.0.at="nexus0"

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 2b4accaa2470b4579c41e43e04dc0afef6cefe3f $
 #
 
 PROG=	syscall_timing

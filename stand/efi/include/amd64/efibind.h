@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8cfce5bbc5f1c0135d51f5d04db9f42047f42606 $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved

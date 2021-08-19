@@ -4,7 +4,7 @@
 \ ** submitted by Larry Hastings, larry@hastings.org
 \ **
 \
-\ $FreeBSD$
+\ $FreeBSD: 7297df681cf3079ab2c3c6c855ef72e9bdf45454 $
 
 : r/o 1 ;
 : r/w 3 ; 

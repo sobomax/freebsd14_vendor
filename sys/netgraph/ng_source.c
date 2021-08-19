@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: da8f42381ac3de4cd77409e53aca04b6aae2c14b $");
 
 /*
  * This node is used for high speed packet geneneration.  It queues

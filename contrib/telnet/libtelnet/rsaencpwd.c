@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9dcf4a658cf657eb51ef154de23e5733477d9955 $");
 
 #ifndef lint
 static char sccsid[] = "@(#)rsaencpwd.c	8.3 (Berkeley) 5/30/95";

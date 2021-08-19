@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9a293faf6bc2e9693bc0b70e25750372c202a81a $
 
 [ "a\
 b" = ab ]

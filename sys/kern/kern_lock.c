@@ -32,7 +32,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d769a185ce7ac334aa7ded789fb730ac5ad1f086 $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>

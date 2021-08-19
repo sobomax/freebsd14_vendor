@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 251c497e32e43374a4b54307f5a8f51691ff5c48 $
 
 TESTSDIR=	${TESTSBASE}/sys/mqueue
 

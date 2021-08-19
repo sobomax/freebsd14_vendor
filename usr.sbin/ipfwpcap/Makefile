@@ -1,7 +1,7 @@
 #
 # From: Id: Makefile,v 1.2 2004/01/15 16:20:56 pkern Exp
 #
-# $FreeBSD$
+# $FreeBSD: dbdd0cae2a56dce8c5594f53b31a70a4f69baa81 $
 #
 
 PROG=	ipfwpcap

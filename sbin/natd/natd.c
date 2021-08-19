@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 268850c0a95a21b8a972eae29a5b85c5fec19606 $");
 
 #define SYSLOG_NAMES
 

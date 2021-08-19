@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: e554a1f4afc288c1cad1d02660d29e57bd924947 $
 #
 
 # PROVIDE: mountd

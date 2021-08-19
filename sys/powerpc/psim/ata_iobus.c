@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 30e850bfc6042a54bf3e2b40c004c5318490ee31 $");
 
 /*
  * PSIM local bus ATA controller

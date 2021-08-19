@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/mips
 #
-# $FreeBSD$
+# $FreeBSD: f09ef5440ce9c237c1ba62436eb964541c5c2fd1 $
 
 device		mem
 

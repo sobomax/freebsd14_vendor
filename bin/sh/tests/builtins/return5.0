@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6e4b7bd751a8db94ff047437756cbaa77dee883a $
 
 if [ "$1" != nested ]; then
 	f() {

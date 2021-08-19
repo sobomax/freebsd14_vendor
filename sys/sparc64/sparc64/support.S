@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 61fef499fd31eebf6b184fb2365b9e2a54ce046f $");
 
 #include "opt_kstack_pages.h"
 

@@ -37,7 +37,7 @@
  * (but it has changed a lot)                                               *
  ****************************************************************************/
 
-/* $FreeBSD$ */
+/* $FreeBSD: c65b826363e333225b8421c753827529e6e411d5 $ */
 
 #define __INTERNAL_CAPS_VISIBLE
 #include <curses.priv.h>

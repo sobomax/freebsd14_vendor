@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: bcf71e9919f694800eaa2b2dbd7dd5acd040886c $
 #
 
 main() {

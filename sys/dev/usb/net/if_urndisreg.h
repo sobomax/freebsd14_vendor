@@ -1,4 +1,4 @@
-/*	$FreeBSD$ */
+/*	$FreeBSD: c76807a53623496334e41e68dbb91078dc30c066 $ */
 /*	$OpenBSD: if_urndisreg.h,v 1.19 2013/11/21 14:08:05 mpi Exp $ */
 
 /*

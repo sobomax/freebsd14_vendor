@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 166d1a7fe0c32903f21e35ef33ea4bc572466c97 $
 Set to not build
 .Xr ppp 8
 and related programs.

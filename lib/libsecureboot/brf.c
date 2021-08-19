@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9e3af4a7c089fc567d7148e62946a27f1e57e6dc $");
 
 #define NEED_BRSSL_H
 #include "libsecureboot-priv.h"

@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD$
+# $FreeBSD: 84e14e9cfd804433881ccac21614da3df236162d $
 #
 # Run nightly periodic scripts
 #

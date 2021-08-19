@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 922f8eb4d0d0ddb10f940a3513e2c5d69d7dc944 $
 
 tar -xvjf gcc-3.0.2.tar.bz2 -X FREEBSD-Xlist
 

@@ -1,6 +1,6 @@
 /*	$OpenBSD: pathnames.h,v 1.3 2003/06/03 02:56:18 millert Exp $	*/
 /*	$NetBSD: pathnames.h,v 1.3 1994/12/08 09:30:59 jtc Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: a42aed3f7368eabf29984179b1a557acdebe330b $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

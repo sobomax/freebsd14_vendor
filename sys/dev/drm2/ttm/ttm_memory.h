@@ -24,7 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  **************************************************************************/
-/* $FreeBSD$ */
+/* $FreeBSD: 53263c6a20eb7b4a6325f2859de316b76d447035 $ */
 
 #ifndef TTM_MEMORY_H
 #define TTM_MEMORY_H

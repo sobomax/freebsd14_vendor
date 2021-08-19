@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d3a330c7f2d5f19717f73f6df3fa8f3219e63d07 $");
 
 #include "opt_ddb.h"
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c2d95e81161fd3ce1dd46a446966fee31c0e7275 $");
 
 /*
  * BIOS disk device handling.

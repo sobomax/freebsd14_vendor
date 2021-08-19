@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 0b19783fb58bddfc5c2a343d1a48bbcd650ddff4 $
  */
 
 /* A10/A20 EMAC driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0b19783fb58bddfc5c2a343d1a48bbcd650ddff4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

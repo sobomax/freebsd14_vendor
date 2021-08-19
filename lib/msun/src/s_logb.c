@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a47e35489a4ba44636963a7c45aa2624170e65cf $");
 
 /*
  * double logb(x)

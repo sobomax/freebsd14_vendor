@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fc7219d868bba536c47f280a7b3bd38ba4985c6e $");
 
 #include "opt_vm.h"
 

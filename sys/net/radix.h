@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)radix.h	8.2 (Berkeley) 10/31/94
- * $FreeBSD$
+ * $FreeBSD: a0e5e5c5aa3fa9e836e9884a5e383575470117df $
  */
 
 #ifndef _RADIX_H_

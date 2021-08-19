@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 35bf48ba51784190e74efb3a0c1127fa976c1d6e $ */
 /* Do not modify. This file is auto-generated from sha512-armv8.pl. */
 // Copyright 2014-2020 The OpenSSL Project Authors. All Rights Reserved.
 //

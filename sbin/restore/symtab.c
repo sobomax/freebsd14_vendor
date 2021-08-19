@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)symtab.c	8.3 (Berkeley) 4/28/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 49ed39dd2022cf26c6cc6ce1e7d3f88bc086d369 $";
 #endif /* not lint */
 
 /*

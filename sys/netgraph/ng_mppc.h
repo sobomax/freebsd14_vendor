@@ -38,7 +38,7 @@
  * Author: Archie Cobbs <archie@freebsd.org>
  *
  * $Whistle: ng_mppc.h,v 1.3 2000/02/12 01:17:22 archie Exp $
- * $FreeBSD$
+ * $FreeBSD: b826806c277e11284ebf8a41a5f2f4db4c7ab97e $
  */
 
 #ifndef _NETGRAPH_NG_MPPC_H_

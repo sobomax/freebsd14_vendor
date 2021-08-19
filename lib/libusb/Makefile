@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 1bbf96c0d239611212700d87c07cff0a9d66c7bb $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #

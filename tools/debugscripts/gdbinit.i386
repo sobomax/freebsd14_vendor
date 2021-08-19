@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 95dbf6e93c8744136658c1346de36bd74147adf6 $
 # Assembler-level macros for i386
 # Disassemble the next 10 instructions.
 define xi

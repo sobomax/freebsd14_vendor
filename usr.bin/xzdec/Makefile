@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 538494c38ce6a04cfb37a08d25e8c11f2cb5e49c $
 
 PROG=	xzdec
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ea75504a7235182c68ecab6cd74e0456239fd362 $");
 
 /*
  * IEEE 802.11 station scanning support.

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1bf92ec5e02a472479c8b26ae19b6d32ff490464 $");
 
 #include "nvme_private.h"
 

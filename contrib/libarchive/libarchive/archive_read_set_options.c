@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2e2eea69058dae4807f799b9e094967570720ec4 $");
 
 #include "archive_read_private.h"
 #include "archive_options_private.h"

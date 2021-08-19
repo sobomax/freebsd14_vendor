@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/arm64
 #
-# $FreeBSD$
+# $FreeBSD: ffc08435380f1c10fd443acc3af6ae866e51f682 $
 
 machine		arm64 aarch64
 

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: c280393ef1c8b5f0beb283ba57ae378b6580721e $*/
 
 #include "i40e_osdep.h"
 #include "i40e_register.h"

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: bba45425343cb0a0f85dc61e03976b5e08376798 $
  */
 
 /* Format L3.0, since we move to XZ API */

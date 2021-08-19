@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3c94db6857d0e4a7720ccae2d69abdfb66d20368 $
 
 PROG=	kimpersonate
 MAN=	kimpersonate.8

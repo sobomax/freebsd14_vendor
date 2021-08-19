@@ -29,7 +29,7 @@
 /* Driver for the VirtIO PCI interface. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 100b44cd1843da8cfd1029e474c95860239c51c3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

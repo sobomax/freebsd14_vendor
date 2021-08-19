@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4c6390d1cb18f68d41cb9e2f5c8ad72da63e1f94 $
 
 .PATH:		${SRCTOP}/sys/dev/alpm
 KMOD		= alpm

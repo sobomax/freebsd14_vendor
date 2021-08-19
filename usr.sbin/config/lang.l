@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lang.l	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 308c38393916366cf6c3521bca34a4c6cf3dd9e0 $
  */
 
 #include <assert.h>

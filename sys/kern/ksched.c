@@ -35,7 +35,7 @@
 /* ksched: Soft real time scheduling based on "rtprio". */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: bf03a46315c2b5070f2c6d04b97bd09833236d93 $");
 
 #include "opt_posix.h"
 

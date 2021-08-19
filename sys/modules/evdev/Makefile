@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7bea12e3277fbbeed850be642da96bff44334587 $
 
 .PATH: ${SRCTOP}/sys/dev/evdev
 

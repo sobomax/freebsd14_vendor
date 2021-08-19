@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 230494557eb742f24682b7d00f75bfa571dd6a6b $
 Set to not build ZFS file system kernel module, libraries, and user commands.

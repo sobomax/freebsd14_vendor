@@ -2,7 +2,7 @@
 /*
  * Copyright is disclaimed as to the contents of this file.
  *
- * $FreeBSD$
+ * $FreeBSD: 4e799d95bf885bd1351f4af255586af492903152 $
  */
 
 #include <sys/types.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: aaefe5abe443bf5ca869c32656a20c7caf10a88d $
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw/nat64
 

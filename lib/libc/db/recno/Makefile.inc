@@ -1,5 +1,5 @@
 #       from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD$
+# $FreeBSD: 744109f46d83f6d475c5bf89d3cba00c1f3934d0 $
 
 .PATH: ${LIBC_SRCTOP}/db/recno
 

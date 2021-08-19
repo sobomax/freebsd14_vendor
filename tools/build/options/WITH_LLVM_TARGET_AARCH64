@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: c22d1ad8a849ab696dbb4ee3414d917d3b9fb1dd $
 Set to build LLVM target support for AArch64.
 The
 .Va LLVM_TARGET_ALL

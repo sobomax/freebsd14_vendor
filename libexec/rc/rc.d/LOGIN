@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 2b45ba88a4b4d69c7aabb6f62f992027dad7573e $
 #
 
 # PROVIDE: LOGIN

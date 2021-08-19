@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD$
+# $FreeBSD: 9e95e6f72a0b13ca8fb8927513fcee43814363dc $
 #
 
 .include <bsd.init.mk>

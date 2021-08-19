@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5a819e2cae4b967c35aaad43ad16af7d9d3f539d $
 
 .PATH: ${SRCTOP}/sys/fs/procfs
 

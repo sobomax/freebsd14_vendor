@@ -6,7 +6,7 @@
 .\" this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 .\" ----------------------------------------------------------------------------
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 952e95ccd9629e9656f84017166e1eab57adda4b $
 .\"
 .ds RH The kernel and memory
 .NH

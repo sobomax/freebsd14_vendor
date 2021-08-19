@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 32dd8525e824f38c8ed266d537d2b6b24bd71019 $
 Enable building
 .Xr loader 8
 with support to pass a verified manifest to the kernel.

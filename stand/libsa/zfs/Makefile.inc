@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0c6632b438f3d877e6ac5ac4013e4e75f42db9dd $
 
 .PATH:		${ZFSSRC}
 SRCS+=		zfs.c skein.c skein_block.c list.c

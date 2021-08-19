@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f5f81e5c135a1d52288de831d3a889d45239fed1 $");
 
 /*
  * Note that this file is compiled into the kernel and into libc.

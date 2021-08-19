@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: eda544f4ff36845eb0b059d224c8ce358dfa3107 $
 #
 # Test for 'optional' keyword.
 #

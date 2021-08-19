@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 22428daa167f8585c6711aec0f6502eef9e6724a $
 #
 
 # PROVIDE: cron

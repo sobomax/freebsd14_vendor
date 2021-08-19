@@ -5,7 +5,7 @@
  *
  * Largely rewritten by J.T. Conklin (jtc@wimsey.com)
  *
- * $FreeBSD$
+ * $FreeBSD: 4f07275031a302553c671e8922591faf9f327fa0 $
  */
 
 #include <sys/types.h>

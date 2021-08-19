@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 75f01bf7dd36a413fb81a7dc0d4dd8d8e2fb986f $ */
 
 	Hardware that is Known To or Should Work with This Driver
 

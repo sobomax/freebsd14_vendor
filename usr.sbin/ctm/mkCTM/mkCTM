@@ -1,6 +1,6 @@
 #!/usr/local/bin/tclsh7.4
 #
-# $FreeBSD$
+# $FreeBSD: 02b154427e9a20baa73c0ba39039ab9288d2beda $
 
 #############################################################################
 ### Do we already have this delta ?

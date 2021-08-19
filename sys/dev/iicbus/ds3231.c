@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: bd4142c6291b951fde7ad27ce71e69160bb59957 $");
 
 /*
  * Driver for Maxim DS3231[N] real-time clock/calendar.

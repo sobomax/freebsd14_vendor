@@ -26,7 +26,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD$
+$FreeBSD: 96429319626735b6ae3eb9f652d5472e0d18350f $
 ***************************************************************************/
 
 static unsigned int rss_eth_z8e_uncompressed_length = 534724 ;

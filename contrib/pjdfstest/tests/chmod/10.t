@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/10.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: f37a94bea84b843d2b4a1d6ee3f3d5226bd3193d $
 
 desc="chmod returns EFAULT if the path argument points outside the process's allocated address space"
 

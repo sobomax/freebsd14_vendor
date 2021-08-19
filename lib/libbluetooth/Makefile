@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.5 2003/07/22 18:38:04 max Exp $
-# $FreeBSD$
+# $FreeBSD: 96bf0cb704ec938a004f05d7f3b2d9252bbdc0f1 $
 
 PACKAGE=	lib${LIB}
 CONFS=		hosts protocols

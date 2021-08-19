@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b2bceee4b3f85489cd6147423f01a66863f26f0d $
 
 .PATH:	${SRCTOP}/sys/dev/intel
 KMOD=	intelspi

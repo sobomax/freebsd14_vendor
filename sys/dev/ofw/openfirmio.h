@@ -36,7 +36,7 @@
  *
  *	@(#)openpromio.h	8.1 (Berkeley) 6/11/93
  *
- * $FreeBSD$
+ * $FreeBSD: 7ba7b907e89295570fd04de8310b3f54e530c0ca $
  */
 
 #ifndef _DEV_OFW_OPENFIRMIO_H_

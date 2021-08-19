@@ -29,7 +29,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 50f44e4104778c944b983944897da0062cf16d2d $");
 
 #include <sys/types.h>
 #include <sys/errno.h>

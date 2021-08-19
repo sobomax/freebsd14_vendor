@@ -13,7 +13,7 @@
 #
 #	$Id: makeinfo.sh,v 8.15 2013-11-22 20:51:17 ca Exp $
 #
-# $FreeBSD$
+# $FreeBSD: 1c907ccd68fac09f1fdfa093cbe9b4e38f536ab4 $
 #
 
 usewhoami=0

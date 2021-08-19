@@ -33,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: db1e9e002c2502f1fe3936cd7d18835d0420bf04 $
  */
 
 #include <dev/tws/tws.h>

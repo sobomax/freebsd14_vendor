@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 4977b9767abf2a258d63cadcf1caee4659e2da2e $
 Set to build the LLD linker during the bootstrap phase of the build.

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_systm.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 538a402635994b4513604fe400d7578a8cb8a187 $
  */
 
 #ifndef _NETINET_IN_SYSTM_H_

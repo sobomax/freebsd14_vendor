@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: e3d66e203a4bd1c74dda0479c481dd3a201e618e $ */
 #ifndef _EFI_SER_H
 #define _EFI_SER_H
 

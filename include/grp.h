@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)grp.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD$
+ * $FreeBSD: 655bfdc66ec805b6fc93fc86402790b496b96b26 $
  */
 
 #ifndef _GRP_H_

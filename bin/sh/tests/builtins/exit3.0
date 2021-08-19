@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 80655ac539c56457d3b53ad78b98e90747741a2b $
 
 # exit without arguments differs from exit $? in an EXIT trap.
 

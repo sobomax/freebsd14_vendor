@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 307c08a287f5ab738a81da2206d6a8f115df22b6 $");
 
 #include "opt_kdb.h"
 #include "opt_device_polling.h"

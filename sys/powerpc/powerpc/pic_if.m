@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 # from: src/sys/kern/bus_if.m,v 1.21 2002/04/21 11:16:10 markm Exp
-# $FreeBSD$
+# $FreeBSD: f42c31a0692c07898296da19c9fe852cb0355a1d $
 #
 
 #include <sys/bus.h>

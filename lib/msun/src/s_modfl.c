@@ -35,7 +35,7 @@
  * is preserved.
  * ====================================================
  *
- * $FreeBSD$
+ * $FreeBSD: 2d83bbe339df843e3e9d950a690bb517c86f350e $
  */
 
 #include <float.h>

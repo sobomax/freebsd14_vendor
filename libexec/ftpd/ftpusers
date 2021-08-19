@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 96a751399532c003dd5a7eb1ec4bcce6c4b1845d $
 #
 # list of users disallowed any ftp access.
 # read by ftpd(8).

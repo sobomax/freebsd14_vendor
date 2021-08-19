@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 168764d802797cba12bf75676a4c4906999baccd $");
 
 /*
  * dpt_scsi.c: SCSI dependent code for the DPT driver

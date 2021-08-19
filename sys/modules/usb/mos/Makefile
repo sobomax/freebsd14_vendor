@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: cd61474cb6162a85ac816b763b67ab7813d41f75 $
 #
 # Copyright (c) 2011 Rick van der Zwet <info@rickvanderzwet.nl>
 #

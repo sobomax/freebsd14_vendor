@@ -36,7 +36,7 @@
  * Xen split devices.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 351140a165d6642f1ea9956f8b2ba61a7d509226 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

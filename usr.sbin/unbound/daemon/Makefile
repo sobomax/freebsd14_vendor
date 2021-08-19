@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ee251acee85f5b68bcc276262de059bfa58336c1 $
 
 # Vendor sources and generated files
 LDNSDIR= ${SRCTOP}/contrib/ldns

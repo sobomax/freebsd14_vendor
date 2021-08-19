@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: 575f3740a6f1e1ea4c7f58ea7b56e65e7fecb7cc $
  */
 
 /*

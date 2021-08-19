@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 815dabc7458703608aafc0d81c4eae8de8531488 $ */
 
 OUTPUT_ARCH(mips)
 ENTRY(_start)

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e8046c7615ec06ef922dee3c6a0ac0061945789d $");
 
 /*
  * Echo command.
