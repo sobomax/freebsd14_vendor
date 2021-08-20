@@ -1,4 +1,4 @@
-/*	$FreeBSD: 31b70d3e89871cd2ae063f1df5030911712d2197 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * arp.c (C) 1995-1998 Darren Reed

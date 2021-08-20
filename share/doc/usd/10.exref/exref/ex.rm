@@ -30,7 +30,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)ex.rm	8.5 (Berkeley) 8/18/96
-.\" $FreeBSD: 9adde179dade277891f1357e682a39bee64ea73f $
+.\" $FreeBSD$
 .\"
 .nr LL 6.5i
 .nr FL 6.5i

@@ -1,4 +1,4 @@
-# $FreeBSD: a257b795b7af766b596ad94bf49540dbf3f7e773 $
+# $FreeBSD$
 
 WARNS?=		0
 

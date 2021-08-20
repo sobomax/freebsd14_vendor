@@ -28,7 +28,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8cab0b23c7585ee3411b4d3e954437b5d3d66646 $
+# $FreeBSD$
 
 # This is a simple HTTP benchmark.  It works by running a number of fetch(1)
 # instances in parallel, 10 by default, each performing a number of fetches,

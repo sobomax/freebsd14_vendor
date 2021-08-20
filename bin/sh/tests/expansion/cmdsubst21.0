@@ -1,4 +1,4 @@
-# $FreeBSD: 87ff6a9db4ad039fdc59b812379665f6ef7ae597 $
+# $FreeBSD$
 
 set -T
 trapped=''

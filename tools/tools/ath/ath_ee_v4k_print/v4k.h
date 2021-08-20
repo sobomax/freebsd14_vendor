@@ -1,4 +1,4 @@
-/* $FreeBSD: efe2dc945b868519debf4ef76c6969e1cacb6a01 $ */
+/* $FreeBSD$ */
 
 #ifndef	__V4K_H__
 #define	__V4K_H__

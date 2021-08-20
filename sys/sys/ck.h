@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 3bfce70c8d2ca9bfb70302f0bb51185447f88627 $
+ * $FreeBSD$
  */
 #ifdef _KERNEL
 #include <ck_queue.h>

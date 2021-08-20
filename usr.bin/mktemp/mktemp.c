@@ -45,7 +45,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-	"$FreeBSD: 0b320e8c5c85816a8bc8f098f73f73ada84dbfb4 $";
+	"$FreeBSD$";
 #endif /* not lint */
 
 static void usage(void);

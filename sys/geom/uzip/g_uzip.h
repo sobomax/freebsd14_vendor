@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6decc41bab00d0e50064a4e950e8db35f90eff97 $
+ * $FreeBSD$
  */
 #ifndef	__GEOM_G_UZIP_H__
 #define	__GEOM_G_UZIP_H__

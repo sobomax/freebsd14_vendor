@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 34e65d03b1ed18a5f7e28c4aaf572081ce28bb15 $
+ * $FreeBSD$
  */
 
 #include <sys/time.h>

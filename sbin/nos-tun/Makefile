@@ -1,4 +1,4 @@
-# $FreeBSD: 480141ec6b6f4ec18a6cbbb582b3660ea2782769 $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	nos-tun

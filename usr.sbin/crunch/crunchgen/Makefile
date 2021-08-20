@@ -1,4 +1,4 @@
-# $FreeBSD: 8d0a78b190276fcbe9cc9036776859ca2b87f30d $
+# $FreeBSD$
 
 PROG=	crunchgen
 SRCS=	crunchgen.c crunched_skel.c

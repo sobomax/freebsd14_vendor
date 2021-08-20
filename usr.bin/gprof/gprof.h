@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)gprof.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 5c190e0fcce6a33c796879f8d75fde5fc922574c $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 8bfb0f47fcbc1c486850e1c2f48b2b63333ab318 $
+# $FreeBSD$
 # Build dev/fdt modules.
 
 SUBDIR = \

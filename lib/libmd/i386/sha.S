@@ -1,4 +1,4 @@
-/* $FreeBSD: 1e5201f5cb8902b54e09758d3bd835a4d0db1a21 $ */
+/* $FreeBSD$ */
 /* -*- Fundamental -*- Emacs' assembler mode hoses this file */
 #ifndef PIC
 /* Run the C pre-processor over this file with one of the following defined

@@ -1,4 +1,4 @@
-# $FreeBSD: 12c6265a92829b9352c1910a0f3b508178c7d334 $
+# $FreeBSD$
 
 f() { ! return $1; }
 f 0 && ! f 1

@@ -1,4 +1,4 @@
-/* $FreeBSD: 5e145838fe3419bb7b3f19ca24cea2700363c3f1 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from poly1305-armv8.pl. */
 #include "arm_arch.h"
 

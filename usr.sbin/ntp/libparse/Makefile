@@ -1,4 +1,4 @@
-# $FreeBSD: a5530ac473c1c3e4bfc03c0d9edac4495bf831db $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/contrib/ntp/libparse
 

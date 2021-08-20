@@ -32,7 +32,7 @@
  *     and: Thomas E. Dickey                        1996 on                 *
  ****************************************************************************/
 
-/* $FreeBSD: 13f75be8d4f7762068eb0eb9370aac82d02ecd35 $ */
+/* $FreeBSD$ */
 
 /*
  *	comp_scan.c --- Lexical scanner for terminfo compiler.

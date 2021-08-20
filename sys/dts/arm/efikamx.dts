@@ -28,7 +28,7 @@
  *
  * Freescale i.MX515 Device Tree Source.
  *
- * $FreeBSD: e077fb78ad0fb439b8747024b309796ae44c7ffc $
+ * $FreeBSD$
  */
 
 /dts-v1/;

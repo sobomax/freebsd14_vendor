@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 5c122e6a96ce566e2447d9c6e4a4821cff767579 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/12.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="rename returns ENOTDIR if a component of either path prefix is not a directory"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: aded3f214eb9dce0efd8a6237efd62295c287283 $
+# $FreeBSD$
 
 ARM64				opt_global.h
 INTRNG				opt_global.h

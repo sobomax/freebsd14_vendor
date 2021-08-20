@@ -1,4 +1,4 @@
-# $FreeBSD: 8f7965d1dece0fd84bab205b0ecbb39536784fb6 $
+# $FreeBSD$
 
 .if ${MK_OPENSSL} != "no" && !defined(RELEASE_CRUNCH)
 SRCS+=	crypto_openssl.c random.c sha1-prf.c sha256-prf.c sha256-tlsprf.c \

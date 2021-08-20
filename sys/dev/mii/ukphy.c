@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22b8035f30911964ce9e9e37133ddace5e24709b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for generic unknown PHYs

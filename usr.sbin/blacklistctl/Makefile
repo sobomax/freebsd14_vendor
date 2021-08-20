@@ -1,4 +1,4 @@
-# $FreeBSD: fd63b85cecbe45dfb56929da0a3859b685826f11 $
+# $FreeBSD$
 
 BLACKLIST_DIR=${SRCTOP}/contrib/blacklist
 .PATH: ${BLACKLIST_DIR}/bin ${BLACKLIST_DIR}/port

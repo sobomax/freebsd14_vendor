@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: f8890537b22cea5196bd5bde20ddba045606aaef $
+# $FreeBSD$
 #
 
 # PROVIDE: routed

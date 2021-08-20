@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1b3761302a11e42deb7528ba65c68f96a69a300 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for Sun Cassini/Cassini+ and National Semiconductor DP83065

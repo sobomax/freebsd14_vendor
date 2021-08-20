@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 870877e59c9d7a650d0748c3a7e41c998a696e93 $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/drm2/ttm/ttm_lock.h>
 #include <dev/drm2/ttm/ttm_module.h>

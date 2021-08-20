@@ -1,4 +1,4 @@
-# $FreeBSD: 101831a2e4b83164700aad229d1b079bd8c2bde9 $
+# $FreeBSD$
 
 : &
 p1=$(jobid)

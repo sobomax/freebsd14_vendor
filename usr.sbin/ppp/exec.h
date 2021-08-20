@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0bc5b41a302e3e05263703dfb53586cedad48da7 $
+ * $FreeBSD$
  */
 
 struct physical;

@@ -1,4 +1,4 @@
-/* $FreeBSD: c25e87a903ea603f45d7ab4d6348b61875e10bcc $ */
+/* $FreeBSD$ */
 /*
  * config.h -- configure various defines for tcsh
  *

@@ -1,4 +1,4 @@
-# $FreeBSD: afad45d353bd610efb06bb37bbbd773f9e89bbc3 $
+# $FreeBSD$
 #
 # module_name	symbol_name
 all	_ahstat

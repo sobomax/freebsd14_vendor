@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  * $DragonFly: src/sys/dev/netif/et/if_etreg.h,v 1.3 2007/10/23 14:28:42 sephe Exp $
- * $FreeBSD: 04e103d5d7f1ac22d0a171bc8831211d83bd94b0 $
+ * $FreeBSD$
  */
 
 #ifndef _IF_ETREG_H

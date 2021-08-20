@@ -1,4 +1,4 @@
-# $FreeBSD: 521a51be41c48bee7e0f754a34d667d95eb92028 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ipw
 

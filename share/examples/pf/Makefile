@@ -1,4 +1,4 @@
-# $FreeBSD: fe7c2baae27a4cb0dfefe4c41973723fea2606e0 $
+# $FreeBSD$
 
 PACKAGE=examples
 FILES=	faq-example1 faq-example2 faq-example3 \

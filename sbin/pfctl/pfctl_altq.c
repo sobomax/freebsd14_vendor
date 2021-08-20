@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f23fe057f7037c8c880f2c505736d378d5f103e8 $");
+__FBSDID("$FreeBSD$");
 
 #define PFIOC_USE_LATEST
 

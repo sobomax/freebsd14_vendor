@@ -1,4 +1,4 @@
-# $FreeBSD: 8480cad426747f1d43c7c8e907289284b02f00e4 $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SRCDIR=		${SRCTOP}/contrib/libcxxrt

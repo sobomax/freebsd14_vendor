@@ -1,4 +1,4 @@
-/* $FreeBSD: 5576d5f4e48cc6e73efc9bbae709291ca1697569 $ */
+/* $FreeBSD$ */
 #ifndef _EFI_DEBUG_H
 #define _EFI_DEBUG_H
 

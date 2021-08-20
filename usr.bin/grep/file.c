@@ -1,5 +1,5 @@
 /*	$NetBSD: file.c,v 1.5 2011/02/16 18:35:39 joerg Exp $	*/
-/*	$FreeBSD: ebcbd706b828e2cc05802c5211a3974f1a0da7d3 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: file.c,v 1.11 2010/07/02 20:48:48 nicm Exp $	*/
 
 /*-
@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ebcbd706b828e2cc05802c5211a3974f1a0da7d3 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/mman.h>

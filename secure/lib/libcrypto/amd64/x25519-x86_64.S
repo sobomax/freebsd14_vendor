@@ -1,4 +1,4 @@
-/* $FreeBSD: 7448e866aaf6d03c31e94709d07126b1931914b0 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x25519-x86_64.pl. */
 .text	
 

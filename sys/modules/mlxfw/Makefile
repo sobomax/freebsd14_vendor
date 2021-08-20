@@ -1,4 +1,4 @@
-# $FreeBSD: 98817b3954b9eed12d500d8114bf101c5175c4a4 $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/dev/mlxfw
 
 KMOD=mlxfw

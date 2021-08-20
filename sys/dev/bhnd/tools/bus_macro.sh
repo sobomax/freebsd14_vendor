@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1016a079368e167b10aa82eea843d7414ad7eeae $
+# $FreeBSD$
 #
 # Generate the bhnd resource macros at the bottom of dev/bhnd/bhnd.h
 #

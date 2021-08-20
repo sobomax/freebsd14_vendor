@@ -1,4 +1,4 @@
-# $FreeBSD: 3c370520a62475c879f9d76cefe4b8acc662b384 $
+# $FreeBSD$
 
 PACKAGE=runtime
 .PATH: ${.CURDIR:H:H}/misc

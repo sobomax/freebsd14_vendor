@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c1a0ed295beff63c66077b26f619bccdeb24e9d4 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_PCB_H_
 #define _NETINET_SCTP_PCB_H_

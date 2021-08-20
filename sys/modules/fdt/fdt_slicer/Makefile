@@ -1,4 +1,4 @@
-# $FreeBSD: 5a38cd1f71ec4bf7ade32ec3073f514d7374967b $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/fdt
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 407da5aa82c7658c6e6956ead5f7c40320475c8d $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/01.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="mknod returns ENOTDIR if a component of the path prefix is not a directory"
 

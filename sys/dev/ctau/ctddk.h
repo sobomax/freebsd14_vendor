@@ -12,7 +12,7 @@
  * all derivative works or modified versions.
  *
  * Cronyx Id: ctddk.h,v 1.1.2.3 2003/12/11 17:33:44 rik Exp $
- * $FreeBSD: 2d53deeab008d97208bb49438a9dec772bcac249 $
+ * $FreeBSD$
  */
 #define NBRD		3	/* the maximum number of installed boards */
 #define NPORT		32	/* the number of i/o ports per board */

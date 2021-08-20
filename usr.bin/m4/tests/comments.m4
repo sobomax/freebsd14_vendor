@@ -1,4 +1,4 @@
-dnl $FreeBSD: d7038c4f636e3927d753c298bc5bf00209cac404 $
+dnl $FreeBSD$
 dnl $OpenBSD: src/regress/usr.bin/m4/comments.m4,v 1.1 2005/09/06 15:33:21 espie Exp $
 dnl checking the way changecom works.
 1: normal

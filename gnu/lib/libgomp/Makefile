@@ -1,4 +1,4 @@
-# $FreeBSD: 5a97172aad7ee5695764f7bbf0a98fa321b65f93 $
+# $FreeBSD$
 
 GCCDIR=	${SRCTOP}/contrib/gcc
 GCCLIB=	${SRCTOP}/contrib/gcclibs

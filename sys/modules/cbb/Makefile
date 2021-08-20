@@ -1,4 +1,4 @@
-# $FreeBSD: aa706e87a4063e5f28f779b35a316da3b0ef86c0 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/pccbb
 

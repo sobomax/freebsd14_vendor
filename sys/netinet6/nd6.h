@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: 71c99b1ba232cad94b84ea2af5dced92a8a5f31e $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_ND6_H_

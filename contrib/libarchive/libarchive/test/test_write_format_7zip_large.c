@@ -25,7 +25,7 @@
 
 
 #include "test.h"
-__FBSDID("$FreeBSD: 5c49f59a1d4d88e87cc98760e7cd8a418cc012e9 $");
+__FBSDID("$FreeBSD$");
 
 #define LARGE_SIZE	(16*1024*1024)
 static void

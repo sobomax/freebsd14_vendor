@@ -1,5 +1,5 @@
 #
-# $FreeBSD: f0a5c2f1daa2ffd84b7e7386cea22c053fa6ad91 $
+# $FreeBSD$
 #
 
 .PATH: ${SRCTOP}/sys/tests/callout_test

@@ -90,7 +90,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: e11240a9e07e1fcb78008ae4f9325df0f2a89e46 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 #define MEM_MAP_REG 0x14
 

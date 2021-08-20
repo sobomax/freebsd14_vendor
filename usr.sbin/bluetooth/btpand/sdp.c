@@ -27,7 +27,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: 82fc5baaf59f3905b4b039e1e814a63a20c1cf76 $ */
+/* $FreeBSD$ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: sdp.c,v 1.2 2008/12/06 20:01:14 plunky Exp $");

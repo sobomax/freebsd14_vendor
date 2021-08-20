@@ -1,4 +1,4 @@
-.\" $FreeBSD: 38599cb96a4ca5243d39ddf363959e53a0a9ec24 $
+.\" $FreeBSD$
 This is an experimental build system.
 For details see
 http://www.crufty.net/sjg/docs/freebsd-meta-mode.htm.

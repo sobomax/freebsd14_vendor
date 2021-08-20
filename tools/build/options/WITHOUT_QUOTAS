@@ -1,4 +1,4 @@
-.\" $FreeBSD: 00a67d79e7e46748fed786717b55ab1029a876f5 $
+.\" $FreeBSD$
 Set to not build
 .Xr quota 1
 and related programs.

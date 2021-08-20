@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex.h	8.2 (Berkeley) 1/3/94
- * $FreeBSD: 6b0838a9bd97351e1ae339de81a4a3c9521f6307 $
+ * $FreeBSD$
  */
 
 #ifndef _REGEX_H_

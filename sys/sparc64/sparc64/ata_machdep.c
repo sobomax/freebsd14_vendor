@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 887216217024e349915eece7b64f73982ccbefc5 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <geom/geom_disk.h>

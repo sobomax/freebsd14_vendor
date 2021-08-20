@@ -1,6 +1,6 @@
 #
-# $FreeBSD: 957fae39fbb36356f6929163652acc6331595d39 $
-# $FreeBSD: 957fae39fbb36356f6929163652acc6331595d39 $
+# $FreeBSD$
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/usb/net
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: 26b36309820178dec43bccdd788243bd38ae76b3 $ */
+/* $FreeBSD$ */
 #ifndef __ISO_C_VISIBLE
 #include <sys/cdefs.h>
 #endif

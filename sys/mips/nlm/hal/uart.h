@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD: 4783ccd7d4ce9eec1295256fe8b954582ee11d22 $
+ * $FreeBSD$
  */
 
 #ifndef __XLP_HAL_UART_H__

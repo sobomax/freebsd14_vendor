@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 3185d826c7ddec1725632e86f39e47779c271e34 $
+# $FreeBSD$
 
 i=1
 "$(dirname $0)/kqtest" | while read line; do

@@ -1,4 +1,4 @@
-# $FreeBSD: 9830b5e8a7cf62d1e9aa94a1ad3b9a271ca4b32c $
+# $FreeBSD$
 # The empty pairs of braces here are to test that this does not cause a crash.
 
 f() { }

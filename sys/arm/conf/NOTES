@@ -1,4 +1,4 @@
-# $FreeBSD: cc045c82289df2b1940e2453515b622bd3bf24f4 $
+# $FreeBSD$
 
 options 	FDT
 

@@ -1,7 +1,7 @@
 /*
  * Православные праздники
  *
- * $FreeBSD: 575a36c3e0886df22f6845f1b5a1f6953a1b2cb1 $
+ * $FreeBSD$
  */
 
 #ifndef _ru_RU_UTF_8_orthodox_

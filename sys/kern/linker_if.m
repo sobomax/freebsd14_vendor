@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a583a0369ebc40f8ecade5c841b5a1d3d5fac8d9 $
+# $FreeBSD$
 #
 
 #include <sys/linker.h>

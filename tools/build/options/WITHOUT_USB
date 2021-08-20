@@ -1,2 +1,2 @@
-.\" $FreeBSD: c3197954cc253238fed104e56e8d2a110653487a $
+.\" $FreeBSD$
 Set to not build USB-related programs and libraries.

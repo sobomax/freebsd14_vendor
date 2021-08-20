@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 37ecddbaeb43fa49c2115a2fd74379c2214bb06f $");
+__FBSDID("$FreeBSD$");
 
 /* Enable LFB on S3 cards that has only VESA 1.2 BIOS */
 

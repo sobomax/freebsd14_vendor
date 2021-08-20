@@ -35,7 +35,7 @@
  *
  *	@(#)dumprestore.h	8.2 (Berkeley) 1/21/94
  *
- * $FreeBSD: 6d22763e96dec662739c1323037d6e8a5db7a1c7 $
+ * $FreeBSD$
  */
 
 #ifndef _PROTOCOLS_DUMPRESTORE_H_

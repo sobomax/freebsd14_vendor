@@ -1,4 +1,4 @@
-# $FreeBSD: 5c37f4f8c35b1dd466ec3ce9f7d378df9cd6f121 $
+# $FreeBSD$
 cloudabi32_vdso.o		optional	compat_cloudabi32	\
 	dependency	"$S/contrib/cloudabi/cloudabi_vdso_armv6_on_64bit.S"	\
 	compile-with	"${CC} -x assembler-with-cpp -m32 -shared -nostdinc -nostdlib -Wl,-T$S/compat/cloudabi/cloudabi_vdso.lds $S/contrib/cloudabi/cloudabi_vdso_armv6_on_64bit.S -o ${.TARGET}" \

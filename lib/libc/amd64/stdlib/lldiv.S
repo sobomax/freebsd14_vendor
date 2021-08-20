@@ -6,7 +6,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 4dab0fdd5278c1ee6bfe94fc8b04b44f4577d25f $");
+__FBSDID("$FreeBSD$");
 
 ENTRY(lldiv)
 	movq	%rdi,%rax

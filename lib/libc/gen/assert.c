@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)assert.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 1a6ef1a8404bd5490f3e74fc12d5e7bb8c5c88c6 $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #include <stdio.h>

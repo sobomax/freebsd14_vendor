@@ -1,4 +1,4 @@
-# $FreeBSD: 0cd516cc8bc0dcc6f5f51709a8ac707f1e275ca3 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/sound/sbus
 

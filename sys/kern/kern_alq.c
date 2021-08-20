@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 038540b2ed18febed06ec88b097f13b4d0aebed8 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mac.h"
 

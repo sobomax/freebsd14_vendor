@@ -11,7 +11,7 @@
  * modified 03-25-03 for 12 hour option
  *     - Samy Al Bahra <samy@kerneled.com>
  *
- * $FreeBSD: 04cc00b37d6fc86c6f0872105e08af1f77018e46 $
+ * $FreeBSD$
  */
 
 #include <err.h>

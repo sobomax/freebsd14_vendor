@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 2c6055b96950d999b71110ecff0db36af2f27d3e $
+# $FreeBSD$
 #
 # Copyright (c) 2011 Adrian Chadd.  All rights reserved.
 #

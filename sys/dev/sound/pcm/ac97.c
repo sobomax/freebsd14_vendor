@@ -38,7 +38,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 70316c34b72b742900b3058f72ce12a94bf50481 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static MALLOC_DEFINE(M_AC97, "ac97", "ac97 codec");
 

@@ -1,7 +1,7 @@
 /*-
  * Test 0080:	Check uninitialized scratch memory (obsolete).
  *
- * $FreeBSD: a4829085d20df4d8d6a8810f2136a64f8b5ff8c0 $
+ * $FreeBSD$
  */
 
 /* BPF program */

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 4c364a763b0923540aaa8f308d793140763ae1f2 $
+# $FreeBSD$
 
 set -e
 
@@ -20,7 +20,7 @@ for file in $fwdir/*.uu; do
 
 	mkdir -p $scriptdir/$img
 	cat > $scriptdir/$img/Makefile <<EOF
-# \$FreeBSD: 4c364a763b0923540aaa8f308d793140763ae1f2 $
+# \$FreeBSD$
 
 KMOD=	radeonkmsfw_$img
 IMG=	$img

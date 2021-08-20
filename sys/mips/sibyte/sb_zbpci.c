@@ -54,7 +54,7 @@
 #include "sb_bus_space.h"
 #include "sb_scd.h"
 
-__FBSDID("$FreeBSD: f1433b1aa1f59b61e518e008c5e17d279fe40131 $");
+__FBSDID("$FreeBSD$");
 
 static struct {
 	vm_offset_t vaddr;

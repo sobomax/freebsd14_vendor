@@ -1,4 +1,4 @@
-# $FreeBSD: 38864e96a4fe09022b5a34f905a21406cba2b7df $
+# $FreeBSD$
 
 VOLUME=	psd
 DOC=	contents

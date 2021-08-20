@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: 7d3c8459a2194ae19fa1b9845f3aa9d5c8427355 $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_IN_VAR_H_

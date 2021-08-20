@@ -1,4 +1,4 @@
-# $FreeBSD: ec36c24fc03441812731e04da2c187e737f793f8 $
+# $FreeBSD$
 
 PROG=	kpasswdd
 MAN=	kpasswdd.8

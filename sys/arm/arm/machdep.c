@@ -51,7 +51,7 @@
 #include "opt_timer.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 086fadfa0f2b28801f6df3ac2ac85a31070b59ad $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/buf.h>

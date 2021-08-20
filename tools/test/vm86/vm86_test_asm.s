@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bf032bdd232a651d31c7d36a8e7367a5f9927468 $
+ * $FreeBSD$
  * $Id: vm86_test_asm.s,v 1.2 2018/05/12 11:39:00 kostik Exp kostik $
  */
 

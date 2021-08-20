@@ -27,7 +27,7 @@
 #ifndef __RADEON_BLIT_COMMON_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8f6827cf79771ab9a2a94eb892e0ccc44ed8995 $");
+__FBSDID("$FreeBSD$");
 
 #define DI_PT_RECTLIST        0x11
 #define DI_INDEX_SIZE_16_BIT  0x0

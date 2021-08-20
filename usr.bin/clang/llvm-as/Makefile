@@ -1,4 +1,4 @@
-# $FreeBSD: 49d9d172e3416737251476719bc1ac9d1ab18db0 $
+# $FreeBSD$
 
 PROG_CXX=	llvm-as
 

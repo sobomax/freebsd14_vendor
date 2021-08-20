@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04b7ead03b7b8ad42381409f170736acc162140c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Print multicast routing structures and statistics.

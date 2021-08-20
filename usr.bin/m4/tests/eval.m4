@@ -1,4 +1,4 @@
-dnl $FreeBSD: 361f9b9c54165fa5559bbb035d3a84f3bef497eb $
+dnl $FreeBSD$
 dnl $OpenBSD: src/regress/usr.bin/m4/eval.m4,v 1.1 2004/05/12 21:24:37 espie Exp $
 dnl expr parser
 eval(224&127)

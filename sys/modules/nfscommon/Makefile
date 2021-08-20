@@ -1,4 +1,4 @@
-# $FreeBSD: 28d658db75fae11c55f82235e985936f9aa971b2 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/nfs
 KMOD=	nfscommon

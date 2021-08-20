@@ -24,7 +24,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 752cce22a4ff6adec4eed2e8bf8ba675f2581fb1 $
+\ $FreeBSD$
 
 marker task-beastie.4th
 

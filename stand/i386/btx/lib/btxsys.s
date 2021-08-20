@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD: 9c77b4295e7cfc6f9146ddeb1c6497946568164e $
+# $FreeBSD$
 
 #
 # BTX system calls.

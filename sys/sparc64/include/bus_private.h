@@ -27,7 +27,7 @@
  *
  *	from: FreeBSD: src/sys/i386/i386/busdma_machdep.c,v 1.25 2002/01/05
  *
- * $FreeBSD: 57f25a678c8168b94a23810a9c1c2c9edbb795e6 $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_BUS_PRIVATE_H_

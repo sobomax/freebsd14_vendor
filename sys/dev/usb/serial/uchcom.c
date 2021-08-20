@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75f7a08f36c45d1365abb5239ce57621eb8b25ed $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for WinChipHead CH341/340, the worst USB-serial chip in the

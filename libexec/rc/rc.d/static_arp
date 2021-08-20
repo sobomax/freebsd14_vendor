@@ -25,7 +25,7 @@
 #
 # Configure static ARP table
 #
-# $FreeBSD: f059a6e9794f4f20d7b4ac9a68f5fc060942da22 $
+# $FreeBSD$
 #
 
 # PROVIDE: static_arp

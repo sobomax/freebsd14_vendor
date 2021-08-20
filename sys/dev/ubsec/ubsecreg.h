@@ -1,4 +1,4 @@
-/* $FreeBSD: 57533ae6d335db29e1eb427b8ee211faa36e4767 $ */
+/* $FreeBSD$ */
 /*	$OpenBSD: ubsecreg.h,v 1.27 2002/09/11 22:40:31 jason Exp $	*/
 
 /*-

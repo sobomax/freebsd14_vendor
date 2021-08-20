@@ -1,4 +1,4 @@
-# $FreeBSD: 0ff7fb32b07c96fc8f9be91159e3207c271a2f7a $
+# $FreeBSD$
 
 SRCS+=	main.c
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5c7a92ecd2649675b7c5f74181768dfcae6949ba $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>

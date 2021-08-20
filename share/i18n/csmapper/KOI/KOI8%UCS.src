@@ -1,4 +1,4 @@
-# $FreeBSD: 0f6ef8c2397f153b483533c4cdab082a125812c6 $ 
+# $FreeBSD$ 
 # $NetBSD: KOI8%UCS.src,v 1.1 2006/04/08 14:15:48 tnozaki Exp $
 
 TYPE		ROWCOL

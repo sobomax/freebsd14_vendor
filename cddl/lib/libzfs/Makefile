@@ -1,4 +1,4 @@
-# $FreeBSD: 73013bdd887c70579742a667facf0cadf77f8094 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/compat/opensolaris/misc
 .PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/zfs

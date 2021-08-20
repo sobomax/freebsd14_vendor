@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 0374c8844b9acbe3c017f42abef44052ace3ea46 $
+# $FreeBSD$
 
 usage()
 {

@@ -1,4 +1,4 @@
-# $FreeBSD: b5fcfb23f155473193215cb3473aaed22fcffc83 $
+# $FreeBSD$
 
 .include "${.CURDIR}/../Makefile.inc"
 

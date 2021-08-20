@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 919bceaa340376b959198a371a71abf0bc09769b $
+# $FreeBSD$
 #
 # This file specifies various information about terminals on the system.
 # It is used by several different programs.  Common entries for the

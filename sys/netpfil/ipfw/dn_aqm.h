@@ -30,7 +30,7 @@
 /*
  * API for writing an Active Queue Management algorithm for Dummynet
  *
- * $FreeBSD: d01e98ebeafa00d4480b3fd1618e0225fa3f4cb2 $
+ * $FreeBSD$
  */
 
 #ifndef _IP_DN_AQM_H

@@ -1,4 +1,4 @@
-# $FreeBSD: 9d0a12b26a45fa38cb79a16cf6aca2e0d01cc97a $
+# $FreeBSD$
 
 .if ${TARGET_ARCH:Marm*eb} != ""
 DEFAULT_VECTOR=	bfd_elf32_bigarm_vec

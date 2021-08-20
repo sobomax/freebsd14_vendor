@@ -1,4 +1,4 @@
-# $FreeBSD: b775b74d75ae346dbdb953caec3ef5811c7701fc $
+# $FreeBSD$
 
 LIB=		gnuregex
 SHLIB_MAJOR=	5

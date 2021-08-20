@@ -1,4 +1,4 @@
-# $FreeBSD: 1a5b433688eea4fbc7fe5299999d33155132fccc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/aac
 

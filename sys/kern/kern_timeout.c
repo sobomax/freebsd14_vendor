@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51696434a385f47f71e487bbde9db7949a4c02d9 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_callout_profiling.h"
 #include "opt_ddb.h"

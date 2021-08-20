@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d1045fe60d115135f0a7dc60975b7920073b99f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ceill(x)

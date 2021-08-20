@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1342ad87703b2ac09ba4f64b7f0a307414e6baf9 $
+ * $FreeBSD$
  */
 
 struct script_msg {

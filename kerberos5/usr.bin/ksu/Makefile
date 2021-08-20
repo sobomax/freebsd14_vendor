@@ -1,4 +1,4 @@
-# $FreeBSD: ebd39c677b54474b65cc6c3ed96d2402664f8c95 $
+# $FreeBSD$
 
 PROG=	ksu
 .if defined(ENABLE_SUID_K5SU)

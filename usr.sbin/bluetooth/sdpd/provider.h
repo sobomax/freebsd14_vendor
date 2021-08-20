@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: provider.h,v 1.6 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: 6f6bed3e820aac5f218a38650291a242214d78d0 $
+ * $FreeBSD$
  */
 
 #ifndef _PROVIDER_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: 840f668d23e661590f9830574bbc495163a92b05 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/hifn
 KMOD	= hifn

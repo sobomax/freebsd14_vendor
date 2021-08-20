@@ -1,4 +1,4 @@
-# $FreeBSD: b97b3f360e53f0d97325da99990de41f2828272d $ 
+# $FreeBSD$ 
 # $NetBSD: charset.pivot.JIS.src,v 1.4 2007/03/05 16:58:34 tnozaki Exp $
 
 JISX0201-KANA		UCS			1

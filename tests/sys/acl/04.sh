@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 917f5acb54a54c78df37ccec08eec5290bdb6de8 $
+# $FreeBSD$
 #
 
 # This is a wrapper script to run tools-nfs4-trivial.test on ZFS filesystem.

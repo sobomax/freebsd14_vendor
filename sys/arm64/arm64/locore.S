@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 74b1d3609b891d49f68fdc932a46d0b2bb2ea8ac $
+ * $FreeBSD$
  */
 
 #include "assym.inc"

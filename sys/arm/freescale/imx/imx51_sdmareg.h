@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 71c28f6bec14811d41f27ae0f2612c245eaab757 $
+ * $FreeBSD$
  */
 
 /* Internal Registers definition for Freescale i.MX515 SDMA Core */

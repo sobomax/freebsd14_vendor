@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: a60126a4f466a82e06a4a389adc4ed92716d4746 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/01.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="chown returns ENOTDIR if a component of the path prefix is not a directory"
 

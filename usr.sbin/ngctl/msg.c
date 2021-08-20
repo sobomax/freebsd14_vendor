@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38f0db704927cbbaddddd3b543c4bf8bb175caa2 $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <netgraph.h>

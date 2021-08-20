@@ -32,7 +32,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)mkbuiltins	8.2 (Berkeley) 5/4/95
-# $FreeBSD: 443a3dcbe7055890ab1b1f3b8abf03738439679d $
+# $FreeBSD$
 
 temp=`mktemp -t ka`
 havehist=1

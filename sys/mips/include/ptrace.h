@@ -30,7 +30,7 @@
  *
  *	@(#)ptrace.h	8.1 (Berkeley) 6/11/93
  *	from: src/sys/i386/include/ptrace.h,v 1.14 2005/05/31 09:43:04 dfr
- * $FreeBSD: 401c171906fb70ee0e2c7c9eba2982373676f6ca $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PTRACE_H_

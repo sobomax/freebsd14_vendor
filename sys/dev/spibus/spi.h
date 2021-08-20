@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fa911b6fd363ea8f3e6dfbb68a389cfc69080d9a $
+ * $FreeBSD$
  */
 
 struct spi_command {

@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 66f94595560b9e6e102edca903db0af00b639909 $*/
+/*$FreeBSD$*/
 
 #ifndef _E1000_MAC_H_
 #define _E1000_MAC_H_

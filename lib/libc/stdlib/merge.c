@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)merge.c	8.2 (Berkeley) 2/14/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a47e424e4dadce9a6a2d80e9fd4916e0a3bb5e3 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Hybrid exponential search/linear search merge sort with hybrid

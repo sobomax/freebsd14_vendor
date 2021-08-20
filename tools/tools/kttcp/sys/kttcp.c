@@ -1,4 +1,4 @@
-/*	$FreeBSD: 09739600feaf83fe55a970937eec0c7b2b923b65 $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: kttcp.c,v 1.3 2002/07/03 19:36:52 thorpej Exp $	*/
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: ba34d05dddd6016b08d8d0035e96c9b341287eec $
+# $FreeBSD$
 
 # This is a working example of ppp.linkdown.span-isp that uses ppp connections
 # to the same machine through 3 null-modem serial cables.

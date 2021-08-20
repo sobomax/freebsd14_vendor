@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: af249e91ed9d4d58cc117ff731722f048b4fa7a6 $
+ * $FreeBSD$
  */
 
 /* udf_vfsops.c */

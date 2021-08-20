@@ -1,4 +1,4 @@
-# $FreeBSD: 9f0bddbae4fd6862309af6b38e32909ce742a864 $
+# $FreeBSD$
 
 PROG=	ipropd-master
 MAN=	iprop.8

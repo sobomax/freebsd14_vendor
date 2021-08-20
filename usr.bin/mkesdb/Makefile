@@ -1,4 +1,4 @@
-# $FreeBSD: d49ecfa88f63c72c9cdaf74edb0056610a42c8d3 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/lib/libc/iconv
 

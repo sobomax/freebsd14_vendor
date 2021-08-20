@@ -1,2 +1,2 @@
-.\" $FreeBSD: 4d3a69d355682a0e2528445f5eacc41c8a8139be $
+.\" $FreeBSD$
 Set to not build any mail support (MUA or MTA).

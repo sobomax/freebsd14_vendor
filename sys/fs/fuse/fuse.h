@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 52744ee8c846c32a59a72833a2efd5088e655f1b $
+ * $FreeBSD$
  */
 
 #include "fuse_kernel.h"

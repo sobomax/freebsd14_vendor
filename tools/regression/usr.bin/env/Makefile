@@ -1,4 +1,4 @@
-# $FreeBSD: c20fedd56c0bce5e5bb7d95f26e533eb0125cc10 $
+# $FreeBSD$
 
 TESTPGM?=TestProgramNotSpecifed
 

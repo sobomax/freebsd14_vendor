@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: bd8ff5212071194ecd622aceef3ce009fe6b04bb $
+ *	$FreeBSD: src/lib/libgssapi/gss_canonicalize_name.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
  */
 
 #include "mech_locl.h"

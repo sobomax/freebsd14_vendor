@@ -7,7 +7,7 @@
 # a quick smoke-test.  The rootgen.sh and related scripts generate much more
 # extensive tests for many combinations of boot env (ufs, zfs, geli, etc).
 #
-# $FreeBSD: 544e4f0d294ebf2f3f547e396b423d5760f612fa $
+# $FreeBSD$
 
 set -e
 

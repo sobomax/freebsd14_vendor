@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8170822d4404f18a91bee265fa9cfb3cd262898c $
+ * $FreeBSD$
  */
 #include <stdio.h>
 #include <fcntl.h>

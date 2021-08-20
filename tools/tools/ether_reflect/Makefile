@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 040a5bd5fba664e02e4b969503946c006c669093 $
+# $FreeBSD$
 #
 # A Makefile that builds both the ether_reflect program and its manual page.
 

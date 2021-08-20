@@ -1,4 +1,4 @@
-/* $FreeBSD: 5b5644079ba99648634575ebe85c296d37cbb8d9 $ */
+/* $FreeBSD$ */
 
 #include <string.h>
 #include <netinet/in.h>

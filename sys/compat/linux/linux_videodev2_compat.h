@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 0d9a3a348b8f919f48d77643d99d67447c74788c $
+ * $FreeBSD$
  */
 
 /*

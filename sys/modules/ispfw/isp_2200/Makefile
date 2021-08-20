@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: d36e6eb74b4d932546dbcc7df86a0f06a6947ff4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ispfw
 

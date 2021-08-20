@@ -1,4 +1,4 @@
-# $FreeBSD: 4849c7acd5dcae2f0682c1c1ed3ba1c7ae8e8584 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	devinfo

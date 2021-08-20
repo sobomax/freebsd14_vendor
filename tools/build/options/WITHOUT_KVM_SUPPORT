@@ -1,4 +1,4 @@
-.\" $FreeBSD: 16c91a78e0396431bc32c50137ec66971fa97fe0 $
+.\" $FreeBSD$
 Set to build some programs without optional
 .Nm libkvm
 support.

@@ -1,4 +1,4 @@
-# $FreeBSD: 32164495c9ca6c233043a972c988ecbe0ed86e7e $
+# $FreeBSD$
 
 f() {
 	x=2

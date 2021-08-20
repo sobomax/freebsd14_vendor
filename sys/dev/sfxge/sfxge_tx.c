@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eb8f0d637c87fe029809724dfb1f98a7895b007d $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

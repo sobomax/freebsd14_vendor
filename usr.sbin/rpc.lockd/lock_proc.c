@@ -1,5 +1,5 @@
 /*	$NetBSD: lock_proc.c,v 1.7 2000/10/11 20:23:56 is Exp $	*/
-/*	$FreeBSD: 160e1844e5a86920e107ebd27a4582df83052e50 $ */
+/*	$FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-4-Clause
  *

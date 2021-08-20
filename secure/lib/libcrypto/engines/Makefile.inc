@@ -1,4 +1,4 @@
-# $FreeBSD: fd9e9f9bcc9f9016aedf7443ffa31b89a11f71ca $
+# $FreeBSD$
 
 SHLIBDIR?= /usr/lib/engines
 

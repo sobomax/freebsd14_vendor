@@ -27,7 +27,7 @@
 ############################################################ IDENT(1)
 #
 # $Title: Watch processes as they trigger a particular DTrace probe $
-# $FreeBSD: 8d90d8173dfe626bfb9ec3afdd46c72b61c71be5 $
+# $FreeBSD$
 #
 ############################################################ CONFIGURATION
 
@@ -1328,7 +1328,7 @@ PSARGS_ACTION=$( cat <&9 )
  * SUCH DAMAGE.
  *
  * $TITLE dtrace(1) script to log process(es) triggering $PROBE $
- * \$FreeBSD: 8d90d8173dfe626bfb9ec3afdd46c72b61c71be5 $
+ * \$FreeBSD$
  */
 
 $( echo "$DTRACE_PRAGMA" | awk '

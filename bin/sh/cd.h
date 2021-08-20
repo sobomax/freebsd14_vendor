@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a82d6370d57c07bc578e39491281032a7fbcf5c4 $
+ * $FreeBSD$
  */
 
 void	 pwd_init(int);

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bd833e27b192483f13c8852cdbc377837954061 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cy_pci_fastintr.h"
 

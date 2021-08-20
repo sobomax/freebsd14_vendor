@@ -31,7 +31,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: 932d8dd5fde49bb3cc3d4c9fec8d4214316235c0 $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_EFX_TYPES_H

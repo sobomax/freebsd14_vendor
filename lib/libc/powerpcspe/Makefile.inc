@@ -1,4 +1,4 @@
-# $FreeBSD: 4adef818a1c088d7b8014cd9309ca7bdf1bc974d $
+# $FreeBSD$
 
 CFLAGS+= -I${LIBC_SRCTOP}/powerpc
 SRCS+=	trivial-vdso_tc.c

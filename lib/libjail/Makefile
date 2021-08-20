@@ -1,4 +1,4 @@
-# $FreeBSD: 74eb8e1091b2bfbcb8296f60f67b20813995938e $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	jail

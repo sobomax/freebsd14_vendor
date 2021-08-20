@@ -1,3 +1,3 @@
-.\" $FreeBSD: b062f8b29bc21818737ebe84c375f64ad0738b44 $
+.\" $FreeBSD$
 Do not build GNU binutils
 as part of the bootstrap process.

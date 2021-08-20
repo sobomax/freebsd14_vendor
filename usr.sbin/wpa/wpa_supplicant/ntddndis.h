@@ -2,7 +2,7 @@
 #define _NTDDNDIS_H_
 
 /*
- * $FreeBSD: 42e403d7bb1216a1c5a51ffb299c5951743d4388 $
+ * $FreeBSD$
  */
 
 /*

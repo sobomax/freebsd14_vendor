@@ -1,4 +1,4 @@
-/* $FreeBSD: 394495de906efe4c07bac45209fdc26311f26f5a $ */
+/* $FreeBSD$ */
 /*	$NetBSD: citrus_iso2022.c,v 1.20 2010/12/07 22:01:45 joerg Exp $	*/
 
 /*-

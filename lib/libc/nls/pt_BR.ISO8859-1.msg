@@ -1,4 +1,4 @@
-$ $FreeBSD: fb1c10056ccfc6ef6ec35ffc801e90017dde83b5 $
+$ $FreeBSD$
 $
 $ Message catalog for pt_BR.ISO8859-1 locale
 $

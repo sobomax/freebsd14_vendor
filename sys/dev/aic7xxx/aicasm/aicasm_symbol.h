@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.h#17 $
  *
- * $FreeBSD: 616dfd28fdeb109a7eeac478ac4fc0def2726e95 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/18/94
- * $FreeBSD: ec171f2d177ca4e89e13fa4a7433ae7bb364eb7c $
+ * $FreeBSD$
  */
 
 /*

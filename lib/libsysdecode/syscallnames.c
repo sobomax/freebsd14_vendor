@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae587c916df5a56de0eae7aa73892e255cd60535 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Map system call codes to names for the supported ABIs on each

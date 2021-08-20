@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf02486c66f724087b884e792c7852940000a63a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SDHCI driver glue for NVIDIA Tegra family

@@ -32,7 +32,7 @@
  * This source is for version 10 revision 01 units with NOR SPI flash.
  * These units are marked "1001" on the serial number label.
  *
- * $FreeBSD: 7b3998d02d5b51454ec2bc2a29ecf4910f3c4f92 $
+ * $FreeBSD$
  */
 
 /dts-v1/;

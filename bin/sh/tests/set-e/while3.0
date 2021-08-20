@@ -1,4 +1,4 @@
-# $FreeBSD: dd3c790252366ed523ca95c4650e64756f758387 $
+# $FreeBSD$
 set -e
 f() {
 	while true; do

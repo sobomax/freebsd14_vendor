@@ -34,7 +34,7 @@
  *
  *	@(#)fbio.h	8.2 (Berkeley) 10/30/93
  *
- * $FreeBSD: 4cc0cc6debbae93ad56245e60757a166ad2618d8 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_FBIO_H_

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ctx.c,v 1.24 2002/04/13 14:35:28 bp Exp $
- * $FreeBSD: 470456451043e5410e9b89f0e6325927093f733a $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/sysctl.h>

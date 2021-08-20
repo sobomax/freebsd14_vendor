@@ -1,4 +1,4 @@
-# $FreeBSD: 6d7586090da08796dffcb2ac0f52de8d7b3bf367 $
+# $FreeBSD$
 
 PACKAGE=runtime
 DIST=		${SRCTOP}/contrib/openresolv

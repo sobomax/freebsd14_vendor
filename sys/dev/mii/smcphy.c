@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57b5eef0d968beaf037748de6b1edc386c3da8df $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the SEEQ 80220 and 84220.

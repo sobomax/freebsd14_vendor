@@ -37,7 +37,7 @@
  */
 
 /*
- * $FreeBSD: 1298cc238e577f1caa44373bfadeddd51bbb1b62 $
+ * $FreeBSD$
  */
 
 #ifndef _TIMECONV_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: aaeba61e103e77f32a075ce3cd23c387ea2c98ec $
+# $FreeBSD$
 
 TESTGROUP= ${.CURDIR:H:T}/${.CURDIR:T}
 TESTSRC= ${SRCTOP}/cddl/contrib/opensolaris/cmd/dtrace/test/tst/${TESTGROUP}

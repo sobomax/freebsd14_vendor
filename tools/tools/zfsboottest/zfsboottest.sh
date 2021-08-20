@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1aea755e185f7d03feb54a91bbf145ad9f9f906e $
+# $FreeBSD$
 
 if [ $# -ne 1 ]; then
 	echo "usage: zfsboottest.sh <pool>" >&2

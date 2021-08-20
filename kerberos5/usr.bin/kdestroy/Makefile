@@ -1,4 +1,4 @@
-# $FreeBSD: 23e90237c658539aa8586a94feaa469b1f5363a3 $
+# $FreeBSD$
 
 PROG=	kdestroy
 CFLAGS+=-I${KRB5DIR}/lib/roken

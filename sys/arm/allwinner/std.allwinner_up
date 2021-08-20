@@ -1,5 +1,5 @@
 # Allwinner Uniprocessor common options
-#$FreeBSD: 3fdfb7bba1560fcafb3ec9ea5cd912c0dddaf22a $
+#$FreeBSD$
 
 cpu		CPU_CORTEXA
 machine 	arm armv7

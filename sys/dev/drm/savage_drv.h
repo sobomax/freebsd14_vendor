@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1e7b256eb3b9aecca0355ec72b4e067f57e9b41 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __SAVAGE_DRV_H__
 #define __SAVAGE_DRV_H__

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: log.h,v 1.1 2004/01/07 23:15:00 max Exp $
- * $FreeBSD: b2c780e5e83e1816185454f2f8bc8d3ee9061219 $
+ * $FreeBSD$
  */
 
 #ifndef _LOG_H_

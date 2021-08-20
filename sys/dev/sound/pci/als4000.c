@@ -48,7 +48,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 7bca1d058691e1963c494bc2499eb6fbc74c2147 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* Debugging macro's */
 #undef DEB

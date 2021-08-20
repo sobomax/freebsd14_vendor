@@ -38,7 +38,7 @@
  *
  *	@(#)procfs_status.c	8.4 (Berkeley) 6/15/94
  *
- * $FreeBSD: 8e16b8939e6c5cd9aedcdb5639bac997d0516985 $
+ * $FreeBSD$
  */
 
 /*

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e47adc0b2902e4bb23996371feed8cc2beeda0d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IBCS2 message compatibility module.

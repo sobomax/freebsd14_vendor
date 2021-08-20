@@ -1,4 +1,4 @@
-# $FreeBSD: 8eaced09b43631076ec31cd487dd800d058e8765 $ 
+# $FreeBSD$ 
 # $NetBSD: EUC-CN.src,v 1.1 2003/06/27 08:40:54 tshiozak Exp $
 
 NAME		"EUC-CN"

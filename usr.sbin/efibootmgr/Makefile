@@ -1,4 +1,4 @@
-# $FreeBSD: d485537e7515cf8b768206917581833088dff577 $
+# $FreeBSD$
 EFIBOOT=${SRCTOP}/stand/efi
 EFIINCL=${SRCTOP}/stand/efi/include
 EFIVAR=${SRCTOP}/usr.sbin/efivar

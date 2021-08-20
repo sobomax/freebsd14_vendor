@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: b36d73f895a1576a0b07e97c6daf7ccaaab175e6 $ */
+/* $FreeBSD$ */
 
 #ifndef	__QCA955X_CHIP_H__
 #define	__QCA955X_CHIP_H__

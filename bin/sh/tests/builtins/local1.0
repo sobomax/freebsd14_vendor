@@ -1,4 +1,4 @@
-# $FreeBSD: b28837ec005fc45e4b4e0fd085e9811dee22a4fa $
+# $FreeBSD$
 # A commonly used but non-POSIX builtin.
 
 f() {

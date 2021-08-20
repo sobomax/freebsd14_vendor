@@ -1,4 +1,4 @@
-# $FreeBSD: a2ab92862783b50d72771286152dfc468d4c995c $
+# $FreeBSD$
 
 LDNSDIR=	${SRCTOP}/contrib/ldns
 LDNSHOSTDIR=	${SRCTOP}/contrib/ldns-host

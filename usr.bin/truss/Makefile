@@ -1,4 +1,4 @@
-# $FreeBSD: b29befdf9c374f0bb4507a644a56e141046eeefc $
+# $FreeBSD$
 
 #NO_WERROR=
 PROG=	truss

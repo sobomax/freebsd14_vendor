@@ -1,3 +1,3 @@
-# $FreeBSD: ad13eab0a7b833449018ac413eaf3232e2537f18 $
+# $FreeBSD$
 
 ! env @badness=1 ${SH} -c 'v=`set`; eval "$v"' 2>&1 | grep @badness

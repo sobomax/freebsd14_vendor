@@ -1,4 +1,4 @@
-.\" $FreeBSD: 473d03e890a0fe4204281de88f4d07e60a02469e $
+.\" $FreeBSD$
 Set to not build
 .Xr amd 8 ,
 and related programs.

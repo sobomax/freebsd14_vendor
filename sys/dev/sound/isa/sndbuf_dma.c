@@ -34,7 +34,7 @@
 
 #include <isa/isavar.h>
 
-SND_DECLARE_FILE("$FreeBSD: 9d41c5292970e3848018b957d105ee2bd711586f $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 int
 sndbuf_dmasetup(struct snd_dbuf *b, struct resource *drq)

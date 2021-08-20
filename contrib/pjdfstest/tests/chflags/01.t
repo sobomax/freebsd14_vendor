@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 2124678343d3bec07141ddf842b8c12b51f325e5 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/01.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="chflags returns ENOTDIR if a component of the path prefix is not a directory"
 

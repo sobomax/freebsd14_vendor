@@ -1,4 +1,4 @@
-/* $FreeBSD: 9cc601d5e96cd437b719d707ff5972ee1d54c254 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: direntry.h,v 1.14 1997/11/17 15:36:32 ws Exp $	*/
 
 /*-

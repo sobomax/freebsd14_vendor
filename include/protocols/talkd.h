@@ -30,7 +30,7 @@
  *
  *	@(#)talkd.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD: f8b74b9c69817f6c08882ea45db61fcd59eecb7b $
+ * $FreeBSD$
  */
 
 #ifndef _PROTOCOLS_TALKD_H_

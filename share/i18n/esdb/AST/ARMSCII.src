@@ -1,4 +1,4 @@
-# $FreeBSD: 646dcbeec6736dec701e79a127d217590e9e1291 $ 
+# $FreeBSD$ 
 # $NetBSD: ARMSCII.src,v 1.1 2006/04/01 04:13:22 tnozaki Exp $
 
 NAME		"ARMSCII-x"

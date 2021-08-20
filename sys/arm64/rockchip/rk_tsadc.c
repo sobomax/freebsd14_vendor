@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5aafe5b4c3fccb836a48ddc3d836354926897eff $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Thermometer and thermal zones driver for RockChip SoCs.

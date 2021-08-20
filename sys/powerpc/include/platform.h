@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: powerpc.h,v 1.3 2000/06/01 00:49:59 matt Exp $
- * $FreeBSD: 7fa8dfa8d9d66f471440a516a1c2cfbc09e53eb7 $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_PLATFORM_H_

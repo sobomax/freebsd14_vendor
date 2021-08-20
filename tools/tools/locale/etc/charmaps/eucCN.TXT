@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 1cec36cbb4d8fa2ffe0e9be56a2429b8b21be85d $
+# $FreeBSD$
 #
 #	Name:             eucCN-80 to Unicode table (complete, hex format)
 #	Based on the GB2312.TXT

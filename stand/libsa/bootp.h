@@ -19,7 +19,7 @@
  * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
  *
- * $FreeBSD: 8939955d861b79b7ca996817430b872c61fe6963 $
+ * $FreeBSD$
  */
 
 #ifndef _BOOTP_H_

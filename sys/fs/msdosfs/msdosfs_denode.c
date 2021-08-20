@@ -1,4 +1,4 @@
-/* $FreeBSD: 1c110ad39ae7fe34795be0f88f715dd1e0ad9e0e $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-

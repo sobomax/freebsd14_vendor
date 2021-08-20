@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c1cf98cb27658f9bc0960d788e153da2ff9f4237 $
+ * $FreeBSD$
  */
 
 /* Groupid entry hung off a member_entry node. */

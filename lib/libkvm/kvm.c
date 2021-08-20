@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f35f26df1ca90f706a2e2810888f78ad727e475 $");
+__FBSDID("$FreeBSD$");
 __SCCSID("@(#)kvm.c	8.2 (Berkeley) 2/13/94");
 
 #include <sys/param.h>

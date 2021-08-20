@@ -1,4 +1,4 @@
-# $FreeBSD: dc583e55a222f4c26931f06cf46a031c0b1609c5 $
+# $FreeBSD$
 
 PROG_CXX=   mctest 
 LIBADD= pthread

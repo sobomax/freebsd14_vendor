@@ -1,4 +1,4 @@
-$FreeBSD: 658379486e4f132c0c9fc04c4548ca6f84695bfd $
+$FreeBSD$
 
 The directory contains poll(2) and select(2) compliance (and more) tests
 from Bruce Evans, together with canned test results from several systems

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 1db0f233033c5a01b6ce4fadf6d6053bc38bd104 $
+ *	$FreeBSD: src/lib/libgssapi/gss_inquire_cred.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
  */
 
 #include "mech_locl.h"

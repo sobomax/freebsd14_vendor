@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b3e7fe1753755fe5795c4750003795d51a4f7117 $");
+__FBSDID("$FreeBSD$");
 #include "dev/drm/drmP.h"
 #include "dev/drm/savage_drm.h"
 #include "dev/drm/savage_drv.h"

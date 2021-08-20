@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcpip.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: f3ed5be9538b6ce2204a962be10f78eebe1849c9 $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_TCPIP_H_

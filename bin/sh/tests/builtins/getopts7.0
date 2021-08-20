@@ -1,4 +1,4 @@
-# $FreeBSD: 3745555f8c1a195a0dfd3e16883a51cb5c03f2b3 $
+# $FreeBSD$
 
 set -- -x
 getopts :x: var

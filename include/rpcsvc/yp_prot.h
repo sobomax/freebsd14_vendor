@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 889e7cceea8cb8ec17defdc30f1c4a8bbaeaaf4b $
+ * $FreeBSD$
  */
 
 #ifndef _RPCSVC_YP_PROT_H_

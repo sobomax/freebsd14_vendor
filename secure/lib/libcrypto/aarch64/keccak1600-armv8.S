@@ -1,4 +1,4 @@
-/* $FreeBSD: 500c8ea36902e01efd4de70f38e51a2edda278dd $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from keccak1600-armv8.pl. */
 .text
 

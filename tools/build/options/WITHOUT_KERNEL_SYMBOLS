@@ -1,4 +1,4 @@
-.\" $FreeBSD: e2b3926a6e463be1caffe39634f404cb96d296df $
+.\" $FreeBSD$
 Set to not install kernel symbol files.
 .Bf -symbolic
 This option is recommended for those people who have small root partitions.

@@ -28,7 +28,7 @@
  *
  * Helper functions for snmp client tools
  *
- * $FreeBSD: bd2034a0f1560283feb5071134acee52e12432d3 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

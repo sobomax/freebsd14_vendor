@@ -1,4 +1,4 @@
-# $FreeBSD: c4b3458ba2cd0d68a6c2cc9d14347b6c074db209 $
+# $FreeBSD$
 #
 # Machine dependent definitions for the arm architecture.
 #

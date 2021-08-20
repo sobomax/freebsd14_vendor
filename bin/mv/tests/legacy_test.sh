@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: d0a5e83440c6f4fb578d98408a9a5f203457c271 $
+# $FreeBSD$
 
 # A directory in a device different from that where the tests are run
 TMPDIR=/tmp/regress.$$

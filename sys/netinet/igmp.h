@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)igmp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 873d6419bd58fd56462f1620d144226ae96f63e8 $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_IGMP_H_

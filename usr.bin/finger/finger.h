@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)finger.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: f750d256cf1f2622e70a078724ed7b8c31bfac12 $
+ * $FreeBSD$
  */
 
 #ifndef	_FINGER_H_

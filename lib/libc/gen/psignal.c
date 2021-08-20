@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)psignal.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: f4cb1079a4933ca71a82558c3821f6a8f006b6df $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Print the name of the signal indicated

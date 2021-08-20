@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1b60809307247030c687561daabc792d1bb4a250 $
+ * $FreeBSD$
  */
 
 #define pr_fmt(fmt) "MFA2: " fmt

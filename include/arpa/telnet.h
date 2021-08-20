@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)telnet.h	8.2 (Berkeley) 12/15/93
- * $FreeBSD: 855b3d26f9cfe85592e69f7c50f76048af417d41 $
+ * $FreeBSD$
  */
 
 #ifndef _ARPA_TELNET_H_

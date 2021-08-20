@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 68b52b88b0ca90664e75d0675c26dce27cd8bc32 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/05.t 211410 2010-08-17 06:08:09Z pjd $
 
 desc="chown returns EACCES when search permission is denied for a component of the path prefix"
 

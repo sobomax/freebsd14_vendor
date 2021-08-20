@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68d6422a76312ec1c560c0fa86bdbbc47eec09d2 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 

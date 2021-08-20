@@ -1,4 +1,4 @@
-$FreeBSD: c6ae6920ebc18a6ef765f025001bc359f8b8046e $
+$FreeBSD$
 /*$NetBSD: miidevs,v 1.105 2011/11/25 23:28:14 jakllsch Exp $*/
 
 /*-

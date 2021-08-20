@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 072493a12f8967def3d6525354f5b8675269aefb $
+# $FreeBSD$
 # script to edit and save some config file(s).
 # If called with no arguments, it edits 3 files in /etc
 thefiles=$*

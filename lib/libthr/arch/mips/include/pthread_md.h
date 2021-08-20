@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * from: src/lib/libthr/arch/arm/include/pthread_md.h,v 1.3 2005/10/29 13:40:31 davidxu
- * $FreeBSD: 20b0e70655958fcadf2af84dad0192409a7f5d49 $
+ * $FreeBSD$
  */
 
 /*

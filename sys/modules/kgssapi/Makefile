@@ -1,4 +1,4 @@
-# $FreeBSD: a720cdd6a48708b6b15458484147e97c23341a72 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/kgssapi ${SRCTOP}/sys/rpc/rpcsec_gss
 KMOD=	kgssapi

@@ -1,4 +1,4 @@
-# $FreeBSD: 5e8777c1221fc6936c9948dce2def09d60f0e299 $
+# $FreeBSD$
 
 # decode OpenPGP signatures per rfc4880
 .PATH: ${.PARSEDIR}

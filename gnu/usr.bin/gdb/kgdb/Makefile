@@ -1,4 +1,4 @@
-# $FreeBSD: 8fb781eca9171da6227656b4dd0211c0d0d64802 $
+# $FreeBSD$
 
 PROG=	kgdb${GDB_SUFFIX}
 SRCS=	main.c kld.c kthr.c trgt.c trgt_${TARGET_CPUARCH}.c

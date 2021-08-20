@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 92db7bf3dc43bb7159828fea825a0475a49f7822 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * A basic exercise of lzop reading and writing.

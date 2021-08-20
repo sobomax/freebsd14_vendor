@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)reloc.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: ea5ed128ef869cc3125d9ee4f2bce8eb275291d7 $
+ * $FreeBSD$
  */
 
 #ifndef _I386_MACHINE_RELOC_H_

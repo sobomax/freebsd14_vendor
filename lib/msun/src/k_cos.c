@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4702e65b282bbada036c6d1cc82a49bdebe6eeb $");
+__FBSDID("$FreeBSD$");
 
 /*
  * __kernel_cos( x,  y )

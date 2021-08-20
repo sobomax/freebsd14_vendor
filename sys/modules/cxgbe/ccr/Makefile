@@ -1,4 +1,4 @@
-# $FreeBSD: 73d34762719da7941cd1a7147482450dbdba7e33 $
+# $FreeBSD$
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
 .PATH: ${CXGBE}/crypto

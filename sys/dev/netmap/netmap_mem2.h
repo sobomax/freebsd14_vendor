@@ -29,7 +29,7 @@
  */
 
 /*
- * $FreeBSD: 4f20755076510dae02d421ecf742120279e840c9 $
+ * $FreeBSD$
  *
  * (New) memory allocator for netmap
  */

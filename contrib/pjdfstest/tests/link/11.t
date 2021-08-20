@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: aee270a4234a3b3a1f93205d198801f635a9e0d0 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/link/11.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="link returns EPERM if the source file is a directory"
 

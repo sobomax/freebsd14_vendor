@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: a39f63c53e2dcfc9c74ca3766c9b0e0c57142fd8 $*/
+/*$FreeBSD$*/
 
 #ifndef _E1000_82571_H_
 #define _E1000_82571_H_

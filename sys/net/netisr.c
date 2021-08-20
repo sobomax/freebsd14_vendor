@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4bd08658ff8b0156726d46dd7d7e5222750bd4f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * netisr is a packet dispatch service, allowing synchronous (directly

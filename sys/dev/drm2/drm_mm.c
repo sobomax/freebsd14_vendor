@@ -27,7 +27,7 @@
  **************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c11ff75ff8b66fdafa8834bedd701682c9b4493 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Generic simple memory manager implementation. Intended to be used as a base

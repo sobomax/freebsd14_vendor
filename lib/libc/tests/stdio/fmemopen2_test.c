@@ -29,7 +29,7 @@ SUCH DAMAGE.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2ca3257fe4e7c740eb25eb3dbfbc903d7990f76 $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <stdio.h>

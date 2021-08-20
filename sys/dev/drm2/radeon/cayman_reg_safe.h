@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2802df6eb4a7e571410b2b300226568fb1237837 $");
+__FBSDID("$FreeBSD$");
 
 static const unsigned cayman_reg_safe_bm[2047] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

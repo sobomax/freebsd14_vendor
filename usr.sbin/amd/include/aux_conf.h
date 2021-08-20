@@ -1,4 +1,4 @@
-/* $FreeBSD: 1529ba34b9e506de9cca8b1eac39e6599a35458c $ */
+/* $FreeBSD$ */
 
 /*
  * aux_conf.h:

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: fd0f41c6c5e60cd882473d721327f0187dab7dcc $
+# $FreeBSD$
 
 name="$(mktemp -u stripe.XXXXXX)"
 class="stripe"

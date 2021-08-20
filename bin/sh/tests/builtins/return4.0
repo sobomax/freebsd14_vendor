@@ -1,4 +1,4 @@
-# $FreeBSD: be5582b458b4eb29fc5c601825afc93f65913882 $
+# $FreeBSD$
 
 failures=
 failure() {

@@ -36,7 +36,7 @@
 #include "cd9660.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57a1c62a25b7bcf3afdc2b0e27a4d82f42ccb6d6 $");
+__FBSDID("$FreeBSD$");
 
 static char cd9660_compute_gm_offset(time_t);
 

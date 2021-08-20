@@ -33,7 +33,7 @@
 #ifdef HID_COMPAT7
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 237319269a2c6f4ceb29346e077ae5c64152fc1b $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

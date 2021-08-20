@@ -1,5 +1,5 @@
 /* $Id: config.h.in,v 9.5 2013/03/11 01:20:53 zy Exp $ */
-/* $FreeBSD: 94e780807fbaf6d476e6c52db9d9d8a272c8abab $ */
+/* $FreeBSD$ */
 
 /* Define if you want a debugging version. */
 /* #undef DEBUG */

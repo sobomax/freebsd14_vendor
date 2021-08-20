@@ -1,4 +1,4 @@
-# $FreeBSD: 7bda6b98c37655306f469ca4f6105f614b3e3fab $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/acpica
 KMOD=		acpi_dock

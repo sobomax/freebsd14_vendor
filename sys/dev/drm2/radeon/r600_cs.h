@@ -1,6 +1,6 @@
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9db545e4c70ba9b5e964c9959b52f1080db93271 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __R600_CS_H__
 #define	__R600_CS_H__

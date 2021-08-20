@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ktrace.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 97fe827303152643346d22479c892e8afeaf0e55 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_KTRACE_H_

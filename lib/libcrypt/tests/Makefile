@@ -1,4 +1,4 @@
-# $FreeBSD: 22b7fccccbba9c4b8b27ab9732d22ac7d70ee27a $
+# $FreeBSD$
 
 ATF_TESTS_C+= crypt_tests
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 80f75c8dcae0022e7e75f94186ad0e332664d0ca $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	compat

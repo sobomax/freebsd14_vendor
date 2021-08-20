@@ -1,4 +1,4 @@
-/* $FreeBSD: eee36b2a0e360bf3c38380ad634611fc14b8675b $ */
+/* $FreeBSD$ */
 
 &palmbus {
 	gpio@600 {

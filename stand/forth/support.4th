@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: 64c71e12ec2656e2d419f9e581651c5e8c3ceb44 $
+\ $FreeBSD$
 
 \ Loader.rc support functions:
 \

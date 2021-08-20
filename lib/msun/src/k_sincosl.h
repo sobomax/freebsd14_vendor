@@ -13,7 +13,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d4dc69f7820642cd48cd89ef9e12ff2bb497edf $");
+__FBSDID("$FreeBSD$");
 
 #if LDBL_MANT_DIG == 64		/* ld80 version of k_sincosl.c. */
 

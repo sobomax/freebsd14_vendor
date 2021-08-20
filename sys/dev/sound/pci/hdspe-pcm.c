@@ -40,7 +40,7 @@
 
 #include <mixer_if.h>
 
-SND_DECLARE_FILE("$FreeBSD: c5c70e44d1a377b088370d2f501872ad97f11cd3 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 struct hdspe_latency {
 	uint32_t n;

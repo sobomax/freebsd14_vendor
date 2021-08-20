@@ -1,5 +1,5 @@
 #	from $NetBSD: Makefile.inc,v 1.7 1995/02/27 13:06:20 cgd Exp $
-# $FreeBSD: 2734e51fe216a97dd735574c1994905d33a4e946 $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/nls
 

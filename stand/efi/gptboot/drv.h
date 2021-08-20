@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d7df6a10f1e4f8930b5f3ea9f1a5bb66cda1f1e7 $
+ * $FreeBSD$
  */
 
 #ifndef _DRV_H_

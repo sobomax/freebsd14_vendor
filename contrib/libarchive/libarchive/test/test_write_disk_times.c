@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 7d02d5854d7716ca4ec117a655290be7527b8c7a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Exercise time restores in archive_write_disk(), including

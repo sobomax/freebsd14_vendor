@@ -1,4 +1,4 @@
-# $FreeBSD: 4d3282345516b217e108c8317301dcff3174f559 $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/usr.bin/bmake/sysmk/t1
 

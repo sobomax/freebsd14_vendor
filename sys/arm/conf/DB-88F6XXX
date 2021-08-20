@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell DB-88F6xxx boards.
 #
-# $FreeBSD: a0ec7284b8d2a838c7c533cd448751679895c429 $
+# $FreeBSD$
 #
 
 ident		DB-88F6XXX

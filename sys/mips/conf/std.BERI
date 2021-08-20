@@ -4,7 +4,7 @@
 # kernel configuration file will be included by other board-specific files,
 # and so contains only BERI features common across all board targets.
 #
-# $FreeBSD: 9e7a55761f1ba7ea8e3fd717cb5ca20590a27c41 $
+# $FreeBSD$
 #
 
 machine		mips mips64

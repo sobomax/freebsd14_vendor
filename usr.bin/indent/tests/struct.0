@@ -1,4 +1,4 @@
-/* $FreeBSD: 83142bfb19729b9c0bd9e4790b20aec48585f55a $ */
+/* $FreeBSD$ */
 
 int f(struct x *a);
 

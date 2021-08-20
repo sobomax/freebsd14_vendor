@@ -37,7 +37,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: 486964c00c49dcddf90096d449244eb898cdb7cd $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* PCI IDs of supported chips */
 #define AU8820_PCI_ID 0x000112eb

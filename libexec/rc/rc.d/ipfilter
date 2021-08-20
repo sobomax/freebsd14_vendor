@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: fe328308e622906150f8fad0ecc0b4a14a9a4218 $
+# $FreeBSD$
 #
 
 # PROVIDE: ipfilter

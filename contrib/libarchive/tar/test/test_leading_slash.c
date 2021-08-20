@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 572c45e3cbb72d9a7ea32611a0d81c568131c9c1 $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_leading_slash)
 {

@@ -1,4 +1,4 @@
-# $FreeBSD: 9086d18d4347abb996016b40e28591611e33ce83 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIBEXECINFO=	${SRCTOP}/contrib/libexecinfo

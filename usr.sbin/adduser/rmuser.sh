@@ -26,7 +26,7 @@
 #
 #	Email: Mike Makonnen <mtm@FreeBSD.Org>
 #
-# $FreeBSD: abaf004e7f6699962c7b8b675f76f9c7c6741b0d $
+# $FreeBSD$
 #
 
 ATJOBDIR="/var/at/jobs"

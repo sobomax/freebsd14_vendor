@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ha.h#1 $
- * $FreeBSD: 98f284d5c59dc1a1e8257a917701f5f569ca46b5 $
+ * $FreeBSD$
  */
 
 #ifndef _CTL_HA_H_

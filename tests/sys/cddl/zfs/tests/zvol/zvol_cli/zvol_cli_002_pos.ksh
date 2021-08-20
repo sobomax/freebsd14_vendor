@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: f6f3f73b5d51e0c9614ed8b68e4d69ce00d6a4c6 $
+# $FreeBSD$
 
 #
 # ident	"@(#)zvol_cli_002_pos.ksh	1.2	07/01/09 SMI"

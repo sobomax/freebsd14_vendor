@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: ca56f5b7c20d238cca92b7f5e66215b618a93629 $
+* $FreeBSD$
 *
 ********************************************************************************/
 /*******************************************************************************/

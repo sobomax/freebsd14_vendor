@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)defines.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: d1864845d83bbb9c896e58f0f68397130096397d $
+ * $FreeBSD$
  */
 
 #define	settimer(x)	clocks.x = clocks.system++

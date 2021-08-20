@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8a64217b5768d75e72f5a82961b8d37b3a92858f $");
+__FBSDID("$FreeBSD$");
 
 #include <stdint.h>
 #include <stdio.h>

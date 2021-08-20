@@ -28,7 +28,7 @@
 /*
  * File: ql_minidump.h
  *
- * $FreeBSD: 3c77f1a3b678d25a8de3f704e30d0abe1390c500 $
+ * $FreeBSD$
  */
 #ifndef _QL_MINIDUMP_H_
 #define _QL_MINIDUMP_H_

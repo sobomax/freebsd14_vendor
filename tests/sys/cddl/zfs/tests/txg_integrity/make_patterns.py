@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# $FreeBSD: 546eda1d3469fc1ee325c5967cf5826d56c26dd2 $
+# $FreeBSD$
 
 # Generate random IO patterns for the txg_integrity test
 # We do this statically and embed the results into the code so that the

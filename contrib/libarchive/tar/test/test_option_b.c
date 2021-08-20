@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0eee80d86f498aa142933c9caf244448f2e871df $");
+__FBSDID("$FreeBSD$");
 
 #define USTAR_OPT " --format=ustar"
 

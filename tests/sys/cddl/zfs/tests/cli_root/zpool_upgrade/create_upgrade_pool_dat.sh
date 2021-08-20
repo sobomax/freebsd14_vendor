@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: ddb95a753ccaa0cb184d3122dcd795289c59abbc $
+# $FreeBSD$
 
 scriptpath=$(realpath $0)
 parent=$(dirname $scriptpath)

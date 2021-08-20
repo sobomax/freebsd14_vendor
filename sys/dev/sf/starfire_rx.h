@@ -1,4 +1,4 @@
-/* $FreeBSD: bc4153c1ab4baf96b9188bc733545fd3c2b89693 $ */
+/* $FreeBSD$ */
 /*
  *   MODULE: GFP_RX.H
  *

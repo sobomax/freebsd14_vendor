@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 8/14/93
-# $FreeBSD: 2a5bed166b17478f6c6243ec95a165894f202b46 $
+# $FreeBSD$
 
 VOLUME=		psd/18.gprof
 SRCS=		header.me abstract.me intro.me profiling.me gathering.me \

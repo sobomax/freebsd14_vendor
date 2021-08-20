@@ -40,7 +40,7 @@
  * see ``http://www.vix.com/isc''.  To learn more about Vixie
  * Enterprises, see ``http://www.vix.com''.
  *
- * $FreeBSD: 240a3ae23bdafac9abbd983c6db5adb425f631cb $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

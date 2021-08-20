@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 849351a2215e5729dd9a3d90cd22aa461bb97929 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Setup the system to run on the current machine.

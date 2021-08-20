@@ -1,4 +1,4 @@
-# $FreeBSD: 826cd0b9c53c91ea09a524ed5b8df06bf2a21227 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/msk
 

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 1ebdf8c0ef602e69a500cd1424f6428e6279907d $
+# $FreeBSD$
 #
 
 SUBDIR=

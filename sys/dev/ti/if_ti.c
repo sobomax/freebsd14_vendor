@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b25eb64d2479954430eeb49b180127694b5c9586 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ti.h"
 

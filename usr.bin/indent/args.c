@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)args.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d4cc32373a094e473549b3fc3e4c4a562414382 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Argument scanning and profile reading code.  Default parameters are set

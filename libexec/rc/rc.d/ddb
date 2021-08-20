@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 84f44e20e3419902e06c00869e14512bfe5ca1d4 $
+# $FreeBSD$
 #
 
 # PROVIDE: ddb

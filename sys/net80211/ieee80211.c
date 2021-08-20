@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68a13ec8b2f16bf3fc8f3ec6dbf77d276dbf7f33 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IEEE 802.11 generic handler

@@ -30,7 +30,7 @@
  *
  *	from: @(#)float.h	7.1 (Berkeley) 5/8/90
  *	from: FreeBSD: src/sys/i386/include/float.h,v 1.8 1999/08/28 00:44:11
- * $FreeBSD: 575b50fbbd0509a2b40e83ca36bfb1b1c8b05a5a $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_FLOAT_H_

@@ -59,4 +59,4 @@ particular service and module type may result in surprising behaviour.
 To get the intended semantics, add a "required" entry listing the
 pam_deny module at the end of the chain.
 
-$FreeBSD: 2824c054fe85c6cb07680193afa6076cd5c1b5d6 $
+$FreeBSD$

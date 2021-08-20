@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1f6397a92f577936743a67b4d8eefd6203ba906 $");
+__FBSDID("$FreeBSD$");
 
 int	write_init(int fd, FILE *f, const char *mode);
 size_t	write_file(char *buffer, int count);

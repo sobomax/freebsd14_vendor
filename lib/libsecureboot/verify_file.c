@@ -26,7 +26,7 @@
  * Routines to verify files loaded.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9773b02e5a1d5622252735e95bd84a6a95fcbcca $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <string.h>

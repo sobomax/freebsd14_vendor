@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: bf63f33d1d00bf74e721503aab251700fb9afc9f $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(sqrtf)
 	retl

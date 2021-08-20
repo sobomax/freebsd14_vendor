@@ -1,4 +1,4 @@
-# $FreeBSD: 88e8c21f60b4bb72fc3a7e79dce2595b56ff0003 $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/ctm_rmail
 

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 58d82349acadfed487d3dd85e0124d06de7cc729 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Verify that "cpio -p .." works.

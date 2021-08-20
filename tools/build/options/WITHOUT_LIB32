@@ -1,4 +1,4 @@
-.\" $FreeBSD: 93798ebef81d2abefdf21f32dbc5a767389224dd $
+.\" $FreeBSD$
 On 64-bit platforms, set to not build 32-bit library set and a
 .Nm ld-elf32.so.1
 runtime linker.

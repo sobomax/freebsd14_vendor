@@ -35,7 +35,7 @@
  *
  *	from: @(#)cpu.h 5.4 (Berkeley) 5/9/91
  *	from: FreeBSD: src/sys/i386/include/cpu.h,v 1.62 2001/06/29
- * $FreeBSD: 4b2305967b1a75faa569ca50005a23c9d1690406 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPU_H_

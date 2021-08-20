@@ -1,4 +1,4 @@
-# $FreeBSD: 9ed46ef7a16d2302bbbbbea59e350cae8a685643 $
+# $FreeBSD$
 
 SUBDIR=	sscop
 

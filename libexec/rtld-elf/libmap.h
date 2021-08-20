@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 0e9c668b4444444b437d7014ac0e3d8444da447e $
+ * $FreeBSD$
  */
 
 int	lm_init (char *);

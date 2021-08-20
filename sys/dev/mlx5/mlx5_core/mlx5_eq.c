@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 144496c9d3a2897cb9bf13a295a8eac2c894d727 $
+ * $FreeBSD$
  */
 
 #include <linux/interrupt.h>

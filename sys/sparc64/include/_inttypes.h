@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	From: $NetBSD: int_fmtio.h,v 1.4 2008/04/28 20:23:36 martin Exp $
- * $FreeBSD: 46c13582d70a12c8f9e93eb5452edaa46d8ddf6e $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_INTTYPES_H_

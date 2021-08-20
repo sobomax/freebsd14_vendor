@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 0e205591380bffb13a73f0f5cdd2b1f9e89baaa2 $
+# $FreeBSD$
 
 desc="utimensat can follow symlinks"
 

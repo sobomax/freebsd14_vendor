@@ -26,7 +26,7 @@
 #define CAYMAN_BLIT_SHADERS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 621019b5c43b5da6a5257a483fbcb10b5b9018cd $");
+__FBSDID("$FreeBSD$");
 
 extern const u32 cayman_ps[];
 extern const u32 cayman_vs[];

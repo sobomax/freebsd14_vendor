@@ -1,4 +1,4 @@
-/* $FreeBSD: 90d52cba2ce37251ad9302e2435c505c672dddf8 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: citrus_csmapper.c,v 1.11 2011/11/20 07:43:52 tnozaki Exp $	*/
 
 /*-

@@ -1,4 +1,4 @@
-# $FreeBSD: 9ce6c6ff658528f34cf0f397269274ea0f562e62 $
+# $FreeBSD$
 
 NATIVE_EMULATION= elf64_sparc_fbsd
 

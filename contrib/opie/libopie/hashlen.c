@@ -11,7 +11,7 @@ you didn't get a copy, you may request one from <license@inner.net>.
 	Modified by cmetz for OPIE 2.4. Use struct opie_otpkey, isolate variables.
 	Created by cmetz for OPIE 2.3.
 
-$FreeBSD: 0d5808c1245004f3b944dd76a15785bfc2678a6b $
+$FreeBSD$
 */
 
 #include <sys/endian.h>

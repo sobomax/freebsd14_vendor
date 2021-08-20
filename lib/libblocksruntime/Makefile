@@ -1,4 +1,4 @@
-# $FreeBSD: c61134d1ea5e3bae1beaeb6662ca96e329084af8 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB:tl}
 LIB=	BlocksRuntime

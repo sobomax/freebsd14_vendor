@@ -1,2 +1,2 @@
-.\" $FreeBSD: d0c6863fcb4aaefb6239925554db506ab3d8d895 $
+.\" $FreeBSD$
 Set to not build Bluetooth related kernel modules, programs and libraries.

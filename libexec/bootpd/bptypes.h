@@ -1,4 +1,4 @@
-/* $FreeBSD: e27cc832c5feca86304fca2dad4b4db4846dba60 $
+/* $FreeBSD$
  */
 
 #ifndef	BPTYPES_H

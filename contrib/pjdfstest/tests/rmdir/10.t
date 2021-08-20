@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 5c088d578503b1fcc986e44e7400bb3e40a23bcd $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/10.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rmdir returns EPERM if the parent directory of the named file has its immutable or append-only flag set"
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fdd79ddd94c19d54353c6a1afcae0a730b6a5116 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Code for dealing with the BIOS in x86 PC systems.

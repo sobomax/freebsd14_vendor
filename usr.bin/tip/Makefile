@@ -1,4 +1,4 @@
-# $FreeBSD: 532431d13cae4ffd0af5002e0bdf701e1eddb48e $
+# $FreeBSD$
 
 SUBDIR=tip
 

@@ -2,7 +2,7 @@
 /*
  * The configure script expands this as a set of definitions
  *
- * $FreeBSD: 715b7fb5089791e36d940bdedb1d3428e2e8e362 $
+ * $FreeBSD$
  */
 
 #define CURSES_WACS_ARRAY _nc_wacs

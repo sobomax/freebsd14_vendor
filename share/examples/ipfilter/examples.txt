@@ -512,4 +512,4 @@ pass in quick proto tcp from any to any port = WWW keep state group 100
 
   ------------------------------------------------------------------------
 Return to the IP Filter home page
-$FreeBSD: a323a8457752bf8ae59af88aeffe53cc157db82d $
+$FreeBSD$

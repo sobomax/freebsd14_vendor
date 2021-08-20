@@ -1,4 +1,4 @@
-# $FreeBSD: 8e80e45e58f6f48b5aa9896584c73ed948efe718 $
+# $FreeBSD$
 #
 # Copyright (c) 2010 by Panasas Inc
 # All rights reserved.

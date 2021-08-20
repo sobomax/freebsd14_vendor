@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dead_vnops.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: a3153aed326aad13cf813bce6bcc78c1dd109eee $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

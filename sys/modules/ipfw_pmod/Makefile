@@ -1,4 +1,4 @@
-# $FreeBSD: 5f0ab18bf2a2178ae565ed5f4903318602105960 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw/pmod
 

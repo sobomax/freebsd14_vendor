@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)1.2.t	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: 469206c2d809e160bd5ef40f62218af0c9dc2c3d $
+.\" $FreeBSD$
 .\"
 .sh "Memory management\(dg
 .NH 3

@@ -1,4 +1,4 @@
-# $FreeBSD: 0dc7b0fe19b3f3b42856d68b86dff2a0ee65a4c0 $
+# $FreeBSD$
 
 PROG=	localeck
 MAN=

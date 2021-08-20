@@ -1,6 +1,6 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
 #
-# $FreeBSD: 8101322cc6efe4165e0099da22fc3d4067ecda51 $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	umount

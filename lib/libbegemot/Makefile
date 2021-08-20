@@ -1,4 +1,4 @@
-# $FreeBSD: c5d3bb8badc2ed487f25d3de8412142934b02b95 $
+# $FreeBSD$
 
 LIBBEGEMOT_DIR=${SRCTOP}/contrib/libbegemot
 

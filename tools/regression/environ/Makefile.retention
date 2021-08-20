@@ -1,5 +1,5 @@
 #
-# $FreeBSD: a69abe72dfdc2872d24b4cf22366e9cf4d1aa011 $
+# $FreeBSD$
 #
 SRCS=	retention.c
 PROG=	retention

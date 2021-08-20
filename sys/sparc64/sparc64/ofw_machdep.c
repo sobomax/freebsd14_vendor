@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59d035e821410683f0370fddbd9ff03920367e78 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Some Open Firmware helper functions that are likely machine dependent.

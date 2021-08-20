@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 836b60434eb349e5e73b97caf57b805420479b37 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/01.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rename returns ENAMETOOLONG if a component of either pathname exceeded {NAME_MAX} characters"
 

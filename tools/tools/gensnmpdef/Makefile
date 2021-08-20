@@ -1,4 +1,4 @@
-# $FreeBSD: 470e1de2dc880122ca8c0151977a43e75721ce1e $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/contrib/bsnmp/gensnmpdef
 

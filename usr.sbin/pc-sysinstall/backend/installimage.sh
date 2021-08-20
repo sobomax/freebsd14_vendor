@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 49ee67c2bdb56ff43540840ec4d4aec33dbe3dd3 $
+# $FreeBSD$
 
 # Source our functions scripts
 . ${BACKEND}/functions.sh

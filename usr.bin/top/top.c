@@ -9,7 +9,7 @@
  *  Copyright (c) 1994, 1995, William LeFebvre, Argonne National Laboratory
  *  Copyright (c) 1996, William LeFebvre, Group sys Consulting
  *
- * $FreeBSD: 058a53b5f0a3f09c2279033b554ab37f0fd6258c $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

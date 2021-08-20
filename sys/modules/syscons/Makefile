@@ -1,4 +1,4 @@
-# $FreeBSD: 85e513d5f898b51839f13f61179d24cfadff8927 $
+# $FreeBSD$
 
 SUBDIR=	${_apm} \
 	${_beastie} \

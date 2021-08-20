@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: server.h,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: 01629e89a789430116e58787ae9658b914d078fc $
+ * $FreeBSD$
  */
 
 #ifndef _SERVER_H_

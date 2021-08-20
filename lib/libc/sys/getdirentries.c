@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 469e6d26d790fad81f663ba5185f6724e7cb3332 $");
+__FBSDID("$FreeBSD$");
 
 #define _WANT_FREEBSD11_DIRENT
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: d4fa6b65dff4cfaa3c99771cc09310de4bd690c2 $
+# $FreeBSD$
 #
 
 # PROVIDE: ipnat

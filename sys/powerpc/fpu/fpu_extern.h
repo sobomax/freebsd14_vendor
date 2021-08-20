@@ -1,5 +1,5 @@
 /*	$NetBSD: fpu_extern.h,v 1.3 2005/12/11 12:18:42 christos Exp $	*/
-/* $FreeBSD: 02caa2312b967310180a3edf633a1aead9d40f92 $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 757e9d72b30abc29263c6a281056cd1f62d6694b $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/04.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="chmod returns ENOENT if the named file does not exist"
 

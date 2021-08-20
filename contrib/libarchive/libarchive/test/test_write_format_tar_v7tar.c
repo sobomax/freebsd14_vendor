@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 16909956878b6ea2a2efe94fc92c8a5699adb346 $");
+__FBSDID("$FreeBSD$");
 
 static int
 is_null(const char *p, size_t l)

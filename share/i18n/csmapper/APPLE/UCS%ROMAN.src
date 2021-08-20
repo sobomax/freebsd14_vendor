@@ -1,4 +1,4 @@
-# $FreeBSD: 81f20ee9fef701eb7e298bb6be389745e51480d6 $
+# $FreeBSD$
 # $NetBSD: UCS%ROMAN.src,v 1.2 2006/04/08 15:47:40 tnozaki Exp $
 
 TYPE		ROWCOL

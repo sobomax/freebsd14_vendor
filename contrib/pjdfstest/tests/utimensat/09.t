@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: ec7acbe911bc0d2136396aa6f890cd267beccd3e $
+# $FreeBSD$
 
 desc="utimensat is y2038 compliant"
 

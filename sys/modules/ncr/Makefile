@@ -1,4 +1,4 @@
-# $FreeBSD: a2060bf5c502d5aab9339594d86ec494d642214c $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ncr
 

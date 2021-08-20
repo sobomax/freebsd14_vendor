@@ -1,4 +1,4 @@
-/* $FreeBSD: dee7bab733e8dd45e729bb41cb3f148f2aa4bf2b $ */
+/* $FreeBSD$ */
 /* $NetBSD: _strtol.h,v 1.2 2009/05/20 22:03:29 christos Exp $ */
 
 /*-

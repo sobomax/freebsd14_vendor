@@ -53,7 +53,7 @@
 #include <machine/asmacros.h>
 #include <machine/trap.h>
 
-__FBSDID("$FreeBSD: 52a7021f2859e0716c1b828b1b9024d6fc1900a5 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef KDTRACE_HOOKS
 	.bss

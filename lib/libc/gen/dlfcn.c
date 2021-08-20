@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7f162753b4b67d6bd13461ccb5bf13939d03f1e $");
+__FBSDID("$FreeBSD$");
 
 #if !defined(IN_LIBDL) || defined(PIC)
 

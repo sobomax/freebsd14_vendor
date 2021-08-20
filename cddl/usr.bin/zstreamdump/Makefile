@@ -1,4 +1,4 @@
-# $FreeBSD: 69fd399e14d2956193b9fa56688ce29987c514de $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zstreamdump
 

@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)table1	8.1 (Berkeley) 8/14/93
 .\"
-.\" $FreeBSD: d0fad8f31ecd1cd4164d4a60d287a0a67faf0534 $
+.\" $FreeBSD$
 .pn 30
 .rm mx
 .br

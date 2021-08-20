@@ -1,7 +1,7 @@
 #
 # This file adds to the values in QCA953X_BASE.hints.
 #
-# $FreeBSD: ef988faf566df3a1b06957c606dfe9aa37b73e18 $
+# $FreeBSD$
 
 # Embedded Atheros Switch
 hint.arswitch.0.at="mdio1"

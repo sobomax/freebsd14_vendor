@@ -30,7 +30,7 @@
 #ifndef lint
 __RCSID("$NetBSD: check.c,v 1.14 2006/06/05 16:51:18 christos Exp $");
 static const char rcsid[] =
-  "$FreeBSD: 9519315672abdb8524468188abd1f2bc0c184965 $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #ifdef HAVE_LIBUTIL_H

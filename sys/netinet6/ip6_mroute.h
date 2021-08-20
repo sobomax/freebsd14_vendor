@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: ip6_mroute.h,v 1.19 2001/06/14 06:12:55 suz Exp $
- * $FreeBSD: 40a857707dee177bf92e9cc81a9ab6c3cdec9944 $
+ * $FreeBSD$
  */
 
 /*	BSDI ip_mroute.h,v 2.5 1996/10/11 16:01:48 pjd Exp	*/

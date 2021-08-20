@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\"	$FreeBSD: c713d0bd46bf2c9a563348d478adecb4597c62cd $
+.\"	$FreeBSD$
 .\"	@(#)0.t	8.1 (Berkeley) 6/8/93
 .\"
 .if n .ND

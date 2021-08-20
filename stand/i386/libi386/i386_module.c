@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78ab61ba9a59fd5b5b0695772d1f124e5df2a151 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * i386-specific module functionality.

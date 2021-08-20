@@ -26,7 +26,7 @@
 #define SI_BLIT_SHADERS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ba0aa8971827ecc85b8907bf9cee5c51ff50458 $");
+__FBSDID("$FreeBSD$");
 
 extern const u32 si_default_state[];
 

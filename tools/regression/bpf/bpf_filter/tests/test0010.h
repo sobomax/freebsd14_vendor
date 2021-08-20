@@ -1,7 +1,7 @@
 /*-
  * Test 0010:	BPF_LD+BPF_H+BPF_IND
  *
- * $FreeBSD: 8377804d4abbfd4619812391a96656eadf858fe6 $
+ * $FreeBSD$
  */
 
 /* BPF program */

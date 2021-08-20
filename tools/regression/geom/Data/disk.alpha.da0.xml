@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
-  <FreeBSD>$FreeBSD: 670fcc38d596fe146235f1a2267dbaa3d4219770 $</FreeBSD>
+  <FreeBSD>$FreeBSD$</FreeBSD>
   <comment>
     Yet an alpha disklabel.
   </comment>

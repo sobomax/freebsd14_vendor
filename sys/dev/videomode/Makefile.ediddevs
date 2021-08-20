@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile.ediddevs,v 1.1 2006/05/11 01:49:53 gdamore Exp $
-#	$FreeBSD: 69dc8bcce9cce5163f58eef470f04209ddb69c58 $
+#	$FreeBSD$
 #
 # As per tron@NetBSD.org, the proper procedure is
 #

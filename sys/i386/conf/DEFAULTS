@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/i386
 #
-# $FreeBSD: bcde90c677e3ce8e357a38676902eab2d8f95fcb $
+# $FreeBSD$
 
 machine		i386
 

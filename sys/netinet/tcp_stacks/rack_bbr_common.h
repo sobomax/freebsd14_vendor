@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * __FBSDID("$FreeBSD: 822208338d674a3e84d1ef6c1dd36cfbeec63aa7 $");
+ * __FBSDID("$FreeBSD$");
  */
 /* Common defines and such used by both RACK and BBR */
 /* Special values for mss accounting array */

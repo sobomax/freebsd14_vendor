@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 12fb56e1340b3fe6d7b238d348a4f5f73b219c08 $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_sqrt(x)
  * Return correctly rounded sqrt.

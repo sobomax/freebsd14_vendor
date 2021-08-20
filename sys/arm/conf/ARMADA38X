@@ -1,7 +1,7 @@
 #
 # Kernel configuration for Marvell Armada38x
 #
-# $FreeBSD: 2a1bc40ea2cd3d6cf63f0794c882b7f93051a09a $
+# $FreeBSD$
 #
 
 include 	"../mv/armada38x/std.armada38x"

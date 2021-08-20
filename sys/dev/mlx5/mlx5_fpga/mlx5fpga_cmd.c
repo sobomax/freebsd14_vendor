@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: cc9e2dc1047e9955dd590abdfc93d79209c72998 $
+ * $FreeBSD$
  */
 
 #include <dev/mlx5/cmd.h>

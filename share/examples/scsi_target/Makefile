@@ -1,4 +1,4 @@
-# $FreeBSD: 22647655a9252015640e7d52d963f9c95375b2db $
+# $FreeBSD$
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/${PROG}

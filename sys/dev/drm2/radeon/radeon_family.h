@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7ac4937d133a08739ad3ac7b2e31764d39e65a59 $");
+__FBSDID("$FreeBSD$");
 
 /* this file defines the CHIP_  and family flags used in the pciids,
  * its is common between kms and non-kms because duplicating it and

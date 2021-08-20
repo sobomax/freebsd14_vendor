@@ -38,7 +38,7 @@
  *	from: Utah Hdr: reg.h 1.1 90/07/09
  *	@(#)reg.h	8.2 (Berkeley) 1/11/94
  *	JNPR: reg.h,v 1.6 2006/09/15 12:52:34 katta
- * $FreeBSD: a1f5aa4da23cde19f618503e64b257469060b75f $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_REG_H_

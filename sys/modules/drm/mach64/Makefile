@@ -1,4 +1,4 @@
-# $FreeBSD: e2d229bbb9fee2430991a8f8fc8f1f44e6eb90b1 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD	= mach64

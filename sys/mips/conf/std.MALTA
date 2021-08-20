@@ -1,6 +1,6 @@
 # MALTA_COMMON -- Common kernel config options for MALTA boards
 #
-# $FreeBSD: 4c1965650fba5471ec3eaf438ff3a3dcc6c90fd3 $
+# $FreeBSD$
 
 options 	YAMON
 

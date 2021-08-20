@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: b6cda150df8a5e08fa39c48032aa4a07f59f39c3 $ */
+/* $FreeBSD$ */
 
 #include "ficl.h"
 

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 0c4e1381be1a36b40191950e2f299cfaa7236bf0 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LIBKERN_H_

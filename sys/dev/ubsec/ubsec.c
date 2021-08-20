@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e15330c83720a9b10b7bde13494163cd40bf6124 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * uBsec 5[56]01, 58xx hardware crypto accelerator

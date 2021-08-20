@@ -1,4 +1,4 @@
-# $FreeBSD: 31182374f381b6af5a725d5d1f885c47f635d78a $
+# $FreeBSD$
 
 PROG=		ctlstat
 MAN=		ctlstat.8

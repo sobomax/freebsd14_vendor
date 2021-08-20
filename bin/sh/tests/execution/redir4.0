@@ -1,4 +1,4 @@
-# $FreeBSD: 57054c17c45f60e1d44a96bd4c9d14abaf52f6c2 $
+# $FreeBSD$
 
 { echo bad 0>&3; } 2>/dev/null 3>/dev/null 3>&-
 exit 0

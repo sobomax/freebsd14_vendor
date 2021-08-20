@@ -1,4 +1,4 @@
-# $FreeBSD: b3b2f926c595eaf4591df6a1017a8b68903ba0ec $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/eli
 

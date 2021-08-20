@@ -1,5 +1,5 @@
 /*	$NetBSD: pcmciavar.h,v 1.12 2000/02/08 12:51:31 enami Exp $	*/
-/* $FreeBSD: 87f41850ec5cf161d405e3099198961349d17b4f $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

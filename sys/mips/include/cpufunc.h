@@ -55,7 +55,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	JNPR: cpufunc.h,v 1.5 2007/08/09 11:23:32 katta
- * $FreeBSD: 7cfc548cda86dfabd9a7f08250189a001dcd3141 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPUFUNC_H_

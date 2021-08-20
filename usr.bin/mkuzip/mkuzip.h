@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f41507c86964b6506f4df9c2caffee5454e7219c $
+ * $FreeBSD$
  */
 
 #define DEFINE_RAW_METHOD(func, rval, args...) typedef rval (*func##_t)(args)

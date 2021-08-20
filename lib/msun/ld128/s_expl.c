@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b47402b0fb4e13f2f1b3fc54e836e5809af996ad $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ld128 version of s_expl.c.  See ../ld80/s_expl.c for most comments.

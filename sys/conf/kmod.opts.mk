@@ -1,4 +1,4 @@
-# $FreeBSD: cfb67400d050531455713aa52bfca517a23b75ba $
+# $FreeBSD$
 #
 # Handle options (KERN_OPTS) for kernel module options.  This can be included earlier in a kmod Makefile
 # to allow KERN_OPTS to control SRCS, etc.

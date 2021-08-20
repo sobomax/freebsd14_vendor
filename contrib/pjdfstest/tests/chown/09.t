@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 9fd44df5fe01fa1ad21ca3d297a3e3b2c99f5d27 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/09.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="chown returns EROFS if the named file resides on a read-only file system"
 

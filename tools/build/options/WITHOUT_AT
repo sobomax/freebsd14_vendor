@@ -1,4 +1,4 @@
-.\" $FreeBSD: 45e552fcc9b1ad8e152afc4989eb4808dc180b94 $
+.\" $FreeBSD$
 Set to not build
 .Xr at 1
 and related utilities.

@@ -1,4 +1,4 @@
-# $FreeBSD: 78fe6c663e82ead9396b4db876835a7f26f28fa1 $
+# $FreeBSD$
 
 KMOD=	radeonkmsfw_CYPRESS_me
 IMG=	CYPRESS_me

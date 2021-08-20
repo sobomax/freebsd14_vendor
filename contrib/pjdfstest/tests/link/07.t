@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: afe1b734c209409d35b96c2db4391333940d9eba $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/link/07.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="link returns EACCES when the requested link requires writing in a directory with a mode that denies write permission"
 

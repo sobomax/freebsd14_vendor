@@ -1,4 +1,4 @@
-# $FreeBSD: 41e0d1a8ad663ccd9edacd6c80111972c66c8005 $
+# $FreeBSD$
 
 .PATH:	${LIBC_SRCTOP}/x86/sys
 

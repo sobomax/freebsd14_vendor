@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d57b36e000e72e87ddeaaac4134a2e150f5d6d1 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Device specific driver for the SUNW,envctrl device found on some

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dfa793b0316716a865986b1b399d5d810debe374 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for Intel 82553 and 82555 PHYs

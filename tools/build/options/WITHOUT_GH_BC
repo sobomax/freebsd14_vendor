@@ -1,4 +1,4 @@
-.\" $FreeBSD: 80e43bb7cde02fab8486cf399663cf9461d97d1f $
+.\" $FreeBSD$
 Set to not build and install the enhanced
 .Xr bc 1
 and

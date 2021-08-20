@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb957594dbfc31c5f90f34ff257c86181f40d1ca $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _DRM_SAREA_H_
 #define _DRM_SAREA_H_

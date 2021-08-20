@@ -1,4 +1,4 @@
-/* $FreeBSD: 496837a8f8628395836b754b26e95f1107f51ace $ */
+/* $FreeBSD$ */
 
 /* include/arch/unix/apr_private.h.  Generated from apr_private.h.in by configure.  */
 /* include/arch/unix/apr_private.h.in.  Generated from configure.in by autoheader.  */

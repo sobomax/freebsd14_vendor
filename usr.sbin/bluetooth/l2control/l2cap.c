@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: l2cap.c,v 1.5 2003/05/16 19:52:37 max Exp $
- * $FreeBSD: cc92c77ec5dcf9469fe3dc316b1ce7f8d01a08f1 $
+ * $FreeBSD$
  */
 
 #include <sys/ioctl.h>

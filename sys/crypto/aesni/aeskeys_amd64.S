@@ -220,4 +220,4 @@ ENTRY(aesni_set_deckey)
 	.cfi_endproc
 END(aesni_set_deckey)
 
-	.ident	"$FreeBSD: 9b3e98c8437ec8ad60913941430c9d34ea07c0a9 $"
+	.ident	"$FreeBSD$"

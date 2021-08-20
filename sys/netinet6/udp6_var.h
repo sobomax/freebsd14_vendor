@@ -59,7 +59,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 93e226d6a4b3854860a2ca4c6219eb4ead462ebe $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_UDP6_VAR_H_

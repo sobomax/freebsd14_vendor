@@ -22,7 +22,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0aba663eae212a8e457ec25922804b06b8c6d31b $
+ * $FreeBSD$
  */
 
 #include <sys/ioctl.h>

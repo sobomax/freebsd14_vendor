@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 912e6713770421c873a3db7a87aea9f7b684abc3 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Issue 822: jar files have an empty External File Attributes field which

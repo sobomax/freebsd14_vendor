@@ -25,7 +25,7 @@ SOFTWARE.
 
 /*
  * Generalized hash table ADT
- * $FreeBSD: 969703d04e59c891ff4db52dedeb3925f40bc465 $
+ * $FreeBSD$
  *
  * Provides multiple, dynamically-allocated, variable-sized hash tables on
  * various data and keys.

@@ -1,5 +1,5 @@
 /* $NetBSD: softfloat-for-gcc.h,v 1.8 2009/12/14 01:07:42 matt Exp $ */
-/* $FreeBSD: cf17e56768a9c3f41ff845a60dcef53405bef151 $ */
+/* $FreeBSD$ */
 
 /*
  * Move private identifiers with external linkage into implementation

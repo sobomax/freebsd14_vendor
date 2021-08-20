@@ -1,4 +1,4 @@
-# $FreeBSD: 24a9159fdeb9e2a804c15abaae1c3c225d765995 $
+# $FreeBSD$
 
 v=$( ($SH -nc 'for') 2>&1 >/dev/null)
 [ $? -ne 0 ] && [ -n "$v" ]

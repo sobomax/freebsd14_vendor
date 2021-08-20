@@ -1,4 +1,4 @@
-$ $FreeBSD: 29ab4c15f50d25628e56cbbf6848f9f281b25e64 $
+$ $FreeBSD$
 $
 $ Message catalog for mn_MN.UTF-8 locale
 $

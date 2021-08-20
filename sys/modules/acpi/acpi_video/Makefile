@@ -1,4 +1,4 @@
-#	$FreeBSD: 803598144a9ad7a0914393a9d2e056759e1f509a $
+#	$FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/acpica
 

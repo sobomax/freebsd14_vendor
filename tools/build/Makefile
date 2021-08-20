@@ -1,4 +1,4 @@
-# $FreeBSD: 0e6d77716852b043064b21596f153fe529bf3da2 $
+# $FreeBSD$
 
 .PATH: ${.CURDIR}/../../include
 

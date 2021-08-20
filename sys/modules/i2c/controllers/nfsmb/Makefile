@@ -1,4 +1,4 @@
-# $FreeBSD: d5cb3d1c42c9305339ee91398157ac18fc3180be $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/nfsmb
 

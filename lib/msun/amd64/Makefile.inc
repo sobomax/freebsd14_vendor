@@ -1,4 +1,4 @@
-# $FreeBSD: 02264c4c2c66cf9942ad9411a2919bea80d7116a $
+# $FreeBSD$
 
 ARCH_SRCS = e_fmod.S e_fmodf.S e_fmodl.S \
 	    e_remainder.S e_remainderf.S e_remainderl.S \

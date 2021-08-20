@@ -1,4 +1,4 @@
-# $FreeBSD: 1112357558f89c0385d818dd0a9ae8d20828a68b $
+# $FreeBSD$
 
 PROG=	rping
 MAN=	rping.1

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)initgroups.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 882dadbeb9ab512e6257ac3a5b32b2d56297cdf1 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

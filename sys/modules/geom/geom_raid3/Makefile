@@ -1,4 +1,4 @@
-# $FreeBSD: 5baa6c2df4ce217846dfe52650d028af2ad3a017 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/raid3
 

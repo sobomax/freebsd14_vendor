@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b3e7933a90a15c61c6dca86eccf4eb64c1592dc $");
+__FBSDID("$FreeBSD$");
 
 /*
  * AMCC'S 3ware driver for 9000 series storage controllers.

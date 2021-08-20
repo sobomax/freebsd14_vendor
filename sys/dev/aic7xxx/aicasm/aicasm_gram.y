@@ -42,7 +42,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_gram.y#29 $
  *
- * $FreeBSD: c479c8fdf2db8f9b6aef08a36ab78ca42d823721 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

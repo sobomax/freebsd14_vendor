@@ -8,7 +8,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: a73f5bfa7f980aae8f5d01f5a589229cfa1c1c3e $");
+__FBSDID("$FreeBSD$");
 
 #define	LOCORE
 

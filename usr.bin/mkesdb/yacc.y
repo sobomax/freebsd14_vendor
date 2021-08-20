@@ -1,4 +1,4 @@
-/* $FreeBSD: 4b3f9c7d382fdc28182a41e23ce2ab5febb038b9 $ */
+/* $FreeBSD$ */
 /* $NetBSD: yacc.y,v 1.4 2005/06/02 02:09:25 lukem Exp $	*/
 
 %{

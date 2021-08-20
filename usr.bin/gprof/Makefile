@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/29/93
-#	$FreeBSD: 28d0ffeef25c45bc0bc22d7d8b4b6aa5bdcaaa31 $
+#	$FreeBSD$
 
 PROG=	gprof
 SRCS=	gprof.c arcs.c dfn.c elf.c lookup.c hertz.c \

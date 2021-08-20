@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 7d56c57457c7705339aa186e05fcebfcb073934c $
+# $FreeBSD$
 
 CONFS=	locate.rc
 PROG=	locate

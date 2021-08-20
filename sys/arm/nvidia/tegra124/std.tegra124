@@ -1,4 +1,4 @@
-# $FreeBSD: 48192c33961aac0b3359675882034357f6930cda $
+# $FreeBSD$
 cpu 		CPU_CORTEXA
 machine		arm	armv7
 makeoptions	CONF_CFLAGS="-march=armv7a"

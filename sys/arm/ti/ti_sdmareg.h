@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8fa8d7ba02d4acde0fca5fbb68efdb83aaed8136 $
+ * $FreeBSD$
  */
 #ifndef	__TI_SDMAREG_H__
 #define	__TI_SDMAREG_H__

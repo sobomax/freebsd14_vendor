@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: b5f061a001aa77bc1fe5bd84b53e273bbb734e0a $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_write_filter_zstd)
 {

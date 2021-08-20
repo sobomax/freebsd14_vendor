@@ -1,4 +1,4 @@
-# $FreeBSD: 465b352177f39afb25f74d4b637b7940f884c443 $
+# $FreeBSD$
 
 S=	${SRCTOP}/sys
 .PATH: $S/dev/usb/serial

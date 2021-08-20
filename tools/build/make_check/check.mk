@@ -1,4 +1,4 @@
-# $FreeBSD: f2d666d5ca43b806e21863fb31c59160b7113460 $
+# $FreeBSD$
 
 all:
 	${MK} ${MK_ARG}

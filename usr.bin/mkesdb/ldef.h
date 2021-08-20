@@ -1,4 +1,4 @@
-/* $FreeBSD: e543936683f993479a5915edbb9817da812ca2a6 $ */
+/* $FreeBSD$ */
 /* $NetBSD: ldef.h,v 1.2 2005/06/27 01:23:59 fvdl Exp $	*/
 
 /*-

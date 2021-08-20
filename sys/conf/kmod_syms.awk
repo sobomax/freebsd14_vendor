@@ -1,4 +1,4 @@
-# $FreeBSD: 677d813507ee561ee3e37be7671a2cba8aa12467 $
+# $FreeBSD$
 
 # Read global symbols from object file.
 BEGIN {

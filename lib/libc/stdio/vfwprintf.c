@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)vfprintf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91238fed138acbfce9bf82fef37faaf71efa33f9 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Actual wprintf innards.

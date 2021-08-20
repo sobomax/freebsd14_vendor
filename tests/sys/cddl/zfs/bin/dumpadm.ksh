@@ -1,6 +1,6 @@
 #! /usr/local/bin/ksh93 -p
 
-# $FreeBSD: a96a71d793108334da26c2144d70a6cc38298113 $
+# $FreeBSD$
 
 if [ $# != 0 ]
 then

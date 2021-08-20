@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 0489c5c1fc08ad62c40bd0465394d8d11483cba5 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/21.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="write access to subdirectory is required to move it to another directory"
 

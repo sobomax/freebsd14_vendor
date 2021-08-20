@@ -1,4 +1,4 @@
-/*	$FreeBSD: a71666379190d6afb7a81435b697a0e0fd9a22ac $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a71666379190d6afb7a81435b697a0e0fd9a22ac $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Ralink Technology RT2500USB chipset driver

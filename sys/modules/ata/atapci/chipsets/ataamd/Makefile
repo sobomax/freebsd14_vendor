@@ -1,4 +1,4 @@
-# $FreeBSD: 96ed09d1e8f4e07b06f89d060f7e9267516daebd $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ata/chipsets
 

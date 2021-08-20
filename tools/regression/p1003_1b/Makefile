@@ -1,4 +1,4 @@
-# $FreeBSD: 902666c2ec39b247f6f48e00de86d833adadf2f8 $
+# $FreeBSD$
 
 PROG=p1003_1b
 

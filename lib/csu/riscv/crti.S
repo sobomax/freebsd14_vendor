@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 4aad1486c5c677656875ea5a077f0110e7df19d6 $");
+__FBSDID("$FreeBSD$");
 
 # this puts __global_pointer$ into .dynsym, so symlook_obj can now find that
 # (see reloc.c)

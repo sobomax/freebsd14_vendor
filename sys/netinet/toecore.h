@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 385ffb69931e62d8ece8dbbedcf4cfd3bc48fa1e $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_TOE_H_

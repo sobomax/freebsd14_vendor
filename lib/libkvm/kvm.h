@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)kvm.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 823e40a7c2b66495c03432d8990e5078f5b53f08 $
+ * $FreeBSD$
  */
 
 #ifndef _KVM_H_

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f829c8b04f8f5700d4556376573a4d7371717a8 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Micrel KSZ9021 Gigabit Ethernet Transceiver

@@ -1,5 +1,5 @@
 # Makefile for ntpd.
-# $FreeBSD: ad5b5234035ade8cf87171a0dd25d4d20edaf10f $
+# $FreeBSD$
 
 SUBDIR=	libopts libntp libntpevent libparse ntpd ntpdc ntpq ntpdate \
 	ntptime ntp-keygen sntp

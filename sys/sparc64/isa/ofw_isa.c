@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a66a738726acced9c4607c6d43949f8ca113a3f1 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Helper functions which can be used in both ISA and EBus code.

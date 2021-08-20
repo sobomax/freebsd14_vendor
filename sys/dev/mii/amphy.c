@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd6b75e2b2b06d0ed67b173003e7f32cd255b142 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for AMD AM79c873 PHYs

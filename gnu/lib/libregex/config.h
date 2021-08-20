@@ -1,4 +1,4 @@
-/* $FreeBSD: 0076f3d76dfcc2cbe478611279ef95ce7e85330a $ */
+/* $FreeBSD$ */
 
 #define	_REGEX_RE_COMP	1
 #define	HAVE_LANGINFO_H	1

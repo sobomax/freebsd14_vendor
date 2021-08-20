@@ -1,4 +1,4 @@
-# $FreeBSD: ddbfe18ee5ea5dcff9e85f3cd7ca225e9b68d46e $
+# $FreeBSD$
 
 PROG_CXX=	llvm-pdbutil
 

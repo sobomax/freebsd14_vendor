@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0528b9cecafc09a5530c9b366e7846ca434fc5f1 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: podd.h,v 1.4 2001/09/10 04:03:58 itojun Exp $	*/
 
 /* crypto/des/podd.h */

@@ -1,4 +1,4 @@
-# $FreeBSD: 809cb4b3e85befb3b9c61a61f5d543233a8076f5 $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/iwm
 

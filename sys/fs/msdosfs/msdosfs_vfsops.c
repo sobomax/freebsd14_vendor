@@ -1,4 +1,4 @@
-/* $FreeBSD: 002efa7ce1575cb03fa2ab2e195e742d02c4f3d6 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_vfsops.c,v 1.51 1997/11/17 15:36:58 ws Exp $	*/
 
 /*-

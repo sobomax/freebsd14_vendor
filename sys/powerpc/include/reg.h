@@ -1,5 +1,5 @@
 /* $NetBSD: reg.h,v 1.4 2000/06/04 09:30:44 tsubai Exp $	*/
-/* $FreeBSD: 32413566042ea519c344403d4733ece8dbf281c7 $	*/
+/* $FreeBSD$	*/
 
 #ifndef _POWERPC_REG_H_
 #define	_POWERPC_REG_H_

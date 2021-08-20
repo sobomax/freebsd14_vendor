@@ -1,4 +1,4 @@
-$FreeBSD: 0465cbe798899a9cc9647c1168b56fcb102367a4 $
+$FreeBSD$
 
 This directory contains sample test programs along the Makefile and
 Kyuafile logic to get them build and installed.

@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain since it's just boilerplate.
  *
- * $FreeBSD: 8c52da2a6e6c27d631ab5a707044a9241355e39d $
+ * $FreeBSD$
  */
 
 #ifndef __MIPS_INCLUDE_EFI_H_

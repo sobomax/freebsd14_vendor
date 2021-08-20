@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: c799dd92f0757bce4b651b5b609af1481a52a031 $
+# $FreeBSD$
 #
 
 uidrange="60000:100000"

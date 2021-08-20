@@ -29,7 +29,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 290c8090aeb5040d424642c0647cc8dbfe0b9214 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * These tests verify that our reader can read files

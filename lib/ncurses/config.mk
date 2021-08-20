@@ -1,4 +1,4 @@
-# $FreeBSD: d15be86011365abd13f63be008f81a2cc14434f7 $
+# $FreeBSD$
 
 # This Makefile is shared by libncurses, libform, libmenu, libpanel.
 

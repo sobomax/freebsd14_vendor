@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ef2a19221383a85d0772e2ab861644fc4ab1ed84 $
+ * $FreeBSD$
  */
 
 #include <sys/hash.h>

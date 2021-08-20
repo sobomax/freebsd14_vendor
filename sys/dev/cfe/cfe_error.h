@@ -33,7 +33,7 @@
  *    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  *    OR OTHERWISE), EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d0cb413acd36fe2d39207ae894375c4b5d829da1 $
+ * $FreeBSD$
  */
 
 /*  *********************************************************************

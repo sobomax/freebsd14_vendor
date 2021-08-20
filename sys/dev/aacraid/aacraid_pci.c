@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f445a073b6d536394aed7112376410236637bbd9 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI bus interface and resource allocation.

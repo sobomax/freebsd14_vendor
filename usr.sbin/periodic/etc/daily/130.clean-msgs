@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b7890db6d954ccf27edb8985ed340ce965f18776 $
+# $FreeBSD$
 #
 # Remove system	messages
 #

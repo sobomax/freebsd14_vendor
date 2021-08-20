@@ -1,4 +1,4 @@
-/* $FreeBSD: 15eb640e3e3c0b2cc291558e019555fb502a46dd $ */
+/* $FreeBSD$ */
 
 #include <pthread.h>
 #include <stdio.h>

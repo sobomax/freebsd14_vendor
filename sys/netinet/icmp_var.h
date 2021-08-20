@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)icmp_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 6b421f2df4456e3b73d99f17c72cece60037af7c $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_ICMP_VAR_H_

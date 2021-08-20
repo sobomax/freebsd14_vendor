@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8f535402044881ab4cb0395c2f3c06617e75fad7 $");
+__FBSDID("$FreeBSD$");
 
 /*
 Execute the following command to rebuild the data for this program:

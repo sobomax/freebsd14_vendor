@@ -1,4 +1,4 @@
-/* $FreeBSD: 89dad6abdeccc784187900c9d84b2753233a2d74 $	*/
+/* $FreeBSD$	*/
 
 /*
  * This file is derived from zlib.h and zconf.h from the zlib-1.0.4

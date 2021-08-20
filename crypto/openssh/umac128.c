@@ -1,5 +1,5 @@
 /* $OpenBSD: umac128.c,v 1.2 2018/02/08 04:12:32 dtucker Exp $ */
-/* $FreeBSD: 88b242a6fd5c1d94dac64b6c34e8caf206ead154 $ */
+/* $FreeBSD$ */
 
 /* undo ssh_namespace.h munging */
 #undef umac_new

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mman.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: aed759b5a8de5737608cbe34de02e3eb92232b05 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MMAN_H_

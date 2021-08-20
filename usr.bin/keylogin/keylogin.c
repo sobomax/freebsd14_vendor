@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)keylogin.c 1.4 91/03/11 Copyr 1986 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f4bdba94d2154a5fc13fb6c157325404e14e04a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Copyright (C) 1986, Sun Microsystems, Inc.

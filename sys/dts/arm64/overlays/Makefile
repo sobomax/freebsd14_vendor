@@ -1,4 +1,4 @@
-# $FreeBSD: cfc655929ef399171025e20078b3a1e069cda3b9 $
+# $FreeBSD$
 
 DTSO!=ls ${.CURDIR}/*.dtso
 

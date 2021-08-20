@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: cf66422d2ff036ed2848074f1a26aac354df590b $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

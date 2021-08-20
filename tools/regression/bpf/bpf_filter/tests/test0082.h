@@ -1,7 +1,7 @@
 /*-
  * Test 0082:	Check conditional jump ranges.
  *
- * $FreeBSD: e74171e1f0f241ba8a60163a3c1a66c709a269b4 $
+ * $FreeBSD$
  */
 
 /* BPF program */

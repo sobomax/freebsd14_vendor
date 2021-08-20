@@ -13,7 +13,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c423dce855871a4a6d04d24ed4392eec33d84ac $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_gamma_r(x, signgamp)
  * Reentrant version of the logarithm of the Gamma function 

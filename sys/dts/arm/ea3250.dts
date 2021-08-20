@@ -24,7 +24,7 @@
  *
  * Embedded Artists LPC3250-Kit Device Tree Source.
  *
- * $FreeBSD: 2c466e3637456b7c915c16b838930c802a52af0d $
+ * $FreeBSD$
  */
 
 /dts-v1/;

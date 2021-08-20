@@ -1,4 +1,4 @@
-# $FreeBSD: f7b7afdf36d02890f270d175a1491c1d13c9cd87 $
+# $FreeBSD$
 
 PROG=	juggle
 MAN=

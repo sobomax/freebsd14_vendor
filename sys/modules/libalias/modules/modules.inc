@@ -1,4 +1,4 @@
-# $FreeBSD: 9582ab53828cd9cc6fc3d01869d537c4e70b8db7 $
+# $FreeBSD$
 
 MODULES		 =
 MODULES		+= cuseeme

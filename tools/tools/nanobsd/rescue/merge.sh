@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: afb66371fe3c98346e8258556ad90c82e964502c $
+# $FreeBSD$
 
 today=`date '+%Y%m%d'`
 

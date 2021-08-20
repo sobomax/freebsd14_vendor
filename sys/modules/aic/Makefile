@@ -1,4 +1,4 @@
-# $FreeBSD: 297f0729cf67eb5e86ae0bf994cf70fcc12884e1 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/aic
 

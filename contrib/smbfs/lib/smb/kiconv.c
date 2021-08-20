@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: kiconv.c,v 1.3 2001/08/22 03:31:36 bp Exp $
- * $FreeBSD: d84d9091fd366420726f2364b76caf3db0df0c5f $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

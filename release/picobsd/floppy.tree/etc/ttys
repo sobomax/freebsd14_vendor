@@ -1,7 +1,7 @@
 #
 #	@(#)ttys	5.1 (Berkeley) 4/17/89
 #
-# $FreeBSD: e0ff48035b735540fff21a5e520260e16b4f8e84 $
+# $FreeBSD$
 #
 # name	getty				type	status		comments
 #

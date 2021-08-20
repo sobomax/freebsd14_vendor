@@ -1,4 +1,4 @@
-/* $FreeBSD: 518d3558732619c4555bf43b19876a550b72f003 $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_esdb_file.h,v 1.1 2003/06/25 09:51:32 tshiozak Exp $ */
 
 /*-

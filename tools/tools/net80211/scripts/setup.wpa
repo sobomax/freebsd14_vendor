@@ -2,7 +2,7 @@
 #
 # Script for testing single-bss WPA1+WPA2.
 #
-# $FreeBSD: 8cbc7724e344923b19666638569a3d5820ffc5d9 $
+# $FreeBSD$
 #
 PATH=.:$PATH
 . config

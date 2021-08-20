@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: d8c694bae5e257cdb99d002f926320b5dc77c522 $");
+__FBSDID("$FreeBSD$");
 
 static void
 verify_padded_archive(const char *refname)

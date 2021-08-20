@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/libkern.h>
-__FBSDID("$FreeBSD: cb30d0bd5551dfdb536474a57b8b77da83c4a7af $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Find Last Set bit

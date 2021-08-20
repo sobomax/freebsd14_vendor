@@ -1,4 +1,4 @@
-# $FreeBSD: c9ecd41ab313d0f20fee8404bb7bc3197314715d $
+# $FreeBSD$
 
 DIALOG=		${SRCTOP}/contrib/dialog
 

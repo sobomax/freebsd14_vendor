@@ -1,4 +1,4 @@
-# $FreeBSD: ed55300c27ec7a8e59d29a19a9cdd74ea92b8f7d $
+# $FreeBSD$
 # $NetBSD: Makefile.inc,v 1.3 2008/10/25 22:35:36 apb Exp $
 
 CODE=	KOI

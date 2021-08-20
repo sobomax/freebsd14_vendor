@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	$Id: if_xereg.h,v 1.5 1999/05/20 21:53:58 scott Exp $
- * $FreeBSD: 820d10603efb24cce2f55b5a31c8dd0103a08fe2 $
+ * $FreeBSD$
  */
 #ifndef DEV_XE_IF_XEREG_H
 #define DEV_XE_IF_XEREG_H

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f93a023f0fceffacd5c7b75e7af15e0e1cc6aa97 $
+ * $FreeBSD$
  */
 #ifndef _PTHREAD_NP_H_
 #define _PTHREAD_NP_H_

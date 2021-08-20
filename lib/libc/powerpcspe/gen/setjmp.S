@@ -26,7 +26,7 @@
 /*      $NetBSD: setjmp.S,v 1.3 1998/10/03 12:30:38 tsubai Exp $        */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 7a93b2f883e8e479081959160963207af02a447d $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/syscall.h>
 	

@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: cfb17c85788d87ce46c9fdac8d878159c68561d6 $");
+__FBSDID("$FreeBSD$");
 
 static char archive_data[] = {
 "begin 644 test_read_uu.Z\n"

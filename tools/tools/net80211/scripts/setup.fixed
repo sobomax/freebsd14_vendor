@@ -2,7 +2,7 @@
 #
 # Script for testing fixed xmit rate handling.
 #
-# $FreeBSD: d0008002dc902e433aa4948efeca62fb58bb0c86 $
+# $FreeBSD$
 #
 PATH=.:$PATH
 . config

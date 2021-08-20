@@ -1,4 +1,4 @@
-/* $FreeBSD: ce3274d0d732d9ef0df6348bb4bdffc0bebc20a5 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from rc5-586.pl. */
 #ifdef PIC
 .text

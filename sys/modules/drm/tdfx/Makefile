@@ -1,4 +1,4 @@
-# $FreeBSD: 3cfc8b7e426cdaea856514c1e230373a8cc63afb $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD	= tdfx

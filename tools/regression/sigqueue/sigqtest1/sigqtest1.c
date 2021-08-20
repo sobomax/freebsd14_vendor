@@ -1,4 +1,4 @@
-/* $FreeBSD: f0201c37af8608beb9f8b49cbcc61b607f74e15a $ */
+/* $FreeBSD$ */
 #include <err.h>
 #include <errno.h>
 #include <signal.h>

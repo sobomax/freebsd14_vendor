@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)popen.c	8.3 (Berkeley) 5/3/95");
-__FBSDID("$FreeBSD: 4f94405c2ff44f4c9d2aa1642d2df868c40dead9 $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/param.h>

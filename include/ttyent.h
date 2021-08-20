@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ttyent.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: a98fbdffb86fa359b24e17eb5b7e71b227903174 $
+ * $FreeBSD$
  */
 
 #ifndef	_TTYENT_H_

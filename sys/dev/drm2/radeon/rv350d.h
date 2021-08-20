@@ -29,7 +29,7 @@
 #define __RV350D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbeaa36e0a05c267c7a6673c29f833463ca69ee7 $");
+__FBSDID("$FreeBSD$");
 
 /* RV350, RV380 registers */
 /* #define R_00000D_SCLK_CNTL                           0x00000D */

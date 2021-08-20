@@ -1,4 +1,4 @@
-# $FreeBSD: 90b10944c5a5d9fabd9e1e58e5faacf9ff072c01 $
+# $FreeBSD$
 # Note: this test depends on strerror() using locale.
 
 failures=0

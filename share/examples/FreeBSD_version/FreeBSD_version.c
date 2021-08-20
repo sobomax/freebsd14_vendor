@@ -1,4 +1,4 @@
-/* $FreeBSD: 036a5aeaaa2071ebe57c8c2ef88e9edc18ec036a $ */
+/* $FreeBSD$ */
 #if __FreeBSD__ == 0		/* 1.0 did not define __FreeBSD__ */
 #define __FreeBSD_version 199401
 #elif __FreeBSD__ == 1		/* 1.1 defined it to be 1 */

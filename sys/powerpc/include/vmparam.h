@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: 3a710e28953e1451e45b073e017f374bf63dc63a $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_VMPARAM_H_

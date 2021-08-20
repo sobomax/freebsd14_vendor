@@ -2,7 +2,7 @@
 #
 # Add additional swap files
 #
-# $FreeBSD: 1758df8409a8dacc33719defa051fd21d4cd4537 $
+# $FreeBSD$
 #
 
 # PROVIDE: addswap

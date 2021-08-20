@@ -1,4 +1,4 @@
-# $FreeBSD: 6f518e5c86256097630adeae0f8607e12252e9c8 $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 GPERFDIR=	${SRCTOP}/contrib/gperf

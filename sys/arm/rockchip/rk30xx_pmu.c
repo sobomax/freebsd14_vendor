@@ -29,7 +29,7 @@
 /* PMU for Rockchip RK30xx */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38eb64702c339e57e4e78d6520dc6c1c2c805cf5 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

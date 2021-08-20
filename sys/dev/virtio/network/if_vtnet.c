@@ -29,7 +29,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff0a07672f49a0aeb6d7808656f46f7ddaf066e2 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>

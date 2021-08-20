@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7ec0496b676c5c9fd65cbd540bb863be210da68 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * unset the secret key on local machine

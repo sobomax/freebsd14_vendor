@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bef2a9ab9fa89ae3bdcfb61b08c7a2fdb7b1b73d $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sio.h"
 

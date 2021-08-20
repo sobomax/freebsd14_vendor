@@ -1,4 +1,4 @@
-$FreeBSD: bdd74f308a4f492bcb690662a4d1f93348217423 $
+$FreeBSD$
 
 This is the FreeBSD copy of libcxxrt.  It contains the src directory from the 
 upstream repository.

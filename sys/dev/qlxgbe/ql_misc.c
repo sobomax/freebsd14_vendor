@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 840e28b53abe27f7bcf2766e517c36d35527da0b $");
+__FBSDID("$FreeBSD$");
 
 #include "ql_os.h"
 #include "ql_hw.h"

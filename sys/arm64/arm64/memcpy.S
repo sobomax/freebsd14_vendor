@@ -53,7 +53,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: f98c2513fa585228a55ae3acb440ac5551e9a60a $");
+__FBSDID("$FreeBSD$");
 
 /* Assumptions:
  *

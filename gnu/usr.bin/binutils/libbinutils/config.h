@@ -1,4 +1,4 @@
-/* $FreeBSD: 5c457f1eeaffbf1fe99183b9500e94515cacd6d2 $ */
+/* $FreeBSD$ */
 
 /* FreeBSD isn't any form of AIX. */
 #define bin_dummy_emulation bin_vanilla_emulation

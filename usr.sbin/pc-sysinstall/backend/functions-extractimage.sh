@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c9aebe88ed0ea6671986b05828ac69f46aca54d8 $
+# $FreeBSD$
 
 # Functions which perform the extraction / installation of system to disk
 

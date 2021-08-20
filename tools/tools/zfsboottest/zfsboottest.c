@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 7406ddb77918c32d2547309dded11f0d3120f637 $ */
+/* $FreeBSD$ */
 
 #include <sys/param.h>
 #include <sys/disk.h>

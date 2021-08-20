@@ -54,7 +54,7 @@
  * from: Header: /sprite/src/kernel/vm/ds3100.md/RCS/vmPmaxConst.h,
  *	v 9.1 89/09/18 17:33:00 shirriff Exp  SPRITE (DECWRL)
  *
- * $FreeBSD: 1e974f6606f10965fa8cef8179fe9cd82329f807 $
+ * $FreeBSD$
  */
 
 #ifndef _MIPS_CCA_H_

@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: d5ba3361b2fc8ec80341ad6a901aa5ec9a6568e1 $*/
+/*$FreeBSD$*/
 
 /*
  *  \brief Host Driver: This file defines the octeon device structure.

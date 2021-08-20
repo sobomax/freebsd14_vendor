@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cfe0163d9b5883df1eca63c0e0a5acd2d43b4d16 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Perform an FPU add (return x + y).

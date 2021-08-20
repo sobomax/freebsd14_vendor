@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b048b0596b67a5b1dd2c097fd2ea571fa720fc5a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * scalbn (double x, int n)

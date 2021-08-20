@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 316490d4eb8de490c733ed42bbdadfddcbf2e077 $
+ * $FreeBSD$
  */
 
 #define CHARMAP_SYMBOL_LEN 64

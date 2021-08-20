@@ -1,5 +1,5 @@
 /*	$NetBSD: ibcs2_mount.h,v 1.2 1994/10/26 02:53:00 cgd Exp $	*/
-/* $FreeBSD: 050511ac55d2236c71e85ee07e729ab77ddaf7e5 $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

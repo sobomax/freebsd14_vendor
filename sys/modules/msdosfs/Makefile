@@ -1,4 +1,4 @@
-# $FreeBSD: 3a0f478cfd57b6e9fa0c885b1f3560491453cefd $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/msdosfs
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 29cd2d05b54624691ac28eea153ad710dcdc3055 $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 KMOD		= nxprtc

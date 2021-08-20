@@ -1,4 +1,4 @@
-# $FreeBSD: ce97714504354c93e9593ecbe510137041f58b4c $
+# $FreeBSD$
 
 LIB=		ssl
 SHLIB_MAJOR=	111

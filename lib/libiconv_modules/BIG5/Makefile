@@ -1,4 +1,4 @@
-# $FreeBSD: 34ff9ebaa220fa6f83d392534313499e6e51f995 $
+# $FreeBSD$
 
 SHLIB=	BIG5
 SRCS+=	citrus_big5.c

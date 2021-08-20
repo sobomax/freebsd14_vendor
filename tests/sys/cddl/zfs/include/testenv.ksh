@@ -1,7 +1,7 @@
 . ${STF_SUITE}/include/libtest.kshlib
 . ${STF_SUITE}/include/commands.cfg
 
-# $FreeBSD: bae66aedac344e2d7762713fbe2af98a9fedbc3d $
+# $FreeBSD$
 
 # Environment-dependent constants.
 for d in `geom disk list | awk '/Name:/ {print $3}'`; do

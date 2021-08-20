@@ -1,4 +1,4 @@
-# $FreeBSD: 0a20d50ee3bc300588289010900435bd38839b8b $
+# $FreeBSD$
 
 echo 1..2
 

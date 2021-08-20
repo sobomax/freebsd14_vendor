@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 35e6e18d02598f354008c42333caa12204cb45ef $
+ * $FreeBSD$
  */
 FBSD_1.0 {
 	__has_sse;

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 360ef14b297c9ee175cac44130ef3aed42b8caef $");
+__FBSDID("$FreeBSD$");
 
 /*
  * FPU subroutines: `implode' internal format numbers into the machine's

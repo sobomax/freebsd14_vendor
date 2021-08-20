@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: db37aab7a3533f4cdfc69e3a1630ce3647fcafd9 $*/
+/*$FreeBSD$*/
 
 #ifndef _E1000_ICH8LAN_H_
 #define _E1000_ICH8LAN_H_

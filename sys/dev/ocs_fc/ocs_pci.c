@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 018c4e6da8f73015a8560b5d60f76148b2f4269c $
+ * $FreeBSD$
  */
 
 #define OCS_COPYRIGHT "Copyright (C) 2017 Broadcom. All rights reserved."

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7714d34936b9e7b1206faf371dd2275e49454f66 $
+ * $FreeBSD$
  */
 
 typedef struct dpaa_portal {

@@ -1,4 +1,4 @@
-# $FreeBSD: 9ba59dcb48c5d816fbe461ff2ef5eee109656d2e $
+# $FreeBSD$
 
 LIB=	gssapi_krb5
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

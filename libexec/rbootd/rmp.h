@@ -41,7 +41,7 @@
  * From: Utah Hdr: rmp.h 3.1 92/07/06
  * Author: Jeff Forys, University of Utah CSS
  *
- * $FreeBSD: 0e8d17532ec0e2f82a3761a6b5b36c0731a9eafd $
+ * $FreeBSD$
  */
 
 /*

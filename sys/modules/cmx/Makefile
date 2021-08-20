@@ -1,4 +1,4 @@
-# $FreeBSD: eea6658d421b0003977490859e07aedafd7f0321 $
+# $FreeBSD$
 #
 .PATH:	${SRCTOP}/sys/dev/cmx
 

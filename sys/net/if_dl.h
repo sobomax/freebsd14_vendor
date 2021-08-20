@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_dl.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 50767325864b271f5f0241d0d7a2056d5cb7b9b4 $
+ * $FreeBSD$
  */
 
 #ifndef _NET_IF_DL_H_

@@ -1,4 +1,4 @@
-/* $FreeBSD: 83520646f37862a4bb3b79acf31490ab2bf87e8a $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_mmap.h,v 1.1 2003/06/25 09:51:38 tshiozak Exp $ */
 
 /*-

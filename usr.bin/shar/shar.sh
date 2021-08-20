@@ -31,7 +31,7 @@
 #
 #	@(#)shar.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: 454f0e9580484c40630855b85504fbc34515e37d $
+# $FreeBSD$
 
 if [ $# -eq 0 ]; then
 	echo 'usage: shar file ...' 1>&2

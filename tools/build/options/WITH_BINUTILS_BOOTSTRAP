@@ -1,3 +1,3 @@
-.\" $FreeBSD: 2d4d400c48d6ba3d4d3300ee1c58f5a4493e7b13 $
+.\" $FreeBSD$
 Build GNU binutils
 as part of the bootstrap process.

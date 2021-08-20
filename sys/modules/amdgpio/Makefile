@@ -1,4 +1,4 @@
-# $FreeBSD: 5cb038f426915fb7d7fec6f4656747d4435bc95e $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/amdgpio
 KMOD=  amdgpio

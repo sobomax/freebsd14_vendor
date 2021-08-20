@@ -13,7 +13,7 @@
  * I have removed all of the ifdef spaghetti which is not relevant to
  * zic from this file.
  *
- * $FreeBSD: d00bf9bae140c4e4d8c4a405942ce462b66d0a1f $
+ * $FreeBSD$
  */
 
 /*

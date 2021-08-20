@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pcb.h,v 1.4 2000/06/04 11:57:17 tsubai Exp $
- * $FreeBSD: 451b730225ca739d1f67cd2f2864843307167b2e $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PCB_H_

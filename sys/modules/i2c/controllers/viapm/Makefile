@@ -1,4 +1,4 @@
-# $FreeBSD: ab8a3562fc6d03558a370d9eb401c6a136904ad2 $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/viapm
 KMOD		= viapm

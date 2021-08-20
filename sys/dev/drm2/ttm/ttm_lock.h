@@ -27,7 +27,7 @@
 /*
  * Authors: Thomas Hellstrom <thellstrom-at-vmware-dot-com>
  */
-/* $FreeBSD: 6d4545760f97a06d111ac193993081cbca50cb76 $ */
+/* $FreeBSD$ */
 
 /** @file ttm_lock.h
  * This file implements a simple replacement for the buffer manager use

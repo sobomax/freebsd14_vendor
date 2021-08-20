@@ -1,4 +1,4 @@
-# $FreeBSD: 4741dee5ea1fcc4f22569275c17adf6131a59047 $
+# $FreeBSD$
 
 hint.ssd1289.0.at="spibus0"
 hint.ssd1289.0.cs=26

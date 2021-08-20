@@ -1,4 +1,4 @@
-.\" $FreeBSD: d895ef93127d095dca942d7c0b4a6da7d62884a1 $
+.\" $FreeBSD$
 Build
 .Xr wpa_supplicant 8
 without support for the IEEE 802.1X protocol and without

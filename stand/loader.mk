@@ -1,4 +1,4 @@
-# $FreeBSD: fc580f578997787cdda59db50491df0f83ca90e0 $
+# $FreeBSD$
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 

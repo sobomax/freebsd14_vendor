@@ -30,7 +30,7 @@
  * OpenBSD: abtn.c,v 1.12 2009/01/10 18:00:59 robert Exp
  * NetBSD: abtn.c,v 1.1 1999/07/12 17:48:26 tsubai Exp
  *
- * $FreeBSD: 3d8726e152b264dafe4168d03d04e6865fd2b96b $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

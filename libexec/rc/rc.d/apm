@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 55e33d0741e4331e50a5c2d12c033a1d95bda9d0 $
+# $FreeBSD$
 #
 
 # PROVIDE: apm

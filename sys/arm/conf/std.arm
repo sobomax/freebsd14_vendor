@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv4/v5 systems.
 #
-# $FreeBSD: 17149ebddb03ea8c2ac7b7ade8fb9dd14e5a9ef2 $
+# $FreeBSD$
 
 options 	COMPAT_FREEBSD10	# Compatible with FreeBSD10
 options 	COMPAT_FREEBSD11	# Compatible with FreeBSD11

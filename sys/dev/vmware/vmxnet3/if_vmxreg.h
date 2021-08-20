@@ -15,7 +15,7 @@
  *
  * $OpenBSD: src/sys/dev/pci/if_vmxreg.h,v 1.2 2013/06/12 01:07:33 uebayasi Exp $
  *
- * $FreeBSD: 5e229206cfd01fa474605119763a518ee565827f $
+ * $FreeBSD$
  */
 
 #ifndef _IF_VMXREG_H

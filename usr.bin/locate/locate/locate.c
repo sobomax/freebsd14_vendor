@@ -49,7 +49,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)locate.c    8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 29c46b2b78ccd8d31d6c1957f6428ee4c29fbc2f $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 /*

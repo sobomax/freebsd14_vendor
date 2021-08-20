@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae8ed5d83e6445e0251251e03f627f60d27b346c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Pin multiplexer driver for Tegra SoCs.

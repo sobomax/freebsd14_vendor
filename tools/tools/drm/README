@@ -1,4 +1,4 @@
-# $FreeBSD: 35660ed082793afb9a6a2e5099147b927af8f73f $
+# $FreeBSD$
 
 gen-drm_pciids	Generate drm_pciids.h based on Linux' drm_pciids.h, FreeBSD's
 		drm_pciids.h and misc/pciids database.

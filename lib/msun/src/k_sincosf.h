@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 073986db881809bb434429bf1050b23dd058848e $");
+__FBSDID("$FreeBSD$");
 
 /* |sin(x)/x - s(x)| < 2**-37.5 (~[-4.89e-12, 4.824e-12]). */
 static const double

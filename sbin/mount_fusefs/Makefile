@@ -1,4 +1,4 @@
-# $FreeBSD: 4003e4fb35f698b2efd5a0252efe5eb94c549217 $
+# $FreeBSD$
 
 .if defined(DEBUG)
 DEBUG_FLAGS+= -D_DEBUG -g

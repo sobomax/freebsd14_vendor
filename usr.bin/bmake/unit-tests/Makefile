@@ -1,4 +1,4 @@
-# $FreeBSD: 551fcc46d01a1be2fd9e9809fc9c87da9d1a24c4 $
+# $FreeBSD$
 # $Id: Makefile,v 1.60 2020/07/10 00:48:32 sjg Exp $
 #
 # $NetBSD: Makefile,v 1.63 2020/07/09 22:40:14 sjg Exp $

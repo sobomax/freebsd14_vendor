@@ -1,4 +1,4 @@
-#$FreeBSD: ab8c2a9ca23d1a97bd062417beff452a799cb0ab $
+#$FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/ichiic
 KMOD		= ig4

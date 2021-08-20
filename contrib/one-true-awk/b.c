@@ -25,7 +25,7 @@ THIS SOFTWARE.
 /* lasciate ogne speranza, voi ch'intrate. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9dae52a0a954da254461518603473dc3408d737 $");
+__FBSDID("$FreeBSD$");
 
 #define	DEBUG
 

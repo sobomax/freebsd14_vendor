@@ -1,4 +1,4 @@
-/* $FreeBSD: 31f9c23f42de50c1bc85e11ffd68b26e2cb644bd $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_fix_grouping.h,v 1.2 2009/01/11 02:46:24 christos Exp $ */
 
 /*-

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 45b55c8ebc65cc3fade846906c5c8ad38a5bfd32 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/06.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="truncate returns EACCES if the named file is not writable by the user"
 

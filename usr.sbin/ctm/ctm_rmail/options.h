@@ -49,7 +49,7 @@
  * Based on recollection of the original options.h produced at the University
  * of Queensland by Ross Patterson (and possibly others).
  *
- * $FreeBSD: 86c1247b6487d94d62dd14f9bbb3f04feccbd476 $
+ * $FreeBSD$
  */
 
 static char *O_usage;

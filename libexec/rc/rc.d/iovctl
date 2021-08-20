@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 1958a266a9c9419b318d0e843df0f2e751110d7e $
+# $FreeBSD$
 #
 
 # PROVIDE: iovctl

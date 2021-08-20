@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 64c06b20f7d2b6689ac80e5ef98766d386dab681 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cpu.h"
 

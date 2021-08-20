@@ -34,7 +34,7 @@
  *
  *	@(#)mips.h	8.1 (Berkeley) 6/6/93
  * From: @(#)sparc.h	5.1 (Berkeley) 7/8/92
- * $FreeBSD: 5b6854bd7ca041c3ac8fef56c9cb82dfe59b17d0 $
+ * $FreeBSD$
  */
 
 /*

@@ -18,7 +18,7 @@
  *
  * From: Version 2.4, Thu Apr 30 17:17:21 MSD 1997
  *
- * $FreeBSD: a68cd11469f30140a468745188fc0518bc964f59 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

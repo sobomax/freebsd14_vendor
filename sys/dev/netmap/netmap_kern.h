@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: 3786826d8e384faaabeb0cb5cb6e0cfe067b4cd2 $
+ * $FreeBSD$
  *
  * The header contains the definitions of constants and function
  * prototypes used only in kernelspace.

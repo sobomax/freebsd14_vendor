@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c781068918f11a61c3b501abac2073ddea905e10 $
+ * $FreeBSD$
  *
  * Test stack unwinding for mixed pthread_cleanup_push/pop and C++
  * object, both should work together.

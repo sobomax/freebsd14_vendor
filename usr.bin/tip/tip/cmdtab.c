@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8c1231fffa51cc68264b2b9f44024ccf4e57134 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef lint
 #if 0

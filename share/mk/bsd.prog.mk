@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: be6b1cb0f4660118e81d26d53f3bde9bd839e78c $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>

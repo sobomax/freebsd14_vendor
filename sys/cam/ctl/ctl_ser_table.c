@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ser_table.c#1 $
- * $FreeBSD: 2793bfa1e28176f435cd1ac3fb66e7055a957462 $
+ * $FreeBSD$
  */
 
 /*

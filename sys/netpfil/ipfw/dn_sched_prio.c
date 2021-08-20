@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: 495cf816225431e0fb92daf12b362bcc4948b74a $
+ * $FreeBSD$
  */
 #ifdef _KERNEL
 #include <sys/malloc.h>

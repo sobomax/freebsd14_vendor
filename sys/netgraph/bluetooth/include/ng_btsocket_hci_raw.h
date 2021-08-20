@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_hci_raw.h,v 1.3 2003/03/25 23:53:32 max Exp $
- * $FreeBSD: a40470a518943885f80b6a19455526c6a7e13710 $
+ * $FreeBSD$
  */
 
 #ifndef _NETGRAPH_BTSOCKET_HCI_RAW_H_

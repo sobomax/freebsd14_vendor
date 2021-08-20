@@ -17,7 +17,7 @@
  * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/* $FreeBSD: cdc98a8474bee45ff2d43bcfbde6af525ff03d1b $ */
+/* $FreeBSD$ */
 
 #ifndef LIST_H
 #define LIST_H 1

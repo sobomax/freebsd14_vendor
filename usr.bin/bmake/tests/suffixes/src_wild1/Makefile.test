@@ -1,4 +1,4 @@
-# $FreeBSD: d0258ad126c6b82fab985a4e9c30872d8af11b99 $
+# $FreeBSD$
 
 test1:	TEST1.b
 	cat TEST1.a TEST2.a | diff -u - TEST1.b

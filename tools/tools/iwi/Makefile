@@ -1,4 +1,4 @@
-# $FreeBSD: 49eccd30a0aaf0ca1fcc6232fd4dd8970d697f36 $
+# $FreeBSD$
 
 PROG=	iwistats
 MAN=

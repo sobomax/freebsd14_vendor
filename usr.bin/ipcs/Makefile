@@ -1,4 +1,4 @@
-# $FreeBSD: d14723f5ad6197d50641f963dd731255a057b510 $
+# $FreeBSD$
 
 PROG=	ipcs
 SRCS=	ipcs.c ipc.c

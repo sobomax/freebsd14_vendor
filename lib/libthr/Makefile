@@ -1,4 +1,4 @@
-# $FreeBSD: 5f3d52661c993c683dabde0d22268902285fb9bb $
+# $FreeBSD$
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does

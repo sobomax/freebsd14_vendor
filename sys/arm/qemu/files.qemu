@@ -1,4 +1,4 @@
-# $FreeBSD: 91992f1b5104abb1854e3dca61d8e4719b1cdf23 $
+# $FreeBSD$
 
 #
 # Standard qemu virt devices and support.

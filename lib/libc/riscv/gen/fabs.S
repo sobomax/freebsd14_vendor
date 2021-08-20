@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 44249252e9c115cd208eb5d251ad3db79cc9d3c5 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef __riscv_float_abi_double
 ENTRY(fabs)

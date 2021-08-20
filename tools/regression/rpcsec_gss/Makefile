@@ -1,4 +1,4 @@
-# $FreeBSD: bea9d9c10e218502569af2bdc78271f46b5b8a58 $
+# $FreeBSD$
 
 PROG=	rpctest
 MAN=

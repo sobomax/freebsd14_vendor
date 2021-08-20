@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	JNPR: frame.h,v 1.6.2.1 2007/09/10 08:14:57 girish
- * $FreeBSD: 72cbb8914eaa32dc486304ba2161376a88812c0b $
+ * $FreeBSD$
  *
  */
 #ifndef _MACHINE_FRAME_H_

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 9e5e02ab29d51ded27b6a0923e0ada8d91ead37d $
+# $FreeBSD$
 #
 
 # PROVIDE: ldconfig

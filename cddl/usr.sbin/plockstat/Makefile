@@ -1,4 +1,4 @@
-# $FreeBSD: cb263fb427a78e5df9c025c2cbbf0b5bcfae0eaf $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/plockstat
 

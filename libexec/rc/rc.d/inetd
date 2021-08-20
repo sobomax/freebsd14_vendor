@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: aa8ac20aeae37a2d5473ce684250ad1ac3d708f2 $
+# $FreeBSD$
 #
 
 # PROVIDE: inetd

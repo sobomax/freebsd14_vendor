@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8be7b7dbaf7d114d1dd9cc6c99db446644424eba $
+ * $FreeBSD$
  */
 
 union IEEEl2bits {

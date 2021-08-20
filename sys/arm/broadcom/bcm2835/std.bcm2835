@@ -1,4 +1,4 @@
-# $FreeBSD: 08e9d763bc8f7a42eae34b50e87594e430ce4756 $
+# $FreeBSD$
 
 machine	arm armv6
 cpu	CPU_ARM1176

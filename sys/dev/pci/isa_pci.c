@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f93d5f462dfa9d2392958890b5c48c49320bb89c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI:ISA bridge support

@@ -40,4 +40,4 @@ To compile:
 Note that rebuilds don't always work correctly; if you run into
 trouble, try 'make clean' before recompiling.
 
-$FreeBSD: 496575e1a323f0cf7e8a3845f69bbfda0755e04a $
+$FreeBSD$

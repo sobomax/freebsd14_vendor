@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: fpu.h,v 1.2 1999/12/07 15:14:56 danw Exp $
- * $FreeBSD: 1fb07c6cc59963593d03020162556433fb088365 $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_FPU_H_

@@ -1,5 +1,5 @@
 
-# $FreeBSD: 6b29f698523674869c9a41ed2ccad2fbb2999218 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/ppbus
 KMOD=	ppbus

@@ -1,4 +1,4 @@
-# $FreeBSD: c723d08ab3ebfecd23f0d378d0fcdc7673b35f0c $
+# $FreeBSD$
 
 alias alias0='| cat >/dev/null'
 

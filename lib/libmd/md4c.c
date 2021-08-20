@@ -2,7 +2,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cb13681401939ccf27e28170cd184f3629e30b0 $");
+__FBSDID("$FreeBSD$");
 
 /*-
    SPDX-License-Identifier: RSA-MD

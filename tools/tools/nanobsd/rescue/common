@@ -1,5 +1,5 @@
 #
-# $FreeBSD: d2a8a6de9e9157621711dbc15e2601cd8be61a74 $
+# $FreeBSD$
 #
 NANO_TOOLS=`pwd`
 NANO_PACKAGE_DIR=`pwd`/Pkg

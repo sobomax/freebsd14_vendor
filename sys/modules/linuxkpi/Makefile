@@ -1,4 +1,4 @@
-# $FreeBSD: 5b5633a982e6c48e9a302940c85bb3138f1634a3 $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/compat/linuxkpi/common/src
 
 KMOD=	linuxkpi

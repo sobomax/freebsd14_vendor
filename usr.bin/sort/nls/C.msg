@@ -1,4 +1,4 @@
-$ $FreeBSD: 541d1d889647895d546febf54788a3f175d6338a $
+$ $FreeBSD$
 $
 $set 1
 $quote "

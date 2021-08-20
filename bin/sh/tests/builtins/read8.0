@@ -1,4 +1,4 @@
-# $FreeBSD: fb786ff008b90fce10d1a179e93d45d903b4bda8 $
+# $FreeBSD$
 
 read a b c <<\EOF
 \

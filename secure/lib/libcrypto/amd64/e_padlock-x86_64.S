@@ -1,4 +1,4 @@
-/* $FreeBSD: de286684465223cd73ecccc88e6cffc334fda1cd $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from e_padlock-x86_64.pl. */
 .text	
 .globl	padlock_capability

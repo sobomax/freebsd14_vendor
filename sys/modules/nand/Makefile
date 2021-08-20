@@ -1,4 +1,4 @@
-# $FreeBSD: c9d9962e897f4e56fdf2a128e4b9d0a78b9d8656 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/nand
 

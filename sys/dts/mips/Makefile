@@ -1,4 +1,4 @@
-# $FreeBSD: 855f8847d5141a319f45bcd94ed372d21e255dfd $
+# $FreeBSD$
 
 DTS!=ls ${.CURDIR}/*.dts
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 890bae7a38be4b0069616b85de28001070a799d5 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/10.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="unlink returns EPERM if the parent directory of the named file has its immutable or append-only flag set"
 

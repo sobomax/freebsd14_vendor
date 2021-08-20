@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53fec76c469232266e939d90ac5d6fad779a7b44 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <opencrypto/cast.h>

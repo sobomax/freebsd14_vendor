@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 6dd9f2b62f27d8e076bd4422ca6b33b60704781e $
+# $FreeBSD$
 #
 
 set -e

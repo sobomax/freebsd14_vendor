@@ -23,7 +23,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ca0e8d155edd38a6dbeae5c3bb2d985471afc037 $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(_start)
 	PTR_LA	t0, kernel_end

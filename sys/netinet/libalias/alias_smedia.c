@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13b16d09d6dd1c9aecf12093eb4ba18c4bf70749 $");
+__FBSDID("$FreeBSD$");
 
 /*
    Alias_smedia.c is meant to contain the aliasing code for streaming media

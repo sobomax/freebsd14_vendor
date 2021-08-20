@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: d5f53a6670bd21513bc21d09ab8d14ab76b13b2b $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 #include "opt_ath.h"

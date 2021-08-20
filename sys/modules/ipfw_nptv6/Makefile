@@ -1,4 +1,4 @@
-# $FreeBSD: fb03f6eb4c17bd931b9cbd383e0cd7908c8a89f2 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw/nptv6
 

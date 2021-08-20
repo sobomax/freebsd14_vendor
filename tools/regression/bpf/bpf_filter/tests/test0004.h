@@ -1,7 +1,7 @@
 /*-
  * Test 0004:	BPF_LD+BPF_W+BPF_ABS
  *
- * $FreeBSD: 7eb42a125ca3947a4b99c9ada0361b5f22173fc5 $
+ * $FreeBSD$
  */
 
 /* BPF program */

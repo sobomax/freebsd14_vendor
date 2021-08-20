@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9c61a436a661d7783ee07bfb68ccec796e07f105 $");
+__FBSDID("$FreeBSD$");
 
 /* IEEE functions
  *	nextafter(x,y)

@@ -14,7 +14,7 @@
  * as long as this message is kept with the software, all derivative
  * works or modified versions.
  *
- * $FreeBSD: be1631e48f36c9490d9f9fb506fe342fb3c9dba3 $
+ * $FreeBSD$
  * Cronyx Id: ng_sppp.h,v 1.1.2.6 2004/03/01 15:17:21 rik Exp $
  */
 

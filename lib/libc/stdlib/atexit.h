@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)atexit.h	8.2 (Berkeley) 7/3/94
- * $FreeBSD: fdf2fc15838076c530502e2b8a4a26812478e39f $
+ * $FreeBSD$
  */
 
 /* must be at least 32 to guarantee ANSI conformance */

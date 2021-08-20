@@ -1,4 +1,4 @@
-# $FreeBSD: 54c453c7b6a3e741c23c8bc07866224b13c2b3ca $
+# $FreeBSD$
 
 arm/mv/ic.c			standard
 arm/mv/orion/orion.c		standard

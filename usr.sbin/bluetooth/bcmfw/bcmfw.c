@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: bcmfw.c,v 1.4 2003/04/27 19:28:09 max Exp $
- * $FreeBSD: f385eae0d9ea5b6c22f34390ca0635148be3e7b8 $
+ * $FreeBSD$
  *
  * Based on Linux BlueZ BlueFW-0.9 package
  *

@@ -10,7 +10,7 @@
 # + 128MB RAM
 # + uboot environment
 
-# $FreeBSD: b46f9de3eb8d6a7cee6d70471127ba754a2feccb $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

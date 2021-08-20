@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a237e9832534d6395c80abde3c808c6a6c63136c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * BHND CFE NVRAM driver.

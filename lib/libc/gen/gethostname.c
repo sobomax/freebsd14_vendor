@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)gethostname.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 8af10d6d06243a23957d2027138dc5a569e47350 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

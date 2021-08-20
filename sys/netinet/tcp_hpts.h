@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 293daa2cae3d0ffd7039974f2e7785a14219373e $
+ * $FreeBSD$
  */
 
 #ifndef __tcp_hpts_h__

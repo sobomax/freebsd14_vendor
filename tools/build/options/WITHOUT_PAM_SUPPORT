@@ -1,4 +1,4 @@
-.\" $FreeBSD: 9b066aaf3185cff3fbee3da207c05e9ed6c0b80b $
+.\" $FreeBSD$
 Set to build some programs without PAM support, particularly
 .Xr ftpd 8
 and

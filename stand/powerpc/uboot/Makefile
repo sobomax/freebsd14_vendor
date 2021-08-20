@@ -1,4 +1,4 @@
-# $FreeBSD: ccffd0ec1467af79f6f3f0a954c399728b8e87d4 $
+# $FreeBSD$
 
 LOADER_UFS_SUPPORT?=	yes
 LOADER_CD9660_SUPPORT?=	no

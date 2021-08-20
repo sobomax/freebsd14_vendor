@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2fee84ce4906ade572430e6c0f0d3b54ed97106a $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone ZFS file reader.

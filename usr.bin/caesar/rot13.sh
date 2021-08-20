@@ -28,6 +28,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)rot13.sh	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 7dcef740525a30f7c3906972c66a627baef445c7 $
+# $FreeBSD$
 
 exec /usr/bin/caesar 13 "$@"

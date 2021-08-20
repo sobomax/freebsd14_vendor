@@ -1,5 +1,5 @@
 #
-# $FreeBSD: a28ad743cebeb18a16f0acecfe10c90324ef78f1 $
+# $FreeBSD$
 #
 
 PROG=	icmp6_filter

@@ -27,7 +27,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8700b477da37a3e7d72a1d97b71d7fa589a0dd2e $");
+__FBSDID("$FreeBSD$");
 
 #include "dvo.h"
 

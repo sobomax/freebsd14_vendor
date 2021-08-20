@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9986569389369d29e95965446ffec6cfcede4da5 $
+ * $FreeBSD$
  */
 
 #include <sys/endian.h>

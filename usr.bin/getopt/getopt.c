@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 970a4c7659afa7a29f9e705c36c2c47e16d18d80 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This material, written by Henry Spencer, was released by him

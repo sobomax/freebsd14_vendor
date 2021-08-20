@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 6e7f8207a1d4b898b2df49faf774db7b6afb29dc $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/10.t 211410 2010-08-17 06:08:09Z pjd $
 
 desc="chown returns EFAULT if the path argument points outside the process's allocated address space"
 

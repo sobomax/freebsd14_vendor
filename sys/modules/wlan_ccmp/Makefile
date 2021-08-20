@@ -1,4 +1,4 @@
-# $FreeBSD: 21978232a73f8b33d4dca6d3561bb115e1f62758 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net80211
 .PATH: ${SRCTOP}/sys/crypto/rijndael

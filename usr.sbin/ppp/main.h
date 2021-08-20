@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e94c1f3c3f264f7973d8ca9af5949682824913af $
+ * $FreeBSD$
  */
 
 extern void Cleanup(void);

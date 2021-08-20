@@ -38,7 +38,7 @@
  * Author: Archie Cobbs <archie@freebsd.org>
  *
  * $Whistle: ng_parse.c,v 1.3 1999/11/29 01:43:48 archie Exp $
- * $FreeBSD: b08cecd102e972b3261ad51a92ee454cd818504a $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

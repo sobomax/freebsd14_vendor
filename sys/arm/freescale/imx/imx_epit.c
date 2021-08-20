@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1295bc75c783e4ce816215c656d3acf9fb1e5360 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for imx Enhanced Programmable Interval Timer, a simple free-running

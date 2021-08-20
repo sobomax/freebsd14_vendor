@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)db.h	8.7 (Berkeley) 6/16/94
- * $FreeBSD: 13fa91d680488cd7cc2920b18af5412c6dd615e4 $
+ * $FreeBSD$
  */
 
 #ifndef _DB_H_

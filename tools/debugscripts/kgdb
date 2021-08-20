@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ae580b301d417337393bc686f3a5e6413c1897c5 $
+# $FreeBSD$
 
 crashpath="/var/crash"
 kld_debpy="kld_deb.py"

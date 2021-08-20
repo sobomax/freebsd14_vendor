@@ -1,5 +1,5 @@
 # Make `routed` for FreeBSD
-# $FreeBSD: c01ab417844381834bce3457ff000062bfb25e6d $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	routed

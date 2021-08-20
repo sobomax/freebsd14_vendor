@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee39e36697750d8f9c218ec5f3746b5626c77f03 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <x86/mptable.h>

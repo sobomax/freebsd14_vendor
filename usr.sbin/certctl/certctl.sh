@@ -25,7 +25,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: f317064a6dfea7d3555aa25d17037ec10648d8f1 $
+# $FreeBSD$
 
 ############################################################ CONFIGURATION
 

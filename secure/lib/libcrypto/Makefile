@@ -1,4 +1,4 @@
-# $FreeBSD: db71e23ef85e059af40392ecb0abd21882e9ccb7 $
+# $FreeBSD$
 
 SHLIBDIR?=	/lib
 SUBDIR=		engines

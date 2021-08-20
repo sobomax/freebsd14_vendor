@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: file.c,v 1.2 2001/04/16 04:33:01 bp Exp $
- * $FreeBSD: 2ac3300155c7bbfea2ac65a02ea17982312b6550 $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/sysctl.h>

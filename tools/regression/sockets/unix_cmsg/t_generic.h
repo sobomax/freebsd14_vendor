@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a9b3d1be703c2c0ce4b8ab38c1923c0f9794f90d $
+ * $FreeBSD$
  */
 
 int t_generic(int (*client_func)(int), int (*server_func)(int));

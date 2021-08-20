@@ -27,7 +27,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: d919bd5c61b1090959b1287e9dc06cf0dabb28b1 $");
+__FBSDID("$FreeBSD$");
 
 ENTRY(generic_bs_r_1)
 	ldrb	w0, [x1, x2]

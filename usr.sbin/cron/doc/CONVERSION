@@ -1,4 +1,4 @@
-$FreeBSD: f30df7d19750821a16865a6ee6394ef51e567636 $
+$FreeBSD$
 
 Conversion of BSD 4.[23] crontab files:
 

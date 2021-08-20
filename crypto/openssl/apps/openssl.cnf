@@ -1,4 +1,4 @@
-# $FreeBSD: d67a4241af78c424d5253e919a3834cc29d7ffc5 $
+# $FreeBSD$
 #
 # OpenSSL example configuration file.
 # This is mostly being used for generation of certificate requests.

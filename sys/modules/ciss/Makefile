@@ -1,4 +1,4 @@
-# $FreeBSD: 9ab327674d764b22689b092619deb40b7d2b3f39 $
+# $FreeBSD$
 
 KMOD		=  ciss
 .PATH:		${SRCTOP}/sys/dev/${KMOD}

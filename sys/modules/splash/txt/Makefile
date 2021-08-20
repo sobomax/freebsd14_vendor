@@ -1,4 +1,4 @@
-# $FreeBSD: d99143369aefc00b856938631f54db50431ad31a $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/dev/fb
 
 KMOD=	splash_txt

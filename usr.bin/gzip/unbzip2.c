@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f6807e0c43b2eb2a9ab9d0b92b0bd65b1921c5ae $
+ * $FreeBSD$
  */
 
 /* This file is #included by gzip.c */

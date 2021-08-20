@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59f79e2167814ca16cf9d6c7974c5584276dd356 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SBus bindings for Sun GEM Ethernet controllers

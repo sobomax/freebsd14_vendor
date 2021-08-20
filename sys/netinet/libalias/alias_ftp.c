@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8e0a703345d2e774071a19202156e98d5eeb6a6 $");
+__FBSDID("$FreeBSD$");
 
 /*
     Alias_ftp.c performs special processing for FTP sessions under

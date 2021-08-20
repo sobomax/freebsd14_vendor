@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c89a5d9cf0134eeec0fa32a79387f0ef41db9e7 $");
+__FBSDID("$FreeBSD$");
 
 #include "calendar.h"
 

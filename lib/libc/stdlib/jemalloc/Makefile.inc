@@ -1,4 +1,4 @@
-# $FreeBSD: 0f36cdf975f0b9749df5b1ced23c3aafa3dba2c1 $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/stdlib/jemalloc
 

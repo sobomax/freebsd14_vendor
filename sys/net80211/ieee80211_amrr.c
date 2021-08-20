@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 384a5956fe4e42215ffe61a28d24da470c5db3ef $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:

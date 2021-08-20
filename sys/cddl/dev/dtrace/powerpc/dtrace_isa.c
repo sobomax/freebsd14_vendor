@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2012,2013 Justin Hibbits <jhibbits@freebsd.org>
  *
- * $FreeBSD: a188eafa777dcf8297aa477d10e354842b049395 $
+ * $FreeBSD$
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.

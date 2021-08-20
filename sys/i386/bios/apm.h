@@ -15,7 +15,7 @@
  *
  * Sep, 1994	Implemented on FreeBSD 1.1.5.1R (Toshiba AVS001WD)
  *
- * $FreeBSD: 70cb15a5bdadada1e796c9bc5b6d121872c8494c $
+ * $FreeBSD$
  */
 
 #ifndef __APM_H__

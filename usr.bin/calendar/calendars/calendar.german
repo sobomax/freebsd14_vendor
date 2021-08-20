@@ -1,7 +1,7 @@
 /*
  * German calendar file(s)
  *
- * $FreeBSD: 635aef1d5735a1a5f982473d8d9c433e8b9e009b $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_german_

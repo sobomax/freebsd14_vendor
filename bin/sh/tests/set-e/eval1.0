@@ -1,3 +1,3 @@
-# $FreeBSD: 9b7f67b6b0d4a692855c7f285af167f3190d50aa $
+# $FreeBSD$
 set -e
 eval false || true

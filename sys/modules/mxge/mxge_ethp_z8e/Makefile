@@ -1,4 +1,4 @@
-# $FreeBSD: d0f0f48bc33805162be21409cbf91fd7a5c912f6 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mxge
 KMOD=	mxge_ethp_z8e

@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3cc63ec290960ca410efdb82a7b76fb7c87ad00a $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

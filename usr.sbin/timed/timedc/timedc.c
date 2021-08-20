@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)timedc.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: dba20e978149f11644ea683aec16c7a8c8ae2a76 $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include "timedc.h"

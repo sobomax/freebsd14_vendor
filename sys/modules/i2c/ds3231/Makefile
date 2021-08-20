@@ -1,4 +1,4 @@
-# $FreeBSD: f0785245f7eebcb74b4ee6b50e2ad87b7fc02040 $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 KMOD		= ds3231

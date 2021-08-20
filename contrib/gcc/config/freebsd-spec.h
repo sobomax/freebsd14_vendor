@@ -18,7 +18,7 @@ along with GCC; see the file COPYING.  If not, write to
 the Free Software Foundation, 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.  */
 
-/* $FreeBSD: 5cd57b0bf615b39769bb94d07e428883c4d20c54 $ */
+/* $FreeBSD$ */
 
 /* Common FreeBSD configuration. 
    All FreeBSD architectures should include this file, which will specify

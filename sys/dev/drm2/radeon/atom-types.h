@@ -26,7 +26,7 @@
 #define ATOM_TYPES_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7009de7bacfbe8277fd4120ce5c53929f4dc13ba $");
+__FBSDID("$FreeBSD$");
 
 /* sync atom types to kernel types */
 

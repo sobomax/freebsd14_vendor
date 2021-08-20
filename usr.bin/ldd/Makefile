@@ -1,4 +1,4 @@
-# $FreeBSD: fd2b7b4d9ccb3210d8c540f75361a1ab3d354713 $
+# $FreeBSD$
 
 PROG?=		ldd
 SRCS=		ldd.c

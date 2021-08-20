@@ -27,7 +27,7 @@
  */
 
 #if 0
-__FBSDID("$FreeBSD: 2de26b1aac2eaef5ca1b063c76d4539090c2cb0a $");
+__FBSDID("$FreeBSD$");
 #endif
 
 void	add_typename(const char *);

@@ -18,7 +18,7 @@
 /* Written June, 1988 by Mike Haertel
    Modified July, 1988 by Arthur David Olson to assist BMG speedups  */
 
-/* $FreeBSD: faf4f0b008a1acdc7c5898bd692e3b7e7eae6da6 $ */
+/* $FreeBSD$ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

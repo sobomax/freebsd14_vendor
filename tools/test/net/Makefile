@@ -1,4 +1,4 @@
-# $FreeBSD: e4c525920d8c0ec27422672597a8003624a65300 $ 
+# $FreeBSD$ 
 
 PROGS=	listen connect
 MAN=

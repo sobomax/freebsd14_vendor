@@ -1,5 +1,5 @@
 /*	$NetBSD: rpcb_clnt.h,v 1.1 2000/06/02 22:57:56 fvdl Exp $	*/
-/*	$FreeBSD: b642aacd6a577473d3f28427a2dfd89877ef64ac $ */
+/*	$FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

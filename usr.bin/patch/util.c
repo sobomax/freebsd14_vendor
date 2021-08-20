@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: util.c,v 1.35 2010/07/24 01:10:12 ray Exp $
- * $FreeBSD: 080a3a266e3b9299e7a2bf3003aa56f8b5aad5c5 $
+ * $FreeBSD$
  */
 
 #include <sys/stat.h>

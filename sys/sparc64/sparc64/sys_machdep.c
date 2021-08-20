@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6a747ac30698a0e41ce100b31c419aaa67b4e908 $
+ * $FreeBSD$
  */
 
 #include "opt_capsicum.h"

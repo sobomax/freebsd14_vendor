@@ -1,4 +1,4 @@
-/* $FreeBSD: 0b13b5570f9fcabb9f9eca9e451280e758971257 $ */
+/* $FreeBSD$ */
 
 #ifndef _EF_H_
 #define _EF_H_

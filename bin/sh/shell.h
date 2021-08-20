@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)shell.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: c06e737e658ff5a7c241ee0e9ca894c69e24aeed $
+ * $FreeBSD$
  */
 
 #ifndef SHELL_H_

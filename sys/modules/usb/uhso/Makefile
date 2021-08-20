@@ -1,5 +1,5 @@
 #
-# $FreeBSD: fb29a7f33546d59a28676b503c89703ee6431236 $
+# $FreeBSD$
 #
 # Copyright (c) 2010 Andrew Thompson. All rights reserved.
 #

@@ -1,4 +1,4 @@
-# $FreeBSD: bab4587c0f14e9cbc3da2755cfd94a0b4bc6ddc6 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2
 

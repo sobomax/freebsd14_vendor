@@ -4,7 +4,7 @@
 #
 #  node1 <-> node2 <-> node3 <-> node4 <-> node5
 #
-# $FreeBSD: 695f8bdc11d0cac961a521b3a5ac02d0b2677326 $
+# $FreeBSD$
 #
 PATH=../:.:$PATH
 . config

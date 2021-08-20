@@ -1,4 +1,4 @@
-#	$FreeBSD: 78bca7a68de698d9c0a34a8cc91dd497d4527010 $
+#	$FreeBSD$
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/kld/fwconsumer

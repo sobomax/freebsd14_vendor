@@ -39,7 +39,7 @@
  *
  *	@(#)procfs_vfsops.c	8.7 (Berkeley) 5/10/95
  *
- * $FreeBSD: cfc4f5e8eb243db5620c7618d8395f46cbe5e935 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: 656c57328cc568ed789a1b804ea6dbfcb2ef427c $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_IP_VAR_H_

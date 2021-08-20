@@ -30,7 +30,7 @@
 #define __BXE_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6e99901f3a0b5c470ff9a031e988db09b97fb45 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59e20d0470dffa61d71c992f2f9d58ac91717d1c $");
+__FBSDID("$FreeBSD$");
 
 /*
     Alias.c provides supervisory control for the functions of the

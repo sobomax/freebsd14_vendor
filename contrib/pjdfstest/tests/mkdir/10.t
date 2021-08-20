@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: a8c4fefa7b5766b759de371f2dcf7c443aaf32fe $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/10.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkdir returns EEXIST if the named file exists"
 

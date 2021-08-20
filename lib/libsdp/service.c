@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: service.c,v 1.1 2004/01/13 19:32:36 max Exp $
- * $FreeBSD: 3309adefeb1f3203a78e020aaf8d1e9ed9f483bb $
+ * $FreeBSD$
  */
 
 #include <sys/uio.h>

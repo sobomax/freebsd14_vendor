@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 88689cf766a37b59b63e8444faf0bc61606eeeef $
+ * $FreeBSD$
  */
 
 #define	__constructor	__attribute__((constructor))

@@ -41,7 +41,7 @@
  *	from: @(#)cache.h	8.1 (Berkeley) 6/11/93
  *	from: NetBSD: cache.h,v 1.3 2000/08/01 00:28:02 eeh Exp
  *
- * $FreeBSD: a299f2e4974a225d0a977a181324ebd6e9a15ba3 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CACHE_H_

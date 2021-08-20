@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67facef72d347f814b371df619ad98c9822005a4 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Mac-io ATA controller

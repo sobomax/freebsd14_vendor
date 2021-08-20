@@ -1,4 +1,4 @@
-# $FreeBSD: 1eaeaa09818e530cb57e2d781aa0ab15120afab2 $
+# $FreeBSD$
 
 TAP_TESTS_SH=	00
 TAP_TESTS_SH+=	01

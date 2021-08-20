@@ -29,7 +29,7 @@
  *
  * Freescale i.MX535 Device Tree Source.
  *
- * $FreeBSD: c6a696ede794c9ece178edca725ae741e136ab63 $
+ * $FreeBSD$
  */
 
 / {

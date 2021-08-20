@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5caa17f83e6399233fb347dcc048c7bd35144bf8 $");
+__FBSDID("$FreeBSD$");
 
 /* The sample has some files in a directory with a very long name. */
 #define TESTPATH "abcdefghijklmnopqrstuvwxyz/"	\

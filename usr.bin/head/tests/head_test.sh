@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1fc3cb10b4553787ed4c39ba3556b745560a5b86 $
+# $FreeBSD$
 
 atf_test_case empty_file 
 empty_file_head() {

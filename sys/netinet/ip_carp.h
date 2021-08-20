@@ -1,4 +1,4 @@
-/*	$FreeBSD: f8ee38ddd82fedcaae0389522d7ed42f2a4579c2 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_carp.h,v 1.8 2004/07/29 22:12:15 mcbride Exp $	*/
 
 /*-

@@ -1,4 +1,4 @@
-/* $FreeBSD: 449eadf3ae0e1dab9570b64b0d3f7bdc2e139df0 $ */
+/* $FreeBSD$ */
 void t(void) {
 	int a = (double) 8;
 }

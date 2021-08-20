@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: dccebeea08f84d357e5cb28b899e428616305ad9 $
+# $FreeBSD$
 #
 
 #include <sys/bus.h>

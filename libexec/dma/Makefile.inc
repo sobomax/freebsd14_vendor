@@ -1,4 +1,4 @@
-# $FreeBSD: 8e88f832ee995c84bfb2802a97b32ef51b05818f $
+# $FreeBSD$
 
 .sinclude "${.CURDIR:H:H}/Makefile.inc"
 DMA_SOURCES=	${SRCTOP}/contrib/dma

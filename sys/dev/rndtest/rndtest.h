@@ -1,4 +1,4 @@
-/*	$FreeBSD: 786f0a442a982195b1cd9ad48aa433459d44b828 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD$	*/
 
 /*-

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4cb2a81903c038a40ff80c1c96d5533b6f4f0ab9 $
+ * $FreeBSD$
  */
 /*
  * Altera, Embedded Peripherals IP, User Guide, v. 11.0, June 2011.

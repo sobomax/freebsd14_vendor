@@ -37,7 +37,7 @@
  * otherwise) arising in any way out of the use of this software, even if
  * advised of the possibility of such damage.
  *  
- * $FreeBSD: f6a367db59edf42b952c815c94c3c0234721fa78 $
+ * $FreeBSD$
  */
 
 #ifndef	_GEOM_VINUM_VAR_H_

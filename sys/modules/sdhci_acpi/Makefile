@@ -1,4 +1,4 @@
-# $FreeBSD: 6b197a98c43af4c48a804d6d7f832df781fe16d3 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/sdhci
 

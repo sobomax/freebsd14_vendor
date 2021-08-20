@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 903a68b10cafd36b5ab16e86a6972954a863cc0a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IEEE 802.11 MAC ACL support.

@@ -1,4 +1,4 @@
-# $FreeBSD: 43e2bbbe4103eac949140f34e4002add100c4a6b $
+# $FreeBSD$
 #
 # Map one or all usernames at a source hostname to a specific (or the same)
 # username at another target hostname.  Remember to add the source hostname

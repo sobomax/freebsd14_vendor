@@ -1,2 +1,2 @@
-.\" $FreeBSD: 805e99b67f1b4400dc234862426c8bbdb0ec8f02 $
+.\" $FreeBSD$
 Set to disables the build of all test-related dependencies, including ATF.

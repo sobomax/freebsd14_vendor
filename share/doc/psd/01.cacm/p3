@@ -4,7 +4,7 @@
 .\"
 .\"	@(#)p3	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 2dc86d28e755394972e896e3517befc90eb84bce $
+.\" $FreeBSD$
 .SH
 V. PROCESSES AND IMAGES
 .PP

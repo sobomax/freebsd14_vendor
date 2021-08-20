@@ -1,4 +1,4 @@
-# $FreeBSD: 84755770b53a3fd32b3bbe65e4dbfe2d9342e544 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/fb
 

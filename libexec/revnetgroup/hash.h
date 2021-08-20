@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b12c91e8d293b1ce6410114fa60e918b48530661 $
+ * $FreeBSD$
  */
 
 /* Groupname entry hung off a member_entry node. */

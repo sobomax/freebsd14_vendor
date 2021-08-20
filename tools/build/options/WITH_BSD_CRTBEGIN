@@ -1,4 +1,4 @@
-.\" $FreeBSD: 390a0613b1c3280ba1d7efb46bc05a3f403110fa $
+.\" $FreeBSD$
 Enable the BSD licensed
 .Pa crtbegin.o
 and

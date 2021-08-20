@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a62922890d73c26ab9c211f9fc457a939c4b0f4f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * UltraSPARC IOMMU support; used by both the PCI and SBus code.

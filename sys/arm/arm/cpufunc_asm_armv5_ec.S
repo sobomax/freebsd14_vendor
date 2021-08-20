@@ -37,7 +37,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 5562bd32ccf5c777fdfe0b763608f58ec53aa882 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef ELF_TRAMPOLINE
 /*

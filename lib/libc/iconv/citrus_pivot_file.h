@@ -1,4 +1,4 @@
-/* $FreeBSD: b2b4f2408dba5854507779ce675f1affd9a7b04a $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_pivot_file.h,v 1.1 2003/06/25 09:51:39 tshiozak Exp $ */
 
 /*-

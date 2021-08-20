@@ -1,4 +1,4 @@
-# $FreeBSD: dfb8357c727c7ad3055a3366b131b9d5e3c68341 $
+# $FreeBSD$
 
 eval 'false;' && exit 1
 eval 'true;' || exit 1

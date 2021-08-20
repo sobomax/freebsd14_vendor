@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b12bff855f6358a722151df1fa49257a516f70dd $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <dev/hyperv/vmbus/hyperv_machdep.h>

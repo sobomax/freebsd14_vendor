@@ -32,7 +32,7 @@
  * LC_MONETARY database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd144d73b806963aa045adfa4f1545c229fb9561 $");
+__FBSDID("$FreeBSD$");
 
 #include <stdio.h>
 #include <stdlib.h>

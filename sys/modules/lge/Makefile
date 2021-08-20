@@ -1,4 +1,4 @@
-# $FreeBSD: 38dbfa50abe5b3e6ddfbd2aad56ab08598dceb03 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/lge
 

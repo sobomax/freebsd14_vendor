@@ -1,4 +1,4 @@
-# $FreeBSD: 0b5907b7530dfa761d23824556d7eb8f1bdee9db $
+# $FreeBSD$
 
 SHLIB=	mapper_serial
 SRCS+=	citrus_mapper_serial.c

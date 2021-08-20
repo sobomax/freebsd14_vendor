@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Joseph Koshy
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: 3f32cb238d7241416aaaf82c3dd2eff4fac6e92e $
+ * $FreeBSD$
  *
  */
 

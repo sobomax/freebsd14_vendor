@@ -1,4 +1,4 @@
-# $FreeBSD: d2f6d207dd084640de91d5849aea60292c9f018f $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/security/mac_seeotheruids
 

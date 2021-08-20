@@ -1,4 +1,4 @@
-/*	$FreeBSD: 9b992c07c811d65b4a51dafe6922e725166dc9d5 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_ah.h,v 1.29 2002/06/09 16:26:10 itojun Exp $	*/
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),

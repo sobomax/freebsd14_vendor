@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 13576bbf188ab7e48211f7b16b3d74770c455f3b $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13576bbf188ab7e48211f7b16b3d74770c455f3b $");
+__FBSDID("$FreeBSD$");
 
 #include "cam_sdio.h"
 

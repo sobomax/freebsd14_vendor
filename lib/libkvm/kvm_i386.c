@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f4c5287e965e98ef21aee74a404873e92b29cfa $");
+__FBSDID("$FreeBSD$");
 __SCCSID("@(#)kvm_hp300.c	8.1 (Berkeley) 6/4/93");
 
 /*

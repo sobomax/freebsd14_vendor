@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 060dc4b710aa8884533501bd42a74169b222e6fe $
+# $FreeBSD$
 
 ident		VYBRID
 include 	"std.armv7"

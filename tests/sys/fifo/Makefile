@@ -1,4 +1,4 @@
-# $FreeBSD: ea67241f4b9a5ca693195a59717c18171fdba5f4 $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/fifo
 

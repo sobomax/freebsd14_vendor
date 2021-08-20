@@ -2,7 +2,7 @@
 #
 # Configure routing and miscellaneous network tunables
 #
-# $FreeBSD: e909523ab709fe47aade502e03f09d0410718a01 $
+# $FreeBSD$
 #
 
 # PROVIDE: routing

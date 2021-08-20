@@ -1,7 +1,7 @@
 /*
  * 16 Feb 93	Julian Elischer	(julian@dialix.oz.au)
  *
- * $FreeBSD: a3eb271a7514d7df31da2cd890d8a29f7b3435a3 $
+ * $FreeBSD$
  */
 
 /*

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)enc-proto.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 7463c8d94ad44fb50a34ffa9db8be30d17498f6a $
+ * $FreeBSD$
  */
 
 /*

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: trap.c,v 1.17.2.9 1999/10/19 15:29:52 cp Exp
- * $FreeBSD: e07b1855438d8bc20e756cb4b44d24c0c77b1d3d $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

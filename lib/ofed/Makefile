@@ -1,4 +1,4 @@
-# $FreeBSD: 224222b55e24190fb3d174a56309df057b285f24 $
+# $FreeBSD$
 
 SUBDIR= \
 	include \

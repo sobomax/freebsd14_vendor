@@ -1,4 +1,4 @@
-/*	$FreeBSD: 5b79f7376a12b7ed14d977a492033324024f526a $	*/
+/*	$FreeBSD$	*/
 
 /*
  * larp.c (C) 1995-1998 Darren Reed

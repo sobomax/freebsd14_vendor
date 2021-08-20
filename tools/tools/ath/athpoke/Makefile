@@ -1,4 +1,4 @@
-# $FreeBSD: a33c7396348b48dba350761554a255622e556d9a $
+# $FreeBSD$
 
 PROG=	athpoke
 LINKS=	${BINDIR}/${PROG} ${BINDIR}/athpeek

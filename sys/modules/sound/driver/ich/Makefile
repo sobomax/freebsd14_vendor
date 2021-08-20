@@ -1,4 +1,4 @@
-# $FreeBSD: def838a320cba010bf07d8109e0a922b560733bf $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/sound/pci
 KMOD		= snd_ich

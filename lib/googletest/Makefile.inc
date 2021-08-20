@@ -1,4 +1,4 @@
-# $FreeBSD: 319ce6ec7ec6207b1b68e2542f6745c180148640 $
+# $FreeBSD$
 
 .include <googletest.test.inc.mk>
 

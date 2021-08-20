@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.19 (Berkeley) 1/14/97
-# $FreeBSD: 2692d55fdc0a359c1ee29fbf0428038c3911401f $
+# $FreeBSD$
 
 M4=		m4
 CHMOD=		chmod

@@ -1,4 +1,4 @@
-# $FreeBSD: c67130ecc57e9052333e4840ac442b3bba0817d1 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=		mt

@@ -33,7 +33,7 @@
  *
  *	@(#)tar.h	8.2 (Berkeley) 1/4/94
  *
- * $FreeBSD: 3d54476520e636c1f1876b82aa0b5652095721ca $
+ * $FreeBSD$
  */
 
 #ifndef _TAR_H

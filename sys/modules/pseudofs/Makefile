@@ -1,4 +1,4 @@
-# $FreeBSD: 45afba941428b640c5e5c58d61ce44bd7135d8ab $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/pseudofs
 

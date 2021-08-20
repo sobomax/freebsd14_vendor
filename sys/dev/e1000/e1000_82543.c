@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 48ad49294f31e359f2f8539ccd9d907dd44e691c $*/
+/*$FreeBSD$*/
 
 /*
  * 82543GC Gigabit Ethernet Controller (Fiber)

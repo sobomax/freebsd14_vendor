@@ -1,4 +1,4 @@
-# $FreeBSD: cd55e2ca029efb758ad8fefab42406dc83478707 $
+# $FreeBSD$
 
 false
 for i in `false`; do exit 3; done

@@ -1,4 +1,4 @@
-# $FreeBSD: 771d46459b71f9173b07ec6dcd4b863f5a2b03a2 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/syscons/star
 

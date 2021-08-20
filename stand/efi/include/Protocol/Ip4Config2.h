@@ -1,4 +1,4 @@
-/* $FreeBSD: 47241d7ad7d4c2e207ed3cc7b41c4439ed7a55d7 $ */
+/* $FreeBSD$ */
 /** @file
   This file provides a definition of the EFI IPv4 Configuration II
   Protocol.

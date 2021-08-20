@@ -3,7 +3,7 @@
 #
 # Version 1.0 - 1999-03-18
 #
-# $FreeBSD: ce2ea2e82b4cfb1b6f726c642fe817eb3291590d $
+# $FreeBSD$
 #
 # This map uses the US QWERTY keyboard for its basic layout.
 # It adds a "third row" to the top of the PC keyboard. To

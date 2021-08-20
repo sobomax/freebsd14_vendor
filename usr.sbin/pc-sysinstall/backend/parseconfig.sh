@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d71c53085921ab4715432d1fe849f07d60b5e60f $
+# $FreeBSD$
 
 # Main install configuration parsing script
 #

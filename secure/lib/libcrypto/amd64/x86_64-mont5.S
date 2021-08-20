@@ -1,4 +1,4 @@
-/* $FreeBSD: cb2528c08dd27c2a54824616556c6d7e6ebfee6a $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x86_64-mont5.pl. */
 .text	
 

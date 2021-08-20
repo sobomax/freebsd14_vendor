@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47380ae72e5e5dc7f76e26e7a0a28062b17a502b $");
+__FBSDID("$FreeBSD$");
 
 #ifndef REGRESSION
 #include "stand.h"

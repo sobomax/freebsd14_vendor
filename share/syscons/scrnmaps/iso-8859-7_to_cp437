@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 12c467a360f2cc17adaa7082884fcff6c9e5dc2d $
+ * $FreeBSD$
  */
 
 scrmap_t scrmap = {

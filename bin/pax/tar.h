@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tar.h	8.2 (Berkeley) 4/18/94
- * $FreeBSD: 91c2400e35ca4003ef83e4842213ea9c95dc6798 $
+ * $FreeBSD$
  */
 
 /*

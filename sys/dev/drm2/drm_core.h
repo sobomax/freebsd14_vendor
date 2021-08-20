@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cccb7b4dff96df84724c3883512c2ecf8bbd6e7 $");
+__FBSDID("$FreeBSD$");
 
 #define CORE_AUTHOR		"Gareth Hughes, Leif Delgass, José Fonseca, Jon Smirl"
 

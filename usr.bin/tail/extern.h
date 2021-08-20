@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: ef2c9ce0ee9a60d5dffeef44112cf077351fa2f9 $
+ * $FreeBSD$
  */
 
 #define	WR(p, size) do { \

@@ -1,4 +1,4 @@
-# $FreeBSD: 401202c700bdd86f5f1e8d7d6d29c6d445487e48 $ 
+# $FreeBSD$ 
 # $NetBSD: DEC.src,v 1.1 2007/04/01 18:52:30 tnozaki Exp $
 
 NAME		"DECx"

@@ -1,4 +1,4 @@
-# $FreeBSD: 63cd2cf2cea94a6a46b22ee6e4b0cbb00818d0ac $
+# $FreeBSD$
 
 PROG=	ktrdump
 LIBADD=	kvm

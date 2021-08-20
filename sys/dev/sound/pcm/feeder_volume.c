@@ -39,7 +39,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: 322d7f6b2c84c9846b8e24dcb96db218e1e1ce5e $");
+SND_DECLARE_FILE("$FreeBSD$");
 #endif
 
 typedef void (*feed_volume_t)(int *, int *, uint32_t, uint8_t *, uint32_t);

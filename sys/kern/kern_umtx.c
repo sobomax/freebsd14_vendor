@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 783dc1893778078c4ca98513251c47d1d4caeaab $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_umtx_profiling.h"
 

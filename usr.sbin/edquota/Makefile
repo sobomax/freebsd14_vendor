@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 83f06d055270789bbeff7fd5f24bf58dd177c134 $
+# $FreeBSD$
 
 PROG=	edquota
 MAN=	edquota.8

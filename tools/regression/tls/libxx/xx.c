@@ -1,4 +1,4 @@
-/* $FreeBSD: 6d1e73f79a05c3e47a19eb3b625960e104018881 $ */
+/* $FreeBSD$ */
 
 extern int __thread yy1;
 int __thread xx1 = 1;

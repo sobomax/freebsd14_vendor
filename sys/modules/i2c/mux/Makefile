@@ -1,4 +1,4 @@
-# $FreeBSD: 8e228a7a7fefa18757845ef073904c68e10065c3 $
+# $FreeBSD$
 
 SUBDIR = \
 	iicmux \

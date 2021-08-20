@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4be45cdf963c893e58935caef688e788f21ed9c7 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef DSO_LIB
 #include <atf-c.h>

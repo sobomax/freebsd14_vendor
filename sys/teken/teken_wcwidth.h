@@ -7,7 +7,7 @@
  *
  * Latest version: http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
  *
- * $FreeBSD: 43f1760ecb3728ffe6b4ccdda4536c0c02022f5e $
+ * $FreeBSD$
  */
 
 struct interval {

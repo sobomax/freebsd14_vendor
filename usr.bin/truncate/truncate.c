@@ -28,7 +28,7 @@
  */
 
 static const char rcsid[] =
-    "$FreeBSD: 0f6c14b15c16859ec93eb31e6f070e0c00e2995d $";
+    "$FreeBSD$";
 
 #include <sys/stat.h>
 

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40b7a8aed77449bc8f199360537582c1be1ae907 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf

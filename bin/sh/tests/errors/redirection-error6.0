@@ -1,4 +1,4 @@
-# $FreeBSD: 17d1109b390f949735164632fb22f87a6801651f $
+# $FreeBSD$
 # A redirection error on a compound command should not abort the shell.
 exec 2>/dev/null
 { echo bad; } </var/empty/x

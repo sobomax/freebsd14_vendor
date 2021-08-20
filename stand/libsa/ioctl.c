@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 807b308e5e501375a99f4c45ebc3f372e6b15799 $");
+__FBSDID("$FreeBSD$");
 
 #include "stand.h"
 

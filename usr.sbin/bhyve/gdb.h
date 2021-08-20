@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 422e46ab0c61f988abcf5e85b2ab5ef5dcf67f2d $
+ * $FreeBSD$
  */
 
 #ifndef __GDB_H__

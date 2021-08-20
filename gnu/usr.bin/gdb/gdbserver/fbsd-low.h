@@ -19,7 +19,7 @@
    Boston, MA 02111-1307, USA.  */
 
 /*
- * $FreeBSD: 310368c9b2c158782bcc4d3ef48d11ff6cc64968 $
+ * $FreeBSD$
  */
 
 typedef void (*regset_fill_func) (void *);

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e1e2fe4e933d4bc71a9e2fd06b1b11d30094f43c $
+ * $FreeBSD$
  */
 
 /* This supports the ENSONIQ AudioPCI board based on the ES1370. */

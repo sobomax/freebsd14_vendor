@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: d679caaa98942eacb072f03aa6e25648095ec9d1 $");
+__FBSDID("$FreeBSD$");
 
 .set mips64
 .set noreorder

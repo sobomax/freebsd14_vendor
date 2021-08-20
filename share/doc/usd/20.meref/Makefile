@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: 861bc855ac847f4052cb93402d7df80699cf6bf4 $
+# $FreeBSD$
 
 VOLUME=		usd/20.meref
 SRCS=		meref.me-sed

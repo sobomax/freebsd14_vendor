@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a24b87367ecd8a3bacece6d3320eb6b1cf42e13 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * 'Ignore' driver - eats devices that show up errnoeously on PCI

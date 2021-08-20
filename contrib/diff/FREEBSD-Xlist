@@ -1,4 +1,4 @@
-# $FreeBSD: 64e22743e7afdb7967923f2b6852cbb6482bc364 $
+# $FreeBSD$
 
 INSTALL
 Makefile.am

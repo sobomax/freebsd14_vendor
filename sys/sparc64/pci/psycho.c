@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7f4c40e389c1a8f0433cfa1aedd4d1cb7d84920 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Support for `Hummingbird' (UltraSPARC IIe), `Psycho' and `Psycho+'

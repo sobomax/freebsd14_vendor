@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7ab11ff07a0b05395d50348d1ab3e1e1e86dd16 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ARM bus dma support routines.

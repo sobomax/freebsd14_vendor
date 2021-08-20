@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1fb47c3ae2f09c4469f8dbff8a8fed357ff1ae3b $
+ * $FreeBSD$
  */
 
 #ifndef	_XMSR_H_

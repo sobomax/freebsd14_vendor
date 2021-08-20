@@ -1,4 +1,4 @@
-# $FreeBSD: 586e349184abde6b40200ad9a771c46ed0714925 $
+# $FreeBSD$
 
 # Build the kernel ${KERNCONF}
 KERNCONF?= ${KERNEL:UGENERIC}

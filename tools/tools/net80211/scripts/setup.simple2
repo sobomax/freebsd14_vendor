@@ -2,7 +2,7 @@
 #
 # Script for testing multi-bss ap operation.
 #
-# $FreeBSD: 7b030a9162aa8a918a812bde6b4e74a8cd99d796 $
+# $FreeBSD$
 #
 PATH=.:$PATH
 . config

@@ -1,7 +1,7 @@
 /*
  * Дни воинской славы России
  *
- * $FreeBSD: 57ed6f9b762811c476be2525f5db42aec2386ad2 $
+ * $FreeBSD$
  */
 
 #ifndef _ru_RU_UTF_8_military_

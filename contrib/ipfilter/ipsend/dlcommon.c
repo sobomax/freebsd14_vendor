@@ -1,4 +1,4 @@
-/*	$FreeBSD: 8a8cbf6a6a9448090a5985f262be55193a3f6ed9 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Common (shared) DLPI test routines.

@@ -1,4 +1,4 @@
-# $FreeBSD: f6a7bc99a749b824f98cf3ac006111cf6a31b869 $
+# $FreeBSD$
 
 files		"../mv/files.mv"
 cpu		CPU_ARM9E

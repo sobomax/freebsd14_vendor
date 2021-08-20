@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ffa016a15d69b8a9a69220fbb3b35325ba4d7c61 $
+ * $FreeBSD$
  */
 
 #define SPIBUS_IVAR(d) (struct spibus_ivar *) device_get_ivars(d)

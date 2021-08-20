@@ -1,4 +1,4 @@
-.\" $FreeBSD: 40d795b5346e876a1e0b6db116ce713f421cbdb2 $
+.\" $FreeBSD$
 Set to install the Clang C/C++ compiler as
 .Pa /usr/bin/cc ,
 .Pa /usr/bin/c++

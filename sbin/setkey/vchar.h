@@ -1,4 +1,4 @@
-/*	$FreeBSD: c7e96cb9ca1abd988d6dae3e33969daf9e1fddb1 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: vchar.h,v 1.2 2000/06/07 00:29:14 itojun Exp $	*/
 
 /*-

@@ -1,4 +1,4 @@
-# $FreeBSD: 3d6da3f35cccd51c55d0567c509657e48b6334b4 $
+# $FreeBSD$
 # Utility functions (mainly from pf tests, should be merged one day)
 ##
 

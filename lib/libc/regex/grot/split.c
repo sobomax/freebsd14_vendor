@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5d5264ab711d137046f882fde538d4e15c99800 $");
+__FBSDID("$FreeBSD$");
 
 #include <stdio.h>
 #include <string.h>

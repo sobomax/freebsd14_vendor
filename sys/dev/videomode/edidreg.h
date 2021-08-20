@@ -1,5 +1,5 @@
 /*	$NetBSD: edidreg.h,v 1.3 2011/03/30 18:49:56 jdc Exp $	*/
-/*	$FreeBSD: 29b04665c212727805bd4d81ccf44907abff9efe $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2006 Itronix Inc.

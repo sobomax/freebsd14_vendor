@@ -1,4 +1,4 @@
-# $FreeBSD: ffddfcafb4bb0f5e97c487bb17b0200461dd47c6 $
+# $FreeBSD$
 
 atf_test_case nominal
 nominal_head()

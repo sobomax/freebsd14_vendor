@@ -1,5 +1,5 @@
 #	@(#)CHANGES	5.1 (Berkeley) 5/11/93
-# $FreeBSD: e51acd1f9d9cad8b7c54ada90132b08caabbf61a $
+# $FreeBSD$
 
 This new version is almost identical to the timed and timedc code
 that has been shipped for years by a workstation vendor.

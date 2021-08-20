@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 16766a44fe8b7731af129397a5511978b342c861 $
+# $FreeBSD$
 #
 
 include		"std.SWARM"

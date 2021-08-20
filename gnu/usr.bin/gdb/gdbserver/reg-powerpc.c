@@ -23,7 +23,7 @@
 /* This file was created with the aid of ``regdat.sh'' and ``../../../../contrib/gdb/gdb/regformats/reg-ppc.dat''.  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47046631d52e81901684322e17de1429c1ae60b6 $");
+__FBSDID("$FreeBSD$");
 
 #include "regdef.h"
 #include "regcache.h"

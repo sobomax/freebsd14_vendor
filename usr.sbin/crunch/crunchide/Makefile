@@ -1,4 +1,4 @@
-# $FreeBSD: 467b0b6d1865b10bdbd652a34fbe9dcedb4aaa2e $
+# $FreeBSD$
 
 PROG=   crunchide
 SRCS=	crunchide.c exec_elf32.c exec_elf64.c

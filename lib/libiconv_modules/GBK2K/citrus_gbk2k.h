@@ -1,4 +1,4 @@
-/* $FreeBSD: c5df93faa934b8ece4c025c9ef19fccc47cc8aae $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_gbk2k.h,v 1.2 2003/06/25 09:51:43 tshiozak Exp $ */
 
 /*-

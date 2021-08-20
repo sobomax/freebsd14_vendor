@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD: b36823f97468ebb6f8aab204abffb83c1b83ebae $
+ * $FreeBSD$
  */
 
 #ifndef _RMI_CLOCK_H_

@@ -1,4 +1,4 @@
-/* $FreeBSD: 080a3c1fe9d90052a2bb13606f7164b5f7272b8d $ */
+/* $FreeBSD$ */
 /*-
  * LSI MPT Host Adapter FreeBSD Wrapper Definitions (CAM version)
  *

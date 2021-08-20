@@ -1,4 +1,4 @@
-# $FreeBSD: f73058794bc5a0570190fdc9bc31814bb86d95fd $
+# $FreeBSD$
 
 PROG=	http
 MAN=

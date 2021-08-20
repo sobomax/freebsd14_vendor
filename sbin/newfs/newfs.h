@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cebb1d999462df85435457e151eb4c214a57fd45 $
+ * $FreeBSD$
  */
 
 #include <libufs.h>

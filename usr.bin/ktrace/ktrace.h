@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ktrace.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 09d5e989ad365823ed9dd8f0dba83c5cd3155522 $
+ * $FreeBSD$
  */
 
 #define DEF_POINTS (KTRFAC_SYSCALL | KTRFAC_SYSRET | KTRFAC_NAMEI | \

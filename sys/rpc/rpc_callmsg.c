@@ -35,7 +35,7 @@ static char *sccsid2 = "@(#)rpc_callmsg.c 1.4 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)rpc_callmsg.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab0848d7930d40db2790e8b08688e7de380c1d90 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * rpc_callmsg.c

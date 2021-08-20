@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)limits.h	8.3 (Berkeley) 1/4/94
- * $FreeBSD: 5a7b831b3089b0ec9d67b2019f0cd8cf324e0b0f $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_LIMITS_H_

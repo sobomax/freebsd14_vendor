@@ -37,7 +37,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 06eb71775d5cdd1aa6a5c255f65facd0c5ddc64f $
+ * $FreeBSD$
  */
 
 #if !defined(IB_VERBS_H)

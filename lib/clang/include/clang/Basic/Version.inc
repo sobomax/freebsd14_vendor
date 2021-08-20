@@ -1,4 +1,4 @@
-/* $FreeBSD: 7114bbf5fd6efa45a0ae632fd19f186c445fcfb2 $ */
+/* $FreeBSD$ */
 
 #define	CLANG_VERSION			10.0.1
 #define	CLANG_VERSION_STRING		"10.0.1"

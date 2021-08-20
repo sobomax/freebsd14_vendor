@@ -1,4 +1,4 @@
-/* $FreeBSD: 3accb286ae989481947b0ec40285ca64cdb7f93b $ */
+/* $FreeBSD$ */
 
 #include <err.h>
 #include <errno.h>

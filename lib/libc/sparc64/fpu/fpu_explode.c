@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c482b9fcd8fa9cfbdad9be0ce95adc5432b5570d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * FPU subroutines: `explode' the machine's `packed binary' format numbers

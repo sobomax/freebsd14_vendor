@@ -36,7 +36,7 @@
  * advised of the possibility of such damage.
  */
 
-/* $FreeBSD: e9c112a5e936d05da33d6d3b961b1898fe4d3bea $ */
+/* $FreeBSD$ */
 
 #define	GVINUMMOD	"g_vinum"
 #define	GVINUMKLD	"geom_vinum"

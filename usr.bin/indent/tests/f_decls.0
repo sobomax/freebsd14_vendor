@@ -1,4 +1,4 @@
-/* $FreeBSD: a463d3c46a5dd0cc326dda8e9f37f1b67ce117c6 $ */
+/* $FreeBSD$ */
 
 char * x(void)
 {

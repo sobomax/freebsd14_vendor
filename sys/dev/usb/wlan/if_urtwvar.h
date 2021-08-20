@@ -1,4 +1,4 @@
-/*	$FreeBSD: 87c24d648d4bf988599df25af1b23b1db6d7e3e7 $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2008 Weongyo Jeong <weongyo@FreeBSD.org>

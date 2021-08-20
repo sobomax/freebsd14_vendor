@@ -31,7 +31,7 @@
 #
 #	@(#)lorder.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: 390b0b7fe8459988081a979a06ea4984fee4230d $
+# $FreeBSD$
 #
 
 # only one argument is a special case, just output the name twice

@@ -29,7 +29,7 @@
  * (both async and sync), but which do not necessarily have anything to
  * do with tty processing.
  *
- * $FreeBSD: 3293ebdab931019fc085cd0846cbdd55dd664473 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SERIAL_H_

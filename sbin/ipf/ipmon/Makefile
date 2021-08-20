@@ -1,4 +1,4 @@
-#	$FreeBSD: 8227811db2ada6853a7943e08d69ef59fb967be5 $
+#	$FreeBSD$
 
 PACKAGE=	ipf
 PROG=		ipmon

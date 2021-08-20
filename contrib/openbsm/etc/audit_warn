@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 4b8498ea414483d607b13ac4051deaf8ae734535 $
+# $FreeBSD$
 #
 
 logger -p security.warning "audit warning: $@"

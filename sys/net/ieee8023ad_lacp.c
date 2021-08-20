@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fd324a069c21ebd1dfcac53220768707468485c $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ratelimit.h"
 

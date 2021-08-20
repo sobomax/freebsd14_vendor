@@ -3,7 +3,7 @@
 #
 # Submitted by Edwin Groothuis <edwin@FreeBSD.org>
 #
-# $FreeBSD: 7ae323b50adcb4c3bf2869a97d5b13ea7f74ee30 $
+# $FreeBSD$
 #
 
 #

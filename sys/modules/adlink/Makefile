@@ -1,4 +1,4 @@
-# $FreeBSD: e5c495665210f15dc2b99b6932e880f7802b20e7 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/adlink
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: 77985e56d65be51fe9a90982d8d70e63d3411af5 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfsmount.h,v 1.17 1997/11/17 15:37:07 ws Exp $	*/
 
 /*-

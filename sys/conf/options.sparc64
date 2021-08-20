@@ -1,4 +1,4 @@
-# $FreeBSD: 883db16692793360db6f9fd28e95be6cdf7f9b4f $
+# $FreeBSD$
 
 GFB_DEBUG		opt_gfb.h
 GFB_NO_FONT_LOADING	opt_gfb.h

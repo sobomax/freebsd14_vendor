@@ -35,7 +35,7 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"	@(#)ssd	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 988e0a0da09e637e83eaf4a9e598bce9115456d3 $
+.\" $FreeBSD$
 .SH
 Appendix D: Old Features Supported but not Encouraged
 .PP

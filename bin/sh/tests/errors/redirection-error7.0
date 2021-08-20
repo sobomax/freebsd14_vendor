@@ -1,4 +1,4 @@
-# $FreeBSD: 5b20f04beb83d6f8a941b9bfde44067fa437ec96 $
+# $FreeBSD$
 
 ! dummy=$(
 	exec 3>&1 >&2 2>&3

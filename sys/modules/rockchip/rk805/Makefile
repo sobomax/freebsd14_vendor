@@ -1,4 +1,4 @@
-# $FreeBSD: 395b9fc49c72409b4ffc427c9784770fd11f7fbc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm64/rockchip
 

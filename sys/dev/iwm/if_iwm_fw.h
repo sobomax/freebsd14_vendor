@@ -71,7 +71,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * $FreeBSD: 66b3d840a50df886bf61ba281d9a9bf17bdb46c0 $
+ * $FreeBSD$
  */
 #ifndef	__IF_IWM_FW_H__
 #define	__IF_IWM_FW_H__

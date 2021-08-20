@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ca01082391f28eb1c209e333d190d7c19c9f7472 $
+ * $FreeBSD$
  *
  * Partly from: src/sys/boot/i386/boot2/boot1.S 1.31
  */

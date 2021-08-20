@@ -1,4 +1,4 @@
-.\" $FreeBSD: 49c246ce7d097230d88ddf92cdf8256a2cc7325d $
+.\" $FreeBSD$
 Set to not build
 .Xr telnet 1
 and related programs.

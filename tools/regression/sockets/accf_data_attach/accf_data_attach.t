@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 8bdfd03be81b623789d533018b165427e9b86083 $
+# $FreeBSD$
 
 cd `dirname $0`
 

@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fb8692d4861eaef36d4bc3aeb70ce7dcdce8696 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_debug_lockf.h"
 

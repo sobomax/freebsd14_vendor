@@ -1,4 +1,4 @@
-# $FreeBSD: c3ce7954b27835731779a56f1837e5e7116ebf86 $
+# $FreeBSD$
 machine		i386
 cpu		I586_CPU
 ident		TINYBSD

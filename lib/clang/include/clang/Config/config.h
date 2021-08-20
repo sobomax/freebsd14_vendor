@@ -1,4 +1,4 @@
-/* $FreeBSD: b16df1ac0e85c81811ec523b279e28758f2f65f4 $ */
+/* $FreeBSD$ */
 /* This generated file is for internal use. Do not include it from headers. */
 
 #ifdef CLANG_CONFIG_H

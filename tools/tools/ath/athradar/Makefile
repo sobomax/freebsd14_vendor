@@ -1,4 +1,4 @@
-# $FreeBSD: 23d3012f234445ca98e787909721554b7d0ee50b $
+# $FreeBSD$
 
 PROG=	athradar
 

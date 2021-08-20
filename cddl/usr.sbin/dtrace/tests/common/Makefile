@@ -1,4 +1,4 @@
-# $FreeBSD: c395269e7aa9dbef3b8771be41bd7ad26be50055 $
+# $FreeBSD$
 
 # We exclude several subdirectories: nfs and sysevent do not compile on
 # FreeBSD, and docsExamples doesn't seem amenable to automated testing.

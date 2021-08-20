@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: f611d6b1ab47aea052e3c44ccae2f7625f5c48f9 $
+# $FreeBSD$
 
 #	dump.h			header file
 #	itime.c			reads /etc/dumpdates

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 62eba734507b38a92da4201fca88c7801390a631 $
+ * $FreeBSD$
  */
 
 struct aic_transinfo {

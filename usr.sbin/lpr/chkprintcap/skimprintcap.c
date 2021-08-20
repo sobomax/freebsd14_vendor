@@ -34,7 +34,7 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: 25a5eb5941bf4098ffc13d5b3d59114402527cc4 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

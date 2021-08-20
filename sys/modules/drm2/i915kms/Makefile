@@ -1,4 +1,4 @@
-# $FreeBSD: 45348b494ac01af988817e76b589bdbd5e3c3234 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm2/i915
 KMOD	= i915kms

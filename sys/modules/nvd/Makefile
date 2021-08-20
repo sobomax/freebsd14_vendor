@@ -1,4 +1,4 @@
-# $FreeBSD: d47ac91847599b41e4605890018c91c80c22c269 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/nvd
 

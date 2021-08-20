@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 3e71eb043f3299a22b2446e78354a5d308adf4a4 $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_MEDFORD_IMPL_H

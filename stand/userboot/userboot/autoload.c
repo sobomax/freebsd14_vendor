@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a86afcfa2b4bf692b125a20d449063ff96ca8740 $");
+__FBSDID("$FreeBSD$");
 
 int
 userboot_autoload(void)

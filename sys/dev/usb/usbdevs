@@ -1,4 +1,4 @@
-$FreeBSD: 2df4117393137e9d7e7a070b1ab98fd42ea1dcaf $
+$FreeBSD$
 /* $NetBSD: usbdevs,v 1.392 2004/12/29 08:38:44 imp Exp $ */
 
 /*-

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0289ecba4f3e7e4a4425ed814696a7e13f6eaf4e $
+ * $FreeBSD$
  */
 
 typedef u_char volatile *cy_addr;

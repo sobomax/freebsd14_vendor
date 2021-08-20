@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce3027fb3441ab00a1c864f5890e6b6f9971bbc8 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI bindings for Apple GMAC, Sun ERI and Sun GEM Ethernet controllers

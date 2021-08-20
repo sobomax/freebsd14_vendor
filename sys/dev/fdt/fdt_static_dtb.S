@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ae1fc03e5b4a022ae6126d46c5d0d98a5a45111c $
+ * $FreeBSD$
  */
 
 #include "fdt_static_dtb.h"

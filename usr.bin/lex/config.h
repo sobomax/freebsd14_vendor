@@ -1,6 +1,6 @@
 /* config.h.  Generated from conf.in by configure.  */
 /* conf.in.  Generated from configure.in by autoheader.  */
-/* $FreeBSD: 88361dfb93dff4a7fcb2a99e77a53cba111e2db0 $ */
+/* $FreeBSD$ */
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.

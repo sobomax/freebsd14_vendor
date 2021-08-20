@@ -1,4 +1,4 @@
-# $FreeBSD: 61fe5a8431ae110b30b7b0a3dc16968ed46597cc $
+# $FreeBSD$
 #
 SHELL=/bin/sh
 PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin

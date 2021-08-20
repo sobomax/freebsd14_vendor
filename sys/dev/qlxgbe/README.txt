@@ -1,4 +1,4 @@
-# $FreeBSD: 8ce6adb00ee76b3bb3338893fd816cae6f0436e4 $
+# $FreeBSD$
 
 			README File
 		QLogic 8300 series Dual Port

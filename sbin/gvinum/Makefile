@@ -1,4 +1,4 @@
-# $FreeBSD: 4caa775be2e1509001951d9da5172acf2166781e $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	gvinum

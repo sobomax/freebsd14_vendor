@@ -1,4 +1,4 @@
-# $FreeBSD: 53e0eb21082077cd00ccadfc52afa452ab9bae0d $
+# $FreeBSD$
 
 # This is a reach over build of BearSSL (www.BearSSL.org)
 

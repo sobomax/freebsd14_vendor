@@ -3,7 +3,7 @@
 # Script for creating a mesh in star topology.
 # Node 3 will be the center.
 #
-# $FreeBSD: a7396a0b31b3ad8867303578ad4800b4f4cbbd09 $
+# $FreeBSD$
 #
 PATH=../:.:$PATH
 . config

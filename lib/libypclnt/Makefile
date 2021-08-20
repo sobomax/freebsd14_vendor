@@ -1,4 +1,4 @@
-# $FreeBSD: c043d6381fd3d0f4f6a0246bbd3e2fb071605d19 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	ypclnt

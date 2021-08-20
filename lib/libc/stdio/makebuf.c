@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)makebuf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bddf89a65b2d623a7f865646c7582da6270cae7 $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/types.h>

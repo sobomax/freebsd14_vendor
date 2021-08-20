@@ -72,7 +72,7 @@ static char sccsid[] = "@(#)mt.c	8.2 (Berkeley) 5/4/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a053cdd92132530da5639ada84e37f246680ddf0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * mt --

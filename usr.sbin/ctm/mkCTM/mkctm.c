@@ -1,4 +1,4 @@
-/* $FreeBSD: d2c73e20809a204d4bfce465accf00eee147f616 $ */
+/* $FreeBSD$ */
 
 /* Still missing:
  *
@@ -14,7 +14,7 @@
  *	dir1		"Soll"
  *	dir2		"Ist"
  *
- * $FreeBSD: d2c73e20809a204d4bfce465accf00eee147f616 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

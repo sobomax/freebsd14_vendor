@@ -1,4 +1,4 @@
-#	$FreeBSD: d9b2ed5ef6e394b548d4c2291e52e0d1cd72bf97 $
+#	$FreeBSD$
 
 PACKAGE=	ipf
 PROG=		ipresend

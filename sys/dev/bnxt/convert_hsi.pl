@@ -3,7 +3,7 @@
 # This script cleans up the "official" Broadcom hsi_struct_defs.h file as distributed
 # to something somewhat more programmer friendly.
 #
-# $FreeBSD: b8a9887d72066ae5761e6841309c4c760fb39a25 $
+# $FreeBSD$
 
 my $do_decode = 0;
 

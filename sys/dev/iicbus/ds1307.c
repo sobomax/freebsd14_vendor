@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bab7e78c0d839c54465edaaef21afc78a925bb7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for Maxim DS1307 I2C real-time clock/calendar.

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/i386/include/_stdint.h,v 1.2 2004/05/18 16:04:57 stefanf
- * $FreeBSD: 83455b7780d1aa50a6f48c53140b37921d83ab1f $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE__STDINT_H_

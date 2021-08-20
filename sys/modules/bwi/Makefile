@@ -1,4 +1,4 @@
-# $FreeBSD: c956f64d40c265e0aa17ee1560c3adccaf17edb0 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/bwi
 

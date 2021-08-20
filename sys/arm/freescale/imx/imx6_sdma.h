@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4cd4cebf943522e409aeac94d28eb34a3f1e463b $
+ * $FreeBSD$
  */
 
 #define	SDMAARM_MC0PTR		0x00	/* ARM platform Channel 0 Pointer */

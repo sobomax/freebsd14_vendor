@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29ed561a7cd04525aa590e363defc9632d570613 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Broadcom ChipCommon driver.

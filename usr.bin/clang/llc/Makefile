@@ -1,4 +1,4 @@
-# $FreeBSD: ce9e11e3bf4534826b8b62158646d962b90eb61a $
+# $FreeBSD$
 
 PROG_CXX=	llc
 

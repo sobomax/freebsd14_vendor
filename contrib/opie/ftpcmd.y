@@ -23,7 +23,7 @@ you didn't get a copy, you may request one from <license@inner.net>.
 	Modified at NRL for OPIE 2.0.
 	Originally from BSD.
 
-$FreeBSD: abcffdc69568cba114bf489b30c2d78e765a0c61 $
+$FreeBSD$
 */
 /*
  * Copyright (c) 1985, 1988 Regents of the University of California.

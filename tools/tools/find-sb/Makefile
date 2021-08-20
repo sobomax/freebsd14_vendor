@@ -1,4 +1,4 @@
-# $FreeBSD: ee6c46b11aa6170e39e52d1719be66c06ef1d253 $
+# $FreeBSD$
 
 PROG=	find-sb
 MAN=

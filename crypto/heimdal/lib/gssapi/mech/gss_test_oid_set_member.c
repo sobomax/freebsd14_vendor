@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 715d34bf0666262988cb83ffaf6a0ae82510f08c $
+ *	$FreeBSD: src/lib/libgssapi/gss_test_oid_set_member.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
  */
 
 #include "mech_locl.h"

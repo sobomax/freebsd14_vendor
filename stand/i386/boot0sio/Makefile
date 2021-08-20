@@ -1,4 +1,4 @@
-# $FreeBSD: 1321dd330c4d50d22a66aa692a25c81f9d98bc0c $
+# $FreeBSD$
 
 .PATH: ${.CURDIR}/../boot0
 

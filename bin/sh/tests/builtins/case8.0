@@ -1,4 +1,4 @@
-# $FreeBSD: 8d9f8b604d881432af08994224d066aee8f2dfe4 $
+# $FreeBSD$
 
 case aZ_ in
 [[:alpha:]_][[:upper:]_][[:alpha:]_]) ;;

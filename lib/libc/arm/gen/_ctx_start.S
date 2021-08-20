@@ -1,6 +1,6 @@
 #include <machine/asm.h>
 
-.ident	"$FreeBSD: faedfb5c6443c1fc6351dfdb367f051fdb3aba35 $"
+.ident	"$FreeBSD$"
 ENTRY(_ctx_start)
 	mov	lr, pc
 	mov	pc, r4

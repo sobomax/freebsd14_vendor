@@ -1,4 +1,4 @@
-.\" $FreeBSD: 02e80c7feff26fd2f56a33c27a5b06c30e2b0de0 $
+.\" $FreeBSD$
 Set to not build
 .Xr iscsid 8
 and related utilities.

@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec7029454386cb2435c41154718229dfc24b7ed7 $");
+__FBSDID("$FreeBSD$");
 
 const char	*version = "version 20121220 (FreeBSD)";
 

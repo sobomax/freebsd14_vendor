@@ -1,4 +1,4 @@
-# $FreeBSD: d754a588a6f01e6cab2e94f51c0a95e6ef434d3b $
+# $FreeBSD$
 
 .include <src.opts.mk>
 MK_SSP=		no

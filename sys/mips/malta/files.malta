@@ -1,4 +1,4 @@
-# $FreeBSD: 507ab0ff9818e9b5d4d2a494249e79f9a7606823 $
+# $FreeBSD$
 mips/malta/gt.c				standard
 mips/malta/gt_pci.c			standard
 mips/malta/gt_pci_bus_space.c			standard

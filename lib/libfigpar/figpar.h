@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f2dc45b288aedea7f7767eeb4d311fe30dd3ca6c $
+ * $FreeBSD$
  */
 
 #ifndef _FIGPAR_H_

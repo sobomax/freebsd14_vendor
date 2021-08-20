@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9fb84670e2cfaf1539861c246e3664dc0e5746c9 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SiS 190/191 PCI Ethernet NIC driver.

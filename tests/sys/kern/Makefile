@@ -1,4 +1,4 @@
-# $FreeBSD: 0ab4a70a41b8f895efad4f7ca4f9e66d7cc9b1c4 $
+# $FreeBSD$
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/kernel
 .PATH:		${SRCTOP}/sys/kern

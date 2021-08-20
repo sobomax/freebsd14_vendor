@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e8770f22ce113d3178bdb33670599693ce0a73bd $
+# $FreeBSD$
 
 # LMAC (BGX controller) interface description
 #

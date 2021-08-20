@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)tss.h	5.4 (Berkeley) 1/18/91
- * $FreeBSD: a3176376917575e4e0fbcedf6900b88517003d13 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_TSS_H_

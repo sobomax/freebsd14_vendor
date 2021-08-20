@@ -46,7 +46,7 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: 949ea090331b8c4fb4c41fbac53a93469e67f411 $");
+__FBSDID("$FreeBSD$");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else

@@ -1,6 +1,6 @@
 /*	OpenBSD: qsphyreg.h,v 1.2 1999/03/09 00:02:45 jason Exp 	*/
 /*	NetBSD: qsphyreg.h,v 1.1 1998/08/11 00:01:03 thorpej Exp 	*/
-/*	$FreeBSD: eaa566b6c409d4c55b389122afcecc2382afadcd $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

@@ -1,4 +1,4 @@
-.\" $FreeBSD: d33ba227da7f79cc313fb0318e36cd99c17f981a $
+.\" $FreeBSD$
 Set to disable assertions and statistics gathering in
 .Xr malloc 3 .
 It also defaults the A and J runtime options to off.

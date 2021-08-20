@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cbecf82a48dfc53a84574b7a0e2a65b8311d7625 $
+ * $FreeBSD$
  */
 
 // $Id: binstream.h,v 1.1 2006/07/05 10:47:54 ivoras Exp $

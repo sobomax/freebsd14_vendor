@@ -1,4 +1,4 @@
-/* $FreeBSD: 97c89dc89eeee8d6d3be6fffde0a72ce583242db $ */
+/* $FreeBSD$ */
 /*	$NetBSD: citrus_iconv_std_local.h,v 1.2 2003/07/01 09:42:16 tshiozak Exp $	*/
 
 /*-

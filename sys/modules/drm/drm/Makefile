@@ -1,4 +1,4 @@
-# $FreeBSD: 41e8a6fd861428cb5df8972216c496bed6ed5025 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD	= drm

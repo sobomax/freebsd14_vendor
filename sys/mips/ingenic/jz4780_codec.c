@@ -31,7 +31,7 @@
 /* Ingenic JZ4780 CODEC. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ccd56807020a5d5b000cf268f29d67f321c77552 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

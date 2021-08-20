@@ -1,4 +1,4 @@
-# $FreeBSD: 7ff3fe98ecd0723bf0764e1b0723469fb6dc8d94 $ 
+# $FreeBSD$ 
 # $NetBSD: EUC-JIS-2004.src,v 1.1 2007/03/05 16:58:35 tnozaki Exp $
 
 NAME		"EUC-JIS-2004"

@@ -1,6 +1,6 @@
 /*
  * @(#)des_crypt.h	2.1 88/08/11 4.0 RPCSRC;	from 1.4 88/02/08 (C) 1986 SMI
- * $FreeBSD: ef938c5cc900fd0507c16e040f9cb92440772f01 $
+ * $FreeBSD$
  *
  * des_crypt.h, des library routine interface
  * Copyright (C) 1986, Sun Microsystems, Inc.

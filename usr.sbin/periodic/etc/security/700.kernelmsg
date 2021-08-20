@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8bf6491901edd5eac981cf3f7539f2e35ada530c $
+# $FreeBSD$
 #
 
 # Show kernel log messages

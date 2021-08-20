@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68bc1070ba373364ecd568448bb8ef824a473c1c $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_log(x)
  * Return the logrithm of x

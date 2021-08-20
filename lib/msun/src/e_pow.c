@@ -10,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69ddb7ffcb483370da0fe2da6f50e713b3a55b8c $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_pow(x,y) return x**y
  *

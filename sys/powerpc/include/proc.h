@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: proc.h,v 1.2 1997/04/16 22:57:48 thorpej Exp $
- * $FreeBSD: d01b6cda4dcdcc2875138824aae1502b9372e34d $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PROC_H_

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: d86589b84bcb2b1d1978e91ec7973db4a4c647da $
+# $FreeBSD$
 #
 
 # PROVIDE: disks

@@ -1,4 +1,4 @@
- $FreeBSD: 4ac414d0b9264e27d56b75e5ce460be5fc907c02 $
+ $FreeBSD$
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;
 ; System call name/number master file.

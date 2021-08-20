@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: fb0bd72f7eae2c61fcb1ae3a733df9493be9331e $
+ *	$FreeBSD$
  */
 
 #define _gss_buffer_zero(buffer) \

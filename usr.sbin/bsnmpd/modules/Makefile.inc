@@ -1,4 +1,4 @@
-# $FreeBSD: bf633958e82b3e30e01884a7a426922eea944834 $
+# $FreeBSD$
 
 SHLIB_MAJOR=	6
 PACKAGE=	bsnmp

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7fe78d13e806cc812b9dc5a49d0edc4449b34747 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Analog PLL and power regulator driver for Freescale i.MX6 family of SoCs.

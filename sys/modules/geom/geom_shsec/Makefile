@@ -1,4 +1,4 @@
-# $FreeBSD: 79d29ea4b205b5986a2e4ec46e6d2db37fdaf0a3 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/shsec
 

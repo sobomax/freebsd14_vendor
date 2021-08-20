@@ -1,4 +1,4 @@
-/* $FreeBSD: 26e49f9b2979086538554374c2df07d84e45938c $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from aesni-gcm-x86_64.pl. */
 .text	
 

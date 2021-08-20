@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de0ebd8801a6203a284cadc00f5e1d05e829b5f0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * EHCI driver for Tegra SoCs.

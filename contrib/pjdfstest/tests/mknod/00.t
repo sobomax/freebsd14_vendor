@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: f10aa7f1926a63ea8b8715d9664240ac4e5e79ce $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/00.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mknod creates fifo files"
 

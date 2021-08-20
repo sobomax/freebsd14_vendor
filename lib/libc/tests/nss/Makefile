@@ -1,4 +1,4 @@
-# $FreeBSD: c2f6e0940c073dc532ccc863c4a730f2b841b829 $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/resolv
 

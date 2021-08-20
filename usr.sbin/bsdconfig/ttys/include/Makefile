@@ -1,4 +1,4 @@
-# $FreeBSD: 45c72adf4f13b4f2c919a56949acb6e5f544e2ad $
+# $FreeBSD$
 
 FILESDIR=	${LIBEXECDIR}/bsdconfig/150.ttys/include
 FILES=		messages.subr

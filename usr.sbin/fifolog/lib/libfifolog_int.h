@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 69cd734331956ee8dad7aaac466f0605480c1139 $
+ * $FreeBSD$
  */
 
 struct fifolog_file {

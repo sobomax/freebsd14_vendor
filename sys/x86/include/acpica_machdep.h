@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 05e8711c16faacc0276da2cdf68312ec5bb506e3 $
+ * $FreeBSD$
  */
 
 /******************************************************************************

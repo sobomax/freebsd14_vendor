@@ -1,7 +1,7 @@
 /*
  * Magyar kalendárium
  *
- * $FreeBSD: 5084dc7295b6ef1e24934b8285390bfeae8242dd $
+ * $FreeBSD$
  */
 
 #ifndef _hu_HU_ISO8859_2_all_

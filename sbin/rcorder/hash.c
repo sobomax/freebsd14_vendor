@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3dcb770549603e745ac2a93f9b58e9ce15a12e11 $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: hash.c,v 1.1.1.1 1999/11/19 04:30:56 mrg Exp $	*/
 
 /*-

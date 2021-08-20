@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: 3de8cb2a0b8321d1d4b4398af86d3454c5430775 $
+# $FreeBSD$
 #
 
 set -e

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 6efc01d09c5ecd5886307fc98427dc2dfbbb5e70 $
+.\" $FreeBSD$
 Set to use the unified object directory format for
 .Xr build 7
 targets.

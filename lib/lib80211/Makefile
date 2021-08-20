@@ -1,4 +1,4 @@
-# $FreeBSD: 54efe869b84a09f26ba44045a177fd5e8c2e8840 $
+# $FreeBSD$
 
 CONFS=	regdomain.xml
 PACKAGE=lib${LIB}

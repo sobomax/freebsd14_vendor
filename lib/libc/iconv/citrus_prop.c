@@ -1,4 +1,4 @@
-/* $FreeBSD: 7ac39bbee6e5232c043c519a4c6ca66bfb0c85a2 $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_prop.c,v 1.4 2011/03/30 08:22:01 jruoho Exp $ */
 
 /*-

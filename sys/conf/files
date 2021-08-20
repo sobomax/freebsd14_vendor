@@ -1,4 +1,4 @@
-# $FreeBSD: 89d9d7be86c00a97539d2712dce703a4b4edc619 $
+# $FreeBSD$
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and

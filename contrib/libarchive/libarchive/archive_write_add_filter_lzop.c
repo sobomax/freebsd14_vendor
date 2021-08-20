@@ -25,7 +25,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: 3bd9062e4d327a1490e95bd2a77a1c5ac635cca1 $");
+__FBSDID("$FreeBSD$");
 //#undef HAVE_LZO_LZOCONF_H
 //#undef HAVE_LZO_LZO1X_H
 

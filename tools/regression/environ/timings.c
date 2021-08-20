@@ -34,7 +34,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7999fa156d7e71fea5be0b1db4d33adee608f88b $");
+__FBSDID("$FreeBSD$");
 
 
 const char value1[] = "Large ------------------ value";

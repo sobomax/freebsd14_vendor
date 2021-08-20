@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 2262af803a5dd7a81cb138d09ac79aa2e9de3ca3 $
+# $FreeBSD$
 # A really simple script to create a swap-backed msdosfs filesystem, then test to
 # make sure the case conversion issue described in msdosfs_lookup.c rev 1.46
 # is fixed.

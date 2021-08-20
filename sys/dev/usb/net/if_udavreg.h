@@ -1,6 +1,6 @@
 /*	$NetBSD: if_udavreg.h,v 1.2 2003/09/04 15:17:39 tsutsui Exp $	*/
 /*	$nabe: if_udavreg.h,v 1.2 2003/08/21 16:26:40 nabe Exp $	*/
-/*	$FreeBSD: d892700620bfe775b12769fceaaa2e4e4ed479bd $	*/
+/*	$FreeBSD$	*/
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *

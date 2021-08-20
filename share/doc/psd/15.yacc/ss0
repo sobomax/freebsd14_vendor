@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss0	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 223e90fbac54eb8da65dfd60268d8f57cd01a3bd $
+.\" $FreeBSD$
 .SH
 0: Introduction
 .PP

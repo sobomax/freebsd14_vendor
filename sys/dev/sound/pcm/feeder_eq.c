@@ -46,7 +46,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: 4c3cf0f14de30e75ab60db014bf05c96f57699af $");
+SND_DECLARE_FILE("$FreeBSD$");
 #endif
 
 #include "feeder_eq_gen.h"

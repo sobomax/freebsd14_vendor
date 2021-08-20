@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: da3b2afe239f7ab4ee7677f997ad06b7a6a7a60d $
+# $FreeBSD$
 #
 
 import argparse

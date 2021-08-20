@@ -1,4 +1,4 @@
-# $FreeBSD: 329f2684ac6f09f9b3a17b4cf96f1295ceccb21d $
+# $FreeBSD$
 
 mkimg_blksz_list="512 4096"
 mkimg_format_list="qcow qcow2 raw vhd vhdf vhdx vmdk"

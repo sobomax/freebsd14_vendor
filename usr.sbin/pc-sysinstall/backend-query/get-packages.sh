@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5979090359097aa3fde4c10080313ba10ea948f0 $
+# $FreeBSD$
 
 # Script which lists the available packages for this release
 ###########################################################################

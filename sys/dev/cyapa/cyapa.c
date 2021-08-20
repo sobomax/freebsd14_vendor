@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 293d68e9abdc34478539196c24debf5635ff7268 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * CYAPA - Cypress APA trackpad with I2C Interface driver

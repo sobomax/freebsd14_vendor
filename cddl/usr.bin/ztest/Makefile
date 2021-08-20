@@ -1,4 +1,4 @@
-# $FreeBSD: 5b44aa2d8097486b9ba1bb968da4071bd6bd6545 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/ztest
 

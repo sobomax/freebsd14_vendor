@@ -30,7 +30,7 @@
  *
  *	from: NetBSD: sbusvar.h,v 1.15 2008/04/28 20:23:36 martin Exp
  *
- * $FreeBSD: 38cad40a6839d5cfca380185cfc2b2c2f344dfa1 $
+ * $FreeBSD$
  */
 
 #ifndef _SPARC64_SBUS_OFW_SBUS_H_

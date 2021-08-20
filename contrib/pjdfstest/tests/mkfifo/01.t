@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: b3156e95c528b4384e8ab2e9afeb24306e2e312b $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/01.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="mkfifo returns ENOTDIR if a component of the path prefix is not a directory"
 

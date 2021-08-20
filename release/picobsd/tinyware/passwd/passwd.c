@@ -44,7 +44,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)passwd.c	8.3 (Berkeley) 4/2/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 419396390afecaf1c591e7470b435bada215bb78 $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/types.h>

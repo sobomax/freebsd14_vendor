@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: 07c08e2ef8f2922d9700eb72f022596b9f4f7ffe $
+ * $FreeBSD$
  */
 
 void block(void);

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c835e2049ec70e0ad9dbb6c88a4a297a4f544ef4 $
+ * $FreeBSD$
  */
 
 struct sockaddr_dl;

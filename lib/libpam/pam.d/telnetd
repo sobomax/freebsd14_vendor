@@ -1,5 +1,5 @@
 #
-# $FreeBSD: fb2f523d4ad1a1250c6df652aaf5bcf384922c82 $
+# $FreeBSD$
 #
 # PAM configuration for the "telnetd" service
 #

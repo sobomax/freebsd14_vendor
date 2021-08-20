@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9383d0db37c6750945dc0554159deb30a9db5db $");
+__FBSDID("$FreeBSD$");
 
 /*
  * fabsf(x) returns the absolute value of x.

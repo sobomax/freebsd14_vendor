@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 83442c2d0d4a8185d28140649097398bd15f71be $");
+__FBSDID("$FreeBSD$");
 
 /*
  * CIS Handling for the Cardbus Bus

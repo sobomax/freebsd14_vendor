@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: fa4736370e92663875f0fb3f36de7bdc8a11f581 $
+ * $FreeBSD$
  */
 
 #ifndef _NETGRAPH_NG_BRIDGE_H_

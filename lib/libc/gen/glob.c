@@ -39,7 +39,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)glob.c	8.3 (Berkeley) 10/13/93");
-__FBSDID("$FreeBSD: b014c8b716fad23a3794813499013ec934e8eeeb $");
+__FBSDID("$FreeBSD$");
 
 /*
  * glob(3) -- a superset of the one defined in POSIX 1003.2.

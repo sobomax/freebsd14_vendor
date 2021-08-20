@@ -6,7 +6,7 @@
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *  Copyright (c) 2016, Randy Westlund
  *
- * $FreeBSD: b06a227890fc78620aff0c0611b99aeba61eba30 $
+ * $FreeBSD$
  */
 #ifndef USERNAME_H
 #define USERNAME_H

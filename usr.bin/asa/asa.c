@@ -38,7 +38,7 @@
 __RCSID("$NetBSD: asa.c,v 1.11 1997/09/20 14:55:00 lukem Exp $");
 #endif
 #endif
-__FBSDID("$FreeBSD: 22174ed340cd05edb42ef9d511e38bc5e7335d82 $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <stdio.h>

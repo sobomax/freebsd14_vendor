@@ -1,4 +1,4 @@
-# $FreeBSD: 410e9526593f38bf26419a2c91838f995b549083 $
+# $FreeBSD$
 
 PACKAGE=examples
 FILESDIR= ${SHAREDIR}/examples/smbfs/print

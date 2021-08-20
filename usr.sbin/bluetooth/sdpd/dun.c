@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: dun.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: 8c21604a05aa945599c1db14482ea68b1d1c1369 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

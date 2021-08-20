@@ -1,4 +1,4 @@
-# $FreeBSD: add92276e076bba516128d3a29e0413e2378bb4b $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/fs/msdosfs
 KMOD=	msdosfs_iconv

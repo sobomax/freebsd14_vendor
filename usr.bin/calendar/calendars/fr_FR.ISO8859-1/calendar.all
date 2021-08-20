@@ -1,7 +1,7 @@
 /*
  * Calendrier français
  *
- * $FreeBSD: 785512e543d317f21096ef72879e94a7e880cf73 $
+ * $FreeBSD$
  */
 
 #ifndef _fr_FR_ISO8859_1_all_

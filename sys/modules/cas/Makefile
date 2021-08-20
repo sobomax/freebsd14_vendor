@@ -1,4 +1,4 @@
-# $FreeBSD: 2e6fcfb4cb45ae9bb78794c6381cf8f6b2e717f5 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/cas
 

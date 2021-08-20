@@ -28,7 +28,7 @@
 #define R600D_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92f35de9cd6c13912025108621b12edae6460c59 $");
+__FBSDID("$FreeBSD$");
 
 #define CP_PACKET2			0x80000000
 #define		PACKET2_PAD_SHIFT		0

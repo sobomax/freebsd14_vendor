@@ -1,4 +1,4 @@
-# $FreeBSD: 137b146f855375d4018ee5d9da45a6052a7030bc $
+# $FreeBSD$
 
 PROG=	unix_cmsg
 SRCS=	${AUTOSRCS} unix_cmsg.c uc_common.h uc_common.c \

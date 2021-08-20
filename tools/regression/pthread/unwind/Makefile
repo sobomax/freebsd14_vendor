@@ -1,4 +1,4 @@
-# $FreeBSD: c4f9ac84d9fb719d6a1557458aa01e766e437cee $
+# $FreeBSD$
 all: main_thread_exit thread_normal_exit sem_wait_cancel \
      cond_wait_cancel cond_wait_cancel2 catch_pthread_exit
 

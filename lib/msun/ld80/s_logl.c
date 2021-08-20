@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a220f2a240325f5bc145055705f31e89e935345 $");
+__FBSDID("$FreeBSD$");
 
 /**
  * Implementation of the natural logarithm of x for Intel 80-bit format.

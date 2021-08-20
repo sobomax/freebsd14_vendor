@@ -1,4 +1,4 @@
-# $FreeBSD: f4b5e0ffca5c53f10c869c74a0a7316c8665f1fb $
+# $FreeBSD$
 
 # Precondition
 (cd /bin) || exit

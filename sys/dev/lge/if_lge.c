@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ef420a022fcdfcfe461921f9b24e52103da1ee2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Level 1 LXT1001 gigabit ethernet driver for FreeBSD. Public

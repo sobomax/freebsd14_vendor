@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91619a28dea6a03a6e1ba159617a04d850339d69 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * The FreeBSD IP packet firewall, main file

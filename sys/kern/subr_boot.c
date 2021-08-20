@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4aa135df5c83be7c136012f9720e1d783c0d062c $");
+__FBSDID("$FreeBSD$");
 
 /* Note: This is compiled in both the kernel and boot loader contexts */
 

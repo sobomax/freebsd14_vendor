@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)show.h	1.1 (Berkeley) 5/4/95
- * $FreeBSD: 1dbdaa152b3353c7720bdb11f889e2c245334c36 $
+ * $FreeBSD$
  */
 
 void showtree(union node *);

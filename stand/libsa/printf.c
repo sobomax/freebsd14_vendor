@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1602a2dc519dc58f376bd402ae15d5ab6fb4561b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Standaloneified version of the FreeBSD kernel printf family.

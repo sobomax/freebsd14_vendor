@@ -3,7 +3,7 @@
 # RISC Implementation) FPGA soft core, as configured in its Terasic DE-4
 # reference configuration.
 #
-# $FreeBSD: 72386f136243968cbc2a3ed6126607b5a208c742 $
+# $FreeBSD$
 #
 
 include "BERI_DE4_BASE"

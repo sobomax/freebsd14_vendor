@@ -1,4 +1,4 @@
-# $FreeBSD: f6d158ba4034b84c45f2a311e7262f4d90865937 $
+# $FreeBSD$
 
 # You really want:
 # PRINTERDEVICE=ps

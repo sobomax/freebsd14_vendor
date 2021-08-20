@@ -1,4 +1,4 @@
-$ $FreeBSD: da3734d04d50b4255a66dcce36328c3afd06c1af $
+$ $FreeBSD$
 $
 $ Message catalog for it_IT.ISO8859-15 locale
 $

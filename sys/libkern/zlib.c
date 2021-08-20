@@ -10,7 +10,7 @@
  * - added inflateIncomp and deflateOutputPending
  * - allow strm->next_out to be NULL, meaning discard the output
  *
- * $FreeBSD: 7b1fe99387c3b28a2aa26d7358432e37e1c5dc1a $
+ * $FreeBSD$
  */
 
 /* 

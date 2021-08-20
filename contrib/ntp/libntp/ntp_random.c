@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ada44f256b042fc5f6c7286013890dc5a7e8cdc $
+ * $FreeBSD: src/lib/libc/stdlib/random.c,v 1.4.2.2 1999/09/05 11:16:45 peter Exp $
  *
  */
 

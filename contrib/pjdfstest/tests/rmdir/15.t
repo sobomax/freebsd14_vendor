@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: a81ab2b5aeaa81cf65bb104fb2aecd9fe37f7f22 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/15.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rmdir returns EFAULT if the path argument points outside the process's allocated address space"
 

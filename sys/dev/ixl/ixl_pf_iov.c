@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 36f1aae28d61511265fb1076ce7c66e226a387cf $*/
+/*$FreeBSD$*/
 
 #include "ixl_pf_iov.h"
 

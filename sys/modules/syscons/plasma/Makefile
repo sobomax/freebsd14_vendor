@@ -1,4 +1,4 @@
-# $FreeBSD: 6864a5e4ecb236c0039f22d2c1ddd5b9209e2ca8 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/syscons/plasma
 

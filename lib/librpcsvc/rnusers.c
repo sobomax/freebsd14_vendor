@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a68de5578c58ec61edfb8faffe727f1909c8d29 $");
+__FBSDID("$FreeBSD$");
 
 #if !defined(lint) && defined(SCCSIDS)
 static char sccsid[] = "@(#)rnusers.c	1.2 91/03/11 TIRPC 1.0; from 1.7 89/03/24 SMI";

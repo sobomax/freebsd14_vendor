@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: e1123905236d88732030b5cb9d8b4b91f023e7b8 $
+ *	$FreeBSD$
  */
 /*
  * The ti_stats structure below is from code with the following copyright, 

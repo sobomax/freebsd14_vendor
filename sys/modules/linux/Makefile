@@ -1,4 +1,4 @@
-# $FreeBSD: 7ff1fdd1a17ee7fb31b4ad0069c77fc8a72dc88c $
+# $FreeBSD$
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32

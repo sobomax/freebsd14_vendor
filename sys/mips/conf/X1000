@@ -1,6 +1,6 @@
 # X1000 -- Kernel config for Ingenic X1000 boards
 #
-# $FreeBSD: 09b81f7c1811b85b67caf9c397e66a000d75c1c1 $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

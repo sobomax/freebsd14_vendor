@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: d2e72f1a24c4da71449048327d8458ff8d18c428 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

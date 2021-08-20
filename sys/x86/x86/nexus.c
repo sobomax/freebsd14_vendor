@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91877499ca6c7d05ad774e4f0bc09a7f9fcd62eb $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This code implements a `root nexus' for Intel Architecture

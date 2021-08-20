@@ -40,7 +40,7 @@
  * important not to run this code in a fast loop or the test will
  * fail.
  *
- * $FreeBSD: 417a2d8c15d5e5469400b29d7fe4c796c49e6a30 $
+ * $FreeBSD$
  */
 
 #include <unistd.h>

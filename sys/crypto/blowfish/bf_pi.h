@@ -1,4 +1,4 @@
-/*	$FreeBSD: fdd5a27e914e82e9cf2aac685c4de75f0ba60014 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: bf_pi.h,v 1.4 2001/09/10 04:03:56 itojun Exp $	*/
 
 /* crypto/bf/bf_pi.h */

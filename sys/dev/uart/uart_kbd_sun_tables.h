@@ -2,7 +2,7 @@
  * Automatically generated from sun.us.unix.kbd.
  * DO NOT EDIT!
  *
- * $FreeBSD: e7dc6120510433d2251f053b3c823e926c77949e $
+ * $FreeBSD$
  */
 static keymap_t keymap_sun_us_unix_kbd = { 0x80, {
 /*                                                         alt

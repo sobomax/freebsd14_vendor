@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36409cc0add19fb175b85baf42599f41eab80476 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Manage an environment-like space in which string variables may be stored.

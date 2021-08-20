@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e950077d09d72d3ac3f6423a1bc9eb58f7b735ab $
+ * $FreeBSD$
  */
 
 /* DMA Channel Registers */

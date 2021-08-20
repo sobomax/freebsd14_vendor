@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0edaea85f5b6a6851f54125bc435d79cf66c77f5 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator

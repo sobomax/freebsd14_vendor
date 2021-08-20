@@ -1,2 +1,2 @@
-.\" $FreeBSD: 7455c21b6cf6fc082db15889860653b251480015 $
+.\" $FreeBSD$
 Set to not build and install vi, view, ex and related programs.

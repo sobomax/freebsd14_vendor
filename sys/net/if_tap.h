@@ -33,7 +33,7 @@
  */
 
 /*
- * $FreeBSD: 9718cee4e2d6767db1692655b9ed94cb6f86f95c $
+ * $FreeBSD$
  * $Id: if_tap.h,v 0.7 2000/07/12 04:12:51 max Exp $
  */
 

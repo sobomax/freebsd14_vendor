@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b64686f78693969a8a92e7ab0cd8b5ec539722e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Access to the Freescale i.MX6 On-Chip One-Time-Programmable Memory

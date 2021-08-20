@@ -1,4 +1,4 @@
-# $FreeBSD: d3008f6e627183742c66cb7fb306c0ac1654898f $
+# $FreeBSD$
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distextract

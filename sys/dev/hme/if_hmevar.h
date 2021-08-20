@@ -30,7 +30,7 @@
  *
  *	from: NetBSD: hmevar.h,v 1.5 2000/06/25 01:10:04 eeh Exp
  *
- * $FreeBSD: a84a8c150c1fceb41bbceb17ec04ed35cea1d1d2 $
+ * $FreeBSD$
  */
 
 #include <sys/callout.h>

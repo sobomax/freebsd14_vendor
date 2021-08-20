@@ -1,4 +1,4 @@
-# $FreeBSD: 50d543d2fe6f266fbbc3867667727df872cfd8cf $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/iscsi_initiator
 KMOD=iscsi_initiator

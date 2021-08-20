@@ -1,4 +1,4 @@
-# $FreeBSD: a7a01003d81b7a6ff2c2e8179f382f4429192b9f $
+# $FreeBSD$
 # $NetBSD: Makefile.inc,v 1.3 2007/03/05 16:57:14 tnozaki Exp $
 
 CODE=	CNS

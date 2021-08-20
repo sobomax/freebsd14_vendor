@@ -1,4 +1,4 @@
-# $FreeBSD: 8dd4567c6c7a352add9086c4cb4e8edab6cc94fa $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/cam/ctl
 

@@ -23,7 +23,7 @@
  * Authors:
  *	Eric Anholt <eric@anholt.net>
  *
- * $FreeBSD: 1ab8d0c00f966664ed2d9980c8f85eba00635dfc $
+ * $FreeBSD$
  */
 
 /**

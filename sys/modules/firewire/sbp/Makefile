@@ -1,4 +1,4 @@
-# $FreeBSD: 7023b8df99b17c370d8efe4fc2e9653e1e96aaf2 $
+# $FreeBSD$
 
 # Makefile for the SBP-II (Serial Bus Protocol 2/SCSI over IEEE1394)
 

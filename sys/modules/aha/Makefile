@@ -1,4 +1,4 @@
-# $FreeBSD: 2f1e1759475ad533e893b5ac6c69253408dbb0bc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/aha
 

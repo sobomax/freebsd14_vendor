@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: b3c6708b5da5f832ec14a877589fb176dde25d83 $");
+__FBSDID("$FreeBSD$");
 #include "SYS.h"
 
 #if defined(LIBC_SCCS) && !defined(lint)

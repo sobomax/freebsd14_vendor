@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 2ad96b7c22e361cb03492be71ee621519a5d4dbb $
+# $FreeBSD$
 
 PROG=	caesar
 LIBADD=	m

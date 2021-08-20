@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fvwrite.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 406f138d7db86b766e955dc3c178220f7ce8530b $
+ * $FreeBSD$
  */
 
 /*

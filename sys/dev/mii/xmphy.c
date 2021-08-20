@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0c67e4d19e5ecf87246d89227b426c1e5f2a312 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for the XaQti XMAC II's internal PHY. This is sort of

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b528a9ac246cb58032c33020f050bbea08097e71 $
+# $FreeBSD$
 #
 
 # PROVIDE: root

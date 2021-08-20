@@ -36,7 +36,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: 5268a03a7c7dfd5f3ab0bff48e16d8caf26a9107 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_CONF_H_

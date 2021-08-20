@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)getproto.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec7ee39447a579009078e98314fbd54aa8deecc3 $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <netdb.h>

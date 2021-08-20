@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 66da254b6d7016d84ebb6ac8aea86b7b9082d7ce $
+ * $FreeBSD$
  */
 
 /*

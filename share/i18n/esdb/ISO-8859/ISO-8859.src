@@ -1,4 +1,4 @@
-# $FreeBSD: 102ff1c48a17b9d7d514709e34f7447e7d015595 $ 
+# $FreeBSD$ 
 # $NetBSD: ISO-8859.src,v 1.1 2003/06/27 08:40:56 tshiozak Exp $
 
 NAME		"ISO-8859-x"

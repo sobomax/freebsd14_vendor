@@ -31,7 +31,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 149458baa331d033359b46d91b9fbd933c3b9e33 $");
+__FBSDID("$FreeBSD$");
 #ifndef lint
 static const char copyright[] =
 "@(#) Copyright (c) 1980, 1992, 1993\n\

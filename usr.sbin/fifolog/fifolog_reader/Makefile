@@ -1,4 +1,4 @@
-# $FreeBSD: 2dd103f91f2c1aaa9208ec592a7c038ebb4f9235 $
+# $FreeBSD$
 
 PROG=	fifolog_reader
 

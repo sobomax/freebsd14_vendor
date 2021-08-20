@@ -1,4 +1,4 @@
-# $FreeBSD: 270b592447ecd8aecf8fdc82ab91f2bee5a74787 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/sbni
 

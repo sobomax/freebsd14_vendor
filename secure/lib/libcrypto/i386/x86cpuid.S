@@ -1,4 +1,4 @@
-/* $FreeBSD: 6029b2df04feedc64d9bfbab8a869c85fc9b0647 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x86cpuid.pl. */
 #ifdef PIC
 .text

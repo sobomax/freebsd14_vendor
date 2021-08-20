@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: ad9a3e353fd1c5490ba941ca03023bea8c5d3ef8 $
+-- $FreeBSD$
 --
 
 local config = require("config")

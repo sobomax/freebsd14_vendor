@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1c84382d4fbd907aba5dcc75dfb83ccf7af20c8d $
+ * $FreeBSD$
  *
  * Convert MS-DOS FAT format timestamps to and from unix timespecs
  *

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 11637a69b188a87e7f481f47dfa7f296010a28c3 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: rtadvd.c,v 1.82 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*-

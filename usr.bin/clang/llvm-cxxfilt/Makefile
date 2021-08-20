@@ -1,4 +1,4 @@
-# $FreeBSD: b5aa8b34b8e29534405141c01fdcab7fabd3170e $
+# $FreeBSD$
 
 PROG_CXX=	llvm-cxxfilt
 

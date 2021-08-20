@@ -1,4 +1,4 @@
-# $FreeBSD: 29a951a6aac04dbfc373eae1deb13a544f09ff62 $
+# $FreeBSD$
 
 .if !target(__${_this}__)
 __${_this}__:

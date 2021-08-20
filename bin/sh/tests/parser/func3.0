@@ -1,4 +1,4 @@
-# $FreeBSD: dcac7323ad3fb6a85c7db6fadc072ca86d14ea1a $
+# $FreeBSD$
 
 name=/var/empty/nosuch
 f() { true; } <$name

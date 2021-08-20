@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8516f7f2598c72b30783ea0f13093cf0113c2d49 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Regression tests for the closefrom(2) system call.

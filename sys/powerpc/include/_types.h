@@ -35,7 +35,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: 7915f5627579b1066df7c4c8fdafb0f12cb0f31f $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE__TYPES_H_

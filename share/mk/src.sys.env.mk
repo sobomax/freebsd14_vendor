@@ -1,4 +1,4 @@
-# $FreeBSD: 6f8dcbf22c1ccaf32f9253dbbada87dda71d2cf7 $
+# $FreeBSD$
 
 # early setup only see also src.sys.mk
 

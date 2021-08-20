@@ -1,4 +1,4 @@
-# $FreeBSD: 84225f4a1d0e2bf5c735170288d0c626763130bd $
+# $FreeBSD$
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libc/tls/${.CURDIR:T}
 

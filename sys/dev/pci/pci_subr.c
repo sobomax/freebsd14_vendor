@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d00a576cf392cda81216d9342823485dcc98cafd $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Support APIs for Host to PCI bridge drivers and drivers that

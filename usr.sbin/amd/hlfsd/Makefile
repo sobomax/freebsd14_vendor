@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: 7e82cc148f2dc8ef92e4ace137249b0522bb4182 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/contrib/amd/hlfsd
 

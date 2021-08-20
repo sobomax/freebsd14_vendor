@@ -1,4 +1,4 @@
-#	$FreeBSD: b4357c2ea652f1a9722c11137978b802bbb06b25 $
+#	$FreeBSD$
 #
 # Copyright (c) 2018		Conrad Meyer <cem@FreeBSD.org>
 # Copyright (c) 2002, 2003	Sam Leffler, Errno Consulting

@@ -1,4 +1,4 @@
-# $FreeBSD: 46446b5f477c29dd4ba82949635316e9a2d577ef $
+# $FreeBSD$
 
 
 # BINDIR

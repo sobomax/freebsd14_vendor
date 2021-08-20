@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: 509f77e95fd35224a5abd5dcab92bceeccad5cf6 $
+ * $FreeBSD$
  */
 
 extern int retval;

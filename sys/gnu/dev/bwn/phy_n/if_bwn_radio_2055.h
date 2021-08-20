@@ -24,7 +24,7 @@
 */
 
 /*
- * $FreeBSD: a47e9c8e6ae055c4a3e16e600c20a00fff3bc635 $
+ * $FreeBSD$
  */
 
 #ifndef	__IF_BWN_RADIO_2055_H__

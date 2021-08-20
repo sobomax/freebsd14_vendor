@@ -23,7 +23,7 @@
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
  *
- * $FreeBSD: c433a9fe09ebb2b61b049d727a9362f9a6aa21e0 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_STACK_H_

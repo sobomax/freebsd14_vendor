@@ -32,7 +32,7 @@
  * LC_NUMERIC database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2950420897ca76823968184b3b5b0589cb32e0b4 $");
+__FBSDID("$FreeBSD$");
 
 #include <stdio.h>
 #include <stdlib.h>

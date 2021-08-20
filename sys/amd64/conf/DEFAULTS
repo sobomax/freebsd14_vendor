@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/amd64
 #
-# $FreeBSD: e6af042986a08bda426ed5f91335d1f081a1c103 $
+# $FreeBSD$
 
 machine		amd64
 

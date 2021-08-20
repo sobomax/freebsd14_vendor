@@ -1,5 +1,5 @@
 /*	$NetBSD: pmap_svc.c,v 1.2 2000/10/20 11:49:40 fvdl Exp $	*/
-/*	$FreeBSD: 991a28d680fb5efef864c1a7b5588b79a94aeb24 $ */
+/*	$FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

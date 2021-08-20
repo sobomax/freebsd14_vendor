@@ -1,4 +1,4 @@
-# $FreeBSD: fbae4c0f6420881833375b38bb792b728a149637 $
+# $FreeBSD$
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.links.mk cannot be included directly.

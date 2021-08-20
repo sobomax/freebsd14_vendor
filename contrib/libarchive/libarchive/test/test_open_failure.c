@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5316a872b6a8129bc8c4780cab89495345e967a1 $");
+__FBSDID("$FreeBSD$");
 
 #define MAGIC 123456789
 struct my_data {

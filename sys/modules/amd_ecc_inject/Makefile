@@ -1,4 +1,4 @@
-# $FreeBSD: 1e17eb31d0a2229092235e33886935c3db672304 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/amd_ecc_inject
 

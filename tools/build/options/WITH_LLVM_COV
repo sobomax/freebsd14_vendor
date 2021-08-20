@@ -1,4 +1,4 @@
-.\" $FreeBSD: f19556d501fc24a8088eb49f6c0f980768abb31e $
+.\" $FreeBSD$
 Set to build the
 .Xr llvm-cov 1
 tool.

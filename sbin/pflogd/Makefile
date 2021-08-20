@@ -1,4 +1,4 @@
-# $FreeBSD: 423bfab8c8a2535093e894a84d95648d7238378d $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/contrib/pf/pflogd
 

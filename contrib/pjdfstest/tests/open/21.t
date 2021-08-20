@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: f8436da963b18753535e636e9318b437e5536590 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/open/21.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="open returns EFAULT if the path argument points outside the process's allocated address space"
 

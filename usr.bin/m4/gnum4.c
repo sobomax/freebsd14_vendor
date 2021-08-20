@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0903378616191d3963c2efbe5a567b9655fa649 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * functions needed to support gnu-m4 extensions, including a fake freezing

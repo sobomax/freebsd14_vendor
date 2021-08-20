@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 2950b4760feb59b4c43d7ef8f6f201ef4c91420e $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_SPEAKER_H_

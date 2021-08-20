@@ -1,6 +1,6 @@
 /*
  * $NetBSD: rpcb_stat.c,v 1.2 2000/07/04 20:27:40 matt Exp $
- * $FreeBSD: 361ae4c7f2bb8a89b82277b1f47e21057dab8153 $
+ * $FreeBSD$
  */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

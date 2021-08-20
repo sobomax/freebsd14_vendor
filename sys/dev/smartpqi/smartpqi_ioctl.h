@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 57f4d6952eb841c6c694356392e43208eaf3aacb $ */
+/* $FreeBSD$ */
 
 #ifndef	_PQI_IOCTL_H_
 #define	_PQI_IOCTL_H_

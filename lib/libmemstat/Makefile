@@ -1,4 +1,4 @@
-# $FreeBSD: 8554eb0482e8f25c0edcaab1898c8428361364a4 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 WARNS?=		3

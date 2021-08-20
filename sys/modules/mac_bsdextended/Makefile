@@ -1,4 +1,4 @@
-# $FreeBSD: 32899e9e7a34768f7ee8391928d4da301e16d57b $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/security/mac_bsdextended
 

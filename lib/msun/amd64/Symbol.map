@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 3da32ffcc990f793f0614d088dbd9f6c84f97822 $
+ * $FreeBSD$
  */
 FBSD_1.0 {
 	fesetexceptflag;

@@ -1,4 +1,4 @@
-/* $FreeBSD: e7ef55d378c6730d891a85258ce4a1eebfe32904 $ */
+/* $FreeBSD$ */
 /* libxo/xo_config.h.  Generated from xo_config.h.in by configure.  */
 /* libxo/xo_config.h.in.  Generated from configure.ac by autoheader.  */
 

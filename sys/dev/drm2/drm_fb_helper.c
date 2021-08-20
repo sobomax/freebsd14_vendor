@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf98d2f9dfecfb5e20b12fea1f4fa7a96a20a832 $");
+__FBSDID("$FreeBSD$");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 

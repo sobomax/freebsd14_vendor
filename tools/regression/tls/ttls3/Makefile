@@ -1,4 +1,4 @@
-# $FreeBSD: b171181e74fbcdfa5de9367519584fd4b2f322e6 $
+# $FreeBSD$
 
 all: ttls3
 

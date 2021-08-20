@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5d3fe89d7a2448b0dc3e6b54bd0beb473f5494d4 $
+# $FreeBSD$
 
 # Various regression tests for the tzsetup handling in the 'update' command.
 

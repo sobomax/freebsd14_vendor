@@ -1,4 +1,4 @@
-# $FreeBSD: 2eeac79ae8c3fced2e343d663d9b2e0ee5bc94c7 $
+# $FreeBSD$
 
 shname=${SH%% *}
 shname=${shname##*/}

@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)readmsg.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 93c916d3640577022a9122563d629d63e09ef592 $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #define	TSPTYPES

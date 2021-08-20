@@ -1,4 +1,4 @@
-# $FreeBSD: 1e67928a27543c6df806d1303f987ce081ad6918 $
+# $FreeBSD$
 #
 # The include file <bsd.man.mk> handles installing manual pages and
 # their links.

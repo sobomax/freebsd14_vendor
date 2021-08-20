@@ -1,4 +1,4 @@
-/* $FreeBSD: 0c8aa895ead267990f4598092b94dc85c372259b $ */
+/* $FreeBSD$ */
 
 #include <sys/types.h>
 #include <sys/event.h>

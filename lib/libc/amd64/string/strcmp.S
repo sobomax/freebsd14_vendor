@@ -4,7 +4,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 787e1e07b1b0e43a78286c97f615f1518b37c2fa $");
+__FBSDID("$FreeBSD$");
 
 #if 0
 	RCSID("$NetBSD: strcmp.S,v 1.3 2004/07/19 20:04:41 drochner Exp $")

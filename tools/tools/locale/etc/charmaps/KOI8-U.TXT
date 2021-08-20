@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 4570af2fab2c6a0c0f463840667f517190f5ef19 $
+# $FreeBSD$
 #
 #	Name:             KOI8-U (RFC2319) to Unicode
 #	Unicode version:  5.1

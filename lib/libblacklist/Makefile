@@ -1,4 +1,4 @@
-# $FreeBSD: 8187479a5e629915ddf9153fc759a7a2fdff67d8 $
+# $FreeBSD$
 
 BLACKLIST_DIR=${SRCTOP}/contrib/blacklist
 

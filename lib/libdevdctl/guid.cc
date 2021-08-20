@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
  *
- * $FreeBSD: 42d326f19e3fb21d41a42f4cd94a44bb0a7a0a68 $
+ * $FreeBSD$
  */
 
 /**
@@ -48,7 +48,7 @@
 
 #include "guid.h"
 
-__FBSDID("$FreeBSD: 42d326f19e3fb21d41a42f4cd94a44bb0a7a0a68 $");
+__FBSDID("$FreeBSD$");
 /*============================ Namespace Control =============================*/
 using std::string;
 namespace DevdCtl

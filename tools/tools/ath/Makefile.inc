@@ -1,4 +1,4 @@
-#	$FreeBSD: d0ed24b041f4cef33b2fd7b7515b5cd6277330ef $
+#	$FreeBSD$
 
 BINDIR=	/usr/local/bin
 MAN=

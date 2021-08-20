@@ -1,4 +1,4 @@
-# $FreeBSD: 6ac215101de37d42020da2e50734d28b92648924 $
+# $FreeBSD$
 
 .PATH: ${.CURDIR}/../tablegen
 

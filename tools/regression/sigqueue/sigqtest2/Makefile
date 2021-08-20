@@ -1,4 +1,4 @@
-# $FreeBSD: 30ae7840ebc599ddfaec476e4684da805a0a1661 $
+# $FreeBSD$
 
 PROG=sigqtest2
 MAN=

@@ -1,4 +1,4 @@
-/* $FreeBSD: b9c6f7e98a690eb0ab77389ec79686bcc798d612 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from vpaes-x86_64.pl. */
 .text	
 

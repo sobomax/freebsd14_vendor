@@ -1,4 +1,4 @@
-# $FreeBSD: 8405bd11c3c4a6a750c9308cc481b8a8c063e3e2 $
+# $FreeBSD$
 
 _spath=	${SRCTOP}/contrib/ofed/opensm/libvendor
 .PATH: ${_spath}

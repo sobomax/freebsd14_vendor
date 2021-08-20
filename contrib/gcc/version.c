@@ -1,4 +1,4 @@
-/* $FreeBSD: 549b413ab6fe6d4c521ef62df233c3092269b812 $ */
+/* $FreeBSD$ */
 #include "version.h"
 
 /* This is the trailing component of the string reported as the

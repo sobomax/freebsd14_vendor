@@ -43,7 +43,7 @@
  * Author: Ken Merry <ken@FreeBSD.org>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbb131b6e2921117afc546137a36efb29175adc6 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

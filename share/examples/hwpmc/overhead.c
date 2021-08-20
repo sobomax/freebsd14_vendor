@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 372babee35d04f598b652d3aa9a7a79631773b25 $
+ * $FreeBSD$
  *
  * Author: George V. Neville-Neil
  *

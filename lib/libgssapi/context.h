@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: dcb08df2a3a84a23a26acc7ec3851198a19ca258 $
+ *	$FreeBSD$
  */
 
 struct _gss_context {

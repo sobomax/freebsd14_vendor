@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0fca15e48ef26da3c47e49219178c43a4c2530c1 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

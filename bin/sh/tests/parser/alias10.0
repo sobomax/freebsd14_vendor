@@ -1,4 +1,4 @@
-# $FreeBSD: 30d99f49bbf4ad41a9920860d5d94ef1d1a3913e $
+# $FreeBSD$
 
 # This test may start consuming memory indefinitely if it fails.
 ulimit -t 5 2>/dev/null

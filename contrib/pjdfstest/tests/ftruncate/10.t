@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: c8b8eaade6b384bc921eb7ae201ca574e90da5ac $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/10.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="truncate returns EROFS if the named file resides on a read-only file system"
 

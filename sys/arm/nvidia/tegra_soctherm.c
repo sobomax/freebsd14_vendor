@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ab77ec8232d8ec7ecce8c7bbb0a1bb9de04d122 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Thermometer and thermal zones driver for Tegra SoCs.

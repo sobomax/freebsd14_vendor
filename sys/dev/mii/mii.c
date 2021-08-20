@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57294f4c096c118a67261079c6776649e1a0ae94 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MII bus layer, glues MII-capable network interface drivers to sharable

@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: fda16fda71ffde4e018796cf91f5df7daa4d7de9 $
+-- $FreeBSD$
 --
 
 local cli = require("cli")

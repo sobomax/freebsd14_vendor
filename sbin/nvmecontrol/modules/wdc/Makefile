@@ -1,4 +1,4 @@
-# $FreeBSD: 40c77254fbea219a72057725c5c380418073abfb $
+# $FreeBSD$
 
 LIB=	wdc
 SRCS=	wdc.c

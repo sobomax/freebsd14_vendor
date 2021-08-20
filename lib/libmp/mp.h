@@ -1,4 +1,4 @@
-/* $FreeBSD: 78f09fd4a129e5a331e5cac25994ce6409d3ba76 $ */
+/* $FreeBSD$ */
 
 #ifndef _MP_H_
 #define _MP_H_

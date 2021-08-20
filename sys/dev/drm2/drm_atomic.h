@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53155c7029bc36b4854d30871057e29279c1da93 $");
+__FBSDID("$FreeBSD$");
 
 typedef u_int		atomic_t;
 typedef uint64_t	atomic64_t;

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7812a518f4bb9b9468d459fcdea5884a40d661fa $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the TDK 78Q2120 MII

@@ -28,7 +28,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: ead4ff1a9806464cb7f97a86baea61d9f2bef78c $
+# $FreeBSD$
 
 # Testcase # 11 is racy; uses an undocumented kernel interface for testing
 #            locking

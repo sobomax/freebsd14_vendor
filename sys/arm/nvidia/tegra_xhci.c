@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7615e8809e61f3cb3598629c9703c03d9d77aff0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * XHCI driver for Tegra SoCs.

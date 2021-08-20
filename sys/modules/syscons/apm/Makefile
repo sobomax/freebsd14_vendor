@@ -1,4 +1,4 @@
-# $FreeBSD: 9214d2d90a0008261a688429e5383a6de75c5f8e $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/syscons/apm
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 34453b7117149dd249574bf7126424d83c29bd4f $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/granular/01.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="NFSv4 granular permissions checking - ACL_READ_ATTRIBUTES and ACL_WRITE_ATTRIBUTES"
 

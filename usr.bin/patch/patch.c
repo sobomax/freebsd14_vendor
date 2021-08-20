@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: patch.c,v 1.54 2014/12/13 10:31:07 tobias Exp $
- * $FreeBSD: a23fc82d3d90256d7c3fe1d0c01d87a9be431069 $
+ * $FreeBSD$
  *
  */
 

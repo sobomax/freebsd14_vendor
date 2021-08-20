@@ -1,4 +1,4 @@
-/* $FreeBSD: 033ed0b134a3e1e15d02ff53b6c5f405cde3be89 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from sha1-armv8.pl. */
 #include "arm_arch.h"
 

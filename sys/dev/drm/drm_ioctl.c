@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 357d29fd161f185f46fbd888c994f740a4496ed8 $");
+__FBSDID("$FreeBSD$");
 
 /** @file drm_ioctl.c
  * Varios minor DRM ioctls not applicable to other files, such as versioning

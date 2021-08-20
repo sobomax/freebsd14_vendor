@@ -1,4 +1,4 @@
-/* $FreeBSD: 5cf3183955f86a111b8aab9107da887fdcabb3c7 $ */
+/* $FreeBSD$ */
 
 #include <sys/param.h>
 

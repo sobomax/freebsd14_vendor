@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a05805ca75ac071fcee6e5bad1f3e7e32922fbc $
+ * $FreeBSD$
  */
 
 #include <linux/kmod.h>

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)siginterrupt.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 2d7f9950776e1d6decb974f9f94a67d4ebf6127d $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <signal.h>

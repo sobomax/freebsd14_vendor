@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2d4f6f5e24234d9a8be538ac15c4b427ed201340 $
+ * $FreeBSD$
  */
 
 int	 asprintf_l(char **, locale_t, const char *, ...) __printflike(3, 4);

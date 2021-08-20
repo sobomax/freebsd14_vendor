@@ -1,5 +1,5 @@
 # $NetBSD: t_sdiff.sh,v 1.1 2012/03/17 16:33:15 jruoho Exp $
-# $FreeBSD: 51aac6ba80f3af7d86350a4ea486600f87614d84 $
+# $FreeBSD$
 #
 # Copyright (c) 2008, 2009 The NetBSD Foundation, Inc.
 # All rights reserved.

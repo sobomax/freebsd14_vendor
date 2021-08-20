@@ -1,4 +1,4 @@
-# $FreeBSD: f6eff154fba73da25b1d81781dd7718bdf4681ab $
+# $FreeBSD$
 # $Id: meta.stage.mk,v 1.55 2017/10/27 01:17:09 sjg Exp $
 #
 #	@(#) Copyright (c) 2011-2017, Simon J. Gerraty

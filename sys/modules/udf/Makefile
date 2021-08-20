@@ -1,4 +1,4 @@
-# $FreeBSD: 2f97e9155df33d5a74fdb6a77a4916b951ddeb19 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/udf
 

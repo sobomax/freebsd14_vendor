@@ -1,4 +1,4 @@
-# $FreeBSD: a755772437f624431830e1fb26b4bf81d2193f66 $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/hyperv/storvsc \
 	${SRCTOP}/sys/dev/hyperv/vmbus \

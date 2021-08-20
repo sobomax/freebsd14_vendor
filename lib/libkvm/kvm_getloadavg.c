@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f2a5f69bcf0f3d8aec6ae679ef3644cfdc1f58e $");
+__FBSDID("$FreeBSD$");
 __SCCSID("@(#)kvm_getloadavg.c	8.1 (Berkeley) 6/4/93");
 
 #include <sys/param.h>

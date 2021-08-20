@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: f6bc35d74701db203a5ff146cdcfd5f3d4f66280 $
+ * $FreeBSD$
  */
 
 scrmap_t scrmap = {

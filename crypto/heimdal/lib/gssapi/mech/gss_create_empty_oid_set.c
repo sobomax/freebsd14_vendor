@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 8d880f5511610ffd3670111f4215f2ef7c6ac472 $
+ *	$FreeBSD: src/lib/libgssapi/gss_create_empty_oid_set.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
  */
 
 #include "mech_locl.h"

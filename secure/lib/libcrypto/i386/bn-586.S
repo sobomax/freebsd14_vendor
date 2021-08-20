@@ -1,4 +1,4 @@
-/* $FreeBSD: 36f3a376b61cdb69ecc88c5983b079c7f4f46621 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from bn-586.pl. */
 #ifdef PIC
 .text

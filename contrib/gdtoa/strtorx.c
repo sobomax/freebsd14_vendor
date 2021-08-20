@@ -29,7 +29,7 @@ THIS SOFTWARE.
 /* Please send bug reports to David M. Gay (dmg at acm dot org,
  * with " at " changed at "@" and " dot " changed to ".").	*/
 
-/* $FreeBSD: 640ba6109b93e8b1008c95e6684edae3c45bcd6b $ */
+/* $FreeBSD$ */
 
 #include "gdtoaimp.h"
 

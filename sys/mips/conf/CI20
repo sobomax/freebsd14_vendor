@@ -1,6 +1,6 @@
 # CI20 -- Kernel config for Creator CI20 board
 #
-# $FreeBSD: 0479e5e9fb4d1aa8312ee75c8af9529487f08de7 $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

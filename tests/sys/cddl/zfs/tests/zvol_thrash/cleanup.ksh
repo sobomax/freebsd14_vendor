@@ -26,7 +26,7 @@
 #
 # ident	"@(#)cleanup.ksh	1.2	07/01/09 SMI"
 #
-# $FreeBSD: b60eb1ebf1de9b69fbeb859fe0c4196f4defcc35 $
+# $FreeBSD$
 
 . ${STF_SUITE}/include/libtest.kshlib
 . ${STF_SUITE}/include/libgnop.kshlib

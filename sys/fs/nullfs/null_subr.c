@@ -33,7 +33,7 @@
  *
  *	@(#)null_subr.c	8.7 (Berkeley) 5/14/95
  *
- * $FreeBSD: 0bebba9b13f7e858bfe214c0a4177cdb820730cd $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

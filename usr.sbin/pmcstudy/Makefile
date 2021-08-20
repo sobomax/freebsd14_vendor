@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: 18fd151b65990bbbf1fd75472805543ab7381486 $
+# $FreeBSD$
 
 PROG=	pmcstudy
 MAN=	pmcstudy.8

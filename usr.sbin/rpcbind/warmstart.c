@@ -36,7 +36,7 @@
 
 /*
  * #ident	"@(#)warmstart.c	1.7	93/07/05 SMI"
- * $FreeBSD: 74ad91231e3dd17fd4c5d2840e5fb990f1e12816 $/
+ * $FreeBSD$/
  */
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 94b4b0c22fc7680a3ba0d210c4ea9433caab70e4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/pcf
 

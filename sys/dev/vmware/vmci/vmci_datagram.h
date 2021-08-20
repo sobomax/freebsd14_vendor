@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD: 8b48c973a905065d2641a5a0482b90bd027aa196 $
+ * $FreeBSD$
  */
 
 /* Internal functions in the VMCI Simple Datagram API */

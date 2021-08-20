@@ -1,4 +1,4 @@
-# $FreeBSD: 7bac0729987e2160cdc1d6e47c9f8753f8f92ac6 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/security/mac_portacl
 

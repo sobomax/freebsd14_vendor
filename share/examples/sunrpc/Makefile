@@ -4,7 +4,7 @@
 #
 #   Build all demo services
 #
-# $FreeBSD: d5044c92148682008ec420f01313c08d9b7a851a $
+# $FreeBSD$
 #
 
 PACKAGE=examples

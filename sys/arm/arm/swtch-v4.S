@@ -86,7 +86,7 @@
 #include <machine/armreg.h>
 #include <machine/vfp.h>
 
-__FBSDID("$FreeBSD: 17c8f80096647fa7efd4e974ac2d75ea649dc35f $");
+__FBSDID("$FreeBSD$");
 
 
 #define GET_PCPU(tmp, tmp2) \

@@ -1,4 +1,4 @@
-# $FreeBSD: 9d958f369bc1900bab9740493909dc3fd1ef18a2 $
+# $FreeBSD$
 
 CALENDAR_FILE="-f ${SRCDIR}/calendar.calibrate"
 CALENDAR_BIN="calendar"

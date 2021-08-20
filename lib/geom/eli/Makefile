@@ -1,4 +1,4 @@
-# $FreeBSD: e36eece7a6e232466777bbdaa9349643f6b77a97 $
+# $FreeBSD$
 
 PACKAGE=runtime
 .PATH: ${.CURDIR:H:H}/misc ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2

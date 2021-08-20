@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 77c853751beb34038c0350fe2681f17a67b63696 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for 3Com internal PHYs

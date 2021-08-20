@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4423e8a4ca91bebd2b149212ab1f3eb3ce9111f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IEEE 802.11i AES-CCMP crypto support.

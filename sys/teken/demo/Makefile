@@ -1,4 +1,4 @@
-# $FreeBSD: 1ade690afe22429932dd558fee4637461fb164a8 $
+# $FreeBSD$
 
 PROG=	teken_demo
 LDADD=	-lncursesw -lteken -lutil

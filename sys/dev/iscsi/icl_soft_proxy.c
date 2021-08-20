@@ -68,7 +68,7 @@
 #ifdef ICL_KERNEL_PROXY
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 905e3b7fb25e02f7c37b8d37e8811be35f4af886 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7ec49ce1cec5d8bc7e072298b2dbcf55fccbf33d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Automounter

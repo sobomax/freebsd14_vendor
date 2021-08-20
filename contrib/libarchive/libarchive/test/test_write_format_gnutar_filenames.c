@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 655e998ed827d567416b960d356838ea6c9224d4 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Inspired by Github issue #682, which reported that gnutar filenames

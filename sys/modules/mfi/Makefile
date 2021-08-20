@@ -1,4 +1,4 @@
-# $FreeBSD: 53f4164add7bc61831460906135f264957cd2c5d $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mfi
 

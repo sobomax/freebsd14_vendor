@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 8b32e3e19d5becee71aeb03eb348ee754d5c4901 $
+# $FreeBSD$
 #
 
 # PROVIDE: ntpd

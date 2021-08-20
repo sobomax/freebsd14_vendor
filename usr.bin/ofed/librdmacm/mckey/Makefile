@@ -1,4 +1,4 @@
-# $FreeBSD: f0dd7f023fed4b9d67a2690ae4dd66a3e97af8cd $
+# $FreeBSD$
 
 PROG=	mckey
 MAN=	mckey.1

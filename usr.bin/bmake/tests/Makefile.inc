@@ -1,3 +1,3 @@
-# $FreeBSD: b2201e4ea349b634f627ec3e1c85e729bcc25d09 $
+# $FreeBSD$
 
 SUBDIR_PARALLEL= t

@@ -9,7 +9,7 @@ delim רר
 .\" this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 .\" ----------------------------------------------------------------------------
 .\"
-.\" $FreeBSD: 83888ae9871aa2f695ff7fe7560e5b6dfd3d42b2 $
+.\" $FreeBSD$
 .\"
 .if n .ND
 .TI

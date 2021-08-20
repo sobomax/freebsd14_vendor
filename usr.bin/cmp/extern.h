@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
  *
- * $FreeBSD: 84507b1929dc91332586993f81ea30230b58dc6c $
+ * $FreeBSD$
  *
  */
 

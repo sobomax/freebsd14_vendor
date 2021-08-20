@@ -1,3 +1,3 @@
-# $FreeBSD: a7689f6841a5e69777f82a599cfb33e25ccab5a1 $
+# $FreeBSD$
 
 [ "$(OPTIND=42 ${SH} -c 'printf %s "$OPTIND"')" = 1 ]

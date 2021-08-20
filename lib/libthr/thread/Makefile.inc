@@ -1,4 +1,4 @@
-# $FreeBSD: 34b881a69637b3934a56417edf51d6811f4fadbc $
+# $FreeBSD$
 
 # thr sources
 .PATH: ${.CURDIR}/thread

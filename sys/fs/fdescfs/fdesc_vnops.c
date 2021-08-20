@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc_vnops.c	8.9 (Berkeley) 1/21/94
  *
- * $FreeBSD: 127bdccd8c40d8ce194693a19fc79e1c04463649 $
+ * $FreeBSD$
  */
 
 /*

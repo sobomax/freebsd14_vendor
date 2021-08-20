@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.5 1999/07/23 09:44:38 mrg Exp $
-#	$FreeBSD: 6efe9ccbe6139880fd07944707f940c106d6cd91 $
+#	$FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	usbhid

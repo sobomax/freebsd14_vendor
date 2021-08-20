@@ -1,4 +1,4 @@
-/* $FreeBSD: ed0881d7520ab1571c8b547e6ad348a5e3cf7cde $ */
+/* $FreeBSD$ */
 /* $NetBSD: in_cksum.c,v 1.7 1997/09/02 13:18:15 thorpej Exp $ */
 
 /*-

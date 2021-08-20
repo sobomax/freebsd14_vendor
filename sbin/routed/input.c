@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 116d15ca743795ecdd1ff8d59112e6dbaeebc50e $
+ * $FreeBSD$
  */
 
 #include "defs.h"
@@ -36,7 +36,7 @@
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 116d15ca743795ecdd1ff8d59112e6dbaeebc50e $");
+__RCSID("$FreeBSD$");
 #else
 __RCSID("$Revision: 2.26 $");
 #ident "$Revision: 2.26 $"

@@ -8,7 +8,7 @@
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *
- * $FreeBSD: 9e56b9e3a1a582864d746464b3a4bf7fc0f73c93 $
+ * $FreeBSD$
  */
 
 /*  This file contains the routines that interface to termcap and stty/gtty.

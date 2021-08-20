@@ -1,4 +1,4 @@
-# $FreeBSD: dbaabc25410b624b1500b16bb184c9f1e0af115a $
+# $FreeBSD$
 
 PROG=	fixwhite
 BINDIR=	/usr/bin

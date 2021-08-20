@@ -29,7 +29,7 @@
 #define __RS600D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7a5b716f396707a410027bbe929bec3ac1db684 $");
+__FBSDID("$FreeBSD$");
 
 /* Registers */
 #define R_000040_GEN_INT_CNTL                        0x000040

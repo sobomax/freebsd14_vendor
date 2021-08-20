@@ -1,4 +1,4 @@
-/*	$FreeBSD: ae0859c22d2c15ba6e73e72e29d55c7fd31c9d9f $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: parse.y,v 1.83 2004/05/18 08:48:23 sakane Exp $	*/
 
 /*-

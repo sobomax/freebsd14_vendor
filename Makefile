@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 30c162f2778a85470d05cac6cb3f704e3009a7a2 $
+# $FreeBSD$
 #
 # The user-driven targets are:
 #

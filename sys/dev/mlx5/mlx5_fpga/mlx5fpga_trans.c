@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 801388f37a8dfa3b61972cc5bcd96ea8809b3f19 $
+ * $FreeBSD$
  */
 
 #include <dev/mlx5/mlx5_fpga/trans.h>

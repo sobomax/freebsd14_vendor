@@ -18,7 +18,7 @@
  *								       *
  ***********************************************************************
  *
- * $FreeBSD: 4fa5735e2d456db69abd99a6f07c094e78daed7a $
+ * $FreeBSD$
  *
  * This header file defines the Network Time Protocol (NTP) interfaces
  * for user and daemon application programs.

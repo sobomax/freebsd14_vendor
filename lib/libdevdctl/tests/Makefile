@@ -1,4 +1,4 @@
-# $FreeBSD: ce256bb88a8c4d78384b2c5f8f859645989d24c1 $
+# $FreeBSD$
 
 TESTSDIR= ${TESTSBASE}/lib/libdevdctl
 

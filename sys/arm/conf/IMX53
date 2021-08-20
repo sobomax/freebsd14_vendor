@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 7b7d67bbca9c9ef458701f2ff7247eda5e57e966 $
+# $FreeBSD$
 
 ident		IMX53
 

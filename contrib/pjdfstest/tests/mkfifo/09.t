@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 80437d3325c9ace4d7862d4feafeee5ad5aefaed $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/09.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="mkfifo returns EEXIST if the named file exists"
 

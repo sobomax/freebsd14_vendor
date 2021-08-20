@@ -1,4 +1,4 @@
-# $FreeBSD: a32e95dd36414155b85112a61e9e2f073f8239e2 $
+# $FreeBSD$
 
 ARCHS+=	rs6000
 

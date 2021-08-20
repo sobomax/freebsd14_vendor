@@ -1,4 +1,4 @@
-# $FreeBSD: 6aaf583007f531343eeaf4113ad329652e6faa11 $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/sparc64/fpu
 

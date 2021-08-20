@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 94697faf2fddbb1117ab2e19c6107fc94f9d104c $
+# $FreeBSD$
 
 # Quad support, if needed
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/quad ${LIBC_SRCTOP}/quad

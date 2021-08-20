@@ -38,7 +38,7 @@
  *
  *	@(#)ar.h	8.2 (Berkeley) 1/21/94
  *
- * $FreeBSD: 01a57a57d785a952c48a91c7d39e45576dcc0ba0 $
+ * $FreeBSD$
  */
 
 #ifndef _AR_H_

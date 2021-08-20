@@ -37,7 +37,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 4de4c24f678f9572c6c51f552e142a52625d273d $
+ * $FreeBSD$
  */
 
 VERSION = "$Id: //depot/aic7xxx/aic7xxx/aic7xxx.seq#58 $"

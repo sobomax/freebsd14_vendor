@@ -23,7 +23,7 @@
  * Authors:
  *    Eric Anholt <eric@anholt.net>
  *
- * $FreeBSD: 8da5e017f190e666e67634d5aba03256ad259691 $
+ * $FreeBSD$
  */
 
 #ifndef _I830_BIOS_H_

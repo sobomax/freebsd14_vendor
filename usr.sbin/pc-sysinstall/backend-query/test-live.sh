@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5779ccaa967d6ced79650f00a925949fe7a8025c $
+# $FreeBSD$
 
 # Script which checks if we are running from install media, or real system
 #############################################################################

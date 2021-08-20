@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4be5f8d463608cec7787a65512fce0cf24daa5d $");
+__FBSDID("$FreeBSD$");
 
 #include <crypto/blowfish/blowfish.h>
 #include <opencrypto/xform_enc.h>

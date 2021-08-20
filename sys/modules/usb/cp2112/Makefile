@@ -1,5 +1,5 @@
 #
-# $FreeBSD: eb9652f8797544db8685a2d419734264587ed28e $
+# $FreeBSD$
 #
 # Copyright (c) Andriy Gapon <avg@FreeBSD.org>
 #

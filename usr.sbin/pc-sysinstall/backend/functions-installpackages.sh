@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 09a7abb99401a38665ab0da5139ba94c1454b595 $
+# $FreeBSD$
 
 # Functions which check and load any optional packages specified in the config
 

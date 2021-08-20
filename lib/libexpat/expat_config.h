@@ -1,4 +1,4 @@
-/* $FreeBSD: d4cb92cafdb5f973a2eba9060592ac2b19fe5606 $ */
+/* $FreeBSD$ */
 
 /* expat_config.h.  Generated from expat_config.h.in by configure.  */
 /* expat_config.h.in.  Generated from configure.ac by autoheader.  */

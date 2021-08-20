@@ -4,7 +4,7 @@
  *
  * David Xu <davidxu@freebsd.org>
  *
- * $FreeBSD: 914b220f5e7ecca492c4a904ee5b4704eb575427 $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbca87ba888798005ccc0cbc28b39e22c0b66778 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef ATOM_H
 #define ATOM_H

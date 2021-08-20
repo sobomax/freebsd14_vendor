@@ -1,4 +1,4 @@
-# $FreeBSD: 73649ea4ff3827f238c92f23b9a328df11c00b15 $ 
+# $FreeBSD$ 
 # $NetBSD: ISO-2022-CN-EXT.src,v 1.1 2006/10/26 15:06:18 tnozaki Exp $
 
 NAME		"ISO-2022-CN-EXT"

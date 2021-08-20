@@ -21,7 +21,7 @@
 static const char rcsid[] = "$Id: inet_cidr_pton.c,v 1.6 2005/04/27 04:56:19 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 413db6c979e20ef19e270c94c7f074f257cf1dd3 $");
+__FBSDID("$FreeBSD$");
 
 #include "port_before.h"
 

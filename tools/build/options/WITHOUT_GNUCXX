@@ -1,3 +1,3 @@
-.\" $FreeBSD: ce10636009e20270a0bf48595f7bcb8f4047ff3b $
+.\" $FreeBSD$
 Do not build the GNU C++ stack (g++, libstdc++).
 This is the default on platforms where clang is the system compiler.

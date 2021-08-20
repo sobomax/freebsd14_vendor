@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 83aa87f1919efb97ef604938cb339b3773b95820 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * strchr(s, c)

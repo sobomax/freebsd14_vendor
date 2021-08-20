@@ -1,4 +1,4 @@
-.\" $FreeBSD: 1a0504d281a622b3fb4a7b4c75a36a77149f5db9 $
+.\" $FreeBSD$
 Set to not build and install the portable BSD make (bmake) as
 .Xr make 1
 instead of the traditional FreeBSD make.

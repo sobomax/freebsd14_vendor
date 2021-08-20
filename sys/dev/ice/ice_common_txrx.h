@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 8fb3d49288d865d7b98257a78fd25fc5ebdec4a2 $*/
+/*$FreeBSD$*/
 
 /**
  * @file ice_common_txrx.h

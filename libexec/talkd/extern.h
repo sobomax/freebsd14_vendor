@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5c1f9bdea0e70e17a24827432435b4754ffbbe9b $
+ * $FreeBSD$
  */
 
 extern int debug;

@@ -1,6 +1,6 @@
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff3bbbccdd38b1150fbcf032b34e9fe5dc0f46fc $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __RADEON_KMS_H__
 #define	__RADEON_KMS_H__

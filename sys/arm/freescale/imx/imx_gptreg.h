@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e1c13b7d0d6ad327412ac83e397f21652b750904 $
+ * $FreeBSD$
  */
 
 /* Registers definition for Freescale i.MX515 Generic Periodic Timer */

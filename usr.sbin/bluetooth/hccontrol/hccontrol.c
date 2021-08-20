@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.c,v 1.5 2003/09/05 00:38:24 max Exp $
- * $FreeBSD: 4fc78054fd7bf65c12d737631de97095f977f93e $
+ * $FreeBSD$
  */
 
 #define L2CAP_SOCKET_CHECKED

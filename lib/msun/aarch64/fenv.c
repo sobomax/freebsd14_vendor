@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ec362f1054c57dd6df5c727cd615b54e8887438 $
+ * $FreeBSD$
  */
 
 #define	__fenv_static

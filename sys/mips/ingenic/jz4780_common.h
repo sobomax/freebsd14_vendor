@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fee5faff8c00063bd51fa2a1bc5784ffcad41cd1 $
+ * $FreeBSD$
  */
 
 #define	READ4(_sc, _reg)	\

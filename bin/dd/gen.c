@@ -1,7 +1,7 @@
 /*-
  * This program is in the public domain
  *
- * $FreeBSD: d53d8fb2b5ac6054928abf9ef85af26e1a1a5948 $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

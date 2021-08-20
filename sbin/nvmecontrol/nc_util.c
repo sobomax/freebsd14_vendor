@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f73256003a53d2bef80e711890470feefc50b84 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include "nvmecontrol.h"

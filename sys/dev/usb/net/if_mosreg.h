@@ -1,4 +1,4 @@
-/* $FreeBSD: b8034feb8e44b0128ed3924016fd730852cafcf6 $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2010, 2011 Rick van der Zwet <info@rickvanderzwet.nl>
  *

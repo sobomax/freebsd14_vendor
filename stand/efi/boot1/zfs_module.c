@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5550879a322776186a62932e487b39e9de0e3135 $
+ * $FreeBSD$
  */
 #include <stddef.h>
 #include <stdarg.h>

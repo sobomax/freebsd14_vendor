@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c051504afb29064a9858d3c83a7aa14915c1ac26 $
+ * $FreeBSD$
  */
 
 /* The 'ret' macro doesn't work in this file if GPROF is enabled. */

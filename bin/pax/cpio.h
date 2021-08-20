@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cpio.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: e5d61dea36fb7840f9d96816d09b436c3835f8b5 $
+ * $FreeBSD$
  */
 
 /*

@@ -4,7 +4,7 @@
   *
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: b31c61a0382db15b579654b67bb3988eb38d96c0 $
+  * $FreeBSD$
   */
 
 #ifndef lint

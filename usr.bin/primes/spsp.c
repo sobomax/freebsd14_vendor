@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 117333b18e2bda7ae795e3dfc800288bab8b1e26 $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #include <stddef.h>

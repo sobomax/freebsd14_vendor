@@ -7,7 +7,7 @@
 #
 # Mark Santcroos <marks@ripe.net>
 #
-# $FreeBSD: ef9527bb76b3cd4e1afdab33d20698d4e7f62478 $
+# $FreeBSD$
 
 PATH=/sbin:/usr/sbin:/usr/bin:/bin
 

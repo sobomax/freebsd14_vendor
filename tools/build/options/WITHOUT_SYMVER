@@ -1,2 +1,2 @@
-.\" $FreeBSD: c6b0eaeee15e0fa268d52d3625cf3b94f2bc2d1f $
+.\" $FreeBSD$
 Set to disable symbol versioning when building shared libraries.

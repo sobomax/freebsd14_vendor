@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b1a2903f46360386a3fa123c0409eee194f713e8 $
+ * $FreeBSD$
  */
 
 /* XXX Yes this is WAY too complicated */

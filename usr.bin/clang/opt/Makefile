@@ -1,4 +1,4 @@
-# $FreeBSD: 786d152ed804cd7dcab4fddbd67fcdd0a4a6e151 $
+# $FreeBSD$
 
 PROG_CXX=	opt
 

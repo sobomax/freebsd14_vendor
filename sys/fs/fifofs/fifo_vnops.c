@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fifo_vnops.c	8.10 (Berkeley) 5/27/95
- * $FreeBSD: 6527a15df089ee882cf7eae3adee25ed4c7ede97 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

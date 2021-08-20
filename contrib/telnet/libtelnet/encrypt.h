@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)encrypt.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: fedaeab067750758f8d9509f33e63866831e29da $
+ * $FreeBSD$
  */
 
 /*

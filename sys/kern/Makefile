@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/21/94
-# $FreeBSD: 5e14eb2d9ed270930d181735de2ba42741004874 $
+# $FreeBSD$
 #
 # Makefile for init_sysent
 

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d651ddda0df049a64bcb9e930878a9fda99561ac $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_apic.h"
 #include "opt_hwpmc_hooks.h"

@@ -11,7 +11,7 @@ actual details you should look at /etc/rc.diskless1, /etc/rc.diskless2,
 and the /usr/share/examples/diskless/clone_root script which can
 be useful to set up clients and server for diskless boot.
 
---- $FreeBSD: ff06be2c53932f3133c4a3f654df3bda318f4951 $ ---
+--- $FreeBSD$ ---
 ------------------------------------------------------------------------
 
 When templating, /conf/ME is typically a softlink to

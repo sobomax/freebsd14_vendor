@@ -1,4 +1,4 @@
-/* $FreeBSD: 09b2428b8012b68cf3449e62b6300f3efc78fd68 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: nfsv2.h,v 1.2 1996/02/26 23:05:23 gwr Exp $	*/
 
 /*

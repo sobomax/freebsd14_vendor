@@ -25,7 +25,7 @@
  *
  *	$NetBSD: mc146818var.h,v 1.7 2008/05/14 13:29:29 tsutsui Exp $
  *
- * $FreeBSD: 7cca69991b20ce182f904b97de28f19cb8d6629b $
+ * $FreeBSD$
  */
 
 struct mc146818_softc {

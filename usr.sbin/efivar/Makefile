@@ -1,4 +1,4 @@
-# $FreeBSD: 3bc1868bf77b0088c2a7b736dd5e44a3e688086f $
+# $FreeBSD$
 
 PROG=	efivar
 MAN=	efivar.8

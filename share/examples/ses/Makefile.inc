@@ -1,4 +1,4 @@
-# $FreeBSD: 2b1e85874d197989076149207e3c3df4dca36b3a $
+# $FreeBSD$
 #
 # Copyright (c) 2000 by Matthew Jacob
 # All rights reserved.

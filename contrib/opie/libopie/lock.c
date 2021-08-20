@@ -29,7 +29,7 @@ License Agreement applies to this software.
             Avoid NULL.
         Created at NRL for OPIE 2.2 from opiesubr2.c
 
-$FreeBSD: 865d270bb527143a22eabf45aa1a45b2b762d791 $
+$FreeBSD$
 */
 #include "opie_cfg.h"
 #if HAVE_STRING_H

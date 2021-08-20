@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2e9390d023fd518a0619ea9d7bdd5e29d1b330ed $
+ * $FreeBSD$
  */
 
 struct dst_list {

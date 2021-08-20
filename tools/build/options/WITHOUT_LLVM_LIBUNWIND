@@ -1,2 +1,2 @@
-.\" $FreeBSD: 63a904230a266827db0ab508617df085e6cfe484 $
+.\" $FreeBSD$
 Set to use GCC's stack unwinder (instead of LLVM's libunwind).

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 0c9de9f3e231c10a8942ddd20c017107132f5732 $
+.\" $FreeBSD$
 .Dd June 22, 2015
 .Dt ATRUN 8
 .Os

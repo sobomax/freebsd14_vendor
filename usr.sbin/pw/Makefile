@@ -1,4 +1,4 @@
-# $FreeBSD: 8db96d90f6e229af5e02ab678e8e7552b6be59a7 $
+# $FreeBSD$
 
 PROG=	pw
 MAN=	pw.conf.5 pw.8

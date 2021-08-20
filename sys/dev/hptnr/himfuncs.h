@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 38dfb5ce4763f1b80031ade12078e1fc6a7043b4 $
+ * $FreeBSD$
  */
 /*
  * define _HIM_INTERFACE before include this file, and

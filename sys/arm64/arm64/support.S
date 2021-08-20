@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: c5aba58c95f15dfa76bed19658bdc854188c5232 $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/setjmp.h>
 #include <machine/param.h>

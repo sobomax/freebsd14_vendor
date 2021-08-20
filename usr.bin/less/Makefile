@@ -1,4 +1,4 @@
-# $FreeBSD: 4ddef921eb140ff4c8d2aad09a29e256a2ec2c1e $
+# $FreeBSD$
 
 PROG=	less
 SRCS=	main.c screen.c brac.c ch.c charset.c cmdbuf.c command.c cvt.c \

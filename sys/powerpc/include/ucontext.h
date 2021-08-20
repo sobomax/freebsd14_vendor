@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * $NetBSD: signal.h,v 1.4 1998/09/14 02:48:34 thorpej Exp $
- * $FreeBSD: 89be2b462aafd888f715783edb4d5ae3fbf06fe2 $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_UCONTEXT_H_

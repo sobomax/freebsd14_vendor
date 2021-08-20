@@ -1,7 +1,7 @@
 #
 # TP-1043ND -- Kernel configuration file for the TP-Link WR-1043ND
 #
-# $FreeBSD: 9a526a791a874368a1223e1292e136577d7bf59e $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

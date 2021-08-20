@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: e83f6fb3634f173b4906732455c95f59260ad0f8 $
+# $FreeBSD$
 #
 
 # PROVIDE: bgfsck

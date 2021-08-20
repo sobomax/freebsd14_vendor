@@ -1,4 +1,4 @@
-# $FreeBSD: 0a396e5b51201e41df130ed314196169e0efaa83 $ 
+# $FreeBSD$ 
 # $NetBSD: KSC5601HANJA%UCS.src,v 1.2 2006/12/04 15:01:42 tnozaki Exp $
 
 TYPE		ROWCOL

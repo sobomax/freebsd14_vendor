@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: bbfe91ab8e5ee0ce3ef0bf2031073f4aab2a08e8 $");
+__FBSDID("$FreeBSD$");
 
 #include <limits.h>
 #if defined(_WIN32) && !defined(__CYGWIN__)

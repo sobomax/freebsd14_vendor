@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94df0116816c347b3ddff2396e0d5467aced607a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Perform an FPU square root (return sqrt(x)).

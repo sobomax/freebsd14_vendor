@@ -1,4 +1,4 @@
-# $FreeBSD: 1e9884f71c680d021eda82eb0a9b719e52f53afb $
+# $FreeBSD$
 
 BINDIR?=	/usr/local/bin/
 PROG=	vis_map

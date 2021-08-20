@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 5d85823792f4bafd3db3ec272e982c4e6a2549ad $
+ * $FreeBSD$
  */
 
 #ifndef _CLOUDABI64_SYSPROTO_H_

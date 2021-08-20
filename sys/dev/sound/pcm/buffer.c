@@ -40,7 +40,7 @@
 #define	SND_DECLARE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: b86b67e44344e5c9fe6bf72349ac1755a74a0068 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 struct snd_dbuf *
 sndbuf_create(device_t dev, char *drv, char *desc, struct pcm_channel *channel)

@@ -11,7 +11,7 @@
 # Copyright 2009 Douglas Barton
 # dougb@FreeBSD.org
 
-# $FreeBSD: 790154595798b6bb53a7f05e0289c316b6af4310 $
+# $FreeBSD$
 
 PATH=/bin:/usr/bin:/usr/sbin
 

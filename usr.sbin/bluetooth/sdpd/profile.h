@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: profile.h,v 1.6 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: 82e0e37f853d2320521003d954929b8968ea9edc $
+ * $FreeBSD$
  */
 
 #ifndef _PROFILE_H_

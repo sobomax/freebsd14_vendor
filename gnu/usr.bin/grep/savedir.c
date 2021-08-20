@@ -18,7 +18,7 @@
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu>. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6aabe31e793c1980533f0e901c7709e3d97372b0 $");
+__FBSDID("$FreeBSD$");
 
 #if HAVE_CONFIG_H
 # include <config.h>

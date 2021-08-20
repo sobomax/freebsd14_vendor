@@ -1,4 +1,4 @@
-/*	$FreeBSD: 2c3cacc1b4996c1ac8a708fc8c99ed2cc6c20613 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: des_locl.h,v 1.7 2001/09/10 04:03:58 itojun Exp $	*/
 
 /* crypto/des/des_locl.h */

@@ -1,4 +1,4 @@
-$FreeBSD: edeba708cb18fe7bf5867f28ac6377cd09fd63c9 $
+$FreeBSD$
 
 This document contains a collection of notes specific to the import
 of the NetBSD test suite into head.  These notes are built on the instructions

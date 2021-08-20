@@ -1,4 +1,4 @@
-# $FreeBSD: 05f57cb2a6b9be10b5e20ec400005f6084493712 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/tdfx
 

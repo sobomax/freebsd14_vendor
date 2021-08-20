@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c088752fe02e7fc884ab362ec606a085ebaeb1b8 $
+ * $FreeBSD$
  */
 
 struct bundle;

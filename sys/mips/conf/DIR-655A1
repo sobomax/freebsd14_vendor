@@ -4,7 +4,7 @@
 # This contains a QCA9558 MIPS74k SoC with on-board 3x3 2GHz wifi,
 # 128MiB RAM, an AR8327 5-port gigabit ethernet switch.
 #
-# $FreeBSD: bae498828a4db7d752042166720b66cc7a66e471 $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

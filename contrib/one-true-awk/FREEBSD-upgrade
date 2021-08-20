@@ -1,4 +1,4 @@
-# $FreeBSD: f0f70ab7b17bae388cba5b502d18bf36ec463343 $
+# $FreeBSD$
 
 Import of the 2005/04/24 version of the "one true awk", as described
 in "The AWK Programming Language", by Al Aho, Brian Kernighan, and

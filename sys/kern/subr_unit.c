@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9855deeba1b42e365b6f91fc4af8a3d581ca2f6b $
+ * $FreeBSD$
  *
  *
  * Unit number allocation functions.

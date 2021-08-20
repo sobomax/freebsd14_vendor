@@ -1,4 +1,4 @@
-# $FreeBSD: e2d2e02897a519022419d93acc5bdd6b26ccbc11 $
+# $FreeBSD$
 
 PACKAGE=examples
 FILES=	README

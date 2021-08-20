@@ -18,4 +18,4 @@ Operator					Associativity
 ?: (C++, third operand)				right to left
 ,						left to right
 
-$FreeBSD: 758737ba14f0db5b0781574f39406bf6bca73235 $
+$FreeBSD$

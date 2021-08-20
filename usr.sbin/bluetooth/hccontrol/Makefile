@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.7 2003/08/14 20:06:17 max Exp $
-# $FreeBSD: 1d34c4b66af141df72f9aa9cc594d1c1def3af51 $
+# $FreeBSD$
 
 CONFS=		bluetooth.device.conf
 CONFSDIR=	/etc/defaults

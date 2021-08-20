@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21dae2d7c695c759ed5cfec0769985615e849b3a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * AS3722 PMIC driver

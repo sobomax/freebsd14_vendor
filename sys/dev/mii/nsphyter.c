@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5bb5ea81e3beb802fc221c9377662a5a0102f038 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the National Semiconductor's DP83843, DP83847 and DP83849

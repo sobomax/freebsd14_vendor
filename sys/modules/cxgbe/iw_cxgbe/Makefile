@@ -1,4 +1,4 @@
-# $FreeBSD: 6b17979e0df216b5defe970a65bd0c58e7aaf2e7 $
+# $FreeBSD$
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
 .PATH: ${CXGBE}/iw_cxgbe

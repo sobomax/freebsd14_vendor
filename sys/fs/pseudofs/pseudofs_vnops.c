@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da35f06208fa83fdc80418c9a75a230964d0608a $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_pseudofs.h"
 

@@ -1,4 +1,4 @@
-#	$FreeBSD: 8608f23301ab171313809f62cfa11f08783dbce8 $
+#	$FreeBSD$
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/kld/firmware

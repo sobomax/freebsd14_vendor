@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fdd3a45e25725742bfed681d44ee02bfa56afaee $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Support functions for the PCI:PCI bridge driver.  This has to be in a

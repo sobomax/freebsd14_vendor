@@ -1,4 +1,4 @@
-.\" $FreeBSD: b10f0f2bb269d90b3b3c27d03223987aeb6e053a $
+.\" $FreeBSD$
 Set this if you do not want to link
 .Pa /bin
 and

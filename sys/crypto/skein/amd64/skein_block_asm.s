@@ -6,7 +6,7 @@
 #
 # This code is released to the public domain.
 #----------------------------------------------------------------
-# $FreeBSD: 43e17749d4b73cec4b17916e29ced55415ac6f2d $
+# $FreeBSD$
 #
     .text
     .altmacro

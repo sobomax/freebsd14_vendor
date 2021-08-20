@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97f533c00c9ae15e5fae2339501c65221931be08 $");
+__FBSDID("$FreeBSD$");
 
 /* System Headers */
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: 045d49520b40a0a1d62e519040c15c06e70b76a8 $ */
+/* $FreeBSD$ */
 #ifndef _EFI_GPT_H
 #define _EFI_GPT_H
 /*++

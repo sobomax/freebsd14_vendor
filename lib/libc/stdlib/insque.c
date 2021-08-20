@@ -7,7 +7,7 @@
  * unchanged, you can do what ever you want with this file. 
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 388e4d592617eef9331421c168bf5b64a76f890a $");
+__FBSDID("$FreeBSD$");
 
 #define	_SEARCH_PRIVATE
 #include <search.h>

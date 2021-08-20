@@ -37,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)inode.h	8.9 (Berkeley) 5/14/95
- * $FreeBSD: e4caaafa5b1ad0d297b86125229cdd74e07f0eb9 $
+ * $FreeBSD$
  */
 
 union dinode {

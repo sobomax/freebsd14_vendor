@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 940574e1ad934084b72a5710f9bc90a7b6bab9dd $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/04.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rename returns EACCES when a component of either path prefix denies search permission"
 

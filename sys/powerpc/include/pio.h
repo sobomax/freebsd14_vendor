@@ -32,7 +32,7 @@
  *
  *	$NetBSD: pio.h,v 1.1 1998/05/15 10:15:54 tsubai Exp $
  *	$OpenBSD: pio.h,v 1.1 1997/10/13 10:53:47 pefo Exp $
- * $FreeBSD: a4d9b327fa869a43751a651ca6e803ce6634c4c9 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PIO_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: 14610e415c1910fff3c3675c0a2a14dd05a23457 $
+# $FreeBSD$
 
 # Pretty much only ash derivatives can parse all of this.
 

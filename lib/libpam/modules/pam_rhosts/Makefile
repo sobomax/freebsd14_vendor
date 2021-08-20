@@ -1,4 +1,4 @@
-# $FreeBSD: 866267e63e1170b3cc4681156dcc01fec64d1409 $
+# $FreeBSD$
 
 LIB=	pam_rhosts
 SRCS=	pam_rhosts.c

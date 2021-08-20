@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c5135290a45b29384530d57d6f8f0be5e321808 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * finite(x) returns 1 is x is finite, else 0;

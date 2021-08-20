@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: f2a7009cdad4b0ebd176eb43df83041462756acf $
+ *	$FreeBSD: src/lib/libgssapi/context.h,v 1.1 2005/12/29 14:40:20 dfr Exp $
  *	$Id$
  */
 

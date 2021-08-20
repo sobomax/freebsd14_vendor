@@ -1,2 +1,2 @@
-.\" $FreeBSD: 0f31dd98ed5a175b8a16d69c28d3c462e2a9b404 $
+.\" $FreeBSD$
 Set to not build libgssapi.

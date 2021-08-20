@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 56a0fb88231ef0a18c0f9e9783f27d19c818041e $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_extract_tar_lrz)
 {

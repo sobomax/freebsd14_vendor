@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5fe34a61643433b1c3c9a2b67874620e2857e9b5 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the Broadcom BCM5201/BCM5202 "Mini-Theta" PHYs.  This also

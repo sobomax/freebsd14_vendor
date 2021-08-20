@@ -1,4 +1,4 @@
-# $FreeBSD: 95b01fd4bc30cdea4ffda15efbf5b2a031dfd4dd $
+# $FreeBSD$
 
 MAN=
 

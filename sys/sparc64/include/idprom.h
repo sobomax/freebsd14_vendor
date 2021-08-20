@@ -30,7 +30,7 @@
  *
  *	from: NetBSD: idprom.h,v 1.3 2008/04/28 20:23:58 martin Exp
  *
- * $FreeBSD: 442b6b32bbffa955f8dc4a4e0ba6c8045a3d9cf6 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_IDPROM_H_

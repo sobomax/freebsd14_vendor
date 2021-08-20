@@ -28,7 +28,7 @@
  * Bridge MIB implementation for SNMPd.
  * Bridge ports.
  *
- * $FreeBSD: 1e87406a9a2791fe47b93c95fef3057db883bcb0 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

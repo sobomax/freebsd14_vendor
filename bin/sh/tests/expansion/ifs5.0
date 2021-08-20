@@ -1,4 +1,4 @@
-# $FreeBSD: ab0e64662fdf9b130cb0c2fc8b25b9af2b3c082c $
+# $FreeBSD$
 
 set -- $(echo a b c d)
 [ "$#" = 4 ]

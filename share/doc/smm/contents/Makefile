@@ -1,4 +1,4 @@
-# $FreeBSD: aa73faaf4e95d45fa48f708b331012b29479d905 $
+# $FreeBSD$
 
 VOLUME=	smm
 DOC=	contents

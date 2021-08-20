@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 043c5b7d1aff596d607e0b3cd81e1202ba707229 $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/workqueue.h>
 #include <linux/wait.h>

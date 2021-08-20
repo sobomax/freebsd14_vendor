@@ -1,4 +1,4 @@
-# $FreeBSD: 015adbbba4039766b88f91d2c242b3741678f669 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/arcmsr
 

@@ -4,7 +4,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 0a9ad41a705c58904f6057ca9ece4a1d28eebb6a $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(trunc)
 	pushl	%ebp

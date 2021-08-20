@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eee8004bb029e91a4c66964c61493c3297f95c63 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 #include "opt_suiddir.h"

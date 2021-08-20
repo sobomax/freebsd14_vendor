@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)sleep.c	8.3 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0515e944181b72d2a290b2b7e095f051a80a9b33 $");
+__FBSDID("$FreeBSD$");
 
 #include <capsicum_helpers.h>
 #include <ctype.h>

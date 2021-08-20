@@ -1,4 +1,4 @@
-$FreeBSD: 5f16d5cddf26598c80614558faba0c4062f66869 $
+$FreeBSD$
 
 This directory contains various files derived from CDDL sources that
 are used by the ZFS bootstrap:

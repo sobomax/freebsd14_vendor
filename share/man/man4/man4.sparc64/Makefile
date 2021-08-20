@@ -1,4 +1,4 @@
-# $FreeBSD: 39ae5152785098493820ca2a7060dac8dc0f960b $
+# $FreeBSD$
 
 PACKAGE=runtime-manuals
 

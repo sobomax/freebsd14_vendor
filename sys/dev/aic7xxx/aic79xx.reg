@@ -37,7 +37,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 96242fdb8342179b8efb456178c16f2c30bc6331 $
+ * $FreeBSD$
  */
 VERSION = "$Id: //depot/aic7xxx/aic7xxx/aic79xx.reg#76 $"
 

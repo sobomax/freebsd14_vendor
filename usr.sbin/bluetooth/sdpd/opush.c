@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: opush.c,v 1.6 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: 91e08af30d4d17dce1c94d22abc2d262fe83d716 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

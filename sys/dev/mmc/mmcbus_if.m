@@ -50,7 +50,7 @@
 # or the SD Card Association to disclose or distribute any technical
 # information, know-how or other confidential information to any third party.
 #
-# $FreeBSD: b55f26486e5e6a490e97fbc2832eab9e1ed02406 $
+# $FreeBSD$
 #
 
 #include <sys/types.h>

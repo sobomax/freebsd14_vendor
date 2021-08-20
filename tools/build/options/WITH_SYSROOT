@@ -1,4 +1,4 @@
-.\" $FreeBSD: 49a1f36320ec0d9ecfb30592a3f4205c5d9ec912 $
+.\" $FreeBSD$
 Enable use of sysroot during build.
 Depends on
 .Va WITH_DIRDEPS_BUILD .

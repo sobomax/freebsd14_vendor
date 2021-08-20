@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 755d9c6615e422d64d193faa48a33760361ef667 $
+# $FreeBSD$
 #
 
 # PROVIDE: linux

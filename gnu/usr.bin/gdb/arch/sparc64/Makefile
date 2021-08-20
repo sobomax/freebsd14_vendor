@@ -1,4 +1,4 @@
-# $FreeBSD: 9d771727e9029022cf402149033a8183a6bef70b $
+# $FreeBSD$
 
 .if !defined(GDB_CROSS_DEBUGGER)
 LIBSRCS+= fbsd-threads.c

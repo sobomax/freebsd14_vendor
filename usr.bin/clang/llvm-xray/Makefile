@@ -1,4 +1,4 @@
-# $FreeBSD: 26083e54795fcb8397195b3816ee59e6ae3c142a $
+# $FreeBSD$
 
 PROG_CXX=	llvm-xray
 MAN=

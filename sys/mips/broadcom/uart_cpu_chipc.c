@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2120cf0ba4f5f35bd82c6cb2842b593d5d627225 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_uart.h"
 

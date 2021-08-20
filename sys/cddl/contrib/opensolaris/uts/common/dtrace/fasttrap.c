@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2010 The FreeBSD Foundation
  *
- * $FreeBSD: 592005b022a367f91881f6eaefa318e13dd20e2e $
+ * $FreeBSD$
  */
 
 /*

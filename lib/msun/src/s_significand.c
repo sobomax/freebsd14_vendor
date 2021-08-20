@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 356e3001f7ca548ea772a9192ffadc5021dbfc40 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * significand(x) computes just

@@ -1,4 +1,4 @@
-/* $FreeBSD: c98e0749ad53661e4802c4ca04170b861b317b63 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msg.h,v 1.4 1994/06/29 06:44:43 cgd Exp $	*/
 
 /*-

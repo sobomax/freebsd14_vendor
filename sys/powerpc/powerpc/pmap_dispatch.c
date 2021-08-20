@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3cfa741d2ddb5dbd59346e169c3f546fa3c90c26 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Dispatch MI pmap calls to the appropriate MMU implementation

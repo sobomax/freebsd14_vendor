@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0ad13e657d02a4e08092dbe9718825e69272918d $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_read_pax_truncated)
 {

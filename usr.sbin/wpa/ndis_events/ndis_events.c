@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cfd971af8ea101b4de764976323445e1f1188607 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This program simulates the behavior of the ndis_events utility

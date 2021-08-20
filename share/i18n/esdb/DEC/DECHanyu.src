@@ -1,4 +1,4 @@
-# $FreeBSD: b3cc61b116f8d5a157ffce50198ca5fed32e27ba $ 
+# $FreeBSD$ 
 # $NetBSD: DECHanyu.src,v 1.1 2007/04/01 18:52:30 tnozaki Exp $
 
 NAME		"DECHanyu"

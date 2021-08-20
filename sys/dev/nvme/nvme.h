@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 01eff36f1caee2d02d87efd719655e2b87bf4aa1 $
+ * $FreeBSD$
  */
 
 #ifndef __NVME_H__

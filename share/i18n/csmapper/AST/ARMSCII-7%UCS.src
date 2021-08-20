@@ -1,4 +1,4 @@
-# $FreeBSD: 603645885f8d790934986f5a271acd65c5a00e85 $
+# $FreeBSD$
 # $NetBSD: ARMSCII-7%UCS.src,v 1.1 2006/04/01 04:13:21 tnozaki Exp $
 
 TYPE		ROWCOL

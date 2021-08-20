@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/mii_layer/truephy.c,v 1.3 2008/02/10 07:29:27 sephe Exp $
- * $FreeBSD: 960a86baeeed562ce027e8ef05fc504c31d73199 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

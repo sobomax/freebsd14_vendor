@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f4ca5e915e89f673fae9283791606686e509eb19 $");
+__FBSDID("$FreeBSD$");
 
 #define ATOM_DEBUG
 

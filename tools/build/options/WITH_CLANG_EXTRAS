@@ -1,2 +1,2 @@
-.\" $FreeBSD: 87da08fef93f93969bd0655f06a3876e6407a6e9 $
+.\" $FreeBSD$
 Set to build additional clang and llvm tools, such as bugpoint.

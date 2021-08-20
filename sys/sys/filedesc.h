@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: ca85f49d799769709f2c7676b5b41b71f02e72ad $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_FILEDESC_H_

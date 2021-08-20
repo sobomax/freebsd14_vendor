@@ -1,4 +1,4 @@
-# $FreeBSD: 4ab69c1ab0ab7af5839fa47beae9de97d188446a $
+# $FreeBSD$
 
 SUBDIR+=	libpythagoras target
 

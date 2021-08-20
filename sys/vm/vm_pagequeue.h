@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: ba5e77ce6c8d1172f32d240ac6b9ac0cd759880c $
+ * $FreeBSD$
  */
 
 #ifndef	_VM_PAGEQUEUE_

@@ -29,7 +29,7 @@
 /*
  * The API to write a packet scheduling algorithm for dummynet.
  *
- * $FreeBSD: 9bbd9019d6239ad0718fe919cda1c1945b7a7246 $
+ * $FreeBSD$
  */
 
 #ifndef _DN_SCHED_H

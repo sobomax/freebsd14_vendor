@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 5605414156ec4237736fc2e1769b5ae39cac496b $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/13.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="chflags returns EFAULT if the path argument points outside the process's allocated address space"
 

@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-/* $FreeBSD: 9c5da2b3ea8bee3fc94df1353e82071de968b10f $ */
+/* $FreeBSD$ */
 
 #if HAVE_CONFIG_H
 # include <config.h>

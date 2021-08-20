@@ -1,5 +1,5 @@
 
-  $FreeBSD: 03d5d3d8d39e8906c660c9ce52709afaf3f5779b $
+  $FreeBSD$
 
 This is the C indenter, it originally came from the University of Illinois
 via some distribution tape for PDP-11 Unix.  It has subsequently been

@@ -1,4 +1,4 @@
-# $FreeBSD: 6f8a8af4ab4be7b062a98b3e9ef79de390e3400a $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/cfi
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: acf5987ddefcb7f843fa79ce7eae4936dc73a054 $
+ * $FreeBSD$
  */
 #define I_AM_MERGESORT_B
 #include "merge.c"

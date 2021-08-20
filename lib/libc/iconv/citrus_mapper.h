@@ -1,4 +1,4 @@
-/* $FreeBSD: 7e9056c761e95aff84737d233cf3f6b3d14047e3 $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_mapper.h,v 1.3 2003/07/12 15:39:19 tshiozak Exp $ */
 
 /*-

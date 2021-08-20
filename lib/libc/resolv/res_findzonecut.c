@@ -22,7 +22,7 @@ static const char rcsid[] = "$Id: res_findzonecut.c,v 1.10 2005/10/11 00:10:16 m
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d08f6dbe7dbda1ec13c50d112433321836cd4510 $");
+__FBSDID("$FreeBSD$");
 
 /* Import. */
 

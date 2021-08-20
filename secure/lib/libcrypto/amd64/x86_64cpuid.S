@@ -1,4 +1,4 @@
-/* $FreeBSD: 4686723d69703eba74e5598f954ff179522b3890 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x86_64cpuid.pl. */
 
 .hidden	OPENSSL_cpuid_setup

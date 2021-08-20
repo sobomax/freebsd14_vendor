@@ -1,4 +1,4 @@
-# $FreeBSD: 9a2781a410e276a000acd2e690e413daa654d134 $
+# $FreeBSD$
 
 .if ${TARGET_ARCH:Mmips*el*} != ""
 _EMULATION_ENDIAN=little

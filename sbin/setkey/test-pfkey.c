@@ -1,4 +1,4 @@
-/*	$FreeBSD: aead9d851dd054b080af049ca532174d5efee271 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: test-pfkey.c,v 1.4 2000/06/07 00:29:14 itojun Exp $	*/
 
 /*-

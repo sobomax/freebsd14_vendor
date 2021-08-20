@@ -1,4 +1,4 @@
-# $FreeBSD: cf9673af6fbd6c77965efe5d4293dc0545e55a81 $
+# $FreeBSD$
 proc				/proc		procfs	rw 0 0
 /dev/fd0c			/fd	ufs	rw,noauto 0 0
 /dev/ad0s1			/dos		msdosfs	rw,noauto 0 0

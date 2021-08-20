@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f2da30cc6cf073e79aed33876ec62a52f8b0b438 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Pseudo-driver for media selection on the Lite-On PNIC 82c168

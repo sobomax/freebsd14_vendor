@@ -1,4 +1,4 @@
-# $FreeBSD: 0b4c41b8d95fb2db01a3e6e4a36fc13863afd9d1 $
+# $FreeBSD$
 
 CFLAGS+=	-I${WORLDTMP}/legacy/usr/include
 DPADD+=		${WORLDTMP}/legacy/usr/lib/libegacy.a

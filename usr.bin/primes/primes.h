@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)primes.h	8.2 (Berkeley) 3/1/94
- * $FreeBSD: ae0bbcba5427716265eefb45918b5bf27da6f385 $
+ * $FreeBSD$
  */
 
 /*

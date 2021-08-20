@@ -1,4 +1,4 @@
-# $FreeBSD: d860a50836b1685e91147850a6a545dbb0a016ac $
+# $FreeBSD$
 
 # building clang is particularly tedious - so avoid re-inventing wheels
 

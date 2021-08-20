@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 753c26bc50211f95dccbf6427b7ec96577f74111 $
+# $FreeBSD$
 #
 
 name = "FreeBSD-%PKGNAME%"

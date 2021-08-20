@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 632638d6fe9286ecd67ee8626343b380e7219a0e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Check that we generate an error message when reading a truncated

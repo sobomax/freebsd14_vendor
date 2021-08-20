@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)3.t	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD: 1a01c608954ecd7947cb69a252814793e0bfee20 $
+.\"	$FreeBSD$
 .\"
 .ds RH New file system
 .NH

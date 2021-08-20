@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 882823d46bac83f946d0154d50eb5fd9ac445bdc $
+ * $FreeBSD$
  */
 /*
  * Developed by the TrustedBSD Project.

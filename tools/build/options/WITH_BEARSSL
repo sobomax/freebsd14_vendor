@@ -1,4 +1,4 @@
-.\" $FreeBSD: e89ab8570c17029236f3057b75538e6de5ab621d $
+.\" $FreeBSD$
 Build the BearSSL library.
 .Pp
 BearSSL is a tiny SSL library suitable for embedded environments.

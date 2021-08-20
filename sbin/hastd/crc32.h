@@ -2,7 +2,7 @@
  *  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
  *  code or tables extracted from it, as desired without restriction.
  *
- * $FreeBSD: 3812a83f971fd8a43f8fc4b8e335479ce54888e2 $
+ * $FreeBSD$
  */
 
 #ifndef _CRC32_H_

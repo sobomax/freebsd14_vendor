@@ -1,4 +1,4 @@
-# $FreeBSD: bb6861ba74fc653ea9f370a936046c90987c9f72 $
+# $FreeBSD$
 
 # The include file <bsd.libnames.mk> define library names.
 # Other include files (e.g. bsd.prog.mk, bsd.lib.mk) include this

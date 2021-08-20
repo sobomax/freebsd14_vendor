@@ -1,4 +1,4 @@
-# $FreeBSD: 1abc8e72679006faf63c46227b2ab24eca3efd48 $
+# $FreeBSD$
 
 hint.arge.0.phymask=0x000c
 hint.arge.0.media=100

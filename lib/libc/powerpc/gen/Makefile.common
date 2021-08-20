@@ -1,4 +1,4 @@
-# $FreeBSD: 4ba72799a5cfa08228de6e87d5f8f41cc4f8e389 $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/powerpc/gen
 

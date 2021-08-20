@@ -1,4 +1,4 @@
-# $FreeBSD: fb76fec9119611afe21d6e4740c57b5382fa9495 $
+# $FreeBSD$
 
 FILES=	README pc-autoinstall.conf pcinstall.cfg.fbsd-netinstall \
 	pcinstall.cfg.geli pcinstall.cfg.gmirror pcinstall.cfg.netinstall \

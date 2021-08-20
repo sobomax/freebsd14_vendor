@@ -21,7 +21,7 @@
    Boston, MA 02111-1307, USA.  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35f7ac65092823e63a992d1b32b43b545dcb0059 $");
+__FBSDID("$FreeBSD$");
 
 #include "server.h"
 #include "fbsd-low.h"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 009a523e32ce363e5b55a0af306ea6cb6ca6cd41 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Utility functions for PHY drivers on systems configured using FDT data.

@@ -28,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $");
+__FBSDID("$FreeBSD$");
 
 /*
  * USB-To-Ethernet adapter driver for Microchip's LAN78XX and related families.

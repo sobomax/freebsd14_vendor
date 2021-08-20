@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ftrn.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: 23cfab4eceb5c7856399b723fede3f0892885dd0 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

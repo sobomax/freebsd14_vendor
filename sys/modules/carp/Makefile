@@ -1,4 +1,4 @@
-# $FreeBSD: 052687381ba64e1f23ffc390bc2cac620fbf83e7 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netinet
 .PATH: ${SRCTOP}/sys/crypto

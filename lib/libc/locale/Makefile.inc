@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: a8daa1ff284e33cfe6468c8a9a694453d5d4cc54 $
+# $FreeBSD$
 
 # locale sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/locale ${LIBC_SRCTOP}/locale

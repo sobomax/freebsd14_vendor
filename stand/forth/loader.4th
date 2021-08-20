@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: df532440e26acc2ccf3b7e7d98b8fc2decea75fc $
+\ $FreeBSD$
 
 only forth definitions
 

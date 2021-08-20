@@ -42,7 +42,7 @@ static const char sccsid[] = "@(#)random.c	8.5 (Berkeley) 4/5/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99f9d900f1b839946f5aaf0f6ae15b89d68c3543 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

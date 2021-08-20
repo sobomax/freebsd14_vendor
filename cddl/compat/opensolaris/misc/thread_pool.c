@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ae0055afceb94dd5eaba0451f26b0166d1e700c $");
+__FBSDID("$FreeBSD$");
 
 #pragma ident	"%Z%%M%	%I%	%E% SMI"
 

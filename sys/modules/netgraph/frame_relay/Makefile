@@ -1,4 +1,4 @@
-# $FreeBSD: 81a2a96aeeb9cbb75fb64d7232e9008791784db2 $
+# $FreeBSD$
 # $Whistle: Makefile,v 1.1 1999/01/19 19:39:21 archie Exp $
 
 KMOD=	ng_frame_relay

@@ -1,4 +1,4 @@
-# $FreeBSD: 87d5240627ef50f67be0565941688e6dadea3ce1 $
+# $FreeBSD$
 
 mips/atheros/apb.c		optional ar71xx_apb
 mips/atheros/ar71xx_caldata.c	optional ar71xx_caldata

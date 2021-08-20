@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97d9af0fdf0514774a56493a2cef1e79dbaab892 $");
+__FBSDID("$FreeBSD$");
 
 #include <libkern/quad.h>
 

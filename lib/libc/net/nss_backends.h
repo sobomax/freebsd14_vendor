@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ec803220adacfadb3d90fb301178e186acb4757 $
+ * $FreeBSD$
  */
 /*
  * Eventually, the implementations of existing built-in NSS functions

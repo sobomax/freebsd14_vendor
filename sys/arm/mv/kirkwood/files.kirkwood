@@ -1,4 +1,4 @@
-# $FreeBSD: 70ba5eedd89058f479353067836efc394cd56841 $
+# $FreeBSD$
 
 arm/mv/ic.c			standard
 arm/mv/rtc.c			standard

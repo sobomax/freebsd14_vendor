@@ -1,4 +1,4 @@
-.\" $FreeBSD: 5f0d4a86194f89f01baa1216dc2156551dc5fd9f $
+.\" $FreeBSD$
 Set to not build programs used for 802.11 wireless networks; especially
 .Xr wpa_supplicant 8
 and

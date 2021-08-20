@@ -1,5 +1,5 @@
 /*	$NetBSD: raw.h,v 1.1 2000/06/02 22:57:56 fvdl Exp $	*/
-/*	$FreeBSD: b56b9026d93fd4f3bac2ccb6e66be6975c4cbb0e $ */
+/*	$FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

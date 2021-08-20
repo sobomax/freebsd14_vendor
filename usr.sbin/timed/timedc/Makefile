@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: d836912d915b4b3b8bdc44890cd5665bfde8d35a $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/timed
 

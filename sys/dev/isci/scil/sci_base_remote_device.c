@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40220128146bcbe0e4bbc536816e71dd890469ac $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/isci/scil/sci_base_remote_device.h>
 

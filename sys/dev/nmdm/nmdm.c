@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74b5c1203596b94f0dd45be01ccb6620e132f0d1 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Pseudo-nulmodem driver

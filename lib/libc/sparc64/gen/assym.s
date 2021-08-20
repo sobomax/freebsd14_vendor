@@ -2,7 +2,7 @@
  * Offsets into into structures used from asm.  Must be kept in sync with
  * appropriate headers.
  *
- * $FreeBSD: 7b205db2b69035379dd0655ed4b129f5f761cb52 $
+ * $FreeBSD$
  */
 
 #define	_JB_FP		0x0

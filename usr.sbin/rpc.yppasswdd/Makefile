@@ -1,4 +1,4 @@
-# $FreeBSD: 22887fb0ec887287a0e05cd8c71bec6211f1b164 $
+# $FreeBSD$
 
 RPCDIR=	${DESTDIR}/usr/include/rpcsvc
 

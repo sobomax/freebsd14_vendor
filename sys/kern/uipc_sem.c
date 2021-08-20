@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: faa61bfea3529085167dddc2bee9e7fd2feca539 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_posix.h"
 

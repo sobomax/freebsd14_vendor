@@ -44,7 +44,7 @@
 
 #include <machine/asm.h>
 #include "assym.inc"
-__FBSDID("$FreeBSD: 0efe508dcb78777f5447ca0a63d1957acabe72cd $");
+__FBSDID("$FreeBSD$");
 
 	.syntax	unified
 /*

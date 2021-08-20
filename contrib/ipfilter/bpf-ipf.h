@@ -1,4 +1,4 @@
-/*	$FreeBSD: dc2b660e2eee97cddb9de0e6f60c5fa6f8cdb72f $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997

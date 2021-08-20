@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5efe8321014246a3c1cf6eb2ed7b5c613ab251c6 $
+ * $FreeBSD$
  */
 
 /* XXX defines we can't easily get from system includes */

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5c5fc1f92d8bcbbd2415cb52e309d369dca89b8a $
+# $FreeBSD$
 #
 
 atf_test_case n_output

@@ -16,7 +16,7 @@
  */
 
 #if !defined(lint) && !defined(LINT)
-static char rcsid[] = "$FreeBSD: 3cdbae920d4773f6a8262bd2ba02ba0ea766f1fc $";
+static char rcsid[] = "$FreeBSD$";
 #endif
 
 /* vix 30dec93 [broke this out of misc.c - see RCS log for history]

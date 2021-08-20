@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mathimpl.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: abf299658615502a46532a2a4d0e15a0dc6834c2 $
+ * $FreeBSD$
  */
 
 #ifndef _MATHIMPL_H_

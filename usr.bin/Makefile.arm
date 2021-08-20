@@ -1,2 +1,2 @@
-# $FreeBSD: b720e3de68bf067da4689dd76d68298158d01fa3 $
+# $FreeBSD$
 

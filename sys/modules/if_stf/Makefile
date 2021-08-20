@@ -1,4 +1,4 @@
-# $FreeBSD: 8ce50335169f11a9d8756caaef5ee8c6cae46043 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net
 

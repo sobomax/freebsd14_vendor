@@ -1,4 +1,4 @@
-# $FreeBSD: 21b0e993fedc7bb3b52cf1da10afac02afad1334 $
+# $FreeBSD$
 
 NETBSD_ATF_TESTS_SH=	expr_test
 

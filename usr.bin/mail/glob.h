@@ -30,7 +30,7 @@
  *
  *	@(#)glob.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: 204110a0da50d7405c89b449030e2ce40109fce7 $
+ * $FreeBSD$
  */
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: 0b023eebc01cb5e2790096e4583bb55f8d59a2b1 $
+# $FreeBSD$
 
 PROG=	athsurvey
 

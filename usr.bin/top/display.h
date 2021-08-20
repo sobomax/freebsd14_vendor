@@ -1,4 +1,4 @@
-/* $FreeBSD: 546f21ce34b06bf4962664b77d0b74b97db7803c $ */
+/* $FreeBSD$ */
 /* constants needed for display.c */
 
 #define  MT_standout  1

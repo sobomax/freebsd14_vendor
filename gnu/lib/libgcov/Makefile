@@ -1,4 +1,4 @@
-# $FreeBSD: 58c765515a6e7ea5e0833c521595466530d71866 $
+# $FreeBSD$
 
 MK_PROFILE=	no
 MK_SSP=		no

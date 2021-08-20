@@ -1,4 +1,4 @@
-#	$FreeBSD: 1ab4712b9477361ece3ef3e877fe1d30d30779da $
+#	$FreeBSD$
 
 .PATH:	${.CURDIR}/../../../../sys/net80211
 

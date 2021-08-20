@@ -1,7 +1,7 @@
 /*-
  * Test 0074:	Divide by 0 (BPF_ALU+BPF_DIV+BPF_X)
  *
- * $FreeBSD: febd27525e981e5e664c07167b2620d4543db581 $
+ * $FreeBSD$
  */
 
 /* BPF program */

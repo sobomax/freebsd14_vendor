@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b85b181edeca87bf909abb7385b9683ab2e57994 $");
+__FBSDID("$FreeBSD$");
 
 #define	KTR_BE_IO	0
 #define	KTR_LE_IO	0

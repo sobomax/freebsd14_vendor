@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)wsetup.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1733d69ee44d1f64211e5c57a8e10466200a0de1 $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <stdio.h>

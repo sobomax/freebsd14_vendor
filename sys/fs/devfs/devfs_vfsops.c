@@ -33,7 +33,7 @@
  *	@(#)kernfs_vfsops.c	8.10 (Berkeley) 5/14/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vfsops.c 1.36
  *
- * $FreeBSD: c093cfb4c1517c3cfbdc865e802c22949e305e11 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

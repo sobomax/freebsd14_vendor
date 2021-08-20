@@ -1,4 +1,4 @@
-# $FreeBSD: 1fcd47eebf960ebf95c04973458e127adf5c2e47 $
+# $FreeBSD$
 # A redirection error on a subshell should not abort the shell.
 exec 2>/dev/null
 ( echo bad ) </var/empty/x

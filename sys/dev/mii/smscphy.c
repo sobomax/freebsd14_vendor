@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 25464b7814410043e6fda2ffcf82742866fae1d7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the SMSC LAN8710A

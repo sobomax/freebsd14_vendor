@@ -1,4 +1,4 @@
-/* $FreeBSD: 28c738e7fbc4aa938bfc7cdf76b736bc83249f76 $ */
+/* $FreeBSD$ */
 /** @file
   UGA Draw protocol from the EFI 1.1 specification.
 

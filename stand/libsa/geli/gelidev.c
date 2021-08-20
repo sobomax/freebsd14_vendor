@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8c1359c0b49af25701e9b0c4344b48bead9303d1 $
+ * $FreeBSD$
  */
 
 #include <stand.h>

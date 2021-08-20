@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)a.out.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: d532d062cacfce1ecde402594ada13516967af89 $
+ * $FreeBSD$
  */
 
 #ifndef	_AOUT_H_

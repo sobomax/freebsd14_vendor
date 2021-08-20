@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 6471522641878bb40bfa2841c30860305ad555f3 $
+# $FreeBSD$
 #
 
 # PROVIDE: bthidd

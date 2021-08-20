@@ -1,4 +1,4 @@
- $FreeBSD: bb43c189e7d05f3de5e3abc62ce26c4a2a2ea93b $
+ $FreeBSD$
 
 #include <sys/param.h>
 #include <sys/sysent.h>

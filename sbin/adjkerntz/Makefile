@@ -1,4 +1,4 @@
-# $FreeBSD: e30841e3ae2d65edf9f9c1eb19cab4e925f8e8fc $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=   adjkerntz

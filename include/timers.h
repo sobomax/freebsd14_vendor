@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 20f95759e26b3ff7b36ea3165c9fffd447ec962a $
+ * $FreeBSD$
  *
  * Description : Basic timers header.
  *

@@ -9,7 +9,7 @@
 #include "softfloat.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe8be52e7e2d01562ebdc2b783c60df0a55b6e47 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef FLOATX80
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 10bfe7721fe0caeadd237a86282f3b1f254a3f51 $
+# $FreeBSD$
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.

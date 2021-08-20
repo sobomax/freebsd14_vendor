@@ -1,4 +1,4 @@
-#	$FreeBSD: a1e839fd7ab6605177462e5372d85b4d37e03428 $
+#	$FreeBSD$
 #
 
 .PATH:	${SRCDIR}/ffs ${SRCTOP}/sys/ufs/ffs

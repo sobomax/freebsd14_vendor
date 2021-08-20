@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 1e19dfef9e4d4cfb18643267c216d238654f4ca4 $ */
+/* $FreeBSD$ */
 
 #define NETMAP_WITH_LIBS
 #include <net/netmap_user.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 4ed00ab90907b53e0176150497175a07467f418e $
+# $FreeBSD$
 #
 # Common code to marry kernel config(8) goo and module building goo.
 #

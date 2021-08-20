@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)glue.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 6c805e0383272fdd908a0a7920452d4f37201127 $
+ * $FreeBSD$
  */
 
 /*

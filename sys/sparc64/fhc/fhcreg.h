@@ -52,7 +52,7 @@
  *
  *	from: OpenBSD: fhcreg.h,v 1.3 2004/09/28 16:26:03 jason Exp
  *
- * $FreeBSD: e01afe7a76514952da0530297d7c5bc5c81592aa $
+ * $FreeBSD$
  */
 
 #ifndef _SPARC64_FHC_FHCREG_H_

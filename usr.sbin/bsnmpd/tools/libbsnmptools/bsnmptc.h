@@ -28,7 +28,7 @@
  *
  * Textual conventions for snmp
  *
- * $FreeBSD: fd066762ad7d6402ccb3ccc4680ba5c91f742ac6 $
+ * $FreeBSD$
  */
 
 #ifndef	_BSNMP_TEXT_CONV_H_

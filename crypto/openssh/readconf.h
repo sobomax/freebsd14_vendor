@@ -1,5 +1,5 @@
 /* $OpenBSD: readconf.h,v 1.128 2018/09/20 03:30:44 djm Exp $ */
-/* $FreeBSD: ed92bb182d310b1845128377fd2c861c63ae9e62 $ */
+/* $FreeBSD$ */
 
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>

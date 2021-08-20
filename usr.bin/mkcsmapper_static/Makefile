@@ -1,4 +1,4 @@
-# $FreeBSD: ca687224b4958d8488a498c4c25f51e9ebe620a9 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/lib/libc/iconv ${SRCTOP}/usr.bin/mkcsmapper
 

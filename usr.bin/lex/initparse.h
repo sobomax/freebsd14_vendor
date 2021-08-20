@@ -1,4 +1,4 @@
-/* $FreeBSD: 6ede604579b5ec87f9083cb0b223149105bfc9d4 $ */
+/* $FreeBSD$ */
 #define CHAR 257
 #define NUMBER 258
 #define SECTEND 259

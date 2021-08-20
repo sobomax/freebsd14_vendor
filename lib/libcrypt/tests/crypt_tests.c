@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 426d10e271a3e86babd220f85b1ccc9392a4d81f $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <crypt.h>

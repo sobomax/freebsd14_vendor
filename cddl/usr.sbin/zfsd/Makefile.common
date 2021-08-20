@@ -1,4 +1,4 @@
-# $FreeBSD: 7d45a3ed16951493de6256f4b7e6426aa0dd323c $
+# $FreeBSD$
 
 SRCS=		callout.cc		\
 		case_file.cc		\

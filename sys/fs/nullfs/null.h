@@ -33,7 +33,7 @@
  *
  *	@(#)null.h	8.3 (Berkeley) 8/20/94
  *
- * $FreeBSD: 6fdac4b1006e15589d346dfb130bd3e73f794634 $
+ * $FreeBSD$
  */
 
 #ifndef	FS_NULL_H

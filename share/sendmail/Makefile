@@ -1,4 +1,4 @@
-# $FreeBSD: 4971ab0f35ffcfe84ed250b90f2af10c955fa003 $
+# $FreeBSD$
 #
 # Doing a make install builds /usr/share/sendmail/
 

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $FreeBSD: 4783fe66bca7ce2b58a22e81bfe9f35b0a670d88 $
+# $FreeBSD$
 
 use Text::Iconv;
 use Encode;

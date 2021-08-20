@@ -1,4 +1,4 @@
-# $FreeBSD: 5dac60ddf3f78a3399fbc662de11bd27ae87ad6a $
+# $FreeBSD$
 
 PROG=	zonectl
 SRCS=	zonectl.c

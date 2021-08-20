@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGES.
  */
 
-/* $FreeBSD: 312851175867696a1b110479caa5ee699ed6c136 $ */
+/* $FreeBSD$ */
 
 /*
  * This file provides set of macros for logging:

@@ -1,4 +1,4 @@
-$FreeBSD: c343cf99db9e2396719ea12576a7da9d7929d448 $
+$FreeBSD$
 .appveyor.yml
 .autom4te.cfg
 .git*

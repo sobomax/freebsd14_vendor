@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 151a2f4c78ee96f5be3c7f8cf0bbcc2587b429c5 $
+ * $FreeBSD$
  */
 
 #define	CODEC_RGADW	0x00	/* Address, data in and write command */

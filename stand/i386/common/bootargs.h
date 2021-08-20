@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: 5a6fef85a8c8137ef0b9746cf71e496a5ad30336 $
+ * $FreeBSD$
  */
 
 #ifndef _BOOT_I386_ARGS_H_

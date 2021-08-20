@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42896b6e98889764d6a764384fb6a87ae40f5083 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * National Semiconductor DP83820/DP83821 gigabit ethernet driver

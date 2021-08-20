@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.2 (Berkeley) 4/20/94
-# $FreeBSD: 863815803631f421b4da581ea8ec4bbe265f1aa3 $
+# $FreeBSD$
 
 # The following modules are not provided:
 # 14.jove

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 136712e8cfb5cfa1bc607d49000978cc07787f69 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Linux ioctl handler for the ipmi device driver

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: deb4865c28ee6d860c930da0823231263c27ca1d $
+ * $FreeBSD$
  */
 
 INCLUDE ../common/common.ldscript

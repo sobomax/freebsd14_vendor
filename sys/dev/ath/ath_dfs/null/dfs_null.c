@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 2c262d1c9ef5125f705c7607a04605942ceaacc7 $
+ * $FreeBSD$
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c262d1c9ef5125f705c7607a04605942ceaacc7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This implements an empty DFS module.

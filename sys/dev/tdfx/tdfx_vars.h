@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *   $FreeBSD: 6eda3797a2cb4d2d22e9c3e04115cee6e902b03f $
+ *   $FreeBSD$
  */
 
 /* tdfx_vars.h -- constants and structs used in the tdfx driver

@@ -27,7 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 
-$FreeBSD: 43a11d8b155976cc87b30e92029b72da346cbd0d $
+$FreeBSD$
 
 ***************************************************************************/
 

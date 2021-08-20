@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 23e897107bd672ab11d40ccf3fb6a00db6115b1d $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/granular/05.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="NFSv4 granular permissions checking - DELETE and DELETE_CHILD with directories"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: d84fc370519b30d7b70747ae369346368697552c $
+# $FreeBSD$
 
 FILESDIR=	${LIBEXECDIR}/dwatch
 FILES=		chmod \

@@ -1,4 +1,4 @@
-/* $FreeBSD: 397823cf6144b660e45934d674cd0048518f43ec $ */
+/* $FreeBSD$ */
 /*	$NetBSD: citrus_utf8.c,v 1.17 2008/06/14 16:01:08 tnozaki Exp $	*/
 
 /*-

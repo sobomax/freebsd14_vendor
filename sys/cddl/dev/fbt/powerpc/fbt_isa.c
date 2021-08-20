@@ -21,7 +21,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  *
- * $FreeBSD: 6072737fa1e2151a9a1ecdc1eefcb0dd4a415c5e $
+ * $FreeBSD$
  *
  */
 

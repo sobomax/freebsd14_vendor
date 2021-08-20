@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 9997c81f8572dab6f9560a349f957898401d409d $
+# $FreeBSD$
 #
 
 _run () {

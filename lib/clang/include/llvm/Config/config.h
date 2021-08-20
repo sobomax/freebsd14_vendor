@@ -1,4 +1,4 @@
-/* $FreeBSD: 5a961c9ddc335c34716e0970cde7e9522684d2d7 $ */
+/* $FreeBSD$ */
 #ifndef CONFIG_H
 #define CONFIG_H
 

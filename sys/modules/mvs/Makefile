@@ -1,4 +1,4 @@
-# $FreeBSD: 165d6c9edd3f1628bb2589fe1df59edeffcddfaf $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mvs
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 73bc8cfe319b013c99f634d35f595d87ecc997d4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/pty
 

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: b59e9e962e04105020ca32b1412ce8972894bb08 $
+# $FreeBSD$
 #
 
 hints		"SWARM.hints"

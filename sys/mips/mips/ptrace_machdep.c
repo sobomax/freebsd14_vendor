@@ -29,7 +29,7 @@
 
 #if 0
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 372995c23699543975310ae2265cae7c5d597b2e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file is a place holder for MIPS.  Some models of MIPS may need special

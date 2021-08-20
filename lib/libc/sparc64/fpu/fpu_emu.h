@@ -34,7 +34,7 @@
  *
  *	@(#)fpu_emu.h	8.1 (Berkeley) 6/11/93
  *	$NetBSD: fpu_emu.h,v 1.4 2000/08/03 18:32:07 eeh Exp $
- * $FreeBSD: 6fadb3dec8a750787df25037145343e5372e2f06 $
+ * $FreeBSD$
  */
 
 /*

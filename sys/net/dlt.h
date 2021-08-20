@@ -33,7 +33,7 @@
  *
  *      @(#)bpf.h       7.1 (Berkeley) 5/7/91
  *
- * $FreeBSD: 31ad4e010c565c0eb0284341812105070d6f8bde $
+ * $FreeBSD$
  */
 
 #ifndef _NET_DLT_H_

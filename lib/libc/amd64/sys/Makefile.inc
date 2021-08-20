@@ -1,5 +1,5 @@
 #	from: Makefile.inc,v 1.1 1993/09/03 19:04:23 jtc Exp
-# $FreeBSD: aea6755182a0f8350660eb91fbfd805cfdabf017 $
+# $FreeBSD$
 
 SRCS+=	\
 	amd64_get_fsbase.c \

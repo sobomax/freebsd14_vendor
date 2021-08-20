@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 16b42414371fc8e01d5660265b5475a539f71a07 $
+# $FreeBSD$
 #
 SRCS=	envctl.c
 PROG=	envctl

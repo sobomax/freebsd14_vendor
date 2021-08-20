@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: d0c06fb2149938a2e1fcb898682f3366d0645851 $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_read_format_rar_encryption_data)
 {

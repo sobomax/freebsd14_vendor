@@ -1,2 +1,2 @@
-.\" $FreeBSD: 527d43dce2813f3ebbe78c16b507feac6fd28045 $
+.\" $FreeBSD$
 Set to build the NAND Flash components.

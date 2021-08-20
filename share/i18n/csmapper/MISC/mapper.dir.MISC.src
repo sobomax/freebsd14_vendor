@@ -1,4 +1,4 @@
-# $FreeBSD: aa863474b1cbc71420e4f02bd03c5e642719ff66 $ 
+# $FreeBSD$ 
 # $NetBSD: mapper.dir.MISC.src,v 1.12 2007/07/15 14:44:37 tnozaki Exp $
 
 ATARIST/UCS			mapper_std	MISC/ATARIST%UCS.mps

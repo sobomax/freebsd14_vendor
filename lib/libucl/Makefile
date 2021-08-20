@@ -1,4 +1,4 @@
-# $FreeBSD: dc2ea91a0260a0ed8f816828f470d9a05cb3895a $
+# $FreeBSD$
 
 LIBUCL=	${SRCTOP}/contrib/libucl
 

@@ -1,7 +1,7 @@
 #
 # GXEMUL "oldtestmips" sample kernel configuration.
 #
-# $FreeBSD: 1c64c06b43a417e9edc7f0f4b8306a88abb863a4 $
+# $FreeBSD$
 #
 
 ident		GXEMUL

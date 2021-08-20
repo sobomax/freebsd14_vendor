@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1ae56efc8f2af6be1dcfed33c97d783d66ae8787 $
+ * $FreeBSD$
  */
 
 #ifndef __PCI_IRQ_H__

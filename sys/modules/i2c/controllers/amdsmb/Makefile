@@ -1,4 +1,4 @@
-# $FreeBSD: d1912e89987a9243d3de0b0282dbefeb76ea2d11 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/amdsmb
 

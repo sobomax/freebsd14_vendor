@@ -1,4 +1,4 @@
-# $FreeBSD: f2a11a537374ef252f1d4561ec10cd105434452b $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/mirror
 

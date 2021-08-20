@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fstab.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 364d132bc4c8255b6d6e058b86d40d11ce68b869 $
+ * $FreeBSD$
  */
 
 #ifndef _FSTAB_H_

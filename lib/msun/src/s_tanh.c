@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d26c695dd3b7e9826655f4d2c64c5d6f8dd46db $");
+__FBSDID("$FreeBSD$");
 
 /* Tanh(x)
  * Return the Hyperbolic Tangent of x

@@ -30,7 +30,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a2e53f49b833ef131a5c3bf55f373de561a8b1b6 $
+# $FreeBSD$
 
 # Script which enables networking with specified options
 ###########################################################################

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 456d782a2a8ae01c65fd584c1601745ec31f7a0d $");
+__FBSDID("$FreeBSD$");
 
 #include "gdtoaimp.h"
 #undef strtold_l

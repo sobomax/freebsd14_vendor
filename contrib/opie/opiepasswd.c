@@ -44,7 +44,7 @@ License Agreement applies to this software.
 	Written at Bellcore for the S/Key Version 1 software distribution
 		(skeyinit.c).
 
- $FreeBSD: cd4ff018c3a01ad82d81db61dbcb9e165aed0422 $
+ $FreeBSD$
 */
 #include "opie_cfg.h"
 

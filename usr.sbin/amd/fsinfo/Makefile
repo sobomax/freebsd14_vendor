@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: 4890f5c09c2d83ccc7001001592d66a4f5c368e7 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/contrib/amd/fsinfo
 

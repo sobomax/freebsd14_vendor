@@ -1,4 +1,4 @@
-/* $FreeBSD: 50b579d0a42c7b446e0f260719c5fb8a52bdfe1a $ */
+/* $FreeBSD$ */
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <err.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: f07b7a33b41e1dd686f4bfadfa438456f9e59452 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zfs
 

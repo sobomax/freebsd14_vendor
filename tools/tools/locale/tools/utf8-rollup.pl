@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1fabb7b0d50d4340848c6bc56fa7955848ab49d1 $
+# $FreeBSD$
 
 use strict;
 use Getopt::Long;

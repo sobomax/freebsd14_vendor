@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0ae78e8b5271df0ec1650979441bba44c696796b $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2006
@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ae78e8b5271df0ec1650979441bba44c696796b $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Ralink Technology RT2561, RT2561S and RT2661 chipset driver

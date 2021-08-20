@@ -1,4 +1,4 @@
-# $FreeBSD: f13858c57c7b2d627f0e1b909d76eed6d14b9ccf $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/nandfs
 

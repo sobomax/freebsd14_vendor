@@ -1,4 +1,4 @@
-# $FreeBSD: 10bdeb7a9e54e114ecd7b8629b49eff067133f60 $
+# $FreeBSD$
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
 
 PACKAGE=quotacheck

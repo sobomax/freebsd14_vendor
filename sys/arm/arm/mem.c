@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd1dc791a4c50731e8279662d1610f9a875293b4 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Memory special file

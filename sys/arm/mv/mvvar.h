@@ -36,7 +36,7 @@
  *
  * from: FreeBSD: //depot/projects/arm/src/sys/arm/xscale/pxa2x0/pxa2x0var.h, rev 1
  *
- * $FreeBSD: c1e51fa6c62c635cac9735a3aca877f435129578 $
+ * $FreeBSD$
  */
 
 #ifndef _MVVAR_H_

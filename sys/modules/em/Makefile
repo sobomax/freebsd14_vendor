@@ -1,5 +1,5 @@
 
-# $FreeBSD: 0d3942dc7f0e4488a513e940c33e2a8190b52553 $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/e1000
 KMOD    = if_em

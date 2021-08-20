@@ -87,7 +87,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	JNPR: gdb_machdep.c,v 1.1 2007/08/09 12:25:25 katta
- * $FreeBSD: 63ae21591513250515ba954aebd7d59fa2310e87 $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>

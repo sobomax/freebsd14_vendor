@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df30ecf32c5665644015a6de431469dec8714683 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mpath.h"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: faf900e572c4c07a44dbac2d31c029eaef497159 $ */
+/* $FreeBSD$ */
 /* test stack unwinding for a new thread */
 
 #include <pthread.h>

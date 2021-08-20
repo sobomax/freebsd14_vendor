@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: search.c,v 1.2 2003/09/04 22:12:13 max Exp $
- * $FreeBSD: 9fab2963a5fea8e878ff604f6385f55f3eb18066 $
+ * $FreeBSD$
  */
 
 #include <sys/uio.h>

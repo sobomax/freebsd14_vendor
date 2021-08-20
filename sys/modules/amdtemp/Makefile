@@ -1,4 +1,4 @@
-# $FreeBSD: f7e5ac64494bd043272cf4494f71c49602e50865 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/amdtemp
 

@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: ce41cdcabb5dfc6eacf98fdea74e85febe5e2c5d $ */
+/* $FreeBSD$ */
 
 #include <sys/types.h>
 

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 087cbb2feda4cc22b33200e8f7a367d8f8ce76ae $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Routines to handle clock hardware.

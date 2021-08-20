@@ -1,5 +1,5 @@
 # configuration for picobsd build script.
-# $FreeBSD: 88f1954d7ab75be204766d6f13f4fd95c4013f75 $
+# $FreeBSD$
 # it should only contain variable definitions -- it is sourced
 # by the shell much like rc.conf* files
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 93f09e5153d214389e47e3af243892b13a373f48 $
+# $FreeBSD$
 
 PROG=	dump_fts
 SRCS=	dump_fts.c

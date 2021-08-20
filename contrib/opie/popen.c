@@ -23,7 +23,7 @@ License Agreement applies to this software.
 	Modified at NRL for OPIE 2.0.
 	Originally from BSD.
 
-$FreeBSD: 99aad17025a6fafb4bc919f6502628b40e04933a $
+$FreeBSD$
 */
 /*
  * Copyright (c) 1988, 1993, 1994

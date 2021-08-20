@@ -1,4 +1,4 @@
-# $FreeBSD: 7a5453e49d68253416914e0b128dcea6b7c8e887 $
+# $FreeBSD$
 
 PROG=	ugidfw
 MAN=	ugidfw.8

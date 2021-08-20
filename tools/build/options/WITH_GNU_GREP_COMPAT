@@ -1,4 +1,4 @@
-.\" $FreeBSD: 7809177855b145bd0bdeca6cf448b71b3c03d62c $
+.\" $FreeBSD$
 Set this option to include GNU extensions in
 .Xr bsdgrep 1
 by linking against libgnuregex.

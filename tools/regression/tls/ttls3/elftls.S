@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 0fad08d90a7c4faad9ac1228f58873071fb0d9f8 $
+ *	$FreeBSD$
  */
 
 .file "elftls.S"

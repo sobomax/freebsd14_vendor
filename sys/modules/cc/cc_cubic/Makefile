@@ -1,4 +1,4 @@
-# $FreeBSD: e56848cb11a83c7f54f6f6a5c5ec934bdc8f8483 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netinet/cc
 KMOD=	cc_cubic

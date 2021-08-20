@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)string.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 3c5cceaeb857b8966c332fc05f31ad0f223270b6 $
+ * $FreeBSD$
  */
 
 #ifndef _STRING_H_

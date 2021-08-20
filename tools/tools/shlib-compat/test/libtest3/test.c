@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 95a169c68236facde53842820636eaa8ddab1bc8 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

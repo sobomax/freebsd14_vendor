@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 588c674c06f2e19b8f29341e1420ac00cdc33bdf $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_iscsi_initiator.h"
 

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getmntinfo.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 250be99c27c5b197462f304a2832fafedd10ef01 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ucred.h>

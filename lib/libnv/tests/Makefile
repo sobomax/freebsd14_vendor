@@ -1,4 +1,4 @@
-# $FreeBSD: 01dfb67cd1685d40ff934c25529add094da15d54 $
+# $FreeBSD$
 
 ATF_TESTS_CXX=	\
 	cnv_tests \

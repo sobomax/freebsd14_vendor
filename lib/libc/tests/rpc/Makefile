@@ -1,4 +1,4 @@
-# $FreeBSD: d7780ef4b86ce4d4e270b2d36cf8652d489cd63a $
+# $FreeBSD$
 
 SRCS.xdr_test=		${RPCSRC:.x=_xdr.c} t_xdr.c ${RPCSRC:.x=.h} \
 			h_testbits.h

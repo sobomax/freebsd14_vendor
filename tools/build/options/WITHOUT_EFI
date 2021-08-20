@@ -1,4 +1,4 @@
-.\" $FreeBSD: 3d080eb6448faa4a0c6a70f608b65cbe6957a065 $
+.\" $FreeBSD$
 Set not to build
 .Xr efivar 3
 and

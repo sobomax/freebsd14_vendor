@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 96c63fa3eb615f93fb29a6b4ca12d5e8fe0a5b5b $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mfi.h"
 

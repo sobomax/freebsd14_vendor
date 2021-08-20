@@ -1,4 +1,4 @@
-# $FreeBSD: a34d6164c9083708e08b85718175de794eacc37c $
+# $FreeBSD$
 # $Whistle: Makefile,v 1.2 1999/01/19 19:39:22 archie Exp $
 
 KMOD=	netgraph

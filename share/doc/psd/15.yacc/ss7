@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss7	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: b6440c793857d193d59eae2ac90d493caf8bd7aa $
+.\" $FreeBSD$
 .SH
 7: Error Handling
 .PP

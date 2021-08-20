@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 33b071794e80d75f8da54517295272adf2db79ca $
+ * $FreeBSD$
  */
 
 #include "checking.hh"

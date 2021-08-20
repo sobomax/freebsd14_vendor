@@ -38,7 +38,7 @@ use Carp;
 use MIME::Base64;
 use Getopt::Long;
 
-my $VERSION = '$FreeBSD: bfac77c739413404decc44a0b9b9060bc7451264 $';
+my $VERSION = '$FreeBSD$';
 my $generated = '@' . 'generated';
 my $inputfh = *STDIN;
 my $debug = 0;

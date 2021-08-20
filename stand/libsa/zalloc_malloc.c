@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98e28b8ef7f5a06631006af1390446692975639b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MALLOC.C - malloc equivalent, runs on top of zalloc and uses sbrk

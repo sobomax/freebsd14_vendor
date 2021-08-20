@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f987b393848da83ea66684073803990c55d3d13e $
+ * $FreeBSD$
  *
  *      @(#)pathnames.h	8.1 (Berkeley) 6/6/93
  */

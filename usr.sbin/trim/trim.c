@@ -45,7 +45,7 @@
 #include <unistd.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da332ca81e5c18a4dda00eefcf331adac8c82218 $");
+__FBSDID("$FreeBSD$");
 
 static bool	candelete(int fd);
 static off_t	getsize(const char *path);

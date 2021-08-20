@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: bc98ac8b1b370f605741c3b1ff8eaac29dfd3794 $
+ * $FreeBSD$
  */
 
 #ifndef _THREAD_POOL_IMPL_H

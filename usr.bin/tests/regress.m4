@@ -1,4 +1,4 @@
-# $FreeBSD: 53dfb145331cbdddad2dd6f327129569e0b0f730 $
+# $FreeBSD$
 
 dnl A library of routines for doing regression tests for userland utilities.
 

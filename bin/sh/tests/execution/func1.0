@@ -1,4 +1,4 @@
-# $FreeBSD: 29fcc077b592330c9de85c08474b206c529ac37d $
+# $FreeBSD$
 
 MALLOC_OPTIONS=J ${SH} -c 'g() { g() { :; }; :; }; g' &&
 MALLOC_OPTIONS=J ${SH} -c 'g() { unset -f g; :; }; g'

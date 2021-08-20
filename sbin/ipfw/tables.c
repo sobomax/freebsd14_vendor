@@ -13,7 +13,7 @@
  *
  * in-kernel ipfw tables support.
  *
- * $FreeBSD: 57b8cef00889013245dd1e2e69821a896180ea31 $
+ * $FreeBSD$
  */
 
 

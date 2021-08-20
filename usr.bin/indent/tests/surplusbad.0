@@ -1,4 +1,4 @@
-/* $FreeBSD: 07d07026db0e02d5f927424590891636a16d9d52 $ */
+/* $FreeBSD$ */
 /* See r303599 */
 #if defined(__i386__)
 int a;

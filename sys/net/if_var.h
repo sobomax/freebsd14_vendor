@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 44334e67cc5cf9e4beb2c4dffa24cbc2e365ed87 $
+ * $FreeBSD$
  */
 
 #ifndef	_NET_IF_VAR_H_

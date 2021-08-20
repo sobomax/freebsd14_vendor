@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 878af24f0cbb1b382cba4691124113c09578f4f3 $
+ * $FreeBSD$
  */
 
 int usage(bool explicit);

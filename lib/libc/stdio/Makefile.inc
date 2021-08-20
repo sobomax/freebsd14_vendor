@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 4/17/94
-# $FreeBSD: 81bd91fdbf4b62b049ab217bc5a6794861f56b8d $
+# $FreeBSD$
 
 # stdio sources
 .PATH: ${LIBC_SRCTOP}/stdio

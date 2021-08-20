@@ -1,4 +1,4 @@
-# $FreeBSD: 406a1fe86c7828d5f76302dd04071900a8c4f86e $ 
+# $FreeBSD$ 
 # $NetBSD: ARMSCII.alias,v 1.1 2006/04/01 04:13:22 tnozaki Exp $
 
 7		ast_34.005

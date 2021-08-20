@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55d9c96da4c8e9bbca34e4bfbf1568d45d870e7c $");
+__FBSDID("$FreeBSD$");
 
 #include "ena_sysctl.h"
 

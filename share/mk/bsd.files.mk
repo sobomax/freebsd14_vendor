@@ -1,4 +1,4 @@
-# $FreeBSD: f43cca726de16b9e4975ac04edaeb6253b97da48 $
+# $FreeBSD$
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.files.mk cannot be included directly.

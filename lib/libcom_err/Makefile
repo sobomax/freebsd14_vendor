@@ -1,4 +1,4 @@
-# $FreeBSD: ca65c091387d14512145f6a5d54c329933533b79 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	com_err

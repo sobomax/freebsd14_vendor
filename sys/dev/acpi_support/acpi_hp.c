@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf46f6df67f59ab4c95daf37f2db9d4aed06312d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for extra ACPI-controlled features found on HP laptops

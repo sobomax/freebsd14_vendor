@@ -1,4 +1,4 @@
-/* $FreeBSD: 4ddc50bcaf5803c46d3de50d7e450c481ea0d75b $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from e_padlock-x86.pl. */
 #ifdef PIC
 .text

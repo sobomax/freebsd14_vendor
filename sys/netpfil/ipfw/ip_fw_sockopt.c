@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 327c81cac537fc91c8917ce6b4948ebc2f8efaad $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Control socket and rule management routines for ipfw.

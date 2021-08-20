@@ -24,7 +24,7 @@ this code that are retained.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 26770599c0b4a23bf634dec0a12a12ac6cbb4dbe $");
+__FBSDID("$FreeBSD$");
 
 #include <ieeefp.h>
 #include "milieu.h"

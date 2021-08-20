@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)mknodes.c	8.2 (Berkeley) 5/4/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b923b7fe0c5b3686e311cef33aa4cb2b6536bd2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This program reads the nodetypes file and nodes.c.pat file.  It generates

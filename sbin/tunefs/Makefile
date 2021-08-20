@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 7f903b2ef21a95c43fed18c843440bff03b67acc $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	tunefs

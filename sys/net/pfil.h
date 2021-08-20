@@ -1,4 +1,4 @@
-/*	$FreeBSD: 8fdaf5a69119ce6f3aa71fec86a67e5f84b55f5f $ */
+/*	$FreeBSD$ */
 /*	$NetBSD: pfil.h,v 1.22 2003/06/23 12:57:08 martin Exp $	*/
 
 /*-

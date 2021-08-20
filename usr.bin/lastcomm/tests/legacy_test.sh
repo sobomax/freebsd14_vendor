@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: c7da326d78e2ab2f767b07a771558cd591cabc70 $
+# $FreeBSD$
 #
 
 DIR=`dirname $0`

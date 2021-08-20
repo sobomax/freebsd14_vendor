@@ -1,4 +1,4 @@
-# $FreeBSD: 685f0f5ae2bd7f214c6f7f6acff2b72355262c57 $
+# $FreeBSD$
 
 FONTS=	gallant.fnt \
 	terminus-b32.fnt \

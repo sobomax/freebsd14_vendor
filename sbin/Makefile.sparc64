@@ -1,4 +1,4 @@
-# $FreeBSD: 9a5bbe63bf17da1c2ca2cbfd8068b877814bfb7b $
+# $FreeBSD$
 
 SUBDIR += bsdlabel
 SUBDIR += sunlabel

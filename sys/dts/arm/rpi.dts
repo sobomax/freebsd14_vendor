@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 86624abeeaf1bc68d22bf4a9322858cc7ac0f865 $
+ * $FreeBSD$
  */
  
 #include "bcm2835-rpi-b.dts"

@@ -1,4 +1,4 @@
-$FreeBSD: 203ae5c220c23006211c70b93c6af1ce04ce26dd $
+$FreeBSD$
 
 Original distribution from http://zlib.net/.  Currently, only trivial
 changes were made to support build of libstand and to suppress certain

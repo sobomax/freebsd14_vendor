@@ -1,4 +1,4 @@
-# $FreeBSD: 5b1ce3a96896d8ff22984e82e94814d110a2b770 $
+# $FreeBSD$
 
 SRCS+=	i386-dis.c
 CFLAGS+= -DARCH_i386

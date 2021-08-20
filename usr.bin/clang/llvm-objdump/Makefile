@@ -1,4 +1,4 @@
-# $FreeBSD: 3a6a2f006b0b55f68de90fd32929a438de3be6ea $
+# $FreeBSD$
 
 PROG_CXX=	llvm-objdump
 

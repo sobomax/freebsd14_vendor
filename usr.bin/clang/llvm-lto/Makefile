@@ -1,4 +1,4 @@
-# $FreeBSD: 96af172288f15b12a94ff4655751a5e49d29ebcd $
+# $FreeBSD$
 
 PROG_CXX=	llvm-lto
 MAN=

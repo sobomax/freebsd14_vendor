@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75c1e4dc0495cb7502f179c38eace572e85c67b3 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ada.h"
 

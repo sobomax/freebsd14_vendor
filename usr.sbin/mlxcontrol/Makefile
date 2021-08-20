@@ -1,4 +1,4 @@
-# $FreeBSD: 5a425fd003daedff7e76989fd76da798b83cafff $
+# $FreeBSD$
 
 PROG=	mlxcontrol
 MAN=	mlxcontrol.8

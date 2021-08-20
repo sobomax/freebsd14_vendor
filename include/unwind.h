@@ -1,4 +1,4 @@
-/* $FreeBSD: 5a07fd819f50018fce1a5fbfddc5c4911bbdc78f $ */
+/* $FreeBSD$ */
 
 /*-
    libunwind - a platform-independent unwind library

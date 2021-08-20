@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: f1f5cdc326415a8f7d1e204f6487d8e99374b290 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This requires makecontext() to setup a valid GP for locating

@@ -1,4 +1,4 @@
-# $FreeBSD: b337f0f6d3385c7f027b77ee51c5a071c344c4c1 $
+# $FreeBSD$
 
 # . should return 0 if no command was executed.
 

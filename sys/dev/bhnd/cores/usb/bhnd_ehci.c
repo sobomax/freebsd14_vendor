@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62bb121a3d58f397545ea214dcede23d9d5bc126 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * BHND attachment driver for the USB Enhanced Host Controller.

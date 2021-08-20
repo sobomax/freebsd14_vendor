@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: 1e43aaedbfdd6d20c0ff182f8e6fc532f8f267d7 $
+ * $FreeBSD$
  *
  * Functions and macros to manipulate netmap structures and packets
  * in userspace. See netmap(4) for more information.

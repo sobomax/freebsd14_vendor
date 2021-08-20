@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: cd43afcf3e9940e3bd04f68990ecd3a60bdcb22b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Verify our ability to read sample files compatibly with lzop.

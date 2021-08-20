@@ -1,4 +1,4 @@
-/* $FreeBSD: aa2709a828b3446a27ee39d0ac8f10320fb4066f $ */
+/* $FreeBSD$ */
 /* $NetBSD: sigcode.S,v 1.1 1999/11/17 14:56:11 kleink Exp $	*/
 
 /*-

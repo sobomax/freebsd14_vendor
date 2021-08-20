@@ -1,4 +1,4 @@
-# $FreeBSD: 1e49666767c0185615f64cca4745ec6435fd4cbc $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 

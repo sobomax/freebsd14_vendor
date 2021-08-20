@@ -3,7 +3,7 @@
 # Script for testing DFS; setup an AP vap on a DFS channel
 # then simulate a radar event and verify operation.
 #
-# $FreeBSD: 67546e91932beaa5c9f7b48b2818e2d7cddd17d8 $
+# $FreeBSD$
 #
 PATH=.:$PATH
 . config

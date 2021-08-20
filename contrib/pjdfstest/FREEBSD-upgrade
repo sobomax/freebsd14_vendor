@@ -1,4 +1,4 @@
-$FreeBSD: eff295fbfdc0be2da56908295b4d6bc8cf197adc $
+$FreeBSD$
 
 This document contains a collection of notes specific to the import
 of pjdfstest into head.  These notes are built on the instructions in

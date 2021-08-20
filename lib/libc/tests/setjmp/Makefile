@@ -1,4 +1,4 @@
-# $FreeBSD: 39b0a96295f43ba40271fcd3679dc205ed35aab6 $
+# $FreeBSD$
 
 NETBSD_ATF_TESTS_C=	setjmp_test
 NETBSD_ATF_TESTS_C+=	threadjmp_test

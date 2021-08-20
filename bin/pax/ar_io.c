@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)ar_io.c	8.2 (Berkeley) 4/18/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6271944703ff2adcd0b5e67d90cd2605249a67b3 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

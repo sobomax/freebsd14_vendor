@@ -1,4 +1,4 @@
-# $FreeBSD: 26a51d02b0649bd2e0d87b2562fcaf507bb6748c $
+# $FreeBSD$
 #
 # block all incoming TCP packets on le0 from host "foo" to any destination.
 #

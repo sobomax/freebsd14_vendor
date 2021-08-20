@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dd73b050b7a1e7265e4b17ab1bbb2896ac60d45e $
+ * $FreeBSD$
  */
 
 struct pcm_feederdesc {

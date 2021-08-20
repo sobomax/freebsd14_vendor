@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: acf7a837e6a4413221ef9be0ce6ad089c85991a0 $
+ * $FreeBSD$
  */
 
 extern struct layer synclayer;

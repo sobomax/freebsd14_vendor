@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 0be86388ef47b028095644798f17ffb4800fc56b $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(remainder)
 	fldl	12(%esp)

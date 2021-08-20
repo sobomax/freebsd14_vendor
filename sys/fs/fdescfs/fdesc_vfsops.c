@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc_vfsops.c	8.4 (Berkeley) 1/21/94
  *
- * $FreeBSD: 6737bfb94f5e26b2cf897ddb91605a0aa118e551 $
+ * $FreeBSD$
  */
 
 /*

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)socket.h	8.4 (Berkeley) 2/21/94
- * $FreeBSD: 9584b4c76788f4616dc4cbf23e6e0a04f8c74aff $
+ * $FreeBSD$
  */
 
 #ifndef _SYS__SOCKADDR_STORAGE_H_

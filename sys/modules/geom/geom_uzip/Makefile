@@ -1,4 +1,4 @@
-# $FreeBSD: fde2df177ca23c952bb2b4be8690330c99712dcc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/uzip ${SRCTOP}/sys/net
 

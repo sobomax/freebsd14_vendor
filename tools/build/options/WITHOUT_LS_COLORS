@@ -1,4 +1,4 @@
-.\" $FreeBSD: 79896565c1a7e9cdbf18a83c7ceb241e02e32bb8 $
+.\" $FreeBSD$
 Set to build
 .Xr ls 1
 without support for colors to distinguish file types.

@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: a2135de03eddb9ea9a430623faa29dfd0d996466 $ */
+/* $FreeBSD$ */
 
 #ifndef	__AR5312_CHIP_H__
 #define	__AR5312_CHIP_H__

@@ -24,7 +24,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: b83c08c884e9b8018ab4c452b405fe8cb159f1d5 $");
+__FBSDID("$FreeBSD$");
 
 static void
 test(struct archive *a, int code, const char *msg)

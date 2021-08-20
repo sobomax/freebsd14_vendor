@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: d0fb4e6cbf08b4e66474ff89a1459ac8dc321e91 $
+# $FreeBSD$
 #
 
 # PROVIDE: pflog

@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.7 2003/09/07 18:32:11 max Exp $
-# $FreeBSD: c739fbf1174fa930a4b71231d16b3a73e4c4feef $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/usr.bin/bluetooth/rfcomm_sppd
 

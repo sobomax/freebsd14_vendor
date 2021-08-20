@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 824710194c18bc2952cdb7e9544877c1e082058b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Verify reading entries with POSIX.1e and NFSv4 ACLs from archives created

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 8aaf2a6544ed4bca008a1b95ce0ca8391272c96e $
+.\" $FreeBSD$
 Set to not build
 .Xr bsdinstall 8 ,
 .Xr sade 8 ,

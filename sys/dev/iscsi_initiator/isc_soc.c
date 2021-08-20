@@ -30,7 +30,7 @@
  | $Id: isc_soc.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd3a0dd2267b104fdc3b8d46358c729674505ebe $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_iscsi_initiator.h"
 

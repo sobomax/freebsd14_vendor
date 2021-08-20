@@ -1,4 +1,4 @@
-# $FreeBSD: 87fa4c2014ef619d685ffa2722ba0f15f9110e2f $
+# $FreeBSD$
 
 PROG_CXX=	llvm-tblgen
 

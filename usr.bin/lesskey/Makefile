@@ -1,4 +1,4 @@
-# $FreeBSD: 22bbf9377ea8a4234953790a5bcc9a4125ae2507 $
+# $FreeBSD$
 
 PROG=	lesskey
 SRCS=	lesskey.c version.c

@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)profile.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: a4973175f3bd458e23d4b70cc0458ecf999d1c15 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PROFILE_H_

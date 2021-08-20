@@ -1,7 +1,7 @@
 #
 # Common configuration settings for vap test scripts.
 #
-# $FreeBSD: aa502e14d32de5fb4f228039f1dfc994da66ff99 $
+# $FreeBSD$
 #
 
 media_type()

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD: 94dfe44d1596554345ebc4d8036afe25ce96c562 $
+ * $FreeBSD$
  */
 
 #ifndef _VMCI_DEFS_H_

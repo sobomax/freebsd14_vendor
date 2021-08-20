@@ -1,4 +1,4 @@
-# $FreeBSD: 3fdebc2499a309477f2113173c191aae3b76d371 $
+# $FreeBSD$
 
 PROG=	uefisign
 SRCS=	uefisign.c child.c pe.c

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abe7bfa465fdb34c934d226ddb0f5ba476836f9b $");
+__FBSDID("$FreeBSD$");
 
 #ifdef _KERNEL
 #include "opt_bpf.h"

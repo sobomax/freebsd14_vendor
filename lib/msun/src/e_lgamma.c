@@ -13,7 +13,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 43f5175603ecc2ef606aab05bbaaf95feeea5a13 $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_lgamma(x)
  * Return the logarithm of the Gamma function of x.

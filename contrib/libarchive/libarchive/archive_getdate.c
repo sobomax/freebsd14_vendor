@@ -30,7 +30,7 @@
 #include "archive_platform.h"
 #ifdef __FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ec5bba88896b759216a7da62b5dc0715c0a03eb $");
+__FBSDID("$FreeBSD$");
 #endif
 
 #include <ctype.h>

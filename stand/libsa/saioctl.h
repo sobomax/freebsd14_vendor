@@ -30,7 +30,7 @@
  *
  *	@(#)saioctl.h	8.1 (Berkeley) 6/11/93
  *
- * $FreeBSD: 5124f86187c93c758de388faf55009d8848b48e5 $
+ * $FreeBSD$
  */
 
 /* ioctl's -- for disks just now */

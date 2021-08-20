@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 217224eead2b1ff863d4fc70f9b2044d5c1aa9ad $
+# $FreeBSD$
 
 stty status '^T'
 trap : 2

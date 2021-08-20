@@ -1,4 +1,4 @@
-# $FreeBSD: de5cceac7c6b8281574a00552277b75ccd2df747 $
+# $FreeBSD$
 
 .include "${SRCTOP}/lib/clang/clang.pre.mk"
 

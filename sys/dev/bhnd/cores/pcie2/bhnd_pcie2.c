@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a6712abff61db2273c5dd25a7fe668895efafc6 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Broadcom Common PCIe-G2 Support.

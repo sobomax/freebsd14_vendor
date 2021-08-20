@@ -1,4 +1,4 @@
-/*	$FreeBSD: 086782c1fbb74ddfbb1c8cfe4832a698d6fb5cbd $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Common DLPI Test Suite header file

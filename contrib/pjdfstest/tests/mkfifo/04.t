@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 0e0a4b76f5caedd7f5136a0490d6477e218e9d29 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/04.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkfifo returns ENOENT if a component of the path prefix does not exist"
 

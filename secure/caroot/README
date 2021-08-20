@@ -1,4 +1,4 @@
-# $FreeBSD: 9a4fc0320e2ad10278219abb3831e7bf5a62b114 $
+# $FreeBSD$
 
 This directory contains the scripts to update the TLS CA Root Certificates
 that comprise the 'root trust store'.

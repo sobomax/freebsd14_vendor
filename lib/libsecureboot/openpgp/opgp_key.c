@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c108cd2fa3288cab1d31a571153b7d79f4c29b20 $");
+__FBSDID("$FreeBSD$");
 
 #include "../libsecureboot-priv.h"
 

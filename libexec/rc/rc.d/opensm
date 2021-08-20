@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 310476be4d9097f62bd5f63f4426cb7bc03feddf $
+# $FreeBSD$
 #
 
 # PROVIDE: opensm

@@ -36,7 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ab01544fc176c9e162f61abe858101014dbe02d0 $");
+__FBSDID("$FreeBSD$");
 
 .syntax	unified
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 18b0276b7296523e62b75e5cc2a2b393ca10ebce $
+# $FreeBSD$
 
 TESTSRC:=	${SRCTOP}/contrib/netbsd-tests/${RELDIR:C/libc\/tests/libc/}
 

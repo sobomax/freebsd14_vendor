@@ -1,4 +1,4 @@
-.\" $FreeBSD: 6d130e106a93eba42261ccc60c78f6402afa8137 $
+.\" $FreeBSD$
 Set to make install targets succeed for non-root users by installing
 files with owner and group attributes set to that of the user running
 the

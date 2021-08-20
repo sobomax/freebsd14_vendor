@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e20608c60616f5badd0d3b0305efc4b454ffd960 $
+ * $FreeBSD$
  */
 
 #include <dlfcn.h>

@@ -25,7 +25,7 @@
 # ident	"@(#)xattr_009_neg.ksh	1.1	07/02/06 SMI"
 #
 
-# $FreeBSD: 96f9ba1fd4043c805c768622c111533366a5f364 $
+# $FreeBSD$
 
 . $STF_SUITE/include/libtest.kshlib
 . $STF_SUITE/tests/xattr/xattr_common.kshlib

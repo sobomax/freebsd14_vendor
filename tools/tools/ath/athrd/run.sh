@@ -1,4 +1,4 @@
-# $FreeBSD: 3e1e01a27be4c069f0ae1f2959bb5fa1e092e288 $
+# $FreeBSD$
 
 COUNTRIES=${@:-"
 	DB NA AL DZ AR AM AU AT AZ BH BY BE BZ BO BR BN BG

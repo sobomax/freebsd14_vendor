@@ -31,7 +31,7 @@
 /* Ingenic JZ4780 PDMA Controller. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5637db93a16417b63bf2720b797bf40c9a1ae6ba $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: f32db22c1db8413826e500eaeb309e25aaa91aca $
+# $FreeBSD$
 
 TAP_TESTS_C+=	abs2rel
 TAP_TESTS_C+=	rel2abs

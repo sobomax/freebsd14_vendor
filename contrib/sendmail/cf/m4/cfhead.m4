@@ -9,7 +9,7 @@
 # forth in the LICENSE file which can be found at the top level of
 # the sendmail distribution.
 #
-# $FreeBSD: 7e5fa99e0ef5a72b489d2ce81802e2a2e8d5859b $
+# $FreeBSD$
 #
 
 ######################################################################

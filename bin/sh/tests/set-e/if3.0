@@ -1,4 +1,4 @@
-# $FreeBSD: a4916a8426643c4fb6dc24a3543d5ed63b97df53 $
+# $FreeBSD$
 set -e
 if false; false; then
 	:

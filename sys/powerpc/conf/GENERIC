@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: 005e629d788bea4a7b361d3bf720bce90d1d9032 $
+# $FreeBSD$
 
 cpu		AIM
 ident		GENERIC

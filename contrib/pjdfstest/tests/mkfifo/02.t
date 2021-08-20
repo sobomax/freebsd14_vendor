@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: f6fb3f1f93dc2f59a1f1acdb180d68f5267d4ab1 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/02.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkfifo returns ENAMETOOLONG if a component of a pathname exceeded {NAME_MAX} characters"
 

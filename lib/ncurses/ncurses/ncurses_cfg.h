@@ -44,7 +44,7 @@
  *	ftp://invisible-island.net/autoconf/
  */
 
-/* $FreeBSD: 9ca3a9725ff6235b59c864ed2a093f5ad2d51b68 $ */
+/* $FreeBSD$ */
 
 #ifndef NC_CONFIG_H
 #define NC_CONFIG_H

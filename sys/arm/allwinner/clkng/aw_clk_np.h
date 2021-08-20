@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4997adb19d9cfc30e20c409d392ecf7a2ecbdc1b $
+ * $FreeBSD$
  */
 
 #ifndef	__AW_CLK_NP_H__

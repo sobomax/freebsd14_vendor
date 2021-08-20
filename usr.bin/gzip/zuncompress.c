@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  * from: NetBSD: zopen.c,v 1.8 2003/08/07 11:13:29 agc Exp
- * $FreeBSD: b2f3e8d51bd3699e1655ac9d55d9a539f35f00ca $
+ * $FreeBSD$
  */
 
 /* This file is #included by gzip.c */

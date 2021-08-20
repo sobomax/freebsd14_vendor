@@ -1,4 +1,4 @@
-# $FreeBSD: 30e81d4dfaad334532fa0927a9578211c8123c64 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/net
 KMOD=	if_lagg

@@ -1,4 +1,4 @@
-# $FreeBSD: cae84aa5ffb583a55d1b750f1cea7f214cb30432 $
+# $FreeBSD$
 
 PROG=	ipropd-slave
 MAN=

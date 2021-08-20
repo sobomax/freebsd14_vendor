@@ -28,7 +28,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 254c4ffd2674fe751d1d3ca2a0a3e5e4354be726 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sched.h"
 

@@ -1,5 +1,5 @@
 /* $NetBSD: cpu.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $ */
-/* $FreeBSD: 55c20cec3ba95c07fdd7b515165fec3cc847006b $ */
+/* $FreeBSD$ */
 
 #ifndef MACHINE_CPU_H
 #define MACHINE_CPU_H

@@ -1,4 +1,4 @@
-# $FreeBSD: 27369a0b1b4ccf966f86374a7543c399c5f71a88 $
+# $FreeBSD$
 
 # It may be argued that
 #   x=$(cat <<EOF

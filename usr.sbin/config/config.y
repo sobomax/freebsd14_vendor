@@ -69,7 +69,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.y	8.1 (Berkeley) 6/6/93
- * $FreeBSD: e6504500454b3467256845095bed7a0f693f94f8 $
+ * $FreeBSD$
  */
 
 #include <assert.h>

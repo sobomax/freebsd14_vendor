@@ -38,7 +38,7 @@
 
 #include "vc_vchi_audioserv_defs.h"
 
-SND_DECLARE_FILE("$FreeBSD: c2dd124bfbbbca59133d798f459791d1ed599eca $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* Audio destination */
 #define	DEST_AUTO		0

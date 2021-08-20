@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3892f2aad86ab31dbe3d9570a5b5a62e6066dda0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple TFTP implementation for libsa.

@@ -1,4 +1,4 @@
-# $FreeBSD: f6db85ee989e2da0d30472a72f8895400280d865 $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

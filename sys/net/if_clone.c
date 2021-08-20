@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
- * $FreeBSD: acc392ead16a376affe0469d92bdc6a3db355c89 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

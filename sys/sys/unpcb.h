@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unpcb.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: f1e5f5f26625cfe09dea428459003467fc910cb9 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UNPCB_H_

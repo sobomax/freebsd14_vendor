@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.13 (Berkeley) 3/21/95
- * $FreeBSD: 46c30e657f75cf2336964e99e9397b8d77ee2660 $
+ * $FreeBSD$
  */
 
 #ifndef _UFS_FFS_FS_H_

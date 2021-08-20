@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: nap.c,v 1.1 2008/03/11 00:02:42 max Exp $
- * $FreeBSD: 16054af657fe9355168e4129ef8e846c1b4206c5 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

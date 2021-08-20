@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7405d5e503a5b63e8a4a66ea6377fba5ca39d3dd $	*/
+/*	$FreeBSD$	*/
 
 /*
  * (C)opyright 1992-1998 Darren Reed. (from tcplog)

@@ -1,4 +1,4 @@
-# $FreeBSD: 5ce355f8b0c1ff8b4b7c66db0c7eb2239907454a $
+# $FreeBSD$
 #
 # String handling from the Cortex Strings library
 # https://git.linaro.org/toolchain/cortex-strings.git

@@ -1,6 +1,6 @@
 /*
  * $NetBSD: util.c,v 1.4 2000/08/03 00:04:30 fvdl Exp $
- * $FreeBSD: 455578b657fb20104d25ec0c4fd368bfc5515255 $
+ * $FreeBSD$
  */
 
 /*-

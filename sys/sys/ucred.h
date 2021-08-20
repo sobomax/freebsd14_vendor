@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ucred.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: e2e0c998bff84f77a7e0a98117248d714e24f92c $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UCRED_H_

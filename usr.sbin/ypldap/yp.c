@@ -1,5 +1,5 @@
 /*	$OpenBSD: yp.c,v 1.14 2015/02/11 01:26:00 pelikan Exp $ */
-/*	$FreeBSD: 0cbadc371c5ee33a258cc736f09702dadc2189f8 $ */
+/*	$FreeBSD$ */
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>
  *

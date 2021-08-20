@@ -1,4 +1,4 @@
-$ $FreeBSD: 48bc1d4001500773aee32121acd1f5ba7f99f4d7 $
+$ $FreeBSD$
 $
 $ Message catalog for ru_RU.KOI8-R locale
 $

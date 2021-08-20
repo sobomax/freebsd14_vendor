@@ -15,7 +15,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: f728abd1825059b6973307f0335b7c7e7c496615 $");
+__RCSID("$FreeBSD$");
 
 #ifdef SANDBOX_CAPSICUM
 

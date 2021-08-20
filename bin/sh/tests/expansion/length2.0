@@ -1,4 +1,4 @@
-# $FreeBSD: d749b51f4b20ce06daa24b5df483fe96a562c162 $
+# $FreeBSD$
 
 v=$-
 [ "${#-}" = "${#v}" ] || echo '${#-} wrong'

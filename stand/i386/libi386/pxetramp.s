@@ -12,7 +12,7 @@
 # warranties of merchantability and fitness for a particular
 # purpose.
 #
-# $FreeBSD: dcf1441aeb24405200c60f82cc7664dc27b46c05 $
+# $FreeBSD$
 
 # ph33r this
 

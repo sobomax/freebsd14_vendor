@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 993a5b2279249f88245f9028923b77d56c54681c $
+# $FreeBSD$
 
 desc="utimensat with UTIME_OMIT will leave the time unchanged"
 

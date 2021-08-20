@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: fe3e754c03514731c297961421b88c0d0dcc9300 $
+# $FreeBSD$
 
 #
 # About:

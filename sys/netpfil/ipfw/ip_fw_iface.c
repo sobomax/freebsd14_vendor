@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: beb3b9115aac98b2daecf52a00833b2524cad534 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Kernel interface tracking API.

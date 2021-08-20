@@ -1,4 +1,4 @@
-# $FreeBSD: 7729c54a68954ad05e224a642a1168aca3faecf3 $
+# $FreeBSD$
 
 # If fully successful, cd -Pe must be like cd -P.
 

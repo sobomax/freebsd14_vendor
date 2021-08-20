@@ -31,7 +31,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: be1cdf0391bd73edaf99c202d8a0eb8a1f6c7e0b $
+ * $FreeBSD$
  */
 
 #if !defined(OPA_SMI_H)

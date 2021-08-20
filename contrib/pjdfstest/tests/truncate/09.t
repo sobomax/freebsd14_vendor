@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: c0a805c54cc7395a2566d12e4cfe368beb08b2a9 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/09.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="truncate returns EISDIR if the named file is a directory"
 

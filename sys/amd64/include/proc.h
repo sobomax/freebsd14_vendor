@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)proc.h	7.1 (Berkeley) 5/15/91
- * $FreeBSD: b9579297770722b44e541a4c243a837868fb21fb $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PROC_H_

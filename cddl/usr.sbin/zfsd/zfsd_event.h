@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD: fd3f9f7c5200e2d92095c1ee3e6cd8e7dc643d79 $
+ * $FreeBSD$
  */
 
 /**

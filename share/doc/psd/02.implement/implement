@@ -39,7 +39,7 @@
 .\" 
 .\"	@(#)implement	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: f6ad7d7591912a4407030c158cc8fad80727f903 $
+.\" $FreeBSD$
 .EH 'PSD:2-%''UNIX Implementation'
 .OH 'UNIX Implementation''PSD:2-%'
 .de P1

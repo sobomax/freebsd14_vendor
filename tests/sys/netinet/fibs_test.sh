@@ -29,7 +29,7 @@
 #
 #  Authors: Alan Somers         (Spectra Logic Corporation)
 #
-# $FreeBSD: 9799f2a5303e1f3928de95ff0d0349ac694e602d $
+# $FreeBSD$
 
 # All of the tests in this file requires the test-suite config variable "fibs"
 # to be defined to a space-delimited list of FIBs that may be used for testing.

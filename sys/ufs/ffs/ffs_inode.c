@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8fbe02cd572b76c34b6778f9658b154bb482237e $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 

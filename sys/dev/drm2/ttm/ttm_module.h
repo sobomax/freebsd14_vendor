@@ -27,7 +27,7 @@
 /*
  * Authors: Thomas Hellstrom <thellstrom-at-vmware-dot-com>
  */
-/* $FreeBSD: b1ce2bcb9afc35fef9cbab73c1deff71f0e809e5 $ */
+/* $FreeBSD$ */
 
 #ifndef _TTM_MODULE_H_
 #define _TTM_MODULE_H_

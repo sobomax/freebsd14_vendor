@@ -28,7 +28,7 @@
  *
  * Marvell SheevaPlug Device Tree Source.
  *
- * $FreeBSD: 6f2714e898cfc26a2d257ebbe930da29f95006e0 $
+ * $FreeBSD$
  */
 
 /dts-v1/;

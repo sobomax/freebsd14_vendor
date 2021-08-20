@@ -1,4 +1,4 @@
-# $FreeBSD: 1d3c39ba953e833e4503d4184fa2a365043bf1cd $
+# $FreeBSD$
 
 set -- -x -y
 getopts :x var || echo "First getopts bad: $?"

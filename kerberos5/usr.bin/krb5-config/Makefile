@@ -1,4 +1,4 @@
-# $FreeBSD: cabc250ff404655d154f8c629b26c38443076ee9 $
+# $FreeBSD$
 
 SCRIPTS=krb5-config
 MAN=	krb5-config.1

@@ -24,7 +24,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 781b4fec8f9cb39ecb695c7c134e9fe57b85e255 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Define arrays of leaf functions to load/store fp registers to memory. See

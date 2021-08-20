@@ -23,7 +23,7 @@
 /* This file was created with the aid of ``regdat.sh'' and ``reg-arm.dat''.  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50379bfed75669cb4bcdd94a25cf77ccbd3fb3e6 $");
+__FBSDID("$FreeBSD$");
 
 #include "regdef.h"
 #include "regcache.h"

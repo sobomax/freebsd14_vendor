@@ -10,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc0f315ed65c995d019f12bfa74f67730e7a51ba $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Just when we thought life were beautiful, reality pops its grim face over

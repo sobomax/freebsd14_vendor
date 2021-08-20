@@ -1,4 +1,4 @@
-# $FreeBSD: 19842900e0c1363e775d547abaa747dd085b0625 $
+# $FreeBSD$
 
 run_test() {
 	w='@ @'

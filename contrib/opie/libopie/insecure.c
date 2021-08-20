@@ -28,7 +28,7 @@ License Agreement applies to this software.
         Created at NRL for OPIE 2.2 from opiesubr.c. Fixed pointer
              assignment that should have been a comparison.
 
-$FreeBSD: ba2a9dfaeb5a0487eeee230bc84875b964d4f3ea $
+$FreeBSD$
 
 */
 #include "opie_cfg.h"

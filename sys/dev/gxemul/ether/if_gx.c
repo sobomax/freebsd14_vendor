@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7e2493dba1a6f7a491b939c60edbeaad778647f1 $
+ * $FreeBSD$
  */
 
 #include "opt_inet.h"

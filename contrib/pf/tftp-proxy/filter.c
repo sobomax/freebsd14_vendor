@@ -1,5 +1,5 @@
 /*	$OpenBSD: filter.c,v 1.1 2005/12/28 19:07:07 jcs Exp $ */
-/*	$FreeBSD: e5a769a62a548e831eaf75c8638f5de47fb9b66e $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2004, 2005 Camiel Dobbelaar, <cd@sentia.nl>

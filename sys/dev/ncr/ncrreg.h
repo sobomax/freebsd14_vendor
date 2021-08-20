@@ -1,6 +1,6 @@
 /**************************************************************************
 **
-** $FreeBSD: 34f1618f8d49c0564b00d79c82b5d7c1364d12e1 $
+** $FreeBSD$
 **
 **  Device driver for the   NCR 53C810   PCI-SCSI-Controller.
 **

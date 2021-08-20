@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: c5f69ff5988b598c1b721c58723340a91bda3f36 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/06.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkdir returns EACCES when write permission is denied on the parent directory of the directory to be created"
 

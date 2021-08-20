@@ -18,7 +18,7 @@
  * 5. Modifications may be freely made to this file if the above conditions
  *    are met.
  *
- * $FreeBSD: 2f1568ab6637c943ab08b25e2198279b52b6f576 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PIPE_H_

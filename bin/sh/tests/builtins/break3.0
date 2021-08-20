@@ -1,4 +1,4 @@
-# $FreeBSD: 10a5ca88edff5df310a9c7b0cf4c4816435c12ba $
+# $FreeBSD$
 
 # We accept this and people might rely on it.
 # However, various other shells do not accept it.

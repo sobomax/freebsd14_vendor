@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3724880c9591124043e15c402468ab3ecac4407 $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	New-style Interrupt Framework

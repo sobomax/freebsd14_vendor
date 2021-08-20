@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 7cf2b5f72145cc8f72dab5b7ffbfa9ced2b13abd $
+# $FreeBSD$
 
 cat ${PROGDIR}/conf/avail-langs
 

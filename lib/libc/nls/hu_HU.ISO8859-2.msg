@@ -1,4 +1,4 @@
-$ $FreeBSD: 330d486a7b8e643f6fd6147cdccb6a5d737fd8d6 $
+$ $FreeBSD$
 $
 $ Message catalog for hu_HU.ISO8859-2 locale
 $

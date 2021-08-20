@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 4d232ee0d4cf848f740f5106945d83ec14d43509 $
+# $FreeBSD$
 #
 
 # PROVIDE: kldxref

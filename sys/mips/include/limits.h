@@ -30,7 +30,7 @@
  *
  *	@(#)limits.h	8.3 (Berkeley) 1/4/94
  *	from: src/sys/i386/include/limits.h,v 1.27 2005/03/02 21:33:26 joerg
- * $FreeBSD: 277d107e174d4b586f638e129fcfbdc78b8de68a $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_LIMITS_H_

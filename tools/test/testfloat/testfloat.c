@@ -24,7 +24,7 @@ this code that are retained.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a19d8811b69fff4faf7b365f1e2748ae271a55c $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <signal.h>

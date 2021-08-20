@@ -1,4 +1,4 @@
-# $FreeBSD: db0aa6ade00d35abe1edd6b24ebfba880b8b1b97 $
+# $FreeBSD$
 
 PROG=	unix_sorflush
 MAN=

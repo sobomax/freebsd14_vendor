@@ -48,7 +48,7 @@
 #include <isa/isavar.h>
 #include <isa/isa_common.h>
 
-SND_DECLARE_FILE("$FreeBSD: 302f2f180999906d7eeab00fc168dcebe21611ee $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 #define LOGICALID_NOPNP 0
 #define LOGICALID_PCM   0x0000561e

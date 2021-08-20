@@ -1,4 +1,4 @@
-/*	$FreeBSD: eb49b5f142154b9978c0f05a4cff17d9f80f56bd $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ip_ecn.h,v 1.8 2002/01/07 11:34:47 kjc Exp $	*/
 
 /*-

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab3b160428fc6f6f288c9cc3eea03d427d617365 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * NOTE: all function names beginning like "uftdi_cfg_" can only

@@ -29,7 +29,7 @@
 
 /*
  * $Id$
- * $FreeBSD: d5d37b933b30857c439f9a98b53dff883997c172 $
+ * $FreeBSD$
  *
  * Prototypes for GEOM-based disk scheduling algorithms.
  * See g_sched.c for generic documentation.

@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.2 2003/01/12 23:37:31 max Exp $
-# $FreeBSD: 36bc4e9fbd0f74f06b3d07fade9a3897a0eaf8e5 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netgraph/bluetooth/socket
 

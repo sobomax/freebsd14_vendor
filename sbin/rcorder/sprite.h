@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)sprite.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: e311ee6e0f667b573e3b0ca3c8f78c7b206cdb70 $
+ * $FreeBSD$
  */
 
 /*

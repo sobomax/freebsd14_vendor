@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8aab2ac3ff8d477e562e8a2e2fc0a5b7390200d2 $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/module.h>
 #include <linux/device.h>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 579b11dcd4ab539072a0d919dc4a1257e2ef9e7a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Lookup table algorithms.

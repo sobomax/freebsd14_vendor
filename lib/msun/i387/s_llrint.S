@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ded12a7634243438be8c1c2e8c7c84256cbf0fd8 $"); 
+__FBSDID("$FreeBSD$"); 
 	
 ENTRY(llrint)
 	fldl	4(%esp)

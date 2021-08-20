@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD: 3cfc20dd58e19d1cdbfeaf1a3896243e4250487d $
+# $FreeBSD$
 
 # A 512 byte MBR boot manager that simply boots the active partition.
 

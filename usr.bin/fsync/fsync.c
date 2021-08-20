@@ -29,7 +29,7 @@
 #ifndef lint
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f6a4286fa4c28ee438c9af69bba9bcddd1e96a3a $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <fcntl.h>

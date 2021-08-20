@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: f89c793b5d1324eaceddf59a348689421031eed5 $");
+__FBSDID("$FreeBSD$");
 
 static unsigned char archive[] = {
 '0','7','0','7','0','7','0','0','2','0','2','5','0','7','4','6','6','1','0',

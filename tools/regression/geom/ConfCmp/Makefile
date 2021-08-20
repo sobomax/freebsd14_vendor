@@ -1,4 +1,4 @@
-# $FreeBSD: c34cf650479df4a6c67945bac59073962f1c6030 $
+# $FreeBSD$
 
 PROG=	ConfCmp
 SRCS+=	ConfCmp.c

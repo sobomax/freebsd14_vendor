@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50c359a8dd2e317f0ad34652bbbd652b4271b723 $");
+__FBSDID("$FreeBSD$");
 /*
 * TI TPS65217 PMIC companion chip for AM335x SoC sitting on I2C bus
 */

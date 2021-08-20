@@ -1,7 +1,7 @@
 /*-
  * Test 0014:	BPF_STX & BPF_LD+BPF_MEM
  *
- * $FreeBSD: ff1799f29eb1cb315a8be90dd0e154626e7f07eb $
+ * $FreeBSD$
  */
 
 /* BPF program */

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: bthidcontrol.h,v 1.1 2004/02/12 23:25:51 max Exp $
- * $FreeBSD: a35e070213351ca7dedc577612802422a7fdca08 $
+ * $FreeBSD$
  */
 
 #ifndef __BTHIDCONTROL_H__

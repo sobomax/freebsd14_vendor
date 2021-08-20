@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6bdeaa7f1acb7193544f5c72028601948581dc53 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kgssapi.h"
 

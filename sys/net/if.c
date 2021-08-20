@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
- * $FreeBSD: a5104fe7422fe753817397637fe0a685896ede81 $
+ * $FreeBSD$
  */
 
 #include "opt_bpf.h"

@@ -12,7 +12,7 @@
 # the author assume any responsibility for damages incurred with
 # its use.
 #
-# $FreeBSD: bc6b854e328462fd99aa519ec65fb40f352e38f4 $
+# $FreeBSD$
 #
 # This script creates and connects n router like nodes. Complex wide
 # area topologies can be created with the help of script.

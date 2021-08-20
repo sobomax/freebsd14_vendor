@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b58d59b8c105bfe95e33c199e2b84d9d13cba822 $
+# $FreeBSD$
 #
 
 # PROVIDE: rwho

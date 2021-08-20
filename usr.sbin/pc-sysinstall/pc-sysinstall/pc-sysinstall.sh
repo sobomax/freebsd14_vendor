@@ -32,7 +32,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: add77805bf68cb93509393cc2cbf959eef9e650a $
+# $FreeBSD$
 #####################################################################
 
 # User-editable configuration variables

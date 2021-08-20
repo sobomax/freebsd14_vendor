@@ -1,4 +1,4 @@
-# $FreeBSD: a11c6f1292e040695fa6fecee74e29082176fb87 $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/fdread
 

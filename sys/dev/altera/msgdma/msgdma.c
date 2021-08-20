@@ -31,7 +31,7 @@
 /* Altera mSGDMA driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c60c7ccfe3521fab12c3fa0c4cabff0779b4f264 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

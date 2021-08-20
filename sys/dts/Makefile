@@ -1,4 +1,4 @@
-# $FreeBSD: 66f65a712fe4cf2eea14f39ae51120ff5ef22d0e $
+# $FreeBSD$
 
 SUBDIR=arm mips powerpc
 

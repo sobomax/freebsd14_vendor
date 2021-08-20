@@ -1,4 +1,4 @@
-# $FreeBSD: df8f6ce396875f39cd56cbdf250e07f377e716ff $
+# $FreeBSD$
 
 PROG=   posixshmcontrol
 LIBADD=	util

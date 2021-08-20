@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD: 057a96aef43db49ccd24a884f7502eafb83d97e3 $
+ * $FreeBSD$
  */
 
 /* VMCI Resource Access Control API. */

@@ -1,4 +1,4 @@
-# $FreeBSD: 2f2a14e110ae4f0f9d10ebbdea5c13bc92115b35 $
+# $FreeBSD$
 
 f() {
 	local PATH IFS elem

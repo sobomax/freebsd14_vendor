@@ -28,7 +28,7 @@
  * File : ecore_spq.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f23a0595c393b452fe860fbf46164ef53e050318 $");
+__FBSDID("$FreeBSD$");
 
 
 #include "bcm_osal.h"

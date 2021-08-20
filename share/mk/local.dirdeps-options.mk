@@ -1,4 +1,4 @@
-# $FreeBSD: 67b30f351f9f657a99d7cfcc9e57b129bdbab7e7 $
+# $FreeBSD$
 
 # avoid duplication
 DIRDEPS.AUDIT.yes= lib/libbsm

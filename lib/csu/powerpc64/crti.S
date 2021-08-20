@@ -24,7 +24,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 00a12426cf603b65fadeb8f4ccf96220092f4fb3 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef _CALL_ELF
 .abiversion _CALL_ELF

@@ -1,4 +1,4 @@
-# $FreeBSD: 5a3118254bfa805d1700ca32a52b95f1d7b76cf1 $
+# $FreeBSD$
 
 atf_test_case ident
 ident_body() {

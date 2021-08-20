@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 279c33bcaf4af978ebe8e709b92ab7f1ff5b98c7 $
+ * $FreeBSD$
  */
 
 #include "opt_etherswitch.h"

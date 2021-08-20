@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 8b8bdf3f0e96ea6a79bc89aaa7adf27f07ab1812 $
+# $FreeBSD$
 #
 # rc.conf for picobsd. This is sourced from /etc/rc1, and is supposed to
 # contain only shell functions that are used later in /etc/rc1.

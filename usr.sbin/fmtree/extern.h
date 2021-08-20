@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 4b6fb3c1839a645130b462df7044e1cafdc94022 $
+ * $FreeBSD$
  */
 extern uint32_t crc_total;
 

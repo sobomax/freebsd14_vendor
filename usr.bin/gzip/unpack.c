@@ -1,4 +1,4 @@
-/*	$FreeBSD: 2ebfaf108be4e1dce898e0329c3f6e61ba21d481 $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: unpack.c,v 1.3 2017/08/04 07:27:08 mrg Exp $	*/
 
 /*-
@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2ebfaf108be4e1dce898e0329c3f6e61ba21d481 $
+ * $FreeBSD$
  */
 
 /* This file is #included by gzip.c */

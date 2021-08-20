@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 8e33079fa4f6e172ce35b68aa477aa907f7595cd $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/03.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rename returns ENOENT if a component of the 'from' path does not exist, or a path prefix of 'to' does not exist"
 

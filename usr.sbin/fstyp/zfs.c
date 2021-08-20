@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52d05a4df55a86eea222c06494613943a9196301 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <cddl/compat/opensolaris/sys/types.h>

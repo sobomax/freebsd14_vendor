@@ -19,7 +19,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 **
-* $FreeBSD: c6032d0b5ec4c0577999fba652281fcc127841e8 $
+* $FreeBSD$
 *
 ********************************************************************************/
 #ifndef __DMDEFS_H__

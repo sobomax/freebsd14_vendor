@@ -1,4 +1,4 @@
-# $FreeBSD: 4d4381d2229f31de9d2341fb3126b635be7ac929 $
+# $FreeBSD$
 
 KMOD=   gsched_delay
 SRCS=   gs_delay.c

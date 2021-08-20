@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 2c669aa76d1addfa013fe9eaacad06f0f4f05dfd $
+-- $FreeBSD$
 --
 
 local color = require("color")

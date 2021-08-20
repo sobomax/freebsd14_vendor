@@ -1,4 +1,4 @@
-# $FreeBSD: e5541b78bb52c5f583e13c404166c988b7b90aab $
+# $FreeBSD$
 
 FILES=	detect-laptop.sh detect-nics.sh detect-emulation.sh disk-info.sh \
 	disk-list.sh disk-part.sh enable-net.sh get-packages.sh list-config.sh \

@@ -1,4 +1,4 @@
-# $FreeBSD: c075977b88efca50c439c5deb8d359cc9a04a8cc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/viawd
 

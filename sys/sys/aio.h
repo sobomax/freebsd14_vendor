@@ -15,7 +15,7 @@
  * bad that happens because of using this software isn't the responsibility
  * of the author.  This software is distributed AS-IS.
  *
- * $FreeBSD: 6ab8bdb7f296e8d81240f8689d918e13eef28ea0 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_AIO_H_

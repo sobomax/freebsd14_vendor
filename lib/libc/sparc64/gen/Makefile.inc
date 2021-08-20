@@ -1,4 +1,4 @@
-# $FreeBSD: 5442a33fdb18ca04350cf4b8b0b90ad09f7d4e93 $
+# $FreeBSD$
 
 SRCS+=	_ctx_start.S _setjmp.S fabs.S fixunsdfsi.S flt_rounds.c fpgetmask.c \
 	fpgetround.c fpgetsticky.c fpsetmask.c fpsetround.c \

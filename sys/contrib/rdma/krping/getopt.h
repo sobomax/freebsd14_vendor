@@ -1,7 +1,7 @@
 /*
  * lifted from fs/ncpfs/getopt.c
  *
- * $FreeBSD: 610ec76254242c222ee26aca5f0a845a1ac1a309 $
+ * $FreeBSD$
  */
 #ifndef _KRPING_GETOPT_H
 #define _KRPING_GETOPT_H

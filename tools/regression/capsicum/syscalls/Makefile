@@ -1,4 +1,4 @@
-# $FreeBSD: 5d342265628196f1e7ffbcf9cfac0e3020e68038 $
+# $FreeBSD$
 
 SYSCALLS=	cap_fcntls_limit cap_getmode cap_ioctls_limit
 

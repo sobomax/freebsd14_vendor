@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fc88ef29198fc907e4f0471f32cce2c4d2609ff5 $
+ * $FreeBSD$
  */
 
 struct mkuz_conveyor;

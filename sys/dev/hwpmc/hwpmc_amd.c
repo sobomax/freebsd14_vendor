@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d54cf52f1082a5aab288a1bfe7ca753b1d90d590 $");
+__FBSDID("$FreeBSD$");
 
 /* Support for the AMD K7 and later processors */
 

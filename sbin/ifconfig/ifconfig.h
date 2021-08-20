@@ -33,7 +33,7 @@
  *
  * so there!
  *
- * $FreeBSD: 5b5a839aec0eef35bb2d1afa710cf90c8dc28ccd $
+ * $FreeBSD$
  */
 
 #define	__constructor	__attribute__((constructor))

@@ -1,4 +1,4 @@
-/*	$FreeBSD: d31a3bf27e5b956283360ea1e619d0ef9787bdea $	*/
+/*	$FreeBSD$	*/
 /* $OpenBSD: deflate.h,v 1.3 2002/03/14 01:26:51 millert Exp $ */
 
 /*-

@@ -1,4 +1,4 @@
-# $FreeBSD: 19cbd748d23450f8b9852a2bc0bb28729e06b34a $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libdtrace/common
 

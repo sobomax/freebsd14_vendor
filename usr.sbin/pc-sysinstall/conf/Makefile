@@ -1,4 +1,4 @@
-# $FreeBSD: 5ccd78f6d99dbc9fed328db8c92492a186a617e5 $
+# $FreeBSD$
 
 FILESGROUPS=	CONF LICENSE
 CONF=		exclude-from-upgrade pc-sysinstall.conf avail-langs

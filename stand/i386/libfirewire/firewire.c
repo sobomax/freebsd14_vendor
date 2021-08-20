@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9cb1ec0b19a97748f1961e5bd77debf0ff3b494 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * FireWire disk device handling.

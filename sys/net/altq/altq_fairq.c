@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/net/altq/altq_fairq.c,v 1.1 2008/04/06 18:58:15 dillon Exp $
- * $FreeBSD: c6ccea2b5dee8fddca68060de9f20367550b3e26 $
+ * $FreeBSD$
  */
 /*
  * Matt: I gutted altq_priq.c and used it as a skeleton on which to build

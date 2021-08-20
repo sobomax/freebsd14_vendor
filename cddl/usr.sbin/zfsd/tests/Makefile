@@ -1,4 +1,4 @@
-# $FreeBSD: 1b776b21777627a5623916e1bef7da4b8a8913e1 $
+# $FreeBSD$
 
 .include "${.CURDIR}/../Makefile.common"
 .PATH:	${.CURDIR:H}

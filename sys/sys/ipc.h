@@ -39,7 +39,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ipc.h	8.4 (Berkeley) 2/19/95
- * $FreeBSD: a0bd61f7f07d530ba524812b8ec131971d84509c $
+ * $FreeBSD$
  */
 
 /*

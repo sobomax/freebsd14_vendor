@@ -1,4 +1,4 @@
-#	$FreeBSD: 6126564e9821283813f4465c9575353624ac8d3b $
+#	$FreeBSD$
 
 SUBDIR=		libipf .WAIT
 SUBDIR+=	ipf ipfs ipfstat ipmon ipnat ippool

@@ -1,4 +1,4 @@
-# $FreeBSD: 7ebded4edc298a59e93dce0ceda6f62167ac0da6 $
+# $FreeBSD$
 # $Id: meta.autodep.mk,v 1.50 2018/06/08 01:25:31 sjg Exp $
 
 #

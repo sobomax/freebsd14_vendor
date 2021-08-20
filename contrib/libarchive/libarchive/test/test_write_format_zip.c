@@ -30,7 +30,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: f37e4e2777bfdd60ad94b75658bde39f60297a66 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This test doesn't actually check that the zip writer is

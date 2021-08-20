@@ -32,7 +32,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: e4757b4001d7bc61e35ac606cd30a4b259472a7b $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

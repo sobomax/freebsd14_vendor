@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ddc2b07d86b86815b3ccf8c4bf5d57234854c04b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Autoconfiguration and support routines for the Philips serial I2C bus

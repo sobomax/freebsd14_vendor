@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)SYS.h	5.5 (Berkeley) 5/7/91
- * $FreeBSD: 3adc0b7fb6557ffe52b06c392e133e0b5ba1a882 $
+ * $FreeBSD$
  */
 
 #include <sys/syscall.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: 045d000fe252cb564927e117057c2880d55972fa $ */
+/* $FreeBSD$ */
   printf("sizeof(union req_data_u_tag) = %d\n", 
 	 (int) sizeof(union req_data_u_tag));
   printf("offsetof(u32) = %d\n", 

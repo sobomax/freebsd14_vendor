@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bt3c_var.h,v 1.1 2002/11/24 19:46:54 max Exp $
- * $FreeBSD: 481e36c87b130e9e344020a7db330326dbdefbad $
+ * $FreeBSD$
  *
  * XXX XXX XX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
  *

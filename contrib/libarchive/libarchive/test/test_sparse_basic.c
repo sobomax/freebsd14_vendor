@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0fbb7f7bf467862e1c5bcdf794b8481a1c2620d7 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>

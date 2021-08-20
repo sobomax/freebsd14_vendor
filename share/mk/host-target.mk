@@ -1,4 +1,4 @@
-# $FreeBSD: ef8cc80d658db34efea4d97d300aa176da28324d $
+# $FreeBSD$
 # RCSid:
 #	$Id: host-target.mk,v 1.11 2015/10/25 00:07:20 sjg Exp $
 

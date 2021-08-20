@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)valloc.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: b058543f54acb79a35c1c555b6cc109c62621c3a $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <unistd.h>

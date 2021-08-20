@@ -1,6 +1,6 @@
 #! /bin/sh -
 #	@(#)makesyscalls.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: 89be565547749212bab80a287c4049414d48602a $
+# $FreeBSD$
 
 set -e
 

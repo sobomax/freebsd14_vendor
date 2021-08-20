@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 066c565ec53ecd50727565b3e9645de89f88023f $*/
+/*$FreeBSD$*/
 
 #include "iavf.h"
 

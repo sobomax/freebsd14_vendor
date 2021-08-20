@@ -1,4 +1,4 @@
-# $FreeBSD: cdb1faf5a14f7cc099ef4e7b3924bdddd29d8907 $
+# $FreeBSD$
 
 NO_WERROR=	true
 NO_WTHREAD_SAFETY= true

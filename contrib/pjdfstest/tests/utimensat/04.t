@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: d3efe950d82aee12b5932f9509df4b821651f2ce $
+# $FreeBSD$
 
 desc="utimensat can set mtime < atime or vice versa"
 

@@ -1,4 +1,4 @@
-#$FreeBSD: 66af0d867847f5bda397eb08fe4658280068239b $
+#$FreeBSD$
 
 arm/ti/aintc.c				standard
 

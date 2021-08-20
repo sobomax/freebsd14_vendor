@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lockf.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: 368c773283ec22031690860f0b52f7c177bd2f5a $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LOCKF_H_

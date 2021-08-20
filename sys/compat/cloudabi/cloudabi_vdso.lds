@@ -2,7 +2,7 @@
  * Linker script for the vDSO for CloudABI.
  * Based on sys/amd64/linux/linux_vdso.lds.s
  *
- * $FreeBSD: 807c48859bf2d12c1e16d4a8af02747833dd28b4 $
+ * $FreeBSD$
  */
 
 SECTIONS

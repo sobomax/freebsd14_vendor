@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 0236c721eeea19864b7cb560d380330256fb1831 $
+# $FreeBSD$
 #
 # Make command line options:
 #	-DNO_CLEANDIR run ${MAKE} clean, instead of ${MAKE} cleandir

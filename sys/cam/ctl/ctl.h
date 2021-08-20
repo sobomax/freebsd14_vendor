@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl.h#5 $
- * $FreeBSD: 56dd5313b4cb4df6455c52515059480b52882cf7 $
+ * $FreeBSD$
  */
 /*
  * Function definitions used both within CTL and potentially in various CTL

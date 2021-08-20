@@ -1,4 +1,4 @@
-/* $FreeBSD: 019164cb316612fd03a669a6c3e98e7a4ca3b52e $ */
+/* $FreeBSD$ */
 /* Test stack unwinding for libc's sem */
 
 #include <pthread.h>

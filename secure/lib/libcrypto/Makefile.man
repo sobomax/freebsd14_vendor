@@ -1,4 +1,4 @@
-# $FreeBSD: 827d6be51b92bacf7b004a9173f8316db03ff7cc $
+# $FreeBSD$
 .for m in 3 5 7
 .include "man/man${m}/Makefile"
 .PATH:	${.CURDIR}/man/man${m}

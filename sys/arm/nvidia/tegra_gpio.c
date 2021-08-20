@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7626d3072beef964f4b4794e3e2409c138392c6a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Tegra GPIO driver.

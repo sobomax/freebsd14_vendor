@@ -61,7 +61,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: cebb214df369de4faf061d2bdfb74c0f4a98eaf7 $ */
+/* $FreeBSD$ */
 
 #ifndef _NCR53C9XVAR_H_
 #define	_NCR53C9XVAR_H_

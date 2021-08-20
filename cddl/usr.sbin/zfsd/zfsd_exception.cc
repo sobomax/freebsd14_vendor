@@ -52,7 +52,7 @@
 #include "vdev.h"
 #include "zfsd_exception.h"
 
-__FBSDID("$FreeBSD: 7859a654003e2e7bac76c730f1fd316fcdfb3cd4 $");
+__FBSDID("$FreeBSD$");
 /*============================ Namespace Control =============================*/
 using std::endl;
 using std::string;

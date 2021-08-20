@@ -1,7 +1,7 @@
 /*
  * Укра╖нський календар
  *
- * $FreeBSD: 1dfa26220475e27598b6f29f95fe43090d920416 $
+ * $FreeBSD$
  */
 
 #ifndef _uk_UA_KOI8_U_all_

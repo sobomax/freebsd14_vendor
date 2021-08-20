@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 2fcd08e4883c4d4ca9b51621782fbe3da9423a7a $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/symlink/00.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="symlink creates symbolic links"
 

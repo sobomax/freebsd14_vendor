@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD: 826581f086b02d6bc0ab0d6a85296ca9d73cd4eb $
+    $FreeBSD$
     A Solaris 8 disklabel
   </comment>
   <sectorsize>512</sectorsize>

@@ -1,4 +1,4 @@
-dnl $FreeBSD: e0647787b76c44815d97c238b775493c0ff6a542 $
+dnl $FreeBSD$
 dnl $OpenBSD: src/regress/usr.bin/m4/patterns.m4,v 1.4 2003/06/08 20:11:45 espie Exp $
 patsubst(`quote s in string', `(s)', `\\\1')
 patsubst(`check whether subst

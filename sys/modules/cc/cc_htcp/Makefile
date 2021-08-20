@@ -1,4 +1,4 @@
-# $FreeBSD: 99f3f8f8f99d7f9b11c90466302252bfba1536d7 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netinet/cc
 KMOD=	cc_htcp

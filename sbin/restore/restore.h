@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)restore.h	8.3 (Berkeley) 9/13/94
- * $FreeBSD: 2e6ff623dc3af0e8805308ae57466b7be83e1d8a $
+ * $FreeBSD$
  */
 
 /*

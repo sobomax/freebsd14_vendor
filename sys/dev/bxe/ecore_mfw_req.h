@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c1528d08443a57c7188f92071443e6a5f638930 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef ECORE_MFW_REQ_H
 #define ECORE_MFW_REQ_H

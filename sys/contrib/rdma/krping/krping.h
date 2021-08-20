@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 37df45b8677681fe3734e13eb01b29ac981b7319 $
+ * $FreeBSD$
  */
 
 struct krping_stats {

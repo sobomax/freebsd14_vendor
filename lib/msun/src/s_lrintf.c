@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a757ded233a3f0579142bb742f6840f217a27b32 $");
+__FBSDID("$FreeBSD$");
 
 #define type		float
 #define	roundit		rintf

@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)ms.diffs	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD: de937af9b6fe7a8249213746c8808dcba055a0f9 $
+.\"	$FreeBSD$
 .\"
 .nr LL 6.5i
 .nr FL 6.0i

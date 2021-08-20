@@ -1,4 +1,4 @@
-# $FreeBSD: 3c7398e3858259fb4023561337d28e87567d542b $
+# $FreeBSD$
 
 SUBDIR=	bhnd_pci \
 	bhnd_pci_hostb \

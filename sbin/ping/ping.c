@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05b38d98f1a0bbbdf177ddf8e1d649687c4d5ecd $");
+__FBSDID("$FreeBSD$");
 
 /*
  *			P I N G . C

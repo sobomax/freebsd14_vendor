@@ -43,7 +43,7 @@
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
 
-__FBSDID("$FreeBSD: 728dfed7978d92915699e81856e5f906695e8afd $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/ktr.h>

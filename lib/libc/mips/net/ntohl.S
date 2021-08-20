@@ -31,7 +31,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: 39001aa86bbef27d054fa62c21e1dc3263fe079e $");
+__FBSDID("$FreeBSD$");
 
 LEAF(ntohl)                            # a0 = 0x11223344, return 0x44332211
 #ifdef __MIPSEB__

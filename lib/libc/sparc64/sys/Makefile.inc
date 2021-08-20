@@ -1,4 +1,4 @@
-# $FreeBSD: fd6368c4de7a265562278022d2ebebe8840530e7 $
+# $FreeBSD$
 
 SRCS+=	__sparc_sigtramp_setup.c \
 	__sparc_utrap.c \

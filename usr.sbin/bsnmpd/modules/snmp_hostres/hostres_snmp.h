@@ -28,7 +28,7 @@
  *
  * Host Resources MIB for SNMPd.
  *
- * $FreeBSD: 5c11573df1984a7ca2eb7fe7fde38727e8e523c0 $
+ * $FreeBSD$
  */
 
 #ifndef HOSTRES_SNMP_H_1132245017

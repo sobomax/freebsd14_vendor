@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3c4b3026706fff19202c570251bc8704580b954 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * BHNDB PCI SPROM driver.

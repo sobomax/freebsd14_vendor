@@ -1,4 +1,4 @@
-# $FreeBSD: 352bacb7685f6d3353d70af1c9ed0df25aa33f81 $
+# $FreeBSD$
 
 PROG_CXX=	llvm-objcopy
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a8f74f498bdb0620a63cdb5cab9b31c2a9b4ca40 $
+ * $FreeBSD$
  */
 
 /include/ "exynos5.dtsi"

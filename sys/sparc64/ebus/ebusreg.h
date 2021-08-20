@@ -1,4 +1,4 @@
-/*	$FreeBSD: 53a4cdd3dc1180ff9ab90edb4611cd47fa227910 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ebusreg.h,v 1.4 2001/10/01 18:08:04 jason Exp $	*/
 /*	$NetBSD: ebusreg.h,v 1.8 2008/05/29 14:51:27 mrg Exp $	*/
 

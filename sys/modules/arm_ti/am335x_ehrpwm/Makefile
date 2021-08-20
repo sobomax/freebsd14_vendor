@@ -1,4 +1,4 @@
-# $FreeBSD: affb7cdc3a969b8b9148bcb571037ca7b094e9be $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/ti/am335x
 

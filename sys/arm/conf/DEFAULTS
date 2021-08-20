@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/arm
 #
-# $FreeBSD: 6755185f54d54e959b0869f3c2db3959f4eebf29 $
+# $FreeBSD$
 
 device		mem
 

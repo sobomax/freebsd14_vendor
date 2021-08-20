@@ -29,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 7c7e3c8027aa69eb57fd902236a213973f9f0b9e $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_EFX_EF10_REGS_H

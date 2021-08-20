@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 71ed4a15540fb7d61a5997f3848d69aeef8ec578 $
+# $FreeBSD$
 
 TEST_MDS_FILE="${TMPDIR}/test_mds.$(basename $0)"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: cb8c744adde4a48186edd3ba58e0313f0f831b0e $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/crypto/aesni
 .PATH: ${SRCTOP}/contrib/llvm-project/clang/lib/Headers

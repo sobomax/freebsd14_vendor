@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 84f886c0d9c3a93d97c0ac4ee08211510f1ea79a $
+# $FreeBSD$
 #
 
 # PROVIDE: moused

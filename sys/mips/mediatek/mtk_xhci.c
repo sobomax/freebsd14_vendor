@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55f39d53daa7ffcc3f3eef80f716550ebee96dc7 $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Copyright (c) 2015 Stanislav Galabov. All rights reserved.

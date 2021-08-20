@@ -1,4 +1,4 @@
-# $FreeBSD: f5b00975e20b319065b92c0b339af8c45f945015 $
+# $FreeBSD$
 # Floppy formats:
 #
 # To make a filesystem on a floppy:

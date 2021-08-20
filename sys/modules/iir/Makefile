@@ -1,4 +1,4 @@
-# $FreeBSD: daccc324055c9b0302df1ec1cbf264abba053116 $
+# $FreeBSD$
 
 KMOD		=  iir
 .PATH:		${SRCTOP}/sys/dev/${KMOD}

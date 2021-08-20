@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8a88b8d6512e34afeef4ec73fa57ac7caf456b2d $
+ * $FreeBSD$
  */
 #define _XLOCALE_INLINE
 #include <ctype.h>

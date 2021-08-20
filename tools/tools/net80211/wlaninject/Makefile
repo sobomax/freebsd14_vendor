@@ -1,4 +1,4 @@
-# $FreeBSD: b6bbeb5ab7013c3f630aa0e3093ac88402fcdd96 $
+# $FreeBSD$
 
 PROG=	wlaninject
 BINDIR=	/usr/local/bin

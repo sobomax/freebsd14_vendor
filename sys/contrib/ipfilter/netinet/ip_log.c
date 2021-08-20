@@ -1,11 +1,11 @@
-/*	$FreeBSD: 76d2e3def1fa573583367a23c0dd152dbbed1ed4 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
  *
- * $FreeBSD: 76d2e3def1fa573583367a23c0dd152dbbed1ed4 $
+ * $FreeBSD$
  * Id: ip_log.c,v 2.75.2.19 2007/09/09 11:32:06 darrenr Exp $
  */
 #include <sys/param.h>

@@ -1,2 +1,2 @@
-# $FreeBSD: 128a48391dedc6abcf6c6b8116122e6e4c094a46 $
+# $FreeBSD$
 case x in x) </dev/null ;; esac

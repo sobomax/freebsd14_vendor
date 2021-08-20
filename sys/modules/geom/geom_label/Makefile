@@ -1,4 +1,4 @@
-# $FreeBSD: 731ca48dcbf9f616ca93b2e5e53a35b8b52a09c4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/label
 

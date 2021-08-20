@@ -1,4 +1,4 @@
-/* $FreeBSD: 84faf5815890dc46221bc66f5b2d2204c551934d $ */
+/* $FreeBSD$ */
 /*	$NetBSD: hid.c,v 1.17 2001/11/13 06:24:53 lukem Exp $	*/
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

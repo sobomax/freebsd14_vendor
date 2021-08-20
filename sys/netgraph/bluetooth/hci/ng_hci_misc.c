@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_misc.c,v 1.5 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: 619b5d4c4430c453ee70fdd8030bacceadbc5d4b $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

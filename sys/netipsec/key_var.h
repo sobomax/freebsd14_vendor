@@ -1,4 +1,4 @@
-/*	$FreeBSD: bd68645e098525e4282124089ca9a46728b4ef2c $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: key_var.h,v 1.11 2001/09/12 23:05:07 sakane Exp $	*/
 
 /*-

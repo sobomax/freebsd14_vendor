@@ -6,7 +6,7 @@
 .\" this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 .\" ----------------------------------------------------------------------------
 .\"
-.\" $FreeBSD: 5a46f9520984aa63980dee6b2e72e0683b3e3b4f $
+.\" $FreeBSD$
 .\"
 .ds RH Alternative implementations
 .NH

@@ -1,4 +1,4 @@
-/* $FreeBSD: ce10b4b5009865507f45d4d59ea68711969f5a45 $ */
+/* $FreeBSD$ */
 /*	$NetBSD: as.h,v 1.1 2001/11/04 23:14:36 atatat Exp $	*/
 
 /*

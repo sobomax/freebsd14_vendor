@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: 22beaae79bb093eaa743cc6a5e53d742b5d9eebc $");
+__RCSID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/param.h>

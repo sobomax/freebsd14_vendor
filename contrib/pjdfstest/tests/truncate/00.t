@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: b9e0c31f5b407e683cdedcb2071c40374b700b91 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/00.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="truncate descrease/increase file size"
 

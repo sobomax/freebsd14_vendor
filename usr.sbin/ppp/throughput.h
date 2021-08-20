@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8ece5adaa804b8fc0bdf69e53ef4d374e9134125 $
+ * $FreeBSD$
  */
 
 #define SAMPLE_PERIOD 5		/* Default sample period */

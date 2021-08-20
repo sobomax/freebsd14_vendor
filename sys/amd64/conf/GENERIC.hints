@@ -1,4 +1,4 @@
-# $FreeBSD: 31311d03fc94d50b34da1141bbd32067e301b331 $
+# $FreeBSD$
 hint.fdc.0.at="isa"
 hint.fdc.0.port="0x3F0"
 hint.fdc.0.irq="6"

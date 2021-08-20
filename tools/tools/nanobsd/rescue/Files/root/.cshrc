@@ -1,4 +1,4 @@
-# $FreeBSD: 50ab635e59c5ec348f3bc5a55282a7e01fe1fb8c $
+# $FreeBSD$
 #
 #csh .cshrc file
 

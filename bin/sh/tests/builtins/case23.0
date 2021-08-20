@@ -1,4 +1,4 @@
-# $FreeBSD: ce03cf96d62e7b8d20dad0a14d45486ccbb6d64b $
+# $FreeBSD$
 
 case [ in
 [[:alpha:]]) echo bad

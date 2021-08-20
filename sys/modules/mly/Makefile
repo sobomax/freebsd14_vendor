@@ -1,4 +1,4 @@
-# $FreeBSD: 5f7f3136359dae875da6485a9bed096308eff38e $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mly
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 94d198bf99003e68e1ab89500a1d5714972bb5d5 $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/kqueue/libkqueue
 BINDIR=		${TESTSDIR}

@@ -30,7 +30,7 @@
  *
  * Customisation of call control source to the NG environment.
  *
- * $FreeBSD: 1be23d4b708db86debfe6b3b1208cf6524062fd0 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

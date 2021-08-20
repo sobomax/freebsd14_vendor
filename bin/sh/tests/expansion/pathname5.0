@@ -1,3 +1,3 @@
-# $FreeBSD: bc278124de4f2ff11822cd2ffb0c8c9e3e4e0aa0 $
+# $FreeBSD$
 
 [ `echo '/[e]tc'` = /etc ]

@@ -1,5 +1,5 @@
 /*      $NetBSD: usbhidaction.c,v 1.8 2002/06/11 06:06:21 itojun Exp $ */
-/*	$FreeBSD: 5f45849f0c57ed0145f695f48dbbd5f8f9e6f7f4 $ */
+/*	$FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

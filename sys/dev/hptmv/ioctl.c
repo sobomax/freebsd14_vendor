@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c9960b24dc528ce5d2cd465ce55b25a3478db1ee $
+ * $FreeBSD$
  */
 /*
  * ioctl.c   ioctl interface implementation

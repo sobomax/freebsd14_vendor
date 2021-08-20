@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed345349c5c0fc061b85f6948a4250308a145d1f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Hardware driver for a Philips PCF8584 I2C bus controller sitting

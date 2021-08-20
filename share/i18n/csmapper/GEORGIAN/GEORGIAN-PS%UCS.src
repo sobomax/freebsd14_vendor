@@ -1,4 +1,4 @@
-# $FreeBSD: 788709aefd701cf11ba854757fe69c6f09a69c88 $
+# $FreeBSD$
 # $NetBSD: GEORGIAN-PS%UCS.src,v 1.2 2006/11/04 06:17:35 tnozaki Exp $
 
 TYPE		ROWCOL

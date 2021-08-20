@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 6ae3910f0628460214324e61f14020601db8a8fb $
+# $FreeBSD$
 #
 
 # PROVIDE: iscsictl

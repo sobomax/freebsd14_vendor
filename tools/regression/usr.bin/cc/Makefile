@@ -1,4 +1,4 @@
-# $FreeBSD: e5b1b90908f167604d1910592d4ac6a86608b8bb $
+# $FreeBSD$
 
 TESTS=	float
 CFLAGS+=-lm

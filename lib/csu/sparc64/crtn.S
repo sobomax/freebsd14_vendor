@@ -27,7 +27,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 5b6d4a77abc11f391ee329287628a6b64a2de784 $");
+__FBSDID("$FreeBSD$");
 
  	.file	"crtn.S"
 

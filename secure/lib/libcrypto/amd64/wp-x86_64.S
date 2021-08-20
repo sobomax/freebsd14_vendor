@@ -1,4 +1,4 @@
-/* $FreeBSD: 3edf02d0fc0842b5f689965b145ee96b0d5b0cf5 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from wp-x86_64.pl. */
 .text	
 

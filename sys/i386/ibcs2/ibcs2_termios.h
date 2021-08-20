@@ -1,5 +1,5 @@
 /*	$NetBSD: ibcs2_termios.h,v 1.3 1994/10/26 02:53:07 cgd Exp $	*/
-/* $FreeBSD: 3f956eca430e349f50f785a46d18b7f51ec09741 $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

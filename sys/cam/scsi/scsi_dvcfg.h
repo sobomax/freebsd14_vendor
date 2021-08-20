@@ -1,4 +1,4 @@
-/*	$FreeBSD: 93b60f2439172c159db69e1bb94667d824eebfe6 $	*/
+/*	$FreeBSD$	*/
 /*	$NecBSD: scsi_dvcfg.h,v 1.4 1998/03/14 07:05:06 kmatsuda Exp $	*/
 /*	$NetBSD$	*/
 

@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)odsyntax.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5032d434d445a51efefbd6b7c25eba5ff8600661 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

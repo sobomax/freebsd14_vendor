@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)var.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: eaf4f427f63b29aa022a42a68e14e2eda52a0419 $
+ * $FreeBSD$
  */
 
 /*

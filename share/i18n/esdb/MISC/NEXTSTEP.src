@@ -1,4 +1,4 @@
-# $FreeBSD: 4af2c0521ec837ed325123344b71e5a465878779 $ 
+# $FreeBSD$ 
 # $NetBSD: NEXTSTEP.src,v 1.1 2006/10/19 14:45:02 tnozaki Exp $
 
 NAME		"NEXTSTEP"

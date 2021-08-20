@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b9523db9eb5a9074238e802435b2bb5a7668ffee $
+# $FreeBSD$
 #
 
 # PROVIDE: ipfw_netflow

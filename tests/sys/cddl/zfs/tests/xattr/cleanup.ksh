@@ -25,7 +25,7 @@
 # ident	"@(#)cleanup.ksh	1.2	07/05/29 SMI"
 #
 
-# $FreeBSD: 7f0267376e5c362f0dbf537f2c5ce2fecd14281c $
+# $FreeBSD$
 
 . ${STF_SUITE}/include/libtest.kshlib
 . ${STF_SUITE}/tests/xattr/xattr.cfg

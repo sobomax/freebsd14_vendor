@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: d4a532b78f4ff88d09f8fae228ab2fc9b31d7b63 $
+\ $FreeBSD$
 
 52 logoX ! 9 logoY ! \ Initialize logo placement defaults
 

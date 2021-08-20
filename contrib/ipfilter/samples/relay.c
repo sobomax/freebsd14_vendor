@@ -1,4 +1,4 @@
-/*	$FreeBSD: 11b76b07c509779c8ca849513046bd8c7f471ec3 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Sample program to be used as a transparent proxy.

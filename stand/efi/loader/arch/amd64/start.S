@@ -33,7 +33,7 @@
 
 /*
  * crt0-efi-x86_64.S - x86_64 EFI startup code.
- * $FreeBSD: 774ef4fa7901b6a7fb3e05b1bd7fe200a6c85b1f $
+ * $FreeBSD$
  */
 
 	.text

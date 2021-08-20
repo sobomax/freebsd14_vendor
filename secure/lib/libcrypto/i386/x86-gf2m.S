@@ -1,4 +1,4 @@
-/* $FreeBSD: 9a137085bffe92e8a8655a086af498520abd2697 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x86-gf2m.pl. */
 #ifdef PIC
 .text

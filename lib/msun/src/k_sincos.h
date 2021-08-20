@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6f03be29776aeed5fbc069a6a613f9eee683141c $");
+__FBSDID("$FreeBSD$");
 
 static const double
 S1  = -1.66666666666666324348e-01, /* 0xBFC55555, 0x55555549 */

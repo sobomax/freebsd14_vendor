@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 95df0107fecb91f0f9c400518ee26e1c499d4c63 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Read a zip file that has a zip comment in the end of the central

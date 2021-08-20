@@ -29,7 +29,7 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: a52f80ed1b56ac5bce9f254951022636fa58e083 $
+ * $FreeBSD$
  */
 /*-
  * Copyright (c) 2011, 2012 LSI Corp.
@@ -58,7 +58,7 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: a52f80ed1b56ac5bce9f254951022636fa58e083 $
+ * $FreeBSD$
  */
 
 #ifndef _MPS_IOCTL_H_

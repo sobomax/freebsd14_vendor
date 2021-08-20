@@ -1,4 +1,4 @@
-# $FreeBSD: a67cfda0999c5d67b988880240fb328be1bca71f $
+# $FreeBSD$
 
 CXGB = ${SRCTOP}/sys/dev/cxgb
 .PATH: ${CXGB} ${CXGB}/common ${CXGB}/sys

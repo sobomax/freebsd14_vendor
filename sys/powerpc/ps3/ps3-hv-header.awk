@@ -7,7 +7,7 @@
 # Invoke like so: awk -f ps3-hv-header.awk < ps3-hvcall.master > ps3-hv.h
 #
 
-# $FreeBSD: d00571a62b4c9151ee9e656a918ee8a6e2360d2a $
+# $FreeBSD$
 
 !/HVCALL.*/ && (!/#.*/ || /#define.*/ || /#include.*/) {
 	print($0);

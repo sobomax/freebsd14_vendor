@@ -1,5 +1,5 @@
 #! /bin/sh
-# $FreeBSD: 9289a8d2dddd510865b03cb183751bb015772848 $
+# $FreeBSD$
 
 . $(dirname $0)/../../common.sh
 

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_llpi.c,v 1.5 2003/09/08 19:11:45 max Exp $
- * $FreeBSD: e77a0031b9ffe8155c902358e966ba7d3a2b40fb $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

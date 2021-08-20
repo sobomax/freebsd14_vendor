@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1aee334631842ea72b4de8c59d38f60f64d0fd17 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ufs.h"
 

@@ -1,7 +1,7 @@
 #
 # TPLink TL-WDR4300 - AR9344 based dual-band 2x2 wifi
 #
-# $FreeBSD: 477ae0a876adb50f81084968f4e0ec932da25a4b $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 582d7e8b4b0266c91f5aa96a76fa114787d1b23e $
+ * $FreeBSD$
  */
 
 #define	_PATH_DEF	".termcap /usr/share/misc/termcap /etc/termcap.small"

@@ -1,4 +1,4 @@
-# $FreeBSD: c32b7babccdb8396b12f0bfe8230df61c2bff420 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/compat/cloudabi
 

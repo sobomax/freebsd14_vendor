@@ -9,7 +9,7 @@
 # do this as part of the normal build. If makefs(8) grows workable FAT
 # support, this should be revisited.
 
-# $FreeBSD: a4389f98074ae1645c328fb5f2b442f15a2e8897 $
+# $FreeBSD$
 
 FAT_SIZE=1600 			#Size in 512-byte blocks of the produced image
 

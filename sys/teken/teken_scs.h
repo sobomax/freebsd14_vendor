@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f17d6e5e28c20368be1e2b381736763cf72ca5b6 $
+ * $FreeBSD$
  */
 
 static inline teken_char_t

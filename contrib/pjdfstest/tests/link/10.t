@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 1ff378b96335d404573646b42d2e196765c896d4 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/link/10.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="link returns EEXIST if the destination file does exist"
 

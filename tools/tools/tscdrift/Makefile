@@ -1,4 +1,4 @@
-# $FreeBSD: fad714d6b058c1fbe8c0c971fed512db0029a2de $
+# $FreeBSD$
 
 PROG=	tscdrift
 MAN=

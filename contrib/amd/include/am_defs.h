@@ -35,7 +35,7 @@
  *
  * File: am-utils/include/am_defs.h
  * $Id: am_defs.h,v 1.15.2.16 2004/05/12 15:54:31 ezk Exp $
- * $FreeBSD: bb867a49b5a59786e87cfb2dcd6bc36a6e3e528f $
+ * $FreeBSD$
  *
  */
 

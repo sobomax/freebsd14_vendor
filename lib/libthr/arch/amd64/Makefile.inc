@@ -1,4 +1,4 @@
-#$FreeBSD: 43f6e839ff10354f35ca2719d62bc8624a6188ab $
+#$FreeBSD$
 
 SRCS+=	_umtx_op_err.S
 

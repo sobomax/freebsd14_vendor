@@ -1,4 +1,4 @@
-# $FreeBSD: 7d93b4d09e85b9219d053fcd4da8d4ef895db24c $
+# $FreeBSD$
 set -e
 ! false
 ! eval false

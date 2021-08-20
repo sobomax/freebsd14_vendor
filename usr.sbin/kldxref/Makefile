@@ -1,4 +1,4 @@
-# $FreeBSD: 75e74efc65daea19119796248c71e895830475b3 $
+# $FreeBSD$
 
 PROG=	kldxref
 MAN=	kldxref.8

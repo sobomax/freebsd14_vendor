@@ -1,4 +1,4 @@
-# $FreeBSD: 08a651d8477f820f4fe6e3531a8d019ddd770911 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/bhnd/bcma
 

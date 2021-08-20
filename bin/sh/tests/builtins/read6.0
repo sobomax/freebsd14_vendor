@@ -1,4 +1,4 @@
-# $FreeBSD: 2168e10c841aa2b2ee2abab3ea61366d8b4e0044 $
+# $FreeBSD$
 
 : | read x
 r=$?

@@ -1,4 +1,4 @@
-# $FreeBSD: 61c51f200d351ffa0cd17d6da8675793d7bbbf04 $
+# $FreeBSD$
 
 # Note: This file is also duplicated in the sys/conf/kern.pre.mk so
 # it will always grab SRCCONF, even if it isn't being built in-tree

@@ -31,7 +31,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 06afeff1f14bbe7293763cf7b6b802fc75ed2ce2 $
+ * $FreeBSD$
  */
 
 /* s3c2410-specific registers */

@@ -36,7 +36,7 @@
  * Agency (DARPA) and Air Force Research Laboratory, Air Force
  * Materiel Command, USAF, under agreement number F30602-01-2-0537.
  *
- * $FreeBSD: 4cc723b6464c7abcfaa5d4a5f20b5c1f8807d8f0 $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_IC_SAB82532_H_

@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8566f55a51a48871084c136f5b534d72d3422f58 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Exercise the system-independent portion of the ACL support.

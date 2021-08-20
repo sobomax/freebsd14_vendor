@@ -1,7 +1,7 @@
 /*
  * Russian calendar files
  *
- * $FreeBSD: 07018766a8325d7ddd2ed08ba9a81633518d6abd $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_russian_

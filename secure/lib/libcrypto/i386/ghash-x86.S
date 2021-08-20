@@ -1,4 +1,4 @@
-/* $FreeBSD: 02b5a036f08a33273f1259f2e27873f82494d3e1 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from ghash-x86.pl. */
 #ifdef PIC
 .text

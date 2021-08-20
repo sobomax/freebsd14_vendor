@@ -29,7 +29,7 @@
 /* Integrated NAND controller driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d78d34d9912cb51b13c4ed037adf0274aff4b29 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

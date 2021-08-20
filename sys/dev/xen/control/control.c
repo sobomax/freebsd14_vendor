@@ -91,7 +91,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9e249abb181d97cb23c9702e393c5b9664e1868 $");
+__FBSDID("$FreeBSD$");
 
 /**
  * \file control.c

@@ -27,7 +27,7 @@
 /*
  * Authors: Thomas Hellstrom <thellstrom-at-vmware-dot-com>
  */
-/* $FreeBSD: 8a286f1f5e80216bd168c1d3157bc6fd2d114147 $ */
+/* $FreeBSD$ */
 /** @file ttm_object.h
  *
  * Base- and reference object implementation for the various

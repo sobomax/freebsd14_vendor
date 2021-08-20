@@ -27,7 +27,7 @@
 #define R600_BLIT_SHADERS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 591b756d2b3ad3639037a93a8a4ed095d9adbb54 $");
+__FBSDID("$FreeBSD$");
 
 extern const u32 r6xx_ps[];
 extern const u32 r6xx_vs[];

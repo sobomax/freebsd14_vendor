@@ -29,7 +29,7 @@
 #define	_TPM20_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b56a17102b2d16b605b6f892660c87b2fb24c131 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/param.h>

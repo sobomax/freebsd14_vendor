@@ -50,7 +50,7 @@ All rights reserved.\n";
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 5e08d35e5d915500d1265b3e6eb58b5e1b8e5212 $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 /* ********************************************************** INCLUDES ***** */

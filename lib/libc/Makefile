@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: ea3879ece5922eef6b6a33bf8bf56769f57133bc $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SHLIBDIR?= /lib

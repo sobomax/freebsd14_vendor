@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: bthost.c,v 1.5 2003/05/21 20:30:01 max Exp $
- * $FreeBSD: b5c5b72cf70056b33b80155bf83cf189951dd9f8 $
+ * $FreeBSD$
  */
 
 #define L2CAP_SOCKET_CHECKED

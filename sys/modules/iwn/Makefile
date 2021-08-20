@@ -1,4 +1,4 @@
-# $FreeBSD: 102c64b5f166f97777605c094a4f5d361cd93076 $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/iwn
 

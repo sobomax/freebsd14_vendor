@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51d6ef93ec00fa74c5e086f44af33b000be4d5f1 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_amdsbwd.h"
 

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6945132f12e0e1b43d63de6f87b1b8f3c4fe5696 $
+ * $FreeBSD$
  */
 #ifndef __kern_prefetch_h__
 #define __kern_prefetch_h__

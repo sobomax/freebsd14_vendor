@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 7619670cecc88c4b263675578a01eabcf56896ba $
+# $FreeBSD$
 #
 
 ## Redefine environment variables here to override prototypes

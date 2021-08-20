@@ -26,14 +26,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e1f6d52d0ebcd6b85ea8ede3ce51e8923eb0378 $
+ * $FreeBSD$
  */
 
 #include "opt_cam.h"
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e1f6d52d0ebcd6b85ea8ede3ce51e8923eb0378 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

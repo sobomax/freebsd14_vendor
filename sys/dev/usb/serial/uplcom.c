@@ -1,7 +1,7 @@
 /*	$NetBSD: uplcom.c,v 1.21 2001/11/13 06:24:56 lukem Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8c1f758a2e37f4144ee87baf40e8e12b962cb8f1 $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause-NetBSD

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f9e70c8939f40ef9f0097434f26f156575c420ed $
+ * $FreeBSD$
  */
 
 #include <linux/etherdevice.h>

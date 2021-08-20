@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: c09bd000de3e01109c087e785f6d33a96156a156 $ */
+/* $FreeBSD$ */
 /*
  * Virtual HBA defines
  */

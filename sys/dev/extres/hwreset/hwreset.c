@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 40ee915e3aacf1a47debddbe44f1b79da7613828 $
+ * $FreeBSD$
  */
 #include "opt_platform.h"
 #include <sys/cdefs.h>

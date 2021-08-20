@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cbb3d463a30ffbe091e7ed35d7a7928d1e5c6f75 $");
+__FBSDID("$FreeBSD$");
 
 /* asinh(x)
  * Method :

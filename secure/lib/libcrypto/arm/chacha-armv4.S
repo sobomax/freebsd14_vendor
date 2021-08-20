@@ -1,4 +1,4 @@
-/* $FreeBSD: d38938049048ea94b645c99723981aac70f48e2b $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from chacha-armv4.pl. */
 #include "arm_arch.h"
 

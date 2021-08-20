@@ -1,5 +1,5 @@
 # regular expression test set
-# $FreeBSD: 050e7b25ab142b6d7505b2daea98f15807d4a014 $
+# $FreeBSD$
 # Lines are at least three fields, separated by one or more tabs.  "" stands
 # for an empty field.  First field is an RE.  Second field is flags.  If
 # C flag given, regcomp() is expected to fail, and the third field is the

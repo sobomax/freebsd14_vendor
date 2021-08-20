@@ -1,4 +1,4 @@
-# $FreeBSD: b5edb08a8d47c10992c14dd9178fba0d297d5125 $
+# $FreeBSD$
 
 LIB=	gssapi_ntlm
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

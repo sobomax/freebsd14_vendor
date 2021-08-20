@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 38e0864761b5f1b7e15b35a5ea16b2a0be605ade $
+ * $FreeBSD$
  */
 /*
    This file is auto-generated from the drm_pciids.txt in the DRM CVS

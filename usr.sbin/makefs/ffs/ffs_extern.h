@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_extern.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD: b4d4bbaef6e968842f778f8b167a888e328c980f $
+ * $FreeBSD$
  */
 
 #include "ffs/buf.h"

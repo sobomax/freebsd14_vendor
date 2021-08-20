@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5fe4a97c214666c5b264889566afc1cac3bd38db $
+ * $FreeBSD$
  */
 
 #define	RIPCMDS
@@ -41,7 +41,7 @@
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 5fe4a97c214666c5b264889566afc1cac3bd38db $");
+__RCSID("$FreeBSD$");
 #else
 __RCSID("$Revision: 2.27 $");
 #ident "$Revision: 2.27 $"

@@ -2,7 +2,7 @@
 \ ** ANS conditional compile directives [if] [else] [then]
 \ ** Requires ficl 2.0 or greater...
 \
-\ $FreeBSD: a8c60626c4f84f13f61846bcb12bbff08265a4a3 $
+\ $FreeBSD$
 
 hide
 

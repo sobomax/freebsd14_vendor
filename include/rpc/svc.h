@@ -31,7 +31,7 @@
  *
  *	from: @(#)svc.h 1.35 88/12/17 SMI
  *	from: @(#)svc.h      1.27    94/04/25 SMI
- * $FreeBSD: 912d26ba4461091dd943b37ed7c466c548558bfb $
+ * $FreeBSD$
  */
 
 /*

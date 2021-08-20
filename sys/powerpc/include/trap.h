@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * $NetBSD: trap.h,v 1.7 2002/02/22 13:51:40 kleink Exp $
- * $FreeBSD: 19a88c05252ca4dedab5382f536f7791499bdc38 $
+ * $FreeBSD$
  */
 
 #ifndef	_POWERPC_TRAP_H_

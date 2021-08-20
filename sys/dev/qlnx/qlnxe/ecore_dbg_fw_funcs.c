@@ -29,7 +29,7 @@
  * File : ecore_dbg_fw_funcs.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30505772e70c77c065030e5d23ad261b8be731ef $");
+__FBSDID("$FreeBSD$");
 
 #include "bcm_osal.h"
 #include "ecore.h"

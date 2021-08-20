@@ -12,7 +12,7 @@
 
 /* INDENT OFF */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e86c3bf648886e7486862f9f961c7acfad48bd1 $");
+__FBSDID("$FreeBSD$");
 
 /* __kernel_tan( x, y, k )
  * kernel tan function on ~[-pi/4, pi/4] (except on -0), pi/4 ~ 0.7854

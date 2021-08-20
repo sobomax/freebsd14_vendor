@@ -1,4 +1,4 @@
-# $FreeBSD: 02623293b592f81a7325df96069d1dd9539bb9ab $
+# $FreeBSD$
 #
 # .profile - Bourne Shell startup script for login shells
 #

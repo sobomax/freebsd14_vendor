@@ -1,4 +1,4 @@
-/* $FreeBSD: 4bffd29dc6f3a97fd60364549f1022848c43a820 $ */
+/* $FreeBSD$ */
 
 #include <sys/poll.h>
 #include <sys/socket.h>

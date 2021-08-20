@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7e0c6622c8b789fe27014c349e7013b6dd424ed1 $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: mkfs_msdos.h,v 1.3 2015/10/16 17:38:17 christos Exp $	*/
 
 /*-

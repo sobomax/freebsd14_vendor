@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 41899adffd96c6552ac6615eec95fa360891a78d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Logging support for ipfw

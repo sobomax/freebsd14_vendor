@@ -1,4 +1,4 @@
-# $FreeBSD: 4fd402c2e3a4584e1481663f72dfd2889b1014be $
+# $FreeBSD$
 # $NetBSD: Makefile.inc,v 1.1 2006/11/13 15:16:30 tnozaki Exp $
 
 CODE=	TCVN

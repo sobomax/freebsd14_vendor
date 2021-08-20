@@ -1,4 +1,4 @@
-/* $FreeBSD: 5b4ae8ed6a9e1ff878ac07ad24231d8542947770 $ */
+/* $FreeBSD$ */
 
 #include <unistd.h>
 #include <fcntl.h>

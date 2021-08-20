@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b4a75488f8f54e00ff4c49a326a378c070b8b9ce $
+ * $FreeBSD$
  */
 
 extern int __stub_N8TwezWFyocUB;

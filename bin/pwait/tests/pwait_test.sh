@@ -1,4 +1,4 @@
-# $FreeBSD: 0e22c94114ba54ee25e1395b925df89ff55144b4 $
+# $FreeBSD$
 
 atf_test_case basic
 basic_head()

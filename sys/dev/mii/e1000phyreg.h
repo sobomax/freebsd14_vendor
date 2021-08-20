@@ -1,4 +1,4 @@
-/* $FreeBSD: 04c396e5767b385f7e4807fa0f6d97a8b0455cfa $ */
+/* $FreeBSD$ */
 /*-
  * Principal Author: Parag Patel
  * Copyright (c) 2001

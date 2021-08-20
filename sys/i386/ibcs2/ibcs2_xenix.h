@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 2948beeea7943d4562a138e859b5f1abd6a66c4a $
+ * $FreeBSD$
  */
 
 #ifndef _IBCS2_XENIX_H_

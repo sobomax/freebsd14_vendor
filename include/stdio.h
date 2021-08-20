@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdio.h	8.5 (Berkeley) 4/29/95
- * $FreeBSD: eb155a0c231ee27aa7854296011f7c348a654842 $
+ * $FreeBSD$
  */
 
 #ifndef	_STDIO_H_

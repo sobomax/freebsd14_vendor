@@ -1,4 +1,4 @@
-/* $FreeBSD: 2fee5b0d40c836d925fb67b23e43a28dee0bc7e4 $ */
+/* $FreeBSD$ */
 
 #ifndef	_OPENSOLARIS_PRIV_H_
 #define	_OPENSOLARIS_PRIV_H_

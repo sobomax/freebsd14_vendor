@@ -1,2 +1,2 @@
-.\" $FreeBSD: 6e9de17525f33a7936333e55a49d57f582edbff8 $
+.\" $FreeBSD$
 Set to build extra TCP stack modules.

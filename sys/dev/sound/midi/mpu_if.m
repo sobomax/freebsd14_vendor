@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 2db606e1b812b8abf8e3f5e52839723a0e6ecd98 $
+# $FreeBSD$
 #
 
 #include <dev/sound/midi/midi.h>

@@ -1,2 +1,2 @@
-.\" $FreeBSD: 75f96822eb8cadedae4fa6bb74fb7f8ccb6b1248 $
+.\" $FreeBSD$
 Enable building openldap support for kerberos.

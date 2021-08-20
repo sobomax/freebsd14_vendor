@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 262c8ab38056d3ba00bbb25045234e560468134e $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __noinline
 #	ifdef __GNUC__

@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a872b020c8b942fb9446bbb1fef5d4e3860bd449 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sleepqueue_profiling.h"
 #include "opt_ddb.h"

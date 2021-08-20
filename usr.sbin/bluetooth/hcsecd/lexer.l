@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  * $Id: lexer.l,v 1.1 2002/11/24 20:22:39 max Exp $
- * $FreeBSD: d2fecc4fb6ec115caa978c8b28e05980b9e8dc42 $
+ * $FreeBSD$
  */
 
 #include <string.h>

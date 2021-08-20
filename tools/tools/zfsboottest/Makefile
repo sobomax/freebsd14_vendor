@@ -1,4 +1,4 @@
-# $FreeBSD: acb510de70a901fda9cca21410ecf1eab6a73176 $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/stand/zfs ${SRCTOP}/sys/cddl/boot/zfs
 

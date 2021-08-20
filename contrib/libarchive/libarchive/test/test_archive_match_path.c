@@ -24,7 +24,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 5e9b9a8cbf638abe52978331e39e24a08f836eca $");
+__FBSDID("$FreeBSD$");
 
 static void
 test_exclusion_mbs(void)

@@ -29,7 +29,7 @@
 /* Driver for VirtIO entropy device. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15311b9e6fbcacadf9c7957f898bf2e6ada2490f $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

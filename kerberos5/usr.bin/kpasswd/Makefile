@@ -1,4 +1,4 @@
-# $FreeBSD: 05e07dddc03decda75872defed660fd4c4505c5d $
+# $FreeBSD$
 
 PROG=	kpasswd
 CFLAGS+=-I${KRB5DIR}/lib/roken

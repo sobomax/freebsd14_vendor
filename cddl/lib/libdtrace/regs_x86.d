@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2009 Stacey Son sson@FreeBSD.org
  *
- * $FreeBSD: 3f625f9f444524aa8de1c54b19edddad9ede42bb $
+ * $FreeBSD$
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

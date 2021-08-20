@@ -1,4 +1,4 @@
-/* $FreeBSD: 625c8083a6ebc6b41bc3835b3da988901b839f61 $ */
+/* $FreeBSD$ */
 #ifndef __crypto_headers_h__
 #define __crypto_headers_h__
 

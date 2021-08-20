@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 325c8befabc348fead472a6725326652b25f550b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * System Reset Control for iMX6

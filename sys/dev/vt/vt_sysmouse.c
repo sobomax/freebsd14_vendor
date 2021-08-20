@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98915c2a78df2d7f7636ee3f0003766067e4e906 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_evdev.h"
 

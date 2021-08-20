@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  * 	From: @(#)lp.h	8.2 (Berkeley) 4/28/95
- * $FreeBSD: bf9262db02a046dcbfdbb7b4061bf86ba644a691 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

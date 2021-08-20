@@ -1,4 +1,4 @@
-# $FreeBSD: 0099379a9d3cd3752f0d1fb80ab5241ecc910ec5 $
+# $FreeBSD$
 # Check that bogus PWD values are not accepted from the environment.
 
 cd / || exit 3

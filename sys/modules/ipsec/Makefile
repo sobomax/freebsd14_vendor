@@ -1,4 +1,4 @@
-# $FreeBSD: 46472f910d166c43c471c6840c2670aca83284f0 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/net ${SRCTOP}/sys/netipsec
 

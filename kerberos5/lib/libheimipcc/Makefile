@@ -1,4 +1,4 @@
-#$FreeBSD: 9ec712572371af9b5d739235736cc4af9f07c4a1 $
+#$FreeBSD$
 
 LIB=	heimipcc
 PRIVATELIB=

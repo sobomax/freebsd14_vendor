@@ -27,7 +27,7 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: ea427ca8f8210a432b5c35c105e7d4646708cb1f $
+ * $FreeBSD$
  */
 
 struct mpr_fw_event_work;

@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union.h	8.9 (Berkeley) 12/10/94
- * $FreeBSD: ba0318bf185ceaf8485a7d9d23cea1397a79939d $
+ * $FreeBSD$
  */
 
 #ifdef _KERNEL

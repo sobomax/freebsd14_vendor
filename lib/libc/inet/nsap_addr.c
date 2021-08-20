@@ -21,7 +21,7 @@
 static const char rcsid[] = "$Id: nsap_addr.c,v 1.5 2005/07/28 06:51:48 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0bf190d7c12a9fde626def871adc527bb96be421 $");
+__FBSDID("$FreeBSD$");
 
 #include "port_before.h"
 

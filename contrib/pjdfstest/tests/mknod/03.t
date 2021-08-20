@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: e400f89c7d6381fff09d53b185a6b2a5c6092ba5 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/03.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mknod returns ENAMETOOLONG if an entire path name exceeded {PATH_MAX} characters"
 

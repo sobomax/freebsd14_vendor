@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cc698f7f347ea5cd87035344bc3ecd9a9326e8c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * AR71XX gigabit ethernet driver

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa024df42ac6a32c3c08b719480c6d72d7b1510b $");
+__FBSDID("$FreeBSD$");
 
 #define BOUNCE_BUFFER_TEST	0
 

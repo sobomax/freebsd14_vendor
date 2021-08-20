@@ -1,4 +1,4 @@
-# $FreeBSD: 38af3a93c455cea9e6f6680de0eb69f36e73c218 $
+# $FreeBSD$
 # Build modules specific to Texas Instruments ARM SoCs.
 
 SUBDIR = \

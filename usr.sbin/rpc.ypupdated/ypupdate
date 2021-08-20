@@ -8,7 +8,7 @@
 #
 # Comment out the LOG=yes line to disable logging.
 #
-# $FreeBSD: 4a26f4b6d72ba45f3a52914596396c026ac0d4cd $
+# $FreeBSD$
 #
 
 LOG=yes

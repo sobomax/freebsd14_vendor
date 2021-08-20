@@ -1,2 +1,2 @@
-.\" $FreeBSD: b6a06b23dfdb0cec515833ddf3d2863005b72abf $
+.\" $FreeBSD$
 Set to not build IPFW tools.

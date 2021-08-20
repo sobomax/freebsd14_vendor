@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff9f9f6f6d608d76c7c32d70d9ad56f08ca40d3b $");
+__FBSDID("$FreeBSD$");
 
 #include <libsecureboot.h>
 

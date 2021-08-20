@@ -31,7 +31,7 @@
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a7e29fd26ded57c9503356963bd7c2b7dd2cd2f $");
+__FBSDID("$FreeBSD$");
 
 #include "ql_os.h"
 #include "ql_hw.h"

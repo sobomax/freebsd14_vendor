@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f98f533acd1ca9d927a7155710c3e10a584f280e $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <signal.h>

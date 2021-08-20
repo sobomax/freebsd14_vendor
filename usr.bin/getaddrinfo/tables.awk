@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 
-#	$FreeBSD: fc51e9686928c1c84b4d3cbb938e3e4205ec54ae $
+#	$FreeBSD$
 #	$NetBSD: tables.awk,v 1.2 2014/02/27 01:17:13 ginsbach Exp $
 
 # Copyright (c) 2013 The NetBSD Foundation, Inc.

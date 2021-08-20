@@ -1,4 +1,4 @@
-# $FreeBSD: 86bc291d36688221fedba0d96f2263e2c8e762f7 $
+# $FreeBSD$
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.

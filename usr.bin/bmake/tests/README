@@ -1,4 +1,4 @@
-$FreeBSD: 1ac209b5715af8e4af716d29afd866a111e0afd4 $
+$FreeBSD$
 
 This directory contains regression tests for make(1).
 

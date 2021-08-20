@@ -1,4 +1,4 @@
-# $FreeBSD: 892568d579f540ddb144e99f9154ecbff4207cb2 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libnvpair
 .PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/nvpair

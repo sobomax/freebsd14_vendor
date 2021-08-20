@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f09dc421cf25e7e7f23065db7c9cc3c72b7de98b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SMSC LAN9xxx devices (http://www.smsc.com/)

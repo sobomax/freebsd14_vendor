@@ -1,2 +1,2 @@
-.\" $FreeBSD: 9e7d9c15b5ef41c1b1bd53a8e43995464b352827 $
+.\" $FreeBSD$
 Set to not build world with propolice stack smashing protection.

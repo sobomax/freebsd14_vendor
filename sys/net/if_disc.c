@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if_loop.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: ac0028c42f70c7a983e82bcaed666564fa5a9ae2 $
+ * $FreeBSD$
  */
 
 /*

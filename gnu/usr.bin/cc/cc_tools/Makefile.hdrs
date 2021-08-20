@@ -1,4 +1,4 @@
-# $FreeBSD: f2576f7fdf0a5cdd7797f8e64770401d3401cc45 $
+# $FreeBSD$
 #
 # This is logic for common headers shared inside of gnu/lib.  It used to
 # live in gnu/usr.bin/cc/cc_tools/Makefile.

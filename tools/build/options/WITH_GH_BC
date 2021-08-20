@@ -1,4 +1,4 @@
-.\" $FreeBSD: 1e8dac498151f28d3250098c0058bd6b494899b1 $
+.\" $FreeBSD$
 Set this option to install the enhanced
 .Xr bc 1
 and

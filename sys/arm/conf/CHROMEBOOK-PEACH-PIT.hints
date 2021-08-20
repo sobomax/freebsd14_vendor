@@ -1,4 +1,4 @@
-# $FreeBSD: 81737c1280e20ec661ba87224cad0db4f95732d4 $
+# $FreeBSD$
 
 # Chrome Embedded Controller
 hint.chrome_ec.0.at="spibus0"

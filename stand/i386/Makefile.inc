@@ -1,6 +1,6 @@
 # Common defines for all of stand/i386/
 #
-# $FreeBSD: 119f8a37162f931bbd8d4316f4faab227e96a584 $
+# $FreeBSD$
 
 .include "bsd.linker.mk"
 

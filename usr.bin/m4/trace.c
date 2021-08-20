@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cce4c79e79b7de6e8a93f921c31a785051a2a81e $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <stddef.h>

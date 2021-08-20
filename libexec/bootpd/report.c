@@ -1,4 +1,4 @@
-/* $FreeBSD: 290e19e74063de0b941b71351330b580133fd5fd $ */
+/* $FreeBSD$ */
 
 /*
  * report() - calls syslog

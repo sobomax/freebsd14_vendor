@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #ifndef lint
-static const char rcsid[] = "$FreeBSD: 8dfd435e07a04f43cb92c943092f0a59b8fce42b $";
+static const char rcsid[] = "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/types.h>

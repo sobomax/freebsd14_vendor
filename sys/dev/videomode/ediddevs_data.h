@@ -1,4 +1,4 @@
-/*	$FreeBSD: e0ad80ab4f9f6669c686d45a7924323bea25aeb0 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.

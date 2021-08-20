@@ -25,7 +25,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 1ad35e2b0c853502b44c2b9cb8fd95475b1c32a9 $
+ * $FreeBSD$
  */
 
 #ifndef _DDB_DB_SYM_H_

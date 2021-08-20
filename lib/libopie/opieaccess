@@ -1,4 +1,4 @@
-# $FreeBSD: ed57ef13a33a0233b5e5406b4cae9a6a7a932d23 $
+# $FreeBSD$
 #
 # This file controls whether UNIX passwords are to be permitted.  Rules
 # are matched in order, and the search terminates when the first matching

@@ -1,4 +1,4 @@
-/* $FreeBSD: 8fe75aaf81ca2165d0bb3a743ae173e4f75d3904 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from bsaes-armv7.pl. */
 @ Copyright 2012-2020 The OpenSSL Project Authors. All Rights Reserved.
 @

@@ -1,4 +1,4 @@
-# $FreeBSD: ce143812a532dcb9ed17fa803db040a9024bfec9 $
+# $FreeBSD$
 root:$1$xOOaGnKU$U9QdsCI40XXcCUMBN.7Az.:0:0::0:0:Charlie &:/root:/bin/sh
 toor:*:0:0::0:0:Bourne-again Superuser:/root:
 daemon:*:1:1::0:0:Owner of many system processes:/root:/nonexistent

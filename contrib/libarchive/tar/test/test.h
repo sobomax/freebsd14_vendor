@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1e1bee80709ca40c270fb1aef62ec94a46afa723 $
+ * $FreeBSD$
  */
 
 /* Every test program should #include "test.h" as the first thing. */

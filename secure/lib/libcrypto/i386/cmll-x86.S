@@ -1,4 +1,4 @@
-/* $FreeBSD: 3611a9e23b5550e9b525b4b77e0c824091cc9382 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from cmll-x86.pl. */
 #ifdef PIC
 .text

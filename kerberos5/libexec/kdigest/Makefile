@@ -1,4 +1,4 @@
-# $FreeBSD: 5f3fb245064692704dcf10d8c33b3d609ca1503e $
+# $FreeBSD$
 
 PROG=	kdigest
 MAN=	kdigest.8

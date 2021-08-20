@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b029913cd07485bede429f6b7ac4c3905b7c5a86 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Local interrupt controller driver for Tegra SoCs.

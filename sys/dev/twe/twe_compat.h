@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 51d02165701231e59f50e1d5bf6408f55a14feb5 $
+ * $FreeBSD$
  */
 /*
  * Portability and compatibility interfaces.

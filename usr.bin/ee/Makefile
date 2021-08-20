@@ -1,4 +1,4 @@
-# $FreeBSD: c30a510a510c2147d3facc55242006b2b06e41b6 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/contrib/ee
 

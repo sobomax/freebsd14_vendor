@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: fc8180cb22173f8e0a1b3e9c87930f4b4de1b97e $
+# $FreeBSD$
 #
 
 # PROVIDE: lpd

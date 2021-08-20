@@ -1,4 +1,4 @@
-# $FreeBSD: 4691114c1d65dd376e3961efe6d5fe5ef623eb48 $
+# $FreeBSD$
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition

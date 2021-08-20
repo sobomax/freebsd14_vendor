@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)printjob.c	8.7 (Berkeley) 5/10/95";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: ff16f8f298c1e7896f69a4d9445f05dbeaddf7b0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * printjob -- print jobs in the queue.

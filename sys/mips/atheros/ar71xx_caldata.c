@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e28f6d2ff4d3baba5a1f0d70045076ad99d8916e $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ar71xx.h"
 

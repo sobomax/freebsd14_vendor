@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	2.3 88/08/11 4.0 RPCSRC
-#	$FreeBSD: cf17ca2d4d6239ec52ae9e95e735247570ba83d5 $
+#	$FreeBSD$
 
 .SUFFIXES: .x
 

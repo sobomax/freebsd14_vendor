@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 6446bf5869e39efc149510efbbf3e98726998355 $
+# $FreeBSD$
 #
 # IPsec regression test.
 #

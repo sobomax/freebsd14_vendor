@@ -28,7 +28,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: b80937ffcb6e39f86dfb5bde0e7565738cfa7ec8 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: a5215c0150f5612c19c93068d23ec608f2c04e24 $
+# $FreeBSD$
 #
 # Copyright (c) 2012 Huang Wen Hui. All rights reserved.
 #

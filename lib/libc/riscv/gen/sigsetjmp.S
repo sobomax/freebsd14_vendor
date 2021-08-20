@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 6eca3c1cdd23fabf0faee1dd53a0dd89d85f809c $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/setjmp.h>
 

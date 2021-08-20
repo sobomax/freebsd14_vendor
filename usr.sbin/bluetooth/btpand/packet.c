@@ -27,7 +27,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: 8e20696ad44330cb2f3a8a71f1a7a281d4fe6b13 $ */
+/* $FreeBSD$ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: packet.c,v 1.1 2008/08/17 13:20:57 plunky Exp $");

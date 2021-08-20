@@ -33,7 +33,7 @@
  *
  *	@(#)ucontext.h	8.1 (Berkeley) 6/10/93
  *	JNPR: ucontext.h,v 1.2 2007/08/09 11:23:32 katta
- * $FreeBSD: 06d8d0ed962352f9b419950890806119449b2ffd $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_UCONTEXT_H_

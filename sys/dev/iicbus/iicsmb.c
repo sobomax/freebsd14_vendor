@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e79452cf2a8d45e759f8f3c5f75e5c1e8c82b37 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * I2C to SMB bridge

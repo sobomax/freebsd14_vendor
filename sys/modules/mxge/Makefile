@@ -1,4 +1,4 @@
-# $FreeBSD: 45e763653e0b9629d5b68a41cb8b10981a8ddfc2 $
+# $FreeBSD$
 
 SUBDIR= mxge
 SUBDIR+=mxge_eth_z8e

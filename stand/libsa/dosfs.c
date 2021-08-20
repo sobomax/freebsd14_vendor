@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d6029be837e89445082faff4e934c4b251324f2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Readonly filesystem for Microsoft FAT12/FAT16/FAT32 filesystems,

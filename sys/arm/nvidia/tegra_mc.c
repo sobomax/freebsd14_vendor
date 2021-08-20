@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 82455ab475cb4efaa434cf345dd55e8c95a0eaab $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Memory controller driver for Tegra SoCs.

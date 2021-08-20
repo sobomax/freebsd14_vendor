@@ -1,4 +1,4 @@
-.\" $FreeBSD: 257438b990f9c0e98bc393e309a8f612fe9235f3 $
+.\" $FreeBSD$
 Set to not build
 .Xr syscons 4
 support files such as keyboard maps, fonts, and screen output maps.

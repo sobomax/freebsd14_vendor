@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getttyent.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 4b152095a946138e69c5a5c52dbf9879073114f8 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/stat.h>

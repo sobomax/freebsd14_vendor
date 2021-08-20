@@ -1,4 +1,4 @@
-# $FreeBSD: 14a0051efef81713b100665f74cc7a97d544b296 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/random
 

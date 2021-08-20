@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f852b722080b0a357228e75d5b81baf1804a6c2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file implements a small portion of the Winpcap API for the

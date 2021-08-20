@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ccc397e3e76bbab49f0cce7ef443637f57fd035c $
+ * $FreeBSD$
  */
 #ifndef _TWL_CLKS_H_
 #define _TWL_CLKS_H_

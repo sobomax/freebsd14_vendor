@@ -34,7 +34,7 @@
  * Compatibility shims for the GNU C Library-style nsswitch interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 110cd66090d6c065ebaae636913b5e8b67050a44 $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/param.h>

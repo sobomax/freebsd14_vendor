@@ -50,7 +50,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: 7af811f1766224ed4870b98c2e0db4a4bf500cc9 $
+ * $FreeBSD$
  */
 
 #ifndef DEV_MMC_BRIDGE_H

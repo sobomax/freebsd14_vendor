@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f779cd7d62c412683ce02dee6df250b43bb99b5 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Perform an FPU divide (return x / y).

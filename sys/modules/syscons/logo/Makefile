@@ -1,4 +1,4 @@
-# $FreeBSD: b32f48240fe3c691fe9f0a09e1941b939964951d $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/syscons/logo
 

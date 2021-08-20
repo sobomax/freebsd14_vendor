@@ -1,4 +1,4 @@
-# $FreeBSD: 91595457831eef9e35e63d2160bfbc47e5250228 $
+# $FreeBSD$
 
 $SH -c '{ { :; } </var/empty/x; } 2>/dev/null || kill -INT $$; echo continued'
 r=$?

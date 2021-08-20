@@ -1,4 +1,4 @@
-# $FreeBSD: 81f06994e37bacca727573c81f7af3373ba84503 $
+# $FreeBSD$
 # $OpenBSD: pf.os,v 1.27 2016/09/03 17:08:57 sthen Exp $
 # passive OS fingerprinting
 # -------------------------

@@ -26,7 +26,7 @@
 
 
 /*
- * $FreeBSD: 537df2d3637dbb5811508e3e6c4947eba7d9ad4e $
+ * $FreeBSD$
  */
 
 #ifndef TI_SMC_H_

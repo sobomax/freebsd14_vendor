@@ -1,4 +1,4 @@
-# $FreeBSD: 56a598f0831247c5f67d86d0764b4d4b71ff30a5 $
+# $FreeBSD$
 
 PROG=	hpropd
 MAN=	hpropd.8

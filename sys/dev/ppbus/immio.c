@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eb1b2e12f28a1de93d4bb34dc8a2ab4e8e5cf4bc $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Iomega ZIP+ Matchmaker Parallel Port Interface driver

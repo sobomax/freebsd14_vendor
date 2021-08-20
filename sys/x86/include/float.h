@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)float.h	7.1 (Berkeley) 5/8/90
- * $FreeBSD: 5d8c9737d298ccf499f821ba547210c9aa8beead $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_FLOAT_H_

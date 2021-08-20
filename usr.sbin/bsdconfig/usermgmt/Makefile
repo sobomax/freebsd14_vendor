@@ -1,4 +1,4 @@
-# $FreeBSD: 127c874fbaf6f63121f232ab4e4d028bf30a0a79 $
+# $FreeBSD$
 
 SUBDIR= include share
 

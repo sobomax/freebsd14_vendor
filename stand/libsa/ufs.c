@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 204bc969f9681f9ecc576c482d562c6750aa75a6 $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone file reading package.

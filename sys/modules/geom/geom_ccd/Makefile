@@ -1,4 +1,4 @@
-# $FreeBSD: 3e1c667011fa9755d45cca2aabbd08b9c27eddf1 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 474c2228d5be593f8c87f03cb72fd00abf83be4c $
+ * $FreeBSD$
  */
 
 extern const struct ccp_algorithm PppdDeflateAlgorithm;

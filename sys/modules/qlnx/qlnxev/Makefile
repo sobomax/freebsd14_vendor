@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: 4c79eee59a5527f7143eff7f8da1e0da2dce687e $
+# $FreeBSD$
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlnx/qlnxe

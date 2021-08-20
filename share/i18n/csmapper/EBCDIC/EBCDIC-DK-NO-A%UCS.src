@@ -1,4 +1,4 @@
-# $FreeBSD: bd264f96662678e1f1014f44ccbdf4fe9f268171 $
+# $FreeBSD$
 # $NetBSD: EBCDIC-DK-NO-A%UCS.src,v 1.2 2003/07/12 16:11:07 tshiozak Exp $
 
 TYPE		ROWCOL

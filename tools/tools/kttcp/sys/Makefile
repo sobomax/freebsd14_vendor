@@ -1,4 +1,4 @@
-# $FreeBSD: d7815306b4ab0ff747e547005ca4e212d84ab17c $
+# $FreeBSD$
 
 KMOD	= kttcp
 SRCS	= kttcp.c

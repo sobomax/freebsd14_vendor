@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57613a46034aa063913fd6353c689e95886f6501 $
+ * $FreeBSD$
  *
  * This test checks for inplace decryption working.  This is the case
  * where the same buffer is passed as input and output to

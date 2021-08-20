@@ -54,7 +54,7 @@
 /*%
  *	@(#)inet.h	8.1 (Berkeley) 6/2/93
  *	$Id: inet.h,v 1.3 2005/04/27 04:56:16 sra Exp $
- * $FreeBSD: 357a444a0d2e1b637c15606617a1df10950bd5cb $
+ * $FreeBSD$
  */
 
 #ifndef _ARPA_INET_H_

@@ -30,7 +30,7 @@
 .\"
 .\"	@(#)1.t	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 8610179fa47eb9ad4ef11be4960f46f99cb9f214 $
+.\" $FreeBSD$
 .\"
 .sh 1 "NFS Implementation"
 .pp

@@ -1,4 +1,4 @@
-# $FreeBSD: 74643f5e35b60c626dd61faddc58c2a9bea00e49 $
+# $FreeBSD$
 
 PROG=   cpuset
 

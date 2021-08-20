@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: af90e2fb462324f2506ffcf185900e030063d104 $
+ * $FreeBSD$
  */
 
 /* This file tests functionality needed by NFS servers */

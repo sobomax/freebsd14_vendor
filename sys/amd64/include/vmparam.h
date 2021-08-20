@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: 22f75c1bf2720540d248ed302f93d445c24803e1 $
+ * $FreeBSD$
  */
 
 

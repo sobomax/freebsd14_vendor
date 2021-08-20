@@ -1,4 +1,4 @@
-# $FreeBSD: 0379c88cec7d6596cbff99a0e1c61d8efaac5631 $
+# $FreeBSD$
 
 KMOD=	ng_tcpmss
 SRCS= 	ng_tcpmss.c

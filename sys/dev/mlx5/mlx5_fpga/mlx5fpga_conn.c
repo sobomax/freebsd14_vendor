@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: c2a03bbf57179e886ce4f223003ccc8972190f76 $
+ * $FreeBSD$
  */
 
 #include <linux/etherdevice.h>

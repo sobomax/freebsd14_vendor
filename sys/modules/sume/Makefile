@@ -1,4 +1,4 @@
-# $FreeBSD: 35f3abd6ca6591c2849acacb9a9170619826bc1f $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/sume
 

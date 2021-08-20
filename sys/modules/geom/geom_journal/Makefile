@@ -1,4 +1,4 @@
-# $FreeBSD: 89298a8180d73a58f96cd7eaa847ca91098d92a9 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/journal
 

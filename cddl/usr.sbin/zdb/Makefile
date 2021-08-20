@@ -1,4 +1,4 @@
-# $FreeBSD: 8c919341f8e39b8f3defa3b3c56afed95db6d443 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zdb
 

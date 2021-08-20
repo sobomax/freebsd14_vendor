@@ -1,4 +1,4 @@
-/* $FreeBSD: d68faa06b12704302a7d59f1c2570db084960b46 $ */
+/* $FreeBSD$ */
  /*
   * Routines to parse an inetd.conf or tlid.conf file. This would be a great
   * job for a PERL script.

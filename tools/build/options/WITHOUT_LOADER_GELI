@@ -1,2 +1,2 @@
-.\" $FreeBSD: 114bea6bfe0df87ddbdbd0f1d158d26535c2cffa $
+.\" $FreeBSD$
 Disable inclusion of GELI crypto support in the boot chain binaries.

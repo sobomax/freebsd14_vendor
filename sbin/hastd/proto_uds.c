@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c18a2c43fcb7551f38137119d8a0cecd2283f48 $");
+__FBSDID("$FreeBSD$");
 
 /* UDS - UNIX Domain Socket */
 

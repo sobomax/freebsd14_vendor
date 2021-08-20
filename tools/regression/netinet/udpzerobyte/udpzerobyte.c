@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c19149233deb873223942da149ecc681ebb0b2f7 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

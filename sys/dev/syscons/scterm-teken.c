@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 290e836f91fba7cd8b3481e15d53253c60fc8327 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_syscons.h"
 #include "opt_teken.h"

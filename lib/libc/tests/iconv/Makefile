@@ -1,4 +1,4 @@
-# $FreeBSD: 78423b7d27538f3bae0a62567b415477c88e9a7d $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/lib/libc/iconv
 

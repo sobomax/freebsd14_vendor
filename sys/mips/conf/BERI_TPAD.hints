@@ -1,4 +1,4 @@
-# $FreeBSD: a890c841493161126e15dc43c58a0d8ffc239c39 $
+# $FreeBSD$
 
 #
 # Altera JTAG UARTs configured for console, debugging, and data putput on the

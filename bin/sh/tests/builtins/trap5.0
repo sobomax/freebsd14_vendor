@@ -1,4 +1,4 @@
-# $FreeBSD: 56e0fb1b89fe52d8736d75f588a1136dfd5435d7 $
+# $FreeBSD$
 
 set -e
 trap - USR1

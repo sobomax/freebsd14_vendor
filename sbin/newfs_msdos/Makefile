@@ -1,4 +1,4 @@
-# $FreeBSD: 3a2c49fed0db09648eb94d11421f3f2ca2c55634 $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	newfs_msdos

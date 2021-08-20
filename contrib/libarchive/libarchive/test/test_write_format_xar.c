@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 02fd2c0e35a7d5ce0e35ffc8d280b8f2396d61d4 $");
+__FBSDID("$FreeBSD$");
 
 static void
 test_xar(const char *option)

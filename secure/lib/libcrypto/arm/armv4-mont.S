@@ -1,4 +1,4 @@
-/* $FreeBSD: d05c71457ecda23418bd3c45160e39cb33192bbd $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from armv4-mont.pl. */
 #include "arm_arch.h"
 

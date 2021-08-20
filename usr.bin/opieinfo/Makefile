@@ -1,4 +1,4 @@
-# $FreeBSD: 3ed6cccb70351527c1d33a13b0a04c256c42675c $
+# $FreeBSD$
 #
 OPIE_DIST?=	${SRCTOP}/contrib/opie
 

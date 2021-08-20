@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d12d35f2d1aa7a993a3c4edb8adc67ff4e845132 $
+ * $FreeBSD$
  *
  * The siftr D script collects data from the SIFTR kernel module.
  *

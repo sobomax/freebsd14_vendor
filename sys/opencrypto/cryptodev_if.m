@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 49caa5536c060d10e928f154aaec99832af6f4aa $
+# $FreeBSD$
 #
 
 #include <sys/malloc.h>

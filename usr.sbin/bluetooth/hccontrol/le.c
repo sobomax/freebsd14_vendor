@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.c,v 1.5 2003/09/05 00:38:24 max Exp $
- * $FreeBSD: fb71f1e20d30d85e12f4a16d9a12ed3985a4d00e $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

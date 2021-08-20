@@ -1,4 +1,4 @@
-# $FreeBSD: 9269ab5de34faab3bb062f31624619e5730f4622 $
+# $FreeBSD$
 
 PROG=	nandsim
 SRCS=	nandsim.c nandsim_rcfile.c nandsim_cfgparse.c

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 6ba0e310448bedecedfda16ebd5cf01d8a3955ec $
+.\" $FreeBSD$
 Enable building
 .Xr loader 8
 with support for verification based on certificates obtained from UEFI.

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ba1d5ec1ec6d4baed99c2b2fb56e6b92893bd88e $
+ * $FreeBSD$
  */
 
 extern "C" {

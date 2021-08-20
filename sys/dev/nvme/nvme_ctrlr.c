@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a0ef43896ebfc8fa7277bd0ff3b2874ad920d64 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cam.h"
 

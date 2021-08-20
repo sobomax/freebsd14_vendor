@@ -1,4 +1,4 @@
-/* $FreeBSD: a986e95ce2eb38c000a19678e5964a2f2670adfc $ */
+/* $FreeBSD$ */
 
 #ifndef res_private_h
 #define res_private_h

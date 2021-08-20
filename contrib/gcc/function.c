@@ -20,7 +20,7 @@ along with GCC; see the file COPYING.  If not, write to the Free
 Software Foundation, 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301, USA.  */
 
-/* $FreeBSD: 301e8e615ce7baf542b5b3cb0a7817b67a1b9299 $ */
+/* $FreeBSD$ */
 
 /* This file handles the generation of rtl code from tree structure
    at the level of the function as a whole.

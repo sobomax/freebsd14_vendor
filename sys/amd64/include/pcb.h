@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: 8800b355c9a1cc436dcbda64a9fbbf07548d957a $
+ * $FreeBSD$
  */
 
 #ifndef _AMD64_PCB_H_

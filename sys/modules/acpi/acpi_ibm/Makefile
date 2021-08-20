@@ -1,4 +1,4 @@
-# $FreeBSD: d6530241adbe317ccaf2d369d5c637f6a11acb9a $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/acpi_support
 KMOD=		acpi_ibm

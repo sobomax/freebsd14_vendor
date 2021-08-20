@@ -1,4 +1,4 @@
-.\" $FreeBSD: 0c31b8c3d0ca9a785e11ae9c612591a5719e844a $
+.\" $FreeBSD$
 Set to not build
 .Xr hastd 8
 and related utilities.

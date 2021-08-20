@@ -1,2 +1,2 @@
-/* $FreeBSD: 01e5f8671c2d5106210e91bc514bd8c4a07d4123 $ */
+/* $FreeBSD$ */
 -cs

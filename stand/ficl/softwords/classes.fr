@@ -4,7 +4,7 @@
 \ john sadler  1 sep 98
 \ Needs oop.fr
 \
-\ $FreeBSD: b56da378e970950391e0e9a0a2ba915c1b197c1b $
+\ $FreeBSD$
 
 also oop definitions
 

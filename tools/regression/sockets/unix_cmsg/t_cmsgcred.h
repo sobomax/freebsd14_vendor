@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2aee226161df3c6c67094d7237acfe6b10efd920 $
+ * $FreeBSD$
  */
 
 int t_cmsgcred_client(int fd);

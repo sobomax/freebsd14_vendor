@@ -1,4 +1,4 @@
-# $FreeBSD: 25e4f4e34fa5ed247c22f576a60382e28d8c45e2 $
+# $FreeBSD$
 
 x=''
 : ${x:=1} &

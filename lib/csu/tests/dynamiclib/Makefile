@@ -1,4 +1,4 @@
-# $FreeBSD: ef05648aa26c5aba19c36980c656abb3637d583c $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}
 CFLAGS+=	-DDSO_BASE

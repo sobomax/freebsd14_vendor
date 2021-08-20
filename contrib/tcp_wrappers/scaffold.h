@@ -3,7 +3,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 38ef8b25468b5d264d3656942533cfef5b70e046 $
+  * $FreeBSD$
   */
 
 #ifdef INET6

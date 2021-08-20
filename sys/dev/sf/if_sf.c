@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59ec14aa290f00f238cf12c1563de1fa8eb5a8e5 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Adaptec AIC-6915 "Starfire" PCI fast ethernet driver for FreeBSD.

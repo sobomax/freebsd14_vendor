@@ -37,7 +37,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: a98553aa52f4c1d4f85f53eee411c02e298da4ab $
+ * $FreeBSD$
  */
 #include "opt_altq.h"
 #include "opt_inet.h"

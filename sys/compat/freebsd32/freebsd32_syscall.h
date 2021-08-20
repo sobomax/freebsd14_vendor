@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: a263190ea093853969a06451a2ef6d21eef99795 $
+ * $FreeBSD$
  */
 
 #define	FREEBSD32_SYS_syscall	0

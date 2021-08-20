@@ -1,4 +1,4 @@
-$ $FreeBSD: 2939116fc97cc92048be57ab3a9a800d1518cd3a $
+$ $FreeBSD$
 $
 $ Message catalog for nl_NL.ISO8859-1 locale
 $

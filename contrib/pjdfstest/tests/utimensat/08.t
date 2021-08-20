@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: aca8b1c26aaeff38664c974420e65861c936299c $
+# $FreeBSD$
 
 desc="utimensat can set timestamps with subsecond precision"
 

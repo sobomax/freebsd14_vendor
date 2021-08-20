@@ -26,7 +26,7 @@
  */
 /*******************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86c198338f120b96714aa80bf6bb211f03c685af $");
+__FBSDID("$FreeBSD$");
 #include <dev/pms/config.h>
 
 #include <dev/pms/RefTisa/sallsdk/spc/saglobal.h>

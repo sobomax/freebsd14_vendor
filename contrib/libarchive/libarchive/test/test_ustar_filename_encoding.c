@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5e4fba716c13f5d429c88bdc94543df42b24eed2 $");
+__FBSDID("$FreeBSD$");
 
 #include <locale.h>
 

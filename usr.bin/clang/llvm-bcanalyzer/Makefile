@@ -1,4 +1,4 @@
-# $FreeBSD: ad327ce2832e0bc20836c4416705a455ac818c19 $
+# $FreeBSD$
 
 PROG_CXX=	llvm-bcanalyzer
 

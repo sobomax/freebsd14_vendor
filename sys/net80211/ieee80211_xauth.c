@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5e7709514468e0c97be197d6c7f88b54922f45f7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * External authenticator placeholder module.

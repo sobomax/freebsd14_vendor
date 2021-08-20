@@ -27,7 +27,7 @@
 #include "opt_global.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0929528e1f9e31ef4d541b11bdfcf9587bfbf442 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

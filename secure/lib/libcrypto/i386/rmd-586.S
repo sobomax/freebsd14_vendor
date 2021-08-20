@@ -1,4 +1,4 @@
-/* $FreeBSD: 947af68e3d35c626d2582057b6fdcd09d19da72c $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from rmd-586.pl. */
 #ifdef PIC
 .text

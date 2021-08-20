@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f48f6c3568bbcf7c4654a135d7f77ec707ca2fb7 $");
+__FBSDID("$FreeBSD$");
 
 /*
 * X-Power AXP209/AXP211 PMU for Allwinner SoCs

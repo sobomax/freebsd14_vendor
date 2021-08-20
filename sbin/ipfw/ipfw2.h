@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: 764e5176e8ef58573646233b7d2ae3bc241339e2 $
+ * $FreeBSD$
  */
 
 /*

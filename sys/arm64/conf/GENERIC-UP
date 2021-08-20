@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: f6c4e6edeca910e7bac88f71d7224bc88a1e5969 $
+# $FreeBSD$
 
 include		GENERIC
 ident		GENERIC-UP

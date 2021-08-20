@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 9020d2a649523fb417949343b06c475e589f8e2f $
+# $FreeBSD$
 
 # Functions related mounting the newly formatted disk partitions
 

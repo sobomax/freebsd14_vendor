@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80873b985cc35feba1b9d884d438948ba900f0d2 $");
+__FBSDID("$FreeBSD$");
 
 /*	$NetBSD: ulpt.c,v 1.60 2003/10/04 21:19:50 augustss Exp $	*/
 

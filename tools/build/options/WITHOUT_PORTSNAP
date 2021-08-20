@@ -1,4 +1,4 @@
-.\" $FreeBSD: ce9c4703498aa7747ace29e9e36dadf97e570f15 $
+.\" $FreeBSD$
 Set to not build or install
 .Xr portsnap 8
 and related files.

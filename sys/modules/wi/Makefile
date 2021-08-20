@@ -1,4 +1,4 @@
-# $FreeBSD: 6268ddb83074043e715c2a0ee3aaf6fdcd2d70e2 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/wi
 

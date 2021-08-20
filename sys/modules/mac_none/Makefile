@@ -1,4 +1,4 @@
-# $FreeBSD: d86792f7a97a305ffee69ec8d72bf093565814b4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/security/mac_none
 

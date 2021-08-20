@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8b3a2b959b4286e06c204661236bd954d658881e $
+ * $FreeBSD$
  */
 
 int dmamux_configure(int mux, int source, int channel, int enable);

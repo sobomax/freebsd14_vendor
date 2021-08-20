@@ -3,7 +3,7 @@
  * Garrett Wollman, September 1994.
  * This file is in the public domain.
  *
- * $FreeBSD: 86a4541568edfed1add32dea8ee0522dcf6d2ef9 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CLOCK_H_

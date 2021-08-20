@@ -47,7 +47,7 @@
  *
  *	from: @(#)locore.s	8.5 (Berkeley) 1/4/94
  *	JNPR: locore.S,v 1.6.2.1 2007/08/29 12:24:49 girish
- * $FreeBSD: e3470b52ce78ddad3379264cc4ff23919ba6d98f $
+ * $FreeBSD$
  */
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: 09b0e113354430229523665690534ffe0803cbc4 $
+# $FreeBSD$
 
 case x in
 `false`) exit 3 ;;

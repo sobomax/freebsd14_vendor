@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 58eaea0ad321f55bc32a9e04f7bc9996987a0c8b $
+ * $FreeBSD$
  */
 
 struct mkuz_blk;

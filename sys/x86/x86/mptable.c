@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3172b7751da579414b9914b5630c43cdc9a22383 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mptable_force_htt.h"
 #include <sys/param.h>

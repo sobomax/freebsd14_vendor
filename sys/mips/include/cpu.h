@@ -43,7 +43,7 @@
  *
  *	from: @(#)cpu.h	8.4 (Berkeley) 1/4/94
  *	JNPR: cpu.h,v 1.9.2.2 2007/09/10 08:23:46 girish
- * $FreeBSD: b4f5c59f72f57a30fb2f75a99842d30593fe43c6 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPU_H_

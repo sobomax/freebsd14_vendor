@@ -1,4 +1,4 @@
-/* $FreeBSD: 88665fc8e1cf61534e0f092363a8529590927325 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from cast-586.pl. */
 #ifdef PIC
 .text

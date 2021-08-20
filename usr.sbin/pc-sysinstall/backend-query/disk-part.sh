@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 88feffc3740d678eecab22a6157cbc62b3d348ae $
+# $FreeBSD$
 
 # Query a disk for partitions and display them
 #############################

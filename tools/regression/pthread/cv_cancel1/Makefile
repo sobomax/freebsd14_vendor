@@ -1,4 +1,4 @@
-# $FreeBSD: be2ffaaa3f5b683c031bc84013711fbd7e3fec24 $
+# $FreeBSD$
 
 PROG=	cv_cancel1
 MAN=

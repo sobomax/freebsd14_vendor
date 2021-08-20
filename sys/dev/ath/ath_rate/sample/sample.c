@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31df8a60c97618babf423ec9fed670dd106a1671 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * John Bicket's SampleRate control algorithm.

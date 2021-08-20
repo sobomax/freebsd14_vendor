@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ldef.h	8.1 (Berkeley) 6/6/93
- *	$FreeBSD: b554f6232959a5c9e1ff37cc78159856cf3b4a9c $
+ *	$FreeBSD$
  */
 
 #include <sys/types.h>

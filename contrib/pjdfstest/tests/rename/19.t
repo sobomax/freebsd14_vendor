@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 787dff694b6438ed5e1a0a9aef1b2ce2658ab833 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/19.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rename returns EINVAL/EBUSY when an attempt is made to rename '.' or '..'"
 

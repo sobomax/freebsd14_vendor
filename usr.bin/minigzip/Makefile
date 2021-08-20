@@ -1,4 +1,4 @@
-# $FreeBSD: 9a0098eed5476ffb4dc65ec4d52bd7f39c986f7c $
+# $FreeBSD$
 
 SRCDIR=	${SRCTOP}/sys/contrib/zlib/test
 .PATH:	${SRCDIR}

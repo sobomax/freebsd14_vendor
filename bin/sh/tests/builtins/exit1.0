@@ -1,4 +1,4 @@
-# $FreeBSD: 496d448761cccd84f7f07376b3b9ed0651948c5d $
+# $FreeBSD$
 
 # exit with an argument should overwrite the exit status in an EXIT trap.
 

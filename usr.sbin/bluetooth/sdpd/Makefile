@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2004/01/20 21:27:55 max Exp $
-# $FreeBSD: df443fca4f4e7c002cea2fcbafdd51fad55a8584 $
+# $FreeBSD$
 
 PROG=		sdpd
 MAN=		sdpd.8

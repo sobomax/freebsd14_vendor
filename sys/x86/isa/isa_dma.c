@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4f4ebf0321189f812a184dfef4e9196a5cd9e4e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * code to manage AT bus

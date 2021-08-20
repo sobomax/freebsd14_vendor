@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0a6894fa8214bde4cefa01b15e1a899f642ae30e $");
+__FBSDID("$FreeBSD$");
 
 static void
 unpack_test(const char *from, const char *options, const char *se)

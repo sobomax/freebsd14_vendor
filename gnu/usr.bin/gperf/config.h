@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: 91c1236ec1cbc6b5930ac917a70e9842db07f10d $ */
+/* $FreeBSD$ */
 
 /* Define if the C++ compiler supports stack-allocated variable-size arrays.
    */

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57e10fed68bd54582d3b96a48b25ffa504d3ebe5 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_altera_sdcard.h"
 

@@ -32,7 +32,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)daemon.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: f6753a84c44a760cf97dbc951654d5ddd6fa6ace $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <errno.h>

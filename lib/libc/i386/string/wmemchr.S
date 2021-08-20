@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 2e81c09bdca183ff0d61cc977d1214fef2c6232d $");
+__FBSDID("$FreeBSD$");
 
 /*
  * wchar_t *

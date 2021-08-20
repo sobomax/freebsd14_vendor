@@ -1,4 +1,4 @@
-# $FreeBSD: 88a3b5efe90d8804b5dd8dd11d227d189cbde78b $
+# $FreeBSD$
 
 kern/kern_clocksource.c			standard
 

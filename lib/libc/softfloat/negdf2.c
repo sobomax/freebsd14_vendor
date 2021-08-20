@@ -9,7 +9,7 @@
 #include "softfloat.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2485d586c47552abe78b02d18cd3b3dc43157080 $");
+__FBSDID("$FreeBSD$");
 
 float64 __negdf2(float64);
 

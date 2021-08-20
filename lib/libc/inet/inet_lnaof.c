@@ -33,7 +33,7 @@
 static const char sccsid[] = "@(#)inet_lnaof.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c09692efeb8bbdf99ad1d726048ea9d1fd0b3771 $");
+__FBSDID("$FreeBSD$");
 
 #include "port_before.h"
 

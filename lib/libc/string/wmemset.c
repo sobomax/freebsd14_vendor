@@ -34,7 +34,7 @@
 __RCSID("$NetBSD: wmemset.c,v 1.1 2000/12/23 23:14:37 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: fcf40efb8e32024c8d175e7975c48d51a59c1ed9 $");
+__FBSDID("$FreeBSD$");
 
 #include <wchar.h>
 

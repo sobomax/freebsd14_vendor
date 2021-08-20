@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)m2	8.1 (Berkeley) 8/14/93
 .\"
-.\" $FreeBSD: b94f4788164fbb56d864078546bcd6a2bbd48886 $
+.\" $FreeBSD$
 .tr |
 .rm mx
 .br

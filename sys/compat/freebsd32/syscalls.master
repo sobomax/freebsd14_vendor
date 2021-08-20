@@ -1,4 +1,4 @@
- $FreeBSD: a530836dc80b1883359598625eb9dbf16c7f7c47 $
+ $FreeBSD$
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;	from: src/sys/kern/syscalls.master 1.107
 ;

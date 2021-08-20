@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d124d541442a7695458012de4a865bf8247296f2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IP ID generation is a fascinating topic.

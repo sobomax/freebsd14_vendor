@@ -14,7 +14,7 @@
  */
 
 /*
- * $FreeBSD: d8d3317e5aa0010db908914c5b4e7c38be3ae792 $
+ * $FreeBSD$
  */
 
 int sio_init(int) __attribute__((regparm (3)));

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 3d5fc003f960b89298896d8fd57cb8dec51a8e28 $
+.\" $FreeBSD$
 Set to not opportunistically skip building a cross-linker during the
 bootstrap phase of the build.
 Normally, if the currently installed linker matches the planned bootstrap

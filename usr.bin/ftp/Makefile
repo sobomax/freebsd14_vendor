@@ -1,4 +1,4 @@
-# $FreeBSD: e7de6e6c496c96185676ac9427b6269fd3f8628a $
+# $FreeBSD$
 #	$NetBSD: Makefile,v 1.15 1997/10/18 15:31:20 lukem Exp $
 #	from: @(#)Makefile	8.2 (Berkeley) 4/3/94
 

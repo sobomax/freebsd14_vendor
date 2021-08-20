@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46a2e8620a223de4b70baf3879fb090e250e866c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Limited testing on pseudorandom numbers drawn within [-2e8:4e8] shows

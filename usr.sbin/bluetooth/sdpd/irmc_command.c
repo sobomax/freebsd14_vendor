@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: irmc_command.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: 3b7e38bdf7f93851f4b5ffb176cfd6216af8272e $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

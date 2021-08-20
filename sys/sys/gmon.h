@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)gmon.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD: 47b5c5c17573dacf26e9348a302f5321834cfd99 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_GMON_H_

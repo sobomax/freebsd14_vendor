@@ -1,4 +1,4 @@
-# $FreeBSD: d3bace8feef32b5a1d6fe4b025694aafd2965972 $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	domainname

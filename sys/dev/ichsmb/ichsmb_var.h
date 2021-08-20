@@ -35,7 +35,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: bc35c540ccf5c6b01fbb5dad129ba3bdd304d4d4 $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_ICHSMB_ICHSMB_VAR_H

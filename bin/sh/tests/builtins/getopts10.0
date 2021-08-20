@@ -1,4 +1,4 @@
-# $FreeBSD: a88e6ca3e85e30e0f0e0df0a8e1b6de472e2eca4 $
+# $FreeBSD$
 
 set -- -x arg
 opt=not

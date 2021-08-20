@@ -1,4 +1,4 @@
-# $FreeBSD: 9671e7bf529815466b98890b953771539323da7a $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/contrib/tzcode/zic
 

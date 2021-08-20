@@ -1,4 +1,4 @@
-/* $FreeBSD: 75bfb7542c01ad50a1d5e6f3b1ccad83ff754de4 $ */
+/* $FreeBSD$ */
 /* tnftp_config.h.  Generated from tnftp_config.h.in by configure.  */
 /* tnftp_config.h.in.  Generated from configure.ac by autoheader.  */
 

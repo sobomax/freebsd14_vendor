@@ -30,7 +30,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 7c035e871e791a0c67a53fd9889f057b683a4d8d $
+# $FreeBSD$
 
 cpu		HAMMER
 ident		MINIMAL

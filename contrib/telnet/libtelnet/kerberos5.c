@@ -49,7 +49,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 63f515310f9bc5b644eb3b5c22c34600b47fcd66 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef	KRB5
 

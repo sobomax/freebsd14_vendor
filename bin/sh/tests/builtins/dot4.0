@@ -1,4 +1,4 @@
-# $FreeBSD: b898131c0e1c3b0928edc56970d074411b6135bf $
+# $FreeBSD$
 
 v=abcd
 v=$v$v$v$v

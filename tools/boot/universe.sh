@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: 68e77f8c706b50de7a7674b9583c79f8ce69bc1d $
+# $FreeBSD$
 
 #
 # Full list of all arches, but we only build a subset. All different mips add any

@@ -1,5 +1,5 @@
 # Sample configuration file for an installation using pc-sysinstall
-#$FreeBSD: d520d09219cd1a3906b64b4e0b35b218923a9353 $
+#$FreeBSD$
 
 installMode=fresh
 installInteractive=yes

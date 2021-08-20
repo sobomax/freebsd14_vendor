@@ -1,4 +1,4 @@
-# $FreeBSD: 62bf96b68e98f597973beb96ec87b844fe217dde $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/bhnd/cores/pci
 .PATH: ${SRCTOP}/sys/dev/bhnd/cores/pcie2

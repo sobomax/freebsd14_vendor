@@ -1,4 +1,4 @@
-# $FreeBSD: f495cdbbda78372708f980aff6d770651ffccd26 $
+# $FreeBSD$
 #
 # Author: Harti Brandt <harti@freebsd.org>
 #

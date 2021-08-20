@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 728fe99b24f8d3294de1e0dab93c35cba1ebb9cc $
+ * $FreeBSD$
  */
 
 #include "../agent.h"

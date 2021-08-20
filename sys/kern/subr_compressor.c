@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 551865bc547be188fd6224c1e7591b8d5ed03f3b $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_gzio.h"
 #include "opt_zstdio.h"

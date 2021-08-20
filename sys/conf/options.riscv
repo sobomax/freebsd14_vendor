@@ -1,4 +1,4 @@
-# $FreeBSD: b2ab5ec09589010fab5d2aca880a4a19c3af0334 $
+# $FreeBSD$
 
 RISCV				opt_global.h
 FPE				opt_global.h

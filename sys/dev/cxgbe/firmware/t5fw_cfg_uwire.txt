@@ -612,5 +612,5 @@
 #   MSI-X Vectors: 736
 #   Virtual Functions: 64
 #
-# $FreeBSD: 5d278cf5636a18fa780fe7a0a59d8c6d9203d990 $
+# $FreeBSD$
 #

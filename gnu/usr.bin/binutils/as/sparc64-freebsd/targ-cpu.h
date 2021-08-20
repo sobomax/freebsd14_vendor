@@ -1,3 +1,3 @@
-/* $FreeBSD: 46e43130fc11144ebf4c3183abb920f7fe65a11e $ */
+/* $FreeBSD$ */
 
 #include "tc-sparc.h"

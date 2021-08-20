@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ffc7388aef8f04a08702ea4ca5bff2ce9ed40b78 $
+ * $FreeBSD$
  */
 
 #ifndef __XEN_PV_H__

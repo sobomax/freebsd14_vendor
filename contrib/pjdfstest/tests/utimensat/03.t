@@ -1,6 +1,6 @@
 #! /bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: f27cdc3c079f41b59b40a58ab5fa90a1d6e0c8ba $
+# $FreeBSD$
 
 desc="utimensat can update birthtimes"
 

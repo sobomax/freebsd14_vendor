@@ -1,5 +1,5 @@
 
-# $FreeBSD: 6a76fba100718e9d9f13c334c9c3c21ca3472860 $
+# $FreeBSD$
 
 .include "../clang.pre.mk"
 

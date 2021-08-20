@@ -2,7 +2,7 @@
  * System call argument to DTrace register array converstion.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: b5636d5c9ab08e8ce5131dbcf63c67da1950dbd2 $
+ * $FreeBSD$
  * This file is part of the DTrace syscall provider.
  */
 

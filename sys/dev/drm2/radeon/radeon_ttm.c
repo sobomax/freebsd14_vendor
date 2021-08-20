@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abfe774f77fb3ca790b3cb5e7c3023a848a1eb39 $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/drm2/ttm/ttm_bo_api.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>

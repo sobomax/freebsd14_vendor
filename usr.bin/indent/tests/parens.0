@@ -1,4 +1,4 @@
-/* $FreeBSD: 40d8de39169c34bb65691f47a3255901be641d7c $ */
+/* $FreeBSD$ */
 typedef void 	(*xxxxxxxxxxx) (int,
 				char);
 

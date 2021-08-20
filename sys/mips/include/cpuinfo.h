@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cdc98ef8e0981be4be86d2b0b1ed0e3f5abca786 $
+ * $FreeBSD$
  *	@(#)cpu.h	8.4 (Berkeley) 1/4/94
  */
 

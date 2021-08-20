@@ -1,4 +1,4 @@
-# $FreeBSD: 2866aaca9ec5bf979f20483192b4ed0fdb956b23 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/vge
 

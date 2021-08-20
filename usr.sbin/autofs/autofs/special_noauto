@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 219ec7ea699403f75457f6b7775d9e6a070fe933 $
+# $FreeBSD$
 #
 
 print_available() {

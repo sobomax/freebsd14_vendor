@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)setjmperr.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: abc13c0339f18c5d2205518bb714e9b91de584b8 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This routine is called from longjmp() when an error occurs.

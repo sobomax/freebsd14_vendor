@@ -1,4 +1,4 @@
-# $FreeBSD: 81607293531e1d795048561449a17b8ebc47b439 $
+# $FreeBSD$
 
 {
 	trap '' garbage && exit 3

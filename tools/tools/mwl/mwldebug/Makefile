@@ -1,4 +1,4 @@
-# $FreeBSD: 62514d7fd11e9d00cfacfc26ee942cb2081eb731 $
+# $FreeBSD$
 
 PROG=	mwldebug
 BINDIR=	/usr/local/bin

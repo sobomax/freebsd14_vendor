@@ -1,5 +1,5 @@
 /* $Id: pathnames.h.in,v 8.7 2012/04/23 08:34:52 zy Exp $ */
-/* $FreeBSD: 49d58fe834938332aef6f736d2b77574dcced174 $ */
+/* $FreeBSD$ */
 
 /* Read standard system paths first. */
 #include <paths.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 3270f1355d72215938230ac03997d16001d63b9b $
+# $FreeBSD$
 #
 # Author: Harti Brandt <harti@freebsd.org>
 

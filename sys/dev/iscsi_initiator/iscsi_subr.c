@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d1869f5de6d0ed002e302db6948292cbaee75f7 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_iscsi_initiator.h"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 9c1924ad4b32a92e7340ea2de91e067e3a505fcc $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	kenv

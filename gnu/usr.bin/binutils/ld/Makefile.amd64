@@ -1,4 +1,4 @@
-# $FreeBSD: c9919bff2987362471e853c963b911c12a2170f4 $
+# $FreeBSD$
 
 NATIVE_EMULATION= elf_x86_64_fbsd
 

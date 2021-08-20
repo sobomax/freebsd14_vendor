@@ -27,7 +27,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)vnode_if.src	8.12 (Berkeley) 5/14/95
-# $FreeBSD: 4f69bba5b9ffbb397622b075e17a2763b3ef2670 $
+# $FreeBSD$
 #
 
 #

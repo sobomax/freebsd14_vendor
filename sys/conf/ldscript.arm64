@@ -1,4 +1,4 @@
-/* $FreeBSD: ae99e4968f340b9efe5c3a65e432cba3a6e56ba8 $ */
+/* $FreeBSD$ */
 OUTPUT_ARCH(aarch64)
 ENTRY(_start)
 

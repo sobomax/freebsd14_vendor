@@ -31,7 +31,7 @@ this code that are retained.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b97c8b0f0d0027ee7c42c36db0a5e708d40f0c10 $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <stdarg.h>

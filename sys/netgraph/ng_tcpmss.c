@@ -31,7 +31,7 @@
  * This software includes fragments of the following programs:
  *	tcpmssd		Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: 5378332f33134a176bba3d50669668b9ae698cc0 $
+ * $FreeBSD$
  */
 
 /*

@@ -44,7 +44,7 @@
  *
  * Created      : 08/02/95
  *
- * $FreeBSD: 4b2ab474fbf96ab36c9ae452b522a67aacbb8af8 $
+ * $FreeBSD$
  */
 
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb3d35ad5d73f6da524c5231662c0b457867536f $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: a7f17c1d33058263c167a1ab912ed7ad8f8c93df $ 
+# $FreeBSD$ 
 # $NetBSD: ISO646.src,v 1.1 2003/06/27 08:40:57 tshiozak Exp $
 
 NAME		"ISO646-x"

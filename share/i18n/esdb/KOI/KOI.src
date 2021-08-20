@@ -1,4 +1,4 @@
-# $FreeBSD: 6144ac103010ef8438337af21d98d2200df3d4fd $ 
+# $FreeBSD$ 
 # $NetBSD: KOI.src,v 1.2 2006/09/16 08:38:20 tnozaki Exp $
 
 NAME		"KOIx"

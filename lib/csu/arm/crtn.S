@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 25bbd5730ae9af7f1df0315f35afeacd32604ffb $");
+__FBSDID("$FreeBSD$");
 
 	.section .init,"ax",%progbits
 	ldmea	fp, {fp, sp, pc}

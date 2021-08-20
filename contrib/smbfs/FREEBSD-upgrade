@@ -1,4 +1,4 @@
-$FreeBSD: 6fad7c6d729ecd5226d27357312f0c21c7cda383 $
+$FreeBSD$
 
 The smbfs distribution was written with FreeBSD in mind, so the only
 change required before an import is:

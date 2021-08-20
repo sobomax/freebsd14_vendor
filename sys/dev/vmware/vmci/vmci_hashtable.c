@@ -7,7 +7,7 @@
 /* Implementation of the VMCI Hashtable. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8559b008c10b8960fa1414caddf6dc010d18871 $");
+__FBSDID("$FreeBSD$");
 
 #include "vmci.h"
 #include "vmci_driver.h"

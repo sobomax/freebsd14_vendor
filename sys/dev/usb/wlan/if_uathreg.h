@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_uathreg.h,v 1.2 2006/09/18 16:34:23 damien Exp $	*/
-/*	$FreeBSD: 1e7929bc7e8fc4d29cbe43ce1ed69c2d365aaf0a $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2006

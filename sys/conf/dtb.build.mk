@@ -1,4 +1,4 @@
-# $FreeBSD: 140440336cad2ff30a83aac41be9f74f36585aab $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 # Grab all the options for a kernel build. For backwards compat, we need to

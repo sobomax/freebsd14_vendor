@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain.
  *
- * $FreeBSD: eb74b56fe5f1f34b148ef354066b43b5aa43223b $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PMC_MDEP_H_

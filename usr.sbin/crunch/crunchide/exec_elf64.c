@@ -36,7 +36,7 @@
 #ifndef lint
 __IDSTRING(elf64rcsid, "$NetBSD: exec_elf64.c,v 1.2 1997/08/02 21:30:19 perry Exp $");
 #endif
-__FBSDID("$FreeBSD: c447116ccf5e4fa364b5894b13e3b6814af911b4 $");
+__FBSDID("$FreeBSD$");
  
 #define	ELFSIZE		64
 

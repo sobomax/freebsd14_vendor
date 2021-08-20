@@ -1,4 +1,4 @@
-# $FreeBSD: 48deeed17089637d14d11786e04496f3a9ff0064 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ksyms
 

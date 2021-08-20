@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 59825172706eb324c9683680c8eb748ddbaa8cf6 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/00.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkfifo creates fifo files"
 

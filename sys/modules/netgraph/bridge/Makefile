@@ -1,4 +1,4 @@
-# $FreeBSD: 318142900c91ee5cfa9d881ba457a094fe5f36b4 $
+# $FreeBSD$
 
 KMOD=	ng_bridge
 SRCS= 	ng_bridge.c

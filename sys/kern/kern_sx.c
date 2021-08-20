@@ -43,7 +43,7 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 600a3d03558ae3cee8da597bce5a4491a157b405 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -2,7 +2,7 @@
  * Offsets into structures used from asm.  Must be kept in sync with
  * appropriate headers.
  *
- * $FreeBSD: 2e799f6566b80df975ec3651f7442fc9da70c30b $
+ * $FreeBSD$
  */
 
 #define	FPRS_FEF	0x4

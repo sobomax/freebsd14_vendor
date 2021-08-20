@@ -1,4 +1,4 @@
-/* $FreeBSD: 6f13367510d6d48fe7d4517557804d6dd77fdc4f $ */
+/* $FreeBSD$ */
 #define __IEEEFP_NOINLINES__ 1
 #include <ieeefp.h>
 

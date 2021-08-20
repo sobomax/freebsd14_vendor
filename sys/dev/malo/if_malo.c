@@ -33,7 +33,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: ce63c5322ab2b601bb17376503b1a34093313593 $");
+__FBSDID("$FreeBSD$");
 #endif
 
 #include "opt_malo.h"

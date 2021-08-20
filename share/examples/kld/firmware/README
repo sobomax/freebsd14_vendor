@@ -1,4 +1,4 @@
-$FreeBSD: 075c5e5723b5adacf6614084753dd2672631da0d $
+$FreeBSD$
 
 This is a simple example of the firmware(9) system.  It consists of two
 parts:

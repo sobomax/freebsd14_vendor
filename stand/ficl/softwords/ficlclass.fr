@@ -7,7 +7,7 @@
 \ ** C - W O R D
 \ Models a FICL_WORD
 \
-\ $FreeBSD: 6d75efb0d3c5c136c0e4d9626b4f7d989c3b703d $
+\ $FreeBSD$
 
 object subclass c-word
     c-word     ref: .link

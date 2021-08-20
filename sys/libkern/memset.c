@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431011a34500394f6fd249c67db50c49286eee4a $");
+__FBSDID("$FreeBSD$");
 
 #define	LIBKERN_INLINE
 

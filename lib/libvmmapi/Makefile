@@ -1,4 +1,4 @@
-# $FreeBSD: bf17566a0d7d70c478249f39589d8acbe9da9663 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	vmmapi

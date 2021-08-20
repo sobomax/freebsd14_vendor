@@ -1,4 +1,4 @@
-# $FreeBSD: 16c2659c8a618779955cf12f6f0d1043ef5a4525 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/cardbus
 

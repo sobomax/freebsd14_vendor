@@ -1,4 +1,4 @@
-# $FreeBSD: d901e35a523cbc1bda1b219016095c34506c66b5 $
+# $FreeBSD$
 
 CONFS=	auto_master
 PACKAGE=autofs

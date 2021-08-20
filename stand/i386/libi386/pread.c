@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 870e2540150f64de5f52b62cf2c66ea8b20a50ad $");
+__FBSDID("$FreeBSD$");
 
 /* read into destination in flat addr space */
 

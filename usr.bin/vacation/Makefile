@@ -1,4 +1,4 @@
-# $FreeBSD: ae3372f46fcde3e2a1741a452865515e36dd965e $
+# $FreeBSD$
 
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/vacation

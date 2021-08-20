@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 6b8aa43844b572af918a2d197a64aa117ddbd46a $
+# $FreeBSD$
 #
 
 # PROVIDE: swap

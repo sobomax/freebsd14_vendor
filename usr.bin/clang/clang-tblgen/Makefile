@@ -1,4 +1,4 @@
-# $FreeBSD: ce30af05ac5f2071b042e932af5c056ec147c506 $
+# $FreeBSD$
 
 PROG_CXX=	clang-tblgen
 MAN=

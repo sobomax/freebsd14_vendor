@@ -1,5 +1,5 @@
 #
-# $FreeBSD: bfc4b6354d2a7f75b35498a26413398ee57bf8b8 $
+# $FreeBSD$
 #
 PROG=	usbconfig
 MAN=	usbconfig.8

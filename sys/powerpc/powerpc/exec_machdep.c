@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94a14f0ab2c09374345bdeaa702167385fb2d58a $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_fpu_emu.h"
 

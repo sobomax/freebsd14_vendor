@@ -1,4 +1,4 @@
-# $FreeBSD: e615eaffb8c9d307bbd0ccf4361c015d86eba991 $
+# $FreeBSD$
 
 SUBDIR=	intel wdc
 

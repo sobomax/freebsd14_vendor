@@ -26,7 +26,7 @@
 
 
 #include "test.h"
-__FBSDID("$FreeBSD: 22345038609a1b1a87a2afb87c897d4a39c055de $");
+__FBSDID("$FreeBSD$");
 
 static void
 test_format_filter_by_ext(const char *output_file, 

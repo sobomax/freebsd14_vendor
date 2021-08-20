@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d3e9d745b27542d0129bec0a5352f0dc978ab41 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __EVERGREEN_REG_H__
 #define __EVERGREEN_REG_H__

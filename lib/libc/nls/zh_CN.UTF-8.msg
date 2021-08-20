@@ -1,4 +1,4 @@
-$ $FreeBSD: 9475ea8e82da653107ff248faa95b35a22bd4965 $
+$ $FreeBSD$
 $
 $ Message catalog for zh_CN.UTF-8 locale
 $

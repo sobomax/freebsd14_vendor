@@ -1,4 +1,4 @@
-$ $FreeBSD: af871d9427663ec444c02ba437a73bb9d8ca8d26 $
+$ $FreeBSD$
 $
 $ Message catalog for uk_UA.UTF-8 locale
 $

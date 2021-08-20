@@ -1,4 +1,4 @@
-# $FreeBSD: cf1fa812d3d60fe2f58d353a05792334ffce16df $
+# $FreeBSD$
 
 CONFS=	devfs.conf devfs.rules
 CONFSDIR_devfs.rules=	/etc/defaults

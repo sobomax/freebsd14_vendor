@@ -57,7 +57,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * from $NetBSD: cpu_subr.c,v 1.1 2003/02/03 17:10:09 matt Exp $
- * $FreeBSD: 6c161ff1566cd09192ee54bf6641addc3819590e $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 74a308aaa6601ee5a214a3747538251a31ff54bc $
+# $FreeBSD$
 
 for i in $(ifconfig -l); do
   case "${i%%[0-9]*}" in

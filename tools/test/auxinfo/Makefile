@@ -1,4 +1,4 @@
-# $FreeBSD: 0e6d80992ad8095fa2cd4688d20ec18f44fbf011 $
+# $FreeBSD$
 
 PROG=	auxinfo
 MAN=

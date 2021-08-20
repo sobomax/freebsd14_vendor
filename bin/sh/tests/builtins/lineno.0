@@ -1,4 +1,4 @@
-# $FreeBSD: c9311f82d253657d9191fb7522ed9f93aa5d7f40 $
+# $FreeBSD$
 echo $LINENO
 echo $LINENO
 

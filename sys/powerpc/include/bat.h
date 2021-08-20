@@ -60,7 +60,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: bat.h,v 1.2 1999/12/18 01:36:06 thorpej Exp $
- * $FreeBSD: 517ebd4a45c69a1bca213cdf7333f9e024d34c15 $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_BAT_H_

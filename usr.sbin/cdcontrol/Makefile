@@ -1,4 +1,4 @@
-# $FreeBSD: de956064450131efacac7b796efd338d1ad03b63 $
+# $FreeBSD$
 
 PROG= cdcontrol
 

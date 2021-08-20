@@ -1,5 +1,5 @@
 /* $NetBSD: pickmode.c,v 1.3 2011/04/09 18:22:31 jdc Exp $ */
-/* $FreeBSD: 66dea82483e4bfbc22ba37ba086ce8303b58dce1 $ */
+/* $FreeBSD$ */
 
 /*-
  * Copyright (c) 2006 The NetBSD Foundation
@@ -30,7 +30,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66dea82483e4bfbc22ba37ba086ce8303b58dce1 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/libkern.h>

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df1facefb105b83f22ebb768a5ab7f71d780af30 $");
+__FBSDID("$FreeBSD$");
 
 char *__stpcpy(char * __restrict, const char * __restrict);
 

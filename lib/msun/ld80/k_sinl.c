@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af5598dbadf11340c6889ba32fcd11b0dfbb176e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ld80 version of k_sin.c.  See ../src/k_sin.c for most comments.

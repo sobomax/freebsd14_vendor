@@ -36,7 +36,7 @@
 
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: bc227e07d662c06d31860a1396f7c5527ac31463 $");
+__FBSDID("$FreeBSD$");
 
 #define _LOCORE		/* XXX not really, just assembly-code source */
 #include <machine/endian.h>

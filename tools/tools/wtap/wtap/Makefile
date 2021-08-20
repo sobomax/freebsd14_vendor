@@ -1,4 +1,4 @@
-# $FreeBSD: 85b584b871bfd772df9296b693ce87116a2df7dd $
+# $FreeBSD$
 
 BINDIR?=	/usr/local/bin
 PROG=	wtap

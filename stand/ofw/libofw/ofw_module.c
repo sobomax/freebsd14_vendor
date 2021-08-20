@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d39a34344556ed0a693b22178ab38de847b57676 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ofw-specific module functionality.

@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 05881f08e9e69c248d108db98096669fc2fd333c $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_IP6_VAR_H_

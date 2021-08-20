@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 90f9589ab00f419dee921052dfe77fa69061b32c $
+# $FreeBSD$
 #
 
 # PROVIDE: ntpdate

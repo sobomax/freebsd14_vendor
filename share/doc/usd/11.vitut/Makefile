@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: 5fbe9db441a10511e2c98f7cee1cddfb7584d8d2 $
+# $FreeBSD$
 
 VOLUME=		usd/11.edit
 SRCS=		edittut.ms

@@ -30,7 +30,7 @@
  *
  *	@(#)routed.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD: dab9bba5661762c3db6e8e6870f39fdeec76bf33 $
+ * $FreeBSD$
  *	$Revision: 2.26 $
  */
 

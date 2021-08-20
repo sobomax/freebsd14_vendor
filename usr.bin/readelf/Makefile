@@ -1,4 +1,4 @@
-# $FreeBSD: 238a901197d729516363ed10d2d0bf9d07738c24 $
+# $FreeBSD$
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 READELFDIR=	${ELFTCDIR}/readelf

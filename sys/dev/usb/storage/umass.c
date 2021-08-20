@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cfd2ba174b410d919b84d6091c7d8579e6196c81 $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -29,7 +29,7 @@ __FBSDID("$FreeBSD: cfd2ba174b410d919b84d6091c7d8579e6196c81 $");
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: cfd2ba174b410d919b84d6091c7d8579e6196c81 $
+ *	$FreeBSD$
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 

@@ -1,5 +1,5 @@
 /* $OpenBSD: myproposal.h,v 1.57 2018/09/12 01:34:02 djm Exp $ */
-/* $FreeBSD: d5a1b7a2fa24ed8d40ca52b3763af352fae9ec3f $ */
+/* $FreeBSD$ */
 
 /*
  * Copyright (c) 2000 Markus Friedl.  All rights reserved.

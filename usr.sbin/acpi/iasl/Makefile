@@ -1,4 +1,4 @@
-# $FreeBSD: 1807156475b1258861a7b4557ddd1cf2c78ccd54 $
+# $FreeBSD$
 
 PROG=	iasl
 

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5c23568c33acda646229e92682b0b3cf345784cd $
+ * $FreeBSD$
  */
 
 #include <pthread.h>

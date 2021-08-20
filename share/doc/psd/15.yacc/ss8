@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss8	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 75c66ab383a5a8e75deec857a1be1e6dd786f15c $
+.\" $FreeBSD$
 .SH
 8: The Yacc Environment
 .PP

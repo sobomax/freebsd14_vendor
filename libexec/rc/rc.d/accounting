@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: dd33c2f1f07bd23257c57ffd3c87e294cba66db1 $
+# $FreeBSD$
 #
 
 # PROVIDE: accounting

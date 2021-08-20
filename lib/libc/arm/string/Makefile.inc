@@ -1,4 +1,4 @@
-# $FreeBSD: cf3175ea4e8cbdab425a56476f239aeb40267143 $
+# $FreeBSD$
 
 MDSRCS+= \
 	bcopy.S \

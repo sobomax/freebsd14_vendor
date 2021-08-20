@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_subr.c,v 1.21 2003/11/06 06:32:53 kjc Exp $
- * $FreeBSD: 01aa1efef53d9dfa82073f20494ef4d45b7dce70 $
+ * $FreeBSD$
  */
 
 #include "opt_altq.h"

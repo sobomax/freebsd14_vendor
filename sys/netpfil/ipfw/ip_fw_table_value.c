@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d60fc34f39eaae26dbc5b9029eaae7e9976f281b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Multi-field value support for ipfw tables.

@@ -26,7 +26,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 1c49c7880018a036b8bae79cbe19da288895d864 $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_read_format_raw)
 {

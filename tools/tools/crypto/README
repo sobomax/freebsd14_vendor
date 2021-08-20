@@ -1,4 +1,4 @@
-$FreeBSD: 16b6bdb0d8ca83f9b5503986894b523f3de3dede $
+$FreeBSD$
 
 The cryptotest program repeatedly encrypts and decrypts a buffer
 with the built-in iv and key, using hardware crypto.  At the end,

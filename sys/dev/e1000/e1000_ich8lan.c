@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 53d8506054cc88fbfe0ec459bf8bf33a2f7dd95a $*/
+/*$FreeBSD$*/
 
 /* 82562G 10/100 Network Connection
  * 82562G-2 10/100 Network Connection

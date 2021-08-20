@@ -1,4 +1,4 @@
-# $FreeBSD: df5d44ec30db13a44d71f3c9d7c49f4c5f6aace8 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	devstat

@@ -24,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 758cec4e91de584eb9b30b309b9795a9ffcf86e7 $
+-- $FreeBSD$
 --
 
 local drawer = require("drawer")

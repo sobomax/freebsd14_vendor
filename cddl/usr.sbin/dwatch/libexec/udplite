@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for dtrace_udplite(4) $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD: 093c0857f865b77bdef0b89837797671f91b97b6 $
+# $FreeBSD$
 #
 ############################################################ DESCRIPTION
 #

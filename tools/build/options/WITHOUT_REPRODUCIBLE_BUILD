@@ -1,4 +1,4 @@
-.\" $FreeBSD: 015a6432ccd56e850777fbe8c8f98c54901fe0ec $
+.\" $FreeBSD$
 Set to include build metadata (such as the build time, user, and host)
 in the kernel, boot loaders, and uname output.
 Successive builds will not be bit-for-bit identical.

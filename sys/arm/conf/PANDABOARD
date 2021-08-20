@@ -17,7 +17,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: e2b3f04f6051da138ef51ec6f5eb05c460634c60 $
+# $FreeBSD$
 
 ident		PANDABOARD
 

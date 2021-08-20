@@ -47,7 +47,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 5a926a125de59c01667dcb5f4221f6c9deea4043 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 #define hdaa_lock(devinfo)	snd_mtxlock((devinfo)->lock)
 #define hdaa_unlock(devinfo)	snd_mtxunlock((devinfo)->lock)

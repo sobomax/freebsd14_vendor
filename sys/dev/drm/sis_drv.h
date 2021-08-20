@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 18b1503cb37e3e54cbd2bbfa910ff35fb9670b03 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _SIS_DRV_H_
 #define _SIS_DRV_H_

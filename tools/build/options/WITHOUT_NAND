@@ -1,2 +1,2 @@
-.\" $FreeBSD: 67cadaf8d966e5107b1ea2bd35ae5cabe93cc737 $
+.\" $FreeBSD$
 Set to not build the NAND Flash components.

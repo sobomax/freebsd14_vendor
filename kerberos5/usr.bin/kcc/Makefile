@@ -1,4 +1,4 @@
-# $FreeBSD: 7c4b7ab3962a337718cbfb9be99ea7ff87fbe726 $
+# $FreeBSD$
 
 PROG=	kcc
 MAN=	klist.1 kswitch.1

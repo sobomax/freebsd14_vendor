@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1b84338470e7dc2e6c418b8ea5a0d97272925420 $
+ * $FreeBSD$
  */
 
 #include <edit/readline/readline.h>

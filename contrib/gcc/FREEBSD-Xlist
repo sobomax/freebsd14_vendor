@@ -1,4 +1,4 @@
-# $FreeBSD: 96080bc59e23a29390fd5935b0cc381eee5bd275 $
+# $FreeBSD$
 *.brik
 *FAQ
 *contrib

@@ -29,13 +29,13 @@
 /*
  * Binary heap and hash tables, used in dummynet
  *
- * $FreeBSD: ab81cfcc656a7486b9f4303187156635d37139a3 $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
 #ifdef _KERNEL
-__FBSDID("$FreeBSD: ab81cfcc656a7486b9f4303187156635d37139a3 $");
+__FBSDID("$FreeBSD$");
 #include <sys/systm.h>
 #include <sys/malloc.h>
 #include <sys/kernel.h>

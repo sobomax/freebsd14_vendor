@@ -1,6 +1,6 @@
 /*
  * 
- * $FreeBSD: 1cb9016715ac380f7c4f881851511f7fc3055358 $
+ * $FreeBSD$
  */
 
 #include <machine/asm.h>

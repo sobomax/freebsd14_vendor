@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c75d20f94f6acb472b28a8a79f8e24bd69b9b12a $
+ * $FreeBSD$
  */
 #include <sys/endian.h>
 #include <sys/time.h>

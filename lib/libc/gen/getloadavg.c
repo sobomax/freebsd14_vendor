@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getloadavg.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: a0a707b6db9d94a9cbf4e04b00e985685970575f $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/time.h>

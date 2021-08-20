@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df9e3c29d17f4bd057b75655d627bae887127529 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for JBus to EBus and PCI to EBus bridges

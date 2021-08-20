@@ -1,5 +1,5 @@
 /*	$OpenBSD: parse.y,v 1.18 2015/01/16 06:40:22 deraadt Exp $	*/
-/*	$FreeBSD: b97af1dfa801169cd29656113e60b888674dda59 $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>

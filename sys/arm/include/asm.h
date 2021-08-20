@@ -35,7 +35,7 @@
  *
  *	from: @(#)asm.h	5.5 (Berkeley) 5/7/91
  *
- * $FreeBSD: 85764f345eafd2ee1d8f1f96452e4f26648f7f8e $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ASM_H_

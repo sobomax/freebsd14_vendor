@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $Id: dconschat.c,v 1.76 2003/10/23 06:21:13 simokawa Exp $
- * $FreeBSD: 6d4750585df6d0d1f6b4e44ffc26bef7f8fe35a0 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

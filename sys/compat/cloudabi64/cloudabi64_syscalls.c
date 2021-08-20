@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 5019ad930d52e1e0eeb545d525315b8144f2e2a2 $
+ * $FreeBSD$
  */
 
 const char *cloudabi64_syscallnames[] = {

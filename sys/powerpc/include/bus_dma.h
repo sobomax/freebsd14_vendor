@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: ba4ebdab4c42c97e9cce67ee42cef25b877def06 $ */
+/* $FreeBSD$ */
 
 #ifndef _POWERPC_BUS_DMA_H_
 #define _POWERPC_BUS_DMA_H_

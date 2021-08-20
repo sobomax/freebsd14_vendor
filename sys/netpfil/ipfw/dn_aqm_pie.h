@@ -1,7 +1,7 @@
 /*
  * PIE - Proportional Integral controller Enhanced AQM algorithm.
  *
- * $FreeBSD: 7512d3272af7edab6b0ea3a5ecf771e6759ea87a $
+ * $FreeBSD$
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.

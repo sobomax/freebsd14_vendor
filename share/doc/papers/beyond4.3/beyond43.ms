@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)beyond43.ms	5.1 (Berkeley) 6/5/90
-.\" $FreeBSD: ef8b6dc5b4eb2c2ee2cd05c0280aa2c68da8578f $
+.\" $FreeBSD$
 .\"
 .\" *troff -ms
 .rm CM

@@ -1,4 +1,4 @@
-# $FreeBSD: 8c410617a33aed350d5a3b8b02064a43b1fe73bd $
+# $FreeBSD$
 #
 # Option file for src builds.
 #

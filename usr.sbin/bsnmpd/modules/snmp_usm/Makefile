@@ -1,4 +1,4 @@
-# $FreeBSD: a5e8e8cf9237ad553680df1cd2afdf42e05fe2ad $
+# $FreeBSD$
 #
 # Author: Shteryana Shopova <syrinx@freebsd.org>
 

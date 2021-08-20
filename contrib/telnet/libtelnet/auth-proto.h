@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)auth-proto.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: e216e06a35c660d9d569087a88242aaf92801fc9 $
+ * $FreeBSD$
  */
 
 /*

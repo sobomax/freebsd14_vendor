@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: uuid-private.h,v 1.1 2004/12/09 18:20:26 max Exp $
- * $FreeBSD: 7f3d299e8dbfc527611db3fa65c873f3476db046 $
+ * $FreeBSD$
  */
 
 #ifndef _UUID_PRIVATE_H_

@@ -1,4 +1,4 @@
-/*	$FreeBSD: e5182f258bbc8598ca0a08881b6394798ec2a5c3 $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_esp.c,v 1.69 2001/06/26 06:18:59 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),

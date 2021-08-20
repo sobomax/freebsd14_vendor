@@ -1,4 +1,4 @@
-# $FreeBSD: 6d3b3b9c32b6410787871ad46d1f758c1599e4a9 $
+# $FreeBSD$
 
 .if ${.MAKE.DEPENDFILE:M*.${MACHINE}} == ""
 # by default only MACHINE0 does updates

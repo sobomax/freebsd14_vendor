@@ -1,4 +1,4 @@
-/* $FreeBSD: d22f9fad1238d7ad659439eabeb073c16fefbc5d $ */
+/* $FreeBSD$ */
 /*
  * Copyright (C) 1984-2019  Mark Nudelman
  *

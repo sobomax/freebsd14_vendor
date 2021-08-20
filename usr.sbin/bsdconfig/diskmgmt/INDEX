@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e04bb79dafe2509e4e55b0752a9f39d64de4c2ea $
+# $FreeBSD$
 
 #
 # Title that will be shown in the bsdconfig menu.

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 0492a3479cec510a310fb0b01b9bd59eeabb9e29 $
+# $FreeBSD$
 
 # Functions related to disk operations using gpart
 

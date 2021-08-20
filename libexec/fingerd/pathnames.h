@@ -30,7 +30,7 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/4/93
  *
- * $FreeBSD: 5f70e892e5b8d2d5e0ac3c6163ba395186b67ea7 $
+ * $FreeBSD$
  */
 
 #define	_PATH_FINGER	"/usr/bin/finger"

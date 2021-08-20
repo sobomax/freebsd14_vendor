@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0f086744513153b28ffe9c861fe7a96e867b8481 $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2005-2006, Ralink Technology, Corp.

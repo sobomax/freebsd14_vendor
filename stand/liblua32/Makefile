@@ -1,4 +1,4 @@
-# $FreeBSD: 4e09f1b0517894861ea113d09d590ab1a924fd26 $
+# $FreeBSD$
 
 DO32=1
 

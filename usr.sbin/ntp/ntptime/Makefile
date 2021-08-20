@@ -1,4 +1,4 @@
-# $FreeBSD: 1111434541cef369ecccb2c235cb8071856b82c4 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/contrib/ntp/util
 

@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: df3f81a5b3fd70e0c5526be095767dc7865bc305 $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_xattr_platform)
 {

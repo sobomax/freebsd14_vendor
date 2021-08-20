@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: efdc6d33e4dd8c6a19c82f8b600153dc9f96acd1 $
+ * $FreeBSD$
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: efdc6d33e4dd8c6a19c82f8b600153dc9f96acd1 $");
+__FBSDID("$FreeBSD$");
 
 ENTRY(bcmp)
 	cmpq	$16,%rdx

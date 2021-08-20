@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*	$FreeBSD: 9726ec07d1e4947e32c03790276aba281a52f19e $ */
+/*	$FreeBSD$ */
 
 /*
  * LSI 64854 DMA engine. Contains three independent channels

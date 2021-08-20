@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 3c9b4c6013273edd64f06180129e2a6efe25b48e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * The use of printf()-family functions can be troublesome

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD: 56383abf1c4cc435c3c3d09c172afe9471463be5 $
+    $FreeBSD$
     A multislice FreeBSD disk
   </comment>
   <sectorsize>512</sectorsize>

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: ec5bb140555379ab2b16473bc78adaa42a8292d7 $
+ * $FreeBSD$
  */
 
 static const struct pci_device_table ath_pci_id_table[] = {

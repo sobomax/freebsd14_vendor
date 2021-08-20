@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: cd004a2267656b9e88a01738432dba23645f1f09 $
+# $FreeBSD$
 
 dir=`dirname $0`
 . ${dir}/../../misc.sh

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 57de19218fcf671f4fe441e802d506c7c6a0397b $
+# $FreeBSD$
 #
 
 # PROVIDE: pf

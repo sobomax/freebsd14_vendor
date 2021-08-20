@@ -1,7 +1,7 @@
 /*
  * Australian holidays
  *
- * $FreeBSD: daa07ff26d502be88654687e99668e95b78756dc $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_australia_

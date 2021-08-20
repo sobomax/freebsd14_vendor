@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
-  <FreeBSD>$FreeBSD: 6bae97fd2d923efb84f87fc7c2ceeda894921455 $</FreeBSD>
+  <FreeBSD>$FreeBSD$</FreeBSD>
   <comment>
     A PC98 disklabel from Warner
   </comment>

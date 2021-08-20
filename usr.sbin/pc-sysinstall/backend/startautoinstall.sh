@@ -27,7 +27,7 @@
 #
 # Script which reads the pc-autoinstall.conf directive, and begins the install
 #
-# $FreeBSD: 5e2b78fb63ed488370226c5534219703f09e9385 $
+# $FreeBSD$
 
 # Source our functions scripts
 . ${BACKEND}/functions.sh

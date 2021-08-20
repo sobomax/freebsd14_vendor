@@ -1,5 +1,5 @@
 /*	$NetBSD: nsswitch.h,v 1.6 1999/01/26 01:04:07 lukem Exp $	*/
-/*	$FreeBSD: f7131292dd781533fa480d9aa12530c555db136d $ */
+/*	$FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

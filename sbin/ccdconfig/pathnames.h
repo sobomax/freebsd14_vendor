@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * $NetBSD: pathnames.h,v 1.4 2008/04/28 20:23:07 martin Exp $
- * $FreeBSD: 85791ddbfcff5d9967a613682db1652eb3943d4f $
+ * $FreeBSD$
  */
 
 #define _PATH_CCDCONF		"/etc/ccd.conf"

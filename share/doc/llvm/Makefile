@@ -1,4 +1,4 @@
-# $FreeBSD: 35bda425918f63f72217c46ddb1a9e529cbe3528 $
+# $FreeBSD$
 
 SUBDIR=		clang
 

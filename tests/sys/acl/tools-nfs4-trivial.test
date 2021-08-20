@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 366b099d86b1e7a5fe3d7c7d15c0d2ff42cf684f $
+# $FreeBSD$
 #
 
 # This is a tools-level test for acl_is_trivial_np(3).  Run it as root on ZFS.

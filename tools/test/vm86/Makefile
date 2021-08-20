@@ -1,4 +1,4 @@
-# $FreeBSD: e895b3f8549812393ee8b81c0e64d5b69bd2e426 $
+# $FreeBSD$
 
 all:	vm86_test
 

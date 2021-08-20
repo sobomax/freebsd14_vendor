@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8a8c7b65b31a0588b6ea2189002e463d45bd34ea $
+ * $FreeBSD$
  */
 
 enum vt_color_format {

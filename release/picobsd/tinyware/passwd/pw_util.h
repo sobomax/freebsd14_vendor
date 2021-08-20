@@ -34,7 +34,7 @@
  *
  *	@(#)pw_util.h	8.2 (Berkeley) 4/1/94
  *
- * $FreeBSD: d441b19079661feda894a8c709913fe0017dc7bc $
+ * $FreeBSD$
  */
 
 void	pw_edit(int);

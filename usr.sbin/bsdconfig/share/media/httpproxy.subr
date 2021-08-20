@@ -24,7 +24,7 @@ if [ ! "$_MEDIA_HTTPPROXY_SUBR" ]; then _MEDIA_HTTPPROXY_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1ef516f76463e1a10d34bff7c680d72e886c1600 $
+# $FreeBSD$
 #
 ############################################################ INCLUDES
 

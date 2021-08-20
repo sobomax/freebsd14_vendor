@@ -1,4 +1,4 @@
-/*	$FreeBSD: 6d44f9891928206daf319ac962177df08592b791 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ipsec.h,v 1.44 2001/03/23 08:08:47 itojun Exp $	*/
 
 /*-

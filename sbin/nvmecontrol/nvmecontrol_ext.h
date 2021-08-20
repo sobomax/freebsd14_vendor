@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d60fcd4d8a2cf26061beefd539dca58c906cc4b9 $
+ * $FreeBSD$
  */
 
 void nvme_print_controller(struct nvme_controller_data *cdata);

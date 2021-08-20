@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 44434e005c491576ed103c9bb25f9d305d94030a $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/05.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="unlink returns EACCES when search permission is denied for a component of the path prefix"
 

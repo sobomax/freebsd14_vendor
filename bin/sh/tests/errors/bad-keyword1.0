@@ -1,4 +1,4 @@
-# $FreeBSD: ac0153655f8d19b9528b275568ab6cff971ab38e $
+# $FreeBSD$
 
 echo ':; fi' | ${SH} -n 2>/dev/null && exit 1
 exit 0

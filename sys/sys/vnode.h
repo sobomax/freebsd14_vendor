@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: 9f442baf7c00f300fe7067dc7d04300ee1e5f2d4 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_VNODE_H_

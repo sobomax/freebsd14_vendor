@@ -1,4 +1,4 @@
-# $FreeBSD: 24a887eec949973758af8219a5397782719cbddc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/compat/ndis
 

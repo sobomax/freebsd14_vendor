@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 8/14/93
-# $FreeBSD: 934cdeaf5eb639be38124f0459555aadb323e2c5 $
+# $FreeBSD$
 
 VOLUME=		psd/20.ipctut
 SRCS=		tutor.me

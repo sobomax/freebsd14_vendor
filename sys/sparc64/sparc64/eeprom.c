@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa385ea35eb7f9e9590508ce7de3587df0c6324b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * clock (eeprom) attaches at EBus, FireHose or SBus

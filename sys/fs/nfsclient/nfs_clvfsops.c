@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 348a64abc11ba173817a968d5254868b2c83c675 $");
+__FBSDID("$FreeBSD$");
 
 
 #include "opt_bootp.h"

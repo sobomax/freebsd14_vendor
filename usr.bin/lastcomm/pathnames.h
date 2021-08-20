@@ -30,7 +30,7 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: 396e9a63ff3bf96e720a8256fcac70a842288a4b $
+ * $FreeBSD$
  */
 
 #define	_PATH_ACCT	"/var/account/acct"

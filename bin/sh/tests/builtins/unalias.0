@@ -1,4 +1,4 @@
-# $FreeBSD: 34d8d6e07d2e1daed88febc9b571b1ddffc9a0e6 $
+# $FreeBSD$
 set -e
 
 alias false=true

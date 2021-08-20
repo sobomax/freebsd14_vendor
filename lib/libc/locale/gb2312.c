@@ -35,7 +35,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 07a6c4764bb385768d5dba15020cf919a8c0bd03 $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <runetype.h>

@@ -1,4 +1,4 @@
-#	$FreeBSD: 13dfa690a7f03ce23d6fece361933f6c3e6a2769 $
+#	$FreeBSD$
 
 FILES=	mw88W8363.fw.uu mwlboot.fw.uu
 

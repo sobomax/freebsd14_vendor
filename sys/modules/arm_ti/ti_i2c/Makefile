@@ -1,4 +1,4 @@
-# $FreeBSD: d0fbd5f1ca0a96f7e4abc84a6d10022aeebae955 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/ti
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 0a3af09ac2ac9950824b0f1e5f47cfd7c705f0e1 $
+# $FreeBSD$
 
 CONFS=	nscd.conf
 PROG=	nscd

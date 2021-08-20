@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * All rights reserved.
  *
- * $FreeBSD: f7ee79459f61e8ff121157bdbf01b813a44c1bea $
+ * $FreeBSD$
  */
 
 #ifndef _ADVANSYS_H_

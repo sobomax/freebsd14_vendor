@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss4	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: e548d53cfc7d69e453ac96e2359cbb9a8ee6441a $
+.\" $FreeBSD$
 .SH
 4: How the Parser Works
 .PP

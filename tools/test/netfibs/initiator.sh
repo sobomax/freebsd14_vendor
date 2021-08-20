@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 3a409a7da1bc9934cdfe6c77d057494a0d0b0ca1 $
+# $FreeBSD$
 #
 
 # We will use the RFC5180 (and Errata) benchmarking working group prefix

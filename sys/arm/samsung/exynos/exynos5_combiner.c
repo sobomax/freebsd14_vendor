@@ -32,7 +32,7 @@
 #include USB_GLOBAL_INCLUDE_FILE
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c612457707d3334862cf3e963507573ef94cb9d $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

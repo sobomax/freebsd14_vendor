@@ -1,4 +1,4 @@
-# $FreeBSD: 072c5612ae29b8bf59df0741bb77e85be590b21c $
+# $FreeBSD$
 #
 # Generic build infrastructure for test programs.
 #

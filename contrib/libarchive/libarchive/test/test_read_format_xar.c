@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 1c8524520b397d0769da642411a7985439d4b3b2 $");
+__FBSDID("$FreeBSD$");
 
 #define UID	1001
 #define UNAME	"cue"

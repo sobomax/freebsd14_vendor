@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: df6848dff3f266e752dc546b1769b76dc80ddeaa $*/
+/*$FreeBSD$*/
 
 #include <sys/limits.h>
 #include <sys/time.h>

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 3475752e7f08210b4911b6b5a2ec9c8b984931f1 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/05.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="chmod returns EACCES when search permission is denied for a component of the path prefix"
 

@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD: 2ace3112fbe9bf782d4a2e8ac105ea23a2b85694 $
+ * $FreeBSD$
  */
 
 #ifndef __NLM_XLP_H__

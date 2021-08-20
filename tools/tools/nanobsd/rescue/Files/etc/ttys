@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 8e72947a73c7c5aff50ab5f0d83a0ed5bca8a622 $
+# $FreeBSD$
 #	@(#)ttys	5.1 (Berkeley) 4/17/89
 #
 # This file specifies various information about terminals on the system.

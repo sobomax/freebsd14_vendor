@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dfa942d914488b6bf099ef2753c082b1c421706d $
+ * $FreeBSD$
  */
 
 struct fwdma_alloc {

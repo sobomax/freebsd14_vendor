@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b204696bafc9680734c9be0eb9775204bd1bdcb7 $");
+__FBSDID("$FreeBSD$");
 
 #include "iwpm_util.h"
 

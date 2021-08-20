@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: bff385ca1d59747b53e35aea66ab2219d3953800 $");
+__FBSDID("$FreeBSD$");
 
 /*
 PLEASE use old cdrtools; mkisofs version is 2.01.

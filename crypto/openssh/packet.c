@@ -38,7 +38,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: 8f4077d4c27fface91c60b5386d8ae1b176daa06 $");
+__RCSID("$FreeBSD$");
 
 #include <sys/types.h>
 #include "openbsd-compat/sys-queue.h"

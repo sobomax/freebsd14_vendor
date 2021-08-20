@@ -26,7 +26,7 @@
  *
  * Marvell DB-78460 Device Tree Source.
  *
- * $FreeBSD: cf200082490b46cdccc514af46592c052df99ce2 $
+ * $FreeBSD$
  */
 
 /dts-v1/;

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7985eebd2ecccbfb93148df81c81a327c52d300e $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This code implements a system driver for legacy systems that do not

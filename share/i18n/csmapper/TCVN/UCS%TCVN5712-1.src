@@ -1,4 +1,4 @@
-# $FreeBSD: 5c821b69572622b8c97c30389a0be50c4a9854ad $ 
+# $FreeBSD$ 
 # $NetBSD: UCS%TCVN5712-1.src,v 1.1 2006/11/13 15:16:30 tnozaki Exp $
 
 TYPE		ROWCOL

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a783735f4bf45ac94da7c5df86509dca22f0e94 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * RTC driver for Tegra SoCs.

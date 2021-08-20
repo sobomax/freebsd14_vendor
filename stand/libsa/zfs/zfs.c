@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 3393bcc45052274b5234daac642aee246c35346f $
+ *	$FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3393bcc45052274b5234daac642aee246c35346f $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone file reading package.

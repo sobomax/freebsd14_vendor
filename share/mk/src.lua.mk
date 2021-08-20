@@ -1,4 +1,4 @@
-# $FreeBSD: 215e12f01c626c3788a811658d1278b5a858dcff $
+# $FreeBSD$
 #
 # Lua helper file for FreeBSD /usr/src builds.
 #

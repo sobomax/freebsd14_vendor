@@ -1,4 +1,4 @@
-# $FreeBSD: ebf81aee8340149ab636c108ad9d70e49abf6dd2 $
+# $FreeBSD$
 
 SCRIPTS=	makeroot.sh
 MAN=		makeroot.8

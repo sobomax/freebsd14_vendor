@@ -1,7 +1,7 @@
 /*
  * dovend.c : Inserts all but the first few vendor options.
  *
- * $FreeBSD: cb0b4a0448c45b54b7f1e1bada93fb71275976c1 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

@@ -27,7 +27,7 @@
  *      Dave Airlie <airlied@linux.ie>
  *      Jesse Barnes <jesse.barnes@intel.com>
  *
- * $FreeBSD: c292752ca945c6388055940673a43c839236bd1b $
+ * $FreeBSD$
  */
 #ifndef DRM_FB_HELPER_H
 #define DRM_FB_HELPER_H

@@ -1,4 +1,4 @@
-# $FreeBSD: 689d613616e1143e4136e06da117c405fdab545e $
+# $FreeBSD$
 
 PROG=	reflect
 MAN=

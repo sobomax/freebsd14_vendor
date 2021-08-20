@@ -30,7 +30,7 @@
 #define BXE_STATS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63e98c4159b11b8273977c5fd56ca1ea25b627e9 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 5caff7117f02f6c788da25e302fdf7cb1a84db95 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/concat
 

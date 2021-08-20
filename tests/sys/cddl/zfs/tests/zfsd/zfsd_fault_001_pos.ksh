@@ -24,7 +24,7 @@
 # Copyright (c) 2012,2013 Spectra Logic Corporation.  All rights reserved.
 # Use is subject to license terms.
 # 
-# $FreeBSD: 5dfc8e9a9d183fabb2ccce924a151007f311e2eb $
+# $FreeBSD$
 
 . $STF_SUITE/include/libtest.kshlib
 

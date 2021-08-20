@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: dfe470fb241734cc96cafd4083864f45a8d18fda $
+ * $FreeBSD$
  */
 
 #ifndef _I386_PCB_H_

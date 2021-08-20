@@ -1,4 +1,4 @@
-/* $FreeBSD: 5e007d18e35ce91c07084637f8f22f04636734a5 $ */
+/* $FreeBSD$ */
 
 #include "itbl-mips.h"
 

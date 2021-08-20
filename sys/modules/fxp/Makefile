@@ -1,4 +1,4 @@
-# $FreeBSD: 6a47028f8822b9c4f7ba83df97da8241525af605 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/fxp
 

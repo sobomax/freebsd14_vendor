@@ -1,4 +1,4 @@
-# $FreeBSD: ff579ba3289ec14159844d5e8561ab14cccc4684 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/mountver
 

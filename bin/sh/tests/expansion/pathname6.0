@@ -1,4 +1,4 @@
-# $FreeBSD: dc425ce64950bafcfa0e3bb59d36d79974757352 $
+# $FreeBSD$
 
 unset LC_ALL
 LC_COLLATE=en_US.US-ASCII

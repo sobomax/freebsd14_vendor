@@ -30,7 +30,7 @@
  * Dummynet portions related to packet handling.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f14532ce9af0785bc82502523887e047fa2fa96d $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet6.h"
 

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c57d5a459f5fd2dacaf7e9f48cfa40dbbcaad5a5 $
+ * $FreeBSD$
  */
 #ifndef _IPS_H
 #define _IPS_H

@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52caa37d3b619291b1fffea4e1cd01f3cd1479f2 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for Altima AC101 10/100 PHY

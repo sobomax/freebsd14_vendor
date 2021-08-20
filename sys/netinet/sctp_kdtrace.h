@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b4d349537b9534d480a27190ef85f7c4a46b06c $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_KDTRACE_H_
 #define _NETINET_SCTP_KDTRACE_H_

@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 524d958329c7050d3ebf081cfbe2514158bf6b1b $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 524d958329c7050d3ebf081cfbe2514158bf6b1b $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_isa.h"

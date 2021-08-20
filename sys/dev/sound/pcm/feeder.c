@@ -35,7 +35,7 @@
 
 #include "feeder_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 7b15c00c4170914598d67ee7a3ee9bf4154fb037 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static MALLOC_DEFINE(M_FEEDER, "feeder", "pcm feeder");
 

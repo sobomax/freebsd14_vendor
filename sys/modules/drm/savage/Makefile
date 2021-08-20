@@ -1,4 +1,4 @@
-# $FreeBSD: f2142a8fbc6447554015d37b8b8853e003ba9985 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD= 	savage

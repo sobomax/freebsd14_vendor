@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2566f7f73c161a32a3aa167a1c668eb9270df5a7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Microsemi / Vitesse VSC8501 (and similar).

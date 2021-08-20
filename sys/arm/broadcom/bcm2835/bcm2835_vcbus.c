@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7e5033f032c499081de7d32603edc98d968196ad $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7e5033f032c499081de7d32603edc98d968196ad $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file contains facilities for runtime determination of address space

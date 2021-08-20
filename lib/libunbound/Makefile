@@ -1,4 +1,4 @@
-# $FreeBSD: fff53feed15bd6aa17648b5df2e3f2af27656153 $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 # Vendor sources and generated files

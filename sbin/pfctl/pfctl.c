@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e00bf2462a6c3609da43b5f6cf75b468387b93e $");
+__FBSDID("$FreeBSD$");
 
 #define PFIOC_USE_LATEST
 

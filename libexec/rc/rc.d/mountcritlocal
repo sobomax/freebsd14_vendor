@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: f52c565d65c6e0e1b0c8439e4e2809ba8dde3532 $
+# $FreeBSD$
 #
 
 # PROVIDE: mountcritlocal

@@ -1,4 +1,4 @@
-# $FreeBSD: 0f4eb70e67aa5f1460587d72083d212790cf465c $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/shared
 

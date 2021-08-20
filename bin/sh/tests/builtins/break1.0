@@ -1,4 +1,4 @@
-# $FreeBSD: ba0cbb4bd2689fcd71019f1f8df2bb27cb029be4 $
+# $FreeBSD$
 
 if [ "$1" != nested ]; then
 	while :; do

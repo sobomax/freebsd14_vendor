@@ -33,7 +33,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40ba160205ac99572940abba9f7450f5f0706834 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mfi.h"
 

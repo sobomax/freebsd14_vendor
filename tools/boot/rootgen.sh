@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: 9156ecbe297ad32cfb9a5d9198dede7072223c7c $
+# $FreeBSD$
 
 passphrase=passphrase
 iterations=50000

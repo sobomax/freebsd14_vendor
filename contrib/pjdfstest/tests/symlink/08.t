@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 001fffc9c5c37915553e752057881e49f3765e9b $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/symlink/08.t 211474 2010-08-18 22:06:43Z pjd $
 
 desc="symlink returns EEXIST if the name2 argument already exists"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: fe6e8ed33daa802ad4354bb3575f0c630434027f $ */
+/* $FreeBSD$ */
 
 #include <sys/socket.h>
 #include <sys/select.h>

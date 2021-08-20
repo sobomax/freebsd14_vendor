@@ -20,7 +20,7 @@ along with GCC; see the file COPYING.  If not, write to the Free
 Software Foundation, 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301, USA.  */
 
-/* $FreeBSD: 7d6b603a372174578c3937db17fd599fae0b0bcf $ */
+/* $FreeBSD$ */
 /* Merged C99 inline changes from gcc trunk 122565 2007-03-05 */
 
 #include "config.h"

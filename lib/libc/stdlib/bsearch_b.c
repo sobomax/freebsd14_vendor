@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 393feba946eaffd83713cfbcf2c6401370a77c5d $
+ * $FreeBSD$
  */
 #define I_AM_BSEARCH_B
 #include "bsearch.c"

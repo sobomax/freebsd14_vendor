@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e5277d935f0258dc9104443049bc9fd3be3def9 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _STANDALONE
 /* Avoid unwanted userlandish components */

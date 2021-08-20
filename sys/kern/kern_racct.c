@@ -28,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d1ec1db880d42f87539e93018ca9fb17dc174766 $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1ec1db880d42f87539e93018ca9fb17dc174766 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sched.h"
 

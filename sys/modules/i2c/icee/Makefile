@@ -1,4 +1,4 @@
-# $FreeBSD: e9d12fd9a36ac367078685b73ba739696bb83035 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/iicbus
 KMOD=	icee

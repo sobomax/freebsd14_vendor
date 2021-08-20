@@ -1,5 +1,5 @@
 #
-# $FreeBSD: c0291e7072ebec0cfe72129c52389f28fbe9dbed $
+# $FreeBSD$
 #
 
 PROG=	ipmulticast

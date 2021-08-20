@@ -1,4 +1,4 @@
-/*	$FreeBSD: 9314ff3c1459ac42122a39908b03e7e55ca813f5 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: bf_locl.h,v 1.6 2001/09/10 04:03:56 itojun Exp $	*/
 
 /* crypto/bf/bf_local.h */

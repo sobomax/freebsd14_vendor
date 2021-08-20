@@ -1,4 +1,4 @@
-# $FreeBSD: a9d5d4f94e843e38d3156094f9fe9f6c3ae594ab $
+# $FreeBSD$
 
 PROG_CXX=	llvm-dwp
 MAN=

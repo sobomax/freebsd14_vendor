@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 147cc3b091bf772e588a691ab335a1259bc61e29 $
+# $FreeBSD$
 
 if devinfo | grep -q acpi_acad0; then
   echo "laptop: YES"

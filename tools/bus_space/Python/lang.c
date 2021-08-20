@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0fde8fc1bb62b764c6be26646f347d70d7e4371b $");
+__FBSDID("$FreeBSD$");
 
 #include <Python.h>
 

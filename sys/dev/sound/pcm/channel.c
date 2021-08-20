@@ -40,7 +40,7 @@
 
 #include "feeder_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: ecf89df4c9a27a1cddabe277cdfe5610a94633f7 $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 int report_soft_formats = 1;
 SYSCTL_INT(_hw_snd, OID_AUTO, report_soft_formats, CTLFLAG_RW,

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mbuf.h	8.5 (Berkeley) 2/19/95
- * $FreeBSD: e2539faed3e09e3c5afa78e4e67d466c88dbdc3b $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MBUF_H_

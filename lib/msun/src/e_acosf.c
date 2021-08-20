@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9f62cc40f5cc92b9fd77704fb7d49c446cd1fed $");
+__FBSDID("$FreeBSD$");
 
 #include "math.h"
 #include "math_private.h"

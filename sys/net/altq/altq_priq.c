@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_priq.c,v 1.11 2003/09/17 14:23:25 kjc Exp $
- * $FreeBSD: 9e2c67064cd13706521674051c1a55639c82f186 $
+ * $FreeBSD$
  */
 /*
  * priority queue

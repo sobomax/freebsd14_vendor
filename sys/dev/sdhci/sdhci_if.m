@@ -50,7 +50,7 @@
 # or the SD Card Association to disclose or distribute any technical
 # information, know-how or other confidential information to any third party.
 #
-# $FreeBSD: b70f04c8d37bcca793cd52c22c3b0ab0f9a75a37 $
+# $FreeBSD$
 #
 
 #

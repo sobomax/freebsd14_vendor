@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: 449e1ec718e3d7768fa9228d26fd89a8e26e6bb8 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __IOAT_H__
 #define __IOAT_H__

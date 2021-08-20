@@ -1,4 +1,4 @@
-# $FreeBSD: 3dc784f7eb63c593f1384242a6f964289b1a61e2 $
+# $FreeBSD$
 
 PJDFSTEST_SRCDIR=	${.CURDIR:H:H:H:H:H}/contrib/pjdfstest
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: dcd358f231929a780383f792dc81273327020338 $
+# $FreeBSD$
 
 PROG=	unifdef
 SCRIPTS=unifdefall.sh

@@ -28,7 +28,7 @@
  * Bridge MIB implementation for SNMPd.
  * Bridge pfil controls.
  *
- * $FreeBSD: 650b16ff77145995dba2ce84916b2438977d78b7 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

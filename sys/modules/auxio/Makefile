@@ -1,4 +1,4 @@
-# $FreeBSD: f46f438accc553d9bd58e6a62a9052550e2295c8 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/auxio
 

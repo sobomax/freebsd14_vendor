@@ -1,4 +1,4 @@
-# $FreeBSD: bce47fdb9d1a913d9c0716f465f4cc6b6944bbe0 $ 
+# $FreeBSD$ 
 # $NetBSD: ISO-2022-JP-2004.src,v 1.1 2007/03/05 16:58:35 tnozaki Exp $
 
 NAME		"ISO-2022-JP-2004"

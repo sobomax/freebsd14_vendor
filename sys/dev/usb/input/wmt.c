@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fae622b6039176f2da9d318afff1b6314ad219b1 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MS Windows 7/8/10 compatible USB HID Multi-touch Device driver.

@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 6e450025897a91a0bec6c5582921f644d7537ea7 $
+ * $FreeBSD$
  */
 
 #define	IBCS2_XENIX_xenix_rdchk	7

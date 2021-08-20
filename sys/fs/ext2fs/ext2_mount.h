@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufsmount.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD: 59478cca10a15733228830f7c7d0345228b9ba9b $
+ * $FreeBSD$
  */
 
 #ifndef _FS_EXT2FS_EXT2_MOUNT_H_

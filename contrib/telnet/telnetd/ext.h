@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ext.h	8.2 (Berkeley) 12/15/93
- * $FreeBSD: 795025d948387147a1cb9c4dcc50fd0e1f614adc $
+ * $FreeBSD$
  */
 
 #ifndef EXTERN

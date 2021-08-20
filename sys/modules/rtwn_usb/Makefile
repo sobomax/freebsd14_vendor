@@ -1,4 +1,4 @@
-# $FreeBSD: 798c3dc129a53158405a192efd31937066edcbc5 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/rtwn/usb
 

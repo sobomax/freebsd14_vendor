@@ -1,7 +1,7 @@
 /*
  * Memory range attribute operations, performed on /dev/mem
  *
- * $FreeBSD: 6d6ff0ecc9c6f537547c4bc2edb567a415683b21 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MEMRANGE_H_

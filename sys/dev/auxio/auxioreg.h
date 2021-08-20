@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3f93cf40635e33cfd1e233a85c58446ac15baf75 $ */
+/*	$FreeBSD$ */
 /*	$NetBSD: auxioreg.h,v 1.4 2001/10/22 07:31:41 mrg Exp $	*/
 
 /*-

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 03751d3c84b58f81a784fe39428fcd9b25bb2831 $
+# $FreeBSD$
 #
 
 # PROVIDE: ubthidhci

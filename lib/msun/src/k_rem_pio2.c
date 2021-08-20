@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8af97ebdc52536a17790b04489a20b67908c26b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * __kernel_rem_pio2(x,y,e0,nx,prec)

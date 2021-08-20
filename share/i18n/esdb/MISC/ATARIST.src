@@ -1,4 +1,4 @@
-# $FreeBSD: 2615fe9345de030668a714c811fd708e95d23a1c $ 
+# $FreeBSD$ 
 # $NetBSD: ATARIST.src,v 1.1 2006/10/19 14:45:02 tnozaki Exp $
 
 NAME		"ATARIST"

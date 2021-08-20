@@ -35,7 +35,7 @@
  *
  *	@(#)nlist.h	8.2 (Berkeley) 1/21/94
  *
- * $FreeBSD: 0e1fa284de1e3e700b361be4c7377e03f5c71be1 $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_NLIST_AOUT_H_

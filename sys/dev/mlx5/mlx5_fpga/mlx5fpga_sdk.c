@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 2d8aa07fd5907374f0b3154ebf6bbc0d087a98cb $
+ * $FreeBSD$
  */
 
 #include <linux/errno.h>

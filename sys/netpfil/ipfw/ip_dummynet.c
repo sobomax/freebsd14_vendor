@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab2c0cdfcd059172eb2e0d80fe7c06bc2a9f4091 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Configuration and internal object management for dummynet.

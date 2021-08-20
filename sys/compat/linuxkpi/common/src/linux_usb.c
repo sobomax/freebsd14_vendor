@@ -1,4 +1,4 @@
-/* $FreeBSD: abef31e20a071e3a1a5029dcd5d5559f4caa5cd7 $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2007 Luigi Rizzo - Universita` di Pisa. All rights reserved.
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.

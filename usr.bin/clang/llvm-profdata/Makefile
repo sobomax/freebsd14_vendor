@@ -1,4 +1,4 @@
-# $FreeBSD: 77e6d78e35e9ed64132b7f620dd03ff098cf58d1 $
+# $FreeBSD$
 
 PROG_CXX=	llvm-profdata
 

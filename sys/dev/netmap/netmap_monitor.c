@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: f30abcc4b39a62756ab833bc39d980ae5eed26eb $
+ * $FreeBSD$
  *
  * Monitors
  *

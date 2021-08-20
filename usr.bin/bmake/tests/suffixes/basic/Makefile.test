@@ -1,4 +1,4 @@
-# $FreeBSD: 45d9130eed977d67e967656f3795f7ee257bb600 $
+# $FreeBSD$
 #
 # Check that a simple suffix rule is correctly processed.
 

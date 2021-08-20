@@ -1,4 +1,4 @@
-# $FreeBSD: 5a37f7c25851c47e206b79db33ab8817a3891e5b $
+# $FreeBSD$
 
 SHLIBDIR?=	/lib/casper
 

@@ -1,4 +1,4 @@
-$FreeBSD: 559348de803dc37b5ec4e330a6362ad02874bae9 $
+$FreeBSD$
 
 This is an implementation of the frag attack described in:
 http://tapir.cs.ucl.ac.uk/bittau-wep.pdf

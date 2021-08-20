@@ -1,4 +1,4 @@
-# $FreeBSD: fc7451191586194ca2f58e8433b7266405a2109f $
+# $FreeBSD$
 
 set -e
 {

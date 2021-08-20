@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: eb763c1a7021e1151f9eabbed0d08d747d1693a7 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Verify our ability to read sample files compatibly with 'lz4 -d'.

@@ -1,4 +1,4 @@
-# $FreeBSD: 8bee4c85624e03b697bb8cd00bf3c866fbbc0729 $
+# $FreeBSD$
 
 FILES=	FREEBSD-MIB.txt
 FILESDIR=	${SHAREDIR}/snmp/mibs

@@ -1,4 +1,4 @@
-/* $FreeBSD: cdac8f7372332e20f2ec5c971238e6487d288e5f $ */
+/* $FreeBSD$ */
 
 #define	VALGRIND_MAKE_MEM_DEFINED(...)	0
 

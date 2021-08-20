@@ -1,4 +1,4 @@
-/*	$FreeBSD: d4aa375024d7a29bb1c11ac926b2d4d79eb030f9 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: sk.h,v 1.4 2001/09/10 04:03:58 itojun Exp $	*/
 
 /* crypto/des/sk.h */

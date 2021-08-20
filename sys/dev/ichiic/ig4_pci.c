@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 872cb617ae02e507a576776d9fb23e11704ed3d3 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Intel fourth generation mobile cpus integrated I2C device.

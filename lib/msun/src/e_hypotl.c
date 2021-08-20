@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9189b1fab54d9c507d954180334375578acea176 $");
+__FBSDID("$FreeBSD$");
 
 /* long double version of hypot().  See e_hypot.c for most comments. */
 

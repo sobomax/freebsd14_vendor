@@ -32,7 +32,7 @@
  * CHARMAP file handling for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cfa05ef8152c46f8666af59a796140715935a1bc $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/tree.h>

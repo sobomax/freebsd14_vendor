@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c767250954da0a937e95e0de7075028da710af62 $");
+__FBSDID("$FreeBSD$");
 
 /* Generic x86 routines to handle delay */
 

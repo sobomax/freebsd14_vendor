@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c2f0becd42fef7780fe06aaf985aca8da8580a09 $
+ * $FreeBSD$
  */
 
 #ifndef __PCFVAR_H__

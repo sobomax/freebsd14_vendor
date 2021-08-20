@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e742812824df11a26ab3890a9b592ef6a3a496c9 $");
+__FBSDID("$FreeBSD$");
 /*
  * AMD Geode LX CS5536 System Management Bus controller.
  *

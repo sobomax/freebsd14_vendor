@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5e119cabc7e9502adc0ff00534e75cb8ed190e38 $
+ * $FreeBSD$
  */
 
 struct uc_cfg {

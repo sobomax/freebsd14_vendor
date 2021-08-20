@@ -1,4 +1,4 @@
-# $FreeBSD: bf8604dcabc35d4f3476a89a0d8993bf137bd320 $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/geom
 

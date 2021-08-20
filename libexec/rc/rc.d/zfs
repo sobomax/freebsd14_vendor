@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 2d35f9b54642e3d81d777e3a537d8b2372903e8d $
+# $FreeBSD$
 #
 
 # PROVIDE: zfs

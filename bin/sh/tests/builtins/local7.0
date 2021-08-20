@@ -1,4 +1,4 @@
-# $FreeBSD: f7e6fc0aae97a4a387b666365d9dd65e4c6a1a20 $
+# $FreeBSD$
 
 f() {
 	local x

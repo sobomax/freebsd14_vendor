@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 948ed705d1a3e42d9c51b3add6de959494e05a4f $
+# $FreeBSD$
 
 # Script which creates a gzipped log and optionally mails it to the specified address
 ############################################################################

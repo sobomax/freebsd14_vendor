@@ -1,4 +1,4 @@
-# $FreeBSD: dab729d159e4eb521dfef585cc2a24a648fd1eff $
+# $FreeBSD$
 
 BINDIR=	/usr/sbin
 

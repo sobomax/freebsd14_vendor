@@ -1,5 +1,5 @@
 #
-# $FreeBSD: eafb5d29afecb2a632eee24bcf959ee016176dd5 $
+# $FreeBSD$
 #
 
 .PATH:	${SRCTOP}/sys/dev/gpio/

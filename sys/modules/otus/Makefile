@@ -1,4 +1,4 @@
-# $FreeBSD: 56c37b239d48af6540798f41076061a1e0fc163f $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/otus
 

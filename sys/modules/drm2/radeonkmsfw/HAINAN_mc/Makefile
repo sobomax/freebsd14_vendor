@@ -1,4 +1,4 @@
-# $FreeBSD: 54727af4244f2ef192d390a4584763d1ca3ff7a5 $
+# $FreeBSD$
 
 KMOD=	radeonkmsfw_HAINAN_mc
 IMG=	HAINAN_mc

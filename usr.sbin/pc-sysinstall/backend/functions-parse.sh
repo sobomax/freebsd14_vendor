@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d661a8001aadc7e9ff3716802e7e3d11243cf37f $
+# $FreeBSD$
 
 # functions.sh
 # Library of functions which pc-sysinstall may call upon for parsing the config

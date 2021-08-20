@@ -1,4 +1,4 @@
-/* $FreeBSD: 3edef4a2c37c70289649d414d14dde56a9d43530 $ */
+/* $FreeBSD$ */
 OUTPUT_ARCH(riscv)
 ENTRY(_start)
 

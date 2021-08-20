@@ -1,4 +1,4 @@
-/*	$FreeBSD: defb766f716967f4a29e13a5d9a031c68c83687d $							*/
+/*	$FreeBSD$							*/
 /*      $OpenBSD: pathnames.h,v 1.1 2003/09/25 19:32:44 otto Exp $	*/
 
 /*

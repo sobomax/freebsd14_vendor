@@ -1,4 +1,4 @@
-# $FreeBSD: c2d803ddc1abf3944233e2f83703a2a0fc7a72d1 $
+# $FreeBSD$
 
 # Options used when building app-specific efi components
 # See conf/kern.mk for the correct set of these

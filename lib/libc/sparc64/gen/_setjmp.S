@@ -40,7 +40,7 @@
 #endif
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: cff9bd08871fa6e9cdd19a623a88c2c87205d6d9 $");
+__FBSDID("$FreeBSD$");
 
 #include "assym.s"
 

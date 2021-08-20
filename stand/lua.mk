@@ -1,4 +1,4 @@
-# $FreeBSD: 711d95e48ba04e08ec6e1560ba2fd272a97c66b9 $
+# $FreeBSD$
 
 # Common flags to build lua related files
 

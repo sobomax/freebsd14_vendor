@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8195530cbbdc23410d6eae19cb422bbc478f34d3 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ffclock.h"
 

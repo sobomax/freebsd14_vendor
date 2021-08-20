@@ -1,11 +1,11 @@
-/*	$FreeBSD: 81e166a6bee5ab6e8aa24d55b2d2fc4e43340526 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
  *
- * $FreeBSD: 81e166a6bee5ab6e8aa24d55b2d2fc4e43340526 $
+ * $FreeBSD$
  * Id: ip_auth.h,v 2.16.2.2 2006/03/16 06:45:49 darrenr Exp $
  *
  */

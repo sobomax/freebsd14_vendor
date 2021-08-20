@@ -24,7 +24,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 # -------+---------+---------+-------- + --------+---------+---------+---------+
-# $FreeBSD: b43ddd3b6aa4611fd0d70f46b612426bac7638fa $
+# $FreeBSD$
 # -------+---------+---------+-------- + --------+---------+---------+---------+
 #   This script was written to provide a battery of regression-tests for some
 # changes I am making to the `env' command.  I wrote a new script for this

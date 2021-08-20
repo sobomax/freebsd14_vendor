@@ -1,4 +1,4 @@
-# $FreeBSD: 709744f49651fe026178f417b7322f6320c28730 $
+# $FreeBSD$
 
 CAL_BIN="ncal"
 CAL="${CAL_BIN} -C"

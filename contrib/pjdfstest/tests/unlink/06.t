@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: f04e7d2b6f08ac5c88e4987eb81972442fd9be20 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/06.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="unlink returns EACCES when write permission is denied on the directory containing the link to be removed"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 93967c7051753eeb42bdb9a569c69aa6a4344336 $
+# $FreeBSD$
 
 NETBSD_ATF_TESTS_SH=		nonexistent_test
 

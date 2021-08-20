@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 808771cb1e62972aeecd0d44a701c95d0f378ef8 $*/
+/*$FreeBSD$*/
 
 
 #include "opt_inet.h"

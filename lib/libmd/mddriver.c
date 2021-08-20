@@ -12,7 +12,7 @@
  * documentation and/or software. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c543974668d860f7f6283ab28e1df412b5abbf6 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

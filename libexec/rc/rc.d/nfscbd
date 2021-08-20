@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: e8a3747b0fa7fb6b418ccbf625334406970a0033 $
+# $FreeBSD$
 #
 
 # PROVIDE: nfscbd

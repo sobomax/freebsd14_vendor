@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 6a02239eca5c96bfc1b3f186f1cd4661041bab09 $*/
+/*$FreeBSD$*/
 
 #include "ice_common.h"
 #include "ice_flex_pipe.h"

@@ -1,2 +1,2 @@
-.\" $FreeBSD: 0ba78e2fffc3f2b1fac6279760f93f73c168ca77 $
+.\" $FreeBSD$
 Set to not build the boot blocks and loader.

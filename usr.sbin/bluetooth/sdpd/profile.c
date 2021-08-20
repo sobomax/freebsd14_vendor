@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: profile.c,v 1.6 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: cef9a03ceea6c28a596030d12f2430e4abe83630 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

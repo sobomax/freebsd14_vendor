@@ -1,4 +1,4 @@
-# $FreeBSD: e0101ce674eb74d032cf6df006b5a2d4de8ccdc5 $
+# $FreeBSD$
 
 PROG_CXX=	llvm-mc
 MAN=

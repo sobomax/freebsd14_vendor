@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 0d9e78aa02dc802b9d0dd40944bdd3ab9970b297 $
+-- $FreeBSD$
 --
 
 local hook = require("hook")

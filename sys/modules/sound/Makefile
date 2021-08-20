@@ -1,4 +1,4 @@
-# $FreeBSD: d6867331eb674252f04d2fd6135dcbc1fe7a3221 $
+# $FreeBSD$
 
 SUBDIR =
 SUBDIR += sound

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 4d337282eadefebb43e6774c863a7e576bd47f3a $
+# $FreeBSD$
 #
 
 PROG=	accf_data_attach

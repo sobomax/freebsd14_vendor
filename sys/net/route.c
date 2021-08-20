@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.c	8.3.1.1 (Berkeley) 2/23/95
- * $FreeBSD: 8062c8ee486a2f194486a8a0e5b329b4cb06b2bf $
+ * $FreeBSD$
  */
 /************************************************************************
  * Note: In this file a 'fib' is a "forwarding information base"	*

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c1f99bcfcf742f27409d3afb6e27139baba1ac3d $
+# $FreeBSD$
 
 # Need access to a some unmount functions
 . ${PROGDIR}/backend/functions-unmount.sh

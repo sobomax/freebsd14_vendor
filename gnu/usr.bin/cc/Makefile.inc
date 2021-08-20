@@ -1,4 +1,4 @@
-# $FreeBSD: 1af7d46fa7778f0ffd120debe2c12eee412d65a0 $
+# $FreeBSD$
 
 .include <src.opts.mk>
 .include "../Makefile.inc"

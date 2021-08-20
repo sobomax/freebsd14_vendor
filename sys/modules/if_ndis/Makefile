@@ -1,4 +1,4 @@
-# $FreeBSD: ced1a4fb332c099f2174d89e72ac3c6b733a1903 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/if_ndis
 

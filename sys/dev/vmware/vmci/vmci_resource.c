@@ -7,7 +7,7 @@
 /* Implementation of the VMCI Resource Access Control API. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 060484f5a1d5e27048653186b8336100ff0bdba8 $");
+__FBSDID("$FreeBSD$");
 
 #include "vmci_driver.h"
 #include "vmci_kernel_defs.h"

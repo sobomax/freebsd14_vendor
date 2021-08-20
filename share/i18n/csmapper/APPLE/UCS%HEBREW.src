@@ -1,4 +1,4 @@
-# $FreeBSD: 8d529d7d44f3fe91db6f6e517498b64a2e8cdce2 $
+# $FreeBSD$
 
 TYPE		ROWCOL
 NAME		UCS/HEBREW

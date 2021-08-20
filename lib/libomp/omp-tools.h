@@ -1,4 +1,4 @@
-// $FreeBSD: 8df198507639fd8cf8e471046700e002b0243838 $
+// $FreeBSD$
 /*
  * include/omp-tools.h.var
  */

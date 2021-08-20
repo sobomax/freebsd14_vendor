@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: edf259bac57e82de8b85663849e9d00415b7e1b0 $
+# $FreeBSD$
 #
 
 # PROVIDE: zfsd

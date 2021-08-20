@@ -1,7 +1,7 @@
 /*
  * Holiday
  *
- * $FreeBSD: a5e5dda4dfd41c982dab8809f3fe3a3b16b8af49 $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_holiday_

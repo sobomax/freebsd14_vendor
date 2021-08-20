@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35ceef8d66a566a81903e26b5b5d994e40828c1c $");
+__FBSDID("$FreeBSD$");
 
 #define _IIR_C_
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 9137cc7a45ff1ec40aceb39189850a3e38a3c4e3 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/open/03.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="open returns ENAMETOOLONG if an entire path name exceeded ${PATH_MAX} characters"
 

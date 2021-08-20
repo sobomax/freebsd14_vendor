@@ -1,4 +1,4 @@
-/* $FreeBSD: 1033c3fe8867633bb3eca037609b909173a26b88 $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_db_hash.c,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-

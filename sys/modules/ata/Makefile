@@ -1,4 +1,4 @@
-# $FreeBSD: 21d853325824a2de9a8c0ea3c03f8d02ceb55fb5 $
+# $FreeBSD$
 
 SUBDIR = atacore
 SUBDIR += atacard

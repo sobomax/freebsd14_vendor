@@ -1,4 +1,4 @@
-# $FreeBSD: 610c605c1bd55485cbe663b55a56243d78c15af1 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/stg
 

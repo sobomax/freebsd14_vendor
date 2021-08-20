@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6f777fde3df525f9e83978246391c3da16313683 $
+ * $FreeBSD$
  */
 
 #ifndef __alignas_is_defined

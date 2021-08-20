@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)floatio.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 00af7eaba5612b35d00fa025c8c63be4b5e16058 $
+ * $FreeBSD$
  */
 
 /*

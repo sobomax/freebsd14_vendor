@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 82a06b3795c58e65f9cd4b92933a15719c4f0133 $ */
+/* $FreeBSD$ */
 
 #ifndef _ARM_INCLUDE_BOARD_H_
 #define _ARM_INCLUDE_BOARD_H_

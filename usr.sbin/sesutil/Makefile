@@ -1,4 +1,4 @@
-# $FreeBSD: fc39434a37040caeccb57927207a00d385d5d944 $
+# $FreeBSD$
 
 PROG=	sesutil
 SRCS=	sesutil.c eltsub.c

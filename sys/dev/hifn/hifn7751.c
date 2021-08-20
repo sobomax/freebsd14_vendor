@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1a7ea52c257d0fdb6937c3e55ee0aae13a54661 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for various Hifn encryption processors.

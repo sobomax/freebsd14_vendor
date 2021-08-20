@@ -35,7 +35,7 @@
 
 #include <dev/sound/pcm/sound.h>
 
-SND_DECLARE_FILE("$FreeBSD: b79c4fc1c3377c0a45547410eca6e4f569734d6e $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 /* board-specific include files */
 #include <dev/sound/isa/mss.h>

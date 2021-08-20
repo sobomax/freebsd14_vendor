@@ -1,4 +1,4 @@
-# $FreeBSD: f60529fa9ef0b6dcc88824764c00856a6b61d9a8 $
+# $FreeBSD$
 
 LIB=	fifolog
 INTERNALLIB=	# API not published or supported.

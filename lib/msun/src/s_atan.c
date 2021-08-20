@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 566f5dc7b99b4cd8c99b4ffdf033ce5802cb03ae $");
+__FBSDID("$FreeBSD$");
 
 /* atan(x)
  * Method

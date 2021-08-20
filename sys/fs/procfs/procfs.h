@@ -35,7 +35,7 @@
  *	@(#)procfs.h	8.9 (Berkeley) 5/14/95
  *
  * From:
- * $FreeBSD: bafcfab41aa0f4da87af7a1fc777df7cffcf153c $
+ * $FreeBSD$
  */
 
 #ifdef _KERNEL

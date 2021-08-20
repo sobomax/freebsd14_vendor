@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: f5affe14bd50f2a71c7720c076ce9ec5a601deb5 $
+ * $FreeBSD$
  */
 
 #include <sys/errno.h>

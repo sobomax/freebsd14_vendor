@@ -1,4 +1,4 @@
-# $FreeBSD: 45b12b7bb75d5c968223aa1c515fb9623eae9b50 $
+# $FreeBSD$
 
 PLAIN_TESTS_SH=
 .for test in	always_test \

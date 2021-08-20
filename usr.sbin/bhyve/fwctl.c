@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0640bc28ba2b49aecd23daead7c9f96bc7f30acd $
+ * $FreeBSD$
  */
 
 /*
@@ -33,7 +33,7 @@
  * but with a request/response messaging protocol.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0640bc28ba2b49aecd23daead7c9f96bc7f30acd $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>

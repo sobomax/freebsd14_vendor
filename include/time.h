@@ -37,7 +37,7 @@
  */
 
 /*
- * $FreeBSD: 2a9bcb6a11079402753a8b09ef83705388c089aa $
+ * $FreeBSD$
  */
 
 #ifndef _TIME_H_

@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)pac.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: 7713096da64127078729406574ba3b649a2cd0fb $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Do Printer accounting summary.

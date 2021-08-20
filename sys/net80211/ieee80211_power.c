@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75d2dbea92ce235f0d34daba5fa01e3807b3de2c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IEEE 802.11 power save support.

@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 6b32abedd9b2b95ba271c67eb9c5c36e66343b37 $ */
+/* $FreeBSD$ */
 
 /*
  * Driver for the Microsemi Smart storage controllers

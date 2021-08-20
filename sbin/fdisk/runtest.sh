@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: f25f4272bb0feea24822823d5a9822b621865b08 $
+# $FreeBSD$
 
 set -e
 MD=`mdconfig -a -t malloc -s 4m -x 63 -y 16`

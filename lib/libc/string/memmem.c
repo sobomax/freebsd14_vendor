@@ -23,7 +23,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0a65a6a3f9105caf9d600094c4e0d776802ceb8 $");
+__FBSDID("$FreeBSD$");
 
 #include <string.h>
 #include <stdint.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 584783ddffe2a32b9b7a5af822679b8aa4df7e76 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/usb/storage
 KMOD=	cfumass

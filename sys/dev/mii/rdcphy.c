@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7fa8ced4fdbe3a382b1dbb27dab123c39cd58ee $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the RDC Semiconductor R6040 10/100 PHY.

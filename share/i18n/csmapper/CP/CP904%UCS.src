@@ -1,4 +1,4 @@
-# $FreeBSD: 262b831ece0e9a254003b9c8864fa14586798134 $
+# $FreeBSD$
 # $NetBSD: CP904%UCS.src,v 1.2 2003/07/12 16:11:04 tshiozak Exp $
 
 TYPE		ROWCOL

@@ -1,4 +1,4 @@
-# $FreeBSD: 54c6f912c29ca33d895e633664339e90c10a848e $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/fs/cd9660
 KMOD=	cd9660_iconv

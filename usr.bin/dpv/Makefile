@@ -1,4 +1,4 @@
-# $FreeBSD: 93a6cd10db5292141739a6e18dbb3f15bda13ab4 $
+# $FreeBSD$
 
 PROG=		dpv
 

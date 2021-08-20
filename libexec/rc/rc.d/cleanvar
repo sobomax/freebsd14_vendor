@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: fcfd365268c374e6314e9999dffc5e0a410ff686 $
+# $FreeBSD$
 #
 
 # PROVIDE: cleanvar

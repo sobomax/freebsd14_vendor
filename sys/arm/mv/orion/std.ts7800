@@ -1,4 +1,4 @@
-# $FreeBSD: 931da3a5f39d770c7e62c13deeccfe2e1cf429db $
+# $FreeBSD$
 
 include	"../mv/std.mv"
 files	"../mv/orion/files.ts7800"

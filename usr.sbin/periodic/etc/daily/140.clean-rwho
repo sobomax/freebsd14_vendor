@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 9645d7e60bf7913ecbe4aa575170a0eebd07315a $
+# $FreeBSD$
 #
 # Remove stale files in /var/rwho
 #

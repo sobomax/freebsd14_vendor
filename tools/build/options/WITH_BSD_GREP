@@ -1,2 +1,2 @@
-.\" $FreeBSD: e6641173e2d19a45acb8ee93641150a08e7e1cc9 $
+.\" $FreeBSD$
 Install BSD-licensed grep as '[ef]grep' instead of GNU grep.

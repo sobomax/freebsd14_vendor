@@ -1,7 +1,7 @@
 /*-
  * Test 0078:	Check boundary conditions (BPF_STX)
  *
- * $FreeBSD: ba830359be4993c995eacb2381657e53751d4b3b $
+ * $FreeBSD$
  */
 
 /* BPF program */

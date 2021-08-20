@@ -1,4 +1,4 @@
-# $FreeBSD: 888fe0e9702861d99a87b075249735cbd25f943f $
+# $FreeBSD$
 
 NO_OBJ=t
 

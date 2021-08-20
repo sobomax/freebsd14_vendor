@@ -1,4 +1,4 @@
-# $FreeBSD: 8ebd53f115c3ed6c5295687cefe75506cf8bd6f3 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/xe
 

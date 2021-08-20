@@ -1,5 +1,5 @@
 /*	$NetBSD: security.c,v 1.5 2000/06/08 09:01:05 fvdl Exp $	*/
-/*	$FreeBSD: 22cf0b26fa9cf1d75b0eb6b52b7449c42c870852 $ */
+/*	$FreeBSD$ */
 
 #include <sys/types.h>
 #include <sys/time.h>

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a83f51e351662cdfd5b35c00b2f43644736adb7c $
+ * $FreeBSD$
  */
 
 /* Tests for all things relating to extended attributes and FUSE */

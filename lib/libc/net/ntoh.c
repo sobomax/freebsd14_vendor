@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b2bf9edc1136e1a471d64230b969437406c206d $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #define _BYTEORDER_FUNC_DEFINED

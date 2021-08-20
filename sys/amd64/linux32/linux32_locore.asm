@@ -1,4 +1,4 @@
-/* $FreeBSD: 5862f0a0d6748a8a90852f0a1453704cc847f411 $ */
+/* $FreeBSD$ */
 
 #include "linux32_assym.h"			/* system definitions */
 #include <machine/asmacros.h>			/* miscellaneous asm macros */

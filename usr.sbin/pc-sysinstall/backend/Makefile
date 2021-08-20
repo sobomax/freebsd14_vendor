@@ -1,4 +1,4 @@
-# $FreeBSD: 3a7703a2d294053d17506d7439e35044a056ff89 $
+# $FreeBSD$
 
 FILES=	functions-bsdlabel.sh functions-cleanup.sh functions-disk.sh \
 	functions-extractimage.sh functions-ftp.sh functions-installcomponents.sh \

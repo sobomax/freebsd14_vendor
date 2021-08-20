@@ -1,4 +1,4 @@
-# $FreeBSD: 927771745785f820a9a0a4dd31b57866473ba173 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm2/radeon
 

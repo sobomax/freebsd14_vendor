@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 1cb785e5113fd212dd0087e7d8b57cf90ee8d5d2 $
+# $FreeBSD$
 
 name="$(mktemp -u mirror.XXXXXX)"
 class="mirror"

@@ -25,7 +25,7 @@
 #define SI_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eaf95fb5218c671748c76da69d213290b892abe7 $");
+__FBSDID("$FreeBSD$");
 
 #define TAHITI_RB_BITMAP_WIDTH_PER_SH  2
 

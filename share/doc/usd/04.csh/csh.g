@@ -27,7 +27,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)csh.g	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: d5aa32b63c08c933a98b6cde01a1e627d2172933 $
+.\" $FreeBSD$
 .\"
 .SH
 Glossary

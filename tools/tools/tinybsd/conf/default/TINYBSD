@@ -1,4 +1,4 @@
-# $FreeBSD: 6052764b3f814bf5be27f8eebcb1fb54f4a92067 $
+# $FreeBSD$
 
 machine		i386
 cpu		I486_CPU

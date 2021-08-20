@@ -1,4 +1,4 @@
-# $FreeBSD: edeb308c82d61a521fb839ce9416d4ddcfab6ff0 $
+# $FreeBSD$
 
 SHLIBDIR?= /lib
 

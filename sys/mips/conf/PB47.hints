@@ -1,5 +1,5 @@
 
-# $FreeBSD: 2bcdc77727b77280a184d5306735dc4c0de4e182 $
+# $FreeBSD$
 
 # There's two interfaces, but only one socket is populated.
 #

@@ -29,7 +29,7 @@
  * Abstract: Abstraction of a Text mode or GOP/UGA screen
  */
 
-/* $FreeBSD: 68be3d69f4fd39e318a6f87d3e57fc84faacf8c7 $ */
+/* $FreeBSD$ */
 
 #ifndef _EFI_CONS_CTL_H
 #define _EFI_CONS_CTL_H

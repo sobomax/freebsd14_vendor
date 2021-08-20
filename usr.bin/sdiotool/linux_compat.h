@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f9d8dd55132cdcc3a9b5ea54bc81f84c66cdfd5a $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9d8dd55132cdcc3a9b5ea54bc81f84c66cdfd5a $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _LINUX_COMPAT_H_
 #define _LINUX_COMPAT_H_

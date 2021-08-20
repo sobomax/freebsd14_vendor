@@ -1,4 +1,4 @@
-# $FreeBSD: 0ef23af6cb38b1fd4e8a34d2ce7e3fd219a384ce $
+# $FreeBSD$
 # Internet (IP) protocols
 ip	0	IP		# internet protocol, pseudo protocol number
 icmp	1	ICMP		# internet control message protocol

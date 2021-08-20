@@ -1,4 +1,4 @@
-/* $FreeBSD: 3792d6ca031b209b7bc8e71b3a2da32186854eb0 $ */
+/* $FreeBSD$ */
 
 OUTPUT_FORMAT("elf32-powerpc-freebsd", "elf32-powerpc-freebsd",
 	      "elf32-powerpc-freebsd")

@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: 77c5a4cb59672917c282fdbfb1f06096bc836303 $
+# $FreeBSD$
 
 SUBDIR= include libamu .WAIT \
 	amd amq fixmount fsinfo hlfsd mk-amd-map pawd \

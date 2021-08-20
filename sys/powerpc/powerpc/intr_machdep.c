@@ -59,7 +59,7 @@
  *	from: @(#)isa.c	7.2 (Berkeley) 5/13/91
  *	form: src/sys/i386/isa/intr_machdep.c,v 1.57 2001/07/20
  *
- * $FreeBSD: 4d56a8ac9324abd82226b0d69f8453ed7a62c28f $
+ * $FreeBSD$
  */
 
 #include "opt_isa.h"

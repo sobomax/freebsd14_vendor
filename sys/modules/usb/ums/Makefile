@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 17826e569e06e1c07fd22ff0db5f2145339bc49f $
+# $FreeBSD$
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #

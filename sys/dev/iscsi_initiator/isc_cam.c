@@ -30,7 +30,7 @@
  | $Id: isc_cam.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f967901152e3371810c97d97eed58a5d7428c81c $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_iscsi_initiator.h"
 

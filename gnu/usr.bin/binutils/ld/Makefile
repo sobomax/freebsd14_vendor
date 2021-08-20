@@ -1,4 +1,4 @@
-# $FreeBSD: b2ce9eececcecec439dd9909bed5d2015952bf85 $
+# $FreeBSD$
 
 ELF_SCR_EXT=	x xbn xc xd xdc xdw xn xr xs xsc xsw xu xw
 .include "../Makefile.inc0"

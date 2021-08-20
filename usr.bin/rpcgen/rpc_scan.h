@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: a57eb3bb1948adbae0591a95d8f6159168daee74 $
+ * $FreeBSD$
  */
 /*
  * Sun RPC is a product of Sun Microsystems, Inc. and is provided for

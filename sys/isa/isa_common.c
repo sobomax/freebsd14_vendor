@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 56fa0f2ba9873e772973ec560b79a4c28772ddd8 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_isa.h"
 

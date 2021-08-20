@@ -30,7 +30,7 @@
 #include "opt_ar531x.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e224a5e93053b350d79299d412a97636dc24a13 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d9d0a89931614153311a4996b02de16843f97f6b $
+# $FreeBSD$
 
 # The code for the following tests was copied from the
 # bectl tests found in src/sbin/bectl/tests, modified as needed.

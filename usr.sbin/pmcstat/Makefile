@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 0233ad48f8d98317f2c1c78ac8322eb3784e73dd $
+# $FreeBSD$
 #
 
 PROG_CXX=	pmcstat

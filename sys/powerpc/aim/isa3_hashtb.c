@@ -86,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4a87801f7315d39e286553caf14595696d2e527b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Native 64-bit page table operations for running without a hypervisor.

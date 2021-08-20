@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 #
-# $FreeBSD: 9350df09102c53ff02a92e47ff2c0773ade8f20c $
+# $FreeBSD$
 #
 # This script compares the file iso639 (from head/share/misc) with the file
 # ISO-639-2_8859-1.txt (from

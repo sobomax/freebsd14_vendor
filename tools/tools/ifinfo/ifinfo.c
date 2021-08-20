@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d4360d01b3a4b104c24b2e5976bc4455cbfbfad3 $
+ * $FreeBSD$
  */
 #include <sys/types.h>
 #include <sys/socket.h>		/* for PF_LINK */

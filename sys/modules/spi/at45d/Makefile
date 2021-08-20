@@ -1,4 +1,4 @@
-# $FreeBSD: 1fa3d289013771792a58cf0fe983c722461d6e5e $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/flash
 

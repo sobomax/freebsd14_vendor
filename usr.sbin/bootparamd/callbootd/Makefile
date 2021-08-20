@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.8 (Berkeley) 7/28/90
-# $FreeBSD: b9c984ffd5388946178c9dddba944753ca5126cb $
+# $FreeBSD$
 
 PROG=	callbootd
 MAN=

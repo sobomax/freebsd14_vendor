@@ -28,7 +28,7 @@
  *
  * Author: Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: 456f531b1224534590728c5aaaa9acc2efe22bc4 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

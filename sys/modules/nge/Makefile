@@ -1,4 +1,4 @@
-# $FreeBSD: 8bc37752115154c1304abb98203470d5f57c64be $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/nge
 

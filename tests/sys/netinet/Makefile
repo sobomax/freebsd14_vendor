@@ -1,4 +1,4 @@
-# $FreeBSD: c02698ba11ebc4fed711eba7d49389473bcaeeca $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/netinet
 BINDIR=		${TESTSDIR}

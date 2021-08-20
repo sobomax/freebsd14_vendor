@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69190fefa94b0343e458c017617c8a7b67ced996 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for generic unknown ten-bit interfaces(1000BASE-{LX,SX}

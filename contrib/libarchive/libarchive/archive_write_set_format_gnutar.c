@@ -27,7 +27,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: ec29c5c418e4e482cb32dbc0694d957704718bc5 $");
+__FBSDID("$FreeBSD: head/lib/libarchive/archive_write_set_format_gnu_tar.c 191579 2009-04-27 18:35:03Z gastal $");
 
 
 #ifdef HAVE_ERRNO_H

@@ -1,4 +1,4 @@
-/* $FreeBSD: ae6d5e2cb6bc774a2186764b6cc13b845560b351 $ */
+/* $FreeBSD$ */
 /*	$OpenBSD: ubsecvar.h,v 1.35 2002/09/24 18:33:26 jason Exp $	*/
 
 /*-

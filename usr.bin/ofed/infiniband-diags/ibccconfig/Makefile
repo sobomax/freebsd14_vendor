@@ -1,4 +1,4 @@
-# $FreeBSD: cfee9bf0eab836dd87ba25bc01906b3dd77734a4 $
+# $FreeBSD$
 
 PROG=	ibccconfig
 SRCS=	ibccconfig.c

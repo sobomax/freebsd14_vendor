@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)pause.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: f6650a73a710b36324c8d40ca889a50937de7e3e $");
+__FBSDID("$FreeBSD$");
 
 #include <signal.h>
 #include <unistd.h>

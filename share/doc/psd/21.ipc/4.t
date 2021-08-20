@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)4.t	8.1 (Berkeley) 6/8/93
-.\"	$FreeBSD: 15e8b4a40ab160659b36594a52706817df3a06f8 $
+.\"	$FreeBSD$
 .\"
 .\".ds RH "Client/Server Model
 .bp

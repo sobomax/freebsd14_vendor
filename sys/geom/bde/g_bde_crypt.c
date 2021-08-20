@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61015f480c7f470abe545ef5efaf69e89c7ef2fc $
+ * $FreeBSD$
  */
 /* This source file contains the functions responsible for the crypto, keying
  * and mapping operations on the I/O requests.

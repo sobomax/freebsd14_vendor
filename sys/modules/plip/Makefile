@@ -1,5 +1,5 @@
 
-# $FreeBSD: 0b214f3b32816036ff113b9da8f5dd968b5f1616 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/ppbus
 KMOD=	plip

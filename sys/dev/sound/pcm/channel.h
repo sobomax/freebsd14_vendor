@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 969b8dba27d836d03a8c8dae73ad8324fbd7998a $
+ * $FreeBSD$
  */
 
 struct pcmchan_caps {

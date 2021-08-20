@@ -1,2 +1,2 @@
-.\" $FreeBSD: c356a95e386e756b163fd950767012034c405051 $
+.\" $FreeBSD$
 Set to not build kernel modules that include sourceless microcode.

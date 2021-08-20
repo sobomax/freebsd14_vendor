@@ -1,6 +1,6 @@
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431bdaa2a74597f0a675e925d20548a0aed6de28 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __RADEON_IRQ_KMS_H__
 #define	__RADEON_IRQ_KMS_H__

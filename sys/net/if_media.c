@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4df6b8b55940d778d3018acfcf1794c00ca9fe3d $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ifmedia.h"
 

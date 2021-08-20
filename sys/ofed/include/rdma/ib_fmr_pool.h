@@ -32,7 +32,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 21ea90ce0f55b0a32efff7086df966ed45cdc21c $
+ * $FreeBSD$
  */
 
 #if !defined(IB_FMR_POOL_H)

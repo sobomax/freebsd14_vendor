@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 553487856d9f3e1cdc02e33883e8a6246f2909bc $*/
+/*$FreeBSD$*/
 
 
 #ifndef _FREEBSD_OS_H_

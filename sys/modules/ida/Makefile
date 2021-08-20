@@ -1,4 +1,4 @@
-# $FreeBSD: ff3391d7e17cdcc1f18e91e8795d3118ef352111 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/ida
 

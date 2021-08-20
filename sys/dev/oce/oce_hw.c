@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: 4aad51da5db64a74d4f2d16a4c95248527cc8d30 $ */
+/* $FreeBSD$ */
 
 
 #include "oce_if.h"

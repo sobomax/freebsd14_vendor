@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.3 (Berkeley) 2/4/95
-# $FreeBSD: ee6d98e9cf6a9d4ec88207fe0b83eb4e94d08d0b $
+# $FreeBSD$
 
 # machine-independent stdlib sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/stdlib ${LIBC_SRCTOP}/stdlib

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: ec3dc1ab7e156dd08aab332201dd8f442dd2927f $
+# $FreeBSD$
 
 PROG=	quotaon
 LINKS=	${BINDIR}/quotaon ${BINDIR}/quotaoff

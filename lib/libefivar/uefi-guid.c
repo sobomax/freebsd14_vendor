@@ -1,5 +1,5 @@
 /* This generated file is in the public domain */
-/* $FreeBSD: c173a449cf099720d0de5d0c870d19be8704ed45 $ */
+/* $FreeBSD$ */
 
 #include <uuid.h>
 #include <stdint.h>

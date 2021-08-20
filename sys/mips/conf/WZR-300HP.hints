@@ -1,4 +1,4 @@
-# $FreeBSD: 2f22198879dabe73a4191874f4dd266cb36d5a82 $
+# $FreeBSD$
 
 # arge0 is connected to the LAN side of the switch PHY.
 # arge1 is connected to the single port WAN side of the switch PHY.

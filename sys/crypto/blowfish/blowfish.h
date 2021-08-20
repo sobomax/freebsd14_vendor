@@ -1,4 +1,4 @@
-/*	$FreeBSD: ecc140754bf9daf071504ad27095ca91d077aeb7 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: blowfish.h,v 1.12 2002/02/27 01:33:59 itojun Exp $	*/
 
 /* crypto/bf/blowfish.h */

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 172d7d5d366cf7355c30c65a6bcadef2628e1148 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Various setup functions for truss.  Not the cleanest-written code,

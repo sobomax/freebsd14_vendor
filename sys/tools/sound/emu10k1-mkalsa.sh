@@ -1,4 +1,4 @@
-# $FreeBSD: 2e78f5bd0499ad879a58eb605974ec834b1e5998 $
+# $FreeBSD$
 
 GREP=${GREP:-grep}
 CC=${CC:-cc}

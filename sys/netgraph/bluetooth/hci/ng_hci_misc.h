@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_misc.h,v 1.3 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: e32a83de909edc47a373a1cfdeb784889d1c8c06 $
+ * $FreeBSD$
  */
 
 #ifndef _NETGRAPH_HCI_MISC_H_

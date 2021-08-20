@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fcef399a83a699c1d659876d233055e0e8db76ea $");
+__FBSDID("$FreeBSD$");
 
 /* ld128 version of __ieee754_rem_pio2l(x,y)
  * 

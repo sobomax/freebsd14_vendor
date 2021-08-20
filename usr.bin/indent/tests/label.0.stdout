@@ -1,4 +1,4 @@
-/* $FreeBSD: 22ec12272af3208d5f31ce9675b4b4a05985b8e6 $ */
+/* $FreeBSD$ */
 /* See r303489 */
 void
 t(void)

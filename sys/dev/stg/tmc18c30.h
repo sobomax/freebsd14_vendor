@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: b79c1179713542550243e055305a4ca8bb004f6c $
+ * $FreeBSD$
  */
 
 extern devclass_t stg_devclass;

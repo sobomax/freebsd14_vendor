@@ -1,4 +1,4 @@
-/* $FreeBSD: cd84b4df17e4d783d61a2672a118f86ac6ba656f $ */
+/* $FreeBSD$ */
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 

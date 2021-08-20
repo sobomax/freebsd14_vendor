@@ -1,4 +1,4 @@
-# $FreeBSD: 11ffb3e6adf66e9ed8e634bcf9f1d57ff930e1ee $
+# $FreeBSD$
 
 # Init
 arm/freescale/imx/imx_common.c		standard

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 0effbe7e22cad49a2dec4729ecbce951f2b1f67a $
+# $FreeBSD$
 #
 
 # PROVIDE: sysvipc

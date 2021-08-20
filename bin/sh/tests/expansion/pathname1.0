@@ -1,4 +1,4 @@
-# $FreeBSD: a4bb0938837fee41f19f89f8eaba23f944af7990 $
+# $FreeBSD$
 
 unset LC_ALL
 LC_COLLATE=C

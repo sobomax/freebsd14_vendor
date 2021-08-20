@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 259c50d8097cc81e3bb053776957d6af07629992 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/11.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="unlink returns EACCES or EPERM if the directory containing the file is marked sticky, and neither the containing directory nor the file to be removed are owned by the effective user ID"
 

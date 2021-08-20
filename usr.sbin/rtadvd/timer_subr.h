@@ -1,4 +1,4 @@
-/*	$FreeBSD: 36e8b3bdc192511b747a46a8bf1521e2fcf15142 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: timer.h,v 1.5 2002/05/31 13:30:38 jinmei Exp $	*/
 
 /*-

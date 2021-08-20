@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f6d141f09cfc3bf52558c19714686b3478aa4204 $");
+__FBSDID("$FreeBSD$");
 
 unsigned int vt_logo_width = 257;
 unsigned int vt_logo_height = 219;

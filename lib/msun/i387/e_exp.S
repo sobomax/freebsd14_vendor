@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: a89ba42560446217b138b82e4853702976cf1c3d $")
+__FBSDID("$FreeBSD$")
 
 /* e^x = 2^(x * log2(e)) */
 ENTRY(exp)

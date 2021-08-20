@@ -1,4 +1,4 @@
-# $FreeBSD: b18fad426027cdaaee79549597649698b1f09da4 $
+# $FreeBSD$
 
 PROG=	arcode
 MAN=

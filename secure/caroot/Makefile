@@ -1,4 +1,4 @@
-# $FreeBSD: 7c0831d2ac2f0826db40eed5057f27a48f0eaaa9 $
+# $FreeBSD$
 
 PACKAGE=	caroot
 

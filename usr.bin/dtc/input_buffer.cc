@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1f4775c8b78cef17e248329c1ae42bb7ccf989ce $
+ * $FreeBSD$
  */
 
 #include "input_buffer.hh"

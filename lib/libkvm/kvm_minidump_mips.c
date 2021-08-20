@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b117213e3bef1d49beb8d2294b858ef09eed6e35 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MIPS machine dependent routines for kvm and minidumps.

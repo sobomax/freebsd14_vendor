@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c13b43f9a7cda823b6bf46e8c4d43e82877a7f4 $");
+__FBSDID("$FreeBSD$");
 
 /** @file drm_context.c
  * Implementation of the context management ioctls.

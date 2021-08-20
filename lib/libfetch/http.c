@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85d624e2da359e5384976720c649e27dd28febc0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * The following copyright applies to the base64 code:

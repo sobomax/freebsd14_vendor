@@ -1,4 +1,4 @@
-/* $FreeBSD: 8b756a30d8cb6e7ae64baaf23aca4b62daaf9e31 $ */
+/* $FreeBSD$ */
 /* File created from flex.skl via mkskel.sh */
 
 #include "flexdef.h"

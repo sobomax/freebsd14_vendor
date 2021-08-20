@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 7e1627dc8ab80c89f41254951fb158b9ef991ec1 $");
+__FBSDID("$FreeBSD$");
 
 ENTRY(cerror)
 	.hidden	cerror

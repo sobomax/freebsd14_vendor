@@ -1,4 +1,4 @@
-# $FreeBSD: 5c44669f6f85cc9e7c145720ab6c846deb61913a $
+# $FreeBSD$
 .include <src.opts.mk>
 
 PACKAGE=lib${LIB}

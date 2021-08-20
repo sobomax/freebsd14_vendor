@@ -1,4 +1,4 @@
-/*	$FreeBSD: ffabaf37b5bc69a7620a2216c9e416118e088be1 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * ipsend.c (C) 1995-1998 Darren Reed

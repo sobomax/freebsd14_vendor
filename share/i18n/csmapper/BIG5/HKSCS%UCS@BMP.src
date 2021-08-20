@@ -1,4 +1,4 @@
-# $FreeBSD: 0fdc74905b7979eaf23e85bd25e288d0904b1041 $
+# $FreeBSD$
 # $NetBSD: HKSCS%UCS@BMP.src,v 1.2 2008/04/12 13:11:56 tnozaki Exp $
 
 TYPE		ROWCOL

@@ -1,4 +1,4 @@
-#$FreeBSD: ddae056d3fc454c422423d64e615e0444d8f0a6f $
+#$FreeBSD$
 
 arm/ti/ti_smc.S					standard
 

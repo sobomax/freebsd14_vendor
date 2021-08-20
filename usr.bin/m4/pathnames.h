@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 742edc147722a8827283bfcc87acb19edb2b1e54 $
+ * $FreeBSD$
  */
 
 #define _PATH_DIVNAME	"/tmp/m4.0XXXXXXXXXX"	/* unix diversion files */

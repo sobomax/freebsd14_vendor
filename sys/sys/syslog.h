@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)syslog.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 071b684271055307bdf203a48a46664f4cb94f7f $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSLOG_H_

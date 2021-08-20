@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: f55beb102cf42f11c1b8b9264a167c8fbd8dc568 $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_EF10_IMPL_H

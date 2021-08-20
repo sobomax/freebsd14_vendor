@@ -1,4 +1,4 @@
-# $FreeBSD: 1f6acaa55f2942f7d79da1384e8b3a36ea33e625 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/nlm ${SRCTOP}/sys/rpc
 KMOD=	nfslockd

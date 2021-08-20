@@ -1,4 +1,4 @@
-/* $FreeBSD: 21823c5ff6f16b14eb3123e690bf4ede12972cf7 $ */
+/* $FreeBSD$ */
 #ifndef _EFI_FPSWA_H
 #define _EFI_FPSWA_H
 

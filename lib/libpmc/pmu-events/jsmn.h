@@ -1,4 +1,4 @@
-/* $FreeBSD: 1f3b369cc44fc99d99414c2b30f6dbd49dedc259 $ */
+/* $FreeBSD$ */
 #ifndef __JSMN_H_
 #define __JSMN_H_
 

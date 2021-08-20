@@ -1,4 +1,4 @@
-# $FreeBSD: 2ca0836e3a151f56829ae768ff53b10bb33ae5c9 $
+# $FreeBSD$
 
 arm/mv/armadaxp/armadaxp.c	standard
 arm/mv/mpic.c			standard

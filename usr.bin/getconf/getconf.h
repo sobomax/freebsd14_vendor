@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 843b9f0edbfd8bbd1cbda6fb7b2cb5dda1bc4fc0 $
+ * $FreeBSD$
  */
 
 #ifdef STABLE

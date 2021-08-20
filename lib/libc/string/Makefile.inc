@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 3df53f05d390d2efa01af741e741eee213aa5650 $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/string ${LIBC_SRCTOP}/string
 .PATH: ${SRCTOP}/sys/libkern

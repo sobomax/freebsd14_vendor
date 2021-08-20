@@ -1,4 +1,4 @@
-/* $FreeBSD: e88117b9e1f40848bf0acc55a7bebc6f4d35b819 $ */
+/* $FreeBSD$ */
 
 &pcie {
 	/*

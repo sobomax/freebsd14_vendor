@@ -1,4 +1,4 @@
-# $FreeBSD: 6c479de2e9c00b3e78d2d55651d932a1271fa2c4 $
+# $FreeBSD$
 
 atf_test_case diff3
 atf_test_case diff3_lesssimple

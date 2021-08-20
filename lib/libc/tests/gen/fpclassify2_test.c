@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a6bb1df3c9f2c7451211fea53eaccea71df319d9 $
+ * $FreeBSD$
  */
 
 #include <math.h>

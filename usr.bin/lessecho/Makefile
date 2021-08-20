@@ -1,4 +1,4 @@
-# $FreeBSD: af0a7c1550abfae53d9fe4759ed0cc97b7c55484 $
+# $FreeBSD$
 
 PROG=	lessecho
 SRCS=	lessecho.c version.c

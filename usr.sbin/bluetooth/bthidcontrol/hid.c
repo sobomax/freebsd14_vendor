@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hid.c,v 1.3 2004/02/17 22:14:57 max Exp $
- * $FreeBSD: 793d17430084c58bc701d32b14538870f21c87b8 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

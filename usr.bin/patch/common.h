@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: common.h,v 1.26 2006/03/11 19:41:30 otto Exp $
- * $FreeBSD: 3253df27e684293e7739c490d0e8e1123fe747b8 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

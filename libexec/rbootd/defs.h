@@ -41,7 +41,7 @@
  * From: Utah Hdr: defs.h 3.1 92/07/06
  * Author: Jeff Forys, University of Utah CSS
  *
- * $FreeBSD: 4c082cbbfc780cc4d73a02015d05c85068249714 $
+ * $FreeBSD$
  */
 
 #include "rmp.h"

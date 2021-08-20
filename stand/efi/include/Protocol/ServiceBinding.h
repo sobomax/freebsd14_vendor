@@ -1,4 +1,4 @@
-/* $FreeBSD: 39602b086e5b29e8b7530b2622ffd94aa54b79f5 $ */
+/* $FreeBSD$ */
 /** @file
   UEFI Service Binding Protocol is defined in UEFI specification.
 

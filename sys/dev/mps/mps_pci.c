@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e12c9a6906ad338d32233cd0f2cc9890c2a9758 $");
+__FBSDID("$FreeBSD$");
 
 /* PCI/PCI-X/PCIe bus interface for the Avago Tech (LSI) MPT2 controllers */
 

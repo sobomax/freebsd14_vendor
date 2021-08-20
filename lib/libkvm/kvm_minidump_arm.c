@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e515c1c60780852f7229c837b7546a4b6c448d8a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * ARM machine dependent routines for kvm and minidumps.

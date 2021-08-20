@@ -1,4 +1,4 @@
-# $FreeBSD: d7e3a4b281cbe8dc0832eb1bea325a53a509ccbc $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/cam/scsi
 KMOD=	scsi_low

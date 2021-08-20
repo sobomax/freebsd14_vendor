@@ -1,4 +1,4 @@
-#$FreeBSD: b6bf526b352281344ee6659dafc3e5f0615428b6 $
+#$FreeBSD$
 
 LIB=	heimbase
 LDFLAGS=	-Wl,--no-undefined

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f948af09281925198dd21baddeaf19582b7102c0 $
+ * $FreeBSD$
  */
 
 #include <dev/tws/tws.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD: fc7d2c499da589ed2e751e3ce41f8d5527a7cf17 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from sha256-armv4.pl. */
 @ Copyright 2007-2020 The OpenSSL Project Authors. All Rights Reserved.
 @

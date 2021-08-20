@@ -29,7 +29,7 @@
  * Portions Copyright (c) 1999 Whistle Communications, Inc.
  * (ng_bpf by Archie Cobbs <archie@freebsd.org>)
  *
- * $FreeBSD: 9222d3bd3b20dde2c334222e508c1a6b8fdd32ad $
+ * $FreeBSD$
  */
 
 /*

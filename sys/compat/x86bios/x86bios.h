@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f12c800d8b3360cf35cd1ddada45e096a2d91916 $
+ * $FreeBSD$
  */
 /*
  * x86 registers were borrowed from x86emu.h x86emu_regs.h

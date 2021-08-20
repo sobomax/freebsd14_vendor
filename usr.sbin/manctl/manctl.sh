@@ -32,7 +32,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e79da64868a93d7a0b02d9dc46b0b640a2eee567 $
+# $FreeBSD$
 #
 # manctl: 
 #	a utility for manipulating manual pages

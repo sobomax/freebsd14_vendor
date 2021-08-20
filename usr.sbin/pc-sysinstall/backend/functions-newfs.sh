@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1a92753bf8e9e12236fdd9f29baaeadedddc7772 $
+# $FreeBSD$
 
 # Functions related to disk operations using newfs
 

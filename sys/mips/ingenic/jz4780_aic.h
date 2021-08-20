@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 534aaa646903c2bd275e7b37e37dea634b20b628 $
+ * $FreeBSD$
  */
 
 #define	AICFR		0x00	/* AIC Configuration Register */

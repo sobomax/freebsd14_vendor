@@ -1,4 +1,4 @@
-# $FreeBSD: 5414042762af432950a37be7db29913a9c43e4cc $
+# $FreeBSD$
 
 TAP_TESTS_C+=	flopen_test
 TAP_TESTS_C+=	grp_test

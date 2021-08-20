@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/27/94
-# $FreeBSD: 9e3ea13b6e5c2fc283ecbdcb9a43f3cc4255f925 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom
 

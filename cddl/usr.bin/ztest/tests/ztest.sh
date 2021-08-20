@@ -1,6 +1,6 @@
 #
 # Test Case: ztest
-# $FreeBSD: 9945d1a45aa9236e8a85d9122f2b410b577b2e2e $
+# $FreeBSD$
 #
 atf_test_case ztest
 ztest_head()

@@ -28,7 +28,7 @@
  *
  * Copyright (c) 2000 Andrew Miklic
  *
- * $FreeBSD: 891d3172a55f5b7be4cf6babb855838af8913fad $
+ * $FreeBSD$
  */
 
 #ifndef _FB_GFB_H_

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: de8e9697101a675b92a45f94d7494814afa50c57 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/14.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rmdir returns EROFS if the named file resides on a read-only file system"
 

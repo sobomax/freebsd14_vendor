@@ -1,2 +1,2 @@
-.\" $FreeBSD: 7cc45d91efdc082e13491422de25d4c9b9c20698 $
+.\" $FreeBSD$
 Set to not build the LLDB debugger.

@@ -24,7 +24,7 @@
  * This file was copied from tcpdump-2.1.1 and modified.
  * There is an e-mail list for tcpdump: <tcpdump@ee.lbl.gov>
  *
- * $FreeBSD: 21bff5f29964b5878b1d1bf8f59fa8b63cf5b76a $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5dbaa5811ff4cb32019547711bc17ad20e775508 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cpu.h"
 

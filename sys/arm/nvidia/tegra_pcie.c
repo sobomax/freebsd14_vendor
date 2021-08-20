@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aae3b67a9e366e7d805caa081d3a80fad4bf37de $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Nvidia Integrated PCI/PCI-Express controller driver.

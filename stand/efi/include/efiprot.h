@@ -1,4 +1,4 @@
-/* $FreeBSD: 351b2d347ad4aba4c962fcd2af4357cfad34247b $ */
+/* $FreeBSD$ */
 #ifndef _EFI_PROT_H
 #define _EFI_PROT_H
 

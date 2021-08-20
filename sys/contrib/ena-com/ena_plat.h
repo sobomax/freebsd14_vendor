@@ -35,7 +35,7 @@
 #define ENA_PLAT_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3536cdf3573505e032db035b441b466d0d73aaf $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

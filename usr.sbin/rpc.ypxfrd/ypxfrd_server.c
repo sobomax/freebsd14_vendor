@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca8a2a3c4fe4fe027d398536b2d9e8e8bc6590cc $");
+__FBSDID("$FreeBSD$");
 
 #include "ypxfrd.h"
 

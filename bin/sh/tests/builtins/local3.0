@@ -1,4 +1,4 @@
-# $FreeBSD: 39ee370099e7637b7c4a922616a6cdf65256c0ac $
+# $FreeBSD$
 
 f() {
 	local "$@"

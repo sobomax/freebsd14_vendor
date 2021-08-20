@@ -1,4 +1,4 @@
-# $FreeBSD: 045002384411dbcb4185fa6ed4b9f6fe6e8d157b $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/ips
 KMOD		= ips

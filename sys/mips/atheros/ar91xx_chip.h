@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: e75f6cc406b3595f15540dafbe11f52893111f12 $ */
+/* $FreeBSD$ */
 
 #ifndef	__AR91XX_CHIP_H__
 #define	__AR91XX_CHIP_H__

@@ -1,4 +1,4 @@
-# $FreeBSD: 7cbb5482f3a634171ae1bc149214d1e081fe7eb9 $
+# $FreeBSD$
 
 BZ2DIR=	${SRCTOP}/contrib/bzip2
 .PATH: ${BZ2DIR}

@@ -1,4 +1,4 @@
-# $FreeBSD: 51b4f056d0d285ac302a3ec3def84c268417e913 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/mii
 

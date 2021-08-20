@@ -1,4 +1,4 @@
-# $FreeBSD: 3101f3378ff3dd63e0f7966761449bd966b8d4d8 $
+# $FreeBSD$
 
 SUBDIR=		libcasper
 SUBDIR+=	services

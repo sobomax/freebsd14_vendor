@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: ff4b91157511157fdd571f04bf9407c536f96a4e $
+# $FreeBSD$
 
 CONFS=	gettytab
 PROG=	getty

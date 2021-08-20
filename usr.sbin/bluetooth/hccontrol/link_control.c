@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: link_control.c,v 1.4 2003/08/18 19:19:54 max Exp $
- * $FreeBSD: edf47814a96829f3e247b210ea401c2d4288171e $
+ * $FreeBSD$
  */
 
 #define L2CAP_SOCKET_CHECKED

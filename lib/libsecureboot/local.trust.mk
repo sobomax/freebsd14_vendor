@@ -1,4 +1,4 @@
-# $FreeBSD: b28e5ee2d1ef6de316c360b9aa55ddf44e8c7207 $
+# $FreeBSD$
 
 # Consider this file an example.
 #

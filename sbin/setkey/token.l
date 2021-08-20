@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0c0ceb728a940bde1126b59c2f038052a5c7933e $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: token.l,v 1.43 2003/07/25 09:35:28 itojun Exp $	*/
 
 /*-

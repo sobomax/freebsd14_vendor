@@ -30,7 +30,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 54646a8f439d5e206ead615d47c99bf76c95498e $
+# $FreeBSD$
 
 
 # Script which tries to ping "home" to see if Internet connectivity is

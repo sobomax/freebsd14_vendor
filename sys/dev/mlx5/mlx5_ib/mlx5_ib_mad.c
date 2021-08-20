@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 719cddec9c342e32b479b3ad582ec9434e5a4e87 $
+ * $FreeBSD$
  */
 
 #include <dev/mlx5/vport.h>

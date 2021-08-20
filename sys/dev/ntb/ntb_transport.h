@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7695abdefaec4fb240118fb239849bd7ea9cca57 $
+ * $FreeBSD$
  */
 
 struct ntb_transport_qp;

@@ -1,4 +1,4 @@
-# $FreeBSD: c5536e96b7a11d45a05d8b00b9c4d872a845f52b $
+# $FreeBSD$
 
 settings1=$(set +o) && set -o nolog && settings2=$(set +o) &&
 [ "$settings1" != "$settings2" ]

@@ -1,4 +1,4 @@
-/* $FreeBSD: e889865e838af8794d3167230e97dccd16a89bfe $ */
+/* $FreeBSD$ */
 
 /* This header exists to avoid editing contrib/gcc/config/elfos.h - which
    isn't coded to be defensive as it should... */

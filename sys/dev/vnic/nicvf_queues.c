@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d469067c1cf88ed66cdd75cda2fbf7e184deac50 $
+ * $FreeBSD$
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d469067c1cf88ed66cdd75cda2fbf7e184deac50 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

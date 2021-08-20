@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: cb41ad5033706fd308aced3296c34623197db83d $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/link/15.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="link returns ENOSPC if the directory in which the entry for the new link is being placed cannot be extended because there is no space left on the file system containing the directory"
 

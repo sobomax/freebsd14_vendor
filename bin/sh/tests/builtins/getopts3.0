@@ -1,4 +1,4 @@
-# $FreeBSD: d02469b204696f05788932c67a831151e6a6ff31 $
+# $FreeBSD$
 
 shift $#
 getopts x opt

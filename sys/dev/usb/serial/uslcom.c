@@ -1,7 +1,7 @@
 /*	$OpenBSD: uslcom.c,v 1.17 2007/11/24 10:52:12 jsg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ee72846a2269f767c1685ff4d0235a3d8639e0f $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Copyright (c) 2006 Jonathan Gray <jsg@openbsd.org>

@@ -1,4 +1,4 @@
-# $FreeBSD: d6bed922a8e0a9026cd81f4d59ff6ec15b2c9dd4 $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/mac/bsdextended
 

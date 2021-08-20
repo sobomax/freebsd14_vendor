@@ -1,4 +1,4 @@
-# $FreeBSD: d5b888dd5bc6a9a4b814ed73f3fb7f54fb4d2d05 $
+# $FreeBSD$
 
 PROG=	fifolog_writer
 

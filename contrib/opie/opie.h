@@ -37,7 +37,7 @@ License Agreement applies to this software.
 	Written at Bellcore for the S/Key Version 1 software distribution
 		(skey.h).
 
-$FreeBSD: 8e88135a55e142b0afea56daa27418e963a29c66 $
+$FreeBSD$
 */
 #ifndef _OPIE_H
 #define _OPIE_H 1

@@ -78,7 +78,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0827289f48c111105435a1cb677c9f1b47b6443c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Using the InterNet Control Message Protocol (ICMP) "ECHO" facility,

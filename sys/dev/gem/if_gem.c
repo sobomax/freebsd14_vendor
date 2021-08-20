@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 470a575013e280b81b24493d3f5cc0f2cbde6dee $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for Apple GMAC, Sun ERI and Sun GEM Ethernet controllers

@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9324133bf544bfc9dbb2c57c312e0b1adfce8794 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <ufs/ufs/dinode.h>

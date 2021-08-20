@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: psl.h,v 1.5 2000/11/19 19:52:37 matt Exp $
- * $FreeBSD: 1179d7441865618ee2a45c66d523a1222af7329a $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_PSL_H_

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3edc42c8ff5e0ef93931fcfb96404877c0dfb82a $
+ * $FreeBSD$
  */
 
 #define ALLOC_OBJ(to, type_magic)					\

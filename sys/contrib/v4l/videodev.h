@@ -4,7 +4,7 @@
  * The FreeBSD vendor branch for v4l gives a more detailed description
  * about this in the README.
  *
- * $FreeBSD: a2e512190e1e1956961b3924e8748cce25bc2dce $
+ * $FreeBSD$
  */
 
 #ifndef __LINUX_VIDEODEV_H

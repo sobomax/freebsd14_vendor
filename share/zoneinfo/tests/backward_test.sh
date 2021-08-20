@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6245a51ee45ecac454b544eda44ce78355d10415 $
+# $FreeBSD$
 
 atf_test_case links
 links_head()

@@ -33,7 +33,7 @@
  *
  *	@(#)rpcv2.h	8.1 (Berkeley) 6/10/93
  *
- * $FreeBSD: 4f1f016333a00a7df46b33373dae8e9cf142c251 $
+ * $FreeBSD$
  */
 
 /*

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 9a13dcf305ff7ca37ccab39f8a385772de452e49 $
+.\" $FreeBSD$
 Set to not build
 .Xr dialog 1 ,
 .Xr dialog 3 ,

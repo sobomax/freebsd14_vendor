@@ -1,4 +1,4 @@
-# $FreeBSD: d17f96ba9fbb924951aef7297de40f2dbf5648a7 $
+# $FreeBSD$
 
 SUBDIR = \
 	ads111x \

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66881b9965aaead2e87befa377704f1c005932cd $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Broadcom BHND PCI/PCIe-Gen1 PCI-Host Bridge.

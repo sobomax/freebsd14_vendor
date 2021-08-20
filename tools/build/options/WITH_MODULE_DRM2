@@ -1,2 +1,2 @@
-.\" $FreeBSD: 68e304d48296702c6f987c6a97db260e3faf3317 $
+.\" $FreeBSD$
 Enable creation of old drm2 video modules.

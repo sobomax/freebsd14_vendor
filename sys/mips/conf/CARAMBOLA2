@@ -8,7 +8,7 @@
 # * 16MB flash
 # * Integrated 1x1 2GHz wifi and 10/100 bridge
 #
-# $FreeBSD: 76916f19d67c707ccb64a180291a67ef771f044a $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

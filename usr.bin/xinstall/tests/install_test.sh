@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c723a6e0d280ba14e6a61ffc247c13df5c0afea4 $
+# $FreeBSD$
 #
 
 copy_to_nonexistent_with_opts() {

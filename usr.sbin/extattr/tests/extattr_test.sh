@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 946183b54dc43a7b697ab1e8807db8f5770656cb $
+# $FreeBSD$
 
 atf_test_case bad_namespace
 bad_namespace_head() {

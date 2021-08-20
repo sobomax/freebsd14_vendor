@@ -30,7 +30,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 4a759685ca42de8c636ab8a5ca6ef6d8d8bd3490 $");
+__FBSDID("$FreeBSD$");
 
 #ifdef	SRA
 #ifdef	ENCRYPTION

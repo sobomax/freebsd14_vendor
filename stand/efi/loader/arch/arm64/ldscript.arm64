@@ -1,4 +1,4 @@
-/* $FreeBSD: 685c0967840d8308410a7a830aa33e0fd42b4366 $ */
+/* $FreeBSD$ */
 /*
 OUTPUT_FORMAT("elf64-aarch64-freebsd", "elf64-aarch64-freebsd", "elf64-aarch64-freebsd")
 */

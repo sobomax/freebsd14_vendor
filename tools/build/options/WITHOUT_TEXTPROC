@@ -1,3 +1,3 @@
-.\" $FreeBSD: 2f3e9722edfa0ba03840a63fa01dddf1a1502f2a $
+.\" $FreeBSD$
 Set to not build
 programs used for text processing.

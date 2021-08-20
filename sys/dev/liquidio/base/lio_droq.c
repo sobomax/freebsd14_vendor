@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: d8a58e52fafbfa34c299f3eef6e5ff22b683871d $*/
+/*$FreeBSD$*/
 
 #include "lio_bsd.h"
 #include "lio_common.h"

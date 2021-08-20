@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 666790bdff1399b33babd0d58b5d31a6c0f00262 $
+# $FreeBSD$
 #
 # Usage: cd /usr/src/contrib/jemalloc
 #        ./FREEBSD-upgrade <command> [args]

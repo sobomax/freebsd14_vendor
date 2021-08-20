@@ -1,4 +1,4 @@
-# $FreeBSD: 0e0818b8a2c46bb1b5fb59088ba0ff454f8629c1 $
+# $FreeBSD$
 # Test that attached options before c are processed
 
 case `${SH} -ac 'echo $-:$0' moo` in

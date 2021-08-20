@@ -67,7 +67,7 @@ up-to-date.  Many thanks.
 ******************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2046a34a2f8c5db3bc56ae02fc1a63e14e15a6f5 $");
+__FBSDID("$FreeBSD$");
 
 #define _NLS_PRIVATE
 

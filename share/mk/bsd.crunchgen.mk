@@ -27,7 +27,7 @@
 # If CRUNCH_GENERATE_LINKS is set to no, no links will be generated.
 #
 
-# $FreeBSD: 6d775ce9af05c4f7d745ad5ef66095a0b5e66f46 $
+# $FreeBSD$
 
 ##################################################################
 #  The following is pretty nearly a generic crunchgen-handling makefile

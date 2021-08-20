@@ -1,4 +1,4 @@
-/*	$FreeBSD: cc99e5dcd76a4a84eb6493f965565a8550af5dab $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: cryptodev.h,v 1.31 2002/06/11 11:14:29 beck Exp $	*/
 
 /*-

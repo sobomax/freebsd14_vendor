@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a56219ae48a0bd6ab78f51dbf222d0c5206282ff $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/mutex.h>
 #include <linux/inetdevice.h>

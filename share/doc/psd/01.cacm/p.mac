@@ -4,7 +4,7 @@
 .\"
 .\"	@(#)p.mac	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 5450b5dc96f76937243414c12bdc0e3bf1b50921 $
+.\" $FreeBSD$
 .de P1
 .DS
 ..

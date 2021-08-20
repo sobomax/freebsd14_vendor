@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)chkey.c 1.7 91/03/11 Copyr 1986 Sun Micro";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4751a284b3844c42619a571d7e98736dbba57846 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Copyright (C) 1986, Sun Microsystems, Inc.

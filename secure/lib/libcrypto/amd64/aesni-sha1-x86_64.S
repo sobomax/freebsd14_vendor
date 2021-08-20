@@ -1,4 +1,4 @@
-/* $FreeBSD: 38f306142c82d7cfd64290aa491a42c69d3f8f94 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from aesni-sha1-x86_64.pl. */
 .text	
 

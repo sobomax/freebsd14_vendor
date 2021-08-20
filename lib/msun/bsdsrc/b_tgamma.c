@@ -35,7 +35,7 @@
 
 /* @(#)gamma.c	8.1 (Berkeley) 6/4/93 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 832a729c20f8dc8012f172f674e24bd8d6ae13c0 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This code by P. McIlroy, Oct 1992;

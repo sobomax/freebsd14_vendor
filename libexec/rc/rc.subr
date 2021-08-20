@@ -1,5 +1,5 @@
 # $NetBSD: rc.subr,v 1.67 2006/10/07 11:25:15 elad Exp $
-# $FreeBSD: 89bda1c1488931e08559be3bdd3ec66c74a2eefa $
+# $FreeBSD$
 #
 # Copyright (c) 1997-2004 The NetBSD Foundation, Inc.
 # All rights reserved.

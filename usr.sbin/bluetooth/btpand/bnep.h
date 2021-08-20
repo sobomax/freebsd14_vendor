@@ -27,7 +27,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: 9fc60932e34c09548e869e841f1e6f750315a3a8 $ */
+/* $FreeBSD$ */
 
 /*
  * Constants defined in the Bluetooth Network Encapsulation

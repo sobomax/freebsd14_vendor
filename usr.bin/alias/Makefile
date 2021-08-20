@@ -1,4 +1,4 @@
-# $FreeBSD: e6345cf7beeb0d7b8d78d808e6f6c77a596ffffa $
+# $FreeBSD$
 
 SCRIPTS=generic.sh
 SCRIPTSNAME=alias

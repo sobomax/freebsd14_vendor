@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2a4fbccee2c62a552793d8a1b0b8b0281048252a $
+ * $FreeBSD$
  */
 
 /* Privately defined error codes. */

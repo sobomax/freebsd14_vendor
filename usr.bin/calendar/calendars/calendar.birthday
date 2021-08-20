@@ -1,7 +1,7 @@
 /*
  * Birthday
  *
- * $FreeBSD: 17383c0b7ef11778285bfb17a81ede7499af2482 $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_birthday_

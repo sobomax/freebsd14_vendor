@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: afba7d185eef9498d1065cca12c704e71fdb2791 $
+ * $FreeBSD$
  */
 #include <stdio.h>
 #include <stdlib.h>

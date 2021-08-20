@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 914c85887e47a242aa88e3a8bdd377ffe867e64b $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file implements a translation layer between the BSD networking

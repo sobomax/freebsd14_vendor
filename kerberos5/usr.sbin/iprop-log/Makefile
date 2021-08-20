@@ -1,4 +1,4 @@
-# $FreeBSD: 1f71f9b2a400505c32735a293f222d660dcd11d2 $
+# $FreeBSD$
 
 PROG=	iprop-log
 MAN=	iprop-log.8

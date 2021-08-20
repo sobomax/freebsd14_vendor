@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73c6b85bf89e8ad97fb3756ca425c0ceda67fd8a $
+ * $FreeBSD$
  */
 
 int usb2_phy_power_on(void);

@@ -1,4 +1,4 @@
-# $FreeBSD: 4d6c6771eb9c7df523595cbe1e5e2ee36c8115dc $
+# $FreeBSD$
 
 arm/samsung/exynos/exynos5_mct.c		standard
 arm/samsung/exynos/exynos5_mp.c			optional	smp

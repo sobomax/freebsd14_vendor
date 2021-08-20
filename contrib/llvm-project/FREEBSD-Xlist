@@ -1,4 +1,4 @@
-# $FreeBSD: 5c1e8f837621111a03bc5c828f3c9078de6cddac $
+# $FreeBSD$
 .arcconfig
 .clang-format
 .clang-tidy

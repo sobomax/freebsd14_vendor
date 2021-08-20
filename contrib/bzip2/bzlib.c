@@ -29,7 +29,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9496d5abc95128bef512600dea685f7b9c411c69 $");
+__FBSDID("$FreeBSD$");
 
 #include "bzlib_private.h"
 

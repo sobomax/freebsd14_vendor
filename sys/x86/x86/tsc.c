@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92e33dd9d3735ecaa803d23f315e5adc36b44ee1 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_clock.h"
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c8271f69e0ab570d783497aa0833b94a53a2cea $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __RADEON_DRV_H__
 #define __RADEON_DRV_H__

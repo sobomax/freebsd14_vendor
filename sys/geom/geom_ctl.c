@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3eddc832f9b4903f576bc5cbe0a4f0a8bac4fa33 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_geom.h"
 

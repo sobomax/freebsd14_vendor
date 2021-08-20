@@ -1,4 +1,4 @@
-# $FreeBSD: bdcec5dab20114a9f1f3225b1cea1ac71263a737 $
+# $FreeBSD$
 
 SUBDIR=	tablegen refgen	posix gnu
 

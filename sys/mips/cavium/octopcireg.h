@@ -37,7 +37,7 @@
  * For any questions regarding licensing please contact marketing@caviumnetworks.com
  *
  ***********************license end**************************************/
-/* $FreeBSD: e053ef80c209b147d4f1d9161d285f7389a96657 $ */
+/* $FreeBSD$ */
 
 #ifndef	_CAVIUM_OCTOPCIREG_H_
 #define	_CAVIUM_OCTOPCIREG_H_

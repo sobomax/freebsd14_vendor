@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 157f28d3306e179eee0cee9441dc73236a6f6825 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/03.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="chmod returns ENAMETOOLONG if an entire path name exceeded {PATH_MAX} characters"
 

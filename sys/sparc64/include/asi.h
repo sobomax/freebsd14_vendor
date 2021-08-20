@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: asi.h,v 1.3 1997/08/08 14:31:42 torek
- * $FreeBSD: 2a40eb89c3579bb539a6209df04c3207a58c56ef $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_ASI_H_

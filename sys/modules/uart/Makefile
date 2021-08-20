@@ -1,4 +1,4 @@
-# $FreeBSD: 199440ae78dbcb48ae1e2378d48563227adf3958 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/uart
 

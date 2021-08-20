@@ -29,7 +29,7 @@
  * Work sponsored by Defense Advanced Research Projects Agency under the
  * CHATS research program, CBOSS project.
  *
- * $FreeBSD: 46bb01c4150d1813b8660ab396d81e0178a724d1 $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

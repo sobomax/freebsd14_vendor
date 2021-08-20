@@ -1,4 +1,4 @@
-# $FreeBSD: 8eb526e93b5b4833940d782e1caf058bc35a9768 $
+# $FreeBSD$
 
 .include <src.opts.mk>
 .include "../clang.pre.mk"

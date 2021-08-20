@@ -1,4 +1,4 @@
-# $FreeBSD: 7fe146ffd4925d6fe666a6d616708e93521e8bcc $
+# $FreeBSD$
 
 PROG=	lastlogin
 MAN=	lastlogin.8

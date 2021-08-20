@@ -1,4 +1,4 @@
-.\" $FreeBSD: ab9346afbf043caea4678cd36144c0ab44236667 $
+.\" $FreeBSD$
 Set to not build
 .Xr c++ 1
 and related libraries.

@@ -1,4 +1,4 @@
-# $FreeBSD: ac8be92c8dbd8585b404862e976cea78a51e797c $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=		sbuf

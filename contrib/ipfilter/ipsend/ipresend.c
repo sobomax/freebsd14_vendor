@@ -1,4 +1,4 @@
-/*	$FreeBSD: 1e7b9049169a39a75486ac2a9aec4ac4283826e5 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * ipresend.c (C) 1995-1998 Darren Reed

@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgtvar.h,v 1.14 2008/02/02 13:48:44 mglocker Exp $ */
-/*	$FreeBSD: 9d4c85e6fcbd409ba99d374930cb7908286e2b5f $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>

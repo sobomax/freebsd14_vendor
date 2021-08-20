@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 7f6d47fd3c75aedbcadd504af5cac01267bf0163 $
+# $FreeBSD$
 
 # Functions related to disk operations using bsdlabel
 

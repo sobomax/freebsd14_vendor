@@ -7,7 +7,7 @@
 # this stuff is worth it, you can buy me a beer in return Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD: f010c29c602532abaa2dfc9b90c4cfe04b977b14 $
+# $FreeBSD$
 #
 
 # define our bail out shortcut

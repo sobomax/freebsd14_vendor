@@ -19,7 +19,7 @@
 
 /*
  *	$Id: res_update.h,v 1.3 2005/04/27 04:56:15 sra Exp $
- * $FreeBSD: 32d363bacfae07698ed3b121e68fe5ac141853e4 $
+ * $FreeBSD$
  */
 
 #ifndef __RES_UPDATE_H

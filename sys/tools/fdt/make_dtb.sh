@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: a7f5a183c17cc0f094cfe2573a9776d17a41dd5f $
+# $FreeBSD$
 
 # Script generates dtb file ($3) from dts source ($2) in build tree S ($1)
 S=$1

@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: fc61eaae585188a15bb63206ffce1b06a6dce5d3 $
+ * $FreeBSD$
  */
 
 #ifndef R88EU_REG_H

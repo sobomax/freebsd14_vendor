@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 419ac93a629ec8848055e30bdb070d3924fcab44 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the Broadcom BCM54xx/57xx 1000baseTX PHY.

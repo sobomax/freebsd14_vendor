@@ -1,4 +1,4 @@
-/* $FreeBSD: 390125ff05213f33baa0e0872ae1a3a16a90fb9a $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from vpaes-armv8.pl. */
 .text
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 689fd689c03861e2e0ac8e9fa14dbea282edfd5d $
+# $FreeBSD$
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"

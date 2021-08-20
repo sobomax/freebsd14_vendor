@@ -1,4 +1,4 @@
-# $FreeBSD: 148aa8df1f70e258afd3be4e04f070c2c94ea166 $
+# $FreeBSD$
 
 LIB=	heimntlm
 LDFLAGS=	-Wl,--no-undefined

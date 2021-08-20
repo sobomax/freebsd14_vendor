@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 115eb8c08d539ff20f4d4a3a4544e1a753a92a27 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * FV Ethernet interface driver

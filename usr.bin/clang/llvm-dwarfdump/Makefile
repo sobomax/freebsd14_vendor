@@ -1,4 +1,4 @@
-# $FreeBSD: d50237dbc9ec0a94e8fc6a23303655ce9bba555e $
+# $FreeBSD$
 
 PROG_CXX=	llvm-dwarfdump
 

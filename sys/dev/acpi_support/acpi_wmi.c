@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8185b9f067e8b7f51db1e98140fcc328736f336 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for acpi-wmi mapping, provides an interface for vendor specific

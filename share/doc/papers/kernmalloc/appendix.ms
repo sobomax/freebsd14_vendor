@@ -1,4 +1,4 @@
-.\" $FreeBSD: 2378b72edff79dd3a556354345dcee69aeb99b7c $
+.\" $FreeBSD$
 .am vS
 ..
 .am vE

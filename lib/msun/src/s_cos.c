@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29804f4cb6cb89132d1c282f103d06b20ec817b3 $");
+__FBSDID("$FreeBSD$");
 
 /* cos(x)
  * Return cosine function of x.

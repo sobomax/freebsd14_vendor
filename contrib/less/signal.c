@@ -7,7 +7,7 @@
  * For more information, see the README file.
  */
 
-/* $FreeBSD: 0f304efe986c021983152f080491e1c28a060be4 $ */
+/* $FreeBSD$ */
 
 /*
  * Routines dealing with signals.

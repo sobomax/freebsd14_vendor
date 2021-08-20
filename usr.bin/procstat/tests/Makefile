@@ -1,4 +1,4 @@
-# $FreeBSD: b8857426ee8d33884a6b4a0385989e270bdeccbb $
+# $FreeBSD$
 
 ATF_TESTS_SH+=	procstat_test
 

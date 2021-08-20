@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: dfd8084b2598b851e357710b39f1955e6f7e8b92 $
+ * $FreeBSD$
  */
 
 #define	_PATH_FCODES	"/var/db/locate.database"

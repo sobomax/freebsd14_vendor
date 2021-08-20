@@ -1,4 +1,4 @@
-/*	$FreeBSD: 2797ca980fb9b2a9a7e80e0b5cf0bcf1b63f8abe $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-

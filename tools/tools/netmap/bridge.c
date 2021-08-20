@@ -6,7 +6,7 @@
  * A netmap client to bridge two network interfaces
  * (or one interface and the host stack).
  *
- * $FreeBSD: 8c9bd574d84e96b767515895ef6bafb3f558cb37 $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

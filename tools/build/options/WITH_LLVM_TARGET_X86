@@ -1,4 +1,4 @@
-.\" $FreeBSD: e6bc3a52ce8f8b47197dff6e59d066e63035f6d4 $
+.\" $FreeBSD$
 Set to build LLVM target support for X86.
 The
 .Va LLVM_TARGET_ALL

@@ -30,7 +30,7 @@
  */
 
 #include <dev/drm2/drmP.h>
-__FBSDID("$FreeBSD: bd7085e2a86df563f1c060449cc0ab4aa1e7d721 $");
+__FBSDID("$FreeBSD$");
 
 struct drm_list_sort_thunk {
 	int (*cmp)(void *, struct list_head *, struct list_head *);

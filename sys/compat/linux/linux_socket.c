@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d0de98383392c04a93924f69c4ba9655b989257 $");
+__FBSDID("$FreeBSD$");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"

@@ -27,7 +27,7 @@
 /*
  * Authors: Thomas Hellstrom <thellstrom-at-vmware-dot-com>
  */
-/* $FreeBSD: 4b16ebd6d608996ac592611ff4108b3749c4e784 $ */
+/* $FreeBSD$ */
 
 #ifndef _TTM_BO_API_H_
 #define _TTM_BO_API_H_

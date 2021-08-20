@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c24a34eda28341ce377d84f03cb77b7ed9a7e005 $");
+__FBSDID("$FreeBSD$");
 
 /* Universal Host Controller Interface
  *

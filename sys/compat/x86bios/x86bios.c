@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 542f04cc0b0dd110616bba150d8849bba89e1967 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_x86bios.h"
 

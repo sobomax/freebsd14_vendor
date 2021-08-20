@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*	$FreeBSD: b47a013957af71d45fb7f61fa3c1e7704b5ff7d9 $ */
+/*	$FreeBSD$ */
 
 struct lsi64854_softc {
 	device_t		sc_dev;

@@ -36,7 +36,7 @@
  * 
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 45b66b07d4abc93e4304669e608108ec1eff960b $
+ * $FreeBSD$
  */
 
 #ifndef _NETGRAPH_NG_L2TP_H_

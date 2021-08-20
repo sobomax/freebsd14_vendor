@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: ba2a434ce5abc0e663ecfde56ad84b0c7ba341af $
+# $FreeBSD$
 # A really simple script to create a swap-backed msdosfs filesystem, copy a few
 # files to it, unmount/remount the filesystem, and make sure all is well.
 # 

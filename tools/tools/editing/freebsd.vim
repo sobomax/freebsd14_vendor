@@ -22,7 +22,7 @@
 " (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 " THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 "
-" $FreeBSD: fa7977b3036140d16d939db9be783767a9c3fd25 $
+" $FreeBSD$
 
 " This is a plugin for Vim (tested with Vim v7.1) to follow the FreeBSD style(9)
 " indentation.  It registers a macro (see below) for changing a buffer's

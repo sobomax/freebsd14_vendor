@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: 73474fbe9c76976034e2be3645b54a26752afaeb $
+ * $FreeBSD$
  */
 
 #ifndef _CONS_H_

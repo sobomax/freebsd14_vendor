@@ -28,7 +28,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: a7f118ea6a8add55aececc4ec84e24734e999f4d $
+ * $FreeBSD$
  */
 
 #ifndef _MIPS_CDEFS_H_

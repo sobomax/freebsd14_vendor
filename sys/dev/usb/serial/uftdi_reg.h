@@ -1,5 +1,5 @@
 /*	$NetBSD: uftdireg.h,v 1.6 2002/07/11 21:14:28 augustss Exp $ */
-/*	$FreeBSD: a1ea325b89a26c4387442477311456a003a152e1 $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Definitions for the FTDI USB Single Port Serial Converter -

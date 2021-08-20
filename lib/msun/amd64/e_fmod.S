@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 6163134e6c30fe454215b32160249bb7759ee349 $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(fmod)
 	movsd	%xmm0,-8(%rsp)

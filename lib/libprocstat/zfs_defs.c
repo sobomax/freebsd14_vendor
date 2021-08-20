@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec0014f6a5930cbc1cbb8fbce192c3b5c0fb3ff9 $");
+__FBSDID("$FreeBSD$");
 
 /* Pretend we are kernel to get the same binary layout. */
 #define _KERNEL

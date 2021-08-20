@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: l2ping.c,v 1.5 2003/05/16 19:54:40 max Exp $
- * $FreeBSD: 49e900588d99c7dab9d876080e26fd3f0d431cc5 $
+ * $FreeBSD$
  */
 
 #include <sys/ioctl.h>

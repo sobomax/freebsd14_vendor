@@ -1,4 +1,4 @@
-# $FreeBSD: b7ccfbe88c03acb1ee9fbc0eadb9fa769fbe3428 $
+# $FreeBSD$
 
 BINDIR=		/usr/share/certs/blacklisted
 

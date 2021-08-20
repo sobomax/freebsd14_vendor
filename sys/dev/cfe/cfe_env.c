@@ -31,7 +31,7 @@
 
 #include <dev/cfe/cfe_api.h>
 
-__FBSDID("$FreeBSD: 589f751b85d5767233595922088a36ce45558b8c $");
+__FBSDID("$FreeBSD$");
 
 #ifndef	CFE_ENV_SIZE
 #define	CFE_ENV_SIZE	PAGE_SIZE	/* default is one page */

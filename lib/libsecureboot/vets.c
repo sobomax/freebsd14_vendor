@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a82592ea6996e4c66b797aaa552db758c99ad9e $");
+__FBSDID("$FreeBSD$");
 
 /**
  * @file vets.c - trust store

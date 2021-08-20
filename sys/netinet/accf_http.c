@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7673158d7249234ac5e3d57a9079ac5813f87c7 $");
+__FBSDID("$FreeBSD$");
 
 #define ACCEPT_FILTER_MOD
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 344effae0460ac68ad7922727ed0ac8b219ac5cc $
+# $FreeBSD$
 
 PROG=	cap_test
 SRCS=	cap_test.c \

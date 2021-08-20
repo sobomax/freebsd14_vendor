@@ -1,4 +1,4 @@
-# $FreeBSD: 7832c870ca68f70615b5e100af76b0950fadd745 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 

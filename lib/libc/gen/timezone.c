@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)timezone.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: f99a6f919262d57bbaa9c39559abf114c6b10699 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/time.h>

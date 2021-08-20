@@ -1,4 +1,4 @@
-// $FreeBSD: c7792742107dc9a570f12beb2bf92f1b73a19169 $
+// $FreeBSD$
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.

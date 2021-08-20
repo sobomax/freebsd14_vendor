@@ -1,4 +1,4 @@
-# $FreeBSD: 44afe12b4b6e96833c90c3e23a20dd9ece2effbb $
+# $FreeBSD$
 
 PACKAGE=	clibs
 LIB=		ssp_nonshared

@@ -1,4 +1,4 @@
-# $FreeBSD: 083ad17c61582464496a3452630895d57c10dec6 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/fdescfs
 

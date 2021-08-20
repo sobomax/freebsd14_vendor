@@ -1,4 +1,4 @@
-# $FreeBSD: 2df9c254e57d8deafcc3da80f216f18a1a937de6 $
+# $FreeBSD$
 
 v=1
 alias a='unalias a

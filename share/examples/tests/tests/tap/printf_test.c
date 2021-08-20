@@ -1,4 +1,4 @@
-/* $FreeBSD: 4e74f790a82694c83ad75f9208e57488c5e8409c $
+/* $FreeBSD$
  *
  * Copyright 2013 Google Inc.
  * All rights reserved.

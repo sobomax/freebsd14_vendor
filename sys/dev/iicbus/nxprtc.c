@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e5162fcd39524f17a8d4f6758c562c2ba75964c $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for NXP real-time clock/calendar chips:

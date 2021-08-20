@@ -1,4 +1,4 @@
-/*	$FreeBSD: f1ffdc9b72047848d2a64980e85d5bc3a9a1199e $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ipcomp.h,v 1.8 2000/09/26 07:55:14 itojun Exp $	*/
 
 /*-

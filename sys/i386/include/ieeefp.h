@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  * 	from: @(#) ieeefp.h 	1.0 (Berkeley) 9/23/93
- * $FreeBSD: 0ab8fe9259dd22bd7642d968b0d393b8d2f49d62 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_IEEEFP_H_

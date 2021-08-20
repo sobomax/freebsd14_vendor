@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3edd061ba5202e68f2de59596e7f9dca89d55f03 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI "universal" communications card driver configuration data (used to

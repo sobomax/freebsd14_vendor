@@ -19,7 +19,7 @@
 ## Software Foundation, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
 ## USA.
 
-## $FreeBSD: 31e6cc61f6efc8e2f14434c5368ca76a44c63212 $
+## $FreeBSD$
 
 
 # Symbols in the support library (libsupc++) have their own tag.

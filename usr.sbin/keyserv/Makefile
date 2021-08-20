@@ -1,4 +1,4 @@
-# $FreeBSD: 42d86b27c29c6caa61b6bd69063757019eae0c25 $
+# $FreeBSD$
 
 PROG=	keyserv
 MAN=	keyserv.8

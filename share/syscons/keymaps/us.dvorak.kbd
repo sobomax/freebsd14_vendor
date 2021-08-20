@@ -7,7 +7,7 @@
 #
 #   -Satoshi
 #
-# $FreeBSD: bc475b25d4d89c443c319a8c158b12840baf0fe8 $
+# $FreeBSD$
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

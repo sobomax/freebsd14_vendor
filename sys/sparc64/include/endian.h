@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)endian.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: f94a6df29b89682164da1fc01b690acffdd01018 $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ENDIAN_H_

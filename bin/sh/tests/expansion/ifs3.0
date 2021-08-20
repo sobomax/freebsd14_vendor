@@ -1,4 +1,4 @@
-# $FreeBSD: 0569b5729cae7fd9f93688cd2884a021e68e5eb6 $
+# $FreeBSD$
 
 failures=0
 unset LC_ALL

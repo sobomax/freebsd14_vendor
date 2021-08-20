@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 57a4b49bd2a6ba3550522b5ee3183e162d209dec $");
+__FBSDID("$FreeBSD$");
 
 /*
  * A basic exercise of uuencode reading and writing.

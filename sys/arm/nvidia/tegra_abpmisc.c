@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d51ec2e9729ca3a628621cff63b98fc842ce5d58 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SoC misc configuration and indentification driver.

@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* $FreeBSD: 8b38834d51705040db97955ddb07d862021ff673 $ */
+/* $FreeBSD$ */
 
 #include "gzguts.h"
 #include <unistd.h>

@@ -35,7 +35,7 @@
  *
  *	@(#)procfs_mem.c	8.5 (Berkeley) 6/15/94
  *
- * $FreeBSD: 59f039064d0990ad6930ac115a8897a6ab7ae5e5 $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

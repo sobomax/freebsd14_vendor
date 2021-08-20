@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4b34216fd65e5981557c34ad927a6f81a8fe8fb8 $
+ * $FreeBSD$
  */
 
 struct mkuz_fifo_queue {

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 09987b10f421e38609783fb203ebf44df4f44895 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for `Schizo' Fireplane/Safari to PCI 2.1, `Tomatillo' JBus to

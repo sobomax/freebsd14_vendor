@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)6.t	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: 3ae687059131fb5805184aef43474f77567a70ed $
+.\" $FreeBSD$
 .\"
 .\".ds RH "Adding New Devices
 .ne 2i

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6f0fb8f7a4deb852699c3014f5eb802bfc3db136 $");
+__FBSDID("$FreeBSD$");
 
 static void
 test_format(int	(*set_format)(struct archive *))

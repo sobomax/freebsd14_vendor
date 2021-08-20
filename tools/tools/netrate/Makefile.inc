@@ -1,4 +1,4 @@
-# $FreeBSD: 3b1228c2879a0f189e0ebb6cf1face25ccf75d11 $
+# $FreeBSD$
 
 WARNS?= 5
 WFORMAT?= 2

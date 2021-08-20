@@ -1,4 +1,4 @@
-# $FreeBSD: 9e81f58a0a992c5469d58b92c341449eb7c13b76 $
+# $FreeBSD$
 
 e= s='foo'
 failures=''

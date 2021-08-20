@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)domain.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 513d624b227cfb92b273fdd2fe0d3e42f6547c7f $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_DOMAIN_H_

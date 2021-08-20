@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5545fe9290d1458de6f6c7e3bbff0fb58258f409 $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>		/* miscellaneous asm macros */

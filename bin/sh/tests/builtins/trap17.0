@@ -1,4 +1,4 @@
-# $FreeBSD: 89be893edd1ab42aab851493766a7e8162e72439 $
+# $FreeBSD$
 # This use-after-free bug probably needs non-default settings to show up.
 
 v1=nothing v2=nothing

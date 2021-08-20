@@ -1,4 +1,4 @@
-# $FreeBSD: 27b6fdbf67e4740a0bb7e942b9897db788d35924 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/multipath
 

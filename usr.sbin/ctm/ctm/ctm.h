@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: b733539bbd9772203b3f952690e2afaab64e3e05 $
+ * $FreeBSD$
  *
  */
 

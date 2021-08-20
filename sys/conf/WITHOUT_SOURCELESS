@@ -1,7 +1,7 @@
 #
 # WITHOUT_SOURCELESS -- Disable drivers that include sourceless code.
 #
-# $FreeBSD: 3425dda644876cc72b55cacdc4f139b590a8af62 $
+# $FreeBSD$
 
 include WITHOUT_SOURCELESS_HOST
 include WITHOUT_SOURCELESS_UCODE

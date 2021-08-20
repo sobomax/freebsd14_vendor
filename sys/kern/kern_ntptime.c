@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0a0a673d0382c06003a21d34ad9b4ec91ff1885 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ntp.h"
 

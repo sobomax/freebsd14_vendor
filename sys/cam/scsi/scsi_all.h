@@ -14,7 +14,7 @@
  *
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
- * $FreeBSD: 475042c70aa6a362444507201aa634cf445b6610 $
+ * $FreeBSD$
  */
 
 /*

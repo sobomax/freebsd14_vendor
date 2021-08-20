@@ -20,7 +20,7 @@
 /* Driver for Microdia's HID based TEMPer Temperature sensor */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88190b03a086e559ce4c6f9121b9ac010c4d65d7 $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>

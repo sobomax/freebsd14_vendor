@@ -1,4 +1,4 @@
-# $FreeBSD: 345eafc5b4a6a4f3e5d34e1108a31e7ae9fd0591 $
+# $FreeBSD$
 
 SUBDIR=	intel_ipw \
 	intel_iwi \

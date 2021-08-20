@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: a908f5301bc60d99fb143eae245cdc02f6e3f5d7 $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_missing_file)
 {

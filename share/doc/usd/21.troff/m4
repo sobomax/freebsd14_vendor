@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)m4	8.1 (Berkeley) 8/14/93
 .\"
-.\" $FreeBSD: 931ac480a2e0ca841ee649c5b7695724a38baa30 $
+.\" $FreeBSD$
 .tr |
 .mh
 Hyphenation.

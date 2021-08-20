@@ -1,4 +1,4 @@
-# $FreeBSD: 85e4b233aea72a854f8a61b846ecbe71aa0cd843 $
+# $FreeBSD$
 
 ATF_TESTS_SH+=	makefs_cd9660_tests
 ATF_TESTS_SH+=	makefs_ffs_tests

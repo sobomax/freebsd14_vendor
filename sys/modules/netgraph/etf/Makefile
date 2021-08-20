@@ -1,4 +1,4 @@
-# $FreeBSD: d807bc91c848b2273b5f078b59cdc54535dbe5a3 $
+# $FreeBSD$
 # Ethertype filter
 
 KMOD=	ng_etf

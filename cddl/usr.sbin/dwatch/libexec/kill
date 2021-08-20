@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for kill(2) [or similar] entry $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD: c30e951381c3278aeff6d65e60a3527cbcb94fda $
+# $FreeBSD$
 #
 ############################################################ DESCRIPTION
 #

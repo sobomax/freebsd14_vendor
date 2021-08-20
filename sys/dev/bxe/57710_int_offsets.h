@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98ed67c1913d9dffdcea7e81868fd8e61caf69a7 $");
+__FBSDID("$FreeBSD$");
 
 
 static const struct iro e1_iro_arr[385] = {

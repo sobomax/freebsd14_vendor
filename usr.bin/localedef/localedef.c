@@ -32,7 +32,7 @@
  * POSIX localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40b4ee58367f16d1e1a1b218996eda43f4d9602f $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/stat.h>

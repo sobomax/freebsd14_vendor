@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c26cad458e56e5aa7d667c512f2dc4a71ba9d033 $
+# $FreeBSD$
 
 # Functions which unmount all mounted disk filesystems
 

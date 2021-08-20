@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 804b1243a4c4998681e25edaf1d9d0a2b3813229 $
+# $FreeBSD$
 #
 
 # PROVIDE: nfsuserd

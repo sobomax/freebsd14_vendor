@@ -1,4 +1,4 @@
-/* $FreeBSD: 5bb9a31a38321373965bf13ed798ff8a830be2b1 $ */
+/* $FreeBSD$ */
 #define b00101010 -1
 void
 t(void)

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: bd3ac44886c58424f6df377ce767c3359f26e220 $
+# $FreeBSD$
 
 # Functions which perform mounting / unmounting and switching of 
 # optical / usb media

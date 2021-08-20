@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 2fc9f926af787e8c3382ee7ee6bb4744aeb05b49 $ */
+/* $FreeBSD$ */
 /*
  * A VHBA device that has a medium number of device.
  */

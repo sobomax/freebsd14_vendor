@@ -1,5 +1,5 @@
 # 	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 32bfa8de0a0e31802fbb02b8886a923ed6d69e30 $
+# $FreeBSD$
 
 SRCDIR:=${.PARSEDIR:tA}
 

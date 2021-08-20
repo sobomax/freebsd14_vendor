@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b6b02876d4fe6f409d211e441f5117c94fa5f38a $
+# $FreeBSD$
 #
 
 # PROVIDE: sppp

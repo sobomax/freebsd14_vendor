@@ -1,4 +1,4 @@
-.\" $FreeBSD: 9ab94f04f36ea4a4a303dde4b8e9b7145c2bd580 $
+.\" $FreeBSD$
 Set to not execute
 .Dq Li "make check"
 in limited sandbox mode.

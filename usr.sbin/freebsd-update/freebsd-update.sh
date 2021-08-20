@@ -27,7 +27,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: 004515bb8bf864c1430bd2c3270355523ccf52d4 $
+# $FreeBSD$
 
 #### Usage function -- called from command-line handling code.
 

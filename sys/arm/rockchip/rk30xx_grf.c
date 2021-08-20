@@ -29,7 +29,7 @@
 /* General Register File for Rockchip RK30xx */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 585b9fef07fe55056209f16d9344de3de348becf $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

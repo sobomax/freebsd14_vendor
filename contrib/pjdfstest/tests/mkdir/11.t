@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 118ca3af88963f7a85cff20995c66724bc8fbf5d $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/11.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mkdir returns ENOSPC if there are no free inodes on the file system on which the directory is being created"
 

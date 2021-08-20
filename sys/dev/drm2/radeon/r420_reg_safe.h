@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c929b0b848c6595dcc284752b6f8064eda10a0f3 $");
+__FBSDID("$FreeBSD$");
 
 static const unsigned r420_reg_safe_bm[159] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

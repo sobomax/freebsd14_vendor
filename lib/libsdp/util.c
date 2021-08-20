@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: util.c,v 1.5 2003/09/08 02:29:35 max Exp $
- * $FreeBSD: 8e3cfea2ea761d432b4ea03487866c0e8152dfae $
+ * $FreeBSD$
  */
 
 #include <netinet/in.h>

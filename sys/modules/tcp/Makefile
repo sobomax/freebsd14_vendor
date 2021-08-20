@@ -1,5 +1,5 @@
 #
-# $FreeBSD: abcd4507b695d2735c4545fac658f6372d8d5edc $
+# $FreeBSD$
 #
 
 .include <kmod.opts.mk>

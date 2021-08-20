@@ -1,4 +1,4 @@
-# $FreeBSD: b687b88cf254aca008313a15fab060a5ced269ab $
+# $FreeBSD$
 
 FILESDIR=	${LIBEXECDIR}/bsdconfig/dot/include
 FILES=		messages.subr

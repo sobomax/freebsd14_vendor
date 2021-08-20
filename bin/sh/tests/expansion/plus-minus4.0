@@ -1,4 +1,4 @@
-# $FreeBSD: 66dea3851efc86713bd5b7e95304f9904a07dd01 $
+# $FreeBSD$
 
 # These may be a bit unclear in the POSIX spec or the proposed revisions,
 # and conflict with bash's interpretation, but I think ksh93's interpretation

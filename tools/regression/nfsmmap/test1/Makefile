@@ -1,4 +1,4 @@
-# $FreeBSD: 5802538d2cedb02feec987735910f9d9bc5b0a7f $
+# $FreeBSD$
 
 PROG= test1
 MAN=

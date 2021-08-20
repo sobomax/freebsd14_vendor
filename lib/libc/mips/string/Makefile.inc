@@ -1,4 +1,4 @@
-# $FreeBSD: 266446c9d13281d8b736a8d8b149aaf7af5baadc $
+# $FreeBSD$
 
 MDSRCS+= \
 	bcmp.S \

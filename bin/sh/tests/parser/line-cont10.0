@@ -1,4 +1,4 @@
-# $FreeBSD: 1e74108757a0070df2f6872e2595bc704f2d476c $
+# $FreeBSD$
 
 v=XaaaXbbbX
 [ "${v\

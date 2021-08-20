@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 8c457a98c0c5bc479e08223a556d03963a086275 $
+# $FreeBSD$
 #
 
 # PROVIDE: utx

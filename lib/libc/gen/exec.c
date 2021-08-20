@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)exec.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 2c703bb4e73e2a8403e17b92686ad2778a44ba34 $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/param.h>

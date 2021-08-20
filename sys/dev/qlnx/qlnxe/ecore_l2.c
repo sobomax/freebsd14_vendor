@@ -29,7 +29,7 @@
  * File : ecore_l2.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5138ee6e9f3f4556dcedaf068916d10147a7a9e2 $");
+__FBSDID("$FreeBSD$");
 
 #include "bcm_osal.h"
 

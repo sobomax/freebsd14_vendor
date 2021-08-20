@@ -3,7 +3,7 @@
 # Extensible RISC Implementation) FPGA soft core, as configured for
 # simulation.
 #
-# $FreeBSD: f80118dcab481a7de0565674da76db87239a4f9f $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

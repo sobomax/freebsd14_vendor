@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a4214997007e0cd19dc4a7f974fd67bbb41bbfb4 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Userboot disk image handling.

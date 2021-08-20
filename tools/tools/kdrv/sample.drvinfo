@@ -2,7 +2,7 @@
 # Sample driver information file for KernelDriver.  See the top of
 # the KernelDriver script for a more exact definition of the syntax.
 #
-# $FreeBSD: 4941b07082c4b2a5d0776277f20e06a3317a1f9d $
+# $FreeBSD$
 
 # Device driver name
 #

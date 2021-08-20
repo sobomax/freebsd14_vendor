@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)00.contents	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: 989fb16ce6c1c096373cd6612d46791df1ef13ff $
+.\" $FreeBSD$
 .\"
 .OH '''PSD Contents'
 .EH 'PSD Contents'''

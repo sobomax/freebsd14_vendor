@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: c2747ae08ca219e49194a4115f94d720c3258e44 $
+# $FreeBSD$
 #
 
 # PROVIDE: kdc

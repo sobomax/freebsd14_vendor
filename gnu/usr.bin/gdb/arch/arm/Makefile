@@ -1,4 +1,4 @@
-# $FreeBSD: 22aee06a7bf4ff253ba92b68c99da2df84a214fa $
+# $FreeBSD$
 
 GENSRCS+= xm.h
 LIBSRCS+= armfbsd-nat.c

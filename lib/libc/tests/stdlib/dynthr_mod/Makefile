@@ -1,4 +1,4 @@
-# $FreeBSD: b2a93b3af6d659d2c87b5aa1c70ece9ca9a02680 $
+# $FreeBSD$
 
 SHLIB_NAME=	dynthr_mod.so
 SHLIBDIR=	${TESTSDIR}

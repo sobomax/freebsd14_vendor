@@ -1,4 +1,4 @@
-/* $FreeBSD: 36418d30fedf4b135cca3d1a749e8f53677c78e6 $ */
+/* $FreeBSD$ */
 
 /* #undef HAVE_SYS_BYTEORDER_H */
 /* #undef HAVE_AVAILABILITY_MACROS_H */

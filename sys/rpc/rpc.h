@@ -31,7 +31,7 @@
  *
  *	from: @(#)rpc.h 1.9 88/02/08 SMI
  *	from: @(#)rpc.h	2.4 89/07/11 4.0 RPCSRC
- * $FreeBSD: 82cf3c022292225cb9ea131dd608ac88204b0879 $
+ * $FreeBSD$
  */
 
 /*

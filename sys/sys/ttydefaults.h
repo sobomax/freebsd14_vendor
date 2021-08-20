@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ttydefaults.h	8.4 (Berkeley) 1/21/94
- * $FreeBSD: c269c56fd23f7846a2073c41ec24fc22fe9e0d0b $
+ * $FreeBSD$
  */
 
 /*

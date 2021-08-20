@@ -1,4 +1,4 @@
-/* $FreeBSD: 55c1f76ecd69f2f3271c024aa742b5f1e1836a99 $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from armv8-mont.pl. */
 .text
 

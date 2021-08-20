@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 82cbad3088e0b9e6a6a8bf9480dc5ee61442990b $
+# $FreeBSD$
 
 hline_press_enter_or_space="Press enter or space"
 msg_auto="Auto"

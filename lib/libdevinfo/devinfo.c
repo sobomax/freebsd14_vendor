@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4cd8d78ba9458eb216f2b149ba3b9bca09ae267 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * An interface to the FreeBSD kernel's bus/device information interface.

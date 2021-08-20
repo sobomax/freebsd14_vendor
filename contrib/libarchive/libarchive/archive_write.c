@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: f74fdaed6729e26a7091ed89a617bf68440a5444 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file contains the "essential" portions of the write API, that

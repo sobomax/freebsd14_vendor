@@ -1,4 +1,4 @@
-/* $FreeBSD: 3075a52d2eec59c99de5a75da499de36debf268d $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from rsaz-avx2.pl. */
 .text	
 

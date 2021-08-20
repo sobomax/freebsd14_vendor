@@ -1,4 +1,4 @@
-; $FreeBSD: ca71a8bb5685b50dc0cfadec166e833669f3c48f $
+; $FreeBSD$
 
 mno-align-long-strings
 Target RejectNegative Report Mask(NO_ALIGN_LONG_STRINGS)

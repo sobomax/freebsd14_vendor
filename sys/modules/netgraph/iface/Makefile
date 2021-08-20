@@ -1,4 +1,4 @@
-# $FreeBSD: 8b50a3c4a46f82da2acd70e77e40a20c0dff05fb $
+# $FreeBSD$
 # $Whistle: Makefile,v 1.2 1999/01/19 19:39:21 archie Exp $
 
 KMOD=	ng_iface

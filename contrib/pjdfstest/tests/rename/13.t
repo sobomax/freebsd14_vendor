@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 7e06cc949084211ab8973039ccb719daf706a19f $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/13.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="rename returns ENOTDIR when the 'from' argument is a directory, but 'to' is not a directory"
 

@@ -30,7 +30,7 @@
 /* Common PCIe functions for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7a9838943d1d791947ce2086f91400d687389526 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

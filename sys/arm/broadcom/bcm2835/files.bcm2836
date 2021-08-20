@@ -1,4 +1,4 @@
-# $FreeBSD: 43b6b6c25c2d07e4761f30765802798b9cafc721 $
+# $FreeBSD$
 
 arm/broadcom/bcm2835/bcm2836.c			standard
 arm/broadcom/bcm2835/bcm2836_mp.c		optional smp

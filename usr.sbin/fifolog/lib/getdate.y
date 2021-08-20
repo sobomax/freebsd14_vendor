@@ -12,7 +12,7 @@
 **  Picked up from CVS and slightly cleaned up by to WARNS=5 level by
 **  Poul-Henning Kamp <phk@FreeBSD.org>
 **
-** $FreeBSD: 53a515c4d17e3986fac02651ff05f4a2efef690f $
+** $FreeBSD$
 */
 
 #include <stdio.h>

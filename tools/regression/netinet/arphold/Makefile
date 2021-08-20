@@ -1,4 +1,4 @@
-# $FreeBSD: 6b679d39815ac2cf448cd93657db944c9e69cdb1 $
+# $FreeBSD$
 
 PROG=	arphold
 MAN=

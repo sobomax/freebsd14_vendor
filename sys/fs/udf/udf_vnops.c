@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b1b004f95166c28eb84cd621e4a1fd276ac703ee $
+ * $FreeBSD$
  */
 
 /* udf_vnops.c */

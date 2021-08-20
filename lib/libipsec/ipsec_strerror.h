@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3eed691eeb753248932988e18ce5f5a27f571f40 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ipsec_strerror.h,v 1.8 2000/07/30 00:45:12 itojun Exp $	*/
 
 /*-

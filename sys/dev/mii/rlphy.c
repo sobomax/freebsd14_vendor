@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6433faf2314241fb9262d44daeda87bd60c90c34 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * driver for RealTek 8139 internal PHYs

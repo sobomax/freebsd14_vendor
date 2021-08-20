@@ -1,4 +1,4 @@
-# $FreeBSD: 79c737b653e043cd6bc23e1391d6aca109cd11f6 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/tpm
 

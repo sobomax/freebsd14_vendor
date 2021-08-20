@@ -29,7 +29,7 @@ you didn't get a copy, you may request one from <license@inner.net>.
 		Bug fixes.
 	Created at NRL for OPIE 2.2.
 
-$FreeBSD: da264640819a8fe33a2a2f7d7eaca37204dc4815 $
+$FreeBSD$
 */
 
 #include "opie_cfg.h"

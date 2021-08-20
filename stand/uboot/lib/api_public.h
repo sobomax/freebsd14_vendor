@@ -48,7 +48,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f393de88933b30d582a127cc140c50d30bade463 $
+ * $FreeBSD$
  *
  * This file needs to be kept in sync with U-Boot reference:
  * http://www.denx.de/cgi-bin/gitweb.cgi?p=u-boot.git;a=blob;f=include/api_public.h

@@ -26,7 +26,7 @@
 #
 #       Email: Mike Makonnen <mtm@FreeBSD.Org>
 #
-# $FreeBSD: 91a1b4b4cf016aa4a048a2fea2487d65112274e7 $
+# $FreeBSD$
 #
 
 # err msg

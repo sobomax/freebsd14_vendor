@@ -1,5 +1,5 @@
 # Makefile
-# $FreeBSD: b7adadf3d5149bd599f575e85cf51c94ddca4d82 $
+# $FreeBSD$
 
 PROG=	bootpgw
 MAN=

@@ -11,7 +11,7 @@
  * In return you should think about all the nice people who give away software.
  * Maybe you should write some free software too.
  *
- * $FreeBSD: 72c5ae741f3f3bf72cc6b8846d95d41fb722c2dc $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

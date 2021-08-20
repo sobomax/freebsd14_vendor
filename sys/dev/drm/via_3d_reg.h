@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7a5b3b6e5ba4ea3c42ccc154600b8bf3a0f471ef $");
+__FBSDID("$FreeBSD$");
 
 #ifndef VIA_3D_REG_H
 #define VIA_3D_REG_H

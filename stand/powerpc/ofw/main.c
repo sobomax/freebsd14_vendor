@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 93a439f8f6093be078db9360a0731a30e16c3ea4 $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include "openfirm.h"

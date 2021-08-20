@@ -1,4 +1,4 @@
-# $FreeBSD: 179c38b53fff3ce11bfe513032c3278d039796ce $
+# $FreeBSD$
 # RCSid:
 #       $Id: dirdeps-targets.mk,v 1.9 2019/10/06 20:07:50 sjg Exp $
 #

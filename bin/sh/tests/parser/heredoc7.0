@@ -1,4 +1,4 @@
-# $FreeBSD: a15010648780c74cb25149dc80fa32196b5fe0f8 $
+# $FreeBSD$
 
 # Some of these created malformed parse trees with null pointers for here
 # documents, causing the here document writing process to segfault.

@@ -1,4 +1,4 @@
-# $FreeBSD: 2c4859fcd959dfc54f143e5d622376532eca3018 $
+# $FreeBSD$
 
 PROG=	brandelf
 

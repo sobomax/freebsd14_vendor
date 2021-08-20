@@ -1,4 +1,4 @@
-# $FreeBSD: 0076c08d795aa99397880f8ce53f9018ad500780 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/amd64/sgx
 

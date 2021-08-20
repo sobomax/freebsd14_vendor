@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fd9dbd40fb394e60c65f155875677f983427a63 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Function fnmatch() as specified in POSIX 1003.2-1992, section B.6.

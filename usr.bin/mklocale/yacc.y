@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)yacc.y	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92d99721b160180f0eea99e2167ea883f86abc12 $");
+__FBSDID("$FreeBSD$");
 
 #include <arpa/inet.h>
 

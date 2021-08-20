@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fee9aae8b5f68321e37379fafdf36ad3189864db $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver to take care of holes in ISA I/O memory occupied

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)trap.h	8.3 (Berkeley) 6/5/95
- * $FreeBSD: 63d0bd5e70b1504a40bfbb4b50ae5930413cb4b1 $
+ * $FreeBSD$
  */
 
 extern volatile sig_atomic_t pendingsig;

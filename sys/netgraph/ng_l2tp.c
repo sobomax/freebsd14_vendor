@@ -36,7 +36,7 @@
  * 
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: a44407511d926e61f3d17c179418ccb54afb88df $
+ * $FreeBSD$
  */
 
 /*

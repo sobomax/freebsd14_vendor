@@ -1,4 +1,4 @@
-# $FreeBSD: 072bbba8a840ba41cc9b0251591a2337bcf526d5 $
+# $FreeBSD$
 #
 PROG=		oinit
 

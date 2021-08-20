@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: 1f43e1d2a76c325fd41e0fbc057c946ab7770634 $
+# $FreeBSD: head/tools/regression/pjdfstest/tests/mknod/04.t 211352 2010-08-15 21:24:17Z pjd $
 
 desc="mknod returns ENOENT if a component of the path prefix does not exist"
 

@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: bbf5be666ea013108405c9ebeedf3cb0b8c5ce6f $
+ * $FreeBSD$
  *
  * In-kernel nat support
  */

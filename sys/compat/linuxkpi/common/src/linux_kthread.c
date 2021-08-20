@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 198082615076fd4fd50cd6322da363d5134d1a7e $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/compat.h>
 #include <linux/kthread.h>

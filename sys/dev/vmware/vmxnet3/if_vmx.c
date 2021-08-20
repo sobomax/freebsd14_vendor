@@ -21,7 +21,7 @@
 /* Driver for VMware vmxnet3 virtual ethernet devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a113b7e33bdcf08867f08c069c2c5f3e8a014c99 $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: d64d400e8c060e7941e077d95b329cf70dad58a4 $ */
+/* $FreeBSD$ */
 /** @file
   EDID Override Protocol from the UEFI 2.0 specification.
 

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 80728932cb5412c74c0f87d52078a56c93e73bce $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Test converting ACLs to text, both wide and non-wide

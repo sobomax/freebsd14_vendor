@@ -1,4 +1,4 @@
-# $FreeBSD: 48fdfc88ebeca3dbad661557fe30a739a26fdd82 $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/sio
 

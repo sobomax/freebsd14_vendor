@@ -6,7 +6,7 @@
  *   of this software, nor does the author assume any responsibility
  *   for damages incurred with its use.
  *
- * $FreeBSD: 84064bd030793bc67f4f139cefd23ad2e1d633b5 $
+ * $FreeBSD$
  */
 /*
  * National Semiconductor DS8390 NIC register definitions

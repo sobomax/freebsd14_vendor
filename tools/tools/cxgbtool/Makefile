@@ -1,4 +1,4 @@
-# $FreeBSD: 5aa08f12196104eed98c96ede54c0724a03e8301 $
+# $FreeBSD$
 
 PROG=	cxgbtool
 SRCS=	cxgbtool.c

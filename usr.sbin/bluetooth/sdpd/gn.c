@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: gn.c,v 1.1 2008/03/11 00:02:42 max Exp $
- * $FreeBSD: 894701b81481f45384aad0a310b6aa98ed3bf0a8 $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>

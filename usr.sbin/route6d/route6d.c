@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7d873d4dfa40750a459b5c42871979b281cdad31 $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: route6d.c,v 1.104 2003/10/31 00:30:20 itojun Exp $	*/
 
 /*-

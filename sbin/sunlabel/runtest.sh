@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 73833e0b7fee4820156469341240a9c1a6d18ffb $
+# $FreeBSD$
 
 TMP=/tmp/$$.
 set -e

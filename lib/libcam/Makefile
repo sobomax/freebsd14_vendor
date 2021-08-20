@@ -1,4 +1,4 @@
-# $FreeBSD: 24441708b49b04b5f04aba061772a4ab00f03c34 $
+# $FreeBSD$
 
 PACKAGE=	lib${LIB}
 LIB=		cam

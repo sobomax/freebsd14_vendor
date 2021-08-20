@@ -1,4 +1,4 @@
-# $FreeBSD: c1c9f91a4a6df28c726e81fcc1b43c86db126b19 $
+# $FreeBSD$
 
 .if !target(__netbsd_tests.test.mk__)
 __netbsd_tests.test.mk__:

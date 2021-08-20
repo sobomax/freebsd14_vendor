@@ -1,4 +1,4 @@
-# $FreeBSD: e725436adb342bbdc47056d73b48ca91b3d62cc2 $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/sound/usb
 

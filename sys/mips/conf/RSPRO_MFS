@@ -1,7 +1,7 @@
 #
 # Ubiquiti Routerstation Pro: boot from MFS
 #
-# $FreeBSD: 029b4e68bbe9d61f9aebc388b4a4758616c851ea $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

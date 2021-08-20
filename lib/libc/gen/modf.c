@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d67b44121aaa8fd1b899309c37fe5137936f1315 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * modf(double x, double *iptr)

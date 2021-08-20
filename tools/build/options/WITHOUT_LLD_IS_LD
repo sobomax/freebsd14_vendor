@@ -1,2 +1,2 @@
-.\" $FreeBSD: 0d48f205d85d0ecd9bcb5688794e8800d6033831 $
+.\" $FreeBSD$
 Set to use GNU binutils ld as the system linker, instead of LLVM's LLD.

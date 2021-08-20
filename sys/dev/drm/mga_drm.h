@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2754c934413a5db360254523b6b2a20bc1aadae0 $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __MGA_DRM_H__
 #define __MGA_DRM_H__

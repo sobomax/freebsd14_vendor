@@ -1,4 +1,4 @@
-# $FreeBSD: ba276338efd8fe21211bb9ded20c3ae053064957 $
+# $FreeBSD$
 files	"../beri/files.beri"
 
 cpu		CPU_MIPS4KC

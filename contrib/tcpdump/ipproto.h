@@ -32,7 +32,7 @@
  *
  * From:
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: aeefc809dd3b42e806daae90b5b4b15866f8504f $
+ * $FreeBSD: projects/clang400-import/contrib/tcpdump/ipproto.h 276788 2015-01-07 19:55:18Z delphij $
  */
 
 extern const struct tok ipproto_values[];

@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)mail0.nr	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD: 355a894d6e99ec3b2de25465bae46a53c8cc41df $
+.\" $FreeBSD$
 .\"
 .eh 'USD:7-%''Mail Reference Manual'
 .oh 'Mail Reference Manual''USD:7-%'

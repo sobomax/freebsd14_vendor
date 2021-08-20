@@ -36,7 +36,7 @@
 .\" 
 .\"	@(#)table2	8.1 (Berkeley) 8/14/93
 .\"
-.\" $FreeBSD: 7d212c0e6a2464b3ec71dd8ca0a85e384eee8441 $
+.\" $FreeBSD$
 .sp 100
 .br
 .de mx

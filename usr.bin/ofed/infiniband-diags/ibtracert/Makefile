@@ -1,4 +1,4 @@
-# $FreeBSD: ea6d66a5dde5c4291aad6eb9d6e8f089b4c4c27f $
+# $FreeBSD$
 
 PROG=	ibtracert
 SRCS=	ibtracert.c

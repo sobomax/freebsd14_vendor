@@ -1,4 +1,4 @@
-.\" $FreeBSD: 646edd341c3572d99f50658865013e777c7cb79f $
+.\" $FreeBSD$
 Set to not build the LLD linker during the bootstrap phase of
 the build.
 To be able to build the system, either Binutils or LLD bootstrap must be

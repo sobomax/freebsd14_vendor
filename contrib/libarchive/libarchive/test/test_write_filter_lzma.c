@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 68e489832504d4140a2d784bf48f6b7058044b47 $");
+__FBSDID("$FreeBSD: head/lib/libarchive/test/test_write_compress_lzma.c 191183 2009-04-17 01:06:31Z kientzle $");
 
 /*
  * A basic exercise of lzma reading and writing.

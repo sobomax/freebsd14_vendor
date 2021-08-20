@@ -1,4 +1,4 @@
-# $FreeBSD: b668613a5248dd97cdaf748d29f3b8a66c0a9e36 $
+# $FreeBSD$
 
 PROG=view
 SRCS=view.c

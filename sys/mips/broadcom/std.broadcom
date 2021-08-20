@@ -1,4 +1,4 @@
-# $FreeBSD: 68aa974ae6120a2edcf5e3cd539b6b24267a9a54 $
+# $FreeBSD$
 #
 
 machine		mips mipsel

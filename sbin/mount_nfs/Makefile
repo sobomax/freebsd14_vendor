@@ -1,6 +1,6 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/27/94
 #
-# $FreeBSD: a896edef898f6377ab482eb3eddd9d6a0250867f $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	mount_nfs

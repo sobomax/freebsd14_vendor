@@ -1,3 +1,3 @@
-.\" $FreeBSD: 72157543f27a0faa66a5736beb5a28fde171853e $
+.\" $FreeBSD$
 Set to not build
 .Xr freebsd-update 8 .

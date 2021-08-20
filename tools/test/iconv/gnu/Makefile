@@ -1,4 +1,4 @@
-# $FreeBSD: d52876e3aa1836c43d21472a2c4acb0963c90352 $
+# $FreeBSD$
 
 PROG=	gnu
 MAN=

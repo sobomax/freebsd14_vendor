@@ -1,4 +1,4 @@
-# $FreeBSD: d001f9b4ed2a694ff5723af6f5bfc3f1dedba2fd $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/hptiop
 

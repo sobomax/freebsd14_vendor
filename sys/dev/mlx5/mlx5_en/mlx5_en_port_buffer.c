@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ebf61d521cec7c0b72d81f0c7cb8a615180ace34 $
+ * $FreeBSD$
  */
 
 #include "port_buffer.h"

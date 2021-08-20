@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd.c,v 1.20 2004/11/15 23:53:30 max Exp $
- * $FreeBSD: f03932d6ecd7ffa4d0d06da1436a9442d7d32997 $
+ * $FreeBSD$
  */
 
 #include "opt_kbd.h"

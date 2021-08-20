@@ -2,7 +2,7 @@
  * This file is in the public domain.  Written by Garrett A. Wollman,
  * 2002-09-07.
  *
- * $FreeBSD: e7f0f5104f93a7ed4dbd0fba245c3d9b16a0392a $
+ * $FreeBSD$
  */
 
 #include <stdlib.h>

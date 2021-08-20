@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0fc6bfca2235cbbfac1a211ad8df112963b7e24e $");
+__FBSDID("$FreeBSD$");
 __SCCSID("@(#)login_tty.c	8.1 (Berkeley) 6/4/93");
 
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 947b3bb7bef5e9aac2d0264a12247748f491759a $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/stripe
 

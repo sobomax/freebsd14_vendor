@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)i386.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 838a14039abda9610c10b02a11689b0301022c3b $
+ * $FreeBSD$
  */
 
     /*

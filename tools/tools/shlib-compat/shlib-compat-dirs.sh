@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-# $FreeBSD: 21ff309874a504a597c3b750476e26a0a00fc167 $
+# $FreeBSD$
 
 SHLIB_COMPAT=$(dirname $0)/shlib-compat.py
 

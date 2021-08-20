@@ -25,7 +25,7 @@
 #define __NI_REG_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f72c01c09b1ee96dfe36444b1e2dd8cb3a35b404 $");
+__FBSDID("$FreeBSD$");
 
 /* northern islands - DCE5 */
 

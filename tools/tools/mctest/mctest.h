@@ -24,7 +24,7 @@
 // SUCH DAMAGE.
 //
 //
-// $FreeBSD: 955464c8795aa689ac9cf2dc2ecf9a7b48bf07d7 $
+// $FreeBSD$
 //
 
 const char* DEFAULT_GROUP = "239.255.255.1";

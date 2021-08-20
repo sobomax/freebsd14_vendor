@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ec3e625c25cd9a614de645ad5de8fb978bf0f07 $");
+__FBSDID("$FreeBSD$");
 
 #include "softfloat-for-gcc.h"
 #include "milieu.h"

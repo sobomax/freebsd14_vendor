@@ -30,7 +30,7 @@
  *
  *	@(#)radix.h	8.2 (Berkeley) 10/31/94
  *
- * $FreeBSD: 4bbd703593313ad5bfd34c30bcbd2bfbcb600bc1 $
+ * $FreeBSD$
  */
 
 #ifndef __RADIX_H_

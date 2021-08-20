@@ -1,2 +1,2 @@
-.\" $FreeBSD: c121fe5ec192c1c79da48ddf4323deb18a08aac2 $
+.\" $FreeBSD$
 Set to build and install gcc and g++.

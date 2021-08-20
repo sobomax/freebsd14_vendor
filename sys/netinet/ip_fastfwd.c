@@ -76,7 +76,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 643a75e2294b8cfaee3034f05ea22cd5894ca85d $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ipstealth.h"
 

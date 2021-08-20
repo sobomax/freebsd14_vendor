@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 300be6c882f5d30160d3a55da322822aa2cc230c $");
+__FBSDID("$FreeBSD$");
 
 #ifndef RADEON_ACPI_H
 #define RADEON_ACPI_H

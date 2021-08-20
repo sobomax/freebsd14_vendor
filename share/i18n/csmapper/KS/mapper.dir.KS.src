@@ -1,4 +1,4 @@
-# $FreeBSD: d50dd3e4d7c9e60a2eab3d3ab2848ea66f1c1a35 $ 
+# $FreeBSD$ 
 # $NetBSD: mapper.dir.KS.src,v 1.2 2006/10/18 17:54:55 tnozaki Exp $
 
 JOHAB/UCS			mapper_std	KS/JOHAB%UCS.mps

@@ -81,7 +81,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eb056bef517674b36597daa5b979f30f0978a64a $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Moschip MCS7730/MCS7830/MCS7832 USB to Ethernet controller

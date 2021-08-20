@@ -58,11 +58,11 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: 9bcc7f78da0fa09bb2da00134a758d399cf2630d $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bcc7f78da0fa09bb2da00134a758d399cf2630d $");
+__FBSDID("$FreeBSD$");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>

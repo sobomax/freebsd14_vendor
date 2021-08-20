@@ -61,7 +61,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: a29c50f11efa4d74e5b70674fa334a38b893eeba $";
+  "$FreeBSD$";
 #endif
 
 #define	NOTAG	((u_short) -1)

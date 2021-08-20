@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 7e099b04f136b2c316c61bb69f0fa5cbdcdc2e08 $")
+__FBSDID("$FreeBSD$")
 
 ENTRY(ceil)
 	pushl	%ebp

@@ -1,4 +1,4 @@
-# $FreeBSD: a798971f798434f0b7f1cf9e44083a28f03bad5c $
+# $FreeBSD$
 
 PROG=	ufs_uprintf
 WARNS?=	3

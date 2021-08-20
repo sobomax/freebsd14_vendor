@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c4b0deb49cff3a3d22e8a43b1992de345f72407 $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MD primitives supporting placement of module data

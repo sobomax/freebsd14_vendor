@@ -1,4 +1,4 @@
-# $FreeBSD: a7aa02688310a31ccecaed684e0c29bff9fd4c70 $
+# $FreeBSD$
 
 bad=1
 case x in

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 93d0655b296f0e86b89ea7be694117cc02f5db0e $
+# $FreeBSD$
 #
 
 # PROVIDE: ppp

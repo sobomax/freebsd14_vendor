@@ -1,4 +1,4 @@
-# $FreeBSD: dd0011f064b0d741102360dc2173d336a5a93e2b $
+# $FreeBSD$
 trap ': $((brokenpipe+=1))' PIPE
 
 P=${TMPDIR:-/tmp}

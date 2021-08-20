@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 39814f17453f7cc7f028756bddbfdcefb74b8653 $
+# $FreeBSD$
 #
 
 # Simulate the build environment.

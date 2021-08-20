@@ -1,4 +1,4 @@
-# $FreeBSD: d0123883cd2e3c82cb0afa2562aca5212a269b64 $
+# $FreeBSD$
 # You probably want to take -DREDEBUG out of CFLAGS, and put something like
 # -O in, *after* testing (-DREDEBUG strengthens testing by enabling a lot of
 # internal assertion checking).  Take -Dconst= out for an ANSI compiler.

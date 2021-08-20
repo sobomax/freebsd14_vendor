@@ -1,2 +1,2 @@
-.\" $FreeBSD: 98e1c560e0fc6301ef7f7869e065dee46ac91453 $
+.\" $FreeBSD$
 Set to not build programs and libraries related to IPv4 networking.

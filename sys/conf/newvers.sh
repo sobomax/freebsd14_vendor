@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: 460c80a4a0e0abbcc19d791a9b66d756d2f8c71f $
+# $FreeBSD$
 
 # Command line options:
 #

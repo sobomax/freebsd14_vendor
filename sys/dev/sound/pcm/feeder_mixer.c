@@ -38,7 +38,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: b2a173a654851d0e22edc35cc4b1105ee7b92f87 $");
+SND_DECLARE_FILE("$FreeBSD$");
 #endif
 
 #undef SND_FEEDER_MULTIFORMAT

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 2fc783a627e9c7df392850654bd075795623da6b $
+# $FreeBSD$
 #
 
 # PROVIDE: powerd

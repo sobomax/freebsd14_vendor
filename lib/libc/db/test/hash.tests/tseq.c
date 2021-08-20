@@ -42,7 +42,7 @@ static char copyright[] =
 static char sccsid[] = "@(#)tseq.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b1f7a9a0867e0056ef731c203ab7efa88d1d42f $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/file.h>

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 21f3ceb16582c42b64bbfc7f7acdbf1b59f27912 $
+# $FreeBSD$
 
 PACKAGE=sendmail
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

@@ -5,7 +5,7 @@
 .\" this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 .\" ----------------------------------------------------------------------------
 .\"
-.\" $FreeBSD: 02ea08daf929b6d9523990aa1222b1603b95f33d $
+.\" $FreeBSD$
 .\"
 .if n .ftr C R
 .nr PI 2n

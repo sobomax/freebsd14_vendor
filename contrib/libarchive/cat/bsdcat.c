@@ -24,7 +24,7 @@
  */
 
 #include "bsdcat_platform.h"
-__FBSDID("$FreeBSD: bdb9c40b91507e3e9b06fa1b3b7a0b6322096561 $");
+__FBSDID("$FreeBSD$");
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H

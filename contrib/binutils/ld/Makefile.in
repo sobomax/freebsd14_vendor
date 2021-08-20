@@ -12,7 +12,7 @@
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
 
-# $FreeBSD: 861822f37969435d8a83155e87d6b905ee5d7332 $
+# $FreeBSD$
 
 @SET_MAKE@
 

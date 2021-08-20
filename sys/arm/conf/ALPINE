@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 59c32cb73630cf8cdf25ee347ee12478d3edb1c8 $
+# $FreeBSD$
 
 ident		ALPINE
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 0cff6202fafa920590c30f81b2a3eaa88c2c044a $
+# $FreeBSD$
 
 PROG=	lptcontrol
 MAN=	lptcontrol.8

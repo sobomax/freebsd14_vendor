@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: rq.c,v 1.7 2001/04/16 04:33:01 bp Exp $
- * $FreeBSD: 7dda4792ea69c440f9352f69a76897c1cc9a1829 $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/ioctl.h>

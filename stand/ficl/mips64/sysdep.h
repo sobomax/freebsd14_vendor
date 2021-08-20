@@ -46,7 +46,7 @@
 ** contact me by email at the address above.
 **
 ** $Id: sysdep.h,v 1.6 2001-04-26 21:41:55-07 jsadler Exp jsadler $
-** $FreeBSD: 5c9e163acb7063233337061596a91e4f0eb6dc7b $
+** $FreeBSD$
 */
 
 #if !defined (__SYSDEP_H__)
