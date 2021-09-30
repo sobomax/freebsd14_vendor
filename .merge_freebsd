@@ -12,10 +12,12 @@ TAG_BR="RELENG_${_FBSD_VER}"
 git fetch freebsd
 CHASH="`git rev-parse --short freebsd/${FBSD_BR}`"
 git checkout "${CHASH}"
-#repofiles="`echo [^.]*`"
-#rm -rf ${repofiles}
-#echo '* ident=FreeBSD' > .gitattributes
-#git checkout -- ${repofiles}
+
+repofiles="`echo [^.]*`"
+rm -rf ${repofiles}
+echo '* ident=FreeBSD' > .gitattributes
+git checkout -- ${repofiles}
+
 mkdir .freebsd_import
 mv [^.]* .freebsd_import
 rm .gitattributes
