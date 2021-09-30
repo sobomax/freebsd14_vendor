@@ -1,5 +1,5 @@
 #	$OpenBSD: ssh_config,v 1.33 2017/05/07 23:12:57 djm Exp $
-#	$FreeBSD$
+#	$FreeBSD: e7d969abed25a777232e0f9425856d67a66304a0 $
 
 # This is the ssh client system-wide configuration file.  See
 # ssh_config(5) for more information.  This file provides defaults for

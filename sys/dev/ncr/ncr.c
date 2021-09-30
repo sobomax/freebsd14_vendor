@@ -40,7 +40,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 58bc2a6af01c0f9a821f3bd10ead8d6c09701369 $");
 
 
 #define NCR_GETCC_WITHMSG

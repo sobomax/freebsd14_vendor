@@ -30,7 +30,7 @@
  *
  *	from: NetBSD: hmereg.h,v 1.16 2003/11/02 11:07:45 wiz Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 6fa0b1219d3af562953da211485b81eef3928932 $
  */
 
 /*

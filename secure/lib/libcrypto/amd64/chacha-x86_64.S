@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b01c1b87d47b4c30d847fd5edae682758c8d13b1 $ */
 /* Do not modify. This file is auto-generated from chacha-x86_64.pl. */
 .text	
 

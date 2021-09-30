@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD$
+ * $FreeBSD: 44dde119015cdf596c9fd7538227aeb40fee11fc $
  */
 
 /* These structures define the layouts for the TLV items stored in static and

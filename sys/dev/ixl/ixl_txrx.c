@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 7f092d47aec390bfa1e7dabd6424b5a3bdc9ee98 $*/
 
 /*
 **	IXL driver TX/RX Routines:

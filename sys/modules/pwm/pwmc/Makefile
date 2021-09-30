@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6e373e467a4a2607555ca569f86ee3ac87b68fc2 $
 
 .PATH:	${SRCTOP}/sys/dev/pwm
 KMOD=	pwmc

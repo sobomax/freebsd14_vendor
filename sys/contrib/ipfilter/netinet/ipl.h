@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: ca3baf2c926f15312df7acb7f27265c496ef6404 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -6,7 +6,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ipl.h	1.21 6/5/96
- * $FreeBSD$
+ * $FreeBSD: ca3baf2c926f15312df7acb7f27265c496ef6404 $
  * Id: ipl.h,v 2.52.2.30 2007/10/16 09:41:00 darrenr Exp $
  */
 

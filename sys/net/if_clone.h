@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: b721e294119b0d38b5a7ecb7b776459dbe7a0603 $
  */
 
 #ifndef	_NET_IF_CLONE_H_

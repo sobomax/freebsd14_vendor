@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b1814bc2e0dfa127a59fab54cc03fde18f43ee38 $
  */
 #define I_AM_HEAPSORT_B
 #include "heapsort.c"

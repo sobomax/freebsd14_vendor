@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c807fa97c98dd8cf2da29fa7883776ece4b2cc64 $");
 
 #include <crypto/camellia/camellia.h>
 #include <opencrypto/xform_enc.h>

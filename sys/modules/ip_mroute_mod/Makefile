@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 082d5ed877b3a965a6c7dd98283a86d3df10c0f0 $
 
 .PATH: ${SRCTOP}/sys/netinet ${SRCTOP}/sys/netinet6
 

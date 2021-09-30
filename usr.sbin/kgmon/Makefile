@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD$
+# $FreeBSD: 5f6a2a37950a8d0d24cfc40f086c2e17b618e2b1 $
 
 PROG=	kgmon
 MAN=	kgmon.8

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a142ef75204e83de6271310f1f88107286537afe $
 
 files		"../mv/files.arm7"
 cpu		CPU_MV_PJ4B

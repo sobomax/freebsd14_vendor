@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD$
+# $FreeBSD: d4ce0fbca8640282faadd3462e54d527c538a48c $
 #
 # optional flags are: MEASURE TESTING DEBUG
 

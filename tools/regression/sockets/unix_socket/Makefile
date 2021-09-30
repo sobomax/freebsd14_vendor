@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bb6045637ed10a697dae6d17850040ea0882af2f $
 
 PROG=	unix_socket
 MAN=

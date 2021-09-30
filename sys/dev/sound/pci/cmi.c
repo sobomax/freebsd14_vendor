@@ -61,7 +61,7 @@
 #include "mixer_if.h"
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 35b3257a00f81d75d1cb5392d885d1ab57ca640a $");
 
 /* Supported chip ID's */
 #define CMI8338A_PCI_ID   0x010013f6

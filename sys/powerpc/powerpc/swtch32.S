@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1bcb08a27132a70e945abf33169a90649cf55fa4 $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-

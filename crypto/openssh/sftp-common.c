@@ -25,7 +25,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: 3d6681467ffd0fd31ace96abae8456e710445632 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

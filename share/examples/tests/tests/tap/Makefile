@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e9a13d0e331a1bdb67145eae203806c82c80a8b8 $
 
 # The release package to use for the tests contained within the directory
 #

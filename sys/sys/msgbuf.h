@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)msgbuf.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: df61f130e46ffec7c93c43af0eed4eb08911010e $
  */
 
 #ifndef _SYS_MSGBUF_H_

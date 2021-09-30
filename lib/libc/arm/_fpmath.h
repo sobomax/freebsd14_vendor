@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: f5ae2f95ad28edd4b7711165b7dc5e924c0b2d01 $
  */
 
 #if defined(__VFP_FP__) || defined(__ARM_EABI__)

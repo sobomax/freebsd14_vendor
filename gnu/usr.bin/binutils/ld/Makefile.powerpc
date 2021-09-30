@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fed52341c089b4f2267e81d7fd57cd5f1b79fd78 $
 
 NATIVE_EMULATION=	elf32ppc_fbsd
 

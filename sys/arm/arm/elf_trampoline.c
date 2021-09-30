@@ -32,7 +32,7 @@
 #include "opt_kernname.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ea33ba82dd6e115ce939a753e1c9e74d41c7d6ee $");
 #include <machine/asm.h>
 #include <sys/param.h>
 #include <sys/elf32.h>

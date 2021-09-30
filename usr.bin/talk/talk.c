@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4b7e748e2f099ed5cdb808c652bc74b7245b0a93 $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)talk.c	8.1 (Berkeley) 6/6/93";

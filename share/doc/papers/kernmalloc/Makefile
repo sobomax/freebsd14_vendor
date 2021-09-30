@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	1.8 (Berkeley) 6/8/93
-# $FreeBSD$
+# $FreeBSD: 02908918a47426c62b0a4dfedf029d48155098cd $
 
 VOLUME=		papers
 DOC=		kernmalloc

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b9c8c0cad109c1cb787bc4380274d159c5edc0a9 $");
 
 static const char *test4out[] = {"file1", "file2", NULL};
 static const char *test5err[] = {"file1", "file2", NULL};

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8bf832e916f0919e086d34410a94ea8dac87d831 $");
 
 /*
  * The machine-dependent part of the arm/pl310 driver for imx6 SoCs.

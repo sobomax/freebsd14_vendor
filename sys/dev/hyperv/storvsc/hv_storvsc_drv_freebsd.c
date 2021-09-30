@@ -35,7 +35,7 @@
  * partition StorVSP driver over the Hyper-V VMBUS.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cab86500ace1cda4b2010a154635cc736aef1b82 $");
 
 #include <sys/param.h>
 #include <sys/proc.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2b10fdcae4a90624f433e36d6e07839d2ed535ae $
 
 SRCDIR=	${SRCTOP}/contrib/pam_modules/pam_passwdqc
 .PATH: ${SRCDIR}

@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD$
+ * $FreeBSD: e41a6faa36a8af73f524b561fbb43d420691afe9 $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.

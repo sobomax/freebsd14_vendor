@@ -6,7 +6,7 @@
 #    ^                               |
 #     \-------------------------------
 #
-# $FreeBSD$
+# $FreeBSD: 1810f3c054950daf7a2580cecd604059d1ee7cb1 $
 #
 PATH=../:.:$PATH
 . config

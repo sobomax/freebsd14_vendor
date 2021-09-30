@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: 816bc3b2415f1d85167ccdd9085008033fda2552 $
  * $Whistle: ng_sample.h,v 1.3 1999/01/20 00:22:14 archie Exp $
  */
 

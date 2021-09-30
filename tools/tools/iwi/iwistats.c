@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 1034dac7701f947e806984f2a012961aef75f7d7 $	*/
 
 /*-
  * Copyright (c) 2005
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1034dac7701f947e806984f2a012961aef75f7d7 $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

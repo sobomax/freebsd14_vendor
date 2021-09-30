@@ -28,7 +28,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 466aa40d9e046b372d69e9305c9abe0e5e524201 $");
 
 /* File data */
 static const char file_name[] = "file";

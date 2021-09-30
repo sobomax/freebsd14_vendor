@@ -1,5 +1,5 @@
 
-# $FreeBSD$
+# $FreeBSD: 882e3334306725a55a6ba89d3f8a42329cee347d $
 
 .PATH:	${SRCTOP}/sys/dev/puc
 

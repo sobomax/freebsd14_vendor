@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 583a9c2f29e54f7a1a49229575e1e19ca38d53bd $
 
 . $(atf_get_srcdir)/conf.sh
 

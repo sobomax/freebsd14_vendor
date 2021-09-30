@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 049e867919f66160c3c70126f7dc64e3bf56ab77 $");
 
 /*
  * Generic I2C bit-banging code

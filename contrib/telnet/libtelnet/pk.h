@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD$
+ * $FreeBSD: 0c254a80c1622bf69e005981e91f26b006732035 $
  */
 
 /* header for the des routines that we will use */

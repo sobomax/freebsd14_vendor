@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_unseal.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: 0add03d4ddb9e1a99062958dda74bfdcddb76588 $
  */
 
 #include "mech_locl.h"

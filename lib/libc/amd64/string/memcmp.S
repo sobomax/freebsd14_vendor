@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 231ab21758045a591fd7c1ee232b84eb9c7e9872 $
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 231ab21758045a591fd7c1ee232b84eb9c7e9872 $");
 
 #define ALIGN_TEXT      .p2align 4,0x90 /* 16-byte alignment, nop filled */
 

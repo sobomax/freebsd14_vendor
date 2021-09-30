@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: frame.h,v 1.2 1999/01/10 10:13:15 tsubai Exp $
- * $FreeBSD$
+ * $FreeBSD: 7a395d7b6196424b3a5d3914ed352577d0f1e1bc $
  */
 
 #ifndef	_MACHINE_FRAME_H_

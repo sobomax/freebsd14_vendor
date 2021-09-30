@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ed2d2c4fbe2e1f31375825089fe56c032b89206f $
 
 TESTSDIR=	${TESTSBASE}/sys/file
 

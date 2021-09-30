@@ -1,5 +1,5 @@
 /* $NetBSD: edid.c,v 1.12 2013/02/08 16:35:10 skrll Exp $ */
-/* $FreeBSD$ */
+/* $FreeBSD: 5bd7ee3ec3d488313800464cb85f4ca8cb87b1a2 $ */
 
 /*-
  * Copyright (c) 2006 Itronix Inc.
@@ -33,7 +33,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5bd7ee3ec3d488313800464cb85f4ca8cb87b1a2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

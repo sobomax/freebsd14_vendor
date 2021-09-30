@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ps.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 03e38af9d517d8e27f99e89329ce85c088b081b6 $
  */
 
 #include <sys/queue.h>

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 33d41675000bd3551c4faa08afb52acaf053e48e $
 Set to not build or install
 .Xr talk 1
 and

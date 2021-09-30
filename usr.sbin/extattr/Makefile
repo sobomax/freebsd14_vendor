@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 253b61b5a9acdc97b5affb45f1174b104c89bfb1 $
 
 PROG=	rmextattr
 MAN=	rmextattr.8

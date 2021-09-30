@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: rfcomm_sppd.c,v 1.4 2003/09/07 18:15:55 max Exp $
- * $FreeBSD$
+ * $FreeBSD: ff99591bdf1babb14a9c9e84b91aa8d1976db94a $
  */
 
 #include <sys/stat.h>

@@ -54,7 +54,7 @@
 
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 21543e736e9f0000ccdbe210160fd700f32ebf8f $");
 
 /* pulled from mpu401.c */
 #define	MPU_DATAPORT	0

@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 59a7d5455a383c1281cb99658982a158cb454a15 $ */
 
 #ifndef _DEV_LE_AM7990VAR_H_
 #define	_DEV_LE_AM7990VAR_H_

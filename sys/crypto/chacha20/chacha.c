@@ -7,7 +7,7 @@ Public domain.
 /* $OpenBSD: chacha.c,v 1.1 2013/11/21 00:45:44 djm Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ac4eef2221150efca24ea93d89b4854ce5b553f6 $");
 
 #include <sys/param.h>
 #include <sys/types.h>

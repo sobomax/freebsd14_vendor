@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 9cdb5577ed2b9a71dcb23233e73faf5f62edea60 $
 #
 
 # PROVIDE: NETWORKING NETWORK

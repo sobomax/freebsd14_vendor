@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: 354246023acf8ad395d0fce749b033a365c7b38f $
  */
 
 const char *syscallnames[] = {

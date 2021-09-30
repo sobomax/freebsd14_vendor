@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: BSDI: wstate.h,v 1.4 1997/09/18 13:05:51 torek Exp
- * $FreeBSD$
+ * $FreeBSD: e55916b7dcf90a0b17d30a9a85809d0e40a32c96 $
  */
 
 #ifndef	_MACHINE_WSTATE_H_

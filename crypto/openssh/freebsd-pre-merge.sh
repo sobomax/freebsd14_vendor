@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 473474c2c4dab98a88d76698c5344747ca0a780b $
 #
 
 :>keywords

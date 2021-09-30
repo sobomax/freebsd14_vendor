@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 40f892d36fbdc2b375d9c503c4fdc94a6459a5f4 $
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/kernel/kqueue
 

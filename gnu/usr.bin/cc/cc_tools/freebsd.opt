@@ -1,4 +1,4 @@
-; $FreeBSD$
+; $FreeBSD: f71a5058b9ecfa25ef28471245c81eefb7ffb878 $
 
 fformat-extensions
 Common Report Var(flag_format_extensions) Init(0)

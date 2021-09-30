@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 287e80939adf302c9d53fdfa00d95851ec7b5b97 $");
 
 /*
  * Also see test_option_q for additional validation of -r support.

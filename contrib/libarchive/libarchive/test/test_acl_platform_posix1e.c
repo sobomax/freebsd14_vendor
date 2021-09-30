@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/lib/libarchive/test/test_acl_freebsd.c 189427 2009-03-06 04:21:23Z kientzle $");
+__FBSDID("$FreeBSD: c34f7c2e299dd1de0cc901565068178ae57938c6 $");
 
 #if ARCHIVE_ACL_POSIX1E
 #include <sys/acl.h>

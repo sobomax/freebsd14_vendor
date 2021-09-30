@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: aeccbf3fd55fb0937fee1e461f0e666c1636cefe $
 
 .PATH: ${SRCTOP}/contrib/com_err
 

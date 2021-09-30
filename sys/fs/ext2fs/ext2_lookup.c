@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_lookup.c	8.6 (Berkeley) 4/1/94
- * $FreeBSD$
+ * $FreeBSD: b0980170d70f0a78cb17cd1e3280f77141140b16 $
  */
 
 #include <sys/param.h>

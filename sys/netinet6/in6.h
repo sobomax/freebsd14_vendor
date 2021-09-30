@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD$
+ * $FreeBSD: 56ab11460af2b137685627e0c4af6ac786b6494b $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_

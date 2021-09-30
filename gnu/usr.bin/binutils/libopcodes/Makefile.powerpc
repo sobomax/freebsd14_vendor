@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cc010ec4a306047994550c13c3b0efa9993b3460 $
 
 SRCS+=	ppc-dis.c ppc-opc.c
 CFLAGS+= -DARCH_powerpc -DARCH_rs6000

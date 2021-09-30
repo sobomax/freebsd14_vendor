@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 6d5566a43a03fe74042b064d94c3aa017503d65d $
 
 # What grep(1) are we working with?
 # - 0 : bsdgrep

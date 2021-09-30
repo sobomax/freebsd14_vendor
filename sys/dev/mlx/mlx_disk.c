@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1fb0a27c9da73d2c6ae76b6102ea421fd902372e $");
 
 /*
  * Disk driver for Mylex DAC960 RAID adapters.

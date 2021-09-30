@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/13.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: a4cd55d65fd851530f5ac229bfb078d4eeec3f4d $
 
 desc="rmdir returns EBUSY if the directory to be removed is the mount point for a mounted file system"
 

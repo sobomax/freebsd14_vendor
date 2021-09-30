@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: bd83b142769321f8b1af8c9d6f95e7dd787387bf $");
 
 /*
  * Simple hashed block cache

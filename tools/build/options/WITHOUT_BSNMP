@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 61dbb27d4f10e4076f6282ff61906b8663f63b7d $
 Set to not build or install
 .Xr bsnmpd 1
 and related libraries and data files.

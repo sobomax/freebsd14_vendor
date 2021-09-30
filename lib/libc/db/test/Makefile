@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.15 (Berkeley) 7/28/94
-# $FreeBSD$
+# $FreeBSD: 712ad625837649889038b545e97728f3b8f91d4e $
 
 PROG=	dbtest
 OBJS=	dbtest.o strerror.o

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_ether.h	8.3 (Berkeley) 5/2/95
- * $FreeBSD$
+ * $FreeBSD: 028e45a778f96831a97a02ca8f5c560ca5625542 $
  */
 
 #ifndef _NETINET_IF_ETHER_H_

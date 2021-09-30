@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a05afad86228990aa261f72ebd828ac9b46e480e $
 
 DTS=	\
 	rockchip/rk3399-khadas-edge-captain.dts \

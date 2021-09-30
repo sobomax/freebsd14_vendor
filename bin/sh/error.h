@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)error.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 1872e83773338239caecad8aad08681dfc3c70ca $
  */
 
 /*

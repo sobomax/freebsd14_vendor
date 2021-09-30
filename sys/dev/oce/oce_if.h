@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 215be567f7cb7940739f3f44b191c99eafc248de $ */
 
 #include <sys/param.h>
 #include <sys/endian.h>

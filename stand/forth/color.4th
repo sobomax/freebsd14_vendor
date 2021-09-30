@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD$
+\ $FreeBSD: fc5a4d564d0a72c84bcc69af3d4fd5a2c341dacb $
 
 marker task-color.4th
 

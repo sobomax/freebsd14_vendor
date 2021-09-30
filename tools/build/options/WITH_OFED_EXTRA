@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: f86dca299823adb80ab29cf17695ca918788e820 $
 Set to build the non-essential components of the
 .Dq "OpenFabrics Enterprise Distribution"
 Infiniband software stack, mostly examples.

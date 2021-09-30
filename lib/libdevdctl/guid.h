@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
  *
- * $FreeBSD$
+ * $FreeBSD: 7e80555a22f3f45b3236ffb02ec5d96fdcd76b20 $
  */
 
 /**

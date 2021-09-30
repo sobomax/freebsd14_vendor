@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: b5012a3236994998377a09c8d089b2d61bef109a $
 #
 
 .PATH:	${SRCDIR}/cd9660

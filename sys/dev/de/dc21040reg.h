@@ -1,6 +1,6 @@
 /*	$NetBSD: dc21040reg.h,v 1.15 1998/05/22 18:50:59 matt Exp $	*/
 
-/* $FreeBSD$ */
+/* $FreeBSD: dc839f6610ca8cb91804ac960de31b937887a6d9 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8768bea25b72683347315155f07ead27fe0cc2c8 $
 
 # Refer to ppp.conf.span-isp for a description of what this file is for.
 # This file is only required on the Gateway machine.

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: l2control.c,v 1.6 2003/09/05 00:38:25 max Exp $
- * $FreeBSD$
+ * $FreeBSD: a8dceb16a6d324c2e6757d400295df10b1b0ef5d $
  */
 
 #include <assert.h>

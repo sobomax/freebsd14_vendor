@@ -41,7 +41,7 @@
  * by: oz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 292dc5eb3f760daea5c88f7a6953eab869cb9db3 $");
 
 #include <assert.h>
 #include <signal.h>

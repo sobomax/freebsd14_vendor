@@ -9,7 +9,7 @@
  *
  * Ari Suutari <suutari@iki.fi>
  *
- * $FreeBSD$
+ * $FreeBSD: 1509b965f4b81f7aa5b8caa44138e2f16cced6c7 $
  */
 
 #include <stdlib.h>

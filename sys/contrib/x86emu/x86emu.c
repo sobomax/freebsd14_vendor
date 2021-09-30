@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 60a154952f27b322f41471f86631bb938b1218f5 $");
 
 #include <contrib/x86emu/x86emu.h>
 #include <contrib/x86emu/x86emu_regs.h>

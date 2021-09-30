@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgt.c,v 1.35 2008/04/16 18:32:15 damien Exp $ */
-/*	$FreeBSD$ */
+/*	$FreeBSD: 7451381411fad13004d49ec94bd8ebeda44c6a3e $ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>

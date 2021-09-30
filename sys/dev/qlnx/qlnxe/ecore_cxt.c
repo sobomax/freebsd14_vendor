@@ -29,7 +29,7 @@
  * File : ecore_cxt.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 881e6ccd375ae199c1971416bfdd2a734a4b86fe $");
 
 #include "bcm_osal.h"
 #include "reg_addr.h"

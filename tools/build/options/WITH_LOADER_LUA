@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 91867d15ef637234ed2508fc1ce041a2f1b70df0 $
 Set to build LUA bindings for the boot loader.

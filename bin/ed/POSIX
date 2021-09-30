@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: dab1a2bc90f3367e67515663479a7d98bcead7d3 $
 
 This version of ed(1) is not strictly POSIX compliant, as described in
 the POSIX 1003.2 document.  The following is a summary of the omissions,

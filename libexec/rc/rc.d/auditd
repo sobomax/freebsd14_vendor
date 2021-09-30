@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 8e078ec4c85693ce9b5c5e3cf414163f1265bcea $
 #
 # Start up for the Audit daemon.
 #

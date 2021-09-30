@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: bc1185d61c64449ddc089cdb0d112ddbeb11cdfc $
 #
 # Line starting with #PicoBSD contains PicoBSD build parameters
 #marker         def_sz  init    MFS_inodes      floppy_inodes

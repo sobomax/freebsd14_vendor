@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD$
+ * $FreeBSD: eea313572f34ea2a85124c8b77e27962964c7286 $
  *
  * ipv6 support
  */

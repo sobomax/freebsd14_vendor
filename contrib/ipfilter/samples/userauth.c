@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 620bd7220057e15ce88d17a041cb95ef51b5dfc7 $	*/
 
 #include <sys/types.h>
 #include <sys/socket.h>

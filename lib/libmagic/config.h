@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 263fdfb571cdbf61bf6f68458e5b9126ed336fda $ */
 
 /* Get __FreeBSD_version. */
 #include <osreldate.h>

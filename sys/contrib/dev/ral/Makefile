@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: 6ef8a9a535a94759e6af235b832c973fcc165937 $
 
 FILES=	rt2561s.fw.uu rt2561.fw.uu rt2661.fw.uu rt2860.fw.uu
 

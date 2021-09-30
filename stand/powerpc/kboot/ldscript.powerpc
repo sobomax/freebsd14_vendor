@@ -1,4 +1,4 @@
-/* $FreeBSD: user/nwhitehorn/kboot/powerpc/kboot/ldscript.powerpc 272888 2014-10-10 06:24:09Z bapt $ */
+/* $FreeBSD: 729113695105f0ced7d4b49065a3095251937fac $ */
 
 OUTPUT_FORMAT("elf32-powerpc-freebsd", "elf32-powerpc-freebsd",
 	      "elf32-powerpc-freebsd")

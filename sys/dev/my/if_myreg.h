@@ -27,7 +27,7 @@
  *
  * Written by: yen_cw@myson.com.tw  available at: http://www.myson.com.tw/
  *
- * $FreeBSD$
+ * $FreeBSD: 27c7f1cdd445cc59f507c5c7dba2b2c6b9a8a69e $
  *
  * Myson MTD80x register definitions.
  *

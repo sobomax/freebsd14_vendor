@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/*$FreeBSD$*/
+/*$FreeBSD: efad9251105b8ef34618039d9d5b69ca6b1c8078 $*/
 #include "opt_ddb.h"
 #include "opt_inet.h"
 #include "opt_inet6.h"

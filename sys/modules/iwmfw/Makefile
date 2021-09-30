@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2ff820c032994dbee197c20feec7e64ddf344b69 $
 
 SUBDIR=	iwm3160fw \
 	iwm3168fw \

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 24d3abc0ca8e561062b09b270b2eef161674178a $
 
 atf_test_case multibyte
 multibyte_head()

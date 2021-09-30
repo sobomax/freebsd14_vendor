@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ec0e67f67d20cbb086a2ff6fed0edbe12d558f9d $
 
 PROG=	fwcontrol
 SRCS=	fwcontrol.c fwcrom.c fwdv.c fwmpegts.c

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7d54dfca04275ab80c238aa3eb8d44fea6368fe8 $
 
 .PATH:		${SRCTOP}/stand/common
 

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8134b1a5d88c3d50ade2e08d5c9a08ab926bc83f $ */
 
 /* Native-dependent definitions for ARM running NetBSD, for GDB.
    Copyright 1986, 1987, 1989, 1992, 1994, 1999 Free Software Foundation, Inc.

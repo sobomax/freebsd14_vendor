@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)find.h	8.1 (Berkeley) 6/6/93
- *	$FreeBSD$
+ *	$FreeBSD: 703cb677708680e3d4d9a4c86742ce7d46c14ea9 $
  */
 
 #include <regex.h>

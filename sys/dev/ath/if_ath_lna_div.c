@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: c89a6b107749effda2ad474440a5b801d93160d4 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c89a6b107749effda2ad474440a5b801d93160d4 $");
 
 /*
  * This module handles LNA diversity for those chips which implement LNA

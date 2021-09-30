@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 48cf93b43911abb1fc8dce8b7a99cb0c5c6d2f38 $
  *
  * Netgraph module for ITU-T Q.2120 UNI SSCF.
  */

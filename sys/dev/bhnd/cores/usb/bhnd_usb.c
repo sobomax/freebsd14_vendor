@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 52b09c4998fbc5cf19c8f9c5b6a75604bf0c29d0 $");
 
 /*
  * Ported version of BroadCom USB core driver from ZRouter project

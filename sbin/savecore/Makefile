@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ebf33455b9b840a3efa83f14947d2a83e154cc46 $
 
 PACKAGE=runtime
 CONFS=	minfree

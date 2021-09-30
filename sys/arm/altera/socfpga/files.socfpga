@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 06275c47f85b0b1127a8a956905a984870b6583d $
 
 arm/altera/socfpga/socfpga_common.c		standard
 arm/altera/socfpga/socfpga_machdep.c		standard

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ee1ce73e7e387a6da1b26fa9130b190ec5a91742 $
 
 exec 2>/dev/null
 ! y=$(: </var/empty/nonexistent)

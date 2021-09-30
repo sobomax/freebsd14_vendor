@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: 9a3ba53797c6eb7b5e5b3dcd4db8b7ba8f6273c2 $
  */
 
 #define	CLOUDABI64_SYS_cloudabi_sys_clock_res_get	0

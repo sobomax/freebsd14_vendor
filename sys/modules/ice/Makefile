@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 0b569f1ddc01188961e8bb193ac76fd96a48365a $
 
 .PATH:  ${SRCTOP}/sys/dev/ice
 

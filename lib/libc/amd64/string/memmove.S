@@ -27,7 +27,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: accc8644061028e6d31ee535698090daf123ebce $");
 
 #define	ALIGN_TEXT	.p2align 4,0x90 /* 16-byte alignment, nop filled */
 

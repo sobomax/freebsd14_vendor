@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7fa743ba9ed2a07fc38f9d135187c9d42d7f5908 $");
 
 #define __LIBARCHIVE_TEST
 #include "archive_string.h"

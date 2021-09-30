@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)auth.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD$
+ * $FreeBSD: bff6f9fdc471e3e18f6126ffaef31cc8abc36aba $
  */
 
 /*

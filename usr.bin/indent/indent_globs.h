@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)indent_globs.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: ffb70861f5d21c617d496adc1aac4c85a5242bba $
  */
 
 #define BACKSLASH '\\'

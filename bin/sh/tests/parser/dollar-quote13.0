@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2247da7abbc99b5a0d5052a572e85f95f72ca149 $
 
 # This Unicode escape sequence that has never been in range should either
 # fail to expand or expand to a fallback.

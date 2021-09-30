@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: dfc9081ba9f6f23cb1eb7f5859da17ded67c9206 $");
 
 /*
  * Common routines to manage event timers hardware.

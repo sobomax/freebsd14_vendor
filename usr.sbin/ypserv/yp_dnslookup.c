@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b33b80c2e82c955b68cff34e6015b12be21d352b $");
 
 /*
  * Do standard and reverse DNS lookups using the resolver library.

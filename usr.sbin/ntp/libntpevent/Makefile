@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2f784be5e3dc0f321b5cb5971a50b2c0dca1707f $
 
 .PATH: ${SRCTOP}/contrib/libevent
 

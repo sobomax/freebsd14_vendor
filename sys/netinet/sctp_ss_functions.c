@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e4fb712094830ffb3f2764b3f5d9febfb82a8af1 $");
 
 #include <netinet/sctp_pcb.h>
 

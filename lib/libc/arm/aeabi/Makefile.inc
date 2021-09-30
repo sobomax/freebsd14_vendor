@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9ccabc2186f94ebb8962bf8341a200a11e0c3c1b $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 

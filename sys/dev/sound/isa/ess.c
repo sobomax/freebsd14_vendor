@@ -44,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: c2f50a8a32bd1233d73a9f383dea55c54b3686f3 $");
 
 #define ESS_BUFFSIZE (4096)
 #define ABS(x) (((x) < 0)? -(x) : (x))

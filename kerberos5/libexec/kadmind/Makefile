@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b2f3f71cc1e81c44e208fe670ff9f9fadeacaeac $
 
 PROG=	kadmind
 MAN=	kadmind.8

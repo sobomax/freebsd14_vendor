@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4a46f612a0b6d646e17a2b728b42b1f22543d957 $
 
 .PATH:	${SRCTOP}/sys/dev/gpio
 KMOD=	bytgpio

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD$
+ * $FreeBSD: ed82ff1232099e3d481d541ac74ebc0d77057b13 $
  */
 
 #ifndef _SYS_SIGNALVAR_H_

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8194dd7f82784fa09f50b0827b6d30a17d2f2291 $
 
 PROG=	mkctm
 MAN=

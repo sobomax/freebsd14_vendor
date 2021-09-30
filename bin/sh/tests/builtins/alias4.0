@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3d5efeccf2c74d1591fba85baff4a8d24b236cd4 $
 
 unalias -a
 alias --

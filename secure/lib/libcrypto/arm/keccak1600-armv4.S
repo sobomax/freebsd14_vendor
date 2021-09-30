@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b50f34e1591e7c6a9f20dd718fe18b87f0b42144 $ */
 /* Do not modify. This file is auto-generated from keccak1600-armv4.pl. */
 #include "arm_arch.h"
 

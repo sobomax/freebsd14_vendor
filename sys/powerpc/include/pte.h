@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pte.h,v 1.2 1998/08/31 14:43:40 tsubai Exp $
- * $FreeBSD$
+ * $FreeBSD: 32eecaedb922602791346328ca794386f949d336 $
  */
 
 #ifndef	_MACHINE_PTE_H_

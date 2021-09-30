@@ -29,7 +29,7 @@
 /* Driver for VirtIO memory balloon devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 678a25ce21d09342227c19ba4291e07e50f5aca3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 66e1a0aa897e7b5706c21cc06fb3f59b6cd8cc13 $ */
 /*
  * sock.c (C) 1995-1998 Darren Reed
  *

@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f41df2a2e5a94cce0d9fda501ce21ad80e967873 $");
 
 /*
  * seed = random (bits - 1) bit

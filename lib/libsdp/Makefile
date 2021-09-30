@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.2 2003/09/07 20:34:19 max Exp $
-# $FreeBSD$
+# $FreeBSD: 0037252ccc6be819d47204e0bd347047c8963c02 $
 
 PACKAGE=lib${LIB}
 LIB=		sdp

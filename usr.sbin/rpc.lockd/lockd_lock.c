@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 25e74ed6a7de847aff17e31c3dd8889db0f2a7f4 $");
 
 #define LOCKD_DEBUG
 

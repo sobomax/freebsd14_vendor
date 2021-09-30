@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 7ace2ef41b1b6d4a2cdb3411cc21ecdbe699bb97 $
  */
 
 #ifndef _PWMBUS_H_

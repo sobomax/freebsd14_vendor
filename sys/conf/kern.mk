@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3802f3211fdf19f193adaefb0589fecae03a2506 $
 
 #
 # Warning flags for compiling the kernel and components of the kernel:

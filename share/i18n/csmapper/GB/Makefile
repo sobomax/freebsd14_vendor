@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cbd372f89d80f962e9a2c9e7013e7e06f5e8f06b $
 # $NetBSD: Makefile.inc,v 1.7 2006/11/23 03:25:24 tnozaki Exp $
 
 CODE=	GB

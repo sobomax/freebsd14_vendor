@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: ba0b2e9b6c5dfcd8c60016b2e99956ee0d4f41ee $ */
 #ifndef _EFIPXEBC_H
 #define _EFIPXEBC_H
 

@@ -29,7 +29,7 @@
 #define __R100D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 96418ca47a2267a0f858e13c35140c0133316946 $");
 
 #define CP_PACKET0			0x00000000
 #define		PACKET0_BASE_INDEX_SHIFT	0

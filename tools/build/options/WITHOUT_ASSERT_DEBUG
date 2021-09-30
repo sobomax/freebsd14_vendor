@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 2bc179cc81363bbcea214bf5db1e12063f8c967c $
 Set to compile programs and libraries without the
 .Xr assert 3
 checks.

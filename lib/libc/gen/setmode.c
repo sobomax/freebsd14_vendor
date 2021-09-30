@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)setmode.c	8.2 (Berkeley) 3/25/94");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 05fe58952e9da5111d531f133ac12b422541828b $");
 
 #include "namespace.h"
 #include <sys/types.h>

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_wrap_size_limit.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: 9bebcf6cf08e8d520033da7635bc2d1dc9eea52c $
  */
 
 #include "mech_locl.h"

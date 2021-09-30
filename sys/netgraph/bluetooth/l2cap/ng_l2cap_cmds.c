@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_cmds.c,v 1.2 2003/09/08 19:11:45 max Exp $
- * $FreeBSD$
+ * $FreeBSD: a1c4d144dfefa81dce9c2b27004c42f4955a9ecb $
  */
 
 #include <sys/param.h>

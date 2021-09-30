@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 70f7f2d0ecbac188a64d40ef5d5f27e151015a61 $
 
 PROG=		bsdiff
 

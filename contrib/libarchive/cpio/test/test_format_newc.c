@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6b9ba47cfe1a4a0658b54c48333f9f1c80f813bf $");
 
 /* Number of bytes needed to pad 'n' to multiple of 'block', assuming
  * that 'block' is a power of two. This trick can be more easily

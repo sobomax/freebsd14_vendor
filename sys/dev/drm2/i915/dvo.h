@@ -24,7 +24,7 @@
 #define _INTEL_DVO_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9b486ced2b09e02beb58edd63206a9eb64d6e265 $");
 
 #include <sys/types.h>
 #include <sys/bus.h>

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0a801ac5d26d3d41d6e514aab5b7d981e68dd16f $");
 
 static int
 open_cb(struct archive *a, void *client)

@@ -34,7 +34,7 @@
  *
  *	@(#)float.h	8.1 (Berkeley) 6/11/93
  *	from: NetBSD: float.h,v 1.3 2001/09/21 20:48:02 eeh Exp
- * $FreeBSD$
+ * $FreeBSD: 104fc50fd79eec78e982ccdf31d64699cf51c4bc $
  */
 
 #ifndef _MACHINE_FLOAT_H_

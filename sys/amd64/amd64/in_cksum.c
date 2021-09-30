@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>			/* RCS ID & Copyright macro defns */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 30e90f043cc356bb2a50d4f4340421e771f52ec8 $");
 
 #include <sys/param.h>
 #include <sys/mbuf.h>

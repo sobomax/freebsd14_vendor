@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: dcaa4ac9808efe2e0ec57c227dca72c3f01c29d0 $
  */
 /*
  * File: ql_hw.h

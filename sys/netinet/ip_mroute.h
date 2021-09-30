@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_mroute.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 11329fd164cbd3626f8a5d7711f823023872c9ea $
  */
 
 #ifndef _NETINET_IP_MROUTE_H_

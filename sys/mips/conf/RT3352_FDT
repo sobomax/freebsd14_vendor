@@ -3,7 +3,7 @@
 #
 # This includes all the configurable parts of the kernel.
 #
-# $FreeBSD$
+# $FreeBSD: 18550979e23b7511cd4ba46e7767ab54b8d00b6c $
 #
 
 #NO_UNIVERSE

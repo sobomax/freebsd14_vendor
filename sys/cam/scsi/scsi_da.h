@@ -46,7 +46,7 @@
  *
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
- * $FreeBSD$
+ * $FreeBSD: a679114dd88ae0de2364fd72bf577934ebb1027a $
  */
 
 #ifndef	_SCSI_SCSI_DA_H

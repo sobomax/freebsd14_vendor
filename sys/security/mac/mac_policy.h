@@ -39,7 +39,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b875e6eb5487281d3ef495522227f28cbeed3b5d $
  */
 /*
  * Kernel interface for MAC policy modules.

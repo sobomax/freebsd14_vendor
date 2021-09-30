@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: d5b34a12c3859d4e683cc39e4b1ea7e6e37157fb $
 #
 # Remove stale files in /var/preserve
 #

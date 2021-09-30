@@ -1,5 +1,5 @@
 /*	$NetBSD: bf_enc_586.S,v 1.1 2001/09/09 11:01:01 tls Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 680b2e5812e2a80250712fdb7817e5a91bd18eb2 $	*/
 
 /* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
  * All rights reserved.

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD$
+ *	$FreeBSD: 46beb69de790d785863e66e2e32e096cf71cb154 $
  */
 /*
   SPDX-License-Identifier: BSD-3-Clause

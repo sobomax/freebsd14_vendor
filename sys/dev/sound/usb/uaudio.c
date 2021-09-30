@@ -1,5 +1,5 @@
 /*	$NetBSD: uaudio.c,v 1.91 2004/11/05 17:46:14 kent Exp $	*/
-/*	$FreeBSD$ */
+/*	$FreeBSD: 0dc06fd42d4d28e5a81e71509651e7335346a840 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0dc06fd42d4d28e5a81e71509651e7335346a840 $");
 
 /*
  * USB audio specs: http://www.usb.org/developers/devclass_docs/audio10.pdf

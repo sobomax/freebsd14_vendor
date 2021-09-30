@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_evnt.h,v 1.1 2002/11/24 19:47:06 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 945ff0a8e52f6db1c247cffeb8eef00d0e166050 $
  */
 
 #ifndef _NETGRAPH_L2CAP_EVNT_H_

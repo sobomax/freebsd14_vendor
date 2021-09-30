@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6bc73697ffabfe31b2538891e9320cb51e625c3f $
 # Try to divide the smallest integer by -1.
 # On amd64 this causes SIGFPE, so make sure the shell checks.
 

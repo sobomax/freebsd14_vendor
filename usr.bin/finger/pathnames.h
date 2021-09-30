@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: a60ce7d1a956b29eca0caec19be8ebccabd9fe08 $
  */
 
 #ifndef PATHNAMES_H

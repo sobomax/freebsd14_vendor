@@ -39,7 +39,7 @@
 #include <util.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f5d7104b3f681dc4c6ddd821868cd0844a07f50a $");
 
 #ifdef DEBUG
 #define	ELTORITO_DPRINTF(__x)	printf __x

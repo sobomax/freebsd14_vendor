@@ -68,7 +68,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD$
+ * $FreeBSD: 42eaf36bdf3df90cddf7b3d983862ced222f1070 $
  */
 
 #ifndef __CDEV_H_

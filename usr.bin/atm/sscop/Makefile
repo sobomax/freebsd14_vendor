@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 491986791282e29d511983a2ed4d51a7900aedfe $
 
 CONTRIB= ${SRCTOP}/contrib/ngatm/sscop
 

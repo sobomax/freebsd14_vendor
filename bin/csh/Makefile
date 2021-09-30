@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b0d4435d970c9fef6ddc5edbbb2985498eb42b1c $
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
 # C Shell with process control; VM/UNIX VAX Makefile

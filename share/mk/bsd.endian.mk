@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e39f69d1ba49d8bf12f364fae9f79b6ca8c391d4 $
 
 .if ${MACHINE_ARCH} == "aarch64" || \
     ${MACHINE_ARCH} == "amd64" || \

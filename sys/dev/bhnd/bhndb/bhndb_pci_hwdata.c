@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 67d0e804cd7c3508610c12358baf5e1aa5bb18ea $");
 
 /*
  * Resource specifications and register maps for Broadcom PCI/PCIe cores 

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0f7ad41bb98df4a20364f40611f214dadd5fd5c8 $
 
 .PATH: ${SRCTOP}/lib/libc/iconv ${SRCTOP}/usr.bin/mkesdb
 

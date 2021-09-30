@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b21fab1a9d04bee1d970fc52e9ff7117a5eb0e1d $ */
 
 		Driver Theory of Operation Manual
 

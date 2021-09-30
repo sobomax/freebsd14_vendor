@@ -29,7 +29,7 @@
 /*
  * internal dummynet APIs.
  *
- * $FreeBSD$
+ * $FreeBSD: 61c61130525cbd58092a3aed94ec9181559cde93 $
  */
 
 #ifndef _IP_DN_PRIVATE_H

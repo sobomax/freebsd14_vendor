@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 095d7941bb157645f44577b232201215f49a06a9 $");
 
 /*
  * IEEE 802.11 regdomain support.

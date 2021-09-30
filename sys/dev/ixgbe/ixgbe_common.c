@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 7a39efa7787d9bef75058932d3e4b74ea2faf383 $*/
 
 #include "ixgbe_common.h"
 #include "ixgbe_phy.h"

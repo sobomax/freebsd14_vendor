@@ -55,7 +55,7 @@
  * SUCH DAMAGE.
  *
  *
- *      $FreeBSD$
+ *      $FreeBSD: ae1a4acbc892ee91f224c38647c0949fa9bd174a $
  */
 
 #include <geom/geom_disk.h>

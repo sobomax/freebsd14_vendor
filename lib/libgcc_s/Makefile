@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0b9bbf257c5e49b2dce7c4ad13e0c4f381cd23c7 $
 
 PACKAGE=	clibs
 SHLIB_NAME=	libgcc_s.so.1

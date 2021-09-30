@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 990a22475b0ec785720c45b837782ef446e21338 $
 #
 
 # PROVIDE: rfcomm_pppd_server

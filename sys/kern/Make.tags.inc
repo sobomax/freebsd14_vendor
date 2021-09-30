@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f267d61a1eb64b54986541d1b0ea3e49c2ec1e8e $
 #	@(#)Make.tags.inc	8.1 (Berkeley) 6/11/93
 
 SYS?=	${.CURDIR}/..

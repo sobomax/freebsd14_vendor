@@ -16,7 +16,7 @@
 
 /* $Id: sha2.h,v 1.12 2009/10/22 02:21:31 each Exp $ */
 
-/*	$FreeBSD:  258945 2013-12-04 21:33:17Z roberto $	*/
+/*	$FreeBSD: 0c9dea8eb3d7be4cb6ab5c2587a4b34e75a27195 $	*/
 /*	$KAME: sha2.h,v 1.3 2001/03/12 08:27:48 itojun Exp $	*/
 
 /*

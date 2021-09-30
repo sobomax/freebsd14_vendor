@@ -13,7 +13,7 @@
 #      v      v
 #    node4  node5
 #
-# $FreeBSD$
+# $FreeBSD: 9a2ed326d8444e250623fbe665e0be40c696c0c8 $
 #
 PATH=../:.:$PATH
 . config

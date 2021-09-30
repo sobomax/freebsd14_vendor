@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)DEFS.h	5.1 (Berkeley) 4/23/90
- * $FreeBSD$
+ * $FreeBSD: bebc4df3d2c5d22ccd6ecfcbdb46e0c24c6b868b $
  */
 
 #ifndef _MACHINE_ASM_H_

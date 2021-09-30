@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 13cb5d5b69d7aac8c53ae86e6592781714654a69 $
 #
 
 # PROVIDE: auditdistd

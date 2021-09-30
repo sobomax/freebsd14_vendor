@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 559496a9fee0b82d3a026a8eaa98f39b7252e2e2 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 559496a9fee0b82d3a026a8eaa98f39b7252e2e2 $");
 
 #include "pci_emul.h"
 

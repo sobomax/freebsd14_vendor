@@ -33,7 +33,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a3fdf77f879c92a6e5a233634f50025d4f6cf6c5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: efd1238a9707b5da717cc93186f8d988e5c32e9c $");
 
 #ifndef BXE_DCB_H
 #define BXE_DCB_H

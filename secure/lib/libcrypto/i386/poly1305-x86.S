@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 100deee40bf237fd53b9af97b8e8273eff134a33 $ */
 /* Do not modify. This file is auto-generated from poly1305-x86.pl. */
 #ifdef PIC
 .text

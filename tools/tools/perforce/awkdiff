@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 #
-#	$FreeBSD$
+#	$FreeBSD: 380d6fa26f93673e565ef57a7fd99b10e62c807e $
 #
 
 BEGIN {

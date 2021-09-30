@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 45cc3003fb5937f98fa9213c22f5e9d2e637cb33 $
 cat /dev/null
 hash
 hash -r

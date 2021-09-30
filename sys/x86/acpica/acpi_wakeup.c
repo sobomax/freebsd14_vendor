@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 25a2ceda10ff64514555df6ae5ef4a954c01a5a8 $");
 
 #if defined(__amd64__)
 #define DEV_APIC

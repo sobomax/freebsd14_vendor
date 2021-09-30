@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 26018ffb13785ec1f5edcca481baf60eadeb0b9b $
 
 PROG=	mbr
 STRIP=

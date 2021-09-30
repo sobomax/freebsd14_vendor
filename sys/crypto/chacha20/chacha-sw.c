@@ -1,7 +1,7 @@
 /* This file is in the public domain. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e874d48c606e24a163983c588ef7dad1600c69ac $");
 
 #include <crypto/chacha20/chacha.h>
 #include <opencrypto/xform_enc.h>

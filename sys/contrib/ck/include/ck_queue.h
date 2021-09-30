@@ -53,7 +53,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)queue.h	8.5 (Berkeley) 8/20/94
- * $FreeBSD$
+ * $FreeBSD: 3f503aa6c3e5b4f5b319bb0fa41f811be324f715 $
  */
 
 #ifndef CK_QUEUE_H

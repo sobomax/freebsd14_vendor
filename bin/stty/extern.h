@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 88b58890f7d1fbebfc7fc736c8fd5295bf97ec66 $
  */
 
 int	c_cchars(const void *, const void *);

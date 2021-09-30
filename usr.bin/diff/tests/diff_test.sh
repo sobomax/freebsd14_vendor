@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 470bb925fdfc0a22879014f14534a9717fe99652 $
 
 atf_test_case simple
 atf_test_case unified

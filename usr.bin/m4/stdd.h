@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdd.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 2ef1bb1f3bdff1e45f9ad6408f888bbe45b82882 $
  */
 
 /*

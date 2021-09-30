@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $
  */
 
 /*-
@@ -53,11 +53,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>

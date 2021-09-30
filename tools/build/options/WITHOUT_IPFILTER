@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 9d02c0358438a4532756bac4dff74941eefb5378 $
 Set to not build IP Filter package.

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 51f5a0fa76f1c571fce424464e1873bae4d48317 $ */
 /*	$NetBSD: msdosfs_fat.c,v 1.28 1997/11/17 15:36:49 ws Exp $	*/
 
 /*-

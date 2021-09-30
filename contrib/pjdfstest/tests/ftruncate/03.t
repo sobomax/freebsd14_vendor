@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/truncate/03.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: d3d3ab3d57ae5004ba53d675a2b3c708afbf9eb5 $
 
 desc="truncate returns ENAMETOOLONG if an entire path name exceeded {PATH_MAX} characters"
 

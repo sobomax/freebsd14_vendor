@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: aaff8bd9000e7fd00d1da4ab1c8fbd7475a0f3f1 $");
 
 /*
  * k_log1p(f):

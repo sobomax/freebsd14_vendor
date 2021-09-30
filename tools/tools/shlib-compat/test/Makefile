@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f4a354826b10819c7716687f37821519e382bb0e $
 
 SUBDIR=	libtest1 \
 	libtest2 \

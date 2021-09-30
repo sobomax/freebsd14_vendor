@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)tftpd.c	8.1 (Berkeley) 6/4/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6d09ad73befaadcc5d66093c8667e89792476705 $");
 
 /*
  * Trivial file transfer protocol server.

@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 929061276d04ddca1899df76af13fc8cf4fc1d67 $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"

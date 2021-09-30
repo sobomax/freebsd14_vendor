@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)paths.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: f8df80518c5ce6b117d0c62679e18e6cc927e794 $
  */
 
 #ifndef _PATHS_H_

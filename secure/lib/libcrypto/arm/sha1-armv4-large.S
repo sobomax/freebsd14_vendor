@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d97f995206eb279d2182e5b0515b5201f7676e69 $ */
 /* Do not modify. This file is auto-generated from sha1-armv4-large.pl. */
 #include "arm_arch.h"
 

@@ -26,7 +26,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 12a370cd8efb7024fee84de7d2ed19d92992864f $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.

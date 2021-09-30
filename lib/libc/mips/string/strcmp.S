@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8a9905630ce8695496931eb4a956a7d925d3183c $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 	ASMSTR("from: @(#)strcmp.s	8.1 (Berkeley) 6/4/93")

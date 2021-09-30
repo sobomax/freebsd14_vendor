@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 08e2fd681eac640645bb5554b9313a989cbcc3d8 $
 #
 # Copyright (c) 2004-06 Applied Micro Circuits Corporation.
 # All rights reserved.

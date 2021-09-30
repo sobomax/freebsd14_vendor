@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 99944f72037828addc350d7e338c6138faf52a5e $ */
 /* Copyright (C) 2014 by John Cronin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

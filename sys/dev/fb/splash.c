@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c3e1946ad0e8c237d5cc0f9614e47366b38bad72 $");
 
 #include "opt_splash.h"
 

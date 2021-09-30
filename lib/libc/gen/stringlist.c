@@ -28,7 +28,7 @@
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: stringlist.c,v 1.2 1997/01/17 07:26:20 lukem Exp $");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 158f3d20705dea68c8093309ac24d29bba21e7e3 $");
 
 #include "namespace.h"
 #include <stdio.h>

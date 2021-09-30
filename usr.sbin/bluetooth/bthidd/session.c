@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: session.c,v 1.3 2006/09/07 21:06:53 max Exp $
- * $FreeBSD$
+ * $FreeBSD: aa3552c4dc109ba92dddd44c070718696830bf12 $
  */
 
 #include <sys/queue.h>

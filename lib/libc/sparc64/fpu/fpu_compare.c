@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 81a0f69d2b5c8e5953db590a23471c97ed970f80 $");
 
 /*
  * CMP and CMPE instructions.

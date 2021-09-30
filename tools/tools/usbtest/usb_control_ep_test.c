@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 87c5fc16a83cb7f35a402640692cff0af4d59a17 $ */
 /*-
  * Copyright (c) 2007-2010 Hans Petter Selasky. All rights reserved.
  *

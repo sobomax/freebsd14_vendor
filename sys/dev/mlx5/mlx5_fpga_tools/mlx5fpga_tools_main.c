@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6cd165c434f9a643ef5b3094f8712ac7dcb8b229 $
  */
 
 #include <linux/module.h>

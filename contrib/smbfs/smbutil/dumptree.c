@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 74a97f3a114ba94ce6575afefb5143f45820aa85 $ */
 
 #include <sys/param.h>
 #include <sys/time.h>

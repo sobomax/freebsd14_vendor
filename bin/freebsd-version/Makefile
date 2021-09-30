@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 073f4d3fa00cd6f2d3df33dd89911cd0228f3a9a $
 
 PACKAGE=runtime
 SCRIPTS = freebsd-version

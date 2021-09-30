@@ -32,11 +32,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 0f7fe1433ed3562bb0ca99b9463523546f3badfe $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0f7fe1433ed3562bb0ca99b9463523546f3badfe $");
 
 #include <stdlib.h>
 #include "libc_private.h"

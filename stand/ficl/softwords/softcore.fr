@@ -3,7 +3,7 @@
 \ ** John Sadler (john_sadler@alum.mit.edu)
 \ ** September, 1998
 \
-\ $FreeBSD$
+\ $FreeBSD: ba210530a390c456f5747a730bddea759676fbc4 $
 
 \ ** Ficl USER variables
 \ ** See words.c for primitive def'n of USER

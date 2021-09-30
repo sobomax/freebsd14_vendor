@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3d23c943015b2d8e687dc2f334f3ce27ae2d950a $
  */
 
 #include <sys/types.h>

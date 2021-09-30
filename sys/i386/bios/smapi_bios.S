@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 74ba05a3f8d001846d7c8bc969f66a15745b68ef $");
 
 /*
  * This is cribbed from the Linux thinkpad-4.1 driver by

@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ssa	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 17e815edfcb16f753063d26f4edb4f3656366f5a $
 .SH
 Appendix A:  A Simple Example
 .PP

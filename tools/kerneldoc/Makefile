@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ec665a7b02569636d4d20c9c2e3eb249f6db487a $
 
 .PATH:	${.CURDIR}/../kern
 

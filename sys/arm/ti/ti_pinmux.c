@@ -34,7 +34,7 @@
  * Exposes pinmux module to pinctrl-compatible interface
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b532d9124ce6a2a15356d869cd0f449236a580ee $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

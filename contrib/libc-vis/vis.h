@@ -1,5 +1,5 @@
 /*	$NetBSD: vis.h,v 1.25 2017/04/23 01:57:36 christos Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: b024b8e8d2aff6e87d379118ea35164c4f24935c $	*/
 
 /*-
  * Copyright (c) 1990, 1993

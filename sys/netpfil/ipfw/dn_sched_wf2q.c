@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: d90357345c8c4c0a9ae60996d3caed67acecf712 $
  */
 
 #ifdef _KERNEL

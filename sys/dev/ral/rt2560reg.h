@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 6860d1ea082ca011c9992f88a41e50fb6c375d77 $	*/
 
 /*-
  * Copyright (c) 2005, 2006

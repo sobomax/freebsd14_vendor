@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: afb5eb163c7be9445949aca655387ff6b7eed4f4 $
 
 .PATH: ${SRCTOP}/sys/dev/ppbus
 

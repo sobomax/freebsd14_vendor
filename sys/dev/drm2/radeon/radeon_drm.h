@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a33975381be035527ff09be92c4a7bedc1822b56 $");
 
 #ifndef __RADEON_DRM_H__
 #define __RADEON_DRM_H__

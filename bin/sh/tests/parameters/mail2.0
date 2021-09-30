@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 343c99de9b279b84544d7f6c9d56ef28cd518b8d $
 # Test that an interactive shell accesses $MAIL.
 
 goodfile=/var/empty/sh-test-goodfile

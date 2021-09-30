@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 75f8077564c28148ced786051c48ee977f512814 $ */
 
 /* Parameters for execution on an ARM running NetBSD, for GDB.
    Copyright 1994 Free Software Foundation, Inc.

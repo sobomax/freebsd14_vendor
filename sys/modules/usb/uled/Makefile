@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 2cd3ada8375b60e67a9919453f855bf7090ef010 $
 #
 # Copyright (c) 2014 Kevin Lo. All rights reserved.
 #

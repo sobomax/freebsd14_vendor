@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 529ae6b17c4129e6df851af9a048df7099cd3ccc $
  *
  * Private definitions for libc, libc_r and libpthread.
  *

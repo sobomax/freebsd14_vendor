@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv7 systems.
 #
-# $FreeBSD$
+# $FreeBSD: 55062d31bc60c820594394f1f439893cad318c0b $
 
 options 	HZ=1000
 options 	ARM_L2_PIPT		# Only L2 PIPT is supported

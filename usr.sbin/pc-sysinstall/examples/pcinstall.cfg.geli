@@ -1,5 +1,5 @@
 # Auto-Generated pc-sysinstall configuration
-#$FreeBSD$
+#$FreeBSD: 983dff72543c30cc3d36973526eec6962a465953 $
 
 installInteractive=no
 installMode=fresh

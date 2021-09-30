@@ -69,7 +69,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d7464a4d3cfed5eb18cdefd88906a33a3120cd2f $");
 
 #include "opt_sysvipc.h"
 

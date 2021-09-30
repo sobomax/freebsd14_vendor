@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/utils.h,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: 7b27d38f3cd0603962cbc5a3ae08536cbc91d592 $
  *	$Id$
  */
 

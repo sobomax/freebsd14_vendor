@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: db1d2f92f90c1b7228ad4e1edb60c21ba2d04e18 $
 
 PROG=	localedef
 SRCS=	charmap.c \

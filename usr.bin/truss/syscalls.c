@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d88927e47f3693235972fdbfc6f35b6d81713a3a $");
 
 /*
  * This file has routines used to print out system calls and their

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 227196a4017f907ea243dbb3c53146e7797d0ee8 $ */
 
 #ifndef	_OPENSOLARIS_MNTTAB_H_
 #define	_OPENSOLARIS_MNTTAB_H_

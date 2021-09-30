@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 12c9cbd2618921a749d3e38a42625f60c83eacab $
 
 .PATH: ${SRCTOP}/sys/dev/bktr
 

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 5771a8b5d3a41448b9cd25be164a16c81e858c8f $
 #
 #	Name:             ISO/IEC 8859-1:1998 to Unicode
 #	Unicode version:  3.0

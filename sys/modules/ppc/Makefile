@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: af2057a1520377c6a9ad0d6269b400f479dd4b33 $
 
 .PATH:	${SRCTOP}/sys/dev/ppc
 KMOD=	ppc

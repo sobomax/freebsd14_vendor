@@ -39,7 +39,7 @@ static const char copyright[] =
 static const char sccsid[] = "@(#)logname.c	8.2 (Berkeley) 4/3/94";
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c939e49eddfcba1269787f71c1de73219ca26439 $");
 
 #include <capsicum_helpers.h>
 #include <err.h>

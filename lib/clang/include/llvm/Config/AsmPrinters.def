@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 2a335aa93b4212d5f7259aefe37b8e3cb2d992b1 $ */
 
 #ifndef LLVM_ASM_PRINTER
 #  error Please define the macro LLVM_ASM_PRINTER(TargetName)

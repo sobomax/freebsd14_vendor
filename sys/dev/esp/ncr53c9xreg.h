@@ -31,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 557ae59ae7206ffff826de41fabeec5eea5bf538 $ */
 
 #ifndef _NCR53C9XREG_H_
 #define	_NCR53C9XREG_H_

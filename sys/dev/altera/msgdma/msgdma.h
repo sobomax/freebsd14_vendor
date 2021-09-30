@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e10a233902a2d90938c1dd648f8f41b40e3daa14 $
  */
 
 /* Altera mSGDMA registers. */

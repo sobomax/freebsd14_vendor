@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e795ad494bba783f5d2b44347cee8d2d19026e07 $
 
 SRCS+=	sparc-dis.c sparc-opc.c
 CFLAGS+= -DARCH_sparc

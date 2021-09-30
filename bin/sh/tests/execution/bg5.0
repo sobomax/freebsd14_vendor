@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cc9ceaa41d4e5e276e5e5ec3c0e846669b432922 $
 # A background command has an implicit </dev/null redirection.
 
 echo bad | ${SH} -c '{ cat & wait; }'

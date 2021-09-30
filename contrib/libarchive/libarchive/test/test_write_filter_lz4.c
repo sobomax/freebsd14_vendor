@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4f2135a3150717cddcad3e44e12146e7e284cf9b $");
 
 /*
  * A basic exercise of lz4 reading and writing.

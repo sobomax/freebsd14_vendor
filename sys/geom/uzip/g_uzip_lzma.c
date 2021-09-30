@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 83e81e5f4ba565d6afa1ce5218907fa7b66f97b1 $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>

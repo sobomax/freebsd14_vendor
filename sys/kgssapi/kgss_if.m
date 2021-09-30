@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 53d499a2b18295acf0cfe476b4d43d8e5104958f $
 
 # Interface for the in-kernel part of a GSS-API mechanism
 

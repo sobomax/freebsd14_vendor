@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)misc-proto.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD$
+ * $FreeBSD: e5559ab6917c31cc5d3b02a914edf16fa58ea634 $
  */
 
 /*

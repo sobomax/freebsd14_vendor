@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ea25354c2aa2a8d0c0cd68af2ee1f923dfca736e $");
 
 #include <math.h>
 
@@ -117,7 +117,7 @@ __p1evll(long double x, long double *PP, int n)
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ea25354c2aa2a8d0c0cd68af2ee1f923dfca736e $");
 
 #include <float.h>
 #include <math.h>

@@ -62,7 +62,7 @@
  *
  * From: sys/arm/include/bus.h
  *
- * $FreeBSD$
+ * $FreeBSD: 8aaf1d3e76cd18bdd91e7e399bb7b18ed2b56a11 $
  */
 
 #ifndef _MACHINE_BUS_H_

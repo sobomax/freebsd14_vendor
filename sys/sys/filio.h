@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD$
+ * $FreeBSD: 2e4f3c9e6132266136b4251be0eaffa7fee0c42d $
  */
 
 #ifndef	_SYS_FILIO_H_

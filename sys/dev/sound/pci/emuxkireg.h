@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 555acc93026a21c4333310e5d3259e21983a6a55 $ */
 /*	$NetBSD: emuxkireg.h,v 1.8 2008/04/28 20:23:54 martin Exp $	*/
 
 /*-

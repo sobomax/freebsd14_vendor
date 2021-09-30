@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4e4456648c6653dc1bf4db70cc0c49762e63343d $");
 
 #include "assym.s"
 

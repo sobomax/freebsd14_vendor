@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 674deffaa3f5322ef2b63caaf8854536a60f7c6b $ */
 
  /* Native-dependent code for BSD Unix running on ARM's, for GDB.
    Copyright 1988, 1989, 1991, 1992, 1994, 1996, 1999, 2002

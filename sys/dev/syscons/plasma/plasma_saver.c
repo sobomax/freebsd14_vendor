@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 376c639231e0c9b8e361d7aa8d5bb1a6d38f21b8 $
  *
  * To CJA, in appreciation of Nighthawk brunches past and future.
  */

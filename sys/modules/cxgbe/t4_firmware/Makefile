@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 591e7a08ecb14f090bcba122c6d898d69812d440 $
 #
 
 T4FW=	${SRCTOP}/sys/dev/cxgbe/firmware

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 04ce398f2d5156b0657c3f0d5b3234ad0100ac9f $
 
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/editmap

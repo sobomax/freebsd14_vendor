@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b421f36ff674e5979795695ea074dfd5bd85ce42 $");
 
 /*		
  * FreeBSD device driver for Xircom CreditCard PCMCIA Ethernet adapters.  The

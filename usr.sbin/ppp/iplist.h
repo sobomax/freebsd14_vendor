@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e4bcea43ce4d0e97ed25dbd2d64709804507fb01 $
  */
 
 struct iplist_cur {

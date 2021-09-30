@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 32355f387ecf0ea79e05f09ce9a53d46291948ee $
 #
 # Common rules for building firmware.  Note this gets auto-included
 # by the subdir Makefile's as a consequence of included bsd.kmod.mk.

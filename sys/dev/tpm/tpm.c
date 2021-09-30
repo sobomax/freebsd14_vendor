@@ -19,7 +19,7 @@
 /* #define	TPM_DEBUG */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6fa86cd614f5fb93c307fa598ce987910b899aed $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 012a88290571985ea27ae77b0c26a59de3f2993f $
 
 include	"../mv/std.mv"
 include "../mv/kirkwood/std.kirkwood"

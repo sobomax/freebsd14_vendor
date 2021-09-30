@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	JNPR: db_machdep.h,v 1.7 2006/10/16 12:30:34 katta
- * $FreeBSD$
+ * $FreeBSD: fd11569d4b9fbb3ce62a1a842d23c0a57fddc851 $
  */
 
 #ifndef	_MIPS_DB_MACHDEP_H_

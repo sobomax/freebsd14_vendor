@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: e466f9a323bd72622a72ace1bfe0af16ff1cb197 $
 #
 #
 # Makefile for uploading Google Compute Engine disk images.

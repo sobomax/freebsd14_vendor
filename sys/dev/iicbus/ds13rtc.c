@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1b21c6c33d80ee43b6efd07098a6586123e78e0a $");
 
 /*
  * Driver for Dallas/Maxim DS13xx real-time clock/calendar chips:

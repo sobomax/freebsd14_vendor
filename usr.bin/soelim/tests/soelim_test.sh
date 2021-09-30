@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 69c92e4bab38bc6dee9572179714a40060fbedda $
 
 atf_test_case stdin
 stdin_head()

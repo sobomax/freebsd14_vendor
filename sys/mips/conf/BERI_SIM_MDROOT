@@ -2,7 +2,7 @@
 # BERI_SIM_MDROOT -- Kernel for the SRI/Cambridge "BERI" (Bluespec Extensible
 # RISC Implementation) FPGA soft core, as configured for simulation.
 #
-# $FreeBSD$
+# $FreeBSD: 032d6605634ebc7035932550e814e970b9b7d200 $
 #
 
 #NO_UNIVERSE

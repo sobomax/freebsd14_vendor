@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: c170be401be68be7e8791df0f2d3669fe91147f2 $
 #
 
 # PROVIDE: hastd

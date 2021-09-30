@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 40fbd8a334cc6be21768552c0c3238b41a1c52d5 $
 
 # Change some defaults for serial devices.
 # Standard defaults are:

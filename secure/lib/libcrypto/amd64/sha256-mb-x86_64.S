@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1c77e3d13a8b477360af505803e13363ce093d8e $ */
 /* Do not modify. This file is auto-generated from sha256-mb-x86_64.pl. */
 .text	
 

@@ -30,7 +30,7 @@
  * Implements low-level interactions with Hyper-V/Azure
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5bb38fde8241e5fd585feff5b1d73e1e582672f2 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

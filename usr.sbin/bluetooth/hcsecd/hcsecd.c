@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hcsecd.c,v 1.6 2003/08/18 19:19:55 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 160b77e1b040859deee08a441498331e030e4428 $
  */
 
 #include <sys/queue.h>

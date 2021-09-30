@@ -2,7 +2,7 @@
 #
 # create message-id / in-reply-to database
 #
-# $FreeBSD$
+# $FreeBSD: a5ec10b78f3b8ee1998aa60de23b3e3979072df8 $
 
 sub usage { die "usage: mid-index name < filelist"; }
 

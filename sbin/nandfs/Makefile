@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 40af5775c51055ca39a071eadd38c94bf40ebc51 $
 
 PACKAGE=nandfs
 PROG=	nandfs

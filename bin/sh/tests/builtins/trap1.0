@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 313f6a38767833821cc59810f3c3e752f84d61e7 $
 
 test "$(trap 'echo trapped' EXIT; :)" = trapped || exit 1
 

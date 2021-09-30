@@ -33,7 +33,7 @@
  *
  *	from: NetBSD: db_disasm.c,v 1.9 2000/08/16 11:29:42 pk Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 54d2a806d93a4c90733d3e69a1b87fbed7e8da4b $
  */
 
 #ifndef _MACHINE_INSTR_H_

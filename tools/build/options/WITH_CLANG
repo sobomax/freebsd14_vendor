@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 0174b4db4e3822f6d2c2f7aba560600b5c0da04a $
 Set to build the Clang C/C++ compiler during the normal phase of the build.

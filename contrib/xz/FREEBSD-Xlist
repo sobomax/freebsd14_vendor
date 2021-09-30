@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 15f3fc6fde17ddc53eff59025eaf8cfb0974e76a $
 */*/*/Makefile.*
 */*/Makefile.*
 */.gitignore

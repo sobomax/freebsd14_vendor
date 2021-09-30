@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 355b7161716519d17d3fc396c47372be34a4bd7a $
 Set to not build tools for the support of jails; e.g.,
 .Xr jail 8 .

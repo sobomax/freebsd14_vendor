@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 56b64f8c8271d1ec1cb4374bad406d8f59ea56e7 $
 #
 
 # PROVIDE: ipmon

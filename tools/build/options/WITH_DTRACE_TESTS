@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: dc85e2b5defdb226dfc6f04f7d8dd1c525d9f57a $
 Set to build and install the DTrace test suite in
 .Pa /usr/tests/cddl/usr.sbin/dtrace .
 This test suite is considered experimental on architectures other than

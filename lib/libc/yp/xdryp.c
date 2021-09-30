@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: aa7c7123a04b74a83196f993682c75d1432dd270 $");
 
 #include <rpc/rpc.h>
 #include <rpcsvc/yp.h>

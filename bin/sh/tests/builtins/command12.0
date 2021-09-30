@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f981db3249463d97265e32baa668e0804335e107 $
 
 alias aa=echo\ \'\"\'
 cmd=$(command -v aa)

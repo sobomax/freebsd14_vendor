@@ -1,5 +1,5 @@
 #       from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD$
+# $FreeBSD: e1be7a565a2c1e5ad6d70cd3618ab0afc97b51fd $
 
 .PATH: ${LIBC_SRCTOP}/db/hash
 

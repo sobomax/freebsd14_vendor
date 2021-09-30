@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_insformat.h#11 $
  *
- * $FreeBSD$
+ * $FreeBSD: b994ff67edb6423a5c0e4f683a9c26c87d4975c1 $
  */
 
 struct ins_format1 {

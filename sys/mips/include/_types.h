@@ -36,7 +36,7 @@
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
  *	from: src/sys/i386/include/_types.h,v 1.12 2005/07/02 23:13:31 thompsa
- * $FreeBSD$
+ * $FreeBSD: 385280b1ea4537b2e908a392b2dff2c09d39e4b9 $
  */
 
 #ifndef _MACHINE__TYPES_H_

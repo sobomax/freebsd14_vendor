@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD$
+ *	$FreeBSD: abcb6d18a7a9efd85ee1c2d6308f9c1ee14b88d1 $
  */
 
 #include <gssapi/gssapi.h>

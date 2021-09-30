@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: dffdbc391f78c3e47104b294a8a9b617312c78d7 $*/
 
 /**
  * @file if_ice_iflib.c

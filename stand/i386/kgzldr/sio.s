@@ -24,7 +24,7 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #	From: sio.s 1.3 1999/01/10 14:48:03 rnordier
-# $FreeBSD$
+# $FreeBSD: ff174eb0b71b382606d0638c84dec2b4a11a753a $
 #
 
 		.globl sio_putchr

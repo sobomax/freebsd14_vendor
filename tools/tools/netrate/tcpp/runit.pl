@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $FreeBSD$
+# $FreeBSD: d0d52277f8ab4e57d2b2d728145fb38066cecb4c $
 #
 
 if ($#ARGV != 0) {

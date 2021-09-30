@@ -28,7 +28,7 @@
  */
 
 #include "bsdcat_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cae19beb7d4cbc03baedd1692cf7b7aface06779 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

@@ -26,7 +26,7 @@
  * and/or fitness for purpose.
  * ---------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: e722298d899e820f3ee4f9e23654963c9cc90b82 $
  */
 
 #ifndef	_MIPS_CAVIUM_CRYPTOCTEON_CRYPTOCTEONVAR_H_

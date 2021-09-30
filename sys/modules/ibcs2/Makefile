@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3041dc27f08c03605e7537b45ce113193c830cf1 $
 
 .PATH: ${SRCTOP}/sys/i386/ibcs2
 

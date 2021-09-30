@@ -28,7 +28,7 @@
  * File : ecore_int.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c1aaaccd2c1e8c5e0e05e7696adc58a1af3111af $");
 
 #include "bcm_osal.h"
 #include "ecore.h"

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 36292ae3f7b7b096c7b98c3aadb7e734799b99e5 $
 #
 
 # PROVIDE: mail

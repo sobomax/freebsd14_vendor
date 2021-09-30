@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: b864d9eea2d149c87d6deb102c1e96aa32e942b7 $
 Set to build LLVM target support for PowerPC.
 The
 .Va LLVM_TARGET_ALL

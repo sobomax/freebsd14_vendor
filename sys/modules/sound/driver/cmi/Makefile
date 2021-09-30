@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4c7af371ce587e53ea97d0ff1a1cb79281afd46b $
 
 .PATH: ${SRCTOP}/sys/dev/sound/pci
 

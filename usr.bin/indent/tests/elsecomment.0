@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 61066c22b586327f749922e4c012173712bb2356 $ */
 /* See r303484 and r309342 */
 void t(void) {
 	/* The two if statements below excercise two different code paths. */

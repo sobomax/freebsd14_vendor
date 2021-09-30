@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1eec313766d30a9377c4cd9068b189f58558112d $
 
 PROG=	kstash
 MAN=	kstash.8

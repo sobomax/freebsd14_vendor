@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)usleep.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e800f6275617d0f29ebf98853c4f3f9707909895 $");
 
 #include "namespace.h"
 #include <time.h>

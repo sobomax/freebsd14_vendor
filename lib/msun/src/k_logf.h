@@ -10,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 71c547e888ae693f6076534938faf446bfb088ff $");
 
 /*
  * Float version of k_log.h.  See the latter for most comments.

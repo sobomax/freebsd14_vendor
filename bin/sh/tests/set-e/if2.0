@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4955408540994b688da3b1af40364fc6768321bb $
 set -e
 # PR 28852
 if true; then

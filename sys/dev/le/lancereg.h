@@ -115,7 +115,7 @@
  * valid on the LANCE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 7b08d84f5e9bcef9876aa09256173561950a1e07 $ */
 
 #ifndef _DEV_LE_LANCEREG_H_
 #define	_DEV_LE_LANCEREG_H_

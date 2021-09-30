@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 77cd69b4484141d79a81e16b00c01dbd44f6cad4 $");
 
 /*
  * The definitive documentation of the Zip file format is:

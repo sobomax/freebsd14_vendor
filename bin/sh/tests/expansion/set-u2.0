@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f81aa62cb6ba3c07af5c803e93f708c42a4bf000 $
 
 set -u
 : $* $@ "$@" "$*"

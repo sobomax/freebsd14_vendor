@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 8b45a521c3ee48de78c95f9aa71248cd4eee3381 $
  */
 
 #ifndef _SYS_SIGNAL_H_

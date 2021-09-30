@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4d5ed403111c0f9751be1e85a7f85aa67abfdad3 $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.

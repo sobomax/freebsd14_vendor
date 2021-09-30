@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: fb01051382b571f569dcb853c7db6ef8978c1f60 $
 
 			README File
 		QLogic 8100 series Dual Port

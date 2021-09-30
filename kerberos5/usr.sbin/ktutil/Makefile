@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c79d09e6d94d2af3e63e0c072fb91b4babe72952 $
 
 PROG=	ktutil
 MAN=	ktutil.8

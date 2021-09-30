@@ -2,7 +2,7 @@
 #
 # Script for testing simple station mode operation.
 #
-# $FreeBSD$
+# $FreeBSD: 570aaa551fb7d5b6a4dbaf03945434d1741802ff $
 #
 PATH=.:$PATH
 . config

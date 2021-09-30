@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 67593aa9e2fcf47f6cb27c5903b14d68eebc4a34 $");
 
 /*
  * Lookup table support for ipfw.

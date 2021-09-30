@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss1	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: f9369fb4bf5de55360dbbc0ce3489ca91f4d755d $
 .tr *\(**
 .tr |\(or
 .SH

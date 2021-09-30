@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 19fd66b47b3df127b417fe7e650467ffcdd93bb9 $
 
 .PATH:	${SRCTOP}/contrib/pf/authpf
 

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: kbd.h,v 1.3 2006/09/07 21:06:53 max Exp $
- * $FreeBSD$
+ * $FreeBSD: a13e0b09886c0f4b7f6af4c7d55e4af3879d3ac4 $
  */
 
 #ifndef _KBD_H_

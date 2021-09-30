@@ -41,7 +41,7 @@
  *
  *	@(#)ufs_vnops.c	8.7 (Berkeley) 2/3/94
  *	@(#)ufs_vnops.c 8.27 (Berkeley) 5/27/95
- * $FreeBSD$
+ * $FreeBSD: 11eedfd4433e081e14e18c12cd5e5c7e8d6a52ab $
  */
 
 #include "opt_suiddir.h"

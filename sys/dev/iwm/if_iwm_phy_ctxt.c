@@ -103,7 +103,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3815d1385fb1a162a4aafdfba72eeb17e2af90a8 $");
 
 #include "opt_wlan.h"
 #include "opt_iwm.h"

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6b89966e7033270d9e46d7493c715f47f1f114f4 $");
 
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>

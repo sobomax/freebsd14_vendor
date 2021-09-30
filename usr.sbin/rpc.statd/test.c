@@ -1,7 +1,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 6df15011db3b3a7ba41e6aa26fd776a5b12f15fd $";
 #endif /* not lint */
 
 #include <stdio.h>

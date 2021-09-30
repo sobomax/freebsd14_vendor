@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 897b74e188de0993b1476546b89f52ad1d9367b7 $
 
 PROG_CXX=dtc
 SRCS=	dtc.cc input_buffer.cc string.cc dtb.cc fdt.cc checking.cc

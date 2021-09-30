@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/05.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: f633c920ae161ae1f453f2e0d514d0daf4fffcb2 $
 
 desc="mkdir returns EACCES when search permission is denied for a component of the path prefix"
 

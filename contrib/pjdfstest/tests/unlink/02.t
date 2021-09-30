@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/02.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: a7b906463be7542a40c0fde35a07bf3976de1018 $
 
 desc="unlink returns ENAMETOOLONG if a component of a pathname exceeded {NAME_MAX} characters"
 

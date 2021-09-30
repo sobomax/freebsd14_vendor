@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  *
- * $FreeBSD$
+ * $FreeBSD: 68586cf84fdbc9fd56cc3a87b490167e08b6ed30 $
  */
 
 provider plockstat {

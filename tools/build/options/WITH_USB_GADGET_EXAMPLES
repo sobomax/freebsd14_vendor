@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 2ecbdb72c00687b8a40a6430da53df1aec913115 $
 Set to build USB gadget kernel modules.

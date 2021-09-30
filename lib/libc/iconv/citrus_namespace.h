@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 4244c70d701e46e8cec8b1a88595bbff1f3bf02b $ */
 /* $NetBSD: citrus_namespace.h,v 1.8 2009/01/11 02:46:24 christos Exp $ */
 
 /*-

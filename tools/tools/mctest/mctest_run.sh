@@ -2,7 +2,7 @@
 # 
 # A program to act as a test harness for the mctest program
 #
-# $FreeBSD$
+# $FreeBSD: 0b405231fefca54735d14b78db2498679e09e354 $
 #
 # Defaults
 size=1024

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0d49ae313ccd04819b97ad630f1b33c5e59bff10 $");
 
 #ifdef NEW_PCIB
 

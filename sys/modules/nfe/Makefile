@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cb3c2334428f90f67f31ddd71ee8fdcc58e7e0e4 $
 
 .PATH: ${SRCTOP}/sys/dev/nfe
 

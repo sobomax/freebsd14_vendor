@@ -9,7 +9,7 @@
  * In return you should think about all the nice people who give away software.
  * Maybe you should write some free software too.
  *
- * $FreeBSD$
+ * $FreeBSD: a46a58aa87348ef9d178fb82627d9481dd4dfc86 $
  */
 
 #include <stdio.h>

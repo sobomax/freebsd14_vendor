@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a945212af275f069db99a83ca6a9ad3cb5023384 $");
 
 /* Debugging tables for MPT2 */
 

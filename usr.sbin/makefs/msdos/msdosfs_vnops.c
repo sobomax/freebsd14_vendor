@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fbd2a1542fce7a4416646c29d5d7045d9e504529 $");
 
 #include <sys/param.h>
 #include <sys/clock.h>

@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 5c0220adfc6f689965fe8a7f4f3aee4c3baae374 $*/
 
 /* 80003ES2LAN Gigabit Ethernet Controller (Copper)
  * 80003ES2LAN Gigabit Ethernet Controller (Serdes)

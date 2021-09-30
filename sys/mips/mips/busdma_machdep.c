@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 85b244d7aa05f9fa031eb20967509d81bdc4fb5c $");
 
 /*
  * MIPS bus dma support routines

@@ -26,7 +26,7 @@
 
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 536001597a06bac1ab2ebce5ab9027bcacde6ba1 $
  */
 
 #ifndef PL310_H_

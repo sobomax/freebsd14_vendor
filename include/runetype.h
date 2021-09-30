@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)runetype.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: 4aca128f8c8a00f63b0f99966e7534934e451650 $
  */
 
 #ifndef	_RUNETYPE_H_

@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9b0024dc7b0fadc67c14429af829a8a165e6f715 $");
 
 #if !defined(_WIN32) || defined(__CYGWIN__)
 

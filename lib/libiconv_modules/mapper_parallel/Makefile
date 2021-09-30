@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 000866578547672a7c5b3d346d5f41a0be8b57cf $
 
 .PATH: ${.CURDIR:H}/mapper_serial
 

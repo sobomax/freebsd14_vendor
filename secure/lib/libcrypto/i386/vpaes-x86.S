@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: f78a8f9b32c6a5ef7412a640115542499a1a533a $ */
 /* Do not modify. This file is auto-generated from vpaes-x86.pl. */
 #ifdef PIC
 .text

@@ -29,7 +29,7 @@
 // $Id: binstream.c,v 1.1 2006/07/05 10:47:54 ivoras Exp $
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 367cd862fd170f07b219c3f196058672e9f81924 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>

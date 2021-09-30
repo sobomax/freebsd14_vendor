@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: ad9f712bb3bf9897546b6670df790e58e3f81dc2 $
  */
 
 #include <sys/sysent.h>

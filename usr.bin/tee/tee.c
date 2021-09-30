@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)tee.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: b55aa84d2f63a2971a7d092262bfa2932c45645b $";
 #endif /* not lint */
 
 #include <sys/capsicum.h>

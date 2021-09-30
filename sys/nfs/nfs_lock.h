@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *      from nfs_lock.h,v 2.2 1998/04/28 19:38:41 don Exp
- * $FreeBSD$
+ * $FreeBSD: 63fdb202d77942302b4d3476d64ce134fcb9f675 $
  */
 
 /*

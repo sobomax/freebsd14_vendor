@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0f96532cc65b6a689f06b94cb5935f19533d2b79 $
 
 # Common flags to build FICL related files
 

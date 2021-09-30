@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: e04a69cbc6c6984ed3fd21d72227a86c23a16597 $
 Set to build
 .Xr c++ 1
 and related libraries.

@@ -14,7 +14,7 @@
  * Routines to test the hash are included if SELF_TEST is defined.
  * You can use this free for any purpose.  It has no warranty.
  *
- * $FreeBSD$
+ * $FreeBSD: 4546b7b3d5b3e1a9c39ce70961bd5cd9fb55b7c2 $
  */
 
 /* NOTE: Arguments are modified. */

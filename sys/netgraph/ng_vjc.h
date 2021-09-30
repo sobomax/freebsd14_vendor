@@ -38,7 +38,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: 284d8d5f5d32fe3811c2889707db7f1d737e0573 $
  * $Whistle: ng_vjc.h,v 1.6 1999/01/25 02:40:22 archie Exp $
  */
 

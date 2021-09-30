@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 81dd01a21f17e6197dd77d2111331aa244bc1df9 $");
 
 #include <sys/endian.h>
 

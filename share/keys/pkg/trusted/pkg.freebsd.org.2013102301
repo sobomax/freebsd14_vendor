@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3a144a338f2952bf31eaf9172ed65c66c9af1f3b $
 
 function: "sha256"
 fingerprint: "b0170035af3acc5f3f3ae1859dc717101b4e6c1d0a794ad554928ca0cbb2f438"

@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: d787dc243ae672bfd2a8b10d15607d4eae4b4b29 $	*/
 /*	$OpenBSD: cryptosoft.h,v 1.10 2002/04/22 23:10:09 deraadt Exp $	*/
 
 /*-

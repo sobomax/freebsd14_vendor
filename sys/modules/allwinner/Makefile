@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 35fe0dfef0dd7a441501bea48d89f150a2004a37 $
 # Build modules specific to Allwinner.
 
 SUBDIR = \

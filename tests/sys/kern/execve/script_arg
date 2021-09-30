@@ -1,4 +1,4 @@
 #! /bin/sh -x
-# $FreeBSD$
+# $FreeBSD: 2700f1c3a38f0ac80b10bebcc8e1389f54f03b62 $
 
 echo succeeded

@@ -5,7 +5,7 @@
 # Since the AR724x boards tend to have minimal flash (sometimes 4MB!),
 # the majority of the kernel framework will be built as modules.
 #
-# $FreeBSD$
+# $FreeBSD: 3201d2f2e4bcb4b56775b814204a7dab000112ed $
 #
 
 machine		mips mips

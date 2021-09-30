@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 129d12cbcf0df48ff8a5c0366b85a7ae2252e21b $
 
 PROG=	string2key
 MAN=	string2key.8

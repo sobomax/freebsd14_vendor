@@ -1,6 +1,6 @@
 # MMCCAM is the kernel config for doing MMC on CAM development
 # and testing on bhyve
-# $FreeBSD$
+# $FreeBSD: 19dc27b95e3d8afd82c03d992aa86d8057eac0b9 $
 
 include         MINIMAL
 

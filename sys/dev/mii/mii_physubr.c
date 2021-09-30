@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f56676d4e091a6791e567d2d6f6c21b3cc6b92da $");
 
 /*
  * Subroutines common to all PHYs.

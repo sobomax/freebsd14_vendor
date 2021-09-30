@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 75e7ef7c20396cb5b3a81c203a5991205ce401b8 $");
 
 #define	MBUF_PRIVATE	/* XXXRW: Optimisation tries to avoid M_EXT mbufs */
 

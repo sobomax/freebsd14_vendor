@@ -35,7 +35,7 @@
 
 /* @(#)exp.c	8.1 (Berkeley) 6/4/93 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f922d02a03aa3185a24b51969aab20a3c7621362 $");
 
 
 /* EXP(X)

@@ -29,7 +29,7 @@
 #define __R500_REG_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 78e7bd01ed87d3bbe5c4d432e089c05da4cc47d5 $");
 
 /* pipe config regs */
 #define R300_GA_POLY_MODE				0x4288

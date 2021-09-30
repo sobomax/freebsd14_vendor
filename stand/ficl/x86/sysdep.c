@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: f45c115f7fca12996a2466782596d56c7a5fdab0 $ */
 
 #ifndef TESTMAIN
 #include <machine/cpufunc.h>

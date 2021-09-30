@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 215066ad6321ebf4b0a97f45ebd41d1d966622ab $
 
 [ "`case x in
 x)	false ;&

@@ -26,7 +26,7 @@
 #define ATOM_BITS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ab099f9964a56b6b7792837aa93b4deb5c56bdd0 $");
 
 static inline uint8_t get_u8(void *bios, int ptr)
 {

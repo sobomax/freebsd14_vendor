@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: 1f0400b696f5a100a9a998f3edf3553ae9735db0 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1f0400b696f5a100a9a998f3edf3553ae9735db0 $");
 
 /*
  * This implements some very basic bluetooth coexistence methods for

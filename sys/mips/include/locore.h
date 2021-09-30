@@ -12,7 +12,7 @@
  * software for any purpose.  It is provided "as is" without
  * express or implied warranty.
  *
- * $FreeBSD$
+ * $FreeBSD: 1f101a5175fc808fdcd1a0b943f5a6cb18ab2c72 $
  */
 
 /*

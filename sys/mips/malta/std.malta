@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5d175ba5260ca400319ab4fdf7d3c491cbb4a5da $
 files	"../malta/files.malta"
 
 cpu		CPU_MALTA

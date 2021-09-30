@@ -40,7 +40,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 5e3805645cf21faa192e9432642edb2a5808430d $");
 
 /* -------------------------------------------------------------------- */
 

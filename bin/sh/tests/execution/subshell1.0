@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 347806ed45aca35e3a25c7c6c615d5447467d168 $
 
 (eval "cd /
 v=$(printf %0100000d 1)

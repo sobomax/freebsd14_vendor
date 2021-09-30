@@ -10,7 +10,7 @@ __RCSID("$NetBSD: l64a.c,v 1.13 2003/07/26 19:24:54 salo Exp $");
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c281d7d823c33b242b395ad40d0f6684621266c4 $");
 
 #include <stdint.h>
 #include <stdlib.h>

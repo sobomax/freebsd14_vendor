@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c1c25ceedf268b74aec7013089181ebb5a06cd20 $
  */
 
 /* Machine-defined variables. */

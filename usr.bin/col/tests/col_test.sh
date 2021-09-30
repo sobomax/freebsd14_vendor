@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c072aab929cdfffe61ee73c9734e6707d1680123 $
 
 atf_test_case rlf
 

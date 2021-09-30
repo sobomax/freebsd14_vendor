@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 5dcddb9d51a4f7c60a032b4204b757a0a4cf8dde $
  */
 
 /* Machine dependent interfaces */

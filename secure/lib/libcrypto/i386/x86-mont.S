@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: dbb8531aefaf2b269dcda5143e99a494776bfdf0 $ */
 /* Do not modify. This file is auto-generated from x86-mont.pl. */
 #ifdef PIC
 .text

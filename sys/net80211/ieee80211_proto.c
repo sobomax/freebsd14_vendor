@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2f98deea88d93371aa437520a454bf98166d98d5 $");
 
 /*
  * IEEE 802.11 protocol support.

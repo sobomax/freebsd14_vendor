@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c1f7c8c6779c1701c9479e769b4e56ce5167528f $
  */
 
 #include <dev/hptnr/hptnr_config.h>

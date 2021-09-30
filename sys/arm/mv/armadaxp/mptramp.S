@@ -27,7 +27,7 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 056f5889dd9ba3464c3e2cda535ab140ea5e0dbc $");
 
 .global _C_LABEL(mptramp_pmu_boot)
 

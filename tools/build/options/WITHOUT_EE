@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 721ddaab9df85842a580320939fa4f56ea75356d $
 Set to not build and install
 .Xr edit 1 ,
 .Xr ee 1 ,

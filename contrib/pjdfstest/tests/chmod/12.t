@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/12.t 219463 2011-03-10 20:59:02Z pjd $
+# $FreeBSD: e3b2b24d79124ced713a7e89acba28900228678a $
 
 desc="verify SUID/SGID bit behaviour"
 

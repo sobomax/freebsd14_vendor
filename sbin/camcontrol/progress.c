@@ -44,7 +44,7 @@
 #include <unistd.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 054b3f5391e78d5238933a975fc1a5b3bbc2d45e $");
 
 #include "progress.h"
 

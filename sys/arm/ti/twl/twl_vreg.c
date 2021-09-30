@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0250e127d22e33e19a19b93d77fce3be6022d7cb $");
 
 /*
  * Texas Instruments TWL4030/TWL5030/TWL60x0/TPS659x0 Power Management.

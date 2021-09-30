@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 91d85c22a57c7b2594b1907b7c50f8a7e0cbed4a $
 # General kernel macros
 
 # Print the command name of the current process

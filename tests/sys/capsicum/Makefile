@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6b0e53fa0865f4933bc2ca4af16ac888369b73ca $
 
 TESTSDIR=	${TESTSBASE}/sys/capsicum
 

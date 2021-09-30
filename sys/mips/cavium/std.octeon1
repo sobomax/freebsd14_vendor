@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fa6ae0746d98f09a48673e1874aa243ab6295d13 $
 # 
 files	"../cavium/files.octeon1"
 machine	mips mips64

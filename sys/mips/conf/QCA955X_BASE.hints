@@ -4,7 +4,7 @@
 # then override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 
-# $FreeBSD$
+# $FreeBSD: 2b0fcdeeb8737528719fbf267d5591acb1531f15 $
 
 hint.apb.0.at="nexus0"
 # The default APB is on IP6 (irq4); we need to add

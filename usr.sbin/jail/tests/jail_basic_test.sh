@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-# $FreeBSD$
+# $FreeBSD: f9d52cf8a78052a20711c7823f0598fe8bd88a49 $
 
 atf_test_case "basic" "cleanup"
 atf_test_case "nested" "cleanup"

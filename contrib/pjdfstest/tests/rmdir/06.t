@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rmdir/06.t 211474 2010-08-18 22:06:43Z pjd $
+# $FreeBSD: 371649cb49299b7174cd34b4f8f9234d0a0dc68a $
 
 desc="rmdir returns EEXIST or ENOTEMPTY the named directory contains files other than '.' and '..' in it"
 

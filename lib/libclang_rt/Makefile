@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d80c9876aee072bbe70bfb202e10e796a4c91f7f $
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 SUBDIR+=	include

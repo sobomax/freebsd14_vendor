@@ -32,7 +32,7 @@
  * LC_TIME database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8715abb42aa0d8d72a8b2846afb05f804b474e40 $");
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 7675d8e688ce94a29370e52213463b981f8cb1d7 $ */
 
 /* Do not modify this file.  */
 /* It is created automatically by the Makefile.  */

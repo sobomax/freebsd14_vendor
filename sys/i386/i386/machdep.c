@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 623622fd1e18bd94331853eb200043f2bbf64776 $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"

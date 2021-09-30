@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 07e6209297c520ab06ee247bbf6a6bde01446bdd $
  */
 
 #include <sys/socket.h>

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 757a1e8608dcfbf1410cfecf22fe4b92e74a3c23 $");
 
 /*
  * Support for the Sun APB (Advanced PCI Bridge) PCI-PCI bridge.

@@ -2,7 +2,7 @@
  * Machine-independent glue to integrate David Gay's gdtoa
  * package into libc.
  *
- * $FreeBSD$
+ * $FreeBSD: 39e491a7a277eff999944ea1d66774c03ef03519 $
  */
 
 #include <pthread.h>

@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: 975229304af6e50cc901f2f7e995c07a85da0eb1 $
  */
 
 #define	LINUX_SYS_linux_setxattr	5

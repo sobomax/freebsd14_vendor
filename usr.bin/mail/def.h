@@ -30,7 +30,7 @@
  *
  *	@(#)def.h	8.4 (Berkeley) 4/20/95
  *
- * $FreeBSD$
+ * $FreeBSD: 02b84478456b1633ab67cce976f278865873fa9d $
  */
 
 /*

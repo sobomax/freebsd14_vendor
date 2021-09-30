@@ -96,7 +96,7 @@
  * OWNER OR CONTRIBUTOR IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4fbca1d9fe2592583a2edbc8b8926e671068122a $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h>

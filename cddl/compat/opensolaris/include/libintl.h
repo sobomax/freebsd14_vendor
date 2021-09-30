@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: da13f4749081d86b3ccdf3a31ac92302e413c7b5 $ */
 
 #ifndef	_LIBINTL_H_
 #define	_LIBINTL_H_

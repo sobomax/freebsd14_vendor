@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2fe63846380523769c7f04a24e4882686fdf8810 $
 
 PACKAGE=lib${LIB}
 LIB=		ugidfw

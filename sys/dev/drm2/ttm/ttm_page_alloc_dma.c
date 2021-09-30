@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 21dc287dfe834ebb1bf31517bbabff9801adcd13 $");
 
 #define pr_fmt(fmt) "[TTM] " fmt
 

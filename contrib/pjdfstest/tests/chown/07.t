@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/07.t 211410 2010-08-17 06:08:09Z pjd $
+# $FreeBSD: bf7c544eeee35007dc0083ccd84b9c0caad85ee2 $
 
 desc="chown returns EPERM if the operation would change the ownership, but the effective user ID is not the super-user and the process is not an owner of the file"
 

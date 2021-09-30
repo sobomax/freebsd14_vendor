@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: bthidd.c,v 1.8 2006/09/07 21:06:53 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 1910a91732fd9d9953059f9a4b0d4e52dd8128fe $
  */
 
 #include <sys/time.h>

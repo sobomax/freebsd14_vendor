@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 9236a23eff9488c50650e55cd0e4b66dfbdee67f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9236a23eff9488c50650e55cd0e4b66dfbdee67f $");
 
 #ifndef _LINUX_SDIO_COMPAT_H_
 #define _LINUX_SDIO_COMPAT_H_

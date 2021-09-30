@@ -26,7 +26,7 @@ THIS SOFTWARE.
 
 ****************************************************************/
 
-/* $FreeBSD$ */
+/* $FreeBSD: 285f8a182845a559a364f9499d692d5bde6ec6ed $ */
 
 /* This is a variation on dtoa.c that converts arbitary binary
    floating-point formats to and from decimal notation.  It uses

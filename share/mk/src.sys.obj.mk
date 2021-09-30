@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3b48fc3c55140db69de348162db7872bae8aeb1c $
 #
 # Early setup of MAKEOBJDIR
 #

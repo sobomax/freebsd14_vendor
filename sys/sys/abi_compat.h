@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 0df31dbfbdcec1d51e536b8fced1ff3e0366b6f1 $
  */
 
 #ifndef _COMPAT_H_

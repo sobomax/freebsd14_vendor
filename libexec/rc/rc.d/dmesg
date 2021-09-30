@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 3da6196b6ff52ee16c4fa320667cb50e0622cae6 $
 #
 
 # PROVIDE: dmesg

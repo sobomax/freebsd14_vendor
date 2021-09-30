@@ -1,5 +1,5 @@
 This fortune brought to you by:
-$FreeBSD$
+$FreeBSD: 5349bc6410c87c9b4db512154269706e6050811b $
 %
 Any user that is a member of the wheel group can use "su -" to simulate
 a root login. You can add a user to the wheel group by editing /etc/group.

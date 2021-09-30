@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 756ff37b4bf88ef8b2f223ab3fd23c5c426ad0e9 $ */
 
 #ifndef LLVM_DISASSEMBLER
 #  error Please define the macro LLVM_DISASSEMBLER(TargetName)

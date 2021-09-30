@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 395c57d4603b82a2ff98abe03d53545af6d51226 $
  */
 
 extern const struct ccp_algorithm Pred1Algorithm;

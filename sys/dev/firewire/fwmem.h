@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD$
+ * $FreeBSD: f79dec68eccfbb3ce68668ad6d7833ed2edeec61 $
  */
 
 struct fw_xfer *fwmem_read_quad(struct fw_device *, caddr_t, uint8_t,

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b5e78f223b899ce2f52c81aa55ee360a8fc0d01a $
 
 .PATH:		${SRCTOP}/sys/dev/smbus
 KMOD		= smbus

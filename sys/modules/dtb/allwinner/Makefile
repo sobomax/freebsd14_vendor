@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8309c128988973e19f4322af297dc54d68825574 $
 # All the dts files for allwinner systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"

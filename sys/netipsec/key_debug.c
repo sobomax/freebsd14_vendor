@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 3041d6368755a118a4aa4db894febf73cd514fc5 $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-

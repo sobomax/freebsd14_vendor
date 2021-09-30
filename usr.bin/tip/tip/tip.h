@@ -1,6 +1,6 @@
 /*	$OpenBSD: tip.h,v 1.27 2006/08/18 03:06:18 jason Exp $	*/
 /*	$NetBSD: tip.h,v 1.7 1997/04/20 00:02:46 mellon Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: ab6b2c4cd9a0afe2131e787d3899a90808a81d48 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

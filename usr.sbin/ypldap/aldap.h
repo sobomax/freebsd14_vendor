@@ -1,6 +1,6 @@
 /*	$Id: aldap.h,v 1.9 2012/04/30 21:40:03 jmatthew Exp $ */
 /*	$OpenBSD: aldap.h,v 1.9 2012/04/30 21:40:03 jmatthew Exp $ */
-/*	$FreeBSD$ */
+/*	$FreeBSD: cdf5316e8328246d4f97699b79c4b3fbf6282f49 $ */
 
 /*
  * Copyright (c) 2008 Alexander Schrijver <aschrijver@openbsd.org>

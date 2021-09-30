@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f7d5af271b9169240dca5f1295c19329b3583435 $");
 
 /*
  * driver for the Marvell 88E1000 series external 1000/100/10-BT PHY.

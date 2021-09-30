@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: e17212a1bdddbc8645bb383378e76ad6a2c09913 $ */
 OUTPUT_FORMAT("elf32-i386-freebsd", "elf32-i386-freebsd", "elf32-i386-freebsd")
 OUTPUT_ARCH(i386)
 ENTRY(_start)

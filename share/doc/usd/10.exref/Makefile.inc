@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9c637dc20250fd971c29b4f758e3fbb6574084a0 $
 
 VOLUME=	usd/10.exref
 MACROS=	-ms

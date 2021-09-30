@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.c#24 $
  *
- * $FreeBSD$
+ * $FreeBSD: c6c65b2202f69c2bd6f83d7b5ae9fb8f1c6eb775 $
  */
 
 #include <sys/types.h>

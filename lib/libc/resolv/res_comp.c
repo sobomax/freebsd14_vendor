@@ -71,7 +71,7 @@ static const char sccsid[] = "@(#)res_comp.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_comp.c,v 1.5 2005/07/28 06:51:50 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1048ef453fe0e4062afb1eb9e094ec7f0241f695 $");
 
 #include "port_before.h"
 #include <sys/param.h>

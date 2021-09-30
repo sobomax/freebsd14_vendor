@@ -32,7 +32,7 @@
 
 #if defined(LIBC_RCS) && !defined(lint)
 	.text
-	.asciz "$FreeBSD$"
+	.asciz "$FreeBSD: 95b0ea8037f5a99f27c707bcd628e81b3f12413d $"
 #endif /* LIBC_RCS and not lint */
 
 /*

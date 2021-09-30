@@ -29,7 +29,7 @@
 #define __R600_REG_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e0578cc3e75e7acd3f98108a1d77f42be09f7fdf $");
 
 #define R600_PCIE_PORT_INDEX                0x0038
 #define R600_PCIE_PORT_DATA                 0x003c

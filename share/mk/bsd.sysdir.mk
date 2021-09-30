@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 665905e1d537de4c07855a5c2cee4b7f1e901f8a $
 
 # Search for kernel source tree in standard places.
 .if !defined(SYSDIR)

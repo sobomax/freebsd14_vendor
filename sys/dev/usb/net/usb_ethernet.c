@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 3dda564d523bd133a110176544d9cd111c5005c2 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3dda564d523bd133a110176544d9cd111c5005c2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 74633717bbd3f1d9e09da56ca54498d0104d8af8 $
 
 .PATH: ${SRCTOP}/sys/dev/hme
 

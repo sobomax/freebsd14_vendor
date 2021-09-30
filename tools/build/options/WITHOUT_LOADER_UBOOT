@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 7f6a3bb49962b79fb9f8108a02d28785d7840209 $
 Disable building of ubldr.

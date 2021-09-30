@@ -51,7 +51,7 @@
  *		that.  Managing something like 512MB worth of 4K blocks 
  *		eats around 32 KBytes of memory. 
  *
- * $FreeBSD$
+ * $FreeBSD: 595d3477aa087c2a41c96daf911b102266e4d30a $
 
  */
 

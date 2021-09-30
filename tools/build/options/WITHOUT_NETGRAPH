@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 6ec804434d04c0c23468509a453fc4abc46e8aa8 $
 Set to not build applications to support
 .Xr netgraph 4 .

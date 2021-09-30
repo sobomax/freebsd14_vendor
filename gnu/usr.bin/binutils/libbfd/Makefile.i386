@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e41e30d4deab73873fe0ffdb565728ee7dcc7350 $
 
 DEFAULT_VECTOR=	bfd_elf32_i386_freebsd_vec
 

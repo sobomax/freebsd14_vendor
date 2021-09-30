@@ -30,11 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD$
+ * $FreeBSD: 553e0300baad69854685d33216b9117eaa93c297 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 553e0300baad69854685d33216b9117eaa93c297 $");
 
 /*
  * bhnd(4) driver mix-in providing shared common methods for

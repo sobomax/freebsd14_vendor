@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 703854e6e5274c55130d2ca35e7d1f0be3fca8df $
 # $NetBSD: Makefile.part,v 1.6 2008/10/25 22:35:36 apb Exp $
 
 MKESDB?= ${.OBJDIR:H:H:H:H}/usr.bin/mkesdb_static/mkesdb_static

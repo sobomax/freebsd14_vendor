@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD$
+ * $FreeBSD: bb1d94aeb6e5f9ec310f4ba44a6e64efb85f55d0 $
  */
 
 #ifndef _SFXGE_TX_H

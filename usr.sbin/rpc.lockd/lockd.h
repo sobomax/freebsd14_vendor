@@ -1,5 +1,5 @@
 /*	$NetBSD: lockd.h,v 1.2 2000/06/07 14:34:40 bouyer Exp $	*/
-/*	$FreeBSD$ */
+/*	$FreeBSD: 23cb19fd79c691079d7eebc56872d915c86d023f $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

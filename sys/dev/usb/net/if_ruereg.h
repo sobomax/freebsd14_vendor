@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 688ee24e51eb48234624ca681dfc602b526cb7fe $
  */
 
 #define	RUE_CONFIG_IDX		0	/* config number 1 */

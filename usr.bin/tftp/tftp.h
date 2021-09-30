@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 26e5652d0fdd3cdefb2b2c9b9b837a516eb98fd8 $
  */
 
 void	recvfile(int peer, char *port, int fd, char *name, char *mode);

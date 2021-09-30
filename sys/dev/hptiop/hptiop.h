@@ -29,7 +29,7 @@
 #define _HPTIOP_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d18a027b9660cd43f9eee87ed811b2ae1d5a9007 $");
 
 #define DBG 0
 

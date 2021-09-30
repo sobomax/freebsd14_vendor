@@ -25,7 +25,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a8972b44f5f1a8169aac9a25bebdda8863880bba $");
 
 #include <dev/drm2/drmP.h>
 

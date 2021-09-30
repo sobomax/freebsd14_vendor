@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: fab303b81aacdadd1a226130c080a8cfe8457776 $
 Set this to not build Kerberos 5 (KTH Heimdal).

@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD$
+-- $FreeBSD: 0008cae9364134e22861af8be88a2724ccb35ddd $
 --
 
 -- The cli module should be included first here. Some of the functions that it

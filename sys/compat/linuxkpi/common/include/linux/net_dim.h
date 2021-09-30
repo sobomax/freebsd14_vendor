@@ -32,7 +32,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: f1b7e06b820e0500ddd28cfc365708a9101e1736 $
  */
 
 /* This file implements Dynamic Interrupt Moderation, DIM */

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6cd381b2ee11543c4242ea3d3b299795141903fd $");
 
 /*
  * PnP BIOS enumerator.

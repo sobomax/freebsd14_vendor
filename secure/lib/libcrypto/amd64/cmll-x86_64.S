@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d1d284b5a32baddf610a37f3802e00710689a764 $ */
 /* Do not modify. This file is auto-generated from cmll-x86_64.pl. */
 .text	
 

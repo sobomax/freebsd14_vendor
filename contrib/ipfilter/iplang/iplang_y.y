@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: b4570d39053048da4973ca5b44557a33d82f56ea $	*/
 
 %{
 /*
@@ -7,7 +7,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * Id: iplang_y.y,v 2.9.2.4 2006/03/17 12:11:29 darrenr Exp $
- * $FreeBSD$
+ * $FreeBSD: b4570d39053048da4973ca5b44557a33d82f56ea $
  */
 
 #include <stdio.h>

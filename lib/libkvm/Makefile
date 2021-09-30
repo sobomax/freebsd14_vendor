@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD$
+# $FreeBSD: d934690d43553ae1e0347109bb7512fd4b024e6c $
 
 PACKAGE=lib${LIB}
 LIB=	kvm

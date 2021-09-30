@@ -26,7 +26,7 @@
 
 
 #include "cpio_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3d5a6a837407a091fe2e550700bd49d03602e139 $");
 
 #include <sys/types.h>
 #include <archive.h>

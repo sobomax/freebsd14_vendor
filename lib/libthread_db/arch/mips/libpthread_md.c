@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1ded66d1c3fe94b881d03d12b7cca83b51c72c0b $");
 
 #include <sys/types.h>
 #define	_WANT_MIPS_REGNUM

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD$
+ * $FreeBSD: b30f2eae1ac7ad5eeb4e62e3824b833a293d2686 $
  */
 
 #include <sys/ioccom.h>

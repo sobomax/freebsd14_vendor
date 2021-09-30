@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 818e4cd21f779112519a2bea5d0c502ffbb18e20 $
 
 TESTSDIR=	${TESTSBASE}/sbin/pfctl/files
 BINDIR=		${TESTSDIR}

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 2ddfd663e28c6d8280c19f0a6f1ee7352a4ec92a $
  */
 
 #include <sys/_iovec.h>

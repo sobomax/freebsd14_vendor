@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 14e6ef40bfcfacf089570ea15b41c974ed6eff2b $");
 
 /*
  * Glue allowing devices beneath the scalable shared memory node to be

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b26f0dd067cd384cca2b8ad43df4da607b9a4b5b $
 
 alias echo='echo a'
 [ "`eval echo b`" = "a b" ]

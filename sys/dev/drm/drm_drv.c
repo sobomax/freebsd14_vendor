@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: bf8065accdb03c73eb39c01fe98493fb5c7dde4e $");
 
 /** @file drm_drv.c
  * The catch-all file for DRM device support, including module setup/teardown,

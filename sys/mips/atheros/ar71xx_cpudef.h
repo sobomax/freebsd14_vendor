@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 53454764a5d6eada589475763015696b635667e6 $ */
 
 #ifndef	__AR71XX_CPUDEF_H__
 #define	__AR71XX_CPUDEF_H__

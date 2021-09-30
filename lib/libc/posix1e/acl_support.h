@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 87692153c4ee69fd9e1b1408ba887d8acd6eec57 $
  */
 /*
  * Support functionality for the POSIX.1e ACL interface

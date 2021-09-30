@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 8a257800eccdb37b2b20f9f76bed0183fee537dd $ 
 # $NetBSD: UCS%ATARIST.src,v 1.1 2006/10/19 14:45:02 tnozaki Exp $
 
 TYPE		ROWCOL

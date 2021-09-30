@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: e8a9799eba35d2b143cb6e7b521bfc8a241a5db5 $
 Set to not build
 .Xr autofs 5
 related programs, libraries, and kernel modules.

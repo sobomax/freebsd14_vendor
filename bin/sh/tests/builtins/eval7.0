@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a309c917b102dc40124055c395fb04fd7780a45f $
 # Assumes that break can break out of a loop outside eval.
 
 while :; do

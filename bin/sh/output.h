@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)output.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 62f006d32a361b6890d86ecf08da4ee1d7b95e25 $
  */
 
 #ifndef OUTPUT_INCL

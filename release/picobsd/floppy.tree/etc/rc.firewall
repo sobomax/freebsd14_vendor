@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 408fe6087f026e17e0e9f8efa6c0d896c942fc8e $
 
 # Setup system for firewall service, with some sample configurations.
 # Select one using ${firewall_type} which you can set in /etc/rc.conf.local.

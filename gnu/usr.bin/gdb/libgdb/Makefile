@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8c27c58907edf1d86b744e05fdda08107dc73588 $
 
 # These assignments duplicate much of the functionality of
 # MACHINE_CPUARCH, but there's no easy way to export make functions...

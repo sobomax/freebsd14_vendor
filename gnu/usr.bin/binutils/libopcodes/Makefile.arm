@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 67bb751db477904eede7b6908dcd79f046e0896a $
 
 SRCS+=	arm-dis.c
 CFLAGS+= -DARCH_arm

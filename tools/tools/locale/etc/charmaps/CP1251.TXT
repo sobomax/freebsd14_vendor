@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: ca3e8f02627777625a6242736aa99ccd14512039 $
 #
 #    Name:     cp1251 to Unicode table
 #    Unicode version: 2.0

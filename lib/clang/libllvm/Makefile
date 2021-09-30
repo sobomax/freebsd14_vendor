@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 219c1dab006715d61dd3b403ce6646e37ed74bba $
 
 .include <src.opts.mk>
 .include "../llvm.pre.mk"

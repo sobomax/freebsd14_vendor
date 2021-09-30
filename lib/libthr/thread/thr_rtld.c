@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3239a9dcfb18f33f2506421c4f4283d1b3cdaa7e $");
 
  /*
   * A lockless rwlock for rtld.

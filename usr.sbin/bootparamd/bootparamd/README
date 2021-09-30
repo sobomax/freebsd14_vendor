@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: c49b990a14b7ded03f1b224eadb6b69cc8654f88 $
 
 This directory contains a version of the rpc.bootparamd, which have been 
 written using the Sun's RPC protocol for bootparamd. To use it you must 

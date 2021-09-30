@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 04468ef0fe647aa357d355992553e85ad3fe41e7 $
 #
 
 # PROVIDE: SERVERS

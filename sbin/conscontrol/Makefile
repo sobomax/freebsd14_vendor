@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0bd82e695c3158a59f5ae34f21ab77656be47610 $
 
 PACKAGE=runtime
 PROG=	conscontrol

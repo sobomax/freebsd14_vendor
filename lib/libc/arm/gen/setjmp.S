@@ -41,7 +41,7 @@
 #include <machine/asm.h>
 #include <machine/setjmp.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 22d6345fa2c63d815d2c802b0bf9d2b6374adeca $");
 
 /*
  * C library -- setjmp, longjmp

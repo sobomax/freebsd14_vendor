@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6cec3e781cd2638f81e1134220fedf2b4964e8da $");
 
 /*
  * floorl(x)

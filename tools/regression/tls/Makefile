@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 76def9685e752ba5b55ad701c351fc5ac277bdca $
 
 SUBDIR=libxx libyy ttls1 ttls2 ttls4
 

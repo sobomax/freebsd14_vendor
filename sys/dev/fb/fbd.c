@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 02b8eb3ada4473e74f82c86e02dbaf64e4f4b6f9 $
  */
 
 /* Generic framebuffer */
@@ -36,7 +36,7 @@
 /* TODO done normal /dev/fb methods */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 02b8eb3ada4473e74f82c86e02dbaf64e4f4b6f9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

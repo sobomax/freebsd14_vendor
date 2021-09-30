@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a34fc6c78240e4b9106fd43a8f551536b5db19a5 $ */
 
 #include <string.h>
 #include <ctype.h>

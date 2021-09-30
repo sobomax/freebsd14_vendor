@@ -1,6 +1,6 @@
 /*	OpenBSD: lxtphyreg.h,v 1.1 1998/11/11 19:34:47 jason Exp 	*/
 /*	NetBSD: lxtphyreg.h,v 1.1 1998/10/24 00:33:17 thorpej Exp 	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: acf15ae0731b4624e5a4b3c948fe4e708dbffe9f $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

@@ -30,7 +30,7 @@
  *
  *	@(#)sysexits.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD$
+ * $FreeBSD: 5e414f24ce8df86ac7c4cefec1261c8f921142c0 $
  */
 
 #ifndef	_SYSEXITS_H_

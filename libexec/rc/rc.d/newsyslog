@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 740fcfeefaf4cf77b76da7cf0e99f84f2b248a00 $
 #
 
 # PROVIDE: newsyslog

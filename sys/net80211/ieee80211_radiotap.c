@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 80c720a6c57b4b0b94ccf58ff8f47b4b5d1fa71a $");
 
 /*
  * IEEE 802.11 radiotap support.

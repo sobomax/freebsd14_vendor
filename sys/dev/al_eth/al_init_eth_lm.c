@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 96da4bb34d96557a694425e8a0223961cc2edd3e $");
 
 #include "al_init_eth_lm.h"
 #include "al_serdes.h"

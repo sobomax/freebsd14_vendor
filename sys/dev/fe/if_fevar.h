@@ -19,7 +19,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3ebfeb0f2b46b11a9d76d67b9ae48901d7dd8d10 $
  */
 
 /* How many registers does an fe-supported adapter have at maximum?  */

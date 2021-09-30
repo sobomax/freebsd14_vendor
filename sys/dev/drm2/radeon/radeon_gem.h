@@ -1,6 +1,6 @@
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c7edd503f2177fee833cbd571e6d8b2c92ce3b2d $");
 
 #ifndef __RADEON_GEM_H__
 #define	__RADEON_GEM_H__

@@ -31,7 +31,7 @@
  *
  *	from: @(#)xdr.h 1.19 87/04/22 SMI
  *	from: @(#)xdr.h	2.2 88/07/29 4.0 RPCSRC
- * $FreeBSD$
+ * $FreeBSD: 24113db9c6305214ef818771cea84b63b376b4e4 $
  */
 
 /*

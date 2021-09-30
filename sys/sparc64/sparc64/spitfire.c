@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6bd3c45b0f493733c16386fcacc117820457d388 $");
 
 #include "opt_pmap.h"
 

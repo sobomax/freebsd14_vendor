@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 123e89fbe656b639447283af19fc08255727c471 $
 #
 
 # PROVIDE: amd

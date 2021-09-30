@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cef5a88a746199f7ed5a61dab66c4bc0bc893487 $
 
 LIB=	vers
 INTERNALLIB=

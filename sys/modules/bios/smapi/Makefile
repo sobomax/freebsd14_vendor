@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c488491bd525bea1961711baf2399221260f2549 $
 #
 
 .PATH:  ${SRCTOP}/sys/i386/bios

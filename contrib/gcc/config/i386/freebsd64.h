@@ -19,7 +19,7 @@ along with GCC; see the file COPYING.  If not, write to
 the Free Software Foundation, 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 9e47d5fc30ee1f602cf3a3b149e72ff8e5f6d250 $ */
 
 
 #undef  TARGET_VERSION

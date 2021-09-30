@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 53d3af17d89d571a08e9c80b48f3ec5abe2adb41 $");
 
 /*
  * See e_lgamma_r.c for complete comments.

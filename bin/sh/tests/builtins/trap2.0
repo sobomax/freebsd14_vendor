@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a05287a16771f7defe0ed3f50c94639387ba3e7e $
 # This is really a test for outqstr(), which is readily accessible via trap.
 
 runtest()

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8666e13dc3a3588016f80895bc3bf66f1868e4b4 $");
 
 /*
  * Slicer is required to split firmware images into pieces.

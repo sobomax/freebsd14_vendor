@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_pcb.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: d2df04402b2f85e732b1c025a6c50ea59d32a380 $
  */
 
 #ifndef _NETINET6_IN6_PCB_H_

@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2002/11/24 20:40:04 max Exp $
-# $FreeBSD$
+# $FreeBSD: 808f44c9dd2c2ba423a79258053c668e5f7c9440 $
 
 .PATH: ${SRCTOP}/sys/netgraph/bluetooth/drivers/h4
 

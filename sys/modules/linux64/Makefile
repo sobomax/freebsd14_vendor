@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f084df6cc4667d1410711a10c71ed659cee6dfe8 $
 
 .PATH: ${SRCTOP}/sys/compat/linux ${SRCTOP}/sys/${MACHINE}/linux
 

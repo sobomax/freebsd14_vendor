@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 87804f845631e9fc1e5d0dd92f7b3895b2a86ac3 $ */
 
 #ifndef _DEV_LE_LANCEVAR_H_
 #define	_DEV_LE_LANCEVAR_H_

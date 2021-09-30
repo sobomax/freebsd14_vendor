@@ -71,7 +71,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsstat.c	8.2 (Berkeley) 3/31/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 2f874b5227ca3272eed94b3873fe549d473bca42 $";
 #endif /* not lint */
 
 #include <sys/param.h>

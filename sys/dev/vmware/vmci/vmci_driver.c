@@ -7,7 +7,7 @@
 /* VMCI initialization. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c742cc46c742a3b2f9daa6280e4e370d73404727 $");
 
 #include "vmci.h"
 #include "vmci_doorbell.h"

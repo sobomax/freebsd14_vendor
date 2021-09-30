@@ -1,6 +1,6 @@
 #! /usr/bin/awk -f
 #	$NetBSD: devlist2h.awk,v 1.3 1998/09/05 14:42:06 christos Exp $
-# $FreeBSD$
+# $FreeBSD: 3e09fe45a5e69591d718f0ac84d3b7701d5973f3 $
 
 #-
 # SPDX-License-Identifier: BSD-2-Clause-NetBSD AND BSD-4-Clause

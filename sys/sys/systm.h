@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)systm.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD$
+ * $FreeBSD: 37dd13654971b3b83845e8211a8fa9befa22e7d6 $
  */
 
 #ifndef _SYS_SYSTM_H_

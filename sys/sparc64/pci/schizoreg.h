@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: OpenBSD: schizoreg.h,v 1.8 2005/05/19 18:28:59 mickey Exp
- * $FreeBSD$
+ * $FreeBSD: 0640df4b744f01f727fadfa4c3438379d56424c3 $
  */
 
 #ifndef _SPARC64_PCI_SCHIZOREG_H_

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8a251f8ca09e830e86dd797cd356e4acb06496ad $
 
 .PATH: ${.CURDIR:H}/common
 

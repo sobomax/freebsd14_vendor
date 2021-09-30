@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 20e248910b52158fce0327539f6298c2dddaf1fa $
 
 PROG=	athregs
 

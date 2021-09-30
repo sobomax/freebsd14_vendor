@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 678641562d930128f549586d738fee131fb82a97 $
 
 WARNS?=	6
 

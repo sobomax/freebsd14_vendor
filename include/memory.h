@@ -30,7 +30,7 @@
  *
  *	@(#)memory.h	8.1 (Berkeley) 6/2/93
  *
- * $FreeBSD$
+ * $FreeBSD: dd0c63ac73b2171cd0dfde82457e66a85f4d9256 $
  */
 
 #include <string.h>

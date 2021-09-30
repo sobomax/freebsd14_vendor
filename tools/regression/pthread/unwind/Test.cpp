@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 9322deff621e636bcaeffbe1d872ceb8a187711a $ */
 
 int destructed;
 int destructed2;

@@ -70,7 +70,7 @@
  * - Dynamic control of hash-table size
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: dd9b97b57475009fea9e4623f225b5efb348aa97 $ */
 
 #ifdef _KERNEL
 #include <machine/stdarg.h>

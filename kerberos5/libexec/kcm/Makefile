@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fa7a0cfce9cf90b54512a05624f99e5999ba0a9a $
 
 PROG=	kcm
 MAN=	kcm.8

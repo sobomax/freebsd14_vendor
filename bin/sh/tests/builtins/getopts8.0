@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: da4af6bd0b567422017a1cbdf3b1d517d24eb68e $
 
 set -- -yz -wx
 opt=wrong1 OPTARG=wrong2

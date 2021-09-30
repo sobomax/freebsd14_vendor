@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 87ca49a08633db672a3f3c77867916d855bfd0fa $
 
 To verify that redzone(9) works properly:
 

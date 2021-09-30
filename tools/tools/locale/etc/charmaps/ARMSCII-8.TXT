@@ -5,7 +5,7 @@
 #
 # Updated with libiconv-1.13.1/tests/ARMSCII-8.TXT
 #
-# $FreeBSD$
+# $FreeBSD: cad0c1c89a62fd0e8d932c5f1dd681db0c9af22c $
 #
 0x00	0x0000
 0x01	0x0001

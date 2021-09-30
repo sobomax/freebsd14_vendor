@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 374262915d49cc9a502568b40e01961a1e56c118 $ */
 
 #define	min(a, b) ((a) > (b) ? (b) : (a))
 #define	VALGRIND_MAKE_MEM_DEFINED(...)	0

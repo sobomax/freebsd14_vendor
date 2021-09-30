@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$"); 
+__FBSDID("$FreeBSD: 32ee3997839c01c9f940dccbeed34ca0070b53b2 $"); 
 	
 ENTRY(remquof)
 	flds	8(%esp)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: daaf12f9d61c01a017d8d10c70ceb0db6c531582 $");
 
 /*
  * ASIX Electronics AX88178A/AX88179 USB 2.0/3.0 gigabit ethernet driver.

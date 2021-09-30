@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 35bc66e21d4f7de2ceb14042ed463f6a24ebe23e $
 
 Example for creating many different builds (including different
 arch) from a common set of files, as well as building natively

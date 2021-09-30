@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 653619638fbc14a82b7cf6151372fad5a20861e7 $
 
 .include "${.CURDIR:H}/config.mk"
 

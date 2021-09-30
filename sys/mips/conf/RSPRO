@@ -1,7 +1,7 @@
 #
 # Routerstation Pro: boot from on-board flash
 #
-# $FreeBSD$
+# $FreeBSD: 6ae1c8f07e307d6a4ccd1f3a1ab60faab48e595d $
 #
 
 #NO_UNIVERSE

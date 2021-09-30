@@ -26,7 +26,7 @@
 #
 # ident	"@(#)setup.ksh	1.3	09/05/19 SMI"
 #
-# $FreeBSD$
+# $FreeBSD: 3eddbfb5516bc7cc69cb86d7654ba18a06a5b1e8 $
 
 . ${STF_SUITE}/include/libtest.kshlib
 . $STF_SUITE/include/libgnop.kshlib

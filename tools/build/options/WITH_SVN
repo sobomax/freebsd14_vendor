@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 829a3a704f50c491194dd2d1454ec0d7364d712b $
 Set to install
 .Xr svnlite 1
 as

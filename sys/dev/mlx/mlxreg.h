@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD$
+ *	$FreeBSD: a26dc21d9506e25a70bf7e6ed03299cc2a24edc1 $
  */
 
 #define MLX_BLKSIZE	512		/* fixed feature */

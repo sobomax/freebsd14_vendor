@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a6ff8b00a402405b6b19cc7b9018d141be049623 $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */

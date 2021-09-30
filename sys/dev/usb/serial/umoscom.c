@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: daa83c54feab0aaf4a70c6a93ca384c1b139ea84 $ */
 /*	$OpenBSD: umoscom.c,v 1.2 2006/10/26 06:02:43 jsg Exp $	*/
 
 /*

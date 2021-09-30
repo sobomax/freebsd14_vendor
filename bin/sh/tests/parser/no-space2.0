@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4e8447b11e4c249f50175d437318479644c96f2c $
 
 # This conflicts with ksh extended patterns but occurs in the wild.
 

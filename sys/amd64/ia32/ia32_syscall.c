@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d3aaa40ee948ab24757618974712879c4ffe5c74 $");
 
 /*
  * 386 Trap and System call handling

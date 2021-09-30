@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: fe281212d20af1bcd70e3f9a09917acb82573ccf $
  */
 
 /*

@@ -19,7 +19,7 @@
    Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 67e67fc69c905d61a9e2e8570226d5857c69d1c0 $ */
 
 /* FreeBSD QMAGIC files have the header in the text. */
 #define	N_HEADER_IN_TEXT(x)	1

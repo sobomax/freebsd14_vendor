@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 530fc12898ce7887bb582a31dc6666ccd72101e8 $
 
 .PATH: ${SRCTOP}/sys/dev/rp
 

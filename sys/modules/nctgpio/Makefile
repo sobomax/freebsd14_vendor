@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7ab56ee5e6d5baa1a7358b09f76e1ee38694c378 $
 
 .PATH:	${SRCTOP}/sys/dev/nctgpio
 KMOD=	nctgpio

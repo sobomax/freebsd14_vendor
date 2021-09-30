@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  */
-/* $FreeBSD$ */
+/* $FreeBSD: 423da4f57e08517c89ddcbafeae8688e11e8d47c $ */
 /* $Id: gss_pseudo_random.c 20053 2007-01-24 01:31:35Z lha $ */
 
 #include <gssapi/gssapi.h>

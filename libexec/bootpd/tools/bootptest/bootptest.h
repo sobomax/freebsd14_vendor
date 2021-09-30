@@ -1,5 +1,5 @@
 /* bootptest.h */
-/* $FreeBSD$ */
+/* $FreeBSD: 2df35dea7ffc20d5b8a6739dcac2d05906c703dd $ */
 /*
  * Hacks for sharing print-bootp.c between tcpdump and bootptest.
  */

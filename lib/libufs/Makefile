@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 16487bebc95787b139bd8c52d232273eac85b85a $
 
 PACKAGE=lib${LIB}
 LIB=	ufs

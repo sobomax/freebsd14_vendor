@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 57f16ed275c6552aa6ec3e80d2301399f092c215 $
 
 .PATH: ${SRCTOP}/sys/dev/netfpga10g/nf10bmac
 

@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 15b83e9e221fab4977d3440216aaac7f8b7e6141 $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>

@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2006 John Birrell jb@freebsd.org
  *
- * $FreeBSD$
+ * $FreeBSD: 0f5ca63c39a4df72c48c3f366b6f5a3e1b6cc2c9 $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

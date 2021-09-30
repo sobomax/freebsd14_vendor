@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cbb21220040bf79f28882f4340604fcc25bd1c2f $
 
 # nameser sources
 .PATH: ${LIBC_SRCTOP}/nameser

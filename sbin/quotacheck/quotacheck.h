@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 2699e4707fe95a2a8e7f435346bfa60d815436df $
  */
 
 extern char *blockcheck(char *);

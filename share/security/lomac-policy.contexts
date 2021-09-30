@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6529d082878ef75d92fe0957cd85f3796b117a94 $
 #
 # This is a sample LOMAC policy based upon the PLM defined in the
 # original FreeBSD LOMAC port.  It may be configured on a

@@ -27,7 +27,7 @@
 /* Qualcomm MSM7K/8K uart driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 96d0207625c2ffcf158493a160ac6429453fe4bb $");
 
 #include "opt_ddb.h"
 

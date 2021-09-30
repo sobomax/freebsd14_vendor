@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD$
+ * $FreeBSD: b4cefa96a7fdb858ed81c56ba8fcd66cdac4956a $
  */
 
 /* Some common utilities used by the VMCI kernel module. */

@@ -18,7 +18,7 @@
 /* ssh session multiplexing support */
 
 #include "includes.h"
-__RCSID("$FreeBSD$");
+__RCSID("$FreeBSD: d035fbe75f7488a7ecb76464e93ea8dbfb3eb397 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

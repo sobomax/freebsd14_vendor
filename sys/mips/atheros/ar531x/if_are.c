@@ -32,7 +32,7 @@
 #include "opt_ar531x.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 07e2a1e5a48b8d7cd48b7edbc504694df88c6caa $");
 
 /*
  * AR531x Ethernet interface driver

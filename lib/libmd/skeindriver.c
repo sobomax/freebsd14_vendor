@@ -15,7 +15,7 @@
  * documentation and/or software. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ee70ef7cd7dc57dffd1c388316eeb1465afac53b $");
 
 #include <sys/types.h>
 

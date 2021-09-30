@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: f5682a01ccdc8c5bc947042ec621388a53f5d8fb $ */
 
 #ifdef RPC_HDR
 

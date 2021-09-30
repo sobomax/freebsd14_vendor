@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 610226f4e02c8318088c236bb5ec4faf58038970 $
 
 KMOD=	vesa
 SRCS=	opt_vga.h opt_vesa.h

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f68627cb192448f94c0d384d7170a3d75e5566f2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

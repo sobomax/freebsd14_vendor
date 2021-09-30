@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a33ca8f78af43a932794b5a77a8d4eaa62064595 $");
 
 int __cxa_atexit(void (*)(void *), void *, void *);
 

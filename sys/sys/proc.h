@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)proc.h	8.15 (Berkeley) 5/19/95
- * $FreeBSD$
+ * $FreeBSD: 10cf8b8bce4b1382d55d427170e3d9c630fe1e23 $
  */
 
 #ifndef _SYS_PROC_H_

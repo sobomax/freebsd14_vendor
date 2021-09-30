@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d59d54036be678e8f1af0ea5377653aa388f6d9c $
 
 .PATH: ${SRCTOP}/sys/dev/isp
 

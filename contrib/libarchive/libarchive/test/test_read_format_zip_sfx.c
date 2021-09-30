@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a33c1b808c567f48c72fd0db3e679ba088418105 $");
 
 /*
  * Read a zip file that is a SFX. 

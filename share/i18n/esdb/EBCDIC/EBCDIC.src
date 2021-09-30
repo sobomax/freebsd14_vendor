@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 805e2071a8731be87a1e2ca447fed983a401832d $ 
 # $NetBSD: EBCDIC.src,v 1.1 2003/06/27 08:40:53 tshiozak Exp $
 
 NAME		"EBCDIC-x"

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: df4c33e6405d861cab150ec7ba05055c77960feb $");
 
 #include "../libsecureboot-priv.h"
 #ifdef _STANDALONE

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 1a3b551c9a4ca50fd43467954e9f183392f3d867 $
 #
 
 # PROVIDE: jail

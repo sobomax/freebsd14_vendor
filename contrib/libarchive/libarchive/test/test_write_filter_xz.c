@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: head/lib/libarchive/test/test_write_compress_xz.c 191183 2009-04-17 01:06:31Z kientzle $");
+__FBSDID("$FreeBSD: bf1265c65b6f376483c678d91af0d17e89e33b56 $");
 
 /*
  * A basic exercise of xz reading and writing.

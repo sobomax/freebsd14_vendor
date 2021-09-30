@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 29d701aacb4c59903bb3ebbb59cfd53578e76aa9 $
  *
  * Customisation of the SSCOP code to ng_sscop.
  */

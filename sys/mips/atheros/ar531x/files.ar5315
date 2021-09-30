@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0d85d41347146d7f932f8f23c658616e11d82e01 $
 
 mips/atheros/ar531x/apb.c			standard
 mips/atheros/ar531x/if_are.c			optional are

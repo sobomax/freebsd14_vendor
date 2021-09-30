@@ -28,7 +28,7 @@
 #define RV770_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e281444f833c5bcc25d9f38a5c19b604f77e241a $");
 
 #define R7XX_MAX_SH_GPRS           256
 #define R7XX_MAX_TEMP_GPRS         16

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4b52ba64c36a453d80fa7595e3ef31cc289d8119 $
 arm/mv/armada38x/armada38x.c	standard
 arm/mv/armadaxp/armadaxp.c	standard
 

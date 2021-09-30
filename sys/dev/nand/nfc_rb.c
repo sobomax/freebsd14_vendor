@@ -27,7 +27,7 @@
 /* RouterBoard 600/800 NAND controller driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1102b3abb9c4153739690fbd86a119bf722cdea1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

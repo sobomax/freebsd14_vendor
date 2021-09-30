@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: d8eb85a9840e7b2d7a3e10207cac17ba09b3fdd6 $ */
 /* Do not modify. This file is auto-generated from aesv8-armx.pl. */
 #include "arm_arch.h"
 

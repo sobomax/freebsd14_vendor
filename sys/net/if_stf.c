@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 225bd30b6bd3ee3b9280f6f64fbfddfba4025b75 $	*/
 /*	$KAME: if_stf.c,v 1.73 2001/12/03 11:08:30 keiichi Exp $	*/
 
 /*-

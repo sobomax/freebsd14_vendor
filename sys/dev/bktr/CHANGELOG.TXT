@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: bead697f04d0c2fe9176c4e205470843015582c7 $ */
 
 /*
  * This is part of the Driver for Video Capture Cards (Frame grabbers)

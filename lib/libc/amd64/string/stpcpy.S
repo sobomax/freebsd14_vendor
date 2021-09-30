@@ -5,7 +5,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 52ac69c5f7e2a73b2420d8280138fcf2e1c571b8 $");
 
 /*
  * This stpcpy implementation copies a byte at a time until the

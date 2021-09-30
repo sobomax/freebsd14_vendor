@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7e72487bed0050cbbd2a2738fd1d8f90ffd3a1bd $
 
 DIFFSRC=${SRCTOP}/contrib/diff/src
 .PATH:  ${DIFFSRC} \

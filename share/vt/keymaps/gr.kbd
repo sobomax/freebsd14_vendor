@@ -1,7 +1,7 @@
 # Greek keyboard for FreeBSD
 # by Basileios Anastasatos <B.Anastasatos@Freemail.gr>
 #
-# $FreeBSD$
+# $FreeBSD: 816205e52486e0834a76cf73b2fa898d536767b3 $
 #
 # English/Greek keyboard lock:  (Left)Alt+(Left|Right)Shift
 # English/Greek keyboard shift: (Right)AltGr

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a88cca5b64508a270ca4108ac8f507d094382ba5 $
 
 This is an enhanced version of the CMU BOOTP server which was derived
 from the original BOOTP server created by Bill Croft at Stanford.

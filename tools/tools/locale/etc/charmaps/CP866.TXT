@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: f38b168120552999d8ecd054b5e31e421987d2c7 $
 #
 #    Name:     cp866_DOSCyrillicRussian to Unicode table
 #    Unicode version: 2.0

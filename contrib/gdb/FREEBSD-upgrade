@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: ac98f9c8f7fce85b289e0a5aeb9e93549354029e $
 
 To strip down a new version of gdb for import, extract the files like this:
 

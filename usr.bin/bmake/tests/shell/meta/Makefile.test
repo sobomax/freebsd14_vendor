@@ -5,7 +5,7 @@
 # will really execute ls, while the line with meta characters will execute
 # our special shell.
 #
-# $FreeBSD$
+# $FreeBSD: bcf19d052bbc7490980ce3b0c79c96f829f73844 $
 
 .SHELL: path="${.OBJDIR}/sh"
 

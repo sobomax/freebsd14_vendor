@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 08f45ff313ae005ee079549f154e79dc51b434cb $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -6,7 +6,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_frag.h	1.5 3/24/96
- * $FreeBSD$
+ * $FreeBSD: 08f45ff313ae005ee079549f154e79dc51b434cb $
  * Id: ip_frag.h,v 2.23.2.1 2004/03/29 16:21:56 darrenr Exp
  */
 

@@ -32,7 +32,7 @@ these four paragraphs for those parts of this code that are retained.
 
 =============================================================================*/
 
-/* $FreeBSD$ */
+/* $FreeBSD: f804b9cb82ca5fabd9d98b898fe2984c935ca8ce $ */
 
 #include <machine/ieeefp.h>
 

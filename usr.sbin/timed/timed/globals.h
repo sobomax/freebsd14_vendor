@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)globals.h	8.1 (Berkeley) 6/6/93
- *	$FreeBSD$
+ *	$FreeBSD: db847bc6ab4a1e5bdf14c2d28fe24571a7614a68 $
  */
 
 #include <sys/param.h>

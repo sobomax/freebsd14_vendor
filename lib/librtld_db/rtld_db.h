@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 8ff3dd5d31ea4e7ce061bd0e4faef16ee2b3f878 $
  */
 
 #ifndef _RTLD_DB_H_

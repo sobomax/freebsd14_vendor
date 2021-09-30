@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 006b59898bdcc4233512591bf7f5cfca79333e24 $");
 
 #include "opt_watchdog.h"
 

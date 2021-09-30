@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 8007cfb4fd209f151d06e2236895a84bb799ec69 $
 #
 # Copyright (c) 2018 Johannes Lundberg. All rights reserved.
 #

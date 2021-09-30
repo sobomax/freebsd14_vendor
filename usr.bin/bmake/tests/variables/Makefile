@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e010718e65a446d1698938b9a00b49adb48ae999 $
 
 TESTSDIR=	${TESTSBASE}/usr.bin/bmake/variables
 

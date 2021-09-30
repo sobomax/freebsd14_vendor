@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7289f0a91f47f1b3aca235af708c2babc95d3dcf $");
 
 #ifndef __clang__
 	.gnu_attribute 4, 0

@@ -30,7 +30,7 @@
 # 
 # usage: mklocatedb [-presort] < filelist > database
 #
-# $FreeBSD$
+# $FreeBSD: 284ea6416493d64ad69157453dcdea73d9a8a7d1 $
 
 # The directory containing locate subprograms
 : ${LIBEXECDIR:=/usr/libexec}; export LIBEXECDIR

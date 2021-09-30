@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: 20689f4893d4c7b7431cd719b1ea456032dee48f $*/
 
 #include "ice_common.h"
 #include "ice_sched.h"

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	$Id: acpiconf.c,v 1.5 2000/08/08 14:12:19 iwasaki Exp $
- *	$FreeBSD$
+ *	$FreeBSD: 8a31657fb98052721db4fdc97ea05ddc66db50af $
  */
 
 #include <sys/param.h>

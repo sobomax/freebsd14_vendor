@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: f98fbfd5a9cbd94d9913fd385a030f3d3960163b $
 Set to not build OpenSSH.

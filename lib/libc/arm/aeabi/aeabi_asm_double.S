@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ced4d78b6cbf96f236fb8df382a13ea17e6e3272 $");
 
 #define	PCR_Z	(1 << 30)
 #define	PCR_C	(1 << 29)

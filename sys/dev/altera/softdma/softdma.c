@@ -31,7 +31,7 @@
 /* This is driver for SoftDMA device built using Altera FIFO component. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b60d642d0ada0bd6792b8ca40e02f5c375029340 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9f8009c582adc09202050ac36ca6db4562c14d9c $
 
 SUBDIR=	iwn100		\
 	iwn105		\

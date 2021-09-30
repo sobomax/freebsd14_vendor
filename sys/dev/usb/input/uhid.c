@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5d185085c22701da329c661a52136d699a37d1b3 $");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

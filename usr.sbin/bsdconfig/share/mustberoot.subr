@@ -24,7 +24,7 @@ if [ ! "$_MUSTBEROOT_SUBR" ]; then _MUSTBEROOT_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 88ff81868d4544fc3e97fc91ed6b8b39fe4a7f68 $
 #
 ############################################################ INCLUDES
 

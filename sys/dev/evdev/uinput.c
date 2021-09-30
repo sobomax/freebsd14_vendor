@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 2449e80645f419d7d9bbe6a11e09f66eff1394eb $
  */
 
 #include "opt_evdev.h"

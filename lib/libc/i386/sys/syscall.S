@@ -34,7 +34,7 @@
 	.asciz "@(#)syscall.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4a9d2717a75d180b5bb130faf0cc4c64f052d55c $");
 
 #include "SYS.h"
 

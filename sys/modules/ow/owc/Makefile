@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 909c2382ad7d581aa69ccbbab16e4eeb8b9063ee $
 
 .PATH: ${SRCTOP}/sys/dev/ow
 

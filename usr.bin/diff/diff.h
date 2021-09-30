@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)diff.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 30387610fc1903111946ef515b5a7f906116f6b2 $
  */
 
 #include <sys/types.h>

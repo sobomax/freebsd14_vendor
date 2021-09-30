@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1f6dca5bb5cb3f321fdaef3caf49b9690e664e66 $");
 
 /* __ieee754_acos(x)
  * Method :                  

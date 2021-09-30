@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: dfcac2309e822aa6858bae897f437fed293655f8 $");
 
 #include <sys/disk.h>
 #include <sys/disklabel.h>

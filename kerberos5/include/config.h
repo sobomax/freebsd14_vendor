@@ -1,7 +1,7 @@
 /* include/config.h.  Generated from config.h.in by configure.  */
 /* include/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: c3037f804a9e2a75e75d7935bb958cb5513780c4 $ */
 
 #ifndef RCSID
 #define RCSID(msg) \

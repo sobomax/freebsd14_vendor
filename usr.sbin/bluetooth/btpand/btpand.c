@@ -27,7 +27,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: e24152d92e96a756d6000875948017d4b7ff3fbe $ */
 
 #include <sys/cdefs.h>
 __COPYRIGHT("@(#) Copyright (c) 2008 Iain Hibbert. All rights reserved.");

@@ -1,5 +1,5 @@
 # $Id: protocols,v 1.2 2003/05/21 22:17:14 max Exp $
-# $FreeBSD$
+# $FreeBSD: 6715094ce148757e48038833d978788d3280ce7b $
 #
 # Bluetooth Protocol/Service Multiplexor (PSM) names and numbers
 #

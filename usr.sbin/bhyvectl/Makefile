@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 0ffca5675cb9688e9349ab847065e87fb82ab0c2 $
 #
 
 PROG=	bhyvectl

@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD$
+# $FreeBSD: e8d21dfd21bc41760ed66a4f7e3958f2e6ffdee9 $
 
 machine 	mips mipsn32
 ident           XLPN32

@@ -43,7 +43,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: a0b35c909931b90b72b6071be6447bd34d3f7742 $");
 
 /* Buffer size on dma transfer. Fixed for CS416x. */
 #define CS461x_BUFFSIZE   (4 * 1024)

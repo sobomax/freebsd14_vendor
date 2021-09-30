@@ -1,4 +1,4 @@
-// $FreeBSD$
+// $FreeBSD: f659e465a6333d05a5f42df18fcf3dd86a0ebf54 $
 /*
  * kmp_config.h -- Feature macros
  */

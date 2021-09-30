@@ -29,7 +29,7 @@
 #define __R520D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6fbd54cbcd611c76eb7c09dee69dad1511996ffc $");
 
 /* Registers */
 #define R_0000F8_CONFIG_MEMSIZE                      0x0000F8

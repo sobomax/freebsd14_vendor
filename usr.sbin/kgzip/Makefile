@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 013c65fe33c929cf0081252f5264859f8c561c4a $
 
 PROG=	kgzip
 MAN=	kgzip.8

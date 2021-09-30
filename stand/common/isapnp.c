@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 16eb0b9ea6b2e89de35f099bf8de189eb9f6a191 $");
 
 /*
  * Machine-independant ISA PnP enumerator implementing a subset of the

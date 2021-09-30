@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5330c19b36577e0c33ddd6f21ae2668a99eb32c4 $
 
 include		"../nlm/std.xlp"
 makeoptions	MODULES_OVERRIDE=""

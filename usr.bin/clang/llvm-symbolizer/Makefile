@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f66b203bc969f688104bf87cda59e2d8ba25490a $
 
 PROG_CXX=	llvm-symbolizer
 MAN=		llvm-symbolizer.1 llvm-addr2line.1

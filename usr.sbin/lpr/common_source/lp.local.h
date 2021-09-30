@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lp.local.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: c0e3f308f75dfac1f31c6b0c51b3ad5d2b9eb1da $
  */
 
 /*

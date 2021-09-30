@@ -1,3 +1,3 @@
-# $FreeBSD$
+# $FreeBSD: 7763d6fe9636cee2731d476ea04ac0f661f2e605 $
 
 [ "$(printf '%cZ%s%d' x '\' 010)" = 'xZ\8' ]

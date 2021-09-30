@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: f9f8a27a8a3380b7285fb938ca11e79bc5b6adb3 $
  */
 
 struct g_uzip_dapi *g_uzip_lzma_ctor(uint32_t);

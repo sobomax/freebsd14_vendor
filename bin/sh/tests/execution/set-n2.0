@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c7f31629f474984b4127b32eaa7f1d7defc0dfbd $
 
 $SH -n <<'EOF'
 echo bad

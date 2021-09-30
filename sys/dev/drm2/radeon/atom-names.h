@@ -26,7 +26,7 @@
 #define ATOM_NAMES_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 737ea7d84f9d94e6c106475cd06fd42ad5aa82e6 $");
 
 #include "atom.h"
 

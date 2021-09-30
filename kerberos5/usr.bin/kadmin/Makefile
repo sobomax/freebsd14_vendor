@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 729b9f7f418e814883f06c1f78133f03e64133cf $
 
 PROG=	kadmin
 MAN=	kadmin.8

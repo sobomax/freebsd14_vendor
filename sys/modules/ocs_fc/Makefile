@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9bab50eba5bc6f1db59ec8b56e5cb539f7c7e7f3 $
 
 .PATH:	${SRCTOP}/sys/dev/ocs_fc
 KMOD = ocs_fc

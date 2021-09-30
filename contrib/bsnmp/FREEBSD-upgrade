@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 4fb31fd9153ceff7933d89ea1d84405ab6426f70 $
 
 This is the Begemot micro-SNMP daemon. It is the base for the ILMI daemon
 for ngATM. Be careful to feed changes back to the maintainer

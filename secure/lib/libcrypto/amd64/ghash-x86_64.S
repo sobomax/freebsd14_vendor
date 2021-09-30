@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 078353528d5f51933b7a995c24d08fcd0ab81232 $ */
 /* Do not modify. This file is auto-generated from ghash-x86_64.pl. */
 .text	
 

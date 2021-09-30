@@ -24,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD$
+-- $FreeBSD: 9c7e4deeb7e4f62681ab73cf6ad8de7738370f63 $
 --
 
 local hook = {}

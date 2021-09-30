@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_process_context_token.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: e8e9b56cdc7f99aad4338ae9c04b43de2e2d8e09 $
  */
 
 #include "mech_locl.h"

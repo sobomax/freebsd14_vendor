@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 06112ebb34d0ac0ddc2d9ec650fd1f0b6fa32d0b $");
 
 #include "opt_isa.h"
 #include "opt_npx.h"

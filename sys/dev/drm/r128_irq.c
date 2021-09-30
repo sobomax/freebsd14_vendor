@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6be6a1c154490ea18cffa001ef9fe20e8a4929a1 $");
 
 #include "dev/drm/drmP.h"
 #include "dev/drm/drm.h"

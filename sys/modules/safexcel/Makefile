@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 985a3f40c282f9f79599f4c20fe6a2ae01bca431 $
 .PATH: ${SRCTOP}/sys/dev/safexcel
 
 KMOD= safexcel

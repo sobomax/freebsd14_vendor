@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *******************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0ef7bc01d76b911da121cdd61bd6984fd77d3fc6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 74d1c8673c88b324b53920b18adc66a004b4e6a3 $
 
 .PATH: ${SRCTOP}/sys/arm/freescale/imx
 

@@ -2,7 +2,7 @@
 #
 # Script for testing multi-bss open+WPA1+WPA2.
 #
-# $FreeBSD$
+# $FreeBSD: 423c5342e7ddb81c97f898032296f18b86dbb43b $
 #
 PATH=.:$PATH
 . config

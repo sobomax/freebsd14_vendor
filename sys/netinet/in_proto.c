@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 61d61dee4b6b918c37f1a10b71a26843c14946d2 $");
 
 #include "opt_mrouting.h"
 #include "opt_ipsec.h"

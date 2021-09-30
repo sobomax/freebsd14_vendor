@@ -38,7 +38,7 @@
  *	from: Utah Hdr: machparam.h 1.11 89/08/14
  *	from: @(#)param.h	8.1 (Berkeley) 6/10/93
  *	JNPR: param.h,v 1.6.2.1 2007/09/10 07:49:36 girish
- * $FreeBSD$
+ * $FreeBSD: b263766b4cedaed2ffcf03c5962fe68034eff82b $
  */
 
 #ifndef _MIPS_INCLUDE__ALIGN_H_

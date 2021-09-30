@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD$
+ * $FreeBSD: 76a90ad0ec307db64635a0b5925d8b143550f251 $
  */
 
 /*	Copyright (c) 1988 AT&T	*/

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 1f39ea056349155b75c81e8c78a6892c61cf153f $
 Set to not build
 .Xr unbound 8
 and related programs.

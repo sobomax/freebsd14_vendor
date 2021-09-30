@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0a24a066f8961981885b50ea2144799a31914f62 $
 # $OpenBSD: queue4,v 1.2 2003/08/22 21:50:34 david Exp $
 #
 # Hierarchical queueing for a university.

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)myhistedit.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: a4c0b56fafd75d42ce7fd0272f61db893e763257 $
  */
 
 #include <histedit.h>

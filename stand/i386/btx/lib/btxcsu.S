@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD$
+# $FreeBSD: c46f8097dbe306c19930422ab713dbf17b7c3bca $
 
 #include <bootargs.h>
 

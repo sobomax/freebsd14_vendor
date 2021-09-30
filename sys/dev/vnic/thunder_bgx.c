@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 6d34b320ef51d92b01cc9f2c3131d3855b8e73e1 $
  *
  */
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6d34b320ef51d92b01cc9f2c3131d3855b8e73e1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

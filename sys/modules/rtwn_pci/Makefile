@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2753ba42628e3427f5cbfca317397103f27d4ab9 $
 
 .PATH: ${SRCTOP}/sys/dev/rtwn/pci
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: ab9d901157159b54a299b5e1a1824efac3d0eb38 $
  */
 
 off_t mkuz_get_insize(struct mkuz_cfg *);

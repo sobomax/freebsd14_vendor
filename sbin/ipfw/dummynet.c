@@ -17,7 +17,7 @@
  *
  * This software is provided ``AS IS'' without any warranties of any kind.
  *
- * $FreeBSD$
+ * $FreeBSD: 24d835fbb98eae7cb4f9beb9701e613313c5028c $
  *
  * dummynet support
  */

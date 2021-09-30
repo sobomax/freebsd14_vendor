@@ -21,7 +21,7 @@
  *
  * Slightly modified by AK to not assume 0 terminated input.
  *
- * $FreeBSD$
+ * $FreeBSD: 3d4818a588da30d6406deef987bd4f7a3f152698 $
  *
  */
 

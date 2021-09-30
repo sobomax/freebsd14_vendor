@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ee609b328990718a444d517ac4ec26561f33c0c6 $");
 
 /* PCI/PCI-X/PCIe bus interface for the LSI MegaSAS controllers */
 

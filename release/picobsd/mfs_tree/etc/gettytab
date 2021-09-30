@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c444276663cd9be8f7918d909edab79e34c12c88 $
 #	from: @(#)gettytab	5.14 (Berkeley) 3/27/91
 #
 default:\

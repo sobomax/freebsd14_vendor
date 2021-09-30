@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)1.1.t	8.1 (Berkeley) 6/8/93
-.\"	$FreeBSD$
+.\"	$FreeBSD: 8bc8e73c1f21cc3a69d34a0b3c59e6a9fb8411ae $
 .\"
 .sh "Processes and protection
 .NH 3

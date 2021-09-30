@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 35bacb26bd11ffd497931c2419dd11cdc66c2c16 $
 
 PACKAGE=lib${LIB}
 LIB=	pmc

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: d35f166a03d4a399ccda244ed5c7564dd30ba72e $
 #
 #
 # Makefile for creating an EC2 AMI from a disk image.

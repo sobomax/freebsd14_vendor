@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: aa2f890bc447137cf3bee0aa5e523a3d295e0ded $
 #
 
 PROG=	sblock

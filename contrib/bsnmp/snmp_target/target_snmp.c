@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 7ea47db0491aa51c5aa79084a34882a5f47d89f7 $
  */
 #include <sys/queue.h>
 #include <sys/types.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 579dea79fb28941790f774de532376b9ce3b32a9 $ 
 # $NetBSD: MAC.src,v 1.1 2006/03/13 19:45:36 tnozaki Exp $
 
 NAME		"MACchangeme"

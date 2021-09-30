@@ -1,6 +1,6 @@
 # /etc/crontab - root's crontab for FreeBSD
 #
-# $FreeBSD$
+# $FreeBSD: 994d4ae6af00887d6a66ec803537680713cc673e $
 #
 SHELL=/bin/sh
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin

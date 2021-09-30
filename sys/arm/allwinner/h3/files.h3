@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bce6ca07c553f4991a1726bd47058fd86b5dfb8b $
 
 arm/allwinner/clkng/ccu_h3.c		standard
 arm/allwinner/clkng/ccu_sun8i_r.c	standard

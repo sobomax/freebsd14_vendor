@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 279bbc36239432122455884d11a06648cc997c4b $");
 
 #include "rand48.h"
 

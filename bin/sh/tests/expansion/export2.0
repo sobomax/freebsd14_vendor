@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 57f64e7f7f7be997df05f8af8aa8b43b75fa06a0 $
 
 w='@ @'
 check() {

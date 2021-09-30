@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: a30c7311804f8bd04f23a0043de4809f6bcd0d08 $
 
 # functions.sh
 # Library of functions which pc-sysinstall may call upon

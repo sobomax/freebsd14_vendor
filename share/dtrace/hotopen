@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: ba2777cfe893aaf1b09e956d5b62a1a0f6f4da44 $
  *
  * The hotopen D script periodically outputs  table of which UIDs
  * are opening files.   This is a very quick way to find out if

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e0faf287a245d9bb52ac577334656a86d1f71b18 $
 
 .if empty(BEARSSL)
 .include "../libbearssl/Makefile.inc"

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b31affadbed67a4c4843935ec0d3f3fc748d3777 $
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

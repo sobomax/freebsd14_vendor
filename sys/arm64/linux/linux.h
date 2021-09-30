@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 3aecc9b94ce74b63bb4c22f773f3a15c6a4e39d0 $
  */
 #ifndef _ARM64_LINUX_H_
 #define	_ARM64_LINUX_H_

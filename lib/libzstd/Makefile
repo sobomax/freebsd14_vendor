@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ca56bcb0c828d0b63296c109f223561fc57a404e $
 
 LIB=	zstd
 SRCS=	entropy_common.c \

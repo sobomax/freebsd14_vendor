@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 386d76589d90182853ce7b750af83ecb4fff2f01 $
  */
 #include <sys/types.h>
 #include <sys/mac.h>

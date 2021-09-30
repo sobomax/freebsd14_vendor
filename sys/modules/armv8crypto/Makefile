@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4b9a84c953d296b087b26f254cdc6d55464ea0ea $
 
 .PATH: ${SRCTOP}/sys/crypto/armv8
 

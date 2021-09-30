@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD$
+# $FreeBSD: 81ffc5c96c211b9e03271f4ae218afb00b2e4273 $
 
 .PATH: ${.CURDIR:H}/common_source
 

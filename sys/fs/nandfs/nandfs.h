@@ -27,7 +27,7 @@
  *
  * From: NetBSD: nilfs.h,v 1.1 2009/07/18 16:31:42 reinoud
  *
- * $FreeBSD$
+ * $FreeBSD: 9a9b28a1bc0bae0ae8957f49129c183cb98bbd59 $
  */
 
 #ifndef _FS_NANDFS_NANDFS_H_

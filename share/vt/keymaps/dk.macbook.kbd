@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e7a7dea152fc15907c7c0f879eb8e505dff136a7 $
 # Danish keyboard layout for Apple MacBook keyboards. Not all
 # key combinations are available in this character set yet.
 # by Erik Cederstrand <erik@cederstrand.dk>

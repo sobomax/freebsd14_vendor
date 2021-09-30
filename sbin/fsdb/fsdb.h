@@ -29,7 +29,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b8dc1e0a2dd65970f73ca61582a5a66daaa76717 $
  */
 
 extern int blread(int fd, char *buf, ufs2_daddr_t blk, long size);

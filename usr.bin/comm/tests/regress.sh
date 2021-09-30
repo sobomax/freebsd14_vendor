@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dcd0348e6abf1cd96f49841db051caf6f23f6693 $
 
 echo 1..3
 

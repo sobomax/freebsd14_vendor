@@ -1,4 +1,4 @@
-$ $FreeBSD$
+$ $FreeBSD: 60e8a121dfe424f31a350c7c04b31910e9e788f9 $
 $
 $ Message catalog for ko_KR.UTF-8 locale
 $

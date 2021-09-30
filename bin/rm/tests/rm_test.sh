@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 31ee64961a97ac90a7ce340e08cfcd25db39cdd4 $
 #
 
 atf_test_case unlink_dash_filename

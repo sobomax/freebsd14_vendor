@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 9c13aabe6914b9045cbaaeffa3113ed8493edef9 $
  */
 
 #ifdef __i386__		/* Do any other archs not care about alignment ? */

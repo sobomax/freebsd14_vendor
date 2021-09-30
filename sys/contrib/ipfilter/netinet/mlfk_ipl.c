@@ -1,9 +1,9 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 9c320ee65c5e205c6d7df692008ca83bf33a2f30 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
- * $FreeBSD$
+ * $FreeBSD: 9c320ee65c5e205c6d7df692008ca83bf33a2f30 $
  * See the IPFILTER.LICENCE file for details on licencing.
  */
 

@@ -27,7 +27,7 @@
 /* Driver for VirtIO console devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 919e61be90f7b0755e004711eb8361197f9d0e89 $");
 
 #include <sys/param.h>
 #include <sys/ctype.h>

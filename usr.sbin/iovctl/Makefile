@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c9083eb6a1d1ea6b9dfe312c25530ff083438dab $
 
 PROG=	iovctl
 SRCS=	iovctl.c parse.c validate.c

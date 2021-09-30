@@ -17,7 +17,7 @@
 
 #if !defined(lint) && !defined(LINT)
 static const char rcsid[] =
-  "$FreeBSD$";
+  "$FreeBSD: 8c579b8f511dfeba315d3341983f505003051043 $";
 #endif
 
 /* vix 26jan87 [RCS'd; rest of log is in RCS file]

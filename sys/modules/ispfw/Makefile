@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD$ 
+# $FreeBSD: fa61f172d80b992504b5744a0fa5915887b0c2de $ 
 
 
 SUBDIR = ispfw

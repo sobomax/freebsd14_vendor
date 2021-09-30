@@ -30,7 +30,7 @@ License Agreement applies to this software.
 	Written at Bellcore for the S/Key Version 1 software distribution
 		(keyinfo)
 
-$FreeBSD$
+$FreeBSD: 1aeead6fb83c6eff23fbf6330d787b5f02390349 $
 
 */
 

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 7e90e2d9b1d297710ab523fc68f42eda03e77707 $ */
 /* Do not modify. This file is auto-generated from sha1-586.pl. */
 #ifdef PIC
 .text

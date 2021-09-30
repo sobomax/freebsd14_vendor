@@ -1,5 +1,5 @@
 /*
- * $FreeBSD$
+ * $FreeBSD: c0bf84565cfed2d02895905ad9e8a4ef8610388e $
  *
  * Copyright (c) 2011, 2012, 2013, 2015, 2016, Juniper Networks, Inc.
  * All rights reserved.

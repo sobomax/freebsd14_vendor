@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 93fbc3c603a494d56309a2db647e79310ae2a40e $");
 __SCCSID("@(#)regex.c	5.1 (Berkeley) 3/29/92");
 
 /*

@@ -26,7 +26,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD$
+$FreeBSD: ecb6427a3dd3f501b47851ef7fdb5377c45ebfe5 $
 ***************************************************************************/
 
 #ifndef _mcp_gen_header_h

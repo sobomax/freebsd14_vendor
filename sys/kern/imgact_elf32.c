@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a25022e6f66dac7d7410dbb9b0bdf8905e98ba2d $");
 
 #define __ELF_WORD_SIZE 32
 #include <kern/imgact_elf.c>

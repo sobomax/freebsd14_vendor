@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD$
+ * $FreeBSD: 87b283a08fb478e582aca4ea0baae4689d0ab347 $
  * $Whistle: ng_frame_relay.h,v 1.7 1999/01/20 00:22:13 archie Exp $
  */
 

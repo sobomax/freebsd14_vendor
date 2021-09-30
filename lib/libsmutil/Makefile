@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ff3f8491225b52322ba1610cf615562f08e767ac $
 
 PACKAGE=lib${LIB}
 SENDMAIL_DIR=${SRCTOP}/contrib/sendmail

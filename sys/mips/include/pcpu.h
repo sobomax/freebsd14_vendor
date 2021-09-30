@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/pcpu.h,v 1.15 2004/11/05 19:16:44 jhb
- * $FreeBSD$
+ * $FreeBSD: 8ff14bf06e0121fc1a6ac2a8d441b4b25dbdf994 $
  */
 
 #ifndef _MACHINE_PCPU_H_

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 390ab733d2ae8e1ec68cf98fcdb0ae808ab8cf4e $");
 
 /* 
  * rp.c - for RocketPort FreeBSD

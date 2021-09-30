@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1d12ac097fb7e687782bbab9b797a7f30b3b1545 $
  */
 
 struct g_uzip_softc;

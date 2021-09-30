@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 109f2e36ad4348a19272280615deab44769077ee $
 #
 # The network configuration file. This file is currently only used in
 # conjunction with the (TI-) RPC code in the C library, unlike its

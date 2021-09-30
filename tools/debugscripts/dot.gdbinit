@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1a340c08ab8ccd02e7300236332830666a422946 $
 # .gdbinit file for remote serial debugging.
 #
 # XXX Do not use this file directly.  It contains parameters which are

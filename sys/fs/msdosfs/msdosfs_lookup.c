@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 56f39083e750cce9cc8aabf47a6311a10d2b554d $ */
 /*	$NetBSD: msdosfs_lookup.c,v 1.37 1997/11/17 15:36:54 ws Exp $	*/
 
 /*-

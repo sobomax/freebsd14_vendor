@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 745c5e2fc485ec2c16442e555c44995c4b9f6c6b $");
 
 #include "opt_ntp.h"
 #include "opt_ffclock.h"

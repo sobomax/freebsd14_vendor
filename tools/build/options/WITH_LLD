@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: e6aef39d5feb227b6784d45064f9631057f26aff $
 Set to build LLVM's lld linker.

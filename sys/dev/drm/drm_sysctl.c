@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2a138e88a73b53ac8696542dc8bde7bb44577449 $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4c3324312b745a35d8ed5a25feeefa937f3cf02b $");
 
 /* Driver for arbitrary double bulk pipe devices.
  * The driver assumes that there will be the same driver on the other side.

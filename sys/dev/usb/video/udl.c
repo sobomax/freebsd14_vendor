@@ -1,5 +1,5 @@
 /*	$OpenBSD: udl.c,v 1.81 2014/12/09 07:05:06 doug Exp $ */
-/*	$FreeBSD$ */
+/*	$FreeBSD: 44fc8fcf2b1f4c623c0bb558909d9e0d0fce2f51 $ */
 
 /*-
  * Copyright (c) 2015 Hans Petter Selasky <hselasky@freebsd.org>

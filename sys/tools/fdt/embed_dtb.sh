@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: d5c9c00a9e8a32006a8fca85ea9c2b977a31c445 $
 
 # $1: kernel filename
 # $2: device tree blob filename

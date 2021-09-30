@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3e86de92fbae2f50c85cf79027246ef287b07d18 $
 
 # eval should return 0 if no command was executed.
 eval $(false)

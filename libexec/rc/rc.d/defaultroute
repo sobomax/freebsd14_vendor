@@ -2,7 +2,7 @@
 #
 # Wait for the default route to be up if DHCP is in use
 #
-# $FreeBSD$
+# $FreeBSD: a4c9647766a8486f8dfdaaee08ae5f22cb67b98d $
 #
 
 # PROVIDE: defaultroute

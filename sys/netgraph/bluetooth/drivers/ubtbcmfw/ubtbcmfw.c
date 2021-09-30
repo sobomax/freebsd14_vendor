@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ubtbcmfw.c,v 1.3 2003/10/10 19:15:08 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 32c9caba94f02faac56644ae9cfebb70cc163c58 $
  */
 
 #include <sys/stdint.h>

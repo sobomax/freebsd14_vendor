@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 484c65361e5e43f27ebba32705a5caeb4f0a3b2e $	*/
 /*	$KAME: keysock.h,v 1.8 2000/03/27 05:11:06 sumikawa Exp $	*/
 
 /*-

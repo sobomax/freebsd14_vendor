@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3cf15f6a24a1575e7dd980e1f11c0449fddb8b66 $
 
 PROG=	gdb${GDB_SUFFIX}
 SRCS=	gdb.c

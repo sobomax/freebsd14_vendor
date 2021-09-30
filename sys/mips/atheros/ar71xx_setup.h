@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 3b6fd327d6575072eead84db880a157cd5ae0afa $ */
 
 #ifndef	__AR71XX_SETUP_H__
 #define	__AR71XX_SETUP_H__

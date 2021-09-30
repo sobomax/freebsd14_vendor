@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)assert.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD$
+ * $FreeBSD: 702e231603e6a0a90d0249da3acc3ce4a0d1396d $
  */
 
 #include <sys/cdefs.h>

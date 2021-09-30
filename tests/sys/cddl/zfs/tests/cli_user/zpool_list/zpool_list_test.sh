@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD$
+# $FreeBSD: a34e60d5d80dfafef3c3f90411c750888dd4697d $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.

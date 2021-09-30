@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/granular/00.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: fcf4c02d8185e72a58387f1905ac983ab42c8a21 $
 
 desc="NFSv4 granular permissions checking - WRITE_DATA vs APPEND_DATA on directories"
 

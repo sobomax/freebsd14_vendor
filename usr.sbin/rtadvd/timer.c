@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 94c5dcd91f708e4aa5b4725884dac464f9dec91d $	*/
 /*	$KAME: timer.c,v 1.9 2002/06/10 19:59:47 itojun Exp $	*/
 
 /*-

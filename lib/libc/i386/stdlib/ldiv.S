@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c40c6314fc0303e709c64f6e7302a56605b45c94 $");
 
 ENTRY(ldiv)
         movl    4(%esp),%eax

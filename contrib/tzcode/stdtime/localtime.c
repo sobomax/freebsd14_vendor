@@ -9,7 +9,7 @@
 static char	elsieid[] __unused = "@(#)localtime.c	8.14";
 #endif /* !defined NOID */
 #endif /* !defined lint */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 632a8d4a89ba4d78418af306258bff561443fe27 $");
 
 /*
 ** Leap second handling from Bradley White.

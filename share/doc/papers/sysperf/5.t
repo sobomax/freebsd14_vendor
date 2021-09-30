@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)5.t	5.1 (Berkeley) 4/17/91
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: a73746b471440a22bf9952679f838546ace5df22 $
 .\"
 .ds RH Functional Extensions
 .NH

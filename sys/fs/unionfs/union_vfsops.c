@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union_vfsops.c	8.20 (Berkeley) 5/20/95
- * $FreeBSD$
+ * $FreeBSD: 8241bf8543389d02eb4844bc310b33b074c92fde $
  */
 
 #include <sys/param.h>

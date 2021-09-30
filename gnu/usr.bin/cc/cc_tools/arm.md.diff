@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: f395b20ba223c300e6295eb91cefecb211c65873 $
 Index: arm.md
 ===================================================================
 RCS file: /cognet/ncvs/src/contrib/gcc/config/arm/arm.md,v

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c63589ec9db0f2ef9e771b5681a49334a84e01f3 $
 
 # Options set in the build system that affect the kernel somehow.
 

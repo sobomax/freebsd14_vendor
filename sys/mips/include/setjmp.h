@@ -29,7 +29,7 @@
  * rights to redistribute these changes.
  *
  *	JNPR: setjmp.h,v 1.2 2006/12/02 09:53:41 katta
- * $FreeBSD$
+ * $FreeBSD: 8b6ca0478fdab6cef3659ee5bf17b67599ee3261 $
  */
 
 #ifndef _MACHINE_SETJMP_H_

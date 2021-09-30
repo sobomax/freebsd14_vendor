@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD$
+ * $FreeBSD: 1108d8ad74fda2b2b64b2309e2ac22a8f943bc61 $
  */
 
 #ifndef _SYS__CALLOUT_H

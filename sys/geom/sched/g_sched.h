@@ -32,7 +32,7 @@
 
 /*
  * $Id$
- * $FreeBSD$
+ * $FreeBSD: 427fec41ff50366bb42bac4254c47edb84f6c2ac $
  *
  * Header for the geom_sched class (userland library and kernel part).
  * See g_sched.c for documentation.

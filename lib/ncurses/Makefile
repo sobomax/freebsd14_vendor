@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a5a19deafafd4163d6b98986409b647055f42cd5 $
 
 SUBDIR=	ncurses form menu panel \
 	ncursesw formw menuw panelw

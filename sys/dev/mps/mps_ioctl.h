@@ -31,7 +31,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD$
+ * $FreeBSD: 7e39d83458eab5da19ccf79a52bddcc3617644b2 $
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
@@ -61,7 +61,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD$
+ * $FreeBSD: 7e39d83458eab5da19ccf79a52bddcc3617644b2 $
  */
 
 #ifndef _MPS_IOCTL_H_

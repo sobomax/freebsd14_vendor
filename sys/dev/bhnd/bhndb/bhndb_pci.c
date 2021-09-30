@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: da67c49b93889f06beb5e5cbb90919a8e11c5842 $");
 
 /*
  * PCI-specific implementation for the BHNDB bridge driver.

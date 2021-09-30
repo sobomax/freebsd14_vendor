@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 0355f893857ef8a9e44a31836b6bd196a8801746 $ */
 /* $NetBSD: trap_subr.S,v 1.20 2002/04/22 23:20:08 kleink Exp $	*/
 
 /*-

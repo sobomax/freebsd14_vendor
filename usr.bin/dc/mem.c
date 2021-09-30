@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0bb3ef39c759f420f4cc13198004a35f436aab21 $");
 
 #include <openssl/err.h>
 

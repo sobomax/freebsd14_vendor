@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 56ece9d3439e5ee94e2dbf66c3f306830e209580 $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 MAN=

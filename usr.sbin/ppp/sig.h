@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 277584544a5b4f1a589c5768d4ebd17c2d7469c9 $
  */
 
 typedef void (*sig_type)(int);

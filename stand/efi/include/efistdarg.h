@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 25f5569841122ceba41d3e7741d41e9726520a4e $ */
 #ifndef _EFISTDARG_H_
 #define _EFISTDARG_H_
 

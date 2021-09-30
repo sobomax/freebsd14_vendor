@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0006fe0de1f1446d5fd4efa6858c1560cebe2901 $");
 
 #include <sys/param.h>
 #ifdef _KERNEL

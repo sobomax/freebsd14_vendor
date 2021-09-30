@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hcseriald.c,v 1.3 2003/05/21 22:40:32 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 3d2fc60cf4de1ca235dd2ea39608189f6e468cba $
  */
 
 #include <sys/types.h>

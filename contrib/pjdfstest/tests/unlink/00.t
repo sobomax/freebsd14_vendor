@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/unlink/00.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: cb01a8343ebdddbcd3328b85785ade465d568c5c $
 
 desc="unlink removes regular files, symbolic links, fifos and sockets"
 

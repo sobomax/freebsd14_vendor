@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pat_rep.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 7def28d36e300e6ef03f1aaf6de4c49cdec468d9 $
  */
 
 /*

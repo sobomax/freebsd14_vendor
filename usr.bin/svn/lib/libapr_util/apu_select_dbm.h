@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: cf756e9603a3d0290fad8a14bfcd331d23338b7e $ */
 
 /* Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with

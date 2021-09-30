@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d6fb6a3ef4821b617cf52199ca3733300e59d938 $
 DIRDEPS = lib/libc
 
 .include <bsd.own.mk>

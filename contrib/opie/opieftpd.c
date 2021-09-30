@@ -48,7 +48,7 @@ License Agreement applies to this software.
 
 	        There is some really, really ugly code in here.
 
-$FreeBSD$
+$FreeBSD: eb6015f4130e1b314ee48915217c8495bca3fd74 $
 */
 /*
  * Copyright (c) 1985, 1988, 1990 Regents of the University of California.

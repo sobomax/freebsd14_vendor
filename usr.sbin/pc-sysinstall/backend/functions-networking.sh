@@ -30,7 +30,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 1a7b500b9b5d6ed0db95537dfc69b19cae04218f $
 
 # Functions which perform our networking setup
 

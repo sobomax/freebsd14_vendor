@@ -1,5 +1,5 @@
 /* $NetBSD: vesagtf.c,v 1.2 2013/09/15 15:56:07 martin Exp $ */
-/* $FreeBSD$ */
+/* $FreeBSD: 7164ae420d5805fd55dea355d8b36e045ef389d5 $ */
 
 /*-
  * Copyright (c) 2006 Itronix Inc.
@@ -154,7 +154,7 @@
 #ifdef	_KERNEL
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7164ae420d5805fd55dea355d8b36e045ef389d5 $");
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/systm.h>

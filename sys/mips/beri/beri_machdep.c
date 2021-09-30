@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6269886e0ee8ab8627bfdc9021b1fc4a98e3f13c $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"

@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.6 1997/05/08 21:11:11 gwr Exp $
-# $FreeBSD$
+# $FreeBSD: bce48211b58602b94c19dd5102bc059a67729b75 $
 
 FSCK=	${.CURDIR:H}/fsck
 .PATH: ${FSCK}

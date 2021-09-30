@@ -47,7 +47,7 @@
  *
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: df6e583fe6d68d20a28bae341b5844a5f844fb12 $ */
 
 #ifndef _ALIAS_SCTP_H_
 #define _ALIAS_SCTP_H_

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 129d4a6bacf3014ed40072267784cd69352e39c3 $
 # $NetBSD: HKSCS%UCS@SIP.src,v 1.2 2008/04/12 13:11:56 tnozaki Exp $
 
 TYPE		ROWCOL

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: dffaa2f5d517a66c4dd268079b76a2436f0a9f15 $
  */
 
 /* Needs to be first to twiddle appropriate system configuration/HAVE_* flags */

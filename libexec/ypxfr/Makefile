@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c4472fb167ceb6afb2d55d90eb666e646fb4609e $
 
 PROG=	ypxfr
 SRCS=	yp_dblookup.c yp_dbwrite.c yp_error.c \

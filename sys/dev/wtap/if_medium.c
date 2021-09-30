@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: f4b84d3784de1643c27c1b09e20e65f8d1ae782c $
  */
 #include "if_wtapvar.h"
 #include "if_medium.h"

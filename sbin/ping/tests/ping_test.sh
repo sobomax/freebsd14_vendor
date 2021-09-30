@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 3c792453d4ff853d5a4bb1e800aab2db9b0aa2c7 $
 
 atf_test_case ping_c1_s56_t1
 ping_c1_s56_t1_head() {

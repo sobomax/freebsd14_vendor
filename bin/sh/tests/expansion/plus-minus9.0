@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: bd2629ad9a768b9382ee928b206b9971d4fcfa92 $
 
 a=1
 b=${a+

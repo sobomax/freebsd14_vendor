@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6dd84f3672121d018f91dee2fe268cfd342f480d $");
 
 #include "opt_wlan.h"
 

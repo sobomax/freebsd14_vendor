@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: 6f630602567b7b42fd3eb66abe27b62c903f3ed1 $*/
 
 #ifndef _IXGBE_X540_H_
 #define _IXGBE_X540_H_

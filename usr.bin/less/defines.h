@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 9a58a043afc2a600c056d2e7ff89e08faae54840 $ */
 /* defines.h.  Generated from defines.h.in by configure.  */
 /* defines.h.in.  Generated from configure.ac by autoheader.  */
 

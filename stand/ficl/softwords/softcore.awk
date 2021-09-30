@@ -10,7 +10,7 @@
 # Note! This script uses strftime() which is a gawk-ism, and the
 # POSIX [[:space:]] character class.
 #
-# $FreeBSD$
+# $FreeBSD: 5a97999a982322e95381ac0ec9ca5e3ecc0a5255 $
 
 BEGIN \
 {

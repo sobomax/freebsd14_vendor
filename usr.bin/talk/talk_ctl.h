@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 77f6d1b8a0743f50c4921024e88834550b1d099f $
  *
  *	@(#)talk_ctl.h	8.1 (Berkeley) 6/6/93
  */

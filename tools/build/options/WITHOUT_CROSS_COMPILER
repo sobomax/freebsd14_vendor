@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: fc5233c50baefe549cf44b944eaed44bd34abb6a $
 Set to not build any cross compiler in the cross-tools stage of buildworld.
 When compiling a different version of
 .Fx

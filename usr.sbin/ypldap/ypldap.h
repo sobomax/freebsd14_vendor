@@ -1,5 +1,5 @@
 /*	$OpenBSD: ypldap.h,v 1.16 2015/01/16 06:40:22 deraadt Exp $ */
-/*	$FreeBSD$ */
+/*	$FreeBSD: 07e633fdeca55db908a9668150471b3f7594e83d $ */
 
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>

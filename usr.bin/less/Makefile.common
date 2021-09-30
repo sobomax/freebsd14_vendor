@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 29862adcd1e26b7126a21009689c4759a4b811db $
 
 LSDIR=	${SRCTOP}/contrib/less
 .PATH:	${LSDIR}

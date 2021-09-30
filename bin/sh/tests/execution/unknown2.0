@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d316e01949f6412c23edfdd22d02774d9da3ca08 $
 
 {
 	: $(/var/empty/nosuchtool) 

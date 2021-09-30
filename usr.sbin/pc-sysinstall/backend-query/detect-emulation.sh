@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 96a23206c4698f8af16aad62825fe51b73f658bf $
 
 case "$(kenv smbios.system.product)" in
 VirtualBox)

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 27d7f1114a089051588f0327f24aaabfc6e00eed $");
 
 #if 0
 #define	KTR_AGP_I810	KTR_DEV

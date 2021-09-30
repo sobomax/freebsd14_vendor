@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3905104be81948bdc0b50d516ddfec7de939a763 $
  */
 
 #define	EPIC_MAX_MTU		1600	/* This is experiment-derived value */

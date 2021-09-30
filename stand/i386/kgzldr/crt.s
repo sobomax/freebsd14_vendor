@@ -24,7 +24,7 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #	From: btx.s 1.10 1999/02/25 16:27:41 rnordier
-# $FreeBSD$
+# $FreeBSD: cfb479fd2d84f7e1ed5c4b220ba22201f0bc5438 $
 #
 
 # Screen defaults and assumptions.

@@ -25,7 +25,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5197e226a26e1eda6f1905bb40803feb98357e15 $");
 
 #include <sys/cdefs.h>
 #include <sys/types.h>

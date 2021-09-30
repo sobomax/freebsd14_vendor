@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 51631f41cca83a4b933689bed147ed1b58c1f5a3 $
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}

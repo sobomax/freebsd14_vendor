@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/open/06.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 75445f5f0b574c27bfc901ad660b7f087286008d $
 
 desc="open returns EACCES when the required permissions (for reading and/or writing) are denied for the given flags"
 

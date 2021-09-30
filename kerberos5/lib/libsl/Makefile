@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 71a38a5729d1799c50edee19f3ded6c651d1be28 $
 
 LIB=	sl
 INTERNALLIB=

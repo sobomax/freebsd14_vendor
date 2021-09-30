@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD$
+ *	$FreeBSD: 541ad2d0d8a47f729c70c8d1e7c7a3ffb1852f08 $
  */
 #include "libc_private.h"
 

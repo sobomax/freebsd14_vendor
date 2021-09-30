@@ -33,7 +33,7 @@
  * SCM - System Control Module
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 835d2381075d31cdacfee5c721116edf16048569 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

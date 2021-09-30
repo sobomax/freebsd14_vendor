@@ -29,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD$
+ * $FreeBSD: 72d989ac7c36fb00fd5151ea5bc6c3a6555e7324 $
  */
 
 #ifndef	_SYS_SIENA_FLASH_H

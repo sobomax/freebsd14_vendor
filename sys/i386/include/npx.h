@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD$
+ * $FreeBSD: c69510164f3b59de78b5bd79d72fb80722810581 $
  */
 
 /*

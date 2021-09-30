@@ -70,7 +70,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD$
+ * $FreeBSD: 7d069768cb6f2f4a2cb49ac6a7c39078dd81fc1b $
  */
 #include <sys/types.h>
 #include <sys/ioccom.h>

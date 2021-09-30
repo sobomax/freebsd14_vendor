@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c81ef76d21c1c9a45ad1e8092cce824846755319 $
  *
  * Lock definitions used in both libc and libpthread.
  *

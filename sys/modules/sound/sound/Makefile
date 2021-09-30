@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: adbc14a38020515e6d86df33aa82b47d67c9c564 $
 
 SYSDIR?=${SRCTOP}/sys
 

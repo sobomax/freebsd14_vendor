@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1200469b4e1258e13f6970a250a0686ff601daf1 $
 
 r=$(${SH} -c 'echo ${01:+yes}${010:+yes}' '' a '' '' '' '' '' '' '' '' b)
 [ "$r" = yesyes ]

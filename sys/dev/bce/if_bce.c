@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3d5c0742580c3792880fe64eb2548f226f802698 $");
 
 /*
  * The following controllers are supported by this driver:

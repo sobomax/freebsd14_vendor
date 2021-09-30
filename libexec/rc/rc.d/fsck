@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 747d357c4412eb9a23efaba90492da7e7e103f07 $
 #
 
 # PROVIDE: fsck

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1c69d935f25f6c8c904f6cf520eeea6f8fd21c64 $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for

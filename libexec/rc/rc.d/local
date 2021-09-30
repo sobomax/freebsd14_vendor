@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: c5aa0e4a690d608dd966fc1a65b021b7071bf41d $
 #
 
 # PROVIDE: local

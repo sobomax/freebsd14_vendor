@@ -46,7 +46,7 @@
 
 #include "_elftc.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b4668e8d541efc493d6b211c5652867ad13c4fcb $");
 
 static bool convert_to_feature_val(char *, uint32_t *);
 static bool edit_file_features(Elf *, int, int, char *);

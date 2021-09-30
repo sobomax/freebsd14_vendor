@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: c3fbbbb5c738702510daf5ac7caa17c7a5e1fe19 $
 
 # Create partitions on a target disk
 #############################

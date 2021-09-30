@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 47c825a52c3acd8275049f941c94d996a5f11bc7 $
 
 # POSIX does not specify these but they occasionally occur in the wild.
 # This just serves to keep working what currently works.

@@ -38,7 +38,7 @@ static const char sccsid[] = "@(#)pw_copy.c	8.4 (Berkeley) 4/2/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7586980e4a55b8dd0b639ed394f1b989eeb9cc6e $");
 
 /*
  * This module is used to copy the master password file, replacing a single

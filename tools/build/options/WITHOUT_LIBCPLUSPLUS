@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 2449e30d4b1062f2827826537b33c41ea5d5489a $
 Set to avoid building libcxxrt and libc++.

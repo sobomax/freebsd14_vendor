@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: e65f1a938d02b039adc813c6765242c1fb6010fc $
 
 .PATH:		${SRCTOP}/sys/dev/ichsmb
 KMOD		= ichsmb

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6fb81a63d260060e99b0a91eca4a194fc72ff53c $");
 
 /*
  * Driver for realtime clock EPSON RTC-8583

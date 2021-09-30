@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: b222cd3d9c16aae08b6930e862b44d8b3c532893 $
  */
 
 #define	LINUX_SYS_read	0

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e8fc7dca71b3a7c6918d242729cd2ba954879bb1 $
  */
 
 #ifdef __cplusplus

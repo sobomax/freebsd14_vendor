@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)rtsock.c	8.7 (Berkeley) 10/12/95
- * $FreeBSD$
+ * $FreeBSD: 8009ec5dd0a2a88d3b6c9433b69fa3d1cf520889 $
  */
 #include "opt_mpath.h"
 #include "opt_inet.h"

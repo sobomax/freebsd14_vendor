@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 052be5a779ae0777933bf605a6511318a9139787 $");
 
 #include <opencrypto/xform_enc.h>
 

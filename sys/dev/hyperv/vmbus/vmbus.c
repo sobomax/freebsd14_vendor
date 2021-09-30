@@ -30,7 +30,7 @@
  * VM Bus Driver Implementation
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b027752290becc9a2c97b997a30365aee6dd645c $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

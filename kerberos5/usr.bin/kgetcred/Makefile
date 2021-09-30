@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1451154f9cf8a87745bd4674be8d880f362f8306 $
 
 PROG=	kgetcred
 CFLAGS+=	-I${KRB5DIR}/lib/asn1 \

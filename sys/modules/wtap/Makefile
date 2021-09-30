@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4386bf0dd7ada806860a69a9def446bcc74440c4 $
 
 
 # Declare Name of kernel module

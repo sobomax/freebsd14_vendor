@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 24267a8dd4199b3a110303a3189144eb9df99762 $
 
 LIB=	kdc
 LDFLAGS=	-Wl,--no-undefined

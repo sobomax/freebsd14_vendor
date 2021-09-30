@@ -24,7 +24,7 @@ if [ ! "$_MEDIA_FTP_SUBR" ]; then _MEDIA_FTP_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: a6d0e1ca1ad0af1d92e2043be7cb8c15ba16a012 $
 #
 ############################################################ INCLUDES
 

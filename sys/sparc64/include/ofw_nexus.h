@@ -55,7 +55,7 @@
  *
  *	from: NetBSD: psychoreg.h,v 1.14 2008/05/30 02:29:37 mrg Exp
  *
- * $FreeBSD$
+ * $FreeBSD: 247a311b19898b993e6595b09e16315edd06ae89 $
  */
 
 #ifndef _MACHINE_OFW_NEXUS_H_

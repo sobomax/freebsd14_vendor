@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5c523d11ed007be8f60e58824a0d8323c4ed4b51 $");
 
 #include <sys/errno.h>
 

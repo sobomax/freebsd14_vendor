@@ -29,7 +29,7 @@
 #define __RS690D_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: af90d7cb1d09e25abd66779bc98dddb695270cc0 $");
 
 /* Registers */
 #define R_000078_MC_INDEX                            0x000078

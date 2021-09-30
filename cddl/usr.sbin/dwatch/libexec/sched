@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for dtrace_sched(4) $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD$
+# $FreeBSD: acbe47d92989ba30f8c66d534bf43fe3185997fa $
 #
 ############################################################ DESCRIPTION
 #

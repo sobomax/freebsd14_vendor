@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: ee4d93db1947423cf32bc4e40e1fc068c71741ff $ */
 #ifndef VERSION_HIDDEN
 #define VERSION_HIDDEN
 #endif

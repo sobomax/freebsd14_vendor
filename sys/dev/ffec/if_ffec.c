@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d52bf9a4e3d502156d35edbc671216c7bb3e423f $");
 
 /*
  * Driver for Freescale Fast Ethernet Controller, found on imx-series SoCs among

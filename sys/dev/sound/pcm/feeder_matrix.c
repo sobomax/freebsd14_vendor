@@ -54,7 +54,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 5e2bdbcb847170e8020091c14c3e4d318d34f0be $");
 #endif
 
 #define FEEDMATRIX_RESERVOIR	(SND_CHN_MAX * PCM_32_BPS)

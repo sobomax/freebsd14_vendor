@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 7126ff854748b950b237c136fe21a235e98faea4 $
 #
 
 # PROVIDE: timed

@@ -24,7 +24,7 @@ if [ ! "$_NETWORKING_MEDIA_SUBR" ]; then _NETWORKING_MEDIA_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 028944b5eb6b4245786306f0d399ca235b08f841 $
 #
 ############################################################ INCLUDES
 

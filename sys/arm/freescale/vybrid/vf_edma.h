@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 72968e7ce79ef80388ab5ae0e3e3d5ce22b29c52 $
  */
 
 #define	DMA_CR		0x000	/* Control */

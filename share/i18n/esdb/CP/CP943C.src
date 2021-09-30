@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: d0ae684043980284a301eb36acc2f4ccb5c1ee32 $ 
 # $NetBSD: CP943C.src,v 1.1 2006/11/29 15:45:26 tnozaki Exp $
 
 NAME		"CP943C"

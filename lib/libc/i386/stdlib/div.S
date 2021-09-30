@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 81d6e6e4aa52e636f7d60ac3a294ba3224fd418b $");
 
 ENTRY(div)
         movl    4(%esp),%eax

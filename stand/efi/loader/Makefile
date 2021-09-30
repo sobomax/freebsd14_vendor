@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d290cae5d4c885b3888058109b94aef7fe1bacec $
 
 LOADER_NET_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	yes

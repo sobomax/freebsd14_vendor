@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD$*/
+/*$FreeBSD: 9ed3e3e2fb0e2c582ee67d6d3c5d3514ef4732ab $*/
 
 /**
  * @file ice_drv_info.h

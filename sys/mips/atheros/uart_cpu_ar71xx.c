@@ -29,7 +29,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 62d7dd69e80a35bc627dba0be023375df5498379 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

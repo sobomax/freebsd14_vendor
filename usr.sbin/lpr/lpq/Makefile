@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD$
+# $FreeBSD: 3ce7182480f0ba816cf41fabbe60fcf65a366c37 $
 
 BINDIR=	/usr/bin
 

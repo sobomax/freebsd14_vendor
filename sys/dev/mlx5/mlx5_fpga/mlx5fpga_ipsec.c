@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: 65f5984060ec402c8d14f2669e98c53428b4bdf8 $
  */
 
 #include <dev/mlx5/driver.h>

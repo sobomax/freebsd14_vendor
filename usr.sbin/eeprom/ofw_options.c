@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3b9e3124c77a91b41ba19268b9610329b48d8eed $");
 
 /*
  * Handlers for Open Firmware /options node.

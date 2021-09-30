@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 97a45ea7b2216439fd32b5440d33941736b4a63d $
 Set to use
 .Xr ccache 1
 for the build.

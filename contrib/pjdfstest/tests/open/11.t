@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/open/11.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 3449ead38b835510ace57354aaa61ba84c526e45 $
 
 desc="open returns EPERM when the named file has its append-only flag set, the file is to be modified, and O_TRUNC is specified or O_APPEND is not specified"
 

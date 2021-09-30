@@ -31,7 +31,7 @@
 /* xDMA memcpy test driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6a4869df8ebc27f7a35f2a90148da73b7372e1f3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

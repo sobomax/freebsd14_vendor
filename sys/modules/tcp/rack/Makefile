@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 55ca2ad080accf250603060baf6c95101e19a8b9 $
 #
 
 .PATH: ${.CURDIR}/../../../netinet/tcp_stacks

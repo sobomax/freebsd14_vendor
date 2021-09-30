@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: dc6f3e481593a031456a73d9f664fe2f31b8f548 $
 PROG=	mfiutil
 
 SRCS=	mfiutil.c mfi_bbu.c mfi_cmd.c mfi_config.c mfi_drive.c mfi_evt.c \

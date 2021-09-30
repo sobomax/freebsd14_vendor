@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9f1c5640570679bdbe1c95ea4c12c41a711e4f32 $");
 
 #include <sys/types.h>
 #include <sys/time.h>		/* XXX for mtree.h */

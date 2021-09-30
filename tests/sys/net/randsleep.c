@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
  *
- * $FreeBSD$
+ * $FreeBSD: a602d06921e7ee5482615e43f2672b624ab014a3 $
  */
 
 #include <errno.h>

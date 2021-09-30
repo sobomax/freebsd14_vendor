@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: a8f43e24fb74bb9dd960b383c6da51b9ffadc062 $
 
 PACKAGE=	ipf
 LIB=		ipf

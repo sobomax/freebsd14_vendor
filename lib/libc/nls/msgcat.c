@@ -32,7 +32,7 @@ up-to-date.  Many thanks.
 ******************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5eb3273f7269fdb844fce8587628e93dbb0b46e6 $");
 
 #define _NLS_PRIVATE
 

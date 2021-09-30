@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 8d8d1ce4bccdfef1f8cb9270423686f1a4c8d2ee $
 Do not build or install GNU
 .Xr as 1 ,
 .Xr ld.bfd 1 , and

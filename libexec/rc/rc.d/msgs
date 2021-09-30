@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: d328c334976e539890345180086a318af448af44 $
 #
 
 # PROVIDE: msgs

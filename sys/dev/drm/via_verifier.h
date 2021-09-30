@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 153b472c139bb045f049c763211de320db34fe3c $");
 
 #ifndef _VIA_VERIFIER_H_
 #define _VIA_VERIFIER_H_

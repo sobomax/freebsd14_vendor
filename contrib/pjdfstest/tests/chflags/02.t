@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/02.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 096370e758632fe891ff761a2b6e53ed35bd8f3f $
 
 desc="chflags returns ENAMETOOLONG if a component of a pathname exceeded {NAME_MAX} characters"
 

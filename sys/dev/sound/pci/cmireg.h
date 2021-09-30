@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 5b0b8b2cb96128dfb2fb987e3c32c1dcf559ccfe $
  */
 
 /* C-Media CMI8x38 Audio Chip Support */

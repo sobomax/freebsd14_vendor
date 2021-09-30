@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2767b460fc2a1e573eccd16f7dd5c53d6993b59a $
 
 .PATH: ${SRCTOP}/sys/dev/ichwd
 

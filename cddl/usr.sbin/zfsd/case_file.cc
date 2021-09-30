@@ -72,7 +72,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 19c4abe45fc9d91fbd23fdf6dea6f097189fd23e $");
 
 /*============================ Namespace Control =============================*/
 using std::auto_ptr;

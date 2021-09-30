@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6f6f0e3d2c57bfcd2e81072875113e6847395819 $");
 
 	.register	%g2, #ignore
 	.register	%g3, #ignore

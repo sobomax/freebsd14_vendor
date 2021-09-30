@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 05c66de2ee5f65347bc0b9e20bc620c1229bfcfa $
  */
 
 /* callback::opmask values */

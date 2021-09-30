@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 95505d2a1ff99c29e6c8b9a852223527dc8b8851 $
 
 LIB=	roken
 LIBADD=	crypt

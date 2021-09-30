@@ -67,7 +67,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD$
+ * $FreeBSD: f86b9a41563b25271fc7f074e24b11575ec0e9fa $
  */
 #include <sys/param.h>
 #include <sys/uio.h>

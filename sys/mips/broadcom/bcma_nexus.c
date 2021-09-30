@@ -27,11 +27,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD$
+ * $FreeBSD: 4e3eaa7a7c1dc84818bddb6dcd410e8d4b9dca2f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4e3eaa7a7c1dc84818bddb6dcd410e8d4b9dca2f $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

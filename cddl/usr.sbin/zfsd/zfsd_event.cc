@@ -67,7 +67,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 707a868c67e8a35a031059701f36f27f1298bc01 $");
 /*============================ Namespace Control =============================*/
 using DevdCtl::Event;
 using DevdCtl::Guid;

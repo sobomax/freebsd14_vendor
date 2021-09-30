@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 338a508de20b8cf512aeec182dc0ec3f5887e52c $
 
 PROG=	kdc
 MAN=	kdc.8

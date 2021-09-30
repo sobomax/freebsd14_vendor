@@ -56,7 +56,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_rio.c,v 1.17 2003/07/10 12:07:49 kjc Exp $
- * $FreeBSD$
+ * $FreeBSD: d229140daddf0257d844638c0dc919e947470914 $
  */
 
 #include "opt_altq.h"

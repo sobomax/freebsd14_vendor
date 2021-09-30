@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/link/04.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 615722c377abfbf0cdaece33beacef5c5b782ab2 $
 
 desc="link returns ENOENT if a component of either path prefix does not exist"
 

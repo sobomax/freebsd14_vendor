@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 34192f11f842c5cff830f408ebac9120014f7714 $");
 
 /*
  * driver for internal phy in the AX88x9x chips.

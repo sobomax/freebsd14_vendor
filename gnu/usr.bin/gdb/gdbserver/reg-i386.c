@@ -3,7 +3,7 @@
 /* This file was created with the aid of ``regdat.sh'' and ``../../../../contrib/gdb/gdb/regformats/reg-i386.dat''.  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3307ea933c4519b744a3b2eba1e5b9afa3669e3b $");
 
 #include "regdef.h"
 #include "regcache.h"

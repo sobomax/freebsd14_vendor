@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: f76e636932ba79d3e0c0c50f47da128011347751 $
 #
 # Makefile for building userland tests
 # this is written in a form compatible with gmake

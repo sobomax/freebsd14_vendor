@@ -6,7 +6,7 @@
 #
 # Trust me, RUN THIS SCRIPT :)
 #
-# $FreeBSD$
+# $FreeBSD: 1b97c03015a951bfe3dd673f224b0a7bd065de5c $
 #
 #-------cut here------------------
 

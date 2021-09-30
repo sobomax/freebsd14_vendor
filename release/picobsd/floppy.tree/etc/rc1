@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: a4a0798344f14daf9dcdc2b987f47de8b99de2ef $
 ### rc1, next stage 'rc' for PicoBSD -- THIS IS NOT THE NORMAL /etc/rc 
 
 . /etc/rc.conf.defaults		# Load default procedures

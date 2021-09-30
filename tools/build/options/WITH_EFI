@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: acd95025d8b7657e9cc71a1af47852c055ce62cb $
 Set to build
 .Xr efivar 3
 and

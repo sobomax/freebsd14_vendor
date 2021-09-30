@@ -29,7 +29,7 @@
 .\" Feral Software
 .\" mjacob@feral.com
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 7a548c72dfeff9d93be21f28e1dc9d0b5aa02e13 $
 .\"
 .Dd November 5, 2012
 .Dt SESD 8

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: b8b85ab47b6b753388ef6ecfc06a8bced56b4f80 $
 
 get_filesystem()
 {

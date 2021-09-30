@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 61230bcb862767ee17937d3e4ad10e5cb9682bb5 $
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES

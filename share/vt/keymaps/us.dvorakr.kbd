@@ -1,6 +1,6 @@
 # A right handed Dvorak keyboard for US English
 #
-# $FreeBSD$
+# $FreeBSD: 54ce39b6320b1c3ab44c0d6f6842943e2d1f33a3 $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

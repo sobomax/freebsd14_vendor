@@ -29,7 +29,7 @@
 #include "opt_ipsec.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 37b686a7e91eb067397c41ea18c4cb9e48d82127 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

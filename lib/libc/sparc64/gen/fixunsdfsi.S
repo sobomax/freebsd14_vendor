@@ -41,7 +41,7 @@
 	RCSID("$NetBSD: fixunsdfsi.S,v 1.3 2000/07/25 04:26:12 mycroft Exp $")
 #endif
 #endif /* LIBC_SCCS and not lint */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3120ca9a0edbab3f3d6febb72c9c87e363e68da5 $");
 
 /*
  * Convert double to unsigned integer (for gcc).

@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	1.5 (Berkeley) 6/8/93
-# $FreeBSD$
+# $FreeBSD: 33416d6e3c1bf052eb46d3c326256819f7e07ed2 $
 
 VOLUME=		papers
 DOC=		kerntune

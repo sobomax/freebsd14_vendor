@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: e5a1e957798d1228a2fca78eb3c7ab013627cace $
 Set to build the GPL'd version of the device tree compiler from elinux.org,
 instead of the BSD licensed one.

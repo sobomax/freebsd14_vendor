@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 935d6e8389938b9ecc5b96a0648637b81645f150 $");
 
 #define	LINUXKPI_PARAM_PREFIX ibcore_
 

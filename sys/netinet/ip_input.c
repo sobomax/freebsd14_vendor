@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8ddbaae1e6bd6a742bc68ebd982d759be62728e1 $");
 
 #include "opt_bootp.h"
 #include "opt_ipstealth.h"

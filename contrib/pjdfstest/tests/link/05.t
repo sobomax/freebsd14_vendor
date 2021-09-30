@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/link/05.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 5a18c2103e1d155784ec90c0fc46ecdedcaad345 $
 
 desc="link returns EMLINK if the link count of the file named by name1 would exceed 32767"
 

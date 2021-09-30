@@ -14,7 +14,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD$
+ * $FreeBSD: 708f0934c4277935629ad38bf7ec17e71f7c7ea7 $
  */
 
 /* build options: */

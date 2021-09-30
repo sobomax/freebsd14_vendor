@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 64f3968a3559ee735bc1a95235cd41c0ae507ea2 $
 
 files		"dpaa/files.dpaa"
 

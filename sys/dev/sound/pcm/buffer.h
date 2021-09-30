@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 74a684b9a4acd782f2807ceaa41be9ceed71558b $
  */
 
 #define SND_DMA(b) (sndbuf_getflags((b)) & SNDBUF_F_DMA)

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 4a4dcbea95587c2b8e513d1cc16ec54b0e2ff561 $
 
 .if ${MK_ACPI} != "no"
 SUBDIR+=	acpi

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 9a22841fdbe97e71670570d1158bc149bcefc501 $
 
 class="uzip"
 base=`basename $0`

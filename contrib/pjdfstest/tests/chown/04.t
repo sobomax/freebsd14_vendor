@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chown/04.t 211410 2010-08-17 06:08:09Z pjd $
+# $FreeBSD: 4b66bacb74223a784e94fd6a4d5e885fe2e23007 $
 
 desc="chown returns ENOENT if the named file does not exist"
 

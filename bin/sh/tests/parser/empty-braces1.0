@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5ab443c48d8a07268ab8cfb22d1d0f70d5d4f64c $
 
 # Unfortunately, some scripts depend on the extension of allowing an empty
 # pair of braces.

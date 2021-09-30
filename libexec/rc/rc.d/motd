@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: acb376723e8047af36494a85d456a82646980a18 $
 #
 
 # PROVIDE: motd

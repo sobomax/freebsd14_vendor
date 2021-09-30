@@ -1,5 +1,5 @@
 #!/bin/sh -
-# $FreeBSD$
+# $FreeBSD: 3cd6d5dcdb5b31568497ed62f8e487fb82340976 $
 
 network_pass1() {
     echo -n 'Doing initial network setup:'

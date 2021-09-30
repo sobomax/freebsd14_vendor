@@ -43,7 +43,7 @@
 #include <dev/sound/midi/mpu401.h>
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 94769b38faf0ae10a505cad884ce9491fe74646e $");
 
 /* -------------------------------------------------------------------- */
 

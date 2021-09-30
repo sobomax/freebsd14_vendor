@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b5e79f2ef07fcf660a5fda907b77f9c201076b83 $");
 
 /*
  * IEEE 802.11 ioctl support (FreeBSD-specific)

@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a8c7a5756590317d4f22073a443dad4393da6774 $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"

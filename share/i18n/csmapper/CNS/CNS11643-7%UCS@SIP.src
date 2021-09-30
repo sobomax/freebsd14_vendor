@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 2025912fd4c12708854af336441b339fc6987fe5 $
 # $NetBSD: CNS11643-7%UCS@SIP.src,v 1.1 2007/03/05 16:57:13 tnozaki Exp $
 
 TYPE		ROWCOL

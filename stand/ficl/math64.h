@@ -40,7 +40,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD$ */
+/* $FreeBSD: a4e56369564f938f1999a17d4bbb9ecc44a5f82d $ */
 
 #if !defined (__MATH64_H__)
 #define __MATH64_H__

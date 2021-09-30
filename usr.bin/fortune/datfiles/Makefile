@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/19/94
-# $FreeBSD$
+# $FreeBSD: 80b8cd2ab6410bef534e89f0b332396544ca3aed $
 
 DB=	freebsd-tips
 

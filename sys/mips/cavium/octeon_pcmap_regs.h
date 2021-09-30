@@ -43,7 +43,7 @@
  *    California, Berkeley and its contributors."
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 6aad912755151c7f511f7990edee4ad9ce19d95a $ */
 
 #ifndef __OCTEON_PCMAP_REGS_H__
 #define __OCTEON_PCMAP_REGS_H__

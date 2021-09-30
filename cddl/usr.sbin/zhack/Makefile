@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1347111c7c175c067ca886717f3befeb67adec7b $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zhack
 

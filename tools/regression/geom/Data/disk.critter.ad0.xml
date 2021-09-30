@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD$
+    $FreeBSD: 9e93b24143459f6c6d7255349cba11de8e827052 $
     This image contains the MBR and disklabel sectors from my Asus M1300
     laptop.
   </comment>

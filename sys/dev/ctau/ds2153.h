@@ -12,7 +12,7 @@
  * all derivative works or modified versions.
  *
  * Cronyx Id: ds2153.h,v 1.2.4.1 2003/11/12 17:22:33 rik Exp $
- * $FreeBSD$
+ * $FreeBSD: 44ab02d41fe968d93b4c67a385f0032f58f352e4 $
  */
 
 /*

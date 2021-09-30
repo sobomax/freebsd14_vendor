@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: db5796039a0dce28d8465735f4529e978d41cd9b $
 
 # This file lists DTrace tests which are known to fail or hang/crash the
 # system. They were pulled from the legacy DTrace test infrastructure in

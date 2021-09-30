@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9c34b79f547d7a689383c170d22399fd6d4df290 $
 
 usage()
 {

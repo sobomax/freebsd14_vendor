@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 663c68d2046d782efa08c39c7fd07df093feef2c $
 
 x=a\ b
 [ "$x" = "${x?}" ] || exit 1

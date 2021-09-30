@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8bae75d18e4c29dab2f9851d9950cafae1aad06e $");
 
 /*
  * CAM front-end for communicating with non-DASD devices

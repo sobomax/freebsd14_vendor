@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD$
+ * $FreeBSD: 86f7e08d9725d6ba68a255d7e9c05e799609cf48 $
  */
 
 

@@ -1,5 +1,5 @@
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: eafc8f25c9c7cc263004cb8856cefc7311233e62 $
 .\"
 .NH
 Implementation jail in the FreeBSD kernel.

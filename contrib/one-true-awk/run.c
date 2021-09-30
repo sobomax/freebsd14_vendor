@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1b02a79fb46be8aa122f5b7fa721ec7b8dd91ec2 $");
 
 #define DEBUG
 #include <stdio.h>

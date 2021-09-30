@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: ac937fe6fd8bdb742b9276d957f127a99e60f4c7 $ */
 
 #ifndef _GTVAR_H_
 #define _GTVAR_H_

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD$*/
+/*$FreeBSD: b2f0b5c0acad8e37c3c95c01b9d5f2db79060ef0 $*/
 
 #include "i40e_adminq.h"
 #include "i40e_prototype.h"

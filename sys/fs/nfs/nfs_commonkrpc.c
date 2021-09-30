@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 78b6d0ed6985888f9bea9bc445013737c5c19799 $");
 
 /*
  * Socket operations for use by nfs

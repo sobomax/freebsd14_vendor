@@ -29,7 +29,7 @@
 #
 #  Authors: Alan Somers         (Spectra Logic Corporation)
 #
-# $FreeBSD$
+# $FreeBSD: 9d85b5d40bace81233ecae790294c80617ee516e $
 
 atf_test_case create cleanup
 create_head()

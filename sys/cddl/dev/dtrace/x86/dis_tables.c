@@ -33,7 +33,7 @@
 /*	  All Rights Reserved  	*/
 
 /*
- * $FreeBSD$
+ * $FreeBSD: d130b3ac335eb48c11dfa4f207121f75ea495b7a $
  */
 
 #include	"dis_tables.h"

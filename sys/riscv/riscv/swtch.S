@@ -40,7 +40,7 @@
 #include <machine/riscvreg.h>
 #include <machine/pte.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 39213d3d31b93ffa64971638a63c51bf9450ebb0 $");
 
 #ifdef FPE
 .macro __fpe_state_save p

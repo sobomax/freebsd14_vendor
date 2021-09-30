@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 1863e0ff4f611759541dda25835ed02104653998 $ */
 /* Do not modify. This file is auto-generated from armv4-gf2m.pl. */
 #include "arm_arch.h"
 

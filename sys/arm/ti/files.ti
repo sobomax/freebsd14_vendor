@@ -1,4 +1,4 @@
-#$FreeBSD$
+#$FreeBSD: 83b3c2ed8d895f041b4ebb51c3e9296f62e65c50 $
 
 arm/ti/ti_cpuid.c				standard
 arm/ti/ti_hwmods.c				standard

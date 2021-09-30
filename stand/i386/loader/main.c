@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5265769cd0d9166fdb4cad0ce8381dfa213823fe $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous

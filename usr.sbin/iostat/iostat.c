@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: e5f746c15284c03bd5a8b05ca6797286e1592cf2 $
  */
 /*
  * Parts of this program are derived from the original FreeBSD iostat

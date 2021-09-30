@@ -36,7 +36,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union_vnops.c	8.32 (Berkeley) 6/23/95
- * $FreeBSD$
+ * $FreeBSD: ff77e506831410f1a88edfd5fb3f633d91aec7e5 $
  *
  */
 

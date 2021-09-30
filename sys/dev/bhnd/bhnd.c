@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 92bb4f45a770cebddff8ef7724bae25750a208b4 $");
 
 /*
  * Broadcom Home Networking Division (HND) Bus Driver.

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)redir.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 08c52359c59e2a49553987c875dab264b5a05c4d $
  */
 
 /* flags passed to redirect */

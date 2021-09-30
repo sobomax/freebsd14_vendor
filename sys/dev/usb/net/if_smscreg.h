@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 5ad79b9e13ea6c77eefffbcecc8c9db27b943aa7 $
  */
 #ifndef _IF_SMSCREG_H_
 #define _IF_SMSCREG_H_

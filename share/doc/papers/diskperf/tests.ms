@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)tests.ms	6.2 (Berkeley) 4/16/91
-.\" $FreeBSD$
+.\" $FreeBSD: 90a9adf9518123d8b6bd552bbad5b8828f0bc7f3 $
 .\"
 .ds RH Tests
 .NH

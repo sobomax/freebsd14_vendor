@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 310684b8b47d33982fd10e1d5fa44aeff9939739 $	*/
 /*	$KAME: icmp6.h,v 1.46 2001/04/27 15:09:48 itojun Exp $	*/
 
 /*-

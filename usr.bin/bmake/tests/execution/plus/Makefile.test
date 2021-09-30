@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: ae3bdc30b7036b2ae286908715f6ed91db032563 $
 
 check-+:
 	@${MAKE} -f ${MAKEFILE} -j2 -n do-$@

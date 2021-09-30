@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: dbcc309a49ccfd08ec9dfcbdb7e4f64be200e6dd $
  */
 
 typedef void (*ac97_patch)(struct ac97_info*);

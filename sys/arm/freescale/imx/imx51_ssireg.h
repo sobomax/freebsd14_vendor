@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3846b49507503233fa9e6f51689b04af2fe18295 $
  */
 
 /* Registers definition for Freescale i.MX515 Synchronous Serial Interface */

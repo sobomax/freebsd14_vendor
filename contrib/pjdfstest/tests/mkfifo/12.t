@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkfifo/12.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: c7f8107bad8410105992e70a6e24fecd7192e2d4 $
 
 desc="mkfifo returns EFAULT if the path argument points outside the process's allocated address space"
 

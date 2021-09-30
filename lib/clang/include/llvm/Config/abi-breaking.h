@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 643e1018b20f95b85ae55ed91c5688f3a506febf $ */
 /*===------- llvm/Config/abi-breaking.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /* Part of the LLVM Project, under the Apache License v2.0 with LLVM          */

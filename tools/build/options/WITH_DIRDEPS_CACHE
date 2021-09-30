@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: e4fec026c7d3f3007c7034a9c30e10fb27377782 $
 Cache result of dirdeps.mk which can save significant time
 for subsequent builds.
 Depends on

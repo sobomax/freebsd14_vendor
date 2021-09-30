@@ -32,7 +32,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 27c8e311c81808b20a957308b01ffe9d8b2a7626 $
  */
 /*
  * Intel fourth generation mobile cpus integrated I2C device.

@@ -29,7 +29,7 @@
 #include "opt_isa.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: acb6ef77c9c670d6b70371e096c79e3a9694d1b3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 40f8ff5b1be9e66be1ec3662dc42c1ca82db9954 $
 Set to not install header files.
 This option used to be spelled
 .Va NO_INCS .

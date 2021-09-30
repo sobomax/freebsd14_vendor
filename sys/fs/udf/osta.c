@@ -3,7 +3,7 @@
  * each code segment.  Slight whitespace modifications have been made for
  * formatting purposes.  Typos/bugs have been fixed.
  *
- * $FreeBSD$
+ * $FreeBSD: 70a22d9336528935993bba3da59ae8ac6ba37888 $
  */
 
 #include <fs/udf/osta.h>

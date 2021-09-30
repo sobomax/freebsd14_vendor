@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e3bfd572f411364ba1459eaa03363026f8676280 $
 
 .if ${MK_DIRDEPS_BUILD} == "yes" || ${MK_META_MODE} == "yes"
 

@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: e9d7a4cb7b4f5874be065714bf73920004e8aded $
 
 This document contains a collection of notes specific to the import
 of atf into head.  These notes are built on the instructions in

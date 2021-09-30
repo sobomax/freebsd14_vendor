@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6307ac4f9fb7010862578cd0e4942344288cce89 $");
 
 #include <rdma/ib_smi.h>
 #include "smi.h"

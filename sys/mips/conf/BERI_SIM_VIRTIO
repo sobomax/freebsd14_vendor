@@ -2,7 +2,7 @@
 # BERI_SIM_VIRTIO -- Kernel for the SRI/Cambridge "BERI" (Bluespec Extensible
 # RISC Implementation) FPGA soft core, as configured for simulation.
 #
-# $FreeBSD$
+# $FreeBSD: 34eaae2b03f52860f9ff1b7731f8c20e02c34a67 $
 #
 
 #NO_UNIVERSE

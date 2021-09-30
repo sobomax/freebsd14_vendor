@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3febea7ed76bdb5dfb757db909c5490605981ae9 $");
 
 /*
  * ISA Bridge driver for Generic ISA Bus Devices.  See section 10.7 of the

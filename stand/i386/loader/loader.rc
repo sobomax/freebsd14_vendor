@@ -1,5 +1,5 @@
 \ Loader.rc
-\ $FreeBSD$
+\ $FreeBSD: 9f1ebe63597112400fb3e4d2340c81bea68a7e4f $
 \
 \ Includes additional commands
 include /boot/loader.4th

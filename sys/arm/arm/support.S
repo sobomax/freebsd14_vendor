@@ -87,7 +87,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8f1191f0309885e579fe11abf1bdd4520db596ea $");
 
 #include "assym.inc"
 

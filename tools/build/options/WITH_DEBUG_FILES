@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 16eee2a34f927e48ded92babe9107b43a7561c1d $
 Set to strip debug info into a separate file for each executable binary
 and shared library.
 The debug files will be placed in a subdirectory of

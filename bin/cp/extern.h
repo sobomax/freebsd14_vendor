@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/1/94
- * $FreeBSD$
+ * $FreeBSD: 65360ccaf6c141f252ec7012e7f841a91c21baca $
  */
 
 typedef struct {

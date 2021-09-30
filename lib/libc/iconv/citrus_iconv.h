@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 8fe630af6c2d8128101904c8afd5ca8273591fc9 $ */
 /* $NetBSD: citrus_iconv.h,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-

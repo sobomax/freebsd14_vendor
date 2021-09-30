@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 9fbee371531940985a796d5a83f318864ad96101 $
 
 Running:
 1. Compile mergesort_bench.c into mergesort_bench

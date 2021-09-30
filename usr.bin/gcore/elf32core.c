@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 595b7de95fbbc0ac0e1fe48a7c703a7abd367277 $ */
 #ifndef __LP64__
 #error "this file must be compiled for LP64."
 #endif

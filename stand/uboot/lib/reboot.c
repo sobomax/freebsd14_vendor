@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9f4d277eb6f95714788b32a884d4bed4cd10e422 $");
 
 #include <stand.h>
 #include "glue.h"

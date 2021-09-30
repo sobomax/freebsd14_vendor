@@ -1,5 +1,5 @@
 /* This file is in the public domain */
-/* $FreeBSD$ */
+/* $FreeBSD: cc59aee757c972404ca76d1df4074274dca5fdfb $ */
 
 #pragma once
 

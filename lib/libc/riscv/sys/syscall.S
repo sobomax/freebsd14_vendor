@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8a007f8c7f17694cb202a480e5c1b155bc951870 $");
 
 #include "SYS.h"
 

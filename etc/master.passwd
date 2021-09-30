@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a1be886f1e8d7594313b13f7cbf20fa9137c5d21 $
 #
 root::0:0::0:0:Charlie &:/root:/bin/csh
 toor:*:0:0::0:0:Bourne-again Superuser:/root:

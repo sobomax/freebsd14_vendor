@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2424e08c9a380fa623fa34e28da5d33a3b48b7ce $");
 
 /*
  * VPD decoder for IBM systems (Thinkpads)

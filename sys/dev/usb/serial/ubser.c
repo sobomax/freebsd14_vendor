@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 8a3ea4f33a7729a2c1dc9d7c5496ddf5e4285b48 $");
 
 /*
  * BWCT serial adapter driver

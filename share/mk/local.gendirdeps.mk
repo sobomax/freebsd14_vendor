@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cb7e4df66d73b048fcf99d6eb8a0c23b8d77548e $
 
 # we need a keyword, this noise is to prevent it being expanded
 GENDIRDEPS_HEADER= echo '\# ${FreeBSD:L:@v@$$$v$$ @:M*F*}';

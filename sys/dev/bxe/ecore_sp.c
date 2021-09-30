@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 566a8dc4382ccc5e6e83a29e60dadc9efd6b218b $");
 
 #include "bxe.h"
 #include "ecore_init.h"

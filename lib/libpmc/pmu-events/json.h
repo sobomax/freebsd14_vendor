@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 871362aaf1da739ba6bd779f1ce824889a989775 $ */
 #ifndef JSON_H
 #define JSON_H 1
 

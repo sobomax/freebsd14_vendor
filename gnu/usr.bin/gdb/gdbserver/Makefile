@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fa46e6de14faa2a945e9d372230e158006629a98 $
 
 # Not elf specific so don't install in /usr/libexec/elf
 BINDIR=/usr/bin

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $FreeBSD$
+# $FreeBSD: 02ed5620e2f0e8c0dff47b6aa05c9fa2f2575cc1 $
 
 use strict;
 use warnings;

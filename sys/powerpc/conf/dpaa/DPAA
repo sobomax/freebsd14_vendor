@@ -5,7 +5,7 @@
 # This is not standalone kernel config. Use it only for including
 # purposes.
 #
-# $FreeBSD$
+# $FreeBSD: 315461fb95ac919ac49cc0537abccec8dfbb4741 $
 
 cpu		BOOKE
 cpu		BOOKE_E500

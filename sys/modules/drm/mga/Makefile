@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 20a8499ffc09f3c8ff876422d2dba7a9ac31165b $
 
 .PATH:	${SRCTOP}/sys/dev/drm
 KMOD	= mga

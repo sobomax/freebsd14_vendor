@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: f20fef47d436fb087c264a87b420f1cf7f717381 $
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe

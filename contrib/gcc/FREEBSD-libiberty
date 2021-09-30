@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# $FreeBSD$
+# $FreeBSD: 1b8c24940c4b6de7b6cd476ef83103a515d72a9a $
 
 for F in \
 	choose-temp.c	\

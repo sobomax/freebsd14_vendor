@@ -30,7 +30,7 @@
  *
  *	@(#)timedc.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD$
+ * $FreeBSD: 8be16e201c395a4411634f1f84724d488f108028 $
  */
 
 #include <sys/param.h>

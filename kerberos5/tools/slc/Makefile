@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: df64d829d08040508bf7fc91995f4283b3873c32 $
 
 PROG=	slc
 LIBROKEN_A=     ${.OBJDIR:H:H}/lib/libroken/libroken.a

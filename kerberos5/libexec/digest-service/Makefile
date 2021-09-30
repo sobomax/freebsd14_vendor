@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7b888f5481cd0efd5529e0aaa6030f9df251b3d3 $
 
 PROG=	digest-service
 MAN=

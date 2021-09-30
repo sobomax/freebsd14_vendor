@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 0902f1c1062e1cc3471ca7362763bbc9853844b3 $
  */
 
 #include "opt_mp_watchdog.h"

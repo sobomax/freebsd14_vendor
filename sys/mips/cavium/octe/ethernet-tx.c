@@ -30,7 +30,7 @@ AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR W
 *************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a444aef3652a61ec0ecf732920e85d803131df52 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

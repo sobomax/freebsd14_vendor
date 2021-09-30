@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 3414e209cecdded81b8640e8886abf12eeb1519f $	*/
 /*	$KAME: advcap.h,v 1.5 2003/06/09 05:40:54 t-momose Exp $	*/
 
 /*-

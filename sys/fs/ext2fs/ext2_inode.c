@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_inode.c	8.5 (Berkeley) 12/30/93
- * $FreeBSD$
+ * $FreeBSD: 4f0de4b6f5c99ba669fbe3c2422ff620ab4ad71c $
  */
 
 #include <sys/param.h>

@@ -9,7 +9,7 @@
 #include "prutil.h"
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 2910b7fdd2c306705b6e8d576918a1b5f86abc7c $
  */
 void quit(const char *text)
 {

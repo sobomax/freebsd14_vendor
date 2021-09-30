@@ -14,7 +14,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 0dca768cc2acc05047a9952354cf0d5ab4086496 $
  */
 
 #ifndef _BTXV86_H_

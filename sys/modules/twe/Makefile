@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: f5d09e4463e18ff592ff79717bbd95aeb1ed56e7 $
 
 KMOD=	twe
 .PATH: ${SRCTOP}/sys/dev/${KMOD}

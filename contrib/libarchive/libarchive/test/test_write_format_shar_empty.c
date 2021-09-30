@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3ca6cceed84d51a9ed757201512bf24f12eb96b0 $");
 
 /*
  * Check that an "empty" shar archive is correctly created as an empty file.

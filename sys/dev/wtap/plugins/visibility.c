@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: de94e710b26220492b7fac3593f596ec9748a6ec $
  */
 #include <sys/param.h>
 #include <sys/module.h>

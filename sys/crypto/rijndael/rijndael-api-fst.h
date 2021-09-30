@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: e5f596ac75f82d144c8a237cbd825ea683073d7a $	*/
 /*	$KAME: rijndael-api-fst.h,v 1.6 2001/05/27 00:23:23 itojun Exp $	*/
 
 /*

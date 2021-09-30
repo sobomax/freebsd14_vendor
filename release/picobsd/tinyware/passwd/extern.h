@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)extern.h	8.1 (Berkeley) 4/2/94
- * $FreeBSD$
+ * $FreeBSD: 0c6c9f505ec6de7196dfe31d63d95aa8e7d2bc31 $
  */
 
 int	krb_passwd(char *, char *, char *, char *);

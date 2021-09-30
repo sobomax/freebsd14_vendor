@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6dcf343cf336f5462e62928ea3c86ca84431ff1e $
 
 S=	${SRCTOP}/sys
 

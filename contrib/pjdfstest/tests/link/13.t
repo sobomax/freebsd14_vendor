@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/link/13.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 437f65d781c2470ad6427d46a910e93bea47ba8f $
 
 desc="link returns EPERM if the parent directory of the destination file has its immutable flag set"
 

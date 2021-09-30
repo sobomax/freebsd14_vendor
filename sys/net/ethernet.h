@@ -1,7 +1,7 @@
 /*
  * Fundamental constants relating to ethernet.
  *
- * $FreeBSD$
+ * $FreeBSD: 5e46f124a0f2131e987e8748e41e66a9f426f027 $
  *
  */
 

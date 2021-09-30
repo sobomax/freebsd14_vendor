@@ -1,6 +1,6 @@
 # MALTA -- Kernel config for MALTA endian-big boards
 #
-# $FreeBSD$
+# $FreeBSD: 2c96f5024e146df3c3ebdaccd3c92ba9b214ed5a $
  
 ident		MALTA
 

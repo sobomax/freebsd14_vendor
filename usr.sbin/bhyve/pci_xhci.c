@@ -33,7 +33,7 @@
      tablet             USB tablet mouse
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: beca9181871e60c2b1c055bcff10b10f2d33f449 $");
 
 #include <sys/param.h>
 #include <sys/uio.h>

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 67b3561db89c693c09e9540e90fdf9395d8a1f29 $
  */
 
 #define pr_fmt(fmt) "mlxfw_mfa2: " fmt

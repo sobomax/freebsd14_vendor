@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: e43bdc362ec342556e0e914507177a3ab5c337e5 $
 
 # Functions which perform the final cleanup after an install
 

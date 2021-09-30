@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: ffb4f48ccb86eabc94d8bf836b0d608d6631be52 $
 
 # Display SVN log entries for changesets which have files which were
 # Added or Deleted.

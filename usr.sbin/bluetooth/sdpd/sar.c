@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: sar.c,v 1.2 2004/01/08 23:46:51 max Exp $
- * $FreeBSD$
+ * $FreeBSD: ce911911b503f21ad117e1a3b98cf37f4bfe0a77 $
  */
 
 #include <sys/queue.h>

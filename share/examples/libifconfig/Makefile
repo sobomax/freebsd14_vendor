@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 1c29c4dad6cce669b3d0bb769167f1fdac7cf945 $
 default:
 	$(CC) -Wall -fPIC -lifconfig -g -o example_setdescription setdescription.c
 	$(CC) -Wall -fPIC -lifconfig -g -o example_setmtu setmtu.c

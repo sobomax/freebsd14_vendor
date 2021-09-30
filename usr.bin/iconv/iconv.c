@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 7e911b4432e5470acf7d418f9fd5b2252612e085 $ */
 /* $NetBSD: iconv.c,v 1.16 2009/02/20 15:28:21 yamt Exp $ */
 
 /*-

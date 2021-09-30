@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fa0e35d6a6b2686d0ba1b3f07b84ad1b10b65e52 $
 
 # Check that the return statement will not break the EXIT trap, ie. all
 # trap commands are executed before the script exits.

@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 69564f8439ddfcbbb690e4e731fd44610e44b9aa $
 #
 # This file add support for the WITHOUT_* and WITH_* knobs in src.conf(5) to
 # the check-old and delete-old* targets.

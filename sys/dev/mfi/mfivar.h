@@ -56,7 +56,7 @@
 #define _MFIVAR_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d11c7c76dad62f08854d7874fcb399ab77fb5a4c $");
 
 #include <sys/lock.h>
 #include <sys/sx.h>

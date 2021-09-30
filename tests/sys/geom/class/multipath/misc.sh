@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 583434e1cfa5ad8e72db3e5f0dbc11b420bdd8c7 $
 
 . $(atf_get_srcdir)/conf.sh
 

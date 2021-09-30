@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)pigs.c	8.2 (Berkeley) 9/23/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d9f3f8d4ad1487016b47fa872baced937382d7b7 $");
 
 /*
  * Pigs display from Bill Reeves at Lucasfilm

@@ -5,7 +5,7 @@
 # provided that this notice is preserved and due credit is given
 # to the original author and the contributors.
 #
-# $FreeBSD$
+# $FreeBSD: 1ac9c94a75dca999db84a324b38c95fdabcb816c $
 # Id: Makefile,v 2.76.2.24 2007/09/26 10:04:03 darrenr Exp $
 #
 SHELL=/bin/sh

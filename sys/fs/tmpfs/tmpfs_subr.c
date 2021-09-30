@@ -36,7 +36,7 @@
  * Efficient memory file system supporting functions.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2e035ed8d7f1b30c45b6c402659eb8381573db9a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

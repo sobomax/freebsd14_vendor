@@ -1,5 +1,5 @@
 /*	$NetBSD: nettype.h,v 1.2 2000/07/06 03:17:19 christos Exp $	*/
-/*	$FreeBSD$ */
+/*	$FreeBSD: 39c1f76970fb05d3d6752396994b9e557794f258 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

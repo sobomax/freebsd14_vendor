@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 24303027ba91407425c0b0ff814fa1e63b1f16c0 $
 
 f() { return 42; }
 f

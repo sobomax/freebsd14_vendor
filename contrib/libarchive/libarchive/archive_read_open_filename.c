@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f5bf8934eea25031ff18d944b0d2704e2990bba5 $");
 
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>

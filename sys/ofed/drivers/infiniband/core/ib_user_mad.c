@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: db95b8dc3d50d2e5120a70e5717853d0912dabf2 $");
 
 #define pr_fmt(fmt) "user_mad: " fmt
 

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: a4e1099220acc4d9c63b12604070ff8af2f67fe6 $
 
 # NAND controller interface description
 #

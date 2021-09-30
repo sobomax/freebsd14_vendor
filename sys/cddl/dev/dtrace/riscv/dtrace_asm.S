@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2016 Ruslan Bukin <br@bsdpad.com>
  *
- * $FreeBSD$
+ * $FreeBSD: eeaf640616753feab7fee1bb60b2c21f9dac21ea $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

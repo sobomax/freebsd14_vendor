@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 648a32e2b70aacb0fee277f7c5cfed3304996b0d $
 
 PROG=	etdump
 

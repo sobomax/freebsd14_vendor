@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c4817ecfad764c322715654843d83fa80f5c1b47 $
 
 LIBADD=	rt
 

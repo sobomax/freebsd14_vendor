@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: b8ad426ca0e61c8b80face9b36e7c4dad222bf76 $
 
 # Delete a specified partition, takes effect immediately
 ########################################################

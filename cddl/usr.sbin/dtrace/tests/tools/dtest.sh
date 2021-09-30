@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD$
+# $FreeBSD: dc1f0244739c052b2a6194a9a97cd1da53206c4f $
 
 usage()
 {

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 5e0fc8eedc19b1c9d98987507ff8a53107aad647 $
 Set to not build or install
 .Xr ftp 1
 and

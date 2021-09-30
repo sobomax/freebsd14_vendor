@@ -28,7 +28,7 @@
 #define _R300_REG_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 136f816de17635107bc689645d026e112a9c80c4 $");
 
 #define R300_SURF_TILE_MACRO (1<<16)
 #define R300_SURF_TILE_MICRO (2<<16)

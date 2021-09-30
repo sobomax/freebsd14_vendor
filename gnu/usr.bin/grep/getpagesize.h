@@ -1,6 +1,6 @@
 /* Emulate getpagesize on systems that lack it.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 7b3e3763c45feeb50d49cf7d99fb85d5c36ab552 $ */
 
 #ifndef HAVE_GETPAGESIZE
 

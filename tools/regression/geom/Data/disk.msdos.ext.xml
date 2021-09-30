@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD$
+    $FreeBSD: 868a88f78237900717da1b0fc10f025a22bd4142 $
     A MSDOS 6.22 disk with maximal number of extended partitions.
   </comment>
   <sectorsize>512</sectorsize>

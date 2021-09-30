@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD$
+ * $FreeBSD: 55f61af4c46ca372c42f2f2207a386264a73b731 $
  */
 
 #ifndef _SYS_TIMETC_H_

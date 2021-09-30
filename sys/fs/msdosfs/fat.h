@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: a4bd28d1f722a4aec1bc9d345713c1932e066a3c $ */
 /*	$NetBSD: fat.h,v 1.12 1997/11/17 15:36:36 ws Exp $	*/
 
 /*-

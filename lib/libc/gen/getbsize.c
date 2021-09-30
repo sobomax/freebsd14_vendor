@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getbsize.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e91c12282ddfbd2ee05ca69899e0e9eb0d4d8013 $");
 
 #include <err.h>
 #include <stdio.h>

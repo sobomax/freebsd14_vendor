@@ -1,4 +1,4 @@
-// $FreeBSD$
+// $FreeBSD: 2f48c9821f9f798df3b3ddd45f0798fc3bb7f408 $
 /*
  * include/omp.h.var
  */

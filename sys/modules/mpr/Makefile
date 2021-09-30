@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 09830c41a86ea6a25b9ff887361418d2322926f2 $
 
 .PATH: ${SRCTOP}/sys/dev/mpr
 

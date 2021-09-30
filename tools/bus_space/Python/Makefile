@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5bc9b77140acf6ecac3501cbcaf365113cc435b8 $
 
 SHLIB_NAME=	bus.so
 SRCS=		lang.c

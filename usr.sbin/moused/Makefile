@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0f9eac5b2417985385acf6c3b025dba462085da2 $
 
 PROG=	moused
 MAN=	moused.8

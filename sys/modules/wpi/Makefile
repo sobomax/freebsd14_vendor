@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a4bb0d5a6beb818bbf5c03a60a82820936dcb07e $
 
 .PATH:  ${SRCTOP}/sys/dev/wpi
 

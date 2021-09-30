@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: acaef7256f5ddb96dc5ce84067c49d213ee70a92 $");
 
 #include "vmci_kernel_api.h"
 #include "vmci_kernel_defs.h"

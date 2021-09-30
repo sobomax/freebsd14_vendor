@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7100733c1d4157d81940aef598d1511cfe7fe4ae $
 
 .PATH: ${SRCTOP}/sys/crypto/via
 

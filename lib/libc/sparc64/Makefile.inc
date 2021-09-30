@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: da507d2f4894be65a113dda1daba34ae3929a5dc $
 #
 # Machine dependent definitions for the ultra sparc architecture.
 #

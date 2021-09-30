@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fe2c1a18f29a885104f4b12b351fd362f35448f2 $
 
 cpu		CPU_CORTEXA
 machine		arm armv7

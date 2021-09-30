@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: adf6286de36f412e565a3502d17afd4e68484650 $ 
 # $NetBSD: RISCOS-LATIN1%UCS.src,v 1.1 2007/04/01 18:52:29 tnozaki Exp $
 
 TYPE		ROWCOL

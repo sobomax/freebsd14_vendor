@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/01.t 211474 2010-08-18 22:06:43Z pjd $
+# $FreeBSD: 02a19584865d42b18d77ce6ae775ce4f3cd4299c $
 
 desc="mkdir returns ENOTDIR if a component of the path prefix is not a directory"
 

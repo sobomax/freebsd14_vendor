@@ -30,7 +30,7 @@
 /* Driver for Attansic Technology Corp. L1 Gigabit Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ee52564d7cc83507b6f3ee37c517a9b689004670 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

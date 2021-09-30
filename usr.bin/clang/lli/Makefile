@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: cce7d9b5db6502b750eb155cbb46fd7fcaf6ffba $
 
 PROG_CXX=	lli
 

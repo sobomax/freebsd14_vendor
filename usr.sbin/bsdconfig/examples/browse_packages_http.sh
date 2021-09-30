@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD$
+# $FreeBSD: 91b928d183bbb99758d18366a2637a0f5a446e72 $
 #
 # This sample downloads the package digests.txz and packagesite.txz files from
 # HTTP to /tmp (if they don't already exist) and then displays the package

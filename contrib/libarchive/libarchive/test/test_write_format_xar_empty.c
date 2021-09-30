@@ -29,7 +29,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 97c080887e40061ea10f3f55e4fc0aef591fd398 $");
 
 DEFINE_TEST(test_write_format_xar_empty)
 {

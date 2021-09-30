@@ -33,7 +33,7 @@
  *	Van Jacobson (van@helios.ee.lbl.gov), Dec 31, 1989:
  *	- Initial distribution.
  *
- * $FreeBSD$
+ * $FreeBSD: 9694d3ace21d77c2201dbea4d8f34cdcb7007cc6 $
  */
 
 #define MIN_VJ_STATES 3

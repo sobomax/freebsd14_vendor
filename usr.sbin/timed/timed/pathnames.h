@@ -30,7 +30,7 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD$
+ * $FreeBSD: bf7d872cd4f90160c14fa9bd84056d4d902b7c91 $
  */
 
 #include <paths.h>

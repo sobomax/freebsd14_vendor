@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: scr.c,v 1.1 2004/01/13 01:54:39 max Exp $
- * $FreeBSD$
+ * $FreeBSD: b3442915341f9a537cbf2f2be1df651ae3c77918 $
  */
 
 #include <sys/queue.h>

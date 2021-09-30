@@ -1,5 +1,5 @@
 /*	$NetBSD: swi.h,v 1.1 2002/01/13 15:03:06 bjh21 Exp $	*/
-/* $FreeBSD$ */
+/* $FreeBSD: 858ed2368b0d1185e1ae6c4b7a77408ae274854c $ */
 
 /*-
  * This file is in the Public Domain.

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: fc163e90efd0bc7bddc3d013c29085758052c4bc $
 
 PACKAGE=lib${LIB}
 LIB=	gpio

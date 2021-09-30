@@ -1,4 +1,4 @@
-$FreeBSD$
+$FreeBSD: 4e0125eec8efe6edcf547b0b6502e967da06ae74 $
 
 SysV IPC Shared Memory Regression Utility.
 

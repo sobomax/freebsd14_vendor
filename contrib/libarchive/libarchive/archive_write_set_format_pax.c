@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 439b3bf282e42a8ad904a3727294ecb6f9b46a94 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

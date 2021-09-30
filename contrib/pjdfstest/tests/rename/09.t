@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/rename/09.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: de401caea46182830b3a0316227775243168ac15 $
 
 desc="rename returns EACCES or EPERM if the directory containing 'from' is marked sticky, and neither the containing directory nor 'from' are owned by the effective user ID"
 

@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD$
+# $FreeBSD: c7ae9959e7dc3b4358aa7fa180813d85644c4b10 $
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"

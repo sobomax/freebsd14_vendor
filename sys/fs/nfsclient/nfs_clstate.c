@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4c219607af91360178accdf3069f7e762f782572 $");
 
 /*
  * These functions implement the client side state handling for NFSv4.

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9e3842acf88947cb4a9779b27058c41c2cc247cc $");
 
 #include "opt_bus.h"	/* XXX trim includes */
 

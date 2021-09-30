@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2f5fd06dec6cdd986f6c53834ee8bde775e43b83 $");
 
 ENTRY(fabs)
 	fabs d0, d0

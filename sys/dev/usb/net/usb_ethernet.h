@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b288e7ae606bd53433434084cc6409a338d77297 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: b288e7ae606bd53433434084cc6409a338d77297 $
  */
 
 #ifndef _USB_ETHERNET_H_

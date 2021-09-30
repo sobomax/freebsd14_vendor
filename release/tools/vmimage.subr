@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: 1ac03dc3b14ee117e8818a201146ef31785eb066 $
 #
 #
 # Common functions for virtual machine image build scripts.

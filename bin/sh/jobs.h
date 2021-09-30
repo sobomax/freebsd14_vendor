@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)jobs.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: d0caf0638617c426bf0b9fbf2814c5bd5235d3c7 $
  */
 
 /* Mode argument to forkshell.  Don't change FORK_FG or FORK_BG. */

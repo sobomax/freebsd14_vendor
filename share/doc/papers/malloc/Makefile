@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	6.3 (Berkeley) 6/8/93
-# $FreeBSD$
+# $FreeBSD: 00e1e3d87a3edeba86ccae3f0f16bf0acf19306f $
 
 VOLUME=	papers
 DOC=	malloc

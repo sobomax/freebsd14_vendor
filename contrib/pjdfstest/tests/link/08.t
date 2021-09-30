@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/link/08.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: eed5a46c5edab8aa438fc9392ff8e0d26364a657 $
 
 desc="link returns ELOOP if too many symbolic links were encountered in translating one of the pathnames"
 

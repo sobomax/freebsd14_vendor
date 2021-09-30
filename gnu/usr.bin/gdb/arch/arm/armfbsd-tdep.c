@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 785897dad344985e89b5dd39b5ab1727848ad7e6 $ */
 
 /* Target-specific functions for ARM running under NetBSD.
    Copyright 2002, 2003 Free Software Foundation, Inc.

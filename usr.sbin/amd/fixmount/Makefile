@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD$
+# $FreeBSD: 12deb22ae1dc14b7c65831757621b9b3aba18fa3 $
 
 .PATH:	${SRCTOP}/contrib/amd/fixmount \
 	${SRCTOP}/contrib/amd/conf/checkmount

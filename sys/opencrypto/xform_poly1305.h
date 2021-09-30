@@ -1,5 +1,5 @@
 /* This file is in the public domain. */
-/* $FreeBSD$ */
+/* $FreeBSD: 7364ecdef1177d33871314fe2aafab5e5cff69d3 $ */
 #pragma once
 
 #include <sys/types.h>

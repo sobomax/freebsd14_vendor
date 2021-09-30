@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: eacd42769e0d2859ebdd2b232693fe3e06aa2ecb $
  * $Id: pkt-gen.c 12346 2013-06-12 17:36:25Z luigi $
  *
  * Example program to show how to build a multithreaded packet

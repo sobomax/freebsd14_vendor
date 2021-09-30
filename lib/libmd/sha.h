@@ -54,7 +54,7 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.]
  *
- * $FreeBSD$
+ * $FreeBSD: 9e4a5c496657b401803c8f972a43f22ae08942f5 $
  */
 
 #ifndef _SHA_H_

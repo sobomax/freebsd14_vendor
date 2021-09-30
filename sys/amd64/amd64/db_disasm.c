@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0ec81f47fd447b9ce274aa19a5aaeda5f9efa915 $");
 
 /*
  * Instruction disassembler.

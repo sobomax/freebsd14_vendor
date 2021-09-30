@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9962cf7fdf33f334f2c416882d5633c095d9186f $");
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
 #define open _open

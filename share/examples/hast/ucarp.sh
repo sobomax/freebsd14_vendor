@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 988c6b73c2c2009b711f4bccce02a7b67ce2f091 $
 
 # Shared IP address, unused for now.
 addr="10.99.0.3"

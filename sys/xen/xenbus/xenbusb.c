@@ -52,7 +52,7 @@
  *                        xnb1
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a7b99d46f419fcdce126297aae193a3916144cfb $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

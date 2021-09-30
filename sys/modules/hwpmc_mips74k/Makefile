@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: 8316e6d2d715fba4a97f4dff67c470f78e1e3a42 $
 #
 
 .PATH: ${SRCTOP}/sys/dev/hwpmc

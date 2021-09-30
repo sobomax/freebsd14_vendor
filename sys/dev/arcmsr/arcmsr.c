@@ -85,7 +85,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 821c95f04f5372c8c01d54b95af4093fd4e3981f $");
 
 #if 0
 #define ARCMSR_DEBUG1			1

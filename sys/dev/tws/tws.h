@@ -33,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 5ed3fadb4a05141d09e63cc402841342e82bc133 $
  */
 
 #include <sys/param.h>        /* defines used in kernel.h */

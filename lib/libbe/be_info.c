@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 7f1b58a071ca434b87569a1f96f319e8c863d958 $");
 
 #include <sys/zfs_context.h>
 

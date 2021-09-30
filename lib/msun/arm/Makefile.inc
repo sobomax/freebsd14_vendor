@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 6ebf21a9c3c5dec11535b0ccda8f01a965bb9401 $
 
 LDBL_PREC = 53
 SYM_MAPS += ${.CURDIR}/arm/Symbol.map

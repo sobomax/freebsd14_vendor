@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 07198200bb25bd39e5ab0c81d446cf6993ddf960 $
 
 FILES=	INDEX.keymaps \
 	am.kbd \

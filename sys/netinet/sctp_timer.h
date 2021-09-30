@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 35be6c51b266c18b8b3e4c0b5e26bc271d656f2f $");
 
 #ifndef _NETINET_SCTP_TIMER_H_
 #define _NETINET_SCTP_TIMER_H_

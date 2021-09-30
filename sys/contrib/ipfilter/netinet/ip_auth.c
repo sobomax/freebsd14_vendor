@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: f08d0b2fd1d949a71567c9f969cba0eb0def301c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -110,7 +110,7 @@
 /* END OF INCLUDES */
 
 #if !defined(lint)
-static const char rcsid[] = "@(#)$FreeBSD$";
+static const char rcsid[] = "@(#)$FreeBSD: f08d0b2fd1d949a71567c9f969cba0eb0def301c $";
 /* static const char rcsid[] = "@(#)$Id: ip_auth.c,v 2.73.2.24 2007/09/09 11:32:04 darrenr Exp $"; */
 #endif
 

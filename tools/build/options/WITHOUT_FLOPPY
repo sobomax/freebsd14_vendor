@@ -1,3 +1,3 @@
-.\" $FreeBSD$
+.\" $FreeBSD: ea78d28c8e4b580a5a4fce69d3d89b143633a041 $
 Set to not build or install programs
 for operating floppy disk driver.

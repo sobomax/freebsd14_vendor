@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 91331ba95459a754c5b8b4a38d066fa858acbffe $
  */
 
 #include <sys/param.h>

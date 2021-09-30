@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for nanosleep(2) [or similar] entry $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD$
+# $FreeBSD: acc4cf352af7b3be24e615a4aeb31c45253c6170 $
 #
 ############################################################ DESCRIPTION
 #

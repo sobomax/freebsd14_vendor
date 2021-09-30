@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 83cca7d0b97e0175a4c474a715736aa57c04c0bf $
 
 IFS=' '
 set -- `printf '\n '`

@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: aec138ed295fd6356c5b37008312a10c6d5678ed $ */
 OUTPUT_FORMAT("elf64-sparc-freebsd", "elf64-sparc-freebsd",
 	      "elf64-sparc-freebsd")
 OUTPUT_ARCH(sparc:v9)

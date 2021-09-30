@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 6c3c470e65de06d4466a5f289e5c4025d0bb6f71 $
 
 # Functions which perform the mounting / unmount for upgrades
 

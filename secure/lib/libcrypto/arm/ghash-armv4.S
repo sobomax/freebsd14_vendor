@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: ab5203527db17ad369d8e42512962094055c01b9 $ */
 /* Do not modify. This file is auto-generated from ghash-armv4.pl. */
 #include "arm_arch.h"
 

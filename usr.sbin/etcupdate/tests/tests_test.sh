@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 5382de30da00ee8812c36165da35b4688db6ad34 $
 
 # Various regression tests to run for the 'update' command.
 

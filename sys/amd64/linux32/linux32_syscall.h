@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: 63c2b4c054479a0cc51a42ee831584de3f6fd03a $
  */
 
 #define	LINUX32_SYS_linux_exit	1

@@ -1,6 +1,6 @@
 # ex:ts=8
 #
-# $FreeBSD$
+# $FreeBSD: 16c11cc2783f62deba9460fc05080047d92840a5 $
 #
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998.

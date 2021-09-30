@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4ba3fd80624b3a897e5099c7f48a09ee0052ed10 $");
 
 ENTRY(_ctx_start)
 	call	%g1

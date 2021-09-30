@@ -6,7 +6,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e43367117792f9abba6da9dfdc3839e3a1caf90e $");
 #if defined(LIBC_SCCS) && !defined(lint)
 __RCSID("$NetBSD: fpsetsticky.c,v 1.5 2005/12/24 23:10:08 perry Exp $");
 #endif /* LIBC_SCCS and not lint */

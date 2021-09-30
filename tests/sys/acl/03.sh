@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: e6379a6d449724e21cbefe9550f3af6b328dcc4f $
 #
 
 # This is a wrapper script to run tools-crossfs.test between UFS without

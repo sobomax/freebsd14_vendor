@@ -49,7 +49,7 @@
 
 #include <sys/cdefs.h>
 /* $NetBSD: msdosfs_vfsops.c,v 1.10 2016/01/30 09:59:27 mlelstv Exp $ */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1599790704a6c7923c5b918e9de2ea58c5eb27a9 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>

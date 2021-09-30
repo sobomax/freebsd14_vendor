@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sysctl.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD$
+ * $FreeBSD: 9019bffeec1e9ddd72a8cdbf3e0e148f0ae9e2bc $
  */
 
 #ifndef _SYS_SYSCTL_H_

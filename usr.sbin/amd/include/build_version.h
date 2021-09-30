@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 09eb1fc912200387c3421543eee13fa7626a205b $ */
 
 #include <sys/param.h>
 /*#define AMU_BUILD_VERSION 1 */

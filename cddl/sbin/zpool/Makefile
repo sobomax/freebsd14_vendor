@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 0276258dcaf57bcad84db5ca7f59b10c44f80ce1 $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/zpool
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/stat/common

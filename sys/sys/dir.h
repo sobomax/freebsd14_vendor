@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dir.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD$
+ * $FreeBSD: 3c87370270e07d349bfd5099d8df89377474a783 $
  */
 
 #ifndef _SYS_DIR_H_

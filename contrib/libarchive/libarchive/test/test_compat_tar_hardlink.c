@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6459fed1379292d782c3a5a2b461300ee3fb44ab $");
 
 /*
  * Background:  There are two written standards for the tar file format.

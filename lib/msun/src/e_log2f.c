@@ -10,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1794484e64ecc44b89f148274ddf7fd22711db5b $");
 
 /*
  * Float version of e_log2.c.  See the latter for most comments.

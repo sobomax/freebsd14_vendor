@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: dbbd5b5d58134b5402bdd1b0df77fb9beecbbe33 $
 
 LIB=	pam_permit
 SRCS=	pam_permit.c

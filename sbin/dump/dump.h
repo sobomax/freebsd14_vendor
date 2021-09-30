@@ -30,7 +30,7 @@
  *
  *	@(#)dump.h	8.2 (Berkeley) 4/28/95
  *
- * $FreeBSD$
+ * $FreeBSD: 7224bcc39fe8619a5144188e93c79faa5cbf9035 $
  */
 
 /*

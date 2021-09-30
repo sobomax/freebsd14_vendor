@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: f1a2f09e440fdfc9657e177c25178424c616cf59 $
  *
  * Host Resources MIB for SNMPd. Implementation for hrSWRunTable
  */

@@ -60,7 +60,7 @@
  * TODO: Move this into a separate configuration header, have all test
  * suites share one copy of this file.
  */
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: d75f1ab4fcc52ae45c813bc071822726a12abe49 $");
 #define KNOWNREF	"test_compat_gtar_1.tar.uu"
 #define	ENVBASE "LIBARCHIVE" /* Prefix for environment variables. */
 #undef	PROGRAM              /* Testing a library, not a program. */

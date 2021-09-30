@@ -1,6 +1,6 @@
 # MALTA64 -- 64-bit kernel config for MALTA endian-big boards
 #
-# $FreeBSD$
+# $FreeBSD: 73857547b15d3d3044aafe422a661baf3d7241af $
  
 ident		MALTA64
 

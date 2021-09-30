@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 675769b4207257ff83782a62c768c3888de68123 $");
 
 /*
  * SysKonnect SK-NET gigabit ethernet driver for FreeBSD. Supports

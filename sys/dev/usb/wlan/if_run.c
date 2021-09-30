@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9eb261274b628d3d47c0ff588dba2a71d6ea0e44 $");
 
 /*-
  * Ralink Technology RT2700U/RT2800U/RT3000U/RT3900E chipset driver.

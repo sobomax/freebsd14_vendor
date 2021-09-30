@@ -1,7 +1,7 @@
 #
 # @(#)Makefile	2.1 88/08/11 4.0 RPCSRC
 #
-# $FreeBSD$
+# $FreeBSD: 017902f150d4e6654ff04d56b500980dc7443b5a $
 #
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/sunrpc/sort

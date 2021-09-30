@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 83647351198304c7734c5f353740ae11572481bb $
 Set to not build the
 .Nm libthr
 (1:1 threading)

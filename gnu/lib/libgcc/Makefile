@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 157495368c7e9070016fda09446f6af25a481626 $
 
 PACKAGE=	clibs
 GCCDIR=	${.CURDIR}/../../../contrib/gcc

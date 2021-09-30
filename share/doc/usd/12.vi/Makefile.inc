@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: d96b8113d8cdf2528719594048f760b6596e4ff1 $
 
 VOLUME=		usd/12.vi
 MACROS=		-ms

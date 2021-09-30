@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: fae144185c8a1cebe865041be91a4cb912c4eeab $
  */
 /*
  * File: qla_reg.h

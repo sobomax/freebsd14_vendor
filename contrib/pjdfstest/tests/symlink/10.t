@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/symlink/10.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 500ccd81695f820818dbcb78b161e35faf2ff8b5 $
 
 desc="symlink returns EROFS if the file name2 would reside on a read-only file system"
 

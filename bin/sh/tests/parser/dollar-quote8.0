@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8f0b41a0a3f78a7a1918fe90a3b49e758f1e6d41 $
 
 [ $'hello\0' = hello ]
 [ $'hello\0world' = hello ]

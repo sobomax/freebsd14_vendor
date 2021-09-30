@@ -1,4 +1,4 @@
-#	$FreeBSD$
+#	$FreeBSD: 596ca26cb61ce7cccdd85170aba58f9aa913fb57 $
 
 .PATH:	${SRCTOP}/contrib/pf/tftp-proxy
 

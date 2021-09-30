@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/9/93
- *	$FreeBSD$
+ *	$FreeBSD: 79fee1be0501e9c651175ba157e17ad81a698e39 $
  */
 
 #include <termios.h>

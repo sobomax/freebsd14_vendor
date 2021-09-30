@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 9089754344771c32e55f10accc239cf23b34eabc $
 # Define the same version as the libsupc++ from gcc 4.2.1 so that we can use
 # libcxxrt as a drop-in replacement.
 

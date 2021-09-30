@@ -1,4 +1,4 @@
-# $FreeBSD$ 
+# $FreeBSD: 6ffad5d45cf69e51bcf725d6203be9f25a69efee $ 
 # $NetBSD: esdb.alias.MISC.src,v 1.16 2007/03/13 16:34:40 tnozaki Exp $
 
 ATARIST			atari

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: e8096f2315e096f02800f7872cd004098d920267 $");
 
 /*
  * Unmaps the DMA mappings.

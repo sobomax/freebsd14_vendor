@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 5bc28dd5983571000aa04465292975740d8564de $
 
 CONFS=	apmd.conf
 PROG=	apmd

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)input.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD$
+ * $FreeBSD: 71046b9731c3e6117aec4d4ba944eff8828d1b0c $
  */
 
 /* PEOF (the end of file marker) is defined in syntax.h */

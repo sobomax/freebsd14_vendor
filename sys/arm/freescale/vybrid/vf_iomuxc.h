@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 3dc1bcdcbe2fcdac64098c4b5bae23c4db03f56a $
  */
 
 #define	IOMUXC(n)	(n * 0x04)

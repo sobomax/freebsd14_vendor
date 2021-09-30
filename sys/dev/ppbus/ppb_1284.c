@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: cd46b36c54730bed054badec4ef91a214afba7e2 $");
 
 /*
  * General purpose routines for the IEEE1284-1994 Standard

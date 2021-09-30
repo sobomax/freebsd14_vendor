@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 052bf73a12f34b8acea26f5fc7d73e569bb754f2 $
 
 PACKAGE=lib${LIB}
 LIB=		gssapi

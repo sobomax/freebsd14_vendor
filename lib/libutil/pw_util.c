@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4d708c007f448b2395d90ced530300d689ac8d82 $");
 __SCCSID("@(#)pw_util.c	8.3 (Berkeley) 4/2/94");
 
 /*

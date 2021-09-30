@@ -40,7 +40,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: da2edf4a0a6ec6397e6387dc574b9ad560c29dd5 $");
 
 #include "assym.inc"
 

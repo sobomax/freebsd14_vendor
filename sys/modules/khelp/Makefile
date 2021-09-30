@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 256d8838c5735d6dd62e8d8d06348278cb10a63f $
 
 SUBDIR=	
 

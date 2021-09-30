@@ -22,6 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 8e945acc8ab64844a6e80048d95678d8759cd6d8 $
 
 msg_package_selection="Package Selection"

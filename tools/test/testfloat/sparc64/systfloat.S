@@ -48,7 +48,7 @@ this code that are retained.
 */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 09e97d15fe37df9493b6994e44583b9e467a655a $");
 
 	.text
 

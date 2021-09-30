@@ -40,7 +40,7 @@
 
 #include <mixer_if.h>
 
-SND_DECLARE_FILE("$FreeBSD$");
+SND_DECLARE_FILE("$FreeBSD: 6eb0436816a6f6e34037b728ea413bc7eaf5ca94 $");
 
 static struct hdspe_channel chan_map_aio[] = {
 	{  0,  1,   "line", 1, 1 },

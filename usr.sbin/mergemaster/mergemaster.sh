@@ -8,7 +8,7 @@
 # Copyright (c) 1998-2012 Douglas Barton, All rights reserved
 # Please see detailed copyright below
 
-# $FreeBSD$
+# $FreeBSD: 415b5e45459004f9a9feb1e65f5fcf473f5b06c8 $
 
 PATH=/bin:/usr/bin:/usr/sbin
 

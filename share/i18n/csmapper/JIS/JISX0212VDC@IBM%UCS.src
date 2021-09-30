@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e0f0850db8e03b39eb9ea95fc48cac83103a558e $
 # $NetBSD: JISX0212VDC@IBM%UCS.src,v 1.1 2003/07/19 20:20:41 tshiozak Exp $
 
 TYPE		ROWCOL

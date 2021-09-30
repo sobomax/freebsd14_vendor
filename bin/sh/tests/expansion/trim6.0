@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3f753c4113f67063679553ae9f9e2a8d64c4d88c $
 
 e=
 for i in 0 1 2 3; do

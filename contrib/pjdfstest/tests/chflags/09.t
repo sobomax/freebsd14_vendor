@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chflags/09.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 9b5f4b6b89f2d0c89cc12dba2b17cc63be6858cc $
 
 desc="chflags returns EPERM when one of SF_IMMUTABLE, SF_APPEND, or SF_NOUNLINK is set and securelevel is greater than 0"
 

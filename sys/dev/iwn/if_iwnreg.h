@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: e53343cfbf4a4e8efe2bbad0c5e22de59831380a $	*/
 /*	$OpenBSD: if_iwnreg.h,v 1.40 2010/05/05 19:41:57 damien Exp $	*/
 
 /*-

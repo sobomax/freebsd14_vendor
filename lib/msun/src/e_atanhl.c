@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 11d56ea52e7f96512c5d6ad10a4c65f594433140 $");
 
 /*
  * See e_atanh.c for complete comments.

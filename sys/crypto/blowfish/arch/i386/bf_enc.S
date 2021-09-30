@@ -1,5 +1,5 @@
 /*	$NetBSD: bf_enc.S,v 1.1 2001/09/09 11:01:01 tls Exp $	*/
-/*	$FreeBSD$	*/
+/*	$FreeBSD: bcee9c5423546c7e23d40266b2b6e71854dd18b9 $	*/
 
 /*
  * Written by Jason R. Thorpe <thorpej@zembu.com> and Thor Lancelot Simon

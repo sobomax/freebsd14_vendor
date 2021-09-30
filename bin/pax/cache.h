@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *      @(#)cache.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD$
+ * $FreeBSD: 8a7cca9f457a97591450efafb6ece9ece8036a03 $
  */
 
 /*

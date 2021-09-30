@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 327dcdfff4b82b7f1f1a028474eeb90583707b0b $");
 
 #if !defined(DISABLE_ATAPI)
 

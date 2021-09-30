@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_verify.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: dd53ddbae9091237254e669c27166177a412badb $
  */
 
 #include "mech_locl.h"

@@ -1,4 +1,4 @@
-/*	$FreeBSD$	*/
+/*	$FreeBSD: 93cd96b6d189566b57143e0a8b3a0d430444e5e3 $	*/
 /*	$KAME: rrenum.h,v 1.3 2001/01/21 15:37:14 itojun Exp $	*/
 
 /*-

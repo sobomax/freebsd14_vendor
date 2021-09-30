@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6d1c54911558e16b0559eaa81c794d61fe87b856 $");
 
 static char buff[4096];
 static struct {

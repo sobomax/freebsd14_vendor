@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 0e1c36a7c9dad7f78638e5fa62083332d24b0a1b $");
 
 /*
  * ChipCommon SPROM driver.

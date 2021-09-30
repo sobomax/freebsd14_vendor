@@ -31,7 +31,7 @@
  *
  *	from: @(#)rpc_msg.h 1.7 86/07/16 SMI
  *	from: @(#)rpc_msg.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD$
+ * $FreeBSD: dc0ccbd0e5bcb0ff8ee2dbb32f0fe6868d0040a9 $
  */
 
 /*

@@ -1,4 +1,4 @@
-// $FreeBSD$
+// $FreeBSD: 317afe138aaa4f6ed436d52dac8a983e57f34318 $
 
 #define LLD_VERSION 10.0.1
 #define LLD_VERSION_STRING "10.0.1"

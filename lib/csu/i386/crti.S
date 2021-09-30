@@ -24,7 +24,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 77e4e77722d7f0c03adf3292ec70906b6984c69c $");
 
 	.section .init,"ax",@progbits
 	.align	4

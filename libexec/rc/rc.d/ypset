@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: a2bedd1a34c645c400ed3c3d0253824194420923 $
 #
 
 # PROVIDE: ypset

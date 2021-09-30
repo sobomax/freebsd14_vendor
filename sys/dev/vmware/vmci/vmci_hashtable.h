@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD$
+ * $FreeBSD: 1c4c9c462b8fb50013dcbc819b31d9846160ad6a $
  */
 
 /* Hash table for use in the APIs. */

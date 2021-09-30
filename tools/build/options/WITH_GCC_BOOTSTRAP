@@ -1,2 +1,2 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 8e04b11fb483d67d2a1647e7c013cee118a16e12 $
 Set to build gcc and g++ as part of the bootstrap process.

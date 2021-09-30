@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 703cc0f716f9615151d4e11cbde49e2f717e1ba3 $");
 
 #include <sys/types.h>
 #ifdef CROSS_DEBUGGER

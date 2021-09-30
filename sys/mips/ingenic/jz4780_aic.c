@@ -31,7 +31,7 @@
 /* Ingenic JZ4780 Audio Interface Controller (AIC). */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f7a0ff53fac33e752780289de18237ae5ab14432 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

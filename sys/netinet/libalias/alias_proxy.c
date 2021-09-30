@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a7b6b0371d01d85aa1ba15d40ff87bc251dfcea5 $");
 
 /* file: alias_proxy.c
 

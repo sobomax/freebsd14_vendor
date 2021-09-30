@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)systat.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: 92233e058172e777e1d564e4643d1bcccab9631c $
  */
 
 #include <curses.h>

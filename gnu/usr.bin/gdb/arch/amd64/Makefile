@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a43e894e749ce12c320b07ea41185be5becf1fc6 $
 
 GENSRCS+= xm.h
 .if !defined(GDB_CROSS_DEBUGGER)

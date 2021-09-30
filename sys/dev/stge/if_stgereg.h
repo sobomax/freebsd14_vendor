@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 9082a2c0793c8edccdbbe7dcfb964411c8200bf9 $ */
 
 /*
  * Sundance Technology PCI vendor ID

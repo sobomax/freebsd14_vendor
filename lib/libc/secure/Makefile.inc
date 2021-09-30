@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: e2e75c70603b1770de76c5f35d433d0f16004c08 $
 #
 # libc sources related to security
 

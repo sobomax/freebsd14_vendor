@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)timeb.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD$
+ * $FreeBSD: 001ec3b5cfaf4dd00b250653bab8d266363641be $
  */
 
 #ifndef _SYS_TIMEB_H_

@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/symlink/03.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 3982b09dcf4b0515c7cca5d96649ce1e6eb8870e $
 
 desc="symlink returns ENAMETOOLONG if an entire length of either path name exceeded {PATH_MAX} characters"
 

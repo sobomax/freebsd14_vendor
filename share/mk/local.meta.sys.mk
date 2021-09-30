@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 8286f43a4cc87a3096ec7647be2685922b3080c2 $
 
 # local configuration specific to meta mode
 # XXX some of this should be in meta.sys.mk

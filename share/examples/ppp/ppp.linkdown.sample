@@ -12,7 +12,7 @@
 #  3) If no label has been found, use MYADDR if it exists.
 #
 #
-# $FreeBSD$
+# $FreeBSD: 749dd944b7b2509b5453af3da6f83da172a7fd5e $
 #
 #########################################################################
 

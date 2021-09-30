@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 5f228474f422edf9d4e3b6894065a0f4a0d733d9 $");
 
 /* double erf(double x)
  * double erfc(double x)

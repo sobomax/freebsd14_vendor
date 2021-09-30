@@ -23,7 +23,7 @@
  * Portions Copyright 2013 Howard Su howardsu@freebsd.org
  * Portions Copyright 2015-2016 Ruslan Bukin <br@bsdpad.com>
  *
- * $FreeBSD$
+ * $FreeBSD: 4dfc1349892598a3b1dfa902a95689ac69d10e72 $
  */
 
 /*

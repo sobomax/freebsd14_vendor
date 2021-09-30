@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: de46159d101a5b0389bd75f19983b7788b7ace5e $
 Set to not make or install
 .Xr info 5
 files.

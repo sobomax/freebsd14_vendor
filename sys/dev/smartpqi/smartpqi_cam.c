@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 5e72846d70cd2cf2cfdfc87de114b34b7de2b987 $ */
 /*
  * CAM interface for smartpqi driver
  */

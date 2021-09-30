@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: b55ae087590a6dd93d33eebeed1f6d7618185fc5 $
 #
 # System-wide .login file for csh(1).
 #

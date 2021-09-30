@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD$
+ * $FreeBSD: 2736de91b7b54ad18dfebcacacaf285967269e44 $
  */
 
 #ifndef	_SYS_EFSYS_H

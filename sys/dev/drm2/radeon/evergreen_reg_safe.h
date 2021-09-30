@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 9d56fe7a53692dfd23a4393f18292dd90cdce2bd $");
 
 static const unsigned evergreen_reg_safe_bm[2047] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

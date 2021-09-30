@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c863ea0edf8712bcc15088ab5fee06423a0d65c8 $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/tools/ctf/common
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/tools/ctf/cvt

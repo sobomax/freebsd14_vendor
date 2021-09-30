@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD$
+ * $FreeBSD: 85f84332dbc594df980a01d426c2f662bb4047b2 $
  */
 
 #include <dev/mlx5/mlx5_fpga/xfer.h>

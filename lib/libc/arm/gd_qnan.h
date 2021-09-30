@@ -6,7 +6,7 @@
  *
  * XXX I don't have ARM hardware, so I just guessed.  --das
  *
- * $FreeBSD$
+ * $FreeBSD: 8fa9edd83415dd72c1982c61bcb7b732a020a18e $
  */
 
 #define f_QNAN 0x7fc00000

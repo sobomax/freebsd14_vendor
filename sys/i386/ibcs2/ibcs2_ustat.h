@@ -1,5 +1,5 @@
 /*	$NetBSD: ibcs2_ustat.h,v 1.2 1994/10/26 02:53:13 cgd Exp $	*/
-/* $FreeBSD$ */
+/* $FreeBSD: ef853bf3bfa44d6ed8049a6906a775c3c8c400ad $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

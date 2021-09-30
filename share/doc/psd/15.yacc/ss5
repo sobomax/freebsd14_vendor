@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss5	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: e2c34626f3333e6079ea89fc619b0f8ff06088a1 $
 .SH
 5: Ambiguity and Conflicts
 .PP

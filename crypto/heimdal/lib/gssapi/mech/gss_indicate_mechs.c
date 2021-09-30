@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: src/lib/libgssapi/gss_indicate_mechs.c,v 1.1 2005/12/29 14:40:20 dfr Exp $
+ *	$FreeBSD: 8fd53d956d58926b37fc72fb61f02245bcddd321 $
  */
 
 #include "mech_locl.h"

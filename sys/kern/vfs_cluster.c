@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 1ebe4a56ca55feb3e8c8c5b0ddb8d6f240aa33c5 $");
 
 #include "opt_debug_cluster.h"
 

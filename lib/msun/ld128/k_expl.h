@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 913107652272f8001622838f19d8156f56f60305 $");
 
 /*
  * ld128 version of k_expl.h.  See ../ld80/s_expl.c for most comments.

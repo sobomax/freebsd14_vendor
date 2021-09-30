@@ -29,7 +29,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: 8eea27322d17a645683b777c5884674354fe1452 $
  */
 
 #include <sys/rman.h>

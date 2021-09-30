@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 25ae031da2afe46f12034fc4864f1cd80783b9a4 $
  */
 #include "opt_ah.h"
 

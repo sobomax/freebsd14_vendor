@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: FreeBSD: src/sys/i386/include/setjmp.h,v 1.5 2000/10/06
- * $FreeBSD$
+ * $FreeBSD: 12035418cbbe6f191f32e5007bca1cd2901b85a4 $
  */
 
 #ifndef	_MACHINE_SETJMP_H_

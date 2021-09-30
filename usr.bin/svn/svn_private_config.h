@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: c923728d6a4984f11b5e7019ec89d5d5ccc44d4a $ */
 
 /* subversion/svn_private_config.h.tmp.  Generated from svn_private_config.h.in by configure.  */
 /* subversion/svn_private_config.h.in.  Generated from configure.ac by autoheader.  */

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 123cba7eae335f22dcc4fda8612330f9b22660fa $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 123cba7eae335f22dcc4fda8612330f9b22660fa $");
 
 /*
  * Driver for the Marvell 88E61xx family of switch PHYs

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$ 
+# $FreeBSD: 0124662308843199d638e116b89c474a674eca3c $ 
 #
 # Embed an MFS image into the kernel body or the loader body (expects space
 # reserved via MD_ROOT_SIZE (kernel) or MD_IMAGE_SIZE (loader))

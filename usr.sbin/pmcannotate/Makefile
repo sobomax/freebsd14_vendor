@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: cff1efb5ccfa8fbc055283de9f64d98a5727316e $
 #
 
 PROG=	pmcannotate

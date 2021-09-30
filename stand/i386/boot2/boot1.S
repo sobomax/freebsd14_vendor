@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD$
+ * $FreeBSD: 984ab52a816fe36c5c8da8496c508581588a3adf $
  */
 
 /* Memory Locations */

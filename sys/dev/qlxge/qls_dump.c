@@ -31,7 +31,7 @@
  * File: qls_dump.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: aec54beecdceaab63af3f7504382e51f9b011494 $");
 
 
 #include "qls_os.h"

@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 7ae02e1bf86ca649226d951bfd5296fc03044d4d $
 Set to not enable
 .Fl fformat-extensions
 when compiling the kernel.

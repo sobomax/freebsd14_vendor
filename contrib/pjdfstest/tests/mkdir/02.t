@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/mkdir/02.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 8197e2ed546befeb8196e26bd37025f818eeab04 $
 
 desc="mkdir returns ENAMETOOLONG if a component of a pathname exceeded {NAME_MAX} characters"
 

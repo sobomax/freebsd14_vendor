@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 478ee059fe84bab1305d5891a426be860c0d6d3f $");
 
 /*
  * vnode op calls for Sun NFS version 2, 3 and 4

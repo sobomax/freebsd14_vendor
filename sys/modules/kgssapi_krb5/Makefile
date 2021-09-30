@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 3eb2465158b8d7e7b4bcc0e5859c2b7a13e5dadd $
 
 .PATH: ${SRCTOP}/sys/kgssapi/krb5
 KMOD=	kgssapi_krb5

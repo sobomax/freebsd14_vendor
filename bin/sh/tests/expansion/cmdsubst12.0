@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 50394dbb00ca4ab1f65d8f4adddc468b246847f8 $
 
 f() {
 	echo x$(printf foo >&2)y

@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 4766cdb495835c45213e7a33b6f0c59d37334216 $");
 
 /*
  * Return the base 2 logarithm of x.  See e_log.c and k_log.h for most

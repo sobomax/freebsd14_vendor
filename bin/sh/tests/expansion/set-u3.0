@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7f199b42c796e3a5b4c9f07a3cce699fae50a768 $
 
 set -u
 unset x

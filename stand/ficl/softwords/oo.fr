@@ -3,7 +3,7 @@
 \ ** F I C L   O - O   E X T E N S I O N S
 \ ** john sadler aug 1998
 \
-\ $FreeBSD$
+\ $FreeBSD: b1c8e214e5bd3e6f4309abc12f4e9aa7a5c74a8a $
 
 17 ficl-vocabulary oop
 also oop definitions

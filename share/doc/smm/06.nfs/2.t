@@ -30,7 +30,7 @@
 .\"
 .\"	@(#)2.t	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD$
+.\"	$FreeBSD: 3e74d7f3c32d72a5591589ef19b893defb54a128 $
 .\"
 .sh 1 "Not Quite NFS, Crash Tolerant Cache Consistency for NFS"
 .pp

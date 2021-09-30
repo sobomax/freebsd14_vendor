@@ -20,7 +20,7 @@ along with GCC; see the file COPYING.  If not, write to the Free
 Software Foundation, 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301, USA.  */
 
-/* $FreeBSD$ */
+/* $FreeBSD: 87f8984a1a9ba82dc324358ec9fdc457206159dc $ */
 
 #include "config.h"
 #include "system.h"

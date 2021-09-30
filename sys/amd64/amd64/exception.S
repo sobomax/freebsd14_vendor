@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 1a00ecc2fcdafe772295aa1ef1e81eaefe120ca8 $
  */
 
 #include "opt_atpic.h"

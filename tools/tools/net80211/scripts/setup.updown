@@ -3,7 +3,7 @@
 # Script for test vap create+destroy.  Also used to verify
 # resources are reclaimed properly on destroy.
 #
-# $FreeBSD$
+# $FreeBSD: 72a2970af3296fc251c0bfce379fcce3caafdd55 $
 #
 PATH=.:$PATH
 . config

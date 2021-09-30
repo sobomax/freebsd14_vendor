@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: 551d38d4f4c7aa7150e8e76c577de82f28d84e38 $
  */
 
 /*
@@ -33,7 +33,7 @@
 #include "opt_device_polling.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 551d38d4f4c7aa7150e8e76c577de82f28d84e38 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

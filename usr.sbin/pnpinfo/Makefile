@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 450fe740f89dacd57be804e4b3ddba76c1ccf495 $
 
 .PATH: ${SRCTOP}/contrib/pnpinfo
 

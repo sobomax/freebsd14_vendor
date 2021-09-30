@@ -43,7 +43,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: ed682abdd91fdc9108cf511ef1d9a70e71de57df $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

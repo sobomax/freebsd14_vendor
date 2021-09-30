@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD$
+ * $FreeBSD: 687b0647ceb55c489ca37eb5ad5e61e00d0d7f28 $
  */
 
 /**
@@ -65,7 +65,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 687b0647ceb55c489ca37eb5ad5e61e00d0d7f28 $");
 /*============================ Namespace Control =============================*/
 using std::string;
 using std::stringstream;

@@ -29,7 +29,7 @@
  * This node presents a /dev/ngd%d device that interfaces to an other
  * netgraph node.
  *
- * $FreeBSD$
+ * $FreeBSD: b239982df28ca28ccd426094a1f406319749a2bb $
  *
  */
 

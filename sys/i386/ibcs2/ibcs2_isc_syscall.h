@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD$
+ * $FreeBSD: 163296d496c5145858ce18b3e8549beb095b9b51 $
  */
 
 #define	IBCS2_ISC_ibcs2_rename	2

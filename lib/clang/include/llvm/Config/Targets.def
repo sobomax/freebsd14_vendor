@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: b6cb6fee9dceece49b76509be09aa361a4ee6436 $ */
 
 #ifndef LLVM_TARGET
 #  error Please define the macro LLVM_TARGET(TargetName)

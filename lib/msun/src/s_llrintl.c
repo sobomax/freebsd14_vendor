@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 6ef83759c314264869a39ed1aec2ec7b3396a732 $");
 
 #define type		long double
 #define	roundit		rintl

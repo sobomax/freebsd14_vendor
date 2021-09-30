@@ -2,7 +2,7 @@
 .\"  Must use -- tbl -- with this one
 .\"
 .\" @(#)xdr.rfc.ms	2.2 88/08/05 4.0 RPCSRC
-.\" $FreeBSD$
+.\" $FreeBSD: 480a339bce570e2186f947c83b0de7f08bb57d07 $
 .\"
 .de BT
 .if \\n%=1 .tl ''- % -''

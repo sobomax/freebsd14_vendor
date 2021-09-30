@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 3fc13f65a984f3b404abd189724f86fbdc4faa6b $");
 
 #include <dev/hptrr/hptrr_config.h>
 /* $Id: osm_bsd.c,v 1.27 2007/11/22 07:35:49 gmm Exp $

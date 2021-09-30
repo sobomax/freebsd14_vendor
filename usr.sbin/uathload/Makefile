@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 10a7cf47274759b44e100865f6bd315ae679837b $
 
 PROG=	uathload
 MAN=	uathload.8

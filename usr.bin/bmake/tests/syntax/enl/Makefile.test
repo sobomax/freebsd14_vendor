@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a7c69555f2446b777c7c494f8b0853ae53795e47 $
 #
 # Test handling of escaped newlines.
 #

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 64c238895c6824db8eefb509e4486f4e21dec969 $
 
 This directory holds scripts and a support program for multiple test cases
 exercising multi-IP FIBs.  At this time only IPv6 test cases are provided.

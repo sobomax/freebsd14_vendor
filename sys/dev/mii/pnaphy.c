@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c03c57844985806cc46b2f47b608258027e0fe3f $");
 
 /*
  * driver for homePNA PHYs

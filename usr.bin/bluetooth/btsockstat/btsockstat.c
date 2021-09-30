@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: btsockstat.c,v 1.8 2003/05/21 22:40:25 max Exp $
- * $FreeBSD$
+ * $FreeBSD: 890fb4eea4d0267b474b1fb6d849a178e83ba4cb $
  */
 
 #include <sys/types.h>

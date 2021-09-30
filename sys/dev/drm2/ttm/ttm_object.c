@@ -36,7 +36,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: fd48044fc28644d67e370400f0cce23fce1396e6 $");
 
 /**
  * struct ttm_object_file

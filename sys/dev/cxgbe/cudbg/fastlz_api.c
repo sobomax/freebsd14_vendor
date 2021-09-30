@@ -24,7 +24,7 @@
    THE SOFTWARE.
    */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: a513557ad3523e317e89a395188b43688be78fa6 $");
 
 #include "osdep.h"
 #include "cudbg.h"

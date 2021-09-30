@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c10301b6680db3824a5cc9f85dfbcf044503a5e2 $");
 
 /*
  * The main module for truss.  Surprisingly simple, but, then, the other

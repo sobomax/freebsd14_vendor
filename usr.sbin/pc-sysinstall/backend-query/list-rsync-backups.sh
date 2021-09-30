@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
+# $FreeBSD: 9c1a760ff00767edc337d8113851b17767035578 $
 
 # Script which lists the backups present on a server
 ###########################################################################

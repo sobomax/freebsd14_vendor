@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)nfs.h	8.4 (Berkeley) 5/1/95
- * $FreeBSD$
+ * $FreeBSD: ab50d896d1553089cece409c5d22751c2b4ea22f $
  */
 
 #ifndef _NFSCLIENT_NFS_H_

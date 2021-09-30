@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 4d58f9abedc7b230e112f7e473452fc8bd28dac6 $
 Set to not build nor install the
 .Fx
 Test Suite in

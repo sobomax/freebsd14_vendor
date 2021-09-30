@@ -1,7 +1,7 @@
 #
 # Custom kernel for Freescale MPC85XX development boards like the CDS etc.
 #
-# $FreeBSD$
+# $FreeBSD: 182f29a5f9ef4d7cf7a2f88d4330deb6b096b9e5 $
 #
 
 cpu		BOOKE

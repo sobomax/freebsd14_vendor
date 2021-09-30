@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 2429fe708d7bc716ac8509fb31cef636a6e0ed56 $");
 
 /*
  * Multiprecision divide.  This algorithm is from Knuth vol. 2 (2nd ed),

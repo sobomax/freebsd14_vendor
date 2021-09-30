@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mtree.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
+ * $FreeBSD: fb22f0d62370a2f46a12d68dd5f67c2e63236ef1 $
  */
 
 #include <string.h>

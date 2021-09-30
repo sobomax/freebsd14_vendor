@@ -33,7 +33,7 @@
  * Content: Contains Hardware dependent functions
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b29d62c5b0e47c394763b2c667cc061562cf40c7 $");
 
 
 

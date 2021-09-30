@@ -1,5 +1,5 @@
 #
-# $FreeBSD$
+# $FreeBSD: be6311e674f554e6874b20efa248fc7d5682e4d3 $
 #
 
 OPENBSMDIR=${SRCTOP}/contrib/openbsm

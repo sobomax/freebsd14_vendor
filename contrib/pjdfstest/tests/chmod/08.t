@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: filetype=sh noexpandtab ts=8 sw=8
-# $FreeBSD: head/tools/regression/pjdfstest/tests/chmod/08.t 211352 2010-08-15 21:24:17Z pjd $
+# $FreeBSD: 7f0602b64dc6b4638a6e1ece0c01d312354e32e1 $
 
 desc="chmod returns EPERM if the named file has its immutable or append-only flag set"
 

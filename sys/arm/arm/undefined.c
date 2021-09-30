@@ -50,7 +50,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: f6fd5bfab2667c9d5584846cdfa5db901cfa3da5 $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>

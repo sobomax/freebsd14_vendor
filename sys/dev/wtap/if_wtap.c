@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: 8f50c00a1f11c50429a506d5cbafab2bcab9f46b $
  */
 #include "if_wtapvar.h"
 #include <sys/uio.h>    /* uio struct */

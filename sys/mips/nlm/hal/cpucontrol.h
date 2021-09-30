@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD$
+ * $FreeBSD: 2328bad3c2c71c327471f0f77dcf5df748afc22e $
  */
 
 #ifndef __NLM_HAL_CPUCONTROL_H__

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: a13013d77c87dc85060f5e6d8eca61b6e8a94b39 $
 
 #include <sys/bus.h>
 

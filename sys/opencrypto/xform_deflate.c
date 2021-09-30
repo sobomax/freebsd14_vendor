@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: c8864bf6228fc48edae71cde8caa206cacd31ba6 $");
 
 #include <opencrypto/deflate.h>
 #include <opencrypto/xform_comp.h>

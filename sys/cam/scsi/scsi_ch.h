@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 30d85620814b299cbc457dd25af3a0f367dfed05 $ */
 /*	$NetBSD: scsi_changer.h,v 1.11 1998/02/13 08:28:32 enami Exp $	*/
 
 /*-

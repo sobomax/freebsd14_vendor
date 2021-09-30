@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getpagesize.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b722bd27c0a3249696c211505ffe99b0d56aca59 $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7fe1dbf1076b1cf3dec6b490863b5f75a6e9bb42 $
 
 key='must_contain_this'
 { r=`set -x; { : "$key"; } 2>&1 >/dev/null`; } 2>/dev/null

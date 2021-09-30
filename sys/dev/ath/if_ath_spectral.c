@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD$
+ * $FreeBSD: 44d5064c182da674f2f169ea4e831395d17fa3f9 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 44d5064c182da674f2f169ea4e831395d17fa3f9 $");
 
 /*
  * Implement some basic spectral scan control logic.

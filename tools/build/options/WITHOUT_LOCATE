@@ -1,4 +1,4 @@
-.\" $FreeBSD$
+.\" $FreeBSD: 4acba8a5d28f272cde74fcb65d8ef4bee0e41084 $
 Set to not build
 .Xr locate 1
 and related programs.

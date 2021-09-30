@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 454df1a900c33989ba249f890e330c823bf7060b $
 #
 # The include file <dtb.mk> handles building and installing dtb files.
 #

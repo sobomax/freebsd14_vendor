@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD$
+# $FreeBSD: c39872cf1729545b84a6b8e628a615a313175485 $
 #
 
 # PROVIDE: savecore

@@ -36,7 +36,7 @@
 .\"
 .\"	@(#)ss6	8.1 (Berkeley) 6/8/93
 .\"
-.\" $FreeBSD$
+.\" $FreeBSD: 513d042a820315e9e9d9842705decebad713b2bb $
 .SH
 6: Precedence
 .PP

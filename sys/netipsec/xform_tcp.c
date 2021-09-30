@@ -30,7 +30,7 @@
 
 /* TCP MD5 Signature Option (RFC2385) */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: b4979182b470770042f06d5ffc5a0638f6d031b6 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"

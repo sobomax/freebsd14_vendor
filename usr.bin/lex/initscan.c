@@ -1,4 +1,4 @@
-/* $FreeBSD$ */
+/* $FreeBSD: 58de7ebaa8800e78737ac0529dbb9f19eec87134 $ */
 
 #line 3 "<stdout>"
 

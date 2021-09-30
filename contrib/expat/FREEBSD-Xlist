@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: c1f2a689fee4ea61167dc890643e0ee88b3b9d7c $
 *.MPW
 *.cmake
 *.def

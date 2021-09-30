@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7cec9ee729b1242f747e2c54bdaef1f93c06f8af $
 
 PROG=	hxtool
 MAN=

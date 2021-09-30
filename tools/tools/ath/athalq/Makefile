@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: 7370b7ac90b7964ea04e960d281dd5cf5cfd2d87 $
 
 PROG=	athalq
 MAN=

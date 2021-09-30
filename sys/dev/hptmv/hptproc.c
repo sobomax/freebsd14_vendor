@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: c9ee38a4d41a84fcc157ec83b6bfe249605ad2b5 $
  */
 /*
  * hptproc.c  sysctl support

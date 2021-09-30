@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD$
+ * $FreeBSD: b3a94bc0d9c3e21cebca4e9642439af7e4384468 $
  *
  * Definitions of constants and the structures used by the netmap
  * framework, for the part visible to both kernel and userspace.

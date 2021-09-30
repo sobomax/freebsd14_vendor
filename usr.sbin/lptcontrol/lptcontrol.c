@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
+__FBSDID("$FreeBSD: 834f62456b54e8fe244f61bf5590be034479f826 $");
 
 #include <dev/ppbus/lptio.h>
 
