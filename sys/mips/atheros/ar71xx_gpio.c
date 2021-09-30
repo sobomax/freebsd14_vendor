@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be16f925edd792881dfc2a1cf6059b1f210cb7d6 $");
+__FBSDID("$FreeBSD: 539e108cb7987c9ec072101dae0de4cea4fcef45 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -151,6 +151,8 @@ static int
 ar71xx_gpio_oe_is_high(void)
 {
 	switch (ar71xx_soc) {
+	case AR71XX_SOC_AR9341:
+	case AR71XX_SOC_AR9342:
 	case AR71XX_SOC_AR9344:
 	case AR71XX_SOC_QCA9533:
 	case AR71XX_SOC_QCA9533_V2:
@@ -226,9 +228,11 @@ ar71xx_gpio_pin_max(device_t dev, int *maxpin)
 			*maxpin = AR91XX_GPIO_PINS - 1;
 			break;
 		case AR71XX_SOC_AR7240:
-		case AR71XX_SOC_AR7241:
 		case AR71XX_SOC_AR7242:
 			*maxpin = AR724X_GPIO_PINS - 1;
+			break;
+		case AR71XX_SOC_AR7241:
+			*maxpin = AR7241_GPIO_PINS - 1;
 			break;
 		case AR71XX_SOC_AR9330:
 		case AR71XX_SOC_AR9331:
@@ -407,8 +411,6 @@ ar71xx_gpio_filter(void *arg)
 	return (FILTER_STRAY);
 }
 
-
-
 static void
 ar71xx_gpio_intr(void *arg)
 {
@@ -557,7 +559,7 @@ ar71xx_gpio_attach(device_t dev)
 		    &gpiomode) != 0)
 			continue;
 
-		/* We only handle mode=1 for now */
+		/* We only handle mode=1 (output) for now */
 		if (gpiomode != 1)
 			continue;
 

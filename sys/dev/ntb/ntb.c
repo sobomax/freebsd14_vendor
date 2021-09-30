@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca71e99de190a48dc42696e43a24c0dfe5276813 $");
+__FBSDID("$FreeBSD: d6b564725aaf611ac60dc7e8be9c0d993198ca28 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -39,7 +39,8 @@ __FBSDID("$FreeBSD: ca71e99de190a48dc42696e43a24c0dfe5276813 $");
 #include "ntb.h"
 
 devclass_t ntb_hw_devclass;
-SYSCTL_NODE(_hw, OID_AUTO, ntb, CTLFLAG_RW, 0, "NTB sysctls");
+SYSCTL_NODE(_hw, OID_AUTO, ntb, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "NTB sysctls");
 
 struct ntb_child {
 	device_t	dev;

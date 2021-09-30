@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d613051eb565fb4e05146fb06b6b56780bc70570 $");
+__FBSDID("$FreeBSD: a8bb51c11f514cb4badc0905e72e402d293a0888 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -831,7 +831,6 @@ bstp_assign_roles(struct bstp_state *bs)
 		bp->bp_desg_max_age = bs->bs_root_max_age;
 		bp->bp_desg_fdelay = bs->bs_root_fdelay;
 		bp->bp_desg_htime = bs->bs_bridge_htime;
-
 
 		switch (bp->bp_infois) {
 		case BSTP_INFO_DISABLED:
@@ -2022,6 +2021,7 @@ bstp_same_bridgeid(uint64_t id1, uint64_t id2)
 void
 bstp_reinit(struct bstp_state *bs)
 {
+	struct epoch_tracker et;
 	struct bstp_port *bp;
 	struct ifnet *ifp, *mif;
 	u_char *e_addr;
@@ -2042,7 +2042,7 @@ bstp_reinit(struct bstp_state *bs)
 	 * from is part of this bridge, so we can have more than one independent
 	 * bridges in the same STP domain.
 	 */
-	IFNET_RLOCK_NOSLEEP();
+	NET_EPOCH_ENTER(et);
 	CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
 		if (ifp->if_type != IFT_ETHER)
 			continue;	/* Not Ethernet */
@@ -2062,7 +2062,7 @@ bstp_reinit(struct bstp_state *bs)
 			continue;
 		}
 	}
-	IFNET_RUNLOCK_NOSLEEP();
+	NET_EPOCH_EXIT(et);
 	if (mif == NULL)
 		goto disablestp;
 

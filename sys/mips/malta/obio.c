@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89169a86d8b391776404c8fa86e0c28ed791512e $");
+__FBSDID("$FreeBSD: 00871bb84306f4c491a59c045f8f8e0f942d067d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -137,7 +137,6 @@ obio_alloc_resource(device_t bus, device_t child, int type, int *rid,
 		return (NULL);
 	}
 
-
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
 	if (rv == NULL) 
 		return (NULL);
@@ -146,7 +145,7 @@ obio_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	rman_set_rid(rv, *rid);
 	rman_set_bustag(rv, bt);
 	rman_set_bushandle(rv, bh);
-	
+
 	if (0) {
 		if (bus_activate_resource(child, type, *rid, rv)) {
 			rman_release_resource(rv);

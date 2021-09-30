@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04f2f3a8ce718cef5c780f14b6c04e74796e98e2 $");
+__FBSDID("$FreeBSD: 4e2fd65bce141db2ce9054d2cb92b384f9d463b8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,7 +69,6 @@ sc_get_softc(int unit, int flags)
 	sc = &sc_softcs[unit];
 	sc->unit = unit;
 	if ((sc->flags & SC_INIT_DONE) == 0) {
-		sc->keyboard = -1;
 		sc->adapter = -1;
 		sc->cursor_char = SC_CURSOR_CHAR;
 		sc->mouse_char = SC_MOUSE_CHAR;

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2dd51791a840646d100a127474b48da3449cb90 $");
+__FBSDID("$FreeBSD: 93b1dfe49b1b2605c07097ca92e9439f697d3a11 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,7 +139,6 @@ nat64stl_find(struct namedobj_instance *ni, const char *name, uint8_t set)
 
 	return (cfg);
 }
-
 
 static int
 nat64stl_create_internal(struct ip_fw_chain *ch, struct nat64stl_cfg *cfg,
@@ -493,7 +492,6 @@ nat64stl_reset_stats(struct ip_fw_chain *ch, ip_fw3_opheader *op,
 }
 
 static struct ipfw_sopt_handler	scodes[] = {
-
 	{ IP_FW_NAT64STL_CREATE, 0,	HDIR_SET,	nat64stl_create },
 	{ IP_FW_NAT64STL_DESTROY,0,	HDIR_SET,	nat64stl_destroy },
 	{ IP_FW_NAT64STL_CONFIG, 0,	HDIR_BOTH,	nat64stl_config },
@@ -617,4 +615,3 @@ nat64stl_uninit(struct ip_fw_chain *ch, int last)
 	V_nat64stl_eid = 0;
 	IPFW_UH_WUNLOCK(ch);
 }
-

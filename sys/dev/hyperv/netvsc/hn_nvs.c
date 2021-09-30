@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f21f989d876ab3b60b9b5f661a8dcab3db5fdea7 $");
+__FBSDID("$FreeBSD: 73a112c4e5e14d04d6afc5938a7814b8946024f9 $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -365,7 +365,7 @@ hn_nvs_disconn_rxbuf(struct hn_softc *sc)
 		pause("lingtx", (200 * hz) / 1000);
 	}
 
-	if (sc->hn_rxbuf_gpadl != 0) {
+	if (vmbus_current_version < VMBUS_VERSION_WIN10 && sc->hn_rxbuf_gpadl != 0) {
 		/*
 		 * Disconnect RXBUF from primary channel.
 		 */
@@ -426,7 +426,7 @@ hn_nvs_disconn_chim(struct hn_softc *sc)
 		pause("lingtx", (200 * hz) / 1000);
 	}
 
-	if (sc->hn_chim_gpadl != 0) {
+	if (vmbus_current_version < VMBUS_VERSION_WIN10 && sc->hn_chim_gpadl != 0) {
 		/*
 		 * Disconnect chimney sending buffer from primary channel.
 		 */

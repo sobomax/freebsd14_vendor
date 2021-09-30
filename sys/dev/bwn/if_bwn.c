@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2ffe7b1f6baddd7ec187f53f06b257a2447a550 $");
+__FBSDID("$FreeBSD: ecec524c07d4496b42c5749f8774a782878a9c64 $");
 
 /*
  * The Broadcom Wireless LAN controller driver.
@@ -98,7 +98,7 @@ __FBSDID("$FreeBSD: b2ffe7b1f6baddd7ec187f53f06b257a2447a550 $");
 
 #include "gpio_if.h"
 
-static SYSCTL_NODE(_hw, OID_AUTO, bwn, CTLFLAG_RD, 0,
+static SYSCTL_NODE(_hw, OID_AUTO, bwn, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "Broadcom driver parameters");
 
 /*
@@ -621,7 +621,7 @@ bwn_attach(device_t dev)
 		mac->mac_flags |= BWN_MAC_FLAG_BADFRAME_PREEMP;
 
 	TASK_INIT(&mac->mac_hwreset, 0, bwn_hwreset, mac);
-	TASK_INIT(&mac->mac_intrtask, 0, bwn_intrtask, mac);
+	NET_TASK_INIT(&mac->mac_intrtask, 0, bwn_intrtask, mac);
 	TASK_INIT(&mac->mac_txpower, 0, bwn_txpwr, mac);
 
 	error = bwn_attach_core(mac);
@@ -2122,7 +2122,6 @@ bwn_stop(struct bwn_softc *sc)
 static void
 bwn_wme_clear(struct bwn_softc *sc)
 {
-#define	MS(_v, _f)	(((_v) & _f) >> _f##_S)
 	struct wmeParams *p;
 	unsigned int i;
 
@@ -2137,29 +2136,37 @@ bwn_wme_clear(struct bwn_softc *sc)
 			p->wmep_txopLimit = 0;
 			p->wmep_aifsn = 2;
 			/* XXX FIXME: log2(cwmin) */
-			p->wmep_logcwmin = MS(0x0001, WME_PARAM_LOGCWMIN);
-			p->wmep_logcwmax = MS(0x0001, WME_PARAM_LOGCWMAX);
+			p->wmep_logcwmin =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMIN);
+			p->wmep_logcwmax =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMAX);
 			break;
 		case BWN_WME_VIDEO:
 			p->wmep_txopLimit = 0;
 			p->wmep_aifsn = 2;
 			/* XXX FIXME: log2(cwmin) */
-			p->wmep_logcwmin = MS(0x0001, WME_PARAM_LOGCWMIN);
-			p->wmep_logcwmax = MS(0x0001, WME_PARAM_LOGCWMAX);
+			p->wmep_logcwmin =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMIN);
+			p->wmep_logcwmax =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMAX);
 			break;
 		case BWN_WME_BESTEFFORT:
 			p->wmep_txopLimit = 0;
 			p->wmep_aifsn = 3;
 			/* XXX FIXME: log2(cwmin) */
-			p->wmep_logcwmin = MS(0x0001, WME_PARAM_LOGCWMIN);
-			p->wmep_logcwmax = MS(0x03ff, WME_PARAM_LOGCWMAX);
+			p->wmep_logcwmin =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMIN);
+			p->wmep_logcwmax =
+			    _IEEE80211_MASKSHIFT(0x03ff, WME_PARAM_LOGCWMAX);
 			break;
 		case BWN_WME_BACKGROUND:
 			p->wmep_txopLimit = 0;
 			p->wmep_aifsn = 7;
 			/* XXX FIXME: log2(cwmin) */
-			p->wmep_logcwmin = MS(0x0001, WME_PARAM_LOGCWMIN);
-			p->wmep_logcwmax = MS(0x03ff, WME_PARAM_LOGCWMAX);
+			p->wmep_logcwmin =
+			    _IEEE80211_MASKSHIFT(0x0001, WME_PARAM_LOGCWMIN);
+			p->wmep_logcwmax =
+			    _IEEE80211_MASKSHIFT(0x03ff, WME_PARAM_LOGCWMAX);
 			break;
 		default:
 			KASSERT(0 == 1, ("%s:%d: fail", __func__, __LINE__));
@@ -4612,14 +4619,13 @@ static void
 bwn_wme_loadparams(struct bwn_mac *mac,
     const struct wmeParams *p, uint16_t shm_offset)
 {
-#define	SM(_v, _f)      (((_v) << _f##_S) & _f)
 	struct bwn_softc *sc = mac->mac_sc;
 	uint16_t params[BWN_NR_WMEPARAMS];
 	int slot, tmp;
 	unsigned int i;
 
 	slot = BWN_READ_2(mac, BWN_RNG) &
-	    SM(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
+	    _IEEE80211_SHIFTMASK(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
 
 	memset(&params, 0, sizeof(params));
 
@@ -4628,9 +4634,12 @@ bwn_wme_loadparams(struct bwn_mac *mac,
 	    p->wmep_logcwmin, p->wmep_logcwmax, p->wmep_aifsn);
 
 	params[BWN_WMEPARAM_TXOP] = p->wmep_txopLimit * 32;
-	params[BWN_WMEPARAM_CWMIN] = SM(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
-	params[BWN_WMEPARAM_CWMAX] = SM(p->wmep_logcwmax, WME_PARAM_LOGCWMAX);
-	params[BWN_WMEPARAM_CWCUR] = SM(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
+	params[BWN_WMEPARAM_CWMIN] =
+	    _IEEE80211_SHIFTMASK(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
+	params[BWN_WMEPARAM_CWMAX] =
+	     _IEEE80211_SHIFTMASK(p->wmep_logcwmax, WME_PARAM_LOGCWMAX);
+	params[BWN_WMEPARAM_CWCUR] =
+	     _IEEE80211_SHIFTMASK(p->wmep_logcwmin, WME_PARAM_LOGCWMIN);
 	params[BWN_WMEPARAM_AIFS] = p->wmep_aifsn;
 	params[BWN_WMEPARAM_BSLOTS] = slot;
 	params[BWN_WMEPARAM_REGGAP] = slot + p->wmep_aifsn;
@@ -5068,6 +5077,7 @@ bwn_intr(void *arg)
 static void
 bwn_intrtask(void *arg, int npending)
 {
+	struct epoch_tracker et;
 	struct bwn_mac *mac = arg;
 	struct bwn_softc *sc = mac->mac_sc;
 	uint32_t merged = 0;
@@ -5128,6 +5138,7 @@ bwn_intrtask(void *arg, int npending)
 	if (mac->mac_reason_intr & BWN_INTR_NOISESAMPLE_OK)
 		bwn_intr_noise(mac);
 
+	NET_EPOCH_ENTER(et);
 	if (mac->mac_flags & BWN_MAC_FLAG_DMA) {
 		if (mac->mac_reason[0] & BWN_DMAINTR_RX_DONE) {
 			bwn_dma_rx(mac->mac_method.dma.rx);
@@ -5135,6 +5146,7 @@ bwn_intrtask(void *arg, int npending)
 		}
 	} else
 		rx = bwn_pio_rx(&mac->mac_method.pio.rx);
+	NET_EPOCH_EXIT(et);
 
 	KASSERT(!(mac->mac_reason[1] & BWN_DMAINTR_RX_DONE), ("%s", __func__));
 	KASSERT(!(mac->mac_reason[2] & BWN_DMAINTR_RX_DONE), ("%s", __func__));

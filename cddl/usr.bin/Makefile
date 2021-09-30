@@ -1,4 +1,4 @@
-# $FreeBSD: 573f99b55bd86c9ffa08e131106a76ae5eaf991c $
+# $FreeBSD: 5c2595df1c9f409e1715a06705153aa1fc407878 $
 
 .include <src.opts.mk>
 
@@ -7,7 +7,7 @@ SUBDIR= \
 	ctfdump \
 	ctfmerge \
 	${_zinject} \
-	${_zlook} \
+	${_zstream} \
 	${_zstreamdump} \
 	${_ztest}
 
@@ -15,11 +15,9 @@ SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_ZFS} != "no"
 _zinject= zinject
-#_zlook= zlook
-.if ${MK_LIBTHR} != "no"
 _ztest=	ztest
+_zstream = zstream
 _zstreamdump = zstreamdump
-.endif
 .endif
 
 SUBDIR_PARALLEL=

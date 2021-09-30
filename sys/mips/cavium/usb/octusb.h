@@ -1,4 +1,4 @@
-/* $FreeBSD: b5846536bf4755a0741d45e6aae0289e1889c8af $ */
+/* $FreeBSD: 4844d03fdc1d55010e0790504a337856a23043f9 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -58,7 +58,6 @@ struct octusb_td {
 };
 
 struct octusb_qh {
-
 	uint64_t fixup_phys;
 
 	struct octusb_softc *sc;
@@ -110,7 +109,6 @@ struct octusb_port {
 };
 
 struct octusb_softc {
-
 	struct usb_bus sc_bus;		/* base device */
 	union octusb_hub_desc sc_hub_desc;
 

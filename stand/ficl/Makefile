@@ -1,4 +1,4 @@
-# $FreeBSD: 35730851d884516409c4ad55a8358a10c3883402 $
+# $FreeBSD: 0f70286ff7df2f2b63fe485eb3d57c4193e1b343 $
 #
 
 .include <bsd.init.mk>
@@ -12,6 +12,8 @@ BASE_SRCS=	dict.c ficl.c fileaccess.c float.c loader.c math64.c \
 SRCS=		${BASE_SRCS} sysdep.c softcore.c
 CLEANFILES+=	softcore.c testmain testmain.o
 
+CFLAGS.loader.c += -I${SRCTOP}/sys/teken
+CFLAGS.loader.c += -I${SRCTOP}/contrib/pnglite
 .ifmake testmain
 CFLAGS=	-DTESTMAIN -D_TESTMAIN
 CFLAGS+=	-I${FICLSRC} -I${FICLSRC}/${FICL_CPUARCH} -I${LDRSRC}

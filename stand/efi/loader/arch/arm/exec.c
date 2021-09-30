@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5fdf8e3daa39ff593743fb260465b8fb8cf013f7 $");
+__FBSDID("$FreeBSD: 86c931bcbbe8ddb87fd6e83887e45ef696eeeaae $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -77,7 +77,7 @@ __elfN(arm_exec)(struct preloaded_file *fp)
 
 	entry = efi_translate(e->e_entry);
 
-	printf("Kernel entry at 0x%x...\n", (unsigned)entry);
+	printf("Kernel entry at %p...\n", entry);
 	printf("Kernel args: %s\n", fp->f_args);
 
 	if ((error = bi_load(fp->f_args, &modulep, &kernend)) != 0) {

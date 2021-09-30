@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6aa3cbf95767e0329adf7fddf628f7c65a0f673a $");
+__FBSDID("$FreeBSD: 28ce93389fd0e48907e0da5163aea092c366ce90 $");
 
 #include <sys/param.h>
 #include <machine/cpufunc.h>
@@ -71,7 +71,7 @@ x86_pkru_get_perm_hw(u_int keyidx, int *access, int *modify)
 	return (0);
 }
 
-DEFINE_UIFUNC(, int, x86_pkru_get_perm, (u_int, int *, int *), static)
+DEFINE_UIFUNC(, int, x86_pkru_get_perm, (u_int, int *, int *))
 {
 
 	return ((cpu_stdext_feature2 & CPUID_STDEXT2_OSPKE) == 0 ?
@@ -106,7 +106,7 @@ x86_pkru_set_perm_hw(u_int keyidx, int access, int modify)
 	return (0);
 }
 
-DEFINE_UIFUNC(, int, x86_pkru_set_perm, (u_int, int, int), static)
+DEFINE_UIFUNC(, int, x86_pkru_set_perm, (u_int, int, int))
 {
 
 	return ((cpu_stdext_feature2 & CPUID_STDEXT2_OSPKE) == 0 ?

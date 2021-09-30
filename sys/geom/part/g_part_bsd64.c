@@ -25,10 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42fb96fbf84d48f8d135e280aaee00fe19614e4b $");
+__FBSDID("$FreeBSD: bc0112fbb7ed00297e8e3bdca1864e12c34d7d69 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
+#include <sys/gsb_crc32.h>
 #include <sys/disklabel.h>
 #include <sys/endian.h>
 #include <sys/gpt.h>
@@ -662,4 +663,3 @@ g_part_bsd64_write(struct g_part_table *basetable, struct g_consumer *cp)
 	g_free(dlp);
 	return (error);
 }
-

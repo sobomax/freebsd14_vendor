@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ae1e52ee2152c0bcbe85abab2100a09c81302c2 $
+ * $FreeBSD: 95af82b295f608cac5e6882f05897492c2507bb2 $
  */
 
 #ifndef _MVREG_H_
@@ -309,10 +309,6 @@
 #define MV_GPIO_OUT_BLINK		0x1
 #define MV_GPIO_OUT_OPEN_DRAIN		0x2
 #define MV_GPIO_OUT_OPEN_SRC		0x4
-
-#define IS_GPIO_IRQ(irq)	((irq) >= NIRQ && (irq) < NIRQ + MV_GPIO_MAX_NPINS)
-#define GPIO2IRQ(gpio)		((gpio) + NIRQ)
-#define IRQ2GPIO(irq)		((irq) - NIRQ)
 
 #if defined(SOC_MV_ORION)
 #define SAMPLE_AT_RESET		0x10

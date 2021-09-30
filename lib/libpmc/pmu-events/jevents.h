@@ -1,4 +1,4 @@
-/* $FreeBSD: cd3d1c19021bd4be75ee775135465a0cce28409d $ */
+/* $FreeBSD: 637d3c36128cc8671e95191fe824072ffc10ead7 $ */
 #ifndef JEVENTS_H
 #define JEVENTS_H 1
 
@@ -10,13 +10,5 @@ int json_events(const char *fn,
 				char *metric_name, char *metric_group),
 		void *data);
 char *get_cpu_str(void);
-
-#ifndef min
-#define min(x, y) ({                            \
-	typeof(x) _min1 = (x);                  \
-	typeof(y) _min2 = (y);                  \
-	(void) (&_min1 == &_min2);              \
-	_min1 < _min2 ? _min1 : _min2; })
-#endif
 
 #endif

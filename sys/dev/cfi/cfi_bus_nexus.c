@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6620a34acb3926233b9544866e981f00ba1a2911 $");
+__FBSDID("$FreeBSD: 1c2607aadf916afbbbd96ed2abe6e8d9f89d6664 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,6 @@ static device_method_t cfi_nexus_methods[] = {
 	DEVMETHOD(device_probe,		cfi_nexus_probe),
 	DEVMETHOD(device_attach,	cfi_nexus_attach),
 	DEVMETHOD(device_detach,	cfi_detach),
-
 	{0, 0}
 };
 

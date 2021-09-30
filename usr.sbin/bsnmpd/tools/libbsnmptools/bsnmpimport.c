@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d4f305fc2ff6e7f5476ae4547230de07cc294d59 $
+ * $FreeBSD: 77785313ff92b0597f46aaf8baf4248db92a097e $
  */
 
 /*
@@ -81,6 +81,7 @@
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <paths.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -148,7 +149,7 @@ static int32_t pbchar = -1;
 
 static const char *paths[MAX_PATHS + 1] = {
 	"/usr/share/snmp/defs",
-	"/usr/local/share/snmp/defs",
+	_PATH_LOCALBASE "/share/snmp/defs",
 	NULL
 };
 

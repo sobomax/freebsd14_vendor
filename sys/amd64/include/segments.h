@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)segments.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: 9bf28863cac86b9bf135ad453399bbb9a1614569 $
+ * $FreeBSD: a5fd89fbf6ce5126334f397d60bb8a45430fc6ba $
  */
 
 #ifndef _MACHINE_SEGMENTS_H_
@@ -89,7 +89,6 @@ struct region_descriptor {
 } __packed;
 
 #ifdef _KERNEL
-extern struct user_segment_descriptor gdt[];
 extern struct soft_segment_descriptor gdt_segs[];
 extern struct gate_descriptor *idt;
 extern struct region_descriptor r_idt;

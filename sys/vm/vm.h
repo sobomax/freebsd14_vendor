@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: e1d3335183d4aa6439a294a112f4fcce86369627 $
+ * $FreeBSD: 296449edc7c12022b479efcd8fb750f594e61c0b $
  */
 
 #ifndef VM_H
@@ -112,7 +112,9 @@ typedef struct vm_object *vm_object_t;
  * Define it here for "applications" that include vm headers (e.g.,
  * genassym).
  */
+#ifndef HAVE_BOOLEAN
 typedef int boolean_t;
+#endif
 
 /*
  * The exact set of memory attributes is machine dependent.  However,
@@ -150,13 +152,14 @@ extern int old_mlock;
 
 extern int vm_ndomains;
 
+#ifdef _KERNEL
 struct ucred;
-int swap_reserve(vm_ooffset_t incr);
-int swap_reserve_by_cred(vm_ooffset_t incr, struct ucred *cred);
+bool swap_reserve(vm_ooffset_t incr);
+bool swap_reserve_by_cred(vm_ooffset_t incr, struct ucred *cred);
 void swap_reserve_force(vm_ooffset_t incr);
 void swap_release(vm_ooffset_t decr);
 void swap_release_by_cred(vm_ooffset_t decr, struct ucred *cred);
 void swapper(void);
+#endif
 
 #endif				/* VM_H */
-

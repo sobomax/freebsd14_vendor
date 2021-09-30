@@ -1,4 +1,4 @@
-/* $FreeBSD: 5f52212ab1788c220fb22e4f233f2e524b24b981 $ */
+/* $FreeBSD: 630f029c80a9735bb3a288a9bd114b0319fc75fd $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -289,7 +289,7 @@ modem_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&modem_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "Virtual serial port device side template");
 	SYSCTL_ADD_U16(&modem_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

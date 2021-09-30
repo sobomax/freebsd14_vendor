@@ -1,4 +1,4 @@
-# $FreeBSD: 03a9a6f9fdb81b490bd9b9fd0efa846aec2cd8d3 $
+# $FreeBSD: 375cf3a964479ac6a5aa961aa763ccf50b235a61 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -11,7 +11,7 @@
         private
             bsdstat
             ..
-            event
+            event1
             ..
             gmock
                 internal
@@ -34,10 +34,8 @@
         ..
     ..
     lib
-        aout
-        ..
         clang
-            10.0.1
+            11.0.1
                 include
                     cuda_wrappers
                     ..
@@ -61,12 +59,12 @@
             ..
         ..
         compat
-            aout
-            ..
         ..
         dtrace
         ..
         engines
+        ..
+        flua
         ..
         i18n
         ..
@@ -166,7 +164,7 @@
     sbin
     ..
     share
-        atf
+        atf             tags=package=tests
         ..
         bsdconfig
             media
@@ -207,9 +205,9 @@
             ..
         ..
         certs
-            blacklisted
+            blacklisted tags=package=caroot
             ..
-            trusted
+            trusted tags=package=caroot
             ..
         ..
         dict
@@ -217,7 +215,9 @@
         doc
             IPv6
             ..
-            atf
+            atf             tags=package=tests
+            ..
+            kyua             tags=package=tests
             ..
             legal
             ..
@@ -277,11 +277,11 @@
             ..
             find_interface
             ..
+            flua
+            ..
             hast
             ..
             hostapd
-            ..
-            ibcs2
             ..
             indent
             ..
@@ -315,6 +315,8 @@
                     ..
                 ..
             ..
+            kyua             tags=package=tests
+            ..
             libusb20
             ..
             libvgl
@@ -322,8 +324,6 @@
             mdoc
             ..
             netgraph
-            ..
-            pc-sysinstall
             ..
             perfmon
             ..
@@ -369,6 +369,8 @@
             ..
         ..
         firmware
+        ..
+        flua
         ..
         games
             fortune
@@ -448,10 +450,16 @@
         ..
         keys
             pkg
-                revoked
+                revoked tags=package=runtime
                 ..
-                trusted
+                trusted tags=package=runtime
                 ..
+            ..
+        ..
+        kyua             tags=package=tests
+            misc         tags=package=tests
+            ..
+            store        tags=package=tests
             ..
         ..
         locale
@@ -665,6 +673,8 @@
             ..
             fr_FR.UTF-8
             ..
+            ga_IE.UTF-8
+            ..
             he_IL.UTF-8
             ..
             hi_IN.ISCII-DEV
@@ -845,6 +855,8 @@
             ..
             man3
             ..
+            man3lua
+            ..
             man4
                 aarch64
                 ..
@@ -855,8 +867,6 @@
                 i386
                 ..
                 powerpc
-                ..
-                sparc64
                 ..
             ..
             man5
@@ -871,8 +881,6 @@
                 i386
                 ..
                 powerpc
-                ..
-                sparc64
                 ..
             ..
             man9
@@ -1188,20 +1196,6 @@
                 ..
                 man7
                 ..
-            ..
-        ..
-        pc-sysinstall
-            backend
-            ..
-            backend-partmanager
-            ..
-            backend-query
-            ..
-            conf
-                license
-                ..
-            ..
-            doc
             ..
         ..
         security

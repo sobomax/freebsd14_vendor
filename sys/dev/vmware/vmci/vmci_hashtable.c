@@ -7,7 +7,7 @@
 /* Implementation of the VMCI Hashtable. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8559b008c10b8960fa1414caddf6dc010d18871 $");
+__FBSDID("$FreeBSD: f5d41bd5069b64f48904583cbba54c2f285ea349 $");
 
 #include "vmci.h"
 #include "vmci_driver.h"
@@ -368,7 +368,6 @@ vmci_hashtable_release_entry_locked(struct vmci_hashtable *table,
 	entry->ref_count--;
 	/* Check if this is last reference and report if so. */
 	if (entry->ref_count == 0) {
-
 		/*
 		 * Remove entry from hash table if not already removed. This
 		 * could have happened already because VMCIHashTable_RemoveEntry

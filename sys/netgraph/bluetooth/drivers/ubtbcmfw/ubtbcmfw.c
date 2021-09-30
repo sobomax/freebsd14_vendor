@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ubtbcmfw.c,v 1.3 2003/10/10 19:15:08 max Exp $
- * $FreeBSD: 32c9caba94f02faac56644ae9cfebb70cc163c58 $
+ * $FreeBSD: 60896597cae7d2c68dd712a0912895ad8868f8e3 $
  */
 
 #include <sys/stdint.h>
@@ -176,7 +176,6 @@ static const STRUCT_USB_HOST_ID ubtbcmfw_devs[] = {
 /* Broadcom BCM2033 devices only */
 	{ USB_VPI(USB_VENDOR_BROADCOM, USB_PRODUCT_BROADCOM_BCM2033, 0) },
 };
-
 
 DRIVER_MODULE(ubtbcmfw, uhub, ubtbcmfw_driver, ubtbcmfw_devclass, NULL, 0);
 MODULE_DEPEND(ubtbcmfw, usb, 1, 1, 1);

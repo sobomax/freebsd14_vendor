@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 96fa231d27a37db4e8b800b0239fb5fc97fb67de $
+ * $FreeBSD: 7d4d6aee7a9b9c810c884ac15a96654f1b2a50eb $
  */
 #ifndef _HWMCODE_
 #define _HWMCODE_
@@ -1601,4 +1601,3 @@ static u_int32_t	CntrlInst1E[] = {
 };
 
 #endif
-

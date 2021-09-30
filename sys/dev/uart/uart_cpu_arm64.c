@@ -31,7 +31,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e8e88de1aa7ad74925febe8060f3a8a14e47b69d $");
+__FBSDID("$FreeBSD: 1d88a1e882a014c657dd0719349ec34b28aa49f9 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -100,15 +100,11 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 	if (uart_cpu_acpi_spcr(devtype, di) == 0)
 		return (0);
 #endif
-
-	if (devtype != UART_DEV_CONSOLE)
-		return (ENXIO);
-
 	err = ENXIO;
 #ifdef FDT
 	if (err != 0) {
 		err = uart_cpu_fdt_probe(&class, &bst, &bsh, &br, &rclk,
-		    &shift, &iowidth);
+		    &shift, &iowidth, devtype);
 	}
 #endif
 	if (err != 0)

@@ -1,11 +1,10 @@
 #	from: @(#)Makefile    5.10 (Berkeley) 6/24/90
-# $FreeBSD: 80c253d0c54fe1e0d6d13f3b828b8fde68df786e $
+# $FreeBSD: 35669a5e35706c812a5dc029cb9e8a4eb8c1825d $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/include/rpcsvc
 
-PACKAGE=lib${LIB}
 LIB=    rpcsvc
 
 RPCSRCS= klm_prot.x mount.x nfs_prot.x nlm_prot.x rex.x rnusers.x \

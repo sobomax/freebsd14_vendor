@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9711d2e62966733f2753951dd4a6e21a94d8c4a $");
+__FBSDID("$FreeBSD: 4d21887c4ee2977dc6ddcfd032fbc5a079d5c46d $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -79,7 +79,7 @@ static void
 clear_password(struct rad_handle *h)
 {
 	if (h->pass_len != 0) {
-		memset(h->pass, 0, h->pass_len);
+		explicit_bzero(h->pass, h->pass_len);
 		h->pass_len = 0;
 	}
 	h->pass_pos = 0;
@@ -875,8 +875,8 @@ rad_create_request(struct rad_handle *h, int code)
 	if (code == RAD_ACCESS_REQUEST) {
 		/* Create a random authenticator */
 		for (i = 0;  i < LEN_AUTH;  i += 2) {
-			long r;
-			r = random();
+			uint32_t r;
+			r = arc4random();
 			h->out[POS_AUTH+i] = (u_char)r;
 			h->out[POS_AUTH+i+1] = (u_char)(r >> 8);
 		}
@@ -1080,10 +1080,9 @@ rad_auth_open(void)
 
 	h = (struct rad_handle *)malloc(sizeof(struct rad_handle));
 	if (h != NULL) {
-		srandomdev();
 		h->fd = -1;
 		h->num_servers = 0;
-		h->ident = random();
+		h->ident = arc4random();
 		h->errmsg[0] = '\0';
 		memset(h->pass, 0, sizeof h->pass);
 		h->pass_len = 0;

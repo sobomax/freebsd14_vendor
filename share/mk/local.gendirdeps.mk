@@ -1,4 +1,4 @@
-# $FreeBSD: cb7e4df66d73b048fcf99d6eb8a0c23b8d77548e $
+# $FreeBSD: 3ec2be4cc86528c1452dc27a2b40bf42e097419e $
 
 # we need a keyword, this noise is to prevent it being expanded
 GENDIRDEPS_HEADER= echo '\# ${FreeBSD:L:@v@$$$v$$ @:M*F*}';
@@ -10,8 +10,6 @@ GENDIRDEPS_FILTER+= \
 	Nlib/libssp_nonshared \
 	Ncddl/usr.bin/ctf* \
 	Nlib/libc_nonshared \
-	Ngnu/lib/csu \
-	Ngnu/lib/libgcc \
 	Nlib/libgcc_eh \
 	Nlib/libgcc_s \
 	Nstand/libsa/* \
@@ -69,3 +67,6 @@ GENDIRDEPS_FILTER_VARS+= \
 
 GENDIRDEPS_FILTER+= ${GENDIRDEPS_FILTER_DIR_VARS:@v@S,${$v},_{${v}},@}
 GENDIRDEPS_FILTER+= ${GENDIRDEPS_FILTER_VARS:@v@S,/${$v}/,/_{${v}}/,@:NS,//,*:u}
+
+# avoid churn for now
+LOCAL_DEPENDS_GUARD= _{DEP_RELDIR} == _{_DEP_RELDIR}

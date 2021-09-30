@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f5fe539a879c9c85688722b51a3d4371d9b099e2 $");
+__FBSDID("$FreeBSD: 5972b63e680aa17863e62e7b6659c6a13e24ae31 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -53,7 +53,8 @@ __FBSDID("$FreeBSD: f5fe539a879c9c85688722b51a3d4371d9b099e2 $");
 FEATURE(geom_multipath, "GEOM multipath support");
 
 SYSCTL_DECL(_kern_geom);
-static SYSCTL_NODE(_kern_geom, OID_AUTO, multipath, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_kern_geom, OID_AUTO, multipath,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "GEOM_MULTIPATH tunables");
 static u_int g_multipath_debug = 0;
 SYSCTL_UINT(_kern_geom_multipath, OID_AUTO, debug, CTLFLAG_RW,
@@ -478,7 +479,6 @@ g_multipath_kt(void *arg)
 	kproc_exit(0);
 }
 
-
 static int
 g_multipath_access(struct g_provider *pp, int dr, int dw, int de)
 {
@@ -823,9 +823,11 @@ g_multipath_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	gp->access = g_multipath_access;
 	gp->orphan = g_multipath_orphan;
 	cp = g_new_consumer(gp);
-	g_attach(cp, pp);
-	error = g_multipath_read_metadata(cp, &md);
-	g_detach(cp);
+	error = g_attach(cp, pp);
+	if (error == 0) {
+		error = g_multipath_read_metadata(cp, &md);
+		g_detach(cp);
+	}
 	g_destroy_consumer(cp);
 	g_destroy_geom(gp);
 	if (error != 0)
@@ -943,7 +945,7 @@ g_multipath_ctl_add_name(struct gctl_req *req, struct g_class *mp,
 	struct g_consumer *cp;
 	struct g_provider *pp;
 	const char *mpname;
-	static const char devpf[6] = "/dev/";
+	static const char devpf[6] = _PATH_DEV;
 	int error;
 
 	g_topology_assert();
@@ -1006,7 +1008,7 @@ g_multipath_ctl_prefer(struct gctl_req *req, struct g_class *mp)
 	struct g_multipath_softc *sc;
 	struct g_consumer *cp;
 	const char *name, *mpname;
-	static const char devpf[6] = "/dev/";
+	static const char devpf[6] = _PATH_DEV;
 	int *nargs;
 
 	g_topology_assert();

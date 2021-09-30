@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 835f9fe56c5298250142eb2aed82cff01052b99e $");
+__FBSDID("$FreeBSD: 7dec50a732afc0cd7ae6a26e28a6cedc5ab6f698 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -522,4 +522,3 @@ quicc_bus_ungrab(struct uart_softc *sc)
 	quicc_write2(bas, rb, st | 0x9000);
 	uart_unlock(sc->sc_hwmtx);
 }
-

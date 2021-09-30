@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b28250f109bbad5e938f27bd977f14fd0ee2939 $");
+__FBSDID("$FreeBSD: 7f3986d4714084c4d51af8530fd34e6d9c282275 $");
 
 #include <sys/param.h>
 #include <stand.h>
@@ -86,9 +86,11 @@ insert_zfs(EFI_HANDLE handle, uint64_t guid)
         zfsinfo_t *zi;
 
         zi = malloc(sizeof(zfsinfo_t));
-        zi->zi_handle = handle;
-        zi->zi_pool_guid = guid;
-        STAILQ_INSERT_TAIL(&zfsinfo, zi, zi_link);
+	if (zi != NULL) {
+        	zi->zi_handle = handle;
+        	zi->zi_pool_guid = guid;
+        	STAILQ_INSERT_TAIL(&zfsinfo, zi, zi_link);
+	}
 }
 
 void
@@ -97,7 +99,7 @@ efi_zfs_probe(void)
 	pdinfo_list_t *hdi;
 	pdinfo_t *hd, *pd = NULL;
 	char devname[SPECNAMELEN + 1];
-        uint64_t guid;
+	uint64_t guid;
 
 	hdi = efiblk_get_pdinfo_list(&efipart_hddev);
 	STAILQ_INIT(&zfsinfo);
@@ -112,6 +114,7 @@ efi_zfs_probe(void)
 		STAILQ_FOREACH(pd, &hd->pd_part, pd_link) {
 			snprintf(devname, sizeof(devname), "%s%dp%d:",
 			    efipart_hddev.dv_name, hd->pd_unit, pd->pd_unit);
+			guid = 0;
 			if (zfs_probe_dev(devname, &guid) == 0) {
 				insert_zfs(pd->pd_handle, guid);
 				if (pd->pd_handle == boot_img->DeviceHandle)

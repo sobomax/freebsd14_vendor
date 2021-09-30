@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f41df2a2e5a94cce0d9fda501ce21ad80e967873 $");
+__FBSDID("$FreeBSD: 1d6c2c7d9668596669ddc78cd7108dc6c05418b1 $");
 
 /*
  * seed = random (bits - 1) bit
@@ -89,6 +89,7 @@ __FBSDID("$FreeBSD: f41df2a2e5a94cce0d9fda501ce21ad80e967873 $");
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/random.h>
 #include <sys/socket.h>
 #include <sys/libkern.h>
 
@@ -257,6 +258,16 @@ ip6_randomid(void)
 u_int32_t
 ip6_randomflowlabel(void)
 {
+
+	/*
+	 * It's ok to emit zero flow labels early, before random is available
+	 * (seeded).  RFC 6437:
+	 *
+	 * "A Flow Label of zero is used to indicate packets that have not been
+	 * labeled."
+	 */
+	if (__predict_false(!is_random_seeded()))
+		return (0);
 
 	return randomid(&randomtab_20) & 0xfffff;
 }

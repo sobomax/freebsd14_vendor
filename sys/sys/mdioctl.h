@@ -39,7 +39,7 @@
  *
  * From: src/sys/sys/vnioctl.h,v 1.4
  *
- * $FreeBSD: 37a3804fe79e03a11d190467cc8815e97ab2057a $
+ * $FreeBSD: 9e0b0c995341b9daa03f7724a6e1b3bccaef634a $
  */
 
 #ifndef _SYS_MDIOCTL_H_
@@ -64,7 +64,7 @@ struct md_ioctl {
 	int		md_fwheads;	/* firmware heads */
 	int		md_fwsectors;	/* firmware sectors */
 	char		*md_label;	/* label of the device */
-	int		md_pad[MDNPAD];	/* storage for MDIOCLIST */
+	int		md_pad[MDNPAD];	/* padding */
 };
 
 #define MD_NAME		"md"
@@ -81,7 +81,6 @@ struct md_ioctl {
 #define MDIOCATTACH	_IOWR('m', 0, struct md_ioctl)	/* attach disk */
 #define MDIOCDETACH	_IOWR('m', 1, struct md_ioctl)	/* detach disk */
 #define MDIOCQUERY	_IOWR('m', 2, struct md_ioctl)	/* query status */
-#define MDIOCLIST	_IOWR('m', 3, struct md_ioctl)	/* query status */
 #define MDIOCRESIZE	_IOWR('m', 4, struct md_ioctl)	/* resize disk */
 
 #define MD_CLUSTER	0x01	/* Don't cluster */
@@ -92,5 +91,6 @@ struct md_ioctl {
 #define MD_FORCE	0x20	/* Don't try to prevent foot-shooting */
 #define MD_ASYNC	0x40	/* Asynchronous mode */
 #define MD_VERIFY	0x80	/* Open file with O_VERIFY (vnode only) */
+#define	MD_CACHE	0x100	/* Cache vnode data */
 
 #endif	/* _SYS_MDIOCTL_H_*/

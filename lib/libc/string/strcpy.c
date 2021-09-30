@@ -33,12 +33,21 @@
 static char sccsid[] = "@(#)strcpy.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3eb0aa81eff54bc4a0b2e25bc9fdf7c2f0db022c $");
+__FBSDID("$FreeBSD: f58cbd9784a21d5e4ced9022d956c42fffc7a61a $");
 
 #include <string.h>
 
+#ifdef WEAK_STRCPY
+__weak_reference(__strcpy, strcpy);
+#endif
+
 char *
-strcpy(char * __restrict to, const char * __restrict from)
+#ifdef WEAK_STRCPY
+__strcpy
+#else
+strcpy
+#endif
+(char * __restrict to, const char * __restrict from)
 {
 	char *save = to;
 

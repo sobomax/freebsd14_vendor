@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a3f5ddb5633a9351676ce4520969603964c54dd $
+ * $FreeBSD: 649a6b09cb34e27ef0c119bcb9cce1f12e777070 $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a3f5ddb5633a9351676ce4520969603964c54dd $");
+__FBSDID("$FreeBSD: 649a6b09cb34e27ef0c119bcb9cce1f12e777070 $");
 
 #include <assert.h>
 #ifndef WITHOUT_CAPSICUM
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: 3a3f5ddb5633a9351676ce4520969603964c54dd $");
 
 #define	MEVENT_MAX	64
 
-extern char *vmname;
+extern const char *vmname;
 
 static pthread_t mevent_tid;
 static int mevent_timid = 43;
@@ -115,7 +115,7 @@ mevent_pipe_read(int fd, enum ev_type type, void *param)
 static void
 mevent_notify(void)
 {
-	char c;
+	char c = '\0';
 	
 	/*
 	 * If calling from outside the i/o thread, write a byte on the

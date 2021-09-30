@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ff741ca2c67a8152018d236190f9d2f0fefbf2a8 $
+ * $FreeBSD: 3ddf8fc574de46ca6cff666c42b472dfbac3854d $
  */
 
 #ifndef _DEV_EXTRES_CLK_H_
@@ -134,6 +134,12 @@ int clk_stop(clk_t clk);
 int clk_get_parent(clk_t clk, clk_t *parent);
 int clk_set_parent_by_clk(clk_t clk, clk_t parent);
 const char *clk_get_name(clk_t clk);
+
+static inline uint64_t
+clk_freq_diff(uint64_t x, uint64_t y)
+{
+	return (x >= y ? x - y : y - x);
+}
 
 #ifdef FDT
 int clk_set_assigned(device_t dev, phandle_t node);

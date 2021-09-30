@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7fdad75628601d83b35af1880e15f2347b75266e $
+ * $FreeBSD: 6df9132de17103b2071757269417f5ef40ea0296 $
  */
 
 #ifndef _LOCALE_T_DEFINED
@@ -46,6 +46,7 @@ typedef struct	_xlocale *locale_t;
  * POSIX2008 functions
  */
 int	 strcoll_l(const char *, const char *, locale_t);
+char	*strerror_l(int num, locale_t);
 size_t	 strxfrm_l(char *, const char *, size_t, locale_t);
 #endif /* _XLOCALE_STRING1_H */
 

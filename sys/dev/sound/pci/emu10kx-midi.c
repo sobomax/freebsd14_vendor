@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 778d17013a05f4a499a58d358ec444dd684395f3 $
+ * $FreeBSD: e00a850a66e296ba916c291cd671111299ab341f $
  */
 
 #include <sys/param.h>
@@ -222,7 +222,6 @@ emu_midi_attach(device_t dev)
 
 	return (0);
 }
-
 
 static int
 emu_midi_detach(device_t dev)

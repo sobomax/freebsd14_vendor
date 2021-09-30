@@ -1,4 +1,4 @@
-# $FreeBSD: aa7ddceb78958a7a599f105cd3cf51f8e99c14d9 $
+# $FreeBSD: 9477f08e1dba6a531af689a82fb579c8dd267a65 $
 machine		i386
 cpu		I486_CPU
 cpu		I586_CPU
@@ -62,11 +62,6 @@ device		sc
 #options 	FAT_CURSOR	# start with block cursor
 
 device		agp		# support several AGP chipsets
-
-# Power management support (see NOTES for more options)
-#device		apm
-# Add suspend/resume support for the i8254.
-device		pmtimer
 
 # PCCARD (PCMCIA) support
 # PCMCIA and cardbus bridge support
@@ -136,7 +131,6 @@ device		wi		# WaveLAN/Intersil/Symbol 802.11 wireless NICs.
 
 # Pseudo devices.
 device		loop		# Network loopback
-device		random		# Entropy device
 device		ether		# Ethernet support
 device		pty		# Pseudo-ttys (telnet etc)
 device		md		# Memory "disks"

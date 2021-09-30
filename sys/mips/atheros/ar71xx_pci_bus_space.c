@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99b81be24d2aef6b717b3e0d35205530134793f0 $");
+__FBSDID("$FreeBSD: def31bd60dff7d4b549de5e5c49ec726a909a4cb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -188,7 +188,7 @@ pcimem_bs_w_2_s(void *t, bus_space_handle_t h, bus_size_t o, uint16_t v)
 static uint32_t
 pcimem_bs_r_4_s(void *t, bus_space_handle_t h, bus_size_t o)
 {
-	
+
 	return le32toh(readl(h + o));
 }
 

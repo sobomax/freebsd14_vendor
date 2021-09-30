@@ -1,8 +1,8 @@
-# $FreeBSD: 3afd703846d30d6e889043926ff20c6ed0dbd52b $
+# $FreeBSD: d0d9f9bd7a0dd148fb9e457ee38c5d3120a0e85f $
 
 .include <src.opts.mk>
 
-TAP_TESTS_C=	sysctl_test
+ATF_TESTS_C=	sysctl_test
 
 .if ${MK_CASPER} != "no"
 LIBADD+=	casper
@@ -10,8 +10,6 @@ LIBADD+=	cap_sysctl
 CFLAGS+=-DWITH_CASPER
 .endif
 LIBADD+=	nv
-
-WARNS?=		3
 
 TEST_METADATA.sysctl_test+=	required_user="root"
 

@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD: 2671c5d3e78379efe20a447f4bdc7bb17126e6c1 $
+ * $FreeBSD: 3e5cd5779559feb16b193e46759261717e05d911 $
  */
 
 /**
@@ -39,6 +39,7 @@
  *        timer services built on top of the POSIX interval timer.
  */
 
+#include <sys/byteorder.h>
 #include <sys/time.h>
 
 #include <signal.h>

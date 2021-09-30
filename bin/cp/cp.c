@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)cp.c	8.2 (Berkeley) 4/1/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c9a57d30d787debcc3f7524aed04981c05a47b6 $");
+__FBSDID("$FreeBSD: 3a23394df35de1d7ce3a651d20ce468dbd89836c $");
 
 /*
  * Cp copies source files to target files.
@@ -282,7 +282,8 @@ copy(char *argv[], enum op type, int fts_options)
 
 	if ((ftsp = fts_open(argv, fts_options, NULL)) == NULL)
 		err(1, "fts_open");
-	for (badcp = rval = 0; (curr = fts_read(ftsp)) != NULL; badcp = 0) {
+	for (badcp = rval = 0; errno = 0, (curr = fts_read(ftsp)) != NULL;
+            badcp = 0) {
 		switch (curr->fts_info) {
 		case FTS_NS:
 		case FTS_DNR:

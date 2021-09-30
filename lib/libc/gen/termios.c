@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)termios.c	8.2 (Berkeley) 2/21/94");
-__FBSDID("$FreeBSD: 7b98c486f4723424b46bd927758c4f85216499f9 $");
+__FBSDID("$FreeBSD: f072b2f045d9e5d880978dd7917fa133ce76d3f6 $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -274,4 +274,18 @@ tcflow(int fd, int action)
 		return (-1);
 	}
 	/* NOTREACHED */
+}
+
+int
+tcgetwinsize(int fd, struct winsize *w)
+{
+
+	return (_ioctl(fd, TIOCGWINSZ, w));
+}
+
+int
+tcsetwinsize(int fd, const struct winsize *w)
+{
+
+	return (_ioctl(fd, TIOCSWINSZ, w));
 }

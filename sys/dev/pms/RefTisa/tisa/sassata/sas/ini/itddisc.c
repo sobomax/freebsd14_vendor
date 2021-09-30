@@ -26,7 +26,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7be19115b6b2bf5481178a81cf3f9c660a1b2cf8 $");
+__FBSDID("$FreeBSD: 62a70e5ecd4955217ab0037a209b4e8fcf5f923c $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>
@@ -1790,9 +1790,9 @@ tdsaSASDownStreamDiscovering(
   }
   else
   {
-    TDLIST_DEQUEUE_FROM_HEAD(&ExpanderList, &(onePortContext->discovery.discoveringExpanderList));;
+    TDLIST_DEQUEUE_FROM_HEAD(&ExpanderList, &(onePortContext->discovery.discoveringExpanderList));
     NextExpander = TDLIST_OBJECT_BASE(tdsaExpander_t, linkNode, ExpanderList);
-    TDLIST_ENQUEUE_AT_HEAD(&(NextExpander->linkNode), &(onePortContext->discovery.discoveringExpanderList));;
+    TDLIST_ENQUEUE_AT_HEAD(&(NextExpander->linkNode), &(onePortContext->discovery.discoveringExpanderList));
     tdsaSingleThreadedLeave(tiRoot, TD_DISC_LOCK);
     TI_DBG3(("tdssSASDiscoveringExpander tdsaSASDownStreamDiscovering: dequeue head\n"));
     TI_DBG3(("tdsaSASDownStreamDiscovering: expander id %d\n", NextExpander->id));

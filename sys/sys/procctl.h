@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a6837bde579e840112312056e47db605ec88cc05 $
+ * $FreeBSD: 90fb149830dcc38f1d1c4f0598b5ff83fb50a179 $
  */
 
 #ifndef	_SYS_PROCCTL_H_
@@ -59,6 +59,8 @@
 #define	PROC_PDEATHSIG_STATUS	12	/* get parent death signal */
 #define	PROC_ASLR_CTL		13	/* en/dis ASLR */
 #define	PROC_ASLR_STATUS	14	/* query ASLR status */
+#define	PROC_PROTMAX_CTL	15	/* en/dis implicit PROT_MAX */
+#define	PROC_PROTMAX_STATUS	16	/* query implicit PROT_MAX status */
 #define	PROC_STACKGAP_CTL	17	/* en/dis stack gap on MAP_STACK */
 #define	PROC_STACKGAP_STATUS	18	/* query stack gap */
 
@@ -128,6 +130,11 @@ struct procctl_reaper_kill {
 #define	PROC_ASLR_FORCE_DISABLE		2
 #define	PROC_ASLR_NOFORCE		3
 #define	PROC_ASLR_ACTIVE		0x80000000
+
+#define	PROC_PROTMAX_FORCE_ENABLE	1
+#define	PROC_PROTMAX_FORCE_DISABLE	2
+#define	PROC_PROTMAX_NOFORCE		3
+#define	PROC_PROTMAX_ACTIVE		0x80000000
 
 #define	PROC_STACKGAP_ENABLE		0x0001
 #define	PROC_STACKGAP_DISABLE		0x0002

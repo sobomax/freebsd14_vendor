@@ -33,9 +33,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9fa3c3799994637124ed4ce95a3ab0f80d64821d $
+ * $FreeBSD: e0e5b756981aaefd93e820465acb6a5ae38cd427 $
  */
-
 
 /* #define TWS_DEBUG on */
 
@@ -52,8 +51,6 @@ u_int32_t tws_swap32(u_int32_t val);
 u_int64_t tws_swap64(u_int64_t val);
 
 void tws_init_qs(struct tws_softc *sc);
-
-
 
 /* ----------------- trace ----------------- */
 
@@ -80,7 +77,6 @@ void tws_init_qs(struct tws_softc *sc);
 #endif
 
 /* ---------------- logging ---------------- */
-
 
 /* ---------------- logging ---------------- */
 enum error_index {
@@ -129,14 +125,6 @@ struct error_desc {
 #define TWS_REQ_RET_RESET          2
 #define TWS_REQ_RET_INVALID   0xdead
 
-
 /* ------------------------ */
-#if (__FreeBSD_version >= 700000)
 #include <sys/clock.h>
 #define TWS_LOCAL_TIME (time_second - utc_offset())
-#else
-#include <machine/clock.h>
-#define TWS_LOCAL_TIME (time_second - (tz_minuteswest * 60) -   \
-                  (wall_cmos_clock ? adjkerntz : 0))
-#endif
-

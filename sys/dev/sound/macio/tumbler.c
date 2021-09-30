@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 24519eae3e5c48b95c0eff821e035e2288ece9f9 $
+ * $FreeBSD: 180482e472158904aa1da41a6dad252402e06c4e $
  */
 /*-
  * Copyright (c) 2002, 2003 Tsubai Masanari.  All rights reserved.
@@ -108,7 +108,6 @@ static device_method_t tumbler_methods[] = {
 	/* Device interface. */
 	DEVMETHOD(device_probe,		tumbler_probe),
 	DEVMETHOD(device_attach,	tumbler_attach),
-
 	{ 0, 0 }
 };
 
@@ -437,4 +436,3 @@ tumbler_setrecsrc(struct snd_mixer *m, u_int32_t src)
 {
 	return (0);
 }
-

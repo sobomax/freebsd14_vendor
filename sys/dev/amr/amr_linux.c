@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 967907cc684604ae16607a6d795a033544dbb677 $");
+__FBSDID("$FreeBSD: 9e0a5cac693e777e2465188daf98225a641c1448 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,7 +78,7 @@ amr_linux_ioctl(struct thread *p, struct linux_ioctl_args *args)
 	struct file *fp;
 	int error;
 
-	error = fget(p, args->fd, cap_rights_init(&rights, CAP_IOCTL), &fp);
+	error = fget(p, args->fd, cap_rights_init_one(&rights, CAP_IOCTL), &fp);
 	if (error != 0)
 		return (error);
 	error = fo_ioctl(fp, args->cmd, (caddr_t)args->arg, p->td_ucred, p);

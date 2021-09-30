@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_h4_prse.h,v 1.4 2005/10/31 17:57:43 max Exp $
- * $FreeBSD: 0a35a369876992e9d832cb08d32a8a3d79d3a09f $
+ * $FreeBSD: 835fd65b95438ab64da1a2b23201af503123cc6c $
  */
 
 /***************************************************************************
@@ -123,4 +123,3 @@ static const struct ng_cmdlist	ng_h4_cmdlist[] = {
 };
 
 #endif /* ndef _NETGRAPH_H4_PRSE_H_ */
-

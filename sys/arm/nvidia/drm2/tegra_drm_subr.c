@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab883445a2e1f7d9cf8409ededaf41bfbd197dae $");
+__FBSDID("$FreeBSD: 813da9c7b18c3135344d9c116f808c2c9f0f8162 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: ab883445a2e1f7d9cf8409ededaf41bfbd197dae $");
 
 #include <arm/nvidia/drm2/tegra_drm.h>
 
-#include <gnu/dts/include/dt-bindings/gpio/gpio.h>
+#include <dt-bindings/gpio/gpio.h>
 
 int
 tegra_drm_connector_get_modes(struct drm_connector *connector)

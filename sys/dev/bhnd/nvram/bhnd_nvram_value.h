@@ -26,12 +26,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: c5c9213e4eb2533a037fed4a21b27af4c56a00b8 $
+ * $FreeBSD: 3720f0468db2b5875c2c84d3bbbf51ec96e92e04 $
  */
 
 #ifndef _BHND_NVRAM_BHND_NVRAM_VALUE_H_
 #define _BHND_NVRAM_BHND_NVRAM_VALUE_H_
-
 
 #include <sys/refcount.h>
 
@@ -92,7 +91,6 @@ int				 bhnd_nvram_val_printf(bhnd_nvram_val *value,
 int				 bhnd_nvram_val_vprintf(bhnd_nvram_val *value,
 				     const char *fmt, char *outp, size_t *olen,
 				     va_list ap);
-
 
 const void			*bhnd_nvram_val_bytes(bhnd_nvram_val *value,
 				     size_t *olen, bhnd_nvram_type *otype);
@@ -161,7 +159,7 @@ typedef enum {
 	 * to a new heap allocation.
 	 */
 	BHND_NVRAM_VAL_STORAGE_AUTO	= 0,
-	
+
 	/**
 	 * The value structure was heap allocated and is fully managed by the
 	 * the NVRAM value API.

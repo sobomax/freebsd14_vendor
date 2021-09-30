@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 11caf35af0169f986181e7a828bf9514d4ccc0ae $");
+__FBSDID("$FreeBSD: 97dca718531965ac46a521ec344751d4e1a70b00 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -200,7 +200,7 @@ module_release(module_t mod)
 		panic("module_release: bad reference count");
 
 	MOD_DPF(REFS, ("module_release: before, refs=%d\n", mod->refs));
-	
+
 	mod->refs--;
 	if (mod->refs == 0) {
 		TAILQ_REMOVE(&modules, mod, link);

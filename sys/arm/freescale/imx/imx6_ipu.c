@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1bf7cf95ca2e40d85c4ae4c4f93a296dd33b6859 $");
+__FBSDID("$FreeBSD: 417f8f64a28c97c63e83e41672fa21118c3d5b4e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/clock.h>
+#include <sys/eventhandler.h>
 #include <sys/time.h>
 #include <sys/bus.h>
 #include <sys/lock.h>

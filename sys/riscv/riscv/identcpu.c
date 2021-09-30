@@ -35,7 +35,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a737d5f7a228691f9ab4b2aa6e372934936c2f99 $");
+__FBSDID("$FreeBSD: f3afa9b8c7ead526a090e827abee43957fa0d320 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,6 +52,7 @@ __FBSDID("$FreeBSD: a737d5f7a228691f9ab4b2aa6e372934936c2f99 $");
 #ifdef FDT
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
+#include <dev/ofw/ofw_bus_subr.h>
 #endif
 
 char machine[] = "riscv";
@@ -146,11 +147,9 @@ fill_elf_hwcap(void *dummy __unused)
 	 * ISAs, keep only the extension bits that are common to all harts.
 	 */
 	for (node = OF_child(node); node > 0; node = OF_peer(node)) {
-		if (!fdt_is_compatible_strict(node, "riscv")) {
-			if (bootverbose)
-				printf("fill_elf_hwcap: Can't find cpu\n");
-			return;
-		}
+		/* Skip any non-CPU nodes, such as cpu-map. */
+		if (!ofw_bus_node_is_compatible(node, "riscv"))
+			continue;
 
 		len = OF_getprop(node, "riscv,isa", isa, sizeof(isa));
 		KASSERT(len <= ISA_NAME_MAXLEN, ("ISA string truncated"));
@@ -174,7 +173,6 @@ fill_elf_hwcap(void *dummy __unused)
 			elf_hwcap &= hwcap;
 		else
 			elf_hwcap = hwcap;
-
 	}
 }
 
@@ -187,15 +185,13 @@ identify_cpu(void)
 	const struct cpu_parts *cpu_partsp;
 	uint32_t part_id;
 	uint32_t impl_id;
-	uint64_t mimpid;
 	uint64_t misa;
 	u_int cpu;
 	size_t i;
 
 	cpu_partsp = NULL;
 
-	/* TODO: can we get mimpid and misa somewhere ? */
-	mimpid = 0;
+	/* TODO: can we get misa somewhere ? */
 	misa = 0;
 
 	cpu = PCPU_GET(cpuid);

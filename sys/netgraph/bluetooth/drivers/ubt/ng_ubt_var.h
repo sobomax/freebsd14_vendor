@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt_var.h,v 1.2 2003/03/22 23:44:36 max Exp $
- * $FreeBSD: d5bf568a5ecb4d2e6c868a5358f8af57b229efd8 $
+ * $FreeBSD: e93c85569f100d155948e2ae5009ce299a5d9529 $
  */
 
 #ifndef _NG_UBT_VAR_H_
@@ -64,7 +64,7 @@ enum {
 	UBT_IF_0_BULK_DT_RD,
 	UBT_IF_0_INTR_DT_RD,
 	UBT_IF_0_CTRL_DT_WR,
-	
+
 	/* Interface #1 transfers */
 	UBT_IF_1_ISOC_DT_RD1,
 	UBT_IF_1_ISOC_DT_RD2,
@@ -165,4 +165,3 @@ extern	devclass_t	ubt_devclass;
 extern	driver_t	ubt_driver;
 
 #endif /* ndef _NG_UBT_VAR_H_ */
-

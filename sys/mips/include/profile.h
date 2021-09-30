@@ -34,7 +34,7 @@
  *
  *	from: @(#)profile.h	8.1 (Berkeley) 6/10/93
  *	JNPR: profile.h,v 1.4 2006/12/02 09:53:41 katta
- * $FreeBSD: 3f04e298c7c5c93a155cc8736d540d0a77a5b7ea $
+ * $FreeBSD: 5968deb60b43a863708c2b95950f8ffcee0a0c57 $
  */
 #ifndef _MACHINE_PROFILE_H_
 #define	_MACHINE_PROFILE_H_
@@ -76,13 +76,6 @@
 	".set at");
 
 #ifdef _KERNEL
-/*
- * The following two macros do splhigh and splx respectively.
- * They have to be defined this way because these are real
- * functions on the MIPS, and we do not want to invoke mcount
- * recursively.
- */
-
 #define	MCOUNT_DECL(s)	u_long s;
 #ifdef SMP
 extern int	mcount_lock;

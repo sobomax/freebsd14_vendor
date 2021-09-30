@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f226bd005409a3abfbf8f0f3522a98719c0f280 $");
+__FBSDID("$FreeBSD: b5232f0297e6c53ba3d90a685890e847077eacff $");
 
 #ifndef _NETINET_SCTP_ASCONF_H_
 #define _NETINET_SCTP_ASCONF_H_
@@ -59,7 +59,6 @@ extern uint32_t
 sctp_addr_mgmt_ep_sa(struct sctp_inpcb *, struct sockaddr *, uint32_t,
     uint32_t);
 
-
 extern int
 sctp_asconf_iterator_ep(struct sctp_inpcb *inp, void *ptr,
     uint32_t val);
@@ -68,7 +67,6 @@ sctp_asconf_iterator_stcb(struct sctp_inpcb *inp,
     struct sctp_tcb *stcb,
     void *ptr, uint32_t type);
 extern void sctp_asconf_iterator_end(void *ptr, uint32_t val);
-
 
 extern int32_t
 sctp_set_primary_ip_address_sa(struct sctp_tcb *,

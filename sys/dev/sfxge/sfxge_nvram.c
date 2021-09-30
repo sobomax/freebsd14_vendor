@@ -28,8 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c2fecdd59dab7093105c4f80261674a802f2f90 $");
-
+__FBSDID("$FreeBSD: 7298cf0b2dfc5059945efdd662cda8dd71902f68 $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>
@@ -104,11 +103,10 @@ sfxge_nvram_rw(struct sfxge_softc *sc, sfxge_ioc_t *ip, efx_nvram_type_t type,
 
 fail3:
 	free(buf, M_TEMP);
-	efx_nvram_rw_finish(enp, type);
+	efx_nvram_rw_finish(enp, type, NULL);
 fail1:
 	return (rc);
 }
-
 
 static int
 sfxge_nvram_erase(struct sfxge_softc *sc, efx_nvram_type_t type)
@@ -125,7 +123,7 @@ sfxge_nvram_erase(struct sfxge_softc *sc, efx_nvram_type_t type)
 
 	rc = efx_nvram_erase(enp, type);
 
-	efx_nvram_rw_finish(enp, type);
+	efx_nvram_rw_finish(enp, type, NULL);
 	return (rc);
 }
 

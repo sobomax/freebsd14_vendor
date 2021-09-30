@@ -1,4 +1,4 @@
-# $FreeBSD: 2c1f504dc191fa530e752099f7a2df20078ebeb5 $
+# $FreeBSD: 738b6ace31a1091d538c54d6e68471b470624da6 $
 
 _spath=	${SRCTOP}/contrib/ofed/opensm/opensm
 .PATH: ${_spath} ${_spath:H}/man
@@ -98,5 +98,7 @@ MAN=		opensm.8
 CFLAGS+=	-I${_spath:H} -DHAVE_CONFIG_H=1
 CFLAGS+=	-I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/infiniband
 LIBADD=		opensm osmvendor osmcomp wrap pthread
+
+WARNS?=		2
 
 .include <bsd.prog.mk>

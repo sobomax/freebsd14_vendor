@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 293daa2cae3d0ffd7039974f2e7785a14219373e $
+ * $FreeBSD: 772a7ec672024b26ae7a6aa7c959f391c0f42439 $
  */
 
 #ifndef __tcp_hpts_h__
@@ -50,7 +50,6 @@ TAILQ_HEAD(hptsh, inpcb);
 #define HPTS_USEC_IN_SEC 1000000
 #define HPTS_MSEC_IN_SEC 1000
 #define HPTS_USEC_IN_MSEC 1000
-
 
 struct hpts_diag {
 	uint32_t p_hpts_active; 	/* bbr->flex7 x */
@@ -102,7 +101,7 @@ struct tcp_hpts_entry {
 	uint32_t p_lasttick;	/* Last tick before the current one */
 	uint8_t p_direct_wake :1, /* boolean */
 		p_on_min_sleep:1, /* boolean */
-		p_avail:6; 
+		p_avail:6;
 	uint8_t p_fill[3];	  /* Fill to 32 bits */
 	/* Cache line 0x40 */
 	void *p_inp;

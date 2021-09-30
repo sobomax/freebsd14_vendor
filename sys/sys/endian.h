@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3cef6130cd15ecf219966b3db7f59a869e37120e $
+ * $FreeBSD: d070d09ad9f71e5242b8c00975988bf1e7f9f70e $
  */
 
 #ifndef _SYS_ENDIAN_H_
@@ -39,22 +39,22 @@
 typedef	__uint8_t	uint8_t;
 #define	_UINT8_T_DECLARED
 #endif
- 
+
 #ifndef _UINT16_T_DECLARED
 typedef	__uint16_t	uint16_t;
 #define	_UINT16_T_DECLARED
 #endif
- 
+
 #ifndef _UINT32_T_DECLARED
 typedef	__uint32_t	uint32_t;
 #define	_UINT32_T_DECLARED
 #endif
- 
+
 #ifndef _UINT64_T_DECLARED
 typedef	__uint64_t	uint64_t;
 #define	_UINT64_T_DECLARED
 #endif
- 
+
 /*
  * General byte order swapping functions.
  */

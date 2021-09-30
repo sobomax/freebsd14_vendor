@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 430c78041128e229b672bf50a3359f1549414376 $
+ * $FreeBSD: ede7ea9f04f79a529dafd184845c83648a9bb588 $
  */
 
 extern "C" {
@@ -67,7 +67,7 @@ void test_ok(int os_flags, int fuse_flags) {
 	})));
 
 	fd = open(FULLPATH, os_flags);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 };
@@ -201,7 +201,7 @@ TEST_F(Open, multiple_creds)
 		expect_release(ino, fh1);
 
 		fd1 = open(FULLPATH, O_RDONLY);
-		EXPECT_LE(0, fd1) << strerror(errno);
+		ASSERT_LE(0, fd1) << strerror(errno);
 	}, [] {
 		int fd0;
 

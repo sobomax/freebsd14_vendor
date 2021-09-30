@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)errno.h	8.5 (Berkeley) 1/21/94
- * $FreeBSD: 6994c0612f79ec8203b0a357faac887311255ae5 $
+ * $FreeBSD: e53a8d4c6c7f3af2eb3afcb24deccc8d0b37000f $
  */
 
 #ifndef _SYS_ERRNO_H_
@@ -187,7 +187,7 @@ __END_DECLS
 #define	ELAST		97		/* Must be equal largest errno */
 #endif /* _POSIX_SOURCE */
 
-#if defined(_KERNEL) || defined(_WANT_KERNEL_ERRNO)
+#if defined(_KERNEL) || defined(_WANT_KERNEL_ERRNO) || defined(_STANDALONE)
 /* pseudo-errors returned inside kernel to modify return to process */
 #define	ERESTART	(-1)		/* restart syscall */
 #define	EJUSTRETURN	(-2)		/* don't modify regs, just return */

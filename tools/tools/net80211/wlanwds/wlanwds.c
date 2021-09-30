@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 86246c21f5c7e4fa01b569421fd184f818cd98e1 $
+ * $FreeBSD: cf1335663388df9446737cdf863346c5a47fb637 $
  */
 
 /*
@@ -84,7 +84,6 @@ static struct wds *wds;
 static	const char *script = NULL;
 static	char **ifnets;
 static	int nifnets = 0;
-static	int verbose = 0;
 static	int discover_on_join = 0;
 
 static	void scanforvaps(int s);
@@ -375,6 +374,8 @@ static void
 handle_rtmsg(struct rt_msghdr *rtm, ssize_t msglen)
 {
 	struct if_announcemsghdr *ifan;
+
+	(void) msglen; /* UNUSED */
 
 	if (rtm->rtm_version != RTM_VERSION) {
 		syslog(LOG_ERR, "routing message version %d not understood",

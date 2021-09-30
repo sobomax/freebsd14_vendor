@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8967ca96fa2aa7fcad8869f30862ab9dcdccca3d $");
+__FBSDID("$FreeBSD: 7663b6f82e7d23ac60797e9bd07049989dd1a6d2 $");
 
 #include <sys/param.h>
 
@@ -102,7 +102,11 @@ __makecontext(ucontext_t *ucp, void (*start)(void), int argc, ...)
 		uint64_t *argp;
 
 		/* Skip past frame pointer and saved LR */
+#if !defined(_CALL_ELF) || _CALL_ELF == 1
 		argp = (uint64_t *)sp + 6;
+#else
+		argp = (uint64_t *)sp + 4;
+#endif
 
 		for (i = 0; i < stackargs; i++)
 			*argp++ = va_arg(ap, uint64_t);
@@ -113,7 +117,12 @@ __makecontext(ucontext_t *ucp, void (*start)(void), int argc, ...)
 	 * Use caller-saved regs 14/15 to hold params that _ctx_start
 	 * will use to invoke the user-supplied func
 	 */
+#if !defined(_CALL_ELF) || _CALL_ELF == 1
+	/* Cast to ensure this is treated as a function descriptor. */
 	mc->mc_srr0 = *(uintptr_t *)_ctx_start;
+#else
+	mc->mc_srr0 = (uintptr_t) _ctx_start;
+#endif
 	mc->mc_gpr[1] = (uintptr_t) sp;		/* new stack pointer */
 	mc->mc_gpr[14] = (uintptr_t) start;	/* r14 <- start */
 	mc->mc_gpr[15] = (uintptr_t) ucp;	/* r15 <- ucp */

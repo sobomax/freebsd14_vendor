@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b6d17d3d6710ea9fc23a7955ab2e37bab745306 $");
+__FBSDID("$FreeBSD: 055a60df3468dcfdd83c161de9e500541fc3fc80 $");
 
 #include <sys/types.h>
 #include <sys/endian.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 9b6d17d3d6710ea9fc23a7955ab2e37bab745306 $");
 #include <sys/systm.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/vinum/geom_vinum_var.h>
 #include <geom/vinum/geom_vinum.h>
 
@@ -69,7 +70,6 @@ static int	gv_legacy_header_type(uint8_t *, int);
  * NOTE: i386 and amd64 formats are stored as little-endian; the current
  * format uses big-endian (network order).
  */
-
 
 /* Checks for legacy format depending on platform. */
 static int

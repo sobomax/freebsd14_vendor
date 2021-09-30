@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/net/altq/altq_fairq.c,v 1.1 2008/04/06 18:58:15 dillon Exp $
- * $FreeBSD: c6ccea2b5dee8fddca68060de9f20367550b3e26 $
+ * $FreeBSD: a8f96daeed368d1ed4f97daf444776210eaad292 $
  */
 /*
  * Matt: I gutted altq_priq.c and used it as a skeleton on which to build
@@ -156,7 +156,6 @@ fairq_add_altq(struct ifnet *ifp, struct pf_altq *a)
 		return (EINVAL);
 	if (!ALTQ_IS_READY(&ifp->if_snd))
 		return (ENODEV);
-
 
 	pif = malloc(sizeof(struct fairq_if),
 			M_DEVBUF, M_WAITOK | M_ZERO);

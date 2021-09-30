@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 61bdad11eb178da21bbcaad04dc19462fb8354e9 $
+ *	$FreeBSD: c573c02b7f92d42d8d01c604223bdbd9e41581c3 $
  */
 
 #include <sys/param.h>
@@ -240,6 +240,7 @@ acpi_handle_fadt(ACPI_TABLE_HEADER *sdp)
 	ACPI_TABLE_HEADER *dsdp;
 	ACPI_TABLE_FACS	*facs;
 	ACPI_TABLE_FADT *fadt;
+	vm_offset_t	addr;
 	int		fadt_revision;
 
 	fadt = (ACPI_TABLE_FADT *)sdp;
@@ -247,12 +248,17 @@ acpi_handle_fadt(ACPI_TABLE_HEADER *sdp)
 
 	fadt_revision = acpi_get_fadt_revision(fadt);
 	if (fadt_revision == 1)
-		facs = (ACPI_TABLE_FACS *)acpi_map_sdt(fadt->Facs);
+		addr = fadt->Facs;
 	else
-		facs = (ACPI_TABLE_FACS *)acpi_map_sdt(fadt->XFacs);
-	if (memcmp(facs->Signature, ACPI_SIG_FACS, 4) != 0 || facs->Length < 64)
-		errx(1, "FACS is corrupt");
-	acpi_print_facs(facs);
+		addr = fadt->XFacs;
+	if (addr != 0) {
+		facs = (ACPI_TABLE_FACS *)acpi_map_sdt(addr);
+
+		if (memcmp(facs->Signature, ACPI_SIG_FACS, 4) != 0 ||
+		    facs->Length < 64)
+			errx(1, "FACS is corrupt");
+		acpi_print_facs(facs);
+	}
 
 	if (fadt_revision == 1)
 		dsdp = (ACPI_TABLE_HEADER *)acpi_map_sdt(fadt->Dsdt);
@@ -1556,7 +1562,8 @@ static const char *nfit_types[] = {
     [ACPI_NFIT_TYPE_SMBIOS] = "SMBIOS",
     [ACPI_NFIT_TYPE_CONTROL_REGION] = "Control Region",
     [ACPI_NFIT_TYPE_DATA_REGION] = "Data Region",
-    [ACPI_NFIT_TYPE_FLUSH_ADDRESS] = "Flush Address"
+    [ACPI_NFIT_TYPE_FLUSH_ADDRESS] = "Flush Address",
+    [ACPI_NFIT_TYPE_CAPABILITIES] = "Platform Capabilities"
 };
 
 
@@ -1573,6 +1580,7 @@ acpi_print_nfit(ACPI_NFIT_HEADER *nfit)
 	ACPI_NFIT_CONTROL_REGION *ctlreg;
 	ACPI_NFIT_DATA_REGION *datareg;
 	ACPI_NFIT_FLUSH_ADDRESS *fladdr;
+	ACPI_NFIT_CAPABILITIES *caps;
 
 	if (nfit->Type < nitems(nfit_types))
 		printf("\tType=%s\n", nfit_types[nfit->Type]);
@@ -1702,6 +1710,20 @@ acpi_print_nfit(ACPI_NFIT_HEADER *nfit)
 		printf("\tDeviceHandle=%u\n", (u_int)fladdr->DeviceHandle);
 		printf("\tHintCount=%u\n", (u_int)fladdr->HintCount);
 		/* XXX fladdr->HintAddress[i] output is not supported */
+		break;
+	case ACPI_NFIT_TYPE_CAPABILITIES:
+		caps = (ACPI_NFIT_CAPABILITIES *)nfit;
+		printf("\tHighestCapability=%u\n", (u_int)caps->HighestCapability);
+
+#define PRINTFLAG(var, flag)	printflag((var), ACPI_NFIT_CAPABILITY_## flag, #flag)
+
+		printf("\tCapabilities=");
+		PRINTFLAG(caps->Capabilities, CACHE_FLUSH);
+		PRINTFLAG(caps->Capabilities, MEM_FLUSH);
+		PRINTFLAG(caps->Capabilities, MEM_MIRRORING);
+		PRINTFLAG_END();
+
+#undef PRINTFLAG
 		break;
 	}
 }

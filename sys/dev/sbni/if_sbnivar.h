@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2d069c6db4d688854083ebcd00f5701f845a5cc6 $
+ * $FreeBSD: 18bab9c36c46a91aad597ee8122c3da4ab238ab7 $
  */
 
 /*
@@ -63,7 +63,6 @@ struct sbni_flags {
 	u_int	fixed_rate	: 1;
 };
 
-
 #ifdef _KERNEL	/* to avoid compile this decls with sbniconfig */
 
 struct sbni_softc {
@@ -81,7 +80,7 @@ struct sbni_softc {
 
 	struct	mbuf *rx_buf_p;		/* receive buffer ptr */
 	struct	mbuf *tx_buf_p;		/* transmit buffer ptr */
-	
+
 	u_int	pktlen;			/* length of transmitting pkt */
 	u_int	framelen;		/* current frame length */
 	u_int	maxframe;		/* maximum valid frame length */
@@ -147,7 +146,6 @@ struct sbni_softc	*connect_to_master(struct sbni_softc *);
 #define	SIOCSHWFLAGS	_IOWR('i', 61, struct ifreq)	/* set flags */
 #define SIOCGINSTATS	_IOWR('i', 60, struct ifreq)	/* get internal stats */
 #define SIOCRINSTATS	_IOWR('i', 63, struct ifreq)	/* reset internal stats */
-
 
 /*
  * CRC-32 stuff

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 776fdc1ec47aeee0287556c8ee922d967fb9be14 $");
+__FBSDID("$FreeBSD: 2003d9b631f6de76025a88074707eb9553e99d49 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: 776fdc1ec47aeee0287556c8ee922d967fb9be14 $");
 #include <sys/malloc.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/label/g_label.h>
 
 #define EXT2FS_SB_OFFSET	1024
@@ -96,7 +97,7 @@ exit_free:
 
 struct g_label_desc g_label_ext2fs = {
 	.ld_taste = g_label_ext2fs_taste,
-	.ld_dir = "ext2fs",
+	.ld_dirprefix = "ext2fs/",
 	.ld_enabled = 1
 };
 

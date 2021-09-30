@@ -1,0 +1,4 @@
+.\" $FreeBSD: ca399c968fe11fc5e0f537056b890c0899831426 $
+Build and install
+.Xr sendmail 8
+and related programs.

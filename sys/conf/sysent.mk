@@ -1,9 +1,10 @@
-# $FreeBSD: 51631f41cca83a4b933689bed147ed1b58c1f5a3 $
+# $FreeBSD: 761905f3ffa611bf3dbd974ade9f58a6c4b2a033 $
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}
 
 .include <bsd.sysdir.mk>
+.include <src.lua.mk>
 
 COMMON_GENERATED=	proto.h		\
 			syscall.h	\
@@ -21,8 +22,15 @@ SYSENT_CONF?=	syscalls.conf
 SRCS+=	${SYSENT_FILE}
 SRCS+=	${SYSENT_CONF}
 
-MAKESYSCALLS_INTERP?=	sh
-MAKESYSCALLS_SCRIPT?=	${SYSDIR}/kern/makesyscalls.sh
+# Ensure that the target gets updated if the capabilities file is modified,
+# even though it is not an explicit input to makesyscalls.lua.  For some
+# targets, like Linux system calls, this is unnecessary, but a spurious rebuild
+# is both rare and harmless.
+CAPABILITIES_CONF?= ${SYSDIR}/kern/capabilities.conf
+SRCS+=	${CAPABILITIES_CONF}
+
+MAKESYSCALLS_INTERP?=	${LUA}
+MAKESYSCALLS_SCRIPT?=	${SYSDIR}/tools/makesyscalls.lua
 MAKESYSCALLS=	${MAKESYSCALLS_INTERP} ${MAKESYSCALLS_SCRIPT}
 
 all:

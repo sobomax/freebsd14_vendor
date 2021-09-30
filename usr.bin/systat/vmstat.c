@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: b5fea58325b30050938b13c6307c6ee57250df87 $");
+__FBSDID("$FreeBSD: e84b79bdd184aa0ef709e912b0133aa11da165d4 $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)vmstat.c	8.2 (Berkeley) 1/12/94";
@@ -115,7 +115,7 @@ static struct Info {
 	long	nchcount;
 	long	*intrcnt;
 	long	bufspace;
-	int	desiredvnodes;
+	u_long	maxvnodes;
 	long	numvnodes;
 	long	freevnodes;
 	int	numdirtybuffers;
@@ -176,10 +176,10 @@ closekre(WINDOW *w)
 #define PAGECOL		47
 #define INTSROW		 5	/* uses all rows to bottom and 16 cols */
 #define INTSCOL		64
-#define PROCSROW	 6	/* uses 3 rows and 19 cols */
+#define PROCSROW	 6	/* uses 3 rows and 20 cols */
 #define PROCSCOL	 0
 #define GENSTATROW	 7	/* uses 2 rows and 29 cols */
-#define GENSTATCOL	21
+#define GENSTATCOL	22
 #define VMSTATROW	 5	/* uses 17 rows and 12-14 cols */
 #define VMSTATCOL	49	/* actually 50-51 for some fields */
 #define GRAPHROW	10	/* uses 3 rows and 49-51 cols */
@@ -303,12 +303,12 @@ labelkre(void)
 	clear();
 	mvprintw(STATROW, STATCOL + 6, "users    Load");
 	mvprintw(STATROW + 1, STATCOL + 3, "Mem usage:    %%Phy   %%Kmem");
-	mvprintw(MEMROW, MEMCOL, "Mem:       REAL            VIRTUAL");
-	mvprintw(MEMROW + 1, MEMCOL, "        Tot   Share      Tot    Share");
+	mvprintw(MEMROW, MEMCOL, "Mem:      REAL           VIRTUAL");
+	mvprintw(MEMROW + 1, MEMCOL, "       Tot   Share     Tot    Share");
 	mvprintw(MEMROW + 2, MEMCOL, "Act");
 	mvprintw(MEMROW + 3, MEMCOL, "All");
 
-	mvprintw(MEMROW + 1, MEMCOL + 41, "Free");
+	mvprintw(MEMROW + 1, MEMCOL + 40, "Free");
 
 	mvprintw(PAGEROW, PAGECOL,     "         VN PAGER   SWAP PAGER");
 	mvprintw(PAGEROW + 1, PAGECOL, "         in   out     in   out");
@@ -343,12 +343,12 @@ labelkre(void)
 	mvprintw(GRAPHROW, GRAPHCOL,
 		"  . %%Sys    . %%Intr   . %%User   . %%Nice   . %%Idle");
 	mvprintw(PROCSROW, PROCSCOL, "Proc:");
-	mvprintw(PROCSROW + 1, PROCSCOL, "  r   p   d   s   w");
+	mvprintw(PROCSROW + 1, PROCSCOL, "  r   p   d    s   w");
 	mvprintw(GRAPHROW + 1, GRAPHCOL,
 		"|    |    |    |    |    |    |    |    |    |    |");
 
 	mvprintw(VNSTATROW, VNSTATCOL + 8, "dtbuf");
-	mvprintw(VNSTATROW + 1, VNSTATCOL + 8, "desvn");
+	mvprintw(VNSTATROW + 1, VNSTATCOL + 8, "maxvn");
 	mvprintw(VNSTATROW + 2, VNSTATCOL + 8, "numvn");
 	mvprintw(VNSTATROW + 3, VNSTATCOL + 8, "frevn");
 
@@ -458,20 +458,20 @@ showkre(void)
 	putfloat(100.0 * s.v_kmem_map_size / kmem_size,
 	   STATROW + 1, STATCOL + 22, 2, 0, 1);
 
-	sysputpage(wnd, MEMROW + 2, MEMCOL + 4, 7, total.t_arm, 0);
-	sysputpage(wnd, MEMROW + 2, MEMCOL + 12, 7, total.t_armshr, 0);
-	sysputpage(wnd, MEMROW + 2, MEMCOL + 20, 8, total.t_avm, 0);
-	sysputpage(wnd, MEMROW + 2, MEMCOL + 29, 8, total.t_avmshr, 0);
-	sysputpage(wnd, MEMROW + 3, MEMCOL + 4, 7, total.t_rm, 0);
-	sysputpage(wnd, MEMROW + 3, MEMCOL + 12, 7, total.t_rmshr, 0);
-	sysputpage(wnd, MEMROW + 3, MEMCOL + 20, 8, total.t_vm, 0);
-	sysputpage(wnd, MEMROW + 3, MEMCOL + 29, 8, total.t_vmshr, 0);
-	sysputpage(wnd, MEMROW + 2, MEMCOL + 38, 7, total.t_free, 0);
+	sysputpage(wnd, MEMROW + 2, MEMCOL + 4, 6, total.t_arm, 0);
+	sysputpage(wnd, MEMROW + 2, MEMCOL + 12, 6, total.t_armshr, 0);
+	sysputpage(wnd, MEMROW + 2, MEMCOL + 20, 6, total.t_avm, 0);
+	sysputpage(wnd, MEMROW + 2, MEMCOL + 29, 6, total.t_avmshr, 0);
+	sysputpage(wnd, MEMROW + 3, MEMCOL + 4, 6, total.t_rm, 0);
+	sysputpage(wnd, MEMROW + 3, MEMCOL + 12, 6, total.t_rmshr, 0);
+	sysputpage(wnd, MEMROW + 3, MEMCOL + 20, 6, total.t_vm, 0);
+	sysputpage(wnd, MEMROW + 3, MEMCOL + 29, 6, total.t_vmshr, 0);
+	sysputpage(wnd, MEMROW + 2, MEMCOL + 38, 6, total.t_free, 0);
 	putint(total.t_rq - 1, PROCSROW + 2, PROCSCOL, 3);
 	putint(total.t_pw, PROCSROW + 2, PROCSCOL + 4, 3);
 	putint(total.t_dw, PROCSROW + 2, PROCSCOL + 8, 3);
-	putint(total.t_sl, PROCSROW + 2, PROCSCOL + 12, 3);
-	putint(total.t_sw, PROCSROW + 2, PROCSCOL + 16, 3);
+	putint(total.t_sl, PROCSROW + 2, PROCSCOL + 12, 4);
+	putint(total.t_sw, PROCSROW + 2, PROCSCOL + 17, 3);
 	PUTRATE(v_io_faults, VMSTATROW, VMSTATCOL + 2, 8 - 2);
 	PUTRATE(v_cow_faults, VMSTATROW + 1, VMSTATCOL + 2, 8 - 2);
 	PUTRATE(v_zfod, VMSTATROW + 2, VMSTATCOL + 2, 8 - 2);
@@ -518,7 +518,7 @@ showkre(void)
 		break;
 	}
 	putint(s.numdirtybuffers, VNSTATROW, VNSTATCOL, 7);
-	putint(s.desiredvnodes, VNSTATROW + 1, VNSTATCOL, 7);
+	putint(s.maxvnodes, VNSTATROW + 1, VNSTATCOL, 7);
 	putint(s.numvnodes, VNSTATROW + 2, VNSTATCOL, 7);
 	putint(s.freevnodes, VNSTATROW + 3, VNSTATCOL, 7);
 	putint(s.nchcount, NAMEIROW + 2, NAMEICOL, 8);
@@ -777,7 +777,7 @@ getinfo(struct Info *ls)
 	GETSYSCTL("vm.stats.vm.v_inactive_count", ls->v_inactive_count);
 	GETSYSCTL("vm.stats.vm.v_laundry_count", ls->v_laundry_count);
 	GETSYSCTL("vfs.bufspace", ls->bufspace);
-	GETSYSCTL("kern.maxvnodes", ls->desiredvnodes);
+	GETSYSCTL("kern.maxvnodes", ls->maxvnodes);
 	GETSYSCTL("vfs.numvnodes", ls->numvnodes);
 	GETSYSCTL("vfs.freevnodes", ls->freevnodes);
 	GETSYSCTL("vfs.cache.nchstats", ls->nchstats);

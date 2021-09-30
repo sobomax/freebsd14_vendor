@@ -61,7 +61,7 @@
 #include "mixer_if.h"
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 35b3257a00f81d75d1cb5392d885d1ab57ca640a $");
+SND_DECLARE_FILE("$FreeBSD: 30868de323b3cd651ed81a6bb957009781b08f48 $");
 
 /* Supported chip ID's */
 #define CMI8338A_PCI_ID   0x010013f6
@@ -268,7 +268,6 @@ cmi_dma_prog(struct sc_info *sc, struct sc_chinfo *ch, u_int32_t base)
 	i = sz / (ch->bps * CMI_INTR_PER_BUFFER) - 1;
 	cmi_wr(sc, base + 6, i, 2);
 }
-
 
 static void
 cmi_ch0_start(struct sc_info *sc, struct sc_chinfo *ch)
@@ -544,7 +543,6 @@ cmi_intr(void *data)
 	snd_mtxlock(sc->lock);
 	intrstat = cmi_rd(sc, CMPCI_REG_INTR_STATUS, 4);
 	if ((intrstat & CMPCI_REG_ANY_INTR) != 0) {
-
 		toclear = 0;
 		if (intrstat & CMPCI_REG_CH0_INTR) {
 			toclear |= CMPCI_REG_CH0_INTR_ENABLE;
@@ -571,7 +569,6 @@ cmi_intr(void *data)
 
 			snd_mtxlock(sc->lock);
 			cmi_set4(sc, CMPCI_REG_INTR_CTRL, toclear);
-
 		}
 	}
 	if(sc->mpu_intr) {
@@ -843,8 +840,6 @@ cmi_midiattach(struct sc_info *sc) {
 	cmi_set4(sc, CMPCI_REG_FUNC_1, CMPCI_REG_UART_ENABLE);
 	sc->mpu = mpu401_init(&cmi_mpu_class, sc, cmi_intr, &sc->mpu_intr);
 }
-
-
 
 /* ------------------------------------------------------------------------- */
 /* Power and reset */

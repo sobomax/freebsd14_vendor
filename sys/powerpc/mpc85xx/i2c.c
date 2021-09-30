@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3d48b36fa8ab3ccd23099b21ea6baf412990764 $");
+__FBSDID("$FreeBSD: 390e492b2d0b6e92663c755015086a93b7b61a72 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,7 +114,6 @@ static device_method_t i2c_methods[] = {
 	DEVMETHOD(iicbus_write,			i2c_write),
 	DEVMETHOD(iicbus_transfer,		iicbus_transfer_gen),
 	DEVMETHOD(ofw_bus_get_node,		i2c_get_node),
-
 	{ 0, 0 }
 };
 
@@ -252,7 +251,7 @@ i2c_repeated_start(device_t dev, u_char slave, int timeout)
 {
 	struct i2c_softc *sc;
 	int error;
-	
+
 	sc = device_get_softc(dev);
 
 	mtx_lock(&sc->mutex);

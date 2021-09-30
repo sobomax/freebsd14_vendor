@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e052c991c2546adc0fa5ad89cf46dd5872bc10a $");
+__FBSDID("$FreeBSD: 4ae9aa152cc983406b68f6b4f8bad38fe0e1a211 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: 4e052c991c2546adc0fa5ad89cf46dd5872bc10a $");
 
 #include <arm/ti/ti_pinmux.h>
 #include <arm/ti/omap4/omap4_scm_padconf.h>
-
 
 /*
  *	This file defines the pin mux configuration for the OMAP4xxx series of

@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 27a6c2a0aaa09082d658b0341986526a5c4b529d $");
+__FBSDID("$FreeBSD: f2dc6657026e09b3bf60238cdd413c81bb9fc666 $");
 
 /*
  * Driver for Realtek RTL8188SU/RTL8191SU/RTL8192SU.
@@ -71,7 +71,8 @@ __FBSDID("$FreeBSD: 27a6c2a0aaa09082d658b0341986526a5c4b529d $");
 
 #ifdef USB_DEBUG
 static int rsu_debug = 0;
-SYSCTL_NODE(_hw_usb, OID_AUTO, rsu, CTLFLAG_RW, 0, "USB rsu");
+SYSCTL_NODE(_hw_usb, OID_AUTO, rsu, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB rsu");
 SYSCTL_INT(_hw_usb_rsu, OID_AUTO, debug, CTLFLAG_RWTUN, &rsu_debug, 0,
     "Debug level");
 #define	RSU_DPRINTF(_sc, _flg, ...)					\
@@ -658,7 +659,7 @@ rsu_do_request(struct rsu_softc *sc, struct usb_device_request *req,
 {
 	usb_error_t err;
 	int ntries = 10;
-	
+
 	RSU_ASSERT_LOCKED(sc);
 
 	while (ntries--) {
@@ -1893,7 +1894,7 @@ rsu_site_survey(struct rsu_softc *sc, struct ieee80211_scan_ssid *ssid)
 	if (sc->sc_active_scan)
 		cmd.active = htole32(1);
 	cmd.limit = htole32(48);
-	
+
 	if (ssid != NULL) {
 		sc->sc_extra_scan = 1;
 		cmd.ssidlen = htole32(ssid->len);
@@ -2329,7 +2330,7 @@ rsu_rx_copy_to_mbuf(struct rsu_softc *sc, struct r92s_rx_stat *stat,
 	/* Finalize mbuf. */
 	memcpy(mtod(m, uint8_t *), (uint8_t *)stat, totlen);
 	m->m_pkthdr.len = m->m_len = totlen;
- 
+
 	return (m);
 fail:
 	counter_u64_add(ic->ic_ierrors, 1);
@@ -2553,6 +2554,7 @@ rsu_rxeof(struct usb_xfer *xfer, struct rsu_data *data)
 static void
 rsu_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 {
+	struct epoch_tracker et;
 	struct rsu_softc *sc = usbd_xfer_softc(xfer);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_node *ni;
@@ -2587,6 +2589,7 @@ tr_setup:
 		 * ieee80211_input() because here is at the end of a USB
 		 * callback and safe to unlock.
 		 */
+		NET_EPOCH_ENTER(et);
 		while (m != NULL) {
 			next = m->m_next;
 			m->m_next = NULL;
@@ -2605,6 +2608,7 @@ tr_setup:
 			RSU_LOCK(sc);
 			m = next;
 		}
+		NET_EPOCH_EXIT(et);
 		break;
 	default:
 		/* needs it to the inactive queue due to a error. */
@@ -3339,7 +3343,7 @@ static int
 rsu_load_firmware(struct rsu_softc *sc)
 {
 	const struct r92s_fw_hdr *hdr;
-	struct r92s_fw_priv *dmem;
+	struct r92s_fw_priv dmem;
 	struct ieee80211com *ic = &sc->sc_ic;
 	const uint8_t *imem, *emem;
 	uint32_t imemsz, ememsz;
@@ -3385,7 +3389,7 @@ rsu_load_firmware(struct rsu_softc *sc)
 	    hdr->minute);
 
 	/* Make sure that driver and firmware are in sync. */
-	if (hdr->privsz != htole32(sizeof(*dmem))) {
+	if (hdr->privsz != htole32(sizeof(dmem))) {
 		device_printf(sc->sc_dev, "unsupported firmware image\n");
 		error = EINVAL;
 		goto fail;
@@ -3471,24 +3475,23 @@ rsu_load_firmware(struct rsu_softc *sc)
 	}
 
 	/* Update DMEM section before loading. */
-	dmem = __DECONST(struct r92s_fw_priv *, &hdr->priv);
-	memset(dmem, 0, sizeof(*dmem));
-	dmem->hci_sel = R92S_HCI_SEL_USB | R92S_HCI_SEL_8172;
-	dmem->nendpoints = sc->sc_nendpoints;
-	dmem->chip_version = sc->cut;
-	dmem->rf_config = sc->sc_rftype;
-	dmem->vcs_type = R92S_VCS_TYPE_AUTO;
-	dmem->vcs_mode = R92S_VCS_MODE_RTS_CTS;
-	dmem->turbo_mode = 0;
-	dmem->bw40_en = !! (ic->ic_htcaps & IEEE80211_HTCAP_CHWIDTH40);
-	dmem->amsdu2ampdu_en = !! (sc->sc_ht);
-	dmem->ampdu_en = !! (sc->sc_ht);
-	dmem->agg_offload = !! (sc->sc_ht);
-	dmem->qos_en = 1;
-	dmem->ps_offload = 1;
-	dmem->lowpower_mode = 1;	/* XXX TODO: configurable? */
+	memset(&dmem, 0, sizeof(dmem));
+	dmem.hci_sel = R92S_HCI_SEL_USB | R92S_HCI_SEL_8172;
+	dmem.nendpoints = sc->sc_nendpoints;
+	dmem.chip_version = sc->cut;
+	dmem.rf_config = sc->sc_rftype;
+	dmem.vcs_type = R92S_VCS_TYPE_AUTO;
+	dmem.vcs_mode = R92S_VCS_MODE_RTS_CTS;
+	dmem.turbo_mode = 0;
+	dmem.bw40_en = !! (ic->ic_htcaps & IEEE80211_HTCAP_CHWIDTH40);
+	dmem.amsdu2ampdu_en = !! (sc->sc_ht);
+	dmem.ampdu_en = !! (sc->sc_ht);
+	dmem.agg_offload = !! (sc->sc_ht);
+	dmem.qos_en = 1;
+	dmem.ps_offload = 1;
+	dmem.lowpower_mode = 1;	/* XXX TODO: configurable? */
 	/* Load DMEM section. */
-	error = rsu_fw_loadsection(sc, (uint8_t *)dmem, sizeof(*dmem));
+	error = rsu_fw_loadsection(sc, (uint8_t *)&dmem, sizeof(dmem));
 	if (error != 0) {
 		device_printf(sc->sc_dev,
 		    "could not load firmware section %s\n", "DMEM");
@@ -3522,7 +3525,6 @@ rsu_load_firmware(struct rsu_softc *sc)
 	firmware_put(fw, FIRMWARE_UNLOAD);
 	return (error);
 }
-
 
 static int	
 rsu_raw_xmit(struct ieee80211_node *ni, struct mbuf *m, 

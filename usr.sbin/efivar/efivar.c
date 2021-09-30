@@ -24,13 +24,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f258eda03055fcbefccc8d7c9614fdc9ac30e3d $");
+__FBSDID("$FreeBSD: c1d36b9bb0ba45aa875c68b31e53ff371da8439d $");
 
 #include <ctype.h>
 #include <efivar.h>
 #include <efivar-dp.h>
 #include <err.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <getopt.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -58,7 +59,7 @@ static struct option longopts[] = {
 	{ "name",		required_argument,	NULL,	'n' },
 	{ "no-name",		no_argument,		NULL,	'N' },
 	{ "print",		no_argument,		NULL,	'p' },
-	{ "print-decimal",	no_argument,		NULL,	'd' },
+//	{ "print-decimal",	no_argument,		NULL,	'd' }, /* unimplemnted clash with linux version */
 	{ "raw-guid",		no_argument,		NULL,   'R' },
 	{ "utf8",		no_argument,		NULL,	'u' },
 	{ "write",		no_argument,		NULL,	'w' },
@@ -69,6 +70,7 @@ static struct option longopts[] = {
 static int aflag, Aflag, bflag, dflag, Dflag, gflag, Hflag, Nflag,
 	lflag, Lflag, Rflag, wflag, pflag, uflag, load_opt_flag;
 static char *varname;
+static char *fromfile;
 static u_long attrib = EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS;
 
 static void
@@ -182,15 +184,31 @@ print_var(efi_guid_t *guid, char *name)
 	uint32_t att;
 	uint8_t *data;
 	size_t datalen;
-	char *gname;
+	char *gname = NULL;
 	int rv;
 
-	pretty_guid(guid, &gname);
-	if (pflag) {
-		rv = efi_get_variable(*guid, name, &data, &datalen, &att);
+	if (guid)
+		pretty_guid(guid, &gname);
+	if (pflag || fromfile) {
+		if (fromfile) {
+			int fd;
 
-		if (rv < 0)
-			err(1, "%s-%s", gname, name);
+			fd = open(fromfile, O_RDONLY);
+			if (fd < 0)
+				err(1, "open %s", fromfile);
+			data = malloc(64 * 1024);
+			if (data == NULL)
+				err(1, "malloc");
+			datalen = read(fd, data, 64 * 1024);
+			if (datalen <= 0)
+				err(1, "read");
+			close(fd);
+		} else {
+			rv = efi_get_variable(*guid, name, &data, &datalen, &att);
+			if (rv < 0)
+				err(1, "fetching %s-%s", gname, name);
+		}
+
 
 		if (!Nflag)
 			printf("%s-%s\n", gname, name);
@@ -309,6 +327,9 @@ parse_args(int argc, char **argv)
 			wflag++;
 			break;
 		case 'f':
+			free(fromfile);
+			fromfile = strdup(optarg);
+			break;
 		case 0:
 			errx(1, "unknown or unimplemented option\n");
 			break;
@@ -342,7 +363,10 @@ parse_args(int argc, char **argv)
 		write_variable(varname, NULL);
 	else if (Lflag)
 		print_known_guid();
-	else if (varname) {
+	else if (fromfile) {
+		Nflag = 1;
+		print_var(NULL, NULL);
+	} else if (varname) {
 		pflag++;
 		print_variable(varname);
 	} else if (argc > 0) {

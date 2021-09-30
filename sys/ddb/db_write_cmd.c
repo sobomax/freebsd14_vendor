@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b0102da5fc54069ee5149e392d3feb223b5826e $");
+__FBSDID("$FreeBSD: 65a2821069b57149dd2a6fab1002b6e82a76b195 $");
 
 #include <sys/param.h>
 
@@ -90,4 +90,3 @@ db_write_cmd(db_expr_t address, bool have_addr, db_expr_t count,
 
 	db_skip_to_eol();
 }
-

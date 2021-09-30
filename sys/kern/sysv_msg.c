@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2766484a8dbda66fdbd4691da1a1e56c00719b97 $");
+__FBSDID("$FreeBSD: f048234f3a33da3d69e33cbcca864ff2464de27c $");
 
 #include "opt_sysvipc.h"
 
@@ -98,7 +98,6 @@ static int msg_prison_set(void *, void *);
 static int msg_prison_get(void *, void *);
 static int msg_prison_remove(void *, void *);
 static void msg_prison_cleanup(struct prison *);
-
 
 #ifdef MSG_DEBUG
 #define DPRINTF(a)	printf a
@@ -291,7 +290,7 @@ msginit()
 		if (rsv == NULL)
 			rsv = osd_reserve(msg_prison_slot);
 		prison_lock(pr);
-		if ((pr->pr_allow & PR_ALLOW_SYSVIPC) && pr->pr_ref > 0) {
+		if (prison_isvalid(pr) && (pr->pr_allow & PR_ALLOW_SYSVIPC)) {
 			(void)osd_jail_set_reserved(pr, msg_prison_slot, rsv,
 			    &prison0);
 			rsv = NULL;
@@ -351,7 +350,6 @@ msgunload()
 	mtx_destroy(&msq_mtx);
 	return (0);
 }
-
 
 static int
 sysvmsg_modload(struct module *module, int cmd, void *arg)
@@ -548,7 +546,6 @@ kern_msgctl(struct thread *td, int msqid, int cmd, struct msqid_ds *msqbuf)
 	rval = 0;
 
 	switch (cmd) {
-
 	case IPC_RMID:
 	{
 #ifdef MAC

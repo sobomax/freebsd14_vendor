@@ -34,7 +34,7 @@
  * THIS SOFTWARE, EVEN IF WHISTLE COMMUNICATIONS IS ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: da4174c27e75b709b613f2aa38c02d7d1f3d7115 $
+ * $FreeBSD: ae64dea8800065d3ea88ef593ff88d25776fb82c $
  */
 
 #include <err.h>
@@ -125,6 +125,8 @@ ListCmd(int ac, char **av)
 				break;
 			ninfo++;
 			nlist->numnames--;
+			if (nlist->numnames > 0)
+				printf("\n");
 		}
 	} else {
 		while (nlist->numnames > 0) {

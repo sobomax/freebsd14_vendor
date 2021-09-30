@@ -1,4 +1,4 @@
-# $FreeBSD: 28a793be1ae6db15662e4a7c8cc923c80610e133 $
+# $FreeBSD: cb5d886e9d365855058af6bdac5e78105e82ce66 $
 
 .include <src.opts.mk>
 
@@ -21,14 +21,8 @@ WARNS?=		2
 
 LIBADD=		telnet ncursesw
 
-.if !defined(RELEASE_CRUNCH)
 CFLAGS+=	-DIPSEC
 LIBADD+=	ipsec
-.else
-.PATH:         ${TELNETDIR}/libtelnet
-SRCS+=		genget.c getent.c misc.c
-CFLAGS+=	-DHAS_CGETENT
-.endif
 
 .if ${MK_OPENSSL} != "no"
 SRCS+=		authenc.c

@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e57a37d1809ed96ed6172fe8727b46e1e54d2f4 $");
+__FBSDID("$FreeBSD: 1b53a90a48c45efe63207116b9d934cb1155521b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -128,8 +128,6 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 		return (EFBIG);
 	gbflags = (flags & BA_UNMAPPED) != 0 ? GB_UNMAPPED : 0;
 
-	if (DOINGSOFTDEP(vp))
-		softdep_prealloc(vp, MNT_WAIT);
 	/*
 	 * If the next write will extend the file into a new block,
 	 * and the file is currently composed of a fragment
@@ -154,8 +152,8 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 			ip->i_size = smalllblktosize(fs, nb + 1);
 			dp->di_size = ip->i_size;
 			dp->di_db[nb] = dbtofsb(fs, bp->b_blkno);
-			ip->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_UPDATE |
-			    IN_IBLKDATA;
+			UFS_INODE_SET_FLAG(ip,
+			    IN_SIZEMOD | IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 			if (flags & IO_SYNC)
 				bwrite(bp);
 			else if (DOINGASYNC(vp))
@@ -172,10 +170,17 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 			panic("ffs_balloc_ufs1: BA_METAONLY for direct block");
 		nb = dp->di_db[lbn];
 		if (nb != 0 && ip->i_size >= smalllblktosize(fs, lbn + 1)) {
-			error = bread(vp, lbn, fs->fs_bsize, NOCRED, &bp);
-			if (error) {
-				brelse(bp);
-				return (error);
+			if ((flags & BA_CLRBUF) != 0) {
+				error = bread(vp, lbn, fs->fs_bsize, NOCRED,
+				    &bp);
+				if (error != 0)
+					return (error);
+			} else {
+				bp = getblk(vp, lbn, fs->fs_bsize, 0, 0,
+				    gbflags);
+				if (bp == NULL)
+					return (EIO);
+				vfs_bio_clrbuf(bp);
 			}
 			bp->b_blkno = fsbtodb(fs, nb);
 			*bpp = bp;
@@ -190,7 +195,6 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 			if (nsize <= osize) {
 				error = bread(vp, lbn, osize, NOCRED, &bp);
 				if (error) {
-					brelse(bp);
 					return (error);
 				}
 				bp->b_blkno = fsbtodb(fs, nb);
@@ -227,7 +231,7 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 				    nsize, 0, bp);
 		}
 		dp->di_db[lbn] = dbtofsb(fs, bp->b_blkno);
-		ip->i_flag |= IN_CHANGE | IN_UPDATE | IN_IBLKDATA;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 		*bpp = bp;
 		return (0);
 	}
@@ -283,7 +287,7 @@ ffs_balloc_ufs1(struct vnode *vp, off_t startoffset, int size,
 		}
 		allocib = &dp->di_ib[indirs[0].in_off];
 		*allocib = nb;
-		ip->i_flag |= IN_CHANGE | IN_UPDATE | IN_IBLKDATA;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 	}
 	/*
 	 * Fetch through the indirect blocks, allocating as necessary.
@@ -293,7 +297,6 @@ retry:
 		error = bread(vp,
 		    indirs[i].in_lbn, (int)fs->fs_bsize, NOCRED, &bp);
 		if (error) {
-			brelse(bp);
 			goto fail;
 		}
 		bap = (ufs1_daddr_t *)bp->b_data;
@@ -328,7 +331,8 @@ retry:
 				UFS_UNLOCK(ump);
 				goto retry;
 			}
-			if (ppsratecheck(&ump->um_last_fullmsg,
+			if (!ffs_fsfail_cleanup_locked(ump, error) &&
+			    ppsratecheck(&ump->um_last_fullmsg,
 			    &ump->um_secs_fullmsg, 1)) {
 				UFS_UNLOCK(ump);
 				ffs_fserr(fs, ip->i_number, "filesystem full");
@@ -411,7 +415,8 @@ retry:
 				UFS_UNLOCK(ump);
 				goto retry;
 			}
-			if (ppsratecheck(&ump->um_last_fullmsg,
+			if (!ffs_fsfail_cleanup_locked(ump, error) &&
+			    ppsratecheck(&ump->um_last_fullmsg,
 			    &ump->um_secs_fullmsg, 1)) {
 				UFS_UNLOCK(ump);
 				ffs_fserr(fs, ip->i_number, "filesystem full");
@@ -546,7 +551,7 @@ fail:
 		(void) chkdq(ip, -btodb(deallocated), cred, FORCE);
 #endif
 		dp->di_blocks -= btodb(deallocated);
-		ip->i_flag |= IN_CHANGE | IN_UPDATE;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE);
 	}
 	(void) ffs_syncvnode(vp, MNT_WAIT, 0);
 	/*
@@ -614,9 +619,6 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 		return (EFBIG);
 	gbflags = (flags & BA_UNMAPPED) != 0 ? GB_UNMAPPED : 0;
 
-	if (DOINGSOFTDEP(vp))
-		softdep_prealloc(vp, MNT_WAIT);
-	
 	/*
 	 * Check for allocating external data.
 	 */
@@ -649,7 +651,8 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 				dp->di_extsize = smalllblktosize(fs, nb + 1);
 				dp->di_extb[nb] = dbtofsb(fs, bp->b_blkno);
 				bp->b_xflags |= BX_ALTDATA;
-				ip->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_IBLKDATA;
+				UFS_INODE_SET_FLAG(ip,
+				    IN_SIZEMOD | IN_CHANGE | IN_IBLKDATA);
 				if (flags & IO_SYNC)
 					bwrite(bp);
 				else
@@ -666,7 +669,6 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 			error = bread_gb(vp, -1 - lbn, fs->fs_bsize, NOCRED,
 			    gbflags, &bp);
 			if (error) {
-				brelse(bp);
 				return (error);
 			}
 			bp->b_blkno = fsbtodb(fs, nb);
@@ -684,7 +686,6 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 				error = bread_gb(vp, -1 - lbn, osize, NOCRED,
 				    gbflags, &bp);
 				if (error) {
-					brelse(bp);
 					return (error);
 				}
 				bp->b_blkno = fsbtodb(fs, nb);
@@ -725,7 +726,7 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 				    nsize, 0, bp);
 		}
 		dp->di_extb[lbn] = dbtofsb(fs, bp->b_blkno);
-		ip->i_flag |= IN_CHANGE | IN_IBLKDATA;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_IBLKDATA);
 		*bpp = bp;
 		return (0);
 	}
@@ -754,8 +755,8 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 			ip->i_size = smalllblktosize(fs, nb + 1);
 			dp->di_size = ip->i_size;
 			dp->di_db[nb] = dbtofsb(fs, bp->b_blkno);
-			ip->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_UPDATE |
-			    IN_IBLKDATA;
+			UFS_INODE_SET_FLAG(ip,
+			    IN_SIZEMOD |IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 			if (flags & IO_SYNC)
 				bwrite(bp);
 			else
@@ -770,11 +771,17 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 			panic("ffs_balloc_ufs2: BA_METAONLY for direct block");
 		nb = dp->di_db[lbn];
 		if (nb != 0 && ip->i_size >= smalllblktosize(fs, lbn + 1)) {
-			error = bread_gb(vp, lbn, fs->fs_bsize, NOCRED,
-			    gbflags, &bp);
-			if (error) {
-				brelse(bp);
-				return (error);
+			if ((flags & BA_CLRBUF) != 0) {
+				error = bread_gb(vp, lbn, fs->fs_bsize, NOCRED,
+				    gbflags, &bp);
+				if (error != 0)
+					return (error);
+			} else {
+				bp = getblk(vp, lbn, fs->fs_bsize, 0, 0,
+				    gbflags);
+				if (bp == NULL)
+					return (EIO);
+				vfs_bio_clrbuf(bp);
 			}
 			bp->b_blkno = fsbtodb(fs, nb);
 			*bpp = bp;
@@ -790,7 +797,6 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 				error = bread_gb(vp, lbn, osize, NOCRED,
 				    gbflags, &bp);
 				if (error) {
-					brelse(bp);
 					return (error);
 				}
 				bp->b_blkno = fsbtodb(fs, nb);
@@ -827,7 +833,7 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 				    nsize, 0, bp);
 		}
 		dp->di_db[lbn] = dbtofsb(fs, bp->b_blkno);
-		ip->i_flag |= IN_CHANGE | IN_UPDATE | IN_IBLKDATA;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 		*bpp = bp;
 		return (0);
 	}
@@ -884,7 +890,7 @@ ffs_balloc_ufs2(struct vnode *vp, off_t startoffset, int size,
 		}
 		allocib = &dp->di_ib[indirs[0].in_off];
 		*allocib = nb;
-		ip->i_flag |= IN_CHANGE | IN_UPDATE | IN_IBLKDATA;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE | IN_IBLKDATA);
 	}
 	/*
 	 * Fetch through the indirect blocks, allocating as necessary.
@@ -894,7 +900,6 @@ retry:
 		error = bread(vp,
 		    indirs[i].in_lbn, (int)fs->fs_bsize, NOCRED, &bp);
 		if (error) {
-			brelse(bp);
 			goto fail;
 		}
 		bap = (ufs2_daddr_t *)bp->b_data;
@@ -929,7 +934,8 @@ retry:
 				UFS_UNLOCK(ump);
 				goto retry;
 			}
-			if (ppsratecheck(&ump->um_last_fullmsg,
+			if (!ffs_fsfail_cleanup_locked(ump, error) &&
+			    ppsratecheck(&ump->um_last_fullmsg,
 			    &ump->um_secs_fullmsg, 1)) {
 				UFS_UNLOCK(ump);
 				ffs_fserr(fs, ip->i_number, "filesystem full");
@@ -1013,7 +1019,8 @@ retry:
 				UFS_UNLOCK(ump);
 				goto retry;
 			}
-			if (ppsratecheck(&ump->um_last_fullmsg,
+			if (!ffs_fsfail_cleanup_locked(ump, error) &&
+			    ppsratecheck(&ump->um_last_fullmsg,
 			    &ump->um_secs_fullmsg, 1)) {
 				UFS_UNLOCK(ump);
 				ffs_fserr(fs, ip->i_number, "filesystem full");
@@ -1154,7 +1161,7 @@ fail:
 		(void) chkdq(ip, -btodb(deallocated), cred, FORCE);
 #endif
 		dp->di_blocks -= btodb(deallocated);
-		ip->i_flag |= IN_CHANGE | IN_UPDATE;
+		UFS_INODE_SET_FLAG(ip, IN_CHANGE | IN_UPDATE);
 	}
 	(void) ffs_syncvnode(vp, MNT_WAIT, 0);
 	/*

@@ -1,4 +1,4 @@
-# $FreeBSD: db1d2f92f90c1b7228ad4e1edb60c21ba2d04e18 $
+# $FreeBSD: 76814dc6e61f1ba6353591b4592673601bb6cd6c $
 
 PROG=	localedef
 SRCS=	charmap.c \
@@ -13,13 +13,16 @@ SRCS=	charmap.c \
 	time.c \
 	wide.c
 
-WARNS=	3
+WARNS?=	3
 ${SRCS:M*.c}: parser.h
 parser.h: parser.y
 
 IGNORE_PRAGMA=	yes
 
 CFLAGS+=	-I. -I${.CURDIR}
+.if defined(BOOTSTRAPPING)
+CFLAGS+=	-I${.CURDIR}/bootstrap
+.endif
 CFLAGS+=	-I${SRCTOP}/lib/libc/locale
 CFLAGS+=	-I${SRCTOP}/lib/libc/stdtime
 

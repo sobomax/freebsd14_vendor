@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b754058c07d502e8882840c79c371b88d5777ada $");
+__FBSDID("$FreeBSD: da3e0e17d1403789d74401f4f8fc0e06bce4bb6b $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -105,7 +105,6 @@ ivrs_hdr_iterate_tbl(ivhd_iter_t iter, void *arg)
 
 		default:
 			printf("AMD-Vi:Not IVHD/IVMD type(%d)", ivrs_hdr->Type);
-
 		}
 
 		ivrs_hdr = (ACPI_IVRS_HEADER *)((uint8_t *)ivrs_hdr +
@@ -424,7 +423,7 @@ ivhd_probe(device_t dev)
 	case IVRS_TYPE_HARDWARE_EFR:
 		device_set_desc(dev, "AMD-Vi/IOMMU ivhd with EFR");
 		break;
-	
+
 	case IVRS_TYPE_HARDWARE_MIXED:
 		device_set_desc(dev, "AMD-Vi/IOMMU ivhd in mixed format");
 		break;
@@ -588,7 +587,7 @@ ivhd_print_cap(struct amdvi_softc *softc, ACPI_IVRS_HARDWARE1 * ivhd)
 	int max_ptp_level;
 
 	dev = softc->dev;
-	
+
 	ivhd_print_flag(dev, softc->ivhd_type, softc->ivhd_flag);
 	ivhd_print_feature(dev, softc->ivhd_type, softc->ivhd_feature);
 	ivhd_print_ext_feature(dev, softc->ext_feature);

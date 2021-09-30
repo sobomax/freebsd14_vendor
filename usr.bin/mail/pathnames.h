@@ -30,11 +30,13 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: ccccb497e91e5b4deb9b7ad5a39af31f08112cae $
+ * $FreeBSD: e89c5288a11d07c592fccfbe06d9ffdcb968e0dd $
  */
+
+#include <paths.h>
 
 #define	_PATH_EX	"/usr/bin/ex"
 #define	_PATH_HELP	"/usr/share/misc/mail.help"
 #define	_PATH_TILDE	"/usr/share/misc/mail.tildehelp"
-#define	_PATH_MASTER_RC	"/usr/share/misc/mail.rc:/usr/local/etc/mail.rc:/etc/mail.rc"
+#define	_PATH_MASTER_RC	"/usr/share/misc/mail.rc:" _PATH_LOCALBASE "/etc/mail.rc:/etc/mail.rc"
 #define	_PATH_LESS	"/usr/bin/less"

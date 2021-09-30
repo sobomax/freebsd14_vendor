@@ -1,4 +1,4 @@
-# $FreeBSD: 8eb9fb99a3682f510d901f93966971e7a464cf88 $
+# $FreeBSD: d5a71d3c33a6406ed35f6d4ce088896b1fe3f561 $
 
 .include <bsd.init.mk>
 
@@ -41,8 +41,5 @@ INTERNAL_CUSTOM_INCS+=	gmock/internal/custom/gmock-matchers.h
 INTERNAL_CUSTOM_INCS+=	gmock/internal/custom/gmock-generated-actions.h
 
 SRCS+=		gmock-all.cc
-
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.lib.mk>

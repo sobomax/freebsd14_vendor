@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3d70a5e27fb223c6570866731f47ea4f27552b43 $
+ * $FreeBSD: db84f905ff50d7889e3ac7bf073eb66fb774bf81 $
  */
 
 /*
@@ -41,6 +41,8 @@
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/cons.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 
 #include <machine/bus.h>
 #include <sys/rman.h>
@@ -101,6 +103,11 @@ idad_strategy(struct bio *bp)
 	 */
 	if (drv->flags & DRV_WRITEPROT && (bp->bio_cmd == BIO_WRITE)) {
 		bp->bio_error = EROFS;
+		goto bad;
+	}
+
+	if ((bp->bio_cmd != BIO_READ) && (bp->bio_cmd != BIO_WRITE)) {
+		bp->bio_error = EOPNOTSUPP;
 		goto bad;
 	}
 

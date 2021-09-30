@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5604695a84cea1754d0ad14b47a9478620afe772 $");
+__FBSDID("$FreeBSD: 683fb4986a41c2e673a606e46e617e1eceaaa894 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -118,8 +118,6 @@ bcm2836_devmap_init(platform_t plat)
 	return (0);
 }
 #endif
-
-
 
 static void
 bcm2835_cpu_reset(platform_t plat)

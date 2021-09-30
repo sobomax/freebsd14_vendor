@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17d70d869b79396810759396ff310c8ba3a49228 $");
+__FBSDID("$FreeBSD: cc45ac161040b9ea231f98369a8f5457bbfd5353 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,7 +63,6 @@ int
 cd9660_inactive(ap)
 	struct vop_inactive_args /* {
 		struct vnode *a_vp;
-		struct thread *a_td;
 	} */ *ap;
 {
 	struct vnode *vp = ap->a_vp;
@@ -86,15 +85,10 @@ int
 cd9660_reclaim(ap)
 	struct vop_reclaim_args /* {
 		struct vnode *a_vp;
-		struct thread *a_td;
 	} */ *ap;
 {
 	struct vnode *vp = ap->a_vp;
 
-	/*
-	 * Destroy the vm object and flush associated pages.
-	 */
-	vnode_destroy_vobject(vp);
 	/*
 	 * Remove the inode from its hash chain.
 	 */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03daba3ebfab89ece1d64717a5cdd68f53440055 $");
+__FBSDID("$FreeBSD: a4b467637c2a7ae44dd727a8e43510a1ed040eac $");
 
 #include "opt_syscons.h"
 
@@ -663,7 +663,6 @@ sc_mouse_ioctl(struct tty *tp, u_long cmd, caddr_t data, struct thread *td)
     scp = SC_STAT(tp);
 
     switch (cmd) {
-
     case CONS_MOUSECTL:		/* control mouse arrow */
     case OLD_CONS_MOUSECTL:
 

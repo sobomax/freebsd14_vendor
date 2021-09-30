@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_cmd_table.c#4 $
- * $FreeBSD: b3780dcf8c67226bbbdb52b8e5f516215150ed1f $
+ * $FreeBSD: 0e7268389c3b0866dd203059550c84aaaa0d772b $
  */
 /*
  * CAM Target Layer command table.
@@ -737,7 +737,6 @@ const struct ctl_cmd_entry ctl_cmd_table_9b[32] =
 
 /* 1d-1f */
 };
-
 
 /* 9E SERVICE ACTION IN(16) */
 const struct ctl_cmd_entry ctl_cmd_table_9e[32] =

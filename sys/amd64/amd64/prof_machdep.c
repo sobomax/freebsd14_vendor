@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b3e83977ead5025182d70e95d37354f2c1079a8 $");
+__FBSDID("$FreeBSD: 72b18faef028c838ebe631ba88dd0a7ab514256e $");
 
 #ifdef GUPROF
 
@@ -262,8 +262,10 @@ sysctl_machdep_cputime_clock(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, cputime_clock, CTLTYPE_INT | CTLFLAG_RW,
-	    0, sizeof(u_int), sysctl_machdep_cputime_clock, "I", "");
+SYSCTL_PROC(_machdep, OID_AUTO, cputime_clock,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, sizeof(u_int),
+    sysctl_machdep_cputime_clock, "I",
+    "");
 
 /*
  * The start and stop routines need not be here since we turn off profiling

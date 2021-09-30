@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9620f5284e847f623b8c24caaeba82b8f4cf8c0f $");
+__FBSDID("$FreeBSD: c2612d2fc7a92d4948dbe958d811616df6976a84 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,8 +39,9 @@ __FBSDID("$FreeBSD: 9620f5284e847f623b8c24caaeba82b8f4cf8c0f $");
 
 #include <machine/bus.h>
 
+#include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
-#include <arm/ti/ti_prcm.h>
+#include <arm/ti/ti_sysc.h>
 #include <arm/ti/am335x/am335x_rtcvar.h>
 #include <arm/ti/am335x/am335x_rtcreg.h>
 
@@ -110,7 +111,7 @@ am335x_rtc_attach(device_t dev)
 	RTC_LOCK_INIT(sc);
 
 	/* Enable the RTC module. */
-	ti_prcm_clk_enable(RTC_CLK);
+	ti_sysc_clock_enable(device_get_parent(dev));
 	rev = RTC_READ4(sc, RTC_REVISION);
 	device_printf(dev, "AM335X RTC v%d.%d.%d\n",
             (rev >> 8) & 0x7, (rev >> 6) & 0x3, rev & 0x3f);
@@ -209,3 +210,4 @@ static devclass_t am335x_rtc_devclass;
 DRIVER_MODULE(am335x_rtc, simplebus, am335x_rtc_driver, am335x_rtc_devclass, 0, 0);
 MODULE_VERSION(am335x_rtc, 1);
 MODULE_DEPEND(am335x_rtc, simplebus, 1, 1, 1);
+MODULE_DEPEND(am335x_rtc, ti_sysc, 1, 1, 1);

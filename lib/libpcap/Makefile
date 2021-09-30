@@ -1,11 +1,10 @@
 # Makefile for libpcap
-# $FreeBSD: ea6405298c2e61304ba296a5abf58411dff6897b $
+# $FreeBSD: bec64e0d0dfa438cbbc6d8e61caeb9b0bb1b51c4 $
 
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=	pcap
 
 SRCS=	bpf_dump.c \

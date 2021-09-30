@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 985baf142ab333d06d2d360c5b3c86dbdcbfb353 $");
+__FBSDID("$FreeBSD: 21a29021728888ff65ff29bf86b40be8db88a73a $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -383,7 +383,6 @@ dtaudit_au_evnamemap_callback(struct evname_elem *ene)
 	if ((ene->ene_commit_probe_id == 0) &&
 	    (dtrace_probe_lookup(dtaudit_id, dtaudit_module_str,
 	    ene_name_lower, dtaudit_name_commit_str) == 0)) {
-
 		/*
 		 * Create the commit probe.
 		 *
@@ -413,7 +412,6 @@ dtaudit_au_evnamemap_callback(struct evname_elem *ene)
 	if ((ene->ene_bsm_probe_id == 0) &&
 	    (dtrace_probe_lookup(dtaudit_id, dtaudit_module_str,
 	    ene_name_lower, dtaudit_name_bsm_str) == 0)) {
-
 		/*
 		 * Create the bsm probe.
 		 *

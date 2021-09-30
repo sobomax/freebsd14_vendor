@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0902f1c1062e1cc3471ca7362763bbc9853844b3 $
+ * $FreeBSD: 018139b049c072a752b67a624bde995e452c6f2a $
  */
 
 #include "opt_mp_watchdog.h"
@@ -149,8 +149,10 @@ sysctl_watchdog(SYSCTL_HANDLER_ARGS)
 		watchdog_change(temp);
 	return (0);
 }
-SYSCTL_PROC(_debug, OID_AUTO, watchdog, CTLTYPE_INT|CTLFLAG_RW, 0, 0,
-    sysctl_watchdog, "I", "");
+SYSCTL_PROC(_debug, OID_AUTO, watchdog,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    0, 0, sysctl_watchdog, "I",
+    "");
 
 /*
  * Drop into the debugger by sending an IPI NMI to the boot processor.

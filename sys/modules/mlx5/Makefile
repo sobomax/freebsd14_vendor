@@ -1,4 +1,4 @@
-# $FreeBSD: 8e5b1c48e9ade50278330c6c88f7270719401d8d $
+# $FreeBSD: 26b46f8efdbdca24bbe1ce707efb2cbadeea2181 $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga
@@ -27,6 +27,7 @@ mlx5_port.c \
 mlx5_qp.c \
 mlx5_rl.c \
 mlx5_srq.c \
+mlx5_tls.c \
 mlx5_transobj.c \
 mlx5_uar.c \
 mlx5_vport.c \

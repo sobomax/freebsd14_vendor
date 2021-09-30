@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95d4421ccddf44d202860b455aa53c654bef5edc $");
+__FBSDID("$FreeBSD: a912da6698a0dfba567ddeb0e95ad0636ce5ffe6 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -103,7 +103,6 @@ static struct rman *ofw_pci_get_rman(struct ofw_pci_softc *, int, u_int);
  * Driver methods.
  */
 static device_method_t	ofw_pci_methods[] = {
-
 	/* Device interface */
 	DEVMETHOD(device_attach,	ofw_pci_attach),
 
@@ -408,7 +407,6 @@ ofw_pci_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	struct resource *rv;
 	struct rman *rm;
 	int needactivate;
-
 
 	needactivate = flags & RF_ACTIVE;
 	flags &= ~RF_ACTIVE;

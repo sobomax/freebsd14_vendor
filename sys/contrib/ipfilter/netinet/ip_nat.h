@@ -1,4 +1,4 @@
-/*	$FreeBSD: e65b1681a5f565724a88e057fcb48ec111cf1729 $	*/
+/*	$FreeBSD: e726bc926937c5be933a4f4a2403a8e93bb025aa $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -6,7 +6,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_nat.h	1.5 2/4/96
- * $FreeBSD: e65b1681a5f565724a88e057fcb48ec111cf1729 $
+ * $FreeBSD: e726bc926937c5be933a4f4a2403a8e93bb025aa $
  * Id: ip_nat.h,v 2.90.2.20 2007/09/25 08:27:32 darrenr Exp $
  */
 
@@ -21,19 +21,11 @@
 # endif
 #endif
 
-#if defined(__STDC__) || defined(__GNUC__) || defined(_AIX51)
 #define	SIOCADNAT	_IOW('r', 60, struct ipfobj)
 #define	SIOCRMNAT	_IOW('r', 61, struct ipfobj)
 #define	SIOCGNATS	_IOWR('r', 62, struct ipfobj)
 #define	SIOCGNATL	_IOWR('r', 63, struct ipfobj)
 #define	SIOCPURGENAT	_IOWR('r', 100, struct ipfobj)
-#else
-#define	SIOCADNAT	_IOW(r, 60, struct ipfobj)
-#define	SIOCRMNAT	_IOW(r, 61, struct ipfobj)
-#define	SIOCGNATS	_IOWR(r, 62, struct ipfobj)
-#define	SIOCGNATL	_IOWR(r, 63, struct ipfobj)
-#define	SIOCPURGENAT	_IOWR(r, 100, struct ipfobj)
-#endif
 
 #undef	LARGE_NAT	/* define	this if you're setting up a system to NAT
 			 * LARGE numbers of networks/hosts - i.e. in the

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 5f8b2bb07be36c8368e4217b53fab344dee15829 $
+ *	$FreeBSD: da8c2d5106bb6636e496a54264fe5c109518b18d $
  */
 
 #ifndef _SYS_KOBJ_H_
@@ -175,7 +175,6 @@ struct kobj_class classvar = {				\
 	#name, methods, size, name ## _baseclasses	\
 }
 
-
 /*
  * Compile the method table in a class.
  */
@@ -252,7 +251,6 @@ extern u_int kobj_lookup_misses;
 kobj_method_t* kobj_lookup_method(kobj_class_t cls,
 				  kobj_method_t **cep,
 				  kobjop_desc_t desc);
-
 
 /*
  * Default method implementation. Returns ENXIO.

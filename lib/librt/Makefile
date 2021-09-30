@@ -1,8 +1,7 @@
-# $FreeBSD: 3c0973db1d70d2d6c1d06165e47973eabbcb7804 $
+# $FreeBSD: 389e0280a6bc8178980ab35a7024f24eb51a424d $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=rt
 SHLIB_MAJOR= 1
 CFLAGS+=-I${SRCTOP}/lib/libc/include -I${.CURDIR}

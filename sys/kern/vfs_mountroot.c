@@ -40,11 +40,12 @@
 #include "opt_rootdevname.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b383e66d701126c7cf1ec03599268a2af42a6794 $");
+__FBSDID("$FreeBSD: 3b968fd19bbdd4d16a8c234982cb11ba930e4c6c $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/cons.h>
+#include <sys/eventhandler.h>
 #include <sys/fcntl.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
@@ -236,27 +237,13 @@ root_mounted(void)
 static void
 set_rootvnode(void)
 {
-	struct proc *p;
 
 	if (VFS_ROOT(TAILQ_FIRST(&mountlist), LK_EXCLUSIVE, &rootvnode))
-		panic("Cannot find root vnode");
+		panic("set_rootvnode: Cannot find root vnode");
 
-	VOP_UNLOCK(rootvnode, 0);
+	VOP_UNLOCK(rootvnode);
 
-	p = curthread->td_proc;
-	FILEDESC_XLOCK(p->p_fd);
-
-	if (p->p_fd->fd_cdir != NULL)
-		vrele(p->p_fd->fd_cdir);
-	p->p_fd->fd_cdir = rootvnode;
-	VREF(rootvnode);
-
-	if (p->p_fd->fd_rdir != NULL)
-		vrele(p->p_fd->fd_rdir);
-	p->p_fd->fd_rdir = rootvnode;
-	VREF(rootvnode);
-
-	FILEDESC_XUNLOCK(p->p_fd);
+	pwd_set_rootvnode();
 }
 
 static int
@@ -305,6 +292,7 @@ vfs_mountroot_devfs(struct thread *td, struct mount **mpp)
 
 		*mpp = mp;
 		rootdevmp = mp;
+		vfs_op_exit(mp);
 	}
 
 	set_rootvnode();
@@ -338,16 +326,18 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 	TAILQ_INSERT_TAIL(&mountlist, mpdevfs, mnt_list);
 	mtx_unlock(&mountlist_mtx);
 
-	cache_purgevfs(mporoot, true);
+	cache_purgevfs(mporoot);
 	if (mporoot != mpdevfs)
-		cache_purgevfs(mpdevfs, true);
+		cache_purgevfs(mpdevfs);
 
-	VFS_ROOT(mporoot, LK_EXCLUSIVE, &vporoot);
+	if (VFS_ROOT(mporoot, LK_EXCLUSIVE, &vporoot))
+		panic("vfs_mountroot_shuffle: Cannot find root vnode");
 
 	VI_LOCK(vporoot);
 	vporoot->v_iflag &= ~VI_MOUNT;
-	VI_UNLOCK(vporoot);
+	vn_irflag_unset_locked(vporoot, VIRF_MOUNTPOINT);
 	vporoot->v_mountedhere = NULL;
+	VI_UNLOCK(vporoot);
 	mporoot->mnt_flag &= ~MNT_ROOTFS;
 	mporoot->mnt_vnodecovered = NULL;
 	vput(vporoot);
@@ -355,7 +345,7 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 	/* Set up the new rootvnode, and purge the cache */
 	mpnroot->mnt_vnodecovered = NULL;
 	set_rootvnode();
-	cache_purgevfs(rootvnode->v_mount, true);
+	cache_purgevfs(rootvnode->v_mount);
 
 	if (mporoot != mpdevfs) {
 		/* Remount old root under /.mount or /mnt */
@@ -381,7 +371,7 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 				vp->v_mountedhere = mporoot;
 				strlcpy(mporoot->mnt_stat.f_mntonname,
 				    fspath, MNAMELEN);
-				VOP_UNLOCK(vp, 0);
+				VOP_UNLOCK(vp);
 			} else
 				vput(vp);
 		}
@@ -404,12 +394,18 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 			vpdevfs = mpdevfs->mnt_vnodecovered;
 			if (vpdevfs != NULL) {
 				cache_purge(vpdevfs);
+				VI_LOCK(vpdevfs);
+				vn_irflag_unset_locked(vpdevfs, VIRF_MOUNTPOINT);
 				vpdevfs->v_mountedhere = NULL;
+				VI_UNLOCK(vpdevfs);
 				vrele(vpdevfs);
 			}
+			VI_LOCK(vp);
 			mpdevfs->mnt_vnodecovered = vp;
+			vn_irflag_set_locked(vp, VIRF_MOUNTPOINT);
 			vp->v_mountedhere = mpdevfs;
-			VOP_UNLOCK(vp, 0);
+			VI_UNLOCK(vp);
+			VOP_UNLOCK(vp);
 		} else
 			vput(vp);
 	}
@@ -421,8 +417,8 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 	if (mporoot == mpdevfs) {
 		vfs_unbusy(mpdevfs);
 		/* Unlink the no longer needed /dev/dev -> / symlink */
-		error = kern_unlinkat(td, AT_FDCWD, "/dev/dev",
-		    UIO_SYSSPACE, 0);
+		error = kern_funlinkat(td, AT_FDCWD, "/dev/dev", FD_NONE,
+		    UIO_SYSSPACE, 0, 0);
 		if (error)
 			printf("mountroot: unable to unlink /dev/dev "
 			    "(error %d)\n", error);
@@ -971,7 +967,7 @@ vfs_mountroot_readconf(struct thread *td, struct sbuf *sb)
 		ofs += len - resid;
 	}
 
-	VOP_UNLOCK(nd.ni_vp, 0);
+	VOP_UNLOCK(nd.ni_vp);
 	vn_close(nd.ni_vp, FREAD, td->td_ucred, td);
 	return (error);
 }
@@ -1060,7 +1056,7 @@ vfs_mountroot(void)
 	struct thread *td;
 	time_t timebase;
 	int error;
-	
+
 	mtx_assert(&Giant, MA_NOTOWNED);
 
 	TSENTER();

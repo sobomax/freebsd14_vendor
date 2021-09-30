@@ -1,4 +1,4 @@
-# $FreeBSD: 685f0f5ae2bd7f214c6f7f6acff2b72355262c57 $
+# $FreeBSD: 7062c0c695426a885b9d6d795a077d4904a8b5e2 $
 
 FONTS=	gallant.fnt \
 	terminus-b32.fnt \
@@ -13,9 +13,9 @@ FILES=	${FONTS} INDEX.fonts
 
 CLEANFILES+=	${FONTS}
 
-.SUFFIXES: .fnt .fnt.uu .hex
-.hex.fnt:
-	vtfontcvt ${.IMPSRC} ${.TARGET}
+.SUFFIXES: .bdf .fnt .fnt.uu .hex
+.bdf.fnt .hex.fnt:
+	vtfontcvt -o ${.TARGET} ${.IMPSRC}
 
 FILESDIR=	${SHAREDIR}/vt/fonts
 

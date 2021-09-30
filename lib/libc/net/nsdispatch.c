@@ -63,7 +63,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9533bd1ca46d321da685584742f97f8d3a59747 $");
+__FBSDID("$FreeBSD: b0f80d079b0b32298d7f6df2917da8f98ff4f60d $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -335,6 +335,7 @@ static int
 nss_configure(void)
 {
 	static time_t	 confmod;
+	static int	 already_initialized = 0;
 	struct stat	 statbuf;
 	int		 result, isthreaded;
 	const char	*path;
@@ -352,6 +353,16 @@ nss_configure(void)
 	if (path == NULL)
 #endif
 		path = _PATH_NS_CONF;
+#ifndef NS_REREAD_CONF
+	/*
+	 * Define NS_REREAD_CONF to have nsswitch notice changes
+	 * to nsswitch.conf(5) during runtime.  This involves calling
+	 * stat(2) every time, which can result in performance hit.
+	 */
+	if (already_initialized)
+		return (0);
+	already_initialized = 1;
+#endif /* NS_REREAD_CONF */
 	if (stat(path, &statbuf) != 0)
 		return (0);
 	if (statbuf.st_mtime <= confmod)

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1bdb8cca3311f733dfa6979aa3069e6bc64d5799 $
+ * $FreeBSD: 7f7e767519bd143528f1e34b1fa93f501d80f33f $
  */
 
 #ifndef _MACHINE_SMP_H_
@@ -52,6 +52,7 @@ void	ipi_selected(cpuset_t cpus, int ipi);
 struct cpuref {
 	uintptr_t	cr_hwref;
 	u_int		cr_cpuid;
+	u_int		cr_domain;
 };
 
 void	pmap_cpu_bootstrap(int);

@@ -37,7 +37,7 @@
 #include "feeder_if.h"
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 92c5f3d613e6eeafe4e90954b1d9fdd66364a46b $");
+SND_DECLARE_FILE("$FreeBSD: 09b0bb8ab148038ae5e348622a29a547e817bccb $");
 
 static MALLOC_DEFINE(M_MIXER, "mixer", "mixer");
 
@@ -160,7 +160,7 @@ mixer_set_softpcmvol(struct snd_mixer *m, struct snddev_info *d,
 		dropmtx = 1;
 	else
 		dropmtx = 0;
-	
+
 	if (!(d->flags & SD_F_MPSAFE) || mtx_owned(d->lock) != 0)
 		acquiremtx = 0;
 	else
@@ -213,7 +213,7 @@ mixer_set_eq(struct snd_mixer *m, struct snddev_info *d,
 		dropmtx = 1;
 	else
 		dropmtx = 0;
-	
+
 	if (!(d->flags & SD_F_MPSAFE) || mtx_owned(d->lock) != 0)
 		acquiremtx = 0;
 	else
@@ -888,9 +888,9 @@ mixer_hwvol_init(device_t dev)
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
             OID_AUTO, "hwvol_step", CTLFLAG_RWTUN, &m->hwvol_step, 0, "");
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
-	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-            OID_AUTO, "hwvol_mixer", CTLTYPE_STRING | CTLFLAG_RWTUN, m, 0,
-	    sysctl_hw_snd_hwvol_mixer, "A", "");
+	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
+	    "hwvol_mixer", CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_MPSAFE,
+	    m, 0, sysctl_hw_snd_hwvol_mixer, "A", "");
 	return 0;
 }
 
@@ -1047,7 +1047,6 @@ mixer_open(struct cdev *i_dev, int flags, int mode, struct thread *td)
 {
 	struct snddev_info *d;
 	struct snd_mixer *m;
-
 
 	if (i_dev == NULL || i_dev->si_drv1 == NULL)
 		return (EBADF);

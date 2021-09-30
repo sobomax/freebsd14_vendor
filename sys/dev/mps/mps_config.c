@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 076276ab3cf17269039407093d645e933420bbc0 $");
+__FBSDID("$FreeBSD: 4c67487dbe8ffa0d28a0b9561a6157b800b02279 $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
@@ -127,7 +127,7 @@ mps_config_get_ioc_pg8(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * counters to match - Need to review the reply FIFO handling.
 	 */
 	mps_free_command(sc, cm);
-	
+
 	if ((cm = mps_alloc_command(sc)) == NULL) {
 		printf("%s: command alloc failed @ line %d\n", __func__,
 		    __LINE__);
@@ -259,7 +259,7 @@ mps_config_get_man_pg10(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply)
 	 * counters to match - Need to review the reply FIFO handling.
 	 */
 	mps_free_command(sc, cm);
-	
+
 	if ((cm = mps_alloc_command(sc)) == NULL) {
 		printf("%s: command alloc failed @ line %d\n", __func__,
 		    __LINE__);

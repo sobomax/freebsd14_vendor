@@ -1,13 +1,11 @@
-# $FreeBSD: 74eb8e1091b2bfbcb8296f60f67b20813995938e $
+# $FreeBSD: a2ee0c9ac1f73043ea60573c2fe172608da22e0d $
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
 LIB=	jail
 SHLIBDIR?= /lib
 SHLIB_MAJOR= 1
 SRCS=	jail.c jail_getid.c
 INCS=	jail.h
-
-PACKAGE=jail
 
 MAN=	jail.3
 

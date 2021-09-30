@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: 06530347946aed49288c65a03dd16e7752ad98b4 $
+# $FreeBSD: 866b703b828f285e3ccc04108f3b9970b708e67f $
 #
 
 # PROVIDE: zvol
-# REQUIRE: hostid
-# BEFORE: dumpon
+# REQUIRE: zpool
 # KEYWORD: nojail
 
 . /etc/rc.subr

@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b9a6d523cb100d7bb05508549e4a8198f67c62bb $
+ * $FreeBSD: dd2127b6e2c4a4853a5555daee5c4aff4e93eb83 $
  */
 
 #define AN_TIMEOUT	65536
@@ -353,7 +353,6 @@ struct an_rxframe_802_3 {
 	u_int8_t		an_rx_src_addr[6];      /* 0x3E */
 };
 #define AN_RXGAP_MAX	8
-
 
 struct an_txframe_802_3 {
 /*

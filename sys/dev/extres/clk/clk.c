@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32956f271c032ab5aec4969012b25c4ebc3ca989 $");
+__FBSDID("$FreeBSD: b26158922d741872c8bbc97d72087961e0795cbe $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -50,7 +50,8 @@ __FBSDID("$FreeBSD: 32956f271c032ab5aec4969012b25c4ebc3ca989 $");
 #endif
 #include <dev/extres/clk/clk.h>
 
-SYSCTL_NODE(_hw, OID_AUTO, clock, CTLFLAG_RD, NULL, "Clocks");
+SYSCTL_NODE(_hw, OID_AUTO, clock, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+    "Clocks");
 
 MALLOC_DEFINE(M_CLOCK, "clocks", "Clock framework");
 
@@ -400,12 +401,11 @@ clkdom_create(device_t dev)
 #endif
 
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
-	  SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-	  OID_AUTO, "clocks",
-	  CTLTYPE_STRING | CTLFLAG_RD,
-		    clkdom, 0, clkdom_sysctl,
-		    "A",
-		    "Clock list for the domain");
+	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
+	    OID_AUTO, "clocks",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+	    clkdom, 0, clkdom_sysctl, "A",
+	    "Clock list for the domain");
 
 	return (clkdom);
 }
@@ -544,7 +544,7 @@ clknode_create(struct clkdom * clkdom, clknode_class_t clknode_class,
 	CLK_TOPO_SLOCK();
 	clknode = clknode_find_by_name(def->name);
 	CLK_TOPO_UNLOCK();
-		if (clknode !=  NULL) {
+	if (clknode !=  NULL) {
 		if (!(clknode->flags & CLK_NODE_LINKED) &&
 		    def->flags & CLK_NODE_LINKED) {
 			/*
@@ -630,7 +630,7 @@ clknode_create(struct clkdom * clkdom, clknode_class_t clknode_class,
 	clknode_oid = SYSCTL_ADD_NODE(&clknode->sysctl_ctx,
 	    SYSCTL_STATIC_CHILDREN(_hw_clock),
 	    OID_AUTO, clknode->name,
-	    CTLFLAG_RD, 0, "A clock node");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "A clock node");
 
 	SYSCTL_ADD_U64(&clknode->sysctl_ctx,
 	    SYSCTL_CHILDREN(clknode_oid),
@@ -639,21 +639,21 @@ clknode_create(struct clkdom * clkdom, clknode_class_t clknode_class,
 	SYSCTL_ADD_PROC(&clknode->sysctl_ctx,
 	    SYSCTL_CHILDREN(clknode_oid),
 	    OID_AUTO, "parent",
-	    CTLTYPE_STRING | CTLFLAG_RD,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    clknode, CLKNODE_SYSCTL_PARENT, clknode_sysctl,
 	    "A",
 	    "The clock parent");
 	SYSCTL_ADD_PROC(&clknode->sysctl_ctx,
 	    SYSCTL_CHILDREN(clknode_oid),
 	    OID_AUTO, "parents",
-	    CTLTYPE_STRING | CTLFLAG_RD,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    clknode, CLKNODE_SYSCTL_PARENTS_LIST, clknode_sysctl,
 	    "A",
 	    "The clock parents list");
 	SYSCTL_ADD_PROC(&clknode->sysctl_ctx,
 	    SYSCTL_CHILDREN(clknode_oid),
 	    OID_AUTO, "childrens",
-	    CTLTYPE_STRING | CTLFLAG_RD,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    clknode, CLKNODE_SYSCTL_CHILDREN_LIST, clknode_sysctl,
 	    "A",
 	    "The clock childrens list");

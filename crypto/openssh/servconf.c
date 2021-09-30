@@ -12,7 +12,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: 5032fa6556d051372f306823b5178dda61870432 $");
+__RCSID("$FreeBSD: 8b07e4b923aede6dead798ac0a7f60e7203d9b39 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -660,6 +660,7 @@ static struct {
 	{ "rdomain", sRDomain, SSHCFG_ALL },
 	{ "casignaturealgorithms", sCASignatureAlgorithms, SSHCFG_ALL },
 	{ "useblacklist", sUseBlacklist, SSHCFG_GLOBAL },
+	{ "useblocklist", sUseBlacklist, SSHCFG_GLOBAL }, /* alias */
 	{ "noneenabled", sUnsupported, SSHCFG_ALL },
 	{ "hpndisabled", sDeprecated, SSHCFG_ALL },
 	{ "hpnbuffersize", sDeprecated, SSHCFG_ALL },

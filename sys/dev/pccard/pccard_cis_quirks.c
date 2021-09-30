@@ -1,7 +1,7 @@
 /*	$NetBSD: pcmcia_cis_quirks.c,v 1.6 2000/04/12 21:07:55 scw Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29f1d4ee97b64bc151531de98f139acd6b485ca0 $");
+__FBSDID("$FreeBSD: cbfcbb80a8d131dc4dcbaabe7c83d87431f764c2 $");
 
 #define	PCCARDDEBUG
 
@@ -258,7 +258,7 @@ static struct pccard_cis_quirk pccard_cis_quirks[] = {
 	{ PCMCIA_VENDOR_INVALID, PCMCIA_PRODUCT_INVALID, PCMCIA_CIS_NDC_ND5100_E,
 	  &pccard_ndc_nd5100_func0, &pccard_ndc_nd5100_func0_cfe0 },
 };
-	
+
 static int
 pccard_cis_quirk_match(struct pccard_softc *sc, struct pccard_cis_quirk *q)
 {

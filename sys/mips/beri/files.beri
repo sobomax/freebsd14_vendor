@@ -1,4 +1,4 @@
-# $FreeBSD: b92f1f37e83074393bf936dcfc80cd67c18023e6 $
+# $FreeBSD: b159c13b51de8a69564e41d524bdb31e6673ed5c $
 dev/altera/atse/if_atse.c		optional altera_atse
 dev/altera/atse/if_atse_fdt.c		optional altera_atse fdt
 dev/altera/atse/if_atse_nexus.c		optional altera_atse
@@ -20,6 +20,7 @@ dev/terasic/mtl/terasic_mtl_reg.c	optional terasic_mtl
 dev/terasic/mtl/terasic_mtl_syscons.c	optional terasic_mtl sc
 dev/terasic/mtl/terasic_mtl_text.c	optional terasic_mtl
 dev/terasic/mtl/terasic_mtl_vt.c	optional terasic_mtl vt
+mips/beri/beri_iommu.c			optional xdma
 mips/beri/beri_machdep.c		standard
 mips/beri/beri_mp.c			optional smp
 mips/beri/beri_pic.c			optional fdt

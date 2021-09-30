@@ -31,7 +31,7 @@
  *
  *	from: @(#)clnt.h 1.31 94/04/29 SMI
  *	from: @(#)clnt.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD: 26a21cf13187d71e0f4c898109ef2bd5f0d4c9b0 $
+ * $FreeBSD: f4cc78b1c3b6e2cdcf514e4b6755f451ac035da1 $
  */
 
 /*
@@ -357,6 +357,9 @@ enum clnt_stat clnt_call_private(CLIENT *, struct rpc_callextra *, rpcproc_t,
 #define CLSET_PRIVPORT		27	/* set privileged source port flag */
 #define CLGET_PRIVPORT		28	/* get privileged source port flag */
 #define CLSET_BACKCHANNEL	29	/* set backchannel for socket */
+#define	CLSET_TLS		30	/* set TLS for socket */
+#define	CLSET_BLOCKRCV		31	/* Temporarily block reception */
+#define	CLSET_TLSCERTNAME	32	/* TLS certificate file name */
 #endif
 
 

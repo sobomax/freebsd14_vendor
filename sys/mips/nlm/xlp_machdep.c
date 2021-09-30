@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8c7a5756590317d4f22073a443dad4393da6774 $");
+__FBSDID("$FreeBSD: 14022df2bd51d62ca7bdb4dc4116c07c14a7a9ae $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -56,7 +56,10 @@ __FBSDID("$FreeBSD: a8c7a5756590317d4f22073a443dad4393da6774 $");
 #include <sys/timetc.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>

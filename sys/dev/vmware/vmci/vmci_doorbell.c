@@ -7,7 +7,7 @@
 /* This file implements the VMCI doorbell API. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 226c69b8483ae531fa50cc3f7279937c38cda89b $");
+__FBSDID("$FreeBSD: 6bccd0fcc646d05abcdf4b4d7edc036ce67bc0d2 $");
 
 #include <sys/types.h>
 
@@ -621,7 +621,6 @@ vmci_doorbell_destroy(struct vmci_handle handle)
 
 	result = vmci_doorbell_unlink(handle, entry->is_doorbell);
 	if (VMCI_SUCCESS != result) {
-
 		/*
 		 * The only reason this should fail would be an inconsistency
 		 * between guest and hypervisor state, where the guest believes

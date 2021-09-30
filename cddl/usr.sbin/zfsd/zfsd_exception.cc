@@ -36,6 +36,7 @@
  * Implementation of the ZfsdException class.
  */
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 #include <sys/fs/zfs.h>
 
 #include <syslog.h>
@@ -52,7 +53,7 @@
 #include "vdev.h"
 #include "zfsd_exception.h"
 
-__FBSDID("$FreeBSD: 7859a654003e2e7bac76c730f1fd316fcdfb3cd4 $");
+__FBSDID("$FreeBSD: 7ebb74ca8c6a79775167671022fb0e3f8088f902 $");
 /*============================ Namespace Control =============================*/
 using std::endl;
 using std::string;

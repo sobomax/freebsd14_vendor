@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7945342a8afc1eebce5dd249c12bc9b7eec9921e $");
+__FBSDID("$FreeBSD: 53c9009c6e64955eb5ce90d5ed8722968a9c3032 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

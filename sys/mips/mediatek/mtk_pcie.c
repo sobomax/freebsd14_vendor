@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d3aa3e2550c0b2918968920ac99f3d97ec1184b $");
+__FBSDID("$FreeBSD: e6f6d3d99bf357d726b281e05c40cdf4d52ecdae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -583,7 +583,6 @@ mtk_pci_teardown_intr(device_t dev, device_t child, struct resource *ires,
 	result = intr_event_remove_handler(cookie);
 	if (!result)
 		sc->sc_eventstab[irqidx] = NULL;
-	
 
 	return (result);
 }

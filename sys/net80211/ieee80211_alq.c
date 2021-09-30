@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: 77824515a1fccaf5438f062b3621ad0693048176 $");
+__FBSDID("$FreeBSD: d7e6a78319dbd877427a85a15c4fe6180222c98a $");
 #endif
 
 /*
@@ -111,8 +111,10 @@ sysctl_ieee80211_alq_log(SYSCTL_HANDLER_ARGS)
 		return (ieee80211_alq_setlogging(enable));
 }
 
-SYSCTL_PROC(_net_wlan, OID_AUTO, alq, CTLTYPE_INT|CTLFLAG_RW,
-	0, 0, sysctl_ieee80211_alq_log, "I", "Enable net80211 alq logging");
+SYSCTL_PROC(_net_wlan, OID_AUTO, alq,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, 0,
+    sysctl_ieee80211_alq_log, "I",
+    "Enable net80211 alq logging");
 SYSCTL_INT(_net_wlan, OID_AUTO, alq_size, CTLFLAG_RW,
 	&ieee80211_alq_qsize, 0, "In-memory log size (bytes)");
 SYSCTL_INT(_net_wlan, OID_AUTO, alq_lost, CTLFLAG_RW,

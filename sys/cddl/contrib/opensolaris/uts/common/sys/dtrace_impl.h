@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 0b8df9834fa61b27e87ff2b4c260d626489681c5 $
+ * $FreeBSD: d26a09be4caa899139e4489c08ffd19362ed37d1 $
  */
 
 /*
@@ -50,6 +50,7 @@ extern "C" {
  */
 
 #include <sys/dtrace.h>
+#include <sys/file.h>
 
 #ifndef illumos
 #ifdef __sparcv9

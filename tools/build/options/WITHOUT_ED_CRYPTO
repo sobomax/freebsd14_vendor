@@ -1,4 +1,0 @@
-.\" $FreeBSD: d4572640d4c1e7c845c9f74336991b1e274db694 $
-Set to build
-.Xr ed 1
-without support for encryption/decryption.

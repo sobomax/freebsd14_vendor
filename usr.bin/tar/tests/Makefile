@@ -1,6 +1,8 @@
-# $FreeBSD: f537274021c501543ed936d3d96940abe11da088 $
+# $FreeBSD: d9ebfc2072ce01380b052e106cb43540927a898b $
 
 PACKAGE=	tests
+
+WARNS?=		3
 
 _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 

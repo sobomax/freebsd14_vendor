@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: bc8e19888fe9e6fdee245a520d2954ada2b1099e $
+ * $FreeBSD: b2c10026895cbd35041842e5f415141440f72d01 $
  */
 
 #ifndef _MIPS_BROADCOM_BCM_MIPSVAR_H_
@@ -50,7 +50,6 @@ struct bcm_mips_softc;
 #define	BCM_MIPS_NINTR		32			/**< maximum number of addressable backplane interrupt vectors */
 #define	BCM_MIPS_IRQ_SHARED	0			/**< MIPS CPU IRQ reserved for shared interrupt handling */
 #define	INTR_MAP_DATA_BCM_MIPS	INTR_MAP_DATA_PLAT_2	/**< Broadcom MIPS PIC interrupt map data type */
-
 
 int	bcm_mips_attach(device_t dev, u_int num_cpuirqs, u_int timer_irq,
 	    driver_filter_t filter);
@@ -99,7 +98,6 @@ struct bcm_mips_softc {
 	struct bcm_mips_irqsrc	 isrcs[BCM_MIPS_NINTR];
 	struct mtx		 mtx;
 };
-
 
 #define	BCM_MIPS_IVEC_MASK(_isrc)	(1 << ((_isrc)->ivec))
 

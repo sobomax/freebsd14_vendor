@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 430bb8272c79c533bb2abe7badb46cb00db245f0 $");
+__FBSDID("$FreeBSD: d54025106400e5ced26a6dc87d224b5d1cd5427b $");
 
 #include "ql_os.h"
 
@@ -1409,4 +1409,3 @@ unsigned char ql83xx_resetseq[] = {
   0xdf, 0xfa, 0x8f, 0x87
 };
 unsigned int ql83xx_resetseq_len = 16384;
-

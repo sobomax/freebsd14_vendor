@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89cd1db467429143db4961bbc195b77320d32ca8 $");
+__FBSDID("$FreeBSD: 99a79b3065803462e4cfa3d3a8abd1e4a135ad3f $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -33,7 +33,8 @@ __FBSDID("$FreeBSD: 89cd1db467429143db4961bbc195b77320d32ca8 $");
 #include <sys/atomic.h>
 
 #if !defined(__LP64__) && !defined(__mips_n32) && \
-    !defined(ARM_HAVE_ATOMIC64) && !defined(I386_HAVE_ATOMIC64)
+    !defined(ARM_HAVE_ATOMIC64) && !defined(I386_HAVE_ATOMIC64) && \
+    !defined(HAS_EMULATED_ATOMIC64)
 
 #ifdef _KERNEL
 #include <sys/kernel.h>

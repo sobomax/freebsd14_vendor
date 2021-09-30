@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68097a5e4e745ce57fddcd804898076b7eee6a0c $");
+__FBSDID("$FreeBSD: 126b284936bbba451a268ad61bca0fed31e0cee0 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -192,9 +192,8 @@ static struct xpt_proto nvme_proto = {
 CAM_XPT_PROTO(nvme_proto);
 
 static void
-nvme_probe_periph_init()
+nvme_probe_periph_init(void)
 {
-
 }
 
 static cam_status
@@ -850,4 +849,3 @@ nvme_proto_debug_out(union ccb *ccb)
 		ccb->ccb_h.func_code == XPT_NVME_ADMIN),
 		nvme_cmd_string(&ccb->nvmeio.cmd, cdb_str, sizeof(cdb_str))));
 }
-

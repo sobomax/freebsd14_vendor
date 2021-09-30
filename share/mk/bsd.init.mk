@@ -1,4 +1,4 @@
-# $FreeBSD: 62506e9887de51d3ece8f44d4ce18188ea5deb67 $
+# $FreeBSD: 30eeb0b2a15b2cc76a0ee5fc4e4fbb178cd59459 $
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the
@@ -11,11 +11,9 @@ __<bsd.init.mk>__:
 .include <bsd.opts.mk>
 .-include "local.init.mk"
 
-.if ${MK_AUTO_OBJ} == "yes"
 # This is also done in bsd.obj.mk
 .if defined(NO_OBJ) && ${.OBJDIR} != ${.CURDIR}
 .OBJDIR: ${.CURDIR}
-.endif
 .endif
 
 .if exists(${.CURDIR}/../Makefile.inc)
@@ -57,9 +55,13 @@ $xGRP=	${_gid}
 # - make install is used without other targets.  This is to avoid breaking
 #   things like 'make all install' or 'make foo install'.
 # - non-build targets are called
-.if ${MK_DIRDEPS_BUILD} == "yes" && ${.MAKE.LEVEL:U1} == 0 && \
-    ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*) && !make(*clean)
+.if ${MK_DIRDEPS_BUILD} == "yes" && ${.MAKE.LEVEL} == 0
+# targets that are ok at level 0
+DIRDEPS_BUILD_LEVEL0_TARGETS += clean* destroy*
+M_ListToSkip?= O:u:S,^,N,:ts:
+.if ${.TARGETS:Uall:${DIRDEPS_BUILD_LEVEL0_TARGETS:${M_ListToSkip}}} != ""
 _SKIP_BUILD=	not building at level 0
+.endif
 .elif !empty(.MAKEFLAGS:M-V${_V_DO_BUILD}) || \
     ${.TARGETS:M*install*} == ${.TARGETS} || \
     ${.TARGETS:Mclean*} == ${.TARGETS} || \

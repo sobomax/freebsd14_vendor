@@ -38,7 +38,7 @@
  * Author: Archie Cobbs <archie@freebsd.org>
  *
  * $Whistle: ng_parse.c,v 1.3 1999/11/29 01:43:48 archie Exp $
- * $FreeBSD: b08cecd102e972b3261ad51a92ee454cd818504a $
+ * $FreeBSD: 8050edbba562df5fa00184a785562ad48184f80c $
  */
 
 #include <sys/types.h>
@@ -174,7 +174,6 @@ ng_parse_getDefault(const struct ng_parse_type *type, u_char *buf, int *buflen)
 		return (EOPNOTSUPP);
 	return (*func)(type, buf, buf, buflen);
 }
-
 
 /************************************************************************
 			STRUCTURE TYPE
@@ -1899,4 +1898,3 @@ ng_get_getAlign_method(const struct ng_parse_type *t)
 		t = t->supertype;
 	return (t ? t->getAlign : NULL);
 }
-

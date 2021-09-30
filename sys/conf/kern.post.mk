@@ -1,4 +1,4 @@
-# $FreeBSD: 61230bcb862767ee17937d3e4ad10e5cb9682bb5 $
+# $FreeBSD: 7df67e24f44512c1ddeb86970e1ca36ed127e74b $
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES
@@ -38,6 +38,18 @@ MKMODULESENV+=	WITH_CTF="${WITH_CTF}"
 MKMODULESENV+=	WITH_EXTRA_TCP_STACKS="${WITH_EXTRA_TCP_STACKS}"
 .endif
 
+.if defined(KCSAN_ENABLED)
+MKMODULESENV+=	KCSAN_ENABLED="yes"
+.endif
+
+.if defined(SAN_CFLAGS)
+MKMODULESENV+=	SAN_CFLAGS="${SAN_CFLAGS}"
+.endif
+
+.if defined(GCOV_CFLAGS)
+MKMODULESENV+=	GCOV_CFLAGS="${GCOV_CFLAGS}"
+.endif
+
 # Allow overriding the kernel debug directory, so kernel and user debug may be
 # installed in different directories. Setting it to "" restores the historical
 # behavior of installing debug files in the kernel directory.
@@ -45,14 +57,35 @@ KERN_DEBUGDIR?=	${DEBUGDIR}
 
 .MAIN: all
 
+.if !defined(NO_MODULES)
+# Default prefix used for modules installed from ports
+LOCALBASE?=	/usr/local
+
+LOCAL_MODULES_DIR?= ${LOCALBASE}/sys/modules
+
+# Default to installing all modules installed by ports unless overridden
+# by the user.
+.if !defined(LOCAL_MODULES) && exists(${LOCAL_MODULES_DIR})
+LOCAL_MODULES!= ls ${LOCAL_MODULES_DIR}
+.endif
+.endif
+
 .for target in all clean cleandepend cleandir clobber depend install \
     ${_obj} reinstall tags
 ${target}: kernel-${target}
-.if !defined(MODULES_WITH_WORLD) && !defined(NO_MODULES) && exists($S/modules)
+.if !defined(NO_MODULES)
 ${target}: modules-${target}
 modules-${target}:
+.if !defined(MODULES_WITH_WORLD) && exists($S/modules)
 	cd $S/modules; ${MKMODULESENV} ${MAKE} \
 	    ${target:S/^reinstall$/install/:S/^clobber$/cleandir/}
+.endif
+.for module in ${LOCAL_MODULES}
+	@${ECHODIR} "===> ${module} (${target:S/^reinstall$/install/:S/^clobber$/cleandir/})"
+	@cd ${LOCAL_MODULES_DIR}/${module}; ${MKMODULESENV} ${MAKE} \
+	    DIRPRFX="${module}/" \
+	    ${target:S/^reinstall$/install/:S/^clobber$/cleandir/}
+.endfor
 .endif
 .endfor
 
@@ -61,8 +94,6 @@ modules-${target}:
 #
 # The ports tree needs some environment variables defined to match the new kernel
 #
-# Ports search for some dependencies in PATH, so add the location of the installed files
-LOCALBASE?=	/usr/local
 # SRC_BASE is how the ports tree refers to the location of the base source files
 .if !defined(SRC_BASE)
 SRC_BASE=	${SYSDIR:H:tA}
@@ -74,6 +105,9 @@ OSRELDATE!=	awk '/^\#define[[:space:]]*__FreeBSD_version/ { print $$3 }' \
 		    ${MAKEOBJDIRPREFIX}${SRC_BASE}/include/osreldate.h
 .endif
 # Keep the related ports builds in the obj directory so that they are only rebuilt once per kernel build
+#
+# Ports search for some dependencies in PATH, so add the location of the
+# installed files
 WRKDIRPREFIX?=	${.OBJDIR}
 PORTSMODULESENV=\
 	env \
@@ -120,7 +154,7 @@ kernel-clobber:
 
 kernel-obj:
 
-.if !defined(MODULES_WITH_WORLD) && !defined(NO_MODULES) && exists($S/modules)
+.if !defined(NO_MODULES)
 modules: modules-all
 modules-depend: beforebuild
 modules-all: beforebuild
@@ -194,7 +228,7 @@ kernel-clean:
 # in the a.out ld.  For now, this works.
 hack.pico: Makefile
 	:> hack.c
-	${CC} -shared ${CFLAGS} -nostdlib hack.c -o hack.pico
+	${CC} ${CCLDFLAGS} -shared ${CFLAGS} -nostdlib hack.c -o hack.pico
 	rm -f hack.c
 
 offset.inc: $S/kern/genoffset.sh genoffset.o
@@ -311,10 +345,7 @@ ${__obj}: ${OBJS_DEPEND_GUESS.${__obj}}
 
 .depend: .PRECIOUS ${SRCS}
 
-.if ${COMPILER_TYPE} == "clang" || \
-    (${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 60000)
 _MAP_DEBUG_PREFIX= yes
-.endif
 
 _ILINKS= machine
 .if ${MACHINE} != ${MACHINE_CPUARCH} && ${MACHINE} != "arm64"
@@ -364,7 +395,7 @@ kernel-install: .PHONY
 		exit 1 ; \
 	fi
 .if exists(${DESTDIR}${KODIR})
-	-thiskernel=`sysctl -n kern.bootfile` ; \
+	-thiskernel=`sysctl -n kern.bootfile || echo /boot/kernel/kernel` ; \
 	if [ ! "`dirname "$$thiskernel"`" -ef ${DESTDIR}${KODIR} ] ; then \
 		chflags -R noschg ${DESTDIR}${KODIR} ; \
 		rm -rf ${DESTDIR}${KODIR} ; \
@@ -426,24 +457,9 @@ vnode_if_typedef.h:
 
 .if ${MFS_IMAGE:Uno} != "no"
 .if empty(MD_ROOT_SIZE_CONFIGURED)
-# Generate an object file from the file system image to embed in the kernel
-# via linking. Make sure the contents are in the mfs section and rename the
-# start/end/size variables to __start_mfs, __stop_mfs, and mfs_size,
-# respectively.
-embedfs_${MFS_IMAGE:T:R}.o: ${MFS_IMAGE}
-	${OBJCOPY} --input-target binary \
-	    --output-target ${EMBEDFS_FORMAT.${MACHINE_ARCH}} \
-	    --binary-architecture ${EMBEDFS_ARCH.${MACHINE_ARCH}} \
-	    ${MFS_IMAGE} ${.TARGET}
-	${OBJCOPY} \
-	    --rename-section .data=mfs,contents,alloc,load,readonly,data \
-	    --redefine-sym \
-		_binary_${MFS_IMAGE:C,[^[:alnum:]],_,g}_size=__mfs_root_size \
-	    --redefine-sym \
-		_binary_${MFS_IMAGE:C,[^[:alnum:]],_,g}_start=mfs_root \
-	    --redefine-sym \
-		_binary_${MFS_IMAGE:C,[^[:alnum:]],_,g}_end=mfs_root_end \
-	    ${.TARGET}
+embedfs_${MFS_IMAGE:T:R}.o: ${MFS_IMAGE} $S/dev/md/embedfs.S
+	${CC} ${CFLAGS} ${ACFLAGS} -DMFS_IMAGE="${MFS_IMAGE}" -c \
+	    $S/dev/md/embedfs.S -o ${.TARGET}
 .endif
 .endif
 

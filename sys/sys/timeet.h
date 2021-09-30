@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: dc43337d176ab16669a15a054c5f349c5ea9bb43 $
+ * $FreeBSD: a809106b2369f2c8371bf10eda237fb3841cbf33 $
  */
 
 #ifndef _SYS_TIMEEC_H_
@@ -105,4 +105,3 @@ int	et_free(struct eventtimer *et);
 SYSCTL_DECL(_kern_eventtimer);
 #endif
 #endif /* !_SYS_TIMETC_H_ */
-

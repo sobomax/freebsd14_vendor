@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5d2ad7c613f66145615e2dea55f57b64cbf954e $");
+__FBSDID("$FreeBSD: 21737293968572d22cc9f38384a80abab42f5a61 $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -73,16 +73,16 @@ struct netif_driver *netif_drivers[] = {
 };
 
 extern struct console efi_console;
-#if defined(__amd64__) || defined(__i386__)
 extern struct console comconsole;
+#if defined(__amd64__) || defined(__i386__)
 extern struct console nullconsole;
 extern struct console spinconsole;
 #endif
 
 struct console *consoles[] = {
 	&efi_console,
-#if defined(__amd64__) || defined(__i386__)
 	&comconsole,
+#if defined(__amd64__) || defined(__i386__)
 	&nullconsole,
 	&spinconsole,
 #endif

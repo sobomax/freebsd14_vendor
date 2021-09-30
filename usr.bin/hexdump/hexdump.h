@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)hexdump.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 8a1d405b87dd0be1837b393eb5d3ef50b1d4645c $
+ * $FreeBSD: f21e2f240b1e51b115746ffac7980e046c3c8327 $
  */
 
 #include <wchar.h>
@@ -88,6 +88,7 @@ void	 addfile(const char *);
 void	 badcnt(const char *);
 void	 badconv(const char *);
 void	 badfmt(const char *);
+void	 badnoconv(void);
 void	 badsfmt(void);
 void	 bpad(PR *);
 void	 conv_c(PR *, u_char *, size_t);

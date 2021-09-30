@@ -1,8 +1,9 @@
-# $FreeBSD: a71bcc2e1a1fd0592a750b2106818227ddce758f $
+# $FreeBSD: 9978d9c4ea9c0e30bcc0743f1ad9d1b40a2b2632 $
 
 HAVE_FDT=yes
 
 SRCS+=	exec.c \
+	efiserialio.c \
 	start.S
 
 .PATH:	${BOOTSRC}/arm64/libarm64

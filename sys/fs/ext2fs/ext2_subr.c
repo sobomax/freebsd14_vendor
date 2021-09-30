@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_subr.c	8.2 (Berkeley) 9/21/93
- * $FreeBSD: cd2ea04fa8b712ae2ae98f4bc5ee1fd18f06a65e $
+ * $FreeBSD: 004bd7a452119e9b3777d73e7c59cc1a89773763 $
  */
 
 #include <sys/param.h>
@@ -114,7 +114,7 @@ ext2_clusteracct(struct m_ext2fs *fs, char *bbp, int cg, e4fs_daddr_t bno, int c
 		bit = 1;
 		loc = 0;
 
-		for (i = 0; i < fs->e2fs->e2fs_fpg; i++) {
+		for (i = 0; i < fs->e2fs_fpg; i++) {
 			if ((bbp[loc] & bit) == 0)
 				run++;
 			else if (run != 0) {
@@ -144,8 +144,8 @@ ext2_clusteracct(struct m_ext2fs *fs, char *bbp, int cg, e4fs_daddr_t bno, int c
 	/* Find the size of the cluster going forward. */
 	start = bno + 1;
 	end = start + fs->e2fs_contigsumsize;
-	if (end > fs->e2fs->e2fs_fpg)
-		end = fs->e2fs->e2fs_fpg;
+	if (end > fs->e2fs_fpg)
+		end = fs->e2fs_fpg;
 	loc = start / NBBY;
 	bit = 1 << (start % NBBY);
 	for (i = start; i < end; i++) {

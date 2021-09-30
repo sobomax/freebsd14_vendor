@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 57ccf4df696ce01708d455ef6bc6a59a71c828cd $");
+__FBSDID("$FreeBSD: 727b988ac9c07d9e3b9c7ca9382b7dac90c28841 $");
 
 #include "archive.h"
 #include "archive_entry.h"
@@ -47,7 +47,7 @@ archive_read_support_format_empty(struct archive *_a)
 
 	r = __archive_read_register_format(a,
 	    NULL,
-	    NULL,
+	    "empty",
 	    archive_read_format_empty_bid,
 	    NULL,
 	    archive_read_format_empty_read_header,

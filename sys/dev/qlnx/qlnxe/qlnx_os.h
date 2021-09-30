@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f409de9e809e6663d2e1b4c086ebb47a5fd0408d $
+ * $FreeBSD: 9f4176f9f29f83d04452cae4568c98109215f149 $
  *
  */
 
@@ -138,7 +138,7 @@ MALLOC_DECLARE(M_QLNXBUF);
 		else  \
 			pause(fn, qlnx_ms_to_hz(msecs)); \
 	}
-	
+
 /*
  * Locks
  */
@@ -157,6 +157,5 @@ struct qlnx_dma {
         bus_dma_tag_t           dma_tag;
 };
 typedef struct qlnx_dma qlnx_dma_t;
-
 
 #endif /* #ifndef _QLNX_OS_H_ */

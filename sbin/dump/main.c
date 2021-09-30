@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/1/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: c89918babb8c797fffc4c72947c390ba1a2a221f $";
+  "$FreeBSD: bbc54d7ab5d7761f20f6cad11060122b0ae50af4 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -455,7 +455,7 @@ main(int argc, char *argv[])
 		msgtail("to %s\n", tape);
 
 	sync();
-	if ((ret = sbget(diskfd, &sblock, -1)) != 0) {
+	if ((ret = sbget(diskfd, &sblock, STDSB)) != 0) {
 		switch (ret) {
 		case ENOENT:
 			warn("Cannot find file system superblock");
@@ -571,7 +571,7 @@ main(int argc, char *argv[])
 		/*
 		 * Skip directory inodes deleted and maybe reallocated
 		 */
-		dp = getinode(ino, &mode);
+		dp = getino(ino, &mode);
 		if (mode != IFDIR)
 			continue;
 		(void)dumpino(dp, ino);
@@ -590,7 +590,7 @@ main(int argc, char *argv[])
 		/*
 		 * Skip inodes deleted and reallocated as directories.
 		 */
-		dp = getinode(ino, &mode);
+		dp = getino(ino, &mode);
 		if (mode == IFDIR)
 			continue;
 		(void)dumpino(dp, ino);

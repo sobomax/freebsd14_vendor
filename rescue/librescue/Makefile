@@ -1,5 +1,5 @@
 #
-# $FreeBSD: e7147d8e67ce2c4171febddb8ee486beded60fff $
+# $FreeBSD: 2116219dc7469c03d655855d93b4fe49c2812c0f $
 #
 
 .include <src.opts.mk>
@@ -22,6 +22,8 @@ LIB=		rescue
 INTERNALLIB=	# Don't install this library
 SRCS=		exec.c getusershell.c login_class.c popen.c rcmdsh.c \
 		sysctl.c system.c
+
+WARNS?=		3
 
 CFLAGS+=	-DRESCUE
 # Flags copied from src/lib/libc and src/lib/libutil

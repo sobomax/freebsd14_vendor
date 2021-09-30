@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0943397a99e0461776acddd7cd7e5cdbf9edd1af $");
+__FBSDID("$FreeBSD: 0c53a77feda87c19ca0b56cf6f91a920d0dd91dd $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -72,4 +72,3 @@ OF_decode_addr(phandle_t dev, int regno, bus_space_tag_t *tag,
 
 	return (bus_space_map(*tag, addr, size, flags, handle));
 }
-

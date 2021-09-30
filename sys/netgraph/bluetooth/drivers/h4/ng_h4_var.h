@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_h4_var.h,v 1.5 2005/10/31 17:57:43 max Exp $
- * $FreeBSD: 2b22fc770aa9fc334321a1f1950c2036767ef847 $
+ * $FreeBSD: 2bfa3d6cde3cfb7357dd0b1f006b0650d7e32e87 $
  * 
  * Based on:
  * ---------
@@ -73,7 +73,7 @@ typedef struct ng_h4_info {
 
 	ng_h4_node_debug_ep	 debug;	/* Debug level */
 	ng_h4_node_state_ep	 state;	/* State */
-	
+
 	ng_h4_node_stat_ep	 stat;
 #define NG_H4_STAT_PCKTS_SENT(s)	(s).pckts_sent ++
 #define NG_H4_STAT_BYTES_SENT(s, n)	(s).bytes_sent += (n)
@@ -102,4 +102,3 @@ typedef struct ng_h4_info {
 typedef ng_h4_info_t *		 ng_h4_info_p;
 
 #endif /* _NETGRAPH_H4_VAR_H_ */
-

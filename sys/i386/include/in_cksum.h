@@ -31,7 +31,7 @@
  *	from tahoe:	in_cksum.c	1.2	86/01/05
  *	from:		@(#)in_cksum.c	1.3 (Berkeley) 1/19/91
  *	from: Id: in_cksum.c,v 1.8 1995/12/03 18:35:19 bde Exp
- * $FreeBSD: 360b324aac623c87e0d1636c00de5ca9778788e3 $
+ * $FreeBSD: 87c18ec4066d7633e896613ba42825cc18d085f3 $
  */
 
 #ifndef _MACHINE_IN_CKSUM_H_
@@ -55,7 +55,7 @@
  * in the normal case (where there are no options and the header length is
  * therefore always exactly five 32-bit words.
  */
-#if defined(__GNUCLIKE_ASM) && !defined(__INTEL_COMPILER)
+#if defined(__GNUCLIKE_ASM)
 #if defined(IPVERSION) && (IPVERSION == 4)
 static __inline u_int
 in_cksum_hdr(const struct ip *ip)
@@ -137,7 +137,7 @@ in_pseudo(u_int sum, u_int b, u_int c)
 #endif
 
 #ifdef _KERNEL
-#if !defined(__GNUCLIKE_ASM) || defined(__INTEL_COMPILER)
+#if !defined(__GNUCLIKE_ASM)
 #if defined(IPVERSION) && (IPVERSION == 4)
 u_int in_cksum_hdr(const struct ip *ip);
 #endif

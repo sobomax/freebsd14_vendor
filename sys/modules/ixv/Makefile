@@ -1,4 +1,4 @@
-#$FreeBSD: 573af91895169517db8ac96c75b8d94b1bef8bc6 $
+#$FreeBSD: db0bb9fe9b4fc833cf57a3f25bc4632ab47aaa00 $
 
 .PATH:  ${SRCTOP}/sys/dev/ixgbe
 
@@ -10,6 +10,6 @@ SRCS    += if_ixv.c if_fdir.c ix_txrx.c ixgbe_osdep.c
 SRCS    += ixgbe_common.c ixgbe_api.c ixgbe_phy.c ixgbe_mbx.c ixgbe_vf.c
 SRCS    += ixgbe_dcb.c ixgbe_dcb_82598.c ixgbe_dcb_82599.c
 SRCS    += ixgbe_82598.c ixgbe_82599.c ixgbe_x540.c ixgbe_x550.c
-CFLAGS+= -I${SRCTOP}/sys/dev/ixgbe -DSMP
+CFLAGS+= -I${SRCTOP}/sys/dev/ixgbe
 
 .include <bsd.kmod.mk>

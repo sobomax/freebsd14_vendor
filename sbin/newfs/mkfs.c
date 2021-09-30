@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)mkfs.c	8.11 (Berkeley) 5/3/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79fc627e5f7a0ea36b529ebf6805df07ee58a530 $");
+__FBSDID("$FreeBSD: bf5ee60694d0b2643af3503582a83c876dd073cf $");
 
 #define	IN_RTLD			/* So we pickup the P_OSREL defines */
 #include <sys/param.h>
@@ -134,6 +134,10 @@ mkfs(struct partition *pp, char *fsys)
 		utime = 1000000000;
 	else
 		time(&utime);
+	if ((sblock.fs_si = malloc(sizeof(struct fs_summary_info))) == NULL) {
+		printf("Superblock summary info allocation failed.\n");
+		exit(18);
+	}
 	sblock.fs_old_flags = FS_FLAGS_UPDATED;
 	sblock.fs_flags = 0;
 	if (Uflag)
@@ -496,7 +500,11 @@ restart:
 	if (Oflag > 1) {
 		sblock.fs_flags |= FS_METACKHASH;
 		if (getosreldate() >= P_OSREL_CK_CYLGRP)
-			sblock.fs_metackhash = CK_CYLGRP;
+			sblock.fs_metackhash |= CK_CYLGRP;
+		if (getosreldate() >= P_OSREL_CK_SUPERBLOCK)
+			sblock.fs_metackhash |= CK_SUPERBLOCK;
+		if (getosreldate() >= P_OSREL_CK_INODE)
+			sblock.fs_metackhash |= CK_INODE;
 	}
 
 	/*
@@ -544,8 +552,12 @@ restart:
 			}
 		}
 	}
-	if (!Nflag && sbput(disk.d_fd, &disk.d_fs, 0) != 0)
-		err(1, "sbput: %s", disk.d_error);
+	/*
+	 * Reference the summary information so it will also be written.
+	 */
+	sblock.fs_csp = fscs;
+	if (!Nflag && sbwrite(&disk, 0) != 0)
+		err(1, "sbwrite: %s", disk.d_error);
 	if (Xflag == 1) {
 		printf("** Exiting on Xflag 1\n");
 		exit(0);
@@ -607,12 +619,8 @@ restart:
 		printf("** Exiting on Xflag 3\n");
 		exit(0);
 	}
-	/*
-	 * Reference the summary information so it will also be written.
-	 */
-	sblock.fs_csp = fscs;
-	if (sbput(disk.d_fd, &disk.d_fs, 0) != 0)
-		err(1, "sbput: %s", disk.d_error);
+	if (sbwrite(&disk, 0) != 0)
+		err(1, "sbwrite: %s", disk.d_error);
 	/*
 	 * For UFS1 filesystems with a blocksize of 64K, the first
 	 * alternate superblock resides at the location used for
@@ -803,11 +811,11 @@ initcg(int cylno, time_t utime)
 	savedactualloc = sblock.fs_sblockactualloc;
 	sblock.fs_sblockactualloc =
 	    dbtob(fsbtodb(&sblock, cgsblock(&sblock, cylno)));
-	if (sbput(disk.d_fd, &disk.d_fs, 0) != 0)
-		err(1, "sbput: %s", disk.d_error);
+	if (sbwrite(&disk, 0) != 0)
+		err(1, "sbwrite: %s", disk.d_error);
 	sblock.fs_sblockactualloc = savedactualloc;
-	if (cgput(&disk, &acg) != 0)
-		err(1, "initcg: cgput: %s", disk.d_error);
+	if (cgwrite(&disk) != 0)
+		err(1, "initcg: cgwrite: %s", disk.d_error);
 	start = 0;
 	dp1 = (struct ufs1_dinode *)(&iobuf[start]);
 	dp2 = (struct ufs2_dinode *)(&iobuf[start]);
@@ -1016,8 +1024,8 @@ goth:
 		for (i = frag; i < sblock.fs_frag; i++)
 			setbit(cg_blksfree(&acg), d + i);
 	}
-	if (cgput(&disk, &acg) != 0)
-		err(1, "alloc: cgput: %s", disk.d_error);
+	if (cgwrite(&disk) != 0)
+		err(1, "alloc: cgwrite: %s", disk.d_error);
 	return ((ufs2_daddr_t)d);
 }
 
@@ -1027,7 +1035,7 @@ goth:
 void
 iput(union dinode *ip, ino_t ino)
 {
-	ufs2_daddr_t d;
+	union dinodep dp;
 
 	bread(&disk, part_ofs + fsbtodb(&sblock, cgtod(&sblock, 0)), (char *)&acg,
 	    sblock.fs_cgsize);
@@ -1037,24 +1045,19 @@ iput(union dinode *ip, ino_t ino)
 	}
 	acg.cg_cs.cs_nifree--;
 	setbit(cg_inosused(&acg), ino);
-	if (cgput(&disk, &acg) != 0)
-		err(1, "iput: cgput: %s", disk.d_error);
+	if (cgwrite(&disk) != 0)
+		err(1, "iput: cgwrite: %s", disk.d_error);
 	sblock.fs_cstotal.cs_nifree--;
 	fscs[0].cs_nifree--;
-	if (ino >= (unsigned long)sblock.fs_ipg * sblock.fs_ncg) {
-		printf("fsinit: inode value out of range (%ju).\n",
-		    (uintmax_t)ino);
+	if (getinode(&disk, &dp, ino) == -1) {
+		printf("iput: %s\n", disk.d_error);
 		exit(32);
 	}
-	d = fsbtodb(&sblock, ino_to_fsba(&sblock, ino));
-	bread(&disk, part_ofs + d, (char *)iobuf, sblock.fs_bsize);
 	if (sblock.fs_magic == FS_UFS1_MAGIC)
-		((struct ufs1_dinode *)iobuf)[ino_to_fsbo(&sblock, ino)] =
-		    ip->dp1;
+		*dp.dp1 = ip->dp1;
 	else
-		((struct ufs2_dinode *)iobuf)[ino_to_fsbo(&sblock, ino)] =
-		    ip->dp2;
-	wtfs(d, sblock.fs_bsize, (char *)iobuf);
+		*dp.dp2 = ip->dp2;
+	putinode(&disk);
 }
 
 /*

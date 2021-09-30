@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: ee1538151882157ae95b195bfce06c7cb0645bcc $
+ * $FreeBSD: 971468c9398f6db4b5a623124f0d6b8f648df593 $
  */
 
 #ifndef _BHND_CORES_PMU_BHND_PMU_H_
@@ -44,7 +44,6 @@
 
 #include "bhnd_pmu_if.h"
 #include "bhnd_pmu_types.h"
-
 
 /**
  * Return the current value of a PMU chipctrl register.
@@ -250,7 +249,6 @@ bhnd_pmu_request_spuravoid(device_t dev, bhnd_pmu_spuravoid spuravoid)
 {
 	return (BHND_PMU_REQUEST_SPURAVOID(dev, spuravoid));
 }
-
 
 /**
  * Return the PMU's maximum state transition latency in microseconds.

@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f5204fa83b164e5358c8b3e1872f5ff827051fc6 $
+ * $FreeBSD: 858989fe505fc7546b2e6736c50a749bb647b6e8 $
  */
 
 #ifndef _SYS_ASSYM_H_
@@ -42,7 +42,6 @@ char name ## w0[(ASSYM_ABS(value) & 0xFFFFU) + ASSYM_BIAS];		      \
 char name ## w1[((ASSYM_ABS(value) & 0xFFFF0000UL) >> 16) + ASSYM_BIAS];      \
 char name ## w2[((ASSYM_ABS(value) & 0xFFFF00000000ULL) >> 32) + ASSYM_BIAS]; \
 char name ## w3[((ASSYM_ABS(value) & 0xFFFF000000000000ULL) >> 48) + ASSYM_BIAS]
-
 
 /* char name ## _datatype_ ## STRINGIFY(typeof(((struct parenttype *)(0x0))-> name)) [1]; */
 #ifdef OFFSET_TEST

@@ -1,0 +1,5 @@
+# $FreeBSD: 58e8a55f2199b7357dcef6bbfc90cafa91cb3bd9 $
+
+include "../../conf/NOTES"
+include NOTES
+machine		powerpc powerpc64

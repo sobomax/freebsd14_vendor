@@ -4,8 +4,8 @@
  * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
  * Copyright (c) 2000, Michael Smith <msmith@freebsd.org>
  * Copyright (c) 2000, BSDi
- * Copyright (c) 2004, John Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
+ * Copyright (c) 2004, John Baldwin <jhb@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42820e009b5bd69c11a7815d845e2d48e0410c1f $");
+__FBSDID("$FreeBSD: 0d2257d526fe3f4a45655ba0ea1b5cb1128cdf69 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -481,7 +481,6 @@ pci_pir_biosroute(int bus, int device, int func, int pin, int irq)
 	return (bios32(&args, PCIbios.ventry, GSEL(GCODE_SEL, SEL_KPL)));
 }
 
-
 /*
  * Route a PCI interrupt using a link device from the $PIR.
  */
@@ -732,7 +731,6 @@ static device_method_t pir_methods[] = {
 	DEVMETHOD(device_probe,		pir_probe),
 	DEVMETHOD(device_attach,	pir_attach),
 	DEVMETHOD(device_resume,	pir_resume),
-
 	{ 0, 0 }
 };
 

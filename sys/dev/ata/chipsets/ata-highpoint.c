@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ce3dbe861d3413325e91ea317b06895a4070b96 $");
+__FBSDID("$FreeBSD: 17fbd4c67ddc1dcb35f3201364f718aff282a6db $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -64,7 +64,6 @@ static int ata_highpoint_check_80pin(device_t dev, int mode);
 #define HPT_372		2
 #define HPT_374		3
 #define HPT_OLD		1
-
 
 /*
  * HighPoint chipset support functions

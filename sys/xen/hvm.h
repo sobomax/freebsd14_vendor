@@ -17,7 +17,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: bc7518d26575060cb180dbb8b2b38670de43828b $
+ * $FreeBSD: e34a552dc714b54f6b9e9b791bc8e6b03235b1a5 $
  */
 
 #ifndef	__XEN_HVM_H__
@@ -104,5 +104,6 @@ void xen_hvm_suspend(void);
 void xen_hvm_resume(bool suspend_cancelled);
 
 extern uint32_t hvm_start_flags;
+extern bool xen_evtchn_needs_ack;
 
 #endif	/* __XEN_HVM_H__ */

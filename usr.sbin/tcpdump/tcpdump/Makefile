@@ -1,4 +1,4 @@
-# $FreeBSD: 8f6f47754b4d7151e3786fb9d7446337509af117 $
+# $FreeBSD: 1133a0a150d54b5297404ef1c18b7d92593aa724 $
 
 .include <src.opts.mk>
 
@@ -186,7 +186,7 @@ CFLAGS+=	-DINET6 -DHAVE_OS_IPV6_SUPPORT
 CFLAGS+=	-DLBL_ALIGN
 .endif
 
-LIBADD=	l pcap
+LIBADD=	pcap
 .if ${MK_CASPER} != "no"
 LIBADD+=	casper
 LIBADD+=	cap_dns

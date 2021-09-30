@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: e20ca86acd645bc0cb33f0010772f3ae490f25bd $ */
+/* $FreeBSD: e3f84d4d5b7435eef83fd7ab394e607b47f905d5 $ */
 
 #ifndef __PCF2123REG_H__
 #define	__PCF2123REG_H__
@@ -66,4 +66,3 @@
 #define	PCF2123_WRITE(reg)	(PCF2123_CMD_WRITE | (1 << 4) | (reg))
 
 #endif /* __PCF2123REG_H__ */
-

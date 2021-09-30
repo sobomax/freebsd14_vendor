@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 65911bcac8b6e04e85a455b61d22edaa8a973233 $
+ * $FreeBSD: 04a29d3030b62f6a677fbc1453d63b82875034d6 $
  */
 
 /*
@@ -130,7 +130,7 @@ aoa_dma_create(struct aoa_softc *sc)
 	dma->tag = tag;
 	dma->bufsz = AOA_BUFFER_SIZE;
 	dma->blksz = PAGE_SIZE; /* initial blocksize */
-	
+
 	mtx_init(&dma->mutex, "AOA", NULL, MTX_DEF);
 
 	sc->sc_intrp = dma;
@@ -215,7 +215,7 @@ aoa_chan_getptr(kobj_t obj, void *data)
 
 	if (!dma->running)
 		return (0);
-	
+
 	return (dma->slot * dma->blksz);
 }
 
@@ -327,7 +327,6 @@ aoa_interrupt(void *xsc)
 	mtx_lock(&dma->mutex);
 
 	while (dbdma_get_cmd_status(dma->channel, dma->slot)) {
-
 		dbdma_clear_cmd_status(dma->channel, dma->slot);
 		dma->slot = (dma->slot + 1) % dma->slots;
 
@@ -389,4 +388,3 @@ aoa_attach(void *xsc)
 
 	return (0);
 }
-

@@ -43,7 +43,7 @@
 #include <dev/sound/midi/mpu401.h>
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 94769b38faf0ae10a505cad884ce9491fe74646e $");
+SND_DECLARE_FILE("$FreeBSD: 9ee71ed968478308a6a330de9bbaffc8ed709a48 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -1283,7 +1283,6 @@ emu_intr(void *data)
 				if (x == 0)
 					emu_enatimer(sc, 0);
 			}
-
 
 			if (ack & (EMU_IPR_ADCBUFFULL | EMU_IPR_ADCBUFHALFFULL)) {
 				if (sc->rch[0].channel)

@@ -38,7 +38,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40928b2b2b1903a972d97b4cc75607b8ff316e38 $");
+__FBSDID("$FreeBSD: 97d8db75fe41035d8ceff672cd5168e4c8f1b63f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -331,9 +331,21 @@ arm_gicv2m_acpi_probe(device_t dev)
 	return (BUS_PROBE_DEFAULT);
 }
 
+static int
+arm_gicv2m_acpi_attach(device_t dev)
+{
+	struct arm_gicv2m_softc *sc;
+
+	sc = device_get_softc(dev);
+	sc->sc_xref = ACPI_MSI_XREF;
+
+	return (arm_gicv2m_attach(dev));
+}
+
 static device_method_t arm_gicv2m_acpi_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		arm_gicv2m_acpi_probe),
+	DEVMETHOD(device_attach,	arm_gicv2m_acpi_attach),
 
 	/* End */
 	DEVMETHOD_END

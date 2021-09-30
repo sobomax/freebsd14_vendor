@@ -1,7 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -50,7 +50,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: 7af811f1766224ed4870b98c2e0db4a4bf500cc9 $
+ * $FreeBSD: 5fbe11663708d8ba3960e01f4f180a63d7e9f951 $
  */
 
 #ifndef DEV_MMC_BRIDGE_H

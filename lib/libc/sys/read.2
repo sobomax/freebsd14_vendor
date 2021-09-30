@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)read.2	8.4 (Berkeley) 2/26/94
-.\" $FreeBSD: da4ca2de95a6c66cafe3570b5ddaf28c0b6f4055 $
+.\" $FreeBSD: 8b58debd3fbbed84bc2b1ed536ca6c4ed90dc572 $
 .\"
-.Dd March 30, 2020
+.Dd June 4, 2020
 .Dt READ 2
 .Os
 .Sh NAME
@@ -200,7 +200,7 @@ The file was marked for non-blocking I/O,
 and no data were ready to be read.
 .It Bq Er EISDIR
 The file descriptor is associated with a directory.
-Directories may only be read directly if the filesystem supports it and
+Directories may only be read directly by root if the filesystem supports it and
 the
 .Dv security.bsd.allow_read_dir
 sysctl MIB is set to a non-zero value.

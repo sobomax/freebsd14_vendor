@@ -1,5 +1,5 @@
 #
-# $FreeBSD: c75a208c95091737e5c63a5fbb631e0df8a8e0fd $
+# $FreeBSD: b67641de9f625dc37b46d3f89d7e453b9551959a $
 #
 
 .include <src.opts.mk>
@@ -9,6 +9,7 @@ WARNS?=	3
 CXXFLAGS+= -O0
 CXXSTD= c++14
 CWARNFLAGS.gcc+= -Wno-redundant-decls
+CFLAGS+= -I${SRCTOP}/lib/libpmcstat
 
 # Does not link when built position-independent.
 MK_PIE=no

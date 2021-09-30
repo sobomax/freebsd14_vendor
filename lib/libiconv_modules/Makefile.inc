@@ -1,9 +1,8 @@
-# $FreeBSD: d42473637534d098d12603ae567c9f0d10d50dbd $
+# $FreeBSD: 556997404f99b69bc640e5dc3665d704dd5e6350 $
 
 .PATH: ${SRCTOP}/lib/libc/iconv
 
 SHLIB_MAJOR= 4
-WARNS?=	6
 CFLAGS+= -I${SRCTOP}/lib/libc/iconv
 
 CFLAGS+=	-Dbool=_Bool

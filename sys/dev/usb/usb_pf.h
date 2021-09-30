@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 03f7ba9888279193feee93e670ab949c23fb370f $
+ * $FreeBSD: 0fc839b48323b6365292bad64678aa620af8c2b9 $
  */
 
 #ifndef _DEV_USB_PF_H
@@ -113,10 +113,10 @@ extern uint8_t usbpf_framehdr_size_ok[
 #define	USBPF_XFERTAP_SUBMIT	0
 #define	USBPF_XFERTAP_DONE	1
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_STANDALONE)
 void	usbpf_attach(struct usb_bus *);
 void	usbpf_detach(struct usb_bus *);
 void	usbpf_xfertap(struct usb_xfer *, int);
-#endif
+#endif	/* _KERNEL || _STANDALONE */
+#endif	/* _DEV_USB_PF_H */
 
-#endif

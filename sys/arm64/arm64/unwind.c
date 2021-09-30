@@ -28,26 +28,28 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bef9c6fa31f109fcfbac7ce5a471a42ed8a1a506 $");
+__FBSDID("$FreeBSD: 1363bb0249d61601cb4c503fc63b0fe5f6e05ff6 $");
 #include <sys/param.h>
+#include <sys/proc.h>
 
 #include <machine/stack.h>
 #include <machine/vmparam.h>
 
-int
-unwind_frame(struct unwind_state *frame)
+bool
+unwind_frame(struct thread *td, struct unwind_state *frame)
 {
-	uint64_t fp;
+	uintptr_t fp;
 
 	fp = frame->fp;
-	if (!INKERNEL(fp))
-		return (-1);
 
-	frame->sp = fp + 0x10;
+	if (!kstack_contains(td, fp, sizeof(uintptr_t) * 2))
+		return (false);
+
+	frame->sp = fp + sizeof(uintptr_t) * 2;
 	/* FP to previous frame (X29) */
-	frame->fp = *(uint64_t *)(fp);
+	frame->fp = ((uintptr_t *)fp)[0];
 	/* LR (X30) */
-	frame->pc = *(uint64_t *)(fp + 8) - 4;
+	frame->pc = ((uintptr_t *)fp)[1] - 4;
 
-	return (0);
+	return (true);
 }

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ddf7f0508412fc23ae05959f9ee7d5e8adbb096a $");
+__FBSDID("$FreeBSD: bde42eeb18d68a6df1483a002f7a670f08e571a9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,10 +72,10 @@ __FBSDID("$FreeBSD: ddf7f0508412fc23ae05959f9ee7d5e8adbb096a $");
 
 MALLOC_DEFINE(M_NAT64LSN, "NAT64LSN", "NAT64LSN");
 
-#define	NAT64LSN_EPOCH_ENTER(et)  NET_EPOCH_ENTER_ET(et)
-#define	NAT64LSN_EPOCH_EXIT(et)   NET_EPOCH_EXIT_ET(et)
-#define	NAT64LSN_EPOCH_ASSERT()   MPASS(in_epoch(net_epoch_preempt))
-#define	NAT64LSN_EPOCH_CALL(c, f) epoch_call(net_epoch_preempt, (c), (f))
+#define	NAT64LSN_EPOCH_ENTER(et)  NET_EPOCH_ENTER(et)
+#define	NAT64LSN_EPOCH_EXIT(et)   NET_EPOCH_EXIT(et)
+#define	NAT64LSN_EPOCH_ASSERT()   NET_EPOCH_ASSERT()
+#define	NAT64LSN_EPOCH_CALL(c, f) NET_EPOCH_CALL((f), (c))
 
 static uma_zone_t nat64lsn_host_zone;
 static uma_zone_t nat64lsn_pgchunk_zone;
@@ -257,7 +257,6 @@ freemask_ffsll(uint32_t *freemask)
     (out) = ck_pr_load_32(FREEMASK_CHUNK((pg), (n))) | \
 	((uint64_t)ck_pr_load_32(FREEMASK_CHUNK((pg), (n)) + 1) << 32)
 #endif /* !__LP64__ */
-
 
 #define	NAT64LSN_TRY_PGCNT	32
 static struct nat64lsn_pg*
@@ -548,6 +547,57 @@ nat64lsn_get_state4to6(struct nat64lsn_cfg *cfg, struct nat64lsn_alias *alias,
 	return (NULL);
 }
 
+/*
+ * Reassemble IPv4 fragments, make PULLUP if needed, get some ULP fields
+ * that might be unknown until reassembling is completed.
+ */
+static struct mbuf*
+nat64lsn_reassemble4(struct nat64lsn_cfg *cfg, struct mbuf *m,
+    uint16_t *port)
+{
+	struct ip *ip;
+	int len;
+
+	m = ip_reass(m);
+	if (m == NULL)
+		return (NULL);
+	/* IP header must be contigious after ip_reass() */
+	ip = mtod(m, struct ip *);
+	len = ip->ip_hl << 2;
+	switch (ip->ip_p) {
+	case IPPROTO_ICMP:
+		len += ICMP_MINLEN; /* Enough to get icmp_id */
+		break;
+	case IPPROTO_TCP:
+		len += sizeof(struct tcphdr);
+		break;
+	case IPPROTO_UDP:
+		len += sizeof(struct udphdr);
+		break;
+	default:
+		m_freem(m);
+		NAT64STAT_INC(&cfg->base.stats, noproto);
+		return (NULL);
+	}
+	if (m->m_len < len) {
+		m = m_pullup(m, len);
+		if (m == NULL) {
+			NAT64STAT_INC(&cfg->base.stats, nomem);
+			return (NULL);
+		}
+		ip = mtod(m, struct ip *);
+	}
+	switch (ip->ip_p) {
+	case IPPROTO_TCP:
+		*port = ntohs(L3HDR(ip, struct tcphdr *)->th_dport);
+		break;
+	case IPPROTO_UDP:
+		*port = ntohs(L3HDR(ip, struct udphdr *)->uh_dport);
+		break;
+	}
+	return (m);
+}
+
 static int
 nat64lsn_translate4(struct nat64lsn_cfg *cfg,
     const struct ipfw_flow_id *f_id, struct mbuf **mp)
@@ -567,6 +617,14 @@ nat64lsn_translate4(struct nat64lsn_cfg *cfg,
 	if (addr < cfg->prefix4 || addr > cfg->pmask4) {
 		NAT64STAT_INC(&cfg->base.stats, nomatch4);
 		return (cfg->nomatch_verdict);
+	}
+
+	/* Reassemble fragments if needed */
+	ret = ntohs(mtod(*mp, struct ip *)->ip_off);
+	if ((ret & (IP_MF | IP_OFFMASK)) != 0) {
+		*mp = nat64lsn_reassemble4(cfg, *mp, &port);
+		if (*mp == NULL)
+			return (IP_FW_DENY);
 	}
 
 	/* Check if protocol is supported */
@@ -1514,7 +1572,6 @@ int
 ipfw_nat64lsn(struct ip_fw_chain *ch, struct ip_fw_args *args,
     ipfw_insn *cmd, int *done)
 {
-	struct epoch_tracker et;
 	struct nat64lsn_cfg *cfg;
 	ipfw_insn *icmd;
 	int ret;
@@ -1531,7 +1588,6 @@ ipfw_nat64lsn(struct ip_fw_chain *ch, struct ip_fw_args *args,
 
 	*done = 1;	/* terminate the search */
 
-	NAT64LSN_EPOCH_ENTER(et);
 	switch (args->f_id.addr_type) {
 	case 4:
 		ret = nat64lsn_translate4(cfg, &args->f_id, &args->m);
@@ -1551,7 +1607,6 @@ ipfw_nat64lsn(struct ip_fw_chain *ch, struct ip_fw_args *args,
 	default:
 		ret = cfg->nomatch_verdict;
 	}
-	NAT64LSN_EPOCH_EXIT(et);
 
 	if (ret != IP_FW_PASS && args->m != NULL) {
 		m_freem(args->m);
@@ -1753,4 +1808,3 @@ nat64lsn_destroy_instance(struct nat64lsn_cfg *cfg)
 	free(cfg->aliases, M_NAT64LSN);
 	free(cfg, M_NAT64LSN);
 }
-

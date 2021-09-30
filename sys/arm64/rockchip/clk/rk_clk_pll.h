@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 400601c219b3635a1b1d4ad7d32ce9bd5c9bf70c $
+ * $FreeBSD: 71a1f2d35be90c1c74271becd99a5b973c437fad $
  */
 
 #ifndef _RK_CLK_PLL_H_
@@ -41,6 +40,7 @@ struct rk_clk_pll_rate {
 	uint32_t	postdiv2;
 	uint32_t	dsmpd;
 	uint32_t	frac;
+	uint32_t	bwadj;
 };
 
 struct rk_clk_pll_def {
@@ -61,6 +61,7 @@ struct rk_clk_pll_def {
 
 #define	RK_CLK_PLL_HAVE_GATE	0x1
 
+int rk3066_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
 int rk3328_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
 int rk3399_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
 

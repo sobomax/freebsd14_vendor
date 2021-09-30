@@ -1,7 +1,7 @@
 /*-
  * Based on sys/sparc64/include/ieeefp.h
  * Public domain.
- * $FreeBSD: 18128d2cdfd33e883e37c7365f5f3dbb4178ad73 $
+ * $FreeBSD: 178721a65b1e981017c68c7539d742cf8f86bbe5 $
  */
 
 #ifndef _MACHINE_IEEEFP_H_
@@ -39,6 +39,5 @@ extern fp_rnd_t    fpsetround(fp_rnd_t);
 extern fp_except_t fpgetmask(void);
 extern fp_except_t fpsetmask(fp_except_t);
 __END_DECLS
-
 
 #endif /* _MACHINE_IEEEFP_H_ */

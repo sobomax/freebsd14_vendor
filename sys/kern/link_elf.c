@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 827fa2bfa19bd7ad2e8a3d37eab40646ce574eb5 $");
+__FBSDID("$FreeBSD: ea21bf447a558ffa0121cdb5b68529fe05a662e5 $");
 
 #include "opt_ddb.h"
 #include "opt_gdb.h"
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: 827fa2bfa19bd7ad2e8a3d37eab40646ce574eb5 $");
 #include <sys/fcntl.h>
 #include <sys/vnode.h>
 #include <sys/linker.h>
+#include <sys/sysctl.h>
 
 #include <machine/elf.h>
 
@@ -69,10 +70,6 @@ __FBSDID("$FreeBSD: 827fa2bfa19bd7ad2e8a3d37eab40646ce574eb5 $");
 #include <vm/vm_map.h>
 
 #include <sys/link_elf.h>
-
-#ifdef DDB_CTF
-#include <sys/zlib.h>
-#endif
 
 #include "linker_if.h"
 
@@ -216,7 +213,6 @@ elf_set_add(struct elf_set_head *list, Elf_Addr start, Elf_Addr stop, Elf_Addr b
 	set->es_base = base;
 
 	TAILQ_FOREACH(iter, list, es_link) {
-
 		KASSERT((set->es_start < iter->es_start && set->es_stop < iter->es_stop) ||
 		    (set->es_start > iter->es_start && set->es_stop > iter->es_stop),
 		    ("linker sets intersection: to insert: 0x%jx-0x%jx; inserted: 0x%jx-0x%jx",
@@ -391,7 +387,31 @@ link_elf_link_common_finish(linker_file_t lf)
 	return (0);
 }
 
+#ifdef RELOCATABLE_KERNEL
+/*
+ * __startkernel and __endkernel are symbols set up as relocation canaries.
+ *
+ * They are defined in locore to reference linker script symbols at the
+ * beginning and end of the LOAD area. This has the desired side effect of
+ * giving us variables that have relative relocations pointing at them, so
+ * relocation of the kernel object will cause the variables to be updated
+ * automatically by the runtime linker when we initialize.
+ *
+ * There are two main reasons to relocate the kernel:
+ * 1) If the loader needed to load the kernel at an alternate load address.
+ * 2) If the kernel is switching address spaces on machines like POWER9
+ *    under Radix where the high bits of the effective address are used to
+ *    differentiate between hypervisor, host, guest, and problem state.
+ */
 extern vm_offset_t __startkernel, __endkernel;
+#endif
+
+static unsigned long kern_relbase = KERNBASE;
+
+SYSCTL_ULONG(_kern, OID_AUTO, base_address, CTLFLAG_RD,
+	SYSCTL_NULL_ULONG_PTR, KERNBASE, "Kernel base address");
+SYSCTL_ULONG(_kern, OID_AUTO, relbase_address, CTLFLAG_RD,
+	&kern_relbase, 0, "Kernel relocated base address");
 
 static void
 link_elf_init(void* arg)
@@ -401,7 +421,7 @@ link_elf_init(void* arg)
 	Elf_Size *ctors_sizep;
 	caddr_t modptr, baseptr, sizeptr;
 	elf_file_t ef;
-	char *modname;
+	const char *modname;
 
 	linker_add_class(&link_elf_class);
 
@@ -420,7 +440,8 @@ link_elf_init(void* arg)
 
 	ef = (elf_file_t) linker_kernel_file;
 	ef->preloaded = 1;
-#ifdef __powerpc__
+#ifdef RELOCATABLE_KERNEL
+	/* Compute relative displacement */
 	ef->address = (caddr_t) (__startkernel - KERNBASE);
 #else
 	ef->address = 0;
@@ -432,9 +453,10 @@ link_elf_init(void* arg)
 
 	if (dp != NULL)
 		parse_dynamic(ef);
-#ifdef __powerpc__
+#ifdef RELOCATABLE_KERNEL
 	linker_kernel_file->address = (caddr_t)__startkernel;
 	linker_kernel_file->size = (intptr_t)(__endkernel - __startkernel);
+	kern_relbase = (unsigned long)__startkernel;
 #else
 	linker_kernel_file->address += KERNBASE;
 	linker_kernel_file->size = -(intptr_t)linker_kernel_file->address;
@@ -615,13 +637,17 @@ parse_dynamic(elf_file_t ef)
 	ef->ddbstrtab = ef->strtab;
 	ef->ddbstrcnt = ef->strsz;
 
-	return (0);
+	return elf_cpu_parse_dynamic(ef->address, ef->dynamic);
 }
 
+#define	LS_PADDING	0x90909090
 static int
 parse_dpcpu(elf_file_t ef)
 {
 	int error, size;
+#if defined(__i386__)
+	uint32_t pad;
+#endif
 
 	ef->pcpu_start = 0;
 	ef->pcpu_stop = 0;
@@ -634,6 +660,26 @@ parse_dpcpu(elf_file_t ef)
 	/* Empty set? */
 	if (size < 1)
 		return (0);
+#if defined(__i386__)
+	/* In case we do find __start/stop_set_ symbols double-check. */
+	if (size < 4) {
+		uprintf("Kernel module '%s' must be recompiled with "
+		    "linker script\n", ef->lf.pathname);
+		return (ENOEXEC);
+	}
+
+	/* Padding from linker-script correct? */
+	pad = *(uint32_t *)((uintptr_t)ef->pcpu_stop - sizeof(pad));
+	if (pad != LS_PADDING) {
+		uprintf("Kernel module '%s' must be recompiled with "
+		    "linker script, invalid padding %#04x (%#04x)\n",
+		    ef->lf.pathname, pad, LS_PADDING);
+		return (ENOEXEC);
+	}
+	/* If we only have valid padding, nothing to do. */
+	if (size == 4)
+		return (0);
+#endif
 	/*
 	 * Allocate space in the primary pcpu area.  Copy in our
 	 * initialization from the data section and then initialize
@@ -659,6 +705,9 @@ static int
 parse_vnet(elf_file_t ef)
 {
 	int error, size;
+#if defined(__i386__)
+	uint32_t pad;
+#endif
 
 	ef->vnet_start = 0;
 	ef->vnet_stop = 0;
@@ -671,6 +720,26 @@ parse_vnet(elf_file_t ef)
 	/* Empty set? */
 	if (size < 1)
 		return (0);
+#if defined(__i386__)
+	/* In case we do find __start/stop_set_ symbols double-check. */
+	if (size < 4) {
+		uprintf("Kernel module '%s' must be recompiled with "
+		    "linker script\n", ef->lf.pathname);
+		return (ENOEXEC);
+	}
+
+	/* Padding from linker-script correct? */
+	pad = *(uint32_t *)((uintptr_t)ef->vnet_stop - sizeof(pad));
+	if (pad != LS_PADDING) {
+		uprintf("Kernel module '%s' must be recompiled with "
+		    "linker script, invalid padding %#04x (%#04x)\n",
+		    ef->lf.pathname, pad, LS_PADDING);
+		return (ENOEXEC);
+	}
+	/* If we only have valid padding, nothing to do. */
+	if (size == 4)
+		return (0);
+#endif
 	/*
 	 * Allocate space in the primary vnet area.  Copy in our
 	 * initialization from the data section and then initialize
@@ -691,6 +760,44 @@ parse_vnet(elf_file_t ef)
 	return (0);
 }
 #endif
+#undef LS_PADDING
+
+/*
+ * Apply the specified protection to the loadable segments of a preloaded linker
+ * file.
+ */
+static int
+preload_protect(elf_file_t ef, vm_prot_t prot)
+{
+#ifdef __amd64__
+	Elf_Ehdr *hdr;
+	Elf_Phdr *phdr, *phlimit;
+	vm_prot_t nprot;
+	int error;
+
+	error = 0;
+	hdr = (Elf_Ehdr *)ef->address;
+	phdr = (Elf_Phdr *)(ef->address + hdr->e_phoff);
+	phlimit = phdr + hdr->e_phnum;
+	for (; phdr < phlimit; phdr++) {
+		if (phdr->p_type != PT_LOAD)
+			continue;
+
+		nprot = prot | VM_PROT_READ;
+		if ((phdr->p_flags & PF_W) != 0)
+			nprot |= VM_PROT_WRITE;
+		if ((phdr->p_flags & PF_X) != 0)
+			nprot |= VM_PROT_EXECUTE;
+		error = pmap_change_prot((vm_offset_t)ef->address +
+		    phdr->p_vaddr, round_page(phdr->p_memsz), nprot);
+		if (error != 0)
+			break;
+	}
+	return (error);
+#else
+	return (0);
+#endif
+}
 
 #ifdef __arm__
 /*
@@ -737,8 +844,8 @@ link_elf_locate_exidx_preload(struct linker_file *lf, caddr_t modptr)
 #endif /* __arm__ */
 
 static int
-link_elf_link_preload(linker_class_t cls,
-    const char* filename, linker_file_t *result)
+link_elf_link_preload(linker_class_t cls, const char *filename,
+    linker_file_t *result)
 {
 	Elf_Addr *ctors_addrp;
 	Elf_Size *ctors_sizep;
@@ -802,6 +909,8 @@ link_elf_link_preload(linker_class_t cls,
 	if (error == 0)
 		error = parse_vnet(ef);
 #endif
+	if (error == 0)
+		error = preload_protect(ef, VM_PROT_ALL);
 	if (error != 0) {
 		linker_file_unload(lf, LINKER_UNLOAD_FORCE);
 		return (error);
@@ -819,6 +928,8 @@ link_elf_link_preload_finish(linker_file_t lf)
 
 	ef = (elf_file_t) lf;
 	error = relocate_file(ef);
+	if (error == 0)
+		error = preload_protect(ef, VM_PROT_NONE);
 	if (error != 0)
 		return (error);
 	(void)link_elf_preload_parse_symbols(ef);
@@ -995,7 +1106,8 @@ link_elf_load_file(linker_class_t cls, const char* filename,
 
 	ef = (elf_file_t) lf;
 #ifdef SPARSE_MAPPING
-	ef->object = vm_object_allocate(OBJT_PHYS, atop(mapsize));
+	ef->object = vm_pager_allocate(OBJT_PHYS, NULL, mapsize, VM_PROT_ALL,
+	    0, thread0.td_ucred);
 	if (ef->object == NULL) {
 		error = ENOMEM;
 		goto out;
@@ -1017,7 +1129,7 @@ link_elf_load_file(linker_class_t cls, const char* filename,
 		goto out;
 	}
 #else
-	mapbase = malloc(mapsize, M_LINKER, M_EXEC | M_WAITOK);
+	mapbase = malloc_exec(mapsize, M_LINKER, M_WAITOK);
 #endif
 	ef->address = mapbase;
 
@@ -1083,7 +1195,7 @@ link_elf_load_file(linker_class_t cls, const char* filename,
 #endif
 	link_elf_reloc_local(lf);
 
-	VOP_UNLOCK(nd.ni_vp, 0);
+	VOP_UNLOCK(nd.ni_vp);
 	error = linker_load_dependencies(lf);
 	vn_lock(nd.ni_vp, LK_EXCLUSIVE | LK_RETRY);
 	if (error != 0)
@@ -1112,7 +1224,7 @@ link_elf_load_file(linker_class_t cls, const char* filename,
 		error = vm_map_protect(kernel_map,
 		    (vm_offset_t)segbase,
 		    (vm_offset_t)segbase + round_page(segs[i]->p_memsz),
-		    prot, FALSE);
+		    prot, 0, VM_MAP_PROTECT_SET_PROT);
 		if (error != KERN_SUCCESS) {
 			error = ENOMEM;
 			goto out;
@@ -1200,7 +1312,7 @@ nosyms:
 	*result = lf;
 
 out:
-	VOP_UNLOCK(nd.ni_vp, 0);
+	VOP_UNLOCK(nd.ni_vp);
 	vn_close(nd.ni_vp, FREAD, td->td_ucred, td);
 	if (error != 0 && lf != NULL)
 		linker_file_unload(lf, LINKER_UNLOAD_FORCE);
@@ -1228,7 +1340,6 @@ elf_relocaddr(linker_file_t lf, Elf_Addr x)
 #endif
 	return (x);
 }
-
 
 static void
 link_elf_unload_file(linker_file_t file)
@@ -1283,6 +1394,7 @@ link_elf_unload_file(linker_file_t file)
 static void
 link_elf_unload_preload(linker_file_t file)
 {
+
 	if (file->pathname != NULL)
 		preload_delete_name(file->pathname);
 }
@@ -1766,7 +1878,7 @@ link_elf_strtab_get(linker_file_t lf, caddr_t *strtab)
 	return (ef->ddbstrcnt);
 }
 
-#if defined(__i386__) || defined(__amd64__) || defined(__aarch64__)
+#if defined(__i386__) || defined(__amd64__) || defined(__aarch64__) || defined(__powerpc__)
 /*
  * Use this lookup routine when performing relocations early during boot.
  * The generic lookup routine depends on kobj, which is not initialized
@@ -1802,9 +1914,29 @@ link_elf_ireloc(caddr_t kmdp)
 
 	ef->modptr = kmdp;
 	ef->dynamic = (Elf_Dyn *)&_DYNAMIC;
-	parse_dynamic(ef);
+
+#ifdef RELOCATABLE_KERNEL
+	ef->address = (caddr_t) (__startkernel - KERNBASE);
+#else
 	ef->address = 0;
+#endif
+	parse_dynamic(ef);
+
 	link_elf_preload_parse_symbols(ef);
 	relocate_file1(ef, elf_lookup_ifunc, elf_reloc, true);
 }
+
+#if defined(__aarch64__) || defined(__amd64__)
+void
+link_elf_late_ireloc(void)
+{
+	elf_file_t ef;
+
+	KASSERT(linker_kernel_file != NULL,
+	    ("link_elf_late_ireloc: No kernel linker file found"));
+	ef = (elf_file_t)linker_kernel_file;
+
+	relocate_file1(ef, elf_lookup_ifunc, elf_reloc_late, true);
+}
+#endif
 #endif

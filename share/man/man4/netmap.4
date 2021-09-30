@@ -25,9 +25,9 @@
 .\" This document is derived in part from the enet man page (enet.4)
 .\" distributed with 4.3BSD Unix.
 .\"
-.\" $FreeBSD: 38fa044cd3e0a3abbefbcef315b4227cda8ac9a4 $
+.\" $FreeBSD: d247c44b0df86c08f0e0ede85f5c9b32f1b91e3a $
 .\"
-.Dd February 6, 2020
+.Dd October 3, 2020
 .Dt NETMAP 4
 .Os
 .Sh NAME
@@ -40,7 +40,7 @@
 is a framework for extremely fast and efficient packet I/O
 for userspace and kernel clients, and for Virtual Machines.
 It runs on
-.Fx
+.Fx ,
 Linux and some versions of Windows, and supports a variety of
 .Nm netmap ports ,
 including
@@ -828,7 +828,7 @@ On
 .Xr cxgbe 4 ,
 .Xr em 4 ,
 .Xr iflib 4
-(providing igb, em and lem),
+.Pq providing Xr igb 4 and Xr em 4 ,
 .Xr ixgbe 4 ,
 .Xr ixl 4 ,
 .Xr re 4 ,
@@ -998,7 +998,7 @@ interfaces, as in
 or even connect the NIC to the host stack using netmap
 .Dl bridge -i netmap:ix0
 .Ss USING THE NATIVE API
-The following code implements a traffic generator
+The following code implements a traffic generator:
 .Pp
 .Bd -literal -compact
 #include <net/netmap_user.h>
@@ -1033,7 +1033,8 @@ void sender(void)
 }
 .Ed
 .Ss HELPER FUNCTIONS
-A simple receiver can be implemented using the helper functions
+A simple receiver can be implemented using the helper functions:
+.Pp
 .Bd -literal -compact
 #define NETMAP_WITH_LIBS
 #include <net/netmap_user.h>
@@ -1051,7 +1052,7 @@ void receiver(void)
     for (;;) {
 	poll(&fds, 1, -1);
         while ( (buf = nm_nextpkt(d, &h)) )
-	    consume_pkt(buf, h->len);
+	    consume_pkt(buf, h.len);
     }
     nm_close(d);
 }
@@ -1062,6 +1063,7 @@ it is possible to do packet forwarding between ports
 swapping buffers.
 The buffer from the transmit ring is used
 to replenish the receive ring:
+.Pp
 .Bd -literal -compact
     uint32_t tmp;
     struct netmap_slot *src, *dst;

@@ -25,13 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8fb8b18f1a6f33b94bb18d7e9d5bb2bed258af3f $");
+__FBSDID("$FreeBSD: e3077d505baf1f1684c4e2e3895b19225b7f827c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 
 #include <dev/gpio/gpiokeys.h>
-#include <gnu/dts/include/dt-bindings/input/linux-event-codes.h>
+#include <contrib/device-tree/include/dt-bindings/input/linux-event-codes.h>
 
 struct gpiokeys_codemap_entry {
 	uint32_t	linux_code;

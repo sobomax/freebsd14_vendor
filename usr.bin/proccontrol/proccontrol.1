@@ -26,7 +26,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 1bc672aa419c43a354daf6e2e71d7c83aa72b340 $
+.\" $FreeBSD: 4445bb5f9f8e83803eaf5f6e7a3a78aad895f3ea $
 .\"
 .Dd June 28, 2019
 .Dt PROCCONTROL 1
@@ -66,8 +66,14 @@ Note that process is only allowed to enable tracing for itself,
 not for any other process.
 .It Ar trapcap
 Controls the signalling of capability mode access violations.
+.It Ar protmax
+Controls the implicit PROT_MAX application for
+.Xr mmap 2 .
 .It Ar kpti
 Controls the KPTI enable, AMD64 only.
+.It Ar la48
+Control limiting usermode process address space to 48 bits of address,
+AMD64 only, on machines capable of 57-bit addressing.
 .El
 .Pp
 The

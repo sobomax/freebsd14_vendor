@@ -1,4 +1,4 @@
-# $FreeBSD: 19644842a8d8407a5f4c5138dea320a42d8aa136 $
+# $FreeBSD: 448188c930583ac84fc13c688b98440b2e17f176 $
 
 .include <bsd.init.mk>
 
@@ -8,7 +8,11 @@ LIB=		uboot
 WARNS?=		2
 
 SRCS=	console.c copy.c devicename.c elf_freebsd.c glue.c
-SRCS+=	module.c net.c reboot.c time.c
+SRCS+=	module.c net.c reboot.c time.c gfx_fb.c
+
+CFLAGS.gfx_fb.c += -I${SRCTOP}/contrib/pnglite
+CFLAGS.gfx_fb.c += -I${SRCTOP}/sys/teken
+CFLAGS.glue.c+=	-DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib
 
 .if ${LOADER_DISK_SUPPORT:Uyes} == "yes"
 SRCS+= disk.c

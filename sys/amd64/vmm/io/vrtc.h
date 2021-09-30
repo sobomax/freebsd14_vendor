@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 836561c7b93bbe37951c4283bcc8201907e4c151 $
+ * $FreeBSD: 791fb7db3e265562143ba23b50add1784e88061c $
  */
 
 #ifndef _VRTC_H_
@@ -34,6 +34,7 @@
 #include <isa/isareg.h>
 
 struct vrtc;
+struct vm_snapshot_meta;
 
 struct vrtc *vrtc_init(struct vm *vm);
 void vrtc_cleanup(struct vrtc *vrtc);
@@ -48,5 +49,9 @@ int vrtc_addr_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
     uint32_t *val);
 int vrtc_data_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
     uint32_t *val);
+
+#ifdef BHYVE_SNAPSHOT
+int vrtc_snapshot(struct vrtc *vrtc, struct vm_snapshot_meta *meta);
+#endif
 
 #endif

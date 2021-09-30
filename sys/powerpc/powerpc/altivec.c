@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b13d635c4d3103b87d7d526c9357d3ced871fd65 $");
+__FBSDID("$FreeBSD: e0e8047177eba86b4d005557492151d37ba00b69 $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -168,12 +168,7 @@ save_vec(struct thread *td)
 void
 save_vec_nodrop(struct thread *td)
 {
-	struct thread *vtd;
 
-	vtd = PCPU_GET(vecthread);
-	if (td != vtd) {
-		return;
-	}
-
-	save_vec_int(td);
+	if (td == PCPU_GET(vecthread))
+		save_vec_int(td);
 }

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0732e7012aed0607aef5af3f9c95dea04c77fc6 $");
+__FBSDID("$FreeBSD: e54546eec7b4c5cef283c97c18f021b4b84e3dc4 $");
 
 #include "opt_ddb.h"
 #include "opt_kld.h"
@@ -132,7 +132,6 @@ retry:									\
 	}								\
 	(a) = next_file_id;						\
 } while(0)
-
 
 /* XXX wrong name; we're looking at version provision tags here, not modules */
 typedef TAILQ_HEAD(, modlist) modlisthead_t;
@@ -481,7 +480,6 @@ linker_load_file(const char *filename, linker_file_t *result)
 	 * the module was not found.
 	 */
 	if (foundfile) {
-
 		/*
 		 * If the file type has not been recognized by the last try
 		 * printout a message before to fail.
@@ -669,7 +667,6 @@ linker_file_unload(linker_file_t file, int flags)
 	MOD_SLOCK;
 	for (mod = TAILQ_FIRST(&file->modules); mod;
 	     mod = module_getfnext(mod)) {
-
 		error = module_quiesce(mod);
 		if (error != 0 && flags != LINKER_UNLOAD_FORCE) {
 			KLD_DPF(FILE, ("linker_file_unload: module %s"
@@ -1024,15 +1021,33 @@ linker_ddb_search_symbol_name(caddr_t value, char *buf, u_int buflen,
  * obey locking protocols, and offer a significantly less complex interface.
  */
 int
-linker_search_symbol_name(caddr_t value, char *buf, u_int buflen,
-    long *offset)
+linker_search_symbol_name_flags(caddr_t value, char *buf, u_int buflen,
+    long *offset, int flags)
 {
 	int error;
 
-	sx_slock(&kld_sx);
+	KASSERT((flags & (M_NOWAIT | M_WAITOK)) != 0 &&
+	    (flags & (M_NOWAIT | M_WAITOK)) != (M_NOWAIT | M_WAITOK),
+	    ("%s: bad flags: 0x%x", __func__, flags));
+
+	if (flags & M_NOWAIT) {
+		if (!sx_try_slock(&kld_sx))
+			return (EWOULDBLOCK);
+	} else
+		sx_slock(&kld_sx);
+
 	error = linker_debug_search_symbol_name(value, buf, buflen, offset);
 	sx_sunlock(&kld_sx);
 	return (error);
+}
+
+int
+linker_search_symbol_name(caddr_t value, char *buf, u_int buflen,
+    long *offset)
+{
+
+	return (linker_search_symbol_name_flags(value, buf, buflen, offset,
+	    M_WAITOK));
 }
 
 /*
@@ -1747,7 +1762,7 @@ SYSCTL_STRING(_kern, OID_AUTO, module_path, CTLFLAG_RWTUN, linker_path,
 
 TUNABLE_STR("module_path", linker_path, sizeof(linker_path));
 
-static char *linker_ext_list[] = {
+static const char * const linker_ext_list[] = {
 	"",
 	".ko",
 	NULL
@@ -1764,7 +1779,8 @@ linker_lookup_file(const char *path, int pathlen, const char *name,
 {
 	struct nameidata nd;
 	struct thread *td = curthread;	/* XXX */
-	char *result, **cpp, *sep;
+	const char * const *cpp, *sep;
+	char *result;
 	int error, len, extlen, reclen, flags;
 	enum vtype type;
 
@@ -1794,7 +1810,7 @@ linker_lookup_file(const char *path, int pathlen, const char *name,
 			type = nd.ni_vp->v_type;
 			if (vap)
 				VOP_GETATTR(nd.ni_vp, vap, td->td_ucred);
-			VOP_UNLOCK(nd.ni_vp, 0);
+			VOP_UNLOCK(nd.ni_vp);
 			vn_close(nd.ni_vp, FREAD, td->td_ucred, td);
 			if (type == VREG)
 				return (result);
@@ -1820,8 +1836,9 @@ linker_hints_lookup(const char *path, int pathlen, const char *modname,
 	struct ucred *cred = td ? td->td_ucred : NULL;
 	struct nameidata nd;
 	struct vattr vattr, mattr;
+	const char *best, *sep;
 	u_char *hints = NULL;
-	u_char *cp, *recptr, *bufend, *result, *best, *pathbuf, *sep;
+	u_char *cp, *recptr, *bufend, *result, *pathbuf;
 	int error, ival, bestver, *intp, found, flags, clen, blen;
 	ssize_t reclen;
 
@@ -1851,7 +1868,7 @@ linker_hints_lookup(const char *path, int pathlen, const char *modname,
 	 * XXX: we need to limit this number to some reasonable value
 	 */
 	if (vattr.va_size > LINKER_HINTS_MAX) {
-		printf("hints file too large %ld\n", (long)vattr.va_size);
+		printf("linker.hints file too large %ld\n", (long)vattr.va_size);
 		goto bad;
 	}
 	hints = malloc(vattr.va_size, M_TEMP, M_WAITOK);
@@ -1859,7 +1876,7 @@ linker_hints_lookup(const char *path, int pathlen, const char *modname,
 	    UIO_SYSSPACE, IO_NODELOCKED, cred, NOCRED, &reclen, td);
 	if (error)
 		goto bad;
-	VOP_UNLOCK(nd.ni_vp, 0);
+	VOP_UNLOCK(nd.ni_vp);
 	vn_close(nd.ni_vp, FREAD, cred, td);
 	nd.ni_vp = NULL;
 	if (reclen != 0) {
@@ -1869,7 +1886,7 @@ linker_hints_lookup(const char *path, int pathlen, const char *modname,
 	intp = (int *)hints;
 	ival = *intp++;
 	if (ival != LINKER_HINTS_VERSION) {
-		printf("hints file version mismatch %d\n", ival);
+		printf("linker.hints file version mismatch %d\n", ival);
 		goto bad;
 	}
 	bufend = hints + vattr.va_size;
@@ -1927,7 +1944,7 @@ bad:
 	if (hints)
 		free(hints, M_TEMP);
 	if (nd.ni_vp != NULL) {
-		VOP_UNLOCK(nd.ni_vp, 0);
+		VOP_UNLOCK(nd.ni_vp);
 		vn_close(nd.ni_vp, FREAD, cred, td);
 	}
 	/*
@@ -2025,7 +2042,6 @@ linker_hwpmc_list_objects(void)
 	    M_LINKER, M_WAITOK | M_ZERO);
 	i = 0;
 	TAILQ_FOREACH(lf, &linker_files, link) {
-
 		/* Save the info for this linker file. */
 		kobase[i].pm_file = lf->filename;
 		kobase[i].pm_address = (uintptr_t)lf->address;
@@ -2042,6 +2058,22 @@ linker_hwpmc_list_objects(void)
 	return ((void *)kobase);
 }
 #endif
+
+/* check if root file system is not mounted */
+static bool
+linker_root_mounted(void)
+{
+	struct pwd *pwd;
+	bool ret;
+
+	if (rootvnode == NULL)
+		return (false);
+
+	pwd = pwd_hold(curthread);
+	ret = pwd->pwd_rdir != NULL;
+	pwd_drop(pwd);
+	return (ret);
+}
 
 /*
  * Find a file which contains given module and load it, if "parent" is not
@@ -2064,15 +2096,13 @@ linker_load_module(const char *kldname, const char *modname,
  		 */
 		KASSERT(verinfo == NULL, ("linker_load_module: verinfo"
 		    " is not NULL"));
-		/* check if root file system is not mounted */
-		if (rootvnode == NULL || curproc->p_fd->fd_rdir == NULL)
+		if (!linker_root_mounted())
 			return (ENXIO);
 		pathname = linker_search_kld(kldname);
 	} else {
 		if (modlist_lookup2(modname, verinfo) != NULL)
 			return (EEXIST);
-		/* check if root file system is not mounted */
-		if (rootvnode == NULL || curproc->p_fd->fd_rdir == NULL)
+		if (!linker_root_mounted())
 			return (ENXIO);
 		if (kldname != NULL)
 			pathname = strdup(kldname, M_LINKER);
@@ -2240,5 +2270,7 @@ sysctl_kern_function_list(SYSCTL_HANDLER_ARGS)
 	return (SYSCTL_OUT(req, "", 1));
 }
 
-SYSCTL_PROC(_kern, OID_AUTO, function_list, CTLTYPE_OPAQUE | CTLFLAG_RD,
-    NULL, 0, sysctl_kern_function_list, "", "kernel function list");
+SYSCTL_PROC(_kern, OID_AUTO, function_list,
+    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
+    sysctl_kern_function_list, "",
+    "kernel function list");

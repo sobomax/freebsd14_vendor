@@ -1,7 +1,8 @@
-# $FreeBSD: 39ed62f1cc4ebca9492c86e1a0b269b50035771c $
+# $FreeBSD: ca8f5e6659203133baadd5b6f98d33e8362135c9 $
 
 .PATH: ${SRCTOP}/cddl/compat/opensolaris/lib/libumem
 
+PACKAGE=	runtime
 LIB=	umem
 SRCS=	umem.c
 WARNS?=	3

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 9512f7921e15f14c8fdef5f37fadc376493bcda8 $
+ *	$FreeBSD: bb7c28e874e56b478e3756871e50f988f5937ab2 $
  */
 
 #define TWE_DRIVER_VERSION_STRING	"1.50.01.002"
@@ -108,7 +108,7 @@ struct twe_request
 			((tr)->tr_tag * sizeof(TWE_Command)))
 #define TWE_FIND_COMMANDPHYS(tr)	((tr)->tr_sc->twe_cmdphys +	\
 					 ((tr)->tr_tag * sizeof(TWE_Command)))
-	
+
 /*
  * Per-controller state.
  */
@@ -201,7 +201,6 @@ extern void	twe_unmap_request(struct twe_request *tr);	/* cleanup after transfer
 	    sc->twe_qstat[qname].q_max = 0;			\
 	    sc->twe_qstat[qname].q_min = 0xFFFFFFFF;		\
 	} while(0)
-
 
 #define TWEQ_REQUEST_QUEUE(name, index)					\
 static __inline void							\

@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d532b496a8d32f8eae1feea12aebeccfd8c0e15e $
+ * $FreeBSD: 42c14bc5fdb7bea6f7c384eebac09e88a16ba06f $
  */
 
 /*
  * Common definitions and structures for SMB/CIFS protocol
  */
- 
+
 #ifndef _NETSMB_SMB_H_
 #define _NETSMB_SMB_H_
 

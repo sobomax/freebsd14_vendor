@@ -32,7 +32,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: fb792991320964894359abbc4640381eed022691 $";
+  "$FreeBSD: 2c18d9910c6fef529e51713187f9cbb0cd212448 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -53,7 +53,7 @@ static const char rcsid[] =
 #include "fsdb.h"
 #include "fsck.h"
 
-void prtblknos(struct uufsd *disk, union dinode *dp);
+void prtblknos(struct fs *fs, union dinode *dp);
 
 char **
 crack(char *line, int *argc)
@@ -236,7 +236,7 @@ printactive(int doblocks)
     case IFSOCK:
     case IFIFO:
 	if (doblocks)
-	    prtblknos(&disk, curinode);
+	    prtblknos(&sblock, curinode);
 	else
 	    printstat("current inode", curinum, curinode);
 	break;

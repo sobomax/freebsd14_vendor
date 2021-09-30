@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 07069a33859aae19a36f8891aea719ad76e1d3be $");
+__FBSDID("$FreeBSD: cc76fed3bd781a3b986f3aa2f3fac22fc5ff800c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -386,7 +386,9 @@ sysctl_kern_prof(SYSCTL_HANDLER_ARGS)
 	/* NOTREACHED */
 }
 
-static SYSCTL_NODE(_kern, KERN_PROF, prof, CTLFLAG_RW, sysctl_kern_prof, "");
+static SYSCTL_NODE(_kern, KERN_PROF, prof,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, sysctl_kern_prof,
+    "");
 #endif /* GPROF */
 
 /*

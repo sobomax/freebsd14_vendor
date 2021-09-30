@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6b93fc08c62802b3aebaeb46fcd4a10d743b980 $");
+__FBSDID("$FreeBSD: 31adb0f2b513944b13b404b6e94a0496a8b9690f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: e6b93fc08c62802b3aebaeb46fcd4a10d743b980 $");
 #include <sys/eventhandler.h>
 #include <vm/uma.h>
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <sys/proc.h>
 #include <sys/kthread.h>
 #include <sys/sched.h>
@@ -53,7 +54,8 @@ __FBSDID("$FreeBSD: e6b93fc08c62802b3aebaeb46fcd4a10d743b980 $");
 static MALLOC_DEFINE(M_RAID, "raid_data", "GEOM_RAID Data");
 
 SYSCTL_DECL(_kern_geom);
-SYSCTL_NODE(_kern_geom, OID_AUTO, raid, CTLFLAG_RW, 0, "GEOM_RAID stuff");
+SYSCTL_NODE(_kern_geom, OID_AUTO, raid, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "GEOM_RAID stuff");
 int g_raid_enable = 1;
 SYSCTL_INT(_kern_geom_raid, OID_AUTO, enable, CTLFLAG_RWTUN,
     &g_raid_enable, 0, "Enable on-disk metadata taste");
@@ -773,7 +775,7 @@ g_raid_open_consumer(struct g_raid_softc *sc, const char *name)
 
 	g_topology_assert();
 
-	if (strncmp(name, "/dev/", 5) == 0)
+	if (strncmp(name, _PATH_DEV, 5) == 0)
 		name += 5;
 	pp = g_provider_by_name(name);
 	if (pp == NULL)
@@ -1110,6 +1112,7 @@ g_raid_start(struct bio *bp)
 	case BIO_WRITE:
 	case BIO_DELETE:
 	case BIO_FLUSH:
+	case BIO_SPEEDUP:
 		break;
 	case BIO_GETATTR:
 		if (!strcmp(bp->bio_attribute, "GEOM::candelete"))
@@ -2225,7 +2228,8 @@ g_raid_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	gp->orphan = g_raid_taste_orphan;
 	cp = g_new_consumer(gp);
 	cp->flags |= G_CF_DIRECT_RECEIVE;
-	g_attach(cp, pp);
+	if (g_attach(cp, pp) != 0)
+		goto ofail2;
 	if (g_access(cp, 1, 0, 0) != 0)
 		goto ofail;
 
@@ -2248,6 +2252,7 @@ g_raid_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 		(void)g_access(cp, -1, 0, 0);
 ofail:
 	g_detach(cp);
+ofail2:
 	g_destroy_consumer(cp);
 	g_destroy_geom(gp);
 	G_RAID_DEBUG(2, "Tasting provider %s done.", pp->name);
@@ -2419,7 +2424,7 @@ g_raid_dumpconf(struct sbuf *sb, const char *indent, struct g_geom *gp,
 			sbuf_printf(sb, "r%d(%s):%d@%ju",
 			    sd->sd_volume->v_global_id,
 			    sd->sd_volume->v_name,
-			    sd->sd_pos, sd->sd_offset);
+			    sd->sd_pos, (uintmax_t)sd->sd_offset);
 			if (TAILQ_NEXT(sd, sd_next))
 				sbuf_cat(sb, ", ");
 		}

@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex2.h	8.4 (Berkeley) 3/20/94
- * $FreeBSD: a7c45683229c1269423c5f36a38c1e728e4cb66b $
+ * $FreeBSD: 38bbed90fd8f2fa609e5c2a922bb3040078e352d $
  */
 
 /*
@@ -104,6 +104,10 @@ typedef unsigned long sopno;
 #define	O_CH	(18L<<OPSHIFT)	/* end choice	back to OOR1		*/
 #define	OBOW	(19L<<OPSHIFT)	/* begin word	-			*/
 #define	OEOW	(20L<<OPSHIFT)	/* end word	-			*/
+#define	OBOS	(21L<<OPSHIFT)	/* begin subj.  -			*/
+#define	OEOS	(22L<<OPSHIFT)	/* end subj.	-			*/
+#define	OWBND	(23L<<OPSHIFT)	/* word bound	-			*/
+#define	ONWBND	(24L<<OPSHIFT)	/* not bound	-			*/
 
 /*
  * Structures for [] character-set representation.
@@ -113,7 +117,7 @@ typedef struct {
 	wint_t		max;
 } crange;
 typedef struct {
-	unsigned char	bmp[NC / 8];
+	unsigned char	bmp[NC_MAX / 8];
 	wctype_t	*types;
 	unsigned int	ntypes;
 	wint_t		*wides;
@@ -133,9 +137,14 @@ CHIN1(cset *cs, wint_t ch)
 	if (ch < NC)
 		return (((cs->bmp[ch >> 3] & (1 << (ch & 7))) != 0) ^
 		    cs->invert);
-	for (i = 0; i < cs->nwides; i++)
-		if (ch == cs->wides[i])
+	for (i = 0; i < cs->nwides; i++) {
+		if (cs->icase) {
+			if (ch == towlower(cs->wides[i]) ||
+			    ch == towupper(cs->wides[i]))
+				return (!cs->invert);
+		} else if (ch == cs->wides[i])
 			return (!cs->invert);
+	}
 	for (i = 0; i < cs->nranges; i++)
 		if (cs->ranges[i].min <= ch && ch <= cs->ranges[i].max)
 			return (!cs->invert);

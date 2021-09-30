@@ -43,7 +43,7 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: f15943ac70027955f644c17e190cbd36557237f7 $");
+SND_DECLARE_FILE("$FreeBSD: 3b1ca7ea61e5f8ceb6d322e2b0d10ac8eb4c2664 $");
 
 struct hdacc_fg {
 	device_t	dev;
@@ -65,7 +65,6 @@ struct hdacc_softc {
 #define hdacc_lock(codec)	snd_mtxlock((codec)->lock)
 #define hdacc_unlock(codec)	snd_mtxunlock((codec)->lock)
 #define hdacc_lockassert(codec)	snd_mtxassert((codec)->lock)
-#define hdacc_lockowned(codec)	mtx_owned((codec)->lock)
 
 MALLOC_DEFINE(M_HDACC, "hdacc", "HDA CODEC");
 
@@ -383,16 +382,16 @@ static const struct {
 	{ HDA_CODEC_INTELKBLK, 0,	"Intel Kaby Lake" },
 	{ HDA_CODEC_INTELJLK, 0,	"Intel Jasper Lake" },
 	{ HDA_CODEC_INTELELLK, 0,	"Intel Elkhart Lake" },
-	{ HDA_CODEC_INTELCT, 0,		"Intel CedarTrail" },
+	{ HDA_CODEC_INTELCT, 0,		"Intel Cedar Trail" },
 	{ HDA_CODEC_INTELVV2, 0,	"Intel Valleyview2" },
 	{ HDA_CODEC_INTELBR, 0,		"Intel Braswell" },
 	{ HDA_CODEC_INTELCL, 0,		"Intel Crestline" },
 	{ HDA_CODEC_INTELBXTN, 0,	"Intel Broxton" },
-	{ HDA_CODEC_INTELCNLK, 0,	"Intel Cannonlake" },
-	{ HDA_CODEC_INTELGMLK, 0,	"Intel Geminilake" },
-	{ HDA_CODEC_INTELGMLK1, 0,	"Intel Geminilake" },
-	{ HDA_CODEC_INTELICLK, 0,	"Intel Icelake" },
-	{ HDA_CODEC_INTELTGLK, 0,	"Intel Tigerlake" },
+	{ HDA_CODEC_INTELCNLK, 0,	"Intel Cannon Lake" },
+	{ HDA_CODEC_INTELGMLK, 0,	"Intel Gemini Lake" },
+	{ HDA_CODEC_INTELGMLK1, 0,	"Intel Gemini Lake" },
+	{ HDA_CODEC_INTELICLK, 0,	"Intel Ice Lake" },
+	{ HDA_CODEC_INTELTGLK, 0,	"Intel Tiger Lake" },
 	{ HDA_CODEC_SII1390, 0,		"Silicon Image SiI1390" },
 	{ HDA_CODEC_SII1392, 0,		"Silicon Image SiI1392" },
 	/* Unknown CODECs */
@@ -451,7 +450,8 @@ hdacc_probe(device_t dev)
 	int i;
 
 	id = ((uint32_t)hda_get_vendor_id(dev) << 16) + hda_get_device_id(dev);
-	revid = ((uint32_t)hda_get_revision_id(dev) << 8) + hda_get_stepping_id(dev);
+	revid = ((uint32_t)hda_get_revision_id(dev) << 8) +
+	    hda_get_stepping_id(dev);
 
 	for (i = 0; i < nitems(hdacc_codecs); i++) {
 		if (!HDA_DEV_MATCH(hdacc_codecs[i].id, id))
@@ -542,8 +542,7 @@ hdacc_detach(device_t dev)
 }
 
 static int
-hdacc_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+hdacc_child_location_str(device_t dev, device_t child, char *buf, size_t buflen)
 {
 	struct hdacc_fg *fg = device_get_ivars(child);
 
@@ -662,8 +661,8 @@ hdacc_stream_free(device_t dev, device_t child, int dir, int stream)
 }
 
 static int
-hdacc_stream_start(device_t dev, device_t child,
-    int dir, int stream, bus_addr_t buf, int blksz, int blkcnt)
+hdacc_stream_start(device_t dev, device_t child, int dir, int stream,
+    bus_addr_t buf, int blksz, int blkcnt)
 {
 
 	return (HDAC_STREAM_START(device_get_parent(dev), dev,

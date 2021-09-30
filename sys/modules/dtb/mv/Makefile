@@ -1,4 +1,4 @@
-# $FreeBSD: ece70675f829044c1843f3d0655f01f5bdc59c3d $
+# $FreeBSD: 6866fba671e83684318ec8ae0d565290c64b0512 $
 # All the dts files for Marvell systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"
@@ -7,7 +7,11 @@ DTS=	\
 	armada-388-gp.dts
 .elif ${MACHINE_ARCH} == "aarch64"
 DTS=	\
-	marvell/armada-3720-espressobin.dts
+	marvell/armada-3720-espressobin.dts \
+	marvell/armada-8040-clearfog-gt-8k.dts \
+	marvell/armada-8040-db \
+	marvell/armada-8040-mcbin.dts \
+	marvell/armada-8040-mcbin-singleshot.dts
 .endif
 
 .include <bsd.dtb.mk>

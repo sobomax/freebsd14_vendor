@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 311e760455258b25a59be3c02bfde1aa219400f4 $");
+__FBSDID("$FreeBSD: 397a1fe5e974547d0711742509f136c48b29ab5c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -312,6 +312,7 @@ g_slice_start(struct bio *bp)
 			/* now, pass it on downwards... */
 		}
 		/* FALLTHROUGH */
+	case BIO_SPEEDUP:
 	case BIO_FLUSH:
 		bp2 = g_clone_bio(bp);
 		if (bp2 == NULL) {

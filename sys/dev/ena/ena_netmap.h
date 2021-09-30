@@ -1,5 +1,5 @@
 /*-
- * BSD LICENSE
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2020 Amazon.com, Inc. or its affiliates.
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7f13da21e2b4c181b82360aca1db1be175207a86 $
+ * $FreeBSD: a418e0b6317eacc422220a44ecaa50a807961486 $
  *
  */
 

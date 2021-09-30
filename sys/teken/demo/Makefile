@@ -1,9 +1,7 @@
-# $FreeBSD: 1ade690afe22429932dd558fee4637461fb164a8 $
+# $FreeBSD: e39c5742bc96296ec9d60e42a9397dceabf6534a $
 
 PROG=	teken_demo
 LDADD=	-lncursesw -lteken -lutil
 MAN=
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 08ed5a7dfbbdf3130b166ba46d0461eedddbdb4f $
+ * $FreeBSD: a41af82febba3488e0f053baf88e7527639794ee $
  */
 
 #ifndef	_MACHINE_ASMACROS_H_
@@ -37,14 +37,8 @@
 
 #ifdef LOCORE
 
-#if __ARM_ARCH >= 6
 #define GET_CURTHREAD_PTR(tmp) \
     	mrc	p15, 0, tmp, c13, c0, 4
-#else
-#define GET_CURTHREAD_PTR(tmp)	\
-	ldr	tmp, =_C_LABEL(__pcpu);\
-	ldr	tmp, [tmp, #PC_CURTHREAD]
-#endif
 
 #define	ELFNOTE(section, type, vendor, desctype, descdata...)	  \
 	.pushsection section					; \

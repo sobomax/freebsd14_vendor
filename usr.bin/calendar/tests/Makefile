@@ -1,10 +1,20 @@
-# $FreeBSD: db0c963db1bb262a5dc2506abf4db7a36891b4b4 $
+# $FreeBSD: 281207a61a4310cbf933375625075128b39e5455 $
 
 PACKAGE=	tests
 
-TAP_TESTS_SH=	legacy_test
+TAP_TESTS_SH=	comment_test cond_test legacy_test
 
+TEST_METADATA.comment_test+=	timeout="600"
+TEST_METADATA.cond_test+=	timeout="600"
 TEST_METADATA.legacy_test+=	timeout="600"
+
+${PACKAGE}FILES+=		calendar.comment
+${PACKAGE}FILES+=		regress.comment.out
+${PACKAGE}FILES+=		comment.sh
+
+${PACKAGE}FILES+=		calendar.cond
+${PACKAGE}FILES+=		regress.cond.out
+${PACKAGE}FILES+=		cond.sh
 
 ${PACKAGE}FILES+=		calendar.calibrate
 ${PACKAGE}FILES+=		regress.a1.out

@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8c83782e874c97eaa673615522cbf04c35a3147e $
+ * $FreeBSD: 4ac579c36a10654ce2cc7af12ebbdee061c44674 $
  */
 
 #ifndef _DEV_CFI_VAR_H_
@@ -80,6 +80,9 @@ struct cfi_softc {
 	u_int		sc_wrbufsz;
 	u_int		sc_wrofs;
 	u_int		sc_writing;
+
+	u_int		sc_manid;
+	u_int		sc_devid;
 };
 
 extern char cfi_driver_name[];

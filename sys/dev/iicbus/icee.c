@@ -1,7 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2006 M. Warner Losh.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f6ab4d0700a9e316d3c53397448b6b2eb080f94 $");
+__FBSDID("$FreeBSD: 19aff78bf45a9e872ed815bfc07d217867b96fe6 $");
 /*
  * Generic IIC eeprom support, modeled after the AT24C family of products.
  */
@@ -113,17 +113,12 @@ static struct ofw_compat_data compat_data[] = {
 #define CDEV2SOFTC(dev)		((dev)->si_drv1)
 
 /* cdev routines */
-static d_open_t icee_open;
-static d_close_t icee_close;
 static d_read_t icee_read;
 static d_write_t icee_write;
 
 static struct cdevsw icee_cdevsw =
 {
 	.d_version = D_VERSION,
-	.d_flags = D_TRACKCLOSE,
-	.d_open = icee_open,
-	.d_close = icee_close,
 	.d_read = icee_read,
 	.d_write = icee_write
 };
@@ -227,28 +222,6 @@ icee_detach(device_t dev)
 	struct icee_softc *sc = device_get_softc(dev);
 
 	destroy_dev(sc->cdev);
-	return (0);
-}
-
-static int 
-icee_open(struct cdev *dev, int oflags, int devtype, struct thread *td)
-{
-	struct icee_softc *sc;
-
-	sc = CDEV2SOFTC(dev);
-	if (device_get_state(sc->dev) < DS_BUSY)
-		device_busy(sc->dev);
-
-	return (0);
-}
-
-static int
-icee_close(struct cdev *dev, int fflag, int devtype, struct thread *td)
-{
-	struct icee_softc *sc;
-
-	sc = CDEV2SOFTC(dev);
-	device_unbusy(sc->dev);
 	return (0);
 }
 

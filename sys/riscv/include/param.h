@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: 4b4610bea8d12ea7d35e245f0d810e6adb63ef22 $
+ * $FreeBSD: 70f8ecde971b0daa718a5fb6272071a063409897 $
  */
 
 #ifndef _MACHINE_PARAM_H_
@@ -42,20 +42,31 @@
 #define	STACKALIGNBYTES	(16 - 1)
 #define	STACKALIGN(p)	((uint64_t)(p) & ~STACKALIGNBYTES)
 
+#define __PCI_REROUTE_INTERRUPT
+
 #ifndef MACHINE
 #define	MACHINE		"riscv"
 #endif
 #ifndef MACHINE_ARCH
+
+/* Always use the hard-float arch for the kernel. */
+#if !defined(_KERNEL) && defined(__riscv_float_abi_soft)
+#define	MACHINE_ARCH	"riscv64sf"
+#else
 #define	MACHINE_ARCH	"riscv64"
 #endif
+#endif
+#ifdef _KERNEL
+#define	MACHINE_ARCHES	"riscv64 riscv64sf"
+#endif
 
-#if defined(SMP) || defined(KLD_MODULE)
+#ifdef SMP
 #ifndef MAXCPU
 #define	MAXCPU		16
 #endif
 #else
 #define	MAXCPU		1
-#endif /* SMP || KLD_MODULE */
+#endif
 
 #ifndef MAXMEMDOM
 #define	MAXMEMDOM	1

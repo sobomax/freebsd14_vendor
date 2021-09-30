@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: 08fe782974c0fedfbab2774afba324a3b06368eb $
+ * $FreeBSD: c9740ac232509e9e23ba12883d1eac0537e835dd $
  */
 
 #ifndef _SYS_FCNTL_H_
@@ -135,10 +135,15 @@ typedef	__pid_t		pid_t;
 
 #if __BSD_VISIBLE
 #define	O_VERIFY	0x00200000	/* open only after verification */
+/* #define O_UNUSED1	0x00400000   */	/* Was O_BENEATH */
+#define	O_RESOLVE_BENEATH 0x00800000	/* Do not allow name resolution to walk
+					   out of cwd */
 #endif
 
+#define	O_DSYNC		0x01000000	/* POSIX data sync */
+
 /*
- * XXX missing O_DSYNC, O_RSYNC.
+ * XXX missing O_RSYNC.
  */
 
 #ifdef _KERNEL
@@ -154,9 +159,9 @@ typedef	__pid_t		pid_t;
 #define	OFLAGS(fflags)	((fflags) & O_EXEC ? (fflags) : (fflags) - 1)
 
 /* bits to save after open */
-#define	FMASK	(FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)
+#define	FMASK	(FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FDSYNC|FNONBLOCK|O_DIRECT|FEXEC)
 /* bits settable by fcntl(F_SETFL, ...) */
-#define	FCNTLFLAGS	(FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FRDAHEAD|O_DIRECT)
+#define	FCNTLFLAGS	(FAPPEND|FASYNC|FFSYNC|FDSYNC|FNONBLOCK|FRDAHEAD|O_DIRECT)
 
 #if defined(COMPAT_FREEBSD7) || defined(COMPAT_FREEBSD6) || \
     defined(COMPAT_FREEBSD5) || defined(COMPAT_FREEBSD4)
@@ -181,15 +186,16 @@ typedef	__pid_t		pid_t;
 #define	FAPPEND		O_APPEND	/* kernel/compat */
 #define	FASYNC		O_ASYNC		/* kernel/compat */
 #define	FFSYNC		O_FSYNC		/* kernel */
+#define	FDSYNC		O_DSYNC		/* kernel */
 #define	FNONBLOCK	O_NONBLOCK	/* kernel */
 #define	FNDELAY		O_NONBLOCK	/* compat */
 #define	O_NDELAY	O_NONBLOCK	/* compat */
 #endif
 
 /*
- * We are out of bits in f_flag (which is a short).  However,
- * the flag bits not set in FMASK are only meaningful in the
- * initial open syscall.  Those bits can thus be given a
+ * Historically, we ran out of bits in f_flag (which was once a short).
+ * However, the flag bits not set in FMASK are only meaningful in the
+ * initial open syscall.  Those bits were thus given a
  * different meaning for fcntl(2).
  */
 #if __BSD_VISIBLE
@@ -208,10 +214,14 @@ typedef	__pid_t		pid_t;
 /*
  * Miscellaneous flags for the *at() syscalls.
  */
-#define	AT_EACCESS		0x100	/* Check access using effective user and group ID */
-#define	AT_SYMLINK_NOFOLLOW	0x200   /* Do not follow symbolic links */
-#define	AT_SYMLINK_FOLLOW	0x400	/* Follow symbolic link */
-#define	AT_REMOVEDIR		0x800	/* Remove directory instead of file */
+#define	AT_EACCESS		0x0100	/* Check access using effective user
+					   and group ID */
+#define	AT_SYMLINK_NOFOLLOW	0x0200	/* Do not follow symbolic links */
+#define	AT_SYMLINK_FOLLOW	0x0400	/* Follow symbolic link */
+#define	AT_REMOVEDIR		0x0800	/* Remove directory instead of file */
+/* #define AT_UNUSED1		0x1000 *//* Was AT_BENEATH */
+#define	AT_RESOLVE_BENEATH	0x2000	/* Do not allow name resolution
+					   to walk out of dirfd */
 #endif
 
 /*
@@ -247,7 +257,16 @@ typedef	__pid_t		pid_t;
 #endif
 #if __BSD_VISIBLE
 #define	F_DUP2FD_CLOEXEC 18		/* Like F_DUP2FD, but FD_CLOEXEC is set */
-#endif
+#define	F_ADD_SEALS	19
+#define	F_GET_SEALS	20
+#define	F_ISUNIONSTACK	21		/* Kludge for libc, don't use it. */
+
+/* Seals (F_ADD_SEALS, F_GET_SEALS). */
+#define	F_SEAL_SEAL	0x0001		/* Prevent adding sealings */
+#define	F_SEAL_SHRINK	0x0002		/* May not shrink */
+#define	F_SEAL_GROW	0x0004		/* May not grow */
+#define	F_SEAL_WRITE	0x0008		/* May not write */
+#endif	/* __BSD_VISIBLE */
 
 /* file descriptor flags (F_GETFD, F_SETFD) */
 #define	FD_CLOEXEC	1		/* close-on-exec flag */
@@ -313,6 +332,15 @@ struct __oflock {
 #define	POSIX_FADV_WILLNEED	3	/* will need these pages */
 #define	POSIX_FADV_DONTNEED	4	/* dont need these pages */
 #define	POSIX_FADV_NOREUSE	5	/* access data only once */
+#endif
+
+#ifdef __BSD_VISIBLE
+/*
+ * Magic value that specify that corresponding file descriptor to filename
+ * is unknown and sanitary check should be omitted in the funlinkat() and
+ * similar syscalls.
+ */
+#define	FD_NONE			-200
 #endif
 
 #ifndef _KERNEL

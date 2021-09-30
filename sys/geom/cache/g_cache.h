@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c3b0e86fefbf40ba55876bbe297bb4c328368bfa $
+ * $FreeBSD: 60caf19a4a8daffac153368b7aa9aed28f5233e4 $
  */
 
 #ifndef	_G_CACHE_H_
@@ -41,25 +41,10 @@
 #define	G_CACHE_TYPE_MANUAL	0
 #define	G_CACHE_TYPE_AUTOMATIC	1
 
-#define	G_CACHE_DEBUG(lvl, ...)	do {					\
-	if (g_cache_debug >= (lvl)) {					\
-		printf("GEOM_CACHE");					\
-		if (g_cache_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
-#define	G_CACHE_LOGREQ(bp, ...)	do {					\
-	if (g_cache_debug >= 2) {					\
-		printf("GEOM_CACHE[2]: ");				\
-		printf(__VA_ARGS__);					\
-		printf(" ");						\
-		g_print_bio(bp);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define G_CACHE_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_CACHE", g_cache_debug, (lvl), NULL, __VA_ARGS__)
+#define G_CACHE_LOGREQ(bp, ...) \
+    _GEOM_DEBUG("GEOM_CACHE", g_cache_debug, 2, (bp), __VA_ARGS__)
 
 #define	G_CACHE_BUCKETS		(1 << 3)
 #define	G_CACHE_BUCKET(bno)	((bno) & (G_CACHE_BUCKETS - 1))

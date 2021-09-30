@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
- * All rights reserved.
+ * Copyright 1997, Stefan Esser <se@freebsd.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e3842acf88947cb4a9779b27058c41c2cc247cc $");
+__FBSDID("$FreeBSD: c34fd715707ea8fc2691f3acd825929457b546e0 $");
 
 #include "opt_bus.h"	/* XXX trim includes */
 
@@ -119,7 +118,7 @@ static d_ioctl_t	pci_ioctl;
 
 struct cdevsw pcicdev = {
 	.d_version =	D_VERSION,
-	.d_flags =	D_NEEDGIANT,
+	.d_flags =	0,
 	.d_open =	pci_open,
 	.d_close =	pci_close,
 	.d_ioctl =	pci_ioctl,
@@ -964,6 +963,8 @@ pci_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *t
 		}
 	}
 
+	/* Giant because newbus is Giant locked revisit with newbus locking */
+	mtx_lock(&Giant);
 
 	switch (cmd) {
 	case PCIOCGETCONF:
@@ -1084,7 +1085,6 @@ pci_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *t
 				 dinfo = STAILQ_FIRST(devlist_head);
 		     dinfo != NULL;
 		     dinfo = STAILQ_NEXT(dinfo, pci_links), i++) {
-
 			if (i < cio->offset)
 				continue;
 
@@ -1288,8 +1288,10 @@ getconfexit:
 	case PCIOCBARMMAP:
 		pbm = (struct pci_bar_mmap *)data;
 		if ((flag & FWRITE) == 0 &&
-		    (pbm->pbm_flags & PCIIO_BAR_MMAP_RW) != 0)
-			return (EPERM);
+		    (pbm->pbm_flags & PCIIO_BAR_MMAP_RW) != 0) {
+			error = EPERM;
+			break;
+		}
 		pcidev = pci_find_dbsf(pbm->pbm_sel.pc_domain,
 		    pbm->pbm_sel.pc_bus, pbm->pbm_sel.pc_dev,
 		    pbm->pbm_sel.pc_func);
@@ -1300,6 +1302,8 @@ getconfexit:
 		error = ENOTTY;
 		break;
 	}
+
+	mtx_unlock(&Giant);
 
 	return (error);
 }

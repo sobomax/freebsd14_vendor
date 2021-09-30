@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d63552470bedf67f75c64dd2afceb73445efbb5 $");
+__FBSDID("$FreeBSD: f5d52eec54822836b764068f1d749935b57959d1 $");
 
 #include <sys/types.h>
 #include <ieeefp.h>
@@ -43,11 +43,11 @@ fp_except_t
 fpsetmask(fp_except_t mask)
 {
 	u_int64_t fpscr;
-	fp_rnd_t old;
+	fp_except_t old;
 
 	__asm__("mffs %0" : "=f"(fpscr));
-	old = (fp_rnd_t)((fpscr >> 3) & 0x1f);
-	fpscr = (fpscr & 0xffffff07) | (mask << 3);
+	old = (fp_except_t)((fpscr >> 3) & 0x1f);
+	fpscr = (fpscr & 0xffffff07) | ((mask & 0x1f) << 3);
 	__asm__ __volatile("mtfsf 0xff,%0" :: "f"(fpscr));
 	return (old);
 }

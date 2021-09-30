@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9138074ed7c96e9e68e9cc28fc62a1a0cc2da128 $");
+__FBSDID("$FreeBSD: 0bd357f2d19735d6a80ef8751f32f3a153425273 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,4 +50,3 @@ sysarch(struct thread *td, struct sysarch_args *uap)
 
 	return (EINVAL);
 }
-

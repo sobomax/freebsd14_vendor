@@ -1,4 +1,4 @@
-/* $FreeBSD: ed0881d7520ab1571c8b547e6ad348a5e3cf7cde $ */
+/* $FreeBSD: 906dc7e8d9a3d3bebe99356bc95fa1ee08f706f0 $ */
 /* $NetBSD: in_cksum.c,v 1.7 1997/09/02 13:18:15 thorpej Exp $ */
 
 /*-
@@ -42,6 +42,7 @@
 
 #include <sys/cdefs.h>			/* RCS ID & Copyright macro defns */
 
+#include <sys/endian.h>
 #include <sys/param.h>
 #include <sys/mbuf.h>
 #include <sys/systm.h>
@@ -73,7 +74,7 @@
     }
 
 static const u_int32_t in_masks[] = {
-#if 0
+#if _BYTE_ORDER == _LITTLE_ENDIAN
 	/*0 bytes*/ /*1 byte*/	/*2 bytes*/ /*3 bytes*/
 	0x00000000, 0x000000FF, 0x0000FFFF, 0x00FFFFFF,	/* offset 0 */
 	0x00000000, 0x0000FF00, 0x00FFFF00, 0xFFFFFF00,	/* offset 1 */

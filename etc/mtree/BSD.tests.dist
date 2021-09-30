@@ -1,9 +1,9 @@
-# $FreeBSD: 29101266c9546df069ce69b2f81a7f01dc4c4e54 $
+# $FreeBSD: 3d50a1943ce4ecef210b27eb6c792c61c344d10b $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
 
-/set type=dir uname=root gname=wheel mode=0755
+/set type=dir uname=root gname=wheel mode=0755 tags=package=tests
 .
     bin
         cat
@@ -11,6 +11,8 @@
         chflags
         ..
         chmod
+        ..
+        cp
         ..
         date
         ..
@@ -248,6 +250,10 @@
                     ustack
                     ..
                 ..
+                amd64
+                    arrays
+                    ..
+                ..
             ..
             zfsd
             ..
@@ -380,6 +386,8 @@
         ..
         libdevdctl
         ..
+        libexecinfo
+        ..
         libkvm
         ..
         libmp
@@ -439,6 +447,8 @@
             ..
         ..
         ping
+        ..
+        route
         ..
     ..
     secure
@@ -722,6 +732,8 @@
                 ..
             ..
         ..
+        devrandom
+        ..
         dtrace
         ..
         fifo
@@ -786,6 +798,8 @@
         ..
         net
         ..
+        netgraph
+        ..
         netinet
         ..
         netinet6
@@ -796,9 +810,11 @@
             tunnel
             ..
         ..
-    netmap
-    ..
+        netmap
+        ..
         netpfil
+            common
+            ..
             pf
                 ioctl
                 ..
@@ -1057,6 +1073,8 @@
         uudecode
         ..
         uuencode
+        ..
+        unifdef
         ..
         uniq
         ..

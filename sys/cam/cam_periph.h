@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d5dcfed0cca6ba34a4a8a295b4ad36e21ea57fab $
+ * $FreeBSD: 15a239decf0a0761722ca648e0b68909049bf6c8 $
  */
 
 #ifndef _CAM_CAM_PERIPH_H
@@ -37,6 +37,8 @@
 #include <cam/cam_sim.h>
 
 #ifdef _KERNEL
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 

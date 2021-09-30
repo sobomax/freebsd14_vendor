@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19ac16a933f53383b586c9e9e42d0b57fa861c83 $");
+__FBSDID("$FreeBSD: a16ff8b36448ed61fc2df7ffa0eebf8ed33a5528 $");
 
 #include "opt_nfs.h"
 
@@ -151,4 +151,3 @@ DECLARE_MODULE(nfssvc, nfssvc_mod, SI_SUB_VFS, SI_ORDER_ANY);
 
 /* So that loader and kldload(2) can find us, wherever we are.. */
 MODULE_VERSION(nfssvc, 1);
-

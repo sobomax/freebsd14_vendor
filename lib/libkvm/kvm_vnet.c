@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eac9584cc730c10d123771e4559732a65cd1a1cb $");
+__FBSDID("$FreeBSD: 79493bc5ffa8de70b45938c3322c19813728d1e5 $");
 
 #include <sys/param.h>
 
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: eac9584cc730c10d123771e4559732a65cd1a1cb $");
 #include <sys/proc.h>
 #include <sys/types.h>
 
+#include <stdbool.h>
 #include <net/vnet.h>
 
 #include <kvm.h>

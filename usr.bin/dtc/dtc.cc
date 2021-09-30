@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0cda698011efaf9690463e203daee539e74767d7 $
+ * $FreeBSD: 14d3685ba9d4e816ef5005f2defc4bb2e3aaf38e $
  */
 
 #include <sys/resource.h>
@@ -304,7 +304,10 @@ main(int argc, char **argv)
 			}
 			break;
 		default:
-			fprintf(stderr, "Unknown option %c\n", ch);
+			/* 
+			 * Since opterr is non-zero, getopt will have
+			 * already printed an error message.
+			 */
 			return EXIT_FAILURE;
 		}
 	}

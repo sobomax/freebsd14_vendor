@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cc3b5bff2cf7cf17217eaf7699bd383bd9ee7223 $
+ * $FreeBSD: 05558f4dc73ef1d66ecd49f83fe06a0d3de4c0f1 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc3b5bff2cf7cf17217eaf7699bd383bd9ee7223 $");
+__FBSDID("$FreeBSD: 05558f4dc73ef1d66ecd49f83fe06a0d3de4c0f1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,8 +53,8 @@ __FBSDID("$FreeBSD: cc3b5bff2cf7cf17217eaf7699bd383bd9ee7223 $");
 
 #include <arm/allwinner/clkng/aw_ccung.h>
 
-#include <gnu/dts/include/dt-bindings/clock/sun8i-r-ccu.h>
-#include <gnu/dts/include/dt-bindings/reset/sun8i-r-ccu.h>
+#include <dt-bindings/clock/sun8i-r-ccu.h>
+#include <dt-bindings/reset/sun8i-r-ccu.h>
 
 /* Non-exported clocks */
 #define	CLK_AHB0	1

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 84dcf991419bd71a757822840ba4ac3fe7dcb6af $");
+__FBSDID("$FreeBSD: 26ba34df500910eccb19e9848960fee4936a8fd7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -669,7 +669,6 @@ setup_sai(struct sc_info *sc)
 	reg |= (1 << 10); /* FEIE */
 	WRITE4(sc, I2S_TCSR, reg);
 }
-
 
 static void
 sai_dmamap_cb(void *arg, bus_dma_segment_t *segs, int nseg, int err)

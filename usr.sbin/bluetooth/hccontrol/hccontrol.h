@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.h,v 1.2 2003/05/19 17:29:29 max Exp $
- * $FreeBSD: 3758faa5c8f2bc8b3f38bbbc8a85dc7b308e0752 $
+ * $FreeBSD: 912bf26a04a52d47cab92f59fb22406133816cfc $
  */
 
 #ifndef _HCCONTROL_H_
@@ -79,6 +79,13 @@ char const *	hci_cc2str          (int);
 char const *	hci_con_state2str   (int);
 char const *	hci_status2str      (int);
 char const *	hci_bdaddr2str      (bdaddr_t const *);
+char const * 	hci_addrtype2str    (int type);
+char const *    hci_role2str        (int role);
+char const *    hci_mc_accuracy2str (int accuracy);
+char const * 	hci_le_chanmap2str  (uint8_t *, char *, int);
+
+void dump_adv_data(int len, uint8_t* advdata);
+void print_adv_data(int len, uint8_t* advdata);
 
 #endif /* _HCCONTROL_H_ */
 

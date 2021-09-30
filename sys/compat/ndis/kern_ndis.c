@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0542f40cd8774947d71f36c8c8fd4dffd9181aee $");
+__FBSDID("$FreeBSD: 153849fa1cf68691efd27374ad036bdccfd7f5b4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -102,7 +102,6 @@ static image_patch_table kernndis_functbl[] = {
 	IMPORT_SFUNC(ndis_sendrsrcavail_func, 1),
 	IMPORT_SFUNC(ndis_intrsetup, 4),
 	IMPORT_SFUNC(ndis_return, 1),
-
 	{ NULL, NULL, NULL }
 };
 
@@ -590,7 +589,6 @@ ndis_convert_res(arg)
 	brl = BUS_GET_RESOURCE_LIST(dev, dev);
 
 	if (brl != NULL) {
-
 		STAILQ_FOREACH(brle, brl, link) {
 			switch (brle->type) {
 			case SYS_RES_IOPORT:

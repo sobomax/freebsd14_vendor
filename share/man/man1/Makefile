@@ -1,11 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 2863d1e2300d5c66709f0345ad9ed7964a9b4ad2 $
+# $FreeBSD: fb94799dc18bf1f4d6fc2da7fb6c5dc6e5898aac $
 
 .include <src.opts.mk>
 
 MAN=	builtin.1 intro.1
-
-PACKAGE=runtime-manuals
 
 .if ${MK_TESTS} != "no"
 ATF=	${SRCTOP}/contrib/atf

@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: dede14f194682781d2e2acf2de35c98ff5a6a692 $
+# $FreeBSD: 2924bfea2f986b4234ca8176276e9d50dab3c5fe $
 #
 
 # PROVIDE: mountcritremote
-# REQUIRE: NETWORKING FILESYSTEMS ipsec netwait
+# REQUIRE: NETWORKING FILESYSTEMS ipsec netwait nfscbd
 # KEYWORD: nojail
 
 . /etc/rc.subr

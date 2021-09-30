@@ -1,4 +1,4 @@
-.\"	$FreeBSD: 3411ac19f4092e6d47886e748ea225c86f356c4f $
+.\"	$FreeBSD: 446684d4ad106f7e652f31d4f33bce1dca75ce00 $
 .\"
 .TH IPPOOL 8
 .SH NAME
@@ -12,7 +12,7 @@ ippool \- user interface to the IPFilter pools
 -A [-dnv] [-m <name>] [-o <role>] [-S <seed>] -t <type>
 .br
 .B ippool
--f <file> [-dnuv] [-f <file [-dnuv]] ...
+-f <file> [-dnuvR] [-f <file [-dnuvR]] ...
 .br
 .B ippool
 -F [-dv] [-o <role>] [-t <type>]
@@ -24,7 +24,7 @@ ippool \- user interface to the IPFilter pools
 -r [-dnv] [-m <name>] [-o <role>] [-t <type>] -i <ipaddr>[/<netmask>]
 .br
 .B ippool
--R [-dnv] [-m <name>] [-o <role>] [-t <type>]
+-R [-dnv] [-m <name>] [-o <role>] -t <type>
 .br
 .B ippool
 -s [-dtv] [-M <core>] [-N <namelist>]
@@ -120,7 +120,7 @@ as a number of seconds.
 .B -u
 When parsing a configuration file, rather than load new pool data into the
 kernel, unload it.
-.DT
+.TP
 .SH FILES
 .br
 /dev/iplookup

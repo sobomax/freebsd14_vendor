@@ -1,4 +1,4 @@
-/* $FreeBSD: 1441b32a457c34d6ba28cc1dc708ab346875bb2c $ */
+/* $FreeBSD: 5bde859274433e81645a4bbd28942b1b52c2b7bc $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -286,7 +286,7 @@ mtp_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&mtp_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB Media Transfer Protocol device side template");
 	SYSCTL_ADD_U16(&mtp_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

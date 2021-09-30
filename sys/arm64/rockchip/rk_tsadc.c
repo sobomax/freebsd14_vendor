@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5aafe5b4c3fccb836a48ddc3d836354926897eff $");
+__FBSDID("$FreeBSD: 54e6dabdfb8ca80ccd07e934819e1143bc4617a3 $");
 
 /*
  * Thermometer and thermal zones driver for RockChip SoCs.
@@ -387,7 +387,6 @@ tsadc_raw_to_temp(struct tsadc_softc *sc, uint32_t raw)
 		}
 	}
 
-
 	/*
 	* Translated value is between i and i - 1 table entries.
 	* Do linear interpolation for it.
@@ -556,7 +555,7 @@ tsadc_init_sysctl(struct tsadc_softc *sc)
 	/* create node for hw.temp */
 	oid = SYSCTL_ADD_NODE(&tsadc_sysctl_ctx,
 	    SYSCTL_STATIC_CHILDREN(_hw), OID_AUTO, "temperature",
-	    CTLFLAG_RD, NULL, "");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "");
 	if (oid == NULL)
 		return (ENXIO);
 
@@ -564,7 +563,7 @@ tsadc_init_sysctl(struct tsadc_softc *sc)
 	for (i = sc->conf->ntsensors  - 1; i >= 0; i--) {
 		tmp = SYSCTL_ADD_PROC(&tsadc_sysctl_ctx,
 		    SYSCTL_CHILDREN(oid), OID_AUTO, sc->conf->tsensors[i].name,
-		    CTLTYPE_INT | CTLFLAG_RD, sc, i,
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, sc, i,
 		    tsadc_sysctl_temperature, "IK", "SoC Temperature");
 		if (tmp == NULL)
 			return (ENXIO);
@@ -693,7 +692,8 @@ tsadc_attach(device_t dev)
 	}
 
 	/* Set the assigned clocks parent and freq */
-	if (clk_set_assigned(sc->dev, node) != 0) {
+	rv = clk_set_assigned(sc->dev, node);
+	if (rv != 0 && rv != ENOENT) {
 		device_printf(dev, "clk_set_assigned failed\n");
 		goto fail;
 	}

@@ -1,4 +1,4 @@
-/*	$OpenBSD: arc4random_uniform.c,v 1.2 2015/09/13 08:31:47 guenther Exp $	*/
+/*	$OpenBSD: arc4random_uniform.c,v 1.3 2019/01/20 02:59:07 bcook Exp $	*/
 
 /*
  * Copyright (c) 2008, Damien Miller <djm@openbsd.org>
@@ -15,10 +15,10 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 0136c66e328930136e202748ffd8e53127927d0f $
+ * $FreeBSD: 5f5e190790b05a8d913cd1019fa148bedb0cd105 $
  */
 
-#include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 /*

@@ -1,5 +1,4 @@
 .\" Copyright (c) 2014 The FreeBSD Foundation
-.\" All rights reserved.
 .\"
 .\" This software was developed by Edward Tomasz Napierala under sponsorship
 .\" from the FreeBSD Foundation.
@@ -25,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: e630028e081776c0b9634a0c616c424c0e405e3d $
+.\" $FreeBSD: 29a05d95b6970111026e41df894433967fa1adbd $
 .\"
-.Dd March 13, 2015
+.Dd December 28, 2018
 .Dt AUTO_MASTER 5
 .Os
 .Sh NAME
@@ -187,6 +186,8 @@ Expands to the output of
 .Li "uname -p" .
 .It Li CPU
 Same as ARCH.
+.It Li DOLLAR
+A literal $ sign.
 .It Li HOST
 Expands to the output of
 .Li "uname -n" .

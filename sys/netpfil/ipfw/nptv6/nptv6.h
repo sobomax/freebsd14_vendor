@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: df5a4e8bf0ea77a6da94e946afeb7237af2cf7cb $
+ * $FreeBSD: a30a44fc24d02c9f9634d003679206beed5f3c21 $
  */
 
 #ifndef	_IP_FW_NPTV6_H_
@@ -65,4 +65,3 @@ void nptv6_uninit(struct ip_fw_chain *ch, int last);
 #endif /* _KERNEL */
 
 #endif /* _IP_FW_NPTV6_H_ */
-

@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 31bfbb48998f2671f48d3e729cccf325260ef29f $
+.\" $FreeBSD: 115727a136a7e5f7c1c102d4bac4d88a87501b28 $
 .\"
-.Dd April 22, 2020
+.Dd January 18, 2021
 .Dt BHYVE 8
 .Os
 .Sh NAME
@@ -32,7 +32,7 @@
 .Nd "run a guest operating system inside a virtual machine"
 .Sh SYNOPSIS
 .Nm
-.Op Fl AabCeHhPSuWwxY
+.Op Fl AaCDeHhPSuWwxY
 .Oo
 .Sm off
 .Fl c\~
@@ -46,7 +46,6 @@
 .Oc
 .Sm on
 .Op Fl G Ar port
-.Op Fl g Ar gdbport
 .Oo Fl l
 .Sm off
 .Cm help | Ar lpcdev Op Cm \&, Ar conf
@@ -61,6 +60,7 @@
 .Sm on
 .Oc
 .Op Fl p Ar vcpu Ns Cm \&: Ns Ar hostcpu
+.Op Fl r Ar file
 .Oo Fl s
 .Sm off
 .Cm help | Ar slot Cm \&, Ar emulation Op Cm \&, Ar conf
@@ -98,12 +98,6 @@ Generate ACPI tables.
 Required for
 .Fx Ns /amd64
 guests.
-.It Fl b
-Enable a low-level console device supported by
-.Fx
-kernels compiled with
-.Cd "device bvmconsole" .
-This option will be deprecated in a future version.
 .It Fl c Op Ar setting ...
 Number of guest virtual CPUs
 and/or the CPU topology.
@@ -137,14 +131,6 @@ Force
 .Nm
 to exit when a guest issues an access to an I/O port that is not emulated.
 This is intended for debug purposes.
-.It Fl g Ar gdbport
-For
-.Fx
-kernels compiled with
-.Cd "device bvmdebug" ,
-allow a remote kernel kgdb to be relayed to the guest kernel gdb stub
-via a local IPv4 address and this port.
-This option will be deprecated in a future version.
 .It Fl G Ar port
 Start a debug server that uses the GDB protocol to export guest state to a
 debugger.
@@ -167,10 +153,12 @@ If this option is not specified, virtual CPUs will use 100% of a host CPU.
 Allow devices behind the LPC PCI-ISA bridge to be configured.
 The only supported devices are the TTY-class devices
 .Ar com1
-and
-.Ar com2
-and the boot ROM device
-.Ar bootrom .
+through
+.Ar com4 ,
+the boot ROM device
+.Ar bootrom ,
+and the debug/test device
+.Ar pc-testdev .
 .Pp
 .Ar help
 print a list of supported LPC devices.
@@ -193,6 +181,21 @@ to
 .Em hostcpu .
 .It Fl P
 Force the guest virtual CPU to exit when a PAUSE instruction is detected.
+.It Fl r Ar file
+Resume a guest from a snapshot.
+The guest memory contents are restored from
+.Ar file ,
+and the guest device and vCPU state are restored from the file
+.Dq Ar file Ns .kern .
+.Pp
+Note that the current snapshot file format requires that the configuration of
+devices in the new VM match the VM from which the snapshot was taken by specifying the
+same
+.Op Fl s
+and
+.Op Fl l
+options.
+The count of vCPUs and memory configuration are read from the snapshot.
 .It Fl s Op Ar help|slot,emulation Ns Op , Ns Ar conf
 Configure a virtual PCI slot and function.
 .Pp
@@ -242,6 +245,8 @@ Virtio network interface.
 Virtio block storage interface.
 .It Li virtio-scsi
 Virtio SCSI interface.
+.It Li virtio-9p
+Virtio 9p (VirtFS) interface.
 .It Li virtio-rnd
 Virtio RNG interface.
 .It Li virtio-console
@@ -259,7 +264,8 @@ Intel e82545 network interface.
 .It Li uart
 PCI 16550 serial device.
 .It Li lpc
-LPC PCI-ISA bridge with COM1 and COM2 16550 serial ports and a boot ROM.
+LPC PCI-ISA bridge with COM1 and COM2 16550 serial ports, a boot ROM, and,
+optionally, the debug/test device.
 The LPC bridge emulation can only be configured on bus 0.
 .It Li fbuf
 Raw framebuffer device attached to VNC server.
@@ -267,6 +273,8 @@ Raw framebuffer device attached to VNC server.
 eXtensible Host Controller Interface (xHCI) USB controller.
 .It Li nvme
 NVM Express (NVMe) controller.
+.It Li hda
+High Definition Audio Controller.
 .El
 .It Op Ar conf
 This optional parameter describes the backend for device emulations.
@@ -275,10 +283,11 @@ If
 is not specified, the device emulation has no backend and can be
 considered unconnected.
 .Pp
-Network devices:
+Network backends:
 .Bl -tag -width 10n
-.It Ar tapN Ns Op , Ns Ar mac=xx:xx:xx:xx:xx:xx
-.It Ar vmnetN Ns Op , Ns Ar mac=xx:xx:xx:xx:xx:xx
+.It Ar tapN Ns Oo , Ns Ar mac=xx:xx:xx:xx:xx:xx Oc Ns Oo , Ns Ar mtu=N Oc
+.It Ar vmnetN Ns Oo , Ns Ar mac=xx:xx:xx:xx:xx:xx Oc Ns Oo , Ns Ar mtu=N Oc
+.It Ar netgraph,path=ADDRESS,peerhook=HOOK Ns Oo , Ns Ar socket=NAME Oc Ns Oo , Ns Ar hook=HOOK Oc Ns Oo , Ns Ar mac=xx:xx:xx:xx:xx:xx Oc Ns Oo , Ns Ar mtu=N Oc
 .Pp
 If
 .Ar mac
@@ -289,6 +298,32 @@ the device name.
 The MAC address is an ASCII string in
 .Xr ethers 5
 format.
+.Pp
+With virtio-net devices, the
+.Ar mtu
+parameter can be specified to inform the guest about the largest MTU
+that should be allowed, expressed in bytes.
+.Pp
+With netgraph backend, the
+.Ar path
+and
+.Ar peerhook
+parameters must be specified to set the destination node and corresponding hook.
+The optional parameters
+.Ar socket
+and
+.Ar hook
+may be used to set the
+.Xr ng_socket 4
+node name and source hook.
+The
+.Ar ADDRESS ,
+.Ar HOOK
+and
+.Ar NAME
+must comply with
+.Xr netgraph 4
+addressing rules.
 .El
 .Pp
 Block storage devices:
@@ -313,6 +348,10 @@ Force the file to be opened read-only.
 Specify the logical and physical sector sizes of the emulated disk.
 The physical sector size is optional and is equal to the logical sector size
 if not explicitly specified.
+.It Li nodelete
+Disable emulation of guest trim requests via
+.Dv DIOCGDELETE
+requests.
 .El
 .Pp
 SCSI devices:
@@ -327,6 +366,19 @@ are:
 .It Li iid= Ns Ar IID
 Initiator ID to use when sending requests to specified CTL port.
 The default value is 0.
+.El
+.Pp
+9P devices:
+.Bl -tag -width 10n
+.It Pa sharename=/path/to/share[,9p-device-options]
+.El
+.Pp
+The
+.Ar 9p-device-options
+are:
+.Bl -tag -width 10n
+.It Li ro
+Expose the share in read-only mode.
 .El
 .Pp
 TTY devices:
@@ -516,6 +568,7 @@ Playback device, typically
 Recording device, typically
 .Ar /dev/dsp0 .
 .El
+.El
 .It Fl S
 Wire guest memory.
 .It Fl u
@@ -549,8 +602,7 @@ Each virtual CPU is exposed to the debugger as a thread.
 General purpose registers can be queried for each virtual CPU, but other
 registers such as floating-point and system registers cannot be queried.
 .Ss Memory
-Memory (including memory mapped I/O regions) can be read by the debugger,
-but not written.
+Memory (including memory mapped I/O regions) can be read and written by the debugger.
 Memory operations use virtual addresses that are resolved to physical addresses
 via the current virtual CPU's active address translation.
 .Ss Control
@@ -661,6 +713,8 @@ bhyve -c 2 -m 4G -w -H \\
 .Ed
 .Sh SEE ALSO
 .Xr bhyve 4 ,
+.Xr netgraph 4 ,
+.Xr ng_socket 4 ,
 .Xr nmdm 4 ,
 .Xr vmm 4 ,
 .Xr ethers 5 ,

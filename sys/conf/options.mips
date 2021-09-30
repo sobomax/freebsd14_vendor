@@ -26,7 +26,7 @@
 # SUCH DAMAGE.
 #
 #	JNPR: options.mips,v 1.2 2006/09/15 12:52:34
-# $FreeBSD: 059d9b15acae6a798355045f1c30d23930bc604d $
+# $FreeBSD: e1f72ee6be389ca0dc78cc325afc15238a4eff3b $
 
 CPU_MIPS4KC	opt_global.h
 CPU_MIPS24K	opt_global.h
@@ -65,10 +65,6 @@ CFE		opt_global.h
 CFE_CONSOLE	opt_global.h
 CFE_ENV		opt_global.h
 CFE_ENV_SIZE	opt_global.h
-
-GFB_DEBUG		opt_gfb.h
-GFB_NO_FONT_LOADING	opt_gfb.h
-GFB_NO_MODE_CHANGE	opt_gfb.h
 
 NOFPU		opt_global.h
 

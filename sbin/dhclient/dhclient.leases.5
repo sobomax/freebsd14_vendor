@@ -36,7 +36,7 @@
 .\" see ``http://www.isc.org/isc''.  To learn more about Vixie
 .\" Enterprises, see ``http://www.vix.com''.
 .\"
-.\" $FreeBSD: ebef81966ef147de929e306e9cc7c7d70bf958f2 $
+.\" $FreeBSD: 38c8edb969c5529925e45cffc04cf2b228491f75 $
 .\"
 .Dd January 1, 1997
 .Dt DHCLIENT.LEASES 5
@@ -54,7 +54,7 @@ the last one in the file is used.
 The file is written as a log, so this is not an unusual occurrence.
 .Pp
 The lease file is named
-.Pa dhclient.leases. Ns Ar IFNAME ,
+.Pa dhclient.leases . Ns Ar IFNAME ,
 where
 .Ar IFNAME
 represents the network interface the DHCP client acquired the lease on.
@@ -70,7 +70,7 @@ The format of the lease declarations is described in
 .Xr dhclient.conf 5 .
 .Sh FILES
 .Bl -tag -width ".Pa /var/db/dhclient.leases. Ns Ar IFNAME"
-.It Pa /var/db/dhclient.leases. Ns Ar IFNAME
+.It Pa /var/db/dhclient.leases . Ns Ar IFNAME
 Current lease file.
 .El
 .Sh SEE ALSO

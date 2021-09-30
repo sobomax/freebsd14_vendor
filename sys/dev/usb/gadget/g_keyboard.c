@@ -30,7 +30,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 3a5980a8e9bc43ce2fc93fd2fba20859caef60c8 $");
+__FBSDID("$FreeBSD: d88e0ea432ced50e212cc6a2c532fa5dcab051bf $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -61,7 +61,9 @@ __FBSDID("$FreeBSD: 3a5980a8e9bc43ce2fc93fd2fba20859caef60c8 $");
 
 #include <dev/usb/gadget/g_keyboard.h>
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, g_keyboard, CTLFLAG_RW, 0, "USB keyboard gadget");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, g_keyboard,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB keyboard gadget");
 
 #ifdef USB_DEBUG
 static int g_keyboard_debug = 0;
@@ -327,7 +329,6 @@ tr_setup:
 			usbd_transfer_submit(xfer);
 
 		} else if (sc->sc_mode == G_KEYBOARD_MODE_PATTERN) {
-
 			memset(&sc->sc_data, 0, sizeof(sc->sc_data));
 
 			if ((sc->sc_state < 0) || (sc->sc_state >= G_KEYBOARD_MAX_STRLEN))
@@ -389,7 +390,6 @@ g_keyboard_handle_request(device_t dev,
 		    (req->bRequest == UR_SET_REPORT) &&
 		    (req->wValue[0] == 0x00) &&
 		    (req->wValue[1] == 0x02)) {
-
 			if (offset == 0) {
 				*plen = sizeof(sc->sc_led_state);
 				*pptr = &sc->sc_led_state;

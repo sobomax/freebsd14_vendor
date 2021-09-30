@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD: 6b9782e7207ba36b82951d2437e7438c52f77ec9 $
+ * $FreeBSD: 8f957eede39b433aa28c72c80008d5ce4371b2e7 $
  */
 
 /*
@@ -71,6 +71,7 @@ int	fputrap_sse(void);
 int	fputrap_x87(void);
 void	fpuuserinited(struct thread *td);
 struct fpu_kern_ctx *fpu_kern_alloc_ctx(u_int flags);
+struct fpu_kern_ctx *fpu_kern_alloc_ctx_domain(int domain, u_int flags);
 void	fpu_kern_free_ctx(struct fpu_kern_ctx *ctx);
 void	fpu_kern_enter(struct thread *td, struct fpu_kern_ctx *ctx,
 	    u_int flags);

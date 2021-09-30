@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: 3786826d8e384faaabeb0cb5cb6e0cfe067b4cd2 $
+ * $FreeBSD: fd9db5842df3a0d8168ad353d3d85402284eb9fd $
  *
  * The header contains the definitions of constants and function
  * prototypes used only in kernelspace.
@@ -1449,8 +1449,7 @@ int netmap_attach_common(struct netmap_adapter *);
 /* fill priv->np_[tr]xq{first,last} using the ringid and flags information
  * coming from a struct nmreq_register
  */
-int netmap_interp_ringid(struct netmap_priv_d *priv, uint32_t nr_mode,
-			uint16_t nr_ringid, uint64_t nr_flags);
+int netmap_interp_ringid(struct netmap_priv_d *priv, struct nmreq_header *hdr);
 /* update the ring parameters (number and size of tx and rx rings).
  * It calls the nm_config callback, if available.
  */
@@ -1485,7 +1484,7 @@ void netmap_enable_all_rings(struct ifnet *);
 
 int netmap_buf_size_validate(const struct netmap_adapter *na, unsigned mtu);
 int netmap_do_regif(struct netmap_priv_d *priv, struct netmap_adapter *na,
-		uint32_t nr_mode, uint16_t nr_ringid, uint64_t nr_flags);
+		struct nmreq_header *);
 void netmap_do_unregif(struct netmap_priv_d *priv);
 
 u_int nm_bound_var(u_int *v, u_int dflt, u_int lo, u_int hi, const char *msg);

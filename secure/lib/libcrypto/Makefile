@@ -1,10 +1,12 @@
-# $FreeBSD: db71e23ef85e059af40392ecb0abd21882e9ccb7 $
+# $FreeBSD: b82b5c8d84b1c35ee9eed7c73aa22cce97128719 $
 
 SHLIBDIR?=	/lib
 SUBDIR=		engines
 
 .include <bsd.own.mk>
+.include <src.opts.mk>
 
+PACKAGE=	runtime
 LIB=		crypto
 SHLIB_MAJOR=	111
 VERSION_MAP=	${.CURDIR}/Version.map
@@ -190,8 +192,8 @@ SRCS+=	ecp_nistz256-x86.S ecp_nistz256.c
 .endif
 
 # engine
-SRCS+=	eng_all.c eng_cnf.c eng_ctrl.c eng_dyn.c eng_err.c eng_fat.c
-SRCS+=	eng_init.c eng_lib.c eng_list.c eng_openssl.c eng_pkey.c
+SRCS+=	eng_all.c eng_cnf.c eng_ctrl.c eng_devcrypto.c eng_dyn.c eng_err.c
+SRCS+=	eng_fat.c eng_init.c eng_lib.c eng_list.c eng_openssl.c eng_pkey.c
 SRCS+=	eng_rdrand.c eng_table.c tb_asnmth.c tb_cipher.c tb_dh.c tb_digest.c
 SRCS+=	tb_dsa.c tb_eckey.c tb_pkmeth.c tb_rand.c tb_rsa.c
 
@@ -428,6 +430,17 @@ SRCS+=	buildinf.h
 CLEANDIRS=	openssl
 CLEANFILES=	buildinf.h opensslconf.h opensslconf.h.tmp
 
+.if defined(ASM_${MACHINE_CPUARCH})
+_cmd1=/%%NO_ASM%%/d
+.else
+_cmd1=s/%%NO_ASM%%//
+.endif
+.if ${MK_OPENSSL_KTLS} != "no"
+_cmd2=/%%NO_KTLS%%/d
+.else
+_cmd2=s/%%NO_KTLS%%//
+.endif
+
 buildinf.h: Makefile
 	( echo "/*"; \
 	echo " * WARNING: do not edit!"; \
@@ -446,11 +459,7 @@ openssl_opensslconf.h: opensslconf.h
 	ln -fs ${.OBJDIR}/${.ALLSRC} openssl/${.ALLSRC}
 
 opensslconf.h: opensslconf.h.in
-.if defined(ASM_${MACHINE_CPUARCH})
-	sed 's/%%ASM%%//; /%%NO_ASM%%/d' ${.ALLSRC} > ${.TARGET}.tmp
-.else
-	sed '/%%ASM%%/d; s/%%NO_ASM%%//' ${.ALLSRC} > ${.TARGET}.tmp
-.endif
+	sed '${_cmd1}; ${_cmd2}' ${.ALLSRC} > ${.TARGET}.tmp
 	mv -f ${.TARGET}.tmp ${.TARGET}
 
 .include <bsd.lib.mk>
@@ -458,7 +467,7 @@ opensslconf.h: opensslconf.h.in
 PICFLAG+=	-DOPENSSL_PIC
 
 .if defined(ASM_${MACHINE_CPUARCH})
-.PATH:	${.CURDIR}/${MACHINE_CPUARCH}
+.PATH:	${SRCTOP}/sys/crypto/openssl/${MACHINE_CPUARCH}
 .if defined(ASM_amd64)
 .PATH:	${LCRYPTO_SRC}/crypto/bn/asm
 .endif

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d91a72bb6c0dd38dac3ffce336e8e6144fe31a5e $
+ * $FreeBSD: 97c335f9a79fb30df123ae869aec49f39bc6be5b $
  */
 
 #ifndef	__X86_BUSDMA_IMPL_H
@@ -62,6 +62,7 @@ struct bus_dma_impl {
 	    void *lockfuncarg, bus_dma_tag_t *dmat);
 	int (*tag_destroy)(bus_dma_tag_t dmat);
 	int (*tag_set_domain)(bus_dma_tag_t);
+	bool (*id_mapped)(bus_dma_tag_t, vm_paddr_t, bus_size_t);
 	int (*map_create)(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp);
 	int (*map_destroy)(bus_dma_tag_t dmat, bus_dmamap_t map);
 	int (*mem_alloc)(bus_dma_tag_t dmat, void** vaddr, int flags,
@@ -84,7 +85,6 @@ struct bus_dma_impl {
 	void (*map_unload)(bus_dma_tag_t dmat, bus_dmamap_t map);
 	void (*map_sync)(bus_dma_tag_t dmat, bus_dmamap_t map,
 	    bus_dmasync_op_t op);
-	bool (*id_mapped)(bus_dma_tag_t, vm_paddr_t, bus_size_t);
 };
 
 void bus_dma_dflt_lock(void *arg, bus_dma_lock_op_t op);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4ab2c1aaf779946ef9b4d4e59d3fdd863fb92ba $");
+__FBSDID("$FreeBSD: 2bb6d5845d164557c6483b6d0498ce9ee9406fb9 $");
 
 #include "opt_ddb.h"
 #include "opt_ar71xx.h"
@@ -39,11 +39,16 @@ __FBSDID("$FreeBSD: c4ab2c1aaf779946ef9b4d4e59d3fdd863fb92ba $");
 #include <sys/bus.h>
 #include <sys/cons.h>
 #include <sys/kdb.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/boot.h>
 #include <sys/reboot.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <net/ethernet.h>
 
@@ -53,7 +58,6 @@ __FBSDID("$FreeBSD: c4ab2c1aaf779946ef9b4d4e59d3fdd863fb92ba $");
 #include <machine/hwfunc.h>
 #include <machine/md_var.h>
 #include <machine/trap.h>
-#include <machine/vmparam.h>
 
 #include <mips/atheros/ar71xxreg.h>
 
@@ -271,8 +275,6 @@ ar71xx_platform_check_mac_hints(void)
 
 	return (0);
 }
-
-extern char cpu_model[];
 
 void
 platform_start(__register_t a0 __unused, __register_t a1 __unused, 

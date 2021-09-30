@@ -1,4 +1,4 @@
-# $FreeBSD: 3cd2872f1530d6c672510431302f8f24b35e8786 $ 
+# $FreeBSD: 96431c19d2afee6e931aaf9de4cf97747925140d $ 
 
 .sinclude <src.opts.mk>
 
@@ -22,7 +22,7 @@ NO_SHARED?=     YES
 SUBDIR+= tests
 .endif
 
-WARNS=3
+WARNS?=3
 CFLAGS+= -DNO_PWD_OVERRIDE
 
 .if make(after-import)

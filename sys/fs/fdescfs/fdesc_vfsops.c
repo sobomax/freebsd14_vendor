@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc_vfsops.c	8.4 (Berkeley) 1/21/94
  *
- * $FreeBSD: 6737bfb94f5e26b2cf897ddb91605a0aa118e551 $
+ * $FreeBSD: e7878f115ac2500e7cd6b29e841e2903a406b03a $
  */
 
 /*
@@ -110,7 +110,7 @@ fdesc_mount(struct mount *mp)
 	rvp->v_type = VDIR;
 	rvp->v_vflag |= VV_ROOT;
 	fmp->f_root = rvp;
-	VOP_UNLOCK(rvp, 0);
+	VOP_UNLOCK(rvp);
 	/* XXX -- don't mark as local to work around fts() problems */
 	/*mp->mnt_flag |= MNT_LOCAL;*/
 	vfs_getnewfsid(mp);
@@ -163,7 +163,7 @@ fdesc_root(struct mount *mp, int flags, struct vnode **vpp)
 	 * Return locked reference to root.
 	 */
 	vp = VFSTOFDESC(mp)->f_root;
-	vget(vp, LK_EXCLUSIVE | LK_RETRY, curthread);
+	vget(vp, LK_EXCLUSIVE | LK_RETRY);
 	*vpp = vp;
 	return (0);
 }

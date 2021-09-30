@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69150ee6f8ea141e40d12a460162490591ae2bfd $");
+__FBSDID("$FreeBSD: b99e5825f5f504c02b386b581539cf10c2f8d24b $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -73,8 +73,7 @@ _pthread_create(pthread_t * __restrict thread,
 	 */
 	if (_thr_isthreaded() == 0) {
 		_malloc_first_thread();
-		if (_thr_setthreaded(1))
-			return (EAGAIN);
+		_thr_setthreaded(1);
 	}
 
 	curthread = _get_curthread();
@@ -258,6 +257,7 @@ thread_start(struct pthread *curthread)
 
 	if (curthread->attr.suspend == THR_CREATE_SUSPENDED)
 		set = curthread->sigmask;
+	_thr_signal_block_setup(curthread);
 
 	/*
 	 * This is used as a serialization point to allow parent

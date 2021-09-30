@@ -37,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: 8b575ceca082b873bfb40179cd3e7cd4971c4bbd $
+ * $FreeBSD: a8c6df4304f817f380143ad57402a55190f7e3cc $
  */
 
 #ifndef _ARM_INCLUDE__ALIGN_H_
@@ -48,11 +48,7 @@
  * is sufficient for any data type, pointer or numeric.  The resulting type
  * is equivelent to arm's uintptr_t (but is purposely spelled "unsigned" here).
  */
-#if __ARM_ARCH >= 6
 #define	_ALIGNBYTES	(sizeof(int) - 1)
-#else
-#define	_ALIGNBYTES	(sizeof(long long) - 1)
-#endif
 #define	_ALIGN(p)	(((unsigned)(p) + _ALIGNBYTES) & ~_ALIGNBYTES)
 
 #endif /* !_ARM_INCLUDE__ALIGN_H_ */

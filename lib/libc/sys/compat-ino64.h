@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 M. Warner Losh <imp@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dde741e4f0890918bbb40dd4aa50554106bf69e1 $
+ * $FreeBSD: 009efd63c590156096e1dc21213b69536084b01a $
  */
 
 /*

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 415a7834d605142007ad02df9b18fd289c9508ad $");
+__FBSDID("$FreeBSD: 107c91e11425b1c76e63e5fd66ac1edf84080163 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,7 +63,8 @@ __FBSDID("$FreeBSD: 415a7834d605142007ad02df9b18fd289c9508ad $");
 #define FDT_REG_CELLS	4
 #define FDT_RANGES_SIZE 48
 
-SYSCTL_NODE(_hw, OID_AUTO, fdt, CTLFLAG_RD, 0, "Flattened Device Tree");
+SYSCTL_NODE(_hw, OID_AUTO, fdt, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "Flattened Device Tree");
 
 vm_paddr_t fdt_immr_pa;
 vm_offset_t fdt_immr_va;

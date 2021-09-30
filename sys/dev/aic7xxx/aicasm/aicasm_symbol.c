@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.c#24 $
  *
- * $FreeBSD: c6c65b2202f69c2bd6f83d7b5ae9fb8f1c6eb775 $
+ * $FreeBSD: 96b1086f90f1a319bbf23d98a19b0f0f324ae2be $
  */
 
 #include <sys/types.h>
@@ -390,7 +390,7 @@ aic_print_reg_dump_end(FILE *ofile, FILE *dfile,
 	lower_name = strdup(regnode->symbol->name);
 	if (lower_name == NULL)
 		 stop("Unable to strdup symbol name", EX_SOFTWARE);
-	
+
 	for (letter = lower_name; *letter != '\0'; letter++)
 		*letter = tolower(*letter);
 
@@ -535,7 +535,6 @@ symtable_dump(FILE *ofile, FILE *dfile)
 	aic_print_file_prologue(dfile);
 	aic_print_include(dfile, stock_include_file);
 	SLIST_FOREACH(curnode, &registers, links) {
-
 		switch(curnode->symbol->type) {
 		case REGISTER:
 		case SCBLOC:
@@ -640,7 +639,6 @@ symtable_dump(FILE *ofile, FILE *dfile)
 	fprintf(ofile, "\n\n");
 
 	while (SLIST_FIRST(&constants) != NULL) {
-
 		curnode = SLIST_FIRST(&constants);
 		SLIST_REMOVE_HEAD(&constants, links);
 		fprintf(ofile, "#define\t%-8s\t0x%02x\n",
@@ -649,11 +647,9 @@ symtable_dump(FILE *ofile, FILE *dfile)
 		free(curnode);
 	}
 
-	
 	fprintf(ofile, "\n\n/* Downloaded Constant Definitions */\n");
 
 	for (i = 0; SLIST_FIRST(&download_constants) != NULL; i++) {
-
 		curnode = SLIST_FIRST(&download_constants);
 		SLIST_REMOVE_HEAD(&download_constants, links);
 		fprintf(ofile, "#define\t%-8s\t0x%02x\n",
@@ -666,7 +662,6 @@ symtable_dump(FILE *ofile, FILE *dfile)
 	fprintf(ofile, "\n\n/* Exported Labels */\n");
 
 	while (SLIST_FIRST(&exported_labels) != NULL) {
-
 		curnode = SLIST_FIRST(&exported_labels);
 		SLIST_REMOVE_HEAD(&exported_labels, links);
 		fprintf(ofile, "#define\tLABEL_%-8s\t0x%02x\n",
@@ -675,4 +670,3 @@ symtable_dump(FILE *ofile, FILE *dfile)
 		free(curnode);
 	}
 }
-

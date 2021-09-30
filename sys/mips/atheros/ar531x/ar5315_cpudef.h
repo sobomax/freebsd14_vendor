@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 49ba8d27d9a1489ac478ce8bdb3dd7fc870d0cf6 $ */
+/* $FreeBSD: 370b10e9b53163eb1ccfeb8a8f69bc4ab023c125 $ */
 
 #ifndef	__AR5315_CPUDEF_H__
 #define	__AR5315_CPUDEF_H__
@@ -122,18 +122,14 @@ extern uint32_t u_ar531x_gpio_pins;
 
 extern uint32_t u_ar531x_wdog_ctl;
 extern uint32_t u_ar531x_wdog_timer;
-
 static inline uint32_t ar531x_cpu_freq(void) { return u_ar531x_cpu_freq; }
 static inline uint32_t ar531x_ahb_freq(void) { return u_ar531x_ahb_freq; }
 static inline uint32_t ar531x_ddr_freq(void) { return u_ar531x_ddr_freq; }
-
 static inline uint32_t ar531x_uart_addr(void) { return u_ar531x_uart_addr; }
-
 static inline uint32_t ar531x_gpio_di(void) { return u_ar531x_gpio_di; }
 static inline uint32_t ar531x_gpio_cr(void) { return u_ar531x_gpio_cr; }
 static inline uint32_t ar531x_gpio_do(void) { return u_ar531x_gpio_do; }
 static inline uint32_t ar531x_gpio_pins(void) { return u_ar531x_gpio_pins; }
- 
 static inline uint32_t ar531x_wdog_ctl(void) { return u_ar531x_wdog_ctl; }
 static inline uint32_t ar531x_wdog_timer(void) { return u_ar531x_wdog_timer; }
 #endif

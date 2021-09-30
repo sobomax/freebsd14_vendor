@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 12734437136a892151684bb3b375b4f07aa445f0 $");
+__FBSDID("$FreeBSD: 0c8419d48fc6ad6045e5670ab249827bf4b00902 $");
 
 /*
  * Broadcom BHND PCIe-Gen2 PCI-Host Bridge.
@@ -74,7 +74,6 @@ __FBSDID("$FreeBSD: 12734437136a892151684bb3b375b4f07aa445f0 $");
 #include "bhnd_pcie2_hostbvar.h"
 
 static const struct bhnd_device_quirk bhnd_pcie2_quirks[];
-
 
 static int	bhnd_pcie2_wars_early_once(struct bhnd_pcie2hb_softc *sc);
 static int	bhnd_pcie2_wars_hwup(struct bhnd_pcie2hb_softc *sc);
@@ -125,19 +124,16 @@ bhnd_pcie2_hostb_attach(device_t dev)
 	if ((error = bhnd_pcie2_generic_attach(dev)))
 		return (error);
 
-
 	/* Apply early single-shot work-arounds */
 	if ((error = bhnd_pcie2_wars_early_once(sc)))
 		goto failed;
-
 
 	/* Apply attach/resume work-arounds */
 	if ((error = bhnd_pcie2_wars_hwup(sc)))
 		goto failed;
 
-
 	return (0);
-	
+
 failed:
 	bhnd_pcie2_generic_detach(dev);
 	return (error);

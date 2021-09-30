@@ -1,10 +1,9 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2008 TAKAHASHI Yoshihiro
- * Copyright (c) 2008 Marcel Moolenaar
- * Copyright (c) 2001 M. Warner Losh
- * All rights reserved.
+ * Copyright (c) 2008 TAKAHASHI Yoshihiro All rights reserved.
+ * Copyright (c) 2008 Marcel Moolenaar All rights reserved.
+ * Copyright (c) 2001 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5085ff66fe1021eb26ba78fe8e4418ee4717c584 $");
+__FBSDID("$FreeBSD: cebf90adf13fe58b4dc9a5a27bd60a4f138288f2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

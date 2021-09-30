@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59ef5cb5889b889310fb135068822691dfb1a5c6 $");
+__FBSDID("$FreeBSD: a8c5e2baddc408692b8f950ef083503a578aa321 $");
 
 #include <opt_inet6.h>
 
@@ -550,4 +550,80 @@ linux_dev_shm_destroy(void)
 {
 
 	destroy_dev(dev_shm_cdev);
+}
+
+int
+bsd_to_linux_bits_(int value, struct bsd_to_linux_bitmap *bitmap,
+    size_t mapcnt, int no_value)
+{
+	int bsd_mask, bsd_value, linux_mask, linux_value;
+	int linux_ret;
+	size_t i;
+	bool applied;
+
+	applied = false;
+	linux_ret = 0;
+	for (i = 0; i < mapcnt; ++i) {
+		bsd_mask = bitmap[i].bsd_mask;
+		bsd_value = bitmap[i].bsd_value;
+		if (bsd_mask == 0)
+			bsd_mask = bsd_value;
+
+		linux_mask = bitmap[i].linux_mask;
+		linux_value = bitmap[i].linux_value;
+		if (linux_mask == 0)
+			linux_mask = linux_value;
+
+		/*
+		 * If a mask larger than just the value is set, we explicitly
+		 * want to make sure that only this bit we mapped within that
+		 * mask is set.
+		 */
+		if ((value & bsd_mask) == bsd_value) {
+			linux_ret = (linux_ret & ~linux_mask) | linux_value;
+			applied = true;
+		}
+	}
+
+	if (!applied)
+		return (no_value);
+	return (linux_ret);
+}
+
+int
+linux_to_bsd_bits_(int value, struct bsd_to_linux_bitmap *bitmap,
+    size_t mapcnt, int no_value)
+{
+	int bsd_mask, bsd_value, linux_mask, linux_value;
+	int bsd_ret;
+	size_t i;
+	bool applied;
+
+	applied = false;
+	bsd_ret = 0;
+	for (i = 0; i < mapcnt; ++i) {
+		bsd_mask = bitmap[i].bsd_mask;
+		bsd_value = bitmap[i].bsd_value;
+		if (bsd_mask == 0)
+			bsd_mask = bsd_value;
+
+		linux_mask = bitmap[i].linux_mask;
+		linux_value = bitmap[i].linux_value;
+		if (linux_mask == 0)
+			linux_mask = linux_value;
+
+		/*
+		 * If a mask larger than just the value is set, we explicitly
+		 * want to make sure that only this bit we mapped within that
+		 * mask is set.
+		 */
+		if ((value & linux_mask) == linux_value) {
+			bsd_ret = (bsd_ret & ~bsd_mask) | bsd_value;
+			applied = true;
+		}
+	}
+
+	if (!applied)
+		return (no_value);
+	return (bsd_ret);
 }

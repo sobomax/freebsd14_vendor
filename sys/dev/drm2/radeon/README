@@ -1,6 +1,0 @@
-# $FreeBSD: fad030f068cf17ef75f3fcb44d5b4563fa118c44 $
-
-== Updates to reg_srcs/ files ==
-
-When a file in the "reg_srcs" subdirectory in updated, be sure to regen
-headers by running "make" in tools/tools/drm/radeon/mkregtable.

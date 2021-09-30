@@ -1,4 +1,4 @@
-# $FreeBSD: d88ec9ff38cc6fada2d1f304c5ac1e0e6d950745 $
+# $FreeBSD: d06cf4f44ad25afe327c6d79a4bd690ce189d499 $
 #
 # Specific board setup for the D-Link DIR-825C1 router.
 #
@@ -44,11 +44,7 @@ device          geom_map
 # uzip - to boot natively from flash
 options 	GEOM_UZIP
 options         GEOM_PART_GPT
-
-# yes, this board has a PCI connected atheros device
-options         AR71XX_ATH_EEPROM
-device          firmware                # Used by the above
-options         ATH_EEPROM_FIRMWARE
+device		xz
 
 # Boot off of the rootfs, as defined in the geom_map setup.
 options         ROOTDEVNAME=\"ufs:map/rootfs.uzip\"

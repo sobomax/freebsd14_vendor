@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3554fe6fe72a4e43b493204eb91e9d6e2faf7f59 $	*/
+/*	$FreeBSD: 22d763d0dc338e2d44994e3b9b5823345a6093fc $	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -97,7 +97,6 @@
  * Statistics registers.
  */
 #define RAL_STA_CSR0	0x04e0	/* FCS error */
-
 
 #define RAL_DISABLE_RX		(1 << 0)
 #define RAL_DROP_CRC		(1 << 1)

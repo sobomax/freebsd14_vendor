@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 20efbb75e55f4649bf8e7af18df5125c217ac09a $
+ * $FreeBSD: d19816a7869cb1d7d56b7782a4be70245c4e1c3d $
  */
 
 #include <sys/param.h>
@@ -42,7 +42,6 @@
 #include <sys/module.h>
 #include <sys/sx.h>
 
-
 #include <netsmb/smb.h>
 #include <netsmb/smb_conn.h>
 #include <netsmb/smb_subr.h>
@@ -56,7 +55,8 @@ static int smbfs_debuglevel = 0;
 
 static int smbfs_version = SMBFS_VERSION;
 
-SYSCTL_NODE(_vfs, OID_AUTO, smbfs, CTLFLAG_RW, 0, "SMB/CIFS filesystem");
+SYSCTL_NODE(_vfs, OID_AUTO, smbfs, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "SMB/CIFS filesystem");
 SYSCTL_INT(_vfs_smbfs, OID_AUTO, version, CTLFLAG_RD, &smbfs_version, 0, "");
 SYSCTL_INT(_vfs_smbfs, OID_AUTO, debuglevel, CTLFLAG_RW, &smbfs_debuglevel, 0, "");
 
@@ -81,14 +81,13 @@ static struct vfsops smbfs_vfsops = {
 	.vfs_unmount =		smbfs_unmount,
 };
 
-
 VFS_SET(smbfs_vfsops, smbfs, VFCF_NETWORK);
 
 MODULE_DEPEND(smbfs, netsmb, NSMB_VERSION, NSMB_VERSION, NSMB_VERSION);
 MODULE_DEPEND(smbfs, libiconv, 1, 1, 2);
 MODULE_DEPEND(smbfs, libmchain, 1, 1, 1);
 
-int smbfs_pbuf_freecnt = -1;	/* start out unlimited */
+uma_zone_t smbfs_pbuf_zone;
 
 static int
 smbfs_cmount(struct mntarg *ma, void * data, uint64_t flags)
@@ -154,7 +153,7 @@ smbfs_mount(struct mount *mp)
 
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, td->td_ucred);
-	
+
 	/* Ask userspace of `fd`, the file descriptor of this session */
 	if (1 != vfs_scanopt(mp->mnt_optnew, "fd", "%d", &v)) {
 		vfs_mount_error(mp, "No fd option");
@@ -234,7 +233,7 @@ smbfs_mount(struct mount *mp)
 		vfs_mount_error(mp, "smbfs_root error: %d", error);
 		goto bad;
 	}
-	VOP_UNLOCK(vp, 0);
+	VOP_UNLOCK(vp);
 	SMBVDEBUG("root.v_usecount = %d\n", vrefcnt(vp));
 
 #ifdef DIAGNOSTIC
@@ -328,7 +327,7 @@ smbfs_root(struct mount *mp, int flags, struct vnode **vpp)
 
 	if (smp->sm_root) {
 		*vpp = SMBTOV(smp->sm_root);
-		return vget(*vpp, LK_EXCLUSIVE | LK_RETRY, td);
+		return vget(*vpp, LK_EXCLUSIVE | LK_RETRY);
 	}
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, cred);
@@ -367,7 +366,8 @@ smbfs_quotactl(mp, cmd, uid, arg)
 int
 smbfs_init(struct vfsconf *vfsp)
 {
-	smbfs_pbuf_freecnt = nswbuf / 2 + 1;
+
+	smbfs_pbuf_zone = pbuf_zsecond_create("smbpbuf", nswbuf / 2);
 	SMBVDEBUG("done.\n");
 	return 0;
 }
@@ -377,6 +377,7 @@ int
 smbfs_uninit(struct vfsconf *vfsp)
 {
 
+	uma_zdestroy(smbfs_pbuf_zone);
 	SMBVDEBUG("done.\n");
 	return 0;
 }
@@ -398,7 +399,7 @@ smbfs_statfs(struct mount *mp, struct statfs *sbp)
 		vfs_mount_error(mp, "np == NULL");
 		return EINVAL;
 	}
-	
+
 	sbp->f_iosize = SSTOVC(ssp)->vc_txmax;		/* optimal transfer block size */
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, td->td_ucred);

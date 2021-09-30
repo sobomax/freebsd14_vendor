@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0b57c4a994aafbd9b34f90e4904870305081c6ad $
+ * $FreeBSD: dbe4e1364f148c3ab1e26bb35e686973d9277a2a $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b57c4a994aafbd9b34f90e4904870305081c6ad $");
+__FBSDID("$FreeBSD: dbe4e1364f148c3ab1e26bb35e686973d9277a2a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -497,7 +497,6 @@ static struct aw_clk_nm_def ir_clk = {
 /* Missing LCD CH1 clock */
 /* Missing CSI clock */
 /* Missing VE clock */
-
 
 /* Clocks list */
 static struct aw_ccung_clk a13_ccu_clks[] = {

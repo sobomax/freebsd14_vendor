@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	JNPR: db_machdep.h,v 1.7 2006/10/16 12:30:34 katta
- * $FreeBSD: fd11569d4b9fbb3ce62a1a842d23c0a57fddc851 $
+ * $FreeBSD: 26e34c5ad12f76882b913e9b04727808b8dfbd72 $
  */
 
 #ifndef	_MIPS_DB_MACHDEP_H_
@@ -67,7 +67,6 @@ db_addr_t	next_instr_address(db_addr_t, boolean_t);
 			kdb_thrctx->pcb_regs.pc +=  BKPT_SIZE;		\
 		}							\
 	} while (0);
-
 
 /*
  *  Test of instructions to see class.

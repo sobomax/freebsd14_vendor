@@ -1,10 +1,11 @@
-# $FreeBSD: ada19698a9a184ac0ef09f3570460314e68bb384 $
+# $FreeBSD: e90019fedb5d15cdf5aff09272f770939cbb489d $
 
 .include <src.opts.mk>
 
 TRACEROUTE_DISTDIR?= ${SRCTOP}/contrib/traceroute
 .PATH: ${TRACEROUTE_DISTDIR}
 
+PACKAGE=	runtime
 PROG=	traceroute
 MAN=	traceroute.8
 SRCS=	as.c version.c traceroute.c ifaddrlist.c findsaddr-udp.c

@@ -1,8 +1,0 @@
-.\" $FreeBSD: 5f9d98d7fcaf085280030c39be96ce662dade468 $
-Set to build and install GNU
-.Xr as 1 ,
-.Xr objdump 1 ,
-and for some CPU architectures
-.Xr ld.bfd 1
-as part
-of the normal system build.

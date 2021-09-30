@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b595cb145980b013ca8f9d992c810044bc2420b $");
+__FBSDID("$FreeBSD: c32d8e32eeaf1fcfb6f35b78b3c2aa464544bbb8 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -224,7 +224,8 @@ g_part_vtoc8_create(struct g_part_table *basetable, struct g_part_parms *gpp)
 	ncyls = pcyls - acyls;
 	msize = ncyls * table->secpercyl;
 
-	sprintf(table->vtoc.ascii, "FreeBSD%lldM cyl %u alt %u hd %u sec %u",
+	snprintf(table->vtoc.ascii, sizeof(table->vtoc.ascii),
+	    "FreeBSD%lldM cyl %u alt %u hd %u sec %u",
 	    (long long)(msize / 2048), ncyls, acyls, basetable->gpt_heads,
 	    basetable->gpt_sectors);
 	be32enc(&table->vtoc.version, VTOC_VERSION);
@@ -338,7 +339,8 @@ vtoc8_set_rawsize(struct g_part_table *basetable, struct g_provider *pp)
 	basetable->gpt_last = msize - 1;
 
 	bzero(table->vtoc.ascii, sizeof(table->vtoc.ascii));
-	sprintf(table->vtoc.ascii, "FreeBSD%lldM cyl %u alt %u hd %u sec %u",
+	snprintf(table->vtoc.ascii, sizeof(table->vtoc.ascii),
+	    "FreeBSD%lldM cyl %u alt %u hd %u sec %u",
 	    (long long)(msize / 2048), ncyls, acyls, basetable->gpt_heads,
 	    basetable->gpt_sectors);
 	be16enc(&table->vtoc.physcyls, pcyls);

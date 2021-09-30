@@ -26,7 +26,7 @@
  */
 /******************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e112adb95a70e9f735c9a89f29c070f4ae40a8f $");
+__FBSDID("$FreeBSD: 94e2ef00a6b50d89c2871361d85885706a67b5d2 $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/RefTisa/sallsdk/spc/saglobal.h>
@@ -1765,7 +1765,7 @@ GLOBAL bit32 siConfiguration(
     for( i = 0; i < queueConfig->numInboundQueues; i ++ )
     {
       mpiConfig->inboundQueues[i].numElements   = (bit16)queueConfig->inboundQueues[i].elementCount;
-      mpiConfig->inboundQueues[i].elementSize   = (bit16)queueConfig->inboundQueues[i].elementSize;;
+      mpiConfig->inboundQueues[i].elementSize   = (bit16)queueConfig->inboundQueues[i].elementSize;
       mpiConfig->inboundQueues[i].priority      = queueConfig->inboundQueues[i].priority;
 
       SA_DBG2(("siConfiguration: IBQ%d:elementCount=%d elementSize=%d priority=%d Total Size 0x%X\n",

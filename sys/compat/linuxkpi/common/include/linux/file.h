@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: acbb43bac1b56d02e1995bddf35b18377382457b $
+ * $FreeBSD: 21b254211cfd1e1f6da95018c3d13b6378aa0034 $
  */
 #ifndef	_LINUX_FILE_H_
 #define	_LINUX_FILE_H_
@@ -54,7 +54,7 @@ linux_fget(unsigned int fd)
 
 	/* lookup file pointer by file descriptor index */
 	if (fget_unlocked(curthread->td_proc->p_fd, fd,
-	    &cap_no_rights, &file, NULL) != 0)
+	    &cap_no_rights, &file) != 0)
 		return (NULL);
 
 	/* check if file handle really belongs to us */
@@ -90,7 +90,7 @@ put_unused_fd(unsigned int fd)
 	struct file *file;
 
 	if (fget_unlocked(curthread->td_proc->p_fd, fd,
-	    &cap_no_rights, &file, NULL) != 0) {
+	    &cap_no_rights, &file) != 0) {
 		return;
 	}
 	/*
@@ -110,7 +110,7 @@ fd_install(unsigned int fd, struct linux_file *filp)
 	struct file *file;
 
 	if (fget_unlocked(curthread->td_proc->p_fd, fd,
-	    &cap_no_rights, &file, NULL) != 0) {
+	    &cap_no_rights, &file) != 0) {
 		filp->_file = NULL;
 	} else {
 		filp->_file = file;

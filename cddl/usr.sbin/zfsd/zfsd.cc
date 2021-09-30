@@ -42,10 +42,12 @@
  */
 
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 #include <sys/param.h>
 #include <sys/fs/zfs.h>
 
 #include <err.h>
+#include <fcntl.h>
 #include <libgeom.h>
 #include <libutil.h>
 #include <poll.h>
@@ -73,7 +75,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD: 2f17b474e493a98c54107b15961db0cc9d5a4dc5 $");
+__FBSDID("$FreeBSD: 876cca836e9e89f9c6a45a227c47873498c27d37 $");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))

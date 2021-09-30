@@ -1,0 +1,4 @@
+.\" $FreeBSD: 8fd8e2aa6c564ebd32b0f333313e58ede0325ab8 $
+Build and install
+.Xr tcpd 8 ,
+and related utilities.

@@ -1,6 +1,4 @@
-# $FreeBSD: afc403d860607b259fdf04e9d9c437452cc210c4 $
-
-SRCS+=	trivial-vdso_tc.c
+# $FreeBSD: 4047edd70c377247a4efd280d1da49afa9829ced $
 
 # Long double is 64-bits
 SRCS+=machdep_ldisd.c

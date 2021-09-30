@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e85c32016b7f7d956b662f362f783107ff6d0fb5 $
+ * $FreeBSD: 4bb2792e0ecf777b7e7c55bc50ffb1755f0e0e85 $
  */
 
 #include <sys/types.h>
@@ -34,9 +34,16 @@
 
 #include <err.h>
 #include <errno.h>
+#include <inttypes.h>
 #include <string.h>
 
 #include "ef.h"
+
+#ifdef __powerpc64__
+#define PRI_ELF_SIZE PRIu64
+#else
+#define PRI_ELF_SIZE PRIu32
+#endif
 
 /*
  * Apply relocations to the values obtained from the file. `relbase' is the
@@ -63,11 +70,11 @@ ef_reloc(struct elf_file *ef, const void *reldata, int reltype, Elf_Off relbase,
 		return (0);
 
 	switch (rtype) {
-	case R_PPC_RELATIVE: /* word32 B + A */
+	case R_PPC_RELATIVE: /* word32|doubleword64 B + A */
 		*where = relbase + addend;
 		break;
 	default:
-		warnx("unhandled relocation type %u", rtype);
+		warnx("unhandled relocation type %" PRI_ELF_SIZE, rtype);
 	}
 	return (0);
 }

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 16c56fb6a3c3076bd39f87144364a33a36b2ffaa $
+ * $FreeBSD: d20296b13a5e1dd9152ee5b9f5c172a4c812ae40 $
  *
  */
 
@@ -121,7 +121,6 @@ enum {
 #define PMU_PWR_BATT_FULL	(1 << 5)
 #define PMU_PWR_PCHARGE_RESET	(1 << 6)
 #define PMU_PWR_BATT_EXIST	(1 << 7)
-
 
 /* I2C related definitions */
 #define PMU_I2C_MODE_SIMPLE	0

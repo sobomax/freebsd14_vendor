@@ -31,8 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b205bff0c1a3274ca52a2f1c83da6e4358c845c9 $");
-
+__FBSDID("$FreeBSD: 25f1145f54e452b12bf3fa81b3cea3c51ac0f7eb $");
 
 /*
  * 2000/3/24  added NetBSD/OpenBSD support (from Alex Nemirovsky)
@@ -82,7 +81,8 @@ __FBSDID("$FreeBSD: b205bff0c1a3274ca52a2f1c83da6e4358c845c9 $");
 #ifdef USB_DEBUG
 static int urio_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, urio, CTLFLAG_RW, 0, "USB urio");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, urio, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB urio");
 SYSCTL_INT(_hw_usb_urio, OID_AUTO, debug, CTLFLAG_RWTUN,
     &urio_debug, 0, "urio debug level");
 #endif
@@ -280,7 +280,6 @@ urio_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		pc = usbd_xfer_get_frame(xfer, 0);
 		if (usb_fifo_get_data(f, pc, 0,
 		    usbd_xfer_max_len(xfer), &actlen, 0)) {
-
 			usbd_xfer_set_frame_len(xfer, 0, actlen);
 			usbd_transfer_submit(xfer);
 		}

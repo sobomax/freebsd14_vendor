@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap.h,v 1.2 2003/04/27 00:52:26 max Exp $
- * $FreeBSD: c8b5dddc6ffc2f9ff365956e217b88601f88e6ec $
+ * $FreeBSD: f7b5e54be59ae58a93f449483e9e0e873ee19977 $
  */
 
 /*
@@ -83,7 +83,6 @@
 #define NG_L2CAP_FIRST_CID	0x0040	/* dynamically alloc. (start) */
 #define NG_L2CAP_LAST_CID	0xffff	/* dynamically alloc. (end) */
 #define NG_L2CAP_LELAST_CID	0x007f
-
 
 /* L2CAP MTU */
 #define NG_L2CAP_MTU_LE_MINIMAM		23
@@ -705,4 +704,3 @@ typedef struct {
 typedef u_int16_t	ng_l2cap_node_auto_discon_ep;
 
 #endif /* ndef _NETGRAPH_L2CAP_H_ */
-

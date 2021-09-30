@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ad1c2c6667a66f86ff3ba70b3e8d7fde4a07b27 $");
+__FBSDID("$FreeBSD: 9bf9eaec6ba2b0b52b389a2baba7cbda92a5c976 $");
 
 /*
  * I2C Bit-Banging over parallel port
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: 5ad1c2c6667a66f86ff3ba70b3e8d7fde4a07b27 $");
 #include <sys/mutex.h>
 #include <sys/systm.h>
 #include <sys/uio.h>
-
 
 #include <dev/ppbus/ppbconf.h>
 #include "ppbus_if.h"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 791a999ab2316c14676782944fa0f50ac962c1dc $");
+__FBSDID("$FreeBSD: 73000a0220e128bd35f7cd321f2ab07215aa19f9 $");
 
 #include "opt_ddb.h"
 
@@ -214,7 +214,6 @@ ar933x_chip_ddr_flush(ar71xx_flush_ddr_id_t id)
 		break;
 	}
 }
-
 
 static uint32_t
 ar933x_chip_get_eth_pll(unsigned int mac, int speed)

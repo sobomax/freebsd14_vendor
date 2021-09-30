@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)queue.h	8.5 (Berkeley) 8/20/94
- * $FreeBSD: 5e12299e01c67b9b8462b56ebc2717f176132e5e $
+ * $FreeBSD: 14d55905dfc0bdd5352955ed68846a2ff97d340a $
  */
 
 #ifndef _SYS_QUEUE_H_
@@ -155,18 +155,14 @@ struct qm_trace {
 #endif	/* QUEUE_MACRO_DEBUG_TRACE */
 
 #ifdef QUEUE_MACRO_DEBUG_TRASH
+#define	QMD_SAVELINK(name, link)	void **name = (void *)&(link)
 #define	TRASHIT(x)		do {(x) = (void *)-1;} while (0)
 #define	QMD_IS_TRASHED(x)	((x) == (void *)(intptr_t)-1)
 #else	/* !QUEUE_MACRO_DEBUG_TRASH */
+#define	QMD_SAVELINK(name, link)
 #define	TRASHIT(x)
 #define	QMD_IS_TRASHED(x)	0
 #endif	/* QUEUE_MACRO_DEBUG_TRASH */
-
-#if defined(QUEUE_MACRO_DEBUG_TRACE) || defined(QUEUE_MACRO_DEBUG_TRASH)
-#define	QMD_SAVELINK(name, link)	void **name = (void *)&(link)
-#else	/* !QUEUE_MACRO_DEBUG_TRACE && !QUEUE_MACRO_DEBUG_TRASH */
-#define	QMD_SAVELINK(name, link)
-#endif	/* QUEUE_MACRO_DEBUG_TRACE || QUEUE_MACRO_DEBUG_TRASH */
 
 #ifdef __cplusplus
 /*
@@ -440,7 +436,6 @@ struct {								\
 	if (STAILQ_EMPTY(head2))					\
 		(head2)->stqh_last = &STAILQ_FIRST(head2);		\
 } while (0)
-
 
 /*
  * List declarations.
@@ -821,7 +816,7 @@ struct {								\
 /*
  * The FAST function is fast in that it causes no data access other
  * then the access to the head. The standard LAST function above
- * will cause a data access of both the element you want and 
+ * will cause a data access of both the element you want and
  * the previous element. FAST is very useful for instances when
  * you may want to prefetch the last data element.
  */

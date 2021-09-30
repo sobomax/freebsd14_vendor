@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c94d8d4a1ffb47f9a09ab75a4039b32c81ec295b $");
+__FBSDID("$FreeBSD: cf0c1a1c2f07d3178f8204cea31565e191254926 $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -333,7 +333,6 @@ static device_method_t pps_methods[] = {
 	DEVMETHOD(device_identify,	ppsidentify),
 	DEVMETHOD(device_probe,		ppsprobe),
 	DEVMETHOD(device_attach,	ppsattach),
-
 	{ 0, 0 }
 };
 

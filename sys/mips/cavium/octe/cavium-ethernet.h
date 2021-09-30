@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -28,7 +27,7 @@ TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
 AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT TO THE SOFTWARE, INCLUDING ITS CONDITION, ITS CONFORMITY TO ANY REPRESENTATION OR DESCRIPTION, OR THE EXISTENCE OF ANY LATENT OR PATENT DEFECTS, AND CAVIUM SPECIFICALLY DISCLAIMS ALL IMPLIED (IF ANY) WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS, QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION. THE ENTIRE  RISK ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE LIES WITH YOU.
 
 *************************************************************************/
-/* $FreeBSD: 37cba4eb51676b4a30db65b1458b09996242afb2 $ */
+/* $FreeBSD: 7d9fe3f1084976fe4b1fe94d22fa597140c597b6 $ */
 
 /**
  * @file
@@ -89,7 +88,6 @@ typedef struct {
 
 	struct mtx tx_mtx;
 } cvm_oct_private_t;
-
 
 /**
  * Free a work queue entry received in a intercept callback.

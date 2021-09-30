@@ -45,7 +45,7 @@
 #include <unistd.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da332ca81e5c18a4dda00eefcf331adac8c82218 $");
+__FBSDID("$FreeBSD: a368f3ac799c178b5b33847a4f2f764069705fa2 $");
 
 static bool	candelete(int fd);
 static off_t	getsize(const char *path);
@@ -220,7 +220,7 @@ trim(const char *path, off_t offset, off_t length, bool dryrun, bool verbose)
 		return (0);
 	}
 
-	fd = opendev(path, O_WRONLY | O_DIRECT);
+	fd = opendev(path, O_RDWR | O_DIRECT);
 	arg[0] = offset;
 	arg[1] = length;
 

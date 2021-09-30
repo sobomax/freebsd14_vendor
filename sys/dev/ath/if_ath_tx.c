@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8800fab04cd8f5f03a984f08ea31c1f2090ef51 $");
+__FBSDID("$FreeBSD: b9de388f3ad87af7b224e0acb8b48382a34b815e $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -2598,7 +2598,6 @@ ieee80211_is_action(struct ieee80211_frame *wh)
 	return 1;
 }
 
-#define	MS(_v, _f)	(((_v) & _f) >> _f##_S)
 /*
  * Return an alternate TID for ADDBA request frames.
  *
@@ -2637,11 +2636,10 @@ ath_tx_action_frame_override_queue(struct ath_softc *sc,
 
 	/* Extract TID, return it */
 	baparamset = le16toh(ia->rq_baparamset);
-	*tid = (int) MS(baparamset, IEEE80211_BAPS_TID);
+	*tid = (int) _IEEE80211_MASKSHIFT(baparamset, IEEE80211_BAPS_TID);
 
 	return 1;
 }
-#undef	MS
 
 /* Per-node software queue operations */
 

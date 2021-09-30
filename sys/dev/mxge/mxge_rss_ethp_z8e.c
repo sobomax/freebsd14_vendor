@@ -2,7 +2,7 @@
  * from: FreeBSD: src/sys/tools/fw_stub.awk,v 1.6 2007/03/02 11:42:53 flz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca7be0e7447d56943920a402600071c16646be45 $");
+__FBSDID("$FreeBSD: d53033f41766d218291f87a0554580250e6b4adc $");
 #include <sys/param.h>
 #include <sys/errno.h>
 #include <sys/kernel.h>
@@ -44,4 +44,3 @@ static moduledata_t mxge_rss_ethp_z8e_fw_mod = {
 DECLARE_MODULE(mxge_rss_ethp_z8e_fw, mxge_rss_ethp_z8e_fw_mod, SI_SUB_DRIVERS, SI_ORDER_FIRST);
 MODULE_VERSION(mxge_rss_ethp_z8e_fw, 1);
 MODULE_DEPEND(mxge_rss_ethp_z8e_fw, firmware, 1, 1, 1);
-

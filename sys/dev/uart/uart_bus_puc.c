@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2006 Marcel Moolenaar.  All rights reserved.
  * Copyright (c) 2002 JF Hay.  All rights reserved.
- * Copyright (c) 2001 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2001 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a90e01628f40e9ad7faf3af2ad6d16042c5eadc2 $");
+__FBSDID("$FreeBSD: a1dcdea11dd06f034d11bef699f557bbf435e02f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

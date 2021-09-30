@@ -1,6 +1,7 @@
-# $FreeBSD: ad3f86fc0fe3ec310572f2456edd54f503673642 $
+# $FreeBSD: a7f5562974d05152f1e097f776b196a88848e313 $
 
-NAME=	ftp
-SRCS=	alias_ftp.c
+PACKAGE=	natd
+NAME=		ftp
+SRCS=		alias_ftp.c
 
 .include <bsd.lib.mk>

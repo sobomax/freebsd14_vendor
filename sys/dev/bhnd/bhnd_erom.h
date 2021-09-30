@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: dcf16a8982ee2bfe96dad0ff370ece1f827082a5 $
+ * $FreeBSD: b9df81098058f843af0c1ffc5e09a40caf07e749 $
  */
 
 #ifndef _BHND_EROM_BHND_EROM_H_
@@ -89,7 +89,6 @@ void			 bhnd_erom_io_fini(struct bhnd_erom_io *eio);
 struct bhnd_erom {
 	KOBJ_FIELDS;
 };
-
 
 /** Number of additional bytes to reserve for statically allocated
  *  bhnd_erom instances. */

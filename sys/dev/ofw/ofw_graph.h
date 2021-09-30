@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5a7ab3a471efbd9c8f2e4a7fb4a7c1f4bae3eee0 $
+ * $FreeBSD: eecc2b76885ead201f4010c98e93d701d1466bc2 $
  */
 
 #ifndef	_OFW_GRAPH_H_
@@ -41,4 +41,3 @@ phandle_t ofw_graph_get_remote_parent(phandle_t remote);
 device_t ofw_graph_get_device_by_port_ep(phandle_t node, uint32_t port_id, uint32_t ep_id);
 
 #endif /* _OFW_GRAPH_H_ */
-

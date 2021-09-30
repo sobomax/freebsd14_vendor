@@ -31,7 +31,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 149458baa331d033359b46d91b9fbd933c3b9e33 $");
+__FBSDID("$FreeBSD: 4ecc2099926fc00cead422667c577992b3f54875 $");
 #ifndef lint
 static const char copyright[] =
 "@(#) Copyright (c) 1980, 1992, 1993\n\
@@ -111,13 +111,15 @@ main(int argc, char *argv[])
 			   warning. (not needed w/clang) */
 	showexit = 0;
 
-	while ((ch = getopt(argc, argv, "adFfkpqrt:")) != -1)
+	while ((ch = getopt(argc, argv, "adeFfkpqrt:")) != -1)
 		switch(ch) {
 		case 'a':
 			aflg = 1;
 			break;
 		case 'd':
 			usesleep = 0;
+			break;
+		case 'e':	/* Default behavior, accepted for linux compat */
 			break;
 		case 'F':
 			Fflg = 1;

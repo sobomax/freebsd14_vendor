@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0710a33fdf93dbf14913a9dc1c14460f333bea47 $");
+__FBSDID("$FreeBSD: 424df7d2e4235a5dc4a6c660d96f95741c318946 $");
 
 #include <sys/disk.h>
 #include <sys/param.h>
@@ -363,6 +363,8 @@ efipart_inithandles(void)
 	status = BS->LocateHandle(ByProtocol, &blkio_guid, 0, &sz, hin);
 	if (status == EFI_BUFFER_TOO_SMALL) {
 		hin = malloc(sz);
+		if (hin == NULL)
+			return (ENOMEM);
 		status = BS->LocateHandle(ByProtocol, &blkio_guid, 0, &sz,
 		    hin);
 		if (EFI_ERROR(status))

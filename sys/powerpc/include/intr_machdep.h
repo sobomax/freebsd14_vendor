@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6ece0fa804f924e04ab5df835797c9ae61933879 $
+ * $FreeBSD: 7ac542537ab8960da903ebbc5506de6ad929d1be $
  */
 
 #ifndef	_MACHINE_INTR_MACHDEP_H_
@@ -54,7 +54,7 @@ u_int	powerpc_get_irq(uint32_t, u_int);
 void	powerpc_dispatch_intr(u_int, struct trapframe *);
 int	powerpc_enable_intr(void);
 int	powerpc_setup_intr(const char *, u_int, driver_filter_t, driver_intr_t,
-	    void *, enum intr_type, void **);
+	    void *, enum intr_type, void **, int);
 int	powerpc_teardown_intr(void *);
 int	powerpc_bind_intr(u_int irq, u_char cpu);
 int	powerpc_config_intr(int, enum intr_trigger, enum intr_polarity);

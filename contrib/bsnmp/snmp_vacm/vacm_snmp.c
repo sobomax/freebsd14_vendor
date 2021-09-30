@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 576495a58889e7d6da29b79bd20d2aed9736c761 $
+ * $FreeBSD: 192de2d6372243c19e0745c3a62afdfe1b095153 $
  */
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -1013,7 +1013,7 @@ vacm_dump(void)
 		    "excluded":"included");
 }
 
-static const char vacm_comment[] = \
+static const char vacm_comment[] =
 "This module implements SNMP View-based Access Control Model defined in RFC 3415.";
 
 extern const struct snmp_module config;

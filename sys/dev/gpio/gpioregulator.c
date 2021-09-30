@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5c67a36909d553e7b8b5d7804f2c20d94b69ad31 $
+ * $FreeBSD: 77e364e5820e6fcd65a846750b9d208785dc11b5 $
  */
 
 /*
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c67a36909d553e7b8b5d7804f2c20d94b69ad31 $");
+__FBSDID("$FreeBSD: 77e364e5820e6fcd65a846750b9d208785dc11b5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -248,7 +247,7 @@ gpioregulator_parse_fdt(struct gpioregulator_softc *sc)
 	/* "gpios" property */
 	sc->init_def.npins = 32 - __builtin_clz(mask);
 	sc->init_def.pins = malloc(sc->init_def.npins *
-	    sizeof(sc->init_def.pins), M_DEVBUF, M_WAITOK);
+	    sizeof(sc->init_def.pins), M_DEVBUF, M_WAITOK | M_ZERO);
 	for (n = 0; n < sc->init_def.npins; n++) {
 		error = gpio_pin_get_by_ofw_idx(sc->dev, node, n,
 		    &sc->init_def.pins[n]);

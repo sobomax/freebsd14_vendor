@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24895ce974dcca302f9e4fd92b776b22417f4ce0 $");
+__FBSDID("$FreeBSD: d55bdd04e86167b274d371110d66a844f9c33847 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

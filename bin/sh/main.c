@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/28/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e024e5cd4469b2e4dc483750cf978dbbde510676 $");
+__FBSDID("$FreeBSD: cbe026e13640568daf82c27150adc3371ba71932 $");
 
 #include <stdio.h>
 #include <signal.h>
@@ -105,19 +105,6 @@ main(int argc, char *argv[])
 	initcharset();
 	state = 0;
 	if (setjmp(main_handler.loc)) {
-		switch (exception) {
-		case EXEXEC:
-			exitstatus = exerrno;
-			break;
-
-		case EXERROR:
-			exitstatus = 2;
-			break;
-
-		default:
-			break;
-		}
-
 		if (state == 0 || iflag == 0 || ! rootshell ||
 		    exception == EXEXIT)
 			exitshell(exitstatus);
@@ -147,6 +134,7 @@ main(int argc, char *argv[])
 	setstackmark(&smark);
 	setstackmark(&smark2);
 	procargs(argc, argv);
+	trap_init();
 	pwd_init(iflag);
 	INTON;
 	if (iflag)

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24333311d38c0e2edb69690a4db81decb5b3b1ef $");
+__FBSDID("$FreeBSD: 378409edaeff2c31221e76c7107156f72a0bbdc9 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -57,7 +57,7 @@ cloudabi_sys_proc_exec(struct thread *td,
 	    uap->fds, uap->fds_len);
 	if (error == 0) {
 		args.fd = uap->fd;
-		error = kern_execve(td, &args, NULL);
+		error = kern_execve(td, &args, NULL, oldvmspace);
 	}
 	post_execve(td, error, oldvmspace);
 	return (error);

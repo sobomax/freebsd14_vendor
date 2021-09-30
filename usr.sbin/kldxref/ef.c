@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cad22b1d498e505313b8c9fd207117c6e9f1eb27 $
+ * $FreeBSD: 736b7cab9279bd7c0a0979de6bb5a735a46bc011 $
  */
 
 #include <sys/param.h>
@@ -49,7 +49,7 @@
 
 #include "ef.h"
 
-#define	MAXSEGS 3
+#define	MAXSEGS 16
 struct ef_file {
 	char		*ef_name;
 	struct elf_file *ef_efile;

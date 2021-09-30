@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 622df48e7f326baed9610bfc094a9623e2ca9938 $
+ * $FreeBSD: 220509853cb26d968acd43939cf2ae0ea5fba460 $
  */
 
 #ifndef _SYS_EFI_H_
@@ -42,8 +42,9 @@
 	{0xeb9d2d32,0x2d88,0x11d3,0x9a,0x16,{0x00,0x90,0x27,0x3f,0xc1,0x4d}}
 
 enum efi_reset {
-	EFI_RESET_COLD,
-	EFI_RESET_WARM
+	EFI_RESET_COLD = 0,
+	EFI_RESET_WARM = 1,
+	EFI_RESET_SHUTDOWN = 2,
 };
 
 typedef uint16_t	efi_char;
@@ -51,7 +52,7 @@ typedef unsigned long efi_status;
 
 struct efi_cfgtbl {
 	struct uuid	ct_uuid;
-	uint64_t	ct_data;
+	void		*ct_data;
 };
 
 struct efi_md {
@@ -184,7 +185,7 @@ int efi_rt_ok(void);
 int efi_get_table(struct uuid *uuid, void **ptr);
 int efi_get_time(struct efi_tm *tm);
 int efi_get_time_capabilities(struct efi_tmcap *tmcap);
-int efi_reset_system(void);
+int efi_reset_system(enum efi_reset type);
 int efi_set_time(struct efi_tm *tm);
 int efi_var_get(uint16_t *name, struct uuid *vendor, uint32_t *attrib,
     size_t *datasize, void *data);

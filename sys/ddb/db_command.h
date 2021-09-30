@@ -25,7 +25,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 6178f6e274ba3ef15e4e4ec953d86b77a5c9c344 $
+ * $FreeBSD: 2720ba65e3a62ae32c591826883085f9806ef932 $
  */
 
 #ifndef _DDB_DB_COMMAND_H_
@@ -49,6 +49,7 @@ void	db_command_init(void);
 void	db_command_loop(void);
 void	db_command_script(const char *command);
 
+extern int		db_cmd_loop_done;
 extern db_addr_t	db_dot;		/* current location */
 extern db_addr_t	db_last_addr;	/* last explicit address typed */
 extern db_addr_t	db_prev;	/* last address examined

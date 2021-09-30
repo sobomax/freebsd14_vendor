@@ -1,10 +1,9 @@
-# $FreeBSD: 1620c9b880df7fd86960b288969b9ce7385225fe $
+# $FreeBSD: 044b83a8a1a0cfe46bdd864a6345598192e8cff1 $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distfetch
 LIBADD=	fetch ncursesw dialog m
 
-WARNS?=	6
 MAN=
 
 .include <bsd.prog.mk>

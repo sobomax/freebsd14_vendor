@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e7e92ca92812f0d416a674434b8840c06b9c95db $");
+__FBSDID("$FreeBSD: 34ad0aedfe8b35d8faa584ddf6d75d073da1ad77 $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -48,7 +48,7 @@ extern const char *cloudabi64_syscallnames[];
 extern struct sysent cloudabi64_sysent[];
 
 static int
-cloudabi64_fixup_tcb(register_t **stack_base, struct image_params *imgp)
+cloudabi64_fixup_tcb(uintptr_t *stack_base, struct image_params *imgp)
 {
 	int error;
 	register_t tcbptr;
@@ -57,19 +57,20 @@ cloudabi64_fixup_tcb(register_t **stack_base, struct image_params *imgp)
 	error = cloudabi64_fixup(stack_base, imgp);
 	if (error != 0)
 		return (error);
-	
+
 	/*
 	 * On x86-64, the TCB is referred to by %fs:0. Take some space
 	 * from the top of the stack to store a single element array,
 	 * containing a pointer to the TCB. %fs base will point to this.
 	 */
 	tcbptr = (register_t)*stack_base;
-	return (copyout(&tcbptr, --*stack_base, sizeof(tcbptr)));
+	*stack_base -= sizeof(tcbptr);
+	return (copyout(&tcbptr, (void *)*stack_base, sizeof(tcbptr)));
 }
 
 static void
 cloudabi64_proc_setregs(struct thread *td, struct image_params *imgp,
-    unsigned long stack)
+    uintptr_t stack)
 {
 	struct trapframe *regs;
 
@@ -100,7 +101,6 @@ cloudabi64_fetch_syscall_args(struct thread *td)
 	if (sa->code >= CLOUDABI64_SYS_MAXSYSCALL)
 		return (ENOSYS);
 	sa->callp = &cloudabi64_sysent[sa->code];
-	sa->narg = sa->callp->sy_narg;
 
 	/* Fetch system call arguments. */
 	sa->args[0] = frame->tf_rdi;

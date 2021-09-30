@@ -67,7 +67,7 @@
  *****************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71061d740c5266d2f6eb6bb97d8c883280f3c23a $");
+__FBSDID("$FreeBSD: 47f02a6cfea7f53336cc2b3c1c8914e36366c331 $");
 
 #include "opt_wlan.h"
 #include "opt_iwm.h"
@@ -76,8 +76,9 @@ __FBSDID("$FreeBSD: 71061d740c5266d2f6eb6bb97d8c883280f3c23a $");
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
-#include <sys/malloc.h>
 #include <sys/lock.h>
+#include <sys/malloc.h>
+#include <sys/mutex.h>
 #include <sys/queue.h>
 
 #include <dev/iwm/if_iwm_notif_wait.h>

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71e8510d4a5c6da920372da065544ff6e95a08f9 $");
+__FBSDID("$FreeBSD: 44d741276eafd28bb92795aae4b932f378353fc4 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -311,7 +311,6 @@ bhnd_erom_read_chipid(struct bhnd_erom_io *eio, struct bhnd_chipid *cid)
 
 	return (0);
 }
-
 
 /**
  * Attempt to map @p size bytes at @p addr, replacing any existing

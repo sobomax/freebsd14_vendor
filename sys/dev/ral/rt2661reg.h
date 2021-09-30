@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3bed3d12dd2c2f9154bfcf5f2ca32a1c04ce27b0 $	*/
+/*	$FreeBSD: 53f9bcde6d7bbaa0a080568344388682c1700026 $	*/
 
 /*-
  * Copyright (c) 2006
@@ -118,7 +118,6 @@
 #define RT2661_TEST_MODE_CSR		0x3484
 #define RT2661_IO_CNTL_CSR		0x3498
 #define RT2661_MCU_CODE_BASE		0x4000
-
 
 /* possible flags for register HOST_CMD_CSR */
 #define RT2661_KICK_CMD		(1 << 7)

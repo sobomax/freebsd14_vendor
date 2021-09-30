@@ -1,6 +1,4 @@
-# $FreeBSD: 7c0831d2ac2f0826db40eed5057f27a48f0eaaa9 $
-
-PACKAGE=	caroot
+# $FreeBSD: 50f92ecc6542816492481293881ec1972a0eef5e $
 
 CLEANFILES+=	certdata.txt
 

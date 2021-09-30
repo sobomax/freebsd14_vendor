@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 83be9c67d412ef8db3541c795ebc77d068c5bfeb $");
+__FBSDID("$FreeBSD: 6964ff0857a1de7e2b1371e9234147c76486fc7c $");
 
 #ifndef _NETINET_SCTP_OS_H_
 #define _NETINET_SCTP_OS_H_
@@ -63,9 +63,6 @@ __FBSDID("$FreeBSD: 83be9c67d412ef8db3541c795ebc77d068c5bfeb $");
  */
 
 #include <netinet/sctp_os_bsd.h>
-
-
-
 
 /* All os's must implement this address gatherer. If
  * no VRF's exist, then vrf 0 is the only one and all

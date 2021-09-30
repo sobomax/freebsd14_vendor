@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_loop.c	8.2 (Berkeley) 1/9/95
- * $FreeBSD: 3c0de11c9a98a334bf66bf1422629a382c698d67 $
+ * $FreeBSD: cbff8200806adf995d785895c1671eb01f31822d $
  */
 
 /*
@@ -393,7 +393,6 @@ loioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			break;
 		}
 		switch (ifr->ifr_addr.sa_family) {
-
 #ifdef INET
 		case AF_INET:
 			break;

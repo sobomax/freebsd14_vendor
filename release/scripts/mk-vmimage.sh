@@ -29,7 +29,7 @@
 #
 # mk-vmimage.sh: Create virtual machine disk images in various formats.
 #
-# $FreeBSD: fd84216a99fe39532dd251230fda1c64578fc1ea $
+# $FreeBSD: cf795e04655bf995a84d8d64b1cc3248dac8c3a2 $
 #
 
 usage() {
@@ -93,15 +93,7 @@ main() {
 		. "${VMCONFIG}"
 	fi
 
-	case ${TARGET}:${TARGET_ARCH} in
-		arm64:aarch64)
-			ROOTLABEL="ufs"
-			NOSWAP=1
-			;;
-		*)
-			ROOTLABEL="gpt"
-			;;
-	esac
+	ROOTLABEL="gpt"
 
 	vm_create_base
 	vm_install_base

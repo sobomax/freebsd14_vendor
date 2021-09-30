@@ -30,7 +30,7 @@
  * OpenBSD: abtn.c,v 1.12 2009/01/10 18:00:59 robert Exp
  * NetBSD: abtn.c,v 1.1 1999/07/12 17:48:26 tsubai Exp
  *
- * $FreeBSD: 3d8726e152b264dafe4168d03d04e6865fd2b96b $
+ * $FreeBSD: 4534f5b2a2e72e8378b49d067ce801cb357347a7 $
  */
 
 #include <sys/param.h>
@@ -69,7 +69,6 @@ static device_method_t abtn_methods[] = {
 
 	/* ADB interface */
 	DEVMETHOD(adb_receive_packet,	abtn_receive_packet),
-
 	{ 0, 0 }
 };
 
@@ -159,4 +158,3 @@ abtn_receive_packet(device_t dev, u_char status,
 	}
 	return 0;
 }
-

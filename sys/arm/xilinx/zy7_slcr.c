@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7e4a1698a08561256690aedceefa1478ae90e36e $
+ * $FreeBSD: 6651252151e2e26010b610f0ed5b90b9d457e855 $
  */
 
 /*
@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7e4a1698a08561256690aedceefa1478ae90e36e $");
+__FBSDID("$FreeBSD: 6651252151e2e26010b610f0ed5b90b9d457e855 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,8 @@ extern void (*zynq7_cpu_reset);
 
 #define ZYNQ_DEFAULT_PS_CLK_FREQUENCY	33333333	/* 33.3 Mhz */
 
-SYSCTL_NODE(_hw, OID_AUTO, zynq, CTLFLAG_RD, 0, "Xilinx Zynq-7000");
+SYSCTL_NODE(_hw, OID_AUTO, zynq, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "Xilinx Zynq-7000");
 
 static char zynq_bootmode[64];
 SYSCTL_STRING(_hw_zynq, OID_AUTO, bootmode, CTLFLAG_RD, zynq_bootmode, 0,

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90274223c51221854a30b524444c0c799fcc8530 $");
+__FBSDID("$FreeBSD: c455ea9482dc4d244823e886ccbebb4283bc6e60 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -290,7 +290,7 @@ systrace_provide(void *arg, dtrace_probedesc_t *desc)
 static void
 systrace_destroy(void *arg, dtrace_id_t id, void *parg)
 {
-#ifdef DEBUG
+#ifdef SYSTRACE_DEBUG
 	int sysnum = SYSTRACE_SYSNUM((uintptr_t)parg);
 
 	/*

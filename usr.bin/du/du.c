@@ -44,7 +44,7 @@ static const char sccsid[] = "@(#)du.c	8.5 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2365e19a67e9c005b88839e54e0e91af87bc6d3d $");
+__FBSDID("$FreeBSD: 012e439bba343e7d7c12500b12c67f5c60fe5c17 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -268,7 +268,7 @@ main(int argc, char *argv[])
 	if ((fts = fts_open(argv, ftsoptions, NULL)) == NULL)
 		err(1, "fts_open");
 
-	while ((p = fts_read(fts)) != NULL) {
+	while (errno = 0, (p = fts_read(fts)) != NULL) {
 		switch (p->fts_info) {
 		case FTS_D:			/* Ignore. */
 			if (ignorep(p))

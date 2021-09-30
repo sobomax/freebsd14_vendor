@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9c71b87b08f4c4f11307f161d8a9c0b730beac41 $");
+__FBSDID("$FreeBSD: ed0c85b4aba5dc3e984824213b68e8f54395c406 $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -45,8 +45,8 @@ __FBSDID("$FreeBSD: 9c71b87b08f4c4f11307f161d8a9c0b730beac41 $");
 extern char _binary_cloudabi64_vdso_o_start[];
 extern char _binary_cloudabi64_vdso_o_end[];
 
-register_t *
-cloudabi64_copyout_strings(struct image_params *imgp)
+int
+cloudabi64_copyout_strings(struct image_params *imgp, uintptr_t *stack_base)
 {
 	struct image_args *args;
 	uintptr_t begin;
@@ -54,14 +54,14 @@ cloudabi64_copyout_strings(struct image_params *imgp)
 
 	/* Copy out program arguments. */
 	args = imgp->args;
-	len = args->begin_envv - args->begin_argv;
+	len = exec_args_get_begin_envv(args) - args->begin_argv;
 	begin = rounddown2(imgp->sysent->sv_usrstack - len, sizeof(register_t));
-	copyout(args->begin_argv, (void *)begin, len);
-	return ((register_t *)begin);
+	*stack_base = begin;
+	return (copyout(args->begin_argv, (void *)begin, len));
 }
 
 int
-cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
+cloudabi64_fixup(uintptr_t *stack_base, struct image_params *imgp)
 {
 	char canarybuf[64], pidbuf[16];
 	Elf64_Auxargs *args;
@@ -79,12 +79,12 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 	td = curthread;
 	td->td_proc->p_osrel = __FreeBSD_version;
 
-	argdata = *stack_base;
+	argdata = (void *)*stack_base;
 
 	/* Store canary for stack smashing protection. */
 	arc4rand(canarybuf, sizeof(canarybuf), 0);
-	*stack_base -= howmany(sizeof(canarybuf), sizeof(register_t));
-	canary = *stack_base;
+	*stack_base -= roundup(sizeof(canarybuf), sizeof(register_t));
+	canary = (void *)*stack_base;
 	error = copyout(canarybuf, canary, sizeof(canarybuf));
 	if (error != 0)
 		return (error);
@@ -97,8 +97,8 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 	arc4rand(pidbuf, sizeof(pidbuf), 0);
 	pidbuf[6] = (pidbuf[6] & 0x0f) | 0x40;
 	pidbuf[8] = (pidbuf[8] & 0x3f) | 0x80;
-	*stack_base -= howmany(sizeof(pidbuf), sizeof(register_t));
-	pid = *stack_base;
+	*stack_base -= roundup(sizeof(pidbuf), sizeof(register_t));
+	pid = (void *)*stack_base;
 	error = copyout(pidbuf, pid, sizeof(pidbuf));
 	if (error != 0)
 		return (error);
@@ -109,7 +109,8 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 	 * exec_copyin_data_fds(). Undo this by reducing the length.
 	 */
 	args = (Elf64_Auxargs *)imgp->auxargs;
-	argdatalen = imgp->args->begin_envv - imgp->args->begin_argv;
+	argdatalen = exec_args_get_begin_envv(imgp->args) -
+	    imgp->args->begin_argv;
 	if (argdatalen > 0)
 		--argdatalen;
 
@@ -134,13 +135,13 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 #undef PTR
 		{ .a_type = CLOUDABI_AT_NULL },
 	};
-	*stack_base -= howmany(sizeof(auxv), sizeof(register_t));
-	error = copyout(auxv, *stack_base, sizeof(auxv));
+	*stack_base -= roundup(sizeof(auxv), sizeof(register_t));
+	error = copyout(auxv, (void *)*stack_base, sizeof(auxv));
 	if (error != 0)
 		return (error);
 
 	/* Reserve space for storing the TCB. */
-	*stack_base -= howmany(sizeof(cloudabi64_tcb_t), sizeof(register_t));
+	*stack_base -= roundup(sizeof(cloudabi64_tcb_t), sizeof(register_t));
 	return (0);
 }
 

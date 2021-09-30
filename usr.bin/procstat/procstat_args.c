@@ -25,9 +25,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: e5ede148d385a7bb45ab49709e23af3ea2c24e9b $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: 7f364ae0603f4f6b50cb996d7e22a5d87f0fa32d $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

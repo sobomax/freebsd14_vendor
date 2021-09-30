@@ -1,6 +1,7 @@
-$FreeBSD: c343cf99db9e2396719ea12576a7da9d7929d448 $
+$FreeBSD: d84d4b9302b63292a7a2a507292530235901d118 $
 .appveyor.yml
 .autom4te.cfg
+.cirrus.yml
 .git*
 .travis.yml
 FREEBSD-*

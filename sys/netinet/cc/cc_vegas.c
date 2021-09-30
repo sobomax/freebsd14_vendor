@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e5e6737ee1af34e71fb99c815d8d65a06d91915b $");
+__FBSDID("$FreeBSD: cd38ad54614003fee6edf9370a3344258fe8d1bb $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -286,16 +286,17 @@ vegas_beta_handler(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_DECL(_net_inet_tcp_cc_vegas);
-SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, vegas, CTLFLAG_RW, NULL,
+SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, vegas,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
     "Vegas related settings");
 
 SYSCTL_PROC(_net_inet_tcp_cc_vegas, OID_AUTO, alpha,
-    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     &VNET_NAME(vegas_alpha), 1, &vegas_alpha_handler, "IU",
     "vegas alpha, specified as number of \"buffers\" (0 < alpha < beta)");
 
 SYSCTL_PROC(_net_inet_tcp_cc_vegas, OID_AUTO, beta,
-    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     &VNET_NAME(vegas_beta), 3, &vegas_beta_handler, "IU",
     "vegas beta, specified as number of \"buffers\" (0 < alpha < beta)");
 

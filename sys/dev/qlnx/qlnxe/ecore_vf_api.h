@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 293896ce8548725b2a37238ce5bd75845a037b30 $
+ * $FreeBSD: 3110c424790cfbe13a1b6e7f16da3c06f51ff99a $
  *
  */
 
@@ -215,7 +215,6 @@ ecore_vf_get_num_cids(struct ecore_hwfn OSAL_UNUSED *p_hwfn,
 		      u8 OSAL_UNUSED *num_cids)
 {
 }
-
 static OSAL_INLINE void ecore_vf_get_port_mac(struct ecore_hwfn OSAL_UNUSED *p_hwfn, u8 OSAL_UNUSED *port_mac) {}
 static OSAL_INLINE void ecore_vf_get_num_vlan_filters(struct ecore_hwfn OSAL_UNUSED *p_hwfn, u8 OSAL_UNUSED *num_vlan_filters) {}
 static OSAL_INLINE void ecore_vf_get_num_mac_filters(struct ecore_hwfn OSAL_UNUSED *p_hwfn, u8 OSAL_UNUSED *num_mac_filters) {}

@@ -1,6 +1,7 @@
-# $FreeBSD: 24441708b49b04b5f04aba061772a4ab00f03c34 $
+# $FreeBSD: 2a5d13ba4f34f2855b1d13c2dee91b986e7fcd51 $
 
-PACKAGE=	lib${LIB}
+PACKAGE=	runtime
+
 LIB=		cam
 SHLIBDIR?=	/lib
 SRCS=		camlib.c scsi_cmdparse.c scsi_all.c scsi_da.c scsi_sa.c cam.c \

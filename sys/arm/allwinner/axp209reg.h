@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Emmanuel Vadot <manu@freeebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c2e94fdf28de96ef93cc2c440206fe08aecde001 $
+ * $FreeBSD: d6be123c5281d3bce2b34a2c764e24ad58023b22 $
  */
 
 #ifndef _AXP209REG_H_
@@ -204,7 +203,6 @@
 #define	AXP221_REG_ALDO1_VOLTAGE	0x28
 #define	AXP221_REG_ALDO2_VOLTAGE	0x29
 #define	AXP221_REG_ALDO3_VOLTAGE	0x2A
-
 
 enum axp2xx_sensor {
 	AXP209_ACVOLT,

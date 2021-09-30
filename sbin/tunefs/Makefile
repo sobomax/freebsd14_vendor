@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 7f903b2ef21a95c43fed18c843440bff03b67acc $
+# $FreeBSD: 9d0754edca89b5b46abefb27a6ed5151f856c4c2 $
 
 PACKAGE=runtime
 PROG=	tunefs
@@ -11,6 +11,6 @@ MOUNT=	${SRCTOP}/sbin/mount
 CFLAGS+=	-I${MOUNT}
 .PATH:	${MOUNT}
 
-WARNS=	3
+WARNS?=	3
 
 .include <bsd.prog.mk>

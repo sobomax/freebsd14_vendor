@@ -22,7 +22,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * SUCH DAMAGE.
  *
- * $FreeBSD: 51936b09606d91cb8597273f58ba58bc3741ce03 $
+ * $FreeBSD: 54d0e60977e3ce5803ce49a8a7874d6a779a5765 $
  */
 
 #include <sys/mman.h>
@@ -156,6 +156,8 @@ ATF_TC_BODY(closefrom_success, tc)
 {
 	const char *regex = "closefrom.*return,success";
 	FILE *pipefd = setup(fds, auclass);
+
+	atf_tc_expect_fail("closefrom was converted to close_range");
 	/* closefrom(2) returns 'void' */
 	closefrom(INT_MAX);
 	check_audit(fds, regex, pipefd);

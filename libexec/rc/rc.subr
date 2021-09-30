@@ -1,5 +1,5 @@
 # $NetBSD: rc.subr,v 1.67 2006/10/07 11:25:15 elad Exp $
-# $FreeBSD: 89bda1c1488931e08559be3bdd3ec66c74a2eefa $
+# $FreeBSD: e859ae06962f5e45cee56ce8cf39e0057b7b2ddf $
 #
 # Copyright (c) 1997-2004 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -66,17 +66,29 @@ rc_service="$0"
 #	---------
 
 # list_vars pattern
-#	List vars matching pattern.
+#	List variables matching glob pattern.
 # 
 list_vars()
 {
-	set | { while read LINE; do
-		var="${LINE%%=*}"
-		case "$var" in
-		"$LINE"|*[!a-zA-Z0-9_]*) continue ;;
-		$1) echo $var
+	# Localize 'set' option below.
+	local -
+	local IFS=$'\n' line varname
+
+	# Disable path expansion in unquoted 'for' parameters below.
+	set -o noglob
+
+	for line in $(set); do
+		varname="${line%%=*}"
+
+		case "$varname" in
+		"$line"|*[!a-zA-Z0-9_]*)
+			continue
+			;;
+		$1)
+			echo $varname
+			;;
 		esac
-	done; }
+	done
 }
 
 # set_rcvar [var] [defval] [desc]
@@ -1024,6 +1036,9 @@ run_rc_command()
 		     _postcmd=\$${rc_arg}_postcmd
 
 		if [ -n "$_cmd" ]; then
+			if [ -n "$_env" ]; then
+				eval "export -- $_env"
+			fi
 			_run_rc_precmd || return 1
 			_run_rc_doit "$_cmd $rc_extra_args" || return 1
 			_run_rc_postcmd

@@ -1,4 +1,4 @@
-# $FreeBSD: 2894712e22dff72b8e51485a47597cd3e21c5b65 $
+# $FreeBSD: 8b472b8b3782fb92b88133c29bd7690f3a5d10f9 $
 
 FBSD_1.2 {
 };
@@ -11,3 +11,7 @@ FBSD_1.4 {
 
 FBSD_1.5 {
 } FBSD_1.4;
+
+# This version was first added to 13.0-current.
+FBSD_1.6 {
+} FBSD_1.5;

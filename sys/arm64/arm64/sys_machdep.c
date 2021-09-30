@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9ee6c51aacbf04aa3a360f57054e0ccfd7afaaf $");
+__FBSDID("$FreeBSD: dfb2c4ad85b831281c3846d894a4925a968b73a0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -37,11 +37,9 @@ __FBSDID("$FreeBSD: c9ee6c51aacbf04aa3a360f57054e0ccfd7afaaf $");
 
 #include <machine/sysarch.h>
 
-
 int
 sysarch(struct thread *td, struct sysarch_args *uap)
 {
 
 	return (ENOTSUP);
 }
-

@@ -27,13 +27,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b7371f82f3e42d9a24dde701e59a7dd188bb460 $");
+__FBSDID("$FreeBSD: c6ab5ee39bd85e4ba22ae6e78e41d50d437fc926 $");
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-
+#include <sys/eventhandler.h>
 #include <sys/power.h>
+#include <sys/proc.h>
+#include <sys/systm.h>
 #include <sys/taskqueue.h>
 
 static u_int		 power_pm_type	= POWER_PM_TYPE_NONE;
@@ -121,4 +121,3 @@ power_profile_set_state(int state)
 	if (changed)
 		EVENTHANDLER_INVOKE(power_profile_change, 0);
 }
-

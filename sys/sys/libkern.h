@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 0c4e1381be1a36b40191950e2f299cfaa7236bf0 $
+ * $FreeBSD: 3874ef9ec4bd01933386bb4c9ce52f170aa0324b $
  */
 
 #ifndef _SYS_LIBKERN_H_
@@ -88,7 +88,6 @@ validbcd(int bcd)
 
 	return (bcd == 0 || (bcd > 0 && bcd <= 0x99 && bcd2bin_data[bcd] != 0));
 }
-
 static __inline int imax(int a, int b) { return (a > b ? a : b); }
 static __inline int imin(int a, int b) { return (a < b ? a : b); }
 static __inline long lmax(long a, long b) { return (a > b ? a : b); }
@@ -113,15 +112,16 @@ static __inline __uintmax_t ummin(__uintmax_t a, __uintmax_t b)
 }
 static __inline off_t omax(off_t a, off_t b) { return (a > b ? a : b); }
 static __inline off_t omin(off_t a, off_t b) { return (a < b ? a : b); }
-
 static __inline int abs(int a) { return (a < 0 ? -a : a); }
 static __inline long labs(long a) { return (a < 0 ? -a : a); }
 static __inline quad_t qabs(quad_t a) { return (a < 0 ? -a : a); }
 
+#ifndef RANDOM_FENESTRASX
 #define	ARC4_ENTR_NONE	0	/* Don't have entropy yet. */
 #define	ARC4_ENTR_HAVE	1	/* Have entropy. */
 #define	ARC4_ENTR_SEED	2	/* Reseeding. */
 extern int arc4rand_iniseed_state;
+#endif
 
 /* Prototypes for non-quad routines. */
 struct malloc_type;
@@ -167,10 +167,11 @@ void	 qsort_r(void *base, size_t nmemb, size_t size, void *thunk,
 	    int (*compar)(void *, const void *, const void *));
 u_long	 random(void);
 int	 scanc(u_int, const u_char *, const u_char *, int);
-void	 srandom(u_long);
 int	 strcasecmp(const char *, const char *);
+char	*strcasestr(const char *, const char *);
 char	*strcat(char * __restrict, const char * __restrict);
 char	*strchr(const char *, int);
+char	*strchrnul(const char *, int);
 int	 strcmp(const char *, const char *);
 char	*strcpy(char * __restrict, const char * __restrict);
 size_t	 strcspn(const char * __restrict, const char * __restrict) __pure;
@@ -191,37 +192,13 @@ size_t	 strspn(const char *, const char *);
 char	*strstr(const char *, const char *);
 int	 strvalid(const char *, size_t);
 
-extern const uint32_t crc32_tab[];
-
-static __inline uint32_t
-crc32_raw(const void *buf, size_t size, uint32_t crc)
-{
-	const uint8_t *p = (const uint8_t *)buf;
-
-	while (size--)
-		crc = crc32_tab[(crc ^ *p++) & 0xFF] ^ (crc >> 8);
-	return (crc);
-}
-
-static __inline uint32_t
-crc32(const void *buf, size_t size)
-{
-	uint32_t crc;
-
-	crc = crc32_raw(buf, size, ~0U);
-	return (crc ^ ~0U);
-}
-
-uint32_t
-calculate_crc32c(uint32_t crc32c, const unsigned char *buffer,
-    unsigned int length);
-#ifdef _KERNEL
-#if defined(__amd64__) || defined(__i386__)
-uint32_t sse42_crc32c(uint32_t, const unsigned char *, unsigned);
-#endif
-#if defined(__aarch64__)
-uint32_t armv8_crc32c(uint32_t, const unsigned char *, unsigned int);
-#endif
+#ifdef KCSAN
+char	*kcsan_strcpy(char *, const char *);
+int	kcsan_strcmp(const char *, const char *);
+size_t	kcsan_strlen(const char *);
+#define	strcpy(d, s) kcsan_strcpy((d), (s))
+#define	strcmp(s1, s2) kcsan_strcmp((s1), (s2))
+#define	strlen(s) kcsan_strlen((s))
 #endif
 
 static __inline char *

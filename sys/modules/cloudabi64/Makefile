@@ -1,4 +1,4 @@
-# $FreeBSD: 4e23f0b1dbb427d838f5315b7b4d48287d3e5380 $
+# $FreeBSD: 9d0caf902ad4549116f007d165260873f02afbbe $
 
 SYSDIR?=${SRCTOP}/sys
 
@@ -25,7 +25,7 @@ BINARY_ARCHITECTURE=i386
 .endif
 
 cloudabi64_vdso.o: ${VDSO_SRCS}
-	${CC} -x assembler-with-cpp -shared -nostdinc -nostdlib \
+	${CC} ${CCLDFLAGS} -x assembler-with-cpp -shared -nostdinc -nostdlib \
 	    -Wl,-T${SYSDIR}/compat/cloudabi/cloudabi_vdso.lds \
 	    ${VDSO_SRCS} -o ${.TARGET}
 

@@ -1,4 +1,4 @@
-# $FreeBSD: e3c82f408824da521738c5178dbee44b7a93acd7 $
+# $FreeBSD: 01dfdc17079f63c99e02411225b0981e435c7684 $
 
 .include <src.opts.mk>
 
@@ -9,6 +9,12 @@ ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 PROG=	strings
 
 LIBADD=	elftc elf
+
+.if ${MK_CASPER} != "no" && !defined(BOOTSTRAPPING) && !defined(NXB_TARGET)
+LIBADD+=	casper
+LIBADD+=	cap_fileargs
+CFLAGS+=	-DWITH_CASPER
+.endif
 
 CFLAGS+=-I${ELFTCDIR}/libelftc -I${ELFTCDIR}/common
 

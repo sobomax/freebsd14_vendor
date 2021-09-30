@@ -64,10 +64,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/bus.h,v 1.5 1999/08/28 00:38:40 peter
- * $FreeBSD: 3fc5497801223b9c688655fac597f57132a26e96 $
+ * $FreeBSD: c6bdc384cfbc79aa4f59d70b3d59719560a172a8 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3fc5497801223b9c688655fac597f57132a26e96 $");
+__FBSDID("$FreeBSD: c6bdc384cfbc79aa4f59d70b3d59719560a172a8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -258,7 +258,6 @@ octopci_bs_r_4(void *t, bus_space_handle_t handle,
 	return (rd32(handle + offset));
 }
 
-
 void
 octopci_bs_rm_1(void *t, bus_space_handle_t bsh,
     bus_size_t offset, uint8_t *addr, size_t count)
@@ -287,7 +286,6 @@ octopci_bs_rm_4(void *t, bus_space_handle_t bsh,
 	while (count--)
 		*addr++ = rd32(baddr);
 }
-
 
 /*
  * Read `count' 1, 2, 4, or 8 byte quantities from bus space

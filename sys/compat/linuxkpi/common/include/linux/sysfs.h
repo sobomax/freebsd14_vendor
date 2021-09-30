@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 59e30f152f6ec9c732e96a69fa0a93b896236fac $
+ * $FreeBSD: c645d9fdf45af9ea3a40a416d8e37aefd81bd975 $
  */
 #ifndef	_LINUX_SYSFS_H_
 #define	_LINUX_SYSFS_H_
@@ -57,7 +57,6 @@ struct attribute_group {
 #define	__ATTR_RO(_name)	__ATTR(_name, 0444, _name##_show, NULL)
 #define	__ATTR_WO(_name)	__ATTR(_name, 0200, NULL, _name##_store)
 #define	__ATTR_RW(_name)	__ATTR(_name, 0644, _name##_show, _name##_store)
-
 #define	__ATTR_NULL	{ .attr = { .name = NULL } }
 
 #define	ATTRIBUTE_GROUPS(_name)						\

@@ -1,5 +1,5 @@
 # Makefile.mips
-# $FreeBSD: 10190638ed57c24b6f92fdb95410f3c559c743fe $
+# $FreeBSD: add27c1752a1ae4af0abf99492801b9646a4b900 $
 #
 # Makefile for FreeBSD
 #
@@ -28,7 +28,7 @@ S=	../../..
 .endif
 .include "$S/conf/kern.pre.mk"
 
-INCLUDES+= -I$S/contrib/libfdt
+INCLUDES+= -I$S/contrib/libfdt -I$S/contrib/device-tree/include
 
 LDSCRIPT_NAME?=ldscript.$M
 SYSTEM_LD:= ${SYSTEM_LD:$S/conf/${LDSCRIPT_NAME}=${LDSCRIPT_NAME}}
@@ -39,10 +39,16 @@ KERNLOADADDR?=0x80001000
 # To be changed later
 TRAMPLOADADDR?=0x807963c0
 
-# We default to the MIPS32 ISA, if none specified in the
-# kernel configuration file.
+# We default to the MIPS32 ISA for O32 and MIPS64 ISA for N64 and N32
+# if none is specified in the kernel configuration file.
+.if ${MACHINE_ARCH:Mmips64*} != "" || ${MACHINE_ARCH:Mmipsn32*} != ""
+ARCH_FLAGS?=-march=mips64
+.else
 ARCH_FLAGS?=-march=mips32
+.endif
+ARCH_FLAGS+=-mabi=${MIPS_ABI}
 EXTRA_FLAGS=-fno-pic -mno-abicalls -G0 -DKERNLOADADDR=${KERNLOADADDR}
+EXTRA_FLAGS+=-${MIPS_ENDIAN}
 
 # We add the -fno-pic flag to kernels because otherwise performance
 # is extremely poor, as well as -mno-abicalls to force no ABI usage.
@@ -72,6 +78,7 @@ ${KERNEL_KO}.tramp.bin: ${KERNEL_KO} $S/$M/$M/elf_trampoline.c \
 	${CC} -O -nostdlib -I. -I$S ${TRAMP_EXTRA_FLAGS} ${TRAMP_LDFLAGS} -Xlinker \
 		-T -Xlinker ${LDSCRIPT_NAME}.tramp.noheader \
 		-DKERNNAME="\"${KERNEL_KO}.tmp\"" -DELFSIZE=${TRAMP_ELFSIZE} \
+		-fno-asynchronous-unwind-tables \
 		$S/$M/$M/inckern.S $S/$M/$M/elf_trampoline.c \
 		-o ${KERNEL_KO}.tramp.elf
 	${OBJCOPY} -S -O binary ${KERNEL_KO}.tramp.elf \

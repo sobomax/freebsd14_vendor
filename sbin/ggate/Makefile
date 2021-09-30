@@ -1,14 +1,9 @@
-# $FreeBSD: b4633599167113a15e94bf3d5f4fed319cdfdeb9 $
+# $FreeBSD: 22532cc185122f47f9cb7a337a099d43204dd531 $
 
 .include <src.opts.mk>
 
-SUBDIR=	${_ggatec} \
-	${_ggated} \
+SUBDIR=	ggatec \
+	ggated \
 	ggatel
-
-.if ${MK_LIBTHR} != "no"
-_ggatec=	ggatec
-_ggated=	ggated
-.endif
 
 .include <bsd.subdir.mk>

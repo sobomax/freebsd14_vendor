@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fefaf5f3f3b47a9e469370cd3c6f0f2715084877 $
+ * $FreeBSD: c6af8c480d470ee32dcc6806ee578a5f32c6d4ca $
  */
 
 #ifndef __DEVCTL_H__

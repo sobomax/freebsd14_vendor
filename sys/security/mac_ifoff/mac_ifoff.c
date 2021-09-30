@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 28097b502989a303470563b289612fe23054cd97 $
+ * $FreeBSD: a19ddd34b22bbfe6266bd61c3ef35e77a48525de $
  */
 
 /*
@@ -62,7 +62,8 @@
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, ifoff, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, ifoff,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "TrustedBSD mac_ifoff policy controls");
 
 static int	ifoff_enabled = 1;

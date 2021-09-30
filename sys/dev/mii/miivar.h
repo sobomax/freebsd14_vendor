@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9def25c4fe31ee9d2173e34539d747eac28c4e7e $
+ * $FreeBSD: 4658394797e954d2d2f80c0c3d72c09491077a51 $
  */
 
 #ifndef _DEV_MII_MIIVAR_H_
@@ -134,6 +134,8 @@ typedef struct mii_softc mii_softc_t;
 #define	MIIF_DOPAUSE	0x00000100	/* advertise PAUSE capability */
 #define	MIIF_IS_HPNA	0x00000200	/* is a HomePNA device */
 #define	MIIF_FORCEANEG	0x00000400	/* force auto-negotiation */
+#define	MIIF_RX_DELAY	0x00000800	/* add RX delay */
+#define	MIIF_TX_DELAY	0x00001000	/* add TX delay */
 #define	MIIF_NOMANPAUSE	0x00100000	/* no manual PAUSE selection */
 #define	MIIF_FORCEPAUSE	0x00200000	/* force PAUSE advertisement */
 #define	MIIF_MACPRIV0	0x01000000	/* private to the MAC driver */

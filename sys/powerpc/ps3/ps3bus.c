@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c59f55d28d33fa63ef030470f5d70dec25a2f3d $");
+__FBSDID("$FreeBSD: 2cb4a85db58e5d8802bf83729122bcc84ce6b22a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -37,6 +37,8 @@ __FBSDID("$FreeBSD: 0c59f55d28d33fa63ef030470f5d70dec25a2f3d $");
 #include <sys/bus.h>
 #include <sys/clock.h>
 #include <sys/cpu.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/resource.h>
 #include <sys/rman.h>
 
@@ -157,7 +159,7 @@ static int
 ps3bus_probe(device_t dev) 
 {
 	/* Do not attach to any OF nodes that may be present */
-	
+
 	device_set_desc(dev, "Playstation 3 System Bus");
 
 	return (BUS_PROBE_NOWILDCARD);
@@ -468,7 +470,7 @@ ps3bus_attach(device_t self)
 			}
 		}
 	}
-	
+
 	clock_register(self, 1000);
 
 	return (bus_generic_attach(self));
@@ -756,10 +758,9 @@ ps3_gettime(device_t dev, struct timespec *ts)
 	ts->tv_nsec = 0;
 	return (0);
 }
-	
+
 static int
 ps3_settime(device_t dev, struct timespec *ts)
 {
 	return (-1);
 }
-

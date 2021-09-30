@@ -1,10 +1,11 @@
-# $FreeBSD: 09cea7b4a4c303b63fa78d0c27878bd9b771b93c $
+# $FreeBSD: 0af397566c17bc0b38b73c25295f0fd813f70ff1 $
 
 arm/broadcom/bcm2835/bcm2835_bsc.c		optional bcm2835_bsc
 arm/broadcom/bcm2835/bcm2835_cpufreq.c		standard
 arm/broadcom/bcm2835/bcm2835_dma.c		standard
 arm/broadcom/bcm2835/bcm2835_fb.c		optional sc
 arm/broadcom/bcm2835/bcm2835_fbd.c		optional vt
+arm/broadcom/bcm2835/bcm2835_firmware.c		standard
 arm/broadcom/bcm2835/bcm2835_ft5406.c		optional evdev bcm2835_ft5406
 arm/broadcom/bcm2835/bcm2835_gpio.c		optional gpio
 arm/broadcom/bcm2835/bcm2835_intr.c		standard
@@ -17,6 +18,8 @@ arm/broadcom/bcm2835/bcm2835_spi.c		optional bcm2835_spi
 arm/broadcom/bcm2835/bcm2835_vcbus.c		standard
 arm/broadcom/bcm2835/bcm2835_vcio.c		standard
 arm/broadcom/bcm2835/bcm2835_wdog.c		standard
+arm/broadcom/bcm2835/bcm2838_pci.c		optional pci
+arm/broadcom/bcm2835/bcm2838_xhci.c		optional xhci
 arm/broadcom/bcm2835/bcm283x_dwc_fdt.c		optional dwcotg fdt
 
 dev/mbox/mbox_if.m				standard

@@ -53,22 +53,25 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee609b328990718a444d517ac4ec26561f33c0c6 $");
+__FBSDID("$FreeBSD: f473a30f3f7f7930780bcf584162dcd14dce21d6 $");
 
 /* PCI/PCI-X/PCIe bus interface for the LSI MegaSAS controllers */
 
 #include "opt_mfi.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/selinfo.h>
-#include <sys/module.h>
+#include <sys/bio.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
-#include <sys/bio.h>
+#include <sys/eventhandler.h>
+#include <sys/kernel.h>
+#include <sys/lock.h>
+#include <sys/module.h>
 #include <sys/malloc.h>
+#include <sys/mutex.h>
+#include <sys/selinfo.h>
 #include <sys/sysctl.h>
+#include <sys/systm.h>
 #include <sys/uio.h>
 
 #include <machine/bus.h>

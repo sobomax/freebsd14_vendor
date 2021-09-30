@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ac2adb0dd1b4f13d619a9c8a39339a258069f6b4 $
+ * $FreeBSD: e3a570545e5731dcb670e9cf539a83f00b76b64b $
  */
 
 #ifndef _VMX_MSR_H_
@@ -35,8 +35,10 @@ struct vmx;
 
 void vmx_msr_init(void);
 void vmx_msr_guest_init(struct vmx *vmx, int vcpuid);
+void vmx_msr_guest_enter_tsc_aux(struct vmx *vmx, int vcpuid);
 void vmx_msr_guest_enter(struct vmx *vmx, int vcpuid);
 void vmx_msr_guest_exit(struct vmx *vmx, int vcpuid);
+void vmx_msr_guest_exit_tsc_aux(struct vmx *vmx, int vcpuid);
 int vmx_rdmsr(struct vmx *, int vcpuid, u_int num, uint64_t *val, bool *retu);
 int vmx_wrmsr(struct vmx *, int vcpuid, u_int num, uint64_t val, bool *retu);
 

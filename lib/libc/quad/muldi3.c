@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)muldi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f5f21005d0e9425d491dfb51ed35a76922a02a6 $");
+__FBSDID("$FreeBSD: bb11ef798fb05799599c06cad1c643288a2599d2 $");
 
 #include "quad.h"
 
@@ -101,8 +101,7 @@ __FBSDID("$FreeBSD: 2f5f21005d0e9425d491dfb51ed35a76922a02a6 $");
 static quad_t __lmulq(u_long, u_long);
 
 quad_t
-__muldi3(a, b)
-	quad_t a, b;
+__muldi3(quad_t a, quad_t b)
 {
 	union uu u, v, low, prod;
 	u_long high, mid, udiff, vdiff;

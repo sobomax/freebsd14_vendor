@@ -1,8 +1,7 @@
-# $FreeBSD: bea9d9c10e218502569af2bdc78271f46b5b8a58 $
+# $FreeBSD: 6f9debb7c2c33da38019a39d19c9c90318e35a68 $
 
 PROG=	rpctest
 MAN=
-WARNS?=	6
 LIBADD=	rpcsec_gss
 DEBUG_FLAGS= -g -O0
 

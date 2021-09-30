@@ -1,4 +1,4 @@
-# $FreeBSD: 0f96532cc65b6a689f06b94cb5935f19533d2b79 $
+# $FreeBSD: caa4aab951c36f32f1dbaebd3ef53bcfb83e603b $
 
 # Common flags to build FICL related files
 
@@ -15,7 +15,7 @@ CFLAGS+=	-fPIC
 .endif
 
 CFLAGS+=	-I${FICLSRC} -I${FICLSRC}/${FICL_CPUARCH} -I${LDRSRC}
-CFLAGS+=	-DBF_DICTSIZE=15000
+CFLAGS+=	-DBF_DICTSIZE=30000
 
 .if ${MK_LOADER_VERIEXEC} != "no"
 CFLAGS+= -DLOADER_VERIEXEC -I${SRCTOP}/lib/libsecureboot/h

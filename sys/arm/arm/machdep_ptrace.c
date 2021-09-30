@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a64f89441cc31a1f47cfce8dfacbf19c3d53b34 $");
+__FBSDID("$FreeBSD: af0cf6ba2997c7e343c085ad43300342d48440e1 $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -238,7 +238,6 @@ arm_predict_branch(void *cookie, u_int insn, register_t pc, register_t *new_pc,
 			offset = (insn & 0xff) << (32 - offset) |
 			    (insn & 0xff) >> offset;
 		} else {
-
 			offset = fetch_reg(cookie, insn & 0x0f);
 			if ((insn & 0x0000ff0) != 0x00000000) {
 				if (insn & 0x10)
@@ -258,11 +257,9 @@ arm_predict_branch(void *cookie, u_int insn, register_t pc, register_t *new_pc,
 				default:
 					break; /* XXX */
 				}
-
 			}
 			*new_pc = addr + offset;
 			return (0);
-
 		}
 
 	case 0xa:	/* b ... */

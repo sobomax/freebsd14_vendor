@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 43ac36fc85c7d8f70b985393c790e4b7ca95e4e0 $
+ * $FreeBSD: 2718ae55629c46de17b820a8170fb71bbd8aa496 $
  * $Whistle: ng_pppoe.h,v 1.7 1999/10/16 10:16:43 julian Exp $
  */
 
@@ -240,7 +240,6 @@ struct pppoe_hdr{
 	u_int16_t length;
 }__packed;
 
-
 struct pppoe_full_hdr {
 	struct  ether_header eh;
 	struct pppoe_hdr ph;
@@ -285,4 +284,3 @@ struct maxptag {
 /* for PADT */
 
 #endif /* _NETGRAPH_NG_PPPOE_H_ */
-

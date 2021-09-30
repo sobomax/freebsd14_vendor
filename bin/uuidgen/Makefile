@@ -1,6 +1,5 @@
-# $FreeBSD: 8cd15982405d67bba03b75b0e6dcfb78babb9942 $
+# $FreeBSD: 0b27d20e9805a714ac58a0738e5e571757e033e9 $
 
-PACKAGE=runtime
 PROG=	uuidgen
 
 .include <bsd.prog.mk>

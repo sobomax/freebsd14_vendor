@@ -1,0 +1,9 @@
+# $FreeBSD: 49cb4483a0f0e9bcb058369548a73ba501bf8a96 $
+
+include "../../conf/NOTES"
+include NOTES
+machine		powerpc powerpc
+nodevice	mlx5
+nodevice	mlx5en
+nodevice	mlx5ib
+nooptions	RATELIMIT

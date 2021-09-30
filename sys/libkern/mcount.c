@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d387b96cc2da546ec692d28036005861218d05b $");
+__FBSDID("$FreeBSD: 5efa56c8f67a12772b284fd44e4027605e9b7ce1 $");
 
 #include <sys/param.h>
 #include <sys/gmon.h>
@@ -58,7 +58,8 @@ __FBSDID("$FreeBSD: 2d387b96cc2da546ec692d28036005861218d05b $");
  * both frompcindex and frompc.  Any reasonable, modern compiler will
  * perform this optimization.
  */
-_MCOUNT_DECL(uintfptr_t frompc, uintfptr_t selfpc)	/* _mcount; may be static, inline, etc */
+/* _mcount; may be static, inline, etc */
+_MCOUNT_DECL(uintfptr_t frompc, uintfptr_t selfpc)
 {
 #ifdef GUPROF
 	int delta;
@@ -236,7 +237,6 @@ _MCOUNT_DECL(uintfptr_t frompc, uintfptr_t selfpc)	/* _mcount; may be static, in
 			*frompcindex = toindex;
 			goto done;
 		}
-
 	}
 done:
 #ifdef _KERNEL
@@ -291,7 +291,7 @@ mexitcount(uintfptr_t selfpc)
 #endif
 
 void
-empty_loop()
+empty_loop(void)
 {
 	int i;
 
@@ -300,13 +300,13 @@ empty_loop()
 }
 
 void
-nullfunc()
+nullfunc(void)
 {
 	__asm __volatile("");
 }
 
 void
-nullfunc_loop()
+nullfunc_loop(void)
 {
 	int i;
 

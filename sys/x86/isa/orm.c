@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fee9aae8b5f68321e37379fafdf36ad3189864db $");
+__FBSDID("$FreeBSD: 6c16a8f63b272e73cd0e07fb36d91f8b0ac86911 $");
 
 /*
  * Driver to take care of holes in ISA I/O memory occupied
@@ -163,7 +163,7 @@ orm_detach(device_t dev)
 {
 	int			i;
 	struct orm_softc	*sc = device_get_softc(dev);
-	
+
 	for (i = 0; i < sc->rnum; i++)
 		bus_release_resource(dev, SYS_RES_MEMORY, sc->rid[i],
 		    sc->res[i]);

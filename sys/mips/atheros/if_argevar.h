@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5e284cc2b814851d469f3dec7fee30cc6633e52e $
+ * $FreeBSD: 498a7f1695d18583b8217acd7f95b9cadc32f0f7 $
  */
 
 #ifndef __IF_ARGEVAR_H__
@@ -49,7 +49,6 @@
 #define	ARGE_RX_RING_ADDR(sc, i)	\
     ((sc)->arge_rdata.arge_rx_ring_paddr + sizeof(struct arge_desc) * (i))
 #define	ARGE_INC(x,y)		(x) = (((x) + 1) % y)
-
 
 #define	ARGE_MII_TIMEOUT	1000
 
@@ -206,6 +205,7 @@ struct arge_softc {
 		uint32_t	tx_pkts_unaligned;
 		uint32_t	tx_pkts_unaligned_start;
 		uint32_t	tx_pkts_unaligned_len;
+		uint32_t	tx_pkts_unaligned_tooshort;
 		uint32_t	tx_pkts_nosegs;
 		uint32_t	tx_pkts_aligned;
 		uint32_t	rx_overflow;

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *      $FreeBSD: 5397ad92e7d8dd1f5bdb9baf1ad3445b9e67aa2a $
+ *      $FreeBSD: d07135f5a83e893b2b2b3828f50233edaee5b276 $
  */
 
 /* 
@@ -494,4 +494,3 @@ typedef struct
     u_int8_t	parameter_size_bytes;
     u_int8_t	data[0];
 } __packed TWE_Param;
-

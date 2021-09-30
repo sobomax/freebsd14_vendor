@@ -1,4 +1,4 @@
-# $FreeBSD: 1499482d878a684f789dba44e02d1b8e0e2ede8b $
+# $FreeBSD: dc102ed8a6e072ca4e7761513c358fabd7c522ac $
 
 .include <bsd.init.mk>
 
@@ -16,8 +16,5 @@ LIBADD+=	gtest
 LDFLAGS+=	-L${LIBGTESTDIR}
 
 SRCS+=		gtest_main.cc
-
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.lib.mk>

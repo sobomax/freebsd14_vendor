@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: b28f0432f435b391fd48827b3add156d83a561d4 $
+ * $FreeBSD: 5dba663ecb765f83c69b0c5699747ce9ea252216 $
  */
 
 /*
@@ -112,7 +112,7 @@ static struct {
 static uint64_t
 getflag(const char *name, int len)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < nitems(flags); i++)
 		if (strncasecmp(flags[i].name, name, len) == 0)
@@ -120,6 +120,7 @@ getflag(const char *name, int len)
 	return 0;
 }
 
+#if 0
 static const char *
 getflagname(u_int flag)
 {
@@ -130,11 +131,12 @@ getflagname(u_int flag)
 			return flags[i].name;
 	return "???";
 }
+#endif
 
 static void
 usage(void)
 {
-	int i;
+	unsigned int i;
 
 	fprintf(stderr, "usage: %s [-i device] [flags]\n", progname);
 	fprintf(stderr, "where flags are:\n");
@@ -149,7 +151,8 @@ main(int argc, char *argv[])
 	const char *ifname;
 	const char *cp, *tp;
 	const char *sep;
-	int c, op, i;
+	int op;
+	unsigned int i;
 	uint64_t debug, ndebug;
 	size_t debuglen;
 	char oid[256];

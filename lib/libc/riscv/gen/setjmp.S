@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8fed37bf47d5d8db1a4c62dfbb0b48f654066baf $");
+__FBSDID("$FreeBSD: c0458e907ce08e676d2b581da07d2497d6c4b3fd $");
 
 #include <machine/setjmp.h>
 
@@ -53,8 +53,7 @@ ENTRY(setjmp)
 	addi	sp, sp, (2 * 8)
 
 	/* Store the magic value and stack pointer */
-	la	t0, .Lmagic
-	ld	t0, 0(t0)
+	ld	t0, .Lmagic
 	sd	t0, (0 * 8)(a0)
 	sd	sp, (1 * 8)(a0)
 	addi	a0, a0, (2 * 8)
@@ -101,6 +100,11 @@ ENTRY(setjmp)
 END(setjmp)
 
 ENTRY(longjmp)
+	/* Check the magic value */
+	ld	t0, 0(a0)
+	ld	t1, .Lmagic
+	bne	t0, t1, botch
+
 	addi	sp, sp, -(4 * 8)
 	sd	a0, (0 * 8)(sp)
 	sd	ra, (1 * 8)(sp)
@@ -116,12 +120,6 @@ ENTRY(longjmp)
 	ld	ra, (1 * 8)(sp)
 	ld	a0, (0 * 8)(sp)
 	addi	sp, sp, (4 * 8)
-
-	/* Check the magic value */
-	ld	t0, 0(a0)
-	la	t1, .Lmagic
-	ld	t1, 0(t1)
-	bne	t0, t1, botch
 
 	/* Restore the stack pointer */
 	ld	t0, 8(a0)

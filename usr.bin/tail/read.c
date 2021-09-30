@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: c5638d961399ffa2b5ef3c8472c1f6c2cf4fdb9d $");
+__FBSDID("$FreeBSD: 1e757c86195c8ad6e43a706d93fa5cb879583f86 $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)read.c	8.1 (Berkeley) 6/6/93";
@@ -50,6 +50,9 @@ static const char sccsid[] = "@(#)read.c	8.1 (Berkeley) 6/6/93";
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <libcasper.h>
+#include <casper/cap_fileargs.h>
 
 #include "extern.h"
 

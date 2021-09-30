@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 284aa19c72fa4a824c1e3c61c7042eaf05b3ba65 $
+# $FreeBSD: 8ae65a1f5a04fe7750d59ac2024a25a795c08f3a $
 
 # Test handling of read errors.
 
@@ -31,7 +31,7 @@ tmp2=$(mktemp $base.XXXXXX)
 ENXIO=6
 # gmirror has special handling for ENXIO. It does not mark the failed component
 # as broken, allowing it to rejoin the mirror automatically when it appears.
-sysctl ${regreadfp}="1*return(${ENXIO})"
+sysctl ${regreadfp}="1*return(${ENXIO})[pid $(gmirror_worker_pid)]"
 dd if=/dev/mirror/$name of=$tmp1 iseek=512 bs=$ddbs count=1 >/dev/null 2>&1
 dd if=/dev/$us1 of=$tmp2 iseek=512 bs=$ddbs count=1 >/dev/null 2>&1
 sysctl ${regreadfp}='off'

@@ -28,9 +28,8 @@
  * SUCH DAMAGE.
  */
 
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb52253f08f10843c9130e5424366e4c44892caf $");
+__FBSDID("$FreeBSD: 118a97e9f989efc1f3dd61febe27af32f7580a4a $");
 
 #include "opt_platform.h"
 
@@ -294,7 +293,6 @@ static device_method_t ti_aintc_methods[] = {
 	DEVMETHOD(pic_post_filter,	ti_aintc_post_filter),
 	DEVMETHOD(pic_post_ithread,	ti_aintc_post_ithread),
 	DEVMETHOD(pic_pre_ithread,	ti_aintc_pre_ithread),
-
 	{ 0, 0 }
 };
 

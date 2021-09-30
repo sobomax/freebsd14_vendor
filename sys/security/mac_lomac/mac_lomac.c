@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b7c6289b7a9972252886d3104b08e5fde20f1737 $
+ * $FreeBSD: 821b0faf68d0ff6517befc84124f9d856f62301d $
  */
 
 /*
@@ -93,7 +93,8 @@ struct mac_lomac_proc {
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, lomac, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, lomac,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "TrustedBSD mac_lomac policy controls");
 
 static int	lomac_label_size = sizeof(struct mac_lomac);
@@ -730,7 +731,7 @@ lomac_parse_element(struct mac_lomac_element *element, char *string)
 
 		p0 = string;
 		d = strtol(p0, &p1, 10);
-	
+
 		if (d < 0 || d > 65535)
 			return (EINVAL);
 		element->mle_type = MAC_LOMAC_TYPE_GRADE;
@@ -1139,7 +1140,7 @@ lomac_ifnet_check_relabel(struct ucred *cred, struct ifnet *ifp,
 		 *
 		 * XXXRW: This is also redundant to a higher layer check.
 		 */
-		error = priv_check_cred(cred, PRIV_NET_SETIFMAC, 0);
+		error = priv_check_cred(cred, PRIV_NET_SETIFMAC);
 		if (error)
 			return (EPERM);
 

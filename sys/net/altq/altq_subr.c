@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_subr.c,v 1.21 2003/11/06 06:32:53 kjc Exp $
- * $FreeBSD: 01aa1efef53d9dfa82073f20494ef4d45b7dce70 $
+ * $FreeBSD: 9d998c40485c70fef8d2376c464154409b8a5dd9 $
  */
 
 #include "opt_altq.h"
@@ -62,9 +62,6 @@
 #include <netpfil/pf/pf.h>
 #include <netpfil/pf/pf_altq.h>
 #include <net/altq/altq.h>
-#ifdef ALTQ3_COMPAT
-#include <net/altq/altq_conf.h>
-#endif
 
 /* machine dependent clock related includes */
 #include <sys/bus.h>
@@ -155,22 +152,6 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
 		return ENXIO;
 	}
 
-#ifdef ALTQ3_COMPAT
-	/*
-	 * pfaltq can override the existing discipline, but altq3 cannot.
-	 * check these if clfier is not NULL (which implies altq3).
-	 */
-	if (clfier != NULL) {
-		if (ALTQ_IS_ENABLED(ifq)) {
-			IFQ_UNLOCK(ifq);
-			return EBUSY;
-		}
-		if (ALTQ_IS_ATTACHED(ifq)) {
-			IFQ_UNLOCK(ifq);
-			return EEXIST;
-		}
-	}
-#endif
 	ifq->altq_type     = type;
 	ifq->altq_disc     = discipline;
 	ifq->altq_enqueue  = enqueue;
@@ -179,11 +160,6 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
 	ifq->altq_clfier   = clfier;
 	ifq->altq_classify = classify;
 	ifq->altq_flags &= (ALTQF_CANTCHANGE|ALTQF_ENABLED);
-#ifdef ALTQ3_COMPAT
-#ifdef ALTQ_KLD
-	altq_module_incref(type);
-#endif
-#endif
 	IFQ_UNLOCK(ifq);
 	return 0;
 }
@@ -206,11 +182,6 @@ altq_detach(ifq)
 		IFQ_UNLOCK(ifq);
 		return (0);
 	}
-#ifdef ALTQ3_COMPAT
-#ifdef ALTQ_KLD
-	altq_module_declref(ifq->altq_type);
-#endif
-#endif
 
 	ifq->altq_type     = ALTQT_NONE;
 	ifq->altq_disc     = NULL;
@@ -272,7 +243,7 @@ altq_disable(ifq)
 	ASSERT(ifq->ifq_len == 0);
 	ifq->altq_flags &= ~(ALTQF_ENABLED|ALTQF_CLASSIFY);
 	splx(s);
-	
+
 	IFQ_UNLOCK(ifq);
 	return 0;
 }
@@ -359,7 +330,7 @@ tbr_set(ifq, profile)
 	struct tb_profile *profile;
 {
 	struct tb_regulator *tbr, *otbr;
-	
+
 	if (tbr_dequeue_ptr == NULL)
 		tbr_dequeue_ptr = tbr_dequeue;
 
@@ -439,11 +410,11 @@ tbr_timeout(arg)
 {
 	VNET_ITERATOR_DECL(vnet_iter);
 	struct ifnet *ifp;
-	int active, s;
+	struct epoch_tracker et;
+	int active;
 
 	active = 0;
-	s = splnet();
-	IFNET_RLOCK_NOSLEEP();
+	NET_EPOCH_ENTER(et);
 	VNET_LIST_RLOCK_NOSLEEP();
 	VNET_FOREACH(vnet_iter) {
 		CURVNET_SET(vnet_iter);
@@ -460,8 +431,7 @@ tbr_timeout(arg)
 		CURVNET_RESTORE();
 	}
 	VNET_LIST_RUNLOCK_NOSLEEP();
-	IFNET_RUNLOCK_NOSLEEP();
-	splx(s);
+	NET_EPOCH_EXIT(et);
 	if (active > 0)
 		CALLOUT_RESET(&tbr_callout, 1, tbr_timeout, (void *)0);
 	else
@@ -870,7 +840,6 @@ write_dsfield(struct mbuf *m, struct altq_pktattr *pktattr, u_int8_t dsfield)
 #endif
 	return;
 }
-
 
 /*
  * high resolution clock support taking advantage of a machine dependent
@@ -1841,7 +1810,6 @@ filt2fibmask(filt)
 	return (mask);
 }
 
-
 /*
  * helper functions to handle IPv4 fragments.
  * currently only in-sequence fragments are handled.
@@ -1860,7 +1828,6 @@ struct ip4_frag {
 static TAILQ_HEAD(ip4f_list, ip4_frag) ip4f_list; /* IPv4 fragment cache */
 
 #define	IP4F_TABSIZE		16	/* IPv4 fragment cache size */
-
 
 static void
 ip4f_cache(ip, fin)
@@ -1901,7 +1868,6 @@ ip4f_lookup(ip, fin)
 		    ip->ip_src.s_addr == fp->ip4f_info.fi_src.s_addr &&
 		    ip->ip_dst.s_addr == fp->ip4f_info.fi_dst.s_addr &&
 		    ip->ip_p == fp->ip4f_info.fi_proto) {
-
 			/* found the matching entry */
 			fin->fi_sport = fp->ip4f_info.fi_sport;
 			fin->fi_dport = fp->ip4f_info.fi_dport;

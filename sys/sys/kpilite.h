@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8742ef5cfbe803f01a0fcd500ff67919b9af63c7 $
+ * $FreeBSD: 2a7e9743f799b4472f23c2d87652aedba42cd005 $
  */
 
 #ifndef _SYS_KPILITE_H_
@@ -38,7 +38,7 @@ sched_pin_lite(struct thread_lite *td)
 
 	KASSERT((struct thread *)td == curthread, ("sched_pin called on non curthread"));
 	td->td_pinned++;
-	__compiler_membar();
+	atomic_interrupt_fence();
 }
 
 static __inline void
@@ -47,9 +47,8 @@ sched_unpin_lite(struct thread_lite *td)
 
 	KASSERT((struct thread *)td == curthread, ("sched_unpin called on non curthread"));
 	KASSERT(td->td_pinned > 0, ("sched_unpin called on non pinned thread"));
-	__compiler_membar();
+	atomic_interrupt_fence();
 	td->td_pinned--;
-	__compiler_membar();
 }
 #endif
 #endif

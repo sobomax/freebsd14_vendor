@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b077a5bc6a302ecd65774c5f0c27d913ceb20c04 $
+ * $FreeBSD: 2af32a03e5c4395986560b74b4a0a03b60b5171e $
  */
 
 #ifndef SB_H
@@ -86,7 +86,6 @@ void sbc_unlock(struct sbc_softc *);
 
 #define	DSP_CMD_DAC2S_AUTO	0x1f	/* auto 2-bit adpcm dma out (start) */
 
-
 /* SB16 commands */
 #define	DSP_CMD_O16		0xb0
 #define	DSP_CMD_I16		0xb8
@@ -112,7 +111,6 @@ void sbc_unlock(struct sbc_softc *);
 
 #define	DSP_CMD_GETVER		0xE1
 #define	DSP_CMD_GETID		0xE7	/* return id bytes */
-
 
 #define	DSP_CMD_OUT16		0x41	/* send parms for dma out on sb16 */
 #define	DSP_CMD_IN16		0x42	/* send parms for dma in on sb16 */

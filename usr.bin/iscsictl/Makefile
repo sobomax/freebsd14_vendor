@@ -1,4 +1,4 @@
-# $FreeBSD: d7a49d050db579dd377421507c4aa3dacadbe2a8 $
+# $FreeBSD: ee70e519a8fb9666e0d14db51b638ba1aa4a505c $
 
 PACKAGE=	iscsi
 PROG=		iscsictl
@@ -7,13 +7,12 @@ CFLAGS+=	-I${.CURDIR}
 CFLAGS+=	-I${SRCTOP}/sys/dev/iscsi
 MAN=		iscsi.conf.5 iscsictl.8
 
-LIBADD=		xo
+LIBADD=		util xo
 
 YFLAGS+=	-v
 LFLAGS+=	-i
 CLEANFILES=	y.tab.c y.tab.h y.output
 
-WARNS=		6
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
 .include <bsd.prog.mk>

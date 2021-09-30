@@ -1,5 +1,5 @@
-# $FreeBSD: 966b6e0630f31b872547488fee471cddda980855 $
-# $Id: meta.subdir.mk,v 1.11 2015/11/24 22:26:51 sjg Exp $
+# $FreeBSD: 781a52856b64d3a47ed947452d7b28b09521e092 $
+# $Id: meta.subdir.mk,v 1.12 2020/08/19 17:51:53 sjg Exp $
 
 #
 #	@(#) Copyright (c) 2010, Simon J. Gerraty
@@ -7,10 +7,10 @@
 #	This file is provided in the hope that it will
 #	be of use.  There is absolutely NO WARRANTY.
 #	Permission to copy, redistribute or otherwise
-#	use this file is hereby granted provided that 
+#	use this file is hereby granted provided that
 #	the above copyright notice and this notice are
-#	left intact. 
-#      
+#	left intact.
+#
 #	Please send copies of changes and bug-fixes to:
 #	sjg@crufty.net
 #
@@ -33,7 +33,7 @@ DIRDEPS = ${SUBDIR:N.WAIT:O:u:@d@${RELDIR}/$d@}
 .include <meta.autodep.mk>
 .else
 # this is the cunning bit
-# actually it is probably a bit risky 
+# actually it is probably a bit risky
 # since we may pickup subdirs which are not relevant
 # the alternative is a walk through the tree though
 # which is difficult without a sub-make.

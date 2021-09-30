@@ -1,6 +1,7 @@
 # $Id: Makefile,v 1.6 2006/09/07 21:36:55 max Exp $
-# $FreeBSD: 9aa303c60bd25989bcc012cec11a854a96f78c31 $
+# $FreeBSD: d92b4cff16932bd73407545c28a26111df27be6e $
 
+PACKAGE=	bluetooth
 PROG=		bthidd
 MAN=		bthidd.8
 #		bthidd.conf.5

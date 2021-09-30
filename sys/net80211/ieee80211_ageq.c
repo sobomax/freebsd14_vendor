@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad070b34b847ee17325b72364d2cf29c06551a54 $");
+__FBSDID("$FreeBSD: 8055012899f3b7ab091ddf531c7f6b213de93208 $");
 
 /*
  * IEEE 802.11 age queue support.
@@ -37,7 +37,7 @@ __FBSDID("$FreeBSD: ad070b34b847ee17325b72364d2cf29c06551a54 $");
 #include <sys/systm.h> 
 #include <sys/kernel.h>
 #include <sys/malloc.h>
- 
+
 #include <sys/socket.h>
 
 #include <net/if.h>

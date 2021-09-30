@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)lshldi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d0788af6c66bb4c048f522297c248a46941083e $");
+__FBSDID("$FreeBSD: d8c7593d49ec19f117a40511924c49fd72cc6317 $");
 
 #include "quad.h"
 
@@ -46,9 +46,7 @@ __FBSDID("$FreeBSD: 0d0788af6c66bb4c048f522297c248a46941083e $");
  * This is the same as arithmetic shift left!
  */
 quad_t
-__lshldi3(a, shift)
-	quad_t a;
-	qshift_t shift;
+__lshldi3(quad_t a, qshift_t shift)
 {
 	union uu aa;
 

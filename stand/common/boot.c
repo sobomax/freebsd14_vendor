@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1dbb61b404d90e36342769e07a26ae8cff3a1fb $");
+__FBSDID("$FreeBSD: 2103f6dc240ca8faaf2d4fb4b1d1a222e759949b $");
 
 /*
  * Loading modules, booting the system
@@ -202,8 +202,9 @@ autoboot(int timeout, char *prompt)
 	}
 
 	if (timeout >= 0) {
-		otime = time(NULL);
-		when = otime + timeout;	/* when to boot */
+		otime = -1;
+		ntime = time(NULL);
+		when = ntime + timeout;	/* when to boot */
 
 		yes = 0;
 

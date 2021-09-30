@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9a60253da447c41bf3eec1910ad38fb437935d6 $");
+__FBSDID("$FreeBSD: 1fd26711ea86d686ae63546d76b03cabfa1584c9 $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -1392,6 +1392,26 @@ ifa_exists(char *ifa_name)
 	return (NULL);
 }
 
+static struct node_host *
+if_lookup(char *if_name)
+{
+	struct node_host *p, *n;
+
+	for (p = iftab; p; p = p->next) {
+		if (! strcmp(if_name, p->ifname)) {
+			n = calloc(1, sizeof(struct node_host));
+			bcopy(p, n, sizeof(struct node_host));
+
+			n->next = NULL;
+			n->tail = n;
+
+			return (n);
+		}
+	}
+
+	return (NULL);
+}
+
 struct node_host *
 ifa_grouplookup(char *ifa_name, int flags)
 {
@@ -1415,7 +1435,7 @@ ifa_grouplookup(char *ifa_name, int flags)
 	for (ifg = ifgr.ifgr_groups; ifg && len >= sizeof(struct ifg_req);
 	    ifg++) {
 		len -= sizeof(struct ifg_req);
-		if ((n = ifa_lookup(ifg->ifgrq_member, flags)) == NULL)
+		if ((n = if_lookup(ifg->ifgrq_member)) == NULL)
 			continue;
 		if (h == NULL)
 			h = n;
@@ -1436,14 +1456,15 @@ ifa_lookup(char *ifa_name, int flags)
 	int			 got4 = 0, got6 = 0;
 	const char		 *last_if = NULL;
 
+	/* first load iftab and isgroup_map */
+	if (iftab == NULL)
+		ifa_load();
+
 	if ((h = ifa_grouplookup(ifa_name, flags)) != NULL)
 		return (h);
 
 	if (!strncmp(ifa_name, "self", IFNAMSIZ))
 		ifa_name = NULL;
-
-	if (iftab == NULL)
-		ifa_load();
 
 	for (p = iftab; p; p = p->next) {
 		if (ifa_skip_if(ifa_name, p))
@@ -1462,6 +1483,9 @@ ifa_lookup(char *ifa_name, int flags)
 			got4 = got6 = 0;
 		last_if = p->ifname;
 		if ((flags & PFI_AFLAG_NOALIAS) && p->af == AF_INET && got4)
+			continue;
+		if ((flags & PFI_AFLAG_NOALIAS) && p->af == AF_INET6 &&
+		    IN6_IS_ADDR_LINKLOCAL(&p->addr.v.a.addr.v6))
 			continue;
 		if ((flags & PFI_AFLAG_NOALIAS) && p->af == AF_INET6 && got6)
 			continue;

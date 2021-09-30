@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57a1422a9407ba2d8bbc7a015fb321118c43d688 $
+ * $FreeBSD: 8cd8d833f1e1974a89ba171c5c4a4523989d2fc5 $
  */
 
 #ifndef _NETINET_UDPLITE_H_
@@ -40,7 +40,7 @@ struct udplitehdr {
 	u_short	udplite_checksum;	/* UDP-Lite checksum */
 };
 
-/* 
+/*
  * User-settable options (used with setsockopt).
  */
 #define	UDPLITE_SEND_CSCOV	2	/* Sender checksum coverage. */

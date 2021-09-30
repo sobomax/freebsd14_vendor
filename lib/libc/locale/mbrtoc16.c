@@ -27,10 +27,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 497f1cd028d0143c540920a31345f36125e7bb76 $");
+__FBSDID("$FreeBSD: 7f5674d97d3cafe88a1b789caee74088c5c7dde3 $");
 
 #include <uchar.h>
-#include "xlocale_private.h"
+#include "mblocal.h"
 
 typedef struct {
 	char16_t	trail_surrogate;
@@ -47,7 +47,7 @@ mbrtoc16_l(char16_t * __restrict pc16, const char * __restrict s, size_t n,
 
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->mbrtoc16;
+		ps = &(XLOCALE_CTYPE(locale)->mbrtoc16);
 	cs = (_Char16State *)ps;
 
 	/*

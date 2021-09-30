@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62bb121a3d58f397545ea214dcede23d9d5bc126 $");
+__FBSDID("$FreeBSD: e2cffddf87930f832182e454a5991a14f853fe18 $");
 
 /*
  * BHND attachment driver for the USB Enhanced Host Controller.
@@ -247,7 +247,6 @@ static device_method_t ehci_methods[] = {
 
 	/* Bus interface */
 	DEVMETHOD(bus_print_child,	bus_generic_print_child),
-
 	{0, 0}
 };
 

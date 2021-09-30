@@ -1,10 +1,10 @@
-# $FreeBSD: 44ec6c0c9d60f6edc2934ac7e0563fb0a5190a37 $
+# $FreeBSD: 95b8c11c6057ddba1ec4c3979e7c4af8caa8148f $
 
 SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
 LIB=		kiconv
 SRCS=		kiconv_sysctl.c xlat16_iconv.c xlat16_sysctl.c
 SRCS+=		quirks.c

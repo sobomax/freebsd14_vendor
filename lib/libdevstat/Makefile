@@ -1,6 +1,5 @@
-# $FreeBSD: df5d44ec30db13a44d71f3c9d7c49f4c5f6aace8 $
+# $FreeBSD: dcda3c2bdac84f1d038d9f098787326125ba7dbb $
 
-PACKAGE=lib${LIB}
 LIB=	devstat
 SHLIBDIR?= /lib
 # Bump DEVSTAT_USER_API_VER in devstat.h every time this is incremented.

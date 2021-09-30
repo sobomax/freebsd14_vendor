@@ -24,7 +24,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 196074195e8747b98e329f7610fe95c02a59fb1b $
+.\" $FreeBSD: 85d69b9051629ac9cbb6232727a4e8f77810cd66 $
 .\"
 .Dd June 2, 2020
 .Dt PSM 4
@@ -344,7 +344,7 @@ Similarly, extended support for IBM/Lenovo TrackPoint and Elantech touchpads
 can be enabled by setting
 .Va hw.psm.trackpoint_support
 or
-.Va hw.psm.elantech_support,
+.Va hw.psm.elantech_support ,
 respectively, to
 .Em 1
 at boot-time.
@@ -815,7 +815,6 @@ At debug level 2, much more detailed information is logged.
 .Xr syslog 3 ,
 .Xr atkbdc 4 ,
 .Xr mouse 4 ,
-.Xr mse 4 ,
 .Xr sysmouse 4 ,
 .Xr moused 8 ,
 .Xr syslogd 8

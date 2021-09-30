@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fcbc2f69a6c0e506154944c6b23ad32fecb60a5c $");
+__FBSDID("$FreeBSD: 3c909beb40e8d6207df3440dee9d10750356d0a0 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -117,7 +117,7 @@ ata_ite_ch_attach(device_t dev)
 {
 	struct ata_channel *ch = device_get_softc(dev);
 	int error;
- 
+
 	error = ata_pci_ch_attach(dev);
 	ch->flags |= ATA_CHECKS_CABLE;
 	ch->flags |= ATA_NO_ATAPI_DMA;

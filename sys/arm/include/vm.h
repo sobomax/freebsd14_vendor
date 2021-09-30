@@ -25,13 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 64b48e53bffd76420783356e992ef2d50823f0e0 $
+ * $FreeBSD: b9f72fe9a5f741dedf82df0dcb8fcc592492605f $
  */
 
 #ifndef _MACHINE_VM_H_
 #define	_MACHINE_VM_H_
 
-#if __ARM_ARCH >= 6
 #define VM_MEMATTR_WB_WA		((vm_memattr_t)0)
 #define VM_MEMATTR_NOCACHE		((vm_memattr_t)1)
 #define VM_MEMATTR_DEVICE		((vm_memattr_t)2)
@@ -44,11 +43,6 @@
 /* Don't export aliased VM_MEMATTR to userland */
 #define VM_MEMATTR_WRITE_COMBINING 	VM_MEMATTR_WRITE_THROUGH /* for DRM */
 #define VM_MEMATTR_WRITE_BACK		VM_MEMATTR_WB_WA	/* for DRM */
-#endif
-#else
-/* Memory attribute configuration. */
-#define	VM_MEMATTR_DEFAULT	0
-#define	VM_MEMATTR_UNCACHEABLE	1
 #endif
 
 #endif /* !_MACHINE_VM_H_ */

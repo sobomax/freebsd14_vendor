@@ -1,4 +1,4 @@
-# $FreeBSD: fc3dc624409fe5b67980dc7af0450d840d213f07 $
+# $FreeBSD: 8694876dbc10f93f55c8ea3ac6b4577533a259bb $
 
 PACKAGE=lib${LIB}
 PRIVATELIB=	yes
@@ -12,7 +12,7 @@ INCS=	sqlite3.h sqlite3ext.h
 SQLITE=	${SRCTOP}/contrib/sqlite3
 .PATH:	${SQLITE}
 
-WARNS=	3
+WARNS?=	3
 CFLAGS+=	-I${SQLITE} \
 		-DUSE_PREAD=1 \
 		-DSTDC_HEADERS=1 \
@@ -34,5 +34,9 @@ CFLAGS+=	-I${SQLITE} \
 		-DHAVE_POSIX_FALLOCATE=1 \
 		-D_REENTRANT=1 \
 		-DSQLITE_THREADSAFE=1
+
+.if ${MACHINE_ARCH} == "powerpc64le"
+CFLAGS+=	-DSQLITE_BYTEORDER=1234
+.endif
 
 .include <bsd.lib.mk>

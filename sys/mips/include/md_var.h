@@ -30,7 +30,7 @@
  *
  *	from: src/sys/i386/include/md_var.h,v 1.35 2000/02/20 20:51:23 bsd
  *	JNPR: md_var.h,v 1.4 2006/10/16 12:30:34 katta
- * $FreeBSD: 0150e6acd354476910b23250b018497f6c7377fa $
+ * $FreeBSD: 8462b1beb22e482a129770f1bbf8a021958501a3 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -42,14 +42,14 @@
  * Miscellaneous machine-dependent declarations.
  */
 extern	long	Maxmem;
+extern	char	cpu_board[];
+extern	char	cpu_model[];
 extern	char	sigcode[];
 extern	int	szsigcode;
 #if defined(__mips_n32) || defined(__mips_n64)
 extern	char	sigcode32[];
 extern	int	szsigcode32;
 #endif
-extern	uint32_t *vm_page_dump;
-extern	int vm_page_dump_size;
 
 extern vm_offset_t kstack0;
 extern vm_offset_t kernel_kseg0_end;
@@ -75,13 +75,13 @@ void	mips_cpu_init(void);
 void	mips_pcpu0_init(void);
 void	mips_proc0_init(void);
 void	mips_postboot_fixup(void);
+void	cpu_identify(void);
+void	cpu_switch_set_userlocal(void) __asm(__STRING(cpu_switch_set_userlocal));
 
 extern int busdma_swi_pending;
 void	busdma_swi(void);
 
 struct	dumperinfo;
-void	dump_add_page(vm_paddr_t);
-void	dump_drop_page(vm_paddr_t);
 int	minidumpsys(struct dumperinfo *);
 
 #endif /* !_MACHINE_MD_VAR_H_ */

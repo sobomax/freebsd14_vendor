@@ -1,8 +1,7 @@
-# $FreeBSD: 03c5dcda9ed9aec4eb428b1e1f33a1025b16b3a4 $
+# $FreeBSD: 9f2f4a7249cdc422b87098d2af7709911d060f27 $
 
 PROG=	aac_checkq
 MAN=
-WARNS?=6
 BINDIR?=/usr/local/bin
 
 .include <bsd.prog.mk>

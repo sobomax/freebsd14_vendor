@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2124c532539c805c320a748b89199d358aba7ced $
+ * $FreeBSD: 7c7707a3864e1ed8ea820f2a90e31fa97ae51b0e $
  */
 
 #include <machine/asmacros.h>
@@ -207,7 +207,7 @@ PT2:
 
 /* 64bit GDT */
 gdtdesc:
-	.word	gdtend - gdt
+	.word	gdtend - gdt - 1
 	.long	VTOP(gdt)		# low
 	.long	0			# high
 gdt:
@@ -221,7 +221,7 @@ gdtend:
 
 /* 32bit GDT */
 gdtdesc32:
-	.word	gdt32end - gdt32
+	.word	gdt32end - gdt32 - 1
 	.long	VTOP(gdt32)
 	.long	0
 gdt32:

@@ -1,7 +1,7 @@
 #ifndef CTRS_H_
 #define CTRS_H_
 
-/* $FreeBSD: a41ae6853fbfc2c9eae17671c0abd6ac29cdea73 $ */
+/* $FreeBSD: eb4c4c9d4bfd7cc74ed55fba26a32ef70864261c $ */
 
 #include <sys/time.h>
 
@@ -18,12 +18,12 @@ struct my_ctrs {
  * Caller has to make sure that the buffer is large enough.
  */
 static const char *
-norm2(char *buf, double val, char *fmt, int normalize)
+norm2(char *buf, double val, const char *fmt, int normalize)
 {
-	char *units[] = { "", "K", "M", "G", "T" };
+	const char *units[] = { "", "K", "M", "G", "T" };
 	u_int i;
 	if (normalize)
-		for (i = 0; val >=1000 && i < sizeof(units)/sizeof(char *) - 1; i++)
+		for (i = 0; val >=1000 && i < sizeof(units)/sizeof(const char *) - 1; i++)
 			val /= 1000;
 	else
 		i=0;

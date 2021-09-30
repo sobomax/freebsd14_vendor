@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d04816f8a591dee708fca3eb92cd8cbec2445b6e $
+# $FreeBSD: 50a18e2f59dd4cc0b4bec78e3d6b18d536f6a8d7 $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -31,6 +31,7 @@
 ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-sh
 
+PACKAGE=	tests
 PROG_CXX=	atf-sh
 SRCS=		atf-sh.cpp
 MAN=		atf-sh.1 atf-sh.3
@@ -74,6 +75,7 @@ FILESGROUPS=	SUBR
 
 SUBRDIR=	${SHAREDIR}/atf
 SUBR=		libatf-sh.subr
+SUBRTAGS=	package=tests
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)jobs.c	8.5 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2ab5389e2ad2b38e0bb0e6aa0ad6a2b5753efc1 $");
+__FBSDID("$FreeBSD: c0ba7d75e16dc13dfc6a7178eefa4ce9074edd67 $");
 
 #include <sys/ioctl.h>
 #include <sys/param.h>
@@ -73,6 +73,7 @@ __FBSDID("$FreeBSD: a2ab5389e2ad2b38e0bb0e6aa0ad6a2b5753efc1 $");
 #include "mystring.h"
 #include "var.h"
 #include "builtins.h"
+#include "eval.h"
 
 
 /*
@@ -927,7 +928,12 @@ forkshell(struct job *jp, union node *n, int mode)
 				pgrp = jp->ps[0].pid;
 			if (setpgid(0, pgrp) == 0 && mode == FORK_FG &&
 			    ttyfd >= 0) {
-				/*** this causes superfluous TIOCSPGRPS ***/
+				/*
+				 * Each process in a pipeline must have the tty
+				 * pgrp set before running its code.
+				 * Only for pipelines of three or more processes
+				 * could this be reduced to two calls.
+				 */
 				if (tcsetpgrp(ttyfd, pgrp) < 0)
 					error("tcsetpgrp failed, errno=%d", errno);
 			}
@@ -1024,7 +1030,7 @@ vforkexecshell(struct job *jp, char **argv, char **envp, const char *path, int i
 	if (pid == 0) {
 		TRACE(("Child shell %d\n", (int)getpid()));
 		if (setjmp(jmploc.loc))
-			_exit(exception == EXEXEC ? exerrno : 2);
+			_exit(exitstatus);
 		if (pip != NULL) {
 			close(pip[0]);
 			if (pip[1] != 1) {

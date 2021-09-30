@@ -1,4 +1,4 @@
-# $FreeBSD: f3105b33f55beba0234af0c7715d3f5c4642f324 $
+# $FreeBSD: bd548f06951e99297d6c57121ddc3f283ea5859f $
 
 PACKAGE=	tests
 
@@ -30,8 +30,8 @@ _ACL_PROGS=		getfacl setfacl
 TEST_METADATA.$t+=	required_programs="perl zpool ${_ACL_PROGS}"
 .endfor
 
-# .for t in 00 02
-# TEST_METADATA.$t+=	required_programs="perl ${_ACL_PROGS}"
-# .endfor
+.for t in 00 02
+TEST_METADATA.$t+=	required_programs="perl ${_ACL_PROGS}"
+.endfor
 
 .include <bsd.test.mk>

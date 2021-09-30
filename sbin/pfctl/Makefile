@@ -1,9 +1,6 @@
-# $FreeBSD: 8ca3b5d8628586f79e0c11765c46719518f68cc4 $
+# $FreeBSD: 14dc83eb97b0d10f602791f9ecea9053026475a7 $
 
 .include <src.opts.mk>
-
-# pf_ruleset.c is shared between kernel and pfctl
-.PATH: ${SRCTOP}/sys/netpfil/pf
 
 PACKAGE=pf
 CONFS=	pf.os

@@ -13,7 +13,7 @@
  * works or modified versions.
  *
  * $Cronyx: ceddk.h,v 1.2.6.1 2005/11/09 13:01:39 rik Exp $
- * $FreeBSD: f5844005d75415820d73cdb7c663c4bdaf3df8cd $
+ * $FreeBSD: 12742dbbef77d57022ef6aaa5cc711971ab66b59 $
  */
 
 #define TAU32_UserContext_Add	void	*sys;
@@ -63,7 +63,7 @@ typedef struct _ce_chan_t {
 #define T_NONE		0		/* no channel */
 #define T_E1		3		/* E1 */
 #define T_DATA		6		/* no physical interface */
-	
+
 	struct _ce_board_t *board;
 	unsigned char dtr;
 	unsigned char rts;

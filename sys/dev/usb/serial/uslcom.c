@@ -1,7 +1,7 @@
 /*	$OpenBSD: uslcom.c,v 1.17 2007/11/24 10:52:12 jsg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ee72846a2269f767c1685ff4d0235a3d8639e0f $");
+__FBSDID("$FreeBSD: fec18d2a5631861966e82d9942e233f865d6549b $");
 
 /*
  * Copyright (c) 2006 Jonathan Gray <jsg@openbsd.org>
@@ -59,7 +59,8 @@ __FBSDID("$FreeBSD: 6ee72846a2269f767c1685ff4d0235a3d8639e0f $");
 #ifdef USB_DEBUG
 static int uslcom_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, uslcom, CTLFLAG_RW, 0, "USB uslcom");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, uslcom, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB uslcom");
 SYSCTL_INT(_hw_usb_uslcom, OID_AUTO, debug, CTLFLAG_RWTUN,
     &uslcom_debug, 0, "Debug level");
 #endif
@@ -821,7 +822,6 @@ tr_setup:
 		pc = usbd_xfer_get_frame(xfer, 0);
 		if (ucom_get_data(&sc->sc_ucom, pc, 0,
 		    USLCOM_BULK_BUF_SIZE, &actlen)) {
-
 			DPRINTF("actlen = %d\n", actlen);
 
 			usbd_xfer_set_frame_len(xfer, 0, actlen);

@@ -32,13 +32,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1415850f6f48e6dfb9d5efcb6f65fd3c35b2567 $");
+__FBSDID("$FreeBSD: 688673268ef93385c212b95f459d2c61fd948ed4 $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
 #include <sys/malloc.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/vinum/geom_vinum_var.h>
 #include <geom/vinum/geom_vinum.h>
 

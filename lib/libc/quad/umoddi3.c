@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)umoddi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f479fa3ef8a14fae8b9fe1a09207f8d836232b49 $");
+__FBSDID("$FreeBSD: 7f45134213ae613a75cc4317d72b9b81eded914d $");
 
 #include "quad.h"
 
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: f479fa3ef8a14fae8b9fe1a09207f8d836232b49 $");
  * Return remainder after dividing two unsigned quads.
  */
 u_quad_t
-__umoddi3(a, b)
-	u_quad_t a, b;
+__umoddi3(u_quad_t a, u_quad_t b)
 {
 	u_quad_t r;
 

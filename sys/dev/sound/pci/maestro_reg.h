@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	maestro_reg.h,v 1.13 2001/11/11 18:29:46 taku Exp
- * $FreeBSD: 7db2127f950915f42ceeaaeb5212c0dbda39a0c7 $
+ * $FreeBSD: 5ec691ca8e8bb2e371206ceb894af10c57a64a84 $
  */
 
 #ifndef	MAESTRO_REG_H_INCLUDED
@@ -79,7 +79,6 @@
 #define	PPMI_D1		1	/* Medium power */
 #define	PPMI_D2		2	/* Low power */
 #define	PPMI_D3		3	/* Turned off */
-
 
 /* -----------------------------
  * I/O ports
@@ -212,7 +211,6 @@
 #define PORT_ASSP_HOST_WR_DATA	0xaa	/* BYTE RW */
 #define PORT_ASSP_INT_STAT	0xac	/* BYTE RW */
 
-
 /* -----------------------------
  * Wave Processor Indexed Data Registers.
  */
@@ -249,7 +247,6 @@
 
 #define WPREG_TIMER_ENABLE	17
 #define WPREG_TIMER_START	23
-
 
 /* -----------------------------
  * Audio Processing Unit.
@@ -375,7 +372,6 @@
 
 #define APU_DATASRC_A_SHIFT	0
 #define APU_DATASRC_B_SHIFT	8
-
 
 /* -----------------------------
  * Limits.

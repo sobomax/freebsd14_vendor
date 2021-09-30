@@ -34,7 +34,7 @@
  *	@(#)null_vfsops.c	8.2 (Berkeley) 1/21/94
  *
  * @(#)lofs_vfsops.c	1.2 (Berkeley) 6/18/92
- * $FreeBSD: 6949d7d5ae89448085be5ceea117852b596184de $
+ * $FreeBSD: 0bb98072edf41996bc94d4b987f07d43c2b6d19d $
  */
 
 /*
@@ -104,7 +104,9 @@ nullfs_mount(struct mount *mp)
 	/*
 	 * Get argument
 	 */
-	error = vfs_getopt(mp->mnt_optnew, "target", (void **)&target, &len);
+	error = vfs_getopt(mp->mnt_optnew, "from", (void **)&target, &len);
+	if (error != 0)
+		error = vfs_getopt(mp->mnt_optnew, "target", (void **)&target, &len);
 	if (error || target[len - 1] != '\0')
 		return (EINVAL);
 
@@ -113,7 +115,7 @@ nullfs_mount(struct mount *mp)
 	 */
 	if (mp->mnt_vnodecovered->v_op == &null_vnodeops &&
 	    VOP_ISLOCKED(mp->mnt_vnodecovered) == LK_EXCLUSIVE) {
-		VOP_UNLOCK(mp->mnt_vnodecovered, 0);
+		VOP_UNLOCK(mp->mnt_vnodecovered);
 		isvnunlocked = true;
 	} else {
 		isvnunlocked = false;
@@ -193,7 +195,7 @@ nullfs_mount(struct mount *mp)
 		    (MNTK_SHARED_WRITES | MNTK_LOOKUP_SHARED |
 		    MNTK_EXTENDED_SHARED);
 	}
-	mp->mnt_kern_flag |= MNTK_LOOKUP_EXCL_DOTDOT;
+	mp->mnt_kern_flag |= MNTK_LOOKUP_EXCL_DOTDOT | MNTK_NOMSYNC;
 	mp->mnt_kern_flag |= lowerrootvp->v_mount->mnt_kern_flag &
 	    (MNTK_USES_BCACHE | MNTK_NO_IOPF | MNTK_UNMAPPED_BUFS);
 	MNT_IUNLOCK(mp);
@@ -281,13 +283,10 @@ nullfs_root(mp, flags, vpp)
 	NULLFSDEBUG("nullfs_root(mp = %p, vp = %p)\n", mp,
 	    mntdata->nullm_lowerrootvp);
 
-	error = vget(mntdata->nullm_lowerrootvp, (flags & ~LK_TYPE_MASK) |
-	    LK_EXCLUSIVE, curthread);
+	error = vget(mntdata->nullm_lowerrootvp, flags);
 	if (error == 0) {
 		error = null_nodeget(mp, mntdata->nullm_lowerrootvp, &vp);
 		if (error == 0) {
-			if ((flags & LK_TYPE_MASK) == LK_SHARED)
-				vn_lock(vp, LK_DOWNGRADE | LK_RETRY);
 			*vpp = vp;
 		}
 	}
@@ -434,9 +433,9 @@ nullfs_unlink_lowervp(struct mount *mp, struct vnode *lowervp)
 		 * extra unlock before allowing the final vdrop() to
 		 * free the vnode.
 		 */
-		KASSERT((vp->v_iflag & VI_DOOMED) != 0,
+		KASSERT(VN_IS_DOOMED(vp),
 		    ("not reclaimed nullfs vnode %p", vp));
-		VOP_UNLOCK(vp, 0);
+		VOP_UNLOCK(vp);
 	} else {
 		/*
 		 * Otherwise, the nullfs vnode still shares the lock
@@ -445,7 +444,7 @@ nullfs_unlink_lowervp(struct mount *mp, struct vnode *lowervp)
 		 * relevant for future reclamations.
 		 */
 		ASSERT_VOP_ELOCKED(vp, "unlink_lowervp");
-		KASSERT((vp->v_iflag & VI_DOOMED) == 0,
+		KASSERT(!VN_IS_DOOMED(vp),
 		    ("reclaimed nullfs vnode %p", vp));
 		xp->null_flags &= ~NULLV_NOUNLOCK;
 	}

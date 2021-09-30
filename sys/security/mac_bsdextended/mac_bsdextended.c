@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2749374e077649a6dd52cf016231c4bb1cf0aafe $
+ * $FreeBSD: dc597052b2724765dc728daa9db2428e8de6ea77 $
  */
 
 /*
@@ -72,7 +72,8 @@ static struct mtx ugidfw_mtx;
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, bsdextended, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, bsdextended,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "TrustedBSD extended BSD MAC policy controls");
 
 static int	ugidfw_enabled = 1;
@@ -384,20 +385,19 @@ ugidfw_rulecheck(struct mac_bsdextended_rule *rule,
 	priv_granted = 0;
 	mac_granted = rule->mbr_mode;
 	if ((acc_mode & MBI_ADMIN) && (mac_granted & MBI_ADMIN) == 0 &&
-	    priv_check_cred(cred, PRIV_VFS_ADMIN, 0) == 0)
+	    priv_check_cred(cred, PRIV_VFS_ADMIN) == 0)
 		priv_granted |= MBI_ADMIN;
 	if ((acc_mode & MBI_EXEC) && (mac_granted & MBI_EXEC) == 0 &&
-	    priv_check_cred(cred, (vap->va_type == VDIR) ? PRIV_VFS_LOOKUP :
-	    PRIV_VFS_EXEC, 0) == 0)
+	    priv_check_cred(cred, (vap->va_type == VDIR) ? PRIV_VFS_LOOKUP : PRIV_VFS_EXEC) == 0)
 		priv_granted |= MBI_EXEC;
 	if ((acc_mode & MBI_READ) && (mac_granted & MBI_READ) == 0 &&
-	    priv_check_cred(cred, PRIV_VFS_READ, 0) == 0)
+	    priv_check_cred(cred, PRIV_VFS_READ) == 0)
 		priv_granted |= MBI_READ;
 	if ((acc_mode & MBI_STAT) && (mac_granted & MBI_STAT) == 0 &&
-	    priv_check_cred(cred, PRIV_VFS_STAT, 0) == 0)
+	    priv_check_cred(cred, PRIV_VFS_STAT) == 0)
 		priv_granted |= MBI_STAT;
 	if ((acc_mode & MBI_WRITE) && (mac_granted & MBI_WRITE) == 0 &&
-	    priv_check_cred(cred, PRIV_VFS_WRITE, 0) == 0)
+	    priv_check_cred(cred, PRIV_VFS_WRITE) == 0)
 		priv_granted |= MBI_WRITE;
 	/*
 	 * Is the access permitted?

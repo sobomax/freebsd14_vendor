@@ -1,7 +1,7 @@
 #ifndef __sack_filter_h__
 #define __sack_filter_h__
 /*-
- * Copyright (c) 2017 Netflix, Inc.
+ * Copyright (c) 2017-9 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * __FBSDID("$FreeBSD: 3ef9862095669b09d270039c3289e7559dbee3c4 $");
+ * __FBSDID("$FreeBSD: 2d01a0c154711061497f6a643c6413a46cbfefb0 $");
  */
 
 /*
@@ -50,7 +50,8 @@ struct sack_filter {
 };
 #ifdef _KERNEL
 void sack_filter_clear(struct sack_filter *sf, tcp_seq seq);
-int sack_filter_blks(struct sack_filter *sf, struct sackblk *in, int numblks, tcp_seq th_ack);
-
+int sack_filter_blks(struct sack_filter *sf, struct sackblk *in, int numblks,
+		     tcp_seq th_ack);
+void sack_filter_reject(struct sack_filter *sf, struct sackblk *in);
 #endif
 #endif

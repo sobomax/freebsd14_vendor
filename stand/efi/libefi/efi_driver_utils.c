@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0edea5c1e0d87b909bfdf700eb958c317f94d23c $
+ * $FreeBSD: e5034c2e34d6928a71e939ce62b6d8db5151ff3f $
  */
 
 #include <stdbool.h>
@@ -52,6 +52,8 @@ connect_controllers(EFI_GUID *filter)
         }
 
         handles = malloc(hsize);
+	if (handles == NULL)
+		return (EFI_OUT_OF_RESOURCES);
         nhandles = hsize / sizeof(EFI_HANDLE);
 
         status = BS->LocateHandle(ByProtocol, filter, NULL,

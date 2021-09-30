@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e21797a4c9a6aff102741f845559d9f50ae477e7 $");
+__FBSDID("$FreeBSD: 04c361eb1523e6a7a51250d020291132245a438e $");
 
 /*
  * driver for RealTek 8305 pseudo PHYs
@@ -136,7 +136,7 @@ rlswitch_attach(device_t dev)
 #ifdef RL_DEBUG
 	rlswitch_phydump(dev);
 #endif
-	
+
 #ifdef RL_VLAN
 	int val;
 

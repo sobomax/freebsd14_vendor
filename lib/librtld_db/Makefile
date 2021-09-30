@@ -1,8 +1,7 @@
-# $FreeBSD: 704140397f58d1ae6c4143600a0b6d5f40840918 $
+# $FreeBSD: f3d97753fe9302f15c0ebaeddf6abd92c2eea124 $
 
 .include <bsd.own.mk>
 
-PACKAGE=lib${LIB}
 LIB=		rtld_db
 SHLIB_MAJOR= 	2
 MAN=		librtld_db.3

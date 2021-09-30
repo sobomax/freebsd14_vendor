@@ -29,7 +29,7 @@
  * File : ecore_sp_commands.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8605a004177b62a526dead8be1d8c54a3e6822c2 $");
+__FBSDID("$FreeBSD: 09cd19cd9f3b3c44e780e6ada70442f223c0cc2b $");
 
 #include "bcm_osal.h"
 
@@ -511,7 +511,6 @@ enum _ecore_status_t ecore_sp_pf_update_ufp(struct ecore_hwfn *p_hwfn)
 
 	return ecore_spq_post(p_hwfn, p_ent, OSAL_NULL);
 }
-
 
 /* QM rate limiter resolution is 1.6Mbps */
 #define QM_RL_RESOLUTION(mb_val)	((mb_val) * 10 / 16)

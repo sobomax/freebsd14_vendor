@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb3d35ad5d73f6da524c5231662c0b457867536f $");
+__FBSDID("$FreeBSD: a76bec12aab56c9b6029420ceacd38ec97e0e212 $");
 
 #include "opt_bus.h"
 
@@ -70,7 +70,6 @@ struct clk_list {
 	TAILQ_ENTRY(clk_list)	next;
 	clk_t			clk;
 };
-
 
 struct hwrst_list {
 	TAILQ_ENTRY(hwrst_list)	next;
@@ -114,6 +113,7 @@ generic_ehci_fdt_probe(device_t self)
 static int
 generic_ehci_fdt_attach(device_t dev)
 {
+	int err;
 #ifdef EXT_RESOURCES
 	struct generic_ehci_fdt_softc *sc;
 	struct clk_list *clkp;
@@ -122,7 +122,7 @@ generic_ehci_fdt_attach(device_t dev)
 	hwreset_t rst;
 	struct phy_list *phyp;
 	phy_t phy;
-	int err, off;
+	int off;
 
 	sc = device_get_softc(dev);
 

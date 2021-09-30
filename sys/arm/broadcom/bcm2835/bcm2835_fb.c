@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c536aa89cfcc0cda99900c6ffecc6048e487fa1b $");
+__FBSDID("$FreeBSD: 40c4a29c3e95b5897bc21e711030bd97c4ef754d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -191,7 +191,6 @@ static device_method_t bcm_fb_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		bcm_fb_probe),
 	DEVMETHOD(device_attach,	bcm_fb_attach),
-
 	{ 0, 0 }
 };
 

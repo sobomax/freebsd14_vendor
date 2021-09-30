@@ -1,4 +1,4 @@
-#$FreeBSD: ddae056d3fc454c422423d64e615e0444d8f0a6f $
+#$FreeBSD: 0b2f2d3bf26d0aa959b435f2ac85055c9ea7de74 $
 
 arm/ti/ti_smc.S					standard
 
@@ -9,7 +9,7 @@ arm/ti/ti_sdma.c				optional	ti_sdma
 
 arm/ti/omap4/omap4_gpio.c			optional	gpio
 arm/ti/omap4/omap4_l2cache.c			optional	pl310
-arm/ti/omap4/omap4_prcm_clks.c			standard
+#arm/ti/omap4/omap4_prcm_clks.c			standard
 arm/ti/omap4/omap4_scm_padconf.c		standard
 arm/ti/omap4/omap4_mp.c				optional	smp
 arm/ti/omap4/omap4_wugen.c			standard

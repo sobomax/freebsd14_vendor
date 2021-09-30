@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: e7c51f417ef59042caffe91b0c3ce247757cac9f $
+.\" $FreeBSD: b27c55cef738a8a8f4db1bf46db9cb547b408313 $
 .\"
 .Dd April 24, 2018
 .Dt UMS 4
@@ -36,6 +36,7 @@ place the following lines in your
 kernel configuration file:
 .Bd -ragged -offset indent
 .Cd "device ums"
+.Cd "device hid"
 .Cd "device uhci"
 .Cd "device ohci"
 .Cd "device usb"
@@ -75,6 +76,7 @@ tunables:
 Debug output level, where 0 is debugging disabled and larger values increase
 debug message verbosity.
 Default is 0.
+.El
 .Sh FILES
 .Bl -tag -width /dev/ums0 -compact
 .It Pa /dev/ums0

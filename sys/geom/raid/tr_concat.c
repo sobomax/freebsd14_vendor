@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97d7111fe8017024f459d92f5fcd9e25e986725b $");
+__FBSDID("$FreeBSD: dca728bf6dc498eeb2463b75289f062f1e4a13ef $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 97d7111fe8017024f459d92f5fcd9e25e986725b $");
 #include <sys/mutex.h>
 #include <sys/systm.h>
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include "geom/raid/g_raid.h"
 #include "g_raid_tr_if.h"
 
@@ -122,7 +123,6 @@ g_raid_tr_update_state_concat(struct g_raid_volume *vol)
 			s = G_RAID_VOLUME_S_BROKEN;
 	}
 	if (s != vol->v_state) {
-
 		/*
 		 * Some metadata modules may not know CONCAT volume
 		 * mediasize until all disks connected. Recalculate.
@@ -223,7 +223,7 @@ g_raid_tr_iostart_concat(struct g_raid_tr_object *tr, struct bio *bp)
 		g_raid_iodone(bp, EIO);
 		return;
 	}
-	if (bp->bio_cmd == BIO_FLUSH) {
+	if (bp->bio_cmd == BIO_FLUSH || bp->bio_cmd == BIO_SPEEDUP) {
 		g_raid_tr_flush_common(tr, bp);
 		return;
 	}

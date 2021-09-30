@@ -1,4 +1,4 @@
-# $FreeBSD: 9a65499e77e5d1c919f061792e8751aeae9fced3 $
+# $FreeBSD: f3a15badeb527b331ecafefb2fc1ae0cced4ac9f $
 
 PACKAGE=	tests
 
@@ -25,6 +25,8 @@ ${PACKAGE}FILES+=	alias15.0 alias15.0.stdout
 ${PACKAGE}FILES+=	alias16.0
 ${PACKAGE}FILES+=	alias17.0
 ${PACKAGE}FILES+=	alias18.0
+${PACKAGE}FILES+=	alias19.0 alias19.0.stdout
+${PACKAGE}FILES+=	alias20.0 alias20.0.stdout
 ${PACKAGE}FILES+=	and-pipe-not.0
 ${PACKAGE}FILES+=	case1.0
 ${PACKAGE}FILES+=	case2.0

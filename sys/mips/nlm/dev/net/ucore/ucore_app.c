@@ -27,20 +27,18 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4a9f970c60b0d1f09bebccdb4647c7670db1c998 $
+ * $FreeBSD: 17e1e3e8b2c2bb61e0335c53de645fe8bde07681 $
  */
 
 #include "ucore.h"
 
 int main(void)
 {
-	unsigned int pktrdy;
 	int num_cachelines = 1518 / 64 ; /* pktsize / L3 cacheline size */
-
 
 	/* Spray packets to using distribution vector */
 	while (1) {
-		pktrdy = nlm_read_ucore_rxpktrdy();
+		(void)nlm_read_ucore_rxpktrdy();
 		nlm_ucore_setup_poepktdistr(FWD_DIST_VEC, 0, 0, 0, 0);
 		nlm_ucore_pkt_done(num_cachelines, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		    0, 0);

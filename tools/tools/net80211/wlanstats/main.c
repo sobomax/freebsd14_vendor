@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: bd73053be976107e603dddf245ea92a2768fc5e4 $
+ * $FreeBSD: 36da5c6b8e51044d4034088f3e39a4f5f660fe3c $
  */
 
 /*
@@ -70,7 +70,7 @@ static struct {
 static const char *
 getfmt(const char *tag)
 {
-	int i;
+	unsigned int i;
 	for (i = 0; i < nitems(tags); i++)
 		if (strcasecmp(tags[i].tag, tag) == 0)
 			return tags[i].fmt;
@@ -156,8 +156,10 @@ print_sta_stats(FILE *fd, const u_int8_t macaddr[IEEE80211_ADDR_LEN])
 }
 #endif
 
-void
-usage(void) {
+static void
+usage(void)
+{
+
 	printf("wlanstats: [-ah] [-i ifname] [-l] [-m station MAC address] [-o fmt] [interval]\n");
 }
 

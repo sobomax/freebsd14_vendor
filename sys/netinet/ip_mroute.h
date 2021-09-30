@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_mroute.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 11329fd164cbd3626f8a5d7711f823023872c9ea $
+ * $FreeBSD: 054eb921d3dfb94348f93aa52b59134a1d986149 $
  */
 
 #ifndef _NETINET_IP_MROUTE_H_
@@ -250,7 +250,6 @@ struct sioc_vif_req {
     u_long ibytes;		/* Input byte count on vif		*/
     u_long obytes;		/* Output byte count on vif		*/
 };
-
 
 /*
  * The kernel's virtual-interface structure.

@@ -25,24 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 80430c64ba1c74b890cb0dc73e2eb85e32708622 $
+ * $FreeBSD: 6d045428dd32dacc31bb6e83aca1168b2b098561 $
  */
 
 #include <sys/param.h>
 
 #include <dialog.h>
 #include <dlg_keys.h>
+#include <err.h>
 #include <errno.h>
 #include <fstab.h>
 #include <inttypes.h>
 #include <libgeom.h>
 #include <libutil.h>
 #include <stdlib.h>
+#include <sysexits.h>
 
 #include "diskeditor.h"
 #include "partedit.h"
 
 struct pmetadata_head part_metadata;
+int tmpdfd;
 static int sade_mode = 0;
 
 static int apply_changes(struct gmesh *mesh);
@@ -66,6 +69,8 @@ sigint_handler(int sig)
 
 	end_dialog();
 
+	close(tmpdfd);
+
 	exit(1);
 }
 
@@ -73,7 +78,7 @@ int
 main(int argc, const char **argv)
 {
 	struct partition_metadata *md;
-	const char *progname, *prompt;
+	const char *progname, *prompt, *tmpdir;
 	struct partedit_item *items = NULL;
 	struct gmesh mesh;
 	int i, op, nitems, nscroll;
@@ -84,6 +89,14 @@ main(int argc, const char **argv)
 		sade_mode = 1;
 
 	TAILQ_INIT(&part_metadata);
+
+	tmpdir = getenv("TMPDIR");
+	if (tmpdir == NULL)
+		tmpdir = "/tmp";
+	tmpdfd = open(tmpdir, O_DIRECTORY);
+	if (tmpdfd < 0)
+		err(EX_OSERR, "%s", tmpdir);
+	unlinkat(tmpdfd, "bsdinstall-esps", 0);
 
 	init_fstab_metadata();
 
@@ -220,6 +233,7 @@ main(int argc, const char **argv)
 	geom_deletetree(&mesh);
 	free(items);
 	end_dialog();
+	close(tmpdfd);
 
 	return (error);
 }
@@ -310,6 +324,22 @@ validate_setup(void)
 }
 
 static int
+mountpoint_sorter(const void *xa, const void *xb)
+{
+	struct partition_metadata *a = *(struct partition_metadata **)xa;
+	struct partition_metadata *b = *(struct partition_metadata **)xb;
+
+	if (a->fstab == NULL && b->fstab == NULL)
+		return 0;
+	if (a->fstab == NULL)
+		return 1;
+	if (b->fstab == NULL)
+		return -1;
+
+	return strcmp(a->fstab->fs_file, b->fstab->fs_file);
+}
+
+static int
 apply_changes(struct gmesh *mesh)
 {
 	struct partition_metadata *md;
@@ -371,6 +401,29 @@ apply_changes(struct gmesh *mesh)
 	for (i = 1; i < nitems; i++)
 		free(__DECONST(char *, items[i*2]));
 	free(items);
+
+	/* Sort filesystems for fstab so that mountpoints are ordered */
+	{
+		struct partition_metadata **tobesorted;
+		struct partition_metadata *tmp;
+		int nparts = 0;
+		TAILQ_FOREACH(md, &part_metadata, metadata)
+			nparts++;
+		tobesorted = malloc(sizeof(struct partition_metadata *)*nparts);
+		nparts = 0;
+		TAILQ_FOREACH_SAFE(md, &part_metadata, metadata, tmp) {
+			tobesorted[nparts++] = md;
+			TAILQ_REMOVE(&part_metadata, md, metadata);
+		}
+		qsort(tobesorted, nparts, sizeof(tobesorted[0]),
+		    mountpoint_sorter);
+
+		/* Now re-add everything */
+		while (nparts-- > 0)
+			TAILQ_INSERT_HEAD(&part_metadata,
+			    tobesorted[nparts], metadata);
+		free(tobesorted);
+	}
 
 	if (getenv("PATH_FSTAB") != NULL)
 		fstab_path = getenv("PATH_FSTAB");

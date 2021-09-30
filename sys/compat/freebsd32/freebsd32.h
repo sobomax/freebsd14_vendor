@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a3774c99a0cb76aa535f8f81bdc4416f38c86b15 $
+ * $FreeBSD: 4227d9037afbdd37733769b29ff047d051fc2e1c $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_H_
@@ -92,6 +92,27 @@ struct wrusage32 {
 struct itimerval32 {
 	struct timeval32 it_interval;
 	struct timeval32 it_value;
+};
+
+struct umtx_time32 {
+	struct	timespec32	_timeout;
+	uint32_t		_flags;
+	uint32_t		_clockid;
+};
+
+struct umtx_robust_lists_params_compat32 {
+	uint32_t	robust_list_offset;
+	uint32_t	robust_priv_list_offset;
+	uint32_t	robust_inact_offset;
+};
+
+struct umutex32 {
+	volatile __lwpid_t	m_owner;	/* Owner of the mutex */
+	__uint32_t		m_flags;	/* Flags of the mutex */
+	__uint32_t		m_ceilings[2];	/* Priority protect ceiling */
+	__uint32_t		m_rb_lnk;	/* Robust linkage */
+	__uint32_t		m_pad;
+	__uint32_t		m_spare[2];
 };
 
 #define FREEBSD4_MFSNAMELEN	16
@@ -386,6 +407,26 @@ struct procctl_reaper_pids32 {
 	u_int	rp_count;
 	u_int	rp_pad0[15];
 	uint32_t rp_pids;
+};
+
+struct timex32 {
+	unsigned int modes;
+	int32_t	offset;
+	int32_t	freq;
+	int32_t	maxerror;
+	int32_t	esterror;
+	int	status;
+	int32_t	constant;
+	int32_t	precision;
+	int32_t	tolerance;
+	int32_t	ppsfreq;
+	int32_t	jitter;
+	int	shift;
+	int32_t	stabil;
+	int32_t	jitcnt;
+	int32_t	calcnt;
+	int32_t	errcnt;
+	int32_t	stbcnt;
 };
 
 #endif /* !_COMPAT_FREEBSD32_FREEBSD32_H_ */

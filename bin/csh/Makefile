@@ -1,4 +1,4 @@
-# $FreeBSD: b0d4435d970c9fef6ddc5edbbb2985498eb42b1c $
+# $FreeBSD: 9aabc047493ae8a4bb1fe7b0dedcc554de2c13c8 $
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
 # C Shell with process control; VM/UNIX VAX Makefile
@@ -117,6 +117,7 @@ csh.1: tcsh.man
 
 build-tools: gethost
 
+DEPENDOBJS+= gethost
 gethost: gethost.c sh.err.h tc.const.h sh.h ${BUILD_TOOLS_META}
 	@rm -f ${.TARGET}
 	${CC:N${CCACHE_BIN}} -o gethost ${LDFLAGS} ${CFLAGS:C/-DHAVE_ICONV//} \

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4ab4768a0f5cb7522d5904b07832f25f3a81927 $");
+__FBSDID("$FreeBSD: 4798f913d5b239f13d563909139f19667ca09251 $");
 
 #include "opt_acpi.h"
 #include "opt_atpic.h"
@@ -186,15 +186,12 @@ x86_msr_op(u_int msr, u_int op, uint64_t arg1)
 }
 
 /*
- * Machine dependent boot() routine
- *
- * I haven't seen anything to put here yet
- * Possibly some stuff might be grafted back here from boot()
+ * Automatically initialized per CPU errata in cpu_idle_tun below.
  */
-void
-cpu_boot(int howto)
-{
-}
+bool mwait_cpustop_broken = false;
+SYSCTL_BOOL(_machdep, OID_AUTO, mwait_cpustop_broken, CTLFLAG_RDTUN,
+    &mwait_cpustop_broken, 0,
+    "Can not reliably wake MONITOR/MWAIT cpus without interrupts");
 
 /*
  * Flush the D-cache for non-DMA I/O so that the I-cache can
@@ -238,7 +235,7 @@ acpi_cpu_idle_mwait(uint32_t mwait_hint)
 	 * but all Intel CPUs provide hardware coordination.
 	 */
 
-	state = (int *)PCPU_PTR(monitorbuf);
+	state = &PCPU_PTR(monitorbuf)->idle_state;
 	KASSERT(atomic_load_int(state) == STATE_SLEEPING,
 	    ("cpu_mwait_cx: wrong monitorbuf state"));
 	atomic_store_int(state, STATE_MWAIT);
@@ -432,13 +429,14 @@ void
 cpu_reset(void)
 {
 #ifdef SMP
+	struct monitorbuf *mb;
 	cpuset_t map;
 	u_int cnt;
 
 	if (smp_started) {
 		map = all_cpus;
 		CPU_CLR(PCPU_GET(cpuid), &map);
-		CPU_NAND(&map, &stopped_cpus);
+		CPU_ANDNOT(&map, &stopped_cpus);
 		if (!CPU_EMPTY(&map)) {
 			printf("cpu_reset: Stopping other CPUs\n");
 			stop_cpus(map);
@@ -452,6 +450,9 @@ cpu_reset(void)
 
 			/* Restart CPU #0. */
 			CPU_SETOF(0, &started_cpus);
+			mb = &pcpu_find(0)->pc_monitorbuf;
+			atomic_store_int(&mb->stop_state,
+			    MONITOR_STOPSTATE_RUNNING);
 
 			cnt = 0;
 			while (cpu_reset_proxy_active == 0 && cnt < 10000000) {
@@ -485,7 +486,9 @@ cpu_mwait_usable(void)
 }
 
 void (*cpu_idle_hook)(sbintime_t) = NULL;	/* ACPI idle hook. */
-static int	cpu_ident_amdc1e = 0;	/* AMD C1E supported. */
+
+int cpu_amdc1e_bug = 0;			/* AMD C1E APIC workaround required. */
+
 static int	idle_mwait = 1;		/* Use MONITOR/MWAIT for short idle. */
 SYSCTL_INT(_machdep, OID_AUTO, idle_mwait, CTLFLAG_RWTUN, &idle_mwait,
     0, "Use MONITOR/MWAIT for short idle");
@@ -495,7 +498,7 @@ cpu_idle_acpi(sbintime_t sbt)
 {
 	int *state;
 
-	state = (int *)PCPU_PTR(monitorbuf);
+	state = &PCPU_PTR(monitorbuf)->idle_state;
 	atomic_store_int(state, STATE_SLEEPING);
 
 	/* See comments in cpu_idle_hlt(). */
@@ -514,7 +517,7 @@ cpu_idle_hlt(sbintime_t sbt)
 {
 	int *state;
 
-	state = (int *)PCPU_PTR(monitorbuf);
+	state = &PCPU_PTR(monitorbuf)->idle_state;
 	atomic_store_int(state, STATE_SLEEPING);
 
 	/*
@@ -546,7 +549,7 @@ cpu_idle_mwait(sbintime_t sbt)
 {
 	int *state;
 
-	state = (int *)PCPU_PTR(monitorbuf);
+	state = &PCPU_PTR(monitorbuf)->idle_state;
 	atomic_store_int(state, STATE_MWAIT);
 
 	/* See comments in cpu_idle_hlt(). */
@@ -571,7 +574,7 @@ cpu_idle_spin(sbintime_t sbt)
 	int *state;
 	int i;
 
-	state = (int *)PCPU_PTR(monitorbuf);
+	state = &PCPU_PTR(monitorbuf)->idle_state;
 	atomic_store_int(state, STATE_RUNNING);
 
 	/*
@@ -583,35 +586,6 @@ cpu_idle_spin(sbintime_t sbt)
 		if (sched_runnable())
 			return;
 		cpu_spinwait();
-	}
-}
-
-/*
- * C1E renders the local APIC timer dead, so we disable it by
- * reading the Interrupt Pending Message register and clearing
- * both C1eOnCmpHalt (bit 28) and SmiOnCmpHalt (bit 27).
- * 
- * Reference:
- *   "BIOS and Kernel Developer's Guide for AMD NPT Family 0Fh Processors"
- *   #32559 revision 3.00+
- */
-#define	MSR_AMDK8_IPM		0xc0010055
-#define	AMDK8_SMIONCMPHALT	(1ULL << 27)
-#define	AMDK8_C1EONCMPHALT	(1ULL << 28)
-#define	AMDK8_CMPHALT		(AMDK8_SMIONCMPHALT | AMDK8_C1EONCMPHALT)
-
-void
-cpu_probe_amdc1e(void)
-{
-
-	/*
-	 * Detect the presence of C1E capability mostly on latest
-	 * dual-cores (or future) k8 family.
-	 */
-	if (cpu_vendor_id == CPU_VENDOR_AMD &&
-	    (cpu_id & 0x00000f00) == 0x00000f00 &&
-	    (cpu_id & 0x0fff0000) >=  0x00040000) {
-		cpu_ident_amdc1e = 1;
 	}
 }
 
@@ -644,10 +618,11 @@ cpu_idle(int busy)
 	}
 
 	/* Apply AMD APIC timer C1E workaround. */
-	if (cpu_ident_amdc1e && cpu_disable_c3_sleep) {
+	if (cpu_amdc1e_bug && cpu_disable_c3_sleep) {
 		msr = rdmsr(MSR_AMDK8_IPM);
-		if (msr & AMDK8_CMPHALT)
-			wrmsr(MSR_AMDK8_IPM, msr & ~AMDK8_CMPHALT);
+		if ((msr & (AMDK8_SMIONCMPHALT | AMDK8_C1EONCMPHALT)) != 0)
+			wrmsr(MSR_AMDK8_IPM, msr & ~(AMDK8_SMIONCMPHALT |
+			    AMDK8_C1EONCMPHALT));
 	}
 
 	/* Call main idle method. */
@@ -671,9 +646,11 @@ SYSCTL_INT(_machdep, OID_AUTO, idle_apl31, CTLFLAG_RW,
 int
 cpu_idle_wakeup(int cpu)
 {
+	struct monitorbuf *mb;
 	int *state;
 
-	state = (int *)pcpu_find(cpu)->pc_monitorbuf;
+	mb = &pcpu_find(cpu)->pc_monitorbuf;
+	state = &mb->idle_state;
 	switch (atomic_load_int(state)) {
 	case STATE_SLEEPING:
 		return (0);
@@ -727,8 +704,10 @@ idle_sysctl_available(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, idle_available, CTLTYPE_STRING | CTLFLAG_RD,
-    0, 0, idle_sysctl_available, "A", "list of available idle functions");
+SYSCTL_PROC(_machdep, OID_AUTO, idle_available,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+    0, 0, idle_sysctl_available, "A",
+    "list of available idle functions");
 
 static bool
 cpu_idle_selector(const char *new_idle_name)
@@ -772,8 +751,10 @@ cpu_idle_sysctl(SYSCTL_HANDLER_ARGS)
 	return (cpu_idle_selector(buf) ? 0 : EINVAL);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, idle, CTLTYPE_STRING | CTLFLAG_RW, 0, 0,
-    cpu_idle_sysctl, "A", "currently selected idle function");
+SYSCTL_PROC(_machdep, OID_AUTO, idle,
+    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    0, 0, cpu_idle_sysctl, "A",
+    "currently selected idle function");
 
 static void
 cpu_idle_tun(void *unused __unused)
@@ -787,6 +768,7 @@ cpu_idle_tun(void *unused __unused)
 		/* Ryzen erratas 1057, 1109. */
 		cpu_idle_selector("hlt");
 		idle_mwait = 0;
+		mwait_cpustop_broken = true;
 	}
 
 	if (cpu_vendor_id == CPU_VENDOR_INTEL && cpu_id == 0x506c9) {
@@ -798,6 +780,7 @@ cpu_idle_tun(void *unused __unused)
 		 * sleep states.
 		 */
 		cpu_idle_apl31_workaround = 1;
+		mwait_cpustop_broken = true;
 	}
 	TUNABLE_INT_FETCH("machdep.idle_apl31", &cpu_idle_apl31_workaround);
 }
@@ -873,6 +856,13 @@ int hw_ibrs_disable = 1;
 SYSCTL_INT(_hw, OID_AUTO, ibrs_active, CTLFLAG_RD, &hw_ibrs_active, 0,
     "Indirect Branch Restricted Speculation active");
 
+SYSCTL_NODE(_machdep_mitigations, OID_AUTO, ibrs,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Indirect Branch Restricted Speculation active");
+
+SYSCTL_INT(_machdep_mitigations_ibrs, OID_AUTO, active, CTLFLAG_RD,
+    &hw_ibrs_active, 0, "Indirect Branch Restricted Speculation active");
+
 void
 hw_ibrs_recalculate(bool for_all_cpus)
 {
@@ -906,12 +896,24 @@ SYSCTL_PROC(_hw, OID_AUTO, ibrs_disable, CTLTYPE_INT | CTLFLAG_RWTUN |
     CTLFLAG_NOFETCH | CTLFLAG_MPSAFE, NULL, 0, hw_ibrs_disable_handler, "I",
     "Disable Indirect Branch Restricted Speculation");
 
+SYSCTL_PROC(_machdep_mitigations_ibrs, OID_AUTO, disable, CTLTYPE_INT |
+    CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE, NULL, 0,
+    hw_ibrs_disable_handler, "I",
+    "Disable Indirect Branch Restricted Speculation");
+
 int hw_ssb_active;
 int hw_ssb_disable;
 
 SYSCTL_INT(_hw, OID_AUTO, spec_store_bypass_disable_active, CTLFLAG_RD,
     &hw_ssb_active, 0,
     "Speculative Store Bypass Disable active");
+
+SYSCTL_NODE(_machdep_mitigations, OID_AUTO, ssb,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Speculative Store Bypass Disable active");
+
+SYSCTL_INT(_machdep_mitigations_ssb, OID_AUTO, active, CTLFLAG_RD,
+    &hw_ssb_active, 0, "Speculative Store Bypass Disable active");
 
 static void
 hw_ssb_set(bool enable, bool for_all_cpus)
@@ -966,6 +968,11 @@ SYSCTL_PROC(_hw, OID_AUTO, spec_store_bypass_disable, CTLTYPE_INT |
     hw_ssb_disable_handler, "I",
     "Speculative Store Bypass Disable (0 - off, 1 - on, 2 - auto");
 
+SYSCTL_PROC(_machdep_mitigations_ssb, OID_AUTO, disable, CTLTYPE_INT |
+    CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE, NULL, 0,
+    hw_ssb_disable_handler, "I",
+    "Speculative Store Bypass Disable (0 - off, 1 - on, 2 - auto");
+
 int hw_mds_disable;
 
 /*
@@ -1011,6 +1018,15 @@ sysctl_hw_mds_disable_state_handler(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_hw, OID_AUTO, mds_disable_state,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
+    sysctl_hw_mds_disable_state_handler, "A",
+    "Microarchitectural Data Sampling Mitigation state");
+
+SYSCTL_NODE(_machdep_mitigations, OID_AUTO, mds,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Microarchitectural Data Sampling Mitigation state");
+
+SYSCTL_PROC(_machdep_mitigations_mds, OID_AUTO, state,
     CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
     sysctl_hw_mds_disable_state_handler, "A",
     "Microarchitectural Data Sampling Mitigation state");
@@ -1105,7 +1121,7 @@ hw_mds_recalculate(void)
 		}
 		xcr0 = rxcr(0);
 		if ((xcr0 & XFEATURE_ENABLED_ZMM_HI256) != 0 &&
-		    (cpu_stdext_feature2 & CPUID_STDEXT_AVX512DQ) != 0)
+		    (cpu_stdext_feature & CPUID_STDEXT_AVX512DQ) != 0)
 			mds_handler = mds_handler_skl_avx512;
 		else if ((xcr0 & XFEATURE_ENABLED_AVX) != 0 &&
 		    (cpu_feature2 & CPUID2_AVX) != 0)
@@ -1171,6 +1187,11 @@ SYSCTL_PROC(_hw, OID_AUTO, mds_disable, CTLTYPE_INT |
     "Microarchitectural Data Sampling Mitigation "
     "(0 - off, 1 - on VERW, 2 - on SW, 3 - on AUTO");
 
+SYSCTL_PROC(_machdep_mitigations_mds, OID_AUTO, disable, CTLTYPE_INT |
+    CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE, NULL, 0,
+    sysctl_mds_disable_handler, "I",
+    "Microarchitectural Data Sampling Mitigation "
+    "(0 - off, 1 - on VERW, 2 - on SW, 3 - on AUTO");
 
 /*
  * Intel Transactional Memory Asynchronous Abort Mitigation
@@ -1285,8 +1306,9 @@ taa_recalculate_boot(void * arg __unused)
 }
 SYSINIT(taa_recalc, SI_SUB_SMP, SI_ORDER_ANY, taa_recalculate_boot, NULL);
 
-SYSCTL_NODE(_machdep_mitigations, OID_AUTO, taa, CTLFLAG_RW, 0,
-	"TSX Asynchronous Abort Mitigation");
+SYSCTL_NODE(_machdep_mitigations, OID_AUTO, taa,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "TSX Asynchronous Abort Mitigation");
 
 static int
 sysctl_taa_handler(SYSCTL_HANDLER_ARGS)

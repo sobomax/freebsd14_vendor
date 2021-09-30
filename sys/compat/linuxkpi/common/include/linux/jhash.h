@@ -21,7 +21,7 @@
  * I've modified Bob's hash to be useful in the Linux kernel, and
  * any bugs present are surely my fault.  -DaveM
  *
- * $FreeBSD: c3904e276778ef8a1f685853cb8405d93d71db2c $
+ * $FreeBSD: 08300083212f40cbde0ade53fcd8a08bd945106c $
  */
 
 /* NOTE: Arguments are modified. */
@@ -115,7 +115,6 @@ static inline u32 jhash2(const u32 *k, u32 length, u32 initval)
 
 	return c;
 }
-
 
 /* A special ultra-optimized versions that knows they are hashing exactly
  * 3, 2 or 1 word(s).

@@ -27,11 +27,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1d8102e16f99ede7e8f8dca93b307c79f0cd959 $");
+__FBSDID("$FreeBSD: 1238ca228b2051367b2e1addec8107d604af4618 $");
 
 #include <uchar.h>
 #include <wchar.h>
-#include "xlocale_private.h"
+#include "mblocal.h"
 
 size_t
 mbrtoc32_l(char32_t * __restrict pc32, const char * __restrict s, size_t n,
@@ -40,7 +40,7 @@ mbrtoc32_l(char32_t * __restrict pc32, const char * __restrict s, size_t n,
 
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->mbrtoc32;
+		ps = &(XLOCALE_CTYPE(locale)->mbrtoc32);
 
 	/* Assume wchar_t uses UTF-32. */
 	return (mbrtowc_l(pc32, s, n, ps, locale));

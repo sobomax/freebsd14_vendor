@@ -1,5 +1,5 @@
 /*	$NetBSD: ptrace.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $	*/
-/* $FreeBSD: 7aec39cb84f3f47e3985fbb1720859dde5962905 $ */
+/* $FreeBSD: 44085a3b707975fb9e784b6b29de93b06a0c64bd $ */
 
 #ifndef _MACHINE_PTRACE_H_
 #define _MACHINE_PTRACE_H_
@@ -20,4 +20,3 @@ struct vfpreg {
 #define	PT_SETVFPREGS	(PT_FIRSTMACH + 1)
 
 #endif /* !_MACHINE_PTRACE_H */
-

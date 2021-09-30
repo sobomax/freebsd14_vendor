@@ -3,12 +3,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cde022dcf0e62e84c426fbbce650e04187bb6648 $");
+__FBSDID("$FreeBSD: a6ac99166128a5db7132e0546b063de7554669d1 $");
 
 #include <stdio.h>
 #include <zlib.h>
 
 FILE *zopen(const char *fname, const char *mode);
+FILE *zdopen(int fd, const char *mode);
 
 /* convert arguments */
 static int
@@ -46,4 +47,19 @@ zopen(const char *fname, const char *mode)
 	return (funopen(gz, xgzread, NULL, xgzseek, xgzclose));
     else
 	return (funopen(gz, NULL, xgzwrite, xgzseek, xgzclose));
+}
+
+FILE *
+zdopen(int fd, const char *mode)
+{
+	gzFile gz;
+
+	gz = gzdopen(fd, mode);
+	if (gz == NULL)
+		return (NULL);
+
+	if (*mode == 'r')
+		return (funopen(gz, xgzread, NULL, xgzseek, xgzclose));
+	else
+		return (funopen(gz, NULL, xgzwrite, xgzseek, xgzclose));
 }

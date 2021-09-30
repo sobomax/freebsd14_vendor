@@ -58,7 +58,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98614b85e32bd801890a63f72de57028635b78a3 $");
+__FBSDID("$FreeBSD: a76dbf020ee35c248c9144368a6a38b82b2ff570 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1068,7 +1068,8 @@ found:
 	return (error);
 }
 
-static SYSCTL_NODE(_hw_bus, OID_AUTO, rman, CTLFLAG_RD, sysctl_rman,
+static SYSCTL_NODE(_hw_bus, OID_AUTO, rman, CTLFLAG_RD | CTLFLAG_MPSAFE,
+    sysctl_rman,
     "kernel resource manager");
 
 #ifdef DDB

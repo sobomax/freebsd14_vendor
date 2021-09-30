@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97a8ef1566587eee87afecd7d058ed8645fce748 $");
+__FBSDID("$FreeBSD: d300b2e8457b224132730ffa1b34ce1cf2832961 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -216,4 +216,3 @@ vdevice_get_dma_tag(device_t dev, device_t child)
 
         return (dinfo->mdi_dma_tag);
 }
-

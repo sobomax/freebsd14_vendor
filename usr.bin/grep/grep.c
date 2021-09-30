@@ -1,5 +1,5 @@
 /*	$NetBSD: grep.c,v 1.6 2011/04/18 03:48:23 joerg Exp $	*/
-/* 	$FreeBSD: 731e46bb112e6f99cb79b312db3ee32da9f28448 $	*/
+/* 	$FreeBSD: 33541e4fe73458a0f3773acd5390207a8516f3d1 $	*/
 /*	$OpenBSD: grep.c,v 1.42 2010/07/02 22:18:03 tedu Exp $	*/
 
 /*-
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 731e46bb112e6f99cb79b312db3ee32da9f28448 $");
+__FBSDID("$FreeBSD: 33541e4fe73458a0f3773acd5390207a8516f3d1 $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -62,21 +62,13 @@ const char	*errstr[] = {
 /* 5*/	"\t[--context[=num]] [--directories=action] [--label] [--line-buffered]\n",
 /* 6*/	"\t[--null] [pattern] [file ...]\n",
 /* 7*/	"Binary file %s matches\n",
-/* 8*/	"%s (BSD grep) %s\n",
-/* 9*/	"%s (BSD grep, GNU compatible) %s\n",
+/* 8*/	"%s (BSD grep, GNU compatible) %s\n",
 };
 
 /* Flags passed to regcomp() and regexec() */
 int		 cflags = REG_NOSUB | REG_NEWLINE;
 int		 eflags = REG_STARTEND;
 
-/* XXX TODO: Get rid of this flag.
- * matchall is a gross hack that means that an empty pattern was passed to us.
- * It is a necessary evil at the moment because our regex(3) implementation
- * does not allow for empty patterns, as supported by POSIX's definition of
- * grammar for BREs/EREs. When libregex becomes available, it would be wise
- * to remove this and let regex(3) handle the dirty details of empty patterns.
- */
 bool		 matchall;
 
 /* Searching patterns */
@@ -555,11 +547,7 @@ main(int argc, char *argv[])
 			filebehave = FILE_MMAP;
 			break;
 		case 'V':
-#ifdef WITH_GNU
-			printf(errstr[9], getprogname(), VERSION);
-#else
 			printf(errstr[8], getprogname(), VERSION);
-#endif
 			exit(0);
 		case 'v':
 			vflag = true;
@@ -642,10 +630,6 @@ main(int argc, char *argv[])
 	aargc -= optind;
 	aargv += optind;
 
-	/* Empty pattern file matches nothing */
-	if (!needpattern && (patterns == 0) && !matchall)
-		exit(1);
-
 	/* Fail if we don't have any pattern */
 	if (aargc == 0 && needpattern)
 		usage();
@@ -711,6 +695,8 @@ main(int argc, char *argv[])
 
 	if ((aargc == 0 || aargc == 1) && !Hflag)
 		hflag = true;
+
+	initqueue();
 
 	if (aargc == 0 && dirbehave != DIR_RECURSE)
 		exit(!procfile("-"));

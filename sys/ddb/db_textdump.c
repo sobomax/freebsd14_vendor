@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a85d1ddca3eb55e3563e811dfeb49221b4fb6ead $");
+__FBSDID("$FreeBSD: 539b51e58e1c1ba2b7e61398d68a3c82cf415d78 $");
 
 #include "opt_config.h"
 
@@ -76,7 +76,8 @@ __FBSDID("$FreeBSD: a85d1ddca3eb55e3563e811dfeb49221b4fb6ead $");
 #include <ddb/ddb.h>
 #include <ddb/db_lex.h>
 
-static SYSCTL_NODE(_debug_ddb, OID_AUTO, textdump, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_debug_ddb, OID_AUTO, textdump,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "DDB textdump options");
 
 /*
@@ -479,7 +480,7 @@ textdump_dumpsys(struct dumperinfo *di)
 #endif
 	if (textdump_do_msgbuf)
 		textdump_dump_msgbuf(di);
-	if (textdump_do_panic && panicstr != NULL)
+	if (textdump_do_panic && KERNEL_PANICKED())
 		textdump_dump_panic(di);
 	if (textdump_do_version)
 		textdump_dump_version(di);

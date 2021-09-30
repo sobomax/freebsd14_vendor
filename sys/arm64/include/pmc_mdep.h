@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5d6f40d0e6c0a14c48dc42d705c89e817179c54b $
+ * $FreeBSD: bcf08a7f95513d23d35858439f090128a28a62d3 $
  */
 
 #ifndef _MACHINE_PMC_MDEP_H_
@@ -54,7 +54,7 @@ union pmc_md_pmc {
 	((S) >= (START) && (S) < (END))
 #define	PMC_IN_KERNEL(va)	INKERNEL((va))
 #define	PMC_IN_USERSPACE(va) ((va) <= VM_MAXUSER_ADDRESS)
-#define	PMC_TRAPFRAME_TO_PC(TF)		((TF)->tf_lr)
+#define	PMC_TRAPFRAME_TO_PC(TF)		((TF)->tf_elr)
 #define	PMC_TRAPFRAME_TO_FP(TF)		((TF)->tf_x[29])
 
 /*

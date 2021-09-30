@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)xordi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed289afe23a44e7e3d95357a8a5823b8e0c92c3b $");
+__FBSDID("$FreeBSD: e956ade4607fd28f73a0a7a0cea7b4944debfa4a $");
 
 #include "quad.h"
 
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: ed289afe23a44e7e3d95357a8a5823b8e0c92c3b $");
  * Return a ^ b, in quad.
  */
 quad_t
-__xordi3(a, b)
-	quad_t a, b;
+__xordi3(quad_t a, quad_t b)
 {
 	union uu aa, bb;
 

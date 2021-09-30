@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a6b358bc1ea9469a88cc59c249d9e96a0708c2d9 $
+ * $FreeBSD: ccbd09c6dbf3c099fa3e8fb83b0809750d5db9ae $
  */
 
 /*
@@ -1010,11 +1010,6 @@ struct ti_type {
 #define TI_TIMEOUT		1000
 #define TI_TXCONS_UNSET		0xFFFF	/* impossible value */
 
-struct ti_mc_entry {
-	struct ether_addr		mc_addr;
-	SLIST_ENTRY(ti_mc_entry)	mc_entries;
-};
-
 typedef enum {
 	TI_FLAG_NONE		= 0x00,
 	TI_FLAG_DEBUGING	= 0x01,
@@ -1048,7 +1043,6 @@ struct ti_softc {
 	int			ti_std;		/* current std ring head */
 	int			ti_mini;	/* current mini ring head */
 	int			ti_jumbo;	/* current jumo ring head */
-	SLIST_HEAD(__ti_mchead, ti_mc_entry)	ti_mc_listhead;
 	uint32_t		ti_stat_ticks;
 	uint32_t		ti_rx_coal_ticks;
 	uint32_t		ti_tx_coal_ticks;

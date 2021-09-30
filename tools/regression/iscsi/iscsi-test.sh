@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Copyright (c) 2012 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Edward Tomasz Napierala under sponsorship
 # from the FreeBSD Foundation.
@@ -27,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6a9ea23bb8c2c12a4d86f803d44cc31b94accfbe $
+# $FreeBSD: 9626e7dac4315662264a90f95bba7f3e2544e198 $
 #
 
 #

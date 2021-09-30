@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 55ec47107051aea73b1f04f6989a5f196f66f119 $
+# $FreeBSD: 5e2e610a80bffd2de29f6ede1890eca9acd261b3 $
 
 atf_test_case F_flag
 F_flag_head()
@@ -184,6 +184,7 @@ x_output()
 	local path=$1; shift
 
 	local atime_s=$(x_output_date -f '%Sa' $path)
+	local btime_s=$(x_output_date -f '%SB' $path)
 	local ctime_s=$(x_output_date -f '%Sc' $path)
 	local devid=$(stat -f '%Hd,%Ld' $path)
 	local file_type_s=$(stat -f '%HT' $path)
@@ -206,6 +207,7 @@ Device: $devid   Inode: $inode    Links: $nlink
 Access: $atime_s
 Modify: $mtime_s
 Change: $ctime_s
+ Birth: $btime_s
 EOF
 }
 

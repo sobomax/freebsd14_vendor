@@ -1,4 +1,4 @@
-# $FreeBSD: 9520483815b35efca3bbe7b23236f7d74465035c $
+# $FreeBSD: 0c6e6e2b95c8cdae3248733a721c53dd56908f2c $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,7 @@ CFLAGS+=	-DGEOM_CLASS_DIR=\"${GEOM_CLASS_DIR}\"
 
 LIBADD=		geom util
 
-.if defined(RESCUE) || defined(RELEASE_CRUNCH)
+.if defined(RESCUE)
 .PATH:	${SRCTOP}/lib/geom/part \
 	${SRCTOP}/lib/geom/label
 

@@ -1,4 +1,4 @@
-# $FreeBSD: db5796039a0dce28d8465735f4529e978d41cd9b $
+# $FreeBSD: 50f825769af14d343e5eea0dad33fcb84bd698a1 $
 
 # This file lists DTrace tests which are known to fail or hang/crash the
 # system. They were pulled from the legacy DTrace test infrastructure in
@@ -23,7 +23,22 @@
 
 exclude()
 {
-    eval $1=\"\$$1\\n$2\"
+    case $2 in
+    # Handle globbing later
+    *"*"*) ;;
+    # No globbing needed
+    *)
+        eval $1=\"\$$1\\n$2\"
+        return
+        ;;
+    esac
+    for file in ${TESTBASE}/${2}; do
+        case ${file} in
+            # Invalid glob
+            "${TESTBASE}/${2}") echo "Invalid exclude for $2" >&2; exit 1; ;;
+        esac
+        exclude "$1" "${file##${TESTBASE}/}"
+    done
 }
 
 exclude EXFAIL common/aggs/tst.subr.d
@@ -185,10 +200,6 @@ exclude EXFAIL common/usdt/tst.eliminate.ksh
 
 # Generated headers include <sys/sdt.h>, so _DTRACE_VERSION is always defined.
 exclude EXFAIL common/usdt/tst.nodtrace.ksh
-
-# The second dtrace -G invocation returns an error with "no probes found," which
-# makes sense to me. Not yet sure what the expected behaviour is here.
-exclude EXFAIL common/usdt/tst.static2.ksh
 
 # Uses the Solaris-specific ppriv(1).
 exclude EXFAIL common/usdt/tst.user.ksh

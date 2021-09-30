@@ -30,12 +30,11 @@
 /*
  * API for writing an Active Queue Management algorithm for Dummynet
  *
- * $FreeBSD: d01e98ebeafa00d4480b3fd1618e0225fa3f4cb2 $
+ * $FreeBSD: a8a362a4bde95fed880e8f7455aa09949cea088f $
  */
 
 #ifndef _IP_DN_AQM_H
 #define _IP_DN_AQM_H
-
 
 /* NOW is the current time in millisecond*/
 #define NOW ((dn_cfg.curr_time * tick) / 1000)
@@ -65,7 +64,7 @@ extern unsigned long io_pkt_drop;
 #define DN_AQM_NAME_MAX 50
 	char			name[DN_AQM_NAME_MAX];	/* name of AQM algorithm */
 	uint32_t	type;	/* AQM type number */
-	
+
 	/* Methods implemented by AQM algorithm:
 	 * 
 	 * enqueue	enqueue packet 'm' on queue 'q'.
@@ -100,7 +99,7 @@ extern unsigned long io_pkt_drop;
 	 * the AQM configurations using 'par' array.
 	 * 
 	 */
-	
+
 	int (*enqueue)(struct dn_queue *, struct mbuf *);
 	struct mbuf * (*dequeue)(struct dn_queue *);
 	int (*config)(struct dn_fsk *, struct dn_extra_parms *ep, int);
@@ -126,7 +125,7 @@ update_stats(struct dn_queue *q, int len, int drop)
 	int inc = 0;
 	struct dn_flow *sni;
 	struct dn_flow *qni;
-	
+
 	sni = &q->_si->ni;
 	qni = &q->ni;
 
@@ -150,7 +149,6 @@ update_stats(struct dn_queue *q, int len, int drop)
 	}
 	/* tot_pkts  is updated in dn_enqueue function */
 }
-
 
 /* kernel module related function */
 int

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7b66bbf76f617f2c565c469a2d3bcbc70e0ec70 $");
+__FBSDID("$FreeBSD: 990c12f8f89da3cb654e4923679b400171cfc827 $");
 
 #include "opt_syscons.h"
 #include "opt_vga.h"
@@ -323,7 +323,7 @@ static const struct mousedata * const mousesmall[] = {
 		writeb((pos), (uint8_t)(color));			\
 	}								\
 } while (0)
-	
+
 static uint32_t vga_palette32[16] = {
 	0x000000, 0x0000ad, 0x00ad00, 0x00adad,
 	0xad0000, 0xad00ad, 0xad5200, 0xadadad,

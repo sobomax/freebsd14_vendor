@@ -1,4 +1,4 @@
-# $FreeBSD: a33c7396348b48dba350761554a255622e556d9a $
+# $FreeBSD: 39295606318ae890d7fe8a5599fe43ae0f0d611c $
 
 PROG=	athpoke
 LINKS=	${BINDIR}/${PROG} ${BINDIR}/athpeek
@@ -17,7 +17,6 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 .include <../Makefile.inc>
 

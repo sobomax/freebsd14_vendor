@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b6986b0eca9af7d8ad5a32473c0e942d5ec031f $");
+__FBSDID("$FreeBSD: 200511b2c273ae375ad6bf36f639385500495b21 $");
 
 /*
  * USBPHY "no-op" driver for Freescale family of SoCs.  This driver is used on
@@ -120,4 +120,3 @@ static driver_t usbphy_driver = {
 static devclass_t usbphy_devclass;
 
 DRIVER_MODULE(usbphy, simplebus, usbphy_driver, usbphy_devclass, 0, 0);
-

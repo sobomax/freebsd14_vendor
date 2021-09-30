@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1794f977a21d9196f4987980051993230a05f044 $");
+__FBSDID("$FreeBSD: 11ce3c3f8d5400418d30300f87f3e5a48ee718e6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -121,7 +121,7 @@ mrsas_linux_ioctl(struct thread *p, struct linux_ioctl_args *args)
 		goto END;
 	}
 #if (__FreeBSD_version >= 1000000)
-	error = fget(p, args->fd, cap_rights_init(&rights, CAP_IOCTL), &fp);
+	error = fget(p, args->fd, cap_rights_init_one(&rights, CAP_IOCTL), &fp);
 #elif (__FreeBSD_version <= 900000)
 	error = fget(p, args->fd, &fp);
 #else					/* For FreeBSD version greater than

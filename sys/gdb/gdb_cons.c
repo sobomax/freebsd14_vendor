@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5e24437a6513cc895f0902c7509ca68ff8f16717 $");
+__FBSDID("$FreeBSD: c83236050d5b7062702bccec428145077ea2a42b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -60,8 +60,11 @@ struct gdbcons {
 static struct gdbcons state = { -1 };
 
 static	int gdbcons_enable = 0;
+SYSCTL_INT(_debug_gdb, OID_AUTO, cons, CTLFLAG_RWTUN, &gdbcons_enable, 0,
+	"copy console messages to GDB");
+/* Legacy sysctl alias */
 SYSCTL_INT(_debug, OID_AUTO, gdbcons, CTLFLAG_RWTUN, &gdbcons_enable,
-	    0, "copy console messages to GDB");
+	0, "copy console messages to GDB");
 
 static void
 gdb_cnprobe(struct consdev *cp)

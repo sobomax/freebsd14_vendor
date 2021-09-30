@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)chown.2	8.4 (Berkeley) 4/19/94
-.\" $FreeBSD: 8e9a937c9c079769fe04012217b18f9f8c25bea8 $
+.\" $FreeBSD: 4c45ce9174bbf97780b2d31b0d8bca9e2a142d32 $
 .\"
-.Dd March 30, 2020
+.Dd February 23, 2021
 .Dt CHOWN 2
 .Os
 .Sh NAME
@@ -118,6 +118,15 @@ list, defined in
 If
 .Fa path
 names a symbolic link, ownership of the symbolic link is changed.
+.It Dv AT_RESOLVE_BENEATH
+Only walk paths below the directory specified by the
+.Ar fd
+descriptor.
+See the description of the
+.Dv O_RESOLVE_BENEATH
+flag in the
+.Xr open 2
+manual page.
 .El
 .Pp
 If
@@ -231,6 +240,15 @@ argument is not an absolute path and
 is neither
 .Dv AT_FDCWD
 nor a file descriptor associated with a directory.
+.It Bq Er ENOTCAPABLE
+.Fa path
+is an absolute path,
+or contained a ".." component leading to a
+directory outside of the directory hierarchy specified by
+.Fa fd ,
+and the process is in capability mode or the
+.Dv AT_RESOLVE_BENEATH
+flag was specified.
 .El
 .Sh SEE ALSO
 .Xr chgrp 1 ,

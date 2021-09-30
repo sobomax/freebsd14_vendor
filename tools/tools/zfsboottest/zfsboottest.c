@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 7406ddb77918c32d2547309dded11f0d3120f637 $ */
+/* $FreeBSD: 88f946e9d3fe3429af0ecfe98d9b77678bd26112 $ */
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -147,7 +147,7 @@ main(int argc, char** argv)
 			warn("open(%s) failed", argv[i]);
 			continue;
 		}
-		if (vdev_probe(vdev_read, &fd[i - 1], NULL) != 0) {
+		if (vdev_probe(vdev_read, NULL, &fd[i - 1], NULL) != 0) {
 			warnx("vdev_probe(%s) failed", argv[i]);
 			close(fd[i - 1]);
 		}

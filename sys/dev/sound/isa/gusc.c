@@ -48,7 +48,7 @@
 #include <isa/isavar.h>
 #include <isa/isa_common.h>
 
-SND_DECLARE_FILE("$FreeBSD: 302f2f180999906d7eeab00fc168dcebe21611ee $");
+SND_DECLARE_FILE("$FreeBSD: 00f59b834f5197bf392de41651673b360fdb7b22 $");
 
 #define LOGICALID_NOPNP 0
 #define LOGICALID_PCM   0x0000561e
@@ -290,7 +290,6 @@ gusisa_probe(device_t dev)
 		device_set_desc(dev, "Gravis UltraSound MAX");
 		return 0;
 	} else {
-
 		/*
 		 * TODO: Support even older GUS cards.  MIDI should work on
 		 * all models.

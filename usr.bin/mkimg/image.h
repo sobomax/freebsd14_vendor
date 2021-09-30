@@ -23,11 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0405c5b37c2729b4fad66862ba8f34457cb62d96 $
+ * $FreeBSD: 25823fef203065741b54906b656c1ae9290f47ca $
  */
 
 #ifndef _MKIMG_IMAGE_H_
 #define	_MKIMG_IMAGE_H_
+
+#include <stdint.h>
 
 typedef int64_t lba_t;
 

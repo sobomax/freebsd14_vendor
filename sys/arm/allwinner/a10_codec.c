@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ad21ced20cc97c2f550ae56bba3318022168f37b $
+ * $FreeBSD: 0780a7328bbe8ddcc5234e9bd7a1a06734ec658a $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad21ced20cc97c2f550ae56bba3318022168f37b $");
+__FBSDID("$FreeBSD: 0780a7328bbe8ddcc5234e9bd7a1a06734ec658a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -367,7 +367,6 @@ static kobj_method_t a10_mixer_methods[] = {
 };
 MIXER_DECLARE(a10_mixer);
 
-
 /*
  * H3 mixer interface
  */
@@ -619,7 +618,6 @@ static kobj_method_t h3_mixer_methods[] = {
 	KOBJMETHOD_END
 };
 MIXER_DECLARE(h3_mixer);
-
 
 /*
  * Channel interface
@@ -1009,7 +1007,6 @@ static kobj_method_t a10codec_chan_methods[] = {
 	KOBJMETHOD_END
 };
 CHANNEL_DECLARE(a10codec_chan);
-
 
 /*
  * Device interface

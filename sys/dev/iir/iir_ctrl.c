@@ -41,21 +41,23 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ec995a5b081f82db39628be862d030890a30013 $");
+__FBSDID("$FreeBSD: c4ed24ff50d92288860200f2584bad75029fc713 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
-#include <sys/endian.h>
-#include <sys/malloc.h>
-#include <sys/kernel.h>
-#include <sys/uio.h>
 #include <sys/conf.h>
 #include <sys/disk.h>
-#include <sys/stat.h>
 #include <sys/disklabel.h>
+#include <sys/endian.h>
+#include <sys/kernel.h>
+#include <sys/lock.h>
+#include <sys/malloc.h>
+#include <sys/mutex.h>
+#include <sys/stat.h>
 #include <sys/sysctl.h>
 #include <sys/sx.h>
+#include <sys/uio.h>
 #include <machine/bus.h>
 
 #include <dev/iir/iir.h>

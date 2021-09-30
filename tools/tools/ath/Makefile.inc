@@ -1,9 +1,11 @@
-#	$FreeBSD: d0ed24b041f4cef33b2fd7b7515b5cd6277330ef $
+#	$FreeBSD: 0eb8bb998aeea1bc26b2c975bf8e2c3e8baaeac1 $
 
 BINDIR=	/usr/local/bin
 MAN=
 
 ATH_DEFAULT=	ath0
+
+WARNS?=	0
 
 CFLAGS+=-DATH_DEFAULT='"${ATH_DEFAULT}"'
 CFLAGS+=-I${.CURDIR}

@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: df149dff4aef2b1f336f42046b7b7eb61946cdeb $"); 
+__FBSDID("$FreeBSD: 59a62cbefe7d3e0317ffb35bfd15248ee34ad762 $"); 
 	
 ENTRY(remquol)
 	fldt	16(%esp)
@@ -61,5 +61,6 @@ ENTRY(remquol)
 	movl	28(%esp),%ecx
 	movl	%eax,(%ecx)
 	ret
+END(remquol)
 
 	.section .note.GNU-stack,"",%progbits

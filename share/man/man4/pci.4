@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: a926b52851d9578991348a5cf55431d99e4d4a9d $
+.\" $FreeBSD: 18eaae1cd4d4add8922bb3bdf068d0d38d199b0f $
 .\"
 .Dd June 17, 2019
 .Dt PCI 4
@@ -406,7 +406,7 @@ specified by the
 member, otherwise fail.
 .It PCIIO_BAR_MMAP_EXCL
 Must be used together with
-.Vd PCIIO_BAR_MMAP_FIXED
+.Dv PCIIO_BAR_MMAP_FIXED
 If the specified base contains already established mappings, the
 operation fails instead of implicitly unmapping them.
 .It PCIIO_BAR_MMAP_RW

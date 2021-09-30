@@ -14,7 +14,7 @@
  * Portions of this software were developed by Julien Ridoux at the University
  * of Melbourne under sponsorship from the FreeBSD Foundation.
  *
- * $FreeBSD: 99ea2207be35439c74c7f4aa78ffe48aaab1fe32 $
+ * $FreeBSD: 578d42704f128cd4e9ae25112db5a2fc31cb332b $
  *
  * The is a FreeBSD version of the RFC 2783 API for Pulse Per Second 
  * timing interfaces.  
@@ -80,7 +80,6 @@ typedef struct {
 
 #define assert_offset_ntpfp     assert_off_tu.ntpfp
 #define clear_offset_ntpfp      clear_off_tu.ntpfp
-
 
 #define PPS_CAPTUREASSERT	0x01
 #define PPS_CAPTURECLEAR	0x02

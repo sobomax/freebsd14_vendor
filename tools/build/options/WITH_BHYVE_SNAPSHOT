@@ -1,0 +1,7 @@
+.\" $FreeBSD: 7e673f51c8bbfd9d90f45088f3bc15b1dbc533f3 $
+Set to include support for save and restore (snapshots) in
+.Xr bhyve 8
+and
+.Xr bhyvectl 8 .
+.Pp
+This option only affects amd64/amd64.

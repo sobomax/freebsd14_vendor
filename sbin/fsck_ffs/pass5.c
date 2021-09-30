@@ -35,7 +35,7 @@ static const char sccsid[] = "@(#)pass5.c	8.9 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71e3eda74c1bfb7240e3f126b1b33675c88a6c13 $");
+__FBSDID("$FreeBSD: 324e725929f601f6f2fd1a36e5b9066dd854925d $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -63,6 +63,7 @@ pass5(void)
 	struct fs *fs = &sblock;
 	ufs2_daddr_t d, dbase, dmax, start;
 	int rewritecg = 0;
+	ino_t inum;
 	struct csum *cs;
 	struct csum_total cstotal;
 	struct inodesc idesc[3];
@@ -74,11 +75,8 @@ pass5(void)
 	memset(newcg, 0, (size_t)fs->fs_cgsize);
 	newcg->cg_niblk = fs->fs_ipg;
 	/* check to see if we are to add a cylinder group check hash */
-	if ((ckhashadd & CK_CYLGRP) != 0) {
-		fs->fs_metackhash |= CK_CYLGRP;
+	if ((ckhashadd & CK_CYLGRP) != 0)
 		rewritecg = 1;
-		sbdirty();
-	}
 	if (cvtlevel >= 3) {
 		if (fs->fs_maxcontig < 2 && fs->fs_contigsumsize > 0) {
 			if (preen)
@@ -185,14 +183,19 @@ pass5(void)
 			ckhash = cg->cg_ckhash;
 			cg->cg_ckhash = 0;
 			thishash = calculate_crc32c(~0L, cg, fs->fs_cgsize);
-			if (ckhash != thishash)
+			if (ckhash == thishash) {
+				cg->cg_ckhash = ckhash;
+			} else {
 				pwarn("CG %d: BAD CHECK-HASH %#x vs %#x\n",
 				    c, ckhash, thishash);
-			cg->cg_ckhash = ckhash;
+				cg->cg_ckhash = thishash;
+				cgdirty(cgbp);
+			}
 		}
 		newcg->cg_time = cg->cg_time;
 		newcg->cg_old_time = cg->cg_old_time;
 		newcg->cg_unrefs = cg->cg_unrefs;
+		newcg->cg_ckhash = cg->cg_ckhash;
 		newcg->cg_cgx = c;
 		dbase = cgbase(fs, c);
 		dmax = dbase + fs->fs_fpg;
@@ -236,9 +239,9 @@ pass5(void)
 		}
 		memset(&newcg->cg_frsum[0], 0, sizeof newcg->cg_frsum);
 		memset(cg_inosused(newcg), 0, (size_t)(mapsize));
-		j = fs->fs_ipg * c;
-		for (i = 0; i < inostathead[c].il_numalloced; j++, i++) {
-			switch (inoinfo(j)->ino_state) {
+		inum = fs->fs_ipg * c;
+		for (i = 0; i < inostathead[c].il_numalloced; inum++, i++) {
+			switch (inoinfo(inum)->ino_state) {
 
 			case USTATE:
 				break;
@@ -258,10 +261,10 @@ pass5(void)
 				break;
 
 			default:
-				if (j < (int)UFS_ROOTINO)
+				if (inum < UFS_ROOTINO)
 					break;
-				errx(EEXIT, "BAD STATE %d FOR INODE I=%d",
-				    inoinfo(j)->ino_state, j);
+				errx(EEXIT, "BAD STATE %d FOR INODE I=%ju",
+				    inoinfo(inum)->ino_state, (uintmax_t)inum);
 			}
 		}
 		if (c == 0)
@@ -329,11 +332,6 @@ pass5(void)
 				sump[run]++;
 			}
 		}
-		if ((fs->fs_metackhash & CK_CYLGRP) != 0) {
-			newcg->cg_ckhash = 0;
-			newcg->cg_ckhash =
-			    calculate_crc32c(~0L, (void *)newcg, fs->fs_cgsize);
-		}
 
 		if (bkgrdflag != 0) {
 			cstotal.cs_nffree += cg->cg_cs.cs_nffree;
@@ -355,14 +353,14 @@ pass5(void)
 		}
 		if (rewritecg) {
 			memmove(cg, newcg, (size_t)fs->fs_cgsize);
-			dirty(cgbp);
+			cgdirty(cgbp);
 			continue;
 		}
 		if (cursnapshot == 0 &&
 		    memcmp(newcg, cg, basesize) != 0 &&
 		    dofix(&idesc[2], "SUMMARY INFORMATION BAD")) {
 			memmove(cg, newcg, (size_t)basesize);
-			dirty(cgbp);
+			cgdirty(cgbp);
 		}
 		if (bkgrdflag != 0 || usedsoftdep || debug)
 			update_maps(cg, newcg, bkgrdflag);
@@ -371,7 +369,7 @@ pass5(void)
 		    dofix(&idesc[1], "BLK(S) MISSING IN BIT MAPS")) {
 			memmove(cg_inosused(cg), cg_inosused(newcg),
 			      (size_t)mapsize);
-			dirty(cgbp);
+			cgdirty(cgbp);
 		}
 	}
 	if (cursnapshot == 0 &&

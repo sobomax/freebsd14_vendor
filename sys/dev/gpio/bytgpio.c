@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2da58defffc42849b0066747ff5762aeb8535f17 $");
+__FBSDID("$FreeBSD: 0727f767c920636cb98b89727553ee94aa9ca261 $");
 
 #include "opt_acpi.h"
 
@@ -541,13 +541,14 @@ static int
 bytgpio_probe(device_t dev)
 {
 	static char *gpio_ids[] = { "INT33FC", NULL };
+	int rv;
 
-	if (acpi_disabled("gpio") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, gpio_ids) == NULL)
-	return (ENXIO);
-
-	device_set_desc(dev, "Intel Baytrail GPIO Controller");
-	return (0);
+	if (acpi_disabled("gpio"))
+		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, gpio_ids, NULL);
+	if (rv <= 0)
+		device_set_desc(dev, "Intel Baytrail GPIO Controller");
+	return (rv);
 }
 
 static int

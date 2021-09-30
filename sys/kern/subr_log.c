@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c542d34182766564248aea2b364cf5a14f259716 $");
+__FBSDID("$FreeBSD: 9336611d6005ecf81a5f656a978d7d79856064c3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -258,7 +258,6 @@ logioctl(struct cdev *dev, u_long com, caddr_t data, int flag, struct thread *td
 {
 
 	switch (com) {
-
 	/* return number of characters immediately available */
 	case FIONREAD:
 		*(int *)data = msgbuf_getcount(msgbufp);

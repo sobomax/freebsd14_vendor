@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 05e8711c16faacc0276da2cdf68312ec5bb506e3 $
+ * $FreeBSD: d6694be9c37367238233320514a42223963afe2e $
  */
 
 /******************************************************************************
@@ -70,7 +70,7 @@ int	acpi_release_global_lock(volatile uint32_t *);
 #define	ACPI_RELEASE_GLOBAL_LOCK(GLptr, Acq)	do {			\
 	(Acq) = acpi_release_global_lock(&((GLptr)->GlobalLock));	\
 } while (0)
- 
+
 enum intr_trigger;
 enum intr_polarity;
 

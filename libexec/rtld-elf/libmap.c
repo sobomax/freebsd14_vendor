@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 627928a9a61be666efa41fdfec571fb3dadcf9fe $
+ * $FreeBSD: 499d2cd2a1d94711776eae325e2107c927fd09c6 $
  */
 
 #include <sys/types.h>
@@ -17,6 +17,7 @@
 #include "rtld.h"
 #include "libmap.h"
 #include "paths.h"
+#include "rtld_libc.h"
 
 TAILQ_HEAD(lm_list, lm);
 struct lm {
@@ -102,7 +103,7 @@ lmc_parse_file(const char *path)
 	char *lm_map;
 	struct stat st;
 	ssize_t retval;
-	int fd;
+	int fd, saved_errno;
 
 	TAILQ_FOREACH(p, &lmc_head, next) {
 		if (strcmp(p->path, path) == 0)
@@ -116,9 +117,9 @@ lmc_parse_file(const char *path)
 		return;
 	}
 	if (fstat(fd, &st) == -1) {
-		close(fd);
 		dbg("lm_parse_file: fstat(\"%s\") failed, %s", path,
 		    rtld_strerror(errno));
+		close(fd);
 		return;
 	}
 
@@ -131,14 +132,19 @@ lmc_parse_file(const char *path)
 
 	lm_map = xmalloc(st.st_size);
 	retval = read(fd, lm_map, st.st_size);
+	saved_errno = errno;
+	close(fd);
 	if (retval != st.st_size) {
-		close(fd);
+		if (retval == -1) {
+			dbg("lm_parse_file: read(\"%s\") failed, %s", path,
+			    rtld_strerror(saved_errno));
+		} else {
+			dbg("lm_parse_file: short read(\"%s\"), %zd vs %jd",
+			    path, retval, (uintmax_t)st.st_size);
+		}
 		free(lm_map);
-		dbg("lm_parse_file: read(\"%s\") failed, %s", path,
-		    rtld_strerror(errno));
 		return;
 	}
-	close(fd);
 	p = xmalloc(sizeof(struct lmc));
 	p->path = xstrdup(path);
 	p->dev = st.st_dev;

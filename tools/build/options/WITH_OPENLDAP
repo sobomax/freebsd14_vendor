@@ -1,2 +1,2 @@
-.\" $FreeBSD: 75f96822eb8cadedae4fa6bb74fb7f8ccb6b1248 $
-Enable building openldap support for kerberos.
+.\" $FreeBSD: c815e616072661709746a672fff4c66bbf621b1e $
+Enable building LDAP support for kerberos using an openldap client from ports.

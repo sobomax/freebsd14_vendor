@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3041d6368755a118a4aa4db894febf73cd514fc5 $	*/
+/*	$FreeBSD: 4f03d78d434f4c1b697db127f5d0e5e74695df38 $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
@@ -162,7 +162,6 @@ kdebug_sadb_exttype(uint16_t type)
 #undef EXT_NAME
 #undef X_NAME
 }
-
 
 /* %%%: about struct sadb_msg */
 void
@@ -810,8 +809,8 @@ kdebug_secreplay(struct secreplay *rpl)
 	int len, l;
 
 	IPSEC_ASSERT(rpl != NULL, ("null rpl"));
-	printf(" secreplay{ count=%u bitmap_size=%u wsize=%u seq=%u lastseq=%u",
-	    rpl->count, rpl->bitmap_size, rpl->wsize, rpl->seq, rpl->lastseq);
+	printf(" secreplay{ count=%lu bitmap_size=%u wsize=%u last=%lu",
+	    rpl->count, rpl->bitmap_size, rpl->wsize, rpl->last);
 
 	if (rpl->bitmap == NULL) {
 		printf("  }\n");
@@ -1029,7 +1028,6 @@ ipsec_bindump(caddr_t buf, int len)
 
 	return;
 }
-
 
 void
 ipsec_hexdump(caddr_t buf, int len)

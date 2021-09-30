@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2662923eb9056e5808d4307fda567e6529dfe03c $
+ * $FreeBSD: d074b563cd415f2878b949dfaaabb259fd444731 $
  */
 #ifndef	_LINUX_DMA_MAPPING_H_
 #define _LINUX_DMA_MAPPING_H_
@@ -38,6 +38,7 @@
 #include <linux/scatterlist.h>
 #include <linux/mm.h>
 #include <linux/page.h>
+#include <linux/sizes.h>
 
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -274,7 +275,6 @@ static inline unsigned int dma_set_max_seg_size(struct device *dev,
 {
 	return (0);
 }
-
 
 #define dma_map_single(d, a, s, r) dma_map_single_attrs(d, a, s, r, NULL)
 #define dma_unmap_single(d, a, s, r) dma_unmap_single_attrs(d, a, s, r, NULL)

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91877499ca6c7d05ad774e4f0bc09a7f9fcd62eb $");
+__FBSDID("$FreeBSD: 2ab891c728c5d9b2d99e32e6c26dd5da1e895f98 $");
 
 /*
  * This code implements a `root nexus' for Intel Architecture
@@ -62,8 +62,11 @@ __FBSDID("$FreeBSD: 91877499ca6c7d05ad774e4f0bc09a7f9fcd62eb $");
 #include <sys/interrupt.h>
 
 #include <machine/md_var.h>
-#include <machine/vmparam.h>
 #include <vm/vm.h>
+#include <vm/vm_param.h>
+#include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 #include <vm/pmap.h>
 
 #include <machine/metadata.h>
@@ -185,7 +188,6 @@ static device_method_t nexus_methods[] = {
 	DEVMETHOD(pcib_release_msix,	nexus_release_msix),
 	DEVMETHOD(pcib_map_msi,		nexus_map_msi),
 #endif
-
 	{ 0, 0 }
 };
 
@@ -322,7 +324,7 @@ nexus_print_child(device_t bus, device_t child)
 	retval += nexus_print_all_resources(child);
 	if (device_get_flags(child))
 		retval += printf(" flags %#x", device_get_flags(child));
-	retval += printf(" on motherboard\n");	/* XXX "motherboard", ick */
+	retval += printf("\n");
 
 	return (retval);
 }
@@ -535,7 +537,7 @@ static int
 nexus_unmap_resource(device_t bus, device_t child, int type, struct resource *r,
     struct resource_map *map)
 {
-	
+
 	/*
 	 * If this is a memory resource, unmap it.
 	 */

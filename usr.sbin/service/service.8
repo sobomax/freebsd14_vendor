@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 27d3948ed62e3dbe77fb99e2022765d695ca9e5d $
+.\" $FreeBSD: 329bcb823f1d159945c8a3ec59fb32d7eaf4f415 $
 .\"
-.Dd June 23, 2020
+.Dd January 16, 2021
 .Dt SERVICE 8
 .Os
 .Sh NAME
@@ -130,6 +130,15 @@ service -rv
 .Ed
 .Pp
 The following programmable completion entry can be used in
+.Xr csh 1
+for the names and common commands of the rc.d scripts:
+.Bd -literal -offset indent
+complete service 'c/-/(e l r v)/' 'p/1/`service -l`/' \e
+		 'n/*/(start stop reload restart \e
+		 status rcvar onestart onestop)/'
+.Ed
+.Pp
+The following programmable completion entry can be use in
 .Xr bash 1
 for the names of the rc.d scripts:
 .Bd -literal -offset -ident

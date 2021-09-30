@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: 3aecc9b94ce74b63bb4c22f773f3a15c6a4e39d0 $
+ * $FreeBSD: f3cf03dffd669820dd714e9eb0b1cb1ffe5f01ca $
  */
 #ifndef _ARM64_LINUX_H_
 #define	_ARM64_LINUX_H_
@@ -64,6 +64,7 @@ typedef l_ulong		l_size_t;
 typedef l_long		l_suseconds_t;
 typedef l_long		l_time_t;
 typedef l_int		l_timer_t;	/* XXX */
+typedef l_int		l_mqd_t;
 typedef l_ulong		l_fd_mask;
 
 typedef struct {
@@ -162,9 +163,9 @@ typedef void	(*l_handler_t)(l_int);
 
 typedef struct {
 	l_handler_t	lsa_handler;
-	l_sigset_t	lsa_mask;
 	l_ulong		lsa_flags;
 	l_uintptr_t	lsa_restorer;
+	l_sigset_t	lsa_mask;
 } l_sigaction_t;				/* XXX */
 
 typedef struct {

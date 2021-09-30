@@ -1,4 +1,4 @@
-/* $FreeBSD: b288e7ae606bd53433434084cc6409a338d77297 $ */
+/* $FreeBSD: a0b1db4e1c02a2e4c55d11ed7bdffe85fb5cec8e $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b288e7ae606bd53433434084cc6409a338d77297 $
+ * $FreeBSD: a0b1db4e1c02a2e4c55d11ed7bdffe85fb5cec8e $
  */
 
 #ifndef _USB_ETHERNET_H_
@@ -48,11 +48,7 @@
 #include <net/bpf.h>
 #include <net/ethernet.h>
 
-#include "miibus_if.h"
-
-#include <dev/mii/mii.h>
-#include <dev/mii/miivar.h>
-
+struct mii_data;
 struct usb_ether;
 struct usb_device_request;
 
@@ -91,7 +87,7 @@ struct usb_ether {
 
 	struct usb_process	ue_tq;
 	struct sysctl_ctx_list	ue_sysctl_ctx;
-	struct ifqueue		ue_rxq;
+	struct mbufq		ue_rxq;
 	struct usb_callout	ue_watchdog;
 	struct usb_ether_cfg_task	ue_sync_task[2];
 	struct usb_ether_cfg_task	ue_media_task[2];

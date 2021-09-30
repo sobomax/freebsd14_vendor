@@ -1,8 +1,7 @@
-# $FreeBSD: 9f001f5215196d9d5cd66b680844240e1a56c8cc $
+# $FreeBSD: 6f63cb56aa043800ac3b2922749f284b577b9f1e $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=		mp
 SHLIB_MAJOR=	7
 LIBADD=		crypto

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9c84e30467bee39ed73c145b3d1abbd92d25058 $");
+__FBSDID("$FreeBSD: 318dae82c7ed1d0be03612ee2d46559e6c1a19d2 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -243,7 +243,6 @@ next_instr_address(db_addr_t pc, boolean_t bd)
 	next = (db_addr_t)MipsEmulateBranch(kdb_frame, pc, 0, 0);
 	return (next);
 }
-
 
 /*
  *	Decode instruction and figure out type.

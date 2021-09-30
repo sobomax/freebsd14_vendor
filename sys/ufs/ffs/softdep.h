@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)softdep.h	9.7 (McKusick) 6/21/00
- * $FreeBSD: 1e2946ab9fb9acedba3f3e2a4df23222125ce651 $
+ * $FreeBSD: 3493aadafc984c0faf568a56edb2978a7a06748e $
  */
 
 #include <sys/queue.h>
@@ -213,6 +213,11 @@ struct worklist {
 	struct mount		*wk_mp;		/* Mount we live in */
 	unsigned int		wk_type:8,	/* type of request */
 				wk_state:24;	/* state flags */
+#ifdef INVARIANTS
+	const char		*wk_func;	/* func where added / removed */
+	int			wk_line;	/* line where added / removed */
+	LIST_ENTRY(worklist)	wk_all;		/* list of deps of this type */
+#endif
 };
 #define	WK_DATA(wk) ((void *)(wk))
 #define	WK_PAGEDEP(wk) ((struct pagedep *)(wk))
@@ -353,6 +358,7 @@ struct inodedep {
 	struct	fs *id_fs;		/* associated filesystem */
 	ino_t	id_ino;			/* dependent inode */
 	nlink_t	id_nlinkdelta;		/* saved effective link count */
+	nlink_t	id_nlinkwrote;		/* i_nlink that we wrote to disk */
 	nlink_t	id_savednlink;		/* Link saved during rollback */
 	LIST_ENTRY(inodedep) id_deps;	/* bmsafemap's list of inodedep's */
 	struct	bmsafemap *id_bmsafemap; /* related bmsafemap (if pending) */
@@ -1069,6 +1075,9 @@ struct mount_softdeps {
 	TAILQ_ENTRY(mount_softdeps) sd_next;	/* List of softdep filesystem */
 	struct	ufsmount *sd_ump;		/* our ufsmount structure */
 	u_long	sd_curdeps[D_LAST + 1];		/* count of current deps */
+#ifdef INVARIANTS
+	struct	workhead sd_alldeps[D_LAST + 1];/* Lists of all deps */
+#endif
 };
 /*
  * Flags for communicating with the syncer thread.
@@ -1077,6 +1086,8 @@ struct mount_softdeps {
 #define FLUSH_CLEANUP	0x0002	/* need to clear out softdep structures */
 #define	FLUSH_STARTING	0x0004	/* flush thread not yet started */
 #define	FLUSH_RC_ACTIVE	0x0008	/* a thread is flushing the mount point */
+#define	FLUSH_DI_ACTIVE	0x0010	/* a thread is processing delayed
+				   inactivations */
 
 /*
  * Keep the old names from when these were in the ufsmount structure.
@@ -1109,3 +1120,4 @@ struct mount_softdeps {
 #define	softdep_flags			um_softdep->sd_flags
 #define	softdep_flushtd			um_softdep->sd_flushtd
 #define	softdep_curdeps			um_softdep->sd_curdeps
+#define	softdep_alldeps			um_softdep->sd_alldeps

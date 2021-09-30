@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 861fa2c722bbc28e3ac17bb0a026b701262224b5 $
+ * $FreeBSD: c8f16539a938a117608453782f2a96612f8bc15a $
  */
 #ifndef _NETSMB_SMB_RQ_H_
 #define	_NETSMB_SMB_RQ_H_
@@ -55,7 +55,6 @@
 #define SMBRQ_SLOCK(rqp)	smb_sl_lock(&(rqp)->sr_slock)
 #define SMBRQ_SUNLOCK(rqp)	smb_sl_unlock(&(rqp)->sr_slock)
 #define SMBRQ_SLOCKPTR(rqp)	(&(rqp)->sr_slock)
-
 
 enum smbrq_state {
 	SMBRQ_NOTSENT,		/* rq have data to send */

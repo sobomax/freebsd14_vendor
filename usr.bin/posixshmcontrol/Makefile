@@ -1,7 +1,6 @@
-# $FreeBSD: df8f6ce396875f39cd56cbdf250e07f377e716ff $
+# $FreeBSD: c6f847e1847831e07d0f28b8f27a5460ea369131 $
 
 PROG=   posixshmcontrol
 LIBADD=	util
-WARNS?=	6
 
 .include <bsd.prog.mk>

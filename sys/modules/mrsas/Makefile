@@ -1,5 +1,5 @@
 # Makefile for mrsas driver
-# $FreeBSD: 8d8695b4e4f2dd2d87aa53604db526f355e87a20 $
+# $FreeBSD: c3c7580805fe93007bba78ae0526e4890bbc3cc9 $
 
 KMOD=mrsas
 .PATH: ${SRCTOP}/sys/dev/${KMOD}
@@ -17,7 +17,7 @@ CFLAGS+= -fgnu89-inline
 
 TARGET_ARCH = ${MACHINE_ARCH}
 .if ${TARGET_ARCH} == "amd64"
-CFLAGS+= -DCOMPAT_FREEBSD32 -D_STANDALONE
+CFLAGS+= -DCOMPAT_FREEBSD32
 .endif
 
 clean_cscope:

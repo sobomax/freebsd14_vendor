@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fe5128a744c6666130637be8ab86fa10e28a3774 $
+ * $FreeBSD: 27e5bb44709c3d06af427f6aac43233007877e09 $
  */
 
 #ifndef _GLXSB_H_
@@ -37,8 +37,6 @@
 
 struct glxsb_session {
 	uint32_t	ses_key[4];		/* key */
-	uint8_t		ses_iv[SB_AES_BLOCK_SIZE]; /* initialization vector */
-	int		ses_klen;		/* key len */
 	struct auth_hash *ses_axf;
 	uint8_t		*ses_ictx;
 	uint8_t		*ses_octx;
@@ -46,10 +44,10 @@ struct glxsb_session {
 };
 
 int glxsb_hash_setup(struct glxsb_session *ses,
-	    struct cryptoini *macini);
+    const struct crypto_session_params *csp);
 
 int glxsb_hash_process(struct glxsb_session *ses,
-	    struct cryptodesc *maccrd, struct cryptop *crp);
+    const struct crypto_session_params *csp, struct cryptop *crp);
 
 void glxsb_hash_free(struct glxsb_session *ses);
 

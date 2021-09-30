@@ -1,4 +1,4 @@
-#$FreeBSD: 56ece9d3439e5ee94e2dbf66c3f306830e209580 $
+#$FreeBSD: ce40eb8b75a28293e5fc0d639b49ac52bf0ca97b $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 MAN=
@@ -57,7 +57,7 @@ CRUNCH_SRCDIRS+= bin
 # statically - and that ends very badly.
 CRUNCH_SHLIBS+=	-lc -lutil -lcrypt -lxo -lgpio
 CRUNCH_LIBS+= -lkvm -lmemstat -lnetgraph
-CRUNCH_LIBS+= -lcrypt -ledit -ll -ltermcapw
+CRUNCH_LIBS+= -lcrypt -ledit -ltermcapw
 
 ###################################################################
 # Programs from standard /sbin
@@ -74,6 +74,7 @@ CRUNCH_LIBS+= -l80211 -lalias -lcam -lcursesw -ldevstat -lipsec
 # Don't forget this - ifconfig, etc -adrian
 CRUNCH_LIBS+= ${LDADD_ifconfig}
 CRUNCH_LIBS+= -lgeom -lbsdxml -ljail -lkiconv -lmd -lsbuf -lufs
+CRUNCH_BUILDOPTS+= CRUNCH_CFLAGS+=-I${OBJTOP}/lib/libifconfig
 
 ##################################################################
 # Programs from stock /usr/bin

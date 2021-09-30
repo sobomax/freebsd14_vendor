@@ -1,24 +1,23 @@
-# $FreeBSD: 256af4da01df658b5f3b96e4ad289c811c65ee0d $
+# $FreeBSD: 857fa8091f4ab10221061192221116fb726460a1 $
 # Options specific to the powerpc platform kernels
 
 AIM			opt_global.h
 BOOKE			opt_global.h
 BOOKE_E500		opt_global.h
-BOOKE_PPC4XX		opt_global.h
 CELL
 
 POWERPC
 POWERPC64
+POWERPC64LE
 POWERPCSPE
 
 FPU_EMU
 
 COMPAT_FREEBSD32	opt_global.h
 
-GFB_DEBUG		opt_gfb.h
-GFB_NO_FONT_LOADING	opt_gfb.h
-GFB_NO_MODE_CHANGE	opt_gfb.h
-
+MOEA64_STATS		opt_pmap.h
+AMIGAONE		opt_platform.h
+MIKROTIK		opt_platform.h
 MPC85XX			opt_platform.h
 POWERMAC		opt_platform.h
 PS3			opt_platform.h
@@ -26,6 +25,7 @@ MAMBO
 POWERNV			opt_platform.h
 PSERIES
 PSIM
+QEMU			opt_platform.h
 
 SC_OFWFB		opt_ofwfb.h
 
@@ -33,8 +33,6 @@ OFWCONS_POLL_HZ		opt_ofw.h
 
 # AGP debugging support
 AGP_DEBUG		opt_agp.h
-
-MIKROTIK
 
 # iWARP client interface support in ixl
 IXL_IW			opt_ixl.h

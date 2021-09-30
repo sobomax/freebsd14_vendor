@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3feeef02499c72d00d3d5e1bb3c1e1754e27a2d5 $
+ * $FreeBSD: 9646590a6a40f7ae6642dc730d94d1cc6aeca272 $
  */
 
 /*
@@ -409,6 +409,15 @@ rdtsc32(void)
 	uint32_t rv;
 
 	__asm __volatile("rdtsc" : "=a" (rv) : : "edx");
+	return (rv);
+}
+
+static __inline uint32_t
+rdtscp32(void)
+{
+	uint32_t rv;
+
+	__asm __volatile("rdtscp" : "=a" (rv) : : "ecx", "edx");
 	return (rv);
 }
 

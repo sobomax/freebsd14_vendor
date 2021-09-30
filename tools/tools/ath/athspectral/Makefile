@@ -1,4 +1,4 @@
-# $FreeBSD: 8aebde60be281a224ff249e4d143786f079ece64 $
+# $FreeBSD: e13891fec72c413aa0ec4979ba87dc5f967d7962 $
 
 PROG=	athspectral
 
@@ -11,6 +11,5 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 .include <bsd.prog.mk>

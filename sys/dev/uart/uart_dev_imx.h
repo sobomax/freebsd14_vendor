@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7276c7a66cce833924c54c99411ae147c1f6cfa5 $
+ * $FreeBSD: 9a3962be23351ac659486b9ac2c812d2b1a0ccb6 $
  */
 
 #ifndef	_UART_DEV_IMX5XX_H
@@ -216,6 +216,5 @@
 #define	ENA(_bas, _r, _b)	SET((_bas), REG(_r), FLD(_r, _b))
 #define	DIS(_bas, _r, _b)	CLR((_bas), REG(_r), FLD(_r, _b))
 #define	IS(_bas, _r, _b)	IS_SET((_bas), REG(_r), FLD(_r, _b))
-
 
 #endif	/* _UART_DEV_IMX5XX_H */

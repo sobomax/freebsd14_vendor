@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $FreeBSD: 0cb968f0e4a5aa12dcc8e34d37373da550c18e3b $
+# $FreeBSD: 448b8ce8a222d12657a1c85253b516398ce0c8ff $
 #
 
 # PROVIDE: ipfs
 # REQUIRE: ipnat
+# BEFORE: netif
 # KEYWORD: nojail shutdown
 
 . /etc/rc.subr

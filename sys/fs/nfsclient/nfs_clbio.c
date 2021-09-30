@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 61442d59dcddeac5cbded5d0a8dd4f1853764191 $");
+__FBSDID("$FreeBSD: 09fedaa47eb8300912c5637e70770c4c5c8642f2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,7 +70,7 @@ extern struct nfsmount *ncl_iodmount[NFS_MAXASYNCDAEMON];
 extern int newnfs_directio_enable;
 extern int nfs_keep_dirty_on_error;
 
-int ncl_pbuf_freecnt = -1;	/* start out unlimited */
+uma_zone_t ncl_pbuf_zone;
 
 static struct buf *nfs_getcacheblk(struct vnode *vp, daddr_t bn, int size,
     struct thread *td);
@@ -174,7 +174,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 	 * XXXGL: is that true for NFS, where short read can occur???
 	 */
 	VM_OBJECT_WLOCK(object);
-	if (pages[npages - 1]->valid != 0 && --npages == 0)
+	if (!vm_page_none_valid(pages[npages - 1]) && --npages == 0)
 		goto out;
 	VM_OBJECT_WUNLOCK(object);
 
@@ -182,7 +182,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 	 * We use only the kva address for the buffer, but this is extremely
 	 * convenient and fast.
 	 */
-	bp = getpbuf(&ncl_pbuf_freecnt);
+	bp = uma_zalloc(ncl_pbuf_zone, M_WAITOK);
 
 	kva = (vm_offset_t) bp->b_data;
 	pmap_qenter(kva, pages, npages);
@@ -203,7 +203,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 	error = ncl_readrpc(vp, &uio, cred);
 	pmap_qremove(kva, npages);
 
-	relpbuf(bp, &ncl_pbuf_freecnt);
+	uma_zfree(ncl_pbuf_zone, bp);
 
 	if (error && (uio.uio_resid == count)) {
 		printf("ncl_getpages: error %d\n", error);
@@ -227,14 +227,14 @@ ncl_getpages(struct vop_getpages_args *ap)
 			/*
 			 * Read operation filled an entire page
 			 */
-			m->valid = VM_PAGE_BITS_ALL;
+			vm_page_valid(m);
 			KASSERT(m->dirty == 0,
 			    ("nfs_getpages: page %p is dirty", m));
 		} else if (size > toff) {
 			/*
 			 * Read operation filled a partial page.
 			 */
-			m->valid = 0;
+			vm_page_invalid(m);
 			vm_page_set_valid_range(m, 0, size - toff);
 			KASSERT(m->dirty == 0,
 			    ("nfs_getpages: page %p is dirty", m));
@@ -812,7 +812,7 @@ do_sync:
 		while (uiop->uio_resid > 0) {
 			size = MIN(uiop->uio_resid, wsize);
 			size = MIN(uiop->uio_iov->iov_len, size);
-			bp = getpbuf(&ncl_pbuf_freecnt);
+			bp = uma_zalloc(ncl_pbuf_zone, M_WAITOK);
 			t_uio = malloc(sizeof(struct uio), M_NFSDIRECTIO, M_WAITOK);
 			t_iov = malloc(sizeof(struct iovec), M_NFSDIRECTIO, M_WAITOK);
 			t_iov->iov_base = malloc(size, M_NFSDIRECTIO, M_WAITOK);
@@ -855,7 +855,7 @@ err_free:
 				free(t_iov, M_NFSDIRECTIO);
 				free(t_uio, M_NFSDIRECTIO);
 				bp->b_vp = NULL;
-				relpbuf(bp, &ncl_pbuf_freecnt);
+				uma_zfree(ncl_pbuf_zone, bp);
 				if (error == EINTR)
 					return (error);
 				goto do_sync;
@@ -1572,7 +1572,7 @@ ncl_doio_directwrite(struct buf *bp)
 	if ((bp->b_flags & B_DIRECT) && bp->b_iocmd == BIO_WRITE) {
 		struct nfsnode *np = VTONFS(bp->b_vp);
 		NFSLOCKNODE(np);
-		if (NFSHASPNFS(VFSTONFS(vnode_mount(bp->b_vp)))) {
+		if (NFSHASPNFS(VFSTONFS(bp->b_vp->v_mount))) {
 			/*
 			 * Invalidate the attribute cache, since writes to a DS
 			 * won't update the size attribute.
@@ -1590,7 +1590,7 @@ ncl_doio_directwrite(struct buf *bp)
 		NFSUNLOCKNODE(np);
 	}
 	bp->b_vp = NULL;
-	relpbuf(bp, &ncl_pbuf_freecnt);
+	uma_zfree(ncl_pbuf_zone, bp);
 }
 
 /*
@@ -1890,4 +1890,3 @@ ncl_meta_setsize(struct vnode *vp, struct thread *td, u_quad_t nsize)
 	}
 	return(error);
 }
-

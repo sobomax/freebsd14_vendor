@@ -31,7 +31,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4b3224a0e7cae1dd084f3dd886dce6974db869d7 $");
+__FBSDID("$FreeBSD: 4dedb72edb2254324f9f1e478c917fd8841181cf $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -42,8 +42,6 @@ __FBSDID("$FreeBSD: 4b3224a0e7cae1dd084f3dd886dce6974db869d7 $");
 
 #ifdef DDB
 #include <ddb/ddb.h>
-
-#if __ARM_ARCH >= 6
 
 DB_SHOW_COMMAND(cp15, db_show_cp15)
 {
@@ -90,7 +88,6 @@ DB_SHOW_COMMAND(vtop, db_show_vtop)
 	} else
 		db_printf("show vtop <virt_addr>\n");
 }
-#endif /* __ARM_ARCH >= 6 */
 #endif /* DDB */
 
 int

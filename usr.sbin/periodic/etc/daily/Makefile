@@ -1,4 +1,4 @@
-# $FreeBSD: b65bc1310cb4ee7f51be1d82840759deb7e9d5a8 $
+# $FreeBSD: f6557a10ba80cb5f50e70f50d584cc98bbac9556 $
 
 .include <src.opts.mk>
 
@@ -10,6 +10,8 @@ CONFS=	100.clean-disks \
 	140.clean-rwho \
 	200.backup-passwd \
 	210.backup-aliases \
+	221.backup-gpart \
+	222.backup-gmirror \
 	330.news \
 	400.status-disks \
 	401.status-graid \
@@ -54,7 +56,8 @@ CONFS+=	150.clean-hoststat \
 .endif
 
 .if ${MK_ZFS} != "no"
-CONFS+=	404.status-zfs \
+CONFS+=	223.backup-zfs \
+	404.status-zfs \
 	800.scrub-zfs
 .endif
 

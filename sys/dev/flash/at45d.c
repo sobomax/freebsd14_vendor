@@ -1,11 +1,10 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2006 M. Warner Losh
- * Copyright (c) 2011-2012 Ian Lepore
- * Copyright (c) 2012 Marius Strobl <marius@FreeBSD.org>
- * All rights reserved.
- *
+ * Copyright (c) 2011-2012 Ian Lepore All rights reserved.
+ * Copyright (c) 2012 Marius Strobl <marius@FreeBSD.org> All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
+
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -28,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4704dc500f4baa3554de30bfc2ad5e47477bd896 $");
+__FBSDID("$FreeBSD: 2c7402dbbe824777bc7df0197b9a8c6cf9aed0b7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -494,7 +493,7 @@ at45d_task(void *arg)
 				len = sc->pagesize - offset;
 			break;
 		default:
-			berr = EINVAL;
+			berr = EOPNOTSUPP;
 			goto out;
 		}
 

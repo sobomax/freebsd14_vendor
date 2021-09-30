@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8d7026e84e7a704a963b6b352fb4a3b24498cef8 $
+ * $FreeBSD: f1f9f226585485b9f660160906e4b422a5d37384 $
  */
 
 #include <sys/param.h>
@@ -80,7 +80,6 @@ static struct ng_type ng_hub_typestruct = {
 	.cmdlist =	ng_hub_cmdlist,
 };
 NETGRAPH_INIT(hub, &ng_hub_typestruct);
-
 
 static int
 ng_hub_constructor(node_p node)

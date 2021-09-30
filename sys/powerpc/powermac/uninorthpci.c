@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72c7106f53f36fa675d571b75ae9ac3decf8b9c4 $");
+__FBSDID("$FreeBSD: 8933693963f5222183700bb328da08a88d7b7250 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -101,7 +101,8 @@ static devclass_t	uninorth_devclass;
 
 DEFINE_CLASS_1(pcib, uninorth_driver, uninorth_methods,
     sizeof(struct uninorth_softc), ofw_pci_driver);
-DRIVER_MODULE(uninorth, ofwbus, uninorth_driver, uninorth_devclass, 0, 0);
+EARLY_DRIVER_MODULE(uninorth, ofwbus, uninorth_driver, uninorth_devclass, 0, 0,
+    BUS_PASS_BUS);
 
 static int
 uninorth_probe(device_t dev)
@@ -127,7 +128,7 @@ uninorth_probe(device_t dev)
 		device_set_desc(dev, "IBM CPC945 PCI Express Root");
 		return (0);
 	}
-	
+
 	return (ENXIO);
 }
 
@@ -277,4 +278,3 @@ uninorth_enable_config(struct uninorth_softc *sc, u_int bus, u_int slot,
 
 	return (1);
 }
-

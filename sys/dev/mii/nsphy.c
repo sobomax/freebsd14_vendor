@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 76ef81320a5c0198bb910fd036f8dbd53f25af88 $");
+__FBSDID("$FreeBSD: 8feab4f023f58f9185de1be6bbd7695d66e2ef7f $");
 
 /*
  * driver for National Semiconductor's DP83840A ethernet 10/100 PHY
@@ -131,15 +131,8 @@ nsphy_probe(device_t dev)
 static int
 nsphy_attach(device_t dev)
 {
-	u_int flags;
 
-	flags = MIIF_NOMANPAUSE;
-	/*
-	 * Am79C971 wedge when isolating all of their external PHYs.
-	 */
-	if (mii_dev_mac_match(dev,"pcn"))
-		flags |= MIIF_NOISOLATE;
-	mii_phy_dev_attach(dev, flags, &nsphy_funcs, 1);
+	mii_phy_dev_attach(dev, MIIF_NOMANPAUSE, &nsphy_funcs, 1);
 	return (0);
 }
 

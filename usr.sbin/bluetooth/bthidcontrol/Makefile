@@ -1,8 +1,9 @@
 # $Id: Makefile,v 1.2 2004/02/13 21:44:41 max Exp $
-# $FreeBSD: b830fced3c994e360f18b52e84be1aef35f06dda $
+# $FreeBSD: 0bdfed6fa682e39973e4a1b0a5fa948d9d02917c $
 
 .PATH:	${.CURDIR:H}/bthidd
 
+PACKAGE=	bluetooth
 PROG=		bthidcontrol
 MAN=		bthidcontrol.8
 SRCS=		bthidcontrol.c hid.c lexer.l  parser.y sdp.c

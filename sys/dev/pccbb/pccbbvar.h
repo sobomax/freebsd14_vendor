@@ -1,9 +1,8 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2003-2004 M. Warner Losh.
- * Copyright (c) 2000,2001 Jonathan Chen.
- * All rights reserved.
+ * Copyright (c) 2000,2001 Jonathan Chen All rights reserved.
+ * Copyright (c) 2003-2004 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 400e466b0779eb4c6303b89dd25b12960db03c51 $
+ * $FreeBSD: c900199c25082cebafea246fe9248cbada02b3fa $
  */
 
 /*
@@ -54,11 +53,10 @@ struct cbb_reslist {
 };
 
 #define	CBB_AUTO_OPEN_SMALLHOLE 0x100
-#define CBB_NSLOTS		4
 
 struct cbb_softc {
 	device_t	dev;
-	struct exca_softc exca[CBB_NSLOTS];
+	struct exca_softc exca;
 	struct		resource *base_res;
 	struct		resource *irq_res;
 	void		*intrhand;

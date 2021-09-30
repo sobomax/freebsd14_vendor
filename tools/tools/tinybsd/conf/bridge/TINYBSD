@@ -1,4 +1,4 @@
-# $FreeBSD: 0788aea40e448a953943debbdbb5dc74c50cb0bf $
+# $FreeBSD: fe6bed93ba6f5de6e1b276aa3e61dcb05029caf0 $
 
 machine		i386
 cpu		I486_CPU
@@ -63,11 +63,6 @@ device		sc
 
 device		agp		# support several AGP chipsets
 
-# Power management support (see NOTES for more options)
-#device		apm
-# Add suspend/resume support for the i8254.
-device		pmtimer
-
 # PCCARD (PCMCIA) support
 # PCMCIA and cardbus bridge support
 device		cbb		# cardbus (yenta) bridge
@@ -130,7 +125,6 @@ device		wi		# WaveLAN/Intersil/Symbol 802.11 wireless NICs.
 
 # Pseudo devices.
 device		loop		# Network loopback
-device		random		# Entropy device
 device		ether		# Ethernet support
 device		pty		# Pseudo-ttys (telnet etc)
 device		md		# Memory "disks"

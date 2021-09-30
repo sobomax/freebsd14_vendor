@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20b6f5602e08b5a3b410afba9129c943226f4b3d $");
+__FBSDID("$FreeBSD: 20ae22f2e9b067cdb108d11928a1575a608f5282 $");
 
 #include "opt_ddb.h"
 
@@ -57,8 +57,11 @@ __FBSDID("$FreeBSD: 20b6f5602e08b5a3b410afba9129c943226f4b3d $");
 #include <sys/user.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <machine/cache.h>
 #include <machine/clock.h>
@@ -73,7 +76,6 @@ __FBSDID("$FreeBSD: 20b6f5602e08b5a3b410afba9129c943226f4b3d $");
 #include <machine/pte.h>
 #include <machine/sigframe.h>
 #include <machine/trap.h>
-#include <machine/vmparam.h>
 
 #include <dev/bhnd/bhnd.h>
 #include <dev/bhnd/bhndreg.h>

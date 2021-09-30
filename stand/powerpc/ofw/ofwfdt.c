@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa0ff4165f4ade6ea1a6cdc59167f06207d5fa59 $");
+__FBSDID("$FreeBSD: 92ae9f553134afc976baae173d0c20d9349a493f $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -120,7 +120,7 @@ ofwfdt_fixups(void *fdtp)
 		/* Instantiate RTAS */
 		rtas = OF_open(path);
 		base = 0;
-		OF_call_method("instantiate-rtas", rtas, 1, 1, (cell_t)rtas,
+		OF_call_method("instantiate-rtas", rtas, 1, 1, (cell_t)rtasmem,
 		    &base);
 
 		/* Store info to FDT using Linux convention */

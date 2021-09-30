@@ -30,7 +30,7 @@
  *
  * Customisation of the SSCFU code to ng_sscfu.
  *
- * $FreeBSD: eb0250e5ec0296f69758c0cde7ef6e1e96beabac $
+ * $FreeBSD: f97245833be1a0e128ef2cf6d32674475a1bd606 $
  */
 #include <sys/param.h>
 #include <sys/types.h>
@@ -82,7 +82,6 @@
 
 #endif
 
-
 /*
  * Signal queues
  */
@@ -119,7 +118,6 @@ ng_sscfu_sigq_get(struct sscfu_sigq *q)					\
 	}								\
 	TAILQ_INIT(Q);							\
     } while (0)
-
 
 /*
  * Message buffers

@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4d4dbec3653dc2f5b56eec7743595b9838699640 $
+ * $FreeBSD: ccd696100687bbabdd80b4c7ab18baac4ae9332d $
  *
  */
 
@@ -226,7 +226,7 @@ void	archive_mstring_copy(struct archive_mstring *dest, struct archive_mstring *
 int archive_mstring_get_mbs(struct archive *, struct archive_mstring *, const char **);
 int archive_mstring_get_utf8(struct archive *, struct archive_mstring *, const char **);
 int archive_mstring_get_wcs(struct archive *, struct archive_mstring *, const wchar_t **);
-int	archive_mstring_get_mbs_l(struct archive_mstring *, const char **,
+int	archive_mstring_get_mbs_l(struct archive *, struct archive_mstring *, const char **,
 	    size_t *, struct archive_string_conv *);
 int	archive_mstring_copy_mbs(struct archive_mstring *, const char *mbs);
 int	archive_mstring_copy_mbs_len(struct archive_mstring *, const char *mbs,

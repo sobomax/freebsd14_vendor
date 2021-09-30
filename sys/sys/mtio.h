@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mtio.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: d36125b20c39c7494741a0679c786823dcb22a22 $
+ * $FreeBSD: 843b329092248eadce6ec261b25214b698021d8b $
  */
 
 #ifndef	_SYS_MTIO_H_
@@ -174,7 +174,7 @@ struct scsi_tape_errors {
 		u_int64_t nbytes;	/* total # bytes processed */
 	} wterr, rderr;
 };
-	
+
 union mterrstat {
 	struct scsi_tape_errors scsi_errstat;
 	char _reserved_padding[256];
@@ -239,7 +239,6 @@ struct mtextget {
 #define	MT_DENS_WRITE_OK		0x80
 #define	MT_DENS_DUP			0x40
 #define	MT_DENS_DEFLT			0x20
-
 
 #define	MT_PARAM_FIXED_STR_LEN	32
 union mt_param_value {

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca50fbb11c33954b9a1c80f8768c38a40db98648 $");
+__FBSDID("$FreeBSD: 4dac8614123056e671dffa9da8a6798a83ecd4be $");
 
 /*
  * I2C bus IP driver
@@ -309,9 +309,13 @@ icintr(device_t dev, int event, char *ptr)
 		BPF_TAP(sc->ic_ifp, sc->ic_ifbuf, len + ICHDRLEN);
 		top = m_devget(sc->ic_ifbuf + ICHDRLEN, len, 0, sc->ic_ifp, 0);
 		if (top) {
+			struct epoch_tracker et;
+
 			mtx_unlock(&sc->ic_lock);
 			M_SETFIB(top, sc->ic_ifp->if_fib);
+			NET_EPOCH_ENTER(et);
 			netisr_dispatch(NETISR_IP, top);
+			NET_EPOCH_EXIT(et);
 			mtx_lock(&sc->ic_lock);
 		}
 		break;

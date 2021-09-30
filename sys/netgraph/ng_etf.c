@@ -32,7 +32,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: e4757b4001d7bc61e35ac606cd30a4b259472a7b $
+ * $FreeBSD: 26e8489878b86503e9f820e859e3c53f19eec6d1 $
  */
 
 #include <sys/param.h>
@@ -159,7 +159,6 @@ ng_etf_findentry(etf_p etfp, u_int16_t ethertype)
 {
 	struct filterhead *chain = etfp->hashtable + HASH(ethertype);
 	struct filter *fil;
-	
 
 	LIST_FOREACH(fil, chain, next) {
 		if (fil->ethertype == ethertype) {
@@ -168,7 +167,6 @@ ng_etf_findentry(etf_p etfp, u_int16_t ethertype)
 	}
 	return (NULL);
 }
-
 
 /*
  * Allocate the private data structure. The generic node has already
@@ -485,4 +483,3 @@ ng_etf_disconnect(hook_p hook)
 		ng_rmnode_self(NG_HOOK_NODE(hook));
 	return (0);
 }
-

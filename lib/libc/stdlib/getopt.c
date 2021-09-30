@@ -35,7 +35,7 @@
 static char sccsid[] = "@(#)getopt.c	8.3 (Berkeley) 4/27/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6bdf8a1eeaf78260a6ee67ada0115f69d72ebd8 $");
+__FBSDID("$FreeBSD: b7f2229a2f5428bfdd20f7cd0256b5d0b54af15a $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -54,8 +54,7 @@ char	*optarg;		/* argument associated with option */
 
 #define	BADCH	(int)'?'
 #define	BADARG	(int)':'
-#define	EMSG	""
-
+static char EMSG[] = "";
 /*
  * getopt --
  *	Parse argc/argv argument vector.

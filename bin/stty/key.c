@@ -33,12 +33,11 @@ static char sccsid[] = "@(#)key.c	8.3 (Berkeley) 4/2/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 632524305628282929758aa429ae38961368844f $");
+__FBSDID("$FreeBSD: 4514a0ea1c041a37c8f54d190647372120d2bec1 $");
 
 #include <sys/types.h>
 
 #include <err.h>
-#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: 14266be8393267326f29b46d2c555c91b6ea20e2 $
+# $FreeBSD: de1e89e708f0db1ccb7771e01443faa638f9e5fb $
 
 .include <src.opts.mk>
 
@@ -14,6 +14,13 @@ NO_WMISSING_VARIABLE_DECLARATIONS=
 
 YFLAGS+=-v
 CFLAGS+=-I. -I${.CURDIR}
+
+# workaround for GNU ld (GNU Binutils) 2.33.1:
+#   relocation truncated to fit: R_RISCV_GPREL_I against `.LANCHOR2'
+# https://bugs.freebsd.org/242109
+.if defined(LINKER_TYPE) && ${LINKER_TYPE} == "bfd" && ${MACHINE} == "riscv"
+CFLAGS+=-Wl,--no-relax
+.endif
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+= -DINET6

@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6387e5fc017170b69a54c44799030db0c0b4b77b $
+ * $FreeBSD: b9e444184c5513b5e4b7add7c184dd65593b9279 $
  */
 
 #ifndef __ECORE_TCP_IP_H
@@ -57,7 +57,6 @@
 #ifndef ntohs
 #define ntohs(val) OSAL_BE16_TO_CPU(val)
 #endif
-
 
 struct ecore_ethhdr {
 	unsigned char	h_dest[ETH_ALEN];	/* destination eth addr	*/

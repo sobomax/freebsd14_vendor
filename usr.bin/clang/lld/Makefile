@@ -1,4 +1,4 @@
-# $FreeBSD: 3bf5454d1b83271ff1a3f304a75fd7b1b402be0e $
+# $FreeBSD: 3593a4006ba29b15e3989f0c7769e743eb7b873e $
 
 .include <src.opts.mk>
 
@@ -34,7 +34,6 @@ SRCS+=		Common/Memory.cpp
 SRCS+=		Common/Reproduce.cpp
 SRCS+=		Common/Strings.cpp
 SRCS+=		Common/TargetOptionsCommandFlags.cpp
-SRCS+=		Common/Threads.cpp
 SRCS+=		Common/Version.cpp
 SRCS+=		ELF/AArch64ErrataFix.cpp
 SRCS+=		ELF/ARMErrataFix.cpp

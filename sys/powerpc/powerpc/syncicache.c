@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15ac490798d1b5b3274d8cef77874ff548f72b4b $");
+__FBSDID("$FreeBSD: 61403daf07342657b518c4437ee9f2172ba2a250 $");
 
 #include <sys/param.h>
 #if	defined(_KERNEL) || defined(_STANDALONE)
@@ -69,4 +69,3 @@ __syncicache(void *from, int len)
 	} while ((len -= cacheline_size) > 0);
 	__asm __volatile ("sync; isync");
 }
-

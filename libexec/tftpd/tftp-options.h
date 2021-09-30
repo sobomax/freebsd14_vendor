@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8768d1ceb3d46fa650f717d342fc6bf176b71ef7 $");
+__FBSDID("$FreeBSD: 713cbb12e4399181ffc08781b35cd7e91070b791 $");
 
 /*
  * Options
@@ -42,6 +42,7 @@ int	option_timeout(int peer);
 int	option_blksize(int peer);
 int	option_blksize2(int peer);
 int	option_rollover(int peer);
+int	option_windowsize(int peer);
 
 extern int options_extra_enabled;
 extern int options_rfc_enabled;
@@ -61,4 +62,5 @@ enum opt_enum {
 	OPT_BLKSIZE,
 	OPT_BLKSIZE2,
 	OPT_ROLLOVER,
+	OPT_WINDOWSIZE,
 };

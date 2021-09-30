@@ -1,0 +1,4 @@
+.\" $FreeBSD: 4e824c4f8bed6fac96de46e1dab7f0d1a66c4efe $
+Set to build the base system or kernel with stack variables initialized
+to zero on function entry.
+This option requires that the clang compiler be used.

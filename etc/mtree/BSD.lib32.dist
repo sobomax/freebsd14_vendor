@@ -1,4 +1,4 @@
-# $FreeBSD: 3e2d80fd6cae92ca708fc1be525e65604711a8c0 $
+# $FreeBSD: ce7d4bdc07fb2dbe2f5476b62db369c93a3c58be $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -8,9 +8,15 @@
     lib32
         dtrace
         ..
+        engines
+        ..
         geom
         ..
         i18n
+        ..
+        libxo
+            encoder
+            ..
         ..
     ..
 ..

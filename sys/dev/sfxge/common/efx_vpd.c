@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d48fc3274449f427738905c13be445538113c17 $");
+__FBSDID("$FreeBSD: 55ad2fde136e1be12ab6938548db0c07030bbd88 $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -73,7 +73,7 @@ static const efx_vpd_ops_t	__efx_vpd_siena_ops = {
 
 #endif	/* EFSYS_OPT_SIENA */
 
-#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD
+#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD || EFSYS_OPT_MEDFORD2
 
 static const efx_vpd_ops_t	__efx_vpd_ef10_ops = {
 	ef10_vpd_init,		/* evpdo_init */
@@ -88,7 +88,7 @@ static const efx_vpd_ops_t	__efx_vpd_ef10_ops = {
 	ef10_vpd_fini,		/* evpdo_fini */
 };
 
-#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD */
+#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD || EFSYS_OPT_MEDFORD2 */
 
 	__checkReturn		efx_rc_t
 efx_vpd_init(
@@ -119,6 +119,12 @@ efx_vpd_init(
 		evpdop = &__efx_vpd_ef10_ops;
 		break;
 #endif	/* EFSYS_OPT_MEDFORD */
+
+#if EFSYS_OPT_MEDFORD2
+	case EFX_FAMILY_MEDFORD2:
+		evpdop = &__efx_vpd_ef10_ops;
+		break;
+#endif	/* EFSYS_OPT_MEDFORD2 */
 
 	default:
 		EFSYS_ASSERT(0);

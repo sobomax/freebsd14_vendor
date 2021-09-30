@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: b76fae1d6299b011356cb0193535f2f06f474e5f $
+ * $FreeBSD: 7c9205848665a2a0bba1a547552ca4fb7be0042f $
  */
 #include "hal.h"
 #include "../if_medium.h"
@@ -214,4 +214,3 @@ free_wtap(struct wtap_hal *hal, int32_t id)
 	hal->hal_devs[id] = NULL;
 	return 0;
 }
-

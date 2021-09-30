@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 765825e0ec25cc5ce627da3a2fea6618ffc4741c $");
+__FBSDID("$FreeBSD: fbde1cd9b557e14f43a557ddb5f9ebfaf7be7ad6 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -659,7 +659,6 @@ acpi_pwr_switch_power(void)
     /* Sweep the list backwards turning things off. */
     TAILQ_FOREACH_REVERSE(rp, &acpi_powerresources, acpi_powerresource_list,
 	ap_link) {
-
 	if (TAILQ_FIRST(&rp->ap_references) != NULL) {
 	    ACPI_DEBUG_PRINT((ACPI_DB_OBJECTS,
 			     "%s has references, not turning off\n",

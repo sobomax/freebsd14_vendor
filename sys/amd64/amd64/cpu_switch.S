@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 74dd3bfcd8b55c7bbe824c38a89ed3cd80942f5d $
+ * $FreeBSD: 97f088589c01be3ef449fed3461f2b8142b8a5be $
  */
 
 #include <machine/asmacros.h>
@@ -44,18 +44,6 @@
 /*****************************************************************************/
 
 	.text
-
-#ifdef SMP
-#define LK	lock ;
-#else
-#define LK
-#endif
-
-#if defined(SCHED_ULE) && defined(SMP)
-#define	SETLK	xchgq
-#else
-#define	SETLK	movq
-#endif
 
 /*
  * cpu_throw()
@@ -128,39 +116,40 @@ done_store_dr:
 
 	/* have we used fp, and need a save? */
 	cmpq	%rdi,PCPU(FPCURTHREAD)
-	jne	2f
-	movq	PCB_SAVEFPU(%r8),%r8
+	jne	ctx_switch_fpusave_done
+	movq	PCB_SAVEFPU(%r8),%r9
 	clts
 	cmpl	$0,use_xsave(%rip)
 	jne	1f
-	fxsave	(%r8)
-	jmp	2f
+	fxsave	(%r9)
+	jmp	ctx_switch_fpusave_done
 1:	movq	%rdx,%rcx
 	movl	xsave_mask,%eax
 	movl	xsave_mask+4,%edx
+	testl	$PCB_32BIT,PCB_FLAGS(%r8)
+	jne	ctx_switch_xsave32
 	.globl	ctx_switch_xsave
 ctx_switch_xsave:
 	/* This is patched to xsaveopt if supported, see fpuinit_bsp1() */
-	xsave	(%r8)
+	xsave64	(%r9)
+ctx_switch_xsave_done:
 	movq	%rcx,%rdx
-2:
+ctx_switch_fpusave_done:
 	/* Save is done.  Now fire up new thread. Leave old vmspace. */
 	movq	%rsi,%r12
 	movq	%rdi,%r13
 	movq	%rdx,%r15
 	movq	%rsi,%rdi
 	callq	pmap_activate_sw
-	SETLK	%r15,TD_LOCK(%r13)		/* Release the old thread */
+	movq	%r15,TD_LOCK(%r13)		/* Release the old thread */
 sw1:
 	leaq	TD_MD_PCB(%r12),%r8
 #if defined(SCHED_ULE) && defined(SMP)
-	/* Wait for the new thread to become unblocked */
 	movq	$blocked_lock, %rdx
-1:
 	movq	TD_LOCK(%r12),%rcx
 	cmpq	%rcx, %rdx
-	pause
-	je	1b
+	je	sw1wait
+sw1cont:
 #endif
 	/*
 	 * At this point, we've switched address spaces and are ready
@@ -202,8 +191,10 @@ do_kthread:
 	/* Do we need to reload tss ? */
 	movq	PCPU(TSSP),%rax
 	movq	PCB_TSSP(%r8),%rdx
+	movq	PCPU(PRVSPACE),%r13
+	addq	$PC_COMMONTSS,%r13
 	testq	%rdx,%rdx
-	cmovzq	PCPU(COMMONTSSP),%rdx
+	cmovzq	%r13,%rdx
 	cmpq	%rax,%rdx
 	jne	do_tss
 done_tss:
@@ -306,6 +297,11 @@ do_ldt:	movq	PCPU(LDT),%rax
 	movq	%rdx,8(%rax)
 	movl	$LDTSEL,%eax
 	jmp	ld_ldt
+
+	.globl	ctx_switch_xsave32
+ctx_switch_xsave32:
+	xsave	(%r9)
+	jmp	ctx_switch_xsave_done
 END(cpu_switch)
 
 /*
@@ -394,8 +390,11 @@ END(savectx)
  * Resuming processor state from pcb.
  */     
 ENTRY(resumectx)
-	/* Switch to KPML4phys. */
+	/* Switch to KPML5/4phys. */
 	movq	KPML4phys,%rax
+	movq	KPML5phys,%rcx
+	cmpl	$0, la57
+	cmovne	%rcx, %rax
 	movq	%rax,%cr3
 
 	/* Force kernel segment registers. */
@@ -499,3 +498,14 @@ ENTRY(resumectx)
 	xorl	%eax,%eax
 	ret
 END(resumectx)
+
+/* Wait for the new thread to become unblocked */
+#if defined(SCHED_ULE) && defined(SMP)
+sw1wait:
+1:
+	pause
+	movq	TD_LOCK(%r12),%rcx
+	cmpq	%rcx, %rdx
+	je	1b
+	jmp	sw1cont
+#endif

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02f1160cd1a432e4242cbc1d88ce5996844d9006 $");
+__FBSDID("$FreeBSD: c70a53d4191a26d61bb64432be609ecab82a30e0 $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -83,9 +83,6 @@ struct fs_ops *file_system[] = {
 #endif
 #if defined(LOADER_CD9660_SUPPORT)
     &cd9660_fsops,
-#endif
-#if defined(LOADER_NANDFS_SUPPORT)
-    &nandfs_fsops,
 #endif
 #ifdef LOADER_NFS_SUPPORT 
     &nfs_fsops,

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 999f80f95339efeb884358525fea0280838f4e59 $");
+__FBSDID("$FreeBSD: ea1ec12dd065e656da245eeb2b228e8be6ddbb66 $");
 
 #include "opt_acpi.h"
 #include "opt_ddb.h"
@@ -38,8 +38,13 @@ __FBSDID("$FreeBSD: 999f80f95339efeb884358525fea0280838f4e59 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/kernel.h>
 #include <sys/physmem.h>
 #include <vm/vm.h>
+#include <vm/vm_param.h>
+#include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 #include <machine/md_var.h>
 
 /*
@@ -74,32 +79,6 @@ static struct region exregions[MAX_EXCNT];
 
 static size_t hwcnt;
 static size_t excnt;
-
-/*
- * These "avail lists" are globals used to communicate physical memory layout to
- * other parts of the kernel.  Within the arrays, each value is the starting
- * address of a contiguous area of physical address space.  The values at even
- * indexes are areas that contain usable memory and the values at odd indexes
- * are areas that aren't usable.  Each list is terminated by a pair of zero
- * entries.
- *
- * dump_avail tells the dump code what regions to include in a crash dump, and
- * phys_avail is the way we hand all the remaining physical ram we haven't used
- * in early kernel init over to the vm system for allocation management.
- *
- * We size these arrays to hold twice as many available regions as we allow for
- * hardware memory regions, to allow for the fact that exclusions can split a
- * hardware region into two or more available regions.  In the real world there
- * will typically be one or two hardware regions and two or three exclusions.
- *
- * Each available region in this list occupies two array slots (the start of the
- * available region and the start of the unavailable region that follows it).
- */
-#define	MAX_AVAIL_REGIONS	(MAX_HWCNT * 2)
-#define	MAX_AVAIL_ENTRIES	(MAX_AVAIL_REGIONS * 2)
-
-vm_paddr_t phys_avail[MAX_AVAIL_ENTRIES + 2]; /* +2 to allow for a pair  */
-vm_paddr_t dump_avail[MAX_AVAIL_ENTRIES + 2]; /* of zeroes to terminate. */
 
 /*
  * realmem is the total number of hardware pages, excluded or not.
@@ -163,6 +142,10 @@ physmem_print_tables(void)
 /*
  * Walk the list of hardware regions, processing it against the list of
  * exclusions that contain the given exflags, and generating an "avail list".
+ * 
+ * If maxphyssz is not zero it sets upper limit, in bytes, for the total
+ * "avail list" size. Walk stops once the limit is reached and the last region
+ * is cut short if necessary.
  *
  * Updates the value at *pavail with the sum of all pages in all hw regions.
  *
@@ -170,15 +153,17 @@ physmem_print_tables(void)
  */
 static size_t
 regions_to_avail(vm_paddr_t *avail, uint32_t exflags, size_t maxavail,
-    long *pavail, long *prealmem)
+    uint64_t maxphyssz, long *pavail, long *prealmem)
 {
 	size_t acnt, exi, hwi;
 	uint64_t end, start, xend, xstart;
 	long availmem, totalmem;
 	const struct region *exp, *hwp;
+	uint64_t availsz;
 
 	totalmem = 0;
 	availmem = 0;
+	availsz = 0;
 	acnt = 0;
 	for (hwi = 0, hwp = hwregions; hwi < hwcnt; ++hwi, ++hwp) {
 		start = hwp->addr;
@@ -224,6 +209,13 @@ regions_to_avail(vm_paddr_t *avail, uint32_t exflags, size_t maxavail,
 			 * could affect the remainder of this hw region.
 			 */
 			if ((xstart > start) && (xend < end)) {
+
+				if ((maxphyssz != 0) &&
+				    (availsz + xstart - start > maxphyssz)) {
+					xstart = maxphyssz + start - availsz;
+				}
+				if (xstart <= start)
+					continue;
 				if (acnt > 0 &&
 				    avail[acnt - 1] == (vm_paddr_t)start) {
 					avail[acnt - 1] = (vm_paddr_t)xstart;
@@ -231,6 +223,7 @@ regions_to_avail(vm_paddr_t *avail, uint32_t exflags, size_t maxavail,
 					avail[acnt++] = (vm_paddr_t)start;
 					avail[acnt++] = (vm_paddr_t)xstart;
 				}
+				availsz += (xstart - start);
 				availmem += atop((vm_offset_t)(xstart - start));
 				start = xend;
 				continue;
@@ -250,12 +243,20 @@ regions_to_avail(vm_paddr_t *avail, uint32_t exflags, size_t maxavail,
 		 * available entry for it.
 		 */
 		if (end > start) {
+			if ((maxphyssz != 0) &&
+			    (availsz + end - start > maxphyssz)) {
+				end = maxphyssz + start - availsz;
+			}
+			if (end <= start)
+				break;
+
 			if (acnt > 0 && avail[acnt - 1] == (vm_paddr_t)start) {
 				avail[acnt - 1] = (vm_paddr_t)end;
 			} else {
 				avail[acnt++] = (vm_paddr_t)start;
 				avail[acnt++] = (vm_paddr_t)end;
 			}
+			availsz += end - start;
 			availmem += atop((vm_offset_t)(end - start));
 		}
 		if (acnt >= maxavail)
@@ -384,7 +385,7 @@ size_t
 physmem_avail(vm_paddr_t *avail, size_t maxavail)
 {
 
-	return (regions_to_avail(avail, EXFLAG_NOALLOC, maxavail, NULL, NULL));
+	return (regions_to_avail(avail, EXFLAG_NOALLOC, maxavail, 0, NULL, NULL));
 }
 
 /*
@@ -400,11 +401,15 @@ void
 physmem_init_kernel_globals(void)
 {
 	size_t nextidx;
+	u_long hwphyssz;
 
-	regions_to_avail(dump_avail, EXFLAG_NODUMP, MAX_AVAIL_ENTRIES, NULL,
-	    NULL);
+	hwphyssz = 0;
+	TUNABLE_ULONG_FETCH("hw.physmem", &hwphyssz);
+
+	regions_to_avail(dump_avail, EXFLAG_NODUMP, PHYS_AVAIL_ENTRIES,
+	    hwphyssz, NULL, NULL);
 	nextidx = regions_to_avail(phys_avail, EXFLAG_NOALLOC,
-	    MAX_AVAIL_ENTRIES, &physmem, &realmem);
+	    PHYS_AVAIL_ENTRIES, hwphyssz, &physmem, &realmem);
 	if (nextidx == 0)
 		panic("No memory entries in phys_avail");
 	Maxmem = atop(phys_avail[nextidx - 1]);

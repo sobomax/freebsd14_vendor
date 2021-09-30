@@ -1,7 +1,6 @@
-# $FreeBSD: 18f7dd3e649af8701517d6ae068f50def04662aa $
+# $FreeBSD: 9706b25ea899798056e8e4563fe03e2d4eb1df2a $
 
 PROG=	zerosend
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

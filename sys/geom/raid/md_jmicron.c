@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d73d4fe183ce381da8394e96ecf7cd590f371fd $");
+__FBSDID("$FreeBSD: d0387bef4de0adc91c3cf7b5f020700ac5e9fb02 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: 5d73d4fe183ce381da8394e96ecf7cd590f371fd $");
 #include <sys/systm.h>
 #include <sys/taskqueue.h>
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include "geom/raid/g_raid.h"
 #include "g_raid_md_if.h"
 
@@ -526,7 +527,6 @@ nofit:
 	/* Welcome the new disk. */
 	g_raid_change_disk_state(disk, G_RAID_DISK_S_ACTIVE);
 	TAILQ_FOREACH(sd, &disk->d_subdisks, sd_next) {
-
 		/*
 		 * Different disks may have different sizes/offsets,
 		 * especially in concat mode. Update.
@@ -1043,7 +1043,6 @@ g_raid_md_ctl_jmicron(struct g_raid_md_object *md,
 	nargs = gctl_get_paraml(req, "nargs", sizeof(*nargs));
 	error = 0;
 	if (strcmp(verb, "label") == 0) {
-
 		if (*nargs < 4) {
 			gctl_error(req, "Invalid number of arguments.");
 			return (-1);
@@ -1237,7 +1236,6 @@ g_raid_md_ctl_jmicron(struct g_raid_md_object *md,
 		return (0);
 	}
 	if (strcmp(verb, "delete") == 0) {
-
 		/* Check if some volume is still open. */
 		force = gctl_get_paraml(req, "force", sizeof(*force));
 		if (force != NULL && *force == 0 &&
@@ -1267,7 +1265,7 @@ g_raid_md_ctl_jmicron(struct g_raid_md_object *md,
 				error = -2;
 				break;
 			}
-			if (strncmp(diskname, "/dev/", 5) == 0)
+			if (strncmp(diskname, _PATH_DEV, 5) == 0)
 				diskname += 5;
 
 			TAILQ_FOREACH(disk, &sc->sc_disks, d_next) {

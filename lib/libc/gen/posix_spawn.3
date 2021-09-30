@@ -32,7 +32,7 @@
 .\" the referee document.  The original Standard can be obtained online at
 .\"	http://www.opengroup.org/unix/online.html.
 .\"
-.\" $FreeBSD: 6c65ccd556c398bc2630668fb841df8c8fd78db0 $
+.\" $FreeBSD: 596dac31867360063108e7f49776b2a8a15d719b $
 .\"
 .Dd January 5, 2016
 .Dt POSIX_SPAWN 3
@@ -300,7 +300,9 @@ had been called to create a child process and then
 .Fn execve
 had been called by the child process to execute the new process image.
 .Pp
-The implementation uses vfork(), thus the fork handlers are not run when
+The implementation uses
+.Fn vfork ,
+thus the fork handlers are not run when
 .Fn posix_spawn
 or
 .Fn posix_spawnp

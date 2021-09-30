@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c2a95c47fe55ab9dd9df7e11cf67b63673aa16e2 $
+ * $FreeBSD: 53f4b6d4e86414f33be0961102986d34d146dc7b $
  */
 
 #ifndef _DEV_CFI_REG_H_
@@ -146,10 +146,13 @@ struct cfi_qry {
 #define	CFI_AMD_BLOCK_ERASE	0x30
 #define	CFI_AMD_UNLOCK_ACK	0x55
 #define	CFI_AMD_ERASE_SECTOR	0x80
+#define	CFI_AMD_AUTO_SELECT	0x90
 #define	CFI_AMD_PROGRAM		0xa0
 #define	CFI_AMD_UNLOCK		0xaa
 
 #define	AMD_ADDR_START		0xaaa
 #define	AMD_ADDR_ACK		0x555
+
+#define	CFI_AMD_MAXCHK		0x10000
 
 #endif /* _DEV_CFI_REG_H_ */

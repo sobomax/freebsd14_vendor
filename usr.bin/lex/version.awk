@@ -1,4 +1,4 @@
-# $FreeBSD: 3d34093bef6d006afbfbc739785233c466e38ac8 $
+# $FreeBSD: 434c1388682ca103c75cfff78e69eb79ee507a2f $
 
 BEGIN {
 	FS = "[ \t\.\"]+"
@@ -6,8 +6,6 @@ BEGIN {
 
 {
 	if ($1 ~ /^#define$/ && $2 ~ /^VERSION$/) {
-		printf("-DFLEX_MAJOR_VERSION=%s\n", $3);
-		printf("-DFLEX_MINOR_VERSION=%s\n", $4);
-		printf("-DFLEX_SUBMINOR_VERSION=%s\n", $5);
+		printf("%s.%s.%s\n", $3, $4, $5);
 	}
 }

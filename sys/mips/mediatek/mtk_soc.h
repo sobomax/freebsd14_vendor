@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 44f9df07007a0592d5a7c87c840bfca448b932d0 $
+ * $FreeBSD: 9e9c738872cd0f98a1c41d6c23a328379b0dc403 $
  */
 
 #ifndef _MTK_SOC_H_
@@ -122,6 +122,7 @@ enum mtk_soc_id {
 #define MTK_DEFAULT_SIZE	0x6000
 
 extern void     mtk_soc_try_early_detect(void);
+extern void	mtk_soc_set_cpu_model(void);
 extern uint32_t mtk_soc_get_uartclk(void);
 extern uint32_t mtk_soc_get_cpuclk(void);
 extern uint32_t mtk_soc_get_timerclk(void);

@@ -1,4 +1,4 @@
-# $FreeBSD: 87fa4c2014ef619d685ffa2722ba0f15f9110e2f $
+# $FreeBSD: a0bc16b1249753da23382cd5c00b18dd08a293a4 $
 
 PROG_CXX=	llvm-tblgen
 
@@ -24,6 +24,7 @@ SRCS+=		DAGISelMatcherGen.cpp
 SRCS+=		DAGISelMatcherOpt.cpp
 SRCS+=		DFAEmitter.cpp
 SRCS+=		DFAPacketizerEmitter.cpp
+SRCS+=		DirectiveEmitter.cpp
 SRCS+=		DisassemblerEmitter.cpp
 SRCS+=		ExegesisEmitter.cpp
 SRCS+=		FastISelEmitter.cpp

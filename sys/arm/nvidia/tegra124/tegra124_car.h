@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b11742c3d012ad941dc66a7f92fb6ed9f8614e7c $
+ * $FreeBSD: 2dcf06184aeda88c459ab18cca7ab9a85c7a966b $
  */
 
 #ifndef _TEGRA124_CAR_
@@ -309,7 +309,6 @@
 #define	CLK_SOURCE_VIC			0x678
 #define	PLLP_OUTC			0x67c
 #define	PLLP_MISC1			0x680
-
 
 struct tegra124_car_softc {
 	device_t		dev;

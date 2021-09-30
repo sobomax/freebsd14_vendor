@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94ecd61b993a31ad85ba35f912d6a0ccc248c520 $");
+__FBSDID("$FreeBSD: 1cab3b2c5393f04f65c7cd6afde952f9271169c0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -289,7 +289,6 @@ jz4780_clk_gen_set_gate(struct clknode *clk, bool enable)
 
 	return (0);
 }
-
 
 int jz4780_clk_gen_register(struct clkdom *clkdom,
     const struct jz4780_clk_descr *descr, struct mtx *dev_mtx,

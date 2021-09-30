@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2008, 2009 Edward Tomasz Napierała <trasz@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0bbad367b1200fcfebaa254575f09be69fca5358 $");
+__FBSDID("$FreeBSD: 316772db502c2eef7579bfc3ee972879e0be46be $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

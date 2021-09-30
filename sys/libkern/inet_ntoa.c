@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c3444c3d0b37146a2ac8906fd36f7f859650577 $");
+__FBSDID("$FreeBSD: c5d74d3544bf668d2ab10f110a4c6c699260b22c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,5 +47,3 @@ inet_ntoa_r(struct in_addr ina, char *buf)
 		ucp[3] & 0xff);
 	return buf;
 }
-
-

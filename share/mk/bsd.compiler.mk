@@ -1,4 +1,4 @@
-# $FreeBSD: cd87740730e9340f448e480c9ffa294adbb59fb9 $
+# $FreeBSD: 8253669fe279018f918ea149aa4695c90f7f66f7 $
 
 # Setup variables for the compiler
 #
@@ -24,6 +24,7 @@
 # - c++11:     supports full (or nearly full) C++11 programming environment.
 # - retpoline: supports the retpoline speculative execution vulnerability
 #              mitigation.
+# - init-all:  supports stack variable initialization.
 #
 # These variables with an X_ prefix will also be provided if XCC is set.
 #
@@ -35,6 +36,16 @@ __<bsd.compiler.mk>__:
 
 .include <bsd.opts.mk>
 
+.if defined(_NO_INCLUDE_COMPILERMK)
+# If _NO_INCLUDE_COMPILERMK is set we are doing a make obj/cleandir/cleanobj
+# and might not have a valid compiler in $PATH yet. In this case just set the
+# variables that are expected by the other .mk files and return
+COMPILER_TYPE=none
+X_COMPILER_TYPE=none
+COMPILER_VERSION=0
+X_COMPILER_VERSION=0
+COMPILER_FEATURES=none
+.else
 # command = /usr/local/bin/ccache cc ...
 # wrapper = /usr/local/libexec/ccache/cc ...
 CCACHE_BUILD_TYPE?=	command
@@ -118,26 +129,38 @@ ccache-print-options: .PHONY
 .endif	# exists(${CCACHE_BIN})
 .endif	# ${MK_CCACHE_BUILD} == "yes"
 
-.for cc X_ in CC $${_empty_var_} XCC X_
+_cc_vars=CC $${_empty_var_}
+.if !empty(_WANT_TOOLCHAIN_CROSS_VARS)
+# Only the toplevel makefile needs to compute the X_COMPILER_* variables.
+# Skipping the computation of the unused X_COMPILER_* in the subdirectory
+# makefiles can save a noticeable amount of time when walking the whole source
+# tree (e.g. during make includes, etc.).
+_cc_vars+=XCC X_
+.endif
+
+.for cc X_ in ${_cc_vars}
 .if ${cc} == "CC" || !empty(XCC)
 # Try to import COMPILER_TYPE and COMPILER_VERSION from parent make.
 # The value is only used/exported for the same environment that impacts
 # CC and COMPILER_* settings here.
 _exported_vars=	${X_}COMPILER_TYPE ${X_}COMPILER_VERSION \
-		${X_}COMPILER_FREEBSD_VERSION
+		${X_}COMPILER_FREEBSD_VERSION ${X_}COMPILER_RESOURCE_DIR
 ${X_}_cc_hash=	${${cc}}${MACHINE}${PATH}
 ${X_}_cc_hash:=	${${X_}_cc_hash:hash}
-# Only import if none of the vars are set somehow else.
+# Only import if none of the vars are set differently somehow else.
 _can_export=	yes
 .for var in ${_exported_vars}
-.if defined(${var})
+.if defined(${var}) && (!defined(${var}__${${X_}_cc_hash}) || ${${var}__${${X_}_cc_hash}} != ${${var}})
+.if defined(${var}__${${X_}_ld_hash})
+.info "Cannot import ${X_}COMPILER variables since cached ${var} is different: ${${var}__${${X_}_cc_hash}} != ${${var}}"
+.endif
 _can_export=	no
 .endif
 .endfor
 .if ${_can_export} == yes
 .for var in ${_exported_vars}
-.if defined(${var}.${${X_}_cc_hash})
-${var}=	${${var}.${${X_}_cc_hash}}
+.if defined(${var}__${${X_}_cc_hash})
+${var}=	${${var}__${${X_}_cc_hash}}
 .endif
 .endfor
 .endif
@@ -182,21 +205,17 @@ ${X_}COMPILER_FREEBSD_VERSION=	unknown
 .endif
 .endif
 
-${X_}COMPILER_FEATURES=
-.if (${${X_}COMPILER_TYPE} == "clang" && ${${X_}COMPILER_VERSION} >= 30300) || \
-	(${${X_}COMPILER_TYPE} == "gcc" && ${${X_}COMPILER_VERSION} >= 40800)
-${X_}COMPILER_FEATURES+=	c++11
+.if !defined(${X_}COMPILER_RESOURCE_DIR)
+${X_}COMPILER_RESOURCE_DIR!=	${${cc}:N${CCACHE_BIN}} -print-resource-dir 2>/dev/null || echo unknown
 .endif
-.if (${${X_}COMPILER_TYPE} == "clang" && ${${X_}COMPILER_VERSION} >= 30400) || \
-	(${${X_}COMPILER_TYPE} == "gcc" && ${${X_}COMPILER_VERSION} >= 50000)
-${X_}COMPILER_FEATURES+=	c++14
-.endif
-.if (${${X_}COMPILER_TYPE} == "clang" && ${${X_}COMPILER_VERSION} >= 50000) || \
+
+${X_}COMPILER_FEATURES=		c++11 c++14
+.if ${${X_}COMPILER_TYPE} == "clang" || \
 	(${${X_}COMPILER_TYPE} == "gcc" && ${${X_}COMPILER_VERSION} >= 70000)
 ${X_}COMPILER_FEATURES+=	c++17
 .endif
-.if ${${X_}COMPILER_TYPE} == "clang" && ${${X_}COMPILER_VERSION} >= 60000
-${X_}COMPILER_FEATURES+=	retpoline
+.if ${${X_}COMPILER_TYPE} == "clang"
+${X_}COMPILER_FEATURES+=	retpoline init-all
 .endif
 
 .else
@@ -205,14 +224,15 @@ X_COMPILER_TYPE=	${COMPILER_TYPE}
 X_COMPILER_VERSION=	${COMPILER_VERSION}
 X_COMPILER_FREEBSD_VERSION=	${COMPILER_FREEBSD_VERSION}
 X_COMPILER_FEATURES=	${COMPILER_FEATURES}
+X_COMPILER_RESOURCE_DIR=	${COMPILER_RESOURCE_DIR}
 .endif	# ${cc} == "CC" || (${cc} == "XCC" && ${XCC} != ${CC})
 
 # Export the values so sub-makes don't have to look them up again, using the
 # hash key computed above.
 .for var in ${_exported_vars}
-${var}.${${X_}_cc_hash}:=	${${var}}
-.export-env ${var}.${${X_}_cc_hash}
-.undef ${var}.${${X_}_cc_hash}
+${var}__${${X_}_cc_hash}:=	${${var}}
+.export-env ${var}__${${X_}_cc_hash}
+.undef ${var}__${${X_}_cc_hash}
 .endfor
 
 .endif	# ${cc} == "CC" || !empty(XCC)
@@ -221,4 +241,5 @@ ${var}.${${X_}_cc_hash}:=	${${var}}
 .if !defined(_NO_INCLUDE_LINKERMK)
 .include <bsd.linker.mk>
 .endif
+.endif	# defined(_NO_INCLUDE_COMPILERMK)
 .endif	# !target(__<bsd.compiler.mk>__)

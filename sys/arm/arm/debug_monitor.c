@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5751ab5281b6d33a01482546fa3e80b427919c7 $");
+__FBSDID("$FreeBSD: ddf3e8e67b25d73048dde46011471b824a822a11 $");
 
 #include "opt_ddb.h"
 
@@ -257,7 +257,6 @@ kdb_cpu_pc_is_singlestep(db_addr_t pc)
 	/*
 	 * XXX: If the platform fails to enable its debug arch.
 	 *      there will be no stepping capabilities
-	 *      (SOFTWARE_SSTEP is not defined for __ARM_ARCH >= 6).
 	 */
 	if (!dbg_capable())
 		return (FALSE);

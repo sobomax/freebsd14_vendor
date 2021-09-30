@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9678c70d0a8ed00c489ba4bc73892ac4a35f3bf7 $");
+__FBSDID("$FreeBSD: 92ce058726a71f83ce5e8940257ad4648824b20d $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -32,6 +32,9 @@ __FBSDID("$FreeBSD: 9678c70d0a8ed00c489ba4bc73892ac4a35f3bf7 $");
 #include <ftw.h>
 
 #include "fts-compat11.h"
+
+int freebsd11_ftw(const char *path, int (*fn)(const char *,
+    const struct freebsd11_stat *, int), int nfds);
 
 int
 freebsd11_ftw(const char *path,

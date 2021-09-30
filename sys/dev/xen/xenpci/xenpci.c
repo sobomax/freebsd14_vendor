@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4093c033c601201dd29b2203dcb20b30d6da3d23 $");
+__FBSDID("$FreeBSD: 07d424c1e7a7c4db842bf08b4890d009fa46d4bd $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -227,7 +227,6 @@ static device_method_t xenpci_methods[] = {
 	DEVMETHOD(device_attach,	xenpci_attach),
 	DEVMETHOD(device_detach,	xenpci_detach),
 	DEVMETHOD(device_resume,	xenpci_resume),
-
 	{ 0, 0 }
 };
 

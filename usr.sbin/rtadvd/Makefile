@@ -12,12 +12,19 @@
 # LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE.
 #
-# $FreeBSD: 5d627e55b26519fef04353b6c4ad94fd190e9c75 $
+# $FreeBSD: 920c6d966aff3438cb1a21ca7d08906f2aa11eb4 $
+
+.include <src.opts.mk>
 
 PROG=	rtadvd
 MAN=	rtadvd.conf.5 rtadvd.8
 SRCS=	rtadvd.c rrenum.c advcap.c if.c config.c timer.c timer_subr.c	\
 	control.c control_server.c
+
+.if ${MK_EXPERIMENTAL} != "no"
+CFLAGS+=	-DEXPERIMENTAL
+CFLAGS+=	-DDRAFT_IETF_6MAN_IPV6ONLY_FLAG
+.endif
 
 LIBADD=	util
 

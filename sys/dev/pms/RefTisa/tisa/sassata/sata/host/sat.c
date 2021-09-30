@@ -28,7 +28,7 @@
  */
 /*****************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b0ae73ee24c86e7b994a871bf5514cbcacf261e $");
+__FBSDID("$FreeBSD: 23a148c933264a66c5493c2a8105b68e41dcde89 $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>
@@ -19869,7 +19869,7 @@ bit32 satAddNComparebit32(bit8 *a, bit8 *b)
   }
 
 
-  return agFALSE;;
+  return agFALSE;
 }
 
 /*****************************************************************************/

@@ -50,31 +50,29 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbd2a1542fce7a4416646c29d5d7045d9e504529 $");
+__FBSDID("$FreeBSD: 8bd4d3d498d8863d5d59f388eeecda579c028f1f $");
 
 #include <sys/param.h>
-#include <sys/clock.h>
 #include <sys/errno.h>
 #include <sys/mman.h>
 #include <sys/time.h>
 
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
 
+#include "ffs/buf.h"
 #include <fs/msdosfs/bpb.h>
+#include "msdos/direntry.h"
+#include <fs/msdosfs/denode.h>
+#include <fs/msdosfs/fat.h>
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include "makefs.h"
 #include "msdos.h"
-
-#include "ffs/buf.h"
-
-#include "msdos/denode.h"
-#include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
 
 /*
  * Some general notes:
@@ -104,7 +102,11 @@ msdosfs_times(struct denode *dep, const struct stat *st)
 	if (stampst.st_ino)
 		st = &stampst;
 
+#ifdef HAVE_STRUCT_STAT_BIRTHTIME
 	unix2fattime(&st->st_birthtim, &dep->de_CDate, &dep->de_CTime);
+#else
+	unix2fattime(&st->st_ctim, &dep->de_CDate, &dep->de_CTime);
+#endif
 	unix2fattime(&st->st_atim, &dep->de_ADate, NULL);
 	unix2fattime(&st->st_mtim, &dep->de_MDate, &dep->de_MTime);
 }
@@ -457,7 +459,7 @@ msdosfs_wfile(const char *path, struct denode *dep, fsnode *node)
 	nsize = st->st_size;
 	MSDOSFS_DPRINTF(("%s(nsize=%zu, osize=%zu)\n", __func__, nsize, osize));
 	if (nsize > osize) {
-		if ((error = deextend(dep, nsize)) != 0)
+		if ((error = deextend(dep, nsize, NULL)) != 0)
 			return error;
 		if ((error = msdosfs_updatede(dep)) != 0)
 			return error;
@@ -465,15 +467,15 @@ msdosfs_wfile(const char *path, struct denode *dep, fsnode *node)
 
 	if ((fd = open(path, O_RDONLY)) == -1) {
 		error = errno;
-		MSDOSFS_DPRINTF(("open %s: %s", path, strerror(error)));
+		fprintf(stderr, "open %s: %s\n", path, strerror(error));
 		return error;
 	}
 
 	if ((dat = mmap(0, nsize, PROT_READ, MAP_FILE | MAP_PRIVATE, fd, 0))
 	    == MAP_FAILED) {
 		error = errno;
-		MSDOSFS_DPRINTF(("%s: mmap %s: %s", __func__, node->name,
-		    strerror(error)));
+		fprintf(stderr, "%s: mmap %s: %s\n", __func__, node->name,
+		    strerror(error));
 		close(fd);
 		goto out;
 	}

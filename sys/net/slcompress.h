@@ -33,7 +33,7 @@
  *
  *	Van Jacobson (van@helios.ee.lbl.gov), Dec 31, 1989:
  *	- Initial distribution.
- * $FreeBSD: 47526931e9d6eebba2b490342c0251b0744c5883 $
+ * $FreeBSD: 76b61942f9a65a586c049dc593a0c34924a56908 $
  */
 
 #ifndef _NET_SLCOMPRESS_H_
@@ -105,7 +105,6 @@
 #define SPECIALS_MASK (NEW_S|NEW_A|NEW_W|NEW_U)
 
 #define TCP_PUSH_BIT 0x10
-
 
 /*
  * "state" data for each active tcp conversation on the wire.  This is

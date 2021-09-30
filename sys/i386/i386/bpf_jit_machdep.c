@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d77d0ba6f3028099cafa3db2e02f17b2673f01f $");
+__FBSDID("$FreeBSD: a2d691d1a5b7b50b20f8339a60ca5cd3d2565dd8 $");
 
 #ifdef _KERNEL
 #include "opt_bpf.h"
@@ -632,7 +632,7 @@ bpf_jit_compile(struct bpf_insn *prog, u_int nins, size_t *size)
 
 		*size = stream.cur_ip;
 #ifdef _KERNEL
-		stream.ibuf = malloc(*size, M_BPFJIT, M_EXEC | M_NOWAIT);
+		stream.ibuf = malloc_exec(*size, M_BPFJIT, M_NOWAIT);
 		if (stream.ibuf == NULL)
 			break;
 #else

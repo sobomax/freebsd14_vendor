@@ -24,13 +24,13 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 9c0e93491c0d129f3b9321d184140004d446249e $
+# $FreeBSD: 46c65d87e61aaa0471b0bfcbfb4ebbac2df3c708 $
 #
 ##
 # Install a boot environment using the current FreeBSD source tree.
 # Requires a fully built world & kernel.
 #
-# Non-base tools required: beadm, pkg
+# Non-base tools required: pkg
 #
 # In a sandbox for the new boot environment, this script also runs etcupdate
 # and pkg upgrade automatically in the sandbox.  Upon successful completion,
@@ -42,6 +42,8 @@
 # beinstall [optional world/kernel flags e.g. KERNCONF]
 #
 ## User modifiable variables - set these in the environment if desired.
+# Utility to manage ZFS boot environments.
+BE_UTILITY="${BE_UTILITY:-"bectl"}"
 # If not empty, 'pkg upgrade' will be skipped.
 NO_PKG_UPGRADE="${NO_PKG_UPGRADE:-""}"
 # Config updater - 'etcupdate' and 'mergemaster' are supported.  Set to an
@@ -54,10 +56,6 @@ MERGEMASTER_FLAGS="${MERGEMASTER_FLAGS:-"-iFU"}"
 
 
 ########################################################################
-## Constants
-ETCUPDATE_CMD="etcupdate"
-MERGEMASTER_CMD="mergemaster"
-
 ## Functions
 cleanup() {
 	[ -z "${cleanup_commands}" ] && return
@@ -82,6 +80,14 @@ unmount_be() {
 	mount | grep " on ${BE_MNTPT}" | awk '{print $3}' | sort -r | xargs -t umount -f
 }
 
+copy_pkgs() {
+	# Before cleaning up, try to save progress in pkg(8) updates, to
+	# speed up future updates.  This is only called on the error path;
+	# no need to run on success.
+	echo "Rsyncing back newly saved packages..."
+	rsync -av --progress ${BE_MNTPT}/var/cache/pkg/. /var/cache/pkg/.
+}
+
 cleanup_be() {
 	# Before destroying, unmount any child filesystems that may have
 	# been mounted under the boot environment.  Sort them in reverse
@@ -92,7 +98,7 @@ cleanup_be() {
 	if [ -n "${created_be_dirs}" ]; then
 		chroot ${BE_MNTPT} /bin/rm -rf ${created_be_dirs}
 	fi
-	beadm destroy -F ${BENAME}
+	${BE_UTILITY} destroy -F ${BENAME}
 }
 
 create_be_dirs() {
@@ -118,23 +124,22 @@ create_be_dirs() {
 }
 
 update_mergemaster_pre() {
-	mergemaster -p -m ${srcdir} -D ${BE_MNTPT} -t ${BE_MM_ROOT} ${MERGEMASTER_FLAGS}
+	${MERGEMASTER_CMD} -p -m ${srcdir} -D ${BE_MNTPT} -t ${BE_MM_ROOT} ${MERGEMASTER_FLAGS}
 }
 
 update_mergemaster() {
-	chroot ${BE_MNTPT} \
-		mergemaster -m ${srcdir} -t ${BE_MM_ROOT} ${MERGEMASTER_FLAGS}
+	${MERGEMASTER_CMD} -m ${srcdir} -D ${BE_MNTPT} -t ${BE_MM_ROOT} ${MERGEMASTER_FLAGS}
 }
 
 update_etcupdate_pre() {
-	etcupdate -p -s ${srcdir} -D ${BE_MNTPT} ${ETCUPDATE_FLAGS} || return $?
-	etcupdate resolve -D ${BE_MNTPT} || return $?
+	${ETCUPDATE_CMD} -p -s ${srcdir} -D ${BE_MNTPT} ${ETCUPDATE_FLAGS} || return $?
+	${ETCUPDATE_CMD} resolve -D ${BE_MNTPT} || return $?
 }
 
 update_etcupdate() {
 	chroot ${BE_MNTPT} \
-		etcupdate -s ${srcdir} ${ETCUPDATE_FLAGS} || return $?
-	chroot ${BE_MNTPT} etcupdate resolve
+		${ETCUPDATE_CMD} -s ${srcdir} ${ETCUPDATE_FLAGS} || return $?
+	chroot ${BE_MNTPT} ${ETCUPDATE_CMD} resolve
 }
 
 
@@ -147,8 +152,8 @@ postmortem() {
 	unmount_be
 	rmdir_be
 	echo "Post-mortem cleanup complete."
-	echo "To destroy the BE (recommended), run: beadm destroy ${BENAME}"
-	echo "To instead continue with the BE, run: beadm activate ${BENAME}"
+	echo "To destroy the BE (recommended), run: ${BE_UTILITY} destroy ${BENAME}"
+	echo "To instead continue with the BE, run: ${BE_UTILITY} activate ${BENAME}"
 }
 
 if [ -n "$BEINSTALL_CMD" ]; then
@@ -156,6 +161,9 @@ if [ -n "$BEINSTALL_CMD" ]; then
 	exit $?
 fi
 
+if [ "$(basename -- "${BE_UTILITY}")" = "bectl" ]; then
+	${BE_UTILITY} check || errx "${BE_UTILITY} sanity check failed"
+fi
 
 cleanup_commands=""
 trap 'errx "Interrupt caught"' HUP INT TERM
@@ -166,6 +174,10 @@ trap 'errx "Interrupt caught"' HUP INT TERM
 srcdir=$(pwd)
 objdir=$(make -V .OBJDIR 2>/dev/null)
 [ ! -d "${objdir}" ] && errx "Must have built FreeBSD from source tree"
+
+## Constants
+ETCUPDATE_CMD="${srcdir}/usr.sbin/etcupdate/etcupdate.sh"
+MERGEMASTER_CMD="${srcdir}/usr.sbin/mergemaster/mergemaster.sh"
 
 # May be a worktree, in which case .git is a file, not a directory.
 if [ -e .git ] ; then
@@ -198,10 +210,10 @@ BE_MNTPT=${BE_TMP}/mnt
 BE_MM_ROOT=${BE_TMP}/mergemaster # mergemaster will create
 mkdir -p ${BE_MNTPT}
 
-beadm create ${BENAME} >/dev/null || errx "Unable to create BE ${BENAME}"
+${BE_UTILITY} create ${BENAME} >/dev/null || errx "Unable to create BE ${BENAME}"
 [ -z "$NO_CLEANUP_BE" ] && cleanup_commands="cleanup_be ${cleanup_commands}"
 
-beadm mount ${BENAME} ${BE_TMP}/mnt || errx "Unable to mount BE ${BENAME}."
+${BE_UTILITY} mount ${BENAME} ${BE_TMP}/mnt || errx "Unable to mount BE ${BENAME}."
 
 echo "Mounted ${BENAME} to ${BE_MNTPT}, performing install/update ..."
 make "$@" DESTDIR=${BE_MNTPT} installkernel || errx "Installkernel failed!"
@@ -216,6 +228,7 @@ fi
 create_be_dirs "${srcdir}" "${objdir}" || errx "Unable to create BE dirs"
 mount -t nullfs "${srcdir}" "${BE_MNTPT}${srcdir}" || errx "Unable to mount src"
 mount -t nullfs "${objdir}" "${BE_MNTPT}${objdir}" || errx "Unable to mount obj"
+mount -t devfs devfs "${BE_MNTPT}/dev" || errx "Unable to mount devfs"
 
 chroot ${BE_MNTPT} make "$@" -C ${srcdir} installworld || \
 	errx "Installworld failed!"
@@ -223,6 +236,10 @@ chroot ${BE_MNTPT} make "$@" -C ${srcdir} installworld || \
 if [ -n "${CONFIG_UPDATER}" ]; then
 	"update_${CONFIG_UPDATER}"
 	[ $? -ne 0 ] && errx "${CONFIG_UPDATER} (post-world) failed!"
+fi
+
+if which rsync >/dev/null 2>&1; then
+	cleanup_commands="copy_pkgs ${cleanup_commands}"
 fi
 
 BE_PKG="chroot ${BE_MNTPT} env ASSUME_ALWAYS_YES=true pkg"
@@ -240,8 +257,8 @@ fi
 
 unmount_be || errx "Unable to unmount BE"
 rmdir_be || errx "Unable to cleanup BE"
-beadm activate ${BENAME} || errx "Unable to activate BE"
+${BE_UTILITY} activate ${BENAME} || errx "Unable to activate BE"
 echo
-beadm list
+${BE_UTILITY} list
 echo
 echo "Boot environment ${BENAME} setup complete; reboot to use it."

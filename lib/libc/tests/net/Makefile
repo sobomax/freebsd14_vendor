@@ -1,4 +1,4 @@
-# $FreeBSD: 23def7e20c68258b4f56535b5a268a626e1299a1 $
+# $FreeBSD: 14ab914e67efbf760c707c26adec5057aa8ed436 $
 
 PACKAGE=	tests
 
@@ -37,5 +37,7 @@ aton_ether_subr.c: gen_ether_subr ${SRCTOP}/sys/net/if_ethersubr.c
 #TESTS_SUBDIRS=	getaddrinfo
 ${PACKAGE}FILES+=	hosts
 ${PACKAGE}FILES+=	resolv.conf
+
+ATF_TESTS_SH_SED_servent_test=	-e 's,services.cdb,services.db,g'
 
 .include <bsd.test.mk>

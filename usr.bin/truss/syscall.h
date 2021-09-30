@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 01d11db7e91ba8ca6cf51a36ff9f73ddf5bf897c $
+ * $FreeBSD: 5f8babf4c40725b3cba0442855fb1316f93f2e54 $
  */
 
 /*
@@ -87,6 +87,7 @@ enum Argtype {
 	/* Encoded scalar values. */
 	Accessmode,
 	Acltype,
+	AiofsyncOp,
 	Atfd,
 	Atflags,
 	CapFcntlRights,
@@ -101,6 +102,7 @@ enum Argtype {
 	Ioctl,
 	Kldsymcmd,
 	Kldunloadflags,
+	LioMode,
 	Madvice,
 	Minherit,
 	Msgflags,
@@ -122,6 +124,7 @@ enum Argtype {
 	Rtpriofunc,
 	RusageWho,
 	Schedpolicy,
+	ShmFlags,
 	Shutdown,
 	Signal,
 	Sigprocmask,
@@ -138,6 +141,8 @@ enum Argtype {
 
 	/* Pointers to non-structures. */
 	Ptr,
+	AiocbArray,
+	AiocbPointer,
 	BinString,
 	CapRights,
 	ExecArgs,
@@ -152,9 +157,11 @@ enum Argtype {
 	PQuadHex,
 	PUInt,
 	Readlinkres,
+	ShmName,
 	StringArray,
 
 	/* Pointers to structures. */
+	Aiocb,
 	Itimerval,
 	Kevent,
 	Kevent11,
@@ -166,6 +173,7 @@ enum Argtype {
 	Schedparam,
 	Sctpsndrcvinfo,
 	Sigaction,
+	Sigevent,
 	Siginfo,
 	Sigset,
 	Sockaddr,

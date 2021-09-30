@@ -1,6 +1,5 @@
-# $FreeBSD: b29befdf9c374f0bb4507a644a56e141046eeefc $
+# $FreeBSD: e6b83a5591fef83b237a2b358034bbd527c34623 $
 
-#NO_WERROR=
 PROG=	truss
 SRCS=	main.c setup.c syscalls.c
 

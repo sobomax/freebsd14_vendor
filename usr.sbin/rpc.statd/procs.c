@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 517c3f62414e61ebeef49881b2a8d35338587546 $");
+__FBSDID("$FreeBSD: 3f1b60bd3f226dbf6106aa7b0f1c7497487634df $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -52,9 +52,10 @@ __FBSDID("$FreeBSD: 517c3f62414e61ebeef49881b2a8d35338587546 $");
 
 #include "statd.h"
 
+static const char *from_addr(struct sockaddr *);
+
 static const char *
-from_addr(saddr)
-	struct sockaddr *saddr;
+from_addr(struct sockaddr *saddr)
 {
 	static char inet_buf[INET6_ADDRSTRLEN];
 

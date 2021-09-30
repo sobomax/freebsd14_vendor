@@ -49,7 +49,7 @@ static char sccsid[] = "@(#)ps.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1be25d332efae539ef8255bfc717101bcd3b1e7 $");
+__FBSDID("$FreeBSD: d3cfc669d581c97635100f2cb08addc012915366 $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -696,7 +696,7 @@ main(int argc, char *argv[])
 			fwidthmin = (xo_get_style(NULL) != XO_STYLE_TEXT ||
 			    (STAILQ_NEXT(vent, next_ve) == NULL &&
 			    (vent->var->flag & LJUST))) ? 0 : vent->var->width;
-			snprintf(fmtbuf, sizeof(fmtbuf), "{:%s/%%%s%d..%ds}",
+			snprintf(fmtbuf, sizeof(fmtbuf), "{:%s/%%%s%d..%dhs}",
 			    vent->var->field ? vent->var->field : vent->var->name,
 			    (vent->var->flag & LJUST) ? "-" : "",
 			    fwidthmin, fwidthmax);

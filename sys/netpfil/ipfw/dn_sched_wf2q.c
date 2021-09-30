@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: d90357345c8c4c0a9ae60996d3caed67acecf712 $
+ * $FreeBSD: 7285df0d1d7df54e5b841e75d7fd944cba2dc3aa $
  */
 
 #ifdef _KERNEL
@@ -380,6 +380,5 @@ static struct dn_alg wf2qp_desc = {
 #endif
 
 };
-
 
 DECLARE_DNSCHED_MODULE(dn_wf2qp, &wf2qp_desc);

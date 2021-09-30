@@ -25,16 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7fb12181dde437133d44668b5f266b9cfd5374cb $
+ * $FreeBSD: da802343eefc2d7fccbe911f194a0eadf85c6479 $
  */
 
 #ifndef	_BOOTROM_H_
 #define	_BOOTROM_H_
 
 #include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <limits.h>
 
 struct vmctx;
 
-int bootrom_init(struct vmctx *ctx, const char *romfile);
+void init_bootrom(struct vmctx *ctx);
+enum {
+	BOOTROM_ALLOC_TOP = 0x80,
+	_FORCE_INT = INT_MIN,
+};
+int bootrom_alloc(struct vmctx *ctx, size_t len, int prot, int flags,
+    char **region_out, uint64_t *gpa_out);
+int bootrom_loadrom(struct vmctx *ctx, const char *romfile);
 
 #endif

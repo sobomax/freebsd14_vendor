@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29e5f46d7651d73a2f8ba824721bf9fa497f1c19 $");
+__FBSDID("$FreeBSD: 7cf20196dfaeb2b1f4323963d02765f473379a28 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -82,6 +82,7 @@ eascan(struct inodesc *idesc, struct ufs2_dinode *dp)
 		if ((n & 31) == 31)
 			printf("\n");
 	}
+	brelse(bp);
 	return (STOP);
 #endif
 }

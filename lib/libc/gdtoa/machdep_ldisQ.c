@@ -34,11 +34,11 @@
 /*
  * Machine-dependent glue to integrate David Gay's gdtoa
  * package into libc for architectures where a long double
- * uses quad precision, such as sparc64.
+ * uses quad precision, such as aarch64 or riscv.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23657ee19746693db267351837d36b7497009d92 $");
+__FBSDID("$FreeBSD: a64f889b6e23305bfb10b96b26e5851c9d563196 $");
 
 #include <float.h>
 

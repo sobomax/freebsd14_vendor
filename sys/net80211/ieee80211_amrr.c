@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 384a5956fe4e42215ffe61a28d24da470c5db3ef $");
+__FBSDID("$FreeBSD: f89437d3e85748af626bff7f5d1363c26c0d00c0 $");
 
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:
@@ -465,8 +465,8 @@ amrr_sysctlattach(struct ieee80211vap *vap,
 		return;
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "amrr_rate_interval", CTLTYPE_INT | CTLFLAG_RW, vap,
-	    0, amrr_sysctl_interval, "I", "amrr operation interval (ms)");
+	    "amrr_rate_interval", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    vap, 0, amrr_sysctl_interval, "I", "amrr operation interval (ms)");
 	/* XXX bounds check values */
 	SYSCTL_ADD_UINT(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
 	    "amrr_max_sucess_threshold", CTLFLAG_RW,

@@ -36,7 +36,7 @@
  */
 
 #include "sys/cdefs.h"
-__FBSDID("$FreeBSD: 5d39568ccc4fb436cd67ea8ee83dd52d83c0b499 $");
+__FBSDID("$FreeBSD: b4537e7cbe21f2e89948c9ff2677c2486c847486 $");
 
 #include "opt_mac.h"
 
@@ -67,7 +67,7 @@ MAC_CHECK_PROBE_DEFINE2(priv_check, "struct ucred *", "int");
  * policy denies access.
  */
 int
-mac_priv_check(struct ucred *cred, int priv)
+mac_priv_check_impl(struct ucred *cred, int priv)
 {
 	int error;
 
@@ -84,7 +84,7 @@ MAC_GRANT_PROBE_DEFINE2(priv_grant, "struct ucred *", "int");
  * policy grants access.
  */
 int
-mac_priv_grant(struct ucred *cred, int priv)
+mac_priv_grant_impl(struct ucred *cred, int priv)
 {
 	int error;
 

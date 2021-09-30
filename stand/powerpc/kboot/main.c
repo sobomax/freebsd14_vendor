@@ -24,14 +24,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b360ecaa2634a29cc7e0b00d74f2551c11b8094 $");
+__FBSDID("$FreeBSD: 10a5e89adb9b75761e3f029245797787a2cbbbb6 $");
 
 #include <stand.h>
 #include <sys/endian.h>
 #include <sys/param.h>
 #include <fdt_platform.h>
 
-#define _KERNEL
 #include <machine/cpufunc.h>
 #include <bootstrap.h>
 #include "host_syscall.h"

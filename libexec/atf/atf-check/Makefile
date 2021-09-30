@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: b6ef6778403abcda38287f9cea454a77831c42d0 $
+# $FreeBSD: 6711d1744430ec85239abdb9b6e57fd0799c349e $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -31,6 +31,7 @@
 ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-sh
 
+PACKAGE=	tests
 PROG_CXX=	atf-check
 SRCS=		atf-check.cpp
 MAN=		atf-check.1

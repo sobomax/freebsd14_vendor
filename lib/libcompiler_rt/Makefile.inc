@@ -1,4 +1,4 @@
-# $FreeBSD: 8b9a009a91e9e3b5a0211f4006d5c26abcffcad0 $
+# $FreeBSD: aa0a6a6c9e695f4e97e34e9ed9df52e1b814478d $
 
 CRTARCH=	${MACHINE_CPUARCH:C/amd64/x86_64/}
 
@@ -69,7 +69,6 @@ SRCF+=		floatunsisf
 SRCF+=		floatuntidf
 SRCF+=		floatuntisf
 SRCF+=		floatuntixf
-SRCF+=		gcc_personality_v0	# not in upstream
 SRCF+=		int_util
 SRCF+=		lshrdi3
 SRCF+=		lshrti3
@@ -248,4 +247,8 @@ SRCS+=		switch32.S
 SRCS+=		switch8.S
 SRCS+=		switchu8.S
 SRCS+=		sync_synchronize.S
+.endif
+
+.if ${MACHINE_ARCH:Mriscv*sf}
+CFLAGS+=	-D__SOFT_FP__
 .endif

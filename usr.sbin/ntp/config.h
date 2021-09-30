@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: c76cc714ac555c93bc130da81a38f01f3e5bebed $ */
+/* $FreeBSD: 7446d199e16fb5609f528e15711a26e8fb364c07 $ */
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
@@ -1548,7 +1548,7 @@
 #define SIZEOF_SIGNED_CHAR 1
 
 /* The size of `time_t', as computed by sizeof. */
-#if defined(__i386__) || defined(__powerpc__)
+#if defined(__i386__)
 #define SIZEOF_TIME_T 4
 #else
 #define SIZEOF_TIME_T 8
@@ -1578,12 +1578,10 @@
 /* #undef STRERROR_R_CHAR_P */
 
 /* canonical system (cpu-vendor-os) of where we should run */
-#if defined(__alpha__)
-#define STR_SYSTEM "alpha-undermydesk-freebsd"
-#elif defined(__sparc64__)
-#define STR_SYSTEM "sparc64-undermydesk-freebsd"
-#elif defined(__amd64__)
+#if defined(__amd64__)
 #define STR_SYSTEM "amd64-undermydesk-freebsd"
+#elif defined(__powerpc64__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define STR_SYSTEM "powerpc64le-undermydesk-freebsd"
 #elif defined(__powerpc64__)
 #define STR_SYSTEM "powerpc64-undermydesk-freebsd"
 #elif defined(__powerpc__)
@@ -1596,12 +1594,8 @@
 #define STR_SYSTEM "arm64-undermydesk-freebsd"
 #elif defined(__arm__)
 #define STR_SYSTEM "arm-undermydesk-freebsd"
-#elif defined(__sparc64__)
-#define STR_SYSTEM "sparc64-undermydesk-freebsd"
-#elif defined(__sparc__)
-#define STR_SYSTEM "sparc-undermydesk-freebsd"
-#elif defined(__ia64__)
-#define STR_SYSTEM "ia64-undermydesk-freebsd"
+#elif defined(__riscv)
+#define STR_SYSTEM "riscv64-undermydesk-freebsd"
 #else
 #define STR_SYSTEM "i386-undermydesk-freebsd"
 #endif
@@ -1668,8 +1662,8 @@ typedef unsigned int	uintptr_t;
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
-#if defined(__ARMEB__) || defined(__MIPSEB__) || defined(__powerpc__) || \
-    defined(__powerpc64__) || defined(__sparc64__)
+#if defined(__ARMEB__) || defined(__MIPSEB__) || \
+    (defined(__powerpc__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
 #define WORDS_BIGENDIAN 1
 #endif
 

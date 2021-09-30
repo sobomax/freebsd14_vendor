@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 60dbba67628791de819d9748b631690bcaaa29ad $
+ * $FreeBSD: 5f64b05a5333929a87db2f9081e864be69e8ec8d $
  */
 
 /*
@@ -170,7 +170,7 @@ struct qla_host {
 	int			msix_count;
 
 	qla_ivec_t		irq_vec[MAX_SDS_RINGS];
-	
+
 	/* parent dma tag */
 	bus_dma_tag_t           parent_tag;
 
@@ -228,7 +228,7 @@ struct qla_host {
 
 	struct task             stats_task;
 	struct taskqueue	*stats_tq;
-	
+
         uint32_t                fw_ver_major;
         uint32_t                fw_ver_minor;
         uint32_t                fw_ver_sub;

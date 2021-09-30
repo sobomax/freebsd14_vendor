@@ -1,4 +1,4 @@
-# $FreeBSD: efb73d2ac1efd185164a7671fcc78d927dcb0397 $
+# $FreeBSD: ad68eac3f9fb758618a00955e77da660cbb00c74 $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 
@@ -11,7 +11,6 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 .include <../Makefile.inc>
 

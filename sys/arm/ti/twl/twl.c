@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50f2bd9ea513a2c299f61c3e5fb48c1ca94807a9 $");
+__FBSDID("$FreeBSD: e1b20cbbaa5f7fc8b8b92a6fb324888d1b830f6c $");
 
 /*
  * Texas Instruments TWL4030/TWL5030/TWL60x0/TPS659x0 Power Management and
@@ -120,7 +120,6 @@ struct twl_softc {
 #define TWL_ASSERT_LOCKED(_sc)    mtx_assert(&_sc->sc_mtx, MA_OWNED);
 #define TWL_ASSERT_UNLOCKED(_sc)  mtx_assert(&_sc->sc_mtx, MA_NOTOWNED);
 
-
 /**
  *	twl_is_4030 - returns true if the device is TWL4030
  *	twl_is_6025 - returns true if the device is TWL6025
@@ -153,7 +152,6 @@ twl_is_6030(device_t dev)
 	return (sc->sc_type == TWL_DEVICE_6030);
 }
 
-
 /**
  *	twl_read - read one or more registers from the TWL device
  *	@sc: device soft context
@@ -183,7 +181,6 @@ twl_read(device_t dev, uint8_t nsub, uint8_t reg, uint8_t *buf, uint16_t cnt)
 
 	if (addr == TWL_INVALID_CHIP_ID)
 		return (EIO);
-
 
 	/* Set the address to read from */
 	msg[0].slave = addr;
@@ -243,7 +240,6 @@ twl_write(device_t dev, uint8_t nsub, uint8_t reg, uint8_t *buf, uint16_t cnt)
 
 	if (addr == TWL_INVALID_CHIP_ID)
 		return (EIO);
-
 
 	/* Setup the transfer and execute it */
 	msg.slave = addr;
@@ -379,7 +375,7 @@ twl_probe(device_t dev)
 		compat += l;
 		len -= l;
 	}
-	
+
 	switch (sc->sc_type) {
 	case TWL_DEVICE_4030:
 		device_set_desc(dev, "TI TWL4030/TPS659x0 Companion IC");
@@ -394,7 +390,7 @@ twl_probe(device_t dev)
 	default:
 		return (ENXIO);
 	}
-	
+
 	return (0);
 }
 
@@ -437,7 +433,6 @@ twl_detach(device_t dev)
 		device_delete_child(dev, sc->sc_vreg);
 	if (sc->sc_clks)
 		device_delete_child(dev, sc->sc_clks);
-	
 
 	TWL_LOCK_DESTROY(sc);
 

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59574386b0afbd7b0e82a5b826715e8fd13b6bae $");
+__FBSDID("$FreeBSD: 69e48eafdc573acc9e863915680f668cc0e32737 $");
 
 #include <errno.h>
 #include <limits.h>
@@ -48,7 +48,7 @@ mbsnrtowcs_l(wchar_t * __restrict dst, const char ** __restrict src,
 {
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->mbsnrtowcs;
+		ps = &(XLOCALE_CTYPE(locale)->mbsnrtowcs);
 	return (XLOCALE_CTYPE(locale)->__mbsnrtowcs(dst, src, nms, len, ps));
 }
 size_t

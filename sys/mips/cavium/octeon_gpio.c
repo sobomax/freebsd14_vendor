@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65a990ad7f436587f9827cda8bce16c805d311bf $");
+__FBSDID("$FreeBSD: 65ce92b99e4318d07b9d5dad5ed07533f097b5de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -322,7 +322,7 @@ octeon_gpio_filter(void *arg)
 	void **cookie = arg;
 	struct octeon_gpio_softc *sc = *cookie;
 	long int irq = (cookie - sc->gpio_intr_cookies);
-	
+
 	if ((irq < 0) || (irq >= OCTEON_GPIO_IRQS))
 		return (FILTER_STRAY);
 
@@ -383,7 +383,7 @@ octeon_gpio_attach(device_t dev)
 	struct octeon_gpio_softc *sc = device_get_softc(dev);
 	struct octeon_gpio_pin *pinp;
 	cvmx_gpio_bit_cfgx_t gpio_cfgx;
-	
+
 	int i;
 
 	KASSERT((device_get_unit(dev) == 0),

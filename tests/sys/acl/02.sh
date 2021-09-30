@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Copyright (c) 2008, 2009 Edward Tomasz Napierała <trasz@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a989ee39702c46c7f1218a2a049685fdd4dafdc5 $
+# $FreeBSD: efef2abfdea4126c543154c288fe97130a6f9fb9 $
 #
 
 # This is a wrapper script to run tools-nfs4.test on UFS filesystem.

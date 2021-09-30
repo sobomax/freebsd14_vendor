@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc28f0f41753d41f90fe182e823717b9436b6e38 $");
+__FBSDID("$FreeBSD: b67302b8d66fa5eedf9ce7531440be1b6a1d3d6f $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -41,7 +41,7 @@ __FBSDID("$FreeBSD: dc28f0f41753d41f90fe182e823717b9436b6e38 $");
 #include <sys/endian.h>
 
 #include <sys/socket.h>
- 
+
 #include <net/bpf.h>
 #include <net/ethernet.h>
 #include <net/if.h>
@@ -168,11 +168,11 @@ ieee80211_vap_pkt_send_dest(struct ieee80211vap *vap, struct mbuf *m,
 	 * uses any existing value for rcvif to identify the
 	 * interface it (might have been) received on.
 	 */
+	MPASS((m->m_pkthdr.csum_flags & CSUM_SND_TAG) == 0);
 	m->m_pkthdr.rcvif = (void *)ni;
 	mcast = (m->m_flags & (M_MCAST | M_BCAST)) ? 1: 0;
 
 	BPF_MTAP(ifp, m);		/* 802.3 tx */
-
 
 	/*
 	 * Figure out if we can do A-MPDU, A-MSDU or FF.
@@ -325,8 +325,6 @@ ieee80211_vap_pkt_send_dest(struct ieee80211vap *vap, struct mbuf *m,
 
 	return (0);
 }
-
-
 
 /*
  * Send the given mbuf through the given vap.
@@ -565,6 +563,7 @@ ieee80211_raw_output(struct ieee80211vap *vap, struct ieee80211_node *ni,
 	 * that the mbuf has the same node value that
 	 * it would if it were going via the normal path.
 	 */
+	MPASS((m->m_pkthdr.csum_flags & CSUM_SND_TAG) == 0);
 	m->m_pkthdr.rcvif = (void *)ni;
 
 	/*
@@ -1477,7 +1476,7 @@ ieee80211_encap(struct ieee80211vap *vap, struct ieee80211_node *ni,
 	int meshhdrsize, meshae;
 	uint8_t *qos;
 	int is_amsdu = 0;
-	
+
 	IEEE80211_TX_LOCK_ASSERT(ic);
 
 	is_mcast = !! (m->m_flags & (M_MCAST | M_BCAST));
@@ -2216,7 +2215,6 @@ static uint8_t *
 ieee80211_add_wme_param(uint8_t *frm, struct ieee80211_wme_state *wme,
     int uapsd_enable)
 {
-#define	SM(_v, _f)	(((_v) << _f##_S) & _f)
 #define	ADDSHORT(frm, v) do {	\
 	le16enc(frm, v);	\
 	frm += 2;		\
@@ -2243,17 +2241,18 @@ ieee80211_add_wme_param(uint8_t *frm, struct ieee80211_wme_state *wme,
 	for (i = 0; i < WME_NUM_AC; i++) {
 		const struct wmeParams *ac =
 		       &wme->wme_bssChanParams.cap_wmeParams[i];
-		*frm++ = SM(i, WME_PARAM_ACI)
-		       | SM(ac->wmep_acm, WME_PARAM_ACM)
-		       | SM(ac->wmep_aifsn, WME_PARAM_AIFSN)
+		*frm++ = _IEEE80211_SHIFTMASK(i, WME_PARAM_ACI)
+		       | _IEEE80211_SHIFTMASK(ac->wmep_acm, WME_PARAM_ACM)
+		       | _IEEE80211_SHIFTMASK(ac->wmep_aifsn, WME_PARAM_AIFSN)
 		       ;
-		*frm++ = SM(ac->wmep_logcwmax, WME_PARAM_LOGCWMAX)
-		       | SM(ac->wmep_logcwmin, WME_PARAM_LOGCWMIN)
+		*frm++ = _IEEE80211_SHIFTMASK(ac->wmep_logcwmax,
+			    WME_PARAM_LOGCWMAX)
+		       | _IEEE80211_SHIFTMASK(ac->wmep_logcwmin,
+			    WME_PARAM_LOGCWMIN)
 		       ;
 		ADDSHORT(frm, ac->wmep_txopLimit);
 	}
 	return frm;
-#undef SM
 #undef ADDSHORT
 }
 #undef WME_OUI_BYTES
@@ -2643,7 +2642,6 @@ ieee80211_send_mgmt(struct ieee80211_node *ni, int type, int arg)
 
 	memset(&params, 0, sizeof(params));
 	switch (type) {
-
 	case IEEE80211_FC0_SUBTYPE_AUTH:
 		status = arg >> 16;
 		arg &= 0xffff;

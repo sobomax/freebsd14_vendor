@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c4c61c7d4e48fb1eab52abaf2c4f2273ec76e60e $
+ * $FreeBSD: f73e269d204097bb140eef36b00c92a6a8e7eb7f $
  */
 
 #ifndef _NETGRAPH_TCPMSS_H_
@@ -56,7 +56,6 @@ struct ng_tcpmss_hookstat {
 	{ "FixedPkts",	&ng_parse_uint64_type	},	\
 	{ NULL }					\
 }
-
 
 /* Structure for NGM_TCPMSS_CONFIG. */
 struct ng_tcpmss_config {

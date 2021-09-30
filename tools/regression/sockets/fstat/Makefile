@@ -1,9 +1,8 @@
 #
-# $FreeBSD: a583166d10c968d4c6b85237c0e97b09497e716c $
+# $FreeBSD: d5cb724199693c076c82180b38bdc1597fdb8d2d $
 #
 
 PROG=	fstat
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

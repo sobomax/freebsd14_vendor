@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 5c2753279a23480470fb5956b2e652c90914f17f $
+# $FreeBSD: 27d93766c3549009b97b3cb1a82d6f66b7f11643 $
 #
 # The Broadcom 470x/471x/535x series of processors and boards is very commonly
 # used in COTS hardware including the ASUS RT-N12, RT-N16, RT-N53.
@@ -82,7 +82,6 @@ device		uart
 #Base
 device		loop
 device		ether
-device 		random
 device		md
 
 #Performance

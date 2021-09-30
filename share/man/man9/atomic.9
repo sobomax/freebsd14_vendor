@@ -1,5 +1,4 @@
 .\" Copyright (c) 2000-2001 John H. Baldwin <jhb@FreeBSD.org>
-.\" All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -21,9 +20,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 104518d3a9702a777ead8c5cac4d31270a42c1d7 $
+.\" $FreeBSD: ebc6ed791f37dfebc57d3f0d6192983f321d5ede $
 .\"
-.Dd August 18, 2019
+.Dd March 6, 2021
 .Dt ATOMIC 9
 .Os
 .Sh NAME
@@ -32,6 +31,7 @@
 .Nm atomic_cmpset ,
 .Nm atomic_fcmpset ,
 .Nm atomic_fetchadd ,
+.Nm atomic_interrupt_fence ,
 .Nm atomic_load ,
 .Nm atomic_readandclear ,
 .Nm atomic_set ,
@@ -60,6 +60,8 @@
 .Fc
 .Ft <type>
 .Fn atomic_fetchadd_<type> "volatile <type> *p" "<type> v"
+.Ft void
+.Fn atomic_interrupt_fence "void"
 .Ft <type>
 .Fn atomic_load_[acq_]<type> "volatile <type> *p"
 .Ft <type>
@@ -273,7 +275,9 @@ In C11, a release fence by one thread synchronizes with an acquire fence by
 another thread when an atomic load that is prior to the acquire fence (by
 program order) reads the value written by an atomic store that is subsequent
 to the release fence.
-In constrast, in FreeBSD, because of the atomicity of ordinary, naturally
+In constrast, in
+.Fx ,
+because of the atomicity of ordinary, naturally
 aligned loads and stores, fences can also be synchronized by ordinary loads
 and stores.
 This simplifies the implementation and use of some synchronization
@@ -291,6 +295,14 @@ release stores, by separating access from ordering, they can sometimes
 facilitate more efficient implementations of synchronization primitives.
 For example, they can be used to avoid executing a memory barrier until a
 memory access shows that some condition is satisfied.
+.Ss Interrupt Fence Operations
+The
+.Fn atomic_interrupt_fence()
+function establishes ordering between its call location and any interrupt
+handler executing on the same CPU.
+It is modeled after the similar C11 function
+.Fn atomic_signal_fence() ,
+and adapted for the kernel environment.
 .Ss Multiple Processors
 In multiprocessor systems, the atomicity of the atomic operations on memory
 depends on support for cache coherence in the underlying architecture.
@@ -600,3 +612,8 @@ and
 .Fn atomic_store
 were added in
 .Fx 12.0 .
+.Pp
+The
+.Fn atomic_interrupt_fence
+operation was added in
+.Fx 13.0 .

@@ -1,10 +1,10 @@
-# $FreeBSD: 4f4e5dc8651894c17dbae5d981e7ced96692ad2b $
+# $FreeBSD: dbe0f47679b960b3f7b106e39f51955f6ef7037e $
+
+PACKAGE=	runtime
 
 SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
-
-PACKAGE=casper
 
 .if ${MK_CASPER} != "no"
 SHLIB=	casper

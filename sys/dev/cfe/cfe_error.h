@@ -33,7 +33,7 @@
  *    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  *    OR OTHERWISE), EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d0cb413acd36fe2d39207ae894375c4b5d829da1 $
+ * $FreeBSD: 27abd75a39f79de902464e5eb7f0f140513c2813 $
  */
 
 /*  *********************************************************************
@@ -47,7 +47,6 @@
     *  Author:  Mitch Lichtenberg
     *  
     ********************************************************************* */
-
 
 #define CFE_OK			 0
 #define CFE_ERR                 -1	/* generic error */

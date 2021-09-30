@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 906d920e205dcfc576b652102a7540998d09776e $
+ * $FreeBSD: 549815273dd22a0045d0646d12816492b3d60b88 $
  */
 
 #ifndef _DEV_UART_DEV_NS8250_H_
@@ -39,7 +39,7 @@ struct ns8250_softc {
 	uint8_t		fcr;
 	uint8_t		ier;
 	uint8_t		mcr;
-	
+
 	uint8_t		ier_mask;
 	uint8_t		ier_rxbits;
 	uint8_t		busy_detect;

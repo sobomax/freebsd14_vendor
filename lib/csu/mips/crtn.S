@@ -1,11 +1,10 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ad81a7b5f3c69ede6a1d3f849311bc2f178c0154 $");
+__FBSDID("$FreeBSD: db03f6c65d20d9313bfac6e5b6285c985ca17133 $");
 
 #ifndef __clang__
 	.gnu_attribute 4, 0
 #endif
 	.section .init,"ax",%progbits
-	.align 4
 	.set noreorder
 #if defined(__ABICALLS__) && (defined(__mips_n32) || defined(__mips_n64))
 	REG_L	gp, CALLFRAME_GP(sp)
@@ -16,7 +15,6 @@ __FBSDID("$FreeBSD: ad81a7b5f3c69ede6a1d3f849311bc2f178c0154 $");
 	.set reorder
 
 	.section .fini,"ax",%progbits
-	.align 4
 	.set noreorder
 #if defined(__ABICALLS__) && (defined(__mips_n32) || defined(__mips_n64))
 	REG_L	gp, CALLFRAME_GP(sp)

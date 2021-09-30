@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2018 Mellanox Technologies. All rights reserved.
+ * Copyright (c) 2018-2019 Mellanox Technologies. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ebf61d521cec7c0b72d81f0c7cb8a615180ace34 $
+ * $FreeBSD: f453b4759e277247f86ee5a56e1487ff6a61371e $
  */
 
 #include "port_buffer.h"

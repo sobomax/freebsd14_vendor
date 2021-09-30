@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 85581f3c29c5db812fa349b7d326cac4325950d0 $
+ * $FreeBSD: 20a10d7dfda0618b58bf8c32546a7b7badf32206 $
  */
 
 #ifndef _FUSE_INTERNAL_H_
@@ -199,7 +199,6 @@ fuse_validity_2_timespec(const struct fuse_entry_out *feo,
 	}
 }
 
-
 /* VFS ops */
 int
 fuse_internal_get_cached_vnode(struct mount*, ino_t, int, struct vnode**);
@@ -274,6 +273,10 @@ void fuse_internal_vnode_disappear(struct vnode *vp);
 /* setattr */
 int fuse_internal_setattr(struct vnode *vp, struct vattr *va,
 	struct thread *td, struct ucred *cred);
+
+/* write */
+void fuse_internal_clear_suid_on_write(struct vnode *vp, struct ucred *cred,
+    struct thread *td);
 
 /* strategy */
 

@@ -25,16 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 916f4e7c885808d82810cb2becc75daa402a7c10 $
+ * $FreeBSD: 0bd740a0908c34c54637299cf55b8d4a174a062b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 916f4e7c885808d82810cb2becc75daa402a7c10 $");
+__FBSDID("$FreeBSD: 0bd740a0908c34c54637299cf55b8d4a174a062b $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
 
 #include <machine/vmm.h>
+#include <machine/vmm_snapshot.h>
 #include <vmmapi.h>
 
 #include <stdio.h>
@@ -135,7 +136,7 @@ pci_fbuf_write(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 	sc = pi->pi_arg;
 
 	DPRINTF(DEBUG_VERBOSE,
-	    ("fbuf wr: offset 0x%lx, size: %d, value: 0x%lx\n",
+	    ("fbuf wr: offset 0x%lx, size: %d, value: 0x%lx",
 	    offset, size, value));
 
 	if (offset + size > DMEMSZ) {
@@ -217,7 +218,7 @@ pci_fbuf_read(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 	}
 
 	DPRINTF(DEBUG_VERBOSE,
-	    ("fbuf rd: offset 0x%lx, size: %d, value: 0x%lx\n",
+	    ("fbuf rd: offset 0x%lx, size: %d, value: 0x%lx",
 	     offset, size, value));
 
 	return (value);
@@ -226,15 +227,13 @@ pci_fbuf_read(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 static int
 pci_fbuf_parse_opts(struct pci_fbuf_softc *sc, char *opts)
 {
-	char	*uopts, *xopts, *config;
+	char	*uopts, *uoptsbak, *xopts, *config;
 	char	*tmpstr;
 	int	ret;
 
 	ret = 0;
-	uopts = strdup(opts);
-	for (xopts = strtok(uopts, ",");
-	     xopts != NULL;
-	     xopts = strtok(NULL, ",")) {
+	uoptsbak = uopts = strdup(opts);
+	while ((xopts = strsep(&uopts, ",")) != NULL) {
 		if (strcmp(xopts, "wait") == 0) {
 			sc->rfb_wait = 1;
 			continue;
@@ -261,7 +260,7 @@ pci_fbuf_parse_opts(struct pci_fbuf_softc *sc, char *opts)
 			if (config) {
 				if (tmpstr[0] == '[')
 					tmpstr++;
-				sc->rfb_host = tmpstr;
+				sc->rfb_host = strdup(tmpstr);
 				if (config[0] == ':')
 					config++;
 				else {
@@ -277,7 +276,7 @@ pci_fbuf_parse_opts(struct pci_fbuf_softc *sc, char *opts)
 					sc->rfb_port = atoi(tmpstr);
 				else {
 					sc->rfb_port = atoi(config);
-					sc->rfb_host = tmpstr;
+					sc->rfb_host = strdup(tmpstr);
 				}
 			}
 	        } else if (!strcmp(xopts, "vga")) {
@@ -311,7 +310,7 @@ pci_fbuf_parse_opts(struct pci_fbuf_softc *sc, char *opts)
 			} else if (sc->memregs.height == 0)
 				sc->memregs.height = 1080;
 		} else if (!strcmp(xopts, "password")) {
-			sc->rfb_password = config;
+			sc->rfb_password = strdup(config);
 		} else {
 			pci_fbuf_usage(xopts);
 			ret = -1;
@@ -320,6 +319,7 @@ pci_fbuf_parse_opts(struct pci_fbuf_softc *sc, char *opts)
 	}
 
 done:
+	free(uoptsbak);
 	return (ret);
 }
 
@@ -441,10 +441,26 @@ done:
 	return (error);
 }
 
+#ifdef BHYVE_SNAPSHOT
+static int
+pci_fbuf_snapshot(struct vm_snapshot_meta *meta)
+{
+	int ret;
+
+	SNAPSHOT_BUF_OR_LEAVE(fbuf_sc->fb_base, FB_SIZE, meta, ret, err);
+
+err:
+	return (ret);
+}
+#endif
+
 struct pci_devemu pci_fbuf = {
 	.pe_emu =	"fbuf",
 	.pe_init =	pci_fbuf_init,
 	.pe_barwrite =	pci_fbuf_write,
-	.pe_barread =	pci_fbuf_read
+	.pe_barread =	pci_fbuf_read,
+#ifdef BHYVE_SNAPSHOT
+	.pe_snapshot =	pci_fbuf_snapshot,
+#endif
 };
 PCI_EMUL_SET(pci_fbuf);

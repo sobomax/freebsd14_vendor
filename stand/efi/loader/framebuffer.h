@@ -25,12 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2ec9017dc3eef5d281a93eacdf87412879f42a42 $
+ * $FreeBSD: 008df7f6c1677947dbfbdf82e24791ecb761fc26 $
  */
+
+#include <gfx_fb.h>
 
 #ifndef	_EFIFB_H_
 #define	_EFIFB_H_
 
-int	efi_find_framebuffer(struct efi_fb *efifb);
+int	efi_find_framebuffer(teken_gfx_t *gfx_state);
 
 #endif /* _EFIFB_H_ */

@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dda81af8c140499bbcd07593c6bdaec061b84f32 $");
+__FBSDID("$FreeBSD: 01927419fe33c38aa9b8dda48a515da770bf06d9 $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -30,7 +30,8 @@ __FBSDID("$FreeBSD: dda81af8c140499bbcd07593c6bdaec061b84f32 $");
 
 #define BUFFERSIZE 512
 
-SYSCTL_NODE(_dev, OID_AUTO, krping, CTLFLAG_RW, 0, "kernel rping module");
+SYSCTL_NODE(_dev, OID_AUTO, krping, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "kernel rping module");
 
 int krping_debug = 0;
 SYSCTL_INT(_dev_krping, OID_AUTO, debug, CTLFLAG_RW, &krping_debug, 0 , "");

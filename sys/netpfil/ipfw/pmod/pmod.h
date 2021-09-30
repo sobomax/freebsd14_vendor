@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1e9f6ec00f7f5656905fd78e35a29f386bb364c9 $
+ * $FreeBSD: 8df741bb91b45d2341d81e34d3697fb65ef20d70 $
  */
 
 #ifndef	_IP_FW_PMOD_H_
@@ -33,4 +33,3 @@
 int tcpmod_init(struct ip_fw_chain *ch, int first);
 void tcpmod_uninit(struct ip_fw_chain *ch, int last);
 #endif /* _IP_FW_PMOD_H_ */
-

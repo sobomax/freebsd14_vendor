@@ -34,8 +34,8 @@
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\" $OpenBSD: sshd_config.5,v 1.282 2018/09/20 03:28:06 djm Exp $
-.\" $FreeBSD: 8176078319d1c7abc2977ece9d18cdf283191e49 $
-.Dd $Mdocdate: September 20 2018 $
+.\" $FreeBSD: d28622d984a1e162d6edcbed6a3c82a8ae300d04 $
+.Dd $Mdocdate: July 28 2020 $
 .Dt SSHD_CONFIG 5
 .Os
 .Sh NAME
@@ -495,8 +495,7 @@ The default is:
 .Bd -literal -offset indent
 chacha20-poly1305@openssh.com,
 aes128-ctr,aes192-ctr,aes256-ctr,
-aes128-gcm@openssh.com,aes256-gcm@openssh.com,
-aes128-cbc,aes192-cbc,aes256-cbc
+aes128-gcm@openssh.com,aes256-gcm@openssh.com
 .Ed
 .Pp
 The list of available ciphers may also be obtained using
@@ -1603,6 +1602,11 @@ to the
 daemon.
 The default is
 .Cm no .
+For forward compatibility with an upcoming
+.Xr blacklistd
+rename, the
+.Cm UseBlocklist
+alias can be used instead.
 .It Cm UseDNS
 Specifies whether
 .Xr sshd 8

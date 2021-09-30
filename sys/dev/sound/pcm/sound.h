@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d4b3a23e8eb2a909297d1d203e01c9fb3ed0c360 $
+ * $FreeBSD: cdae5e837cdc90180d5902542fd30c5a45704d46 $
  */
 
 /*
@@ -40,6 +40,7 @@
 #ifdef _KERNEL
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/eventhandler.h>
 #include <sys/ioccom.h>
 #include <sys/filio.h>
 #include <sys/sockio.h>
@@ -335,7 +336,6 @@ int pcm_setstatus(device_t dev, char *str);
 u_int32_t pcm_getflags(device_t dev);
 void pcm_setflags(device_t dev, u_int32_t val);
 void *pcm_getdevinfo(device_t dev);
-
 
 int snd_setup_intr(device_t dev, struct resource *res, int flags,
 		   driver_intr_t hand, void *param, void **cookiep);

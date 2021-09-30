@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a0c362c50ed205c54b7f0ad08b17a574469a74b8 $
+ * $FreeBSD: d192a28bbdc536768b0c9b1cb5e19eb351d3dc60 $
  */
 
 #define	WDOG_CLK_FREQ	32768
@@ -61,4 +61,3 @@
 
 #define	WDOG_MCR_REG	0x08	/* Miscellaneous Control Register */
 #define	  WDOG_MCR_PDE		  (1u << 0)  /* Power-down enable */
-

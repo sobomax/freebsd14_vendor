@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa7eadfdb022c3a528f3c1e09895a02eb4983aa6 $");
+__FBSDID("$FreeBSD: 30b02bac2fc4ddf47e751a349d3035842effaef8 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -123,8 +123,8 @@ sysctl_register_fdt_oid(void *arg)
 		return;
 
 	SYSCTL_ADD_PROC(NULL, SYSCTL_STATIC_CHILDREN(_hw_fdt), OID_AUTO, "dtb",
-	    CTLTYPE_OPAQUE | CTLFLAG_RD, NULL, 0, sysctl_handle_dtb, "",
-	    "Device Tree Blob");
+	    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
+	    sysctl_handle_dtb, "", "Device Tree Blob");
 }
 SYSINIT(dtb_oid, SI_SUB_KMEM, SI_ORDER_ANY, sysctl_register_fdt_oid, NULL);
 

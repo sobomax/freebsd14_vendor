@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d26303a43db577ea1c39d37262050514c5a66dda $
+ * $FreeBSD: 1ce8e3b623ac397e67ead0334ec2a930dcf5928f $
  */
 
 /*
@@ -79,7 +79,6 @@
 /*#define SMBV_FAILED		0x0200*/	/* last reconnect attempt has failed */
 #define SMBV_UNICODE		0x0400	/* connection is configured to use Unicode */
 
-
 /*
  * smb_share flags
  */
@@ -124,7 +123,6 @@ enum smbiod_state {
 	SMBIOD_ST_VCACTIVE,	/* session established */
 	SMBIOD_ST_DEAD		/* connection broken, transport is down */
 };
-
 
 /*
  * Info structures

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0be933ed896d16fb437f98becdb89baada9d12e9 $
+ * $FreeBSD: 91099caf083dfe7c642620a21430ec13aec17936 $
  */
 
 #ifndef _HDA_REG_H_
@@ -756,7 +756,6 @@
     (HDA_CMD_12BIT((cad), (nid),					\
     HDA_CMD_VERB_FUNCTION_RESET, 0x0))
 
-
 /****************************************************************************
  * HDA Device Parameters
  ****************************************************************************/
@@ -1301,7 +1300,6 @@
 #define HDA_PARAM_VOLUME_KNOB_CAP_NUM_STEPS(param)			\
     (((param) & HDA_PARAM_VOLUME_KNOB_CAP_NUM_STEPS_MASK) >>		\
     HDA_PARAM_VOLUME_KNOB_CAP_NUM_STEPS_SHIFT)
-
 
 #define HDA_CONFIG_DEFAULTCONF_SEQUENCE_MASK		0x0000000f
 #define HDA_CONFIG_DEFAULTCONF_SEQUENCE_SHIFT		0

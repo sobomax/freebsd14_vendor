@@ -1,4 +1,4 @@
-# $FreeBSD: 2748b6f3ac12439c72eb9d51bf587ed4aa200758 $
+# $FreeBSD: 42b195cb440eadfc093966ecad168e17926f6a34 $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 
@@ -18,7 +18,6 @@ LIBADD+=	bsdstat
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 ah_osdep.h:
 	echo 'typedef void *HAL_SOFTC;' >ah_osdep.h

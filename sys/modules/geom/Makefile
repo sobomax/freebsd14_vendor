@@ -1,4 +1,4 @@
-# $FreeBSD: cbc7207b6f0eebee6ddd94e83a77c6bc9c669a28 $
+# $FreeBSD: 51f3d2438eb17bf6558313bab579e316a2c7ba4b $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -19,7 +19,6 @@ SUBDIR=	geom_bde \
 	geom_part \
 	geom_raid \
 	geom_raid3 \
-	geom_sched \
 	geom_shsec \
 	geom_stripe \
 	geom_uzip \

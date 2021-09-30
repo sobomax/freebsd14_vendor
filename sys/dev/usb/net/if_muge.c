@@ -28,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $
+ * $FreeBSD: 3d008ea3c66a9c7537666c1146d8f60dcef7540d $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $");
+__FBSDID("$FreeBSD: 3d008ea3c66a9c7537666c1146d8f60dcef7540d $");
 
 /*
  * USB-To-Ethernet adapter driver for Microchip's LAN78XX and related families.
@@ -85,6 +85,10 @@ __FBSDID("$FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_media.h>
+
+#include <dev/mii/mii.h>
+#include <dev/mii/miivar.h>
 
 #include <netinet/in.h>
 #include <netinet/ip.h>
@@ -111,10 +115,12 @@ __FBSDID("$FreeBSD: c0ee22345fda47c31ecc8d5eeb14d726b7a858ec $");
 
 #include <dev/usb/net/if_mugereg.h>
 
+#include "miibus_if.h"
+
 #ifdef USB_DEBUG
 static int muge_debug = 0;
 
-SYSCTL_NODE(_hw_usb, OID_AUTO, muge, CTLFLAG_RW, 0,
+SYSCTL_NODE(_hw_usb, OID_AUTO, muge, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Microchip LAN78xx USB-GigE");
 SYSCTL_INT(_hw_usb_muge, OID_AUTO, debug, CTLFLAG_RWTUN, &muge_debug, 0,
     "Debug level");
@@ -147,9 +153,6 @@ do { \
 
 #define muge_err_printf(sc, fmt, args...) \
 	device_printf((sc)->sc_ue.ue_dev, "error: " fmt, ##args)
-
-#define ETHER_IS_ZERO(addr) \
-	(!(addr[0] | addr[1] | addr[2] | addr[3] | addr[4] | addr[5]))
 
 #define ETHER_IS_VALID(addr) \
 	(!ETHER_IS_MULTICAST(addr) && !ETHER_IS_ZERO(addr))
@@ -221,7 +224,6 @@ static int lan78xx_chip_init(struct muge_softc *sc);
 static int muge_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data);
 
 static const struct usb_config muge_config[MUGE_N_TRANSFER] = {
-
 	[MUGE_BULK_DT_WR] = {
 		.type = UE_BULK,
 		.endpoint = UE_ADDR_ANY,
@@ -1856,6 +1858,24 @@ muge_hash(uint8_t addr[ETHER_ADDR_LEN])
 	return (ether_crc32_be(addr, ETHER_ADDR_LEN) >> 23) & 0x1ff;
 }
 
+static u_int
+muge_hash_maddr(void *arg, struct sockaddr_dl *sdl, u_int cnt)
+{
+	struct muge_softc *sc = arg;
+	uint32_t bitnum;
+
+	/* First fill up the perfect address table. */
+	if (cnt < 32 /* XXX */)
+		muge_set_addr_filter(sc, cnt + 1, LLADDR(sdl));
+	else {
+		bitnum = muge_hash(LLADDR(sdl));
+		sc->sc_mchash_table[bitnum / 32] |= (1 << (bitnum % 32));
+		sc->sc_rfe_ctl |= ETH_RFE_CTL_MCAST_HASH_;
+	}
+
+	return (1);
+}
+
 /**
  *	muge_setmulti - Setup multicast
  *	@ue: usb ethernet device context
@@ -1871,8 +1891,7 @@ muge_setmulti(struct usb_ether *ue)
 {
 	struct muge_softc *sc = uether_getsc(ue);
 	struct ifnet *ifp = uether_getifp(ue);
-	uint8_t i, *addr;
-	struct ifmultiaddr *ifma;
+	uint8_t i;
 
 	MUGE_LOCK_ASSERT(sc, MA_OWNED);
 
@@ -1897,28 +1916,7 @@ muge_setmulti(struct usb_ether *ue)
 		muge_dbg_printf(sc, "receive all multicast enabled\n");
 		sc->sc_rfe_ctl |= ETH_RFE_CTL_MCAST_EN_;
 	} else {
-		/* Lock the mac address list before hashing each of them. */
-		if_maddr_rlock(ifp);
-		if (!CK_STAILQ_EMPTY(&ifp->if_multiaddrs)) {
-			i = 1;
-			CK_STAILQ_FOREACH(ifma, &ifp->if_multiaddrs,
-			    ifma_link) {
-				/* First fill up the perfect address table. */
-				addr = LLADDR((struct sockaddr_dl *)
-				    ifma->ifma_addr);
-				if (i < 33 /* XXX */) {
-					muge_set_addr_filter(sc, i, addr);
-				} else {
-					uint32_t bitnum = muge_hash(addr);
-					sc->sc_mchash_table[bitnum / 32] |=
-					    (1 << (bitnum % 32));
-					sc->sc_rfe_ctl |=
-					    ETH_RFE_CTL_MCAST_HASH_;
-				}
-				i++;
-			}
-		}
-		if_maddr_runlock(ifp);
+		if_foreach_llmaddr(ifp, muge_hash_maddr, sc);
 		muge_multicast_write(sc);
 	}
 	lan78xx_write_reg(sc, ETH_RFE_CTL, sc->sc_rfe_ctl);
@@ -2272,8 +2270,8 @@ static driver_t muge_driver = {
 
 static devclass_t muge_devclass;
 
-DRIVER_MODULE(muge, uhub, muge_driver, muge_devclass, NULL, 0);
-DRIVER_MODULE(miibus, muge, miibus_driver, miibus_devclass, 0, 0);
+DRIVER_MODULE(muge, uhub, muge_driver, muge_devclass, NULL, NULL);
+DRIVER_MODULE(miibus, muge, miibus_driver, miibus_devclass, NULL, NULL);
 MODULE_DEPEND(muge, uether, 1, 1, 1);
 MODULE_DEPEND(muge, usb, 1, 1, 1);
 MODULE_DEPEND(muge, ether, 1, 1, 1);

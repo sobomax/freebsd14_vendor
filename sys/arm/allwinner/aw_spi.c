@@ -22,17 +22,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 629b808c6e72ef1a825efd15a35600d709c547ca $
+ * $FreeBSD: 0952102575b35ec3d982fa5369cccc1dae850cfb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 629b808c6e72ef1a825efd15a35600d709c547ca $");
+__FBSDID("$FreeBSD: 0952102575b35ec3d982fa5369cccc1dae850cfb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/rman.h>
 #include <sys/resource.h>
 #include <machine/bus.h>

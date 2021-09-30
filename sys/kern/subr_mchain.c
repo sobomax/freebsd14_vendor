@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57461abda807635cf635a0b4678e4cdbf1aec7ce $");
+__FBSDID("$FreeBSD: ca4d8e879997d6f926fe454b53c564149d5905e5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -473,7 +473,7 @@ md_get_mem(struct mdchain *mdp, caddr_t target, int size, int type)
 	int error;
 	u_int count;
 	u_char *s;
-	
+
 	while (size > 0) {
 		if (m == NULL) {
 			MBERROR("incomplete copy\n");

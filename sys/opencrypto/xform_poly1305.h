@@ -1,12 +1,12 @@
 /* This file is in the public domain. */
-/* $FreeBSD: 7364ecdef1177d33871314fe2aafab5e5cff69d3 $ */
+/* $FreeBSD: cca1c6af9395bc739ea8319fa27469c01ac351bb $ */
 #pragma once
 
 #include <sys/types.h>
 
 struct poly1305_xform_ctx;
 
-void Poly1305_Init(struct poly1305_xform_ctx *);
+void Poly1305_Init(void *);
 
 void Poly1305_Setkey(struct poly1305_xform_ctx *,
     const uint8_t [__min_size(32)], size_t);

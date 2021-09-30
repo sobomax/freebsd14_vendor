@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 38ab1acb1c6513ae043c2d955daa823cfa44e7d8 $
+ * $FreeBSD: 928d7b0fd95737fe683e4c78e7ad72632f148574 $
  */
 #ifndef _NET80211__IEEE80211_H_
 #define _NET80211__IEEE80211_H_
@@ -619,7 +619,7 @@ struct ieee80211_rx_stats {
 	} evm;
 
 	/* 32 bits */
-	uint8_t c_phytype;		/* PHY type, FW flags above */
+	uint8_t c_phytype;		/* PHY type, FP flags above */
 	uint8_t c_vhtnss;		/* VHT - number of spatial streams */
 	uint8_t c_pad2[2];
 };

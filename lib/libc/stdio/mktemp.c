@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)mktemp.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0cc7496b693e4f05a4f72aae6cd326eba566fa4e $");
+__FBSDID("$FreeBSD: 0ede3058a3d50f59077dcca36a6fcb0160af59c3 $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -49,17 +49,25 @@ __FBSDID("$FreeBSD: 0cc7496b693e4f05a4f72aae6cd326eba566fa4e $");
 
 char *_mktemp(char *);
 
-static int _gettemp(char *, int *, int, int, int);
+static int _gettemp(int, char *, int *, int, int, int);
 
 static const unsigned char padchar[] =
 "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+int
+mkostempsat(int dfd, char *path, int slen, int oflags)
+{
+	int fd;
+
+	return (_gettemp(dfd, path, &fd, 0, slen, oflags) ? fd : -1);
+}
 
 int
 mkostemps(char *path, int slen, int oflags)
 {
 	int fd;
 
-	return (_gettemp(path, &fd, 0, slen, oflags) ? fd : -1);
+	return (_gettemp(AT_FDCWD, path, &fd, 0, slen, oflags) ? fd : -1);
 }
 
 int
@@ -67,7 +75,7 @@ mkstemps(char *path, int slen)
 {
 	int fd;
 
-	return (_gettemp(path, &fd, 0, slen, 0) ? fd : -1);
+	return (_gettemp(AT_FDCWD, path, &fd, 0, slen, 0) ? fd : -1);
 }
 
 int
@@ -75,7 +83,7 @@ mkostemp(char *path, int oflags)
 {
 	int fd;
 
-	return (_gettemp(path, &fd, 0, 0, oflags) ? fd : -1);
+	return (_gettemp(AT_FDCWD, path, &fd, 0, 0, oflags) ? fd : -1);
 }
 
 int
@@ -83,19 +91,19 @@ mkstemp(char *path)
 {
 	int fd;
 
-	return (_gettemp(path, &fd, 0, 0, 0) ? fd : -1);
+	return (_gettemp(AT_FDCWD, path, &fd, 0, 0, 0) ? fd : -1);
 }
 
 char *
 mkdtemp(char *path)
 {
-	return (_gettemp(path, (int *)NULL, 1, 0, 0) ? path : (char *)NULL);
+	return (_gettemp(AT_FDCWD, path, (int *)NULL, 1, 0, 0) ? path : (char *)NULL);
 }
 
 char *
 _mktemp(char *path)
 {
-	return (_gettemp(path, (int *)NULL, 0, 0, 0) ? path : (char *)NULL);
+	return (_gettemp(AT_FDCWD, path, (int *)NULL, 0, 0, 0) ? path : (char *)NULL);
 }
 
 __warn_references(mktemp,
@@ -108,14 +116,14 @@ mktemp(char *path)
 }
 
 static int
-_gettemp(char *path, int *doopen, int domkdir, int slen, int oflags)
+_gettemp(int dfd, char *path, int *doopen, int domkdir, int slen, int oflags)
 {
 	char *start, *trv, *suffp, *carryp;
 	char *pad;
 	struct stat sbuf;
-	int rval;
 	uint32_t rand;
 	char carrybuf[MAXPATHLEN];
+	int saved;
 
 	if ((doopen != NULL && domkdir) || slen < 0 ||
 	    (oflags & ~(O_APPEND | O_DIRECT | O_SHLOCK | O_EXLOCK | O_SYNC |
@@ -124,8 +132,7 @@ _gettemp(char *path, int *doopen, int domkdir, int slen, int oflags)
 		return (0);
 	}
 
-	for (trv = path; *trv != '\0'; ++trv)
-		;
+	trv = path + strlen(path);
 	if (trv - path >= MAXPATHLEN) {
 		errno = ENAMETOOLONG;
 		return (0);
@@ -145,34 +152,12 @@ _gettemp(char *path, int *doopen, int domkdir, int slen, int oflags)
 	}
 	start = trv + 1;
 
-	/* save first combination of random characters */
-	memcpy(carrybuf, start, suffp - start);
-
-	/*
-	 * check the target directory.
-	 */
-	if (doopen != NULL || domkdir) {
-		for (; trv > path; --trv) {
-			if (*trv == '/') {
-				*trv = '\0';
-				rval = stat(path, &sbuf);
-				*trv = '/';
-				if (rval != 0)
-					return (0);
-				if (!S_ISDIR(sbuf.st_mode)) {
-					errno = ENOTDIR;
-					return (0);
-				}
-				break;
-			}
-		}
-	}
-
+	saved = 0;
+	oflags |= O_CREAT | O_EXCL | O_RDWR;
 	for (;;) {
 		if (doopen) {
-			if ((*doopen =
-			    _open(path, O_CREAT|O_EXCL|O_RDWR|oflags, 0600)) >=
-			    0)
+			*doopen = _openat(dfd, path, oflags, 0600);
+			if (*doopen >= 0)
 				return (1);
 			if (errno != EEXIST)
 				return (0);
@@ -183,6 +168,12 @@ _gettemp(char *path, int *doopen, int domkdir, int slen, int oflags)
 				return (0);
 		} else if (lstat(path, &sbuf))
 			return (errno == ENOENT);
+
+		/* save first combination of random characters */
+		if (!saved) {
+			memcpy(carrybuf, start, suffp - start);
+			saved = 1;
+		}
 
 		/* If we have a collision, cycle through the space of filenames */
 		for (trv = start, carryp = carrybuf;;) {

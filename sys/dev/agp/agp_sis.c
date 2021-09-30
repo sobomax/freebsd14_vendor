@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 06e57e9885b5a9ecfb311d4c9884bf1fdad99903 $");
+__FBSDID("$FreeBSD: db498ed814635487f9c650d8b74c003b8de67d2d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -155,7 +155,7 @@ agp_sis_attach(device_t dev)
 
 	/* Install the gatt. */
 	pci_write_config(dev, AGP_SIS_ATTBASE, gatt->ag_physical, 4);
-	
+
 	/* Enable the aperture. */
 	pci_write_config(dev, AGP_SIS_WINCTRL,
 			 pci_read_config(dev, AGP_SIS_WINCTRL, 1) | 3, 1);
@@ -218,7 +218,7 @@ agp_sis_set_aperture(device_t dev, u_int32_t aperture)
 		return EINVAL;
 
 	gws = ffs(aperture / 4*1024*1024) - 1;
-	
+
 	pci_write_config(dev, AGP_SIS_WINCTRL,
 			 ((pci_read_config(dev, AGP_SIS_WINCTRL, 1) & ~0x70)
 			  | gws << 4), 1);
@@ -276,7 +276,6 @@ static device_method_t agp_sis_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

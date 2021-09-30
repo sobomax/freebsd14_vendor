@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1d79b92250ef1da9eaddbc0e5e620a02c71d990 $");
+__FBSDID("$FreeBSD: edee5455c594e6951b7b37d8bb1cdc5a6c9b9026 $");
 
 /*
  * Debugging support.
@@ -392,7 +392,7 @@ aac_print_aif(struct aac_softc *sc, struct aac_aif_command *aif)
 		default:
 			status = "unknown status"; break;
 		}		
-	
+
 		device_printf(sc->aac_dev, "JobProgress (%d) - %s (%d, %d)\n",
 			      aif->seqNumber, status,
 			      aif->data.PR[0].currentTick,

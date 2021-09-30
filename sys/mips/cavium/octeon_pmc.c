@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 70fb69ca33ef1c6e65d580013cdcb93837680c9d $
+ * $FreeBSD: 23b5f0534f39972d0bb2ae6613838b1c7285d2b4 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70fb69ca33ef1c6e65d580013cdcb93837680c9d $");
+__FBSDID("$FreeBSD: 23b5f0534f39972d0bb2ae6613838b1c7285d2b4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -111,7 +111,7 @@ octeon_pmc_intr(void *arg)
 	struct trapframe *tf = PCPU_GET(curthread)->td_intr_frame;
 
 	if (pmc_intr)
-		(*pmc_intr)(PCPU_GET(tf);
+		(*pmc_intr)(tf);
 
 	return (FILTER_HANDLED);
 }

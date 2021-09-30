@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 48033585a19dfc2313397ffc59feea4ec3d0a4d6 $
+ * $FreeBSD: df47b5ae6d1fba4bc5d235193b718f4d0dad50ad $
  */
 
 #include "opt_ddb.h"
@@ -60,7 +60,6 @@ static device_method_t pswitch_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		pswitch_probe),
 	DEVMETHOD(device_attach,	pswitch_attach),
-
 	{ 0, 0 }
 };
 

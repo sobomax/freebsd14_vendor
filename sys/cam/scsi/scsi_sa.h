@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 076589efc9ef73559ce06910d0fe88a65e2b8a05 $
+ * $FreeBSD: 908b16b684cf1d333060bb6961b41aa4e9e3c3d5 $
  */
 
 #ifndef	_SCSI_SCSI_SA_H
@@ -1000,7 +1000,7 @@ void	scsi_load_unload(struct ccb_scsiio *csio, u_int32_t retries,
 			 u_int8_t tag_action, int immediate,   int eot,
 			 int reten, int load, u_int8_t sense_len,
 			 u_int32_t timeout);
-	
+
 void	scsi_write_filemarks(struct ccb_scsiio *csio, u_int32_t retries,
 			     void (*cbfcnp)(struct cam_periph *, union ccb *),
 			     u_int8_t tag_action, int immediate, int setmark,

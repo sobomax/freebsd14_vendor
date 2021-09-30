@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7675edda4c5da61761abe2dca577d6b5b49c62c $");
+__FBSDID("$FreeBSD: 07027cb272f98764faf7415c84e67773f1c84ee6 $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -180,11 +180,12 @@ pmc_find_name(idmap & map, uint32_t id, char *list[LIST_MAX], int count)
 static void
 pmc_log_event(int fd, struct pmclog_ev *ev, bool json)
 {
+	string ret;
 	int len;
 	const void *buf;
 
 	if (json) {
-		string ret = event_to_json(ev);
+		ret = event_to_json(ev);
 		buf = ret.c_str();
 		len = ret.size();
 	} else {

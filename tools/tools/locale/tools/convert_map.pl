@@ -1,6 +1,6 @@
 #! /usr/local/bin/perl
 #
-# $FreeBSD: 88222531d0649afe7f3dfe93721bb7c2389fad9b $
+# $FreeBSD: 8b54ff33381b67154689c7ccdfda29836fe75dae $
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -87,7 +87,7 @@ sub load_utf8_cm
 {
     my $file = shift;
 
-    open(UTF8, "$file") || die "open";
+    open(UTF8, "$file") || die "$!: open: $file";
 
     while (<UTF8>) {
 	next if (/^#/);
@@ -158,7 +158,8 @@ $mf = shift(@ARGV);
 $codeset = shift(@ARGV);
 my $max_mb;
 
-load_utf8_cm("etc/final-maps/map.UTF-8");
+my $etcdir = (exists $ENV{'ETCDIR'}) ? $ENV{'ETCDIR'} : "etc";
+load_utf8_cm("${etcdir}/final-maps/map.UTF-8");
 load_map($mf);
 
 

@@ -1,5 +1,5 @@
 # $Whistle: Makefile,v 1.5 1999/01/24 06:48:37 archie Exp $
-# $FreeBSD: ac674d16d8125641860700d7e722779436b612e1 $
+# $FreeBSD: df97324a19f9a581b3623b38910f44bf52a58711 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -11,6 +11,7 @@ SUBDIR=	async \
 	bpf \
 	bridge \
 	car \
+	checksum \
 	cisco \
 	deflate \
 	device \
@@ -30,6 +31,7 @@ SUBDIR=	async \
 	ksocket \
 	l2tp \
 	lmi \
+	macfilter \
 	${_mppc} \
 	nat \
 	netflow \

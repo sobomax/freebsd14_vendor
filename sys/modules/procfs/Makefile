@@ -1,4 +1,4 @@
-# $FreeBSD: 5a819e2cae4b967c35aaad43ad16af7d9d3f539d $
+# $FreeBSD: 282b200e5a6050c186f7b698b41eef7746f79f93 $
 
 .PATH: ${SRCTOP}/sys/fs/procfs
 
@@ -7,7 +7,6 @@ SRCS=
 SRCS+=		vnode_if.h
 SRCS+=		procfs_dbregs.c
 SRCS+=		procfs_fpregs.c
-SRCS+=		procfs_ioctl.c
 SRCS+=		procfs_map.c
 SRCS+=		procfs_mem.c
 SRCS+=		procfs_note.c

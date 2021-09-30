@@ -1,6 +1,6 @@
-/* $FreeBSD: d22f9fad1238d7ad659439eabeb073c16fefbc5d $ */
+/* $FreeBSD: 44b21761077873c6545e113a2a19543773cabf04 $ */
 /*
- * Copyright (C) 1984-2019  Mark Nudelman
+ * Copyright (C) 1984-2020  Mark Nudelman
  *
  * You may distribute under the terms of either the GNU General Public
  * License or the Less License, as specified in the README file.
@@ -119,7 +119,6 @@ main(argc, argv)
 	init_mark();
 	init_cmds();
 	get_term();
-	expand_cmd_tables();
 	init_charset();
 	init_line();
 	init_cmdhist();
@@ -167,6 +166,8 @@ main(argc, argv)
 
 	if (less_is_more)
 		no_init = TRUE;
+
+	expand_cmd_tables();
 
 #if EDITOR
 	editor = lgetenv("VISUAL");

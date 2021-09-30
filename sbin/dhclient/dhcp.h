@@ -1,5 +1,5 @@
 /*	$OpenBSD: dhcp.h,v 1.5 2004/05/04 15:49:49 deraadt Exp $	*/
-/*	$FreeBSD: e4dcfb93271ecece73193107435d901662266caf $	*/
+/*	$FreeBSD: 9183a9c82aec97af7016557382621940ba96de3b $	*/
 
 /* Protocol structures... */
 
@@ -171,6 +171,7 @@ struct dhcp_packet {
 #define	DHO_STREETTALK_SERVER		75
 #define	DHO_STREETTALK_DA_SERVER	76
 #define DHO_DHCP_USER_CLASS_ID		77
+#define	DHO_URL				114
 #define	DHO_DOMAIN_SEARCH		119
 #define DHO_CLASSLESS_ROUTES		121
 #define DHO_END				255

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee8a4914189d8d54440f42ad70d99a3a60c92fdd $");
+__FBSDID("$FreeBSD: dc81db56bf8207098520c6d20ff5ad4ec297415c $");
 
 #include "al_init_eth_kr.h"
 #include "al_serdes.h"
@@ -707,7 +707,6 @@ al_eth_kr_run_lt(struct al_eth_kr_data *kr_data)
 
 	if (al_eth_kr_lt_frame_lock_wait(kr_data->adapter, AL_ETH_AN__LT_LANE_0,
 	    AL_ETH_KR_FRAME_LOCK_TIMEOUT) == TRUE) {
-
 		/*
 		 * when locked, for the first time initialize the receiver and
 		 * transmitter tasks to prepare it for detecting coefficient
@@ -755,7 +754,6 @@ al_eth_kr_run_lt(struct al_eth_kr_data *kr_data)
 		}
 
 	} else {
-
 		al_info("[%s] FAILED: did not achieve initial frame lock...\n",
 		    kr_data->adapter->name);
 

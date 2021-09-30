@@ -24,10 +24,9 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 475cfc375471fe7ee96fca1462b93c87ee83792d $
+ * $FreeBSD: 80ac6fc79373171f25e4c05cd76207e97c66717c $
  *
  */
-
 
 /****************************************************************************
  *
@@ -42,7 +41,6 @@
 
 #ifndef NVM_CFG_H
 #define NVM_CFG_H
-
 
 #define NVM_CFG_version 0x83306
 

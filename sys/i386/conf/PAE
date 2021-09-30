@@ -1,7 +1,7 @@
 #
 # PAE -- Generic kernel configuration file for FreeBSD/i386 PAE
 #
-# $FreeBSD: 72543c4f6e29ae7ab259ee13a7b3f8b33def89e2 $
+# $FreeBSD: 07dfec58fd8e0d73c3c875675d914ab03bb95056 $
 
 include GENERIC
 
@@ -17,6 +17,5 @@ nodevice	hptmv
 nodevice	ida
 
 # The following drivers don't work with PAE enabled.
-makeoptions	WITHOUT_MODULES+="ncr pst"
-nodevice	ncr
+makeoptions	WITHOUT_MODULES+="pst"
 nodevice	pst

@@ -34,9 +34,8 @@
  * SUCH DAMAGE.
  *
  *	@(#)iso_rrip.h	8.2 (Berkeley) 1/23/94
- * $FreeBSD: 29dc1163c44c4af7999bdd172389a14907fa0a06 $
+ * $FreeBSD: 5ab9103022d120f660b3af674314ddc03478e6e7 $
  */
-
 
 /*
  *	Analyze function flag (similar to RR field bits)

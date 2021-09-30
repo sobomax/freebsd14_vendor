@@ -35,7 +35,7 @@
  *
  *	from: @(#)mips_opcode.h 8.1 (Berkeley) 6/10/93
  *	JNPR: mips_opcode.h,v 1.1 2006/08/07 05:38:57 katta
- * $FreeBSD: e722af81207d823baa2f57274fa9cb06b5ae0467 $
+ * $FreeBSD: 0a1bc72684758d2cb35a5b10a0fc7c8dbc9c7659 $
  */
 
 #ifndef _MACHINE_MIPS_OPCODE_H_
@@ -137,7 +137,6 @@ typedef union {
  */
 
 #define	MIPS_OPCODE(r, c)	(((r & 0x07) << 3) | (c & 0x07))
-
 
 /*
  * Values for the 'op' field.

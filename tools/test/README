@@ -1,4 +1,4 @@
-$FreeBSD: 1e4aef85253eb99a547784d5d365977ba975004f $
+$FreeBSD: 2bafa48a9764ff1105b5111f0ce61e17f8ddabf6 $
 
 This directory is for standalone test programs.  For the FreeBSD
 Test Suite, which uses Kyua, please see /usr/src/tests/
@@ -10,6 +10,7 @@ Please make a subdir per program, and add a brief description to this file.
 
 auxinfo		Return information on page sizes, CPUs, and OS release date.
 devrandom	Programs to test /dev/*random.
+gpioevents	Test delivery of gpio pin-change events to userland.
 hwpmc		Automatically trigger every event in hwpmc(4).
 iconv		Character set conversion tests.
 malloc		A program to test and benchmark malloc().

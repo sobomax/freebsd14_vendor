@@ -23,17 +23,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bac1e185da4d279be6de01e98f2df9d6b0fa47f3 $
+ * $FreeBSD: 9d2cde87ef98744a04ac114cab5a740346f75a06 $
  */
 
 #ifndef DEV_SYSCON_GENERIC_H
 #define DEV_SYSCON_GENERIC_H
 
+#include <dev/fdt/simplebus.h>
+
 struct syscon_generic_softc {
+	struct simplebus_softc	simplebus;
 	device_t		dev;
 	struct syscon		*syscon;
 	struct resource		*mem_res;
 	struct mtx		mtx;
+	bool			simplebus_attached;
 };
 
 DECLARE_CLASS(syscon_generic_driver);

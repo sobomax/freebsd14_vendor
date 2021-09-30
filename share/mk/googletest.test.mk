@@ -1,4 +1,4 @@
-# $FreeBSD: b55f28d572f00d14abd0ff390fa2ff2d89601bf6 $
+# $FreeBSD: b2e57e8d6e0afd7113e96d9db45919d8418e8480 $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -30,12 +30,18 @@ GTESTS?=
 .include <googletest.test.inc.mk>
 
 PROGS_CXX+= ${GTESTS}
-_TESTS+= ${GTESTS}
 .for _T in ${GTESTS}
 BINDIR.${_T}= ${TESTSDIR}
 CXXFLAGS.${_T}+= ${GTESTS_CXXFLAGS}
 MAN.${_T}?= # empty
 SRCS.${_T}?= ${_T}.cc
+.if !empty(GTESTS_WRAPPER_SH.${_T})
+# A stopgap/workaround to let kyua execute test case one by one
+ATF_TESTS_SH+= ${GTESTS_WRAPPER_SH.${_T}}
+.else
+_TESTS+= ${_T}
 TEST_INTERFACE.${_T}= plain
+.endif
+
 .endfor
 .endif

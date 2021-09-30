@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from BSDI $Id: mutex.h,v 2.7.2.35 2000/04/27 03:10:26 cp Exp $
- * $FreeBSD: d4c9d1cbc815809eae65e8f057326f307a254d24 $
+ * $FreeBSD: 35257ce97038b6ce292f05f822bbd2290909a70f $
  */
 
 #ifndef _SYS_MUTEX_H_
@@ -106,6 +106,7 @@ void	__mtx_unlock_sleep(volatile uintptr_t *c, uintptr_t v, int opts,
 void	__mtx_lock_sleep(volatile uintptr_t *c, uintptr_t v);
 void	__mtx_unlock_sleep(volatile uintptr_t *c, uintptr_t v);
 #endif
+void	mtx_wait_unlocked(struct mtx *m);
 
 #ifdef SMP
 #if LOCK_DEBUG > 0
@@ -496,7 +497,7 @@ do {									\
 	int _giantcnt = 0;						\
 	WITNESS_SAVE_DECL(Giant);					\
 									\
-	if (mtx_owned(&Giant)) {					\
+	if (__predict_false(mtx_owned(&Giant))) {			\
 		WITNESS_SAVE(&Giant.lock_object, Giant);		\
 		for (_giantcnt = 0; mtx_owned(&Giant) &&		\
 		    !SCHEDULER_STOPPED(); _giantcnt++)			\
@@ -509,7 +510,7 @@ do {									\
 
 #define PARTIAL_PICKUP_GIANT()						\
 	mtx_assert(&Giant, MA_NOTOWNED);				\
-	if (_giantcnt > 0) {						\
+	if (__predict_false(_giantcnt > 0)) {				\
 		while (_giantcnt--)					\
 			mtx_lock(&Giant);				\
 		WITNESS_RESTORE(&Giant.lock_object, Giant);		\

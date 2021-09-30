@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8324e4629179afc60ac097222c16ea417298d67 $");
+__FBSDID("$FreeBSD: 4195089e164b84117e775b6226d1eb194517a3a2 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -235,7 +235,6 @@ struct winbond_vendor_device_id {
 		.descr		= "Nuvoton NCT6795",
 	},
 };
-
 
 /*
  * Return the watchdog related registers as we last read them.  This will
@@ -628,14 +627,15 @@ wb_attach(device_t dev)
 	    "debug_verbose", CTLFLAG_RW, &sc->debug_verbose, 0,
             "Enables extra debugging information");
         SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "debug",
-	    CTLTYPE_STRING|CTLFLAG_RD, sc, 0, sysctl_wb_debug, "A",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, sc, 0,
+	    sysctl_wb_debug, "A",
             "Selected register information from last change by driver");
         SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "debug_current",
-	    CTLTYPE_STRING|CTLFLAG_RD|CTLFLAG_SKIP, sc, 0,
-	     sysctl_wb_debug_current, "A",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_SKIP | CTLFLAG_NEEDGIANT,
+	    sc, 0, sysctl_wb_debug_current, "A",
 	     "Selected register information (may interfere)");
 	SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "force_timeout",
-	    CTLTYPE_INT|CTLFLAG_RW|CTLFLAG_SKIP, sc, 0,
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_SKIP | CTLFLAG_NEEDGIANT, sc, 0,
 	    sysctl_wb_force_test_nmi, "I", "Enable to force watchdog to fire.");
 
 	/* Register watchdog. */

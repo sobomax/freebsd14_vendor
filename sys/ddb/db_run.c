@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf38a4d2f72647a370e06d79586bac44045387c3 $");
+__FBSDID("$FreeBSD: af99eb7576097a82cc14f6fc01a07d8263e23ef7 $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -48,8 +48,9 @@ __FBSDID("$FreeBSD: bf38a4d2f72647a370e06d79586bac44045387c3 $");
 #include <vm/vm.h>
 
 #include <ddb/ddb.h>
-#include <ddb/db_break.h>
 #include <ddb/db_access.h>
+#include <ddb/db_break.h>
+#include <ddb/db_command.h>
 
 #define	STEP_ONCE	1
 #define	STEP_RETURN	2
@@ -331,8 +332,6 @@ db_clear_single_step(void)
 }
 
 #endif	/* SOFTWARE_SSTEP */
-
-extern int	db_cmd_loop_done;
 
 /* single-step */
 /*ARGSUSED*/

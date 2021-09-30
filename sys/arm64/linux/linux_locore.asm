@@ -2,6 +2,7 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (C) 2018 Turing Robotic Industries Inc.
+ * Copyright (C) 2020 Andrew Turner <andrew@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 952131d25d81318779a74d1e3d4b4a8ad99e78fd $
+ * $FreeBSD: 0383e677095426a780ffc79c781137727ed247a3 $
  */
 
 /*
@@ -32,6 +33,8 @@
  */
 
 #include <machine/asm.h>
+
+#include <arm64/linux/linux_syscall.h>
 
 	.data
 
@@ -44,15 +47,21 @@ linux_platform:
 ENTRY(__kernel_rt_sigreturn)
 	brk #0 /* LINUXTODO: implement __kernel_rt_sigreturn */
 	ret
+END(__kernel_rt_sigreturn)
 
 ENTRY(__kernel_gettimeofday)
-	brk #0 /* LINUXTODO: implement __kernel_gettimeofday */
+	ldr	x8, =LINUX_SYS_gettimeofday
+	svc	#0
 	ret
+END(__kernel_gettimeofday)
 
 ENTRY(__kernel_clock_gettime)
-	brk #0 /* LINUXTODO: implement __kernel_clock_gettime */
+	ldr	x8, =LINUX_SYS_linux_clock_gettime
+	svc	#0
 	ret
+END(__kernel_clock_gettime)
 
 ENTRY(__kernel_clock_getres)
 	brk #0 /* LINUXTODO: implement __kernel_clock_getres */
 	ret
+END(__kernel_clock_getres)

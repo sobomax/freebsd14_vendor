@@ -25,21 +25,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4ab256ed2179b39c5a406f1a100dae99e060712b $");
+__FBSDID("$FreeBSD: 6b563ea8ab0c2abb3dc31981dc19690d6eb9adb2 $");
 
 #include <sys/param.h>
-#include <sys/lock.h>
 #include <sys/malloc.h>
-#include <sys/mutex.h>
-#include <sys/systm.h>
-#include <sys/vmmeter.h>
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_page.h>
-#include <vm/vm_pageout.h>
+#include <vm/vm_dumpset.h>
 #include <vm/uma.h>
 #include <vm/uma_int.h>
-#include <machine/md_var.h>
-#include <machine/vmparam.h>
 
 void *
 uma_small_alloc(uma_zone_t zone, vm_size_t bytes, int domain, u_int8_t *flags,

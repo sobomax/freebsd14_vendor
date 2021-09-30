@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e7399ec236d8ec4fc4a7a2dd3b47c1cee27f871 $");
+__FBSDID("$FreeBSD: 9efd872f4ee0b76582fb3024ca1a13be4b66e1f5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -440,7 +440,6 @@ am335x_syscons_init(int unit, video_adapter_t *adp, int flags)
 
 	sc->xmargin = (sc->width - (vi->vi_width * vi->vi_cwidth)) / 2;
 	sc->ymargin = (sc->height - (vi->vi_height * vi->vi_cheight))/2;
-
 
 	adp->va_window = (vm_offset_t) am335x_syscons_static_window;
 	adp->va_flags |= V_ADP_FONT /* | V_ADP_COLOR | V_ADP_MODECHANGE */;

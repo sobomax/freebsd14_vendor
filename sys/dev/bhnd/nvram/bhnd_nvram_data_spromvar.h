@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 14fde58c4181fef39a1758d47b960f86c84d7def $
+ * $FreeBSD: d168c0faec1ec942de6e22627ea4817bbd856e29 $
  */
 
 #ifndef _BHND_NVRAM_BHND_NVRAM_SPROMVAR_H_
@@ -130,7 +130,7 @@ struct bhnd_sprom_opcode_state {
 
 	/** Current SPROM revision range */
 	bitstr_t			 bit_decl(revs, SPROM_OP_REV_MAX);
-	
+
 	const uint8_t			*input;		/**< opcode input position */
 
 	/* State preserved across variable definitions */

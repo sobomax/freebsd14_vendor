@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 411348a436681afa074b9b408e1bc45aacab207f $
+# $FreeBSD: c328e161a70e4d488020d89c00419dbff49636f5 $
 #
 
 # PROVIDE: os-release
@@ -13,6 +13,7 @@
 : ${osrelease_perms:=444}
 name="osrelease"
 desc="Update ${osrelease_file}"
+rcvar="osrelease_enable"
 start_cmd="osrelease_start"
 stop_cmd=":"
 

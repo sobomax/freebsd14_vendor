@@ -1,9 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-#	$FreeBSD: 069a11edca1c87ddedddb319a5abbe0f7fae276c $
+#	$FreeBSD: 2083993b07959e397068dc39938db40e24b181f3 $
 
 .include <src.opts.mk>
-
-PACKAGE=runtime-manuals
 
 #MISSING: dump.5 plot.5
 MAN=	acct.5 \
@@ -65,9 +63,11 @@ MAN=	acct.5 \
 	resolver.5 \
 	services.5 \
 	shells.5 \
+	smbfs.5 \
 	src.conf.5 \
 	stab.5 \
 	style.Makefile.5 \
+	style.mdoc.5 \
 	sysctl.conf.5 \
 	tmpfs.5 \
 	unionfs.5
@@ -100,10 +100,6 @@ MAN+=	freebsd-update.conf.5
 
 .if ${MK_HESIOD} != "no"
 MAN+=	hesiod.conf.5 
-.endif
-
-.if ${MK_NAND} != "no"
-MAN+=	nandfs.5
 .endif
 
 .if ${MK_PF} != "no"

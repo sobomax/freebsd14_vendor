@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *      $FreeBSD: 602e1fbfa377ce2c78725c6e249a9427c8da7677 $
+ *      $FreeBSD: 158f74575e33595ed2de5b232c4600a03f594674 $
  */
 
 #ifndef _PSEUDOFS_H_INCLUDED
@@ -78,6 +78,7 @@ typedef enum {
 #define PFS_RAW		(PFS_RAWRD|PFS_RAWWR)
 #define PFS_PROCDEP	0x0010	/* process-dependent */
 #define PFS_NOWAIT	0x0020 /* allow malloc to fail */
+#define PFS_AUTODRAIN	0x0040	/* sbuf_print can sleep to drain */
 
 /*
  * Data structures
@@ -237,6 +238,7 @@ struct pfs_node {
 
 	struct pfs_node		*pn_parent;		/* (o) */
 	struct pfs_node		*pn_nodes;		/* (o) */
+	struct pfs_node		*pn_last_node;		/* (o) */
 	struct pfs_node		*pn_next;		/* (p) */
 };
 

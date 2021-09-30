@@ -23,9 +23,8 @@ THIS SOFTWARE.
 ****************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec7029454386cb2435c41154718229dfc24b7ed7 $");
-
-const char	*version = "version 20121220 (FreeBSD)";
+__FBSDID("$FreeBSD: e45df738a62458213f5dd565d5fb68f57e897161 $");
+const char	*version = "version 20190529 (FreeBSD)";
 
 #define DEBUG
 #include <stdio.h>
@@ -57,6 +56,13 @@ int	curpfile = 0;	/* current filename */
 
 int	safe	= 0;	/* 1 => "safe" mode */
 
+/* Can this work with recursive calls?  I don't think so.
+void segvcatch(int n)
+{
+	FATAL("segfault.  Do you have an unbounded recursive call?", n);
+}
+*/
+
 int main(int argc, char *argv[])
 {
 	const char *fs = NULL;
@@ -72,6 +78,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	signal(SIGFPE, fpecatch);
+	/*signal(SIGSEGV, segvcatch); experiment */
 
 	srand_seed = 1;
 	srandom((unsigned long) srand_seed);
@@ -84,7 +91,7 @@ int main(int argc, char *argv[])
 			exit(0);
 			break;
 		}
-		if (strncmp(argv[1], "--", 2) == 0) {	/* explicit end of args */
+		if (strcmp(argv[1], "--") == 0) {	/* explicit end of args */
 			argc--;
 			argv++;
 			break;

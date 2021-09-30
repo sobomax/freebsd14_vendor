@@ -1,4 +1,4 @@
-/*	$FreeBSD: 759bc9b953182506cd8bf45a913f92ef238c7787 $	*/
+/*	$FreeBSD: c7a44d60f082755cc3f6792708dff32771ec38ae $	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -282,8 +282,6 @@ VNET_DECLARE(int, crypto_support);
 VNET_DECLARE(int, async_crypto);
 VNET_DECLARE(int, natt_cksum_policy);
 
-extern struct timeval ipsec_warn_interval;
-
 #define	IPSECSTAT_INC(name)	\
     VNET_PCPUSTAT_ADD(struct ipsecstat, ipsec4stat, name, 1)
 #define	V_ip4_esp_trans_deflev	VNET(ip4_esp_trans_deflev)
@@ -327,7 +325,7 @@ int udp_ipsec_output(struct mbuf *, struct secasvar *);
 int udp_ipsec_input(struct mbuf *, int, int);
 int udp_ipsec_pcbctl(struct inpcb *, struct sockopt *);
 
-int ipsec_chkreplay(uint32_t, struct secasvar *);
+int ipsec_chkreplay(uint32_t, uint32_t *, struct secasvar *);
 int ipsec_updatereplay(uint32_t, struct secasvar *);
 int ipsec_updateid(struct secasvar *, crypto_session_t *, crypto_session_t *);
 int ipsec_initialized(void);

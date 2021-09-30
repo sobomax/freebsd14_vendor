@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 59b8bc0d61de267b9667ffc6fb216d3591e69b3d $
+ * $FreeBSD: a6875fbaacf6dc217381b88e6720673884a91610 $
  */
 
 #ifndef SOUND_AOA_H
@@ -46,4 +46,3 @@ void	aoa_interrupt(void *);
 int	aoa_attach(void *xsc);
 
 #endif /* SOUND_AOA_H */
-

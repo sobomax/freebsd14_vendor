@@ -1,4 +1,0 @@
-# $FreeBSD: 7fad324025dcaa2779d7e5acadaf16db5cd10052 $
-files	"../gxemul/files.gxemul"
-
-cpu		CPU_MIPS4KC

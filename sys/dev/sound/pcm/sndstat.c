@@ -36,7 +36,7 @@
 #include <dev/sound/version.h>
 #include <sys/sx.h>
 
-SND_DECLARE_FILE("$FreeBSD: 0237c8e3311c54144d289ad92e93d25a0cfcb8b3 $");
+SND_DECLARE_FILE("$FreeBSD: 31c4a1b14a79f9cf42ea892b0bec59877066b56c $");
 
 #define	SS_TYPE_MODULE		0
 #define	SS_TYPE_PCM		1
@@ -100,8 +100,10 @@ sysctl_hw_sndverbose(SYSCTL_HANDLER_ARGS)
 	}
 	return (error);
 }
-SYSCTL_PROC(_hw_snd, OID_AUTO, verbose, CTLTYPE_INT | CTLFLAG_RWTUN,
-            0, sizeof(int), sysctl_hw_sndverbose, "I", "verbosity level");
+SYSCTL_PROC(_hw_snd, OID_AUTO, verbose,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    sysctl_hw_sndverbose, "I",
+    "verbosity level");
 
 static int
 sndstat_open(struct cdev *i_dev, int flags, int mode, struct thread *td)
@@ -342,7 +344,7 @@ sndstat_prepare(struct sndstat_file *pf_self)
 
 	/* make sure buffer is reset */
 	sbuf_clear(s);
-	
+
 	if (snd_verbose > 0) {
 		sbuf_printf(s, "FreeBSD Audio Driver (%ubit %d/%s)\n",
 		    (u_int)sizeof(intpcm32_t) << 3, SND_DRV_VERSION,

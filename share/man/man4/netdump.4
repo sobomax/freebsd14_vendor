@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 65de42eb028fb78e0cc15f73ed86713740a28f14 $
+.\" $FreeBSD: a6150eb758e3ee0b18c31449676947864f5bde54 $
 .\"
 .Dd August 25, 2020
 .Dt NETDUMP 4
@@ -46,7 +46,10 @@ daemon, available in ports as
 .Nm
 clients are configured using the
 .Xr dumpon 8
-utility.
+utility or the
+.Ic netdump
+command in
+.Xr ddb 4 .
 .Pp
 .Nm
 client messages consist of a fixed-size header followed by a variable-sized

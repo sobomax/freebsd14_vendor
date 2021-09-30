@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 524d958329c7050d3ebf081cfbe2514158bf6b1b $
+ * $FreeBSD: cad8015435d0b84b057bcaf13afcb1e65f994135 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 524d958329c7050d3ebf081cfbe2514158bf6b1b $");
+__FBSDID("$FreeBSD: cad8015435d0b84b057bcaf13afcb1e65f994135 $");
 
 #include "opt_acpi.h"
 #include "opt_isa.h"
@@ -617,7 +617,6 @@ static device_method_t atrtc_isa_methods[] = {
 	/* clock interface */
 	DEVMETHOD(clock_gettime,	atrtc_gettime),
 	DEVMETHOD(clock_settime,	atrtc_settime),
-
 	{ 0, 0 }
 };
 
@@ -639,7 +638,6 @@ static device_method_t atrtc_acpi_methods[] = {
 	/* clock interface */
 	DEVMETHOD(clock_gettime,	atrtc_gettime),
 	DEVMETHOD(clock_settime,	atrtc_settime),
-
 	{ 0, 0 }
 };
 

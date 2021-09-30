@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 696aae50c6ec51b99005285431d953deb69f0692 $");
+__FBSDID("$FreeBSD: 46b3ded7f3796d660a98fd747542303bffe595f3 $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -264,6 +264,8 @@ ATF_TC_BODY(ip_reass__multiple_last_fragments, tc)
 	ATF_REQUIRE(error == 0);
 	free_lopacket(packet1);
 	free_lopacket(packet2);
+	free_lopacket(packet3);
+	free_lopacket(packet4);
 }
 
 /*

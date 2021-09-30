@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea825e51acf9aa7cacf7eea8f908d29e645063d3 $");
+__FBSDID("$FreeBSD: c06e62e093f8d055e4f31649fdf64fc009e7b731 $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -141,9 +141,9 @@ dso_handle_check(void)
 {
 	void *dso = __dso_handle;
 
-#ifdef DSO_LIB
+#if defined(DSO_LIB) || defined(__PIE__)
 	ATF_REQUIRE_MSG(dso != NULL,
-	    "Null __dso_handle in DSO");
+	    "Null __dso_handle in DSO/PIE");
 #else
 	ATF_REQUIRE_MSG(dso == NULL,
 	    "Invalid __dso_handle in non-DSO");

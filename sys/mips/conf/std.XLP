@@ -1,4 +1,4 @@
-# $FreeBSD: 5330c19b36577e0c33ddd6f21ae2668a99eb32c4 $
+# $FreeBSD: 8d8cfb693a70c74adb8d99168ce3b78f2bb25c56 $
 
 include		"../nlm/std.xlp"
 makeoptions	MODULES_OVERRIDE=""
@@ -66,7 +66,6 @@ makeoptions	FDT_DTS_FILE=xlp-basic.dts
 
 # Pseudo
 device		loop
-device		random
 device		md
 device		bpf
 
@@ -114,6 +113,7 @@ device		cfi
 device		cfid
 
 # MMC/SD
+device		gpio
 device		mmc			# MMC/SD bus
 device		mmcsd			# MMC/SD memory card
 device		sdhci			# Generic PCI SD Host Controller

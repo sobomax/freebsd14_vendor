@@ -47,7 +47,7 @@ static char sccsid[] = "@(#)login.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e99ee5efc2eb8552dc750905375f60c2e028086e $");
+__FBSDID("$FreeBSD: 510712a15491d8bd9d99019df683a7fa2f2bee93 $");
 
 /*
  * login [ name ]
@@ -793,6 +793,7 @@ export(const char *s)
 	char *p;
 	const char **pp;
 	size_t n;
+	int rv;
 
 	if (strlen(s) > 1024 || (p = strchr(s, '=')) == NULL)
 		return (0);
@@ -804,8 +805,10 @@ export(const char *s)
 			return (0);
 	}
 	*p = '\0';
-	(void)setenv(s, p + 1, 1);
+	rv = setenv(s, p + 1, 1);
 	*p = '=';
+	if (rv == -1)
+		return (0);
 	return (1);
 }
 

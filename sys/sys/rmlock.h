@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cdcb6edc3b926220ec635e29835b0f264c4976e3 $
+ * $FreeBSD: 3e4db5d853c62a0fd29292d5f6c0e8f597fa123a $
  */
 
 #ifndef _SYS_RMLOCK_H_
@@ -131,6 +131,47 @@ struct rm_args {
 #define	rm_assert(rm, what)	_rm_assert((rm), (what), LOCK_FILE, LOCK_LINE)
 #else
 #define	rm_assert(rm, what)
+#endif
+
+void	rms_init(struct rmslock *rms, const char *name);
+void	rms_destroy(struct rmslock *rms);
+void	rms_rlock(struct rmslock *rms);
+int	rms_try_rlock(struct rmslock *rms);
+void	rms_runlock(struct rmslock *rms);
+void	rms_wlock(struct rmslock *rms);
+void	rms_wunlock(struct rmslock *rms);
+void	rms_unlock(struct rmslock *rms);
+
+static inline int
+rms_wowned(struct rmslock *rms)
+{
+
+	return (rms->owner == curthread);
+}
+
+#ifdef INVARIANTS
+/*
+ * For assertion purposes.
+ *
+ * Main limitation is that we at best can tell there are readers, but not
+ * whether curthread is one of them.
+ */
+static inline int
+rms_rowned(struct rmslock *rms)
+{
+
+	return (rms->debug_readers > 0);
+}
+
+static inline int
+rms_owned_any(struct rmslock *rms)
+{
+
+	if (rms_wowned(rms))
+		return (1);
+
+	return (rms_rowned(rms));
+}
 #endif
 
 #endif /* _KERNEL */

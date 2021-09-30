@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d676af880cc94391eaa84c463600fae119547d78 $");
+__FBSDID("$FreeBSD: 49bc1dc7ca8596a661cb9e82b158cba0f32b1378 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -135,7 +135,7 @@ ata_jmicron_ch_attach(device_t dev)
 {
 	struct ata_channel *ch = device_get_softc(dev);
 	int error;
- 
+
 	error = ata_pci_ch_attach(dev);
 	ch->flags |= ATA_CHECKS_CABLE;
 	return (error);

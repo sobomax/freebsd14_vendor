@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7a586e94b9f117f73736339257cf3e2b73c2062e $
+ * $FreeBSD: c8b8520a885905671fb1081cc07b9ac67689b5c0 $
  */
 
 #include <sys/param.h>
@@ -38,7 +38,8 @@
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, ntpd, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, ntpd,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "mac_ntpd policy controls");
 
 static int ntpd_enabled = 1;

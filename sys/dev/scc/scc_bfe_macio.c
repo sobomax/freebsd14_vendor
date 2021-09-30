@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51a8ed61f0f5e0abe7f51536e974cc0c81f8a920 $");
+__FBSDID("$FreeBSD: 241f6c072a2c87323ede63fd8476b13460dd3b6a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,9 +55,10 @@ scc_macio_probe(device_t dev)
 
 	sc = device_get_softc(dev);
 	nm = ofw_bus_get_name(dev);
+	/* Attach to modern escc (channel shift 4 bits) */
 	if (!strcmp(nm, "escc")) {
 		device_set_desc(dev, "Zilog Z8530 dual channel SCC");
-		sc->sc_class = &scc_z8530_class;
+		sc->sc_class = &scc_z8530_escc_class;
 		return (scc_bfe_probe(dev, MACIO_REGSHFT, MACIO_RCLK, 0));
 	}
 	return (ENXIO);

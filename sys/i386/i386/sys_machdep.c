@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5bac44f9d580c2ed51dc9d4bbc524dd14e04afe $");
+__FBSDID("$FreeBSD: 3f650b65e1609866e26b19d44ef513f2181645d9 $");
 
 #include "opt_capsicum.h"
 #include "opt_kstack_pages.h"
@@ -473,7 +473,7 @@ user_ldt_alloc(struct mdproc *mdp, int len)
 		    len * sizeof(union descriptor));
 	} else
 		bcopy(ldt, new_ldt->ldt_base, sizeof(union descriptor) * NLDT);
-	
+
 	return (new_ldt);
 }
 

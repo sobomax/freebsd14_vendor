@@ -1,6 +1,7 @@
-# $FreeBSD: ac8be92c8dbd8585b404862e976cea78a51e797c $
+# $FreeBSD: 5d983d6e017e9e8ddbb97e92ce4160e583d393bf $
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
+
 LIB=		sbuf
 SHLIBDIR?= 	/lib
 SRCS=		subr_prf.c subr_sbuf.c

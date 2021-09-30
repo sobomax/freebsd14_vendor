@@ -1,4 +1,4 @@
-/*	$FreeBSD: b59b79116f344766829e34db37ec9d80141ea0c2 $	*/
+/*	$FreeBSD: 6f6d01ed75e4c412668d6ed30929526182d29706 $	*/
 
 /*-
  * Copyright (c) 2005
@@ -23,7 +23,6 @@
 #define URAL_SCAN_START         1
 #define URAL_SCAN_END           2
 #define URAL_SET_CHANNEL        3
-
 
 struct ural_rx_radiotap_header {
 	struct ieee80211_radiotap_header wr_ihdr;

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 576ac68e261e8b88c39aa1a6eb02fbe0d3defb45 $
+ * $FreeBSD: cfe34ddd964f0ae438c37c1e3da390fb2cbf9c34 $
  */
 
 #ifndef _FS_EXT2FS_EXT2_DINODE_H_
@@ -140,4 +140,3 @@ struct ext2fs_dinode {
 };
 
 #endif /* !_FS_EXT2FS_EXT2_DINODE_H_ */
-

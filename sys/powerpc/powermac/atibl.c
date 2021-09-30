@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1b195149fca374a076c78ee557e516aff9466a4 $");
+__FBSDID("$FreeBSD: ad78ff743436159964b7c9af587c0c64dd39fd03 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -160,7 +160,7 @@ atibl_attach(device_t dev)
 	tree = device_get_sysctl_tree(dev);
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "level", CTLTYPE_INT | CTLFLAG_RW, sc, 0,
+	    "level", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, 0,
 	    atibl_sysctl, "I", "Backlight level (0-100)");
 
 	return (0);

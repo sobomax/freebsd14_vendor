@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 962fe5579e0fc2d9f661750f659f3495bc8ea6f5 $");
+__FBSDID("$FreeBSD: 459a81508e2bba2bebaa931fde3fbfcd516224ea $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -190,7 +190,7 @@ send_wrq(int peer, char *filename, char *mode)
 			filename, mode
 		);
 
-	DROPPACKETn("send_wrq", 1);
+	DROPPACKETn("send_wrq", 0);
 
 	tp = (struct tftphdr *)buf;
 	tp->th_opcode = htons((u_short)WRQ);
@@ -238,7 +238,7 @@ send_rrq(int peer, char *filename, char *mode)
 			filename, mode
 		);
 
-	DROPPACKETn("send_rrq", 1);
+	DROPPACKETn("send_rrq", 0);
 
 	tp = (struct tftphdr *)buf;
 	tp->th_opcode = htons((u_short)RRQ);

@@ -1,6 +1,6 @@
-# $FreeBSD: e2d2e02897a519022419d93acc5bdd6b26ccbc11 $
+# $FreeBSD: 18c8ac7344065f0c788e909b70485c6105c866e5 $
 
-PACKAGE=examples
+PACKAGE=ipf
 FILES=	README
 
 # dist sample files

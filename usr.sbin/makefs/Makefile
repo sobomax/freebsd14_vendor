@@ -1,4 +1,4 @@
-#	$FreeBSD: e39a07f76965f2afd7b232b2c442a3573a0d8509 $
+#	$FreeBSD: cbe4f497d7d1afb937d567111c6a48e3d1009359 $
 
 SRCDIR:=${.PARSEDIR:tA}
 
@@ -17,6 +17,7 @@ SRCS=	cd9660.c \
 MAN=	makefs.8
 
 WARNS?=	2
+CSTD=	c11
 
 .include "${SRCDIR}/cd9660/Makefile.inc"
 .include "${SRCDIR}/ffs/Makefile.inc"

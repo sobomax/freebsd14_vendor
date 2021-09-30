@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)fstab.5	8.1 (Berkeley) 6/5/93
-.\" $FreeBSD: 9925383757326534e702818e3dde98f4a3f1fb3c $
+.\" $FreeBSD: a83b26288ebc99a25462d8a5be040d182b6d48bd $
 .\"
 .Dd April 14, 2014
 .Dt FSTAB 5
@@ -190,6 +190,32 @@ see the
 .Xr mount 8
 manual page.
 .Pp
+If the option
+.Dq update
+is specified, it indicates that the status of an already mounted file
+system should be changed accordingly.
+This allows, for example, file systems mounted read-only to be upgraded
+read-write and vice-versa.
+By default, an entry corresponding to a file systems that is already
+mounted is going to be skipped over when processing
+.Nm ,
+unless it's a root file system, in which case logic similar to
+.Dq update
+is applied automatically.
+.Pp
+The
+.Dq update
+option is typically used in conjunction with two
+.Nm
+files.
+The first
+.Nm
+file is used to set up the initial set of file systems.
+The second
+.Nm
+file is then run to update the initial set of file systems and
+to add additional file systems.
+.Pp
 The type of the mount is extracted from the
 .Fa fs_mntops
 field and stored separately in the
@@ -228,7 +254,7 @@ To delay
 .Nm swapon
 for a device until after
 .Nm savecore
-has copied the crash dump to another location, use the 
+has copied the crash dump to another location, use the
 .Dq late
 option.
 For vnode-backed swap spaces,

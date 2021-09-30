@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 7bbc4bf9f8f15ecf39785754d245332a135466f7 $
+ * $FreeBSD: 3efd20bdf5c51fbb1f17683c825ca5f33f7cc330 $
  */
 
 FBSD_1.2 {
@@ -39,3 +39,7 @@ FBSD_1.5 {
 	sbuf_putbuf;
 };
 
+/* Added in FreeBSD 13.x */
+FBSD_1.6 {
+	sbuf_printf_drain;
+};

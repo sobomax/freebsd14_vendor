@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: e1123905236d88732030b5cb9d8b4b91f023e7b8 $
+ *	$FreeBSD: acda7741d0b71806187222428f0c719d725ef65c $
  */
 /*
  * The ti_stats structure below is from code with the following copyright, 
@@ -267,7 +267,6 @@ struct tg_mem {
 	caddr_t		userAddr;
 	int		len;
 }; 
-
 
 typedef enum {
 	TI_PARAM_NONE		= 0x00,

@@ -25,15 +25,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6ad8b01d00ca403c5efe3030e1e9695b5d756d78 $
+ * $FreeBSD: 459d4f17e9d1784afc74037da36d1c369ed9b7fb $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
 #define	_MACHINE_GDB_MACHDEP_H_
 
-#define	GDB_BUFSZ	(GDB_NREGS * 16)
+#define	GDB_BUFSZ	4096
 #define	GDB_NREGS	56
+#define	GDB_REG_RAX	0
+#define	GDB_REG_RBX	1
+#define	GDB_REG_RCX	2
+#define	GDB_REG_RDX	3
+#define	GDB_REG_RSI	4
+#define	GDB_REG_RDI	5
+#define	GDB_REG_RBP	6
+#define	GDB_REG_RSP	7
+#define	GDB_REG_R8	8
+#define	GDB_REG_R9	9
+#define	GDB_REG_R10	10
+#define	GDB_REG_R11	11
+#define	GDB_REG_R12	12
+#define	GDB_REG_R13	13
+#define	GDB_REG_R14	14
+#define	GDB_REG_R15	15
 #define	GDB_REG_PC	16
+#define	GDB_REG_RFLAGS	17
+#define	GDB_REG_CS	18
+#define	GDB_REG_SS	19
+_Static_assert(GDB_BUFSZ >= (GDB_NREGS * 16), "buffer fits 'g' regs");
 
 static __inline size_t
 gdb_cpu_regsz(int regnum)

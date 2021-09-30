@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6777b005bab36b0ad8c78d73d450dbcd68f06367 $");
+__FBSDID("$FreeBSD: 6082b22ae0b3a6abcb25447c3e197881c6bc5be9 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -51,4 +51,3 @@ gss_release_buffer(OM_uint32 *minor_status, gss_buffer_t buffer)
 
 	return (GSS_S_COMPLETE);
 }
-

@@ -1,3 +1,0 @@
-.\" $FreeBSD: a1f4c6859a3dd339249e92c4749cf3163622c2b9 $
-Set to not build or install
-.Xr timed 8 .

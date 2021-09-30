@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)gets.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1f360ac5ae61c953fcdb8a56946ab6553e5fd18c $");
+__FBSDID("$FreeBSD: c8822e3b8d869bebc3149e56b028685be5405d58 $");
 
 #include "namespace.h"
 #include <unistd.h>
@@ -45,10 +45,8 @@ __FBSDID("$FreeBSD: 1f360ac5ae61c953fcdb8a56946ab6553e5fd18c $");
 #include "libc_private.h"
 #include "local.h"
 
-__warn_references(gets, "warning: this program uses gets(), which is unsafe.");
-
 char *
-gets(char *buf)
+__gets_unsafe(char *buf)
 {
 	int c;
 	char *s, *ret;
@@ -78,3 +76,4 @@ end:
 	FUNLOCKFILE_CANCELSAFE();
 	return (ret);
 }
+__sym_compat(gets, __gets_unsafe, FBSD_1.0);

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04f3c5c81f41cf373f0e1cb26f4680323c8f641b $");
+__FBSDID("$FreeBSD: 7559dbd9ce20d5d5b8d2184061db336e074f8ede $");
 
 #include <ctype.h>
 #include <err.h>
@@ -310,7 +310,8 @@ valid_format(const char *fmt)
 		}
 	}
 
-	return (conversions <= 1);
+	/* PR 236347 -- user format strings must have a conversion */
+	return (conversions == 1);
 }
 
 /*

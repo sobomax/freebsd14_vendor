@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: c8187189d60dde03e7c55a4ad5a8f122759209c6 $
+# $FreeBSD: 9247abddd82653d6cb4ab65e15db683e9ea9fc48 $
 
 # Test handling of read errors.
 
@@ -30,7 +30,7 @@ tmp2=$(mktemp $base.XXXXXX)
 
 EIO=5
 # gmirror should retry a failed read from the other mirror.
-sysctl ${regreadfp}="1*return(${EIO})"
+sysctl ${regreadfp}="1*return(${EIO})[pid $(gmirror_worker_pid)]"
 dd if=/dev/mirror/$name of=$tmp1 iseek=256 bs=$ddbs count=1 >/dev/null 2>&1
 dd if=/dev/$us1 of=$tmp2 iseek=256 bs=$ddbs count=1 >/dev/null 2>&1
 sysctl ${regreadfp}='off'

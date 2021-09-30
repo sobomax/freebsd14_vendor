@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7997e2883b6bb913c3a5456f942378a86bf26e07 $");
+__FBSDID("$FreeBSD: 05285573ef95ce864fbea89ba969610a418585fe $");
 
 #include "opt_pcfclock.h"
 
@@ -325,7 +325,6 @@ static device_method_t pcfclock_methods[] = {
 	DEVMETHOD(device_identify,	pcfclock_identify),
 	DEVMETHOD(device_probe,		pcfclock_probe),
 	DEVMETHOD(device_attach,	pcfclock_attach),
-
 	{ 0, 0 }
 };
 

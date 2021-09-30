@@ -1,7 +1,7 @@
-# $FreeBSD: 87615e7a637cf0d9f361562c8fcf05b0467bc681 $
+# $FreeBSD: 4a4d0c4b85532adf8b0855a807893232f2b116ee $
 
 #-
-# Copyright (c) 2014 M. Warner Losh.
+# Copyright (c) 2014 M. Warner Losh <imp@FreeBSD.org>
 # Copyright (c) 2010-2011 iXsystems, Inc.
 #
 # Redistribution and use in source and binary forms, with or without

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4e34b51ca30f1e595429fb69b0ed8a6b958544d4 $
+ * $FreeBSD: 32b6aa3074529275c3cee1d4ff4459216c12f314 $
  */
 
 #ifndef _NET_NDIS_H_
@@ -115,8 +115,8 @@ struct ndis_offload_params {
 	/* NDIS >= 6.30 */
 	uint8_t			ndis_rsc_ip4;	/* NDIS_OFFLOAD_RSC_ */
 	uint8_t			ndis_rsc_ip6;	/* NDIS_OFFLOAD_RSC_ */
-	uint8_t			ndis_encap;	/* NDIS_OFFLOAD_SET_ */
-	uint8_t			ndis_encap_types;/* NDIS_ENCAP_TYPE_ */
+	uint32_t		ndis_encap;	/* NDIS_OFFLOAD_SET_ */
+	uint32_t		ndis_encap_types;/* NDIS_ENCAP_TYPE_ */
 };
 
 #define	NDIS_OFFLOAD_PARAMS_SIZE	sizeof(struct ndis_offload_params)

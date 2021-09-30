@@ -1,4 +1,4 @@
-/* $FreeBSD: cd84b4df17e4d783d61a2672a118f86ac6ba656f $ */
+/* $FreeBSD: f674cbf66fdb52953b93fd03fb673c9977a93ec7 $ */
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -309,7 +309,6 @@
 #define HAVE__MM_MOVEMASK_EPI8 1
 #endif
 
-#if defined(__clang__) && defined(__FreeBSD__)
 /* Define to 1 if the GNU C extension __builtin_assume_aligned is supported.
    */
 #define HAVE___BUILTIN_ASSUME_ALIGNED 1
@@ -317,7 +316,6 @@
 /* Define to 1 if the GNU C extensions __builtin_bswap16/32/64 are supported.
    */
 #define HAVE___BUILTIN_BSWAPXX 1
-#endif
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"

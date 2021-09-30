@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a529aeeab1f08b9cdaf02c6a6bf3ce40a5b8024a $
+ * $FreeBSD: e9366867231ae52b4a2b0a2d6cefb8bdb8a9c86a $
  *
  */
 
@@ -52,4 +52,3 @@ enum _ecore_status_t {
 };
 
 #endif /* __ECORE_STATUS_H__ */
-

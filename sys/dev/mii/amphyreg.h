@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 30bac3028b05179141be568980897e375a63593f $
+ * $FreeBSD: 023834ab6799242872af0de2bf6139ee77269ddd $
  */
 
 #ifndef _DEV_MII_AMTPHYREG_H_
@@ -40,7 +40,6 @@
 /*
  * AMD Am79C873 registers.
  */
-
 
 #define MII_AMPHY_DSCR		0x10	/* Specified configuration register */a
 #define DSCR_BP4B5B		0x8000	/* Bypass 4B5B encoding */

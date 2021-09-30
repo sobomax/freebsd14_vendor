@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2010 The FreeBSD Foundation
  *
- * $FreeBSD: 592005b022a367f91881f6eaefa318e13dd20e2e $
+ * $FreeBSD: 4771a67a9f092d7c23b033bc965c74588651669b $
  */
 
 /*
@@ -35,6 +35,7 @@
 #include <sys/atomic.h>
 #include <sys/errno.h>
 #include <sys/stat.h>
+#include <sys/endian.h>
 #include <sys/modctl.h>
 #include <sys/conf.h>
 #include <sys/systm.h>
@@ -54,6 +55,8 @@
 #include <sys/dtrace_impl.h>
 #include <sys/sysmacros.h>
 #include <sys/proc.h>
+#undef AT_UID
+#undef AT_GID
 #include <sys/policy.h>
 #ifdef illumos
 #include <util/qsort.h>
@@ -236,7 +239,8 @@ static unsigned long tpoints_hash_size = FASTTRAP_TPOINTS_DEFAULT_SIZE;
 
 #ifdef __FreeBSD__
 SYSCTL_DECL(_kern_dtrace);
-SYSCTL_NODE(_kern_dtrace, OID_AUTO, fasttrap, CTLFLAG_RD, 0, "DTrace fasttrap parameters");
+SYSCTL_NODE(_kern_dtrace, OID_AUTO, fasttrap, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "DTrace fasttrap parameters");
 SYSCTL_UINT(_kern_dtrace_fasttrap, OID_AUTO, max_probes, CTLFLAG_RWTUN, &fasttrap_max,
     FASTTRAP_MAX_DEFAULT, "Maximum number of fasttrap probes");
 SYSCTL_ULONG(_kern_dtrace_fasttrap, OID_AUTO, tpoints_hash_size, CTLFLAG_RDTUN, &tpoints_hash_size,
@@ -2326,10 +2330,8 @@ err:
 		int ret;
 #endif
 
-#ifdef illumos
 		if (copyin((void *)arg, &instr, sizeof (instr)) != 0)
 			return (EFAULT);
-#endif
 
 #ifdef notyet
 		if (!PRIV_POLICY_CHOICE(cr, PRIV_ALL, B_FALSE)) {

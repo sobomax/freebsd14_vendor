@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 025dfc75fab6eabc3cc5e491f14479e858088b61 $");
+__FBSDID("$FreeBSD: c60308fcd1d2b9ee082e6cb33a574cf9ff83ec40 $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -687,6 +687,7 @@ __thr_interpose_libc(void)
 	SLOT(map_stacks_exec);
 	SLOT(fdatasync);
 	SLOT(clock_nanosleep);
+	SLOT(pdfork);
 #undef SLOT
 	*(__libc_interposing_slot(
 	    INTERPOS__pthread_mutex_init_calloc_cb)) =

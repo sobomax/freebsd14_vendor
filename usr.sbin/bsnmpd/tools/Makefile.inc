@@ -1,9 +1,7 @@
-# $FreeBSD: 9d5ac4cdb8106e4fb257054e935d327e152366d8 $
+# $FreeBSD: db12061896d2d5e3c773cd436f913625e3f74f31 $
 # Author: Shteryana Shopova <syrinx@FreeBSD.org>
 
 BINDIR?= /usr/bin
 PACKAGE=	bsnmp
 
 CFLAGS+= -I. -I${.CURDIR}
-
-WARNS?=		6

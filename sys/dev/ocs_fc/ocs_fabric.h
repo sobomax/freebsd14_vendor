@@ -28,14 +28,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 57fad1390984e2f0055a7b06bba78a7650ecc57d $
+ * $FreeBSD: ecc557c473eef62676552d03598f9a6a1418a294 $
  */
 
 /**
  * @file
  * Declarations for the interface exported by ocs_fabric
  */
-
 
 #if !defined(__OCS_FABRIC_H__)
 #define __OCS_FABRIC_H__

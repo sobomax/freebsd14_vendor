@@ -30,7 +30,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: d8a58e52fafbfa34c299f3eef6e5ff22b683871d $*/
+/*$FreeBSD: 6124768a582e654ec6b258565621a01a92a1ec36 $*/
 
 #include "lio_bsd.h"
 #include "lio_common.h"
@@ -329,7 +329,7 @@ lio_init_droq(struct octeon_device *oct, uint32_t q_no,
 	 * output queue packet processing.
 	 */
 	lio_dev_dbg(oct, "Initializing droq%d taskqueue\n", q_no);
-	TASK_INIT(&droq->droq_task, 0, lio_droq_bh, (void *)droq);
+	NET_TASK_INIT(&droq->droq_task, 0, lio_droq_bh, (void *)droq);
 
 	droq->droq_taskqueue = taskqueue_create_fast("lio_droq_task", M_NOWAIT,
 						     taskqueue_thread_enqueue,

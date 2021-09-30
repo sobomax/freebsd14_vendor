@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b27d2739f619ac488c7fa18d92a3d6db0c05073a $");
+__FBSDID("$FreeBSD: ad43a4121728f3adf8fc6f2e77458fe9130fb5d6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -224,7 +224,6 @@ gnttab_end_foreign_access_references(u_int count, grant_ref_t *refs)
 	tail = *refs;
 	last_ref = refs + count;
 	while (refs != last_ref) {
-
 		if (gnttab_end_foreign_access_ref(*refs)) {
 			gnttab_entry(*refs) = head;
 			head = *refs;
@@ -416,7 +415,6 @@ gnttab_cancel_free_callback(struct gnttab_free_callback *callback)
 	}
 	mtx_unlock(&gnttab_list_lock);
 }
-
 
 static int
 grow_gnttab_list(unsigned int more_frames)

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3b34854e7f4c5fe9b4fc849b51b7d70c7d9d83bb $
+ * $FreeBSD: d428dad2b71c3f66f0b7162b736384dd9fae794d $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b34854e7f4c5fe9b4fc849b51b7d70c7d9d83bb $");
+__FBSDID("$FreeBSD: d428dad2b71c3f66f0b7162b736384dd9fae794d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,17 +70,12 @@ ASSYM(VMXCTX_HOST_RSP, offsetof(struct vmxctx, host_rsp));
 ASSYM(VMXCTX_HOST_RBX, offsetof(struct vmxctx, host_rbx));
 
 ASSYM(VMXCTX_INST_FAIL_STATUS, offsetof(struct vmxctx, inst_fail_status));
-ASSYM(VMXCTX_PMAP, offsetof(struct vmxctx, pmap));
-
-ASSYM(VMX_EPTGEN, offsetof(struct vmx, eptgen));
-ASSYM(VMX_EPTP, offsetof(struct vmx, eptp));
 
 ASSYM(VM_FAIL_INVALID,	VM_FAIL_INVALID);
 ASSYM(VM_FAIL_VALID,	VM_FAIL_VALID);
 ASSYM(VMX_GUEST_VMEXIT, VMX_GUEST_VMEXIT);
 ASSYM(VMX_VMRESUME_ERROR, VMX_VMRESUME_ERROR);
 ASSYM(VMX_VMLAUNCH_ERROR, VMX_VMLAUNCH_ERROR);
-ASSYM(VMX_INVEPT_ERROR, VMX_INVEPT_ERROR);
 
 ASSYM(PC_CPUID, offsetof(struct pcpu, pc_cpuid));
 

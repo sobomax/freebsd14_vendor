@@ -1,5 +1,3 @@
-.\" $FreeBSD: de8667fe4d737f50ee34fe401714697250fc1335 $
+.\" $FreeBSD: 48d7361ff8cac7bf47227cf71cbf7ec13a176778 $
 Set to not build GNU
-.Xr diff 1
-and
 .Xr diff3 1 .

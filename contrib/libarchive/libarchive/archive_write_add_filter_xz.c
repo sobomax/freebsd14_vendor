@@ -26,7 +26,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: 8c1ebb805b10b973be32b008d13e378ed2f94ad1 $");
+__FBSDID("$FreeBSD: 9dd2c30e5de7a1cba73a5bc47d4f960f8a0d2de8 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -382,8 +382,8 @@ archive_compressor_xz_options(struct archive_write_filter *f,
 		    value[1] != '\0')
 			return (ARCHIVE_WARN);
 		data->compression_level = value[0] - '0';
-		if (data->compression_level > 6)
-			data->compression_level = 6;
+		if (data->compression_level > 9)
+			data->compression_level = 9;
 		return (ARCHIVE_OK);
 	} else if (strcmp(key, "threads") == 0) {
 		char *endptr;

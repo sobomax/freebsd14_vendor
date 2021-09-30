@@ -1,10 +1,9 @@
-# $FreeBSD: 90111fb86bd5af4eb1e1318fca424563694918a4 $
+# $FreeBSD: eadb3efb1c361d73e2ef2d32deb74e50a1f29872 $
 
 .include <src.opts.mk>
 
 PROG=	so_setfib
 MAN=
-WARNS?=	6
 
 .if ${MK_INET} != "no"
 CFLAGS+=	-DINET

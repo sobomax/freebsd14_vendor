@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c60117b5cb8c604571e6f6a3a3e0110de972c19d $
+ * $FreeBSD: b8b87bb2c6856e861eb9ed6b647bd9f0101cff6c $
  */
 #ifndef	_ASM_ATOMIC64_H_
 #define	_ASM_ATOMIC64_H_
@@ -35,7 +35,6 @@
 typedef struct {
 	volatile int64_t counter;
 } atomic64_t;
-
 #define	ATOMIC64_INIT(x)	{ .counter = (x) }
 
 /*------------------------------------------------------------------------*

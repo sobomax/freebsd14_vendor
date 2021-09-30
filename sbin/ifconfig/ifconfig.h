@@ -33,7 +33,7 @@
  *
  * so there!
  *
- * $FreeBSD: 5b5a839aec0eef35bb2d1afa710cf90c8dc28ccd $
+ * $FreeBSD: 67c25f5921d646ba40006e4696d81a286356ec69 $
  */
 
 #define	__constructor	__attribute__((constructor))
@@ -145,8 +145,10 @@ void	printb(const char *s, unsigned value, const char *bits);
 
 void	ifmaybeload(const char *name);
 
+typedef int  clone_match_func(const char *);
 typedef void clone_callback_func(int, struct ifreq *);
-void	clone_setdefcallback(const char *, clone_callback_func *);
+void	clone_setdefcallback_prefix(const char *, clone_callback_func *);
+void	clone_setdefcallback_filter(clone_match_func *, clone_callback_func *);
 
 void	sfp_status(int s, struct ifreq *ifr, int verbose);
 
@@ -158,3 +160,4 @@ struct ifmediareq *ifmedia_getstate(int s);
 
 void print_vhid(const struct ifaddrs *, const char *);
 
+void ioctl_ifcreate(int s, struct ifreq *);

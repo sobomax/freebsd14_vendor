@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_sco.h,v 1.3 2005/10/31 18:08:52 max Exp $
- * $FreeBSD: f707e7ed19881d996a96051e5c72576e12a21c7b $
+ * $FreeBSD: 979ea408f292c9a22fe10db62dfe7e8e75f8a51c $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_SCO_H_
@@ -129,4 +129,3 @@ int  ng_btsocket_sco_sockaddr   (struct socket *, struct sockaddr **);
 #endif /* _KERNEL */
 
 #endif /* _NETGRAPH_BTSOCKET_SCO_H_ */
-

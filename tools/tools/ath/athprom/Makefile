@@ -1,4 +1,4 @@
-# $FreeBSD: f7b596728699b7e3bc3eb1bd4770f65e96149852 $
+# $FreeBSD: 82a5d2bb294dde33847814d103ea0df4b3454ec3 $
 
 PROG=	athprom
 
@@ -14,7 +14,6 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 CFLAGS+=-DDIR_TEMPLATE='"${TEMPLATEDIR}"'
 

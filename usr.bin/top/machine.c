@@ -13,7 +13,7 @@
  *          Thomas Moestl <tmoestl@gmx.net>
  *          Eitan Adler <eadler@FreeBSD.org>
  *
- * $FreeBSD: 1a2c608f3045cacccc4ab6f3c86dc3aa8fd6e2cf $
+ * $FreeBSD: c7b3e13c700be6416f9d5d687b9948f8eb578822 $
  */
 
 #include <sys/errno.h>
@@ -211,6 +211,10 @@ static long *pcpu_cp_old;
 static long *pcpu_cp_diff;
 static int *pcpu_cpu_states;
 
+/* Battery units and states */
+static int battery_units;
+static int battery_life;
+
 static int compare_swap(const void *a, const void *b);
 static int compare_jid(const void *a, const void *b);
 static int compare_pid(const void *a, const void *b);
@@ -369,6 +373,12 @@ machine_init(struct statics *statics)
 	pcpu_cp_diff = calloc(ncpus * CPUSTATES, sizeof(long));
 	pcpu_cpu_states = calloc(ncpus * CPUSTATES, sizeof(int));
 	statics->ncpus = ncpus;
+
+	/* Allocate state of battery units reported via ACPI. */
+	battery_units = 0;
+	size = sizeof(int);
+	sysctlbyname("hw.acpi.battery.units", &battery_units, &size, NULL, 0);
+	statics->nbatteries = battery_units;
 
 	update_layout();
 
@@ -576,6 +586,12 @@ get_system_info(struct system_info *si)
 	} else {
 		si->boottime.tv_sec = -1;
 	}
+
+	battery_life = 0;
+	if (battery_units > 0) {
+		GETSYSCTL("hw.acpi.battery.life", battery_life);
+	}
+	si->battery = battery_life;
 }
 
 #define NOPROC	((void *)-1)
@@ -1000,7 +1016,7 @@ format_next_process(struct handle * xhandle, char *(*get_userid)(int), int flags
 				len = (argbuflen - (dst - argbuf) - 1) / 4;
 				strvisx(dst, src,
 				    MIN(strlen(src), len),
-				    VIS_NL | VIS_CSTYLE);
+				    VIS_NL | VIS_TAB | VIS_CSTYLE | VIS_OCTAL);
 				while (*dst != '\0')
 					dst++;
 				if ((argbuflen - (dst - argbuf) - 1) / 4 > 0)
@@ -1099,7 +1115,7 @@ format_next_process(struct handle * xhandle, char *(*get_userid)(int), int flags
 		sbuf_printf(procbuf, "%6s ", format_time(cputime));
 		sbuf_printf(procbuf, "%6.2f%% ", ps.wcpu ? 100.0 * weighted_cpu(PCTCPU(pp), pp) : 100.0 * PCTCPU(pp));
 	}
-	sbuf_printf(procbuf, "%s", printable(cmdbuf));
+	sbuf_printf(procbuf, "%s", cmdbuf);
 	free(cmdbuf);
 	return (sbuf_data(procbuf));
 }

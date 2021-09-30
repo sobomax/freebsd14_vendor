@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 799d9d6e0dff9fa9ae7af3af8ab536fc1405730c $
+ * $FreeBSD: d858afe2cc3c6bf558d6679624a609b18fcc081f $
  */
 
 #ifndef _NFS_RPCV2_H_
@@ -199,7 +199,7 @@
 #define	RPCMNT_NAMELEN	255
 #define	RPCMNT_PATHLEN	1024
 #define	RPCPROG_NFS	100003
- 
+
 /* Structs for common parts of the rpc's */
 struct rpcv2_time {
 	u_int32_t rpc_sec;

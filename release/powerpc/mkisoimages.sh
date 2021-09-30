@@ -4,7 +4,7 @@
 # Author: Jordan K Hubbard
 # Date:   22 June 2001
 #
-# $FreeBSD: 02e2d58160af03826bfa10911522be188d429d50 $
+# $FreeBSD: 2d5ea76ca7a22f67138cfb7f47145678328e3a5d $
 #
 # This script is used by release/Makefile to build the (optional) ISO images
 # for a FreeBSD release.  It is considered architecture dependent since each
@@ -23,6 +23,7 @@
 # extra-bits-dir, if provided, contains additional files to be merged
 # into base-bits-dir as part of making the image.
 
+set -e
 
 if [ "$1" = "-b" ]; then
 	bootable=1

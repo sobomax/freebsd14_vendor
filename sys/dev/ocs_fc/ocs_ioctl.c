@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 0e0ffb46af2a92ee73f42a2da3936f6bcf429447 $
+ * $FreeBSD: 13d80bd3edde12ea10ed1c6812c00d7f852ec0c8 $
  */
 
 #include "ocs.h"
@@ -96,7 +96,6 @@ __ocs_ioctl_mbox_cb(ocs_hw_t *hw, int32_t status, uint8_t *mqe, void *arg)
 
 static int
 ocs_process_sli_config (ocs_t *ocs, ocs_ioctl_elxu_mbox_t *mcmd, ocs_dma_t *dma){
-
 	sli4_cmd_sli_config_t *sli_config = (sli4_cmd_sli_config_t *)mcmd->payload;
 
 	if (sli_config->emb) {
@@ -120,7 +119,6 @@ ocs_process_sli_config (ocs_t *ocs, ocs_ioctl_elxu_mbox_t *mcmd, ocs_dma_t *dma)
 				rdobj->host_buffer_descriptor[0].buffer_length = mcmd->out_bytes;
 				rdobj->host_buffer_descriptor[0].u.data.buffer_address_low = ocs_addr32_lo(dma->phys);
 				rdobj->host_buffer_descriptor[0].u.data.buffer_address_high = ocs_addr32_hi(dma->phys);
-
 			}
 			break;
 		case SLI4_OPC_COMMON_WRITE_OBJECT:
@@ -162,7 +160,6 @@ ocs_process_sli_config (ocs_t *ocs, ocs_ioctl_elxu_mbox_t *mcmd, ocs_dma_t *dma)
 				rdobj->host_buffer_descriptor[0].buffer_length = mcmd->out_bytes;
 				rdobj->host_buffer_descriptor[0].u.data.buffer_address_low = ocs_addr32_lo(dma->phys);
 				rdobj->host_buffer_descriptor[0].u.data.buffer_address_high = ocs_addr32_hi(dma->phys);
-
 			}
 			break;
 		case SLI4_OPC_COMMON_READ_TRANSCEIVER_DATA:
@@ -222,7 +219,6 @@ ocs_process_mbx_ioctl(ocs_t *ocs, ocs_ioctl_elxu_mbox_t *mcmd)
 		device_printf(ocs->dev, "%s, command not support\n", __func__);
 		goto no_support;
 		break;
-
 	}
 
 	/*
@@ -243,9 +239,12 @@ ocs_process_mbx_ioctl(ocs_t *ocs, ocs_ioctl_elxu_mbox_t *mcmd)
 	 *  6. ioctl code releases the lock
 	 */
 	mtx_lock(&ocs->dbg_lock);
-		ocs_hw_command(&ocs->hw, mcmd->payload, OCS_CMD_NOWAIT,
-				__ocs_ioctl_mbox_cb, ocs);
-		msleep(ocs, &ocs->dbg_lock, 0, "ocsmbx", 0);
+	if (ocs_hw_command(&ocs->hw, mcmd->payload, OCS_CMD_NOWAIT,
+			__ocs_ioctl_mbox_cb, ocs)) {
+		device_printf(ocs->dev, "%s: command- %x failed\n", __func__,
+			((sli4_mbox_command_header_t *)mcmd->payload)->command);
+	}
+	msleep(ocs, &ocs->dbg_lock, 0, "ocsmbx", 0);
 	mtx_unlock(&ocs->dbg_lock);
 
 	if( SLI4_MBOX_COMMAND_SLI_CONFIG == ((sli4_mbox_command_header_t *)mcmd->payload)->command
@@ -278,7 +277,6 @@ ocs_process_ecd_helper (ocs_t *ocs, ocs_ioctl_ecd_helper_t *req)
 	uint8_t v8;
 	uint16_t v16;
 	uint32_t v32;
-
 
 	/* Check the BAR read/write commands for valid bar */
 	switch(req->cmd) {
@@ -457,7 +455,6 @@ ocs_ioctl(struct cdev *cdev, u_long cmd, caddr_t addr, int flag, struct thread *
 				} else {
 					ptbuf = &textbuf;
 				}
-
 			}
 			written = 0;
 			if (ptbuf != NULL) {
@@ -539,7 +536,6 @@ ocs_ioctl(struct cdev *cdev, u_long cmd, caddr_t addr, int flag, struct thread *
 		ocs_textbuf_free(ocs, &textbuf);
 
 		break;
-
 	}
 
 	case OCS_IOCTL_CMD_MGMT_GET_ALL: {
@@ -561,7 +557,6 @@ ocs_ioctl(struct cdev *cdev, u_long cmd, caddr_t addr, int flag, struct thread *
 			if(ocs_copy_to_user(req->user_buffer + copied, 
 					ocs_textbuf_ext_get_buffer(&textbuf, idx),
 					ocs_textbuf_ext_get_written(&textbuf, idx))) {
-
 					ocs_log_err(ocs, "Error: ocs_textbuf_alloc failed\n");
 			}
 			copied += n;
@@ -598,7 +593,6 @@ ocs_ioctl(struct cdev *cdev, u_long cmd, caddr_t addr, int flag, struct thread *
 				ocs_textbuf_get_buffer(&textbuf), 
 				ocs_textbuf_get_written(&textbuf))) {
 				ocs_log_test(ocs, "Error: (%d) ocs_copy_to_user failed\n", __LINE__);
-
 		}
 		}
 		req->value_length = ocs_textbuf_get_written(&textbuf);
@@ -692,7 +686,6 @@ ocs_firmware_write(ocs_t *ocs, const uint8_t *buf, size_t buf_len,
         }
 
         while (bytes_left > 0) {
-
                 if (bytes_left > FW_WRITE_BUFSIZE) {
                         xfer_size = FW_WRITE_BUFSIZE;
                 } else {
@@ -762,7 +755,6 @@ ocs_sys_fwupgrade(SYSCTL_HANDLER_ARGS)
                         ocs_be32toh(fw_image->magic_number), fw->datasize);
                 rc = -1;
                 goto exit;
-
         }
 
         if (!strncmp(ocs->fw_version, fw_image->revision, 
@@ -803,7 +795,6 @@ ocs_sys_fwupgrade(SYSCTL_HANDLER_ARGS)
                                         fw_change_status);
                                 break;
                 }
-
         }
 
 exit:
@@ -838,7 +829,6 @@ ocs_sysctl_wwnn(SYSCTL_HANDLER_ARGS)
 
 	/*Read wwnn*/
 	if (!req->newptr) {
-
 		return (sysctl_handle_string(oidp, old, sizeof(old), req));
 	}
 
@@ -873,7 +863,6 @@ ocs_sysctl_wwpn(SYSCTL_HANDLER_ARGS)
 		memset(old, 0, sizeof(old));
 		snprintf(old, sizeof(old), "0x%llx",(unsigned long long) ocs_htobe64(*wwpn));
 	}
-
 
 	/*Read wwpn*/
 	if (!req->newptr) {
@@ -989,7 +978,6 @@ ocs_sysctl_fcid(SYSCTL_HANDLER_ARGS)
 	return (sysctl_handle_string(oidp, buf, sizeof(buf), req));
 }
 
-
 static int
 ocs_sysctl_port_state(SYSCTL_HANDLER_ARGS)
 {
@@ -1008,7 +996,7 @@ ocs_sysctl_port_state(SYSCTL_HANDLER_ARGS)
 					 "offline" : "online");	
 		return (sysctl_handle_string(oidp, new, sizeof(new), req));
         }
-	
+
 	/*Configure port state*/
 	rc = sysctl_handle_string(oidp, new, sizeof(new), req);
 	if (rc)
@@ -1049,7 +1037,7 @@ ocs_sysctl_vport_wwpn(SYSCTL_HANDLER_ARGS)
 
 	memset(str_wwpn, 0, sizeof(str_wwpn));
 	snprintf(str_wwpn, sizeof(str_wwpn), "0x%llx", (unsigned long long)fcp->vport->wwpn);
-	
+
 	return (sysctl_handle_string(oidp, str_wwpn, sizeof(str_wwpn), req));
 }
 
@@ -1128,38 +1116,38 @@ ocs_sysctl_init(ocs_t *ocs)
 			  0, "SLI Interface");
 
         SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO, "fw_upgrade",
-                CTLTYPE_STRING | CTLFLAG_RW, (void *)ocs, 0,
-                ocs_sys_fwupgrade, "A", "Firmware grp file");
+            CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT, (void *)ocs, 0,
+	    ocs_sys_fwupgrade, "A", "Firmware grp file");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"wwnn", CTLTYPE_STRING | CTLFLAG_RW,
-			ocs, 0, ocs_sysctl_wwnn, "A",
-			"World Wide Node Name, wwnn should be in the format 0x<XXXXXXXXXXXXXXXX>");
+	    "wwnn", CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_wwnn, "A",
+	    "World Wide Node Name, wwnn should be in the format 0x<XXXXXXXXXXXXXXXX>");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"wwpn", CTLTYPE_STRING | CTLFLAG_RW,
-			ocs, 0, ocs_sysctl_wwpn, "A",
-			"World Wide Port Name, wwpn should be in the format 0x<XXXXXXXXXXXXXXXX>");
+	    "wwpn", CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_wwpn, "A",
+	    "World Wide Port Name, wwpn should be in the format 0x<XXXXXXXXXXXXXXXX>");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"current_topology", CTLTYPE_UINT | CTLFLAG_RD,
-			ocs, 0, ocs_sysctl_current_topology, "IU",
-			"Current Topology, 1-NPort; 2-Loop; 3-None");
+	    "current_topology", CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_current_topology, "IU",
+	    "Current Topology, 1-NPort; 2-Loop; 3-None");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"current_speed", CTLTYPE_UINT | CTLFLAG_RD,
-			ocs, 0, ocs_sysctl_current_speed, "IU",
-			"Current Speed");
+	    "current_speed", CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_current_speed, "IU",
+	    "Current Speed");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"configured_topology", CTLTYPE_UINT | CTLFLAG_RW,
-			ocs, 0, ocs_sysctl_config_topology, "IU",
-			"Configured Topology, 0-Auto; 1-NPort; 2-Loop");
+	    "configured_topology", CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_config_topology, "IU",
+	    "Configured Topology, 0-Auto; 1-NPort; 2-Loop");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"configured_speed", CTLTYPE_UINT | CTLFLAG_RW,
-			ocs, 0, ocs_sysctl_config_speed, "IU",
-			"Configured Speed, 0-Auto, 2000, 4000, 8000, 16000, 32000");
+	    "configured_speed", CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_config_speed, "IU",
+	    "Configured Speed, 0-Auto, 2000, 4000, 8000, 16000, 32000");
 
 	SYSCTL_ADD_STRING(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
 			"businfo", CTLFLAG_RD,
@@ -1167,14 +1155,12 @@ ocs_sysctl_init(ocs_t *ocs)
 			0, "Bus Info");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"fcid", CTLTYPE_STRING | CTLFLAG_RD,
-			ocs, 0, ocs_sysctl_fcid, "A",
-			"Port FC ID");
+	    "fcid", CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_fcid, "A", "Port FC ID");
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"port_state", CTLTYPE_STRING | CTLFLAG_RW,
-			ocs, 0, ocs_sysctl_port_state, "A",
-			"configured port state");
+	    "port_state", CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    ocs, 0, ocs_sysctl_port_state, "A", "configured port state");
 
 	for (i	= 0; i < ocs->num_vports; i++) {
 		fcp = FCPORT(ocs, i+1);
@@ -1182,18 +1168,17 @@ ocs_sysctl_init(ocs_t *ocs)
 		memset(name, 0, sizeof(name));
 		snprintf(name, sizeof(name), "vport%d", i);
 		vtree = SYSCTL_ADD_NODE(ctx, SYSCTL_CHILDREN(tree),
-				OID_AUTO, name, CTLFLAG_RW, 0, "Virtual port");
+		    OID_AUTO, name, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+		    "Virtual port");
 
 		SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(vtree), OID_AUTO,
-			"wwnn", CTLTYPE_STRING | CTLFLAG_RW,
-			fcp, 0, ocs_sysctl_vport_wwnn, "A",
-			"World Wide Node Name");
+		    "wwnn", CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+		    fcp, 0, ocs_sysctl_vport_wwnn, "A",
+		    "World Wide Node Name");
 
 		SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(vtree), OID_AUTO,
-			"wwpn", CTLTYPE_STRING | CTLFLAG_RW,
-			fcp, 0, ocs_sysctl_vport_wwpn, "A",
-			"World Wide Port Name");
-
+		    "wwpn", CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+		    fcp, 0, ocs_sysctl_vport_wwpn, "A", "World Wide Port Name");
 	}
 
 }
@@ -1250,4 +1235,3 @@ ocs_debug_detach(void *os)
 		destroy_dev(ocs->cdev);
 	}
 }
-

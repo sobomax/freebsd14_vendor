@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 942adcd7d1d729666983172819626873eeecc3e1 $
+ * $FreeBSD: 7da43e0edde53316fb80e3d3de44e2b959b8150a $
  */
 
 #ifndef	_G_SHSEC_H_
@@ -46,28 +46,10 @@
 #ifdef _KERNEL
 #define	G_SHSEC_BFLAG_FIRST	0x1
 
-#define	G_SHSEC_DEBUG(lvl, ...)	do {					\
-	if (g_shsec_debug >= (lvl)) {					\
-		printf("GEOM_SHSEC");					\
-		if (g_shsec_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
-#define	G_SHSEC_LOGREQ(lvl, bp, ...)	do {				\
-	if (g_shsec_debug >= (lvl)) {					\
-		printf("GEOM_SHSEC");					\
-		if (g_shsec_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf(" ");						\
-		g_print_bio(bp);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define	G_SHSEC_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_SHSEC", g_shsec_debug, (lvl), NULL, __VA_ARGS__)
+#define	G_SHSEC_LOGREQ(lvl, bp, ...) \
+    _GEOM_DEBUG("GEOM_SHSEC", g_shsec_debug, (lvl), (bp), __VA_ARGS__)
 
 struct g_shsec_softc {
 	u_int		 sc_type;	/* provider type */

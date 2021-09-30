@@ -1,8 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: b9256f3cec30af825dad968fd67476670633cc62 $
+# $FreeBSD: 2f16201d171d19aaeb24677dc8198bea730365c5 $
 
 .include <src.opts.mk>
 
+PACKAGE=	runtime
 PROG=	du
 LIBADD=	util
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 4fed5b6b28c472ba8e10cd4bac86807319287296 $
+# $FreeBSD: 2e625cf553e58c58c14d9af19bfecff04600d604 $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,8 @@ _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 _LIBARCHIVECONFDIR=	${SRCTOP}/lib/libarchive
 
 PROG=	bsdcat
-BSDCAT_VERSION_STRING=	3.4.3
+BSDCAT_VERSION_STRING!=	sed -n '/define.*ARCHIVE_VERSION_ONLY_STRING/{s,[^0-9.],,gp;q;}' \
+			${_LIBARCHIVEDIR}/libarchive/archive.h
 
 .PATH:	${_LIBARCHIVEDIR}/cat
 SRCS=	bsdcat.c cmdline.c

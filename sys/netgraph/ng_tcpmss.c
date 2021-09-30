@@ -31,7 +31,7 @@
  * This software includes fragments of the following programs:
  *	tcpmssd		Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: 5378332f33134a176bba3d50669668b9ae698cc0 $
+ * $FreeBSD: a79253309c394e20f7efd3ae88837eeb639821f5 $
  */
 
 /*
@@ -142,7 +142,6 @@ static struct ng_type ng_tcpmss_typestruct = {
 };
 
 NETGRAPH_INIT(tcpmss, &ng_tcpmss_typestruct);
-
 #define	ERROUT(x)	{ error = (x); goto done; }
 
 /*
@@ -329,7 +328,7 @@ ng_tcpmss_rcvdata(hook_p hook, item_p item)
 	/* Check SYN packet and has options. */
 	if (!(tcp->th_flags & TH_SYN) || tcphlen == sizeof(struct tcphdr))
 		goto send;
-	
+
 	/* Update SYN stats. */
 	priv->stats.SYNPkts++;
 

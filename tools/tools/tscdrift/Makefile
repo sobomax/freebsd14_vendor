@@ -1,8 +1,7 @@
-# $FreeBSD: fad714d6b058c1fbe8c0c971fed512db0029a2de $
+# $FreeBSD: d235972fb53aa656f615131fd5f5278b03b30bbb $
 
 PROG=	tscdrift
 MAN=
-WARNS?=	6
 
 LIBADD=	pthread m
 

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03c2a9d9c541ed3a59320cf3764edf2b37c61940 $");
+__FBSDID("$FreeBSD: 12a666b8eead2acdf799cda65c4164b9630564c2 $");
 
 #ifndef _NETINET_SCTP_OS_BSD_H_
 #define _NETINET_SCTP_OS_BSD_H_
@@ -74,11 +74,13 @@ __FBSDID("$FreeBSD: 03c2a9d9c541ed3a59320cf3764edf2b37c61940 $");
 #include <net/if_types.h>
 #include <net/if_var.h>
 #include <net/route.h>
+#include <net/route/nhop.h>
 #include <net/vnet.h>
 
 #include <netinet/in.h>
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
+#include <netinet/in_fib.h>
 #include <netinet/in_pcb.h>
 #include <netinet/in_var.h>
 #include <netinet/ip_var.h>
@@ -87,6 +89,7 @@ __FBSDID("$FreeBSD: 03c2a9d9c541ed3a59320cf3764edf2b37c61940 $");
 
 #ifdef INET6
 #include <netinet/ip6.h>
+#include <netinet6/in6_fib.h>
 #include <netinet6/ip6_var.h>
 #include <netinet6/in6_pcb.h>
 #include <netinet6/ip6protosw.h>
@@ -188,7 +191,6 @@ MALLOC_DECLARE(SCTP_M_MCORE);
 #define SCTP_LTRACE_ERR_RET(inp, stcb, net, file, err)
 #endif
 
-
 /*
  * Local address and interface list handling
  */
@@ -201,15 +203,15 @@ MALLOC_DECLARE(SCTP_M_MCORE);
 #define	SCTP_INIT_VRF_TABLEID(vrf)
 
 #define SCTP_IFN_IS_IFT_LOOP(ifn) ((ifn)->ifn_type == IFT_LOOP)
-#define SCTP_ROUTE_IS_REAL_LOOP(ro) ((ro)->ro_rt && (ro)->ro_rt->rt_ifa && (ro)->ro_rt->rt_ifa->ifa_ifp && (ro)->ro_rt->rt_ifa->ifa_ifp->if_type == IFT_LOOP)
+#define SCTP_ROUTE_IS_REAL_LOOP(ro) ((ro)->ro_nh && (ro)->ro_nh->nh_ifa && (ro)->ro_nh->nh_ifa->ifa_ifp && (ro)->ro_nh->nh_ifa->ifa_ifp->if_type == IFT_LOOP)
 
 /*
  * Access to IFN's to help with src-addr-selection
  */
 /* This could return VOID if the index works but for BSD we provide both. */
-#define SCTP_GET_IFN_VOID_FROM_ROUTE(ro) (void *)ro->ro_rt->rt_ifp
-#define SCTP_GET_IF_INDEX_FROM_ROUTE(ro) (ro)->ro_rt->rt_ifp->if_index
-#define SCTP_ROUTE_HAS_VALID_IFN(ro) ((ro)->ro_rt && (ro)->ro_rt->rt_ifp)
+#define SCTP_GET_IFN_VOID_FROM_ROUTE(ro) (void *)ro->ro_nh->nh_ifp
+#define SCTP_GET_IF_INDEX_FROM_ROUTE(ro) (ro)->ro_nh->nh_ifp->if_index
+#define SCTP_ROUTE_HAS_VALID_IFN(ro) ((ro)->ro_nh && (ro)->ro_nh->nh_ifp)
 
 /*
  * general memory allocation
@@ -264,7 +266,6 @@ typedef struct uma_zone *sctp_zone_t;
 #include <sys/callout.h>
 typedef struct callout sctp_os_timer_t;
 
-
 #define SCTP_OS_TIMER_INIT(tmr)	callout_init(tmr, 1)
 /*
  * NOTE: The next two shouldn't be called directly outside of sctp_timer_start()
@@ -313,12 +314,8 @@ typedef struct callout sctp_os_timer_t;
 /*      MTU              */
 /*************************/
 #define SCTP_GATHER_MTU_FROM_IFN_INFO(ifn, ifn_index, af) ((struct ifnet *)ifn)->if_mtu
-#define SCTP_GATHER_MTU_FROM_ROUTE(sctp_ifa, sa, rt) ((uint32_t)((rt != NULL) ? rt->rt_mtu : 0))
+#define SCTP_GATHER_MTU_FROM_ROUTE(sctp_ifa, sa, nh) ((uint32_t)((nh != NULL) ? nh->nh_mtu : 0))
 #define SCTP_GATHER_MTU_FROM_INTFC(sctp_ifn) ((sctp_ifn->ifn_p != NULL) ? ((struct ifnet *)(sctp_ifn->ifn_p))->if_mtu : 0)
-#define SCTP_SET_MTU_OF_ROUTE(sa, rt, mtu) do { \
-                                              if (rt != NULL) \
-                                                 rt->rt_mtu = mtu; \
-                                           } while(0)
 
 /*************************/
 /* These are for logging */
@@ -350,8 +347,6 @@ typedef struct callout sctp_os_timer_t;
 
 #define SCTP_GET_PKT_VRFID(m, vrf_id)  ((vrf_id = SCTP_DEFAULT_VRFID) != SCTP_DEFAULT_VRFID)
 
-
-
 /* Attach the chain of data into the sendable packet. */
 #define SCTP_ATTACH_CHAIN(pak, m, packet_length) do { \
                                                  pak = m; \
@@ -362,14 +357,13 @@ typedef struct callout sctp_os_timer_t;
 #define SCTP_IS_IT_BROADCAST(dst, m) ((m->m_flags & M_PKTHDR) ? in_broadcast(dst, m->m_pkthdr.rcvif) : 0)
 #define SCTP_IS_IT_LOOPBACK(m) ((m->m_flags & M_PKTHDR) && ((m->m_pkthdr.rcvif == NULL) || (m->m_pkthdr.rcvif->if_type == IFT_LOOP)))
 
-
 /* This converts any input packet header
  * into the chain of data holders, for BSD
  * its a NOP.
  */
 
 /* get the v6 hop limit */
-#define SCTP_GET_HLIM(inp, ro)	in6_selecthlim(&inp->ip_inp.inp, (ro ? (ro->ro_rt ? (ro->ro_rt->rt_ifp) : (NULL)) : (NULL)));
+#define SCTP_GET_HLIM(inp, ro)	in6_selecthlim(&inp->ip_inp.inp, (ro ? (ro->ro_nh ? (ro->ro_nh->nh_ifp) : (NULL)) : (NULL)));
 
 /* is the endpoint v6only? */
 #define SCTP_IPV6_V6ONLY(sctp_inpcb)	((sctp_inpcb)->ip_inp.inp.inp_flags & IN6P_IPV6_V6ONLY)
@@ -401,10 +395,13 @@ typedef struct callout sctp_os_timer_t;
  * routes, output, etc.
  */
 typedef struct route sctp_route_t;
-typedef struct rtentry sctp_rtentry_t;
 
 #define SCTP_RTALLOC(ro, vrf_id, fibnum) \
-	rtalloc_ign_fib((struct route *)ro, 0UL, fibnum)
+{ \
+	if ((ro)->ro_nh == NULL) { \
+		(ro)->ro_nh = rib_lookup(fibnum, &(ro)->ro_dst, NHR_REF, 0); \
+	} \
+}
 
 /*
  * SCTP protocol specific mbuf flags.
@@ -441,7 +438,6 @@ typedef struct rtentry sctp_rtentry_t;
 struct mbuf *
 sctp_get_mbuf_for_msg(unsigned int space_needed,
     int want_header, int how, int allonebuf, int type);
-
 
 /*
  * SCTP AUTH

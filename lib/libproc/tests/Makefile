@@ -1,4 +1,4 @@
-# $FreeBSD: 8c7563a33ca6f098c66413df6d0c51ea8fe5011c $
+# $FreeBSD: 93f50789c88c2aea2ea037b552b06daaa22961ca $
 
 ATF_TESTS_C+=	proc_test
 
@@ -6,7 +6,6 @@ PROGS=		target_prog
 SRCS_target_prog=	target_prog.c
 BINDIR_target_prog=	${TESTSDIR}
 
-WARNS?=		6
 LIBADD=	elf proc rtld_db util
 
 # Ensure that symbols aren't stripped from the test program, as they're needed

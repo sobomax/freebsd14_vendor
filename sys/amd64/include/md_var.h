@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8d866fee846aa0d3400a26c0de479f11fd5aabe6 $
+ * $FreeBSD: 3b2454a4b441a477c2e1c2a74bef6f702993ab7f $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -36,7 +36,8 @@
 
 #include <x86/x86_var.h>
 
-extern uint64_t	*vm_page_dump;
+extern char	ctx_switch_xsave[];
+extern char	ctx_switch_xsave32[];
 extern int	hw_lower_amd64_sharedpage;
 extern int	hw_ibrs_disable;
 extern int	hw_ssb_disable;
@@ -45,6 +46,8 @@ extern int	syscall_ret_l1d_flush_mode;
 
 extern vm_paddr_t intel_graphics_stolen_base;
 extern vm_paddr_t intel_graphics_stolen_size;
+
+extern int la57;
 
 /*
  * The file "conf/ldscript.amd64" defines the symbol "kernphys".  Its
@@ -82,7 +85,6 @@ void	gsbase_load_fault(void) __asm(__STRING(gsbase_load_fault));
 void	fpstate_drop(struct thread *td);
 void	pagezero(void *addr);
 void	setidt(int idx, alias_for_inthand_t *func, int typ, int dpl, int ist);
-void	sse2_pagezero(void *addr);
 void	set_top_of_stack_td(struct thread *td);
 struct savefpu *get_pcb_user_save_td(struct thread *td);
 struct savefpu *get_pcb_user_save_pcb(struct pcb *pcb);

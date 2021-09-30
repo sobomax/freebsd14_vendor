@@ -1,4 +1,4 @@
-# $FreeBSD: 9cc49ac7fcfd71469cc552fe9dec0624444dea43 $
+# $FreeBSD: dc8178ccf9b8a451fde91d80011b9662ee9dd35e $
 
 .include <src.opts.mk>
 
@@ -8,12 +8,13 @@
 	${WPA_DISTDIR}/src/eap_peer \
 	${WPA_DISTDIR}/src/drivers
 
+PACKAGE=	wpa
 PROG=	wpa_supplicant
 
 SRCS=	base64.c bitfield.c blacklist.c bss.c cli.c common.c \
 	config.c config_file.c \
 	ctrl_iface.c ctrl_iface_common.c ctrl_iface_unix.c \
-	dh_groups.c driver_bsd.c driver_common.c \
+	driver_bsd.c driver_common.c \
 	driver_ndis.c driver_wired.c driver_wired_common.c drivers.c \
 	eap_register.c eloop.c \
 	events.c gas.c gas_query.c \

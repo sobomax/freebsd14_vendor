@@ -1,4 +1,4 @@
-/* $FreeBSD: 9d460e6f9f7431044e7c87e43357b4837eece701 $ */
+/* $FreeBSD: e64bdf1d68ce6e19c25943a5bc478b53883a5ba3 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -76,7 +76,6 @@
 	(USB_PAGE_SIZE < EHCI_FSTN_ALIGN) || (EHCI_FSTN_ALIGN == 0))
 #error	"Invalid USB page size!"
 #endif
-
 
 /*
  * Isochronous Transfer Descriptor.  This descriptor is used for high speed

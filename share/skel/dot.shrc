@@ -1,4 +1,4 @@
-# $FreeBSD: 3108702dfd1630b4e033f5701bda95b8021d8f24 $
+# $FreeBSD: f497bd66f819854c4e6b75c1ed9b266f05a3c7de $
 #
 # .shrc - bourne shell startup file 
 #
@@ -32,7 +32,7 @@ alias g='egrep -i'
 # alias rm='rm -i'
 
 
-# set prompt: ``username@hostname:directory $ ''
+# set prompt: ``username@hostname:directory $ '' 
 PS1="\u@\h:\w \\$ "
 
 # search path for cd(1)

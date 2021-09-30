@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86f8e012550f95e29f9472d7f37a94d3290f4fe7 $");
+__FBSDID("$FreeBSD: af4fac84a9aa923e336436abcde40b32dd875523 $");
 
 #ifndef ECORE_SP_H
 #define ECORE_SP_H
@@ -75,9 +75,6 @@ typedef volatile int ecore_atomic_t;
 #ifndef __bool_true_false_are_defined
 #ifndef __cplusplus
 #define bool _Bool
-#if __STDC_VERSION__ < 199901L && __GNUC__ < 3 && !defined(__INTEL_COMPILER)
-typedef _Bool bool;
-#endif
 #endif /* !__cplusplus */
 #endif /* !__bool_true_false_are_defined$ */
 

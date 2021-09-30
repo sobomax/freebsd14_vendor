@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: ebc72e391ed284b17fe28b46cc5b21340850f1da $
+.\" $FreeBSD: bce9161a1880ced83661af16c13a1880568c5a95 $
 .\"
 .Dd May 23, 2017
 .Dt CPUSET_GETAFFINITY 2
@@ -149,21 +149,21 @@ was either preposterously large or smaller than the kernel set size.
 The calling process did not have the credentials required to complete the
 operation.
 .It Bq Er ECAPMODE
-The calling process attempted to act on a process other than itself, while 
+The calling process attempted to act on a process other than itself, while
 in capability mode.
 See
 .Xr capsicum 4 .
 .El
 .Sh SEE ALSO
-.Xr capsicum 4 ,
 .Xr cpuset 1 ,
 .Xr cpuset 2 ,
-.Xr cpuset_getid 2 ,
-.Xr cpuset_setid 2 ,
 .Xr cpuset_getdomain 2 ,
+.Xr cpuset_getid 2 ,
 .Xr cpuset_setdomain 2 ,
+.Xr cpuset_setid 2 ,
 .Xr pthread_affinity_np 3 ,
 .Xr pthread_attr_affinity_np 3 ,
+.Xr capsicum 4 ,
 .Xr cpuset 9
 .Sh HISTORY
 The

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: e6216ab7645a21410f16970144db8876e3de7fa9 $
+# $FreeBSD: ef323152f1719cb6cc8fb0db91e49da6595e65cc $
 #
 
 OPENBSMDIR=${SRCTOP}/contrib/openbsm
@@ -21,7 +21,7 @@ SRCS+=	sandbox.c sender.c subr.c
 SRCS+=	token.l trail.c
 MAN=	auditdistd.8 auditdistd.conf.5
 
-LIBADD+=	l pthread util crypto ssl
+LIBADD+=	pthread util crypto ssl
 
 YFLAGS+=-v
 

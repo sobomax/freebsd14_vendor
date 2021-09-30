@@ -31,7 +31,7 @@
 /* xDMA memcpy test driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6a4869df8ebc27f7a35f2a90148da73b7372e1f3 $");
+__FBSDID("$FreeBSD: edf192a470162988c075c8ee3c5b555b0f95f20d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -217,7 +217,7 @@ xdmatest_test(struct xdmatest_softc *sc)
 	}
 
 	/* Setup callback. */
-	err = xdma_setup_intr(sc->xchan, xdmatest_intr, sc, &sc->ih);
+	err = xdma_setup_intr(sc->xchan, 0, xdmatest_intr, sc, &sc->ih);
 	if (err) {
 		device_printf(sc->dev, "Can't setup xDMA interrupt handler.\n");
 		return (-1);

@@ -1,5 +1,0 @@
-.\" $FreeBSD: 28a6200bfc921ccce9d001a2431142c9f1ea9243 $
-Set to not build the
-.Nm libpthread
-providing library,
-.Nm libthr .

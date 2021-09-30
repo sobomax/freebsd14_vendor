@@ -25,7 +25,7 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 355ca7857a1bef86a9b5afab7f47f8121f823535 $");
+__FBSDID("$FreeBSD: 44fda4765d8f4f722371ba56c18ce42a86dd96c7 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -614,4 +614,3 @@ uart_mvebu_bus_ungrab(struct uart_softc *sc)
 	uart_barrier(bas);
 	uart_unlock(sc->sc_hwmtx);
 }
-

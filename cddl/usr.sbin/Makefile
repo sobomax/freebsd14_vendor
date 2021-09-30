@@ -1,4 +1,4 @@
-# $FreeBSD: a736a75a73ec3017e8e30e44764afbcef9323dc3 $
+# $FreeBSD: 42de5c96c53ad283f888c250abc1624793ce8c08 $
 
 .include <src.opts.mk>
 
@@ -13,10 +13,8 @@ SUBDIR=	${_dtrace} \
 SUBDIR.${MK_TESTS}+= tests
 
 .if ${MK_ZFS} != "no"
-.if ${MK_LIBTHR} != "no"
 _zdb=	zdb
 _zhack=	zhack
-.endif
 . if ${MK_CXX} != "no"
 _zfsd=	zfsd
 . endif

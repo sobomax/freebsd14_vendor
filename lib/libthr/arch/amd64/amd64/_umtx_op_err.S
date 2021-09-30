@@ -23,14 +23,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b54fe64f617d11f07192ca3a0476fb2a97077a7f $
+ * $FreeBSD: 1e9f7d607f7a47f917e31a0381dcb9176d7cba96 $
  */
 
 #include <sys/syscall.h>
 #include <machine/asm.h>
 
-#define	RSYSCALL_ERR(x)	ENTRY(__CONCAT(x, _err));		\
-			mov __CONCAT($SYS_,x),%rax; KERNCALL; ret; 
+#define	RSYSCALL_ERR(x)	ENTRY(__CONCAT(x, _err)); \
+			mov __CONCAT($SYS_,x),%rax; \
+			KERNCALL; \
+			ret; \
+			END(__CONCAT(x, _err));
 
 #define KERNCALL	movq %rcx, %r10; syscall
 

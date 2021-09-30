@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: scope6_var.h,v 1.4 2000/05/18 15:03:27 jinmei Exp $
- * $FreeBSD: f4e59a1920c1e5351acacb00d302a39a118022c3 $
+ * $FreeBSD: 181e30afe6f8dd2febc9b48db588e069e1f9e6b4 $
  */
 
 #ifndef _NETINET6_SCOPE6_VAR_H_
@@ -46,9 +46,6 @@ struct scope6_id {
 	 */
 	uint32_t s6id_list[IPV6_ADDR_SCOPES_COUNT];
 };
-
-VNET_DECLARE(int, deembed_scopeid);
-#define V_deembed_scopeid       VNET(deembed_scopeid)
 
 void	scope6_init(void);
 struct scope6_id *scope6_ifattach(struct ifnet *);
@@ -67,6 +64,8 @@ uint16_t in6_getscope(const struct in6_addr *);
 uint32_t in6_getscopezone(const struct ifnet *, int);
 void	in6_splitscope(const struct in6_addr *, struct in6_addr *, uint32_t *);
 struct ifnet* in6_getlinkifnet(uint32_t);
+uint32_t in6_get_unicast_scopeid(const struct in6_addr *, const struct ifnet *);
+void	in6_set_unicast_scopeid(struct in6_addr *, uint32_t);
 #endif /* _KERNEL */
 
 #endif /* _NETINET6_SCOPE6_VAR_H_ */

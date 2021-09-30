@@ -28,9 +28,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)diff.1	8.1 (Berkeley) 6/30/93
-.\" $FreeBSD: 36c0ec25212e809e6cdcc0854120a9a4f025a01a $
+.\" $FreeBSD: e0a790f6efb676679a260b3422a597da322c9fd2 $
 .\"
-.Dd April 27, 2020
+.Dd June 19, 2020
 .Dt DIFF 1
 .Os
 .Sh NAME
@@ -184,17 +184,17 @@
 .Ar dir1 dir2
 .Nm diff
 .Op Fl aBbditwW
-.Op --expand-tabs
-.Op --ignore-all-blanks
-.Op --ignore-blank-lines
-.Op --ignore-case
-.Op --minimal
-.Op --no-ignore-file-name-case
-.Op --strip-trailing-cr
-.Op --suppress-common-lines
-.Op --tabsize Ar number
-.Op --text
-.Op --width
+.Op Fl -expand-tabs
+.Op Fl -ignore-all-blanks
+.Op Fl -ignore-blank-lines
+.Op Fl -ignore-case
+.Op Fl -minimal
+.Op Fl -no-ignore-file-name-case
+.Op Fl -strip-trailing-cr
+.Op Fl -suppress-common-lines
+.Op Fl -tabsize Ar number
+.Op Fl -text
+.Op Fl -width
 .Fl y | Fl -side-by-side
 .Ar file1 file2
 .Sh DESCRIPTION
@@ -277,8 +277,7 @@ Produces a script similar to that of
 .Fl e ,
 but in the opposite order and with a count of changed lines on each
 insert or delete command.
-This is the form used by
-.Xr rcsdiff 1 .
+This is the form used by rcsdiff.
 .It Fl q -brief
 Just print a line when the files differ.
 Does not output a list of changes.
@@ -330,7 +329,7 @@ Use of this option forces
 to produce a diff.
 .It Fl B Fl -ignore-blank-lines
 Causes chunks that include only blank lines to be ignored.
-.It Fl b
+.It Fl b -ignore-space-change
 Causes trailing blanks (spaces and tabs) to be ignored, and other
 strings of blanks to compare equal.
 .It Fl d -minimal
@@ -613,6 +612,49 @@ Differences were found.
 .It >1
 An error occurred.
 .El
+.Sh EXAMPLES
+Compare
+.Pa old_dir
+and
+.Pa new_dir
+recursively generating an unified diff and treating files found only in one
+of those directories as new files:
+.Bd -literal -offset indent
+$ diff -ruN /path/to/old_dir /path/to/new_dir
+.Ed
+.Pp
+Same as above but excluding files matching the expressions
+.Dq *.h
+and
+.Dq *.c :
+.Bd -literal -offset indent
+$ diff -ruN -x '*.h' -x '*.c' /path/to/old_dir /path/to/new_dir
+.Ed
+.Pp
+Show a single line indicating if the files differ:
+.Bd -literal -offset indent
+$ diff -q /boot/loader.conf /boot/defaults/loader.conf
+Files /boot/loader.conf and /boot/defaults/loader.conf differ
+.Ed
+.Pp
+Assuming a file named
+.Pa example.txt
+with the following contents:
+.Bd -literal -offset indent
+FreeBSD is an operating system
+Linux is a kernel
+OpenBSD is an operating system
+.Ed
+.Pp
+Compare stdin with
+.Pa example.txt
+excluding from the comparison those lines containing either
+.Qq Linux
+or
+.Qq Open :
+.Bd -literal -offset indent
+$ echo "FreeBSD is an operating system" | diff -q -I 'Linux|Open' example.txt -
+.Ed
 .Sh SEE ALSO
 .Xr cmp 1 ,
 .Xr comm 1 ,
@@ -637,7 +679,7 @@ utility is compliant with the
 specification.
 .Pp
 The flags
-.Op Fl aDdIiLlNnPpqSsTtwXx
+.Op Fl aDdIiLlNnPpqSsTtwXxy
 are extensions to that specification.
 .Sh HISTORY
 A

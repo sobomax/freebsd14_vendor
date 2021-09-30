@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: de94e710b26220492b7fac3593f596ec9748a6ec $
+ * $FreeBSD: d627e55d43f525519e49cc6d4c9521b4910a629f $
  */
 #include <sys/param.h>
 #include <sys/module.h>
@@ -69,7 +69,6 @@
 #include <net80211/ieee80211_regdomain.h>
 
 #include <net/bpf.h>
-
 
 #include <sys/errno.h>
 #include <sys/conf.h>   /* cdevsw struct */
@@ -200,7 +199,6 @@ del_link(struct visibility_plugin *vis_plugin, struct link *l)
 #endif
 }
 
-
 int
 vis_ioctl(struct cdev *sdev, u_long cmd, caddr_t data,
     int fflag, struct thread *td)
@@ -239,4 +237,3 @@ vis_ioctl(struct cdev *sdev, u_long cmd, caddr_t data,
 	CURVNET_RESTORE();
 	return error;
 }
-

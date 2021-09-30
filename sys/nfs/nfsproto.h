@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)nfsproto.h  8.2 (Berkeley) 3/30/95
- * $FreeBSD: dfaf7689fae487beaceff014bff4f71b61948173 $
+ * $FreeBSD: 4f7f838d01d64d4c6f80620119eb45a4dbdcee1d $
  */
 
 #ifndef _NFS_NFSPROTO_H_
@@ -136,8 +136,6 @@
 #define	NFSERR_DEADLOCK		10045
 #define	NFSERR_FILE_OPEN	10046
 #define	NFSERR_STALEWRITEVERF	30001	/* Fake return for nfs_commit() */
-
-
 
 #define NFSERR_RETVOID		0x20000000 /* Return void, not error */
 #define NFSERR_AUTHERR		0x40000000 /* Mark an authentication error */

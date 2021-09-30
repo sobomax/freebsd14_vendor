@@ -37,9 +37,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88c2904ba70699ea848da7cc65f8fdbe947251cd $");
+__FBSDID("$FreeBSD: f85d4a5161e5adae6c6467b774479d8bfa21363b $");
 
 #include "opt_acpi.h"
+#include "opt_iommu.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -153,6 +154,8 @@ struct pic msi_pic = {
 };
 
 u_int first_msi_irq;
+SYSCTL_UINT(_machdep, OID_AUTO, first_msi_irq, CTLFLAG_RD, &first_msi_irq, 0,
+    "Number of first IRQ reserved for MSI and MSI-X interrupts");
 
 u_int num_msi_irqs = 2048;
 SYSCTL_UINT(_machdep, OID_AUTO, num_msi_irqs, CTLFLAG_RDTUN, &num_msi_irqs, 0,
@@ -340,7 +343,7 @@ msi_init(void)
 	if (num_msi_irqs == 0)
 		return;
 
-	first_msi_irq = max(MINIMUM_MSI_INT, num_io_irqs);
+	first_msi_irq = num_io_irqs;
 	if (num_msi_irqs > UINT_MAX - first_msi_irq)
 		panic("num_msi_irqs too high");
 	num_io_irqs = first_msi_irq + num_msi_irqs;
@@ -381,7 +384,7 @@ msi_alloc(device_t dev, int count, int maxcount, int *irqs)
 	struct msi_intsrc *msi, *fsrc;
 	u_int cpu, domain, *mirqs;
 	int cnt, i, vector;
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	u_int cookies[count];
 	int error;
 #endif
@@ -447,7 +450,7 @@ again:
 		return (ENOSPC);
 	}
 
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	mtx_unlock(&msi_lock);
 	error = iommu_alloc_msi_intr(dev, cookies, count);
 	mtx_lock(&msi_lock);
@@ -529,7 +532,7 @@ msi_release(int *irqs, int count)
 		msi = (struct msi_intsrc *)intr_lookup_source(irqs[i]);
 		KASSERT(msi->msi_first == first, ("message not in group"));
 		KASSERT(msi->msi_dev == first->msi_dev, ("owner mismatch"));
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 		iommu_unmap_msi_intr(first->msi_dev, msi->msi_remap_cookie);
 #endif
 		msi->msi_first = NULL;
@@ -539,7 +542,7 @@ msi_release(int *irqs, int count)
 	}
 
 	/* Clear out the first message. */
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	mtx_unlock(&msi_lock);
 	iommu_unmap_msi_intr(first->msi_dev, first->msi_remap_cookie);
 	mtx_lock(&msi_lock);
@@ -562,7 +565,7 @@ msi_map(int irq, uint64_t *addr, uint32_t *data)
 {
 	struct msi_intsrc *msi;
 	int error;
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	struct msi_intsrc *msi1;
 	int i, k;
 #endif
@@ -593,7 +596,7 @@ msi_map(int irq, uint64_t *addr, uint32_t *data)
 		msi = msi->msi_first;
 	}
 
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	if (!msi->msi_msix) {
 		for (k = msi->msi_count - 1, i = first_msi_irq; k > 0 &&
 		    i < first_msi_irq + num_msi_irqs; i++) {
@@ -631,7 +634,7 @@ msix_alloc(device_t dev, int *irq)
 	struct msi_intsrc *msi;
 	u_int cpu, domain;
 	int i, vector;
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	u_int cookie;
 	int error;
 #endif
@@ -682,7 +685,7 @@ again:
 	}
 
 	msi->msi_dev = dev;
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	mtx_unlock(&msi_lock);
 	error = iommu_alloc_msi_intr(dev, &cookie, 1);
 	mtx_lock(&msi_lock);
@@ -737,7 +740,7 @@ msix_release(int irq)
 	KASSERT(msi->msi_dev != NULL, ("unowned message"));
 
 	/* Clear out the message. */
-#ifdef ACPI_DMAR
+#ifdef IOMMU
 	mtx_unlock(&msi_lock);
 	iommu_unmap_msi_intr(msi->msi_dev, msi->msi_remap_cookie);
 	mtx_lock(&msi_lock);

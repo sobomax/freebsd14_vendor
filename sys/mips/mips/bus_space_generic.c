@@ -64,10 +64,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/bus.h,v 1.5 1999/08/28 00:38:40 peter
- * $FreeBSD: 6ec989010db343a848d931d5eea9434c71559835 $
+ * $FreeBSD: e9d67bcb4093eb18ee01fa34f1d8896acaf492cd $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ec989010db343a848d931d5eea9434c71559835 $");
+__FBSDID("$FreeBSD: e9d67bcb4093eb18ee01fa34f1d8896acaf492cd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -202,14 +202,6 @@ static struct bus_space generic_space = {
 #define wr16(a, v) cvmx_write64_uint16(a, v)
 #define wr32(a, v) cvmx_write64_uint32(a, v)
 #define wr64(a, v) cvmx_write64_uint64(a, v)
-#elif defined(CPU_SB1) && _BYTE_ORDER == _BIG_ENDIAN
-#include <mips/sibyte/sb_bus_space.h>
-#define rd8(a) sb_big_endian_read8(a)
-#define rd16(a) sb_big_endian_read16(a)
-#define rd32(a) sb_big_endian_read32(a)
-#define wr8(a, v) sb_big_endian_write8(a, v)
-#define wr16(a, v) sb_big_endian_write16(a, v)
-#define wr32(a, v) sb_big_endian_write32(a, v)
 #else
 #define rd8(a) readb(a)
 #define rd16(a) readw(a)

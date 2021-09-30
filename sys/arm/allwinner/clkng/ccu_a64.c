@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a2dc126129ae46bf4e622bf210cf5da90a7bae43 $
+ * $FreeBSD: 41f5315964759ed0325b1439bbfbe90c43d96dee $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2dc126129ae46bf4e622bf210cf5da90a7bae43 $");
+__FBSDID("$FreeBSD: 41f5315964759ed0325b1439bbfbe90c43d96dee $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,8 +49,8 @@ __FBSDID("$FreeBSD: a2dc126129ae46bf4e622bf210cf5da90a7bae43 $");
 
 #include <arm/allwinner/clkng/aw_ccung.h>
 
-#include <gnu/dts/include/dt-bindings/clock/sun50i-a64-ccu.h>
-#include <gnu/dts/include/dt-bindings/reset/sun50i-a64-ccu.h>
+#include <dt-bindings/clock/sun50i-a64-ccu.h>
+#include <dt-bindings/reset/sun50i-a64-ccu.h>
 
 /* Non-exported clocks */
 
@@ -789,6 +789,8 @@ static struct aw_clk_init a64_init_clks[] = {
 	{"ahb1", "pll_periph0", 0, false},
 	{"ahb2", "pll_periph0", 0, false},
 	{"dram", "pll_ddr0", 0, false},
+	{"pll_de", NULL, 432000000, true},
+	{"de", "pll_de", 0, true},
 };
 
 static int

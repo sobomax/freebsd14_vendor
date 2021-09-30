@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e2bb5e22eb1a2b7d975eaf05f19830439255468a $");
+__FBSDID("$FreeBSD: 1e84e293e2148a7aa7d4b0dbc9804f594e35b371 $");
 
 #include <sys/capsicum.h>
 #include <sys/nv.h>
@@ -321,6 +321,8 @@ test_cmds(cap_channel_t *origcapgrp)
 	capgrp = cap_clone(origcapgrp);
 	CHECK(capgrp != NULL);
 
+	cap_setgrent(capgrp);
+
 	cmds[0] = "getgrent";
 	cmds[1] = "getgrent_r";
 	cmds[2] = "getgrnam";
@@ -360,6 +362,8 @@ test_cmds(cap_channel_t *origcapgrp)
 	 */
 	capgrp = cap_clone(origcapgrp);
 	CHECK(capgrp != NULL);
+
+	cap_setgrent(capgrp);
 
 	cmds[0] = "getgrent";
 	cmds[1] = "getgrent_r";

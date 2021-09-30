@@ -33,7 +33,7 @@
  * LC_CTYPE database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6fb5e796372ac8325b20acce54fc89e78fa7ae7 $");
+__FBSDID("$FreeBSD: 02e525c5aed2420ddb1ca5f6810431741b0f0cdd $");
 
 #include <sys/tree.h>
 
@@ -43,11 +43,13 @@ __FBSDID("$FreeBSD: e6fb5e796372ac8325b20acce54fc89e78fa7ae7 $");
 #include <string.h>
 #include <sys/types.h>
 #include <wchar.h>
-#include <ctype.h>
-#include <wctype.h>
 #include <unistd.h>
 #include "localedef.h"
 #include "parser.h"
+
+/* Always include the defines for the target: */
+#define _DONT_USE_CTYPE_INLINE_ /* Avoid dependencies on runetype.h */
+#include "_ctype.h"
 #include "runefile.h"
 
 

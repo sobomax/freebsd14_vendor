@@ -1,4 +1,4 @@
-# $FreeBSD: 07198200bb25bd39e5ab0c81d446cf6993ddf960 $
+# $FreeBSD: 8b9fc4d26dc919f328931fcc4a578cfb2f87ae3b $
 
 FILES=	INDEX.keymaps \
 	am.kbd \
@@ -18,6 +18,7 @@ FILES=	INDEX.keymaps \
 	ch.acc.kbd \
 	ch.kbd \
 	ch.macbook.acc.kbd \
+	colemak-dh.acc.kbd \
 	colemak.acc.kbd \
 	cz.kbd \
 	de.acc.kbd \

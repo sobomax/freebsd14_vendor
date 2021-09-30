@@ -1,15 +1,27 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 1f651a7b0b0bb13f9efec2c4694e3fbed531215c $
+# $FreeBSD: 23bac6d62d90cdf6d054b6baa0df8143b8999707 $
 
 .include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	ping
-SRCS=	ping.c utils.c
+SRCS=	main.c
 MAN=	ping.8
 BINOWN=	root
 BINMODE=4555
 LIBADD=	m
+
+.if ${MK_INET_SUPPORT}!= "no"
+CFLAGS+= -DINET
+SRCS+=	ping.c utils.c
+.endif
+
+.if ${MK_INET6_SUPPORT} != "no"
+CFLAGS+= -DINET6 -DKAME_SCOPEID
+SRCS+=	ping6.c
+LIBADD+= md
+LINKS=	${BINDIR}/ping ${BINDIR}/ping6
+.endif
 
 .if ${MK_DYNAMICROOT} == "no"
 .warning ${PROG} built without libcasper support
@@ -19,10 +31,8 @@ LIBADD+=	cap_dns
 CFLAGS+=-DWITH_CASPER
 .endif
 
-.if !defined(RELEASE_CRUNCH)
 CFLAGS+=-DIPSEC
 LIBADD+=	ipsec
-.endif
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

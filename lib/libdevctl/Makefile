@@ -1,6 +1,5 @@
-# $FreeBSD: ed56b25dc374044300ea1217599513fa4428b3f4 $
+# $FreeBSD: 74687ecc2bd27ce6d95d6dc6238594895faabd5c $
 
-PACKAGE=lib${LIB}
 LIB=	devctl
 SRCS=	devctl.c
 INCS=	devctl.h

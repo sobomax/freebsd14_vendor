@@ -1,4 +1,4 @@
-.\" $FreeBSD: ad9325896a79dcd5f15e8f6bd4c75979580a1847 $
+.\" $FreeBSD: a9c5bb2bdeb3ff27542f1294a644f863e7f4105c $
 Set to opportunistically skip building a cross-linker during the
 bootstrap phase of the build.
 If the currently installed linker matches the planned bootstrap linker
@@ -7,9 +7,7 @@ This does not prevent a linker from being built for installation though,
 only for building one for the build itself.
 The
 .Va WITHOUT_LLD
-and
-.Va WITHOUT_BINUTILS
-options control those.
+option controls that.
 .Pp
 This option is only relevant when
 .Va WITH_LLD_BOOTSTRAP

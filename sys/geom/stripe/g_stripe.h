@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 21b6ea666a4207f138e76792b2606538888fd846 $
+ * $FreeBSD: 90b97426713ca62d86bee88fd8eac19e32941c18 $
  */
 
 #ifndef	_G_STRIPE_H_
@@ -49,25 +49,10 @@
 #define	G_STRIPE_TYPE_MANUAL	0
 #define	G_STRIPE_TYPE_AUTOMATIC	1
 
-#define	G_STRIPE_DEBUG(lvl, ...)	do {				\
-	if (g_stripe_debug >= (lvl)) {					\
-		printf("GEOM_STRIPE");					\
-		if (g_stripe_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
-#define	G_STRIPE_LOGREQ(bp, ...)	do {				\
-	if (g_stripe_debug >= 2) {					\
-		printf("GEOM_STRIPE[2]: ");				\
-		printf(__VA_ARGS__);					\
-		printf(" ");						\
-		g_print_bio(bp);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define	G_STRIPE_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_STRIPE", g_stripe_debug, (lvl), NULL, __VA_ARGS__)
+#define	G_STRIPE_LOGREQ(bp, ...) \
+    _GEOM_DEBUG("GEOM_STRIPE", g_stripe_debug, 2, (bp), __VA_ARGS__)
 
 struct g_stripe_softc {
 	u_int		 sc_type;	/* provider type */
@@ -76,7 +61,7 @@ struct g_stripe_softc {
 	uint32_t	 sc_id;		/* stripe unique ID */
 	struct g_consumer **sc_disks;
 	uint16_t	 sc_ndisks;
-	uint32_t	 sc_stripesize;
+	off_t		 sc_stripesize;
 	uint32_t	 sc_stripebits;
 	struct mtx	 sc_lock;
 };

@@ -1,7 +1,8 @@
-# $FreeBSD: 29e6f294056cbea7a64fb3cc4dbaed2ee167e632 $
+# $FreeBSD: a7a35d49295edfdac39de0079127663ff7b434c7 $
 
 .include <src.opts.mk>
 
+PACKAGE=	ppp
 PROG=	ppp
 MAN=	ppp.8
 SRCS=	acf.c arp.c async.c auth.c bundle.c cbcp.c ccp.c chap.c chat.c \
@@ -11,15 +12,6 @@ SRCS=	acf.c arp.c async.c auth.c bundle.c cbcp.c ccp.c chap.c chat.c \
 	proto.c route.c server.c sig.c slcompress.c sync.c systems.c tcp.c \
 	tcpmss.c throughput.c timer.c tty.c tun.c udp.c vjcomp.c
 WARNS?=	3
-.if defined(RELEASE_CRUNCH)
-CFLAGS+=-DRELEASE_CRUNCH
-PPP_NO_DES=
-PPP_NO_KLDLOAD=
-PPP_NO_NAT=
-PPP_NO_PAM=
-PPP_NO_RADIUS=
-PPP_NO_SUID=
-.endif
 CONFS=	ppp.conf
 CONFSDIR=	${CONFDIR}/ppp
 CONFSMODE=	600

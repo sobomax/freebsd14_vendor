@@ -17,7 +17,7 @@
  * Cronyx Id: ng_sppp.c,v 1.1.2.10 2004/03/01 15:17:21 rik Exp $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95e9a60f56f9840630125b54791e1bbfc53de775 $");
+__FBSDID("$FreeBSD: 78e205e0d715d845acc627467656107dbca5b144 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -196,7 +196,7 @@ ng_sppp_start (struct ifnet *ifp)
 	struct mbuf *m;
 	int len, error = 0;
 	priv_p priv = ifp->if_softc;
-	
+
 	/* Check interface flags */
 	/*
 	 * This has side effects. It is not good idea to stop sending if we
@@ -207,7 +207,7 @@ ng_sppp_start (struct ifnet *ifp)
 /*	    (ifp->if_drv_flags & IFF_DRV_RUNNING))) { */
 /*		return;*/
 /*	}*/
-	
+
 	if (ifp->if_drv_flags & IFF_DRV_OACTIVE)
 		return;
 		
@@ -295,13 +295,13 @@ ng_sppp_newhook (node_p node, hook_p hook, const char *name)
 
 	if (strcmp (name, NG_SPPP_HOOK_DOWNSTREAM) != 0)
 		return (EINVAL);
-	
+
 	if (priv->hook)
 		return (EISCONN);
 		
 	priv->hook = hook;
 	NG_HOOK_SET_PRIVATE (hook, priv);
-	
+
 	return (0);
 }
 

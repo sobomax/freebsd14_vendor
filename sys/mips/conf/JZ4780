@@ -1,8 +1,10 @@
 # JZ4780 -- Kernel config for Ingenic JZ47XX boards
 #
-# $FreeBSD: c73ed9c789bf0a22e5b2a86fc609b1f4ed93be60 $
+# $FreeBSD: 962334eeffdabc10c95f48c62468588f6ae21f1d $
 
 #NO_UNIVERSE
+
+# Note: SMP on 32-bit mips is no longer supported, which affects this config file.
 
 ident		JZ4780
 machine		mips mipselhf
@@ -10,7 +12,7 @@ cpu		CPU_XBURST
 cpu		CPU_MIPS4KC
 
 makeoptions	KERNLOADADDR=0x80020000
-makeoptions	ARCH_FLAGS="-EL -march=mips32r2"
+makeoptions	ARCH_FLAGS="-march=mips32r2"
 
 # Don't build any modules yet.
 makeoptions	MODULES_OVERRIDE=""
@@ -29,6 +31,7 @@ options 	BREAK_TO_DEBUGGER
 
 options 	COMPAT_FREEBSD10
 options 	COMPAT_FREEBSD11
+options 	COMPAT_FREEBSD12
 
 options 	SCHED_4BSD		#4BSD scheduler
 options 	INET			#InterNETworking
@@ -65,7 +68,6 @@ device		miibus
 device		bpf
 device		md
 device		uart
-device		random
 
 device		fdt_pinctrl
 
@@ -106,6 +108,10 @@ device		ukbd		# Allow keyboard like HIDs to control console
 #device		ulpt		# Printer
 device		umass		# Disks/Mass storage - Requires scbus and da
 device		ums		# Mouse
+
+# HID support
+options 	HID_DEBUG	# enable debug msgs
+device		hid		# Generic HID support
 
 # FDT support
 options 	FDT

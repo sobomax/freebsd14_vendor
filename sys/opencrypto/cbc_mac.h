@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 33e61cc1a1236a14c8801f6b670cb5084c4a3762 $
+ *	$FreeBSD: 51833a212f6c52067ec0b74b65d3959e86e85b03 $
  *
  */
 
@@ -58,10 +58,10 @@ struct aes_cbc_mac_ctx {
 	uint32_t	keysched[4*(RIJNDAEL_MAXNR+1)];
 };
 
-void AES_CBC_MAC_Init(struct aes_cbc_mac_ctx *);
-void AES_CBC_MAC_Setkey(struct aes_cbc_mac_ctx *, const uint8_t *, uint16_t);
-void AES_CBC_MAC_Reinit(struct aes_cbc_mac_ctx *, const uint8_t *, uint16_t);
-int AES_CBC_MAC_Update(struct aes_cbc_mac_ctx *, const uint8_t *, uint16_t);
-void AES_CBC_MAC_Final(uint8_t *, struct aes_cbc_mac_ctx *);
+void AES_CBC_MAC_Init(void *);
+void AES_CBC_MAC_Setkey(void *, const uint8_t *, u_int);
+void AES_CBC_MAC_Reinit(void *, const uint8_t *, u_int);
+int AES_CBC_MAC_Update(void *, const void *, u_int);
+void AES_CBC_MAC_Final(uint8_t *, void *);
 
 #endif /* _CBC_CCM_H */

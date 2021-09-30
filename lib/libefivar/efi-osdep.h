@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b971eab5899dcc05100a3250e86a2e2a37e2f330 $
+ * $FreeBSD: 4e3eb21b5fe794d2fef4f824c3ac31a8dd568c1e $
  */
 
 #ifndef	_EFI_OSDEP_H_
@@ -104,6 +104,8 @@ typedef void VOID;
 #define MDE_CPU_ARM
 #elif defined(__aarch64__)
 #define MDE_CPU_AARCH64
+#elif defined(__riscv)
+#define MDE_CPU_RISCV64
 #endif
 /* FreeBSD doesn't have/use MDE_CPU_EBC or MDE_CPU_IPF (ia64) */
 

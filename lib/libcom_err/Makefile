@@ -1,6 +1,5 @@
-# $FreeBSD: ca65c091387d14512145f6a5d54c329933533b79 $
+# $FreeBSD: 89fed48e1dd1becdb9d8b5fbf678f7290d400b17 $
 
-PACKAGE=lib${LIB}
 LIB=	com_err
 SRCS=	com_err.c error.c
 INCS=	${COM_ERRDIR}/com_err.h ${COM_ERRDIR}/com_right.h

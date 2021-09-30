@@ -1,13 +1,17 @@
-# $FreeBSD: 34573a403ab437565834bd5e8fe19b3a7c08eec1 $
+# $FreeBSD: 73dad36c1dc5b72f2432b20a56e6d86860c5bdfb $
 
 PACKAGE=	lib${LIB}
 LIB=		ifconfig
-PRIVATELIB=	true
-# Don't build shared library, for now.
-NO_PIC= 
+INTERNALLIB=	true
+
+LIBADD=		m
 
 SHLIBDIR?=	/lib
 SHLIB_MAJOR=	1
+
+VERSION_DEF=	${LIBCSRCDIR}/Versions.def
+SYMBOL_MAPS=	${.CURDIR}/Symbol.map
+
 SRCS=		libifconfig.c \
 		libifconfig_bridge.c \
 		libifconfig_carp.c \
@@ -15,14 +19,30 @@ SRCS=		libifconfig.c \
 		libifconfig_inet6.c \
 		libifconfig_internal.c \
 		libifconfig_lagg.c \
-		libifconfig_media.c
+		libifconfig_media.c \
+		libifconfig_sfp.c
 
-INCSDIR=	${INCLUDEDIR}
-INCS=		libifconfig.h
+GEN=		libifconfig_sfp_tables.h \
+		libifconfig_sfp_tables.c \
+		libifconfig_sfp_tables_internal.h
+
+SRCS+=	${GEN}
+
+.include <src.lua.mk>
+
+.SUFFIXES: .tpl.c .tpl.h
+.tpl.c.c .tpl.h.h: sfp.lua
+	${LUA} ${.CURDIR}/sfp.lua ${.IMPSRC} >${.TARGET}
+
+CLEANFILES+= ${GEN}
+
+# If libifconfig become public uncomment those two lines
+#INCSDIR=	${INCLUDEDIR}
+#INCS=		libifconfig.h libifconfig_sfp.h libifconfig_sfp_tables.h
 
 #MAN=		libifconfig.3
 
-CFLAGS+= -I${.CURDIR}
+CFLAGS+= -I${.CURDIR} -I${.OBJDIR}
 NO_WCAST_ALIGN= yes
 
 .include <bsd.lib.mk>

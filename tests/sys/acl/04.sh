@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Copyright (c) 2011 Edward Tomasz Napierała <trasz@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 917f5acb54a54c78df37ccec08eec5290bdb6de8 $
+# $FreeBSD: ca8d9df0f5d7220fcba722f11a5f4c96e8fb2729 $
 #
 
 # This is a wrapper script to run tools-nfs4-trivial.test on ZFS filesystem.

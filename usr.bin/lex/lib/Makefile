@@ -1,8 +1,8 @@
-# $FreeBSD: 0bca11f2113e90892e25fbd581e8226069924437 $
+# $FreeBSD: dfffe96159f3bc57212ddce918f4e6912e01ba24 $
 
 .include <src.opts.mk>
 
-.PATH:	${SRCTOP}/contrib/flex
+.PATH:	${SRCTOP}/contrib/flex/src
 
 LIB=    ln
 SRCS=   libmain.c libyywrap.c

@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# $FreeBSD: f8890537b22cea5196bd5bde20ddba045606aaef $
+# $FreeBSD: 81ba077c85e48bf5391f6324ee2b0e3e90385506 $
 #
 
-# PROVIDE: routed
+# PROVIDE: routed dynamicrouting
 # REQUIRE: netif routing
 # BEFORE: NETWORK
 # KEYWORD: nojailvnet

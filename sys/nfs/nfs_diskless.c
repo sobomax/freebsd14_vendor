@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b621ed452e0ef53bccdc0e025cb787c74ce1d571 $");
+__FBSDID("$FreeBSD: 6df01e56f9b2ff0a99e6180b80b1eac186d6bc87 $");
 
 #include "opt_bootp.h"
 
@@ -253,7 +253,7 @@ match_done:
 	if (is_nfsv3 != 0) {
 		strlcpy(nd3->myif.ifra_name, ifp->if_xname,
 		    sizeof(nd3->myif.ifra_name));
-	
+
 		/* set up gateway */
 		inaddr_to_sockaddr("boot.netif.gateway", &nd3->mygateway);
 
@@ -287,12 +287,12 @@ match_done:
 			nfs_parse_options(cp, &nd3->root_args);
 			freeenv(cp);
 		}
-	
+
 		nfs_diskless_valid = 3;
 	} else {
 		strlcpy(nd->myif.ifra_name, ifp->if_xname,
 		    sizeof(nd->myif.ifra_name));
-	
+
 		/* set up gateway */
 		inaddr_to_sockaddr("boot.netif.gateway", &nd->mygateway);
 
@@ -319,7 +319,7 @@ match_done:
 		}
 		if ((cp = kern_getenv("boot.nfsroot.options")) != NULL) {
 			struct nfs_args args;
-	
+
 			/*
 			 * XXX yech, convert between old and current
 			 * arg format
@@ -335,7 +335,7 @@ match_done:
 			nd->root_args.wsize = args.wsize;
 			freeenv(cp);
 		}
-	
+
 		nfs_diskless_valid = 1;
 	}
 }
@@ -436,4 +436,3 @@ nfs_rootconf(void)
 
 SYSINIT(cpu_rootconf, SI_SUB_ROOT_CONF, SI_ORDER_FIRST, nfs_rootconf, NULL);
 #endif
-

@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9105f0d68a350b38b6d9e700d523bfe5966bb684 $
+ * $FreeBSD: 0b897a50302a252e258f637e8261e47bcb8e9ad2 $
  */
 
 #ifndef ICL_H
@@ -79,9 +78,8 @@ struct icl_pdu {
 	/*
 	 * User (initiator or provider) private fields.
 	 */
-	uint32_t		ip_prv0;
-	uint32_t		ip_prv1;
-	uint32_t		ip_prv2;
+	void			*ip_prv0;
+	void			*ip_prv1;
 };
 
 #define ICL_CONN_STATE_INVALID		0
@@ -91,7 +89,7 @@ struct icl_pdu {
 #define ICL_CONN_STATE_DATA		4
 #define ICL_CONN_STATE_DATA_DIGEST	5
 
-#define	ICL_MAX_DATA_SEGMENT_LENGTH	(128 * 1024)
+#define	ICL_NOCOPY			(1 << 30)
 
 struct icl_conn {
 	KOBJ_FIELDS;
@@ -135,6 +133,8 @@ struct icl_drv_limits {
 	int idl_first_burst_length;
 	int spare[4];
 };
+
+typedef void (*icl_pdu_cb)(struct icl_pdu *, int error);
 
 struct icl_conn	*icl_new_conn(const char *offload, bool iser, const char *name,
 		    struct mtx *lock);

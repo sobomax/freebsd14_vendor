@@ -1,4 +1,4 @@
-# $FreeBSD: 8fbc1e5971192503b8fa3f812d9e114a56536360 $
+# $FreeBSD: e2f1739a4f4e2c5f978501f80cf5c035b98e665a $
 
 .include <bsd.init.mk>
 
@@ -10,7 +10,20 @@ FILES=		boot1.hfs
 SRCS=		boot1.c ashldi3.c syncicache.c
 
 CFLAGS+=-I${LDRSRC}
-LDFLAGS=-nostdlib -static -Wl,-N
+# Load boot1.elf below kernel.
+#
+# Due to limitiations in the way we load stuff, we have to avoid reusing
+# memory until the kernel MMU code has taken over.
+#
+# 0x38000 is high enough to not interfere with the trap area, but low
+# enough that it doesn't bump into the kernel area starting at 0x100000,
+# even if the entire partition gets used as the load size by a buggy OFW.
+#
+# In theory 0xf0000 would work too under the current 64k size limit for
+# boot1.elf defined in the HFS template, but sometimes boot1.elf is written
+# directly to the PReP partition.
+#
+LDFLAGS=-nostdlib -static -Wl,-N -Wl,-Ttext=0x38000
 
 .PATH:  ${SYSDIR}/libkern ${SRCTOP}/lib/libc/powerpc/gen ${.CURDIR}
 

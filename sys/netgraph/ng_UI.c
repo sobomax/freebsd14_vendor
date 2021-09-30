@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 8e8ab55d649088447a74455e2e38805e687f6130 $
+ * $FreeBSD: 9f899a841fd8d25b3b3e54e7de214ffcbd9a2f22 $
  * $Whistle: ng_UI.c,v 1.14 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -48,7 +48,6 @@
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/errno.h>
-
 
 #include <netgraph/ng_message.h>
 #include <netgraph/netgraph.h>
@@ -242,4 +241,3 @@ ng_UI_disconnect(hook_p hook)
 	}
 	return (0);
 }
-

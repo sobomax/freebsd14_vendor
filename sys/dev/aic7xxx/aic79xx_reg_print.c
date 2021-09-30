@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98749a365bb1526cc8e766615451c1cd717351b9 $");
+__FBSDID("$FreeBSD: fa343b4a767f8c9d900c850e9610f4ed780bfe3a $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 
 static ahd_reg_parse_entry_t MODE_PTR_parse_table[] = {
@@ -3671,4 +3671,3 @@ ahd_scb_disconnected_lists_print(u_int regvalue, u_int *cur_col, u_int wrap)
 	return (ahd_print_register(NULL, 0, "SCB_DISCONNECTED_LISTS",
 	    0x1b8, regvalue, cur_col, wrap));
 }
-

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 571dfec7d3b5ae0772bd59f510a544b17c7b0886 $");
+__FBSDID("$FreeBSD: 0cd0b639da68673a86d021f059bda70c894f6ebf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -93,7 +93,7 @@ xdrmbuf_append(XDR *xdrs, struct mbuf *madd)
 		m_freem(madd);
 		return;
 	}
-	
+
 	m = (struct mbuf *) xdrs->x_private;
 	m->m_next = madd;
 
@@ -206,7 +206,7 @@ xdrmbuf_getbytes(XDR *xdrs, char *addr, u_int len)
 			xdrs->x_handy = 0;
 		}
 	}
-	
+
 	return (TRUE);
 }
 
@@ -241,7 +241,7 @@ xdrmbuf_putbytes(XDR *xdrs, const char *addr, u_int len)
 			xdrs->x_handy = 0;
 		}
 	}
-	
+
 	return (TRUE);
 }
 

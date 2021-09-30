@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 037e63427ebe38ce983658788bc28ca7f20c471d $");
+__FBSDID("$FreeBSD: 086e85d9df8e30f8d0273a16246c4ac09f646678 $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -433,6 +433,11 @@ __archive_mktemp(const char *tmpdir)
 		if (temp_name.s[temp_name.length-1] != '/')
 			archive_strappend_char(&temp_name, '/');
 	}
+#ifdef O_TMPFILE
+	fd = open(temp_name.s, O_RDWR|O_CLOEXEC|O_TMPFILE|O_EXCL, 0600); 
+	if(fd >= 0)
+		goto exit_tmpfile;
+#endif
 	archive_strcat(&temp_name, "libarchive_XXXXXX");
 	fd = mkstemp(temp_name.s);
 	if (fd < 0)

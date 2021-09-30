@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5f8184e102bbdb5d4a75aa6191d3c4cdfc64cc92 $
+ * $FreeBSD: b382e2f597f53c835703863c7f4069b3e88d5fe7 $
  */
 
 #ifndef	_POWERPC_ADBVAR_H_
@@ -36,13 +36,12 @@ enum {
 	ADB_COMMAND_BUS_RESET = 0
 };
 
-
 struct adb_softc {
 	device_t	sc_dev;
 	device_t	parent;
 
 	struct intr_config_hook enum_hook;
-	
+
 	volatile int 	sync_packet;
 	volatile int	packet_reply;
 

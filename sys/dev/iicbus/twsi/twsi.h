@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73822816b0e6d35ff0f885033fb4207aa3b49fa9 $
+ * $FreeBSD: 631486fb3f0c37f8a6a5e31990908a9a2f632526 $
  */
 
 #ifndef _TWSI_H_
@@ -50,12 +50,12 @@ struct twsi_softc {
 	struct resource	*res[2];
 	struct mtx	mutex;
 	device_t	iicbus;
-	void *			intrhand;
-	bool			have_intr;
 #ifdef EXT_RESOURCES
 	clk_t		clk_core;
 	clk_t		clk_reg;
 #endif
+	void *			intrhand;
+	bool			have_intr;
 
 	struct iic_msg		*msgs;
 	uint32_t		nmsgs;
@@ -66,6 +66,7 @@ struct twsi_softc {
 	int			error;
 	uint32_t		control_val;
 	bool			need_ack;
+	bool			iflag_w1c;
 
 	bus_size_t	reg_data;
 	bus_size_t	reg_slave_addr;

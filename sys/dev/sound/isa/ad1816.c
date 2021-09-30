@@ -39,7 +39,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: e8a8199b50084ba00511b08c7e8adafd71e5ae54 $");
+SND_DECLARE_FILE("$FreeBSD: e8d7ac7cf62f2c520e83f7be4a972a6d8000d708 $");
 
 struct ad1816_info;
 
@@ -671,7 +671,6 @@ static device_method_t ad1816_methods[] = {
 	DEVMETHOD(device_probe,		ad1816_probe),
 	DEVMETHOD(device_attach,	ad1816_attach),
 	DEVMETHOD(device_detach,	ad1816_detach),
-
 	{ 0, 0 }
 };
 
@@ -685,5 +684,3 @@ DRIVER_MODULE(snd_ad1816, isa, ad1816_driver, pcm_devclass, 0, 0);
 DRIVER_MODULE(snd_ad1816, acpi, ad1816_driver, pcm_devclass, 0, 0);
 MODULE_DEPEND(snd_ad1816, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_ad1816, 1);
-
-

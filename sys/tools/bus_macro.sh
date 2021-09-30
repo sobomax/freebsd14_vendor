@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1d5aeba623fd5204493b4b4ebda3bb698697a87e $
+# $FreeBSD: 6a75e31367dca275fc37083365e75723d218fe9b $
 #
 # Generate the convenience macros at the bottom of sys/bus.h
 #
@@ -55,7 +55,8 @@ for w in 1 2 4 8
 do
 	# macro copy_region_$w so dh do c
 	# macro copy_region_stream_$w ?
-	# macro peek_$w
+	macro poke_$w o v
+	macro peek_$w o vp
 	for s in "" stream_
 	do
 		macro read_$s$w o

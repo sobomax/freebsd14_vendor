@@ -1,6 +1,8 @@
-# $FreeBSD: c2e216c4b6c46b35a20012199ba2d96f975eb3f8 $
+# $FreeBSD: 0a69ca08166bfa214447f7a1a75c8dfc561b1bab $
 
 BINDIR?=	/usr/sbin
+
+WARNS?=		0
 
 WPA_DISTDIR?= 		${SRCTOP}/contrib/wpa/
 WPA_SUPPLICANT_DISTDIR?=${WPA_DISTDIR}/wpa_supplicant

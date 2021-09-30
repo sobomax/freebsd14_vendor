@@ -1,4 +1,4 @@
-# $FreeBSD: 50eafa6ba621690e5181519aa370e6fce72405d8 $
+# $FreeBSD: 95ccd05811fe5dd014815979fb2f19b03a648143 $
 
 .include <src.opts.mk>
 
@@ -14,6 +14,10 @@ LIBADD=	ssh
 CFLAGS+=	-DHAVE_LDNS=1
 #DPADD+=	${LIBLDNS}
 #LDADD+=	-lldns
+.endif
+
+.if defined(LOCALBASE)
+CFLAGS+= -DDEFAULT_PKCS11_WHITELIST='"/usr/lib*/*,${LOCALBASE}/lib*/*"'
 .endif
 
 LIBADD+=	crypto

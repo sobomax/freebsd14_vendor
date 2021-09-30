@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e4ef6ffbd50a79e72a74e221a028f56a832a425 $");
+__FBSDID("$FreeBSD: a55239dbec8c4b02077a13a931a4e878ce7cf7f8 $");
 
 #include <efi.h>
 #include <efilib.h>
@@ -52,6 +52,8 @@ efi_register_handles(struct devsw *sw, EFI_HANDLE *handles,
 	nentries += count;
 	sz = nentries * sizeof(struct entry);
 	entry = (entry == NULL) ? malloc(sz) : realloc(entry, sz);
+	if (entry == NULL)
+		return (ENOMEM);
 	for (unit = 0; idx < nentries; idx++, unit++) {
 		entry[idx].handle = handles[unit];
 		if (aliases != NULL)

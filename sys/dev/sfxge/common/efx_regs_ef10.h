@@ -29,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 7c7e3c8027aa69eb57fd902236a213973f9f0b9e $
+ * $FreeBSD: 3403e50b5b66c8c8db9a9dbec4d10c42b3b4d38e $
  */
 
 #ifndef	_SYS_EFX_EF10_REGS_H
@@ -52,13 +52,11 @@ extern "C" {
  */
 
 #define	ER_DZ_BIU_HW_REV_ID_REG_OFST 0x00000000
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_BIU_HW_REV_ID_REG_RESET 0xeb14face
-
 
 #define	ERF_DZ_HW_REV_ID_LBN 0
 #define	ERF_DZ_HW_REV_ID_WIDTH 32
-
 
 /*
  * BIU_MC_SFT_STATUS_REG(32bit):
@@ -66,15 +64,13 @@ extern "C" {
  */
 
 #define	ER_DZ_BIU_MC_SFT_STATUS_REG_OFST 0x00000010
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_BIU_MC_SFT_STATUS_REG_STEP 4
 #define	ER_DZ_BIU_MC_SFT_STATUS_REG_ROWS 8
 #define	ER_DZ_BIU_MC_SFT_STATUS_REG_RESET 0x1111face
 
-
 #define	ERF_DZ_MC_SFT_STATUS_LBN 0
 #define	ERF_DZ_MC_SFT_STATUS_WIDTH 32
-
 
 /*
  * BIU_INT_ISR_REG(32bit):
@@ -82,13 +78,11 @@ extern "C" {
  */
 
 #define	ER_DZ_BIU_INT_ISR_REG_OFST 0x00000090
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_BIU_INT_ISR_REG_RESET 0x0
-
 
 #define	ERF_DZ_ISR_REG_LBN 0
 #define	ERF_DZ_ISR_REG_WIDTH 32
-
 
 /*
  * MC_DB_LWRD_REG(32bit):
@@ -96,13 +90,11 @@ extern "C" {
  */
 
 #define	ER_DZ_MC_DB_LWRD_REG_OFST 0x00000200
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_MC_DB_LWRD_REG_RESET 0x0
-
 
 #define	ERF_DZ_MC_DOORBELL_L_LBN 0
 #define	ERF_DZ_MC_DOORBELL_L_WIDTH 32
-
 
 /*
  * MC_DB_HWRD_REG(32bit):
@@ -110,13 +102,11 @@ extern "C" {
  */
 
 #define	ER_DZ_MC_DB_HWRD_REG_OFST 0x00000204
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_MC_DB_HWRD_REG_RESET 0x0
-
 
 #define	ERF_DZ_MC_DOORBELL_H_LBN 0
 #define	ERF_DZ_MC_DOORBELL_H_WIDTH 32
-
 
 /*
  * EVQ_RPTR_REG(32bit):
@@ -124,17 +114,83 @@ extern "C" {
  */
 
 #define	ER_DZ_EVQ_RPTR_REG_OFST 0x00000400
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_EVQ_RPTR_REG_STEP 8192
 #define	ER_DZ_EVQ_RPTR_REG_ROWS 2048
 #define	ER_DZ_EVQ_RPTR_REG_RESET 0x0
-
 
 #define	ERF_DZ_EVQ_RPTR_VLD_LBN 15
 #define	ERF_DZ_EVQ_RPTR_VLD_WIDTH 1
 #define	ERF_DZ_EVQ_RPTR_LBN 0
 #define	ERF_DZ_EVQ_RPTR_WIDTH 15
 
+/*
+ * EVQ_RPTR_REG_64K(32bit):
+ *
+ */
+
+#define	ER_FZ_EVQ_RPTR_REG_64K_OFST 0x00000400
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_EVQ_RPTR_REG_64K_STEP 65536
+#define	ER_FZ_EVQ_RPTR_REG_64K_ROWS 2048
+#define	ER_FZ_EVQ_RPTR_REG_64K_RESET 0x0
+
+#define	ERF_FZ_EVQ_RPTR_VLD_LBN 15
+#define	ERF_FZ_EVQ_RPTR_VLD_WIDTH 1
+#define	ERF_FZ_EVQ_RPTR_LBN 0
+#define	ERF_FZ_EVQ_RPTR_WIDTH 15
+
+/*
+ * EVQ_RPTR_REG_16K(32bit):
+ *
+ */
+
+#define	ER_FZ_EVQ_RPTR_REG_16K_OFST 0x00000400
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_EVQ_RPTR_REG_16K_STEP 16384
+#define	ER_FZ_EVQ_RPTR_REG_16K_ROWS 2048
+#define	ER_FZ_EVQ_RPTR_REG_16K_RESET 0x0
+
+/* defined as ERF_FZ_EVQ_RPTR_VLD_LBN 15; */
+/* defined as ERF_FZ_EVQ_RPTR_VLD_WIDTH 1 */
+/* defined as ERF_FZ_EVQ_RPTR_LBN 0; */
+/* defined as ERF_FZ_EVQ_RPTR_WIDTH 15 */
+
+/*
+ * EVQ_TMR_REG_64K(32bit):
+ *
+ */
+
+#define	ER_FZ_EVQ_TMR_REG_64K_OFST 0x00000420
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_EVQ_TMR_REG_64K_STEP 65536
+#define	ER_FZ_EVQ_TMR_REG_64K_ROWS 2048
+#define	ER_FZ_EVQ_TMR_REG_64K_RESET 0x0
+
+#define	ERF_FZ_TC_TMR_REL_VAL_LBN 16
+#define	ERF_FZ_TC_TMR_REL_VAL_WIDTH 14
+#define	ERF_FZ_TC_TIMER_MODE_LBN 14
+#define	ERF_FZ_TC_TIMER_MODE_WIDTH 2
+#define	ERF_FZ_TC_TIMER_VAL_LBN 0
+#define	ERF_FZ_TC_TIMER_VAL_WIDTH 14
+
+/*
+ * EVQ_TMR_REG_16K(32bit):
+ *
+ */
+
+#define	ER_FZ_EVQ_TMR_REG_16K_OFST 0x00000420
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_EVQ_TMR_REG_16K_STEP 16384
+#define	ER_FZ_EVQ_TMR_REG_16K_ROWS 2048
+#define	ER_FZ_EVQ_TMR_REG_16K_RESET 0x0
+
+/* defined as ERF_FZ_TC_TMR_REL_VAL_LBN 16; */
+/* defined as ERF_FZ_TC_TMR_REL_VAL_WIDTH 14 */
+/* defined as ERF_FZ_TC_TIMER_MODE_LBN 14; */
+/* defined as ERF_FZ_TC_TIMER_MODE_WIDTH 2 */
+/* defined as ERF_FZ_TC_TIMER_VAL_LBN 0; */
+/* defined as ERF_FZ_TC_TIMER_VAL_WIDTH 14 */
 
 /*
  * EVQ_TMR_REG(32bit):
@@ -142,17 +198,31 @@ extern "C" {
  */
 
 #define	ER_DZ_EVQ_TMR_REG_OFST 0x00000420
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_EVQ_TMR_REG_STEP 8192
 #define	ER_DZ_EVQ_TMR_REG_ROWS 2048
 #define	ER_DZ_EVQ_TMR_REG_RESET 0x0
 
-
+/* defined as ERF_FZ_TC_TMR_REL_VAL_LBN 16; */
+/* defined as ERF_FZ_TC_TMR_REL_VAL_WIDTH 14 */
 #define	ERF_DZ_TC_TIMER_MODE_LBN 14
 #define	ERF_DZ_TC_TIMER_MODE_WIDTH 2
 #define	ERF_DZ_TC_TIMER_VAL_LBN 0
 #define	ERF_DZ_TC_TIMER_VAL_WIDTH 14
 
+/*
+ * RX_DESC_UPD_REG_16K(32bit):
+ *
+ */
+
+#define	ER_FZ_RX_DESC_UPD_REG_16K_OFST 0x00000830
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_RX_DESC_UPD_REG_16K_STEP 16384
+#define	ER_FZ_RX_DESC_UPD_REG_16K_ROWS 2048
+#define	ER_FZ_RX_DESC_UPD_REG_16K_RESET 0x0
+
+#define	ERF_FZ_RX_DESC_WPTR_LBN 0
+#define	ERF_FZ_RX_DESC_WPTR_WIDTH 12
 
 /*
  * RX_DESC_UPD_REG(32bit):
@@ -160,15 +230,67 @@ extern "C" {
  */
 
 #define	ER_DZ_RX_DESC_UPD_REG_OFST 0x00000830
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_RX_DESC_UPD_REG_STEP 8192
 #define	ER_DZ_RX_DESC_UPD_REG_ROWS 2048
 #define	ER_DZ_RX_DESC_UPD_REG_RESET 0x0
 
-
 #define	ERF_DZ_RX_DESC_WPTR_LBN 0
 #define	ERF_DZ_RX_DESC_WPTR_WIDTH 12
 
+/*
+ * RX_DESC_UPD_REG_64K(32bit):
+ *
+ */
+
+#define	ER_FZ_RX_DESC_UPD_REG_64K_OFST 0x00000830
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_RX_DESC_UPD_REG_64K_STEP 65536
+#define	ER_FZ_RX_DESC_UPD_REG_64K_ROWS 2048
+#define	ER_FZ_RX_DESC_UPD_REG_64K_RESET 0x0
+
+/* defined as ERF_FZ_RX_DESC_WPTR_LBN 0; */
+/* defined as ERF_FZ_RX_DESC_WPTR_WIDTH 12 */
+
+/*
+ * TX_DESC_UPD_REG_64K(96bit):
+ *
+ */
+
+#define	ER_FZ_TX_DESC_UPD_REG_64K_OFST 0x00000a10
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_TX_DESC_UPD_REG_64K_STEP 65536
+#define	ER_FZ_TX_DESC_UPD_REG_64K_ROWS 2048
+#define	ER_FZ_TX_DESC_UPD_REG_64K_RESET 0x0
+
+#define	ERF_FZ_RSVD_LBN 76
+#define	ERF_FZ_RSVD_WIDTH 20
+#define	ERF_FZ_TX_DESC_WPTR_LBN 64
+#define	ERF_FZ_TX_DESC_WPTR_WIDTH 12
+#define	ERF_FZ_TX_DESC_HWORD_LBN 32
+#define	ERF_FZ_TX_DESC_HWORD_WIDTH 32
+#define	ERF_FZ_TX_DESC_LWORD_LBN 0
+#define	ERF_FZ_TX_DESC_LWORD_WIDTH 32
+
+/*
+ * TX_DESC_UPD_REG_16K(96bit):
+ *
+ */
+
+#define	ER_FZ_TX_DESC_UPD_REG_16K_OFST 0x00000a10
+/* medford2a0=pf_dbell_bar */
+#define	ER_FZ_TX_DESC_UPD_REG_16K_STEP 16384
+#define	ER_FZ_TX_DESC_UPD_REG_16K_ROWS 2048
+#define	ER_FZ_TX_DESC_UPD_REG_16K_RESET 0x0
+
+/* defined as ERF_FZ_RSVD_LBN 76; */
+/* defined as ERF_FZ_RSVD_WIDTH 20 */
+/* defined as ERF_FZ_TX_DESC_WPTR_LBN 64; */
+/* defined as ERF_FZ_TX_DESC_WPTR_WIDTH 12 */
+/* defined as ERF_FZ_TX_DESC_HWORD_LBN 32; */
+/* defined as ERF_FZ_TX_DESC_HWORD_WIDTH 32 */
+/* defined as ERF_FZ_TX_DESC_LWORD_LBN 0; */
+/* defined as ERF_FZ_TX_DESC_LWORD_WIDTH 32 */
 
 /*
  * TX_DESC_UPD_REG(96bit):
@@ -176,11 +298,10 @@ extern "C" {
  */
 
 #define	ER_DZ_TX_DESC_UPD_REG_OFST 0x00000a10
-/* hunta0,medforda0=pcie_pf_bar2 */
+/* hunta0,medforda0,medford2a0=pf_dbell_bar */
 #define	ER_DZ_TX_DESC_UPD_REG_STEP 8192
 #define	ER_DZ_TX_DESC_UPD_REG_ROWS 2048
 #define	ER_DZ_TX_DESC_UPD_REG_RESET 0x0
-
 
 #define	ERF_DZ_RSVD_LBN 76
 #define	ERF_DZ_RSVD_WIDTH 20
@@ -190,7 +311,6 @@ extern "C" {
 #define	ERF_DZ_TX_DESC_HWORD_WIDTH 32
 #define	ERF_DZ_TX_DESC_LWORD_LBN 0
 #define	ERF_DZ_TX_DESC_LWORD_WIDTH 32
-
 
 /* ES_DRIVER_EV */
 #define	ESF_DZ_DRV_CODE_LBN 60
@@ -211,7 +331,6 @@ extern "C" {
 #define	ESF_DZ_DRV_TMR_ID_LBN 0
 #define	ESF_DZ_DRV_TMR_ID_WIDTH 14
 
-
 /* ES_EVENT_ENTRY */
 #define	ESF_DZ_EV_CODE_LBN 60
 #define	ESF_DZ_EV_CODE_WIDTH 4
@@ -227,7 +346,6 @@ extern "C" {
 #define	ESF_DZ_EV_DATA_LBN 0
 #define	ESF_DZ_EV_DATA_WIDTH 60
 
-
 /* ES_MC_EVENT */
 #define	ESF_DZ_MC_CODE_LBN 60
 #define	ESF_DZ_MC_CODE_WIDTH 4
@@ -241,7 +359,6 @@ extern "C" {
 #define	ESF_DZ_MC_SOFT_DW1_WIDTH 26
 #define	ESF_DZ_MC_SOFT_LBN 0
 #define	ESF_DZ_MC_SOFT_WIDTH 58
-
 
 /* ES_RX_EVENT */
 #define	ESF_DZ_RX_CODE_LBN 60
@@ -262,16 +379,24 @@ extern "C" {
 #define	ESF_DZ_RX_EV_SOFT2_WIDTH 2
 #define	ESF_DZ_RX_DSC_PTR_LBITS_LBN 48
 #define	ESF_DZ_RX_DSC_PTR_LBITS_WIDTH 4
-#define	ESF_DZ_RX_L4_CLASS_LBN 45
-#define	ESF_DZ_RX_L4_CLASS_WIDTH 3
-#define	ESE_DZ_L4_CLASS_RSVD7 7
-#define	ESE_DZ_L4_CLASS_RSVD6 6
-#define	ESE_DZ_L4_CLASS_RSVD5 5
-#define	ESE_DZ_L4_CLASS_RSVD4 4
-#define	ESE_DZ_L4_CLASS_RSVD3 3
-#define	ESE_DZ_L4_CLASS_UDP 2
-#define	ESE_DZ_L4_CLASS_TCP 1
-#define	ESE_DZ_L4_CLASS_UNKNOWN 0
+#define	ESF_DE_RX_L4_CLASS_LBN 45
+#define	ESF_DE_RX_L4_CLASS_WIDTH 3
+#define	ESE_DE_L4_CLASS_RSVD7 7
+#define	ESE_DE_L4_CLASS_RSVD6 6
+#define	ESE_DE_L4_CLASS_RSVD5 5
+#define	ESE_DE_L4_CLASS_RSVD4 4
+#define	ESE_DE_L4_CLASS_RSVD3 3
+#define	ESE_DE_L4_CLASS_UDP 2
+#define	ESE_DE_L4_CLASS_TCP 1
+#define	ESE_DE_L4_CLASS_UNKNOWN 0
+#define	ESF_FZ_RX_FASTPD_INDCTR_LBN 47
+#define	ESF_FZ_RX_FASTPD_INDCTR_WIDTH 1
+#define	ESF_FZ_RX_L4_CLASS_LBN 45
+#define	ESF_FZ_RX_L4_CLASS_WIDTH 2
+#define	ESE_FZ_L4_CLASS_RSVD3 3
+#define	ESE_FZ_L4_CLASS_UDP 2
+#define	ESE_FZ_L4_CLASS_TCP 1
+#define	ESE_FZ_L4_CLASS_UNKNOWN 0
 #define	ESF_DZ_RX_L3_CLASS_LBN 42
 #define	ESF_DZ_RX_L3_CLASS_WIDTH 3
 #define	ESE_DZ_L3_CLASS_RSVD7 7
@@ -318,6 +443,8 @@ extern "C" {
 #define	ESF_EZ_RX_ABORT_WIDTH 1
 #define	ESF_DZ_RX_ECC_ERR_LBN 29
 #define	ESF_DZ_RX_ECC_ERR_WIDTH 1
+#define	ESF_DZ_RX_TRUNC_ERR_LBN 29
+#define	ESF_DZ_RX_TRUNC_ERR_WIDTH 1
 #define	ESF_DZ_RX_CRC1_ERR_LBN 28
 #define	ESF_DZ_RX_CRC1_ERR_WIDTH 1
 #define	ESF_DZ_RX_CRC0_ERR_LBN 27
@@ -337,7 +464,6 @@ extern "C" {
 #define	ESF_DZ_RX_BYTES_LBN 0
 #define	ESF_DZ_RX_BYTES_WIDTH 14
 
-
 /* ES_RX_KER_DESC */
 #define	ESF_DZ_RX_KER_RESERVED_LBN 62
 #define	ESF_DZ_RX_KER_RESERVED_WIDTH 2
@@ -349,7 +475,6 @@ extern "C" {
 #define	ESF_DZ_RX_KER_BUF_ADDR_DW1_WIDTH 16
 #define	ESF_DZ_RX_KER_BUF_ADDR_LBN 0
 #define	ESF_DZ_RX_KER_BUF_ADDR_WIDTH 48
-
 
 /* ES_TX_CSUM_TSTAMP_DESC */
 #define	ESF_DZ_TX_DESC_IS_OPT_LBN 63
@@ -380,7 +505,6 @@ extern "C" {
 #define	ESF_DZ_TX_OPTION_IP_CSUM_LBN 0
 #define	ESF_DZ_TX_OPTION_IP_CSUM_WIDTH 1
 
-
 /* ES_TX_EVENT */
 #define	ESF_DZ_TX_CODE_LBN 60
 #define	ESF_DZ_TX_CODE_WIDTH 4
@@ -409,7 +533,6 @@ extern "C" {
 #define	ESF_DZ_TX_DESCR_INDX_LBN 0
 #define	ESF_DZ_TX_DESCR_INDX_WIDTH 16
 
-
 /* ES_TX_KER_DESC */
 #define	ESF_DZ_TX_KER_TYPE_LBN 63
 #define	ESF_DZ_TX_KER_TYPE_WIDTH 1
@@ -424,7 +547,6 @@ extern "C" {
 #define	ESF_DZ_TX_KER_BUF_ADDR_LBN 0
 #define	ESF_DZ_TX_KER_BUF_ADDR_WIDTH 48
 
-
 /* ES_TX_PIO_DESC */
 #define	ESF_DZ_TX_PIO_TYPE_LBN 63
 #define	ESF_DZ_TX_PIO_TYPE_WIDTH 1
@@ -437,7 +559,6 @@ extern "C" {
 #define	ESF_DZ_TX_PIO_BUF_ADDR_LBN 0
 #define	ESF_DZ_TX_PIO_BUF_ADDR_WIDTH 12
 
-
 /* ES_TX_TSO_DESC */
 #define	ESF_DZ_TX_DESC_IS_OPT_LBN 63
 #define	ESF_DZ_TX_DESC_IS_OPT_WIDTH 1
@@ -448,6 +569,8 @@ extern "C" {
 #define	ESE_DZ_TX_OPTION_DESC_CRC_CSUM 0
 #define	ESF_DZ_TX_TSO_OPTION_TYPE_LBN 56
 #define	ESF_DZ_TX_TSO_OPTION_TYPE_WIDTH 4
+#define	ESE_DZ_TX_TSO_OPTION_DESC_FATSO2B 3
+#define	ESE_DZ_TX_TSO_OPTION_DESC_FATSO2A 2
 #define	ESE_DZ_TX_TSO_OPTION_DESC_ENCAP 1
 #define	ESE_DZ_TX_TSO_OPTION_DESC_NORMAL 0
 #define	ESF_DZ_TX_TSO_TCP_FLAGS_LBN 48
@@ -457,8 +580,7 @@ extern "C" {
 #define	ESF_DZ_TX_TSO_TCP_SEQNO_LBN 0
 #define	ESF_DZ_TX_TSO_TCP_SEQNO_WIDTH 32
 
-
-/* TX_TSO_FATSO2A_DESC */
+/* ES_TX_TSO_V2_DESC_A */
 #define	ESF_DZ_TX_DESC_IS_OPT_LBN 63
 #define	ESF_DZ_TX_DESC_IS_OPT_WIDTH 1
 #define	ESF_DZ_TX_OPTION_TYPE_LBN 60
@@ -477,8 +599,7 @@ extern "C" {
 #define	ESF_DZ_TX_TSO_TCP_SEQNO_LBN 0
 #define	ESF_DZ_TX_TSO_TCP_SEQNO_WIDTH 32
 
-
-/* TX_TSO_FATSO2B_DESC */
+/* ES_TX_TSO_V2_DESC_B */
 #define	ESF_DZ_TX_DESC_IS_OPT_LBN 63
 #define	ESF_DZ_TX_DESC_IS_OPT_WIDTH 1
 #define	ESF_DZ_TX_OPTION_TYPE_LBN 60
@@ -492,13 +613,10 @@ extern "C" {
 #define	ESE_DZ_TX_TSO_OPTION_DESC_FATSO2A 2
 #define	ESE_DZ_TX_TSO_OPTION_DESC_ENCAP 1
 #define	ESE_DZ_TX_TSO_OPTION_DESC_NORMAL 0
-#define	ESF_DZ_TX_TSO_OUTER_IP_ID_LBN 16
-#define	ESF_DZ_TX_TSO_OUTER_IP_ID_WIDTH 16
 #define	ESF_DZ_TX_TSO_TCP_MSS_LBN 32
 #define	ESF_DZ_TX_TSO_TCP_MSS_WIDTH 16
-#define	ESF_DZ_TX_TSO_INNER_PE_CSUM_LBN 0
-#define	ESF_DZ_TX_TSO_INNER_PE_CSUM_WIDTH 16
-
+#define	ESF_DZ_TX_TSO_OUTER_IPID_LBN 0
+#define	ESF_DZ_TX_TSO_OUTER_IPID_WIDTH 16
 
 /* ES_TX_VLAN_DESC */
 #define	ESF_DZ_TX_DESC_IS_OPT_LBN 63
@@ -514,7 +632,6 @@ extern "C" {
 #define	ESF_DZ_TX_VLAN_TAG2_WIDTH 16
 #define	ESF_DZ_TX_VLAN_TAG1_LBN 0
 #define	ESF_DZ_TX_VLAN_TAG1_WIDTH 16
-
 
 /*************************************************************************
  * NOTE: the comment line above marks the end of the autogenerated section
@@ -543,6 +660,46 @@ extern "C" {
 #define	ERF_DD_EVQ_IND_TIMER_VAL_LBN 0
 #define	ERF_DD_EVQ_IND_TIMER_VAL_WIDTH 8
 
+/* Packed stream magic doorbell command */
+#define	ERF_DZ_RX_DESC_MAGIC_DOORBELL_LBN 11
+#define	ERF_DZ_RX_DESC_MAGIC_DOORBELL_WIDTH 1
+
+#define	ERF_DZ_RX_DESC_MAGIC_CMD_LBN 8
+#define	ERF_DZ_RX_DESC_MAGIC_CMD_WIDTH 3
+#define	ERE_DZ_RX_DESC_MAGIC_CMD_PS_CREDITS 0
+
+#define	ERF_DZ_RX_DESC_MAGIC_DATA_LBN 0
+#define	ERF_DZ_RX_DESC_MAGIC_DATA_WIDTH 8
+
+/* Packed stream RX packet prefix */
+#define	ES_DZ_PS_RX_PREFIX_TSTAMP_LBN 0
+#define	ES_DZ_PS_RX_PREFIX_TSTAMP_WIDTH 32
+#define	ES_DZ_PS_RX_PREFIX_CAP_LEN_LBN 32
+#define	ES_DZ_PS_RX_PREFIX_CAP_LEN_WIDTH 16
+#define	ES_DZ_PS_RX_PREFIX_ORIG_LEN_LBN 48
+#define	ES_DZ_PS_RX_PREFIX_ORIG_LEN_WIDTH 16
+
+/* Equal stride super-buffer RX packet prefix (see SF-119419-TC) */
+#define	ES_EZ_ESSB_RX_PREFIX_LEN 8
+#define	ES_EZ_ESSB_RX_PREFIX_DATA_LEN_LBN 0
+#define	ES_EZ_ESSB_RX_PREFIX_DATA_LEN_WIDTH 16
+#define	ES_EZ_ESSB_RX_PREFIX_MARK_LBN 16
+#define	ES_EZ_ESSB_RX_PREFIX_MARK_WIDTH 8
+#define	ES_EZ_ESSB_RX_PREFIX_HASH_VALID_LBN 28
+#define	ES_EZ_ESSB_RX_PREFIX_HASH_VALID_WIDTH 1
+#define	ES_EZ_ESSB_RX_PREFIX_MARK_VALID_LBN 29
+#define	ES_EZ_ESSB_RX_PREFIX_MARK_VALID_WIDTH 1
+#define	ES_EZ_ESSB_RX_PREFIX_MATCH_FLAG_LBN 30
+#define	ES_EZ_ESSB_RX_PREFIX_MATCH_FLAG_WIDTH 1
+#define	ES_EZ_ESSB_RX_PREFIX_HASH_LBN 32
+#define	ES_EZ_ESSB_RX_PREFIX_HASH_WIDTH 32
+
+/*
+ * An extra flag for the packed stream mode,
+ * signalling the start of a new buffer
+ */
+#define	ESF_DZ_RX_EV_ROTATE_LBN 53
+#define	ESF_DZ_RX_EV_ROTATE_WIDTH 1
 
 #ifdef	__cplusplus
 }

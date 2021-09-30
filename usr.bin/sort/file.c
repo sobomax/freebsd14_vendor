@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 58a97826916edd4f028a6d36fb7ab1128dd26b05 $");
+__FBSDID("$FreeBSD: b6b9d934e0ef843ba1a61b634038ef7027bbb4d0 $");
 
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -1236,7 +1236,7 @@ sort_list_to_file(struct sort_list *list, const char *outfile)
 {
 	struct sort_mods *sm = &(keys[0].sm);
 
-	if (!(sm->Mflag) && !(sm->Rflag) && !(sm->Vflag) && !(sm->Vflag) &&
+	if (!(sm->Mflag) && !(sm->Rflag) && !(sm->Vflag) &&
 	    !(sm->gflag) && !(sm->hflag) && !(sm->nflag)) {
 		if ((sort_opts_vals.sort_method == SORT_DEFAULT) && byte_sort)
 			sort_opts_vals.sort_method = SORT_RADIXSORT;

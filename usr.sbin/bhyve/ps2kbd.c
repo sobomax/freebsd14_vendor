@@ -28,14 +28,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e6a1b67ca380ca84c4e471e61d80c92ba9cef01 $");
+__FBSDID("$FreeBSD: ef20fa47e0a9b9365699d64b16b459ddbfd9b284 $");
 
 #include <sys/types.h>
+
+#include <machine/vmm_snapshot.h>
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 #include <pthread.h>
 #include <pthread_np.h>
@@ -381,4 +384,18 @@ ps2kbd_init(struct atkbdc_softc *atkbdc_sc)
 
 	return (sc);
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+ps2kbd_snapshot(struct ps2kbd_softc *sc, struct vm_snapshot_meta *meta)
+{
+	int ret;
+
+	SNAPSHOT_VAR_OR_LEAVE(sc->enabled, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->curcmd, meta, ret, done);
+
+done:
+	return (ret);
+}
+#endif
 

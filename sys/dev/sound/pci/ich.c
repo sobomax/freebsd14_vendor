@@ -38,7 +38,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: 2521dacaac474e1bbbad249c4ebfc95c225fdbf0 $");
+SND_DECLARE_FILE("$FreeBSD: 2ee8c00cd6e4e0ed11bef2db0952f604bc5d7319 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -649,7 +649,6 @@ ich_intr(void *p)
 				lvi += cbi + ch->blkcnt - lbi;
 			lvi %= ICH_DTBL_LENGTH;
 			ich_wr(sc, ch->regbase + ICH_REG_X_LVI, lvi, 1);
-
 		}
 		/* clear status bit */
 		ich_wr(sc, ch->regbase +

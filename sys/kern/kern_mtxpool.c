@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4b96247dde2da96ef71da29a48997ec162da0c3f $");
+__FBSDID("$FreeBSD: 92cfeb5bd131856f7d210d901e646cd79dbfd47a $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -56,7 +56,6 @@ __FBSDID("$FreeBSD: 4b96247dde2da96ef71da29a48997ec162da0c3f $");
 #include <sys/malloc.h>
 #include <sys/mutex.h>
 #include <sys/systm.h>
-
 
 static MALLOC_DEFINE(M_MTXPOOL, "mtx_pool", "mutex pool");
 
@@ -82,7 +81,7 @@ struct mtx_pool {
 #define mtx_pool_shift	mtx_pool_header.mtxpool_shift
 #define mtx_pool_next	mtx_pool_header.mtxpool_next
 
-struct mtx_pool __read_frequently *mtxpool_sleep;
+struct mtx_pool __read_mostly *mtxpool_sleep;
 
 #if UINTPTR_MAX == UINT64_MAX	/* 64 bits */
 # define POINTER_BITS		64

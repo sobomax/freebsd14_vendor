@@ -1,6 +1,5 @@
-# $FreeBSD: d217a10a7f5c1cd17088ab07d6d7d2822962ed9d $
+# $FreeBSD: b0ae002fd5e911a9ed09ea0442687256a95d808f $
 
-PACKAGE=	lib${LIB}
 LIB=	calendar
 
 SRCS=	calendar.c easter.c

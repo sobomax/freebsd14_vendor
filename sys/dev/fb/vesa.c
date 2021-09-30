@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47f768abcc9245efe265c99a582916238370541e $");
+__FBSDID("$FreeBSD: f1d75873f98339c94a2de836c7e919ecef9d160a $");
 
 #include "opt_vga.h"
 #include "opt_vesa.h"
@@ -102,7 +102,8 @@ static size_t vesa_bios_size;
 /* VESA video adapter */
 static video_adapter_t *vesa_adp;
 
-static SYSCTL_NODE(_debug, OID_AUTO, vesa, CTLFLAG_RD, NULL, "VESA debugging");
+static SYSCTL_NODE(_debug, OID_AUTO, vesa, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+    "VESA debugging");
 static int vesa_shadow_rom;
 SYSCTL_INT(_debug_vesa, OID_AUTO, shadow_rom, CTLFLAG_RDTUN, &vesa_shadow_rom,
     0, "Enable video BIOS shadow");
@@ -1935,6 +1936,12 @@ vesa_load(void)
 	if (error == 0)
 		vesa_bios_info(bootverbose);
 
+	/* Don't return ENODEV, the upper layers will whine. */
+	if (error == ENODEV) {
+		error = 0;
+		vesa_adp = NULL;
+	}
+
 	return (error);
 }
 
@@ -1943,8 +1950,12 @@ vesa_unload(void)
 {
 	int error;
 
+	/* The driver never initialized, so make it easy to unload. */
+	if (vesa_adp == NULL)
+		return (0);
+
 	/* if the adapter is currently in a VESA mode, don't unload */
-	if ((vesa_adp != NULL) && VESA_MODE(vesa_adp->va_mode))
+	if (VESA_MODE(vesa_adp->va_mode))
 		return (EBUSY);
 	/* 
 	 * FIXME: if there is at least one vty which is in a VESA mode,

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92019c7e4f1690d807226fd542b5fa7c7719d145 $");
+__FBSDID("$FreeBSD: aa008871d58fb146ef5edb857353f327acc21f72 $");
 
 #include <sys/param.h>
 #include <sys/apm.h>
@@ -582,10 +582,10 @@ g_part_apm_write(struct g_part_table *basetable, struct g_consumer *cp)
 			baseentry = LIST_NEXT(baseentry, gpe_entry);
 	}
 
-	for (index = 0; index < tblsz; index += MAXPHYS / pp->sectorsize) {
+	for (index = 0; index < tblsz; index += maxphys / pp->sectorsize) {
 		error = g_write_data(cp, (1 + index) * pp->sectorsize,
 		    buf + index * pp->sectorsize,
-		    (tblsz - index > MAXPHYS / pp->sectorsize) ? MAXPHYS:
+		    (tblsz - index > maxphys / pp->sectorsize) ? maxphys:
 		    (tblsz - index) * pp->sectorsize);
 		if (error) {
 			g_free(buf);

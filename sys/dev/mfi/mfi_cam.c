@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4a8294ac866551efc74bd8fe8f08365e5187440 $");
+__FBSDID("$FreeBSD: 2ea27527e1581e3af39de1faf055931a0a6a8373 $");
 
 #include "opt_mfi.h"
 
@@ -474,4 +474,3 @@ mfip_cam_poll(struct cam_sim *sim)
 
 	mfisc->mfi_intr_ptr(mfisc);
 }
-

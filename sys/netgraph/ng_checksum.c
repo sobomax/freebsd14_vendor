@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7fecb0ab78d67413f5de535c8535803fe235c91 $");
+__FBSDID("$FreeBSD: 682375c805da1011ab2b1b9a9d45efb3611b5166 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -75,7 +75,6 @@ static ng_shutdown_t	ng_checksum_shutdown;
 static ng_newhook_t	ng_checksum_newhook;
 static ng_rcvdata_t	ng_checksum_rcvdata;
 static ng_disconnect_t	ng_checksum_disconnect;
-
 #define ERROUT(x) { error = (x); goto done; }
 
 static const struct ng_parse_struct_field ng_checksum_config_type_fields[]

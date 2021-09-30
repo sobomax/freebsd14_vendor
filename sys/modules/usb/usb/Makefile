@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 78901825283d3294e786b55e3a2b62cb51893526 $
+# $FreeBSD: f42f3d61147e6417acbc7cbefaadab86b9ba41d7 $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -25,9 +25,7 @@
 # SUCH DAMAGE.
 #
 
-S=     ${SRCTOP}/sys
-
-.PATH: $S/dev/usb $S/dev/usb/controller
+.PATH: ${SRCTOP}/sys/dev/usb ${SRCTOP}/sys/dev/usb/controller
 
 KMOD=	usb
 SRCS=	bus_if.h device_if.h usb_if.h usb_if.c vnode_if.h \

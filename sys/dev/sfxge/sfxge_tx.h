@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: bb1d94aeb6e5f9ec310f4ba44a6e64efb85f55d0 $
+ * $FreeBSD: 4446eb51a2383bfacf22b123e2b3d78b73bdf962 $
  */
 
 #ifndef _SFXGE_TX_H
@@ -121,7 +121,6 @@ struct sfxge_tx_dpl {
 						 * high watermark */
 };
 
-
 #define	SFXGE_TX_BUFFER_SIZE	0x400
 #define	SFXGE_TX_HEADER_SIZE	0x100
 #define	SFXGE_TX_COPY_THRESHOLD	0x200
@@ -169,7 +168,6 @@ enum sfxge_txq_type {
 	mtx_assert(&(_txq)->lock, MA_OWNED)
 #define	SFXGE_TXQ_LOCK_ASSERT_NOTOWNED(_txq)				\
 	mtx_assert(&(_txq)->lock, MA_NOTOWNED)
-
 
 struct sfxge_txq {
 	/* The following fields should be written very rarely */

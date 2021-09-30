@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 556ced64c452afa972282460343703129d31e1aa $
+ * $FreeBSD: 996ab4e44fc0885cde373c3b6ff04d07ae074435 $
  */
 
 /*
@@ -36,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 556ced64c452afa972282460343703129d31e1aa $");
+__FBSDID("$FreeBSD: 996ab4e44fc0885cde373c3b6ff04d07ae074435 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -88,7 +87,7 @@ FEATURE(cfiscsi_kernel_proxy, "iSCSI target built with ICL_KERNEL_PROXY");
 static MALLOC_DEFINE(M_CFISCSI, "cfiscsi", "Memory used for CTL iSCSI frontend");
 static uma_zone_t cfiscsi_data_wait_zone;
 
-SYSCTL_NODE(_kern_cam_ctl, OID_AUTO, iscsi, CTLFLAG_RD, 0,
+SYSCTL_NODE(_kern_cam_ctl, OID_AUTO, iscsi, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "CAM Target Layer iSCSI Frontend");
 static int debug = 1;
 SYSCTL_INT(_kern_cam_ctl_iscsi, OID_AUTO, debug, CTLFLAG_RWTUN,
@@ -424,6 +423,17 @@ cfiscsi_pdu_queue(struct icl_pdu *response)
 	CFISCSI_SESSION_UNLOCK(cs);
 }
 
+ static void
+cfiscsi_pdu_queue_cb(struct icl_pdu *response, icl_pdu_cb cb)
+{
+	struct cfiscsi_session *cs = PDU_SESSION(response);
+
+	CFISCSI_SESSION_LOCK(cs);
+	cfiscsi_pdu_prepare(response);
+	icl_pdu_queue_cb(response, cb);
+	CFISCSI_SESSION_UNLOCK(cs);
+}
+
 static void
 cfiscsi_pdu_handle_nop_out(struct icl_pdu *request)
 {
@@ -519,6 +529,8 @@ cfiscsi_pdu_handle_scsi_command(struct icl_pdu *request)
 	io->io_hdr.nexus.initid = cs->cs_ctl_initid;
 	io->io_hdr.nexus.targ_port = cs->cs_target->ct_port.targ_port;
 	io->io_hdr.nexus.targ_lun = ctl_decode_lun(be64toh(bhssc->bhssc_lun));
+	io->scsiio.priority = (bhssc->bhssc_pri & BHSSC_PRI_MASK) >>
+	    BHSSC_PRI_SHIFT;
 	io->scsiio.tag_num = bhssc->bhssc_initiator_task_tag;
 	switch ((bhssc->bhssc_flags & BHSSC_FLAGS_ATTR)) {
 	case BHSSC_FLAGS_ATTR_UNTAGGED:
@@ -1172,7 +1184,6 @@ cfiscsi_maintenance_thread(void *arg)
 		CFISCSI_SESSION_UNLOCK(cs);
 
 		if (cs->cs_terminating && cs->cs_handoff_in_progress == false) {
-
 			/*
 			 * We used to wait up to 30 seconds to deliver queued
 			 * PDUs to the initiator.  We also tried hard to deliver
@@ -2126,7 +2137,6 @@ cfiscsi_ioctl_port_create(struct ctl_req *req)
 	val = dnvlist_get_string(req->args_nvl, "cfiscsi_portal_group_tag",
 	    NULL);
 
-
 	if (target == NULL || val == NULL) {
 		req->status = CTL_LUN_ERROR;
 		snprintf(req->error_str, sizeof(req->error_str),
@@ -2417,6 +2427,15 @@ cfiscsi_target_find_or_create(struct cfiscsi_softc *softc, const char *name,
 }
 
 static void
+cfiscsi_pdu_done(struct icl_pdu *ip, int error)
+{
+
+	if (error != 0)
+		; // XXX: Do something on error?
+	((ctl_ref)ip->ip_prv0)(ip->ip_prv1, -1);
+}
+
+static void
 cfiscsi_datamove_in(union ctl_io *io)
 {
 	struct cfiscsi_session *cs;
@@ -2426,6 +2445,7 @@ cfiscsi_datamove_in(union ctl_io *io)
 	struct ctl_sg_entry ctl_sg_entry, *ctl_sglist;
 	size_t len, expected_len, sg_len, buffer_offset;
 	const char *sg_addr;
+	icl_pdu_cb cb;
 	int ctl_sg_count, error, i;
 
 	request = PRIV_REQUEST(io);
@@ -2470,6 +2490,11 @@ cfiscsi_datamove_in(union ctl_io *io)
 		io->scsiio.be_move_done(io);
 		return;
 	}
+
+	if (io->scsiio.kern_data_ref != NULL)
+		cb = cfiscsi_pdu_done;
+	else
+		cb = NULL;
 
 	i = 0;
 	sg_addr = NULL;
@@ -2534,7 +2559,8 @@ cfiscsi_datamove_in(union ctl_io *io)
 			    len, sg_len));
 		}
 
-		error = icl_pdu_append_data(response, sg_addr, len, M_NOWAIT);
+		error = icl_pdu_append_data(response, sg_addr, len,
+		    M_NOWAIT | (cb ? ICL_NOCOPY : 0));
 		if (error != 0) {
 			CFISCSI_SESSION_WARN(cs, "failed to "
 			    "allocate memory; dropping connection");
@@ -2587,7 +2613,12 @@ cfiscsi_datamove_in(union ctl_io *io)
 				buffer_offset -= response->ip_data_len;
 				break;
 			}
-			cfiscsi_pdu_queue(response);
+			if (cb != NULL) {
+				response->ip_prv0 = io->scsiio.kern_data_ref;
+				response->ip_prv1 = io->scsiio.kern_data_arg;
+				io->scsiio.kern_data_ref(io->scsiio.kern_data_arg, 1);
+			}
+			cfiscsi_pdu_queue_cb(response, cb);
 			response = NULL;
 			bhsdi = NULL;
 		}
@@ -2617,7 +2648,12 @@ cfiscsi_datamove_in(union ctl_io *io)
 			}
 		}
 		KASSERT(response->ip_data_len > 0, ("sending empty Data-In"));
-		cfiscsi_pdu_queue(response);
+		if (cb != NULL) {
+			response->ip_prv0 = io->scsiio.kern_data_ref;
+			response->ip_prv1 = io->scsiio.kern_data_arg;
+			io->scsiio.kern_data_ref(io->scsiio.kern_data_arg, 1);
+		}
+		cfiscsi_pdu_queue_cb(response, cb);
 	}
 
 	io->scsiio.be_move_done(io);

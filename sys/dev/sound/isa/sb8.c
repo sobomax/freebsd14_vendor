@@ -44,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 9cdc1b230ab41f23b91b8b560d4c43852758b60b $");
+SND_DECLARE_FILE("$FreeBSD: 779c6631b26442e6bbd41ee7f96e36beb7be3759 $");
 
 #define SB_DEFAULT_BUFSZ	4096
 
@@ -116,13 +116,11 @@ static int sb_stop(struct sb_chinfo *ch);
 
 static void
 sb_lock(struct sb_info *sb) {
-
 	sbc_lock(device_get_softc(sb->parent_dev));
 }
 
 static void
 sb_unlock(struct sb_info *sb) {
-
 	sbc_unlock(device_get_softc(sb->parent_dev));
 }
 
@@ -789,7 +787,6 @@ static device_method_t sb_methods[] = {
 	DEVMETHOD(device_probe,		sb_probe),
 	DEVMETHOD(device_attach,	sb_attach),
 	DEVMETHOD(device_detach,	sb_detach),
-
 	{ 0, 0 }
 };
 
@@ -803,7 +800,3 @@ DRIVER_MODULE(snd_sb8, sbc, sb_driver, pcm_devclass, 0, 0);
 MODULE_DEPEND(snd_sb8, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_DEPEND(snd_sb8, snd_sbc, 1, 1, 1);
 MODULE_VERSION(snd_sb8, 1);
-
-
-
-

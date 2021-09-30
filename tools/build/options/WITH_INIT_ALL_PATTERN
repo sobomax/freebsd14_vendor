@@ -1,0 +1,5 @@
+.\" $FreeBSD: 9908477b0983e641218d2bb94254ce172812e16d $
+Set to build the base system or kernel with stack variables initialized to
+.Pq compiler defined
+debugging patterns on function entry.
+This option requires the clang compiler.

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ef2a19221383a85d0772e2ab861644fc4ab1ed84 $
+ * $FreeBSD: 5a5b508932c741af6597ef984591f6a2e230667c $
  */
 
 #include <sys/hash.h>
@@ -129,4 +129,3 @@ murmur3_32_hash32(const uint32_t *data, size_t count, uint32_t seed)
 	hash ^= hash >> 16;
 	return (hash);
 }
-

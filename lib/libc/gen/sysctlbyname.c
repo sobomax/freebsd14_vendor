@@ -27,15 +27,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2a1c645e6e458f6e35b37cbe8aac1d5e0b5aedd $");
+__FBSDID("$FreeBSD: 9b4ffc0ca4ae08fbf785654fa3047c8b52baebe7 $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <string.h>
-
-#include "libc_private.h"
-
-#define	SYSCTLBYNAME_OSREL	1201522
 
 extern int __sysctlbyname(const char *name, size_t namelen, void *oldp,
     size_t *oldlenp, const void *newp, size_t newlen);
@@ -44,16 +40,9 @@ int
 sysctlbyname(const char *name, void *oldp, size_t *oldlenp,
     const void *newp, size_t newlen)
 {
-	int oid[CTL_MAXNAME];
 	size_t len;
 
-	if (__getosreldate() >= SYSCTLBYNAME_OSREL) {
-		len = strlen(name);
-		return (__sysctlbyname(name, len, oldp, oldlenp, newp,
-		    newlen));
-	}
-	len = nitems(oid);
-	if (sysctlnametomib(name, oid, &len) == -1)
-		return (-1);
-	return (sysctl(oid, len, oldp, oldlenp, newp, newlen));
+	len = strlen(name);
+	return (__sysctlbyname(name, len, oldp, oldlenp, newp,
+	    newlen));
 }

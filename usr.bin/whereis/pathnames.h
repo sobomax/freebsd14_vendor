@@ -24,7 +24,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c177720a5bf26fab5c56a80d957a2e4a7579ab67 $
+ * $FreeBSD: 2bcf28cee32cdee3fe7856a786fbcc448d0f68ee $
  */
 
 /* Where to look for libexec */
@@ -36,7 +36,7 @@
 "/usr/src/usr.sbin:/usr/src/libexec:"			\
 "/usr/src/gnu/bin:/usr/src/gnu/usr.bin:"		\
 "/usr/src/gnu/sbin:/usr/src/gnu/usr.sbin:"		\
-"/usr/src/gnu/libexec:/usr/src/contrib:"		\
+"/usr/src/contrib:"					\
 "/usr/src/secure/bin:/usr/src/secure/usr.bin:"		\
 "/usr/src/secure/sbin:/usr/src/secure/usr.sbin:"	\
 "/usr/src/secure/libexec:/usr/src/crypto:"		\

@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b675b01210e5632975be9c78de6d658d82f710d8 $
+ * $FreeBSD: 123af7c1a502f777101df07f110768717ce3fca7 $
  */
 
 #ifndef	_POWERPC_OPENPICVAR_H_
@@ -33,6 +33,9 @@
 #define OPENPIC_DEVSTR	"OpenPIC Interrupt Controller"
 
 #define OPENPIC_IRQMAX	256	/* h/w allows more */
+
+#define	OPENPIC_QUIRK_SINGLE_BIND	1	/* Bind interrupts to only 1 CPU */
+#define	OPENPIC_QUIRK_HIDDEN_IRQS	2	/* May have IRQs beyond FRR[NIRQ] */
 
 /* Names match the macros in openpicreg.h. */
 struct openpic_timer {
@@ -55,6 +58,7 @@ struct openpic_softc {
 	u_int		sc_ncpu;
 	u_int		sc_nirq;
 	int		sc_psim;
+	u_int		sc_quirks;
 
 	/* Saved states. */
 	uint32_t		sc_saved_config;
@@ -62,7 +66,7 @@ struct openpic_softc {
 	uint32_t		sc_saved_prios[4];
 	struct openpic_timer	sc_saved_timers[OPENPIC_TIMERS];
 	uint32_t		sc_saved_vectors[OPENPIC_SRC_VECTOR_COUNT];
-	
+
 };
 
 extern devclass_t openpic_devclass;
@@ -75,14 +79,14 @@ int	openpic_common_attach(device_t, uint32_t);
 /*
  * PIC interface.
  */
-void	openpic_bind(device_t dev, u_int irq, cpuset_t cpumask);
+void	openpic_bind(device_t dev, u_int irq, cpuset_t cpumask, void **);
 void	openpic_config(device_t, u_int, enum intr_trigger, enum intr_polarity);
 void	openpic_dispatch(device_t, struct trapframe *);
-void	openpic_enable(device_t, u_int, u_int);
-void	openpic_eoi(device_t, u_int);
+void	openpic_enable(device_t, u_int, u_int, void **);
+void	openpic_eoi(device_t, u_int, void *);
 void	openpic_ipi(device_t, u_int);
-void	openpic_mask(device_t, u_int);
-void	openpic_unmask(device_t, u_int);
+void	openpic_mask(device_t, u_int, void *);
+void	openpic_unmask(device_t, u_int, void *);
 
 int	openpic_suspend(device_t dev);
 int	openpic_resume(device_t dev);

@@ -1,12 +1,10 @@
-# $FreeBSD: c9083eb6a1d1ea6b9dfe312c25530ff083438dab $
+# $FreeBSD: 42fca7dab71c22c6632072061fa0f3bee5f5258d $
 
 PROG=	iovctl
 SRCS=	iovctl.c parse.c validate.c
 LIBADD=	nv ucl m
 
 CFLAGS+=-I${SRCTOP}/contrib/libucl/include
-
-WARNS?=6
 
 MAN=	\
 	iovctl.8 \

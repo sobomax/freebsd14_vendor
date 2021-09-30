@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)divdi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eab73c0bcfb71e9f4e421dd2c5a16eeeef1b94c9 $");
+__FBSDID("$FreeBSD: c5b4a376477ebeca3873b763d39abdd2a96989da $");
 
 #include "quad.h"
 
@@ -46,8 +46,7 @@ __FBSDID("$FreeBSD: eab73c0bcfb71e9f4e421dd2c5a16eeeef1b94c9 $");
  * ??? if -1/2 should produce -1 on this machine, this code is wrong
  */
 quad_t
-__divdi3(a, b)
-	quad_t a, b;
+__divdi3(quad_t a, quad_t b)
 {
 	u_quad_t ua, ub, uq;
 	int neg;

@@ -31,12 +31,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e41c8a85a24cfc8d447faea4ab00c48feff11fc1 $");
+__FBSDID("$FreeBSD: f47d5b3280820609c4d0d241ed86b14154e4a4c9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/watchdog.h>
 #include <sys/bus.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/sysctl.h>
@@ -115,12 +116,11 @@ ar5315_wdog_sysctl(device_t dev)
                 "whether the system rebooted from the watchdog");
 }
 
-
 static int
 ar5315_wdog_attach(device_t dev)
 {
 	struct ar5315_wdog_softc *sc = device_get_softc(dev);
-	
+
 	/* Initialise */
 	sc->reboot_from_watchdog = 0;
 	sc->armed = 0;

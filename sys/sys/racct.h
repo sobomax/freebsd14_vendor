@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2010 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 84de705f24af0d052d48b4836c2db9f5f192abfe $
+ * $FreeBSD: 49e0ce64069e654fd9c7453c474905d788d05d5a $
  */
 
 /*
@@ -91,7 +90,7 @@ struct ucred;
 #define	RACCT_DECAYING		0x20
 
 extern int racct_types[];
-extern int racct_enable;
+extern bool racct_enable;
 
 #define ASSERT_RACCT_ENABLED()	KASSERT(racct_enable, \
 				    ("%s called with !racct_enable", __func__))
@@ -164,12 +163,14 @@ extern struct mtx racct_lock;
 #define RACCT_UNLOCK()		mtx_unlock(&racct_lock)
 #define RACCT_LOCK_ASSERT()	mtx_assert(&racct_lock, MA_OWNED)
 
+#define RACCT_ENABLED()		__predict_false(racct_enable)
+
 #define	RACCT_PROC_LOCK(p)	do {		\
-	if (__predict_false(racct_enable))	\
+	if (RACCT_ENABLED())			\
 		PROC_LOCK(p);			\
 } while (0)
 #define	RACCT_PROC_UNLOCK(p)	do {		\
-	if (__predict_false(racct_enable))	\
+	if (RACCT_ENABLED())			\
 		PROC_UNLOCK(p);			\
 } while (0)
 
@@ -178,6 +179,7 @@ void	racct_add_cred(struct ucred *cred, int resource, uint64_t amount);
 void	racct_add_force(struct proc *p, int resource, uint64_t amount);
 void	racct_add_buf(struct proc *p, const struct buf *bufp, int is_write);
 int	racct_set(struct proc *p, int resource, uint64_t amount);
+int	racct_set_unlocked(struct proc *p, int resource, uint64_t amount);
 void	racct_set_force(struct proc *p, int resource, uint64_t amount);
 void	racct_sub(struct proc *p, int resource, uint64_t amount);
 void	racct_sub_cred(struct ucred *cred, int resource, uint64_t amount);
@@ -194,6 +196,7 @@ void	racct_proc_exit(struct proc *p);
 void	racct_proc_ucred_changed(struct proc *p, struct ucred *oldcred,
 	    struct ucred *newcred);
 void	racct_move(struct racct *dest, struct racct *src);
+void	racct_proc_throttled(struct proc *p);
 void	racct_proc_throttle(struct proc *p, int timeout);
 
 #else

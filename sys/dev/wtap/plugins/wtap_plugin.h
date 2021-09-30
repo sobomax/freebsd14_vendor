@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: aa286e82accf3ec4a67d675342121f8c0e301e75 $
+ * $FreeBSD: 34d871aa6ab1bf406e18cc824dea7405533be472 $
  */
 #ifndef _WTAP_PLUGIN_H_
 #define _WTAP_PLUGIN_H_
@@ -36,7 +36,6 @@
 #include "../if_wtapvar.h"
 #include "../if_medium.h"
 #include "../wtap_hal/hal.h"
-
 
 struct wtap_plugin {
 	struct cdev	*wp_sdev;
@@ -47,4 +46,3 @@ struct wtap_plugin {
 };
 
 #endif
-

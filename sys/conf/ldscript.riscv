@@ -1,4 +1,4 @@
-/* $FreeBSD: 3edef4a2c37c70289649d414d14dde56a9d43530 $ */
+/* $FreeBSD: b8ebf047f996b717e1b7c93711f09a7c1f7c1172 $ */
 OUTPUT_ARCH(riscv)
 ENTRY(_start)
 
@@ -100,7 +100,7 @@ SECTIONS
   /* Ensure __bss_start is associated with the next section in case orphan
      sections are placed directly after .sdata, as has been seen to happen with
      LLD.  */
-  . = .;
+  . = ALIGN(8);
   __bss_start = .;
   .sbss      : { *(.sbss) *(.scommon) }
   .bss       :

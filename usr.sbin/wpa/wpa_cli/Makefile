@@ -1,4 +1,4 @@
-# $FreeBSD: f6db85ee989e2da0d30472a72f8895400280d865 $
+# $FreeBSD: 504b0883f52f1d229daa1a5fae2339e2a178626e $
 
 .include <src.opts.mk>
 
@@ -9,6 +9,7 @@
 	${WPA_DISTDIR}/src/eap_peer \
 	${WPA_DISTDIR}/src/drivers
 
+PACKAGE=	wpa
 PROG=	wpa_cli
 SRCS=	base64.c bitfield.c blacklist.c bss.c cli.c common.c config.c \
 	config_file.c \

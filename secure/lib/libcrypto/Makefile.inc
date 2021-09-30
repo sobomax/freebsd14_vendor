@@ -1,16 +1,15 @@
-# $FreeBSD: dd49600e79d0003639c49ecb970351c805f08ac5 $
+# $FreeBSD: 0edeb9098ecd49cc239098b37fff62a8055a6d11 $
 
 .include <bsd.own.mk>
 
 # OpenSSL version used for manual page generation
-OPENSSL_VER=	1.1.1h
-OPENSSL_DATE=	2020-09-22
+OPENSSL_VER=	1.1.1k
+OPENSSL_DATE=	2021-03-25
 
 LCRYPTO_SRC=	${SRCTOP}/crypto/openssl
 LCRYPTO_DOC=	${LCRYPTO_SRC}/doc
 
 CFLAGS+=	-I${LCRYPTO_SRC}
-CFLAGS+=	-I${LCRYPTO_SRC}/crypto/include
 CFLAGS+=	-I${LCRYPTO_SRC}/include
 
 .include <bsd.endian.mk>
@@ -75,7 +74,7 @@ CFLAGS+=	-DPOLY1305_ASM
 
 .if defined(LIB)
 CFLAGS+=	-DOPENSSLDIR="\"/etc/ssl\""
-CFLAGS+=	-DENGINESDIR="\"/usr/lib/engines\""
+CFLAGS+=	-DENGINESDIR="\"${LIBDIR}/engines\""
 .endif
 
 CFLAGS+=	-DNDEBUG

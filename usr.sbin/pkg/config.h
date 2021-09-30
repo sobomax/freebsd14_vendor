@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a63997a7a60d32f3eedb29fcab1c53ae50003609 $
+ * $FreeBSD: f1a2aa227f16f8c912a30fb09f0541c76ecc72b3 $
  */
 
 #ifndef _PKG_CONFIG_H
 #define _PKG_CONFIG_H
 
-#define _LOCALBASE "/usr/local"
+#include <paths.h>
+
 #define URL_SCHEME_PREFIX "pkg+"
 
 typedef enum {

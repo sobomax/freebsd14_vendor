@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 545f6c21014edd090683e0ab967c366bd3ddeb3e $");
+__FBSDID("$FreeBSD: 1b82327f9fb9be3543dff9ee0d83b462ecb0b159 $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -618,4 +618,3 @@ smp_phy_control(struct ccb_smpio *smpio, uint32_t retries,
 	request->config_bits0 = slumber_partial;
 	request->pp_timeout_value = pp_timeout_value;
 }
-

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7f4be068ec273d01cccc8806da0ca3625a2707be $
+ * $FreeBSD: 82f851096d7be735edc62c450233792d8db44986 $
  */
 
 #ifndef _MACHINE_STACK_H_
@@ -41,11 +41,11 @@
 			 (va) <= VM_MAX_KERNEL_ADDRESS)
 
 struct unwind_state {
-	uint64_t fp;
-	uint64_t sp;
-	uint64_t pc;
+	uintptr_t fp;
+	uintptr_t sp;
+	uintptr_t pc;
 };
 
-int unwind_frame(struct unwind_state *);
+bool unwind_frame(struct thread *, struct unwind_state *);
 
 #endif /* !_MACHINE_STACK_H_ */

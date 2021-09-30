@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 63f7810cca1d6e1477a8f962485282c56c9426e4 $
+ * $FreeBSD: 5f07cbfa8937743f3febbbcb45101092e0f592ab $
  */
 
 /*
@@ -47,7 +47,6 @@ extern void qls_dump_buf32(qla_host_t *ha, const char *str, void *dbuf,
 		uint32_t len32);
 
 extern void qls_dump_cq(qla_host_t *ha);
-
 
 #ifdef QL_DBG
 
@@ -91,6 +90,5 @@ extern void qls_dump_cq(qla_host_t *ha);
 #define QL_DUMP_CQ(ha)
 
 #endif
-
 
 #endif /* #ifndef _QL_DBG_H_ */

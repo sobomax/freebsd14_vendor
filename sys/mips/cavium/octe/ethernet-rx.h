@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -28,7 +27,7 @@ TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
 AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT TO THE SOFTWARE, INCLUDING ITS CONDITION, ITS CONFORMITY TO ANY REPRESENTATION OR DESCRIPTION, OR THE EXISTENCE OF ANY LATENT OR PATENT DEFECTS, AND CAVIUM SPECIFICALLY DISCLAIMS ALL IMPLIED (IF ANY) WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS, QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION. THE ENTIRE  RISK ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE LIES WITH YOU.
 
 *************************************************************************/
-/* $FreeBSD: 04952ccc6daf35b3f6acce8a973a6c422c36e035 $ */
+/* $FreeBSD: 79d5c4a61fd688ebb682658531a66a9a3189d4be $ */
 
 int cvm_oct_do_interrupt(void *dev_id);
 void cvm_oct_poll_controller(struct ifnet *ifp);
@@ -36,4 +35,3 @@ void cvm_oct_tasklet_rx(void *context, int pending);
 
 void cvm_oct_rx_initialize(void);
 void cvm_oct_rx_shutdown(void);
-

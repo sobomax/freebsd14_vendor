@@ -69,7 +69,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.y	8.1 (Berkeley) 6/6/93
- * $FreeBSD: e6504500454b3467256845095bed7a0f693f94f8 $
+ * $FreeBSD: 6fcd93aa19f9a285d262afde10f0014838e171d5 $
  */
 
 #include <assert.h>
@@ -155,8 +155,11 @@ Config_spec:
 		machinearch = $2;
 	      } |
 	ARCH Save_id Save_id {
-		if (machinename != NULL &&
-		    !(eq($2, machinename) && eq($3, machinearch)))
+		/*
+		 * Allow the machinearch to change with a second machine directive,
+		 * but still enforce no changes to the machinename.
+		 */
+		if (machinename != NULL && !eq($2, machinename))
 		    errx(1, "%s:%d: only one machine directive is allowed",
 			yyfile, yyline);
 		machinename = $2;

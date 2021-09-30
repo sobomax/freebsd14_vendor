@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: 38a2a3193991dbda64bdaec459c3b63c1d8defcc $
+# $FreeBSD: 5c9b1154fdd10859071ff6928a45a6adafe491f4 $
 
 PROG=	vfontedpr
 SRCS=	regexp.c vfontedpr.c
@@ -19,8 +19,9 @@ SCRIPTSDIR=/usr/bin
 CLEANFILES= vgrindefs.src.db
 
 .include <bsd.endian.mk>
+.include <src.tools.mk>
 
 vgrindefs.src.db: vgrindefs.src
-	cap_mkdb ${CAP_MKDB_ENDIAN} -f vgrindefs.src ${.ALLSRC}
+	${CAP_MKDB_CMD} ${CAP_MKDB_ENDIAN} -f vgrindefs.src ${.ALLSRC}
 
 .include <bsd.prog.mk>

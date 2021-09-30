@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3b4ec4994432ac205386a5767aa2ce832dfdedcc $
+ * $FreeBSD: 76bda8f71f3bb3233f779f17548537ffbe763b22 $
  */
 
 #ifndef _SYS_ELF_COMMON_H_
@@ -46,12 +46,14 @@
  * not include the padding.
  */
 
+#ifndef LOCORE
 typedef struct {
 	u_int32_t	n_namesz;	/* Length of name. */
 	u_int32_t	n_descsz;	/* Length of descriptor. */
 	u_int32_t	n_type;		/* Type of this note. */
 } Elf_Note;
 typedef Elf_Note Elf_Nhdr;
+#endif
 
 /*
  * Option kinds.
@@ -112,12 +114,14 @@ typedef Elf_Note Elf_Nhdr;
  * The header for GNU-style hash sections.
  */
 
+#ifndef LOCORE
 typedef struct {
 	u_int32_t	gh_nbuckets;	/* Number of hash buckets. */
 	u_int32_t	gh_symndx;	/* First visible symbol in .dynsym. */
 	u_int32_t	gh_maskwords;	/* #maskwords used in bloom filter. */
 	u_int32_t	gh_shift2;	/* Bloom filter shift count. */
 } Elf_GNU_Hash_Header;
+#endif
 
 /* Indexes into the e_ident array.  Keep synced with
    http://www.sco.com/developers/gabi/latest/ch4.eheader.html */
@@ -175,6 +179,7 @@ typedef struct {
 #define	ELFOSABI_AROS		15	/* Amiga Research OS */
 #define	ELFOSABI_FENIXOS	16	/* FenixOS */
 #define	ELFOSABI_CLOUDABI	17	/* Nuxi CloudABI */
+#define	ELFOSABI_OPENVOS	18	/* Stratus Technologies OpenVOS */
 #define	ELFOSABI_ARM_AEABI	64	/* ARM EABI */
 #define	ELFOSABI_ARM		97	/* ARM */
 #define	ELFOSABI_STANDALONE	255	/* Standalone (embedded) application */
@@ -724,6 +729,7 @@ typedef struct {
 #define	DT_MIPS_PLTGOT			0x70000032
 #define	DT_MIPS_RLD_OBJ_UPDATE		0x70000033
 #define	DT_MIPS_RWPLT			0x70000034
+#define	DT_MIPS_RLD_MAP_REL		0x70000035
 
 #define	DT_PPC_GOT			0x70000000
 #define	DT_PPC_TLSOPT			0x70000001
@@ -790,6 +796,8 @@ typedef struct {
 #define	NT_FREEBSD_FCTL_PROTMAX_DISABLE	0x00000002
 #define	NT_FREEBSD_FCTL_STKGAP_DISABLE	0x00000004
 #define	NT_FREEBSD_FCTL_WXNEEDED	0x00000008
+#define	NT_FREEBSD_FCTL_LA48		0x00000010
+#define	NT_FREEBSD_FCTL_ASG_DISABLE	0x00000020 /* ASLR STACK GAP Disable */
 
 /* Values for n_type.  Used in core files. */
 #define	NT_PRSTATUS	1	/* Process status. */
@@ -926,6 +934,44 @@ typedef struct {
 #define	ELFCOMPRESS_LOPROC	0x70000000	/* Processor-specific */
 #define	ELFCOMPRESS_HIPROC	0x7fffffff
 
+/* Values for a_type. */
+#define	AT_NULL		0	/* Terminates the vector. */
+#define	AT_IGNORE	1	/* Ignored entry. */
+#define	AT_EXECFD	2	/* File descriptor of program to load. */
+#define	AT_PHDR		3	/* Program header of program already loaded. */
+#define	AT_PHENT	4	/* Size of each program header entry. */
+#define	AT_PHNUM	5	/* Number of program header entries. */
+#define	AT_PAGESZ	6	/* Page size in bytes. */
+#define	AT_BASE		7	/* Interpreter's base address. */
+#define	AT_FLAGS	8	/* Flags. */
+#define	AT_ENTRY	9	/* Where interpreter should transfer control. */
+#define	AT_NOTELF	10	/* Program is not ELF ?? */
+#define	AT_UID		11	/* Real uid. */
+#define	AT_EUID		12	/* Effective uid. */
+#define	AT_GID		13	/* Real gid. */
+#define	AT_EGID		14	/* Effective gid. */
+#define	AT_EXECPATH	15	/* Path to the executable. */
+#define	AT_CANARY	16	/* Canary for SSP. */
+#define	AT_CANARYLEN	17	/* Length of the canary. */
+#define	AT_OSRELDATE	18	/* OSRELDATE. */
+#define	AT_NCPUS	19	/* Number of CPUs. */
+#define	AT_PAGESIZES	20	/* Pagesizes. */
+#define	AT_PAGESIZESLEN	21	/* Number of pagesizes. */
+#define	AT_TIMEKEEP	22	/* Pointer to timehands. */
+#define	AT_STACKPROT	23	/* Initial stack protection. */
+#define	AT_EHDRFLAGS	24	/* e_flags field from elf hdr */
+#define	AT_HWCAP	25	/* CPU feature flags. */
+#define	AT_HWCAP2	26	/* CPU feature flags 2. */
+#define	AT_BSDFLAGS	27	/* ELF BSD Flags. */
+#define	AT_ARGC		28	/* Argument count */
+#define	AT_ARGV		29	/* Argument vector */
+#define	AT_ENVC		30	/* Environment count */
+#define	AT_ENVV		31	/* Environment vector */
+#define	AT_PS_STRINGS	32	/* struct ps_strings */
+#define	AT_FXRNG	33	/* Pointer to root RNG seed version. */
+
+#define	AT_COUNT	34	/* Count of defined aux entry types. */
+
 /*
  * Relocation types.
  *
@@ -944,12 +990,17 @@ typedef struct {
 #define	R_386_RELATIVE		8	/* Add load address of shared object. */
 #define	R_386_GOTOFF		9	/* Add GOT-relative symbol address. */
 #define	R_386_GOTPC		10	/* Add PC-relative GOT table address. */
+#define	R_386_32PLT		11
 #define	R_386_TLS_TPOFF		14	/* Negative offset in static TLS block */
 #define	R_386_TLS_IE		15	/* Absolute address of GOT for -ve static TLS */
 #define	R_386_TLS_GOTIE		16	/* GOT entry for negative static TLS block */
 #define	R_386_TLS_LE		17	/* Negative offset relative to static TLS */
 #define	R_386_TLS_GD		18	/* 32 bit offset to GOT (index,off) pair */
 #define	R_386_TLS_LDM		19	/* 32 bit offset to GOT (index,zero) pair */
+#define	R_386_16		20
+#define	R_386_PC16		21
+#define	R_386_8			22
+#define	R_386_PC8		23
 #define	R_386_TLS_GD_32		24	/* 32 bit offset to GOT (index,off) pair */
 #define	R_386_TLS_GD_PUSH	25	/* pushl instruction for Sun ABI GD sequence */
 #define	R_386_TLS_GD_CALL	26	/* call instruction for Sun ABI GD sequence */
@@ -964,7 +1015,12 @@ typedef struct {
 #define	R_386_TLS_DTPMOD32	35	/* GOT entry containing TLS index */
 #define	R_386_TLS_DTPOFF32	36	/* GOT entry containing TLS offset */
 #define	R_386_TLS_TPOFF32	37	/* GOT entry of -ve static TLS offset */
+#define	R_386_SIZE32		38
+#define	R_386_TLS_GOTDESC	39
+#define	R_386_TLS_DESC_CALL	40
+#define	R_386_TLS_DESC		41
 #define	R_386_IRELATIVE		42	/* PLT entry resolved indirectly at runtime */
+#define	R_386_GOT32X		43
 
 #define	R_AARCH64_NONE		0	/* No relocation */
 #define	R_AARCH64_ABS64		257	/* Absolute offset */
@@ -1171,6 +1227,7 @@ typedef struct {
 #define	R_PPC_SECTOFF_LO	34
 #define	R_PPC_SECTOFF_HI	35
 #define	R_PPC_SECTOFF_HA	36
+#define	R_PPC_IRELATIVE		248
 
 /*
  * 64-bit relocations
@@ -1425,6 +1482,11 @@ typedef struct {
 #define	R_X86_64_TLSDESC_CALL	35
 #define	R_X86_64_TLSDESC	36
 #define	R_X86_64_IRELATIVE	37
+#define	R_X86_64_RELATIVE64	38
+/* 39 and 40 were BND-related, already decomissioned */
+#define	R_X86_64_GOTPCRELX	41
+#define	R_X86_64_REX_GOTPCRELX	42
 
+#define	ELF_BSDF_SIGFASTBLK	0x0001	/* Kernel supports fast sigblock */
 
 #endif /* !_SYS_ELF_COMMON_H_ */

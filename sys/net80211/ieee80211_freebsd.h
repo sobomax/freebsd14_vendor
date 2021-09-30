@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 19a8e45672a9ca69d39dc3f7e75a847e9b9655ba $
+ * $FreeBSD: c3811cc32e845f7fe2268f20cbd23a026d12e897 $
  */
 #ifndef _NET80211_IEEE80211_FREEBSD_H_
 #define _NET80211_IEEE80211_FREEBSD_H_
@@ -39,6 +39,21 @@
 #include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 #include <sys/time.h>
+
+#include <net/debugnet.h>
+
+/*
+ * priv(9) NET80211 checks.
+ */
+struct ieee80211vap;
+int ieee80211_priv_check_vap_getkey(u_long, struct ieee80211vap *,
+    struct ifnet *);
+int ieee80211_priv_check_vap_manage(u_long, struct ieee80211vap *,
+    struct ifnet *);
+int ieee80211_priv_check_vap_setmac(u_long, struct ieee80211vap *,
+    struct ifnet *);
+int ieee80211_priv_check_create_vap(u_long, struct ieee80211vap *,
+    struct ifnet *);
 
 /*
  * Common state locking definitions.
@@ -152,7 +167,7 @@ typedef struct mtx ieee80211_psq_lock_t;
 	IF_UNLOCK(ifq);						\
 } while (0)
 #endif /* IF_PREPEND_LIST */
- 
+
 /*
  * Age queue definitions.
  */
@@ -492,6 +507,36 @@ typedef int ieee80211_ioctl_setfunc(struct ieee80211vap *,
     struct ieee80211req *);
 SET_DECLARE(ieee80211_ioctl_setset, ieee80211_ioctl_setfunc);
 #define	IEEE80211_IOCTL_SET(_name, _set) TEXT_SET(ieee80211_ioctl_setset, _set)
+
+#ifdef DEBUGNET
+typedef void debugnet80211_init_t(struct ieee80211com *, int *nrxr, int *ncl,
+    int *clsize);
+typedef void debugnet80211_event_t(struct ieee80211com *, enum debugnet_ev);
+typedef int debugnet80211_poll_t(struct ieee80211com *, int);
+
+struct debugnet80211_methods {
+	debugnet80211_init_t		*dn8_init;
+	debugnet80211_event_t		*dn8_event;
+	debugnet80211_poll_t		*dn8_poll;
+};
+
+#define	DEBUGNET80211_DEFINE(driver)					\
+	static debugnet80211_init_t driver##_debugnet80211_init;		\
+	static debugnet80211_event_t driver##_debugnet80211_event;	\
+	static debugnet80211_poll_t driver##_debugnet80211_poll;		\
+									\
+	static struct debugnet80211_methods driver##_debugnet80211_methods = { \
+		.dn8_init = driver##_debugnet80211_init,			\
+		.dn8_event = driver##_debugnet80211_event,		\
+		.dn8_poll = driver##_debugnet80211_poll,			\
+	}
+#define DEBUGNET80211_SET(ic, driver)					\
+	(ic)->ic_debugnet_meth = &driver##_debugnet80211_methods
+#else
+#define DEBUGNET80211_DEFINE(driver)
+#define DEBUGNET80211_SET(ic, driver)
+#endif /* DEBUGNET */
+
 #endif /* _KERNEL */
 
 /* XXX this stuff belongs elsewhere */

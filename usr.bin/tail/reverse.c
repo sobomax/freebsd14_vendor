@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)reverse.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 422724c0ebabedd8bbd9b6e0a2c2fa010653f972 $");
+__FBSDID("$FreeBSD: 3373f072c228b3bcdc07e4d77695d1c9fafbffa3 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -54,6 +54,9 @@ __FBSDID("$FreeBSD: 422724c0ebabedd8bbd9b6e0a2c2fa010653f972 $");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <libcasper.h>
+#include <casper/cap_fileargs.h>
 
 #include "extern.h"
 

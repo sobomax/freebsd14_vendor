@@ -22,7 +22,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c2e41fe007f7e380ca5e029947e570587c7a8877 $
+ * $FreeBSD: a23e09abb874ed032342fb922c7d275032f7d3c6 $
  */
 
 #ifndef _SYS_MOUSE_H_
@@ -142,8 +142,8 @@ typedef struct synapticshw {
 /* iftype */
 #define MOUSE_IF_UNKNOWN	(-1)
 #define MOUSE_IF_SERIAL		0
-#define MOUSE_IF_BUS		1
-#define MOUSE_IF_INPORT		2
+/* 1 was bus */
+/* 2 was inport */
 #define MOUSE_IF_PS2		3
 #define MOUSE_IF_SYSMOUSE	4
 #define MOUSE_IF_USB		5
@@ -191,7 +191,7 @@ typedef struct mousemode {
  *   GlidePoint, IntelliMouse, Thinking Mouse, MouseRemote, Kidspad,
  *   VersaPad
  * Bus mouse protocols:
- *   bus, InPort
+ *   bus, InPort -- both of these are now obsolete and will be remvoed soon.
  * PS/2 mouse protocol:
  *   PS/2
  */
@@ -201,8 +201,8 @@ typedef struct mousemode {
 #define MOUSE_PROTO_LOGI	2	/* Logitech, 3 bytes */
 #define MOUSE_PROTO_MM		3	/* MM series, 3 bytes */
 #define MOUSE_PROTO_LOGIMOUSEMAN 4	/* Logitech MouseMan 3/4 bytes */
-#define MOUSE_PROTO_BUS		5	/* MS/Logitech bus mouse */
-#define MOUSE_PROTO_INPORT	6	/* MS/ATI InPort mouse */
+#define	MOUSE_PROTO_BUS		5	/* bus mouse -- obsolete */
+#define	MOUSE_PROTO_INPORT	6	/* inport mosue -- obsolete */
 #define MOUSE_PROTO_PS2		7	/* PS/2 mouse, 3 bytes */
 #define MOUSE_PROTO_HITTAB	8	/* Hitachi Tablet 3 bytes */
 #define MOUSE_PROTO_GLIDEPOINT	9	/* ALPS GlidePoint, 3/4 bytes */

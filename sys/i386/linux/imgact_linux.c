@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7cc4d9f1ebf56cfb7f22a459284fc4b3d47109f $");
+__FBSDID("$FreeBSD: 661620b6ceaf2c79423c73c760ba179911a96659 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,7 @@ exec_linux_imgact(struct image_params *imgp)
 	}
 	PROC_UNLOCK(imgp->proc);
 
-	VOP_UNLOCK(imgp->vp, 0);
+	VOP_UNLOCK(imgp->vp);
 
 	/*
 	 * Destroy old process VM and create a new one (with a new stack)
@@ -158,7 +158,8 @@ exec_linux_imgact(struct image_params *imgp)
 		 * remove write enable on the 'text' part
 		 */
 		error = vm_map_protect(&vmspace->vm_map, vmaddr,
-		    vmaddr + a_out->a_text, VM_PROT_EXECUTE|VM_PROT_READ, TRUE);
+		    vmaddr + a_out->a_text, 0, VM_PROT_EXECUTE | VM_PROT_READ,
+		    VM_MAP_PROTECT_SET_MAXPROT);
 		if (error)
 			goto fail;
 	} else {
@@ -185,7 +186,8 @@ exec_linux_imgact(struct image_params *imgp)
 		 * allow read/write of data
 		 */
 		error = vm_map_protect(&vmspace->vm_map, vmaddr + a_out->a_text,
-		    vmaddr + a_out->a_text + a_out->a_data, VM_PROT_ALL, FALSE);
+		    vmaddr + a_out->a_text + a_out->a_data, VM_PROT_ALL, 0,
+		    VM_MAP_PROTECT_SET_PROT);
 		if (error)
 			goto fail;
 

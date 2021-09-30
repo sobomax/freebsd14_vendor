@@ -3781,7 +3781,7 @@ static int mlx4_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
 		return ret;
 	} else {
 		device_set_desc(pdev->dev.bsddev, mlx4_description);
-		pci_save_state(pdev->dev.bsddev);
+		pci_save_state(pdev);
 	}
 
 	snprintf(dev->fw_str, sizeof(dev->fw_str), "%d.%d.%d",
@@ -3792,7 +3792,8 @@ static int mlx4_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
 	ctx = &dev->hw_ctx;
 	sysctl_ctx_init(ctx);
 	node = SYSCTL_ADD_NODE(ctx,SYSCTL_CHILDREN(pdev->dev.kobj.oidp),
-	    OID_AUTO, "hw" , CTLFLAG_RD, 0, "mlx4 dev hw information");
+	    OID_AUTO, "hw" , CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+	    "mlx4 dev hw information");
 	if (node != NULL) {
 		node_list = SYSCTL_CHILDREN(node);
 		SYSCTL_ADD_STRING(ctx, node_list, OID_AUTO,

@@ -38,7 +38,7 @@
  *
  *	@(#)procfs_status.c	8.4 (Berkeley) 6/15/94
  *
- * $FreeBSD: 8e16b8939e6c5cd9aedcdb5639bac997d0516985 $
+ * $FreeBSD: 9a9898225cdbabfe505ff65c721f0f5276529b01 $
  */
 
 /*
@@ -61,7 +61,6 @@
 #include <fs/pseudofs/pseudofs.h>
 #include <fs/procfs/procfs.h>
 
-
 int
 procfs_doprocrlimit(PFS_FILL_ARGS)
 {
@@ -77,7 +76,6 @@ procfs_doprocrlimit(PFS_FILL_ARGS)
 	PROC_UNLOCK(p);
 
 	for (i = 0; i < RLIM_NLIMITS; i++) {
-
 		/*
 		 * Add the rlimit ident
 		 */

@@ -20,7 +20,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b1250e02c4eb01dbd2b5342934e41e8303730b30 $
+ * $FreeBSD: b7bf991cf99175aaaee36476fb3c4f00ae913f56 $
  */
 
 #ifndef _CRT_H_
@@ -30,29 +30,31 @@
 #define	CTORS_CONSTRUCTORS
 #ifdef __mips_o32
 #define	INIT_CALL_SEQ(func)						\
+    ".set push			\n"					\
     ".set noreorder		\n"					\
     "bal	1f		\n"					\
     "nop			\n"					\
     "1:				\n"					\
     ".cpload	$ra		\n"					\
     "addu	$sp, $sp, -8	\n"					\
-    ".set reorder		\n"					\
     ".cprestore	4		\n"					\
     ".local	" __STRING(func) "\n"					\
     "jal	" __STRING(func) "\n"					\
     "nop			\n"					\
-    "addu	$sp, $sp, 8	\n"
+    "addu	$sp, $sp, 8	\n"					\
+    ".set pop\n"
 #else
 #define	INIT_CALL_SEQ(func)						\
+    ".set push			\n"					\
     ".set noreorder		\n"					\
     "bal	1f		\n"					\
     "nop			\n"					\
     "1:				\n"					\
-    ".set reorder		\n"					\
-    ".cpsetup $ra, $v0, 1b	\n"					\
+    ".cpsetup $ra, $zero, 1b	\n"					\
     ".local	" __STRING(func) "\n"					\
     "jal	" __STRING(func) "\n"					\
-    "nop			\n"
+    "nop			\n"					\
+    ".set pop\n"
 #endif
 
 #endif

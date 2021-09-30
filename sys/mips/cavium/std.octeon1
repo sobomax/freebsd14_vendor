@@ -1,4 +1,4 @@
-# $FreeBSD: fa6ae0746d98f09a48673e1874aa243ab6295d13 $
+# $FreeBSD: d5ff64bf70445a198244553c3bb6660b3bb22cbd $
 # 
 files	"../cavium/files.octeon1"
 machine	mips mips64
@@ -7,3 +7,4 @@ cpu		CPU_CNMIPS
 makeoptions CFLAGS_PARAM_INLINE_UNIT_GROWTH=10000
 makeoptions CFLAGS_PARAM_LARGE_FUNCTION_GROWTH=100000
 makeoptions CFLAGS_ARCH_PARAMS="--param max-inline-insns-single=10000"
+makeoptions "CWARNFLAGS.clang"+="-Wno-parentheses-equality -Wno-pointer-sign"

@@ -1,4 +1,4 @@
-# $FreeBSD: 51b4f056d0d285ac302a3ec3def84c268417e913 $
+# $FreeBSD: 5709af97b720526478050f6bf2b2be25e05118a8 $
 
 .PATH: ${SRCTOP}/sys/dev/mii
 
@@ -7,9 +7,9 @@ SRCS=	acphy.c amphy.c atphy.c axphy.c bmtphy.c brgphy.c bus_if.h
 SRCS+=	ciphy.c device_if.h
 SRCS+=	e1000phy.c gentbi.c icsphy.c ip1000phy.c jmphy.c lxtphy.c
 SRCS+=	miibus_if.c miibus_if.h mii.c miidevs.h mii_bitbang.c mii_physubr.c
-SRCS+=	mlphy.c nsgphy.c nsphy.c nsphyter.c pci_if.h pnaphy.c qsphy.c
+SRCS+=	nsgphy.c nsphy.c nsphyter.c pci_if.h pnaphy.c qsphy.c
 SRCS+=	rdcphy.c rgephy.c rlphy.c smcphy.c
-SRCS+=	smscphy.c tdkphy.c tlphy.c truephy.c
+SRCS+=	smscphy.c tdkphy.c truephy.c
 SRCS+=	ukphy.c ukphy_subr.c
 SRCS+=	xmphy.c
 

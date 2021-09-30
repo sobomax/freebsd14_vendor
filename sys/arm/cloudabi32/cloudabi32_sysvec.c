@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b4c2d5916d6c8774ee09939ab5390d6801c380a $");
+__FBSDID("$FreeBSD: c6dfe0661b7cfce7ca1a196ea36a1696c9e73d05 $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -49,7 +49,7 @@ extern struct sysent cloudabi32_sysent[];
 
 static void
 cloudabi32_proc_setregs(struct thread *td, struct image_params *imgp,
-    unsigned long stack)
+    uintptr_t stack)
 {
 	struct trapframe *regs;
 
@@ -81,16 +81,15 @@ cloudabi32_fetch_syscall_args(struct thread *td)
 	if (sa->code >= CLOUDABI32_SYS_MAXSYSCALL)
 		return (ENOSYS);
 	sa->callp = &cloudabi32_sysent[sa->code];
-	sa->narg = sa->callp->sy_narg;
 
 	/* Fetch system call arguments from registers and the stack. */
 	sa->args[0] = frame->tf_r0;
 	sa->args[1] = frame->tf_r1;
 	sa->args[2] = frame->tf_r2;
 	sa->args[3] = frame->tf_r3;
-	if (sa->narg > 4) {
+	if (sa->callp->sy_narg > 4) {
 		error = copyin((void *)td->td_frame->tf_usr_sp, &sa->args[4],
-		    (sa->narg - 4) * sizeof(register_t));
+		    (sa->callp->sy_narg - 4) * sizeof(register_t));
 		if (error != 0)
 			return (error);
 	}

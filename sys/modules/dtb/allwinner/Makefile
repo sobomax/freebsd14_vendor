@@ -1,4 +1,4 @@
-# $FreeBSD: 8309c128988973e19f4322af297dc54d68825574 $
+# $FreeBSD: 184cadb63fb9fd8734ad69944ec09f7c94257836 $
 # All the dts files for allwinner systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"
@@ -47,7 +47,9 @@ DTS=	\
 	allwinner/sun50i-a64-pinebook.dts \
 	allwinner/sun50i-a64-sopine-baseboard.dts \
 	allwinner/sun50i-h5-orangepi-pc2.dts \
-	allwinner/sun50i-h5-nanopi-neo2.dts
+	allwinner/sun50i-h5-nanopi-neo2.dts \
+	allwinner/sun50i-h6-pine-h64.dts \
+	allwinner/sun50i-h6-pine-h64-model-b.dts
 
 DTSO=	sun50i-a64-opp.dtso \
 	sun50i-a64-pwm.dtso \

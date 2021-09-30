@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4347f4fbc942b0199aa3086e63bbddf11b9ff53e $");
+__FBSDID("$FreeBSD: 7134b0cd8432262f1be075e09f8246a930367cba $");
 
 #include <sys/dnv.h>
 #include <sys/nv.h>
@@ -157,7 +157,7 @@ group_unpack(const nvlist_t *nvl, struct group *grp, char *buffer,
 	if (!nvlist_exists_string(nvl, "gr_name"))
 		return (EINVAL);
 
-	memset(grp, 0, sizeof(*grp));
+	explicit_bzero(grp, sizeof(*grp));
 
 	error = group_unpack_string(nvl, "gr_name", &grp->gr_name, &buffer,
 	    &bufsize);

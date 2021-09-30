@@ -1,9 +1,9 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  * Copyright (c) 1996, by Steve Passe
  * All rights reserved.
+ * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3172b7751da579414b9914b5630c43cdc9a22383 $");
+__FBSDID("$FreeBSD: 5cc42863cf386b789d7474151bc367444703f4f8 $");
 
 #include "opt_mptable_force_htt.h"
 #include <sys/param.h>
@@ -496,7 +496,6 @@ mptable_probe_cpus_handler(u_char *entry, void *arg)
 	}
 }
 
-
 static void
 mptable_setup_cpus_handler(u_char *entry, void *arg)
 {
@@ -580,7 +579,6 @@ mptable_parse_apics_and_busses_handler(u_char *entry, void *arg __unused)
 	bus_entry_ptr bus;
 	enum busTypes bus_type;
 	int i;
-
 
 	switch (*entry) {
 	case MPCT_ENTRY_BUS:

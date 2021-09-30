@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aeebde4b0a2ed71f97379ce11539cc78c41c4877 $
+ * $FreeBSD: 0c2ef817e97d0f25a74a2edd435287f41c191f3b $
  */
 
 #include <crypto/intake.h>
@@ -50,6 +50,11 @@
 #define	GELI_KEYBUF_SIZE		(sizeof(struct keybuf) + \
     (GELI_MAX_KEYS * sizeof(struct keybuf_ent)))
 
+typedef enum geli_op {
+	GELI_DECRYPT,
+	GELI_ENCRYPT
+} geli_op_t;
+
 extern void pwgets(char *buf, int n, int hide);
 
 typedef u_char geli_ukey[G_ELI_USERKEYLEN];
@@ -73,9 +78,10 @@ struct preloaded_file;
 typedef int (*geli_readfunc)(void *vdev, void *readpriv, off_t offbytes,
     void *buf, size_t sizebytes);
 
-struct geli_dev * geli_taste(geli_readfunc readfunc, void *readpriv,
+struct geli_dev *geli_taste(geli_readfunc readfunc, void *readpriv,
     daddr_t lastsector, const char *namefmt, ...);
-int geli_read(struct geli_dev *gdev, off_t offset, u_char *buf, size_t bytes);
+int geli_io(struct geli_dev *gdev, geli_op_t, off_t offset, u_char *buf,
+    size_t bytes);
 int geli_havekey(struct geli_dev *gdev);
 int geli_passphrase(struct geli_dev *gdev, char *pw);
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a178ae36235decf144c10d530e3e11d4773348a7 $");
+__FBSDID("$FreeBSD: e01163ac52657500a5cef415f4807ddb7b01ffd1 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -609,7 +609,6 @@ static device_method_t nfsmb_methods[] = {
 	DEVMETHOD(smbus_readw,		nfsmb_readw),
 	DEVMETHOD(smbus_bwrite,		nfsmb_bwrite),
 	DEVMETHOD(smbus_bread,		nfsmb_bread),
-
 	{ 0, 0 }
 };
 
@@ -630,7 +629,6 @@ static device_method_t nfsmbsub_methods[] = {
 	DEVMETHOD(smbus_readw,		nfsmb_readw),
 	DEVMETHOD(smbus_bwrite,		nfsmb_bwrite),
 	DEVMETHOD(smbus_bread,		nfsmb_bread),
-
 	{ 0, 0 }
 };
 

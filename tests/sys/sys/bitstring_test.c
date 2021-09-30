@@ -27,7 +27,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 713ad4d4bac79e0e43353df5c68ea5ba4267ce05 $
+ * $FreeBSD: 8fdc68ecf68ef37f57879d95604bf24f55a478ce $
  */
 #include <sys/param.h>
 
@@ -347,8 +347,10 @@ ATF_TC_WITHOUT_HEAD(bit_ffs_area);
 ATF_TC_BODY(bit_ffs_area, tc)
 {
 	const int nbits = 72;
-	bitstr_t bit_decl(bitstr, nbits) = {};
+	bitstr_t bit_decl(bitstr, nbits);
 	int location;
+
+	memset(bitstr, 0, bitstr_size(nbits));
 
 	bit_set(bitstr, 5);
 	bit_set(bitstr, 6);
@@ -416,7 +418,7 @@ ATF_TC_WITHOUT_HEAD(bit_ffc_area);
 ATF_TC_BODY(bit_ffc_area, tc)
 {
 	const int nbits = 80;
-	bitstr_t bit_decl(bitstr, nbits) = {};
+	bitstr_t bit_decl(bitstr, nbits);
 	int location;
 
 	/* set all bits */

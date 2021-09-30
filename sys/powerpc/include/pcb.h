@@ -31,22 +31,26 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pcb.h,v 1.4 2000/06/04 11:57:17 tsubai Exp $
- * $FreeBSD: 451b730225ca739d1f67cd2f2864843307167b2e $
+ * $FreeBSD: bff58cfa7bb3cd273257753e214b16af6e5e2fec $
  */
 
 #ifndef _MACHINE_PCB_H_
 #define	_MACHINE_PCB_H_
 
+#include <sys/endian.h>
+
 #include <machine/setjmp.h>
 
 #ifndef _STANDALONE
 struct pcb {
-	register_t	pcb_context[20];	/* non-volatile r14-r31 */
+	register_t	pcb_context[20];	/* non-volatile r12-r31 */
 	register_t	pcb_cr;			/* Condition register */
 	register_t	pcb_sp;			/* stack pointer */
 	register_t	pcb_toc;		/* toc pointer */
 	register_t	pcb_lr;			/* link register */
 	register_t	pcb_dscr;		/* dscr value */
+	register_t	pcb_fscr;		
+	register_t	pcb_tar;
 	struct		pmap *pcb_pm;		/* pmap of our vmspace */
 	jmp_buf		*pcb_onfault;		/* For use during
 						    copyin/copyout */
@@ -57,10 +61,19 @@ struct pcb {
 #define	PCB_VSX		0x8	/* Process had VSX initialized */
 #define	PCB_CDSCR	0x10	/* Process had Custom DSCR initialized */
 #define	PCB_HTM		0x20	/* Process had HTM initialized */
+#define	PCB_CFSCR	0x40	/* Process had FSCR updated */
 	struct fpu {
 		union {
+#if _BYTE_ORDER == _BIG_ENDIAN
 			double fpr;
 			uint32_t vsr[4];
+#else
+			uint32_t vsr[4];
+			struct {
+				double padding;
+				double fpr;
+			};
+#endif
 		} fpr[32];
 		double	fpscr;	/* FPSCR stored as double for easier access */
 	} pcb_fpu;		/* Floating point processor */
@@ -80,6 +93,17 @@ struct pcb {
 		uint64_t tfiar;
 	} pcb_htm;
 
+	struct ebb {
+		uint64_t ebbhr;
+		uint64_t ebbrr;
+		uint64_t bescr;
+	} pcb_ebb;
+
+	struct lmon {
+		uint64_t lmrr;
+		uint64_t lmser;
+	} pcb_lm;
+
 	union {
 		struct {
 			vm_offset_t	usr_segm;	/* Base address */
@@ -89,6 +113,7 @@ struct pcb {
 			register_t	dbcr0;
 		} booke;
 	} pcb_cpu;
+	vm_offset_t pcb_lastill;	/* Last illegal instruction */
 };
 #endif
 

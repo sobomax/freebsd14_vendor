@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b982d6fbdb80fbcc55d85de219238e1a25379459 $");
+__FBSDID("$FreeBSD: 0fafbd919d6ec8a40c2a83db0b05ba1394d8912e $");
 
 #include "opt_inet.h"
 #include "opt_ipsec.h"
@@ -291,4 +291,3 @@ udp_ipsec_adjust_cksum(struct mbuf *m, struct secasvar *sav, int proto,
 		m->m_pkthdr.csum_flags &= ~CSUM_DELAY_DATA;
 	}
 }
-

@@ -1,8 +1,10 @@
-# $FreeBSD: bab4587c0f14e9cbc3da2755cfd94a0b4bc6ddc6 $
+# $FreeBSD: c7f1342f45aefefbc9367b06550acf5d3e247b76 $
 
 .PATH: ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2
 
 PACKAGE=	tests
+
+WARNS?=		3
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class/${.CURDIR:T}
 
@@ -16,6 +18,7 @@ ATF_TESTS_SH+=	integrity_test
 ATF_TESTS_SH+=	kill_test
 ATF_TESTS_SH+=	misc_test
 ATF_TESTS_SH+=	onetime_test
+ATF_TESTS_SH+=	online_resize_test
 ATF_TESTS_SH+=	reentrancy_test
 ATF_TESTS_SH+=	resize_test
 ATF_TESTS_SH+=	setkey_test

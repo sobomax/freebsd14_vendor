@@ -38,13 +38,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ebe9da0de536c1d166c8d949bfa306980d0eac22 $");
+__FBSDID("$FreeBSD: 2724db4f8a06789edba4e31ff710ddcd6f650184 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
 #include <sys/buf_ring.h>
 #include <sys/bus.h>
+#include <sys/ktr.h>
 #include <sys/limits.h>
 #include <sys/module.h>
 #include <sys/socket.h>
@@ -74,7 +75,8 @@ __FBSDID("$FreeBSD: ebe9da0de536c1d166c8d949bfa306980d0eac22 $");
 				    CSUM_IP_CHECKED | CSUM_IP_VALID | \
 				    CSUM_SCTP_VALID)
 
-static SYSCTL_NODE(_hw, OID_AUTO, if_ntb, CTLFLAG_RW, 0, "if_ntb");
+static SYSCTL_NODE(_hw, OID_AUTO, if_ntb, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "if_ntb");
 
 static unsigned g_if_ntb_num_queues = UINT_MAX;
 SYSCTL_UINT(_hw_if_ntb, OID_AUTO, num_queues, CTLFLAG_RWTUN,

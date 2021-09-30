@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04aff36917acb6dc9a57eb3811c9bf3e6fe44db1 $");
+__FBSDID("$FreeBSD: 86b7369883fb84dd4db312389da36c626a704da7 $");
 
 #include <sys/param.h>
 
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: 04aff36917acb6dc9a57eb3811c9bf3e6fe44db1 $");
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sysexits.h>
 #include <unistd.h>
 
 #include "nvmecontrol.h"
@@ -191,7 +192,8 @@ identify_ctrlr(int fd)
 	struct nvme_controller_data	cdata;
 	int				hexlength;
 
-	read_controller_data(fd, &cdata);
+	if (read_controller_data(fd, &cdata))
+		errx(EX_IOERR, "Identify request failed");
 	close(fd);
 
 	if (opt.hex) {
@@ -214,7 +216,8 @@ identify_ns(int fd, uint32_t nsid)
 	struct nvme_namespace_data	nsdata;
 	int				hexlength;
 
-	read_namespace_data(fd, nsid, &nsdata);
+	if (read_namespace_data(fd, nsid, &nsdata))
+		errx(EX_IOERR, "Identify request failed");
 	close(fd);
 
 	if (opt.hex) {

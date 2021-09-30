@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df89032dbca90063d85cc3bc264fa4830910243c $");
+__FBSDID("$FreeBSD: f5a2c1200fc60395500546146a34062de1dc5a8e $");
 
 #define __ELF_WORD_SIZE 32
 
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: df89032dbca90063d85cc3bc264fa4830910243c $");
 #include <sys/mutex.h>
 #include <sys/mman.h>
 #include <sys/namei.h>
-#include <sys/pioctl.h>
 #include <sys/proc.h>
 #include <sys/procfs.h>
 #include <sys/resourcevar.h>
@@ -86,7 +85,8 @@ CTASSERT(sizeof(struct ia32_sigframe4) == 408);
 
 extern const char *freebsd32_syscallnames[];
 
-static SYSCTL_NODE(_compat, OID_AUTO, ia32, CTLFLAG_RW, 0, "ia32 mode");
+static SYSCTL_NODE(_compat, OID_AUTO, ia32, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "ia32 mode");
 
 static u_long	ia32_maxdsiz = IA32_MAXDSIZ;
 SYSCTL_ULONG(_compat_ia32, OID_AUTO, maxdsiz, CTLFLAG_RWTUN, &ia32_maxdsiz, 0, "");
@@ -98,9 +98,6 @@ SYSCTL_ULONG(_compat_ia32, OID_AUTO, maxvmem, CTLFLAG_RWTUN, &ia32_maxvmem, 0, "
 struct sysentvec ia32_freebsd_sysvec = {
 	.sv_size	= FREEBSD32_SYS_MAXSYSCALL,
 	.sv_table	= freebsd32_sysent,
-	.sv_mask	= 0,
-	.sv_errsize	= 0,
-	.sv_errtbl	= NULL,
 	.sv_transtrap	= NULL,
 	.sv_fixup	= elf32_freebsd_fixup,
 	.sv_sendsig	= ia32_sendsig,
@@ -115,12 +112,13 @@ struct sysentvec ia32_freebsd_sysvec = {
 	.sv_usrstack	= FREEBSD32_USRSTACK,
 	.sv_psstrings	= FREEBSD32_PS_STRINGS,
 	.sv_stackprot	= VM_PROT_ALL,
+	.sv_copyout_auxargs	= elf32_freebsd_copyout_auxargs,
 	.sv_copyout_strings	= freebsd32_copyout_strings,
 	.sv_setregs	= ia32_setregs,
 	.sv_fixlimit	= ia32_fixlimit,
 	.sv_maxssiz	= &ia32_maxssiz,
 	.sv_flags	= SV_ABI_FREEBSD | SV_ASLR | SV_IA32 | SV_ILP32 |
-			    SV_SHP | SV_TIMEKEEP,
+			    SV_SHP | SV_TIMEKEEP | SV_RNG_SEED_VER,
 	.sv_set_syscall_retval = ia32_set_syscall_retval,
 	.sv_fetch_syscall_args = ia32_fetch_syscall_args,
 	.sv_syscallnames = freebsd32_syscallnames,

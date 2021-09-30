@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e6d5d088ebe7668f730016d432d4e9455ddaa5a7 $
+ * $FreeBSD: c1425755b5d10344eff9c3aad1cf8b2ae8561386 $
  */
 
 #ifndef _X86_X86_VAR_H_
@@ -67,13 +67,16 @@ extern	u_int	cpu_mon_mwait_flags;
 extern	u_int	cpu_mon_min_size;
 extern	u_int	cpu_mon_max_size;
 extern	u_int	cpu_maxphyaddr;
-extern	char	ctx_switch_xsave[];
+extern	u_int	cpu_power_eax;
+extern	u_int	cpu_power_ebx;
+extern	u_int	cpu_power_ecx;
+extern	u_int	cpu_power_edx;
+extern	u_int	hv_base;
 extern	u_int	hv_high;
 extern	char	hv_vendor[];
 extern	char	kstack[];
 extern	char	sigcode[];
 extern	int	szsigcode;
-extern	int	vm_page_dump_size;
 extern	int	workaround_erratum383;
 extern	int	_udatasel;
 extern	int	_ucodesel;
@@ -83,6 +86,7 @@ extern	int	_ugssel;
 extern	int	use_xsave;
 extern	uint64_t xsave_mask;
 extern	u_int	max_apic_id;
+extern	int	i386_read_exec;
 extern	int	pti;
 extern	int	hw_ibrs_ibpb_active;
 extern	int	hw_mds_disable;
@@ -90,6 +94,7 @@ extern	int	hw_ssb_active;
 extern	int	x86_taa_enable;
 extern	int	cpu_flush_rsb_ctxsw;
 extern	int	x86_rngds_mitg_enable;
+extern	int	cpu_amdc1e_bug;
 
 struct	pcb;
 struct	thread;
@@ -106,30 +111,16 @@ struct	trapframe;
  */
 typedef void alias_for_inthand_t(void);
 
-/*
- * Returns the maximum physical address that can be used with the
- * current system.
- */
-static __inline vm_paddr_t
-cpu_getmaxphyaddr(void)
-{
-#if defined(__i386__) && !defined(PAE)
-	return (0xffffffff);
-#else
-	return ((1ULL << cpu_maxphyaddr) - 1);
-#endif
-}
-
 bool	acpi_get_fadt_bootflags(uint16_t *flagsp);
 void	*alloc_fpusave(int flags);
 void	busdma_swi(void);
+u_int	cpu_auxmsr(void);
+vm_paddr_t cpu_getmaxphyaddr(void);
 bool	cpu_mwait_usable(void);
 void	cpu_probe_amdc1e(void);
 void	cpu_setregs(void);
 bool	disable_wp(void);
 void	restore_wp(bool old_wp);
-void	dump_add_page(vm_paddr_t);
-void	dump_drop_page(vm_paddr_t);
 void	finishidentcpu(void);
 void	identify_cpu1(void);
 void	identify_cpu2(void);

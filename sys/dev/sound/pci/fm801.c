@@ -35,7 +35,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: 4ff48bbffe9eca56be172f90194daada7e112f40 $");
+SND_DECLARE_FILE("$FreeBSD: 886d50f27fe7d5c1e4c78409954110e28072fd8c $");
 
 #define PCI_VENDOR_FORTEMEDIA	0x1319
 #define PCI_DEVICE_FORTEMEDIA1	0x08011319	/* Audio controller */
@@ -60,7 +60,6 @@ SND_DECLARE_FILE("$FreeBSD: 4ff48bbffe9eca56be172f90194daada7e112f40 $");
 #define FM_PLAY_DMABUF1         0x0c
 #define FM_PLAY_DMABUF2         0x10
 
-
 #define FM_REC_CTL              0x14
 #define  FM_REC_RATE_MASK               0x0f00
 #define  FM_REC_BUF1_LAST               0x0001
@@ -70,7 +69,6 @@ SND_DECLARE_FILE("$FreeBSD: 4ff48bbffe9eca56be172f90194daada7e112f40 $");
 #define  FM_REC_STOPNOW                 0x0080
 #define  FM_REC_16BIT                   0x4000
 #define  FM_REC_STEREO                  0x8000
-
 
 #define FM_REC_DMALEN           0x16
 #define FM_REC_DMABUF1          0x18
@@ -398,7 +396,6 @@ fm801ch_setspeed(kobj_t obj, void *data, u_int32_t speed)
 	struct fm801_info *fm801 = ch->parent;
 	int i;
 
-
 	for (i = 0; i < 10 && fm801_rates[i].limit <= speed; i++) ;
 
 	if(ch->dir == PCMDIR_PLAY) {
@@ -455,7 +452,6 @@ fm801ch_trigger(kobj_t obj, void *data, int go)
 
 	if (ch->dir == PCMDIR_PLAY) {
 		if (go == PCMTRIG_START) {
-
 			fm801->play_start = baseaddr;
 			fm801->play_nextblk = fm801->play_start + fm801->play_blksize;
 			fm801->play_flip = 0;

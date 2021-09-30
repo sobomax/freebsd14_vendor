@@ -43,7 +43,7 @@
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
  *	from: scsi_cd.h,v 1.10 1997/02/22 09:44:28 peter Exp $
- * $FreeBSD: 3785c84677ddc860bc7b783f1f9a49855710958d $
+ * $FreeBSD: 0968dafe4d2dd45d685ccbe547b8bfc1c0c92155 $
  */
 #ifndef	_SCSI_SCSI_CD_H
 #define _SCSI_SCSI_CD_H 1
@@ -886,4 +886,3 @@ void scsi_read_toc(struct ccb_scsiio *csio, uint32_t retries,
 __END_DECLS
 
 #endif /*_SCSI_SCSI_CD_H*/
-

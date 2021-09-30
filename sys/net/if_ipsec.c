@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24000f736c44e581f019df5c459198a77baef883 $");
+__FBSDID("$FreeBSD: b9931286a73577a94c5052e3ada52988a8556461 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -818,7 +818,7 @@ ipsec_srcaddr(void *arg __unused, const struct sockaddr *sa,
 	if (V_ipsec_idhtbl == NULL)
 		return;
 
-	MPASS(in_epoch(net_epoch_preempt));
+	NET_EPOCH_ASSERT();
 	CK_LIST_FOREACH(sc, ipsec_srchash(sa), srchash) {
 		if (sc->family == 0)
 			continue;
@@ -1003,7 +1003,6 @@ ipsec_set_addresses(struct ifnet *ifp, struct sockaddr *src,
 		    key_sockaddrcmp(&saidx->src.sa, src, 0) == 0 &&
 		    key_sockaddrcmp(&saidx->dst.sa, dst, 0) == 0)
 			return (0); /* Nothing has been changed. */
-
 	}
 	/* If reqid is not set, generate new one. */
 	if (ipsec_init_reqid(sc) != 0)

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b31dfa96cb1e1579af6a4870f1d44d597c257f60 $");
+__FBSDID("$FreeBSD: cdf2b735b54ebfcadf1c109a08f4bb10bedeafff $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -52,6 +52,7 @@ __FBSDID("$FreeBSD: b31dfa96cb1e1579af6a4870f1d44d597c257f60 $");
 #include <sys/stat.h>
 #include <assert.h>
 #include <bsdxml.h>
+#include <capsicum_helpers.h>
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -237,10 +238,16 @@ cctl_end_element(void *user_data, const char *name)
 		cur_lun->backend_type = str;
 		str = NULL;
 	} else if (strcmp(name, "lun_type") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_lun->device_type = strtoull(str, NULL, 0);
 	} else if (strcmp(name, "size") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_lun->size_blocks = strtoull(str, NULL, 0);
 	} else if (strcmp(name, "blocksize") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_lun->blocksize = strtoul(str, NULL, 0);
 	} else if (strcmp(name, "serial_number") == 0) {
 		cur_lun->serial_number = str;
@@ -356,15 +363,23 @@ cctl_end_pelement(void *user_data, const char *name)
 		cur_port->port_name = str;
 		str = NULL;
 	} else if (strcmp(name, "physical_port") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_port->pp = strtoul(str, NULL, 0);
 	} else if (strcmp(name, "virtual_port") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_port->vp = strtoul(str, NULL, 0);
 	} else if (strcmp(name, "cfiscsi_target") == 0) {
 		cur_port->cfiscsi_target = str;
 		str = NULL;
 	} else if (strcmp(name, "cfiscsi_state") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_port->cfiscsi_state = strtoul(str, NULL, 0);
 	} else if (strcmp(name, "cfiscsi_portal_group_tag") == 0) {
+		if (str == NULL)
+			log_errx(1, "%s: %s missing its argument", __func__, name);
 		cur_port->cfiscsi_portal_group_tag = strtoul(str, NULL, 0);
 	} else if (strcmp(name, "ctld_portal_group_name") == 0) {
 		cur_port->ctld_portal_group_name = str;
@@ -1337,22 +1352,17 @@ kernel_receive(struct pdu *pdu)
 void
 kernel_capsicate(void)
 {
-	int error;
 	cap_rights_t rights;
 	const unsigned long cmds[] = { CTL_ISCSI };
 
 	cap_rights_init(&rights, CAP_IOCTL);
-	error = cap_rights_limit(ctl_fd, &rights);
-	if (error != 0 && errno != ENOSYS)
+	if (caph_rights_limit(ctl_fd, &rights) < 0)
 		log_err(1, "cap_rights_limit");
 
-	error = cap_ioctls_limit(ctl_fd, cmds, nitems(cmds));
-
-	if (error != 0 && errno != ENOSYS)
+	if (caph_ioctls_limit(ctl_fd, cmds, nitems(cmds)) < 0)
 		log_err(1, "cap_ioctls_limit");
 
-	error = cap_enter();
-	if (error != 0 && errno != ENOSYS)
+	if (caph_enter() < 0)
 		log_err(1, "cap_enter");
 
 	if (cap_sandboxed())

@@ -11,7 +11,7 @@
 # + 64MB RAM
 # + uboot environment
 
-# $FreeBSD: 80a1d17c0ac08bc9ce684b9d51aa4ac5c6f46732 $
+# $FreeBSD: 8b43cf1b22ca9ab7234d89ae1a4d9f3fadee23c8 $
 
 #NO_UNIVERSE
 
@@ -21,7 +21,6 @@ hints		"DIR-825B1.hints"
 
 # Since the kernel image must fit inside 1024KiB, we have to build almost
 # everything as modules.
-# nodevice random
 nodevice gpio
 nodevice gpioled
 nodevice gif

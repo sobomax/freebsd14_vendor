@@ -1,5 +1,0 @@
-# $FreeBSD: 07a4279f0b25a52e60bd578c53c65c8d6cf51201 $
-
-arm/mv/discovery/discovery.c	standard
-arm/mv/ic.c			standard
-

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2018, Mellanox Technologies, Ltd.  All rights reserved.
+ * Copyright (c) 2013-2019, Mellanox Technologies, Ltd.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a65ea1e8161605c45f17a854e98f12335231e14a $
+ * $FreeBSD: 69057d5f2470e47e99186eb76dfb9af62a3558eb $
  */
 
 #ifndef MLX5_DEVICE_H
@@ -245,10 +245,22 @@ enum {
 };
 
 enum {
-	MLX5_BF_REGS_PER_PAGE		= 4,
-	MLX5_MAX_UAR_PAGES		= 1 << 8,
-	MLX5_NON_FP_BF_REGS_PER_PAGE	= 2,
-	MLX5_MAX_UUARS	= MLX5_MAX_UAR_PAGES * MLX5_NON_FP_BF_REGS_PER_PAGE,
+	MLX5_ADAPTER_PAGE_SHIFT		= 12,
+	MLX5_ADAPTER_PAGE_SIZE		= 1 << MLX5_ADAPTER_PAGE_SHIFT,
+};
+
+enum {
+	MLX5_BFREGS_PER_UAR		= 4,
+	MLX5_MAX_UARS			= 1 << 8,
+	MLX5_NON_FP_BFREGS_PER_UAR	= 2,
+	MLX5_FP_BFREGS_PER_UAR		= MLX5_BFREGS_PER_UAR -
+					  MLX5_NON_FP_BFREGS_PER_UAR,
+	MLX5_MAX_BFREGS			= MLX5_MAX_UARS *
+					  MLX5_NON_FP_BFREGS_PER_UAR,
+	MLX5_UARS_IN_PAGE		= PAGE_SIZE / MLX5_ADAPTER_PAGE_SIZE,
+	MLX5_NON_FP_BFREGS_IN_PAGE	= MLX5_NON_FP_BFREGS_PER_UAR * MLX5_UARS_IN_PAGE,
+	MLX5_MIN_DYN_BFREGS		= 512,
+	MLX5_MAX_DYN_BFREGS		= 1024,
 };
 
 enum {
@@ -361,6 +373,7 @@ enum {
 	MLX5_OPCODE_ATOMIC_MASKED_FA	= 0x15,
 	MLX5_OPCODE_BIND_MW		= 0x18,
 	MLX5_OPCODE_CONFIG_CMD		= 0x1f,
+	MLX5_OPCODE_DUMP		= 0x23,
 
 	MLX5_RECV_OPCODE_RDMA_WRITE_IMM	= 0x00,
 	MLX5_RECV_OPCODE_SEND		= 0x01,
@@ -382,6 +395,18 @@ enum {
 };
 
 enum {
+	MLX5_OPCODE_MOD_UMR_UMR = 0x0,
+	MLX5_OPCODE_MOD_UMR_TLS_TIS_STATIC_PARAMS = 0x1,
+	MLX5_OPCODE_MOD_UMR_TLS_TIR_STATIC_PARAMS = 0x2,
+};
+
+enum {
+	MLX5_OPCODE_MOD_PSV_PSV = 0x0,
+	MLX5_OPCODE_MOD_PSV_TLS_TIS_PROGRESS_PARAMS = 0x1,
+	MLX5_OPCODE_MOD_PSV_TLS_TIR_PROGRESS_PARAMS = 0x2,
+};
+
+enum {
 	MLX5_SET_PORT_RESET_QKEY	= 0,
 	MLX5_SET_PORT_GUID0		= 16,
 	MLX5_SET_PORT_NODE_GUID		= 17,
@@ -392,11 +417,6 @@ enum {
 
 enum {
 	MLX5_MAX_PAGE_SHIFT		= 31
-};
-
-enum {
-	MLX5_ADAPTER_PAGE_SHIFT		= 12,
-	MLX5_ADAPTER_PAGE_SIZE		= 1 << MLX5_ADAPTER_PAGE_SHIFT,
 };
 
 enum {
@@ -927,6 +947,10 @@ enum mlx5_cap_type {
 	MLX5_CAP_VECTOR_CALC,
 	MLX5_CAP_QOS,
 	MLX5_CAP_DEBUG,
+	MLX5_CAP_NVME,
+	MLX5_CAP_DMC,
+	MLX5_CAP_DEC,
+	MLX5_CAP_TLS,
 	/* NUM OF CAP Types */
 	MLX5_CAP_NUM
 };
@@ -958,6 +982,9 @@ enum mlx5_mcam_feature_groups {
 /* GET Dev Caps macros */
 #define MLX5_CAP_GEN(mdev, cap) \
 	MLX5_GET(cmd_hca_cap, mdev->hca_caps_cur[MLX5_CAP_GENERAL], cap)
+
+#define	MLX5_CAP_GEN_64(mdev, cap)					\
+	MLX5_GET64(cmd_hca_cap, mdev->hca_caps_cur[MLX5_CAP_GENERAL], cap)
 
 #define MLX5_CAP_GEN_MAX(mdev, cap) \
 	MLX5_GET(cmd_hca_cap, mdev->hca_caps_max[MLX5_CAP_GENERAL], cap)
@@ -1084,6 +1111,9 @@ enum mlx5_mcam_feature_groups {
 #define MLX5_CAP64_FPGA(mdev, cap) \
 	MLX5_GET64(fpga_cap, (mdev)->caps.fpga, cap)
 
+#define	MLX5_CAP_TLS(mdev, cap) \
+	MLX5_GET(tls_capabilities, (mdev)->hca_caps_cur[MLX5_CAP_TLS], cap)
+
 enum {
 	MLX5_CMD_STAT_OK			= 0x0,
 	MLX5_CMD_STAT_INT_ERR			= 0x1,
@@ -1121,16 +1151,6 @@ enum {
 	MLX5_PCIE_PERFORMANCE_COUNTERS_GROUP       = 0x0,
 	MLX5_PCIE_LANE_COUNTERS_GROUP	      = 0x1,
 	MLX5_PCIE_TIMERS_AND_STATES_COUNTERS_GROUP = 0x2,
-};
-
-enum {
-	MLX5_NUM_UUARS_PER_PAGE = MLX5_NON_FP_BF_REGS_PER_PAGE,
-	MLX5_DEF_TOT_UUARS = 8 * MLX5_NUM_UUARS_PER_PAGE,
-};
-
-enum {
-	NUM_DRIVER_UARS = 4,
-	NUM_LOW_LAT_UUARS = 4,
 };
 
 enum {

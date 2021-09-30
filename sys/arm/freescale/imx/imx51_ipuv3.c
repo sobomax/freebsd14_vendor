@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9daded244a8ab64bf9fa29ffe3409a3bf24d5b65 $");
+__FBSDID("$FreeBSD: 520ace1a1b5362f6cf1e5eff97b686e672fbf690 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -154,7 +154,6 @@ static uint32_t colors_24[16] = {
 	0xFF00FF,/* Light Magenta */
 	0xFFFF00,/* Yellow 	*/
 	0xFFFFFF,/* White 	*/
-
 
 };
 
@@ -422,7 +421,6 @@ static device_method_t ipu3_fb_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		ipu3_fb_probe),
 	DEVMETHOD(device_attach,	ipu3_fb_attach),
-
 	{ 0, 0 }
 };
 

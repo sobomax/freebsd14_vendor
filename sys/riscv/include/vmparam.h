@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: ee03f7b09cc2d4f70a1e97362a0642a3e536dc2c $
+ * $FreeBSD: 94782da779f775ba7be95d9b5365a27fd6f5a50a $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -190,20 +190,13 @@
 #define	SHAREDPAGE		(VM_MAXUSER_ADDRESS - PAGE_SIZE)
 #define	USRSTACK		SHAREDPAGE
 
-#define	KERNENTRY		(0)
+#define	VM_EARLY_DTB_ADDRESS	(VM_MAX_KERNEL_ADDRESS - (2 * L2_SIZE))
 
 /*
  * How many physical pages per kmem arena virtual page.
  */
 #ifndef VM_KMEM_SIZE_SCALE
-#define	VM_KMEM_SIZE_SCALE	(3)
-#endif
-
-/*
- * Optional floor (in bytes) on the size of the kmem arena.
- */
-#ifndef VM_KMEM_SIZE_MIN
-#define	VM_KMEM_SIZE_MIN	(16 * 1024 * 1024)
+#define	VM_KMEM_SIZE_SCALE	(1)
 #endif
 
 /*
@@ -228,7 +221,6 @@
 extern vm_paddr_t dmap_phys_base;
 extern vm_paddr_t dmap_phys_max;
 extern vm_offset_t dmap_max_addr;
-extern u_int tsb_kernel_ldd_phys;
 extern vm_offset_t vm_max_kernel_address;
 extern vm_offset_t init_pt_va;
 #endif
@@ -236,5 +228,16 @@ extern vm_offset_t init_pt_va;
 #define	ZERO_REGION_SIZE	(64 * 1024)	/* 64KB */
 
 #define	DEVMAP_MAX_VADDR	VM_MAX_KERNEL_ADDRESS
+#define	PMAP_MAPDEV_EARLY_SIZE	(L2_SIZE * 2)
+
+/*
+ * No non-transparent large page support in the pmap.
+ */
+#define	PMAP_HAS_LARGEPAGES	0
+
+/*
+ * Need a page dump array for minidump.
+ */
+#define MINIDUMP_PAGE_TRACKING	1
 
 #endif /* !_MACHINE_VMPARAM_H_ */

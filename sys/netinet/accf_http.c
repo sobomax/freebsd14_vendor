@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7673158d7249234ac5e3d57a9079ac5813f87c7 $");
+__FBSDID("$FreeBSD: 85761c2502b36be1735c261e7e0c15e349ce0683 $");
 
 #define ACCEPT_FILTER_MOD
 
@@ -58,8 +58,9 @@ ACCEPT_FILTER_DEFINE(accf_http, "httpready", sohashttpget, NULL, NULL, 1);
 
 static int parse_http_version = 1;
 
-static SYSCTL_NODE(_net_inet_accf, OID_AUTO, http, CTLFLAG_RW, 0,
-"HTTP accept filter");
+static SYSCTL_NODE(_net_inet_accf, OID_AUTO, http,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "HTTP accept filter");
 SYSCTL_INT(_net_inet_accf_http, OID_AUTO, parsehttpversion, CTLFLAG_RW,
     &parse_http_version, 1,
     "Parse http version so that non 1.x requests work");
@@ -271,7 +272,6 @@ fallout:
 	DPRINT("fallout");
 	return (SU_ISCONNECTED);
 }
-
 
 #define NCHRS 3
 

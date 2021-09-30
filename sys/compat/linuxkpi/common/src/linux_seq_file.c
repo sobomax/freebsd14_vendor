@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9eb15cdb47e643cc138a5216b9f0afab60129fa $");
+__FBSDID("$FreeBSD: 6f4f1a368c4a90d11fe6e731540b9753bc192b1e $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -130,7 +130,6 @@ single_open(struct linux_file *f, int (*show)(struct seq_file *, void *), void *
 			free(op, M_LSEQ);
 		else
 			((struct seq_file *)f->private_data)->private = d;
-
 	}
 	return (rc);
 }

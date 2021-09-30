@@ -33,7 +33,7 @@
  *	@(#)kernfs_vfsops.c	8.10 (Berkeley) 5/14/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vfsops.c 1.36
  *
- * $FreeBSD: c093cfb4c1517c3cfbdc865e802c22949e305e11 $
+ * $FreeBSD: 56297578ec2a465b188e9e7017d89a069e84f2a8 $
  */
 
 #include <sys/param.h>
@@ -130,7 +130,8 @@ devfs_mount(struct mount *mp)
 
 	MNT_ILOCK(mp);
 	mp->mnt_flag |= MNT_LOCAL;
-	mp->mnt_kern_flag |= MNTK_LOOKUP_SHARED | MNTK_EXTENDED_SHARED;
+	mp->mnt_kern_flag |= MNTK_LOOKUP_SHARED | MNTK_EXTENDED_SHARED |
+	    MNTK_NOMSYNC;
 #ifdef MAC
 	mp->mnt_flag |= MNT_MULTILABEL;
 #endif
@@ -155,7 +156,8 @@ devfs_mount(struct mount *mp)
 		sx_xunlock(&fmp->dm_lock);
 	}
 
-	VOP_UNLOCK(rvp, 0);
+	VOP_UNLOCK(rvp);
+	vfs_cache_root_set(mp, rvp);
 
 	vfs_mountedfrom(mp, "devfs");
 
@@ -237,7 +239,8 @@ devfs_statfs(struct mount *mp, struct statfs *sbp)
 
 static struct vfsops devfs_vfsops = {
 	.vfs_mount =		devfs_mount,
-	.vfs_root =		devfs_root,
+	.vfs_root =		vfs_cache_root,
+	.vfs_cachedroot =	devfs_root,
 	.vfs_statfs =		devfs_statfs,
 	.vfs_unmount =		devfs_unmount,
 };

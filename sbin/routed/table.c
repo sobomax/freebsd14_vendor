@@ -28,19 +28,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 04b2f79f5e08ffbf3dd151257176f385f1a383ab $
+ * $FreeBSD: 648a1d1a6b25bdcd3025343c9b5b31b1cff6da50 $
  */
 
 #include "defs.h"
 
-#ifdef __NetBSD__
-__RCSID("$NetBSD$");
-#elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 04b2f79f5e08ffbf3dd151257176f385f1a383ab $");
-#else
-__RCSID("$Revision: 2.27 $");
-#ident "$Revision: 2.27 $"
-#endif
+__RCSID("$FreeBSD: 648a1d1a6b25bdcd3025343c9b5b31b1cff6da50 $");
 
 static struct rt_spare *rts_better(struct rt_entry *);
 static struct rt_spare rts_empty = {0,0,0,HOPCNT_INFINITY,0,0,0};

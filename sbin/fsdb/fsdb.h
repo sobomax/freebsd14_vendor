@@ -29,7 +29,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b8dc1e0a2dd65970f73ca61582a5a66daaa76717 $
+ * $FreeBSD: fee35886f67577255c6e536f016decb7ed8837f1 $
  */
 
 extern int blread(int fd, char *buf, ufs2_daddr_t blk, long size);
@@ -52,6 +52,7 @@ struct cmdtable {
 #define	FL_ST	0x0002		/* resplit final string if argc > maxargc */
 	int (*handler)(int argc, char *argv[]);
 };
+extern struct inode curip;
 extern union dinode *curinode;
 extern ino_t curinum;
 

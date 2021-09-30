@@ -31,7 +31,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52775a9b8a441c8f08e99445d88d385aec6184b1 $");
+__FBSDID("$FreeBSD: d920a76ae2756dd75a44aa8fc5febc7ddd7ea1de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -415,6 +415,9 @@ struct uart_class uart_ns8250_class = {
 static struct acpi_uart_compat_data acpi_compat_data[] = {
 	{"AMD0020",	&uart_ns8250_class, 0, 2, 0, 48000000, UART_F_BUSY_DETECT, "AMD / Synopsys Designware UART"},
 	{"AMDI0020", &uart_ns8250_class, 0, 2, 0, 48000000, UART_F_BUSY_DETECT, "AMD / Synopsys Designware UART"},
+	{"MRVL0001", &uart_ns8250_class, 0, 2, 0, 200000000, UART_F_BUSY_DETECT, "Marvell / Synopsys Designware UART"},
+	{"SCX0006",  &uart_ns8250_class, 0, 2, 0, 62500000, UART_F_BUSY_DETECT, "SynQuacer / Synopsys Designware UART"},
+	{"HISI0031", &uart_ns8250_class, 0, 2, 0, 200000000, UART_F_BUSY_DETECT, "HiSilicon / Synopsys Designware UART"},
 	{"PNP0500", &uart_ns8250_class, 0, 0, 0, 0, 0, "Standard PC COM port"},
 	{"PNP0501", &uart_ns8250_class, 0, 0, 0, 0, 0, "16550A-compatible COM port"},
 	{"PNP0502", &uart_ns8250_class, 0, 0, 0, 0, 0, "Multiport serial device (non-intelligent 16550)"},
@@ -511,19 +514,19 @@ ns8250_bus_attach(struct uart_softc *sc)
 			ns8250->fcr |= FCR_RX_MEDH;
 	} else 
 		ns8250->fcr |= FCR_RX_MEDH;
-	
+
 	/* Get IER mask */
 	ivar = 0xf0;
 	resource_int_value("uart", device_get_unit(sc->sc_dev), "ier_mask",
 	    &ivar);
 	ns8250->ier_mask = (uint8_t)(ivar & 0xff);
-	
+
 	/* Get IER RX interrupt bits */
 	ivar = IER_EMSC | IER_ERLS | IER_ERXRDY;
 	resource_int_value("uart", device_get_unit(sc->sc_dev), "ier_rxbits",
 	    &ivar);
 	ns8250->ier_rxbits = (uint8_t)(ivar & 0xff);
-	
+
 	uart_setreg(bas, REG_FCR, ns8250->fcr);
 	uart_barrier(bas);
 	ns8250_bus_flush(sc, UART_FLUSH_RECEIVER|UART_FLUSH_TRANSMITTER);

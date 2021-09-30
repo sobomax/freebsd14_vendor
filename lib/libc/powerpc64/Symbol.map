@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c1e2d9ce8e6947052e0f38f17905dbe93d2fd7f9 $
+ * $FreeBSD: 29bd6a544a618737ac73e83d1c875ed0fc128b71 $
  */
 
 /*
@@ -39,9 +39,7 @@ FBSD_1.0 {
 
 FBSDprivate_1.0 {
 	/* PSEUDO syscalls */
-	__sys_getlogin;
 	_getlogin;
-	__sys_exit;
 
 	_set_tp;
 	_fpgetsticky;

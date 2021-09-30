@@ -36,7 +36,7 @@
 #include <machine/sysreg.h>
 #include <machine/pte-v6.h>
 
-__FBSDID("$FreeBSD: 94737f1c5ccbd615aa1cbdefbfe75cf717de9af2 $");
+__FBSDID("$FreeBSD: d796e6267cdcca51286c788602e94e6a840f29d5 $");
 
 /* We map 64MB of kernel unless overridden in assym.inc by the kernel option. */
 #ifndef LOCORE_MAP_MB
@@ -58,6 +58,9 @@ __FBSDID("$FreeBSD: 94737f1c5ccbd615aa1cbdefbfe75cf717de9af2 $");
 
 	.text
 	.align	2
+
+	.globl kernbase
+	.set kernbase,KERNVIRTADDR
 
 #if __ARM_ARCH >= 7
 #define	HANDLE_HYP							\

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f44443790b18f7b022756a74b5592cb506a776c1 $
+ * $FreeBSD: 7825f8892ac300a5d01c89529e29b5d16cebe7ea $
  */
 #ifndef _RK_CLK_MUX_H_
 #define _RK_CLK_MUX_H_
@@ -41,6 +41,7 @@ struct rk_clk_mux_def {
 };
 
 #define	RK_CLK_MUX_MASK		0xFFFF0000
+#define	RK_CLK_MUX_REPARENT	(1 << 0)
 
 int rk_clk_mux_register(struct clkdom *clkdom, struct rk_clk_mux_def *clkdef);
 

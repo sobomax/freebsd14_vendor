@@ -38,7 +38,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 1d8d3a942b8b20ed8fb2c8a6c60ec7008f46844e $
+ * $FreeBSD: 11bd328fc8b2a1315957e15c4682a069839eb727 $
  * $Whistle: ng_vjc.c,v 1.17 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -611,4 +611,3 @@ ng_vjc_pulluphdrs(struct mbuf *m, int knownTCP)
 		m = m_pullup(m, ihlen + thlen);
 	return (m);
 }
-

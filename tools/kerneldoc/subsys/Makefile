@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 596654fa7fcf96c6159f0323dde9c2aa00639bf2 $
+# $FreeBSD: b8397f810a0f6c8550c51f9b059460040175d95f $
 #
 
 _ALL!=	cd ${.CURDIR} && ls Doxyfile-*
@@ -10,7 +10,7 @@ TARGET_ARCH?=	${MACHINE_ARCH}
 S?=/usr/src/sys
 LOCALBASE?=/usr/local
 
-MFILES!= find ${S} -name \*.m | sed -e 's:${S}/::g'
+MFILES!= find ${S} -name \*.m | egrep '/(dev|libkern|kgssapi|opencrypto|isa|geom|kern|xen|net|${TARGET_ARCH})/' | sed -e 's:${S}/::g'
 HFILES=	${MFILES:T:S/.m$/.h/}
 AWK?=	awk
 

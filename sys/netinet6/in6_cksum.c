@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aead41228b40d256e723ac1fd88dc592098e220c $");
+__FBSDID("$FreeBSD: c4624b90b6a1d16ab6dc6ed236abc356b69222cd $");
 
 #include <sys/param.h>
 #include <sys/mbuf.h>
@@ -234,7 +234,7 @@ in6_cksum_partial(struct mbuf *m, u_int8_t nxt, u_int32_t off,
 		byte_swapped = 1;
 	} else
 		byte_swapped = 0;
-	
+
 	/*
 	 * Unroll the loop to make overhead from
 	 * branches &c small.

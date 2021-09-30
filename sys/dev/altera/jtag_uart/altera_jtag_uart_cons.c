@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0cd3aa5a59f996e23b121e4a56865d999a80e0f $");
+__FBSDID("$FreeBSD: 51e0b2b2869949201c1196f59c1313af8420abd3 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -52,7 +52,8 @@ __FBSDID("$FreeBSD: c0cd3aa5a59f996e23b121e4a56865d999a80e0f $");
 
 devclass_t	altera_jtag_uart_devclass;
 
-static SYSCTL_NODE(_hw, OID_AUTO, altera_jtag_uart, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_hw, OID_AUTO, altera_jtag_uart,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Altera JTAG UART configuration knobs");
 
 /*

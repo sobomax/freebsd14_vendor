@@ -1,5 +1,5 @@
 #
-# $FreeBSD: c0219664506452cf23afbe37e36958ff1e0663c3 $
+# $FreeBSD: a7902a1b08807b4b93f40b3c7c7bc3381f8213c1 $
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,6 +23,8 @@
 # SUCH DAMAGE.
 #
 
-SUBDIR=	 vmci vmxnet3
-
+SUBDIR=	 pvscsi vmxnet3
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+SUBDIR+= vmci
+.endif
 .include <bsd.subdir.mk>

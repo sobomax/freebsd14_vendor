@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fbb89fd3a84d6c11bd5aa21de8319a774f9de679 $
+ * $FreeBSD: a87ffc5940224c445c1df4d809aee92c86279c8e $
  *
  */
 
@@ -62,5 +62,3 @@ struct mcp_trace {
 };
 
 #endif /* MFW_HSI_H */
-
-

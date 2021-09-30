@@ -24,13 +24,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5cfcc6d062f1cd5c390664b4c54c2e645d3c5c2d $
+ * $FreeBSD: 3d3a0480eccea0418bc71a040d3724b3287a0c62 $
  */
 
 #ifndef RTLD_PRINTF_H
 #define RTLD_PRINTF_H 1
 
 #include <sys/cdefs.h>
+#include <stdarg.h>
 #include <unistd.h>
 
 int rtld_snprintf(char *buf, size_t bufsize, const char *fmt, ...)

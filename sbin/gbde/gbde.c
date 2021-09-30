@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 16afe5e5a489b447085abcf0d26eedce94b87f84 $
+ * $FreeBSD: 421242c38c8010bf1f15da47c6ad950c12fd784d $
  *
  * XXX: Future stuff
  *
@@ -174,18 +174,7 @@ g_read_data(struct g_consumer *cp, off_t offset, off_t length, int *error)
 static void
 random_bits(void *p, u_int len)
 {
-	static int fdr = -1;
-	int i;
-
-	if (fdr < 0) {
-		fdr = open("/dev/urandom", O_RDONLY);
-		if (fdr < 0)
-			err(1, "/dev/urandom");
-	}
-
-	i = read(fdr, p, len);
-	if (i != (int)len)
-		err(1, "read from /dev/urandom");
+	arc4random_buf(p, len);
 }
 
 /* XXX: not nice */

@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8db92b12902a90c60ed897e0cf1b115191e9c2ec $");
+__FBSDID("$FreeBSD: c2beabc0122f60382679632d4c925c6185250aaa $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -136,7 +136,6 @@ static ofw_method_t ofw_std_methods[] = {
 	OFWMETHOD(ofw_release,			ofw_std_release),
 	OFWMETHOD(ofw_enter,			ofw_std_enter),
 	OFWMETHOD(ofw_exit,			ofw_std_exit),
-
 	{ 0, 0 }
 };
 

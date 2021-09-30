@@ -2,7 +2,7 @@
  * Copyright (c) 2010 Isilon Systems, Inc.
  * Copyright (c) 2010 iX Systems, Inc.
  * Copyright (c) 2010 Panasas, Inc.
- * Copyright (c) 2013-2017 Mellanox Technologies, Ltd.
+ * Copyright (c) 2013-2019 Mellanox Technologies, Ltd.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 141d71c7ff399cedfdb822426454526ff7459576 $
+ * $FreeBSD: 336215b9f7c537acf148fe3869a6a1e06e3c1e82 $
  */
 #ifndef	_LINUX_NETDEVICE_H_
 #define	_LINUX_NETDEVICE_H_
@@ -60,11 +60,14 @@
 static inline struct ifnet *
 dev_get_by_index(struct vnet *vnet, int if_index)
 {
+	struct epoch_tracker et;
 	struct ifnet *retval;
 
+	NET_EPOCH_ENTER(et);
 	CURVNET_SET(vnet);
 	retval = ifnet_byindex_ref(if_index);
 	CURVNET_RESTORE();
+	NET_EPOCH_EXIT(et);
 
 	return (retval);
 }

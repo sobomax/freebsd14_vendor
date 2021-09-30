@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1c84382d4fbd907aba5dcc75dfb83ccf7af20c8d $
+ * $FreeBSD: bc8bef4b089cca070fb6292f0cbd121e310e086b $
  *
  * Convert MS-DOS FAT format timestamps to and from unix timespecs
  *
@@ -134,7 +134,6 @@ static const struct {
 	{ SEP + 3 * YEAR + 1, ENC(3, 10) }, { OCT + 3 * YEAR + 1, ENC(3, 11) },
 	{ NOV + 3 * YEAR + 1, ENC(3, 12) }
 };
-
 
 void
 timespec2fattime(const struct timespec *tsp, int utc, uint16_t *ddp,

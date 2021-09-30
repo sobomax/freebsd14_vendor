@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e80e54463c57ac2e1157017ad6ff67f78405044d $");
+__FBSDID("$FreeBSD: 89014b3597ee0a8c78096fe12ef01c16a683bfad $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -54,6 +54,7 @@ lb_simple_accept_loop(int domain, const struct sockaddr *addr, int sds[],
 	size_t i;
 	int *acceptcnt;
 	int csd, error, excnt, sd;
+	const struct linger lopt = { 1, 0 };
 
 	/*
 	 * We expect each listening socket to accept roughly nconns/nsds
@@ -71,6 +72,10 @@ lb_simple_accept_loop(int domain, const struct sockaddr *addr, int sds[],
 
 		error = connect(sd, addr, addr->sa_len);
 		ATF_REQUIRE_MSG(error == 0, "connect() failed: %s",
+		    strerror(errno));
+
+		error = setsockopt(sd, SOL_SOCKET, SO_LINGER, &lopt, sizeof(lopt));
+		ATF_REQUIRE_MSG(error == 0, "Setting linger failed: %s",
 		    strerror(errno));
 
 		/*
@@ -108,7 +113,7 @@ lb_simple_accept_loop(int domain, const struct sockaddr *addr, int sds[],
 static int
 lb_listen_socket(int domain, int flags)
 {
-	size_t one;
+	int one;
 	int error, sd;
 
 	sd = socket(domain, SOCK_STREAM | flags, 0);

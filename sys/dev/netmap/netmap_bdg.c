@@ -58,7 +58,7 @@ ports attached to the switch)
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: 96d6deedb7681d58f69beeaf323f8e0e800638bf $");
+__FBSDID("$FreeBSD: 4d18859e2091c543205c6790cd610eb45247743d $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -1477,8 +1477,7 @@ netmap_bwrap_bdg_ctl(struct nmreq_header *hdr, struct netmap_adapter *na)
 		if (npriv == NULL)
 			return ENOMEM;
 		npriv->np_ifp = na->ifp; /* let the priv destructor release the ref */
-		error = netmap_do_regif(npriv, na, req->reg.nr_mode,
-					req->reg.nr_ringid, req->reg.nr_flags);
+		error = netmap_do_regif(npriv, na, hdr);
 		if (error) {
 			netmap_priv_delete(npriv);
 			return error;

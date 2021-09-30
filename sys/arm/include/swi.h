@@ -1,5 +1,5 @@
 /*	$NetBSD: swi.h,v 1.1 2002/01/13 15:03:06 bjh21 Exp $	*/
-/* $FreeBSD: 858ed2368b0d1185e1ae6c4b7a77408ae274854c $ */
+/* $FreeBSD: b2caf5ee1c311841dc965599035310dcb9d9b7fd $ */
 
 /*-
  * This file is in the Public Domain.
@@ -20,4 +20,3 @@
 #define SWI_IMBrange	0xf00001
 
 #endif /* !_MACHINE_SWI_H_ */
-

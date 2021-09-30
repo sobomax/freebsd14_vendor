@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 060ea4ef0e90a3ece131bbf4fc7d040654cc42b4 $");
+__FBSDID("$FreeBSD: 7adca26bbf2809c80ea52fa88792f7ea9313553f $");
 
 #include <fcntl.h>
 #include <getopt.h>
@@ -332,6 +332,8 @@ main(int argc, char **argv)
 			flag = 	str2cap(argv[i]);
 			if (flag < 0)
 				fail("Invalid flag: %s\n", argv[i]);
+			else if ((flag & GPIO_INTR_MASK) != 0)
+				fail("Interrupt capability %s cannot be set as configuration flag\n", argv[i]);
 			flags |= flag;
 		}
 		pin.g_pin = pinn;

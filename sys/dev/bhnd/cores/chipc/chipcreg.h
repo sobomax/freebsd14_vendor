@@ -21,7 +21,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 4ad6fcf9d357d50c672169caf8a7d1b0c659ee8d $
+ * $FreeBSD: 6c48ac20089d3821f86464c6ab91d22a0260aabb $
  */
 
 #ifndef _BHND_CORES_CHIPC_CHIPCREG_H_
@@ -48,7 +48,6 @@
 #define CHIPC_GET_FLAG(_value, _flag)	(((_value) & _flag) != 0)
 #define	CHIPC_GET_BITS(_value, _field)	\
 	((_value & _field ## _MASK) >> _field ## _SHIFT)
-
 
 #define	CHIPC_ID			0x00
 #define	CHIPC_CAPABILITIES		0x04
@@ -115,7 +114,7 @@
 #define	CHIPC_PLL_ON_DELAY		0xB0	/* rev >= 4 */
 #define	CHIPC_PLL_FREFSEL_DELAY		0xB4	/* rev >= 4 */
 #define	CHIPC_PLL_SLOWCLK_CTL		0xB8	/* "slowclock" (rev 6-9) */
- 
+
  /* "instaclock" clock control registers */
 #define	CHIPC_SYS_CLK_CTL		0xC0	/* "instaclock" (rev >= 10) */
 #define	CHIPC_SYS_CLK_ST_STRETCH	0xC4	/* state strech (?) rev >= 10 */
@@ -265,7 +264,6 @@ enum {
 	CHIPC_CST_OTP_SEL	= 2,	/**< OTP is powered up, no SPROM */
 	CHIPC_CST_OTP_PWRDN	= 3	/**< OTP is powered down, SPROM is present (rev <= 22 only) */
 };
-
 
 #define	CHIPC_CST_SPROM_OTP_SEL_R22_MASK	0x00000003	/**< chipstatus OTP/SPROM SEL value (rev 22) */
 #define	CHIPC_CST_SPROM_OTP_SEL_R22_SHIFT	0
@@ -781,7 +779,6 @@ enum {
 /* 4312 chip-specific ChipStatus register bits */
 #define	CHIPC_CST4312_SPROM_OTP_SEL_MASK	CHIPC_CST_SPROM_OTP_SEL_R22_MASK
 #define	CHIPC_CST4312_SPROM_OTP_SEL_SHIFT	CHIPC_CST_SPROM_OTP_SEL_R22_SHIFT
-
 
 /* 4322 chip-specific ChipStatus register bits */
 #define	CHIPC_CST4322_XTAL_FREQ_20_40MHZ	0x00000020

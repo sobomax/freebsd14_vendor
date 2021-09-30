@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e0fb84fdeb24b45b96e5d55c643fe9a7d4331cbc $
+ * $FreeBSD: 13ff984ef9c9dcc6efd435806d397d141b52555e $
  */
 
 #ifndef __ECORE_RDMA_H__
@@ -276,4 +276,3 @@ ecore_rdma_allocated_qps(struct ecore_hwfn *p_hwfn);
 u16 ecore_rdma_get_fw_srq_id(struct ecore_hwfn *p_hwfn, u16 id, bool is_xrc);
 
 #endif /*__ECORE_RDMA_H__*/
-

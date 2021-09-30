@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: 6b58c96c1b8d90f2057512f0d0d6646c9f75597d $
+ * $FreeBSD: d60992f104e1e1d359f78ab86fc34943bb1d9d16 $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -38,8 +38,6 @@
 extern long Maxmem;
 extern char sigcode[];
 extern int szsigcode;
-extern uint32_t *vm_page_dump;
-extern int vm_page_dump_size;
 extern u_long elf_hwcap;
 extern u_long elf_hwcap2;
 extern vm_paddr_t arm_physmem_kernaddr;
@@ -56,14 +54,8 @@ extern int _min_bzero_size;
 
 enum cpu_class {
 	CPU_CLASS_NONE,
-	CPU_CLASS_ARM9TDMI,
-	CPU_CLASS_ARM9ES,
-	CPU_CLASS_ARM9EJS,
-	CPU_CLASS_ARM10E,
-	CPU_CLASS_ARM10EJ,
 	CPU_CLASS_CORTEXA,
 	CPU_CLASS_KRAIT,
-	CPU_CLASS_XSCALE,
 	CPU_CLASS_ARM11J,
 	CPU_CLASS_MARVELL
 };
@@ -72,8 +64,6 @@ extern enum cpu_class cpu_class;
 struct dumperinfo;
 extern int busdma_swi_pending;
 void busdma_swi(void);
-void dump_add_page(vm_paddr_t);
-void dump_drop_page(vm_paddr_t);
 int minidumpsys(struct dumperinfo *);
 
 extern uint32_t initial_fpscr;

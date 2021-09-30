@@ -1,4 +1,4 @@
-/* $FreeBSD: fe632f5abf2886394e6aab3d1d2b7366e0eb6f69 $ */
+/* $FreeBSD: 27ce216a488f73ec060d37c945f59c3785c7f277 $ */
 /*	$NetBSD: msdosfs_lookup.c,v 1.37 1997/11/17 15:36:54 ws Exp $	*/
 
 /*-
@@ -53,17 +53,16 @@
 #include <sys/param.h>
 #include <sys/errno.h>
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-#include <fs/msdosfs/bpb.h>
-
 #include "ffs/buf.h"
-
-#include "msdos/denode.h"
+#include <fs/msdosfs/bpb.h>
 #include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
+#include <fs/msdosfs/denode.h>
+#include <fs/msdosfs/fat.h>
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include "makefs.h"
 #include "msdos.h"
@@ -104,7 +103,7 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 		dirclust = de_clcount(pmp, diroffset);
 		error = extendfile(ddep, dirclust, 0, 0, DE_CLEAR);
 		if (error) {
-			(void)detrunc(ddep, ddep->de_FileSize, 0);
+			(void)detrunc(ddep, ddep->de_FileSize, 0, NULL);
 			return error;
 		}
 

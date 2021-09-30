@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 2c0e6f4a28b88d33dfc37ab2717d9c36e95d11a3 $
+# $FreeBSD: acc52fd5755733fa6fa87db6ad2ac8388f181996 $
 #
 # For multiple programs using a single source file each,
 # we can just define 'progs' and create custom targets.
@@ -7,10 +7,11 @@ PROGS	=	pkt-gen nmreplay bridge lb
 
 CLEANFILES = $(PROGS) *.o
 MAN=
-CFLAGS += -Werror -Wall
-CFLAGS += -Wextra
 
-LDFLAGS += -lpthread
+.include <bsd.prog.mk>
+.include <bsd.lib.mk>
+
+LDFLAGS += -lpthread -lnetmap
 .ifdef WITHOUT_PCAP
 CFLAGS += -DNO_PCAP
 .else
@@ -18,8 +19,7 @@ LDFLAGS += -lpcap
 .endif
 LDFLAGS += -lm # used by nmreplay
 
-.include <bsd.prog.mk>
-.include <bsd.lib.mk>
+CFLAGS += -Wno-cast-align
 
 all: $(PROGS)
 
@@ -27,7 +27,7 @@ pkt-gen: pkt-gen.o
 	$(CC) $(CFLAGS) -o pkt-gen pkt-gen.o $(LDFLAGS)
 
 bridge: bridge.o
-	$(CC) $(CFLAGS) -o bridge bridge.o
+	$(CC) $(CFLAGS) -o bridge bridge.o $(LDFLAGS)
 
 nmreplay: nmreplay.o
 	$(CC) $(CFLAGS) -o nmreplay nmreplay.o $(LDFLAGS)

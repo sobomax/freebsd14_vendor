@@ -1,9 +1,8 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2008, M. Warner Losh
- * Copyright (c) 2000,2001 Jonathan Chen.
- * All rights reserved.
+ * Copyright (c) 2000,2001 Jonathan Chen. All rights reserved.
+ * Copyright (c) 2008 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 310923655a1967b6c42c26de6ec9ba9396aeab0b $
+ * $FreeBSD: a8aa8f0aa576bfed328e31b18da91a7f2bd43f4f $
  */
 
 /*

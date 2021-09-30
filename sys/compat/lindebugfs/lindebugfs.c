@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fc07dec1d01300f0744769b6b9af2c8f22e7ae56 $");
+__FBSDID("$FreeBSD: 63161eedf14fd6c9b402db7094ca4ddcb086050c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -143,10 +143,17 @@ debugfs_fill(PFS_FILL_ARGS)
 	}
 	sf = lf.private_data;
 	sf->buf = sb;
-	if (uio->uio_rw == UIO_READ)
-		rc = d->dm_fops->read(&lf, NULL, len, &off);
-	else
-		rc = d->dm_fops->write(&lf, buf, len, &off);
+	if (uio->uio_rw == UIO_READ) {
+		if (d->dm_fops->read)
+			rc = d->dm_fops->read(&lf, NULL, len, &off);
+		else
+			rc = ENODEV;
+	} else {
+		if (d->dm_fops->write)
+			rc = d->dm_fops->write(&lf, buf, len, &off);
+		else
+			rc = ENODEV;
+	}
 	if (d->dm_fops->release)
 		d->dm_fops->release(&vn, &lf);
 	else
@@ -287,12 +294,14 @@ debugfs_remove_recursive(struct dentry *dnode)
 	pfs_destroy(dnode->d_pfs_node);
 }
 
-
 static int
 debugfs_init(PFS_INIT_ARGS)
 {
 
 	debugfs_root = pi->pi_root;
+
+	(void)debugfs_create_symlink("kcov", NULL, "/dev/kcov");
+
 	return (0);
 }
 
@@ -307,3 +316,4 @@ PSEUDOFS(debugfs, 1, PR_ALLOW_MOUNT_LINSYSFS);
 #else
 PSEUDOFS(debugfs, 1, VFCF_JAIL);
 #endif
+MODULE_DEPEND(lindebugfs, linuxkpi, 1, 1, 1);

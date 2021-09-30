@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d7355a50f2b8c1972447624866acf6bdce81e07b $
+ * $FreeBSD: 1f8165c0ed89c3c6a623bb0a7d750335d05182ac $
  */
 
 #include <dev/mlx5/driver.h>
@@ -223,6 +223,12 @@ int mlx5_query_hca_caps(struct mlx5_core_dev *dev)
 
 	if (MLX5_CAP_GEN(dev, pcam_reg)) {
 		err = mlx5_get_pcam_reg(dev);
+		if (err)
+			return err;
+	}
+
+	if (MLX5_CAP_GEN(dev, tls_tx)) {
+		err = mlx5_core_get_caps(dev, MLX5_CAP_TLS);
 		if (err)
 			return err;
 	}

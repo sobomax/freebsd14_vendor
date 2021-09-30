@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a36cbb36c63fd3f113d77b1b7e88ccaae0254d57 $");
+__FBSDID("$FreeBSD: d0b9fc11a365f91173c70b4ee7552d64b81c1703 $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -119,7 +119,6 @@ bhnd_nvram_iobuf_empty(size_t size, size_t capacity)
 		iobuf->buf = &iobuf->data;
 	else
 		iobuf->buf = bhnd_nv_malloc(iobuf->capacity);
-
 
 	if (iobuf->buf == NULL) {
 		bhnd_nv_free(iobuf);
@@ -218,7 +217,6 @@ bhnd_nvram_iobuf_copy_range(struct bhnd_nvram_io *src, size_t offset,
 
 	return (io);
 }
-
 
 static void
 bhnd_nvram_iobuf_free(struct bhnd_nvram_io *io)

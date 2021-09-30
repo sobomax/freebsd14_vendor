@@ -30,8 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4341223791cf0c492457f824e0d25a1f6999fa61 $");
-
+__FBSDID("$FreeBSD: b2874f49f13f5765ca802292106f2785ab8425aa $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,7 +53,6 @@ __FBSDID("$FreeBSD: 4341223791cf0c492457f824e0d25a1f6999fa61 $");
 #include <cam/cam_xpt_periph.h>
 #include <cam/cam_sim.h>
 #include <cam/scsi/scsi_targetio.h>
-
 
 /* Transaction information attached to each CCB sent by the user */
 struct targ_cmd_descr {
@@ -406,8 +404,8 @@ targenable(struct targ_softc *softc, struct cam_path *path, int grp6_len,
 	}
 	if (cpi.maxio == 0)
 		softc->maxio = DFLTPHYS;	/* traditional default */
-	else if (cpi.maxio > MAXPHYS)
-		softc->maxio = MAXPHYS;		/* for safety */
+	else if (cpi.maxio > maxphys)
+		softc->maxio = maxphys;		/* for safety */
 	else
 		softc->maxio = cpi.maxio;	/* real value */
 
@@ -599,7 +597,7 @@ targwrite(struct cdev *dev, struct uio *uio, int ioflag)
 		}
 		write_len += sizeof(user_ccb);
 	}
-	
+
 	/*
 	 * If we've successfully taken in some amount of
 	 * data, return success for that data first.  If
@@ -731,7 +729,6 @@ targsendccb(struct targ_softc *softc, union ccb *ccb,
 
 	if ((ccb_h->func_code == XPT_CONT_TARGET_IO) ||
 	    (ccb_h->func_code == XPT_DEV_MATCH)) {
-
 		error = cam_periph_mapmem(ccb, mapinfo, softc->maxio);
 
 		/*

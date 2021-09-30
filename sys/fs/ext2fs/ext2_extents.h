@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0a145b248788f858e70e9cf343aa245a354f8bbc $
+ * $FreeBSD: 52a96297b606a0090e115cabb778d93bcaa0990f $
  */
 #ifndef _FS_EXT2FS_EXT2_EXTENTS_H_
 #define	_FS_EXT2FS_EXT2_EXTENTS_H_
@@ -108,14 +108,14 @@ struct ext4_extent_path {
     sizeof(struct ext4_extent_header)))
 #define EXT_FIRST_INDEX(hdr) ((struct ext4_extent_index *)(((char *)(hdr)) + \
     sizeof(struct ext4_extent_header)))
-#define EXT_LAST_EXTENT(hdr) (EXT_FIRST_EXTENT((hdr)) + (hdr)->eh_ecount - 1)
-#define EXT_LAST_INDEX(hdr) (EXT_FIRST_INDEX((hdr)) + (hdr)->eh_ecount - 1)
+#define EXT_LAST_EXTENT(hdr) (EXT_FIRST_EXTENT((hdr)) + le16toh((hdr)->eh_ecount) - 1)
+#define EXT_LAST_INDEX(hdr) (EXT_FIRST_INDEX((hdr)) + le16toh((hdr)->eh_ecount) - 1)
 #define EXT4_EXTENT_TAIL_OFFSET(hdr) (sizeof(struct ext4_extent_header) + \
-    (sizeof(struct ext4_extent) * (hdr)->eh_max))
+    (sizeof(struct ext4_extent) * le16toh((hdr)->eh_max)))
 #define EXT_HAS_FREE_INDEX(path) \
-    ((path)->ep_header->eh_ecount < (path)->ep_header->eh_max)
-#define EXT_MAX_EXTENT(hdr) (EXT_FIRST_EXTENT(hdr) + ((hdr)->eh_max) - 1)
-#define EXT_MAX_INDEX(hdr) (EXT_FIRST_INDEX((hdr)) + (hdr)->eh_max - 1)
+    (le16toh((path)->ep_header->eh_ecount) < le16toh((path)->ep_header->eh_max))
+#define EXT_MAX_EXTENT(hdr) (EXT_FIRST_EXTENT(hdr) + le16toh((hdr)->eh_max) - 1)
+#define EXT_MAX_INDEX(hdr) (EXT_FIRST_INDEX((hdr)) + le16toh((hdr)->eh_max) - 1)
 
 struct inode;
 struct m_ext2fs;

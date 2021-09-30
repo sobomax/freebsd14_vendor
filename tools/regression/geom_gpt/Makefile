@@ -1,10 +1,8 @@
-# $FreeBSD: 92d1f020c9168a965a52917ad88ee390189532ef $
+# $FreeBSD: eb5a9659ff4f066b96f7d131833b8e67025e51b0 $
 
 PROG=	gctl_test_helper
 MAN=
 
 LIBADD+=	geom
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

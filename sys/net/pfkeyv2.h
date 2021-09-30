@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7bbdd577a5f5878ca73dd1fca1301652f3b17761 $	*/
+/*	$FreeBSD: 4d607a4d8b13938a063f026e52c18755ac37c296 $	*/
 /*	$KAME: pfkeyv2.h,v 1.37 2003/09/06 05:15:43 itojun Exp $	*/
 
 /*-
@@ -348,6 +348,8 @@ _Static_assert(sizeof(struct sadb_x_sa_replay) == 8, "struct size mismatch");
 #define SADB_SASTATE_MAX      3
 
 #define SADB_SAFLAGS_PFS      1
+/* SADB_X_SAFLAGS_ESN was defined in sys/net/pfkeyv2.h in OpenBSD sources */
+#define SADB_X_SAFLAGS_ESN    0x400
 
 /*
  * Though some of these numbers (both _AALG and _EALG) appear to be
@@ -383,6 +385,7 @@ _Static_assert(sizeof(struct sadb_x_sa_replay) == 8, "struct size mismatch");
 #define SADB_EALG_NULL		11
 #define SADB_X_EALG_RIJNDAELCBC	12
 #define SADB_X_EALG_AES		12
+#define	SADB_X_EALG_AESCBC	12
 #define SADB_X_EALG_AESCTR	13
 #define SADB_X_EALG_AESGCM8	18	/* RFC4106 */
 #define SADB_X_EALG_AESGCM12	19

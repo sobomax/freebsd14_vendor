@@ -1,9 +1,10 @@
-# $FreeBSD: 9ec4e896e7a5c26fb5f14173e9717b44df3bbc85 $
+# $FreeBSD: a2325221d0b1dae834e9f4f9b885a16ec18a3c35 $
 
 .include <src.opts.mk>
 
 PACKAGE=	lib${LIB}
 LIB=		compiler_rt
+MK_SSP=		no
 NO_PIC=
 WARNS?=		2
 
@@ -14,7 +15,7 @@ CFLAGS+=	-I${SRCTOP}/contrib/libcxxrt
 
 # gcc has incompatible internal declarations for __divtc3 and __multc3, but has
 # no option to silence its warning, so make warnings non-fatal.
-NO_WERROR.gcc=
+MK_WERROR.gcc=	no
 
 .include "Makefile.inc"
 

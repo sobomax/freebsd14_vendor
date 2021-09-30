@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d7612754ac15c6058dfb33fae8c9ff585f4be6b $");
+__FBSDID("$FreeBSD: 0796da96bdd76c49d32a60e76342d26d011e7172 $");
 /*
 * NXP TDA19988 HDMI encoder 
 */
@@ -34,6 +34,7 @@ __FBSDID("$FreeBSD: 2d7612754ac15c6058dfb33fae8c9ff585f4be6b $");
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/clock.h>
+#include <sys/eventhandler.h>
 #include <sys/time.h>
 #include <sys/bus.h>
 #include <sys/resource.h>
@@ -650,7 +651,7 @@ tda19988_start(struct tda19988_softc *sc)
 	uint16_t version;
 
 	dev = sc->sc_dev;
-	
+
 	tda19988_cec_write(sc, TDA_CEC_ENAMODS, ENAMODS_RXSENS | ENAMODS_HDMI);
 	DELAY(1000);
 	tda19988_cec_read(sc, 0xfe, &data);

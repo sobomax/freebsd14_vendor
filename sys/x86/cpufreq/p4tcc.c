@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e7360b4e679864f9d8df3d321c6ef67f68028d1a $");
+__FBSDID("$FreeBSD: 89bfef3f69300a22052b577c34cb958158bd89f7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,7 +57,7 @@ __FBSDID("$FreeBSD: e7360b4e679864f9d8df3d321c6ef67f68028d1a $");
 
 #include <dev/acpica/acpivar.h>
 #include "acpi_if.h"
- 
+
 struct p4tcc_softc {
 	device_t	dev;
 	int		set_count;
@@ -97,7 +97,6 @@ static device_method_t p4tcc_methods[] = {
 
 	/* ACPI interface */
 	DEVMETHOD(acpi_get_features,	p4tcc_features),
-
 	{0, 0}
 };
 

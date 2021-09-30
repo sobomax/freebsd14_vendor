@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: da531f0e7863ae8c11c94627eece808ced1d4548 $
+ * $FreeBSD: 6b28c375f674c01baab659dbdd1dcd3fab6c1eca $
  * $Whistle: ng_message.h,v 1.12 1999/01/25 01:17:44 archie Exp $
  */
 
@@ -357,7 +357,6 @@ struct flow_manager {
 	  { "id",		&ng_parse_hint32_type	},	\
 	  { NULL }						\
 }
-
 
 /*
  * For netgraph nodes that are somehow associated with file descriptors

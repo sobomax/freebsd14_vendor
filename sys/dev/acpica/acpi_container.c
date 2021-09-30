@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 26855bd732d75b362ef324523fcbbae52f43b111 $");
+__FBSDID("$FreeBSD: 0a4b123c5303caac7c99143e648a756e6e04f17c $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -98,13 +98,14 @@ static int
 acpi_syscont_probe(device_t dev)
 {
     static char *syscont_ids[] = { "ACPI0004", "PNP0A05", "PNP0A06", NULL };
+    int rv;
 
-    if (acpi_disabled("syscontainer") ||
-	ACPI_ID_PROBE(device_get_parent(dev), dev, syscont_ids) == NULL)
+    if (acpi_disabled("syscontainer"))
 	return (ENXIO);
-
-    device_set_desc(dev, "System Container");
-    return (BUS_PROBE_DEFAULT);
+    rv = ACPI_ID_PROBE(device_get_parent(dev), dev, syscont_ids, NULL);
+    if (rv <= 0)
+	device_set_desc(dev, "System Container");
+    return (rv);
 }
 
 static int

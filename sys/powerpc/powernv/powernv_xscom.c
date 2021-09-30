@@ -24,13 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 669599e3a547fed72f80457e1c1eb38552cd4abf $
+ * $FreeBSD: ba8a3a7d6690d827004ab057a42fcc27b193b47d $
  */
 
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 669599e3a547fed72f80457e1c1eb38552cd4abf $");
+__FBSDID("$FreeBSD: ba8a3a7d6690d827004ab057a42fcc27b193b47d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -127,4 +127,3 @@ DEFINE_CLASS_0(powernv_xscom, powernv_xscom_driver, powernv_xscom_methods,
     sizeof(struct powernv_xscom_softc));
 DRIVER_MODULE(powernv_xscom, ofwbus, powernv_xscom_driver, powernv_xscom_devclass, NULL,
     NULL);
-

@@ -1,9 +1,9 @@
 #
-# $FreeBSD: f2c2870abdc85d1f6a91e24d98d0e3d9ff550c5c $
+# $FreeBSD: 867fc5f045d28df67ff8826906ef34c741a6ab68 $
 #
 
 .include <bsd.own.mk>
-	
+
 PROG=	binmiscctl
 MAN=	binmiscctl.8
 

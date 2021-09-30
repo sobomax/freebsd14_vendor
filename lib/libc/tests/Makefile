@@ -1,4 +1,4 @@
-# $FreeBSD: 3e71350d82a969b5a91f8c1d92abb7eb045fdb75 $
+# $FreeBSD: 11c3a635339d2d0040649ab75d6de0b73a246e61 $
 
 .include <src.opts.mk>
 
@@ -20,6 +20,7 @@ TESTS_SUBDIRS+=	stdlib
 TESTS_SUBDIRS+=	string
 TESTS_SUBDIRS+=	sys
 TESTS_SUBDIRS+=	termios
+TESTS_SUBDIRS+=	time
 TESTS_SUBDIRS+=	tls
 TESTS_SUBDIRS+=	ttyio
 

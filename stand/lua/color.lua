@@ -25,7 +25,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 364d548ca3dcbbaba093214dc3443259ff00e912 $
+-- $FreeBSD: 4dc16cacb97ecc189086840e163b4ce9161c6c84 $
 --
 
 local core = require("core")
@@ -56,7 +56,7 @@ function color.isEnabled()
 	if c ~= nil then
 		return c:lower() ~= "no" and c ~= "0"
 	end
-	return not core.isSerialBoot()
+	return true
 end
 
 function color.escapefg(color_value)

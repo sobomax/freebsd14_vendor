@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a4fc9cb809b0263bd6c440f5df2438c4ffebadd $");
+__FBSDID("$FreeBSD: 92a4fcdabc0edafed8476c3dcfb3cccb7061dd0b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,7 +141,6 @@ MALLOC_DEFINE(M_THUNDER_MDIO, "ThunderX MDIO",
 
 #define	MDIO_LOCK_ASSERT(sc)				\
     mtx_assert(&(sc)->mtx, MA_OWNED)
-
 
 #define	mdio_reg_read(sc, reg)				\
     bus_read_8((sc)->reg_base, (reg))

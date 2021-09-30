@@ -25,27 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bdd0b55c54890b80cb96122c4b7f9f7a999627bc $
+ * $FreeBSD: 4989bff29ec4f2ee7661b997b13cd2f1e2583636 $
  *
  */
 
 #ifndef _MVEC_H_
 #define _MVEC_H_
 #include <machine/bus.h>
-
-static __inline void
-busdma_map_mbuf_fast(bus_dma_tag_t tag, bus_dmamap_t map,
-    struct mbuf *m, bus_dma_segment_t *seg)
-{
-#if defined(__i386__) || defined(__amd64__)
-	seg->ds_addr = pmap_kextract(mtod(m, vm_offset_t));
-	seg->ds_len = m->m_len;
-#else
-	int nsegstmp;
-
-	bus_dmamap_load_mbuf_sg(tag, map, m, seg, &nsegstmp, 0);
-#endif
-}
 
 int busdma_map_sg_collapse(bus_dma_tag_t tag, bus_dmamap_t map,
     struct mbuf **m, bus_dma_segment_t *segs, int *nsegs);

@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf42bca48d2dd64f34617f4af9a7a0c1c1bd4e4c $");
+__FBSDID("$FreeBSD: 145676dd579a1d26ba4b8832da832da457ca8fe0 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -320,7 +320,6 @@ nlm_board_get_phyaddr(int block, int port, int *phyaddr)
 		break;
 	}
 }
-
 
 static void
 nlm_print_processor_info(void)

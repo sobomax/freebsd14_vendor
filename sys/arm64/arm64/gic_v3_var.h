@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 27dec4d72190390eaf9c8f2d74b67f880cd38800 $
+ * $FreeBSD: 1645c417fd8d242d1849de62055be28d79115e24 $
  */
 
 #ifndef _GIC_V3_VAR_H_
@@ -68,6 +68,11 @@ struct gic_v3_softc {
 	/* Re-Distributors */
 	struct gic_redists	gic_redists;
 
+	/* Message Based Interrupts */
+	u_int			gic_mbi_start;
+	u_int			gic_mbi_end;
+	struct mtx		gic_mbi_mtx;
+
 	uint32_t		gic_pidr2;
 	u_int			gic_bus;
 
@@ -82,7 +87,6 @@ struct gic_v3_softc {
 	struct gic_v3_irqsrc	*gic_irqs;
 };
 
-
 struct gic_v3_devinfo {
 	int gic_domain;
 	int msi_xref;
@@ -94,11 +98,10 @@ MALLOC_DECLARE(M_GIC_V3);
 
 /* ivars */
 #define	GICV3_IVAR_NIRQS	1000
-#define	GICV3_IVAR_REDIST_VADDR	1001
+/* 1001 was GICV3_IVAR_REDIST_VADDR */
 #define	GICV3_IVAR_REDIST	1002
 
 __BUS_ACCESSOR(gicv3, nirqs, GICV3, NIRQS, u_int);
-__BUS_ACCESSOR(gicv3, redist_vaddr, GICV3, REDIST_VADDR, void *);
 __BUS_ACCESSOR(gicv3, redist, GICV3, REDIST, void *);
 
 /* Device methods */

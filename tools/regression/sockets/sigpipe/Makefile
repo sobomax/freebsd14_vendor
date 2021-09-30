@@ -1,9 +1,8 @@
 #
-# $FreeBSD: 51167011edb634c4bd4c45fb5f0e85e0fe76dcbc $
+# $FreeBSD: bd7720fbcbed8e1f0ece27bac59d64f138774a8f $
 #
 
 PROG=	sigpipe
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

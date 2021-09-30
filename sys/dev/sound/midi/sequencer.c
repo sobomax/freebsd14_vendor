@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03b22cd10c414d5dc9269bfa93df6d4e53bf108d $");
+__FBSDID("$FreeBSD: ed8ba6dde699ed6eb35bec88fa6ebfd9f5f9265a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -159,7 +159,8 @@ struct seq_softc {
  * we currently own.
  */
 
-SYSCTL_NODE(_hw_midi, OID_AUTO, seq, CTLFLAG_RD, 0, "Midi sequencer");
+SYSCTL_NODE(_hw_midi, OID_AUTO, seq, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "Midi sequencer");
 
 int					seq_debug;
 /* XXX: should this be moved into debug.midi? */
@@ -309,7 +310,6 @@ static void timer_setvals(struct seq_softc *t, int tempo, int timerbase);
 static void timer_wait(struct seq_softc *t, int ticks, int wait_abs);
 static int timer_now(struct seq_softc *t);
 
-
 static void
 timer_start(struct seq_softc *t)
 {
@@ -434,7 +434,7 @@ static void
 seq_eventthread(void *arg)
 {
 	struct seq_softc *scp = arg;
-	char event[EV_SZ];
+	u_char event[EV_SZ];
 
 	mtx_lock(&scp->seq_lock);
 	SEQ_DEBUG(2, printf("seq_eventthread started\n"));
@@ -1010,7 +1010,6 @@ mseq_write(struct cdev *i_dev, struct uio *uio, int ioflag)
 
 		/* Have a look at the event code. */
 		if (ev_code == SEQ_FULLSIZE) {
-
 			/*
 			 * TODO: restore code for SEQ_FULLSIZE
 			 */
@@ -1043,7 +1042,6 @@ mseq_write(struct cdev *i_dev, struct uio *uio, int ioflag)
 				mtx_lock(&scp->seq_lock);
 				if (retval)
 					goto err0;
-
 			}
 			retval = 0;
 			goto err0;
@@ -1110,7 +1108,6 @@ mseq_write(struct cdev *i_dev, struct uio *uio, int ioflag)
 				goto err0;
 #endif
 		}
-
 	}
 
 	scp->playing = 1;
@@ -1836,7 +1833,6 @@ seq_chncommon(struct seq_softc *scp, kobj_t md, u_char *event)
 		    printf("seq_chncommon event type %d not handled.\n",
 		    event[1]));
 		break;
-
 	}
 	mtx_lock(&scp->seq_lock);
 	return ret;
@@ -2027,7 +2023,6 @@ seq_sync(struct seq_softc *scp)
 	 * the queue is moving along.  If it isn't just abort.
 	 */
 	while (!MIDIQ_EMPTY(scp->out_q)) {
-
 		if (!scp->playing) {
 			scp->playing = 1;
 			cv_broadcast(&scp->state_cv);

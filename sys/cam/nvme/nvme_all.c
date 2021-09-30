@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ed16df40852888d03b0e9d366a5b6653fac3c6c $");
+__FBSDID("$FreeBSD: 14fcd3a7536e7cff2fe60b0d1271b8f11f56020b $");
 
 #include <sys/param.h>
 
@@ -84,7 +84,6 @@ nvme_identify_match(caddr_t identbuffer, caddr_t table_entry)
 {
 	return 0;
 }
-
 
 void
 nvme_print_ident(const struct nvme_controller_data *cdata,
@@ -153,7 +152,12 @@ nvme_cmd_string(const struct nvme_command *cmd, char *cmd_string, size_t len)
 	nvme_cmd_sbuf(cmd, &sb);
 
 	error = sbuf_finish(&sb);
-	if (error != 0 && error != ENOMEM)
+	if (error != 0 &&
+#ifdef _KERNEL
+	    error != ENOMEM)
+#else
+	    errno != ENOMEM)
+#endif
 		return ("");
 
 	return(sbuf_data(&sb));

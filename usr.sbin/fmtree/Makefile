@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 5e1bb6098df97118f477da33a4ab9e4251223c39 $
+# $FreeBSD: c1ba3737b25883d004076f596d8904e7ba36ac84 $
 
 .include <bsd.own.mk>
 
@@ -10,7 +10,7 @@ MAN=	fmtree.8
 SRCS=	compare.c crc.c create.c excludes.c misc.c mtree.c spec.c verify.c
 SRCS+=	specspec.c
 
-CFLAGS+= -DMD5 -DSHA1 -DRMD160 -DSHA256
+CFLAGS+= -DWITH_MD5 -DWITH_SHA1 -DWITH_RMD160 -DWITH_SHA256
 LIBADD=	md
 
 CLEANFILES+=	fmtree.8

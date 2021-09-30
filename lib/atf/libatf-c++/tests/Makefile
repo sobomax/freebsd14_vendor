@@ -1,4 +1,4 @@
-# $FreeBSD: 0e0e455e458d3f316c46491efc46276037ff5926 $
+# $FreeBSD: 851be7af97c4c378f01b66a0d5459725aac1110b $
 
 .include <bsd.init.mk>
 
@@ -25,6 +25,13 @@ ${PACKAGE}FILES+=	unused_test.cpp
 		utils_test
 ATF_TESTS_CXX+=	${_T}
 SRCS.${_T}=	${_T}.cpp test_helpers.cpp
+.endfor
+
+.for _T in	atf_c++_test \
+		build_test \
+		check_test \
+		macros_test
+TEST_METADATA.${_T}+=	required_programs="c++"
 .endfor
 
 .include <bsd.test.mk>

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0ea526dea3952050b0e56aee54f4eda27d037cf $");
+__FBSDID("$FreeBSD: c8f6f4a1b3b736fd2027160603227db33b5fd705 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: b0ea526dea3952050b0e56aee54f4eda27d037cf $");
 #include <machine/atomic.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/gate/g_gate.h>
 
 FEATURE(geom_gate, "GEOM Gate module");
@@ -61,7 +62,7 @@ FEATURE(geom_gate, "GEOM Gate module");
 static MALLOC_DEFINE(M_GATE, "gg_data", "GEOM Gate Data");
 
 SYSCTL_DECL(_kern_geom);
-static SYSCTL_NODE(_kern_geom, OID_AUTO, gate, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_kern_geom, OID_AUTO, gate, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "GEOM_GATE configuration");
 static int g_gate_debug = 0;
 SYSCTL_INT(_kern_geom_gate, OID_AUTO, debug, CTLFLAG_RWTUN, &g_gate_debug, 0,
@@ -82,7 +83,6 @@ static struct cdevsw g_gate_cdevsw = {
 	.d_ioctl =	g_gate_ioctl,
 	.d_name =	G_GATE_CTL_NAME
 };
-
 
 static struct g_gate_softc **g_gate_units;
 static u_int g_gate_nunits;
@@ -284,6 +284,7 @@ g_gate_start(struct bio *pbp)
 	case BIO_DELETE:
 	case BIO_WRITE:
 	case BIO_FLUSH:
+	case BIO_SPEEDUP:
 		/* XXX: Hack to allow read-only mounts. */
 		if ((sc->sc_flags & G_GATE_FLAG_READONLY) != 0) {
 			g_io_deliver(pbp, EPERM);
@@ -870,6 +871,7 @@ g_gate_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int flags, struct threa
 		case BIO_READ:
 		case BIO_DELETE:
 		case BIO_FLUSH:
+		case BIO_SPEEDUP:
 			break;
 		case BIO_WRITE:
 			error = copyout(bp->bio_data, ggio->gctl_data,
@@ -934,6 +936,7 @@ start_end:
 				case BIO_DELETE:
 				case BIO_WRITE:
 				case BIO_FLUSH:
+				case BIO_SPEEDUP:
 					break;
 				}
 			}

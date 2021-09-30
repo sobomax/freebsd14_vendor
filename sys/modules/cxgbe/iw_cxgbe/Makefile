@@ -1,4 +1,4 @@
-# $FreeBSD: 6b17979e0df216b5defe970a65bd0c58e7aaf2e7 $
+# $FreeBSD: 69ac1a4de7524e9f20a1ad4176976b2ace397d3c $
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
 .PATH: ${CXGBE}/iw_cxgbe
@@ -14,7 +14,7 @@ SRCS+=	provider.c
 SRCS+=	qp.c
 SRCS+=	resource.c
 SRCS+=	${LINUXKPI_GENSRCS}
-SRCS+=	opt_inet.h opt_inet6.h opt_ktr.h opt_ofed.h opt_sched.h
+SRCS+=	opt_inet.h opt_inet6.h opt_ktr.h opt_ofed.h
 
 CFLAGS+= -I${CXGBE} -I${SRCTOP}/sys/ofed/include -DLINUX_TYPES_DEFINED
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

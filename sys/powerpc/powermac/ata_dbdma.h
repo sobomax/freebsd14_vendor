@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ec3a842f1e4c6113f8271441362a9a16ea23c58c $
+ * $FreeBSD: 44ef2f1d083df2af6dab027b6b81df9caf4504d2 $
  */
 
 #ifndef ATA_DBDMA_H
@@ -54,4 +54,3 @@ struct ata_dbdma_channel {
 void ata_dbdma_dmainit(device_t dev);
 
 #endif /* ATA_DBDMA_H */
-

@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_pcb.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: d2df04402b2f85e732b1c025a6c50ea59d32a380 $
+ * $FreeBSD: 06df113c2325012d5875b4433f9a8855a7616be0 $
  */
 
 #ifndef _NETINET6_IN6_PCB_H_
@@ -95,7 +95,7 @@ struct	inpcb *
 struct inpcb *
 	in6_pcblookup_hash_locked(struct inpcbinfo *pcbinfo,
 	    struct in6_addr *faddr, u_int fport_arg, struct in6_addr *laddr,
-	    u_int lport_arg, int lookupflags, struct ifnet *ifp);
+	    u_int lport_arg, int lookupflags, struct ifnet *ifp, uint8_t);
 struct	inpcb *
 	in6_pcblookup(struct inpcbinfo *, struct in6_addr *,
 			   u_int, struct in6_addr *, u_int, int,

@@ -1,7 +1,7 @@
 /*-
  * This file is in the public domain
  *
- * $FreeBSD: e65986f19fcd1ebb3f0ba6c55caaeeff61c032bd $
+ * $FreeBSD: daa57062b1b24d4989888e4e8c4b93c9c2520c66 $
  */
 
 /*
@@ -47,9 +47,9 @@
  *     %VERSREQ field in the Makefile.$ARCH of all the affected makefiles
  *     (typically all of them).
  *
- * $FreeBSD: e65986f19fcd1ebb3f0ba6c55caaeeff61c032bd $
+ * $FreeBSD: daa57062b1b24d4989888e4e8c4b93c9c2520c66 $
  */
-#define	CONFIGVERS	600016
+#define	CONFIGVERS	600018
 #define	MAJOR_VERS(x)	((x) / 100000)
 
 /* Last config(8) version to require envmode/hintmode */

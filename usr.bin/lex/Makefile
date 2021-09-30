@@ -1,4 +1,4 @@
-# $FreeBSD: 473b089286816a0afdd2ea8b0df5f5cf4030c0e6 $
+# $FreeBSD: 3459d8815620adecf454d17d0c6bf11adc4a7ccb $
 #
 # By default, flex will be configured to generate 8-bit scanners only if the
 # -8 flag is given.  If you want it to always generate 8-bit scanners, add
@@ -14,7 +14,7 @@ LINKS+=	${BINDIR}/lex ${BINDIR}/lex++
 LINKS+=	${BINDIR}/lex ${BINDIR}/flex
 LINKS+=	${BINDIR}/lex ${BINDIR}/flex++
 
-FLEXDIR=	${SRCTOP}/contrib/flex
+FLEXDIR=	${SRCTOP}/contrib/flex/src
 
 .PATH:		${FLEXDIR}
 
@@ -42,11 +42,7 @@ SUBDIR=		lib
 FLEX_VERSION=	`awk -f ${.CURDIR}/version.awk ${.CURDIR}/config.h`
 
 skel.c: config.h mkskel.sh flex.skl version.awk
-	sed 's/m4_/m4postproc_/g; s/m4preproc_/m4_/g' \
-	    ${FLEXDIR}/flex.skl | \
-	m4 -I${FLEXDIR} -P ${FLEX_VERSION} | \
-	sed 's/m4postproc_/m4_/g' | \
-	sh ${FLEXDIR}/mkskel.sh > ${.TARGET}
+	sh ${FLEXDIR}/mkskel.sh ${FLEXDIR} m4 ${FLEX_VERSION} > ${.TARGET}
 
 bootstrap: ${GENFILES:S/^/init/g}
 .for _f in ${GENFILES}

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e62954bd4ae3314f67cced63698fb62b21217dd $");
+__FBSDID("$FreeBSD: a41dc7c04a88c669b45d0682ee30ff5f8ce31740 $");
 
 #include "opt_ufs.h"
 
@@ -85,7 +85,7 @@ ufs_gjournal_modref(struct vnode *vp, int count)
 	if ((u_int)ino >= fs->fs_ipg * fs->fs_ncg)
 		panic("ufs_gjournal_modref: range: dev = %s, ino = %lu, fs = %s",
 		    devtoname(dev), (u_long)ino, fs->fs_fsmnt);
-	if ((error = ffs_getcg(fs, devvp, cg, &bp, &cgp)) != 0)
+	if ((error = ffs_getcg(fs, devvp, cg, 0, &bp, &cgp)) != 0)
 		return (error);
 	cgp->cg_unrefs += count;
 	UFS_LOCK(ump);

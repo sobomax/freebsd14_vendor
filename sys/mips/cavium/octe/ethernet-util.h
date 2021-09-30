@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -28,7 +27,7 @@ TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
 AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT TO THE SOFTWARE, INCLUDING ITS CONDITION, ITS CONFORMITY TO ANY REPRESENTATION OR DESCRIPTION, OR THE EXISTENCE OF ANY LATENT OR PATENT DEFECTS, AND CAVIUM SPECIFICALLY DISCLAIMS ALL IMPLIED (IF ANY) WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS, QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION. THE ENTIRE  RISK ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE LIES WITH YOU.
 
 *************************************************************************/
-/* $FreeBSD: add5f8918833ce3be1866c004a8fc79797cf7f41 $ */
+/* $FreeBSD: 2c6c280a15bae8e89c874790575f4d5acd03a823 $ */
 
 #define DEBUGPRINT(format, ...) printf(format, ##__VA_ARGS__)
 
@@ -43,7 +42,6 @@ static inline char *cvm_oct_get_buffer_ptr(cvmx_buf_ptr_t packet_ptr)
 {
 	return cvmx_phys_to_ptr(((packet_ptr.s.addr >> 7) - packet_ptr.s.back) << 7);
 }
-
 
 /**
  * Given an IPD/PKO port number, return the logical interface it is
@@ -67,7 +65,6 @@ static inline int INTERFACE(int ipd_port)
 		panic("Illegal ipd_port %d passed to INTERFACE\n", ipd_port);
 }
 
-
 /**
  * Given an IPD/PKO port number, return the port's index on a
  * logical interface.
@@ -83,4 +80,3 @@ static inline int INDEX(int ipd_port)
 	else
 		return ipd_port & 3;
 }
-

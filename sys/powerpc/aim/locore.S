@@ -1,4 +1,4 @@
-/* $FreeBSD: 806884dfbeff4231d409273e9d5f9ecc004cbde6 $ */
+/* $FreeBSD: 861536447be100a7604700c8d47c9d3aeb89ea90 $ */
 
 #ifdef __powerpc64__
 #include <powerpc/aim/locore64.S>
@@ -13,3 +13,4 @@
 ENTRY(get_spr)
 	mfspr	%r3, 0
 	blr
+END(get_spr)

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20a5ae9d3e5b01506b1bb551618a335d32856f54 $");
+__FBSDID("$FreeBSD: 0602893d90277ec5c71069e2148e6c3091e4ab1a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,7 +78,6 @@ static device_method_t chipc_cfi_methods[] = {
 	DEVMETHOD(device_probe,		chipc_cfi_probe),
 	DEVMETHOD(device_attach,	chipc_cfi_attach),
 	DEVMETHOD(device_detach,	cfi_detach),
-
 	{0, 0}
 };
 

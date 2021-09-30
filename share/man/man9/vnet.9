@@ -26,9 +26,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 72a66a75f9c84d9bf872ea71e1667f4ec6fd0fa8 $
+.\" $FreeBSD: 16c0db9a1f1c8ad431df01aa928c55b0c7f88290 $
 .\"
-.Dd July 24, 2018
+.Dd December 10, 2020
 .Dt VNET 9
 .Os
 .Sh NAME
@@ -38,8 +38,7 @@
 .Cd "options VIMAGE"
 .Cd "options VNET_DEBUG"
 .Pp
-.In sys/vnet.h
-.Pp
+.In net/vnet.h
 .\"------------------------------------------------------------
 .Ss "Constants and Global Variables"
 .\"
@@ -506,13 +505,13 @@ The virtual network stack implementation first appeared in
 .An -nosplit
 The
 .Nm
-framework has been designed and implemented at the University of Zagreb by
-.An Marko Zec ,
+framework was designed and implemented at the University of Zagreb by
+.An Marko Zec
+under sponsorship of the FreeBSD Foundation and NLnet Foundation,
 and later extended and refined by
 .An Bjoern A. Zeeb
-and
-.An Robert Watson ,
-under contract to the FreeBSD Foundation.
+(also under FreeBSD Foundation sponsorship), and
+.An Robert Watson .
 .Pp
 This manual page was written by
 .An Bjoern A. Zeeb, CK Software GmbH,

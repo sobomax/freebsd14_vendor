@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1f396c5ddcbb63ea52890c60d09bd05ae76ce6c4 $
+ * $FreeBSD: 967f29eeb40cdb3379826d9d89bf670120738c23 $
  */
 
 #ifndef _POWERPC_POWERMAC_POWERMAC_THERMAL_H
@@ -35,7 +35,7 @@
 
 struct pmac_fan {
 	int min_rpm, max_rpm, default_rpm;
-	
+
 	char name[32];
 	int zone;
 
@@ -45,7 +45,7 @@ struct pmac_fan {
 
 struct pmac_therm {
 	int target_temp, max_temp;	/* Tenths of a degree K */
-	
+
 	char name[32];
 	int zone;
 

@@ -3,7 +3,7 @@
 #
 # This includes all the required drivers for the SoCs.
 #
-# $FreeBSD: 8040585e9cb948b27e498c12e408ee88b414b1dd $
+# $FreeBSD: 397a0bc322daf6c6407001a69da043da123a8847 $
 #
 
 # Include the standard file list for Mediatek SoCs.
@@ -72,9 +72,6 @@ device 		fdt_pinctrl
 
 # UART support
 device 		uart
-
-# random support
-device 		random
 
 # loop device support
 device 		loop

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9834e3f3d0f712bffce0ebb7bfc53a9b49a6cf7d $
+ * $FreeBSD: ad04bb93962ab7a05c88b98a34fd63a19771fefe $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@
 
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
-
 
 #include <netsmb/smb.h>
 #include <netsmb/smb_conn.h>
@@ -114,6 +113,7 @@ struct vop_vector smbfs_vnodeops = {
 	.vop_symlink =		smbfs_symlink,
 	.vop_write =		smbfs_write,
 };
+VFS_VOP_VECTOR_REGISTER(smbfs_vnodeops);
 
 static int
 smbfs_access(ap)
@@ -140,7 +140,7 @@ smbfs_access(ap)
 	}
 	mpmode = vp->v_type == VREG ? smp->sm_file_mode : smp->sm_dir_mode;
 	return (vaccess(vp->v_type, mpmode, smp->sm_uid,
-	    smp->sm_gid, ap->a_accmode, ap->a_cred, NULL));
+	    smp->sm_gid, ap->a_accmode, ap->a_cred));
 }
 
 /* ARGSUSED */
@@ -552,7 +552,6 @@ smbfs_create(ap)
 	char *name = cnp->cn_nameptr;
 	int nmlen = cnp->cn_namelen;
 	int error;
-	
 
 	SMBVDEBUG("\n");
 	*vpp = NULL;
@@ -562,7 +561,7 @@ smbfs_create(ap)
 		return error;
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, cnp->cn_thread, cnp->cn_cred);
-	
+
 	error = smbfs_smb_create(dnp, name, nmlen, scred);
 	if (error)
 		goto out;
@@ -897,7 +896,7 @@ smbfs_pathconf (ap)
 	struct smb_vc *vcp = SSTOVC(smp->sm_share);
 	long *retval = ap->a_retval;
 	int error = 0;
-	
+
 	switch (ap->a_name) {
 	    case _PC_FILESIZEBITS:
 		if (vcp->vc_sopt.sv_caps & (SMB_CAP_LARGE_READX |
@@ -1038,7 +1037,6 @@ smbfs_advlock(ap)
 	}
 	size = np->n_size;
 	switch (fl->l_whence) {
-
 	case SEEK_SET:
 	case SEEK_CUR:
 		start = fl->l_start;
@@ -1187,7 +1185,7 @@ smbfs_lookup(ap)
 	int nmlen = cnp->cn_namelen;
 	int error, islastcn, isdot;
 	int killit;
-	
+
 	SMBVDEBUG("\n");
 	if (dvp->v_type != VDIR)
 		return ENOTDIR;
@@ -1338,7 +1336,7 @@ smbfs_lookup(ap)
 		error = vfs_busy(mp, MBF_NOWAIT);
 		if (error != 0) {
 			vfs_ref(mp);
-			VOP_UNLOCK(dvp, 0);
+			VOP_UNLOCK(dvp);
 			error = vfs_busy(mp, 0);
 			vn_lock(dvp, LK_EXCLUSIVE | LK_RETRY);
 			vfs_rel(mp);
@@ -1346,17 +1344,17 @@ smbfs_lookup(ap)
 				error = ENOENT;
 				goto out;
 			}
-			if ((dvp->v_iflag & VI_DOOMED) != 0) {
+			if (VN_IS_DOOMED(dvp)) {
 				vfs_unbusy(mp);
 				error = ENOENT;
 				goto out;
 			}
 		}	
-		VOP_UNLOCK(dvp, 0);
+		VOP_UNLOCK(dvp);
 		error = smbfs_nget(mp, dvp, name, nmlen, NULL, &vp);
 		vfs_unbusy(mp);
 		vn_lock(dvp, LK_EXCLUSIVE | LK_RETRY);
-		if ((dvp->v_iflag & VI_DOOMED) != 0) {
+		if (VN_IS_DOOMED(dvp)) {
 			if (error == 0)
 				vput(vp);
 			error = ENOENT;

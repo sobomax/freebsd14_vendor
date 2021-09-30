@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 025bed0d73dea3865130a43300f085719158e8fb $");
+__FBSDID("$FreeBSD: 00aaa73027a897947aa94f52cece7f4b5af37c72 $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -280,7 +280,6 @@ sfxge_mcdi_ioctl(struct sfxge_softc *sc, sfxge_ioc_t *ip)
 	 * Both ports will see ->emt_exception callbacks on the next MCDI poll
 	 */
 	if (ip->u.mcdi.cmd == MC_CMD_REBOOT) {
-
 		EFSYS_PROBE(mcdi_ioctl_mc_reboot);
 		/* sfxge_t->s_state_lock held */
 		(void) sfxge_schedule_reset(sc);
@@ -298,7 +297,6 @@ fail2:
 fail1:
 	return (rc);
 }
-
 
 int
 sfxge_mcdi_init(struct sfxge_softc *sc)

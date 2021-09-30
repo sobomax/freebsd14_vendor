@@ -1,10 +1,13 @@
 /*
- * $FreeBSD: 5821f62b64309c4f746ac8bbdd9b14a229cdabd1 $
+ * $FreeBSD: 1da7b81ba11b99ef012be1d005fd6c6eae6e7e29 $
  */
 
 FBSD_1.0 {
-	regcomp;
 	regerror;
 	regexec;
 	regfree;
+};
+
+FBSD_1.6 {
+	regcomp;
 };

@@ -1,6 +1,5 @@
 #
 # Copyright (c) 2001 John Baldwin <jhb@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: 9c3fb15ddf5807df5717fb0488ad229edb18149c $
+# $FreeBSD: 951b07f209d390031b5353619b75d8175d999e69 $
 
 #
 # This program is a freestanding boot program to load an a.out binary

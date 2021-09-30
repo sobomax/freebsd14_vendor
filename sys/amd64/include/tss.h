@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)tss.h	5.4 (Berkeley) 1/18/91
- * $FreeBSD: a3176376917575e4e0fbcedf6900b88517003d13 $
+ * $FreeBSD: 12cb3a22e0e40a38a2649437d6dad9532a88ffc3 $
  */
 
 #ifndef _MACHINE_TSS_H_
@@ -64,9 +64,5 @@ struct amd64tss {
 	u_int16_t	tss_rsvd5;
 	u_int16_t	tss_iobase;	/* io bitmap offset */
 };
-
-#ifdef _KERNEL
-extern struct amd64tss common_tss[];
-#endif
 
 #endif /* _MACHINE_TSS_H_ */

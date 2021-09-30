@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ea04c9d532b26a8a83e9c2587e3ad4a12bd633ba $
+ * $FreeBSD: 69bdf2193151281496e3c926e4a17056456f88c0 $
  */
 
 #include <dev/hptnr/hptnr_config.h>
@@ -90,7 +90,7 @@ BUS_ADDRESS get_dmapool_phy_addr(void *osext, void * dmapool_virt_addr)
 
 HPT_U32 pcicfg_read_dword(HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg)
 {
-	return (HPT_U32)pci_cfgregread(bus, dev, func, reg, 4);;
+	return (HPT_U32)pci_cfgregread(bus, dev, func, reg, 4);
 }/* PCI space access */
 
 void *os_map_pci_bar(

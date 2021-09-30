@@ -1,4 +1,4 @@
-# $FreeBSD: 8df09a2c7c0cf128ba85a958adffcd6d21e3a167 $
+# $FreeBSD: 8758261ad45fd8f7fa8563bbf7014fc60cffa28a $
 
 .include <bsd.init.mk>
 
@@ -37,9 +37,6 @@ CFLAGS+=-fomit-frame-pointer \
 CFLAGS.gcc+=	-Os \
 		-fno-asynchronous-unwind-tables \
 		--param max-inline-insns-single=100
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} <= 40201
-CFLAGS.gcc+=   -mno-align-long-strings
-.endif
 
 CFLAGS.clang+=	-Oz ${CLANG_OPT_SMALL}
 
@@ -66,7 +63,7 @@ BOOT2SIZE=	7680
 boot2: boot2.ld
 	@set -- `ls -l ${.ALLSRC}`; x=$$((${BOOT2SIZE}-$$5)); \
 	    echo "$$x bytes available"; test $$x -ge 0
-	${DD} if=${.ALLSRC} of=${.TARGET} obs=${BOOT2SIZE} conv=osync
+	${DD} if=${.ALLSRC} of=${.TARGET} bs=${BOOT2SIZE} conv=sync
 
 boot2.ld: boot2.ldr boot2.bin ${BTXKERN}
 	btxld -v -E ${ORG2} -f bin -b ${BTXKERN} -l boot2.ldr \
@@ -96,6 +93,3 @@ boot2.h: boot1.out
 	    REL1=`printf "%d" ${REL1}` > ${.TARGET}
 
 .include <bsd.prog.mk>
-
-# XXX: clang integrated-as doesn't grok .codeNN directives yet
-CFLAGS.boot1.S=		${CLANG_NO_IAS}

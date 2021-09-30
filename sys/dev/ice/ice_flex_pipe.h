@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2020, Intel Corporation
+/*  Copyright (c) 2021, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: d33946e4f68146959faa50237e6e412c4f9111fa $*/
+/*$FreeBSD: 7ec919e3bc6143e9a3d833e310e5297cf49bf24e $*/
 
 #ifndef _ICE_FLEX_PIPE_H_
 #define _ICE_FLEX_PIPE_H_

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5cb75e06cd382bf05724aca670602cf4a29f25f7 $
+ * $FreeBSD: d424d16164a6a25de8dc9d602c6ab2a04a23508c $
  */
 #ifndef	_LINUX_DMA_ATTR_H_
 #define	_LINUX_DMA_ATTR_H_
@@ -45,7 +45,6 @@
 struct dma_attrs {
 	unsigned long flags;
 };
-
 #define DEFINE_DMA_ATTRS(x) struct dma_attrs x = { }
 
 static inline void

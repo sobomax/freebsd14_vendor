@@ -48,14 +48,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44ac8c0e8b77f8f3c4b294e0e16d0f96245ca447 $");
+__FBSDID("$FreeBSD: a96f5024f57c6c0190a1cb1483ffdd640ae24006 $");
 
 #include <crypto/sha1.h>
 #include <opencrypto/xform_auth.h>
 
 static	void SHA1Init_int(void *);
-static	int SHA1Update_int(void *, const u_int8_t *, u_int16_t);
-static	void SHA1Final_int(u_int8_t *, void *);
+static	int SHA1Update_int(void *, const void *, u_int);
+static	void SHA1Final_int(uint8_t *, void *);
 
 /* Plain hash */
 struct auth_hash auth_hash_sha1 = {
@@ -82,18 +82,6 @@ struct auth_hash auth_hash_hmac_sha1 = {
 	.Final = SHA1Final_int,
 };
 
-struct auth_hash auth_hash_key_sha1 = {
-	.type = CRYPTO_SHA1_KPDK,
-	.name = "Keyed SHA1",
-	.keysize = 0,
-	.hashsize = SHA1_KPDK_HASH_LEN,
-	.ctxsize = sizeof(SHA1_CTX),
-	.blocksize = 0,
-	.Init = SHA1Init_int,
-	.Update = SHA1Update_int,
-	.Final = SHA1Final_int,
-};
-
 /*
  * And now for auth.
  */
@@ -104,14 +92,14 @@ SHA1Init_int(void *ctx)
 }
 
 static int
-SHA1Update_int(void *ctx, const u_int8_t *buf, u_int16_t len)
+SHA1Update_int(void *ctx, const void *buf, u_int len)
 {
 	SHA1Update(ctx, buf, len);
 	return 0;
 }
 
 static void
-SHA1Final_int(u_int8_t *blk, void *ctx)
+SHA1Final_int(uint8_t *blk, void *ctx)
 {
 	SHA1Final(blk, ctx);
 }

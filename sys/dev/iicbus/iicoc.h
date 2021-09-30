@@ -27,7 +27,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3a677c0ff8d56c2c3b20aff4a65c9f25f3282e41 $
+ * $FreeBSD: c9b91ef1a895224c16b596a0d1f03a4f5c1962db $
  */
 
 #ifndef __OPENCORE_I2C_H__
@@ -77,4 +77,30 @@
 #define OC_STATUS_TIP			0x02	/* Transfer in Progress  */
 #define OC_STATUS_IF			0x01	/* Intr. Pending Flag */
 
+struct iicoc_softc {
+	device_t	dev;		/* Self */
+	u_int		reg_shift;	/* Chip specific */
+	u_int		clockfreq;
+	u_int		i2cfreq;
+	struct resource *mem_res;	/* Memory resource */
+	int		mem_rid;
+	int		sc_started;
+	uint8_t		i2cdev_addr;
+	device_t	iicbus;
+	struct mtx	sc_mtx;
+};
+
 #endif
+
+extern devclass_t iicoc_devclass;
+
+int iicoc_iicbus_start(device_t dev, u_char slave, int timeout);
+int iicoc_iicbus_stop(device_t dev);
+int iicoc_iicbus_read(device_t dev, char *buf, int len, int *read, int last,
+    int delay);
+int iicoc_iicbus_write(device_t dev, const char *buf, int len, int *sent,
+    int timeout);
+int iicoc_iicbus_repeated_start(device_t dev, u_char slave, int timeout);
+int iicoc_iicbus_reset(device_t dev, u_char speed, u_char addr, u_char *oldadr);
+
+int iicoc_init(device_t dev);

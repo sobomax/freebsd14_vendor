@@ -1,4 +1,4 @@
-/*	$FreeBSD: 6ac6399359021824731d3bcf6310df66a0add41b $	*/
+/*	$FreeBSD: d2ed954576d3101828ec19e0aebbd9ba18ad86e4 $	*/
 
 
 
@@ -100,11 +100,7 @@ static unsigned char PADDING[64] = {
    (a) += (b); \
   }
 
-#ifdef __STDC__
 #define UL(x)	x##U
-#else
-#define UL(x)	x
-#endif
 
 /* The routine MD5Init initializes the message-digest context
    mdContext. All fields are set to zero.

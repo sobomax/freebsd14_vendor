@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0ea4889cb5d3ee19d4f7dd0080db14a42615a67 $");
+__FBSDID("$FreeBSD: d51744c6fbe3d30753443cf9ae609f6bd61c90f8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -128,4 +128,11 @@ memmmap(struct cdev *dev, vm_ooffset_t offset, vm_paddr_t *paddr,
 		return (0);
 	}
 	return (-1);
+}
+
+int
+memioctl_md(struct cdev *dev __unused, u_long cmd __unused,
+    caddr_t data __unused, int flags __unused, struct thread *td __unused)
+{
+	return (ENOTTY);
 }

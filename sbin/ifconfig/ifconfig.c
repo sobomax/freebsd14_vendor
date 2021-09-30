@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)ifconfig.c	8.2 (Berkeley) 2/16/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: d6bc7131b787c726c374b7557ce49193f53b8e78 $";
+  "$FreeBSD: e6e7908e18cd5a8d81cf65106dcbb7e4e2c8104d $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -196,6 +196,19 @@ usage(void)
 	"       ifconfig %s[-d] [-m] [-u] [-v]\n",
 		options, options, options);
 	exit(1);
+}
+
+void
+ioctl_ifcreate(int s, struct ifreq *ifr)
+{
+	if (ioctl(s, SIOCIFCREATE2, ifr) < 0) {
+		switch (errno) {
+		case EEXIST:
+			errx(1, "interface %s already exists", ifr->ifr_name);
+		default:
+			err(1, "SIOCIFCREATE2");
+		}
+	}
 }
 
 #define ORDERS_SIZE(x) sizeof(x) / sizeof(x[0])
@@ -1344,7 +1357,8 @@ unsetifdescr(const char *val, int value, int s, const struct afswtch *afp)
 "\020\1RXCSUM\2TXCSUM\3NETCONS\4VLAN_MTU\5VLAN_HWTAGGING\6JUMBO_MTU\7POLLING" \
 "\10VLAN_HWCSUM\11TSO4\12TSO6\13LRO\14WOL_UCAST\15WOL_MCAST\16WOL_MAGIC" \
 "\17TOE4\20TOE6\21VLAN_HWFILTER\23VLAN_HWTSO\24LINKSTATE\25NETMAP" \
-"\26RXCSUM_IPV6\27TXCSUM_IPV6\31TXRTLMT\32HWRXTSTMP"
+"\26RXCSUM_IPV6\27TXCSUM_IPV6\31TXRTLMT\32HWRXTSTMP\33NOMAP\34TXTLS4\35TXTLS6" \
+"\36VXLAN_HWCSUM\37VXLAN_HWTSO\40TXTLS_RTLMT"
 
 /*
  * Print the status of the interface.  If an address family was
@@ -1644,6 +1658,8 @@ static struct cmd basic_cmds[] = {
 	DEF_CMD("-link2",	-IFF_LINK2,	setifflags),
 	DEF_CMD("monitor",	IFF_MONITOR,	setifflags),
 	DEF_CMD("-monitor",	-IFF_MONITOR,	setifflags),
+	DEF_CMD("nomap",	IFCAP_NOMAP,	setifcap),
+	DEF_CMD("-nomap",	-IFCAP_NOMAP,	setifcap),
 	DEF_CMD("staticarp",	IFF_STATICARP,	setifflags),
 	DEF_CMD("-staticarp",	-IFF_STATICARP,	setifflags),
 	DEF_CMD("rxcsum6",	IFCAP_RXCSUM_IPV6,	setifcap),
@@ -1670,6 +1686,8 @@ static struct cmd basic_cmds[] = {
 	DEF_CMD("-toe",		-IFCAP_TOE,	setifcap),
 	DEF_CMD("lro",		IFCAP_LRO,	setifcap),
 	DEF_CMD("-lro",		-IFCAP_LRO,	setifcap),
+	DEF_CMD("txtls",	IFCAP_TXTLS,	setifcap),
+	DEF_CMD("-txtls",	-IFCAP_TXTLS,	setifcap),
 	DEF_CMD("wol",		IFCAP_WOL,	setifcap),
 	DEF_CMD("-wol",		-IFCAP_WOL,	setifcap),
 	DEF_CMD("wol_ucast",	IFCAP_WOL_UCAST,	setifcap),
@@ -1680,6 +1698,8 @@ static struct cmd basic_cmds[] = {
 	DEF_CMD("-wol_magic",	-IFCAP_WOL_MAGIC,	setifcap),
 	DEF_CMD("txrtlmt",	IFCAP_TXRTLMT,	setifcap),
 	DEF_CMD("-txrtlmt",	-IFCAP_TXRTLMT,	setifcap),
+	DEF_CMD("txtlsrtlmt",	IFCAP_TXTLS_RTLMT,	setifcap),
+	DEF_CMD("-txtlsrtlmt",	-IFCAP_TXTLS_RTLMT,	setifcap),
 	DEF_CMD("hwrxtstmp",	IFCAP_HWRXTSTMP,	setifcap),
 	DEF_CMD("-hwrxtstmp",	-IFCAP_HWRXTSTMP,	setifcap),
 	DEF_CMD("normal",	-IFF_LINK0,	setifflags),

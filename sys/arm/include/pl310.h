@@ -24,9 +24,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 /*
- * $FreeBSD: 536001597a06bac1ab2ebce5ab9027bcacde6ba1 $
+ * $FreeBSD: 39e8434097a7db26fac2e43c55cd25f7b0ecb067 $
  */
 
 #ifndef PL310_H_

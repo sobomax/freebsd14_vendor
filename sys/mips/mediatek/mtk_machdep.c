@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f9eddce4f252601351a159fdceb5be033ff4d40 $");
+__FBSDID("$FreeBSD: bfffaee634bd79a67ca141d2f269d751a8b518f2 $");
 
 #include "opt_ddb.h"
 
@@ -54,8 +54,11 @@ __FBSDID("$FreeBSD: 2f9eddce4f252601351a159fdceb5be033ff4d40 $");
 #include <sys/user.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <machine/cache.h>
 #include <machine/clock.h>
@@ -70,7 +73,6 @@ __FBSDID("$FreeBSD: 2f9eddce4f252601351a159fdceb5be033ff4d40 $");
 #include <machine/pte.h>
 #include <machine/sigframe.h>
 #include <machine/trap.h>
-#include <machine/vmparam.h>
 
 #include <mips/mediatek/mtk_sysctl.h>
 #include <mips/mediatek/mtk_soc.h>
@@ -233,6 +235,8 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 		while (1);
 
 	mtk_soc_try_early_detect();
+	mtk_soc_set_cpu_model();
+
 	if ((timer_clk = mtk_soc_get_timerclk()) == 0)
 		timer_clk = 1000000000; /* no such speed yet */
 
@@ -293,7 +297,6 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 		else
 			kern_setenv(n, arg);
 	}
-
 
 	mips_init();
 	mips_timer_init_params(timer_clk, 0);

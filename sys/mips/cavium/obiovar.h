@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fbf33b508c6b7236151c96aa09c49d561d0cc9f3 $
+ * $FreeBSD: 3cccf59d92eb5530a224593724ffdfb44164b49d $
  *
  */
 
@@ -51,7 +51,7 @@ struct obio_softc {
 	bus_size_t oba_size;		/* size of device */
 	struct rman oba_rman;
 	struct rman oba_irq_rman;
-	
+
 };
 
 #endif /* _OCTEON_OBIOVAR_H_ */

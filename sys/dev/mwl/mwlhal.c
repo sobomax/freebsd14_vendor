@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: d66941919288be8da0a2267cf17c76063c1aae04 $
+ * $FreeBSD: 4e341f49e85ed92a5ff14f00edc0ab2fb6bf8ca7 $
  */
 
 #include <sys/param.h>
@@ -192,7 +192,7 @@ static void dumpresult(struct mwl_hal_priv *, int showresult);
 #endif /* MWLHAL_DEBUG */
 
 SYSCTL_DECL(_hw_mwl);
-static SYSCTL_NODE(_hw_mwl, OID_AUTO, hal, CTLFLAG_RD, 0,
+static SYSCTL_NODE(_hw_mwl, OID_AUTO, hal, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "Marvell HAL parameters");
 
 static __inline void

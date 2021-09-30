@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f7574718f8c804298ae27c639733279213dc6651 $
+ * $FreeBSD: aecdee7b5c8fd34a45465ad5e362de8956a4a4b4 $
  */
 
 #ifndef _SND_INTPCM_H_
@@ -86,7 +86,6 @@ intpcm_write_##SIGN##32##ENDIAN(uint8_t *dst, intpcm_t v)		\
 									\
 	_PCM_WRITE_##SIGN##32##_##ENDIAN(dst, v);			\
 }
-
 
 #define INTPCM_DECLARE(t)						\
 									\

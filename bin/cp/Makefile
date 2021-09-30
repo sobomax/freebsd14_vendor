@@ -1,9 +1,14 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: d20f60e537d31e20e2e3cd5aa834ed6103b92bce $
+# $FreeBSD: 0c4c7b5eff53b68ac6bf650bb2512c8ad136aea2 $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	cp
 SRCS=	cp.c utils.c
 CFLAGS+= -DVM_AND_BUFFER_CACHE_SYNCHRONIZED -D_ACL_PRIVATE
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}=	tests
 
 .include <bsd.prog.mk>

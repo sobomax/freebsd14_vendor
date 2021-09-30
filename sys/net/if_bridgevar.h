@@ -69,7 +69,7 @@
  *
  * OpenBSD: if_bridge.h,v 1.14 2001/03/22 03:48:29 jason Exp
  *
- * $FreeBSD: fef252821be75946ea421fa2a47c982f27ef9a60 $
+ * $FreeBSD: c12ee45985480243b1616f56e8a09ef24605e999 $
  */
 
 /*
@@ -278,15 +278,15 @@ struct ifbpstpconf {
     "discarding"
 
 #define STP_PROTOS \
-    "stp"          \
-    "-"            \
+    "stp",         \
+    "-",           \
     "rstp"
 
 #define STP_ROLES \
-    "disabled"    \
-    "root"        \
-    "designated"  \
-    "alternate"   \
+    "disabled",   \
+    "root",       \
+    "designated", \
+    "alternate",  \
     "backup"
 
 #define PV2ID(pv, epri, eaddr)	do { \

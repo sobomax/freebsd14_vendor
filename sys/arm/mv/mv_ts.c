@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e94e843a3b8959b4c44cd3981830af71bf5b60e4 $");
+__FBSDID("$FreeBSD: 1a7b3981daad9043593496d9033655a6a8dfb8a5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -150,7 +150,8 @@ ts_attach(device_t dev)
 	}
 	ctx = device_get_sysctl_ctx(dev);
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-	    OID_AUTO, "temperature", CTLTYPE_INT | CTLFLAG_RD, dev,
+	    OID_AUTO, "temperature",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, dev,
 	    0, ts_sysctl_handler, "IK", "Current Temperature");
 
 	return (0);

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5fd84cfa423de7666faa31b7af03ffe52375b348 $
+ * $FreeBSD: b53e0824b5f7ff22f5256c54e9cc1a6402277edc $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -47,8 +47,8 @@
 #define	_C_LABEL(x)	x
 
 #define	ENTRY(sym)						\
-	.text; .globl sym; .type sym,@function; .align 4; sym:
-#define	END(sym) .size sym, . - sym
+	.text; .globl sym; .type sym,@function; .align 4; sym: .cfi_startproc;
+#define	END(sym) .cfi_endproc; .size sym, . - sym
 
 #define	EENTRY(sym)						\
 	.globl	sym; sym:

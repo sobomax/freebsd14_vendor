@@ -43,7 +43,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: 39ad3dcbcf9cf75e484eb1773c0a62ced50a2f07 $");
+__RCSID("$FreeBSD: 06fa7b8de339db862e5281481f7e1e735f04cc1f $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -1749,7 +1749,7 @@ main(int ac, char **av)
 
 	debug("sshd version %s, %s", SSH_VERSION,
 #ifdef WITH_OPENSSL
-	    SSLeay_version(SSLEAY_VERSION)
+	    OpenSSL_version(OPENSSL_VERSION)
 #else
 	    "without OpenSSL"
 #endif

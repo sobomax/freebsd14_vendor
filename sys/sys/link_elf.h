@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6114765baa4a5c987f14aa3fc281c820844924fc $
+ * $FreeBSD: 8e41a670bec04c807842dcefc26da49e6d5125bb $
  */
 
 /*
@@ -69,7 +69,7 @@ typedef struct link_map {
 } Link_map;
 
 struct r_debug {
-	int		r_version;		/* not used */
+	int		r_version;		/* Currently '1' */
 	struct link_map *r_map;			/* list of loaded images */
 	void		(*r_brk)(struct r_debug *, struct link_map *);
 						/* pointer to break point */
@@ -78,7 +78,10 @@ struct r_debug {
 		RT_ADD,				/* adding a shared library */
 		RT_DELETE			/* removing a shared library */
 	}		r_state;
+	void		*r_ldbase;		/* Base address of rtld */
 };
+
+#define	R_DEBUG_VERSION		1
 
 struct dl_phdr_info
 {

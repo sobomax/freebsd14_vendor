@@ -1,4 +1,4 @@
-#! $FreeBSD: 28fc05a9aa7129f5a51249cb3ecb63b390fe3c0b $
+#! $FreeBSD: 0ca74e4545db497998184bf61e94ef3de8408f0b $
 
 LUASRC?=	${SRCTOP}/contrib/lua/src
 .PATH: ${LUASRC}
@@ -20,7 +20,7 @@ SRCS=	lapi.c lcode.c lctype.c ldebug.c ldo.c ldump.c lfunc.c lgc.c linit.c \
 # Library functions; any change to these likely needs an accompanying change
 # in our custom linit_flua.c.  We use our custom linit.c to make it easier to
 # support bootstrap flua that may not have supporting local libraries.
-SRCS+=	lauxlib.c lbaselib.c lbitlib.c lcorolib.c ldblib.c liolib.c \
+SRCS+=	lauxlib.c lbaselib.c lcorolib.c ldblib.c liolib.c \
 	lmathlib.c loslib.c lstrlib.c ltablib.c lutf8lib.c loadlib.c
 
 CFLAGS+=	-I${.CURDIR} -I${.CURDIR}/modules -I${LUASRC}
@@ -29,6 +29,8 @@ CFLAGS+=	-DLUA_PROGNAME="\"${PROG}\""
 .if defined(BOOTSTRAPPING)
 CFLAGS+=	-DLUA_PATH_DEFAULT="\"/nonexistent/?.lua\""
 CFLAGS+=	-DLUA_CPATH_DEFAULT="\"/nonexistent/?.so\""
+# We don't support dynamic libs on bootstrap builds.
+CFLAGS+=	-DBOOTSTRAPPING
 .endif
 
 .include <bsd.lib.mk>

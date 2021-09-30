@@ -25,9 +25,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69e61aab0806f93936f9a05ece15c3599174ac83 $");
+__FBSDID("$FreeBSD: 983a2604a9c4afbfcd8a77071fedc56582a30bef $");
 
 #include "bcm_osal.h"
 #include "ecore.h"
@@ -581,7 +580,6 @@ enum _ecore_status_t ecore_vf_hw_prepare(struct ecore_hwfn *p_hwfn)
 						(u8 *)p_hwfn->p_dev->doorbells;
 		}
 #endif
-
 	}
 
 	/* Allocate vf2pf msg */

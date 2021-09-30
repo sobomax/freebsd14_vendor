@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0717246495b52ffa14dea0e7f7d6b74d2fe33b86 $
+ * $FreeBSD: a030a0791af6b1555c485ad2626e0f86ce549f70 $
  */
 
 #ifndef	IMX_MACHDEP_H
@@ -69,4 +69,3 @@ imx_soc_family(void)
 }
 
 #endif
-

@@ -1,7 +1,6 @@
-# $FreeBSD: 49eccd30a0aaf0ca1fcc6232fd4dd8970d697f36 $
+# $FreeBSD: 8ebdd60ebc057d5c4ad0dc36581b5d821561bcdb $
 
 PROG=	iwistats
 MAN=
-WARNS?=6
 
 .include <bsd.prog.mk>

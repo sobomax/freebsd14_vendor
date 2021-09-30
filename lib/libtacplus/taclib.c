@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c11674ff60d607e21e3df4c63221da5b57ede6e0 $");
+__FBSDID("$FreeBSD: 8a7e78bc37e4bffddfeffe680581fbcedd595935 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -429,10 +429,10 @@ gen_session_id(struct tac_msg *msg)
 {
 	int r;
 
-	r = random();
+	r = arc4random();
 	msg->session_id[0] = r >> 8;
 	msg->session_id[1] = r;
-	r = random();
+	r = arc4random();
 	msg->session_id[2] = r >> 8;
 	msg->session_id[3] = r;
 }
@@ -1051,7 +1051,6 @@ tac_open(void)
 		}
 		init_srvr_str(&h->srvr_msg);
 		init_srvr_str(&h->srvr_data);
-		srandomdev();
 	}
 	return h;
 }

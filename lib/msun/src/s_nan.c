@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 659e98179770371ca66443084d1844580ae4b22d $
+ * $FreeBSD: 17692445ac52ea9906c3bae2e20e54c1b601530a $
  */
 
 #include <sys/endian.h>
@@ -66,14 +66,15 @@ _scan_nan(uint32_t *words, int num_words, const char *s)
 		;
 
 	/* Scan backwards, filling in the bits in words[] as we go. */
-#if _BYTE_ORDER == _LITTLE_ENDIAN
 	for (bitpos = 0; bitpos < 32 * num_words; bitpos += 4) {
-#else
-	for (bitpos = 32 * num_words - 4; bitpos >= 0; bitpos -= 4) {
-#endif
 		if (--si < 0)
 			break;
+#if _BYTE_ORDER == _LITTLE_ENDIAN
 		words[bitpos / 32] |= digittoint(s[si]) << (bitpos % 32);
+#else
+		words[num_words - 1 - bitpos / 32] |=
+		    digittoint(s[si]) << (bitpos % 32);
+#endif
 	}
 }
 

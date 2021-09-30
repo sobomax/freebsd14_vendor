@@ -60,7 +60,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: bat.h,v 1.2 1999/12/18 01:36:06 thorpej Exp $
- * $FreeBSD: 517ebd4a45c69a1bca213cdf7333f9e024d34c15 $
+ * $FreeBSD: 78f8f14d11678756a2ca372b1284ea1964d09c5b $
  */
 
 #ifndef	_MACHINE_BAT_H_
@@ -112,7 +112,6 @@ struct bat {
 
 #define	BATL(pa, wimg, pp)						\
 	(((pa) & BAT_PBS) | (wimg) | (pp))
-
 
 /* Lower BAT bits (PowerPC 601): */
 #define	BAT601_PBN	0xfffe0000	/* physical block number */

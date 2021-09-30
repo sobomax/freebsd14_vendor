@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 674f76c2b7cb5b1f3fe976f5cd8b76e1cab8851a $
+ * $FreeBSD: da9419b2ed32000643354a731b946c7eac338d33 $
  */
 
 #if 0
@@ -152,7 +152,7 @@
 #define ATA_SACTIVE                     16
 
 /* DMA register defines */
-#define ATA_DMA_ENTRIES                 256
+#define ATA_DMA_ENTRIES                 MAX(17, btoc(maxphys) + 1)
 #define ATA_DMA_EOT                     0x80000000
 
 #define ATA_BMCMD_PORT                  17
@@ -295,7 +295,6 @@ struct ata_request {
 #else
 #define ATA_DEBUG_RQ(request, string)
 #endif
-
 
 /* structure describing an ATA/ATAPI device */
 struct ata_device {
@@ -477,7 +476,7 @@ const char *ata_mode2str(int mode);
 void ata_setmode(device_t dev);
 void ata_print_cable(device_t dev, u_int8_t *who);
 int ata_atapi(device_t dev, int target);
-void ata_timeout(struct ata_request *);
+void ata_timeout(void *);
 
 /* ata-lowlevel.c: */
 void ata_generic_hw(device_t dev);

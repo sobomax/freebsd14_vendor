@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bf3c9861538a1efca7f89fada1d6790092e8f5ea $
+ * $FreeBSD: 273e477fbda51abce0dcf0c4fb794e7da9dcd492 $
  */
 
 #include <sys/param.h>
@@ -40,10 +40,18 @@
 #include "debug.h"
 #include "rtld.h"
 
-static Elf_Ehdr *get_elf_header(int, const char *, const struct stat *);
+static Elf_Ehdr *get_elf_header(int, const char *, const struct stat *,
+    Elf_Phdr **phdr);
 static int convert_flags(int); /* Elf flags -> mmap flags */
 
 int __getosreldate(void);
+
+static bool
+phdr_in_zero_page(const Elf_Ehdr *hdr)
+{
+	return (hdr->e_phoff + hdr->e_phnum * sizeof(Elf_Phdr) <=
+	    (size_t)PAGE_SIZE);
+}
 
 /*
  * Map a shared object into memory.  The "fd" argument is a file descriptor,
@@ -93,18 +101,17 @@ map_object(int fd, const char *path, const struct stat *sb)
     Elf_Addr note_end;
     char *note_map;
     size_t note_map_len;
+    Elf_Addr text_end;
 
-    hdr = get_elf_header(fd, path, sb);
+    hdr = get_elf_header(fd, path, sb, &phdr);
     if (hdr == NULL)
 	return (NULL);
 
     /*
      * Scan the program header entries, and save key information.
-     *
      * We expect that the loadable segments are ordered by load address.
      */
-    phdr = (Elf_Phdr *)((char *)hdr + hdr->e_phoff);
-    phsize  = hdr->e_phnum * sizeof (phdr[0]);
+    phsize  = hdr->e_phnum * sizeof(phdr[0]);
     phlimit = phdr + hdr->e_phnum;
     nsegs = -1;
     phdyn = phinterp = phtls = NULL;
@@ -117,6 +124,7 @@ map_object(int fd, const char *path, const struct stat *sb)
     note_map_len = 0;
     segs = alloca(sizeof(segs[0]) * hdr->e_phnum);
     stack_flags = RTLD_DEFAULT_STACK_PF_EXEC | PF_R | PF_W;
+    text_end = 0;
     while (phdr < phlimit) {
 	switch (phdr->p_type) {
 
@@ -130,6 +138,10 @@ map_object(int fd, const char *path, const struct stat *sb)
 		_rtld_error("%s: PT_LOAD segment %d not page-aligned",
 		    path, nsegs);
 		goto error;
+	    }
+	    if ((segs[nsegs]->p_flags & PF_X) == PF_X) {
+		text_end = MAX(text_end,
+		    round_page(segs[nsegs]->p_vaddr + segs[nsegs]->p_memsz));
 	    }
 	    break;
 
@@ -222,11 +234,12 @@ map_object(int fd, const char *path, const struct stat *sb)
 	data_addr = mapbase + (data_vaddr - base_vaddr);
 	data_prot = convert_prot(segs[i]->p_flags);
 	data_flags = convert_flags(segs[i]->p_flags) | MAP_FIXED;
-	if (mmap(data_addr, data_vlimit - data_vaddr, data_prot,
-	  data_flags | MAP_PREFAULT_READ, fd, data_offset) == (caddr_t) -1) {
-	    _rtld_error("%s: mmap of data failed: %s", path,
-		rtld_strerror(errno));
-	    goto error1;
+	if (data_vlimit != data_vaddr &&
+	    mmap(data_addr, data_vlimit - data_vaddr, data_prot, 
+	    data_flags | MAP_PREFAULT_READ, fd, data_offset) == MAP_FAILED) {
+		_rtld_error("%s: mmap of data failed: %s", path,
+		    rtld_strerror(errno));
+		goto error1;
 	}
 
 	/* Do BSS setup */
@@ -281,8 +294,6 @@ map_object(int fd, const char *path, const struct stat *sb)
     }
     obj->mapbase = mapbase;
     obj->mapsize = mapsize;
-    obj->textsize = round_page(segs[0]->p_vaddr + segs[0]->p_memsz) -
-      base_vaddr;
     obj->vaddrbase = base_vaddr;
     obj->relocbase = mapbase - base_vaddr;
     obj->dynamic = (const Elf_Dyn *)(obj->relocbase + phdyn->p_vaddr);
@@ -327,14 +338,18 @@ error1:
 error:
     if (note_map != NULL && note_map != MAP_FAILED)
 	munmap(note_map, note_map_len);
+    if (!phdr_in_zero_page(hdr))
+	munmap(phdr, hdr->e_phnum * sizeof(phdr[0]));
     munmap(hdr, PAGE_SIZE);
     return (NULL);
 }
 
 static Elf_Ehdr *
-get_elf_header(int fd, const char *path, const struct stat *sbp)
+get_elf_header(int fd, const char *path, const struct stat *sbp,
+    Elf_Phdr **phdr_p)
 {
 	Elf_Ehdr *hdr;
+	Elf_Phdr *phdr;
 
 	/* Make sure file has enough data for the ELF header */
 	if (sbp != NULL && sbp->st_size < (off_t)sizeof(Elf_Ehdr)) {
@@ -383,11 +398,19 @@ get_elf_header(int fd, const char *path, const struct stat *sbp)
 	    "%s: invalid shared object: e_phentsize != sizeof(Elf_Phdr)", path);
 		goto error;
 	}
-	if (hdr->e_phoff + hdr->e_phnum * sizeof(Elf_Phdr) >
-	    (size_t)PAGE_SIZE) {
-		_rtld_error("%s: program header too large", path);
-		goto error;
+	if (phdr_in_zero_page(hdr)) {
+		phdr = (Elf_Phdr *)((char *)hdr + hdr->e_phoff);
+	} else {
+		phdr = mmap(NULL, hdr->e_phnum * sizeof(phdr[0]),
+		    PROT_READ, MAP_PRIVATE | MAP_PREFAULT_READ, fd,
+		    hdr->e_phoff);
+		if (phdr == MAP_FAILED) {
+			_rtld_error("%s: error mapping phdr: %s", path,
+			    rtld_strerror(errno));
+			goto error;
+		}
 	}
+	*phdr_p = phdr;
 	return (hdr);
 
 error:

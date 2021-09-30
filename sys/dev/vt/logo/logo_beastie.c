@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Conrad Meyer <cse.cem@gmail.com>
+ * Copyright (c) 2015 Conrad Meyer <cem@FreeBSD.org>
  * Copyright (c) 2005 The FreeBSD Foundation
  * Copyright (c) 1996 Larry Ewing <lewing@isc.tamu.edu>
  * Copyright (c) 1988 Kirk McKusick <mckusick@FreeBSD.org>
@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c78951728853de905f16801e196b2445b230630 $");
+__FBSDID("$FreeBSD: c6848d0c902bf7fa3b63678ae45c230aff938b2a $");
 
 #include <dev/vt/vt.h>
 

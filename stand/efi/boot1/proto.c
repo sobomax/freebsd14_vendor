@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7511cc4cf41614e4dd674939a29a3ed31fa27838 $");
+__FBSDID("$FreeBSD: eeb3cd9568a4b1f5390a09638c23a38b459015a5 $");
 
 #include <sys/param.h>
 #include <machine/elf.h>
@@ -38,12 +38,14 @@ __FBSDID("$FreeBSD: 7511cc4cf41614e4dd674939a29a3ed31fa27838 $");
 static EFI_GUID BlockIoProtocolGUID = BLOCK_IO_PROTOCOL;
 static EFI_GUID DevicePathGUID = DEVICE_PATH_PROTOCOL;
 
+#ifndef EFI_DEBUG
 static const char *prio_str[] = {
 	"error",
 	"not supported",
 	"good",
 	"better"
 };
+#endif
 
 /*
  * probe_handle determines if the passed handle represents a logical partition

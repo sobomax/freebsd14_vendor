@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c69d935f25f6c8c904f6cf520eeea6f8fd21c64 $");
+__FBSDID("$FreeBSD: f26ad0452e0741ae9dafb9faa975e2af6e378adc $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -187,7 +187,7 @@ ncl_getattrcache(struct vnode *vp, struct vattr *vaper)
 	int timeo, mustflush;
 	u_quad_t nsize;
 	bool setnsize;
-	
+
 	np = VTONFS(vp);
 	vap = &np->n_vattr.na_vattr;
 	nmp = VFSTONFS(vp->v_mount);
@@ -273,7 +273,7 @@ ncl_getcookie(struct nfsnode *np, off_t off, int add)
 	struct nfsdmap *dp, *dp2;
 	int pos;
 	nfsuint64 *retval = NULL;
-	
+
 	pos = (uoff_t)off / NFS_DIRBLKSIZ;
 	if (pos == 0 || off < 0) {
 		KASSERT(!add, ("nfs getcookie add at <= 0"));
@@ -388,4 +388,3 @@ ncl_init(struct vfsconf *vfsp)
 
 	return (0);
 }
-

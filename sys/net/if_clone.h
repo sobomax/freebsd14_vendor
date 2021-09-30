@@ -29,13 +29,15 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: b721e294119b0d38b5a7ecb7b776459dbe7a0603 $
+ * $FreeBSD: ed7d6f4d02d5849bddc485eb3ad85f62ffe38a8a $
  */
 
 #ifndef	_NET_IF_CLONE_H_
 #define	_NET_IF_CLONE_H_
 
 #ifdef _KERNEL
+
+#include <sys/_eventhandler.h>
 
 #define IFC_NOGROUP 0x1
 
@@ -65,11 +67,9 @@ const char *ifc_name(struct if_clone *);
 void ifc_flags_set(struct if_clone *, int flags);
 int ifc_flags_get(struct if_clone *);
 
-#ifdef _SYS_EVENTHANDLER_H_
 /* Interface clone event. */
 typedef void (*if_clone_event_handler_t)(void *, struct if_clone *);
 EVENTHANDLER_DECLARE(if_clone_event, if_clone_event_handler_t);
-#endif
 
 /* The below interfaces used only by net/if.c. */
 void	vnet_if_clone_init(void);

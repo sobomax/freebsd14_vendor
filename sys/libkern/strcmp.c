@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fadbd30779ad4493d56ca5e2f455a9bedc67f9f8 $");
+__FBSDID("$FreeBSD: 00220fa6d5840b6a114f1b29bb945af95867a73b $");
 
 #include <sys/libkern.h>
 
@@ -41,7 +41,7 @@ __FBSDID("$FreeBSD: fadbd30779ad4493d56ca5e2f455a9bedc67f9f8 $");
  * Compare strings.
  */
 int
-strcmp(const char *s1, const char *s2)
+(strcmp)(const char *s1, const char *s2)
 {
 	while (*s1 == *s2++)
 		if (*s1++ == '\0')

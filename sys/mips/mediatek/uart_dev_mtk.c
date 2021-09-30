@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5993cb60777b6874166908abe8d9f72680f17dac $");
+__FBSDID("$FreeBSD: 8fcfb952c7472f1b09dc4cb65bfff0114b91bcb8 $");
 
 #include "opt_ddb.h"
 
@@ -239,7 +239,6 @@ static struct ofw_compat_data compat_data[] = {
 	{ NULL,				(uintptr_t)NULL },
 };
 UART_FDT_CLASS_AND_DEVICE(compat_data);
-
 
 #define	SIGCHG(c, i, s, d)				\
 	if (c) {					\

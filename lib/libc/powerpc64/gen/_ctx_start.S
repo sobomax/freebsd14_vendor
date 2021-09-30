@@ -26,14 +26,20 @@
 
  #include <machine/asm.h>
 
- __FBSDID("$FreeBSD: 17ec44e739cd0b49b078bf8801eed7bb2cb5b0fb $");
+ __FBSDID("$FreeBSD: 4d5f106c96cb76c0da7a7cbac89d223bcd539e0f $");
 
 	.globl  CNAME(_ctx_done)
 	.globl  CNAME(abort)
 
  ENTRY(_ctx_start)
+#if !defined(_CALL_ELF) || _CALL_ELF == 1
+	/* Load values from function descriptor */
 	ld	%r2,8(%r14)
 	ld	%r14,0(%r14)
+#else
+	/* Load global entry point */
+	mr	%r12,%r14
+#endif
 	mtlr	%r14
 	blrl			/* branch to start function */
 	mr	%r3,%r15	/* pass pointer to ucontext as argument */

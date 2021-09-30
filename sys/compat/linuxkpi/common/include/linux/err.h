@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5f71ebf59b5b96ded192829b7d28a4248e58845f $
+ * $FreeBSD: 40a8ba82dfda47014c5ce8b261e683ea61d480f1 $
  */
 #ifndef	_LINUX_ERR_H_
 #define	_LINUX_ERR_H_
@@ -37,30 +37,30 @@
 
 #define MAX_ERRNO	4095
 
-#define IS_ERR_VALUE(x) unlikely((x) >= (unsigned long)-MAX_ERRNO)
+#define IS_ERR_VALUE(x) unlikely((x) >= (uintptr_t)-MAX_ERRNO)
 
 static inline void *
 ERR_PTR(long error)
 {
-	return (void *)error;
+	return (void *)(intptr_t)error;
 }
 
 static inline long
 PTR_ERR(const void *ptr)
 {
-	return (long)ptr;
+	return (intptr_t)ptr;
 }
 
-static inline long
+static inline bool
 IS_ERR(const void *ptr)
 {
-	return IS_ERR_VALUE((unsigned long)ptr);
+	return IS_ERR_VALUE((uintptr_t)ptr);
 }
 
-static inline long
+static inline bool
 IS_ERR_OR_NULL(const void *ptr)
 {
-	return !ptr || IS_ERR_VALUE((unsigned long)ptr);
+	return !ptr || IS_ERR_VALUE((uintptr_t)ptr);
 }
 
 static inline void *

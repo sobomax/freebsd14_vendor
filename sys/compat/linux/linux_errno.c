@@ -1,6 +1,41 @@
-/* $FreeBSD: 72304dc5caf689130285e5774b6bbb226f22b36e $ */
+/* $FreeBSD: 69880db86319b588d4ae4d968b90efe7548ea6b6 $ */
 
 #include <sys/cdefs.h>
-#include <sys/errno.h>
+__FBSDID("$FreeBSD: 69880db86319b588d4ae4d968b90efe7548ea6b6 $");
 
+#include <sys/param.h>
+#include <sys/errno.h>
+#include <sys/systm.h>
+
+#include <compat/linux/linux.h>
+#include <compat/linux/linux_errno.h>
 #include <compat/linux/linux_errno.inc>
+
+int
+bsd_to_linux_errno(int error)
+{
+
+	KASSERT(error >= 0 && error <= ELAST,
+	    ("%s: bad error %d", __func__, error));
+
+	return (linux_errtbl[error]);
+}
+
+#ifdef INVARIANTS
+void
+linux_check_errtbl(void)
+{
+	int i;
+
+	for (i = 1; i < nitems(linux_errtbl); i++) {
+		KASSERT(linux_errtbl[i] != 0,
+		    ("%s: linux_errtbl[%d] == 0", __func__, i));
+	}
+
+	for (i = 1; i < nitems(linux_to_bsd_errtbl); i++) {
+		KASSERT(linux_to_bsd_errtbl[i] != 0,
+		    ("%s: linux_to_bsd_errtbl[%d] == 0", __func__, i));
+	}
+
+}
+#endif

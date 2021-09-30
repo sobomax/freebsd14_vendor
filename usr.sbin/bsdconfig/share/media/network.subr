@@ -24,7 +24,7 @@ if [ ! "$_MEDIA_NETWORK_SUBR" ]; then _MEDIA_NETWORK_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6e1720034dc5fae4f274f3490a59af893df2dbb0 $
+# $FreeBSD: 5a03d80e8163894a4d45d56df0a070c8c49d28f2 $
 #
 ############################################################ INCLUDES
 
@@ -51,7 +51,7 @@ NETWORK_INITIALIZED=
 # initialized and returns success.
 #
 # The variables (from variable.subr) used to initialize the network are as
-# follows (all of which are configured either automatically or manaully):
+# follows (all of which are configured either automatically or manually):
 #
 # 	VAR_IFCONFIG + device_name (e.g., `ifconfig_em0')
 # 		Automatically populated but can be overridden in a script. This

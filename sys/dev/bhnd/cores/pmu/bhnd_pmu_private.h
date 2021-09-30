@@ -21,7 +21,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: 93242931ca62803752412e1278cee69c7f7866d9 $
+ * $FreeBSD: ac4079c275830ef8034d2ff49fdbcb300d89b457 $
  */
 
 #ifndef _BHND_CORES_PMU_BHND_PMU_PRIVATE_H_
@@ -70,7 +70,6 @@
 #define	BHND_PMU_PLL_WRITE(_sc, _reg, _val, _mask)	\
 	BHND_PMU_IND_WRITE((_sc), PLL_CONTROL, (_reg), (_val), (_mask))
 
-
 /** FVCO frequencies, in Hz */
 enum {
 	FVCO_880	= 880	* 1000,	/**< 880MHz */
@@ -92,7 +91,6 @@ enum {
 	SET_LDO_VOLTAGE_LNLDO1		= 9,
 	SET_LDO_VOLTAGE_LNLDO2_SEL	= 10,
 };
-
 
 uint32_t	bhnd_pmu_ind_read(const struct bhnd_pmu_io *io, void *io_ctx,
 		    bus_size_t addr, bus_size_t data, uint32_t reg);

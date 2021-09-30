@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca31cf1897c723dd9d4090a7ee1561445298669e $");
+__FBSDID("$FreeBSD: 02f4370794684d155bd365ed492d40956420efd0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,26 +65,7 @@ busdma_map_sg_collapse(bus_dma_tag_t tag, bus_dmamap_t map,
 retry:
 	psegs = segs;
 	seg_count = 0;
-	if (n->m_next == NULL) {
-		busdma_map_mbuf_fast(tag, map, n, segs);
-		*nsegs = 1;
-		return (0);
-	}
-#if defined(__i386__) || defined(__amd64__)
-	while (n && seg_count < TX_MAX_SEGS) {
-		/*
-		 * firmware doesn't like empty segments
-		 */
-		if (__predict_true(n->m_len != 0)) {
-			seg_count++;
-			busdma_map_mbuf_fast(tag, map, n, psegs);
-			psegs++;
-		}
-		n = n->m_next;
-	}
-#else
 	err = bus_dmamap_load_mbuf_sg(tag, map, *m, segs, &seg_count, 0);
-#endif	
 	if (seg_count == 0) {
 		if (cxgb_debug)
 			printf("empty segment chain\n");
@@ -117,8 +98,9 @@ void
 busdma_map_sg_vec(bus_dma_tag_t tag, bus_dmamap_t map,
     struct mbuf *m, bus_dma_segment_t *segs, int *nsegs)
 {
+	int n = 0;
 
-	for (*nsegs = 0; m != NULL ; segs++, *nsegs += 1, m = m->m_nextpkt)
-		busdma_map_mbuf_fast(tag, map, m, segs);
+	for (*nsegs = 0; m != NULL; segs += n, *nsegs += n, m = m->m_nextpkt)
+		bus_dmamap_load_mbuf_sg(tag, map, m, segs, &n, 0);
 }
 

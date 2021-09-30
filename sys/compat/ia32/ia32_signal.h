@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ec8702971ef03489ed41c6a3a439e0e6c4124107 $
+ * $FreeBSD: e5fb8ec90fa25b4e3615658ba4c1c72e75e17174 $
  */
 
 #ifndef	_COMPAT_IA32_IA32_SIGNAL_H
@@ -87,7 +87,6 @@ struct ia32_ucontext {
 	u_int32_t		uc_flags;
 	u_int32_t		__spare__[4];
 };
-
 
 #if defined(COMPAT_FREEBSD4)
 struct ia32_mcontext4 {
@@ -206,7 +205,7 @@ extern int sz_ia32_osigcode;
 extern int sz_lcall_tramp;
 void ia32_sendsig(sig_t, struct ksiginfo *, sigset_t *);
 void ia32_setregs(struct thread *td, struct image_params *imgp,
-    u_long stack);
+    uintptr_t stack);
 int setup_lcall_gate(void);
 
 #endif

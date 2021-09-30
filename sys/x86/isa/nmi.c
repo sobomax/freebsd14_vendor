@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92e9ba30d927ff7a21257a7403e9a5c744384e65 $");
+__FBSDID("$FreeBSD: dc830744d49a9ae87e31673eb015a557d8d312ed $");
 
 #include <sys/types.h>
 #include <sys/syslog.h>
@@ -61,7 +61,7 @@ isa_nmi(int cd)
 	int eisa_port = inb(0x461);
 
 	log(LOG_CRIT, "NMI ISA %x, EISA %x\n", isa_port, eisa_port);
-	
+
 	if (isa_port & NMI_PARITY) {
 		log(LOG_CRIT, "RAM parity error, likely hardware failure.");
 		retval = 1;

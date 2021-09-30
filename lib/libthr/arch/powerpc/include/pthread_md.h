@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a9923d7337d8793a204b41dc8b403593213c96fd $
+ * $FreeBSD: 0ed44058a7a77c3b077833a83a60d9a4d23a9693 $
  */
 
 /*
@@ -72,14 +72,15 @@ _tcb_set(struct tcb *tcb)
 static __inline struct tcb *
 _tcb_get(void)
 {
-	register uint8_t *_tp;
+        register struct tcb *tcb;
+
 #ifdef __powerpc64__
-	__asm __volatile("mr %0,13" : "=r"(_tp));
+	__asm __volatile("addi %0,13,%1" : "=r"(tcb) : "i"(-TP_OFFSET));
 #else
-	__asm __volatile("mr %0,2" : "=r"(_tp));
+	__asm __volatile("addi %0,2,%1" : "=r"(tcb) : "i"(-TP_OFFSET));
 #endif
 
-	return ((struct tcb *)(_tp - TP_OFFSET));
+	return (tcb);
 }
 
 static __inline struct pthread *
@@ -89,5 +90,7 @@ _get_curthread(void)
 		return (_tcb_get()->tcb_thread);
 	return (NULL);
 }
+
+#define	HAS__UMTX_OP_ERR	1
 
 #endif /* _PTHREAD_MD_H_ */

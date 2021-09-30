@@ -1,4 +1,4 @@
-/*	$FreeBSD: 6860d1ea082ca011c9992f88a41e50fb6c375d77 $	*/
+/*	$FreeBSD: c41149c991463e56b352f81a69c044e2460df9bc $	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -114,7 +114,6 @@
 #define RT2560_ARTCSR2		0x0154	/* ACK/CTS padload consume time */
 #define RT2560_SECCSR1		0x0158	/* WEP control */
 #define RT2560_BBPCSR1		0x015c	/* BBP TX Configuration */
-
 
 /* possible flags for register RXCSR0 */
 #define RT2560_DISABLE_RX		(1 << 0)

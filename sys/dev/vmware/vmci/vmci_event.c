@@ -7,7 +7,7 @@
 /* This file implements VMCI Event code. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9a932340a7b693439e360fc90ebed313c96258f8 $");
+__FBSDID("$FreeBSD: 7f3bf9039e12c7433c6207531600d05daea6f904 $");
 
 #include "vmci.h"
 #include "vmci_driver.h"
@@ -104,7 +104,6 @@ vmci_event_exit(void)
 	for (e = 0; e < VMCI_EVENT_MAX; e++) {
 		vmci_list_scan_safe(iter, &subscriber_array[e],
 		    subscriber_list_item, iter_2) {
-
 			/*
 			 * We should never get here because all events should
 			 * have been unregistered before we try to unload the

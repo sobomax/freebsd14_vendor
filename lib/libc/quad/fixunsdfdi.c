@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)fixunsdfdi.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: baddb8ff5d36f1b924aaa454c7595c07a193e19e $");
+__FBSDID("$FreeBSD: 5d63d6cb6cbda1778dce82fdf77adbe5b3611808 $");
 
 #include "quad.h"
 
@@ -51,8 +51,7 @@ __FBSDID("$FreeBSD: baddb8ff5d36f1b924aaa454c7595c07a193e19e $");
  * of range becomes UQUAD_MAX.
  */
 u_quad_t
-__fixunsdfdi(x)
-	double x;
+__fixunsdfdi(double x)
 {
 	double toppart;
 	union uu t;

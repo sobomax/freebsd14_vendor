@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7a53e62455807e7ef812c829c852a8e33b28da4e $
+ * $FreeBSD: 29405ea3c5f8db75e38ae3c84c26e7a8da6d340d $
  */
 
 /*
@@ -35,7 +35,6 @@
 
 #ifndef _SEQUENCER_H_
 #define _SEQUENCER_H_
-
 
 #define NSEQ_MAX	16
 

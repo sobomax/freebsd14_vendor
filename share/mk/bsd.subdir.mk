@@ -1,5 +1,5 @@
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-# $FreeBSD: 40fe454ecacc4aa66452da0506293344e6634e55 $
+# $FreeBSD: 91c114f8d3612392e6b226fad2ca4dff29a65eab $
 #
 # The include file <bsd.subdir.mk> contains the default targets
 # for building subdirectories.
@@ -125,6 +125,12 @@ install:	beforeinstall realinstall afterinstall
 .if defined(SUBDIR) || defined(SUBDIR.yes) || defined(SUBDIR.yes.yes)
 SUBDIR:=${SUBDIR} ${SUBDIR.yes} ${SUBDIR.yes.yes}
 SUBDIR:=${SUBDIR:u}
+.endif
+
+.if defined(SUBDIR.)
+.error ${.CURDIR}: Found variable SUBDIR. with value "${SUBDIR.}". This was \
+        probably caused by using SUBDIR.$${MK_FOO} without including \
+        <src.opts.mk> or by using an invalid $${MK_FOO} option.
 .endif
 
 # Subdir code shared among 'make <subdir>', 'make <target>' and SUBDIR_PARALLEL.

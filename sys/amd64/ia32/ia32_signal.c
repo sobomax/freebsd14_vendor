@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72f35af75b85801351b420282a4da8722086f1ad $");
+__FBSDID("$FreeBSD: 51dd1f38090f6189f04ec7bf6639a17d6f0a5e48 $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: 72f35af75b85801351b420282a4da8722086f1ad $");
 #include <sys/mutex.h>
 #include <sys/mman.h>
 #include <sys/namei.h>
-#include <sys/pioctl.h>
 #include <sys/proc.h>
 #include <sys/procfs.h>
 #include <sys/resourcevar.h>
@@ -266,7 +265,6 @@ freebsd32_getcontext(struct thread *td, struct freebsd32_getcontext_args *uap)
 		PROC_LOCK(td->td_proc);
 		uc.uc_sigmask = td->td_sigmask;
 		PROC_UNLOCK(td->td_proc);
-		bzero(&uc.__spare__, sizeof(uc.__spare__));
 		ret = copyout(&uc, uap->ucp, UC_COPY_SIZE);
 	}
 	return (ret);
@@ -276,7 +274,7 @@ int
 freebsd32_setcontext(struct thread *td, struct freebsd32_setcontext_args *uap)
 {
 	struct ia32_ucontext uc;
-	int ret;	
+	int ret;
 
 	if (uap->ucp == NULL)
 		ret = EINVAL;
@@ -297,7 +295,7 @@ int
 freebsd32_swapcontext(struct thread *td, struct freebsd32_swapcontext_args *uap)
 {
 	struct ia32_ucontext uc;
-	int ret;	
+	int ret;
 
 	if (uap->oucp == NULL || uap->ucp == NULL)
 		ret = EINVAL;
@@ -622,7 +620,6 @@ ia32_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	fpstate_drop(td);
 	sf.sf_uc.uc_mcontext.mc_fsbase = td->td_pcb->pcb_fsbase;
 	sf.sf_uc.uc_mcontext.mc_gsbase = td->td_pcb->pcb_gsbase;
-	bzero(sf.sf_uc.__spare__, sizeof(sf.sf_uc.__spare__));
 
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
@@ -938,7 +935,7 @@ freebsd32_sigreturn(td, uap)
  * Clear registers on exec
  */
 void
-ia32_setregs(struct thread *td, struct image_params *imgp, u_long stack)
+ia32_setregs(struct thread *td, struct image_params *imgp, uintptr_t stack)
 {
 	struct trapframe *regs;
 	struct pcb *pcb;
@@ -964,7 +961,7 @@ ia32_setregs(struct thread *td, struct image_params *imgp, u_long stack)
 	regs->tf_rflags = PSL_USER | saved_rflags;
 	regs->tf_ss = _udatasel;
 	regs->tf_cs = _ucode32sel;
-	regs->tf_rbx = imgp->ps_strings;
+	regs->tf_rbx = (register_t)imgp->ps_strings;
 	regs->tf_ds = _udatasel;
 	regs->tf_es = _udatasel;
 	regs->tf_fs = _ufssel;

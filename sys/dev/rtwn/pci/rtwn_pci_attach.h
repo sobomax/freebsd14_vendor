@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: f96c7b6d5c7065d012f5d5df8dc2e4cf851d28c6 $
+ * $FreeBSD: b37ef672525734e18d7169217e0c9d5887d94890 $
  */
 
 void	r92ce_attach(struct rtwn_pci_softc *);
@@ -34,8 +34,8 @@ struct rtwn_pci_ident {
 
 static const struct rtwn_pci_ident rtwn_pci_ident_table[] = {
 	{ 0x10ec, 0x8176, "Realtek RTL8188CE", RTWN_CHIP_RTL8192CE },
-	{ 0x10ec, 0x8178, "Realtek RTL8192CE", RTWN_CHIP_RTL8192CE },
 	{ 0x10ec, 0x8179, "Realtek RTL8188EE", RTWN_CHIP_RTL8188EE },
+	{ 0x10ec, 0x8178, "Realtek RTL8192CE", RTWN_CHIP_RTL8192CE },
 };
 
 typedef void	(*chip_pci_attach)(struct rtwn_pci_softc *);

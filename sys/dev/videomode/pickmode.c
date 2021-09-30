@@ -1,5 +1,5 @@
 /* $NetBSD: pickmode.c,v 1.3 2011/04/09 18:22:31 jdc Exp $ */
-/* $FreeBSD: 66dea82483e4bfbc22ba37ba086ce8303b58dce1 $ */
+/* $FreeBSD: 533a0ce6032b86880c6c9fdddde3bad142cc633b $ */
 
 /*-
  * Copyright (c) 2006 The NetBSD Foundation
@@ -30,7 +30,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66dea82483e4bfbc22ba37ba086ce8303b58dce1 $");
+__FBSDID("$FreeBSD: 533a0ce6032b86880c6c9fdddde3bad142cc633b $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -77,7 +77,6 @@ pick_mode_by_ref(int width, int height, int refresh)
 	DPRINTF("%s: looking for %d x %d at up to %d Hz\n", __func__, width,
 	    height, refresh);
 	for (i = 0; i < videomode_count; i++) {
-
 		this = &videomode_list[i];
 		mref = this->dot_clock * 1000 / (this->htotal * this->vtotal);
 		diff = abs(mref - refresh);

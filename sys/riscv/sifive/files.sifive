@@ -1,0 +1,6 @@
+# $FreeBSD: e0ab09b385026e916db0119ea8e7af74d560cdf2 $
+
+riscv/sifive/fe310_aon.c		optional	fe310aon
+riscv/sifive/fu540_prci.c		standard
+riscv/sifive/fu540_spi.c		optional	fu540spi spibus
+riscv/sifive/sifive_uart.c		standard

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 323594b358521f1fd8770d746bacd386757e362b $");
+__FBSDID("$FreeBSD: 16050226cc8ced0c2cdd1bdc5ceab636f6e973f9 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -59,7 +59,7 @@ gss_release_name(OM_uint32 *minor_status, gss_name_t *input_name)
 	if (*input_name) {
 		name = *input_name;
 		args.input_name = name->handle;
-	
+
 		cl = kgss_gssd_client();
 		if (cl == NULL)
 			return (GSS_S_FAILURE);

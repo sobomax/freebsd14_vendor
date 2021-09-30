@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Copyright (c) 2008, 2009 Edward Tomasz Napierała <trasz@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e6379a6d449724e21cbefe9550f3af6b328dcc4f $
+# $FreeBSD: 110d4614a8c0ef4e2f2250b562c9672b0fa59fb2 $
 #
 
 # This is a wrapper script to run tools-crossfs.test between UFS without

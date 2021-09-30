@@ -59,24 +59,27 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 20e847f5e5afeb5b4391c8d6ef822f83d37c6cff $
+ * $FreeBSD: c3db4bb5765127b22c31f1cf76612b3b65b6bea4 $
  */
 
 #ifndef _VM_VM_KERN_H_
 #define	_VM_VM_KERN_H_
 
 /* Kernel memory management definitions. */
-extern vm_map_t kernel_map;
-extern vm_map_t exec_map;
-extern vm_map_t pipe_map;
+extern struct vm_map kernel_map_store;
+#define	kernel_map	(&kernel_map_store)
+extern struct vm_map exec_map_store;
+#define	exec_map	(&exec_map_store)
+extern struct vm_map pipe_map_store;
+#define	pipe_map	(&pipe_map_store)
 extern struct vmem *kernel_arena;
 extern struct vmem *kmem_arena;
 extern struct vmem *buffer_arena;
 extern struct vmem *transient_arena;
 extern struct vmem *memguard_arena;
-extern vm_offset_t swapbkva;
 extern u_long vm_kmem_size;
 extern u_int exec_map_entries;
 extern u_int exec_map_entry_size;
+extern vm_object_t kstack_object;
 
 #endif /* _VM_VM_KERN_H_ */

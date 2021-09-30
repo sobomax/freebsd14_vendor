@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f93d5f462dfa9d2392958890b5c48c49320bb89c $");
+__FBSDID("$FreeBSD: 3c3b353806c4c93e6efc32da38c78eff7baf58d6 $");
 
 /*
  * PCI:ISA bridge support
@@ -145,7 +145,7 @@ isab_pci_probe(device_t dev)
 		       pci_get_subclass(dev));
 	    matched = 1;
 	    break;
-	
+
 	default:
 	    break;
 	}

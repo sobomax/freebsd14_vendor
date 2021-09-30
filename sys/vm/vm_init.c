@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b15e53709c2c88e6ccee1734c1a14b6e9d093f7 $");
+__FBSDID("$FreeBSD: f17f81264eb6dd53f6d0dd8f93075b09a464b053 $");
 
 #include <sys/param.h>
 #include <sys/domainset.h>
@@ -95,9 +95,7 @@ __FBSDID("$FreeBSD: 2b15e53709c2c88e6ccee1734c1a14b6e9d093f7 $");
 #include <vm/vm_pager.h>
 #include <vm/vm_extern.h>
 
-extern void	uma_startup1(void);
-extern void	uma_startup2(void);
-extern void	vm_radix_reserve_kva(void);
+extern void	uma_startup1(vm_offset_t);
 
 long physmem;
 
@@ -110,8 +108,6 @@ SYSINIT(vm_mem, SI_SUB_VM, SI_ORDER_FIRST, vm_mem_init, NULL);
 /*
  *	vm_init initializes the virtual memory system.
  *	This is done only by the first cpu up.
- *
- *	The start and end address of physical memory is passed in.
  */
 static void
 vm_mem_init(void *dummy)
@@ -135,10 +131,9 @@ vm_mem_init(void *dummy)
 	 */
 	domainset_zero();
 
-#ifdef	UMA_MD_SMALL_ALLOC
-	/* Announce page availability to UMA. */
-	uma_startup1();
-#endif
+	/* Bootstrap the kernel memory allocator. */
+	uma_startup1(virtual_avail);
+
 	/*
 	 * Initialize other VM packages
 	 */
@@ -147,12 +142,6 @@ vm_mem_init(void *dummy)
 	vm_map_startup();
 	kmem_init(virtual_avail, virtual_end);
 
-#ifndef	UMA_MD_SMALL_ALLOC
-	/* Set up radix zone to use noobj_alloc. */
-	vm_radix_reserve_kva();
-#endif
-	/* Announce full page availability to UMA. */
-	uma_startup2();
 	kmem_init_zero_region();
 	pmap_init();
 	vm_pager_init();
@@ -221,11 +210,9 @@ again:
 		panic("startup: table size inconsistency");
 
 	/*
-	 * Allocate the clean map to hold all of the paging and I/O virtual
-	 * memory.
+	 * Allocate the clean map to hold all of I/O virtual memory.
 	 */
-	size = (long)nbuf * BKVASIZE + (long)nswbuf * MAXPHYS +
-	    (long)bio_transient_maxcnt * MAXPHYS;
+	size = (long)nbuf * BKVASIZE + (long)bio_transient_maxcnt * maxphys;
 	kmi->clean_sva = firstaddr = kva_alloc(size);
 	kmi->clean_eva = firstaddr + size;
 
@@ -243,17 +230,10 @@ again:
 	firstaddr += size;
 
 	/*
-	 * Now swap kva.
-	 */
-	swapbkva = firstaddr;
-	size = (long)nswbuf * MAXPHYS;
-	firstaddr += size;
-
-	/*
 	 * And optionally transient bio space.
 	 */
 	if (bio_transient_maxcnt != 0) {
-		size = (long)bio_transient_maxcnt * MAXPHYS;
+		size = (long)bio_transient_maxcnt * maxphys;
 		vmem_init(transient_arena, "transient arena",
 		    firstaddr, size, PAGE_SIZE, 0, 0);
 		firstaddr += size;
@@ -273,8 +253,8 @@ again:
 	exec_map_entries = 2 * mp_ncpus + 4;
 #endif
 	exec_map_entry_size = round_page(PATH_MAX + ARG_MAX);
-	exec_map = kmem_suballoc(kernel_map, &minaddr, &maxaddr,
-	    exec_map_entries * exec_map_entry_size + 64 * PAGE_SIZE, FALSE);
-	pipe_map = kmem_suballoc(kernel_map, &minaddr, &maxaddr, maxpipekva,
-	    FALSE);
+	kmem_subinit(exec_map, kernel_map, &minaddr, &maxaddr,
+	    exec_map_entries * exec_map_entry_size + 64 * PAGE_SIZE, false);
+	kmem_subinit(pipe_map, kernel_map, &minaddr, &maxaddr, maxpipekva,
+	    false);
 }

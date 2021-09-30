@@ -28,7 +28,7 @@
  *
  *	from: NetBSD: profile.h,v 1.9 1997/04/06 08:47:37 cgd Exp
  *	from: FreeBSD: src/sys/alpha/include/profile.h,v 1.4 1999/12/29
- * $FreeBSD: 087af0504c75a621e2fa126c4732632f74696273 $
+ * $FreeBSD: edfcbd31b73ace86957f39d9f90b1ec7b89f3c57 $
  */
 
 #ifndef _MACHINE_PROFILE_H_
@@ -70,7 +70,7 @@ void	mcount(uintfptr_t frompc, uintfptr_t selfpc);
 
 #else /* !_KERNEL */
 
-typedef unsigned long long	uintfptr_t;
+typedef	__uintfptr_t	uintfptr_t;
 
 #define	_MCOUNT_DECL	void mcount
 #define	MCOUNT

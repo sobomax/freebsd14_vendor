@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3283367a9a3a973dd7242e205f149bf111323d9c $");
+__FBSDID("$FreeBSD: ff34e811b82f8f0ee9982f83dd12ff12f9ca3ccc $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -273,7 +273,8 @@ update_clip_table(struct adapter *sc)
 
 				inet_ntop(AF_INET6, &ce->lip, &ip[0],
 				    sizeof(ip));
-				if (sc->active_ulds != 0) {
+				if (sc->flags & KERN_TLS_OK ||
+				    sc->active_ulds != 0) {
 					log(LOG_ERR,
 					    "%s: could not add %s (%d)\n",
 					    __func__, ip, rc);

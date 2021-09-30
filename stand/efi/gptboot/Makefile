@@ -1,17 +1,17 @@
-# $FreeBSD: e4af52b31204f2aab35a0026b7767bc151012e2a $
+# $FreeBSD: 7d6dee85f93f49d5780075f10cfa29c799116718 $
 
 # ZFS is not supported, we want debugging until this is vetted and
 # we don't want the gptboot.efifat thing created.
 MK_LOADER_ZFS=no
 EFI_DEBUG=yes
-NOFAT=yes
 
 BOOT1?=		gptboot
 .PATH:		${SRCTOP}/stand/efi/boot1 ${SRCTOP}/stand/libsa
 CFLAGS+=	-I${SRCTOP}/stand/efi/boot1
 CFLAGS+=	-I${.CURDIR}
 CFLAGS+=	-DBOOTPROG=\"gptboot.efi\"
+CFLAGS+=	-DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib
 SRCS+=		gpt.c
 CWARNFLAGS.gpt.c+=	-Wno-sign-compare -Wno-cast-align
-WARNS=6
+WARNS?=6
 .include "${.CURDIR}/../boot1/Makefile"

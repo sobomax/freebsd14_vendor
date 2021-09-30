@@ -1,6 +1,5 @@
 /*-
  * Copyright (C) 2016 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5f6de17a42d9820778b57de78d8bef3898fa9683 $
+ * $FreeBSD: 5f9ac8179f242ab6107568bb06dc973469251697 $
  */
 
 #ifndef _BCM2836_MP_H_

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 05dcfa4afd6412b1b02900dbdb2180cb6f7c2e03 $	*/
+/*	$FreeBSD: 834ba83f51f051b03ff8c49c45386b203dd1be61 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -73,15 +73,7 @@
 #include "opts.h"
 
 #ifndef __P
-# ifdef __STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
-#endif
-#ifndef __STDC__
-# undef		const
-# define	const
 #endif
 
 #ifndef	U_32_T

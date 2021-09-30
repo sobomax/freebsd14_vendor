@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 684c84ec58e4db7b77f5034682c0269243c0a5e2 $");
+__FBSDID("$FreeBSD: a60bb0c15e68e2cc28fb6c20e7d607faf0cd8fc4 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -33,7 +33,9 @@ __FBSDID("$FreeBSD: 684c84ec58e4db7b77f5034682c0269243c0a5e2 $");
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -175,7 +177,7 @@ randomize_fd(int fd, int type, int unique, double denom)
 			    (type == RANDOM_TYPE_WORDS && isspace(buf[i])) ||
 			    (eof && i == buflen - 1)) {
 make_token:
-				if (numnode == RANDOM_MAX_PLUS1) {
+				if (numnode == UINT32_MAX - 1) {
 					errno = EFBIG;
 					err(1, "too many delimiters");
 				}
@@ -210,15 +212,14 @@ make_token:
 	free(buf);
 
 	for (i = numnode; i > 0; i--) {
-		selected = random() % numnode;
+		selected = arc4random_uniform(numnode);
 
 		for (j = 0, prev = n = rand_root; n != NULL; j++, prev = n, n = n->next) {
 			if (j == selected) {
 				if (n->cp == NULL)
 					break;
 
-				if ((int)(denom * random() /
-					RANDOM_MAX_PLUS1) == 0) {
+				if (random_uniform_denom(denom)) {
 					ret = printf("%.*s",
 						(int)n->len - 1, n->cp);
 					if (ret < 0)

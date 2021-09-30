@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)edquota.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eef149c4d698868884e8f52dafce4987e1c0867c $");
+__FBSDID("$FreeBSD: de2083506864331352aad41c8eedd416b8396cdd $");
 
 /*
  * Disk quota editor.
@@ -83,9 +83,9 @@ __FBSDID("$FreeBSD: eef149c4d698868884e8f52dafce4987e1c0867c $");
 #define dbtokb(db)	(db)
 #endif
 
-const char *qfextension[] = INITQFNAMES;
-char tmpfil[] = _PATH_TMP;
-int hflag;
+static const char *qfextension[] = INITQFNAMES;
+static char tmpfil[] = _PATH_TMP;
+static int hflag;
 
 struct quotause {
 	struct	quotause *next;

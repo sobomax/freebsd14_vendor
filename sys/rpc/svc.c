@@ -35,7 +35,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd44b8fd53b72c072a2744b05820d33e8f554ab0 $");
+__FBSDID("$FreeBSD: a059096e7b7727adf51ca9beb34586fc2038435f $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -128,15 +128,15 @@ svcpool_create(const char *name, struct sysctl_oid_list *sysctl_base)
 	sysctl_ctx_init(&pool->sp_sysctl);
 	if (sysctl_base) {
 		SYSCTL_ADD_PROC(&pool->sp_sysctl, sysctl_base, OID_AUTO,
-		    "minthreads", CTLTYPE_INT | CTLFLAG_RW,
+		    "minthreads", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 		    pool, 0, svcpool_minthread_sysctl, "I",
 		    "Minimal number of threads");
 		SYSCTL_ADD_PROC(&pool->sp_sysctl, sysctl_base, OID_AUTO,
-		    "maxthreads", CTLTYPE_INT | CTLFLAG_RW,
+		    "maxthreads", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 		    pool, 0, svcpool_maxthread_sysctl, "I",
 		    "Maximal number of threads");
 		SYSCTL_ADD_PROC(&pool->sp_sysctl, sysctl_base, OID_AUTO,
-		    "threads", CTLTYPE_INT | CTLFLAG_RD,
+		    "threads", CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 		    pool, 0, svcpool_threads_sysctl, "I",
 		    "Current number of threads");
 		SYSCTL_ADD_INT(&pool->sp_sysctl, sysctl_base, OID_AUTO,
@@ -902,6 +902,8 @@ svc_xprt_free(SVCXPRT *xprt)
 {
 
 	mem_free(xprt->xp_p3, sizeof(SVCXPRT_EXT));
+	/* The size argument is ignored, so 0 is ok. */
+	mem_free(xprt->xp_gidp, 0);
 	mem_free(xprt, sizeof(SVCXPRT));
 }
 

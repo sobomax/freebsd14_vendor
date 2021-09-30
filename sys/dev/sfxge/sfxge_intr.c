@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bcff90b23f48e48d44ae568474fc2760b13ce240 $");
+__FBSDID("$FreeBSD: 5f6b1bbcc94bb0c552cca9f051d6c8cc6cad8ce5 $");
 
 #include "opt_rss.h"
 
@@ -195,18 +195,15 @@ sfxge_intr_bus_enable(struct sfxge_softc *sc)
 			    sc->evq[index], &table[index].eih_tag)) != 0) {
 			goto fail;
 		}
-#ifdef SFXGE_HAVE_DESCRIBE_INTR
 		if (intr->n_alloc > 1)
 			bus_describe_intr(sc->dev, table[index].eih_res,
 			    table[index].eih_tag, "%d", index);
-#endif
 #ifdef RSS
 		bus_bind_intr(sc->dev, table[index].eih_res,
 			      rss_getcpu(index));
 #else
 		bus_bind_intr(sc->dev, table[index].eih_res, index);
 #endif
-
 	}
 
 	return (0);

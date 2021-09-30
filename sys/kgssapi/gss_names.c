@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 373c4bb4ebcd0887d8b1ef316c0b1de6e3b5ac8f $");
+__FBSDID("$FreeBSD: 5672f049a3e3fbb1be4497c47255c1338bb18d27 $");
 
 #include <sys/param.h>
 #include <kgssapi/gssapi.h>
@@ -174,5 +174,3 @@ gss_OID GSS_KRB5_NT_MACHINE_UID_NAME = &GSS_C_NT_MACHINE_UID_NAME_storage;
  * this type is "GSS_KRB5_NT_STRING_UID_NAME".
  */
 gss_OID GSS_KRB5_NT_STRING_UID_NAME = &GSS_C_NT_STRING_UID_NAME_storage;
-
-

@@ -1,9 +1,10 @@
-# $FreeBSD: c42ea4afd8c8cac15953acc7fa80f8d15a37b12f $
+# $FreeBSD: 9a929c07b6fcb30c2a471ed67031f1c9828df478 $
 
 .include "../Makefile.inc"
 
 .PATH.c:${WPA_SUPPLICANT_DISTDIR}
 
+PACKAGE=	wpa
 PROG=	wpa_passphrase
 SRCS=	common.c md5-internal.c md5.c os_unix.c sha1-internal.c sha1-pbkdf2.c \
 	sha1.c wpa_passphrase.c

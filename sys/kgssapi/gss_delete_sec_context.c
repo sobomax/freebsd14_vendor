@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 883909a84577f1ae7797764d2c7aac6b7aa322b0 $");
+__FBSDID("$FreeBSD: 4d520feb71b9ee026f5b460341fe183dfbb1b13e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -70,7 +70,7 @@ gss_delete_sec_context(OM_uint32 *minor_status, gss_ctx_id_t *context_handle,
 			cl = kgss_gssd_client();
 			if (cl == NULL)
 				return (GSS_S_FAILURE);
-	
+
 			bzero(&res, sizeof(res));
 			stat = gssd_delete_sec_context_1(&args, &res, cl);
 			CLNT_RELEASE(cl);

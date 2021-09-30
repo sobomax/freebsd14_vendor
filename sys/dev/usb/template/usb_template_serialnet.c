@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 928d4f78510adbe92198e62fef6b613d06ac20cb $");
+__FBSDID("$FreeBSD: 60bfffe31585de9462810adb5f477855b7bd01c8 $");
 
 #ifdef USB_GLOBAL_INCLUDE_FILE
 #include USB_GLOBAL_INCLUDE_FILE
@@ -412,7 +412,7 @@ serialnet_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&serialnet_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB CDC Serial/Ethernet device side template");
 	SYSCTL_ADD_U16(&serialnet_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

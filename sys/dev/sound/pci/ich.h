@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THEPOSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89cbd49d90a7f16f5380aaf45aa0bd2d9c5de9e7 $
+ * $FreeBSD: e3d81890b21cda577caf506533dc2d317fceecf2 $
  */
 
 #define PCIR_NAMBAR 0x10
@@ -97,4 +97,3 @@
 /* play/record buffer */
 #define ICH_BDC_IOC 0x80000000
 #define ICH_BDC_BUP 0x40000000
-

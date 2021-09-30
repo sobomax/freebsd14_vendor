@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7c54fd6773ce98f7621ff1a0305ad46047fdc1a $");
+__FBSDID("$FreeBSD: c5c3435b6ef7c3a569c7b7420b05cef4641647df $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -138,7 +138,6 @@ bcm_systimer_start(struct eventtimer *et, sbintime_t first, sbintime_t period)
 	register_t s;
 
 	if (first != 0) {
-
 		count = ((uint32_t)et->et_frequency * first) >> 32;
 
 		s = intr_disable();

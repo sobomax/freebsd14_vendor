@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 470a575013e280b81b24493d3f5cc0f2cbde6dee $");
+__FBSDID("$FreeBSD: d698bdff03e3d953fb766b3c79f6c1e4743d487a $");
 
 /*
  * Driver for Apple GMAC, Sun ERI and Sun GEM Ethernet controllers
@@ -2202,14 +2202,27 @@ gem_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 	return (error);
 }
 
+static u_int
+gem_hash_maddr(void *arg, struct sockaddr_dl *sdl, u_int cnt)
+{
+	uint32_t crc, *hash = arg;
+
+	crc = ether_crc32_le(LLADDR(sdl), ETHER_ADDR_LEN);
+	/* We just want the 8 most significant bits. */
+	crc >>= 24;
+	/* Set the corresponding bit in the filter. */
+	hash[crc >> 4] |= 1 << (15 - (crc & 15));
+
+	return (1);
+}
+
 static void
 gem_setladrf(struct gem_softc *sc)
 {
 	struct ifnet *ifp = sc->sc_ifp;
-	struct ifmultiaddr *inm;
 	int i;
 	uint32_t hash[16];
-	uint32_t crc, v;
+	uint32_t v;
 
 	GEM_LOCK_ASSERT(sc, MA_OWNED);
 
@@ -2245,23 +2258,8 @@ gem_setladrf(struct gem_softc *sc)
 	 * is the MSB).
 	 */
 
-	/* Clear the hash table. */
 	memset(hash, 0, sizeof(hash));
-
-	if_maddr_rlock(ifp);
-	CK_STAILQ_FOREACH(inm, &ifp->if_multiaddrs, ifma_link) {
-		if (inm->ifma_addr->sa_family != AF_LINK)
-			continue;
-		crc = ether_crc32_le(LLADDR((struct sockaddr_dl *)
-		    inm->ifma_addr), ETHER_ADDR_LEN);
-
-		/* We just want the 8 most significant bits. */
-		crc >>= 24;
-
-		/* Set the corresponding bit in the filter. */
-		hash[crc >> 4] |= 1 << (15 - (crc & 15));
-	}
-	if_maddr_runlock(ifp);
+	if_foreach_llmaddr(ifp, gem_hash_maddr, hash);
 
 	v |= GEM_MAC_RX_HASH_FILTER;
 

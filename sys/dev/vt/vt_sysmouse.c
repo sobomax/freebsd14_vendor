@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98915c2a78df2d7f7636ee3f0003766067e4e906 $");
+__FBSDID("$FreeBSD: e10ac829abf38b78b00bf4204cbcd18c47ded8a9 $");
 
 #include "opt_evdev.h"
 
@@ -42,8 +42,10 @@ __FBSDID("$FreeBSD: 98915c2a78df2d7f7636ee3f0003766067e4e906 $");
 #include <sys/consio.h>
 #include <sys/fcntl.h>
 #include <sys/filio.h>
+#include <sys/lock.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
+#include <sys/mutex.h>
 #include <sys/poll.h>
 #include <sys/random.h>
 #include <sys/selinfo.h>

@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)lock.1	8.1 (Berkeley) 6/6/93
-.\" $FreeBSD: d68af4f7e3a0b25992597ef9767207fab81e8bc8 $
+.\" $FreeBSD: b3027fa192551ad30d879206eb35b023ffad28a9 $
 .\"
-.Dd July 10, 2002
+.Dd December 11, 2020
 .Dt LOCK 1
 .Os
 .Sh NAME
@@ -73,6 +73,11 @@ or
 .Xr vt 4
 virtual terminal.
 .El
+.Sh EXAMPLES
+Lock the terminal for 5 minutes, disable switching virtual terminals and
+require the user's login password to unlock:
+.Pp
+.Dl $ lock -p -t 5 -v
 .Sh SEE ALSO
 .Xr vidcontrol 1 ,
 .Xr syscons 4 ,

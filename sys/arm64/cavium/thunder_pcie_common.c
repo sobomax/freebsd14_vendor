@@ -30,7 +30,7 @@
 /* Common PCIe functions for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7a9838943d1d791947ce2086f91400d687389526 $");
+__FBSDID("$FreeBSD: 8f1d4834b1a5219da351860626a393722edb2ad9 $");
 
 #include "opt_platform.h"
 
@@ -185,7 +185,6 @@ thunder_pcie_alloc_resource(device_t dev, device_t child, int type, int *rid,
 	 */
 	if (((type == SYS_RES_IOPORT) || (type == SYS_RES_MEMORY)) &&
 	    RMAN_IS_DEFAULT_RANGE(start, end)) {
-
 		/* Read BAR manually to get resource address and size */
 		pci_read_bar(child, *rid, &map, &testval, NULL);
 

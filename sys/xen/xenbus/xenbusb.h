@@ -34,7 +34,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 8dbbffc43739ed5d5ee861db998ed203d9c38be6 $
+ * $FreeBSD: 41e56ec51e30a1755b0a272202c71872fb8be762 $
  */
 #ifndef _XEN_XENBUS_XENBUSB_H
 #define _XEN_XENBUS_XENBUSB_H
@@ -114,7 +114,6 @@ struct xenbusb_softc {
  * the xenbusb_softc structure.
  */
 typedef enum {
-
 	/**
 	 * This device is contributing to the xbs_connecting_children
 	 * count of its parent bus.

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b64686f78693969a8a92e7ab0cd8b5ec539722e $");
+__FBSDID("$FreeBSD: ddfeedb5e15a4fa6aa63ac7e829f805c34367af5 $");
 
 /*
  * Access to the Freescale i.MX6 On-Chip One-Time-Programmable Memory
@@ -204,4 +204,3 @@ static devclass_t ocotp_devclass;
 
 EARLY_DRIVER_MODULE(ocotp, simplebus, ocotp_driver, ocotp_devclass, 0, 0,
     BUS_PASS_CPU + BUS_PASS_ORDER_FIRST);
-

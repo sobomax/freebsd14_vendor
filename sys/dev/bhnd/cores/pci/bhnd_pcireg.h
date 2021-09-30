@@ -21,7 +21,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 673f1d4af17fb81db7d5d122047a9bb7c884ea4a $
+ * $FreeBSD: 0f26ce4785596bbfd8e690c532423cc2033f1741 $
  */
 
 #ifndef _BHND_CORES_PCI_BHND_PCIREG_H_
@@ -205,7 +205,7 @@
 #define	BHND_PCIE_CFG_OFFSET(f, r)	\
 	((((f) & BHND_PCIE_CFG_ADDR_FUNC_MASK) << BHND_PCIE_CFG_ADDR_FUNC_SHIFT) | \
 	(((r) & BHND_PCIE_CFG_ADDR_FUNC_SHIFT) << BHND_PCIE_CFG_ADDR_REG_SHIFT))
-	
+
 /* BHND_PCIE_MDIO_CTL control */
 #define	BHND_PCIE_MDIOCTL_DIVISOR_MASK		0x7f	/* clock divisor mask */
 #define	BHND_PCIE_MDIOCTL_DIVISOR_VAL		0x2	/* default clock divisor */
@@ -318,7 +318,6 @@
 #define	BHND_PCIE_TLP_TGTDEBUG3			0x07C	/* Target Debug Reg3 */
 #define	BHND_PCIE_TLP_TGTDEBUG4			0x080	/* Target Debug Reg4 */
 
-
 /*
  * PCIe-G1 SerDes MDIO Registers (>= rev10)
  */
@@ -394,7 +393,6 @@
 #define	  BHND_PCIE_SDR9_RX_TIMER1_LKTRK_SHIFT	8
 #define	  BHND_PCIE_SDR9_RX_TIMER1_LKACQ_MASK	0x00FF	/* phase acquisition mode time (in 1024ns units) */
 #define	  BHND_PCIE_SDR9_RX_TIMER1_LKACQ_SHIFT	0
-
 
 /* SPROM offsets */
 #define	BHND_PCIE_SRSH_PI_OFFSET		BHND_PCI_SRSH_PI_OFFSET	/**< PCI base address bits in SPROM shadow area */

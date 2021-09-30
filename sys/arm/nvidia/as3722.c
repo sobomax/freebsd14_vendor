@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21dae2d7c695c759ed5cfec0769985615e849b3a $");
+__FBSDID("$FreeBSD: 60301c78a2fbded3aa44751181285bcff0da3a92 $");
 
 /*
  * AS3722 PMIC driver
@@ -51,7 +51,7 @@ __FBSDID("$FreeBSD: 21dae2d7c695c759ed5cfec0769985615e849b3a $");
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
-#include <gnu/dts/include/dt-bindings/mfd/as3722.h>
+#include <dt-bindings/mfd/as3722.h>
 
 #include "clock_if.h"
 #include "regdev_if.h"

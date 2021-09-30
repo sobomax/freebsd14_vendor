@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80fef9e491bfa8f789e36c99df4d34f0ef4ffb59 $");
+__FBSDID("$FreeBSD: cf339387c10eeba6eda78f911d765f9160c7e8e1 $");
 
 #include <sys/param.h>
 #ifdef __amd64__
@@ -577,7 +577,7 @@ mpt_user_raid_action(struct mpt_softc *mpt, struct mpt_raid_action *raid_act,
 		mpt_free_request(mpt, req);
 		return (0);
 	}
-	
+
 	res = (struct mpt_user_raid_action_result *)
 	    (((uint8_t *)req->req_vbuf) + MPT_RQSL(mpt));
 	raid_act->volume_status = res->volume_status;

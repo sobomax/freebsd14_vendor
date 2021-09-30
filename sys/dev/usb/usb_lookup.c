@@ -1,4 +1,4 @@
-/* $FreeBSD: 09605f54ba6a71f5ccee24b630676d7c50be60c4 $ */
+/* $FreeBSD: 2d0e9b1b370a6389f58c60296411b4d189cdfb0a $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -84,7 +84,6 @@ usbd_lookup_id_by_info(const struct usb_device_id *id, usb_size_t sizeof_id,
 	 * until we reach the end of the matching array:
 	 */
 	for (; id != id_end; id++) {
-
 		if ((id->match_flag_vendor) &&
 		    (id->idVendor != info->idVendor)) {
 			continue;
@@ -152,4 +151,3 @@ usbd_lookup_id_by_uaa(const struct usb_device_id *id, usb_size_t sizeof_id,
 	}
 	return (ENXIO);
 }
-

@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)stty.1	8.4 (Berkeley) 4/18/94
-.\" $FreeBSD: 2575263c18c1832aa62c3d0d42cbd87d2ca9fe47 $
+.\" $FreeBSD: 1863c2286176a8601bb211215215951587245b33 $
 .\"
-.Dd March 2, 2018
+.Dd October 20, 2018
 .Dt STTY 1
 .Os
 .Sh NAME
@@ -145,6 +145,8 @@ Assume a line without (with) modem
 control.
 .It Cm crtscts Pq Fl crtscts
 Enable (disable) RTS/CTS flow control.
+.It Cm rtsdtr Pq Fl -rtsdtr
+Enable (disable) asserting RTS/DTR on open.
 .El
 .Ss Input Modes:
 This corresponds to the c_iflag in the termios structure.
@@ -459,6 +461,13 @@ The status line consists of the
 system load average, the current command name, its process ID, the
 event the process is waiting on (or the status of the process), the user
 and system times, percent cpu, and current memory usage.
+.Pp
+If the
+.Xr sysctl 8
+variable
+.Va kern.tty_info_kstacks
+is set to a non-zero value, the status message also includes the kernel program
+stack of the foreground thread.
 .It Cm columns Ar number
 The terminal size is recorded as having
 .Ar number

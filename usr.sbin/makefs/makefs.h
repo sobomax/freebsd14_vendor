@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 25f41731fe578a1d81a06771a71a696b32715059 $
+ * $FreeBSD: 68dc0362dd2170a3b9c2a210cd97203304efbf07 $
  */
 
 #ifndef	_MAKEFS_H
@@ -299,7 +299,7 @@ extern	struct stat stampst;
     ((int32_t *)((uintptr_t)(cgp) + ufs_rw32((cgp)->cg_clustersumoff, ns)))
 
 struct fs;
-void   ffs_fragacct_swap(struct fs *, int, int32_t [], int, int);
+void   ffs_fragacct_swap(struct fs *, int, uint32_t [], int, int);
 
 fsinode *link_check(fsinode *);
 

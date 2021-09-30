@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b25b5bde3bf707db2d9fcb711c645dafb442e96 $");
+__FBSDID("$FreeBSD: dc86d4736b88d17f56b90376f521e9182c6da2c1 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -199,7 +199,6 @@ bcm_mips74k_detach(device_t dev)
 
 	return (0);
 }
-
 
 /* PIC_DISABLE_INTR() */
 static void

@@ -1,6 +1,5 @@
 #-
 # Copyright (c) 2016 Emmanuel Vadot <manu@freebsd.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 78b73cc0c8b11717281a71035b6fb0fbc41f70bc $
+# $FreeBSD: 455f273fe1f2e9d77079482ec4f4861a44c94e48 $
 #
 
 INTERFACE generic_usb;

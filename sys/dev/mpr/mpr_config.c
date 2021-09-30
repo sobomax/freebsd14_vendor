@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80c8a189b433b7ff6f5fb8fd62d61157ecb8c271 $");
+__FBSDID("$FreeBSD: 1916dc1cb3dc31c1545a7ba035d6ca5c085ccee6 $");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>
@@ -127,7 +127,7 @@ mpr_config_get_ioc_pg8(struct mpr_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * counters to match - Need to review the reply FIFO handling.
 	 */
 	mpr_free_command(sc, cm);
-	
+
 	if ((cm = mpr_alloc_command(sc)) == NULL) {
 		printf("%s: command alloc failed @ line %d\n", __func__,
 		    __LINE__);
@@ -259,7 +259,7 @@ mpr_config_get_iounit_pg8(struct mpr_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * counters to match - Need to review the reply FIFO handling.
 	 */
 	mpr_free_command(sc, cm);
-	
+
 	if ((cm = mpr_alloc_command(sc)) == NULL) {
 		printf("%s: command alloc failed @ line %d\n", __func__,
 		    __LINE__);
@@ -391,7 +391,7 @@ mpr_config_get_man_pg11(struct mpr_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * counters to match - Need to review the reply FIFO handling.
 	 */
 	mpr_free_command(sc, cm);
-	
+
 	if ((cm = mpr_alloc_command(sc)) == NULL) {
 		printf("%s: command alloc failed @ line %d\n", __func__,
 		    __LINE__);
@@ -495,7 +495,7 @@ mpr_base_static_config_pages(struct mpr_softc *sc)
 			break;
 		}
 	}
-	
+
 	if (!rc) {
 		sc->custom_nvme_tm_handling = (le16toh(man_pg11.AddlFlags2) &
 		    MPI2_MAN_PG11_ADDLFLAGS2_CUSTOM_TM_HANDLING_MASK);

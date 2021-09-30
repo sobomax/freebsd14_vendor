@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de0ebd8801a6203a284cadc00f5e1d05e829b5f0 $");
+__FBSDID("$FreeBSD: 058cbe7c5fb953f1cf193d3e2effc6322c345352 $");
 
 /*
  * EHCI driver for Tegra SoCs.
@@ -65,8 +65,10 @@ __FBSDID("$FreeBSD: de0ebd8801a6203a284cadc00f5e1d05e829b5f0 $");
 
 /* Compatible devices. */
 #define	TEGRA124_EHCI		1
+#define	TEGRA210_EHCI		2
 static struct ofw_compat_data compat_data[] = {
 	{"nvidia,tegra124-ehci",	(uintptr_t)TEGRA124_EHCI},
+	{"nvidia,tegra210-ehci",	(uintptr_t)TEGRA210_EHCI},
 	{NULL,		 	0},
 };
 

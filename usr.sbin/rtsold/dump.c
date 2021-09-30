@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 65b4f979bd435fb2e88158a4ff8a9c7e7cca5f28 $
+ * $FreeBSD: 803a6c0d95d33333dbf03545a94eb9e921153571 $
  */
 
 #include <sys/types.h>
@@ -148,6 +148,7 @@ rtsold_init_dumpfile(const char *dumpfile)
 	if (caph_rights_limit(fileno(fp), &rights) != 0) {
 		warnmsg(LOG_WARNING, __func__, "caph_rights_limit(%s): %s",
 		    dumpfile, strerror(errno));
+		(void)fclose(fp);
 		return (NULL);
 	}
 	return (fp);

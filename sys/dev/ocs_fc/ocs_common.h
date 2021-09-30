@@ -28,14 +28,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 0d34a2d14704913e47e82ccc92c1c8286f454ccd $
+ * $FreeBSD: 35b0e4165113ceb7fb327d2341a8f5c749a528be $
  */
 
 /**
  * @file
  * Contains declarations shared between the alex layer and HW/SLI4
  */
-
 
 #if !defined(__OCS_COMMON_H__)
 #define __OCS_COMMON_H__
@@ -154,7 +153,6 @@ typedef enum {
  * a separate SLI port object.
  */
 struct ocs_sli_port_s {
-
 	ocs_t *ocs;				/**< pointer to ocs */
 	uint32_t tgt_id;			/**< target id */
 	uint32_t index;				/**< ??? */
@@ -215,7 +213,6 @@ struct ocs_sli_port_s {
  * to connect to the domain of a FC or FCoE switch
  */
 struct ocs_domain_s {
-
 	ocs_t *ocs;				/**< pointer back to ocs */
 	uint32_t instance_index;		/**< unique instance index value */
 	char display_name[OCS_DISPLAY_NAME_LENGTH]; /**< Node display name */
@@ -302,7 +299,6 @@ struct ocs_remote_node_group_s {
 	 * Implementation specific fields allowed here
 	 */
 
-
 	uint32_t instance_index;		/*<< instance index */
 	ocs_node_group_dir_t *node_group_dir;	/*<< pointer to the node group directory */
 	ocs_list_link_t link;			/*<< linked list link */
@@ -325,7 +321,6 @@ typedef enum {
  *
  */
 struct ocs_node_s {
-
 	ocs_t *ocs;				/**< pointer back to ocs structure */
 	uint32_t instance_index;		/**< unique instance index value */
 	char display_name[OCS_DISPLAY_NAME_LENGTH]; /**< Node display name */
@@ -419,6 +414,5 @@ struct ocs_vport_spec_s {
 	void	*ini_data;			/**< initiator backend pointer */
 	ocs_sport_t *sport;			/**< Used to match record after attaching for update */
 };
-
 
 #endif /* __OCS_COMMON_H__*/

@@ -1,9 +1,8 @@
-# $FreeBSD: fd2b7b4d9ccb3210d8c540f75361a1ab3d354713 $
+# $FreeBSD: 78e551d80a3370acf6cf0c9be4c05060a7efd730 $
 
 PROG?=		ldd
 SRCS=		ldd.c
-.if ${MACHINE_CPUARCH} == "i386"
-SRCS+=		sods.c
-.endif
+
+LIBADD=		elf
 
 .include <bsd.prog.mk>

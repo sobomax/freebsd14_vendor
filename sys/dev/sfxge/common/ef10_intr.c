@@ -29,13 +29,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 953bcc633bd82b8b400a0e0c60d36c4affcd75ba $");
+__FBSDID("$FreeBSD: bd15068ba26709eec031a9c00aaad2fa63a991ad $");
 
 #include "efx.h"
 #include "efx_impl.h"
 
-
-#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD
+#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD || EFSYS_OPT_MEDFORD2
 
 	__checkReturn	efx_rc_t
 ef10_intr_init(
@@ -47,14 +46,12 @@ ef10_intr_init(
 	return (0);
 }
 
-
 			void
 ef10_intr_enable(
 	__in		efx_nic_t *enp)
 {
 	_NOTE(ARGUNUSED(enp))
 }
-
 
 			void
 ef10_intr_disable(
@@ -63,14 +60,12 @@ ef10_intr_disable(
 	_NOTE(ARGUNUSED(enp))
 }
 
-
 			void
 ef10_intr_disable_unlocked(
 	__in		efx_nic_t *enp)
 {
 	_NOTE(ARGUNUSED(enp))
 }
-
 
 static	__checkReturn	efx_rc_t
 efx_mcdi_trigger_interrupt(
@@ -83,7 +78,8 @@ efx_mcdi_trigger_interrupt(
 	efx_rc_t rc;
 
 	EFSYS_ASSERT(enp->en_family == EFX_FAMILY_HUNTINGTON ||
-		    enp->en_family == EFX_FAMILY_MEDFORD);
+	    enp->en_family == EFX_FAMILY_MEDFORD ||
+	    enp->en_family == EFX_FAMILY_MEDFORD2);
 
 	if (level >= enp->en_nic_cfg.enc_intr_limit) {
 		rc = EINVAL;
@@ -155,7 +151,8 @@ ef10_intr_status_line(
 	efx_dword_t dword;
 
 	EFSYS_ASSERT(enp->en_family == EFX_FAMILY_HUNTINGTON ||
-		    enp->en_family == EFX_FAMILY_MEDFORD);
+	    enp->en_family == EFX_FAMILY_MEDFORD ||
+	    enp->en_family == EFX_FAMILY_MEDFORD2);
 
 	/* Read the queue mask and implicitly acknowledge the interrupt. */
 	EFX_BAR_READD(enp, ER_DZ_BIU_INT_ISR_REG, &dword, B_FALSE);
@@ -173,7 +170,8 @@ ef10_intr_status_message(
 	__out		boolean_t *fatalp)
 {
 	EFSYS_ASSERT(enp->en_family == EFX_FAMILY_HUNTINGTON ||
-		    enp->en_family == EFX_FAMILY_MEDFORD);
+	    enp->en_family == EFX_FAMILY_MEDFORD ||
+	    enp->en_family == EFX_FAMILY_MEDFORD2);
 
 	_NOTE(ARGUNUSED(enp, message))
 
@@ -196,4 +194,4 @@ ef10_intr_fini(
 	_NOTE(ARGUNUSED(enp))
 }
 
-#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD */
+#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD || EFSYS_OPT_MEDFORD2 */

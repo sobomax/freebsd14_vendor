@@ -1,4 +1,4 @@
-# $FreeBSD: 187517736e6279927d570e9216a7d9fdda22eeb6 $
+# $FreeBSD: f7f127cf4e7e024f93021c63032868444d6ffcb5 $
 
 .include <src.opts.mk>
 
@@ -35,7 +35,7 @@ BINMODE=	2555
 .include <bsd.compiler.mk>
 
 .if ${COMPILER_TYPE} == gcc
-WARNS=	5
+WARNS?=	5
 .endif
 
 .include <bsd.prog.mk>

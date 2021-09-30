@@ -19,17 +19,13 @@
 static const char rcsid[] = "$Id: inet_pton.c,v 1.3.18.2 2005/07/28 07:38:07 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8b7293bfa83f7cf6c7d7b15975c70f8fa4ed5f1 $");
+__FBSDID("$FreeBSD: d8a31fa21b61a8fe8d3790f8146e91fed3f3e44d $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/systm.h>
 
 #include <netinet/in.h>
-
-#if __FreeBSD_version < 700000
-#define strchr index
-#endif
 
 /*%
  * WARNING: Don't even consider trying to compile this on a system where

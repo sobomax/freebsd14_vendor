@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 41cd7b2c23d1f35196b8b8dc679402b572428741 $
+ * $FreeBSD: 6712412127997b0ae610b9c6418f018b345ac38a $
  */
 
 /*
@@ -93,10 +93,10 @@ unsigned int
 void		LibAliasUninit(struct libalias *);
 
 /* Packet Handling functions. */
-int		LibAliasIn (struct libalias *, char *_ptr, int _maxpacketsize);
-int		LibAliasOut(struct libalias *, char *_ptr, int _maxpacketsize);
-int		LibAliasOutTry(struct libalias *, char *_ptr, int _maxpacketsize, int _create);
-int		LibAliasUnaliasOut(struct libalias *, char *_ptr, int _maxpacketsize);
+int		LibAliasIn (struct libalias *, void *_ptr, int _maxpacketsize);
+int		LibAliasOut(struct libalias *, void *_ptr, int _maxpacketsize);
+int		LibAliasOutTry(struct libalias *, void *_ptr, int _maxpacketsize, int _create);
+int		LibAliasUnaliasOut(struct libalias *, void *_ptr, int _maxpacketsize);
 
 /* Port and address redirection functions. */
 
@@ -119,9 +119,9 @@ LibAliasRedirectProto(struct libalias *, struct in_addr _src_addr,
     unsigned char _proto);
 
 /* Fragment Handling functions. */
-void		LibAliasFragmentIn(struct libalias *, char *_ptr, char *_ptr_fragment);
-char           *LibAliasGetFragment(struct libalias *, char *_ptr);
-int		LibAliasSaveFragment(struct libalias *, char *_ptr);
+void		LibAliasFragmentIn(struct libalias *, void *_ptr, void *_ptr_fragment);
+void           *LibAliasGetFragment(struct libalias *, void *_ptr);
+int		LibAliasSaveFragment(struct libalias *, void *_ptr);
 
 /* Miscellaneous functions. */
 int		LibAliasCheckNewLink(struct libalias *);
@@ -143,7 +143,6 @@ struct mbuf    *m_megapullup(struct mbuf *, int);
 /*
  * Mode flags and other constants.
  */
-
 
 /* Mode flags, set using PacketAliasSetMode() */
 

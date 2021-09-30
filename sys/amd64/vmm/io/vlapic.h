@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1741f003bd3d8ad3ad7a07a41d1a9bffc1b3b50c $
+ * $FreeBSD: b87657c8bb51a339fe505de4cbfe9f3bfccd9c84 $
  */
 
 #ifndef _VLAPIC_H_
 #define	_VLAPIC_H_
 
 struct vm;
+struct vm_snapshot_meta;
 enum x2apic_state;
 
 int vlapic_write(struct vlapic *vlapic, int mmio_access, uint64_t offset,
@@ -71,7 +72,6 @@ int vlapic_set_intr_ready(struct vlapic *vlapic, int vector, bool level);
  */
 void vlapic_post_intr(struct vlapic *vlapic, int hostcpu, int ipinum);
 
-void vlapic_set_error(struct vlapic *vlapic, uint32_t mask);
 void vlapic_fire_cmci(struct vlapic *vlapic);
 int vlapic_trigger_lvt(struct vlapic *vlapic, int vector);
 
@@ -110,4 +110,9 @@ void vlapic_icrtmr_write_handler(struct vlapic *vlapic);
 void vlapic_dcr_write_handler(struct vlapic *vlapic);
 void vlapic_lvt_write_handler(struct vlapic *vlapic, uint32_t offset);
 void vlapic_self_ipi_handler(struct vlapic *vlapic, uint64_t val);
+
+#ifdef BHYVE_SNAPSHOT
+int vlapic_snapshot(struct vm *vm, struct vm_snapshot_meta *meta);
+#endif
+
 #endif	/* _VLAPIC_H_ */

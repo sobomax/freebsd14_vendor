@@ -1,0 +1,2 @@
+.\" $FreeBSD: e729f6c4c8e03a2ac1a9d5374296d143b17471a8 $
+Install ELF Tool Chain's cxxfilt as c++filt, instead of LLVM's llvm-cxxfilt.

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c3f2a72888bb34c66e2e6257d7ef53e4a2cfa9b6 $
+ * $FreeBSD: 3327117b98a10bbbf5b62367dbbb6ba45731bedb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c3f2a72888bb34c66e2e6257d7ef53e4a2cfa9b6 $");
+__FBSDID("$FreeBSD: 3327117b98a10bbbf5b62367dbbb6ba45731bedb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -728,7 +728,6 @@ static struct rk_clk_composite_def pclk_pmu_src = {
 	.div_shift = 0,
 	.div_width = 5,
 };
-
 
 #define	SCLK_I2C0_PMU	9
 #define	SCLK_I2C4_PMU	10

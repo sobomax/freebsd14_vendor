@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c43fc6d4bf331707418eff9162e8c1dfe43777a5 $");
+__FBSDID("$FreeBSD: adba0d52951a05a79fde3fcc4274981f87070e75 $");
 
 #ifndef MRSAS_IOCTL_H
 #define	MRSAS_IOCTL_H
@@ -87,7 +87,6 @@ __FBSDID("$FreeBSD: c43fc6d4bf331707418eff9162e8c1dfe43777a5 $");
 #define	SCSI_SENSE_BUFFERSIZE	96
 
 #define	MEGAMFI_RAW_FRAME_SIZE	128
-
 
 #pragma pack(1)
 struct mrsas_iocpacket {

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f98deea88d93371aa437520a454bf98166d98d5 $");
+__FBSDID("$FreeBSD: ad27275d8cfb07ade4154df564db07229b987dd7 $");
 
 /*
  * IEEE 802.11 protocol support.
@@ -103,7 +103,6 @@ const char *ieee80211_wme_acnames[] = {
 	"WME_AC_VO",
 	"WME_UPSD",
 };
-
 
 /*
  * Reason code descriptions were (mostly) obtained from
@@ -1693,7 +1692,7 @@ ieee80211_wme_updateparams_locked(struct ieee80211vap *vap)
 	/* XXX WDS? */
 
 	/* XXX MBSS? */
-	
+
 	if (do_aggrmode) {
 		chanp = &wme->wme_chanParams.cap_wmeParams[WME_AC_BE];
 		bssp = &wme->wme_bssChanParams.cap_wmeParams[WME_AC_BE];
@@ -1712,7 +1711,6 @@ ieee80211_wme_updateparams_locked(struct ieee80211vap *vap)
 		    chanp->wmep_acm, chanp->wmep_aifsn, chanp->wmep_logcwmin,
 		    chanp->wmep_logcwmax, chanp->wmep_txopLimit);
 	}
-
 
 	/*
 	 * Change the contention window based on the number of associated
@@ -1996,7 +1994,6 @@ ieee80211_start_locked(struct ieee80211vap *vap)
 		 * to be brought up auto-up the parent if necessary.
 		 */
 		if (ic->ic_nrunning++ == 0) {
-
 			/* reset the channel to a known good channel */
 			if (ieee80211_start_check_reset_chan(vap))
 				ieee80211_start_reset_chan(vap);

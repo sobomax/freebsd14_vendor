@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bd2f89e538eb2e844bbc3c39a6d469cb837d892 $");
+__FBSDID("$FreeBSD: 7bcefd0f2493f23a15ccfccf407db436be1d4520 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -96,4 +96,3 @@ gss_unwrap_mbuf(OM_uint32 *minor_status,
 
 	return (KGSS_UNWRAP(ctx, minor_status, mp, conf_state, qop_state));
 }
-

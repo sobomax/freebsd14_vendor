@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_misc.h,v 1.3 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: e32a83de909edc47a373a1cfdeb784889d1c8c06 $
+ * $FreeBSD: dde5f883acb25816b94142627a9b7cedf4d9f4dc $
  */
 
 #ifndef _NETGRAPH_HCI_MISC_H_
@@ -57,4 +57,3 @@ int               ng_hci_con_timeout            (ng_hci_unit_con_p);
 int               ng_hci_con_untimeout          (ng_hci_unit_con_p);
 
 #endif /* ndef _NETGRAPH_HCI_MISC_H_ */
-

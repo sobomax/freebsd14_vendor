@@ -1,4 +1,4 @@
-/* $FreeBSD: 8646c572004f3840faeb8fa7886a1bed1d2c52e3 $ */
+/* $FreeBSD: 7d414eb38b4da3650c8464f8d1f9cdb6b7899a11 $ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -39,7 +39,6 @@
  *  CREATION DATE:  6/02/2000
  *  ID:             $Id: fc_log.h,v 4.6 2001/07/26 14:41:33 sschremm Exp $
  */
-
 
 /*
  * MpiIocLogInfo_t enum

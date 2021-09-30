@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 1f73a806eb7a628a4deaa69e43074e42c4226b1a $
+ * $FreeBSD: 6f0c3a46605a5d40ec919f9f7320165f4b007e78 $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -168,7 +168,7 @@ struct tcp_timer {
 #define TT_2MSL		0x0010
 #define TT_MASK		(TT_DELACK|TT_REXMT|TT_PERSIST|TT_KEEP|TT_2MSL)
 
-/* 
+/*
  * Suspend flags - used when suspending a timer
  * from ever running again.
  */

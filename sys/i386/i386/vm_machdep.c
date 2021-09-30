@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 06112ebb34d0ac0ddc2d9ec650fd1f0b6fa32d0b $");
+__FBSDID("$FreeBSD: d3182cb224bf27c2eac8f69aa541036e56a445de $");
 
 #include "opt_isa.h"
 #include "opt_npx.h"
@@ -60,7 +60,6 @@ __FBSDID("$FreeBSD: 06112ebb34d0ac0ddc2d9ec650fd1f0b6fa32d0b $");
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/mutex.h>
-#include <sys/pioctl.h>
 #include <sys/proc.h>
 #include <sys/sysent.h>
 #include <sys/sf_buf.h>
@@ -85,10 +84,6 @@ __FBSDID("$FreeBSD: 06112ebb34d0ac0ddc2d9ec650fd1f0b6fa32d0b $");
 #include <vm/vm_page.h>
 #include <vm/vm_map.h>
 #include <vm/vm_param.h>
-
-#ifndef NSFBUFS
-#define	NSFBUFS		(512 + maxusers * 16)
-#endif
 
 _Static_assert(__OFFSETOF_MONITORBUF == offsetof(struct pcpu, pc_monitorbuf),
     "__OFFSETOF_MONITORBUF does not correspond with offset of pc_monitorbuf.");
@@ -212,25 +207,17 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_frame->tf_edx = 1;
 
 	/*
-	 * If the parent process has the trap bit set (i.e. a debugger had
-	 * single stepped the process to the system call), we need to clear
-	 * the trap flag from the new frame unless the debugger had set PF_FORK
-	 * on the parent.  Otherwise, the child will receive a (likely
-	 * unexpected) SIGTRAP when it executes the first instruction after
-	 * returning  to userland.
+	 * If the parent process has the trap bit set (i.e. a debugger
+	 * had single stepped the process to the system call), we need
+	 * to clear the trap flag from the new frame.
 	 */
-	if ((p1->p_pfsflags & PF_FORK) == 0)
-		td2->td_frame->tf_eflags &= ~PSL_T;
+	td2->td_frame->tf_eflags &= ~PSL_T;
 
 	/*
 	 * Set registers for trampoline to user mode.  Leave space for the
 	 * return address on stack.  These are the kernel mode register values.
 	 */
-#if defined(PAE) || defined(PAE_TABLES)
-	pcb2->pcb_cr3 = vtophys(vmspace_pmap(p2->p_vmspace)->pm_pdpt);
-#else
-	pcb2->pcb_cr3 = vtophys(vmspace_pmap(p2->p_vmspace)->pm_pdir);
-#endif
+	pcb2->pcb_cr3 = pmap_get_cr3(vmspace_pmap(p2->p_vmspace));
 	pcb2->pcb_edi = 0;
 	pcb2->pcb_esi = (int)fork_return;	/* fork_trampoline argument */
 	pcb2->pcb_ebp = 0;
@@ -420,7 +407,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		break;
 
 	default:
-		td->td_frame->tf_eax = SV_ABI_ERRNO(td->td_proc, error);
+		td->td_frame->tf_eax = error;
 		td->td_frame->tf_eflags |= PSL_C;
 		break;
 	}
@@ -583,34 +570,10 @@ kvtop(void *addr)
 void
 sf_buf_map(struct sf_buf *sf, int flags)
 {
-	pt_entry_t opte, *ptep;
 
-	/*
-	 * Update the sf_buf's virtual-to-physical mapping, flushing the
-	 * virtual address from the TLB.  Since the reference count for 
-	 * the sf_buf's old mapping was zero, that mapping is not 
-	 * currently in use.  Consequently, there is no need to exchange 
-	 * the old and new PTEs atomically, even under PAE.
-	 */
-	ptep = vtopte(sf->kva);
-	opte = *ptep;
-	*ptep = VM_PAGE_TO_PHYS(sf->m) | PG_RW | PG_V |
-	    pmap_cache_bits(kernel_pmap, sf->m->md.pat_mode, 0);
-
-	/*
-	 * Avoid unnecessary TLB invalidations: If the sf_buf's old
-	 * virtual-to-physical mapping was not used, then any processor
-	 * that has invalidated the sf_buf's virtual address from its TLB
-	 * since the last used mapping need not invalidate again.
-	 */
+	pmap_sf_buf_map(sf);
 #ifdef SMP
-	if ((opte & (PG_V | PG_A)) ==  (PG_V | PG_A))
-		CPU_ZERO(&sf->cpumask);
-
 	sf_buf_shootdown(sf, flags);
-#else
-	if ((opte & (PG_V | PG_A)) ==  (PG_V | PG_A))
-		pmap_invalidate_page(kernel_pmap, sf->kva);
 #endif
 }
 
@@ -636,7 +599,7 @@ sf_buf_shootdown(struct sf_buf *sf, int flags)
 	if ((flags & SFB_CPUPRIVATE) == 0) {
 		other_cpus = all_cpus;
 		CPU_CLR(cpuid, &other_cpus);
-		CPU_NAND(&other_cpus, &sf->cpumask);
+		CPU_ANDNOT(&other_cpus, &sf->cpumask);
 		if (!CPU_EMPTY(&other_cpus)) {
 			CPU_OR(&sf->cpumask, &other_cpus);
 			smp_masked_invlpg(other_cpus, sf->kva, kernel_pmap,

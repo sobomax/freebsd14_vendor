@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9caf2f00f32c87744e1b7b79270712c549901b90 $
+ * $FreeBSD: eccfc1a4dfd4f4cc0b9da9c4e312d34d5f643770 $
  *
  */
 #include <sys/cdefs.h>
@@ -75,10 +75,13 @@ dtrace_test_sdttest(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-static SYSCTL_NODE(_debug, OID_AUTO, dtracetest, CTLFLAG_RD, 0, "");
+static SYSCTL_NODE(_debug, OID_AUTO, dtracetest,
+    CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "");
 
-SYSCTL_PROC(_debug_dtracetest, OID_AUTO, sdttest, CTLTYPE_INT | CTLFLAG_RW,
-    NULL, 0, dtrace_test_sdttest, "I", "Trigger the SDT test probe");
+SYSCTL_PROC(_debug_dtracetest, OID_AUTO, sdttest,
+    CTLTYPE_INT | CTLFLAG_MPSAFE | CTLFLAG_RW, NULL, 0, dtrace_test_sdttest,
+    "I", "Trigger the SDT test probe");
 
 static int
 dtrace_test_modevent(module_t mod, int type, void *data)

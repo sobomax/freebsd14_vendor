@@ -1,4 +1,4 @@
-# $FreeBSD: 566794fa6f4b81f62aa89db6c991933f13c9a0c2 $
+# $FreeBSD: 5a6fceb2a4cb7e75a1840f47d2ae5bc3f32cbcb6 $
 
 PROG=	acpidb
 SRCS=	acpidb.c
@@ -87,6 +87,6 @@ LIBADD=	pthread
 # integer to pointer, which is a GNU extension.
 #
 # Turn off the warning, because this is in contributed code.
-.if ${COMPILER_TYPE} == "clang" && ${COMPILER_VERSION} >= 60000
+.if ${COMPILER_TYPE} == "clang"
 CWARNFLAGS+=	-Wno-null-pointer-arithmetic
 .endif

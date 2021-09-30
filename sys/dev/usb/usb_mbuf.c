@@ -1,4 +1,4 @@
-/* $FreeBSD: 4eb27cf6977e4c1093bd82a7e8c6ab8e5c153251 $ */
+/* $FreeBSD: 8da2f514cd65cb4d166cf8cdca31a05bcc40a12c $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -74,7 +74,6 @@ usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
 	block_size += ((-block_size) & (USB_HOST_ALIGN - 1));
 
 	if (nblocks && block_size) {
-
 		alloc_size = (block_size + sizeof(struct usb_mbuf)) * nblocks;
 
 		free_ptr = malloc(alloc_size, type, M_WAITOK | M_ZERO);

@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 9/5/93
-# $FreeBSD: b31c1a36fcfe2fa4c704fd36ef340c280a9632a5 $
+# $FreeBSD: 6628028ccc83bc633969b26f91abbaeac9d22b99 $
 
 # machine-independent net sources
 .PATH: ${LIBC_SRCTOP}/net
@@ -124,8 +124,9 @@ SRCS+=	hesiod.c
 MAN+=	hesiod.3
 .endif
 
+afterinstallconfig: modify-nsswitch-conf
+modify-nsswitch-conf: .PHONY
 .if ${MK_NIS} == "no"
-afterinstallconfig:
 	sed -i "" -e 's/.*_compat:/# &/' -e 's/compat$$/files/' \
 		${DESTDIR}/etc/nsswitch.conf
 .endif

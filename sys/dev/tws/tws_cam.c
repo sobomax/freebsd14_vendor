@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f948af09281925198dd21baddeaf19582b7102c0 $
+ * $FreeBSD: 4e274df45804c0ade2fe78317e8dbf1e7d1f4fe1 $
  */
 
 #include <dev/tws/tws.h>
@@ -50,8 +50,6 @@ static void  tws_action(struct cam_sim *sim, union ccb *ccb);
 static void  tws_poll(struct cam_sim *sim);
 static void tws_scsi_complete(struct tws_request *req);
 
-
-
 void tws_unmap_request(struct tws_softc *sc, struct tws_request *req);
 int32_t tws_map_request(struct tws_softc *sc, struct tws_request *req);
 int tws_bus_scan(struct tws_softc *sc);
@@ -73,7 +71,6 @@ static void tws_scsi_err_complete(struct tws_request *req,
 static void tws_passthru_err_complete(struct tws_request *req, 
                                                struct tws_command_header *hdr);
 
-
 void tws_timeout(void *arg);
 static void tws_intr_attn_aen(struct tws_softc *sc);
 static void tws_intr_attn_error(struct tws_softc *sc);
@@ -87,7 +84,6 @@ int tws_set_param(struct tws_softc *sc, u_int32_t table_id, u_int32_t param_id,
               u_int32_t param_size, void *data);
 int tws_get_param(struct tws_softc *sc, u_int32_t table_id, u_int32_t param_id,  
               u_int32_t param_size, void *data);
-
 
 extern struct tws_request *tws_get_request(struct tws_softc *sc, 
                                             u_int16_t type);
@@ -126,8 +122,6 @@ extern u_int16_t tws_poll4_response(struct tws_softc *sc, u_int64_t *mfa);
 extern int tws_setup_intr(struct tws_softc *sc, int irqs);
 extern int tws_teardown_intr(struct tws_softc *sc);
 
-
-
 int
 tws_cam_attach(struct tws_softc *sc)
 {
@@ -160,9 +154,7 @@ tws_cam_attach(struct tws_softc *sc)
     */
     sc->sim = cam_sim_alloc(tws_action, tws_poll, "tws", sc,
                       device_get_unit(sc->tws_dev), 
-#if (__FreeBSD_version >= 700000)
                       &sc->sim_lock,
-#endif
                       tws_cam_depth, 1, devq);
                       /* 1, 1, devq); */
     if (sc->sim == NULL) {
@@ -172,9 +164,7 @@ tws_cam_attach(struct tws_softc *sc)
     /* Register the bus. */
     mtx_lock(&sc->sim_lock);
     if (xpt_bus_register(sc->sim, 
-#if (__FreeBSD_version >= 700000)
                          sc->tws_dev, 
-#endif
                          0) != CAM_SUCCESS) {
         cam_sim_free(sc->sim, TRUE); /* passing true will free the devq */
         sc->sim = NULL; /* so cam_detach will not try to free it */
@@ -237,7 +227,6 @@ tws_action(struct cam_sim *sim, union ccb *ccb)
 {
     struct tws_softc *sc = (struct tws_softc *)cam_sim_softc(sim);
 
-
     switch( ccb->ccb_h.func_code ) {
         case XPT_SCSI_IO:   
         {
@@ -269,7 +258,6 @@ tws_action(struct cam_sim *sim, union ccb *ccb)
         {
             TWS_TRACE_DEBUG(sc, "get tran settings", sim, ccb);
 
-#if (__FreeBSD_version >= 700000 )
             ccb->cts.protocol = PROTO_SCSI;
             ccb->cts.protocol_version = SCSI_REV_2;
             ccb->cts.transport = XPORT_SPI;
@@ -279,10 +267,6 @@ tws_action(struct cam_sim *sim, union ccb *ccb)
             ccb->cts.xport_specific.spi.flags = CTS_SPI_FLAGS_DISC_ENB;
             ccb->cts.proto_specific.scsi.valid = CTS_SCSI_VALID_TQ;
             ccb->cts.proto_specific.scsi.flags = CTS_SCSI_FLAGS_TAG_ENB;
-#else
-            ccb->cts.valid = (CCB_TRANS_DISC_VALID | CCB_TRANS_TQ_VALID);
-            ccb->cts.flags &= ~(CCB_TRANS_DISC_ENB | CCB_TRANS_TAG_ENB);
-#endif
             ccb->ccb_h.status = CAM_REQ_CMP;
             xpt_done(ccb);
 
@@ -314,13 +298,11 @@ tws_action(struct cam_sim *sim, union ccb *ccb)
             strlcpy(ccb->cpi.sim_vid, "FreeBSD", SIM_IDLEN);
             strlcpy(ccb->cpi.hba_vid, "3ware", HBA_IDLEN);
             strlcpy(ccb->cpi.dev_name, cam_sim_name(sim), DEV_IDLEN);
-#if (__FreeBSD_version >= 700000 )
             ccb->cpi.transport = XPORT_SPI;
             ccb->cpi.transport_version = 2;
             ccb->cpi.protocol = PROTO_SCSI;
             ccb->cpi.protocol_version = SCSI_REV_2;
             ccb->cpi.maxio = TWS_MAX_IO_SIZE;
-#endif
             ccb->ccb_h.status = CAM_REQ_CMP;
             xpt_done(ccb);
 
@@ -345,7 +327,6 @@ tws_scsi_complete(struct tws_request *req)
 
     callout_stop(&req->timeout);
     tws_unmap_request(req->sc, req);
-
 
     req->ccb_ptr->ccb_h.status = CAM_REQ_CMP;
     mtx_lock(&sc->sim_lock);
@@ -437,7 +418,6 @@ tws_aen_complete(struct tws_request *req)
             sc->seq_id++;
             mtx_unlock(&sc->gen_lock);
             break;
-
     }
     
     free(req->data, M_TWS);
@@ -527,7 +507,6 @@ tws_scsi_err_complete(struct tws_request *req, struct tws_command_header *hdr)
                                  req->cmd_pkt->cmd.pkt_a.status);
     if ( hdr->status_block.error == TWS_ERROR_LOGICAL_UNIT_NOT_SUPPORTED ||
          hdr->status_block.error == TWS_ERROR_UNIT_OFFLINE ) {
-
         if ( ccb->ccb_h.target_lun ) {
             TWS_TRACE_DEBUG(sc, "invalid lun error",0,0);
             ccb->ccb_h.status |= CAM_DEV_NOT_THERE;
@@ -557,7 +536,7 @@ tws_scsi_err_complete(struct tws_request *req, struct tws_command_header *hdr)
         ccb->ccb_h.status |= CAM_AUTOSNS_VALID;
     }
     ccb->csio.scsi_status = req->cmd_pkt->cmd.pkt_a.status;
- 
+
     ccb->ccb_h.status &= ~CAM_SIM_QUEUED;
     mtx_lock(&sc->sim_lock);
     xpt_done(ccb);
@@ -615,7 +594,6 @@ tws_drain_busy_queue(struct tws_softc *sc)
     } 
 }
 
-
 static void
 tws_drain_reserved_reqs(struct tws_softc *sc)
 {
@@ -655,7 +633,6 @@ tws_drain_response_queue(struct tws_softc *sc)
     u_int64_t mfa;
     while ( tws_get_response(sc, &req_id, &mfa) );
 }
-
 
 static int32_t
 tws_execute_scsi(struct tws_softc *sc, union ccb *ccb)
@@ -755,7 +732,6 @@ tws_execute_scsi(struct tws_softc *sc, union ccb *ccb)
     return(error);
 }
 
-
 int
 tws_send_scsi_cmd(struct tws_softc *sc, int cmd)
 {
@@ -853,7 +829,6 @@ tws_get_param(struct tws_softc *sc, u_int32_t table_id, u_int32_t param_id,
     u_int64_t mfa;
     int error = SUCCESS;
 
-
     req = tws_get_request(sc, TWS_REQ_TYPE_GETSET_PARAM);
     if ( req == NULL ) {
         TWS_TRACE_DEBUG(sc, "null req", 0, 0);
@@ -923,7 +898,6 @@ tws_map_request(struct tws_softc *sc, struct tws_request *req)
 {
     int32_t error = 0;
 
-
     /* If the command involves data, map that too. */       
     if (req->data != NULL) {
         int my_flags = ((req->type == TWS_REQ_TYPE_SCSI_IO) ? BUS_DMA_WAITOK : BUS_DMA_NOWAIT);
@@ -955,7 +929,6 @@ tws_map_request(struct tws_softc *sc, struct tws_request *req)
     return(error);
 }
 
-
 static void
 tws_dmamap_data_load_cbfn(void *arg, bus_dma_segment_t *segs, 
                             int nseg, int error)
@@ -965,7 +938,6 @@ tws_dmamap_data_load_cbfn(void *arg, bus_dma_segment_t *segs,
     u_int16_t sgls = nseg;
     void *sgl_ptr;
     struct tws_cmd_generic *gcmd;
-
 
     if ( error ) {
         TWS_TRACE(sc, "SOMETHING BAD HAPPENED! error = %d\n", error, 0);
@@ -1002,11 +974,9 @@ tws_dmamap_data_load_cbfn(void *arg, bus_dma_segment_t *segs,
         }
     }
 
-
     req->error_code = tws_submit_command(req->sc, req);
 
 }
-
 
 static void
 tws_fill_sg_list(struct tws_softc *sc, void *sgl_src, void *sgl_dest, 
@@ -1048,7 +1018,6 @@ tws_fill_sg_list(struct tws_softc *sc, void *sgl_src, void *sgl_dest,
         if ( num_sgl_entries > TWS_MAX_32BIT_SG_ELEMENTS )
             TWS_TRACE(sc, "32bit sg overflow", num_sgl_entries, 0);
 
-
         for (i = 0; i < num_sgl_entries; i++) {
             sgl_d[i].address = sgl_s[i].address;
             sgl_d[i].length = sgl_s[i].length;
@@ -1056,7 +1025,6 @@ tws_fill_sg_list(struct tws_softc *sc, void *sgl_src, void *sgl_dest,
         }
     }
 }
- 
 
 void
 tws_intr(void *arg)
@@ -1140,7 +1108,6 @@ tws_intr_resp(struct tws_softc *sc)
 
 }
 
-
 static void
 tws_poll(struct cam_sim *sim)
 {
@@ -1154,7 +1121,6 @@ tws_timeout(void *arg)
 {
     struct tws_request *req = (struct tws_request *)arg;
     struct tws_softc *sc = req->sc;
-
 
     if ( req->error_code == TWS_REQ_RET_RESET ) {
         return;
@@ -1264,7 +1230,6 @@ tws_reinit(void *arg)
     int try=2;
     int done=0;
 
-
 //  device_printf(sc->tws_dev,  "Waiting for Controller Ready\n");
     while ( !done && try ) {
         if ( tws_ctlr_ready(sc) ) {
@@ -1299,7 +1264,6 @@ tws_reinit(void *arg)
     wakeup_one(sc);
 }
 
-
 static void
 tws_freeze_simq(struct tws_softc *sc, struct tws_request *req)
 {
@@ -1312,6 +1276,5 @@ tws_freeze_simq(struct tws_softc *sc, struct tws_request *req)
         ccb->ccb_h.status |= CAM_REQUEUE_REQ;
     }
 }
-
 
 TUNABLE_INT("hw.tws.cam_depth", &tws_cam_depth);

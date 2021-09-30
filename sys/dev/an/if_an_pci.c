@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63860aea3467449e195a8ba5dc5c526811fd70d3 $");
+__FBSDID("$FreeBSD: 77d9d3f375ce2029abbb11851d277d5ce2c3edee $");
 
 /*
  * This is a PCI shim for the Aironet PC4500/4800 wireless network
@@ -242,7 +242,7 @@ static int
 an_suspend_pci(device_t dev)
 {
 	an_shutdown(dev);
-	
+
 	return (0);
 }
 

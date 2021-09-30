@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 62ea3363394b2652eedb9e01a184a5e7784f7059 $
+ * $FreeBSD: 03b7dc60b7a1cf8801d7aa7be34110864c51e03b $
  */
 #ifndef	_LINUX_COMPAT_H_
 #define	_LINUX_COMPAT_H_
@@ -45,14 +45,14 @@ static inline void
 linux_set_current(struct thread *td)
 {
 	if (__predict_false(td->td_lkpi_task == NULL))
-		linux_alloc_current(td, M_WAITOK);
+		lkpi_alloc_current(td, M_WAITOK);
 }
 
 static inline int
 linux_set_current_flags(struct thread *td, int flags)
 {
 	if (__predict_false(td->td_lkpi_task == NULL))
-		return (linux_alloc_current(td, flags));
+		return (lkpi_alloc_current(td, flags));
 	return (0);
 }
 

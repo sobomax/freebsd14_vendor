@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: a6f8f03c57320c4d8162085822142c96dde7d4db $ */
+/* $FreeBSD: 97cf00b0dff39d38bf7b168f80a1a5d073fdb7b6 $ */
 
 #if !defined (__FICL_H__)
 #define __FICL_H__
@@ -249,7 +249,7 @@ typedef struct ficl_system_info FICL_SYSTEM_INFO;
 ** complement of false... that unifies logical and bitwise operations
 ** nicely.
 */
-#define FICL_TRUE  ((unsigned long)~(0L))
+#define FICL_TRUE  (~(FICL_UNS)0)
 #define FICL_FALSE (0)
 #define FICL_BOOL(x) ((x) ? FICL_TRUE : FICL_FALSE)
 

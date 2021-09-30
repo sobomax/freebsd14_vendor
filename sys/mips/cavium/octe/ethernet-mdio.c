@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -30,7 +29,7 @@ AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR W
 *************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e679d75cc0900bf74d64af569d6a80637292361e $");
+__FBSDID("$FreeBSD: 68c72fe51ac5cd590e50f72cd04e87109bd8c1ec $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -85,7 +84,6 @@ int cvm_oct_mdio_read(struct ifnet *ifp, int phy_id, int location)
 		return 0;
 }
 
-
 /**
  * Perform an MII write. Called by the generic MII routines
  *
@@ -135,4 +133,3 @@ int cvm_oct_mdio_setup_device(struct ifnet *ifp)
 
 	return 0;
 }
-

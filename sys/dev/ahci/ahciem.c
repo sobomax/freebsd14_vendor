@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6f22fac563937344883b6c49fe69d6adaf45b21 $");
+__FBSDID("$FreeBSD: b1c3fbf1fdd4ddf34e4cb2f517a212c2418d02d7 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -641,7 +641,7 @@ ahciemaction(struct cam_sim *sim, union ccb *ccb)
 		cpi->transport_version = XPORT_VERSION_UNSPECIFIED;
 		cpi->protocol = PROTO_ATA;
 		cpi->protocol_version = PROTO_VERSION_UNSPECIFIED;
-		cpi->maxio = MAXPHYS;
+		cpi->maxio = maxphys;
 		cpi->hba_vendor = pci_get_vendor(parent);
 		cpi->hba_device = pci_get_device(parent);
 		cpi->hba_subvendor = pci_get_subvendor(parent);

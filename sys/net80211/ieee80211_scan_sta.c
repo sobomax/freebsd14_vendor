@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea75504a7235182c68ecab6cd74e0456239fd362 $");
+__FBSDID("$FreeBSD: 7ac959241358aa5c6d101c6b4519e86de064b1a4 $");
 
 /*
  * IEEE 802.11 station scanning support.
@@ -1556,7 +1556,7 @@ static int
 adhoc_start(struct ieee80211_scan_state *ss, struct ieee80211vap *vap)
 {
 	struct sta_table *st = ss->ss_priv;
-	
+
 	makescanlist(ss, vap, adhocScanTable);
 
 	if (ss->ss_mindwell == 0)

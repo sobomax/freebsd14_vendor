@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 54097a1f426939502b1f36852e42be672b20347b $
+ * $FreeBSD: 308157183b4c40c8b0a26fd063dbb025722e7e1e $
  */
 
 #include <sys/mman.h>
@@ -107,7 +107,6 @@ ATF_TC_WITHOUT_HEAD(page_fault_signal__segv_accerr_2);
 ATF_TC_BODY(page_fault_signal__segv_accerr_2, tc)
 {
 	int *p;
-	volatile int dummy;
 	int sz;
 
 	sz = getpagesize();
@@ -115,7 +114,7 @@ ATF_TC_BODY(page_fault_signal__segv_accerr_2, tc)
 	ATF_REQUIRE(p != MAP_FAILED);
 	if (sigsetjmp(sig_env, 1) == 0) {
 		setup_signals();
-		dummy = *p;
+		(void)*(volatile int *)p;
 	}
 	(void)munmap(p, sz);
 	ATF_CHECK_EQ(SIGSEGV, last_sig);

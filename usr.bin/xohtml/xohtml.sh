@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 3613e1d5f4f1dff01f9144b9bfe3136f69077a84 $
+# $FreeBSD: 3eb7901483a7d04f77ff19270468e7334b1c0401 $
 #!/bin/sh
 #
 # Copyright (c) 2014, Juniper Networks, Inc.
@@ -12,7 +12,7 @@
 #
 
 BASE=/usr/share/libxo
-VERSION=0.9.0
+VERSION=1.4.0
 CMD=cat
 DONE=
 WEB=http://juniper.github.io/libxo/${VERSION}/xohtml

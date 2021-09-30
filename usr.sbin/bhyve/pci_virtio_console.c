@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d0567fe964a871f1f90ab7bece733d8def649447 $");
+__FBSDID("$FreeBSD: 2f87220a0e4f01b96d5ea282c64f7c8acada07a4 $");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
@@ -357,8 +357,11 @@ out:
 	if (fd != -1)
 		close(fd);
 
-	if (error != 0 && s != -1)
-		close(s);
+	if (error != 0) {
+		if (s != -1)
+			close(s);
+		free(sock);
+	}
 
 	return (error);
 }

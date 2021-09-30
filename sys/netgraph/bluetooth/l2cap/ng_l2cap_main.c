@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_main.c,v 1.2 2003/04/28 21:44:59 max Exp $
- * $FreeBSD: b438cf22337450c1587c92eba5b814278b218423 $
+ * $FreeBSD: 1a60e1be4a626928af8d5e43e673b313c12dd4ba $
  */
 
 #include <sys/param.h>
@@ -757,4 +757,3 @@ ng_l2cap_destroy_channels(ng_l2cap_p l2cap)
 	while (!LIST_EMPTY(&l2cap->chan_list))
 		ng_l2cap_free_chan(LIST_FIRST(&l2cap->chan_list));
 } /* ng_l2cap_destroy_channels_by_hook */
-

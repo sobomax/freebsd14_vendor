@@ -1,5 +1,5 @@
 /*	$NetBSD: file.c,v 1.5 2011/02/16 18:35:39 joerg Exp $	*/
-/*	$FreeBSD: ebcbd706b828e2cc05802c5211a3974f1a0da7d3 $	*/
+/*	$FreeBSD: 3d86bef010e5fb957aa33dbf45a74ac1d944e043 $	*/
 /*	$OpenBSD: file.c,v 1.11 2010/07/02 20:48:48 nicm Exp $	*/
 
 /*-
@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ebcbd706b828e2cc05802c5211a3974f1a0da7d3 $");
+__FBSDID("$FreeBSD: 3d86bef010e5fb957aa33dbf45a74ac1d944e043 $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -55,12 +55,12 @@ __FBSDID("$FreeBSD: ebcbd706b828e2cc05802c5211a3974f1a0da7d3 $");
 #define	MAXBUFSIZ	(32 * 1024)
 #define	LNBUFBUMP	80
 
-static unsigned char *buffer;
-static unsigned char *bufpos;
+static char *buffer;
+static char *bufpos;
 static size_t bufrem;
 static size_t fsiz;
 
-static unsigned char *lnbuf;
+static char *lnbuf;
 static size_t lnbuflen;
 
 static inline int
@@ -97,7 +97,7 @@ grep_lnbufgrow(size_t newlen)
 char *
 grep_fgetln(struct file *f, struct parsec *pc)
 {
-	unsigned char *p;
+	char *p;
 	char *ret;
 	size_t len;
 	size_t off;

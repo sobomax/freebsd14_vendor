@@ -1,4 +1,4 @@
-/*	$FreeBSD: c76807a53623496334e41e68dbb91078dc30c066 $ */
+/*	$FreeBSD: 660624cf7e375a6f51a881343fc259bd37045168 $ */
 /*	$OpenBSD: if_urndisreg.h,v 1.19 2013/11/21 14:08:05 mpi Exp $ */
 
 /*
@@ -36,7 +36,6 @@ enum {
 };
 
 struct urndis_softc {
-
 	struct usb_ether sc_ue;
 	struct mtx sc_mtx;
 

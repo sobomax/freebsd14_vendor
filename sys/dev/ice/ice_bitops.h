@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2020, Intel Corporation
+/*  Copyright (c) 2021, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 7c8cf6cb90f5c40ad1874ec0f7721b2e9ce6c636 $*/
+/*$FreeBSD: a7f729060b780f215de75d13874c92172c82174a $*/
 
 #ifndef _ICE_BITOPS_H_
 #define _ICE_BITOPS_H_
@@ -423,7 +423,7 @@ ice_bitmap_set(ice_bitmap_t *dst, u16 pos, u16 num_bits)
 {
 	u16 i;
 
-	for (i = pos; i < num_bits; i++)
+	for (i = pos; i < pos + num_bits; i++)
 		ice_set_bit(i, dst);
 }
 

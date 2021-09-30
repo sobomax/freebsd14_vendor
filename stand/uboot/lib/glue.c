@@ -25,11 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 016d435b345e12c4e4a2865a54e1d61df002775c $");
+__FBSDID("$FreeBSD: 83c0e3da41a543d9f5d89278f0e2b23b046b23ee $");
 
 #include <sys/types.h>
 
-#include <crc32.h>
+#include <zlib.h>
 #include <stand.h>
 #include "api_public.h"
 #include "glue.h"
@@ -57,9 +57,9 @@ valid_sig(struct api_signature *sig)
 	 * produced
 	 */
 	s = *sig;
-	s.checksum = 0;
+	s.checksum = crc32(0, Z_NULL, 0);
 
-	checksum = crc32((void *)&s, sizeof(struct api_signature));
+	checksum = crc32(s.checksum, (void *)&s, sizeof(struct api_signature));
 
 	if (checksum != sig->checksum)
 		return (0);

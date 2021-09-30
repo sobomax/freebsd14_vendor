@@ -5,7 +5,7 @@
  * $Id: //depot/aic7xxx/aic7xxx/aic79xx.seq#119 $
  * $Id: //depot/aic7xxx/aic7xxx/aic79xx.reg#76 $
  *
- * $FreeBSD: d08ed8b99178abbe1f19b975761ed73d3e44bb60 $
+ * $FreeBSD: 8815f209f4cdcc92da56bcb3be7f7d937bb7cf82 $
  */
 typedef int (ahd_reg_print_t)(u_int, u_int *, u_int);
 typedef struct ahd_reg_parse_entry {
@@ -2380,7 +2380,6 @@ ahd_reg_print_t ahd_scb_disconnected_lists_print;
     ahd_print_register(NULL, 0, "SCB_DISCONNECTED_LISTS", 0x1b8, regvalue, cur_col, wrap)
 #endif
 
-
 #define	MODE_PTR        		0x00
 #define		DST_MODE        	0x70
 #define		SRC_MODE        	0x07
@@ -3749,7 +3748,6 @@ ahd_reg_print_t ahd_scb_disconnected_lists_print;
 
 #define	SCB_DISCONNECTED_LISTS		0x1b8
 
-
 #define	STATUS_QUEUE_FULL	0x28
 #define	WRTBIASCTL_HP_DEFAULT	0x00
 #define	NUMDSPS 	0x14
@@ -3808,7 +3806,6 @@ ahd_reg_print_t ahd_scb_disconnected_lists_print;
 #define	AHD_SLEWRATE_SHIFT	0x03
 #define	B_CURRFIFO_0	0x02
 
-
 /* Downloaded Constant Definitions */
 #define	SG_SIZEOF	0x04
 #define	CACHELINE_MASK	0x07
@@ -3819,7 +3816,6 @@ ahd_reg_print_t ahd_scb_disconnected_lists_print;
 #define	SG_PREFETCH_CNT_LIMIT	0x01
 #define	PKT_OVERRUN_BUFOFFSET	0x05
 #define	DOWNLOAD_CONST_COUNT	0x08
-
 
 /* Exported Labels */
 #define	LABEL_seq_isr 	0x28f

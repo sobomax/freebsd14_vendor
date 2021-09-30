@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.h,v 1.10 2003/03/29 22:27:42 max Exp $
- * $FreeBSD: 1e3a28b9ede7279d339de0f4a757f32d68072719 $
+ * $FreeBSD: 569a407ef629b3ba2b3fc926264b4ead9723db36 $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_RFCOMM_H_
@@ -339,4 +339,3 @@ int  ng_btsocket_rfcomm_sockaddr   (struct socket *, struct sockaddr **);
 #endif /* _KERNEL */
 
 #endif /* _NETGRAPH_BTSOCKET_RFCOMM_H_ */
-

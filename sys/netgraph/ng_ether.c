@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 575f3740a6f1e1ea4c7f58ea7b56e65e7fecb7cc $
+ * $FreeBSD: 5718de235c4cd6337c1ef11accdcc205c84544a5 $
  */
 
 /*
@@ -414,8 +414,7 @@ ng_ether_ifnet_arrival_event(void *arg __unused, struct ifnet *ifp)
 	node_p node;
 
 	/* Only ethernet interfaces are of interest. */
-	if (ifp->if_type != IFT_ETHER
-	    && ifp->if_type != IFT_L2VLAN)
+	if (ifp->if_type != IFT_ETHER && ifp->if_type != IFT_L2VLAN)
 		return;
 
 	/*
@@ -578,6 +577,7 @@ ng_ether_rcvmsg(node_p node, item_p item, hook_p lasthook)
 		case NGM_ETHER_ADD_MULTI:
 		    {
 			struct sockaddr_dl sa_dl;
+			struct epoch_tracker et;
 			struct ifmultiaddr *ifma;
 
 			if (msg->header.arglen != ETHER_ADDR_LEN) {
@@ -597,10 +597,10 @@ ng_ether_rcvmsg(node_p node, item_p item, hook_p lasthook)
 			 * lose a race while we check if the membership
 			 * already exists.
 			 */
-			if_maddr_rlock(priv->ifp);
+			NET_EPOCH_ENTER(et);
 			ifma = if_findmulti(priv->ifp,
 			    (struct sockaddr *)&sa_dl);
-			if_maddr_runlock(priv->ifp);
+			NET_EPOCH_EXIT(et);
 			if (ifma != NULL) {
 				error = EADDRINUSE;
 			} else {
@@ -689,7 +689,6 @@ ng_ether_rcv_lower(hook_p hook, item_p item)
 
 	/* Drop in the MAC address if desired */
 	if (priv->autoSrcAddr) {
-
 		/* Make the mbuf writable if it's not already */
 		if (!M_WRITABLE(m)
 		    && (m = m_pullup(m, sizeof(struct ether_header))) == NULL)
@@ -753,13 +752,13 @@ ng_ether_shutdown(node_p node)
 
 	if (node->nd_flags & NGF_REALLY_DIE) {
 		/*
-		 * WE came here because the ethernet card is being unloaded,
-		 * so stop being persistent.
-		 * Actually undo all the things we did on creation.
-		 * Assume the ifp has already been freed.
+		 * The ifnet is going away, perhaps because the driver was
+		 * unloaded or its vnet is being torn down.
 		 */
 		NG_NODE_SET_PRIVATE(node, NULL);
-		free(priv, M_NETGRAPH);		
+		if (priv->ifp != NULL)
+			IFP2NG(priv->ifp) = NULL;
+		free(priv, M_NETGRAPH);
 		NG_NODE_UNREF(node);	/* free node itself */
 		return (0);
 	}

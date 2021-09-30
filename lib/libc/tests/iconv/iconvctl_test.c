@@ -24,13 +24,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29d5b9520f2e0591ae52eb4afced23ead3378d7f $");
+__FBSDID("$FreeBSD: 993629e6b4bd25be17c997e4841b874b35536ebe $");
 
 #include <iconv.h>
 
 #include <atf-c.h>
 
-void
+static void
 test_trivialp(const char *src, const char *dst, int expected)
 {
 	iconv_t ic;

@@ -1,5 +1,5 @@
 /*	$NetBSD: fpu_arith.h,v 1.4 2005/12/24 20:07:28 perry Exp $ */
-/* $FreeBSD: e70256927baffd05670d2619213ff20e5eab9c77 $ */
+/* $FreeBSD: c39862217fac1f071d709f63e301afa2ca660d34 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,7 +56,6 @@
  *	((unsigned)(x + y + c) <= (unsigned)x && (y|c) != 0)
  * for example.
  */
-
 
 #ifndef FPE_USE_ASM
 

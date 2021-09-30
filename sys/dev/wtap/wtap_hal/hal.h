@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: f03e92de4d232c31f58411e613156db46ca448cb $
+ * $FreeBSD: 8446bdbcdd1a52eeb9e00d20875508a0e56f642d $
  */
 
 #ifndef _WTAP_HAL_H_
@@ -52,6 +52,4 @@ void deregister_plugin(struct wtap_hal *);
 int32_t new_wtap(struct wtap_hal *, int32_t id);
 int32_t free_wtap(struct wtap_hal *, int32_t id);
 
-
 #endif
-

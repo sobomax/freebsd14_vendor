@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd46b36c54730bed054badec4ef91a214afba7e2 $");
+__FBSDID("$FreeBSD: 5752e4599a8d9ecf4cd7fce7350e3343e5f4263c $");
 
 /*
  * General purpose routines for the IEEE1284-1994 Standard
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: cd46b36c54730bed054badec4ef91a214afba7e2 $");
 #include <sys/mutex.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
-
 
 #include <dev/ppbus/ppbconf.h>
 #include <dev/ppbus/ppb_1284.h>
@@ -224,7 +223,6 @@ ppb_peripheral_negociate(device_t bus, int mode, int options)
 	/* nibble mode is not supported */
 	if ((r == (char)request_mode) ||
 			(r == NIBBLE_1284_NORMAL)) {
-
 		/* Event 5 - restore direction bit, no data avail */
 		ppb_wctr(bus, (STROBE | nINIT) & ~(SELECTIN));
 		DELAY(1);
@@ -489,7 +487,6 @@ nibble_1284_inbyte(device_t bus, char *buffer)
 	int i, error;
 
 	for (i = 0; i < 2; i++) {
-
 		/* Event 7 - ready to take data (nAUTO low) */
 		ppb_wctr(bus, (nINIT | AUTOFEED) & ~(STROBE | SELECTIN));
 
@@ -555,7 +552,6 @@ spp_1284_read(device_t bus, int mode, char *buffer, int max, int *read)
 	}
 
 	while ((len < max) && !(ppb_rstr(bus) & (nFAULT))) {
-
 		ppb_1284_set_state(bus, PPB_REVERSE_TRANSFER);
 
 #ifdef DEBUG_1284
@@ -744,11 +740,9 @@ ppb_1284_negociate(device_t bus, int mode, int options)
 	/* Event 7 - quering result consider nACK not to misunderstand
 	 * a remote computer terminate sequence */
 	if (options & PPB_EXTENSIBILITY_LINK) {
-
 		/* XXX not fully supported yet */
 		ppb_1284_terminate(bus);
 		return (0);
-
 	}
 	if (request_mode == NIBBLE_1284_NORMAL) {
 		if (do_1284_wait(bus, nACK | SELECT, nACK)) {

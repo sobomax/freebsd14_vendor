@@ -30,12 +30,14 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 6d013e80d2f5073fbb66a4f76eb40e0b74d2aad2 $*/
+/*$FreeBSD: 9a7d73a69d2db9f6aa5efce747e68ee84deed051 $*/
 
 #include "ixgbe.h"
 #include "ixgbe_sriov.h"
 
 #ifdef PCI_IOV
+
+#include <sys/ktr.h>
 
 MALLOC_DEFINE(M_IXGBE_SRIOV, "ix_sriov", "ix SR-IOV allocations");
 

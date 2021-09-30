@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 983f0e6f7d43ff722ca7ad4621d9217cf8d5ceb1 $");
+__FBSDID("$FreeBSD: 62244ddc80e84d7d2bcb7bc387f6b0af3087c511 $");
 
 #ifdef VFP
 #include <sys/param.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 983f0e6f7d43ff722ca7ad4621d9217cf8d5ceb1 $");
 #include <sys/proc.h>
 
 #include <machine/armreg.h>
+#include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/vfp.h>
 
@@ -218,7 +219,6 @@ vfp_restore_state(void)
 	 * cpu we need to restore the old state.
 	 */
 	if (PCPU_GET(fpcurthread) != curthread || cpu != curpcb->pcb_vfpcpu) {
-
 		vfp_restore(curthread->td_pcb->pcb_fpusaved);
 		PCPU_SET(fpcurthread, curthread);
 		curpcb->pcb_vfpcpu = cpu;
@@ -239,6 +239,9 @@ vfp_init(void)
 
 	/* Disable to be enabled when it's used */
 	vfp_disable();
+
+	if (PCPU_GET(cpuid) == 0)
+		thread0.td_pcb->pcb_fpusaved->vfp_fpcr = initial_fpcr;
 }
 
 SYSINIT(vfp, SI_SUB_CPU, SI_ORDER_ANY, vfp_init, NULL);

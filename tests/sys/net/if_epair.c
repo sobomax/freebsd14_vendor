@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 87b61be09ebf6fa242479a614cebe6962114b6b7 $
+ * $FreeBSD: e6864d3ebf9360e791f51b992e6de3e373b0063b $
  */
 
 #include <sys/param.h>
@@ -40,6 +40,7 @@
 #include <strings.h>
 
 #include <atf-c.h>
+#include "freebsd_test_suite/macros.h"
 
 ATF_TC(params);
 ATF_TC_HEAD(params, tc)
@@ -52,9 +53,8 @@ ATF_TC_BODY(params, tc)
 	struct ifreq ifr;
 	int s;
 
-	s = kldload("if_epair");
-	if (s == -1 && errno != EEXIST)
-		atf_tc_fail("Failed to load if_epair");
+	kldload("if_epair");
+	ATF_REQUIRE_KERNEL_MODULE("if_epair");
 
 	s = socket(AF_INET, SOCK_DGRAM, 0);
 	if (s < 0)

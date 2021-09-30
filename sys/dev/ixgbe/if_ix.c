@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 80f812336d2cbc8c83e2f853cff5ee11910e18f1 $*/
+/*$FreeBSD: 9f3674cdab5d0ca6348561afb3373a4d38ceae3f $*/
 
 
 #include "opt_inet.h"
@@ -287,7 +287,8 @@ static device_method_t ixgbe_if_methods[] = {
  * TUNEABLE PARAMETERS:
  */
 
-static SYSCTL_NODE(_hw, OID_AUTO, ix, CTLFLAG_RD, 0, "IXGBE driver parameters");
+static SYSCTL_NODE(_hw, OID_AUTO, ix, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "IXGBE driver parameters");
 static driver_t ixgbe_if_driver = {
   "ixgbe_if", ixgbe_if_methods, sizeof(struct adapter)
 };
@@ -427,7 +428,6 @@ ixgbe_if_tx_queues_alloc(if_ctx_t ctx, caddr_t *vaddrs, uint64_t *paddrs,
 		    i);
 
 		txr->adapter = que->adapter = adapter;
-		adapter->active_queues |= (u64)1 << txr->me;
 
 		/* Allocate report status array */
 		txr->tx_rsq = (qidx_t *)malloc(sizeof(qidx_t) * scctx->isc_ntxd[0], M_IXGBE, M_NOWAIT | M_ZERO);
@@ -798,6 +798,8 @@ ixgbe_initialize_transmit_units(if_ctx_t ctx)
 		IXGBE_WRITE_REG(hw, IXGBE_TDT(j), 0);
 
 		/* Cache the tail address */
+		txr->tail = IXGBE_TDT(txr->me);
+
 		txr->tx_rs_cidx = txr->tx_rs_pidx;
 		txr->tx_cidx_processed = scctx->isc_ntxd[0] - 1;
 		for (int k = 0; k < scctx->isc_ntxd[0]; k++)
@@ -1529,7 +1531,22 @@ ixgbe_update_stats_counters(struct adapter *adapter)
 	IXGBE_SET_OMCASTS(adapter, stats->mptc);
 	IXGBE_SET_COLLISIONS(adapter, 0);
 	IXGBE_SET_IQDROPS(adapter, total_missed_rx);
-	IXGBE_SET_IERRORS(adapter, stats->crcerrs + stats->rlec);
+
+	/*
+	 * Aggregate following types of errors as RX errors:
+	 * - CRC error count,
+	 * - illegal byte error count,
+	 * - checksum error count,
+	 * - missed packets count,
+	 * - length error count,
+	 * - undersized packets count,
+	 * - fragmented packets count,
+	 * - oversized packets count,
+	 * - jabber count.
+	 */
+	IXGBE_SET_IERRORS(adapter, stats->crcerrs + stats->illerrc + stats->xec +
+	    stats->mpc[0] + stats->rlec + stats->ruc + stats->rfc + stats->roc +
+	    stats->rjc);
 } /* ixgbe_update_stats_counters */
 
 /************************************************************************
@@ -1566,14 +1583,14 @@ ixgbe_add_hw_stats(struct adapter *adapter)
 		struct tx_ring *txr = &tx_que->txr;
 		snprintf(namebuf, QUEUE_NAME_LEN, "queue%d", i);
 		queue_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, namebuf,
-		    CTLFLAG_RD, NULL, "Queue Name");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "Queue Name");
 		queue_list = SYSCTL_CHILDREN(queue_node);
 
 		SYSCTL_ADD_PROC(ctx, queue_list, OID_AUTO, "txd_head",
-		    CTLTYPE_UINT | CTLFLAG_RD, txr, sizeof(txr),
+		    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, txr, 0,
 		    ixgbe_sysctl_tdh_handler, "IU", "Transmit Descriptor Head");
 		SYSCTL_ADD_PROC(ctx, queue_list, OID_AUTO, "txd_tail",
-		    CTLTYPE_UINT | CTLFLAG_RD, txr, sizeof(txr),
+		    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, txr, 0,
 		    ixgbe_sysctl_tdt_handler, "IU", "Transmit Descriptor Tail");
 		SYSCTL_ADD_UQUAD(ctx, queue_list, OID_AUTO, "tso_tx",
 		    CTLFLAG_RD, &txr->tso_tx, "TSO");
@@ -1586,22 +1603,22 @@ ixgbe_add_hw_stats(struct adapter *adapter)
 		struct rx_ring *rxr = &rx_que->rxr;
 		snprintf(namebuf, QUEUE_NAME_LEN, "queue%d", i);
 		queue_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, namebuf,
-		    CTLFLAG_RD, NULL, "Queue Name");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "Queue Name");
 		queue_list = SYSCTL_CHILDREN(queue_node);
 
 		SYSCTL_ADD_PROC(ctx, queue_list, OID_AUTO, "interrupt_rate",
-		    CTLTYPE_UINT | CTLFLAG_RW, &adapter->rx_queues[i],
-		    sizeof(&adapter->rx_queues[i]),
+		    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+		    &adapter->rx_queues[i], 0,
 		    ixgbe_sysctl_interrupt_rate_handler, "IU",
 		    "Interrupt Rate");
 		SYSCTL_ADD_UQUAD(ctx, queue_list, OID_AUTO, "irqs",
 		    CTLFLAG_RD, &(adapter->rx_queues[i].irqs),
 		    "irqs on this queue");
 		SYSCTL_ADD_PROC(ctx, queue_list, OID_AUTO, "rxd_head",
-		    CTLTYPE_UINT | CTLFLAG_RD, rxr, sizeof(rxr),
+		    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, rxr, 0,
 		    ixgbe_sysctl_rdh_handler, "IU", "Receive Descriptor Head");
 		SYSCTL_ADD_PROC(ctx, queue_list, OID_AUTO, "rxd_tail",
-		    CTLTYPE_UINT | CTLFLAG_RD, rxr, sizeof(rxr),
+		    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, rxr, 0,
 		    ixgbe_sysctl_rdt_handler, "IU", "Receive Descriptor Tail");
 		SYSCTL_ADD_UQUAD(ctx, queue_list, OID_AUTO, "rx_packets",
 		    CTLFLAG_RD, &rxr->rx_packets, "Queue Packets Received");
@@ -1616,9 +1633,11 @@ ixgbe_add_hw_stats(struct adapter *adapter)
 	/* MAC stats get their own sub node */
 
 	stat_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, "mac_stats",
-	    CTLFLAG_RD, NULL, "MAC Statistics");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "MAC Statistics");
 	stat_list = SYSCTL_CHILDREN(stat_node);
 
+	SYSCTL_ADD_UQUAD(ctx, stat_list, OID_AUTO, "rx_errs",
+	    CTLFLAG_RD, &adapter->ierrors, IXGBE_SYSCTL_DESC_RX_ERRS);
 	SYSCTL_ADD_UQUAD(ctx, stat_list, OID_AUTO, "crc_errs",
 	    CTLFLAG_RD, &stats->crcerrs, "CRC Errors");
 	SYSCTL_ADD_UQUAD(ctx, stat_list, OID_AUTO, "ill_errs",
@@ -2024,7 +2043,7 @@ ixgbe_if_msix_intr_assign(if_ctx_t ctx, int msix)
 
 		snprintf(buf, sizeof(buf), "rxq%d", i);
 		error = iflib_irq_alloc_generic(ctx, &rx_que->que_irq, rid,
-		    IFLIB_INTR_RX, ixgbe_msix_que, rx_que, rx_que->rxr.me, buf);
+		    IFLIB_INTR_RXTX, ixgbe_msix_que, rx_que, rx_que->rxr.me, buf);
 
 		if (error) {
 			device_printf(iflib_get_dev(ctx),
@@ -2034,7 +2053,6 @@ ixgbe_if_msix_intr_assign(if_ctx_t ctx, int msix)
 		}
 
 		rx_que->msix = vector;
-		adapter->active_queues |= (u64)(1 << rx_que->msix);
 		if (adapter->feat_en & IXGBE_FEATURE_RSS) {
 			/*
 			 * The queue ID is used as the RSS layer bucket ID.
@@ -2364,7 +2382,7 @@ ixgbe_if_promisc_set(if_ctx_t ctx, int flags)
 	if (ifp->if_flags & IFF_ALLMULTI)
 		mcnt = MAX_NUM_MULTICAST_ADDRESSES;
 	else {
-		mcnt = if_multiaddr_count(ifp, MAX_NUM_MULTICAST_ADDRESSES);
+		mcnt = min(if_llmaddr_count(ifp), MAX_NUM_MULTICAST_ADDRESSES);
 	}
 	if (mcnt < MAX_NUM_MULTICAST_ADDRESSES)
 		rctl &= (~IXGBE_FCTRL_MPE);
@@ -2550,37 +2568,42 @@ ixgbe_add_device_sysctls(if_ctx_t ctx)
 
 	/* Sysctls for all devices */
 	SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "fc",
-	    CTLTYPE_INT | CTLFLAG_RW, adapter, 0, ixgbe_sysctl_flowcntl, "I",
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    adapter, 0, ixgbe_sysctl_flowcntl, "I",
 	    IXGBE_SYSCTL_DESC_SET_FC);
 
 	SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "advertise_speed",
-	    CTLTYPE_INT | CTLFLAG_RW, adapter, 0, ixgbe_sysctl_advertise, "I",
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    adapter, 0, ixgbe_sysctl_advertise, "I",
 	    IXGBE_SYSCTL_DESC_ADV_SPEED);
 
 #ifdef IXGBE_DEBUG
 	/* testing sysctls (for all devices) */
 	SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "power_state",
-	    CTLTYPE_INT | CTLFLAG_RW, adapter, 0, ixgbe_sysctl_power_state,
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    adapter, 0, ixgbe_sysctl_power_state,
 	    "I", "PCI Power State");
 
 	SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "print_rss_config",
-	    CTLTYPE_STRING | CTLFLAG_RD, adapter, 0,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, adapter, 0,
 	    ixgbe_sysctl_print_rss_config, "A", "Prints RSS Configuration");
 #endif
 	/* for X550 series devices */
 	if (hw->mac.type >= ixgbe_mac_X550)
 		SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "dmac",
-		    CTLTYPE_U16 | CTLFLAG_RW, adapter, 0, ixgbe_sysctl_dmac,
+		    CTLTYPE_U16 | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+		    adapter, 0, ixgbe_sysctl_dmac,
 		    "I", "DMA Coalesce");
 
 	/* for WoL-capable devices */
 	if (hw->device_id == IXGBE_DEV_ID_X550EM_X_10G_T) {
 		SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "wol_enable",
-		    CTLTYPE_INT | CTLFLAG_RW, adapter, 0,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, adapter, 0,
 		    ixgbe_sysctl_wol_enable, "I", "Enable/Disable Wake on LAN");
 
 		SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "wufc",
-		    CTLTYPE_U32 | CTLFLAG_RW, adapter, 0, ixgbe_sysctl_wufc,
+		    CTLTYPE_U32 | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+		    adapter, 0, ixgbe_sysctl_wufc,
 		    "I", "Enable/Disable Wake Up Filters");
 	}
 
@@ -2590,22 +2613,24 @@ ixgbe_add_device_sysctls(if_ctx_t ctx)
 		struct sysctl_oid_list *phy_list;
 
 		phy_node = SYSCTL_ADD_NODE(ctx_list, child, OID_AUTO, "phy",
-		    CTLFLAG_RD, NULL, "External PHY sysctls");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "External PHY sysctls");
 		phy_list = SYSCTL_CHILDREN(phy_node);
 
 		SYSCTL_ADD_PROC(ctx_list, phy_list, OID_AUTO, "temp",
-		    CTLTYPE_U16 | CTLFLAG_RD, adapter, 0, ixgbe_sysctl_phy_temp,
+		    CTLTYPE_U16 | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+		    adapter, 0, ixgbe_sysctl_phy_temp,
 		    "I", "Current External PHY Temperature (Celsius)");
 
 		SYSCTL_ADD_PROC(ctx_list, phy_list, OID_AUTO,
-		    "overtemp_occurred", CTLTYPE_U16 | CTLFLAG_RD, adapter, 0,
+		    "overtemp_occurred",
+		    CTLTYPE_U16 | CTLFLAG_RD | CTLFLAG_NEEDGIANT, adapter, 0,
 		    ixgbe_sysctl_phy_overtemp_occurred, "I",
 		    "External PHY High Temperature Event Occurred");
 	}
 
 	if (adapter->feat_cap & IXGBE_FEATURE_EEE) {
 		SYSCTL_ADD_PROC(ctx_list, child, OID_AUTO, "eee_state",
-		    CTLTYPE_INT | CTLFLAG_RW, adapter, 0,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, adapter, 0,
 		    ixgbe_sysctl_eee_state, "I", "EEE Power Save State");
 	}
 } /* ixgbe_add_device_sysctls */
@@ -3238,18 +3263,15 @@ ixgbe_config_delay_values(struct adapter *adapter)
  *
  *   Called whenever multicast address list is updated.
  ************************************************************************/
-static int
-ixgbe_mc_filter_apply(void *arg, struct ifmultiaddr *ifma, int count)
+static u_int
+ixgbe_mc_filter_apply(void *arg, struct sockaddr_dl *sdl, u_int count)
 {
 	struct adapter *adapter = arg;
 	struct ixgbe_mc_addr *mta = adapter->mta;
 
-	if (ifma->ifma_addr->sa_family != AF_LINK)
-		return (0);
 	if (count == MAX_NUM_MULTICAST_ADDRESSES)
 		return (0);
-	bcopy(LLADDR((struct sockaddr_dl *)ifma->ifma_addr),
-	    mta[count].addr, IXGBE_ETH_LENGTH_OF_ADDRESS);
+	bcopy(LLADDR(sdl), mta[count].addr, IXGBE_ETH_LENGTH_OF_ADDRESS);
 	mta[count].vmdq = adapter->pool;
 
 	return (1);
@@ -3262,15 +3284,16 @@ ixgbe_if_multi_set(if_ctx_t ctx)
 	struct ixgbe_mc_addr *mta;
 	struct ifnet         *ifp = iflib_get_ifp(ctx);
 	u8                   *update_ptr;
-	int                  mcnt = 0;
 	u32                  fctrl;
+	u_int		     mcnt;
 
 	IOCTL_DEBUGOUT("ixgbe_if_multi_set: begin");
 
 	mta = adapter->mta;
 	bzero(mta, sizeof(*mta) * MAX_NUM_MULTICAST_ADDRESSES);
 
-	mcnt = if_multi_apply(iflib_get_ifp(ctx), ixgbe_mc_filter_apply, adapter);
+	mcnt = if_foreach_llmaddr(iflib_get_ifp(ctx), ixgbe_mc_filter_apply,
+	    adapter);
 
 	fctrl = IXGBE_READ_REG(&adapter->hw, IXGBE_FCTRL);
 	fctrl |= (IXGBE_FCTRL_UPE | IXGBE_FCTRL_MPE);
@@ -3719,7 +3742,7 @@ ixgbe_if_rx_queue_intr_enable(if_ctx_t ctx, uint16_t rxqid)
 	struct adapter     *adapter = iflib_get_softc(ctx);
 	struct ix_rx_queue *que = &adapter->rx_queues[rxqid];
 
-	ixgbe_enable_queue(adapter, que->rxr.me);
+	ixgbe_enable_queue(adapter, que->msix);
 
 	return (0);
 } /* ixgbe_if_rx_queue_intr_enable */
@@ -3731,7 +3754,7 @@ static void
 ixgbe_enable_queue(struct adapter *adapter, u32 vector)
 {
 	struct ixgbe_hw *hw = &adapter->hw;
-	u64             queue = (u64)(1 << vector);
+	u64             queue = 1ULL << vector;
 	u32             mask;
 
 	if (hw->mac.type == ixgbe_mac_82598EB) {
@@ -3754,7 +3777,7 @@ static void
 ixgbe_disable_queue(struct adapter *adapter, u32 vector)
 {
 	struct ixgbe_hw *hw = &adapter->hw;
-	u64             queue = (u64)(1 << vector);
+	u64             queue = 1ULL << vector;
 	u32             mask;
 
 	if (hw->mac.type == ixgbe_mac_82598EB) {

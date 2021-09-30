@@ -1,4 +1,4 @@
-# $FreeBSD: 8afe98fe1156361f35e2755ec300eef8fff8a97a $
+# $FreeBSD: ce74e4067c9a0b8edd1870b8503a22346d4c56ad $
 
 .include <bsd.init.mk>
 
@@ -29,6 +29,3 @@ ORG=	0x9000
 LDFLAGS+=${LDFLAGS_BIN}
 
 .include <bsd.prog.mk>
-
-# XXX: clang integrated-as doesn't grok .codeNN directives yet
-CFLAGS.btx.S=		${CLANG_NO_IAS}

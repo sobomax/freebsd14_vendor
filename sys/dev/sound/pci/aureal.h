@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ca1caf97bc3860398c3188fa54ca07d8603ccde $
+ * $FreeBSD: c80f246de697512c45e0518a0c7f7bbb4b959025 $
  */
 
 #ifndef _AU8820_REG_H
@@ -96,6 +96,5 @@
 #define AC97_REG_POWER	0x26
 #define AC97_REG_ID1	0x7c
 #define AC97_REG_ID2	0x7e
-
 
 #endif

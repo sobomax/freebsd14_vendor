@@ -1,4 +1,4 @@
-/*	$FreeBSD: 94612b8785141312463bcb77ae6d55d930e49223 $	*/
+/*	$FreeBSD: 2e7c0c9cffa36c4ddedbc9c60ec8efdad56d99b5 $	*/
 /*	$KAME: esp.h,v 1.16 2000/10/18 21:28:00 itojun Exp $	*/
 
 /*-
@@ -64,6 +64,6 @@ struct esptail {
 	u_int8_t	esp_nxt;	/* Next header */
 	/*variable size, 32bit bound*/	/* Authentication data (new IPsec)*/
 };
-	
+
 #define ESP_ALEN	12	/* 96-bit authenticator */
 #endif /*_NETIPSEC_ESP_H_*/

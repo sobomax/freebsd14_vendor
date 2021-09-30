@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 907acbbf49e562bacff535590fc1a63e28f5ff60 $");
+__FBSDID("$FreeBSD: 0223bf3b5d51560666321e5fc00ce5b38c342024 $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: 907acbbf49e562bacff535590fc1a63e28f5ff60 $");
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sysexits.h>
 #include <unistd.h>
 
 #include "nvmecontrol.h"
@@ -143,9 +144,9 @@ perftest(const struct cmd *f, int argc, char *argv[])
 	if (arg_parse(argc, argv, f))
 		return;
 	
-	if (opt.flags == NULL || opt.op == NULL)
+	if (opt.op == NULL)
 		arg_help(argc, argv, f);
-	if (strcmp(opt.flags, "refthread") == 0)
+	if (opt.flags != NULL && strcmp(opt.flags, "refthread") == 0)
 		io_test.flags |= NVME_TEST_FLAG_REFTHREAD;
 	if (opt.intr != NULL) {
 		if (strcmp(opt.intr, "bio") == 0 ||
@@ -163,6 +164,7 @@ perftest(const struct cmd *f, int argc, char *argv[])
 		fprintf(stderr, "Bad number of threads %d\n", opt.threads);
 		arg_help(argc, argv, f);
 	}
+	io_test.num_threads = opt.threads;
 	if (strcasecmp(opt.op, "read") == 0)
 		io_test.opc = NVME_OPC_READ;
 	else if (strcasecmp(opt.op, "write") == 0)
@@ -176,9 +178,10 @@ perftest(const struct cmd *f, int argc, char *argv[])
 		arg_help(argc, argv, f);
 	}
 	io_test.time = opt.time;
+	io_test.size = opt.size;
 	open_dev(opt.dev, &fd, 1, 1);
 	if (ioctl(fd, ioctl_cmd, &io_test) < 0)
-		err(1, "ioctl NVME_IO_TEST failed");
+		err(EX_IOERR, "ioctl NVME_IO_TEST failed");
 
 	close(fd);
 	print_perftest(&io_test, opt.perthread);

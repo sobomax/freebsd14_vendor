@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b117213e3bef1d49beb8d2294b858ef09eed6e35 $");
+__FBSDID("$FreeBSD: dda6f3551872340014669b05d1cf6da03a981581 $");
 
 /*
  * MIPS machine dependent routines for kvm and minidumps.
@@ -85,7 +85,7 @@ static int
 _mips_minidump_initvtop(kvm_t *kd)
 {
 	struct vmstate *vmst;
-	off_t off, sparse_off;
+	off_t off, dump_avail_off, sparse_off;
 
 	vmst = _kvm_malloc(kd, sizeof(*vmst));
 	if (vmst == NULL) {
@@ -113,7 +113,7 @@ _mips_minidump_initvtop(kvm_t *kd)
 		return (-1);
 	}
 	vmst->hdr.version = _kvm32toh(kd, vmst->hdr.version);
-	if (vmst->hdr.version != MINIDUMP_VERSION) {
+	if (vmst->hdr.version != MINIDUMP_VERSION && vmst->hdr.version != 1) {
 		_kvm_err(kd, kd->program, "wrong minidump version. "
 		    "Expected %d got %d", MINIDUMP_VERSION, vmst->hdr.version);
 		return (-1);
@@ -124,14 +124,19 @@ _mips_minidump_initvtop(kvm_t *kd)
 	vmst->hdr.kernbase = _kvm64toh(kd, vmst->hdr.kernbase);
 	vmst->hdr.dmapbase = _kvm64toh(kd, vmst->hdr.dmapbase);
 	vmst->hdr.dmapend = _kvm64toh(kd, vmst->hdr.dmapend);
+	vmst->hdr.dumpavailsize = vmst->hdr.version == MINIDUMP_VERSION ?
+	    _kvm32toh(kd, vmst->hdr.dumpavailsize) : 0;
 
 	/* Skip header and msgbuf */
-	off = MIPS_PAGE_SIZE + mips_round_page(vmst->hdr.msgbufsize);
+	dump_avail_off = MIPS_PAGE_SIZE + mips_round_page(vmst->hdr.msgbufsize);
+
+	/* Skip dump_avail */
+	off = dump_avail_off + mips_round_page(vmst->hdr.dumpavailsize);
 
 	sparse_off = off + mips_round_page(vmst->hdr.bitmapsize) +
 	    mips_round_page(vmst->hdr.ptesize);
-	if (_kvm_pt_init(kd, vmst->hdr.bitmapsize, off, sparse_off,
-	    MIPS_PAGE_SIZE, sizeof(uint32_t)) == -1) {
+	if (_kvm_pt_init(kd, vmst->hdr.dumpavailsize, dump_avail_off,
+	    vmst->hdr.bitmapsize, off, sparse_off, MIPS_PAGE_SIZE) == -1) {
 		return (-1);
 	}
 	off += mips_round_page(vmst->hdr.bitmapsize);

@@ -26,11 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8f91f9fe6d78366bf7308a191bad363e03f7849d $
+ * $FreeBSD: 530f5d49f8f18b3d31353c64b09a2f4b297bb217 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f91f9fe6d78366bf7308a191bad363e03f7849d $");
+__FBSDID("$FreeBSD: 530f5d49f8f18b3d31353c64b09a2f4b297bb217 $");
+
+#include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -43,6 +45,7 @@ __FBSDID("$FreeBSD: 8f91f9fe6d78366bf7308a191bad363e03f7849d $");
 
 #include <machine/vmm.h>
 #include <machine/vmm_dev.h>
+#include <machine/vmm_snapshot.h>
 
 #include "vmm_lapic.h"
 #include "vatpic.h"
@@ -761,3 +764,49 @@ vhpet_getcap(struct vm_hpet_cap *cap)
 	cap->capabilities = vhpet_capabilities();
 	return (0);
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+vhpet_snapshot(struct vhpet *vhpet, struct vm_snapshot_meta *meta)
+{
+	int i, ret;
+	uint32_t countbase;
+
+	SNAPSHOT_VAR_OR_LEAVE(vhpet->freq_sbt, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(vhpet->config, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(vhpet->isr, meta, ret, done);
+
+	/* at restore time the countbase should have the value it had when the
+	 * snapshot was created; since the value is not directly kept in
+	 * vhpet->countbase, but rather computed relative to the current system
+	 * uptime using countbase_sbt, save the value retured by vhpet_counter
+	 */
+	if (meta->op == VM_SNAPSHOT_SAVE)
+		countbase = vhpet_counter(vhpet, NULL);
+	SNAPSHOT_VAR_OR_LEAVE(countbase, meta, ret, done);
+	if (meta->op == VM_SNAPSHOT_RESTORE)
+		vhpet->countbase = countbase;
+
+	for (i = 0; i < nitems(vhpet->timer); i++) {
+		SNAPSHOT_VAR_OR_LEAVE(vhpet->timer[i].cap_config,
+				      meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(vhpet->timer[i].msireg, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(vhpet->timer[i].compval, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(vhpet->timer[i].comprate, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(vhpet->timer[i].callout_sbt,
+				      meta, ret, done);
+	}
+
+done:
+	return (ret);
+}
+
+int
+vhpet_restore_time(struct vhpet *vhpet)
+{
+	if (vhpet_counter_enabled(vhpet))
+		vhpet_start_counting(vhpet);
+
+	return (0);
+}
+#endif

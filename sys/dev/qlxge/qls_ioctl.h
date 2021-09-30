@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 972ba31f2bddd0b271567bbc918ea3afd239b876 $
+ * $FreeBSD: 3ea344183e9fedb0cd73127cf435afc11f7f2d7d $
  */
 /*
  * File: qls_ioctl.h
@@ -48,6 +48,5 @@ typedef struct qls_mpi_dump qls_mpi_dump_t;
  * Get MPI Dump
  */
 #define QLA_MPI_DUMP		_IOWR('q', 1, qls_mpi_dump_t)
-
 
 #endif /* #ifndef _QLS_IOCTL_H_ */

@@ -29,7 +29,7 @@
  * File : ecore_cxt.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 881e6ccd375ae199c1971416bfdd2a734a4b86fe $");
+__FBSDID("$FreeBSD: 754efc33dd88eded2a6cf758b58983226f456d02 $");
 
 #include "bcm_osal.h"
 #include "reg_addr.h"
@@ -1062,7 +1062,6 @@ t2_fail:
 			continue;		\
 		} else				\
 
-
 /* Total number of ILT lines used by this PF */
 static u32 ecore_cxt_ilt_shadow_size(struct ecore_ilt_client_cfg *ilt_clients)
 {
@@ -1590,7 +1589,6 @@ static void ecore_cdu_init_pf(struct ecore_hwfn *p_hwfn)
 		SET_FIELD(cdu_seg_params, CDU_SEG_REG_OFFSET, offset);
 		STORE_RT_REG(p_hwfn, rt_type_offset_fl_arr[i],
 			     cdu_seg_params);
-
 	}
 }
 

@@ -1,6 +1,5 @@
-# $FreeBSD: 480141ec6b6f4ec18a6cbbb582b3660ea2782769 $
+# $FreeBSD: 9f1024f41e8e4e04a3cd2c0a3f7444c3b84f1795 $
 
-PACKAGE=runtime
 PROG=	nos-tun
 MAN=	nos-tun.8
 WARNS?=	3

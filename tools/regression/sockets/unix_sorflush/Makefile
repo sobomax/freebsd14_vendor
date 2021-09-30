@@ -1,7 +1,6 @@
-# $FreeBSD: db0aa6ade00d35abe1edd6b24ebfba880b8b1b97 $
+# $FreeBSD: 879dcc8ef53374742afd6001c7da12ef61d15a24 $
 
 PROG=	unix_sorflush
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

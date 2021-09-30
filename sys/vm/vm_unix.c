@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4995466cfa60f19a648a9c836dc08090433db8ac $");
+__FBSDID("$FreeBSD: 8b3fce6b49a934b51924a7b2797f0c66f0478706 $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -55,6 +55,9 @@ __FBSDID("$FreeBSD: 4995466cfa60f19a648a9c836dc08090433db8ac $");
 #include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <sys/systm.h>
+#if defined(__amd64__) || defined(__i386__) /* for i386_read_exec */
+#include <machine/md_var.h>
+#endif
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>
@@ -175,11 +178,9 @@ kern_break(struct thread *td, uintptr_t *addr)
 		}
 #endif
 		prot = VM_PROT_RW;
-#ifdef COMPAT_FREEBSD32
-#if defined(__amd64__)
+#if (defined(COMPAT_FREEBSD32) && defined(__amd64__)) || defined(__i386__)
 		if (i386_read_exec && SV_PROC_FLAG(td->td_proc, SV_ILP32))
 			prot |= VM_PROT_EXECUTE;
-#endif
 #endif
 		rv = vm_map_insert(map, NULL, 0, old, new, prot, VM_PROT_ALL,
 		    0);
@@ -187,7 +188,7 @@ kern_break(struct thread *td, uintptr_t *addr)
 			rv = vm_map_wire_locked(map, old, new,
 			    VM_MAP_WIRE_USER | VM_MAP_WIRE_NOHOLES);
 			if (rv != KERN_SUCCESS)
-				vm_map_delete(map, old, new);
+				(void)vm_map_delete(map, old, new);
 		}
 		if (rv != KERN_SUCCESS) {
 #ifdef RACCT

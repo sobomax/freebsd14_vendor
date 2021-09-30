@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1858357dab5ed74ac721ddae82d1f8b49df1dbe3 $");
+__FBSDID("$FreeBSD: 586e8a667ff37df7bd8b30f36d678f08e0907f6d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -67,7 +67,6 @@ static int	bhnd_pwrctl_updateclk(struct bhnd_pwrctl_softc *sc,
 		    bhnd_pwrctl_wars wars);
 
 static struct bhnd_device_quirk pwrctl_quirks[];
-
 
 /* Supported parent core device identifiers */
 static const struct bhnd_device pwrctl_devices[] = {
@@ -471,7 +470,6 @@ bhnd_pwrctl_request_clock(device_t dev, device_t child, bhnd_clock clock)
 	PWRCTL_UNLOCK(sc);
 	return (error);
 }
-
 
 static device_method_t bhnd_pwrctl_methods[] = {
 	/* Device interface */

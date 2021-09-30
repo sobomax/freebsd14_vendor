@@ -1,4 +1,4 @@
-/* $FreeBSD: 197962f2cee06e2ef8fcc96c3626b7ee814396c8 $ */
+/* $FreeBSD: 2dfea07cf55d021765b2d5342376ab6f964511e1 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -88,6 +88,9 @@ typedef struct {
 #define	FCP_CMND_TASK_ATTR_ACA		0x04
 #define	FCP_CMND_TASK_ATTR_UNTAGGED	0x05
 #define	FCP_CMND_TASK_ATTR_MASK		0x07
+
+#define	FCP_CMND_PRIO_MASK		0x78
+#define	FCP_CMND_PRIO_SHIFT		3
 
 #define	FCP_CMND_ADDTL_CDBLEN_SHIFT	2
 

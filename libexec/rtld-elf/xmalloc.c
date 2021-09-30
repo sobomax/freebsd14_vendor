@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 44a7447fdab7ef255784c84a954e02fdd15c3381 $
+ * $FreeBSD: 1ee3e1c3a74ff8a21e0247c18c5a70e71bb7fe1f $
  */
 
 #include <sys/param.h>
@@ -35,6 +35,7 @@
 #include "rtld.h"
 #include "rtld_printf.h"
 #include "rtld_malloc.h"
+#include "rtld_libc.h"
 
 void *
 xcalloc(size_t number, size_t size)

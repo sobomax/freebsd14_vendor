@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f23be1e143f71065e07dd42b2253cc36b774db48 $");
+__FBSDID("$FreeBSD: 1784d034ac2d8eddf9fe5eb479b28a29d6b45337 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -117,7 +117,7 @@ VNET_DEFINE_STATIC(struct if_clone *, gif_cloner);
 #define	V_gif_cloner	VNET(gif_cloner)
 
 SYSCTL_DECL(_net_link);
-static SYSCTL_NODE(_net_link, IFT_GIF, gif, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_net_link, IFT_GIF, gif, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Generic Tunnel Interface");
 #ifndef MAX_GIF_NEST
 /*
@@ -293,7 +293,7 @@ gif_transmit(struct ifnet *ifp, struct mbuf *m)
 	uint8_t proto, ecn;
 	int error;
 
-	GIF_RLOCK();
+	NET_EPOCH_ASSERT();
 #ifdef MAC
 	error = mac_ifnet_check_transmit(ifp, m);
 	if (error) {
@@ -391,7 +391,6 @@ gif_transmit(struct ifnet *ifp, struct mbuf *m)
 err:
 	if (error)
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
-	GIF_RUNLOCK();
 	return (error);
 }
 
@@ -400,7 +399,6 @@ gif_qflush(struct ifnet *ifp __unused)
 {
 
 }
-
 
 int
 gif_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
@@ -435,6 +433,8 @@ gif_input(struct mbuf *m, struct ifnet *ifp, int proto, uint8_t ecn)
 	struct ether_header *eh;
 	struct ifnet *oldifp;
 	int isr, n, af;
+
+	NET_EPOCH_ASSERT();
 
 	if (ifp == NULL) {
 		/* just in case */
@@ -720,4 +720,3 @@ gif_delete_tunnel(struct gif_softc *sc)
 	GIF2IFP(sc)->if_drv_flags &= ~IFF_DRV_RUNNING;
 	if_link_state_change(GIF2IFP(sc), LINK_STATE_DOWN);
 }
-

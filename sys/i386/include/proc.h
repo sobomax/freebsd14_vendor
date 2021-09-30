@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)proc.h	7.1 (Berkeley) 5/15/91
- * $FreeBSD: 71b199603f519071fe51b67afe1dff8f640f3a1b $
+ * $FreeBSD: 2950946ff155b992226fb5b8b3107d99a4d8342d $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -66,7 +66,6 @@ struct syscall_args {
 	u_int code;
 	struct sysent *callp;
 	register_t args[8];
-	int narg;
 };
 
 #ifdef	_KERNEL

@@ -25,13 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f6bfcbb27bb8c5cd86514e96de43f15842d1c66 $");
+__FBSDID("$FreeBSD: aee19cd8c5749a897cf2bab511dc2b50d85fafc5 $");
 
 #include <sys/types.h>
 #include <elf.h>
 #include <bootstrap.h>
 
-#if defined(__aarch64__) || defined(__amd64__)
+#if defined(__aarch64__) || defined(__amd64__) || defined(__riscv)
 #define	ElfW_Rel	Elf64_Rela
 #define	ElfW_Dyn	Elf64_Dyn
 #define	ELFW_R_TYPE	ELF64_R_TYPE
@@ -55,6 +55,9 @@ __FBSDID("$FreeBSD: 5f6bfcbb27bb8c5cd86514e96de43f15842d1c66 $");
 #elif defined(__i386__)
 #define	RELOC_TYPE_NONE		R_386_NONE
 #define	RELOC_TYPE_RELATIVE	R_386_RELATIVE
+#elif defined(__riscv)
+#define	RELOC_TYPE_NONE		R_RISCV_NONE
+#define	RELOC_TYPE_RELATIVE	R_RISCV_RELATIVE
 #endif
 
 void self_reloc(Elf_Addr baseaddr, ElfW_Dyn *dynamic);

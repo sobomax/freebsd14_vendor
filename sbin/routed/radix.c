@@ -30,7 +30,7 @@
  *
  *	@(#)radix.c	8.4 (Berkeley) 11/2/94
  *
- * $FreeBSD: 0f3ef39ec21395968370b071e48daa42b93c742c $
+ * $FreeBSD: 2372b8c68581c78f29a1dd595ad4dbddf28cb514 $
  */
 
 /*
@@ -39,14 +39,7 @@
 
 #include "defs.h"
 
-#ifdef __NetBSD__
-__RCSID("$NetBSD$");
-#elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 0f3ef39ec21395968370b071e48daa42b93c742c $");
-#else
-__RCSID("$Revision: 2.23 $");
-#ident "$Revision: 2.23 $"
-#endif
+__RCSID("$FreeBSD: 2372b8c68581c78f29a1dd595ad4dbddf28cb514 $");
 
 #define log(x, msg) syslog(x, msg)
 #define panic(s) {log(LOG_ERR,s); exit(1);}

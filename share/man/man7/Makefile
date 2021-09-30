@@ -1,9 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: d2acb3bcfba5d7d07c18918c711c54ece10b0eb9 $
+# $FreeBSD: be7a5ae305001dbe86786c919bfaf6b283684c96 $
 
 .include <src.opts.mk>
-
-PACKAGE=runtime-manuals
 
 #MISSING: eqnchar.7 ms.7 term.7
 MAN=	arch.7 \

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 345f688a35f258eb6c030dfbcc89e624a66b406e $
+ * $FreeBSD: d76b4b242fce3debab8e0e337e82f1498f1d62d0 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 345f688a35f258eb6c030dfbcc89e624a66b406e $");
+__FBSDID("$FreeBSD: d76b4b242fce3debab8e0e337e82f1498f1d62d0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

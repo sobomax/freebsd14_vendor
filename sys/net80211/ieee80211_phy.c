@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 16bfbf62b7a1b2aa87040e30553dd0b5d4837599 $");
+__FBSDID("$FreeBSD: 8bf643b17307f14e3ea090c99d3ba258bb4a127a $");
 
 /*
  * IEEE 802.11 PHY-related support.
@@ -581,7 +581,6 @@ static const uint16_t ht40_bps[32] = {
 	162, 324, 486, 648, 972, 1296, 1458, 1620,
 	216, 432, 648, 864, 1296, 1728, 1944, 2160
 };
-
 
 #define	OFDM_PLCP_BITS	22
 #define	HT_L_STF	8

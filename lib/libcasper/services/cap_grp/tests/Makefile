@@ -1,4 +1,4 @@
-# $FreeBSD: ff2f2f18e25c8ef68b9b9878071c357b47f216a9 $
+# $FreeBSD: d24cba093e67c49a347e3383c24e56b08e8e27d9 $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,5 @@ LIBADD+=	cap_grp
 CFLAGS+=-DWITH_CASPER
 .endif
 LIBADD+=	nv
-
-WARNS?=		3
 
 .include <bsd.test.mk>

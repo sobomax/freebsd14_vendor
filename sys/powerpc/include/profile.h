@@ -28,7 +28,7 @@
  *
  *	from: NetBSD: profile.h,v 1.9 1997/04/06 08:47:37 cgd Exp
  *	from: FreeBSD: src/sys/alpha/include/profile.h,v 1.4 1999/12/29
- * $FreeBSD: 5f933551279e054ac9687909307fee635590ea06 $
+ * $FreeBSD: bea1b3e98e6619346e04357f5c0581822ea00039 $
  */
 
 #ifndef _MACHINE_PROFILE_H_
@@ -190,7 +190,7 @@ extern char interrupt_vector_base[];
 extern char interrupt_vector_top[];
 #define	__PROFILE_VECTOR_BASE	(uintfptr_t)interrupt_vector_base
 #define	__PROFILE_VECTOR_TOP	(uintfptr_t)interrupt_vector_top
-#endif	/* BOOKE_E500 || BOOKE_PPC4XX */
+#endif	/* BOOKE_E500 */
 
 #endif	/* !COMPILING_LINT */
 

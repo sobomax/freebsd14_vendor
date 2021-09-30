@@ -1,4 +1,4 @@
-# $FreeBSD: 5f3d52661c993c683dabde0d22268902285fb9bb $
+# $FreeBSD: c77b6b565a87684e6e54fd801efbd738d413ba34 $
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does
@@ -29,10 +29,7 @@ CFLAGS+=-Winline
 
 CFLAGS.thr_stack.c+=	-Wno-cast-align
 CFLAGS.rtld_malloc.c+=	-Wno-cast-align
-.include <bsd.compiler.mk>
-.if !(${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} < 40300)
 CFLAGS.thr_symbols.c+=	-Wno-missing-variable-declarations
-.endif
 
 .ifndef NO_THREAD_UNWIND_STACK
 CFLAGS+=-fexceptions

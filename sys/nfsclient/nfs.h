@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)nfs.h	8.4 (Berkeley) 5/1/95
- * $FreeBSD: ab50d896d1553089cece409c5d22751c2b4ea22f $
+ * $FreeBSD: af9e6f856c46f60781b36f3e7c7ba131b15a2bcb $
  */
 
 #ifndef _NFSCLIENT_NFS_H_
@@ -99,7 +99,6 @@
 #define	NFSSTA_WANTSND		0x02000000  /* Want above */
 #define	NFSSTA_TIMEO		0x10000000  /* Experiencing a timeout */
 #define	NFSSTA_LOCKTIMEO	0x20000000  /* Experiencing a lockd timeout */
-
 
 /*
  * XXX to allow amd to include nfs.h without nfsproto.h

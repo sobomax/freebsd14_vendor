@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3c4b3026706fff19202c570251bc8704580b954 $");
+__FBSDID("$FreeBSD: b376f0d36f1fb3120eabb75c6d76c5ac230bd5e5 $");
 
 /*
  * BHNDB PCI SPROM driver.
@@ -74,7 +74,6 @@ bhndb_pci_sprom_probe(device_t dev)
 
 	return (BUS_PROBE_NOWILDCARD);
 }
-
 
 static device_method_t bhndb_pci_sprom_methods[] = {
 	/* Device interface */

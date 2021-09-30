@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 616cbb1182501f9d286aba61c9c10da825b88fcb $");
+__FBSDID("$FreeBSD: 63ad288ab0da5d44863cf670b04d19684b109669 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -296,7 +296,7 @@ ipsec_set_pcbpolicy(struct inpcb *inp, struct ucred *cred,
 	case IPSEC_POLICY_IPSEC:
 	case IPSEC_POLICY_BYPASS:
 		if (cred != NULL &&
-		    priv_check_cred(cred, PRIV_NETINET_IPSEC, 0) != 0)
+		    priv_check_cred(cred, PRIV_NETINET_IPSEC) != 0)
 			return (EACCES);
 		/* Allocate new SP entry. */
 		newsp = key_msg2sp(xpl, len, &error);
@@ -480,4 +480,3 @@ ipsec6_pcbctl(struct inpcb *inp, struct sockopt *sopt)
 	return (ipsec_control_pcbpolicy(inp, sopt));
 }
 #endif
-

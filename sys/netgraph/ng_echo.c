@@ -37,7 +37,7 @@
  *
  * Author: Julian Elisher <julian@freebsd.org>
  *
- * $FreeBSD: e9daf5eda958be43ef70c97202d21a820665c017 $
+ * $FreeBSD: 2601c42aaeea0aba1d6485b16c41d4b49be3db1f $
  * $Whistle: ng_echo.c,v 1.13 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -118,4 +118,3 @@ nge_disconnect(hook_p hook)
 	}
 	return (0);
 }
-

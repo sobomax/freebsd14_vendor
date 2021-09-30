@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32486d69d9fa253babea344fe65a84226b0574d0 $");
+__FBSDID("$FreeBSD: bd44a38cb972aa03546765aacf48174b7094103b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,14 +35,12 @@ __FBSDID("$FreeBSD: 32486d69d9fa253babea344fe65a84226b0574d0 $");
 #include <sys/malloc.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/label/g_label.h>
-
-#define G_LABEL_ISO9660_DIR	"iso9660"
 
 #define	ISO9660_MAGIC	"\x01" "CD001" "\x01\x00"
 #define	ISO9660_OFFSET	0x8000
 #define	VOLUME_LEN	32
-
 
 static void
 g_label_iso9660_taste(struct g_consumer *cp, char *label, size_t size)
@@ -74,7 +72,7 @@ g_label_iso9660_taste(struct g_consumer *cp, char *label, size_t size)
 
 struct g_label_desc g_label_iso9660 = {
 	.ld_taste = g_label_iso9660_taste,
-	.ld_dir = G_LABEL_ISO9660_DIR,
+	.ld_dirprefix = "iso9660/",
 	.ld_enabled = 1
 };
 

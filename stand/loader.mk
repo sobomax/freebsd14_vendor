@@ -1,4 +1,4 @@
-# $FreeBSD: fc580f578997787cdda59db50491df0f83ca90e0 $
+# $FreeBSD: 3a38a9bc9e6391c710de88f3ffcc048667b0e0a5 $
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 
@@ -6,31 +6,47 @@ CFLAGS+=-I${LDRSRC}
 
 SRCS+=	boot.c commands.c console.c devopen.c interp.c 
 SRCS+=	interp_backslash.c interp_parse.c ls.c misc.c 
-SRCS+=	module.c
+SRCS+=	module.c nvstore.c pnglite.c
+
+CFLAGS.module.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
+
+.PATH: ${SRCTOP}/contrib/pnglite
+CFLAGS.pnglite.c+= -I${SRCTOP}/contrib/pnglite
+CFLAGS.pnglite.c+= -DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib
 
 .if ${MACHINE} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 SRCS+=	load_elf32.c load_elf32_obj.c reloc_elf32.c
 SRCS+=	load_elf64.c load_elf64_obj.c reloc_elf64.c
+CFLAGS.load_elf32.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
+CFLAGS.load_elf64.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .elif ${MACHINE_CPUARCH} == "aarch64"
 SRCS+=	load_elf64.c reloc_elf64.c
+CFLAGS.load_elf64.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .elif ${MACHINE_CPUARCH} == "arm"
 SRCS+=	load_elf32.c reloc_elf32.c
+CFLAGS.load_elf32.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .elif ${MACHINE_CPUARCH} == "powerpc"
 SRCS+=	load_elf32.c reloc_elf32.c
 SRCS+=	load_elf64.c reloc_elf64.c
 SRCS+=	metadata.c
-.elif ${MACHINE_CPUARCH} == "sparc64"
-SRCS+=	load_elf64.c reloc_elf64.c
-SRCS+=	metadata.c
+CFLAGS.load_elf32.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
+CFLAGS.load_elf64.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .elif ${MACHINE_ARCH:Mmips64*} != ""
 SRCS+= load_elf64.c reloc_elf64.c
 SRCS+=	metadata.c
+CFLAGS.load_elf64.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .elif ${MACHINE} == "mips"
 SRCS+=	load_elf32.c reloc_elf32.c
 SRCS+=	metadata.c
+CFLAGS.load_elf32.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
+.elif ${MACHINE_CPUARCH} == "riscv"
+SRCS+=	load_elf64.c reloc_elf64.c
+SRCS+=	metadata.c
+CFLAGS.load_elf64.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 .endif
 
 .if ${LOADER_DISK_SUPPORT:Uyes} == "yes"
+CFLAGS.part.c+= -DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib
 SRCS+=	disk.c part.c vdisk.c
 .endif
 
@@ -103,9 +119,6 @@ CFLAGS+=	-DLOADER_EXT2FS_SUPPORT
 .if ${LOADER_MSDOS_SUPPORT:Uno} == "yes"
 CFLAGS+=	-DLOADER_MSDOS_SUPPORT
 .endif
-.if ${LOADER_NANDFS_SUPPORT:U${MK_NAND}} == "yes"
-CFLAGS+=	-DLOADER_NANDFS_SUPPORT
-.endif
 .if ${LOADER_UFS_SUPPORT:Uyes} == "yes"
 CFLAGS+=	-DLOADER_UFS_SUPPORT
 .endif
@@ -141,6 +154,7 @@ CFLAGS+= -DLOADER_MBR_SUPPORT
 CFLAGS+=	-DLOADER_ZFS_SUPPORT
 CFLAGS+=	-I${ZFSSRC}
 CFLAGS+=	-I${SYSDIR}/cddl/boot/zfs
+CFLAGS+=	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common
 SRCS+=		zfs_cmd.c
 .endif
 
@@ -166,6 +180,10 @@ REPRO_FLAG=	-r
 vers.c: ${LDRSRC}/newvers.sh ${VERSION_FILE}
 	sh ${LDRSRC}/newvers.sh ${REPRO_FLAG} ${VERSION_FILE} \
 	    ${NEWVERSWHAT}
+
+.if ${MK_LOADER_VERBOSE} != "no"
+CFLAGS+=	-DELF_VERBOSE
+.endif
 
 .if !empty(HELP_FILES)
 HELP_FILES+=	${LDRSRC}/help.common

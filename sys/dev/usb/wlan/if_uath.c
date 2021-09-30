@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c6a79614e914318b9edb8e5a6be88d3f77a16d88 $");
+__FBSDID("$FreeBSD: df7e1d7c396f97d3034374fbb77135deeb7631c2 $");
 
 /*-
  * Driver for Atheros AR5523 USB parts.
@@ -114,7 +114,8 @@ __FBSDID("$FreeBSD: c6a79614e914318b9edb8e5a6be88d3f77a16d88 $");
 #include <dev/usb/wlan/if_uathreg.h>
 #include <dev/usb/wlan/if_uathvar.h>
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, uath, CTLFLAG_RW, 0, "USB Atheros");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, uath, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB Atheros");
 
 static	int uath_countrycode = CTRY_DEFAULT;	/* country code */
 SYSCTL_INT(_hw_usb_uath, OID_AUTO, countrycode, CTLFLAG_RWTUN, &uath_countrycode,
@@ -2152,8 +2153,8 @@ uath_sysctl_node(struct uath_softc *sc)
 	ctx = device_get_sysctl_ctx(sc->sc_dev);
 	child = SYSCTL_CHILDREN(device_get_sysctl_tree(sc->sc_dev));
 
-	tree = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, "stats", CTLFLAG_RD,
-	    NULL, "UATH statistics");
+	tree = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, "stats",
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "UATH statistics");
 	child = SYSCTL_CHILDREN(tree);
 	UATH_SYSCTL_STAT_ADD32(ctx, child, "badchunkseqnum",
 	    &stats->st_badchunkseqnum, "Bad chunk sequence numbers");
@@ -2705,6 +2706,7 @@ uath_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
 	struct ieee80211_node *ni;
+	struct epoch_tracker et;
 	struct mbuf *m = NULL;
 	struct uath_data *data;
 	struct uath_rx_desc *desc = NULL;
@@ -2751,6 +2753,7 @@ setup:
 			ni = ieee80211_find_rxnode(ic,
 			    (struct ieee80211_frame_min *)wh);
 			nf = -95;	/* XXX */
+			NET_EPOCH_ENTER(et);
 			if (ni != NULL) {
 				(void) ieee80211_input(ni, m,
 				    (int)be32toh(desc->rssi), nf);
@@ -2759,6 +2762,7 @@ setup:
 			} else
 				(void) ieee80211_input_all(ic, m,
 				    (int)be32toh(desc->rssi), nf);
+			NET_EPOCH_EXIT(et);
 			m = NULL;
 			desc = NULL;
 		}

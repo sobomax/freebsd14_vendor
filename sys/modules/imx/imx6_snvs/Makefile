@@ -1,4 +1,4 @@
-# $FreeBSD: eca421ffe4c798128edddf65fd46a291fe8ed070 $
+# $FreeBSD: aa793a5ab1ab50cbd7218b46eca4a1262984b334 $
 
 .PATH: ${SRCTOP}/sys/arm/freescale/imx
 
@@ -11,5 +11,6 @@ SRCS+=	\
 	clock_if.h \
 	device_if.h \
 	ofw_bus_if.h \
+	syscon_if.h \
 
 .include <bsd.kmod.mk>

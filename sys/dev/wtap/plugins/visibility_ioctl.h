@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 7c53fcd69c888a5d66a925ee042f8e39ac0dd643 $
+ * $FreeBSD: 342a4ec45f51d75db1153fe27e556f30c92f37ca $
  */
 
 /*
@@ -50,4 +50,3 @@ struct link {
 #define VISIOCTLLINK _IOW('W', 4, struct link) //
 
 #endif
-

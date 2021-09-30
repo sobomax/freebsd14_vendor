@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 41e34da792642965bbc6ba736367e84abe2a0ee3 $
+ * $FreeBSD: 1e37449aaa9d52d596ec55d3f5d2e6dd035ac89c $
  */
 
 #ifndef _MACHINE_MEMDEV_H_
@@ -36,7 +36,7 @@
 
 d_open_t	memopen;
 d_read_t	memrw;
-d_ioctl_t	memioctl;
+d_ioctl_t	memioctl_md;
 d_mmap_t	memmmap;
 
 #endif /* _MACHINE_MEMDEV_H_ */

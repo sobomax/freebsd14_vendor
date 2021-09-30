@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_misc.c,v 1.5 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: 619b5d4c4430c453ee70fdd8030bacceadbc5d4b $
+ * $FreeBSD: 707af8c84d068c672bd0c66cc815c8b54a4e2057 $
  */
 
 #include <sys/param.h>
@@ -232,7 +232,7 @@ ng_hci_get_neighbor(ng_hci_unit_p unit, bdaddr_p bdaddr,int link_type)
 
 		n = nn;
 	}
-	
+
 	return (n);
 } /* ng_hci_get_neighbor */
 
@@ -526,4 +526,3 @@ ng_hci_str_error(u_int16_t code)
 	return ((code >= LAST_ERROR_CODE)? s[LAST_ERROR_CODE] : s[code]);
 } /* ng_hci_str_error */
 #endif
-

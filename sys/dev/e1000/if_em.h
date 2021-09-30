@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/*$FreeBSD: efad9251105b8ef34618039d9d5b69ca6b1c8078 $*/
+/*$FreeBSD: d685b4aedc267929c77461218276a14ca51aee06 $*/
 #include "opt_ddb.h"
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -316,7 +316,6 @@
 #define EM_BAR_MEM_TYPE_MASK	0x00000006
 #define EM_BAR_MEM_TYPE_32BIT	0x00000000
 #define EM_BAR_MEM_TYPE_64BIT	0x00000004
-#define EM_MSIX_BAR		3	/* On 82575 */
 
 /* More backward compatibility */
 #if __FreeBSD_version < 900000
@@ -345,7 +344,6 @@
 #define EM_MSIX_MASK		0x01F00000 /* For 82574 use */
 #define EM_MSIX_LINK		0x01000000 /* For 82574 use */
 #define ETH_ZLEN		60
-#define ETH_ADDR_LEN		6
 #define EM_CSUM_OFFLOAD		(CSUM_IP | CSUM_IP_UDP | CSUM_IP_TCP) /* Offload bits in mbuf flag */
 #define IGB_CSUM_OFFLOAD	(CSUM_IP | CSUM_IP_UDP | CSUM_IP_TCP | \
 				 CSUM_IP_SCTP | CSUM_IP6_UDP | CSUM_IP6_TCP | \

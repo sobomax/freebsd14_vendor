@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: d081ecd358f44c9da5ea6948fa7e818973707d71 $
+ * $FreeBSD: 966704cc481ee7ff853dda2c525b67735d358833 $
  */
 
 #ifndef _DEV_WTAP_WTAPVAR_H
@@ -154,6 +154,5 @@ void	wtap_suspend(struct wtap_softc *);
 void	wtap_shutdown(struct wtap_softc *);
 void	wtap_intr(struct wtap_softc *);
 void	wtap_inject(struct wtap_softc *, struct mbuf *);
-void	wtap_rx_deliver(struct wtap_softc *, struct mbuf *);
 
 #endif

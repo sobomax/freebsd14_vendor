@@ -27,14 +27,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4a90256e46b9b47744e65a13bcc364a0f5250813 $");
+__FBSDID("$FreeBSD: 2dd5bf19d7d9f982ac673e89d4172fef89a2106d $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
+#include <sys/bus.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
-#include <sys/bus.h>
 #include <sys/power.h>
 
 #include <contrib/dev/acpica/include/acpi.h>
@@ -137,14 +138,16 @@ static int
 acpi_panasonic_probe(device_t dev)
 {
 	static char *mat_ids[] = { "MAT0019", NULL };
+	int rv;
 
 	if (acpi_disabled("panasonic") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, mat_ids) == NULL ||
 	    device_get_unit(dev) != 0)
 		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, mat_ids, NULL);
 
-	device_set_desc(dev, "Panasonic Notebook Hotkeys");
-	return (0);
+	if (rv <= 0)
+		device_set_desc(dev, "Panasonic Notebook Hotkeys");
+	return (rv);
 }
 
 static int
@@ -165,13 +168,13 @@ acpi_panasonic_attach(device_t dev)
 	sysctl_ctx_init(&sc->sysctl_ctx);
 	sc->sysctl_tree = SYSCTL_ADD_NODE(&sc->sysctl_ctx,
 	    SYSCTL_CHILDREN(acpi_sc->acpi_sysctl_tree), OID_AUTO,
-	    "panasonic", CTLFLAG_RD, 0, "");
+	    "panasonic", CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "");
 	for (i = 0; sysctl_table[i].name != NULL; i++) {
 		SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 		    sysctl_table[i].name,
-		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY,
-		    sc, i, acpi_panasonic_sysctl, "I", "");
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
+		    CTLFLAG_NEEDGIANT, sc, i, acpi_panasonic_sysctl, "I", "");
 	}
 
 #if 0

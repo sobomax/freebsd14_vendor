@@ -1,4 +1,4 @@
-# $FreeBSD: 138606b7c44d78743698e7c6a27e2140c4d7cdf0 $
+# $FreeBSD: b2685bca0d406922d2208006876a1bed155698e1 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -6,8 +6,10 @@
 /set type=dir uname=root gname=wheel mode=0755
 .               nochange
     var             nochange
-        spool           nochange
-            clientmqueue    uname=smmsp gname=smmsp mode=0770
+        spool           nochange tags=package=runtime
+            clientmqueue    uname=smmsp gname=smmsp mode=0770 tags=package=sendmail
+            ..
+            mqueue          gname=daemon tags=package=sendmail
             ..
         ..
     ..

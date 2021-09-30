@@ -33,7 +33,7 @@
 /* Xilinx AXI DMA controller driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d5f05a0a5f13b8feb1c5d5ce4d7d1be70b39548 $");
+__FBSDID("$FreeBSD: 0512b3e06d541e1de24e41309972166f277a1557 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -61,6 +61,15 @@ __FBSDID("$FreeBSD: 8d5f05a0a5f13b8feb1c5d5ce4d7d1be70b39548 $");
 
 #include "xdma_if.h"
 
+#define	READ4(_sc, _reg)	\
+	bus_space_read_4(_sc->bst, _sc->bsh, _reg)
+#define	WRITE4(_sc, _reg, _val)	\
+	bus_space_write_4(_sc->bst, _sc->bsh, _reg, _val)
+#define	READ8(_sc, _reg)	\
+	bus_space_read_8(_sc->bst, _sc->bsh, _reg)
+#define	WRITE8(_sc, _reg, _val)	\
+	bus_space_write_8(_sc->bst, _sc->bsh, _reg, _val)
+
 #define AXIDMA_DEBUG
 #undef AXIDMA_DEBUG
 
@@ -70,16 +79,7 @@ __FBSDID("$FreeBSD: 8d5f05a0a5f13b8feb1c5d5ce4d7d1be70b39548 $");
 #define dprintf(fmt, ...)
 #endif
 
-#define	AXIDMA_NCHANNELS	2
-#define	AXIDMA_DESCS_NUM	512
-#define	AXIDMA_TX_CHAN		0
-#define	AXIDMA_RX_CHAN		1
-
 extern struct bus_space memmap_bus;
-
-struct axidma_fdt_data {
-	int id;
-};
 
 struct axidma_channel {
 	struct axidma_softc	*sc;
@@ -363,7 +363,7 @@ axidma_desc_alloc(struct axidma_softc *sc, struct xdma_channel *xchan,
 	chan->mem_vaddr = kva_alloc(chan->mem_size);
 	pmap_kenter_device(chan->mem_vaddr, chan->mem_size, chan->mem_paddr);
 
-	device_printf(sc->dev, "Allocated chunk %lx %d\n",
+	device_printf(sc->dev, "Allocated chunk %lx %lu\n",
 	    chan->mem_paddr, chan->mem_size);
 
 	for (i = 0; i < nsegments; i++) {
@@ -399,6 +399,7 @@ axidma_channel_alloc(device_t dev, struct xdma_channel *xchan)
 		if (axidma_reset(sc, data->id) != 0)
 			return (-1);
 		chan->xchan = xchan;
+		xchan->caps |= XCHAN_CAP_BOUNCE;
 		xchan->chan = (void *)chan;
 		chan->sc = sc;
 		chan->used = true;

@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)subdi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cc9534c6b553be11cbcb1081aa63a4c6922e283 $");
+__FBSDID("$FreeBSD: 3622c323568cac3455402641877a08fdafd23af7 $");
 
 #include "quad.h"
 
@@ -46,8 +46,7 @@ __FBSDID("$FreeBSD: 4cc9534c6b553be11cbcb1081aa63a4c6922e283 $");
  * from a single u_long difference x-y occurs if and only if (x-y) > x.
  */
 quad_t
-__subdi3(a, b)
-	quad_t a, b;
+__subdi3(quad_t a, quad_t b)
 {
 	union uu aa, bb, diff;
 

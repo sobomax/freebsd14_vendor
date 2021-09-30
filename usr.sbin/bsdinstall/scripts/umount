@@ -24,9 +24,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 47d7f0bb9a163ffac3e98aa78d0c0cf16f0ddbfd $
+# $FreeBSD: 3c33eff7e105feca79ff5e9155237ac93b974dfd $
 
-TMP_FSTAB=/tmp/bsdinstall-tmp-fstab
+TMP_FSTAB=${TMPDIR:-"/tmp"}/bsdinstall-tmp-fstab
 
 cat $PATH_FSTAB | awk -v BSDINSTALL_CHROOT=$BSDINSTALL_CHROOT '{
 	if ($2 ~ "^/.*") {
@@ -39,4 +39,6 @@ cat $PATH_FSTAB | awk -v BSDINSTALL_CHROOT=$BSDINSTALL_CHROOT '{
 }' > $TMP_FSTAB
 
 umount $BSDINSTALL_CHROOT/dev 2>/dev/null
-umount -F $TMP_FSTAB -a 2>/dev/null
+if [ -n "$TMP_FSTAB" ]; then
+	umount -F $TMP_FSTAB -a 2>/dev/null
+fi

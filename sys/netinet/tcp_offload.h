@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f755ce7ed20bf9710879b7d1c0beb17f5c0a0002 $
+ * $FreeBSD: 19c120ccdd7da0a99ff354e43c5dc9c4f4af007b $
  *
  */
 
@@ -46,6 +46,7 @@ int  tcp_offload_output(struct tcpcb *);
 void tcp_offload_rcvd(struct tcpcb *);
 void tcp_offload_ctloutput(struct tcpcb *, int, int);
 void tcp_offload_tcp_info(struct tcpcb *, struct tcp_info *);
+int  tcp_offload_alloc_tls_session(struct tcpcb *, struct ktls_session *, int);
 void tcp_offload_detach(struct tcpcb *);
 
 #endif

@@ -27,7 +27,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6826656bb914f35d8c01866906aa453c429a7ad7 $
+ * $FreeBSD: aa3512a2c12de020c6c51a3108683d7fd0655c78 $
  */
 #ifndef __NLM_UCORE_H__
 #define	__NLM_UCORE_H__
@@ -99,7 +99,6 @@ nlm_write_ucore_##name(unsigned int v)				\
 {								\
 	nlm_write_ucore_reg(reg, v);				\
 } struct __hack
-
 
 NLM_DEFINE_UCORE(obufdone,		UCORE_OUTBUF_DONE);
 NLM_DEFINE_UCORE(rxpktrdy,		UCORE_RX_PKT_RDY);

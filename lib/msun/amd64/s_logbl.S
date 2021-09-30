@@ -34,12 +34,13 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 370af7ca4cc715b1449aeab7a8ed28bdb52229a5 $")
+__FBSDID("$FreeBSD: 857ef7628b0dde465276cd204aa78e154e71c230 $")
 
 ENTRY(logbl)
 	fldt	8(%rsp)
 	fxtract
 	fstp	%st
 	ret
+END(logbl)
 
 	.section .note.GNU-stack,"",%progbits

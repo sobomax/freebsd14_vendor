@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3cfaecf0c268c029c877e8816e1944f41a6771a9 $
+ * $FreeBSD: b19bebfe1786b405732a5e44ccb4a73dc48a33bc $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3cfaecf0c268c029c877e8816e1944f41a6771a9 $");
+__FBSDID("$FreeBSD: b19bebfe1786b405732a5e44ccb4a73dc48a33bc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -607,7 +607,6 @@ NM_CLK(spi3_clk,
     24, 4,					/* mux */
     31,						/* gate */
     AW_CLK_HAS_GATE | AW_CLK_HAS_MUX);		/* flags */
-
 
 static const char *daudio_parents[] = {"pll_audio-8x", "pll_audio-4x", "pll_audio-2x", "pll_audio"};
 MUX_CLK(daudio0mux_clk,

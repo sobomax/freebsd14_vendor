@@ -38,11 +38,6 @@
  *
  ***********************license end**************************************/
 
-
-
-
-
-
 /**
  * @file
  *
@@ -53,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 349ed7a783d6ece2d58b52799d1872646815ec04 $");
+__FBSDID("$FreeBSD: 888730d18353f2746ec40347fbf1c4ed6832b974 $");
 
 #include <sys/param.h>
 #include <sys/timespec.h>
@@ -102,7 +97,6 @@ uint32_t cvmx_rtc_ds1337_read(void)
     uint8_t   sec;
     struct clocktime ct;
     struct timespec ts;
-
 
     memset(&reg, 0, sizeof(reg));
     memset(&ct, 0, sizeof(ct));

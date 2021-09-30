@@ -26,12 +26,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c473c54f019027a925eb8dc6f2dd341cd1857532 $
+ * $FreeBSD: 31d8b996aa0b7f2e58ef6b6be451c7e1f6daa972 $
  */
 
 #ifndef _LINUX_RANDOM_H_
 #define	_LINUX_RANDOM_H_
 
+#include <linux/types.h>
 #include <sys/random.h>
 #include <sys/libkern.h>
 
@@ -41,8 +42,7 @@ static inline void
 get_random_bytes(void *buf, int nbytes)
 {
 
-	if (read_random(buf, nbytes) == 0)
-		arc4rand(buf, nbytes, 0);
+	arc4random_buf(buf, nbytes);
 }
 
 static inline u_int

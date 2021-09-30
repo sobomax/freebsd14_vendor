@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ef1d87ada9f6bbd5857ed3e6508e4c9597cdd199 $
+ * $FreeBSD: b3106e6fa8749aa52a4c3f1f4f94a3551dca84ea $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -224,12 +224,10 @@ struct knlist {
 	struct	klist	kl_list;
 	void    (*kl_lock)(void *);	/* lock function */
 	void    (*kl_unlock)(void *);
-	void	(*kl_assert_locked)(void *);
-	void	(*kl_assert_unlocked)(void *);
+	void	(*kl_assert_lock)(void *, int);
 	void	*kl_lockarg;		/* argument passed to lock functions */
 	int	kl_autodestroy;
 };
-
 
 #ifdef _KERNEL
 
@@ -335,8 +333,7 @@ void	knlist_add(struct knlist *knl, struct knote *kn, int islocked);
 void	knlist_remove(struct knlist *knl, struct knote *kn, int islocked);
 int	knlist_empty(struct knlist *knl);
 void	knlist_init(struct knlist *knl, void *lock, void (*kl_lock)(void *),
-	    void (*kl_unlock)(void *), void (*kl_assert_locked)(void *),
-	    void (*kl_assert_unlocked)(void *));
+	    void (*kl_unlock)(void *), void (*kl_assert_lock)(void *, int));
 void	knlist_init_mtx(struct knlist *knl, struct mtx *lock);
 void	knlist_init_rw_reader(struct knlist *knl, struct rwlock *lock);
 void	knlist_destroy(struct knlist *knl);

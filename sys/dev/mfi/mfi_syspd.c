@@ -32,16 +32,18 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0418abf356d0813878609ebda99c3625997c6f04 $");
+__FBSDID("$FreeBSD: ba090e744ee17227d7b3b6cd6e7f7269485fdbff $");
 
 #include "opt_mfi.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
-#include <sys/selinfo.h>
+#include <sys/lock.h>
 #include <sys/module.h>
 #include <sys/malloc.h>
+#include <sys/mutex.h>
+#include <sys/selinfo.h>
 #include <sys/sysctl.h>
 #include <sys/uio.h>
 

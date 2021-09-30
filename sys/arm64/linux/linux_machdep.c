@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 20e97d02c56877b0bf161c31745012d5dd42b16d $
+ * $FreeBSD: 512bf1cc3398becedd47574f893d1f340e2f15d6 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20e97d02c56877b0bf161c31745012d5dd42b16d $");
+__FBSDID("$FreeBSD: 512bf1cc3398becedd47574f893d1f340e2f15d6 $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -69,11 +69,15 @@ linux_execve(struct thread *td, struct linux_execve_args *uap)
 	char *path;
 	int error;
 
-	LCONVPATHEXIST(td, uap->path, &path);
-
-	error = exec_copyin_args(&eargs, path, UIO_SYSSPACE, uap->argp,
-	    uap->envp);
-	free(path, M_TEMP);
+	if (!LUSECONVPATH(td)) {
+		error = exec_copyin_args(&eargs, uap->path, UIO_USERSPACE,
+		    uap->argp, uap->envp);
+	} else {
+		LCONVPATHEXIST(td, uap->path, &path);
+		error = exec_copyin_args(&eargs, path, UIO_SYSSPACE,
+		    uap->argp, uap->envp);
+		LFREEPATH(path);
+	}
 	if (error == 0)
 		error = linux_common_execve(td, &eargs);
 	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);

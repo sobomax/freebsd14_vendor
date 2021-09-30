@@ -1,6 +1,7 @@
 # $NetBSD: Makefile,v 1.2 2008/08/18 08:25:32 plunky Exp $
-# $FreeBSD: 0689d17c6c31ab7871a69a1106d60d1b5c77f03c $
+# $FreeBSD: e24a9fe7f79552747d10750683fb498f25b7bd5f $
 
+PACKAGE=	bluetooth
 PROG=	btpand
 MAN=	btpand.8
 SRCS=	btpand.c bnep.c channel.c client.c event.c packet.c server.c sdp.c tap.c

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ce01891a76daff9c7b6d3fe76119b2b6bc97118f $
+ * $FreeBSD: f3af9f93825a99a222f35e2d2fbd6432f57faf62 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce01891a76daff9c7b6d3fe76119b2b6bc97118f $");
+__FBSDID("$FreeBSD: f3af9f93825a99a222f35e2d2fbd6432f57faf62 $");
 
 #include <ctype.h>
 #include <err.h>
@@ -215,6 +215,8 @@ set_port_flag(struct cfg *cfg, int argc, char *argv[])
 			f = ETHERSWITCH_PORT_ADDTAG;
 		else if (strcasecmp(flag, "firstlock") == 0)
 			f = ETHERSWITCH_PORT_FIRSTLOCK;
+		else if (strcasecmp(flag, "droptagged") == 0)
+			f = ETHERSWITCH_PORT_DROPTAGGED;
 		else if (strcasecmp(flag, "dropuntagged") == 0)
 			f = ETHERSWITCH_PORT_DROPUNTAGGED;
 		else if (strcasecmp(flag, "doubletag") == 0)
@@ -871,6 +873,8 @@ static struct cmds cmds[] = {
 	{ MODE_PORT, "-doubletag", 0, set_port_flag },
 	{ MODE_PORT, "firstlock", 0, set_port_flag },
 	{ MODE_PORT, "-firstlock", 0, set_port_flag },
+	{ MODE_PORT, "droptagged", 0, set_port_flag },
+	{ MODE_PORT, "-droptagged", 0, set_port_flag },
 	{ MODE_PORT, "dropuntagged", 0, set_port_flag },
 	{ MODE_PORT, "-dropuntagged", 0, set_port_flag },
 	{ MODE_CONFIG, "vlan_mode", 1, set_vlan_mode },

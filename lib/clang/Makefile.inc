@@ -1,4 +1,4 @@
-# $FreeBSD: 3d49ea44c9918c7dd6e014b9a2c21fadb99b78a5 $
+# $FreeBSD: 6500e91eaac1724139c9d2f1695d066f6068dab5 $
 
 .include <bsd.compiler.mk>
 
@@ -9,3 +9,5 @@ DEBUG_FILES_CFLAGS= -gline-tables-only
 .else
 DEBUG_FILES_CFLAGS= -g1
 .endif
+
+WARNS?=		0

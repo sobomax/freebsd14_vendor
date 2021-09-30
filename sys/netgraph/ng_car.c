@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 897576349b22b7fafc5a259e123323600827fab4 $
+ * $FreeBSD: 1f74c4b193d0243f59b99476c38d2f94e1f3ac39 $
  */
 
 /*
@@ -286,7 +286,7 @@ ng_car_rcvdata(hook_p hook, item_p item )
 		default:				\
 			/* Drop packet and return. */	\
 			NG_FREE_ITEM(item);		\
-			++hinfo->stats.droped_pkts;	\
+			++hinfo->stats.dropped_pkts;	\
 			return (0);			\
 		}					\
 	} while (0)
@@ -305,7 +305,6 @@ ng_car_rcvdata(hook_p hook, item_p item )
 		hinfo->tc -= len;
 		NG_CAR_PERFORM_MATCH_ACTION(hinfo->conf.green_action);
 	} else {
-
 		/* Refill only if not green without it. */
 		ng_car_refillhook(hinfo);
 
@@ -673,7 +672,6 @@ ng_car_q_event(node_p node, hook_p hook, void *arg, int arg2)
 
 	/* If we have some tokens */
 	while (hinfo->tc >= 0) {
-
 		/* Send packet. */
 		m = hinfo->q[hinfo->q_first];
 		NG_SEND_DATA_ONLY(error, hinfo->dest, m);
@@ -730,7 +728,7 @@ ng_car_enqueue(struct hookinfo *hinfo, item_p item)
 	    (hinfo->te + len >= NG_CAR_QUEUE_SIZE)) {
 		/* Drop packet. */
 		++hinfo->stats.red_pkts;
-		++hinfo->stats.droped_pkts;
+		++hinfo->stats.dropped_pkts;
 		NG_FREE_M(m);
 
 		hinfo->te = 0;

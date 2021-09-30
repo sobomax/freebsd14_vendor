@@ -1,4 +1,4 @@
-# $FreeBSD: 9b687c6d5fed35422d7810dae2174ccf5b8fa3ef $
+# $FreeBSD: 21feba9dce0592e41edf23d056c0c3f46aaa34ec $
 
 .include <bsd.own.mk>
 
@@ -19,8 +19,12 @@ CLEANFILES+=	h_nonexec
 
 .include "../../Makefile.netbsd-tests"
 
+# The dd status=none option is non-standard. Only use it when this test succeeds
+# rather than require dd to be a bootstrap tool.
+DD_NOSTATUS!=(dd status=none count=0 2> /dev/null && echo status=none) || true
+DD=dd ${DD_NOSTATUS}
 h_zero:
-	dd if=/dev/zero of=h_zero bs=1k count=2 status=none
+	${DD} if=/dev/zero of=h_zero bs=1k count=2
 	chmod a+x h_zero
 
 CLEANFILES+=	h_zero

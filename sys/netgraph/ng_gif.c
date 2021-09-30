@@ -64,7 +64,7 @@
  * THIS SOFTWARE, EVEN IF WHISTLE COMMUNICATIONS IS ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: 69401a3344fbb42d98e101b200c78bab13b82d19 $
+ * $FreeBSD: d4cb8922d1d64bc9185126feae7af20d650d17bf $
  */
 
 /*
@@ -593,4 +593,3 @@ ng_gif_mod_event(module_t mod, int event, void *data)
 	}
 	return (error);
 }
-

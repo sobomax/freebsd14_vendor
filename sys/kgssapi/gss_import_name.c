@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bed965f190c5de848741e1f82ac54f8dcc74999 $");
+__FBSDID("$FreeBSD: 7200cc90354e570904a7efa67788b277604d12ab $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -63,7 +63,7 @@ gss_import_name(OM_uint32 *minor_status,
 
 	args.input_name_buffer = *input_name_buffer;
 	args.input_name_type = input_name_type;
-	
+
 	bzero(&res, sizeof(res));
 	stat = gssd_import_name_1(&args, &res, cl);
 	CLNT_RELEASE(cl);

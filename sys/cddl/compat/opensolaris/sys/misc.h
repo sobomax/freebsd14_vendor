@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e128ce06d16512d851069965910c4bea0fdc1c5a $
+ * $FreeBSD: b2230da24e7aa9dfadf2a03daa9ca5c6247e3900 $
  */
 
 #ifndef _OPENSOLARIS_SYS_MISC_H_
@@ -55,7 +55,6 @@ struct opensolaris_utsname {
 };
 
 extern char hw_serial[11];
-extern struct opensolaris_utsname utsname;
 #endif
 
 #endif	/* _OPENSOLARIS_SYS_MISC_H_ */

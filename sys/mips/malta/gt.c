@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e56df251c8460f98b2a6400f58e6c9409654c048 $");
+__FBSDID("$FreeBSD: fb6b0f5b344fffc4115201119ce43dd0ba5ed182 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,6 @@ gt_attach(device_t dev)
 	bus_generic_probe(dev);
 	bus_generic_attach(dev);
 
-
 	return (0);
 }
 
@@ -82,7 +81,7 @@ gt_alloc_resource(device_t dev, device_t child, int type, int *rid,
 {
 	return (BUS_ALLOC_RESOURCE(device_get_parent(dev), child,
 		    type, rid, start, end, count, flags));
-	
+
 }
 
 static int

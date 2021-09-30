@@ -1,11 +1,10 @@
 # $Id: Makefile,v 1.5 2003/09/08 02:28:35 max Exp $
-# $FreeBSD: c380fc77d6ec6b673aef332b1fa4c50a4c1f9945 $
+# $FreeBSD: 5868ffe90747147781b03cdd7ac0f7a52e8fb1a7 $
 
 .include <src.opts.mk>
 
 SUBDIR= \
 	bluetooth-config \
-	bt3cfw \
 	btpand \
 	hccontrol \
 	hcsecd \

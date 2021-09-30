@@ -38,7 +38,7 @@
  * Author: Archie Cobbs <archie@freebsd.org>
  *
  * $Whistle: ng_parse.h,v 1.2 1999/11/29 01:43:48 archie Exp $
- * $FreeBSD: c17feaf458e76971678ca47ed73e7fea2745599f $
+ * $FreeBSD: e1b6c399e8d2611a480cd2febc6fe7ede7a4fca7 $
  */
 
 #ifndef _NETGRAPH_NG_PARSE_H_
@@ -109,7 +109,6 @@
 
 	ASCII value
 	-----------
-
 	{ ip=1.2.3.4 label="abc\n" alen=3 ary=[ 5 2=10 ] }
 
     Note that omitted fields and array elements get their default
@@ -537,4 +536,3 @@ extern char	*ng_get_string_token(const char *s, int *startp,
 extern char	*ng_encode_string(const char *s, int slen);
 
 #endif /* _NETGRAPH_NG_PARSE_H_ */
-

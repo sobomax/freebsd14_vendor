@@ -1,4 +1,4 @@
-# $FreeBSD: 671db88a14a9a6c36cab1e5061f9892108fc98c2 $
+# $FreeBSD: 8b632ae3d076e44507cbb0acb0c67329825bd37f $
 
 LOADER_CD9660_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	no
@@ -19,7 +19,10 @@ INSTALLFLAGS=	-b
 # Architecture-specific loader code
 SRCS=		conf.c vers.c main.c ppc64_elf_freebsd.c
 SRCS+=		host_syscall.S hostcons.c hostdisk.c kerneltramp.S kbootfdt.c
-SRCS+=		ucmpdi2.c
+SRCS+=		ucmpdi2.c gfx_fb.c
+
+CFLAGS.gfx_fb.c += -I${SRCTOP}/contrib/pnglite
+CFLAGS.gfx_fb.c += -I${SRCTOP}/sys/teken
 
 .include	"${BOOTSRC}/fdt.mk"
 

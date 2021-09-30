@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
  *
- * $FreeBSD: 84507b1929dc91332586993f81ea30230b58dc6c $
+ * $FreeBSD: 82c5ea42b175d153b82b9d7e30f9317f1dd17f43 $
  *
  */
 
@@ -44,4 +44,4 @@ void	c_special(int, const char *, off_t, int, const char *, off_t);
 void	diffmsg(const char *, const char *, off_t, off_t);
 void	eofmsg(const char *);
 
-extern int lflag, sflag, xflag, zflag;
+extern bool lflag, sflag, xflag, zflag;

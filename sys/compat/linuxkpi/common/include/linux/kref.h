@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cfc5c0231e231d296b2d110f4af6298a7f38643f $
+ * $FreeBSD: d5b45ba59313489c7aa3c689378b7b2f0d2494f5 $
  */
 #ifndef _LINUX_KREF_H_
 #define _LINUX_KREF_H_
@@ -90,7 +90,6 @@ kref_put_lock(struct kref *kref, void (*rel)(struct kref *kref),
 	}
 	return (0);
 }
-
 
 static inline int
 kref_sub(struct kref *kref, unsigned int count,

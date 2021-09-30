@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b7e76bb815e0e5eab78b5a743c95dd44f13b42f7 $");
+__FBSDID("$FreeBSD: de8dce5dac8383e4b4ce977c166d9b07ffd13be7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -251,9 +251,6 @@ arm_tmr_intr(void *arg)
 		sc->et.et_event_cb(&sc->et, sc->et.et_arg);
 	return (FILTER_HANDLED);
 }
-
-
-
 
 /**
  *	arm_tmr_probe - timer probe routine

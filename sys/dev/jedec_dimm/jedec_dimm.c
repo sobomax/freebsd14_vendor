@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e6d421e32ec7d2a8aaa8d1fbb77cd872cd42b5c2 $
+ * $FreeBSD: 884da8b51061da37597c0e313482d801f59602d9 $
  */
 
 /* 
@@ -795,7 +795,7 @@ jedec_dimm_field_to_str(struct jedec_dimm_softc *sc, char *dst, size_t dstsz,
 
 	/* If we're dealing with ASCII, convert trailing spaces to NULs. */
 	if (ascii) {
-		for (i = dstsz; i > 0; i--) {
+		for (i = dstsz - 1; i > 0; i--) {
 			if (dst[i] == ' ') {
 				dst[i] = 0;
 			} else if (dst[i] == 0) {

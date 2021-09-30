@@ -1,8 +1,25 @@
-# $FreeBSD: 26a023c536f3a6def8a8ad99862a037d29110bdc $
+# $FreeBSD: b5f1e552c4650e194bfd0612c7983b7ec989a8af $
 
 .PATH: ${SRCTOP}/sys/libkern
+.PATH: ${SRCTOP}/sys/dev/zlib
+.PATH: ${SRCTOP}/sys/contrib/zlib
 
 KMOD=	zlib
-SRCS=	zlib.c
+SRCS+=	zcalloc.c
+SRCS+=	zlib_mod.c
+SRCS+=	adler32.c
+SRCS+=	compress.c
+SRCS+=	crc32.c
+SRCS+=	deflate.c
+SRCS+=	inffast.c
+SRCS+=	inflate.c
+SRCS+=	inftrees.c
+SRCS+=	trees.c
+SRCS+=	uncompr.c
+SRCS+=	zutil.c
+
+CWARNFLAGS.compress.c+=-Wno-cast-qual # compress:49
+CWARNFLAGS.deflate.c+=-Wno-cast-qual # deflate.c:415
+CWARNFLAGS.uncompr.c+=-Wno-cast-qual # uncompr:49
 
 .include <bsd.kmod.mk>

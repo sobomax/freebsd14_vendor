@@ -1,5 +1,5 @@
 #	$OpenBSD: Makefile,v 1.13 2014/05/12 19:11:19 espie Exp $
-# $FreeBSD: e722d014eebf834648d7bb74487abe4bbd7bd1c7 $
+# $FreeBSD: 25c83c093f5f063b9514d7144d18f23c98c99467 $
 
 # -DEXTENDED 
 # 	if you want the paste & spaste macros.
@@ -12,13 +12,21 @@ LIBADD=	m openbsd
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
-SRCS=	eval.c expr.c look.c main.c misc.c gnum4.c trace.c parser.y tokenizer.l
+SRCS=	eval.c expr.c look.c main.c misc.c gnum4.c trace.c parser.y
+.if target(bootstrap_m4_tokenizer)
+# When crossbuilding on non-FreeBSD we need to first build m4 with pre-generated
+# tokenizer files and the build the real m4 once we have lex+yacc.
+SRCS+=	tokenizer.c
+.else
+SRCS+=	tokenizer.l
+.endif
 
-WARNS=	3
+GENFILES=	tokenizer.c parser.c parser.h
+WARNS?=	3
 
 tokenizer.o: parser.h
 
-CLEANFILES+=	parser.c parser.h tokenizer.o
+CLEANFILES+=	parser.c parser.h tokenizer.o tokenizer.c
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

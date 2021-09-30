@@ -30,7 +30,7 @@
 
 /* TCP MD5 Signature Option (RFC2385) */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4979182b470770042f06d5ffc5a0638f6d031b6 $");
+__FBSDID("$FreeBSD: 54681f7df5d21b91b372fdbb6105c3904de35cc8 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -361,21 +361,16 @@ tcpsignature_init(struct secasvar *sav, struct xformsw *xsp)
 /*
  * Called when the SA is deleted.
  */
-static int
-tcpsignature_zeroize(struct secasvar *sav)
+static void
+tcpsignature_cleanup(struct secasvar *sav)
 {
-
-	if (sav->key_auth != NULL)
-		bzero(sav->key_auth->key_data, _KEYLEN(sav->key_auth));
-	sav->tdb_xform = NULL;
-	return (0);
 }
 
 static struct xformsw tcpsignature_xformsw = {
 	.xf_type =	XF_TCPSIGNATURE,
 	.xf_name =	"TCP-MD5",
 	.xf_init =	tcpsignature_init,
-	.xf_zeroize =	tcpsignature_zeroize,
+	.xf_cleanup =	tcpsignature_cleanup,
 };
 
 static const struct tcpmd5_methods tcpmd5_methods = {

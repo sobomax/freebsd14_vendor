@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1f6397a92f577936743a67b4d8eefd6203ba906 $");
+__FBSDID("$FreeBSD: c9ce5e33b723c74b2c02826271a170529035b1aa $");
 
 int	write_init(int fd, FILE *f, const char *mode);
 size_t	write_file(char *buffer, int count);
@@ -35,5 +35,8 @@ int	write_close(void);
 int	read_init(int fd, FILE *f, const char *mode);
 size_t	read_file(char *buffer, int count);
 int	read_close(void);
+
+int	seek_file(off_t offset);
+off_t	tell_file(void);
 
 int	synchnet(int peer);

@@ -30,7 +30,7 @@
 #define _NET_NETMAP_LEGACY_H_
 
 /*
- * $FreeBSD: 115a09e5fbaf52fb4c027a3f429424f63b31068b $
+ * $FreeBSD: ba0ffa980285fe84c0a684002613ef87d496dca1 $
  *
  * ioctl names and related fields
  *
@@ -144,7 +144,6 @@
  *
  */
 
-
 /*
  * struct nmreq overlays a struct ifreq (just the name)
  */
@@ -215,7 +214,6 @@ struct nmreq {
 /* and also two setsockopt for sysctl emulation */
 #define NETMAP_SETSOCKOPT _IO('i', 140)
 #define NETMAP_GETSOCKOPT _IO('i', 141)
-
 
 /* These linknames are for the Netmap Core Driver */
 #define NETMAP_NT_DEVICE_NAME			L"\\Device\\NETMAP"

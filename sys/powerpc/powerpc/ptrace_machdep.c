@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74cb0aedc01ff65167dc68dea39d875a4c0f6f8a $");
+__FBSDID("$FreeBSD: 1d80c56cdefaece594a444d0549bb842cb69b039 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,6 +39,12 @@ __FBSDID("$FreeBSD: 74cb0aedc01ff65167dc68dea39d875a4c0f6f8a $");
 #include <machine/cpu.h>
 #include <machine/md_var.h>
 #include <machine/pcb.h>
+
+#ifdef __SPE__
+#define	PPC_FEATURE_VECTOR	PPC_FEATURE_HAS_SPE
+#else
+#define	PPC_FEATURE_VECTOR	PPC_FEATURE_HAS_ALTIVEC
+#endif
 
 int
 cpu_ptrace(struct thread *td, int req, void *addr, int data)
@@ -58,7 +64,7 @@ cpu_ptrace(struct thread *td, int req, void *addr, int data)
 	error = EINVAL;
 	switch (req) {
 	case PT_GETVRREGS:
-		if (!(cpu_features & PPC_FEATURE_HAS_ALTIVEC))
+		if (!(cpu_features & PPC_FEATURE_VECTOR))
 			break;
 
 		if (pcb->pcb_flags & PCB_VEC) {
@@ -68,7 +74,7 @@ cpu_ptrace(struct thread *td, int req, void *addr, int data)
 		error = copyout(&vec, addr, sizeof(vec));
 		break;
 	case PT_SETVRREGS:
-		if (!(cpu_features & PPC_FEATURE_HAS_ALTIVEC))
+		if (!(cpu_features & PPC_FEATURE_VECTOR))
 			break;
 		error = copyin(addr, &vec, sizeof(vec));
 		if (error == 0) {

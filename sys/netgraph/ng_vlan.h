@@ -28,7 +28,7 @@
  *
  * Author: Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: 5cc580ad57789aa1c93b702fe70861a999fa18cf $
+ * $FreeBSD: fd7442e680c6fa853720e93781140aaaf9925691 $
  */
 
 #ifndef _NETGRAPH_NG_VLAN_H_
@@ -92,7 +92,6 @@ struct ng_vlan_filter {
 	{ NULL }						\
 }
 #endif
-
 
 /* Structure returned by NGM_VLAN_GET_TABLE. */
 struct ng_vlan_table {

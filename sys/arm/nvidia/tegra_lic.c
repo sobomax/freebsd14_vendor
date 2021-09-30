@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b029913cd07485bede429f6b7ac4c3905b7c5a86 $");
+__FBSDID("$FreeBSD: d457bd4b0f73e951fcfbaa31639036096c4a7c5b $");
 
 /*
  * Local interrupt controller driver for Tegra SoCs.
@@ -38,7 +38,7 @@ __FBSDID("$FreeBSD: b029913cd07485bede429f6b7ac4c3905b7c5a86 $");
 #include <sys/kernel.h>
 #include <sys/rman.h>
 
-#include <machine/fdt.h>
+#include <machine/bus.h>
 #include <machine/intr.h>
 #include <machine/resource.h>
 
@@ -78,6 +78,7 @@ static struct resource_spec lic_spec[] = {
 
 static struct ofw_compat_data compat_data[] = {
 	{"nvidia,tegra124-ictlr", 	1},
+	{"nvidia,tegra210-ictlr", 	1},
 	{NULL,				0}
 };
 
@@ -156,7 +157,6 @@ tegra_lic_pre_ithread(device_t dev, struct intr_irqsrc *isrc)
 	PIC_PRE_ITHREAD(sc->parent, isrc);
 }
 
-
 static void
 tegra_lic_post_ithread(device_t dev, struct intr_irqsrc *isrc)
 {
@@ -231,7 +231,6 @@ tegra_lic_attach(device_t dev)
 		WR4(sc, i, LIC_CPU_IER_CLR, 0xFFFFFFFF);
 		WR4(sc, i, LIC_CPU_IEP_CLASS, 0);
 	}
-
 
 	if (intr_pic_register(dev, OF_xref_from_node(node)) == NULL) {
 		device_printf(dev, "Cannot register PIC\n");

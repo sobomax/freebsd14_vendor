@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: 8800b355c9a1cc436dcbda64a9fbbf07548d957a $
+ * $FreeBSD: 6ce6d9728366fe07830218fd233b61ba97423f71 $
  */
 
 #ifndef _AMD64_PCB_H_
@@ -84,6 +84,7 @@ struct pcb {
 #define	PCB_KERNFPU	0x04	/* kernel uses fpu */
 #define	PCB_FPUINITDONE	0x08	/* fpu state is initialized */
 #define	PCB_USERFPUINITDONE 0x10 /* fpu user state is initialized */
+#define	PCB_KERNFPU_THR	0x20	/* fpu_kern_thread() */
 #define	PCB_32BIT	0x40	/* process has 32 bit context (segs etc) */
 #define	PCB_FPUNOSAVE	0x80	/* no save area for current FPU ctx */
 

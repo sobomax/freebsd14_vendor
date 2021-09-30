@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0d4aca5082f4af1a5bf98aaae95fd888c2f66b54 $
+ * $FreeBSD: 078a13c137963236c3ed8236213b8f3e9f31d1f5 $
  */
 
 #ifndef	_MACHINE_PCB_H_
@@ -42,7 +42,6 @@
 
 #include <machine/frame.h>
 #include <machine/vfp.h>
-
 
 /*
  * WARNING!

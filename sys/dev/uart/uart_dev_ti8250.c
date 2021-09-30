@@ -29,7 +29,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f5a230908da3acdfe7de5f8e85878b084f152f43 $");
+__FBSDID("$FreeBSD: ebe777ed7fdb7327d175fa59d9b577d7726a38f9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,9 +38,6 @@ __FBSDID("$FreeBSD: f5a230908da3acdfe7de5f8e85878b084f152f43 $");
 #include <sys/kernel.h>
 #include <sys/sysctl.h>
 #include <machine/bus.h>
-
-#include <arm/ti/ti_prcm.h>
-#include <arm/ti/ti_hwmods.h>
 
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
@@ -51,6 +48,8 @@ __FBSDID("$FreeBSD: f5a230908da3acdfe7de5f8e85878b084f152f43 $");
 #include <dev/uart/uart_cpu_fdt.h>
 #include <dev/uart/uart_bus.h>
 #include <dev/uart/uart_dev_ns8250.h>
+
+#include <arm/ti/ti_sysc.h>
 
 #include "uart_if.h"
 
@@ -74,16 +73,8 @@ static int
 ti8250_bus_probe(struct uart_softc *sc)
 {
 	int status;
-	clk_ident_t clkid;
 
-	/* Enable clocks for this device.  We can't continue if that fails.  */
-	clkid = ti_hwmods_get_clock(sc->sc_dev);
-	if (clkid == INVALID_CLK_IDENT) {
-		device_printf(sc->sc_dev,
-		    "failed to get clock based on hwmods\n");
-		clkid = UART1_CLK + device_get_unit(sc->sc_dev);
-	}
-	if ((status = ti_prcm_clk_enable(clkid)) != 0)
+	if ((status = ti_sysc_clock_enable(device_get_parent(sc->sc_dev))) != 0)
 		return (status);
 
 	/*

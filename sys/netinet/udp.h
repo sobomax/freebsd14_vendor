@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 7c08135d02cf314cc01603ee229bb7855f794509 $
+ * $FreeBSD: 263a64fbe5887a4f2cd9f44e36eb932ca52ac973 $
  */
 
 #ifndef _NETINET_UDP_H_
@@ -47,7 +47,7 @@ struct udphdr {
 	u_short	uh_sum;			/* udp checksum */
 };
 
-/* 
+/*
  * User-settable options (used with setsockopt).
  */
 #define	UDP_ENCAP			1

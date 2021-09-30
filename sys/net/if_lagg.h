@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 1f80cbf5841254f10968d459996cb340a027c14f $
+ * $FreeBSD: 94f3487af6f7f2219161842099ddd8cdd46e4f43 $
  */
 
 #ifndef _NET_LAGG_H
@@ -71,6 +71,33 @@ struct lagg_protos {
 	{ "none",		LAGG_PROTO_NONE },			\
 	{ "default",		LAGG_PROTO_DEFAULT }			\
 }
+
+/* Supported lagg TYPEs */
+typedef enum {
+	LAGG_TYPE_ETHERNET = 0, /* ethernet (default) */
+	LAGG_TYPE_INFINIBAND,	/* infiniband */
+	LAGG_TYPE_MAX,
+} lagg_type;
+
+struct lagg_types {
+	const char		*lt_name;
+	lagg_type		lt_value;
+};
+
+#define	LAGG_TYPE_DEFAULT	LAGG_TYPE_ETHERNET
+#define LAGG_TYPES	{						\
+	{ "ethernet",		LAGG_TYPE_ETHERNET },			\
+	{ "infiniband",		LAGG_TYPE_INFINIBAND },			\
+}
+
+/*
+ * lagg create clone params
+ */
+struct iflaggparam {
+	uint8_t lagg_type;	/* see LAGG_TYPE_XXX */
+	uint8_t reserved_8[3];
+	uint32_t reserved_32[3];
+};
 
 /*
  * lagg ioctls.
@@ -143,6 +170,7 @@ struct lagg_reqopts {
 #define	LAGG_OPT_USE_FLOWID		0x01		/* enable use of flowid */
 /* Pseudo flags which are used in ro_opts but not stored into sc_opts. */
 #define	LAGG_OPT_FLOWIDSHIFT		0x02		/* set flowid shift */
+#define	LAGG_OPT_USE_NUMA		0x04		/* enable use of numa */
 #define	LAGG_OPT_FLOWIDSHIFT_MASK	0x1f		/* flowid is uint32_t */
 #define	LAGG_OPT_LACP_STRICT		0x10		/* LACP strict mode */
 #define	LAGG_OPT_LACP_TXTEST		0x20		/* LACP debug: txtest */
@@ -159,9 +187,9 @@ struct lagg_reqopts {
 #define	SIOCGLAGGOPTS		_IOWR('i', 152, struct lagg_reqopts)
 #define	SIOCSLAGGOPTS		 _IOW('i', 153, struct lagg_reqopts)
 
-#define	LAGG_OPT_BITS		"\020\001USE_FLOWID\005LACP_STRICT" \
-				"\006LACP_TXTEST\007LACP_RXTEST" \
-				"\010LACP_FAST_TIMO"
+#define	LAGG_OPT_BITS		"\020\001USE_FLOWID\003USE_NUMA" \
+				"\005LACP_STRICT\006LACP_TXTEST" \
+				"\007LACP_RXTEST\010LACP_FAST_TIMO"
 
 #ifdef _KERNEL
 
@@ -205,7 +233,7 @@ struct lagg_counters {
 
 struct lagg_softc {
 	struct ifnet			*sc_ifp;	/* virtual interface */
-	struct rmlock			sc_mtx;
+	struct mtx			sc_mtx;		/* watchdog mutex */
 	struct sx			sc_sx;
 	int				sc_proto;	/* lagg protocol */
 	u_int				sc_count;	/* number of ports */
@@ -229,12 +257,16 @@ struct lagg_softc {
 	u_int				sc_opts;
 	int				flowid_shift;	/* shift the flowid */
 	struct lagg_counters		detached_counters; /* detached ports sum */
+	struct callout			sc_watchdog;	/* watchdog timer */
+#define	LAGG_ADDR_LEN \
+	MAX(INFINIBAND_ADDR_LEN, ETHER_ADDR_LEN)
+	uint8_t				sc_bcast_addr[LAGG_ADDR_LEN];
 };
 
 struct lagg_port {
 	struct ifnet			*lp_ifp;	/* physical interface */
 	struct lagg_softc		*lp_softc;	/* parent lagg */
-	uint8_t				lp_lladdr[ETHER_ADDR_LEN];
+	uint8_t				lp_lladdr[LAGG_ADDR_LEN];
 
 	u_char				lp_iftype;	/* interface type */
 	uint32_t			lp_prio;	/* port priority */
@@ -256,7 +288,8 @@ struct lagg_port {
 	struct epoch_context	lp_epoch_ctx;
 };
 
-extern struct mbuf *(*lagg_input_p)(struct ifnet *, struct mbuf *);
+extern struct mbuf *(*lagg_input_ethernet_p)(struct ifnet *, struct mbuf *);
+extern struct mbuf *(*lagg_input_infiniband_p)(struct ifnet *, struct mbuf *);
 extern void	(*lagg_linkstate_p)(struct ifnet *, int );
 
 int		lagg_enqueue(struct ifnet *, struct mbuf *);

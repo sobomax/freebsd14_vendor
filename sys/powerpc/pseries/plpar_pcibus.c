@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8bb4a51d1005036d977b291179b1c2f7013d1048 $");
+__FBSDID("$FreeBSD: 23abb4acd53bcbc3da504b9cbb0bd0eb6f3611d3 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -78,7 +78,7 @@ static int
 plpar_pcibus_probe(device_t dev)
 {
 	phandle_t rtas;
- 
+
 	if (ofw_bus_get_node(dev) == -1 || !rtas_exists())
 		return (ENXIO);
 
@@ -112,4 +112,3 @@ plpar_pcibus_get_dma_tag(device_t dev, device_t child)
 
 	return (dinfo->opd_dma_tag);
 }
-

@@ -1,9 +1,10 @@
-# $FreeBSD: ad652333c753676b605474320a2d3b4d69392d41 $
+# $FreeBSD: eda50e222d2e581b7cd2d1d3ba905aa6cd0e8f82 $
 
 .include "../Makefile.inc"
 
 .PATH.c:${HOSTAPD_DISTDIR}
 
+PACKAGE=	hostapd
 PROG=	hostapd_cli
 SRCS=	cli.c common.c edit.c eloop.c hostapd_cli.c os_unix.c \
 	wpa_ctrl.c wpa_debug.c

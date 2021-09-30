@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: fpu.h,v 1.2 1999/12/07 15:14:56 danw Exp $
- * $FreeBSD: 1fb07c6cc59963593d03020162556433fb088365 $
+ * $FreeBSD: 19f0cb0c9a652f9ec177d6c129c625ed9ff73bae $
  */
 
 #ifndef	_MACHINE_FPU_H_
@@ -75,6 +75,8 @@
 void    enable_fpu(struct thread *);
 void    save_fpu(struct thread *);
 void    save_fpu_nodrop(struct thread *);
+void    cleanup_fpscr(void);
+u_int   get_fpu_exception(struct thread *);
 
 #endif /* _KERNEL */
 

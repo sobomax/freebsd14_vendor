@@ -1,4 +1,4 @@
-/* $FreeBSD: 9767cf76d24ba028aec1971a33a109a7a69ca163 $ */
+/* $FreeBSD: 37495608a30d1a1dbe566e3a1bb20f896e452eec $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -91,7 +91,8 @@ static int usb_pcount;
 #ifdef USB_DEBUG
 static int usb_proc_debug;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, proc, CTLFLAG_RW, 0, "USB process");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, proc, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB process");
 SYSCTL_INT(_hw_usb_proc, OID_AUTO, debug, CTLFLAG_RWTUN, &usb_proc_debug, 0,
     "Debug level");
 #endif
@@ -122,7 +123,6 @@ usb_process(void *arg)
 	up->up_curtd = td;
 
 	while (1) {
-
 		if (up->up_gone)
 			break;
 
@@ -449,7 +449,6 @@ usb_proc_drain(struct usb_process *up)
 	up->up_gone = 1;
 
 	while (up->up_ptr) {
-
 		/* Check if we need to wakeup the USB process */
 
 		if (up->up_msleep || up->up_csleep) {

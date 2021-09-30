@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 22727181d882976726b7b5740250bbd4bdb48ef3 $
+.\" $FreeBSD: abd306ab70af27b6b76425e4d056b0c748370b06 $
 .\"
 .Dd January 18, 2019
 .Dt TRIM 8
@@ -60,10 +60,12 @@ The following options are available:
 Do not actually erase anything but show what it would do (dry run).
 Implies
 .Fl v .
-This is the default. Overrides
+This is the default.
+Overrides
 .Fl f .
 .It Fl f
-Perform the operation. Overrides
+Perform the operation.
+Overrides
 .Fl N .
 .It Fl l Xo
 .Sm off
@@ -150,11 +152,11 @@ is special device file not supporting DIOCGMEDIASIZE
 (probably not a disk), so its size cannot be examined.
 .El
 .Sh SEE ALSO
+.Xr ioctl 2 ,
+.Xr sysexits 3 ,
 .Xr ada 4 ,
 .Xr da 4 ,
-.Xr ioctl 2 ,
-.Xr nda 4 ,
-.Xr sysexits 3
+.Xr nda 4
 .Sh HISTORY
 The
 .Nm

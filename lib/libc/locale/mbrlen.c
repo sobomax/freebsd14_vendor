@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f84fce7b61b0a2437f51ab135021e8ac957bdf41 $");
+__FBSDID("$FreeBSD: 4f687e98628f1b7ed46eabd17983b04546b0f278 $");
 
 #include <wchar.h>
 #include "mblocal.h"
@@ -42,7 +42,7 @@ mbrlen_l(const char * __restrict s, size_t n, mbstate_t * __restrict ps, locale_
 {
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->mbrlen;
+		ps = &(XLOCALE_CTYPE(locale)->mbrlen);
 	return (XLOCALE_CTYPE(locale)->__mbrtowc(NULL, s, n, ps));
 }
 

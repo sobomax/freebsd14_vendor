@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 3df53f05d390d2efa01af741e741eee213aa5650 $
+# $FreeBSD: 6e6a3f42f72338bbd269665e4142c0976b659ab9 $
 
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/string ${LIBC_SRCTOP}/string
 .PATH: ${SRCTOP}/sys/libkern
@@ -64,6 +64,7 @@ MLINKS+=strcpy.3 stpcpy.3 \
 	strcpy.3 strncpy.3
 MLINKS+=strdup.3 strndup.3
 MLINKS+=strerror.3 perror.3 \
+	strerror.3 strerror_l.3 \
 	strerror.3 strerror_r.3 \
 	strerror.3 sys_errlist.3 \
 	strerror.3 sys_nerr.3

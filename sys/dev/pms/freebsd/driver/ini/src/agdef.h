@@ -18,7 +18,7 @@
 *WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 *THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: a07d97357fd3498c4b9f72d883b574ea9c4604c5 $
+* $FreeBSD: b58741a434c7755e5c54270bed065407b1e3b35a $
 *
 **
 *******************************************************************************/
@@ -62,7 +62,7 @@ EW     09-17-2004     1.0.0     Constant definitions
 #define AGTIAPI_MAX_DEVICE_7H       256 /*Max devices per channel in 7H */
 #define AGTIAPI_MAX_DEVICE_8H       512 /*Max devices per channel in 8H*/
 #define AGTIAPI_MAX_CAM_Q_DEPTH     1024
-#define AGTIAPI_NSEGS               (MAXPHYS / PAGE_SIZE)
+#define AGTIAPI_NSEGS               (MIN(btoc(maxphys), 64) + 1)
 /*
 ** Adapter specific defines 
 */

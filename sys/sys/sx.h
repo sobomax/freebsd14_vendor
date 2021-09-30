@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: 817f0f97d38c2f818398397d4dc30e1718bd9576 $
+ * $FreeBSD: 1e6b9f3f8a46c283141eac3555794c5729e2e4a7 $
  */
 
 #ifndef	_SYS_SX_H_
@@ -273,7 +273,6 @@ __sx_xunlock(struct sx *sx, struct thread *td, const char *file, int line)
 #define	SX_NOPROFILE		0x02
 #define	SX_NOWITNESS		0x04
 #define	SX_QUIET		0x08
-#define	SX_NOADAPTIVE		0x10
 #define	SX_RECURSE		0x20
 #define	SX_NEW			0x40
 
@@ -300,5 +299,27 @@ __sx_xunlock(struct sx *sx, struct thread *td, const char *file, int line)
 #endif
 
 #endif /* _KERNEL */
+
+#ifdef _STANDALONE
+/* since we have no threads in the boot loader, trivially implement no-op version */
+#define sx_xlock(s) (1)
+#define sx_try_xlock(s) (1)
+#define sx_xunlock(s) (1)
+#define SX_DUPOK 0
+#define SX_NEW 0
+#define SX_NOWITNESS 0
+
+static __inline void
+sx_init_flags(struct sx *sx, const char *description, int opts)
+{
+
+}
+
+static __inline void
+sx_destroy(struct sx *sx)
+{
+
+}
+#endif /* _STANDALONE */
 
 #endif /* !_SYS_SX_H_ */

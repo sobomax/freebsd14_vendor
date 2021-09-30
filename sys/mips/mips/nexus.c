@@ -39,7 +39,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3503e6d1a232e80bff392a6a096cd500b968c2ba $");
+__FBSDID("$FreeBSD: 46e7f18310298dca358dd3fa8addb2ea05969402 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -77,7 +77,7 @@ __FBSDID("$FreeBSD: 3503e6d1a232e80bff392a6a096cd500b968c2ba $");
 #endif  /* NEXUS_DEBUG */
 
 #ifdef INTRNG
-#define	NUM_MIPS_IRQS	NIRQ	/* Any INTRNG-mapped IRQ */
+#define	NUM_MIPS_IRQS	intr_nirq	/* Any INTRNG-mapped IRQ */
 #else
 #define	NUM_MIPS_IRQS	6	/* HW IRQs only */
 #endif
@@ -163,7 +163,6 @@ static device_method_t nexus_methods[] = {
 	DEVMETHOD(ofw_bus_map_intr,	nexus_ofw_map_intr),
 #endif
 #endif
-
 	{ 0, 0 }
 };
 

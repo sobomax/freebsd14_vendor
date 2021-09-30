@@ -1,5 +1,5 @@
 /*	$NetBSD: instr.h,v 1.4 2005/12/11 12:18:43 christos Exp $ */
-/* $FreeBSD: eb2d09989a53cf8f87c46d15fb31eda61874e1b0 $ */
+/* $FreeBSD: 10893d5964c7c0ddd5a12d896813302ed967a86e $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -48,7 +48,7 @@
  */
 union instr {
 	int	i_int;			/* as a whole */
- 
+
 	/*
 	 * Any instruction type.
 	 */
@@ -155,7 +155,6 @@ union instr {
 		u_int	i_xo:4;
 		u_int	i_rc:1;
 	} i_mds;
-
 
 	/*
 	 * Format S
@@ -385,4 +384,3 @@ union instr {
 #define	FTYPE_INT	0	/* data = 32-bit signed integer */
 #define	FTYPE_SNG	1	/* data = 32-bit float */
 #define	FTYPE_DBL	2	/* data = 64-bit double */
-

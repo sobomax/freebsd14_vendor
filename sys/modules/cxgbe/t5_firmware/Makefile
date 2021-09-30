@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 8c62248bfdca64ccf9a10b8e440001de18c002cc $
+# $FreeBSD: 89106cb4a497e17650f460f633b969572b42acdc $
 #
 
 T5FW=	${SRCTOP}/sys/dev/cxgbe/firmware
@@ -17,7 +17,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T5FW_VER=	1.25.0.0
+T5FW_VER=	1.25.0.40
 FIRMWS+=	t5fw-${T5FW_VER}.bin:t5fw:${T5FW_VER}
 
 .include <bsd.kmod.mk>

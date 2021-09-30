@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fda4a94e02f55bf2266f40fb19cbc9f173ce4819 $");
+__FBSDID("$FreeBSD: 5ce8d7b7bd4888533b2a6349eab83fdf485507a4 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -183,7 +183,7 @@ ofw_bus_status_okay(device_t dev)
 	if (status == NULL || strcmp(status, "okay") == 0 ||
 	    strcmp(status, "ok") == 0)
 		return (1);
-	
+
 	return (0);
 }
 

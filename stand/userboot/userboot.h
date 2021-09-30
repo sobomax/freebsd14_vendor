@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: de0cdb6605c83129e9ae9f1d6d0e567db90b4580 $
+ * $FreeBSD: 810e5b9d3d2463665411b5baf3809a6d3b6f3061 $
  */
 
 /*
@@ -130,6 +130,12 @@ struct loader_callbacks {
          */
 	int		(*diskread)(void *arg, int unit, uint64_t offset,
             void *dst, size_t size, size_t *resid_return);
+
+        /*
+         * Write to a disk image at the given offset
+         */
+	int		(*diskwrite)(void *arg, int unit, uint64_t offset,
+            void *src, size_t size, size_t *resid_return);
 
 	/*
 	 * Guest virtual machine i/o

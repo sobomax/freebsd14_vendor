@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ef15c64db1ec29eca07dd8ad36745813fe2d994 $");
+__FBSDID("$FreeBSD: b544d2975c6aa1948600abb62cef51bcf033285e $");
 
 #include <netinet/sctp_os.h>
 #ifdef INET6
@@ -56,8 +56,6 @@ __FBSDID("$FreeBSD: 6ef15c64db1ec29eca07dd8ad36745813fe2d994 $");
 #include <netinet/sctp_crc32.h>
 #include <netinet/icmp6.h>
 #include <netinet/udp.h>
-
-extern struct protosw inetsw[];
 
 int
 sctp6_input_with_port(struct mbuf **i_pak, int *offp, uint16_t port)
@@ -113,7 +111,7 @@ sctp6_input_with_port(struct mbuf **i_pak, int *offp, uint16_t port)
 		}
 	}
 	ip6 = mtod(m, struct ip6_hdr *);
-	sh = (struct sctphdr *)(mtod(m, caddr_t) + iphlen);
+	sh = (struct sctphdr *)(mtod(m, caddr_t)+iphlen);
 	ch = (struct sctp_chunkhdr *)((caddr_t)sh + sizeof(struct sctphdr));
 	offset -= sizeof(struct sctp_chunkhdr);
 	memset(&src, 0, sizeof(struct sockaddr_in6));
@@ -165,7 +163,6 @@ out:
 	}
 	return (IPPROTO_DONE);
 }
-
 
 int
 sctp6_input(struct mbuf **i_pak, int *offp, int proto SCTP_UNUSED)
@@ -460,15 +457,16 @@ out:
 	return (error);
 }
 
-SYSCTL_PROC(_net_inet6_sctp6, OID_AUTO, getcred, CTLTYPE_OPAQUE | CTLFLAG_RW,
-    0, 0,
-    sctp6_getcred, "S,ucred", "Get the ucred of a SCTP6 connection");
-
+SYSCTL_PROC(_net_inet6_sctp6, OID_AUTO, getcred,
+    CTLTYPE_OPAQUE | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    0, 0, sctp6_getcred, "S,ucred",
+    "Get the ucred of a SCTP6 connection");
 
 /* This is the same as the sctp_abort() could be made common */
 static void
 sctp6_abort(struct socket *so)
 {
+	struct epoch_tracker et;
 	struct sctp_inpcb *inp;
 	uint32_t flags;
 
@@ -477,6 +475,7 @@ sctp6_abort(struct socket *so)
 		SCTP_LTRACE_ERR_RET(inp, NULL, NULL, SCTP_FROM_SCTP6_USRREQ, EINVAL);
 		return;
 	}
+	NET_EPOCH_ENTER(et);
 sctp_must_try_again:
 	flags = inp->sctp_flags;
 #ifdef SCTP_LOG_CLOSING
@@ -505,6 +504,7 @@ sctp_must_try_again:
 			goto sctp_must_try_again;
 		}
 	}
+	NET_EPOCH_EXIT(et);
 	return;
 }
 
@@ -652,7 +652,6 @@ out:
 	return (error);
 }
 
-
 static void
 sctp6_close(struct socket *so)
 {
@@ -668,11 +667,9 @@ sctp6_disconnect(struct socket *so)
 	return (sctp_disconnect(so));
 }
 
-
 int
 sctp_sendm(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
     struct mbuf *control, struct thread *p);
-
 
 static int
 sctp6_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
@@ -764,9 +761,12 @@ connected_type:
 		 * optionaly switch back to this code (by changing back the
 		 * defininitions but this is not advisable.
 		 */
+		struct epoch_tracker et;
 		int ret;
 
+		NET_EPOCH_ENTER(et);
 		ret = sctp_output(inp, inp->pkt, addr, inp->control, p, flags);
+		NET_EPOCH_EXIT(et);
 		inp->pkt = NULL;
 		inp->control = NULL;
 		return (ret);
@@ -778,6 +778,7 @@ connected_type:
 static int
 sctp6_connect(struct socket *so, struct sockaddr *addr, struct thread *p)
 {
+	struct epoch_tracker et;
 	uint32_t vrf_id;
 	int error = 0;
 	struct sctp_inpcb *inp;
@@ -912,8 +913,10 @@ sctp6_connect(struct socket *so, struct sockaddr *addr, struct thread *p)
 	}
 	SCTP_SET_STATE(stcb, SCTP_STATE_COOKIE_WAIT);
 	(void)SCTP_GETTIME_TIMEVAL(&stcb->asoc.time_entered);
+	NET_EPOCH_ENTER(et);
 	sctp_send_initiate(inp, stcb, SCTP_SO_LOCKED);
 	SCTP_TCB_UNLOCK(stcb);
+	NET_EPOCH_EXIT(et);
 	return (error);
 }
 
@@ -1117,7 +1120,6 @@ sctp6_in6getaddr(struct socket *so, struct sockaddr **nam)
 #endif
 	return (error);
 }
-
 
 static int
 sctp6_getpeeraddr(struct socket *so, struct sockaddr **nam)

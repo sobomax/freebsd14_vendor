@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4e97ba6779dfe567cc576120dbd9cf7d5de11d80 $
+ * $FreeBSD: b3788661ae957833fd7e97c5d61a3d5f4eaca07f $
  */
 
 #include <sys/param.h>
@@ -324,6 +324,13 @@ memstat_get_sleeps(const struct memory_type *mtp)
 {
 
 	return (mtp->mt_sleeps);
+}
+
+uint64_t
+memstat_get_xdomain(const struct memory_type *mtp)
+{
+
+	return (mtp->mt_xdomain);
 }
 
 void *

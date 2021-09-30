@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5005afe33592fdbefa4a071c03329498196887a4 $
+ * $FreeBSD: 7243caa256403ded574289cda43281da4ad3996b $
  */
 
 /**
@@ -69,7 +69,6 @@ typedef struct {
 	} rq_cfg[16];
 	uint32_t num_pairs;
 } ocs_hw_mrq_t;
-
 
 #define MAX_TOKENS			256
 #define OCS_HW_MAX_QTOP_ENTRIES	200

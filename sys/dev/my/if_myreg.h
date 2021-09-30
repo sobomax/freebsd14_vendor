@@ -27,7 +27,7 @@
  *
  * Written by: yen_cw@myson.com.tw  available at: http://www.myson.com.tw/
  *
- * $FreeBSD: 27c7f1cdd445cc59f507c5c7dba2b2c6b9a8a69e $
+ * $FreeBSD: a3a723d05322b707ec9982f41aaad801cee41f1b $
  *
  * Myson MTD80x register definitions.
  *
@@ -585,5 +585,3 @@ struct my_softc {
 #define PHY_BMSR_LINKSTAT               0x0004
 #define PHY_BMSR_JABBER                 0x0002
 #define PHY_BMSR_EXTENDED               0x0001
-
-

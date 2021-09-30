@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f2819bb66aa393ebde4d38383af4fcb245c9a776 $");
+__FBSDID("$FreeBSD: 4e1b56d4b2e253605f3a3c29778d865e1818aa3f $");
 
 #include "opt_compat.h"
 
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: f2819bb66aa393ebde4d38383af4fcb245c9a776 $");
 #include <machine/../linux/linux_proto.h>
 #endif
 #include <compat/linux/linux_timer.h>
-
 
 static int
 linux_convert_l_sigevent(struct l_sigevent *l_sig, struct sigevent *sig)

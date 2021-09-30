@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4f4ebf0321189f812a184dfef4e9196a5cd9e4e $");
+__FBSDID("$FreeBSD: 661dcd8c0825ad6f2a1518da1b18b6bb604a3ec0 $");
 
 /*
  * code to manage AT bus
@@ -94,7 +94,6 @@ isa_dma_init(int chan, u_int bouncebufsize, int flag)
 	if (chan & ~VALID_DMA_MASK)
 		panic("isa_dma_init: channel out of range");
 #endif
-
 
 	/* Try malloc() first.  It works better if it works. */
 	buf = malloc(bouncebufsize, M_DEVBUF, flag);
@@ -576,7 +575,7 @@ static int
 atdma_probe(device_t dev)
 {
 	int result;
-	
+
 	if ((result = ISA_PNP_PROBE(device_get_parent(dev), dev, atdma_ids)) <= 0)
 		device_quiet(dev);
 	return(result);

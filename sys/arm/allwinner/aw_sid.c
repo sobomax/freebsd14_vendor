@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 15b497ed27d74abc29475f4251e51944369d9258 $
+ * $FreeBSD: 4c949770d58fdb5306834ae9cc89d51985ce1906 $
  */
 
 /*
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15b497ed27d74abc29475f4251e51944369d9258 $");
+__FBSDID("$FreeBSD: 4c949770d58fdb5306834ae9cc89d51985ce1906 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -279,7 +278,7 @@ aw_sid_attach(device_t dev)
 		SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 		    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 		    OID_AUTO, sc->sid_conf->efuses[i].name,
-		    CTLTYPE_STRING | CTLFLAG_RD,
+		    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, sc->sid_conf->efuses[i].id, aw_sid_sysctl,
 		    "A", sc->sid_conf->efuses[i].desc);
 	}

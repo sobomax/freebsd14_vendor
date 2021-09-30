@@ -1,4 +1,4 @@
-# $FreeBSD: 94d198bf99003e68e1ab89500a1d5714972bb5d5 $
+# $FreeBSD: cc29e35aa5107be07fb2a5ed38a71b01fc59aed1 $
 
 TESTSDIR=	${TESTSBASE}/sys/kqueue/libkqueue
 BINDIR=		${TESTSDIR}
@@ -16,6 +16,5 @@ SRCS.kqtest=		\
 	proc.c		\
 	signal.c	\
 	user.c
-WARNS?=	2
 
 .include <bsd.test.mk>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c494c2214d1129d7a24981e0d565607ec05674aa $");
+__FBSDID("$FreeBSD: bd2c1dac39239e91d2313d7e348784d63395bd70 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: c494c2214d1129d7a24981e0d565607ec05674aa $");
 #include "nvme_private.h"
 
 struct nvme_io_test_thread {
-
 	uint32_t		idx;
 	struct nvme_namespace	*ns;
 	enum nvme_nvm_opcode	opc;
@@ -59,7 +58,6 @@ struct nvme_io_test_thread {
 };
 
 struct nvme_io_test_internal {
-
 	struct nvme_namespace	*ns;
 	enum nvme_nvm_opcode	opc;
 	struct timeval		start;
@@ -103,7 +101,6 @@ nvme_ns_bio_test(void *arg)
 	offset = idx * 2048ULL * nvme_ns_get_sector_size(io_test->ns);
 
 	while (1) {
-
 		bio = g_alloc_bio();
 
 		memset(bio, 0, sizeof(*bio));

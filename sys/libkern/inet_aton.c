@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79a7b99b95556cb975f37fe79f997c28a7a17ec2 $");
+__FBSDID("$FreeBSD: 0a51041d84cae28848f82b0732f86b6d8b758e05 $");
 
 #include <sys/param.h>
 #include <sys/ctype.h>
@@ -94,12 +94,10 @@ inet_aton(const char *cp, struct in_addr *addr)
 				gotend = 1;
 				break;
 			} else {
-
 				/* Invalid character, then fail. */
 				return (0);
 			}
 		}
-
 	}
 
 	/* Concoct the address according to the number of parts specified. */
@@ -135,4 +133,3 @@ inet_aton(const char *cp, struct in_addr *addr)
 		addr->s_addr = htonl(val);
 	return (1);
 }
-

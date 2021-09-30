@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD: 82a2e31e34e82acb0f29226aa1b780170475e621 $
+ * $FreeBSD: 9fa9bebbc4c05b52cbca84ef36df8d52f31190c0 $
  */
 
 #ifndef _UNISTD_H_
@@ -495,6 +495,7 @@ int	 acct(const char *);
 int	 async_daemon(void);
 int	 check_utility_compat(const char *);
 int	 close_range(unsigned int, unsigned int, int);
+ssize_t	 copy_file_range(int, off_t *, int, off_t *, size_t, unsigned int);
 const char *
 	 crypt_get_format(void);
 char	*crypt_r(const char *, const char *, struct crypt_data *);
@@ -584,6 +585,7 @@ off_t	 __syscall(quad_t, ...);
 int	 undelete(const char *);
 int	 unwhiteout(const char *);
 void	*valloc(size_t);			/* obsoleted by malloc() */
+int	 funlinkat(int, const char *, int, int);
 
 #ifndef _OPTRESET_DECLARED
 #define	_OPTRESET_DECLARED

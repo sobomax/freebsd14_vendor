@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: a1d12559bb782e9929ca3f61a1cb0c769072a3d3 $
+ * $FreeBSD: ce4dc46e16094beb7d4440bf8065d58cb48ac746 $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -37,28 +37,28 @@
 
 typedef int (*pcpu_bp_harden)(void);
 typedef int (*pcpu_ssbd)(int);
+struct debug_monitor_state;
 
 #define	PCPU_MD_FIELDS							\
-	u_int	pc_acpi_id;	/* ACPI CPU id */		\
-	u_int	pc_midr;	/* stored MIDR value */	\
+	u_int	pc_acpi_id;	/* ACPI CPU id */			\
+	u_int	pc_midr;	/* stored MIDR value */			\
 	uint64_t pc_clock;						\
 	pcpu_bp_harden pc_bp_harden;					\
 	pcpu_ssbd pc_ssbd;						\
-	char __pad[225]
+	struct pmap *pc_curpmap;					\
+	struct pmap *pc_curvmpmap;					\
+	u_int	pc_bcast_tlbi_workaround;				\
+	u_int	pc_mpidr;	/* stored MPIDR value */		\
+	char __pad[201]
 
 #ifdef _KERNEL
 
 struct pcb;
 struct pcpu;
 
-static inline struct pcpu *
-get_pcpu(void)
-{
-	struct pcpu *pcpu;
+register struct pcpu *pcpup __asm ("x18");
 
-	__asm __volatile("mov	%0, x18" : "=&r"(pcpu));
-	return (pcpu);
-}
+#define	get_pcpu()	pcpup
 
 static inline struct thread *
 get_curthread(void)
@@ -71,11 +71,11 @@ get_curthread(void)
 
 #define	curthread get_curthread()
 
-#define	PCPU_GET(member)	(get_pcpu()->pc_ ## member)
-#define	PCPU_ADD(member, value)	(get_pcpu()->pc_ ## member += (value))
+#define	PCPU_GET(member)	(pcpup->pc_ ## member)
+#define	PCPU_ADD(member, value)	(pcpup->pc_ ## member += (value))
 #define	PCPU_INC(member)	PCPU_ADD(member, 1)
-#define	PCPU_PTR(member)	(&get_pcpu()->pc_ ## member)
-#define	PCPU_SET(member,value)	(get_pcpu()->pc_ ## member = (value))
+#define	PCPU_PTR(member)	(&pcpup->pc_ ## member)
+#define	PCPU_SET(member,value)	(pcpup->pc_ ## member = (value))
 
 #endif	/* _KERNEL */
 

@@ -43,7 +43,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03d653a459e57d16ef0cf8b757b97a0814ef6b93 $");
+__FBSDID("$FreeBSD: 924496ec7f52693acdf31af4c8b7e9757c87fe00 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -208,7 +208,6 @@ nexus_add_child(device_t bus, u_int order, const char *name, int unit)
 
 	return (child);
 }
-
 
 /*
  * Allocate a resource on behalf of child.  NB: child is usually going to be a
@@ -397,7 +396,6 @@ nexus_set_resource(device_t dev, device_t child, int type, int rid,
 
 	return(0);
 }
-
 
 static int
 nexus_deactivate_resource(device_t bus, device_t child, int type, int rid,

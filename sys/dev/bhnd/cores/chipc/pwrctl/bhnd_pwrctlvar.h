@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 2952bbf7ee9ca83802e74b4acfb33c9c34aab5b6 $
+ * $FreeBSD: 8d3c93ae22a1c116c9efd0651a85d2037808319d $
  */
 
 #ifndef _BHND_PWRCTL_BHND_PWRCTLVAR_H_
@@ -71,8 +71,7 @@ enum {
 	 * Dynamic clock control is not supported on these devices.
 	 */
 	PWRCTL_QUIRK_PCICLK_CTL		= (1 << 1) | PWRCTL_QUIRK_FIXED_CLK,
-	
-	
+
 	/**
 	 * On earliy BCM4311, BCM4321, and BCM4716 PCI(e) devices, no ALP
 	 * clock is available, and the HT clock must be enabled.
@@ -83,7 +82,7 @@ enum {
 	 * ChipCommon revisions 6-9 use the slowclk register layout.
 	 */
 	PWRCTL_QUIRK_SLOWCLK_CTL	= (1 << 3),
-	
+
 	/**
 	 * ChipCommon revisions 10-19 support the instaclk register layout.
 	 */
@@ -99,7 +98,6 @@ struct bhnd_pwrctl_clkres {
 	bhnd_clock	clock;	/**< requested clock */
 	STAILQ_ENTRY(bhnd_pwrctl_clkres) cr_link;
 };
-
 
 /**
  * bhnd pwrctl driver instance state.

@@ -1,4 +1,4 @@
-# $FreeBSD: ed7ebc5351debefdd835484e0dfc86b0f92a8157 $
+# $FreeBSD: 860b327ca7683a4920b28c046f91e2c76bef5fee $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/common/ctf
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libctf/common
@@ -21,6 +21,13 @@ MAN=		ctf.5
 WARNS?=		2
 CFLAGS+=	-DCTF_OLD_VERSIONS
 
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
+CFLAGS+= -DHAVE_ISSETUGID
+
 CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${SRCTOP}/cddl/compat/opensolaris/include \
 		-I${OPENSOLARIS_USR_DISTDIR}/head \
@@ -28,6 +35,6 @@ CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${OPENSOLARIS_USR_DISTDIR}/lib/libctf/common \
 		-I${OPENSOLARIS_SYS_DISTDIR}/uts/common
 
-LIBADD+=	z
+LIBADD+=	spl z
 
 .include <bsd.lib.mk>

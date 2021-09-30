@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e2db3cd8755acc777cc0aa7b1e00053f3789d97 $");
+__FBSDID("$FreeBSD: 1fc162d360cd6a78d3e2ca055e6f8e59a44dad9e $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_module.h>
@@ -285,34 +285,24 @@ int ttm_tt_swapin(struct ttm_tt *ttm)
 
 	obj = ttm->swap_storage;
 
-	VM_OBJECT_WLOCK(obj);
 	vm_object_pip_add(obj, 1);
 	for (i = 0; i < ttm->num_pages; ++i) {
-		from_page = vm_page_grab(obj, i, VM_ALLOC_NORMAL);
-		if (from_page->valid != VM_PAGE_BITS_ALL) {
-			if (vm_pager_has_page(obj, i, NULL, NULL)) {
-				rv = vm_pager_get_pages(obj, &from_page, 1,
-				    NULL, NULL);
-				if (rv != VM_PAGER_OK) {
-					vm_page_lock(from_page);
-					vm_page_free(from_page);
-					vm_page_unlock(from_page);
-					ret = -EIO;
-					goto err_ret;
-				}
-			} else
-				vm_page_zero_invalid(from_page, TRUE);
+		rv = vm_page_grab_valid_unlocked(&from_page, obj, i,
+		    VM_ALLOC_NORMAL | VM_ALLOC_SBUSY | VM_ALLOC_IGN_SBUSY);
+		if (rv != VM_PAGER_OK) {
+			ret = -EIO;
+			goto err_ret;
 		}
-		vm_page_xunbusy(from_page);
 		to_page = ttm->pages[i];
 		if (unlikely(to_page == NULL)) {
+			vm_page_sunbusy(from_page);
 			ret = -ENOMEM;
 			goto err_ret;
 		}
 		pmap_copy_page(from_page, to_page);
+		vm_page_sunbusy(from_page);
 	}
 	vm_object_pip_wakeup(obj);
-	VM_OBJECT_WUNLOCK(obj);
 
 	if (!(ttm->page_flags & TTM_PAGE_FLAG_PERSISTENT_SWAP))
 		vm_object_deallocate(obj);
@@ -322,7 +312,6 @@ int ttm_tt_swapin(struct ttm_tt *ttm)
 
 err_ret:
 	vm_object_pip_wakeup(obj);
-	VM_OBJECT_WUNLOCK(obj);
 	return (ret);
 }
 
@@ -354,7 +343,7 @@ int ttm_tt_swapout(struct ttm_tt *ttm, vm_object_t persistent_swap_storage)
 			continue;
 		to_page = vm_page_grab(obj, i, VM_ALLOC_NORMAL);
 		pmap_copy_page(from_page, to_page);
-		to_page->valid = VM_PAGE_BITS_ALL;
+		vm_page_valid(to_page);
 		vm_page_dirty(to_page);
 		vm_page_xunbusy(to_page);
 	}

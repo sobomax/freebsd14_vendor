@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5975a4a1c7f3fafba8837fe149c55175a9dc9e15 $");
+__FBSDID("$FreeBSD: 5959b621954bb57fc043af3b2dbf57d1b612fc5d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,6 +69,10 @@ __FBSDID("$FreeBSD: 5975a4a1c7f3fafba8837fe149c55175a9dc9e15 $");
 #include <net/if_types.h>
 #include <net/if_var.h>
 #include <net/if_vlan_var.h>
+
+#include <netinet/in.h>
+#include <netinet/udp.h>
+#include <netinet/tcp.h>
 
 #include <machine/bus.h>
 #include <machine/fdt.h>
@@ -635,7 +639,6 @@ vtbe_attach(device_t dev)
 static device_method_t vtbe_methods[] = {
 	DEVMETHOD(device_probe,		vtbe_probe),
 	DEVMETHOD(device_attach,	vtbe_attach),
-
 	{ 0, 0 }
 };
 

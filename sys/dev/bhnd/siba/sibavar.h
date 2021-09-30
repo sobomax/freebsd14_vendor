@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 650ad799406b5acab1a02d12b9bd526634debfa2 $
+ * $FreeBSD: 88aef2bd1033f41297e70f80675c76152deab005 $
  */
 
 #ifndef _SIBA_SIBAVAR_H_
@@ -226,7 +226,6 @@ struct siba_softc {
 	device_t			dev;		/**< siba device */
 	struct mtx			mtx;		/**< state mutex */
 };
-
 
 #define	SIBA_LOCK_INIT(sc)	\
     mtx_init(&(sc)->mtx, device_get_nameunit((sc)->dev), NULL, MTX_DEF)

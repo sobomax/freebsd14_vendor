@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fb23a8104ee0dc3ca618e2d970ad54d69c57500b $");
+__FBSDID("$FreeBSD: 8690500502251dd7daf7f57059540a7a88695b4a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,7 +76,6 @@ static device_method_t ppc_isa_methods[] = {
 	DEVMETHOD(ppbus_ecp_sync,	ppc_ecp_sync),
 	DEVMETHOD(ppbus_read,		ppc_read),
 	DEVMETHOD(ppbus_write,		ppc_isa_write),
-
 	{ 0, 0 }
 };
 
@@ -234,7 +233,6 @@ ppc_isa_write(device_t dev, char *buf, int len, int how)
 
 	/* wait for an empty fifo */
 	while (!(r_ecr(ppc) & PPC_FIFO_EMPTY)) {
-
 		for (spin=100; spin; spin--)
 			if (r_ecr(ppc) & PPC_FIFO_EMPTY)
 				goto fifo_empty;

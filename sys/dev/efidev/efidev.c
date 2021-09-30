@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b585db4f01172f46ed84df049ff0fd3d9a8e0a1d $");
+__FBSDID("$FreeBSD: 303b10c1d0ba6e5aa5b4154d08cd493ecc22b9af $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,14 +53,6 @@ efidev_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
 	int error;
 
 	switch (cmd) {
-	case EFIIOC_GET_TABLE:
-	{
-		struct efi_get_table_ioc *egtioc =
-		    (struct efi_get_table_ioc *)addr;
-
-		error = efi_get_table(&egtioc->uuid, &egtioc->ptr);
-		break;
-	}
 	case EFIIOC_GET_TIME:
 	{
 		struct efi_tm *tm = (struct efi_tm *)addr;

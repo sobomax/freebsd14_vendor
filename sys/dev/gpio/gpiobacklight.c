@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24636e0a65ddfa6d7285e4df09a9debcc9754428 $");
+__FBSDID("$FreeBSD: 48766e8b649ce65fe93ae9bbf91e0a89b6793053 $");
 
 #include "opt_platform.h"
 
@@ -131,7 +131,7 @@ gpiobacklight_attach(device_t dev)
 	ctx = device_get_sysctl_ctx(dev);
 	tree = device_get_sysctl_tree(dev);
 	sc->sc_oid = SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "brightness", CTLTYPE_INT | CTLFLAG_RW, sc, 0,
+	    "brightness", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, 0,
 	    gpiobacklight_sysctl, "I", "backlight brightness");
 
 	return (0);

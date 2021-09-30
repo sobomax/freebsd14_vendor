@@ -40,7 +40,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 83d9390f09d2cb88165a6a4e5b74be534fe36d38 $");
+__FBSDID("$FreeBSD: e3c54c2379674beb409e65dd9c2d34a4aa108d15 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -382,7 +382,6 @@ arm_tmr_acpi_probe(device_t dev)
 	return (BUS_PROBE_NOWILDCARD);
 }
 #endif
-
 
 static int
 arm_tmr_attach(device_t dev)

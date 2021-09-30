@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 957da2e41569524457e16ca001ba4ee97fc0c119 $");
+__FBSDID("$FreeBSD: e46dd31c2efbe6373743b52467c04a0f7e9d9979 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,7 +139,6 @@ pinmux_set(struct iomuxc_softc *sc)
 
 	/* Find 'iomux_config' prop in the nodes */
 	for (child = OF_child(parent); child != 0; child = OF_peer(child)) {
-
 		/* Find a 'leaf'. Start the search from this node. */
 		while (OF_child(child)) {
 			parent = child;

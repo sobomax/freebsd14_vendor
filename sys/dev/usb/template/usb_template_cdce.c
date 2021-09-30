@@ -1,4 +1,4 @@
-/* $FreeBSD: 9bfcd6c74fa085c0fbb8a9658e27edc6c8d47c0a $ */
+/* $FreeBSD: 4d713b07a11217262238995508bfd15801ae6f41 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -302,7 +302,7 @@ eth_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&eth_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB CDC Ethernet device side template");
 	SYSCTL_ADD_U16(&eth_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)ifconfig.8	8.3 (Berkeley) 1/5/94
-.\" $FreeBSD: a7fecacdd89a744a0320fffa10ccca3b2cf3c174 $
+.\" $FreeBSD: bbaaa00d419b94aff7c0251f94e520a9f821e249 $
 .\"
-.Dd June 4, 2020
+.Dd November 1, 2020
 .Dt IFCONFIG 8
 .Os
 .Sh NAME
@@ -36,7 +36,7 @@
 .Nd configure network interface parameters
 .Sh SYNOPSIS
 .Nm
-.Op Fl f Ar type:format Ns Op Ar ,type:format
+.Op Fl f Ar type Ns Cm \&: Ns Ar format Ns Op Cm \&, Ns Ar type Ns Cm \& : Ns Ar format ...
 .Op Fl L
 .Op Fl k
 .Op Fl m
@@ -92,15 +92,11 @@ or other operating parameters.
 The following options are available:
 .Bl -tag -width indent
 .It Ar address
-For the
-.Tn DARPA Ns -Internet
-family,
+For the DARPA-Internet family,
 the address is either a host name present in the host name data
 base,
 .Xr hosts 5 ,
-or a
-.Tn DARPA
-Internet address expressed in the Internet standard
+or a DARPA Internet address expressed in the Internet standard
 .Dq dot notation .
 .Pp
 It is also possible to use the CIDR notation (also known as the
@@ -131,9 +127,7 @@ parameter below for more information.
 .\" (Ethernet, FDDI, and Token Ring) interfaces,
 .\" which use the hardware physical address,
 .\" and on interfaces other than the first.
-.\" For the
-.\" .Tn ISO
-.\" family, addresses are specified as a long hexadecimal string,
+.\" For the ISO family, addresses are specified as a long hexadecimal string,
 .\" as in the Xerox family.
 .\" However, two consecutive dots imply a zero
 .\" byte, and the dots are optional, if the user wishes to (carefully)
@@ -197,7 +191,7 @@ This
 parameter is a string of the form
 .Dq name unit ,
 for example,
-.Dq Li ed0 .
+.Dq Li em0 .
 .It Ar groupname
 List the interfaces in the given group.
 .El
@@ -320,12 +314,8 @@ Enable the use of the Address Resolution Protocol
 .Pq Xr arp 4
 in mapping
 between network level addresses and link level addresses (default).
-This is currently implemented for mapping between
-.Tn DARPA
-Internet
-addresses and
-.Tn IEEE
-802 48-bit MAC addresses (Ethernet, FDDI, and Token Ring addresses).
+This is currently implemented for mapping between DARPA Internet addresses
+and IEEE 802 48-bit MAC addresses (Ethernet, FDDI, and Token Ring addresses).
 .It Fl arp
 Disable the use of the Address Resolution Protocol
 .Pq Xr arp 4 .
@@ -425,8 +415,7 @@ of the interface to
 Some interfaces support the mutually exclusive use of one of several
 different physical media connectors.
 For example, a 10Mbit/s Ethernet
-interface might support the use of either
-.Tn AUI
+interface might support the use of either AUI
 or twisted pair connectors.
 Setting the media type to
 .Cm 10base5/AUI
@@ -539,6 +528,38 @@ large receive offloading, enable LRO on the interface.
 If the driver supports
 .Xr tcp 4
 large receive offloading, disable LRO on the interface.
+.It Cm txtls
+Transmit TLS offload encrypts Transport Layer Security (TLS) records and
+segments the encrypted record into one or more
+.Xr tcp 4
+segments over either
+.Xr ip 4
+or
+.Xr ip6 4 .
+If the driver supports transmit TLS offload,
+enable transmit TLS offload on the interface.
+Some drivers may not be able to support transmit TLS offload for
+.Xr ip 4
+and
+.Xr ip6 4
+packets, so they may enable only one of them.
+.It Fl txtls
+If the driver supports transmit TLS offload,
+disable transmit TLS offload on the interface.
+It will always disable TLS for
+.Xr ip 4
+and
+.Xr ip6 4 .
+.It Cm txtlsrtlmt
+Enable use of rate limiting (packet pacing) for TLS offload.
+.It Fl txtlsrtlmt
+Disable use of rate limiting for TLS offload.
+.It Cm nomap
+If the driver supports unmapped network buffers,
+enable them on the interface.
+.It Fl nomap
+If the driver supports unmapped network buffers,
+disable them on the interface.
 .It Cm wol , wol_ucast , wol_mcast , wol_magic
 Enable Wake On Lan (WOL) support, if available.
 WOL is a facility whereby a machine in a low power state may be woken
@@ -554,21 +575,36 @@ they support in their capabilities.
 is a synonym for enabling all available WOL mechanisms.
 To disable WOL use
 .Fl wol .
-.It Cm vlanmtu , vlanhwtag, vlanhwfilter, vlanhwcsum, vlanhwtso
+.It Cm vlanmtu , vlanhwtag , vlanhwfilter , vlanhwcsum , vlanhwtso
 If the driver offers user-configurable VLAN support, enable
 reception of extended frames, tag processing in hardware,
 frame filtering in hardware, checksum offloading, or TSO on VLAN,
 respectively.
-Note that this must be issued on a physical interface associated with
+Note that this must be configured on a physical interface associated with
 .Xr vlan 4 ,
 not on a
 .Xr vlan 4
 interface itself.
-.It Fl vlanmtu , vlanhwtag, vlanhwfilter, vlanhwtso
+.It Fl vlanmtu , vlanhwtag , vlanhwfilter , vlanhwtso
 If the driver offers user-configurable VLAN support, disable
 reception of extended frames, tag processing in hardware,
 frame filtering in hardware, or TSO on VLAN,
 respectively.
+.It Cm vxlanhwcsum , vxlanhwtso
+If the driver offers user-configurable VXLAN support, enable inner checksum
+offloading (receive and transmit) or TSO on VXLAN, respectively.
+Note that this must be configured on a physical interface associated with
+.Xr vxlan 4 ,
+not on a
+.Xr vxlan 4
+interface itself.
+The physical interface is either the interface specified as the vxlandev
+or the interface hosting the vxlanlocal address.
+The driver will offload as much checksum work and TSO as it can reliably
+support, the exact level of offloading may vary between drivers.
+.It Fl vxlanhwcsum , vxlanhwtso
+If the driver offers user-configurable VXLAN support, disable checksum
+offloading (receive and transmit) or TSO on VXLAN, respectively.
 .It Cm vnet Ar jail
 Move the interface to the
 .Xr jail 8 ,
@@ -605,16 +641,12 @@ Destroy the specified network pseudo-device.
 Another name for the
 .Cm create
 parameter.
-Included for
-.Tn Solaris
-compatibility.
+Included for Solaris compatibility.
 .It Cm unplumb
 Another name for the
 .Cm destroy
 parameter.
-Included for
-.Tn Solaris
-compatibility.
+Included for Solaris compatibility.
 .It Cm metric Ar n
 Set the routing metric of the interface to
 .Ar n ,
@@ -700,6 +732,13 @@ No packets are transmitted, and received packets are discarded after
 processing.
 .It Fl monitor
 Take the interface out of monitor mode.
+.It Cm pcp Ar priority_code_point
+Priority code point
+.Pq Dv PCP
+is an 3-bit field which refers to the IEEE 802.1p
+class of service and maps to the frame priority level.
+.It Fl pcp
+Stop tagging packets on the interface w/ the priority code point.
 .It Cm up
 Mark an interface
 .Dq up .
@@ -834,10 +873,10 @@ is one of
 .Cm ahdemo
 (or
 .Cm adhoc-demo ) ,
-.Cm ibss ,
+.Cm ibss
 (or
 .Cm adhoc ) ,
-.Cm ap ,
+.Cm ap
 (or
 .Cm hostap ) ,
 .Cm wds ,
@@ -1927,9 +1966,7 @@ string or as a string of hexadecimal digits preceded by
 .Ql 0x .
 For maximum portability, hex keys are recommended;
 the mapping of text keys to WEP encryption is usually driver-specific.
-In particular, the
-.Tn Windows
-drivers do this mapping differently to
+In particular, the Windows drivers do this mapping differently to
 .Fx .
 A key may be cleared by setting it to
 .Ql - .
@@ -2431,6 +2468,12 @@ Set to 0 to disable.
 .Pp
 The following parameters are specific to lagg interfaces:
 .Bl -tag -width indent
+.It Cm laggtype Ar type
+When creating a lagg interface the type can be specified as either
+.Cm ethernet
+or
+.Cm infiniband .
+If not specified ethernet is the default lagg type.
 .It Cm laggport Ar interface
 Add the interface named by
 .Ar interface
@@ -2493,6 +2536,22 @@ Use the RSS hash from the network card if available.
 Set a shift parameter for RSS local hash computation.
 Hash is calculated by using flowid bits in a packet header mbuf
 which are shifted by the number of this parameter.
+.It Cm use_numa
+Enable selection of egress ports based on the native
+.Xr NUMA 4
+domain for the packets being transmitted.
+This is currently only implemented for lacp mode.
+This works only on
+.Xr NUMA 4
+hardware, running a kernel compiled with the
+.Xr NUMA 4
+option, and when interfaces from multiple
+.Xr NUMA 4
+domains are ports of the aggregation interface.
+.It Cm -use_numa
+Disable selection of egress ports based on the native
+.Xr NUMA 4
+domain for the packets being transmitted.
 .It Cm lacp_fast_timeout
 Enable lacp fast-timeout on the interface.
 .It Cm -lacp_fast_timeout
@@ -2630,7 +2689,7 @@ interfaces:
 Set the VLAN tag value to
 .Ar vlan_tag .
 This value is a 12-bit VLAN Identifier (VID) which is used to create an 802.1Q
-VLAN header for packets sent from the
+or 802.1ad VLAN header for packets sent from the
 .Xr vlan 4
 interface.
 Note that
@@ -2638,6 +2697,20 @@ Note that
 and
 .Cm vlandev
 must both be set at the same time.
+.It Cm vlanproto Ar vlan_proto
+Set the VLAN encapsulation protocol to
+.Ar vlan_proto .
+Supported encapsulation protocols are currently
+.Dq 802.1Q
+and
+.Dq 802.1ad .
+The default encapsulation protocol is
+.Dq 802.1Q .
+The
+.Dq 802.1ad
+protocol is also commonly known as
+.Dq QinQ ;
+either name can be used.
 .It Cm vlanpcp Ar priority_code_point
 Priority code point
 .Pq Dv PCP
@@ -2863,7 +2936,6 @@ The
 flag limits this to interfaces that are down,
 .Fl u
 limits this to interfaces that are up,
-limits this to interfaces that are up,
 .Fl g
 limits this to members of the specified group of interfaces, and
 .Fl G
@@ -2935,26 +3007,26 @@ Assign the IPv4 address
 with a network mask of
 .Li 255.255.255.0 ,
 to the interface
-.Li fxp0 :
-.Dl # ifconfig fxp0 inet 192.0.2.10 netmask 255.255.255.0
+.Li em0 :
+.Dl # ifconfig em0 inet 192.0.2.10 netmask 255.255.255.0
 .Pp
 Add the IPv4 address
 .Li 192.0.2.45 ,
 with the CIDR network prefix
 .Li /28 ,
 to the interface
-.Li ed0 ,
+.Li em0 ,
 using
 .Cm add
 as a synonym for the canonical form of the option
 .Cm alias :
-.Dl # ifconfig ed0 inet 192.0.2.45/28 add
+.Dl # ifconfig em0 inet 192.0.2.45/28 add
 .Pp
 Remove the IPv4 address
 .Li 192.0.2.45
 from the interface
-.Li ed0 :
-.Dl # ifconfig ed0 inet 192.0.2.45 -alias
+.Li em0 :
+.Dl # ifconfig em0 inet 192.0.2.45 -alias
 .Pp
 Enable IPv6 functionality of the interface:
 .Dl # ifconfig em0 inet6 -ifdisabled

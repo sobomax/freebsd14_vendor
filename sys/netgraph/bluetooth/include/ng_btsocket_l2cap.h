@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.h,v 1.4 2003/03/25 23:53:33 max Exp $
- * $FreeBSD: 0017f8b6557a4363bf2fd8c173a0c7c0c3eb4d4f $
+ * $FreeBSD: 8ecb8821a2758437bda5d08a0b40c9b8b2ecb1c8 $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_L2CAP_H_
@@ -176,7 +176,7 @@ struct ng_btsocket_l2cap_pcb {
 
 	struct mtx			 pcb_mtx;    /* pcb mutex */
 	uint16_t			 need_encrypt; /*encryption needed*/
-	
+
 	LIST_ENTRY(ng_btsocket_l2cap_pcb) next;      /* link to next PCB */
 };
 typedef struct ng_btsocket_l2cap_pcb	ng_btsocket_l2cap_pcb_t;
@@ -215,4 +215,3 @@ int  ng_btsocket_l2cap_sockaddr   (struct socket *, struct sockaddr **);
 #endif /* _KERNEL */
 
 #endif /* _NETGRAPH_BTSOCKET_L2CAP_H_ */
-

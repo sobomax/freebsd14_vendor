@@ -1,8 +1,9 @@
-# $FreeBSD: 00aa7c0e212bf492d5c5f963a53465c3baa86d43 $
+# $FreeBSD: 9e0584bd73e3453fb464e40e82b6aa3da489a8ff $
 
 .include <bsd.own.mk>
 
 BINDIR?=	${TESTSDIR}
+WARNS?=		3
 
 # SKIP_LEFTASSOC -> these testcases fail on FreeBSD.
 IMPLEMENTATION?=      -DREGEX_SPENCER -DSKIP_LEFTASSOC

@@ -24,10 +24,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e3f94f08f70d71540ce3d8539013602813a68cd $");
+__FBSDID("$FreeBSD: ba93db3c0bfdcbfeb7dbfee011c0db0bfd328f2b $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
+#include <sys/fcntl.h>
 #include <sys/filedesc.h>
 #include <sys/proc.h>
 #include <sys/mman.h>

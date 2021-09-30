@@ -1,4 +1,4 @@
-# $FreeBSD: 6b58daf5310e7eb7b5999bac4fbe1687e3143001 $
+# $FreeBSD: f4273d2266f0923321cd29c7c9ce4ce28efdc5d4 $
 #
 # Doing a make install builds /usr/share/examples
 
@@ -16,7 +16,7 @@ LDIRS=	BSD_daemon \
 	drivers \
 	etc \
 	find_interface \
-	ibcs2 \
+	flua \
 	indent \
 	ipfw \
 	jails \
@@ -99,10 +99,8 @@ SE_FIND_INTERFACE= \
 	README \
 	find_interface.c
 
-SE_DIRS+=	ibcs2
-SE_IBCS2=	\
-	README \
-	hello.uu
+SE_DIRS+=	flua
+SE_FLUA=	libjail.lua
 
 SE_DIRS+=	indent
 SE_INDENT=	indent.pro
@@ -387,9 +385,8 @@ SER_${d:tu:C/\//_/g}DIR+=	${SHAREDIR}/examples/${d}
 
 BINDIR= ${SHAREDIR}/examples
 
-beforeinstall: copies etc-examples
+beforeinstall: copies
 META_TARGETS+=	copies
-.ORDER: etc-examples
 
 copies:
 .for i in ${LDIRS}
@@ -397,9 +394,6 @@ copies:
 		rm -f ${DESTDIR}${BINDIR}/$i; \
 	fi
 .endfor
-
-etc-examples:
-	${_+_}(cd ${SRCTOP}/etc; ${MAKE} etc-examples)
 
 SUBDIR+=	smbfs
 

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bc522ec732dd3464efb7002f59ffe1db122c8517 $
+ * $FreeBSD: e7ab4c7ccd1ba3f4498867d3ff70a2f94979e729 $
  */
 
 #ifndef __X86_IOMMU_INTEL_REG_H
@@ -40,6 +40,9 @@
 #define	DMAR_NPTEPG	(DMAR_PAGE_SIZE / sizeof(dmar_pte_t))
 #define	DMAR_NPTEPGSHIFT 9
 #define	DMAR_PTEMASK	(DMAR_NPTEPG - 1)
+
+#define	IOMMU_PAGE_SIZE	DMAR_PAGE_SIZE
+#define	IOMMU_PAGE_MASK	DMAR_PAGE_MASK
 
 typedef struct dmar_root_entry {
 	uint64_t r1;

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a4eed466d96587149bca1c11338b4583328b75c9 $
+ * $FreeBSD: 3e9e95a74b47a5cc1bbcf20e85d86dd92d15c0d9 $
  */
 
 #ifndef _PCI_EMUL_H_
@@ -45,6 +45,7 @@
 struct vmctx;
 struct pci_devinst;
 struct memory_region;
+struct vm_snapshot_meta;
 
 struct pci_devemu {
 	char      *pe_emu;		/* Name of device emulation */
@@ -71,6 +72,11 @@ struct pci_devemu {
 	uint64_t  (*pe_barread)(struct vmctx *ctx, int vcpu,
 				struct pci_devinst *pi, int baridx,
 				uint64_t offset, int size);
+
+	/* Save/restore device state */
+	int	(*pe_snapshot)(struct vm_snapshot_meta *meta);
+	int	(*pe_pause)(struct vmctx *ctx, struct pci_devinst *pi);
+	int	(*pe_resume)(struct vmctx *ctx, struct pci_devinst *pi);
 };
 #define PCI_EMUL_SET(x)   DATA_SET(pci_devemu_set, x);
 
@@ -215,8 +221,6 @@ int	init_pci(struct vmctx *ctx);
 void	pci_callback(void);
 int	pci_emul_alloc_bar(struct pci_devinst *pdi, int idx,
 	    enum pcibar_type type, uint64_t size);
-int	pci_emul_alloc_pbar(struct pci_devinst *pdi, int idx,
-	    uint64_t hostbase, enum pcibar_type type, uint64_t size);
 int	pci_emul_add_msicap(struct pci_devinst *pi, int msgnum);
 int	pci_emul_add_pciecap(struct pci_devinst *pi, int pcie_device_type);
 void	pci_emul_capwrite(struct pci_devinst *pi, int offset, int bytes,
@@ -244,6 +248,11 @@ void	pci_walk_lintr(int bus, pci_lintr_cb cb, void *arg);
 void	pci_write_dsdt(void);
 uint64_t pci_ecfg_base(void);
 int	pci_bus_configured(int bus);
+#ifdef BHYVE_SNAPSHOT
+int	pci_snapshot(struct vm_snapshot_meta *meta);
+int	pci_pause(struct vmctx *ctx, const char *dev_name);
+int	pci_resume(struct vmctx *ctx, const char *dev_name);
+#endif
 
 static __inline void 
 pci_set_cfgdata8(struct pci_devinst *pi, int offset, uint8_t val)

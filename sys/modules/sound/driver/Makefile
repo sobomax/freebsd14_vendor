@@ -1,4 +1,4 @@
-# $FreeBSD: d00ccaa1028612692f4247d8ed8533ca158d4926 $
+# $FreeBSD: 8c21a719966af511f3675bb43edd0f8035601ef0 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -19,12 +19,6 @@ _maestro3=	maestro3
 
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 SUBDIR+=	cmi mss
-.endif
-
-.if ${MACHINE_CPUARCH} == "sparc64"
-.if ${MACHINE} == "sparc64"
-SUBDIR+=	audiocs
-.endif
 .endif
 
 .if ${MACHINE_CPUARCH} == "powerpc"

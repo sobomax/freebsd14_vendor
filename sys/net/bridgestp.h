@@ -69,7 +69,7 @@
  *
  * OpenBSD: if_bridge.h,v 1.14 2001/03/22 03:48:29 jason Exp
  *
- * $FreeBSD: 48f6c9ebbfcff5be7df23531a3ee04a3d569f400 $
+ * $FreeBSD: b7ce1e27409dd330be5de219a3bf6de8932eb58a $
  */
 
 /*
@@ -177,7 +177,6 @@
 #define	BSTP_INFO_MINE		2
 #define	BSTP_INFO_AGED		3
 #define	BSTP_INFO_DISABLED	4
-
 
 #define	BSTP_MESSAGE_AGE_INCR	(1 * 256)	/* in 256ths of a second */
 #define	BSTP_TICK_VAL		(1 * 256)	/* in 256ths of a second */

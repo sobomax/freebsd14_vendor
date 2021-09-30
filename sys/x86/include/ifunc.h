@@ -26,22 +26,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 38c82570770e639bf1a1b24eae1097b08081c33c $
+ * $FreeBSD: 690d491d39b9f26fe5fdb83a3b1a9bc4f408d28d $
  */
 
 #ifndef __X86_IFUNC_H
 #define	__X86_IFUNC_H
 
-#define	DEFINE_IFUNC(qual, ret_type, name, args, resolver_qual)		\
-    resolver_qual ret_type (*name##_resolver(void))args __used;		\
+#define	DEFINE_IFUNC(qual, ret_type, name, args)			\
+    static ret_type (*name##_resolver(void))args __used;		\
     qual ret_type name args __attribute__((ifunc(#name "_resolver")));	\
-    resolver_qual ret_type (*name##_resolver(void))args
+    static ret_type (*name##_resolver(void))args
 
-#define	DEFINE_UIFUNC(qual, ret_type, name, args, resolver_qual)	\
-    resolver_qual ret_type (*name##_resolver(uint32_t, uint32_t,	\
-	uint32_t, uint32_t))args __used;				\
+#define	DEFINE_UIFUNC(qual, ret_type, name, args)			\
+    static ret_type (*name##_resolver(uint32_t, uint32_t, uint32_t,	\
+	uint32_t))args __used;						\
     qual ret_type name args __attribute__((ifunc(#name "_resolver")));	\
-    resolver_qual ret_type (*name##_resolver(				\
+    static ret_type (*name##_resolver(				\
 	uint32_t cpu_feature __unused,					\
 	uint32_t cpu_feature2 __unused,					\
 	uint32_t cpu_stdext_feature __unused,				\

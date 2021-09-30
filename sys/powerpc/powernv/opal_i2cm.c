@@ -24,13 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57d9e7ebbff0eabbeac6bffd0c2be36c054186e7 $
+ * $FreeBSD: 4f3ad518567bb4b87eb309aa73179466d7533648 $
  */
 
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57d9e7ebbff0eabbeac6bffd0c2be36c054186e7 $");
+__FBSDID("$FreeBSD: 4f3ad518567bb4b87eb309aa73179466d7533648 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -130,4 +130,3 @@ DRIVER_MODULE(opal_i2cm, powernv_xscom, opal_i2cm_driver, opal_i2cm_devclass, NU
     NULL);
 DRIVER_MODULE(opal_i2cm, powernv_centaur, opal_i2cm_driver, opal_i2cm_devclass, NULL,
     NULL);
-

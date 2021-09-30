@@ -47,12 +47,11 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 5a926a125de59c01667dcb5f4221f6c9deea4043 $");
+SND_DECLARE_FILE("$FreeBSD: 8eeeadce66667319f7618a0c730921d5e8d44f16 $");
 
 #define hdaa_lock(devinfo)	snd_mtxlock((devinfo)->lock)
 #define hdaa_unlock(devinfo)	snd_mtxunlock((devinfo)->lock)
 #define hdaa_lockassert(devinfo) snd_mtxassert((devinfo)->lock)
-#define hdaa_lockowned(devinfo)	mtx_owned((devinfo)->lock)
 
 static const struct {
 	const char *key;
@@ -1128,7 +1127,6 @@ hdaa_dump_amp_sb(struct sbuf *sb, uint32_t cap, const char *banner)
 	    ((0 - offset) * (size + 1)) / 4,
 	    ((step - offset) * (size + 1)) / 4);
 }
-
 
 static int
 hdaa_sysctl_caps(SYSCTL_HANDLER_ARGS)
@@ -6671,7 +6669,7 @@ hdaa_attach(device_t dev)
 	    devinfo, 0, hdaa_sysctl_gpo_config, "A", "GPO configuration");
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
-	    "reconfig", CTLTYPE_INT | CTLFLAG_RW,
+	    "reconfig", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 	    dev, 0, hdaa_sysctl_reconfig, "I", "Reprocess configuration");
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,

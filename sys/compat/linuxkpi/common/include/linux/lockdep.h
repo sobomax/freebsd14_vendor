@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d2b3d4485dde45465e153ddadfb80e3fd6543a49 $
+ * $FreeBSD: a86157ba592465ae2b895a6918ed887721410f0c $
  */
 
 #ifndef _LINUX_LOCKDEP_H_
@@ -42,6 +42,7 @@ struct lock_class_key {
 #define	lockdep_set_class_and_name(lock, key, name)
 #define	lockdep_set_current_reclaim_state(g) do { } while (0)
 #define	lockdep_clear_current_reclaim_state() do { } while (0)
+#define	lockdep_init_map(_map, _name, _key, _x) do { } while(0)
 
 #ifdef INVARIANTS
 #define	lockdep_assert_held(m) do {					\

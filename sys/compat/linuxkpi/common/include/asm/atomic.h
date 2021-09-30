@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 202ccf4ba16ce2f53524ce46940c39fa1da27965 $
+ * $FreeBSD: 5cdfbe674ef3a6f7f17b530535d710878e9a8c9c $
  */
 
 #ifndef _ASM_ATOMIC_H_
@@ -35,7 +35,6 @@
 #include <linux/compiler.h>
 #include <sys/types.h>
 #include <machine/atomic.h>
-
 #define	ATOMIC_INIT(x)	{ .counter = (x) }
 
 typedef struct {
@@ -142,15 +141,7 @@ atomic_clear_mask(unsigned int mask, atomic_t *v)
 static inline int
 atomic_xchg(atomic_t *v, int i)
 {
-#if !defined(__mips__)
 	return (atomic_swap_int(&v->counter, i));
-#else
-	int ret = atomic_read(v);
-
-	while (!atomic_fcmpset_int(&v->counter, &ret, i))
-		;
-	return (ret);
-#endif
 }
 
 static inline int

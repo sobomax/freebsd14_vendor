@@ -1,4 +1,4 @@
-// $FreeBSD: c7792742107dc9a570f12beb2bf92f1b73a19169 $
+// $FreeBSD: 1201fbd7faca7495e9e498a1cea2964bc2c92fd8 $
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -46,6 +46,8 @@
 #define LLDB_ENABLE_LUA 1
 
 #define LLDB_ENABLE_PYTHON 0
+
+#define LLDB_EMBED_PYTHON_HOME 0
 
 /* #undef LLDB_PYTHON_HOME */
 

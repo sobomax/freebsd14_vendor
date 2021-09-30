@@ -1,12 +1,13 @@
 #
-# $FreeBSD: 773bbda87b62957522155c7d55bf3ae025dfa3b7 $
+# $FreeBSD: 48e57ccc2a1aa7c4f3c0943175262a5014b318da $
 #
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
 LIB=		z
 SHLIBDIR?=	/lib
 SHLIB_MAJOR=	6
 MAN=		zlib.3 zopen.3
+MLINKS+=	zopen.3 zdopen.3
 
 ZLIBSRC=	${SRCTOP}/sys/contrib/zlib
 
@@ -78,6 +79,3 @@ FILES=		zlib.pc
 FILESDIR=	${LIBDATADIR}/pkgconfig
 
 .include <bsd.lib.mk>
-
-## XXX: clang integrated-as doesn't grok .intel_syntax directives yet
-#ACFLAGS.gvmat64.S=	${CLANG_NO_IAS}

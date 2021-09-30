@@ -29,7 +29,7 @@
 #define	_TPM20_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b56a17102b2d16b605b6f892660c87b2fb24c131 $");
+__FBSDID("$FreeBSD: bafbd93dc1368acc2d6e8c800071692a9f49689f $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -94,7 +94,6 @@ __FBSDID("$FreeBSD: b56a17102b2d16b605b6f892660c87b2fb24c131 $");
 
 #define	TPM_CDEV_NAME			"tpm0"
 #define	TPM_CDEV_PERM_FLAG		0600
-
 
 #define	TPM2_START_METHOD_ACPI		2
 #define	TPM2_START_METHOD_TIS		6

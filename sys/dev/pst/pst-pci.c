@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a09e1de79f39aa94da09309d94ee9a2c62aa89c $");
+__FBSDID("$FreeBSD: 631f3f64cae1d3c5f3ca601bc1a4151ad5aff8bd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,6 @@ iop_pci_detach(device_t dev)
     mtx_destroy(&sc->mtx);
     return (0);
 }
-
 
 static device_method_t pst_pci_methods[] = {
     DEVMETHOD(device_probe,		iop_pci_probe),

@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3dd48c16ebc433263dc1d3b7855d532a22f2d261 $
+ * $FreeBSD: 8eb421c0fce8bd3b32d2a4fe48664ec4c834282e $
  */
 
 /*
@@ -83,7 +83,8 @@
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, portacl, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, portacl,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "TrustedBSD mac_portacl policy controls");
 
 static int	portacl_enabled = 1;
@@ -372,7 +373,9 @@ out:
 }
 
 SYSCTL_PROC(_security_mac_portacl, OID_AUTO, rules,
-       CTLTYPE_STRING|CTLFLAG_RW, 0, 0, sysctl_rules, "A", "Rules");
+    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE,
+    0, 0, sysctl_rules, "A",
+    "Rules");
 
 static int
 rules_check(struct ucred *cred, int family, int type, u_int16_t port)
@@ -419,7 +422,7 @@ rules_check(struct ucred *cred, int family, int type, u_int16_t port)
 	mtx_unlock(&rule_mtx);
 
 	if (error != 0 && portacl_suser_exempt != 0)
-		error = priv_check_cred(cred, PRIV_NETINET_RESERVEDPORT, 0);
+		error = priv_check_cred(cred, PRIV_NETINET_RESERVEDPORT);
 
 	return (error);
 }

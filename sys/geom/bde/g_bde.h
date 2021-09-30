@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1b54057198fc92d9513a9e0d02b708670e5764ff $
+ * $FreeBSD: 3f36bb4281ae1e86baa6cf46f0b2e5cb5f98e016 $
  */
 
 #ifndef _SYS_GEOM_BDE_G_BDE_H_
@@ -53,7 +53,6 @@
 #define G_BDE_MAXKEYS	4
 #define G_BDE_LOCKSIZE	384
 #define NLOCK_FIELDS	13
-
 
 /* This just needs to be "large enough" */
 #define G_BDE_KEYBYTES	304

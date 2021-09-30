@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4b99813721ddc8811a152cdb5899c3bd8524bf48 $
+ * $FreeBSD: d6674e2f4d65d42e9ad031e6d7161e9e513e36da $
  */
 
 #include <sys/cdefs.h>
@@ -122,4 +122,3 @@ fdt_reset_unregister_provider(device_t provider)
 
 	OF_device_register_xref(OF_xref_from_device(provider), NULL);
 }
-

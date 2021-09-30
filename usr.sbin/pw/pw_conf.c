@@ -28,7 +28,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 9dff3fe03efaf7590af404548777cfc5fd298fde $";
+  "$FreeBSD: c446a663f0823178133e7ff5d75431871757df92 $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -221,12 +221,14 @@ passwd_val(char const * str, int dflt)
 char const     *
 boolean_str(int val)
 {
-	if (val == -1)
-		return "random";
-	else if (val == -2)
-		return "none";
+	if (val == P_NO)
+		return (boolfalse[0]);
+	else if (val == P_RANDOM)
+		return ("random");
+	else if (val == P_NONE)
+		return ("none");
 	else
-		return val ? booltrue[0] : boolfalse[0];
+		return (booltrue[0]);
 }
 
 char           *

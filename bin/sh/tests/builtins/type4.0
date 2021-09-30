@@ -1,0 +1,9 @@
+# $FreeBSD: 5b5f96c5078d8fc39922fcbb12a99c4616d98ab7 $
+
+r=`cd /bin && PATH=. type ls`
+case $r in
+*/bin/ls*|*/bin/./ls*) ;;
+*)
+	echo "Unexpected result: $r"
+	exit 1
+esac

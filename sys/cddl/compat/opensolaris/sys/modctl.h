@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7af39b090f3b538e1fac79c0825c82dddc3dbc5d $
+ * $FreeBSD: af91036a31b40db1a5f5588e0d0aae79f97783a6 $
  *
  */
 
@@ -31,6 +31,7 @@
 #define	_COMPAT_OPENSOLARIS_SYS_MODCTL_H
 
 #include <sys/param.h>
+#include <sys/queue.h>
 #include <sys/linker.h>
 
 typedef struct linker_file modctl_t;

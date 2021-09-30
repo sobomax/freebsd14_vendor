@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 06904c66fbf82333f6b1ba4a7a2ea8f6614cbb22 $
+ * $FreeBSD: 7072907d42903de0c3a0b53937804532d6f3017b $
  */
 
 #ifndef _SYS_HUNT_IMPL_H
@@ -61,7 +61,6 @@ extern "C" {
 #define	HUNT_PIOBUF_SIZE	(ER_DZ_TX_PIOBUF_SIZE)
 
 #define	HUNT_MIN_PIO_ALLOC_SIZE	(HUNT_PIOBUF_SIZE / 32)
-
 
 /* NIC */
 

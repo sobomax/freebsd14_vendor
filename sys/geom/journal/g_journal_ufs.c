@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de0dbd83d48b3703ec23f1dccea7d88a2ce587da $");
+__FBSDID("$FreeBSD: dec28e547f8246384961cf537bbfe52de94b4666 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: de0dbd83d48b3703ec23f1dccea7d88a2ce587da $");
 #include <ufs/ffs/ffs_extern.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/journal/g_journal.h>
 
 static int
@@ -72,18 +73,25 @@ g_journal_ufs_dirty(struct g_consumer *cp)
 
 	fs = NULL;
 	if (SBLOCKSIZE % cp->provider->sectorsize != 0 ||
-	    ffs_sbget(cp, &fs, -1, M_GEOM, g_use_g_read_data) != 0) {
+	    ffs_sbget(cp, &fs, STDSB, M_GEOM, g_use_g_read_data) != 0) {
 		GJ_DEBUG(0, "Cannot find superblock to mark file system %s "
 		    "as dirty.", cp->provider->name);
 		KASSERT(fs == NULL,
 		    ("g_journal_ufs_dirty: non-NULL fs %p\n", fs));
 		return;
 	}
+	/*
+	 * Do not use or change summary information, so free it now
+	 * to avoid unnecessarily writing it back out in ffs_sbput().
+	 */
+	g_free(fs->fs_csp);
+	g_free(fs->fs_si);
+	fs->fs_si = NULL;
+
 	GJ_DEBUG(0, "clean=%d flags=0x%x", fs->fs_clean, fs->fs_flags);
 	fs->fs_clean = 0;
 	fs->fs_flags |= FS_NEEDSFSCK | FS_UNCLEAN;
 	error = ffs_sbput(cp, fs, fs->fs_sblockloc, g_use_g_write_data);
-	g_free(fs->fs_csp);
 	g_free(fs);
 	if (error != 0) {
 		GJ_DEBUG(0, "Cannot mark file system %s as dirty "

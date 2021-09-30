@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 71ff97958024092af3490d80b47e958491f2564b $
+ * $FreeBSD: 392f395a5feb7eb7b4c504342cc84ae79ef016ff $
  */
 #ifndef _LINUX_ETHERDEVICE
 #define	_LINUX_ETHERDEVICE
@@ -108,8 +108,7 @@ eth_zero_addr(u8 *pa)
 static inline void
 random_ether_addr(u8 * dst)
 {
-	if (read_random(dst, 6) == 0)
-		arc4rand(dst, 6, 0);
+	arc4random_buf(dst, 6);
 
 	dst[0] &= 0xfe;
 	dst[0] |= 0x02;

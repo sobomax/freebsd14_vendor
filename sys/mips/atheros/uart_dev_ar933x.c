@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6545ec64fb371a630d9623bdae5e315f0dd7addc $");
+__FBSDID("$FreeBSD: e7e4626b9b9826f21cf234e84d7cbe7477ea9c56 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,8 +54,6 @@ __FBSDID("$FreeBSD: 6545ec64fb371a630d9623bdae5e315f0dd7addc $");
 #define	ar933x_setreg(bas, reg, value)    \
 	bus_space_write_4((bas)->bst, (bas)->bsh, reg, value)
 
-
-
 static int
 ar933x_drain(struct uart_bas *bas, int what)
 {
@@ -78,7 +76,6 @@ ar933x_drain(struct uart_bas *bas, int what)
 	if (what & UART_DRAIN_RECEIVER) {
 		limit=10*4096;
 		while (--limit) {
-
 			/* XXX duplicated from ar933x_getc() */
 			/* XXX TODO: refactor! */
 
@@ -192,7 +189,6 @@ ar933x_param(struct uart_bas *bas, int baudrate, int databits, int stopbits,
 	uart_barrier(bas);
 	return (0);
 }
-
 
 /*
  * Low-level UART interface.

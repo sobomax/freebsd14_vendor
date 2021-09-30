@@ -33,7 +33,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: 895bc179af1092d21cff5ce99c12d712fc64e1d4 $");
+__FBSDID("$FreeBSD: 0d1b7f9995a0dab8c17c4574fb57557609f2b3c0 $");
 #endif
 
 /*
@@ -84,7 +84,7 @@ struct malo_pci_softc {
  * Tunable variables.
  */
 SYSCTL_DECL(_hw_malo);
-static SYSCTL_NODE(_hw_malo, OID_AUTO, pci, CTLFLAG_RD, 0,
+static SYSCTL_NODE(_hw_malo, OID_AUTO, pci, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "Marvell 88W8335 driver PCI parameters");
 
 static int msi_disable = 0;				/* MSI disabled  */

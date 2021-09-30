@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec7f44a065333ae964d1a610bd03f80550974eae $");
+__FBSDID("$FreeBSD: eaa9379267db1f0710e2ecff2424ca13eac6aad9 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -293,8 +293,11 @@ _pidfile_remove(struct pidfh *pfh, int freeit)
 		return (-1);
 	}
 
-	if (unlinkat(pfh->pf_dirfd, pfh->pf_filename, 0) == -1)
+	if (funlinkat(pfh->pf_dirfd, pfh->pf_filename, pfh->pf_fd, 0) == -1) {
+		if (errno == EDEADLK)
+			return (-1);
 		error = errno;
+	}
 	if (close(pfh->pf_fd) == -1 && error == 0)
 		error = errno;
 	if (close(pfh->pf_dirfd) == -1 && error == 0)

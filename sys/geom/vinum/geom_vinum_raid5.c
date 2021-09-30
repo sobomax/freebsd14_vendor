@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c21e28ac6a72fc3132037f12e916a59bd6775b6f $");
+__FBSDID("$FreeBSD: 2778646467e2ad6761442d1246aeed78015961fb $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: c21e28ac6a72fc3132037f12e916a59bd6775b6f $");
 #include <sys/systm.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/vinum/geom_vinum_var.h>
 #include <geom/vinum/geom_vinum_raid5.h>
 #include <geom/vinum/geom_vinum.h>
@@ -79,7 +80,7 @@ gv_raid5_start(struct gv_plex *p, struct bio *bp, caddr_t addr, off_t boff,
 		g_free(wp);
 		return (NULL);
 	}
-	
+
 	/*
 	 * Building the sub-request failed, we probably need to clean up a lot.
 	 */

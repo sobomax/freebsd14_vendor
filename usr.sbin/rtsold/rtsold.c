@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1d5605463314b18218ea46f247ddf912c1e3978f $
+ * $FreeBSD: 5e5298bfdadcdfcdc9b96cdf65783da3652b8473 $
  */
 
 #include <sys/param.h>
@@ -333,6 +333,7 @@ init_capabilities(void)
 #ifdef WITH_CASPER
 	const char *const scripts[] =
 	    { resolvconf_script, managedconf_script, otherconf_script };
+	const char *scripts_set[nitems(scripts)];
 	cap_channel_t *capcasper;
 	nvlist_t *limits;
 	int count;
@@ -351,9 +352,9 @@ init_capabilities(void)
 	count = 0;
 	for (size_t i = 0; i < nitems(scripts); i++)
 		if (scripts[i] != NULL)
-			count++;
+			scripts_set[count++] = scripts[i];
 	limits = nvlist_create(0);
-	nvlist_add_string_array(limits, "scripts", scripts, count);
+	nvlist_add_string_array(limits, "scripts", scripts_set, count);
 	if (cap_limit_set(capscript, limits) != 0)
 		return (-1);
 

@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 768db8046db9b197aeccb3c798f13696232ad030 $
+ * $FreeBSD: 1b490aa41c124558d5e8e4586a6c2b4d73db73e8 $
  *
  */
 
@@ -171,7 +171,6 @@ struct private_path {
 	struct load_rsp_stc drv_load_params;
 	u64 ecc_events;
 };
-
 
 /**************************************/
 /*                                    */
@@ -477,7 +476,6 @@ struct private_func {
 	struct pf_sb_t sb;
 	struct dci_info_func dci_func;
 };
-
 
 /**************************************/
 /*                                    */

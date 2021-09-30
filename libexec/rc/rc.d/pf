@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: 57de19218fcf671f4fe441e802d506c7c6a0397b $
+# $FreeBSD: 1f73940076677548ca2a388ead4997cef7ad47f3 $
 #
 
 # PROVIDE: pf
-# REQUIRE: FILESYSTEMS netif pflog pfsync
-# BEFORE:  routing
+# REQUIRE: FILESYSTEMS netif pflog pfsync routing
 # KEYWORD: nojailvnet
 
 . /etc/rc.subr

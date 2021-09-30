@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 98b4d90262492b979ca4719d8cb59ecf48e32ed3 $
+ * $FreeBSD: 01c73a9307c30266b40fa6073ad28ae681e1d28d $
  */
 
 #ifndef _NET_IF_VXLAN_H_
@@ -142,5 +142,12 @@ struct ifvxlancmd {
 	union vxlan_sockaddr	vxlcmd_sa;
 	char			vxlcmd_ifname[IFNAMSIZ];
 };
+
+#ifdef _KERNEL
+typedef void (*vxlan_event_handler_t)(void *, struct ifnet *, sa_family_t,
+    u_int);
+EVENTHANDLER_DECLARE(vxlan_start, vxlan_event_handler_t);
+EVENTHANDLER_DECLARE(vxlan_stop, vxlan_event_handler_t);
+#endif
 
 #endif /* _NET_IF_VXLAN_H_ */

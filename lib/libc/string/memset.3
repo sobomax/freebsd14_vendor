@@ -30,7 +30,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)memset.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 590bc08531b92c7a52caeb1fb2dd9524e9af72e1 $
+.\" $FreeBSD: 87635e2a8ac3d3d98773498140286860915d957e $
 .\"
 .Dd August 19, 2018
 .Dt MEMSET 3
@@ -63,8 +63,9 @@ Undefined behaviour from
 .Fn memset ,
 resulting from storage overflow, will occur if
 .Fa len
-is greater than the the length of buffer
-.Fa dest .
+is greater than the length of the
+.Fa dest
+buffer.
 The behaviour is also undefined if
 .Fa dest
 is an invalid pointer.

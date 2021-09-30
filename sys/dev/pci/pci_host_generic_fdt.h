@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: fba3ddcd7f840c0e3fbe76f6fb257e61961ce8e3 $
+ * $FreeBSD: 5c3e18e9ad3588cc0da23bd9aa38df4ccafdece7 $
  *
  */
 
@@ -43,6 +43,7 @@ DECLARE_CLASS(generic_pcie_fdt_driver);
 
 struct resource *pci_host_generic_alloc_resource(device_t,
     device_t, int, int *, rman_res_t, rman_res_t, rman_res_t, u_int);
+int pci_host_generic_setup_fdt(device_t);
 int pci_host_generic_attach(device_t);
 int generic_pcie_get_id(device_t, device_t, enum pci_id_type, uintptr_t *);
 

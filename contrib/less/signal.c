@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 1984-2019  Mark Nudelman
+ * Copyright (C) 1984-2020  Mark Nudelman
  *
  * You may distribute under the terms of either the GNU General Public
  * License or the Less License, as specified in the README file.
@@ -7,7 +7,7 @@
  * For more information, see the README file.
  */
 
-/* $FreeBSD: 0f304efe986c021983152f080491e1c28a060be4 $ */
+/* $FreeBSD: 04799b87bb8cbb033a900845f738256f609f9b27 $ */
 
 /*
  * Routines dealing with signals.

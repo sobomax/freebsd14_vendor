@@ -1,10 +1,9 @@
-# $FreeBSD: d1c9d3c9da706f5f211ae3b05b3c691881d704a9 $
+# $FreeBSD: 20ec0aff0faa328328f4bb9bbc01400db64ba77c $
 
 LIB=	teken
 SHLIB_MAJOR= 0
 
 CFLAGS+=-I.
-WARNS?=	6
 
 SRCDIR=	${.CURDIR}/..
 .PATH: ${SRCDIR}

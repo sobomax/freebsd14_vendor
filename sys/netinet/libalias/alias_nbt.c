@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a747f0507d3fc156d90368551345407429f2961 $");
+__FBSDID("$FreeBSD: e29dc4789248a51cd61511dcd352f864d7534344 $");
 
 /*
     alias_nbt.c performs special processing for NetBios over TCP/IP
@@ -94,7 +94,7 @@ fingerprint1(struct libalias *la, struct alias_data *ah)
 static int
 protohandler1(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	return (AliasHandleUdpNbt(la, pip, ah->lnk, ah->aaddr, *ah->aport));
 }
 
@@ -114,7 +114,7 @@ fingerprint2(struct libalias *la, struct alias_data *ah)
 static int
 protohandler2in(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	AliasHandleUdpNbtNS(la, pip, ah->lnk, ah->aaddr, ah->aport,
  			    ah->oaddr, ah->dport);
 	return (0);
@@ -123,7 +123,7 @@ protohandler2in(struct libalias *la, struct ip *pip, struct alias_data *ah)
 static int
 protohandler2out(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	return (AliasHandleUdpNbtNS(la, pip, ah->lnk, &pip->ip_src, ah->sport,
  	    ah->aaddr, ah->aport));
 }
@@ -227,7 +227,6 @@ typedef struct {
 #define ACT_ERR		0x6
 #define CFT_ERR		0x7
 
-
 #ifdef LIBALIAS_DEBUG
 static void
 PrintRcode(u_char rcode)
@@ -248,12 +247,10 @@ PrintRcode(u_char rcode)
 		printf("\nName in conflict error.\n");
 	default:
 		printf("\n?%c?=%0x\n", '?', rcode);
-
 	}
 }
 
 #endif
-
 
 /* Handling Name field */
 static u_char  *

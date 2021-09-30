@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -30,7 +29,7 @@ AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR W
 *************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a444aef3652a61ec0ecf732920e85d803131df52 $");
+__FBSDID("$FreeBSD: 0b05b4522e304648cd3c262fed09474b9ff43d07 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,7 +55,6 @@ __FBSDID("$FreeBSD: a444aef3652a61ec0ecf732920e85d803131df52 $");
 #ifndef GET_MBUF_QOS
     #define GET_MBUF_QOS(m) 0
 #endif
-
 
 /**
  * Packet transmit
@@ -256,7 +254,6 @@ int cvm_oct_xmit(struct mbuf *m, struct ifnet *ifp)
 
 	return dropped;
 }
-
 
 /**
  * This function frees all mbufs that are currenty queued for TX.

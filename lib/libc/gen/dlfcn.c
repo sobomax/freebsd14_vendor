@@ -27,14 +27,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7f162753b4b67d6bd13461ccb5bf13939d03f1e $");
+__FBSDID("$FreeBSD: 395a6d9402e8599cbb018bc4737e807ca86d1320 $");
 
 #if !defined(IN_LIBDL) || defined(PIC)
 
 /*
  * Linkage to services provided by the dynamic linker.
  */
+#include <sys/types.h>
 #include <sys/mman.h>
+#include <machine/atomic.h>
 #include <dlfcn.h>
 #include <link.h>
 #include <stddef.h>
@@ -256,8 +258,30 @@ _rtld_addr_phdr(const void *addr __unused,
 int
 _rtld_get_stack_prot(void)
 {
+#ifndef IN_LIBDL
+	unsigned i;
+	int r;
+	static int ret;
 
-	return (PROT_EXEC | PROT_READ | PROT_WRITE);
+	r = atomic_load_int(&ret);
+	if (r != 0)
+		return (r);
+
+	_once(&dl_phdr_info_once, dl_init_phdr_info);
+	r = PROT_EXEC | PROT_READ | PROT_WRITE;
+	for (i = 0; i < phdr_info.dlpi_phnum; i++) {
+		if (phdr_info.dlpi_phdr[i].p_type != PT_GNU_STACK)
+			continue;
+		r = PROT_READ | PROT_WRITE;
+		if ((phdr_info.dlpi_phdr[i].p_flags & PF_X) != 0)
+			r |= PROT_EXEC;
+		break;
+	}
+	atomic_store_int(&ret, r);
+	return (r);
+#else
+	return (0);
+#endif
 }
 
 #pragma weak _rtld_is_dlopened

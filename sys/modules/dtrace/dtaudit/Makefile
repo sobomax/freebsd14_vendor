@@ -1,4 +1,4 @@
-# $FreeBSD: aea5bd590ac64c49f63818d6875797c37baab5af $
+# $FreeBSD: 3571bcbb7ea237d01748889e315fc07f7e2830a3 $
 
 SYSDIR?=	${SRCTOP}/sys
 
@@ -8,10 +8,9 @@ KMOD=		dtaudit
 SRCS=		audit_dtrace.c	\
 		vnode_if.h
 
-CFLAGS+=	-I${SYSDIR}/cddl/compat/opensolaris \
-		-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
-		-I${SYSDIR}
+CFLAGS+= ${OPENZFS_CFLAGS}
 
 .include <bsd.kmod.mk>
 
 CFLAGS+=	-include ${SYSDIR}/cddl/compat/opensolaris/sys/debug_compat.h
+CWARNFLAGS+=	${OPENZFS_CWARNFLAGS}

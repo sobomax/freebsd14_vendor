@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGES.
  */
 
-/* $FreeBSD: 312851175867696a1b110479caa5ee699ed6c136 $ */
+/* $FreeBSD: 061f16d4d432df838652868649e6b81ec224f5be $ */
 
 /*
  * This file provides set of macros for logging:
@@ -107,7 +107,6 @@
 		    fn "bhnd: " fmt "\n", ## __VA_ARGS__);		\
 	} while(0);
 #endif /* BHND_LOGGING > BHND_INFO_LEVEL */
-
 
 #define	_BHND_RAWPRINTFN	printf(
 #define	_BHND_DEVPRINTFN(dev)	device_printf(dev,

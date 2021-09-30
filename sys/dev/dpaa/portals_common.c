@@ -26,7 +26,7 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02729f2fcb7d097642ad15555813e164e06593be $");
+__FBSDID("$FreeBSD: 971dd5793972a696b3025188a7f906cbdc985087 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -120,8 +120,7 @@ dpaa_portal_alloc_res(device_t dev, struct dpaa_portals_devinfo *di, int cpu)
 		device_printf(dev, "Could not allocate irq.\n");
 		return (ENXIO);
 	}
-
-	err = XX_PreallocAndBindIntr((uintptr_t)sc->sc_dp[cpu].dp_ires, cpu);
+	err = XX_PreallocAndBindIntr(dev, (uintptr_t)sc->sc_dp[cpu].dp_ires, cpu);
 
 	if (err != E_OK) {
 		device_printf(dev, "Could not prealloc and bind interrupt\n");

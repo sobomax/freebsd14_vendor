@@ -57,7 +57,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: db0768b0e6c9cdc7e9ab9175077a90131a9cb155 $ */
+/* $FreeBSD: e3c4fde9d411659e0b7200d64b0943d7eaab8d4e $ */
 
 #ifndef SYM_DEFS_H
 #define SYM_DEFS_H
@@ -674,7 +674,6 @@ struct sym_tblsel {
 #define	SCR_ACK		0x00000040
 #define	SCR_ATN		0x00000008
 
-
 /*-----------------------------------------------------------
  *
  *	Memory to memory move
@@ -735,7 +734,6 @@ struct sym_tblsel {
 
 #define SCR_REG_REG(reg,op,data) \
         (0x78000000 | (SCR_REG_OFS(REG(reg))) | (op) | (((data)&0xff)<<8ul))
-
 
 #define      SCR_LOAD   0x00000000
 #define      SCR_SHL    0x01000000
@@ -814,7 +812,6 @@ struct sym_tblsel {
 #define SCR_STORE_REL(reg, n)	SCR_STORE_R(reg, SCR_NO_FLUSH2|SCR_DSA_REL2,n)
 #define SCR_STORE_ABS_F(reg, n)	SCR_STORE_R(reg, 0, n)
 #define SCR_STORE_REL_F(reg, n)	SCR_STORE_R(reg, SCR_DSA_REL2, n)
-
 
 /*-----------------------------------------------------------
  *

@@ -1,4 +1,4 @@
-/* $FreeBSD: 6bfd342e0620274f9dfd15fb4283d5d01b15f6ff $ */
+/* $FreeBSD: c0427e0cf11f50e5bcc2a642099bd7847646e585 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -544,5 +544,8 @@ usb_error_t xhci_init(struct xhci_softc *, device_t, uint8_t);
 usb_error_t xhci_start_controller(struct xhci_softc *);
 void	xhci_interrupt(struct xhci_softc *);
 void	xhci_uninit(struct xhci_softc *);
+int	xhci_pci_attach(device_t);
+
+DECLARE_CLASS(xhci_pci_driver);
 
 #endif					/* _XHCI_H_ */

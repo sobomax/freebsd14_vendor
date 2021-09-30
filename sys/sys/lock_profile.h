@@ -26,9 +26,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7c7edee4af0a05c26b748d8b6e82f9995e7796a1 $
+ * $FreeBSD: 2ace6ef5698327c867f7bae68af1d94b962f1d68 $
  */
-
 
 #ifndef _SYS_LOCK_PROFILE_H_
 #define _SYS_LOCK_PROFILE_H_
@@ -51,7 +50,6 @@ void lock_profile_obtain_lock_success(struct lock_object *lo, int contested,
     uint64_t waittime, const char *file, int line);
 void lock_profile_release_lock(struct lock_object *lo);
 void lock_profile_thread_exit(struct thread *td);
-
 
 static inline void
 lock_profile_obtain_lock_failed(struct lock_object *lo, int *contested,

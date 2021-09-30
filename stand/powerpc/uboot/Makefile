@@ -1,4 +1,4 @@
-# $FreeBSD: ccffd0ec1467af79f6f3f0a954c399728b8e87d4 $
+# $FreeBSD: 9124507397ad44c780c1962db5e345ab460a4230 $
 
 LOADER_UFS_SUPPORT?=	yes
 LOADER_CD9660_SUPPORT?=	no
@@ -11,6 +11,7 @@ LOADER_BZIP2_SUPPORT?=	no
 
 .include <bsd.init.mk>
 
+BINDIR= 	/boot/uboot
 PROG=		ubldr
 NEWVERSWHAT=	"U-Boot loader" ${MACHINE_ARCH}
 INSTALLFLAGS=	-b

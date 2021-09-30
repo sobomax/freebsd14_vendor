@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e27add408ad59167f6775301896e5fc3f8d76b4e $");
+__FBSDID("$FreeBSD: a2f6ed78c487325c4d094e1118ff9bd4ae5e4a0f $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -33,9 +33,10 @@ __FBSDID("$FreeBSD: e27add408ad59167f6775301896e5fc3f8d76b4e $");
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/rman.h>
-#include <sys/types.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/resource.h>
 
 #include <machine/fdt.h>

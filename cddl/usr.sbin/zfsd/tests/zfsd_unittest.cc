@@ -30,6 +30,7 @@
  * Authors: Alan Somers         (Spectra Logic Corporation)
  */
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 
 #include <stdarg.h>
 #include <syslog.h>
@@ -62,7 +63,7 @@
 
 #include "libmocks.h"
 
-__FBSDID("$FreeBSD: d65295075c1f1419308d797ad95f334ac6c73173 $");
+__FBSDID("$FreeBSD: e2833170f9ac7895517afdf491fe354c2706f4ef $");
 
 /*================================== Macros ==================================*/
 #define	NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))

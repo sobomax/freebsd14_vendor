@@ -1,10 +1,8 @@
-# $FreeBSD: 178c30805f92d402cd3f0e2fb060cc91e06e25bb $
+# $FreeBSD: 89e59ca9932eec5b0003cff9c74bb659546686e1 $
 
 ATF_TESTS_C+=	libcam_test
 ATF_TESTS_C+=	cam_test
 
 LIBADD+=	cam
-
-WARNS?=		6
 
 .include <bsd.test.mk>

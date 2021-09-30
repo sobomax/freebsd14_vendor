@@ -17,7 +17,7 @@
 
 #if !defined(lint) && !defined(LINT)
 static const char rcsid[] =
-  "$FreeBSD: 8c579b8f511dfeba315d3341983f505003051043 $";
+  "$FreeBSD: 66ead885bea8d689b4f40d9b3efe76390a7a6b9c $";
 #endif
 
 /* vix 26jan87 [RCS'd; rest of log is in RCS file]
@@ -369,7 +369,8 @@ load_entry(file, error_func, pw, envp)
 	e->gid = pw->pw_gid;
 
 	/* copy and fix up environment.  some variables are just defaults and
-	 * others are overrides.
+	 * others are overrides; we process only the overrides here, defaults
+	 * are handled in do_command after login.conf is processed.
 	 */
 	e->envp = env_copy(envp);
 	if (e->envp == NULL) {
@@ -388,6 +389,10 @@ load_entry(file, error_func, pw, envp)
 			goto eof;
 		}
 	}
+	/* If LOGIN_CAP, this is deferred to do_command where the login class
+	 * is processed. If !LOGIN_CAP, do it here.
+	 */
+#ifndef LOGIN_CAP
 	if (!env_get("HOME", e->envp)) {
 		prev_env = e->envp;
 		sprintf(envstr, "HOME=%s", pw->pw_dir);
@@ -399,17 +404,7 @@ load_entry(file, error_func, pw, envp)
 			goto eof;
 		}
 	}
-	if (!env_get("PATH", e->envp)) {
-		prev_env = e->envp;
-		sprintf(envstr, "PATH=%s", _PATH_DEFPATH);
-		e->envp = env_set(e->envp, envstr);
-		if (e->envp == NULL) {
-			warn("env_set(%s)", envstr);
-			env_free(prev_env);
-			ecode = e_mem;
-			goto eof;
-		}
-	}
+#endif
 	prev_env = e->envp;
 	sprintf(envstr, "%s=%s", "LOGNAME", pw->pw_name);
 	e->envp = env_set(e->envp, envstr);

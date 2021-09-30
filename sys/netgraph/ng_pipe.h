@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: adf56cda6f7424a9541cc3270571f050ae0d5b20 $
+ * $FreeBSD: 2abccaa0a19cd289408b9931489fd8b30ce17f7b $
  */
 
 #ifndef _NETGRAPH_PIPE_H_
@@ -43,7 +43,7 @@
 #define NG_PIPE_HOOK_UPPER	"upper"
 #define NG_PIPE_HOOK_LOWER	"lower"
 
-#define MAX_FSIZE 16384	/* Largest supported frame size, in bytes, for BER */
+#define MAX_FSIZE 65536	/* Largest supported frame size, in bytes, for BER */
 #define MAX_OHSIZE 256	/* Largest supported dummy-framing size, in bytes */
 
 /* Statistics structure for one hook */

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c2342134b3d10b7b3804430d08076883a7f951f $");
+__FBSDID("$FreeBSD: a2b83b77148edc6a46440fe469e1aaed3a3ef453 $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -466,7 +466,7 @@ pci_vtscsi_request_handle(struct pci_vtscsi_queue *q, struct iovec *iov_in,
 	int data_niov_in, data_niov_out;
 	void *ext_data_ptr = NULL;
 	uint32_t ext_data_len = 0, ext_sg_entries = 0;
-	int err;
+	int err, nxferred;
 
 	seek_iov(iov_in, niov_in, data_iov_in, &data_niov_in,
 	    VTSCSI_IN_HEADER_LEN(sc));
@@ -545,10 +545,11 @@ pci_vtscsi_request_handle(struct pci_vtscsi_queue *q, struct iovec *iov_in,
 	}
 
 	buf_to_iov(cmd_wr, VTSCSI_OUT_HEADER_LEN(sc), iov_out, niov_out, 0);
+	nxferred = VTSCSI_OUT_HEADER_LEN(sc) + io->scsiio.ext_data_filled;
 	free(cmd_rd);
 	free(cmd_wr);
 	ctl_scsi_free_io(io);
-	return (VTSCSI_OUT_HEADER_LEN(sc) + io->scsiio.ext_data_filled);
+	return (nxferred);
 }
 
 static void

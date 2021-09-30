@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01c45df7a6637d7ed21e3374d67eaf4f359de417 $");
+__FBSDID("$FreeBSD: 9a49b6a9c0150b473e82d5c4d541567e2d3aff69 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -130,7 +130,7 @@ agp_ali_attach(device_t dev)
 	attbase = pci_read_config(dev, AGP_ALI_ATTBASE, 4);
 	pci_write_config(dev, AGP_ALI_ATTBASE, gatt->ag_physical |
 	    (attbase & 0xfff), 4);
-	
+
 	/* Enable the TLB. */
 	pci_write_config(dev, AGP_ALI_TLBCTRL, 0x10, 1);
 
@@ -256,7 +256,6 @@ static device_method_t agp_ali_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

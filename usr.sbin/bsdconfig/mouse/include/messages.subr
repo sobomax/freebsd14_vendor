@@ -22,13 +22,11 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 82cbad3088e0b9e6a6a8bf9480dc5ee61442990b $
+# $FreeBSD: 2699b9a5471cda92daea4e5609686f6cec513cfd $
 
 hline_press_enter_or_space="Press enter or space"
 msg_auto="Auto"
 msg_auto_desc="Bus mouse, PS/2 style mouse or PnP serial mouse"
-msg_busmouse="BusMouse"
-msg_busmouse_desc="Logitech, ATI or MS bus mouse (/dev/mse0)"
 msg_cancel="Cancel"
 msg_com1="COM1"
 msg_com1_desc="Serial mouse on COM1 (/dev/cuau0)"

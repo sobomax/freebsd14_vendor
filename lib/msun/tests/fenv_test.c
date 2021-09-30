@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1599644126ff61db9aa6c6120e41b59c0cd29b60 $");
+__FBSDID("$FreeBSD: 9b615b100e8ad53c81c08899a0d210c186a3c950 $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -43,13 +43,7 @@ __FBSDID("$FreeBSD: 1599644126ff61db9aa6c6120e41b59c0cd29b60 $");
 #include <string.h>
 #include <unistd.h>
 
-/*
- * Implementations are permitted to define additional exception flags
- * not specified in the standard, so it is not necessarily true that
- * FE_ALL_EXCEPT == ALL_STD_EXCEPT.
- */
-#define	ALL_STD_EXCEPT	(FE_DIVBYZERO | FE_INEXACT | FE_INVALID | \
-			 FE_OVERFLOW | FE_UNDERFLOW)
+#include "test-utils.h"
 
 #define	NEXCEPTS	(sizeof(std_excepts) / sizeof(std_excepts[0]))
 
@@ -373,7 +367,13 @@ test_fegsetenv(void)
 		assert(fegetround() == FE_TONEAREST);
 
 		assert(fesetenv(&env2) == 0);
-		assert(fetestexcept(FE_ALL_EXCEPT) == excepts);
+
+		/* 
+		 * Some platforms like powerpc may set extra exception bits. Since
+		 * only standard exceptions are tested, mask against ALL_STD_EXCEPT 
+		 */
+		assert((fetestexcept(FE_ALL_EXCEPT) & ALL_STD_EXCEPT) == excepts);
+
 		assert(fegetround() == FE_DOWNWARD);
 		assert(fesetenv(&env1) == 0);
 		assert(fetestexcept(FE_ALL_EXCEPT) == 0);

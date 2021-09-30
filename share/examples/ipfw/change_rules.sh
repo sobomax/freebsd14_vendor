@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6148630a37345ed7888f0cbce5eb415dc927bdd5 $
+# $FreeBSD: c33ce2680c4faa1aff482a77aff4f0c32a01d6d7 $
 
 # Change ipfw(8) rules with safety guarantees for remote operation
 #
@@ -149,7 +149,7 @@ cat <<!
 The new rules are now installed. The previous rules have been preserved in
 the file ${edit_file}.$DATE
 !
-diff -F "^# .*[A-Za-z]" -u ${edit_file}.$DATE ${edit_file} \
+diff -u ${edit_file}.$DATE ${edit_file} \
     | mail -s "`hostname` Firewall rule change" root
 rm ${TMPFILE}
 exit 0

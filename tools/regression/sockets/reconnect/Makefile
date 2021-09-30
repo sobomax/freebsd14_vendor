@@ -1,9 +1,8 @@
 #
-# $FreeBSD: d8fa5e09b502453241fe52cfdfc8dd5ed54c9f30 $
+# $FreeBSD: 285d075bca4b0879f5b076f5c3c55a95d834b595 $
 #
 
 PROG=	reconnect
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -23,16 +23,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5d481a937b1fb93c03d151c78f7211ecc6884012 $
+ * $FreeBSD: f2c8a43c81ea8f1ee078a7db916d57278a37157e $
  */
 
 #ifndef	_MACHINE_PSCI_H_
 #define	_MACHINE_PSCI_H_
 
 #include <sys/types.h>
+#include <dev/psci/smccc.h>
 
 typedef int (*psci_initfn_t)(device_t dev, int default_version);
-typedef int (*psci_callfn_t)(register_t, register_t, register_t, register_t);
+typedef int (*psci_callfn_t)(register_t, register_t, register_t, register_t,
+	register_t, register_t, register_t, register_t,
+	struct arm_smccc_res *res);
 
 extern int psci_present;
 
@@ -47,12 +50,8 @@ static inline int
 psci_call(register_t a, register_t b, register_t c, register_t d)
 {
 
-	return (psci_callfn(a, b, c, d));
+	return (psci_callfn(a, b, c, d, 0, 0, 0, 0, NULL));
 }
-/* One of these handlers will be selected during the boot */
-int	psci_hvc_despatch(register_t, register_t, register_t, register_t);
-int	psci_smc_despatch(register_t, register_t, register_t, register_t);
-
 
 /*
  * PSCI return codes.

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e364d13a613fd2c2edde2b0c4ada15c70d9dd1ed $");
+__FBSDID("$FreeBSD: f3f21055a09c4a7be33fb49c5c2f26ce801c5540 $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -209,6 +209,9 @@ static const char * const __efx_loopback_type_name[] = {
 	"SD_FEP1_5_WS",
 	"SD_FEP_WS",
 	"SD_FES_WS",
+	"AOE_INT_NEAR",
+	"DATA_WS",
+	"FORCE_EXT_LINK",
 };
 
 	__checkReturn	const char *

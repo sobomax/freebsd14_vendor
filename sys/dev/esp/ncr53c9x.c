@@ -100,7 +100,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98d40ce70697fc39ee37fafb0a28ae5a6de7db4e $");
+__FBSDID("$FreeBSD: 35ce9a4dbf2c83c985e5c56029b79e1a5dc4a611 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -402,6 +402,7 @@ ncr53c9x_attach(struct ncr53c9x_softc *sc)
 
 	NCR_UNLOCK(sc);
 
+	gone_in_dev(sc->sc_dev, 13, "esp(4) driver");
 	return (0);
 
 fail_async:

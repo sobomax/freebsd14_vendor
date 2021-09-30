@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: feabd7360280af00843052ad00f757ccfc0066a8 $
+ * $FreeBSD: 3eb6051035afc9df6bfbae7e57cc454c6da9033b $
  */
 #ifndef _LINUX_NET_IPV6_H_
 #define	_LINUX_NET_IPV6_H_
@@ -109,6 +109,5 @@ static inline int ipv6_addr_cmp(const struct in6_addr *a1, const struct in6_addr
 {
 	return memcmp(a1, a2, sizeof(struct in6_addr));
 }
-
 
 #endif	/* _LINUX_NET_IPV6_H_ */

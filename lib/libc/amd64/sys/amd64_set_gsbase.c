@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 039c021aae7eee96aeca5c324e139fb1698cfac9 $");
+__FBSDID("$FreeBSD: c4880c126ae9c40e72e1e0b6c198d61a79e1286c $");
 
 #define	IN_RTLD	1
 #include <sys/param.h>
@@ -57,7 +57,7 @@ amd64_set_gsbase_syscall(void *addr)
 	return (sysarch(AMD64_SET_GSBASE, &addr));
 }
 
-DEFINE_UIFUNC(, int, amd64_set_gsbase, (void *), static)
+DEFINE_UIFUNC(, int, amd64_set_gsbase, (void *))
 {
 
 	if (__getosreldate() >= P_OSREL_WRFSBASE &&

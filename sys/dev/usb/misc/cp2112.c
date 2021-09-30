@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2ead7d5371ed6be6872167dd912cab63be6cc65 $");
+__FBSDID("$FreeBSD: 7c1fc14d56d077e47d6cc4fa0dac7dc66710b37f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1079,7 +1079,6 @@ cp2112iic_read_data(struct cp2112iic_softc *sc, void *data, uint16_t in_len,
 out:
 	return (err);
 }
-
 
 static int
 cp2112iic_transfer(device_t dev, struct iic_msg *msgs, uint32_t nmsgs)

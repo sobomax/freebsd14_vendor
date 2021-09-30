@@ -1,4 +1,4 @@
-# $FreeBSD: 94f9ea40b4b4e0f697914e4bf2e96b6ced34fb63 $
+# $FreeBSD: aba3225de23c95f48b5a264f49b75468a7f0995d $
 
 # This file is meant to list all FreeBSD ports committers and describe the
 # mentor-mentee relationships between them.
@@ -33,6 +33,7 @@ asami [label="Satoshi Asami\nasami@FreeBSD.org\n1994/11/18\n2001/09/11"]
 billf [label="Bill Fumerola\nbillf@FreeBSD.org\n1998/11/11\n2006/12/14"]
 jmallett [label="Juli Mallett\njmallett@FreeBSD.org\n2003/01/16\n2006/08/10"]
 marcel [label="Marcel Moolenaar\nmarcel@FreeBSD.org\n1999/07/03\n2007/07/01"]
+sobomax[label="Maxim Sobolev\nsobomax@FreeBSD.org\n2000/05/17\n2018/12/03"]
 steve [label="Steve Price\nsteve@FreeBSD.org\nxxxx/xx/xx\nxxxx/xx/xx"]
 will [label="Will Andrews\nwill@FreeBSD.org\n2000/03/20\n2006/09/01"]
 
@@ -83,6 +84,7 @@ cperciva [label="Colin Percival\ncperciva@FreeBSD.org\n2006/01/31"]
 crees [label="Chris Rees\ncrees@FreeBSD.org\n2011/06/11"]
 cs [label="Carlo Strub\ncs@FreeBSD.org\n2011/09/13"]
 culot [label="Frederic Culot\nculot@FreeBSD.org\n2010/10/16"]
+cy [label="Cy Schubert\ncy@FreeBSD.org\n2001/11/13"]
 daichi [label="Daichi Goto\ndaichi@FreeBSD.org\n2002/10/17"]
 danfe [label="Alexey Dokuchaev\ndanfe@FreeBSD.org\n2004/08/20"]
 danilo [label="Danilo E. Gondolfo\ndanilo@FreeBSD.org\n2013/09/23"]
@@ -94,6 +96,7 @@ decke [label="Bernhard Froehlich\ndecke@FreeBSD.org\n2010/03/21"]
 delphij [label="Xin Li\ndelphij@FreeBSD.org\n2006/05/01"]
 demon [label="Dmitry Sivachenko\ndemon@FreeBSD.org\n2000/11/13"]
 dhn [label="Dennis Herrmann\ndhn@FreeBSD.org\n2009/03/03"]
+dmgk [label="Dmitri Goutnik\ndmgk@FreeBSD.org\n2019/09/15"]
 dryice [label="Dryice Dong Liu\ndryice@FreeBSD.org\n2006/12/25"]
 dteske [label="Devin Teske\ndteske@FreeBSD.org\n2018/03/01"]
 dumbbell [label="Jean-Sebastien Pedron\ndumbbell@FreeBSD.org\n2017/01/10"]
@@ -149,16 +152,20 @@ jsa [label="Joseph S. Atkinson\njsa@FreeBSD.org\n2010/07/15"]
 jsm [label="Jesper Schmitz Mouridsen\njsm@FreeBSD.org\n2018/06/30"]
 junovitch [label="Jason Unovitch\njunovitch@FreeBSD.org\n2015/07/27"]
 jylefort [label="Jean-Yves Lefort\njylefort@FreeBSD.org\n2005/04/12"]
+kai [label="Kai Knoblich\nkai@FreeBSD.org\n2019/02/01"]
 kami [label="Dominic Fandrey\nkami@FreeBSD.org\n2014/09/09"]
 kbowling [label="Kevin Bowling\nkbowling@FreeBSD.org\n2018/09/02"]
+kevans [label="Kyle Evans\nkevans@FreeBSD.org\n2020/02/14"]
 kevlo [label="Kevin Lo\nkevlo@FreeBSD.org\n2003/02/21"]
 kmoore [label="Kris Moore\nkmoore@FreeBSD.org\n2009/04/14"]
 knu [label="Akinori Musha\nknu@FreeBSD.org\n2000/03/22"]
 koitsu [label="Jeremy Chadwick\nkoitsu@FreeBSD.org\n2006/11/10"]
+koobs [label="Kubilay Kocak\nkoobs@FreeBSD.org\n2012/12/24"]
 krion [label="Kirill Ponomarew\nkrion@FreeBSD.org\n2003/07/20"]
 kwm [label="Koop Mast\nkwm@FreeBSD.org\n2004/09/14"]
 laszlof [label="Frank Laszlo\nlaszlof@FreeBSD.org\n2006/11/07"]
 lawrance [label="Sam Lawrance\nlawrance@FreeBSD.org\n2005/04/11\n2007/02/21"]
+lbartoletti [label="Loïc Bartoletti\nlbartoletti@FreeBSD.org\n2020/01/02"]
 lbr [label="Lars Balker Rasmussen\nlbr@FreeBSD.org\n2006/04/30"]
 leeym [label="Yen-Ming Lee\nleeym@FreeBSD.org\n2002/08/14"]
 ler [label="Larry Rosenman\nler@FreeBSD.org\n2017/01/09"]
@@ -188,6 +195,7 @@ meta [label="Koichiro Iwao\nmeta@FreeBSD.org\n2018/03/19"]
 mezz [label="Jeremy Messenger\nmezz@FreeBSD.org\n2004/04/30"]
 mfechner [label="Matthias Fechner\nmfechner@FreeBSD.org\n2018/03/01"]
 mharo [label="Michael Haro\nmharo@FreeBSD.org\n1999/04/13"]
+mikael [label="Mikael Urankar\nmikael@FreeBSD.org\n2020/01/16"]
 milki [label="Jonathan Chu\nmilki@FreeBSD.org\n2013/12/15"]
 misha [label="Mikhail Pchelin\nmisha@FreeBSD.org\n2016/11/15"]
 miwi [label="Martin Wilke\nmiwi@FreeBSD.org\n2006/06/04"]
@@ -195,6 +203,7 @@ mm [label="Martin Matuska\nmm@FreeBSD.org\n2007/04/04"]
 mmokhi [label="Mahdi Mokhtari\nmmokhi@FreeBSD.org\n2017/02/09"]
 mnag [label="Marcus Alves Grando\nmnag@FreeBSD.org\n2005/09/15"]
 mva [label="Marcus von Appen\nmva@FreeBSD.org\n2009/02/16"]
+nc [label="Neel Chauhan\nnc@FreeBSD.org\n2021/01/02"]
 nemysis [label="Rusmir Dusko\nnemysis@FreeBSD.org\n2013/07/31"]
 nemoliu [label="Tong Liu\nnemoliu@FreeBSD.org\n2007/04/25"]
 netchild [label="Alexander Leidinger\nnetchild@FreeBSD.org\n2002/03/19"]
@@ -206,20 +215,25 @@ obrien [label="David E. O'Brien\nobrien@FreeBSD.org\n1996/10/29"]
 olivier [label="Olivier Cochard-Labbe\nolivier@FreeBSD.org\n2016/02/02"]
 olivierd [label="Olivier Duchateau\nolivierd@FreeBSD.org\n2012/05/29"]
 osa [label="Sergey A. Osokin\nosa@FreeBSD.org\n2003/06/04"]
+otis [label="Juraj Lutter\notis@FreeBSD.org\n2020/12/12"]
 pat [label="Patrick Li\npat@FreeBSD.org\n2001/11/14"]
 pav [label="Pav Lucistnik\npav@FreeBSD.org\n2003/11/12"]
 pawel [label="Pawel Pekala\npawel@FreeBSD.org\n2011/03/11"]
 pclin [label="Po-Chien Lin\npclin@FreeBSD.org\n2013/02/11"]
+pfg [label="Pedro Giffuni\npfg@FreeBSD.org\n2019/04/14"]
 pgj [label="Gabor Pali\npgj@FreeBSD.org\n2009/04/12"]
 pgollucci [label="Philip M. Gollucci\npgollucci@FreeBSD.org\n2008/07/21"]
 philip [label="Philip Paeps\nphilip@FreeBSD.org\n2005/10/19"]
 pi [label="Kurt Jaeger\npi@FreeBSD.org\n2014/03/14"]
 pizzamig [label="Luca Pizzamiglio\npizzamig@FreeBSD.org\n2017/08/25"]
+pkubaj [label="Piotr Kubaj\npkubaj@FreeBSD.org\n2019/04/14"]
 rafan [label="Rong-En Fan\nrafan@FreeBSD.org\n2006/06/23"]
 rakuco [label="Raphael Kubo da Costa\nrakuco@FreeBSD.org\n2011/08/22"]
 rene [label="Rene Ladan\nrene@FreeBSD.org\n2010/04/11"]
 rezny [label="Matthew Rezny\nrezny@FreeBSD.org\n2017/01/09"]
+rhurlin [label="Rainer Hurling\nrhurlin@FreeBSD.org\n2020/08/31"]
 riggs [label="Thomas Zander\nriggs@FreeBSD.org\n2014/01/09"]
+rigoletto [label="Alexandre C. Guimaraes\nrigoletto@FreeBSD.org\n2018/10/01"]
 rm [label="Ruslan Makhmatkhanov\nrm@FreeBSD.org\n2011/11/06"]
 rnoland [label="Robert Noland\nrnoland@FreeBSD.org\n2008/07/21"]
 robak [label="Bartek Rutkowski\nrobak@FreeBSD.org\n2014/06/10"]
@@ -227,6 +241,8 @@ rodrigo [label="Rodrigo Osorio\nrodrigo@FreeBSD.org\n2014/01/15"]
 romain [label="Romain Tartiere\nromain@FreeBSD.org\n2010/01/24"]
 rpaulo [label="Rui Paulo\nrpaulo@FreeBSD.org\n2014/07/15"]
 sahil [label="Sahil Tandon\nsahil@FreeBSD.org\n2010/04/11"]
+salvadore [label="Lorenzo Salvadore\nsalvadore@FreeBSD.org\n2020/02/21"]
+samm [label="Alex Samorukov\nsamm@FreeBSD.org\n2019/10/09"]
 sat [label="Andrew Pantyukhin\nsat@FreeBSD.org\n2006/05/06"]
 sbruno [label="Sean Bruno\nsbruno@FreeBSD.org\n2014/09/14"]
 sbz [label="Sofian Brabez\nsbz@FreeBSD.org\n2011/03/14"]
@@ -237,8 +253,8 @@ sergei [label="Sergei Kolobov\nsergei@FreeBSD.org\n2003/10/21"]
 shaun [label="Shaun Amott\nshaun@FreeBSD.org\n2006/06/19"]
 shurd [label="Stephen Hurd\nshurd@FreeBSD.org\n2014/06/14"]
 simon [label="Simon L. Nielsen\nsimon@FreeBSD.org\n2005/01/08"]
+skozlov [label="Sergey Kozlov\nskozlov@FreeBSD.org\n2018/09/21"]
 skreuzer [label="Steven Kreuzer\nskreuzer@FreeBSD.org\n2009/03/25"]
-sobomax[label="Maxim Sobolev\nsobomax@FreeBSD.org\n2000/05/17"]
 sperber[label="Armin Pirkovitsch\nsperber@FreeBSD.org\n2012/04/15"]
 stas [label="Stanislav Sedov\nstas@FreeBSD.org\n2006/09/18"]
 stefan [label="Stefan Walter\nstefan@FreeBSD.org\n2006/05/07"]
@@ -247,6 +263,7 @@ sunpoet [label="Po-Chuan Hsieh\nsunpoet@FreeBSD.org\n2010/09/21"]
 swills [label="Steve Wills\nswills@FreeBSD.org\n2010/09/03"]
 sylvio [label="Sylvio Cesar Teixeira\nsylvio@FreeBSD.org\n2009/10/29"]
 tabthorpe [label="Thomas Abthorpe\ntabthorpe@FreeBSD.org\n2007/08/20"]
+tagattie [label="Hiroki Tagato\ntagattie@FreeBSD.org\n2020/04/01"]
 tcberner [label="Tobias C. Berner\ntcberner@FreeBSD.org\n2016/07/06"]
 tdb [label="Tim Bishop\ntdb@FreeBSD.org\n2005/11/30"]
 thierry [label="Thierry Thomas\nthierry@FreeBSD.org\n2004/03/15"]
@@ -281,6 +298,8 @@ znerd [label="Ernst de Haan\nznerd@FreeBSD.org\n2001/11/15"]
 # Group together all the mentees for a particular mentor.
 # Keep the list sorted by mentor login.
 
+"0mp" -> nc
+
 adamw -> ahze
 adamw -> jylefort
 adamw -> ler
@@ -298,11 +317,15 @@ amdmi3 -> arrowd
 
 antoine -> dumbbell
 
+araujo -> dmgk
 araujo -> egypcio
 araujo -> jhixson
 araujo -> lippe
 araujo -> pclin
 araujo -> pgollucci
+araujo -> samm
+
+arrowd -> rhurlin
 
 arved -> markus
 arved -> stefan
@@ -326,6 +349,7 @@ bapt -> ericbsd
 bapt -> grembo
 bapt -> jbeich
 bapt -> jlaffaye
+bapt -> kevans
 bapt -> manu
 bapt -> marius
 bapt -> marino
@@ -395,6 +419,7 @@ edwin -> lx
 
 ehaupt -> db
 ehaupt -> martymac
+ehaupt -> tagattie
 
 eik -> sem
 eik -> trhodes
@@ -445,6 +470,8 @@ garga -> vd
 garga -> wxs
 garga -> xride
 
+gerald -> salvadore
+
 glarkin -> avl
 glarkin -> cs
 glarkin -> rm
@@ -474,6 +501,8 @@ jadawin -> wen
 
 joerg -> netchild
 
+joneum -> kai
+
 jrm -> dch
 jrm -> jwb
 
@@ -488,6 +517,7 @@ knu -> nork
 
 koobs -> brnrd
 koobs -> kami
+koobs -> kevans
 koobs -> woodsb02
 koobs -> xmj
 
@@ -497,6 +527,7 @@ krion -> kbowling
 krion -> miwi
 krion -> novel
 krion -> philip
+krion -> samm
 krion -> sat
 krion -> sem
 krion -> sergei
@@ -514,6 +545,7 @@ ler -> leres
 lifanov -> ultima
 
 linimon -> hrs
+linimon -> pkubaj
 
 lioux -> pat
 
@@ -524,6 +556,8 @@ lwhsu -> yzlin
 
 maho -> stephen
 maho -> tota
+
+manu -> mikael
 
 marcus -> ahze
 marcus -> bland
@@ -549,6 +583,8 @@ mat -> tcberner
 mat -> thierry
 mat -> tobik
 mat -> woodsb02
+mat -> rigoletto
+mat -> pkubaj
 
 matthew -> leres
 matthew -> lifanov
@@ -570,6 +606,7 @@ miwi -> gahr
 miwi -> jhixson
 miwi -> joneum
 miwi -> jsm
+miwi -> kai
 miwi -> kmoore
 miwi -> lme
 miwi -> makc
@@ -603,6 +640,7 @@ obrien -> gerald
 
 olivier -> pizzamig
 
+osa -> otis
 osa -> vg
 
 pat -> adamw
@@ -622,10 +660,13 @@ pgollucci -> junovitch
 pgollucci -> sunpoet
 pgollucci -> swills
 
+philip -> fox
 philip -> koitsu
 
 pi -> meta
 pi -> tz
+
+pizzamig -> tagattie
 
 rafan -> chinsan
 
@@ -650,6 +691,8 @@ sahil -> culot
 sahil -> eadler
 
 sat -> beech
+
+sbruno -> skozlov
 
 sem -> az
 sem -> anray
@@ -677,8 +720,10 @@ swills -> feld
 swills -> jmd
 swills -> jrm
 swills -> jsm
+swills -> lbartoletti
 swills -> mfechner
 swills -> milki
+swills -> otis
 swills -> pclin
 swills -> rezny
 swills -> robak
@@ -704,19 +749,27 @@ tabthorpe -> zi
 tabthorpe -> gblach
 
 tcberner -> adridg
-tcberner -> joneum
-tcberner -> yuri
-tcberner -> fernape
 tcberner -> arrowd
+tcberner -> fernape
+tcberner -> joneum
+tcberner -> kai
+tcberner -> lbartoletti
+tcberner -> pkubaj
+tcberner -> rhurlin
+tcberner -> rigoletto
+tcberner -> salvadore
+tcberner -> yuri
 
 thierry -> jadawin
 thierry -> riggs
+thierry -> pfg
 
 timur -> kbowling
 
 tmclaugh -> itetcu
 tmclaugh -> xride
 
+tz -> dmgk
 tz -> joneum
 tz -> fernape
 tz -> mfechner

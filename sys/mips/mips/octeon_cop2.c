@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab7308cf06d8c523803b991cd14771398a2f2bb8 $");
+__FBSDID("$FreeBSD: 4d76643c618a9897e2efb6d04575dba2128dec46 $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -46,7 +46,7 @@ octeon_cop2_init(void* dummy)
 	printf("Create COP2 context zone\n");
 	ctxzone = uma_zcreate("COP2 context",
 	                        sizeof(struct octeon_cop2_state), 
-				NULL, NULL, NULL, NULL, 8, 0);
+				NULL, NULL, NULL, NULL, UMA_ALIGN_LONG, 0);
 }
 
 struct octeon_cop2_state *

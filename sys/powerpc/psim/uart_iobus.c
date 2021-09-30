@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6ddf147cd554c74101948e51c4a88f9981cfc75d $
+ * $FreeBSD: 9aa0a345d324fc1045a03408cdffd243382057e8 $
  */
 
 /*
@@ -58,7 +58,6 @@ static device_method_t uart_iobus_methods[] = {
 	DEVMETHOD(device_probe,		uart_iobus_probe),
 	DEVMETHOD(device_attach,	uart_bus_attach),
 	DEVMETHOD(device_detach,	uart_bus_detach),
-
 	{ 0, 0 }
 };
 

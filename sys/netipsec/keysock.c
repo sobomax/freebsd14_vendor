@@ -1,4 +1,4 @@
-/*	$FreeBSD: a216f085c1bc32901c40637d93ab81c475d28019 $	*/
+/*	$FreeBSD: 49efa0a3c510816c6fb37b9d00082c374b00ce6c $	*/
 /*	$KAME: keysock.c,v 1.25 2001/08/13 20:07:41 itojun Exp $	*/
 
 /*-
@@ -431,7 +431,8 @@ struct pr_usrreqs key_usrreqs = {
 };
 
 /* sysctl */
-SYSCTL_NODE(_net, PF_KEY, key, CTLFLAG_RW, 0, "Key Family");
+SYSCTL_NODE(_net, PF_KEY, key, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Key Family");
 
 /*
  * Definitions of protocols supported in the KEY domain.

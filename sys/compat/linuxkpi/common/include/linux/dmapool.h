@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 80d74f1537477eae00c4cf5696a62083375c0e94 $
+ * $FreeBSD: 980d5d74884f88e9b050a41f0546845b5ea9f054 $
  */
 #ifndef _LINUX_DMAPOOL_H_
 #define	_LINUX_DMAPOOL_H_
@@ -81,6 +81,5 @@ dma_pool_free(struct dma_pool *pool, void *vaddr, dma_addr_t dma_addr)
 
 	linux_dma_pool_free(pool, vaddr, dma_addr);
 }
-
 
 #endif /* _LINUX_DMAPOOL_H_ */

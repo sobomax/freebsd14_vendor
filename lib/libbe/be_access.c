@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60375d0cbc12ce280c4a81b3ceb14181debfd120 $");
+__FBSDID("$FreeBSD: 74059a0a56930cdc85cfc5712a64cdbdc6625d33 $");
 
 #include <sys/mntent.h>
 
@@ -232,8 +232,8 @@ be_mounted_at(libbe_handle_t *lbh, const char *path, nvlist_t *details)
  * usage
  */
 int
-be_mount(libbe_handle_t *lbh, char *bootenv, char *mountpoint, int flags,
-    char *result_loc)
+be_mount(libbe_handle_t *lbh, const char *bootenv, const char *mountpoint,
+    int flags, char *result_loc)
 {
 	char be[BE_MAXPATHLEN];
 	char mnt_temp[BE_MAXPATHLEN];
@@ -288,7 +288,7 @@ be_mount(libbe_handle_t *lbh, char *bootenv, char *mountpoint, int flags,
  * usage
  */
 int
-be_unmount(libbe_handle_t *lbh, char *bootenv, int flags)
+be_unmount(libbe_handle_t *lbh, const char *bootenv, int flags)
 {
 	int err;
 	char be[BE_MAXPATHLEN];

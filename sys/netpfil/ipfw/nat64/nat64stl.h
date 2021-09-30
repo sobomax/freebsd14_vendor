@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 54ecfcac002b6cb33db92d638e7bb178765b0582 $
+ * $FreeBSD: 385e92a7e4ef362b7b51e8ed8a21ef0eeb4ab458 $
  */
 
 #ifndef	_IP_FW_NAT64STL_H_
@@ -57,4 +57,3 @@ int ipfw_nat64stl(struct ip_fw_chain *chain, struct ip_fw_args *args,
     ipfw_insn *cmd, int *done);
 
 #endif
-

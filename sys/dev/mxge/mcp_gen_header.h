@@ -26,7 +26,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD: ecb6427a3dd3f501b47851ef7fdb5377c45ebfe5 $
+$FreeBSD: 629ab4a38525d0b78981c3b249bdb108c5713b59 $
 ***************************************************************************/
 
 #ifndef _mcp_gen_header_h
@@ -57,14 +57,12 @@ $FreeBSD: ecb6427a3dd3f501b47851ef7fdb5377c45ebfe5 $
    };
 */
 
-
 #define MCP_HEADER_PTR_OFFSET  0x3c
 
 #define MCP_TYPE_MX 0x4d582020 /* "MX  " */
 #define MCP_TYPE_PCIE 0x70636965 /* "PCIE" pcie-only MCP */
 #define MCP_TYPE_ETH 0x45544820 /* "ETH " */
 #define MCP_TYPE_MCP0 0x4d435030 /* "MCP0" */
-
 
 typedef struct mcp_gen_header {
   /* the first 4 fields are filled at compile time */
@@ -99,6 +97,5 @@ typedef struct mcp_gen_header {
     (unsigned int) STRING_SPECS,				\
     256								\
   }
-
 
 #endif /* _mcp_gen_header_h */

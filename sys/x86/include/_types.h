@@ -35,7 +35,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: 2c7301dd857fd02949eaee7baed6d35e30896e67 $
+ * $FreeBSD: 68dd7eba6ce1b9c087913565e1086d5a51c81a29 $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -135,11 +135,7 @@ typedef	__uint64_t	__vm_size_t;
 #else
 typedef	__uint32_t	__u_register_t;
 typedef	__uint32_t	__vm_offset_t;
-#ifdef PAE
 typedef	__uint64_t	__vm_paddr_t;
-#else
-typedef	__uint32_t	__vm_paddr_t;
-#endif
 typedef	__uint32_t	__vm_size_t;
 #endif
 typedef	int		___wchar_t;

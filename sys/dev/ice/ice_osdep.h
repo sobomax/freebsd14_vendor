@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2020, Intel Corporation
+/*  Copyright (c) 2021, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: cb7ba605b5b49e07d1880fcfb0bbbb52ce967edf $*/
+/*$FreeBSD: 0c7d42911fb0ce00f45c2daa52f20c87fd57bbb5 $*/
 
 /**
  * @file ice_osdep.h

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fc19e497c691689ba030e5e0964dee588f42e28b $
+ * $FreeBSD: 1f9c9756db023b153e4814375ea393f951628964 $
  */
 
 #include <sys/param.h>
@@ -185,7 +185,6 @@ evdev_support_mt_compat(struct evdev_dev *evdev)
 	for (i = 0; i < nitems(evdev_mtstmap); i++)
 		if (bit_test(evdev->ev_abs_flags, evdev_mtstmap[i][0]))
 			evdev_support_abs(evdev, evdev_mtstmap[i][1],
-			    evdev->ev_absinfo[evdev_mtstmap[i][0]].value,
 			    evdev->ev_absinfo[evdev_mtstmap[i][0]].minimum,
 			    evdev->ev_absinfo[evdev_mtstmap[i][0]].maximum,
 			    evdev->ev_absinfo[evdev_mtstmap[i][0]].fuzz,

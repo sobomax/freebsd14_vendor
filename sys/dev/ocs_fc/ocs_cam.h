@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2de549fe8f6e531dbfb41f94ecf4401c15b50b25 $
+ * $FreeBSD: 57859f42d987ca1458b8d4664a2342d9021aa68f $
  */
 
 #ifndef __OCS_CAM_H__
@@ -41,7 +41,6 @@
 #include <cam/cam_xpt_sim.h>
 
 #include <cam/scsi/scsi_message.h>
-
 
 #define ccb_ocs_ptr     spriv_ptr0
 #define ccb_io_ptr      spriv_ptr1
@@ -119,4 +118,3 @@ extern int32_t ocs_cam_attach(ocs_t *ocs);
 extern int32_t ocs_cam_detach(ocs_t *ocs);
 
 #endif /* __OCS_CAM_H__ */
-

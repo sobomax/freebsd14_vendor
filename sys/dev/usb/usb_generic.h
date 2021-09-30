@@ -1,4 +1,4 @@
-/* $FreeBSD: d03f25cd945532f6690fdb874bbb9973397d81d8 $ */
+/* $FreeBSD: fe59310634da3f5578da919bb544fb39254433e2 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -31,5 +31,6 @@
 
 extern struct usb_fifo_methods usb_ugen_methods;
 int	ugen_do_request(struct usb_fifo *f, struct usb_ctl_request *ur);
+int	ugen_fill_deviceinfo(struct usb_fifo *f, struct usb_device_info *di);
 
 #endif					/* _USB_GENERIC_H_ */

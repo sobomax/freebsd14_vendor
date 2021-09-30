@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f04d3ff25451da2ab8b82fcefce1f2138ab2f63 $");
+__FBSDID("$FreeBSD: 3db5c982b59ac182ddeecd06943f6488000b08b3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -248,7 +248,6 @@ imxccm_attach(device_t dev)
 	    imx51_get_clock(IMX51CLK_AHB_CLK_ROOT),
 	    imx51_get_clock(IMX51CLK_IPG_CLK_ROOT),
 	    imx51_get_clock(IMX51CLK_PERCLK_ROOT));
-
 
 	return (0);
 
@@ -437,7 +436,6 @@ imx51_get_clock(enum imx51_clock clk)
 		return 0;
 	}
 }
-
 
 static uint64_t
 imx51_get_pll_freq(u_int pll_no)
@@ -661,4 +659,3 @@ imx_ccm_ahb_hz(void)
 
 	return (imx51_get_clock(IMX51CLK_AHB_CLK_ROOT));
 }
-

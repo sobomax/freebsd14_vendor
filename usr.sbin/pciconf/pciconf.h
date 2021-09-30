@@ -29,13 +29,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4b31372cd963d6d9ab19fb8338c726148e651a25 $
+ * $FreeBSD: 353c361f302aef7d3851c40298dfa405cb923ce8 $
  */
 
 #ifndef __PCICONF_H__
 #define	__PCICONF_H__
 
-void	list_caps(int fd, struct pci_conf *p);
+void	list_caps(int fd, struct pci_conf *p, int level);
 void	list_errors(int fd, struct pci_conf *p);
 uint8_t	pci_find_cap(int fd, struct pci_conf *p, uint8_t id);
 uint16_t pcie_find_cap(int fd, struct pci_conf *p, uint16_t id);

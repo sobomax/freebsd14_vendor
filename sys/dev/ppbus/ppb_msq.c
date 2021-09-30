@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7eb6df407384119a824fb13dcd990ec9fc3aab15 $");
+__FBSDID("$FreeBSD: 3b40a134f4bd3460d68e6a2e451e5d5b335a52cd $");
 #include <machine/stdarg.h>
 
 #include <sys/param.h>
@@ -343,4 +343,3 @@ ppb_MS_microseq(device_t bus, device_t dev, struct ppb_microseq *msq, int *ret)
 error:
 	return (error);
 }
-

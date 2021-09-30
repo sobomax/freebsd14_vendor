@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a420f91447a0a49bbd74ad6028e93c97a25e2cf $");
+__FBSDID("$FreeBSD: 539e4f905b30e861ed61da4dc544393270259e35 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -124,7 +124,6 @@ omap4_wugen_pre_ithread(device_t dev, struct intr_irqsrc *isrc)
 
 	PIC_PRE_ITHREAD(sc->sc_parent, isrc);
 }
-
 
 static void
 omap4_wugen_post_ithread(device_t dev, struct intr_irqsrc *isrc)

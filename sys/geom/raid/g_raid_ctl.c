@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 228c86c9ca1e5de2a2ce01b75394640e4e1f5251 $");
+__FBSDID("$FreeBSD: 7ca4a8588d021fd34585c7c3969cab7a5a4c4b12 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: 228c86c9ca1e5de2a2ce01b75394640e4e1f5251 $");
 #include <sys/kthread.h>
 #include <geom/raid/g_raid.h>
 #include "g_raid_md_if.h"
-
 
 static struct g_raid_softc *
 g_raid_find_node(struct g_class *mp, const char *name)

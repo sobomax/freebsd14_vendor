@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efd91bfdaed5e439e35b6ab411a5fb76a4a0535a $");
+__FBSDID("$FreeBSD: a56485512a14d38debb50f33000f80ff5b22f802 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -120,4 +120,3 @@ linux_hrtimer_forward_now(struct hrtimer *hrtimer, ktime_t interval)
 	    nstosbt(hrtimer->precision), hrtimer_call_handler, hrtimer, 0);
 	mtx_unlock(&hrtimer->mtx);
 }
-

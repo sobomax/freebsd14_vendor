@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 16364131eff4136973b9477d57cd5d4546d20b3f $
+ * $FreeBSD: 030c4da1fe8fa341796a1413505cd23e1a570d44 $
  */
 
 #include <machine/asm.h>	
@@ -36,4 +36,4 @@ ASENTRY(mambocall)
 	 */
 	.long 0x000EAEB0
 	blr
-
+ASEND(mambocall)

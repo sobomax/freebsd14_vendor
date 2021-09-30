@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_main.c,v 1.2 2003/03/18 00:09:36 max Exp $
- * $FreeBSD: ad3bd403de7fc795a2a12038aa9167b3cdcae79e $
+ * $FreeBSD: 2d93a79cd6797a6ea6608abcbd24e41c4b5dc656 $
  */
 
 #include <sys/param.h>
@@ -755,7 +755,7 @@ ng_hci_drv_rcvdata(hook_p hook, item_p item)
 		} else
 			NG_FWD_ITEM_HOOK(error, item, unit->sco);
 		break;
-	
+
 	case NG_HCI_EVENT_PKT:
 		NG_HCI_STAT_EVNT_RECV(unit->stat);
 
@@ -1101,4 +1101,3 @@ drop:
 
 	return (error);
 } /* ng_hci_raw_rcvdata */
-

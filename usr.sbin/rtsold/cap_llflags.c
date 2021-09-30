@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2c07df7379d0e8727d7594e02dac909b70f9aa6 $");
+__FBSDID("$FreeBSD: 195f83893b4dacb0603634b5cf406429ada79d3a $");
 
 #include <sys/types.h>
 #include <sys/dnv.h>
@@ -72,9 +72,12 @@ llflags_get(const char *ifname, int *flagsp)
 	if (s < 0)
 		return (-1);
 
-	if (getifaddrs(&ifap) != 0)
-		return (-1);
-	error = -1;
+	ifap = NULL;
+	if (getifaddrs(&ifap) != 0) {
+		error = errno;
+		goto out;
+	}
+	error = ENOENT;
 	for (ifa = ifap; ifa != NULL; ifa = ifa->ifa_next) {
 		if (strcmp(ifa->ifa_name, ifname) != 0)
 			continue;
@@ -88,27 +91,29 @@ llflags_get(const char *ifname, int *flagsp)
 		memset(&ifr6, 0, sizeof(ifr6));
 		if (strlcpy(ifr6.ifr_name, ifname, sizeof(ifr6.ifr_name)) >=
 		    sizeof(ifr6.ifr_name)) {
-			freeifaddrs(ifap);
-			errno = EINVAL;
-			return (-1);
+			error = errno;
+			goto out;
 		}
 		memcpy(&ifr6.ifr_ifru.ifru_addr, sin6, sin6->sin6_len);
 		if (ioctl(s, SIOCGIFAFLAG_IN6, &ifr6) < 0) {
 			error = errno;
-			freeifaddrs(ifap);
-			errno = error;
-			return (-1);
+			goto out;
 		}
 
 		*flagsp = ifr6.ifr_ifru.ifru_flags6;
 		error = 0;
 		break;
 	}
+out:
 	(void)close(s);
-	freeifaddrs(ifap);
-	if (error == -1)
-		errno = ENOENT;
-	return (error);
+	if (ifap != NULL)
+		freeifaddrs(ifap);
+	if (error != 0) {
+		errno = error;
+		return (-1);
+	} else {
+		return (0);
+	}
 }
 
 int

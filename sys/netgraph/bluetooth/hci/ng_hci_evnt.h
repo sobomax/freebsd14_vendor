@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_evnt.h,v 1.1 2002/11/24 19:46:58 max Exp $
- * $FreeBSD: 1f11b416eae9d61ac9f75a225b02992c704a2a68 $
+ * $FreeBSD: efc958d3be9e3159487e057530aec407488e4ba7 $
  */
 
 #ifndef _NETGRAPH_HCI_EVNT_H_
@@ -44,4 +44,3 @@ int	ng_hci_process_event	(ng_hci_unit_p, struct mbuf *);
 void	ng_hci_send_data	(ng_hci_unit_p);
 
 #endif /* ndef _NETGRAPH_HCI_EVNT_H_ */
-

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e731c628df9d2dff7e043d7b6c2b3529a19cd99 $
+ * $FreeBSD: ac469585cafe998ff5e70d7125211fa559f519a9 $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_IPC_H_
@@ -59,7 +59,6 @@ struct semid_kernel32 {
 	int32_t			cred;
 };
 #endif /* _KERNEL */
-
 
 union semun32 {
 	int		val;

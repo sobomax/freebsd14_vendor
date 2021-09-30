@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 66d9070f1303ed22cca756c98c502c5c91800a4f $
+ * $FreeBSD: 4926b6f357296c59aa29ea7e29c6e50d38656a88 $
  */
 
 FBSD_1.0 {
@@ -177,6 +177,7 @@ FBSD_1.6 {
 	fputs_unlocked;
 	fread_unlocked;
 	fwrite_unlocked;
+	mkostempsat;
 };
 
 FBSDprivate_1.0 {

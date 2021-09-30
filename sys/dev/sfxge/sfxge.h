@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 6cfc6cf5c17fa1015b5b92db7fcec82a1b27f2f3 $
+ * $FreeBSD: 07e7ede97309a2ace00222f4257f66b404843b90 $
  */
 
 #ifndef _SFXGE_H
@@ -93,11 +93,6 @@
 #define	IFM_40G_CR4 IFM_UNKNOWN
 #endif
 
-#if (__FreeBSD_version >= 800501 && __FreeBSD_version < 900000) || \
-	__FreeBSD_version >= 900003
-#define	SFXGE_HAVE_DESCRIBE_INTR
-#endif
-
 #ifdef IFM_ETH_RXPAUSE
 #define	SFXGE_HAVE_PAUSE_MEDIAOPTS
 #endif
@@ -114,7 +109,6 @@
 #define	SFXGE_IP_ALIGN	2
 
 #define	SFXGE_ETHERTYPE_LOOPBACK	0x9000	/* Xerox loopback */
-
 
 #define	SFXGE_MAGIC_RESERVED		0x8000
 
@@ -287,6 +281,8 @@ struct sfxge_softc {
 	struct task			task_reset;
 
 	efx_family_t			family;
+	unsigned int			mem_bar;
+
 	caddr_t				vpd_data;
 	size_t				vpd_size;
 	efx_nic_t			*enp;

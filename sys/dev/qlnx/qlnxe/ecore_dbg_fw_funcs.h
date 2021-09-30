@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f56fc14c18740fa790c472724af5c1382e36b3f6 $
+ * $FreeBSD: 76d0f5f054f8eb91288c472015bd97c6840788dc $
  *
  */
 
@@ -892,6 +892,5 @@ enum dbg_status ecore_dbg_print_attn(struct ecore_hwfn *p_hwfn,
 bool ecore_is_block_in_reset(struct ecore_hwfn *p_hwfn,
 							 struct ecore_ptt *p_ptt,
 							 enum block_id block);
-
 
 #endif

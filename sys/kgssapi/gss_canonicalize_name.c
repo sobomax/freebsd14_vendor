@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3af222d549d6d210d769abbb42a350078436ba5 $");
+__FBSDID("$FreeBSD: b1e2f9fe81b8b9462d8e9a46fed8f6fb7de69323 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -61,7 +61,7 @@ gss_canonicalize_name(OM_uint32 *minor_status,
 
 	args.input_name = input_name->handle;
 	args.mech_type = mech_type;
-	
+
 	bzero(&res, sizeof(res));
 	stat = gssd_canonicalize_name_1(&args, &res, cl);
 	CLNT_RELEASE(cl);

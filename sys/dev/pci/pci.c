@@ -29,22 +29,27 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c453cb5e96f4aa2296e4f9e786aa0787c10407c $");
+__FBSDID("$FreeBSD: 1ca128a48ad07500f2b994792685ecae813d08cf $");
 
+#include "opt_acpi.h"
+#include "opt_iommu.h"
 #include "opt_bus.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/module.h>
+#include <sys/conf.h>
+#include <sys/endian.h>
+#include <sys/eventhandler.h>
+#include <sys/fcntl.h>
+#include <sys/kernel.h>
 #include <sys/limits.h>
 #include <sys/linker.h>
-#include <sys/fcntl.h>
-#include <sys/conf.h>
-#include <sys/kernel.h>
+#include <sys/malloc.h>
+#include <sys/module.h>
 #include <sys/queue.h>
 #include <sys/sysctl.h>
-#include <sys/endian.h>
+#include <sys/systm.h>
+#include <sys/taskqueue.h>
+#include <sys/tree.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
@@ -74,6 +79,8 @@ __FBSDID("$FreeBSD: 2c453cb5e96f4aa2296e4f9e786aa0787c10407c $");
 #include <dev/usb/controller/ehcireg.h>
 #include <dev/usb/controller/ohcireg.h>
 #include <dev/usb/controller/uhcireg.h>
+
+#include <dev/iommu/iommu.h>
 
 #include "pcib_if.h"
 #include "pci_if.h"
@@ -219,7 +226,8 @@ static device_method_t pci_methods[] = {
 DEFINE_CLASS_0(pci, pci_driver, pci_methods, sizeof(struct pci_softc));
 
 static devclass_t pci_devclass;
-DRIVER_MODULE(pci, pcib, pci_driver, pci_devclass, pci_modevent, NULL);
+EARLY_DRIVER_MODULE(pci, pcib, pci_driver, pci_devclass, pci_modevent, NULL,
+    BUS_PASS_BUS);
 MODULE_VERSION(pci, 1);
 
 static char	*pci_vendordata;
@@ -272,13 +280,6 @@ static const struct pci_quirk pci_quirks[] = {
 	{ 0x74501022, PCI_QUIRK_DISABLE_MSI,	0,	0 },
 
 	/*
-	 * MSI-X allocation doesn't work properly for devices passed through
-	 * by VMware up to at least ESXi 5.1.
-	 */
-	{ 0x079015ad, PCI_QUIRK_DISABLE_MSIX,	0,	0 }, /* PCI/PCI-X */
-	{ 0x07a015ad, PCI_QUIRK_DISABLE_MSIX,	0,	0 }, /* PCIe */
-
-	/*
 	 * Some virtualization environments emulate an older chipset
 	 * but support MSI just fine.  QEMU uses the Intel 82440.
 	 */
@@ -321,7 +322,6 @@ static const struct pci_quirk pci_quirks[] = {
 	 * expected place.
 	 */
 	{ 0x98741002, PCI_QUIRK_REALLOC_BAR,	0, 	0 },
-
 	{ 0 }
 };
 
@@ -336,7 +336,8 @@ uint32_t pci_numdevs = 0;
 static int pcie_chipset, pcix_chipset;
 
 /* sysctl vars */
-SYSCTL_NODE(_hw, OID_AUTO, pci, CTLFLAG_RD, 0, "PCI bus tuning parameters");
+SYSCTL_NODE(_hw, OID_AUTO, pci, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "PCI bus tuning parameters");
 
 static int pci_enable_io_modes = 1;
 SYSCTL_INT(_hw_pci, OID_AUTO, enable_io_modes, CTLFLAG_RWTUN,
@@ -345,7 +346,7 @@ SYSCTL_INT(_hw_pci, OID_AUTO, enable_io_modes, CTLFLAG_RWTUN,
     " enable these bits correctly.  We'd like to do this all the time, but"
     " there are some peripherals that this causes problems with.");
 
-static int pci_do_realloc_bars = 0;
+static int pci_do_realloc_bars = 1;
 SYSCTL_INT(_hw_pci, OID_AUTO, realloc_bars, CTLFLAG_RWTUN,
     &pci_do_realloc_bars, 0,
     "Attempt to allocate a new range for any BARs whose original "
@@ -411,7 +412,7 @@ static int pci_enable_ari = 1;
 SYSCTL_INT(_hw_pci, OID_AUTO, enable_ari, CTLFLAG_RDTUN, &pci_enable_ari,
     0, "Enable support for PCIe Alternative RID Interpretation");
 
-int pci_enable_aspm;
+int pci_enable_aspm = 1;
 SYSCTL_INT(_hw_pci, OID_AUTO, enable_aspm, CTLFLAG_RDTUN, &pci_enable_aspm,
     0, "Enable support for PCIe Active State Power Management");
 
@@ -446,18 +447,18 @@ pci_find_bsf(uint8_t bus, uint8_t slot, uint8_t func)
 device_t
 pci_find_dbsf(uint32_t domain, uint8_t bus, uint8_t slot, uint8_t func)
 {
-	struct pci_devinfo *dinfo;
+	struct pci_devinfo *dinfo = NULL;
 
 	STAILQ_FOREACH(dinfo, &pci_devq, pci_links) {
 		if ((dinfo->cfg.domain == domain) &&
 		    (dinfo->cfg.bus == bus) &&
 		    (dinfo->cfg.slot == slot) &&
 		    (dinfo->cfg.func == func)) {
-			return (dinfo->cfg.dev);
+			break;
 		}
 	}
 
-	return (NULL);
+	return (dinfo != NULL ? dinfo->cfg.dev : NULL);
 }
 
 /* Find a device_t by vendor/device ID */
@@ -483,6 +484,28 @@ pci_find_class(uint8_t class, uint8_t subclass)
 	struct pci_devinfo *dinfo;
 
 	STAILQ_FOREACH(dinfo, &pci_devq, pci_links) {
+		if (dinfo->cfg.baseclass == class &&
+		    dinfo->cfg.subclass == subclass) {
+			return (dinfo->cfg.dev);
+		}
+	}
+
+	return (NULL);
+}
+
+device_t
+pci_find_class_from(uint8_t class, uint8_t subclass, device_t from)
+{
+	struct pci_devinfo *dinfo;
+	bool found = false;
+
+	STAILQ_FOREACH(dinfo, &pci_devq, pci_links) {
+		if (from != NULL && found == false) {
+			if (from != dinfo->cfg.dev)
+				continue;
+			found = true;
+			continue;
+		}
 		if (dinfo->cfg.baseclass == class &&
 		    dinfo->cfg.subclass == subclass) {
 			return (dinfo->cfg.dev);
@@ -771,7 +794,6 @@ pci_ea_fill_info(device_t pcib, pcicfgregs *cfg)
 		ptr += 4;
 
 	for (a = 0; a < num_ent; a++) {
-
 		eae = malloc(sizeof(*eae), M_DEVBUF, M_WAITOK | M_ZERO);
 		eae->eae_cfg_offset = cfg->ea.ea_location + ptr;
 
@@ -2366,7 +2388,6 @@ pci_remap_intr_method(device_t bus, device_t dev, u_int irq)
 	 * data registers and apply the results.
 	 */
 	if (cfg->msi.msi_alloc > 0) {
-
 		/* If we don't have any active handlers, nothing to do. */
 		if (cfg->msi.msi_handlers == 0)
 			return (0);
@@ -2596,7 +2617,6 @@ pci_alloc_msi_method(device_t dev, device_t child, int *count)
 			device_printf(child, "using IRQs %d", irqs[0]);
 			run = 0;
 			for (i = 1; i < actual; i++) {
-
 				/* Still in a run? */
 				if (irqs[i] == irqs[i - 1] + 1) {
 					run = 1;
@@ -3865,7 +3885,6 @@ pci_add_resources_ea(device_t bus, device_t dev, int alloc_iov)
 		return;
 
 	STAILQ_FOREACH(ea, &dinfo->cfg.ea.ea_entries, eae_link) {
-
 		/*
 		 * TODO: Ignore EA-BAR if is not enabled.
 		 *   Currently the EA implementation supports
@@ -5264,7 +5283,6 @@ DB_SHOW_COMMAND(pciregs, db_pci_dump)
 	     dinfo = STAILQ_FIRST(devlist_head);
 	     (dinfo != NULL) && (error == 0) && (i < pci_numdevs) && !db_pager_quit;
 	     dinfo = STAILQ_NEXT(dinfo, pci_links), i++) {
-
 		/* Populate pd_name and pd_unit */
 		name = NULL;
 		if (dinfo->cfg.dev)
@@ -5688,6 +5706,25 @@ pci_get_resource_list (device_t dev, device_t child)
 	return (&dinfo->resources);
 }
 
+#ifdef IOMMU
+bus_dma_tag_t
+pci_get_dma_tag(device_t bus, device_t dev)
+{
+	bus_dma_tag_t tag;
+	struct pci_softc *sc;
+
+	if (device_get_parent(dev) == bus) {
+		/* try iommu and return if it works */
+		tag = iommu_get_dma_tag(bus, dev);
+	} else
+		tag = NULL;
+	if (tag == NULL) {
+		sc = device_get_softc(bus);
+		tag = sc->sc_dma_tag;
+	}
+	return (tag);
+}
+#else
 bus_dma_tag_t
 pci_get_dma_tag(device_t bus, device_t dev)
 {
@@ -5695,6 +5732,7 @@ pci_get_dma_tag(device_t bus, device_t dev)
 
 	return (sc->sc_dma_tag);
 }
+#endif
 
 uint32_t
 pci_read_config_method(device_t dev, device_t child, int reg, int width)

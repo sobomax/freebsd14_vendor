@@ -1,5 +1,4 @@
 # Copyright (c) 2012 Edward Tomasz Napierała <trasz@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -22,7 +21,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d12e565db4aa27608c997588e2cf72faf9e8fd7c $
+# $FreeBSD: 0dd5208260563bb5cb2910c9149011525c774147 $
 #
 
 check_diskinfo()

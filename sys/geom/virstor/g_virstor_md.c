@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7fdfb0ad45917150fbfe2c8e735938e0bc6b908 $");
+__FBSDID("$FreeBSD: 9a9eac350abe05b11970a5fc1c69f98e21dd0b7d $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -62,7 +62,6 @@ virstor_metadata_encode(struct g_virstor_metadata *md, unsigned char *data)
 	bs_write_u16(&bs, md->chunk_reserved);
 	bs_write_u16(&bs, md->flags);
 }
-
 
 /*
  * Decode data from endian-independant byte stream into g_virstor_metadata

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7312a203e4c5afc9a3e59024881260b0175e176c $
+ * $FreeBSD: 1aac03ae8c30a5abfc9f6ca92a53256a3a8f2586 $
  *
  */
 #ifndef __AW_WDOG_H__
@@ -32,4 +32,3 @@
 void aw_wdog_watchdog_reset(void);
 
 #endif /*__AW_WDOG_H__*/
-

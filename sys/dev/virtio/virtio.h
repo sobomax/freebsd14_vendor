@@ -25,15 +25,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 15e598a11d16bdb79ce21615c87303fa1154a7a2 $
+ * $FreeBSD: b22327351b43f81dab67c090662f3857ead95ed5 $
  */
 
 #ifndef _VIRTIO_H_
 #define _VIRTIO_H_
 
+#include <dev/virtio/virtio_endian.h>
 #include <dev/virtio/virtio_ids.h>
 #include <dev/virtio/virtio_config.h>
 
+struct sbuf;
 struct vq_alloc_info;
 
 /*
@@ -57,15 +59,42 @@ struct vq_alloc_info;
 #define VIRTIO_IVAR_DEVICE		4
 #define VIRTIO_IVAR_SUBVENDOR		5
 #define VIRTIO_IVAR_SUBDEVICE		6
+#define VIRTIO_IVAR_MODERN		7
 
 struct virtio_feature_desc {
 	uint64_t	 vfd_val;
 	const char	*vfd_str;
 };
 
+#define VIRTIO_DRIVER_MODULE(name, driver, devclass, evh, arg)		\
+	DRIVER_MODULE(name, virtio_mmio, driver, devclass, evh, arg);	\
+	DRIVER_MODULE(name, virtio_pci, driver, devclass, evh, arg)
+
+struct virtio_pnp_match {
+	uint32_t	 device_type;
+	const char	*description;
+};
+#define VIRTIO_SIMPLE_PNPINFO(driver, devtype, desc)			\
+	static const struct virtio_pnp_match driver ## _match = {	\
+		.device_type = devtype,					\
+		.description = desc,					\
+	};								\
+	MODULE_PNP_INFO("U32:device_type;D:#", virtio_mmio, driver,	\
+	    &driver ## _match, 1);					\
+	MODULE_PNP_INFO("U32:device_type;D:#", virtio_pci, driver,	\
+	    &driver ## _match, 1)
+#define VIRTIO_SIMPLE_PROBE(dev, driver)				\
+	(virtio_simple_probe(dev, &driver ## _match))
+
 const char *virtio_device_name(uint16_t devid);
 void	 virtio_describe(device_t dev, const char *msg,
-	     uint64_t features, struct virtio_feature_desc *feature_desc);
+	     uint64_t features, struct virtio_feature_desc *desc);
+int	 virtio_describe_sbuf(struct sbuf *sb, uint64_t features,
+	     struct virtio_feature_desc *desc);
+uint64_t virtio_filter_transport_features(uint64_t features);
+int	 virtio_bus_is_modern(device_t dev);
+void	 virtio_read_device_config_array(device_t dev, bus_size_t offset,
+	     void *dst, int size, int count);
 
 /*
  * VirtIO Bus Methods.
@@ -73,6 +102,7 @@ void	 virtio_describe(device_t dev, const char *msg,
 void	 virtio_read_ivar(device_t dev, int ivar, uintptr_t *val);
 void	 virtio_write_ivar(device_t dev, int ivar, uintptr_t val);
 uint64_t virtio_negotiate_features(device_t dev, uint64_t child_features);
+int	 virtio_finalize_features(device_t dev);
 int	 virtio_alloc_virtqueues(device_t dev, int flags, int nvqs,
 	     struct vq_alloc_info *info);
 int	 virtio_setup_intr(device_t dev, enum intr_type type);
@@ -81,6 +111,8 @@ void	 virtio_stop(device_t dev);
 int	 virtio_config_generation(device_t dev);
 int	 virtio_reinit(device_t dev, uint64_t features);
 void	 virtio_reinit_complete(device_t dev);
+int	 virtio_child_pnpinfo_str(device_t busdev, device_t child, char *buf,
+	     size_t buflen);
 
 /*
  * Read/write a variable amount from the device specific (ie, network)
@@ -130,6 +162,7 @@ VIRTIO_READ_IVAR(vendor,	VIRTIO_IVAR_VENDOR);
 VIRTIO_READ_IVAR(device,	VIRTIO_IVAR_DEVICE);
 VIRTIO_READ_IVAR(subvendor,	VIRTIO_IVAR_SUBVENDOR);
 VIRTIO_READ_IVAR(subdevice,	VIRTIO_IVAR_SUBDEVICE);
+VIRTIO_READ_IVAR(modern,	VIRTIO_IVAR_MODERN);
 
 #undef VIRTIO_READ_IVAR
 
@@ -143,5 +176,15 @@ __CONCAT(virtio_set_,name)(device_t dev, void *val)			\
 VIRTIO_WRITE_IVAR(feature_desc,	VIRTIO_IVAR_FEATURE_DESC);
 
 #undef VIRTIO_WRITE_IVAR
+
+static inline int
+virtio_simple_probe(device_t dev, const struct virtio_pnp_match *match)
+{
+
+	if (virtio_get_device_type(dev) != match->device_type)
+		return (ENXIO);
+	device_set_desc(dev, match->description);
+	return (BUS_PROBE_DEFAULT);
+}
 
 #endif /* _VIRTIO_H_ */

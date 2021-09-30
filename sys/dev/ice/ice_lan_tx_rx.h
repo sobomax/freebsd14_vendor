@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2020, Intel Corporation
+/*  Copyright (c) 2021, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: f69394d2fe6840538bce6f208b0049b7e9ef59d0 $*/
+/*$FreeBSD: f5443b920b4931d4cac2ed6d0ceb1295690cbd86 $*/
 
 #ifndef _ICE_LAN_TX_RX_H_
 #define _ICE_LAN_TX_RX_H_

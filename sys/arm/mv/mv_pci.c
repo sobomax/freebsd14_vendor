@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 468c9a6bdcded75ed820d3653804f24d6708f151 $");
+__FBSDID("$FreeBSD: 4c8da7dc75825f9eb55e9a7e602f48de3b3f4fde $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -466,9 +466,7 @@ mv_pcib_attach(device_t self)
 		sc->sc_win_target = MV_WIN_PCIE_TARGET(port_id);
 		sc->sc_mem_win_attr = MV_WIN_PCIE_MEM_ATTR(port_id);
 		sc->sc_io_win_attr = MV_WIN_PCIE_IO_ATTR(port_id);
-#if __ARM_ARCH >= 6
 		sc->sc_skip_enable_procedure = 1;
-#endif
 	} else if (ofw_bus_node_is_compatible(parnode, "marvell,armada-370-pcie")) {
 		sc->sc_type = MV_TYPE_PCIE;
 		sc->sc_win_target = MV_WIN_PCIE_TARGET_ARMADA38X(port_id);
@@ -1218,9 +1216,7 @@ mv_pcib_map_msi(device_t dev, device_t child, int irq, uint64_t *addr,
 		return (EINVAL);
 	}
 
-#if __ARM_ARCH >= 6 
 	mv_msi_data(irq, addr, data);
-#endif
 
 	debugf("%s: irq: %d addr: %jx data: %x\n",
 	    __func__, irq, *addr, *data);

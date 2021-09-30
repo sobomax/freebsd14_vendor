@@ -34,7 +34,7 @@
  *
  *	@(#)procfs_status.c	8.3 (Berkeley) 2/17/94
  *
- * $FreeBSD: f62a6ea555eb04fd7ab46a35bd648977939abffc $
+ * $FreeBSD: a9893e5e10f0de3742b6d58e640b0ea36b6e165d $
  */
 
 #include <sys/param.h>
@@ -118,8 +118,7 @@ procfs_doprocmap(PFS_FILL_ARGS)
 		return (ESRCH);
 	map = &vm->vm_map;
 	vm_map_lock_read(map);
-	for (entry = map->header.next; entry != &map->header;
-	     entry = entry->next) {
+	VM_MAP_ENTRY_FOREACH(entry, map) {
 		if (entry->eflags & MAP_ENTRY_IS_SUB_MAP)
 			continue;
 
@@ -190,7 +189,7 @@ procfs_doprocmap(PFS_FILL_ARGS)
 			shadow_count = obj->shadow_count;
 			VM_OBJECT_RUNLOCK(obj);
 			if (vp != NULL) {
-				vn_fullpath(td, vp, &fullpath, &freepath);
+				vn_fullpath(vp, &fullpath, &freepath);
 				vrele(vp);
 			}
 		} else {

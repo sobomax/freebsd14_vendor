@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61015f480c7f470abe545ef5efaf69e89c7ef2fc $
+ * $FreeBSD: 1312140186ff5120c36c9459c43fcc1568c31608 $
  */
 /* This source file contains the functions responsible for the crypto, keying
  * and mapping operations on the I/O requests.
@@ -124,7 +124,6 @@ g_bde_crypt_read(struct g_bde_work *wp)
 	u_char skey[G_BDE_SKEYLEN];
 	keyInstance ki;
 	cipherInstance ci;
-	
 
 	AES_init(&ci);
 	sc = wp->softc;
@@ -164,7 +163,6 @@ g_bde_crypt_write(struct g_bde_work *wp)
 	AES_init(&ci);
 	o = 0;
 	for (n = 0; o < wp->length; n++, o += sc->sectorsize) {
-
 		s = (u_char *)wp->data + o;
 		d = (u_char *)wp->sp->data + o;
 		arc4rand(skey, sizeof skey, 0);

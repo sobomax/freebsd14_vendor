@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 0c0dd972ace8e31658f4ef6194cdbecc4b438fe8 $
+.\" $FreeBSD: 3dffdf7b402c3da60476f2ab9222e4a8b52bbcc9 $
 .\"
-.Dd September 27, 2018
+.Dd December 20, 2020
 .Dt MAKE.CONF 5
 .Os
 .Sh NAME
@@ -444,6 +444,16 @@ statically linked, this can be bad.
 If set, every utility that uses
 .Pa bsd.prog.mk
 will be linked statically.
+.It Va PKG_REPO_SIGNING_KEY
+.Pq Vt str
+Path to rsa private key passed to
+.Xr pkg-repo 8
+to sign packages created when building the
+.Ar packages
+target, i.e.: pkgbase.
+The variable is named the same in
+.Xr poudriere 8
+so it will automatically be picked up when building pkgbase with poudriere.
 .It Va PPP_NO_NAT
 .Pq Vt bool
 Build
@@ -568,7 +578,7 @@ Use with caution as a make install will overwrite any existing
 .Pa /etc/mail/sendmail.cf .
 Note that
 .Va SENDMAIL_CF
-is now deprecated.
+is deprecated.
 .It Va SENDMAIL_SET_USER_ID
 .Pq Vt bool
 If set, install

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 20de2e18dfc5b1fec0728f6d68cd5943c937f88e $
+ * $FreeBSD: e79e802a697ca34861f5da8932c8af00804e94d2 $
  */
 
 #ifndef _BHND_NVRAM_BHND_NVRAM_BCMVAR_H_
@@ -59,7 +59,7 @@ struct bhnd_nvram_bcm_hvar {
 	/** variable data */
 	union bhnd_nvram_bcm_hvar_value value;
 };
-	
+
 /** BCM NVRAM header */
 struct bhnd_nvram_bcmhdr {
 	uint32_t magic;

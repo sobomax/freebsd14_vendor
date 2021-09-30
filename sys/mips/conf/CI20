@@ -1,8 +1,10 @@
 # CI20 -- Kernel config for Creator CI20 board
 #
-# $FreeBSD: 0479e5e9fb4d1aa8312ee75c8af9529487f08de7 $
+# $FreeBSD: f99daf57cacf02ccc58adf644a645d7bba6c77b3 $
 
 #NO_UNIVERSE
+
+# Note: SMP on 32-bit mips is no longer supported, which affects this config file.
 
 include		"JZ4780"
 ident		CI20

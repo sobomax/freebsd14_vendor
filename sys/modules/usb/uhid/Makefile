@@ -1,5 +1,5 @@
 #
-# $FreeBSD: f1fa4f660b36faa78fd9ff36a19999a09fbb160c $
+# $FreeBSD: 1ae7b012903fbdd2fe7240babef052be26b016be $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -30,7 +30,7 @@ S=     ${SRCTOP}/sys
 .PATH: $S/dev/usb/input
 
 KMOD=	uhid
-SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h vnode_if.h usbdevs.h \
-	uhid.c
+SRCS=	opt_bus.h opt_hid.h opt_usb.h device_if.h bus_if.h usb_if.h \
+	vnode_if.h usbdevs.h uhid.c
 
 .include <bsd.kmod.mk>

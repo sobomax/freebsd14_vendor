@@ -23,7 +23,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 7f6930a58b3753d1b4b3971f1cc642a631d7e2e4 $
+ * $FreeBSD: a3bf394d94140626e60e56ba9d5a97c36ba7de68 $
  */
 
 #ifndef _X86_STACK_H
@@ -55,7 +55,7 @@ struct i386_frame {
 #endif /* __amd64__ */
 
 #ifdef _KERNEL
-int	stack_nmi_handler(struct trapframe *);
+void	stack_capture_intr(void);
 #endif
 
 #endif /* !_X86_STACK_H */

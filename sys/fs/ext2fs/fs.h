@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.7 (Berkeley) 4/19/94
- * $FreeBSD: db696942bf29d42390867500d5d07583c6abd60c $
+ * $FreeBSD: e07b69b91bce1a2e7a64278c67cec1e694589d2e $
  */
 
 #ifndef _FS_EXT2FS_FS_H_
@@ -108,8 +108,8 @@
 
 /* get block containing inode from its number x */
 #define	ino_to_fsba(fs, x)                                              \
-        (e2fs_gd_get_i_tables(&(fs)->e2fs_gd[ino_to_cg((fs), (x))]) +   \
-        (((x) - 1) % (fs)->e2fs->e2fs_ipg) / (fs)->e2fs_ipb)
+	(e2fs_gd_get_i_tables(&(fs)->e2fs_gd[ino_to_cg((fs), (x))]) +   \
+	    (((x) - 1) % (fs)->e2fs_ipg) / (fs)->e2fs_ipb)
 
 /* get offset for inode in block */
 #define	ino_to_fsbo(fs, x)	((x-1) % (fs->e2fs_ipb))
@@ -118,10 +118,10 @@
  * Give cylinder group number for a file system block.
  * Give cylinder group block number for a file system block.
  */
-#define	dtog(fs, d)	(((d) - fs->e2fs->e2fs_first_dblock) / \
-			EXT2_BLOCKS_PER_GROUP(fs))
-#define	dtogd(fs, d)	(((d) - fs->e2fs->e2fs_first_dblock) % \
-			EXT2_BLOCKS_PER_GROUP(fs))
+#define	dtog(fs, d)	(((d) - le32toh(fs->e2fs->e2fs_first_dblock)) / \
+    EXT2_BLOCKS_PER_GROUP(fs))
+#define	dtogd(fs, d)	(((d) - le32toh(fs->e2fs->e2fs_first_dblock)) % \
+    EXT2_BLOCKS_PER_GROUP(fs))
 
 /*
  * The following macros optimize certain frequently calculated

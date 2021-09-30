@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a9a77223f9e11bcde5aa4a6cadd1837a3d01fd0d $
+ * $FreeBSD: 6c7aae79640dbbea48ad14f3784dbbcf1dcde2dd $
  */
 
 #ifndef DEV_MMC_HOST_DWMMC_VAR_H
@@ -38,6 +38,8 @@
 #include <dev/extres/hwreset/hwreset.h>
 #include <dev/extres/regulator/regulator.h>
 #endif
+
+#include "opt_mmccam.h"
 
 enum {
 	HWTYPE_NONE,
@@ -54,7 +56,14 @@ struct dwmmc_softc {
 	struct mmc_host		host;
 	struct mmc_fdt_helper	mmc_helper;
 	struct mtx		sc_mtx;
+#ifdef MMCCAM
+	union ccb *		ccb;
+	struct cam_devq *	devq;
+	struct cam_sim * 	sim;
+	struct mtx		sim_mtx;
+#else
 	struct mmc_request	*req;
+#endif
 	struct mmc_command	*curcmd;
 	uint32_t		flags;
 	uint32_t		hwtype;

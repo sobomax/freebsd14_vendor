@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f51d993bf26a739181c54c7ce6fc7cdf84bbea64 $");
+__FBSDID("$FreeBSD: bd6ac72b7936f470771c08b8a69c03b4969feaaf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,7 +87,7 @@ ata_dmainit(device_t dev)
     if (ch->dma.segsize == 0)
 	ch->dma.segsize = 65536;
     if (ch->dma.max_iosize == 0)
-	ch->dma.max_iosize = MIN((ATA_DMA_ENTRIES - 1) * PAGE_SIZE, MAXPHYS);
+	ch->dma.max_iosize = (ATA_DMA_ENTRIES - 1) * PAGE_SIZE;
     if (ch->dma.max_address == 0)
 	ch->dma.max_address = BUS_SPACE_MAXADDR_32BIT;
     if (ch->dma.dma_slots == 0)

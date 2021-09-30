@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 6ffc58af36ed592e717690b122017928b64a1779 $
+ * $FreeBSD: b25feb7a98795fbe219bdd453c46c4ca4daf5a15 $
  */
 
 #ifndef _WTAP_HANDLER_H_
@@ -49,4 +49,3 @@ struct eventhandler {
 };
 
 #endif
-

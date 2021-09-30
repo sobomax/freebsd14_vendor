@@ -1,6 +1,11 @@
-# $FreeBSD: cfb271bf3ae2bb0da043e8a7fd0bb44d37a6763f $
+# $FreeBSD: 4cfbc7bb7c43c1664e307be175bfe0782011f889 $
 
 PROG=	vtfontcvt
+SRCS=	vtfontcvt.c lz4.c
 MAN8=	vtfontcvt.8
+
+# lz4 compression functionality
+.PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/lz4
+CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/common/lz4
 
 .include <bsd.prog.mk>

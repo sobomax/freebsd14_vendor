@@ -1,8 +1,8 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2003-2008 M. Warner Losh.  All Rights Reserved.
  * Copyright (c) 2000,2001 Jonathan Chen.  All rights reserved.
+ * Copyright (c) 2003-2008 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,9 +27,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae877223ec2087771000683b3e1ea234d59f888d $");
+__FBSDID("$FreeBSD: 391267944ec48cabaf286dab5180a7f1f128e814 $");
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
@@ -56,7 +57,8 @@ __FBSDID("$FreeBSD: ae877223ec2087771000683b3e1ea234d59f888d $");
 #include "pcib_if.h"
 
 /* sysctl vars */
-static SYSCTL_NODE(_hw, OID_AUTO, cardbus, CTLFLAG_RD, 0, "CardBus parameters");
+static SYSCTL_NODE(_hw, OID_AUTO, cardbus, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "CardBus parameters");
 
 int    cardbus_debug = 0;
 SYSCTL_INT(_hw_cardbus, OID_AUTO, debug, CTLFLAG_RWTUN,
@@ -358,7 +360,6 @@ static device_method_t cardbus_methods[] = {
 
 	/* PCI interface */
 	DEVMETHOD(pci_alloc_devinfo,	cardbus_alloc_devinfo),
-
 	{0,0}
 };
 

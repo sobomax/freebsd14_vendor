@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2db2c2f10c364b0de12247176441030df18eace0 $
+ * $FreeBSD: 5b4e1f172c3f761e2887ea37b11d5f0afe0d614f $
  *
  */
 
@@ -39,7 +39,6 @@
 /* Add include to common fcoe target for both eCore and protocol driver */
 /************************************************************************/
 #include "fcoe_common.h"
-
 
 /*
  * The fcoe storm context of Ystorm
@@ -785,7 +784,6 @@ struct e4_fcoe_conn_context
 	struct mstorm_fcoe_conn_st_ctx mstorm_st_context /* mstorm storm context */;
 };
 
-
 struct e5_xstorm_fcoe_conn_ag_ctx
 {
 	u8 reserved0 /* cdu_validation */;
@@ -1285,7 +1283,6 @@ struct e5_fcoe_conn_context
 	struct mstorm_fcoe_conn_st_ctx mstorm_st_context /* mstorm storm context */;
 };
 
-
 /*
  * FCoE connection offload params passed by driver to FW in FCoE offload ramrod 
  */
@@ -1294,7 +1291,6 @@ struct fcoe_conn_offload_ramrod_params
 	struct fcoe_conn_offload_ramrod_data offload_ramrod_data;
 };
 
-
 /*
  * FCoE connection terminate params passed by driver to FW in FCoE terminate conn ramrod 
  */
@@ -1302,7 +1298,6 @@ struct fcoe_conn_terminate_ramrod_params
 {
 	struct fcoe_conn_terminate_ramrod_data terminate_ramrod_data;
 };
-
 
 /*
  * FCoE event type
@@ -1318,7 +1313,6 @@ enum fcoe_event_type
 	MAX_FCOE_EVENT_TYPE
 };
 
-
 /*
  * FCoE init params passed by driver to FW in FCoE init ramrod 
  */
@@ -1326,9 +1320,6 @@ struct fcoe_init_ramrod_params
 {
 	struct fcoe_init_func_ramrod_data init_ramrod_data;
 };
-
-
-
 
 /*
  * FCoE ramrod Command IDs 
@@ -1343,7 +1334,6 @@ enum fcoe_ramrod_cmd_id
 	MAX_FCOE_RAMROD_CMD_ID
 };
 
-
 /*
  * FCoE statistics params buffer passed by driver to FW in FCoE statistics ramrod 
  */
@@ -1351,21 +1341,6 @@ struct fcoe_stat_ramrod_params
 {
 	struct fcoe_stat_ramrod_data stat_ramrod_data;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 struct e4_ystorm_fcoe_conn_ag_ctx
 {
@@ -1411,11 +1386,6 @@ struct e4_ystorm_fcoe_conn_ag_ctx
 	__le32 reg2 /* reg2 */;
 	__le32 reg3 /* reg3 */;
 };
-
-
-
-
-
 
 struct e5_ystorm_fcoe_conn_ag_ctx
 {

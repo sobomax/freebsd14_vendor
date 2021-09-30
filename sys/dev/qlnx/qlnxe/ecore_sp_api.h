@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 04bcfa9b8f4f239cce866ecbeaf94643335a6754 $
+ * $FreeBSD: 71bfca0ac703c0c7cb434d412f05779d66d8d7ab $
  *
  */
 
@@ -50,7 +50,6 @@ struct ecore_spq_comp_cb {
 			 u8 fw_return_code);
 	void	*cookie;
 };
-
 
 /**
  * @brief ecore_eth_cqe_completion - handles the completion of a

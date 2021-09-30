@@ -1,13 +1,13 @@
 #	$NetBSD: Makefile,v 1.56 2016/03/02 19:24:20 christos Exp $
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: f1dbad42db2225dc55c52f0d698c724ff2700e22 $
+# $FreeBSD: 963063ef90faf6f1602ca92df10a9e547f94060a $
 
 PACKAGE=clibs
 
 EDITDIR=	${SRCTOP}/contrib/libedit
 .PATH: ${EDITDIR}
 
-SHLIB_MAJOR=	7
+SHLIB_MAJOR=	8
 SHLIBDIR?= /lib
 
 WARNS?=	3

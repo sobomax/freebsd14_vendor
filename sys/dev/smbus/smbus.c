@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7341f3bf5bdd4faf1bc61154bb0828106b1dbb5e $");
+__FBSDID("$FreeBSD: d6b4d9ab78b61c883f080353d7549a5ddeb7ebcd $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/lock.h>
@@ -133,7 +133,6 @@ smbus_hinted_child(device_t bus, const char *dname, int dunit)
 	devi = device_get_ivars(child);
 	devi->addr = addr;
 }
-
 
 static int
 smbus_child_location_str(device_t parent, device_t child, char *buf,

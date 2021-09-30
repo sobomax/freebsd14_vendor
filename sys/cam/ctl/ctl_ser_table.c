@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ser_table.c#1 $
- * $FreeBSD: 2793bfa1e28176f435cd1ac3fb66e7055a957462 $
+ * $FreeBSD: 5499e63534faae8653a6fc08f169def7efaee64d $
  */
 
 /*
@@ -81,4 +81,3 @@ ctl_serialize_table[CTL_SERIDX_COUNT][CTL_SERIDX_COUNT] = {
 /*FORMAT  */{   pS, bK, bK, bK, bK, bK,  bK,  pS,  pS, bK,  bK, bK,  bK, bK},
 /*START   */{   bK, bK, bK, bK, bK, bK,  bK,  bK,  pS, bK,  bK, bK,  bK, bK},
 };
-

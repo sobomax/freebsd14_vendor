@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2658931b7d877c42ad5d8490b647b11fe02f4c23 $
+ * $FreeBSD: 98fb9dc9013f82900cd09601131148b8ca38e372 $
  */
 /*
  * File: ql_tmplt.h
@@ -34,7 +34,6 @@
  */
 #ifndef _QL_TMPLT_H_
 #define _QL_TMPLT_H_
-
 
 typedef struct _q8_tmplt_hdr {
 	uint16_t	version;
@@ -46,7 +45,6 @@ typedef struct _q8_tmplt_hdr {
 	uint16_t	init_seq_off;
 	uint16_t	start_seq_off;
 } __packed q8_tmplt_hdr_t;
-
 
 typedef struct _q8_ce_hdr {
 	uint16_t	opcode;

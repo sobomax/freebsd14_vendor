@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e482c95c950267739c29581af5a6d9d68ba60c22 $");
+__FBSDID("$FreeBSD: 79130e9e9e57401896da0f6a426559e34e581570 $");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"
@@ -86,11 +86,22 @@ ahci_fdt_probe(device_t dev)
 #endif
 
 #ifdef DEV_ACPI
+
+static const struct ahci_acpi_quirk {
+	const char*	hid;
+	u_int		quirks;
+} ahci_acpi_quirks[] = {
+	{ "NXP0004", AHCI_Q_NOPMP },
+	{ NULL, 0 }
+};
+
+
 static int
 ahci_acpi_probe(device_t dev)
 {
 	struct ahci_controller *ctlr = device_get_softc(dev);
 	ACPI_HANDLE h;
+	int i;
 
 	if ((h = acpi_get_handle(dev)) == NULL)
 		return (ENXIO);
@@ -105,6 +116,12 @@ ahci_acpi_probe(device_t dev)
 		if (bootverbose)
 			device_printf(dev, "Bus is%s cache-coherent\n",
 			  ctlr->dma_coherent ? "" : " not");
+		for (i = 0; ahci_acpi_quirks[i].hid != NULL; i++) {
+			if (acpi_MatchHid(h, ahci_acpi_quirks[i].hid) != ACPI_MATCHHID_NOMATCH) {
+				ctlr->quirks = ahci_acpi_quirks[i].quirks;
+				break;
+			}
+		}
 		return (BUS_PROBE_DEFAULT);
 	}
 

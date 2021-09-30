@@ -1,4 +1,4 @@
-/* $FreeBSD: edde5eb2990853892ea5aca4d041522ec1d549cf $ */
+/* $FreeBSD: 97ea986715f56b5a40e8e8ccb161128b6475fea6 $ */
 /*-
  * Copyright 1998 Massachusetts Institute of Technology
  *
@@ -40,5 +40,6 @@
 #define	SYS_RES_DRQ	2	/* isa dma lines */
 #define	SYS_RES_MEMORY	3	/* i/o memory */
 #define	SYS_RES_IOPORT	4	/* i/o ports */
+#define	PCI_RES_BUS	5	/* PCI bus numbers */
 
 #endif /* !_MACHINE_RESOURCE_H_ */

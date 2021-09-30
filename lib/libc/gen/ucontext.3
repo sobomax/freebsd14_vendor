@@ -33,9 +33,9 @@
 .\" THE USE OF THIS SOFTWARE, EVEN IF PACKET DESIGN IS ADVISED OF
 .\" THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 69ecbc1793e03721e28df50c5fee57f36db89436 $
+.\" $FreeBSD: d6e05dc2c1fa770094fa6dc77727d91be5a4b232 $
 .\"
-.Dd September 10, 2002
+.Dd March 23, 2020
 .Dt UCONTEXT 3
 .Os
 .Sh NAME
@@ -109,3 +109,15 @@ structures:
 .Xr getcontext 3 ,
 .Xr getcontextx 3 ,
 .Xr makecontext 3
+.Sh STANDARDS
+The
+.Vt ucontext_t
+type conforms to
+.St -xsh5
+and
+.St -p1003.1-2001 .
+The
+.St -p1003.1-2008
+revision removed the
+.Vt ucontext_t
+from the specification.

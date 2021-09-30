@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5aa0ba6040d74c8e95a4e0e60959647e9be3df39 $");
+__FBSDID("$FreeBSD: 6fd2a139376179c48e293c62b62395b14e0a7451 $");
 
 /*
  * 386 Trap and System call handling
@@ -52,14 +52,12 @@ __FBSDID("$FreeBSD: 5aa0ba6040d74c8e95a4e0e60959647e9be3df39 $");
 #include "opt_hwpmc_hooks.h"
 #include "opt_isa.h"
 #include "opt_kdb.h"
-#include "opt_stack.h"
 #include "opt_trap.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/systm.h>
 #include <sys/proc.h>
-#include <sys/pioctl.h>
 #include <sys/ptrace.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
@@ -123,6 +121,7 @@ static bool trap_user_dtrace(struct trapframe *,
 void dblfault_handler(void);
 
 extern inthand_t IDTVEC(bpt), IDTVEC(dbg), IDTVEC(int0x80_syscall);
+extern uint64_t pg_nx;
 
 struct trap_data {
 	bool		ei;
@@ -245,11 +244,6 @@ trap(struct trapframe *frame)
 		 */
 		if (pmc_intr != NULL &&
 		    (*pmc_intr)(frame) != 0)
-			return;
-#endif
-
-#ifdef STACK
-		if (stack_nmi_handler(frame) != 0)
 			return;
 #endif
 	}
@@ -848,10 +842,8 @@ trap_pfault(struct trapframe *frame, bool usermode, vm_offset_t eva,
 	 */
 	if (frame->tf_err & PGEX_W)
 		ftype = VM_PROT_WRITE;
-#if defined(PAE) || defined(PAE_TABLES)
 	else if ((frame->tf_err & PGEX_I) && pg_nx != 0)
 		ftype = VM_PROT_EXECUTE;
-#endif
 	else
 		ftype = VM_PROT_READ;
 
@@ -911,10 +903,8 @@ trap_fatal(frame, eva)
 		printf("fault code		= %s %s%s, %s\n",
 			code & PGEX_U ? "user" : "supervisor",
 			code & PGEX_W ? "write" : "read",
-#if defined(PAE) || defined(PAE_TABLES)
 			pg_nx != 0 ?
 			(code & PGEX_I ? " instruction" : " data") :
-#endif
 			"",
 			code & PGEX_RSV ? "reserved bits in PTE" :
 			code & PGEX_P ? "protection violation" : "page not present");
@@ -981,7 +971,7 @@ trap_user_dtrace(struct trapframe *frame, int (**hookp)(struct trapframe *))
 {
 	int (*hook)(struct trapframe *);
 
-	hook = (int (*)(struct trapframe *))atomic_load_ptr(hookp);
+	hook = atomic_load_ptr(hookp);
 	enable_intr();
 	if (hook != NULL)
 		return ((hook)(frame) == 0);
@@ -1090,17 +1080,14 @@ cpu_fetch_syscall_args(struct thread *td)
 		params += sizeof(quad_t);
 	}
 
- 	if (p->p_sysent->sv_mask)
- 		sa->code &= p->p_sysent->sv_mask;
  	if (sa->code >= p->p_sysent->sv_size)
  		sa->callp = &p->p_sysent->sv_table[0];
   	else
  		sa->callp = &p->p_sysent->sv_table[sa->code];
-	sa->narg = sa->callp->sy_narg;
 
-	if (params != NULL && sa->narg != 0)
+	if (params != NULL && sa->callp->sy_narg != 0)
 		error = copyin(params, (caddr_t)sa->args,
-		    (u_int)(sa->narg * sizeof(uint32_t)));
+		    (u_int)(sa->callp->sy_narg * sizeof(uint32_t)));
 	else
 		error = 0;
 

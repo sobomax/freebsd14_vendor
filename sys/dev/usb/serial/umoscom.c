@@ -1,4 +1,4 @@
-/* $FreeBSD: daa83c54feab0aaf4a70c6a93ca384c1b139ea84 $ */
+/* $FreeBSD: 724ab7f940920eec829422c9452deb31d2f2c065 $ */
 /*	$OpenBSD: umoscom.c,v 1.2 2006/10/26 06:02:43 jsg Exp $	*/
 
 /*
@@ -50,7 +50,8 @@
 #ifdef USB_DEBUG
 static int umoscom_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, umoscom, CTLFLAG_RW, 0, "USB umoscom");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, umoscom, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB umoscom");
 SYSCTL_INT(_hw_usb_umoscom, OID_AUTO, debug, CTLFLAG_RWTUN,
     &umoscom_debug, 0, "Debug level");
 #endif
@@ -214,7 +215,6 @@ static void	umoscom_stop_write(struct ucom_softc *);
 static void	umoscom_poll(struct ucom_softc *ucom);
 
 static const struct usb_config umoscom_config_data[UMOSCOM_N_TRANSFER] = {
-
 	[UMOSCOM_BULK_DT_WR] = {
 		.type = UE_BULK,
 		.endpoint = UE_ADDR_ANY,
@@ -642,7 +642,6 @@ tr_setup:
 		pc = usbd_xfer_get_frame(xfer, 0);
 		if (ucom_get_data(&sc->sc_ucom, pc, 0,
 		    UMOSCOM_BUFSIZE, &actlen)) {
-
 			usbd_xfer_set_frame_len(xfer, 0, actlen);
 			usbd_transfer_submit(xfer);
 		}

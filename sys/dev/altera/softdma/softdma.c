@@ -31,7 +31,7 @@
 /* This is driver for SoftDMA device built using Altera FIFO component. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b60d642d0ada0bd6792b8ca40e02f5c375029340 $");
+__FBSDID("$FreeBSD: 143672ee7cc7cbf2e4122306d81ae524c75d6242 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -501,7 +501,6 @@ softdma_process_descriptors(struct softdma_channel *chan,
 	desc = &chan->descs[chan->idx_tail];
 
 	while (desc != NULL) {
-
 		if ((desc->control & CONTROL_OWN) == 0) {
 			break;
 		}
@@ -616,7 +615,6 @@ softdma_channel_alloc(device_t dev, struct xdma_channel *xchan)
 		if (chan->used == 0) {
 			chan->xchan = xchan;
 			xchan->chan = (void *)chan;
-			xchan->caps |= XCHAN_CAP_NOBUFS;
 			xchan->caps |= XCHAN_CAP_NOSEG;
 			chan->index = i;
 			chan->idx_head = 0;

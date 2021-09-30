@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: daad2b83765b313748d1a5ea1828eb18d809e490 $
+ * $FreeBSD: e02f27dfd85e1de670ccbeba3a1d9f4d5874fee9 $
  */
 
 #ifdef _KERNEL
@@ -500,7 +500,6 @@ qfq_slot_rotate(struct qfq_sched *q, struct qfq_group *grp, uint64_t roundedS)
 	grp->front = (grp->front - i) % QFQ_MAX_SLOTS;
 }
 
-
 static inline void
 qfq_update_eligible(struct qfq_sched *q, uint64_t old_V)
 {
@@ -709,7 +708,6 @@ skip_update:
 
 	return 0;
 }
-
 
 #if 0
 static inline void

@@ -1,4 +1,4 @@
-# $FreeBSD: a90a3da3e4d0b86b0f64194641b71796bfada89c $
+# $FreeBSD: 2e5f4e6ca77bedeacb569ec54e1c77559ef87b15 $
 
 . $(atf_get_srcdir)/conf.sh
 
@@ -17,19 +17,19 @@ configure_b_B_body()
 
 	atf_check geli init -B none -P -K /dev/null ${md}
 
-	atf_check -s exit:0 -o match:'flags: 0x0$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x200$' geli dump ${md}
 
 	atf_check geli init -B none -b -P -K /dev/null ${md}
 
-	atf_check -s exit:0 -o match:'flags: 0x2$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x202$' geli dump ${md}
 
 	atf_check geli configure -B ${md}
 
-	atf_check -s exit:0 -o match:'flags: 0x0$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x200$' geli dump ${md}
 
 	atf_check geli configure -b ${md}
 
-	atf_check -s exit:0 -o match:'flags: 0x2$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x202$' geli dump ${md}
 
 	atf_check geli attach -p -k /dev/null ${md}
 
@@ -39,13 +39,13 @@ configure_b_B_body()
 
 	atf_check -o not-match:'^Flags: .*BOOT' geli list ${md}.eli
 
-	atf_check -s exit:0 -o match:'flags: 0x0$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x200$' geli dump ${md}
 
 	atf_check geli configure -b ${md}
 
 	atf_check -s exit:0 -o match:'^Flags: .*BOOT' geli list ${md}.eli
 
-	atf_check -s exit:0 -o match:'flags: 0x2$' geli dump ${md}
+	atf_check -s exit:0 -o match:'flags: 0x202$' geli dump ${md}
 
 	atf_check geli detach ${md}
 }

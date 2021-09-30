@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD: 7c72d0579f88b18c23de72b0c7c7ef6e49d840c9 $
+ * $FreeBSD: 1173eb48a6b03f990573e9bd783973dbe0e029e5 $
  */
 
 #ifndef __XLP_MMU_H__
@@ -107,7 +107,6 @@ nlm_write_c0_config7(uint32_t value)
  * 4(G)      128         128+2048     128          128+2048
  * (G) = Global mode
  */
-
 
 /* en = 1 to enable
  * en = 0 to disable

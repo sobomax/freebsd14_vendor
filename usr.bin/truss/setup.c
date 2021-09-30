@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 172d7d5d366cf7355c30c65a6bcadef2628e1148 $");
+__FBSDID("$FreeBSD: d21ec133f48339b0e91acae1a9a9a204a4341694 $");
 
 /*
  * Various setup functions for truss.  Not the cleanest-written code,
@@ -141,7 +141,7 @@ static struct procabi_table abis[] = {
 	{ "Linux ELF64", &linux },
 	{ "Linux ELF32", &linux32 },
 #else
-	{ "Linux ELF", &linux },
+	{ "Linux ELF32", &linux },
 #endif
 };
 

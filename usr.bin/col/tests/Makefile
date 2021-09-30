@@ -1,11 +1,17 @@
-# $FreeBSD: fd28df01ca47b4fbe84702cffa4830e5b8a07ffe $
+# $FreeBSD: 16f5ce2e24d2497b64a980d137bb6b9c6105de72 $
 
 PACKAGE=	tests
 
 ATF_TESTS_SH=	col_test
 
-${PACKAGE}FILES+=	\
+${PACKAGE}FILES+= \
+		hlf.in \
+		hlf2.in \
+		nl.in \
+		nl2.in \
+		nl3.in \
 		rlf.in \
-		rlf2.in
+		rlf2.in \
+		rlf3.in
 
 .include <bsd.test.mk>

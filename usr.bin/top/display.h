@@ -1,4 +1,4 @@
-/* $FreeBSD: 546f21ce34b06bf4962664b77d0b74b97db7803c $ */
+/* $FreeBSD: 76e88acb4d880f4e28c98161a20a9bfe5e66d88e $ */
 /* constants needed for display.c */
 
 #define  MT_standout  1
@@ -11,10 +11,10 @@ int		 display_updatecpus(struct statics *statics);
 void	 clear_message(void);
 int		 display_resize(void);
 void	 i_header(const char *text);
-char	*printable(char *string);
 void	 display_header(int t);
 int		 display_init(struct statics *statics);
 void	 i_arc(int *stats);
+void	 i_battery(int nbat, int batt);
 void	 i_carc(int *stats);
 void	 i_cpustates(int *states);
 void	 i_loadave(int mpid, double *avenrun);

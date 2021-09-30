@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 090d1a6172a74078764107061a2fe358373a3e81 $
+ * $FreeBSD: 65e06ec9bf58e293fb7699e1edda93b02b2fc345 $
  */
 
 #ifndef _VATPIT_H_
@@ -36,6 +36,8 @@
 
 #define	NMISC_PORT	0x61
 
+struct vm_snapshot_meta;
+
 struct vatpit *vatpit_init(struct vm *vm);
 void vatpit_cleanup(struct vatpit *vatpit);
 
@@ -43,5 +45,8 @@ int vatpit_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
     uint32_t *eax);
 int vatpit_nmisc_handler(struct vm *vm, int vcpuid, bool in, int port,
     int bytes, uint32_t *eax);
+#ifdef BHYVE_SNAPSHOT
+int vatpit_snapshot(struct vatpit *vatpit, struct vm_snapshot_meta *meta);
+#endif
 
 #endif	/* _VATPIT_H_ */

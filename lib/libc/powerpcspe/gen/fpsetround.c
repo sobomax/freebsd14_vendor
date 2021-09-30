@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5340a6d9ea2641b6aafcfcbf342bc969ac8cbd1 $");
+__FBSDID("$FreeBSD: 2e2469cdae5ee75eff1a868e85253e6b38f000d8 $");
 
 #include <sys/types.h>
 #include <machine/spr.h>
@@ -47,7 +47,7 @@ fpsetround(fp_rnd_t rnd_dir)
 	__asm__ __volatile("mfspr %0, %1" : "=r"(fpscr) : "K"(SPR_SPEFSCR) );
 	old = (fp_rnd_t)(fpscr & 0x3);
 	fpscr = (fpscr & 0xfffffffc) | rnd_dir;
-	__asm__ __volatile("mtspr %1, %0" :: "r"(fpscr), "K"(SPR_SPEFSCR));
+	__asm__ __volatile("mtspr %1, %0;isync" :: "r"(fpscr), "K"(SPR_SPEFSCR));
 	return (old);
 }
 #endif

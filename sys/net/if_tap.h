@@ -33,7 +33,7 @@
  */
 
 /*
- * $FreeBSD: 9718cee4e2d6767db1692655b9ed94cb6f86f95c $
+ * $FreeBSD: 1c6f30d7730cb69f152be685ec4ce619d0e24c70 $
  * $Id: if_tap.h,v 0.7 2000/07/12 04:12:51 max Exp $
  */
 
@@ -43,7 +43,7 @@
 #include <net/if_tun.h>
 
 /* maximum receive packet size (hard limit) */
-#define	TAPMRU		16384
+#define	TAPMRU		65535
 
 #define	tapinfo		tuninfo
 
@@ -56,6 +56,8 @@
 #define	TAPSIFINFO		TUNSIFINFO
 #define	TAPGIFINFO		TUNGIFINFO
 #define	TAPGIFNAME		TUNGIFNAME
+#define	TAPSVNETHDR		_IOW('t', 91, int)
+#define	TAPGVNETHDR		_IOR('t', 94, int)
 
 /* VMware ioctl's */
 #define VMIO_SIOCSIFFLAGS	_IOWINT('V', 0)

@@ -13,13 +13,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: de342d69e2dba80f988e5a6b22930a23c32ec743 $
+ * $FreeBSD: cfce342932dd23d2728cf5e777550ac30cd0f764 $
  */
 
 #include "common.h"
 
 
-void
+static void
 test_kevent_signal_add(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, EV_ADD)";
@@ -34,7 +34,7 @@ test_kevent_signal_add(void)
     success();
 }
 
-void
+static void
 test_kevent_signal_get(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, wait)";
@@ -62,7 +62,7 @@ test_kevent_signal_get(void)
     success();
 }
 
-void
+static void
 test_kevent_signal_disable(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, EV_DISABLE)";
@@ -88,7 +88,7 @@ test_kevent_signal_disable(void)
     success();
 }
 
-void
+static void
 test_kevent_signal_enable(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, EV_ENABLE)";
@@ -125,7 +125,7 @@ test_kevent_signal_enable(void)
     success();
 }
 
-void
+static void
 test_kevent_signal_del(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, EV_DELETE)";
@@ -151,7 +151,7 @@ test_kevent_signal_del(void)
     success();
 }
 
-void
+static void
 test_kevent_signal_oneshot(void)
 {
     const char *test_id = "kevent(EVFILT_SIGNAL, EV_ONESHOT)";
@@ -185,7 +185,7 @@ test_kevent_signal_oneshot(void)
 }
 
 void
-test_evfilt_signal()
+test_evfilt_signal(void)
 {
     kqfd = kqueue();
     test_kevent_signal_add();

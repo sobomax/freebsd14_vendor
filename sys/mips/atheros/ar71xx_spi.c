@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 694f168a4687fcab50144a04e26a4fb301a6802b $");
+__FBSDID("$FreeBSD: f851667dbf6ba4ae12f1dd37c821564dda87e835 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -282,7 +282,6 @@ static device_method_t ar71xx_spi_methods[] = {
 	DEVMETHOD(device_detach,	ar71xx_spi_detach),
 
 	DEVMETHOD(spibus_transfer,	ar71xx_spi_transfer),
-
 	{0, 0}
 };
 

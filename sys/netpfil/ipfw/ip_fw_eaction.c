@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44ad93725ff5a05d147b97859eccc6943e58f873 $");
+__FBSDID("$FreeBSD: bd8ee2fc113227d1edcdb8b162bd15dbfbfce71f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,9 +38,9 @@ __FBSDID("$FreeBSD: 44ad93725ff5a05d147b97859eccc6943e58f873 $");
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/queue.h>
-#include <net/pfil.h>
 
 #include <net/if.h>	/* ip_fw.h requires IFNAMSIZ */
+#include <net/pfil.h>
 #include <netinet/in.h>
 #include <netinet/ip_var.h>	/* struct ipfw_rule_ref */
 #include <netinet/ip_fw.h>

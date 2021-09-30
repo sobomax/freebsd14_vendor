@@ -1,4 +1,6 @@
-# $FreeBSD: 2fe42457f2e827df43d000518a985838eaf6b139 $
+# $FreeBSD: a8839e45a9fa6be15ea62aaa2a5b5d266ebf610c $
+
+PACKAGE=	tests
 
 LIBXOSRC=	${SRCTOP}/contrib/libxo
 
@@ -12,7 +14,7 @@ SYMLINKS+=	${LIBDIR}/${SHLIB_NAME} /usr/lib/libxo/encoder/test.enc
 
 SRCS=		enc_test.c
 
-CFLAGS+=	-I${LIBXOSRC}/libxo
+CFLAGS+=	-I${LIBXOSRC}/libxo -I${.CURDIR:H:H}/libxo
 
 LIBADD=		xo
 

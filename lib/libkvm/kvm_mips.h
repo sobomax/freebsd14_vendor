@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 715117d59fb9037cd8e4efde586cd5d4f895615d $
+ * $FreeBSD: 9efe5b8e9093160c8a3e6ea967a60589a19fbe19 $
  */
 
 #ifndef __KVM_MIPS_H__

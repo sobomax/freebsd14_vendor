@@ -27,9 +27,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac7d3e6b31a98815f2c287378133ec736a359962 $");
+__FBSDID("$FreeBSD: 69117a6b49fcab6eb27846e19780738317cfd972 $");
 
 #include <sys/param.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/stack.h>
 #include <sys/systm.h>
@@ -86,25 +88,21 @@ stack_capture(struct stack *st, vm_offset_t frame)
 	}
 }
 
-void
+int
 stack_save_td(struct stack *st, struct thread *td)
 {
 	vm_offset_t frame;
 
-	if (TD_IS_SWAPPED(td))
-		panic("stack_save_td: swapped");
+	THREAD_LOCK_ASSERT(td, MA_OWNED);
+	KASSERT(!TD_IS_SWAPPED(td),
+	    ("stack_save_td: thread %p is swapped", td));
+
 	if (TD_IS_RUNNING(td))
-		panic("stack_save_td: running");
+		return (EOPNOTSUPP);
 
 	frame = td->td_pcb->pcb_sp;
 	stack_capture(st, frame);
-}
-
-int
-stack_save_td_running(struct stack *st, struct thread *td)
-{
-
-	return (EOPNOTSUPP);
+	return (0);
 }
 
 void

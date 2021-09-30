@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22a15745e6bca0ddae2e58126decef45e7d02487 $");
+__FBSDID("$FreeBSD: cb1601b019c479d85d3af03ac66f512185ce5360 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,7 +78,6 @@ ar71xx_ohci_intr(void *arg)
 	ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_USB);
 	ohci_interrupt(arg);
 }
-
 
 static int
 ar71xx_ohci_attach(device_t dev)

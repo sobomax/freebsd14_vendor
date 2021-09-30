@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket.c,v 1.4 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 9bfafc8c2748edf3b77b4bf9980d7fc1ce17ebd3 $
+ * $FreeBSD: fc54154f1274cccb751a065f652efa1bc7e5a4cf $
  */
 
 #include <sys/param.h>
@@ -234,14 +234,18 @@ static struct domain ng_btsocket_domain = {
  * Socket sysctl tree 
  */
 
-SYSCTL_NODE(_net_bluetooth_hci, OID_AUTO, sockets, CTLFLAG_RW,
-	0, "Bluetooth HCI sockets family");
-SYSCTL_NODE(_net_bluetooth_l2cap, OID_AUTO, sockets, CTLFLAG_RW,
-	0, "Bluetooth L2CAP sockets family");
-SYSCTL_NODE(_net_bluetooth_rfcomm, OID_AUTO, sockets, CTLFLAG_RW,
-	0, "Bluetooth RFCOMM sockets family");
-SYSCTL_NODE(_net_bluetooth_sco, OID_AUTO, sockets, CTLFLAG_RW,
-	0, "Bluetooth SCO sockets family");
+SYSCTL_NODE(_net_bluetooth_hci, OID_AUTO, sockets,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Bluetooth HCI sockets family");
+SYSCTL_NODE(_net_bluetooth_l2cap, OID_AUTO, sockets,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Bluetooth L2CAP sockets family");
+SYSCTL_NODE(_net_bluetooth_rfcomm, OID_AUTO, sockets,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Bluetooth RFCOMM sockets family");
+SYSCTL_NODE(_net_bluetooth_sco, OID_AUTO, sockets,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Bluetooth SCO sockets family");
 
 /* 
  * Module 

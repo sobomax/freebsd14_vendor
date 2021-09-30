@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 160dfef437e96e9c76f7cc82575f55fd4b8633e1 $");
+__FBSDID("$FreeBSD: be58411b7ec79ff519aa79179ce75ac2aa4f3dee $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -1222,6 +1222,7 @@ main(int argc, char *argv[])
 	pjdlog_init(PJDLOG_MODE_STD);
 	pjdlog_debug_set(debuglevel);
 
+	closefrom(MAX(MAX(STDIN_FILENO, STDOUT_FILENO), STDERR_FILENO) + 1);
 	g_gate_load();
 
 	/*

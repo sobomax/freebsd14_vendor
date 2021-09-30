@@ -1,4 +1,4 @@
-# $FreeBSD: 7db23b941997e10a9432d33353256025e08c2b35 $
+# $FreeBSD: 32a0478eb0a3c5640e3f5aa3fe58c7dea396f380 $
 
 PROG=	ioatcontrol
 MAN=	ioatcontrol.8
@@ -7,7 +7,5 @@ BINDIR?=	/usr/bin
 CFLAGS+=	-I${SRCTOP}/sys/dev/ioat
 
 LIBADD=	util
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

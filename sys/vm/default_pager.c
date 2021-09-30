@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 877e6441d59614586fb1532f7f9ca4ee44a7e227 $");
+__FBSDID("$FreeBSD: 057dbe895050152babe693835018ee1a6f07db26 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -154,4 +154,3 @@ default_pager_haspage(vm_object_t object, vm_pindex_t pindex, int *before,
 	/* An OBJT_DEFAULT object has no backing store. */
 	return (FALSE);
 }
-

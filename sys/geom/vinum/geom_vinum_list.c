@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efcc75b67e9e53bdc7384adf6f3bd0b364fd2e07 $");
+__FBSDID("$FreeBSD: bc079d57387ca72201cb2b9a0fcb19cb951ebd3b $");
 
 #include <sys/types.h>
 #include <sys/libkern.h>
@@ -228,7 +228,7 @@ gv_lv(struct g_geom *gp, struct gctl_req *req, struct sbuf *sb)
 
 	LIST_FOREACH(v, &sc->volumes, volume)
 		i++;
-	
+
 	sbuf_printf(sb, "%d volume%s:\n", i, i == 1 ? "" : "s");
 
 	if (i) {
@@ -374,7 +374,7 @@ gv_ls(struct g_geom *gp, struct gctl_req *req, struct sbuf *sb)
 
 	LIST_FOREACH(s, &sc->subdisks, sd)
 		i++;
-	
+
 	sbuf_printf(sb, "%d subdisk%s:\n", i, i == 1 ? "" : "s");
 
 	if (i) {
@@ -449,7 +449,7 @@ gv_ld(struct g_geom *gp, struct gctl_req *req, struct sbuf *sb)
 
 	LIST_FOREACH(d, &sc->drives, drive)
 		i++;
-	
+
 	sbuf_printf(sb, "%d drive%s:\n", i, i == 1 ? "" : "s");
 
 	if (i) {

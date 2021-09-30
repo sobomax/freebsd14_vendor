@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91e35c9da5f7cb65343c1233d556cde24955ef5c $");
+__FBSDID("$FreeBSD: d04cf4a08b373dfa3990077c7cb467f9bebbf279 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -118,7 +118,6 @@ port_intr(void *arg)
 	for (i = 0; i < NGPIO; i++) {
 		reg = READ4(sc, PORT_PCR(i));
 		if (reg & PCR_ISF) {
-
 			/* Clear interrupt */
 			WRITE4(sc, PORT_PCR(i), reg);
 

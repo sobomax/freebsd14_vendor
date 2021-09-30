@@ -1,4 +1,4 @@
-# $FreeBSD: 118ac93966e3ac0e008b6dcc716cad83735a9a8e $
+# $FreeBSD: 3e4e00950defcc7f644149f98d6b4c04a43bd64d $
 
 OPENSSL_1_1_0 {
     global:
@@ -513,3 +513,9 @@ OPENSSL_1_1_1a {
     global:
         SSL_get_signature_type_nid;
 } OPENSSL_1_1_1;
+
+OPENSSL_1_1_1e {
+    global:
+        SSL_sendfile;
+    local: *;
+} OPENSSL_1_1_1a;

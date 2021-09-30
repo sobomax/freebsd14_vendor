@@ -1,4 +1,4 @@
-# $FreeBSD: 1a0f6cc0d72f2145b3c88d4649e315e58b106d11 $
+# $FreeBSD: 7574c612f49c5005fb242f1f46c331546ae24432 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -28,9 +28,7 @@ SUBDIR=	\
 	${_aesni} \
 	age \
 	${_agp} \
-	aha \
 	ahci \
-	${_aic} \
 	aic7xxx \
 	alc \
 	ale \
@@ -43,7 +41,6 @@ SUBDIR=	\
 	amr \
 	${_an} \
 	${_aout} \
-	${_apm} \
 	${_arcmsr} \
 	${_allwinner} \
 	${_armv8crypto} \
@@ -61,7 +58,8 @@ SUBDIR=	\
 	ath_rate \
 	ath_pci \
 	${_autofs} \
-	${_auxio} \
+	axgbe \
+	backlight \
 	${_bce} \
 	${_bcm283x_clkman} \
 	${_bcm283x_pwm} \
@@ -70,9 +68,7 @@ SUBDIR=	\
 	bhnd \
 	${_bxe} \
 	${_bios} \
-	${_bktr} \
 	${_blake2} \
-	${_bm} \
 	bnxt \
 	bridgestp \
 	bwi \
@@ -95,8 +91,6 @@ SUBDIR=	\
 	cloudabi \
 	${_cloudabi32} \
 	${_cloudabi64} \
-	${_cmx} \
-	${_coff} \
 	${_coretemp} \
 	${_cp} \
 	${_cpsw} \
@@ -104,39 +98,32 @@ SUBDIR=	\
 	${_cpufreq} \
 	${_crypto} \
 	${_cryptodev} \
-	${_cs} \
-	${_ctau} \
 	ctl \
 	${_cxgb} \
 	${_cxgbe} \
 	dc \
 	dcons \
 	dcons_crom \
-	de \
+	${_dpdk_lpm4} \
+	${_dpdk_lpm6} \
 	${_dpms} \
-	${_dpt} \
-	${_drm} \
-	${_drm2} \
 	dummynet \
-	${_ed} \
+	${_dwwdt} \
 	${_efirt} \
 	${_em} \
 	${_ena} \
-	${_ep} \
-	${_epic} \
 	esp \
 	${_et} \
 	evdev \
-	${_ex} \
 	${_exca} \
 	ext2fs \
 	fdc \
 	fdescfs \
-	${_fe} \
 	${_ffec} \
 	filemon \
 	firewire \
 	firmware \
+	${_ftwd} \
 	fusefs \
 	${_fxp} \
 	gem \
@@ -144,8 +131,8 @@ SUBDIR=	\
 	${_glxiic} \
 	${_glxsb} \
 	gpio \
+	hid \
 	hifn \
-	hme \
 	${_hpt27xx} \
 	${_hptiop} \
 	${_hptmv} \
@@ -158,7 +145,6 @@ SUBDIR=	\
 	i2c \
 	${_iavf} \
         ${_ibcore} \
-	${_ibcs2} \
 	${_ichwd} \
 	${_ice} \
 	${_ice_ddp} \
@@ -171,6 +157,7 @@ SUBDIR=	\
 	${_if_gif} \
 	${_if_gre} \
 	${_if_me} \
+	if_infiniband \
 	if_lagg \
 	${_if_ndis} \
 	${_if_stf} \
@@ -202,6 +189,7 @@ SUBDIR=	\
 	${_iser} \
 	isp \
 	${_ispfw} \
+	${_itwd} \
 	${_iwi} \
 	${_iwifw} \
 	${_iwm} \
@@ -212,21 +200,19 @@ SUBDIR=	\
 	${_ixv} \
 	${_ixl} \
 	jme \
-	joy \
 	kbdmux \
 	kgssapi \
 	kgssapi_krb5 \
 	khelp \
 	krpc \
 	ksyms \
+	${_ktls_ocf} \
 	le \
 	lge \
 	libalias \
 	libiconv \
 	libmchain \
-	${_linux} \
-	${_linux_common} \
-	${_linux64} \
+	lindebugfs \
 	linuxkpi \
 	${_lio} \
 	lpt \
@@ -242,7 +228,7 @@ SUBDIR=	\
 	mac_seeotheruids \
 	mac_stub \
 	mac_test \
-	malo \
+	${_malo} \
 	md \
 	mdio \
 	mem \
@@ -266,7 +252,6 @@ SUBDIR=	\
 	mrsas \
 	msdosfs \
 	msdosfs_iconv \
-	${_mse} \
 	msk \
 	${_mthca} \
 	mvs \
@@ -274,23 +259,17 @@ SUBDIR=	\
 	${_mwlfw} \
 	mxge \
 	my \
-	${_nandfs} \
-	${_nandsim} \
-	${_ncr} \
 	${_nctgpio} \
-	${_ncv} \
 	${_ndis} \
 	${_netgraph} \
 	${_nfe} \
 	nfscl \
 	nfscommon \
 	nfsd \
-	nfslock \
 	nfslockd \
 	nfssvc \
 	nge \
 	nmdm \
-	${_nsp} \
 	nullfs \
 	${_ntb} \
 	${_nvd} \
@@ -299,14 +278,15 @@ SUBDIR=	\
 	${_nvram} \
 	oce \
 	${_ocs_fc} \
+	${_ossl} \
 	otus \
 	${_otusfw} \
 	ow \
 	${_padlock} \
 	${_padlock_rng} \
 	${_pccard} \
+	${_pchtherm} \
 	${_pcfclock} \
-	pcn \
 	${_pf} \
 	${_pflog} \
 	${_pfsync} \
@@ -323,6 +303,8 @@ SUBDIR=	\
 	pty  \
 	puc \
 	pwm \
+	${_qat} \
+	${_qatfw} \
 	${_qlxge} \
 	${_qlxgb} \
 	${_qlxgbe} \
@@ -337,6 +319,7 @@ SUBDIR=	\
 	re \
 	rl \
 	${_rockchip} \
+	rtsx \
 	rtwn \
 	rtwn_pci \
 	rtwn_usb \
@@ -346,14 +329,13 @@ SUBDIR=	\
 	safexcel \
 	${_sbni} \
 	scc \
-	${_scsi_low} \
 	${_sctp} \
 	sdhci \
 	${_sdhci_acpi} \
 	sdhci_pci \
+	sdio \
 	sem \
 	send \
-	${_sf} \
 	${_sfxge} \
 	sge \
 	${_sgx} \
@@ -364,7 +346,6 @@ SUBDIR=	\
 	sk \
 	${_smartpqi} \
 	smbfs \
-	sn \
 	snp \
 	sound \
 	${_speaker} \
@@ -372,7 +353,6 @@ SUBDIR=	\
 	${_splash} \
 	${_sppp} \
 	ste \
-	${_stg} \
 	stge \
 	${_sume} \
 	${_superio} \
@@ -381,18 +361,13 @@ SUBDIR=	\
 	sysvipc \
 	tcp \
 	${_ti} \
-	tl \
 	tmpfs \
 	${_toecore} \
 	${_tpm} \
-	trm \
 	${_twa} \
 	twe \
 	tws \
-	tx \
-	${_txp} \
 	uart \
-	ubsec \
 	udf \
 	udf_iconv \
 	ufs \
@@ -400,20 +375,17 @@ SUBDIR=	\
 	unionfs \
 	usb \
 	${_vesa} \
-	${_virtio} \
+	virtio \
 	vge \
 	${_viawd} \
 	videomode \
 	vkbd \
+	${_vmd} \
 	${_vmm} \
 	${_vmware} \
-	${_vpo} \
 	vr \
 	vte \
-	vx \
-	wb \
 	${_wbwd} \
-	${_wi} \
 	wlan \
 	wlan_acl \
 	wlan_amrr \
@@ -426,7 +398,6 @@ SUBDIR=	\
 	${_wpifw} \
 	${_x86bios} \
 	xdr \
-	${_xe} \
 	xl \
 	xz \
 	zlib
@@ -437,9 +408,10 @@ _autofs=	autofs
 
 .if ${MK_CDDL} != "no" || defined(ALL_MODULES)
 .if (${MACHINE_CPUARCH} != "arm" || ${MACHINE_ARCH:Marmv[67]*} != "") && \
-	${MACHINE_CPUARCH} != "mips" && \
-	${MACHINE_CPUARCH} != "sparc64"
+	${MACHINE_CPUARCH} != "mips"
+.if ${KERN_OPTS:MKDTRACE_HOOKS}
 SUBDIR+=	dtrace
+.endif
 .endif
 SUBDIR+=	opensolaris
 .endif
@@ -450,11 +422,18 @@ _crypto=	crypto
 _cryptodev=	cryptodev
 _random_fortuna=random_fortuna
 _random_other=	random_other
+_ktls_ocf=	ktls_ocf
 .endif
 .endif
 
 .if ${MK_CUSE} != "no" || defined(ALL_MODULES)
 SUBDIR+=	cuse
+.endif
+
+.if ${MK_EFI} != "no"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64"
+_efirt=		efirt
+.endif
 .endif
 
 .if (${MK_INET_SUPPORT} != "no" || ${MK_INET6_SUPPORT} != "no") || \
@@ -468,7 +447,7 @@ _ipfw_pmod=	ipfw_pmod
 .if ${KERN_OPTS:MIPSEC_SUPPORT} && !${KERN_OPTS:MIPSEC}
 _ipsec=		ipsec
 .endif
-.if ${MK_SCTP_SUPPORT} != "no" || ${MK_SCTP} != "no"
+.if ${KERN_OPTS:MSCTP_SUPPORT} || ${KERN_OPTS:MSCTP}
 _sctp=		sctp
 .endif
 .endif
@@ -495,6 +474,14 @@ _ipfw_nptv6=	ipfw_nptv6
 _ipfilter=	ipfilter
 .endif
 
+.if ${MK_INET_SUPPORT} != "no" && ${KERN_OPTS:MFIB_ALGO}
+_dpdk_lpm4=	dpdk_lpm4
+.endif
+
+.if ${MK_INET6_SUPPORT} != "no" && ${KERN_OPTS:MFIB_ALGO}
+_dpdk_lpm6=	dpdk_lpm6
+.endif
+
 .if ${MK_ISCSI} != "no" || defined(ALL_MODULES)
 SUBDIR+=	cfiscsi
 SUBDIR+=	iscsi
@@ -505,16 +492,29 @@ SUBDIR+=	iscsi_initiator
 SUBDIR+=	fdt
 .endif
 
+# Linuxulator
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
     ${MACHINE_CPUARCH} == "i386"
 SUBDIR+=	linprocfs
 SUBDIR+=	linsysfs
+.endif
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+SUBDIR+=	linux
+.endif
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64"
+SUBDIR+=	linux64
+SUBDIR+=	linux_common
+.endif
+
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
+    ${MACHINE_CPUARCH} == "i386"
 _ena=		ena
 .if ${MK_OFED} != "no" || defined(ALL_MODULES)
 _ibcore=	ibcore
 _ipoib=		ipoib
 _iser=		iser
 .endif
+_ipmi=		ipmi
 _mlx4=		mlx4
 _mlx5=		mlx5
 .if (${MK_INET_SUPPORT} != "no" && ${MK_INET6_SUPPORT} != "no") || \
@@ -527,11 +527,8 @@ _mthca=		mthca
 _mlx4ib=	mlx4ib
 _mlx5ib=	mlx5ib
 .endif
-.endif
-
-.if ${MK_NAND} != "no" || defined(ALL_MODULES)
-_nandfs=	nandfs
-_nandsim=	nandsim
+_ossl=		ossl
+_vmware=	vmware
 .endif
 
 .if ${MK_NETGRAPH} != "no" || defined(ALL_MODULES)
@@ -551,9 +548,7 @@ _pfsync=	pfsync
 _bce=		bce
 _fxp=		fxp
 _ispfw=		ispfw
-_sf=		sf
 _ti=		ti
-_txp=		txp
 
 .if ${MACHINE_CPUARCH} != "mips"
 _mwlfw=		mwlfw
@@ -578,7 +573,8 @@ _ice_ddp=	ice_ddp
 .endif
 
 # These rely on 64bit atomics
-.if ${MACHINE_ARCH} != "powerpc" && ${MACHINE_CPUARCH} != "mips"
+.if ${MACHINE_ARCH} != "powerpc" && ${MACHINE_ARCH} != "powerpcspe" && \
+	${MACHINE_CPUARCH} != "mips"
 _mps=		mps
 _mpr=		mpr
 .endif
@@ -587,7 +583,7 @@ _mpr=		mpr
 SUBDIR+=	tests
 .endif
 
-.if ${MK_ZFS} != "no" || defined(ALL_MODULES)
+.if ${MK_ZFS} != "no" || (defined(ALL_MODULES)  && ${MACHINE_CPUARCH} != "powerpc")
 SUBDIR+=	zfs
 .endif
 
@@ -600,7 +596,6 @@ _hwpmc_mips74k=	hwpmc_mips74k
 	${MACHINE_CPUARCH} != "mips" && ${MACHINE_CPUARCH} != "powerpc" && \
 	${MACHINE_CPUARCH} != "riscv"
 _syscons=	syscons
-_vpo=		vpo
 .endif
 
 .if ${MACHINE_CPUARCH} != "mips"
@@ -616,7 +611,7 @@ _cxgb=		cxgb
 .if ${MACHINE_CPUARCH} == "aarch64"
 _allwinner=	allwinner
 _armv8crypto=	armv8crypto
-_efirt=		efirt
+_dwwdt=		dwwdt
 _em=		em
 _rockchip=	rockchip
 .endif
@@ -626,7 +621,6 @@ _agp=		agp
 _an=		an
 _aout=		aout
 _bios=		bios
-_bktr=		bktr
 .if ${MK_SOURCELESS_UCODE} != "no"
 _bxe=		bxe
 .endif
@@ -634,52 +628,40 @@ _cardbus=	cardbus
 _cbb=		cbb
 _cpuctl=	cpuctl
 _cpufreq=	cpufreq
-_cs=		cs
 _dpms=		dpms
-.if ${MK_MODULE_DRM} != "no"
-_drm=		drm
-.endif
-.if ${MK_MODULE_DRM2} != "no"
-_drm2=		drm2
-.endif
-_ed=		ed
 _em=		em
-_ep=		ep
 _et=		et
+_ftwd=		ftwd
 _exca=		exca
-_fe=		fe
 _if_ndis=	if_ndis
 _io=		io
+_itwd=		itwd
 _ix=		ix
 _ixv=		ixv
-_linux=		linux
 .if ${MK_SOURCELESS_UCODE} != "no"
 _lio=		lio
 .endif
 _nctgpio=	nctgpio
 _ndis=		ndis
+_ntb=		ntb
 _ocs_fc=	ocs_fc
 _pccard=	pccard
+_qat=		qat
+_qatfw=		qatfw
 .if ${MK_OFED} != "no" || defined(ALL_MODULES)
 _rdma=		rdma
 .endif
 _safe=		safe
-_scsi_low=	scsi_low
 _speaker=	speaker
 _splash=	splash
 _sppp=		sppp
-_vmware=	vmware
 _wbwd=		wbwd
-_wi=		wi
-_xe=		xe
 
 _aac=		aac
 _aacraid=	aacraid
 _acpi=		acpi
 .if ${MK_CRYPT} != "no" || defined(ALL_MODULES)
-.if ${COMPILER_TYPE} != "gcc" || ${COMPILER_VERSION} > 40201
 _aesni=		aesni
-.endif
 .endif
 _amd_ecc_inject=amd_ecc_inject
 _amdsbwd=	amdsbwd
@@ -694,13 +676,12 @@ _bytgpio=	bytgpio
 _chvgpio=	chvgpio
 _ciss=		ciss
 _chromebook_platform=	chromebook_platform
-_cmx=		cmx
 _coretemp=	coretemp
-.if ${MK_SOURCELESS_HOST} != "no"
+.if ${MK_SOURCELESS_HOST} != "no" && empty(KCSAN_ENABLED)
 _hpt27xx=	hpt27xx
 .endif
 _hptiop=	hptiop
-.if ${MK_SOURCELESS_HOST} != "no"
+.if ${MK_SOURCELESS_HOST} != "no" && empty(KCSAN_ENABLED)
 _hptmv=		hptmv
 _hptnr=		hptnr
 _hptrr=		hptrr
@@ -710,7 +691,6 @@ _ichwd=		ichwd
 _ida=		ida
 _iir=		iir
 _intelspi=	intelspi
-_ipmi=		ipmi
 _ips=		ips
 _isci=		isci
 _ipw=		ipw
@@ -733,6 +713,7 @@ _padlock=	padlock
 _padlock_rng=	padlock_rng
 _rdrand_rng=	rdrand_rng
 .endif
+_pchtherm = pchtherm
 _s3=		s3
 _sdhci_acpi=	sdhci_acpi
 _superio=	superio
@@ -740,7 +721,6 @@ _tpm=		tpm
 _twa=		twa
 _vesa=		vesa
 _viawd=		viawd
-_virtio=	virtio
 _wpi=		wpi
 .if ${MK_SOURCELESS_UCODE} != "no"
 _wpifw=		wpifw
@@ -751,18 +731,15 @@ _x86bios=	x86bios
 .if ${MACHINE_CPUARCH} == "amd64"
 _amdgpio=	amdgpio
 _ccp=		ccp
-_efirt=		efirt
 _iavf=		iavf
 _ioat=		ioat
 _ixl=		ixl
-_linux64=	linux64
-_linux_common=	linux_common
-_ntb=		ntb
 _nvdimm=	nvdimm
 _pms=		pms
 _qlxge=		qlxge
 _qlxgb=		qlxgb
 _sume=		sume
+_vmd=		vmd
 .if ${MK_SOURCELESS_UCODE} != "no"
 _qlxgbe=	qlxgbe
 _qlnx=		qlnx
@@ -773,7 +750,9 @@ _sgx_linux=	sgx_linux
 _smartpqi=	smartpqi
 
 .if ${MK_BHYVE} != "no" || defined(ALL_MODULES)
+.if ${KERN_OPTS:MSMP}
 _vmm=		vmm
+.endif
 .endif
 .endif
 
@@ -782,74 +761,47 @@ _vmm=		vmm
 # XXX some of these can move now, but are untested on other architectures.
 _3dfx=		3dfx
 _3dfx_linux=	3dfx_linux
-_aic=		aic
-_apm=		apm
-.if ${MK_SOURCELESS_UCODE} != "no"
+.if ${MK_SOURCELESS_HOST} != "no"
 _ce=		ce
 .endif
-_coff=		coff
-.if ${MK_SOURCELESS_UCODE} != "no"
+.if ${MK_SOURCELESS_HOST} != "no"
 _cp=		cp
 .endif
 _glxiic=	glxiic
 _glxsb=		glxsb
-#_ibcs2=		ibcs2
-_mse=		mse
-_ncr=		ncr
-_ncv=		ncv
-_nsp=		nsp
 _pcfclock=	pcfclock
 _pst=		pst
 _sbni=		sbni
-_stg=		stg
-.if ${MK_SOURCELESS_UCODE} != "no"
-_ctau=		ctau
-.endif
-_dpt=		dpt
-_ex=		ex
 .endif
 
-.if ${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_ARCH} == "armv7"
 _cfi=		cfi
 _cpsw=		cpsw
 .endif
 
 .if ${MACHINE_CPUARCH} == "powerpc"
+_aacraid=	aacraid
 _agp=		agp
 _an=		an
-_bm=		bm
 _cardbus=	cardbus
 _cbb=		cbb
 _cfi=		cfi
 _cpufreq=	cpufreq
-.if ${MK_MODULE_DRM} != "no"
-_drm=		drm
-.endif
 _exca=		exca
 _ffec=		ffec
 _nvd=		nvd
 _nvme=		nvme
 _pccard=	pccard
-_wi=		wi
 .endif
 
-.if ${MACHINE_ARCH} == "powerpc64"
-.if ${MK_MODULE_DRM2} != "no"
-_drm2=		drm2
-.endif
+.if ${MACHINE_ARCH:Mpowerpc64*} != ""
 _ipmi=		ipmi
 _ixl=		ixl
 _nvram=		opal_nvram
 .endif
-.if ${MACHINE_ARCH} == "powerpc64" || ${MACHINE_ARCH} == "powerpc"
+.if ${MACHINE_CPUARCH} == "powerpc" && ${MACHINE_ARCH} != "powerpcspe"
 # Don't build powermac_nvram for powerpcspe, it's never supported.
-_nvram=		powermac_nvram
-.endif
-
-.if ${MACHINE_CPUARCH} == "sparc64"
-_auxio=		auxio
-_em=		em
-_epic=		epic
+_nvram+=	powermac_nvram
 .endif
 
 .if (${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
@@ -867,6 +819,12 @@ _bcm283x_clkman=  bcm283x_clkman
 _bcm283x_pwm=  bcm283x_pwm
 .endif
 
+.if !(${COMPILER_TYPE} == "clang" && ${COMPILER_VERSION} < 110000)
+# LLVM 10 crashes when building if_malo_pci.c, fixed in LLVM11:
+# https://bugs.llvm.org/show_bug.cgi?id=44351
+_malo=	malo
+.endif
+
 SUBDIR+=${MODULES_EXTRA}
 
 .for reject in ${WITHOUT_MODULES}
@@ -878,8 +836,8 @@ SUBDIR:= ${SUBDIR:N${reject}}
 .MAKEFLAGS+=	-DNO_XREF
 afterinstall: .PHONY
 	@if type kldxref >/dev/null 2>&1; then \
-		${ECHO} kldxref ${DESTDIR}${KMODDIR}; \
-		kldxref ${DESTDIR}${KMODDIR}; \
+		${ECHO} ${KLDXREF_CMD} ${DESTDIR}${KMODDIR}; \
+		${KLDXREF_CMD} ${DESTDIR}${KMODDIR}; \
 	fi
 .endif
 

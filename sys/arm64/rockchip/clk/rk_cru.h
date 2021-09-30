@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 727d4af940a0a5023f1345298039b7a1732294f9 $
+ * $FreeBSD: 0d1c49f012907c3a62135df49a3851be478fb09d $
  */
 
 #ifndef __RK_CRU_H__
@@ -206,6 +205,7 @@ struct rk_cru_gate {
 
 enum rk_clk_type {
 	RK_CLK_UNDEFINED = 0,
+	RK3066_CLK_PLL,
 	RK3328_CLK_PLL,
 	RK3399_CLK_PLL,
 	RK_CLK_COMPOSITE,

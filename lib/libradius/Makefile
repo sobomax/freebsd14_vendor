@@ -22,11 +22,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 3ce1435aa2d92f74af5debce56748a596ad2adc9 $
+# $FreeBSD: 42f5def20ef1ac4e6e907ff94373eaf8eef9edbb $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=		radius
 SRCS=		radlib.c
 INCS=		radlib.h radlib_vs.h

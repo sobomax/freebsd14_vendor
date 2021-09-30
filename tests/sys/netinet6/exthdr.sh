@@ -1,4 +1,4 @@
-# $FreeBSD: 1a12bb2ccd89186bb09b03acbb8861e91a7c2e8f $
+# $FreeBSD: 3912f1dc5d5adb75b45292b76b15c47050f2e419 $
 #-
 # SPDX-License-Identifier: BSD-2-Clause
 #
@@ -74,7 +74,7 @@ exthdr_body() {
 	pyname=$(atf_get ident)
 	pyname=${pyname%*_[0-9]}
 
-	atf_check -o ignore -s exit:0 ping6 -c 3 -q -o ${ip6b}
+	atf_check -o ignore -s exit:0 ping -6 -c 3 -q -o ${ip6b}
 
 	atf_check -s exit:0 $(atf_get_srcdir)/${pyname}.py \
 		--sendif ${epair}a --recvif ${epair}a \

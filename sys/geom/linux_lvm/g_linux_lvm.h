@@ -25,19 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 043f164fe8a5d6ba3f1562f4043048563f8626d0 $
+ * $FreeBSD: 9133a982a782ebd0b950eaa97dd4330fa5bb12d5 $
  */
 
-#define	G_LLVM_DEBUG(lvl, ...)	do {					\
-	if (g_llvm_debug >= (lvl)) {					\
-		printf("GEOM_LINUX_LVM");				\
-		if (g_llvm_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define	G_LLVM_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_LINUX_LVM", g_llvm_debug, (lvl), NULL, __VA_ARGS__)
 
 #define	G_LLVM_CLASS_NAME	"LINUX_LVM"
 #define	G_LLVM_NAMELEN		128

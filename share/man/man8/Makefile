@@ -1,9 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: b8575ef8ac6b1ca08214b9425b5d6102af742fb9 $
+# $FreeBSD: 1e61c79d12b945b188316ea638e68513f96a9327 $
 
 .include <src.opts.mk>
-
-PACKAGE=runtime-manuals
 
 MAN=	\
 	beinstall.8 \
@@ -11,7 +9,6 @@ MAN=	\
 	diskless.8 \
 	intro.8 \
 	nanobsd.8 \
-	picobsd.8 \
 	rc.8 \
 	rc.sendmail.8 \
 	rc.subr.8 \
@@ -26,6 +23,7 @@ MLINKS= \
 	rc.8 rc.local.8 \
 	rc.8 rc.network.8 \
 	rc.8 rc.pccard.8 \
+	rc.8 rc.resume.8 \
 	rc.8 rc.serial.8 \
 	rc.8 rc.shutdown.8
 

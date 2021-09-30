@@ -27,7 +27,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ab7a13370fe71814ccce9e77d3cc99346f2861a7 $
+ * $FreeBSD: 6f4d4d487e9d53974b93d9960c3aaa73b4911862 $
  */
 
 #ifndef _NLMSECLIB_H_
@@ -46,7 +46,6 @@
 #define	XLP_SEC_AES256F8_KEY_LENGTH	64	/* Bytes */
 #define	XLP_SEC_KASUMI_F8_KEY_LENGTH	16	/* Bytes */
 #define	XLP_SEC_MAX_CRYPT_KEY_LENGTH	XLP_SEC_AES256F8_KEY_LENGTH
-
 
 #define	XLP_SEC_DES_IV_LENGTH		8	/* Bytes */
 #define	XLP_SEC_AES_IV_LENGTH		16	/* Bytes */
@@ -91,7 +90,6 @@ extern unsigned int creditleft;
 
 struct xlp_sec_command {
 	struct cryptop *crp;
-	struct cryptodesc *enccrd, *maccrd;
 	struct xlp_sec_session *ses;
 	struct nlm_crypto_pkt_ctrl *ctrlp;
 	struct nlm_crypto_pkt_param *paramp;
@@ -116,8 +114,6 @@ struct xlp_sec_command {
 
 struct xlp_sec_session {
 	int hs_mlen;
-	uint8_t ses_iv[EALG_MAX_BLOCK_LEN];
-	struct xlp_sec_command cmd;
 };
 
 /*
@@ -135,17 +131,22 @@ struct xlp_sec_softc {
 
 #ifdef NLM_SEC_DEBUG
 void	print_crypto_params(struct xlp_sec_command *cmd, struct nlm_fmn_msg m);
-void	xlp_sec_print_data(struct cryptop *crp);
 void	print_cmd(struct xlp_sec_command *cmd);
 #endif
-int	nlm_crypto_form_srcdst_segs(struct xlp_sec_command *cmd);
+int	nlm_crypto_form_srcdst_segs(struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
 int	nlm_crypto_do_cipher(struct xlp_sec_softc *sc,
-	    struct xlp_sec_command *cmd);
+	    struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
 int	nlm_crypto_do_digest(struct xlp_sec_softc *sc,
-	    struct xlp_sec_command *cmd);
+	    struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
 int	nlm_crypto_do_cipher_digest(struct xlp_sec_softc *sc,
-	    struct xlp_sec_command *cmd);
-int	nlm_get_digest_param(struct xlp_sec_command *cmd);
-int	nlm_get_cipher_param(struct xlp_sec_command *cmd);
+	    struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
+int	nlm_get_digest_param(struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
+int	nlm_get_cipher_param(struct xlp_sec_command *cmd,
+	    const struct crypto_session_params *csp);
 
 #endif /* _NLMSECLIB_H_ */

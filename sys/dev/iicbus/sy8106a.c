@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: acb5dc17827002e926d42c0b3102b04fb7f512d7 $
+ * $FreeBSD: cf83b74ee6ad7ee966e63d7f9e57d48a29e3b126 $
  */
 
 /*
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: acb5dc17827002e926d42c0b3102b04fb7f512d7 $");
+__FBSDID("$FreeBSD: cf83b74ee6ad7ee966e63d7f9e57d48a29e3b126 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

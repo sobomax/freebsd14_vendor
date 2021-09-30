@@ -1,4 +1,4 @@
-/* $FreeBSD: 4f9901891e622b82752cb4c7a0ebd40b862903bb $ */
+/* $FreeBSD: cebf264310d04cb1c569e6d007ab1b10dcb8f35b $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -39,7 +39,7 @@
 #define	IPHETH_USBINTF_SUBCLASS 253
 #define	IPHETH_USBINTF_PROTO    1
 
-#define	IPHETH_BUF_SIZE         1516
+#define	IPHETH_BUF_SIZE         1514
 #define	IPHETH_TX_TIMEOUT       5000	/* ms */
 
 #define	IPHETH_RX_FRAMES_MAX	1

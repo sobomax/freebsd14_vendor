@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 0a7ba9c4b56aff53f9c1567209c989f59f221c2a $
+ * $FreeBSD: aaf76756c459912bbf2a1711b1c295f2d3af3693 $
  */
 
 #ifndef _GDB_GDB_H_
@@ -46,7 +46,18 @@ struct gdb_dbgport {
 	gdb_putc_f	*gdb_putc;
 	gdb_term_f	*gdb_term;
 	int		gdb_active;
+	void		(*gdb_sendpacket)(const void *, size_t);
+	int		gdb_dbfeatures;
 };
+
+#define	GDB_DBGP_FEAT_WANTTERM	0x1	/* Want gdb_term() invocation when
+					   leaving GDB.  gdb_term has been
+					   deadcode and never invoked for so
+					   long I don't want to just blindly
+					   start invoking it without opt-in. */
+#define	GDB_DBGP_FEAT_RELIABLE	0x2	/* The debugport promises it is a
+					   reliable transport, which allows GDB
+					   acks to be turned off. */
 
 #define	GDB_DBGPORT(name, probe, init, term, getc, putc)		\
 	static struct gdb_dbgport name##_gdb_dbgport = {		\

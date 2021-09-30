@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 29d701aacb4c59903bb3ebbb59cfd53578e76aa9 $
+ * $FreeBSD: 97456a165220fa57632425ebf6e6549bbbc629d6 $
  *
  * Customisation of the SSCOP code to ng_sscop.
  */
@@ -132,7 +132,6 @@ T##_func(node_p node, hook_p hook, void *arg1, int arg2)		\
 	    "timer_" #T " expired"));					\
 	sscop_signal(sscop, SIG_T_##N, NULL);				\
 }
-
 
 /*
  * Message queues

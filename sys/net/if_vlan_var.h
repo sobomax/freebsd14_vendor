@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0b66ec0a0a1e9a6b2e77e11724125a293c43d2d5 $
+ * $FreeBSD: 1b9540f18a3eb60749422df0886401d506cde714 $
  */
 
 #ifndef _NET_IF_VLAN_VAR_H_
@@ -69,6 +69,7 @@
 struct	vlanreq {
 	char	vlr_parent[IFNAMSIZ];
 	u_short	vlr_tag;
+	u_short	vlr_proto;
 };
 #define	SIOCSETVLAN	SIOCSIFGENERIC
 #define	SIOCGETVLAN	SIOCGIFGENERIC
@@ -123,6 +124,15 @@ struct	vlanreq {
 #define	MTAG_8021Q_PCP_IN	0		/* Input priority. */
 #define	MTAG_8021Q_PCP_OUT	1		/* Output priority. */
 
+/*
+ * 802.1q full tag. Proto and vid are stored in host byte order.
+ */
+struct ether_8021q_tag {
+	uint16_t proto;
+	uint16_t vid;
+	uint8_t  pcp;
+};
+
 #define	VLAN_CAPABILITIES(_ifp) do {				\
 	if ((_ifp)->if_vlantrunk != NULL) 			\
 		(*vlan_trunk_cap_p)(_ifp);			\
@@ -150,13 +160,13 @@ extern	int (*vlan_pcp_p)(struct ifnet *, uint16_t *);
 extern	int (*vlan_setcookie_p)(struct ifnet *, void *);
 extern	void *(*vlan_cookie_p)(struct ifnet *);
 
-#ifdef _SYS_EVENTHANDLER_H_
+#include <sys/_eventhandler.h>
+
 /* VLAN state change events */
 typedef void (*vlan_config_fn)(void *, struct ifnet *, uint16_t);
 typedef void (*vlan_unconfig_fn)(void *, struct ifnet *, uint16_t);
 EVENTHANDLER_DECLARE(vlan_config, vlan_config_fn);
 EVENTHANDLER_DECLARE(vlan_unconfig, vlan_unconfig_fn);
-#endif /* _SYS_EVENTHANDLER_H_ */
 
 #endif /* _KERNEL */
 

@@ -39,7 +39,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 553ba9f55edca2f426e6ffab4de80ea6fe3f1513 $
+ * $FreeBSD: 5851d8bd401850e7cb92b5c12e157201ccbbf022 $
  */
 
 #ifndef	_MIPS_ATHEROS_AR5315REG_H_
@@ -223,7 +223,7 @@
 
 #define ATH_READ_REG(reg) \
     *((volatile uint32_t *)MIPS_PHYS_TO_KSEG1((reg)))
- 
+
 #define ATH_WRITE_REG(reg, val) \
     *((volatile uint32_t *)MIPS_PHYS_TO_KSEG1((reg))) = (val)
 

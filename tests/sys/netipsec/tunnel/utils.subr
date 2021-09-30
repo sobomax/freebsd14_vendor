@@ -1,4 +1,4 @@
-# $FreeBSD: 3d6da3f35cccd51c55d0567c509657e48b6334b4 $
+# $FreeBSD: 9f467990b9e1f51bc3ae603fd3a2eb4f29c8be34 $
 # Utility functions (mainly from pf tests, should be merged one day)
 ##
 
@@ -8,6 +8,10 @@
 
 ist_init()
 {
+	if ! sysctl -q kern.features.ipsec >/dev/null ; then
+		atf_skip "This test requires ipsec"
+	fi
+
 	vnet_init
 }
 
@@ -120,7 +124,7 @@ ist_test()
 	if [ $1 -eq 4 ]; then
 		atf_check -s exit:0 -o ignore jexec hostA ping -c 1 203.0.113.1
 	else
-		atf_check -s exit:0 -o ignore jexec hostA ping6 -c 1 2001:db8:45::1
+		atf_check -s exit:0 -o ignore jexec hostA ping -6 -c 1 2001:db8:45::1
 	fi
 }
 ist_cleanup()

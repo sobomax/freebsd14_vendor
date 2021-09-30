@@ -1,5 +1,2 @@
-.\" $FreeBSD: 67a8969d639251fde684ab156884a62ca3241dba $
+.\" $FreeBSD: 03868c5cc5f7269497f55b00ec7e874238e23f47 $
 Set to not build gcc and g++ as part of the bootstrap process.
-You must enable either gcc or clang bootstrap to be able to build the system,
-unless an alternative compiler is provided via
-XCC.

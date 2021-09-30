@@ -1,4 +1,4 @@
-# $FreeBSD: 7c9583960953ea444a833637cfd7b4668e1404e4 $
+# $FreeBSD: 9ad4b883015ca19b4f642ebbf252634b560d88bc $
 
 .include <bsd.own.mk>
 
@@ -10,7 +10,6 @@ SHLIBDIR=	${TESTSBASE}/libexec/rtld-elf
 
 SRCS=		pythagoras.c
 
-WARNS?=		6
 LIBADD=		m
 
 .include <bsd.lib.mk>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8271964211cced095410070e9eb6ca93128940c $");
+__FBSDID("$FreeBSD: 6d76beb83cd51f36f2d10c1293338052040ef846 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -112,7 +112,6 @@ struct host1x_softc {
 	struct tegra_drm 	*tegra_drm;
 };
 
-
 static void
 host1x_output_poll_changed(struct drm_device *drm_dev)
 {
@@ -127,7 +126,6 @@ static const struct drm_mode_config_funcs mode_config_funcs = {
 	.fb_create = tegra_drm_fb_create,
 	.output_poll_changed = host1x_output_poll_changed,
 };
-
 
 static int
 host1x_drm_init(struct host1x_softc *sc)
@@ -310,10 +308,8 @@ host1x_drm_disable_vblank(struct drm_device *drm_dev, int pipe)
 	}
 }
 
-
 static struct drm_ioctl_desc host1x_drm_ioctls[] = {
 };
-
 
 struct drm_driver tegra_drm_driver = {
 	.driver_features = DRIVER_MODESET | DRIVER_GEM | DRIVER_PRIME,
@@ -647,4 +643,3 @@ EARLY_DRIVER_MODULE(host1x, simplebus, host1x_driver,
 extern devclass_t fbd_devclass;
 extern driver_t fbd_driver;
 DRIVER_MODULE(fbd, host1x, fbd_driver, fbd_devclass, 0, 0);
-

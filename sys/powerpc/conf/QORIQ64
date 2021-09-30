@@ -2,7 +2,7 @@
 # Custom kernel for Freescale QorIQ (P5xxx, Txxxx) based boards, like
 # AmigaOne X5000
 #
-# $FreeBSD: 348150e83d055ffa3870dd249d56b38b0387dcf5 $
+# $FreeBSD: 4131ed5935b5210ef130e3456bbda60a40e739ce $
 #
 
 cpu		BOOKE
@@ -99,12 +99,10 @@ device  	mmc
 device  	mmcsd
 device		pass
 device		pci
-device		random
 #device		rl
 device		scbus
 device		scc
 device  	sdhci
-device		sec
 device  	spibus
 device  	spigen
 device		tuntap
@@ -115,3 +113,14 @@ device		ehci
 device		umass
 device		usb
 device		vlan
+
+# Desktop related
+device  	vt
+device  	fbd
+options 	KBD_INSTALL_CDEV
+device  	ukbd
+device  	ums
+
+# HID support
+options 	HID_DEBUG	# enable debug msgs
+device		hid		# Generic HID support

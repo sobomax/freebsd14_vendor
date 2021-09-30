@@ -33,12 +33,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 061c4d62f95613b13e6b502ddfb6d83e9730ee15 $");
+__FBSDID("$FreeBSD: a36d36dc4861ce294680188abecd21f888070938 $");
 
 #include "opt_sctp.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/gsb_crc32.h>
 #include <sys/mbuf.h>
 
 #include <netinet/sctp.h>
@@ -132,16 +133,16 @@ sctp_delayed_cksum(struct mbuf *m, uint32_t offset)
 	SCTP_STAT_INCR(sctps_sendswcrc);
 	offset += offsetof(struct sctphdr, checksum);
 
-	if (offset + sizeof(uint32_t) > (uint32_t)(m->m_len)) {
+	if (offset + sizeof(uint32_t) > (uint32_t)(m->m_pkthdr.len)) {
 #ifdef INVARIANTS
-		panic("sctp_delayed_cksum(): m->m_len: %d, offset: %u.",
-		    m->m_len, offset);
+		panic("sctp_delayed_cksum(): m->m_pkthdr.len: %d, offset: %u.",
+		    m->m_pkthdr.len, offset);
 #else
-		SCTP_PRINTF("sctp_delayed_cksum(): m->m_len: %d, offset: %u.\n",
-		    m->m_len, offset);
+		SCTP_PRINTF("sctp_delayed_cksum(): m->m_pkthdr.len: %d, offset: %u.\n",
+		    m->m_pkthdr.len, offset);
 #endif
 		return;
 	}
-	*(uint32_t *)(m->m_data + offset) = checksum;
+	m_copyback(m, (int)offset, (int)sizeof(uint32_t), (caddr_t)&checksum);
 }
 #endif

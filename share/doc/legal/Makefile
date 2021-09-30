@@ -1,4 +1,4 @@
-# $FreeBSD: 345eafc5b4a6a4f3e5d34e1108a31e7ae9fd0591 $
+# $FreeBSD: 5c0f37bd33d2cf38f2610d46aacf661dac2b9687 $
 
 SUBDIR=	intel_ipw \
 	intel_iwi \
@@ -8,4 +8,5 @@ SUBDIR=	intel_ipw \
 
 SUBDIR_PARALLEL=
 
+.include <bsd.arch.inc.mk>
 .include <bsd.subdir.mk>

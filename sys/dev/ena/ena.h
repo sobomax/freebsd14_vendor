@@ -1,5 +1,5 @@
 /*-
- * BSD LICENSE
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2020 Amazon.com, Inc. or its affiliates.
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ccc74007d47737b29ae5eac5495a558d5e425cd4 $
+ * $FreeBSD: f3e92f31341a10c4b8071e633150ce93a601de7e $
  *
  */
 
@@ -40,8 +40,8 @@
 #include "ena-com/ena_eth_com.h"
 
 #define DRV_MODULE_VER_MAJOR	2
-#define DRV_MODULE_VER_MINOR	2
-#define DRV_MODULE_VER_SUBMINOR 0
+#define DRV_MODULE_VER_MINOR	3
+#define DRV_MODULE_VER_SUBMINOR 1
 
 #define DRV_MODULE_NAME		"ena"
 
@@ -150,10 +150,10 @@
  */
 #define	PCI_VENDOR_ID_AMAZON	0x1d0f
 
-#define	PCI_DEV_ID_ENA_PF	0x0ec2
-#define	PCI_DEV_ID_ENA_LLQ_PF	0x1ec2
-#define	PCI_DEV_ID_ENA_VF	0xec20
-#define	PCI_DEV_ID_ENA_LLQ_VF	0xec21
+#define	PCI_DEV_ID_ENA_PF		0x0ec2
+#define	PCI_DEV_ID_ENA_PF_RSERV0	0x1ec2
+#define	PCI_DEV_ID_ENA_VF		0xec20
+#define	PCI_DEV_ID_ENA_VF_RSERV0	0xec21
 
 /*
  * Flags indicating current ENA driver state
@@ -315,6 +315,7 @@ struct ena_ring {
 		uint8_t tx_max_header_size;
 		/* The maximum (and default) mbuf size for the Rx descriptor. */
 		uint16_t rx_mbuf_sz;
+
 	};
 
 	bool first_interrupt;
@@ -397,6 +398,8 @@ struct ena_adapter {
 	/* OS resources */
 	struct resource *memory;
 	struct resource *registers;
+	struct resource *msix;
+	int msix_rid;
 
 	struct sx global_lock;
 
@@ -462,9 +465,13 @@ struct ena_adapter {
 	uint32_t missing_tx_threshold;
 	bool disable_meta_caching;
 
+	uint16_t eni_metrics_sample_interval;
+	uint16_t eni_metrics_sample_interval_cnt;
+
 	/* Statistics */
 	struct ena_stats_dev dev_stats;
 	struct ena_hw_stats hw_stats;
+	struct ena_admin_eni_stats eni_metrics;
 
 	enum ena_regs_reset_reason_types reset_reason;
 };
@@ -511,22 +518,6 @@ ena_trigger_reset(struct ena_adapter *adapter,
 		adapter->reset_reason = reset_reason;
 		ENA_FLAG_SET_ATOMIC(ENA_FLAG_TRIGGER_RESET, adapter);
 	}
-}
-
-static inline int
-validate_rx_req_id(struct ena_ring *rx_ring, uint16_t req_id)
-{
-	if (likely(req_id < rx_ring->ring_size))
-		return (0);
-
-	device_printf(rx_ring->adapter->pdev, "Invalid rx req_id: %hu\n",
-	    req_id);
-	counter_u64_add(rx_ring->rx_stats.bad_req_id, 1);
-
-	/* Trigger device reset */
-	ena_trigger_reset(rx_ring->adapter, ENA_REGS_RESET_INV_RX_REQ_ID);
-
-	return (EFAULT);
 }
 
 #endif /* !(ENA_H) */

@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72f86678f5652f7a094a23c8d2166e288b4438b0 $");
+__FBSDID("$FreeBSD: 5992c5035ec05f2b354ce0ffcbdb50b8ed6cac3f $");
 #include <dev/aic7xxx/aic7xxx_osm.h>
 
 static ahc_reg_parse_entry_t SCSISEQ_parse_table[] = {
@@ -1681,4 +1681,3 @@ ahc_sg_cache_pre_print(u_int regvalue, u_int *cur_col, u_int wrap)
 	return (ahc_print_register(SG_CACHE_PRE_parse_table, 3, "SG_CACHE_PRE",
 	    0xfc, regvalue, cur_col, wrap));
 }
-

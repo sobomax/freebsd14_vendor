@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea599e9aab343fef4cf90981e0a9c20cb4e88b25 $");
+__FBSDID("$FreeBSD: 3f23a35a862698f0d2e6aefcc1f1632dffb5819b $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -121,9 +121,6 @@ SDT_PROBE_DEFINE2(fusefs, , io, trace, "int", "char*");
 
 static int
 fuse_inval_buf_range(struct vnode *vp, off_t filesize, off_t start, off_t end);
-static void
-fuse_io_clear_suid_on_write(struct vnode *vp, struct ucred *cred,
-    struct thread *td);
 static int 
 fuse_read_directbackend(struct vnode *vp, struct uio *uio,
     struct ucred *cred, struct fuse_filehandle *fufh);
@@ -188,43 +185,6 @@ fuse_inval_buf_range(struct vnode *vp, off_t filesize, off_t start, off_t end)
 
 	v_inval_buf_range(vp, left_lbn, end_lbn, iosize);
 	return (0);
-}
-
-/*
- * FreeBSD clears the SUID and SGID bits on any write by a non-root user.
- */
-static void
-fuse_io_clear_suid_on_write(struct vnode *vp, struct ucred *cred,
-	struct thread *td)
-{
-	struct fuse_data *data;
-	struct mount *mp;
-	struct vattr va;
-	int dataflags;
-
-	mp = vnode_mount(vp);
-	data = fuse_get_mpdata(mp);
-	dataflags = data->dataflags;
-
-	if (dataflags & FSESS_DEFAULT_PERMISSIONS) {
-		if (priv_check_cred(cred, PRIV_VFS_RETAINSUGID, 0)) {
-			fuse_internal_getattr(vp, &va, cred, td);
-			if (va.va_mode & (S_ISUID | S_ISGID)) {
-				mode_t mode = va.va_mode & ~(S_ISUID | S_ISGID);
-				/* Clear all vattr fields except mode */
-				vattr_null(&va);
-				va.va_mode = mode;
-
-				/*
-				 * Ignore fuse_internal_setattr's return value,
-				 * because at this point the write operation has
-				 * already succeeded and we don't want to return
-				 * failing status for that.
-				 */
-				(void)fuse_internal_setattr(vp, &va, td, NULL);
-			}
-		}
-	}
 }
 
 SDT_PROBE_DEFINE5(fusefs, , io, io_dispatch, "struct vnode*", "struct uio*",
@@ -318,7 +278,7 @@ fuse_io_dispatch(struct vnode *vp, struct uio *uio, int ioflag,
 			err = fuse_write_biobackend(vp, uio, cred, fufh, ioflag,
 				pid);
 		}
-		fuse_io_clear_suid_on_write(vp, cred, uio->uio_td);
+		fuse_internal_clear_suid_on_write(vp, cred, uio->uio_td);
 		break;
 	default:
 		panic("uninterpreted mode passed to fuse_io_dispatch");
@@ -1037,7 +997,6 @@ fuse_io_strategy(struct vnode *vp, struct buf *bp)
 					"Short read of a dirty file");
 				uiop->uio_resid = 0;
 			}
-
 		}
 		if (error) {
 			bp->b_ioflags |= BIO_ERROR;
@@ -1116,7 +1075,7 @@ fuse_io_invalbuf(struct vnode *vp, struct thread *td)
 	struct fuse_vnode_data *fvdat = VTOFUD(vp);
 	int error = 0;
 
-	if (vp->v_iflag & VI_DOOMED)
+	if (VN_IS_DOOMED(vp))
 		return 0;
 
 	ASSERT_VOP_ELOCKED(vp, "fuse_io_invalbuf");

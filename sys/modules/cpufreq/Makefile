@@ -1,4 +1,4 @@
-# $FreeBSD: e9fae049ebed92b1febca36309470a50c52139e2 $
+# $FreeBSD: 4198d7d66a75c2f362b3246329cab8423059851c $
 
 .PATH:	${SRCTOP}/sys/dev/cpufreq		\
 	${SRCTOP}/sys/${MACHINE_CPUARCH}/cpufreq
@@ -11,7 +11,7 @@ SRCS+=	bus_if.h cpufreq_if.h device_if.h pci_if.h
 .PATH:	${SRCTOP}/sys/x86/cpufreq
 
 SRCS+=	acpi_if.h opt_acpi.h
-SRCS+=	est.c hwpstate.c p4tcc.c powernow.c
+SRCS+=	est.c hwpstate_amd.c p4tcc.c powernow.c hwpstate_intel.c
 .endif
 
 .if ${MACHINE} == "i386"

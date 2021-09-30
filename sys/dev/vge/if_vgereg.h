@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 88e6f22f31241997a112661f09cc6d6ad1819048 $
+ * $FreeBSD: a0c19d576752f2895f2ececddb8922fbc85002a3 $
  */
 
 /*
@@ -395,7 +395,6 @@
  * - The behavior the WOL pattern programming registers at offset
  *   0xC0 (controls which pattern is set)
  */
-
 
 #define VGE_CAMCTL_WRITE	0x04	/* CAM write command */
 #define VGE_CAMCTL_READ		0x08	/* CAM read command */

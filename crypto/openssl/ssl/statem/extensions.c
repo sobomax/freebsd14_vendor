@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 2016-2021 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
@@ -336,6 +336,8 @@ static const EXTENSION_DEFINITION ext_defs[] = {
         tls_construct_stoc_key_share, tls_construct_ctos_key_share,
         final_key_share
     },
+#else
+    INVALID_EXTENSION,
 #endif
     {
         /* Must be after key_share */
@@ -966,7 +968,8 @@ static int final_server_name(SSL *s, unsigned int context, int sent)
      * context, to avoid the confusing situation of having sess_accept_good
      * exceed sess_accept (zero) for the new context.
      */
-    if (SSL_IS_FIRST_HANDSHAKE(s) && s->ctx != s->session_ctx) {
+    if (SSL_IS_FIRST_HANDSHAKE(s) && s->ctx != s->session_ctx
+		    && s->hello_retry_request == SSL_HRR_NONE) {
         tsan_counter(&s->ctx->stats.sess_accept);
         tsan_decr(&s->session_ctx->stats.sess_accept);
     }

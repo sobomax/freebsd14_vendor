@@ -21,7 +21,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  *
- * $FreeBSD: 6072737fa1e2151a9a1ecdc1eefcb0dd4a415c5e $
+ * $FreeBSD: 0da74c9cf07600267606d71c87673116c71d329b $
  *
  */
 
@@ -116,6 +116,7 @@ fbt_provide_module_function(linker_file_t lf, int symindx,
 	uint32_t *instr, *limit;
 
 #ifdef __powerpc64__
+#if !defined(_CALL_ELF) || _CALL_ELF == 1
 	/*
 	 * PowerPC64 uses '.' prefixes on symbol names, ignore it, but only
 	 * allow symbols with the '.' prefix, so that we don't get the function
@@ -125,6 +126,7 @@ fbt_provide_module_function(linker_file_t lf, int symindx,
 		name++;
 	else
 		return (0);
+#endif
 #endif
 
 	if (fbt_excluded(name))
@@ -221,7 +223,7 @@ again:
 	if (*instr == FBT_BCTR)
 		fbt->fbtp_rval = DTRACE_INVOP_BCTR;
 	else if (*instr == FBT_BLR)
-		fbt->fbtp_rval = DTRACE_INVOP_RET;
+		fbt->fbtp_rval = DTRACE_INVOP_BLR;
 	else
 		fbt->fbtp_rval = DTRACE_INVOP_JUMP;
 

@@ -17,13 +17,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 48ad32c8d70a5659dc727e008807e28214d86bd3 $");
+__FBSDID("$FreeBSD: f85d40993a911c505aff683810e77119aa789e47 $");
 
 #include <errno.h>
 #include <libgen.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/param.h>
+
+char * __freebsd11_dirname(char *path);
 
 char *
 __freebsd11_dirname(char *path)

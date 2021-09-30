@@ -1,7 +1,7 @@
 # $Id: Makefile,v 1.5 2003/07/22 18:38:04 max Exp $
-# $FreeBSD: 96bf0cb704ec938a004f05d7f3b2d9252bbdc0f1 $
+# $FreeBSD: 5a87f3bacd13d7d14e96300efe3796cf3f0a83bc $
 
-PACKAGE=	lib${LIB}
+PACKAGE=	bluetooth
 CONFS=		hosts protocols
 CONFSDIR=	/etc/bluetooth
 CONFSMODE_protocols=	444

@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d89933c4f46261af2bdfc64a3e649a2aa651cdfe $
+ * $FreeBSD: ee990d4d6351de139f42b799a3bf1ed5a93be8ea $
  */
 
 #ifndef	_POWERPC_POWERMAC_UNINORTHVAR_H_
@@ -97,7 +97,6 @@ struct unin_chip_devinfo {
 #define UNIN_HWINIT_STATE	0x70
 #define UNIN_SLEEPING		0x01
 #define UNIN_RUNNING		0x02
-
 
 /*
  * Toggle registers

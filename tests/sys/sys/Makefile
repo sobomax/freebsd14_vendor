@@ -1,10 +1,10 @@
-# $FreeBSD: b0c5315255968a13dc3de2564a9504de1158864f $
+# $FreeBSD: eed87935e6e7f6b7d61ddb6888f7581cfa3b3cf4 $
 
 .include <bsd.compiler.mk>
 
 TESTSDIR=	${TESTSBASE}/sys/sys
 
-ATF_TESTS_C=	bitstring_test
+ATF_TESTS_C=	arb_test bitstring_test qmath_test rb_test splay_test
 
 WARNS?=	5
 

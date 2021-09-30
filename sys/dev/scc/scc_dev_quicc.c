@@ -27,13 +27,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9c372e8e33c4272e045efe53be152554e680d450 $");
+__FBSDID("$FreeBSD: b73402a909418a88d41b173c20536cf27aab434e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <machine/bus.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/rman.h>
 #include <sys/serial.h>
 

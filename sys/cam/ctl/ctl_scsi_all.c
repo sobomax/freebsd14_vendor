@@ -33,7 +33,7 @@
 
 #include <sys/param.h>
 
-__FBSDID("$FreeBSD: 8dc59e0a5262ce34a69d038fee0c67bdd6030844 $");
+__FBSDID("$FreeBSD: 98dba8cf2d833505638c50f6a1d4a5888fdad683 $");
 
 #include <sys/types.h>
 #ifdef _KERNEL
@@ -136,7 +136,6 @@ ctl_scsi_sense_sbuf(struct ctl_scsiio *ctsio,
 	ctl_scsi_path_string((union ctl_io *)ctsio, path_str, sizeof(path_str));
 
 	if (flags & SSS_FLAG_PRINT_COMMAND) {
-
 		sbuf_cat(sb, path_str);
 
 		ctl_scsi_command_string(ctsio, inq_data, sb);
@@ -204,4 +203,3 @@ ctl_scsi_sense_print(struct ctl_scsiio *ctsio,
 }
 
 #endif /* _KERNEL */
-

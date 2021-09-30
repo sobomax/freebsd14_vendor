@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f1c811429428887d3e6134af698cfbde8ded129 $");
+__FBSDID("$FreeBSD: 80a81f9c6c27c85197092c9ff1fd27127f026381 $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -41,6 +41,7 @@ int npagesizes;
 size_t *pagesizes;
 static size_t pagesizes_d[2];
 static struct umutex thr_malloc_umtx;
+static u_int thr_malloc_umtx_level;
 
 void
 __thr_malloc_init(void)
@@ -60,11 +61,16 @@ __thr_malloc_init(void)
 static void
 thr_malloc_lock(struct pthread *curthread)
 {
+	uint32_t curtid;
 
 	if (curthread == NULL)
 		return;
 	curthread->locklevel++;
-	_thr_umutex_lock(&thr_malloc_umtx, TID(curthread));
+	curtid = TID(curthread);
+	if ((uint32_t)thr_malloc_umtx.m_owner == curtid)
+		thr_malloc_umtx_level++;
+	else
+		_thr_umutex_lock(&thr_malloc_umtx, curtid);
 }
 
 static void
@@ -73,7 +79,10 @@ thr_malloc_unlock(struct pthread *curthread)
 
 	if (curthread == NULL)
 		return;
-	_thr_umutex_unlock(&thr_malloc_umtx, TID(curthread));
+	if (thr_malloc_umtx_level > 0)
+		thr_malloc_umtx_level--;
+	else
+		_thr_umutex_unlock(&thr_malloc_umtx, TID(curthread));
 	curthread->locklevel--;
 	_thr_ast(curthread);
 }

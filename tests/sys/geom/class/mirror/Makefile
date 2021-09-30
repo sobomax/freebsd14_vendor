@@ -1,4 +1,4 @@
-# $FreeBSD: 817d5d66e9715cde6ed595936c1168d1248866ef $
+# $FreeBSD: f719d75429640bc90b452244710eb1a9ecbff841 $
 
 PACKAGE=	tests
 
@@ -18,6 +18,7 @@ TAP_TESTS_SH+=	11_test
 TAP_TESTS_SH+=	12_test
 TAP_TESTS_SH+=	13_test
 
+ATF_TESTS_SH+=	component_selection
 ATF_TESTS_SH+=	sync_error
 
 ${PACKAGE}FILES+=		conf.sh

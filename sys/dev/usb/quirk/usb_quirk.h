@@ -1,4 +1,4 @@
-/* $FreeBSD: e7f2e02f60848fbfcb77821342c867d2ddc0a2c5 $ */
+/* $FreeBSD: 9b3d0c81ce03185a1f5e564ec708f8e251e8db46 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -93,6 +93,7 @@ enum {
 	UQ_MSC_FORCE_PROTO_ATAPI,	/* force ATAPI command protocol */
 	UQ_MSC_FORCE_PROTO_UFI,		/* force UFI command protocol */
 	UQ_MSC_FORCE_PROTO_RBC,		/* force RBC command protocol */
+	UQ_MSC_IGNORE,			/* device should be ignored by umass */
 
 	/* Ejection of mass storage (driver disk) */
 	UQ_MSC_EJECT_HUAWEI,		/* ejects after Huawei USB command */

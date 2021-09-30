@@ -1,4 +1,4 @@
-/* $FreeBSD: 51f5a0fa76f1c571fce424464e1873bae4d48317 $ */
+/* $FreeBSD: eacc448b09de3ad4a9d13f759ca2766e416d8649 $ */
 /*	$NetBSD: msdosfs_fat.c,v 1.28 1997/11/17 15:36:49 ws Exp $	*/
 
 /*-
@@ -54,18 +54,18 @@
 #include <sys/errno.h>
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
 
-#include <fs/msdosfs/bpb.h>
-
 #include "ffs/buf.h"
 
-#include "msdos/denode.h"
+#include <fs/msdosfs/bpb.h>
 #include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
+#include <fs/msdosfs/denode.h>
+#include <fs/msdosfs/fat.h>
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include "makefs.h"
 #include "msdos.h"

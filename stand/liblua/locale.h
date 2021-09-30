@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2018 M. Warner Losh
+ * Copyright (c) 2018 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,5 +22,5 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d0822025821412078130bdff57b5fadd03ca4d1f $
+ * $FreeBSD: b6420935d83fd810fd94f1c22b4b9e0b28d99429 $
  */

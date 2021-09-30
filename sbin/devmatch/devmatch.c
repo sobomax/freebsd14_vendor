@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5d698576076da70dfe5e0224171769137a43926 $");
+__FBSDID("$FreeBSD: c1ed11f6e41f010eed85bf5afb174e52a6ca8f0b $");
 
 #include <sys/param.h>
 #include <ctype.h>
@@ -349,7 +349,12 @@ search_hints(const char *bus, const char *dev, const char *pnpinfo)
 						}
 						if (*cp == 'D')
 							break;
+						if (bit >= 0 && ((1 << bit) & mask) == 0)
+							break;
 						s = pnpval_as_str(cp + 2, pnpinfo);
+						if (verbose_flag)
+							printf("Matching %s (%c) table=%s tomatch=%s\n",
+							    cp + 2, *cp, s, val1);
 						if (strcmp(s, val1) != 0)
 							notme++;
 						break;

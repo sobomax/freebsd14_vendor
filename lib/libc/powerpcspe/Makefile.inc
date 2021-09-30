@@ -1,7 +1,6 @@
-# $FreeBSD: 4adef818a1c088d7b8014cd9309ca7bdf1bc974d $
+# $FreeBSD: 56f0476f88979333a8c845efec1548dbb56cdf2f $
 
 CFLAGS+= -I${LIBC_SRCTOP}/powerpc
-SRCS+=	trivial-vdso_tc.c
 
 # Long double is 64-bits
 SRCS+=machdep_ldisd.c

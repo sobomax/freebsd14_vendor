@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c898981f72e92b74c4e123381f302f663a9bd367 $
+ * $FreeBSD: a7ce1b31641c62d35e3ec57ee3d525365803dd5c $
  */
 
 #ifndef __MLX5_CORE_H__
@@ -36,9 +36,9 @@
 
 #define DRIVER_NAME "mlx5_core"
 #ifndef DRIVER_VERSION
-#define DRIVER_VERSION "3.5.2"
+#define DRIVER_VERSION "3.6.0"
 #endif
-#define DRIVER_RELDATE "September 2019"
+#define DRIVER_RELDATE "December 2020"
 
 extern int mlx5_core_debug_mask;
 

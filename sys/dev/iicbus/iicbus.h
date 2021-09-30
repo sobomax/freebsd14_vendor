@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ee56a3c77ae82d512925e01034b74f297d30331a $
+ * $FreeBSD: d3c3f77d545598e3105af988a8a7d4fa007ddfea $
  *
  */
 #ifndef __IICBUS_H
@@ -75,6 +75,12 @@ IICBUS_ACCESSOR(addr,		ADDR,		uint32_t)
 #define	IICBUS_FDT_PNP_INFO(t)	FDTCOMPAT_PNP_INFO(t, iicbus)
 #else
 #define	IICBUS_FDT_PNP_INFO(t)
+#endif
+
+#ifdef DEV_ACPI
+#define	IICBUS_ACPI_PNP_INFO(t)	ACPICOMPAT_PNP_INFO(t, iicbus)
+#else
+#define	IICBUS_ACPI_PNP_INFO(t)
 #endif
 
 int  iicbus_generic_intr(device_t dev, int event, char *buf);

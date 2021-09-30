@@ -1,5 +1,5 @@
 # $OpenBSD: Makefile,v 1.8 2015/09/09 15:33:18 deraadt Exp $
-# $FreeBSD: 4ba12a7bbd29d4f4ebc348b8439db27dfcc3f3e2 $
+# $FreeBSD: 5c909e3d79fea0ee7994fbd5be5b0df44bfef524 $
 
 PROG=		ypldap
 SRCS=		parse.y ypldap.c log.c	\
@@ -9,12 +9,12 @@ SRCS=		parse.y ypldap.c log.c	\
 
 MAN=		ypldap.8 ypldap.conf.5
 
-LIBADD=		openbsd event util rpcsvc
+LIBADD=		openbsd event1 util rpcsvc
 
 CFLAGS+=-I${.CURDIR}
 CFLAGS+=-I${SRCTOP}/contrib/pf/libevent
 CFLAGS+=-I${SRCTOP}/lib/libopenbsd
 
-WARNS=	2
+WARNS?=	2
 
 .include <bsd.prog.mk>

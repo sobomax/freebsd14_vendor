@@ -1,7 +1,8 @@
-# $FreeBSD: 4804f9759389497156f215afe9bf503c631860be $
+# $FreeBSD: 61637b85d4ba3c05d66405f38004d852fe622651 $
 
 PROG=	MdLoad
 LIBADD=	sbuf bsdxml
+NO_OBJ=	t
 
 MAN=
 

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 191456a4acf2fe1fd9600923afb8c5b2b9ff1524 $
+ * $FreeBSD: 3728d742e4d124b278e3473a38546dfd6352e6f9 $
  */
 #ifndef _SYS_WATCHDOG_H
 #define	_SYS_WATCHDOG_H
@@ -104,7 +104,7 @@
 
 #ifdef _KERNEL
 
-#include <sys/eventhandler.h>
+#include <sys/_eventhandler.h>
 
 typedef void (*watchdog_fn)(void *, u_int, int *);
 

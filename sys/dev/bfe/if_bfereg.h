@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 668d2604ffc3f181382a6719026ab122738e2c13 $ */
+/* $FreeBSD: 8638f78cf56290f03eb9841b858835ec1a7f2cb9 $ */
 
 #ifndef _BFE_H
 #define _BFE_H
@@ -247,7 +247,6 @@
 #define BFE_AP_RSV          0x00000030 /* Reserved */
 #define BFE_IBE             0x00020000 /* In Band Error */
 #define BFE_TO              0x00040000 /* Timeout */
-
 
 /* Seems the bcm440x has a fairly generic core, we only need be concerned with
  * a couple of these

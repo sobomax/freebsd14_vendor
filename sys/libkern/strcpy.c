@@ -30,12 +30,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c61542d9636202a79109d5f49483586142bf6de $");
+__FBSDID("$FreeBSD: 8528ed72ac3e46b1ca705fdeffab18c023aa58cf $");
 
 #include <sys/libkern.h>
 
 char *
-strcpy(char * __restrict to, const char * __restrict from)
+(strcpy)(char * __restrict to, const char * __restrict from)
 {
 	char *save = to;
 

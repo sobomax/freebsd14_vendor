@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e576efc288c65ffe957e3a89eb4c982d29ddafc $");
+__FBSDID("$FreeBSD: 2121a15bad6ebd6d3b222c36ae0b9c070989cbe6 $");
 
 #include "opt_wlan.h"
 #include "opt_iwn.h"
@@ -3022,6 +3022,7 @@ static void
 iwn_rx_done(struct iwn_softc *sc, struct iwn_rx_desc *desc,
     struct iwn_rx_data *data)
 {
+	struct epoch_tracker et;
 	struct iwn_ops *ops = &sc->ops;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct iwn_rx_ring *ring = &sc->rxq;
@@ -3181,6 +3182,7 @@ iwn_rx_done(struct iwn_softc *sc, struct iwn_rx_desc *desc,
 	}
 
 	IWN_UNLOCK(sc);
+	NET_EPOCH_ENTER(et);
 
 	/* Send the frame to the 802.11 layer. */
 	if (ni != NULL) {
@@ -3192,6 +3194,7 @@ iwn_rx_done(struct iwn_softc *sc, struct iwn_rx_desc *desc,
 	} else
 		(void)ieee80211_input_all(ic, m, rssi - nf, nf);
 
+	NET_EPOCH_EXIT(et);
 	IWN_LOCK(sc);
 
 	DPRINTF(sc, IWN_DEBUG_TRACE, "->%s: end\n",__func__);
@@ -7439,7 +7442,6 @@ static int
 iwn_ampdu_rx_start(struct ieee80211_node *ni, struct ieee80211_rx_ampdu *rap,
     int baparamset, int batimeout, int baseqctl)
 {
-#define MS(_v, _f)	(((_v) & _f) >> _f##_S)
 	struct iwn_softc *sc = ni->ni_ic->ic_softc;
 	struct iwn_ops *ops = &sc->ops;
 	struct iwn_node *wn = (void *)ni;
@@ -7450,8 +7452,8 @@ iwn_ampdu_rx_start(struct ieee80211_node *ni, struct ieee80211_rx_ampdu *rap,
 
 	DPRINTF(sc, IWN_DEBUG_TRACE, "->Doing %s\n", __func__);
 
-	tid = MS(le16toh(baparamset), IEEE80211_BAPS_TID);
-	ssn = MS(le16toh(baseqctl), IEEE80211_BASEQ_START);
+	tid = _IEEE80211_MASKSHIFT(le16toh(baparamset), IEEE80211_BAPS_TID);
+	ssn = _IEEE80211_MASKSHIFT(le16toh(baseqctl), IEEE80211_BASEQ_START);
 
 	if (wn->id == IWN_ID_UNDEFINED)
 		return (ENOENT);
@@ -7468,7 +7470,6 @@ iwn_ampdu_rx_start(struct ieee80211_node *ni, struct ieee80211_rx_ampdu *rap,
 	if (error != 0)
 		return error;
 	return sc->sc_ampdu_rx_start(ni, rap, baparamset, batimeout, baseqctl);
-#undef MS
 }
 
 /*

@@ -34,7 +34,7 @@
 #ifndef lint
 __COPYRIGHT("@(#) Copyright (c) 1997, 1998, 2003, 2004, 2006, 2008,\
  2009, 2010, 2011, 2015, 2017 Matthew R. Green.  All rights reserved.");
-__FBSDID("$FreeBSD: 47cfd225b8444bbd1f503bd2715ddc0f6ed6bdb8 $");
+__FBSDID("$FreeBSD: 5128e7ed43e00ed5cb4dd73c6ed1b17d436979dc $");
 #endif /* not lint */
 
 /*
@@ -2075,7 +2075,7 @@ handle_dir(char *dir)
 		return;
 	}
 
-	while ((entry = fts_read(fts))) {
+	while (errno = 0, (entry = fts_read(fts))) {
 		switch(entry->fts_info) {
 		case FTS_D:
 		case FTS_DP:
@@ -2090,6 +2090,8 @@ handle_dir(char *dir)
 			handle_file(entry->fts_path, entry->fts_statp);
 		}
 	}
+	if (errno != 0)
+		warn("error with fts_read %s", dir);
 	(void)fts_close(fts);
 }
 #endif

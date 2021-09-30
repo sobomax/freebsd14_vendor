@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 927652f193cad3d3dccba157573f2edf84a1258f $
+ * $FreeBSD: a7b6b7b54618271634fa0cf3cd50f66d068df67f $
  *
  */
 
@@ -67,7 +67,7 @@
  * C Helper macros
  */
 
-#if __ARM_ARCH >= 6
+#if __ARM_ARCH >= 6 && !defined(SOFTFLOAT_FOR_GCC)
 /*
  * Generate a function that will either call into the VFP implementation,
  * or the soft float version for a given __aeabi_* helper. The function

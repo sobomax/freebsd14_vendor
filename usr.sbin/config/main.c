@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 52873f67a4e64e532af00c0bff85ace253a23712 $";
+  "$FreeBSD: e52db432bf6515fe277195133a8512546cb84133 $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -129,14 +129,35 @@ main(int argc, char **argv)
 	char *kernfile;
 	struct includepath* ipath;
 	int printmachine;
+	bool cust_dest = false;
 
 	printmachine = 0;
 	kernfile = NULL;
 	SLIST_INIT(&includepath);
-	while ((ch = getopt(argc, argv, "CI:d:gmps:Vx:")) != -1)
+	SLIST_INIT(&cputype);
+	SLIST_INIT(&mkopt);
+	SLIST_INIT(&opt);
+	SLIST_INIT(&rmopts);
+	STAILQ_INIT(&cfgfiles);
+	STAILQ_INIT(&dtab);
+	STAILQ_INIT(&fntab);
+	STAILQ_INIT(&ftab);
+	STAILQ_INIT(&hints);
+	STAILQ_INIT(&envvars);
+	while ((ch = getopt(argc, argv, "Cd:gI:mps:Vx:")) != -1)
 		switch (ch) {
 		case 'C':
 			filebased = 1;
+			break;
+		case 'd':
+			if (*destdir == '\0')
+				strlcpy(destdir, optarg, sizeof(destdir));
+			else
+				errx(EXIT_FAILURE, "directory already set");
+			cust_dest = true;
+			break;
+		case 'g':
+			debugging++;
 			break;
 		case 'I':
 			ipath = (struct includepath *) \
@@ -148,15 +169,6 @@ main(int argc, char **argv)
 			break;
 		case 'm':
 			printmachine = 1;
-			break;
-		case 'd':
-			if (*destdir == '\0')
-				strlcpy(destdir, optarg, sizeof(destdir));
-			else
-				errx(EXIT_FAILURE, "directory already set");
-			break;
-		case 'g':
-			debugging++;
 			break;
 		case 'p':
 			profiling++;
@@ -210,16 +222,6 @@ main(int argc, char **argv)
 		strlcat(destdir, PREFIX, sizeof(destdir));
 	}
 
-	SLIST_INIT(&cputype);
-	SLIST_INIT(&mkopt);
-	SLIST_INIT(&opt);
-	SLIST_INIT(&rmopts);
-	STAILQ_INIT(&cfgfiles);
-	STAILQ_INIT(&dtab);
-	STAILQ_INIT(&fntab);
-	STAILQ_INIT(&ftab);
-	STAILQ_INIT(&hints);
-	STAILQ_INIT(&envvars);
 	if (yyparse())
 		exit(3);
 
@@ -245,7 +247,14 @@ main(int argc, char **argv)
 		exit(0);
 	}
 
-	/* Make compile directory */
+	/*
+	 * Make CDIR directory, if doing a default destination. Some version
+	 * control systems delete empty directories and this seemlessly copes.
+	 */
+	if (!cust_dest && stat(CDIR, &buf))
+		if (mkdir(CDIR, 0777))
+			err(2, "%s", CDIR);
+	/* Create the compile directory */
 	p = path((char *)NULL);
 	if (stat(p, &buf)) {
 		if (mkdir(p, 0777))

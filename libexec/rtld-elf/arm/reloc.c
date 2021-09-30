@@ -1,7 +1,7 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d389bb0f8e8784688be66e970e24da5e5d4079f2 $");
+__FBSDID("$FreeBSD: 7779169667be7f84898166d77729b33dbde291a2 $");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -484,12 +484,6 @@ reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 
 void
 ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
-{
-
-}
-
-void
-pre_init(void)
 {
 
 }

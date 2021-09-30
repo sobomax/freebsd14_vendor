@@ -1,4 +1,4 @@
-/* $FreeBSD: 1c110ad39ae7fe34795be0f88f715dd1e0ad9e0e $ */
+/* $FreeBSD: 158b3cdda4da6d85698268b6a9fb9b2ec5ed07d4 $ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-
@@ -230,7 +230,7 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 			 * Arrange for vput() to just forget about it.
 			 */
 			ldep->de_Name[0] = SLOT_DELETED;
-
+			vgone(nvp);
 			vput(nvp);
 			*depp = NULL;
 			return (error);
@@ -552,10 +552,6 @@ msdosfs_reclaim(struct vop_reclaim_args *ap)
 	    dep, dep->de_Name, dep->de_refcnt);
 #endif
 
-	/*
-	 * Destroy the vm object and flush associated pages.
-	 */
-	vnode_destroy_vobject(vp);
 	/*
 	 * Remove the denode from its hash chain.
 	 */

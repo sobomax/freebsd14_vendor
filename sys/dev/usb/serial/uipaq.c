@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba83ad7d2ac8b0315d287609e560f19bc82f07db $");
+__FBSDID("$FreeBSD: 33f2ae4c0845c7c7544e119b81b01ba207bb0825 $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -121,7 +121,6 @@ static void	uipaq_cfg_set_break(struct ucom_softc *, uint8_t);
 static void	uipaq_poll(struct ucom_softc *ucom);
 
 static const struct usb_config uipaq_config_data[UIPAQ_N_TRANSFER] = {
-
 	[UIPAQ_BULK_DT_WR] = {
 		.type = UE_BULK,
 		.endpoint = UE_ADDR_ANY,

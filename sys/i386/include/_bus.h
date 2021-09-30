@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2005 M. Warner Losh.
- * All rights reserved.
+ * Copyright (c) 2005 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2f0b84220b534ee3482fb03ba165fba068941047 $
+ * $FreeBSD: bd716938af6d2ef56792b9ae40ad3c01fcb09d5f $
  */
 
 #ifndef I386_INCLUDE__BUS_H

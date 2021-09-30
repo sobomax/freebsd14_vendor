@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 33a802103f0c6af1c37607898ac5912959ba2706 $");
+__FBSDID("$FreeBSD: 22e2d6e1edda00d225f2c3e5a9c73b6b3ad325e6 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 33a802103f0c6af1c37607898ac5912959ba2706 $");
 #include <sys/mutex.h>
 #include <sys/systm.h>
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include "geom/raid/g_raid.h"
 #include "g_raid_tr_if.h"
 
@@ -203,7 +204,7 @@ g_raid_tr_iostart_raid0(struct g_raid_tr_object *tr, struct bio *bp)
 		g_raid_iodone(bp, EIO);
 		return;
 	}
-	if (bp->bio_cmd == BIO_FLUSH) {
+	if (bp->bio_cmd == BIO_FLUSH || bp->bio_cmd == BIO_SPEEDUP) {
 		g_raid_tr_flush_common(tr, bp);
 		return;
 	}

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 192843506dd970712a66e01a444706940f500185 $");
+__FBSDID("$FreeBSD: 1920f9c3854b55540077bae86689893897aeadb3 $");
 
 #include "opt_bus.h"
 
@@ -206,7 +206,6 @@ ehci_msm_detach(device_t dev)
 
 	return (0);
 }
-
 
 static device_method_t ehci_methods[] = {
 	/* Device interface */

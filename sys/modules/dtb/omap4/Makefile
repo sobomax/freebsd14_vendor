@@ -1,12 +1,8 @@
-# $FreeBSD: 8e6ea876bbe7bf01799fc86be9ee3136db675180 $
+# $FreeBSD: 036ec7fad4faa567153dea16368719b047cfbfe2 $
 # All the dts files for omap4 systems we support.
 DTS=	\
 	omap4-duovero-parlor.dts \
-        pandaboard.dts \
-	pandaboard-es.dts
-
-LINKS=	\
-	${DTBDIR}/pandaboard.dtb ${DTBDIR}/omap4-panda.dtb \
-	${DTBDIR}/pandaboard-es.dtb ${DTBDIR}/omap4-panda-es.dtb
+	omap4-panda.dts \
+	omap4-panda-es.dts
 
 .include <bsd.dtb.mk>

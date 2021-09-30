@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1bef6384678e47ddacc4352d695fd7e1edf9344d $");
+__FBSDID("$FreeBSD: ad7052289f0b77f565afd9d947791d9c23cacabb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -285,13 +285,16 @@ uart_tty_param(struct tty *tp, struct termios *t)
 		parity = UART_PARITY_NONE;
 	if (UART_PARAM(sc, t->c_ospeed, databits, stopbits, parity) != 0)
 		return (EINVAL);
-	UART_SETSIG(sc, SER_DDTR | SER_DTR);
+	if ((t->c_cflag & CNO_RTSDTR) == 0)
+		UART_SETSIG(sc, SER_DDTR | SER_DTR);
 	/* Set input flow control state. */
 	if (!sc->sc_hwiflow) {
 		if ((t->c_cflag & CRTS_IFLOW) && sc->sc_isquelch)
 			UART_SETSIG(sc, SER_DRTS);
-		else
-			UART_SETSIG(sc, SER_DRTS | SER_RTS);
+		else {
+			if ((t->c_cflag & CNO_RTSDTR) == 0)
+				UART_SETSIG(sc, SER_DRTS | SER_RTS);
+		}
 	} else
 		UART_IOCTL(sc, UART_IOCTL_IFLOW, (t->c_cflag & CRTS_IFLOW));
 	/* Set output flow control state. */

@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: 6ce45cbb5280dc637f24957d20698230d4d6b128 $
+ * $FreeBSD: fee69498708a5aa321a5b7964a4ed57f4e7f0c7b $
  */
 
 #ifndef _MATH_H_
@@ -34,11 +34,11 @@ extern const union __nan_un {
 	float		__uf;
 } __nan;
 
-#if __GNUC_PREREQ__(3, 3) || (defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 800)
+#if __GNUC_PREREQ__(3, 3)
 #define	__MATH_BUILTIN_CONSTANTS
 #endif
 
-#if __GNUC_PREREQ__(3, 0) && !defined(__INTEL_COMPILER)
+#if __GNUC_PREREQ__(3, 0)
 #define	__MATH_BUILTIN_RELOPS
 #endif
 

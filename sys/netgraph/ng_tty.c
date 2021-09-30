@@ -39,7 +39,7 @@
  *
  * Updated by Andrew Thompson <thompsa@FreeBSD.org> for MPSAFE TTY.
  *
- * $FreeBSD: 483d0022d9bbf9a58319ea9dfa866c00c28bad83 $
+ * $FreeBSD: fb1e06ff0f2bc13599291a642de05a14a80b2d11 $
  * $Whistle: ng_tty.c,v 1.21 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -439,7 +439,6 @@ ngt_rint_bypass(struct tty *tp, const void *buf, size_t len)
 		 * Odd, we have changed from non-bypass to bypass. It is
 		 * unlikely but not impossible, flush the data first.
 		 */
-		sc->m->m_data = sc->m->m_pktdat;
 		NG_SEND_DATA_ONLY(error, sc->hook, sc->m);
 		sc->m = NULL;
 	}
@@ -495,7 +494,6 @@ ngt_rint(struct tty *tp, char c, int flags)
 
 	/* Ship off mbuf if it's time */
 	if (sc->hotchar == -1 || c == sc->hotchar || m->m_len >= MHLEN) {
-		m->m_data = m->m_pktdat;
 		sc->m = NULL;
 		NG_SEND_DATA_ONLY(error, sc->hook, m);	/* Will queue */
 	}
@@ -509,4 +507,3 @@ ngt_rint_poll(struct tty *tp)
 	/* We can always accept input */
 	return (1);
 }
-

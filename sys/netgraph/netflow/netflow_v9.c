@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * 	$FreeBSD: e4f9c5faa53413a4168bc1d358803cca3c2e484e $
+ * 	$FreeBSD: 798bf6fecc42cdcaef566883735d0d6a426b0b36 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e4f9c5faa53413a4168bc1d358803cca3c2e484e $");
+__FBSDID("$FreeBSD: 798bf6fecc42cdcaef566883735d0d6a426b0b36 $");
 
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -236,8 +236,6 @@ export9_send(priv_p priv, fib_export_p fe, item_p item, struct netflow_v9_packet
 	return (error);
 }
 
-
-
 /* Add V9 record to dgram. */
 int
 export9_add(item_p item, struct netflow_v9_packet_opt *t, struct flow_entry *fle)
@@ -413,16 +411,15 @@ get_export9_dgram(priv_p priv, fib_export_p fe, struct netflow_v9_packet_opt **t
 		t->count = 0;
 		t->mtu = mtu;
 		t->flow_header = m->m_len;
-	
+
 		/*
 		 * Check if we need to insert templates into packet
 		 */
 		
 		struct netflow_v9_flowset_header	*fl;
-	
+
 		if ((time_uptime >= priv->templ_time + fe->templ_last_ts) ||
 				(fe->sent_packets >= priv->templ_packets + fe->templ_last_pkt)) {
-
 			fe->templ_last_ts = time_uptime;
 			fe->templ_last_pkt = fe->sent_packets;
 
@@ -431,7 +428,6 @@ get_export9_dgram(priv_p priv, fib_export_p fe, struct netflow_v9_packet_opt **t
 			t->flow_header = m->m_len;
 			t->count += priv->flowset_records[0];
 		}
-
 	}
 
 	*tt = t;
@@ -492,4 +488,3 @@ ng_netflow_copyv9info(priv_p priv, struct ng_netflow_v9info *i)
 	i->templ_packets = priv->templ_packets;
 	i->mtu = priv->mtu;
 }
-

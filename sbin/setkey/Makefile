@@ -25,11 +25,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 69f1ede48ea48ed5cc98917319ab900ec5b2ad30 $
+# $FreeBSD: 47ef3d36bee49bb2de65c8e24deaa1b42f969c13 $
 
 .include <src.opts.mk>
 
-PACKAGE=runtime
 PROG=	setkey
 MAN=	setkey.8
 SRCS=	setkey.c parse.y token.l

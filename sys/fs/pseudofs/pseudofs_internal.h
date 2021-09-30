@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *      $FreeBSD: 3ec49e711999e350c9f6304f1d6d15e00255829a $
+ *      $FreeBSD: 2cc8f32b1d01185a76794b5bd5bcfd983dbae2aa $
  */
 
 #ifndef _PSEUDOFS_INTERNAL_H_INCLUDED
@@ -45,8 +45,7 @@ struct pfs_vdata {
 	struct pfs_node	*pvd_pn;
 	pid_t		 pvd_pid;
 	struct vnode	*pvd_vnode;
-	struct pfs_vdata*pvd_prev, *pvd_next;
-	int		 pvd_dead:1;
+	SLIST_ENTRY(pfs_vdata) pvd_hash;
 };
 
 /*

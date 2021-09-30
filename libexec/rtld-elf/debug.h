@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1ad0323b42f99808b8e7a887beeef1d68dde6c8c $
+ * $FreeBSD: 4dcefbabdb45f0e56d0e389103235548bbeaddc1 $
  */
 
 /*
@@ -37,7 +37,7 @@
 #include <sys/cdefs.h>
 
 #include <string.h>
-#include <unistd.h>
+#include "rtld_printf.h"
 
 void debug_printf(const char *, ...) __printflike(1, 2);
 extern int debug;
@@ -57,7 +57,7 @@ extern int debug;
 #define assert(cond)	((cond) ? (void) 0 :		\
     (msg(_MYNAME ": assert failed: " __FILE__ ":"	\
       __XSTRING(__LINE__) "\n"), abort()))
-#define msg(s)		write(STDOUT_FILENO, s, strlen(s))
+#define msg(s)		rtld_putstr(s)
 #define trace()		msg(_MYNAME ": " __XSTRING(__LINE__) "\n")
 
 

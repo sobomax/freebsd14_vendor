@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 17d2239516ecb4108de9ae35e6081894ecec3bed $
+ * $FreeBSD: 4d75d5547890e461314467b7700c4aa551f12db2 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17d2239516ecb4108de9ae35e6081894ecec3bed $");
+__FBSDID("$FreeBSD: 4d75d5547890e461314467b7700c4aa551f12db2 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -68,7 +68,8 @@ __FBSDID("$FreeBSD: 17d2239516ecb4108de9ae35e6081894ecec3bed $");
 #define	EPT_ENABLE_AD_BITS	(1 << 6)
 
 SYSCTL_DECL(_hw_vmm);
-SYSCTL_NODE(_hw_vmm, OID_AUTO, ept, CTLFLAG_RW, NULL, NULL);
+SYSCTL_NODE(_hw_vmm, OID_AUTO, ept, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
+    NULL);
 
 static int ept_enable_ad_bits;
 

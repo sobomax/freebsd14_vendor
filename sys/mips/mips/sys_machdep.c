@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c4941ea75af1676754bc4bbcf59411b34eeb096 $");
+__FBSDID("$FreeBSD: 87158b5c3cf37c967dc7c5a366499a1828a4cea8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,7 @@ sysarch(struct thread *td, struct sysarch_args *uap)
 		 */
 		if (cpuinfo.userlocal_reg == true) {
 			mips_wr_userlocal((unsigned long)(uap->parms +
-			    td->td_md.md_tls_tcb_offset));
+			    td->td_proc->p_md.md_tls_tcb_offset));
 		}
 		return (0);
 	case MIPS_GET_TLS: 

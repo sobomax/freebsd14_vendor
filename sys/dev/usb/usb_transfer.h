@@ -1,4 +1,4 @@
-/* $FreeBSD: da632a738262d27e3dce00f8b2f59f60a7e06328 $ */
+/* $FreeBSD: c6b97e1ab3c52f8d390eb11fa2ed391c1c57721f $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -153,9 +153,7 @@ struct usb_done_msg {
 };
 
 #define	USB_DMATAG_TO_XROOT(dpt)				\
-  ((struct usb_xfer_root *)(					\
-   ((uint8_t *)(dpt)) -						\
-   ((uint8_t *)&((struct usb_xfer_root *)0)->dma_parent_tag)))
+	__containerof(dpt, struct usb_xfer_root, dma_parent_tag)
 
 /*
  * The following structure is used to keep information about memory

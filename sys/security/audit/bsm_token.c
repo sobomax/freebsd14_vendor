@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05a1dcff93f731f2768f0694f2afb222a05c4579 $");
+__FBSDID("$FreeBSD: 2dc4df2aa1b83e49920e619362427128e645819d $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: 05a1dcff93f731f2768f0694f2afb222a05c4579 $");
 #include <netinet/in.h>
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
-
 
 #include <bsm/audit.h>
 #include <bsm/audit_internal.h>
@@ -341,7 +340,6 @@ au_to_data(char unit_print, char unit_type, char unit_count, const char *p)
 
 	return (t);
 }
-
 
 /*
  * token ID                1 byte

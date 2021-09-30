@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 384a09d519ff61ca159f952923cfdc674c0dfdf5 $
+ * $FreeBSD: b75a1b25eeb65dda9579c1b894274977f856ba37 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 384a09d519ff61ca159f952923cfdc674c0dfdf5 $");
+__FBSDID("$FreeBSD: b75a1b25eeb65dda9579c1b894274977f856ba37 $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -37,6 +37,12 @@ __FBSDID("$FreeBSD: 384a09d519ff61ca159f952923cfdc674c0dfdf5 $");
 #include <machine/md_var.h>
 
 #include "vmm_util.h"
+
+bool
+vmm_is_hw_supported(void)
+{
+	return (vmm_is_intel() || vmm_is_svm());
+}
 
 bool
 vmm_is_intel(void)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8dea105702caa918e21b6befbec83ba04edcd82 $");
+__FBSDID("$FreeBSD: 3edccdbd2c2f0c1f9b46a7e369425ddb31fcaf9f $");
 
 #include "namespace.h"
 #include <sys/endian.h>
@@ -128,11 +128,7 @@ utx_to_futx(const struct utmpx *ut, struct futx *fu)
 struct utmpx *
 futx_to_utx(const struct futx *fu)
 {
-#ifdef __NO_TLS
-	static struct utmpx *ut;
-#else
 	static _Thread_local struct utmpx *ut;
-#endif
 
 	if (ut == NULL) {
 		ut = calloc(1, sizeof *ut);

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e5b96272528797328e303f4a7836d4846674b747 $
+ * $FreeBSD: 3c805bac099dbf8a2d71c38ec0cc0f5d8c5121be $
  */
 
 #ifndef __SYS_IPMI_H__
@@ -126,7 +126,6 @@ struct ipmi_cmdspec {
 	unsigned char	netfn;
 	unsigned char	cmd;
 };
-
 
 struct ipmi_addr {
 	int		addr_type;

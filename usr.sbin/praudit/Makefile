@@ -1,6 +1,8 @@
 #
-# $FreeBSD: be6311e674f554e6874b20efa248fc7d5682e4d3 $
+# $FreeBSD: 4d0cf2742e56d42e7f6d5f42464e582ac3b14e76 $
 #
+
+.include <src.opts.mk>
 
 OPENBSMDIR=${SRCTOP}/contrib/openbsm
 .PATH: ${OPENBSMDIR}/bin/praudit

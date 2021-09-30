@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d0485ee28287a7cf4c20a1078bdcd3b973baba93 $
+ * $FreeBSD: 18c8fc85b765b8a002003cb718209ea7543d6296 $
  */
 
 #ifndef _CAM_CAM_XPT_INTERNAL_H
@@ -92,7 +92,6 @@ SET_DECLARE(cam_xpt_proto_set, struct xpt_proto);
 #define CAM_XPT_PROTO(data) 				\
 	DATA_SET(cam_xpt_proto_set, data)
 
-
 /*
  * The CAM EDT (Existing Device Table) contains the device information for
  * all devices for all buses in the system.  The table contains a
@@ -107,7 +106,7 @@ struct cam_ed {
 	struct	cam_ccbq ccbq;		/* Queue of pending ccbs */
 	struct	async_list asyncs;	/* Async callback info for this B/T/L */
 	struct	periph_list periphs;	/* All attached devices */
-	u_int	generation;		/* Generation number */
+	u_int		 generation;	/* Generation number */
 	void		 *quirk;	/* Oddities about this device */
 	u_int		 maxtags;
 	u_int		 mintags;

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 290e836f91fba7cd8b3481e15d53253c60fc8327 $");
+__FBSDID("$FreeBSD: b575b4ec3119e353d7bed77bcfae761ba6361514 $");
 
 #include "opt_syscons.h"
 #include "opt_teken.h"
@@ -42,8 +42,7 @@ __FBSDID("$FreeBSD: 290e836f91fba7cd8b3481e15d53253c60fc8327 $");
 #include <sys/consio.h>
 #include <sys/kbio.h>
 
-#if defined(__arm__) || defined(__mips__) || \
-	defined(__powerpc__) || defined(__sparc64__)
+#if defined(__arm__) || defined(__mips__) || defined(__powerpc__)
 #include <machine/sc_machdep.h>
 #else
 #include <machine/pc/display.h>
@@ -144,6 +143,7 @@ scteken_init(scr_stat *scp, void **softc, int code)
 #ifdef TEKEN_CONS25
 		teken_set_cons25(&ts->ts_teken);
 #endif /* TEKEN_CONS25 */
+		teken_set_cons25keys(&ts->ts_teken);
 		scteken_sync_internal(scp, ts);
 		break;
 	}

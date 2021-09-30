@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d00b96527b077fdd5873c7c5a230a7d76a22f136 $");
+__FBSDID("$FreeBSD: 245c3e89dfb9186bc61a59630d63b8f26b1e8f57 $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -740,8 +740,9 @@ ctl_io_sbuf(union ctl_io *io, struct sbuf *sb)
 	case CTL_IO_SCSI:
 		sbuf_cat(sb, path_str);
 		ctl_scsi_command_string(&io->scsiio, NULL, sb);
-		sbuf_printf(sb, " Tag: %#x/%d\n",
-			    io->scsiio.tag_num, io->scsiio.tag_type);
+		sbuf_printf(sb, " Tag: %#x/%d, Prio: %d\n",
+			    io->scsiio.tag_num, io->scsiio.tag_type,
+			    io->scsiio.priority);
 		break;
 	case CTL_IO_TASK:
 		sbuf_cat(sb, path_str);

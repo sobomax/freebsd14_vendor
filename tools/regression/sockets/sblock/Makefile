@@ -1,9 +1,8 @@
 #
-# $FreeBSD: aa2f890bc447137cf3bee0aa5e523a3d295e0ded $
+# $FreeBSD: 1992a0a652ac63ad5abdb8f3f17cc7c6350ebd6e $
 #
 
 PROG=	sblock
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

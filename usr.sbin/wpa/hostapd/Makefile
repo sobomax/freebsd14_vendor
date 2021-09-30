@@ -1,4 +1,4 @@
-# $FreeBSD: f5d48a32046f497f34de3ae7aca68bbaf6aaef50 $
+# $FreeBSD: 579694046989406ffd7c7d162b8acb2af9c6bda0 $
 
 .include <src.opts.mk>
 .include "../Makefile.inc"
@@ -10,6 +10,7 @@
 	${WPA_DISTDIR}/src/drivers \
 	${WPA_DISTDIR}/wpa_supplicant
 
+PACKAGE=	hostapd
 PROG=	hostapd
 SRCS=	accounting.c \
 	ap_config.c \
@@ -161,6 +162,10 @@ SRCS+=	eap_server_gtc.c \
 	eapol_auth_dump.c \
 	eapol_auth_sm.c
 TLS_FUNCS=y
+
+# For WPS, EAP modes, etc
+NEED_DH_GROUPS=y
+NEED_DH_GROUPS_ALL=y
 
 .if !empty(CFLAGS:M*-DCONFIG_WPS)
 NEED_SIM_COMMON=y

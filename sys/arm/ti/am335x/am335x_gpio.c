@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cbfde175c2e78fd2380570326b2368511a3fa8e0 $");
+__FBSDID("$FreeBSD: beb169b3e4b563af5fb0c12537eed2ca31b73504 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -155,3 +155,4 @@ DEFINE_CLASS_1(gpio, am335x_gpio_driver, am335x_gpio_methods,
     sizeof(struct ti_gpio_softc), ti_gpio_driver);
 DRIVER_MODULE(am335x_gpio, simplebus, am335x_gpio_driver, am335x_gpio_devclass,
     0, 0);
+MODULE_DEPEND(am335x_gpio, ti_sysc, 1, 1, 1);

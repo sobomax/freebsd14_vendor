@@ -7,7 +7,7 @@
 /* VMCI initialization. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c742cc46c742a3b2f9daa6280e4e370d73404727 $");
+__FBSDID("$FreeBSD: 8426731a038a185cc3933e5eb891c98684e6207d $");
 
 #include "vmci.h"
 #include "vmci_doorbell.h"
@@ -281,10 +281,8 @@ vmci_read_datagrams_from_port(vmci_io_handle io_handle, vmci_io_port dg_in_port,
 			 */
 
 			if (dg_in_size > remaining_bytes) {
-
 				if (remaining_bytes !=
 				    current_dg_in_buffer_size) {
-
 					/*
 					 * We move the partial datagram to the
 					 * front and read the reminder of the

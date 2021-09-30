@@ -31,7 +31,7 @@
  *
  *	from: @(#)svc.h 1.35 88/12/17 SMI
  *	from: @(#)svc.h      1.27    94/04/25 SMI
- * $FreeBSD: b60b85ef0f530ebc1f4c714967dd5a9f4e818a83 $
+ * $FreeBSD: dae654d4b08cf897ff62b2ac7a843a665ece77fa $
  */
 
 /*
@@ -175,6 +175,14 @@ typedef struct __rpc_svcxprt {
 	int		xp_upcallset;	/* socket upcall is set up */
 	uint32_t	xp_snd_cnt;	/* # of bytes to send to socket */
 	uint32_t	xp_snt_cnt;	/* # of bytes sent to socket */
+	bool_t		xp_dontrcv;	/* Do not receive on the socket */
+	uint32_t	xp_tls;		/* RPC-over-TLS on socket */
+	uint64_t	xp_sslsec;	/* Userland SSL * */
+	uint64_t	xp_sslusec;
+	uint64_t	xp_sslrefno;
+	int		xp_ngrps;	/* Cred. from TLS cert. */
+	uid_t		xp_uid;
+	gid_t		*xp_gidp;
 #else
 	int		xp_fd;
 	u_short		xp_port;	 /* associated port number */

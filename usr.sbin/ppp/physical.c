@@ -16,7 +16,7 @@
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: eb74b33a15507e7cb07fa9376b6f3ae4acd5a5f9 $
+ * $FreeBSD: 5612c1194e9dd2a33aa4859d67879c85534da251 $
  *
  */
 
@@ -364,13 +364,9 @@ physical_Close(struct physical *p)
 
   if (*p->name.full == '/') {
     snprintf(fn, sizeof fn, "%s%s.if", _PATH_VARRUN, p->name.base);
-#ifndef RELEASE_CRUNCH
     if (ID0unlink(fn) == -1)
       log_Printf(LogALERT, "%s: Can't remove %s: %s\n",
                  p->link.name, fn, strerror(errno));
-#else
-    ID0unlink(fn);
-#endif
   }
   physical_Unlock(p);
   if (p->handler && p->handler->destroy)
@@ -978,12 +974,9 @@ physical_Found(struct physical *p)
     if (lockfile != NULL) {
       fprintf(lockfile, "%s%d\n", TUN_NAME, p->dl->bundle->unit);
       fclose(lockfile);
-    }
-#ifndef RELEASE_CRUNCH
-    else
+    } else
       log_Printf(LogALERT, "%s: Can't create %s: %s\n",
                  p->link.name, fn, strerror(errno));
-#endif
   }
 
   throughput_start(&p->link.stats.total, "physical throughput",

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 005a42c2038a9465816c8d798db6f6d658faea5c $	*/
+/*	$FreeBSD: 885d2fbb3c8010ba2e8c22de31c98fdb2ebd32dc $	*/
 /*	$KAME: rtadvd.h,v 1.26 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*-
@@ -196,6 +196,9 @@ struct	rainfo {
 	uint16_t	rai_mininterval;	/* MinRtrAdvInterval */
 	int 	rai_managedflg;		/* AdvManagedFlag */
 	int	rai_otherflg;		/* AdvOtherConfigFlag */
+#ifdef DRAFT_IETF_6MAN_IPV6ONLY_FLAG
+	int	rai_ipv6onlyflg;	/* AdvIPv6OnlyFlag */
+#endif
 
 	int	rai_rtpref;		/* router preference */
 	uint32_t	rai_linkmtu;		/* AdvLinkMTU */

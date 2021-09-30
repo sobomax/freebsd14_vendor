@@ -1,4 +1,4 @@
-# $FreeBSD: de5d5e01037abc543e65ad672d3a0875a8b30e92 $
+# $FreeBSD: a35a7c7c56bfea5ffacdbcfc86cf60f2c18689c5 $
 
 LOADER_CD9660_SUPPORT?=	yes
 LOADER_EXT2FS_SUPPORT?=	no
@@ -18,11 +18,19 @@ INSTALLFLAGS=	-b
 
 # Architecture-specific loader code
 SRCS=		conf.c vers.c main.c elf_freebsd.c ppc64_elf_freebsd.c start.c
-SRCS+=		ucmpdi2.c
+SRCS+=		ucmpdi2.c gfx_fb.c
+
+CFLAGS.gfx_fb.c += -I${SRCTOP}/contrib/pnglite
+CFLAGS.gfx_fb.c += -I${SRCTOP}/sys/teken
 
 .include	"${BOOTSRC}/fdt.mk"
 .if ${MK_FDT} == "yes"
 SRCS+=		ofwfdt.c
+.endif
+
+.if ${MACHINE_ARCH} == "powerpc64"
+SRCS+=		cas.c
+CFLAGS+=	-DCAS
 .endif
 
 HELP_FILES=	${FDTSRC}/help.fdt
@@ -34,13 +42,13 @@ HELP_FILES=	${FDTSRC}/help.fdt
 
 # load address. set in linker script
 RELOC?=		0x1C00000
-CFLAGS+=	-DRELOC=${RELOC}
+CFLAGS+=	-DRELOC=${RELOC} -g
 
 LDFLAGS=	-nostdlib -static -T ${.CURDIR}/ldscript.powerpc
 
 # Open Firmware standalone support library
-LIBOFW=		${BOOTOBJ}/ofw/libofw/libofw.a
-CFLAGS+=	-I${BOOTSRC}/ofw/libofw
+LIBOFW=		${BOOTOBJ}/libofw/libofw.a
+CFLAGS+=	-I${BOOTSRC}/libofw
 
 DPADD=		${LDR_INTERP} ${LIBOFW} ${LIBFDT} ${LIBSA}
 LDADD=		${LDR_INTERP} ${LIBOFW} ${LIBFDT} ${LIBSA}

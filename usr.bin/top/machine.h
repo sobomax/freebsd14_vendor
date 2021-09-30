@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c3c7777d910ed994a90824faa11ce05cafb41e86 $
+ * $FreeBSD: c2616e9052e348253b5381c18b589f4b90272fe6 $
  */
 
 /*
@@ -30,6 +30,7 @@ struct statics
     const char * const *carc_names;
     const char * const *swap_names;
     const char * const *order_names;
+    int nbatteries;
     int ncpus;
 };
 
@@ -50,6 +51,7 @@ struct system_info
     int    *carc;
     int    *swap;
     struct timeval boottime;
+    int    battery;
     int    ncpus;
 };
 

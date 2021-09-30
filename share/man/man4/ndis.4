@@ -28,7 +28,7 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 .\" THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 1531b0ced89756b901797347d3b6fe5cab3ba238 $
+.\" $FreeBSD: 0a1ae39bff62640bb109415741e85835975ef686 $
 .\"
 .Dd March 14, 2010
 .Dt NDIS 4
@@ -105,9 +105,8 @@ file.
 The
 .Nm
 driver is designed to support mainly Ethernet and wireless
-network devices with PCI, PCMCIA and USB bus attachments.
-(Cardbus
-devices are also supported as a subset of PCI.)
+network devices with PCI and USB bus attachments.
+(Cardbus devices are also supported as PCI.)
 It can
 support many different media types and speeds.
 One limitation
@@ -121,8 +120,8 @@ which can be configured via the
 .Xr sysctl 8
 command.
 .Sh DEPRECATION NOTICE
-The PC Card attachment of this driver is scheduled for removal prior to the release of
-.Fx 13.0
+This driver is scheduled for removal prior to the release of
+.Fx 14.0
 .Sh DIAGNOSTICS
 .Bl -diag
 .It "ndis%d: watchdog timeout"

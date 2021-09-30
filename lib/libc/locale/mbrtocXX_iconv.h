@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 262818ee79d5642a32ddb9287d684654dfc41f4d $");
+__FBSDID("$FreeBSD: d753b3523244bd3677c2cac6850e7be24e64ff6f $");
 
 #include <sys/queue.h>
 
@@ -41,7 +41,7 @@ __FBSDID("$FreeBSD: 262818ee79d5642a32ddb9287d684654dfc41f4d $");
 #include "../iconv/citrus_hash.h"
 #include "../iconv/citrus_module.h"
 #include "../iconv/citrus_iconv.h"
-#include "xlocale_private.h"
+#include "mblocal.h"
 
 typedef struct {
 	bool			initialized;
@@ -68,7 +68,7 @@ mbrtocXX_l(charXX_t * __restrict pc, const char * __restrict s, size_t n,
 
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->mbrtocXX;
+		ps = &(XLOCALE_CTYPE(locale)->mbrtocXX);
 	cs = (_ConversionState *)ps;
 	handle = &cs->iconv;
 

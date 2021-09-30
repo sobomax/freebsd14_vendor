@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9d860f9d88963abfebaec661f79cfafee1e6ed5 $");
+__FBSDID("$FreeBSD: cf1685a920eaea31b75f1ed398ba18d1f737c04a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -337,6 +337,9 @@ ndis_attach_pci(dev)
 		sc->ndis_devidx = devidx;
 
 	error = ndis_attach(dev);
+	if (error == 0)
+		gone_in_dev(dev, 14, "ndis removed");
+
 
 fail:
 	return(error);

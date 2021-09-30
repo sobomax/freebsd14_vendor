@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9966335cd980137d7e6b263352f1f5d5612bfc1 $");
+__FBSDID("$FreeBSD: 4c389e9f88be1e23f9410155c2d7727eddc87d3f $");
 #include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: f9966335cd980137d7e6b263352f1f5d5612bfc1 $");
 #include <mips/nlm/hal/usb.h>
 
 #include <mips/nlm/xlp.h>
-
 
 static void
 nlm_usb_intr_en(int node, int port)

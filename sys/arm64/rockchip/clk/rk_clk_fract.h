@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2fe8f47586e552c84b8d167c206a340283040c1e $
+ * $FreeBSD: 03fab3fd28846f507671dc94297490a1f622283e $
  */
 
 #ifndef _RK_CLK_FRACT_H_
@@ -35,8 +35,12 @@
 struct rk_clk_fract_def {
 	struct clknode_init_def clkdef;
 	uint32_t		offset;
+	uint32_t		gate_offset;
+	uint32_t		gate_shift;
 	uint32_t		flags;
 };
+
+#define	RK_CLK_FRACT_HAVE_GATE	0x0001
 
 int rk_clk_fract_register(struct clkdom *clkdom,
     struct rk_clk_fract_def *clkdef);

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 808351f95e00590a8b47ffdb2a00318838a241f8 $");
+__FBSDID("$FreeBSD: 47d7fd4887323cb1e3a55ece6ad7f0ae0ed5779e $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -109,7 +109,6 @@ __FBSDID("$FreeBSD: 808351f95e00590a8b47ffdb2a00318838a241f8 $");
 		_c -= EFX_HASH_ROTATE(_b, 24);				\
 	_NOTE(CONSTANTCONDITION)					\
 	} while (B_FALSE)
-
 
 /* Produce a 32-bit hash from 32-bit aligned input */
 	__checkReturn		uint32_t

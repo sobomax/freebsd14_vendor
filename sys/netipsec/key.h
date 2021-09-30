@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7d7ae69f379daeef0d1c9170c1f5d4c220fcf81e $	*/
+/*	$FreeBSD: 2ee7c208f195f5912b97d6ad7b820c097c682b58 $	*/
 /*	$KAME: key.h,v 1.21 2001/07/27 03:51:30 itojun Exp $	*/
 
 /*-
@@ -78,7 +78,6 @@ void key_unregister_ifnet(struct secpolicy **, u_int);
 void key_delete_xform(const struct xformsw *);
 
 extern u_long key_random(void);
-extern void key_randomfill(void *, size_t);
 extern void key_freereg(struct socket *);
 extern int key_parse(struct mbuf *, struct socket *);
 extern void key_init(void);

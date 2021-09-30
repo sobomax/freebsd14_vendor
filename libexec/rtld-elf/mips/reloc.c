@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b116978114b151832a905b6182f3f5e61c12159d $");
+__FBSDID("$FreeBSD: 163f9a170872eaa8c1ada514ee0582680a376fd8 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -755,12 +755,6 @@ reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 
 void
 ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
-{
-
-}
-
-void
-pre_init(void)
 {
 
 }

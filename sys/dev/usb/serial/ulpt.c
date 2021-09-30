@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80873b985cc35feba1b9d884d438948ba900f0d2 $");
+__FBSDID("$FreeBSD: c566da924374b04a738bf673eebc0e560e87de23 $");
 
 /*	$NetBSD: ulpt.c,v 1.60 2003/10/04 21:19:50 augustss Exp $	*/
 
@@ -76,7 +76,8 @@ __FBSDID("$FreeBSD: 80873b985cc35feba1b9d884d438948ba900f0d2 $");
 #ifdef USB_DEBUG
 static int ulpt_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, ulpt, CTLFLAG_RW, 0, "USB ulpt");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, ulpt, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB ulpt");
 SYSCTL_INT(_hw_usb_ulpt, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ulpt_debug, 0, "Debug level");
 #endif
@@ -256,7 +257,6 @@ ulpt_read_callback(struct usb_xfer *xfer, usb_error_t error)
 	case USB_ST_TRANSFERRED:
 
 		if (actlen == 0) {
-
 			if (sc->sc_zlps == 4) {
 				/* enable BULK throttle */
 				usbd_xfer_set_interval(xfer, 500); /* ms */
@@ -420,7 +420,6 @@ ulpt_open(struct usb_fifo *fifo, int fflags)
 	/* we assume that open is a serial process */
 
 	if (sc->sc_fflags == 0) {
-
 		/* reset USB parallel port */
 
 		ulpt_reset(sc);
@@ -574,7 +573,6 @@ found:
 	    "config number: %d\n", alt_index);
 
 	if (alt_index) {
-
 		error = usbd_set_alt_interface_index
 		    (uaa->device, iface_index, alt_index);
 
@@ -689,7 +687,6 @@ static uint8_t
 ieee1284_compare(const char *a, const char *b)
 {
 	while (1) {
-
 		if (*b == 0) {
 			break;
 		}

@@ -1,4 +1,4 @@
-# $FreeBSD: c41da991a039617bda1b13860b0b291f8c3ed4e4 $
+# $FreeBSD: ab3eba28ac961069095b2e421bb56dc303ec7515 $
 
 .include <bsd.init.mk>
 
@@ -13,8 +13,10 @@ CXXFLAGS+=	-fvisibility=default
 
 SRCS+=		profile/GCDAProfiling.c
 SRCS+=		profile/InstrProfiling.c
+SRCS+=		profile/InstrProfilingBiasVar.c
 SRCS+=		profile/InstrProfilingBuffer.c
 SRCS+=		profile/InstrProfilingFile.c
+SRCS+=		profile/InstrProfilingInternal.c
 SRCS+=		profile/InstrProfilingMerge.c
 SRCS+=		profile/InstrProfilingMergeFile.c
 SRCS+=		profile/InstrProfilingNameVar.c

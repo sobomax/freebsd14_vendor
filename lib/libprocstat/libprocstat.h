@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e03ef515444d4ca0ba7f769206cfd3ee32787ae $
+ * $FreeBSD: 0624ec5289d4d4751c9315edb3f0bb2445f7dbd6 $
  */
 
 #ifndef _LIBPROCSTAT_H_
@@ -64,7 +64,7 @@
 #define	PS_FST_TYPE_PIPE	4
 #define	PS_FST_TYPE_PTS		5
 #define	PS_FST_TYPE_KQUEUE	6
-#define	PS_FST_TYPE_CRYPTO	7
+/* was PS_FST_TYPE_CRYPTO	7 */
 #define	PS_FST_TYPE_MQUEUE	8
 #define	PS_FST_TYPE_SHM		9
 #define	PS_FST_TYPE_SEM		10
@@ -72,6 +72,7 @@
 #define	PS_FST_TYPE_NONE	12
 #define	PS_FST_TYPE_PROCDESC	13
 #define	PS_FST_TYPE_DEV		14
+#define	PS_FST_TYPE_EVENTFD	15
 
 /*
  * Special descriptor numbers.

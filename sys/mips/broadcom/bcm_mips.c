@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab38f01b063690c2aad7aa388d27e96aca1d74f3 $");
+__FBSDID("$FreeBSD: a3540416dff9d2650c28dc15926986539e90d28e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -476,7 +476,6 @@ bcm_mips_pic_teardown_intr(device_t dev, struct intr_irqsrc *irqsrc,
 
 	return (error);
 }
-
 
 /** return our PIC's xref */
 static uintptr_t

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8bc4d3917a03adb854df058354badf4e7c22e42d $");
+__FBSDID("$FreeBSD: 227c9b1719ad1be581a0a466e2c7fa76ee3cfe70 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -507,7 +507,6 @@ x86_mrsetvariable(struct mem_range_softc *sc, struct mem_range_desc *mrd,
 			/* Exact match? */
 			if (curr_md->mr_base == mrd->mr_base &&
 			    curr_md->mr_len == mrd->mr_len) {
-
 				/* Whoops, owned by someone. */
 				if (curr_md->mr_flags & MDF_BUSY)
 					return (EBUSY);

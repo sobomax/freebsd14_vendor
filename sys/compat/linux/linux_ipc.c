@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f52f25372626a365d1af663312e395f01e529c15 $");
+__FBSDID("$FreeBSD: 82fe54fae65e15145483b6be312dd9a9d5a5eafc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -832,7 +832,6 @@ linux_shmctl(struct thread *td, struct linux_shmctl_args *args)
 	memset(&linux_shminfo64, 0, sizeof(linux_shminfo64));
 
 	switch (args->cmd & ~LINUX_IPC_64) {
-
 	case LINUX_IPC_INFO: {
 		struct shminfo bsd_shminfo;
 

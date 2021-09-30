@@ -1,10 +1,19 @@
-# $FreeBSD: 4849c7acd5dcae2f0682c1c1ed3ba1c7ae8e8584 $
+# $FreeBSD: 7995660fb7fd48ed5eb2de6ac257731e070354d7 $
 
-PACKAGE=lib${LIB}
 LIB=	devinfo
 SRCS=	devinfo.c
 INCS=	devinfo.h
 MAN=	devinfo.3
+
+MLINKS+=devinfo.3 devinfo_init.3
+MLINKS+=devinfo.3 devinfo_free.3
+MLINKS+=devinfo.3 devinfo_handle_to_device.3
+MLINKS+=devinfo.3 devinfo_handle_to_resource.3
+MLINKS+=devinfo.3 devinfo_handle_to_rman.3
+MLINKS+=devinfo.3 devinfo_foreach_device_child.3
+MLINKS+=devinfo.3 devinfo_foreach_device_resource.3
+MLINKS+=devinfo.3 devinfo_foreach_rman_resource.3
+MLINKS+=devinfo.3 devinfo_foreach_rman.3
 
 SHLIB_MAJOR=	6
 

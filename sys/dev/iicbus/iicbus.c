@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ddc2b07d86b86815b3ccf8c4bf5d57234854c04b $");
+__FBSDID("$FreeBSD: b16a2bdba332174ed0b7dc290b1e8e3c484a03cd $");
 
 /*
  * Autoconfiguration and support routines for the Philips serial I2C bus
@@ -51,6 +51,8 @@ __FBSDID("$FreeBSD: ddc2b07d86b86815b3ccf8c4bf5d57234854c04b $");
 
 /* See comments below for why auto-scanning is a bad idea. */
 #define SCAN_IICBUS 0
+
+SYSCTL_NODE(_hw, OID_AUTO, i2c, CTLFLAG_RW, 0, "i2c controls");
 
 static int
 iicbus_probe(device_t dev)

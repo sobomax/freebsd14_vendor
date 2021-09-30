@@ -1,4 +1,4 @@
-/*	$FreeBSD: 264fe7b3ddd58c93616d05af350622b73f9bc36f $	*/
+/*	$FreeBSD: 2e61fcc166e1eb1968e250c81ef9a91a51afcb8e $	*/
 /*	$KAME: if_gif.h,v 1.17 2000/09/11 11:36:41 sumikawa Exp $	*/
 
 /*-
@@ -97,8 +97,6 @@ struct etherip_header {
 /* mbuf adjust factor to force 32-bit alignment of IP header */
 #define	ETHERIP_ALIGN		2
 
-#define	GIF_RLOCK()	struct epoch_tracker gif_et; epoch_enter_preempt(net_epoch_preempt, &gif_et)
-#define	GIF_RUNLOCK()	epoch_exit_preempt(net_epoch_preempt, &gif_et)
 #define	GIF_WAIT()	epoch_wait_preempt(net_epoch_preempt)
 
 /* Prototypes */

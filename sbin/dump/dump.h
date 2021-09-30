@@ -30,7 +30,7 @@
  *
  *	@(#)dump.h	8.2 (Berkeley) 4/28/95
  *
- * $FreeBSD: 7224bcc39fe8619a5144188e93c79faa5cbf9035 $
+ * $FreeBSD: fc8c845fc576488c36e173c79f649fc1e1859752 $
  */
 
 /*
@@ -126,7 +126,7 @@ void	dumpabort(int signo) __dead2;
 void	dump_getfstab(void);
 
 char	*rawname(char *cp);
-union	dinode *getinode(ino_t inum, int *mode);
+union	dinode *getino(ino_t inum, int *mode);
 
 /* rdump routines */
 #ifdef RDUMP

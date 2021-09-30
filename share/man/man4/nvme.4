@@ -31,7 +31,7 @@
 .\"
 .\" Author: Jim Harris <jimharris@FreeBSD.org>
 .\"
-.\" $FreeBSD: 1bdbd6215dd21b01ddcdee0e014cf13e0f49cfd7 $
+.\" $FreeBSD: db31b6f26b3e374b80590a6b718c7d72648fa3b3 $
 .\"
 .Dd June 6, 2020
 .Dt NVME 4
@@ -152,6 +152,21 @@ use the CAM I/O scheduler to bias one type of operation over another.
 To select the
 .Xr nda 4
 driver, set the following tunable value in
+.Xr loader.conf 5 :
+.Bd -literal -offset indent
+hw.nvme.use_nvd=0
+.Ed
+.Pp
+This value may also be set in the kernel config file with
+.Bd -literal -offset indent
+.Cd options NVME_USE_NVD=0
+.Ed
+.Pp
+When there is an error,
+.Nm
+prints only the most relevant information about the command by default.
+To enable dumping of all information about the command, set the following tunable
+value in
 .Xr loader.conf 5 :
 .Bd -literal -offset indent
 hw.nvme.verbose_cmd_dump=1

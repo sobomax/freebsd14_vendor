@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)negdi2.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 793c63dee07f7cedee985510507401e7089136ba $");
+__FBSDID("$FreeBSD: 476c32afb55e4dd269e81a2876ac179926b91b8c $");
 
 #include "quad.h"
 
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: 793c63dee07f7cedee985510507401e7089136ba $");
  * Return -a (or, equivalently, 0 - a), in quad.  See subdi3.c.
  */
 quad_t
-__negdi2(a)
-	quad_t a;
+__negdi2(quad_t a)
 {
 	union uu aa, res;
 

@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 8c576117e226728474facece16b0f3815e33c390 $";
+  "$FreeBSD: b6cda30dc06d19ce38c3dbdaac5973a78b1afacb $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -57,9 +57,17 @@ static const char rcsid[] =
 #include "ifconfig.h"
 
 #define	MAX_SYSCTL_TRY	5
+#ifdef DRAFT_IETF_6MAN_IPV6ONLY_FLAG
+#define	ND6BITS	"\020\001PERFORMNUD\002ACCEPT_RTADV\003PREFER_SOURCE" \
+		"\004IFDISABLED\005DONT_SET_IFROUTE\006AUTO_LINKLOCAL" \
+		"\007NO_RADR\010NO_PREFER_IFACE\011NO_DAD" \
+		"\012IPV6_ONLY\013IPV6_ONLY_MANUAL" \
+		"\020DEFAULTIF"
+#else
 #define	ND6BITS	"\020\001PERFORMNUD\002ACCEPT_RTADV\003PREFER_SOURCE" \
 		"\004IFDISABLED\005DONT_SET_IFROUTE\006AUTO_LINKLOCAL" \
 		"\007NO_RADR\010NO_PREFER_IFACE\011NO_DAD\020DEFAULTIF"
+#endif
 
 static int isnd6defif(int);
 void setnd6flags(const char *, int, int, const struct afswtch *);

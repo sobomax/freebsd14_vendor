@@ -45,7 +45,7 @@
 
 #ifdef _KERNEL
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19b2f9388c6f06da30aa7a798b33508be9e1283d $");
+__FBSDID("$FreeBSD: ed4f4e0ca7b904d491018e37291de45e30c281a7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -199,7 +199,7 @@ adlink_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct threa
 	u_int u;
 	struct pgstat *pg;
 	uint64_t *sample;
-	
+
 	sc = dev->si_drv1;
 	u = *(u_int*)data;
 	error = 0;
@@ -430,7 +430,7 @@ static device_method_t adlink_methods[] = {
 
 	DEVMETHOD_END
 };
- 
+
 static driver_t adlink_driver = {
 	"adlink",
 	adlink_methods,

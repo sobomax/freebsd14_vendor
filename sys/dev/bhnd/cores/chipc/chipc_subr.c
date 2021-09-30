@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea182894f000c3dbcb2100dc5d1ff6b696a86bd8 $");
+__FBSDID("$FreeBSD: 03c9851d73e18fb2f78cf285ba87030de9d360db $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -213,7 +213,6 @@ chipc_set_irq_resource(struct chipc_softc *sc, device_t child, int rid,
 	return (0);
 }
 
-
 /**
  * Add a SYS_RES_MEMORY resource with a given resource ID, relative to the
  * given port and region, to @p child's resource list.
@@ -274,7 +273,6 @@ chipc_set_mem_resource(struct chipc_softc *sc, device_t child, int rid,
 	return (bus_set_resource(child, SYS_RES_MEMORY, rid,
 	    region_addr + start, count));
 }
-
 
 /*
  * Print a capability structure.
@@ -485,7 +483,6 @@ chipc_retain_region(struct chipc_softc *sc, struct chipc_region *cr, int flags)
 		/* Increment allocation refcount */
 		cr->cr_refs++;
 	}
-
 
 	/* Handle activation */
 	if (flags & RF_ACTIVE) {

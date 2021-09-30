@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0129cfddd90c7efd4fb7425b31b8b005fc46aa5a $
+ * $FreeBSD: f750a977324b506dcbb7020e974c9551ef1c26f5 $
  */
 
 #ifndef	_VMM_HOST_H_
@@ -69,7 +69,7 @@ static __inline uint64_t
 vmm_get_host_gdtrbase(void)
 {
 
-	return ((uint64_t)&gdt[NGDT * curcpu]);
+	return ((uint64_t)*PCPU_PTR(gdt));
 }
 
 static __inline uint64_t

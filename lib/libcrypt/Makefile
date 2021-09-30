@@ -1,11 +1,12 @@
 #
-# $FreeBSD: 1aa4c66d9cc726064f5cb77198a92b1dab780acf $
+# $FreeBSD: f222394b45c316c72ffa0481576d44519b60ee71 $
 #
 
-PACKAGE=lib${LIB}
 SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 SHLIB_MAJOR=	5
 LIB=		crypt

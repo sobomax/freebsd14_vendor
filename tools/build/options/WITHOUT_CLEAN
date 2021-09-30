@@ -1,0 +1,2 @@
+.\" $FreeBSD: b55caa4b4bfd87c23d949f500546bc95cbb36527 $
+Do not clean before building world and/or kernel.

@@ -1,34 +1,10 @@
-# $FreeBSD: a4a19b704e3cf6d36934629ff9238c6ad3443d73 $
+# $FreeBSD: 1b42da3778830fab0888967bd9cf415e288b951d $
 
 .include <src.opts.mk>
 
 SUBDIR=
 SUBDIR.${MK_DIALOG}+=	libdialog
-SUBDIR.${MK_GCC}+=	libgcov
-.if ${MK_GCC} != "no" && ${MK_OPENMP} == "no"
-SUBDIR+=		libgomp
-.endif
 SUBDIR.${MK_TESTS}+=	tests
-
-.if ${MK_BSD_CRTBEGIN} == "no"
-SUBDIR+=		csu
-.endif
-
-.if ${MK_GNU_GREP} != "no" || ${MK_GNU_GREP_COMPAT} != "no" || \
-    ${MK_GDB} != "no"
-SUBDIR+=		libregex
-.endif
-
-.if ${MK_LLVM_LIBUNWIND} == "no"
-SUBDIR+=		libgcc
-.endif
-
-# libsupc++ uses libstdc++ headers, although 'make includes' should
-# have taken care of that already.
-.if ${MK_GNUCXX} != "no"
-SUBDIR+= libstdc++ libsupc++
-SUBDIR_DEPENDS_libsupc++:= libstdc++
-.endif
 
 SUBDIR_PARALLEL=
 

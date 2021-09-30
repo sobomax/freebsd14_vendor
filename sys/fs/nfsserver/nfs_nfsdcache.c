@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eefd8cc566aa83e890999e2c1e0a103fd89a06e8 $");
+__FBSDID("$FreeBSD: 5efcb90411e0dd91e2af450b751708ebb97a8025 $");
 
 /*
  * Here is the basic algorithm:
@@ -185,9 +185,9 @@ sysctl_tcphighwater(SYSCTL_HANDLER_ARGS)
 	nfsrc_tcphighwater = newhighwater;
 	return (0);
 }
-SYSCTL_PROC(_vfs_nfsd, OID_AUTO, tcphighwater, CTLTYPE_UINT | CTLFLAG_RW, 0,
-    sizeof(nfsrc_tcphighwater), sysctl_tcphighwater, "IU",
-    "High water mark for TCP cache entries");
+SYSCTL_PROC(_vfs_nfsd, OID_AUTO, tcphighwater,
+    CTLTYPE_UINT | CTLFLAG_MPSAFE | CTLFLAG_RW, 0, sizeof(nfsrc_tcphighwater),
+    sysctl_tcphighwater, "IU", "High water mark for TCP cache entries");
 
 static u_int	nfsrc_udphighwater = NFSRVCACHE_UDPHIGHWATER;
 SYSCTL_UINT(_vfs_nfsd, OID_AUTO, udphighwater, CTLFLAG_RW,
@@ -283,7 +283,7 @@ static void nfsrc_lock(struct nfsrvcache *rp);
 static void nfsrc_unlock(struct nfsrvcache *rp);
 static void nfsrc_wanted(struct nfsrvcache *rp);
 static void nfsrc_freecache(struct nfsrvcache *rp);
-static int nfsrc_getlenandcksum(mbuf_t m1, u_int16_t *cksum);
+static int nfsrc_getlenandcksum(struct mbuf *m1, u_int16_t *cksum);
 static void nfsrc_marksametcpconn(u_int64_t);
 
 /*
@@ -458,7 +458,7 @@ nfsrvd_updatecache(struct nfsrv_descript *nd)
 {
 	struct nfsrvcache *rp;
 	struct nfsrvcache *retrp = NULL;
-	mbuf_t m;
+	struct mbuf *m;
 	struct mtx *mutex;
 
 	rp = nd->nd_rp;
@@ -484,7 +484,7 @@ nfsrvd_updatecache(struct nfsrv_descript *nd)
 		mtx_unlock(mutex);
 		nd->nd_repstat = 0;
 		if (nd->nd_mreq)
-			mbuf_freem(nd->nd_mreq);
+			m_freem(nd->nd_mreq);
 		if (!(rp->rc_flag & RC_REPMBUF))
 			panic("reply from cache");
 		nd->nd_mreq = m_copym(rp->rc_reply, 0,
@@ -796,7 +796,7 @@ nfsrc_freecache(struct nfsrvcache *rp)
 	}
 	nfsrc_wanted(rp);
 	if (rp->rc_flag & RC_REPMBUF) {
-		mbuf_freem(rp->rc_reply);
+		m_freem(rp->rc_reply);
 		if (!(rp->rc_flag & RC_UDP))
 			atomic_add_int(&nfsrc_tcpsavedreplies, -1);
 	}
@@ -1011,15 +1011,15 @@ nfsrvd_derefcache(struct nfsrvcache *rp)
  * NFSRVCACHE_CHECKLEN bytes.
  */
 static int
-nfsrc_getlenandcksum(mbuf_t m1, u_int16_t *cksum)
+nfsrc_getlenandcksum(struct mbuf *m1, u_int16_t *cksum)
 {
 	int len = 0, cklen;
-	mbuf_t m;
+	struct mbuf *m;
 
 	m = m1;
 	while (m) {
-		len += mbuf_len(m);
-		m = mbuf_next(m);
+		len += m->m_len;
+		m = m->m_next;
 	}
 	cklen = (len > NFSRVCACHE_CHECKLEN) ? NFSRVCACHE_CHECKLEN : len;
 	*cksum = in_cksum(m1, cklen);
@@ -1034,4 +1034,3 @@ static void
 nfsrc_marksametcpconn(u_int64_t sockref)
 {
 }
-

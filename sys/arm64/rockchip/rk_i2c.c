@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5956468875628b22ca7693ba23a844c4c9e1b80 $");
+__FBSDID("$FreeBSD: fa824c76003b333e4fedaa6aa465e6edcd3b2d72 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: c5956468875628b22ca7693ba23a844c4c9e1b80 $");
 #include <dev/extres/clk/clk.h>
 
 #include "iicbus_if.h"
-
 
 #define	RK_I2C_CON			0x00
 #define	 RK_I2C_CON_EN			(1 << 0)
@@ -238,7 +237,6 @@ rk_i2c_fill_tx(struct rk_i2c_softc *sc)
 				sc->cnt++;
 			}
 			buf32 |= buf << (j * 8);
-
 		}
 		RK_I2C_WRITE(sc, RK_I2C_TXDATA_BASE + 4 * i, buf32);
 

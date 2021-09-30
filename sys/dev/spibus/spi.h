@@ -1,6 +1,5 @@
 /*-
- * Copyright (c) 2006 M. Warner Losh
- * All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fa911b6fd363ea8f3e6dfbb68a389cfc69080d9a $
+ * $FreeBSD: 4cb5c8905b615c96a8900e4d313fd5787901a503 $
  */
 
 struct spi_command {
@@ -36,7 +35,6 @@ struct spi_command {
 	void	*rx_data;
 	uint32_t rx_data_sz;
 };
-
 #define	SPI_COMMAND_INITIALIZER	{ 0 }
 
 #define	SPI_CHIP_SELECT_HIGH	0x1		/* Chip select high (else low) */

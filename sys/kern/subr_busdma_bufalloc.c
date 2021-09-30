@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91445aa79950dc68c0a79c78a20bc409e1bdfde9 $");
+__FBSDID("$FreeBSD: fea141908399a90d1179304a27df7384fbbac113 $");
 
 /*
  * Buffer allocation support routines for bus_dmamem_alloc implementations.
@@ -171,4 +171,3 @@ busdma_bufalloc_free_uncacheable(void *item, vm_size_t size, uint8_t pflag)
 
 	kmem_free((vm_offset_t)item, size);
 }
-

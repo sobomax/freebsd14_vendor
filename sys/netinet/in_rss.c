@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: f3184175a7cfea7a4136fbf1686e65fdfa0cffae $");
+__FBSDID("$FreeBSD: 05659b97fe7c7b4d54134e0efd07ddc283ea0431 $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"
@@ -149,6 +149,48 @@ rss_proto_software_hash_v4(struct in_addr s, struct in_addr d,
 	/* No configured available hashtypes! */
 	RSS_DEBUG("no available hashtypes!\n");
 	return (-1);
+}
+
+/*
+ * Calculate an appropriate ipv4 2-tuple or 4-tuple given the given
+ * IPv4 source/destination address, UDP or TCP source/destination ports
+ * and the protocol type.
+ *
+ * The protocol code may wish to do a software hash of the given
+ * tuple.  This depends upon the currently configured RSS hash types.
+ *
+ * It assumes the packet source/destination address
+ * are in "outgoing" packet order (ie, destination is "far" address.)
+ */
+uint32_t
+xps_proto_software_hash_v4(struct in_addr s, struct in_addr d,
+    u_short sp, u_short dp, int proto, uint32_t *hashtype)
+{
+	uint32_t hash;
+
+	/*
+	 * Next, choose the hash type depending upon the protocol
+	 * identifier.
+	 */
+	if ((proto == IPPROTO_TCP) &&
+	    (rss_gethashconfig() & RSS_HASHTYPE_RSS_TCP_IPV4)) {
+		hash = rss_hash_ip4_4tuple(d, dp, s, sp);
+		*hashtype = M_HASHTYPE_RSS_TCP_IPV4;
+		return (hash);
+	} else if ((proto == IPPROTO_UDP) &&
+	    (rss_gethashconfig() & RSS_HASHTYPE_RSS_UDP_IPV4)) {
+		hash = rss_hash_ip4_4tuple(d, dp, s, sp);
+		*hashtype = M_HASHTYPE_RSS_UDP_IPV4;
+		return (hash);
+	} else if (rss_gethashconfig() & RSS_HASHTYPE_RSS_IPV4) {
+		/* RSS doesn't hash on other protocols like SCTP; so 2-tuple */
+		hash = rss_hash_ip4_2tuple(d, s);
+		*hashtype = M_HASHTYPE_RSS_IPV4;
+		return (hash);
+	}
+
+	*hashtype = M_HASHTYPE_NONE;
+	return (0);
 }
 
 /*

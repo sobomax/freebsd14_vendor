@@ -1,10 +1,10 @@
-# $FreeBSD: f3f8e1270f5e86180dd9b62d071ec0e7919464e3 $
+# $FreeBSD: 97c2fdedb91d3064567e66b6ddc6d837e3687b67 $
 .PATH: ${SRCTOP}/sys/contrib/rdma/krping
 
 KMOD= krping
 SRCS= krping.c krping_dev.c getopt.c
 SRCS+=	${LINUXKPI_GENSRCS}
-SRCS+=  opt_sched.h opt_inet.h opt_inet6.h
+SRCS+=  opt_inet.h opt_inet6.h
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
 CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include

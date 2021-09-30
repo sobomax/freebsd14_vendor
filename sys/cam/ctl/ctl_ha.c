@@ -27,26 +27,26 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bc43c2173f6f973248590d01f5ab1bad906e5a38 $");
+__FBSDID("$FreeBSD: 80dfc543303dd06fc80f7cd3d74ee5e8b4f25e90 $");
 
 #include <sys/param.h>
-#include <sys/systm.h>
+#include <sys/condvar.h>
+#include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
-#include <sys/types.h>
 #include <sys/limits.h>
 #include <sys/lock.h>
-#include <sys/module.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
+#include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/proc.h>
-#include <sys/conf.h>
 #include <sys/queue.h>
-#include <sys/sysctl.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
+#include <sys/sysctl.h>
+#include <sys/systm.h>
 #include <sys/uio.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -65,69 +65,6 @@ __FBSDID("$FreeBSD: bc43c2173f6f973248590d01f5ab1bad906e5a38 $");
 #include <cam/ctl/ctl_private.h>
 #include <cam/ctl/ctl_debug.h>
 #include <cam/ctl/ctl_error.h>
-
-#if (__FreeBSD_version < 1100000)
-struct mbufq {
-	struct mbuf *head;
-	struct mbuf *tail;
-};
-
-static void
-mbufq_init(struct mbufq *q, int limit)
-{
-
-	q->head = q->tail = NULL;
-}
-
-static void
-mbufq_drain(struct mbufq *q)
-{
-	struct mbuf *m;
-
-	while ((m = q->head) != NULL) {
-		q->head = m->m_nextpkt;
-		m_freem(m);
-	}
-	q->tail = NULL;
-}
-
-static struct mbuf *
-mbufq_dequeue(struct mbufq *q)
-{
-	struct mbuf *m;
-
-	m = q->head;
-	if (m) {
-		if (q->tail == m)
-			q->tail = NULL;
-		q->head = m->m_nextpkt;
-		m->m_nextpkt = NULL;
-	}
-	return (m);
-}
-
-static void
-mbufq_enqueue(struct mbufq *q, struct mbuf *m)
-{
-
-	m->m_nextpkt = NULL;
-	if (q->tail)
-		q->tail->m_nextpkt = m;
-	else
-		q->head = m;
-	q->tail = m;
-}
-
-static u_int
-sbavail(struct sockbuf *sb)
-{
-	return (sb->sb_cc);
-}
-
-#if (__FreeBSD_version < 1000000)
-#define	mtodo(m, o)	((void *)(((m)->m_data) + (o)))
-#endif
-#endif
 
 struct ha_msg_wire {
 	uint32_t	 channel;
@@ -937,7 +874,6 @@ ctl_dt_event_handler(ctl_ha_channel channel, ctl_ha_event event, int param)
 	}
 }
 
-
 ctl_ha_status
 ctl_ha_msg_init(struct ctl_softc *ctl_softc)
 {
@@ -959,7 +895,8 @@ ctl_ha_msg_init(struct ctl_softc *ctl_softc)
 	    ctl_ha_msg_shutdown, ctl_softc, SHUTDOWN_PRI_FIRST);
 	SYSCTL_ADD_PROC(&ctl_softc->sysctl_ctx,
 	    SYSCTL_CHILDREN(ctl_softc->sysctl_tree),
-	    OID_AUTO, "ha_peer", CTLTYPE_STRING | CTLFLAG_RWTUN,
+	    OID_AUTO, "ha_peer",
+	    CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT,
 	    softc, 0, ctl_ha_peer_sysctl, "A", "HA peer connection method");
 
 	if (ctl_ha_msg_register(CTL_HA_CHAN_DATA, ctl_dt_event_handler)

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  * 
- * $FreeBSD: 89423bd8f8175dd9985820be757ea68c1be9fc42 $
+ * $FreeBSD: 9fff6c3c548c195178e7bc8f7dfe9941060a37d4 $
  */
 #ifndef _NET80211_IEEE80211_MESH_H_
 #define _NET80211_IEEE80211_MESH_H_
@@ -90,7 +90,6 @@ enum {
 
 /* Authentication Protocol Identifier */
 enum {
-	
 	IEEE80211_MESHCONF_AUTH_DISABLED	= 0,
 	/* Simultaneous Authenticaction of Equals */
 	IEEE80211_MESHCONF_AUTH_SEA		= 1,

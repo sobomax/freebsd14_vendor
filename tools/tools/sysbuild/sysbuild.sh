@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 950f9f4da50dacef8825d9d594fb8c71643e5cda $
+# $FreeBSD: 2ad19b75659fde9294f71aa4fe477cd15560b2aa $
 #
 
 set -e
@@ -196,11 +196,14 @@ ports_recurse() (
 	echo "$t" >> /tmp/_.plist.tdone
 	for d
 	do
+		if [ "x$d" == "xpatch" ] ; then
+			continue
+		fi
 		fl=""
 		if [ ! -d $d ] ; then
 			fl=FLAVOR=`expr $d : '.*@\(.*\)'`
 			bd=`expr $d : '\(.*\)@.*'`
-			if [ ! -d $bd ] ; then
+			if [ ! -d "$bd" ] ; then
 				echo "Missing port $d ($t) (fl $fl) (bd $bd)" 1>&2
 				continue
 			fi
@@ -485,7 +488,7 @@ if $do_world ; then
 		rm -rf /usr/obj
 		(cd /freebsd && mkdir -p ${OBJ_PATH} && ln -s ${OBJ_PATH} /usr/obj)
 	else
-		rm -rf /usr/obj
+		rm -rf /usr/obj/*
 		mkdir -p /usr/obj
 	fi
 fi
@@ -496,6 +499,10 @@ for i in ${PORTS_WE_WANT}
 do
 	(
 	cd /usr/ports
+	if [ ! -d $i ] ; then
+		fl=FLAVOR=`expr $i : '.*@\(.*\)'`
+		i=`expr $i : '\(.*\)@.*'`
+	fi
 	if [ ! -d $i ]  ; then
 		echo "Port $i not found" 1>&2
 		exit 2

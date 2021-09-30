@@ -1,4 +1,4 @@
-# $FreeBSD: d0038f915239e53a08b594a9b18e20673099c7c3 $
+# $FreeBSD: e01a54e26cb3dc48ebc0bc40a21ae225928fadd4 $
 
 TEST_CASES?=	test0001 test0002 test0003 test0004	\
 		test0005 test0006 test0007 test0008	\
@@ -46,7 +46,6 @@ SRCS+=		${SYSDIR}/net/bpf_jitter.c	\
 		${SYSDIR}/${MACHINE_ARCH}/${MACHINE_ARCH}/bpf_jit_machdep.c
 CFLAGS+=	-DBPF_JIT_COMPILER
 LIBS+=		-lutil
-WARNS?=		6
 .else
 SRCS+=		${SYSDIR}/net/bpf_filter.c
 WARNS?=		2

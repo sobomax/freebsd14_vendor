@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 487d7b3ea05f19469d9b83e218a50cf0e5cd8fb8 $");
+__FBSDID("$FreeBSD: d5287a4e95d15dd2afe759ccba0b25e963b85188 $");
 
 #include <sys/param.h>
 #include <sys/vnode.h>
@@ -196,19 +196,12 @@ exec_shell_imgact(struct image_params *imgp)
 	length = (imgp->args->argc == 0) ? 0 :
 	    strlen(imgp->args->begin_argv) + 1;		/* bytes to delete */
 
-	if (offset > imgp->args->stringspace + length) {
+	error = exec_args_adjust_args(imgp->args, length, offset);
+	if (error != 0) {
 		if (sname != NULL)
 			sbuf_delete(sname);
-		return (E2BIG);
+		return (error);
 	}
-
-	bcopy(imgp->args->begin_argv + length, imgp->args->begin_argv + offset,
-	    imgp->args->endp - (imgp->args->begin_argv + length));
-
-	offset -= length;		/* calculate actual adjustment */
-	imgp->args->begin_envv += offset;
-	imgp->args->endp += offset;
-	imgp->args->stringspace -= offset;
 
 	/*
 	 * If there was no arg[0] when we started, then the interpreter_name

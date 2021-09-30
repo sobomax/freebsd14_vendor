@@ -1,4 +1,4 @@
-# $FreeBSD: bae84d3a84ff4425dd2d33ca11fdadcaff8f1411 $
+# $FreeBSD: ef271e85bf3fd40e5dc1aa18d5eddbbdb4fe74d2 $
 
 .include <src.opts.mk>
 
@@ -40,7 +40,7 @@ TARGET_ABI=	-gnueabi
 TARGET_ABI=
 .endif
 VENDOR=		unknown
-OS_VERSION=	freebsd12.2
+OS_VERSION=	freebsd13.0
 
 LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
 LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}
@@ -82,12 +82,6 @@ CFLAGS+=	-DLLVM_TARGET_ENABLE_RISCV
 LLVM_NATIVE_ARCH=	RISCV
 . endif
 .endif
-.if ${MK_LLVM_TARGET_SPARC} != "no"
-CFLAGS+=	-DLLVM_TARGET_ENABLE_SPARC
-. if ${MACHINE_CPUARCH} == "sparc64"
-LLVM_NATIVE_ARCH=	Sparc
-. endif
-.endif
 .if ${MK_LLVM_TARGET_X86} != "no"
 CFLAGS+=	-DLLVM_TARGET_ENABLE_X86
 . if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
@@ -113,7 +107,7 @@ CXXFLAGS+=	-fno-exceptions
 CXXFLAGS+=	-fno-rtti
 CXXFLAGS.clang+= -stdlib=libc++
 
-.if ${MACHINE_CPUARCH} == "arm"
-STATIC_CFLAGS+= -mlong-calls
-STATIC_CXXFLAGS+= -mlong-calls
+.if ${MACHINE_ARCH:Mmips64}
+STATIC_CFLAGS+= -mxgot
+STATIC_CXXFLAGS+= -mxgot
 .endif

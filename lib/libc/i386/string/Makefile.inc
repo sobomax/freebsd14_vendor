@@ -1,11 +1,10 @@
-# $FreeBSD: 17170eeb385954332414e2d2c18a96a38cc54791 $
+# $FreeBSD: a8c50a285cbd6d9bca2bde91347a1aa361885090 $
 
 MDSRCS+= \
 	bcmp.S \
 	bcopy.S \
 	bzero.S \
 	ffs.S \
-	memchr.S \
 	memcmp.S \
 	memcpy.S \
 	memmove.S \

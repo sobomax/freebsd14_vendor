@@ -1,4 +1,4 @@
-#$FreeBSD: e3b48cc81a1c21f52992b36f726dce278ab31f0a $
+#$FreeBSD: 1484e3029d6e5b426c9235197aa5a0c652cb8720 $
 
 #.PATH:  ${.CURDIR}
 .PATH: ${.CURDIR}/../../dev/liquidio
@@ -7,7 +7,6 @@
 KMOD = if_lio
 CFLAGS += -I${.CURDIR}/../../dev/liquidio
 CFLAGS += -I${.CURDIR}/../../dev/liquidio/base
-CFLAGS += -DSMP
 
 SRCS = device_if.h bus_if.h pci_if.h vnode_if.h opt_inet.h opt_inet6.h
 SRCS += vnode_if_newproto.h vnode_if_typedef.h

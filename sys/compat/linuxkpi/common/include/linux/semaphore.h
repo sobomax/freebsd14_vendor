@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 59a35311a5ccbe96a1373862eaf3335d81c9ae71 $
+ * $FreeBSD: e4a72fd9b47aafb4e366b11e97c1475b74b3a455 $
  */
 #ifndef _LINUX_SEMAPHORE_H_
 #define _LINUX_SEMAPHORE_H_
@@ -65,6 +65,6 @@ init_MUTEX(struct semaphore *sem)
 	sema_init(&sem->sema, 1, "lnxsema");
 }
 
-#define	sema_init	linux_sema_init
+#define	sema_init(...)	linux_sema_init(__VA_ARGS__)
 
 #endif /* _LINUX_SEMAPHORE_H_ */

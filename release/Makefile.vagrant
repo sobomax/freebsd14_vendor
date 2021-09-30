@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 9048279821f5bc831fd3a8ff85e10a0a02225a8b $
+# $FreeBSD: 4abcaa891ed34c6358ce6cddadcdc5036d0300f2 $
 #
 # Makefile for producing and uploading Vagrant boxes to Hashicorp Atlas
 #
@@ -29,7 +29,7 @@ ATLAS${VAR}:=		${VAGRANT${VAR}}
 .endif
 
 .if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT" || ${BRANCH} == "PRERELEASE"
-SNAPSHOT_DATE!=		date +-%Y%m%d
+SNAPSHOT_DATE!=		date +-${BUILDDATE}
 .endif
 
 VAGRANT_VERSION!=	date +%Y.%m.%d

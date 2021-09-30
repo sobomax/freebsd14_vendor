@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD: 1d1540b294a2249ce716f4c3a955633772cee43f $
+ * $FreeBSD: 82c35736df13aa86a3b71d65f230d1a122470a29 $
  */
 
 /**
@@ -38,6 +38,7 @@
  * Implementation of the ZpoolList class.
  */
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 #include <sys/fs/zfs.h>
 
 #include <stdint.h>

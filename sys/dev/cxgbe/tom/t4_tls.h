@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 90ffbfb75fd04179335a9e0aa35a589c71492779 $
+ * $FreeBSD: 37266206c31fbedb02f4330c9d2a37eb7e93d531 $
  *
  */
 
@@ -254,6 +254,12 @@ struct tls_scmd {
 	__be32 ivgen_hdrlen;
 };
 
+enum tls_mode {
+	TLS_MODE_OFF,
+	TLS_MODE_TLSOM,
+	TLS_MODE_KTLS,
+};
+
 struct tls_ofld_info {
 	struct tls_key_context k_ctx;
 	int key_location;
@@ -266,9 +272,10 @@ struct tls_ofld_info {
 	unsigned short expn_per_ulp;
 	unsigned short pdus_per_ulp;
 	struct tls_scmd scmd0;
-	u_int sb_off;
+	u_int iv_len;
+	enum tls_mode mode;
 	struct callout handshake_timer;
-	u_int rcv_over;
+	u_int sb_off;
 };
 
 struct tls_key_req {

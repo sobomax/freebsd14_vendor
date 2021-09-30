@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: e1b9d4fd68a2e9dc18e9f7327fadfa9e6fc35958 $
+# $FreeBSD: e826ac2d6dbf7a21bda8da8205f5d7528f1e1923 $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,5 @@ LIBADD+=	cap_grp
 LIBADD+=	cap_pwd
 CFLAGS+=-DWITH_CASPER
 .endif
-
-#NO_WERROR?=	YES
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: 7626274e59a5945e59ddbf7e1c795890e6af52d5 $
+# $FreeBSD: a7bffad5ceae5221d8e403214ae8bfd732d4168b $
 
 .if !target(__<bsd.symver.mk>__)
 __<bsd.symver.mk>__:
@@ -7,7 +7,7 @@ __<bsd.symver.mk>__:
 
 # Generate the version map given the version definitions
 # and symbol maps.
-.if ${MK_SYMVER} == "yes" && !empty(VERSION_DEF) && !empty(SYMBOL_MAPS)
+.if !empty(VERSION_DEF) && !empty(SYMBOL_MAPS)
 # Find the awk script that generates the version map.
 VERSION_GEN?=	version_gen.awk
 VERSION_MAP?=	Version.map

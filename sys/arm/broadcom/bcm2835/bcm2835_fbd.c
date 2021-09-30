@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 87e95d0e5b0543f4a700959cbb7cd5cc4ad8d670 $");
+__FBSDID("$FreeBSD: 93849b3551d9f1213aca360f42299df23a7d7d47 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -88,17 +88,20 @@ bcm_fb_init(struct bcmsc_softc *sc, struct bcm2835_fb_config *fb)
 	if (bcm2835_mbox_fb_get_bpp(fb) != 0)
 		return (ENXIO);
 	if (fb->bpp < FB_DEPTH) {
-		device_printf(sc->dev, "changing fb bpp from %d to %d\n", fb->bpp, FB_DEPTH);
+		device_printf(sc->dev, "changing fb bpp from %d to %d\n",
+		    fb->bpp, FB_DEPTH);
 		fb->bpp = FB_DEPTH;
 	} else
-		device_printf(sc->dev, "keeping existing fb bpp of %d\n", fb->bpp);
+		device_printf(sc->dev, "keeping existing fb bpp of %d\n",
+		    fb->bpp);
 
 	fb->vxres = fb->xres;
 	fb->vyres = fb->yres;
 	fb->xoffset = fb->yoffset = 0;
 
 	if ((err = bcm2835_mbox_fb_init(fb)) != 0) {
-		device_printf(sc->dev, "bcm2835_mbox_fb_init failed, err=%d\n", err);
+		device_printf(sc->dev, "bcm2835_mbox_fb_init failed, err=%d\n",
+		    err);
 		return (ENXIO);
 	}
 
@@ -199,7 +202,7 @@ bcm_fb_sysctl_init(struct bcmsc_softc *sc)
 	tree_node = device_get_sysctl_tree(sc->dev);
 	tree = SYSCTL_CHILDREN(tree_node);
 	SYSCTL_ADD_PROC(ctx, tree, OID_AUTO, "resync",
-	    CTLFLAG_RW | CTLTYPE_UINT, sc, sizeof(*sc),
+	    CTLFLAG_RW | CTLTYPE_UINT | CTLFLAG_NEEDGIANT, sc, sizeof(*sc),
 	    bcm_fb_resync_sysctl, "IU", "Set to resync framebuffer with VC");
 }
 

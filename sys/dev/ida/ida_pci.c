@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3911a70c0b4694e51c568f0575e63df7bcb4caef $");
+__FBSDID("$FreeBSD: 083d52ded3f14996737d8e17421de47f20d728a9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -37,6 +37,8 @@ __FBSDID("$FreeBSD: 3911a70c0b4694e51c568f0575e63df7bcb4caef $");
 #include <sys/bio.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 
 #include <machine/bus.h>
 #include <machine/resource.h>

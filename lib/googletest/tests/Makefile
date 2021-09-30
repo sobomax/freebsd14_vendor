@@ -1,6 +1,12 @@
-# $FreeBSD: 3b3078f8612a31159256366433fb198b7569d1a2 $
+# $FreeBSD: 1df9936ff6cfdfe1d52a259877813b39a9e36894 $
 
 .PATH:		${SRCTOP}/tests
 KYUAFILE=	yes
+
+# Note: we start the gmock_main and gmock tests first since those take up to
+# 60 seconds to build, so starting them late seriously reduces build parallism.
+SUBDIR=		gmock_main gmock gtest_main gtest
+
+SUBDIR_PARALLEL=
 
 .include <bsd.test.mk>

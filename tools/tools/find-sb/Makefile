@@ -1,7 +1,6 @@
-# $FreeBSD: ee6c46b11aa6170e39e52d1719be66c06ef1d253 $
+# $FreeBSD: 428a79e292007cd19e833e64cd26cc81dad0abc5 $
 
 PROG=	find-sb
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

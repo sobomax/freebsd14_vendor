@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca70bfcaef04ac3eb2edafb0f08261ee22707fb8 $");
+__FBSDID("$FreeBSD: d6ccb8b334ee539f8e580f46feff22d35152827e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,10 +36,10 @@ __FBSDID("$FreeBSD: ca70bfcaef04ac3eb2edafb0f08261ee22707fb8 $");
 #include <sys/malloc.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/label/g_label.h>
 #include <geom/label/g_label_msdosfs.h>
 
-#define G_LABEL_MSDOSFS_DIR	"msdosfs"
 #define LABEL_NO_NAME		"NO NAME    "
 
 static void
@@ -81,7 +81,6 @@ g_label_msdosfs_taste(struct g_consumer *cp, char *label, size_t size)
 		    pp->name);
 		goto error;
 	}
-
 
 	/*
 	 * Test if this is really a FAT volume and determine the FAT type.
@@ -212,7 +211,7 @@ error:
 
 struct g_label_desc g_label_msdosfs = {
 	.ld_taste = g_label_msdosfs_taste,
-	.ld_dir = G_LABEL_MSDOSFS_DIR,
+	.ld_dirprefix = "msdosfs/",
 	.ld_enabled = 1
 };
 

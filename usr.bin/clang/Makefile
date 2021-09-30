@@ -1,4 +1,4 @@
-# $FreeBSD: 68b3c1537d9003d03ad8ffdf118ed9173b24ab0e $
+# $FreeBSD: 6f5a065b9ae728e5602068fc1499327b9e64ca3f $
 
 .include <src.opts.mk>
 
@@ -16,6 +16,10 @@ SUBDIR+=	llvm-nm
 SUBDIR+=	llvm-objdump
 SUBDIR+=	llvm-symbolizer
 
+.if ${MK_CLANG_EXTRAS} != "no" || ${MK_LLVM_CXXFILT} != "no"
+SUBDIR+=	llvm-cxxfilt
+.endif
+
 .if ${MK_CLANG_EXTRAS} != "no"
 SUBDIR+=	bugpoint
 SUBDIR+=	llc
@@ -23,7 +27,6 @@ SUBDIR+=	lli
 SUBDIR+=	llvm-as
 SUBDIR+=	llvm-bcanalyzer
 SUBDIR+=	llvm-cxxdump
-SUBDIR+=	llvm-cxxfilt
 SUBDIR+=	llvm-diff
 SUBDIR+=	llvm-dis
 SUBDIR+=	llvm-dwarfdump

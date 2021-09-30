@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)inet6.c	8.4 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80e26fb95aaa65384617916d514569e8745c14bd $");
+__FBSDID("$FreeBSD: b8d954dbd9391abad08a4e45b2d23321984dc0c7 $");
 
 #ifdef INET6
 #include <sys/param.h>
@@ -1055,6 +1055,16 @@ icmp6_stats(u_long off, const char *name, int af1 __unused, int proto __unused)
 	    "{N:/bad router advertisement message%s}\n");
 	p(icp6s_badredirect, "\t{:bad-redirect/%ju} "
 	    "{N:/bad redirect message%s}\n");
+	p(icp6s_overflowdefrtr, "\t{:default-routers-overflows/%ju} "
+	    "{N:/default routers overflow%s}\n");
+	p(icp6s_overflowprfx, "\t{:prefixes-overflows/%ju} "
+	    "{N:/prefix overflow%s}\n");
+	p(icp6s_overflownndp, "\t{:neighbour-entries-overflows/%ju} "
+	    "{N:/neighbour entries overflow%s}\n");
+	p(icp6s_overflowredirect, "\t{:redirect-overflows/%ju} "
+	    "{N:/redirect overflow%s}\n");
+	p(icp6s_invlhlim, "\t{:dropped-invalid-hop-limit/%ju} "
+	    "{N:/message%s with invalid hop limit}\n");
 	xo_close_container("errors");
 	p(icp6s_pmtuchg, "\t{:path-mtu-changes/%ju} {N:/path MTU change%s}\n");
 #undef p

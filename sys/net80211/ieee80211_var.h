@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: dd469b6a7c1d61a4b9b5ad6e3335263a50d9665b $
+ * $FreeBSD: 350c9b98441d5e4aaca5d810e8fb00cb6b1004a4 $
  */
 #ifndef _NET80211_IEEE80211_VAR_H_
 #define _NET80211_IEEE80211_VAR_H_
@@ -131,6 +131,8 @@ struct ieee80211_tx_ampdu;
 struct ieee80211_rx_ampdu;
 struct ieee80211_superg;
 struct ieee80211_frame;
+
+struct net80211dump_methods;
 
 struct ieee80211com {
 	void			*ic_softc;	/* driver softc */
@@ -375,6 +377,7 @@ struct ieee80211com {
 	/* The channel width has changed (20<->2040) */
 	void			(*ic_update_chw)(struct ieee80211com *);
 
+	const struct debugnet80211_methods	*ic_debugnet_meth;
 	uint64_t		ic_spare[7];
 };
 
@@ -407,6 +410,7 @@ struct ieee80211vap {
 	uint32_t		iv_caps;	/* capabilities */
 	uint32_t		iv_htcaps;	/* HT capabilities */
 	uint32_t		iv_htextcaps;	/* HT extended capabilities */
+	uint32_t		iv_com_state;	/* com usage / detached flag */
 	enum ieee80211_opmode	iv_opmode;	/* operation mode */
 	enum ieee80211_state	iv_state;	/* state machine state */
 	enum ieee80211_state	iv_nstate;	/* pending state */
@@ -601,9 +605,7 @@ struct ieee80211vap {
 	struct ieee80211_rx_histogram	*rx_histogram;
 	struct ieee80211_tx_histogram	*tx_histogram;
 
-	uint64_t		iv_spare[5];
-	uint32_t		iv_com_state;	/* com usage / detached flag */
-	uint32_t		iv_spare1;
+	uint64_t		iv_spare[6];
 };
 MALLOC_DECLARE(M_80211_VAP);
 
@@ -733,9 +735,9 @@ MALLOC_DECLARE(M_80211_VAP);
 
 #define	IEEE80211_COM_DETACHED	0x00000001	/* ieee80211_ifdetach called */
 #define	IEEE80211_COM_REF_ADD	0x00000002	/* add / remove reference */
-#define	IEEE80211_COM_REF_M	0xfffffffe	/* reference counter bits */
+#define	IEEE80211_COM_REF	0xfffffffe	/* reference counter bits */
 #define	IEEE80211_COM_REF_S	1
-#define	IEEE80211_COM_REF_MAX	(IEEE80211_COM_REF_M >> IEEE80211_COM_REF_S)
+#define	IEEE80211_COM_REF_MAX	(IEEE80211_COM_REF >> IEEE80211_COM_REF_S)
 
 int	ic_printf(struct ieee80211com *, const char *, ...) __printflike(2, 3);
 void	ieee80211_ifattach(struct ieee80211com *);
@@ -770,6 +772,8 @@ int	ieee80211_mhz2ieee(u_int, u_int);
 int	ieee80211_chan2ieee(struct ieee80211com *,
 		const struct ieee80211_channel *);
 u_int	ieee80211_ieee2mhz(u_int, u_int);
+int	ieee80211_add_channel_cbw(struct ieee80211_channel[], int, int *,
+	    uint8_t, uint16_t, int8_t, uint32_t, const uint8_t[], int);
 int	ieee80211_add_channel(struct ieee80211_channel[], int, int *,
 	    uint8_t, uint16_t, int8_t, uint32_t, const uint8_t[]);
 int	ieee80211_add_channel_ht40(struct ieee80211_channel[], int, int *,
@@ -1010,6 +1014,10 @@ ieee80211_get_node_txpower(struct ieee80211_node *ni)
 	"\13WME\14ACL\15WPA\16RADKEYS\17RADDUMP\20RADIUS\21DOT1XSM\22HWMP" \
 	"\23POWER\24STATE\25OUTPUT\26SCAN\27AUTH\30ASSOC\31NODE\32ELEMID" \
 	"\33XRATE\34INPUT\35CRYPTO\36DUPMPKTS\37DEBUG\04011N"
+
+/* Helper macros unified. */
+#define	_IEEE80211_MASKSHIFT(_v, _f)	(((_v) & _f) >> _f##_S)
+#define	_IEEE80211_SHIFTMASK(_v, _f)	(((_v) << _f##_S) & _f)
 
 #ifdef IEEE80211_DEBUG
 #define	ieee80211_msg(_vap, _m)	((_vap)->iv_debug & (_m))

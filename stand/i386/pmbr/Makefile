@@ -1,13 +1,15 @@
-# $FreeBSD: bfd6209f04063ae9b7dbbc8bd9aa2f510a02dcbc $
+# $FreeBSD: e09bb610fc18277e959ad116c23611e606063cb2 $
 
 PROG=	pmbr
 STRIP=
 BINMODE=${NOBINMODE}
-SRCS=	${PROG}.s
+SRCS=	${PROG}.S
+
+BOOT_MBR_FLAGS?=	0
 
 ORG=	0x600
 
-AFLAGS+=--defsym FLAGS=${BOOT_MBR_FLAGS}
+ACFLAGS+=-Wa,-defsym,FLAGS=${BOOT_MBR_FLAGS}
 LDFLAGS+=${LDFLAGS_BIN}
 
 .include <bsd.prog.mk>

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fcb5632d896ae8f6a4945ab6e28ca477ee566577 $");
+__FBSDID("$FreeBSD: 9f92521437fd5164278c06a1d314843996b3d031 $");
 
 #include "opt_acpi.h"
 
@@ -451,16 +451,18 @@ hpet_identify(driver_t *driver, device_t parent)
 static int
 hpet_probe(device_t dev)
 {
-	ACPI_FUNCTION_TRACE((char *)(uintptr_t) __func__);
+	int rv;
 
+	ACPI_FUNCTION_TRACE((char *)(uintptr_t) __func__);
 	if (acpi_disabled("hpet") || acpi_hpet_disabled)
 		return (ENXIO);
-	if (acpi_get_handle(dev) != NULL &&
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, hpet_ids) == NULL)
-		return (ENXIO);
-
-	device_set_desc(dev, "High Precision Event Timer");
-	return (0);
+	if (acpi_get_handle(dev) != NULL)
+		rv = ACPI_ID_PROBE(device_get_parent(dev), dev, hpet_ids, NULL);
+	else
+		rv = 0;
+	if (rv <= 0)
+		device_set_desc(dev, "High Precision Event Timer");
+	return (rv);
 }
 
 static int

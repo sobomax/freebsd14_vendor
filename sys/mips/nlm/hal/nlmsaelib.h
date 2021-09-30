@@ -27,7 +27,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 230b3740f401f7e475c63b00009244db3fe4a4a2 $
+ * $FreeBSD: 6e1451beeb270c43a198c72d929755fd058df58b $
  */
 
 #ifndef _NLM_HAL_CRYPTO_H_
@@ -462,8 +462,8 @@ static __inline__ int
 nlm_crypto_fill_pkt_ctrl(struct nlm_crypto_pkt_ctrl *ctrl, unsigned int hmac,
     enum nlm_hash_algo hashalg, enum nlm_hash_mode hashmode,
     enum nlm_cipher_algo cipheralg, enum nlm_cipher_mode ciphermode,
-    unsigned char *cipherkey, unsigned int cipherkeylen,
-    unsigned char *hashkey, unsigned int hashkeylen)
+    const unsigned char *cipherkey, unsigned int cipherkeylen,
+    const unsigned char *hashkey, unsigned int hashkeylen)
 {
 	unsigned int taglen = 0, hklen = 0;
 

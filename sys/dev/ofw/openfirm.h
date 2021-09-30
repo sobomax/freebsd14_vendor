@@ -1,7 +1,7 @@
 /*	$NetBSD: openfirm.h,v 1.1 1998/05/15 10:16:00 tsubai Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-4-Clause
+ * SPDX-License-Identifier: (BSD-4-Clause AND BSD-2-Clause-FreeBSD)
  *
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
  * Copyright (C) 1995, 1996 TooLs GmbH.
@@ -56,7 +56,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f043197a574fd253f2a386054a2c214ecaddb899 $
+ * $FreeBSD: 53c8cdf88df8d275706c73d671a820ddee8e4813 $
  */
 
 #ifndef _DEV_OPENFIRM_H_
@@ -178,13 +178,10 @@ int		OF_interpret(const char *cmd, int nreturns, ...);
 /*
  * Decode the Nth register property of the given device node and create a bus
  * space tag and handle for accessing it.  This is for use in setting up things
- * like early console output before newbus is available.  The implementation is
- * machine-dependent, and sparc uses a different function signature as well.
+ * like early console output before newbus is available.
  */
-#ifndef __sparc64__
 int		OF_decode_addr(phandle_t dev, int regno, bus_space_tag_t *ptag,
 		    bus_space_handle_t *phandle, bus_size_t *sz);
-#endif
 
 #endif /* _KERNEL */
 #endif /* _DEV_OPENFIRM_H_ */

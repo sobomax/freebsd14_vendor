@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 8fa66229fb4dd14fd8321ceab2ed70d6a225ce62 $
+ * $FreeBSD: ae239c5286df6042a02b29cfb7dac0cc1f174dd1 $
  * $Whistle: ng_sample.c,v 1.13 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -393,7 +393,7 @@ devintr()
 
 	/* get packet from device and send on */
 	m = MGET(blah blah)
-	
+
 	NG_SEND_DATA_ONLY(error, xxxp->upstream_hook.hook, m);
 				/* see note above in xxx_rcvdata() */
 				/* and ng_xxx_connect() */
@@ -493,4 +493,3 @@ ng_xxx_disconnect(hook_p hook)
 		ng_rmnode_self(NG_HOOK_NODE(hook));
 	return (0);
 }
-

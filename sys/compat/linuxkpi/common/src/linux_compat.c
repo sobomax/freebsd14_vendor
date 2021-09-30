@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f93905a03158f47acc921773b9bdbc51d325f3f9 $");
+__FBSDID("$FreeBSD: 2ad9363112045805793685739b9de9986e2458a7 $");
 
 #include "opt_stack.h"
 
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: f93905a03158f47acc921773b9bdbc51d325f3f9 $");
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/bus.h>
+#include <sys/eventhandler.h>
 #include <sys/fcntl.h>
 #include <sys/file.h>
 #include <sys/filio.h>
@@ -91,7 +92,8 @@ __FBSDID("$FreeBSD: f93905a03158f47acc921773b9bdbc51d325f3f9 $");
 #include <asm/smp.h>
 #endif
 
-SYSCTL_NODE(_compat, OID_AUTO, linuxkpi, CTLFLAG_RW, 0, "LinuxKPI parameters");
+SYSCTL_NODE(_compat, OID_AUTO, linuxkpi, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "LinuxKPI parameters");
 
 int linuxkpi_debug;
 SYSCTL_INT(_compat_linuxkpi, OID_AUTO, debug, CTLFLAG_RWTUN,
@@ -204,7 +206,6 @@ kobject_add_complete(struct kobject *kobj, struct kobject *parent)
 		}
 		if (error)
 			sysfs_remove_dir(kobj);
-
 	}
 	return (error);
 }
@@ -421,22 +422,15 @@ linux_kq_unlock(void *arg)
 }
 
 static void
-linux_kq_lock_owned(void *arg)
+linux_kq_assert_lock(void *arg, int what)
 {
 #ifdef INVARIANTS
 	spinlock_t *s = arg;
 
-	mtx_assert(&s->m, MA_OWNED);
-#endif
-}
-
-static void
-linux_kq_lock_unowned(void *arg)
-{
-#ifdef INVARIANTS
-	spinlock_t *s = arg;
-
-	mtx_assert(&s->m, MA_NOTOWNED);
+	if (what == LA_LOCKED)
+		mtx_assert(&s->m, MA_OWNED);
+	else
+		mtx_assert(&s->m, MA_NOTOWNED);
 #endif
 }
 
@@ -456,8 +450,7 @@ linux_file_alloc(void)
 	/* setup fields needed by kqueue support */
 	spin_lock_init(&filp->f_kqlock);
 	knlist_init(&filp->f_selinfo.si_note, &filp->f_kqlock,
-	    linux_kq_lock, linux_kq_unlock,
-	    linux_kq_lock_owned, linux_kq_lock_unowned);
+	    linux_kq_lock, linux_kq_unlock, linux_kq_assert_lock);
 
 	return (filp);
 }
@@ -511,15 +504,10 @@ linux_cdev_pager_fault(vm_object_t vm_obj, vm_ooffset_t offset, int prot,
 			page = vm_page_getfake(paddr, vm_obj->memattr);
 			VM_OBJECT_WLOCK(vm_obj);
 
-			vm_page_replace_checked(page, vm_obj,
-			    (*mres)->pindex, *mres);
-
-			vm_page_lock(*mres);
-			vm_page_free(*mres);
-			vm_page_unlock(*mres);
+			vm_page_replace(page, vm_obj, (*mres)->pindex, *mres);
 			*mres = page;
 		}
-		page->valid = VM_PAGE_BITS_ALL;
+		vm_page_valid(page);
 		return (VM_PAGER_OK);
 	}
 	return (VM_PAGER_FAIL);
@@ -1014,7 +1002,6 @@ linux_poll_wakeup_state(atomic_t *v, const uint8_t *pstate)
 
 	return (c);
 }
-
 
 static int
 linux_poll_wakeup_callback(wait_queue_t *wq, unsigned int wq_state, int flags, void *key)
@@ -1571,6 +1558,9 @@ linux_file_ioctl(struct file *fp, u_long cmd, void *data, struct ucred *cred,
 		*(int *)data = fgetown(&filp->f_sigio);
 		break;
 	case FIODGNAME:
+#ifdef	COMPAT_FREEBSD32
+	case FIODGNAME_32:
+#endif
 		if (filp->f_cdev == NULL || filp->f_cdev->cdev == NULL) {
 			error = ENXIO;
 			break;
@@ -1582,7 +1572,7 @@ linux_file_ioctl(struct file *fp, u_long cmd, void *data, struct ucred *cred,
 			error = EINVAL;
 			break;
 		}
-		error = copyout(p, fgn->buf, i);
+		error = copyout(p, fiodgname_buf_get_ptr(fgn, cmd), i);
 		break;
 	default:
 		error = linux_file_ioctl_sub(fp, filp, fop, cmd, data, td);
@@ -1695,8 +1685,8 @@ linux_file_stat(struct file *fp, struct stat *sb, struct ucred *active_cred,
 	vp = filp->f_vnode;
 
 	vn_lock(vp, LK_SHARED | LK_RETRY);
-	error = vn_stat(vp, sb, td->td_ucred, NOCRED, td);
-	VOP_UNLOCK(vp, 0);
+	error = VOP_STAT(vp, sb, td->td_ucred, NOCRED, td);
+	VOP_UNLOCK(vp);
 
 	return (error);
 }
@@ -1835,7 +1825,6 @@ iounmap(void *addr)
 	kfree(vmmap);
 }
 
-
 void *
 vmap(struct page **pages, unsigned int count, unsigned long flags, int prot)
 {
@@ -1865,8 +1854,8 @@ vunmap(void *addr)
 	kfree(vmmap);
 }
 
-char *
-kvasprintf(gfp_t gfp, const char *fmt, va_list ap)
+static char *
+devm_kvasprintf(struct device *dev, gfp_t gfp, const char *fmt, va_list ap)
 {
 	unsigned int len;
 	char *p;
@@ -1876,9 +1865,32 @@ kvasprintf(gfp_t gfp, const char *fmt, va_list ap)
 	len = vsnprintf(NULL, 0, fmt, aq);
 	va_end(aq);
 
-	p = kmalloc(len + 1, gfp);
+	if (dev != NULL)
+		p = devm_kmalloc(dev, len + 1, gfp);
+	else
+		p = kmalloc(len + 1, gfp);
 	if (p != NULL)
 		vsnprintf(p, len + 1, fmt, ap);
+
+	return (p);
+}
+
+char *
+kvasprintf(gfp_t gfp, const char *fmt, va_list ap)
+{
+
+	return (devm_kvasprintf(NULL, gfp, fmt, ap));
+}
+
+char *
+lkpi_devm_kasprintf(struct device *dev, gfp_t gfp, const char *fmt, ...)
+{
+	va_list ap;
+	char *p;
+
+	va_start(ap, fmt);
+	p = devm_kvasprintf(dev, gfp, fmt, ap);
+	va_end(ap);
 
 	return (p);
 }
@@ -2002,7 +2014,7 @@ linux_timer_init(void *arg)
 	linux_timer_hz_mask--;
 
 	/* compute some internal constants */
-	
+
 	lkpi_nsec2hz_rem = hz;
 	lkpi_usec2hz_rem = hz;
 	lkpi_msec2hz_rem = hz;
@@ -2516,8 +2528,8 @@ linux_compat_init(void *arg)
 	kobject_init(&linux_root_device.kobj, &linux_dev_ktype);
 	kobject_set_name(&linux_root_device.kobj, "device");
 	linux_root_device.kobj.oidp = SYSCTL_ADD_NODE(NULL,
-	    SYSCTL_CHILDREN(rootoid), OID_AUTO, "device", CTLFLAG_RD, NULL,
-	    "device");
+	    SYSCTL_CHILDREN(rootoid), OID_AUTO, "device",
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "device");
 	linux_root_device.bsddev = root_bus;
 	linux_class_misc.name = "misc";
 	class_register(&linux_class_misc);

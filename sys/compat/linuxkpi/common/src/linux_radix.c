@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17c7b4bb48e782cdf0c0c23cb2cf360f5b199967 $");
+__FBSDID("$FreeBSD: abf217de7f98bdacbb3ff580327bec95656d63b4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -206,7 +206,6 @@ radix_tree_insert(struct radix_tree_root *root, unsigned long index, void *item)
 
 	/* expand radix tree as needed */
 	while (radix_max(root) < index) {
-
 		/* check if the radix tree is getting too big */
 		if (root->height == RADIX_TREE_MAX_HEIGHT) {
 			radix_tree_clean_root_node(root);
@@ -311,7 +310,6 @@ radix_tree_store(struct radix_tree_root *root, unsigned long index, void **ppite
 
 	/* expand radix tree as needed */
 	while (radix_max(root) < index) {
-
 		/* check if the radix tree is getting too big */
 		if (root->height == RADIX_TREE_MAX_HEIGHT) {
 			radix_tree_clean_root_node(root);

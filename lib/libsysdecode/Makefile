@@ -1,8 +1,7 @@
-# $FreeBSD: f52b5cf17c1cb97ef88cf80941c9c21121ea9f28 $
+# $FreeBSD: d58858086bc98455241f2ca5972b7ee72b95be24 $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=	sysdecode
 
 SRCS=	errno.c flags.c ioctl.c signal.c syscallnames.c utrace.c
@@ -120,13 +119,6 @@ CFLAGS+=-DPF
 # Workaround duplicate declarations in <netinet/ip_compat.h>
 CFLAGS.gcc.ioctl.c+= -Wno-redundant-decls
 
-# Ignore deprecation warning in <sys/pioctl.h>
-CFLAGS.clang.ioctl.c+= -Wno-\#warnings
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 40700
-CFLAGS.gcc.ioctl.c+= -Wno-cpp
-.endif
-
-CFLAGS.clang+=	${CFLAGS.clang.${.IMPSRC}}
 CFLAGS.gcc+=	${CFLAGS.gcc.${.IMPSRC}}
 
 DEPENDOBJS+=	tables.h

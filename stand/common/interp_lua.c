@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a6035e7bb28c82c64a967e2dd55b8befccd8b44 $");
+__FBSDID("$FreeBSD: 94001918e15163a48220d0478808b7b68d70aa62 $");
 
 #include <stand.h>
 #include "bootstrap.h"
@@ -95,6 +95,7 @@ static const luaL_Reg loadedlibs[] = {
   {"io", luaopen_io},
   {"lfs", luaopen_lfs},
   {"loader", luaopen_loader},
+  {"pager", luaopen_pager},
   {NULL, NULL}
 };
 

@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4643017c596d09bd10d6b5183218a5dd438d4168 $
+ * $FreeBSD: 277c60560d79ac1afe518f809191306efcbc243a $
  */
 /*
  * File: ql_glbl.h
@@ -123,6 +123,5 @@ extern void ql_sp_log(qla_host_t *ha, uint16_t fmtstr_idx, uint16_t num_params,
 		uint32_t param3, uint32_t param4);
 extern void ql_alloc_sp_log_buffer(qla_host_t *ha);
 extern void ql_free_sp_log_buffer(qla_host_t *ha);
-
 
 #endif /* #ifndef_QL_GLBL_H_ */

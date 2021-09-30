@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97d9af0fdf0514774a56493a2cef1e79dbaab892 $");
+__FBSDID("$FreeBSD: 87113f6382b420e53c28257e55980b2135744e7d $");
 
 #include <libkern/quad.h>
 
@@ -63,4 +63,3 @@ __aeabi_ulcmp(unsigned long long a, unsigned long long b)
 	return __ucmpdi2(a, b) - 1;
 }
 #endif
-

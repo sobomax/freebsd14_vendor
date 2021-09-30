@@ -1,6 +1,7 @@
-# $FreeBSD: 135d22c7460b9470df5be22980d50c7abb979771 $
+# $FreeBSD: 11a7a178edb43eae0f208987b7edf9aba5ed1883 $
 
-NAME=	smedia
-SRCS=	alias_smedia.c
+PACKAGE=	natd
+NAME=		smedia
+SRCS=		alias_smedia.c
 
 .include <bsd.lib.mk>

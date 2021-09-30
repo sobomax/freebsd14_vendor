@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d837afb198cb85176a7944bf96dea6808fbe23ed $");
+__FBSDID("$FreeBSD: 091164a11fcf6558f74219d0f4f0b2cbf02c04d0 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -227,8 +227,6 @@ void
 devstat_start_transaction(struct devstat *ds, const struct bintime *now)
 {
 
-	mtx_assert(&devstat_mutex, MA_NOTOWNED);
-
 	/* sanity check */
 	if (ds == NULL)
 		return;
@@ -239,13 +237,12 @@ devstat_start_transaction(struct devstat *ds, const struct bintime *now)
 	 * to busy.  The start time is really the start of the latest busy
 	 * period.
 	 */
-	if (ds->start_count == ds->end_count) {
+	if (atomic_fetchadd_int(&ds->start_count, 1) == ds->end_count) {
 		if (now != NULL)
 			ds->busy_from = *now;
 		else
 			binuptime(&ds->busy_from);
 	}
-	ds->start_count++;
 	atomic_add_rel_int(&ds->sequence0, 1);
 	DTRACE_DEVSTAT_START();
 }
@@ -254,13 +251,22 @@ void
 devstat_start_transaction_bio(struct devstat *ds, struct bio *bp)
 {
 
-	mtx_assert(&devstat_mutex, MA_NOTOWNED);
-
 	/* sanity check */
 	if (ds == NULL)
 		return;
 
 	binuptime(&bp->bio_t0);
+	devstat_start_transaction_bio_t0(ds, bp);
+}
+
+void
+devstat_start_transaction_bio_t0(struct devstat *ds, struct bio *bp)
+{
+
+	/* sanity check */
+	if (ds == NULL)
+		return;
+
 	devstat_start_transaction(ds, &bp->bio_t0);
 	DTRACE_DEVSTAT_BIO_START();
 }
@@ -441,11 +447,13 @@ sysctl_devstat(SYSCTL_HANDLER_ARGS)
  * Sysctl entries for devstat.  The first one is a node that all the rest
  * hang off of. 
  */
-static SYSCTL_NODE(_kern, OID_AUTO, devstat, CTLFLAG_RD, NULL,
+static SYSCTL_NODE(_kern, OID_AUTO, devstat, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
     "Device Statistics");
 
-SYSCTL_PROC(_kern_devstat, OID_AUTO, all, CTLFLAG_RD|CTLTYPE_OPAQUE,
-    NULL, 0, sysctl_devstat, "S,devstat", "All devices in the devstat list");
+SYSCTL_PROC(_kern_devstat, OID_AUTO, all,
+    CTLFLAG_RD | CTLTYPE_OPAQUE | CTLFLAG_MPSAFE, NULL, 0,
+    sysctl_devstat, "S,devstat",
+    "All devices in the devstat list");
 /*
  * Export the number of devices in the system so that userland utilities
  * can determine how much memory to allocate to hold all the devices.

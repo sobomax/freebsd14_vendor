@@ -26,7 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: b68782737893501a41e8e5619bae6e6b777fe443 $
+# $FreeBSD: 00b7c438c695a60d681b350a2d31d9b16f3cf280 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/ath
@@ -40,9 +40,6 @@ SRCS=	ah_osdep_ar5416.c
 
 #
 # AR5416, AR9130, AR9160, AR9220, AR9280, AR9285, AR9287 support.
-
-# Note enabling this support requires defining AH_SUPPORT_AR5416
-# in opt_ah.h so the 11n tx/rx descriptor format is handled.
 #
 # NB: 9160 depends on 5416 but 5416 does not require 9160
 #

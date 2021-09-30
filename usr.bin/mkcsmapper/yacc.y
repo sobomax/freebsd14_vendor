@@ -1,4 +1,4 @@
-/* $FreeBSD: fc43ea80da0f796793511c1ce0e14672be14aef9 $ */
+/* $FreeBSD: 8d67be70beece96aa0b43ded57c35771e66840f3 $ */
 /*     $NetBSD: yacc.y,v 1.11 2016/06/28 09:22:16 wiz Exp $    */
 
 %{
@@ -463,7 +463,7 @@ set_src_zone(u_int32_t val)
 	default: 
 		goto bad;
 	}
-	rowcol_mask = 1 << (rowcol_bits - 1);
+	rowcol_mask = 1u << (rowcol_bits - 1);
 	rowcol_mask |= rowcol_mask - 1;
 	for (i = 0; i < rowcol_len; ++i) {
 		p = &rowcol[i];

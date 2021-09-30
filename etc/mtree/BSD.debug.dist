@@ -1,4 +1,4 @@
-# $FreeBSD: 7468ae38a8e09eeb9419610873927ed03a653d85 $
+# $FreeBSD: 3ccdf50188c882b36fb6a30a3d79236ca38a17e2 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -19,6 +19,8 @@
             ..
             geom
             ..
+            nvmecontrol
+            ..
         ..
         libexec
         ..
@@ -29,7 +31,7 @@
             ..
             lib
                 clang
-                    10.0.1
+                    11.0.1
                         lib
                             freebsd
                             ..

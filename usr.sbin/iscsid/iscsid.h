@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e1a5e92113d24afe4ff43caea463eefe49e61625 $
+ * $FreeBSD: b67df4a8197f3cfc9a85ed9a7f1e6ba1cc85b782 $
  */
 
 #ifndef ISCSID_H
@@ -57,6 +56,7 @@ struct connection {
 	uint8_t			conn_isid[6];
 	uint16_t		conn_tsih;
 	uint32_t		conn_statsn;
+	int			conn_protocol_level;
 	int			conn_header_digest;
 	int			conn_data_digest;
 	bool			conn_initial_r2t;

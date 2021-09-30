@@ -1,10 +1,10 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/16/94
-# $FreeBSD: e1dc9cf06c80ccb0ac85a13dfe55976529f004e4 $
+# $FreeBSD: 59a1ab9dbc3677ed0744ae04ce0e9f8023005d8b $
 
 .include <src.opts.mk>
 
 # XXX MISSING:	man3f
-SUBDIR=	man1 man3 man4 man5 man6 man7 man8 man9
+SUBDIR=	man1 man3 man3lua man4 man5 man6 man7 man8 man9
 SUBDIR_PARALLEL=
 
 MAKEWHATIS?=	makewhatis

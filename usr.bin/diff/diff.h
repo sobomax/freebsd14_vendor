@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)diff.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 30387610fc1903111946ef515b5a7f906116f6b2 $
+ * $FreeBSD: 1974b5cc08d6e28132e8ce3a357b998c05941bf2 $
  */
 
 #include <sys/types.h>
@@ -83,6 +83,7 @@
 #define	D_MISMATCH2	4	/* path1 was a file, path2 a dir */
 #define	D_SKIPPED1	5	/* path1 was a special file */
 #define	D_SKIPPED2	6	/* path2 was a special file */
+#define	D_ERROR		7	/* A file access error occurred */
 
 struct excludes {
 	char *pattern;

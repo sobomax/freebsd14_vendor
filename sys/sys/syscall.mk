@@ -1,6 +1,6 @@
 # FreeBSD system call object files.
 # DO NOT EDIT-- this file is automatically @generated.
-# $FreeBSD: f5e213d6f70eb918f4259411abd3708b9519e101 $
+# $FreeBSD: 4c3e04ebd0f770835860df8fee3a8ad958389bca $
 MIASM =  \
 	syscall.o \
 	exit.o \
@@ -327,7 +327,7 @@ MIASM =  \
 	truncate.o \
 	ftruncate.o \
 	thr_kill2.o \
-	shm_open.o \
+	freebsd12_shm_open.o \
 	shm_unlink.o \
 	cpuset.o \
 	cpuset_setid.o \
@@ -354,7 +354,7 @@ MIASM =  \
 	jail_get.o \
 	jail_set.o \
 	jail_remove.o \
-	closefrom.o \
+	freebsd12_closefrom.o \
 	__semctl.o \
 	msgctl.o \
 	shmctl.o \
@@ -409,5 +409,15 @@ MIASM =  \
 	fhlink.o \
 	fhlinkat.o \
 	fhreadlink.o \
+	funlinkat.o \
+	copy_file_range.o \
 	__sysctlbyname.o \
-	close_range.o
+	shm_open2.o \
+	shm_rename.o \
+	sigfastblock.o \
+	__realpathat.o \
+	close_range.o \
+	rpctls_syscall.o \
+	__specialfd.o \
+	aio_writev.o \
+	aio_readv.o

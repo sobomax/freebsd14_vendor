@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a16618dd56f2a881037017a139248082d12395e $");
+__FBSDID("$FreeBSD: 76a4553c922cc8a184a14f3489c68ed0e65bbb9e $");
 
 #include <sys/param.h>
 #define	_WANT_FREEBSD11_STAT
@@ -77,8 +77,8 @@ __FBSDID("$FreeBSD: 2a16618dd56f2a881037017a139248082d12395e $");
 struct glob_limit {
 	size_t	l_brace_cnt;
 	size_t	l_path_lim;
-	size_t	l_readdir_cnt;	
-	size_t	l_stat_cnt;	
+	size_t	l_readdir_cnt;
+	size_t	l_stat_cnt;
 	size_t	l_string_cnt;
 };
 
@@ -402,8 +402,8 @@ globtilde(const Char *pattern, Char *patbuf, size_t patbuf_len, glob11_t *pglob)
 	if (*pattern != TILDE || !(pglob->gl_flags & GLOB_TILDE))
 		return (pattern);
 
-	/* 
-	 * Copy up to the end of the string or / 
+	/*
+	 * Copy up to the end of the string or /
 	 */
 	eb = &patbuf[patbuf_len - 1];
 	for (p = pattern + 1, b = patbuf;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 198082615076fd4fd50cd6322da363d5134d1a7e $");
+__FBSDID("$FreeBSD: 26afe005ea59f147bd86f36637b77f37fb0af812 $");
 
 #include <linux/compat.h>
 #include <linux/kthread.h>
@@ -142,7 +142,6 @@ linux_kthread_setup_and_run(struct thread *td, linux_task_fn_t *task_fn, void *a
 	sched_prio(td, PI_SWI(SWI_NET));
 	/* put thread into run-queue */
 	sched_add(td, SRQ_BORING);
-	thread_unlock(td);
 
 	return (task);
 }

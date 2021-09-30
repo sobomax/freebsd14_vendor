@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 172adce556abc0657d464651befc8ef7dded7eac $
+ * $FreeBSD: cdb9205f3da1af8bfd715091d5a63a2b147b5ce9 $
  */
 
 #ifndef __SYSDECODE_H__
@@ -122,6 +121,7 @@ const char *sysdecode_sysarch_number(int _number);
 bool	sysdecode_thr_create_flags(FILE *_fp, int _flags, int *_rem);
 bool	sysdecode_umtx_cvwait_flags(FILE *_fp, u_long _flags, u_long *_rem);
 const char *sysdecode_umtx_op(int _op);
+bool	sysdecode_umtx_op_flags(FILE *_fp, int op, int *_rem);
 bool	sysdecode_umtx_rwlock_flags(FILE *_fp, u_long _flags, u_long *_rem);
 int	sysdecode_utrace(FILE *_fp, void *_buf, size_t _len);
 bool	sysdecode_vmprot(FILE *_fp, int _type, int *_rem);
@@ -129,5 +129,6 @@ const char *sysdecode_vmresult(int _result);
 bool	sysdecode_wait4_options(FILE *_fp, int _options, int *_rem);
 bool	sysdecode_wait6_options(FILE *_fp, int _options, int *_rem);
 const char *sysdecode_whence(int _whence);
+bool	sysdecode_shmflags(FILE *_fp, int _flags, int *_rem);
 
 #endif /* !__SYSDECODE_H__ */

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4a15d8f3e3a22a57de0b721bbaf3ec540ac9b19 $");
+__FBSDID("$FreeBSD: 084a03c8a83dca194ee6334cc12cef4398fafec4 $");
 
 /*
  * PCI bus interface and resource allocation.
@@ -494,7 +494,7 @@ static driver_t aacch_driver = {
 
 static devclass_t	aacch_devclass;
 DRIVER_MODULE(aacch, pci, aacch_driver, aacch_devclass, NULL, NULL);
-MODULE_PNP_INFO("U16:vendor;U16:device;", pci, aac,
+MODULE_PNP_INFO("U16:vendor;U16:device;", pci, aacch,
     aac_identifiers, nitems(aac_identifiers) - 1);
 
 static int

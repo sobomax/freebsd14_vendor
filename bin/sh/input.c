@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)input.c	8.3 (Berkeley) 6/9/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0da1a7cbcc30d366e016298b1bbd5b47aa0f2bbc $");
+__FBSDID("$FreeBSD: a8d048fc4890d246cdd959fb5da43ca51819fa15 $");
 
 #include <stdio.h>	/* defines BUFSIZ */
 #include <fcntl.h>
@@ -357,12 +357,16 @@ popstring(void)
 void
 setinputfile(const char *fname, int push)
 {
+	int e;
 	int fd;
 	int fd2;
 
 	INTOFF;
-	if ((fd = open(fname, O_RDONLY | O_CLOEXEC)) < 0)
-		error("cannot open %s: %s", fname, strerror(errno));
+	if ((fd = open(fname, O_RDONLY | O_CLOEXEC)) < 0) {
+		e = errno;
+		errorwithstatus(e == ENOENT || e == ENOTDIR ? 127 : 126,
+		    "cannot open %s: %s", fname, strerror(e));
+	}
 	if (fd < 10) {
 		fd2 = fcntl(fd, F_DUPFD_CLOEXEC, 10);
 		close(fd);

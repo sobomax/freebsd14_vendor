@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b73c1d071a2947f8d5138a4c187ce22bc55a842b $
+ * $FreeBSD: 6b5ff6fa5b48e6abc2e6b06cd06553ea8b11bf26 $
  */
 
 /**
@@ -292,10 +292,6 @@ ocs_xport_attach_cleanup:
 		ocs_node_free_pool(ocs);
 	}
 
-	if (rq_threads_created) {
-		ocs_xport_rq_threads_teardown(xport);
-	}
-
 	return -1;
 }
 
@@ -549,12 +545,10 @@ ocs_xport_initialize(ocs_xport_t *xport)
 		} else {
 			ini_device_set = TRUE;
 		}
-
 	}
 
 	/* Add vports */
 	if (ocs->num_vports != 0) {
-
 		uint32_t max_vports;
 		ocs_hw_get(&ocs->hw, OCS_HW_MAX_VPORTS, &max_vports);
 
@@ -881,7 +875,6 @@ ocs_xport_control(ocs_xport_t *xport, ocs_xport_ctrl_e cmd, ...)
 		break;
 	}
 
-
 	default:
 		break;
 	}
@@ -1057,7 +1050,6 @@ ocs_xport_link_stats_cb(int32_t status, uint32_t num_counters, ocs_hw_link_stat_
         ocs_sem_v(&(result->stats.semaphore));
 }
 
-
 static void
 ocs_xport_host_stats_cb(int32_t status, uint32_t num_counters, ocs_hw_host_stat_counts_t *counters, void *arg)
 {
@@ -1070,7 +1062,6 @@ ocs_xport_host_stats_cb(int32_t status, uint32_t num_counters, ocs_hw_host_stat_
 
         ocs_sem_v(&(result->stats.semaphore));
 }
-
 
 /**
  * @brief Free a transport object.

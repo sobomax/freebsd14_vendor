@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 523297731514f7c4d992ffdace4af0bf8d591215 $
+ * $FreeBSD: 325443bc5895f9affcd517e4834b2f8d36db913c $
  */
 
 const char *linux32_syscallnames[] = {
@@ -246,7 +246,7 @@ const char *linux32_syscallnames[] = {
 	"linux_lremovexattr",			/* 236 = linux_lremovexattr */
 	"linux_fremovexattr",			/* 237 = linux_fremovexattr */
 	"linux_tkill",			/* 238 = linux_tkill */
-	"#239",			/* 239 = linux_sendfile64 */
+	"linux_sendfile64",			/* 239 = linux_sendfile64 */
 	"linux_sys_futex",			/* 240 = linux_sys_futex */
 	"linux_sched_setaffinity",			/* 241 = linux_sched_setaffinity */
 	"linux_sched_getaffinity",			/* 242 = linux_sched_getaffinity */

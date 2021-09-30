@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38488a2c9a87d7a6ac1264e44f6ea8442fecf469 $");
+__FBSDID("$FreeBSD: ec0a29bdf5cd4d1bf80edc2f5c2076509453d35f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -122,3 +122,24 @@ memrw(struct cdev *dev, struct uio *uio, int flags)
 	return (error);
 }
 
+/*
+ * Allow user processes to MMAP some memory sections
+ * instead of going through read/write.
+ */
+int
+memmmap(struct cdev *dev, vm_ooffset_t offset, vm_paddr_t *paddr,
+    int prot __unused, vm_memattr_t *memattr __unused)
+{
+	if (dev2unit(dev) == CDEV_MINOR_MEM) {
+		*paddr = offset;
+		return (0);
+	}
+	return (-1);
+}
+
+int
+memioctl_md(struct cdev *dev __unused, u_long cmd __unused,
+    caddr_t data __unused, int flags __unused, struct thread *td __unused)
+{
+	return (ENOTTY);
+}

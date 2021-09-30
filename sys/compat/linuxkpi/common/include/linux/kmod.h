@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3fd42fab584c7fa831d79c3afba88270416c5435 $
+ * $FreeBSD: b8a1a8b677edee809664b5728231636b7529d563 $
  */
 #ifndef	_LINUX_KMOD_H_
 #define	_LINUX_KMOD_H_
@@ -47,6 +47,5 @@
 })
 
 #define request_module_nowait request_module
-
 
 #endif /* _LINUX_KMOD_H_ */

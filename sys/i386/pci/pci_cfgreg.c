@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 991181843d368ce2e330db9ce4b0bc7bcdc4e1c3 $");
+__FBSDID("$FreeBSD: 928401d7b3bfed3154e001960843f5ad035f789f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -405,7 +405,6 @@ pcireg_cfgopen(void)
 	}
 
 	if ((oldval2 & 0xf0) == 0) {
-
 		cfgmech = CFGMECH_2;
 		devmax = 16;
 
@@ -450,15 +449,13 @@ pcie_cfgregopen(uint64_t base, uint8_t minbus, uint8_t maxbus)
 	if (minbus != 0)
 		return (0);
 
-#ifndef PAE
-	if (base >= 0x100000000) {
+	if (!pae_mode && base >= 0x100000000) {
 		if (bootverbose)
 			printf(
 	    "PCI: Memory Mapped PCI configuration area base 0x%jx too high\n",
 			    (uintmax_t)base);
 		return (0);
 	}
-#endif
 		
 	if (bootverbose)
 		printf("PCIe: Memory Mapped configuration base @ 0x%jx\n",
@@ -468,7 +465,6 @@ pcie_cfgregopen(uint64_t base, uint8_t minbus, uint8_t maxbus)
 	STAILQ_FOREACH(pc, &cpuhead, pc_allcpu)
 #endif
 	{
-
 		pcie_array = malloc(sizeof(struct pcie_cfg_elem) * PCIE_CACHE,
 		    M_DEVBUF, M_NOWAIT);
 		if (pcie_array == NULL)

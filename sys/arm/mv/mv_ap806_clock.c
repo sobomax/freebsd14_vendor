@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1df07c0d43962062e1e60cb073e99823bcfe41ea $
+ * $FreeBSD: 56041a48d312723aded7878accc6857732027a34 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1df07c0d43962062e1e60cb073e99823bcfe41ea $");
+__FBSDID("$FreeBSD: 56041a48d312723aded7878accc6857732027a34 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,12 +44,13 @@ __FBSDID("$FreeBSD: 1df07c0d43962062e1e60cb073e99823bcfe41ea $");
 #include <machine/resource.h>
 #include <machine/intr.h>
 
-#include <dev/fdt/simplebus.h>
+#include <dev/extres/clk/clk_fixed.h>
+#include <dev/extres/syscon/syscon.h>
 
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
-#include <dev/extres/clk/clk_fixed.h>
+#include "syscon_if.h"
 
 static struct clk_fixed_def ap806_clk_cluster_0 = {
 	.clkdef.id = 0,
@@ -92,23 +93,17 @@ static struct clk_fixed_def ap806_clk_sdio = {
 };
 
 struct mv_ap806_clock_softc {
-	struct simplebus_softc	simplebus_sc;
 	device_t		dev;
-	struct resource		*res;
-};
-
-static struct resource_spec mv_ap806_clock_res_spec[] = {
-	{ SYS_RES_MEMORY,	0,	RF_ACTIVE | RF_SHAREABLE },
-	{ -1, 0 }
+	struct syscon		*syscon;
 };
 
 static struct ofw_compat_data compat_data[] = {
-	{"marvell,ap806-clock", 1},
-	{NULL,             0}
+	{"marvell,ap806-clock",	1},
+	{NULL,			0}
 };
 
-#define	RD4(sc, reg)		bus_read_4((sc)->res, (reg))
-#define	WR4(sc, reg, val)	bus_write_4((sc)->res, (reg), (val))
+#define	RD4(sc, reg)		SYSCON_READ_4((sc)->syscon, (reg))
+#define	WR4(sc, reg, val)	SYSCON_WRITE_4((sc)->syscon, (reg), (val))
 
 static int
 mv_ap806_clock_probe(device_t dev)
@@ -135,32 +130,60 @@ mv_ap806_clock_attach(device_t dev)
 	sc = device_get_softc(dev);
 	sc->dev = dev;
 
-	if (bus_alloc_resources(dev, mv_ap806_clock_res_spec, &sc->res) != 0) {
-		device_printf(dev, "cannot allocate resources for device\n");
+	if (SYSCON_GET_HANDLE(sc->dev, &sc->syscon) != 0 ||
+	    sc->syscon == NULL) {
+		device_printf(dev, "cannot get syscon for device\n");
 		return (ENXIO);
 	}
 
-	/* 
-	 * We might miss some combinations
-	 * Those are the only possible ones on the mcbin
-	 */
 	reg = RD4(sc, 0x400);
 	switch (reg & 0x1f) {
 	case 0x0:
 	case 0x1:
 		clock_freq = 2000000000;
 		break;
+	case 0x4:
+		clock_freq = 1600000000;
+		break;
 	case 0x6:
 		clock_freq = 1800000000;
+		break;
+	case 0x7:
+		clock_freq = 1800000000;
+		break;
+	case 0xb:
+		clock_freq = 1600000000;
 		break;
 	case 0xd:
 		clock_freq = 1600000000;
 		break;
+	case 0x13:
+		clock_freq = 1000000000;
+		break;
 	case 0x14:
 		clock_freq = 1333000000;
 		break;
+	case 0x17:
+		clock_freq = 1333000000;
+		break;
+	case 0x19:
+		clock_freq = 1200000000;
+		break;
+	case 0x1a:
+		clock_freq = 1400000000;
+		break;
+	case 0x1b:
+		clock_freq = 600000000;
+		break;
+	case 0x1c:
+		clock_freq = 800000000;
+		break;
+	case 0x1d:
+		clock_freq = 1000000000;
+		break;
 	default:
-		device_printf(dev, "Cannot guess clock freq with reg %x\n", reg & 0x1f);
+		device_printf(dev, "Cannot guess clock freq with reg %x\n",
+		     reg & 0x1f);
 		return (ENXIO);
 		break;
 	};

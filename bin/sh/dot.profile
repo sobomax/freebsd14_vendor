@@ -1,4 +1,4 @@
-# $FreeBSD: 76ebfd5e61682c8732b18ae525453843beefb0cc $
+# $FreeBSD: fd0c43fdb9276707adb78cd02b27b6607da8e0ba $
 #
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:~/bin
 export PATH
@@ -8,6 +8,9 @@ TERM=${TERM:-xterm}
 export TERM
 PAGER=less
 export PAGER
+
+# set ENV to a file invoked each time sh is started for interactive use.
+ENV=$HOME/.shrc; export ENV
 
 # Query terminal size; useful for serial lines.
 if [ -x /usr/bin/resizewin ] ; then /usr/bin/resizewin -z ; fi

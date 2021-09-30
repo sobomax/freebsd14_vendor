@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fae144185c8a1cebe865041be91a4cb912c4eeab $
+ * $FreeBSD: 1f1083ad8d69d743ed596f4db5263b14e0484e2c $
  */
 /*
  * File: qla_reg.h
@@ -81,7 +81,6 @@
 /* Valid bit for a SEM<N>_LOCK registers */
 #define SEM_LOCK_BIT			0x00000001
 
-
 #define Q8_ROM_LOCKID			0x1B2100
 
 /*******************************
@@ -126,7 +125,6 @@
  * definitions for Q8_COLD_BOOT
  */
 #define COLD_BOOT_VALUE		0x12345678
-
 
 #define Q8_MIU_TEST_AGT_CTRL		0x180090
 #define Q8_MIU_TEST_AGT_ADDR_LO		0x180094
@@ -194,7 +192,7 @@
  * 31:2 Reserved;
  * 1:0  max address bytes for ROM Interface
  */
- 
+
 #define Q8_ROM_DUMMY_BYTE_COUNT		0x03310014
 /*
  * bit definitions for Q8_ROM_DUMMY_BYTE_COUNT 
@@ -206,7 +204,6 @@
 #define Q8_ROM_WR_DATA                  0x0331000C
 #define Q8_ROM_DIRECT_WINDOW            0x03310030
 #define Q8_ROM_DIRECT_DATA_OFFSET       0x03310000
-
 
 #define Q8_NX_CDRP_CMD_RSP		0x1B2218
 #define Q8_NX_CDRP_ARG1			0x1B221C

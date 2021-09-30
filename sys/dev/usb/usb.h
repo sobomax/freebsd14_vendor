@@ -1,4 +1,4 @@
-/* $FreeBSD: b7e51b9b876b96411fcf0f517f333da7a5c53008 $ */
+/* $FreeBSD: 346ecd3059d791315cb58d12fad816dded48c871 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -41,7 +41,7 @@
 #ifndef _USB_STANDARD_H_
 #define	_USB_STANDARD_H_
 
-#if defined(_KERNEL)
+#if defined(_KERNEL) || defined(_STANDALONE)
 #ifndef USB_GLOBAL_INCLUDE_FILE
 #include "opt_usb.h"
 #endif
@@ -57,7 +57,7 @@ SYSCTL_DECL(_hw_usb);
 
 MALLOC_DECLARE(M_USB);
 MALLOC_DECLARE(M_USBDEV);
-#endif /* _KERNEL */
+#endif	/* _KERNEL || _STANDALONE */
 
 #ifndef USB_GLOBAL_INCLUDE_FILE
 #include <dev/usb/usb_endian.h>

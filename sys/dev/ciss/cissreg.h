@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 56d19d104542b21e6b34b3105e80b77361515a79 $
+ *	$FreeBSD: e6c848cfa72abaf62d8e1d9ac67c925f8eba22a3 $
  */
 
 /*
@@ -854,7 +854,5 @@ struct ciss_bmic_flush_cache {
 #define CISS_TL_SIMPLE_ENABLE_INTERRUPTS(sc) \
 	CISS_TL_SIMPLE_WRITE(sc, CISS_TL_SIMPLE_IMR, \
 			     CISS_TL_SIMPLE_READ(sc, CISS_TL_SIMPLE_IMR) & ~(sc)->ciss_interrupt_mask)
-
-
 
 #endif /* _KERNEL */

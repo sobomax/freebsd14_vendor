@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0006fe0de1f1446d5fd4efa6858c1560cebe2901 $");
+__FBSDID("$FreeBSD: c9c3984a38382be2757dbe0c386bc83ed11c1abf $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -97,7 +97,7 @@ static int
 pkcs5v2_probe(int iterations)
 {
 	uint8_t	key[G_ELI_USERKEYLEN], salt[G_ELI_SALTLEN];
-	uint8_t passphrase[] = "passphrase";
+	const char passphrase[] = "passphrase";
 	struct rusage start, end;
 	int usecs;
 

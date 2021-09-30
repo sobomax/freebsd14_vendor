@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40242958bfaf5ede62b31a52c2c4571d820a2c06 $");
+__FBSDID("$FreeBSD: 438b0e502fe0055400fbc42342e9159f92a7e56f $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -79,9 +79,8 @@ cam_getccb(struct cam_device *dev)
 {
 	union ccb *ccb;
 
-	ccb = (union ccb *)malloc(sizeof(union ccb));
+	ccb = calloc(1, sizeof(*ccb));
 	if (ccb != NULL) {
-		bzero(&ccb->ccb_h, sizeof(struct ccb_hdr));
 		ccb->ccb_h.path_id = dev->path_id;
 		ccb->ccb_h.target_id = dev->target_id;
 		ccb->ccb_h.target_lun = dev->target_lun;

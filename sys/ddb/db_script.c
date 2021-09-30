@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38b22d137587b1a4fa4c2ad83798e1821bafc4fb $");
+__FBSDID("$FreeBSD: 59e6ba67649652d79c21a6797a651f32db5665d8 $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -462,7 +462,8 @@ db_unscript_cmd(db_expr_t addr, bool have_addr, db_expr_t count,
  * like RPCs and a bit less like normal get/set requests.  The ddb(8) command
  * line tool wraps them to make things a bit more user-friendly.
  */
-static SYSCTL_NODE(_debug_ddb, OID_AUTO, scripting, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_debug_ddb, OID_AUTO, scripting,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "DDB script settings");
 
 static int
@@ -495,8 +496,9 @@ sysctl_debug_ddb_scripting_scripts(SYSCTL_HANDLER_ARGS)
 	free(buffer, M_TEMP);
 	return (error);
 }
-SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, scripts, CTLTYPE_STRING |
-    CTLFLAG_RD, 0, 0, sysctl_debug_ddb_scripting_scripts, "A",
+SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, scripts,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, 0, 0,
+    sysctl_debug_ddb_scripting_scripts, "A",
     "List of defined scripts");
 
 static int
@@ -532,8 +534,9 @@ out:
 	free(buffer, M_TEMP);
 	return (error);
 }
-SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, script, CTLTYPE_STRING |
-    CTLFLAG_RW, 0, 0, sysctl_debug_ddb_scripting_script, "A",
+SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, script,
+    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE, 0, 0,
+    sysctl_debug_ddb_scripting_script, "A",
     "Set a script");
 
 /*
@@ -559,6 +562,7 @@ sysctl_debug_ddb_scripting_unscript(SYSCTL_HANDLER_ARGS)
 		return (EINVAL);	/* Don't confuse sysctl consumers. */
 	return (0);
 }
-SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, unscript, CTLTYPE_STRING |
-    CTLFLAG_RW, 0, 0, sysctl_debug_ddb_scripting_unscript, "A",
+SYSCTL_PROC(_debug_ddb_scripting, OID_AUTO, unscript,
+    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE, 0, 0,
+    sysctl_debug_ddb_scripting_unscript, "A",
     "Unset a script");

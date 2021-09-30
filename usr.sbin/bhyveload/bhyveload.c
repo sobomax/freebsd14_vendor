@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $
+ * $FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $
  */
 
 /*-
@@ -53,11 +53,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $
+ * $FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6db41a498534e23d8e745ef89e5eaf4d1e4cc1cb $");
+__FBSDID("$FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -300,13 +300,28 @@ cb_stat(void *arg, void *h, struct stat *sbp)
 
 static int
 cb_diskread(void *arg, int unit, uint64_t from, void *to, size_t size,
-	    size_t *resid)
+    size_t *resid)
 {
 	ssize_t n;
 
-	if (unit < 0 || unit >= ndisks )
+	if (unit < 0 || unit >= ndisks)
 		return (EIO);
 	n = pread(disk_fd[unit], to, size, from);
+	if (n < 0)
+		return (errno);
+	*resid = size - n;
+	return (0);
+}
+
+static int
+cb_diskwrite(void *arg, int unit, uint64_t offset, void *src, size_t size,
+    size_t *resid)
+{
+	ssize_t n;
+
+	if (unit < 0 || unit >= ndisks)
+		return (EIO);
+	n = pwrite(disk_fd[unit], src, size, offset);
 	if (n < 0)
 		return (errno);
 	*resid = size - n;
@@ -611,6 +626,7 @@ static struct loader_callbacks cb = {
 	.stat = cb_stat,
 
 	.diskread = cb_diskread,
+	.diskwrite = cb_diskwrite,
 	.diskioctl = cb_diskioctl,
 
 	.copyin = cb_copyin,
@@ -669,21 +685,19 @@ altcons_open(char *path)
 static int
 disk_open(char *path)
 {
-	int err, fd;
+	int fd;
 
 	if (ndisks >= NDISKS)
 		return (ERANGE);
 
-	err = 0;
 	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (errno);
 
-	if (fd > 0) {
-		disk_fd[ndisks] = fd;
-		ndisks++;
-	} else 
-		err = errno;
+	disk_fd[ndisks] = fd;
+	ndisks++;
 
-	return (err);
+	return (0);
 }
 
 static void

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8b12e4a4cc3931829833d08776b36c60eca38c0 $");
+__FBSDID("$FreeBSD: 33f872bec89e68838ec8f2c286b38aa8e5f0fc2d $");
 
 #include "opt_platform.h"
 
@@ -36,7 +36,9 @@ __FBSDID("$FreeBSD: b8b12e4a4cc3931829833d08776b36c60eca38c0 $");
 #include <sys/bus.h>
 #include <sys/cpuset.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/rman.h>
 #ifdef SMP

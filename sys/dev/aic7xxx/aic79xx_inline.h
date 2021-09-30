@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aic79xx_inline.h#57 $
  *
- * $FreeBSD: 61720d9c389353a2dda19622e840ad198292cb4b $
+ * $FreeBSD: cd37505424364c4b0a463b5122e2a2c5e6e3949e $
  */
 
 #ifndef _AIC79XX_INLINE_H_
@@ -567,7 +567,7 @@ ahd_inq(struct ahd_softc *ahd, u_int port)
 	return ((ahd_inb(ahd, port))
 	      | (ahd_inb(ahd, port+1) << 8)
 	      | (ahd_inb(ahd, port+2) << 16)
-	      | (ahd_inb(ahd, port+3) << 24)
+	      | (((uint64_t)ahd_inb(ahd, port+3)) << 24)
 	      | (((uint64_t)ahd_inb(ahd, port+4)) << 32)
 	      | (((uint64_t)ahd_inb(ahd, port+5)) << 40)
 	      | (((uint64_t)ahd_inb(ahd, port+6)) << 48)
@@ -969,7 +969,6 @@ ahd_intr(struct ahd_softc *ahd)
 	} else if ((intstat & (PCIINT|SPLTINT)) != 0) {
 		ahd->bus_intr(ahd);
 	} else {
-
 		if ((intstat & SEQINT) != 0)
 			ahd_handle_seqint(ahd, intstat);
 

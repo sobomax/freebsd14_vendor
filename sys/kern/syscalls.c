@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 354246023acf8ad395d0fce749b033a365c7b38f $
+ * $FreeBSD: 88fa3aee980fc92ffe833c9424282fdb26035ec2 $
  */
 
 const char *syscallnames[] = {
@@ -488,7 +488,7 @@ const char *syscallnames[] = {
 	"truncate",			/* 479 = truncate */
 	"ftruncate",			/* 480 = ftruncate */
 	"thr_kill2",			/* 481 = thr_kill2 */
-	"shm_open",			/* 482 = shm_open */
+	"compat12.shm_open",		/* 482 = freebsd12 shm_open */
 	"shm_unlink",			/* 483 = shm_unlink */
 	"cpuset",			/* 484 = cpuset */
 	"cpuset_setid",			/* 485 = cpuset_setid */
@@ -515,7 +515,7 @@ const char *syscallnames[] = {
 	"jail_get",			/* 506 = jail_get */
 	"jail_set",			/* 507 = jail_set */
 	"jail_remove",			/* 508 = jail_remove */
-	"closefrom",			/* 509 = closefrom */
+	"compat12.closefrom",		/* 509 = freebsd12 closefrom */
 	"__semctl",			/* 510 = __semctl */
 	"msgctl",			/* 511 = msgctl */
 	"shmctl",			/* 512 = shmctl */
@@ -574,12 +574,16 @@ const char *syscallnames[] = {
 	"fhlink",			/* 565 = fhlink */
 	"fhlinkat",			/* 566 = fhlinkat */
 	"fhreadlink",			/* 567 = fhreadlink */
-	"#568",			/* 568 = funlinkat */
-	"#569",			/* 569 = copy_file_range */
+	"funlinkat",			/* 568 = funlinkat */
+	"copy_file_range",			/* 569 = copy_file_range */
 	"__sysctlbyname",			/* 570 = __sysctlbyname */
-	"#571",			/* 571 = shm_open2 */
-	"#572",			/* 572 = shm_rename */
-	"#573",			/* 573 = sigfastblock */
-	"#574",			/* 574 = __realpathat */
+	"shm_open2",			/* 571 = shm_open2 */
+	"shm_rename",			/* 572 = shm_rename */
+	"sigfastblock",			/* 573 = sigfastblock */
+	"__realpathat",			/* 574 = __realpathat */
 	"close_range",			/* 575 = close_range */
+	"rpctls_syscall",			/* 576 = rpctls_syscall */
+	"__specialfd",			/* 577 = __specialfd */
+	"aio_writev",			/* 578 = aio_writev */
+	"aio_readv",			/* 579 = aio_readv */
 };

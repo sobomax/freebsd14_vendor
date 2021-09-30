@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: 05f42c97231e217b1a90876b8136309eb2585e49 $
+ * $FreeBSD: 5f6525d3e94f5153a43e27c9561081374f1a50c6 $
  */
 
 #ifndef _MAKEFS_CD9660_H
@@ -221,7 +221,7 @@ typedef struct _path_table_entry
 	u_char extended_attribute_length[ISODCL (2, 2)];
 	u_char first_sector[ISODCL (3, 6)];
 	u_char parent_number[ISODCL (7, 8)];
-	u_char name[ISO_FILENAME_MAXLENGTH_WITH_PADDING];
+	char name[ISO_FILENAME_MAXLENGTH_WITH_PADDING];
 } path_table_entry;
 
 typedef struct _volume_descriptor
@@ -347,9 +347,9 @@ void	debug_print_volume_descriptor_information(iso9660_disk *);
 void	debug_dump_to_xml_ptentry(path_table_entry *,int, int);
 void	debug_dump_to_xml_path_table(FILE *, off_t, int, int);
 void	debug_dump_to_xml(FILE *);
-int	debug_get_encoded_number(unsigned char *, int);
-void	debug_dump_integer(const char *, char *,int);
-void	debug_dump_string(const char *,unsigned char *,int);
+int	debug_get_encoded_number(const unsigned char *, int);
+void	debug_dump_integer(const char *, const unsigned char *, int);
+void	debug_dump_string(const char *, const unsigned char *, int);
 void	debug_dump_directory_record_9_1(unsigned char *);
 void	debug_dump_to_xml_volume_descriptor(unsigned char *,int);
 

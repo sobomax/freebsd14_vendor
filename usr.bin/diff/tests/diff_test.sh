@@ -1,4 +1,4 @@
-# $FreeBSD: 470bb925fdfc0a22879014f14534a9717fe99652 $
+# $FreeBSD: 6da2bbaea34d2ed97455e1339d0765ed1fb138a3 $
 
 atf_test_case simple
 atf_test_case unified
@@ -9,9 +9,13 @@ atf_test_case group_format
 atf_test_case side_by_side
 atf_test_case brief_format
 atf_test_case b230049
+atf_test_case b252515
 atf_test_case Bflag
+atf_test_case Nflag
 atf_test_case tabsize
 atf_test_case conflicting_format
+atf_test_case label
+atf_test_case report_identical
 
 simple_body()
 {
@@ -61,6 +65,14 @@ b230049_body()
 	atf_check -o empty -s eq:0 \
 		diff -up --strip-trailing-cr -L b230049_a.in -L b230049_b.in \
 		    b230049_a.in b230049_b.in
+}
+
+b252515_body()
+{
+	printf 'a b\n' > b252515_a.in
+	printf 'a  b\n' > b252515_b.in
+	atf_check -o empty -s eq:0 \
+		diff -qw b252515_a.in b252515_b.in
 }
 
 header_body()
@@ -164,6 +176,15 @@ Bflag_body()
 	atf_check -s exit:1 -o file:"$(atf_get_srcdir)/Bflag_F.out" diff -B E F
 }
 
+Nflag_body()
+{
+	atf_check -x 'printf "foo" > A'
+
+	atf_check -s exit:1 -o ignore -e ignore diff -N A NOFILE 
+	atf_check -s exit:1 -o ignore -e ignore diff -N NOFILE A 
+	atf_check -s exit:2 -o ignore -e ignore diff -N NOFILE1 NOFILE2 
+}
+
 tabsize_body()
 {
 	printf "\tA\n" > A
@@ -195,6 +216,26 @@ conflicting_format_body()
 	atf_check -s exit:1 -o ignore -e ignore diff --normal --normal A B
 }
 
+label_body()
+{
+	printf "\tA\n" > A
+
+	atf_check -o inline:"Files hello and world are identical\n" \
+		-s exit:0 diff --label hello --label world -s A A
+
+	atf_check -o inline:"Binary files hello and world differ\n" \
+		-s exit:1 diff --label hello --label world `which diff` `which ls`
+}
+
+report_identical_body()
+{
+	printf "\tA\n" > A
+	printf "\tB\n" > B
+	chmod -r B
+	atf_check -s exit:2 -e inline:"diff: B: Permission denied\n" \
+		-o empty diff -s A B
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case simple
@@ -206,7 +247,11 @@ atf_init_test_cases()
 	atf_add_test_case side_by_side
 	atf_add_test_case brief_format
 	atf_add_test_case b230049
+	atf_add_test_case b252515
 	atf_add_test_case Bflag
+	atf_add_test_case Nflag
 	atf_add_test_case tabsize
 	atf_add_test_case conflicting_format
+	atf_add_test_case label
+	atf_add_test_case report_identical
 }

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d768397a785c530417408b9e536c4f1a07dc833a $");
+__FBSDID("$FreeBSD: 763a47a1a95971f4162d5a7b97248686d5c9cfc7 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -354,7 +354,7 @@ acpi_timer_sysctl_freq(SYSCTL_HANDLER_ARGS)
 {
     int error;
     u_int freq;
- 
+
     if (acpi_timer_timecounter.tc_frequency == 0)
 	return (EOPNOTSUPP);
     freq = acpi_timer_frequency;
@@ -366,9 +366,11 @@ acpi_timer_sysctl_freq(SYSCTL_HANDLER_ARGS)
 
     return (error);
 }
- 
-SYSCTL_PROC(_machdep, OID_AUTO, acpi_timer_freq, CTLTYPE_INT | CTLFLAG_RW,
-    0, sizeof(u_int), acpi_timer_sysctl_freq, "I", "ACPI timer frequency");
+
+SYSCTL_PROC(_machdep, OID_AUTO, acpi_timer_freq,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, sizeof(u_int),
+    acpi_timer_sysctl_freq, "I",
+    "ACPI timer frequency");
 
 /*
  * Some ACPI timers are known or believed to suffer from implementation

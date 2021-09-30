@@ -30,7 +30,7 @@
 /* PCIe external MAC root complex driver (PEM) for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79bb1eed8df329ca2620c727992941de5d3ce50f $");
+__FBSDID("$FreeBSD: 9296280ad95f92d2bc780e1163696d4bd5c7f576 $");
 
 #include "opt_platform.h"
 
@@ -648,7 +648,6 @@ thunder_pem_alloc_resource(device_t dev, device_t child, int type, int *rid,
 		    end, count, flags));
 	}
 
-
 	if (!RMAN_IS_DEFAULT_RANGE(start, end)) {
 		/*
 		 * We might get PHYS addresses here inherited from EFI.
@@ -658,7 +657,6 @@ thunder_pem_alloc_resource(device_t dev, device_t child, int type, int *rid,
 			start = range_addr_phys_to_pci(sc->ranges, start);
 			end = start + count - 1;
 		}
-
 	}
 
 	if (bootverbose) {

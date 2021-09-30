@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75b845f56e0345e0e7ba5e40998c2d3903024020 $");
+__FBSDID("$FreeBSD: 31e340a69c337e05e4e19ead8776052b042c6043 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -190,7 +190,6 @@ am335x_ecap_detach(device_t dev)
 	PWM_UNLOCK(sc);
 
 	PWM_LOCK_DESTROY(sc);
-
 
 	return (0);
 }

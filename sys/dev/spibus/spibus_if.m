@@ -1,6 +1,5 @@
 #-
-# Copyright (c) 2006 M. Warner Losh
-# All rights reserved.
+# Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 4e8fa11f280517e4273a69af27750cf48c1747de $
+# $FreeBSD: 8e95c358fa82c25228259323633445657888783d $
 #
 
 #include <sys/bus.h>

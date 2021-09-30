@@ -1,5 +1,5 @@
 #	@(#)TOUR	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 14dc3458b65c5ad914b42b519d30caee0b986ec9 $
+# $FreeBSD: 8f7a741ba5c4c776ea87c8c1cd805dd050ff8b0f $
 
 NOTE -- This is the original TOUR paper distributed with ash and
 does not represent the current state of the shell.  It is provided anyway
@@ -35,7 +35,7 @@ EXCEPTIONS:  Code for dealing with exceptions appears in
 exceptions.c.  The C language doesn't include exception handling,
 so I implement it using setjmp and longjmp.  The global variable
 exception contains the type of exception.  EXERROR is raised by
-calling error.  EXINT is an interrupt.
+calling error or errorwithstatus.  EXINT is an interrupt.
 
 INTERRUPTS:  In an interactive shell, an interrupt will cause an
 EXINT exception to return to the main command loop.  (Exception:

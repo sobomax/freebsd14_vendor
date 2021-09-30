@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da994e8fc4dd7653d82d767f2b89e1348f692a68 $");
+__FBSDID("$FreeBSD: 129c9f38e174ac96b3e4563df8de1c5350b529f1 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/lock.h>
@@ -68,7 +68,7 @@ smbus_error(int smb_error)
 
 	if (smb_error == SMB_ENOERR)
 		return (0);
-	
+
 	if (smb_error & (SMB_ENOTSUPP))
 		error = ENODEV;
 	else if (smb_error & (SMB_ENOACK))

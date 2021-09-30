@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b8b804e4cd0a8f8383b640591f06a420204c8ce3 $
+ * $FreeBSD: 3bdd7ca2a9f1994a9aa38af8c9d1872517149944 $
  */
 
 #ifndef _FFS_BUF_H
@@ -45,6 +45,7 @@
 #include <sys/param.h>
 #include <sys/queue.h>
 
+struct componentname;
 struct makefs_fsinfo;
 struct ucred;
 

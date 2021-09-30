@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5dfedc4bd9f29f2a9116e8d1313e241e917d675a $
+ * $FreeBSD: f73f5b474d9ea8958fb016351f37f7a3effad773 $
  */
 
 #ifndef	_SYS_CONSIO_H_
@@ -37,6 +37,7 @@
 #include <sys/types.h>
 #endif
 #include <sys/ioccom.h>
+#include <sys/font.h>
 
 /*
  * Console ioctl commands.  Some commands are named as KDXXXX, GIO_XXX, and
@@ -218,18 +219,6 @@ struct fnt16 {
 };
 typedef struct fnt16	fnt16_t;
 
-struct vfnt_map {
-	uint32_t	src;
-	uint16_t	dst;
-	uint16_t	len;
-};
-typedef struct vfnt_map	vfnt_map_t;
-
-#define VFNT_MAP_NORMAL		0
-#define VFNT_MAP_NORMAL_RIGHT	1
-#define VFNT_MAP_BOLD		2
-#define VFNT_MAP_BOLD_RIGHT	3
-#define VFNT_MAPS		4
 struct vfnt {
 	vfnt_map_t	*map[VFNT_MAPS];
 	uint8_t		*glyphs;

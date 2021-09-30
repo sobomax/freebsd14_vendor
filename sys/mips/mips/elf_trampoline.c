@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd96de16589e5ff042f5acbbf5ade50b41e6943c $");
+__FBSDID("$FreeBSD: 0794de6713d3c5d15d3878d9a0fcfa5f5aa966e3 $");
 #include <machine/asm.h>
 #include <sys/param.h>
 
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: bd96de16589e5ff042f5acbbf5ade50b41e6943c $");
  */
 #include "opt_global.h"
 
-#include <sys/inflate.h>
 #include <machine/elf.h>
 #include <machine/cpufunc.h>
 #include <machine/stdarg.h>
@@ -121,7 +120,7 @@ load_kernel(void * kstart)
 	int symtabindex = -1;
 	int symstrindex = -1;
 	Elf_Size tmp;
-	
+
 #if ELFSIZE == 64
 	eh = (Elf64_Ehdr *)kstart;
 #else

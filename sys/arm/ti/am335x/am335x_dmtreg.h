@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f2ef54ddb9179c6ad3591c2e5cfbabd2ff4ec3ee $
+ * $FreeBSD: c91a30570bd82fed6165f3d2ec40a73c0ea57e88 $
  */
 
 #ifndef AM335X_DMTREG_H
@@ -72,5 +72,17 @@
 #define	DMT_TSICR		0x54		/* Synchr. Interface Ctrl Reg */
 #define	  DMT_TSICR_RESET	  (1 << 1)	/* TSICR perform soft reset */
 #define	DMT_TCAR2		0x48		/* Capture Reg */
+
+/* Location of revision register from TRM Memory map chapter 2 */
+/* L4_WKUP */
+#define DMTIMER0_REV		0x05000
+#define DMTIMER1_1MS_REV	0x31000
+/* L4_PER */
+#define DMTIMER2_REV		0x40000
+#define DMTIMER3_REV		0x42000
+#define DMTIMER4_REV		0x44000
+#define DMTIMER5_REV		0x46000
+#define DMTIMER6_REV		0x48000
+#define DMTIMER7_REV		0x4A000
 
 #endif /* AM335X_DMTREG_H */

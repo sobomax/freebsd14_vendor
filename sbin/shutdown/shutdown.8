@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)shutdown.8	8.2 (Berkeley) 4/27/95
-.\" $FreeBSD: 0deeb8dac594446eb5d6386584683319f0b86d4d $
+.\" $FreeBSD: 12a7baba0de86fbbf56f2a87d2f2124bc9ce5589 $
 .\"
-.Dd January 1, 2018
+.Dd January 11, 2020
 .Dt SHUTDOWN 8
 .Os
 .Sh NAME
@@ -63,7 +63,7 @@ The following options are available:
 The system is power cycled (power turned off and then back on)
 at the specified time.
 If the hardware doesn't support power cycle, the system will be
-halted.
+rebooted.
 At the present time, only systems with BMC supported by the
 .Xr ipmi 4
 driver that implement this functionality support this flag.

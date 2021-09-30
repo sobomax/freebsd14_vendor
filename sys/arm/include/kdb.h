@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 96dbf1a0031e5fa85414f685a91321b93f95f860 $
+ * $FreeBSD: 42677499ed786af28f717a6936a56e63b8731440 $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -38,21 +38,9 @@
 
 #define	KDB_STOPPEDPCB(pc)	&stoppcbs[pc->pc_cpuid]
 
-#if __ARM_ARCH >= 6
 extern void kdb_cpu_clear_singlestep(void);
 extern void kdb_cpu_set_singlestep(void);
 boolean_t kdb_cpu_pc_is_singlestep(db_addr_t);
-#else
-static __inline void
-kdb_cpu_clear_singlestep(void)
-{
-}
-
-static __inline void
-kdb_cpu_set_singlestep(void)
-{
-}
-#endif
 
 static __inline void
 kdb_cpu_sync_icache(unsigned char *addr, size_t size)

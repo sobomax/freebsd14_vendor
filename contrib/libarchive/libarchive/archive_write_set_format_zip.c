@@ -30,7 +30,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 78528ea33ef7f5c0fac855f61050a87497dfd09e $");
+__FBSDID("$FreeBSD: da7b2604d2597808ff2ecabe33139f0172322524 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -584,6 +584,7 @@ archive_write_zip_header(struct archive_write *a, struct archive_entry *entry)
 			zip->entry_flags |= ZIP_ENTRY_FLAG_ENCRYPTED;
 			zip->entry_encryption = zip->encryption_type;
 			break;
+		case ENCRYPTION_NONE:
 		default:
 			break;
 		}
@@ -710,6 +711,7 @@ archive_write_zip_header(struct archive_write *a, struct archive_entry *entry)
 				    + AUTH_CODE_SIZE;
 				version_needed = 20;
 				break;
+			case ENCRYPTION_NONE:
 			default:
 				break;
 			}
@@ -762,6 +764,7 @@ archive_write_zip_header(struct archive_write *a, struct archive_entry *entry)
 				if (version_needed < 20)
 					version_needed = 20;
 				break;
+			case ENCRYPTION_NONE:
 			default:
 				break;
 			}
@@ -1029,6 +1032,7 @@ archive_write_zip_data(struct archive_write *a, const void *buff, size_t s)
 				zip->cctx_valid = zip->hctx_valid = 1;
 			}
 			break;
+		case ENCRYPTION_NONE:
 		default:
 			break;
 		}
@@ -1117,6 +1121,7 @@ archive_write_zip_data(struct archive_write *a, const void *buff, size_t s)
 		break;
 #endif
 
+	case COMPRESSION_UNSPECIFIED:
 	default:
 		archive_set_error(&a->archive, ARCHIVE_ERRNO_MISC,
 		    "Invalid ZIP compression type");

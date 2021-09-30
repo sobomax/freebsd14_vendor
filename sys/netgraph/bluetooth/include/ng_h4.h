@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_h4.h,v 1.1 2002/11/24 19:47:05 max Exp $
- * $FreeBSD: 803bbaf9609b8685d03c9b234161530e1e163bf7 $
+ * $FreeBSD: 872ce6423ad953cce9f46b33c3968333a9c9ecc0 $
  * 
  * Based on:
  * ---------
@@ -112,4 +112,3 @@ typedef struct {
 #define NGM_H4_NODE_RESET_STAT	8
 
 #endif /* _NETGRAPH_H4_H_ */
-

@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)open.2	8.2 (Berkeley) 11/16/93
-.\" $FreeBSD: 8f59dc00f10ed2e577c502c9aca2c427f0fa3eb4 $
+.\" $FreeBSD: ddf8aeb750fba235b77c7c4e6ba66c0caf140607 $
 .\"
 .Dd March 30, 2020
 .Dt POSIX_FALLOCATE 2
@@ -117,7 +117,8 @@ Corrupted data was detected while reading from the file system.
 .It Bq Er ENODEV
 The
 .Fa fd
-argument does not refer to a regular file.
+argument does not refer to a file that supports
+.Nm .
 .It Bq Er ENOSPC
 There is insufficient free space remaining on the file system storage
 media.

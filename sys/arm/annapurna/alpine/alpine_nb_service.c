@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3725cd340f33e133f78f92f2f8b7c375e1b82e06 $");
+__FBSDID("$FreeBSD: 156d8e406df59f41720bd8742af101a3236bfc16 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -61,7 +61,6 @@ static device_method_t nb_service_methods[] = {
 	DEVMETHOD(device_probe,		nb_service_probe),
 	DEVMETHOD(device_attach,	nb_service_attach),
 	DEVMETHOD(device_detach,	nb_service_detach),
-
 	{ 0, 0 }
 };
 

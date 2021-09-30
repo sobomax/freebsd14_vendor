@@ -1,4 +1,4 @@
-# $FreeBSD: 6f481b0140d2cc07b75bb71db7d082ca67cb2aea $
+# $FreeBSD: 7045d7292a7559203f60bda639d461654ac83f4d $
 
 PIDFILE=ggated.pid
 PLAINFILES=plainfiles
@@ -16,6 +16,11 @@ ggated_head()
 
 ggated_body()
 {
+	if [ "$(atf_config_get ci false)" = "true" ] && \
+		[ "$(uname -p)" = "i386" ]; then
+		atf_skip "https://bugs.freebsd.org/244737"
+	fi
+
 	load_ggate
 
 	us=$(alloc_ggate_dev)

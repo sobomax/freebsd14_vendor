@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: 71ce230c3812da2cc0eae74a22d3d82197013f9a $
+* $FreeBSD: bbe33cf1fef7e867869a6625b3ae0fccc1b0641b $
 *
 *******************************************************************************/
 /******************************************************************************
@@ -313,7 +313,7 @@ ag_card_id_t ag_card_type[] = {
 #endif   //AGTIAPI_SA
 };
 
-static const char *ag_card_names[] = {
+static char const * const ag_card_names[] = {
   "Unknown",
   "iSCSI DiXL Card",
   "iSCSI iDX1 Card",

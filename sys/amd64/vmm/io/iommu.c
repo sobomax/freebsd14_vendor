@@ -25,17 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 144e292fb754ddf4fac7becb6ccdae76e738d7a3 $
+ * $FreeBSD: 3fe4d299a49746aa17a86c6bbb2c08170ceec426 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 144e292fb754ddf4fac7becb6ccdae76e738d7a3 $");
+__FBSDID("$FreeBSD: 3fe4d299a49746aa17a86c6bbb2c08170ceec426 $");
 
 #include <sys/param.h>
-#include <sys/types.h>
-#include <sys/systm.h>
 #include <sys/bus.h>
+#include <sys/eventhandler.h>
 #include <sys/sysctl.h>
+#include <sys/systm.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -48,7 +48,8 @@ __FBSDID("$FreeBSD: 144e292fb754ddf4fac7becb6ccdae76e738d7a3 $");
 #include "iommu.h"
 
 SYSCTL_DECL(_hw_vmm);
-SYSCTL_NODE(_hw_vmm, OID_AUTO, iommu, CTLFLAG_RW, 0, "bhyve iommu parameters");
+SYSCTL_NODE(_hw_vmm, OID_AUTO, iommu, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "bhyve iommu parameters");
 
 static int iommu_avail;
 SYSCTL_INT(_hw_vmm_iommu, OID_AUTO, initialized, CTLFLAG_RD, &iommu_avail,

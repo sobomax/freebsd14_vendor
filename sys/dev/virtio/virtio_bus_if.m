@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ec280e2d80beba8f79ad283bce9d8c97dbc2fc45 $
+# $FreeBSD: 2c3424204842630a5de3b2a69b24c420e65a5c2f $
 
 #include <sys/bus.h>
 #include <machine/bus.h>
@@ -36,6 +36,12 @@ struct vq_alloc_info;
 
 CODE {
 	static int
+	virtio_bus_default_finalize_features(device_t dev)
+	{
+		return (0);
+	}
+
+	static int
 	virtio_bus_default_config_generation(device_t dev)
 	{
 		return (0);
@@ -46,6 +52,10 @@ METHOD uint64_t negotiate_features {
 	device_t	dev;
 	uint64_t	child_features;
 };
+
+METHOD int finalize_features {
+	device_t	dev;
+} DEFAULT virtio_bus_default_finalize_features;
 
 METHOD int with_feature {
 	device_t	dev;
@@ -80,6 +90,7 @@ METHOD void reinit_complete {
 METHOD void notify_vq {
 	device_t	dev;
 	uint16_t	queue;
+	bus_size_t	offset;
 };
 
 METHOD int config_generation {

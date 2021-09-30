@@ -24,7 +24,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2caa2619f6b276361145b524e4d4f7a03ff37d85 $
+ * $FreeBSD: 19ad346c85f6557a5c50e8aa61ea1f5eab80f066 $
  */
 
 #ifndef _IF_TSEC_H
@@ -56,7 +56,7 @@ struct tsec_bufmap {
 struct tsec_softc {
 	/* XXX MII bus requires that struct ifnet is first!!! */
 	struct ifnet	*tsec_ifp;
-	
+
 	struct mtx	transmit_lock;	/* transmitter lock */
 	struct mtx	receive_lock;	/* receiver lock */
 

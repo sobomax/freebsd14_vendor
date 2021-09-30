@@ -1,4 +1,4 @@
-/* $FreeBSD: 622178ab4dd3d852d9a1cd3e6c1f00adf3d87b8b $ */
+/* $FreeBSD: be09a3649dd9cc707c3b01010cef8f8be4ab7006 $ */
 /*-
  * Copyright (c) 2015, Mellanox Technologies, Inc. All rights reserved.
  *
@@ -26,7 +26,8 @@
 
 #include "icl_iser.h"
 
-SYSCTL_NODE(_kern, OID_AUTO, iser, CTLFLAG_RW, 0, "iSER module");
+SYSCTL_NODE(_kern, OID_AUTO, iser, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "iSER module");
 int iser_debug = 0;
 SYSCTL_INT(_kern_iser, OID_AUTO, debug, CTLFLAG_RWTUN,
     &iser_debug, 0, "Enable iser debug messages");

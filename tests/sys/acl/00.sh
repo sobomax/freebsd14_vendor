@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Copyright (c) 2008, 2009 Edward Tomasz Napierała <trasz@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 98b5e6fdf50983e9d3e8c3cc1845680171e217f9 $
+# $FreeBSD: 92aaa3d9641d7f1e4dcb9d2750dcd093bab33013 $
 #
 
 # This is a wrapper script to run tools-posix.test on UFS filesystem.

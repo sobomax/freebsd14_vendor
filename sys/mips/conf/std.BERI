@@ -4,7 +4,7 @@
 # kernel configuration file will be included by other board-specific files,
 # and so contains only BERI features common across all board targets.
 #
-# $FreeBSD: 9e7a55761f1ba7ea8e3fd717cb5ca20590a27c41 $
+# $FreeBSD: 965754546d1a69976919c5d4424f367bdb752f28 $
 #
 
 machine		mips mips64
@@ -12,8 +12,6 @@ machine		mips mips64
 cpu		CPU_BERI
 
 options 	HZ=200
-
-makeoptions	ARCH_FLAGS="-march=mips64 -mabi=64"
 
 makeoptions 	KERNLOADADDR=0xffffffff80100000
 
@@ -33,6 +31,7 @@ options 	CAPABILITIES
 
 options 	COMPAT_FREEBSD10
 options 	COMPAT_FREEBSD11
+options 	COMPAT_FREEBSD12
 
 options 	INTRNG
 options 	SCHED_ULE
@@ -60,5 +59,4 @@ device		ether
 device		geom_map
 device		loop
 device		md
-device		random
 device		snp

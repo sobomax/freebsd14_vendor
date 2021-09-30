@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35806cae1d9fd6f409dd20ea3f13dfe587ca2c3b $");
+__FBSDID("$FreeBSD: bfb957338af73791965f7fccd96e20062a68bec3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -407,7 +407,6 @@ ccm_fdt_set(struct ccm_softc *sc)
 
 	/* Find 'clock_names' prop in the tree */
 	for (child = OF_child(parent); child != 0; child = OF_peer(child)) {
-
 		/* Find a 'leaf'. Start the search from this node. */
 		while (OF_child(child)) {
 			parent = child;

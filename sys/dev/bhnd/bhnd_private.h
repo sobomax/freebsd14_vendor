@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 423650a694261cf98e87dabc2d93c4a84306e5cb $
+ * $FreeBSD: aae25349e90edb0a93a09e2c2ede02c49d3b58c4 $
  */
 
 #ifndef _BHND_BHND_PRIVATE_H_
@@ -96,7 +96,7 @@ struct bhnd_core_clkctl {
 
 #define	BHND_CLKCTL_WRITE_4(_clkctl, _val)	\
 	bhnd_bus_write_4((_clkctl)->cc_res, (_clkctl)->cc_res_offset, (_val))
-	
+
 #define	BHND_CLKCTL_SET_4(_clkctl, _val, _mask)	\
 	BHND_CLKCTL_WRITE_4((_clkctl),		\
 	    ((_val) & (_mask)) | (BHND_CLKCTL_READ_4(_clkctl) & ~(_mask)))

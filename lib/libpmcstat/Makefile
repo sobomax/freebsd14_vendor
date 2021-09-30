@@ -1,4 +1,4 @@
-# $FreeBSD: 5becabb5c957b9580ccc98b26fa786dff8fc9409 $
+# $FreeBSD: b5777315bbb65e63dfdf832feb97ec9ce679c87c $
 PACKAGE=lib${LIB}
 LIB=	pmcstat
 INTERNALLIB=
@@ -10,6 +10,8 @@ SRCS=	\
 	libpmcstat_process.c	\
 	libpmcstat_string.c	\
 	libpmcstat_symbol.c
-INCS=	libpmcstat.h
+
+# If libpmcstat becomes public uncomment this line
+#INCS=	libpmcstat.h
 
 .include <bsd.lib.mk>

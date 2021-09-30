@@ -1,6 +1,6 @@
-# $FreeBSD: e8e5f1cc0d323275fa02c4c05834546d2ad660b9 $
+# $FreeBSD: a653507f54b00e890eb527bf91dd61017861f1fa $
 
-PACKAGE=examples
+PACKAGE=utilities
 FILESDIR= ${SHAREDIR}/examples/smbfs
 FILES=	dot.nsmbrc
 

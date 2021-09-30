@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4b23e4fce272f4adbaa85bd54653a0a8f364c63a $
+ * $FreeBSD: 5c3cb17eca612f6e93e0f3418bf53f8f550aec7d $
  */
 
 /*
@@ -94,6 +94,9 @@ extern struct mtx devfs_de_interlock;
 extern struct sx clone_drain_lock;
 extern struct mtx cdevpriv_mtx;
 extern TAILQ_HEAD(cdev_priv_list, cdev_priv) cdevp_list;
+
+#define	dev_lock_assert_locked()	mtx_assert(&devmtx, MA_OWNED)
+#define	dev_lock_assert_unlocked()	mtx_assert(&devmtx, MA_NOTOWNED)
 
 #endif /* _KERNEL */
 

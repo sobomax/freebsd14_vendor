@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 96da4bb34d96557a694425e8a0223961cc2edd3e $");
+__FBSDID("$FreeBSD: 12c9b0917ef002ec9a7b6b84cfcbce0f57249ebb $");
 
 #include "al_init_eth_lm.h"
 #include "al_serdes.h"
@@ -551,7 +551,6 @@ al_eth_serdes_static_rx_params_set(struct al_eth_lm_context *lm_context)
 					lm_context->lane,
 					&lm_context->rx_params_override);
 
-
 	} else if (lm_context->static_values != 0) {
 		lm_context->rx_param_dirty = 0;
 
@@ -989,7 +988,6 @@ static int al_eth_lm_retimer_ds25_full_config(struct al_eth_lm_context *lm_conte
 		config_rx_size = AL_ARR_SIZE(retimer_ds25_10g_mode);
 	}
 
-
 	rc = al_eth_lm_retimer_ds25_channel_config(lm_context,
 					lm_context->retimer_channel,
 					config_rx,
@@ -1357,7 +1355,6 @@ al_eth_lm_link_establish(struct al_eth_lm_context *lm_context, boolean_t *link_u
 		DELAY(AL_ETH_LM_GEARBOX_RESET_DELAY);
 	}
 
-
 	if (lm_context->retimer_exist) {
 		DELAY(AL_ETH_LM_RETIMER_LINK_STATUS_DELAY);
 
@@ -1393,7 +1390,6 @@ al_eth_lm_link_establish(struct al_eth_lm_context *lm_context, boolean_t *link_u
 				lm_debug("%s: link is up with LT\n", __func__);
 				return (0);
 			}
-
 		}
 
 		lm_context->link_training_failures++;

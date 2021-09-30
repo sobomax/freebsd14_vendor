@@ -1,4 +1,4 @@
-# $FreeBSD: b7b72ac076aac2672cd5249111a4ab68d2886dba $
+# $FreeBSD: 0dbe5bd2a3904353430a3c96d735794f9a90ab5a $
 
 SHLIB_NAME?=	padlock.so
 
@@ -11,4 +11,4 @@ SRCS+=	e_padlock-x86.S
 
 .include <bsd.lib.mk>
 
-.PATH:	${.CURDIR:H:H}/${MACHINE_CPUARCH}
+.PATH:	${SRCTOP}/sys/crypto/openssl/${MACHINE_CPUARCH}

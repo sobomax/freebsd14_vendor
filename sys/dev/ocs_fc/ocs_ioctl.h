@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6ae5d36aeb3a002858d6aac1cd89a4ed73b6d176 $
+ * $FreeBSD: ad2460d09b87df7ffdc8528944e889950e9ae563 $
  */
 
 /**
@@ -361,7 +361,6 @@ typedef struct {
 #define OCS_IOCTL_CMD_GEN_DUMP		_IOWR(OCS_IOCTL_CMD_BASE, 17, int)
 #define OCS_IOCTL_CMD_UNLOAD		_IO(OCS_IOCTL_CMD_BASE, 18)
 #define OCS_IOCTL_CMD_SEND_FRAME	_IOWR(OCS_IOCTL_CMD_BASE, 19, ocs_ioctl_send_frame_t)
-
 
 extern void ocs_info_get_xport_address(ocs_t *ocs, ocs_ioctl_driver_info_t *info);
 extern int32_t ocs_device_ioctl_xport(ocs_t *ocs, unsigned int cmd, unsigned long arg);

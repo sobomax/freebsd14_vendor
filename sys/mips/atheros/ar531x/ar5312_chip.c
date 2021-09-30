@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 33c2bebd113efd82ec45801e1188bce4f2528436 $");
+__FBSDID("$FreeBSD: 440334cf604ce00f8be9e6854a5925f8215b1d97 $");
 
 #include "opt_ddb.h"
 
@@ -86,7 +86,6 @@ ar5312_chip_detect_sys_frequency(void)
 {
 	uint32_t	predivisor;
 	uint32_t	multiplier;
-
 
 	const uint32_t clockctl = ATH_READ_REG(AR5312_SYSREG_BASE + AR5312_SYSREG_CLOCKCTL);
 	if(ar531x_soc == AR531X_SOC_AR5313) {

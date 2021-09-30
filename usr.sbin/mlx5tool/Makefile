@@ -1,7 +1,6 @@
-# $FreeBSD: bf5ec067431293d9e2f7c9abe1f7e1fbc6ae8d91 $
+# $FreeBSD: 43b725516d2a50581adcb54d3a8823351362fddd $
 
 PROG=	mlx5tool
 MAN=	mlx5tool.8
-WARNS?= 6
 
 .include <bsd.prog.mk>

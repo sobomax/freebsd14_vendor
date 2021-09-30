@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd16ff5c45743b45f0d301b47cef4ebcf263291c $");
+__FBSDID("$FreeBSD: c92a5c2453fce0e96c1f6429263e4cb520c9d3a8 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -131,7 +131,6 @@ iconv_xlat16_conv(void *d2p, const char **inbuf,
 	dst = *outbuf;
 
 	while(ir > 0 && or > 0) {
-
 		inlen = 0;
 		code = 0;
 

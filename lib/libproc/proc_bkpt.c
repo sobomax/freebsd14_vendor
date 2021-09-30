@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af16877c619f78f94fe81d0b014fd25e6aef7ee4 $");
+__FBSDID("$FreeBSD: ff37bb7c44619a24386c29fb24913f417a2b2e69 $");
 
 #include <sys/types.h>
 #include <sys/ptrace.h>
@@ -112,7 +112,7 @@ proc_bkptset(struct proc_handle *phdl, uintptr_t address,
 		return (-1);
 	}
 
-	DPRINTFX("adding breakpoint at 0x%lx", address);
+	DPRINTFX("adding breakpoint at 0x%lx", (unsigned long)address);
 
 	stopped = 0;
 	if (phdl->status != PS_STOP) {
@@ -173,7 +173,7 @@ proc_bkptdel(struct proc_handle *phdl, uintptr_t address,
 		return (-1);
 	}
 
-	DPRINTFX("removing breakpoint at 0x%lx", address);
+	DPRINTFX("removing breakpoint at 0x%lx", (unsigned long)address);
 
 	stopped = 0;
 	if (phdl->status != PS_STOP) {

@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 74e808d8abaca3c949080aa7280c8bc0a933862c $
+ * $FreeBSD: f14c395d96636a6417b89f893629ac64bc6c5a49 $
  */
 /*
  * File: ql_os.h
@@ -154,13 +154,13 @@ MALLOC_DECLARE(M_QLA83XXBUF);
 		else  \
 			pause(fn, qla_ms_to_hz(msecs)); \
 	}
-	
+
 /*
  * Locks
  */
 #define QLA_LOCK(ha, str, to_ms, no_sleep)	qla_lock(ha, str, to_ms, no_sleep)
 #define QLA_UNLOCK(ha, str)			qla_unlock(ha, str)
- 
+
 /*
  * structure encapsulating a DMA buffer
  */
@@ -173,6 +173,5 @@ struct qla_dma {
         bus_dma_tag_t           dma_tag;
 };
 typedef struct qla_dma qla_dma_t;
-
 
 #endif /* #ifndef _QL_OS_H_ */

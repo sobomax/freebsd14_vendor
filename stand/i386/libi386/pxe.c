@@ -1,8 +1,8 @@
 /*-
  * Copyright (c) 2000 Alfred Perlstein <alfred@freebsd.org>
  * Copyright (c) 2000 Paul Saab <ps@freebsd.org>
- * Copyright (c) 2000 John Baldwin <jhb@freebsd.org>
  * All rights reserved.
+ * Copyright (c) 2000 John Baldwin <jhb@freebsd.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5af41fa4642a3fdd21f95c62895ae22475f7aa0 $");
+__FBSDID("$FreeBSD: 217692b515f0f5563f56ffec0d65cce4ea1c0bee $");
 
 #include <stand.h>
 #include <stddef.h>

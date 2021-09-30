@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 438870f0a44b1fded05e313d63603faecf64de07 $");
+__FBSDID("$FreeBSD: 8d9c23a41aa5b4a8ab34c782e17024e062ec69ac $");
 
 #include <sys/types.h>
 
@@ -128,8 +128,6 @@ struct tls_data {
 	Elf_Addr	tls_offs;
 };
 
-int64_t rtld_tlsdesc_handle(struct tls_data *tlsdesc, int flags);
-
 static Elf_Addr
 reloc_tlsdesc_alloc(int tlsindex, Elf_Addr tlsoffs)
 {
@@ -189,7 +187,8 @@ reloc_plt(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 	const Elf_Rela *relalim;
 	const Elf_Rela *rela;
 
-	relalim = (const Elf_Rela *)((const char *)obj->pltrela + obj->pltrelasize);
+	relalim = (const Elf_Rela *)((const char *)obj->pltrela +
+	    obj->pltrelasize);
 	for (rela = obj->pltrela; rela < relalim; rela++) {
 		Elf_Addr *where;
 
@@ -232,7 +231,8 @@ reloc_jmpslots(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 	if (obj->jmpslots_done)
 		return (0);
 
-	relalim = (const Elf_Rela *)((const char *)obj->pltrela + obj->pltrelasize);
+	relalim = (const Elf_Rela *)((const char *)obj->pltrela +
+	    obj->pltrelasize);
 	for (rela = obj->pltrela; rela < relalim; rela++) {
 		Elf_Addr *where, target;
 
@@ -356,12 +356,6 @@ reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 
 void
 ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
-{
-
-}
-
-void
-pre_init(void)
 {
 
 }

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 615ef662c19a0f47999d3e4a6c33a09269e68a11 $");
+__FBSDID("$FreeBSD: 3498450d6326e3ee8c3118820ca8ba551f3434ee $");
 
 #include "qla_os.h"
 #include "qla_reg.h"
@@ -94,7 +94,6 @@ qla_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 	pci_dev= ha->pci_dev;
 
         switch(cmd) {
-
         case QLA_RDWR_REG:
 
                 rv = (qla_reg_val_t *)data;
@@ -125,7 +124,6 @@ qla_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
                         rval = ENXIO;
                 break;
 
-
 	case QLA_ERASE_FLASH:
 		if (qla_erase_flash(ha, ((qla_erase_flash_t *)data)->off,
 			((qla_erase_flash_t *)data)->size))
@@ -147,4 +145,3 @@ qla_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 
         return rval;
 }
-

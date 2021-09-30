@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8e7bcf9228bc49761b395f59cb74c4f25fd1c15 $");
+__FBSDID("$FreeBSD: 4ca075836f8d5720d18200a9dc6927945aa891ab $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -212,6 +212,20 @@ write_close(void)
 		return 1;
 	}
 	return 0;
+}
+
+off_t
+tell_file(void)
+{
+
+	return ftello(file);
+}
+
+int
+seek_file(off_t offset)
+{
+
+	return fseeko(file, offset, SEEK_SET);
 }
 
 int

@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6917861139bc862f32cafb707c388c6fc62daea2 $
+ * $FreeBSD: caf7fef50d89ab5c813401835601e5990adf1c05 $
  */
 
 #ifndef _MACHINE_SR_H_
@@ -53,7 +53,7 @@
 #define	KERNEL2_SEGMENT	(0xfffff0 + KERNEL2_SR)
 #define	EMPTY_SEGMENT	0xfffff0
 #ifdef __powerpc64__
-#define	USER_ADDR	0xeffffffff0000000UL
+#define	USER_ADDR	0xc00ffffff0000000UL
 #else
 #define	USER_ADDR	((uintptr_t)USER_SR << ADDR_SR_SHFT)
 #endif

@@ -28,7 +28,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: 2f7318dbdab5c767277bd606a146eb04c8b06a2c $
+ * $FreeBSD: 0cedee5b1f8c32b7e0b77e4763ec173f6dd9626d $
  */
 
 #ifndef _MPS_MAPPING_H
@@ -68,7 +68,6 @@ struct _map_topology_change {
 	uint8_t	exp_status;
 	struct _map_phy_change *phy_details;
 };
-
 
 extern int
 mpssas_get_sas_address_for_sata_disk(struct mps_softc *ioc,

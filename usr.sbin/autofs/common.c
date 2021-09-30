@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65b8737bcff4766b1395daad8951e8d2c1b2372b $");
+__FBSDID("$FreeBSD: a6ed90909ec9d6688832a5367e5c70c71fabedb3 $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -365,7 +364,7 @@ expand_ampersand(char *string, const char *key)
 		 * of characters before the '&'.
 		 */
 		before_len = i;
-		//assert(i + 1 < (int)strlen(string));
+		//assert(i < (int)strlen(string));
 
 		ret = asprintf(&expanded, "%.*s%s%s",
 		    before_len, string, key, string + before_len + 1);
@@ -380,6 +379,8 @@ expand_ampersand(char *string, const char *key)
 		 */
 		string = expanded;
 		i = before_len + strlen(key);
+		if (i == (int)strlen(string))
+			break;
 		backslashed = false;
 		//assert(i < (int)strlen(string));
 	}

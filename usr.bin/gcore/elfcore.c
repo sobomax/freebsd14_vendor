@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f8de3fad77c44cf4f8c42704c767ae2a55eea09 $");
+__FBSDID("$FreeBSD: d936aa023e79dca99569715e8e590a7f1d58589d $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -388,7 +388,9 @@ elf_putnotes(pid_t pid, struct sbuf *sb, size_t *sizep)
 #endif
 #if defined(__powerpc__)
 		elf_putnote(NT_PPC_VMX, elf_note_powerpc_vmx, tids + i, sb);
+#ifndef __SPE__
 		elf_putnote(NT_PPC_VSX, elf_note_powerpc_vsx, tids + i, sb);
+#endif
 #endif
 	}
 

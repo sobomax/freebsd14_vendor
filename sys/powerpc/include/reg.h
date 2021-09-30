@@ -1,5 +1,5 @@
 /* $NetBSD: reg.h,v 1.4 2000/06/04 09:30:44 tsubai Exp $	*/
-/* $FreeBSD: 32413566042ea519c344403d4733ece8dbf281c7 $	*/
+/* $FreeBSD: a824792b0f12c2e84bfe401bf5c42d2df2cd5061 $	*/
 
 #ifndef _POWERPC_REG_H_
 #define	_POWERPC_REG_H_
@@ -73,7 +73,7 @@ struct image_params;
 
 int	fill_regs32(struct thread *, struct reg32 *);
 int	set_regs32(struct thread *, struct reg32 *);
-void	ppc32_setregs(struct thread *, struct image_params *, u_long);
+void	ppc32_setregs(struct thread *, struct image_params *, uintptr_t);
 
 #define	fill_fpregs32(td, reg)	fill_fpregs(td,(struct fpreg *)reg)
 #define	set_fpregs32(td, reg)	set_fpregs(td,(struct fpreg *)reg)

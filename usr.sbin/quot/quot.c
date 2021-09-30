@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 348946ff7dbbb4db9ebc0b07d0bb44c8a4b7cdcd $");
+__FBSDID("$FreeBSD: fa1ee1c65fe7a8167b1b93b115b0f820db113f57 $");
 
 #include <sys/param.h>
 #include <sys/stdint.h>
@@ -550,7 +550,7 @@ quot(char *name, char *mp)
 		close(fd);
 		return;
 	}
-	switch (sbget(fd, &fs, -1)) {
+	switch (sbget(fd, &fs, STDSB)) {
 	case 0:
 		break;
 	case ENOENT:
@@ -567,6 +567,9 @@ quot(char *name, char *mp)
 		printf(" (%s)",mp);
 	putchar('\n');
 	(*func)(fd, fs, name);
+	free(fs->fs_csp);
+	free(fs->fs_si);
+	free(fs);
 	close(fd);
 }
 

@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: edf5d17d457bd047c1e9dbb7b15ca9e25a935f92 $
+ * $FreeBSD: aedaf5104e313cd4678ff4f851853501de061eda $
  */
 
 #include <sys/param.h>
@@ -44,6 +44,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "rtld_printf.h"
+#include "rtld_libc.h"
 
 #define MAXNBUF	(sizeof(intmax_t) * NBBY + 1)
 

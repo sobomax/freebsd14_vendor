@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0a6a2d305501636bf127edfd28f55c429323f567 $
+ * $FreeBSD: eba95f62e3107d7caf5a8fbb034f0a204b3d4fdd $
  */
 
 /*
@@ -34,8 +34,4 @@
 
 #include <machine/acle-compat.h>
 
-#if __ARM_ARCH >= 6
 #include "locore-v6.S"
-#else
-#include "locore-v4.S"
-#endif

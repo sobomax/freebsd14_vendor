@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 89e8dfd2f0ff207524cb4f7c556072520e942625 $
+ * $FreeBSD: 52a36799940b5b8be09aa37b8ce0ff0e26301d8c $
  */
 
 #ifndef ARCHIVE_ENTRY_PRIVATE_H_INCLUDED
@@ -48,6 +48,15 @@ struct ae_sparse {
 
 	int64_t	 offset;
 	int64_t	 length;
+};
+
+struct ae_digest {
+	unsigned char md5[16];
+	unsigned char rmd160[20];
+	unsigned char sha1[20];
+	unsigned char sha256[32];
+	unsigned char sha384[48];
+	unsigned char sha512[64];
 };
 
 /*
@@ -162,6 +171,9 @@ struct archive_entry {
 	void *mac_metadata;
 	size_t mac_metadata_size;
 
+	/* Digest support. */
+	struct ae_digest digest;
+
 	/* ACL support. */
 	struct archive_acl    acl;
 
@@ -180,5 +192,9 @@ struct archive_entry {
 	/* Symlink type support */
 	int ae_symlink_type;
 };
+
+int
+archive_entry_set_digest(struct archive_entry *entry, int type,
+    const unsigned char *digest);
 
 #endif /* ARCHIVE_ENTRY_PRIVATE_H_INCLUDED */

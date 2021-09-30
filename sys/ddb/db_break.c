@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6275f819a2b5bdfb76078a4bbfed286ed20ae565 $");
+__FBSDID("$FreeBSD: 9da67238951b22aaa0d828572bad4b16df615a1d $");
 
 #include <sys/param.h>
 
@@ -178,7 +178,6 @@ db_set_breakpoints(void)
 	register db_breakpoint_t	bkpt;
 
 	if (!db_breakpoints_inserted) {
-
 		for (bkpt = db_breakpoint_list;
 		     bkpt != 0;
 		     bkpt = bkpt->link)
@@ -195,7 +194,6 @@ db_clear_breakpoints(void)
 	register db_breakpoint_t	bkpt;
 
 	if (db_breakpoints_inserted) {
-
 		for (bkpt = db_breakpoint_list;
 		     bkpt != 0;
 		     bkpt = bkpt->link)

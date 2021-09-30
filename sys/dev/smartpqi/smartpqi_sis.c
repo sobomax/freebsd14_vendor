@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: cf7744710d24d219f9ee491a8665f9f0bbd0d15b $ */
+/* $FreeBSD: 71295e3de62265561ebb56337d6b88d41058e238 $ */
 
 #include "smartpqi_includes.h"
 
@@ -80,7 +80,7 @@ void sis_disable_intx(pqisrc_softstate_t *softs)
 void sis_disable_interrupt(pqisrc_softstate_t *softs)
 {
 	DBG_FUNC("IN");
-	
+
 	switch(softs->intr_type) {
 		case INTR_TYPE_FIXED:
 			pqisrc_configure_legacy_intx(softs,false);
@@ -94,7 +94,7 @@ void sis_disable_interrupt(pqisrc_softstate_t *softs)
 			DBG_ERR("Inerrupt mode none!\n");
 			break;
 	}
-	
+
 	DBG_FUNC("OUT");
 }
 
@@ -162,7 +162,6 @@ static int pqisrc_send_sis_cmd(pqisrc_softstate_t *softs,
 	int val;
 
 	DBG_FUNC("IN\n");
-
 
 	/* Copy Command to mailbox */
 	for (i = 0; i < 6; i++)

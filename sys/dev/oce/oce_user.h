@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: ae1f96d5d317377c7867ca228b83e5df67797398 $ */
+/* $FreeBSD: b38665898270ffe29dec040a4929c895a7cc0beb $ */
 
 struct oce_mbx;
 struct oce_softc;
@@ -77,7 +77,6 @@ struct oce_dev_info {
 	uint32_t flags;
 #define OCE_RDMA_INFO_RDMA_SUPPORTED     0x00000001
 };
-
 
 #define OCE_GEN2_FAMILY     2
 

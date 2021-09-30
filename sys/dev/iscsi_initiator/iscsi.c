@@ -31,12 +31,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ce4abc0de3016c53b2a6469f2eed3bf8af30788 $");
+__FBSDID("$FreeBSD: ce190c5c892ad96071dd19c79b234296c1c61533 $");
 
 #include "opt_iscsi_initiator.h"
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
+#ifdef DO_EVENTHANDLER
+#include <sys/eventhandler.h>
+#endif
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/conf.h>
@@ -367,7 +370,6 @@ iscsi_read(struct cdev *dev, struct uio *uio, int ioflag)
 
 	  sprintf(buf, "/---- socket -----/\nso_count=%d so_state=%x\n", so->so_count, so->so_state);
 	  uiomove(buf, strlen(buf), uio);
-
      }
 #endif
      return 0;
@@ -390,8 +392,8 @@ i_setsoc(isc_session_t *sp, int fd, struct thread *td)
      if(sp->soc != NULL)
 	  isc_stop_receiver(sp);
 
-     error = getsock_cap(td, fd, cap_rights_init(&rights, CAP_SOCK_CLIENT),
-	     &sp->fp, NULL, NULL);
+     error = getsock_cap(td, fd, cap_rights_init_one(&rights, CAP_SOCK_CLIENT),
+         &sp->fp, NULL, NULL);
      if(error)
 	  return error;
 
@@ -734,7 +736,7 @@ iscsi_start(void)
 			       SYSCTL_STATIC_CHILDREN(_net),
 			       OID_AUTO,
 			       "iscsi_initiator",
-			       CTLFLAG_RD,
+			       CTLFLAG_RD | CTLFLAG_MPSAFE,
 			       0,
 			       "iSCSI Subsystem");
 
@@ -746,7 +748,7 @@ iscsi_start(void)
 		       iscsi_driver_version,
 		       0,
 		       "iscsi driver version");
- 
+
      SYSCTL_ADD_STRING(&isc->clist,
 		       SYSCTL_CHILDREN(isc->oid),
 		       OID_AUTO,

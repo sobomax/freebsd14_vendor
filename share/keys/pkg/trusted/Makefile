@@ -1,4 +1,6 @@
-# $FreeBSD: e55977c0a9a97c6aa622dd2a7ea85a681543b70b $
+# $FreeBSD: 2da13d579e822e6cc2462a124e9c9befaecba60d $
+
+PACKAGE=	utilities
 
 FILES=	pkg.freebsd.org.2013102301
 

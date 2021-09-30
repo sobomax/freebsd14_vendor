@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)locore.s	7.3 (Berkeley) 5/13/91
- * $FreeBSD: 454f7f0a101056f2f5aefb4e2343f89aa23d0530 $
+ * $FreeBSD: 2bc751ba8ffc28396091ccaa4172ee067ed4c86d $
  *
  *		originally from: locore.s, by William F. Jolitz
  *
@@ -52,15 +52,6 @@
 #include <machine/specialreg.h>
 
 #include "assym.inc"
-
-/*
- * PTmap is recursive pagemap at top of virtual address space.
- * Within PTmap, the page directory can be found (third indirection).
- */
-	.globl	PTmap,PTD,PTDpde
-	.set	PTmap,(PTDPTDI << PDRSHIFT)
-	.set	PTD,PTmap + (PTDPTDI * PAGE_SIZE)
-	.set	PTDpde,PTD + (PTDPTDI * PDESIZE)
 
 /*
  * Compiled KERNBASE location and the kernel load address, now identical.

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 439fef8bd2c05556b23516249036e8039e7e1c2e $
+ * $FreeBSD: 45ad5f4ac6540d004bea1c69508001516a20179f $
  */
 
 #ifndef _INOUT_H_
@@ -76,6 +76,5 @@ int	emulate_inout(struct vmctx *, int vcpu, struct vm_exit *vmexit,
 		      int strict);
 int	register_inout(struct inout_port *iop);
 int	unregister_inout(struct inout_port *iop);
-void	init_bvmcons(void);
 
 #endif	/* _INOUT_H_ */

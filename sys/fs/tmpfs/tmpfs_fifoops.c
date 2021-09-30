@@ -36,7 +36,7 @@
  * tmpfs vnode interface for named pipes.
  */
 #include <sys/cdefs.h>
- __FBSDID("$FreeBSD: a3c82bb2ba78280301e8812e8a8311587c0edf8e $");
+ __FBSDID("$FreeBSD: 9b66f26fa14aa7d5edf779f99af298c88b6574c2 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -56,8 +56,7 @@ tmpfs_fifo_close(struct vop_close_args *v)
 	struct tmpfs_node *node;
 
 	node = VP_TO_TMPFS_NODE(v->a_vp);
-	tmpfs_set_status(VFS_TO_TMPFS(v->a_vp->v_mount), node,
-	    TMPFS_NODE_ACCESSED);
+	tmpfs_set_accessed(VFS_TO_TMPFS(v->a_vp->v_mount), node);
 	tmpfs_update(v->a_vp);
 	return (fifo_specops.vop_close(v));
 }
@@ -75,3 +74,4 @@ struct vop_vector tmpfs_fifoop_entries = {
 	.vop_pathconf =                 tmpfs_pathconf,
 	.vop_print =			tmpfs_print,
 };
+VFS_VOP_VECTOR_REGISTER(tmpfs_fifoop_entries);

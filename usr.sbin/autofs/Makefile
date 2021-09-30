@@ -1,4 +1,4 @@
-# $FreeBSD: d901e35a523cbc1bda1b219016095c34506c66b5 $
+# $FreeBSD: 3a649062ae6ed28637651a33d38a33d7c88dbe64 $
 
 CONFS=	auto_master
 PACKAGE=autofs
@@ -23,8 +23,6 @@ LIBADD=	util
 # Needed for getmntopts.c
 MOUNT=  ${SRCTOP}/sbin/mount
 CFLAGS+=-I${MOUNT}
-
-WARNS=	6
 
 LINKS=	${BINDIR}/automountd ${BINDIR}/automount
 LINKS+=	${BINDIR}/automountd ${BINDIR}/autounmountd

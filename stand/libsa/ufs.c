@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 204bc969f9681f9ecc576c482d562c6750aa75a6 $");
+__FBSDID("$FreeBSD: 02d13aa29722e2080789935287af6d3476f8e1ee $");
 
 /*
  *	Stand-alone file reading package.
@@ -140,6 +140,11 @@ static int	ufs_use_sa_read(void *, off_t, void **, int);
 /* from ffs_subr.c */
 int	ffs_sbget(void *, struct fs **, off_t, char *,
 	    int (*)(void *, off_t, void **, int));
+/*
+ * Request standard superblock location in ffs_sbget
+ */
+#define	STDSB			-1	/* Fail if check-hash is bad */
+#define	STDSB_NOHASHFAIL	-2	/* Ignore check-hash failure */
 
 /*
  * Read a new inode into a file structure.
@@ -519,7 +524,8 @@ ufs_open(upath, f)
 
 	/* read super block */
 	twiddle(1);
-	if ((rc = ffs_sbget(f, &fs, -1, "stand", ufs_use_sa_read)) != 0)
+	if ((rc = ffs_sbget(f, &fs, STDSB_NOHASHFAIL, "stand",
+	     ufs_use_sa_read)) != 0)
 		goto out;
 	fp->f_fs = fs;
 	/*
@@ -672,7 +678,11 @@ out:
 	if (rc) {
 		if (fp->f_buf)
 			free(fp->f_buf);
-		free(fp->f_fs);
+		if (fp->f_fs != NULL) {
+			free(fp->f_fs->fs_csp);
+			free(fp->f_fs->fs_si);
+			free(fp->f_fs);
+		}
 		free(fp);
 	}
 	return (rc);
@@ -717,7 +727,11 @@ ufs_close(f)
 	}
 	if (fp->f_buf)
 		free(fp->f_buf);
-	free(fp->f_fs);
+	if (fp->f_fs != NULL) {
+		free(fp->f_fs->fs_csp);
+		free(fp->f_fs->fs_si);
+		free(fp->f_fs);
+	}
 	free(fp);
 	return (0);
 }

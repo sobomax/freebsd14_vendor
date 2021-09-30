@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 12fd3484291e29214d2245244350fa57adca5e93 $
+# $FreeBSD: de95a944f9c71f01ea3ef462ecc023464d7744db $
 #
 #
 # Makefile for uploading Microsoft Azure disk images.
@@ -17,7 +17,7 @@ AZURE${VAR}!=	grep -E ^AZURE${VAR} ${AZURE_UPLOAD_CONF} | awk -F'	' '{print $$2}
 .endif
 
 .if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT" || ${BRANCH} == "PRERELEASE"
-SNAPSHOT_DATE!=		date +-%Y-%m-%d
+SNAPSHOT_DATE!=		date +-${BUILDDATE}
 .endif
 
 AZURE_TARGET:=		${OSRELEASE}${SNAPSHOT_DATE}.vhd

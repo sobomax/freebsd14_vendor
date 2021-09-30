@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5beae62b251e2940189100f6728e347f37185370 $");
+__FBSDID("$FreeBSD: 4c89072fa3896ea24c2bd1dd25f01e6f774fe49b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -368,12 +368,12 @@ cam_compat_translate_dev_match_0x18(union ccb *ccb)
 
 	/* Remap the CCB into kernel address space */
 	bzero(&mapinfo, sizeof(mapinfo));
-	cam_periph_mapmem(ccb, &mapinfo, MAXPHYS);
+	cam_periph_mapmem(ccb, &mapinfo, maxphys);
 
 	dm = ccb->cdm.matches;
 	/* Translate in-place: old fields are smaller */
 	dm18 = (struct dev_match_result_0x18 *)(dm);
-	
+
 	for (i = 0; i < ccb->cdm.num_matches; i++) {
 		dm18[i].type = dm[i].type;
 		switch (dm[i].type) {
@@ -420,4 +420,3 @@ cam_compat_translate_dev_match_0x18(union ccb *ccb)
 
 	return (0);
 }
-

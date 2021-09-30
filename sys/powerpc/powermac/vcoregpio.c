@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c387e5c6716ab326470a750f7698ba879cdee8f $");
+__FBSDID("$FreeBSD: f2037f7b503916bf64df8342e5134b4e33512bed $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 3c387e5c6716ab326470a750f7698ba879cdee8f $");
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/cpu.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/sysctl.h>
 
@@ -111,4 +112,3 @@ vcoregpio_post_change(device_t dev, const struct cf_level *level)
 		macgpio_write(dev, GPIO_DDR_OUTPUT | 0);
 	}
 }
-

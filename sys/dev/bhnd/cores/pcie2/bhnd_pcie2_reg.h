@@ -20,7 +20,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: e128c4bf723cf5f3fc55b697878b2d23ab964218 $
+ * $FreeBSD: d1890b372aa4e1bc197ba2f02823a77cd0a252c7 $
  */
 
 #ifndef _BHND_CORES_PCIE2_BHND_PCIE2_REG_H_
@@ -98,7 +98,6 @@
 #define	BHND_PCIE2_MDIO_CTL		0x128	/**< mdio control */
 #define	BHND_PCIE2_MDIO_WRDATA		0x12C	/**< mdio data write */
 #define	BHND_PCIE2_MDIO_RDDATA		0x130	/**< mdio data read */
-
 
 /* DMA doorbell registers (>= rev5) */
 #define	BHND_PCIE2_DB0_HOST2DEV0	0x140
@@ -236,6 +235,5 @@
 #define	BHND_PCIE2_DMA_ADDRH		0xC	/**< descriptor ring base address bits 63:32 (8K aligned) */
 #define	BHND_PCIE2_DMA_STATUS0		0x10	/**< current descriptor, xmt state */
 #define	BHND_PCIE2_DMA_STATUS1		0x10	/**< active descriptor, xmt error */
-
 
 #endif /* _BHND_CORES_PCIE2_BHND_PCIE2_REG_H_ */

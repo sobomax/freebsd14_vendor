@@ -1,6 +1,5 @@
-# $FreeBSD: 2fe63846380523769c7f04a24e4882686fdf8810 $
+# $FreeBSD: 9da8907cb5d03b4dc002b6d7850b1af2c9cb44c3 $
 
-PACKAGE=lib${LIB}
 LIB=		ugidfw
 SHLIB_MAJOR=	5
 SRCS=		ugidfw.c

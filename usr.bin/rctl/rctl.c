@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2010 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 74073c13207eb50aec0a3120485bb29c81d238f7 $
+ * $FreeBSD: 2bb4bb9aff1b302beacb4975b6984899eb1beb83 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74073c13207eb50aec0a3120485bb29c81d238f7 $");
+__FBSDID("$FreeBSD: 2bb4bb9aff1b302beacb4975b6984899eb1beb83 $");
 
 #include <sys/types.h>
 #include <sys/rctl.h>
@@ -378,8 +377,9 @@ print_rules(char *rules, int hflag, int nflag)
 static void
 enosys(void)
 {
-	int error, racct_enable;
 	size_t racct_enable_len;
+	int error;
+	bool racct_enable;
 
 	racct_enable_len = sizeof(racct_enable);
 	error = sysctlbyname("kern.racct.enable",
@@ -392,7 +392,7 @@ enosys(void)
 		err(1, "sysctlbyname");
 	}
 
-	if (racct_enable == 0)
+	if (!racct_enable)
 		errx(1, "RACCT/RCTL present, but disabled; enable using kern.racct.enable=1 tunable");
 }
 

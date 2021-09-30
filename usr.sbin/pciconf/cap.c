@@ -32,7 +32,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: cb18baff2d36e5db72f4f03faa4c35f5173062ba $";
+  "$FreeBSD: bd7315beb0477ef92aee274e70252b70f99690a9 $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -49,6 +49,8 @@ static const char rcsid[] =
 #include "pciconf.h"
 
 static void	list_ecaps(int fd, struct pci_conf *p);
+
+static int cap_level;
 
 static void
 cap_power(int fd, struct pci_conf *p, uint8_t ptr)
@@ -371,9 +373,12 @@ static void
 cap_subvendor(int fd, struct pci_conf *p, uint8_t ptr)
 {
 	uint32_t id;
+	uint16_t ssid, ssvid;
 
 	id = read_config(fd, &p->pc_sel, ptr + PCIR_SUBVENDCAP_ID, 4);
-	printf("PCI Bridge card=0x%08x", id);
+	ssid = id >> 16;
+	ssvid = id & 0xffff;
+	printf("PCI Bridge subvendor=0x%04x subdevice=0x%04x", ssvid, ssid);
 }
 
 #define	MAX_PAYLOAD(field)		(128 << (field))
@@ -391,6 +396,28 @@ link_speed_string(uint8_t speed)
 		return ("8.0");
 	case 4:
 		return ("16.0");
+	default:
+		return ("undef");
+	}
+}
+
+static const char *
+max_read_string(u_int max_read)
+{
+
+	switch (max_read) {
+	case 0x0:
+		return ("128");
+	case 0x1:
+		return ("256");
+	case 0x2:
+		return ("512");
+	case 0x3:
+		return ("1024");
+	case 0x4:
+		return ("2048");
+	case 0x5:
+		return ("4096");
 	default:
 		return ("undef");
 	}
@@ -498,6 +525,8 @@ cap_express(int fd, struct pci_conf *p, uint8_t ptr)
 			    (ctl & PCIEM_CTL2_ARI) ? "enabled" : "disabled");
 		}
 	}
+	printf("\n                 max read %s", max_read_string((ctl &
+	    PCIEM_CTL_MAX_READ_REQUEST) >> 12));
 	cap = read_config(fd, &p->pc_sel, ptr + PCIER_LINK_CAP, 4);
 	sta = read_config(fd, &p->pc_sel, ptr + PCIER_LINK_STA, 2);
 	if (cap == 0 && sta == 0)
@@ -726,7 +755,7 @@ cap_ea(int fd, struct pci_conf *p, uint8_t ptr)
 }
 
 void
-list_caps(int fd, struct pci_conf *p)
+list_caps(int fd, struct pci_conf *p, int level)
 {
 	int express;
 	uint16_t sta;
@@ -736,6 +765,8 @@ list_caps(int fd, struct pci_conf *p)
 	sta = read_config(fd, &p->pc_sel, PCIR_STATUS, 2);
 	if (!(sta & PCIM_STATUS_CAPPRESENT))
 		return;
+
+	cap_level = level;
 
 	switch (p->pc_hdr & PCIM_HDRTYPE) {
 	case PCIM_HDRTYPE_NORMAL:
@@ -872,13 +903,35 @@ ecap_sernum(int fd, struct pci_conf *p, uint16_t ptr, uint8_t ver)
 static void
 ecap_vendor(int fd, struct pci_conf *p, uint16_t ptr, uint8_t ver)
 {
-	uint32_t val;
+	uint32_t val, hdr;
+	uint16_t nextptr, len;
+	int i;
 
-	printf("Vendor %d", ver);
-	if (ver < 1)
+	val = read_config(fd, &p->pc_sel, ptr, 4);
+	nextptr = PCI_EXTCAP_NEXTPTR(val);
+	hdr = read_config(fd, &p->pc_sel, ptr + PCIR_VSEC_HEADER, 4);
+	len = PCIR_VSEC_LENGTH(hdr);
+	if (len == 0) {
+		if (nextptr == 0)
+			nextptr = 0x1000;
+		len = nextptr - ptr;
+	}
+
+	printf("Vendor [%d] ID %04x Rev %d Length %d\n", ver,
+	    PCIR_VSEC_ID(hdr), PCIR_VSEC_REV(hdr), len);
+	if ((ver < 1) || (cap_level <= 1))
 		return;
-	val = read_config(fd, &p->pc_sel, ptr + 4, 4);
-	printf(" ID %d\n", val & 0xffff);
+	for (i = 0; i < len; i += 4) {
+		val = read_config(fd, &p->pc_sel, ptr + i, 4);
+		if ((i % 16) == 0)
+			printf("                 ");
+		printf("%02x %02x %02x %02x", val & 0xff, (val >> 8) & 0xff,
+		    (val >> 16) & 0xff, (val >> 24) & 0xff);
+		if ((((i + 4) % 16) == 0 ) || ((i + 4) >= len))
+			printf("\n");
+		else
+			printf(" ");
+	}
 }
 
 static void

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0186fedb20d5fe5df38044a5934815a1fda61672 $
+ * $FreeBSD: 994298b0dbc6b52a1b79fc448c2d85b522b863f9 $
  */
 
 #ifndef _TEKEN_H_
@@ -48,6 +48,7 @@ typedef unsigned char teken_format_t;
 #define	TF_BLINK	0x04	/* Blinking character. */
 #define	TF_REVERSE	0x08	/* Reverse rendered character. */
 #define	TF_CJK_RIGHT	0x10	/* Right-hand side of CJK character. */
+#define	TF_IMAGE	0x20	/* This character space has image. */
 typedef unsigned char teken_color_t;
 #define	TC_BLACK	0
 #define	TC_RED		1
@@ -157,6 +158,7 @@ struct __teken {
 
 	unsigned int	 t_utf8_left;
 	teken_char_t	 t_utf8_partial;
+	teken_char_t	 t_last;
 
 	unsigned int	 t_curscs;
 	teken_scs_t	*t_saved_curscs;
@@ -211,6 +213,7 @@ const char *teken_get_sequence(const teken_t *, unsigned int);
 /* Legacy features. */
 void	teken_set_8bit(teken_t *);
 void	teken_set_cons25(teken_t *);
+void	teken_set_cons25keys(teken_t *);
 
 /* Color conversion. */
 teken_color_t teken_256to16(teken_color_t);

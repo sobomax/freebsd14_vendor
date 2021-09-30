@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c71002e55d36f17123d8f4b66a1ed71428561e33 $
+ * $FreeBSD: 5b3a93dc56d46bf5a49972fce5f1ba2f928d8570 $
  */
 
 #include <sys/param.h>
@@ -142,7 +142,7 @@ rain_init(video_adapter_t *adp)
 {
 	video_info_t info;
 	int i;
-	
+
 	if (!vidd_get_info(adp, M_VGA_CG320, &info)) {
 		scrmode = M_VGA_CG320;
 	} else {
@@ -151,14 +151,14 @@ rain_init(video_adapter_t *adp)
 		    SAVER_NAME);
 		return (ENODEV);
 	}
-	
+
 	scrw = info.vi_width;
 	scrh = info.vi_height;
 
 	/* intialize the palette */
 	for (i = 1; i < MAX; i++)
 		rain_pal[BLUE(i)] = rain_pal[BLUE(i - 1)] + INCREMENT;
-	
+
 	return (0);
 }
 

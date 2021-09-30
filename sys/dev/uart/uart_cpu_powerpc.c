@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1dac960765bc97ccd4acfcd30209f42409fd90a $");
+__FBSDID("$FreeBSD: b56efe4a235fa797add6a775b5d5f60ac3e57f6e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -99,7 +99,7 @@ ofw_get_console_phandle_path(phandle_t node, phandle_t *result,
 		output = OF_finddevice(field.buf);
 	if (output == -1 && size == 4)
 		output = OF_instance_to_package(field.ref);
-	
+
 	if (output != -1) {
 		*result = output;
 		return (0);
@@ -202,4 +202,3 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 	di->parity = UART_PARITY_NONE;
 	return (0);
 }
-

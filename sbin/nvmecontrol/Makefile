@@ -1,4 +1,4 @@
-# $FreeBSD: 71212930a6c4947e5fef7399abb87972482b98b5 $
+# $FreeBSD: b5ceb350ed0d374c95f6135248bbe243e0cffd0a $
 
 .include <src.opts.mk>
 
@@ -9,6 +9,7 @@ SRCS+=	devlist.c firmware.c format.c identify.c logpage.c ns.c nsid.c
 SRCS+=	perftest.c power.c reset.c resv.c sanitize.c
 SRCS+=	passthru.c
 SRCS+=	identify_ext.c nvme_util.c nc_util.c
+SRCS+=  selftest.c
 MAN=	nvmecontrol.8
 LDFLAGS+= -rdynamic
 LIBADD+= util

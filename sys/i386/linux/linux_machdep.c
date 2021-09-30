@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce177e78dc1872a8bcac727c8cbf4bd3c2c64557 $");
+__FBSDID("$FreeBSD: 624a6ef6ae8705c87178502ef9ac53d24fb4ccf0 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -98,7 +98,6 @@ struct l_old_select_argv {
 	struct l_timeval	*timeout;
 };
 
-
 int
 linux_execve(struct thread *td, struct linux_execve_args *args)
 {
@@ -106,11 +105,15 @@ linux_execve(struct thread *td, struct linux_execve_args *args)
 	char *newpath;
 	int error;
 
-	LCONVPATHEXIST(td, args->path, &newpath);
-
-	error = exec_copyin_args(&eargs, newpath, UIO_SYSSPACE,
-	    args->argp, args->envp);
-	free(newpath, M_TEMP);
+	if (!LUSECONVPATH(td)) {
+		error = exec_copyin_args(&eargs, args->path, UIO_USERSPACE,
+		    args->argp, args->envp);
+	} else {
+		LCONVPATHEXIST(td, args->path, &newpath);
+		error = exec_copyin_args(&eargs, newpath, UIO_SYSSPACE,
+		    args->argp, args->envp);
+		LFREEPATH(newpath);
+	}
 	if (error == 0)
 		error = linux_common_execve(td, &eargs);
 	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);

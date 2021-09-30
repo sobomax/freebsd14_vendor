@@ -35,7 +35,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: dfbe19ea3aa37a747dc9e7a0422f18774d279e9c $
+ * $FreeBSD: d1d6f5ef49c7885a978314773c0d271be3fca89d $
  */
 
 #if !defined(IB_MAD_H)
@@ -44,7 +44,7 @@
 #include <linux/list.h>
 
 #include <rdma/ib_verbs.h>
-#include <rdma/ib_user_mad.h>
+#include <uapi/rdma/ib_user_mad.h>
 
 /* Management base versions */
 #define IB_MGMT_BASE_VERSION			1

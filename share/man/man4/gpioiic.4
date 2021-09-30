@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 0a15ee85f9a01dcbc82934dedd9c4b26d5ce4565 $
+.\" $FreeBSD: f5cea830ead08e22d195fdc2811c42b76cc824bf $
 .\"
 .Dd December 1, 2019
 .Dt GPIOIIC 4
@@ -61,7 +61,6 @@ The pins are never driven to the logical value of '1'.
 They are driven to '0' or switched to input mode (Hi-Z/tri-state), and
 an external pullup resistor pulls the line to the 1 state unless some
 other device on the bus is driving it to 0.
-.Pp
 .Sh HINTS CONFIGURATION
 On a
 .Xr device.hints 5

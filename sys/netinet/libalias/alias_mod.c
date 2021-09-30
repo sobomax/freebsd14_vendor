@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f1071ebc79e0b173026e92e272225b41af5833c $");
+__FBSDID("$FreeBSD: 835d76cf5152155190ce4a37af2d88a11dc9394c $");
 
 #ifdef _KERNEL
 #include <sys/libkern.h>
@@ -129,7 +129,7 @@ first_handler(void)
 
 #ifndef _KERNEL
 /* Dll manipulation code - this code is not thread safe... */
-SLIST_HEAD(dll_chain, dll) dll_chain = SLIST_HEAD_INITIALIZER(dll_chain);
+static SLIST_HEAD(dll_chain, dll) dll_chain = SLIST_HEAD_INITIALIZER(dll_chain);
 int
 attach_dll(struct dll *p)
 {

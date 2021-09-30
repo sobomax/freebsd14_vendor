@@ -1,6 +1,6 @@
-# $FreeBSD: 07dcbfec9f1cedc85bc34c7fe985604c94214542 $
+# $FreeBSD: 613444a468f44366e8d491f35b6e91a5ab7dc9ca $
 
-PACKAGE=iscsi_legacy
+PACKAGE=iscsilegacy
 SRCS= iscontrol.c pdu.c fsm.c config.c login.c auth_subr.c misc.c
 PROG= iscontrol
 LIBADD=	cam md

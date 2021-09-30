@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 1aedff07bada2ce4583fd047e4e25e4f06c384b0 $"); 
+__FBSDID("$FreeBSD: 69c7041558a8844f7937a83c1fa2a0f72b4ec1f2 $"); 
 	
 ENTRY(llrintl)
 	fldt	8(%rsp)
@@ -33,5 +33,6 @@ ENTRY(llrintl)
 	fistpll	(%rsp)
 	popq	%rax
 	ret
+END(llrintl)
 
 	.section .note.GNU-stack,"",%progbits

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0eeb51eab84af10afebde44f4b265cac26e3603 $");
+__FBSDID("$FreeBSD: f0901bb10976a98e977b7958716c469b967628dd $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -89,7 +89,7 @@ static int
 ata_cyrix_ch_attach(device_t dev)
 {
 	struct ata_channel *ch = device_get_softc(dev);
- 
+
 	ch->dma.alignment = 16;
 	ch->dma.max_iosize = 64 * DEV_BSIZE;
 	return (ata_pci_ch_attach(dev));

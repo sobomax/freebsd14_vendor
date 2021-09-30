@@ -26,7 +26,7 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0822d42d47c707a8a0dfe179e10092b0563ddda $");
+__FBSDID("$FreeBSD: 9ef2bf7aa61c3fc359cd6396169a3171bddbd6a5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -142,8 +142,7 @@ bman_portal_setup(struct bman_softc *bsc)
 
 		/* Not inititialized and "owned" by another thread */
 		thread_lock(curthread);
-		mi_switch(SW_VOL, NULL);
-		thread_unlock(curthread);
+		mi_switch(SW_VOL);
 	}
 
 	/* Map portal registers */

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0ae78e8b5271df0ec1650979441bba44c696796b $	*/
+/*	$FreeBSD: 4625121ae0a5dda39938ec0fa80439229d44dea2 $	*/
 
 /*-
  * Copyright (c) 2006
@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ae78e8b5271df0ec1650979441bba44c696796b $");
+__FBSDID("$FreeBSD: 4625121ae0a5dda39938ec0fa80439229d44dea2 $");
 
 /*-
  * Ralink Technology RT2561, RT2561S and RT2661 chipset driver
@@ -332,7 +332,7 @@ rt2661_detach(void *xsc)
 {
 	struct rt2661_softc *sc = xsc;
 	struct ieee80211com *ic = &sc->sc_ic;
-	
+
 	RAL_LOCK(sc);
 	rt2661_stop_locked(sc);
 	RAL_UNLOCK(sc);
@@ -958,6 +958,7 @@ rt2661_tx_dma_intr(struct rt2661_softc *sc, struct rt2661_tx_ring *txq)
 static void
 rt2661_rx_intr(struct rt2661_softc *sc)
 {
+	struct epoch_tracker et;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct rt2661_rx_desc *desc;
 	struct rt2661_rx_data *data;
@@ -1074,11 +1075,13 @@ rt2661_rx_intr(struct rt2661_softc *sc)
 		/* send the frame to the 802.11 layer */
 		ni = ieee80211_find_rxnode(ic,
 		    (struct ieee80211_frame_min *)wh);
+		NET_EPOCH_ENTER(et);
 		if (ni != NULL) {
 			(void) ieee80211_input(ni, m, rssi, nf);
 			ieee80211_free_node(ni);
 		} else
 			(void) ieee80211_input_all(ic, m, rssi, nf);
+		NET_EPOCH_EXIT(et);
 
 		RAL_LOCK(sc);
 		sc->sc_flags &= ~RAL_INPUT_RUNNING;

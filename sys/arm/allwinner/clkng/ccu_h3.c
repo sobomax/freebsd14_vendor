@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c5f182b81a3fb5e46dc8436138a45c113c14327c $
+ * $FreeBSD: 72e257c98d7374821da131610ff6eb0ea3142b28 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5f182b81a3fb5e46dc8436138a45c113c14327c $");
+__FBSDID("$FreeBSD: 72e257c98d7374821da131610ff6eb0ea3142b28 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,8 +57,8 @@ __FBSDID("$FreeBSD: c5f182b81a3fb5e46dc8436138a45c113c14327c $");
 
 #include <arm/allwinner/clkng/aw_ccung.h>
 
-#include <gnu/dts/include/dt-bindings/clock/sun8i-h3-ccu.h>
-#include <gnu/dts/include/dt-bindings/reset/sun8i-h3-ccu.h>
+#include <dt-bindings/clock/sun8i-h3-ccu.h>
+#include <dt-bindings/reset/sun8i-h3-ccu.h>
 
 /* Non-exported resets */
 #define	RST_BUS_SCR		53

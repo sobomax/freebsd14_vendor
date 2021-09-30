@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d565b3511170b43d77efbc5cb837b4cca1fbbfa1 $");
+__FBSDID("$FreeBSD: 59760d1e7d9c1f8cd0605f86d7b817e958815906 $");
 
 /*
  * IEEE 802.11 generic crypto support.
@@ -746,7 +746,6 @@ ieee80211_crypto_demic(struct ieee80211vap *vap, struct ieee80211_key *k,
 	cip = k->wk_cipher;
 	return (cip->ic_miclen > 0 ? cip->ic_demic(k, m, force) : 1);
 }
-
 
 static void
 load_ucastkey(void *arg, struct ieee80211_node *ni)

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ec78c47db444ccf4a767026fa42b9a1541cbf829 $
+ * $FreeBSD: b20b0119bc04a2b07a2e2f9376fcdae6e1a470b1 $
  */
 
 #ifndef _VMBUS_CHANVAR_H_
@@ -148,6 +148,12 @@ struct vmbus_channel {
 	struct vmbus_xact_ctx		*ch_orphan_xact;
 
 	int				ch_refs;
+
+	/*
+	 * These are for HyperV socket channel only
+	 */
+	bool				ch_is_hvs;
+	uint8_t				ch_hvs_conn_from_host;
 
 	struct sysctl_ctx_list		ch_sysctl_ctx;
 } __aligned(CACHE_LINE_SIZE);

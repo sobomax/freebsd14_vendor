@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c56c95eed270c9f7085fb39144433cfd8e2762a $");
+__FBSDID("$FreeBSD: a9bc6a4df740a4a81d9790766719fba7be20da16 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -316,10 +316,9 @@ bnxt_isc_rxd_flush(void *sc, uint16_t rxqid, uint8_t flid,
 	if (softc->rx_cp_rings[rxqid].cons != UINT32_MAX)
 		BNXT_CP_IDX_DISABLE_DB(&softc->rx_cp_rings[rxqid].ring,
 		    softc->rx_cp_rings[rxqid].cons);
-	/* We're given the last filled RX buffer here, not the next empty one */
-	BNXT_RX_DB(rx_ring, RING_NEXT(rx_ring, pidx));
+	BNXT_RX_DB(rx_ring, pidx);
 	/* TODO: Cumulus+ doesn't need the double doorbell */
-	BNXT_RX_DB(rx_ring, RING_NEXT(rx_ring, pidx));
+	BNXT_RX_DB(rx_ring, pidx);
 	return;
 }
 

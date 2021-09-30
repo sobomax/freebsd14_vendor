@@ -1,4 +1,4 @@
-.\" $FreeBSD: 01bd89b2f3513e3ba3a1df3e31312f3a505cb34c $
+.\" $FreeBSD: 2bf999af83e29de8b35843d2f05bfc4e51bd4185 $
 Set to not opportunistically skip building a cross-compiler during the
 bootstrap phase of the build.
 Normally, if the currently installed compiler matches the planned bootstrap
@@ -7,6 +7,4 @@ This does not prevent a compiler from being built for installation though,
 only for building one for the build itself.
 The
 .Va WITHOUT_CLANG
-and
-.Va WITHOUT_GCC
-options control those.
+option controls that.

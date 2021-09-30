@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5de570a179bb9836493883ac2b5aabc6d7e80d08 $");
+__FBSDID("$FreeBSD: 288351d2008b4d6c35b3ef9a62b44831112d323e $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -644,9 +644,9 @@ fts_build(FTS11 *sp, int type)
 	 */
 #ifdef FTS_WHITEOUT
 	if (ISSET(FTS_WHITEOUT))
-		oflag = DTF_NODUP | DTF_REWIND;
+		oflag = DTF_NODUP;
 	else
-		oflag = DTF_HIDEW | DTF_NODUP | DTF_REWIND;
+		oflag = DTF_HIDEW | DTF_NODUP;
 #else
 #define __opendir2(path, flag) opendir(path)
 #endif

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 946183b54dc43a7b697ab1e8807db8f5770656cb $
+# $FreeBSD: c2d96cfcb0bf55578a8cb466a3791940b5c24c0b $
 
 atf_test_case bad_namespace
 bad_namespace_head() {
@@ -74,9 +74,6 @@ long_name_body() {
 	if ! NAME_MAX=$(getconf NAME_MAX .); then
 		atf_skip "Filesystem not reporting NAME_MAX; skipping testcase"
 	fi
-
-	# https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=208965
-	atf_expect_fail "BUG 208965 extattr(2) doesn't allow maxlen attr names"
 
 	ATTRNAME=`jot -b X -s "" $NAME_MAX 0`
 	touch foo

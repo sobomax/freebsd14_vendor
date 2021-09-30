@@ -1,4 +1,4 @@
-.\" $FreeBSD: fc1d55bababde18b3953ff36090a643ab0835fdc $
+.\" $FreeBSD: bcb51ad0055bd0c69ec032250e3c7e468567b6ec $
 .Dd August 11, 2018
 .Dt "AT" 1
 .Os
@@ -213,9 +213,14 @@ every five minutes.
 This implies that the granularity of
 .Nm
 might not be optimal for every deployment.
-If a finer granularity is needed, the system crontab at
-.Pa /etc/crontab
-needs to be changed.
+If a finer granularity is desired, the
+.Pa /etc/cron.d/at
+file can be edited and will be read by the system crontab, from which
+the 
+.Ev SHELL 
+and 
+.Ev PATH
+environment variables are inherited. 
 .Sh OPTIONS
 .Bl -tag -width indent
 .It Fl q Ar queue

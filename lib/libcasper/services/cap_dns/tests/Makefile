@@ -1,4 +1,4 @@
-# $FreeBSD: 55c163bbdb408fa9f1e563d045e0d6dc5f045aa3 $
+# $FreeBSD: f79e872049d117aa0a26115ad7cccc98791d9090 $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,5 @@ LIBADD+=	cap_dns
 CFLAGS+=-DWITH_CASPER
 .endif
 LIBADD+=	nv
-
-WARNS?=		3
 
 .include <bsd.test.mk>

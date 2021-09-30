@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 414178a7bffd689e3922da2eb7b4dc6ce4df2b21 $");
+__FBSDID("$FreeBSD: b3ed457f7132947a6eb0a7a901d2307b5b13df82 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -57,22 +57,6 @@ __FBSDID("$FreeBSD: 414178a7bffd689e3922da2eb7b4dc6ce4df2b21 $");
 #include <compat/freebsd32/freebsd32_proto.h>
 
 CTASSERT(sizeof(struct mem_range_op32) == 12);
-
-static int
-freebsd32_ioctl_fiodgname(struct thread *td,
-    struct freebsd32_ioctl_args *uap, struct file *fp)
-{
-	struct fiodgname_arg fgn;
-	struct fiodgname_arg32 fgn32;
-	int error;
-
-	if ((error = copyin(uap->data, &fgn32, sizeof fgn32)) != 0)
-		return (error);
-	CP(fgn32, fgn, len);
-	PTRIN_CP(fgn32, fgn, buf);
-	error = fo_ioctl(fp, FIODGNAME, (caddr_t)&fgn, td->td_ucred, td);
-	return (error);
-}
 
 static int
 freebsd32_ioctl_memrange(struct thread *td,
@@ -228,7 +212,7 @@ freebsd32_ioctl(struct thread *td, struct freebsd32_ioctl_args *uap)
 	cap_rights_t rights;
 	int error;
 
-	error = fget(td, uap->fd, cap_rights_init(&rights, CAP_IOCTL), &fp);
+	error = fget(td, uap->fd, cap_rights_init_one(&rights, CAP_IOCTL), &fp);
 	if (error != 0)
 		return (error);
 	if ((fp->f_flag & (FREAD | FWRITE)) == 0) {
@@ -237,10 +221,6 @@ freebsd32_ioctl(struct thread *td, struct freebsd32_ioctl_args *uap)
 	}
 
 	switch (uap->com) {
-	case FIODGNAME_32:
-		error = freebsd32_ioctl_fiodgname(td, uap, fp);
-		break;
-
 	case MEMRANGE_GET32:	/* FALLTHROUGH */
 	case MEMRANGE_SET32:
 		error = freebsd32_ioctl_memrange(td, uap, fp);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-4-Clause
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +31,7 @@
 
 /* @(#)log.c	8.2 (Berkeley) 11/30/93 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23dbde4edeaa8567b10b939d57e35e1a4de0b5fb $");
+__FBSDID("$FreeBSD: c164dfa5014cd2eef82b8c43b523fc6838185052 $");
 
 #include <math.h>
 

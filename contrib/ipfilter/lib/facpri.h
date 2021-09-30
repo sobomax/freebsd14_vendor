@@ -1,4 +1,4 @@
-/*	$FreeBSD: 54ecabd6ce4972aa3d943e9c84c64b39e13bc6e2 $	*/
+/*	$FreeBSD: d3634e99d795940cccc5c19ed55abaecc10d2476 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -13,11 +13,7 @@
 
 #ifndef	__P
 # define P_DEF
-# ifdef	__STDC__
 #  define	__P(x) x
-# else
-#  define	__P(x) ()
-# endif
 #endif
 
 extern	char	*fac_toname __P((int));

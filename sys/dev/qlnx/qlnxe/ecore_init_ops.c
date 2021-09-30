@@ -29,7 +29,7 @@
  * File : ecore_init_ops.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1fe9985611cac39f4dafa3d8cce8a39a7fff488 $");
+__FBSDID("$FreeBSD: 94c6b2964092584edd79d1b3e55ca302216eaafc $");
 
 /* include the precompiled configuration values - only once */
 #include "bcm_osal.h"
@@ -102,7 +102,6 @@ void ecore_init_store_rt_agg(struct ecore_hwfn *p_hwfn,
 	for (i = 0; i < size / sizeof(u32); i++) {
 		p_hwfn->rt_data.init_val[rt_offset + i] = p_val[i];
 		p_hwfn->rt_data.b_valid[rt_offset + i] = true;
-
 	}
 }
 
@@ -240,7 +239,6 @@ static void ecore_init_fill(struct ecore_hwfn *p_hwfn,
 	for (i = 0; i < fill_count; i++, addr += sizeof(u32))
 		ecore_wr(p_hwfn, p_ptt, addr, fill);
 }
-
 
 static enum _ecore_status_t ecore_init_cmd_array(struct ecore_hwfn *p_hwfn,
 						 struct ecore_ptt *p_ptt,

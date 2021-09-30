@@ -1,4 +1,4 @@
-# $FreeBSD: a8c4c81ba6e829b73cea9d43fff15fa1991cf10b $
+# $FreeBSD: fcaa748825ee540a2c7a74940718850cbd797bae $
 
 .if !defined(COMPAT_32BIT)
 GEOM_CLASS_DIR?=/lib/geom
@@ -20,7 +20,6 @@ GEOM_CLASSES+=	nop
 GEOM_CLASSES+=	part
 GEOM_CLASSES+=	raid
 GEOM_CLASSES+=	raid3
-GEOM_CLASSES+=	sched
 GEOM_CLASSES+=	shsec
 GEOM_CLASSES+=	stripe
 GEOM_CLASSES+=	virstor

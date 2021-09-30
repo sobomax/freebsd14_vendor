@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex.h	8.2 (Berkeley) 1/3/94
- * $FreeBSD: 6b0838a9bd97351e1ae339de81a4a3c9521f6307 $
+ * $FreeBSD: 3bea3df4f3d47630a8b45ac62f69667516becfd4 $
  */
 
 #ifndef _REGEX_H_
@@ -71,6 +71,7 @@ typedef struct {
 #define	REG_NOSPEC	0020
 #define	REG_PEND	0040
 #define	REG_DUMP	0200
+#define	REG_POSIX	0400	/* only POSIX-compliant regex (libregex) */
 
 /* regerror() flags */
 #define	REG_ENOSYS	(-1)

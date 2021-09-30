@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ac10719861aeeda9d65daa2a0bc5bc5b7a958979 $
+# $FreeBSD: 318428ba2feeb613e686a709667d950d0441ba12 $
 
 # PROVIDE: bluetooth
 # REQUIRE: DAEMON
@@ -252,17 +252,6 @@ bluetooth_start()
 
 		if [ ! -f "/var/run/hcseriald.${dev}.pid" ]; then
 			err 1 "Unable to start hcseriald on ${dev}"
-		fi
-		;;
-
-	# 3Com Bluetooth Adapter 3CRWB60-A
-	btccc*)
-		hook="hook"
-
-		# Obtain unit number from device.
-		unit=`expr ${dev} : 'btccc\([0-9]\{1,\}\)'`
-		if [ -z "${unit}" ]; then
-			err 1 "Unable to get bt3c unit number: ${dev}"
 		fi
 		;;
 

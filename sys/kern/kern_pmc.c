@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4b73f134b2d4a13ef05f944d2127100f181244e2 $");
+__FBSDID("$FreeBSD: 88e87f25cd2cc7a8fccf38234720f4d17db63c87 $");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -108,7 +108,8 @@ __read_mostly struct pmc_domain_buffer_header *pmc_dom_hdrs[MAXMEMDOM];
  * PMC Soft use a global table to store registered events.
  */
 
-SYSCTL_NODE(_kern, OID_AUTO, hwpmc, CTLFLAG_RW, 0, "HWPMC parameters");
+SYSCTL_NODE(_kern, OID_AUTO, hwpmc, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "HWPMC parameters");
 
 static int pmc_softevents = 16;
 SYSCTL_INT(_kern_hwpmc, OID_AUTO, softevents, CTLFLAG_RDTUN,
@@ -182,7 +183,6 @@ pmc_cpu_is_primary(int cpu)
 	return (1);
 #endif
 }
-
 
 /*
  * Return the maximum CPU number supported by the system.  The return
@@ -364,4 +364,3 @@ init_hwpmc(void *dummy __unused)
 }
 
 SYSINIT(hwpmc, SI_SUB_KDTRACE, SI_ORDER_FIRST, init_hwpmc, NULL);
-

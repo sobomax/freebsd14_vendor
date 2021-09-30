@@ -24,14 +24,14 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 039813c8f3ee0885bbe23aea33542d7122cd0067 $
+# $FreeBSD: 54bab2a60dfb6d64c29dd55df766ede29cde037e $
 #
 
 # PROVIDE: growfs
 # BEFORE: sysctl
 # KEYWORD: firstboot
 
-# This allows us to distribute a image
+# This allows us to distribute an image
 # and have it work on essentially any size drive.
 #
 # TODO: Figure out where this should really be ordered.

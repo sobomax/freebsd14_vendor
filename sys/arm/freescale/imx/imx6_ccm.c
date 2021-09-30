@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94c0420e6737be126c4579d8f0530fd6ae25fb69 $");
+__FBSDID("$FreeBSD: 5bdb71caa4bdf85cdf31ef1f330b1db7a5d002b4 $");
 
 /*
  * Clocks and power control driver for Freescale i.MX6 family of SoCs.
@@ -518,4 +518,3 @@ static devclass_t ccm_devclass;
 
 EARLY_DRIVER_MODULE(ccm, simplebus, ccm_driver, ccm_devclass, 0, 0, 
     BUS_PASS_CPU + BUS_PASS_ORDER_EARLY);
-

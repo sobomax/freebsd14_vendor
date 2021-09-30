@@ -25,7 +25,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1073e50242e7577a3e0ba5f7dd0b50a72bb92287 $
+ * $FreeBSD: abc5143575312e2d264c9387c3e00d78f6b4d056 $
  */
 
 #ifndef	_POWERPC_POWERMAC_POWERMAC_NVRAMVAR_H_
@@ -49,6 +49,7 @@
 
 struct powermac_nvram_softc {
 	device_t		sc_dev;
+	struct sx		sc_lock;
 	phandle_t		sc_node;
 	vm_offset_t		sc_bank;
 	vm_offset_t		sc_bank0;

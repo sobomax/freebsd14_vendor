@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: beb3b9115aac98b2daecf52a00833b2524cad534 $");
+__FBSDID("$FreeBSD: 8e384105ce143de5ec636b4c57a9fb0867a66ecb $");
 
 /*
  * Kernel interface tracking API.
@@ -50,7 +50,6 @@ __FBSDID("$FreeBSD: beb3b9115aac98b2daecf52a00833b2524cad534 $");
 #include <sys/eventhandler.h>
 #include <net/if.h>
 #include <net/if_var.h>
-#include <net/pfil.h>
 #include <net/vnet.h>
 
 #include <netinet/in.h>
@@ -303,7 +302,6 @@ ipfw_iface_ref(struct ip_fw_chain *ch, char *name,
 
 	ii = CHAIN_TO_II(ch);
 	if (ii == NULL) {
-
 		/*
 		 * First request to subsystem.
 		 * Let's perform init.
@@ -376,7 +374,7 @@ ipfw_iface_add_notify(struct ip_fw_chain *ch, struct ipfw_ifc *ic)
 	IPFW_WLOCK_ASSERT(ch);
 
 	iif = ic->iface;
-	
+
 	TAILQ_INSERT_TAIL(&iif->consumers, ic, next);
 	if (iif->resolved != 0)
 		ic->cb(ch, ic->cbdata, iif->ifindex);
@@ -537,4 +535,3 @@ list_ifaces(struct ip_fw_chain *ch, ip_fw3_opheader *op3,
 
 	return (0);
 }
-

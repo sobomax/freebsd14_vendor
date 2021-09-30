@@ -1,4 +1,4 @@
-# $FreeBSD: ebfb71c1699b5b39b827bebd877457b3c41f2e3c $
+# $FreeBSD: 980faafc6b6c6db8380e4e32a7623d7c52454a28 $
 
 _BRANCH!=	${MAKE} -C ${SRCTOP}/release -V BRANCH
 BRANCH?=	${_BRANCH}
@@ -25,6 +25,6 @@ MAN=	pkg.7
 
 CFLAGS+=-I${SRCTOP}/contrib/libucl/include
 .PATH:	${SRCTOP}/contrib/libucl/include
-LIBADD=	archive fetch ucl sbuf crypto ssl
+LIBADD=	archive fetch ucl sbuf crypto ssl util
 
 .include <bsd.prog.mk>

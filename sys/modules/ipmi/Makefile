@@ -1,4 +1,4 @@
-# $FreeBSD: 5a730ef7483030b67d95a9bd1cf906b210069dd9 $
+# $FreeBSD: 733ac6f302222e8607dd9cd915158753dc0d0d20 $
 
 .PATH: ${SRCTOP}/sys/dev/ipmi
 
@@ -7,15 +7,23 @@
 KMOD=	ipmi
 SRCS=	ipmi.c
 SRCS+=	bus_if.h device_if.h
-.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-SRCS+=	ipmi_kcs.c ipmi_smic.c ipmi_smbios.c ipmi_ssif.c
-SRCS+=	ipmi_acpi.c ipmi_isa.c ipmi_pci.c ipmi_smbus.c
+
+.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64" || \
+    ${MACHINE_CPUARCH} == "aarch64"
+SRCS+=	ipmi_kcs.c ipmi_smic.c
+SRCS+=	ipmi_acpi.c
 SRCS+=	opt_acpi.h
-SRCS+=	acpi_if.h isa_if.h pci_if.h smbus_if.h
+SRCS+=	acpi_if.h
+.endif
+
+.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
+SRCS+=	ipmi_smbios.c ipmi_ssif.c
+SRCS+=	ipmi_isa.c ipmi_pci.c ipmi_smbus.c
+SRCS+=	isa_if.h pci_if.h smbus_if.h
 
 SUBDIR+= ipmi_linux
 
-.elif ${MACHINE_ARCH} == "powerpc64"
+.elif ${MACHINE_ARCH:Mpowerpc64*} != ""
 SRCS+=	ipmi_opal.c ofw_bus_if.h
 .endif
 

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0bce5588fd2d15af9c193a9872b1ee18bafd38b7 $
+ * $FreeBSD: 50e70e9a9e5ca2b693761d16de973bb175e70117 $
  */
 
 extern "C" {
@@ -112,7 +112,7 @@ TEST_F(ReleaseDir, o_exec)
 	expect_releasedir(ino, ReturnErrno(0));
 	
 	fd = open(FULLPATH, O_EXEC | O_DIRECTORY);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 
 	ASSERT_EQ(0, close(fd)) << strerror(errno);
 }

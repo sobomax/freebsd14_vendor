@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d53a2503bbead06e93f1eb8955eb16043dfa70bf $
+ * $FreeBSD: 9a1f23b2024545bafaa4992d89635686fc27c468 $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -54,7 +54,7 @@
 #endif
 
 #define	pmap_page_get_memattr(m)	((m)->md.pv_memattr)
-#define	pmap_page_is_write_mapped(m)	(((m)->aflags & PGA_WRITEABLE) != 0)
+#define	pmap_page_is_write_mapped(m)	(((m)->a.flags & PGA_WRITEABLE) != 0)
 void pmap_page_set_memattr(vm_page_t m, vm_memattr_t ma);
 
 /*
@@ -127,9 +127,6 @@ extern struct pmap	kernel_pmap_store;
 #define	PMAP_TRYLOCK(pmap)	mtx_trylock(&(pmap)->pm_mtx)
 #define	PMAP_UNLOCK(pmap)	mtx_unlock(&(pmap)->pm_mtx)
 
-#define	PHYS_AVAIL_SIZE	10
-extern vm_paddr_t phys_avail[];
-extern vm_paddr_t dump_avail[];
 extern vm_offset_t virtual_avail;
 extern vm_offset_t virtual_end;
 

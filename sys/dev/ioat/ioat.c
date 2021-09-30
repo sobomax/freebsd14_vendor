@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1a2bab49bfc0ad7e3a8ba464581afa8cdbed786 $");
+__FBSDID("$FreeBSD: 7e6a33a4285bccaa2282488dcee6a07e3fa6344a $");
 
 #include "opt_ddb.h"
 
@@ -38,6 +38,7 @@ __FBSDID("$FreeBSD: f1a2bab49bfc0ad7e3a8ba464581afa8cdbed786 $");
 #include <sys/fail.h>
 #include <sys/ioccom.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
@@ -113,7 +114,8 @@ static void ioat_drain_locked(struct ioat_softc *);
 } while (0)
 
 MALLOC_DEFINE(M_IOAT, "ioat", "ioat driver memory allocations");
-SYSCTL_NODE(_hw, OID_AUTO, ioat, CTLFLAG_RD, 0, "ioat node");
+SYSCTL_NODE(_hw, OID_AUTO, ioat, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "ioat node");
 
 static int g_force_legacy_interrupts;
 SYSCTL_INT(_hw_ioat, OID_AUTO, force_legacy_interrupts, CTLFLAG_RDTUN,
@@ -1576,7 +1578,7 @@ ioat_free_ring(struct ioat_softc *ioat, uint32_t size,
     struct ioat_descriptor *ring)
 {
 
-	free_domain(ring, M_IOAT);
+	free(ring, M_IOAT);
 }
 
 static struct ioat_descriptor *
@@ -1931,8 +1933,8 @@ ioat_setup_sysctl(device_t device)
 	    &ioat->intrdelay_max, 0,
 	    "Maximum configurable INTRDELAY on this channel (microseconds)");
 
-	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "state", CTLFLAG_RD, NULL,
-	    "IOAT channel internal state");
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "state",
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "IOAT channel internal state");
 	state = SYSCTL_CHILDREN(tmp);
 
 	SYSCTL_ADD_UINT(ctx, state, OID_AUTO, "ring_size_order", CTLFLAG_RD,
@@ -1950,47 +1952,48 @@ ioat_setup_sysctl(device_t device)
 	    "submitter processing");
 
 	SYSCTL_ADD_PROC(ctx, state, OID_AUTO, "chansts",
-	    CTLTYPE_STRING | CTLFLAG_RD, ioat, 0, sysctl_handle_chansts, "A",
-	    "String of the channel status");
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, ioat, 0,
+	    sysctl_handle_chansts, "A", "String of the channel status");
 
 	SYSCTL_ADD_U16(ctx, state, OID_AUTO, "intrdelay", CTLFLAG_RD,
 	    &ioat->cached_intrdelay, 0,
 	    "Current INTRDELAY on this channel (cached, microseconds)");
 
-	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "hammer", CTLFLAG_RD, NULL,
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "hammer",
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
 	    "Big hammers (mostly for testing)");
 	hammer = SYSCTL_CHILDREN(tmp);
 
 	SYSCTL_ADD_PROC(ctx, hammer, OID_AUTO, "force_hw_reset",
-	    CTLTYPE_INT | CTLFLAG_RW, ioat, 0, sysctl_handle_reset, "I",
-	    "Set to non-zero to reset the hardware");
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, ioat, 0,
+	    sysctl_handle_reset, "I", "Set to non-zero to reset the hardware");
 
-	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "stats", CTLFLAG_RD, NULL,
-	    "IOAT channel statistics");
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "stats",
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "IOAT channel statistics");
 	statpar = SYSCTL_CHILDREN(tmp);
 
-	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "interrupts", CTLFLAG_RW,
-	    &ioat->stats.interrupts,
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "interrupts",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.interrupts,
 	    "Number of interrupts processed on this channel");
-	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "descriptors", CTLFLAG_RW,
-	    &ioat->stats.descriptors_processed,
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "descriptors",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.descriptors_processed,
 	    "Number of descriptors processed on this channel");
-	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "submitted", CTLFLAG_RW,
-	    &ioat->stats.descriptors_submitted,
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "submitted",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.descriptors_submitted,
 	    "Number of descriptors submitted to this channel");
-	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "errored", CTLFLAG_RW,
-	    &ioat->stats.descriptors_error,
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "errored",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.descriptors_error,
 	    "Number of descriptors failed by channel errors");
-	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "halts", CTLFLAG_RW,
-	    &ioat->stats.channel_halts, 0,
+	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "halts",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.channel_halts, 0,
 	    "Number of times the channel has halted");
-	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "last_halt_chanerr", CTLFLAG_RW,
-	    &ioat->stats.last_halt_chanerr, 0,
+	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "last_halt_chanerr",
+	    CTLFLAG_RW | CTLFLAG_STATS, &ioat->stats.last_halt_chanerr, 0,
 	    "The raw CHANERR when the channel was last halted");
 
 	SYSCTL_ADD_PROC(ctx, statpar, OID_AUTO, "desc_per_interrupt",
-	    CTLTYPE_STRING | CTLFLAG_RD, ioat, 0, sysctl_handle_dpi, "A",
-	    "Descriptors per interrupt");
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, ioat, 0,
+	    sysctl_handle_dpi, "A", "Descriptors per interrupt");
 }
 
 static void

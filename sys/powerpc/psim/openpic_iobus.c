@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c248b45ca92e791e5a9f648d5d4bd282b35e3b2 $");
+__FBSDID("$FreeBSD: 85f2a34b2e0b7d7ce6743688eda9faef6f0c3d34 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,6 @@ static device_method_t  openpic_iobus_methods[] = {
 	DEVMETHOD(pic_ipi,		openpic_ipi),
 	DEVMETHOD(pic_mask,		openpic_mask),
 	DEVMETHOD(pic_unmask,		openpic_unmask),
-
 	{ 0, 0 }
 };
 

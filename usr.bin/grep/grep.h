@@ -1,6 +1,6 @@
 /*	$NetBSD: grep.h,v 1.5 2011/02/27 17:33:37 joerg Exp $	*/
 /*	$OpenBSD: grep.h,v 1.15 2010/04/05 03:03:55 tedu Exp $	*/
-/*	$FreeBSD: 6d1e87ae4d7cfd11914d7fb8898876abf3cad962 $	*/
+/*	$FreeBSD: 62e82c7f56b621f6eaa438e9e576f90184289acd $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -149,6 +149,7 @@ char	*grep_strdup(const char *str);
 void	 grep_printline(struct str *line, int sep);
 
 /* queue.c */
+void	 initqueue(void);
 bool	 enqueue(struct str *x);
 void	 printqueue(void);
 void	 clearqueue(void);

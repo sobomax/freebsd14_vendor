@@ -33,8 +33,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: 7421b4734d78e5cd1d38f6cde5142a84d4621449 $
+ * $FreeBSD: b8fc3afc39efe4e82776237d1953199a91d5339d $
  */
+
+#include <sys/_eventhandler.h>
 
 typedef void (*dcons_poll_fn)(void *, int);
 EVENTHANDLER_DECLARE(dcons_poll, dcons_poll_fn);

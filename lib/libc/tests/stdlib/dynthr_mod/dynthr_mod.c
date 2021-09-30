@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c455808f6b928bcd5216d0823d4a500f99a56f06 $");
+__FBSDID("$FreeBSD: 4f5622f47a8187579625f3d45e6f8d0883cffb8a $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,10 +41,12 @@ __FBSDID("$FreeBSD: c455808f6b928bcd5216d0823d4a500f99a56f06 $");
 #include <unistd.h>
 #include <pthread.h>
 
+void mod_main(int op);
+
 static pthread_t thr;
 
 static void *
-mod_thread(void *ptr)
+mod_thread(void *ptr __unused)
 {
 	char *volatile dummy;
 

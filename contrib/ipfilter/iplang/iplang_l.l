@@ -1,4 +1,4 @@
-/*	$FreeBSD: 0002db151c815cd1f9b9307be355470cc6e0d387 $	*/
+/*	$FreeBSD: e66867e2a455d44985f8e76b69b1813990a433ea $	*/
 
 %{
 /*
@@ -21,11 +21,7 @@
 #include "ipf.h"
 
 #ifndef	__P
-# ifdef __STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 
 extern int opts;

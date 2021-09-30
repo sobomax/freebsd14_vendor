@@ -43,7 +43,7 @@
  * Author: Ken Merry <ken@FreeBSD.org>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbb131b6e2921117afc546137a36efb29175adc6 $");
+__FBSDID("$FreeBSD: 92fee127c233d8da166b9f017efdfa265a64b5e1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -102,9 +102,11 @@ __FBSDID("$FreeBSD: fbb131b6e2921117afc546137a36efb29175adc6 $");
  */
 #define	CTLBLK_HALF_IO_SIZE	(512 * 1024)
 #define	CTLBLK_MAX_IO_SIZE	(CTLBLK_HALF_IO_SIZE * 2)
-#define	CTLBLK_MAX_SEG		MAXPHYS
-#define	CTLBLK_HALF_SEGS	MAX(CTLBLK_HALF_IO_SIZE / CTLBLK_MAX_SEG, 1)
+#define	CTLBLK_MIN_SEG		(128 * 1024)
+#define	CTLBLK_MAX_SEG		MIN(CTLBLK_HALF_IO_SIZE, maxphys)
+#define	CTLBLK_HALF_SEGS	MAX(CTLBLK_HALF_IO_SIZE / CTLBLK_MIN_SEG, 1)
 #define	CTLBLK_MAX_SEGS		(CTLBLK_HALF_SEGS * 2)
+#define	CTLBLK_NUM_SEGS		(CTLBLK_MAX_IO_SIZE / CTLBLK_MAX_SEG)
 
 #ifdef CTLBLK_DEBUG
 #define DPRINTF(fmt, args...) \
@@ -189,7 +191,8 @@ struct ctl_be_block_softc {
 	int				 num_luns;
 	SLIST_HEAD(, ctl_be_block_lun)	 lun_list;
 	uma_zone_t			 beio_zone;
-	uma_zone_t			 buf_zone;
+	uma_zone_t			 bufmin_zone;
+	uma_zone_t			 bufmax_zone;
 };
 
 static struct ctl_be_block_softc backend_block_softc;
@@ -201,6 +204,7 @@ struct ctl_be_block_io {
 	union ctl_io			*io;
 	struct ctl_sg_entry		sg_segs[CTLBLK_MAX_SEGS];
 	struct iovec			xiovecs[CTLBLK_MAX_SEGS];
+	int				refcnt;
 	int				bio_cmd;
 	int				two_sglists;
 	int				num_segs;
@@ -223,7 +227,7 @@ struct ctl_be_block_io {
 extern struct ctl_softc *control_softc;
 
 static int cbb_num_threads = 14;
-SYSCTL_NODE(_kern_cam_ctl, OID_AUTO, block, CTLFLAG_RD, 0,
+SYSCTL_NODE(_kern_cam_ctl, OID_AUTO, block, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
 	    "CAM Target Layer Block Backend");
 SYSCTL_INT(_kern_cam_ctl_block, OID_AUTO, num_threads, CTLFLAG_RWTUN,
            &cbb_num_threads, 0, "Number of threads per backing file");
@@ -298,6 +302,34 @@ static struct ctl_backend_driver ctl_be_block_driver =
 MALLOC_DEFINE(M_CTLBLK, "ctlblock", "Memory used for CTL block backend");
 CTL_BACKEND_DECLARE(cbb, ctl_be_block_driver);
 
+static void
+ctl_alloc_seg(struct ctl_be_block_softc *softc, struct ctl_sg_entry *sg,
+    size_t len)
+{
+
+	if (len <= CTLBLK_MIN_SEG) {
+		sg->addr = uma_zalloc(softc->bufmin_zone, M_WAITOK);
+	} else {
+		KASSERT(len <= CTLBLK_MAX_SEG,
+		    ("Too large alloc %zu > %lu", len, CTLBLK_MAX_SEG));
+		sg->addr = uma_zalloc(softc->bufmax_zone, M_WAITOK);
+	}
+	sg->len = len;
+}
+
+static void
+ctl_free_seg(struct ctl_be_block_softc *softc, struct ctl_sg_entry *sg)
+{
+
+	if (sg->len <= CTLBLK_MIN_SEG) {
+		uma_zfree(softc->bufmin_zone, sg->addr);
+	} else {
+		KASSERT(sg->len <= CTLBLK_MAX_SEG,
+		    ("Too large free %zu > %lu", sg->len, CTLBLK_MAX_SEG));
+		uma_zfree(softc->bufmax_zone, sg->addr);
+	}
+}
+
 static struct ctl_be_block_io *
 ctl_alloc_beio(struct ctl_be_block_softc *softc)
 {
@@ -305,26 +337,43 @@ ctl_alloc_beio(struct ctl_be_block_softc *softc)
 
 	beio = uma_zalloc(softc->beio_zone, M_WAITOK | M_ZERO);
 	beio->softc = softc;
+	beio->refcnt = 1;
 	return (beio);
 }
 
 static void
-ctl_free_beio(struct ctl_be_block_io *beio)
+ctl_real_free_beio(struct ctl_be_block_io *beio)
 {
 	struct ctl_be_block_softc *softc = beio->softc;
 	int i;
 
 	for (i = 0; i < beio->num_segs; i++) {
-		uma_zfree(softc->buf_zone, beio->sg_segs[i].addr);
+		ctl_free_seg(softc, &beio->sg_segs[i]);
 
 		/* For compare we had two equal S/G lists. */
 		if (beio->two_sglists) {
-			uma_zfree(softc->buf_zone,
-			    beio->sg_segs[i + CTLBLK_HALF_SEGS].addr);
+			ctl_free_seg(softc,
+			    &beio->sg_segs[i + CTLBLK_HALF_SEGS]);
 		}
 	}
 
 	uma_zfree(softc->beio_zone, beio);
+}
+
+static void
+ctl_refcnt_beio(void *arg, int diff)
+{
+	struct ctl_be_block_io *beio = arg;
+
+	if (atomic_fetchadd_int(&beio->refcnt, diff) + diff == 0)
+		ctl_real_free_beio(beio);
+}
+
+static void
+ctl_free_beio(struct ctl_be_block_io *beio)
+{
+
+	ctl_refcnt_beio(beio, -1);
 }
 
 static void
@@ -567,9 +616,7 @@ ctl_be_block_flush_file(struct ctl_be_block_lun *be_lun,
 	DPRINTF("entered\n");
 
 	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
 	devstat_start_transaction(beio->lun->disk_stats, &beio->ds_t0);
-	mtx_unlock(&be_lun->io_lock);
 
 	(void) vn_start_write(be_lun->vn, &mountpoint, V_WAIT);
 
@@ -581,7 +628,7 @@ ctl_be_block_flush_file(struct ctl_be_block_lun *be_lun,
 	vn_lock(be_lun->vn, lock_flags | LK_RETRY);
 	error = VOP_FSYNC(be_lun->vn, beio->io_arg ? MNT_NOWAIT : MNT_WAIT,
 	    curthread);
-	VOP_UNLOCK(be_lun->vn, 0);
+	VOP_UNLOCK(be_lun->vn);
 
 	vn_finished_write(mountpoint);
 
@@ -650,9 +697,7 @@ ctl_be_block_dispatch_file(struct ctl_be_block_lun *be_lun,
 	}
 
 	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
 	devstat_start_transaction(beio->lun->disk_stats, &beio->ds_t0);
-	mtx_unlock(&be_lun->io_lock);
 
 	if (beio->bio_cmd == BIO_READ) {
 		vn_lock(be_lun->vn, LK_SHARED | LK_RETRY);
@@ -676,7 +721,7 @@ ctl_be_block_dispatch_file(struct ctl_be_block_lun *be_lun,
 		 */
 		error = VOP_READ(be_lun->vn, &xuio, flags, file_data->cred);
 
-		VOP_UNLOCK(be_lun->vn, 0);
+		VOP_UNLOCK(be_lun->vn);
 		SDT_PROBE0(cbb, , read, file_done);
 		if (error == 0 && xuio.uio_resid > 0) {
 			/*
@@ -723,7 +768,7 @@ ctl_be_block_dispatch_file(struct ctl_be_block_lun *be_lun,
 		 * cache before returning.
 		 */
 		error = VOP_WRITE(be_lun->vn, &xuio, flags, file_data->cred);
-		VOP_UNLOCK(be_lun->vn, 0);
+		VOP_UNLOCK(be_lun->vn);
 
 		vn_finished_write(mountpoint);
 		SDT_PROBE0(cbb, , write, file_done);
@@ -801,7 +846,7 @@ ctl_be_block_gls_file(struct ctl_be_block_lun *be_lun,
 			off = be_lun->size_bytes;
 		}
 	}
-	VOP_UNLOCK(be_lun->vn, 0);
+	VOP_UNLOCK(be_lun->vn);
 
 	data = (struct scsi_get_lba_status_data *)io->scsiio.kern_data_ptr;
 	scsi_u64to8b(lbalen->lba, data->descr[0].addr);
@@ -830,13 +875,13 @@ ctl_be_block_getattr_file(struct ctl_be_block_lun *be_lun, const char *attrname)
 			val = vattr.va_bytes / be_lun->cbe_lun.blocksize;
 	}
 	if (strcmp(attrname, "blocksavail") == 0 &&
-	    (be_lun->vn->v_iflag & VI_DOOMED) == 0) {
+	    !VN_IS_DOOMED(be_lun->vn)) {
 		error = VFS_STATFS(be_lun->vn->v_mount, &statfs);
 		if (error == 0)
 			val = statfs.f_bavail * statfs.f_bsize /
 			    be_lun->cbe_lun.blocksize;
 	}
-	VOP_UNLOCK(be_lun->vn, 0);
+	VOP_UNLOCK(be_lun->vn);
 	return (val);
 }
 
@@ -881,9 +926,7 @@ ctl_be_block_dispatch_zvol(struct ctl_be_block_lun *be_lun,
 	}
 
 	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
 	devstat_start_transaction(beio->lun->disk_stats, &beio->ds_t0);
-	mtx_unlock(&be_lun->io_lock);
 
 	csw = devvn_refthread(be_lun->vn, &dev, &ref);
 	if (csw) {
@@ -1021,9 +1064,7 @@ ctl_be_block_flush_dev(struct ctl_be_block_lun *be_lun,
 	beio->send_complete = 1;
 
 	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
 	devstat_start_transaction(be_lun->disk_stats, &beio->ds_t0);
-	mtx_unlock(&be_lun->io_lock);
 
 	csw = devvn_refthread(be_lun->vn, &dev, &ref);
 	if (csw) {
@@ -1094,9 +1135,7 @@ ctl_be_block_unmap_dev(struct ctl_be_block_lun *be_lun,
 	DPRINTF("entered\n");
 
 	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
 	devstat_start_transaction(be_lun->disk_stats, &beio->ds_t0);
-	mtx_unlock(&be_lun->io_lock);
 
 	if (beio->io_offset == -1) {
 		beio->io_len = 0;
@@ -1132,8 +1171,7 @@ ctl_be_block_dispatch_dev(struct ctl_be_block_lun *be_lun,
 
 	/*
 	 * We have to limit our I/O size to the maximum supported by the
-	 * backend device.  Hopefully it is MAXPHYS.  If the driver doesn't
-	 * set it properly, use DFLTPHYS.
+	 * backend device.
 	 */
 	if (csw) {
 		max_iosize = dev->si_iosize_max;
@@ -1173,11 +1211,9 @@ ctl_be_block_dispatch_dev(struct ctl_be_block_lun *be_lun,
 			beio->num_bios_sent++;
 		}
 	}
-	binuptime(&beio->ds_t0);
-	mtx_lock(&be_lun->io_lock);
-	devstat_start_transaction(be_lun->disk_stats, &beio->ds_t0);
 	beio->send_complete = 1;
-	mtx_unlock(&be_lun->io_lock);
+	binuptime(&beio->ds_t0);
+	devstat_start_transaction(be_lun->disk_stats, &beio->ds_t0);
 
 	/*
 	 * Fire off all allocated requests!
@@ -1310,8 +1346,7 @@ ctl_be_block_cw_dispatch_ws(struct ctl_be_block_lun *be_lun,
 	else
 		pbo = 0;
 	len_left = (uint64_t)lbalen->len * cbe_lun->blocksize;
-	for (i = 0, lba = 0; i < CTLBLK_MAX_SEGS && len_left > 0; i++) {
-
+	for (i = 0, lba = 0; i < CTLBLK_NUM_SEGS && len_left > 0; i++) {
 		/*
 		 * Setup the S/G entry for this chunk.
 		 */
@@ -1325,8 +1360,7 @@ ctl_be_block_cw_dispatch_ws(struct ctl_be_block_lun *be_lun,
 				seglen -= seglen % cbe_lun->blocksize;
 		} else
 			seglen -= seglen % cbe_lun->blocksize;
-		beio->sg_segs[i].len = seglen;
-		beio->sg_segs[i].addr = uma_zalloc(softc->buf_zone, M_WAITOK);
+		ctl_alloc_seg(softc, &beio->sg_segs[i], seglen);
 
 		DPRINTF("segment %d addr %p len %zd\n", i,
 			beio->sg_segs[i].addr, beio->sg_segs[i].len);
@@ -1598,18 +1632,17 @@ ctl_be_block_dispatch(struct ctl_be_block_lun *be_lun,
 		/*
 		 * Setup the S/G entry for this chunk.
 		 */
-		beio->sg_segs[i].len = min(CTLBLK_MAX_SEG, len_left);
-		beio->sg_segs[i].addr = uma_zalloc(softc->buf_zone, M_WAITOK);
+		ctl_alloc_seg(softc, &beio->sg_segs[i],
+		    MIN(CTLBLK_MAX_SEG, len_left));
 
 		DPRINTF("segment %d addr %p len %zd\n", i,
 			beio->sg_segs[i].addr, beio->sg_segs[i].len);
 
 		/* Set up second segment for compare operation. */
 		if (beio->two_sglists) {
-			beio->sg_segs[i + CTLBLK_HALF_SEGS].len =
-			    beio->sg_segs[i].len;
-			beio->sg_segs[i + CTLBLK_HALF_SEGS].addr =
-			    uma_zalloc(softc->buf_zone, M_WAITOK);
+			ctl_alloc_seg(softc,
+			    &beio->sg_segs[i + CTLBLK_HALF_SEGS],
+			    beio->sg_segs[i].len);
 		}
 
 		beio->num_segs++;
@@ -1625,6 +1658,8 @@ ctl_be_block_dispatch(struct ctl_be_block_lun *be_lun,
 		io->scsiio.kern_data_ptr = (uint8_t *)beio->sg_segs;
 	io->scsiio.kern_data_len = beio->io_len;
 	io->scsiio.kern_sg_entries = beio->num_segs;
+	io->scsiio.kern_data_ref = ctl_refcnt_beio;
+	io->scsiio.kern_data_arg = beio;
 	io->io_hdr.flags |= CTL_FLAG_ALLOCATED;
 
 	/*
@@ -1670,7 +1705,7 @@ ctl_be_block_worker(void *context, int pending)
 			if (cbe_lun->flags & CTL_LUN_FLAG_NO_MEDIA) {
 				ctl_set_busy(&io->scsiio);
 				ctl_complete_beio(beio);
-				return;
+				continue;
 			}
 			be_lun->dispatch(be_lun, beio);
 			continue;
@@ -1684,7 +1719,7 @@ ctl_be_block_worker(void *context, int pending)
 			if (cbe_lun->flags & CTL_LUN_FLAG_NO_MEDIA) {
 				ctl_set_busy(&io->scsiio);
 				ctl_config_write_done(io);
-				return;
+				continue;
 			}
 			ctl_be_block_cw_dispatch(be_lun, io);
 			continue;
@@ -1698,7 +1733,7 @@ ctl_be_block_worker(void *context, int pending)
 			if (cbe_lun->flags & CTL_LUN_FLAG_NO_MEDIA) {
 				ctl_set_busy(&io->scsiio);
 				ctl_config_read_done(io);
-				return;
+				continue;
 			}
 			ctl_be_block_cr_dispatch(be_lun, io);
 			continue;
@@ -1712,7 +1747,7 @@ ctl_be_block_worker(void *context, int pending)
 			if (cbe_lun->flags & CTL_LUN_FLAG_NO_MEDIA) {
 				ctl_set_busy(&io->scsiio);
 				ctl_data_submit_done(io);
-				return;
+				continue;
 			}
 			ctl_be_block_dispatch(be_lun, io);
 			continue;
@@ -1925,8 +1960,8 @@ ctl_be_block_open_dev(struct ctl_be_block_lun *be_lun, struct ctl_lun_req *req)
 		maxio = dev->si_iosize_max;
 		if (maxio <= 0)
 			maxio = DFLTPHYS;
-		if (maxio > CTLBLK_MAX_IO_SIZE)
-			maxio = CTLBLK_MAX_IO_SIZE;
+		if (maxio > CTLBLK_MAX_SEG)
+			maxio = CTLBLK_MAX_SEG;
 	}
 	be_lun->lun_flush = ctl_be_block_flush_dev;
 	be_lun->getattr = ctl_be_block_getattr_dev;
@@ -2176,7 +2211,7 @@ again:
 	be_lun->vn = nd.ni_vp;
 
 	/* We only support disks and files. */
-	if (vn_isdisk(be_lun->vn, &error)) {
+	if (vn_isdisk_error(be_lun->vn, &error)) {
 		error = ctl_be_block_open_dev(be_lun, req);
 	} else if (be_lun->vn->v_type == VREG) {
 		error = ctl_be_block_open_file(be_lun, req);
@@ -2185,7 +2220,7 @@ again:
 		snprintf(req->error_str, sizeof(req->error_str),
 			 "%s is not a disk or plain file", be_lun->dev_path);
 	}
-	VOP_UNLOCK(be_lun->vn, 0);
+	VOP_UNLOCK(be_lun->vn);
 
 	if (error != 0)
 		ctl_be_block_close(be_lun);
@@ -2539,12 +2574,12 @@ ctl_be_block_modify(struct ctl_be_block_softc *softc, struct ctl_lun_req *req)
 	    control_softc->ha_mode == CTL_HA_MODE_SER_ONLY) {
 		if (be_lun->vn == NULL)
 			error = ctl_be_block_open(be_lun, req);
-		else if (vn_isdisk(be_lun->vn, &error))
+		else if (vn_isdisk_error(be_lun->vn, &error))
 			error = ctl_be_block_open_dev(be_lun, req);
 		else if (be_lun->vn->v_type == VREG) {
 			vn_lock(be_lun->vn, LK_SHARED | LK_RETRY);
 			error = ctl_be_block_open_file(be_lun, req);
-			VOP_UNLOCK(be_lun->vn, 0);
+			VOP_UNLOCK(be_lun->vn);
 		} else
 			error = EINVAL;
 		if ((cbe_lun->flags & CTL_LUN_FLAG_NO_MEDIA) &&
@@ -2769,12 +2804,14 @@ ctl_be_block_init(void)
 	mtx_init(&softc->lock, "ctlblock", NULL, MTX_DEF);
 	softc->beio_zone = uma_zcreate("beio", sizeof(struct ctl_be_block_io),
 	    NULL, NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
-	softc->buf_zone = uma_zcreate("ctlblock", CTLBLK_MAX_SEG,
+	softc->bufmin_zone = uma_zcreate("ctlblockmin", CTLBLK_MIN_SEG,
 	    NULL, NULL, NULL, NULL, /*align*/ 0, /*flags*/0);
+	if (CTLBLK_MIN_SEG < CTLBLK_MAX_SEG)
+		softc->bufmax_zone = uma_zcreate("ctlblockmax", CTLBLK_MAX_SEG,
+		    NULL, NULL, NULL, NULL, /*align*/ 0, /*flags*/0);
 	SLIST_INIT(&softc->lun_list);
 	return (0);
 }
-
 
 static int
 ctl_be_block_shutdown(void)
@@ -2796,7 +2833,9 @@ ctl_be_block_shutdown(void)
 		mtx_lock(&softc->lock);
 	}
 	mtx_unlock(&softc->lock);
-	uma_zdestroy(softc->buf_zone);
+	uma_zdestroy(softc->bufmin_zone);
+	if (CTLBLK_MIN_SEG < CTLBLK_MAX_SEG)
+		uma_zdestroy(softc->bufmax_zone);
 	uma_zdestroy(softc->beio_zone);
 	mtx_destroy(&softc->lock);
 	sx_destroy(&softc->modify_lock);

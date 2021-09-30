@@ -25,11 +25,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efe16fbb1aa9c058d9ea2a3502efe94274b4771e $");
+__FBSDID("$FreeBSD: 7fd73f0a7f4529cce35dcac532b88e9f23a5936a $");
 
 #include <sys/param.h>
 #include <sys/module.h>
 
 MODULE_VERSION(linuxkpi, 1);
+MODULE_DEPEND(linuxkpi, firmware, 1, 1, 1);
+MODULE_DEPEND(linuxkpi, backlight, 1, 1, 1);
 MODULE_DEPEND(linuxkpi, pci, 1, 1, 1);
-

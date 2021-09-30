@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c6fa42dbe2c42701ec75cac6ebf9736fa7bd6f30 $");
+__FBSDID("$FreeBSD: ad23d65b6b6ff184416996d3387df8846e418551 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -107,7 +107,6 @@ static struct {
 	    CPU_CLASS_KRAIT},
 };
 
-
 static void
 print_v5_cache(void)
 {
@@ -167,7 +166,6 @@ print_v5_cache(void)
 		    (CPU_CT_xSIZE_ASSOC(dsize) - 1);
 		}
 	pdcache_size = multiplier << (CPU_CT_xSIZE_SIZE(dsize) + 8);
-
 
 	/* Print cache info. */
 	if (picache_line_size == 0 && pdcache_line_size == 0)
@@ -272,7 +270,6 @@ add_cap(char *cap)
 		hw_buf_idx += sprintf(hw_buf + hw_buf_idx, ", ");
 	hw_buf_newline = false;
 
-
 	hw_buf_idx += sprintf(hw_buf + hw_buf_idx, "%s", cap);
 }
 
@@ -298,7 +295,6 @@ identify_arm_cpu(void)
 			printf("CPU: %s\n", cpu_model);
 			break;
 		}
-
 	}
 	if (i >= nitems(cpu_names))
 		printf("unknown CPU (ID = 0x%x)\n", cpuinfo.midr);

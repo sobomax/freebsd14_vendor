@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e8005eb17adc3ddd4223d2588b0a21f0b5ffba9 $");
+__FBSDID("$FreeBSD: 8d59c6ff4de7bdc2f3607cf07eea5d196b2218a7 $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 2e8005eb17adc3ddd4223d2588b0a21f0b5ffba9 $");
 #include <sys/boot.h>
 #include <sys/cons.h>
 #include <sys/kdb.h>
+#include <sys/mutex.h>
 #include <sys/reboot.h>
 
 #ifdef FDT
@@ -47,7 +48,10 @@ __FBSDID("$FreeBSD: 2e8005eb17adc3ddd4223d2588b0a21f0b5ffba9 $");
 #endif
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <net/ethernet.h>
 
@@ -57,7 +61,6 @@ __FBSDID("$FreeBSD: 2e8005eb17adc3ddd4223d2588b0a21f0b5ffba9 $");
 #include <machine/hwfunc.h>
 #include <machine/md_var.h>
 #include <machine/trap.h>
-#include <machine/vmparam.h>
 
 #include <mips/ingenic/jz4780_regs.h>
 #include <mips/ingenic/jz4780_cpuregs.h>
@@ -139,7 +142,6 @@ mips_init(void)
 
 #ifdef FDT
 	if (fdt_get_mem_regions(mr, &mr_cnt, &val) == 0) {
-
 		physmem = realmem = btoc(val);
 
 		KASSERT((phys_avail[0] >= mr[0].mr_start) && \

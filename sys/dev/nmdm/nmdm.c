@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74b5c1203596b94f0dd45be01ccb6620e132f0d1 $");
+__FBSDID("$FreeBSD: 61de05d4a41f3046592d68ab48733dc6159d5e09 $");
 
 /*
  * Pseudo-nulmodem driver
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: 74b5c1203596b94f0dd45be01ccb6620e132f0d1 $");
 #include <sys/proc.h>
 #include <sys/tty.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/fcntl.h>
 #include <sys/poll.h>
 #include <sys/kernel.h>
@@ -194,7 +195,7 @@ nmdm_clone(void *arg, struct ucred *cred, char *name, int nameen,
 	tp = ns->ns_part1.np_tty = tty_alloc_mutex(&nmdm_class, &ns->ns_part1,
 	    &ns->ns_mtx);
 	*end = 'A';
-	error = tty_makedevf(tp, NULL, endc == 'A' ? TTYMK_CLONING : 0,
+	error = tty_makedevf(tp, cred, endc == 'A' ? TTYMK_CLONING : 0,
 	    "%s", name);
 	if (error) {
 		*end = endc;
@@ -206,7 +207,7 @@ nmdm_clone(void *arg, struct ucred *cred, char *name, int nameen,
 	tp = ns->ns_part2.np_tty = tty_alloc_mutex(&nmdm_class, &ns->ns_part2,
 	    &ns->ns_mtx);
 	*end = 'B';
-	error = tty_makedevf(tp, NULL, endc == 'B' ? TTYMK_CLONING : 0,
+	error = tty_makedevf(tp, cred, endc == 'B' ? TTYMK_CLONING : 0,
 	    "%s", name);
 	if (error) {
 		*end = endc;

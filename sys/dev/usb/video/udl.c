@@ -1,5 +1,5 @@
 /*	$OpenBSD: udl.c,v 1.81 2014/12/09 07:05:06 doug Exp $ */
-/*	$FreeBSD: 44fc8fcf2b1f4c623c0bb558909d9e0d0fce2f51 $ */
+/*	$FreeBSD: 892e61ae2da0a6ada4e1bcfc652fbcc62103247c $ */
 
 /*-
  * Copyright (c) 2015 Hans Petter Selasky <hselasky@freebsd.org>
@@ -60,7 +60,8 @@
 #define	USB_DEBUG_VAR udl_debug
 #include <dev/usb/usb_debug.h>
 
-static	SYSCTL_NODE(_hw_usb, OID_AUTO, udl, CTLFLAG_RW, 0, "USB UDL");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, udl, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB UDL");
 
 #ifdef USB_DEBUG
 static int udl_debug = 0;
@@ -784,7 +785,6 @@ udl_select_chip(struct udl_softc *sc, struct usb_attach_arg *uaa)
 
 	if ((uaa->info.idVendor == USB_VENDOR_DISPLAYLINK) &&
 	    (uaa->info.idProduct == USB_PRODUCT_DISPLAYLINK_WSDVI)) {
-
 		/*
 		 * WS Tech DVI is DL120 or DL160. All deviced uses the
 		 * same revision (0.04) so iSerialNumber must be used
@@ -800,7 +800,6 @@ udl_select_chip(struct udl_softc *sc, struct usb_attach_arg *uaa)
 	}
 	if ((uaa->info.idVendor == USB_VENDOR_DISPLAYLINK) &&
 	    (uaa->info.idProduct == USB_PRODUCT_DISPLAYLINK_SWDVI)) {
-
 		/*
 		 * SUNWEIT DVI is DL160, DL125, DL165 or DL195. Major revision
 		 * can be used to differ between DL1x0 and DL1x5. Minor to

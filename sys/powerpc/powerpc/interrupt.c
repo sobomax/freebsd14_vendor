@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cba9661fa33bfc7b08e53b739ba85d8afd4ac87d $
+ * $FreeBSD: 60e650bf1baae42eeaf72eca07fd431b3aae5440 $
  */
 
 /*
@@ -118,9 +118,9 @@ powerpc_interrupt(struct trapframe *framep)
 		critical_enter();
 		KASSERT(pmc_intr != NULL, ("Performance exception, but no handler!"));
 		(*pmc_intr)(framep);
+		critical_exit();
 		if (pmc_hook && (PCPU_GET(curthread)->td_pflags & TDP_CALLCHAIN))
 			pmc_hook(PCPU_GET(curthread), PMC_FN_USER_CALLCHAIN, framep);
-		critical_exit();
 		break;
 #endif
 

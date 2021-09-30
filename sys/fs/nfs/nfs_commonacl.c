@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7fb744417d6a730edd11b961610d327536da28d0 $");
+__FBSDID("$FreeBSD: 99a67edc044dba5d929524106e5b5116121e6597 $");
 
 #include <fs/nfs/nfsport.h>
 
@@ -101,12 +101,12 @@ nfsrv_dissectace(struct nfsrv_descript *nd, struct acl_entry *acep,
 	if (gotid == 0) {
 		if (flag & NFSV4ACE_IDENTIFIERGROUP) {
 			acep->ae_tag = ACL_GROUP;
-			aceerr = nfsv4_strtogid(nd, name, len, &gid, p);
+			aceerr = nfsv4_strtogid(nd, name, len, &gid);
 			if (aceerr == 0)
 				acep->ae_id = (uid_t)gid;
 		} else {
 			acep->ae_tag = ACL_USER;
-			aceerr = nfsv4_strtouid(nd, name, len, &uid, p);
+			aceerr = nfsv4_strtouid(nd, name, len, &uid);
 			if (aceerr == 0)
 				acep->ae_id = uid;
 		}
@@ -422,7 +422,7 @@ nfsrv_buildacl(struct nfsrv_descript *nd, NFSACL_T *aclp, enum vtype type,
 		case ACL_USER:
 			name = namestr;
 			nfsv4_uidtostr(aclp->acl_entry[i].ae_id, &name,
-			    &namelen, p);
+			    &namelen);
 			if (name != namestr)
 				malloced = 1;
 			break;
@@ -430,7 +430,7 @@ nfsrv_buildacl(struct nfsrv_descript *nd, NFSACL_T *aclp, enum vtype type,
 			isgroup = 1;
 			name = namestr;
 			nfsv4_gidtostr((gid_t)aclp->acl_entry[i].ae_id, &name,
-			    &namelen, p);
+			    &namelen);
 			if (name != namestr)
 				malloced = 1;
 			break;

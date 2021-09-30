@@ -1,4 +1,4 @@
-#	$FreeBSD: b4357c2ea652f1a9722c11137978b802bbb06b25 $
+#	$FreeBSD: d8445ded087abba1fe8c8f73fe1e4d256212c6c3 $
 #
 # Copyright (c) 2018		Conrad Meyer <cem@FreeBSD.org>
 # Copyright (c) 2002, 2003	Sam Leffler, Errno Consulting
@@ -27,7 +27,7 @@
 #
 
 PROGS=	cryptocheck cryptotest cryptokeytest cryptostats \
-	ubsecstats hifnstats ipsecstats safestats
+	hifnstats ipsecstats safestats
 MAN=
 BINDIR?=	/usr/local/bin
 
@@ -38,7 +38,6 @@ LIBADD.cryptocheck+=	crypto util
 LIBADD.cryptokeytest+=	crypto
 
 # cryptostats: dump statistics kept by the core crypto code
-# ubsecstats: print statistics kept by the Broadcom driver
 # hifnstats: print statistics kept by the HIFN driver
 # safestats: statistics kept by the SafeNet driver
 # ipsecstats: print statistics kept by fast ipsec

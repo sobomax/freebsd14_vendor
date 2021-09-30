@@ -37,7 +37,7 @@
 
 #ifdef __FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2faa4d3d3618fe233fcb85104db5b86b45ad5433 $");
+__FBSDID("$FreeBSD: f2d947bcc5cd94d5b1df7d1f305cd08643350262 $");
 #endif
 
 #include <sys/param.h>
@@ -65,8 +65,9 @@ __FBSDID("$FreeBSD: 2faa4d3d3618fe233fcb85104db5b86b45ad5433 $");
 static int fwmem_speed = 2, fwmem_debug = 0;
 static struct fw_eui64 fwmem_eui64;
 SYSCTL_DECL(_hw_firewire);
-static SYSCTL_NODE(_hw_firewire, OID_AUTO, fwmem, CTLFLAG_RD, 0,
-	"FireWire Memory Access");
+static SYSCTL_NODE(_hw_firewire, OID_AUTO, fwmem,
+    CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "FireWire Memory Access");
 SYSCTL_UINT(_hw_firewire_fwmem, OID_AUTO, eui64_hi, CTLFLAG_RW,
 	&fwmem_eui64.hi, 0, "Fwmem target EUI64 high");
 SYSCTL_UINT(_hw_firewire_fwmem, OID_AUTO, eui64_lo, CTLFLAG_RW,

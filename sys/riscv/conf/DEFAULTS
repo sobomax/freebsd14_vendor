@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/RISC-V
 #
-# $FreeBSD: 5451decf822d4c8130720514ed58f873021c2779 $
+# $FreeBSD: 94c6bf283c4584e142a1f354fe5a07342b3f528c $
 
 machine		riscv	riscv64
 
@@ -11,3 +11,5 @@ device		mem		# Memory and kernel memory devices
 # Default partitioning schemes
 options 	GEOM_PART_BSD
 options 	GEOM_PART_MBR
+
+options 	NEW_PCIB

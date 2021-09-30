@@ -1,7 +1,6 @@
-# $FreeBSD: f68b6c3a2e2cf3e166cffcdcf8c3f8b734042699 $
+# $FreeBSD: fcb2e40acca1e658c7ee7c5513991344db4ae1ab $
 
 PROG=	rtsocket
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

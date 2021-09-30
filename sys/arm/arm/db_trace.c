@@ -31,10 +31,9 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c2b1ed2d63dfcfbd95cf551d5511a181908250a7 $");
+__FBSDID("$FreeBSD: 195ed0f4e3d94208e8d2135739f6fc0686717d6a $");
 #include <sys/param.h>
 #include <sys/systm.h>
-
 
 #include <sys/proc.h>
 #include <sys/kdb.h>
@@ -102,7 +101,6 @@ db_stack_trace_cmd(struct unwind_state *state)
 					i = 0;
 				} else
 					sep = " ";
-
 			}
 		}
 		db_printf("\n");

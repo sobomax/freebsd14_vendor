@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 68b6a424e5635efd47131d6dcfc06950cab44291 $
+ * $FreeBSD: 781cc782f4153c124b2c9f85773a616fcff4e75c $
  */
 /*
  * Developed by the TrustedBSD Project.
@@ -95,7 +95,7 @@ struct extattr {
  *	content referenced by eap.
  */
 #define	EXTATTR_NEXT(eap) \
-	((struct extattr *)(((u_char *)(eap)) + (eap)->ea_length))
+	((struct extattr *)(__DECONST(char *, (eap)) + (eap)->ea_length))
 #define	EXTATTR_CONTENT(eap) \
 	(void *)(((u_char *)(eap)) + EXTATTR_BASE_LENGTH(eap))
 #define	EXTATTR_CONTENT_SIZE(eap) \
@@ -140,7 +140,7 @@ int	ufs_extattrctl(struct mount *mp, int cmd, struct vnode *filename,
 int	ufs_getextattr(struct vop_getextattr_args *ap);
 int	ufs_deleteextattr(struct vop_deleteextattr_args *ap);
 int	ufs_setextattr(struct vop_setextattr_args *ap);
-void	ufs_extattr_vnode_inactive(struct vnode *vp, struct thread *td);
+void	ufs_extattr_vnode_inactive(struct vnode *vp);
 
 #endif /* !_KERNEL */
 

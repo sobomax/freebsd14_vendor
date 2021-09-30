@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d4a1be18208dd63299815c5b7c16b808999c4cba $
+ * $FreeBSD: 8990a2a5fcb09f0a83a7ffc67e13cebf594d048d $
  */
 
 #ifndef _VATPIC_H_
@@ -35,6 +35,8 @@
 
 #define	IO_ELCR1	0x4d0
 #define	IO_ELCR2	0x4d1
+
+struct vm_snapshot_meta;
 
 struct vatpic *vatpic_init(struct vm *vm);
 void vatpic_cleanup(struct vatpic *vatpic);
@@ -53,5 +55,9 @@ int vatpic_set_irq_trigger(struct vm *vm, int irq, enum vm_intr_trigger trigger)
 
 void vatpic_pending_intr(struct vm *vm, int *vecptr);
 void vatpic_intr_accepted(struct vm *vm, int vector);
+
+#ifdef BHYVE_SNAPSHOT
+int vatpic_snapshot(struct vatpic *vatpic, struct vm_snapshot_meta *meta);
+#endif
 
 #endif	/* _VATPIC_H_ */

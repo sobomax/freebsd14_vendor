@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53a719e01593b4aa3016c2f6353eb7c22b016642 $");
+__FBSDID("$FreeBSD: c49d1e89448886b70eb4054adb70f82c3cf776ff $");
 
 #include "opt_platform.h"
 
@@ -183,7 +182,7 @@ static int
 pwmc_detach(device_t dev)
 {
 	struct pwmc_softc *sc;
- 
+
 	sc = device_get_softc(dev);
 	destroy_dev(sc->cdev);
 

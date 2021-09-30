@@ -1,4 +1,8 @@
-# $FreeBSD: b2b918ebed5b308a130a12332ac71ad18a22be44 $
+# $FreeBSD: 9ee3649071b209b044b95f781ff70f5d6ef316f3 $
 
 S.yes+=		userboot
 S.yes+=		i386
+
+SUBDIR_DEPEND_userboot+=	${INTERP_DEPENDS}
+# These won't get tacked on in an amd64 build
+SUBDIR_DEPEND_i386+=	${LIB32DEPENDS} ${INTERP_DEPENDS}

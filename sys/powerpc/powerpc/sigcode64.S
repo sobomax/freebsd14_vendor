@@ -1,4 +1,4 @@
-/* $FreeBSD: aa2709a828b3446a27ee39d0ac8f10320fb4066f $ */
+/* $FreeBSD: 7b1a902ff4815185695e26a723cab58341b20eb8 $ */
 /* $NetBSD: sigcode.S,v 1.1 1999/11/17 14:56:11 kleink Exp $	*/
 
 /*-
@@ -63,9 +63,13 @@ CNAME(sigcode64_elfv2):
 	addi	3,1,112+SF_UC		/* restore sp, and get &frame->sf_uc */
 	li	0,SYS_sigreturn
 	sc				/* sigreturn(scp) */
+	/*
+	 * If we get back to here, it means sigreturn failed.
+	 * As such, we are now stuck in the wrong context.
+	 * Exit immediately without touching the stack.
+	 */
 	li	0,SYS_exit
 	sc				/* exit(errno) */
-	nop				/* align to doubleword */
 endsigcode64:
 	
 	.data

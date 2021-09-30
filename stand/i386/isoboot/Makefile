@@ -1,4 +1,4 @@
-# $FreeBSD: 5979580650907b8ad24ecafc4a1ca554d63492d7 $
+# $FreeBSD: 67936e16176af2c424893fcf678bad01e8325c42 $
 
 .include <bsd.init.mk>
 
@@ -32,9 +32,6 @@ CFLAGS+=-DBOOTPROG=\"isoboot\" \
 	-Winline -Wno-pointer-sign
 
 CFLAGS.gcc+=	--param max-inline-insns-single=100
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} <= 40201
-CFLAGS.gcc+=	-Wno-uninitialized
-.endif
 CFLAGS.clang+=  -Oz ${CLANG_OPT_SMALL}
 
 LD_FLAGS+=${LD_FLAGS_BIN}
@@ -55,13 +52,13 @@ gptldr.bin: gptldr.out
 gptldr.out: gptldr.o
 	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} gptldr.o
 
-CLEANFILES+=	isoboot.bin isoboot.out isoboot.o sio.o crc32.o drv.o \
+CLEANFILES+=	isoboot.bin isoboot.out isoboot.o sio.o drv.o \
 		cons.o ${OPENCRYPTO_XTS}
 
 isoboot.bin: isoboot.out
 	${OBJCOPY} -S -O binary isoboot.out ${.TARGET}
 
-isoboot.out: ${BTXCRT} isoboot.o sio.o crc32.o drv.o cons.o ${OPENCRYPTO_XTS}
+isoboot.out: ${BTXCRT} isoboot.o sio.o drv.o cons.o ${OPENCRYPTO_XTS}
 	${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
 
 .include <bsd.prog.mk>

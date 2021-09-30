@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)exec.c	8.4 (Berkeley) 6/8/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95bf22a4a9f9e1c8f3e73b0d592fa09813e37934 $");
+__FBSDID("$FreeBSD: e3779b097e1d3066596b83d1eb1ddeeb987f9b81 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: 95bf22a4a9f9e1c8f3e73b0d592fa09813e37934 $");
 #include <fcntl.h>
 #include <errno.h>
 #include <paths.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 /*
@@ -91,7 +92,6 @@ struct tblentry {
 
 static struct tblentry *cmdtable[CMDTABLESIZE];
 static int cmdtable_cd = 0;	/* cmdtable contains cd-dependent entries */
-int exerrno = 0;			/* Last exec error */
 
 
 static void tryexec(char *, char **, char **);
@@ -134,13 +134,41 @@ shellexec(char **argv, char **envp, const char *path, int idx)
 	}
 
 	/* Map to POSIX errors */
-	if (e == ENOENT || e == ENOTDIR) {
-		exerrno = 127;
-		exerror(EXEXEC, "%s: not found", argv[0]);
-	} else {
-		exerrno = 126;
-		exerror(EXEXEC, "%s: %s", argv[0], strerror(e));
+	if (e == ENOENT || e == ENOTDIR)
+		errorwithstatus(127, "%s: not found", argv[0]);
+	else
+		errorwithstatus(126, "%s: %s", argv[0], strerror(e));
+}
+
+
+static bool
+isbinary(const char *data, size_t len)
+{
+	const char *nul, *p;
+	bool hasletter;
+
+	nul = memchr(data, '\0', len);
+	if (nul == NULL)
+		return false;
+	/*
+	 * POSIX says we shall allow execution if the initial part intended
+	 * to be parsed by the shell consists of characters and does not
+	 * contain the NUL character. This allows concatenating a shell
+	 * script (ending with exec or exit) and a binary payload.
+	 *
+	 * In order to reject common binary files such as PNG images, check
+	 * that there is a lowercase letter or expansion before the last
+	 * newline before the NUL character, in addition to the check for
+	 * the newline character suggested by POSIX.
+	 */
+	hasletter = false;
+	for (p = data; *p != '\0'; p++) {
+		if ((*p >= 'a' && *p <= 'z') || *p == '$' || *p == '`')
+			hasletter = true;
+		if (hasletter && *p == '\n')
+			return false;
 	}
+	return true;
 }
 
 
@@ -159,7 +187,7 @@ tryexec(char *cmd, char **argv, char **envp)
 		if (in != -1) {
 			n = pread(in, buf, sizeof buf, 0);
 			close(in);
-			if (n > 0 && memchr(buf, '\0', n) != NULL) {
+			if (n > 0 && isbinary(buf, n)) {
 				errno = ENOEXEC;
 				return;
 			}
@@ -651,6 +679,21 @@ isfunc(const char *name)
 }
 
 
+static void
+print_absolute_path(const char *name)
+{
+	const char *pwd;
+
+	if (*name != '/' && (pwd = lookupvar("PWD")) != NULL && *pwd != '\0') {
+		out1str(pwd);
+		if (strcmp(pwd, "/") != 0)
+			outcslow('/', out1);
+	}
+	out1str(name);
+	outcslow('\n', out1);
+}
+
+
 /*
  * Shared code for the following builtin commands:
  *    type, command -v, command -V
@@ -717,20 +760,16 @@ typecmd_impl(int argc, char **argv, int cmd, const char *path)
 					name = padvance(&path2, &opt2, argv[i]);
 					stunalloc(name);
 				} while (--j >= 0);
-				if (cmd == TYPECMD_SMALLV)
-					out1fmt("%s\n", name);
-				else
-					out1fmt("%s is%s %s\n", argv[i],
+				if (cmd != TYPECMD_SMALLV)
+					out1fmt("%s is%s ", argv[i],
 					    (cmdp && cmd == TYPECMD_TYPE) ?
-						" a tracked alias for" : "",
-					    name);
+						" a tracked alias for" : "");
+				print_absolute_path(name);
 			} else {
 				if (eaccess(argv[i], X_OK) == 0) {
-					if (cmd == TYPECMD_SMALLV)
-						out1fmt("%s\n", argv[i]);
-					else
-						out1fmt("%s is %s\n", argv[i],
-						    argv[i]);
+					if (cmd != TYPECMD_SMALLV)
+						out1fmt("%s is ", argv[i]);
+					print_absolute_path(argv[i]);
 				} else {
 					if (cmd != TYPECMD_SMALLV)
 						outfmt(out2, "%s: %s\n",

@@ -4,7 +4,6 @@
  * Copyright (c) 2000 Paul Saab <ps@freebsd.org>
  * All rights reserved.
  * Copyright (c) 2000 John Baldwin <jhb@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aebf1fffde796f8275436f9860486a3d57edf592 $
+ * $FreeBSD: a51d72dae6505c170900a794701384184b1737f5 $
  */
 
 /*

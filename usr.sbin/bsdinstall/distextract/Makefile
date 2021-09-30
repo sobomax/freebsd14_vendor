@@ -1,10 +1,9 @@
-# $FreeBSD: d3008f6e627183742c66cb7fb306c0ac1654898f $
+# $FreeBSD: 908a60c6594a8e52f0c1c83d16e93572164a9986 $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distextract
 LIBADD=	archive dpv figpar ncursesw dialog m
 
-WARNS?=	6
 MAN=
 
 .include <bsd.prog.mk>

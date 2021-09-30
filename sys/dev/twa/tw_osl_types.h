@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 913aca0ccf9a7f2769023c1298bff8bb5c77b915 $
+ *	$FreeBSD: d208606e61da2557cb76be97653a66b6130e12ce $
  */
 
 /*
@@ -36,17 +36,13 @@
  * Modifications by: Adam Radford
  */
 
-
-
 #ifndef TW_OSL_TYPES_H
 
 #define TW_OSL_TYPES_H
 
-
 /*
  * typedefs shared between OSL and CL, and defined by OSL.
  */
-
 
 typedef void			TW_VOID;
 typedef char			TW_INT8;
@@ -60,7 +56,5 @@ typedef unsigned long long	TW_UINT64;
 
 typedef time_t			TW_TIME;
 typedef struct mtx		TW_LOCK_HANDLE;
-
-
 
 #endif /* TW_OSL_TYPES_H */

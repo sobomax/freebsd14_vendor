@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eab78c5731f65c3f673c2df23189bcc858098c44 $");
+__FBSDID("$FreeBSD: 0a8125eeabb5da161bfd6aef3b51529bf8598841 $");
 
 #include <sys/param.h>
 #include <sys/signal.h>
@@ -43,6 +43,7 @@ __sym_compat(swapcontext, __impl_swapcontext, FBSD_1.0);
 __weak_reference(swapcontext, __impl_swapcontext);
 __sym_default(swapcontext, swapcontext, FBSD_1.2);
 
+#pragma weak swapcontext
 int
 swapcontext(ucontext_t *oucp, const ucontext_t *ucp)
 {

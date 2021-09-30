@@ -30,7 +30,7 @@
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/5/93
  *
- * $FreeBSD: fff6de671cfa0f02361d95d68d2944b9b108552f $
+ * $FreeBSD: 5a31fa7e86bcc9dcb2d0680e76a170de34aeb289 $
  */
 
 #include <paths.h>
@@ -47,8 +47,4 @@
  * Leave this undefined, and only the trace file originally specified
  * when routed was started, if any, will be appended to.
  */
-#ifndef __NetBSD__
 #define _PATH_TRACE	"/etc/routed.trace"
-#else
-#undef _PATH_TRACE
-#endif

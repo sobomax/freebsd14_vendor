@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d948a24e1402633b60981815315133875bc3e321 $
+ * $FreeBSD: cc37771c7dba6552a9be83f02db4e000cbd7093c $
  */
 
 /*
@@ -77,6 +76,13 @@ icl_pdu_queue(struct icl_pdu *ip)
 {
 
 	ICL_CONN_PDU_QUEUE(ip->ip_conn, ip);
+}
+
+static inline void
+icl_pdu_queue_cb(struct icl_pdu *ip, icl_pdu_cb cb)
+{
+
+	ICL_CONN_PDU_QUEUE_CB(ip->ip_conn, ip, cb);
 }
 
 static inline void

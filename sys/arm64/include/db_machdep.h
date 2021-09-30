@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 45d548c750bcd54dcca69ef03e665c8c10dc3cb6 $
+ * $FreeBSD: f2fd2a57a9c3a1a651f14aafb1e5b227a4eb2560 $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -43,7 +43,7 @@
 typedef vm_offset_t	db_addr_t;
 typedef long		db_expr_t;
 
-#define	PC_REGS()	((db_addr_t)kdb_thrctx->pcb_pc)
+#define	PC_REGS()	((db_addr_t)kdb_thrctx->pcb_lr)
 
 #define	BKPT_INST	(0xd4200000)
 #define	BKPT_SIZE	(4)

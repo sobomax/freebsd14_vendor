@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)exec.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: f7cad87abb498f5b363defe5dd65a51041206aae $
+ * $FreeBSD: d1af92afd2815daf95eb1efaf401ce25af208338 $
  */
 
 #ifndef	_IMGACT_AOUT_H_
@@ -69,7 +69,6 @@
 	 N_GETMAGIC(ex) != ZMAGIC && N_GETMAGIC(ex) != QMAGIC && \
 	 N_GETMAGIC_NET(ex) != OMAGIC && N_GETMAGIC_NET(ex) != NMAGIC && \
 	 N_GETMAGIC_NET(ex) != ZMAGIC && N_GETMAGIC_NET(ex) != QMAGIC)
-
 
 /* Address of the bottom of the text segment. */
 /*

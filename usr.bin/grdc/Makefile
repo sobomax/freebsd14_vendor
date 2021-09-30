@@ -1,8 +1,7 @@
-# $FreeBSD: be8c4b2efed70055d781197cd691ef0cd1a1dcf8 $
+# $FreeBSD: d12277df8466b766d995097d147f67361798f122 $
 
 PROG=	grdc
 MAN=	grdc.6
-DPADD=	${LIBNCURSESW}
 LIBADD=	ncursesw
 
 .include <bsd.prog.mk>

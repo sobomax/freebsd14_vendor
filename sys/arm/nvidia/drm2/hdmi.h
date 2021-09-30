@@ -20,12 +20,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: 27868e08b436ebb2bbfdcf261060e4491a9d18f9 $
+ * $FreeBSD: df98315464286c02782b49e78706b4601389299f $
  */
 
 #ifndef _HDMI_H_
 #define _HDMI_H_
-
 
 enum hdmi_infoframe_type {
 	HDMI_INFOFRAME_TYPE_VENDOR = 0x81,
@@ -281,7 +280,6 @@ enum hdmi_3d_structure {
 	HDMI_3D_STRUCTURE_TOP_AND_BOTTOM,
 	HDMI_3D_STRUCTURE_SIDE_BY_SIDE_HALF = 8,
 };
-
 
 struct hdmi_vendor_infoframe {
 	enum hdmi_infoframe_type type;

@@ -29,7 +29,7 @@
 /*
  * internal dummynet APIs.
  *
- * $FreeBSD: 61c61130525cbd58092a3aed94ec9181559cde93 $
+ * $FreeBSD: 24765bc09b0eb66f0bc47d7ce52a8af53115300a $
  */
 
 #ifndef _IP_DN_PRIVATE_H
@@ -304,7 +304,6 @@ struct dn_schk {
 	struct dn_ht	*siht;
 };
 
-
 /*
  * Scheduler instance.
  * Contains variables and all queues relative to a this instance.
@@ -354,7 +353,6 @@ struct dn_sch_inst {
  * The same schema is used for sceduler instances
  */
 
-
 /* kernel-side flags. Linux has DN_DELETE in fcntl.h
  */
 enum {
@@ -387,11 +385,26 @@ struct dn_pkt_tag {
 	uint16_t iphdr_off;	/* IP header offset for mtodo()	*/
 };
 
+/*
+ * Possible values for dn_dir. XXXGL: this needs to be reviewed
+ * and converted to same values ip_fw_args.flags use.
+ */
+enum {
+	DIR_OUT =	0,
+	DIR_IN =	1,
+	DIR_FWD =	2,
+	DIR_DROP =	3,
+	PROTO_LAYER2 =	0x4, /* set for layer 2 */
+	PROTO_IPV4 =	0x08,
+	PROTO_IPV6 =	0x10,
+	PROTO_IFB =	0x0c, /* layer2 + ifbridge */
+};
+
 extern struct dn_parms dn_cfg;
 //VNET_DECLARE(struct dn_parms, _base_dn_cfg);
 //#define dn_cfg	VNET(_base_dn_cfg)
 
-int dummynet_io(struct mbuf **, int , struct ip_fw_args *);
+int dummynet_io(struct mbuf **, struct ip_fw_args *);
 void dummynet_task(void *context, int pending);
 void dn_reschedule(void);
 struct dn_pkt_tag * dn_tag_get(struct mbuf *m);

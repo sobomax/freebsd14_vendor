@@ -33,13 +33,15 @@
  * SUCH DAMAGE.
  *
  *	@(#)utils.h	8.3 (Berkeley) 3/20/94
- * $FreeBSD: b2dba2ee4e93a48b98c11cd3bb3b248fd67a42fb $
+ * $FreeBSD: 72f2286a02602877e5d86308eedfc69e1a1271bf $
  */
 
 /* utility definitions */
 #define	DUPMAX		_POSIX2_RE_DUP_MAX	/* xxx is this right? */
 #define	INFINITY	(DUPMAX + 1)
-#define	NC		(CHAR_MAX - CHAR_MIN + 1)
+
+#define	NC_MAX		(CHAR_MAX - CHAR_MIN + 1)
+#define	NC		((MB_CUR_MAX) == 1 ? (NC_MAX) : (128))
 typedef unsigned char uch;
 
 /* switch off assertions (if not already off) if no REDEBUG */

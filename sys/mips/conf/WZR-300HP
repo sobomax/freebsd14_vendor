@@ -10,7 +10,7 @@
 # + 64MB RAM
 # + uboot environment
 
-# $FreeBSD: 217e444f1b8968c50c4ed3ef737f622c5c2f5c82 $
+# $FreeBSD: dd767888a1e98fa31083c98940ee6b15b4635fc2 $
 
 #NO_UNIVERSE
 
@@ -49,4 +49,4 @@ device		hwpmc
 # load these via modules, shrink kernel
 nodevice	if_bridge
 nodevice	bridgestp
-nodevice	random
+options		RANDOM_LOADABLE

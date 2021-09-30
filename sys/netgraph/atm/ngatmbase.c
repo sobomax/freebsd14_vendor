@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b0f0969f6e40234a11c2120d92baacb37432c75 $");
+__FBSDID("$FreeBSD: 85409b35e4bd76c36cfb7c0f399f655d33d1f8a3 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -483,7 +483,6 @@ ngatm_handler(module_t mod, int what, void *arg)
 	int error = 0;
 
 	switch (what) {
-
 	  case MOD_LOAD:
 		uni_msg_init();
 		break;

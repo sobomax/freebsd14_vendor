@@ -1,4 +1,0 @@
-.\" $FreeBSD: e436d9133968ee4098316dc8ade879f204ef3379 $
-Set to not build
-.Xr ctm 1
-and related utilities.

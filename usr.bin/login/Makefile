@@ -1,9 +1,10 @@
 # 	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: 6e88c2224b0408c219f5e9f931ce8049b06d445f $
+# $FreeBSD: 2e8b215a449224a06ff2dc80c826ace4f7359595 $
 
 .include <src.opts.mk>
+.include <src.tools.mk>
 
-CONFS=	fbtab login.conf motd
+CONFS=	fbtab login.conf motd.template login.access
 PROG=	login
 SRCS=	login.c login_fbtab.c
 CFLAGS+=-DLOGALL
@@ -25,7 +26,7 @@ PRECIOUSPROG=
 
 .include <bsd.endian.mk>
 afterinstallconfig:
-	cap_mkdb ${CAP_MKDB_ENDIAN} ${DESTDIR}/etc/login.conf
+	${CAP_MKDB_CMD} ${CAP_MKDB_ENDIAN} ${DESTDIR}/etc/login.conf
 .if defined(NO_ROOT) && defined(METALOG)
 	echo "./etc/login.conf.db type=file mode=0644 uname=root gname=wheel" | \
 		cat -l >> ${METALOG}

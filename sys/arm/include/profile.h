@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)profile.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: a4973175f3bd458e23d4b70cc0458ecf999d1c15 $
+ * $FreeBSD: cab8f89ddadf3bf3c2234ab72ebd3ad1318380fe $
  */
 
 #ifndef _MACHINE_PROFILE_H_
@@ -44,7 +44,6 @@
  * byte boundaries.  A strict alignment is good for keeping the tables small.
  */
 #define	FUNCTION_ALIGNMENT	16
-
 
 #define	_MCOUNT_DECL void mcount
 
@@ -107,19 +106,12 @@ void user(void);
 	    ((pc >= (uintfptr_t)bintr) ? (uintfptr_t)bintr :	\
 		(uintfptr_t)btrap) : ~0U)
 
-
 #ifdef _KERNEL
 
 #define	MCOUNT_DECL(s)	register_t s;
 
 #include <machine/asm.h>
 #include <machine/cpufunc.h>
-/*
- * splhigh() and splx() are heavyweight, and call mcount().  Therefore
- * we disabled interrupts (IRQ, but not FIQ) directly on the CPU.
- *
- * We're lucky that the CPSR and 's' both happen to be 'int's.
- */
 #define	MCOUNT_ENTER(s)	{s = intr_disable(); }	/* kill IRQ */
 #define	MCOUNT_EXIT(s)	{intr_restore(s); }	/* restore old value */
 

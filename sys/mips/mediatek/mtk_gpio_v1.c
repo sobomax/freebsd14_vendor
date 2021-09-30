@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 632c7a744abf4af1b91bd391fa717a68961c3df5 $");
+__FBSDID("$FreeBSD: 8c7df30f81e3c1135d697f85f4ecf4147c2702e7 $");
         
 #include "opt_platform.h"
 
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: 632c7a744abf4af1b91bd391fa717a68961c3df5 $");
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
-#include <gnu/dts/include/dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 
 #include "gpio_if.h"
 #include "pic_if.h"
@@ -687,7 +687,7 @@ mtk_gpio_pic_setup_intr(device_t dev, struct intr_irqsrc *isrc,
 
 	if (error != 0)
 		return (error);
-	
+
 	MTK_GPIO_LOCK(sc);
 	if (mode == GPIO_INTR_EDGE_BOTH || mode == GPIO_INTR_EDGE_RISING) {
 		val = MTK_READ_4(sc, GPIO_PIORENA) | (1u << irq);

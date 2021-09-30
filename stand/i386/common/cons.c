@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 96e782fda5c904c66be42b5c5bfba6ba23b6490a $");
+__FBSDID("$FreeBSD: 25dda1ce7405aa9c58b4b29bbccb1922bfd84822 $");
 
 #include <sys/param.h>
 
@@ -53,12 +53,38 @@ xputc(int c)
 		sio_putc(c);
 }
 
+static void
+getcursor(int *row, int *col)
+{
+	v86.ctl = V86_FLAGS;
+	v86.addr = 0x10;
+	v86.eax = 0x300;
+	v86.ebx = 0x7;
+	v86int();
+
+	if (row != NULL)
+		*row = v86.edx >> 8;
+	if (col != NULL)
+		*col = v86.edx & 0xff;
+}
+
 void
 putchar(int c)
 {
+	int i, col;
 
-	if (c == '\n')
+	switch (c) {
+	case '\n':
 		xputc('\r');
+		break;
+	case '\t':
+		col = 0;
+		getcursor(NULL, &col);
+		col = 8 - (col % 8);
+		for (i = 0; i < col; i++)
+			xputc(' ');
+		return;
+	}
 	xputc(c);
 }
 
@@ -100,7 +126,7 @@ int
 getchar(void)
 {
 
-	return (xgetc(0));
+	return (xgetc(0) & 0xff);
 }
 
 int

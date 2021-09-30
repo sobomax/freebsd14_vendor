@@ -29,12 +29,11 @@
  * (both async and sync), but which do not necessarily have anything to
  * do with tty processing.
  *
- * $FreeBSD: 3293ebdab931019fc085cd0846cbdd55dd664473 $
+ * $FreeBSD: 804687d31271e4b6aac91b80801f4d55debaebc5 $
  */
 
 #ifndef _SYS_SERIAL_H_
 #define	_SYS_SERIAL_H_
-
 
 /*
  * Indentification of modem control signals.  These definitions match

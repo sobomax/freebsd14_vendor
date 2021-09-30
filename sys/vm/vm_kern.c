@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f79482a2d3fbceb7eddce7f9ec87638e9bcca0e $");
+__FBSDID("$FreeBSD: 0677d901d4089aa690e3d0861da8961ab1761f62 $");
 
 #include "opt_vm.h"
 
@@ -91,15 +91,15 @@ __FBSDID("$FreeBSD: 5f79482a2d3fbceb7eddce7f9ec87638e9bcca0e $");
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
 #include <vm/vm_pageout.h>
-#include <vm/vm_phys.h>
 #include <vm/vm_pagequeue.h>
+#include <vm/vm_phys.h>
 #include <vm/vm_radix.h>
 #include <vm/vm_extern.h>
 #include <vm/uma.h>
 
-vm_map_t kernel_map;
-vm_map_t exec_map;
-vm_map_t pipe_map;
+struct vm_map kernel_map_store;
+struct vm_map exec_map_store;
+struct vm_map pipe_map_store;
 
 const void *zero_region;
 CTASSERT((ZERO_REGION_SIZE & PAGE_MASK) == 0);
@@ -114,7 +114,7 @@ SYSCTL_ULONG(_vm, OID_AUTO, min_kernel_address, CTLFLAG_RD,
     SYSCTL_NULL_ULONG_PTR, VM_MIN_KERNEL_ADDRESS, "Min kernel address");
 
 SYSCTL_ULONG(_vm, OID_AUTO, max_kernel_address, CTLFLAG_RD,
-#if defined(__arm__) || defined(__sparc64__)
+#if defined(__arm__)
     &vm_max_kernel_address, 0,
 #else
     SYSCTL_NULL_ULONG_PTR, VM_MAX_KERNEL_ADDRESS,
@@ -127,7 +127,10 @@ SYSCTL_ULONG(_vm, OID_AUTO, max_kernel_address, CTLFLAG_RD,
 /* On non-superpage architectures we want large import sizes. */
 #define	KVA_QUANTUM_SHIFT	(8 + PAGE_SHIFT)
 #endif
-#define	KVA_QUANTUM		(1 << KVA_QUANTUM_SHIFT)
+#define	KVA_QUANTUM		(1ul << KVA_QUANTUM_SHIFT)
+#define	KVA_NUMA_IMPORT_QUANTUM	(KVA_QUANTUM * 128)
+
+extern void     uma_startup2(void);
 
 /*
  *	kva_alloc:
@@ -221,7 +224,7 @@ kmem_alloc_attr_domain(int domain, vm_size_t size, int flags, vm_paddr_t low,
 	if (vmem_alloc(vmem, size, M_BESTFIT | flags, &addr))
 		return (0);
 	offset = addr - VM_MIN_KERNEL_ADDRESS;
-	pflags = malloc2vm_flags(flags) | VM_ALLOC_NOBUSY | VM_ALLOC_WIRED;
+	pflags = malloc2vm_flags(flags) | VM_ALLOC_WIRED;
 	prot = (flags & M_EXEC) != 0 ? VM_PROT_ALL : VM_PROT_RW;
 	VM_OBJECT_WLOCK(object);
 	for (i = 0; i < size; i += PAGE_SIZE) {
@@ -233,12 +236,12 @@ kmem_alloc_attr_domain(int domain, vm_size_t size, int flags, vm_paddr_t low,
 			vmem_free(vmem, addr, size);
 			return (0);
 		}
-		KASSERT(vm_phys_domain(m) == domain,
+		KASSERT(vm_page_domain(m) == domain,
 		    ("kmem_alloc_attr_domain: Domain mismatch %d != %d",
-		    vm_phys_domain(m), domain));
+		    vm_page_domain(m), domain));
 		if ((flags & M_ZERO) && (m->flags & PG_ZERO) == 0)
 			pmap_zero_page(m);
-		m->valid = VM_PAGE_BITS_ALL;
+		vm_page_valid(m);
 		pmap_enter(kernel_pmap, addr + i, m, prot,
 		    prot | PMAP_ENTER_WIRED, 0);
 	}
@@ -300,7 +303,7 @@ kmem_alloc_contig_domain(int domain, vm_size_t size, int flags, vm_paddr_t low,
 	if (vmem_alloc(vmem, size, flags | M_BESTFIT, &addr))
 		return (0);
 	offset = addr - VM_MIN_KERNEL_ADDRESS;
-	pflags = malloc2vm_flags(flags) | VM_ALLOC_NOBUSY | VM_ALLOC_WIRED;
+	pflags = malloc2vm_flags(flags) | VM_ALLOC_WIRED;
 	npages = atop(size);
 	VM_OBJECT_WLOCK(object);
 	m = kmem_alloc_contig_pages(object, atop(offset), domain,
@@ -310,15 +313,15 @@ kmem_alloc_contig_domain(int domain, vm_size_t size, int flags, vm_paddr_t low,
 		vmem_free(vmem, addr, size);
 		return (0);
 	}
-	KASSERT(vm_phys_domain(m) == domain,
+	KASSERT(vm_page_domain(m) == domain,
 	    ("kmem_alloc_contig_domain: Domain mismatch %d != %d",
-	    vm_phys_domain(m), domain));
+	    vm_page_domain(m), domain));
 	end_m = m + npages;
 	tmp = addr;
 	for (; m < end_m; m++) {
 		if ((flags & M_ZERO) && (m->flags & PG_ZERO) == 0)
 			pmap_zero_page(m);
-		m->valid = VM_PAGE_BITS_ALL;
+		vm_page_valid(m);
 		pmap_enter(kernel_pmap, tmp, m, VM_PROT_RW,
 		    VM_PROT_RW | PMAP_ENTER_WIRED, 0);
 		tmp += PAGE_SIZE;
@@ -357,9 +360,9 @@ kmem_alloc_contig_domainset(struct domainset *ds, vm_size_t size, int flags,
 }
 
 /*
- *	kmem_suballoc:
+ *	kmem_subinit:
  *
- *	Allocates a map to manage a subrange
+ *	Initializes a map to manage a subrange
  *	of the kernel virtual address space.
  *
  *	Arguments are as follows:
@@ -369,12 +372,11 @@ kmem_alloc_contig_domainset(struct domainset *ds, vm_size_t size, int flags,
  *	size		Size of range to find
  *	superpage_align	Request that min is superpage aligned
  */
-vm_map_t
-kmem_suballoc(vm_map_t parent, vm_offset_t *min, vm_offset_t *max,
-    vm_size_t size, boolean_t superpage_align)
+void
+kmem_subinit(vm_map_t map, vm_map_t parent, vm_offset_t *min, vm_offset_t *max,
+    vm_size_t size, bool superpage_align)
 {
 	int ret;
-	vm_map_t result;
 
 	size = round_page(size);
 
@@ -383,14 +385,11 @@ kmem_suballoc(vm_map_t parent, vm_offset_t *min, vm_offset_t *max,
 	    VMFS_SUPER_SPACE : VMFS_ANY_SPACE, VM_PROT_ALL, VM_PROT_ALL,
 	    MAP_ACC_NO_CHARGE);
 	if (ret != KERN_SUCCESS)
-		panic("kmem_suballoc: bad status return of %d", ret);
+		panic("kmem_subinit: bad status return of %d", ret);
 	*max = *min + size;
-	result = vm_map_create(vm_map_pmap(parent), *min, *max);
-	if (result == NULL)
-		panic("kmem_suballoc: cannot create submap");
-	if (vm_map_submap(parent, *min, *max, result) != KERN_SUCCESS)
-		panic("kmem_suballoc: unable to change range to submap");
-	return (result);
+	vm_map_init(map, vm_map_pmap(parent), *min, *max);
+	if (vm_map_submap(parent, *min, *max, map) != KERN_SUCCESS)
+		panic("kmem_subinit: unable to change range to submap");
 }
 
 /*
@@ -464,7 +463,7 @@ kmem_back_domain(int domain, vm_object_t object, vm_offset_t addr,
 	    ("kmem_back_domain: only supports kernel object."));
 
 	offset = addr - VM_MIN_KERNEL_ADDRESS;
-	pflags = malloc2vm_flags(flags) | VM_ALLOC_NOBUSY | VM_ALLOC_WIRED;
+	pflags = malloc2vm_flags(flags) | VM_ALLOC_WIRED;
 	pflags &= ~(VM_ALLOC_NOWAIT | VM_ALLOC_WAITOK | VM_ALLOC_WAITFAIL);
 	if (flags & M_WAITOK)
 		pflags |= VM_ALLOC_WAITFAIL;
@@ -490,14 +489,14 @@ retry:
 			kmem_unback(object, addr, i);
 			return (KERN_NO_SPACE);
 		}
-		KASSERT(vm_phys_domain(m) == domain,
+		KASSERT(vm_page_domain(m) == domain,
 		    ("kmem_back_domain: Domain mismatch %d != %d",
-		    vm_phys_domain(m), domain));
+		    vm_page_domain(m), domain));
 		if (flags & M_ZERO && (m->flags & PG_ZERO) == 0)
 			pmap_zero_page(m);
 		KASSERT((m->oflags & VPO_UNMANAGED) != 0,
 		    ("kmem_malloc: page %p is managed", m));
-		m->valid = VM_PAGE_BITS_ALL;
+		vm_page_valid(m);
 		pmap_enter(kernel_pmap, addr + i, m, prot,
 		    prot | PMAP_ENTER_WIRED, 0);
 		if (__predict_false((prot & VM_PROT_EXECUTE) != 0))
@@ -574,13 +573,14 @@ _kmem_unback(vm_object_t object, vm_offset_t addr, vm_size_t size)
 	end = offset + size;
 	VM_OBJECT_WLOCK(object);
 	m = vm_page_lookup(object, atop(offset)); 
-	domain = vm_phys_domain(m);
+	domain = vm_page_domain(m);
 	if (__predict_true((m->oflags & VPO_KMEM_EXEC) == 0))
 		arena = vm_dom[domain].vmd_kernel_arena;
 	else
 		arena = vm_dom[domain].vmd_kernel_rwx_arena;
 	for (; offset < end; offset += PAGE_SIZE, m = next) {
 		next = vm_page_next(m);
+		vm_page_xbusy_claim(m);
 		vm_page_unwire_noq(m);
 		vm_page_free(m);
 	}
@@ -746,15 +746,14 @@ kva_import_domain(void *arena, vmem_size_t size, int flags, vmem_addr_t *addrp)
 void
 kmem_init(vm_offset_t start, vm_offset_t end)
 {
-	vm_map_t m;
+	vm_size_t quantum;
 	int domain;
 
-	m = vm_map_create(kernel_pmap, VM_MIN_KERNEL_ADDRESS, end);
-	m->system_map = 1;
-	vm_map_lock(m);
+	vm_map_init(kernel_map, kernel_pmap, VM_MIN_KERNEL_ADDRESS, end);
+	kernel_map->system_map = 1;
+	vm_map_lock(kernel_map);
 	/* N.B.: cannot use kgdb to debug, starting with this assignment ... */
-	kernel_map = m;
-	(void) vm_map_insert(m, NULL, (vm_ooffset_t) 0,
+	(void)vm_map_insert(kernel_map, NULL, 0,
 #ifdef __amd64__
 	    KERNBASE,
 #else		     
@@ -762,13 +761,35 @@ kmem_init(vm_offset_t start, vm_offset_t end)
 #endif
 	    start, VM_PROT_ALL, VM_PROT_ALL, MAP_NOFAULT);
 	/* ... and ending with the completion of the above `insert' */
-	vm_map_unlock(m);
+
+#ifdef __amd64__
+	/*
+	 * Mark KVA used for the page array as allocated.  Other platforms
+	 * that handle vm_page_array allocation can simply adjust virtual_avail
+	 * instead.
+	 */
+	(void)vm_map_insert(kernel_map, NULL, 0, (vm_offset_t)vm_page_array,
+	    (vm_offset_t)vm_page_array + round_2mpage(vm_page_array_size *
+	    sizeof(struct vm_page)),
+	    VM_PROT_RW, VM_PROT_RW, MAP_NOFAULT);
+#endif
+	vm_map_unlock(kernel_map);
+
+	/*
+	 * Use a large import quantum on NUMA systems.  This helps minimize
+	 * interleaving of superpages, reducing internal fragmentation within
+	 * the per-domain arenas.
+	 */
+	if (vm_ndomains > 1 && PMAP_HAS_DMAP)
+		quantum = KVA_NUMA_IMPORT_QUANTUM;
+	else
+		quantum = KVA_QUANTUM;
 
 	/*
 	 * Initialize the kernel_arena.  This can grow on demand.
 	 */
 	vmem_init(kernel_arena, "kernel arena", 0, 0, PAGE_SIZE, 0, 0);
-	vmem_set_import(kernel_arena, kva_import, NULL, NULL, KVA_QUANTUM);
+	vmem_set_import(kernel_arena, kva_import, NULL, NULL, quantum);
 
 	for (domain = 0; domain < vm_ndomains; domain++) {
 		/*
@@ -780,13 +801,15 @@ kmem_init(vm_offset_t start, vm_offset_t end)
 		vm_dom[domain].vmd_kernel_arena = vmem_create(
 		    "kernel arena domain", 0, 0, PAGE_SIZE, 0, M_WAITOK);
 		vmem_set_import(vm_dom[domain].vmd_kernel_arena,
-		    kva_import_domain, NULL, kernel_arena, KVA_QUANTUM);
+		    kva_import_domain, NULL, kernel_arena, quantum);
 
 		/*
 		 * In architectures with superpages, maintain separate arenas
 		 * for allocations with permissions that differ from the
 		 * "standard" read/write permissions used for kernel memory,
 		 * so as not to inhibit superpage promotion.
+		 *
+		 * Use the base import quantum since this arena is rarely used.
 		 */
 #if VM_NRESERVLEVEL > 0
 		vm_dom[domain].vmd_kernel_rwx_arena = vmem_create(
@@ -799,6 +822,13 @@ kmem_init(vm_offset_t start, vm_offset_t end)
 		    vm_dom[domain].vmd_kernel_arena;
 #endif
 	}
+
+	/*
+	 * This must be the very first call so that the virtual address
+	 * space used for early allocations is properly marked used in
+	 * the map.
+	 */
+	uma_startup2();
 }
 
 /*
@@ -820,6 +850,14 @@ kmem_bootstrap_free(vm_offset_t start, vm_size_t size)
 	end = trunc_page(start + size);
 	start = round_page(start);
 
+#ifdef __amd64__
+	/*
+	 * Preloaded files do not have execute permissions by default on amd64.
+	 * Restore the default permissions to ensure that the direct map alias
+	 * is updated.
+	 */
+	pmap_change_prot(start, end - start, VM_PROT_RW);
+#endif
 	for (va = start; va < end; va += PAGE_SIZE) {
 		pa = pmap_kextract(va);
 		m = PHYS_TO_VM_PAGE(pa);
@@ -857,5 +895,5 @@ debug_vm_lowmem(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 
-SYSCTL_PROC(_debug, OID_AUTO, vm_lowmem, CTLTYPE_INT | CTLFLAG_RW, 0, 0,
+SYSCTL_PROC(_debug, OID_AUTO, vm_lowmem, CTLTYPE_INT | CTLFLAG_MPSAFE | CTLFLAG_RW, 0, 0,
     debug_vm_lowmem, "I", "set to trigger vm_lowmem event with given flags");

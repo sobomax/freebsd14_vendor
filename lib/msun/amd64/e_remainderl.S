@@ -35,7 +35,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: 56566b5ab0af5e53d477580e195f323e95ff7fb1 $")
+__FBSDID("$FreeBSD: 977934b9d4e284cf40e50ff323968656fa484184 $")
 
 ENTRY(remainderl)
 	fldt	24(%rsp)
@@ -46,5 +46,6 @@ ENTRY(remainderl)
 	jne	1b
 	fstp	%st(1)
 	ret
+END(remainderl)
 
 	.section .note.GNU-stack,"",%progbits

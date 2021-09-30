@@ -26,10 +26,10 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70f6294d278be336db5f02d343b8f8a08aa5766a $");
+__FBSDID("$FreeBSD: c72fa8d7a36bb84ad4f752126ffc3a6f3bcb6768 $");
 
 #include <sys/param.h>
-#include <sys/types.h>
+#include <sys/eventhandler.h>
 #include <sys/sockio.h>
 #include <sys/mbuf.h>
 #include <sys/malloc.h>
@@ -98,7 +98,7 @@ struct uhso_softc {
 	struct ifnet		*sc_ifp;
 	struct mbuf		*sc_mwait;	/* Partial packet */
 	size_t			sc_waitlen;	/* No. of outstanding bytes */
-	struct ifqueue		sc_rxq;
+	struct mbufq		sc_rxq;
 	struct callout		sc_c;
 
 	/* TTY related structures */
@@ -288,7 +288,8 @@ static const STRUCT_USB_HOST_ID uhso_devs[] = {
 #undef UHSO_DEV
 };
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, uhso, CTLFLAG_RW, 0, "USB uhso");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, uhso, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB uhso");
 static int uhso_autoswitch = 1;
 SYSCTL_INT(_hw_usb_uhso, OID_AUTO, auto_switch, CTLFLAG_RWTUN,
     &uhso_autoswitch, 0, "Automatically switch to modem mode");
@@ -560,6 +561,7 @@ uhso_attach(device_t self)
 	sc->sc_dev = self;
 	sc->sc_udev = uaa->device;
 	mtx_init(&sc->sc_mtx, "uhso", NULL, MTX_DEF);
+	mbufq_init(&sc->sc_rxq, INT_MAX);	/* XXXGL: sane maximum */
 	ucom_ref(&sc->sc_super_ucom);
 
 	sc->sc_radio = 1;
@@ -598,7 +600,8 @@ uhso_attach(device_t self)
 	    CTLFLAG_RD, uhso_port[UHSO_IFACE_PORT(sc->sc_type)], 0,
 	    "Port available at this interface");
 	SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "radio",
-	    CTLTYPE_INT | CTLFLAG_RWTUN, sc, 0, uhso_radio_sysctl, "I", "Enable radio");
+	    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, sc, 0,
+	    uhso_radio_sysctl, "I", "Enable radio");
 
 	/*
 	 * The default interface description on most Option devices isn't
@@ -618,7 +621,7 @@ uhso_attach(device_t self)
 		    CTLFLAG_RD, &sc->sc_ttys, 0, "Number of attached serial ports");
 
 		tree = SYSCTL_ADD_NODE(sctx, SYSCTL_CHILDREN(soid), OID_AUTO,
-		    "port", CTLFLAG_RD, NULL, "Serial ports");
+		    "port", CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "Serial ports");
 	}
 
 	/*
@@ -637,7 +640,7 @@ uhso_attach(device_t self)
 		desc = uhso_port_type_sysctl[port];
 
 		tty_node = SYSCTL_ADD_NODE(sctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-		    desc, CTLFLAG_RD, NULL, "");
+		    desc, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "");
 
 		ht->ht_name[0] = 0;
 		if (sc->sc_ttys == 1)
@@ -939,7 +942,6 @@ uhso_probe_iface(struct uhso_softc *sc, int index,
 		}
 	} else if ((UHSO_IFACE_USB_TYPE(type) & UHSO_IF_BULK) &&
 	    UHSO_IFACE_PORT(type) & UHSO_PORT_SERIAL) {
-
 		error = uhso_attach_bulkserial(sc, iface, type);
 		if (error)
 			return (ENXIO);
@@ -1231,7 +1233,6 @@ tr_setup:
 		pc = usbd_xfer_get_frame(xfer, 1);
 		if (ucom_get_data(&sc->sc_ucom[ht->ht_muxport], pc,
 		    0, 32, &actlen)) {
-
 			usbd_get_page(pc, 0, &res);
 
 			memset(&req, 0, sizeof(struct usb_device_request));
@@ -1529,7 +1530,6 @@ uhso_ucom_start_write(struct ucom_softc *ucom)
 		    &sc->sc_tty[ucom->sc_subunit]);
 		usbd_transfer_start(
 		    sc->sc_tty[ucom->sc_subunit].ht_xfer[UHSO_CTRL_WRITE]);
-
 	}
 	else if (UHSO_IFACE_USB_TYPE(sc->sc_type) & UHSO_IF_BULK) {
 		usbd_transfer_start(sc->sc_xfer[UHSO_BULK_ENDPT_WRITE]);
@@ -1626,11 +1626,13 @@ uhso_ifnet_read_callback(struct usb_xfer *xfer, usb_error_t error)
 	case USB_ST_TRANSFERRED:
 		if (actlen > 0 && (sc->sc_ifp->if_drv_flags & IFF_DRV_RUNNING)) {
 			pc = usbd_xfer_get_frame(xfer, 0);
+			if (mbufq_full(&sc->sc_rxq))
+				break;
 			m = m_getcl(M_NOWAIT, MT_DATA, M_PKTHDR);
 			usbd_copy_out(pc, 0, mtod(m, uint8_t *), actlen);
 			m->m_pkthdr.len = m->m_len = actlen;
 			/* Enqueue frame for further processing */
-			_IF_ENQUEUE(&sc->sc_rxq, m);
+			mbufq_enqueue(&sc->sc_rxq, m);
 			if (!callout_pending(&sc->sc_c) ||
 			    !callout_active(&sc->sc_c)) {
 				callout_schedule(&sc->sc_c, 1);
@@ -1661,6 +1663,7 @@ tr_setup:
 static void
 uhso_if_rxflush(void *arg)
 {
+	struct epoch_tracker et;
 	struct uhso_softc *sc = arg;
 	struct ifnet *ifp = sc->sc_ifp;
 	uint8_t *cp;
@@ -1674,10 +1677,10 @@ uhso_if_rxflush(void *arg)
 
 	m = NULL;
 	mwait = sc->sc_mwait;
+	NET_EPOCH_ENTER(et);
 	for (;;) {
 		if (m == NULL) {
-			_IF_DEQUEUE(&sc->sc_rxq, m);
-			if (m == NULL)
+			if ((m = mbufq_dequeue(&sc->sc_rxq)) == NULL)
 				break;
 			UHSO_DPRINTF(3, "dequeue m=%p, len=%d\n", m, m->m_len);
 		}
@@ -1785,6 +1788,7 @@ uhso_if_rxflush(void *arg)
 		m = m0 != NULL ? m0 : NULL;
 		mtx_lock(&sc->sc_mtx);
 	}
+	NET_EPOCH_EXIT(et);
 	sc->sc_mwait = mwait;
 }
 

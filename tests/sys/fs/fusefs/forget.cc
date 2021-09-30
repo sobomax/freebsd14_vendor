@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8a53ac0ecaa69612817730fd5ff0ea8c210ee5d4 $
+ * $FreeBSD: c138b7acc4aa531dbc3f952ecb7fa857ab4979dc $
  */
 
 extern "C" {
@@ -116,6 +116,7 @@ TEST_F(Forget, invalidate_names)
 	int err;
 
 	EXPECT_LOOKUP(FUSE_ROOT_ID, DNAME)
+	.Times(2)
 	.WillRepeatedly(Invoke(
 		ReturnImmediate([=](auto in __unused, auto& out) {
 		SET_OUT_HEADER_LEN(out, entry);
@@ -142,7 +143,7 @@ TEST_F(Forget, invalidate_names)
 		out.body.entry.attr_valid = UINT64_MAX;
 		out.body.entry.entry_valid = UINT64_MAX;
 	})));
-	expect_forget(dir_ino, 2);
+	expect_forget(dir_ino, 1);
 
 	/* Access the file to cache its name */
 	ASSERT_EQ(0, access(FULLFPATH, F_OK)) << strerror(errno);

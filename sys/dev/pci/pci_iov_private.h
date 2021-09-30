@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2d15353032d37b25c220744d4ffeb7872630ed18 $
+ * $FreeBSD: 0d1dda871b44121524051cac3c5004e8491019a2 $
  */
 
 #ifndef _PCI_IOV_PRIVATE_H_
@@ -43,7 +43,7 @@ struct pcicfg_iov {
 	struct pci_iov_bar iov_bar[PCIR_MAX_BAR_0 + 1];
 	struct rman rman;
 	char rman_name[64];
- 
+
 	int iov_pos;
 	int iov_num_vfs;
 	uint32_t iov_flags;
@@ -59,4 +59,3 @@ void	pci_iov_cfg_restore(device_t dev, struct pci_devinfo *dinfo);
 void	pci_iov_cfg_save(device_t dev, struct pci_devinfo *dinfo);
 
 #endif
-

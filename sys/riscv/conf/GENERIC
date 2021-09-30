@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 4982c48ece399385a92d96a0facc572bd7c1e248 $
+# $FreeBSD: 63ed92a409e429c193a8e8ce87b786caeaa4e358 $
 
 cpu		RISCV
 ident		GENERIC
@@ -30,10 +30,10 @@ options 	VIMAGE			# Subsystem virtualization, e.g. VNET
 options 	INET			# InterNETworking
 options 	INET6			# IPv6 communications protocols
 options 	TCP_HHOOK		# hhook(9) framework for TCP
-options 	IPSEC			# IP (v4/v6) security
 options 	IPSEC_SUPPORT		# Allow kldload of ipsec and tcpmd5
+options		ROUTE_MPATH		# Multipath routing support
 options 	TCP_OFFLOAD		# TCP offload
-options 	SCTP			# Stream Control Transmission Protocol
+options 	SCTP_SUPPORT		# Allow kldload of SCTP
 options 	FFS			# Berkeley Fast Filesystem
 options 	SOFTUPDATES		# Enable FFS soft updates support
 options 	UFS_ACL			# Support for access control lists
@@ -48,6 +48,7 @@ options 	MSDOSFS			# MSDOS Filesystem
 options 	CD9660			# ISO 9660 Filesystem
 options 	PROCFS			# Process filesystem (requires PSEUDOFS)
 options 	PSEUDOFS		# Pseudo-filesystem framework
+options 	TMPFS			# Efficient memory filesystem
 options 	GEOM_PART_GPT		# GUID Partition Tables.
 options 	GEOM_RAID		# Soft RAID functionality.
 options 	GEOM_LABEL		# Provides labelization
@@ -67,6 +68,7 @@ options 	CAPABILITIES		# Capsicum capabilities
 options 	MAC			# TrustedBSD MAC Framework
 options 	KDTRACE_FRAME		# Ensure frames are compiled in
 options 	KDTRACE_HOOKS		# Kernel DTrace hooks
+options 	DDB_CTF			# Kernel ELF linker loads CTF data
 options 	FPE			# Floating-point extension support
 options 	RACCT			# Resource accounting framework
 options 	RACCT_DEFAULT_TO_DISABLED # Set kern.racct.enable=0 by default
@@ -76,6 +78,16 @@ options 	INTRNG
 
 # RISC-V SBI console
 device		rcons
+
+# EXT_RESOURCES pseudo devices
+options 	EXT_RESOURCES
+device		clk
+device		syscon
+device		syscon_power
+device		riscv_syscon
+
+# Bus drivers
+device		pci
 
 # VirtIO support
 device		virtio			# Generic VirtIO bus (required)
@@ -98,10 +110,12 @@ device		uart		# Generic UART driver
 device		uart_lowrisc	# lowRISC UART driver
 device		uart_ns8250	# ns8250-type UART driver
 
+# RTC
+device		goldfish_rtc	# QEMU RTC
 
 # Ethernet drivers
+device		cgem		# Cadence GEM Gigabit Ethernet device
 device		miibus		# MII bus support
-device		cgem		# Cadence Gigabit Ethernet MAC
 device		xae		# Xilinx AXI Ethernet MAC
 
 # DMA support
@@ -127,7 +141,6 @@ options		ZSTDIO			# zstd-compressed kernel and user dumps
 # Pseudo devices.
 device		crypto		# core crypto support
 device		loop		# Network loopback
-device		random		# Entropy device
 device		ether		# Ethernet support
 device		vlan		# 802.1Q VLAN support
 device		tuntap		# Packet tunnel.
@@ -140,4 +153,10 @@ device		firmware	# firmware assist module
 # Note that 'bpf' is required for DHCP.
 device		bpf		# Berkeley packet filter
 
+# Flattened Device Tree
 options 	FDT
+makeoptions	MODULES_EXTRA+="dtb/sifive"
+
+# SiFive device drivers
+device		fu540spi
+include		"../sifive/std.sifive"

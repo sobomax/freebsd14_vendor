@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a150322d1a44f1339513318469fc85cb36573468 $");
+__FBSDID("$FreeBSD: 286876e553e338313731b9f82610fead093f45b8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -263,5 +263,3 @@ ipfw_nat64stl(struct ip_fw_chain *chain, struct ip_fw_args *args,
 	args->m = NULL;
 	return (IP_FW_NAT64);
 }
-
-

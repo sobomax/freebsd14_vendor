@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 158f4415aaca80300393afff783573a16f75ecf5 $
+# $FreeBSD: 1b41ae81565ceb72eabde407de4e21f7423a657d $
 
 .include <src.opts.mk>
 
@@ -13,6 +13,7 @@ SUBDIR=	${_atf} \
 	${_mail.local} \
 	${_makewhatis.local} \
 	${_mknetid} \
+	${_phttpget} \
 	${_pppoed} \
 	rc \
 	revnetgroup \
@@ -48,6 +49,10 @@ SUBDIR+=	bootpd
 SUBDIR+=	fingerd
 .endif
 
+.if ${MK_FREEBSD_UPDATE} != "no" || ${MK_PORTSNAP} != "no"
+_phttpget=	phttpget
+.endif
+
 .if ${MK_FTP} != "no"
 SUBDIR+=	ftpd
 .endif
@@ -75,6 +80,7 @@ _tftp-proxy=	tftp-proxy
 
 .if !defined(NO_PIC) && !defined(NO_RTLD)
 _rtld-elf=	rtld-elf
+SUBDIR.${MK_LIB32}+=	rtld-elf32
 .endif
 
 .if ${MK_RBOOTD} != "no"

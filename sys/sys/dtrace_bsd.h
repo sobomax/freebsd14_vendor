@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 577e27333b6a0a24a34552c28f3fe5d32166ffcc $
+ * $FreeBSD: 10d67cf699c425285adf1fb464a452fa7df7485c $
  *
  * This file contains BSD shims for Sun's DTrace code.
  */
@@ -164,6 +164,11 @@ extern dtrace_nfsclient_nfs23_done_probe_func_t
  */
 size_t	kdtrace_proc_size(void);
 size_t	kdtrace_thread_size(void);
+
+void	kdtrace_proc_ctor(struct proc *p);
+void	kdtrace_proc_dtor(struct proc *p);
+void	kdtrace_thread_ctor(struct thread *td);
+void	kdtrace_thread_dtor(struct thread *td);
 
 /*
  * OpenSolaris compatible time functions returning nanoseconds.

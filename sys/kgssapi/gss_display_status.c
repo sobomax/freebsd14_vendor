@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80ba1d8a5d87a42027a3140bbe28f95e3041e441 $");
+__FBSDID("$FreeBSD: 6809bc352b11c8e93e0b68186ad50366eb9833c3 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -64,7 +64,7 @@ gss_display_status(OM_uint32 *minor_status,
 	args.status_type = status_type;
 	args.mech_type = mech_type;
 	args.message_context = *message_context;
-	
+
 	bzero(&res, sizeof(res));
 	stat = gssd_display_status_1(&args, &res, cl);
 	CLNT_RELEASE(cl);

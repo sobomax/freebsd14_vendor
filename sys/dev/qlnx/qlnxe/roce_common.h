@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2e46cddb55dee568ffddf20cd1c023bf7a8a45a2 $
+ * $FreeBSD: 97dd885ad977d8c2617947c18c7c0598127b2d43 $
  *
  */
 
@@ -44,7 +44,6 @@
 #define ROCE_MAX_QPS				(32*1024)
 #define ROCE_DCQCN_NP_MAX_QPS  (64)	/* notification point max QPs*/
 #define ROCE_DCQCN_RP_MAX_QPS  (64)		/* reaction point max QPs*/
-
 
 /*
  * Affiliated asynchronous events / errors enumeration

@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 7c748030802572360a103854ac20792f9aab1854 $
+ * $FreeBSD: 83473e883b170468ff27b8e1a96a6ce0ece32dbb $
  */
 
 /*
@@ -229,21 +229,9 @@ crfind(int crid)
 
 	bzero(&find, sizeof(find));
 	find.crid = crid;
-	if (ioctl(devcrypto(), CRIOFINDDEV, &find) == -1)
+	if (ioctl(devcrypto(), CIOCFINDDEV, &find) == -1)
 		err(1, "ioctl(CIOCFINDDEV): crid %d", crid);
 	return find.name;
-}
-
-int
-crget(void)
-{
-	int fd;
-
-	if (ioctl(devcrypto(), CRIOGET, &fd) == -1)
-		err(1, "ioctl(CRIOGET)");
-	if (fcntl(fd, F_SETFD, 1) == -1)
-		err(1, "fcntl(F_SETFD) (crget)");
-	return fd;
 }
 
 char
@@ -259,7 +247,7 @@ rdigit(void)
 void
 runtest(struct alg *ealg, struct alg *alg, int count, int size, u_long cmd, struct timeval *tv)
 {
-	int i, fd = crget();
+	int i, fd = devcrypto();
 	struct timeval start, stop, dt;
 	char *cleartext, *ciphertext, *originaltext, *key;
 	struct session2_op sop;

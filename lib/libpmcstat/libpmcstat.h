@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3f5f2689f6b36573d40816d965ffb85c56284588 $
+ * $FreeBSD: 8e8d94b116d86aedfc0b1f13932af6e2a0d7fb73 $
  */
 
 #ifndef	_LIBPMCSTAT_H_
@@ -107,8 +107,9 @@ struct pmcstat_args {
 #define	FLAGS_HAS_CPUMASK		0x00040000	/* -c */
 #define	FLAG_HAS_DURATION		0x00080000	/* -l secs */
 #define	FLAG_DO_WIDE_GPROF_HC		0x00100000	/* -e */
-#define	FLAG_SKIP_TOP_FN_RES		0x00200000	/* -I */
+#define	FLAG_SKIP_TOP_FN_RES		0x00200000	/* -A */
 #define	FLAG_FILTER_THREAD_ID		0x00400000	/* -L */
+#define	FLAG_SHOW_OFFSET		0x00800000	/* -I */
 
 	int	pa_required;		/* required features */
 	int	pa_pplugin;		/* pre-processing plugin */

@@ -1,4 +1,4 @@
-# $FreeBSD: d80c9876aee072bbe70bfb202e10e796a4c91f7f $
+# $FreeBSD: c1c72299bdf77a95076f463114454535174b6a25 $
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 SUBDIR+=	include
@@ -31,5 +31,7 @@ SUBDIR+=	xray-profiling
 .endif # amd64
 
 SUBDIR+=	profile
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

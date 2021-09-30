@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78c80c28937577c927f2b365817b996351099828 $");
+__FBSDID("$FreeBSD: c08d772ddb9b5d2b978bb0dbe08e6d7190583d19 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -220,10 +220,10 @@ gpioths_dht_readbytes(struct gpioths_softc *sc)
 #ifdef GPIOTHS_DEBUG
 	/* Debug bits */
 	for (i = 0; i < GPIOTHS_DHT_CYCLES; i++)
-		device_printf(dev, "%d: %d %d\n", i, calibrations[i],
+		device_printf(sc->dev, "%d: %d %d\n", i, calibrations[i],
 		    intervals[i]);
 
-	device_printf(dev, "len=%d, data=%x, crc=%x/%x\n", avglen, value, crc,
+	device_printf(sc->dev, "len=%d, data=%x, crc=%x/%x\n", avglen, value, crc,
 	    calc);
 #endif /* GPIOTHS_DEBUG */
 

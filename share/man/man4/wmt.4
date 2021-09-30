@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: f778a07a598319eff022ff269edfa9c82e3b91db $
+.\" $FreeBSD: e09fc5286fe26a78e9e3751e328f7e1e52e90b33 $
 .\"
 .Dd August 19, 2017
 .Dt WMT 4
@@ -36,6 +36,7 @@ your kernel configuration file:
 .Bd -ragged -offset indent
 .Cd "device wmt"
 .Cd "device usb"
+.Cd "device hid"
 .Cd "device evdev"
 .Ed
 .Pp
@@ -72,10 +73,6 @@ The
 driver was written by
 .An Vladimir Kondratyev Aq Mt wulf@FreeBSD.org .
 .Sh BUGS
-.Nm
-works only with touchscreens now.
-Neither pens nor touchpads are supported.
-.Pp
 .Nm
 cannot act like
 .Xr sysmouse 4 ,

@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 49db81e6095474a6b835914481ef09c22fb5b707 $
+ * $FreeBSD: b9535c7c124d06361e328150043153ff5184d5ac $
  * $Whistle: ng_bpf.c,v 1.3 1999/12/03 20:30:23 archie Exp $
  */
 
@@ -479,7 +479,6 @@ ng_bpf_rcvdata(hook_p hook, item_p item)
 ready:
 	/* See if we got a match and find destination hook */
 	if (len > 0) {
-
 		/* Update stats */
 		/* XXX atomically? */
 		hip->stats.recvMatchFrames++;

@@ -1,4 +1,4 @@
-# $FreeBSD: 21fff8e2ea5155b08e6a60c83770e3162f19d1c4 $
+# $FreeBSD: 165082e917472d6a47c49072a3d3a748887a1c3c $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,8 @@ PACKAGE=	tests
 MAN=
 BINDIR=		${TESTSBASE}/sys/cddl/zfs/bin
 SCRIPTSDIR=	${TESTSBASE}/sys/cddl/zfs/bin
+
+WARNS?=		0
 
 SCRIPTS+=	bsddisks.ksh
 SCRIPTS+=	dircmp.ksh

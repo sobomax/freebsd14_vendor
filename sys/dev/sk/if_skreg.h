@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 85d3f14ea625e1483e842c70b93f941a81149425 $
+ * $FreeBSD: 5a4f18e9e851aae755cf960249b07dc89fec1880 $
  */
 
 /*-
@@ -132,7 +132,6 @@
  * blocks are actually used. Most registers are 32 bits wide, but
  * there are a few 16-bit and 8-bit ones as well.
  */
-
 
 /* Start of remappable register window. */
 #define SK_WIN_BASE		0x0080

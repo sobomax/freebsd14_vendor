@@ -2,7 +2,7 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  * Copyright (c) 2017 Marius Strobl <marius@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9459b9141ca48204deb1999404dd443cb3230ae $");
+__FBSDID("$FreeBSD: 5e821586f7229cac99c54b98e8a2fe49e2f09837 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -156,7 +156,8 @@ static const char *errmsg[] =
 	"NO MEMORY"
 };
 
-static SYSCTL_NODE(_hw, OID_AUTO, mmcsd, CTLFLAG_RD, NULL, "mmcsd driver");
+static SYSCTL_NODE(_hw, OID_AUTO, mmcsd, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+    "mmcsd driver");
 
 static int mmcsd_cache = 1;
 SYSCTL_INT(_hw_mmcsd, OID_AUTO, cache, CTLFLAG_RDTUN, &mmcsd_cache, 0,
@@ -1431,7 +1432,7 @@ mmcsd_task(void *arg)
 	struct mmcsd_softc *sc;
 	struct bio *bp;
 	device_t dev, mmcbus;
-	int err, sz;
+	int bio_error, err, sz;
 
 	part = arg;
 	sc = part->sc;
@@ -1439,6 +1440,7 @@ mmcsd_task(void *arg)
 	mmcbus = sc->mmcbus;
 
 	while (1) {
+		bio_error = 0;
 		MMCSD_DISK_LOCK(part);
 		do {
 			if (part->running == 0)
@@ -1480,18 +1482,18 @@ mmcsd_task(void *arg)
 			if (block < part->eend && end > part->eblock)
 				part->eblock = part->eend = 0;
 			block = mmcsd_rw(part, bp);
-		} else if (bp->bio_cmd == BIO_DELETE) {
+		} else if (bp->bio_cmd == BIO_DELETE)
 			block = mmcsd_delete(part, bp);
-		}
+		else
+			bio_error = EOPNOTSUPP;
 release:
 		MMCBUS_RELEASE_BUS(mmcbus, dev);
 		if (block < end) {
-			bp->bio_error = EIO;
+			bp->bio_error = (bio_error == 0) ? EIO : bio_error;
 			bp->bio_resid = (end - block) * sz;
 			bp->bio_flags |= BIO_ERROR;
-		} else {
+		} else
 			bp->bio_resid = 0;
-		}
 		biodone(bp);
 	}
 out:

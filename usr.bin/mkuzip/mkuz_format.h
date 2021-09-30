@@ -23,15 +23,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 817c0121ed85537b132304eb72cbcdd6e503ce61 $
+ * $FreeBSD: ddee771eab87e1ee9999b15d6341a0cdd64a8432 $
  */
 
-DEFINE_RAW_METHOD(f_init, void *, uint32_t);
-DEFINE_RAW_METHOD(f_compress, struct mkuz_blk *, void *, const struct mkuz_blk *);
+DEFINE_RAW_METHOD(f_compress_bound, size_t, size_t);
+DEFINE_RAW_METHOD(f_init, void *, int *);
+DEFINE_RAW_METHOD(f_compress, void, void *, const struct mkuz_blk *, struct mkuz_blk *);
 
 struct mkuz_format {
+	const char *option;
         const char *magic;
         const char *default_sufx;
+        f_compress_bound_t f_compress_bound;
         f_init_t f_init;
         f_compress_t f_compress;
 };

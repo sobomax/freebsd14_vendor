@@ -31,7 +31,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: fe2527ae9680b0fffd15c1a97ae47e649f9036d7 $";
+  "$FreeBSD: fb7a235b2f493bea1c43fa54da48d67404d88424 $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -74,10 +74,10 @@ link_status(int s __unused, const struct ifaddrs *ifa)
 	    sdl->sdl_type == IFT_BRIDGE) && sdl->sdl_alen == ETHER_ADDR_LEN) {
 		ether_format = ether_ntoa((struct ether_addr *)LLADDR(sdl));
 		if (f_ether != NULL && strcmp(f_ether, "dash") == 0) {
-			for (format_char = strchr(ether_format, ':');
-			    format_char != NULL;
-			    format_char = strchr(ether_format, ':'))
+			while ((format_char = strchr(ether_format, ':')) !=
+			    NULL) {
 				*format_char = '-';
+			}
 		}
 		printf("\tether %s\n", ether_format);
 	} else {

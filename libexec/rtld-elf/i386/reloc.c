@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 67b9828887feecf8e4dd8110c900e595c8588c03 $
+ * $FreeBSD: 7f8ecfa40f8f5498655a14923093b2e5c98e1015 $
  */
 
 /*
@@ -145,6 +145,10 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 		/* No need to check for NULL here */
 	} else
 		cache = NULL;
+
+	/* Appease some compilers. */
+	symval = 0;
+	def = NULL;
 
 	rellim = (const Elf_Rel *)((const char *)obj->rel + obj->relsize);
 	for (rel = obj->rel;  rel < rellim;  rel++) {
@@ -496,12 +500,6 @@ ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
 		cpu_stdext_feature = p[1];
 		cpu_stdext_feature2 = p[2];
 	}
-}
-
-void
-pre_init(void)
-{
-
 }
 
 void

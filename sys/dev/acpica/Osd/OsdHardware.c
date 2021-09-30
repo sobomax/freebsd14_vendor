@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20e2eeaa1f99208b3ef4a9b3bacf1d88d936b088 $");
+__FBSDID("$FreeBSD: 67952416f507244e66eaba21846df50e06a7c736 $");
 
 #include <contrib/dev/acpica/include/acpi.h>
 
@@ -118,7 +118,6 @@ AcpiOsReadPciConfiguration(ACPI_PCI_ID *PciId, UINT32 Register, UINT64 *Value,
     return (AE_OK);
 #endif
 }
-
 
 ACPI_STATUS
 AcpiOsWritePciConfiguration (ACPI_PCI_ID *PciId, UINT32 Register,

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7282953947bc384956bf852b731de6e3f8ea828a $
+ * $FreeBSD: 481ae5c6d93c8f3ba401e107e21b553f4fe7f572 $
  */
 
 #ifndef _POWERPC_MACHDEP_H_
@@ -35,6 +35,5 @@ void booke_disable_l2_cache(void);
 void booke_enable_l1_cache(void);
 void booke_enable_l2_cache(void);
 void booke_enable_bpred(void);
-void booke_init_tlb(vm_paddr_t);
 
 #endif /* _POWERPC_MACHDEP_H_ */

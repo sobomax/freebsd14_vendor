@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 75c016447ac20038418717d1e3bf70c957c009de $
+ * $FreeBSD: f3b5b6938ef12ae32592fc2c0cde5d878fb0d05a $
  */
 
 /*
@@ -40,6 +40,9 @@
 
 #include <sys/uio.h>
 #include <sys/unistd.h>
+
+struct vm_snapshot_meta;
+
 
 /*
  * BLOCKIF_IOV_MAX is the maximum number of scatter/gather entries in
@@ -74,5 +77,13 @@ int	blockif_flush(struct blockif_ctxt *bc, struct blockif_req *breq);
 int	blockif_delete(struct blockif_ctxt *bc, struct blockif_req *breq);
 int	blockif_cancel(struct blockif_ctxt *bc, struct blockif_req *breq);
 int	blockif_close(struct blockif_ctxt *bc);
+#ifdef BHYVE_SNAPSHOT
+void	blockif_pause(struct blockif_ctxt *bc);
+void	blockif_resume(struct blockif_ctxt *bc);
+int	blockif_snapshot_req(struct blockif_req *br,
+    struct vm_snapshot_meta *meta);
+int	blockif_snapshot(struct blockif_ctxt *bc,
+    struct vm_snapshot_meta *meta);
+#endif
 
 #endif /* _BLOCK_IF_H_ */

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b796c371da3d0ddeada2a2978957402b19cdc522 $");
+__FBSDID("$FreeBSD: d93f8a21a4f0133d077234d768a967ecfd3bbed3 $");
 
 #include "opt_uart.h"
 
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: b796c371da3d0ddeada2a2978957402b19cdc522 $");
 #include "bhnd_chipc_if.h"
 
 #include "bcm_machdep.h"
-
 
 static int
 uart_chipc_probe(device_t dev)

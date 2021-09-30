@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6a92a2164d7057d8a7ccca44758c7e3b160a102 $");
+__FBSDID("$FreeBSD: 23b02693cf4873392331f0c4832f9d6c9281c43a $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -205,6 +205,8 @@ bi_load32(char *args, int *howtop, int *bootdevp, vm_offset_t *bip, vm_offset_t 
     /* pad to a page boundary */
     addr = roundup(addr, PAGE_SIZE);
 
+    addr = build_font_module(addr);
+
     /* copy our environment */
     envp = addr;
     addr = bi_copyenv(addr);
@@ -225,6 +227,7 @@ bi_load32(char *args, int *howtop, int *bootdevp, vm_offset_t *bip, vm_offset_t 
 #ifdef LOADER_GELI_SUPPORT
     geli_export_key_metadata(kfp);
 #endif
+    bi_load_vbe_data(kfp);
 
     /* Figure out the size and location of the metadata */
     *modulep = addr;

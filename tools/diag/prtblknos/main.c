@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 51d5b135a5eaa1cdd6ea0f45e4c9b69916e560ee $
+ * $FreeBSD: 25a7177609221bdaf31645658e724a7a53b05d27 $
  */
 
 #include <ufs/ffs/fs.h>
@@ -39,15 +39,16 @@ union dinode {
 	struct ufs2_dinode *dp2;
 };
 
-void prtblknos(struct uufsd *disk, union dinode *dp);
+void prtblknos(struct fs *fs, union dinode *dp);
+
+struct uufsd disk;
 
 int
 main(argc, argv)
 	int argc;
 	char *argv[];
 {
-	struct uufsd disk;
-	union dinode *dp;
+	union dinodep dp;
 	struct fs *fs;
 	struct stat sb;
 	struct statfs sfb;
@@ -98,11 +99,11 @@ main(argc, argv)
 			(void)printf("%s (inode #%jd): ", filename,
 			    (intmax_t)inonum);
 
-		if ((error = getino(&disk, (void **)&dp, inonum, NULL)) < 0)
-			warn("Read of inode %jd on %s failed",
-			    (intmax_t)inonum, fsname);
+		if ((error = getinode(&disk, &dp, inonum)) < 0)
+			warn("Read of inode %jd on %s failed: %s",
+			    (intmax_t)inonum, fsname, disk.d_error);
 
-		prtblknos(&disk, dp);
+		prtblknos(fs, (union dinode *)dp.dp1);
 	}
 	exit(0);
 }

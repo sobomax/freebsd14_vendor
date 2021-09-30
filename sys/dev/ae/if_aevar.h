@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 030f3604dd1611a15df58d35c97aab6b4493e1c6 $
+ * $FreeBSD: b6010e30ec8486b62c3b96741b9ce3a12c7c4e8e $
  */
 
 #ifndef IF_AEVAR_H
@@ -123,7 +123,7 @@ typedef struct ae_softc	{
 	struct task		int_task;
 	struct task		link_task;
 	struct taskqueue	*tq;
-	
+
 	/* DMA tags. */
 	bus_dma_tag_t		dma_parent_tag;
 	bus_dma_tag_t		dma_rxd_tag;
@@ -136,7 +136,7 @@ typedef struct ae_softc	{
 	bus_addr_t		dma_rxd_busaddr;
 	bus_addr_t		dma_txd_busaddr;
 	bus_addr_t		dma_txs_busaddr;
-	
+
 	char			*rxd_base_dma;	/* Start of allocated area. */
 	ae_rxd_t		*rxd_base;	/* Start of RxD ring. */
 	char			*txd_base;	/* Start of TxD ring. */

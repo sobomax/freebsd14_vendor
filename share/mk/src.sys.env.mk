@@ -1,4 +1,4 @@
-# $FreeBSD: 6f8dcbf22c1ccaf32f9253dbbada87dda71d2cf7 $
+# $FreeBSD: 6f11489bfd2fc13e817bce99518a181ba0bc6932 $
 
 # early setup only see also src.sys.mk
 
@@ -61,8 +61,9 @@ MAKEOBJDIRPREFIX:=	${_saveMAKEOBJDIRPREFIX}
 .include <bsd.mkopt.mk>
 
 # Top-level installs should not use meta mode as it may prevent installing
-# based on cookies.
-.if make(*install*) && ${.MAKE.LEVEL} == 0
+# based on cookies. It's fine with filemon though.
+.if !empty(META_MODE:Mnofilemon) && \
+  make(*install*) && ${.MAKE.LEVEL} == 0
 META_MODE=	normal
 MK_META_MODE=	no
 .export MK_META_MODE

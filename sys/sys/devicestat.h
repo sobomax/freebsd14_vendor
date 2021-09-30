@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e3059ce83a5bd4b88119868639cf8418a67009d9 $
+ * $FreeBSD: af3f536e82968e77c41cd563b7fc596d9869a92f $
  */
 
 #ifndef _DEVICESTAT_H
@@ -196,6 +196,7 @@ struct devstat *devstat_new_entry(const void *dev_name, int unit_number,
 void devstat_remove_entry(struct devstat *ds);
 void devstat_start_transaction(struct devstat *ds, const struct bintime *now);
 void devstat_start_transaction_bio(struct devstat *ds, struct bio *bp);
+void devstat_start_transaction_bio_t0(struct devstat *ds, struct bio *bp);
 void devstat_end_transaction(struct devstat *ds, u_int32_t bytes, 
 			     devstat_tag_type tag_type,
 			     devstat_trans_flags flags,

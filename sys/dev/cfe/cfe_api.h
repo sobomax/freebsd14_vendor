@@ -33,7 +33,7 @@
  *    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  *    OR OTHERWISE), EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a068f58f11b13f2b187e2241a7bf1189301e6afa $
+ * $FreeBSD: 164e2e4da33246cc3a9263406b9a164bb7cfa504 $
  */
 
 /*  *********************************************************************
@@ -63,13 +63,13 @@
  * CFE_API_* can be defined here as desired.
  */
 /* Begin customization. */
+#include <sys/types.h>
 #include <sys/stdint.h>		/* All of the typedefs.  */
 #include <sys/systm.h>		/* strlen() prototype.  */
 
 #define	CFE_API_ALL
 #define	cfe_strlen(x)	strlen(x)
 /* End customization. */
-
 
 /*  *********************************************************************
     *  Constants
@@ -122,7 +122,6 @@ typedef struct {
     int64_t fwi_bootarea_pa;		/* PA of boot area */
     int64_t fwi_bootarea_size;	        /* size of boot area */
 } cfe_fwinfo_t;
-
 
 /*
  * cfe_strlen is handled specially: If already defined, it has been

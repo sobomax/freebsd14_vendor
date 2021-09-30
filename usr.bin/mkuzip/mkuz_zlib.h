@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 55e57a610b4bbae69ca3a64c526231f01c7f464e $
+ * $FreeBSD: ad653b935f22df4a394d0ce398f0f34ed0ba8820 $
  */
 
 #define DEFAULT_SUFX_ZLIB       ".uzip"
@@ -32,5 +32,6 @@
     "(kldstat -qm g_uzip||kldload geom_uzip)>&-&&" \
     "mount_cd9660 /dev/`mdconfig -af $0`.uzip $1\nexit $?\n"
 
-void *mkuz_zlib_init(uint32_t);
-struct mkuz_blk *mkuz_zlib_compress(void *, const struct mkuz_blk *);
+size_t mkuz_zlib_cbound(size_t);
+void *mkuz_zlib_init(int *);
+void mkuz_zlib_compress(void *, const struct mkuz_blk *, struct mkuz_blk *);

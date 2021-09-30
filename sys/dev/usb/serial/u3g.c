@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: c30d21c5c7a377b20b14d23ae99baae976a0c6ba $
+ * $FreeBSD: fcff316d8d3afde8ceea8d715739cf98a325f660 $
  */
 
 /*
@@ -30,12 +30,11 @@
  *
  */
 
-
+#include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/stdint.h>
 #include <sys/stddef.h>
-#include <sys/param.h>
 #include <sys/queue.h>
-#include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>
@@ -67,7 +66,8 @@
 #ifdef USB_DEBUG
 static int u3g_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, u3g, CTLFLAG_RW, 0, "USB 3g");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, u3g, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB 3g");
 SYSCTL_INT(_hw_usb_u3g, OID_AUTO, debug, CTLFLAG_RWTUN,
     &u3g_debug, 0, "Debug level");
 #endif
@@ -133,7 +133,6 @@ static void u3g_stop_write(struct ucom_softc *ucom);
 static void u3g_poll(struct ucom_softc *ucom);
 static void u3g_free(struct ucom_softc *ucom);
 
-
 static void u3g_test_autoinst(void *, struct usb_device *,
 		struct usb_attach_arg *);
 static int u3g_driver_loaded(struct module *mod, int what, void *arg);
@@ -141,7 +140,6 @@ static int u3g_driver_loaded(struct module *mod, int what, void *arg);
 static eventhandler_tag u3g_etag;
 
 static const struct usb_config u3g_config[U3G_N_TRANSFER] = {
-
 	[U3G_BULK_WR] = {
 		.type = UE_BULK,
 		.endpoint = UE_ADDR_ANY,
@@ -723,7 +721,6 @@ u3g_sael_m460_init(struct usb_device *udev)
 	}
 
 	for (n = 0; n != nitems(setup); n++) {
-
 		memcpy(&req, setup[n], sizeof(req));
 
 		len = UGETW(req.wLength);

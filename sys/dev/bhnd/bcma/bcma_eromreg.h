@@ -20,7 +20,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: 844f98fa17d915fa74f856cca5914b6034d8a1fc $
+ * $FreeBSD: e1bde43a0c4f7cea7b1d662e4ea17234d8eabfb3 $
  */
 
 #ifndef	_BCMA_BCMA_EROM_REG_H_
@@ -104,7 +104,6 @@
 #define	BCMA_EROM_MPORT_NUM_SHIFT	8
 #define	BCMA_EROM_MPORT_ID_MASK		0x000000F0	/* AXI master ID (unique per master). */
 #define	BCMA_EROM_MPORT_ID_SHIFT	4
-
 
 /* EROM Slave Port MMIO Region Descriptor */
 #define	BCMA_EROM_REGION_BASE_MASK	0xFFFFF000	/* region base address */

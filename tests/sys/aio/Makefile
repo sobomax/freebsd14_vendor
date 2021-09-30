@@ -1,4 +1,4 @@
-# $FreeBSD: ef44036bf3d82c2331700a22f098351b42cc041d $
+# $FreeBSD: db9da144c43bdcac069d6c8f52b14b08dd2ea911 $
 
 TESTSDIR=	${TESTSBASE}/sys/aio
 
@@ -16,7 +16,5 @@ LIBADD.aio_test+=	util rt
 LIBADD.lio_test+=	rt
 
 CFLAGS+=	-I${.CURDIR:H:H}
-
-WARNS?=	6
 
 .include <bsd.test.mk>

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: cf7d55a4369721ee3b7effeb8c0a6acc1c10a3bd $
+# $FreeBSD: 037a308fa826e9c75a486f49954f6cc581af7417 $
 
 set -e
 
@@ -38,8 +38,8 @@ trap "rm -f $tmpfile" EXIT
 ${ECHO} creating osreldate.h from newvers.sh
 
 set +e
-VARS_ONLY=1
-. "${NEWVERS_SH:=$CURDIR/../sys/conf/newvers.sh}" || exit 1
+COPYRIGHT=$(sh ${NEWVERS_SH:=$CURDIR/../sys/conf/newvers.sh} -c) || exit 1
+eval $(sh ${NEWVERS_SH} -V RELDATE) || exit 1
 set -e
 cat > $tmpfile <<EOF
 $COPYRIGHT

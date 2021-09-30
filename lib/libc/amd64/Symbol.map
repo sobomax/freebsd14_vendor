@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: ad7fa5dd2a285dbbf50616295339fb8be95ded52 $
+ * $FreeBSD: 0655bd5eeb3694959f044d5ccb1338185c479691 $
  */
 
 /*
@@ -58,9 +58,7 @@ FBSD_1.6 {
  */
 FBSDprivate_1.0 {
 	/* PSEUDO syscalls */
-	__sys_getlogin;
 	_getlogin;
-	__sys_exit;
 
 	_set_tp;
 	___longjmp;
@@ -70,6 +68,5 @@ FBSDprivate_1.0 {
 	signalcontext;
 	__siglongjmp;
 	_brk;
-	__sys_vfork;
 	_vfork;
 };

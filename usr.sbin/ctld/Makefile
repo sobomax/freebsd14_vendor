@@ -1,4 +1,4 @@
-# $FreeBSD: b038ebd524cc90e7d75b11c2157ec8e20a1685d1 $
+# $FreeBSD: 08dcb79d0d84e78f9813c9b891279f678febf7ea $
 
 .include <src.opts.mk>
 
@@ -20,7 +20,6 @@ LIBADD=		bsdxml md sbuf util ucl m nv
 YFLAGS+=	-v
 CLEANFILES=	y.tab.c y.tab.h y.output
 
-WARNS?=		6
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
 .if ${MK_ISCSI} != "no"

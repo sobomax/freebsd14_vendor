@@ -1,4 +1,4 @@
-/* $FreeBSD: b5a5409c2582e54ee8241b62560892dabc0dbc1d $ */
+/* $FreeBSD: b940633e0cfdfa0a06a8af920de5e1c11f8dfa2b $ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -250,7 +250,7 @@ msdosfs_access(struct vop_access_args *ap)
 	}
 
 	return (vaccess(vp->v_type, file_mode, pmp->pm_uid, pmp->pm_gid,
-	    ap->a_accmode, ap->a_cred, NULL));
+	    ap->a_accmode, ap->a_cred));
 }
 
 static int
@@ -378,7 +378,7 @@ msdosfs_setattr(struct vop_setattr_args *ap)
 		if (vp->v_mount->mnt_flag & MNT_RDONLY)
 			return (EROFS);
 		if (cred->cr_uid != pmp->pm_uid) {
-			error = priv_check_cred(cred, PRIV_VFS_ADMIN, 0);
+			error = priv_check_cred(cred, PRIV_VFS_ADMIN);
 			if (error)
 				return (error);
 		}
@@ -427,7 +427,7 @@ msdosfs_setattr(struct vop_setattr_args *ap)
 			gid = pmp->pm_gid;
 		if (cred->cr_uid != pmp->pm_uid || uid != pmp->pm_uid ||
 		    (gid != pmp->pm_gid && !groupmember(gid, cred))) {
-			error = priv_check_cred(cred, PRIV_VFS_CHOWN, 0);
+			error = priv_check_cred(cred, PRIV_VFS_CHOWN);
 			if (error)
 				return (error);
 		}
@@ -498,7 +498,7 @@ msdosfs_setattr(struct vop_setattr_args *ap)
 		if (vp->v_mount->mnt_flag & MNT_RDONLY)
 			return (EROFS);
 		if (cred->cr_uid != pmp->pm_uid) {
-			error = priv_check_cred(cred, PRIV_VFS_ADMIN, 0);
+			error = priv_check_cred(cred, PRIV_VFS_ADMIN);
 			if (error)
 				return (error);
 		}
@@ -758,7 +758,6 @@ msdosfs_write(struct vop_write_args *ap)
 			 */
 			error = bread(thisvp, bn, pmp->pm_bpcluster, cred, &bp);
 			if (error) {
-				brelse(bp);
 				break;
 			}
 		}
@@ -849,15 +848,15 @@ msdosfs_fsync(struct vop_fsync_args *ap)
 	* Non-critical metadata for associated directory entries only
 	* gets synced accidentally, as in most file systems.
 	*/
-	if (ap->a_waitfor == MNT_WAIT) {
+	if (ap->a_waitfor != MNT_NOWAIT) {
 		devvp = VTODE(ap->a_vp)->de_pmp->pm_devvp;
 		vn_lock(devvp, LK_EXCLUSIVE | LK_RETRY);
 		allerror = VOP_FSYNC(devvp, MNT_WAIT, ap->a_td);
-		VOP_UNLOCK(devvp, 0);
+		VOP_UNLOCK(devvp);
 	} else
 		allerror = 0;
 
-	error = deupdat(VTODE(ap->a_vp), ap->a_waitfor == MNT_WAIT);
+	error = deupdat(VTODE(ap->a_vp), ap->a_waitfor != MNT_NOWAIT);
 	if (allerror == 0)
 		allerror = error;
 	return (allerror);
@@ -1010,7 +1009,7 @@ abortit:
 		    (fcnp->cn_flags & ISDOTDOT) ||
 		    (tcnp->cn_flags & ISDOTDOT) ||
 		    (ip->de_flag & DE_RENAME)) {
-			VOP_UNLOCK(fvp, 0);
+			VOP_UNLOCK(fvp);
 			error = EINVAL;
 			goto abortit;
 		}
@@ -1041,7 +1040,7 @@ abortit:
 	 * call to doscheckpath().
 	 */
 	error = VOP_ACCESS(fvp, VWRITE, tcnp->cn_cred, tcnp->cn_thread);
-	VOP_UNLOCK(fvp, 0);
+	VOP_UNLOCK(fvp);
 	if (VTODE(fdvp)->de_StartCluster != VTODE(tdvp)->de_StartCluster)
 		newparent = 1;
 	if (doingdirectory && newparent) {
@@ -1110,7 +1109,7 @@ abortit:
 	if ((fcnp->cn_flags & SAVESTART) == 0)
 		panic("msdosfs_rename: lost from startdir");
 	if (!newparent)
-		VOP_UNLOCK(tdvp, 0);
+		VOP_UNLOCK(tdvp);
 	if (relookup(fdvp, &fvp, fcnp) == 0)
 		vrele(fdvp);
 	if (fvp == NULL) {
@@ -1120,7 +1119,7 @@ abortit:
 		if (doingdirectory)
 			panic("rename: lost dir entry");
 		if (newparent)
-			VOP_UNLOCK(tdvp, 0);
+			VOP_UNLOCK(tdvp);
 		vrele(tdvp);
 		vrele(ap->a_fvp);
 		return 0;
@@ -1140,9 +1139,9 @@ abortit:
 	if (xp != ip) {
 		if (doingdirectory)
 			panic("rename: lost dir entry");
-		VOP_UNLOCK(fvp, 0);
+		VOP_UNLOCK(fvp);
 		if (newparent)
-			VOP_UNLOCK(fdvp, 0);
+			VOP_UNLOCK(fdvp);
 		vrele(ap->a_fvp);
 		xp = NULL;
 	} else {
@@ -1165,8 +1164,8 @@ abortit:
 		if (error) {
 			memcpy(ip->de_Name, oldname, 11);
 			if (newparent)
-				VOP_UNLOCK(fdvp, 0);
-			VOP_UNLOCK(fvp, 0);
+				VOP_UNLOCK(fdvp);
+			VOP_UNLOCK(fvp);
 			goto bad;
 		}
 		/*
@@ -1186,8 +1185,8 @@ abortit:
 		if (error) {
 			/* XXX should downgrade to ro here, fs is corrupt */
 			if (newparent)
-				VOP_UNLOCK(fdvp, 0);
-			VOP_UNLOCK(fvp, 0);
+				VOP_UNLOCK(fdvp);
+			VOP_UNLOCK(fvp);
 			goto bad;
 		}
 		if (!doingdirectory) {
@@ -1196,8 +1195,8 @@ abortit:
 			if (error) {
 				/* XXX should downgrade to ro here, fs is corrupt */
 				if (newparent)
-					VOP_UNLOCK(fdvp, 0);
-				VOP_UNLOCK(fvp, 0);
+					VOP_UNLOCK(fdvp);
+				VOP_UNLOCK(fvp);
 				goto bad;
 			}
 			if (ip->de_dirclust == MSDOSFSROOT)
@@ -1207,7 +1206,7 @@ abortit:
 		}
 		reinsert(ip);
 		if (newparent)
-			VOP_UNLOCK(fdvp, 0);
+			VOP_UNLOCK(fdvp);
 	}
 
 	/*
@@ -1225,8 +1224,7 @@ abortit:
 			      NOCRED, &bp);
 		if (error) {
 			/* XXX should downgrade to ro here, fs is corrupt */
-			brelse(bp);
-			VOP_UNLOCK(fvp, 0);
+			VOP_UNLOCK(fvp);
 			goto bad;
 		}
 		dotdotp = (struct direntry *)bp->b_data + 1;
@@ -1240,7 +1238,7 @@ abortit:
 			bdwrite(bp);
 		else if ((error = bwrite(bp)) != 0) {
 			/* XXX should downgrade to ro here, fs is corrupt */
-			VOP_UNLOCK(fvp, 0);
+			VOP_UNLOCK(fvp);
 			goto bad;
 		}
 	}
@@ -1253,7 +1251,7 @@ abortit:
 	 * namecache entries that were installed for this direntry.
 	 */
 	cache_purge(fvp);
-	VOP_UNLOCK(fvp, 0);
+	VOP_UNLOCK(fvp);
 bad:
 	if (xp)
 		vput(tvp);
@@ -1593,7 +1591,6 @@ msdosfs_readdir(struct vop_readdir_args *ap)
 			break;
 		error = bread(pmp->pm_devvp, bn, blsize, NOCRED, &bp);
 		if (error) {
-			brelse(bp);
 			return (error);
 		}
 		n = min(n, blsize - bp->b_resid);
@@ -1741,6 +1738,7 @@ out:
 static int
 msdosfs_bmap(struct vop_bmap_args *ap)
 {
+	struct fatcache savefc;
 	struct denode *dep;
 	struct mount *mp;
 	struct msdosfsmount *pmp;
@@ -1767,6 +1765,20 @@ msdosfs_bmap(struct vop_bmap_args *ap)
 	if (error != 0 || (ap->a_runp == NULL && ap->a_runb == NULL))
 		return (error);
 
+	/*
+	 * Prepare to back out updates of the fatchain cache after the one
+	 * for the first block done by pcbmap() above.  Without the backout,
+	 * then whenever the caller doesn't do i/o to all of the blocks that
+	 * we find, the single useful cache entry would be too far in advance
+	 * of the actual i/o to work for the next sequential i/o.  Then the
+	 * FAT would be searched from the beginning.  With the backout, the
+	 * FAT is searched starting at most a few blocks early.  This wastes
+	 * much less time.  Time is also wasted finding more blocks than the
+	 * caller will do i/o to.  This is necessary because the runlength
+	 * parameters are output-only.
+	 */
+	savefc = dep->de_fc[FC_LASTMAP];
+
 	mp = vp->v_mount;
 	maxio = mp->mnt_iosize_max / mp->mnt_stat.f_iosize;
 	bnpercn = de_cn2bn(pmp, 1);
@@ -1788,10 +1800,12 @@ msdosfs_bmap(struct vop_bmap_args *ap)
 		}
 		*ap->a_runb = run - 1;
 	}
+	dep->de_fc[FC_LASTMAP] = savefc;
 	return (0);
 }
 
-SYSCTL_NODE(_vfs, OID_AUTO, msdosfs, CTLFLAG_RW, 0, "msdos filesystem");
+SYSCTL_NODE(_vfs, OID_AUTO, msdosfs, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "msdos filesystem");
 static int use_buf_pager = 1;
 SYSCTL_INT(_vfs_msdosfs, OID_AUTO, use_buf_pager, CTLFLAG_RWTUN,
     &use_buf_pager, 0,
@@ -1950,3 +1964,4 @@ struct vop_vector msdosfs_vnodeops = {
 	.vop_write =		msdosfs_write,
 	.vop_vptofh =		msdosfs_vptofh,
 };
+VFS_VOP_VECTOR_REGISTER(msdosfs_vnodeops);

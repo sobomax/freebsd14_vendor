@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
-# $FreeBSD: d5ae58da2b3168a3abf61222e76b51a6fb9d6836 $
+# $FreeBSD: b4076d3a30a178ead3c53a38ec9eff0522b252dd $
 
 .include <src.opts.mk>
 
@@ -8,8 +8,7 @@ PROG=	ls
 SRCS=	cmp.c ls.c print.c util.c
 LIBADD=	util
 
-.if !defined(RELEASE_CRUNCH) && \
-	${MK_LS_COLORS} != no
+.if ${MK_LS_COLORS} != no
 CFLAGS+= -DCOLORLS
 LIBADD+=	termcapw
 .endif

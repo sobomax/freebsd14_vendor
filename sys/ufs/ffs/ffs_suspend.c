@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b8ad1e7696b4a43b2d378a386812790fbd94487c $
+ * $FreeBSD: a7fef099cd7034abea7cecf6dd603b6e97dbf372 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8ad1e7696b4a43b2d378a386812790fbd94487c $");
+__FBSDID("$FreeBSD: a7fef099cd7034abea7cecf6dd603b6e97dbf372 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -196,10 +195,10 @@ ffs_susp_suspend(struct mount *mp)
 	 * device.  The permissions can change after we unlock the vnode;
 	 * it's harmless.
 	 */
-	vn_lock(ump->um_devvp, LK_EXCLUSIVE | LK_RETRY);
-	error = VOP_ACCESS(ump->um_devvp, VREAD | VWRITE,
+	vn_lock(ump->um_odevvp, LK_EXCLUSIVE | LK_RETRY);
+	error = VOP_ACCESS(ump->um_odevvp, VREAD | VWRITE,
 	    curthread->td_ucred, curthread);
-	VOP_UNLOCK(ump->um_devvp, 0);
+	VOP_UNLOCK(ump->um_odevvp);
 	if (error != 0)
 		return (error);
 #ifdef MAC

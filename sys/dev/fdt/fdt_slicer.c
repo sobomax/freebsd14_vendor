@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f480162ed6d6bcd6647c8b398db442915cdcf8f6 $");
+__FBSDID("$FreeBSD: 462cb4d80fe57121e4bc27cb463ac88d55981c84 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -182,4 +182,5 @@ static moduledata_t fdt_slicer_mod = {
 };
 
 DECLARE_MODULE(fdt_slicer, fdt_slicer_mod, SI_SUB_DRIVERS, SI_ORDER_THIRD);
+MODULE_DEPEND(fdt_slicer, g_flashmap, 0, 0, 0);
 MODULE_VERSION(fdt_slicer, 1);

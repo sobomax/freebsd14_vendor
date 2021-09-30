@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: a51c024617e1fd20ef1e53ae0310938bb1999573 $
+ * $FreeBSD: 024bc47eb72595538c9147713680fe9415b05d5c $
  * $Whistle: ng_lmi.c,v 1.38 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -1077,4 +1077,3 @@ nglmi_disconnect(hook_p hook)
 		ng_rmnode_self(NG_HOOK_NODE(hook));
 	return (0);
 }
-

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4f10a878d372e3aa67b8d4d90c8052ddc7fc59b7 $
+ * $FreeBSD: 553da69835380089854cb896705ce3fe3429105c $
  */
 
 #ifndef _OPENSOLARIS_SYS_ASSFAIL_H_
@@ -48,9 +48,7 @@ void assfail3(const char *, uintmax_t, const char *, uintmax_t, const char *,
 #ifndef HAVE_ASSFAIL
 extern int aok;
 
-__inline int __assfail(const char *expr, const char *file, int line);
-
-__inline int
+static __inline int
 __assfail(const char *expr, const char *file, int line)
 {
 

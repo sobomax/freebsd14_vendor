@@ -28,14 +28,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a7f324e099ccf7ecfc272aad7e291fc3cedf9e5e $
+ * $FreeBSD: df03d9aa24e4ba774dc62b74b9665ba007ee63cb $
  */
 
 /**
  * @file
  *
  */
-
 
 #if !defined(__OCS_STATS_H__)
 #define __OCS_STATS_H__

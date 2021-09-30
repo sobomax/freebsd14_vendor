@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_compat.h	1.8 1/14/96
- * $FreeBSD: 29590298d79f36a0714d2c0c0e1730859a387dc8 $
+ * $FreeBSD: ac20b527ab341553d471dcd061d8e095ade51188 $
  * Id: ip_compat.h,v 2.142.2.57 2007/10/10 09:51:42 darrenr Exp $
  */
 
@@ -12,15 +12,7 @@
 #define	__IP_COMPAT_H__
 
 #ifndef	__P
-# ifdef	__STDC__
 #  define	__P(x)  x
-# else
-#  define	__P(x)  ()
-# endif
-#endif
-#ifndef	__STDC__
-# undef		const
-# define	const
 #endif
 
 #if defined(_KERNEL) || defined(KERNEL) || defined(__KERNEL__)
@@ -63,11 +55,7 @@
 #endif
 
 
-# ifdef __STDC__
 #  define IPL_EXTERN(ep) ipl##ep
-# else
-#  define IPL_EXTERN(ep) ipl/**/ep
-# endif
 
 /*
  * This is a workaround for <sys/uio.h> troubles on FreeBSD and OpenBSD.

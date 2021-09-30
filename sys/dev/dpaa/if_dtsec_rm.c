@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a8782ee1fa2e6e60a33560cc1ac3ac51a32a7ab $");
+__FBSDID("$FreeBSD: d42973915b6b397ebbac8c3c91e0e4c930c5d92f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -86,10 +86,10 @@ enum dtsec_rm_pool_params {
 	DTSEC_RM_POOL_FI_MAX_SIZE	= 256,
 };
 
+#define	DTSEC_RM_FQR_RX_CHANNEL		e_QM_FQ_CHANNEL_POOL1
+#define	DTSEC_RM_FQR_TX_CONF_CHANNEL	e_QM_FQ_CHANNEL_SWPORTAL0
 enum dtsec_rm_fqr_params {
-	DTSEC_RM_FQR_RX_CHANNEL		= e_QM_FQ_CHANNEL_POOL1,
 	DTSEC_RM_FQR_RX_WQ		= 1,
-	DTSEC_RM_FQR_TX_CONF_CHANNEL	= e_QM_FQ_CHANNEL_SWPORTAL0,
 	DTSEC_RM_FQR_TX_WQ		= 1,
 	DTSEC_RM_FQR_TX_CONF_WQ		= 1
 };

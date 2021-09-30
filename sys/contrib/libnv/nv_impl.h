@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 56e01a2bfb31ed89405aec41fa511b33a9c036cc $
+ * $FreeBSD: 14f2fb8f2c11faef27c07ec3c487b19b868d6e3a $
  */
 
 #ifndef	_NV_IMPL_H_
@@ -103,6 +103,7 @@ bool nvlist_move_nvpair(nvlist_t *nvl, nvpair_t *nvp);
 
 void nvlist_set_parent(nvlist_t *nvl, nvpair_t *parent);
 void nvlist_set_array_next(nvlist_t *nvl, nvpair_t *ele);
+nvpair_t *nvlist_get_array_next_nvpair(nvlist_t *nvl);
 
 const nvpair_t *nvlist_get_nvpair(const nvlist_t *nvl, const char *name);
 

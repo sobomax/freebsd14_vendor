@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: e2a546f450d4b8428ae5e3f7e587e2e7e0829dfd $*/
+/*$FreeBSD: 9a7716c5e5a2e8f93e9dc0d572916bdbef5b7366 $*/
 
 
 #ifndef _IAVF_H_
@@ -42,6 +42,13 @@
 #define IAVF_MAX_FILTERS	128
 #define IAVF_MAX_QUEUES		16
 #define IAVF_AQ_TIMEOUT		(1 * hz)
+
+/* MacVlan Flags */
+#define IAVF_FILTER_USED	(u16)(1 << 0)
+#define IAVF_FILTER_VLAN	(u16)(1 << 1)
+#define IAVF_FILTER_ADD		(u16)(1 << 2)
+#define IAVF_FILTER_DEL		(u16)(1 << 3)
+#define IAVF_FILTER_MC		(u16)(1 << 4)
 
 #define IAVF_FLAG_AQ_ENABLE_QUEUES            (u32)(1 << 0)
 #define IAVF_FLAG_AQ_DISABLE_QUEUES           (u32)(1 << 1)

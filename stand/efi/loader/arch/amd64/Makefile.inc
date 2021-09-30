@@ -1,4 +1,4 @@
-# $FreeBSD: b6d824ce57e45ac2806276db4b9f19f3844c3763 $
+# $FreeBSD: f64adf08ec13a3f8c0cb4b9c62c72d29cc7566d2 $
 
 SRCS+=	amd64_tramp.S \
 	start.S \
@@ -11,5 +11,5 @@ SRCS+=	nullconsole.c \
 	comconsole.c \
 	spinconsole.c
 
-CFLAGS+=	-fPIC -DTERM_EMU
+CFLAGS+=	-fPIC
 LDFLAGS+=	-Wl,-znocombreloc

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 680fbbb81459ee0fd6f3b64fbc996265ddd1a06e $
+ * $FreeBSD: 980d37df205b4ab6a7b57224ba61895b8ab2856f $
  */
 
 /*
@@ -218,7 +218,6 @@ msgbuf_addstr(struct msgbuf *mbp, int pri, const char *str, int filter_cr)
 	 * insert a newline before this string.
 	 */
 	if (mbp->msg_lastpri != pri && (mbp->msg_flags & MSGBUF_NEEDNL) != 0) {
-
 		msgbuf_do_addchar(mbp, &seq, '\n');
 		mbp->msg_flags &= ~MSGBUF_NEEDNL;
 	}
@@ -239,7 +238,6 @@ msgbuf_addstr(struct msgbuf *mbp, int pri, const char *str, int filter_cr)
 
 		if (msgbuf_show_timestamp && needtime == 1 &&
 		    (mbp->msg_flags & MSGBUF_NEEDNL) == 0) {
-
 			snprintf(buf, sizeof(buf), "[%jd] ",
 			    (intmax_t)time_uptime);
 			for (j = 0; buf[j] != '\0'; j++)

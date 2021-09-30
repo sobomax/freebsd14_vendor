@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: cb1459fe6987d26ff92704154bbe2cfb650c1cd0 $
+.\" $FreeBSD: f3a01b6880e11bd86f8f8da6d965bc644013f0aa $
 .\"
 .Dd November 13, 2012
 .Dt NG_CAR 4
@@ -163,7 +163,7 @@ Return node statistics as
 .Bd -literal
 struct ng_car_hookstats {
 	uint64_t passed_pkts;	/* Counter for passed packets */
-	uint64_t droped_pkts;	/* Counter for dropped packets */
+	uint64_t dropped_pkts;	/* Counter for dropped packets */
 	uint64_t green_pkts;	/* Counter for green packets */
 	uint64_t yellow_pkts;	/* Counter for yellow packets */
 	uint64_t red_pkts;	/* Counter for red packets */

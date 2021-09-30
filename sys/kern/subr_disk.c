@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea364a2a1dfa051fe64c4ebaca8ca6db6ff5ebf8 $");
+__FBSDID("$FreeBSD: c08ba99d01fd06e87b8da7203717e2921b0e2910 $");
 
 #include "opt_geom.h"
 
@@ -26,7 +26,7 @@ __FBSDID("$FreeBSD: ea364a2a1dfa051fe64c4ebaca8ca6db6ff5ebf8 $");
 #include <sys/sysctl.h>
 #include <geom/geom_disk.h>
 
-static int bioq_batchsize = 0;
+static int bioq_batchsize = 128;
 SYSCTL_INT(_debug, OID_AUTO, bioq_batchsize, CTLFLAG_RW,
     &bioq_batchsize, 0, "BIOQ batch size");
 
@@ -172,6 +172,8 @@ bioq_remove(struct bio_queue_head *head, struct bio *bp)
 		head->insert_point = NULL;
 
 	TAILQ_REMOVE(&head->queue, bp, bio_queue);
+	if (TAILQ_EMPTY(&head->queue))
+		head->batched = 0;
 	head->total--;
 }
 
@@ -201,6 +203,7 @@ bioq_insert_tail(struct bio_queue_head *head, struct bio *bp)
 
 	TAILQ_INSERT_TAIL(&head->queue, bp, bio_queue);
 	head->total++;
+	head->batched = 0;
 	head->insert_point = bp;
 	head->last_offset = bp->bio_offset;
 }

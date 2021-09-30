@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6828602781f3950e3f1c5201546c34032de9f95f $
+ * $FreeBSD: 2c927346a96d91de404bc5c4280583b0fb45533b $
  */
 #ifndef _NETSMB_DEV_H_
 #define _NETSMB_DEV_H_
@@ -194,7 +194,6 @@ int  smb_usr_t2request(struct smb_share *ssp, struct smbioc_t2rq *data,
 	struct smb_cred *scred);
 int  smb_dev2share(int fd, int mode, struct smb_cred *scred,
 	struct smb_share **sspp, struct smb_dev **ssdp);
-
 
 #endif /* _KERNEL */
 

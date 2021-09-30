@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ae04270f398a271177ea90088bc6af78997d1bd $
+ * $FreeBSD: 574a404fc3022e535276d2b8ae8cf108649b7625 $
  */
 
 #ifndef _MACHINE_RTAS_H_
@@ -60,4 +60,3 @@ cell_t rtas_token_lookup(const char *method);
 #define	RTAS_VENDOR_ERROR_BEGIN		-9004
 
 #endif /* _MACHINE_RTAS_H_ */
-

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c0bf84565cfed2d02895905ad9e8a4ef8610388e $
+ * $FreeBSD: 29b5c19eed1ec2c56d8563586de73fa2cdd047de $
  *
  * Copyright (c) 2011, 2012, 2013, 2015, 2016, Juniper Networks, Inc.
  * All rights reserved.
@@ -64,7 +64,8 @@ static int mac_veriexec_late;
 static int sysctl_mac_veriexec_algorithms(SYSCTL_HANDLER_ARGS);
 
 SYSCTL_PROC(_security_mac_veriexec, OID_AUTO, algorithms,
-    CTLTYPE_STRING | CTLFLAG_RD, 0, 0, sysctl_mac_veriexec_algorithms, "A",
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+    0, 0, sysctl_mac_veriexec_algorithms, "A",
     "Verified execution supported hashing algorithms");
 
 static int

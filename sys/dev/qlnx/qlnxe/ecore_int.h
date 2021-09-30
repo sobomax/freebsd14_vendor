@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d2a98e630a354296f645e4d574b5a2dd9f7777b7 $
+ * $FreeBSD: 0215b96bcfb9cde05aeceecf156edc91fc2777bd $
  *
  */
 
@@ -290,4 +290,3 @@ enum _ecore_status_t ecore_pglueb_rbc_attn_handler(struct ecore_hwfn *p_hwfn,
 						   struct ecore_ptt *p_ptt);
 
 #endif /* __ECORE_INT_H__ */
-

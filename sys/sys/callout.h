@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: e4d91c69da3fdc08e6310770d66a0fa21d77c0fb $
+ * $FreeBSD: 41b47a32d9a132c1e4e1dbfeb84210c248091aef $
  */
 
 #ifndef _SYS_CALLOUT_H_
@@ -61,10 +61,6 @@
 #define	C_ABSOLUTE		0x0200 /* event time is absolute. */
 #define	C_PRECALC		0x0400 /* event time is pre-calculated. */
 #define	C_CATCH			0x0800 /* catch signals, used by pause_sbt(9) */
-
-struct callout_handle {
-	struct callout *callout;
-};
 
 /* Flags for callout_stop_safe() */
 #define	CS_DRAIN		0x0001 /* callout_drain(), wait allowed */

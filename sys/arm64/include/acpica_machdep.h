@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7f8139f9134b522d35d353fe8dbbc34b07a13c4d $
+ * $FreeBSD: f17e5dcfdbf1b2c00410fe9fdc3c95e6b67b2bb4 $
  */
 
 /******************************************************************************
@@ -35,7 +35,6 @@
 
 #ifndef __ACPICA_MACHDEP_H__
 #define	__ACPICA_MACHDEP_H__
-
 
 #ifdef _KERNEL
 

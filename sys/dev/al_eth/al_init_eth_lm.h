@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fbe70115f2f103b174e015220efe01622823d288 $
+ * $FreeBSD: 9e2563f4f46f098d9c1eda13cf951cf0f0ce4718 $
  */
 
 /**
@@ -132,7 +132,6 @@ enum al_eth_lm_led_config_speed {
 struct al_eth_lm_led_config_data {
 	enum al_eth_lm_led_config_speed	speed;
 };
-
 
 struct al_eth_lm_context {
 	struct al_hal_eth_adapter	*adapter;

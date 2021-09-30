@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 060dc4b710aa8884533501bd42a74169b222e6fe $
+# $FreeBSD: e7ded5f42d82f7704f602df836c3be10639d5104 $
 
 ident		VYBRID
 include 	"std.armv7"
@@ -24,7 +24,6 @@ include 	"../freescale/vybrid/std.vybrid"
 
 options 	SCHED_4BSD		# 4BSD scheduler
 options 	PLATFORM		# Platform based SoC
-#options 	NANDFS			# NAND Filesystem
 #options 	SMP			# Enable multiple cores
 
 # NFS root from boopt/dhcp
@@ -35,7 +34,6 @@ options 	PLATFORM		# Platform based SoC
 #options 	BOOTP_WIRED_TO=ffec0
 
 #options 	ROOTDEVNAME=\"nfs:10.5.0.1:/tftpboot/cosmic\"
-#options 	ROOTDEVNAME=\"nandfs:/dev/gnand0s.root\"
 options 	ROOTDEVNAME=\"ufs:/dev/da0\"
 
 options 	MUTEX_NOINLINE
@@ -57,7 +55,6 @@ device		sdhci			# generic sdhci
 # Pseudo devices
 
 device		loop
-device		random
 device		pty
 device		md
 device		gpio
@@ -78,8 +75,6 @@ device		pass
 #device		ata
 #device		atadisk
 #device		mvs
-
-device		nand
 
 # Serial ports
 device		uart
@@ -107,6 +102,9 @@ device		vf_spi
 device		vt
 device		kbdmux
 device		ukbd
+
+# HID support
+device		hid			# Generic HID support
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data

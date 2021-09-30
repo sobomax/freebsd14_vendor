@@ -23,16 +23,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b3e6cb330c26a58dd98931a44e0d74b344646aa3 $
+ * $FreeBSD: 0d82cda6fa1f40d2df4739f14e4cd482ba5e506f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b3e6cb330c26a58dd98931a44e0d74b344646aa3 $");
+__FBSDID("$FreeBSD: 0d82cda6fa1f40d2df4739f14e4cd482ba5e506f $");
 
 #include <stdlib.h>
 
 #include "libc_private.h"
-#include "crtbrand.c"
 #include "ignore_init.c"
 
 typedef void (*fptr)(void);

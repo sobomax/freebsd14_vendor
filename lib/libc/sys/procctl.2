@@ -27,7 +27,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 80408b73d6162e9d8497920f20b30373dd45cff6 $
+.\" $FreeBSD: f85825d8cc6f3b30a7435d8a75c4aee94b320902 $
 .\"
 .Dd June 13, 2020
 .Dt PROCCTL 2
@@ -94,7 +94,7 @@ Same notes as for
 .Dv PROC_ASLR_FORCE_ENABLE
 apply.
 .It Dv PROC_ASLR_NOFORCE
-Use system-wide configured policy for ASLR.
+Use the system-wide configured policy for ASLR.
 .El
 .It Dv PROC_ASLR_STATUS
 Returns the current status of ASLR enablement for the target process.
@@ -111,6 +111,47 @@ following values is written:
 If the currently executed image in the process itself has ASLR enabled,
 the
 .Dv PROC_ASLR_ACTIVE
+flag is or-ed with the value listed above.
+.It Dv PROC_PROTMAX_CTL
+Controls implicit application of PROT_MAX protection equal to the
+.Fa prot
+argument of the
+.Xr mmap 2
+syscall, in the target process.
+The
+.Fa data
+parameter must point to the integer variable holding one of the following
+values:
+.Bl -tag -width PROC_PROTMAX_FORCE_DISABLE
+.It Dv PROC_PROTMAX_FORCE_ENABLE
+Enables implicit PROT_MAX application,
+even if it is disabled system-wide by the sysctl
+.Va vm.imply_prot_max .
+The image flag might still prevent the enablement.
+.It Dv PROC_PROTMAX_FORCE_DISABLE
+Request that implicit application of PROT_MAX be disabled.
+Same notes as for
+.Dv PROC_PROTMAX_FORCE_ENABLE
+apply.
+.It Dv PROC_PROTMAX_NOFORCE
+Use the system-wide configured policy for PROT_MAX.
+.El
+.It Dv PROC_PROTMAX_STATUS
+Returns the current status of implicit PROT_MAX enablement for the
+target process.
+The
+.Fa data
+parameter must point to the integer variable, where one of the
+following values is written:
+.Bl -tag -width PROC_PROTMAX_FORCE_DISABLE
+.It Dv PROC_PROTMAX_FORCE_ENABLE
+.It Dv PROC_PROTMAX_FORCE_DISABLE
+.It Dv PROC_PROTMAX_NOFORCE
+.El
+.Pp
+If the currently executed image in the process itself has implicit PROT_MAX
+application enabled, the
+.Dv PROC_PROTMAX_ACTIVE
 flag is or-ed with the value listed above.
 .It Dv PROC_SPROTECT
 Set process protection state.
@@ -442,7 +483,7 @@ and
 must be the either caller's pid or zero, with no difference in effect.
 The value is cleared for child processes
 and when executing set-user-ID or set-group-ID binaries.
-.Fa arg
+.Fa data
 must point to a value of type
 .Vt int
 indicating the signal
@@ -457,7 +498,7 @@ must be
 and
 .Fa id
 must be the either caller's pid or zero, with no difference in effect.
-.Fa arg
+.Fa data
 must point to a memory location that can hold a value of type
 .Vt int .
 If signal delivery has not been requested, it will contain zero
@@ -555,7 +596,8 @@ privilege might use this option.
 .El
 .It Dv PROC_KPTI_STATUS
 Returns the current KPTI status for the specified process.
-.Fa data must point to the integer variable, which returns the
+.Fa data
+must point to the integer variable, which returns the
 following statuses:
 .Bl -tag -width PROC_KPTI_CTL_DISABLE_ON_EXEC
 .It Dv PROC_KPTI_CTL_ENABLE_ON_EXEC
@@ -583,7 +625,7 @@ will fail if:
 .Bl -tag -width Er
 .It Bq Er EFAULT
 The
-.Fa arg
+.Fa data
 parameter points outside the process's allocated address space.
 .It Bq Er EINVAL
 The
@@ -603,7 +645,7 @@ and
 .Fa id .
 .It Bq Er EINVAL
 An invalid operation or flag was passed in
-.Fa arg
+.Fa data
 for a
 .Dv PROC_SPROTECT
 command.
@@ -672,9 +714,13 @@ or invalid signal number.
 .El
 .Sh SEE ALSO
 .Xr dtrace 1 ,
+.Xr proccontrol 1 ,
+.Xr protect 1 ,
 .Xr cap_enter 2 ,
 .Xr kill 2 ,
 .Xr ktrace 2 ,
+.Xr mmap 2 ,
+.Xr mprotect 2 ,
 .Xr ptrace 2 ,
 .Xr wait 2 ,
 .Xr capsicum 4 ,

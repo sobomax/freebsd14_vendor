@@ -31,7 +31,7 @@
 .\"
 .\"     @(#)pwd.1	8.2 (Berkeley) 4/28/95
 .\" From: src/bin/pwd/pwd.1,v 1.11 2000/11/20 11:39:39 ru Exp
-.\" $FreeBSD: 7f65668ae7ab2fe565470c54293fc3189a4e7007 $
+.\" $FreeBSD: f9ba929d7fc6fbcd44a9d0dd3cbbd37215c76cf2 $
 .\"
 .Dd June 21, 2011
 .Dt REALPATH 1
@@ -69,6 +69,14 @@ is specified, warnings will not be printed when
 fails.
 .Sh EXIT STATUS
 .Ex -std
+.Sh EXAMPLES
+Show the physical path of the
+.Pa /dev/log
+directory silencing warnings if any:
+.Bd -literal -offset indent
+$ realpath -q /dev/log
+/var/run/log
+.Ed
 .Sh SEE ALSO
 .Xr realpath 3
 .Sh HISTORY

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d9f8199117fbc433aa23cca12b7225877d0bc828 $
+ * $FreeBSD: 1257aaf9554bb94518018796f8fc6d43c3e7bd71 $
  */
 #ifndef _SMBFS_SMBFS_H_
 #define _SMBFS_SMBFS_H_
@@ -43,7 +43,6 @@
 #define	SMBFS_MOUNT_NO_LONG	0x0010
 
 #define	SMBFS_MAXPATHCOMP	256	/* maximum number of path components */
-
 
 /* Layout of the mount control block for an smb file system. */
 struct smbfs_args {

@@ -1,4 +1,6 @@
-# $FreeBSD: 470e1de2dc880122ca8c0151977a43e75721ce1e $
+# $FreeBSD: 104c97d66f45a2abb89aaca7b7dc51e99cb06f7d $
+#
+# NB: Install ports/net-mgmt/libsmi
 
 .PATH:	${SRCTOP}/contrib/bsnmp/gensnmpdef
 
@@ -18,7 +20,5 @@ CFLAGS+=	-I${LOCALBASE}/include
 LDFLAGS+=	-L${LOCALBASE}/lib
 
 LDADD+=	-lsmi
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

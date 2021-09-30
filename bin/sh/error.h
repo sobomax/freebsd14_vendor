@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)error.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: 1872e83773338239caecad8aad08681dfc3c70ca $
+ * $FreeBSD: 3a79dec81b9dcf5169718610586b7026f35e5477 $
  */
 
 /*
@@ -55,9 +55,8 @@ extern volatile sig_atomic_t exception;
 
 /* exceptions */
 #define EXINT 0		/* SIGINT received */
-#define EXERROR 1	/* a generic error */
-#define EXEXEC 2	/* command execution failed */
-#define EXEXIT 3	/* call exitshell(exitstatus) */
+#define EXERROR 1	/* a generic error with exitstatus */
+#define EXEXIT 2	/* call exitshell(exitstatus) */
 
 
 /*
@@ -83,7 +82,7 @@ void exraise(int) __dead2;
 void onint(void) __dead2;
 void warning(const char *, ...) __printflike(1, 2);
 void error(const char *, ...) __printf0like(1, 2) __dead2;
-void exerror(int, const char *, ...) __printf0like(2, 3) __dead2;
+void errorwithstatus(int, const char *, ...) __printf0like(2, 3) __dead2;
 
 
 /*

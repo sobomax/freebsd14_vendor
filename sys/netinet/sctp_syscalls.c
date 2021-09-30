@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7bf7cfba077752877bba5d5155caf33277bb425 $");
+__FBSDID("$FreeBSD: 2697d139300cc2822755d79f4e863da1899199a9 $");
 
 #include "opt_capsicum.h"
 #include "opt_sctp.h"
@@ -153,7 +153,7 @@ sys_sctp_peeloff(td, uap)
 	int error, fd;
 
 	AUDIT_ARG_FD(uap->sd);
-	error = getsock_cap(td, uap->sd, cap_rights_init(&rights, CAP_PEELOFF),
+	error = getsock_cap(td, uap->sd, cap_rights_init_one(&rights, CAP_PEELOFF),
 	    &headfp, &fflag, NULL);
 	if (error != 0)
 		goto done2;
@@ -241,14 +241,14 @@ sys_sctp_generic_sendmsg (td, uap)
 		u_sinfo = &sinfo;
 	}
 
-	cap_rights_init(&rights, CAP_SEND);
+	cap_rights_init_one(&rights, CAP_SEND);
 	if (uap->tolen != 0) {
 		error = getsockaddr(&to, uap->to, uap->tolen);
 		if (error != 0) {
 			to = NULL;
 			goto sctp_bad2;
 		}
-		cap_rights_set(&rights, CAP_CONNECT);
+		cap_rights_set_one(&rights, CAP_CONNECT);
 	}
 
 	AUDIT_ARG_FD(uap->sd);
@@ -350,14 +350,14 @@ sys_sctp_generic_sendmsg_iov(td, uap)
 			return (error);
 		u_sinfo = &sinfo;
 	}
-	cap_rights_init(&rights, CAP_SEND);
+	cap_rights_init_one(&rights, CAP_SEND);
 	if (uap->tolen != 0) {
 		error = getsockaddr(&to, uap->to, uap->tolen);
 		if (error != 0) {
 			to = NULL;
 			goto sctp_bad2;
 		}
-		cap_rights_set(&rights, CAP_CONNECT);
+		cap_rights_set_one(&rights, CAP_CONNECT);
 	}
 
 	AUDIT_ARG_FD(uap->sd);
@@ -472,7 +472,7 @@ sys_sctp_generic_recvmsg(td, uap)
 	int error, fromlen, i, msg_flags;
 
 	AUDIT_ARG_FD(uap->sd);
-	error = getsock_cap(td, uap->sd, cap_rights_init(&rights, CAP_RECV),
+	error = getsock_cap(td, uap->sd, cap_rights_init_one(&rights, CAP_RECV),
 	    &fp, NULL, NULL);
 	if (error != 0)
 		return (error);

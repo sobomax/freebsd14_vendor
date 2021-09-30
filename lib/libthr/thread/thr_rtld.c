@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3239a9dcfb18f33f2506421c4f4283d1b3cdaa7e $");
+__FBSDID("$FreeBSD: 291ca17e2068c96f700b6159effdc4c66ed08465 $");
 
  /*
   * A lockless rwlock for rtld.
@@ -236,6 +236,8 @@ _thr_rtld_init(void)
 	_thr_signal_block(curthread);
 	_rtld_thread_init(&li);
 	_thr_signal_unblock(curthread);
+	_thr_signal_block_check_fast();
+	_thr_signal_block_setup(curthread);
 
 	uc_len = __getcontextx_size();
 	uc = alloca(uc_len);

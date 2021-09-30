@@ -1,4 +1,4 @@
-/* $FreeBSD: 3d9e83df8db2214b8dab617ba46323aa6edf5944 $ */
+/* $FreeBSD: f5b76b3bc59289400f973eb45de31d20ad8ff8dc $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -219,7 +219,7 @@ msc_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&msc_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB Mass Storage device side template");
 	SYSCTL_ADD_U16(&msc_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

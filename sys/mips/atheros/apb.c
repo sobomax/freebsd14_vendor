@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 37819fac2e9ed8b678e04b50233c8e46a37e78ab $");
+__FBSDID("$FreeBSD: 47dd77de18d70b8b4a73616db595ba39a78cf0f4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -356,7 +356,6 @@ apb_filter(void *arg)
 	reg = ATH_READ_REG(AR71XX_MISC_INTR_STATUS);
 	for (irq = 0; irq < APB_NIRQS; irq++) {
 		if (reg & (1 << irq)) {
-
 			switch (ar71xx_soc) {
 			case AR71XX_SOC_AR7240:
 			case AR71XX_SOC_AR7241:
@@ -508,7 +507,6 @@ apb_print_child(device_t bus, device_t child)
 
 	return (retval);
 }
-
 
 static device_method_t apb_methods[] = {
 	DEVMETHOD(bus_activate_resource,	apb_activate_resource),

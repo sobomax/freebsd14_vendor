@@ -1,6 +1,5 @@
-# $FreeBSD: 61a3667481a87913e5978b10128f24b3606d2bcc $
+# $FreeBSD: 94090963a0fbc9caedb466b9e875613c9650b90c $
 
 PROG=   proccontrol
-WARNS?=	6
 
 .include <bsd.prog.mk>

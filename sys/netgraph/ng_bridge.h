@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: fa4736370e92663875f0fb3f36de7bdc8a11f581 $
+ * $FreeBSD: e4b74efbfc5ea0f4f5272b0d796c2bc5db89b557 $
  */
 
 #ifndef _NETGRAPH_NG_BRIDGE_H_
@@ -201,4 +201,3 @@ enum {
 };
 
 #endif /* _NETGRAPH_NG_BRIDGE_H_ */
-

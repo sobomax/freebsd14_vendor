@@ -24,9 +24,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0526f4fbd94c1de1c47ca4ac02593b8d12048fb8 $
+ * $FreeBSD: 6a5f79a2f152f0720684093e9fc03bbf22eb4a33 $
  */
- 
+
 /*
  * DTrace lockstat provider definitions
  */

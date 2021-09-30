@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)un.h	8.3 (Berkeley) 2/19/95
- * $FreeBSD: d9605ae1893eebe8ed9f2d85fbf4e7e6fce252e1 $
+ * $FreeBSD: e024841518143aaed1fa5f39c451eab343cb43ec $
  */
 
 #ifndef _SYS_UN_H_
@@ -44,12 +44,20 @@ typedef	__sa_family_t	sa_family_t;
 #endif
 
 /*
+ * Historically, (struct sockaddr) needed to fit inside an mbuf.
+ * For this reason, UNIX domain sockets were therefore limited to
+ * 104 bytes. While this limit is no longer necessary, it is kept for
+ * binary compatibility reasons.
+ */
+#define	SUNPATHLEN	104
+
+/*
  * Definitions for UNIX IPC domain.
  */
 struct sockaddr_un {
 	unsigned char	sun_len;	/* sockaddr len including null */
 	sa_family_t	sun_family;	/* AF_UNIX */
-	char	sun_path[104];		/* path name (gag) */
+	char	sun_path[SUNPATHLEN];	/* path name (gag) */
 };
 
 #if __BSD_VISIBLE
@@ -59,6 +67,7 @@ struct sockaddr_un {
 /* Socket options. */
 #define	LOCAL_PEERCRED		1	/* retrieve peer credentials */
 #define	LOCAL_CREDS		2	/* pass credentials to receiver */
+#define	LOCAL_CREDS_PERSISTENT	3	/* pass credentials to receiver */
 #define	LOCAL_CONNWAIT		4	/* connects block until accepted */
 
 /* Start of reserved space for third-party socket options. */

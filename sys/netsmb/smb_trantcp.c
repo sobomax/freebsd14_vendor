@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8101993277a35d67d32ffb993f11f0c4e94d8cfe $");
+__FBSDID("$FreeBSD: 051aade512175f0b1e0a38e590c6fbd76fa75e2a $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -600,7 +600,6 @@ abort:
 	return error;
 }
 
-
 static int
 smb_nbst_recv(struct smb_vc *vcp, struct mbuf **mpp, struct thread *td)
 {
@@ -682,7 +681,6 @@ smb_nbst_fatal(struct smb_vc *vcp, int error)
 	return 0;
 }
 
-
 struct smb_tran_desc smb_tran_nbtcp_desc = {
 	SMBT_NBTCP,
 	smb_nbst_create, smb_nbst_done,
@@ -692,4 +690,3 @@ struct smb_tran_desc smb_tran_nbtcp_desc = {
 	smb_nbst_getparam, smb_nbst_setparam,
 	smb_nbst_fatal
 };
-

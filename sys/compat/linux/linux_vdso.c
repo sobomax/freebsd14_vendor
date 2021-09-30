@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 012e1d75c599d1492769629e7511e122c94df167 $");
+__FBSDID("$FreeBSD: 096f2e4248509812db5f4cdd82254e11bd93534f $");
 
 #include "opt_compat.h"
 
@@ -65,7 +65,6 @@ static int __elfN(symstrindex);
 static void
 __elfN(linux_vdso_lookup)(Elf_Ehdr *, struct linux_vdso_sym *);
 
-
 void
 __elfN(linux_vdso_sym_init)(struct linux_vdso_sym *s)
 {
@@ -83,9 +82,10 @@ __elfN(linux_shared_page_init)(char **mapping)
 	obj = vm_pager_allocate(OBJT_PHYS, 0, PAGE_SIZE,
 	    VM_PROT_DEFAULT, 0, NULL);
 	VM_OBJECT_WLOCK(obj);
-	m = vm_page_grab(obj, 0, VM_ALLOC_NOBUSY | VM_ALLOC_ZERO);
-	m->valid = VM_PAGE_BITS_ALL;
+	m = vm_page_grab(obj, 0, VM_ALLOC_ZERO);
 	VM_OBJECT_WUNLOCK(obj);
+	vm_page_valid(m);
+	vm_page_xunbusy(m);
 	addr = kva_alloc(PAGE_SIZE);
 	pmap_qenter(addr, &m, 1);
 	*mapping = (char *)addr;

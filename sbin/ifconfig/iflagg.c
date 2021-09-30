@@ -3,7 +3,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 22858279956053f31fe0783be5e9c0eff8444e32 $";
+  "$FreeBSD: 5be8c67cd72a96386417bc1352b0dbeda055501d $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -30,7 +30,11 @@ static const char rcsid[] =
 
 #include "ifconfig.h"
 
-char lacpbuf[120];	/* LACP peer '[(a,a,a),(p,p,p)]' */
+static struct iflaggparam params = {
+	.lagg_type = LAGG_TYPE_DEFAULT,
+};
+
+static char lacpbuf[120];	/* LACP peer '[(a,a,a),(p,p,p)]' */
 
 static void
 setlaggport(const char *val, int d, int s, const struct afswtch *afp)
@@ -133,6 +137,8 @@ setlaggsetopt(const char *val, int d, int s, const struct afswtch *afp)
 	switch (ro.ro_opts) {
 	case LAGG_OPT_USE_FLOWID:
 	case -LAGG_OPT_USE_FLOWID:
+	case LAGG_OPT_USE_NUMA:
+	case -LAGG_OPT_USE_NUMA:
 	case LAGG_OPT_LACP_STRICT:
 	case -LAGG_OPT_LACP_STRICT:
 	case LAGG_OPT_LACP_TXTEST:
@@ -299,13 +305,38 @@ lagg_status(int s)
 	}
 }
 
+static
+DECL_CMD_FUNC(setlaggtype, arg, d)
+{
+	static const struct lagg_types lt[] = LAGG_TYPES;
+	int i;
+
+	for (i = 0; i < nitems(lt); i++) {
+		if (strcmp(arg, lt[i].lt_name) == 0) {
+			params.lagg_type = lt[i].lt_value;
+			return;
+		}
+	}
+	errx(1, "invalid lagg type: %s", arg);
+}
+
+static void
+lagg_create(int s, struct ifreq *ifr)
+{
+	ifr->ifr_data = (caddr_t) &params;
+	ioctl_ifcreate(s, ifr);
+}
+
 static struct cmd lagg_cmds[] = {
+	DEF_CLONE_CMD_ARG("laggtype",   setlaggtype),
 	DEF_CMD_ARG("laggport",		setlaggport),
 	DEF_CMD_ARG("-laggport",	unsetlaggport),
 	DEF_CMD_ARG("laggproto",	setlaggproto),
 	DEF_CMD_ARG("lagghash",		setlagghash),
 	DEF_CMD("use_flowid",	LAGG_OPT_USE_FLOWID,	setlaggsetopt),
 	DEF_CMD("-use_flowid",	-LAGG_OPT_USE_FLOWID,	setlaggsetopt),
+	DEF_CMD("use_numa",	LAGG_OPT_USE_NUMA,	setlaggsetopt),
+	DEF_CMD("-use_numa",	-LAGG_OPT_USE_NUMA,	setlaggsetopt),
 	DEF_CMD("lacp_strict",	LAGG_OPT_LACP_STRICT,	setlaggsetopt),
 	DEF_CMD("-lacp_strict",	-LAGG_OPT_LACP_STRICT,	setlaggsetopt),
 	DEF_CMD("lacp_txtest",	LAGG_OPT_LACP_TXTEST,	setlaggsetopt),
@@ -331,4 +362,5 @@ lagg_ctor(void)
 	for (i = 0; i < nitems(lagg_cmds);  i++)
 		cmd_register(&lagg_cmds[i]);
 	af_register(&af_lagg);
+	clone_setdefcallback_prefix("lagg", lagg_create);
 }

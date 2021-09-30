@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 06b69f1a95b47be01014d8c3c8b9273d7170ad0c $
+ *	$FreeBSD: e6811f5df2a7ce80672a83075710aac1a7153558 $
  */
 
 /*
@@ -36,17 +36,13 @@
  * Modifications by: Adam Radford
  */
 
-
-
 #ifndef TW_OSL_INCLUDES_H
 
 #define TW_OSL_INCLUDES_H
 
-
 /*
  * All header files needed by the OS Layer.
  */
-
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,7 +72,5 @@
 #include <dev/twa/tw_osl_share.h>
 #include <dev/twa/tw_cl_share.h>
 #include <dev/twa/tw_osl_externs.h>
-
-
 
 #endif /* TW_OSL_INCLUDES_H */

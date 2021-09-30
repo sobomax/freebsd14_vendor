@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a092e27b0a74ffd079c552076fdb8ec3dc3caaaf $");
+__FBSDID("$FreeBSD: 5f07241109f19a9ec9f56a4a8020040b1365c3a1 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -90,7 +90,6 @@ sys_audit(struct thread *td, struct audit_args *uap)
 	 * commit the user audit record.
 	 */
 	if (ar == NULL) {
-
 		/*
 		 * This is not very efficient; we're required to allocate a
 		 * complete kernel audit record just so the user record can
@@ -628,7 +627,7 @@ sys_setauid(struct thread *td, struct setauid_args *uap)
 	if (error)
 		goto fail;
 #endif
-	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT, 0);
+	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT);
 	if (error)
 		goto fail;
 	newcred->cr_audit.ai_auid = id;
@@ -693,7 +692,7 @@ sys_setaudit(struct thread *td, struct setaudit_args *uap)
 	if (error)
 		goto fail;
 #endif
-	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT, 0);
+	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT);
 	if (error)
 		goto fail;
 	bzero(&newcred->cr_audit, sizeof(newcred->cr_audit));
@@ -756,7 +755,7 @@ sys_setaudit_addr(struct thread *td, struct setaudit_addr_args *uap)
 	if (error)
 		goto fail;
 #endif
-	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT, 0);
+	error = priv_check_cred(oldcred, PRIV_AUDIT_SETAUDIT);
 	if (error)
 		goto fail;
 	newcred->cr_audit = aia;
@@ -811,13 +810,13 @@ sys_auditctl(struct thread *td, struct auditctl_args *uap)
 	vp = nd.ni_vp;
 #ifdef MAC
 	error = mac_system_check_auditctl(td->td_ucred, vp);
-	VOP_UNLOCK(vp, 0);
+	VOP_UNLOCK(vp);
 	if (error) {
 		vn_close(vp, AUDIT_CLOSE_FLAGS, td->td_ucred, td);
 		return (error);
 	}
 #else
-	VOP_UNLOCK(vp, 0);
+	VOP_UNLOCK(vp);
 #endif
 	NDFREE(&nd, NDF_ONLY_PNBUF);
 	if (vp->v_type != VREG) {

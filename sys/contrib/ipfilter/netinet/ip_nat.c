@@ -1,4 +1,4 @@
-/*	$FreeBSD: a60f879cdcb4476a4712966bbdeae8b1491a3c99 $	*/
+/*	$FreeBSD: eeaaba1b367beca7c21ac10c49f00d986aa5d28f $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -105,7 +105,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: a60f879cdcb4476a4712966bbdeae8b1491a3c99 $";
+static const char rcsid[] = "@(#)$FreeBSD: eeaaba1b367beca7c21ac10c49f00d986aa5d28f $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -1855,7 +1855,7 @@ ipf_nat_getent(softc, data, getlock)
 	 */
 	if (nat->nat_ptr != NULL)
 		bcopy((char *)nat->nat_ptr, (char *)&ipn->ipn_ipnat,
-		      ipn->ipn_ipnat.in_size);
+		      sizeof(nat->nat_ptr));
 
 	/*
 	 * If we also know the NAT entry has an associated filter rule,
@@ -5116,8 +5116,8 @@ ipf_nat_out(fin, nat, natadd, nflags)
 
 		ipf_fix_outcksum(0, &fin->fin_ip->ip_sum, msumd, 0);
 	}
-#if !defined(_KERNEL) || defined(MENTAT) || defined(__sgi) || \
-    defined(linux) || defined(BRIDGE_IPF) || defined(__FreeBSD__)
+#if !defined(_KERNEL) || defined(MENTAT) || \
+    defined(BRIDGE_IPF) || defined(__FreeBSD__)
 	else {
 		/*
 		 * Strictly speaking, this isn't necessary on BSD
@@ -5631,8 +5631,7 @@ ipf_nat_in(fin, nat, natadd, nflags)
 		}
 		fin->fin_ip->ip_dst = nat->nat_ndstip;
 		fin->fin_daddr = nat->nat_ndstaddr;
-#if !defined(_KERNEL) || defined(MENTAT) || defined(__sgi) || \
-     defined(__osf__) || defined(linux)
+#if !defined(_KERNEL) || defined(MENTAT)
 		ipf_fix_outcksum(0, &fin->fin_ip->ip_sum, ipsumd, 0);
 #endif
 		break;

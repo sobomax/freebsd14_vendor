@@ -24,13 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9053c491ff444adb2fd4f6746bb0460ec48919bb $
+ * $FreeBSD: b112bd83b4ea378aa39752e409062bea04dad5ef $
  */
 
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9053c491ff444adb2fd4f6746bb0460ec48919bb $");
+__FBSDID("$FreeBSD: b112bd83b4ea378aa39752e409062bea04dad5ef $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -127,4 +127,3 @@ DEFINE_CLASS_0(powernv_centaur, powernv_centaur_driver, powernv_centaur_methods,
     sizeof(struct powernv_centaur_softc));
 DRIVER_MODULE(powernv_centaur, ofwbus, powernv_centaur_driver, powernv_centaur_devclass, NULL,
     NULL);
-

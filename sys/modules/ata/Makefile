@@ -1,7 +1,6 @@
-# $FreeBSD: 21d853325824a2de9a8c0ea3c03f8d02ceb55fb5 $
+# $FreeBSD: c7d1b17f5f4056fba550c716a1ccbf49e918cfe8 $
 
 SUBDIR = atacore
-SUBDIR += atacard
 SUBDIR += ataisa
 SUBDIR += atapci 
 

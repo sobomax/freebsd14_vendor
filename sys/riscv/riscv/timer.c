@@ -39,7 +39,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ee5ca2215843e1b6ed5711396184831b8c22174 $");
+__FBSDID("$FreeBSD: 845a2fbed2ffeedeb829ae6c4a0b9c001609093c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,6 +56,7 @@ __FBSDID("$FreeBSD: 5ee5ca2215843e1b6ed5711396184831b8c22174 $");
 
 #include <machine/bus.h>
 #include <machine/cpu.h>
+#include <machine/cpufunc.h>
 #include <machine/intr.h>
 #include <machine/asm.h>
 #include <machine/trap.h>
@@ -91,11 +92,8 @@ static struct timecounter riscv_timer_timecount = {
 static inline uint64_t
 get_cycles(void)
 {
-	uint64_t cycles;
 
-	__asm __volatile("rdtime %0" : "=r" (cycles));
-
-	return (cycles);
+	return (rdtime());
 }
 
 static long

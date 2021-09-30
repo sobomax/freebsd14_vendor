@@ -1,5 +1,0 @@
-# $FreeBSD: 2e33346efd98294d886dd76f8ca9a293f8fe51e1 $
-. ${srcdir}/emulparams/elf32btsmipn32.sh
-. ${srcdir}/emulparams/elf_fbsd.sh
-GENERATE_PIE_SCRIPT=yes
-ALIGNMENT=8

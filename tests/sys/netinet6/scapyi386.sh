@@ -1,4 +1,4 @@
-# $FreeBSD: 48a34305917b28be3d134e3fc011e7ee5e2848b1 $
+# $FreeBSD: 2ff2ebbbe34027aab14351d0e29c7d1f3531f3c7 $
 #-
 # SPDX-License-Identifier: BSD-2-Clause
 #
@@ -37,11 +37,6 @@ scapyi386_head() {
 }
 
 scapyi386_body() {
-
-	if [ "$(atf_config_get ci false)" = "true" ] && \
-		[ "$(uname -p)" = "i386" ]; then
-		atf_skip "https://bugs.freebsd.org/239380"
-	fi
 
 	ids=65533
 	id=`printf "%x" ${ids}`

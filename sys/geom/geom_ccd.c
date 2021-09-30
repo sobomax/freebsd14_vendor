@@ -80,7 +80,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c113a20f0916db3ea3ffe87c5ee36f872142bd8d $");
+__FBSDID("$FreeBSD: 7f4dd3ca11ffb61de1af1afe120cb12855296673 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -233,7 +233,6 @@ g_ccd_freesc(struct ccd_s *sc)
 	g_free(sc);
 }
 
-
 static int
 ccdinit(struct gctl_req *req, struct ccd_s *cs)
 {
@@ -261,7 +260,6 @@ ccdinit(struct gctl_req *req, struct ccd_s *cs)
 			cs->sc_offset = 0;
 		else
 			cs->sc_offset = CCD_OFFSET;
-
 	}
 	for (ix = 0; ix < cs->sc_ndisks; ix++) {
 		ci = &cs->sc_cinfo[ix];
@@ -358,7 +356,6 @@ ccdinterleave(struct ccd_s *cs)
 	daddr_t bn, lbn;
 	int ix;
 	daddr_t size;
-
 
 	/*
 	 * Allocate an interleave table.  The worst case occurs when each
@@ -771,7 +768,7 @@ g_ccd_create(struct gctl_req *req, struct g_class *mp)
 
 	/* Check all providers are valid */
 	for (i = 0; i < *nprovider; i++) {
-		sprintf(buf, "provider%d", i);
+		snprintf(buf, sizeof(buf), "provider%d", i);
 		pp = gctl_get_provider(req, buf);
 		if (pp == NULL)
 			return;
@@ -788,7 +785,7 @@ g_ccd_create(struct gctl_req *req, struct g_class *mp)
 
 	/* Create consumers and attach to all providers */
 	for (i = 0; i < *nprovider; i++) {
-		sprintf(buf, "provider%d", i);
+		snprintf(buf, sizeof(buf), "provider%d", i);
 		pp = gctl_get_provider(req, buf);
 		cp = g_new_consumer(gp);
 		error = g_attach(cp, pp);
@@ -917,7 +914,7 @@ g_ccd_config(struct gctl_req *req, struct g_class *mp, char const *verb)
 	} else if (!strcmp(verb, "destroy geom")) {
 		gp = gctl_get_geom(req, mp, "geom");
 		if (gp != NULL)
-		g_ccd_destroy_geom(req, mp, gp);
+			g_ccd_destroy_geom(req, mp, gp);
 	} else if (!strcmp(verb, "list")) {
 		g_ccd_list(req, mp);
 	} else {

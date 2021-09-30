@@ -26,15 +26,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d865e4910707e3d406b77424cc56bcb3a9c7ab69 $");
+__FBSDID("$FreeBSD: 28cc245c7254032b301af10b19c135b356f25248 $");
 
 #include "opt_platform.h"
 
-#include <sys/types.h>
+#include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/cpuset.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
+#include <sys/lock.h>
 #include <sys/module.h>
 #include <sys/mutex.h>
 #include <sys/param.h>
@@ -374,7 +375,6 @@ static device_method_t a10_aintc_methods[] = {
 	DEVMETHOD(pic_post_filter,	a10_intr_post_filter),
 	DEVMETHOD(pic_post_ithread,	a10_intr_post_ithread),
 	DEVMETHOD(pic_pre_ithread,	a10_intr_pre_ithread),
-
 	{ 0, 0 }
 };
 

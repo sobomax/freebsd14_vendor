@@ -39,7 +39,7 @@
 #include <util.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f5d7104b3f681dc4c6ddd821868cd0844a07f50a $");
+__FBSDID("$FreeBSD: 3628a798db4ca3821c1bee0743498211af033bf0 $");
 
 #ifdef DEBUG
 #define	ELTORITO_DPRINTF(__x)	printf __x
@@ -107,9 +107,11 @@ cd9660_add_boot_disk(iso9660_disk *diskStructure, const char *boot_info)
 	else if (strcmp(sysname, "macppc") == 0 ||
 	         strcmp(sysname, "mac68k") == 0)
 		new_image->system = ET_SYS_MAC;
+	else if (strcmp(sysname, "efi") == 0)
+		new_image->system = ET_SYS_EFI;
 	else {
 		warnx("boot disk system must be "
-		      "i386, powerpc, macppc, or mac68k");
+		      "i386, powerpc, macppc, mac68k, or efi");
 		free(temp);
 		free(new_image);
 		return 0;

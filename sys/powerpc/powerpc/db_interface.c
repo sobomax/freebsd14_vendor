@@ -1,7 +1,6 @@
-/*	$FreeBSD: c16b2584989954dae35a8c49778d4b0a44b1a568 $ */
+/*	$FreeBSD: bc085c2c086ea7c89ca68d6a3f121f08b8d0c669 $ */
 /*	$NetBSD: db_interface.c,v 1.20 2002/05/13 20:30:09 matt Exp $ */
 /*	$OpenBSD: db_interface.c,v 1.2 1996/12/28 06:21:50 rahnds Exp $	*/
-
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -91,4 +90,5 @@ db_show_mdpcpu(struct pcpu *pc)
 
 	db_printf("PPC: hwref   = %#zx\n", pc->pc_hwref);
 	db_printf("PPC: ipimask = %#x\n", pc->pc_ipimask);
+	db_printf("PPC: flags   = %#x\n", pc->pc_flags);
 }

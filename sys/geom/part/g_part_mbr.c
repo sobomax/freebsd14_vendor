@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46c045d1490e2269b689127150ad4c3932a07a54 $");
+__FBSDID("$FreeBSD: 750d417bba5d72c769fb977130d2d31869345394 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -52,7 +52,8 @@ __FBSDID("$FreeBSD: 46c045d1490e2269b689127150ad4c3932a07a54 $");
 FEATURE(geom_part_mbr, "GEOM partitioning class for MBR support");
 
 SYSCTL_DECL(_kern_geom_part);
-static SYSCTL_NODE(_kern_geom_part, OID_AUTO, mbr, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_kern_geom_part, OID_AUTO, mbr,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "GEOM_PART_MBR Master Boot Record");
 
 static u_int enforce_chs = 0;
@@ -274,7 +275,7 @@ g_part_mbr_bootcode(struct g_part_table *basetable, struct g_part_parms *gpp)
 	table = (struct g_part_mbr_table *)basetable;
 	dsn = *(uint32_t *)(table->mbr + DOSDSNOFF);
 	bcopy(gpp->gpp_codeptr, table->mbr, DOSPARTOFF);
-	if (dsn != 0)
+	if (dsn != 0 && !gpp->gpp_skip_dsn)
 		*(uint32_t *)(table->mbr + DOSDSNOFF) = dsn;
 	return (0);
 }

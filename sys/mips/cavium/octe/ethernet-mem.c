@@ -4,7 +4,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Copyright (c) 2003-2007  Cavium Networks (support@cavium.com). All rights
 reserved.
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -30,7 +29,7 @@ AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR W
 *************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99a11c4483da54652a687a211bf3f0ffd490f4bc $");
+__FBSDID("$FreeBSD: ea6297507242e0c70ae4eeb639728af1be39a4e6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,7 +72,6 @@ int cvm_oct_mem_fill_fpa(int pool, int size, int elements)
 	}
 	return (elements - freed);
 }
-
 
 /**
  * Free the supplied hardware pool of mbufs

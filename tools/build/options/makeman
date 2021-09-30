@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This file is in the public domain.
-# $FreeBSD: 167571920dcc03a025a21824ce067b0a05995d9a $
+# $FreeBSD: 328b9faed881772ac063210903df76519fd432ee $
 #
 # This script creates the src.conf.5 man page using template text contained
 # herein and the contents of the WITH_* and WITHOUT_* files in the same
@@ -154,7 +154,8 @@ main()
 .Sh DESCRIPTION
 The
 .Nm
-file contains settings that will apply to every build involving the
+file contains variables that control what components will be generated during
+the build process of the
 .Fx
 source tree; see
 .Xr build 7 .

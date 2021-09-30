@@ -30,11 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 553e0300baad69854685d33216b9117eaa93c297 $
+ * $FreeBSD: 6d3e735a297077d53509f9f12e1017effc2f08df $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 553e0300baad69854685d33216b9117eaa93c297 $");
+__FBSDID("$FreeBSD: 6d3e735a297077d53509f9f12e1017effc2f08df $");
 
 /*
  * bhnd(4) driver mix-in providing shared common methods for
@@ -62,7 +62,6 @@ __FBSDID("$FreeBSD: 553e0300baad69854685d33216b9117eaa93c297 $");
 #include "bcm_mipsvar.h"
 
 #include "bhnd_nexusvar.h"
-
 
 /**
  * Default bhnd_nexus implementation of BHND_BUS_GET_SERVICE_REGISTRY().

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d3a6efa487caeeef4a73f39b4494bf327714b267 $
+ * $FreeBSD: 81df2ec82012ab795cdb2bab30704f9f469133a1 $
  */
 
 #include <sys/param.h>
@@ -64,7 +64,8 @@
 #define DEBUG
 
 #if defined(DEBUG)
-static SYSCTL_NODE(_debug, OID_AUTO, mtkswitch, CTLFLAG_RD, 0, "mtkswitch");
+static SYSCTL_NODE(_debug, OID_AUTO, mtkswitch, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "mtkswitch");
 #endif
 
 static inline int mtkswitch_portforphy(int phy);

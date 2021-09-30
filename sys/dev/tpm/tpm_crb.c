@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b18f8b561559aea2c6c407e21db064ddf029765 $");
+__FBSDID("$FreeBSD: 5345be261d161ef6248e0f73f0a1d967d8e8dd1c $");
 
 #include "tpm20.h"
 
@@ -85,7 +85,6 @@ struct tpmcrb_sc {
 	size_t		rsp_buf_size;
 };
 
-
 int tpmcrb_transmit(struct tpm_sc *sc, size_t size);
 
 static int tpmcrb_acpi_probe(device_t dev);
@@ -105,13 +104,12 @@ char *tpmcrb_ids[] = {"MSFT0101", NULL};
 static int
 tpmcrb_acpi_probe(device_t dev)
 {
-	int err = 0;
+	int err;
 	ACPI_TABLE_TPM23 *tbl;
 	ACPI_STATUS status;
-
-	if (ACPI_ID_PROBE(device_get_parent(dev), dev, tpmcrb_ids) == NULL)
-		return (ENXIO);
-
+	err = ACPI_ID_PROBE(device_get_parent(dev), dev, tpmcrb_ids, NULL);
+	if (err > 0)
+		return (err);
 	/*Find TPM2 Header*/
 	status = AcpiGetTable(ACPI_SIG_TPM2, 1, (ACPI_TABLE_HEADER **) &tbl);
 	if(ACPI_FAILURE(status) ||

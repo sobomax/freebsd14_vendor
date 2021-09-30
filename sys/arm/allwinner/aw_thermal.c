@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 15a7f39dd508e3d343da2eb32abb0fae35fb498b $
+ * $FreeBSD: 90836124ad66acb6fe9af1fe951c07a28298005b $
  */
 
 /*
@@ -31,10 +30,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15a7f39dd508e3d343da2eb32abb0fae35fb498b $");
+__FBSDID("$FreeBSD: 90836124ad66acb6fe9af1fe951c07a28298005b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/eventhandler.h>
 #include <sys/bus.h>
 #include <sys/rman.h>
 #include <sys/kernel.h>
@@ -676,7 +676,7 @@ aw_thermal_attach(device_t dev)
 		SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 		    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 		    OID_AUTO, sc->conf->sensors[i].name,
-		    CTLTYPE_INT | CTLFLAG_RD,
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    sc, i, aw_thermal_sysctl, "IK0",
 		    sc->conf->sensors[i].desc);
 

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b7d83fc2fb0566e41a728e7710b9c9b19e2383ed $");
+__FBSDID("$FreeBSD: 5588d3cb9511fa0723cb6042de51a7e0dcfafdd6 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -47,6 +47,7 @@ __FBSDID("$FreeBSD: b7d83fc2fb0566e41a728e7710b9c9b19e2383ed $");
 #include <sys/file.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
+#include <sys/ktr.h>
 #include <sys/lock.h>
 #include <sys/mbuf.h>
 #include <sys/mutex.h>
@@ -99,7 +100,8 @@ __FBSDID("$FreeBSD: b7d83fc2fb0566e41a728e7710b9c9b19e2383ed $");
 #include "tom/t4_tom.h"
 #include "cxgbei.h"
 
-SYSCTL_NODE(_kern_icl, OID_AUTO, cxgbei, CTLFLAG_RD, 0, "Chelsio iSCSI offload");
+SYSCTL_NODE(_kern_icl, OID_AUTO, cxgbei, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "Chelsio iSCSI offload");
 static int coalesce = 1;
 SYSCTL_INT(_kern_icl_cxgbei, OID_AUTO, coalesce, CTLFLAG_RWTUN,
 	&coalesce, 0, "Try to coalesce PDUs before sending");
@@ -622,7 +624,7 @@ icl_cxgbei_conn_handoff(struct icl_conn *ic, int fd)
 	 * Steal the socket from userland.
 	 */
 	error = fget(curthread, fd,
-	    cap_rights_init(&rights, CAP_SOCK_CLIENT), &fp);
+	    cap_rights_init_one(&rights, CAP_SOCK_CLIENT), &fp);
 	if (error != 0)
 		return (error);
 	if (fp->f_type != DTYPE_SOCKET) {

@@ -1,4 +1,4 @@
-# $FreeBSD: a8491fcb937d4a2a006e0de6d7e428dd61bca26c $
+# $FreeBSD: 561a0ec5fcab86071d01c034d905eec5e286390c $
 
 PACKAGE= tests
 
@@ -15,7 +15,8 @@ SUBDIR_PARALLEL=
 
 afterinstall: install-tests-local
 install-tests-local: .PHONY
-	${INSTALL_SYMLINK} ../local/tests ${DESTDIR}${TESTSDIR}/local
+	${INSTALL_SYMLINK} -T 'package=tests' \
+	    ../local/tests ${DESTDIR}${TESTSDIR}/local
 
 .include "Makefile.inc0"
 .include <bsd.test.mk>

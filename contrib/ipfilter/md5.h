@@ -1,4 +1,4 @@
-/*	$FreeBSD: 914df74355a0581c63c53b3564e33c47434b06fa $	*/
+/*	$FreeBSD: cc09b48e854750017571e5116a3d93d187391076 $	*/
 
 /*
  ***********************************************************************
@@ -42,15 +42,7 @@
 #if !defined(__MD5_INCLUDE__) && !defined(_SYS_MD5_H)
 
 #ifndef __P
-# ifdef __STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
-#endif
-#ifndef __STDC__
-# undef		const
-# define	const
 #endif
 
 /* typedef a 32-bit type */

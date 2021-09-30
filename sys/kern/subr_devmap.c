@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7dace37744e66ac93784d5d0d1f1c9dcaaefe661 $");
+__FBSDID("$FreeBSD: 23baceb0512980455228b765dcc7420106ea69d8 $");
 
 /* Routines for mapping device memory. */
 
@@ -46,7 +46,7 @@ static boolean_t devmap_bootstrap_done = false;
  * The allocated-kva (akva) devmap table and metadata.  Platforms can call
  * devmap_add_entry() to add static device mappings to this table using
  * automatically allocated virtual addresses carved out of the top of kva space.
- * Allocation begins immediately below the ARM_VECTORS_HIGH address.
+ * Allocation begins immediately below the max kernel virtual address.
  */
 #define	AKVA_DEVMAP_MAX_ENTRIES	32
 static struct devmap_entry	akva_devmap_entries[AKVA_DEVMAP_MAX_ENTRIES];
@@ -73,8 +73,10 @@ devmap_dump_table(int (*prfunc)(const char *, ...))
 
 	prfunc("Static device mappings:\n");
 	for (pd = devmap_table; pd->pd_size != 0; ++pd) {
-		prfunc("  0x%08x - 0x%08x mapped at VA 0x%08x\n",
-		    pd->pd_pa, pd->pd_pa + pd->pd_size - 1, pd->pd_va);
+		prfunc("  0x%08jx - 0x%08jx mapped at VA 0x%08jx\n",
+		    (uintmax_t)pd->pd_pa,
+		    (uintmax_t)(pd->pd_pa + pd->pd_size - 1),
+		    (uintmax_t)pd->pd_va);
 	}
 }
 
@@ -115,8 +117,8 @@ devmap_lastaddr()
  * physical address and size and a virtual address allocated from the top of
  * kva.  This automatically registers the akva table on the first call, so all a
  * platform has to do is call this routine to install as many mappings as it
- * needs and when initarm() calls devmap_bootstrap() it will pick up all the
- * entries in the akva table automatically.
+ * needs and when the platform-specific init function calls devmap_bootstrap()
+ * it will pick up all the entries in the akva table automatically.
  */
 void
 devmap_add_entry(vm_paddr_t pa, vm_size_t sz)
@@ -132,13 +134,13 @@ devmap_add_entry(vm_paddr_t pa, vm_size_t sz)
 	if (akva_devmap_idx == 0)
 		devmap_register_table(akva_devmap_entries);
 
-	/*
-	 * Allocate virtual address space from the top of kva downwards.  If the
-	 * range being mapped is aligned and sized to 1MB boundaries then also
-	 * align the virtual address to the next-lower 1MB boundary so that we
-	 * end up with a nice efficient section mapping.
-	 */
+	 /* Allocate virtual address space from the top of kva downwards. */
 #ifdef __arm__
+	/*
+	 * If the range being mapped is aligned and sized to 1MB boundaries then
+	 * also align the virtual address to the next-lower 1MB boundary so that
+	 * we end with a nice efficient section mapping.
+	 */
 	if ((pa & 0x000fffff) == 0 && (sz & 0x000fffff) == 0) {
 		akva_devmap_vaddr = trunc_1mpage(akva_devmap_vaddr - sz);
 	} else
@@ -170,7 +172,8 @@ devmap_register_table(const struct devmap_entry *table)
  * the previously-registered table is used.  This smooths transition from legacy
  * code that fills in a local table then calls this function passing that table,
  * and newer code that uses devmap_register_table() in platform-specific
- * code, then lets the common initarm() call this function with a NULL pointer.
+ * code, then lets the common platform-specific init function call this function
+ * with a NULL pointer.
  */
 void
 devmap_bootstrap(vm_offset_t l1pt, const struct devmap_entry *table)
@@ -274,7 +277,7 @@ pmap_mapdev(vm_offset_t pa, vm_size_t size)
 	if (early_boot) {
 		akva_devmap_vaddr = trunc_page(akva_devmap_vaddr - size);
 		va = akva_devmap_vaddr;
-		KASSERT(va >= VM_MAX_KERNEL_ADDRESS - L2_SIZE,
+		KASSERT(va >= VM_MAX_KERNEL_ADDRESS - PMAP_MAPDEV_EARLY_SIZE,
 		    ("Too many early devmap mappings"));
 	} else
 #endif
@@ -347,4 +350,3 @@ DB_SHOW_COMMAND(devmap, db_show_devmap)
 }
 
 #endif /* DDB */
-

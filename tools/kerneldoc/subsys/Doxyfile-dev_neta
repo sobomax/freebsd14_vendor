@@ -1,0 +1,21 @@
+# Doxyfile 1.5.2
+
+# $FreeBSD: 06c78640fa959795209d675245ebe5a8ad67255a $
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "FreeBSD kernel neta device code"
+OUTPUT_DIRECTORY       = $(DOXYGEN_DEST_PATH)/dev_neta/
+EXTRACT_ALL            = YES    # for undocumented src, no warnings enabled
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = $(DOXYGEN_SRC_PATH)/dev/neta/ \
+                         $(NOTREVIEWED)
+
+GENERATE_TAGFILE       = dev_neta/dev_neta.tag
+
+@INCLUDE_PATH          = $(DOXYGEN_INCLUDE_PATH)
+@INCLUDE               = common-Doxyfile
+

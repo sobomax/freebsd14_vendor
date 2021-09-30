@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b8c831f1d38d2b4eef73b0a18f13a01c7b77b452 $
+ * $FreeBSD: ba95e27701d8989ba93080c2aa3b2ee17ef5aa2b $
  */
 
 /*
@@ -54,6 +54,8 @@ extern int lineno;
 extern int undefok;	/* mostly ignore undefined symbols */
 extern int warnok;
 extern int warnings;
+
+extern char *version;
 
 int yylex(void);
 void yyerror(const char *);

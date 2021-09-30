@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\"  $FreeBSD: 4d46d8a79b26ab0eafa7c60543e1024a96cd01f1 $
+.\"  $FreeBSD: 984b2530e1b0c14dcce0875c813b886cbcf85976 $
 .\"
 .Dd Dec 15, 1997"
 .Dt ABS2REL 3
@@ -119,8 +119,8 @@ yields:
 
     path == "../../../sys/kern"        /* It's correct but ... */
 
-That is correct, but a little redundant. If you wish get the simple
-answer 'kern', do the following.
+That is correct, but a little redundant.
+If you wish get the simple answer 'kern', do the following.
 
     path = abs2rel(realpath("/sys/kern", r1), realpath("/sys", r2),
 								result, MAXPATHLEN);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bea2dd95b0ddab04d695b223039221dd79b5dabc $");
+__FBSDID("$FreeBSD: ed292607f56d8b19b6fc722d2644fec09448945a $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -88,7 +88,6 @@ static int	tcp_log_dev_ioctl(struct cdev *dev __unused, u_long cmd,
     caddr_t data, int fflag __unused, struct thread *td __unused);
 static int	tcp_log_dev_poll(struct cdev *dev __unused, int events,
     struct thread *td);
-
 
 enum tcp_log_dev_queue_lock_state {
 	QUEUE_UNLOCKED = 0,

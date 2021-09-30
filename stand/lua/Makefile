@@ -1,4 +1,4 @@
-# $FreeBSD: 7bdcc3fee056463236932df7b0d250a8fd870757 $
+# $FreeBSD: fe6fd6f63c8eed608bb0fae1adfa5c5991b4e899 $
 
 .include <bsd.init.mk>
 
@@ -20,11 +20,11 @@ FILES=	cli.lua \
 	drawer.lua \
 	hook.lua \
 	loader.lua \
-	logo-beastie.lua \
-	logo-beastiebw.lua \
-	logo-fbsdbw.lua \
-	logo-orb.lua \
-	logo-orbbw.lua \
+	gfx-beastie.lua \
+	gfx-beastiebw.lua \
+	gfx-fbsdbw.lua \
+	gfx-orb.lua \
+	gfx-orbbw.lua \
 	menu.lua \
 	password.lua \
 	screen.lua

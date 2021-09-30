@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7adcdb8096a628107bbfe7cdf44ff1f326f9a83d $	*/
+/*	$FreeBSD: 9871bd9454aa154dd5e1b2cbe7d85b762951048c $	*/
 
 /*-
  * Copyright (c) 2005
@@ -114,7 +114,7 @@ struct rt2661_softc {
  * The same in both up to here
  * ------------------------------------------------
  */
-	
+
 	int                             sc_flags;
 #define	RAL_FW_LOADED		0x1
 #define	RAL_INPUT_RUNNING	0x2

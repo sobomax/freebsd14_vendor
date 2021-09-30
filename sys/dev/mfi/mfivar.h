@@ -56,7 +56,7 @@
 #define _MFIVAR_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d11c7c76dad62f08854d7874fcb399ab77fb5a4c $");
+__FBSDID("$FreeBSD: ec242a7f8dd2c0da167ab9bbd4d27c2a30a9d340 $");
 
 #include <sys/lock.h>
 #include <sys/sx.h>
@@ -592,7 +592,6 @@ mfi_print_sense(struct mfi_softc *sc, void *sense)
 	device_printf(sc->mfi_dev, "sense error %d, sense_key %d, "
 	    "asc %d, ascq %d\n", error, key, asc, ascq);
 }
-
 
 #define MFI_WRITE4(sc, reg, val)	bus_space_write_4((sc)->mfi_btag, \
 	sc->mfi_bhandle, (reg), (val))

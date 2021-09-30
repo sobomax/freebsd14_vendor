@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)proc.h	7.1 (Berkeley) 5/15/91
- * $FreeBSD: b9579297770722b44e541a4c243a837868fb21fb $
+ * $FreeBSD: 59796e729ac4cdc18b76b6a51af4934aac63daee $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -80,9 +80,12 @@ struct mdthread {
 struct mdproc {
 	struct proc_ldt *md_ldt;	/* (t) per-process ldt */
 	struct system_segment_descriptor md_ldt_sd;
+	u_int md_flags;			/* (c) md process flags P_MD */
 };
 
 #define	P_MD_KPTI		0x00000001	/* Enable KPTI on exec */
+#define	P_MD_LA48		0x00000002	/* Request LA48 after exec */
+#define	P_MD_LA57		0x00000004	/* Request LA57 after exec */
 
 #define	KINFO_PROC_SIZE 1088
 #define	KINFO_PROC32_SIZE 768
@@ -91,7 +94,6 @@ struct syscall_args {
 	u_int code;
 	struct sysent *callp;
 	register_t args[8];
-	int narg;
 };
 
 #ifdef	_KERNEL

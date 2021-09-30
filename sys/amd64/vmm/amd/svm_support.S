@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 032912ad8e4f2395ca2ccc42ee57db4c729b53de $
+ * $FreeBSD: bf9e9a0f89cc9c326241339d0d47c71296c96ca4 $
  */
 #include <machine/asmacros.h>
 
@@ -38,10 +38,6 @@
  */
 #define	VENTER  push %rbp ; mov %rsp,%rbp
 #define	VLEAVE  pop %rbp
-
-#define	VMLOAD	.byte 0x0f, 0x01, 0xda
-#define	VMRUN	.byte 0x0f, 0x01, 0xd8
-#define	VMSAVE	.byte 0x0f, 0x01, 0xdb
 
 /*
  * svm_launch(uint64_t vmcb, struct svm_regctx *gctx, struct pcpu *pcpu)
@@ -91,9 +87,9 @@ ENTRY(svm_launch)
 	movq SCTX_RDI(%rsi), %rdi
 	movq SCTX_RSI(%rsi), %rsi	/* %rsi must be restored last */
 
-	VMLOAD
-	VMRUN
-	VMSAVE
+	vmload %rax
+	vmrun %rax
+	vmsave %rax
 
 	pop %rax		/* pop guest context pointer from the stack */
 

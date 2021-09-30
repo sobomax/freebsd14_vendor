@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95221e75924549ddd3e22782b0647e4fdcc4788d $");
+__FBSDID("$FreeBSD: 97ece878aa7b6dbdf24b7b80cd77ba325d5d949f $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -156,7 +156,7 @@ rtaspci_read_config(device_t dev, u_int bus, u_int slot, u_int func, u_int reg,
 	int error, pcierror;
 
 	sc = device_get_softc(dev);
-	
+
 	config_addr = ((bus & 0xff) << 16) | ((slot & 0x1f) << 11) |
 	    ((func & 0x7) << 8) | (reg & 0xff);
 	if (sc->sc_extended_config)
@@ -179,7 +179,7 @@ rtaspci_read_config(device_t dev, u_int bus, u_int slot, u_int func, u_int reg,
 		retval = (int32_t)(int16_t)(retval);
 		break;
 	}
-	
+
 	if (error < 0 || pcierror != 0)
 		retval = 0xffffffff;
 
@@ -195,7 +195,7 @@ rtaspci_write_config(device_t dev, u_int bus, u_int slot, u_int func,
 	int pcierror;
 
 	sc = device_get_softc(dev);
-	
+
 	config_addr = ((bus & 0xff) << 16) | ((slot & 0x1f) << 11) |
 	    ((func & 0x7) << 8) | (reg & 0xff);
 	if (sc->sc_extended_config)
@@ -209,4 +209,3 @@ rtaspci_write_config(device_t dev, u_int bus, u_int slot, u_int func,
 		rtas_call_method(sc->write_pci_config, 3, 1, config_addr,
 		    width, val, &pcierror);
 }
-

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 172401265e37716fa6641929141f66d8ed50e068 $
+ * $FreeBSD: f97743e77fe79ad925cba2ecd2449ecf1a628ed4 $
  */
 
 #ifndef _VMM_STAT_H_
@@ -99,7 +99,7 @@ vmm_stat_array_incr(struct vm *vm, int vcpu, struct vmm_stat_type *vst,
 {
 #ifdef VMM_KEEP_STATS
 	uint64_t *stats;
-	
+
 	stats = vcpu_stats(vm, vcpu);
 
 	if (vst->index >= 0 && statidx < vst->nelems)
@@ -113,7 +113,7 @@ vmm_stat_array_set(struct vm *vm, int vcpu, struct vmm_stat_type *vst,
 {
 #ifdef VMM_KEEP_STATS
 	uint64_t *stats;
-	
+
 	stats = vcpu_stats(vm, vcpu);
 
 	if (vst->index >= 0 && statidx < vst->nelems)

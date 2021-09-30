@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 089e49a4467445b7360d5742d59426f6833d11eb $
+ * $FreeBSD: 64c1fe0b90ca862225a476fdff633acee8e947ce $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 089e49a4467445b7360d5742d59426f6833d11eb $");
+__FBSDID("$FreeBSD: 64c1fe0b90ca862225a476fdff633acee8e947ce $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -40,6 +40,8 @@ __FBSDID("$FreeBSD: 089e49a4467445b7360d5742d59426f6833d11eb $");
 #include <sys/disk.h>
 #include <sys/ata.h>
 #include <sys/endian.h>
+
+#include <machine/vmm_snapshot.h>
 
 #include <errno.h>
 #include <fcntl.h>
@@ -131,6 +133,7 @@ struct ahci_ioreq {
 	uint32_t done;
 	int slot;
 	int more;
+	int readop;
 };
 
 struct ahci_port {
@@ -240,7 +243,7 @@ ahci_generate_intr(struct pci_ahci_softc *sc, uint32_t mask)
 		if (p->is & p->ie)
 			sc->is |= (1 << i);
 	}
-	DPRINTF("%s(%08x) %08x\n", __func__, mask, sc->is);
+	DPRINTF("%s(%08x) %08x", __func__, mask, sc->is);
 
 	/* If there is nothing enabled -- clear legacy interrupt and exit. */
 	if (sc->is == 0 || (sc->ghc & AHCI_GHC_IE) == 0) {
@@ -282,7 +285,7 @@ ahci_port_intr(struct ahci_port *p)
 	struct pci_devinst *pi = sc->asc_pi;
 	int nmsg;
 
-	DPRINTF("%s(%d) %08x/%08x %08x\n", __func__,
+	DPRINTF("%s(%d) %08x/%08x %08x", __func__,
 	    p->port, p->is, p->ie, sc->is);
 
 	/* If there is nothing enabled -- we are done. */
@@ -341,7 +344,7 @@ ahci_write_fis(struct ahci_port *p, enum sata_fis_type ft, uint8_t *fis)
 		irq = (fis[1] & (1 << 6)) ? AHCI_P_IX_PS : 0;
 		break;
 	default:
-		WPRINTF("unsupported fis type %d\n", ft);
+		WPRINTF("unsupported fis type %d", ft);
 		return;
 	}
 	if (fis[2] & ATA_S_ERROR) {
@@ -724,6 +727,7 @@ ahci_handle_rw(struct ahci_port *p, int slot, uint8_t *cfis, uint32_t done)
 	aior->slot = slot;
 	aior->len = len;
 	aior->done = done;
+	aior->readop = readop;
 	breq = &aior->io_req;
 	breq->br_offset = lba + done;
 	ahci_build_iov(p, aior, prdt, hdr->prdtl);
@@ -1000,7 +1004,7 @@ ata_identify_init(struct ahci_port* p, int atapi)
 		ata_ident->capabilities1 = ATA_SUPPORT_LBA |
 			ATA_SUPPORT_DMA;
 		ata_ident->capabilities2 = (1 << 14 | 1);
-		ata_ident->atavalid = ATA_FLAG_54_58 | ATA_FLAG_64_70;
+		ata_ident->atavalid = ATA_FLAG_64_70 | ATA_FLAG_88;
 		ata_ident->obsolete62 = 0x3f;
 		ata_ident->mwdmamodes = 7;
 		if (p->xfermode & ATA_WDMA0)
@@ -1049,8 +1053,7 @@ ata_identify_init(struct ahci_port* p, int atapi)
 		ata_ident->capabilities1 = ATA_SUPPORT_DMA |
 			ATA_SUPPORT_LBA | ATA_SUPPORT_IORDY;
 		ata_ident->capabilities2 = (1 << 14);
-		ata_ident->atavalid = ATA_FLAG_54_58 |
-			ATA_FLAG_64_70;
+		ata_ident->atavalid = ATA_FLAG_64_70 | ATA_FLAG_88;
 		if (p->mult_sectors)
 			ata_ident->multi = (ATA_MULTI_VALID | p->mult_sectors);
 		if (sectors <= 0x0fffffff) {
@@ -1425,6 +1428,7 @@ atapi_read(struct ahci_port *p, int slot, uint8_t *cfis, uint32_t done)
 	aior->slot = slot;
 	aior->len = len;
 	aior->done = done;
+	aior->readop = 1;
 	breq = &aior->io_req;
 	breq->br_offset = lba + done;
 	ahci_build_iov(p, aior, prdt, hdr->prdtl);
@@ -1606,7 +1610,7 @@ handle_packet_cmd(struct ahci_port *p, int slot, uint8_t *cfis)
 		DPRINTF("ACMD:");
 		for (i = 0; i < 16; i++)
 			DPRINTF("%02x ", acmd[i]);
-		DPRINTF("\n");
+		DPRINTF("");
 	}
 #endif
 
@@ -1793,7 +1797,7 @@ ahci_handle_cmd(struct ahci_port *p, int slot, uint8_t *cfis)
 			handle_packet_cmd(p, slot, cfis);
 		break;
 	default:
-		WPRINTF("Unsupported cmd:%02x\n", cfis[2]);
+		WPRINTF("Unsupported cmd:%02x", cfis[2]);
 		ahci_write_fis_d2h(p, slot, cfis,
 		    (ATA_E_ABORT << 8) | ATA_S_READY | ATA_S_ERROR);
 		break;
@@ -1823,22 +1827,22 @@ ahci_handle_slot(struct ahci_port *p, int slot)
 #ifdef AHCI_DEBUG
 	prdt = (struct ahci_prdt_entry *)(cfis + 0x80);
 
-	DPRINTF("\ncfis:");
+	DPRINTF("cfis:");
 	for (i = 0; i < cfl; i++) {
 		if (i % 10 == 0)
-			DPRINTF("\n");
+			DPRINTF("");
 		DPRINTF("%02x ", cfis[i]);
 	}
-	DPRINTF("\n");
+	DPRINTF("");
 
 	for (i = 0; i < hdr->prdtl; i++) {
-		DPRINTF("%d@%08"PRIx64"\n", prdt->dbc & 0x3fffff, prdt->dba);
+		DPRINTF("%d@%08"PRIx64"", prdt->dbc & 0x3fffff, prdt->dba);
 		prdt++;
 	}
 #endif
 
 	if (cfis[0] != FIS_TYPE_REGH2D) {
-		WPRINTF("Not a H2D FIS:%02x\n", cfis[0]);
+		WPRINTF("Not a H2D FIS:%02x", cfis[0]);
 		return;
 	}
 
@@ -1894,7 +1898,7 @@ ata_ioreq_cb(struct blockif_req *br, int err)
 	uint8_t *cfis;
 	int slot, ncq, dsm;
 
-	DPRINTF("%s %d\n", __func__, err);
+	DPRINTF("%s %d", __func__, err);
 
 	ncq = dsm = 0;
 	aior = br->br_param;
@@ -1954,7 +1958,7 @@ ata_ioreq_cb(struct blockif_req *br, int err)
 	ahci_handle_port(p);
 out:
 	pthread_mutex_unlock(&sc->mtx);
-	DPRINTF("%s exit\n", __func__);
+	DPRINTF("%s exit", __func__);
 }
 
 static void
@@ -1968,7 +1972,7 @@ atapi_ioreq_cb(struct blockif_req *br, int err)
 	uint32_t tfd;
 	int slot;
 
-	DPRINTF("%s %d\n", __func__, err);
+	DPRINTF("%s %d", __func__, err);
 
 	aior = br->br_param;
 	p = aior->io_pr;
@@ -2016,7 +2020,7 @@ atapi_ioreq_cb(struct blockif_req *br, int err)
 	ahci_handle_port(p);
 out:
 	pthread_mutex_unlock(&sc->mtx);
-	DPRINTF("%s exit\n", __func__);
+	DPRINTF("%s exit", __func__);
 }
 
 static void
@@ -2053,7 +2057,7 @@ pci_ahci_port_write(struct pci_ahci_softc *sc, uint64_t offset, uint64_t value)
 	offset = (offset - AHCI_OFFSET) % AHCI_STEP;
 	struct ahci_port *p = &sc->port[port];
 
-	DPRINTF("pci_ahci_port %d: write offset 0x%"PRIx64" value 0x%"PRIx64"\n",
+	DPRINTF("pci_ahci_port %d: write offset 0x%"PRIx64" value 0x%"PRIx64"",
 		port, offset, value);
 
 	switch (offset) {
@@ -2125,7 +2129,7 @@ pci_ahci_port_write(struct pci_ahci_softc *sc, uint64_t offset, uint64_t value)
 	case AHCI_P_TFD:
 	case AHCI_P_SIG:
 	case AHCI_P_SSTS:
-		WPRINTF("pci_ahci_port: read only registers 0x%"PRIx64"\n", offset);
+		WPRINTF("pci_ahci_port: read only registers 0x%"PRIx64"", offset);
 		break;
 	case AHCI_P_SCTL:
 		p->sctl = value;
@@ -2154,7 +2158,7 @@ pci_ahci_port_write(struct pci_ahci_softc *sc, uint64_t offset, uint64_t value)
 static void
 pci_ahci_host_write(struct pci_ahci_softc *sc, uint64_t offset, uint64_t value)
 {
-	DPRINTF("pci_ahci_host: write offset 0x%"PRIx64" value 0x%"PRIx64"\n",
+	DPRINTF("pci_ahci_host: write offset 0x%"PRIx64" value 0x%"PRIx64"",
 		offset, value);
 
 	switch (offset) {
@@ -2162,7 +2166,7 @@ pci_ahci_host_write(struct pci_ahci_softc *sc, uint64_t offset, uint64_t value)
 	case AHCI_PI:
 	case AHCI_VS:
 	case AHCI_CAP2:
-		DPRINTF("pci_ahci_host: read only registers 0x%"PRIx64"\n", offset);
+		DPRINTF("pci_ahci_host: read only registers 0x%"PRIx64"", offset);
 		break;
 	case AHCI_GHC:
 		if (value & AHCI_GHC_HR) {
@@ -2200,7 +2204,7 @@ pci_ahci_write(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 	else if (offset < AHCI_OFFSET + sc->ports * AHCI_STEP)
 		pci_ahci_port_write(sc, offset, value);
 	else
-		WPRINTF("pci_ahci: unknown i/o write offset 0x%"PRIx64"\n", offset);
+		WPRINTF("pci_ahci: unknown i/o write offset 0x%"PRIx64"", offset);
 
 	pthread_mutex_unlock(&sc->mtx);
 }
@@ -2231,7 +2235,7 @@ pci_ahci_host_read(struct pci_ahci_softc *sc, uint64_t offset)
 		value = 0;
 		break;
 	}
-	DPRINTF("pci_ahci_host: read offset 0x%"PRIx64" value 0x%x\n",
+	DPRINTF("pci_ahci_host: read offset 0x%"PRIx64" value 0x%x",
 		offset, value);
 
 	return (value);
@@ -2272,7 +2276,7 @@ pci_ahci_port_read(struct pci_ahci_softc *sc, uint64_t offset)
 		break;
 	}
 
-	DPRINTF("pci_ahci_port %d: read offset 0x%"PRIx64" value 0x%x\n",
+	DPRINTF("pci_ahci_port %d: read offset 0x%"PRIx64" value 0x%x",
 		port, offset, value);
 
 	return value;
@@ -2299,7 +2303,7 @@ pci_ahci_read(struct vmctx *ctx, int vcpu, struct pci_devinst *pi, int baridx,
 		value = pci_ahci_port_read(sc, offset);
 	else {
 		value = 0;
-		WPRINTF("pci_ahci: unknown i/o read offset 0x%"PRIx64"\n",
+		WPRINTF("pci_ahci: unknown i/o read offset 0x%"PRIx64"",
 		    regoff);
 	}
 	value >>= 8 * (regoff & 0x3);
@@ -2517,6 +2521,282 @@ pci_ahci_atapi_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	return (pci_ahci_init(ctx, pi, opts, 1));
 }
 
+#ifdef BHYVE_SNAPSHOT
+static int
+pci_ahci_snapshot_save_queues(struct ahci_port *port,
+			      struct vm_snapshot_meta *meta)
+{
+	int ret;
+	int idx;
+	struct ahci_ioreq *ioreq;
+
+	STAILQ_FOREACH(ioreq, &port->iofhd, io_flist) {
+		idx = ((void *) ioreq - (void *) port->ioreq) / sizeof(*ioreq);
+		SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+	}
+
+	idx = -1;
+	SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+
+	TAILQ_FOREACH(ioreq, &port->iobhd, io_blist) {
+		idx = ((void *) ioreq - (void *) port->ioreq) / sizeof(*ioreq);
+		SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+
+		/*
+		 * Snapshot only the busy requests; other requests are
+		 * not valid.
+		 */
+		ret = blockif_snapshot_req(&ioreq->io_req, meta);
+		if (ret != 0) {
+			fprintf(stderr, "%s: failed to snapshot req\r\n",
+				__func__);
+			goto done;
+		}
+	}
+
+	idx = -1;
+	SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+
+done:
+	return (ret);
+}
+
+static int
+pci_ahci_snapshot_restore_queues(struct ahci_port *port,
+				 struct vm_snapshot_meta *meta)
+{
+	int ret;
+	int idx;
+	struct ahci_ioreq *ioreq;
+
+	/* Empty the free queue before restoring. */
+	while (!STAILQ_EMPTY(&port->iofhd))
+		STAILQ_REMOVE_HEAD(&port->iofhd, io_flist);
+
+	/* Restore the free queue. */
+	while (1) {
+		SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+		if (idx == -1)
+			break;
+
+		STAILQ_INSERT_TAIL(&port->iofhd, &port->ioreq[idx], io_flist);
+	}
+
+	/* Restore the busy queue. */
+	while (1) {
+		SNAPSHOT_VAR_OR_LEAVE(idx, meta, ret, done);
+		if (idx == -1)
+			break;
+
+		ioreq = &port->ioreq[idx];
+		TAILQ_INSERT_TAIL(&port->iobhd, ioreq, io_blist);
+
+		/*
+		 * Restore only the busy requests; other requests are
+		 * not valid.
+		 */
+		ret = blockif_snapshot_req(&ioreq->io_req, meta);
+		if (ret != 0) {
+			fprintf(stderr, "%s: failed to restore request\r\n",
+				__func__);
+			goto done;
+		}
+
+		/* Re-enqueue the requests in the block interface. */
+		if (ioreq->readop)
+			ret = blockif_read(port->bctx, &ioreq->io_req);
+		else
+			ret = blockif_write(port->bctx, &ioreq->io_req);
+
+		if (ret != 0) {
+			fprintf(stderr,
+				"%s: failed to re-enqueue request\r\n",
+				__func__);
+			goto done;
+		}
+	}
+
+done:
+	return (ret);
+}
+
+static int
+pci_ahci_snapshot(struct vm_snapshot_meta *meta)
+{
+	int i, j, ret;
+	void *bctx;
+	struct pci_devinst *pi;
+	struct pci_ahci_softc *sc;
+	struct ahci_port *port;
+	struct ahci_cmd_hdr *hdr;
+	struct ahci_ioreq *ioreq;
+
+	pi = meta->dev_data;
+	sc = pi->pi_arg;
+
+	/* TODO: add mtx lock/unlock */
+
+	SNAPSHOT_VAR_OR_LEAVE(sc->ports, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->cap, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->ghc, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->is, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->pi, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->vs, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->ccc_ctl, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->ccc_pts, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->em_loc, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->em_ctl, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->cap2, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->bohc, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->lintr, meta, ret, done);
+
+	for (i = 0; i < MAX_PORTS; i++) {
+		port = &sc->port[i];
+
+		if (meta->op == VM_SNAPSHOT_SAVE)
+			bctx = port->bctx;
+
+		SNAPSHOT_VAR_OR_LEAVE(bctx, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->port, meta, ret, done);
+
+		/* Mostly for restore; save is ensured by the lines above. */
+		if (((bctx == NULL) && (port->bctx != NULL)) ||
+		    ((bctx != NULL) && (port->bctx == NULL))) {
+			fprintf(stderr, "%s: ports not matching\r\n", __func__);
+			ret = EINVAL;
+			goto done;
+		}
+
+		if (port->bctx == NULL)
+			continue;
+
+		if (port->port != i) {
+			fprintf(stderr, "%s: ports not matching: "
+					"actual: %d expected: %d\r\n",
+					__func__, port->port, i);
+			ret = EINVAL;
+			goto done;
+		}
+
+		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(port->cmd_lst,
+			AHCI_CL_SIZE * AHCI_MAX_SLOTS, false, meta, ret, done);
+		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(port->rfis, 256, false, meta,
+			ret, done);
+
+		SNAPSHOT_VAR_OR_LEAVE(port->ata_ident, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->atapi, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->reset, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->waitforclear, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->mult_sectors, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->xfermode, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->err_cfis, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->sense_key, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->asc, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->ccs, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->pending, meta, ret, done);
+
+		SNAPSHOT_VAR_OR_LEAVE(port->clb, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->clbu, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->fb, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->fbu, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->ie, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->cmd, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->unused0, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->tfd, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->sig, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->ssts, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->sctl, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->serr, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->sact, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->ci, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->sntf, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->fbs, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(port->ioqsz, meta, ret, done);
+
+		for (j = 0; j < port->ioqsz; j++) {
+			ioreq = &port->ioreq[j];
+
+			/* blockif_req snapshot done only for busy requests. */
+			hdr = (struct ahci_cmd_hdr *)(port->cmd_lst +
+				ioreq->slot * AHCI_CL_SIZE);
+			SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(ioreq->cfis,
+				0x80 + hdr->prdtl * sizeof(struct ahci_prdt_entry),
+				false, meta, ret, done);
+
+			SNAPSHOT_VAR_OR_LEAVE(ioreq->len, meta, ret, done);
+			SNAPSHOT_VAR_OR_LEAVE(ioreq->done, meta, ret, done);
+			SNAPSHOT_VAR_OR_LEAVE(ioreq->slot, meta, ret, done);
+			SNAPSHOT_VAR_OR_LEAVE(ioreq->more, meta, ret, done);
+			SNAPSHOT_VAR_OR_LEAVE(ioreq->readop, meta, ret, done);
+		}
+
+		/* Perform save / restore specific operations. */
+		if (meta->op == VM_SNAPSHOT_SAVE) {
+			ret = pci_ahci_snapshot_save_queues(port, meta);
+			if (ret != 0)
+				goto done;
+		} else if (meta->op == VM_SNAPSHOT_RESTORE) {
+			ret = pci_ahci_snapshot_restore_queues(port, meta);
+			if (ret != 0)
+				goto done;
+		} else {
+			ret = EINVAL;
+			goto done;
+		}
+
+		ret = blockif_snapshot(port->bctx, meta);
+		if (ret != 0) {
+			fprintf(stderr, "%s: failed to restore blockif\r\n",
+				__func__);
+			goto done;
+		}
+	}
+
+done:
+	return (ret);
+}
+
+static int
+pci_ahci_pause(struct vmctx *ctx, struct pci_devinst *pi)
+{
+	struct pci_ahci_softc *sc;
+	struct blockif_ctxt *bctxt;
+	int i;
+
+	sc = pi->pi_arg;
+
+	for (i = 0; i < MAX_PORTS; i++) {
+		bctxt = sc->port[i].bctx;
+		if (bctxt == NULL)
+			continue;
+
+		blockif_pause(bctxt);
+	}
+
+	return (0);
+}
+
+static int
+pci_ahci_resume(struct vmctx *ctx, struct pci_devinst *pi)
+{
+	struct pci_ahci_softc *sc;
+	struct blockif_ctxt *bctxt;
+	int i;
+
+	sc = pi->pi_arg;
+
+	for (i = 0; i < MAX_PORTS; i++) {
+		bctxt = sc->port[i].bctx;
+		if (bctxt == NULL)
+			continue;
+
+		blockif_resume(bctxt);
+	}
+
+	return (0);
+}
+#endif
+
 /*
  * Use separate emulation names to distinguish drive and atapi devices
  */
@@ -2524,7 +2804,12 @@ struct pci_devemu pci_de_ahci = {
 	.pe_emu =	"ahci",
 	.pe_init =	pci_ahci_hd_init,
 	.pe_barwrite =	pci_ahci_write,
-	.pe_barread =	pci_ahci_read
+	.pe_barread =	pci_ahci_read,
+#ifdef BHYVE_SNAPSHOT
+	.pe_snapshot =	pci_ahci_snapshot,
+	.pe_pause =	pci_ahci_pause,
+	.pe_resume =	pci_ahci_resume,
+#endif
 };
 PCI_EMUL_SET(pci_de_ahci);
 
@@ -2532,7 +2817,12 @@ struct pci_devemu pci_de_ahci_hd = {
 	.pe_emu =	"ahci-hd",
 	.pe_init =	pci_ahci_hd_init,
 	.pe_barwrite =	pci_ahci_write,
-	.pe_barread =	pci_ahci_read
+	.pe_barread =	pci_ahci_read,
+#ifdef BHYVE_SNAPSHOT
+	.pe_snapshot =	pci_ahci_snapshot,
+	.pe_pause =	pci_ahci_pause,
+	.pe_resume =	pci_ahci_resume,
+#endif
 };
 PCI_EMUL_SET(pci_de_ahci_hd);
 
@@ -2540,6 +2830,11 @@ struct pci_devemu pci_de_ahci_cd = {
 	.pe_emu =	"ahci-cd",
 	.pe_init =	pci_ahci_atapi_init,
 	.pe_barwrite =	pci_ahci_write,
-	.pe_barread =	pci_ahci_read
+	.pe_barread =	pci_ahci_read,
+#ifdef BHYVE_SNAPSHOT
+	.pe_snapshot =	pci_ahci_snapshot,
+	.pe_pause =	pci_ahci_pause,
+	.pe_resume =	pci_ahci_resume,
+#endif
 };
 PCI_EMUL_SET(pci_de_ahci_cd);

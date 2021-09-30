@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9d64b3e9e8b541706f71a298cd474620909bdbd7 $
+ * $FreeBSD: de38ed9fbedf2174724991c886e38f25343142eb $
  */
 
 #ifndef _IP_DUMMYNET_H
@@ -188,7 +188,6 @@ struct dn_flow {
 	uint32_t	drops;
 };
 
-
 /*
  * Scheduler template, mostly indicating the name, number,
  * sched_mask and buckets.
@@ -203,7 +202,6 @@ struct dn_sch {
 	/* mask to select the appropriate scheduler instance */
 	struct ipfw_flow_id sched_mask; /* M */
 };
-
 
 /* A delay profile is attached to a link.
  * Note that a profile, as any other object, cannot be longer than 2^16
@@ -277,7 +275,7 @@ the objects used by dummynet:
    to delay and bandwidth;
  + dn_profile describes a delay profile;
  + dn_flow describes the flow status (flow id, statistics)
-   
+
  + dn_sch describes a scheduler
  + dn_fs describes a flowset (msk, weight, queue parameters)
 

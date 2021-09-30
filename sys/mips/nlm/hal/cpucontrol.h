@@ -28,7 +28,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * NETLOGIC_BSD
- * $FreeBSD: 2328bad3c2c71c327471f0f77dcf5df748afc22e $
+ * $FreeBSD: 501b80db5fac7dca6bbd2840ab555f25a3c16b53 $
  */
 
 #ifndef __NLM_HAL_CPUCONTROL_H__
@@ -80,7 +80,6 @@
 #define	MMU_PGWKR_PMDMASK	0x417
 #define	MMU_PGWKR_PTESHFT	0x418
 #define	MMU_PGWKR_PTEMASK	0x419
-
 
 #if !defined(LOCORE) && !defined(__ASSEMBLY__)
 #if defined(__mips_n64) || defined(__mips_n32)

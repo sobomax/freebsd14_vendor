@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e6f1fa41a988a1ded268e72209b70a17f40d5987 $
+ * $FreeBSD: 826472f4bb38ceb202e7b091da39e7c8b7e32dee $
  */
 
 #ifndef _SYS_KTHREAD_H_
@@ -76,6 +76,5 @@ void	kthread_shutdown(void *, int);
 void	kthread_start(const void *);
 int	kthread_suspend(struct thread *, int);
 void	kthread_suspend_check(void);
-
 
 #endif /* !_SYS_KTHREAD_H_ */

@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 74ba05a3f8d001846d7c8bc969f66a15745b68ef $");
+__FBSDID("$FreeBSD: c9d4acea66bf05d56385a8ede39da50846044322 $");
 
 /*
  * This is cribbed from the Linux thinkpad-4.1 driver by
@@ -38,3 +38,4 @@ ENTRY(smapi32)
 
 	leave
 	ret
+END(smapi32)

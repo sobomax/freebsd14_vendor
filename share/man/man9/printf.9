@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 0b4bd826aa5c94ba6c5b1a63885a81765d5ade9d $
+.\" $FreeBSD: 1a3640871bd1c2a012d7a32b62d9c86e5999c177 $
 .\"
-.Dd November 18, 2015
+.Dd May 9, 2020
 .Dt PRINTF 9
 .Os
 .Sh NAME
@@ -83,7 +83,7 @@ parameter in the same manner as
 .Xr printf 3 .
 However,
 .Xr printf 9
-adds two other conversion specifiers.
+adds two other conversion specifiers and omits one.
 .Pp
 The
 .Cm \&%b
@@ -119,6 +119,10 @@ a time.
 The string is used as a delimiter between individual bytes.
 If present, a width directive will specify the number of bytes to display.
 By default, 16 bytes of data are output.
+.Pp
+The
+.Cm \&%n
+conversion specifier is not supported.
 .Pp
 The
 .Fn log

@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 9144498544dac11217613b404ced4998e984befc $
+# $FreeBSD: 87d269f2ca699003cf38a83079ce6c5d9a8940ef $
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,
@@ -196,9 +196,9 @@ build_tree()
 		# Build a limited tree that only contains files that are
 		# crucial to installworld.
 		for file in $PREWORLD_FILES; do
-			dir=`dirname /$file`
-			mkdir -p $1/$dir >&3 2>&1 || return 1
-			cp -p $SRCDIR/$file $1/$file || return 1
+			name=$(basename $file)
+			mkdir -p $1/etc >&3 2>&1 || return 1
+			cp -p $SRCDIR/$file $1/etc/$name || return 1
 		done
 	elif ! [ -n "$nobuild" ]; then
 		(cd $SRCDIR; $make DESTDIR=$destdir distrib-dirs &&

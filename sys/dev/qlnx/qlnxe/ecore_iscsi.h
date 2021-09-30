@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3c2bc3724a050d6a906bb6add16b5f04dab6bae8 $
+ * $FreeBSD: 0c90edc1d8bf8deef19afd83fac85693f501a9db $
  *
  */
 
@@ -185,4 +185,3 @@ ecore_sp_iscsi_conn_clear_sq(struct ecore_hwfn *p_hwfn,
 			     struct ecore_spq_comp_cb *p_comp_addr);
 
 #endif  /*__ECORE_ISCSI_H__*/
-

@@ -35,7 +35,7 @@
  *
  *	from: @(#)asm.h	5.5 (Berkeley) 5/7/91
  *
- * $FreeBSD: 85764f345eafd2ee1d8f1f96452e4f26648f7f8e $
+ * $FreeBSD: 1974908b65c1b37adecef5e755d9f7f634b56582 $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -168,7 +168,6 @@
 #else
 #define __FBSDID(s)     /* nothing */
 #endif
-
 
 #define	WEAK_ALIAS(alias,sym)						\
 	.weak alias;							\

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 8667c2b33038c784b8ad6fed83235bdf4eb42052 $	*/
+/*	$FreeBSD: fcaefe0fc23ee408adcb40e6d176b814283e92bf $	*/
 
 /*
  * ++Copyright++ 1983, 1990, 1993
@@ -66,11 +66,7 @@ static const char rcsid[] = "@(#)$Id: inet_addr.c,v 1.8.2.3 2004/12/09 19:41:20 
 #include <ctype.h>
 
 #ifndef	__P
-# ifdef	__STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 int inet_aton __P((const char *, struct in_addr *));
 

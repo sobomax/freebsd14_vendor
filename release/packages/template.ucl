@@ -1,14 +1,14 @@
 #
-# $FreeBSD: 38844f0f0898c32f541d5fe24a27d9eeda529634 $
+# $FreeBSD: f7cea7af88931d195f78bfff7673ecb197d3f438 $
 #
 
-name = "FreeBSD-%PKGNAME%"
+name = "%PKG_NAME_PREFIX%-%PKGNAME%"
 origin = "base"
 version = "%VERSION%"
 comment = "%COMMENT%"
 categories = [ base ]
-maintainer = "re@FreeBSD.org"
-www = "https://www.FreeBSD.org"
+maintainer = "%PKG_MAINTAINER%"
+www = "%PKG_WWW%"
 prefix = "/"
 licenselogic = "single"
 licenses = [ BSD2CLAUSE ]

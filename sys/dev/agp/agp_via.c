@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0f35b4d1042b44d7484e3c2f811788cad89f20d $");
+__FBSDID("$FreeBSD: 97bb0262f5ded319a31cd38f5fe1bbd8d4890520 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -176,7 +176,7 @@ agp_via_attach(device_t dev)
 		if ((agpsel & (1 << 1)) == 0)
 			sc->regs = via_v3_regs;
 	}
-	
+
 	error = agp_generic_attach(dev);
 	if (error)
 		return error;
@@ -388,7 +388,7 @@ agp_via_flush_tlb(device_t dev)
 		    ~(1 << 7), 4);
 		pci_write_config(dev, sc->regs[REG_GARTCTRL], gartctrl, 4);
 	}
-	
+
 }
 
 static device_method_t agp_via_methods[] = {
@@ -411,7 +411,6 @@ static device_method_t agp_via_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

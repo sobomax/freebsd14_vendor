@@ -34,10 +34,11 @@
  * SUCH DAMAGE.
  * 
  * $Id: dcons_crom.c,v 1.8 2003/10/23 15:47:21 simokawa Exp $
- * $FreeBSD: 6bba3857d1b9134bf626f1c826e1d99b354adfe3 $
+ * $FreeBSD: 2a320ef65f3d3b7089da7bce53d38c32eda97c08 $
  */
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/systm.h>

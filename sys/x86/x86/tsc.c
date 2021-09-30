@@ -27,13 +27,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92e33dd9d3735ecaa803d23f315e5adc36b44ee1 $");
+__FBSDID("$FreeBSD: 5ffbb64229e9e4c10b0576088f3829ec8dbdc3c6 $");
 
 #include "opt_clock.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/cpu.h>
+#include <sys/eventhandler.h>
 #include <sys/limits.h>
 #include <sys/malloc.h>
 #include <sys/systm.h>
@@ -90,12 +91,14 @@ static void tsc_freq_changed(void *arg, const struct cf_level *level,
     int status);
 static void tsc_freq_changing(void *arg, const struct cf_level *level,
     int *status);
-static unsigned tsc_get_timecount(struct timecounter *tc);
-static inline unsigned tsc_get_timecount_low(struct timecounter *tc);
-static unsigned tsc_get_timecount_lfence(struct timecounter *tc);
-static unsigned tsc_get_timecount_low_lfence(struct timecounter *tc);
-static unsigned tsc_get_timecount_mfence(struct timecounter *tc);
-static unsigned tsc_get_timecount_low_mfence(struct timecounter *tc);
+static u_int tsc_get_timecount(struct timecounter *tc);
+static inline u_int tsc_get_timecount_low(struct timecounter *tc);
+static u_int tsc_get_timecount_lfence(struct timecounter *tc);
+static u_int tsc_get_timecount_low_lfence(struct timecounter *tc);
+static u_int tsc_get_timecount_mfence(struct timecounter *tc);
+static u_int tsc_get_timecount_low_mfence(struct timecounter *tc);
+static u_int tscp_get_timecount(struct timecounter *tc);
+static u_int tscp_get_timecount_low(struct timecounter *tc);
 static void tsc_levels_changed(void *arg, int unit);
 static uint32_t x86_tsc_vdso_timehands(struct vdso_timehands *vdso_th,
     struct timecounter *tc);
@@ -227,24 +230,19 @@ tsc_freq_intel(void)
 static void
 probe_tsc_freq(void)
 {
-	u_int regs[4];
 	uint64_t tmp_freq, tsc1, tsc2;
 	int no_cpuid_override;
 
-	if (cpu_high >= 6) {
-		do_cpuid(6, regs);
-		if ((regs[2] & CPUID_PERF_STAT) != 0) {
-			/*
-			 * XXX Some emulators expose host CPUID without actual
-			 * support for these MSRs.  We must test whether they
-			 * really work.
-			 */
-			wrmsr(MSR_MPERF, 0);
-			wrmsr(MSR_APERF, 0);
-			DELAY(10);
-			if (rdmsr(MSR_MPERF) > 0 && rdmsr(MSR_APERF) > 0)
-				tsc_perf_stat = 1;
-		}
+	if (cpu_power_ecx & CPUID_PERF_STAT) {
+		/*
+		 * XXX Some emulators expose host CPUID without actual support
+		 * for these MSRs.  We must test whether they really work.
+		 */
+		wrmsr(MSR_MPERF, 0);
+		wrmsr(MSR_APERF, 0);
+		DELAY(10);
+		if (rdmsr(MSR_MPERF) > 0 && rdmsr(MSR_APERF) > 0)
+			tsc_perf_stat = 1;
 	}
 
 	if (vm_guest == VM_GUEST_VMWARE) {
@@ -503,8 +501,16 @@ test_tsc(int adj_max_count)
 	uint64_t *data, *tsc;
 	u_int i, size, adj;
 
-	if ((!smp_tsc && !tsc_is_invariant) || vm_guest)
+	if ((!smp_tsc && !tsc_is_invariant))
 		return (-100);
+	/*
+	 * Misbehavior of TSC under VirtualBox has been observed.  In
+	 * particular, threads doing small (~1 second) sleeps may miss their
+	 * wakeup and hang around in sleep state, causing hangs on shutdown.
+	 */
+	if (vm_guest == VM_GUEST_VBOX)
+		return (0);
+
 	size = (mp_maxid + 1) * 3;
 	data = malloc(sizeof(*data) * size * N, M_TEMP, M_WAITOK);
 	adj = 0;
@@ -632,7 +638,18 @@ init_TSC_tc(void)
 init:
 	for (shift = 0; shift <= 31 && (tsc_freq >> shift) > max_freq; shift++)
 		;
-	if ((cpu_feature & CPUID_SSE2) != 0 && mp_ncpus > 1) {
+
+	/*
+	 * Timecounter implementation selection, top to bottom:
+	 * - If RDTSCP is available, use RDTSCP.
+	 * - If fence instructions are provided (SSE2), use LFENCE;RDTSC
+	 *   on Intel, and MFENCE;RDTSC on AMD.
+	 * - For really old CPUs, just use RDTSC.
+	 */
+	if ((amd_feature & AMDID_RDTSCP) != 0) {
+		tsc_timecounter.tc_get_timecount = shift > 0 ?
+		    tscp_get_timecount_low : tscp_get_timecount;
+	} else if ((cpu_feature & CPUID_SSE2) != 0 && mp_ncpus > 1) {
 		if (cpu_vendor_id == CPU_VENDOR_AMD ||
 		    cpu_vendor_id == CPU_VENDOR_HYGON) {
 			tsc_timecounter.tc_get_timecount = shift > 0 ?
@@ -775,14 +792,23 @@ sysctl_machdep_tsc_freq(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, tsc_freq, CTLTYPE_U64 | CTLFLAG_RW,
-    0, 0, sysctl_machdep_tsc_freq, "QU", "Time Stamp Counter frequency");
+SYSCTL_PROC(_machdep, OID_AUTO, tsc_freq,
+    CTLTYPE_U64 | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    0, 0, sysctl_machdep_tsc_freq, "QU",
+    "Time Stamp Counter frequency");
 
 static u_int
 tsc_get_timecount(struct timecounter *tc __unused)
 {
 
 	return (rdtsc32());
+}
+
+static u_int
+tscp_get_timecount(struct timecounter *tc __unused)
+{
+
+	return (rdtscp32());
 }
 
 static inline u_int
@@ -792,6 +818,16 @@ tsc_get_timecount_low(struct timecounter *tc)
 
 	__asm __volatile("rdtsc; shrd %%cl, %%edx, %0"
 	    : "=a" (rv) : "c" ((int)(intptr_t)tc->tc_priv) : "edx");
+	return (rv);
+}
+
+static u_int
+tscp_get_timecount_low(struct timecounter *tc)
+{
+	uint32_t rv;
+
+	__asm __volatile("rdtscp; movl %1, %%ecx; shrd %%cl, %%edx, %0"
+	    : "=&a" (rv) : "m" (tc->tc_priv) : "ecx", "edx");
 	return (rv);
 }
 

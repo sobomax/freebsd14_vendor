@@ -23,7 +23,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: a2fb69a82de1d36bb5fc4be5a3a81d43f80b9934 $
+.\" $FreeBSD: 30341e779bf2d8b21290ec9fb3b2a22a6f654418 $
 .\"
 .Dd April 9, 2018
 .Dt OF_FINDDEVICE 9
@@ -37,23 +37,10 @@
 .Ft phandle_t
 .Fn OF_finddevice "const char *path"
 .Sh DESCRIPTION
-.Pp
 .Fn OF_finddevice
 returns the phandle for the node specified by the
 .Fa path .
 Returns -1 if the path cannot be found in the tree.
-.Sh CAVEATS
-The return value should only be checked with equality
-operators (equal to, not equal to) and not relational comparison
-(less than, greater than ).
-There is a discrepancy between IEEE 1275 standard and
-.Fx Ns 's
-internal representation of a phandle: IEEE 1275
-requires the return value of this function to be -1 if the path
-is not found.
-But phandle_t is an unsigned type, so it cannot
-be relationally compared with -1 or 0, this comparison
-is always true or always false.
 .Sh EXAMPLES
 .Bd -literal
     phandle_t root, i2c;
@@ -72,3 +59,15 @@ is always true or always false.
 .An -nosplit
 This manual page was written by
 .An Oleksandr Tymoshenko Aq Mt gonzo@FreeBSD.org .
+.Sh CAVEATS
+The return value should only be checked with equality
+operators (equal to, not equal to) and not relational comparison
+(less than, greater than ).
+There is a discrepancy between IEEE 1275 standard and
+.Fx Ns 's
+internal representation of a phandle: IEEE 1275
+requires the return value of this function to be -1 if the path
+is not found.
+But phandle_t is an unsigned type, so it cannot
+be relationally compared with -1 or 0, this comparison
+is always true or always false.

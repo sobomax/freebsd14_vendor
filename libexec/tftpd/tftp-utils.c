@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2111e35bb7227fd95a5eca5d0980d50408a26124 $");
+__FBSDID("$FreeBSD: d706639d51e84d990c7e6ba8e0602da09ea1f079 $");
 
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -51,6 +51,7 @@ int		timeoutnetwork = MAX_TIMEOUTS * TIMEOUT;
 int		maxtimeouts = MAX_TIMEOUTS;
 uint16_t	segsize = SEGSIZE;
 uint16_t	pktsize = SEGSIZE + 4;
+uint16_t	windowsize = WINDOWSIZE;
 
 int	acting_as_client;
 

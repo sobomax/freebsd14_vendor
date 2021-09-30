@@ -27,7 +27,13 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: accc8644061028e6d31ee535698090daf123ebce $");
+__FBSDID("$FreeBSD: 3d75ff45c79821f00c7c2a8674b806452f800f84 $");
+
+/*
+ * Note: this routine was written with kernel use in mind (read: no simd),
+ * it is only present in userspace as a temporary measure until something
+ * better gets imported.
+ */
 
 #define	ALIGN_TEXT	.p2align 4,0x90 /* 16-byte alignment, nop filled */
 
@@ -65,6 +71,7 @@ __FBSDID("$FreeBSD: accc8644061028e6d31ee535698090daf123ebce $");
 	cmpq	$256,%rcx
 	ja	1256f
 
+	ALIGN_TEXT
 103200:
 	movq	(%rsi),%rdx
 	movq	%rdx,(%rdi)
@@ -198,6 +205,7 @@ __FBSDID("$FreeBSD: accc8644061028e6d31ee535698090daf123ebce $");
 	cmpq	$32,%rcx
 	jb	2016f
 
+	ALIGN_TEXT
 2032:
 	movq	(%rsi),%rdx
 	movq	%rdx,(%rdi)

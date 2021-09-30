@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ff826d30ca7208f99be7a20f4209787baedb1662 $
+ * $FreeBSD: 07144fa0adb3401052ec746331c87dd761f6e114 $
  */
 #ifndef _NET80211_IEEE80211_NODE_H_
 #define _NET80211_IEEE80211_NODE_H_
@@ -70,7 +70,7 @@ struct ieee80211vap;
 struct ieee80211_scanparams;
 
 /*
- * Information element ``blob''.  We use this structure
+ * Information element (IE) ``blob''.  We use this structure
  * to capture management frame payloads that need to be
  * retained.  Information elements within the payload that
  * we need to consult have references recorded.

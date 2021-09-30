@@ -31,9 +31,8 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f1df004e2bda8f0d3c265bb80a6fd4925e54aea7 $
+ * $FreeBSD: e59901bc97eed0b5ac7cde7738f1c5757bd8b0a1 $
  */
-
 
 /**
  *	Functions to configure the PIN multiplexing on the chip.

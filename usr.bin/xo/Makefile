@@ -1,4 +1,4 @@
-# $FreeBSD: 6a60768b2fd6f706b0d4ae1ee0c69da7d23dbcc9 $
+# $FreeBSD: 5cc36ab95dd95c5a97aa52ad98463172f375acb2 $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,7 @@ MAN=	xo.1
 CFLAGS+=-I${LIBXOSRC}/libxo
 
 # XXX For xo_config.h
-CFLAGS+=-I${SRCTOP}/lib/libxo
+CFLAGS+=-I${SRCTOP}/lib/libxo/libxo
 
 LIBADD=	xo util
 

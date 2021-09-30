@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: de5e9f8be1fbde253cb670a397cbe811dfbc64f7 $
+ * $FreeBSD: e6229057d6e25275523af8b8f913ad4567013c53 $
  *
  */
 
@@ -53,9 +53,7 @@ static inline enum _ecore_status_t ecore_fcoe_alloc(struct ecore_hwfn OSAL_UNUSE
 {
 	return ECORE_INVAL;
 }
-
 static inline void ecore_fcoe_setup(struct ecore_hwfn OSAL_UNUSED *p_hwfn) {}
-
 static inline void ecore_fcoe_free(struct ecore_hwfn OSAL_UNUSED *p_hwfn) {}
 #endif
 
@@ -74,4 +72,3 @@ ecore_sp_fcoe_conn_destroy(struct ecore_hwfn *p_hwfn,
 #endif
 
 #endif  /*__ECORE_FCOE_H__*/
-

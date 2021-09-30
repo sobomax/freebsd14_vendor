@@ -1,4 +1,4 @@
-# $FreeBSD: 501b7c14861a8c9933cb4f65239753043bad7312 $
+# $FreeBSD: f1248f419bee2cdb09fbd705a6d2fe0872385044 $
 
 .include <src.opts.mk>
 
@@ -10,6 +10,12 @@ BINDIR?=	/usr/sbin
 
 WARNS?=		1
 
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -I${SRCTOP}/sys
+CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/include
 CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${SRCTOP}/cddl/compat/opensolaris/include \
 		-I${OPENSOLARIS_USR_DISTDIR}/head \
@@ -17,12 +23,13 @@ CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${OPENSOLARIS_USR_DISTDIR}/lib/libproc/common \
 		-I${OPENSOLARIS_SYS_DISTDIR}/uts/common \
 		-I${OPENSOLARIS_SYS_DISTDIR}/compat
+CFLAGS+= -DHAVE_ISSETUGID
 
 # Optional debugging stuff...
 #CFLAGS+=	-DNEED_ERRLOC
 #YFLAGS+=	-d
 
-LIBADD=	dtrace ctf elf proc
+LIBADD=	dtrace ctf elf proc spl
 
 .if ${MK_DTRACE_TESTS} != "no"
 SUBDIR+=	tests

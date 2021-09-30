@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 82d0888f6e7d6c45224db7ca6f48e5fc1e1a4e6c $");
+__FBSDID("$FreeBSD: b01d17fe9b1b80a548ce68065a5e166602fd5c19 $");
 
 #include <sys/param.h>
 #include <sys/mbuf.h>
@@ -126,6 +126,23 @@ ifdead_snd_tag_free(struct m_snd_tag *pmt)
 {
 }
 
+static void
+ifdead_ratelimit_query(struct ifnet *ifp __unused,
+      struct if_ratelimit_query_results *q)
+{
+	/*
+	 * This guy does not support
+	 * this interface. Not sure
+	 * why we would specify a
+	 * flag on the interface
+	 * that says we do.
+	 */
+	q->rate_table = NULL;
+	q->flags = RT_NOSUPPORT;
+	q->max_flows = 0;
+	q->number_of_rates = 0;
+}
+
 void
 if_dead(struct ifnet *ifp)
 {
@@ -142,4 +159,5 @@ if_dead(struct ifnet *ifp)
 	ifp->if_snd_tag_modify = ifdead_snd_tag_modify;
 	ifp->if_snd_tag_query = ifdead_snd_tag_query;
 	ifp->if_snd_tag_free = ifdead_snd_tag_free;
+	ifp->if_ratelimit_query = ifdead_ratelimit_query;
 }

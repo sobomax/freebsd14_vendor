@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 8ad3224c42a0c453917c6e0bbb1b51ffd16ad21e $
+# $FreeBSD: b8f216970d7f052680101f99d820c75d20f94ce7 $
 
 .include <src.opts.mk>
 
@@ -23,10 +23,7 @@ CFLAGS+=	-DLIBWRAP
 LIBADD+=	wrap
 .endif
 
-# XXX for src/release/picobsd
-.if !defined(RELEASE_CRUNCH)
 CFLAGS+= -DIPSEC
 LIBADD+=	ipsec
-.endif
 
 .include <bsd.prog.mk>

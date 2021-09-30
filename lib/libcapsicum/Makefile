@@ -1,6 +1,4 @@
-# $FreeBSD: 1adf57666f7eaab2685cad5c76faa1ec5240fce3 $
-
-PACKAGE=lib${LIB}
+# $FreeBSD: c3c6330cbcbdc9c1f46eb0d4b8c3d4af5f236fb5 $
 
 INCS=	capsicum_helpers.h
 
@@ -8,7 +6,10 @@ MAN+=	capsicum_helpers.3
 
 MLINKS+=capsicum_helpers.3 caph_enter.3
 MLINKS+=capsicum_helpers.3 caph_enter_casper.3
+MLINKS+=capsicum_helpers.3 caph_stream_rights.3
 MLINKS+=capsicum_helpers.3 caph_rights_limit.3
+MLINKS+=capsicum_helpers.3 caph_fcntls_limit.3
+MLINKS+=capsicum_helpers.3 caph_ioctls_limit.3
 MLINKS+=capsicum_helpers.3 caph_limit_stream.3
 MLINKS+=capsicum_helpers.3 caph_limit_stdin.3
 MLINKS+=capsicum_helpers.3 caph_limit_stderr.3

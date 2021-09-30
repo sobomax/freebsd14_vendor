@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 404eaf96716a19c93854f3f10e269f47e5adeaf8 $");
+__FBSDID("$FreeBSD: aa557fc1ec2425004b99ac0bb2887cf9cd60c8e4 $");
 
 #include "opt_wlan.h"
 
@@ -37,9 +37,9 @@ __FBSDID("$FreeBSD: 404eaf96716a19c93854f3f10e269f47e5adeaf8 $");
 #include <sys/malloc.h>
 #include <sys/endian.h>
 #include <sys/kernel.h>
- 
+
 #include <sys/socket.h>
- 
+
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <net/if_var.h>

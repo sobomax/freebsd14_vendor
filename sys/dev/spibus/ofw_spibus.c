@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 33cafe4c4143cb0173d1121c7a61bb45133aadb4 $");
+__FBSDID("$FreeBSD: f24b12dccb90b1f35efa67d075681fffaeb10e7a $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -152,6 +152,10 @@ ofw_spibus_attach(device_t dev)
 			continue;
 		}
 		childdev = device_add_child(dev, NULL, -1);
+
+		resource_list_init(&dinfo->opd_dinfo.rl);
+		ofw_bus_intr_to_rl(childdev, child,
+		    &dinfo->opd_dinfo.rl, NULL);
 		device_set_ivars(childdev, dinfo);
 	}
 
@@ -198,6 +202,15 @@ ofw_spibus_get_devinfo(device_t bus, device_t dev)
 	return (&dinfo->opd_obdinfo);
 }
 
+static struct resource_list *
+ofw_spibus_get_resource_list(device_t bus __unused, device_t child)
+{
+	struct spibus_ivar *devi;
+        
+	devi = SPIBUS_IVAR(child);
+	return (&devi->rl);
+}
+
 static device_method_t ofw_spibus_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		ofw_spibus_probe),
@@ -206,6 +219,7 @@ static device_method_t ofw_spibus_methods[] = {
 	/* Bus interface */
 	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
 	DEVMETHOD(bus_add_child,	ofw_spibus_add_child),
+	DEVMETHOD(bus_get_resource_list, ofw_spibus_get_resource_list),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	ofw_spibus_get_devinfo),

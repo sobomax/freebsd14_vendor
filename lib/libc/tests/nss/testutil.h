@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ff9e8f0a93048dd0eceb7bf07c69292f89b3ac47 $
+ * $FreeBSD: 7b55e16580d12ba52dd1f86b6d41691a63b20e92 $
  */
 
 #include <sys/queue.h>
@@ -325,6 +325,6 @@ __##ent##_2pass_test(struct ent##_test_data *td1,			\
 {									\
 	int rv;								\
 									\
-	rv = __##ent##_test_data_compare(td1, td2, cmp_func, cmp_mdata);	\
+	rv = __##ent##_test_data_compare(td1, td2, cmp_func, cmp_mdata);\
 	return (rv);							\
 }

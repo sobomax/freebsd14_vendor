@@ -1,5 +1,5 @@
 .\"
-.\" Copyright (c) 2017 Netflix, Inc.
+.\" Copyright (c) 2017-2019 Netflix, Inc.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 13c9a83bfdbd4cafc455c776e72db5bfe419150a $
+.\" $FreeBSD: e6f34501dfde02fc0778f9ce7229faa13e085372 $
 .\"
 .Dd June 18, 2020
 .Dt EFIVAR 8
@@ -46,6 +46,7 @@
 .Op Fl -hex
 .Op Fl -list-guids
 .Op Fl -list
+.Op Fl -load-option
 .Op Fl -name Ar name
 .Op Fl -no-name
 .Op Fl -print
@@ -86,8 +87,17 @@ This flag implies
 .Fl -write
 unless the
 .Fl -append
-flag is given.
-This behavior is not well understood and is currently unimplemented.
+or
+.Fl -print
+flags are given.
+This behavior is not well understood and is currently unimplemented
+for writes.
+When
+.Fl -print
+is specified, the contents of the file are used as the value to
+print using any other specified flags.
+This is used primarily for testing purposes for more complicated
+variable decoding.
 .It Fl a Fl -append
 Append the specified value to the UEFI variable rather than replacing
 it.
@@ -139,6 +149,8 @@ List all the variables.
 If the
 .Fl -print
 flag is also listed, their values will be displayed.
+.It Fl -load-option
+Decode the variable as if it were a UEFI Boot Option, including information about what device and/or paths the UEFI DevicePaths decode to.
 .It Fl N Fl -no-name
 Do not display the variable name.
 .It Fl p Fl -print

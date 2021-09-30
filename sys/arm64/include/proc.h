@@ -28,7 +28,7 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: 52d60b00dcfb8118754146940d6884ebd7437b0c $
+ * $FreeBSD: bb933dc982418c0cf5c24e2c16c57f741676b203 $
  */
 
 #ifndef	_MACHINE_PROC_H_
@@ -40,7 +40,7 @@ struct mdthread {
 };
 
 struct mdproc {
-	vm_offset_t	md_l0addr;
+	long	md_dummy;
 };
 
 #define	KINFO_PROC_SIZE	1088
@@ -51,7 +51,6 @@ struct syscall_args {
 	u_int code;
 	struct sysent *callp;
 	register_t args[MAXARGS];
-	int narg;
 };
 
 #ifdef _KERNEL

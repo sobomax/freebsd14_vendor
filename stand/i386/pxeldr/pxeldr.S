@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2000 John Baldwin
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ee1e18a1f38af3bb3e0560dfb6b41cd489df8483 $
+ * $FreeBSD: 09e9fda7aa61c39b7cfdee77a61de323fc0d363e $
  */
 
 /*

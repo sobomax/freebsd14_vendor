@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c7841cd5122e76b39591e63acc28ee6ba5b17c1c $
+ * $FreeBSD: daa2b2e0fee9dd5c7268f273101affecd519daa9 $
  */
 
 /**
@@ -200,7 +200,6 @@ struct ocs_xport_s {
 	ocs_timer_t     stats_timer;            /**< Timer for Statistics */
 	ocs_xport_stats_t fc_xport_stats;
 };
-
 
 extern ocs_xport_t *ocs_xport_alloc(ocs_t *ocs);
 extern int32_t ocs_xport_attach(ocs_xport_t *xport);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fec51b6b635a16b7ccb7fc69ef10edb8409668b2 $");
+__FBSDID("$FreeBSD: c79cc49dfd0d84ba5818396223502f9bbba0227d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -61,14 +61,14 @@ counter_u64_t
 counter_u64_alloc(int flags)
 {
 
-	return (uma_zalloc_pcpu(pcpu_zone_64, flags | M_ZERO));
+	return (uma_zalloc_pcpu(pcpu_zone_8, flags | M_ZERO));
 }
 
 void
 counter_u64_free(counter_u64_t c)
 {
 
-	uma_zfree_pcpu(pcpu_zone_64, c);
+	uma_zfree_pcpu(pcpu_zone_8, c);
 }
 
 int
@@ -113,7 +113,7 @@ sysctl_handle_counter_u64_array(SYSCTL_HANDLER_ARGS)
 	 */
 	for (int i = 0; i < arg2; i++)
 		counter_u64_zero(((counter_u64_t *)arg1)[i]);
- 
+
 	return (0);
 }
 

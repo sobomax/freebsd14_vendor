@@ -28,7 +28,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: d60a2c8e21fd651cadb11d3185a440ba5427209a $
+ * $FreeBSD: eb5f2d0db623801b351006446777c861bec4ab23 $
  */
 
 /*
@@ -53,7 +53,6 @@
 
 #ifndef MPI2_TYPE_H
 #define MPI2_TYPE_H
-
 
 /*******************************************************************************
  * Define MPI2_POINTER if it hasn't already been defined. By default
@@ -110,7 +109,6 @@ typedef struct _U64
     U32          High;
 } U64;
 
-
 /*****************************************************************************
 *
 *               Pointer Types
@@ -129,4 +127,3 @@ typedef U64     *PU64;
 #endif
 
 #endif
-

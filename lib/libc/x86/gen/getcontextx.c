@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9060bac44adc8a0f0e029e2fbb9eb4293f27dd9 $");
+__FBSDID("$FreeBSD: 056128a149ffa7ade61b9f78c79f0758896e783a $");
 
 #include <sys/types.h>
 #include <sys/ucontext.h>
@@ -61,7 +61,7 @@ __getcontextx_size_xfpu(void)
 	return (sizeof(ucontext_t) + xstate_sz);
 }
 
-DEFINE_UIFUNC(, int, __getcontextx_size, (void), static)
+DEFINE_UIFUNC(, int, __getcontextx_size, (void))
 {
 	u_int p[4];
 
@@ -100,7 +100,7 @@ __fillcontextx2_noxfpu(char *ctx)
 	return (0);
 }
 
-DEFINE_UIFUNC(, int, __fillcontextx2, (char *), static)
+DEFINE_UIFUNC(, int, __fillcontextx2, (char *))
 {
 
 	return ((cpu_feature2 & CPUID2_OSXSAVE) != 0 ? __fillcontextx2_xfpu : 

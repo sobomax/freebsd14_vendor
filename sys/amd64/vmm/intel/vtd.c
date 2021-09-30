@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 489e7c179f2d470e0ce939c1474adf4c58b6f0f8 $
+ * $FreeBSD: f47e2b56bdcea5864ffb8b9f37c90413b357b79e $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 489e7c179f2d470e0ce939c1474adf4c58b6f0f8 $");
+__FBSDID("$FreeBSD: f47e2b56bdcea5864ffb8b9f37c90413b357b79e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -171,7 +171,7 @@ domain_id(void)
 		if (dom == NULL)
 			break;		/* found it */
 	}
-	
+
 	if (id >= max_domains)
 		panic("domain ids exhausted");
 
@@ -274,7 +274,7 @@ vtd_iotlb_global_invalidate(struct vtdmap *vtdmap)
 
 	offset = VTD_ECAP_IRO(vtdmap->ext_cap) * 16;
 	iotlb_reg = (volatile uint64_t *)((caddr_t)vtdmap + offset + 8);
-	
+
 	*iotlb_reg =  VTD_IIR_IVT | VTD_IIR_IIRG_GLOBAL |
 		      VTD_IIR_DRAIN_READS | VTD_IIR_DRAIN_WRITES;
 
@@ -753,7 +753,7 @@ static void
 vtd_destroy_domain(void *arg)
 {
 	struct domain *dom;
-	
+
 	dom = arg;
 
 	SLIST_REMOVE(&domhead, dom, domain, next);

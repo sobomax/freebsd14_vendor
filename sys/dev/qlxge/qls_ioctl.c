@@ -31,8 +31,7 @@
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bad4307eb4ca46e6941fe033a605c12e924c28a1 $");
-
+__FBSDID("$FreeBSD: 1ce380d9c5eb4949d4ef51ae61c882e22956162e $");
 
 #include "qls_os.h"
 #include "qls_hw.h"
@@ -95,7 +94,6 @@ qls_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 	pci_dev= ha->pci_dev;
 
         switch(cmd) {
-
 	case QLA_MPI_DUMP:
 		mpi_dump = (qls_mpi_dump_t *)data;
 
@@ -119,7 +117,6 @@ qls_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 						__func__, rval);
 				}
 			}
-
 		}
 		
 		break;
@@ -129,4 +126,3 @@ qls_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 
         return rval;
 }
-

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6675d73f0c89dc16329616fe2e5a2c09350116db $");
+__FBSDID("$FreeBSD: 793311b0de554a8294448ebaaca9a7c4d2a10413 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -241,7 +241,6 @@ atpic_isa_attach(device_t dev)
 		    sc->sc_rid[ATPIC_MASTER], sc->sc_res[ATPIC_MASTER]);
 	return (error);
 }
-
 
 /*
  * PIC interface.

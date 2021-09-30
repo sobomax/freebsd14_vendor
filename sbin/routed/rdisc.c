@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b8b02d7b9e1a67e6cf4dd15aa72135759cab98e5 $
+ * $FreeBSD: 3494f061b64b3190abac1616a046c34362dc6d34 $
  */
 
 #include "defs.h"
@@ -36,14 +36,7 @@
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
 
-#ifdef __NetBSD__
-__RCSID("$NetBSD$");
-#elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: b8b02d7b9e1a67e6cf4dd15aa72135759cab98e5 $");
-#else
-__RCSID("$Revision: 2.27 $");
-#ident "$Revision: 2.27 $"
-#endif
+__RCSID("$FreeBSD: 3494f061b64b3190abac1616a046c34362dc6d34 $");
 
 /* router advertisement ICMP packet */
 struct icmp_ad {

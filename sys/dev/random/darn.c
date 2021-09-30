@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e42a4287a5323f1c4b30e094fc302244d0b349a3 $");
+__FBSDID("$FreeBSD: a9b0a84c7edd1fc1c4ca570850aa187613cea50a $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -137,6 +137,12 @@ darn_modevent(module_t mod, int type, void *unused)
 	return (error);
 }
 
-DEV_MODULE(darn, darn_modevent, NULL);
+static moduledata_t darn_mod = {
+	"darn",
+	darn_modevent,
+	0
+};
+
+DECLARE_MODULE(darn, darn_mod, SI_SUB_RANDOM, SI_ORDER_FOURTH);
 MODULE_VERSION(darn, 1);
-MODULE_DEPEND(darn, random_device, 1, 1, 1);
+MODULE_DEPEND(darn, random_harvestq, 1, 1, 1);

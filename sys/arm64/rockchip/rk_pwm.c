@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2244700ee98b6e97960a9ff0f4f3d6ea471c0e02 $
+ * $FreeBSD: f7f2cd8cbeef76dfb8923690898761ccaef3b4c3 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2244700ee98b6e97960a9ff0f4f3d6ea471c0e02 $");
+__FBSDID("$FreeBSD: f7f2cd8cbeef76dfb8923690898761ccaef3b4c3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -99,6 +99,7 @@ __FBSDID("$FreeBSD: 2244700ee98b6e97960a9ff0f4f3d6ea471c0e02 $");
 #define	NS_PER_SEC	1000000000
 
 static struct ofw_compat_data compat_data[] = {
+	{ "rockchip,rk3288-pwm",		1 },
 	{ "rockchip,rk3399-pwm",		1 },
 	{ NULL,					0 }
 };

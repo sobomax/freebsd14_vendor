@@ -46,7 +46,7 @@
  *
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
- * $FreeBSD: a679114dd88ae0de2364fd72bf577934ebb1027a $
+ * $FreeBSD: 2472eda6dc91891403441a34287c632e61c8ed7d $
  */
 
 #ifndef	_SCSI_SCSI_DA_H
@@ -393,7 +393,6 @@ struct scsi_reassign_blocks_data
 	} defect_descriptor[1];
 };
 
-
 /*
  * This is the list header for the READ DEFECT DATA(10) command above.
  * It may be a bit wrong to append the 10 at the end of the data structure,
@@ -608,7 +607,6 @@ struct scsi_rigid_disk_page {
 	uint8_t rotation_rate[2];
 	uint8_t reserved2[2];
 };
-
 
 struct scsi_da_rw_recovery_page {
 	u_int8_t page_code;

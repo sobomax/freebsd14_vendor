@@ -31,11 +31,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b47e2e5348d3c340040130674ad96a3bc1e1c5cc $");
+__FBSDID("$FreeBSD: 14052ac2ca250d0525938b7c4df143f5ed813d72 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/malloc.h>
@@ -286,7 +287,6 @@ mv_hardclock(void *arg)
 static device_method_t mv_timer_methods[] = {
 	DEVMETHOD(device_probe, mv_timer_probe),
 	DEVMETHOD(device_attach, mv_timer_attach),
-
 	{ 0, 0 }
 };
 

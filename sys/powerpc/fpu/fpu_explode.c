@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 010c4e3dd67f7d8d7e407ccb21669d6d66083431 $");
+__FBSDID("$FreeBSD: 1c30f821031ad6e275fd91cb137f1bdd0c212a6e $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -220,7 +220,6 @@ fpu_explode(struct fpemu *fe, struct fpn *fp, int type, int reg)
 	fp->fp_sign = s >> 31;
 	fp->fp_sticky = 0;
 	switch (type) {
-
 	case FTYPE_LNG:
 		s = fpu_xtof(fp, l);
 		break;

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6197a50d0d0e3dc621526033425a3b4c634d1cc0 $");
+__FBSDID("$FreeBSD: ef851058a6efdb1c00e28c64e9a95781f372abf6 $");
 
 #include "opt_evdev.h"
 #include "opt_syscons.h"
@@ -137,7 +137,6 @@ smdev_ioctl(struct tty *tp, u_long cmd, caddr_t data, struct thread *td)
 	mousemode_t *mode;
 
 	switch (cmd) {
-
 	case MOUSE_GETHWINFO:	/* get device information */
 		hw = (mousehw_t *)data;
 		hw->buttons = 10;		/* XXX unknown */

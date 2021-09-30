@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4bdda929c0c7043006bfa0d388a713dc45b0b708 $
+ * $FreeBSD: 00e538d4b647e0efba550d455b7c3ae2ecf652e8 $
  */
 
 /*
@@ -514,12 +514,6 @@ ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
 		cpu_stdext_feature = p[1];
 		cpu_stdext_feature2 = p[2];
 	}
-}
-
-void
-pre_init(void)
-{
-
 }
 
 int __getosreldate(void);

@@ -27,16 +27,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: edbe1741e0f707431557ac5fe18e196e0c6fe004 $");
+__FBSDID("$FreeBSD: 25077500d835b2d7c2ce35abafa3215f15120ff3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/condvar.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/poll.h>
 #include <sys/reboot.h>
 #include <sys/rman.h>
@@ -94,7 +97,7 @@ static int wd_startup_countdown = 0; /* sec */
 static int wd_pretimeout_countdown = 120; /* sec */
 static int cycle_wait = 10; /* sec */
 
-static SYSCTL_NODE(_hw, OID_AUTO, ipmi, CTLFLAG_RD, 0,
+static SYSCTL_NODE(_hw, OID_AUTO, ipmi, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "IPMI driver parameters");
 SYSCTL_INT(_hw_ipmi, OID_AUTO, on, CTLFLAG_RWTUN,
 	&on, 0, "");
@@ -937,14 +940,14 @@ ipmi_startup(void *arg)
 	} else if (!on)
 		(void)ipmi_set_watchdog(sc, 0);
 	/*
-	 * Power cycle the system off using IPMI. We use last - 1 since we don't
+	 * Power cycle the system off using IPMI. We use last - 2 since we don't
 	 * handle all the other kinds of reboots. We'll let others handle them.
 	 * We only try to do this if the BMC supports the Chassis device.
 	 */
 	if (sc->ipmi_dev_support & IPMI_ADS_CHASSIS) {
 		device_printf(dev, "Establishing power cycle handler\n");
 		sc->ipmi_power_cycle_tag = EVENTHANDLER_REGISTER(shutdown_final,
-		    ipmi_power_cycle, sc, SHUTDOWN_PRI_LAST - 1);
+		    ipmi_power_cycle, sc, SHUTDOWN_PRI_LAST - 2);
 	}
 }
 

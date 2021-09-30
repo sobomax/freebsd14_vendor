@@ -28,11 +28,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: de40ad16783c86b6b4929c584fdc415661cd56b8 $
+ * $FreeBSD: 1b4b0b78280c90e77535d3151cef77ee33f2b111 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de40ad16783c86b6b4929c584fdc415661cd56b8 $");
+__FBSDID("$FreeBSD: 1b4b0b78280c90e77535d3151cef77ee33f2b111 $");
 
 #include <sys/capsicum.h>
 #include <sys/file.h>
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: de40ad16783c86b6b4929c584fdc415661cd56b8 $");
 #include <compat/linux/linux_persona.h>
 #include <compat/linux/linux_util.h>
 
-
 #define STACK_SIZE  (2 * 1024 * 1024)
 #define GUARD_SIZE  (4 * PAGE_SIZE)
 
@@ -80,6 +79,7 @@ int
 linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
     int flags, int fd, off_t pos)
 {
+	struct mmap_req mr, mr_fixed;
 	struct proc *p = td->td_proc;
 	struct vmspace *vms = td->td_proc->p_vmspace;
 	int bsd_flags, error;
@@ -204,17 +204,25 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 	 * address is not zero, try with MAP_FIXED and MAP_EXCL first,
 	 * and fall back to the normal behaviour if that fails.
 	 */
+	mr = (struct mmap_req) {
+		.mr_hint = addr,
+		.mr_len = len,
+		.mr_prot = prot,
+		.mr_flags = bsd_flags,
+		.mr_fd = fd,
+		.mr_pos = pos,
+		.mr_check_fp_fn = linux_mmap_check_fp,
+	};
 	if (addr != 0 && (bsd_flags & MAP_FIXED) == 0 &&
 	    (bsd_flags & MAP_EXCL) == 0) {
-		error = kern_mmap_fpcheck(td, addr, len, prot,
-		    bsd_flags | MAP_FIXED | MAP_EXCL, fd, pos,
-		    linux_mmap_check_fp);
+		mr_fixed = mr;
+		mr_fixed.mr_flags |= MAP_FIXED | MAP_EXCL;
+		error = kern_mmap_req(td, &mr_fixed);
 		if (error == 0)
 			goto out;
 	}
 
-	error = kern_mmap_fpcheck(td, addr, len, prot, bsd_flags, fd, pos,
-	    linux_mmap_check_fp);
+	error = kern_mmap_req(td, &mr);
 out:
 	LINUX_CTR2(mmap2, "return: %d (%p)", error, td->td_retval[0]);
 
@@ -260,8 +268,8 @@ linux_madvise_dontneed(struct thread *td, vm_offset_t start, vm_offset_t end)
 	error = 0;
 	vm_map_lock_read(map);
 	if (!vm_map_lookup_entry(map, start, &entry))
-		entry = entry->next;
-	for (; entry->start < end; entry = entry->next) {
+		entry = vm_map_entry_succ(entry);
+	for (; entry->start < end; entry = vm_map_entry_succ(entry)) {
 		if ((entry->eflags & MAP_ENTRY_IS_SUB_MAP) != 0)
 			continue;
 
@@ -292,10 +300,8 @@ linux_madvise_dontneed(struct thread *td, vm_offset_t start, vm_offset_t end)
 			eend = entry->end;
 		}
 
-		if ((object->type == OBJT_DEFAULT ||
-		    object->type == OBJT_SWAP) && object->handle == NULL &&
-		    (object->flags & (OBJ_ONEMAPPING | OBJ_NOSPLIT)) ==
-		    OBJ_ONEMAPPING) {
+		if ((object->flags & (OBJ_ANON | OBJ_ONEMAPPING)) ==
+		    (OBJ_ANON | OBJ_ONEMAPPING)) {
 			/*
 			 * Singly-mapped anonymous memory is discarded.  This
 			 * does not match Linux's semantics when the object
@@ -311,10 +317,7 @@ linux_madvise_dontneed(struct thread *td, vm_offset_t start, vm_offset_t end)
 				vm_object_page_remove(object, pstart, pend, 0);
 				backing_object = object->backing_object;
 				if (backing_object != NULL &&
-				    (backing_object->type == OBJT_DEFAULT ||
-				    backing_object->type == OBJT_SWAP) &&
-				    backing_object->handle == NULL &&
-				    (backing_object->flags & OBJ_NOSPLIT) == 0)
+				    (backing_object->flags & OBJ_ANON) != 0)
 					linux_msg(td,
 					    "possibly incorrect MADV_DONTNEED");
 				VM_OBJECT_WUNLOCK(object);
@@ -390,6 +393,16 @@ linux_madvise_common(struct thread *td, uintptr_t addr, size_t len, int behav)
 		return (EINVAL);
 	case LINUX_MADV_SOFT_OFFLINE:
 		linux_msg(curthread, "unsupported madvise MADV_SOFT_OFFLINE");
+		return (EINVAL);
+	case -1:
+		/*
+		 * -1 is sometimes used as a dummy value to detect simplistic
+		 * madvise(2) stub implementations.  This safeguard is used by
+		 * BoringSSL, for example, before assuming MADV_WIPEONFORK is
+		 * safe to use.  Don't produce an "unsupported" error message
+		 * for this special dummy value, which is unlikely to be used
+		 * by any new advisory behavior feature.
+		 */
 		return (EINVAL);
 	default:
 		linux_msg(curthread, "unsupported madvise behav %d", behav);

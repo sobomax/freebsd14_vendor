@@ -37,7 +37,7 @@
  * otherwise) arising in any way out of the use of this software, even if
  * advised of the possibility of such damage.
  *  
- * $FreeBSD: f6a367db59edf42b952c815c94c3c0234721fa78 $
+ * $FreeBSD: 2bd70875f6cd8d0b1091236e2be15155a30f6a45 $
  */
 
 #ifndef	_GEOM_VINUM_VAR_H_
@@ -106,7 +106,7 @@
 
 /* Synchronization/initialization request sizes. */
 #define	GV_MIN_SYNCSIZE		512
-#define	GV_MAX_SYNCSIZE		MAXPHYS
+#define	GV_MAX_SYNCSIZE		maxphys
 #define	GV_DFLT_SYNCSIZE	65536
 
 /* Flags for BIOs, as they are processed within vinum. */

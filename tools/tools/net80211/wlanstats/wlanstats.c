@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: b42d7312e5197965ba51d9e347cce08509b697bb $
+ * $FreeBSD: 2f362a60a83622373d934418e650fe37f98f1600 $
  */
 
 /*
@@ -463,7 +463,7 @@ getlladdr(struct wlanstatfoo_p *wf)
 		errx(1, "did not find link layer address for interface %s",
 			wf->ifr.ifr_name);
 	sdl = (const struct sockaddr_dl *) p->ifa_addr;
-	IEEE80211_ADDR_COPY(wf->mac, LLADDR(sdl));
+	IEEE80211_ADDR_COPY(wf->mac, CLLADDR(sdl));
 	freeifaddrs(ifp);
 }
 
@@ -561,8 +561,8 @@ wlan_update_tot(struct bsdstat *sf)
 	wf->ntotal = wf->ncur;
 }
 
-void
-setreason(char b[], size_t bs, int v)
+static void
+setreason(char b[], size_t bs, unsigned int v)
 {
     static const char *reasons[] = {
 	[IEEE80211_REASON_UNSPECIFIED]		= "unspecified",
@@ -595,8 +595,8 @@ setreason(char b[], size_t bs, int v)
 	    snprintf(b, bs, "%u", v);
 }
 
-void
-setstatus(char b[], size_t bs, int v)
+static void
+setstatus(char b[], size_t bs, unsigned int v)
 {
     static const char *status[] = {
 	[IEEE80211_STATUS_SUCCESS]		= "success",

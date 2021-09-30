@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)tftpd.c	8.1 (Berkeley) 6/4/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d09ad73befaadcc5d66093c8667e89792476705 $");
+__FBSDID("$FreeBSD: 02fbaaf0d3714aed4f90e4c2964f720ec8c49ef0 $");
 
 /*
  * Trivial file transfer protocol server.
@@ -373,7 +373,10 @@ main(int argc, char *argv[])
 			    chroot_dir, strerror(errno));
 			exit(1);
 		}
-		chdir("/");
+		if (chdir("/") != 0) {
+			tftp_log(LOG_ERR, "chdir: %s", strerror(errno));
+			exit(1);
+		}
 		if (setgroups(1, &nobody->pw_gid) != 0) {
 			tftp_log(LOG_ERR, "setgroups failed");
 			exit(1);

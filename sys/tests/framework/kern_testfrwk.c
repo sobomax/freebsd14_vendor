@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e88faa5e8f85ca8f5f3bc394f23409b35768960 $");
+__FBSDID("$FreeBSD: db3fcfc7fd8004008afb360e98cbf09aea641634 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -166,9 +166,12 @@ kerntest_frwk_fini(void)
 
 static int kerntest_execute(SYSCTL_HANDLER_ARGS);
 
-SYSCTL_NODE(_kern, OID_AUTO, testfrwk, CTLFLAG_RW, 0, "Kernel Test Framework");
-SYSCTL_PROC(_kern_testfrwk, OID_AUTO, runtest, (CTLTYPE_STRUCT | CTLFLAG_RW),
-    0, 0, kerntest_execute, "IU", "Execute a kernel test");
+SYSCTL_NODE(_kern, OID_AUTO, testfrwk, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Kernel Test Framework");
+SYSCTL_PROC(_kern_testfrwk, OID_AUTO, runtest,
+    CTLTYPE_STRUCT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    0, 0, kerntest_execute, "IU",
+    "Execute a kernel test");
 
 int
 kerntest_execute(SYSCTL_HANDLER_ARGS)

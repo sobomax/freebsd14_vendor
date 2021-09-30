@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bd6da487e6a9e02e218fb7bd7c6513432ffc24d7 $
+ * $FreeBSD: 14fa3040341c3705bfa69326bad1d39ce3a96d5f $
  */
 #ifndef _MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_
@@ -808,6 +808,7 @@ u_long	atomic_swap_long(volatile u_long *p, u_long v);
 
 #define	atomic_readandclear_int(p)	atomic_swap_int(p, 0)
 #define	atomic_readandclear_long(p)	atomic_swap_long(p, 0)
+#define	atomic_testandset_acq_long	atomic_testandset_long
 
 /* Operations on 8-bit bytes. */
 #define	atomic_set_8		atomic_set_char

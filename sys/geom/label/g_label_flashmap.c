@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23b018fb5b5a8a8efb888491fefbd2877c2969b4 $");
+__FBSDID("$FreeBSD: c19f5fe3ee97621f9b37cd3eb8967bd14916ab5d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,8 +38,6 @@ __FBSDID("$FreeBSD: 23b018fb5b5a8a8efb888491fefbd2877c2969b4 $");
 #include <geom/geom_flashmap.h>
 #include <geom/geom_slice.h>
 #include <geom/label/g_label.h>
-
-#define	G_LABEL_FLASHMAP_SLICE_DIR	"flash"
 
 static void
 g_label_flashmap_taste(struct g_consumer *cp, char *label, size_t size)
@@ -70,7 +68,7 @@ g_label_flashmap_taste(struct g_consumer *cp, char *label, size_t size)
 
 struct g_label_desc g_label_flashmap = {
 	.ld_taste = g_label_flashmap_taste,
-	.ld_dir = G_LABEL_FLASHMAP_SLICE_DIR,
+	.ld_dirprefix = "flash/",
 	.ld_enabled = 1
 };
 

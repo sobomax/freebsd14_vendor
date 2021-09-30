@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86cd8b7bf69b9920cf3c631bb516edb7858c4b9b $");
+__FBSDID("$FreeBSD: aa9f41cd6cd93eb0416633e6fa65dd4f75878a24 $");
 
 /*
  * Driver for extra ACPI-controlled gadgets (hotkeys, leds, etc) found on
@@ -417,7 +417,6 @@ static struct acpi_asus_model acpi_asus_models[] = {
 		.disp_get	= "\\_SB.PCI0.P0P2.VGA.GETD",
 		.disp_set	= "SDSP"
 	},
-
 	{ .name = NULL }
 };
 
@@ -434,7 +433,6 @@ static struct acpi_asus_model acpi_samsung_models[] = {
 		.lcd_get	= "\\BKLT",
 		.lcd_set	= "\\_SB.PCI0.LPCB.EC0._Q0E"
 	},
-
 	{ .name = NULL }
 };
 
@@ -457,7 +455,6 @@ static struct acpi_asus_model acpi_eeepc_models[] = {
 		.wlan_set	= "\\_SB.ATKD.WLDS",
 		.n_func		= acpi_asus_eeepc_notify
 	},
-
 	{ .name = NULL }
 };
 
@@ -499,7 +496,6 @@ static struct {
 		.method		= ACPI_ASUS_METHOD_WLAN,
 		.description	= "wireless lan state",
 	},
-
 	{ .name = NULL }
 };
 
@@ -524,7 +520,6 @@ static device_method_t acpi_asus_methods[] = {
 	DEVMETHOD(device_probe,  acpi_asus_probe),
 	DEVMETHOD(device_attach, acpi_asus_attach),
 	DEVMETHOD(device_detach, acpi_asus_detach),
-
 	{ 0, 0 }
 };
 
@@ -549,15 +544,16 @@ acpi_asus_probe(device_t dev)
 	ACPI_OBJECT		Arg, *Obj;
 	ACPI_OBJECT_LIST	Args;
 	static char		*asus_ids[] = { "ATK0100", "ASUS010", NULL };
+	int rv;
 	char *rstr;
 
 	ACPI_FUNCTION_TRACE((char *)(uintptr_t)__func__);
 
 	if (acpi_disabled("asus"))
 		return (ENXIO);
-	rstr = ACPI_ID_PROBE(device_get_parent(dev), dev, asus_ids);
-	if (rstr == NULL) {
-		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, asus_ids, &rstr);
+	if (rv > 0) {
+		return (rv);
 	}
 
 	sc = device_get_softc(dev);
@@ -595,7 +591,7 @@ acpi_asus_probe(device_t dev)
 			sc->model = &acpi_samsung_models[0];
 			device_set_desc(dev, "Samsung P30 Laptop Extras");
 			AcpiOsFree(Buf.Pointer);
-			return (0);
+			return (rv);
 		}
 
 		/* EeePC */
@@ -603,7 +599,7 @@ acpi_asus_probe(device_t dev)
 			sc->model = &acpi_eeepc_models[0];
 			device_set_desc(dev, "ASUS EeePC");
 			AcpiOsFree(Buf.Pointer);
-			return (0);
+			return (rv);
 		}
 	}
 
@@ -616,7 +612,6 @@ acpi_asus_probe(device_t dev)
 	 */
 	for (model = acpi_asus_models; model->name != NULL; model++) {
 		if (strncmp(Obj->String.Pointer, model->name, 3) == 0) {
-
 good:
 			sbuf_printf(sb, "Asus %s Laptop Extras",
 			    Obj->String.Pointer);
@@ -627,7 +622,7 @@ good:
 
 			sbuf_delete(sb);
 			AcpiOsFree(Buf.Pointer);
-			return (0);
+			return (rv);
 		}
 		
 		/*
@@ -730,7 +725,7 @@ acpi_asus_attach(device_t dev)
 	sysctl_ctx_init(&sc->sysctl_ctx);
 	sc->sysctl_tree = SYSCTL_ADD_NODE(&sc->sysctl_ctx,
 	    SYSCTL_CHILDREN(acpi_sc->acpi_sysctl_tree),
-	    OID_AUTO, "asus", CTLFLAG_RD, 0, "");
+	    OID_AUTO, "asus", CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "");
 
 	/* Hook up nodes */
 	for (int i = 0; acpi_asus_sysctls[i].name != NULL; i++) {
@@ -741,14 +736,14 @@ acpi_asus_attach(device_t dev)
 			SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_asus_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY,
-			    sc, i, acpi_asus_sysctl, "I",
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
+			    CTLFLAG_NEEDGIANT, sc, i, acpi_asus_sysctl, "I",
 			    acpi_asus_sysctls[i].description);
 		} else {
 			SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_asus_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RW,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 			    sc, i, acpi_asus_sysctl, "I",
 			    acpi_asus_sysctls[i].description);
 		}
@@ -866,7 +861,7 @@ acpi_asus_detach(device_t dev)
 	/* Remove notify handler */
 	AcpiRemoveNotifyHandler(sc->handle, ACPI_SYSTEM_NOTIFY,
 	    acpi_asus_notify);
-	
+
 	if (sc->lcdd_handle) {
 		KASSERT(sc->model->lcdd_n_func != NULL,
 		    ("model->lcdd_n_func is NULL, but lcdd_handle is non-zero"));
@@ -886,7 +881,7 @@ acpi_asus_led_task(struct acpi_asus_led *led, int pending __unused)
 	struct acpi_asus_softc	*sc;
 	char			*method;
 	int			state;
-	
+
 	ACPI_FUNCTION_TRACE((char *)(uintptr_t)__func__);
 
 	sc = led->sc;
@@ -925,7 +920,7 @@ acpi_asus_led_task(struct acpi_asus_led *led, int pending __unused)
 	acpi_SetInteger(sc->handle, method, state);
 	led->busy = 0;
 }
-	
+
 static void
 acpi_asus_led(struct acpi_asus_led *led, int state)
 {
@@ -949,7 +944,7 @@ acpi_asus_sysctl(SYSCTL_HANDLER_ARGS)
 	int			error = 0;
 	int			function;
 	int			method;
-	
+
 	ACPI_FUNCTION_TRACE((char *)(uintptr_t)__func__);
 
 	sc = (struct acpi_asus_softc *)oidp->oid_arg1;

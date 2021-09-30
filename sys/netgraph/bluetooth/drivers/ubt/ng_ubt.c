@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.c,v 1.16 2003/10/10 19:15:06 max Exp $
- * $FreeBSD: d641aadad60da5db78875ddf6778bd3e7ac6a8fd $
+ * $FreeBSD: 30a012702c8f5a5d87c5bf97221ec4c226a13e6f $
  */
 
 /*
@@ -560,7 +560,6 @@ ubt_do_hci_request(struct usb_device *udev, struct ubt_hci_cmd *cmd,
 	error = usbd_transfer_setup(udev, &iface_index, xfer,
 	    &ubt_probe_config, 1, evt, &mtx);
 	if (error == USB_ERR_NORMAL_COMPLETION) {
-
 		mtx_lock(&mtx);
 		usbd_transfer_start(*xfer);
 
@@ -703,7 +702,6 @@ ubt_attach(device_t dev)
 	while ((ed = (struct usb_endpoint_descriptor *)usb_desc_foreach(
 	    usbd_get_config_descriptor(uaa->device), 
 	    (struct usb_descriptor *)ed))) {
-
 		if ((ed->bDescriptorType == UDESC_INTERFACE) &&
 		    (ed->bLength >= sizeof(*id))) {
 			id = (struct usb_interface_descriptor *)ed;
@@ -1678,7 +1676,7 @@ ng_ubt_disconnect(hook_p hook)
 
 	return (0);
 } /* ng_ubt_disconnect */
-	
+
 /*
  * Process control message.
  * Netgraph context.

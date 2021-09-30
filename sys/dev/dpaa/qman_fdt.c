@@ -26,7 +26,7 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9eca3944b4d877387c35b71893f9287eb28f32b8 $");
+__FBSDID("$FreeBSD: bb40f724e7f11bd41d6ca78717a1c7d9920ceec0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -68,7 +68,8 @@ static driver_t qman_driver = {
 };
 
 static devclass_t qman_devclass;
-DRIVER_MODULE(qman, simplebus, qman_driver, qman_devclass, 0, 0);
+EARLY_DRIVER_MODULE(qman, simplebus, qman_driver, qman_devclass, 0, 0,
+    BUS_PASS_SUPPORTDEV);
 
 static int
 qman_fdt_probe(device_t dev)

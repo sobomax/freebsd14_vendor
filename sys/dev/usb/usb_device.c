@@ -1,8 +1,8 @@
-/* $FreeBSD: ba49bef533c5e7c5ee4be63a9813e8a5afd23b8c $ */
+/* $FreeBSD: 322e4f5401ba2dfe70d8010a25486e1fe8306d5d $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
+ * Copyright (c) 2008-2020 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,8 +32,8 @@
 #include <sys/stdint.h>
 #include <sys/stddef.h>
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/queue.h>
-#include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>
@@ -325,7 +325,6 @@ usbd_get_ep_by_addr(struct usb_device *udev, uint8_t ea_val)
 	 * based on the endpoint address:
 	 */
 	for (; ep != ep_end; ep++) {
-
 		if (ep->edesc == NULL) {
 			continue;
 		}
@@ -436,7 +435,6 @@ usbd_get_endpoint(struct usb_device *udev, uint8_t iface_index,
 	 * the endpoints from the beginning of the "udev->endpoints" array.
 	 */
 	for (; ep != ep_end; ep++) {
-
 		if ((ep->edesc == NULL) ||
 		    (ep->iface_index != iface_index)) {
 			continue;
@@ -883,7 +881,6 @@ usb_config_parse(struct usb_device *udev, uint8_t iface_index, uint8_t cmd)
 	ep_max = 0;
 
 	while ((id = usb_idesc_foreach(udev->cdesc, &ips))) {
-
 		iface = udev->ifaces + ips.iface_index;
 
 		/* check for specific interface match */
@@ -900,6 +897,9 @@ usb_config_parse(struct usb_device *udev, uint8_t iface_index, uint8_t cmd)
 				/* initialise interface */
 				do_init = 1;
 			}
+			/* update number of alternate settings, if any */
+			if (iface_index == USB_IFACE_INDEX_ANY)
+				iface->num_altsetting = ips.iface_index_alt + 1;
 		} else
 			do_init = 0;
 
@@ -908,6 +908,7 @@ usb_config_parse(struct usb_device *udev, uint8_t iface_index, uint8_t cmd)
 			/* update current number of endpoints */
 			ep_curr = ep_max;
 		}
+
 		/* check for init */
 		if (do_init) {
 			/* setup the USB interface structure */
@@ -929,7 +930,6 @@ usb_config_parse(struct usb_device *udev, uint8_t iface_index, uint8_t cmd)
 
 		/* iterate all the endpoint descriptors */
 		while ((ed = usb_edesc_foreach(udev->cdesc, ed))) {
-
 			/* check if endpoint limit has been reached */
 			if (temp >= USB_MAX_EP_UNITS) {
 				DPRINTF("Endpoint limit reached\n");
@@ -1184,7 +1184,6 @@ usb_reset_iface_endpoints(struct usb_device *udev, uint8_t iface_index)
 	ep_end = udev->endpoints + udev->endpoints_max;
 
 	for (; ep != ep_end; ep++) {
-
 		if ((ep->edesc == NULL) ||
 		    (ep->iface_index != iface_index)) {
 			continue;
@@ -1293,7 +1292,6 @@ usb_detach_device(struct usb_device *udev, uint8_t iface_index,
 	/* do the detach */
 
 	for (; i != iface_index; i++) {
-
 		iface = usbd_get_iface(udev, i);
 		if (iface == NULL) {
 			/* looks like the end of the USB interfaces */
@@ -1326,7 +1324,6 @@ usb_probe_and_attach_sub(struct usb_device *udev,
 	}
 	dev = iface->subdev;
 	if (dev) {
-
 		/* clean up after module unload */
 
 		if (device_is_attached(dev)) {
@@ -1338,7 +1335,6 @@ usb_probe_and_attach_sub(struct usb_device *udev,
 		iface->subdev = NULL;
 
 		if (device_delete_child(udev->parent_dev, dev)) {
-
 			/*
 			 * Panic here, else one can get a double call
 			 * to device_detach().  USB devices should
@@ -1348,7 +1344,6 @@ usb_probe_and_attach_sub(struct usb_device *udev,
 		}
 	}
 	if (uaa->temp_dev == NULL) {
-
 		/* create a new child */
 		uaa->temp_dev = device_add_child(udev->parent_dev, NULL, -1);
 		if (uaa->temp_dev == NULL) {
@@ -1471,7 +1466,6 @@ usb_probe_and_attach(struct usb_device *udev, uint8_t iface_index)
 	 * handler(s):
 	 */
 	if (iface_index == USB_IFACE_INDEX_ANY) {
-
 		if (usb_test_quirk(&uaa, UQ_MSC_DYMO_EJECT) != 0 &&
 		    usb_dymo_eject(udev, 0) == 0) {
 			/* success, mark the udev as disappearing */
@@ -1498,7 +1492,6 @@ usb_probe_and_attach(struct usb_device *udev, uint8_t iface_index)
 
 	/* Do the probe and attach */
 	for (; i != j; i++) {
-
 		iface = usbd_get_iface(udev, i);
 		if (iface == NULL) {
 			/*
@@ -1616,7 +1609,6 @@ usb_suspend_resume(struct usb_device *udev, uint8_t do_suspend)
 	/* do the suspend or resume */
 
 	for (i = 0; i != USB_IFACE_MAX; i++) {
-
 		iface = usbd_get_iface(udev, i);
 		if (iface == NULL) {
 			/* looks like the end of the USB interfaces */
@@ -1898,7 +1890,6 @@ usb_alloc_device(device_t parent_dev, struct usb_bus *bus,
 	usb_set_device_state(udev, USB_STATE_POWERED);
 
 	if (udev->flags.usb_mode == USB_MODE_HOST) {
-
 		err = usbd_req_set_address(udev, NULL, device_index);
 
 		/*
@@ -2058,7 +2049,6 @@ repeat_set_config:
 	if (set_config_failed == 0 && config_index == 0 &&
 	    usb_test_quirk(&uaa, UQ_MSC_NO_SYNC_CACHE) == 0 &&
 	    usb_test_quirk(&uaa, UQ_MSC_NO_GETMAXLUN) == 0) {
-
 		/*
 		 * Try to figure out if there are any MSC quirks we
 		 * should apply automatically:
@@ -2339,7 +2329,7 @@ usb_free_device(struct usb_device *udev, uint8_t flag)
 
 	/* wait for all references to go away */
 	usb_wait_pending_refs(udev);
-	
+
 	sx_destroy(&udev->enum_sx);
 	sx_destroy(&udev->sr_sx);
 	sx_destroy(&udev->ctrl_sx);
@@ -2424,7 +2414,6 @@ usbd_find_descriptor(struct usb_device *udev, void *id, uint8_t iface_index,
 	desc = (void *)id;
 
 	while ((desc = usb_desc_foreach(cd, desc))) {
-
 		if (desc->bDescriptorType == UDESC_INTERFACE) {
 			break;
 		}

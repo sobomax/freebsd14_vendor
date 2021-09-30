@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4ef6af3d901b783ef19e48606515c59b9e5a8d8c $
+ * $FreeBSD: ed3b7017d7469ba6e3f888bbbb1efd78bfe73ee0 $
  */
 
 #ifndef _DEV_UART_H_
@@ -104,7 +104,6 @@ struct uart_class;
 extern struct uart_class uart_ns8250_class __attribute__((weak));
 extern struct uart_class uart_quicc_class __attribute__((weak));
 extern struct uart_class uart_s3c2410_class __attribute__((weak));
-extern struct uart_class uart_sab82532_class __attribute__((weak));
 extern struct uart_class uart_sbbc_class __attribute__((weak));
 extern struct uart_class uart_z8530_class __attribute__((weak));
 

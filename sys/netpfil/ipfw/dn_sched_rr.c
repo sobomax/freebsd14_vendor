@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: 4c1e4e910a98519a997373ae8a2dfd5ede3a2b1c $
+ * $FreeBSD: 701ce490d60512e3e1d543164e6e29b14f653c3d $
  */
 
 #ifdef _KERNEL
@@ -137,7 +137,6 @@ remove_queue_q(struct rr_queue *q, struct rr_si *si)
 		break;
 	}
 }
-
 
 static inline void
 next_pointer(struct rr_si *si)
@@ -321,6 +320,5 @@ static struct dn_alg rr_desc = {
 	_SI( .getconfig = )  NULL,
 #endif
 };
-
 
 DECLARE_DNSCHED_MODULE(dn_rr, &rr_desc);

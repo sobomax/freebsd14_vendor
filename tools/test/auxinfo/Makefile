@@ -1,7 +1,6 @@
-# $FreeBSD: 0e6d80992ad8095fa2cd4688d20ec18f44fbf011 $
+# $FreeBSD: f40c81d876522a8f2b460204fb3175e1fc4b5fc5 $
 
 PROG=	auxinfo
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)scandir.c	8.3 (Berkeley) 1/2/94");
-__FBSDID("$FreeBSD: 7e5bcce905fb4c3fd5bb6de540c4ad0b77086247 $");
+__FBSDID("$FreeBSD: 10cd7633dac14fac903c079bed5005a029c32178 $");
 
 /*
  * Scan the directory dirname calling select to make a list of selected
@@ -56,13 +56,18 @@ void qsort_b(void *, size_t, size_t, void *);
 #define	SELECT(x)	select(x)
 #endif
 
+#ifdef I_AM_SCANDIR_B
+typedef DECLARE_BLOCK(int, select_block, const struct dirent *);
+typedef DECLARE_BLOCK(int, dcomp_block, const struct dirent **,
+    const struct dirent **);
+#else
 static int alphasort_thunk(void *thunk, const void *p1, const void *p2);
+#endif
 
 int
 #ifdef I_AM_SCANDIR_B
-scandir_b(const char *dirname, struct dirent ***namelist,
-    DECLARE_BLOCK(int, select, const struct dirent *),
-    DECLARE_BLOCK(int, dcomp, const struct dirent **, const struct dirent **))
+scandir_b(const char *dirname, struct dirent ***namelist, select_block select,
+    dcomp_block dcomp)
 #else
 scandir(const char *dirname, struct dirent ***namelist,
     int (*select)(const struct dirent *), int (*dcomp)(const struct dirent **,

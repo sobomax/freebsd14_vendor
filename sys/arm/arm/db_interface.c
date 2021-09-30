@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1ceb29b37c8aaf47665dd1492888260db1484402 $");
+__FBSDID("$FreeBSD: 73d0cc478617a14042f4881006b2825e9a3d4c1d $");
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -64,7 +64,6 @@ __FBSDID("$FreeBSD: 1ceb29b37c8aaf47665dd1492888260db1484402 $");
 #include <ddb/db_output.h>
 #include <ddb/db_variables.h>
 #include <ddb/db_sym.h>
-
 
 static int nil = 0;
 
@@ -154,10 +153,9 @@ void
 db_show_mdpcpu(struct pcpu *pc)
 {
 
-#if __ARM_ARCH >= 6
 	db_printf("curpmap      = %p\n", pc->pc_curpmap);
-#endif
 }
+
 int
 db_validate_address(vm_offset_t addr)
 {
@@ -252,7 +250,6 @@ db_write_bytes(vm_offset_t addr, size_t size, char *data)
 	tlb_flush_all();
 	return (0);
 }
-
 
 static u_int
 db_fetch_reg(int reg)

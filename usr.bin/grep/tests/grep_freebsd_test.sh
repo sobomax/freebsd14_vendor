@@ -24,16 +24,13 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6d5566a43a03fe74042b064d94c3aa017503d65d $
+# $FreeBSD: 0d068d5d1c65280a2dfa6d4d8e3c6ba41e22a460 $
 
 # What grep(1) are we working with?
 # - 0 : bsdgrep
-# - 1 : gnu grep 2.51 (base)
-# - 2 : gnu grep (ports)
+# - 1 : gnu grep (ports)
 GREP_TYPE_BSD=0
-GREP_TYPE_GNU_FREEBSD=1
-GREP_TYPE_GNU=2
-GREP_TYPE_UNKNOWN=3
+GREP_TYPE_GNU=1
 
 grep_type()
 {
@@ -44,14 +41,7 @@ grep_type()
 		return $GREP_TYPE_BSD
 		;;
 	*"GNU grep"*)
-		case "$grep_version" in
-		*2.5.1-FreeBSD*)
-			return $GREP_TYPE_GNU_FREEBSD
-			;;
-		*)
-			return $GREP_TYPE_GNU
-			;;
-		esac
+		return $GREP_TYPE_GNU
 		;;
 	esac
 	atf_fail "unknown grep type: $grep_version"
@@ -87,11 +77,6 @@ gnuext_body()
 {
 	grep_type
 	_type=$?
-	if [ $_type -eq $GREP_TYPE_BSD ]; then
-		atf_expect_fail "this test requires GNU extensions in regex(3)"
-	elif [ $_type -eq $GREP_TYPE_GNU_FREEBSD ]; then
-		atf_expect_fail "\\s and \\S are known to be buggy in base gnugrep"
-	fi
 
 	atf_check -o save:grep_alnum.out grep -o '[[:alnum:]]' /COPYRIGHT
 	atf_check -o file:grep_alnum.out grep -o '\w' /COPYRIGHT

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 9d4d981b54d95bfbdeaf80a13791cd4764dbdf81 $ */
+/*	$FreeBSD: 3103399f06b44c952a26d3e89718bdb3ec866efc $ */
 /*	$NetBSD: db_trace.c,v 1.20 2002/05/13 20:30:09 matt Exp $	*/
 /*	$OpenBSD: db_trace.c,v 1.3 1997/03/21 02:10:48 niklas Exp $	*/
 
@@ -125,7 +125,6 @@ db_frame(struct db_variable *vp, db_expr_t *valuep, int op)
 		*reg = *valuep;
 	return (1);
 }
-
 
 /*
  *	Frame tracing.
@@ -255,6 +254,7 @@ db_backtrace(struct thread *td, db_addr_t fp, int count)
 			case EXC_DECR: trapstr = "DECR"; break;
 			case EXC_PERF: trapstr = "PERF"; break;
 			case EXC_VSX: trapstr = "VSX"; break;
+			case EXC_SOFT_PATCH: trapstr = "SOFT_PATCH"; break;
 			default: trapstr = NULL; break;
 			}
 			if (trapstr != NULL) {

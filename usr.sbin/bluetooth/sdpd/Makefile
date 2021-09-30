@@ -1,6 +1,7 @@
 # $Id: Makefile,v 1.1 2004/01/20 21:27:55 max Exp $
-# $FreeBSD: df443fca4f4e7c002cea2fcbafdd51fad55a8584 $
+# $FreeBSD: 65c1df35d12c75c2c38650b0e123ec40beac89f3 $
 
+PACKAGE=	bluetooth
 PROG=		sdpd
 MAN=		sdpd.8
 SRCS=		audio_sink.c audio_source.c \

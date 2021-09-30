@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80c720a6c57b4b0b94ccf58ff8f47b4b5d1fa71a $");
+__FBSDID("$FreeBSD: 08117a9e8c05112189a61d5146ad7f467ab7f0ca $");
 
 /*
  * IEEE 802.11 radiotap support.
@@ -39,9 +39,9 @@ __FBSDID("$FreeBSD: 80c720a6c57b4b0b94ccf58ff8f47b4b5d1fa71a $");
 #include <sys/malloc.h>
 #include <sys/endian.h>
 #include <sys/kernel.h>
- 
+
 #include <sys/socket.h>
- 
+
 #include <net/bpf.h>
 #include <net/if.h>
 #include <net/if_var.h>

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5bb70419726a5c6d2a5ee08aeab47d7710d9e9fc $
+ * $FreeBSD: c7d5ce2bc268756583880b48c18990fbcb80859e $
  */
 
 #ifndef _X86_BUS_DMA_H_
@@ -191,11 +191,4 @@ _bus_dmamap_complete(bus_dma_tag_t dmat, bus_dmamap_t map,
 	return (tc->impl->map_complete(dmat, map, segs, nsegs, error));
 }
 
-#ifdef _KERNEL
-bool bus_dma_dmar_set_buswide(device_t dev);
-int bus_dma_dmar_load_ident(bus_dma_tag_t dmat, bus_dmamap_t map,
-    vm_paddr_t start, vm_size_t length, int flags);
-#endif
-
 #endif /* !_X86_BUS_DMA_H_ */
-

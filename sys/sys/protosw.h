@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)protosw.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: a8aa7f860c09811fa4436ea112ece7268ba4144e $
+ * $FreeBSD: 9c3139c866bde1d01895da7cb927a272c9eda21a $
  */
 
 #ifndef _SYS_PROTOSW_H_
@@ -343,7 +343,6 @@ char	*prcorequests[] = {
 
 #ifdef _KERNEL
 void	pfctlinput(int, struct sockaddr *);
-void	pfctlinput2(int, struct sockaddr *, void *);
 struct domain *pffinddomain(int family);
 struct protosw *pffindproto(int family, int protocol, int type);
 struct protosw *pffindtype(int family, int type);

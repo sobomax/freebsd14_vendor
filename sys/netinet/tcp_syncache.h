@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: 58252b4a5fef50630221944ebfe784d3aefa32c6 $
+ * $FreeBSD: 37575a14467c4dbdf11ced2f0689f68ae34719dd $
  */
 
 #ifndef _NETINET_TCP_SYNCACHE_H_
@@ -48,7 +48,7 @@ int	 syncache_add(struct in_conninfo *, struct tcpopt *,
 	     void *, void *, uint8_t);
 void	 syncache_chkrst(struct in_conninfo *, struct tcphdr *, struct mbuf *);
 void	 syncache_badack(struct in_conninfo *);
-int	 syncache_pcblist(struct sysctl_req *req, int max_pcbs, int *pcbs_exported);
+int	 syncache_pcblist(struct sysctl_req *);
 
 struct syncache {
 	TAILQ_ENTRY(syncache)	sc_hash;
@@ -63,8 +63,8 @@ struct syncache {
 	struct		mbuf *sc_ipopts;	/* source route */
 	u_int16_t	sc_peer_mss;		/* peer's MSS */
 	u_int16_t	sc_wnd;			/* advertised window */
-	u_int8_t	sc_ip_ttl;		/* IPv4 TTL */
-	u_int8_t	sc_ip_tos;		/* IPv4 TOS */
+	u_int8_t	sc_ip_ttl;		/* TTL / Hop Limit */
+	u_int8_t	sc_ip_tos;		/* TOS / Traffic Class */
 	u_int8_t	sc_requested_s_scale:4,
 			sc_requested_r_scale:4;
 	u_int16_t	sc_flags;
@@ -115,6 +115,9 @@ struct syncookie_secret {
 	u_int lifetime;
 };
 
+#define	TCP_SYNCACHE_PAUSE_TIME		SYNCOOKIE_LIFETIME
+#define	TCP_SYNCACHE_MAX_BACKOFF	6	/* 16 minutes */
+
 struct tcp_syncache {
 	struct	syncache_head *hashbase;
 	uma_zone_t zone;
@@ -126,6 +129,11 @@ struct tcp_syncache {
 	uint32_t hash_secret;
 	struct vnet *vnet;
 	struct syncookie_secret secret;
+	struct mtx pause_mtx;
+	struct callout pause_co;
+	time_t	pause_until;
+	uint8_t pause_backoff;
+	volatile bool paused;
 };
 
 /* Internal use for the syncookie functions. */

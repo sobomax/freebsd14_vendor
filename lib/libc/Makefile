@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: ea3879ece5922eef6b6a33bf8bf56769f57133bc $
+# $FreeBSD: d9309153072108af42df2442318e2521ec3e2031 $
 
 PACKAGE=	clibs
 SHLIBDIR?= /lib
@@ -15,8 +15,8 @@ LIBC_SRCTOP?= ${.CURDIR}
 # named MACHINE_CPUARCH, but some ABIs are different enough to require
 # their own libc, so allow a directory named MACHINE_ARCH to override this.
 
-.if exists(${LIBC_SRCTOP}/${MACHINE_ARCH})
-LIBC_ARCH=${MACHINE_ARCH}
+.if exists(${LIBC_SRCTOP}/${MACHINE_ARCH:S/powerpc64le/powerpc64/})
+LIBC_ARCH=${MACHINE_ARCH:S/powerpc64le/powerpc64/}
 .else
 LIBC_ARCH=${MACHINE_CPUARCH}
 .endif
@@ -31,7 +31,8 @@ CFLAGS+=-DNO__SCCSID -DNO__RCSID
 
 LIB=c
 SHLIB_MAJOR= 7
-.if ${MK_SSP} != "no"
+.if ${MK_SSP} != "no" && \
+    (${LIBC_ARCH} == "i386" || ${MACHINE_ARCH:Mpower*} != "")
 SHLIB_LDSCRIPT=libc.ldscript
 .else
 SHLIB_LDSCRIPT=libc_nossp.ldscript
@@ -59,7 +60,8 @@ CFLAGS+=${CANCELPOINTS_CFLAGS}
 LDFLAGS+= -nodefaultlibs
 LIBADD+=	compiler_rt
 
-.if ${MK_SSP} != "no"
+.if ${MK_SSP} != "no" && \
+    (${LIBC_ARCH} == "i386" || ${MACHINE_ARCH:Mpower*} != "")
 LIBADD+=	ssp_nonshared
 .endif
 
@@ -95,7 +97,6 @@ NOASM=
     ${LIBC_ARCH} != "amd64" && \
     ${LIBC_ARCH} != "powerpc64" && \
     ${LIBC_ARCH} != "riscv" && \
-    ${LIBC_ARCH} != "sparc64" && \
     ${MACHINE_ARCH:Mmipsn32*} == "" && \
     ${MACHINE_ARCH:Mmips64*} == ""
 .include "${LIBC_SRCTOP}/quad/Makefile.inc"

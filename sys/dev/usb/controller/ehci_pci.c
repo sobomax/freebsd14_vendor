@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d24045c75673f9e02112c977097ba39b46f2846 $");
+__FBSDID("$FreeBSD: 7783c157046f681ce922e1a68c0be4a467324ba8 $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -212,6 +212,9 @@ ehci_pci_match(device_t self)
 
 	case 0x15621131:
 		return "Philips ISP156x USB 2.0 controller";
+
+	case 0x70021039:
+		return "SiS 968 USB 2.0 controller";
 
 	case 0x31041106:
 		return ("VIA VT6202 USB 2.0 controller");

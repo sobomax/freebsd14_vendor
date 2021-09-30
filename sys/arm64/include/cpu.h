@@ -35,7 +35,7 @@
  *
  *	from: @(#)cpu.h 5.4 (Berkeley) 5/9/91
  *	from: FreeBSD: src/sys/i386/include/cpu.h,v 1.62 2001/06/29
- * $FreeBSD: 4b2305967b1a75faa569ca50005a23c9d1690406 $
+ * $FreeBSD: 529f156f2e96d610b13a3b6ce2cbd3929270c943 $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -81,13 +81,18 @@
 
 /* ARM Part numbers */
 #define	CPU_PART_FOUNDATION	0xD00
-#define	CPU_PART_CORTEX_A35	0xD04
 #define	CPU_PART_CORTEX_A53	0xD03
+#define	CPU_PART_CORTEX_A35	0xD04
 #define	CPU_PART_CORTEX_A55	0xD05
+#define	CPU_PART_CORTEX_A65	0xD06
 #define	CPU_PART_CORTEX_A57	0xD07
 #define	CPU_PART_CORTEX_A72	0xD08
 #define	CPU_PART_CORTEX_A73	0xD09
 #define	CPU_PART_CORTEX_A75	0xD0A
+#define	CPU_PART_CORTEX_A76	0xD0B
+#define	CPU_PART_NEOVERSE_N1	0xD0C
+#define	CPU_PART_CORTEX_A77	0xD0D
+#define	CPU_PART_CORTEX_A76AE	0xD0E
 
 /* Cavium Part numbers */
 #define	CPU_PART_THUNDERX	0x0A1
@@ -152,7 +157,6 @@
 #define	CPU_MATCH_ERRATA_CAVIUM_THUNDERX_1_1	0
 #endif
 
-
 extern char btext[];
 extern char etext[];
 
@@ -161,9 +165,15 @@ extern uint64_t __cpu_affinity[];
 void	cpu_halt(void) __dead2;
 void	cpu_reset(void) __dead2;
 void	fork_trampoline(void);
-void	identify_cpu(void);
+void	identify_cache(uint64_t);
+void	identify_cpu(u_int);
 void	install_cpu_errata(void);
 void	swi_vm(void *v);
+
+/* Functions to read the sanitised view of the special registers */
+void	update_special_regs(u_int);
+bool	extract_user_id_field(u_int, u_int, uint8_t *);
+bool	get_kernel_reg(u_int, uint64_t *);
 
 #define	CPU_AFFINITY(cpu)	__cpu_affinity[(cpu)]
 #define	CPU_CURRENT_SOCKET				\

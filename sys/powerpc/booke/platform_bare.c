@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2354eaed4e847cd0867b072891512113f3c6786 $");
+__FBSDID("$FreeBSD: 0fc1e299f78e54419958cfed01b085612e0b80bd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -159,4 +159,3 @@ bare_reset(platform_t plat)
 	while (1)
 		;
 }
-

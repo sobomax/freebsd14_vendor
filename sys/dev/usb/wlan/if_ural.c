@@ -1,4 +1,4 @@
-/*	$FreeBSD: a71666379190d6afb7a81435b697a0e0fd9a22ac $	*/
+/*	$FreeBSD: 4a2ed51928a7b1f617772b58873839207207f49e $	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a71666379190d6afb7a81435b697a0e0fd9a22ac $");
+__FBSDID("$FreeBSD: 4a2ed51928a7b1f617772b58873839207207f49e $");
 
 /*-
  * Ralink Technology RT2500USB chipset driver
@@ -80,7 +80,8 @@ __FBSDID("$FreeBSD: a71666379190d6afb7a81435b697a0e0fd9a22ac $");
 #ifdef USB_DEBUG
 static int ural_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, ural, CTLFLAG_RW, 0, "USB ural");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, ural, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB ural");
 SYSCTL_INT(_hw_usb_ural, OID_AUTO, debug, CTLFLAG_RWTUN, &ural_debug, 0,
     "Debug level");
 #endif
@@ -757,7 +758,6 @@ fail:
 	return (-1);
 }
 
-
 static void
 ural_bulk_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
@@ -851,6 +851,7 @@ ural_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 	struct ural_softc *sc = usbd_xfer_softc(xfer);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_node *ni;
+	struct epoch_tracker et;
 	struct mbuf *m = NULL;
 	struct usb_page_cache *pc;
 	uint32_t flags;
@@ -931,11 +932,13 @@ tr_setup:
 		if (m) {
 			ni = ieee80211_find_rxnode(ic,
 			    mtod(m, struct ieee80211_frame_min *));
+			NET_EPOCH_ENTER(et);
 			if (ni != NULL) {
 				(void) ieee80211_input(ni, m, rssi, nf);
 				ieee80211_free_node(ni);
 			} else
 				(void) ieee80211_input_all(ic, m, rssi, nf);
+			NET_EPOCH_EXIT(et);
 		}
 		RAL_LOCK(sc);
 		ural_start(sc);

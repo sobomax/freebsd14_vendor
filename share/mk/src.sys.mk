@@ -1,4 +1,4 @@
-# $FreeBSD: 61c51f200d351ffa0cd17d6da8675793d7bbbf04 $
+# $FreeBSD: 2a6bfadee00919acc5df7bdbe0f9382ebd17b96e $
 
 # Note: This file is also duplicated in the sys/conf/kern.pre.mk so
 # it will always grab SRCCONF, even if it isn't being built in-tree
@@ -39,6 +39,8 @@ __postrcconf_${var}:=	${MK_${var}:U-}${WITHOUT_${var}:Uno:Dyes}${WITH_${var}:Uno
 # default over to -fno-common, making this redundant.
 CFCOMMONFLAG?=	-fno-common
 CFLAGS+=	${CFCOMMONFLAG}
+
+DEFAULTWARNS=	6
 
 # tempting, but bsd.compiler.mk causes problems this early
 # probably need to remove dependence on bsd.own.mk 

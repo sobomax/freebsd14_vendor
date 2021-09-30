@@ -1,6 +1,6 @@
 /*-
  * This file is in the public domain.
- * $FreeBSD: ddac571e6b43a93f3403bcf203fe770cbfb8fd59 $
+ * $FreeBSD: c6fb7fca4c2ef65e2a21934dcb4da2833c626ed1 $
  */
 
 /* Messages (1 byte) */		     /* I/T (M)andatory or (O)ptional */
@@ -73,4 +73,3 @@
 #define	MSG_QUERY_TASK		0x100
 #define	MSG_QUERY_TASK_SET	0x101
 #define	MSG_QUERY_ASYNC_EVENT	0x102
-

@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 42b35c4637aac2d7299598f5c24d765b85865199 $*/
+/*$FreeBSD: f521c2c8c5e6c7c13c062e2768333361d9ce55d0 $*/
 
 #ifndef _E1000_HW_H_
 #define _E1000_HW_H_
@@ -791,8 +791,8 @@ struct e1000_nvm_operations {
 
 struct e1000_mac_info {
 	struct e1000_mac_operations ops;
-	u8 addr[ETH_ADDR_LEN];
-	u8 perm_addr[ETH_ADDR_LEN];
+	u8 addr[ETHER_ADDR_LEN];
+	u8 perm_addr[ETHER_ADDR_LEN];
 
 	enum e1000_mac_type type;
 

@@ -32,7 +32,7 @@
  *	1. Compute and return log2(x) in two pieces:
  *		log2(x) = w1 + w2,
  *	   where w1 has 113-53 = 60 bit trailing zeros.
- *	2. Perform y*log2(x) = n+y' by simulating muti-precision
+ *	2. Perform y*log2(x) = n+y' by simulating multi-precision
  *	   arithmetic, where |y'|<=0.5.
  *	3. Return x**y = 2**n*exp(y'*log2)
  *
@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6e72333e4b97b7c02a80d9ebd18811dcf1db89b $");
+__FBSDID("$FreeBSD: 12b92a1a98b9fa87a457a188124f83363b1c9a93 $");
 
 #include <float.h>
 #include <math.h>

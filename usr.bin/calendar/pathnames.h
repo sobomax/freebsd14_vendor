@@ -29,9 +29,10 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 006f5bcd5cdc82e5f6a270fa743c1e391dbe97df $
+ * $FreeBSD: fa46eb0c7e509f144a2db7f33e1a6b290e2cd46c $
  */
 
 #include <paths.h>
 
 #define	_PATH_INCLUDE	"/usr/share/calendar"
+#define	_PATH_INCLUDE_LOCAL	"%s/share/calendar"

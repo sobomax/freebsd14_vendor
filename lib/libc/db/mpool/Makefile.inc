@@ -1,9 +1,7 @@
 #	from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 76ec0ebe5cd2940222d3a9c9138aafa2a20245b1 $
+# $FreeBSD: bd57a65e1f06fedae71946027381bc0de32126e1 $
 
 .PATH: ${LIBC_SRCTOP}/db/mpool
 
-SRCS+=	mpool.c
-.if ${MK_SYMVER} == yes
-SRCS+=	mpool-compat.c
-.endif
+SRCS+=	mpool.c \
+	mpool-compat.c

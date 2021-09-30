@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d059e2bfd058edce4ef1ed8e36bf59302ba37f2 $");
+__FBSDID("$FreeBSD: 84626936eb811fe717fe87206a05873ccf55845a $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -39,16 +39,13 @@ __FBSDID("$FreeBSD: 8d059e2bfd058edce4ef1ed8e36bf59302ba37f2 $");
 #include <sys/malloc.h>
 #include <sys/memdesc.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/rman.h>
 #include <sys/rwlock.h>
 #include <sys/smp.h>
 #include <sys/taskqueue.h>
 #include <sys/tree.h>
 #include <sys/vmem.h>
-#include <machine/bus.h>
-#include <contrib/dev/acpica/include/acpi.h>
-#include <contrib/dev/acpica/include/accommon.h>
-#include <dev/acpica/acpivar.h>
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_kern.h>
@@ -56,12 +53,16 @@ __FBSDID("$FreeBSD: 8d059e2bfd058edce4ef1ed8e36bf59302ba37f2 $");
 #include <vm/vm_page.h>
 #include <vm/vm_pager.h>
 #include <vm/vm_map.h>
-#include <x86/include/busdma_impl.h>
-#include <x86/iommu/intel_reg.h>
-#include <x86/iommu/busdma_dmar.h>
+#include <contrib/dev/acpica/include/acpi.h>
+#include <contrib/dev/acpica/include/accommon.h>
+#include <dev/acpica/acpivar.h>
 #include <dev/pci/pcireg.h>
-#include <x86/iommu/intel_dmar.h>
 #include <dev/pci/pcivar.h>
+#include <machine/bus.h>
+#include <x86/include/busdma_impl.h>
+#include <dev/iommu/busdma_iommu.h>
+#include <x86/iommu/intel_reg.h>
+#include <x86/iommu/intel_dmar.h>
 
 typedef void (*dmar_quirk_cpu_fun)(struct dmar_unit *);
 
@@ -221,8 +222,11 @@ static const struct intel_dmar_quirk_cpu post_ident_cpu[] = {
 };
 
 void
-dmar_quirks_pre_use(struct dmar_unit *dmar)
+dmar_quirks_pre_use(struct iommu_unit *unit)
 {
+	struct dmar_unit *dmar;
+
+	dmar = IOMMU2DMAR(unit);
 
 	if (!dmar_barrier_enter(dmar, DMAR_BARRIER_USEQ))
 		return;

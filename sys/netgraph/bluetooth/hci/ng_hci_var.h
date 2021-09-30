@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_var.h,v 1.3 2003/04/26 22:35:21 max Exp $
- * $FreeBSD: d30a5694284f762d087519b3c6d4799053b7007f $
+ * $FreeBSD: bb5c1f4624a70ec679b94ee30586e895b218df59 $
  */
 
 #ifndef _NETGRAPH_HCI_VAR_H_
@@ -219,4 +219,3 @@ typedef struct ng_hci_neighbor {
 typedef ng_hci_neighbor_t *		ng_hci_neighbor_p;
        
 #endif /* ndef _NETGRAPH_HCI_VAR_H_ */
-

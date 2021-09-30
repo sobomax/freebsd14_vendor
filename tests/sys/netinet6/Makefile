@@ -1,4 +1,4 @@
-# $FreeBSD: bdedc404a16e020cab198e9faaf13ada87a3db57 $
+# $FreeBSD: 0ad95af97c833e275a2ae33a42bcca9583779d04 $
 
 PACKAGE=	tests
 
@@ -8,15 +8,24 @@ FILESDIR=	${TESTSDIR}
 ATF_TESTS_SH=			\
 				exthdr \
 				mld \
-				scapyi386
+				scapyi386 \
+				redirect \
+				divert \
+				forward6 \
+				output6 \
+				lpm6 \
+				fibs6
+TEST_METADATA.output6+=	required_programs="python"
 
 ${PACKAGE}FILES+=		exthdr.py
 ${PACKAGE}FILES+=		mld.py
 ${PACKAGE}FILES+=		scapyi386.py
+${PACKAGE}FILES+=		redirect.py
 
 ${PACKAGE}FILESMODE_exthdr.py=	0555
 ${PACKAGE}FILESMODE_mld.py=	0555
 ${PACKAGE}FILESMODE_scapyi386.py=0555
+${PACKAGE}FILESMODE_redirect.py=0555
 
 TESTS_SUBDIRS+=	frag6
 

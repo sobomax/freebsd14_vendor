@@ -1,5 +1,6 @@
-# $FreeBSD: e0b2452afdd03dde8257cca9d710cd88122b89e2 $
+# $FreeBSD: 03b608edc63fc93b6af6fac66e6973981d461146 $
 
+PACKAGE=	bluetooth
 CONFS=		iwmbtfw.conf
 CONFSDIR=       /etc/devd
 PROG=		iwmbtfw

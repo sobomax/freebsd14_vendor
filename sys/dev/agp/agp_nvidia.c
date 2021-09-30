@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40b999490d9f6ebe2a995e84d9c364ff43df541c $");
+__FBSDID("$FreeBSD: aa8df5e06f86077cbe725d7fb9e84d2dc4108702 $");
 
 /*
  * Written using information gleaned from the
@@ -41,15 +41,8 @@ __FBSDID("$FreeBSD: 40b999490d9f6ebe2a995e84d9c364ff43df541c $");
 #include <sys/module.h>
 #include <sys/bus.h>
 #include <sys/lock.h>
-
-#if __FreeBSD_version < 500000
-#include "opt_pci.h"
-#endif
-
-#if __FreeBSD_version > 500000
 #include <sys/mutex.h>
 #include <sys/proc.h>
-#endif
 
 #include <dev/agp/agppriv.h>
 #include <dev/agp/agpreg.h>
@@ -444,7 +437,6 @@ static device_method_t agp_nvidia_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

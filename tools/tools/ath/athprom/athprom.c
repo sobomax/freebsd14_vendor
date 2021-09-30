@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: e295fd1d70a1755c2991720acd399dee75ada6b9 $
+ * $FreeBSD: 1010c0bf5315aa42bb2a9dd13ee3c0cbd4d13d9e $
  */
 #include "diag.h"
 
@@ -41,12 +41,13 @@
 #include <getopt.h>
 #include <errno.h>
 #include <err.h>
+#include <paths.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
 #ifndef DIR_TEMPLATE
-#define	DIR_TEMPLATE	"/usr/local/libdata/athprom"
+#define	DIR_TEMPLATE	_PATH_LOCALBASE "/libdata/athprom"
 #endif
 
 struct	ath_diag atd;

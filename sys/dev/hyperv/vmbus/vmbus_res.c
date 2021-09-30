@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 164ebeb9175eda3d446315bf8143786158ba0a56 $");
+__FBSDID("$FreeBSD: fba5a732ca588b96aeeb4afbe35bf2b5eff00958 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -73,14 +73,15 @@ static int
 vmbus_res_probe(device_t dev)
 {
 	char *id[] = { "VMBUS", NULL };
-
-	if (ACPI_ID_PROBE(device_get_parent(dev), dev, id) == NULL ||
-	    device_get_unit(dev) != 0 || vm_guest != VM_GUEST_HV ||
+	int rv;
+	
+	if (device_get_unit(dev) != 0 || vm_guest != VM_GUEST_HV ||
 	    (hyperv_features & CPUID_HV_MSR_SYNIC) == 0)
 		return (ENXIO);
-
-	device_set_desc(dev, "Hyper-V Vmbus Resource");
-	return (BUS_PROBE_DEFAULT);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, id, NULL);
+	if (rv <= 0)
+		device_set_desc(dev, "Hyper-V Vmbus Resource");
+	return (rv);
 }
 
 static int

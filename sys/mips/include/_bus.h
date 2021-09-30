@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2005 M. Warner Losh.
- * All rights reserved.
+ * Copyright (c) 2005 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +27,7 @@
  * SUCH DAMAGE.
  *
  * from: src/sys/i386/include/_bus.h,v 1.1 2005/04/18 21:45:33 imp
- * $FreeBSD: 866c19f45664ea0ae840db9aab13b4ee7986db7d $
+ * $FreeBSD: 9edb1f183efc8be4a234ee9c3f2710340ca6e8d5 $
  */
 
 #ifndef MIPS_INCLUDE__BUS_H

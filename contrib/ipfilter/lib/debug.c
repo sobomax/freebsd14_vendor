@@ -1,4 +1,4 @@
-/*	$FreeBSD: 02e5f5b487754d9f0cd459c271069636a5ed2d98 $	*/
+/*	$FreeBSD: 0e3276e21705f4bc4e4b49283cb4fd2661a993b4 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -8,11 +8,7 @@
  * $Id$
  */
 
-#if defined(__STDC__)
 # include <stdarg.h>
-#else
-# include <varargs.h>
-#endif
 #include <stdio.h>
 
 #include "ipf.h"
@@ -21,14 +17,8 @@
 int	debuglevel = 0;
 
 
-#ifdef	__STDC__
-void	debug(int level, char *fmt, ...)
-#else
-void	debug(level, fmt, va_alist)
-	int level;
-	char *fmt;
-	va_dcl
-#endif
+void
+debug(int level, char *fmt, ...)
 {
 	va_list pvar;
 
@@ -40,13 +30,8 @@ void	debug(level, fmt, va_alist)
 }
 
 
-#ifdef	__STDC__
-void	ipfkdebug(char *fmt, ...)
-#else
-void	ipfkdebug(fmt, va_alist)
-	char *fmt;
-	va_dcl
-#endif
+void
+ipfkdebug(char *fmt, ...)
 {
 	va_list pvar;
 

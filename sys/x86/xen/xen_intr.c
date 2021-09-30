@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d366a61dc9ec875bf1f5b8489eaca0d65e9e4bdf $");
+__FBSDID("$FreeBSD: 435db2e3169339554595808627ef7e7b3d29647f $");
 
 #include "opt_ddb.h"
 
@@ -60,6 +60,7 @@ __FBSDID("$FreeBSD: d366a61dc9ec875bf1f5b8489eaca0d65e9e4bdf $");
 #include <machine/xen/xen-os.h>
 
 #include <xen/xen-os.h>
+#include <xen/hvm.h>
 #include <xen/hypervisor.h>
 #include <xen/xen_intr.h>
 #include <xen/evtchn/evtchnvar.h>
@@ -559,7 +560,6 @@ xen_intr_handle_upcall(struct trapframe *trap_frame)
 	(*pc->evtchn_intrcnt)++;
 
 	while (l1 != 0) {
-
 		l1i = (l1i + 1) % LONG_BIT;
 		masked_l1 = l1 & ((~0UL) << l1i);
 
@@ -620,6 +620,10 @@ xen_intr_handle_upcall(struct trapframe *trap_frame)
 			l1 &= ~(1UL << l1i);
 		}
 	}
+
+	if (xen_evtchn_needs_ack)
+		lapic_eoi();
+
 	critical_exit();
 }
 
@@ -1568,7 +1572,7 @@ xen_intr_port(xen_intr_handle_t handle)
 	isrc = xen_intr_isrc(handle);
 	if (isrc == NULL)
 		return (0);
-	
+
 	return (isrc->xi_port);
 }
 

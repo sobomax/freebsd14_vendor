@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 195beaaf0583fb597da29c569793a51e58d5f43a $
+ * $FreeBSD: 0ff1a866424bb8a2e7b28df170379b46bcac791b $
  */
 
 #ifndef DEV_FDT_RESET_H
@@ -46,4 +46,3 @@ void fdt_reset_register_provider(device_t provider);
 void fdt_reset_unregister_provider(device_t provider);
 
 #endif /* DEV_FDT_RESET_H */
-

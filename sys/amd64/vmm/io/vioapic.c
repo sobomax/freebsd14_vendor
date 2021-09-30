@@ -26,11 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 31c1cabab094299f1f0289eee437db0db9a7867a $
+ * $FreeBSD: a8117da4b879176e84c9e65d47819e7adebacafb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31c1cabab094299f1f0289eee437db0db9a7867a $");
+__FBSDID("$FreeBSD: a8117da4b879176e84c9e65d47819e7adebacafb $");
+
+#include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -42,6 +44,7 @@ __FBSDID("$FreeBSD: 31c1cabab094299f1f0289eee437db0db9a7867a $");
 
 #include <x86/apicreg.h>
 #include <machine/vmm.h>
+#include <machine/vmm_snapshot.h>
 
 #include "vmm_ktr.h"
 #include "vmm_lapic.h"
@@ -499,3 +502,22 @@ vioapic_pincount(struct vm *vm)
 
 	return (REDIR_ENTRIES);
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+vioapic_snapshot(struct vioapic *vioapic, struct vm_snapshot_meta *meta)
+{
+	int ret;
+	int i;
+
+	SNAPSHOT_VAR_OR_LEAVE(vioapic->ioregsel, meta, ret, done);
+
+	for (i = 0; i < nitems(vioapic->rtbl); i++) {
+		SNAPSHOT_VAR_OR_LEAVE(vioapic->rtbl[i].reg, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(vioapic->rtbl[i].acnt, meta, ret, done);
+	}
+
+done:
+	return (ret);
+}
+#endif

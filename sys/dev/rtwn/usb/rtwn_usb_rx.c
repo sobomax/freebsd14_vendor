@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52415084745bf49d874f298776c16fd1d58cd3fa $");
+__FBSDID("$FreeBSD: 9e0867c1aa000d6229a596fa8ccf14d28c2aaecb $");
 
 #include "opt_wlan.h"
 
@@ -363,11 +363,12 @@ rtwn_rx_frame(struct rtwn_softc *sc, struct mbuf *m)
 void
 rtwn_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 {
+	struct epoch_tracker et;
 	struct rtwn_usb_softc *uc = usbd_xfer_softc(xfer);
 	struct rtwn_softc *sc = &uc->uc_sc;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_node *ni;
-	struct mbuf *m = NULL, *next;
+	struct mbuf *m0, *m = NULL, *next;
 	struct rtwn_data *data;
 
 	RTWN_ASSERT_LOCKED(sc);
@@ -399,23 +400,31 @@ tr_setup:
 		 * ieee80211_input() because here is at the end of a USB
 		 * callback and safe to unlock.
 		 */
+		m0 = m;
+		while (m != NULL) {
+			M_ASSERTPKTHDR(m);
+			m->m_pkthdr.PH_loc.ptr = rtwn_rx_frame(sc, m);
+			m = m->m_nextpkt;
+		}
+		NET_EPOCH_ENTER(et);
+		RTWN_UNLOCK(sc);
+		m = m0;
 		while (m != NULL) {
 			next = m->m_nextpkt;
 			m->m_nextpkt = NULL;
 
-			ni = rtwn_rx_frame(sc, m);
-
-			RTWN_UNLOCK(sc);
-
+			ni = m->m_pkthdr.PH_loc.ptr;
+			m->m_pkthdr.PH_loc.ptr = NULL;
 			if (ni != NULL) {
 				(void)ieee80211_input_mimo(ni, m);
 				ieee80211_free_node(ni);
 			} else {
 				(void)ieee80211_input_mimo_all(ic, m);
 			}
-			RTWN_LOCK(sc);
 			m = next;
 		}
+		RTWN_LOCK(sc);
+		NET_EPOCH_EXIT(et);
 		break;
 	default:
 		/* needs it to the inactive queue due to a error. */

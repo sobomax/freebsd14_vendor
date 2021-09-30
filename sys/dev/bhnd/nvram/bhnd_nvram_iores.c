@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70d2d398cde33b3bd5ca4393e1640e6d1cf8a554 $");
+__FBSDID("$FreeBSD: 333b73cbe66e8780e5b233921ba495f147f2c857 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -102,7 +102,7 @@ bhnd_nvram_iores_new(struct bhnd_resource *r, bus_size_t offset,
 		    (uintmax_t)offset, (uintmax_t)offset);
 		return (NULL);
 	}
-	
+
 	if (size > BUS_SPACE_MAXSIZE || offset > BUS_SPACE_MAXSIZE)
 	{
 		BHND_NV_LOG("offset %#jx+%#jx exceeds BUS_SPACE_MAXSIZE\n",
@@ -209,7 +209,6 @@ bhnd_nvram_iores_validate_req(struct bhnd_nvram_iores *iores, size_t offset,
 
 	return (0);
 }
-
 
 static int
 bhnd_nvram_iores_read(struct bhnd_nvram_io *io, size_t offset, void *buffer,

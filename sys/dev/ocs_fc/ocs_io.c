@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2951500efc36ece68c7982a1de6f56913ed5a49c $
+ * $FreeBSD: cbf711696ebdd1e21ea04edbd6dc39646a526482 $
  */
 
 /**
@@ -110,7 +110,7 @@ ocs_io_pool_create(ocs_t *ocs, uint32_t num_io, uint32_t num_sgl)
 	io_pool = ocs_malloc(ocs, sizeof(*io_pool), OCS_M_ZERO | OCS_M_NOWAIT);
 	if (io_pool == NULL) {
 		ocs_log_err(ocs, "allocate of IO pool failed\n");
-		return NULL;;
+		return NULL;
 	}
 
 	io_pool->ocs = ocs;
@@ -407,7 +407,6 @@ ocs_ddump_io(ocs_textbuf_t *textbuf, ocs_io_t *io)
 	ocs_ddump_endsection(textbuf, "io", io->instance_index);
 }
 
-
 void
 ocs_mgmt_io_list(ocs_textbuf_t *textbuf, void *object)
 {
@@ -485,7 +484,3 @@ ocs_mgmt_io_get_all(ocs_textbuf_t *textbuf, void *object)
 	ocs_mgmt_emit_int(textbuf, MGMT_MODE_RD, "xfer_req", "%d", io->xfer_req);
 
 }
-
-
-
-

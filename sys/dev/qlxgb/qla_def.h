@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fd154e788a8b24185177de33668d8ccb75d86ce1 $
+ * $FreeBSD: 69e1cd07c5bd12cfa820eca646e6bc7157b2197b $
  */
 
 /*
@@ -141,7 +141,7 @@ struct qla_host {
 	int			msix_count;
 	void			*intr_handle;
 	qla_ivec_t		irq_vec[Q8_MSI_COUNT];
-	
+
 	/* parent dma tag */
 	bus_dma_tag_t           parent_tag;
 

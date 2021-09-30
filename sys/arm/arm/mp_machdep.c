@@ -28,7 +28,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5fc2c7258ef88140242311bd8adacf784995f4a2 $");
+__FBSDID("$FreeBSD: 6368f7b72da990e212a182f21e9f3e0581963987 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -162,8 +162,9 @@ init_secondary(int cpu)
 		;
 
 	pcpu_init(pc, cpu, sizeof(struct pcpu));
+	pc->pc_mpidr = cp15_mpidr_get() & 0xFFFFFF;
 	dpcpu_init(dpcpu[cpu - 1], cpu);
-#if __ARM_ARCH >= 6 && defined(DDB)
+#if defined(DDB)
 	dbg_monitor_init_secondary();
 #endif
 	/* Signal our startup to BSP */

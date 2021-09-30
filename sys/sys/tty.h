@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f4dc079a6adfc242b1547b08c9a8140eda3be201 $
+ * $FreeBSD: 4ee76b343c3a882c574d53b1d3c356a9257cdd80 $
  */
 
 #ifndef _SYS_TTY_H_
@@ -132,6 +132,9 @@ struct tty {
 	void		*t_devswsoftc;	/* (c) Soft config, for drivers. */
 	void		*t_hooksoftc;	/* (t) Soft config, for hooks. */
 	struct cdev	*t_dev;		/* (c) Primary character device. */
+
+	size_t		t_prbufsz;	/* (t) SIGINFO buffer size. */
+	char		t_prbuf[];	/* (t) SIGINFO buffer. */
 };
 
 /*
@@ -197,6 +200,7 @@ void	tty_wakeup(struct tty *tp, int flags);
 /* System messages. */
 int	tty_checkoutq(struct tty *tp);
 int	tty_putchar(struct tty *tp, char c);
+int	tty_putstrn(struct tty *tp, const char *p, size_t n);
 
 int	tty_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
     struct thread *td);

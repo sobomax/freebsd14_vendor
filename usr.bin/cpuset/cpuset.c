@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5f674f0d6b20ddce64560075395d81986a742bb $");
+__FBSDID("$FreeBSD: e039030415bb1ab8b70167b4d0e647512e6e39cf $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -253,7 +253,7 @@ printaffinity(void)
 	printf("%s %jd%s mask: ", whichnames[which], (intmax_t)id,
 	    levelnames[level]);
 	printset((struct bitset *)&mask, CPU_SETSIZE);
-	if (dflag)
+	if (dflag || xflag)
 		goto out;
 	if (cpuset_getdomain(level, which, id, sizeof(domain), &domain,
 	    &policy) != 0)

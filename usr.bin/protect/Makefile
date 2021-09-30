@@ -1,6 +1,5 @@
-# $FreeBSD: 89bbda8a1bc20946e64a5bdcb2470f1460badcd5 $
+# $FreeBSD: dac81b296b681c0a4470db3f70018e8a571aae95 $
 
 PROG=   protect
-WARNS?=	6
 
 .include <bsd.prog.mk>

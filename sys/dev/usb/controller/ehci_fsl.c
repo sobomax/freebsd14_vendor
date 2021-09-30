@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 726c40a4b31f7dbd10bdf33e1a7c817ae37f7ec1 $");
+__FBSDID("$FreeBSD: 01f758837d7510110868f3a7d68b122a4dcea0d2 $");
 
 #include "opt_bus.h"
 
@@ -83,7 +83,6 @@ static device_method_t ehci_methods[] = {
 
 	/* Bus interface */
 	DEVMETHOD(bus_print_child, bus_generic_print_child),
-
 	{ 0, 0 }
 };
 
@@ -426,4 +425,3 @@ fsl_ehci_detach(device_t self)
 
 	return (0);
 }
-

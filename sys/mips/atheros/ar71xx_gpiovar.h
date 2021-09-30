@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8279618f9be4f865a2d5fd4298b4ebe84c5a8011 $
+ * $FreeBSD: 35af376313f5a03edbc1cd6fb58b398ca69a3fa8 $
  *
  */
 
@@ -55,6 +55,7 @@
 
 #define	AR71XX_GPIO_PINS	12
 #define	AR724X_GPIO_PINS	18
+#define	AR7241_GPIO_PINS	20
 #define	AR91XX_GPIO_PINS	22
 
 struct ar71xx_gpio_softc {

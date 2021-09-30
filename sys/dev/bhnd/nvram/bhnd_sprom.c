@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0eb17b4b1e88cab5a138290ad359b581835cf166 $");
+__FBSDID("$FreeBSD: 1272644bfb4b7cd4475258f738545171b68b4b2e $");
 
 /*
  * BHND SPROM driver.
@@ -196,7 +196,7 @@ bhnd_sprom_detach(device_t dev)
 {
 	struct bhnd_sprom_softc	*sc;
 	int			 error;
-	
+
 	sc = device_get_softc(dev);
 
 	if ((error = bhnd_deregister_provider(dev, BHND_SERVICE_ANY)))

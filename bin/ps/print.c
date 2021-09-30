@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)print.c	8.6 (Berkeley) 4/16/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c061aee67df236da632388cfa204dc781d8b612 $");
+__FBSDID("$FreeBSD: 3d3a543c8a5df93d31cac5a7969d2b2dd5fb2e9f $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -89,11 +89,11 @@ printheader(void)
 		v = vent->var;
 		if (v->flag & LJUST) {
 			if (STAILQ_NEXT(vent, next_ve) == NULL)	/* last one */
-				xo_emit("{T:/%s}", vent->header);
+				xo_emit("{T:/%hs}", vent->header);
 			else
-				xo_emit("{T:/%-*s}", v->width, vent->header);
+				xo_emit("{T:/%-*hs}", v->width, vent->header);
 		} else
-			xo_emit("{T:/%*s}", v->width, vent->header);
+			xo_emit("{T:/%*hs}", v->width, vent->header);
 		if (STAILQ_NEXT(vent, next_ve) != NULL)
 			xo_emit("{P: }");
 	}

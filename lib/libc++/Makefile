@@ -1,4 +1,4 @@
-# $FreeBSD: c7a207a78b28d6067da358e7e542c762935a0dbc $
+# $FreeBSD: 066faf4abb1f0435a3303440ad4dcb96dcfa4582 $
 
 .include <src.opts.mk>
 
@@ -7,9 +7,6 @@ _LIBCXXRTDIR=	${SRCTOP}/contrib/libcxxrt
 HDRDIR=		${SRCTOP}/contrib/llvm-project/libcxx/include
 SRCDIR=		${SRCTOP}/contrib/llvm-project/libcxx/src
 CXXINCLUDEDIR=	${INCLUDEDIR}/c++/v${SHLIB_MAJOR}
-.if ${MACHINE_CPUARCH} == "arm"
-STATIC_CXXFLAGS+= -mlong-calls
-.endif
 
 .PATH: ${SRCDIR}
 
@@ -19,6 +16,8 @@ SHLIB_LDSCRIPT=	libc++.ldscript
 
 SRCS+=		algorithm.cpp
 SRCS+=		any.cpp
+SRCS+=		atomic.cpp
+SRCS+=		barrier.cpp
 SRCS+=		bind.cpp
 SRCS+=		charconv.cpp
 SRCS+=		chrono.cpp
@@ -41,6 +40,7 @@ SRCS+=		mutex_destructor.cpp
 SRCS+=		new.cpp
 SRCS+=		optional.cpp
 SRCS+=		random.cpp
+SRCS+=		random_shuffle.cpp
 SRCS+=		regex.cpp
 SRCS+=		shared_mutex.cpp
 SRCS+=		stdexcept.cpp
@@ -71,7 +71,7 @@ cxxrt_${_S}: ${_LIBCXXRTDIR}/${_S} .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 .endfor
 
-WARNS=		0
+WARNS?=		0
 CFLAGS+=	-isystem ${HDRDIR}
 CFLAGS+=	-isystem ${_LIBCXXRTDIR}
 CFLAGS+=	-nostdinc++
@@ -112,6 +112,7 @@ STD_HEADERS+=	algorithm
 STD_HEADERS+=	any
 STD_HEADERS+=	array
 STD_HEADERS+=	atomic
+STD_HEADERS+=	barrier
 STD_HEADERS+=	bit
 STD_HEADERS+=	bitset
 STD_HEADERS+=	cassert
@@ -131,6 +132,7 @@ STD_HEADERS+=	codecvt
 STD_HEADERS+=	compare
 STD_HEADERS+=	complex
 STD_HEADERS+=	complex.h
+STD_HEADERS+=	concepts
 STD_HEADERS+=	condition_variable
 STD_HEADERS+=	csetjmp
 STD_HEADERS+=	csignal
@@ -149,6 +151,7 @@ STD_HEADERS+=	cwctype
 STD_HEADERS+=	deque
 STD_HEADERS+=	errno.h
 STD_HEADERS+=	exception
+STD_HEADERS+=	execution
 STD_HEADERS+=	fenv.h
 STD_HEADERS+=	filesystem
 STD_HEADERS+=	float.h
@@ -164,6 +167,7 @@ STD_HEADERS+=	iosfwd
 STD_HEADERS+=	iostream
 STD_HEADERS+=	istream
 STD_HEADERS+=	iterator
+STD_HEADERS+=	latch
 STD_HEADERS+=	limits
 STD_HEADERS+=	limits.h
 STD_HEADERS+=	list
@@ -174,6 +178,7 @@ STD_HEADERS+=	math.h
 STD_HEADERS+=	memory
 STD_HEADERS+=	mutex
 STD_HEADERS+=	new
+STD_HEADERS+=	numbers
 STD_HEADERS+=	numeric
 STD_HEADERS+=	optional
 STD_HEADERS+=	ostream
@@ -182,6 +187,7 @@ STD_HEADERS+=	random
 STD_HEADERS+=	ratio
 STD_HEADERS+=	regex
 STD_HEADERS+=	scoped_allocator
+STD_HEADERS+=	semaphore
 STD_HEADERS+=	set
 STD_HEADERS+=	setjmp.h
 STD_HEADERS+=	shared_mutex

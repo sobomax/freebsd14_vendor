@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 066c565ec53ecd50727565b3e9645de89f88023f $*/
+/*$FreeBSD: 394656d27a2f916a4e519e1a35bcfe0a98b72894 $*/
 
 #include "iavf.h"
 
@@ -203,7 +203,7 @@ static driver_t iavf_if_driver = {
 ** TUNEABLE PARAMETERS:
 */
 
-static SYSCTL_NODE(_hw, OID_AUTO, iavf, CTLFLAG_RD, 0,
+static SYSCTL_NODE(_hw, OID_AUTO, iavf, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "iavf driver parameters");
 
 /*
@@ -663,7 +663,7 @@ iavf_if_init(if_ctx_t ctx)
 	iavf_send_vc_msg(sc, IAVF_FLAG_AQ_DISABLE_QUEUES);
 
 	bcopy(IF_LLADDR(ifp), tmpaddr, ETHER_ADDR_LEN);
-	if (!cmp_etheraddr(hw->mac.addr, tmpaddr) &&
+	if (!ixl_ether_is_equal(hw->mac.addr, tmpaddr) &&
 	    (i40e_validate_mac_addr(tmpaddr) == I40E_SUCCESS)) {
 		error = iavf_del_mac_filter(sc, hw->mac.addr);
 		if (error == 0)
@@ -707,7 +707,7 @@ iavf_if_init(if_ctx_t ctx)
 }
 
 /*
- * iavf_attach() helper function; initalizes the admin queue
+ * iavf_attach() helper function; initializes the admin queue
  * and attempts to establish contact with the PF by
  * retrying the initial "API version" message several times
  * or until the PF responds.
@@ -904,7 +904,7 @@ iavf_if_msix_intr_assign(if_ctx_t ctx, int msix)
 
 		snprintf(buf, sizeof(buf), "rxq%d", i);
 		err = iflib_irq_alloc_generic(ctx, &rx_que->que_irq, rid,
-		    IFLIB_INTR_RX, iavf_msix_que, rx_que, rx_que->rxr.me, buf);
+		    IFLIB_INTR_RXTX, iavf_msix_que, rx_que, rx_que->rxr.me, buf);
 		/* XXX: Does the driver work as expected if there are fewer num_rx_queues than
 		 * what's expected in the iflib context? */
 		if (err) {
@@ -1227,18 +1227,13 @@ iavf_if_update_admin_status(if_ctx_t ctx)
 		iavf_enable_adminq_irq(hw);
 }
 
-static int
-iavf_mc_filter_apply(void *arg, struct ifmultiaddr *ifma, int count __unused)
+static u_int
+iavf_mc_filter_apply(void *arg, struct sockaddr_dl *sdl, u_int count __unused)
 {
 	struct iavf_sc *sc = arg;
-	int error = 0;
+	int error;
 
-	if (ifma->ifma_addr->sa_family != AF_LINK)
-		return (0);
-	error = iavf_add_mac_filter(sc,
-	    (u8*)LLADDR((struct sockaddr_dl *) ifma->ifma_addr),
-	    IXL_FILTER_MC);
-
+	error = iavf_add_mac_filter(sc, (u8*)LLADDR(sdl), IAVF_FILTER_MC);
 	return (!error);
 }
 
@@ -1246,12 +1241,11 @@ static void
 iavf_if_multi_set(if_ctx_t ctx)
 {
 	struct iavf_sc *sc = iflib_get_softc(ctx);
-	int mcnt = 0;
 
 	IOCTL_DEBUGOUT("iavf_if_multi_set: begin");
 
-	mcnt = if_multiaddr_count(iflib_get_ifp(ctx), MAX_MULTICAST_ADDR);
-	if (__predict_false(mcnt == MAX_MULTICAST_ADDR)) {
+	if (__predict_false(if_llmaddr_count(iflib_get_ifp(ctx)) >=
+	    MAX_MULTICAST_ADDR)) {
 		/* Delete MC filters and enable mulitcast promisc instead */
 		iavf_init_multi(sc);
 		sc->promisc_flags |= FLAG_VF_MULTICAST_PROMISC;
@@ -1263,9 +1257,8 @@ iavf_if_multi_set(if_ctx_t ctx)
 	iavf_init_multi(sc);
 
 	/* And (re-)install filters for all mcast addresses */
-	mcnt = if_multi_apply(iflib_get_ifp(ctx), iavf_mc_filter_apply, sc);
-
-	if (mcnt > 0)
+	if (if_foreach_llmaddr(iflib_get_ifp(ctx), iavf_mc_filter_apply, sc) >
+	    0)
 		iavf_send_vc_msg(sc, IAVF_FLAG_AQ_ADD_MAC_FILTER);
 }
 
@@ -1360,8 +1353,8 @@ iavf_if_promisc_set(if_ctx_t ctx, int flags)
 
 	sc->promisc_flags = 0;
 
-	if (flags & IFF_ALLMULTI ||
-		if_multiaddr_count(ifp, MAX_MULTICAST_ADDR) == MAX_MULTICAST_ADDR)
+	if (flags & IFF_ALLMULTI || if_llmaddr_count(ifp) >=
+	    MAX_MULTICAST_ADDR)
 		sc->promisc_flags |= FLAG_VF_MULTICAST_PROMISC;
 	if (flags & IFF_PROMISC)
 		sc->promisc_flags |= FLAG_VF_UNICAST_PROMISC;
@@ -1411,7 +1404,7 @@ iavf_if_vlan_register(if_ctx_t ctx, u16 vtag)
 	v = malloc(sizeof(struct iavf_vlan_filter), M_IAVF, M_WAITOK | M_ZERO);
 	SLIST_INSERT_HEAD(sc->vlan_filters, v, next);
 	v->vlan = vtag;
-	v->flags = IXL_FILTER_ADD;
+	v->flags = IAVF_FILTER_ADD;
 
 	iavf_send_vc_msg(sc, IAVF_FLAG_AQ_ADD_VLAN_FILTER);
 }
@@ -1429,7 +1422,7 @@ iavf_if_vlan_unregister(if_ctx_t ctx, u16 vtag)
 
 	SLIST_FOREACH(v, sc->vlan_filters, next) {
 		if (v->vlan == vtag) {
-			v->flags = IXL_FILTER_DEL;
+			v->flags = IAVF_FILTER_DEL;
 			++i;
 			--vsi->num_vlans;
 		}
@@ -1631,7 +1624,7 @@ iavf_find_mac_filter(struct iavf_sc *sc, u8 *macaddr)
 	bool match = FALSE;
 
 	SLIST_FOREACH(f, sc->mac_filters, next) {
-		if (cmp_etheraddr(f->macaddr, macaddr)) {
+		if (ixl_ether_is_equal(f->macaddr, macaddr)) {
 			match = TRUE;
 			break;
 		}
@@ -1835,9 +1828,9 @@ iavf_init_multi(struct iavf_sc *sc)
 
 	/* First clear any multicast filters */
 	SLIST_FOREACH(f, sc->mac_filters, next) {
-		if ((f->flags & IXL_FILTER_USED)
-		    && (f->flags & IXL_FILTER_MC)) {
-			f->flags |= IXL_FILTER_DEL;
+		if ((f->flags & IAVF_FILTER_USED)
+		    && (f->flags & IAVF_FILTER_MC)) {
+			f->flags |= IAVF_FILTER_DEL;
 			mcnt++;
 		}
 	}
@@ -2041,7 +2034,7 @@ iavf_add_mac_filter(struct iavf_sc *sc, u8 *macaddr, u16 flags)
 	    MAC_FORMAT_ARGS(macaddr));
 
 	bcopy(macaddr, f->macaddr, ETHER_ADDR_LEN);
-	f->flags |= (IXL_FILTER_ADD | IXL_FILTER_USED);
+	f->flags |= (IAVF_FILTER_ADD | IAVF_FILTER_USED);
 	f->flags |= flags;
 	return (0);
 }
@@ -2058,7 +2051,7 @@ iavf_del_mac_filter(struct iavf_sc *sc, u8 *macaddr)
 	if (f == NULL)
 		return (ENOENT);
 
-	f->flags |= IXL_FILTER_DEL;
+	f->flags |= IAVF_FILTER_DEL;
 	return (0);
 }
 
@@ -2078,23 +2071,27 @@ iavf_add_device_sysctls(struct iavf_sc *sc)
 	struct sysctl_oid_list *debug_list;
 
 	SYSCTL_ADD_PROC(ctx, ctx_list,
-	    OID_AUTO, "current_speed", CTLTYPE_STRING | CTLFLAG_RD,
+	    OID_AUTO, "current_speed",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_current_speed, "A", "Current Port Speed");
 
 	SYSCTL_ADD_PROC(ctx, ctx_list,
-	    OID_AUTO, "tx_itr", CTLTYPE_INT | CTLFLAG_RW,
+	    OID_AUTO, "tx_itr",
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_tx_itr, "I",
 	    "Immediately set TX ITR value for all queues");
 
 	SYSCTL_ADD_PROC(ctx, ctx_list,
-	    OID_AUTO, "rx_itr", CTLTYPE_INT | CTLFLAG_RW,
+	    OID_AUTO, "rx_itr",
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_rx_itr, "I",
 	    "Immediately set RX ITR value for all queues");
 
 	/* Add sysctls meant to print debug information, but don't list them
 	 * in "sysctl -a" output. */
 	debug_node = SYSCTL_ADD_NODE(ctx, ctx_list,
-	    OID_AUTO, "debug", CTLFLAG_RD | CTLFLAG_SKIP, NULL, "Debug Sysctls");
+	    OID_AUTO, "debug", CTLFLAG_RD | CTLFLAG_SKIP | CTLFLAG_MPSAFE,
+	    NULL, "Debug Sysctls");
 	debug_list = SYSCTL_CHILDREN(debug_node);
 
 	SYSCTL_ADD_UINT(ctx, debug_list,
@@ -2106,19 +2103,23 @@ iavf_add_device_sysctls(struct iavf_sc *sc)
 	    &sc->dbg_mask, 0, "Non-shared code debug message level");
 
 	SYSCTL_ADD_PROC(ctx, debug_list,
-	    OID_AUTO, "filter_list", CTLTYPE_STRING | CTLFLAG_RD,
+	    OID_AUTO, "filter_list",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_sw_filter_list, "A", "SW Filter List");
 
 	SYSCTL_ADD_PROC(ctx, debug_list,
-	    OID_AUTO, "queue_interrupt_table", CTLTYPE_STRING | CTLFLAG_RD,
+	    OID_AUTO, "queue_interrupt_table",
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_queue_interrupt_table, "A", "View MSI-X indices for TX/RX queues");
 
 	SYSCTL_ADD_PROC(ctx, debug_list,
-	    OID_AUTO, "do_vf_reset", CTLTYPE_INT | CTLFLAG_WR,
+	    OID_AUTO, "do_vf_reset",
+	    CTLTYPE_INT | CTLFLAG_WR | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_vf_reset, "A", "Request a VF reset from PF");
 
 	SYSCTL_ADD_PROC(ctx, debug_list,
-	    OID_AUTO, "do_vflr_reset", CTLTYPE_INT | CTLFLAG_WR,
+	    OID_AUTO, "do_vflr_reset",
+	    CTLTYPE_INT | CTLFLAG_WR | CTLFLAG_NEEDGIANT,
 	    sc, 0, iavf_sysctl_vflr_reset, "A", "Request a VFLR reset from HW");
 
 	/* Add stats sysctls */

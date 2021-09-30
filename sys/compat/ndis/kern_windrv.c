@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe60b0e4076783b4fe15ac8f35acd6ee2971dfd0 $");
+__FBSDID("$FreeBSD: 9ca7953a9384c393c6c344c881c26d9d1dde1081 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -797,7 +797,6 @@ _x86_64_call6(void *fn, uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 	return (ret);
 }
 #endif /* __amd64__ */
-
 
 #ifdef __i386__
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a54127950206d26ba408d9952211f2493c131ff0 $");
+__FBSDID("$FreeBSD: e6ebc585bcd7b3622534c3504e4d8d6f391fb05b $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -369,11 +369,13 @@ add_param(struct cfjail *j, const struct cfparam *p, enum intparam ipnum,
 		if ((flags ^ dp->flags) & PF_VAR) {
 			jail_warnx(j, "variable \"$%s\" cannot have the same "
 			    "name as a parameter.", name);
+			j->flags |= JF_FAILED;
 			return;
 		}
 		if (dp->flags & PF_IMMUTABLE) {
 			jail_warnx(j, "cannot redefine parameter \"%s\".",
 			    dp->name);
+			j->flags |= JF_FAILED;
 			return;
 		}
 		if (strcmp(dp->name, name)) {
@@ -405,6 +407,7 @@ add_param(struct cfjail *j, const struct cfparam *p, enum intparam ipnum,
 						    "cannot have the same "
 						    "name as a parameter.",
 						    name);
+						j->flags |= JF_FAILED;
 						return;
 					}
 					j->intparams[ipnum] = np;
@@ -611,8 +614,8 @@ check_intparams(struct cfjail *j)
 			if (cs || defif)
 				add_param(j, NULL, IP__IP4_IFADDR, s->s);
 			if (cs) {
-				strcpy(s->s, cs + 1);
 				s->len -= cs + 1 - s->s;
+				memmove(s->s, cs + 1, s->len + 1);
 			}
 			if ((cs = strchr(s->s, '/')) != NULL) {
 				*cs = '\0';
@@ -632,8 +635,8 @@ check_intparams(struct cfjail *j)
 			if (cs || defif)
 				add_param(j, NULL, IP__IP6_IFADDR, s->s);
 			if (cs) {
-				strcpy(s->s, cs + 1);
 				s->len -= cs + 1 - s->s;
+				memmove(s->s, cs + 1, s->len + 1);
 			}
 			if ((cs = strchr(s->s, '/')) != NULL) {
 				*cs = '\0';

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 #
-# Copyright (c) 2018-2020 Gavin D. Howard and contributors.
+# Copyright (c) 2018-2021 Gavin D. Howard and contributors.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -47,7 +47,7 @@ header() {
 }
 
 do_make() {
-	make -j4 "$@"
+	make -j16 "$@"
 }
 
 configure() {
@@ -263,6 +263,35 @@ runtestseries() {
 	done
 }
 
+runlibtests() {
+
+	_runlibtests_CFLAGS="$1"
+	shift
+
+	_runlibtests_CC="$1"
+	shift
+
+	_runlibtests_configure_flags="$1"
+	shift
+
+	_runlibtests_run_tests="$1"
+	shift
+
+	_runlibtests_configure_flags="$_runlibtests_configure_flags -a"
+
+	build "$_runlibtests_CFLAGS" "$_runlibtests_CC" "$_runlibtests_configure_flags" 1 64
+
+	if [ "$_runlibtests_run_tests" -ne 0 ]; then
+		runtest
+	fi
+
+	build "$_runlibtests_CFLAGS" "$_runlibtests_CC" "$_runlibtests_configure_flags" 1 32
+
+	if [ "$_runlibtests_run_tests" -ne 0 ]; then
+		runtest
+	fi
+}
+
 runtests() {
 
 	_runtests_CFLAGS="$1"
@@ -297,18 +326,18 @@ vg() {
 		_vg_bits=32
 	fi
 
-	build "$debug" "gcc" "-O0 -g" "1" "$_vg_bits"
-	runtest valgrind
+	build "$debug" "gcc" "-O0 -gv" "1" "$_vg_bits"
+	runtest test
 
 	do_make clean_config
 
-	build "$debug" "gcc" "-O0 -gb" "1" "$_vg_bits"
-	runtest valgrind
+	build "$debug" "gcc" "-O0 -gvb" "1" "$_vg_bits"
+	runtest test
 
 	do_make clean_config
 
-	build "$debug" "gcc" "-O0 -gd" "1" "$_vg_bits"
-	runtest valgrind
+	build "$debug" "gcc" "-O0 -gvd" "1" "$_vg_bits"
+	runtest test
 
 	do_make clean_config
 }
@@ -326,6 +355,12 @@ debug() {
 	if [ "$_debug_CC" = "clang" -a "$run_sanitizers" -ne 0 ]; then
 		runtests "$debug -fsanitize=undefined" "$_debug_CC" "-g" "$_debug_run_tests"
 	fi
+
+	runlibtests "$debug" "$_debug_CC" "-g" "$_debug_run_tests"
+
+	if [ "$_debug_CC" = "clang" -a "$run_sanitizers" -ne 0 ]; then
+		runlibtests "$debug -fsanitize=undefined" "$_debug_CC" "-g" "$_debug_run_tests"
+	fi
 }
 
 release() {
@@ -337,6 +372,8 @@ release() {
 	shift
 
 	runtests "$release" "$_release_CC" "-O3" "$_release_run_tests"
+
+	runlibtests "$release" "$_release_CC" "-O3" "$_release_run_tests"
 }
 
 reldebug() {
@@ -353,6 +390,13 @@ reldebug() {
 		runtests "$debug -fsanitize=address" "$_reldebug_CC" "-gO3" "$_reldebug_run_tests"
 		runtests "$debug -fsanitize=memory" "$_reldebug_CC" "-gO3" "$_reldebug_run_tests"
 	fi
+
+	runlibtests "$debug" "$_reldebug_CC" "-gO3" "$_reldebug_run_tests"
+
+	if [ "$_reldebug_CC" = "clang" -a "$run_sanitizers" -ne 0 ]; then
+		runlibtests "$debug -fsanitize=address" "$_reldebug_CC" "-gO3" "$_reldebug_run_tests"
+		runlibtests "$debug -fsanitize=memory" "$_reldebug_CC" "-gO3" "$_reldebug_run_tests"
+	fi
 }
 
 minsize() {
@@ -364,6 +408,8 @@ minsize() {
 	shift
 
 	runtests "$release" "$_minsize_CC" "-Os" "$_minsize_run_tests"
+
+	runlibtests "$release" "$_minsize_CC" "-Os" "$_minsize_run_tests"
 }
 
 build_set() {
@@ -383,6 +429,7 @@ build_set() {
 clang_flags="-Weverything -Wno-padded -Wno-switch-enum -Wno-format-nonliteral"
 clang_flags="$clang_flags -Wno-cast-align -Wno-missing-noreturn -Wno-disabled-macro-expansion"
 clang_flags="$clang_flags -Wno-unreachable-code -Wno-unreachable-code-return"
+clang_flags="$clang_flags -Wno-implicit-fallthrough"
 gcc_flags="-Wno-maybe-uninitialized -Wno-clobbered"
 
 cflags="-Wall -Wextra -Werror -pedantic -Wno-conditional-uninitialized"
@@ -467,7 +514,7 @@ else
 	defcc="c99"
 fi
 
-export ASAN_OPTIONS="abort_on_error=1"
+export ASAN_OPTIONS="abort_on_error=1,allocator_may_return_null=1"
 export UBSAN_OPTIONS="print_stack_trace=1,silence_unsigned_overflow=1"
 
 build "$debug" "$defcc" "-g" "1" "$bits"
@@ -526,9 +573,9 @@ if [ "$run_tests" -ne 0 ]; then
 		printf '\n'
 		printf 'Then run the GitHub release script as follows:\n'
 		printf '\n'
-		printf '    <github_release> %s .travis.yml codecov.yml release.sh \\\n' "$version"
-		printf '    RELEASE.md tests/afl.py tests/radamsa.sh tests/radamsa.txt tests/randmath.py \\\n'
-		printf '    tests/bc/scripts/timeconst.bc\n'
+		printf '    <github_release> %s release.sh RELEASE.md\\\n' "$version"
+		printf '    tests/afl.py tests/radamsa.sh tests/radamsa.txt tests/randmath.py \\\n'
+		printf '    tests/fuzzing/ tests/bc/scripts/timeconst.bc\n'
 
 	fi
 

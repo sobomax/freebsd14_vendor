@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6d7c2d7241c5af87913278fee464ef75d7d6fdf4 $
+ * $FreeBSD: 34ca831384f63c91824b22295a0a9158ad2d093b $
  */
 
 #ifndef	_G_MOUNTVER_H_
@@ -38,25 +38,10 @@
 
 #ifdef _KERNEL
 
-#define	G_MOUNTVER_DEBUG(lvl, ...)	do {				\
-	if (g_mountver_debug >= (lvl)) {				\
-		printf("GEOM_MOUNTVER");				\
-		if (g_mountver_debug > 0)				\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
-#define	G_MOUNTVER_LOGREQ(bp, ...)	do {				\
-	if (g_mountver_debug >= 2) {					\
-		printf("GEOM_MOUNTVER[2]: ");				\
-		printf(__VA_ARGS__);					\
-		printf(" ");						\
-		g_print_bio(bp);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define	G_MOUNTVER_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_MOUNTVER", g_mountver_debug, (lvl), NULL, __VA_ARGS__)
+#define	G_MOUNTVER_LOGREQ(bp, ...) \
+    _GEOM_DEBUG("GEOM_MOUNTVER", g_mountver_debug, 2, (bp), __VA_ARGS__)
 
 struct g_mountver_softc {
 	TAILQ_HEAD(, bio)		sc_queue;

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e0694d479a543bed8665eb2e436efc0af38dc3d $
+ * $FreeBSD: c7a302207b653db1dc3a305b74c7cccabe02fed4 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e0694d479a543bed8665eb2e436efc0af38dc3d $");
+__FBSDID("$FreeBSD: c7a302207b653db1dc3a305b74c7cccabe02fed4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -152,9 +151,10 @@ aw_clk_nm_find_best(struct aw_clk_nm_sc *sc, uint64_t fparent, uint64_t *fout,
 	min_n = aw_clk_factor_get_min(&sc->n);
 
 	for (m = min_m; m <= max_m; ) {
-		for (n = min_m; n <= max_n; ) {
+		for (n = min_n; n <= max_n; ) {
 			cur = fparent / n / m;
-			if (abs(*fout - cur) < abs(*fout - best)) {
+			if (clk_freq_diff(*fout, cur) <
+			    clk_freq_diff(*fout, best)) {
 				best = cur;
 				*factor_n = n;
 				*factor_m = m;
@@ -197,7 +197,8 @@ aw_clk_nm_set_freq(struct clknode *clk, uint64_t fparent, uint64_t *fout,
 			clknode_get_freq(p_clk, &fparent);
 
 			cur = aw_clk_nm_find_best(sc, fparent, fout, &n, &m);
-			if ((*fout - cur) < (*fout - best)) {
+			if (clk_freq_diff(*fout, cur) <
+			    clk_freq_diff(*fout, best)) {
 				best = cur;
 				best_parent = p_idx;
 				best_n = n;
@@ -222,11 +223,15 @@ aw_clk_nm_set_freq(struct clknode *clk, uint64_t fparent, uint64_t *fout,
 	if ((best < *fout) &&
 	  ((flags & CLK_SET_ROUND_DOWN) == 0)) {
 		*stop = 1;
+		printf("best freq (%ju) < requested freq(%ju)\n",
+		    best, *fout);
 		return (ERANGE);
 	}
 	if ((best > *fout) &&
 	  ((flags & CLK_SET_ROUND_UP) == 0)) {
 		*stop = 1;
+		printf("best freq (%ju) > requested freq(%ju)\n",
+		    best, *fout);
 		return (ERANGE);
 	}
 

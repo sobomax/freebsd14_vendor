@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52b09c4998fbc5cf19c8f9c5b6a75604bf0c29d0 $");
+__FBSDID("$FreeBSD: 98f75d922460ab4c60ce3aad22c1e45697947b9e $");
 
 /*
  * Ported version of BroadCom USB core driver from ZRouter project
@@ -147,7 +147,6 @@ bhnd_usb_attach(device_t dev)
 	bus_write_4(sc->sc_mem, OHCI_CONTROL, 0);
 
 	if ( bhnd_get_device(dev) == BHND_COREID_USB20H) {
-
 		uint32_t rev = bhnd_get_hwrev(dev);
 		BHND_INFO_DEV(dev, "USB HOST 2.0 setup for rev %d", rev);
 		if (rev == 1/* ? == 2 */) {
@@ -275,7 +274,6 @@ bhnd_usb_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	 * attempt to satisfy the allocation ourselves.
 	 */
 	if (type == SYS_RES_MEMORY) {
-
 		rv = rman_reserve_resource(&sc->mem_rman, start, end, count,
 		    flags, child);
 		if (rv == NULL) {

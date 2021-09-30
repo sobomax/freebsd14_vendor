@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8c08b6ba106e5fc6c337a6b44df93659d717e5b $");
+__FBSDID("$FreeBSD: 32395bc4208162cf2856ad73c0564a0574f86ac0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -499,7 +499,6 @@ static device_method_t agp_amd64_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

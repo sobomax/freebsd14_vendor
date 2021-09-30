@@ -1,11 +1,11 @@
-# $FreeBSD: 93a6cd10db5292141739a6e18dbb3f15bda13ab4 $
+# $FreeBSD: ef4575ca24f93a1b238d18dda9e80c70854ea28f $
+
+PACKAGE=	dpv
 
 PROG=		dpv
 
 CFLAGS+=	-I${.CURDIR}
 
 LIBADD=		dpv dialog
-
-WARNS?=		6
 
 .include <bsd.prog.mk>

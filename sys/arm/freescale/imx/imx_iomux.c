@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 69052f592a59e5f83c2a0f1798abb6fb16b81e76 $
+ * $FreeBSD: f8c7d8e785a646a2ac7748e7e68375df2c280287 $
  */
 
 /*
@@ -76,6 +76,7 @@ struct iomux_softc {
 static struct iomux_softc *iomux_sc;
 
 static struct ofw_compat_data compat_data[] = {
+	{"fsl,imx8mq-iomuxc",	true},
 	{"fsl,imx6dl-iomuxc",	true},
 	{"fsl,imx6q-iomuxc",	true},
 	{"fsl,imx6sl-iomuxc",	true},
@@ -327,4 +328,3 @@ static devclass_t imx_iomux_devclass;
 
 EARLY_DRIVER_MODULE(imx_iomux, simplebus, imx_iomux_driver, 
     imx_iomux_devclass, 0, 0, BUS_PASS_CPU + BUS_PASS_ORDER_LATE);
-

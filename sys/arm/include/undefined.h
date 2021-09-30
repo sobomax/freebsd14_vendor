@@ -44,9 +44,8 @@
  *
  * Created      : 08/02/95
  *
- * $FreeBSD: 4b2ab474fbf96ab36c9ae452b522a67aacbb8af8 $
+ * $FreeBSD: 139448be4c0ef3ba63941e663cc6dda6ce333233 $
  */
-
 
 #ifndef _MACHINE_UNDEFINED_H_
 #define _MACHINE_UNDEFINED_H_

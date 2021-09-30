@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b5224ca0bdb0ebb4b60a925a0cb879bcea077ea9 $
+ * $FreeBSD: 226ba1ce72de9712717fb4fe2f8d6ca8401f8514 $
  */
 
 #include <sys/param.h>
@@ -43,6 +43,7 @@
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
+#include <inttypes.h>
 #include <fcntl.h>
 #include <libgen.h>
 #include <libutil.h>
@@ -603,6 +604,7 @@ sendfail(int sfd, int error, const char *fmt, ...)
 	va_list ap;
 	ssize_t data;
 
+	memset(&sinit, 0, sizeof(sinit));
 	sinit.gs_error = error;
 	g_gate_swap2n_sinit(&sinit);
 	data = g_gate_send(sfd, &sinit, sizeof(sinit), 0);
@@ -661,8 +663,8 @@ recv_thread(void *arg)
 		g_gate_log(LOG_DEBUG, "Received hdr packet.");
 		g_gate_swap2h_hdr(&req->r_hdr);
 
-		g_gate_log(LOG_DEBUG, "%s: offset=%jd length=%u", __func__,
-		    (intmax_t)req->r_offset, (unsigned)req->r_length);
+		g_gate_log(LOG_DEBUG, "%s: offset=%" PRIu64 " length=%" PRIu32,
+		    __func__, req->r_offset, req->r_length);
 
 		/*
 		 * Allocate memory for data.
@@ -729,8 +731,8 @@ disk_thread(void *arg)
 		assert((req->r_offset % conn->c_sectorsize) == 0);
 		assert((req->r_length % conn->c_sectorsize) == 0);
 
-		g_gate_log(LOG_DEBUG, "%s: offset=%jd length=%u", __func__,
-		    (intmax_t)req->r_offset, (unsigned)req->r_length);
+		g_gate_log(LOG_DEBUG, "%s: offset=%" PRIu64 " length=%" PRIu32,
+		     __func__, req->r_offset, req->r_length);
 
 		/*
 		 * Do the request.
@@ -803,8 +805,8 @@ send_thread(void *arg)
 		error = pthread_mutex_unlock(&outqueue_mtx);
 		assert(error == 0);
 
-		g_gate_log(LOG_DEBUG, "%s: offset=%jd length=%u", __func__,
-		    (intmax_t)req->r_offset, (unsigned)req->r_length);
+		g_gate_log(LOG_DEBUG, "%s: offset=%" PRIu64 " length=%" PRIu32,
+		    __func__, req->r_offset, req->r_length);
 
 		/*
 		 * Send the request.
@@ -823,8 +825,8 @@ send_thread(void *arg)
 				    strerror(errno));
 			}
 			g_gate_log(LOG_DEBUG,
-			    "Sent %zd bytes (offset=%ju, size=%zu).", data,
-			    (uintmax_t)req->r_offset, (size_t)req->r_length);
+			    "Sent %zd bytes (offset=%" PRIu64 ", size=%" PRIu32
+			    ").", data, req->r_offset, req->r_length);
 			free(req->r_data);
 		}
 		free(req);

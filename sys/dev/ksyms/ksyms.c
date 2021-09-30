@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d7244da724bb4499114acaa491c918c3d2a9a25f $
+ * $FreeBSD: 2fb3d9bd2f794f99e9e63f4deb57b6696ef19c7f $
  */
 
 #include <sys/param.h>
@@ -41,6 +41,7 @@
 #include <sys/proc.h>
 #include <sys/queue.h>
 #include <sys/resourcevar.h>
+#include <sys/rwlock.h>
 #include <sys/stat.h>
 #include <sys/sx.h>
 #include <sys/uio.h>
@@ -51,6 +52,8 @@
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_object.h>
+#include <vm/vm_page.h>
+#include <vm/vm_pager.h>
 
 #include "linker_if.h"
 
@@ -191,6 +194,7 @@ ksyms_add(linker_file_t lf, void *arg)
 	size_t len, numsyms, strsz, symsz;
 	linker_symval_t symval;
 	int error, i, nsyms;
+	bool fixup;
 
 	buf = malloc(SYMBLKSZ, M_KSYMS, M_WAITOK);
 	to = arg;
@@ -200,6 +204,12 @@ ksyms_add(linker_file_t lf, void *arg)
 	numsyms =  LINKER_SYMTAB_GET(lf, &symtab);
 	strsz = LINKER_STRTAB_GET(lf, &strtab);
 	symsz = numsyms * sizeof(Elf_Sym);
+
+#ifdef RELOCATABLE_KERNEL
+	fixup = true;
+#else
+	fixup = lf->id > 1;
+#endif
 
 	while (symsz > 0) {
 		len = min(SYMBLKSZ, symsz);
@@ -214,7 +224,7 @@ ksyms_add(linker_file_t lf, void *arg)
 		nsyms = len / sizeof(Elf_Sym);
 		for (i = 0; i < nsyms; i++) {
 			symp[i].st_name += to->to_stridx;
-			if (lf->id > 1 && LINKER_SYMBOL_VALUES(lf,
+			if (fixup && LINKER_SYMBOL_VALUES(lf,
 			    (c_linker_sym_t)&symtab[i], &symval) == 0) {
 				symp[i].st_value = (uintptr_t)symval.value;
 			}
@@ -435,8 +445,8 @@ ksyms_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)
 		ksyms_size_calc(&ts);
 		elfsz = sizeof(struct ksyms_hdr) + ts.ts_symsz + ts.ts_strsz;
 
-		object = vm_object_allocate(OBJT_PHYS,
-		    OFF_TO_IDX(round_page(elfsz)));
+		object = vm_pager_allocate(OBJT_PHYS, NULL, round_page(elfsz),
+		    VM_PROT_ALL, 0, td->td_ucred);
 		sc->sc_obj = object;
 		sc->sc_objsz = elfsz;
 
@@ -474,7 +484,7 @@ ksyms_mmap_single(struct cdev *dev, vm_ooffset_t *offset, vm_size_t size,
 	if (error != 0)
 		return (error);
 
-	if (*offset < 0 || *offset >= round_page(sc->sc_objsz) ||
+	if (*offset >= round_page(sc->sc_objsz) ||
 	    size > round_page(sc->sc_objsz) - *offset ||
 	    (nprot & ~PROT_READ) != 0)
 		return (EINVAL);

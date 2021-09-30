@@ -1,4 +1,4 @@
-# $FreeBSD: 8dab2301cbc42f96a05ef0cf6d902bcfecb5d755 $
+# $FreeBSD: ec42fe78cf9090312b907171a18102b651561b67 $
 
 .include <src.opts.mk>
 
@@ -13,9 +13,6 @@ SRCS+=		driver.cpp
 .if ${MK_SHARED_TOOLCHAIN} == "no"
 NO_SHARED?= yes
 
-.if ${MACHINE_CPUARCH} == "arm"
-CFLAGS+= -mlong-calls
-.endif
 .endif
 
 LINKS=	${BINDIR}/clang ${BINDIR}/clang++ \

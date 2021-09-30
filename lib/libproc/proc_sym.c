@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c3a84a9403a20b58ca100d0bd0c0bf6f26015b84 $");
+__FBSDID("$FreeBSD: ad6673f9f9baa51a967f0f0285f3cdf5bd9512fe $");
 
 #include <sys/types.h>
 #ifndef NO_CTF
@@ -307,7 +307,7 @@ open_object(struct map_info *mapping)
 	 */
 	if (data->d_size < sizeof(crc) + 1) {
 		DPRINTFX("ERROR: debuglink section is too small (%zd bytes)",
-		    data->d_size);
+		    (ssize_t)data->d_size);
 		goto internal;
 	}
 	if (strnlen(data->d_buf, data->d_size) >= data->d_size - sizeof(crc)) {
@@ -510,7 +510,7 @@ proc_addr2sym(struct proc_handle *p, uintptr_t addr, char *name,
 	int error;
 
 	if ((mapping = _proc_addr2map(p, addr)) == NULL) {
-		DPRINTFX("ERROR: proc_addr2map failed to resolve 0x%jx", addr);
+		DPRINTFX("ERROR: proc_addr2map failed to resolve 0x%jx", (uintmax_t)addr);
 		return (-1);
 	}
 	if (open_object(mapping) != 0) {

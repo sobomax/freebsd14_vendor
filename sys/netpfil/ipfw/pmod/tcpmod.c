@@ -29,7 +29,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 054c289c89149a6229eb676bf6fea0684badaaf2 $");
+__FBSDID("$FreeBSD: aa2d199f46d57ba584a17dbd03049503d33916e1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -243,4 +243,3 @@ tcpmod_uninit(struct ip_fw_chain *ch, int last)
 	ipfw_del_eaction(ch, V_tcpmod_setmss_eid);
 	V_tcpmod_setmss_eid = 0;
 }
-

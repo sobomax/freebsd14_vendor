@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 67b01fb6be6d89e338abf923dcbac8f8687f285b $
+ *	$FreeBSD: e150ad7f26138a254d804b58841cd4efa1832c83 $
  */
 
 /*
@@ -43,11 +43,10 @@
  * block is returned by this function. For architectures using
  * 'Variant I' TLS, the thread local storage follows the TCB, and for
  * 'Variant II', the thread local storage precedes it. For
- * architectures using the 'Variant II' model (e.g. i386, amd64,
- * sparc64), the TCB must begin with two pointer fields which are used
- * by rtld for its TLS implementation. For the 'Variant I' model, the
- * TCB must begin with a single pointer field for rtld's
- * implementation.
+ * architectures using the 'Variant II' model (e.g. i386, amd64) the
+ * TCB must begin with two pointer fields which are used by rtld for
+ * its TLS implementation. For the 'Variant I' model, the TCB must
+ * begin with a single pointer field for rtld's implementation.
  *
  * If the value of 'oldtls' is non-NULL, the new TLS block will be
  * initialised using the values contained in 'oldtls' and 'oldtls'

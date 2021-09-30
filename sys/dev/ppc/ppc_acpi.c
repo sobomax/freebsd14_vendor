@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 582638183f13f5e73e1667cfb532609f88b1aa29 $");
+__FBSDID("$FreeBSD: bb52b7370d1615f8e5554c78dc7dabd79eea4364 $");
 
 #include "opt_isa.h"
 
@@ -81,7 +81,6 @@ static device_method_t ppc_acpi_methods[] = {
 #else
 	DEVMETHOD(ppbus_write,		ppc_write),
 #endif
-
 	{ 0, 0 }
 };
 

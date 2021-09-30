@@ -1,4 +1,4 @@
-# $FreeBSD: a7c0442d57d56bfddb6886157f8e0b909ec751f6 $
+# $FreeBSD: eb69a29fd86295f0f5d9bd0623ecd08bee88ad49 $
 
 .include <src.opts.mk>
 
@@ -25,8 +25,9 @@ ytab.h: awkgram.c awkgram.h .NOMETA
 	ln -sf ${.ALLSRC:M*.h} ${.TARGET}
 
 proctab.c: maketab
-	${BTOOLSPATH:U.}/maketab > proctab.c
+	${BTOOLSPATH:U.}/maketab awkgram.h > proctab.c
 
+DEPENDOBJS+= maketab
 build-tools: maketab
 maketab: ytab.h maketab.c ${BUILD_TOOLS_META}
 

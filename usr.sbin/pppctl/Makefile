@@ -1,5 +1,6 @@
-# $FreeBSD: dcb793139bed66a3aacbebffcf82d69432c4d7f0 $
+# $FreeBSD: 064f12dd776355ca4292058c723a087fe364eeb0 $
 
+PACKAGE=	ppp
 PROG=	pppctl
 MAN=	pppctl.8
 

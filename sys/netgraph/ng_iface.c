@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 3750fb5a1ae1dabad2117e146822759efcbc55ed $
+ * $FreeBSD: 1e586d68724413c70e9f67682a502f3a956672ed $
  * $Whistle: ng_iface.c,v 1.33 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -93,7 +93,7 @@ static MALLOC_DEFINE(M_NETGRAPH_IFACE, "netgraph_iface", "netgraph iface node");
 #define M_NETGRAPH_IFACE M_NETGRAPH
 #endif
 
-static SYSCTL_NODE(_net_graph, OID_AUTO, iface, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_net_graph, OID_AUTO, iface, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Point to point netgraph interface");
 VNET_DEFINE_STATIC(int, ng_iface_max_nest) = 2;
 #define	V_ng_iface_max_nest	VNET(ng_iface_max_nest)
@@ -287,7 +287,6 @@ ng_iface_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 	ng_iface_print_ioctl(ifp, command, data);
 #endif
 	switch (command) {
-
 	/* These two are mostly handled at a higher layer */
 	case SIOCSIFADDR:
 		ifp->if_flags |= IFF_UP;
@@ -625,7 +624,6 @@ ng_iface_rcvmsg(node_p node, item_p item, hook_p lasthook)
 		case NGM_IFACE_POINT2POINT:
 		case NGM_IFACE_BROADCAST:
 		    {
-
 			/* Deny request if interface is UP */
 			if ((ifp->if_flags & IFF_UP) != 0)
 				return (EBUSY);
@@ -688,6 +686,7 @@ ng_iface_rcvdata(hook_p hook, item_p item)
 	const priv_p priv = NG_NODE_PRIVATE(NG_HOOK_NODE(hook));
 	const iffam_p iffam = get_iffam_from_hook(priv, hook);
 	struct ifnet *const ifp = priv->ifp;
+	struct epoch_tracker et;
 	struct mbuf *m;
 	int isr;
 
@@ -730,7 +729,9 @@ ng_iface_rcvdata(hook_p hook, item_p item)
 	random_harvest_queue(m, sizeof(*m), RANDOM_NET_NG);
 	M_SETFIB(m, ifp->if_fib);
 	CURVNET_SET(ifp->if_vnet);
+	NET_EPOCH_ENTER(et);
 	netisr_dispatch(isr, m);
+	NET_EPOCH_EXIT(et);
 	CURVNET_RESTORE();
 	return (0);
 }

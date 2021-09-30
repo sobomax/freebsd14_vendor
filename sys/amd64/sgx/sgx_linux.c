@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60ebec0e027835fae6be965afd2c0e0eae0f4ea8 $");
+__FBSDID("$FreeBSD: c2975b0d2c84a4914a7b75b34092708328e86013 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,7 +63,8 @@ sgx_linux_ioctl(struct thread *td, struct linux_ioctl_args *args)
 	int error;
 	int len;
 
-	error = fget(td, args->fd, cap_rights_init(&rights, CAP_IOCTL), &fp);
+	error = fget(td, args->fd, cap_rights_init_one(&rights, CAP_IOCTL),
+	    &fp);
 	if (error != 0)
 		return (error);
 

@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/memdev.h,v 1.2 2004/08/01 18:51:44 markm
- * $FreeBSD: b08bae904021d5a1f625ed2d7b78b9e07e969051 $
+ * $FreeBSD: 82e98150c11ab996a824aa890eb2a767e93cfe8f $
  */
 
 #ifndef _MACHINE_MEMDEV_H_
@@ -37,7 +37,7 @@
 
 d_open_t	memopen;
 d_read_t	memrw;
-#define		memioctl	(d_ioctl_t *)NULL
+d_ioctl_t	memioctl_md;
 d_mmap_t	memmmap;
 
 #endif /* _MACHINE_MEMDEV_H_ */

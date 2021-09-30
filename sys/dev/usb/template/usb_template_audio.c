@@ -1,4 +1,4 @@
-/* $FreeBSD: 40861d42db51d1b450df4a91ff97e2c3a9014305 $ */
+/* $FreeBSD: ec14d130b96480faaa2874dcbeb5bf25e0940ab9 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -433,7 +433,7 @@ audio_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&audio_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB Audio Interface device side template");
 	SYSCTL_ADD_U16(&audio_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN, &usb_template_audio.idVendor,

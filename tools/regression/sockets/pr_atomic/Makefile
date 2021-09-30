@@ -1,7 +1,6 @@
-# $FreeBSD: 1dc85ffbeff89618d1f32938c9769090dc3509ca $
+# $FreeBSD: a52433c6ef26f7c8abb74d63d6d8070c59434fa7 $
 
 PROG=	pr_atomic
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

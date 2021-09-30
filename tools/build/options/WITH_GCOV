@@ -1,0 +1,4 @@
+.\" $FreeBSD: a9f3eb68a82bea0b745623f768ad98b3146a4015 $
+Build and install the GNU
+.Xr gcov 1
+tool.

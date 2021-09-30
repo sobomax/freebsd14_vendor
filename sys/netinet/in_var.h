@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: 7d3c8459a2194ae19fa1b9845f3aa9d5c8427355 $
+ * $FreeBSD: c7ebff80e56df4631d1853f74e7fbe959b487320 $
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -171,6 +171,7 @@ do { \
 	/* struct in_ifaddr *ia; */					\
 	/* struct rm_priotracker *t; */					\
 do {									\
+	NET_EPOCH_ASSERT();						\
 	IN_IFADDR_RLOCK((t));						\
 	for ((ia) = CK_STAILQ_FIRST(&V_in_ifaddrhead);			\
 	    (ia) != NULL && (ia)->ia_ifp != (ifp);			\
@@ -435,8 +436,7 @@ inm_rele_locked(struct in_multi_head *inmh, struct in_multi *inm)
 #define MCAST_NOTSMEMBER	2	/* This host excluded source */
 #define MCAST_MUTED		3	/* [deprecated] */
 
-struct	rtentry;
-struct	route;
+struct rib_head;
 struct	ip_moptions;
 
 struct in_multi *inm_lookup_locked(struct ifnet *, const struct in_addr);
@@ -461,21 +461,21 @@ int	in_leavegroup_locked(struct in_multi *,
 	    /*const*/ struct in_mfilter *);
 int	in_control(struct socket *, u_long, caddr_t, struct ifnet *,
 	    struct thread *);
-int	in_addprefix(struct in_ifaddr *, int);
+int	in_addprefix(struct in_ifaddr *);
 int	in_scrubprefix(struct in_ifaddr *, u_int);
 void	in_ifscrub_all(void);
+int	in_handle_ifaddr_route(int, struct in_ifaddr *);
 void	ip_input(struct mbuf *);
 void	ip_direct_input(struct mbuf *);
 void	in_ifadown(struct ifaddr *ifa, int);
 struct	mbuf	*ip_tryforward(struct mbuf *);
 void	*in_domifattach(struct ifnet *);
 void	in_domifdetach(struct ifnet *, void *);
+struct rib_head *in_inithead(uint32_t fibnum);
+#ifdef VIMAGE
+void	in_detachhead(struct rib_head *rh);
+#endif
 
-
-/* XXX */
-void	 in_rtalloc_ign(struct route *ro, u_long ignflags, u_int fibnum);
-void	 in_rtredirect(struct sockaddr *, struct sockaddr *,
-	    struct sockaddr *, int, struct sockaddr *, u_int);
 #endif /* _KERNEL */
 
 /* INET6 stuff */

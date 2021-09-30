@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 248060b6cf04970087ad691e2acea714990c317b $
+# $FreeBSD: 724d742e03af3fd7aacc7f5b9aa75847029c5da5 $
 
 ident		EFIKA_MX
 
@@ -57,7 +57,6 @@ device		bpf			# Berkeley packet filter
 
 # Pseudo devices.
 device		loop			# Network loopback
-device		random			# Entropy device
 device		ether			# Ethernet support
 #device		vlan			# 802.1Q VLAN support
 #device		tuntap			# Packet tunnel.
@@ -116,6 +115,9 @@ device		wlan_wep		# 802.11 WEP support
 device		wlan_ccmp		# 802.11 CCMP support
 device		wlan_tkip		# 802.11 TKIP support
 device		wlan_amrr		# AMRR transmit rate control algorithm
+
+# HID support
+device		hid			# Generic HID support
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data

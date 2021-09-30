@@ -1,22 +1,6 @@
-# $FreeBSD: 718c41dab4fa8d7a2180f7a0932d10e2a0a63c19 $
+# $FreeBSD: 69f65015201e3b3ddce27a6a39ac4b3f37d6c7f1 $
 
-# Search for kernel source tree in standard places.
-.if empty(KERNBUILDDIR)
-.if !defined(SYSDIR)
-.for _dir in ${SRCTOP:D${SRCTOP}/sys} \
-    ${.CURDIR}/../.. ${.CURDIR}/../../.. ${.CURDIR}/../../../.. \
-    ${.CURDIR}/../../../../.. /sys /usr/src/sys
-.if !defined(SYSDIR) && exists(${_dir}/kern/) && exists(${_dir}/conf/kmod.mk)
-SYSDIR=	${_dir}
-.endif
-.endfor
-.endif
-.if !defined(SYSDIR) || !exists(${SYSDIR}/kern/) || \
-    !exists(${SYSDIR}/conf/kmod.mk)
-.error Unable to locate the kernel source tree. Set SYSDIR to override.
-.endif
-.endif
-
+.include <bsd.sysdir.mk>
 .include "${SYSDIR}/conf/dtb.mk"
 
 .include <bsd.sys.mk>

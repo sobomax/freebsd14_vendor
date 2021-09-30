@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f727461064b8dd0f97025559f0e4199258b24b4c $
+ * $FreeBSD: 182a19f35e9814dfa9a33fcad056aea89c200171 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f727461064b8dd0f97025559f0e4199258b24b4c $");
+__FBSDID("$FreeBSD: 182a19f35e9814dfa9a33fcad056aea89c200171 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,9 +49,9 @@ __FBSDID("$FreeBSD: f727461064b8dd0f97025559f0e4199258b24b4c $");
 
 #include <arm/allwinner/clkng/aw_ccung.h>
 
-#include <gnu/dts/include/dt-bindings/clock/sun4i-a10-ccu.h>
-#include <gnu/dts/include/dt-bindings/clock/sun7i-a20-ccu.h>
-#include <gnu/dts/include/dt-bindings/reset/sun4i-a10-ccu.h>
+#include <dt-bindings/clock/sun4i-a10-ccu.h>
+#include <dt-bindings/clock/sun7i-a20-ccu.h>
+#include <dt-bindings/reset/sun4i-a10-ccu.h>
 
 /* Non-exported resets */
 /* Non-exported clocks */
@@ -299,7 +299,6 @@ NM_CLK(apb1_clk,
     24, 2,					/* mux */
     0,						/* gate */
     AW_CLK_HAS_MUX);				/* flags */
-
 
 NKMP_CLK(pll_ddr_other_clk,
     CLK_PLL_DDR_OTHER,				/* id */

@@ -43,7 +43,7 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 600a3d03558ae3cee8da597bce5a4491a157b405 $");
+__FBSDID("$FreeBSD: 0d914375ec8796038237b646f4e1ca2b75971e60 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,8 +70,6 @@ __FBSDID("$FreeBSD: 600a3d03558ae3cee8da597bce5a4491a157b405 $");
 #if defined(SMP) && !defined(NO_ADAPTIVE_SX)
 #define	ADAPTIVE_SX
 #endif
-
-CTASSERT((SX_NOADAPTIVE & LO_CLASSFLAGS) == SX_NOADAPTIVE);
 
 #ifdef HWPMC_HOOKS
 #include <sys/pmckern.h>
@@ -145,17 +143,19 @@ struct lock_class lock_class_sx = {
 #endif
 
 #ifdef ADAPTIVE_SX
-static __read_frequently u_int asx_retries;
-static __read_frequently u_int asx_loops;
-static SYSCTL_NODE(_debug, OID_AUTO, sx, CTLFLAG_RD, NULL, "sxlock debugging");
-SYSCTL_UINT(_debug_sx, OID_AUTO, retries, CTLFLAG_RW, &asx_retries, 0, "");
-SYSCTL_UINT(_debug_sx, OID_AUTO, loops, CTLFLAG_RW, &asx_loops, 0, "");
+#ifdef SX_CUSTOM_BACKOFF
+static u_short __read_frequently asx_retries;
+static u_short __read_frequently asx_loops;
+static SYSCTL_NODE(_debug, OID_AUTO, sx, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+    "sxlock debugging");
+SYSCTL_U16(_debug_sx, OID_AUTO, retries, CTLFLAG_RW, &asx_retries, 0, "");
+SYSCTL_U16(_debug_sx, OID_AUTO, loops, CTLFLAG_RW, &asx_loops, 0, "");
 
 static struct lock_delay_config __read_frequently sx_delay;
 
-SYSCTL_INT(_debug_sx, OID_AUTO, delay_base, CTLFLAG_RW, &sx_delay.base,
+SYSCTL_U16(_debug_sx, OID_AUTO, delay_base, CTLFLAG_RW, &sx_delay.base,
     0, "");
-SYSCTL_INT(_debug_sx, OID_AUTO, delay_max, CTLFLAG_RW, &sx_delay.max,
+SYSCTL_U16(_debug_sx, OID_AUTO, delay_max, CTLFLAG_RW, &sx_delay.max,
     0, "");
 
 static void
@@ -167,6 +167,11 @@ sx_lock_delay_init(void *arg __unused)
 	asx_loops = max(10000, sx_delay.max);
 }
 LOCK_DELAY_SYSINIT(sx_lock_delay_init);
+#else
+#define sx_delay	locks_delay
+#define asx_retries	locks_delay_retries
+#define asx_loops	locks_delay_loops
+#endif
 #endif
 
 void
@@ -233,7 +238,7 @@ sx_init_flags(struct sx *sx, const char *description, int opts)
 	int flags;
 
 	MPASS((opts & ~(SX_QUIET | SX_RECURSE | SX_NOWITNESS | SX_DUPOK |
-	    SX_NOPROFILE | SX_NOADAPTIVE | SX_NEW)) == 0);
+	    SX_NOPROFILE | SX_NEW)) == 0);
 	ASSERT_ATOMIC_LOAD_PTR(sx->sx_lock,
 	    ("%s: sx_lock not aligned for %s: %p", __func__, description,
 	    &sx->sx_lock));
@@ -252,7 +257,6 @@ sx_init_flags(struct sx *sx, const char *description, int opts)
 	if (opts & SX_NEW)
 		flags |= LO_NEW;
 
-	flags |= opts & SX_NOADAPTIVE;
 	lock_init(&sx->lock_object, &lock_class_sx, description, NULL, flags);
 	sx->sx_lock = SX_LOCK_UNLOCKED;
 	sx->sx_recurse = 0;
@@ -569,10 +573,9 @@ _sx_xlock_hard(struct sx *sx, uintptr_t x, int opts LOCK_FILE_LINE_ARG_DEF)
 	GIANT_DECLARE;
 	uintptr_t tid, setx;
 #ifdef ADAPTIVE_SX
-	volatile struct thread *owner;
+	struct thread *owner;
 	u_int i, n, spintries = 0;
 	enum { READERS, WRITER } sleep_reason = READERS;
-	bool adaptive;
 	bool in_critical = false;
 #endif
 #ifdef LOCK_PROFILING
@@ -617,12 +620,6 @@ _sx_xlock_hard(struct sx *sx, uintptr_t x, int opts LOCK_FILE_LINE_ARG_DEF)
 	if (SCHEDULER_STOPPED())
 		return (0);
 
-#if defined(ADAPTIVE_SX)
-	lock_delay_arg_init(&lda, &sx_delay);
-#elif defined(KDTRACE_HOOKS)
-	lock_delay_arg_init(&lda, NULL);
-#endif
-
 	if (__predict_false(x == SX_LOCK_UNLOCKED))
 		x = SX_READ_VALUE(sx);
 
@@ -642,8 +639,10 @@ _sx_xlock_hard(struct sx *sx, uintptr_t x, int opts LOCK_FILE_LINE_ARG_DEF)
 		CTR5(KTR_LOCK, "%s: %s contested (lock=%p) at %s:%d", __func__,
 		    sx->lock_object.lo_name, (void *)sx->sx_lock, file, line);
 
-#ifdef ADAPTIVE_SX
-	adaptive = ((sx->lock_object.lo_flags & SX_NOADAPTIVE) == 0);
+#if defined(ADAPTIVE_SX)
+	lock_delay_arg_init(&lda, &sx_delay);
+#elif defined(KDTRACE_HOOKS)
+	lock_delay_arg_init_noadapt(&lda);
 #endif
 
 #ifdef HWPMC_HOOKS
@@ -669,8 +668,12 @@ _sx_xlock_hard(struct sx *sx, uintptr_t x, int opts LOCK_FILE_LINE_ARG_DEF)
 		lda.spin_cnt++;
 #endif
 #ifdef ADAPTIVE_SX
-		if (__predict_false(!adaptive))
-			goto sleepq;
+		if (x == (SX_LOCK_SHARED | SX_LOCK_WRITE_SPINNER)) {
+			if (atomic_fcmpset_acq_ptr(&sx->sx_lock, &x, tid))
+				break;
+			continue;
+		}
+
 		/*
 		 * If the lock is write locked and the owner is
 		 * running on another CPU, spin until the owner stops
@@ -762,20 +765,18 @@ retry_sleepq:
 		 * chain lock.  If so, drop the sleep queue lock and try
 		 * again.
 		 */
-		if (adaptive) {
-			if (!(x & SX_LOCK_SHARED)) {
-				owner = (struct thread *)SX_OWNER(x);
-				if (TD_IS_RUNNING(owner)) {
-					sleepq_release(&sx->lock_object);
-					sx_drop_critical(x, &in_critical,
-					    &extra_work);
-					continue;
-				}
-			} else if (SX_SHARERS(x) > 0 && sleep_reason == WRITER) {
+		if (!(x & SX_LOCK_SHARED)) {
+			owner = (struct thread *)SX_OWNER(x);
+			if (TD_IS_RUNNING(owner)) {
 				sleepq_release(&sx->lock_object);
-				sx_drop_critical(x, &in_critical, &extra_work);
+				sx_drop_critical(x, &in_critical,
+				    &extra_work);
 				continue;
 			}
+		} else if (SX_SHARERS(x) > 0 && sleep_reason == WRITER) {
+			sleepq_release(&sx->lock_object);
+			sx_drop_critical(x, &in_critical, &extra_work);
+			continue;
 		}
 #endif
 
@@ -1019,9 +1020,8 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 	GIANT_DECLARE;
 	struct thread *td;
 #ifdef ADAPTIVE_SX
-	volatile struct thread *owner;
+	struct thread *owner;
 	u_int i, n, spintries = 0;
-	bool adaptive;
 #endif
 #ifdef LOCK_PROFILING
 	uint64_t waittime = 0;
@@ -1063,11 +1063,7 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 #if defined(ADAPTIVE_SX)
 	lock_delay_arg_init(&lda, &sx_delay);
 #elif defined(KDTRACE_HOOKS)
-	lock_delay_arg_init(&lda, NULL);
-#endif
-
-#ifdef ADAPTIVE_SX
-	adaptive = ((sx->lock_object.lo_flags & SX_NOADAPTIVE) == 0);
+	lock_delay_arg_init_noadapt(&lda);
 #endif
 
 #ifdef HWPMC_HOOKS
@@ -1095,9 +1091,6 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 #endif
 
 #ifdef ADAPTIVE_SX
-		if (__predict_false(!adaptive))
-			goto sleepq;
-
 		/*
 		 * If the owner is running on another CPU, spin until
 		 * the owner stops running or the state of the lock
@@ -1154,7 +1147,6 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 					continue;
 			}
 		}
-sleepq:
 #endif
 
 		/*
@@ -1176,7 +1168,7 @@ retry_sleepq:
 		 * the owner stops running or the state of the lock
 		 * changes.
 		 */
-		if (!(x & SX_LOCK_SHARED) && adaptive) {
+		if (!(x & SX_LOCK_SHARED)) {
 			owner = (struct thread *)SX_OWNER(x);
 			if (TD_IS_RUNNING(owner)) {
 				sleepq_release(&sx->lock_object);
@@ -1541,7 +1533,7 @@ db_show_sx(const struct lock_object *lock)
 int
 sx_chain(struct thread *td, struct thread **ownerp)
 {
-	struct sx *sx;
+	const struct sx *sx;
 
 	/*
 	 * Check to see if this thread is blocked on an sx lock.

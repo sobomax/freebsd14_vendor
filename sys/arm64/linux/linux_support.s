@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c7a87f616812f5a5e1982dffc239f1a1fcee2dbf $
+ * $FreeBSD: 1048e95796275a2277d848b89f4105cf4d12bad3 $
  */
 
 #include "linux_assym.h"
@@ -39,19 +39,24 @@
 ENTRY(futex_xchgl)
 	brk #0
 	ret
+END(futex_xchgl)
 
 ENTRY(futex_addl)
 	brk #0
 	ret
+END(futex_addl)
 
 ENTRY(futex_orl)
 	brk #0
 	ret
+END(futex_orl)
 
 ENTRY(futex_andl)
 	brk #0
 	ret
+END(futex_andl)
 
 ENTRY(futex_xorl)
 	brk #0
 	ret
+END(futex_xorl)

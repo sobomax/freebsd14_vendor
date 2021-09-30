@@ -1,4 +1,4 @@
-# $FreeBSD: b325fe9d32d4f4081294f5f3209f2ac8cfbe66ca $
+# $FreeBSD: aa3dc27fb5261c778e7345d796fc06e871c737f8 $
 
 .include <src.opts.mk>
 
@@ -51,6 +51,10 @@ SRCS+=	 ssh_namespace.h
 .if ${MK_GSSAPI} != "no" && ${MK_KERBEROS_SUPPORT} != "no"
 CFLAGS+= -include krb5_config.h
 SRCS+=	 krb5_config.h
+.endif
+
+.if defined(LOCALBASE)
+CFLAGS+= -D_PATH_SSH_ASKPASS_DEFAULT='"${LOCALBASE}/bin/ssh-askpass"'
 .endif
 
 NO_LINT=

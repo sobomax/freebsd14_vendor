@@ -1,8 +1,8 @@
-# $FreeBSD: d9bef05888a586aa142d6582ac887c22e8c65a99 $
+# $FreeBSD: be28debc70bca1cad784cb671fdd6a3600c06612 $
 
-PACKAGE=lib${LIB}
+PACKAGE=	dpv
 LIB=		dpv
-SHLIB_MAJOR=	1
+SHLIB_MAJOR=	2
 INCS=		dpv.h
 MAN=		dpv.3
 MLINKS=		dpv.3 dpv_free.3

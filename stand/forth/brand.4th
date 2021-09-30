@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 39a9bfae753c1e82991f26d4577717445d4a70ad $
+\ $FreeBSD: 034e4eb4044524c15ca707a2c1c7af10484a33f5 $
 
 marker task-brand.4th
 
@@ -71,4 +71,8 @@ variable brandY
 			brandX @ brandY @ rot execute
 		else drop then
 	then
+;
+
+: draw-brand
+	['] draw-brand console-iterate
 ;

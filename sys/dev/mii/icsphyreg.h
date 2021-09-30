@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 80ebbded9241788278f0774afc86ccb5c79da73b $
+ * $FreeBSD: fc2d1f267e40a6e3cedd31a66c1041cb37097c5e $
  */
 
 #ifndef _DEV_MII_ICSPHYREG_H_
@@ -93,7 +93,6 @@
 #define	TTR_NOSQE		0x0004	/* Disable SQE check */
 #define	TTR_NOLINK		0x0002	/* Disable Link check */
 #define	TTR_NOSQUELCH		0x0001	/* Disable squelch */
-
 
 /*
  * Extended Control Register 2

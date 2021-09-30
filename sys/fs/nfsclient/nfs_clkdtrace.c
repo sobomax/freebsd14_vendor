@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e51c2f06a137df30dde5ec798d4692be3617a37 $");
+__FBSDID("$FreeBSD: 367153e4beef7eb596b7319d2efe1d04586abbe5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -539,7 +539,6 @@ dtnfsclient_load(void *dummy)
 	dtrace_nfscl_nfs234_done_probe =
 	    (dtrace_nfsclient_nfs23_done_probe_func_t)dtrace_probe;
 }
-
 
 static int
 dtnfsclient_unload()

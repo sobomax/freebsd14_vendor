@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5550879a322776186a62932e487b39e9de0e3135 $
+ * $FreeBSD: 583d6b1d101f31e76e9e47351f17c15584c5a8da $
  */
 #include <stddef.h>
 #include <stdarg.h>
@@ -124,7 +124,7 @@ probe(dev_info_t *dev)
 	}
 	memcpy(tdev, dev, sizeof(*dev));
 
-	if (vdev_probe(vdev_read, tdev, &spa) != 0) {
+	if (vdev_probe(vdev_read, NULL, tdev, &spa) != 0) {
 		free(tdev);
 		return (EFI_UNSUPPORTED);
 	}

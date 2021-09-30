@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 844589b0805342f811988bf731a2fa639d014efe $
+ * $FreeBSD: 3305a4854812c9b254f8c85c967438a8defc6a0a $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 844589b0805342f811988bf731a2fa639d014efe $");
+__FBSDID("$FreeBSD: 3305a4854812c9b254f8c85c967438a8defc6a0a $");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
@@ -583,7 +583,7 @@ cfginitbar(struct vmctx *ctx, struct passthru_softc *sc)
 		sc->psc_bar[i].addr = base;
 
 		/* Allocate the BAR in the guest I/O or MMIO space */
-		error = pci_emul_alloc_pbar(pi, i, base, bartype, size);
+		error = pci_emul_alloc_bar(pi, i, bartype, size);
 		if (error)
 			return (-1);
 
@@ -668,14 +668,14 @@ passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	memflags = vm_get_memflags(ctx);
 	if (!(memflags & VM_MEM_F_WIRED)) {
 		warnx("passthru requires guest memory to be wired");
-		goto done;
+		return (error);
 	}
 
 	if (pcifd < 0) {
 		pcifd = open(_PATH_DEVPCI, O_RDWR, 0);
 		if (pcifd < 0) {
 			warn("failed to open %s", _PATH_DEVPCI);
-			goto done;
+			return (error);
 		}
 	}
 
@@ -690,7 +690,7 @@ passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 		iofd = open(_PATH_DEVIO, O_RDWR, 0);
 		if (iofd < 0) {
 			warn("failed to open %s", _PATH_DEVIO);
-			goto done;
+			return (error);
 		}
 	}
 
@@ -705,7 +705,7 @@ passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 		memfd = open(_PATH_MEM, O_RDWR, 0);
 		if (memfd < 0) {
 			warn("failed to open %s", _PATH_MEM);
-			goto done;
+			return (error);
 		}
 	}
 
@@ -719,7 +719,7 @@ passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	if (opts == NULL ||
 	    sscanf(opts, "%d/%d/%d", &bus, &slot, &func) != 3) {
 		warnx("invalid passthru options");
-		goto done;
+		return (error);
 	}
 
 	if (vm_assign_pptdev(ctx, bus, slot, func) != 0) {
@@ -734,10 +734,7 @@ passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	sc->psc_pi = pi;
 
 	/* initialize config space */
-	if ((error = cfginit(ctx, pi, bus, slot, func)) != 0)
-		goto done;
-	
-	error = 0;		/* success */
+	error = cfginit(ctx, pi, bus, slot, func);
 done:
 	if (error) {
 		free(sc);
@@ -872,6 +869,11 @@ passthru_cfgwrite(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 				if (error)
 					err(1, "vm_setup_pptdev_msix");
 			}
+		} else {
+			error = vm_disable_pptdev_msix(ctx, sc->psc_sel.pc_bus,
+			    sc->psc_sel.pc_dev, sc->psc_sel.pc_func);
+			if (error)
+				err(1, "vm_disable_pptdev_msix");
 		}
 		return (0);
 	}

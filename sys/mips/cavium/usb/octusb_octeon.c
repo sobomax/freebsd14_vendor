@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13370bb6c2875d4205ae82699f1c753e4df98dab $");
+__FBSDID("$FreeBSD: 41d02e6dcadff05c2e69848d3d4f34dd35ff3640 $");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -142,7 +142,6 @@ octusb_octeon_attach(device_t dev)
 		goto error;
 	}
 	device_set_ivars(sc->sc_dci.sc_bus.bdev, &sc->sc_dci.sc_bus);
-
 
 	err = octusb_init(&sc->sc_dci);
 	if (!err) {

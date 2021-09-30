@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a35b752d72530b7a4d09efc5fef9b99f06011f42 $
+ * $FreeBSD: 1af2924b8d56902a3a2c7cddeceda7bfeac4d300 $
  */
 
 #include <sys/param.h>
@@ -678,12 +678,9 @@ bundle_LockTun(struct bundle *bundle)
   if (lockfile != NULL) {
     fprintf(lockfile, "%d\n", (int)getpid());
     fclose(lockfile);
-  }
-#ifndef RELEASE_CRUNCH
-  else
+  } else
     log_Printf(LogERROR, "Warning: Can't create %s: %s\n",
                pidfile, strerror(errno));
-#endif
 }
 
 static void

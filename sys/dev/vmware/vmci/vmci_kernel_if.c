@@ -7,7 +7,7 @@
 /* This file implements defines and helper functions. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 851c4c9df2147f40a5a3d0a104bf4fccbd9fb2a7 $");
+__FBSDID("$FreeBSD: e845650873b5aad23282514751b69a34a37174ff $");
 
 #include <sys/malloc.h>
 #include <sys/proc.h>
@@ -615,7 +615,6 @@ vmci_alloc_ppn_set(void *prod_q, uint64_t num_produce_pages, void *cons_q,
 		if (sizeof(pfn) >
 		    sizeof(*consume_ppns) && pfn != consume_ppns[i])
 			goto ppn_error;
-
 	}
 
 	ppn_set->num_produce_pages = num_produce_pages;

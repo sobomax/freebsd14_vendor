@@ -1,7 +1,6 @@
-# $FreeBSD: 52cc8442be093107028d4b2213b0a7e260bf5f9f $
+# $FreeBSD: 4bb4fc011ba4a0223d744e3363e3588b71b58233 $
 
 PROG=	unix_bindconnect
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

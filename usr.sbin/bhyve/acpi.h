@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4c6d86d0916f7a0d2afa7195ab70eb86d0322ac1 $
+ * $FreeBSD: 50e5337f332abd7361183df534e2f698995062cf $
  */
 
 #ifndef _ACPI_H_
@@ -42,9 +42,19 @@
 
 #define	IO_PMTMR		0x408	/* 4-byte i/o port for the timer */
 
+#define	IO_GPE0_BLK		0x40c	/* 2x 1-byte IO port for GPE0_STS/EN */
+#define	IO_GPE0_LEN		0x2
+
+#define	IO_GPE0_STS		IO_GPE0_BLK
+#define	IO_GPE0_EN		(IO_GPE0_BLK + (IO_GPE0_LEN / 2))
+
+/* Allocated GPE bits. */
+#define	GPE_VMGENC		0
+
 struct vmctx;
 
 int	acpi_build(struct vmctx *ctx, int ncpu);
+void	acpi_raise_gpe(struct vmctx *ctx, unsigned bit);
 void	dsdt_line(const char *fmt, ...);
 void	dsdt_fixed_ioport(uint16_t iobase, uint16_t length);
 void	dsdt_fixed_irq(uint8_t irq);

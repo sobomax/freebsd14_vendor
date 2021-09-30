@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ba7ea87ec11acee0049ca25d0db8f4fbddfbfb8 $
+ * $FreeBSD: 0797a3ff9e34c5f20dac0bd9f4d0e66d0dae0192 $
  */
 
 extern "C" {
@@ -143,7 +143,7 @@ TEST_F(Create, attr_cache)
 	).Times(0);
 
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 
@@ -184,7 +184,7 @@ TEST_F(Create, clear_attr_cache)
 
 	EXPECT_EQ(0, stat("mountpoint", &sb)) << strerror(errno);
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	EXPECT_EQ(0, stat("mountpoint", &sb)) << strerror(errno);
 
 	leak(fd);
@@ -254,7 +254,7 @@ TEST_F(Create, Enosys)
 	})));
 
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 
@@ -366,7 +366,7 @@ TEST_F(Create, ok)
 	}));
 
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 
@@ -398,7 +398,7 @@ TEST_F(Create, wronly_0444)
 	}));
 
 	fd = open(FULLPATH, O_CREAT | O_WRONLY, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 
@@ -422,7 +422,7 @@ TEST_F(Create_7_8, ok)
 	}));
 
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }
 
@@ -446,6 +446,6 @@ TEST_F(Create_7_11, ok)
 	}));
 
 	fd = open(FULLPATH, O_CREAT | O_EXCL, mode);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 	leak(fd);
 }

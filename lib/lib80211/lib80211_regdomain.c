@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #ifndef lint
-static const char rcsid[] = "$FreeBSD: 8dfd435e07a04f43cb92c943092f0a59b8fce42b $";
+static const char rcsid[] = "$FreeBSD: f5ed236467f5674a2cbfcc05286d60f0b64507d4 $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -191,11 +191,11 @@ decode_flag(struct mystate *mt, const char *p, int len)
 		FLAG(IEEE80211_CHAN_VHT20),
 		FLAG(IEEE80211_CHAN_VHT40),
 		FLAG(IEEE80211_CHAN_VHT80),
+		FLAG(IEEE80211_CHAN_VHT160),
 		/*
 		 * XXX VHT80P80? This likely should be done by
 		 * 80MHz chan logic in net80211 / ifconfig.
 		 */
-		FLAG(IEEE80211_CHAN_VHT160),
 		FLAG(IEEE80211_CHAN_ST),
 		FLAG(IEEE80211_CHAN_TURBO),
 		FLAG(IEEE80211_CHAN_PASSIVE),

@@ -1,5 +1,6 @@
-# $FreeBSD: 61a6f9c35060fac259b1632f46d95ae12f1b0c0c $
+# $FreeBSD: 7b2f2c2086bdefda31e969fcd5f74f2031150aa4 $
 
+PACKAGE=	bluetooth
 PROG=		ath3kfw
 MAN=		ath3kfw.8
 LIBADD+=	usb

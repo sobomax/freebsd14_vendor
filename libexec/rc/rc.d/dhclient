@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 520a0850ccbca0bb44f2f5b33eb39d1de06d4dc2 $
+# $FreeBSD: 765e38266408912ecea8d03142d3b66f6729c493 $
 #
 
 # PROVIDE: dhclient
@@ -48,6 +48,11 @@ dhclient_prestart()
 	if checkyesno background_dhclient; then
 		rc_flags="${rc_flags} -b"
 	fi
+
+
+	# /var/run/dhclient is not guaranteed to exist,
+	# e.g. if /var/run is a tmpfs
+	install -d -o root -g wheel -m 755 ${pidfile%/*}
 
 	rc_flags="${rc_flags} ${ifn}"
 }

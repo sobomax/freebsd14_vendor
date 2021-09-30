@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d20e4e0bf0e48885883320090507281703b7768 $");
+__FBSDID("$FreeBSD: 9c33ab71e6c88fedcb056a8a84d5c67c9ef319dc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,7 +45,7 @@ __FBSDID("$FreeBSD: 1d20e4e0bf0e48885883320090507281703b7768 $");
 #include <sys/conf.h>
 #include <sys/ctype.h>
 #include <sys/bio.h>
-#include <sys/bus.h>
+#include <sys/devctl.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/proc.h>
@@ -92,6 +92,7 @@ static g_fini_t g_dev_fini;
 static g_taste_t g_dev_taste;
 static g_orphan_t g_dev_orphan;
 static g_attrchanged_t g_dev_attrchanged;
+static g_resize_t g_dev_resize;
 
 static struct g_class g_dev_class	= {
 	.name = "DEV",
@@ -100,7 +101,8 @@ static struct g_class g_dev_class	= {
 	.fini = g_dev_fini,
 	.taste = g_dev_taste,
 	.orphan = g_dev_orphan,
-	.attrchanged = g_dev_attrchanged
+	.attrchanged = g_dev_attrchanged,
+	.resize = g_dev_resize
 };
 
 /*
@@ -110,7 +112,8 @@ static struct g_class g_dev_class	= {
  */
 static uint64_t g_dev_del_max_sectors = 262144;
 SYSCTL_DECL(_kern_geom);
-SYSCTL_NODE(_kern_geom, OID_AUTO, dev, CTLFLAG_RW, 0, "GEOM_DEV stuff");
+SYSCTL_NODE(_kern_geom, OID_AUTO, dev, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "GEOM_DEV stuff");
 SYSCTL_QUAD(_kern_geom_dev, OID_AUTO, delete_max_sectors, CTLFLAG_RW,
     &g_dev_del_max_sectors, 0, "Maximum number of sectors in a single "
     "delete request sent to the provider. Larger requests are chunked "
@@ -133,15 +136,14 @@ g_dev_fini(struct g_class *mp)
 }
 
 static int
-g_dev_setdumpdev(struct cdev *dev, struct diocskerneldump_arg *kda,
-    struct thread *td)
+g_dev_setdumpdev(struct cdev *dev, struct diocskerneldump_arg *kda)
 {
 	struct g_kerneldump kd;
 	struct g_consumer *cp;
 	int error, len;
 
-	if (dev == NULL || kda == NULL)
-		return (clear_dumper(td));
+	MPASS(dev != NULL && kda != NULL);
+	MPASS(kda->kda_index != KDA_REMOVE);
 
 	cp = dev->si_drv2;
 	len = sizeof(kd);
@@ -152,9 +154,7 @@ g_dev_setdumpdev(struct cdev *dev, struct diocskerneldump_arg *kda,
 	if (error != 0)
 		return (error);
 
-	error = set_dumper(&kd.di, devtoname(dev), td, kda->kda_compression,
-	    kda->kda_encryption, kda->kda_key, kda->kda_encryptedkeysize,
-	    kda->kda_encryptedkey);
+	error = dumper_insert(&kd.di, devtoname(dev), kda);
 	if (error == 0)
 		dev->si_flags |= SI_DUMPDEV;
 
@@ -166,12 +166,12 @@ init_dumpdev(struct cdev *dev)
 {
 	struct diocskerneldump_arg kda;
 	struct g_consumer *cp;
-	const char *devprefix = "/dev/", *devname;
+	const char *devprefix = _PATH_DEV, *devname;
 	int error;
 	size_t len;
 
 	bzero(&kda, sizeof(kda));
-	kda.kda_enable = 1;
+	kda.kda_index = KDA_APPEND;
 
 	if (dumpdev == NULL)
 		return (0);
@@ -188,7 +188,7 @@ init_dumpdev(struct cdev *dev)
 	if (error != 0)
 		return (error);
 
-	error = g_dev_setdumpdev(dev, &kda, curthread);
+	error = g_dev_setdumpdev(dev, &kda);
 	if (error == 0) {
 		freeenv(dumpdev);
 		dumpdev = NULL;
@@ -213,7 +213,7 @@ g_dev_destroy(void *arg, int flags __unused)
 	sc = cp->private;
 	g_trace(G_T_TOPOLOGY, "g_dev_destroy(%p(%s))", cp, gp->name);
 	snprintf(buf, sizeof(buf), "cdev=%s", gp->name);
-	devctl_notify_f("GEOM", "DEV", "DESTROY", buf, M_WAITOK);
+	devctl_notify("GEOM", "DEV", "DESTROY", buf);
 	if (cp->acr > 0 || cp->acw > 0 || cp->ace > 0)
 		g_access(cp, -cp->acr, -cp->acw, -cp->ace);
 	g_detach(cp);
@@ -277,13 +277,13 @@ g_dev_set_media(struct g_consumer *cp)
 	sc = cp->private;
 	dev = sc->sc_dev;
 	snprintf(buf, sizeof(buf), "cdev=%s", dev->si_name);
-	devctl_notify_f("DEVFS", "CDEV", "MEDIACHANGE", buf, M_WAITOK);
-	devctl_notify_f("GEOM", "DEV", "MEDIACHANGE", buf, M_WAITOK);
+	devctl_notify("DEVFS", "CDEV", "MEDIACHANGE", buf);
+	devctl_notify("GEOM", "DEV", "MEDIACHANGE", buf);
 	dev = sc->sc_alias;
 	if (dev != NULL) {
 		snprintf(buf, sizeof(buf), "cdev=%s", dev->si_name);
-		devctl_notify_f("DEVFS", "CDEV", "MEDIACHANGE", buf, M_WAITOK);
-		devctl_notify_f("GEOM", "DEV", "MEDIACHANGE", buf, M_WAITOK);
+		devctl_notify("DEVFS", "CDEV", "MEDIACHANGE", buf);
+		devctl_notify("GEOM", "DEV", "MEDIACHANGE", buf);
 	}
 }
 
@@ -300,6 +300,15 @@ g_dev_attrchanged(struct g_consumer *cp, const char *attr)
 		g_dev_set_physpath(cp);
 		return;
 	}
+}
+
+static void
+g_dev_resize(struct g_consumer *cp)
+{
+	char buf[SPECNAMELEN + 6];
+
+	snprintf(buf, sizeof(buf), "cdev=%s", cp->provider->name);
+	devctl_notify("GEOM", "DEV", "SIZECHANGE", buf);
 }
 
 struct g_provider *
@@ -337,9 +346,15 @@ g_dev_taste(struct g_class *mp, struct g_provider *pp, int insist __unused)
 	cp->private = sc;
 	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	error = g_attach(cp, pp);
-	KASSERT(error == 0,
-	    ("g_dev_taste(%s) failed to g_attach, err=%d", pp->name, error));
-
+	if (error != 0) {
+		printf("%s: g_dev_taste(%s) failed to g_attach, error=%d\n",
+		    __func__, pp->name, error);
+		g_destroy_consumer(cp);
+		g_destroy_geom(gp);
+		mtx_destroy(&sc->sc_mtx);
+		g_free(sc);
+		return (NULL);
+	}
 	make_dev_args_init(&args);
 	args.mda_flags = MAKEDEV_CHECKNAME | MAKEDEV_WAITOK;
 	args.mda_devsw = &g_dev_cdevsw;
@@ -362,7 +377,7 @@ g_dev_taste(struct g_class *mp, struct g_provider *pp, int insist __unused)
 	}
 	dev = sc->sc_dev;
 	dev->si_flags |= SI_UNMAPPED;
-	dev->si_iosize_max = MAXPHYS;
+	dev->si_iosize_max = maxphys;
 	error = init_dumpdev(dev);
 	if (error != 0)
 		printf("%s: init_dumpdev() failed (gp->name=%s, error=%d)\n",
@@ -370,11 +385,11 @@ g_dev_taste(struct g_class *mp, struct g_provider *pp, int insist __unused)
 
 	g_dev_attrchanged(cp, "GEOM::physpath");
 	snprintf(buf, sizeof(buf), "cdev=%s", gp->name);
-	devctl_notify_f("GEOM", "DEV", "CREATE", buf, M_WAITOK);
+	devctl_notify("GEOM", "DEV", "CREATE", buf);
 	/*
 	 * Now add all the aliases for this drive
 	 */
-	LIST_FOREACH(gap, &pp->geom->aliases, ga_next) {
+	LIST_FOREACH(gap, &pp->aliases, ga_next) {
 		error = make_dev_alias_p(MAKEDEV_CHECKNAME | MAKEDEV_WAITOK, &adev, dev,
 		    "%s", gap->ga_alias);
 		if (error) {
@@ -383,7 +398,7 @@ g_dev_taste(struct g_class *mp, struct g_provider *pp, int insist __unused)
 			continue;
 		}
 		snprintf(buf, sizeof(buf), "cdev=%s", gap->ga_alias);
-		devctl_notify_f("GEOM", "DEV", "CREATE", buf, M_WAITOK);
+		devctl_notify("GEOM", "DEV", "CREATE", buf);
 	}
 
 	return (gp);
@@ -496,6 +511,9 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 	struct g_provider *pp;
 	off_t offset, length, chunk, odd;
 	int i, error;
+#ifdef COMPAT_FREEBSD12
+	struct diocskerneldump_arg kda_copy;
+#endif
 
 	cp = dev->si_drv2;
 	pp = cp->provider;
@@ -532,23 +550,40 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 		if (error == 0 && *(u_int *)data == 0)
 			error = ENOENT;
 		break;
-	case DIOCGFRONTSTUFF:
-		error = g_io_getattr("GEOM::frontstuff", cp, &i, data);
-		break;
 #ifdef COMPAT_FREEBSD11
 	case DIOCSKERNELDUMP_FREEBSD11:
 	    {
 		struct diocskerneldump_arg kda;
 
+		gone_in(13, "FreeBSD 11.x ABI compat");
+
 		bzero(&kda, sizeof(kda));
 		kda.kda_encryption = KERNELDUMP_ENC_NONE;
-		kda.kda_enable = (uint8_t)*(u_int *)data;
-		if (kda.kda_enable == 0)
-			error = g_dev_setdumpdev(NULL, NULL, td);
+		kda.kda_index = (*(u_int *)data ? 0 : KDA_REMOVE_ALL);
+		if (kda.kda_index == KDA_REMOVE_ALL)
+			error = dumper_remove(devtoname(dev), &kda);
 		else
-			error = g_dev_setdumpdev(dev, &kda, td);
+			error = g_dev_setdumpdev(dev, &kda);
 		break;
 	    }
+#endif
+#ifdef COMPAT_FREEBSD12
+	case DIOCSKERNELDUMP_FREEBSD12:
+	    {
+		struct diocskerneldump_arg_freebsd12 *kda12;
+
+		gone_in(14, "FreeBSD 12.x ABI compat");
+
+		kda12 = (void *)data;
+		memcpy(&kda_copy, kda12, sizeof(kda_copy));
+		kda_copy.kda_index = (kda12->kda12_enable ?
+		    0 : KDA_REMOVE_ALL);
+
+		explicit_bzero(kda12, sizeof(*kda12));
+		/* Kludge to pass kda_copy to kda in fallthrough. */
+		data = (void *)&kda_copy;
+	    }
+	    /* FALLTHROUGH */
 #endif
 	case DIOCSKERNELDUMP:
 	    {
@@ -556,15 +591,19 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 		uint8_t *encryptedkey;
 
 		kda = (struct diocskerneldump_arg *)data;
-		if (kda->kda_enable == 0) {
-			error = g_dev_setdumpdev(NULL, NULL, td);
+		if (kda->kda_index == KDA_REMOVE_ALL ||
+		    kda->kda_index == KDA_REMOVE_DEV ||
+		    kda->kda_index == KDA_REMOVE) {
+			error = dumper_remove(devtoname(dev), kda);
+			explicit_bzero(kda, sizeof(*kda));
 			break;
 		}
 
 		if (kda->kda_encryption != KERNELDUMP_ENC_NONE) {
-			if (kda->kda_encryptedkeysize <= 0 ||
+			if (kda->kda_encryptedkeysize == 0 ||
 			    kda->kda_encryptedkeysize >
 			    KERNELDUMP_ENCKEY_MAX_SIZE) {
+				explicit_bzero(kda, sizeof(*kda));
 				return (EINVAL);
 			}
 			encryptedkey = malloc(kda->kda_encryptedkeysize, M_TEMP,
@@ -576,12 +615,9 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 		}
 		if (error == 0) {
 			kda->kda_encryptedkey = encryptedkey;
-			error = g_dev_setdumpdev(dev, kda, td);
+			error = g_dev_setdumpdev(dev, kda);
 		}
-		if (encryptedkey != NULL) {
-			explicit_bzero(encryptedkey, kda->kda_encryptedkeysize);
-			free(encryptedkey, M_TEMP);
-		}
+		zfree(encryptedkey, M_TEMP);
 		explicit_bzero(kda, sizeof(*kda));
 		break;
 	    }
@@ -596,6 +632,19 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 			printf("%s: offset=%jd length=%jd\n", __func__, offset,
 			    length);
 			error = EINVAL;
+			break;
+		}
+		if ((pp->mediasize > 0) && (offset >= pp->mediasize)) {
+			/*
+			 * Catch out-of-bounds requests here. The problem is
+			 * that due to historical GEOM I/O implementation
+			 * peculatities, g_delete_data() would always return
+			 * success for requests starting just the next byte
+			 * after providers media boundary. Condition check on
+			 * non-zero media size, since that condition would
+			 * (most likely) cause ENXIO instead.
+			 */
+			error = EIO;
 			break;
 		}
 		while (length > 0) {
@@ -664,14 +713,14 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 
 		if (zone_args->zone_cmd == DISK_ZONE_REPORT_ZONES) {
 			rep = &zone_args->zone_params.report;
-#define	MAXENTRIES	(MAXPHYS / sizeof(struct disk_zone_rep_entry))
+#define	MAXENTRIES	(maxphys / sizeof(struct disk_zone_rep_entry))
 			if (rep->entries_allocated > MAXENTRIES)
 				rep->entries_allocated = MAXENTRIES;
 			alloc_size = rep->entries_allocated *
 			    sizeof(struct disk_zone_rep_entry);
 			if (alloc_size != 0)
 				new_entries = g_malloc(alloc_size,
-				    M_WAITOK| M_ZERO);
+				    M_WAITOK | M_ZERO);
 			old_entries = rep->entries;
 			rep->entries = new_entries;
 		}
@@ -834,8 +883,13 @@ g_dev_orphan(struct g_consumer *cp)
 	g_trace(G_T_TOPOLOGY, "g_dev_orphan(%p(%s))", cp, cp->geom->name);
 
 	/* Reset any dump-area set on this device */
-	if (dev->si_flags & SI_DUMPDEV)
-		(void)clear_dumper(curthread);
+	if (dev->si_flags & SI_DUMPDEV) {
+		struct diocskerneldump_arg kda;
+
+		bzero(&kda, sizeof(kda));
+		kda.kda_index = KDA_REMOVE_DEV;
+		(void)dumper_remove(devtoname(dev), &kda);
+	}
 
 	/* Destroy the struct cdev *so we get no more requests */
 	delist_dev(dev);

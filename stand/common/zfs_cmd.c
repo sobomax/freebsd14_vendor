@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2018 M. Warner Losh <imp@freebd.org>
+ * Copyright (c) 2018 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb98f7256268f56c719614a45f4081caa39f89f1 $");
+__FBSDID("$FreeBSD: cee5b89932105c89a019a1083e2456d0378fb80c $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -37,10 +37,7 @@ __FBSDID("$FreeBSD: cb98f7256268f56c719614a45f4081caa39f89f1 $");
 #include <sys/reboot.h>
 
 #include "bootstrap.h"
-
-#ifdef LOADER_ZFS_SUPPORT
 #include "libzfs.h"
-#endif
 
 COMMAND_SET(lszfs, "lszfs", "list child datasets of a zfs dataset",
 	    command_lszfs);

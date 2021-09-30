@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6269886e0ee8ab8627bfdc9021b1fc4a98e3f13c $");
+__FBSDID("$FreeBSD: 754898f9a17515139a0546eb216060015ce99905 $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -65,8 +65,11 @@ __FBSDID("$FreeBSD: 6269886e0ee8ab8627bfdc9021b1fc4a98e3f13c $");
 #endif
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <machine/bootinfo.h>
 #include <machine/clock.h>
@@ -113,7 +116,6 @@ mips_init(void)
 
 #ifdef FDT
 	if (fdt_get_mem_regions(mr, &mr_cnt, &val) == 0) {
-
 		physmem = btoc(val);
 
 		KASSERT((phys_avail[0] >= mr[0].mr_start) && \

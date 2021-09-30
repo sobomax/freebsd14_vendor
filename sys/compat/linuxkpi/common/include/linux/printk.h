@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 31802bdd2c993702a8e6a7d635794baff41e4a48 $
+ * $FreeBSD: e6510e9e9834ef8bda710ce544309cf0d7e879eb $
  */
 #ifndef _LINUX_PRINTK_H_
 #define	_LINUX_PRINTK_H_
@@ -68,7 +68,7 @@ print_hex_dump(const char *level, const char *prefix_str,
 			printf("[%p] ", buf);
 			break;
 		case DUMP_PREFIX_OFFSET:
-			printf("[%p] ", (const char *)((const char *)buf -
+			printf("[%#tx] ", ((const char *)buf -
 			    (const char *)buf_old));
 			break;
 		default:

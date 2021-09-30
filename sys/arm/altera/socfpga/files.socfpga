@@ -1,11 +1,10 @@
-# $FreeBSD: 06275c47f85b0b1127a8a956905a984870b6583d $
+# $FreeBSD: 56c1d16f1f4618af5584ae91ffc69c5dff1fa406 $
 
 arm/altera/socfpga/socfpga_common.c		standard
 arm/altera/socfpga/socfpga_machdep.c		standard
 arm/altera/socfpga/socfpga_manager.c		standard
 arm/altera/socfpga/socfpga_rstmgr.c		standard
 arm/altera/socfpga/socfpga_mp.c			optional smp
-arm/altera/socfpga/socfpga_gpio.c		optional gpio
 
 dev/mmc/host/dwmmc.c				optional dwmmc
 dev/mmc/host/dwmmc_altera.c			optional dwmmc

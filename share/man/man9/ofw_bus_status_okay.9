@@ -26,14 +26,14 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: d153b74f33cf0628aff459db4578de92da1626c8 $
+.\" $FreeBSD: c8861c6df1065acde8ca31743835f4b9de7d5c67 $
 .\"
 .Dd April 8, 2018
 .Dt ofw_bus_status_okay 9
 .Os
 .Sh NAME
-.Nm ofw_bus_get_status
-.Nm ofw_bus_status_okay
+.Nm ofw_bus_get_status ,
+.Nm ofw_bus_status_okay ,
 .Nm ofw_bus_node_status_okay
 .Nd check status of the device tree node
 .Sh SYNOPSIS
@@ -47,7 +47,6 @@
 .Ft int
 .Fn ofw_bus_node_status_okay "phandle_t node"
 .Sh DESCRIPTION
-.Pp
 The "status" property of the device tree node indicates whether the device is
 enabled or not.
 Multiple hardware versions might be built using the same base System-on-Chip

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5f42b83d220b95963ce353b9c4064208f383ecd $");
+__FBSDID("$FreeBSD: ba0dfb200ba0fa7e41280059b21835193dadf1d2 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -146,6 +146,12 @@ nehemiah_modevent(module_t mod, int type, void *unused)
 	return (error);
 }
 
-DEV_MODULE(nehemiah, nehemiah_modevent, NULL);
+static moduledata_t nehemiah_mod = {
+	"nehemiah",
+	nehemiah_modevent,
+	0
+};
+
+DECLARE_MODULE(nehemiah, nehemiah_mod, SI_SUB_RANDOM, SI_ORDER_FOURTH);
 MODULE_VERSION(nehemiah, 1);
-MODULE_DEPEND(nehemiah, random_device, 1, 1, 1);
+MODULE_DEPEND(nehemiah, random_harvestq, 1, 1, 1);

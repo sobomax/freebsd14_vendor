@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8e5d83874eee9804ee4149e1191b34cb55eab0ea $
+ * $FreeBSD: addacb463d2a4116c53cf764ae219e4b781bb6a0 $
  */
 
 #ifndef _DEV_XILINX_AXIDMA_H_
@@ -60,14 +60,10 @@
 #define	AXI_TAILDESC_MSB(n)	(0x14 + 0x30 * (n)) /* Tail Descriptor Pointer. Upper 32 bits of address. */
 #define	AXI_SG_CTL		0x2C /* Scatter/Gather User and Cache */
 
-#define	READ4(_sc, _reg)	\
-	bus_space_read_4(_sc->bst, _sc->bsh, _reg)
-#define	WRITE4(_sc, _reg, _val)	\
-	bus_space_write_4(_sc->bst, _sc->bsh, _reg, _val)
-#define	READ8(_sc, _reg)	\
-	bus_space_read_8(_sc->bst, _sc->bsh, _reg)
-#define	WRITE8(_sc, _reg, _val)	\
-	bus_space_write_8(_sc->bst, _sc->bsh, _reg, _val)
+#define	AXIDMA_NCHANNELS	2
+#define	AXIDMA_DESCS_NUM	512
+#define	AXIDMA_TX_CHAN		0
+#define	AXIDMA_RX_CHAN		1
 
 struct axidma_desc {
 	uint32_t next;
@@ -91,6 +87,10 @@ struct axidma_desc {
 	uint32_t app3;
 	uint32_t app4;
 	uint32_t reserved[3];
+};
+
+struct axidma_fdt_data {
+	int id;
 };
 
 #endif /* !_DEV_XILINX_AXIDMA_H_ */

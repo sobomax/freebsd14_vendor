@@ -32,9 +32,8 @@
  * SUCH DAMAGE.
  *
  *	@(#)xdr_subs.h	8.3 (Berkeley) 3/30/95
- * $FreeBSD: 829711e8ddd5332ba8d863c92885324a37396eb8 $
+ * $FreeBSD: a4f7ae0b7e401a1066325ae65d40b37909bb6c7b $
  */
-
 
 #ifndef _NFS_XDR_SUBS_H_
 #define _NFS_XDR_SUBS_H_

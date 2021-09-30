@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d0de98383392c04a93924f69c4ba9655b989257 $");
+__FBSDID("$FreeBSD: c723af9dfba0bd291c967fa9f70f511db3083b0e $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -50,8 +50,12 @@ __FBSDID("$FreeBSD: 3d0de98383392c04a93924f69c4ba9655b989257 $");
 #include <sys/socketvar.h>
 #include <sys/syscallsubr.h>
 #include <sys/uio.h>
+#include <sys/stat.h>
 #include <sys/syslog.h>
 #include <sys/un.h>
+#include <sys/unistd.h>
+
+#include <security/audit/audit.h>
 
 #include <net/if.h>
 #include <net/vnet.h>
@@ -84,7 +88,6 @@ static int linux_recvmsg_common(struct thread *, l_int, struct l_msghdr *,
 					l_uint, struct msghdr *);
 static int linux_set_socket_flags(int, int *);
 
-
 static int
 linux_to_bsd_sockopt_level(int level)
 {
@@ -109,12 +112,37 @@ linux_to_bsd_ip_sockopt(int opt)
 {
 
 	switch (opt) {
+	/* known and translated sockopts */
 	case LINUX_IP_TOS:
 		return (IP_TOS);
 	case LINUX_IP_TTL:
 		return (IP_TTL);
+	case LINUX_IP_HDRINCL:
+		return (IP_HDRINCL);
 	case LINUX_IP_OPTIONS:
 		return (IP_OPTIONS);
+	case LINUX_IP_RECVOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_RECVOPTS");
+		return (IP_RECVOPTS);
+	case LINUX_IP_RETOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_REETOPTS");
+		return (IP_RETOPTS);
+	case LINUX_IP_RECVTTL:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_RECVTTL");
+		return (IP_RECVTTL);
+	case LINUX_IP_RECVTOS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_RECVTOS");
+		return (IP_RECVTOS);
+	case LINUX_IP_FREEBIND:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_FREEBIND");
+		return (IP_BINDANY);
+	case LINUX_IP_IPSEC_POLICY:
+		/* we have this option, but not documented in ip(4) manpage */
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_IPSEC_POLICY");
+		return (IP_IPSEC_POLICY);
+	case LINUX_IP_MINTTL:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_MINTTL");
+		return (IP_MINTTL);
 	case LINUX_IP_MULTICAST_IF:
 		return (IP_MULTICAST_IF);
 	case LINUX_IP_MULTICAST_TTL:
@@ -125,10 +153,120 @@ linux_to_bsd_ip_sockopt(int opt)
 		return (IP_ADD_MEMBERSHIP);
 	case LINUX_IP_DROP_MEMBERSHIP:
 		return (IP_DROP_MEMBERSHIP);
-	case LINUX_IP_HDRINCL:
-		return (IP_HDRINCL);
+	case LINUX_IP_UNBLOCK_SOURCE:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_UNBLOCK_SOURCE");
+		return (IP_UNBLOCK_SOURCE);
+	case LINUX_IP_BLOCK_SOURCE:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_BLOCK_SOURCE");
+		return (IP_BLOCK_SOURCE);
+	case LINUX_IP_ADD_SOURCE_MEMBERSHIP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_ADD_SOURCE_MEMBERSHIP");
+		return (IP_ADD_SOURCE_MEMBERSHIP);
+	case LINUX_IP_DROP_SOURCE_MEMBERSHIP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_DROP_SOURCE_MEMBERSHIP");
+		return (IP_DROP_SOURCE_MEMBERSHIP);
+	case LINUX_MCAST_JOIN_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_MCAST_JOIN_GROUP");
+		return (MCAST_JOIN_GROUP);
+	case LINUX_MCAST_LEAVE_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_MCAST_LEAVE_GROUP");
+		return (MCAST_LEAVE_GROUP);
+	case LINUX_MCAST_JOIN_SOURCE_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_MCAST_JOIN_SOURCE_GROUP");
+		return (MCAST_JOIN_SOURCE_GROUP);
+	case LINUX_MCAST_LEAVE_SOURCE_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv4 socket option IP_MCAST_LEAVE_SOURCE_GROUP");
+		return (MCAST_LEAVE_SOURCE_GROUP);
+
+	/* known but not implemented sockopts */
+	case LINUX_IP_ROUTER_ALERT:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_ROUTER_ALERT (%d), you can not do user-space routing from linux programs",
+		    opt);
+		return (-2);
+	case LINUX_IP_PKTINFO:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_PKTINFO (%d), you can not get extended packet info for datagram sockets in linux programs",
+		    opt);
+		return (-2);
+	case LINUX_IP_PKTOPTIONS:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_PKTOPTIONS (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_MTU_DISCOVER:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_MTU_DISCOVER (%d), your linux program can not control path-MTU discovery",
+		    opt);
+		return (-2);
+	case LINUX_IP_RECVERR:
+		/* needed by steam */
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_RECVERR (%d), you can not get extended reliability info in linux programs",
+		    opt);
+		return (-2);
+	case LINUX_IP_MTU:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_MTU (%d), your linux program can not control the MTU on this socket",
+		    opt);
+		return (-2);
+	case LINUX_IP_XFRM_POLICY:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_XFRM_POLICY (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_PASSSEC:
+		/* needed by steam */
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_PASSSEC (%d), you can not get IPSEC related credential information associated with this socket in linux programs -- if you do not use IPSEC, you can ignore this",
+		    opt);
+		return (-2);
+	case LINUX_IP_TRANSPARENT:
+		/* IP_BINDANY or more? */
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_TRANSPARENT (%d), you can not enable transparent proxying in linux programs -- note, IP_FREEBIND is supported, no idea if the FreeBSD IP_BINDANY is equivalent to the Linux IP_TRANSPARENT or not, any info is welcome",
+		    opt);
+		return (-2);
+	case LINUX_IP_NODEFRAG:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_NODEFRAG (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_CHECKSUM:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_CHECKSUM (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_BIND_ADDRESS_NO_PORT:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_BIND_ADDRESS_NO_PORT (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_RECVFRAGSIZE:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_RECVFRAGSIZE (%d)",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_MSFILTER:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_MCAST_MSFILTER (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IP_MULTICAST_ALL:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_MULTICAST_ALL (%d), your linux program will not see all multicast groups joined by the entire system, only those the program joined itself on this socket",
+		    opt);
+		return (-2);
+	case LINUX_IP_UNICAST_IF:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv4 socket option IP_UNICAST_IF (%d)",
+		    opt);
+		return (-2);
+
+	/* unknown sockopts */
+	default:
+		return (-1);
 	}
-	return (-1);
 }
 
 static int
@@ -136,6 +274,28 @@ linux_to_bsd_ip6_sockopt(int opt)
 {
 
 	switch (opt) {
+	/* known and translated sockopts */
+	case LINUX_IPV6_2292PKTINFO:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292PKTINFO");
+		return (IPV6_2292PKTINFO);
+	case LINUX_IPV6_2292HOPOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292HOPOPTS");
+		return (IPV6_2292HOPOPTS);
+	case LINUX_IPV6_2292DSTOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292DSTOPTS");
+		return (IPV6_2292DSTOPTS);
+	case LINUX_IPV6_2292RTHDR:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292RTHDR");
+		return (IPV6_2292RTHDR);
+	case LINUX_IPV6_2292PKTOPTIONS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292PKTOPTIONS");
+		return (IPV6_2292PKTOPTIONS);
+	case LINUX_IPV6_CHECKSUM:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_CHECKSUM");
+		return (IPV6_CHECKSUM);
+	case LINUX_IPV6_2292HOPLIMIT:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_2292HOPLIMIT");
+		return (IPV6_2292HOPLIMIT);
 	case LINUX_IPV6_NEXTHOP:
 		return (IPV6_NEXTHOP);
 	case LINUX_IPV6_UNICAST_HOPS:
@@ -152,40 +312,194 @@ linux_to_bsd_ip6_sockopt(int opt)
 		return (IPV6_LEAVE_GROUP);
 	case LINUX_IPV6_V6ONLY:
 		return (IPV6_V6ONLY);
-	case LINUX_IPV6_DONTFRAG:
-		return (IPV6_DONTFRAG);
-#if 0
-	case LINUX_IPV6_CHECKSUM:
-		return (IPV6_CHECKSUM);
+	case LINUX_IPV6_IPSEC_POLICY:
+		/* we have this option, but not documented in ip6(4) manpage */
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_IPSEC_POLICY");
+		return (IPV6_IPSEC_POLICY);
+	case LINUX_MCAST_JOIN_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_JOIN_GROUP");
+		return (IPV6_JOIN_GROUP);
+	case LINUX_MCAST_LEAVE_GROUP:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_LEAVE_GROUP");
+		return (IPV6_LEAVE_GROUP);
 	case LINUX_IPV6_RECVPKTINFO:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVPKTINFO");
 		return (IPV6_RECVPKTINFO);
 	case LINUX_IPV6_PKTINFO:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_PKTINFO");
 		return (IPV6_PKTINFO);
 	case LINUX_IPV6_RECVHOPLIMIT:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVHOPLIMIT");
 		return (IPV6_RECVHOPLIMIT);
 	case LINUX_IPV6_HOPLIMIT:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_HOPLIMIT");
 		return (IPV6_HOPLIMIT);
 	case LINUX_IPV6_RECVHOPOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVHOPOPTS");
 		return (IPV6_RECVHOPOPTS);
 	case LINUX_IPV6_HOPOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_HOPOPTS");
 		return (IPV6_HOPOPTS);
 	case LINUX_IPV6_RTHDRDSTOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RTHDRDSTOPTS");
 		return (IPV6_RTHDRDSTOPTS);
 	case LINUX_IPV6_RECVRTHDR:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVRTHDR");
 		return (IPV6_RECVRTHDR);
 	case LINUX_IPV6_RTHDR:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RTHDR");
 		return (IPV6_RTHDR);
 	case LINUX_IPV6_RECVDSTOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVDSTOPTS");
 		return (IPV6_RECVDSTOPTS);
 	case LINUX_IPV6_DSTOPTS:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_DSTOPTS");
 		return (IPV6_DSTOPTS);
 	case LINUX_IPV6_RECVPATHMTU:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_RECVPATHMTU");
 		return (IPV6_RECVPATHMTU);
 	case LINUX_IPV6_PATHMTU:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_PATHMTU");
 		return (IPV6_PATHMTU);
-#endif
+	case LINUX_IPV6_DONTFRAG:
+		return (IPV6_DONTFRAG);
+	case LINUX_IPV6_AUTOFLOWLABEL:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_AUTOFLOWLABEL");
+		return (IPV6_AUTOFLOWLABEL);
+	case LINUX_IPV6_ORIGDSTADDR:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_ORIGDSTADDR");
+		return (IPV6_ORIGDSTADDR);
+	case LINUX_IPV6_FREEBIND:
+		LINUX_RATELIMIT_MSG_NOTTESTED("IPv6 socket option IPV6_FREEBIND");
+		return (IPV6_BINDANY);
+
+	/* known but not implemented sockopts */
+	case LINUX_IPV6_ADDRFORM:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_ADDRFORM (%d), you linux program can not convert the socket to IPv4",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_AUTHHDR:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_AUTHHDR (%d), your linux program can not get the authentication header info of IPv6 packets",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_FLOWINFO:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_FLOWINFO (%d), your linux program can not get the flowid of IPv6 packets",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_ROUTER_ALERT:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_ROUTER_ALERT (%d), you can not do user-space routing from linux programs",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_MTU_DISCOVER:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_MTU_DISCOVER (%d), your linux program can not control path-MTU discovery",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_MTU:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_MTU (%d), your linux program can not control the MTU on this socket",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_JOIN_ANYCAST:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_JOIN_ANYCAST (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_LEAVE_ANYCAST:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_LEAVE_ANYCAST (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_MULTICAST_ALL:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_MULTICAST_ALL (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_ROUTER_ALERT_ISOLATE:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_ROUTER_ALERT_ISOLATE (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_FLOWLABEL_MGR:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_FLOWLABEL_MGR (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_FLOWINFO_SEND:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_FLOWINFO_SEND (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_XFRM_POLICY:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_XFRM_POLICY (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_HDRINCL:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_HDRINCL (%d)",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_BLOCK_SOURCE:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option MCAST_BLOCK_SOURCE (%d), your linux program may see more multicast stuff than it wants",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_UNBLOCK_SOURCE:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option MCAST_UNBLOCK_SOURCE (%d), your linux program may not see all the multicast stuff it wants",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_JOIN_SOURCE_GROUP:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option MCAST_JOIN_SOURCE_GROUP (%d), your linux program is not able to join a multicast source group",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_LEAVE_SOURCE_GROUP:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option MCAST_LEAVE_SOURCE_GROUP (%d), your linux program is not able to leave a multicast source group -- but it was also not able to join one, so no issue",
+		    opt);
+		return (-2);
+	case LINUX_MCAST_MSFILTER:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option MCAST_MSFILTER (%d), your linux program can not manipulate the multicast filter, it may see more multicast data than it wants to see",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_ADDR_PREFERENCES:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_ADDR_PREFERENCES (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_MINHOPCOUNT:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_MINHOPCOUNT (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_TRANSPARENT:
+		/* IP_BINDANY or more? */
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_TRANSPARENT (%d), you can not enable transparent proxying in linux programs -- note, IP_FREEBIND is supported, no idea if the FreeBSD IP_BINDANY is equivalent to the Linux IP_TRANSPARENT or not, any info is welcome",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_UNICAST_IF:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_UNICAST_IF (%d)",
+		    opt);
+		return (-2);
+	case LINUX_IPV6_RECVFRAGSIZE:
+		LINUX_RATELIMIT_MSG_OPT1(
+		    "unsupported IPv6 socket option IPV6_RECVFRAGSIZE (%d)",
+		    opt);
+		return (-2);
+
+	/* unknown sockopts */
+	default:
+		return (-1);
 	}
-	return (-1);
 }
 
 static int
@@ -219,6 +533,8 @@ linux_to_bsd_so_sockopt(int opt)
 		return (SO_LINGER);
 	case LINUX_SO_REUSEPORT:
 		return (SO_REUSEPORT_LB);
+	case LINUX_SO_PASSCRED:
+		return (LOCAL_CREDS_PERSISTENT);
 	case LINUX_SO_PEERCRED:
 		return (LOCAL_PEERCRED);
 	case LINUX_SO_RCVLOWAT:
@@ -285,20 +601,24 @@ linux_to_bsd_msg_flags(int flags)
 		ret_flags |= MSG_WAITALL;
 	if (flags & LINUX_MSG_NOSIGNAL)
 		ret_flags |= MSG_NOSIGNAL;
-#if 0 /* not handled */
 	if (flags & LINUX_MSG_PROXY)
-		;
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_PROXY (%d) not handled",
+		    LINUX_MSG_PROXY);
 	if (flags & LINUX_MSG_FIN)
-		;
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_FIN (%d) not handled",
+		    LINUX_MSG_FIN);
 	if (flags & LINUX_MSG_SYN)
-		;
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_SYN (%d) not handled",
+		    LINUX_MSG_SYN);
 	if (flags & LINUX_MSG_CONFIRM)
-		;
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_CONFIRM (%d) not handled",
+		    LINUX_MSG_CONFIRM);
 	if (flags & LINUX_MSG_RST)
-		;
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_RST (%d) not handled",
+		    LINUX_MSG_RST);
 	if (flags & LINUX_MSG_ERRQUEUE)
-		;
-#endif
+		LINUX_RATELIMIT_MSG_OPT1("socket message flag MSG_ERRQUEUE (%d) not handled",
+		    LINUX_MSG_ERRQUEUE);
 	return (ret_flags);
 }
 
@@ -323,6 +643,8 @@ bsd_to_linux_cmsg_type(int cmsg_type)
 	case SCM_RIGHTS:
 		return (LINUX_SCM_RIGHTS);
 	case SCM_CREDS:
+		return (LINUX_SCM_CREDENTIALS);
+	case SCM_CREDS2:
 		return (LINUX_SCM_CREDENTIALS);
 	case SCM_TIMESTAMP:
 		return (LINUX_SCM_TIMESTAMP);
@@ -388,6 +710,22 @@ linux_set_socket_flags(int lflags, int *flags)
 	if (lflags & LINUX_SOCK_CLOEXEC)
 		*flags |= SOCK_CLOEXEC;
 	return (0);
+}
+
+static int
+linux_copyout_sockaddr(const struct sockaddr *sa, void *uaddr, size_t len)
+{
+	struct l_sockaddr *lsa;
+	int error;
+
+	error = bsd_to_linux_sockaddr(sa, &lsa, len);
+	if (error != 0)
+		return (error);
+	
+	error = copyout(lsa, uaddr, len);
+	free(lsa, M_SONAME);
+
+	return (error);
 }
 
 static int
@@ -481,6 +819,17 @@ goout:
 	return (error);
 }
 
+static const char *linux_netlink_names[] = {
+	[LINUX_NETLINK_ROUTE] = "ROUTE",
+	[LINUX_NETLINK_SOCK_DIAG] = "SOCK_DIAG",
+	[LINUX_NETLINK_NFLOG] = "NFLOG",
+	[LINUX_NETLINK_SELINUX] = "SELINUX",
+	[LINUX_NETLINK_AUDIT] = "AUDIT",
+	[LINUX_NETLINK_FIB_LOOKUP] = "FIB_LOOKUP",
+	[LINUX_NETLINK_NETFILTER] = "NETFILTER",
+	[LINUX_NETLINK_KOBJECT_UEVENT] = "KOBJECT_UEVENT",
+};
+
 int
 linux_socket(struct thread *td, struct linux_socket_args *args)
 {
@@ -494,8 +843,35 @@ linux_socket(struct thread *td, struct linux_socket_args *args)
 	if (retval_socket != 0)
 		return (retval_socket);
 	domain = linux_to_bsd_domain(args->domain);
-	if (domain == -1)
+	if (domain == -1) {
+		/* Mask off SOCK_NONBLOCK / CLOEXEC for error messages. */
+		type = args->type & LINUX_SOCK_TYPE_MASK;
+		if (args->domain == LINUX_AF_NETLINK &&
+		    args->protocol == LINUX_NETLINK_AUDIT) {
+			; /* Do nothing, quietly. */
+		} else if (args->domain == LINUX_AF_NETLINK) {
+			const char *nl_name;
+
+			if (args->protocol >= 0 &&
+			    args->protocol < nitems(linux_netlink_names))
+				nl_name = linux_netlink_names[args->protocol];
+			else
+				nl_name = NULL;
+			if (nl_name != NULL)
+				linux_msg(curthread,
+				    "unsupported socket(AF_NETLINK, %d, "
+				    "NETLINK_%s)", type, nl_name);
+			else
+				linux_msg(curthread,
+				    "unsupported socket(AF_NETLINK, %d, %d)",
+				    type, args->protocol);
+		} else {
+			linux_msg(curthread, "unsupported socket domain %d, "
+			    "type %d, protocol %d", args->domain, type,
+			    args->protocol);
+		}
 		return (EAFNOSUPPORT);
+	}
 
 	retval_socket = kern_socket(td, domain, type, args->protocol);
 	if (retval_socket)
@@ -606,7 +982,6 @@ static int
 linux_accept_common(struct thread *td, int s, l_uintptr_t addr,
     l_uintptr_t namelen, int flags)
 {
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	struct file *fp, *fp1;
 	int bflags, len;
@@ -662,10 +1037,7 @@ linux_accept_common(struct thread *td, int s, l_uintptr_t addr,
 	}
 
 	if (len != 0) {
-		error = bsd_to_linux_sockaddr(sa, &lsa, len);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(addr), len);
-		free(lsa, M_SONAME);
+		error = linux_copyout_sockaddr(sa, PTRIN(addr), len);
 
 		/*
 		 * XXX: We should also copyout the len, shouldn't we?
@@ -701,7 +1073,6 @@ linux_accept4(struct thread *td, struct linux_accept4_args *args)
 int
 linux_getsockname(struct thread *td, struct linux_getsockname_args *args)
 {
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	int len, error;
 
@@ -713,13 +1084,8 @@ linux_getsockname(struct thread *td, struct linux_getsockname_args *args)
 	if (error != 0)
 		return (error);
 
-	if (len != 0) {
-		error = bsd_to_linux_sockaddr(sa, &lsa, len);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(args->addr),
-			    len);
-		free(lsa, M_SONAME);
-	}
+	if (len != 0)
+		error = linux_copyout_sockaddr(sa, PTRIN(args->addr), len);
 
 	free(sa, M_SONAME);
 	if (error == 0)
@@ -730,7 +1096,6 @@ linux_getsockname(struct thread *td, struct linux_getsockname_args *args)
 int
 linux_getpeername(struct thread *td, struct linux_getpeername_args *args)
 {
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	int len, error;
 
@@ -744,13 +1109,8 @@ linux_getpeername(struct thread *td, struct linux_getpeername_args *args)
 	if (error != 0)
 		return (error);
 
-	if (len != 0) {
-		error = bsd_to_linux_sockaddr(sa, &lsa, len);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(args->addr),
-			    len);
-		free(lsa, M_SONAME);
-	}
+	if (len != 0)
+		error = linux_copyout_sockaddr(sa, PTRIN(args->addr), len);
 
 	free(sa, M_SONAME);
 	if (error == 0)
@@ -761,26 +1121,19 @@ linux_getpeername(struct thread *td, struct linux_getpeername_args *args)
 int
 linux_socketpair(struct thread *td, struct linux_socketpair_args *args)
 {
-	struct socketpair_args /* {
-		int domain;
-		int type;
-		int protocol;
-		int *rsv;
-	} */ bsd_args;
-	int error;
+	int domain, error, sv[2], type;
 
-	bsd_args.domain = linux_to_bsd_domain(args->domain);
-	if (bsd_args.domain != PF_LOCAL)
+	domain = linux_to_bsd_domain(args->domain);
+	if (domain != PF_LOCAL)
 		return (EAFNOSUPPORT);
-	bsd_args.type = args->type & LINUX_SOCK_TYPE_MASK;
-	if (bsd_args.type < 0 || bsd_args.type > LINUX_SOCK_MAX)
+	type = args->type & LINUX_SOCK_TYPE_MASK;
+	if (type < 0 || type > LINUX_SOCK_MAX)
 		return (EINVAL);
 	error = linux_set_socket_flags(args->type & ~LINUX_SOCK_TYPE_MASK,
-		&bsd_args.type);
+	    &type);
 	if (error != 0)
 		return (error);
-	if (args->protocol != 0 && args->protocol != PF_UNIX)
-
+	if (args->protocol != 0 && args->protocol != PF_UNIX) {
 		/*
 		 * Use of PF_UNIX as protocol argument is not right,
 		 * but Linux does it.
@@ -788,10 +1141,16 @@ linux_socketpair(struct thread *td, struct linux_socketpair_args *args)
 		 * to FreeBSD one.
 		 */
 		return (EPROTONOSUPPORT);
-	else
-		bsd_args.protocol = 0;
-	bsd_args.rsv = (int *)PTRIN(args->rsv);
-	return (sys_socketpair(td, &bsd_args));
+	}
+	error = kern_socketpair(td, domain, type, 0, sv);
+	if (error != 0)
+                return (error);
+        error = copyout(sv, PTRIN(args->rsv), 2 * sizeof(int));
+        if (error != 0) {
+                (void)kern_close(td, sv[0]);
+                (void)kern_close(td, sv[1]);
+        }
+	return (error);
 }
 
 #if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
@@ -819,7 +1178,7 @@ linux_send(struct thread *td, struct linux_send_args *args)
 	bsd_args.s = args->s;
 	bsd_args.buf = (caddr_t)PTRIN(args->msg);
 	bsd_args.len = args->len;
-	bsd_args.flags = args->flags;
+	bsd_args.flags = linux_to_bsd_msg_flags(args->flags);
 	bsd_args.to = NULL;
 	bsd_args.tolen = 0;
 	error = sys_sendto(td, &bsd_args);
@@ -893,7 +1252,6 @@ linux_sendto(struct thread *td, struct linux_sendto_args *args)
 int
 linux_recvfrom(struct thread *td, struct linux_recvfrom_args *args)
 {
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	struct msghdr msg;
 	struct iovec aiov;
@@ -925,13 +1283,8 @@ linux_recvfrom(struct thread *td, struct linux_recvfrom_args *args)
 	if (error != 0)
 		goto out;
 
-	if (PTRIN(args->from) != NULL) {
-		error = bsd_to_linux_sockaddr(sa, &lsa, msg.msg_namelen);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(args->from),
-			    msg.msg_namelen);
-		free(lsa, M_SONAME);
-	}
+	if (PTRIN(args->from) != NULL)
+		error = linux_copyout_sockaddr(sa, PTRIN(args->from), msg.msg_namelen);
 
 	if (error == 0 && PTRIN(args->fromlen) != NULL)
 		error = copyout(&msg.msg_namelen, PTRIN(args->fromlen),
@@ -1016,7 +1369,6 @@ linux_sendmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 	}
 
 	if (linux_msghdr.msg_controllen >= sizeof(struct l_cmsghdr)) {
-
 		error = ENOBUFS;
 		control = m_get(M_WAITOK, MT_CONTROL);
 		MCLGET(control, M_WAITOK);
@@ -1161,6 +1513,7 @@ linux_recvmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 {
 	struct cmsghdr *cm;
 	struct cmsgcred *cmcred;
+	struct sockcred2 *scred;
 	struct l_cmsghdr *linux_cmsg = NULL;
 	struct l_ucred linux_ucred;
 	socklen_t datalen, maxlen, outlen;
@@ -1169,7 +1522,6 @@ linux_recvmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 	struct mbuf *control = NULL;
 	struct mbuf **controlp;
 	struct timeval *ftmvl;
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	l_timeval ltmvl;
 	caddr_t outbuf;
@@ -1215,11 +1567,8 @@ linux_recvmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 	 */
 	if (msg->msg_name != NULL && msg->msg_namelen > 0) {
 		msg->msg_name = PTRIN(linux_msghdr.msg_name);
-		error = bsd_to_linux_sockaddr(sa, &lsa, msg->msg_namelen);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(msg->msg_name),
-			    msg->msg_namelen);
-		free(lsa, M_SONAME);
+		error = linux_copyout_sockaddr(sa,
+		    PTRIN(msg->msg_name), msg->msg_namelen);
 		if (error != 0)
 			goto bad;
 	}
@@ -1284,6 +1633,16 @@ linux_recvmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 				linux_ucred.pid = cmcred->cmcred_pid;
 				linux_ucred.uid = cmcred->cmcred_uid;
 				linux_ucred.gid = cmcred->cmcred_gid;
+				data = &linux_ucred;
+				datalen = sizeof(linux_ucred);
+				break;
+
+			case SCM_CREDS2:
+				scred = data;
+				bzero(&linux_ucred, sizeof(linux_ucred));
+				linux_ucred.pid = scred->sc_pid;
+				linux_ucred.uid = scred->sc_uid;
+				linux_ucred.gid = scred->sc_gid;
 				data = &linux_ucred;
 				datalen = sizeof(linux_ucred);
 				break;
@@ -1437,6 +1796,9 @@ linux_setsockopt(struct thread *td, struct linux_setsockopt_args *args)
 	case SOL_SOCKET:
 		name = linux_to_bsd_so_sockopt(args->optname);
 		switch (name) {
+		case LOCAL_CREDS_PERSISTENT:
+			level = SOL_LOCAL;
+			break;
 		case SO_RCVTIMEO:
 			/* FALLTHROUGH */
 		case SO_SNDTIMEO:
@@ -1474,9 +1836,13 @@ linux_setsockopt(struct thread *td, struct linux_setsockopt_args *args)
 		name = -1;
 		break;
 	}
-	if (name == -1)
+	if (name < 0) {
+		if (name == -1)
+			linux_msg(curthread,
+			    "unsupported setsockopt level %d optname %d",
+			    args->level, args->optname);
 		return (ENOPROTOOPT);
-
+	}
 
 	if (name == IPV6_NEXTHOP) {
 		len = args->optlen;
@@ -1501,7 +1867,6 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 	l_timeval linux_tv;
 	struct timeval tv;
 	socklen_t tv_len, xulen, len;
-	struct l_sockaddr *lsa;
 	struct sockaddr *sa;
 	struct xucred xu;
 	struct l_ucred lxu;
@@ -1512,6 +1877,9 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 	case SOL_SOCKET:
 		name = linux_to_bsd_so_sockopt(args->optname);
 		switch (name) {
+		case LOCAL_CREDS_PERSISTENT:
+			level = SOL_LOCAL;
+			break;
 		case SO_RCVTIMEO:
 			/* FALLTHROUGH */
 		case SO_SNDTIMEO:
@@ -1538,10 +1906,7 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 			    name, &xu, UIO_SYSSPACE, &xulen);
 			if (error != 0)
 				return (error);
-			/*
-			 * XXX Use 0 for pid as the FreeBSD does not cache peer pid.
-			 */
-			lxu.pid = 0;
+			lxu.pid = xu.cr_pid;
 			lxu.uid = xu.cr_uid;
 			lxu.gid = xu.cr_gid;
 			return (copyout(&lxu, PTRIN(args->optval), sizeof(lxu)));
@@ -1552,7 +1917,7 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 			    name, &newval, UIO_SYSSPACE, &len);
 			if (error != 0)
 				return (error);
-			newval = -SV_ABI_ERRNO(td->td_proc, newval);
+			newval = -bsd_to_linux_errno(newval);
 			return (copyout(&newval, PTRIN(args->optval), len));
 			/* NOTREACHED */
 		default:
@@ -1572,8 +1937,13 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 		name = -1;
 		break;
 	}
-	if (name == -1)
+	if (name < 0) {
+		if (name == -1)
+			linux_msg(curthread,
+			    "unsupported getsockopt level %d optname %d",
+			    args->level, args->optname);
 		return (EINVAL);
+	}
 
 	if (name == IPV6_NEXTHOP) {
 		error = copyin(PTRIN(args->optlen), &len, sizeof(len));
@@ -1586,10 +1956,7 @@ linux_getsockopt(struct thread *td, struct linux_getsockopt_args *args)
 		if (error != 0)
 			goto out;
 
-		error = bsd_to_linux_sockaddr(sa, &lsa, len);
-		if (error == 0)
-			error = copyout(lsa, PTRIN(args->optval), len);
-		free(lsa, M_SONAME);
+		error = linux_copyout_sockaddr(sa, PTRIN(args->optval), len);
 		if (error == 0)
 			error = copyout(&len, PTRIN(args->optlen),
 			    sizeof(len));
@@ -1611,7 +1978,134 @@ out:
 	return (error);
 }
 
-#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
+static int
+linux_sendfile_common(struct thread *td, l_int out, l_int in,
+    l_loff_t *offset, l_size_t count)
+{
+	off_t bytes_read;
+	int error;
+	l_loff_t current_offset;
+	struct file *fp;
+
+	AUDIT_ARG_FD(in);
+	error = fget_read(td, in, &cap_pread_rights, &fp);
+	if (error != 0)
+		return (error);
+
+	if (offset != NULL) {
+		current_offset = *offset;
+	} else {
+		error = (fp->f_ops->fo_flags & DFLAG_SEEKABLE) != 0 ?
+		    fo_seek(fp, 0, SEEK_CUR, td) : ESPIPE;
+		if (error != 0)
+			goto drop;
+		current_offset = td->td_uretoff.tdu_off;
+	}
+
+	bytes_read = 0;
+
+	/* Linux cannot have 0 count. */
+	if (count <= 0 || current_offset < 0) {
+		error = EINVAL;
+		goto drop;
+	}
+
+	error = fo_sendfile(fp, out, NULL, NULL, current_offset, count,
+	    &bytes_read, 0, td);
+	if (error != 0)
+		goto drop;
+	current_offset += bytes_read;
+
+	if (offset != NULL) {
+		*offset = current_offset;
+	} else {
+		error = fo_seek(fp, current_offset, SEEK_SET, td);
+		if (error != 0)
+			goto drop;
+	}
+
+	td->td_retval[0] = (ssize_t)bytes_read;
+drop:
+	fdrop(fp, td);
+	return (error);
+}
+
+int
+linux_sendfile(struct thread *td, struct linux_sendfile_args *arg)
+{
+	/*
+	 * Differences between FreeBSD and Linux sendfile:
+	 * - Linux doesn't send anything when count is 0 (FreeBSD uses 0 to
+	 *   mean send the whole file.)  In linux_sendfile given fds are still
+	 *   checked for validity when the count is 0.
+	 * - Linux can send to any fd whereas FreeBSD only supports sockets.
+	 *   The same restriction follows for linux_sendfile.
+	 * - Linux doesn't have an equivalent for FreeBSD's flags and sf_hdtr.
+	 * - Linux takes an offset pointer and updates it to the read location.
+	 *   FreeBSD takes in an offset and a 'bytes read' parameter which is
+	 *   only filled if it isn't NULL.  We use this parameter to update the
+	 *   offset pointer if it exists.
+	 * - Linux sendfile returns bytes read on success while FreeBSD
+	 *   returns 0.  We use the 'bytes read' parameter to get this value.
+	 */
+
+	l_loff_t offset64;
+	l_long offset;
+	int ret;
+	int error;
+
+	if (arg->offset != NULL) {
+		error = copyin(arg->offset, &offset, sizeof(offset));
+		if (error != 0)
+			return (error);
+		offset64 = (l_loff_t)offset;
+	}
+
+	ret = linux_sendfile_common(td, arg->out, arg->in,
+	    arg->offset != NULL ? &offset64 : NULL, arg->count);
+
+	if (arg->offset != NULL) {
+#if defined(__i386__) || defined(__arm__) || \
+    (defined(__amd64__) && defined(COMPAT_LINUX32))
+		if (offset64 > INT32_MAX)
+			return (EOVERFLOW);
+#endif
+		offset = (l_long)offset64;
+		error = copyout(&offset, arg->offset, sizeof(offset));
+		if (error != 0)
+			return (error);
+	}
+
+	return (ret);
+}
+
+#if defined(__i386__) || defined(__arm__) || \
+    (defined(__amd64__) && defined(COMPAT_LINUX32))
+
+int
+linux_sendfile64(struct thread *td, struct linux_sendfile64_args *arg)
+{
+	l_loff_t offset;
+	int ret;
+	int error;
+
+	if (arg->offset != NULL) {
+		error = copyin(arg->offset, &offset, sizeof(offset));
+		if (error != 0)
+			return (error);
+	}
+
+	ret = linux_sendfile_common(td, arg->out, arg->in,
+		arg->offset != NULL ? &offset : NULL, arg->count);
+
+	if (arg->offset != NULL) {
+		error = copyout(&offset, arg->offset, sizeof(offset));
+		if (error != 0)
+			return (error);
+	}
+
+	return (ret);
+}
 
 /* Argument list sizes for linux_socketcall */
 static const unsigned char lxs_args_cnt[] = {
@@ -1625,7 +2119,7 @@ static const unsigned char lxs_args_cnt[] = {
 	5 /* setsockopt */,	5 /* getsockopt */,
 	3 /* sendmsg */,	3 /* recvmsg */,
 	4 /* accept4 */,	5 /* recvmmsg */,
-	4 /* sendmmsg */
+	4 /* sendmmsg */,	4 /* sendfile */
 };
 #define	LINUX_ARGS_CNT		(nitems(lxs_args_cnt) - 1)
 #define	LINUX_ARG_SIZE(x)	(lxs_args_cnt[x] * sizeof(l_ulong))
@@ -1694,9 +2188,11 @@ linux_socketcall(struct thread *td, struct linux_socketcall_args *args)
 		return (linux_recvmmsg(td, arg));
 	case LINUX_SENDMMSG:
 		return (linux_sendmmsg(td, arg));
+	case LINUX_SENDFILE:
+		return (linux_sendfile(td, arg));
 	}
 
 	linux_msg(td, "socket type %d not implemented", args->what);
 	return (ENOSYS);
 }
-#endif /* __i386__ || (__amd64__ && COMPAT_LINUX32) */
+#endif /* __i386__ || __arm__ || (__amd64__ && COMPAT_LINUX32) */

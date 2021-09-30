@@ -35,9 +35,9 @@
 .\"     @(#)vnconfig.8	8.1 (Berkeley) 6/5/93
 .\" from: src/usr.sbin/vnconfig/vnconfig.8,v 1.19 2000/12/27 15:30:29
 .\"
-.\" $FreeBSD: cf05d8f43efbb01a19dc1251177d55e24c168265 $
+.\" $FreeBSD: 6d9da815972371d66ac8b49c226abcb09638c645 $
 .\"
-.Dd August 28, 2017
+.Dd November 6, 2020
 .Dt MDCONFIG 8
 .Os
 .Sh NAME
@@ -127,7 +127,7 @@ Filename to use for the vnode type memory disk.
 The
 .Fl a
 and
-.Fl t Ar vnode
+.Fl t Cm vnode
 options are implied if not specified.
 .It Fl l
 List configured devices.
@@ -170,7 +170,7 @@ When used without the
 option, the
 .Fl a
 and
-.Fl t Ar swap
+.Fl t Cm swap
 options are implied if not specified.
 .It Fl S Ar sectorsize
 Sectorsize to use for the memory disk, in bytes.
@@ -206,6 +206,32 @@ backed devices: avoid
 .Dv IO_SYNC
 for increased performance but
 at the risk of deadlocking the entire kernel.
+.It Oo Cm no Oc Ns Cm cache
+For
+.Cm vnode
+backed devices: enable/disable caching of data in system caches.
+The default is to not cache.
+.Pp
+Accesses via the device are converted to accesses via the vnode.
+The caching policy for the vnode is used initially.
+This is normally to cache.
+This caching policy is retained if the
+.Cm cache
+option is used.
+Otherwise, caching is limited
+by releasing data from caches soon after each access.
+The release has the same semantics as the
+.Dv POSIX_FADV_DONTNEED
+feature of
+.Xr posix_fadvise 2 .
+The result is that with normal (non-zfs) caching,
+buffers are released from the buffer cache soon after they are constructed,
+but their data is kept in the page cache at lower priority.
+.Pp
+The
+.Cm cache
+option tends to waste memory by giving unwanted double caching,
+but it saves time if there is memory to spare.
 .It Oo Cm no Oc Ns Cm reserve
 Allocate and reserve all needed storage from the start, rather than as needed.
 .It Oo Cm no Oc Ns Cm cluster
@@ -235,7 +261,7 @@ checksums or cryptographic signatures.
 Request a specific unit number or device name for the
 .Xr md 4
 device instead of automatic allocation.
-If a device name is specified, it must be start with
+If a device name is specified, it must start with
 .Dq md
 followed by the unit number.
 .El
@@ -246,7 +272,7 @@ The last form,
 is provided for convenience as an abbreviation of
 .Nm
 .Fl a
-.Fl t Ar vnode
+.Fl t Cm vnode
 .Fl f Ar file .
 .Sh EXAMPLES
 Create a disk with
@@ -324,11 +350,8 @@ The
 .Nm
 utility first appeared in
 .Fx 5.0
-as a cleaner replacement for the
-.Xr vn 4
-and
-.Xr vnconfig 8
-combo.
+as a cleaner replacement for the vn kernel module
+and the vnconfig utility combo.
 .Sh AUTHORS
 The
 .Nm

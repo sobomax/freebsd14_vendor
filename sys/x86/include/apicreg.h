@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d0173e2ecaf8d4b129f59ebbbe19ac9c7cfbbf94 $
+ * $FreeBSD: fb8b3b92e65860bb901265004738d5a8a449097f $
  */
 
 #ifndef _X86_APICREG_H_
@@ -110,11 +110,9 @@
  * 3F0             Reserved
  */
 
-
 /******************************************************************************
  * global defines, etc.
  */
-
 
 /******************************************************************************
  * LOCAL APIC structure
@@ -286,7 +284,6 @@ typedef struct IOAPIC ioapic_t;
 
 #endif  /* !LOCORE */
 
-
 /******************************************************************************
  * various code 'logical' values
  */
@@ -411,7 +408,6 @@ typedef struct IOAPIC ioapic_t;
 #define APIC_LVT_RIRR		0x00004000
 #define APIC_LVT_TM		0x00008000
 #define APIC_LVT_M		0x00010000
-
 
 /* fields in LVT Timer */
 #define APIC_LVTT_VECTOR	0x000000ff

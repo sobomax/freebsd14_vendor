@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5fe4a97c214666c5b264889566afc1cac3bd38db $
+ * $FreeBSD: 98c29218fb891e1b41d6cb97f28270c10248c7d0 $
  */
 
 #define	RIPCMDS
@@ -38,20 +38,9 @@
 #include <sys/signal.h>
 #include <fcntl.h>
 
-#ifdef __NetBSD__
-__RCSID("$NetBSD$");
-#elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 5fe4a97c214666c5b264889566afc1cac3bd38db $");
-#else
-__RCSID("$Revision: 2.27 $");
-#ident "$Revision: 2.27 $"
-#endif
+__RCSID("$FreeBSD: 98c29218fb891e1b41d6cb97f28270c10248c7d0 $");
 
 
-#ifdef sgi
-/* use *stat64 for files on large file systems */
-#define stat	stat64
-#endif
 
 int	tracelevel, new_tracelevel;
 FILE	*ftrace;			/* output trace file */
@@ -150,12 +139,8 @@ ts(time_t secs) {
 	static char s[20];
 
 	secs += epoch.tv_sec;
-#ifdef sgi
-	(void)cftime(s, "%T", &secs);
-#else
 	memcpy(s, ctime(&secs)+11, 8);
 	s[8] = '\0';
-#endif
 	return s;
 }
 

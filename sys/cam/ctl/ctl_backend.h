@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_backend.h#2 $
- * $FreeBSD: 4d75a20f3559fd8888e345734b32f573136d70ef $
+ * $FreeBSD: be8ab4d1706be032adcc0e84fda107bb4e4db4f0 $
  */
 /*
  * CTL backend driver definitions
@@ -78,7 +78,6 @@ typedef enum {
 	DECLARE_MODULE(name, name ## _mod, SI_SUB_CONFIGURE, SI_ORDER_FOURTH); \
 	MODULE_DEPEND(name, ctl, 1, 1, 1); \
 	MODULE_DEPEND(name, cam, 1, 1, 1)
-
 
 struct ctl_be_lun;
 typedef void (*be_callback_t)(struct ctl_be_lun *be_lun);

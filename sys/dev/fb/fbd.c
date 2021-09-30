@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 02b8eb3ada4473e74f82c86e02dbaf64e4f4b6f9 $
+ * $FreeBSD: 36439af9256c28b2a8706fc2fe6e03b8bb5badee $
  */
 
 /* Generic framebuffer */
@@ -36,12 +36,13 @@
 /* TODO done normal /dev/fb methods */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02b8eb3ada4473e74f82c86e02dbaf64e4f4b6f9 $");
+__FBSDID("$FreeBSD: 36439af9256c28b2a8706fc2fe6e03b8bb5badee $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
@@ -175,7 +176,7 @@ fb_mmap(struct cdev *dev, vm_ooffset_t offset, vm_paddr_t *paddr, int nprot,
 	if (info->fb_flags & FB_FLAG_NOMMAP)
 		return (ENODEV);
 
-	if (offset >= 0 && offset < info->fb_size) {
+	if (offset < info->fb_size) {
 		if (info->fb_pbase == 0)
 			*paddr = vtophys((uint8_t *)info->fb_vbase + offset);
 		else

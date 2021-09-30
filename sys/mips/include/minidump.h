@@ -25,14 +25,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a4ceb02be6eaaffbfa46b86d43fd31d8d8ad8956 $
+ * $FreeBSD: f9e7432b54d84284f8139763ee4593ab86b66573 $
  */
 
 #ifndef	_MACHINE_MINIDUMP_H_
 #define	_MACHINE_MINIDUMP_H_ 1
 
 #define	MINIDUMP_MAGIC		"minidump FreeBSD/mips"
-#define	MINIDUMP_VERSION	1
+#define	MINIDUMP_VERSION	2
 
 struct minidumphdr {
 	char magic[24];
@@ -43,6 +43,7 @@ struct minidumphdr {
 	uint64_t kernbase;
 	uint64_t dmapbase;
 	uint64_t dmapend;
+	uint32_t dumpavailsize;
 };
 
 #endif /* _MACHINE_MINIDUMP_H_ */

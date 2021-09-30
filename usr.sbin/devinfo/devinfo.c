@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be18c57dc5e768fc0533fff1566d77f645b6bb07 $");
+__FBSDID("$FreeBSD: ee5ac0a1f7eb865aaeb4334bc90feaf717a24756 $");
 
 #include <sys/types.h>
 #include <err.h>
@@ -235,7 +235,7 @@ usage(void)
 	fprintf(stderr, "%s\n%s\n%s\n",
 	    "usage: devinfo [-rv]",
 	    "       devinfo -u",
-	    "       devifno -p dev [-v]");
+	    "       devinfo -p dev [-v]");
 	exit(1);
 }
 

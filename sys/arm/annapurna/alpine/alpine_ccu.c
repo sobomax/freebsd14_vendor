@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19dc57a6dc53f47943ee6b1e14721b2ab561d758 $");
+__FBSDID("$FreeBSD: 1e99cb5bf67e1b016a4494677237a9652f8a3ad1 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -62,7 +62,6 @@ static device_method_t al_ccu_methods[] = {
 	DEVMETHOD(device_probe,		al_ccu_probe),
 	DEVMETHOD(device_attach,	al_ccu_attach),
 	DEVMETHOD(device_detach,	al_ccu_detach),
-
 	{ 0, 0 }
 };
 

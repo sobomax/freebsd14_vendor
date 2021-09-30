@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f890ebf92913b762e5c345ac26b315dafea01e98 $");
+__FBSDID("$FreeBSD: ea7c8cc3a293db1dd2ddf5d838ede80005e2fe12 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -152,7 +152,6 @@ imx6_mp_start_ap(platform_t plat)
 
 		val |= ((1 << (SRC_CONTROL_C1ENA_SHIFT - 1 + i )) |
 		    ( 1 << (SRC_CONTROL_C1RST_SHIFT - 1 + i)));
-
 	}
 	bus_space_write_4(fdtbus_bs_tag, src, SRC_CONTROL_REG, val);
 

@@ -33,7 +33,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: e427bbf4d43f7870d9241cb8ff7683e0b9b177bd $
+ * $FreeBSD: 6d00d4a6ebd816536248d770e68eda0350de50a1 $
  */
 
 #ifndef __MACHINE_XEN_HYPERCALL_H__
@@ -425,6 +425,13 @@ HYPERVISOR_kexec_op(
 	unsigned long op, void *args)
 {
 	return _hypercall2(int, kexec_op, op, args);
+}
+
+static inline int __must_check
+HYPERVISOR_dm_op(
+	domid_t domid, unsigned int nr_bufs, const void *bufs)
+{
+	return _hypercall3(int, dm_op, domid, nr_bufs, bufs);
 }
 
 #undef __must_check

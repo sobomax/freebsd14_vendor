@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38c3b5a6ffe6c5ab5591048d533e35ca1ddd4235 $");
+__FBSDID("$FreeBSD: 4b8bd55892833ce7823ec333fcf1e1ecf0562f4d $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1432,7 +1432,6 @@ xn_get_responses(struct netfront_rxq *rxq,
 #endif
 		if (__predict_false(rx->status < 0 ||
 			rx->offset + rx->status > PAGE_SIZE)) {
-
 			xn_move_rx_slot(rxq, m, ref);
 			if (m0 == m)
 				m0 = NULL;

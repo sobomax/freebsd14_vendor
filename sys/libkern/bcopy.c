@@ -41,7 +41,7 @@ static char *rcsid = "$NetBSD: bcopy.c,v 1.2 1997/04/16 22:09:41 thorpej Exp $";
 #endif
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1469cb1b707e47bd9f746dba6656de0f64202ff3 $");
+__FBSDID("$FreeBSD: 8e34ad0daa5348652c59af58c87c1d6ca4350abc $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -154,4 +154,3 @@ void
 
 	memcpy(dst0, src0, length);
 }
-

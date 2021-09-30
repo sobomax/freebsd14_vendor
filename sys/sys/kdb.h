@@ -25,12 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a8c2db9eeeb6636b32e996fd225efd99bb5d1010 $
+ * $FreeBSD: 5ace60740bb6aea02d1534960d298e7ab5e1b731 $
  */
 
 #ifndef _SYS_KDB_H_
 #define	_SYS_KDB_H_
 
+#include <sys/linker_set.h>
 #include <machine/setjmp.h>
 
 struct pcb;
@@ -60,6 +61,8 @@ struct kdb_dbbe {
 		.dbbe_trap = trap			\
 	};						\
 	DATA_SET(kdb_dbbe_set, name##_dbbe)
+
+SET_DECLARE(kdb_dbbe_set, struct kdb_dbbe);
 
 extern u_char kdb_active;		/* Non-zero while in debugger. */
 extern int debugger_on_panic;		/* enter the debugger on panic. */

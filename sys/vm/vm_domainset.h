@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b70a027fb0cde56405d5441bae57cda139915899 $
+ * $FreeBSD: 6dceb6fe59c80104bf360d5bbc965bb42506c0e1 $
  */
 #ifndef __VM_DOMAINSET_H__
 #define __VM_DOMAINSET_H__
@@ -50,6 +50,6 @@ void	vm_domainset_iter_policy_init(struct vm_domainset_iter *,
 void	vm_domainset_iter_policy_ref_init(struct vm_domainset_iter *,
 	    struct domainset_ref *, int *, int *);
 
-void	vm_wait_doms(const domainset_t *);
+int	vm_wait_doms(const domainset_t *, int mflags);
 
 #endif  /* __VM_DOMAINSET_H__ */

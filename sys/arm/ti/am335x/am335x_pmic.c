@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50c359a8dd2e317f0ad34652bbbd652b4271b723 $");
+__FBSDID("$FreeBSD: 0b0782ab72a6aba56a73ef02cbf3926fa76c201b $");
 /*
 * TI TPS65217 PMIC companion chip for AM335x SoC sitting on I2C bus
 */
@@ -113,7 +113,7 @@ am335x_pmic_intr(void *arg)
 	if (int_reg.aci) {
 		snprintf(notify_buf, sizeof(notify_buf), "notify=0x%02x",
 		    status_reg.acpwr);
-		devctl_notify_f("ACPI", "ACAD", "power", notify_buf, M_NOWAIT);
+		devctl_notify("ACPI", "ACAD", "power", notify_buf);
 	}
 }
 

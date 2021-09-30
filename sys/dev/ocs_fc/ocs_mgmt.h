@@ -28,14 +28,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a9717674cefaa602f193041b4a9b0e99abfc3db3 $
+ * $FreeBSD: 39f1c6b2366e37b099217ee84ace51f44dde2c2b $
  */
 
 /**
  * @file
  * Declarations for the common functions used by ocs_mgmt.
  */
-
 
 #if !defined(__OCS_MGMT_H__)
 #define __OCS_MGMT_H__
@@ -58,7 +57,6 @@ typedef struct ocs_mgmt_fw_write_result {
 	uint32_t actual_xfer;
 	uint32_t change_status;
 } ocs_mgmt_fw_write_result_t;
-
 
 /*
  * This structure is used in constructing a table of internal handler functions.
@@ -91,7 +89,6 @@ typedef struct ocs_mgmt_functions_s {
 	ocs_mgmt_set_handler		set_handler;
 	ocs_mgmt_exec_handler		exec_handler;
 } ocs_mgmt_functions_t;
-
 
 /* Helper functions */
 extern void ocs_mgmt_start_section(ocs_textbuf_t *textbuf, const char *name, int index);

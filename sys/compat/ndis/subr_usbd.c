@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c877ea533a54fbd5bbef802dd7c4896c4c3e934 $");
+__FBSDID("$FreeBSD: 114a2640ea7e49bcb038eb77bdffafbb96069bae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1455,7 +1455,6 @@ image_patch_table usbd_functbl[] = {
 	{ NULL, (FUNC)dummy, NULL, 0, WINDRV_WRAP_STDCALL },
 
 	/* End of list. */
-
 	{ NULL, NULL, NULL }
 };
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1708487acba974c683fd4781e82c2b90c8b7d0e $");
+__FBSDID("$FreeBSD: 0f13888742926f8a23e2bb103979526b53824874 $");
 
 /*
  * HDMI core module
@@ -33,6 +33,7 @@ __FBSDID("$FreeBSD: e1708487acba974c683fd4781e82c2b90c8b7d0e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/malloc.h>

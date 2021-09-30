@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a294661943b8a07fade388dc11b0edae5d088e73 $");
+__FBSDID("$FreeBSD: 59eeb176f3a07c506dd9d187f31835460e65b89d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -316,7 +316,6 @@ gt_pci_attach(device_t dev)
 	sc->sc_ioh_icu1 = MIPS_PHYS_TO_KSEG1(sc->sc_io + IO_ICU1);
 	sc->sc_ioh_icu2 = MIPS_PHYS_TO_KSEG1(sc->sc_io + IO_ICU2);
 #endif	
-
 
 	/* All interrupts default to "masked off". */
 	sc->sc_imask = 0xffff;
@@ -680,7 +679,7 @@ gt_pci_activate_resource(device_t bus, device_t child, int type, int rid,
 {
 	bus_space_handle_t p;
 	int error;
-	
+
 	if ((type == SYS_RES_MEMORY) || (type == SYS_RES_IOPORT)) {
 		error = bus_space_map(rman_get_bustag(r),
 		    rman_get_bushandle(r), rman_get_size(r), 0, &p);

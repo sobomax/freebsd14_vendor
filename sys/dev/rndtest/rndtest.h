@@ -1,4 +1,4 @@
-/*	$FreeBSD: 786f0a442a982195b1cd9ad48aa433459d44b828 $	*/
+/*	$FreeBSD: 4858f415e2777c6791c08ad738cc5459d29ace45 $	*/
 /*	$OpenBSD$	*/
 
 /*-
@@ -33,7 +33,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 
 /* Some of the tests depend on these values */
 #define	RNDTEST_NBYTES	2500

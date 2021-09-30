@@ -1,4 +1,4 @@
-# $FreeBSD: 76bf879f609604564837e71076ec8e6f326a8945 $
+# $FreeBSD: c3ba3a255c5594ddb6ae7e190b7e3ed7dcf035f8 $
 
 _spath=	${SRCTOP}/contrib/ofed/infiniband-diags
 .PATH: ${_spath}/src ${_spath}/man
@@ -10,3 +10,4 @@ CFLAGS+= -DHAVE_CONFIG_H=1
 CFLAGS+= -I${_spath} -I${_spath}/src
 LIBADD+= osmcomp ibmad ibumad
 
+WARNS?=	0

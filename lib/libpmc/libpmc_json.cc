@@ -24,24 +24,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6581fa6985d6b012aa9fafcd33ca32cee3566545 $
+ * $FreeBSD: 0a4a8d68a54045e2589b4afae75fc3709690db12 $
  *
  */
 
 #include <sys/types.h>
-#include <sys/errno.h>
 #include <sys/sysctl.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <err.h>
-#include <limits.h>
-#include <string.h>
-#include <pmc.h>
-#include <pmclog.h>
 #include <assert.h>
+#include <err.h>
+#include <errno.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 #include <sysexits.h>
+
+#include <pmc.h>
 #include <pmcformat.h>
+#include <pmclog.h>
 
 using std::string;
 

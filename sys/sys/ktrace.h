@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ktrace.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 97fe827303152643346d22479c892e8afeaf0e55 $
+ * $FreeBSD: a0b02f7d3ac5a6e1a3fcc52e57901ea09baf11fc $
  */
 
 #ifndef _SYS_KTRACE_H_
@@ -73,7 +73,7 @@ struct ktr_header {
 #define KTRPOINT(td, type)  (__predict_false(KTRCHECK((td), (type))))
 #define	KTRCHECKDRAIN(td)	(!(STAILQ_EMPTY(&(td)->td_proc->p_ktr)))
 #define	KTRUSERRET(td) do {						\
-	if (KTRCHECKDRAIN(td))						\
+	if (__predict_false(KTRCHECKDRAIN(td)))				\
 		ktruserret(td);						\
 } while (0)
 
@@ -280,6 +280,7 @@ void	ktrprocexit(struct thread *);
 void	ktrprocfork(struct proc *, struct proc *);
 void	ktruserret(struct thread *);
 void	ktrstruct(const char *, const void *, size_t);
+void	ktrstruct_error(const char *, const void *, size_t, int);
 void	ktrstructarray(const char *, enum uio_seg, const void *, int, size_t);
 void	ktrcapfail(enum ktr_cap_fail_type, const cap_rights_t *,
 	    const cap_rights_t *);
@@ -291,6 +292,8 @@ void	ktrcapfail(enum ktr_cap_fail_type, const cap_rights_t *,
 	ktrstruct("sockaddr", (s), ((struct sockaddr *)(s))->sa_len)
 #define ktrstat(s) \
 	ktrstruct("stat", (s), sizeof(struct stat))
+#define ktrstat_error(s, error) \
+	ktrstruct_error("stat", (s), sizeof(struct stat), error)
 extern u_int ktr_geniosize;
 #else
 

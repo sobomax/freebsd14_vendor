@@ -10,7 +10,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc0f315ed65c995d019f12bfa74f67730e7a51ba $");
+__FBSDID("$FreeBSD: 7b0fd991862441b0354bb9b4e9edaf4c3160803a $");
 
 /*-
  * Just when we thought life were beautiful, reality pops its grim face over
@@ -63,7 +63,6 @@ static struct timecounter piix_timecounter = {
 	"PIIX"			/* name */
 };
 
-
 static int
 sysctl_machdep_piix_freq(SYSCTL_HANDLER_ARGS)
 {
@@ -81,8 +80,10 @@ sysctl_machdep_piix_freq(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, piix_freq, CTLTYPE_INT | CTLFLAG_RW,
-    0, sizeof(u_int), sysctl_machdep_piix_freq, "I", "");
+SYSCTL_PROC(_machdep, OID_AUTO, piix_freq,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, sizeof(u_int),
+    sysctl_machdep_piix_freq, "I",
+    "");
 
 static unsigned
 piix_get_timecount(struct timecounter *tc)

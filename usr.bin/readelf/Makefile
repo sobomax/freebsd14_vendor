@@ -1,4 +1,6 @@
-# $FreeBSD: 238a901197d729516363ed10d2d0bf9d07738c24 $
+# $FreeBSD: ed4de3b55745ab93a0d4f6790603c4339172bbd4 $
+
+.include <src.opts.mk>
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 READELFDIR=	${ELFTCDIR}/readelf
@@ -8,7 +10,13 @@ READELFDIR=	${ELFTCDIR}/readelf
 PROG=	readelf
 SRCS=	readelf.c
 
-LIBADD=	dwarf elftc elf
+LIBADD=	dwarf elftc elf z
+
+.if ${MK_CASPER} != "no"
+LIBADD+=	casper
+LIBADD+=	cap_fileargs
+CFLAGS+=	-DWITH_CASPER
+.endif
 
 CFLAGS+=-I${ELFTCDIR}/libelftc -I${ELFTCDIR}/common
 

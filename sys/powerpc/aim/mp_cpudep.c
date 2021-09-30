@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32d9a48b8af649934e0a472b71d64307670ee568 $");
+__FBSDID("$FreeBSD: b5931786f8f7714d0983f2e95650fffd3cb7706a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -103,6 +103,12 @@ cpudep_ap_early_bootstrap(void)
 
 			mtspr(SPR_LPCR, lpcr);
 			isync();
+
+			/*
+			 * Nuke FSCR, to be managed on a per-process basis
+			 * later.
+			 */
+			mtspr(SPR_FSCR, 0);
 		}
 #endif
 		break;
@@ -419,4 +425,3 @@ cpudep_ap_setup()
 		break;
 	}
 }
-

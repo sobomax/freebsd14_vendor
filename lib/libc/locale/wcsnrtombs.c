@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d90445aacf16629d6ba941da374b60cedbd968d $");
+__FBSDID("$FreeBSD: 7fdbfc75156df89144ede43f40facee947b24e72 $");
 
 #include <limits.h>
 #include <stdlib.h>
@@ -48,7 +48,7 @@ wcsnrtombs_l(char * __restrict dst, const wchar_t ** __restrict src, size_t nwc,
 {
 	FIX_LOCALE(locale);
 	if (ps == NULL)
-		ps = &locale->wcsnrtombs;
+		ps = &(XLOCALE_CTYPE(locale)->wcsnrtombs);
 	return (XLOCALE_CTYPE(locale)->__wcsnrtombs(dst, src, nwc, len, ps));
 }
 size_t

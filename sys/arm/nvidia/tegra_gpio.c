@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7626d3072beef964f4b4794e3e2409c138392c6a $");
+__FBSDID("$FreeBSD: 17a7ac2a9fb74b5680b669891385616e2899a485 $");
 
 /*
  * Tegra GPIO driver.
@@ -137,6 +137,7 @@ struct tegra_gpio_softc {
 
 static struct ofw_compat_data compat_data[] = {
 	{"nvidia,tegra124-gpio", 1},
+	{"nvidia,tegra210-gpio", 1},
 	{NULL,			0}
 };
 
@@ -425,7 +426,6 @@ tegra_gpio_intr(void *arg)
 				device_printf(sc->dev,
 				    "Stray irq %u disabled\n", irq);
 			}
-
 		}
 	}
 
@@ -469,7 +469,6 @@ tegra_gpio_pic_detach(struct tegra_gpio_softc *sc)
 	device_printf(sc->dev, "%s: not implemented yet\n", __func__);
 	return (EBUSY);
 }
-
 
 static void
 tegra_gpio_pic_disable_intr(device_t dev, struct intr_irqsrc *isrc)
@@ -534,7 +533,6 @@ tegra_gpio_pic_map_fdt(struct tegra_gpio_softc *sc, u_int ncells,
 		*regp = reg;
 	return (0);
 }
-
 
 static int
 tegra_gpio_pic_map_gpio(struct tegra_gpio_softc *sc, u_int gpio_pin_num,

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98964741b2b9d6d8ab083ecb89fe0a2432ae295f $");
+__FBSDID("$FreeBSD: c06ddf7b1f2eb99d660bdd6e8dd4e3b340ce5d97 $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -570,7 +570,6 @@ sctp_process_asconf_set_primary(struct sockaddr *src,
 		    SCTP_MOBILITY_PRIM_DELETED) &&
 		    (stcb->asoc.primary_destination->dest_state &
 		    SCTP_ADDR_UNCONFIRMED) == 0) {
-
 			sctp_timer_stop(SCTP_TIMER_TYPE_PRIM_DELETED,
 			    stcb->sctp_ep, stcb, NULL,
 			    SCTP_FROM_SCTP_ASCONF + SCTP_LOC_1);
@@ -724,7 +723,7 @@ sctp_handle_asconf(struct mbuf *m, unsigned int offset,
 			sctp_m_freem(m_ack);
 			return;
 		}
-		if (param_length <= sizeof(struct sctp_paramhdr)) {
+		if (param_length < sizeof(struct sctp_asconf_paramhdr)) {
 			SCTPDBG(SCTP_DEBUG_ASCONF1, "handle_asconf: param length (%u) too short\n", param_length);
 			sctp_m_freem(m_ack);
 			return;
@@ -979,8 +978,7 @@ sctp_asconf_nets_cleanup(struct sctp_tcb *stcb, struct sctp_ifn *ifn)
 		    ((ifn == NULL) ||
 		    (SCTP_GET_IF_INDEX_FROM_ROUTE(&net->ro) != ifn->ifn_index))) {
 			/* clear any cached route */
-			RTFREE(net->ro.ro_rt);
-			net->ro.ro_rt = NULL;
+			RO_NHFREE(&net->ro);
 		}
 		/* clear any cached source address */
 		if (net->src_addr_selected) {
@@ -990,7 +988,6 @@ sctp_asconf_nets_cleanup(struct sctp_tcb *stcb, struct sctp_ifn *ifn)
 		}
 	}
 }
-
 
 void
 sctp_assoc_immediate_retrans(struct sctp_tcb *stcb, struct sctp_nets *dstnet)
@@ -1094,10 +1091,7 @@ sctp_path_check_and_react(struct sctp_tcb *stcb, struct sctp_ifa *newifa)
 	if (addrnum == 1) {
 		TAILQ_FOREACH(net, &stcb->asoc.nets, sctp_next) {
 			/* clear any cached route and source address */
-			if (net->ro.ro_rt) {
-				RTFREE(net->ro.ro_rt);
-				net->ro.ro_rt = NULL;
-			}
+			RO_NHFREE(&net->ro);
 			if (net->src_addr_selected) {
 				sctp_free_ifa(net->ro._s_addr);
 				net->ro._s_addr = NULL;
@@ -1116,10 +1110,7 @@ sctp_path_check_and_react(struct sctp_tcb *stcb, struct sctp_ifa *newifa)
 	/* Multiple local addresses exsist in the association.  */
 	TAILQ_FOREACH(net, &stcb->asoc.nets, sctp_next) {
 		/* clear any cached route and source address */
-		if (net->ro.ro_rt) {
-			RTFREE(net->ro.ro_rt);
-			net->ro.ro_rt = NULL;
-		}
+		RO_NHFREE(&net->ro);
 		if (net->src_addr_selected) {
 			sctp_free_ifa(net->ro._s_addr);
 			net->ro._s_addr = NULL;
@@ -1135,7 +1126,7 @@ sctp_path_check_and_react(struct sctp_tcb *stcb, struct sctp_ifa *newifa)
 		SCTP_RTALLOC((sctp_route_t *)&net->ro,
 		    stcb->sctp_ep->def_vrf_id,
 		    stcb->sctp_ep->fibnum);
-		if (net->ro.ro_rt == NULL)
+		if (net->ro.ro_nh == NULL)
 			continue;
 
 		changed = 0;
@@ -1339,7 +1330,6 @@ sctp_asconf_queue_mgmt(struct sctp_tcb *stcb, struct sctp_ifa *ifa,
 
 	return (0);
 }
-
 
 /*
  * add an asconf operation for the given ifa and type.
@@ -1753,7 +1743,7 @@ sctp_handle_asconf_ack(struct mbuf *m, int offset,
 			sctp_asconf_ack_clear(stcb);
 			return;
 		}
-		if (param_length < sizeof(struct sctp_paramhdr)) {
+		if (param_length < sizeof(struct sctp_asconf_paramhdr)) {
 			sctp_asconf_ack_clear(stcb);
 			return;
 		}
@@ -2030,7 +2020,6 @@ sctp_addr_mgmt_assoc(struct sctp_inpcb *inp, struct sctp_tcb *stcb,
 	}
 }
 
-
 int
 sctp_asconf_iterator_ep(struct sctp_inpcb *inp, void *ptr, uint32_t val SCTP_UNUSED)
 {
@@ -2094,7 +2083,6 @@ sctp_asconf_iterator_ep_end(struct sctp_inpcb *inp, void *ptr, uint32_t val SCTP
 					laddr->action = 0;
 					break;
 				}
-
 			}
 		} else if (l->action == SCTP_DEL_IP_ADDRESS) {
 			LIST_FOREACH_SAFE(laddr, &inp->sctp_addr_list, sctp_nxt_addr, nladdr) {
@@ -2217,18 +2205,12 @@ sctp_asconf_iterator_stcb(struct sctp_inpcb *inp, struct sctp_tcb *stcb,
 			struct sctp_nets *net;
 
 			TAILQ_FOREACH(net, &stcb->asoc.nets, sctp_next) {
-				sctp_rtentry_t *rt;
-
 				/* delete this address if cached */
 				if (net->ro._s_addr == ifa) {
 					sctp_free_ifa(net->ro._s_addr);
 					net->ro._s_addr = NULL;
 					net->src_addr_selected = 0;
-					rt = net->ro.ro_rt;
-					if (rt) {
-						RTFREE(rt);
-						net->ro.ro_rt = NULL;
-					}
+					RO_NHFREE(&net->ro);
 					/*
 					 * Now we deleted our src address,
 					 * should we not also now reset the
@@ -2237,7 +2219,6 @@ sctp_asconf_iterator_stcb(struct sctp_inpcb *inp, struct sctp_tcb *stcb,
 					 */
 					stcb->asoc.cc_functions.sctp_set_initial_cc_param(stcb, net);
 					net->RTO = 0;
-
 				}
 			}
 		} else if (type == SCTP_SET_PRIM_ADDR) {

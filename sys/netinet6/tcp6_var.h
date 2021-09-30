@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: 00697695fc79b15c5ae0540191a0ab37e9fc4d81 $
+ * $FreeBSD: 7c758fbd347964e05df54e165a96b0d9ed4d9e4c $
  */
 
 #ifndef _NETINET_TCP6_VAR_H_
@@ -76,7 +76,6 @@ struct	ip6_hdr;
 void	tcp6_ctlinput(int, struct sockaddr *, void *);
 void	tcp6_init(void);
 int	tcp6_input(struct mbuf **, int *, int);
-struct	rtentry *tcp_rtlookup6(struct in_conninfo *);
 
 extern struct	pr_usrreqs tcp6_usrreqs;
 

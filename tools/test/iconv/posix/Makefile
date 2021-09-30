@@ -1,8 +1,6 @@
-# $FreeBSD: 891142412df842a237b0fc3a963edc3f1bccb0b6 $
+# $FreeBSD: aafaadebafe76f0648e6c79b82e6391dc2fd7204 $
 
 PROG=	posix
 MAN=
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

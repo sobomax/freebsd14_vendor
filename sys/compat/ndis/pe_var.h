@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8a56a4c5bafdf1c4df02ed24cf65fa960e1962c2 $
+ * $FreeBSD: a7fdcacb28449b25c53799b44800001cad87d0ec $
  */
 
 #ifndef _PE_VAR_H_
@@ -164,7 +164,6 @@ typedef struct image_data_directory image_data_directory;
  */
 
 struct image_optional_header {
-
 	/* Standard fields */
 
 	uint16_t	ioh_magic;
@@ -502,7 +501,6 @@ extern uint32_t x86_stdcall_call(void *, int, ...);
 		x86_stdcall_call(fn, 6, (a), (b), (c), (d), (e), (f))
 
 #endif /* __i386__ */
-
 
 #define	FUNC void(*)(void)
 

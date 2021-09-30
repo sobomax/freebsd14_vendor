@@ -1,12 +1,10 @@
-# $FreeBSD: b1b4fc207cbecfe3d95a4bf9352adb8844af481f $
+# $FreeBSD: d5754223ca0ea90e6b922bf158c43ffc0cf16438 $
 
 .include <src.opts.mk>
 
 PROG_CXX=	llvm-cov
-.if ${MK_GCOV} == "no"
 LINKS=		${BINDIR}/llvm-cov	${BINDIR}/gcov
 MLINKS=		llvm-cov.1		gcov.1
-.endif
 
 SRCDIR=		llvm/tools/llvm-cov
 SRCS+=		CodeCoverage.cpp

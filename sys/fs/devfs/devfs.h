@@ -35,7 +35,7 @@
  *	@(#)kernfs.h	8.6 (Berkeley) 3/29/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs.h 1.14
  *
- * $FreeBSD: 5f64a2672799b6886187aa3e654d1899cb154527 $
+ * $FreeBSD: aef2916012897f98ad03c0c778ad3f52dfdbc1e2 $
  */
 
 #ifndef _FS_DEVFS_DEVFS_H_
@@ -153,6 +153,7 @@ struct devfs_dirent {
 	struct timespec 	de_ctime;
 	struct vnode 		*de_vnode;
 	char 			*de_symlink;
+	int			de_usecount;
 };
 
 struct devfs_mount {
@@ -192,6 +193,7 @@ char	*devfs_fqpn(char *, struct devfs_mount *, struct devfs_dirent *,
 	    struct componentname *);
 void	devfs_delete(struct devfs_mount *, struct devfs_dirent *, int);
 void	devfs_dirent_free(struct devfs_dirent *);
+int	devfs_populate_needed(struct devfs_mount *dm);
 void	devfs_populate(struct devfs_mount *);
 void	devfs_cleanup(struct devfs_mount *);
 void	devfs_unmount_final(struct devfs_mount *);
@@ -201,6 +203,10 @@ struct devfs_dirent	*devfs_vmkdir(struct devfs_mount *, char *, int,
 			    struct devfs_dirent *, u_int);
 struct devfs_dirent	*devfs_find(struct devfs_dirent *, const char *, int,
 			    int);
+
+void	devfs_ctty_ref(struct vnode *);
+void	devfs_ctty_unref(struct vnode *);
+int	devfs_usecount(struct vnode *);
 
 #endif /* _KERNEL */
 

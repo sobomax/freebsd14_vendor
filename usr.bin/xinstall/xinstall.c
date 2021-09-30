@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)xinstall.c	8.1 (Berkeley) 7/21/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31d56c1436c0154282ee791db021b54d4801e833 $");
+__FBSDID("$FreeBSD: 114614abd16f74ddd2e861be14cd6268ad6dcc55 $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -74,6 +74,17 @@ __FBSDID("$FreeBSD: 31d56c1436c0154282ee791db021b54d4801e833 $");
 #include <vis.h>
 
 #include "mtree.h"
+
+/*
+ * We need to build xinstall during the bootstrap stage when building on a
+ * non-FreeBSD system. Linux does not have the st_flags and st_birthtime
+ * members in struct stat so we need to omit support for changing those fields.
+ */
+#ifdef UF_SETTABLE
+#define HAVE_STRUCT_STAT_ST_FLAGS 1
+#else
+#define HAVE_STRUCT_STAT_ST_FLAGS 0
+#endif
 
 #define MAX_CMP_SIZE	(16 * 1024 * 1024)
 
@@ -137,7 +148,7 @@ static void	metadata_log(const char *, const char *, struct timespec *,
 		    const char *, const char *, off_t);
 static int	parseid(const char *, id_t *);
 static int	strip(const char *, int, const char *, char **);
-static int	trymmap(int);
+static int	trymmap(size_t);
 static void	usage(void);
 
 int
@@ -1076,7 +1087,7 @@ compare(int from_fd, const char *from_name __unused, size_t from_len,
 		if (do_digest)
 			digest_init(&ctx);
 		done_compare = 0;
-		if (trymmap(from_fd) && trymmap(to_fd)) {
+		if (trymmap(from_len) && trymmap(to_len)) {
 			p = mmap(NULL, from_len, PROT_READ, MAP_SHARED,
 			    from_fd, (off_t)0);
 			if (p == MAP_FAILED)
@@ -1150,7 +1161,7 @@ create_tempfile(const char *path, char *temp, size_t tsize)
 		p++;
 	else
 		p = temp;
-	(void)strncpy(p, "INS@XXXX", &temp[tsize - 1] - p);
+	(void)strncpy(p, "INS@XXXXXX", &temp[tsize - 1] - p);
 	temp[tsize - 1] = '\0';
 	return (mkstemp(temp));
 }
@@ -1237,13 +1248,8 @@ copy(int from_fd, const char *from_name, int to_fd, const char *to_name,
 
 	digest_init(&ctx);
 
-	/*
-	 * Mmap and write if less than 8M (the limit is so we don't totally
-	 * trash memory on big files.  This is really a minor hack, but it
-	 * wins some CPU back.
-	 */
 	done_copy = 0;
-	if (size <= 8 * 1048576 && trymmap(from_fd) &&
+	if (trymmap((size_t)size) &&
 	    (p = mmap(NULL, (size_t)size, PROT_READ, MAP_SHARED,
 		    from_fd, (off_t)0)) != MAP_FAILED) {
 		nw = write(to_fd, p, size);
@@ -1512,20 +1518,23 @@ usage(void)
  *	return true (1) if mmap should be tried, false (0) if not.
  */
 static int
-trymmap(int fd)
+trymmap(size_t filesize)
 {
-/*
- * The ifdef is for bootstrapping - f_fstypename doesn't exist in
- * pre-Lite2-merge systems.
- */
-#ifdef MFSNAMELEN
-	struct statfs stfs;
-
-	if (fstatfs(fd, &stfs) != 0)
-		return (0);
-	if (strcmp(stfs.f_fstypename, "ufs") == 0 ||
-	    strcmp(stfs.f_fstypename, "cd9660") == 0)
-		return (1);
-#endif
-	return (0);
+	/*
+	 * This function existed to skip mmap() for NFS file systems whereas
+	 * nowadays mmap() should be perfectly safe. Nevertheless, using mmap()
+	 * only reduces the number of system calls if we need multiple read()
+	 * syscalls, i.e. if the file size is > MAXBSIZE. However, mmap() is
+	 * more expensive than read() so set the threshold at 4 fewer syscalls.
+	 * Additionally, for larger file size mmap() can significantly increase
+	 * the number of page faults, so avoid it in that case.
+	 *
+	 * Note: the 8MB limit is not based on any meaningful benchmarking
+	 * results, it is simply reusing the same value that was used before
+	 * and also matches bin/cp.
+	 *
+	 * XXX: Maybe we shouldn't bother with mmap() at all, since we use
+	 * MAXBSIZE the syscall overhead of read() shouldn't be too high?
+	 */
+	return (filesize > 4 * MAXBSIZE && filesize < 8 * 1024 * 1024);
 }

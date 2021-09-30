@@ -1,36 +1,17 @@
-# $FreeBSD: 85e513d5f898b51839f13f61179d24cfadff8927 $
+# $FreeBSD: 746c19686768654910aaece46fc0ea23e44649ac $
 
-SUBDIR=	${_apm} \
-	${_beastie} \
+SUBDIR= beastie \
 	blank \
-	${_daemon} \
-	${_dragon} \
+	daemon \
+	dragon \
 	fade \
-	${_fire} \
+	fire \
 	green \
-	${_logo} \
-	${_plasma} \
-	${_rain} \
-	${_snake} \
-	${_star} \
-	${_warp}
-
-.if ${MACHINE_CPUARCH} == "i386"
-_apm=		apm
-.endif
-
-.if ${MACHINE_CPUARCH} != "sparc64"
-_beastie=	beastie
-_beastie=	beastie
-_daemon=	daemon
-_dragon=	dragon
-_fire=		fire
-_logo=		logo
-_plasma=	plasma
-_rain=		rain
-_snake=		snake
-_star=		star
-_warp=		warp
-.endif
+	logo \
+	plasma \
+	rain \
+	snake \
+	star \
+	warp
 
 .include <bsd.subdir.mk>

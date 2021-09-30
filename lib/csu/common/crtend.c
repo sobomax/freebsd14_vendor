@@ -22,13 +22,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19fe5eb8780bdcddc5a347e418c74977fa39f7b7 $");
+__FBSDID("$FreeBSD: 072f7b7a82f26f833826762a3e28269b31c8cfff $");
 
 #include "crt.h"
 
 typedef void (*crt_func)(void);
 
-static crt_func __JCR_LIST__[] __section(".jcr") __used = {
+static crt_func __JCR_END__[] __section(".jcr") __used = {
 	(crt_func)0
 };
 

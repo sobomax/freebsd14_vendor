@@ -50,28 +50,28 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39131921bce395cd36a9629cf1fa6f71f655d7a6 $");
+__FBSDID("$FreeBSD: 283ef2e83e0b1c737c0aa3b58c396f49b66f9eee $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
-#include <sys/vnode.h>
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <util.h>
 
+#include "ffs/buf.h"
+
 #include <fs/msdosfs/bpb.h>
+#include <fs/msdosfs/direntry.h>
+#include <fs/msdosfs/denode.h>
+#include <fs/msdosfs/fat.h>
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include "makefs.h"
 #include "msdos.h"
 
-#include "ffs/buf.h"
-
-#include "msdos/denode.h"
-#include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
 
 /*
  * If deget() succeeds it returns with the gotten denode locked().
@@ -210,7 +210,7 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
  * Truncate the file described by dep to the length specified by length.
  */
 int
-detrunc(struct denode *dep, u_long length, int flags)
+detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred)
 {
 	int error;
 	int allerror;
@@ -242,7 +242,7 @@ detrunc(struct denode *dep, u_long length, int flags)
 	}
 
 	if (dep->de_FileSize < length)
-		return deextend(dep, length);
+		return deextend(dep, length, cred);
 
 	/*
 	 * If the desired length is 0 then remember the starting cluster of
@@ -287,10 +287,7 @@ detrunc(struct denode *dep, u_long length, int flags)
 				return (error);
 			}
 			memset(bp->b_data + boff, 0, pmp->pm_bpcluster - boff);
-			if (flags & IO_SYNC)
-				bwrite(bp);
-			else
-				bdwrite(bp);
+			bwrite(bp);
 		}
 	}
 
@@ -334,7 +331,7 @@ detrunc(struct denode *dep, u_long length, int flags)
  * Extend the file described by dep to length specified by length.
  */
 int
-deextend(struct denode *dep, u_long length)
+deextend(struct denode *dep, u_long length, struct ucred *cred)
 {
 	struct msdosfsmount *pmp = dep->de_pmp;
 	u_long count;
@@ -365,7 +362,7 @@ deextend(struct denode *dep, u_long length)
 		error = extendfile(dep, count, NULL, NULL, DE_CLEAR);
 		if (error) {
 			/* truncate the added clusters away again */
-			(void) detrunc(dep, dep->de_FileSize, 0);
+			(void) detrunc(dep, dep->de_FileSize, 0, cred);
 			return (error);
 		}
 	}

@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 5017a7f4d88f091bc0bb98e2ba4bd33d2cb491e9 $
+ * $FreeBSD: b7622e38329d440d35fa2ace28e25a3af86610bc $
  */
 
 #ifndef _BHND_CORES_PCIE2_BHND_PCIE2_VAR_H_
@@ -49,7 +49,6 @@ int		bhnd_pcie2_generic_attach(device_t dev);
 int		bhnd_pcie2_generic_detach(device_t dev);
 int		bhnd_pcie2_generic_suspend(device_t dev);
 int		bhnd_pcie2_generic_resume(device_t dev);
-
 
 uint32_t	bhnd_pcie2_read_proto_reg(struct bhnd_pcie2_softc *sc,
 		    uint32_t addr);
@@ -87,7 +86,6 @@ struct bhnd_pcie2_softc {
 	struct bhnd_resource	*mem_res;	/**< device register block. */
 	int			 mem_rid;	/**< register block RID */
 };
-
 
 #define	BHND_PCIE2_LOCK_INIT(sc) \
 	mtx_init(&(sc)->mtx, device_get_nameunit((sc)->dev), \

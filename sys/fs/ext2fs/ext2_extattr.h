@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1047c8b607b608d9ba5079c846f13f2bdac3aa89 $
+ * $FreeBSD: 6bee73f94b0273b1ce1eaa8015c9bdb3959a35c5 $
  */
 
 #ifndef _FS_EXT2FS_EXT2_EXTARTTR_H_
@@ -52,7 +52,6 @@
 #define EXT2_EXTATTR_NAME_HASH_SHIFT		5
 #define EXT2_EXTATTR_VALUE_HASH_SHIFT		16
 #define EXT2_EXTATTR_BLOCK_HASH_SHIFT		16
-
 
 struct ext2fs_extattr_header {
 	int32_t	h_magic;	/* magic number for identification */

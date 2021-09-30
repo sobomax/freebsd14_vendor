@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d88dc59c1968b461033a13f62412196fe5bd8d74 $");
+__FBSDID("$FreeBSD: 3364d31815322f51c9eaaaf9e63bc919d62c3ec4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -68,7 +68,8 @@ __FBSDID("$FreeBSD: d88dc59c1968b461033a13f62412196fe5bd8d74 $");
 #include <compat/ndis/usbd_var.h>
 #include <dev/if_ndis/if_ndisvar.h>
 
-SYSCTL_NODE(_hw, OID_AUTO, ndisusb, CTLFLAG_RD, 0, "NDIS USB driver parameters");
+SYSCTL_NODE(_hw, OID_AUTO, ndisusb, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "NDIS USB driver parameters");
 
 MODULE_DEPEND(ndis, usb, 1, 1, 1);
 
@@ -197,6 +198,8 @@ ndisusb_attach(device_t self)
 
 	if (ndis_attach(self) != 0)
 		return (ENXIO);
+
+	gone_in_dev(self, 14, "ndis removed");
 
 	return (0);
 }

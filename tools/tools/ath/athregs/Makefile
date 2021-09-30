@@ -1,4 +1,4 @@
-# $FreeBSD: 20e248910b52158fce0327539f6298c2dddaf1fa $
+# $FreeBSD: 886354ae9cd25c8fe0875ef423bb21193e314a92 $
 
 PROG=	athregs
 
@@ -19,7 +19,6 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 .include <../Makefile.inc>
 

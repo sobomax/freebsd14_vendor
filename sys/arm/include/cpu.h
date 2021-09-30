@@ -1,5 +1,5 @@
 /* $NetBSD: cpu.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $ */
-/* $FreeBSD: 55c20cec3ba95c07fdd7b515165fec3cc847006b $ */
+/* $FreeBSD: 8937a87aebeadfc669024e5797980fb4f14c81e8 $ */
 
 #ifndef MACHINE_CPU_H
 #define MACHINE_CPU_H
@@ -11,11 +11,7 @@ void	cpu_halt(void);
 void	swi_vm(void *);
 
 #ifdef _KERNEL
-#if __ARM_ARCH >= 6
 #include <machine/cpu-v6.h>
-#else
-#include <machine/cpu-v4.h>
-#endif /* __ARM_ARCH >= 6 */
 
 static __inline uint64_t
 get_cyclecount(void)

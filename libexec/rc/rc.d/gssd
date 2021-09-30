@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: 1d7e72a42ffb56c61294b4d77b0e29fa759f2d42 $
+# $FreeBSD: 2a51add38b88803b6281d4182e347f7dd7017c64 $
 #
 
 # PROVIDE: gssd
-# REQUIRE: root
+# REQUIRE: root mountcritlocal
 # KEYWORD: nojail shutdown
 
 . /etc/rc.subr

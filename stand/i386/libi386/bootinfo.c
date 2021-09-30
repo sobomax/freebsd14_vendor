@@ -25,16 +25,37 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 41901e5f928fc7aa422456e484bfdd43c3a1d3a7 $");
+__FBSDID("$FreeBSD: 57f926b765896a729a99a9ffed7db753ec1b47bc $");
 
 #include <stand.h>
 #include <sys/param.h>
 #include <sys/reboot.h>
 #include <sys/boot.h>
 #include <sys/linker.h>
+#include <gfx_fb.h>
 #include "bootstrap.h"
 #include "libi386.h"
+#include "vbe.h"
 #include "btxv86.h"
+
+void
+bi_load_vbe_data(struct preloaded_file *kfp)
+{
+	if (!gfx_state.tg_kernel_supported) {
+		/*
+		 * Loaded kernel does not have vt/vbe backend,
+		 * switch console to text mode.
+		 */
+		if (vbe_available())
+			bios_set_text_mode(VGA_TEXT_MODE);
+		return;
+	}
+
+	if (vbe_available()) {
+		file_addmetadata(kfp, MODINFOMD_VBE_FB,
+		    sizeof(gfx_state.tg_fb), &gfx_state.tg_fb);
+	}
+}
 
 int
 bi_getboothowto(char *kargs)

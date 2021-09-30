@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21c4a6b6610a41868193ccc788a39eb90d5ad7b5 $");
+__FBSDID("$FreeBSD: dbe2301d008a04fbef05ee8d48debd56b0560681 $");
 
 #ifndef _NETINET_SCTP_BSD_ADDR_H_
 #define _NETINET_SCTP_BSD_ADDR_H_
@@ -46,7 +46,6 @@ extern struct iterator_control sctp_it_ctl;
 void sctp_wakeup_iterator(void);
 
 void sctp_startup_iterator(void);
-
 
 #ifdef INET6
 void sctp_gather_internal_ifa_flags(struct sctp_ifa *ifa);

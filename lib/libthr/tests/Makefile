@@ -1,6 +1,8 @@
-# $FreeBSD: f899f47350939ecbc68fdd5cafaf0f1a15ea2aa4 $
+# $FreeBSD: 8dd0b8f1dcc039e380c010c94f712fb4716feef3 $
 
 PACKAGE=	tests
+
+WARNS?=		3
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread
 
@@ -32,6 +34,8 @@ NETBSD_ATF_TESTS_SH=	atexit_test
 NETBSD_ATF_TESTS_SH+=	cancel_test
 NETBSD_ATF_TESTS_SH+=	exit_test
 NETBSD_ATF_TESTS_SH+=	resolv_test
+
+ATF_TESTS_C+=		umtx_op_test
 
 LIBADD+=		pthread
 LIBADD.fpu_test+=	m

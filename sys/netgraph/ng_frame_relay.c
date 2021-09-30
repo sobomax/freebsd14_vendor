@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: b931e897be88531de8ca5e9a643b2929f9bc8cfa $
+ * $FreeBSD: 20c8fb9791c3e957c67349d39d3e48569b39d836 $
  * $Whistle: ng_frame_relay.c,v 1.20 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -252,7 +252,6 @@ ngfrm_newhook(node_p node, hook_p hook, const char *name)
 	 */
 	if (strncmp(name, NG_FRAMERELAY_HOOK_DLCI,
 	    strlen(NG_FRAMERELAY_HOOK_DLCI)) != 0) {
-
 		/* It must be the downstream connection */
 		if (strcmp(name, NG_FRAMERELAY_HOOK_DOWNSTREAM) != 0)
 			return EINVAL;

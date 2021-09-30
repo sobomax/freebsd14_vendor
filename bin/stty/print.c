@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)print.c	8.6 (Berkeley) 4/16/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03d5c3b8a770635e3f40d9bf78be85e2c4967feb $");
+__FBSDID("$FreeBSD: a76cd46b765e1c501f3fb2f40880887e7112583f $");
 
 #include <sys/types.h>
 
@@ -184,6 +184,12 @@ print(struct termios *tp, struct winsize *wp, int ldisc, enum FMT fmt)
 	put("-dsrflow", CDSR_OFLOW, 0);
 	put("-dtrflow", CDTR_IFLOW, 0);
 	put("-mdmbuf", MDMBUF, 0);	/* XXX mdmbuf ==  dtrflow */
+	if (on(CNO_RTSDTR))
+		bput("-rtsdtr");
+	else {
+		if (fmt >= BSD)
+			bput("rtsdtr");
+	}
 
 	/* special control characters */
 	cc = tp->c_cc;

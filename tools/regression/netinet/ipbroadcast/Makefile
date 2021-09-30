@@ -1,10 +1,8 @@
 #
-# $FreeBSD: a1b497ae145cf0202b62ace458a60b79fee0766e $
+# $FreeBSD: c1e5bba93dcf3df36cabfb31dfc2cea4eac766b2 $
 #
 
 PROG=	ipbroadcast
 MAN=
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

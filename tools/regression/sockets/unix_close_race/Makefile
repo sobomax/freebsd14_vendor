@@ -1,7 +1,6 @@
-# $FreeBSD: 370adc4698962b35f4abc0e55f6f6833466f5d97 $
+# $FreeBSD: 690929edc2bc604c15b6a91b12ae07bffd0e7e1b $
 
 PROG=	unix_close_race
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: 0c906c99ee6f15bd51cb7273c6862b62cc996344 $
+# $FreeBSD: f99282aa6e5aaeaaf3cb9d3b069b2d8c8b40cdb1 $
 
 LOADER_UFS_SUPPORT?=	yes
 LOADER_CD9660_SUPPORT?=	no
@@ -24,7 +24,7 @@ UBLDR_LOADADDR?=	0x1000000
 # Architecture-specific loader code
 SRCS=		start.S conf.c self_reloc.c vers.c
 
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} > 40201
+.if ${COMPILER_TYPE} == "gcc"
 CWARNFLAGS.self_reloc.c+=	-Wno-error=maybe-uninitialized
 .endif
 

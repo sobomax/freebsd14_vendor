@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1c75fd5bf2d8ad67b916bfd16f42df5d607bcebe $
+ * $FreeBSD: c2d28720205fe97d44a2698dbc08250d9174c1d8 $
  */
 
 
@@ -517,7 +517,8 @@ main(int argc, char **argv)
 			if (!flag_B)
 				loop = 0;
 			else
-				fflush(stdout);
+				if (fflush(stdout) == EOF)
+					goto out;
 			usleep(flag_I);
 			continue;
 		}
@@ -585,7 +586,7 @@ main(int argc, char **argv)
 			}
 		}
 	}
-
+out:
 	if (!flag_b) {
 		el_end(el);
 		endwin();

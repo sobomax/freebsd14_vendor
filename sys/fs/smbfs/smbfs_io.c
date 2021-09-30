@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 78a11309edc313459a967efc2cb591d2dff36014 $
+ * $FreeBSD: dd12d12764388005a2cbf399f676c7bded6fbecf $
  *
  */
 #include <sys/param.h>
@@ -63,13 +63,12 @@
 
 /*#define SMBFS_RWGENERIC*/
 
-extern int smbfs_pbuf_freecnt;
+extern uma_zone_t smbfs_pbuf_zone;
 
 static int smbfs_fastlookup = 1;
 
 SYSCTL_DECL(_vfs_smbfs);
 SYSCTL_INT(_vfs_smbfs, OID_AUTO, fastlookup, CTLFLAG_RW, &smbfs_fastlookup, 0, "");
-
 
 #define DE_SIZE	(sizeof(struct dirent))
 
@@ -288,7 +287,7 @@ smbfs_writevnode(struct vnode *vp, struct uio *uiop,
 
 	if (vn_rlimit_fsize(vp, uiop, td))
 		return (EFBIG);
-	
+
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, cred);
 	error = smb_write(smp->sm_share, np->n_fid, uiop, scred);
@@ -459,14 +458,14 @@ smbfs_getpages(ap)
 	 * XXXGL: is that true for SMB filesystem?
 	 */
 	VM_OBJECT_WLOCK(object);
-	if (pages[npages - 1]->valid != 0 && --npages == 0)
+	if (!vm_page_none_valid(pages[npages - 1]) && --npages == 0)
 		goto out;
 	VM_OBJECT_WUNLOCK(object);
 
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, cred);
 
-	bp = getpbuf(&smbfs_pbuf_freecnt);
+	bp = uma_zalloc(smbfs_pbuf_zone, M_WAITOK);
 
 	kva = (vm_offset_t) bp->b_data;
 	pmap_qenter(kva, pages, npages);
@@ -488,7 +487,7 @@ smbfs_getpages(ap)
 	smbfs_free_scred(scred);
 	pmap_qremove(kva, npages);
 
-	relpbuf(bp, &smbfs_pbuf_freecnt);
+	uma_zfree(smbfs_pbuf_zone, bp);
 
 	if (error && (uio.uio_resid == count)) {
 		printf("smbfs_getpages: error %d\n",error);
@@ -507,14 +506,14 @@ smbfs_getpages(ap)
 			/*
 			 * Read operation filled an entire page
 			 */
-			m->valid = VM_PAGE_BITS_ALL;
+			vm_page_valid(m);
 			KASSERT(m->dirty == 0,
 			    ("smbfs_getpages: page %p is dirty", m));
 		} else if (size > toff) {
 			/*
 			 * Read operation filled a partial page.
 			 */
-			m->valid = 0;
+			vm_page_invalid(m);
 			vm_page_set_valid_range(m, 0, size - toff);
 			KASSERT(m->dirty == 0,
 			    ("smbfs_getpages: page %p is dirty", m));
@@ -591,7 +590,7 @@ smbfs_putpages(ap)
 		rtvals[i] = VM_PAGER_ERROR;
 	}
 
-	bp = getpbuf(&smbfs_pbuf_freecnt);
+	bp = uma_zalloc(smbfs_pbuf_zone, M_WAITOK);
 
 	kva = (vm_offset_t) bp->b_data;
 	pmap_qenter(kva, pages, npages);
@@ -619,7 +618,7 @@ smbfs_putpages(ap)
 
 	pmap_qremove(kva, npages);
 
-	relpbuf(bp, &smbfs_pbuf_freecnt);
+	uma_zfree(smbfs_pbuf_zone, bp);
 
 	if (error == 0) {
 		vnode_pager_undirty_pages(pages, rtvals, count - uio.uio_resid,
@@ -639,7 +638,7 @@ smbfs_vinvalbuf(struct vnode *vp, struct thread *td)
 	struct smbnode *np = VTOSMB(vp);
 	int error = 0;
 
-	if (vp->v_iflag & VI_DOOMED)
+	if (VN_IS_DOOMED(vp))
 		return 0;
 
 	while (np->n_flag & NFLUSHINPROG) {

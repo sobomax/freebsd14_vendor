@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0fce0cbabf0181bf6900c1f5fe17e79ab0c190c0 $
+ * $FreeBSD: cb84d22e29325e41b128117df3c6d9735c42bff6 $
  */
 
 /*
@@ -45,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0fce0cbabf0181bf6900c1f5fe17e79ab0c190c0 $");
+__FBSDID("$FreeBSD: cb84d22e29325e41b128117df3c6d9735c42bff6 $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -84,10 +83,8 @@ loginclass_hold(struct loginclass *lc)
 void
 loginclass_free(struct loginclass *lc)
 {
-	int old;
 
-	old = lc->lc_refcount;
-	if (old > 1 && atomic_cmpset_int(&lc->lc_refcount, old, old - 1))
+	if (refcount_release_if_not_last(&lc->lc_refcount))
 		return;
 
 	rw_wlock(&loginclasses_lock);

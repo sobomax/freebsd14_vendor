@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)nfs.h	8.4 (Berkeley) 5/1/95
- * $FreeBSD: 3fda65eda75c214fc86677ea117093c2d6fa0821 $
+ * $FreeBSD: 1d9b2a88b2e22da3a3c03bced4860a0d23f66364 $
  */
 
 #ifndef _NFSSERVER_NFSRVSTATS_H_
@@ -42,10 +42,10 @@
  * Server stats structure
  */
 struct nfsrvstats {
-	int	srvrpc_errs;
-	int	srv_errs;
+	int	reserved_0;
+	int	reserved_1;
 	int	srvcache_inproghits;
-	int	srvcache_idemdonehits;
+	int	reserved_2;
 	int	srvcache_nonidemdonehits;
 	int	srvcache_misses;
 	int	srvvop_writes;

@@ -1,7 +1,6 @@
-# $FreeBSD: ae9982ac141886d1de945a857a10362005bcd0d9 $
+# $FreeBSD: 2bc346a7d6fcad83e9090877fd9ed0b15ac8e2a1 $
 
 PROG=	logic
-WARNS=6
 MAN=
 
 .include <bsd.prog.mk>

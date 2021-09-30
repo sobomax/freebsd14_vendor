@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2cc5fa41c29bf6fb783da366c964ba04293c78d5 $
+ * $FreeBSD: b2f2c640b1755d38efc12b935cacd99b70a05b60 $
  */
 
 #include <sys/param.h>
@@ -327,7 +327,7 @@ if_nametosdl(char *name)
 			}
 		}
 	}
-	if (next == lim) {
+	if (next >= lim) {
 		/* search failed */
 		free(buf);
 		return (NULL);

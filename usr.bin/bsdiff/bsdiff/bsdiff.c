@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57243fc50ba0458cffb138542cf325f5a6bf1025 $");
+__FBSDID("$FreeBSD: 337e7085b3dae21780edb7b2dcfa925cb3718de5 $");
 
 #include <sys/types.h>
 
@@ -212,7 +212,7 @@ int main(int argc,char *argv[])
 
 		for(scsc=scan+=len;scan<newsize;scan++) {
 			len=search(I,old,oldsize,new+scan,newsize-scan,
-					0,oldsize,&pos);
+					0,oldsize-1,&pos);
 
 			for(;scsc<scan+len;scsc++)
 			if((scsc+lastoffset<oldsize) &&

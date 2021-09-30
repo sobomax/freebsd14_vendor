@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c6e0dfd44e87dfe8a665290b7517688c39ee34fa $
+ * $FreeBSD: 768ce33bb20db24b5166d87192d02d4f960d1091 $
  */
 #ifndef	_LINUX_WORKQUEUE_H_
 #define	_LINUX_WORKQUEUE_H_
@@ -98,11 +98,12 @@ struct delayed_work {
 
 #define	DECLARE_DELAYED_WORK(name, fn)					\
 	struct delayed_work name;					\
-	static void name##_init(void *arg)				\
+	static void __linux_delayed_ ## name ## _init(void *arg)	\
 	{								\
 		linux_init_delayed_work(&name, fn);			\
 	}								\
-	SYSINIT(name, SI_SUB_LOCK, SI_ORDER_SECOND, name##_init, NULL)
+	SYSINIT(name, SI_SUB_LOCK, SI_ORDER_SECOND,			\
+	    __linux_delayed_ ## name##_init, NULL)
 
 static inline struct delayed_work *
 to_delayed_work(struct work_struct *work)

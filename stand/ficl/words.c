@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: 54257275d5cc463483d9644b8dfced52094a2a59 $ */
+/* $FreeBSD: 3f781c6d2ff4fd3a0a0e36dbdef1e04bab81a487 $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>
@@ -1015,7 +1015,7 @@ static void twoSwap(FICL_VM *pVM)
 
 static void emit(FICL_VM *pVM)
 {
-    char *cp = pVM->pad;
+    char cp[2];
     int i;
 
 #if FICL_ROBUST > 1

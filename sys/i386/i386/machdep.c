@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 623622fd1e18bd94331853eb200043f2bbf64776 $");
+__FBSDID("$FreeBSD: e847d97b8bcff97c61152334e81fa4b9c2620b3b $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -94,14 +94,15 @@ __FBSDID("$FreeBSD: 623622fd1e18bd94331853eb200043f2bbf64776 $");
 #include <sys/vmmeter.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_kern.h>
 #include <vm/vm_page.h>
 #include <vm/vm_map.h>
 #include <vm/vm_object.h>
 #include <vm/vm_pager.h>
-#include <vm/vm_param.h>
 #include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #ifdef DDB
 #ifndef KDB
@@ -175,6 +176,8 @@ SYSINIT(cpu, SI_SUB_CPU, SI_ORDER_FIRST, cpu_startup, NULL);
 
 int	_udatasel, _ucodesel;
 u_int	basemem;
+static int above4g_allow = 1;
+static int above24g_allow = 0;
 
 int cold = 1;
 
@@ -191,21 +194,6 @@ long realmem = 0;
 #ifdef PAE
 FEATURE(pae, "Physical Address Extensions");
 #endif
-
-/*
- * The number of PHYSMAP entries must be one less than the number of
- * PHYSSEG entries because the PHYSMAP entry that spans the largest
- * physical address that is accessible by ISA DMA is split into two
- * PHYSSEG entries.
- */
-#define	PHYSMAP_SIZE	(2 * (VM_PHYSSEG_MAX - 1))
-
-vm_paddr_t phys_avail[PHYSMAP_SIZE + 2];
-vm_paddr_t dump_avail[PHYSMAP_SIZE + 2];
-
-/* must be 2 less so 0 0 can signal end of chunks */
-#define	PHYS_AVAIL_ARRAY_END (nitems(phys_avail) - 2)
-#define	DUMP_AVAIL_ARRAY_END (nitems(dump_avail) - 2)
 
 struct kva_md_info kmi;
 
@@ -645,7 +633,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	    sdp->sd_lobase;
 	bzero(sf.sf_uc.uc_mcontext.mc_spare2,
 	    sizeof(sf.sf_uc.uc_mcontext.mc_spare2));
-	bzero(sf.sf_uc.__spare__, sizeof(sf.sf_uc.__spare__));
 
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
@@ -1138,7 +1125,7 @@ setup_priv_lcall_gate(struct proc *p)
  * Reset registers to default values on exec.
  */
 void
-exec_setregs(struct thread *td, struct image_params *imgp, u_long stack)
+exec_setregs(struct thread *td, struct image_params *imgp, uintptr_t stack)
 {
 	struct trapframe *regs;
 	struct pcb *pcb;
@@ -1185,7 +1172,7 @@ exec_setregs(struct thread *td, struct image_params *imgp, u_long stack)
 	regs->tf_cs = _ucodesel;
 
 	/* PS_STRINGS value for BSD/OS binaries.  It is 0 for non-BSD/OS. */
-	regs->tf_ebx = imgp->ps_strings;
+	regs->tf_ebx = (register_t)imgp->ps_strings;
 
         /*
          * Reset the hardware debug registers if they were in use.
@@ -1677,20 +1664,32 @@ static int
 add_physmap_entry(uint64_t base, uint64_t length, vm_paddr_t *physmap,
     int *physmap_idxp)
 {
+	uint64_t lim, ign;
 	int i, insert_idx, physmap_idx;
 
 	physmap_idx = *physmap_idxp;
-	
+
 	if (length == 0)
 		return (1);
 
-#ifndef PAE
-	if (base > 0xffffffff) {
-		printf("%uK of memory above 4GB ignored\n",
-		    (u_int)(length / 1024));
+	lim = 0x100000000;					/*  4G */
+	if (pae_mode && above4g_allow)
+		lim = above24g_allow ? -1ULL : 0x600000000;	/* 24G */
+	if (base >= lim) {
+		printf("%uK of memory above %uGB ignored, pae %d "
+		    "above4g_allow %d above24g_allow %d\n",
+		    (u_int)(length / 1024), (u_int)(lim >> 30), pae_mode,
+		    above4g_allow, above24g_allow);
 		return (1);
 	}
-#endif
+	if (base + length >= lim) {
+		ign = base + length - lim;
+		length -= ign;
+		printf("%uK of memory above %uGB ignored, pae %d "
+		    "above4g_allow %d above24g_allow %d\n",
+		    (u_int)(ign / 1024), (u_int)(lim >> 30), pae_mode,
+		    above4g_allow, above24g_allow);
+	}
 
 	/*
 	 * Find insertion point while checking for overlap.  Start off by
@@ -1724,7 +1723,7 @@ add_physmap_entry(uint64_t base, uint64_t length, vm_paddr_t *physmap,
 
 	physmap_idx += 2;
 	*physmap_idxp = physmap_idx;
-	if (physmap_idx == PHYSMAP_SIZE) {
+	if (physmap_idx == PHYS_AVAIL_ENTRIES) {
 		printf(
 		"Too many segments in the physical address map, giving up\n");
 		return (0);
@@ -1783,8 +1782,6 @@ add_smap_entries(struct bios_smap *smapbase, vm_paddr_t *physmap,
 static void
 basemem_setup(void)
 {
-	pt_entry_t *pte;
-	int i;
 
 	if (basemem > 640) {
 		printf("Preposterous BIOS basemem of %uK, truncating to 640K\n",
@@ -1792,15 +1789,7 @@ basemem_setup(void)
 		basemem = 640;
 	}
 
-	/*
-	 * Map pages between basemem and ISA_HOLE_START, if any, r/w into
-	 * the vm86 page table so that vm86 can scribble on them using
-	 * the vm86 map too.  XXX: why 2 ways for this and only 1 way for
-	 * page 0, at least as initialized here?
-	 */
-	pte = (pt_entry_t *)vm86paddr;
-	for (i = basemem / 4; i < 160; i++)
-		pte[i] = (i << PAGE_SHIFT) | PG_V | PG_RW | PG_U;
+	pmap_basemem_setup(basemem);
 }
 
 /*
@@ -1821,8 +1810,7 @@ getmemsize(int first)
 {
 	int has_smap, off, physmap_idx, pa_indx, da_indx;
 	u_long memtest;
-	vm_paddr_t physmap[PHYSMAP_SIZE];
-	pt_entry_t *pte;
+	vm_paddr_t physmap[PHYS_AVAIL_ENTRIES];
 	quad_t dcons_addr, dcons_size, physmem_tunable;
 	int hasbrokenint12, i, res;
 	u_int extmem;
@@ -1841,7 +1829,10 @@ getmemsize(int first)
 	 * Tell the physical memory allocator about pages used to store
 	 * the kernel and preloaded data.  See kmem_bootstrap_free().
 	 */
-	vm_phys_add_seg((vm_paddr_t)KERNLOAD, trunc_page(first));
+	vm_phys_early_add_seg((vm_paddr_t)KERNLOAD, trunc_page(first));
+
+	TUNABLE_INT_FETCH("hw.above4g_allow", &above4g_allow);
+	TUNABLE_INT_FETCH("hw.above24g_allow", &above24g_allow);
 
 	/*
 	 * Check if the loader supplied an SMAP memory map.  If so,
@@ -2001,13 +1992,15 @@ physmap_done:
 		Maxmem = atop(physmap[physmap_idx + 1]);
 
 	/*
-	 * By default enable the memory test on real hardware, and disable
-	 * it if we appear to be running in a VM.  This avoids touching all
-	 * pages unnecessarily, which doesn't matter on real hardware but is
-	 * bad for shared VM hosts.  Use a general name so that
-	 * one could eventually do more with the code than just disable it.
+	 * The boot memory test is disabled by default, as it takes a
+	 * significant amount of time on large-memory systems, and is
+	 * unfriendly to virtual machines as it unnecessarily touches all
+	 * pages.
+	 *
+	 * A general name is used as the code may be extended to support
+	 * additional tests beyond the current "page present" test.
 	 */
-	memtest = (vm_guest > VM_GUEST_NO) ? 0 : 1;
+	memtest = 0;
 	TUNABLE_ULONG_FETCH("hw.memtest.tests", &memtest);
 
 	if (atop(physmap[physmap_idx + 1]) != Maxmem &&
@@ -2033,7 +2026,6 @@ physmap_done:
 	phys_avail[pa_indx++] = physmap[0];
 	phys_avail[pa_indx] = physmap[0];
 	dump_avail[da_indx] = physmap[0];
-	pte = CMAP3;
 
 	/*
 	 * Get dcons buffer address
@@ -2054,7 +2046,7 @@ physmap_done:
 			end = trunc_page(physmap[i + 1]);
 		for (pa = round_page(physmap[i]); pa < end; pa += PAGE_SIZE) {
 			int tmp, page_bad, full;
-			int *ptr = (int *)CADDR3;
+			int *ptr;
 
 			full = FALSE;
 			/*
@@ -2078,8 +2070,7 @@ physmap_done:
 			/*
 			 * map page into kernel: valid, read/write,non-cacheable
 			 */
-			*pte = pa | PG_V | PG_RW | PG_N;
-			invltlb();
+			ptr = (int *)pmap_cmap3(pa, PG_V | PG_RW | PG_N);
 
 			tmp = *(int *)ptr;
 			/*
@@ -2132,7 +2123,7 @@ skip_memtest:
 				phys_avail[pa_indx] += PAGE_SIZE;
 			} else {
 				pa_indx++;
-				if (pa_indx == PHYS_AVAIL_ARRAY_END) {
+				if (pa_indx == PHYS_AVAIL_ENTRIES) {
 					printf(
 		"Too many holes in the physical address space, giving up\n");
 					pa_indx--;
@@ -2148,7 +2139,7 @@ do_dump_avail:
 				dump_avail[da_indx] += PAGE_SIZE;
 			} else {
 				da_indx++;
-				if (da_indx == DUMP_AVAIL_ARRAY_END) {
+				if (da_indx == PHYS_AVAIL_ENTRIES) {
 					da_indx--;
 					goto do_next;
 				}
@@ -2160,9 +2151,8 @@ do_next:
 				break;
 		}
 	}
-	*pte = 0;
-	invltlb();
-	
+	pmap_cmap3(0, 0);
+
 	/*
 	 * XXX
 	 * The last chunk must contain at least one page plus the message
@@ -2191,7 +2181,7 @@ static void
 i386_kdb_init(void)
 {
 #ifdef DDB
-	db_fetch_ksymtab(bootinfo.bi_symtab, bootinfo.bi_esymtab);
+	db_fetch_ksymtab(bootinfo.bi_symtab, bootinfo.bi_esymtab, 0);
 #endif
 	kdb_init();
 #ifdef KDB
@@ -2416,6 +2406,7 @@ init386(int first)
 
 	finishidentcpu();	/* Final stage of CPU initialization */
 	i386_setidt2();
+	pmap_set_nx();
 	initializecpu();	/* Initialize CPU registers */
 	initializecpucache();
 
@@ -2510,15 +2501,9 @@ init386(int first)
 
 	/* setup proc 0's pcb */
 	thread0.td_pcb->pcb_flags = 0;
-#if defined(PAE) || defined(PAE_TABLES)
-	thread0.td_pcb->pcb_cr3 = (int)IdlePDPT;
-#else
-	thread0.td_pcb->pcb_cr3 = (int)IdlePTD;
-#endif
+	thread0.td_pcb->pcb_cr3 = pmap_get_kcr3();
 	thread0.td_pcb->pcb_ext = 0;
 	thread0.td_frame = &proc0_tf;
-
-	cpu_probe_amdc1e();
 
 #ifdef FDT
 	x86_init_fdt();
@@ -2583,11 +2568,7 @@ machdep_init_trampoline(void)
 	    (int)dblfault_stack + PAGE_SIZE;
 	dblfault_tss->tss_ss = dblfault_tss->tss_ss0 = dblfault_tss->tss_ss1 =
 	    dblfault_tss->tss_ss2 = GSEL(GDATA_SEL, SEL_KPL);
-#if defined(PAE) || defined(PAE_TABLES)
-	dblfault_tss->tss_cr3 = (int)IdlePDPT;
-#else
-	dblfault_tss->tss_cr3 = (int)IdlePTD;
-#endif
+	dblfault_tss->tss_cr3 = pmap_get_kcr3();
 	dblfault_tss->tss_eip = (int)dblfault_handler;
 	dblfault_tss->tss_eflags = PSL_KERNEL;
 	dblfault_tss->tss_ds = dblfault_tss->tss_es =
@@ -2684,8 +2665,10 @@ smap_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	}
 	return (error);
 }
-SYSCTL_PROC(_machdep, OID_AUTO, smap, CTLTYPE_OPAQUE|CTLFLAG_RD, NULL, 0,
-    smap_sysctl_handler, "S,bios_smap_xattr", "Raw BIOS SMAP data");
+SYSCTL_PROC(_machdep, OID_AUTO, smap,
+    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
+    smap_sysctl_handler, "S,bios_smap_xattr",
+    "Raw BIOS SMAP data");
 
 void
 spinlock_enter(void)
@@ -2698,9 +2681,9 @@ spinlock_enter(void)
 		flags = intr_disable();
 		td->td_md.md_spinlock_count = 1;
 		td->td_md.md_saved_flags = flags;
+		critical_enter();
 	} else
 		td->td_md.md_spinlock_count++;
-	critical_enter();
 }
 
 void
@@ -2710,11 +2693,12 @@ spinlock_exit(void)
 	register_t flags;
 
 	td = curthread;
-	critical_exit();
 	flags = td->td_md.md_saved_flags;
 	td->td_md.md_spinlock_count--;
-	if (td->td_md.md_spinlock_count == 0)
+	if (td->td_md.md_spinlock_count == 0) {
+		critical_exit();
 		intr_restore(flags);
+	}
 }
 
 #if defined(I586_CPU) && !defined(NO_F00F_HACK)

@@ -1,4 +1,4 @@
-# $FreeBSD: 3a6a2f006b0b55f68de90fd32929a438de3be6ea $
+# $FreeBSD: 34b01504271812176c74d38a104641b69bac49b2 $
 
 PROG_CXX=	llvm-objdump
 
@@ -7,6 +7,7 @@ SRCS+=		COFFDump.cpp
 SRCS+=		ELFDump.cpp
 SRCS+=		MachODump.cpp
 SRCS+=		WasmDump.cpp
+SRCS+=		XCOFFDump.cpp
 SRCS+=		llvm-objdump.cpp
 
 LIBADD+=	z

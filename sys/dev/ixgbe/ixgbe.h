@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 459853ccf04cba83c0acc8c8248c9b65bf47871d $*/
+/*$FreeBSD: 30dd1d5368fb01cf59b534ba0dad2066b1c371a7 $*/
 
 
 #ifndef _IXGBE_H_
@@ -337,7 +337,6 @@ struct rx_ring {
 struct ix_rx_queue {
 	struct adapter		*adapter;
 	u32			msix;           /* This queue's MSIX vector */
-	u32			eims;           /* This queue's EIMS bit */
 	u32			eitr_setting;
 	struct resource		*res;
 	void			*tag;
@@ -440,7 +439,6 @@ struct adapter {
 	 */
 	struct ix_tx_queue	*tx_queues;
 	struct ix_rx_queue	*rx_queues;
-	u64			active_queues;
 
 	/* Multicast array memory */
 	struct ixgbe_mc_addr    *mta;
@@ -537,6 +535,18 @@ struct adapter {
         "\t1 - rx pause\n" \
         "\t2 - tx pause\n" \
         "\t3 - tx and rx pause"
+
+#define IXGBE_SYSCTL_DESC_RX_ERRS \
+		"\nSum of the following RX errors counters:\n" \
+		" * CRC errors,\n" \
+		" * illegal byte error count,\n" \
+		" * checksum error count,\n" \
+		" * missed packet count,\n" \
+		" * length error count,\n" \
+		" * undersized packets count,\n" \
+		" * fragmented packets count,\n" \
+		" * oversized packets count,\n" \
+		" * jabber count."
 
 /* Workaround to make 8.0 buildable */
 #if __FreeBSD_version >= 800000 && __FreeBSD_version < 800504

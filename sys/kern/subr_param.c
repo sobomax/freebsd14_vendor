@@ -37,19 +37,22 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c6f6eba3d9125056bb5198141e999392f8d9f01 $");
+__FBSDID("$FreeBSD: 39ec48a32cb383868ec1f449d9d941f4556dbf96 $");
 
 #include "opt_param.h"
 #include "opt_msgbuf.h"
+#include "opt_maxphys.h"
 #include "opt_maxusers.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/buf.h>
 #include <sys/kernel.h>
 #include <sys/limits.h>
 #include <sys/msgbuf.h>
 #include <sys/sysctl.h>
 #include <sys/proc.h>
+#include <sys/vnode.h>
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>
@@ -93,14 +96,15 @@ int	maxprocperuid;			/* max # of procs per user */
 int	maxfiles;			/* sys. wide open files limit */
 int	maxfilesperproc;		/* per-proc open files limit */
 int	msgbufsize;			/* size of kernel message buffer */
-int	nbuf;
+int	nbuf;				/* number of bcache bufs */
 int	bio_transient_maxcnt;
 int	ngroups_max;			/* max # groups per process */
 int	nswbuf;
 pid_t	pid_max = PID_MAX;
-long	maxswzone;			/* max swmeta KVA storage */
-long	maxbcache;			/* max buffer cache KVA storage */
-long	maxpipekva;			/* Limit on pipe KVA */
+u_long	maxswzone;			/* max swmeta KVA storage */
+u_long	maxbcache;			/* max buffer cache KVA storage */
+u_long	maxpipekva;			/* Limit on pipe KVA */
+u_long	maxphys;			/* max raw I/O transfer size */
 int	vm_guest = VM_GUEST_NO;		/* Running as virtual machine guest? */
 u_long	maxtsiz;			/* max text size */
 u_long	dfldsiz;			/* initial data size limit */
@@ -136,8 +140,9 @@ SYSCTL_ULONG(_kern, OID_AUTO, maxssiz, CTLFLAG_RWTUN | CTLFLAG_NOFETCH, &maxssiz
     "Maximum stack size");
 SYSCTL_ULONG(_kern, OID_AUTO, sgrowsiz, CTLFLAG_RWTUN | CTLFLAG_NOFETCH, &sgrowsiz, 0,
     "Amount to grow stack on a stack fault");
-SYSCTL_PROC(_kern, OID_AUTO, vm_guest, CTLFLAG_RD | CTLTYPE_STRING,
-    NULL, 0, sysctl_kern_vm_guest, "A",
+SYSCTL_PROC(_kern, OID_AUTO, vm_guest,
+    CTLFLAG_RD | CTLTYPE_STRING | CTLFLAG_MPSAFE, NULL, 0,
+    sysctl_kern_vm_guest, "A",
     "Virtual machine guest detected?");
 
 /*
@@ -145,14 +150,16 @@ SYSCTL_PROC(_kern, OID_AUTO, vm_guest, CTLFLAG_RD | CTLTYPE_STRING,
  * corresponding enum VM_GUEST members.
  */
 static const char *const vm_guest_sysctl_names[] = {
-	"none",
-	"generic",
-	"xen",
-	"hv",
-	"vmware",
-	"kvm",
-	"bhyve",
-	NULL
+	[VM_GUEST_NO] = "none",
+	[VM_GUEST_VM] = "generic",
+	[VM_GUEST_XEN] = "xen",
+	[VM_GUEST_HV] = "hv",
+	[VM_GUEST_VMWARE] = "vmware",
+	[VM_GUEST_KVM] = "kvm",
+	[VM_GUEST_BHYVE] = "bhyve",
+	[VM_GUEST_VBOX] = "vbox",
+	[VM_GUEST_PARALLELS] = "parallels",
+	[VM_LAST] = NULL
 };
 CTASSERT(nitems(vm_guest_sysctl_names) - 1 == VM_LAST);
 
@@ -163,7 +170,7 @@ void
 init_param1(void)
 {
 
-#if !defined(__mips__) && !defined(__arm64__) && !defined(__sparc64__)
+#if !defined(__mips__) && !defined(__arm64__)
 	TUNABLE_INT_FETCH("kern.kstack_pages", &kstack_pages);
 #endif
 	hz = -1;
@@ -179,6 +186,10 @@ init_param1(void)
 	 * sign problems sooner.
 	 */
 	ticks = INT_MAX - (hz * 10 * 60);
+
+	vn_lock_pair_pause_max = hz / 100;
+	if (vn_lock_pair_pause_max == 0)
+		vn_lock_pair_pause_max = 1;
 
 #ifdef VM_SWZONE_SIZE_MAX
 	maxswzone = VM_SWZONE_SIZE_MAX;
@@ -285,12 +296,30 @@ init_param2(long physpages)
 	nbuf = NBUF;
 	TUNABLE_INT_FETCH("kern.nbuf", &nbuf);
 	TUNABLE_INT_FETCH("kern.bio_transient_maxcnt", &bio_transient_maxcnt);
+	maxphys = MAXPHYS;
+	TUNABLE_ULONG_FETCH("kern.maxphys", &maxphys);
+	if (maxphys == 0) {
+		maxphys = MAXPHYS;
+	} else if (__bitcountl(maxphys) != 1) {	/* power of two */
+		if (flsl(maxphys) == NBBY * sizeof(maxphys))
+			maxphys = MAXPHYS;
+		else
+			maxphys = 1UL << flsl(maxphys);
+	}
+	if (maxphys < PAGE_SIZE)
+		maxphys = MAXPHYS;
+
+	/*
+	 * Physical buffers are pre-allocated buffers (struct buf) that
+	 * are used as temporary holders for I/O, such as paging I/O.
+	 */
+	TUNABLE_INT_FETCH("kern.nswbuf", &nswbuf);
 
 	/*
 	 * The default for maxpipekva is min(1/64 of the kernel address space,
 	 * max(1/64 of main memory, 512KB)).  See sys_pipe.c for more details.
 	 */
-	maxpipekva = (physpages / 64) * PAGE_SIZE;
+	maxpipekva = ptoa(physpages / 64);
 	TUNABLE_LONG_FETCH("kern.ipc.maxpipekva", &maxpipekva);
 	if (maxpipekva < 512 * 1024)
 		maxpipekva = 512 * 1024;

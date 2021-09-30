@@ -1,6 +1,7 @@
-# $FreeBSD: 1d5308d704890597a6be2cbcbba02d7f8e791655 $
+# $FreeBSD: b96813b90c19a81d09e4276ba3dc97b1efd2de96 $
 
-NAME=	irc
-SRCS=	alias_irc.c
+PACKAGE=	natd
+NAME=		irc
+SRCS=		alias_irc.c
 
 .include <bsd.lib.mk>

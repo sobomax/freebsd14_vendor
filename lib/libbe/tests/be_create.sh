@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d9d0a89931614153311a4996b02de16843f97f6b $
+# $FreeBSD: ef64628a4de80e8e8bdcaed5cccd95a3fb5c1d51 $
 
 # The code for the following tests was copied from the
 # bectl tests found in src/sbin/bectl/tests, modified as needed.
@@ -88,6 +88,16 @@ libbe_create_head()
 }
 libbe_create_body()
 {
+	if [ "$(atf_config_get ci false)" = "true" ] && \
+		[ "$(uname -p)" = "i386" ]; then
+		atf_skip "https://bugs.freebsd.org/249055"
+	fi
+
+	if [ "$(atf_config_get ci false)" = "true" ] && \
+		[ "$(uname -p)" = "armv7" ]; then
+		atf_skip "https://bugs.freebsd.org/249229"
+	fi
+
 	cwd=$(atf_get_srcdir)
 	zpool=$(make_zpool_name)
 	disk=${cwd}/disk.img

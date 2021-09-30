@@ -1,7 +1,12 @@
-# $FreeBSD: 675acac1d0f4ae1cf93017a09b81859ca5e82acd $
+# $FreeBSD: 9ba132de924446355eb3ce26cb7f0064f1fd5620 $
 
-ATF_TESTS_SH=	pfctl_test
+PACKAGE=	tests
 
+ATF_TESTS_C=	pfctl_test
+ATF_TESTS_SH=	macro
+
+LIBADD+=	sbuf
 SUBDIR+=	files
+WARNS=6
 
 .include <bsd.test.mk>

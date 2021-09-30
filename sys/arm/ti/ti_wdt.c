@@ -24,12 +24,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 179b783029dbeeff08816a3951f7e4b69ded3387 $");
+__FBSDID("$FreeBSD: 29ae41eac531ee25e2fe778ada6cbfa5f6e08b68 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/malloc.h>
@@ -48,7 +49,6 @@ __FBSDID("$FreeBSD: 179b783029dbeeff08816a3951f7e4b69ded3387 $");
 
 #include <machine/bus.h>
 
-#include <arm/ti/ti_prcm.h>
 #include <arm/ti/ti_wdt.h>
 
 #ifdef DEBUG
@@ -92,6 +92,7 @@ static driver_t ti_wdt_driver = {
 static devclass_t ti_wdt_devclass;
 
 DRIVER_MODULE(ti_wdt, simplebus, ti_wdt_driver, ti_wdt_devclass, 0, 0);
+MODULE_DEPEND(ti_wdt, ti_sysc, 1, 1, 1);
 
 static __inline uint32_t
 ti_wdt_reg_read(struct ti_wdt_softc *sc, uint32_t reg)

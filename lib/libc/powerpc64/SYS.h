@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$NetBSD: SYS.h,v 1.8 2002/01/14 00:55:56 thorpej Exp $
- * $FreeBSD: cc1c268adf293251cc578224f2344222e573dc06 $
+ * $FreeBSD: 9ca5af4b70edfec2d540e0c55a988e9705696cec $
  */
 
 #include <sys/syscall.h>
@@ -74,7 +74,8 @@ ENTRY(__sys_##name);						\
 	addi	%r1,%r1,48;					\
 	ld	%r0,16(%r1);					\
 	mtlr	%r0;						\
-	blr;
+	blr;							\
+END(__sys_##name)
 
 #define	RSYSCALL(name)						\
 	.text;							\
@@ -93,4 +94,5 @@ ENTRY(__sys_##name);						\
 	addi	%r1,%r1,48;					\
 	ld	%r0,16(%r1);					\
 	mtlr	%r0;						\
-	blr;
+	blr;							\
+END(__sys_##name)

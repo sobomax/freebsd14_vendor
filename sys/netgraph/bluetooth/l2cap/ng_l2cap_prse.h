@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_prse.h,v 1.2 2003/04/28 21:44:59 max Exp $
- * $FreeBSD: f6829adc3a6f4194770efa0985a7f89cd10a1c6f $
+ * $FreeBSD: b60be9f5bc06913ce0175eba2345a502020c8f9c $
  */
 
 /***************************************************************************
@@ -86,4 +86,3 @@ static const struct ng_cmdlist	ng_l2cap_cmdlist[] = {
 };
 
 #endif /* ndef _NETGRAPH_L2CAP_PRSE_H_ */
-

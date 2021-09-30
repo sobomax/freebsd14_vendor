@@ -1,4 +1,4 @@
-/* $FreeBSD: 2aaa1a374bd781f90e986e2ecfffa4be863fec21 $ */
+/* $FreeBSD: b198a6a39d81ca89ce243f583c8ac055415666d7 $ */
 /*	$NetBSD: denode.h,v 1.25 1997/11/17 15:36:28 ws Exp $	*/
 
 /*-
@@ -213,7 +213,7 @@ struct denode {
 	     ((dep)->de_Attributes & ATTR_DIRECTORY) ? 0 : (dep)->de_FileSize), \
 	 putushort((dp)->deHighClust, (dep)->de_StartCluster >> 16))
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(MAKEFS)
 
 #define	VTODE(vp)	((struct denode *)(vp)->v_data)
 #define	DETOV(de)	((de)->de_vnode)
@@ -262,9 +262,11 @@ struct defid {
 
 extern struct vop_vector msdosfs_vnodeops;
 
+#ifdef _KERNEL
 int msdosfs_lookup(struct vop_cachedlookup_args *);
 int msdosfs_inactive(struct vop_inactive_args *);
 int msdosfs_reclaim(struct vop_reclaim_args *);
+#endif
 
 /*
  * Internal service routine prototypes.
@@ -283,5 +285,5 @@ int deupdat(struct denode *dep, int waitfor);
 int removede(struct denode *pdep, struct denode *dep);
 int detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred);
 int doscheckpath( struct denode *source, struct denode *target);
-#endif	/* _KERNEL */
+#endif	/* _KERNEL || MAKEFS */
 #endif	/* !_FS_MSDOSFS_DENODE_H_ */

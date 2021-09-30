@@ -1,8 +1,7 @@
 #
-# $FreeBSD: 4fcfe028d9f75a189a85468a49b35e1779927ab9 $
+# $FreeBSD: ead5619afb67758bfa08951e3686ef8ad42084cf $
 #
 
-PACKAGE=lib${LIB}
 SHLIBDIR?=	/lib
 
 .include <bsd.own.mk>

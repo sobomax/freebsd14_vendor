@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: a263190ea093853969a06451a2ef6d21eef99795 $
+ * $FreeBSD: eea7e2f56968090dae28a8f3a4cd7735e4066d06 $
  */
 
 #define	FREEBSD32_SYS_syscall	0
@@ -31,7 +31,7 @@
 #define	FREEBSD32_SYS_setuid	23
 #define	FREEBSD32_SYS_getuid	24
 #define	FREEBSD32_SYS_geteuid	25
-#define	FREEBSD32_SYS_ptrace	26
+#define	FREEBSD32_SYS_freebsd32_ptrace	26
 #define	FREEBSD32_SYS_freebsd32_recvmsg	27
 #define	FREEBSD32_SYS_freebsd32_sendmsg	28
 #define	FREEBSD32_SYS_freebsd32_recvfrom	29
@@ -167,7 +167,7 @@
 #define	FREEBSD32_SYS_freebsd32_shmsys	171
 				/* 173 is freebsd6 freebsd32_pread */
 				/* 174 is freebsd6 freebsd32_pwrite */
-#define	FREEBSD32_SYS_ntp_adjtime	176
+#define	FREEBSD32_SYS_freebsd32_ntp_adjtime	176
 #define	FREEBSD32_SYS_setgid	181
 #define	FREEBSD32_SYS_setegid	182
 #define	FREEBSD32_SYS_seteuid	183
@@ -404,7 +404,7 @@
 #define	FREEBSD32_SYS_freebsd32_truncate	479
 #define	FREEBSD32_SYS_freebsd32_ftruncate	480
 #define	FREEBSD32_SYS_thr_kill2	481
-#define	FREEBSD32_SYS_shm_open	482
+#define	FREEBSD32_SYS_freebsd12_shm_open	482
 #define	FREEBSD32_SYS_shm_unlink	483
 #define	FREEBSD32_SYS_cpuset	484
 #define	FREEBSD32_SYS_freebsd32_cpuset_setid	485
@@ -431,7 +431,7 @@
 #define	FREEBSD32_SYS_freebsd32_jail_get	506
 #define	FREEBSD32_SYS_freebsd32_jail_set	507
 #define	FREEBSD32_SYS_jail_remove	508
-#define	FREEBSD32_SYS_closefrom	509
+#define	FREEBSD32_SYS_freebsd12_closefrom	509
 #define	FREEBSD32_SYS_freebsd32_semctl	510
 #define	FREEBSD32_SYS_freebsd32_msgctl	511
 #define	FREEBSD32_SYS_freebsd32_shmctl	512
@@ -494,6 +494,16 @@
 #define	FREEBSD32_SYS_fhlink	565
 #define	FREEBSD32_SYS_fhlinkat	566
 #define	FREEBSD32_SYS_fhreadlink	567
+#define	FREEBSD32_SYS_funlinkat	568
+#define	FREEBSD32_SYS_copy_file_range	569
 #define	FREEBSD32_SYS_freebsd32___sysctlbyname	570
+#define	FREEBSD32_SYS_shm_open2	571
+#define	FREEBSD32_SYS_shm_rename	572
+#define	FREEBSD32_SYS_sigfastblock	573
+#define	FREEBSD32_SYS___realpathat	574
 #define	FREEBSD32_SYS_close_range	575
-#define	FREEBSD32_SYS_MAXSYSCALL	576
+#define	FREEBSD32_SYS_rpctls_syscall	576
+#define	FREEBSD32_SYS___specialfd	577
+#define	FREEBSD32_SYS_freebsd32_aio_writev	578
+#define	FREEBSD32_SYS_freebsd32_aio_readv	579
+#define	FREEBSD32_SYS_MAXSYSCALL	580

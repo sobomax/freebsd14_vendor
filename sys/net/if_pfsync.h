@@ -44,9 +44,8 @@
 
 /*
  *	$OpenBSD: if_pfsync.h,v 1.35 2008/06/29 08:42:15 mcbride Exp $
- *	$FreeBSD: 3715fdb55afa6ccef9f5ee95cf87a26f47e13479 $
+ *	$FreeBSD: f26a2ae34eedf25293073dbf52fbff75deecbaf4 $
  */
-
 
 #ifndef _NET_IF_PFSYNC_H_
 #define	_NET_IF_PFSYNC_H_

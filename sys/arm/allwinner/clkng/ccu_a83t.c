@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d93f53c13ba75f0faf8e9dfe35b119cb74830d5b $
+ * $FreeBSD: c32b1d624161aa11cf3db39a6805168c9d4d043b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d93f53c13ba75f0faf8e9dfe35b119cb74830d5b $");
+__FBSDID("$FreeBSD: c32b1d624161aa11cf3db39a6805168c9d4d043b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,8 +49,8 @@ __FBSDID("$FreeBSD: d93f53c13ba75f0faf8e9dfe35b119cb74830d5b $");
 
 #include <arm/allwinner/clkng/aw_ccung.h>
 
-#include <gnu/dts/include/dt-bindings/clock/sun8i-a83t-ccu.h>
-#include <gnu/dts/include/dt-bindings/reset/sun8i-a83t-ccu.h>
+#include <dt-bindings/clock/sun8i-a83t-ccu.h>
+#include <dt-bindings/reset/sun8i-a83t-ccu.h>
 
 /* Non-exported clocks */
 
@@ -80,7 +80,6 @@ __FBSDID("$FreeBSD: d93f53c13ba75f0faf8e9dfe35b119cb74830d5b $");
 
 /* Non-exported fixed clocks */
 #define CLK_OSC_12M		150
-
 
 static struct aw_ccung_reset a83t_ccu_resets[] = {
 	CCU_RESET(RST_USB_PHY0, 0xcc, 0)

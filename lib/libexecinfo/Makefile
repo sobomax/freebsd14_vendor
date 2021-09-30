@@ -1,15 +1,17 @@
-# $FreeBSD: 9086d18d4347abb996016b40e28591611e33ce83 $
+# $FreeBSD: cc7b5a406638d118e68cd084a984804589680caa $
 
 PACKAGE=lib${LIB}
-LIBEXECINFO=	${SRCTOP}/contrib/libexecinfo
+
+.include <src.opts.mk>
 
 LIB=		execinfo
 SHLIB_MAJOR=	1
 
-.PATH:		${LIBEXECINFO}
+.PATH:		${SRCTOP}/contrib/libexecinfo
 
 INCS=		execinfo.h
 SRCS=		backtrace.c symtab.c unwind.c
+CFLAGS+=	-I${SRCTOP}/contrib/llvm-project/libunwind/include
 
 LIBADD=		elf
 
@@ -19,5 +21,8 @@ MLINKS+=	backtrace.3 backtrace_symbols.3
 MLINKS+=	backtrace.3 backtrace_symbols_fmt.3
 MLINKS+=	backtrace.3 backtrace_symbols_fd.3
 MLINKS+=	backtrace.3 backtrace_symbols_fd_fmt.3
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.lib.mk>

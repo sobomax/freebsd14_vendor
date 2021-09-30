@@ -1,4 +1,4 @@
-# $FreeBSD: 2088cfaf853dfe86d376070cd8466dd0ddbd82e6 $
+# $FreeBSD: 8ecf2c77f117a2909d9750efd60cd4df24d36d4f $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en
@@ -8,12 +8,13 @@ mlx5_en_ethtool.c \
 mlx5_en_main.c \
 mlx5_en_tx.c \
 mlx5_en_flow_table.c \
+mlx5_en_hw_tls.c \
 mlx5_en_rx.c \
 mlx5_en_rl.c \
 mlx5_en_txrx.c \
 mlx5_en_port_buffer.c
 SRCS+=	${LINUXKPI_GENSRCS}
-SRCS+=	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h
+SRCS+=	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h opt_kern_tls.h
 
 .if defined(HAVE_PER_CQ_EVENT_PACKET)
 CFLAGS+= -DHAVE_PER_CQ_EVENT_PACKET

@@ -29,7 +29,7 @@
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
  *
- * $FreeBSD: a602d06921e7ee5482615e43f2672b624ab014a3 $
+ * $FreeBSD: dfff24e90db5e494ace89e6f64f4c67d6472d5e9 $
  */
 
 #include <errno.h>
@@ -37,7 +37,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define RANDOM_MAX ((1<<31) - 1)
+#define RANDOM_MAX ((1U<<31) - 1)
 
 int main(int argc, char** argv){
 	useconds_t max_usecs, usecs;

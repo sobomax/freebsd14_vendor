@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2689483d412fa5d2159e795e1abb38c677bf38f9 $");
+__FBSDID("$FreeBSD: 24ad7798eef0d1afee15ea626eb7c72470ab66ad $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,7 +86,6 @@ struct rk_pinctrl_gpio {
 	char		*gpio_name;
 	device_t	gpio_dev;
 };
-
 
 struct rk_pinctrl_softc;
 
@@ -468,7 +466,6 @@ static struct rk_pinctrl_pin_fixup rk3328_pin_fixup[] = {
 	RK_PINFIX(2, 15, 0x28,  0, 0x7),
 	RK_PINFIX(2, 23, 0x30, 14, 0x6000),
 };
-
 
 static struct rk_pinctrl_pin_drive rk3328_pin_drive[] = {
 	/*       bank sub  offs val ma */
@@ -933,7 +930,28 @@ rk_pinctrl_configure_pin(struct rk_pinctrl_softc *sc, uint32_t *pindata)
 	/* Find syscon */
 	syscon = sc->conf->get_syscon(sc, bank);
 
-	/* Parse pin function */
+	/* Setup GPIO properties first */
+	rv = rk_pinctrl_handle_io(sc, pin_conf, bank, pin);
+
+	/* Then pin pull-up/down */
+	bias = sc->conf->parse_bias(pin_conf, bank);
+	if (bias >= 0) {
+		reg = sc->conf->get_pd_offset(sc, bank);
+		reg += bank * 0x10 + ((pin / 8) * 0x4);
+		bit = (pin % 8) * 2;
+		mask = (0x3 << bit);
+		SYSCON_MODIFY_4(syscon, reg, mask, bias << bit | (mask << 16));
+	}
+
+	/* Then drive strength */
+	rv = rk_pinctrl_parse_drive(sc, pin_conf, bank, subbank, &drive, &reg);
+	if (rv == 0) {
+		bit = (pin % 8) * 2;
+		mask = (0x3 << bit);
+		SYSCON_MODIFY_4(syscon, reg, mask, drive << bit | (mask << 16));
+	}
+
+	/* Finally set the pin function */
 	reg = sc->conf->iomux_conf[i].offset;
 	switch (sc->conf->iomux_conf[i].nbits) {
 	case 4:
@@ -967,28 +985,6 @@ rk_pinctrl_configure_pin(struct rk_pinctrl_softc *sc, uint32_t *pindata)
 	 * without hi-word write mask.
 	 */
 	SYSCON_MODIFY_4(syscon, reg, mask, function << bit | (mask << 16));
-
-	/* Pull-Up/Down */
-	bias = sc->conf->parse_bias(pin_conf, bank);
-	if (bias >= 0) {
-		reg = sc->conf->get_pd_offset(sc, bank);
-
-		reg += bank * 0x10 + ((pin / 8) * 0x4);
-		bit = (pin % 8) * 2;
-		mask = (0x3 << bit);
-		SYSCON_MODIFY_4(syscon, reg, mask, bias << bit | (mask << 16));
-	}
-
-	/* Drive Strength */
-	rv = rk_pinctrl_parse_drive(sc, pin_conf, bank, subbank, &drive, &reg);
-	if (rv == 0) {
-		bit = (pin % 8) * 2;
-		mask = (0x3 << bit);
-		SYSCON_MODIFY_4(syscon, reg, mask, drive << bit | (mask << 16));
-	}
-
-	/* Input/Outpot + default level */
-	rv = rk_pinctrl_handle_io(sc, pin_conf, bank, pin);
 }
 
 static int

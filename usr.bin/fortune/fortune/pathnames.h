@@ -27,8 +27,10 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 5/31/93
- *	$FreeBSD: 149b3e8d56b45c79d9f3e8a35a289cb25b5e5d97 $
+ *	$FreeBSD: b6c9985ea885827ffd6141712e1cb6ea3848c31c $
  */
 
+#include <paths.h>
+
 #define	FORTDIR		"/usr/share/games/fortune:" \
-			"/usr/local/share/games/fortune"
+			_PATH_LOCALBASE "/share/games/fortune"

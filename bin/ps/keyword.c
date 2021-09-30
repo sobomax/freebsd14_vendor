@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)keyword.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a3ae8b9bea115a26868c27b07381c6056dbe5931 $");
+__FBSDID("$FreeBSD: 2a8382a2273e5c7a057063f5712e4d3c3fef8ab0 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -253,7 +253,7 @@ showkey(void)
 			i = len;
 			sep = "\n";
 		}
-		xo_emit("{P:/%s}{l:key/%s}", sep, p);
+		xo_emit("{P:/%hs}{l:key/%hs}", sep, p);
 		sep = " ";
 	}
 	xo_emit("\n");

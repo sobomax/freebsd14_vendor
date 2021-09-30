@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 333243e941a7ceea87ea40dcd9591a7338e4fc36 $
+ * $FreeBSD: ad1f436e169ca096364714bafaabdb8933fc6572 $
  */
 
 #ifndef _PWM_H_
@@ -46,6 +45,5 @@ struct pwm_state {
 
 #define	PWMGETSTATE	_IOWR('G', 0, struct pwm_state)
 #define	PWMSETSTATE	_IOWR('G', 1, struct pwm_state)
-
 
 #endif /* _PWM_H_ */

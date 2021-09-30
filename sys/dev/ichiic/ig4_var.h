@@ -32,7 +32,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3bd3fd998299b0eca6d4e6253ca93bac6bc30a7b $
+ * $FreeBSD: 7a94e4f5cffd759f082400120c891c4ccd492bd0 $
  */
 
 #ifndef _ICHIIC_IG4_VAR_H_
@@ -43,10 +43,17 @@
 #include "pci_if.h"
 #include "iicbus_if.h"
 
-enum ig4_vers { IG4_HASWELL, IG4_ATOM, IG4_SKYLAKE, IG4_APL, IG4_CANNONLAKE };
+enum ig4_vers {
+	IG4_HASWELL,
+	IG4_ATOM,
+	IG4_SKYLAKE,
+	IG4_APL,
+	IG4_CANNONLAKE,
+	IG4_TIGERLAKE
+};
+
 /* Controller has additional registers */
-#define	IG4_HAS_ADDREGS(vers)	((vers) == IG4_SKYLAKE || \
-	(vers) == IG4_APL || (vers) == IG4_CANNONLAKE)
+#define	IG4_HAS_ADDREGS(vers)	((vers) >= IG4_SKYLAKE)
 
 struct ig4_hw {
 	uint32_t	ic_clock_rate;	/* MHz */

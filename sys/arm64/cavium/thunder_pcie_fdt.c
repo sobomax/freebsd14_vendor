@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4b0ce0eba79f9fee35b58cf1df251629be87a1a $");
+__FBSDID("$FreeBSD: 115b89b67b8848c11ac790fdc68a3c9f0885d349 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -89,7 +89,6 @@ DRIVER_MODULE(thunder_pcib, simplebus, thunder_pcie_fdt_driver,
     thunder_pcie_fdt_devclass, 0, 0);
 DRIVER_MODULE(thunder_pcib, ofwbus, thunder_pcie_fdt_driver,
     thunder_pcie_fdt_devclass, 0, 0);
-
 
 static int
 thunder_pcie_fdt_probe(device_t dev)

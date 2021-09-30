@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 226e2f5a6f346fbb9d60b0f6359c5fb33bf74bc9 $");
+__FBSDID("$FreeBSD: c4a2c6cd0d27218775526487d5b2ff333f459267 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -312,7 +312,7 @@ agp_intel_resume(device_t dev)
 {
 	struct agp_intel_softc *sc;
 	sc = device_get_softc(dev);
-	
+
 	AGP_SET_APERTURE(dev, sc->current_aperture);
 	agp_intel_commit_gatt(dev);
 	return (bus_generic_resume(dev));
@@ -422,7 +422,6 @@ static device_method_t agp_intel_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

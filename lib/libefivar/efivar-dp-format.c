@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 274c2fccd6225e33a279fd72d4f757f715bc4e48 $");
+__FBSDID("$FreeBSD: aa875dc45e70d36b01237e8d9f837a2bbfbc908a $");
 
 #include <efivar.h>
 #include <stdio.h>
@@ -2412,12 +2412,19 @@ UefiDevicePathLibConvertDevicePathToText (
   }
 }
 
-
 ssize_t
 efidp_format_device_path(char *buf, size_t len, const_efidp dp, ssize_t max)
 {
 	char *str;
 	ssize_t retval;
+
+	/*
+	 * Basic sanity check on the device path.
+	 */
+	if (!IsDevicePathValid((CONST EFI_DEVICE_PATH_PROTOCOL *) dp, max)) {
+		*buf = '\0';
+		return 0;
+	}
 
 	str = UefiDevicePathLibConvertDevicePathToText (
 		__DECONST(EFI_DEVICE_PATH_PROTOCOL *, dp), FALSE, TRUE);

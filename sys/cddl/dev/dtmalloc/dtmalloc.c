@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: 49516a27a6352e795e4896545b09c324c7d44411 $
+ * $FreeBSD: 3f584dc0860e26ed2da3efa11b87cd72273c1a49 $
  *
  */
 
@@ -114,7 +114,7 @@ static void
 dtmalloc_type_cb(struct malloc_type *mtp, void *arg __unused)
 {
 	char name[DTRACE_FUNCNAMELEN];
-	struct malloc_type_internal *mtip = mtp->ks_handle;
+	struct malloc_type_internal *mtip = &mtp->ks_mti;
 	int i;
 
 	/*

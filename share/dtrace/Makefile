@@ -1,4 +1,4 @@
-# $FreeBSD: 86e47bc894694136e1b3327a8d029b048a760b81 $
+# $FreeBSD: 95e0b4fee4e3f15937ee9a64a19da5c0ce57c41f $
 #
 # Hand installing our scripts and optionally (based on MK_CDDL) installing
 # the DTraceToolkit.
@@ -21,7 +21,7 @@ SCRIPTS=	blocking \
 
 SCRIPTSDIR= ${SHAREDIR}/dtrace
 
-DSRCS=		mbuf.d
+DSRCS=		mbuf.d ipfw.d
 
 FILES=		${DSRCS}
 FILESDIR=	/usr/lib/dtrace

@@ -1,4 +1,4 @@
-# $FreeBSD: b5f138aaf8a0549c149c118045da67815b0d4055 $
+# $FreeBSD: 7c736b955a68bf05c7b7de7687f62fe680546e3d $
 
 ATF_TEST=true
 . $(atf_get_srcdir)/conf.sh
@@ -28,7 +28,7 @@ sync_read_error_2_disks_body()
 	atf_check gmirror label $name $md1
 	devwait
 
-	atf_check -s ignore -e empty -o not-empty sysctl ${REG_READ_FP}='1*return(5)'
+	atf_check -s ignore -e empty -o not-empty sysctl ${REG_READ_FP}="1*return(5)[pid $(gmirror_worker_pid)]"
 
 	# If a read error occurs while synchronizing and the mirror contains
 	# a single active disk, gmirror has no choice but to fail the
@@ -75,7 +75,7 @@ sync_read_error_3_disks_body()
 	atf_check gmirror insert $name $md2
 	syncwait
 
-	atf_check -s exit:0 -e empty -o not-empty sysctl ${REG_READ_FP}='1*return(5)'
+	atf_check -s exit:0 -e empty -o not-empty sysctl ${REG_READ_FP}="1*return(5)[pid $(gmirror_worker_pid)]"
 
 	# If a read error occurs while synchronizing a new disk, and we have
 	# multiple active disks, we retry the read after an error. The disk

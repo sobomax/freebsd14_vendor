@@ -39,7 +39,7 @@
 #include <dev/sound/pci/ds1.h>
 #include <dev/sound/pci/ds1-fw.h>
 
-SND_DECLARE_FILE("$FreeBSD: 9c7c75cb175be76b7d3365efd67914115df5eaf4 $");
+SND_DECLARE_FILE("$FreeBSD: d9641b632051ef97aa84be7de7a4fed396a963e0 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -765,7 +765,6 @@ ds_intr(void *p)
 		i = ds_rd(sc, YDSXGR_MODE, 4);
 		if (x)
 			ds_wr(sc, YDSXGR_MODE, i | 0x00000002, 4);
-
 	}
 	snd_mtxunlock(sc->lock);
 }

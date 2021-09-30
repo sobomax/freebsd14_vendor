@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea30675d66b0cf8b2cb653a78b37c1da1e84b179 $");
+__FBSDID("$FreeBSD: c609db52ed2dc2945c42a45e82113e11d56fa8ae $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -478,6 +478,5 @@ image_patch_table hal_functbl[] = {
 	{ NULL, (FUNC)dummy, NULL, 0, WINDRV_WRAP_STDCALL },
 
 	/* End of list. */
-
 	{ NULL, NULL, NULL }
 };

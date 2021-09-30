@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Copyright (c) 2005 Poul-Henning Kamp.
-# Copyright (c) 2016 M. Warner Losh.
-# All rights reserved.
+# Copyright (c) 2005 Poul-Henning Kamp All rights reserved.
+# Copyright (c) 2016 M. Warner Losh <imp@FreeBSD.org>
+#
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 0832179ba22718580045aceba11a495b3b6bd0b0 $
+# $FreeBSD: b59a9e795b66fa38ad7cf8288734118e46861284 $
 #
 
 # Media geometry, only relevant if bios doesn't understand LBA.

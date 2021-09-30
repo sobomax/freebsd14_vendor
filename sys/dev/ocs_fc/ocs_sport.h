@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 88bc5f5d949a53914a6dd0563243652ad1ac5abb $
+ * $FreeBSD: a89d895b48201736e0310f94b4dfa405f5ca839e $
  */
 
 /**
@@ -107,7 +107,5 @@ extern ocs_remote_node_group_t *ocs_remote_node_group_alloc(ocs_node_group_dir_t
 extern void ocs_remote_node_group_free(ocs_remote_node_group_t *node_group);
 extern int ocs_node_group_init(ocs_node_t *node);
 extern void ocs_node_group_free(ocs_node_t *node);
-
-
 
 #endif 

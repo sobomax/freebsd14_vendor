@@ -36,9 +36,8 @@
  *    TORT (INCLUDING NEGLIGENCE OR OTHERWISE), EVEN IF ADVISED OF
  *    THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1ced180b77639c04811db6d8268eb0b75c5f4a36 $
+ * $FreeBSD: 7e28d7b9b5edb4263fde07634ece12b9b017e98f $
  */
-
 
 /*  *********************************************************************
     *  Broadcom Common Firmware Environment (CFE)

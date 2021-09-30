@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a5db378daf8ee7839b08eafbf2d00c380d7c9d5 $");
+__FBSDID("$FreeBSD: 2b1c383ded103b21a059d090685deb81eabcf41f $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -88,7 +88,7 @@ fan_management_proc(void)
 	/* Nothing to manage? */
 	if (SLIST_EMPTY(&fans))
 		kproc_exit(0);
-	
+
 	while (1) {
 		pmac_therm_manage_fans();
 		pause("pmac_therm", hz);
@@ -217,4 +217,3 @@ pmac_thermal_sensor_register(struct pmac_therm *sensor)
 
 	SLIST_INSERT_HEAD(&sensors, list_entry, entries);
 }
-

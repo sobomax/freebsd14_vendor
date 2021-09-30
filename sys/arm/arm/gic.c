@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ff0ec110b54b08eaea5ff44c9de2967ed869ad8 $");
+__FBSDID("$FreeBSD: 8fcf511fda08ff0bf50c93463bc9859b2d2d8473 $");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"
@@ -98,7 +98,6 @@ __FBSDID("$FreeBSD: 9ff0ec110b54b08eaea5ff44c9de2967ed869ad8 $");
 #define	GIC_SUPPORT_SECEXT(_sc)	\
     ((_sc->typer & GICD_TYPER_SECURITYEXT) == GICD_TYPER_SECURITYEXT)
 
-
 #ifndef	GIC_DEFAULT_ICFGR_INIT
 #define	GIC_DEFAULT_ICFGR_INIT	0x00000000
 #endif
@@ -132,7 +131,6 @@ static struct resource_spec arm_gic_spec[] = {
 	{ SYS_RES_IRQ,	  0, RF_ACTIVE | RF_OPTIONAL }, /* Parent interrupt */
 	{ -1, 0 }
 };
-
 
 #if defined(__arm__) && defined(INVARIANTS)
 static int gic_debug_spurious = 1;
@@ -1137,7 +1135,6 @@ arm_gicv2m_alloc_msi(device_t dev, device_t child, int count, int maxcount,
 	for (i = 0; i < count; i++) {
 		/* Mark the interrupt as used */
 		psc->gic_irqs[irq + i].gi_flags |= GI_FLAG_MSI_USED;
-
 	}
 	mtx_unlock(&sc->sc_mutex);
 

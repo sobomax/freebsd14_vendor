@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e2b1e5cfd315876f8a082608d22d715757d18b3f $
+ * $FreeBSD: 570f1682cca4bc37b1b95136829231c0706f43d4 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e2b1e5cfd315876f8a082608d22d715757d18b3f $");
+__FBSDID("$FreeBSD: 570f1682cca4bc37b1b95136829231c0706f43d4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -216,7 +216,7 @@ static int
 octopci_read_ivar(device_t dev, device_t child, int which, uintptr_t *result)
 {
 	struct octopci_softc *sc;
-	
+
 	sc = device_get_softc(dev);
 
 	switch (which) {

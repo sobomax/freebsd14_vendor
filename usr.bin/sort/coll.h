@@ -1,4 +1,4 @@
-/*	$FreeBSD: 10505a423bebc0852a8bf6adc171c6698723ab3c $	*/
+/*	$FreeBSD: e89c9f8233101e7f1346850fb4dd64cdec1e1043 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -65,6 +65,17 @@ struct M_hint
 };
 
 /*
+ * Sort hint data for -R
+ *
+ * This stores the first 12 bytes of the digest rather than the full output to
+ * avoid increasing the size of the 'key_hint' object via the 'v' union.
+ */
+struct R_hint
+{
+	unsigned char		 cached[12];
+};
+
+/*
  * Status of a sort hint object
  */
 typedef enum
@@ -83,6 +94,7 @@ struct key_hint
 		struct n_hint		nh;
 		struct g_hint		gh;
 		struct M_hint		Mh;
+		struct R_hint		Rh;
 	}			v;
 };
 

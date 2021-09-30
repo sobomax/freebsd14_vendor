@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf98d2f9dfecfb5e20b12fea1f4fa7a96a20a832 $");
+__FBSDID("$FreeBSD: 8cb913570c13d0370d1ec89ae7f14b370e50940b $");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
@@ -74,7 +74,7 @@ vt_kms_postswitch(void *arg)
 
 	sc = (struct vt_kms_softc *)arg;
 
-	if (!kdb_active && panicstr == NULL)
+	if (!kdb_active && !KERNEL_PANICKED())
 		taskqueue_enqueue(taskqueue_thread, &sc->fb_mode_task);
 	else
 		drm_fb_helper_restore_fbdev_mode(sc->fb_helper);

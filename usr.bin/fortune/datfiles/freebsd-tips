@@ -1,5 +1,5 @@
 This fortune brought to you by:
-$FreeBSD: 5349bc6410c87c9b4db512154269706e6050811b $
+$FreeBSD: 3325fdce090fbf738dcb1f8535d16217789cbe4e $
 %
 Any user that is a member of the wheel group can use "su -" to simulate
 a root login. You can add a user to the wheel group by editing /etc/group.
@@ -584,7 +584,7 @@ zfs list -o space
 		-- Benedict Reuschling <bcr@FreeBSD.org>
 %
 To learn more about what your system is doing, take a look at systat(1). For
-example, to get various of statistics related to virtual memory usage, process
+example, to get various statistics related to virtual memory usage, process
 scheduling, device interrupts, system name translation caching, and disk I/O,
 enter the following:
 

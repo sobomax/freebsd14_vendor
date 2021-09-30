@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b5e3cfae28cd23e74eae8770f08aa239fbffd18b $
+ * $FreeBSD: 955de4643b16117b7d74430f7b9cc7c962b3c6b6 $
  */
 
 #ifndef _MTK_PINCTRL_H_
@@ -50,7 +50,6 @@ struct mtk_pin_group {
 #define GROUP(_name, _reg, _off, _mask, _funcs)	\
     { .name = (_name), .sysc_reg = (_reg), .offset = (_off),		\
     .mask = (_mask), .functions = (_funcs), .funcnum = nitems(_funcs) }
-
 #define GROUP_END	{ NULL, 0, 0, 0, NULL, 0 }
 
 #define DECL_FUNC(_name)	\

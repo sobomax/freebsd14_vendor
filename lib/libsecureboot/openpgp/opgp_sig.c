@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df4c33e6405d861cab150ec7ba05055c77960feb $");
+__FBSDID("$FreeBSD: c16d8974e8a3ab3fde6f7c0f5e5359438e596c6b $");
 
 #include "../libsecureboot-priv.h"
 #ifdef _STANDALONE
@@ -67,9 +67,7 @@ __FBSDID("$FreeBSD: df4c33e6405d861cab150ec7ba05055c77960feb $");
 void
 initialize (void)
 {
-#ifdef _STANDALONE
-    ve_trust_init();
-#endif
+	openpgp_trust_init();
 }
 
 #else

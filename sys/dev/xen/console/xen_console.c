@@ -25,11 +25,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bee1510b08d92b649ecd8293d4ab7629af4a64bc $");
+__FBSDID("$FreeBSD: 8e366bba231938fd967bd764baa9aabc3726110a $");
 
 #include <sys/param.h>
 #include <sys/module.h>
 #include <sys/systm.h>
+#include <sys/eventhandler.h>
 #include <sys/consio.h>
 #include <sys/priv.h>
 #include <sys/proc.h>
@@ -199,7 +200,7 @@ xc_printf(const char *fmt, ...)
 static inline void xencons_lock(struct xencons_priv *cons)
 {
 
-	if (panicstr == NULL)
+	if (!KERNEL_PANICKED())
 		mtx_lock_spin(&cons->mtx);
 
 }
@@ -207,7 +208,7 @@ static inline void xencons_lock(struct xencons_priv *cons)
 static inline void xencons_unlock(struct xencons_priv *cons)
 {
 
-	if (panicstr == NULL)
+	if (!KERNEL_PANICKED())
 		mtx_unlock_spin(&cons->mtx);
 }
 

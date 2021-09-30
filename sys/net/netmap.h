@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: b3a94bc0d9c3e21cebca4e9642439af7e4384468 $
+ * $FreeBSD: c040683651d0da8b133ce63e21cc0f353862a7d5 $
  *
  * Definitions of constants and the structures used by the netmap
  * framework, for the part visible to both kernel and userspace.
@@ -235,7 +235,6 @@ struct netmap_slot {
 
 #define NETMAP_MAX_FRAGS	64	/* max number of fragments */
 
-
 /*
  * struct netmap_ring
  *
@@ -307,7 +306,6 @@ struct netmap_ring {
 	/* the slots follow. This struct has variable size */
 	struct netmap_slot slot[0];	/* array of slots. */
 };
-
 
 /*
  * RING FLAGS

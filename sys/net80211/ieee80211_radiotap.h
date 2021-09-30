@@ -1,4 +1,4 @@
-/* $FreeBSD: d4369e8e0cd1d1e511f6f3b5765fef3d4f896790 $ */
+/* $FreeBSD: f6e76e9fe8aaa11324068486347d5cdbdcffb4fb $ */
 /* $NetBSD: ieee80211_radiotap.h,v 1.16 2007/01/06 05:51:15 dyoung Exp $ */
 
 /*-
@@ -285,7 +285,6 @@ enum ieee80211_radiotap_type {
 						 * retries */
 #define	IEEE80211_RADIOTAP_F_TX_CTS	0x0002	/* used cts 'protection' */
 #define	IEEE80211_RADIOTAP_F_TX_RTS	0x0004	/* used rts/cts handshake */
-
 
 /* For IEEE80211_RADIOTAP_MCS */
 #define	IEEE80211_RADIOTAP_MCS_HAVE_BW		0x01

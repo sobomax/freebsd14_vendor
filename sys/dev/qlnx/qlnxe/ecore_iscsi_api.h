@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e8d07219a655e9909c237f40320d80f6ac3df6cd $
+ * $FreeBSD: 3fb8fb8dfdcd88175a9733364fe5c9e5c11b5803 $
  *
  */
 
@@ -275,7 +275,6 @@ void ecore_iscsi_release_connection(struct ecore_hwfn *p_hwfn,
 enum _ecore_status_t
 ecore_iscsi_terminate_connection(struct ecore_hwfn *p_hwfn,
 				 struct ecore_iscsi_conn *p_conn);
-
 
 /**
  * @brief ecore_iscsi_update_connection - updates previously 

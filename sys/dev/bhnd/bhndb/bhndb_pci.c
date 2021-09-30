@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da67c49b93889f06beb5e5cbb90919a8e11c5842 $");
+__FBSDID("$FreeBSD: c7d993beac6fe2388d012f56fd1ff278f9fd99c7 $");
 
 /*
  * PCI-specific implementation for the BHNDB bridge driver.
@@ -180,7 +180,6 @@ struct bhndb_pci_probe {
 
 	struct bhndb_host_resources	*hr;		/**< backing host resources */
 };
-
 
 static struct bhndb_pci_quirk bhndb_pci_quirks[] = {
 	/* Backplane interrupt flags must be routed via siba-specific
@@ -853,7 +852,7 @@ bhndb_pci_resume(device_t dev)
 	int			 error;
 
 	sc = device_get_softc(dev);
-	
+
 	/* Enable clocks (if supported by this hardware) */
 	if ((error = bhndb_enable_pci_clocks(sc->dev)))
 		return (error);
@@ -869,7 +868,7 @@ bhndb_pci_suspend(device_t dev)
 	int			 error;
 
 	sc = device_get_softc(dev);
-	
+
 	/* Disable clocks (if supported by this hardware) */
 	if ((error = bhndb_disable_pci_clocks(sc->dev)))
 		return (error);

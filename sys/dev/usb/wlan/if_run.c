@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9eb261274b628d3d47c0ff588dba2a71d6ea0e44 $");
+__FBSDID("$FreeBSD: dbbdc9bdcbd25653f02e6f9758863422ac643366 $");
 
 /*-
  * Ralink Technology RT2700U/RT2800U/RT3000U/RT3900E chipset driver.
@@ -28,6 +28,7 @@ __FBSDID("$FreeBSD: 9eb261274b628d3d47c0ff588dba2a71d6ea0e44 $");
 #include "opt_wlan.h"
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/sockio.h>
 #include <sys/sysctl.h>
 #include <sys/lock.h>
@@ -84,7 +85,8 @@ __FBSDID("$FreeBSD: 9eb261274b628d3d47c0ff588dba2a71d6ea0e44 $");
 
 #ifdef	RUN_DEBUG
 int run_debug = 0;
-static SYSCTL_NODE(_hw_usb, OID_AUTO, run, CTLFLAG_RW, 0, "USB run");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, run, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB run");
 SYSCTL_INT(_hw_usb_run, OID_AUTO, debug, CTLFLAG_RWTUN, &run_debug, 0,
     "run debug level");
 
@@ -2783,7 +2785,6 @@ run_newassoc(struct ieee80211_node *ni, int isnew)
 
 	/* only interested in true associations */
 	if (isnew && ni->ni_associd != 0) {
-
 		/*
 		 * This function could is called though timeout function.
 		 * Need to defer.
@@ -2869,6 +2870,7 @@ run_rx_frame(struct run_softc *sc, struct mbuf *m, uint32_t dmalen)
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
 	struct ieee80211_node *ni;
+	struct epoch_tracker et;
 	struct rt2870_rxd *rxd;
 	struct rt2860_rxwi *rxwi;
 	uint32_t flags;
@@ -2991,12 +2993,14 @@ run_rx_frame(struct run_softc *sc, struct mbuf *m, uint32_t dmalen)
 		}
 	}
 
+	NET_EPOCH_ENTER(et);
 	if (ni != NULL) {
 		(void)ieee80211_input(ni, m, rssi, nf);
 		ieee80211_free_node(ni);
 	} else {
 		(void)ieee80211_input_all(ic, m, rssi, nf);
 	}
+	NET_EPOCH_EXIT(et);
 
 	return;
 
@@ -3787,7 +3791,7 @@ run_raw_xmit(struct ieee80211_node *ni, struct mbuf *m,
 {
 	struct run_softc *sc = ni->ni_ic->ic_softc;
 	int error = 0;
- 
+
 	RUN_LOCK(sc);
 
 	/* prevent management frames from being sent if we're not ready */
@@ -6401,7 +6405,6 @@ run_delay(struct run_softc *sc, u_int ms)
 	usb_pause_mtx(mtx_owned(&sc->sc_mtx) ? 
 	    &sc->sc_mtx : NULL, USB_MS_TO_TICKS(ms));
 }
-
 
 static void
 run_update_chw(struct ieee80211com *ic)

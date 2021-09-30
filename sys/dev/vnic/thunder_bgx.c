@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6d34b320ef51d92b01cc9f2c3131d3855b8e73e1 $
+ * $FreeBSD: b2479d2dcd428ff1fa86da5e417279612408875d $
  *
  */
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d34b320ef51d92b01cc9f2c3131d3855b8e73e1 $");
+__FBSDID("$FreeBSD: b2479d2dcd428ff1fa86da5e417279612408875d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1052,7 +1052,7 @@ bgx_init_hw(struct bgx *bgx)
 static void
 bgx_get_qlm_mode(struct bgx *bgx)
 {
-	device_t dev = bgx->dev;;
+	device_t dev = bgx->dev;
 	int lmac_type;
 	int train_en;
 

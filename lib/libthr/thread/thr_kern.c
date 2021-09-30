@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 77ccc684782865f45a83902ae032d41fe3974ba9 $");
+__FBSDID("$FreeBSD: 1e633865720476410617f9840aaf81c131baa201 $");
 
 #include <sys/types.h>
 #include <sys/signalvar.h>
@@ -53,14 +53,10 @@ static struct wake_addr default_wake_addr;
  * This is called when the first thread (other than the initial
  * thread) is created.
  */
-int
+void
 _thr_setthreaded(int threaded)
 {
-	if (((threaded == 0) ^ (__isthreaded == 0)) == 0)
-		return (0);
-
 	__isthreaded = threaded;
-	return (0);
 }
 
 void

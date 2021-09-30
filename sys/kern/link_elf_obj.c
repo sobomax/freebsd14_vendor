@@ -28,22 +28,23 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d59b9b4131f91a1d2c465dc1c06e947cf2b4c2e $");
+__FBSDID("$FreeBSD: 6b5a6df0a56fe0c67bf97c977ce9aefce9bc3ab4 $");
 
 #include "opt_ddb.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/fcntl.h>
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/linker.h>
 #include <sys/mutex.h>
 #include <sys/mount.h>
-#include <sys/proc.h>
 #include <sys/namei.h>
-#include <sys/fcntl.h>
+#include <sys/proc.h>
+#include <sys/rwlock.h>
 #include <sys/vnode.h>
-#include <sys/linker.h>
 
 #include <machine/elf.h>
 
@@ -53,16 +54,18 @@ __FBSDID("$FreeBSD: 9d59b9b4131f91a1d2c465dc1c06e947cf2b4c2e $");
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>
-#include <vm/vm_object.h>
-#include <vm/vm_kern.h>
-#include <vm/vm_extern.h>
 #include <vm/pmap.h>
+#include <vm/vm_extern.h>
+#include <vm/vm_kern.h>
 #include <vm/vm_map.h>
+#include <vm/vm_object.h>
+#include <vm/vm_page.h>
+#include <vm/vm_pager.h>
 
 #include <sys/link_elf.h>
 
 #ifdef DDB_CTF
-#include <sys/zlib.h>
+#include <contrib/zlib/zlib.h>
 #endif
 
 #include "linker_if.h"
@@ -86,7 +89,6 @@ typedef struct {
 	int		nrela;
 	int		sec;
 } Elf_relaent;
-
 
 typedef struct elf_file {
 	struct linker_file lf;		/* Common fields */
@@ -193,7 +195,6 @@ link_elf_init(void *arg)
 
 	linker_add_class(&link_elf_class);
 }
-
 SYSINIT(link_elf_obj, SI_SUB_KLD, SI_ORDER_SECOND, link_elf_init, NULL);
 
 static void
@@ -209,7 +210,17 @@ link_elf_protect_range(elf_file_t ef, vm_offset_t start, vm_offset_t end,
 
 	if (start == end)
 		return;
-	error = vm_map_protect(kernel_map, start, end, prot, FALSE);
+	if (ef->preloaded) {
+#ifdef __amd64__
+		error = pmap_change_prot(start, end - start, prot);
+		KASSERT(error == 0,
+		    ("link_elf_protect_range: pmap_change_prot() returned %d",
+		    error));
+#endif
+		return;
+	}
+	error = vm_map_protect(kernel_map, start, end, prot, 0,
+	    VM_MAP_PROTECT_SET_PROT);
 	KASSERT(error == KERN_SUCCESS,
 	    ("link_elf_protect_range: vm_map_protect() returned %d", error));
 }
@@ -564,6 +575,14 @@ link_elf_link_preload(linker_class_t cls, const char *filename,
 		goto out;
 	}
 
+	/*
+	 * The file needs to be writeable and executable while applying
+	 * relocations.  Mapping protections are applied once relocation
+	 * processing is complete.
+	 */
+	link_elf_protect_range(ef, (vm_offset_t)ef->address,
+	    round_page((vm_offset_t)ef->address + ef->lf.size), VM_PROT_ALL);
+
 	/* Local intra-module relocations */
 	error = link_elf_reloc_local(lf, false);
 	if (error != 0)
@@ -616,7 +635,9 @@ link_elf_link_preload_finish(linker_file_t lf)
 		return (error);
 #endif
 
-	/* Invoke .ctors */
+	/* Apply protections now that relocation processing is complete. */
+	link_elf_protect(ef);
+
 	link_elf_invoke_ctors(lf->ctors_addr, lf->ctors_size);
 	return (0);
 }
@@ -888,11 +909,15 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 	 * This stuff needs to be in a single chunk so that profiling etc
 	 * can get the bounds and gdb can associate offsets with modules
 	 */
-	ef->object = vm_object_allocate(OBJT_PHYS, atop(round_page(mapsize)));
+	ef->object = vm_pager_allocate(OBJT_PHYS, NULL, round_page(mapsize),
+	    VM_PROT_ALL, 0, thread0.td_ucred);
 	if (ef->object == NULL) {
 		error = ENOMEM;
 		goto out;
 	}
+#if VM_NRESERVLEVEL > 0
+	vm_object_color(ef->object, 0);
+#endif
 
 	/*
 	 * In order to satisfy amd64's architectural requirements on the
@@ -1117,7 +1142,7 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 		goto out;
 
 	/* Pull in dependencies */
-	VOP_UNLOCK(nd->ni_vp, 0);
+	VOP_UNLOCK(nd->ni_vp);
 	error = linker_load_dependencies(lf);
 	vn_lock(nd->ni_vp, LK_EXCLUSIVE | LK_RETRY);
 	if (error)
@@ -1145,7 +1170,7 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 	*result = lf;
 
 out:
-	VOP_UNLOCK(nd->ni_vp, 0);
+	VOP_UNLOCK(nd->ni_vp);
 	vn_close(nd->ni_vp, FREAD, td->td_ucred, td);
 	free(nd, M_TEMP);
 	if (error && lf)
@@ -1251,7 +1276,6 @@ relocate_file(elf_file_t ef)
 	int i;
 	Elf_Size symidx;
 	Elf_Addr base;
-
 
 	/* Perform relocations without addend if there are any: */
 	for (i = 0; i < ef->nreltab; i++) {
@@ -1441,7 +1465,7 @@ link_elf_each_function_name(linker_file_t file,
 	elf_file_t ef = (elf_file_t)file;
 	const Elf_Sym *symp;
 	int i, error;
-	
+
 	/* Exhaustive search */
 	for (i = 0, symp = ef->ddbsymtab; i < ef->ddbsymcnt; i++, symp++) {
 		if (symp->st_value != 0 &&
@@ -1656,9 +1680,11 @@ link_elf_reloc_local(linker_file_t lf, bool ifuncs)
 			if (ELF_ST_BIND(sym->st_info) != STB_LOCAL)
 				continue;
 			if ((ELF_ST_TYPE(sym->st_info) == STT_GNU_IFUNC ||
-			    elf_is_ifunc_reloc(rel->r_info)) == ifuncs)
-				elf_reloc_local(lf, base, rel, ELF_RELOC_REL,
-				    elf_obj_lookup);
+			    elf_is_ifunc_reloc(rel->r_info)) != ifuncs)
+				continue;
+			if (elf_reloc_local(lf, base, rel, ELF_RELOC_REL,
+			    elf_obj_lookup) != 0)
+				return (ENOEXEC);
 		}
 	}
 
@@ -1684,9 +1710,11 @@ link_elf_reloc_local(linker_file_t lf, bool ifuncs)
 			if (ELF_ST_BIND(sym->st_info) != STB_LOCAL)
 				continue;
 			if ((ELF_ST_TYPE(sym->st_info) == STT_GNU_IFUNC ||
-			    elf_is_ifunc_reloc(rela->r_info)) == ifuncs)
-				elf_reloc_local(lf, base, rela, ELF_RELOC_RELA,
-				    elf_obj_lookup);
+			    elf_is_ifunc_reloc(rela->r_info)) != ifuncs)
+				continue;
+			if (elf_reloc_local(lf, base, rela, ELF_RELOC_RELA,
+			    elf_obj_lookup) != 0)
+				return (ENOEXEC);
 		}
 	}
 	return (0);

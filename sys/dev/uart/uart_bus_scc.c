@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6666a35e272e12d7c826b7b9e91225adcff1a6c5 $");
+__FBSDID("$FreeBSD: 3b643524825e89a86cf4b9d35f215e81e6749a5f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -99,9 +99,6 @@ uart_scc_probe(device_t dev)
 	switch (cl) {
 	case SCC_CLASS_QUICC:
 		sc->sc_class = &uart_quicc_class;
-		break;
-	case SCC_CLASS_SAB82532:
-		sc->sc_class = &uart_sab82532_class;
 		break;
 	case SCC_CLASS_Z8530:
 		sc->sc_class = &uart_z8530_class;

@@ -31,7 +31,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: bfb307e531f703f33e42a81fb78b7351ccfcffbd $
+ * $FreeBSD: 7e3401ddf90ac46276be77b2009dfc22af3a824a $
  */
 
 #ifndef _CORE_PRIV_H
@@ -127,16 +127,6 @@ unsigned long roce_gid_type_mask_support(struct ib_device *ib_dev, u8 port);
 int ib_cache_setup_one(struct ib_device *device);
 void ib_cache_cleanup_one(struct ib_device *device);
 void ib_cache_release_one(struct ib_device *device);
-
-static inline bool rdma_is_upper_dev_rcu(struct net_device *dev,
-					 struct net_device *upper)
-{
-
-	/* TODO: add support for LAGG */
-	upper = VLAN_TRUNKDEV(upper);
-
-	return (dev == upper);
-}
 
 int addr_init(void);
 void addr_cleanup(void);

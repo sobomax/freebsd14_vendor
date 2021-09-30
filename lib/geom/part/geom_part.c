@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29c066c4714fa50c2bdaee9a40d978beb2bd8742 $");
+__FBSDID("$FreeBSD: b21ebf7ef8d8e2ce109d1af936644b960380d5a2 $");
 
 #include <sys/stat.h>
 #include <sys/vtoc.h>
@@ -72,6 +72,7 @@ volatile sig_atomic_t undo_restore;
 #define	GPART_PARAM_BOOTCODE	"bootcode"
 #define	GPART_PARAM_INDEX	"index"
 #define	GPART_PARAM_PARTCODE	"partcode"
+#define	GPART_PARAM_SKIP_DSN	"skip_dsn"
 
 static struct gclass *find_class(struct gmesh *, const char *);
 static struct ggeom * find_geom(struct gclass *, const char *);
@@ -115,8 +116,9 @@ struct g_command PUBSYM(class_commands)[] = {
 		{ 'p', GPART_PARAM_PARTCODE, G_VAL_OPTIONAL, G_TYPE_STRING },
 		{ 'i', GPART_PARAM_INDEX, G_VAL_OPTIONAL, G_TYPE_NUMBER },
 		{ 'f', "flags", GPART_FLAGS, G_TYPE_STRING },
+		{ 'N', GPART_PARAM_SKIP_DSN, NULL, G_TYPE_BOOL },
 		G_OPT_SENTINEL },
-	    "[-b bootcode] [-p partcode -i index] [-f flags] geom"
+	    "[-N] [-b bootcode] [-p partcode -i index] [-f flags] geom"
 	},
 	{ "commit", 0, gpart_issue, G_NULL_OPTS,
 	    "geom"

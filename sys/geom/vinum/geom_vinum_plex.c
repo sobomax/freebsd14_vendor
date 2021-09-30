@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4afdb282b821d58b746a367e8e6a9b0a3f40c49d $");
+__FBSDID("$FreeBSD: a7b1e1e5a8bd44d422d568b15dbefbbf914f8565 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -37,6 +37,7 @@ __FBSDID("$FreeBSD: 4afdb282b821d58b746a367e8e6a9b0a3f40c49d $");
 #include <sys/systm.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/vinum/geom_vinum_var.h>
 #include <geom/vinum/geom_vinum_raid5.h>
 #include <geom/vinum/geom_vinum.h>
@@ -77,7 +78,7 @@ gv_plex_start(struct gv_plex *p, struct bio *bp)
 			wp = gv_raid5_start(p, bp, addr, boff, bcount);
  			if (wp == NULL)
  				return;
- 
+
 			len = wp->length;
 
 			if (TAILQ_EMPTY(&wp->bits))
@@ -498,7 +499,6 @@ gv_check_parity(struct gv_plex *p, struct bio *bp, struct gv_raid5_packet *wp)
 			bp->bio_parent->bio_inbed++;
 			g_destroy_bio(pbp);
 		}
-
 	}
 
 	return (finished);
@@ -775,7 +775,6 @@ gv_grow_complete(struct gv_plex *p, struct bio *bp)
 	}
 }
 
-
 /*
  * Create an initialization BIO and send it off to the consumer. Assume that
  * we're given initialization data as parameter.
@@ -1018,7 +1017,7 @@ gv_rebuild_complete(struct gv_plex *p, struct bio *bp)
 		g_topology_lock();
 		gv_access(p->vol_sc->provider, -1, -1, 0);
 		g_topology_unlock();
-	
+
 		G_VINUM_DEBUG(0, "rebuild of %s failed at offset %jd errno: %d",
 		    p->name, (intmax_t)offset, error);
 		p->flags &= ~GV_PLEX_REBUILDING;
@@ -1034,7 +1033,7 @@ gv_rebuild_complete(struct gv_plex *p, struct bio *bp)
 		g_topology_lock();
 		gv_access(p->vol_sc->provider, -1, -1, 0);
 		g_topology_unlock();
-	
+
 		G_VINUM_DEBUG(1, "rebuild of %s finished", p->name);
 		gv_save_config(p->vinumconf);
 		p->flags &= ~GV_PLEX_REBUILDING;

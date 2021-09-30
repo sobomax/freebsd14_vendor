@@ -34,6 +34,7 @@
  * \file zfsd_event.cc
  */
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 #include <sys/time.h>
 #include <sys/fs/zfs.h>
 #include <sys/vdev_impl.h>
@@ -41,12 +42,13 @@
 #include <syslog.h>
 
 #include <libzfs.h>
+#include <libzutil.h>
 /* 
  * Undefine flush, defined by cpufunc.h on sparc64, because it conflicts with
  * C++ flush methods
  */
 #undef   flush
-
+#undef	__init
 #include <list>
 #include <map>
 #include <sstream>
@@ -67,7 +69,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD: 707a868c67e8a35a031059701f36f27f1298bc01 $");
+__FBSDID("$FreeBSD: 688e7c0354a280c38831f8bc4d173b9c91fcd33e $");
 /*============================ Namespace Control =============================*/
 using DevdCtl::Event;
 using DevdCtl::Guid;
@@ -190,7 +192,8 @@ GeomEvent::ReadLabel(int devFd, bool &inUse, bool &degraded)
 		if (poolName != NULL)
 			free(poolName);
 
-		nlabels = zpool_read_all_labels(devFd, &devLabel);
+		if (zpool_read_label(devFd, &devLabel, &nlabels) != 0)
+			return (NULL);
 		/*
 		 * If we find a disk with fewer than the maximum number of
 		 * labels, it might be the whole disk of a partitioned disk

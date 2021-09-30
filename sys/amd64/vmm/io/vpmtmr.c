@@ -27,7 +27,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4df909777d880dd253f3e550083ddcca53a20a2b $");
+__FBSDID("$FreeBSD: f79e94f6d0fea3ef7ad517c9320ab79def812b49 $");
+
+#include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -36,6 +38,7 @@ __FBSDID("$FreeBSD: 4df909777d880dd253f3e550083ddcca53a20a2b $");
 #include <sys/systm.h>
 
 #include <machine/vmm.h>
+#include <machine/vmm_snapshot.h>
 
 #include "vpmtmr.h"
 
@@ -103,3 +106,16 @@ vpmtmr_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
 
 	return (0);
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+vpmtmr_snapshot(struct vpmtmr *vpmtmr, struct vm_snapshot_meta *meta)
+{
+	int ret;
+
+	SNAPSHOT_VAR_OR_LEAVE(vpmtmr->baseval, meta, ret, done);
+
+done:
+	return (ret);
+}
+#endif

@@ -23,10 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6d14807160e4b10da1f3cee5a2f18a1a6d03ec54 $
+ * $FreeBSD: d7d968b705bb5a0b364e779e01028d09dd6102c2 $
  */
 
 #include <lua.h>
 
 int	luaopen_loader(lua_State *);
 int	luaopen_io(lua_State *);
+int	luaopen_pager(lua_State *);

@@ -1,9 +1,9 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  * Copyright (c) 2013 Roger Pau Monné <roger.pau@citrix.com>
  * All rights reserved.
+ * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c4bcec186bb58ed8dc479fb4647500ffede1573 $");
+__FBSDID("$FreeBSD: 5d5c265fcc5fb47b17187907b0c892fc200ba181 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -199,7 +199,7 @@ xenpv_setup_io(void)
 		 * this is legacy code so just keep using the previous
 		 * behaviour and assume a maximum of 256 interrupts.
 		 */
-		num_io_irqs = max(MINIMUM_MSI_INT - 1, num_io_irqs);
+		num_io_irqs = max(255, num_io_irqs);
 
 		acpi_SetDefaultIntrModel(ACPI_INTR_APIC);
 	}

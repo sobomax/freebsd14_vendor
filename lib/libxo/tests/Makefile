@@ -1,8 +1,10 @@
-# $FreeBSD: 2c5f1a03ea7368a14cf4827f561bef1412b976dd $
+# $FreeBSD: 2d834ac502f1e7b491aabdbc3a59b342fb5f54e4 $
 
 .include <bsd.own.mk>
 
 PACKAGE=	tests
+
+WARNS?=		1
 
 LIBXOSRC=	${SRCTOP}/contrib/libxo
 
@@ -240,7 +242,7 @@ PROGS+= test_09
 PROGS+= test_10
 PROGS+= test_11
 
-CFLAGS+=	-I${LIBXOSRC}/libxo -I${.CURDIR:H}
+CFLAGS+=	-I${LIBXOSRC}/libxo -I${.CURDIR:H}/libxo
 
 LIBADD=		xo util
 

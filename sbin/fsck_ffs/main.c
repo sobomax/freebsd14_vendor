@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7728e2cda019602200ef2752468665d13b6f1888 $");
+__FBSDID("$FreeBSD: 65cee9b7b8c625b072e25801c2a88504e3e2aa86 $");
 
 #define	IN_RTLD			/* So we pickup the P_OSREL defines */
 #include <sys/param.h>
@@ -61,6 +61,7 @@ __FBSDID("$FreeBSD: 7728e2cda019602200ef2752468665d13b6f1888 $");
 #include <fstab.h>
 #include <grp.h>
 #include <inttypes.h>
+#include <libufs.h>
 #include <mntopts.h>
 #include <paths.h>
 #include <stdint.h>
@@ -69,7 +70,7 @@ __FBSDID("$FreeBSD: 7728e2cda019602200ef2752468665d13b6f1888 $");
 
 #include "fsck.h"
 
-int	restarts;
+static int	restarts;
 
 static void usage(void) __dead2;
 static intmax_t argtoimax(int flag, const char *req, const char *str, int base);
@@ -295,7 +296,12 @@ checkfilesys(char *filesys)
 		 */
 		if ((fsreadfd = open(filesys, O_RDONLY)) < 0 || readsb(0) == 0)
 			exit(3);	/* Cannot read superblock */
-		close(fsreadfd);
+		if (nflag || (fswritefd = open(filesys, O_WRONLY)) < 0) {
+			fswritefd = -1;
+			if (preen)
+				pfatal("NO WRITE ACCESS");
+			printf(" (NO WRITE)");
+		}
 		if ((sblock.fs_flags & FS_GJOURNAL) != 0) {
 			//printf("GJournaled file system detected on %s.\n",
 			//    filesys);
@@ -311,6 +317,8 @@ checkfilesys(char *filesys)
 			} else {
 				pfatal(
 			    "UNEXPECTED INCONSISTENCY, CANNOT RUN FAST FSCK\n");
+				close(fsreadfd);
+				close(fswritefd);
 			}
 		}
 	}
@@ -407,7 +415,7 @@ checkfilesys(char *filesys)
 	case 0:
 		if (preen)
 			pfatal("CAN'T CHECK FILE SYSTEM.");
-		return (0);
+		return (EEXIT);
 	case -1:
 	clean:
 		pwarn("clean, %ld free ", (long)(sblock.fs_cstotal.cs_nffree +
@@ -423,12 +431,14 @@ checkfilesys(char *filesys)
 	 */
 	if ((sblock.fs_flags & FS_SUJ) == FS_SUJ) {
 		if ((sblock.fs_flags & FS_NEEDSFSCK) != FS_NEEDSFSCK && skipclean) {
+			sujrecovery = 1;
 			if (suj_check(filesys) == 0) {
 				printf("\n***** FILE SYSTEM MARKED CLEAN *****\n");
 				if (chkdoreload(mntp) == 0)
 					exit(0);
 				exit(4);
 			}
+			sujrecovery = 0;
 			printf("** Skipping journal, falling through to full fsck\n\n");
 		}
 		/*
@@ -460,28 +470,40 @@ checkfilesys(char *filesys)
 	if (preen == 0 && yflag == 0 && sblock.fs_magic != FS_UFS1_MAGIC &&
 	    fswritefd != -1 && getosreldate() >= P_OSREL_CK_CYLGRP) {
 		if ((sblock.fs_metackhash & CK_CYLGRP) == 0 &&
-		    reply("ADD CYLINDER GROUP CHECK-HASH PROTECTION") != 0)
+		    reply("ADD CYLINDER GROUP CHECK-HASH PROTECTION") != 0) {
 			ckhashadd |= CK_CYLGRP;
-#ifdef notyet
+			sblock.fs_metackhash |= CK_CYLGRP;
+		}
 		if ((sblock.fs_metackhash & CK_SUPERBLOCK) == 0 &&
 		    getosreldate() >= P_OSREL_CK_SUPERBLOCK &&
-		    reply("ADD SUPERBLOCK CHECK-HASH PROTECTION") != 0)
+		    reply("ADD SUPERBLOCK CHECK-HASH PROTECTION") != 0) {
 			ckhashadd |= CK_SUPERBLOCK;
+			sblock.fs_metackhash |= CK_SUPERBLOCK;
+		}
 		if ((sblock.fs_metackhash & CK_INODE) == 0 &&
 		    getosreldate() >= P_OSREL_CK_INODE &&
-		    reply("ADD INODE CHECK-HASH PROTECTION") != 0)
+		    reply("ADD INODE CHECK-HASH PROTECTION") != 0) {
 			ckhashadd |= CK_INODE;
+			sblock.fs_metackhash |= CK_INODE;
+		}
+#ifdef notyet
 		if ((sblock.fs_metackhash & CK_INDIR) == 0 &&
 		    getosreldate() >= P_OSREL_CK_INDIR &&
-		    reply("ADD INDIRECT BLOCK CHECK-HASH PROTECTION") != 0)
+		    reply("ADD INDIRECT BLOCK CHECK-HASH PROTECTION") != 0) {
 			ckhashadd |= CK_INDIR;
+			sblock.fs_metackhash |= CK_INDIR;
+		}
 		if ((sblock.fs_metackhash & CK_DIR) == 0 &&
 		    getosreldate() >= P_OSREL_CK_DIR &&
-		    reply("ADD DIRECTORY CHECK-HASH PROTECTION") != 0)
+		    reply("ADD DIRECTORY CHECK-HASH PROTECTION") != 0) {
 			ckhashadd |= CK_DIR;
+			sblock.fs_metackhash |= CK_DIR;
+		}
 #endif /* notyet */
-		if (ckhashadd != 0)
+		if (ckhashadd != 0) {
 			sblock.fs_flags |= FS_METACKHASH;
+			sbdirty();
+		}
 	}
 	/*
 	 * Cleared if any questions answered no. Used to decide if
@@ -588,18 +610,15 @@ checkfilesys(char *filesys)
 		sblock.fs_time = time(NULL);
 		sbdirty();
 	}
-	if (cvtlevel && sblk.b_dirty) {
+	if (cvtlevel && (sblk.b_flags & B_DIRTY) != 0) {
 		/*
 		 * Write out the duplicate super blocks
 		 */
-		for (cylno = 0; cylno < sblock.fs_ncg; cylno++)
-			blwrite(fswritefd, (char *)&sblock,
-			    fsbtodb(&sblock, cgsblock(&sblock, cylno)),
-			    SBLOCKSIZE);
+		if (sbput(fswritefd, &sblock, sblock.fs_ncg) == 0)
+			fsmodified = 1;
 	}
 	if (rerun)
 		resolved = 0;
-	finalIOstats();
 
 	/*
 	 * Check to see if the file system is mounted read-write.

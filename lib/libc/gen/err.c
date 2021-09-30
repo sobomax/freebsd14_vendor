@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)err.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 4193eca77f60f723f8463779bb9e9b822e546d05 $");
+__FBSDID("$FreeBSD: e72fac99ee614e7c8a5b59fd7b69b1ff23c91439 $");
 
 #include "namespace.h"
 #include <err.h>
@@ -161,6 +161,9 @@ warnc(int code, const char *fmt, ...)
 void
 vwarnc(int code, const char *fmt, va_list ap)
 {
+	int saved_errno;
+
+	saved_errno = errno;
 	if (err_file == NULL)
 		err_set_file(NULL);
 	fprintf(err_file, "%s: ", _getprogname());
@@ -169,6 +172,7 @@ vwarnc(int code, const char *fmt, va_list ap)
 		fprintf(err_file, ": ");
 	}
 	fprintf(err_file, "%s\n", strerror(code));
+	errno = saved_errno;
 }
 
 void
@@ -183,10 +187,14 @@ warnx(const char *fmt, ...)
 void
 vwarnx(const char *fmt, va_list ap)
 {
+	int saved_errno;
+
+	saved_errno = errno;
 	if (err_file == NULL)
 		err_set_file(NULL);
 	fprintf(err_file, "%s: ", _getprogname());
 	if (fmt != NULL)
 		vfprintf(err_file, fmt, ap);
 	fprintf(err_file, "\n");
+	errno = saved_errno;
 }

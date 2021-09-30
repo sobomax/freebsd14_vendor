@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)chmod.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 34acac45b2f7fa71321413e58c0d67b33330388f $
+.\" $FreeBSD: 0127a5b629e409e4805a7c7c4c47a2e86e1c21c2 $
 .\"
-.Dd March 30, 2020
+.Dd February 23, 2021
 .Dt CHMOD 2
 .Os
 .Sh NAME
@@ -101,6 +101,15 @@ in
 If
 .Fa path
 names a symbolic link, then the mode of the symbolic link is changed.
+.It Dv AT_RESOLVE_BENEATH
+Only walk paths below the directory specified by the
+.Ar fd
+descriptor.
+See the description of the
+.Dv O_RESOLVE_BENEATH
+flag in the
+.Xr open 2
+manual page.
 .El
 .Pp
 If
@@ -289,6 +298,15 @@ argument is not an absolute path and
 is neither
 .Dv AT_FDCWD
 nor a file descriptor associated with a directory.
+.It Bq Er ENOTCAPABLE
+.Fa path
+is an absolute path,
+or contained a ".." component leading to a
+directory outside of the directory hierarchy specified by
+.Fa fd ,
+and the process is in capability mode or the
+.Dv AT_RESOLVE_BENEATH
+flag was specified.
 .El
 .Sh SEE ALSO
 .Xr chmod 1 ,

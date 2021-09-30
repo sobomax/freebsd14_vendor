@@ -38,13 +38,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e68906c4296bc6bcd68aec2974911aa8c99dad69 $");
+__FBSDID("$FreeBSD: f95939001ecbaf2e9c06db84f1051778f3e112ca $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/cpu.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/systm.h>
 
 #include <machine/bus.h>
@@ -99,7 +100,6 @@ static device_method_t smist_methods[] = {
 	DEVMETHOD(cpufreq_drv_get,	smist_get),
 	DEVMETHOD(cpufreq_drv_type,	smist_type),
 	DEVMETHOD(cpufreq_drv_settings,	smist_settings),
-
 	{0, 0}
 };
 

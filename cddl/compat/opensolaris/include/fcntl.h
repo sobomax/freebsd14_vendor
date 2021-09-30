@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 548918aaab3a9baa085e53bab8bc766c4456b773 $
+ * $FreeBSD: b962bb4855eed6f384b1d9c4262cbfc3fa56f0dd $
  *
  */
 
@@ -32,7 +32,9 @@
 
 #include_next <fcntl.h>
 
+#ifndef open64
 #define open64(...)	open(__VA_ARGS__)
+#endif
 #define openat64(...)	openat(__VA_ARGS__)
 
 #endif

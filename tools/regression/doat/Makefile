@@ -1,8 +1,7 @@
-# $FreeBSD: c04223bbfec81b5bb67c7de2b8bbd4c43fab87b7 $
+# $FreeBSD: c31ca53f4579ee00f1ae2d2170221246da6d6f17 $
 
 PROG=	doat
 
 MAN=
-WARNS?=6
 
 .include <bsd.prog.mk>

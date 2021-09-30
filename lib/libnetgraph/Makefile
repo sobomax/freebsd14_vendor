@@ -1,7 +1,6 @@
-# $FreeBSD: 3f80ee84f47db3b6ba21172ab699c8883a7612df $
+# $FreeBSD: fa760479f712950970b1aeb9b1e0dbc1e6645a1a $
 # $Whistle: Makefile,v 1.4 1999/01/17 03:41:02 julian Exp $
 
-PACKAGE=lib${LIB}
 LIB=		netgraph
 WARNS?=		3
 MAN=		netgraph.3

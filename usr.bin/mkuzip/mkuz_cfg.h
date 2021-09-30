@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fc88ef29198fc907e4f0471f32cce2c4d2609ff5 $
+ * $FreeBSD: a27d98a6ff60a8de49eb1600568faa748115521d $
  */
 
 struct mkuz_conveyor;
@@ -39,4 +39,6 @@ struct mkuz_cfg {
     const char *iname;
     off_t isize;
     const struct mkuz_format *handler;
+    size_t cbound_blksz;
+    int comp_level;
 };

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 305b3c61c6cf610c631e31e057ecd14083291145 $");
+__FBSDID("$FreeBSD: 2f924ed5c3c7ccf501adbc3cfef9a056ce24ed8a $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -699,7 +699,7 @@ mipsNN_pdcache_wbinv_range_index_64(vm_offset_t va, vm_size_t size)
 		va += 64;
 	}
 }
- 
+
 void
 mipsNN_pdcache_inv_range_16(vm_offset_t va, vm_size_t size)
 {
@@ -845,12 +845,10 @@ mipsNN_icache_sync_range_index_128(vm_offset_t va, vm_size_t size)
 {
 }
 
-
 void
 mipsNN_pdcache_wbinv_all_128(void)
 {
 }
-
 
 void
 mipsNN_pdcache_wbinv_range_128(vm_offset_t va, vm_size_t size)
@@ -986,7 +984,6 @@ mipsNN_pdcache_wbinv_all_128(void)
 
 	SYNC;
 }
-
 
 void
 mipsNN_pdcache_wbinv_range_128(vm_offset_t va, vm_size_t size)

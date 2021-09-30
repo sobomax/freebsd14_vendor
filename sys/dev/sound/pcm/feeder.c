@@ -35,7 +35,7 @@
 
 #include "feeder_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 7b15c00c4170914598d67ee7a3ee9bf4154fb037 $");
+SND_DECLARE_FILE("$FreeBSD: 1a53d1ba5ca1ee7e10ff27acf2c02fbb09b2cb9c $");
 
 static MALLOC_DEFINE(M_FEEDER, "feeder", "pcm feeder");
 
@@ -472,7 +472,6 @@ feed_root(struct pcm_feeder *feeder, struct pcm_channel *ch, u_int8_t *buffer, u
 		sndbuf_dispose(src, buffer, l);
 		return l;
 	}
-
 
 	offset = count - l;
 

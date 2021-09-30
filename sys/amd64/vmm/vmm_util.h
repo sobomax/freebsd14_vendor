@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ff93ce5733cc7afb6e0d6715b3849323b87b5cca $
+ * $FreeBSD: 130330c2686a8f986e937afaea3c1272a4195125 $
  */
 
 #ifndef _VMM_UTIL_H_
@@ -33,6 +33,7 @@
 
 struct trapframe;
 
+bool		vmm_is_hw_supported(void);
 bool		vmm_is_intel(void);
 bool		vmm_is_svm(void);
 bool		vmm_supports_1G_pages(void);

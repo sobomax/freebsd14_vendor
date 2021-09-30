@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d32e3bc53419099d2278a8be9d1781e02a5dc3b1 $
+ * $FreeBSD: b2c4140c6b487de39050dc9b49a0b27a66ed55cc $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -41,7 +41,7 @@
 #include <machine/frame.h>
 #include <machine/trap.h>
 
-#define	T_BREAKPOINT	(EXCP_BREAKPOINT)
+#define	T_BREAKPOINT	(SCAUSE_BREAKPOINT)
 #define	T_WATCHPOINT	(0)
 
 typedef vm_offset_t	db_addr_t;

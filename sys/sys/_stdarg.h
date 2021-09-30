@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d20cfaa988ced2fe0612346fc6decf78073752cb $
+ * $FreeBSD: 0d4ca8996f0071193a5501085f00334c219129ca $
  */
 
 #ifndef _SYS__STDARG_H_
@@ -52,4 +52,3 @@
 #endif
 
 #endif /* ! _SYS__STDARG_H_ */
-

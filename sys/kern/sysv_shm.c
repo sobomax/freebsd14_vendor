@@ -69,7 +69,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7464a4d3cfed5eb18cdefd88906a33a3120cd2f $");
+__FBSDID("$FreeBSD: ad5f0030b9651dd5bcec1f5db47814145b930848 $");
 
 #include "opt_sysvipc.h"
 
@@ -111,11 +111,6 @@ FEATURE(sysv_shm, "System V shared memory segments support");
 
 static MALLOC_DEFINE(M_SHM, "shm", "SVID compatible shared memory segments");
 
-static int shmget_allocate_segment(struct thread *td,
-    struct shmget_args *uap, int mode);
-static int shmget_existing(struct thread *td, struct shmget_args *uap,
-    int mode, int segnum);
-
 #define	SHMSEG_FREE     	0x0200
 #define	SHMSEG_REMOVED  	0x0400
 #define	SHMSEG_ALLOCATED	0x0800
@@ -134,12 +129,18 @@ static void shm_deallocate_segment(struct shmid_kernel *);
 static int shm_find_segment_by_key(struct prison *, key_t);
 static struct shmid_kernel *shm_find_segment(struct prison *, int, bool);
 static int shm_delete_mapping(struct vmspace *vm, struct shmmap_state *);
+static int shmget_allocate_segment(struct thread *td, key_t key, size_t size,
+    int mode);
+static int shmget_existing(struct thread *td, size_t size, int shmflg,
+    int mode, int segnum);
 static void shmrealloc(void);
 static int shminit(void);
 static int sysvshm_modload(struct module *, int, void *);
 static int shmunload(void);
+#ifndef SYSVSHM
 static void shmexit_myhook(struct vmspace *vm);
 static void shmfork_myhook(struct proc *p1, struct proc *p2);
+#endif
 static int sysctl_shmsegs(SYSCTL_HANDLER_ARGS);
 static void shm_remove(struct shmid_kernel *, int);
 static struct prison *shm_find_prison(struct ucred *);
@@ -608,7 +609,6 @@ kern_shmctl(struct thread *td, int shmid, int cmd, void *buf, size_t *bufsz)
 	return (error);
 }
 
-
 #ifndef _SYS_SYSPROTO_H_
 struct shmctl_args {
 	int shmid;
@@ -657,9 +657,8 @@ done:
 	return (error);
 }
 
-
 static int
-shmget_existing(struct thread *td, struct shmget_args *uap, int mode,
+shmget_existing(struct thread *td, size_t size, int shmflg, int mode,
     int segnum)
 {
 	struct shmid_kernel *shmseg;
@@ -671,35 +670,34 @@ shmget_existing(struct thread *td, struct shmget_args *uap, int mode,
 	KASSERT(segnum >= 0 && segnum < shmalloced,
 	    ("segnum %d shmalloced %d", segnum, shmalloced));
 	shmseg = &shmsegs[segnum];
-	if ((uap->shmflg & (IPC_CREAT | IPC_EXCL)) == (IPC_CREAT | IPC_EXCL))
+	if ((shmflg & (IPC_CREAT | IPC_EXCL)) == (IPC_CREAT | IPC_EXCL))
 		return (EEXIST);
 #ifdef MAC
-	error = mac_sysvshm_check_shmget(td->td_ucred, shmseg, uap->shmflg);
+	error = mac_sysvshm_check_shmget(td->td_ucred, shmseg, shmflg);
 	if (error != 0)
 		return (error);
 #endif
-	if (uap->size != 0 && uap->size > shmseg->u.shm_segsz)
+	if (size != 0 && size > shmseg->u.shm_segsz)
 		return (EINVAL);
 	td->td_retval[0] = IXSEQ_TO_IPCID(segnum, shmseg->u.shm_perm);
 	return (0);
 }
 
 static int
-shmget_allocate_segment(struct thread *td, struct shmget_args *uap, int mode)
+shmget_allocate_segment(struct thread *td, key_t key, size_t size, int mode)
 {
 	struct ucred *cred = td->td_ucred;
 	struct shmid_kernel *shmseg;
 	vm_object_t shm_object;
 	int i, segnum;
-	size_t size;
 
 	SYSVSHM_ASSERT_LOCKED();
 
-	if (uap->size < shminfo.shmmin || uap->size > shminfo.shmmax)
+	if (size < shminfo.shmmin || size > shminfo.shmmax)
 		return (EINVAL);
 	if (shm_nused >= shminfo.shmmni) /* Any shmids left? */
 		return (ENOSPC);
-	size = round_page(uap->size);
+	size = round_page(size);
 	if (shm_committed + btoc(size) > shminfo.shmall)
 		return (ENOMEM);
 	if (shm_last_free < 0) {
@@ -750,20 +748,15 @@ shmget_allocate_segment(struct thread *td, struct shmget_args *uap, int mode)
 #endif
 		return (ENOMEM);
 	}
-	shm_object->pg_color = 0;
-	VM_OBJECT_WLOCK(shm_object);
-	vm_object_clear_flag(shm_object, OBJ_ONEMAPPING);
-	vm_object_set_flag(shm_object, OBJ_COLORED | OBJ_NOSPLIT);
-	VM_OBJECT_WUNLOCK(shm_object);
 
 	shmseg->object = shm_object;
 	shmseg->u.shm_perm.cuid = shmseg->u.shm_perm.uid = cred->cr_uid;
 	shmseg->u.shm_perm.cgid = shmseg->u.shm_perm.gid = cred->cr_gid;
 	shmseg->u.shm_perm.mode = (mode & ACCESSPERMS) | SHMSEG_ALLOCATED;
-	shmseg->u.shm_perm.key = uap->key;
+	shmseg->u.shm_perm.key = key;
 	shmseg->u.shm_perm.seq = (shmseg->u.shm_perm.seq + 1) & 0x7fff;
 	shmseg->cred = crhold(cred);
-	shmseg->u.shm_segsz = uap->size;
+	shmseg->u.shm_segsz = size;
 	shmseg->u.shm_cpid = td->td_proc->p_pid;
 	shmseg->u.shm_lpid = shmseg->u.shm_nattch = 0;
 	shmseg->u.shm_atime = shmseg->u.shm_dtime = 0;
@@ -796,23 +789,30 @@ sys_shmget(struct thread *td, struct shmget_args *uap)
 	mode = uap->shmflg & ACCESSPERMS;
 	SYSVSHM_LOCK();
 	if (uap->key == IPC_PRIVATE) {
-		error = shmget_allocate_segment(td, uap, mode);
+		error = shmget_allocate_segment(td, uap->key, uap->size, mode);
 	} else {
 		segnum = shm_find_segment_by_key(td->td_ucred->cr_prison,
 		    uap->key);
 		if (segnum >= 0)
-			error = shmget_existing(td, uap, mode, segnum);
+			error = shmget_existing(td, uap->size, uap->shmflg,
+			    mode, segnum);
 		else if ((uap->shmflg & IPC_CREAT) == 0)
 			error = ENOENT;
 		else
-			error = shmget_allocate_segment(td, uap, mode);
+			error = shmget_allocate_segment(td, uap->key,
+			    uap->size, mode);
 	}
 	SYSVSHM_UNLOCK();
 	return (error);
 }
 
+#ifdef SYSVSHM
+void
+shmfork(struct proc *p1, struct proc *p2)
+#else
 static void
 shmfork_myhook(struct proc *p1, struct proc *p2)
+#endif
 {
 	struct shmmap_state *shmmap_s;
 	size_t size;
@@ -835,8 +835,13 @@ shmfork_myhook(struct proc *p1, struct proc *p2)
 	SYSVSHM_UNLOCK();
 }
 
+#ifdef SYSVSHM
+void
+shmexit(struct vmspace *vm)
+#else
 static void
 shmexit_myhook(struct vmspace *vm)
+#endif
 {
 	struct shmmap_state *base, *shm;
 	int i;
@@ -957,8 +962,10 @@ shminit(void)
 	shm_nused = 0;
 	shm_committed = 0;
 	sx_init(&sysvshmsx, "sysvshmsx");
+#ifndef SYSVSHM
 	shmexit_hook = &shmexit_myhook;
 	shmfork_hook = &shmfork_myhook;
+#endif
 
 	/* Set current prisons according to their allow.sysvipc. */
 	shm_prison_slot = osd_jail_register(NULL, methods);
@@ -972,7 +979,7 @@ shminit(void)
 		if (rsv == NULL)
 			rsv = osd_reserve(shm_prison_slot);
 		prison_lock(pr);
-		if ((pr->pr_allow & PR_ALLOW_SYSVIPC) && pr->pr_ref > 0) {
+		if (prison_isvalid(pr) && (pr->pr_allow & PR_ALLOW_SYSVIPC)) {
 			(void)osd_jail_set_reserved(pr, shm_prison_slot, rsv,
 			    &prison0);
 			rsv = NULL;
@@ -1022,8 +1029,10 @@ shmunload(void)
 			vm_object_deallocate(shmsegs[i].object);
 	}
 	free(shmsegs, M_SHM);
+#ifndef SYSVSHM
 	shmexit_hook = NULL;
 	shmfork_hook = NULL;
+#endif
 	sx_destroy(&sysvshmsx);
 	return (0);
 }

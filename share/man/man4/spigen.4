@@ -23,9 +23,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: f432fb760d4c2d6521c434342744eff512333a2a $
+.\" $FreeBSD: e586b0baa82a82754ff6abdd131b1a9da9b96257 $
 .\"
-.Dd April 7, 2018
+.Dd August 21, 2020
 .Dt SPIGEN 4
 .Os
 .Sh NAME
@@ -58,7 +58,7 @@ line on the bus, and all I/O performed through that instance is done
 with that chip-select line asserted.
 .Pp
 SPI data transfers are inherently bi-directional; there are not separate
-read and write operations. 
+read and write operations.
 When commands and data are sent to a device, data also comes back from
 the device, although in some cases the data may not be useful (or even
 documented or predictable for some devices).
@@ -129,7 +129,7 @@ The setting remains in effect for subsequent transfers; it
 is not necessary to reset this before each transfer.
 .El
 .Sh HINTS CONFIGURATION
-On a 
+On a
 .Xr device.hints 5
 based system, such as
 .Li MIPS ,
@@ -195,7 +195,8 @@ Empty property indicating the slave device requires chip select active high.
 .El
 .Sh SEE ALSO
 .Xr fdt 4 ,
-.Xr device.hints 5
+.Xr device.hints 5 ,
+.Xr spi 8
 .Sh HISTORY
 The
 .Nm

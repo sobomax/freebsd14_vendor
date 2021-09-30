@@ -28,11 +28,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4d13d66379904e014b258d68c82fa8190b5edb5b $
+ * $FreeBSD: 9123531d3ab6fcce8e01420b9619200b1ba43878 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d13d66379904e014b258d68c82fa8190b5edb5b $");
+__FBSDID("$FreeBSD: 9123531d3ab6fcce8e01420b9619200b1ba43878 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -74,7 +74,6 @@ static int			chipc_gpio_commit_update(
 static chipc_gpio_pin_mode	chipc_gpio_pin_get_mode(
 				    struct chipc_gpio_softc *sc,
 				    uint32_t pin_num);
-
 
 /* Debugging flags */
 static u_long chipc_gpio_debug = 0;
@@ -430,7 +429,7 @@ chipc_gpio_pin_getname(device_t dev, uint32_t pin_num, char *name)
 
 	if (ret >= GPIOMAXNAME)
 		return (ENOMEM);
-	
+
 	return (0);
 }
 
@@ -440,7 +439,7 @@ chipc_gpio_pin_setflags(device_t dev, uint32_t pin_num, uint32_t flags)
 	struct chipc_gpio_softc		*sc;
 	struct chipc_gpio_update	 upd;
 	int				 error;
-	
+
 	sc = device_get_softc(dev);
 
 	if (!CC_GPIO_VALID_PIN(pin_num))
@@ -548,7 +547,7 @@ chipc_gpio_pin_config_32(device_t dev, uint32_t first_pin, uint32_t num_pins,
 	struct chipc_gpio_softc		*sc;
 	struct chipc_gpio_update	 upd;
 	int				 error;
-	
+
 	sc = device_get_softc(dev);
 
 	if (!CC_GPIO_VALID_PINS(first_pin, num_pins))
@@ -579,7 +578,6 @@ chipc_gpio_pin_config_32(device_t dev, uint32_t first_pin, uint32_t num_pins,
 
 	return (error);
 }
-
 
 /**
  * Commit a single @p reg register update.
@@ -742,7 +740,7 @@ chipc_gpio_check_flags(struct chipc_gpio_softc *sc, uint32_t pin_num,
 			/* Check for unhandled flags */
 			if ((flags & ~(mode_flag | output_flag)) != 0)
 				return (EINVAL);
-	
+
 			*mode = CC_GPIO_PIN_OUTPUT;
 			return (0);
 

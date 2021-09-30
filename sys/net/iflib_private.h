@@ -24,12 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 341deb43d7bf31a74b3b1c8b021c4d0d0b2151bf $
+ * $FreeBSD: eca6be6384e85a0ccff9c5fa5c18491b5b8be8df $
  */
 
 #ifndef __NET_IFLIB_PRIVATE_H_
-#define __NET_IFLIB_PRIVATE_H_
-
+#define	__NET_IFLIB_PRIVATE_H_
 
 #define	IFC_LEGACY		0x001
 #define	IFC_QFLUSH		0x002
@@ -40,18 +39,13 @@
 #define	IFC_PREFETCH		0x040
 #define	IFC_DO_RESET		0x080
 #define	IFC_DO_WATCHDOG		0x100
-#define	IFC_CHECK_HUNG		0x200
+#define	IFC_SPARE0		0x200
 #define	IFC_PSEUDO		0x400
 #define	IFC_IN_DETACH		0x800
 
-#define IFC_NETMAP_TX_IRQ	0x80000000
+#define	IFC_NETMAP_TX_IRQ	0x80000000
 
 MALLOC_DECLARE(M_IFLIB);
-
-#define IFLIB_MAX_TX_BYTES		(2*1024*1024)
-#define IFLIB_MIN_TX_BYTES		(8*1024)
-#define IFLIB_DEFAULT_TX_QDEPTH	2048
-
 
 struct iflib_cloneattach_ctx {
 	struct if_clone *cc_ifc;

@@ -1,4 +1,4 @@
-/*	$FreeBSD: 86b850d319bb747c3f98e79f0f621eb23ffcf98a $	*/
+/*	$FreeBSD: a4e1a99b288525b4c07f855eba65b2700877589c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -27,7 +27,7 @@ typedef	int	boolean_t;
 # endif
 # define _KERNEL
 # define KERNEL
-# if !defined(solaris) && !defined(linux) && !defined(__sgi) && !defined(hpux)
+# if !defined(solaris)
 #  include <sys/file.h>
 # else
 #  ifdef solaris

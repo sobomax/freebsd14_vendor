@@ -3,7 +3,7 @@
  * Garrett Wollman, September 1994.
  * This file is in the public domain.
  *
- * $FreeBSD: 91cdfe50f525f03cf75aeb9b23d4f3ccd7d2c3c4 $
+ * $FreeBSD: 6f335bf05cfa303a20110981b690d71a2d9dab66 $
  */
 
 #ifndef _MACHINE_CLOCK_H_
@@ -30,7 +30,6 @@ void	clock_init(void);
  */
 
 void	startrtclock(void);
-void	timer_restore(void);
 void	init_TSC(void);
 void	resume_TSC(void);
 

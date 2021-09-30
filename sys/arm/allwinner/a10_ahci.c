@@ -1,7 +1,6 @@
 /*-
- * Copyright (c) 2014-2015 M. Warner Losh <imp@freebsd.org>
- * Copyright (c) 2015 Luiz Otavio O Souza <loos@freebsd.org>
- * All rights reserved.
+ * Copyright (c) 2015 Luiz Otavio O Souza <loos@freebsd.org> All rights reserved.
+ * Copyright (c) 2014-2015 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,7 +32,7 @@
 #include "opt_bus.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c41df5a8e0788f694cab4eb28a5718a1bb56d74 $");
+__FBSDID("$FreeBSD: 399f17b079efd926164b2a36d49436bd761d9c89 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -356,7 +355,7 @@ ahci_a10_attach(device_t dev)
 		device_printf(dev, "Cannot enable clk gate\n");
 		goto fail;
 	}
-	
+
 	/* Reset controller */
 	if ((error = ahci_a10_ctlr_reset(dev)) != 0)
 		goto fail;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 544bfd1194f02422895c6c68c6b7bb2e5e35b3d3 $");
+__FBSDID("$FreeBSD: 57bf053034ad30aaf3944a17d5693bbf64477674 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -365,7 +365,6 @@ smb_rq_reply(struct smb_rq *rqp)
 	    rqp->sr_errclass, rqp->sr_serror);
 	return error ? error : rperror;
 }
-
 
 #define ALIGN4(a)	(((a) + 3) & ~3)
 

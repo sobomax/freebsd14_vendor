@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89a25ee6879865f4dc68b173d9498f3c62286197 $
+ * $FreeBSD: 8bf5be57343c1254e10496b84da8aeb2938e2e64 $
  */
 
 #ifndef _SYS__RMLOCK_H_
@@ -66,6 +66,19 @@ struct rm_priotracker {
 	struct thread *rmp_thread;
 	int rmp_flags;
 	LIST_ENTRY(rm_priotracker) rmp_qentry;
+};
+
+#include <sys/_mutex.h>
+
+struct rmslock_pcpu;
+
+struct rmslock {
+	struct mtx mtx;
+	struct thread *owner;
+	struct rmslock_pcpu *pcpu;
+	int	writers;
+	int	readers;
+	int	debug_readers;
 };
 
 #endif /* !_SYS__RMLOCK_H_ */

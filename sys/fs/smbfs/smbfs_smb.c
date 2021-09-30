@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0d964f4ddbd76096c37762ca499af045b879a92a $
+ * $FreeBSD: e674ddd0d2b67a3d82e2ff2800acb2cad0a0024b $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -176,7 +176,6 @@ smbfs_query_info_fs(struct smb_share *ssp, struct statfs *sbp,
 	smb_t2_done(t2p);
 	return (0);
 }
-
 
 static int
 smbfs_query_info_alloc(struct smb_share *ssp, struct statfs *sbp,
@@ -669,7 +668,6 @@ smbfs_smb_setfattrNT(struct smbnode *np, u_int16_t attr, struct timespec *mtime,
 	return error;
 }
 
-
 int
 smbfs_smb_open(struct smbnode *np, int accmode, struct smb_cred *scred)
 {
@@ -720,7 +718,6 @@ smbfs_smb_open(struct smbnode *np, int accmode, struct smb_cred *scred)
 	np->n_rwstate = grantedmode;
 	return 0;
 }
-
 
 int
 smbfs_smb_close(struct smb_share *ssp, u_int16_t fid, struct timespec *mtime,

@@ -33,12 +33,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 03df023b7531d2a41f6dc7e31639576225340aee $
+ * $FreeBSD: 30eca83900e7782a7fb91e2d5798b76b18869ca4 $
  *
  */
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/lock.h>
 #include <sys/mbuf.h>
 #include <sys/malloc.h>
 #include <sys/sockio.h>

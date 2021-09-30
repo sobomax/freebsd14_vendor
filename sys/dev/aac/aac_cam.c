@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e95b6da14096a7aca44f967f2f582ac92fc05da $");
+__FBSDID("$FreeBSD: 4de1ab9a3164bc87f365e35ec1c1b3ccc7b7ecbc $");
 
 /*
  * CAM front-end for communicating with non-DASD devices
@@ -143,7 +143,6 @@ aac_cam_rescan(struct aac_softc *sc, uint32_t channel, uint32_t target_id)
 		break;
 	}
 }
-
 
 static void
 aac_cam_event(struct aac_softc *sc, struct aac_event *event, void *arg)

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d76457765737c47b613a69ec69d1b449b399e456 $");
+__FBSDID("$FreeBSD: 8ccaa4b6b473f6ce365d7bc14ee3d5a9b2a6746f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -140,7 +140,6 @@ fpga_wait_dclk_pulses(struct fpgamgr_a10_softc *sc, int npulses)
 
 	return (0);
 }
-
 
 static int
 fpga_open(struct cdev *dev, int flags __unused,

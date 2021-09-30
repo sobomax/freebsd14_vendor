@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5a9a72a0f378f411c09d406c95018d8f615c1047 $
+ * $FreeBSD: f6ccb003c89b1675ae6194b7cf0e5db0e9617dfe $
  */
 
 #ifndef _MACHINE_DUMP_H_
@@ -37,6 +37,9 @@
 
 void dumpsys_pa_init(void);
 void dumpsys_unmap_chunk(vm_paddr_t, size_t, void *);
+size_t dumpsys_scan_pmap(void);
+void *dumpsys_dump_pmap_init(unsigned blkpgs);
+void *dumpsys_dump_pmap(void *ctx, void *buf, u_long *nbytes);
 
 static inline struct dump_pa *
 dumpsys_pa_next(struct dump_pa *p)

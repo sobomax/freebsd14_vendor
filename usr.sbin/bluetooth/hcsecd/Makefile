@@ -1,6 +1,7 @@
 # $Id: Makefile,v 1.8 2003/08/14 20:06:20 max Exp $
-# $FreeBSD: 35353a3bfe942291c181b2db7d5ecc6a3296869b $
+# $FreeBSD: b571162a1907dd2e5be4242b56018f310cb2d1cb $
 
+PACKAGE=	bluetooth
 CONFS=		hcsecd.conf
 CONFSDIR=	/etc/bluetooth
 CONFSMODE_hcsecd.conf=	600

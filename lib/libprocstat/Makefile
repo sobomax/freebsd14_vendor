@@ -1,21 +1,17 @@
-# $FreeBSD: cedfed27fda1241cb013a6e4c8cdd9bc798423be $
+# $FreeBSD: 2e60a7b0dc4d60c3618cbc23630653233e65ed39 $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=	procstat
 
 SRCS=	cd9660.c	\
 	common_kvm.c	\
 	core.c		\
 	libprocstat.c	\
+	libprocstat_compat.c \
 	msdosfs.c	\
 	smbfs.c		\
 	udf.c
-
-.if ${MK_SYMVER} == yes
-SRCS+=	libprocstat_compat.c
-.endif
 
 VERSION_DEF=	${LIBCSRCDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map
@@ -63,8 +59,6 @@ MLINKS+=libprocstat.3 procstat_close.3 \
 CFLAGS+=	-DLIBPROCSTAT_ZFS
 SRCS+=	zfs.c
 OBJS+=	zfs/zfs_defs.o
-SOBJS+=	zfs/zfs_defs.pico
-POBJS+=	zfs/zfs_defs.po
 SUBDIR=	zfs
 zfs/zfs_defs.o: .PHONY
 	@cd ${.CURDIR}/zfs && ${MAKE} zfs_defs.o

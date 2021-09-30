@@ -26,9 +26,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 04293aa59ee7a4a84852015c36ba67d9b3e2e0de $
+.\" $FreeBSD: 2378cb60fc8889427b47e9722886c3d4ff76c509 $
 .\"
-.Dd June 1, 2016
+.Dd May 5, 2020
 .Dt THR_kill 2
 .Os
 .Sh NAME
@@ -131,3 +131,10 @@ to implement
 .St -p1003.1-2001
 .Xr pthread 3
 functionality.
+.Sh HISTORY
+The
+.Fn thr_kill
+and
+.Fn thr_kill2
+system calls first appeared in
+.Fx 5.2 .

@@ -1,4 +1,4 @@
-#	$FreeBSD: 6a33617a46fbb49293dc82b3cc6b2580593476ac $
+#	$FreeBSD: fa3890d8393b9dc00be89f201ea7c5689f0e5b26 $
 #
 
 MSDOS=		${SRCTOP}/sys/fs/msdosfs
@@ -6,7 +6,7 @@ MSDOS_NEWFS=	${SRCTOP}/sbin/newfs_msdos
 
 .PATH:	${SRCDIR}/msdos ${MSDOS} ${MSDOS_NEWFS}
 
-CFLAGS+= -I${MSDOS} -I${MSDOS_NEWFS}
+CFLAGS+= -DMAKEFS -I${MSDOS} -I${MSDOS_NEWFS}
 
 SRCS+= mkfs_msdos.c
 SRCS+= msdosfs_conv.c msdosfs_denode.c msdosfs_fat.c msdosfs_lookup.c

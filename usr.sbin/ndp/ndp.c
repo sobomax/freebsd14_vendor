@@ -1,4 +1,4 @@
-/*	$FreeBSD: 10e186d1d9f35a736c10711873ceae323e39ca12 $	*/
+/*	$FreeBSD: ce21e34417c3b54501161aff705923baa4eacc09 $	*/
 /*	$KAME: ndp.c,v 1.104 2003/06/27 07:48:39 itojun Exp $	*/
 
 /*-
@@ -860,12 +860,6 @@ rtmsg(int cmd)
 			rtm->rtm_inits = RTV_EXPIRE;
 		}
 		rtm->rtm_flags |= (RTF_HOST | RTF_STATIC | RTF_LLDATA);
-#if 0		/* we don't support ipv6addr/128 type proxying */
-		if (rtm->rtm_flags & RTF_ANNOUNCE) {
-			rtm->rtm_flags &= ~RTF_HOST;
-			rtm->rtm_addrs |= RTA_NETMASK;
-		}
-#endif
 		/* FALLTHROUGH */
 	case RTM_GET:
 		rtm->rtm_addrs |= RTA_DST;
@@ -873,10 +867,6 @@ rtmsg(int cmd)
 
 	NEXTADDR(RTA_DST, sin_m);
 	NEXTADDR(RTA_GATEWAY, sdl_m);
-#if 0	/* we don't support ipv6addr/128 type proxying */
-	memset(&so_mask.sin6_addr, 0xff, sizeof(so_mask.sin6_addr));
-	NEXTADDR(RTA_NETMASK, so_mask);
-#endif
 
 	rtm->rtm_msglen = cp - (char *)&m_rtmsg;
 doit:
@@ -1096,6 +1086,9 @@ rtrlist()
 		printf(", flags=%s%s",
 		    p->flags & ND_RA_FLAG_MANAGED ? "M" : "",
 		    p->flags & ND_RA_FLAG_OTHER   ? "O" : "");
+#ifdef DRAFT_IETF_6MAN_IPV6ONLY_FLAG
+		printf("%s", p->flags & ND_RA_FLAG_IPV6_ONLY ? "S" : "");
+#endif
 		rtpref = ((p->flags & ND_RA_FLAG_RTPREF_MASK) >> 3) & 0xff;
 		printf(", pref=%s", rtpref_str[rtpref]);
 

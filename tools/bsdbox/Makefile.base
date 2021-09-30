@@ -2,7 +2,7 @@
 # This builds a variety of "base" tools, useful for an embedded
 # system.
 #
-# $FreeBSD: 0274949055198666d70d78c7b31d30a4b7859e04 $
+# $FreeBSD: f2ffc2e49f701d230e8f8cb8347c5acd7a2b8d88 $
 #
 CRUNCH_PROGS_sbin+=	dmesg sysctl init reboot
 CRUNCH_PROGS_bin+=	ls cat dd df cp hostname kill mkdir sleep ps
@@ -14,12 +14,13 @@ CRUNCH_ALIAS_tset=	reset
 
 CRUNCH_PROGS_usr.bin+=	vmstat
 #CRUNCH_PROGS_user.bin+=	systat
-CRUNCH_LIBS+=		-ldevstat -lncursesw -lncurses -lmemstat -lkvm -lelf
+CRUNCH_LIBS+=		-ldevstat -lncursesw -lmemstat -lkvm -lelf
 
 # CRUNCH_PROGS_usr.bin+=	tar
 CRUNCH_PROGS_usr.bin+=	cpio
 # XXX SSL ?
 CRUNCH_LIBS+=		-larchive -lbz2 -lz -llzma -lbsdxml -lssl -lcrypto
+CRUNCH_LIBS+=		-lprivatezstd -lthr
 
 # Clear requires tput, and it's a shell script so it won't be crunched
 CRUNCH_PROGS_usr.bin+=	tput

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2018 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac0203f1e68caa1b9d9d150354b75bd5f27929dd $");
+__FBSDID("$FreeBSD: df50987088642836e1f8c7d49220f029c51d4166 $");
 
 #include <sys/capsicum.h>
 #include <sys/filio.h>

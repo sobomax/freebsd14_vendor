@@ -38,7 +38,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b5bf8c32dbef4fa4f66f31366e68190ff16b2d04 $
+ * $FreeBSD: 296d4a4e25b8f912b07fd62374889f7db4fbf5c8 $
  */
 
 /*
@@ -92,7 +92,8 @@
 
 SYSCTL_DECL(_security_mac);
 
-static SYSCTL_NODE(_security_mac, OID_AUTO, biba, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_security_mac, OID_AUTO, biba,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "TrustedBSD mac_biba policy controls");
 
 static int	biba_label_size = sizeof(struct mac_biba);
@@ -2744,7 +2745,7 @@ biba_sysvshm_check_shmat(struct ucred *cred, struct shmid_kernel *shmsegptr,
 		if (!biba_dominate_effective(subj, obj))
 			return (EACCES);
 	}
-	
+
 	return (0);
 }
 

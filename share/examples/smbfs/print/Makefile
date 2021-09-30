@@ -1,6 +1,6 @@
-# $FreeBSD: 410e9526593f38bf26419a2c91838f995b549083 $
+# $FreeBSD: 0c080c0861b35755cbf9eca2e361fec863ff0819 $
 
-PACKAGE=examples
+PACKAGE=utilities
 FILESDIR= ${SHAREDIR}/examples/smbfs/print
 FILES=	lj6l ljspool printcap.sample tolj
 

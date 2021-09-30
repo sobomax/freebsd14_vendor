@@ -29,12 +29,12 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/9/93
- * $FreeBSD: e501d7b8772d613a47c99ea0ee39a85a3213527b $
+ * $FreeBSD: 5dca6f2cbb4e58031462f42bca4870be58be46c5 $
  */
 
 #include <paths.h>
 
 #define	_PATH_HUSHLOGIN		".hushlogin"
-#define	_PATH_MOTDFILE		"/etc/motd"
+#define	_PATH_MOTDFILE		"/var/run/motd"
 #define _PATH_FBTAB		"/etc/fbtab"
 #define _PATH_LOGINDEVPERM	"/etc/logindevperm"

@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: ce93160c7d90d2009db252078b8395bfdc866cc8 $
+ * $FreeBSD: 06d44956ef381d2441ae71fd35855d5542927cff $
  */
 
 #ifndef _SYS_MCDI_MON_H
@@ -51,7 +51,6 @@ mcdi_mon_cfg_build(
 mcdi_mon_cfg_free(
 	__in		efx_nic_t *enp);
 
-
 extern	__checkReturn			efx_rc_t
 mcdi_mon_ev(
 	__in				efx_nic_t *enp,
@@ -64,6 +63,11 @@ mcdi_mon_stats_update(
 	__in				efx_nic_t *enp,
 	__in				efsys_mem_t *esmp,
 	__inout_ecount(EFX_MON_NSTATS)	efx_mon_stat_value_t *values);
+
+extern	__checkReturn			efx_rc_t
+mcdi_mon_limits_update(
+	__in				efx_nic_t *enp,
+	__inout_ecount(EFX_MON_NSTATS)	efx_mon_stat_limits_t *values);
 
 #endif	/* EFSYS_OPT_MON_STATS */
 

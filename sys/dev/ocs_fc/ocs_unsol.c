@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8c2ab2ad880d5fe5e6c86fe7edaeb508b8d2ad4e $
+ * $FreeBSD: 12b600132c00ba66046be56b9c215990905f01ee $
  */
 
 /**
@@ -44,7 +44,6 @@
 #include "ocs_els.h"
 #include "ocs_fabric.h"
 #include "ocs_device.h"
-
 
 #define frame_printf(ocs, hdr, fmt, ...) \
 	do { \
@@ -124,7 +123,6 @@ ocs_unsol_abort_cb (ocs_hw_io_t *hio, ocs_remote_node_t *rnode, uint32_t len, in
 	ocs_hw_io_free(&ocs->hw, hio);
 	return 0;
 }
-
 
 /**
  * @ingroup unsol
@@ -557,7 +555,6 @@ ocs_domain_accept_frames(ocs_domain_t *domain)
 	ocs_domain_process_pending(domain);
 }
 
-
 /**
  * @ingroup unsol
  * @brief Dispatch unsolicited FC frame.
@@ -857,6 +854,7 @@ ocs_get_flags_fcp_cmd(fcp_cmnd_iu_t *cmnd)
 		flags |= OCS_SCSI_CMD_UNTAGGED;
 		break;
 	}
+	flags |= (uint32_t)cmnd->command_priority << OCS_SCSI_PRIORITY_SHIFT;
 	if (cmnd->wrdata)
 		flags |= OCS_SCSI_CMD_DIR_IN;
 	if (cmnd->rddata)
@@ -1137,7 +1135,6 @@ ocs_dispatch_fcp_data(ocs_node_t *node, ocs_hw_sequence_t *seq)
 	ocs_hw_sequence_free(&ocs->hw, seq);
 	return 0;
 }
-
 
 /**
  * @ingroup unsol

@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 920c495fcf05b0a43fee87144421905469f02312 $
+ * $FreeBSD: 7ae5864692f201ca694e60d4afdd8de82fa0832d $
  */
 #ifndef _VISIBILITY_H_
 #define _VISIBILITY_H_
@@ -55,4 +55,3 @@ void visibility_deinit(struct wtap_plugin *);
 void visibility_work(struct wtap_plugin *, struct packet *);
 
 #endif
-

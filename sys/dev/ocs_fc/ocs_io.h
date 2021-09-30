@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b5a9544ace09f9b6954dbc80b5d97b74534a52c5 $
+ * $FreeBSD: c16d7459b3fe9100b33de941f58ce2aa2e18e95e $
  */
 
 /**
@@ -69,7 +69,6 @@ typedef enum {
 } ocs_io_type_e;
 
 struct ocs_io_s {
-
 	ocs_t *ocs;			/**< pointer back to ocs */
 	uint32_t instance_index;	/**< unique instance index value */
 	const char *display_name;	/**< display name */

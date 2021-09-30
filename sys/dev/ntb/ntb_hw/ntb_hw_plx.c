@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97df9ce3a4cc3f1ac6ab2b5cfca097564edf202b $");
+__FBSDID("$FreeBSD: f3d8af4971a420603a7998241f66bbb7f4c6bc2d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -42,6 +42,8 @@ __FBSDID("$FreeBSD: 97df9ce3a4cc3f1ac6ab2b5cfca097564edf202b $");
 #include <sys/module.h>
 #include <sys/rman.h>
 #include <sys/sysctl.h>
+#include <sys/taskqueue.h>
+#include <sys/tree.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
 #include <machine/bus.h>
@@ -49,6 +51,7 @@ __FBSDID("$FreeBSD: 97df9ce3a4cc3f1ac6ab2b5cfca097564edf202b $");
 #include <machine/resource.h>
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
+#include <dev/iommu/iommu.h>
 
 #include "../ntb.h"
 
@@ -343,7 +346,7 @@ ntb_plx_attach(device_t dev)
 	 * The device occupies whole bus.  In translated TLP slot field
 	 * keeps LUT index (original bus/slot), function is passed through.
 	 */
-	bus_dma_dmar_set_buswide(dev);
+	bus_dma_iommu_set_buswide(dev);
 
 	/* Identify chip port we are connected to. */
 	val = bus_read_4(sc->conf_res, 0x360);

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c22cc749c6596a9dce8667396bcd3c96061cf00 $");
+__FBSDID("$FreeBSD: 1056bcdcd13cf8b22c018fbffd3736779b99e8af $");
 
 #ifndef _NETINET_SCTP_AUTH_H_
 #define _NETINET_SCTP_AUTH_H_
@@ -95,8 +95,6 @@ typedef struct sctp_authinformation {
 	uint16_t recv_keyid;	/* last recv keyid (cached) */
 } sctp_authinfo_t;
 
-
-
 /*
  * Macros
  */
@@ -153,7 +151,6 @@ extern void sctp_auth_key_acquire(struct sctp_tcb *stcb, uint16_t keyid);
 extern void
 sctp_auth_key_release(struct sctp_tcb *stcb, uint16_t keyid,
     int so_locked);
-
 
 /* hmac list handling */
 extern sctp_hmaclist_t *sctp_alloc_hmaclist(uint16_t num_hmacs);

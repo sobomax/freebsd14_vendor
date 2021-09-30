@@ -1,10 +1,10 @@
-# $FreeBSD: e4c426290d4e243883c9ac31f14b93ec07803742 $
+# $FreeBSD: a8277e08932cb8479a58a860f50508b700483556 $
 
 .include <src.opts.mk>
 
 CONFDIR=	/etc/rc.d
 CONFGROUPS=	CONFS
-#PACKAGE=rc
+CONFSPACKAGE=	rc
 
 CONFS=	DAEMON \
 	FILESYSTEMS \
@@ -16,9 +16,7 @@ CONFS=	DAEMON \
 	archdep \
 	bgfsck \
 	${_blacklistd} \
-	${_bluetooth} \
 	bridge \
-	${_bthidd} \
 	cfumass \
 	cleanvar \
 	cleartmp \
@@ -39,7 +37,6 @@ CONFS=	DAEMON \
 	gptboot \
 	growfs \
 	gssd \
-	${_hcsecd} \
 	hostid \
 	hostid_save \
 	hostname \
@@ -77,7 +74,6 @@ CONFS=	DAEMON \
 	nfsuserd \
 	nisdomain \
 	${_nscd} \
-	nsswitch \
 	ntpdate \
 	${_opensm} \
 	os-release \
@@ -113,7 +109,6 @@ CONFS=	DAEMON \
 	syslogd \
 	sysvipc \
 	tmp \
-	${_ubthidhci} \
 	ugidfw \
 	${_utx} \
 	var \
@@ -145,12 +140,6 @@ ACPIPACKAGE=	acpi
 CONFS+=		powerd
 .endif
 
-.if ${MK_AMD} != "no"
-CONFGROUPS+=	AMD
-AMD+=		amd
-AMDPACKAGE=	amd
-.endif
-
 .if ${MK_APM} != "no"
 CONFGROUPS+=	APM
 APM+=		apm
@@ -164,6 +153,7 @@ APMPACKAGE=	apm
 CONFGROUPS+=	AUDIT
 AUDIT+=		auditd
 AUDIT+=		auditdistd
+AUDITPACKAGE=	rc
 .endif
 
 .if ${MK_AUTOFS} != "no"
@@ -177,12 +167,14 @@ _blacklistd+=	blacklistd
 .endif
 
 .if ${MK_BLUETOOTH} != "no"
-_bluetooth=	bluetooth
-_bthidd=	bthidd
-_hcsecd=	hcsecd
-CONFS+=		rfcomm_pppd_server
-CONFS+=		sdpd
-_ubthidhci=	ubthidhci
+CONFGROUPS+=	BLUETOOTH
+BLUETOOTH+=	bluetooth \
+		bthidd \
+		hcsecd \
+		rfcomm_pppd_server \
+		sdpd \
+		ubthidhci
+BLUETOOTHPACKAGE=	bluetooth
 .endif
 
 .if ${MK_BOOTPARAMD} != "no"
@@ -301,10 +293,6 @@ SMRCD=		sendmail
 SMRCDPACKAGE=	sendmail
 .endif
 
-.if ${MK_TIMED} != "no"
-CONFS+=		timed
-.endif
-
 .if ${MK_UNBOUND} != "no"
 CONFGROUPS+=	UNBOUND
 UNBOUND+=	local_unbound
@@ -331,11 +319,9 @@ CONFGROUPS+=	ZFS
 ZFS+=		zfs
 ZFS+=		zfsbe
 ZFS+=		zfsd
+ZFS+=		zpool
 ZFS+=		zvol
-ZFSPACKAGE=	zfs
-DIRS+=	ETC_ZFS
-ETC_ZFS=	/etc/zfs
-ETC_ZFSPACKAGE=	zfs
+ZFSPACKAGE=	rc
 .endif
 
 .for fg in ${CONFGROUPS}

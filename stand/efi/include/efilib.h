@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aace2351fcc6c06aa5440623c53e3c8f50e492b2 $
+ * $FreeBSD: b9b9030afd7fe9dc4a50063d35beebf66e13fa40 $
  */
 
 #ifndef _LOADER_EFILIB_H
@@ -96,10 +96,10 @@ void efi_free_devpath_name(CHAR16 *);
 bool efi_devpath_same_disk(EFI_DEVICE_PATH *, EFI_DEVICE_PATH *);
 EFI_DEVICE_PATH *efi_devpath_to_media_path(EFI_DEVICE_PATH *);
 UINTN efi_devpath_length(EFI_DEVICE_PATH *);
-EFI_HANDLE efi_devpath_to_handle(EFI_DEVICE_PATH *path, EFI_HANDLE *handles, unsigned nhandles);
 EFI_DEVICE_PATH *efi_name_to_devpath(const char *path);
 EFI_DEVICE_PATH *efi_name_to_devpath16(CHAR16 *path);
 void efi_devpath_free(EFI_DEVICE_PATH *dp);
+EFI_HANDLE efi_devpath_to_handle(EFI_DEVICE_PATH *path, EFI_HANDLE *handles, unsigned nhandles);
 
 int efi_status_to_errno(EFI_STATUS);
 EFI_STATUS errno_to_efi_status(int errno);
@@ -107,6 +107,7 @@ EFI_STATUS errno_to_efi_status(int errno);
 void efi_time_init(void);
 void efi_time_fini(void);
 
+int parse_uefi_con_out(void);
 EFI_STATUS efi_main(EFI_HANDLE Ximage, EFI_SYSTEM_TABLE* Xsystab);
 
 EFI_STATUS main(int argc, CHAR16 *argv[]);

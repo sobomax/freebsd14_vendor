@@ -38,13 +38,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd0592829079644f25a8549c5c553b8e0e5b12a3 $");
+__FBSDID("$FreeBSD: bcd2e34bf4b7f1c3dfc70a13fe08bacc635377e5 $");
 
 #include <dev/aic7xxx/aic7xxx_osm.h>
 
 #include <sys/limits.h>		/* For CHAR_BIT*/
 #include <isa/isavar.h>		/* For ISA attach glue */
-
 
 static struct aic7770_identity *ahc_isa_find_device(bus_space_tag_t tag,
 						    bus_space_handle_t bsh);

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 897eb74900aae7dd01a8489f812a99138f0dea66 $");
+__FBSDID("$FreeBSD: b28462ce5f7563c9296a578aceab3aba9f65b457 $");
 
 /* Includes */
 #ifdef _KERNEL
@@ -100,7 +100,7 @@ fingerprintgre(struct libalias *la, struct alias_data *ah)
 static int
 protohandlerin(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	AliasHandlePptpIn(la, pip, ah->lnk);
 	return (0);
 }
@@ -108,7 +108,7 @@ protohandlerin(struct libalias *la, struct ip *pip, struct alias_data *ah)
 static int
 protohandlerout(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	AliasHandlePptpOut(la, pip, ah->lnk);
 	return (0);
 }
@@ -294,7 +294,6 @@ struct pptpCallIds {
 typedef struct pptpCallIds *PptpCallId;
 
 static PptpCallId AliasVerifyPptp(struct ip *, u_int16_t *);
-
 
 static void
 AliasHandlePptpOut(struct libalias *la,

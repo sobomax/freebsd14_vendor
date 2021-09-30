@@ -40,13 +40,15 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cc1e5f5ca6162958d80b24ec9d52470fae916c4 $");
+__FBSDID("$FreeBSD: cdcc86e715dda4696ae872ede9a2fe7288833747 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/cpu.h>
+#include <sys/cpuset.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/mutex.h>
@@ -190,7 +192,7 @@ static void
 release_aps(void *dummy __unused)
 {
 	cpuset_t mask;
-	int cpu, i;
+	int i;
 
 	if (mp_ncpus == 1)
 		return;
@@ -209,13 +211,8 @@ release_aps(void *dummy __unused)
 	sbi_send_ipi(mask.__bits);
 
 	for (i = 0; i < 2000; i++) {
-		if (smp_started) {
-			for (cpu = 0; cpu <= mp_maxid; cpu++) {
-				if (CPU_ABSENT(cpu))
-					continue;
-			}
+		if (smp_started)
 			return;
-		}
 		DELAY(1000);
 	}
 
@@ -270,6 +267,9 @@ init_secondary(uint64_t hart)
 	/* Enable external (PLIC) interrupts */
 	csr_set(sie, SIE_SEIE);
 
+	/* Activate this hart in the kernel pmap. */
+	CPU_SET_ATOMIC(hart, &kernel_pmap->pm_active);
+
 	/* Activate process 0's pmap. */
 	pmap_activate_boot(vmspace_pmap(proc0.p_vmspace));
 
@@ -305,7 +305,7 @@ smp_after_idle_runnable(void *arg __unused)
 	for (cpu = 1; cpu <= mp_maxid; cpu++) {
 		if (bootstacks[cpu] != NULL) {
 			pc = pcpu_find(cpu);
-			while ((void *)atomic_load_ptr(&pc->pc_curpcb) == NULL)
+			while (atomic_load_ptr(&pc->pc_curpcb) == NULL)
 				cpu_spinwait();
 			kmem_free((vm_offset_t)bootstacks[cpu], PAGE_SIZE);
 		}
@@ -321,7 +321,7 @@ ipi_handler(void *arg)
 	u_int cpu, ipi;
 	int bit;
 
-	sbi_clear_ipi();
+	csr_clear(sip, SIP_SSIP);
 
 	cpu = PCPU_GET(cpuid);
 

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5bf060964c25837c113bc12f2c9b75f7635de1a $");
+__FBSDID("$FreeBSD: ccdd4f15905b636e12d9d59cf482fbeb0938b41f $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -633,9 +633,8 @@ fts_build(FTS *sp, int type)
 	FTSENT *cur, *tail;
 	DIR *dirp;
 	void *oldaddr;
-	size_t dnamlen;
 	int cderrno, descend, len, level, maxlen, nlinks, oflag, saved_errno,
-	    nostat, doadjust;
+	    nostat, doadjust, dnamlen;
 	char *cp;
 
 	/* Set current node pointer. */
@@ -647,9 +646,9 @@ fts_build(FTS *sp, int type)
 	 */
 #ifdef FTS_WHITEOUT
 	if (ISSET(FTS_WHITEOUT))
-		oflag = DTF_NODUP | DTF_REWIND;
+		oflag = DTF_NODUP;
 	else
-		oflag = DTF_HIDEW | DTF_NODUP | DTF_REWIND;
+		oflag = DTF_HIDEW | DTF_NODUP;
 #else
 #define __opendir2(path, flag) opendir(path)
 #endif
@@ -745,7 +744,7 @@ fts_build(FTS *sp, int type)
 		if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
 			continue;
 
-		if ((p = fts_alloc(sp, dp->d_name, (int)dnamlen)) == NULL)
+		if ((p = fts_alloc(sp, dp->d_name, dnamlen)) == NULL)
 			goto mem1;
 		if (dnamlen >= maxlen) {	/* include space for NUL */
 			oldaddr = sp->fts_path;

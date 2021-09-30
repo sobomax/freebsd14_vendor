@@ -1,5 +1,4 @@
-/* $Id: pathnames.h.in,v 8.7 2012/04/23 08:34:52 zy Exp $ */
-/* $FreeBSD: 49d58fe834938332aef6f736d2b77574dcced174 $ */
+/* $FreeBSD: f788c05bb5eb84a70705891dc2d6c34fac5bad65 $ */
 
 /* Read standard system paths first. */
 #include <paths.h>
@@ -16,9 +15,8 @@
 #define	_PATH_NEXRC	".nexrc"
 #endif
 
-#ifndef	_PATH_PRESERVE
-#define	_PATH_PRESERVE	"/var/tmp/vi.recover/"
-#endif
+/* On linux _PATH_PRESERVE is only writable by root */
+#define	NVI_PATH_PRESERVE	"/var/tmp/vi.recover/"
 
 #ifndef	_PATH_SYSEXRC
 #define	_PATH_SYSEXRC	"/etc/vi.exrc"

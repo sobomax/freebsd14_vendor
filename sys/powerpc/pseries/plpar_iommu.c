@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9511332dd6bb7775acf96677b424bce8f6cd7c63 $");
+__FBSDID("$FreeBSD: d403d91ce94a0a7507cd41adf7d5e1188973f8c1 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -215,7 +215,7 @@ phyp_iommu_map(device_t dev, bus_dma_segment_t *segs, int *nsegs,
 
 	return (0);
 }
-	
+
 int
 phyp_iommu_unmap(device_t dev, bus_dma_segment_t *segs, int nsegs, void *cookie)
 {
@@ -244,4 +244,3 @@ phyp_iommu_unmap(device_t dev, bus_dma_segment_t *segs, int nsegs, void *cookie)
 
 	return (0);
 }
-

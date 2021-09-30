@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d6ddd6775a3c1649fd1fe3b28439c7f1f8be5342 $
+ * $FreeBSD: 1ccd176e553948f9f5334b795752a659101e1a64 $
  */
 
 #ifndef _DEV_SCC_BFE_H_
@@ -113,8 +113,8 @@ struct scc_class {
 };
 
 extern struct scc_class scc_quicc_class;
-extern struct scc_class scc_sab82532_class;
-extern struct scc_class scc_z8530_class;
+extern struct scc_class scc_z8530_escc_class;
+extern struct scc_class scc_z8530_legacy_class;
 
 struct scc_softc {
 	KOBJ_FIELDS;

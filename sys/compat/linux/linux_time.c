@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50ee6ae5562b91d58cdaab3a4141448a06a17434 $");
+__FBSDID("$FreeBSD: 6f1ef36a911488d10fbb8825d80d1dff0d6f5482 $");
 #if 0
 __KERNEL_RCSID(0, "$NetBSD: linux_time.c,v 1.14 2006/05/14 03:40:54 christos Exp $");
 #endif
@@ -121,7 +121,6 @@ LIN_SDT_PROBE_DEFINE1(time, linux_clock_nanosleep, copyin_error, "int");
 LIN_SDT_PROBE_DEFINE1(time, linux_clock_nanosleep, unsupported_flags, "int");
 LIN_SDT_PROBE_DEFINE1(time, linux_clock_nanosleep, unsupported_clockid, "int");
 LIN_SDT_PROBE_DEFINE1(time, linux_clock_nanosleep, return, "int");
-
 
 int
 native_to_linux_timespec(struct l_timespec *ltp, struct timespec *ntp)

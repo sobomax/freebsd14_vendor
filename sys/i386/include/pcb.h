@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: dfe470fb241734cc96cafd4083864f45a8d18fda $
+ * $FreeBSD: a3f503ae132045fea68d6d1cc8517c5371c67cfa $
  */
 
 #ifndef _I386_PCB_H_
@@ -82,10 +82,12 @@ struct pcb {
 
 	u_int	pcb_flags;
 #define	PCB_DBREGS	0x02	/* process using debug registers */
+#define	PCB_KERNNPX_THR	0x04	/* fpu_kern_thread() */
 #define	PCB_NPXINITDONE	0x08	/* fpu state is initialized */
 #define	PCB_VM86CALL	0x10	/* in vm86 call */
 #define	PCB_NPXUSERINITDONE 0x20 /* user fpu state is initialized */
 #define	PCB_KERNNPX	0x40	/* kernel uses npx */
+#define	PCB_NPXNOSAVE	0x80	/* no save area for current FPU ctx */
 
 	uint16_t pcb_initial_npxcw;
 

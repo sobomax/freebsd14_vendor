@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_arp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 070dbafe10f0410132a262e18c7873326310839f $
+ * $FreeBSD: f4c3bec217d4396bb854f03f2849a99597358a4d $
  */
 
 #ifndef _NET_IF_ARP_H_
@@ -105,8 +105,9 @@ struct arpstat {
 	uint64_t rxrequests;	/* # of ARP requests received by this host. */
 	uint64_t rxreplies;	/* # of ARP replies received by this host. */
 	uint64_t received;	/* # of ARP packets received by this host. */
+	uint64_t txerrors;	/* # of ARP requests failed to send. */
 
-	uint64_t arp_spares[4];	/* For either the upper or lower half. */
+	uint64_t arp_spares[3];	/* For either the upper or lower half. */
 	/* Abnormal event and error  counting: */
 	uint64_t dropped;	/* # of packets dropped waiting for a reply. */
 	uint64_t timeouts;	/* # of times with entries removed */

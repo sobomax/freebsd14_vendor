@@ -1,4 +1,4 @@
-# $FreeBSD: 7ca1a1f92fd7b640fdfe317ad8e93c9b86a859da $
+# $FreeBSD: e838a5a10ac4859ab271cc609666d3255bf58bb4 $
 
 .include <bsd.init.mk>
 
@@ -22,9 +22,13 @@ SRCS=	delay.c \
 	libefi.c \
 	wchar.c
 
+.PATH:  ${SYSDIR}/teken
+SRCS+=  teken.c
+
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 SRCS+=	time.c
-.elif ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
+.elif ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm" || \
+    ${MACHINE_CPUARCH} == "riscv"
 SRCS+=	time_event.c
 .endif
 
@@ -45,8 +49,13 @@ CFLAGS+= -fPIC -mno-red-zone
 .endif
 CFLAGS+= -I${EFIINC}
 CFLAGS+= -I${EFIINCMD}
+CFLAGS.efi_console.c+= -I${SRCTOP}/sys/teken -I${SRCTOP}/contrib/pnglite
+CFLAGS.efi_console.c+= -I${.CURDIR}/../loader
+CFLAGS.teken.c+= -I${SRCTOP}/sys/teken
 .if ${MK_LOADER_ZFS} != "no"
 CFLAGS+=	-I${ZFSSRC}
+CFLAGS+=	-I${SYSDIR}/cddl/boot/zfs
+CFLAGS+=	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common
 CFLAGS+=	-DEFI_ZFS_BOOT
 .endif
 
@@ -56,9 +65,6 @@ CFLAGS+= -I${LDRSRC}
 # Handle FreeBSD specific %b and %D printf format specifiers
 CFLAGS+= ${FORMAT_EXTENSIONS}
 
-# Do not use TERM_EMU on arm and arm64 as it doesn't behave well with serial console
-.if ${MACHINE_CPUARCH} != "arm" && ${MACHINE_CPUARCH} != "aarch64"
 CFLAGS+= -DTERM_EMU
-.endif
 
 .include <bsd.lib.mk>

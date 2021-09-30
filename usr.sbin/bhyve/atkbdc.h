@@ -23,16 +23,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 85c8a7141eb2b04096aa3d5282cbff528fb3131a $
+ * $FreeBSD: 14c00ed9ae880ad22bd4f3115001a5816d31356d $
  */
 
 #ifndef _ATKBDC_H_
 #define _ATKBDC_H_
 
 struct atkbdc_softc;
+struct vm_snapshot_meta;
 struct vmctx;
 
 void atkbdc_init(struct vmctx *ctx);
 void atkbdc_event(struct atkbdc_softc *sc, int iskbd);
+
+#ifdef BHYVE_SNAPSHOT
+int atkbdc_snapshot(struct vm_snapshot_meta *meta);
+#endif
 
 #endif /* _ATKBDC_H_ */

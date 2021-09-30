@@ -1,8 +1,7 @@
-# $FreeBSD: afda4fb3e59b9cf3e45c64d0859d78a3b4efde76 $
+# $FreeBSD: 47dc716b800e82f16a82f50e7e399b53648758ec $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 #
-PACKAGE=lib${LIB}
 LIB=	ngatm
 SHLIB_MAJOR= 4
 MAN=	libngatm.3 uniaddr.3 unifunc.3 unimsg.3 unisap.3 unistruct.3

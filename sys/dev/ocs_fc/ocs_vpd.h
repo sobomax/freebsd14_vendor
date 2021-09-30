@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c5c0341320e4236a21066331f94a008d926b4573 $
+ * $FreeBSD: 7c2fd28c43bf6a51526da9601466ac90829a6ae6 $
  */
 
 /**
@@ -174,7 +174,6 @@ ocs_find_vpd(uint8_t *vpddata, uint32_t vpddata_length, const char *key)
 					}
 				/* check for "RV" end */
 				} else if ('R' == rc0 && 'V' == rc1) {
-
 					/* Read the checksum */
 					for (i = 0; i < sublen; i++) {
 						vpdnext(&vpdbuf);

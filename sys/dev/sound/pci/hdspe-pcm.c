@@ -40,7 +40,7 @@
 
 #include <mixer_if.h>
 
-SND_DECLARE_FILE("$FreeBSD: c5c70e44d1a377b088370d2f501872ad97f11cd3 $");
+SND_DECLARE_FILE("$FreeBSD: 20cb39d2de14a8a0d8a7634f717c04d207ad1fc5 $");
 
 struct hdspe_latency {
 	uint32_t n;
@@ -79,7 +79,6 @@ static struct hdspe_rate rate_map[] = {
 
 	{ 0, 0 },
 };
-
 
 static int
 hdspe_hw_mixer(struct sc_chinfo *ch, unsigned int dst,
@@ -329,7 +328,6 @@ clean(struct sc_chinfo *ch)
 
 	return (0);
 }
-
 
 /* Channel interface. */
 static void *
@@ -659,7 +657,6 @@ static kobj_method_t hdspechan_methods[] = {
 	KOBJMETHOD_END
 };
 CHANNEL_DECLARE(hdspechan);
-
 
 static int
 hdspe_pcm_probe(device_t dev)

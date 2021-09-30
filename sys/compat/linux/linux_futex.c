@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9324670b4875b80cab7073ff0bea95ab2302c95d $");
+__FBSDID("$FreeBSD: 75fdddb203b7bf0951f478efb700d782418ffe53 $");
 #if 0
 __KERNEL_RCSID(1, "$NetBSD: linux_futex.c,v 1.7 2006/07/24 19:01:49 manu Exp $");
 #endif
@@ -1008,7 +1008,6 @@ retry2:
 			else
 				op_ret += futex_wake(f, nrwake, args->val3);
 			ret += op_ret;
-
 		}
 		if (f2 != NULL)
 			futex_put(f2, NULL);

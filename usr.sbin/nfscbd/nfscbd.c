@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bcfd6ea95dab85943a4f0a894ea79f134e591b8 $");
+__FBSDID("$FreeBSD: 3731575b4822096c683be63662e54edbbf35bedd $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -101,13 +101,14 @@ main(int argc, char *argv[])
 	struct nfsd_nfscbd_args nfscbdargs2;
 	struct sockaddr_in inetaddr, inetpeer;
 	fd_set ready, sockbits;
-	int ch, connect_type_cnt, len, maxsock, msgsock, error;
+	int ch, connect_type_cnt, maxsock, msgsock, error;
 	int nfssvc_flag, on, sock, tcpsock, ret, mustfreeai = 0;
 	char *cp, princname[128];
 	char myname[MAXHOSTNAMELEN], *myfqdnname = NULL;
 	struct addrinfo *aip, hints;
 	pid_t pid;
 	short myport = NFSV4_CBPORT;
+	socklen_t len;
 
 	if (modfind("nfscl") < 0) {
 		/* Not present in kernel, try loading it */

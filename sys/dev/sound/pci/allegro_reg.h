@@ -1,4 +1,4 @@
-/* $FreeBSD: 5a219bb5c832e2279cfc4e32e248205d0fc6ca88 $ */
+/* $FreeBSD: e340432e881dbb2b4567bbb8a8135f03621556d6 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -147,7 +147,6 @@
 
 #define PCI_DDMA_CTRL           0x60
 #define DDMA_ENABLE             0x00000001
-
 
 /* Allegro registers */
 #define HOST_INT_CTRL           0x18
@@ -446,7 +445,6 @@
 #error Data memory map length too short.
 #endif
 
-
 /*
  * Kernel code memory definition
  */
@@ -455,7 +453,6 @@
 #define KCODE_VECTORS_END               0x002F
 #define KCODE_VECTORS_UNIT_LENGTH       0x0002
 #define KCODE_VECTORS_LENGTH            (KCODE_VECTORS_END - KCODE_VECTORS_BEGIN + 1)
-
 
 /*
  * Kernel data memory definition

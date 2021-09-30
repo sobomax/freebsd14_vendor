@@ -1,4 +1,4 @@
-/* $FreeBSD: ff8858276e426763101d5b8ec78e05be03297ba7 $ */
+/* $FreeBSD: 86cc88ad27f12b47d8e1fbc8e03ba88db531486e $ */
 /*-
  * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD OR GPL-2.0)
  *
@@ -154,7 +154,6 @@ ses_cfg_page_get_num_subenc(struct ses_cfg_page *page)
 {
 	return (page->hdr.page_specific_flags + 1);
 }
-
 
 /*================ SCSI SES Control Diagnostic Page Structures ==============*/
 struct ses_ctrl_common {
@@ -2154,8 +2153,6 @@ struct ses_status_page_hdr {
 #define	SES_SET_STATUS_MASK		0xf
 /* Element Descriptor Diagnostic Page: unused */
 /* Additional Element Status Diagnostic Page: unused */
-
-
 
 /* Summary SES Status Defines, Common Status Codes */
 #define	SES_OBJSTAT_UNSUPPORTED		0

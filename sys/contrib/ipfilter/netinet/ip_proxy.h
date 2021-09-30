@@ -1,11 +1,11 @@
-/*	$FreeBSD: 659b0a7ebe27e7952a01e8428b42851c9775a975 $	*/
+/*	$FreeBSD: 3f4fc2a8af6fd65a44ec64ddde31325bffac0d2c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
  *
- * $FreeBSD: 659b0a7ebe27e7952a01e8428b42851c9775a975 $
+ * $FreeBSD: 3f4fc2a8af6fd65a44ec64ddde31325bffac0d2c $
  * Id: ip_proxy.h,v 2.31.2.2 2005/03/12 19:33:48 darrenr Exp
  */
 
@@ -13,18 +13,14 @@
 #define	__IP_PROXY_H__
 
 #ifndef	SOLARIS
-# if defined(sun) && defined(__SVR4))
+# if defined(sun) && defined(__SVR4)
 #  define	SOLARIS		1
 # else
 #  define	SOLARIS		0
 # endif
 #endif
 
-#if defined(__STDC__) || defined(__GNUC__)
 #define	SIOCPROXY	_IOWR('r', 64, struct ap_control)
-#else
-#define	SIOCPROXY	_IOWR(r, 64, struct ap_control)
-#endif
 
 #ifndef	APR_LABELLEN
 #define	APR_LABELLEN	16

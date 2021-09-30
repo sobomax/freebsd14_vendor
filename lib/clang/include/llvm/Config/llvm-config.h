@@ -1,4 +1,4 @@
-/* $FreeBSD: 580d5420479c3d87fb3ab839f624e623aef8d024 $ */
+/* $FreeBSD: a80b21672e86c4fe08151da59675becb38ef987b $ */
 /*===------- llvm/Config/llvm-config.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /* Part of the LLVM Project, under the Apache License v2.0 with LLVM          */
@@ -64,7 +64,7 @@
 #define LLVM_USE_PERF 0
 
 /* Major version of the LLVM API */
-#define LLVM_VERSION_MAJOR 10
+#define LLVM_VERSION_MAJOR 11
 
 /* Minor version of the LLVM API */
 #define LLVM_VERSION_MINOR 0
@@ -73,11 +73,17 @@
 #define LLVM_VERSION_PATCH 1
 
 /* LLVM version string */
-#define LLVM_VERSION_STRING "10.0.1"
+#define LLVM_VERSION_STRING "11.0.1"
 
 /* Whether LLVM records statistics for use with GetStatistics(),
  * PrintStatistics() or PrintStatisticsJSON()
  */
 #define LLVM_FORCE_ENABLE_STATS 0
+
+/* Define if we have z3 and want to build it */
+/* #undef LLVM_WITH_Z3 */
+
+/* Define if LLVM was built with a dependency to the libtensorflow dynamic library */
+/* #undef LLVM_HAVE_TF_API */
 
 #endif

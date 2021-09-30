@@ -1,4 +1,4 @@
-/*	$FreeBSD: f409e89c656e65ea7a34e206f4e5ba38c3265342 $	*/
+/*	$FreeBSD: 22f85ff07f1496e40caa94b9867dff0634305f82 $	*/
 
 /*
  * ipsend.h (C) 1997-1998 Darren Reed
@@ -16,11 +16,7 @@
  *
  */
 #ifndef	__P
-# ifdef	__STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 
 #include <net/if.h>

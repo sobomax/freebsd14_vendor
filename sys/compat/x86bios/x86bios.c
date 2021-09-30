@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 542f04cc0b0dd110616bba150d8849bba89e1967 $");
+__FBSDID("$FreeBSD: f6350b8f6388f4fc48e5923d288a1499a6bb835a $");
 
 #include "opt_x86bios.h"
 
@@ -67,7 +67,7 @@ __FBSDID("$FreeBSD: 542f04cc0b0dd110616bba150d8849bba89e1967 $");
 
 static struct mtx x86bios_lock;
 
-static SYSCTL_NODE(_debug, OID_AUTO, x86bios, CTLFLAG_RD, NULL,
+static SYSCTL_NODE(_debug, OID_AUTO, x86bios, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
     "x86bios debugging");
 static int x86bios_trace_call;
 SYSCTL_INT(_debug_x86bios, OID_AUTO, call, CTLFLAG_RWTUN, &x86bios_trace_call, 0,

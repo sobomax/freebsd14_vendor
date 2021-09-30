@@ -1,10 +1,9 @@
 #
-# $FreeBSD: 6e9c1ab701641e84171dd34ed6e7ba4b0a612761 $
+# $FreeBSD: f1ba7a1cf596c901e7c7c5489db76c19404096b4 $
 #
 
 PROG=	sendfile
 MAN=
-WARNS?=	6
 LIBADD=	md
 
 .include <bsd.prog.mk>

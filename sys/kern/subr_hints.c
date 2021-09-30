@@ -27,10 +27,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba30e23d9f8aaba0a77690caf0f78b3782033e5b $");
+__FBSDID("$FreeBSD: 3614659ebcf2adcb3dc6d5fbfd51b4a7d3c80e9b $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
+#include <sys/kenv.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
@@ -134,7 +135,6 @@ res_find(char **hintp_cookie, int *line, int *startln,
 	const char *s, *cp;
 	char *hintp, *p;
 	bool dyn_used = false;
-
 
 	/*
 	 * We are expecting that the caller will pass us a hintp_cookie that
@@ -448,7 +448,6 @@ resource_find_match(int *anchor, const char **name, int *unit,
 	*anchor = newln;
 	return ret;
 }
-
 
 /*
  * err = resource_find_dev(&anchor, name, &unit, res, value);

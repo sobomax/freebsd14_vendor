@@ -1,8 +1,6 @@
-# $FreeBSD: 38d9db62266a08f9b926024dcab1a7f215284c29 $
+# $FreeBSD: aac9a3b89e45aa99c4ef7b3dcd61e2b18547b8c7 $
 
 PROG=	aiop
 MAN=
-
-WARNS=	6
 
 .include <bsd.prog.mk>

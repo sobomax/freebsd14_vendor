@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9df4539ebba657b9232c6d08825e95955db67442 $
+ * $FreeBSD: 95b8efa3f28ecba3d1d987c2f717d6a92f4aca6b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9df4539ebba657b9232c6d08825e95955db67442 $");
+__FBSDID("$FreeBSD: 95b8efa3f28ecba3d1d987c2f717d6a92f4aca6b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,7 +63,6 @@ static device_method_t octeon_rnd_methods[] = {
 	DEVMETHOD(device_probe,		octeon_rnd_probe),
 	DEVMETHOD(device_attach,	octeon_rnd_attach),
 	DEVMETHOD(device_detach,	octeon_rnd_detach),
-
 	{ 0, 0 }
 };
 

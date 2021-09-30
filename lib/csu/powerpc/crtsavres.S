@@ -22,7 +22,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 2341b611b4d908a375cd31d59477954b3aefac62 $");
+__FBSDID("$FreeBSD: 582b69f2fe37a01dd28a6b79dc13acf3ac398685 $");
 
 .text
 
@@ -93,7 +93,7 @@ RESTFPR(31)
 	blr
 
 #define SAVEGPR(r)	_CRTENTRY(__CONCAT(_savegpr_,r))	\
-	stfd	r,(-128 + r*4)(11)
+	stw	r,(-128 + r * 4)(11)
 
 SAVEGPR(14)
 SAVEGPR(15)
@@ -165,7 +165,7 @@ RESTFPR_X(31)
 	blr
 
 #define RESTGPR_X(r)	_CRTENTRY(__CONCAT(__CONCAT(_restgpr_,r),_x))	\
-	lwz	r,(-128 + r*4)(11)
+	lwz	r,(-128 + r * 4)(11)
 
 RESTGPR_X(14)
 RESTGPR_X(15)

@@ -1,4 +1,4 @@
-# $FreeBSD: 186bb20088ce524dc4a4eec87ecbbb2a8605f3af $
+# $FreeBSD: 5e54c3a5312a6861b3bc7e365b24b44aa1bf89af $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,7 @@ WARNS?=	2
 VERSION_DEF=	${.CURDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map
 
-#HAS_TESTS=
+HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests
 
 .include "../Makefile.inc"

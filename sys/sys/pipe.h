@@ -18,7 +18,7 @@
  * 5. Modifications may be freely made to this file if the above conditions
  *    are met.
  *
- * $FreeBSD: 2f1568ab6637c943ab08b25e2198279b52b6f576 $
+ * $FreeBSD: f8b008151c6a9c251be588fd41082916338fd8b8 $
  */
 
 #ifndef _SYS_PIPE_H_
@@ -95,7 +95,11 @@ struct pipemapping {
 #define PIPE_LWANT	0x200	/* Process wants exclusive access to pointers/data. */
 #define PIPE_DIRECTW	0x400	/* Pipe direct write active. */
 #define PIPE_DIRECTOK	0x800	/* Direct mode ok. */
-#define PIPE_NAMED	0x1000	/* Is a named pipe. */
+
+/*
+ * Bits in pipe_type.
+ */
+#define PIPE_TYPE_NAMED	0x001	/* Is a named pipe. */
 
 /*
  * Per-pipe data structure.
@@ -111,9 +115,11 @@ struct pipe {
 	struct	sigio *pipe_sigio;	/* information for async I/O */
 	struct	pipe *pipe_peer;	/* link with other direction */
 	struct	pipepair *pipe_pair;	/* container structure pointer */
-	u_int	pipe_state;		/* pipe status info */
+	u_short	pipe_state;		/* pipe status info */
+	u_char	pipe_type;		/* pipe type info */
+	u_char	pipe_present;		/* still present? */
+	int	pipe_waiters;		/* pipelock waiters */
 	int	pipe_busy;		/* busy flag, mostly to handle rundown sanely */
-	int	pipe_present;		/* still present? */
 	int	pipe_wgen;		/* writer generation for named pipe */
 	ino_t	pipe_ino;		/* fake inode for stat(2) */
 };

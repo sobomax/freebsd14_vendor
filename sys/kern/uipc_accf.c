@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98cefe0789a8f6be8a5a883a0072ddb7f7cbd99b $");
+__FBSDID("$FreeBSD: 3ca64dd21e252308ab166b7831cfd6d6448489d0 $");
 
 #define ACCEPT_FILTER_MOD
 
@@ -62,7 +62,8 @@ MALLOC_DEFINE(M_ACCF, "accf", "accept filter data");
 
 static int unloadable = 0;
 
-SYSCTL_NODE(_net, OID_AUTO, accf, CTLFLAG_RW, 0, "Accept filters");
+SYSCTL_NODE(_net, OID_AUTO, accf, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Accept filters");
 SYSCTL_INT(_net_accf, OID_AUTO, unloadable, CTLFLAG_RW, &unloadable, 0,
 	"Allow unload of accept filters (not recommended)");
 

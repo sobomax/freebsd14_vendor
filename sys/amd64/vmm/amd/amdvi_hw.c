@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d3dee68059cb1c9c1481921242ca52b14bb1bfc $");
+__FBSDID("$FreeBSD: 62aba04de050f69bc237184dabfee87bfa17d0aa $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,7 +58,8 @@ __FBSDID("$FreeBSD: 0d3dee68059cb1c9c1481921242ca52b14bb1bfc $");
 #include "amdvi_priv.h"
 
 SYSCTL_DECL(_hw_vmm);
-SYSCTL_NODE(_hw_vmm, OID_AUTO, amdvi, CTLFLAG_RW, NULL, NULL);
+SYSCTL_NODE(_hw_vmm, OID_AUTO, amdvi, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
+    NULL);
 
 #define MOD_INC(a, s, m) (((a) + (s)) % ((m) * (s)))
 #define MOD_DEC(a, s, m) (((a) - (s)) % ((m) * (s)))
@@ -354,7 +355,6 @@ amdvi_cmd_inv_iommu_pages(struct amdvi_softc *softc, uint16_t domain_id,
 
 	cmd = amdvi_get_cmd_tail(softc);
 	KASSERT(cmd != NULL, ("Cmd is NULL"));
-
 
 	cmd->opcode = AMDVI_INVD_PAGE_OPCODE;
 	cmd->word1 = domain_id;
@@ -728,7 +728,6 @@ amdvi_print_pci_cap(device_t dev)
 	struct amdvi_softc *softc;
 	uint32_t off, cap;
 
-
 	softc = device_get_softc(dev);
 	off = softc->cap_off;
 
@@ -868,7 +867,6 @@ amdvi_alloc_intr_resources(struct amdvi_softc *softc)
 	return (0);
 }
 
-
 static void
 amdvi_print_dev_cap(struct amdvi_softc *softc)
 {
@@ -947,16 +945,16 @@ amdvi_add_sysctl(struct amdvi_softc *softc)
 	SYSCTL_ADD_U16(ctx, child, OID_AUTO, "end_dev_rid", CTLFLAG_RD,
 	    &softc->end_dev_rid, 0, "End of device under this IOMMU");
 	SYSCTL_ADD_PROC(ctx, child, OID_AUTO, "command_head",
-	    CTLTYPE_UINT | CTLFLAG_RD, softc, 0,
+	    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_MPSAFE, softc, 0,
 	    amdvi_handle_sysctl, "IU", "Command head");
 	SYSCTL_ADD_PROC(ctx, child, OID_AUTO, "command_tail",
-	    CTLTYPE_UINT | CTLFLAG_RD, softc, 1,
+	    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_MPSAFE, softc, 1,
 	    amdvi_handle_sysctl, "IU", "Command tail");
 	SYSCTL_ADD_PROC(ctx, child, OID_AUTO, "event_head",
-	    CTLTYPE_UINT | CTLFLAG_RD, softc, 2,
+	    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_MPSAFE, softc, 2,
 	    amdvi_handle_sysctl, "IU", "Command head");
 	SYSCTL_ADD_PROC(ctx, child, OID_AUTO, "event_tail",
-	    CTLTYPE_UINT | CTLFLAG_RD, softc, 3,
+	    CTLTYPE_UINT | CTLFLAG_RD | CTLFLAG_MPSAFE, softc, 3,
 	    amdvi_handle_sysctl, "IU", "Command tail");
 }
 
@@ -1120,7 +1118,6 @@ amdvi_free_ptp(uint64_t *ptp, int level)
 
 		amdvi_free_ptp((uint64_t *)PHYS_TO_DMAP(ptp[i]
 		    & AMDVI_PT_MASK), level - 1);
-
 	}
 
 	free(ptp, M_AMDVI);
@@ -1303,7 +1300,7 @@ amdvi_set_dte(struct amdvi_domain *domain, uint16_t devid, bool enable)
 	struct amdvi_dte* temp;
 
 	KASSERT(domain, ("domain is NULL for pci_rid:0x%x\n", devid));
-	
+
 	softc = amdvi_find_iommu(devid);
 	KASSERT(softc, ("softc is NULL for pci_rid:0x%x\n", devid));
 

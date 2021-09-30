@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)runetype.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 4aca128f8c8a00f63b0f99966e7534934e451650 $
+ * $FreeBSD: 93007809dbf8a92f83925d607ff130ca022f5ea3 $
  */
 
 #ifndef	_RUNETYPE_H_
@@ -88,7 +88,7 @@ typedef struct {
 __BEGIN_DECLS
 extern const _RuneLocale _DefaultRuneLocale;
 extern const _RuneLocale *_CurrentRuneLocale;
-#if defined(__NO_TLS) || defined(__RUNETYPE_INTERNAL)
+#ifdef __RUNETYPE_INTERNAL
 extern const _RuneLocale *__getCurrentRuneLocale(void);
 #else
 extern _Thread_local const _RuneLocale *_ThreadRuneLocale;
@@ -99,7 +99,7 @@ static __inline const _RuneLocale *__getCurrentRuneLocale(void)
 		return _ThreadRuneLocale;
 	return _CurrentRuneLocale;
 }
-#endif /* __NO_TLS || __RUNETYPE_INTERNAL */
+#endif /*__RUNETYPE_INTERNAL */
 #define _CurrentRuneLocale (__getCurrentRuneLocale())
 __END_DECLS
 

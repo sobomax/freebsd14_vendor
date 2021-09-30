@@ -34,7 +34,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 45a62d9af7e0d1162b2bae9a18e4fc7854c9d7be $");
+__FBSDID("$FreeBSD: 688012d5f14c244eff872446750a772fa42a76f5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -290,8 +290,6 @@ static platform_method_t h3_methods[] = {
 };
 FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3", 200);
 #endif
-
-
 
 u_int
 allwinner_soc_type(void)

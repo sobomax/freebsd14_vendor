@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c85df079be476efb37f33484e15274a56795ada $");
+__FBSDID("$FreeBSD: 321e1fdb5887e57afa037635517ae7f46cfc6cb4 $");
 
 #include <assert.h>
 #include <fenv.h>
@@ -41,6 +41,8 @@ __FBSDID("$FreeBSD: 0c85df079be476efb37f33484e15274a56795ada $");
 #include <ieeefp.h>
 #endif
 
+#include "test-utils.h"
+
 /*
  * XXX The volatile here is to avoid gcc's bogus constant folding and work
  *     around the lack of support for the FENV_ACCESS pragma.
@@ -49,7 +51,8 @@ __FBSDID("$FreeBSD: 0c85df079be476efb37f33484e15274a56795ada $");
 	volatile double _d = x;						\
 	assert(feclearexcept(FE_ALL_EXCEPT) == 0);			\
 	assert((func)(_d) == (result) || fetestexcept(FE_INVALID));	\
-	assert(fetestexcept(FE_ALL_EXCEPT) == (excepts));		\
+	assert((fetestexcept(FE_ALL_EXCEPT) & ALL_STD_EXCEPT) 		\
+			== (excepts));					\
 } while (0)
 
 #define	testall(x, result, excepts)	do {				\

@@ -1,11 +1,10 @@
 #
-# $FreeBSD: 1326b43bad236d26f1f1da9efee5388bb7e6e152 $
+# $FreeBSD: f45e8f9dda6bd415168449be12734617399a89b6 $
 #
 
 .include <src.opts.mk>
 
 CONFS=	hosts.allow
-PACKAGE=lib${LIB}
 LIB=	wrap
 SHLIB_MAJOR= 6
 INCS=	tcpd.h

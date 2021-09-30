@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8656801c0bcf1e22f64bcab4736db2ddbfa25287 $
+ * $FreeBSD: 92c7ede7b97f9528b9ce9c1f420d417f26feea99 $
  */
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -57,10 +57,10 @@
 #define	SNMP_AUTH_KEY_LOOPCNT		1048576
 #define	SNMP_AUTH_BUF_SIZE		72
 
+#ifdef HAVE_LIBCRYPTO
+
 static const uint8_t ipad = 0x36;
 static const uint8_t opad = 0x5c;
-
-#ifdef HAVE_LIBCRYPTO
 
 static int32_t
 snmp_digest_init(const struct snmp_user *user, EVP_MD_CTX *ctx,

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9a4321a8409be70c811fc9f938b428cab458d954 $");
+__FBSDID("$FreeBSD: 2480fc8dd86cda441ef1223e2569178d09265f5e $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -235,7 +235,6 @@ vnet_alloc(void)
 	SDT_PROBE1(vnet, functions, vnet_alloc, entry, __LINE__);
 	vnet = malloc(sizeof(struct vnet), M_VNET, M_WAITOK | M_ZERO);
 	vnet->vnet_magic_n = VNET_MAGIC_N;
-	vnet->vnet_state = 0;
 	SDT_PROBE2(vnet, functions, vnet_alloc, alloc, __LINE__, vnet);
 
 	/*
@@ -280,8 +279,13 @@ vnet_destroy(struct vnet *vnet)
 	LIST_REMOVE(vnet, vnet_le);
 	VNET_LIST_WUNLOCK();
 
+	/* Signal that VNET is being shutdown. */
+	vnet->vnet_shutdown = true;
+
 	CURVNET_SET_QUIET(vnet);
+	sx_xlock(&ifnet_detach_sxlock);
 	vnet_sysuninit();
+	sx_xunlock(&ifnet_detach_sxlock);
 	CURVNET_RESTORE();
 
 	/*
@@ -710,6 +714,7 @@ db_vnet_print(struct vnet *vnet)
 	db_printf(" vnet_data_base = %#jx\n",
 	    (uintmax_t)vnet->vnet_data_base);
 	db_printf(" vnet_state     = %#08x\n", vnet->vnet_state);
+	db_printf(" vnet_shutdown  = %#03x\n", vnet->vnet_shutdown);
 	db_printf("\n");
 }
 

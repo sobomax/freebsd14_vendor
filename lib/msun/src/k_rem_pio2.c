@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8af97ebdc52536a17790b04489a20b67908c26b $");
+__FBSDID("$FreeBSD: 0a717f768428f318d181ac012b1ae977ac44c3ec $");
 
 /*
  * __kernel_rem_pio2(x,y,e0,nx,prec)
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: d8af97ebdc52536a17790b04489a20b67908c26b $");
  *			64-bit  precision	2
  *			113-bit precision	3
  *		The actual value is the sum of them. Thus for 113-bit
- *		precison, one may have to do something like:
+ *		precision, one may have to do something like:
  *
  *		long double t,w,r_head, r_tail;
  *		t = (long double)y[2] + (long double)y[1];

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 670e9fd7dd0f438879b7161de212eb51616af88f $");
+__FBSDID("$FreeBSD: b2cfb3250cd9f3c86379c741c301ac01d673db7e $");
 
 #include <sys/types.h>
 #include "libc_private.h"
@@ -82,6 +82,7 @@ interpos_func_t __libc_interposing[INTERPOS_MAX] = {
 	SLOT(fdatasync, __sys_fdatasync),
 	SLOT(clock_nanosleep, __sys_clock_nanosleep),
 	SLOT(distribute_static_tls, __libc_distribute_static_tls),
+	SLOT(pdfork, __sys_pdfork),
 };
 #undef SLOT
 

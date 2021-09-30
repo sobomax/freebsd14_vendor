@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73e19351b6c473cbf0ad717727d5b8450d0d8d82 $");
+__FBSDID("$FreeBSD: f567d680ad96cebdf5501e0b30c5b190d45e63e6 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -211,7 +211,6 @@ static device_method_t qpi_methods[] = {
 	DEVMETHOD(bus_deactivate_resource, bus_generic_deactivate_resource),
 	DEVMETHOD(bus_setup_intr,	bus_generic_setup_intr),
 	DEVMETHOD(bus_teardown_intr,	bus_generic_teardown_intr),
-
 	{ 0, 0 }
 };
 

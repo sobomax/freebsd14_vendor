@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fc24d8f67c91cdfaecc1d39c22ba30d3b403c3ae $
+ * $FreeBSD: b9916dd29a7f50ce60c7897f8fff31859f75891c $
  */
 
 #include <sys/param.h>
@@ -68,7 +68,6 @@ static device_method_t smb_methods[] = {
 
 	/* smbus interface */
 	DEVMETHOD(smbus_intr,		smbus_generic_intr),
-
 	{ 0, 0 }
 };
 
@@ -104,7 +103,7 @@ smb_probe(device_t dev)
 	device_set_desc(dev, "SMBus generic I/O");
 	return (BUS_PROBE_NOWILDCARD);
 }
-	
+
 static int
 smb_attach(device_t dev)
 {

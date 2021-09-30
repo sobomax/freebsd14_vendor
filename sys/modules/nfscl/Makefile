@@ -1,4 +1,4 @@
-# $FreeBSD: 5da77b268f10b0296a502bfb0cc6abecb06992e2 $
+# $FreeBSD: f75965af224ff66802396ef6be2ee4aeadf3e84c $
 
 .PATH: ${SRCTOP}/sys/fs/nfsclient ${SRCTOP}/sys/nfs
 KMOD=	nfscl
@@ -17,6 +17,7 @@ SRCS=	vnode_if.h \
 	opt_bootp.h \
 	opt_inet.h \
 	opt_inet6.h \
+	opt_kern_tls.h \
 	opt_kgssapi.h \
 	opt_nfs.h \
 	opt_nfsroot.h \

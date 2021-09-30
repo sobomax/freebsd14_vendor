@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 43c6756d7edce67870cd350b8b541e9bb4d8b6b2 $
+ * $FreeBSD: 39de0989fec27f67dec2d3a88de103d7e9fe7492 $
  */
 /*
  * File: ql_ioctl.h
@@ -280,6 +280,5 @@ typedef struct qla_sp_log qla_sp_log_t;
 
 #define SP_TLOG_FMT_STR_14	\
 	"qla_init_locked [%ld]: \n"
-
 
 #endif /* #ifndef _QL_IOCTL_H_ */

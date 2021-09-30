@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c98bed08bb75d08f823de4000aebeec6b98f885f $");
+__FBSDID("$FreeBSD: 2aba95b6e8644abb07b9c331a49a2c685a33a477 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -239,7 +239,6 @@ done:
 	free(value, M_OFWPROP);
 	return (result);
 }
-
 
 static device_method_t jz4780_pinctrl_methods[] = {
 	/* Device interface */

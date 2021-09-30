@@ -1,12 +1,16 @@
 /* $NetBSD: arm-gcc.h,v 1.2 2001/02/21 18:09:25 bjh21 Exp $ */
-/* $FreeBSD: e2f8680dd74eb8551cbf68c9044865f59572e20c $ */
+/* $FreeBSD: 0fbb8006e22de94e17b56bfce995e5546774e79e $ */
 
 /*
 -------------------------------------------------------------------------------
 One of the macros `BIGENDIAN' or `LITTLEENDIAN' must be defined.
 -------------------------------------------------------------------------------
 */
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define LITTLEENDIAN
+#else
 #define BIGENDIAN
+#endif
 
 /*
 -------------------------------------------------------------------------------

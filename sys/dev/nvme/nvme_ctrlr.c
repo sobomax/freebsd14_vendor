@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a0ef43896ebfc8fa7277bd0ff3b2874ad920d64 $");
+__FBSDID("$FreeBSD: 2bd7074ee3781bbcb108ced526cd41ff172427ab $");
 
 #include "opt_cam.h"
 
@@ -40,7 +40,9 @@ __FBSDID("$FreeBSD: 5a0ef43896ebfc8fa7277bd0ff3b2874ad920d64 $");
 #include <sys/proc.h>
 #include <sys/smp.h>
 #include <sys/uio.h>
+#include <sys/sbuf.h>
 #include <sys/endian.h>
+#include <machine/stdarg.h>
 #include <vm/vm.h>
 
 #include "nvme_private.h"
@@ -49,6 +51,35 @@ __FBSDID("$FreeBSD: 5a0ef43896ebfc8fa7277bd0ff3b2874ad920d64 $");
 
 static void nvme_ctrlr_construct_and_submit_aer(struct nvme_controller *ctrlr,
 						struct nvme_async_event_request *aer);
+
+static void
+nvme_ctrlr_devctl_log(struct nvme_controller *ctrlr, const char *type, const char *msg, ...)
+{
+	struct sbuf sb;
+	va_list ap;
+	int error;
+
+	if (sbuf_new(&sb, NULL, 0, SBUF_AUTOEXTEND | SBUF_NOWAIT) == NULL)
+		return;
+	sbuf_printf(&sb, "%s: ", device_get_nameunit(ctrlr->dev));
+	va_start(ap, msg);
+	sbuf_vprintf(&sb, msg, ap);
+	va_end(ap);
+	error = sbuf_finish(&sb);
+	if (error == 0)
+		printf("%s\n", sbuf_data(&sb));
+
+	sbuf_clear(&sb);
+	sbuf_printf(&sb, "name=\"%s\" reason=\"", device_get_nameunit(ctrlr->dev));
+	va_start(ap, msg);
+	sbuf_vprintf(&sb, msg, ap);
+	va_end(ap);
+	sbuf_printf(&sb, "\"");
+	error = sbuf_finish(&sb);
+	if (error == 0)
+		devctl_notify("nvme", "controller", type, sbuf_data(&sb));
+	sbuf_delete(&sb);
+}
 
 static int
 nvme_ctrlr_construct_admin_qpair(struct nvme_controller *ctrlr)
@@ -607,23 +638,28 @@ nvme_ctrlr_log_critical_warnings(struct nvme_controller *ctrlr,
 {
 
 	if (state & NVME_CRIT_WARN_ST_AVAILABLE_SPARE)
-		nvme_printf(ctrlr, "available spare space below threshold\n");
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "available spare space below threshold");
 
 	if (state & NVME_CRIT_WARN_ST_TEMPERATURE)
-		nvme_printf(ctrlr, "temperature above threshold\n");
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "temperature above threshold");
 
 	if (state & NVME_CRIT_WARN_ST_DEVICE_RELIABILITY)
-		nvme_printf(ctrlr, "device reliability degraded\n");
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "device reliability degraded");
 
 	if (state & NVME_CRIT_WARN_ST_READ_ONLY)
-		nvme_printf(ctrlr, "media placed in read only mode\n");
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "media placed in read only mode");
 
 	if (state & NVME_CRIT_WARN_ST_VOLATILE_MEMORY_BACKUP)
-		nvme_printf(ctrlr, "volatile memory backup device failed\n");
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "volatile memory backup device failed");
 
 	if (state & NVME_CRIT_WARN_ST_RESERVED_MASK)
-		nvme_printf(ctrlr,
-		    "unknown critical warning(s): state = 0x%02x\n", state);
+		nvme_ctrlr_devctl_log(ctrlr, "critical",
+		    "unknown critical warning(s): state = 0x%02x", state);
 }
 
 static void
@@ -708,7 +744,6 @@ nvme_ctrlr_async_event_log_page_cb(void *arg, const struct nvme_completion *cpl)
 				nvme_notify_ns(aer->ctrlr, nsl->ns[i]);
 			}
 		}
-
 
 		/*
 		 * Pass the cpl data from the original async event completion,
@@ -799,7 +834,8 @@ nvme_ctrlr_configure_aer(struct nvme_controller *ctrlr)
 	    NVME_CRIT_WARN_ST_READ_ONLY |
 	    NVME_CRIT_WARN_ST_VOLATILE_MEMORY_BACKUP;
 	if (ctrlr->cdata.ver >= NVME_REV(1, 2))
-		ctrlr->async_event_config |= 0x300;
+		ctrlr->async_event_config |= NVME_ASYNC_EVENT_NS_ATTRIBUTE |
+		    NVME_ASYNC_EVENT_FW_ACTIVATE;
 
 	status.done = 0;
 	nvme_ctrlr_cmd_get_feature(ctrlr, NVME_FEAT_TEMPERATURE_THRESHOLD,
@@ -1017,15 +1053,15 @@ nvme_ctrlr_start(void *ctrlr_arg, bool resetting)
 	 *  the number of I/O queues supported, so cannot reset
 	 *  the adminq again here.
 	 */
-	if (resetting)
+	if (resetting) {
 		nvme_qpair_reset(&ctrlr->adminq);
+		nvme_admin_qpair_enable(&ctrlr->adminq);
+	}
 
 	if (ctrlr->ioq != NULL) {
 		for (i = 0; i < ctrlr->num_io_queues; i++)
 			nvme_qpair_reset(&ctrlr->ioq[i]);
 	}
-
-	nvme_admin_qpair_enable(&ctrlr->adminq);
 
 	/*
 	 * If it was a reset on initialization command timeout, just
@@ -1034,7 +1070,7 @@ nvme_ctrlr_start(void *ctrlr_arg, bool resetting)
 	if (resetting && !ctrlr->is_initialized)
 		return;
 
-	if (nvme_ctrlr_identify(ctrlr) != 0) {
+	if (resetting && nvme_ctrlr_identify(ctrlr) != 0) {
 		nvme_ctrlr_fail(ctrlr);
 		return;
 	}
@@ -1099,6 +1135,7 @@ nvme_ctrlr_start_config_hook(void *arg)
 fail:
 		nvme_ctrlr_fail(ctrlr);
 		config_intrhook_disestablish(&ctrlr->config_hook);
+		ctrlr->config_hook.ich_arg = NULL;
 		return;
 	}
 
@@ -1108,7 +1145,8 @@ fail:
 	nvme_qpair_reset(&ctrlr->adminq);
 	nvme_admin_qpair_enable(&ctrlr->adminq);
 
-	if (nvme_ctrlr_set_num_qpairs(ctrlr) == 0 &&
+	if (nvme_ctrlr_identify(ctrlr) == 0 &&
+	    nvme_ctrlr_set_num_qpairs(ctrlr) == 0 &&
 	    nvme_ctrlr_construct_io_qpairs(ctrlr) == 0)
 		nvme_ctrlr_start(ctrlr, false);
 	else
@@ -1116,6 +1154,7 @@ fail:
 
 	nvme_sysctl_initialize_ctrlr(ctrlr);
 	config_intrhook_disestablish(&ctrlr->config_hook);
+	ctrlr->config_hook.ich_arg = NULL;
 
 	ctrlr->is_initialized = 1;
 	nvme_notify_new_controller(ctrlr);
@@ -1127,7 +1166,7 @@ nvme_ctrlr_reset_task(void *arg, int pending)
 	struct nvme_controller	*ctrlr = arg;
 	int			status;
 
-	nvme_printf(ctrlr, "resetting controller\n");
+	nvme_ctrlr_devctl_log(ctrlr, "RESET", "resetting controller");
 	status = nvme_ctrlr_hw_reset(ctrlr);
 	/*
 	 * Use pause instead of DELAY, so that we yield to any nvme interrupt
@@ -1205,20 +1244,8 @@ nvme_ctrlr_passthrough_cmd(struct nvme_controller *ctrlr,
 	struct mtx		*mtx;
 	struct buf		*buf = NULL;
 	int			ret = 0;
-	vm_offset_t		addr, end;
 
 	if (pt->len > 0) {
-		/*
-		 * vmapbuf calls vm_fault_quick_hold_pages which only maps full
-		 * pages. Ensure this request has fewer than MAXPHYS bytes when
-		 * extended to full pages.
-		 */
-		addr = (vm_offset_t)pt->buf;
-		end = round_page(addr + pt->len);
-		addr = trunc_page(addr);
-		if (end - addr > MAXPHYS)
-			return EIO;
-
 		if (pt->len > ctrlr->max_xfer_size) {
 			nvme_printf(ctrlr, "pt->len (%d) "
 			    "exceeds max_xfer_size (%d)\n", pt->len,
@@ -1231,11 +1258,9 @@ nvme_ctrlr_passthrough_cmd(struct nvme_controller *ctrlr,
 			 *  this pass-through command.
 			 */
 			PHOLD(curproc);
-			buf = getpbuf(NULL);
-			buf->b_data = pt->buf;
-			buf->b_bufsize = pt->len;
+			buf = uma_zalloc(pbuf_zone, M_WAITOK);
 			buf->b_iocmd = pt->is_read ? BIO_READ : BIO_WRITE;
-			if (vmapbuf(buf, 1) < 0) {
+			if (vmapbuf(buf, pt->buf, pt->len, 1) < 0) {
 				ret = EFAULT;
 				goto err;
 			}
@@ -1276,7 +1301,7 @@ nvme_ctrlr_passthrough_cmd(struct nvme_controller *ctrlr,
 
 err:
 	if (buf != NULL) {
-		relpbuf(buf, NULL);
+		uma_zfree(pbuf_zone, buf);
 		PRELE(curproc);
 	}
 
@@ -1309,6 +1334,9 @@ nvme_ctrlr_ioctl(struct cdev *cdev, u_long cmd, caddr_t arg, int flag,
 		gnsid->nsid = 0;
 		break;
 	}
+	case NVME_GET_MAX_XFER_SIZE:
+		*(uint64_t *)arg = ctrlr->max_xfer_size;
+		break;
 	default:
 		return (ENOTTY);
 	}
@@ -1328,7 +1356,7 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 	struct make_dev_args	md_args;
 	uint32_t	cap_lo;
 	uint32_t	cap_hi;
-	uint32_t	to;
+	uint32_t	to, vs, pmrcap;
 	uint8_t		mpsmin;
 	int		status, timeout_period;
 
@@ -1338,14 +1366,53 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 	if (bus_get_domain(dev, &ctrlr->domain) != 0)
 		ctrlr->domain = 0;
 
+	cap_lo = nvme_mmio_read_4(ctrlr, cap_lo);
+	if (bootverbose) {
+		device_printf(dev, "CapLo: 0x%08x: MQES %u%s%s%s%s, TO %u\n",
+		    cap_lo, NVME_CAP_LO_MQES(cap_lo),
+		    NVME_CAP_LO_CQR(cap_lo) ? ", CQR" : "",
+		    NVME_CAP_LO_AMS(cap_lo) ? ", AMS" : "",
+		    (NVME_CAP_LO_AMS(cap_lo) & 0x1) ? " WRRwUPC" : "",
+		    (NVME_CAP_LO_AMS(cap_lo) & 0x2) ? " VS" : "",
+		    NVME_CAP_LO_TO(cap_lo));
+	}
 	cap_hi = nvme_mmio_read_4(ctrlr, cap_hi);
+	if (bootverbose) {
+		device_printf(dev, "CapHi: 0x%08x: DSTRD %u%s, CSS %x%s, "
+		    "MPSMIN %u, MPSMAX %u%s%s\n", cap_hi,
+		    NVME_CAP_HI_DSTRD(cap_hi),
+		    NVME_CAP_HI_NSSRS(cap_hi) ? ", NSSRS" : "",
+		    NVME_CAP_HI_CSS(cap_hi),
+		    NVME_CAP_HI_BPS(cap_hi) ? ", BPS" : "",
+		    NVME_CAP_HI_MPSMIN(cap_hi),
+		    NVME_CAP_HI_MPSMAX(cap_hi),
+		    NVME_CAP_HI_PMRS(cap_hi) ? ", PMRS" : "",
+		    NVME_CAP_HI_CMBS(cap_hi) ? ", CMBS" : "");
+	}
+	if (bootverbose) {
+		vs = nvme_mmio_read_4(ctrlr, vs);
+		device_printf(dev, "Version: 0x%08x: %d.%d\n", vs,
+		    NVME_MAJOR(vs), NVME_MINOR(vs));
+	}
+	if (bootverbose && NVME_CAP_HI_PMRS(cap_hi)) {
+		pmrcap = nvme_mmio_read_4(ctrlr, pmrcap);
+		device_printf(dev, "PMRCap: 0x%08x: BIR %u%s%s, PMRTU %u, "
+		    "PMRWBM %x, PMRTO %u%s\n", pmrcap,
+		    NVME_PMRCAP_BIR(pmrcap),
+		    NVME_PMRCAP_RDS(pmrcap) ? ", RDS" : "",
+		    NVME_PMRCAP_WDS(pmrcap) ? ", WDS" : "",
+		    NVME_PMRCAP_PMRTU(pmrcap),
+		    NVME_PMRCAP_PMRWBM(pmrcap),
+		    NVME_PMRCAP_PMRTO(pmrcap),
+		    NVME_PMRCAP_CMSS(pmrcap) ? ", CMSS" : "");
+	}
+
 	ctrlr->dstrd = NVME_CAP_HI_DSTRD(cap_hi) + 2;
 
 	mpsmin = NVME_CAP_HI_MPSMIN(cap_hi);
 	ctrlr->min_page_size = 1 << (12 + mpsmin);
 
 	/* Get ready timeout value from controller, in units of 500ms. */
-	cap_lo = nvme_mmio_read_4(ctrlr, cap_lo);
 	to = NVME_CAP_LO_TO(cap_lo) + 1;
 	ctrlr->ready_timeout_in_ms = to * 500;
 
@@ -1471,22 +1538,24 @@ nvme_ctrlr_shutdown(struct nvme_controller *ctrlr)
 {
 	uint32_t	cc;
 	uint32_t	csts;
-	int		ticks = 0;
+	int		ticks = 0, timeout;
 
 	cc = nvme_mmio_read_4(ctrlr, cc);
 	cc &= ~(NVME_CC_REG_SHN_MASK << NVME_CC_REG_SHN_SHIFT);
 	cc |= NVME_SHN_NORMAL << NVME_CC_REG_SHN_SHIFT;
 	nvme_mmio_write_4(ctrlr, cc, cc);
 
+	timeout = ctrlr->cdata.rtd3e == 0 ? 5 * hz :
+	    ((uint64_t)ctrlr->cdata.rtd3e * hz + 999999) / 1000000;
 	while (1) {
 		csts = nvme_mmio_read_4(ctrlr, csts);
 		if (csts == 0xffffffff)		/* Hot unplug. */
 			break;
 		if (NVME_CSTS_GET_SHST(csts) == NVME_SHST_COMPLETE)
 			break;
-		if (ticks++ > 5*hz) {
+		if (ticks++ > timeout) {
 			nvme_printf(ctrlr, "did not complete shutdown within"
-			    " 5 seconds of notification\n");
+			    " %d ticks of notification\n", timeout);
 			break;
 		}
 		pause("nvme shn", 1);

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4b669d27d9db19f560deda5b538c93eba2f5be23 $
+ * $FreeBSD: deaf4fd5c0e948846d4d90ef68b8e66a535ff955 $
  */
 
 #ifndef	_IP_FW_NAT64_TRANSLATE_H_
@@ -154,4 +154,3 @@ void nat64_set_output_method(int);
 int nat64_get_output_method(void);
 
 #endif
-

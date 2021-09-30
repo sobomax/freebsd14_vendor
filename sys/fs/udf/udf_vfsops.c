@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: af249e91ed9d4d58cc117ff731722f048b4fa7a6 $
+ * $FreeBSD: 132f4e7703d7af84e4e216a7e756391d834b8eea $
  */
 
 /* udf_vfsops.c */
@@ -233,7 +233,7 @@ udf_mount(struct mount *mp)
 	NDFREE(ndp, NDF_ONLY_PNBUF);
 	devvp = ndp->ni_vp;
 
-	if (vn_isdisk(devvp, &error) == 0) {
+	if (!vn_isdisk_error(devvp, &error)) {
 		vput(devvp);
 		return (error);
 	}
@@ -330,7 +330,7 @@ udf_mountfs(struct vnode *devvp, struct mount *mp)
 	g_topology_lock();
 	error = g_vfs_open(devvp, &cp, "udf", 0);
 	g_topology_unlock();
-	VOP_UNLOCK(devvp, 0);
+	VOP_UNLOCK(devvp);
 	if (error)
 		goto bail;
 
@@ -338,8 +338,8 @@ udf_mountfs(struct vnode *devvp, struct mount *mp)
 
 	if (devvp->v_rdev->si_iosize_max != 0)
 		mp->mnt_iosize_max = devvp->v_rdev->si_iosize_max;
-	if (mp->mnt_iosize_max > MAXPHYS)
-		mp->mnt_iosize_max = MAXPHYS;
+	if (mp->mnt_iosize_max > maxphys)
+		mp->mnt_iosize_max = maxphys;
 
 	/* XXX: should be M_WAITOK */
 	udfmp = malloc(sizeof(struct udf_mnt), M_UDFMOUNT,
@@ -445,7 +445,6 @@ udf_mountfs(struct vnode *devvp, struct mount *mp)
 		error = EINVAL;
 		goto bail;
 	}
-
 
 	/*
 	 * Grab the Fileset Descriptor
@@ -680,7 +679,7 @@ udf_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 	}
 
 	bcopy(bp->b_data, unode->fentry, size);
-	
+
 	brelse(bp);
 	bp = NULL;
 

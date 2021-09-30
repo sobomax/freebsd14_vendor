@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 141547dac424be3f0742660d1d320e6048677de7 $");
+__FBSDID("$FreeBSD: 58da21f096389a2d1f568d7194987cb8d89321f2 $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -668,6 +668,8 @@ ath_rx_pkt(struct ath_softc *sc, struct ath_rx_status *rs, HAL_STATUS status,
 	int is_good = 0;
 	struct ath_rx_edma *re = &sc->sc_rxedma[qtype];
 
+	NET_EPOCH_ASSERT();
+
 	/*
 	 * Calculate the correct 64 bit TSF given
 	 * the TSF64 register value and rs_tstamp.
@@ -704,8 +706,11 @@ ath_rx_pkt(struct ath_softc *sc, struct ath_rx_status *rs, HAL_STATUS status,
 				ath_dfs_process_phy_err(sc, m, rstamp, rs);
 			}
 
-			/* Be suitably paranoid about receiving phy errors out of the stats array bounds */
-			if (rs->rs_phyerr < 64)
+			/*
+			 * Be suitably paranoid about receiving phy errors
+			 * out of the stats array bounds
+			 */
+			if (rs->rs_phyerr < ATH_IOCTL_STATS_NUM_RX_PHYERR)
 				sc->sc_stats.ast_rx_phy[rs->rs_phyerr]++;
 			goto rx_error;	/* NB: don't count in ierrors */
 		}
@@ -833,7 +838,7 @@ rx_accept:
 	 * the majority of the statistics are only valid
 	 * for the last frame in an aggregate.
 	 */
-	if (rs->rs_antenna > 7) {
+	if (rs->rs_antenna >= ATH_IOCTL_STATS_NUM_RX_ANTENNA) {
 		device_printf(sc->sc_dev, "%s: rs_antenna > 7 (%d)\n",
 		    __func__, rs->rs_antenna);
 #ifdef	ATH_DEBUG
@@ -1086,6 +1091,8 @@ ath_rx_proc(struct ath_softc *sc, int resched)
 	int kickpcu = 0;
 	int ret;
 
+	NET_EPOCH_ASSERT();
+
 	/* XXX we must not hold the ATH_LOCK here */
 	ATH_UNLOCK_ASSERT(sc);
 	ATH_PCU_UNLOCK_ASSERT(sc);
@@ -1305,6 +1312,7 @@ static void
 ath_legacy_rx_tasklet(void *arg, int npending)
 {
 	struct ath_softc *sc = arg;
+	struct epoch_tracker et;
 
 	ATH_KTR(sc, ATH_KTR_RXPROC, 1, "ath_rx_proc: pending=%d", npending);
 	DPRINTF(sc, ATH_DEBUG_RX_PROC, "%s: pending %u\n", __func__, npending);
@@ -1317,14 +1325,18 @@ ath_legacy_rx_tasklet(void *arg, int npending)
 	}
 	ATH_PCU_UNLOCK(sc);
 
+	NET_EPOCH_ENTER(et);
 	ath_rx_proc(sc, 1);
+	NET_EPOCH_EXIT(et);
 }
 
 static void
 ath_legacy_flushrecv(struct ath_softc *sc)
 {
-
+	struct epoch_tracker et;
+	NET_EPOCH_ENTER(et);
 	ath_rx_proc(sc, 0);
+	NET_EPOCH_EXIT(et);
 }
 
 static void

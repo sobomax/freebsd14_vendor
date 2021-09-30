@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e972298f5b404c065486f88cd80282d4aee3e139 $");
+__FBSDID("$FreeBSD: 77d9745da1981a4cb9e8a89c0160e9404f2f1432 $");
 
 #include <stdlib.h>
 #include <wchar.h>
@@ -47,10 +47,11 @@ mblen_l(const char *s, size_t n, locale_t locale)
 
 	if (s == NULL) {
 		/* No support for state dependent encodings. */
-		locale->mblen = initial;
+		XLOCALE_CTYPE(locale)->mblen = initial;
 		return (0);
 	}
-	rval = XLOCALE_CTYPE(locale)->__mbrtowc(NULL, s, n, &locale->mblen);
+	rval = XLOCALE_CTYPE(locale)->__mbrtowc(NULL, s, n,
+	    &(XLOCALE_CTYPE(locale)->mblen));
 	if (rval == (size_t)-1 || rval == (size_t)-2)
 		return (-1);
 	return ((int)rval);

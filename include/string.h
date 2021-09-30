@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)string.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 3c5cceaeb857b8966c332fc05f31ad0f223270b6 $
+ * $FreeBSD: 774cf5fe975638fa64242ee83942e251578a3238 $
  */
 
 #ifndef _STRING_H_
@@ -140,7 +140,7 @@ int	 timingsafe_bcmp(const void *, const void *, size_t);
 int	 timingsafe_memcmp(const void *, const void *, size_t);
 #endif /* __BSD_VISIBLE */
 
-#if __POSIX_VISIBLE >= 200809 || defined(_XLOCALE_H_)
+#if __POSIX_VISIBLE >= 200112 || defined(_XLOCALE_H_)
 #include <xlocale/_string.h>
 #endif
 

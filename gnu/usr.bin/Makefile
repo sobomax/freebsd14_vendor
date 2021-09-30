@@ -1,20 +1,9 @@
-# $FreeBSD: a3e749508e689a91c3ad18c7a01e53fa6c1cb2b0 $
+# $FreeBSD: 9910365a5b0a0c352ed5afce7471771281158b34 $
 
 .include <src.opts.mk>
 
-
-.if ${MK_CXX} != "no"
-SUBDIR.${MK_GCC}+=	gperf
-.endif
-
-SUBDIR.${MK_BINUTILS}+=	binutils
 SUBDIR.${MK_DIALOG}+=	dialog
-SUBDIR.${MK_GCC}+=	cc
 SUBDIR.${MK_GNU_DIFF}+=	diff3
-SUBDIR.${MK_GNU_GREP}+=	grep
-SUBDIR.${MK_GDB}+=	gdb
-SUBDIR_DEPEND_gdb=	binutils
-SUBDIR.${MK_GPL_DTC}+=	dtc
 SUBDIR.${MK_TESTS}+=	tests
 
 SUBDIR_PARALLEL=

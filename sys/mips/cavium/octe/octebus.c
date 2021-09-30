@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 41e6fcd64932a70d533e3c3b8c01593ccee5de2d $
+ * $FreeBSD: d344593ebeebf12ebab4b41db899996abf2f7623 $
  */
 
 /*
@@ -66,7 +66,6 @@ static device_method_t octebus_methods[] = {
 
 	/* Bus interface.  */
 	DEVMETHOD(bus_add_child,	bus_generic_add_child),
-
 	{ 0, 0 }
 };
 

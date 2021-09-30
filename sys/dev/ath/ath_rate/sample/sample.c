@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31df8a60c97618babf423ec9fed670dd106a1671 $");
+__FBSDID("$FreeBSD: a8fdcb28e49f66fb88e8ed5f3f20e2c47fa91713 $");
 
 /*
  * John Bicket's SampleRate control algorithm.
@@ -1613,17 +1613,17 @@ ath_rate_sysctlattach(struct ath_softc *sc, struct sample_softc *ssc)
 	struct sysctl_oid *tree = device_get_sysctl_tree(sc->sc_dev);
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "smoothing_rate", CTLTYPE_INT | CTLFLAG_RW, ssc, 0,
-	    ath_rate_sysctl_smoothing_rate, "I",
+	    "smoothing_rate", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+	    ssc, 0, ath_rate_sysctl_smoothing_rate, "I",
 	    "sample: smoothing rate for avg tx time (%%)");
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "sample_rate", CTLTYPE_INT | CTLFLAG_RW, ssc, 0,
-	    ath_rate_sysctl_sample_rate, "I",
+	    "sample_rate", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+	    ssc, 0, ath_rate_sysctl_sample_rate, "I",
 	    "sample: percent air time devoted to sampling new rates (%%)");
 	/* XXX max_successive_failures, stale_failure_timeout, min_switch */
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "sample_stats", CTLTYPE_INT | CTLFLAG_RW, sc, 0,
-	    ath_rate_sysctl_stats, "I", "sample: print statistics");
+	    "sample_stats", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+	    sc, 0, ath_rate_sysctl_stats, "I", "sample: print statistics");
 }
 
 struct ath_ratectrl *

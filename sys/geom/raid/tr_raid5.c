@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ff8f81cc3ac7be097cf0764d3217dd98bc3233b $");
+__FBSDID("$FreeBSD: 431f9cad09de9624bc46cedb8cb8c7560e707080 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -357,6 +357,7 @@ g_raid_tr_iostart_raid5(struct g_raid_tr_object *tr, struct bio *bp)
 	case BIO_WRITE:
 	case BIO_DELETE:
 	case BIO_FLUSH:
+	case BIO_SPEEDUP:
 		g_raid_iodone(bp, ENODEV);
 		break;
 	default:

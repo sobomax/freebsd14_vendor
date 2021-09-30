@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)qdivrem.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50a836359ceae65ecacfd21710058abcc47ebb76 $");
+__FBSDID("$FreeBSD: ea09e7f43f16382c9dd40b1304d22e90da3805d0 $");
 
 /*
  * Multiprecision divide.  This algorithm is from Knuth vol. 2 (2nd ed),
@@ -82,8 +82,7 @@ shl(digit *p, int len, int sh)
  * leading zeros).
  */
 u_quad_t
-__qdivrem(uq, vq, arq)
-	u_quad_t uq, vq, *arq;
+__qdivrem(u_quad_t uq, u_quad_t vq, u_quad_t *arq)
 {
 	union uu tmp;
 	digit *u, *v, *q;

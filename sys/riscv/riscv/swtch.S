@@ -40,7 +40,7 @@
 #include <machine/riscvreg.h>
 #include <machine/pte.h>
 
-__FBSDID("$FreeBSD: 39213d3d31b93ffa64971638a63c51bf9450ebb0 $");
+__FBSDID("$FreeBSD: 2176d2a181bee03ef17e480254a7bdc93910747c $");
 
 #ifdef FPE
 .macro __fpe_state_save p
@@ -151,7 +151,6 @@ ENTRY(fpe_state_save)
 	__fpe_state_save a0
 	ret
 END(fpe_state_save)
-#endif /* FPE */
 
 /*
  * void
@@ -205,6 +204,7 @@ ENTRY(fpe_state_clear)
 
 	ret
 END(fpe_state_clear)
+#endif /* FPE */
 	
 /*
  * void cpu_throw(struct thread *old __unused, struct thread *new)

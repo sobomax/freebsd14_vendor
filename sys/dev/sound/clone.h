@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67aaf63b75858dfe67a19af5bbd0886df0260b22 $
+ * $FreeBSD: 54b26e31c8b4b047f2782e382efd614b7535992c $
  */
 
 #ifndef _SND_CLONE_H_
@@ -98,7 +98,6 @@ struct snd_clone;
 				 SND_CLONE_BUSY)
 
 #define SND_CLONE_DEVMASK	SND_CLONE_ALLOC
-
 
 void snd_timestamp(struct timespec *);
 

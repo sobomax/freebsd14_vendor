@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)echo.c	8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a96542c8aee2980e1344b2d6a2caf152d6830fc9 $");
+__FBSDID("$FreeBSD: f56bd5b976d82985186cffc3d460ac4f4dc4fbc3 $");
 
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -71,7 +71,7 @@ errexit(const char *prog, const char *reason)
 	write(STDERR_FILENO, "\n", 1);
 	exit(1);
 }
-	
+
 int
 main(int argc, char *argv[])
 {
@@ -100,13 +100,12 @@ main(int argc, char *argv[])
 
 	while (argv[0] != NULL) {
 		size_t len;
-		
+
 		len = strlen(argv[0]);
 
 		/*
-		 * If the next argument is NULL then this is this
-		 * the last argument, therefore we need to check
-		 * for a trailing \c.
+		 * If the next argument is NULL then this is the last argument,
+		 * therefore we need to check for a trailing \c.
 		 */
 		if (argv[1] == NULL) {
 			/* is there room for a '\c' and is there one? */

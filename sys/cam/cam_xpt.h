@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 250db1ea7448a1f2dbeaa326a482106038ba062c $
+ * $FreeBSD: 1d3fd9d315a183cf60136d8b7d82f6bf9676a39d $
  */
 
 #ifndef _CAM_CAM_XPT_H
@@ -38,7 +38,6 @@
 #include <sys/cdefs.h>
 #include <cam/cam_ccb.h>
 #endif
-
 
 /* Forward Declarations */
 union ccb;
@@ -86,8 +85,8 @@ void			xpt_setup_ccb_flags(struct ccb_hdr *ccb_h,
 void			xpt_setup_ccb(struct ccb_hdr *ccb_h,
 				      struct cam_path *path,
 				      u_int32_t priority);
-void			xpt_merge_ccb(union ccb *master_ccb,
-				      union ccb *slave_ccb);
+void			xpt_merge_ccb(union ccb *dst_ccb,
+				      union ccb *src_ccb);
 cam_status		xpt_create_path(struct cam_path **new_path_ptr,
 					struct cam_periph *perph,
 					path_id_t path_id,

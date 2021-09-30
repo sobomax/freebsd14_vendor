@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0b078048f6cf5fcaa27884422629cbc1450401e3 $
+ * $FreeBSD: ba930b993f20a8e5954c428e9b83acf58f2bf23a $
  */
 
 /*
@@ -32,14 +32,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b078048f6cf5fcaa27884422629cbc1450401e3 $");
+__FBSDID("$FreeBSD: ba930b993f20a8e5954c428e9b83acf58f2bf23a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/rman.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <machine/bus.h>
 
 #include <dev/fdt/simplebus.h>

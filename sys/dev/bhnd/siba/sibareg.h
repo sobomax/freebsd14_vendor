@@ -18,7 +18,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: db5831233d549ffbe1a7e6320d5fa99197c00da3 $
+ * $FreeBSD: 6d8e23e0fb95400ca0deee295a427ad585cbf649 $
  */
 
 #ifndef _BHND_SIBA_SIBAREG_
@@ -43,7 +43,6 @@
 #define	SIBA_REG_GET(_entry, _attr)			\
 	((_entry & SIBA_ ## _attr ## _MASK)	\
 	>> SIBA_ ## _attr ## _SHIFT)
-
 
 #define	SIBA_ENUM_ADDR		BHND_DEFAULT_CHIPC_ADDR	/**< enumeration space */
 #define	SIBA_ENUM_SIZE		0x00100000		/**< size of the enumeration space */ 

@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)merge.c	8.2 (Berkeley) 2/14/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a47e424e4dadce9a6a2d80e9fd4916e0a3bb5e3 $");
+__FBSDID("$FreeBSD: 853d6ae93fcbb9d577dfd037891613edf81f3de6 $");
 
 /*
  * Hybrid exponential search/linear search merge sort with hybrid
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: 3a47e424e4dadce9a6a2d80e9fd4916e0a3bb5e3 $");
  * (The default is pairwise merging.)
  */
 
-#include <sys/types.h>
+#include <sys/param.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -97,9 +97,7 @@ static void insertionsort(u_char *, size_t, size_t, cmp_t);
  * boundaries.
  */
 /* Assumption: PSIZE is a power of 2. */
-#define EVAL(p) (u_char **)						\
-	((u_char *)0 +							\
-	    (((u_char *)p + PSIZE - 1 - (u_char *) 0) & ~(PSIZE - 1)))
+#define EVAL(p) (u_char **)roundup2((uintptr_t)p, PSIZE)
 
 #ifdef I_AM_MERGESORT_B
 int mergesort_b(void *, size_t, size_t, cmp_t);

@@ -2,6 +2,7 @@
 #
 # Copyright (c) 2014 The FreeBSD Foundation
 # All rights reserved.
+# Copyright 2019 Enji Cooper
 #
 # This software was developed by John-Mark Gurney under
 # the sponsorship from the FreeBSD Foundation.
@@ -26,10 +27,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 86a293c3eee45e94a576bed4d898d4e1bf36cd30 $
+# $FreeBSD: a4e33ea38f9babf6cce695b4f564db1fa5bc6af0 $
 #
 
-: ${PYTHON=python2}
+: ${PYTHON=python3}
 
 if [ ! -d /usr/local/share/nist-kat ]; then
 	echo "1..0 # SKIP: nist-kat package not installed for test vectors"
@@ -59,7 +60,19 @@ cleanup_tests()
 }
 trap cleanup_tests EXIT INT TERM
 
-for required_module in nexus/aesni cryptodev; do
+cpu_type="$(uname -p)"
+cpu_module=
+
+case ${cpu_type} in
+aarch64)
+	cpu_module="nexus/armv8crypto nexus/ossl"
+	;;
+amd64|i386)
+	cpu_module="nexus/aesni nexus/ossl"
+	;;
+esac
+
+for required_module in $cpu_module cryptodev; do
 	if ! kldstat -q -m $required_module; then
 		module_to_load=${required_module#nexus/}
 		if ! kldload ${module_to_load}; then
@@ -70,7 +83,7 @@ for required_module in nexus/aesni cryptodev; do
 	fi
 done
 
-cdas_sysctl=kern.cryptodevallowsoft
+cdas_sysctl=kern.crypto.allow_soft
 if ! oldcdas=$(sysctl -e $cdas_sysctl); then
 	echo "1..0 # SKIP: could not resolve sysctl: $cdas_sysctl"
 	exit 0

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a487042a5c32c3ff09eb7add6e9e64b77f8c5be7 $");
+__FBSDID("$FreeBSD: 60e470d14cbb1672901465c5dbcd9f6671593c20 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -282,7 +282,6 @@ static device_method_t nexus_acpi_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		nexus_acpi_probe),
 	DEVMETHOD(device_attach,	nexus_acpi_attach),
-
 	{ 0, 0 }
 };
 

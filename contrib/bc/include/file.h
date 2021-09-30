@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright (c) 2018-2020 Gavin D. Howard and contributors.
+ * Copyright (c) 2018-2021 Gavin D. Howard and contributors.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -61,7 +61,5 @@ void bc_file_write(BcFile *restrict f, const char *buf, size_t n);
 void bc_file_printf(BcFile *restrict f, const char *fmt, ...);
 void bc_file_vprintf(BcFile *restrict f, const char *fmt, va_list args);
 void bc_file_puts(BcFile *restrict f, const char *str);
-
-void bc_file_ultoa(unsigned long long val, char buf[BC_FILE_ULL_LENGTH]);
 
 #endif // BC_FILE_H

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2352a844f7ddfe3ee3c7ab937d4fb45da9c5f010 $
+ * $FreeBSD: 2af74466179fe481973a09dd6041523180f1f9fe $
  */
 
 #ifndef _GELIBOOT_INTERNAL_H_
@@ -55,6 +55,8 @@
 #define STAND_H /* We don't want stand.h in {gpt,zfs,gptzfs}boot */
 #include <opencrypto/xform_enc.h>
 
+#include "geliboot.h"
+
 #define GELIDEV_NAMELEN	32
 
 struct geli_dev {
@@ -65,7 +67,7 @@ struct geli_dev {
 	char                    *name; /* for prompting; it ends in ':' */
 };
 
-int geliboot_crypt(u_int algo, int enc, u_char *data, size_t datasize,
+int geliboot_crypt(u_int algo, geli_op_t  enc, u_char *data, size_t datasize,
     const u_char *key, size_t keysize, u_char *iv);
 
 #endif /* _GELIBOOT_INTERNAL_H_ */

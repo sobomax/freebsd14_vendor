@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2005 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 11637c349943e9950c5995b240fe35f6b1f013da $");
+__FBSDID("$FreeBSD: 37334da00f80ccf5e068caeffe937602f600b173 $");
 
 /*
  * Simple driver for PCI VGA display devices.  Drivers such as agp(4) and
@@ -160,7 +159,6 @@ vga_pci_reset(device_t dev)
 		pci_set_powerstate(dev, PCI_POWERSTATE_D3);
 	pci_set_powerstate(dev, ps);
 }
-
 
 void *
 vga_pci_map_bios(device_t dev, size_t *size)
@@ -780,7 +778,6 @@ static device_method_t vga_pci_methods[] = {
 	DEVMETHOD(pci_release_msi,	vga_pci_release_msi),
 	DEVMETHOD(pci_msi_count,	vga_pci_msi_count),
 	DEVMETHOD(pci_msix_count,	vga_pci_msix_count),
-
 	{ 0, 0 }
 };
 

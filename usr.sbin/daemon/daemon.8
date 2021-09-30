@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: bd853652c03fe730350a9fab2408219d350c395b $
+.\" $FreeBSD: c4f20548d4a2573c17ffabf73760881cbd1b32d8 $
 .\"
-.Dd October 2, 2019
+.Dd January 14, 2021
 .Dt DAEMON 8
 .Os
 .Sh NAME
@@ -34,7 +34,7 @@
 .Nd run detached from the controlling terminal
 .Sh SYNOPSIS
 .Nm
-.Op Fl cfrS
+.Op Fl cfHrS
 .Op Fl p Ar child_pidfile
 .Op Fl P Ar supervisor_pidfile
 .Op Fl t Ar title
@@ -68,6 +68,14 @@ or syslog output, the standard file descriptors are first redirected to
 .Pa /dev/null ,
 then stdout and/or stderr is redirected to a file or to syslog as
 specified by the other options.
+.It Fl H
+Close
+.Pa output_file
+and re-open it when signal SIGHUP is received, for interoperability with
+.Xr newsyslog 1
+and similar log rotation / archival mechanisms.  If
+.Fl o
+is not specified, this flag is ignored.
 .It Fl S
 Enable syslog output.
 This is implicitly applied if other syslog parameters are provided.
@@ -77,6 +85,13 @@ tag, respectively.
 Append output from the daemonized process to
 .Pa output_file .
 If the file does not exist, it is created with permissions 0600.
+When this option is used together with options
+.Fl c
+and
+.Fl H
+the absolute path needs to be provided to ensure
+.Nm
+can re-open the file after a SIGHUP.
 .It Fl m Ar output_mask
 Redirect output from the child process stdout (1), stderr (2), or both (3).
 This value specifies what is sent to syslog and the log file.
@@ -217,6 +232,7 @@ The exact behavior depends on the logging parameters and the
 .Fl f
 flag.
 .Sh SEE ALSO
+.Xr nohup 1 ,
 .Xr setregid 2 ,
 .Xr setreuid 2 ,
 .Xr daemon 3 ,

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #ifndef lint
-__FBSDID("$FreeBSD: 328528537ab5febc8f77a3555ab714bea7d867be $");
+__FBSDID("$FreeBSD: 6851d3d765555dd4fa08badbce1f70226272829f $");
 #endif /* not lint */
 
 #include "namespace.h"
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: 328528537ab5febc8f77a3555ab714bea7d867be $");
 #include <errno.h>
 #include <paths.h>
 #include <stdlib.h>
+#include <string.h>
 #include "un-namespace.h"
 
 /*
@@ -71,23 +72,48 @@ __strong_reference(__isptmaster, grantpt);
 __strong_reference(__isptmaster, unlockpt);
 
 /*
+ * ptsname_r(): return the pathname of the slave pseudo-terminal device
+ *              associated with the specified master.
+ */
+int
+__ptsname_r(int fildes, char *buffer, size_t buflen)
+{
+
+	if (buflen <= sizeof(_PATH_DEV)) {
+		errno = ERANGE;
+		return (-1);
+	}
+
+	/* Make sure fildes points to a master device. */
+	if (__isptmaster(fildes) != 0)
+		return (-1);
+
+	memcpy(buffer, _PATH_DEV, sizeof(_PATH_DEV));
+	buffer += sizeof(_PATH_DEV) - 1;
+	buflen -= sizeof(_PATH_DEV) - 1;
+
+	if (fdevname_r(fildes, buffer, buflen) == NULL) {
+		if (errno == EINVAL)
+			errno = ERANGE;
+		return (-1);
+	}
+
+	return (0);
+}
+
+__strong_reference(__ptsname_r, ptsname_r);
+
+/*
  * ptsname():  return the pathname of the slave pseudo-terminal device
  *             associated with the specified master.
  */
 char *
 ptsname(int fildes)
 {
-	static char pt_slave[sizeof _PATH_DEV + SPECNAMELEN] = _PATH_DEV;
-	char *ret = NULL;
+	static char pt_slave[sizeof(_PATH_DEV) + SPECNAMELEN];
 
-	/* Make sure fildes points to a master device. */
-	if (__isptmaster(fildes) != 0)
-		goto done;
+	if (__ptsname_r(fildes, pt_slave, sizeof(pt_slave)) == 0)
+		return (pt_slave);
 
-	if (fdevname_r(fildes, pt_slave + (sizeof _PATH_DEV - 1),
-	    sizeof pt_slave - (sizeof _PATH_DEV - 1)) != NULL)
-		ret = pt_slave;
-
-done:
-	return (ret);
+	return (NULL);
 }

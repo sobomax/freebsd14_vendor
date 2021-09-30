@@ -28,14 +28,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f42d2e726023e3388671c8aa8b2af4f0a4079820 $");
+__FBSDID("$FreeBSD: afe817710f30dc631e775c1d7b9bb62df7999265 $");
 
 #include <sys/types.h>
+
+#include <machine/vmm_snapshot.h>
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 #include <pthread.h>
 #include <pthread_np.h>
@@ -416,4 +419,23 @@ ps2mouse_init(struct atkbdc_softc *atkbdc_sc)
 	return (sc);
 }
 
+#ifdef BHYVE_SNAPSHOT
+int
+ps2mouse_snapshot(struct ps2mouse_softc *sc, struct vm_snapshot_meta *meta)
+{
+	int ret;
 
+	SNAPSHOT_VAR_OR_LEAVE(sc->status, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->resolution, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->sampling_rate, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->ctrlenable, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->curcmd, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->cur_x, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->cur_y, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->delta_x, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->delta_y, meta, ret, done);
+
+done:
+	return (ret);
+}
+#endif

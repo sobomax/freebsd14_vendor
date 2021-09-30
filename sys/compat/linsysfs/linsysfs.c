@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c00c15691fabd67be0e24a09bbbbaebf598934fc $");
+__FBSDID("$FreeBSD: 66cb36db98681359ec35dad7229e6d0da78fbe05 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -624,6 +624,8 @@ linsysfs_init(PFS_INIT_ARGS)
 	struct pfs_node *net;
 	struct pfs_node *power_supply;
 	struct pfs_node *devdir, *chardev;
+	struct pfs_node *kernel;
+	struct pfs_node *debug;
 	devclass_t devclass;
 	device_t dev;
 
@@ -671,6 +673,11 @@ linsysfs_init(PFS_INIT_ARGS)
 
 	linsysfs_listcpus(cpu);
 	linsysfs_listnics(net);
+
+	/* /sys/kernel */
+	kernel = pfs_create_dir(root, "kernel", NULL, NULL, NULL, 0);
+	/* /sys/kernel/debug, mountpoint for lindebugfs. */
+	debug = pfs_create_dir(kernel, "debug", NULL, NULL, NULL, 0);
 
 	return (0);
 }

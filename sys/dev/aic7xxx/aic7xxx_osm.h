@@ -31,7 +31,7 @@
  *
  * $Id: //depot/aic7xxx/freebsd/dev/aic7xxx/aic7xxx_osm.h#18 $
  *
- * $FreeBSD: 601130f71f7ee13d8875b9e7c2e7736f4f238d4a $
+ * $FreeBSD: 820ecb563b6b18427feab4ce5fb80f892e066090 $
  */
 
 #ifndef _AIC7XXX_FREEBSD_H_
@@ -42,39 +42,22 @@
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>		/* For device_t */
-#if __FreeBSD_version >= 500000
 #include <sys/endian.h>
-#endif
 #include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/queue.h>
 
-#if __FreeBSD_version < 500000
-#include <pci.h>
-#else
-#define NPCI 1
-#endif
-
-#if NPCI > 0
 #define AIC_PCI_CONFIG 1
-#endif
 #include <machine/bus.h>
 #include <machine/endian.h>
 #include <machine/resource.h>
 
 #include <sys/rman.h>
 
-#if NPCI > 0
-#if __FreeBSD_version >= 500000
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-#else
-#include <pci/pcireg.h>
-#include <pci/pcivar.h>
-#endif
-#endif
 
 #include <cam/cam.h>
 #include <cam/cam_ccb.h>

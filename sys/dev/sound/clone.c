@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 125d80152c36e5fe7d124cf21a40af417279a700 $
+ * $FreeBSD: 3ded510eae5c523ff24e713ac4dc51adbc54d65b $
  */
 
 #include <sys/param.h>
@@ -158,8 +158,9 @@ sysctl_hw_snd_timestamp_precision(SYSCTL_HANDLER_ARGS)
 
 	return (err);
 }
-SYSCTL_PROC(_hw_snd, OID_AUTO, timestamp_precision, CTLTYPE_INT | CTLFLAG_RW,
-    0, sizeof(int), sysctl_hw_snd_timestamp_precision, "I",
+SYSCTL_PROC(_hw_snd, OID_AUTO, timestamp_precision,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    sysctl_hw_snd_timestamp_precision, "I",
     "timestamp precision (0=s 1=hz 2=us 3=ns)");
 #endif
 

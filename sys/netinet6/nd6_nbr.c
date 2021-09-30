@@ -32,15 +32,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c216ca8fc9561485fa5b03a45953bfb82a810428 $");
+__FBSDID("$FreeBSD: ab55c4dfc6978997c9aeaf4321fb23f6d407b7ee $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
-#include "opt_mpath.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/eventhandler.h>
 #include <sys/malloc.h>
 #include <sys/libkern.h>
 #include <sys/lock.h>
@@ -62,9 +62,6 @@ __FBSDID("$FreeBSD: c216ca8fc9561485fa5b03a45953bfb82a810428 $");
 #include <net/if_dl.h>
 #include <net/if_var.h>
 #include <net/route.h>
-#ifdef RADIX_MPATH
-#include <net/radix_mpath.h>
-#endif
 #include <net/vnet.h>
 
 #include <netinet/in.h>
@@ -139,7 +136,8 @@ nd6_ns_input(struct mbuf *m, int off, int icmp6len)
 
 	ifp = m->m_pkthdr.rcvif;
 	ip6 = mtod(m, struct ip6_hdr *);
-	if (ip6->ip6_hlim != 255) {
+	if (__predict_false(ip6->ip6_hlim != 255)) {
+		ICMP6STAT_INC(icp6s_invlhlim);
 		nd6log((LOG_ERR,
 		    "nd6_ns_input: invalid hlim (%d) from %s to %s on %s\n",
 		    ip6->ip6_hlim, ip6_sprintf(ip6bufs, &ip6->ip6_src),
@@ -275,7 +273,6 @@ nd6_ns_input(struct mbuf *m, int off, int icmp6len)
 		    0, 0, &info) == 0) {
 			if ((info.rti_flags & RTF_ANNOUNCE) != 0 &&
 			    rt_gateway.sdl_family == AF_LINK) {
-
 				/*
 				 * proxy NDP for single entry
 				 */
@@ -633,6 +630,8 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 	int flags, is_override, is_router, is_solicited;
 	int lladdr_off, lladdrlen, checklink;
 
+	NET_EPOCH_ASSERT();
+
 	chain = NULL;
 	ln = NULL;
 	checklink = 0;
@@ -643,7 +642,8 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 
 	ifp = m->m_pkthdr.rcvif;
 	ip6 = mtod(m, struct ip6_hdr *);
-	if (ip6->ip6_hlim != 255) {
+	if (__predict_false(ip6->ip6_hlim != 255)) {
+		ICMP6STAT_INC(icp6s_invlhlim);
 		nd6log((LOG_ERR,
 		    "nd6_na_input: invalid hlim (%d) from %s to %s on %s\n",
 		    ip6->ip6_hlim, ip6_sprintf(ip6bufs, &ip6->ip6_src),
@@ -746,9 +746,7 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 	 * If no neighbor cache entry is found, NA SHOULD silently be
 	 * discarded.
 	 */
-	IF_AFDATA_RLOCK(ifp);
 	ln = nd6_lookup(&taddr6, LLE_EXCLUSIVE, ifp);
-	IF_AFDATA_RUNLOCK(ifp);
 	if (ln == NULL) {
 		goto freeit;
 	}
@@ -1205,6 +1203,8 @@ static void
 nd6_dad_starttimer(struct dadq *dp, int ticks, int send_ns)
 {
 
+	NET_EPOCH_ASSERT();
+
 	if (send_ns != 0)
 		nd6_dad_ns_output(dp);
 	callout_reset(&dp->dad_timer_ch, ticks,
@@ -1245,6 +1245,7 @@ nd6_dad_start(struct ifaddr *ifa, int delay)
 	struct in6_ifaddr *ia = (struct in6_ifaddr *)ifa;
 	struct dadq *dp;
 	char ip6buf[INET6_ADDRSTRLEN];
+	struct epoch_tracker et;
 
 	KASSERT((ia->ia6_flags & IN6_IFF_TENTATIVE) != 0,
 	    ("starting DAD on non-tentative address %p", ifa));
@@ -1306,7 +1307,9 @@ nd6_dad_start(struct ifaddr *ifa, int delay)
 	/* Add this to the dadq and add a reference for the dadq. */
 	refcount_init(&dp->dad_refcnt, 1);
 	nd6_dad_add(dp);
+	NET_EPOCH_ENTER(et);
 	nd6_dad_starttimer(dp, delay, 0);
+	NET_EPOCH_EXIT(et);
 }
 
 /*
@@ -1338,9 +1341,11 @@ nd6_dad_timer(struct dadq *dp)
 	struct ifnet *ifp = dp->dad_ifa->ifa_ifp;
 	struct in6_ifaddr *ia = (struct in6_ifaddr *)ifa;
 	char ip6buf[INET6_ADDRSTRLEN];
+	struct epoch_tracker et;
 
 	KASSERT(ia != NULL, ("DAD entry %p with no address", dp));
 
+	NET_EPOCH_ENTER(et);
 	if (ND_IFINFO(ifp)->flags & ND6_IFF_IFDISABLED) {
 		/* Do not need DAD for ifdisabled interface. */
 		log(LOG_ERR, "nd6_dad_timer: cancel DAD on %s because of "
@@ -1437,6 +1442,7 @@ nd6_dad_timer(struct dadq *dp)
 err:
 	nd6_dad_del(dp);
 done:
+	NET_EPOCH_EXIT(et);
 	CURVNET_RESTORE();
 }
 

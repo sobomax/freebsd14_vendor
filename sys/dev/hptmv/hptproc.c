@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c9ee38a4d41a84fcc157ec83b6bfe249605ad2b5 $
+ * $FreeBSD: 90d65250c75223eb22036c5cae0676d97e72af48 $
  */
 /*
  * hptproc.c  sysctl support
@@ -639,13 +639,16 @@ out:
 
 #if __FreeBSD_version >= 1100024
 #define hptregister_node(name) \
-	SYSCTL_ROOT_NODE(OID_AUTO, name, CTLFLAG_RW, 0, "Get/Set " #name " state root node"); \
-	SYSCTL_OID(_ ## name, OID_AUTO, status, CTLTYPE_STRING|CTLFLAG_RW, \
-	NULL, 0, hpt_status, "A", "Get/Set " #name " state")
+    SYSCTL_ROOT_NODE(OID_AUTO, name, CTLFLAG_RW | CTLFLAG_MPSAFE, 0, \
+        "Get/Set " #name " state root node"); \
+        SYSCTL_OID(_ ## name, OID_AUTO, status, \
+            CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT, \
+            NULL, 0, hpt_status, "A", "Get/Set " #name " state")
 #else
 #define hptregister_node(name) \
 	SYSCTL_NODE(, OID_AUTO, name, CTLFLAG_RW, 0, "Get/Set " #name " state root node"); \
-	SYSCTL_OID(_ ## name, OID_AUTO, status, CTLTYPE_STRING|CTLFLAG_RW, \
+	SYSCTL_OID(_ ## name, OID_AUTO, status, \
+	CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE, \
 	NULL, 0, hpt_status, "A", "Get/Set " #name " state")
 #endif
 	

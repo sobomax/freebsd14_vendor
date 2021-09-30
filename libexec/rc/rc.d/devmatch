@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2018 M. Warner Losh
+# Copyright (c) 2018 M. Warner Losh <imp@FreeBSD.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a5f91727d547b91f7738d7dfc10b1b9dfa5cf361 $
+# $FreeBSD: 491bc94c4a16f23ed054785d0c4d864387baff33 $
 #
 # PROVIDE: devmatch
 # REQUIRE: kldxref

@@ -1,15 +1,13 @@
-# $FreeBSD: 3b38dd3f64167ee8cb1420e2252e4ed3011311ee $
-
-PACKAGE=runtime-manuals
+# $FreeBSD: 05c5d4012fe88f1192636f31e58e95b3c9d6a0d2 $
 
 MAN=	adb.4 \
 	akbd.4 \
 	abtn.4 \
 	ams.4 \
-	bm.4 \
 	cuda.4 \
 	dtsec.4 \
 	llan.4 \
+	ofw_console.4 \
 	pmu.4 \
 	powermac_nvram.4 \
 	smu.4 \

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright (c) 2018-2020 Gavin D. Howard and contributors.
+ * Copyright (c) 2018-2021 Gavin D. Howard and contributors.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -172,6 +172,10 @@ extern const BcParseNext bc_parse_next_rel;
 extern const BcParseNext bc_parse_next_elem;
 extern const BcParseNext bc_parse_next_for;
 extern const BcParseNext bc_parse_next_read;
+
+#else // BC_ENABLED
+
+#define BC_PARSE_NO_EXEC(p) (0)
 
 #endif // BC_ENABLED
 

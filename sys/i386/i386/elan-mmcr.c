@@ -41,13 +41,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a26e226ba476091d21760428e1dc6b8e5c4cfebf $");
+__FBSDID("$FreeBSD: 9b0ac1116797bc94cfc5288cc03c9fa0062662a6 $");
 
 #include "opt_cpu.h"
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/sysctl.h>
 #include <sys/syslog.h>
 #include <sys/timetc.h>
@@ -220,8 +221,10 @@ sysctl_machdep_elan_gpio_config(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 
-SYSCTL_OID(_machdep, OID_AUTO, elan_gpio_config, CTLTYPE_STRING | CTLFLAG_RW,
-    NULL, 0, sysctl_machdep_elan_gpio_config, "A", "Elan CPU GPIO pin config");
+SYSCTL_OID(_machdep, OID_AUTO, elan_gpio_config,
+    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT, NULL, 0,
+    sysctl_machdep_elan_gpio_config, "A",
+    "Elan CPU GPIO pin config");
 
 #ifdef CPU_ELAN_PPS
 static void
@@ -320,8 +323,10 @@ sysctl_machdep_elan_freq(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, elan_freq, CTLTYPE_UINT | CTLFLAG_RW,
-    0, sizeof (u_int), sysctl_machdep_elan_freq, "IU", "");
+SYSCTL_PROC(_machdep, OID_AUTO, elan_freq,
+    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, sizeof (u_int),
+    sysctl_machdep_elan_freq, "IU",
+    "");
 
 /*
  * Positively identifying the Elan can only be done through the PCI id of
@@ -342,7 +347,7 @@ init_AMD_Elan_sc520(void)
 	 *   f = 32768 * 45 * 25 / 31 = 1189161.29...
 	 * We use the sysctl to get the i8254 (timecounter etc) into whack.
 	 */
-	
+
 	new = 1189161;
 	i = kernel_sysctlbyname(&thread0, "machdep.i8254_freq", 
 	    NULL, 0, &new, sizeof new, NULL, 0);
@@ -492,7 +497,7 @@ elan_drvinit(void)
 	/* Create the error LED on GPIO9 */
 	led_cookie[9] = 0x02000c34;
 	led_dev[9] = led_create(gpio_led, &led_cookie[9], "error");
-	
+
 	/* Disable the unavailable GPIO pins */
 	strcpy(gpio_config, "-----....--..--------..---------");
 #else /* !CPU_SOEKRIS */
@@ -504,4 +509,3 @@ elan_drvinit(void)
 }
 
 SYSINIT(elan, SI_SUB_PSEUDO, SI_ORDER_MIDDLE, elan_drvinit, NULL);
-

@@ -1,4 +1,4 @@
-/* $FreeBSD: 83011b395c51cff919be8d82ef0941397fce029d $ */
+/* $FreeBSD: 2637bf98278f70bab452d6508f8f3fd29ace022c $ */
 /*	$NetBSD: msdosfs_conv.c,v 1.25 1997/11/17 15:36:40 ws Exp $	*/
 
 /*-
@@ -337,7 +337,6 @@ unix2dosfn(const u_char *un, u_char dn[12], size_t unlen, u_int gen,
 			break;
 	if (i < 0)
 		return 0;
-
 
 	/*
 	 * Filenames with some characters are not allowed!

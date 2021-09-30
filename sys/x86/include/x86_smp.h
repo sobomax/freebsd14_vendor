@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: 9bb05d9038ab1eabb4010e7b2ee70c2da2ce4bd4 $
+ * $FreeBSD: e01f869a58f610e998702769d49390146c4be915 $
  *
  */
 
@@ -34,7 +34,6 @@ extern char *bootSTK;
 extern void *bootstacks[];
 extern unsigned int boot_address;
 extern unsigned int bootMP_size;
-extern volatile u_int cpu_ipi_pending[];
 extern volatile int aps_ready;
 extern struct mtx ap_boot_mtx;
 extern int cpu_logical;
@@ -61,6 +60,11 @@ struct cpu_info {
 };
 extern struct cpu_info *cpu_info;
 
+/*
+ * Set if MWAIT does not reliably wake when the MONITORed address is written.
+ */
+extern bool mwait_cpustop_broken;
+
 #ifdef COUNT_IPIS
 extern u_long *ipi_invltlb_counts[MAXCPU];
 extern u_long *ipi_invlrng_counts[MAXCPU];
@@ -71,10 +75,6 @@ extern u_long *ipi_rendezvous_counts[MAXCPU];
 
 /* IPI handlers */
 inthand_t
-	IDTVEC(invltlb),	/* TLB shootdowns - global */
-	IDTVEC(invlpg),		/* TLB shootdowns - 1 page */
-	IDTVEC(invlrng),	/* TLB shootdowns - page range */
-	IDTVEC(invlcache),	/* Write back and invalidate cache */
 	IDTVEC(ipi_intr_bitmap_handler), /* Bitmap based IPIs */ 
 	IDTVEC(ipi_swi),	/* Runs delayed SWI */
 	IDTVEC(cpustop),	/* CPU stops & waits to be restarted */
@@ -91,10 +91,6 @@ void	cpustop_handler(void);
 void	cpususpend_handler(void);
 void	alloc_ap_trampoline(vm_paddr_t *physmap, unsigned int *physmap_idx);
 void	init_secondary_tail(void);
-void	invltlb_handler(void);
-void	invlpg_handler(void);
-void	invlrng_handler(void);
-void	invlcache_handler(void);
 void	init_secondary(void);
 void	ipi_startup(int apic_id, int vector);
 void	ipi_all_but_self(u_int ipi);
@@ -114,6 +110,5 @@ void	smp_masked_invltlb(cpuset_t mask, struct pmap *pmap,
 	    smp_invl_cb_t curcpu_cb);
 void	mem_range_AP_init(void);
 void	topo_probe(void);
-void	ipi_send_cpu(int cpu, u_int ipi);
 
 #endif

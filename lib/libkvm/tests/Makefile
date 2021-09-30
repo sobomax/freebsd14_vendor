@@ -1,4 +1,4 @@
-# $FreeBSD: 24caf9108883efdee3e74c819a73ceafcaf071e2 $
+# $FreeBSD: 1f74aec83f0253c065c9f1c2026ebb327a9a0dfb $
 
 .include <bsd.own.mk>
 
@@ -12,8 +12,6 @@ CFLAGS.kvm_geterr_test+=	-I${.CURDIR:H}
 CFLAGS.kvm_read_test+=		-I${.CURDIR:H}
 
 LIBADD+=	kvm
-
-WARNS?=		6
 
 BINDIR=		${TESTSDIR}
 

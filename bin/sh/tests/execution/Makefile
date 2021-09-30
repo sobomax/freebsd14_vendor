@@ -1,4 +1,4 @@
-# $FreeBSD: 064afdbf736c1997b332de55fae225c687685bab $
+# $FreeBSD: ab5218b10a0c2a6c2b9ad4f52983543415dde234 $
 
 PACKAGE=	tests
 
@@ -19,6 +19,8 @@ ${PACKAGE}FILES+=		bg9.0
 ${PACKAGE}FILES+=		bg10.0 bg10.0.stdout
 ${PACKAGE}FILES+=		bg11.0
 ${PACKAGE}FILES+=		bg12.0
+${PACKAGE}FILES+=		bg13.0
+${PACKAGE}FILES+=		env1.0
 ${PACKAGE}FILES+=		fork1.0
 ${PACKAGE}FILES+=		fork2.0
 ${PACKAGE}FILES+=		fork3.0
@@ -56,6 +58,12 @@ ${PACKAGE}FILES+=		set-x2.0
 ${PACKAGE}FILES+=		set-x3.0
 ${PACKAGE}FILES+=		set-x4.0
 ${PACKAGE}FILES+=		shellproc1.0
+${PACKAGE}FILES+=		shellproc2.0
+${PACKAGE}FILES+=		shellproc3.0
+${PACKAGE}FILES+=		shellproc4.0
+${PACKAGE}FILES+=		shellproc5.0
+${PACKAGE}FILES+=		shellproc6.0
+${PACKAGE}FILES+=		shellproc7.0
 ${PACKAGE}FILES+=		subshell1.0 subshell1.0.stdout
 ${PACKAGE}FILES+=		subshell2.0
 ${PACKAGE}FILES+=		subshell3.0

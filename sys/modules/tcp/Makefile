@@ -1,14 +1,16 @@
 #
-# $FreeBSD: abcd4507b695d2735c4545fac658f6372d8d5edc $
+# $FreeBSD: 3def63255fd93bf06311fe8a80f7ddf1c3e8efbb $
 #
 
 .include <kmod.opts.mk>
 
 SUBDIR=	\
+        ${_tcp_bbr} \
         ${_tcp_rack} \
 	${_tcpmd5} \
 
 .if ${MK_EXTRA_TCP_STACKS} != "no" || defined(ALL_MODULES)
+_tcp_bbr= 	bbr
 _tcp_rack= 	rack
 .endif
 

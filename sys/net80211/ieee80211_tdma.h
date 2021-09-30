@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9b108e4ba7241f7f0027f8854a0e84e5bf749a8c $
+ * $FreeBSD: f0cbf5cdd77fcebae7ec907ea186f27138418c37 $
  */
 #ifndef _NET80211_IEEE80211_TDMA_H_
 #define _NET80211_IEEE80211_TDMA_H_
@@ -87,7 +87,7 @@ struct ieee80211_tdma_state {
 		    const struct ieee80211_rx_stats *rxs, int, int);
 	void	(*tdma_opdetach)(struct ieee80211vap *);
 };
- 
+
 #define	TDMA_UPDATE_SLOT	0x0001	/* tdma_slot changed */
 #define	TDMA_UPDATE_SLOTCNT	0x0002	/* tdma_slotcnt changed */
 #define	TDMA_UPDATE_SLOTLEN	0x0004	/* tdma_slotlen changed */

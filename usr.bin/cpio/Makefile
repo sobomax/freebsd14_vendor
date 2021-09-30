@@ -1,4 +1,4 @@
-# $FreeBSD: 7daac80c29d3b238b5f8567a8439fb1727a13b8f $
+# $FreeBSD: f9f344429a9166112acb3f45fbf5e25f9cf2627a $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,8 @@ _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 _LIBARCHIVECONFDIR=	${SRCTOP}/lib/libarchive
 
 PROG=	bsdcpio
-BSDCPIO_VERSION_STRING=	3.4.3
+BSDCPIO_VERSION_STRING!=	sed -n '/define.*ARCHIVE_VERSION_ONLY_STRING/{s,[^0-9.],,gp;q;}' \
+			${_LIBARCHIVEDIR}/libarchive/archive.h
 
 .PATH:	${_LIBARCHIVEDIR}/cpio
 SRCS=	cpio.c cmdline.c
@@ -18,11 +19,6 @@ CFLAGS+= -DBSDCPIO_VERSION_STRING=\"${BSDCPIO_VERSION_STRING}\"
 CFLAGS+= -DPLATFORM_CONFIG_H=\"${_LIBARCHIVECONFDIR}/config_freebsd.h\"
 CFLAGS+= -I${_LIBARCHIVEDIR}/cpio -I${_LIBARCHIVEDIR}/libarchive_fe
 
-.ifdef RELEASE_CRUNCH
-# FreeBSD's installer uses cpio in crunched binaries that are
-# statically linked, cannot use -lcrypto, and are size sensitive.
-CFLAGS+= -DSMALLER
-.endif
 LIBADD=	archive
 
 .if ${MK_ICONV} != "no"

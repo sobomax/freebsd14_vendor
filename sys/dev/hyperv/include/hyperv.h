@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3761b2864eef51ba29f8fb5d2d76d119c6c583cf $
+ * $FreeBSD: 8b985b2f31a78c43f40453df2024f55b6fa13b03 $
  */
 
 #ifndef _HYPERV_H_
@@ -93,6 +93,11 @@ int			hyperv_guid2str(const struct hyperv_guid *, char *,
 extern hyperv_tc64_t	hyperv_tc64;
 extern u_int		hyperv_features;	/* CPUID_HV_MSR_ */
 extern u_int		hyperv_ver_major;
+
+/*
+ * Vmbus version after negotiation with host.
+ */
+extern uint32_t		vmbus_current_version;
 
 #endif	/* _KERNEL */
 

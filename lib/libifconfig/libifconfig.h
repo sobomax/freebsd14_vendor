@@ -23,10 +23,14 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cd2929f315b47b335c68828480518e386b3621f8 $
+ * $FreeBSD: 46a13ae27d69b30349c068554d99bb5c334f18c3 $
  */
 
 #pragma once
+
+#include <sys/types.h>
+
+#include <net/if.h>
 
 #include <netinet/in.h>
 #include <netinet6/in6_var.h>
@@ -275,3 +279,13 @@ int ifconfig_create_interface_vlan(ifconfig_handle_t *h, const char *name,
 
 int ifconfig_set_vlantag(ifconfig_handle_t *h, const char *name,
     const char *vlandev, const unsigned short vlantag);
+
+/** Gets the names of all interface cloners available on the system
+ * @param bufp	Set to the address of the names buffer on success or NULL
+ *              if an error occurs.  This buffer must be freed when done.
+ * @param lenp	Set to the number of names in the returned buffer or 0
+ * 		if an error occurs.  Each name is contained within an
+ * 		IFNAMSIZ length slice of the buffer, for a total buffer
+ * 		length of *lenp * IFNAMSIZ bytes.
+ */
+int ifconfig_list_cloners(ifconfig_handle_t *h, char **bufp, size_t *lenp);

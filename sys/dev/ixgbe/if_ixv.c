@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 808771cb1e62972aeecd0d44a701c95d0f378ef8 $*/
+/*$FreeBSD: 6bd92d262558b34acbd74d7dc2911bed15c54550 $*/
 
 
 #include "opt_inet.h"
@@ -271,7 +271,6 @@ ixv_if_tx_queues_alloc(if_ctx_t ctx, caddr_t *vaddrs, uint64_t *paddrs,
 
 		txr->me = i;
 		txr->adapter =  que->adapter = adapter;
-		adapter->active_queues |= (u64)1 << txr->me;
 
 		/* Allocate report status array */
 		if (!(txr->tx_rsq = (qidx_t *)malloc(sizeof(qidx_t) * scctx->isc_ntxd[0], M_DEVBUF, M_NOWAIT | M_ZERO))) {
@@ -421,8 +420,8 @@ ixv_if_attach_pre(if_ctx_t ctx)
 	/* SYSCTL APIs */
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO, "debug",
-	    CTLTYPE_INT | CTLFLAG_RW, adapter, 0, ixv_sysctl_debug, "I",
-	    "Debug Info");
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    adapter, 0, ixv_sysctl_debug, "I", "Debug Info");
 
 	/* Determine hardware revision */
 	ixv_identify_hardware(ctx);
@@ -1031,7 +1030,7 @@ ixv_if_msix_intr_assign(if_ctx_t ctx, int msix)
 
 		snprintf(buf, sizeof(buf), "rxq%d", i);
 		error = iflib_irq_alloc_generic(ctx, &rx_que->que_irq, rid,
-		    IFLIB_INTR_RX, ixv_msix_que, rx_que, rx_que->rxr.me, buf);
+		    IFLIB_INTR_RXTX, ixv_msix_que, rx_que, rx_que->rxr.me, buf);
 
 		if (error) {
 			device_printf(iflib_get_dev(ctx),
@@ -1041,8 +1040,6 @@ ixv_if_msix_intr_assign(if_ctx_t ctx, int msix)
 		}
 
 		rx_que->msix = vector;
-		adapter->active_queues |= (u64)(1 << rx_que->msix);
-
 	}
 
 	for (int i = 0; i < adapter->num_tx_queues; i++) {
@@ -1827,7 +1824,7 @@ ixv_add_stats_sysctls(struct adapter *adapter)
 		struct tx_ring *txr = &tx_que->txr;
 		snprintf(namebuf, QUEUE_NAME_LEN, "queue%d", i);
 		queue_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, namebuf,
-		    CTLFLAG_RD, NULL, "Queue Name");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "Queue Name");
 		queue_list = SYSCTL_CHILDREN(queue_node);
 
 		SYSCTL_ADD_UQUAD(ctx, queue_list, OID_AUTO, "tso_tx",
@@ -1840,7 +1837,7 @@ ixv_add_stats_sysctls(struct adapter *adapter)
 		struct rx_ring *rxr = &rx_que->rxr;
 		snprintf(namebuf, QUEUE_NAME_LEN, "queue%d", i);
 		queue_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, namebuf,
-		    CTLFLAG_RD, NULL, "Queue Name");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, "Queue Name");
 		queue_list = SYSCTL_CHILDREN(queue_node);
 
 		SYSCTL_ADD_UQUAD(ctx, queue_list, OID_AUTO, "irqs",
@@ -1854,7 +1851,8 @@ ixv_add_stats_sysctls(struct adapter *adapter)
 	}
 
 	stat_node = SYSCTL_ADD_NODE(ctx, child, OID_AUTO, "mac",
-	    CTLFLAG_RD, NULL, "VF Statistics (read from HW registers)");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+	    "VF Statistics (read from HW registers)");
 	stat_list = SYSCTL_CHILDREN(stat_node);
 
 	SYSCTL_ADD_UQUAD(ctx, stat_list, OID_AUTO, "good_pkts_rcvd",

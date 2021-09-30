@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ec2c80838dd36d5ac1bd3904553e72c2916f7994 $
+ * $FreeBSD: 9e1bd30276873216179409347a9e96a91ff7ac4c $
  */
 
 #ifndef	_ARM_ARM_NEXUSVAR_H_
@@ -33,4 +33,3 @@
 void nexus_set_dma_tag(bus_dma_tag_t _tag);
 
 #endif
-

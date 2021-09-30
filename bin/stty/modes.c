@@ -33,10 +33,9 @@ static char sccsid[] = "@(#)modes.c	8.3 (Berkeley) 4/2/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e34afb83ee38a276f174ed0ba83ff69cb96c6087 $");
+__FBSDID("$FreeBSD: 5cd3061aa44920d47b1a0f1c86e5b1b06594b085 $");
 
 #include <sys/types.h>
-#include <stddef.h>
 #include <string.h>
 #include "stty.h"
 
@@ -91,6 +90,8 @@ static const struct modes cmodes[] = {
 	{ "-rtsflow",	0, CRTS_IFLOW },
 	{ "mdmbuf",	MDMBUF, 0 },
 	{ "-mdmbuf",	0, MDMBUF },
+	{ "rtsdtr",	0, CNO_RTSDTR },
+	{ "-rtsdtr",	CNO_RTSDTR, 0 },
 	{ NULL,		0, 0 },
 };
 

@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: 87804f845631e9fc1e5d0dd92f7b3895b2a86ac3 $ */
+/* $FreeBSD: 2fbbabbf1f070f975cf1a92a4730cc53e12c79cf $ */
 
 #ifndef _DEV_LE_LANCEVAR_H_
 #define	_DEV_LE_LANCEVAR_H_
@@ -198,7 +198,7 @@ ether_cmp(void *one, void *two)
 	diff |= *a++ - *b++;
 #else
 	/*
-	 * Most modern CPUs do better with a single expresion.
+	 * Most modern CPUs do better with a single expression.
 	 * Note that short-cut evaluation is NOT helpful here,
 	 * because it just makes the code longer, not faster!
 	 */

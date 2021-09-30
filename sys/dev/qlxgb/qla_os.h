@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 548719de890da0f86a277dcb005b6ea5c9a6a90b $
+ * $FreeBSD: 1ee4f8d1ce61582b33909d6ecb40a25537dee90d $
  */
 /*
  * File: qla_os.h
@@ -121,7 +121,6 @@ static __inline int qla_sec_to_hz(int sec)
 	return (tvtohz(&t));
 }
 
-
 #define qla_host_to_le16(x)	htole16(x)
 #define qla_host_to_le32(x)	htole32(x)
 #define qla_host_to_le64(x)	htole64(x)
@@ -145,13 +144,13 @@ MALLOC_DECLARE(M_QLA8XXXBUF);
 		else  \
 			pause(fn, qla_ms_to_hz(msecs)); \
 	}
-	
+
 /*
  * Locks
  */
 #define QLA_LOCK(ha, str) qla_lock(ha, str);
 #define QLA_UNLOCK(ha, str) qla_unlock(ha, str)
- 
+
 #define QLA_TX_LOCK(ha)		mtx_lock(&ha->tx_lock);
 #define QLA_TX_UNLOCK(ha)	mtx_unlock(&ha->tx_lock);
 

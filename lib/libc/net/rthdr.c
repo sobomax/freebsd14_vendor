@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a035e9d32d0ca79bd5450fd74e6bcca31d4d354 $");
+__FBSDID("$FreeBSD: 81f07c0e77ddd103aadeabc368309a947b707679 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -282,7 +282,7 @@ inet6_rth_space(int type, int segments)
 			return (((segments * 2) + 1) << 3);
 		/* FALLTHROUGH */
 	default:
-		return (0);	/* type not suppported */
+		return (0);	/* type not supported */
 	}
 }
 

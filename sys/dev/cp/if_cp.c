@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29643b2ba7f17a59a38171bcedfca495bc2fe19d $");
+__FBSDID("$FreeBSD: c8d080fcc60145dfdc3665a8fa4436ab4d559572 $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: 29643b2ba7f17a59a38171bcedfca495bc2fe19d $");
 #   define PP_CISCO IFF_LINK2
 #   include <net/bpf.h>
 #endif
-#include <dev/cx/machdep.h>
+#include <dev/cp/machdep.h>
 #include <dev/cp/cpddk.h>
 #include <machine/cserial.h>
 #include <machine/resource.h>

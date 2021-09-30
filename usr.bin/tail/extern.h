@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: ef2c9ce0ee9a60d5dffeef44112cf077351fa2f9 $
+ * $FreeBSD: 65ddb519dc61bf57bbfbb2ec7595f5407cf668e8 $
  */
 
 #define	WR(p, size) do { \
@@ -78,3 +78,4 @@ int maparound(struct mapinfo *, off_t);
 void printfn(const char *, int);
 
 extern int Fflag, fflag, qflag, rflag, rval, no_files;
+extern fileargs_t *fa;

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: da7b6ff7220297709fb76584d567ebb45b6b3fac $
+ * $FreeBSD: 32e60b1b4cb20bf51bef8c763b05e64349ae9704 $
  */
 
 #ifndef	_G_CONCAT_H_
@@ -49,25 +49,10 @@
 #define	G_CONCAT_TYPE_MANUAL	0
 #define	G_CONCAT_TYPE_AUTOMATIC	1
 
-#define	G_CONCAT_DEBUG(lvl, ...)	do {				\
-	if (g_concat_debug >= (lvl)) {					\
-		printf("GEOM_CONCAT");					\
-		if (g_concat_debug > 0)					\
-			printf("[%u]", lvl);				\
-		printf(": ");						\
-		printf(__VA_ARGS__);					\
-		printf("\n");						\
-	}								\
-} while (0)
-#define	G_CONCAT_LOGREQ(bp, ...)	do {				\
-	if (g_concat_debug >= 2) {					\
-		printf("GEOM_CONCAT[2]: ");				\
-		printf(__VA_ARGS__);					\
-		printf(" ");						\
-		g_print_bio(bp);					\
-		printf("\n");						\
-	}								\
-} while (0)
+#define G_CONCAT_DEBUG(lvl, ...) \
+    _GEOM_DEBUG("GEOM_CONCAT", g_concat_debug, (lvl), NULL, __VA_ARGS__)
+#define G_CONCAT_LOGREQ(bp, ...) \
+    _GEOM_DEBUG("GEOM_CONCAT", g_concat_debug, 2, (bp), __VA_ARGS__)
 
 struct g_concat_disk {
 	struct g_consumer	*d_consumer;

@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 189945dde73f4fa415616ae37e0f05bfb343addf $
+ * $FreeBSD: 7abae276e8d1d54e2e5ec596e323fd8beee60460 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 189945dde73f4fa415616ae37e0f05bfb343addf $");
+__FBSDID("$FreeBSD: 7abae276e8d1d54e2e5ec596e323fd8beee60460 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -66,7 +66,6 @@ __FBSDID("$FreeBSD: 189945dde73f4fa415616ae37e0f05bfb343addf $");
 #define	GPIO_GPIER	0xc
 #define	GPIO_GPIMR	0x10
 #define	GPIO_GPICR	0x14
-
 
 struct qoriq_gpio_softc {
 	device_t	dev;
@@ -209,7 +208,7 @@ qoriq_gpio_pin_toggle(device_t dev, uint32_t pin)
 	val = bus_read_4(sc->sc_mem, GPIO_GPDAT);
 	val ^= (1 << (31 - pin));
 	bus_write_4(sc->sc_mem, GPIO_GPDAT, val);
-	
+
 	GPIO_UNLOCK(sc);
 
 	return (0);

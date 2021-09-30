@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 660be20a27db1d51479da4fcfa17b8808d901472 $
+ * $FreeBSD: 13e58ce8642b5a8caab339b6a962a18048ec48de $
  */
 
 /*
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 660be20a27db1d51479da4fcfa17b8808d901472 $");
+__FBSDID("$FreeBSD: 13e58ce8642b5a8caab339b6a962a18048ec48de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -126,7 +125,6 @@ static kobj_method_t a10hdmiaudio_mixer_methods[] = {
 	KOBJMETHOD_END
 };
 MIXER_DECLARE(a10hdmiaudio_mixer);
-
 
 /*
  * Channel interface
@@ -345,7 +343,6 @@ static kobj_method_t a10hdmiaudio_chan_methods[] = {
 	KOBJMETHOD_END
 };
 CHANNEL_DECLARE(a10hdmiaudio_chan);
-
 
 /*
  * Device interface

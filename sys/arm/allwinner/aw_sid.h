@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0da2f0383215989fc16d599927166aece9607abc $
+ * $FreeBSD: a94b3d6ab36fe355d8a9b1d5e0acfdec90a3a336 $
  */
 
 #ifndef __AW_SID_H__

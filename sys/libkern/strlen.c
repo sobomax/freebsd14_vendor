@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f2f5867771edcb221869e3f882238632f74f972 $");
+__FBSDID("$FreeBSD: a8c7964f69a3d161dcda716ac65d524fd2aaa71e $");
 
 #include <sys/libkern.h>
 #include <sys/limits.h>
@@ -80,7 +80,7 @@ static const unsigned long mask80 = 0x8080808080808080;
 	} while (0)
 
 size_t
-strlen(const char *str)
+(strlen)(const char *str)
 {
 	const char *p;
 	const unsigned long *lp;

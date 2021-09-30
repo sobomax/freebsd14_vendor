@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 9b51c1605a369f6c9e3b932c22839e56a62d0058 $
+ *	$FreeBSD: a2b7ba4d0eccf8575dcb5e4743fe906dec8ba93a $
  */
 
 /*
@@ -1342,7 +1342,6 @@ typedef enum {
 	CMUNSTABLE
 } AAC_CommitLevel;
 
-
 #define	CT_FIB_PARAMS			6
 #define	MAX_FIB_PARAMS			10
 #define	CT_PACKET_SIZE \
@@ -1589,7 +1588,6 @@ enum {
 /* Sunrise Lake dual core reset */
 #define AAC_IRCSR		0x38	/* inbound dual cores reset */
 #define AAC_IRCSR_CORES_RST	3
-
 
 /*
  * Common bit definitions for the doorbell registers.

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)specialreg.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: 142d8baaaf30f0b9730ebd80ac869181859f3427 $
+ * $FreeBSD: 22672d50efed21f9d8154b6f5b619727184032cc $
  */
 
 #ifndef _MACHINE_SPECIALREG_H_
@@ -71,6 +71,8 @@
 #define	CR4_PCE	0x00000100	/* Performance monitoring counter enable */
 #define	CR4_FXSR 0x00000200	/* Fast FPU save/restore used by OS */
 #define	CR4_XMM	0x00000400	/* enable SIMD/MMX2 to use except 16 */
+#define	CR4_UMIP 0x00000800	/* User Mode Instruction Prevention */
+#define	CR4_LA57 0x00001000	/* Enable 5-level paging */
 #define	CR4_VMXE 0x00002000	/* enable VMX operation (Intel-specific) */
 #define	CR4_FSGSBASE 0x00010000	/* Enable FS/GS BASE accessing instructions */
 #define	CR4_PCIDE 0x00020000	/* Enable Context ID */
@@ -90,6 +92,7 @@
 #define	EFER_LMSLE 0x000002000	/* Long Mode Segment Limit Enable */
 #define	EFER_FFXSR 0x000004000	/* Fast FXSAVE/FSRSTOR */
 #define	EFER_TCE   0x000008000	/* Translation Cache Extension */
+#define	EFER_MCOMMIT	0x00020000	/* Enable MCOMMIT (AMD) */
 
 /*
  * Intel Extended Features registers
@@ -182,21 +185,6 @@
 #define	CPUID2_F16C	0x20000000
 #define	CPUID2_RDRAND	0x40000000
 #define	CPUID2_HV	0x80000000
-
-/*
- * Important bits in the Thermal and Power Management flags
- * CPUID.6 EAX and ECX.
- */
-#define	CPUTPM1_SENSOR	0x00000001
-#define	CPUTPM1_TURBO	0x00000002
-#define	CPUTPM1_ARAT	0x00000004
-#define	CPUTPM1_HWP	0x00000080
-#define	CPUTPM1_HWP_NOTIFICATION	0x00000100
-#define	CPUTPM1_HWP_ACTIVITY_WINDOW	0x00000200
-#define	CPUTPM1_HWP_PERF_PREF	0x00000400
-#define	CPUTPM1_HWP_PKG	0x00000800
-#define	CPUTPM1_HWP_FLEXIBLE	0x00020000
-#define	CPUTPM2_EFFREQ	0x00000001
 
 /* Intel Processor Trace CPUID. */
 
@@ -327,10 +315,34 @@
 #define	MWAIT_INTRBREAK		0x00000001
 
 /*
- * CPUID instruction 6 ecx info
+ * CPUID leaf 6: Thermal and Power management.
  */
-#define	CPUID_PERF_STAT		0x00000001
-#define	CPUID_PERF_BIAS		0x00000008
+/* Eax. */
+#define	CPUTPM1_SENSOR			0x00000001
+#define	CPUTPM1_TURBO			0x00000002
+#define	CPUTPM1_ARAT			0x00000004
+#define	CPUTPM1_PLN			0x00000010
+#define	CPUTPM1_ECMD			0x00000020
+#define	CPUTPM1_PTM			0x00000040
+#define	CPUTPM1_HWP			0x00000080
+#define	CPUTPM1_HWP_NOTIFICATION	0x00000100
+#define	CPUTPM1_HWP_ACTIVITY_WINDOW	0x00000200
+#define	CPUTPM1_HWP_PERF_PREF		0x00000400
+#define	CPUTPM1_HWP_PKG			0x00000800
+#define	CPUTPM1_HDC			0x00002000
+#define	CPUTPM1_TURBO30			0x00004000
+#define	CPUTPM1_HWP_CAPABILITIES	0x00008000
+#define	CPUTPM1_HWP_PECI_OVR		0x00010000
+#define	CPUTPM1_HWP_FLEXIBLE		0x00020000
+#define	CPUTPM1_HWP_FAST_MSR		0x00040000
+#define	CPUTPM1_HWP_IGN_IDLE		0x00100000
+
+/* Ebx. */
+#define	CPUTPM_B_NSENSINTTHRESH		0x0000000f
+
+/* Ecx. */
+#define	CPUID_PERF_STAT			0x00000001
+#define	CPUID_PERF_BIAS			0x00000008
 
 /* 
  * CPUID instruction 0xb ebx info.
@@ -376,6 +388,21 @@
 #define	AMDFEID_CLZERO		0x00000001
 #define	AMDFEID_IRPERF		0x00000002
 #define	AMDFEID_XSAVEERPTR	0x00000004
+#define	AMDFEID_RDPRU		0x00000010
+#define	AMDFEID_MCOMMIT		0x00000100
+#define	AMDFEID_WBNOINVD	0x00000200
+#define	AMDFEID_IBPB		0x00001000
+#define	AMDFEID_IBRS		0x00004000
+#define	AMDFEID_STIBP		0x00008000
+/* The below are only defined if the corresponding base feature above exists. */
+#define	AMDFEID_IBRS_ALWAYSON	0x00010000
+#define	AMDFEID_STIBP_ALWAYSON	0x00020000
+#define	AMDFEID_PREFER_IBRS	0x00040000
+#define	AMDFEID_PPIN		0x00800000
+#define	AMDFEID_SSBD		0x01000000
+/* SSBD via MSRC001_011F instead of MSR 0x48: */
+#define	AMDFEID_VIRT_SSBD	0x02000000
+#define	AMDFEID_SSB_NO		0x04000000
 
 /*
  * AMD extended function 8000_0008h ecx info
@@ -409,7 +436,7 @@
 #define	CPUID_STDEXT_ADX	0x00080000
 #define	CPUID_STDEXT_SMAP	0x00100000
 #define	CPUID_STDEXT_AVX512IFMA	0x00200000
-#define	CPUID_STDEXT_PCOMMIT	0x00400000
+/* Formerly PCOMMIT */
 #define	CPUID_STDEXT_CLFLUSHOPT	0x00800000
 #define	CPUID_STDEXT_CLWB	0x01000000
 #define	CPUID_STDEXT_PROCTRACE	0x02000000
@@ -435,11 +462,13 @@
 #define	CPUID_STDEXT2_VPCLMULQDQ	0x00000400
 #define	CPUID_STDEXT2_AVX512VNNI	0x00000800
 #define	CPUID_STDEXT2_AVX512BITALG	0x00001000
+#define	CPUID_STDEXT2_TME		0x00002000
 #define	CPUID_STDEXT2_AVX512VPOPCNTDQ	0x00004000
+#define	CPUID_STDEXT2_LA57		0x00010000
 #define	CPUID_STDEXT2_RDPID		0x00400000
 #define	CPUID_STDEXT2_CLDEMOTE		0x02000000
 #define	CPUID_STDEXT2_MOVDIRI		0x08000000
-#define	CPUID_STDEXT2_MOVDIRI64B	0x10000000
+#define	CPUID_STDEXT2_MOVDIR64B		0x10000000
 #define	CPUID_STDEXT2_ENQCMD		0x20000000
 #define	CPUID_STDEXT2_SGXLC		0x40000000
 
@@ -448,6 +477,7 @@
  */
 #define	CPUID_STDEXT3_AVX5124VNNIW	0x00000004
 #define	CPUID_STDEXT3_AVX5124FMAPS	0x00000008
+#define	CPUID_STDEXT3_FSRM		0x00000010
 #define	CPUID_STDEXT3_AVX512VP2INTERSECT	0x00000100
 #define	CPUID_STDEXT3_MCUOPT		0x00000200
 #define	CPUID_STDEXT3_MD_CLEAR		0x00000400
@@ -544,6 +574,7 @@
 #define	MSR_IA32_TEMPERATURE_TARGET	0x1a2
 #define	MSR_TURBO_RATIO_LIMIT	0x1ad
 #define	MSR_TURBO_RATIO_LIMIT1	0x1ae
+#define	MSR_IA32_ENERGY_PERF_BIAS	0x1b0
 #define	MSR_DEBUGCTLMSR		0x1d9
 #define	MSR_LASTBRANCHFROMIP	0x1db
 #define	MSR_LASTBRANCHTOIP	0x1dc
@@ -754,6 +785,10 @@
 /*
  * IA32_SPEC_CTRL and IA32_PRED_CMD MSRs are described in the Intel'
  * document 336996-001 Speculative Execution Side Channel Mitigations.
+ *
+ * AMD uses the same MSRs and bit definitions, as described in 111006-B
+ * "Indirect Branch Control Extension" and 124441 "Speculative Store Bypass
+ * Disable."
  */
 /* MSR IA32_SPEC_CTRL */
 #define	IA32_SPEC_CTRL_IBRS	0x00000001
@@ -787,6 +822,9 @@
 #define	IA32_HWP_DESIRED_PERFORMANCE			(0xffULL << 16)
 #define	IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE		(0xffULL << 8)
 #define	IA32_HWP_MINIMUM_PERFORMANCE			(0xffULL << 0)
+
+/* MSR IA32_ENERGY_PERF_BIAS */
+#define	IA32_ENERGY_PERF_BIAS_POLICY_HINT_MASK		(0xfULL << 0)
 
 /*
  * PAT modes.
@@ -956,6 +994,16 @@
 #define	MC_MISC_AMD_PTR_MASK	0x00000000ff000000	/* Pointer to additional registers */
 #define	MC_MISC_AMD_PTR_SHIFT	24
 
+/* AMD Scalable MCA */
+#define MSR_SMCA_MC0_CTL          0xc0002000
+#define MSR_SMCA_MC0_STATUS       0xc0002001
+#define MSR_SMCA_MC0_ADDR         0xc0002002
+#define MSR_SMCA_MC0_MISC0        0xc0002003
+#define MSR_SMCA_MC_CTL(x)       (MSR_SMCA_MC0_CTL + 0x10 * (x))
+#define MSR_SMCA_MC_STATUS(x)    (MSR_SMCA_MC0_STATUS + 0x10 * (x))
+#define MSR_SMCA_MC_ADDR(x)      (MSR_SMCA_MC0_ADDR + 0x10 * (x))
+#define MSR_SMCA_MC_MISC(x)      (MSR_SMCA_MC0_MISC0 + 0x10 * (x))
+
 /*
  * The following four 3-byte registers control the non-cacheable regions.
  * These registers must be written as three separate bytes.
@@ -1078,6 +1126,7 @@
 #define	MSR_NB_CFG1	0xc001001f	/* NB configuration 1 */
 #define	MSR_K8_UCODE_UPDATE 0xc0010020	/* update microcode */
 #define	MSR_MC0_CTL_MASK 0xc0010044
+#define	MSR_AMDK8_IPM	0xc0010055
 #define	MSR_P_STATE_LIMIT 0xc0010061	/* P-state Current Limit Register */
 #define	MSR_P_STATE_CONTROL 0xc0010062	/* P-state Control Register */
 #define	MSR_P_STATE_STATUS 0xc0010063	/* P-state Status Register */
@@ -1090,9 +1139,13 @@
 #define	MSR_EXTFEATURES	0xc0011005	/* Extended CPUID Features override */
 #define	MSR_LS_CFG	0xc0011020
 #define	MSR_IC_CFG	0xc0011021	/* Instruction Cache Configuration */
+#define	MSR_DE_CFG	0xc0011029	/* Decode Configuration */
 
 /* MSR_VM_CR related */
 #define	VM_CR_SVMDIS		0x10	/* SVM: disabled by BIOS */
+
+#define	AMDK8_SMIONCMPHALT	(1ULL << 27)
+#define	AMDK8_C1EONCMPHALT	(1ULL << 28)
 
 /* VIA ACE crypto featureset: for via_feature_rng */
 #define	VIA_HAS_RNG		1	/* cpu has RNG */

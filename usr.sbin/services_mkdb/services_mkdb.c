@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 368b8390cc489261d4b3df1695b8830b35c1c5a1 $");
+__FBSDID("$FreeBSD: 60d5783977d66999d08218b995bc4caf022e99c5 $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: 368b8390cc489261d4b3df1695b8830b35c1c5a1 $");
 static char tname[MAXPATHLEN];
 
 #define	PMASK		0xffff
-#define PROTOMAX	6
+#define	PROTOMAX	6
 
 static void	add(DB *, StringList *, size_t, const char *, size_t *, int);
 static StringList ***parseservices(const char *, StringList *);

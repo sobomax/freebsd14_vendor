@@ -48,7 +48,7 @@
 #include "aic7xxx_93cx6.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b75677def159fe952047891140d2cec2270ae941 $");
+__FBSDID("$FreeBSD: d4ad4522d67ecc93a2e48e956ef9b0ec51c985cf $");
 #include <dev/aic7xxx/aic7xxx_osm.h>
 #include <dev/aic7xxx/aic7xxx_inline.h>
 #include <dev/aic7xxx/aic7xxx_93cx6.h>
@@ -323,7 +323,6 @@ aha2840_load_seeprom(struct ahc_softc *ahc)
 					/*start_addr*/0, sizeof(*sc)/2);
 
 	if (have_seeprom) {
-
 		if (ahc_verify_cksum(sc) == 0) {
 			if(bootverbose)
 				printf ("checksum error\n");

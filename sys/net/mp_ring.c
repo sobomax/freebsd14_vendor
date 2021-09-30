@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 26e79224954de37ab38c16cce955d249035ac4d9 $");
+__FBSDID("$FreeBSD: da1ce7676bfdb805aa0fa6cb54cd16c41694ac2a $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -109,7 +109,6 @@ drain_ring_locked(struct ifmp_ring *r, union ring_state os, uint16_t prev, int b
 	total = 0;
 
 	while (cidx != pidx) {
-
 		/* Items from cidx to pidx are available for consumption. */
 		n = r->drain(r, cidx, pidx);
 		if (n == 0) {
@@ -184,7 +183,6 @@ drain_ring_lockless(struct ifmp_ring *r, union ring_state os, uint16_t prev, int
 	total = 0;
 
 	while (cidx != pidx) {
-
 		/* Items from cidx to pidx are available for consumption. */
 		n = r->drain(r, cidx, pidx);
 		if (n == 0) {
@@ -491,7 +489,6 @@ ifmp_ring_check_drainage(struct ifmp_ring *r, int budget)
 	ns.state = os.state;
 	ns.flags = BUSY;
 
-
 #ifdef MP_RING_NO_64BIT_ATOMICS
 	mtx_lock(&r->lock);
 	if (r->state != os.state) {
@@ -508,7 +505,6 @@ ifmp_ring_check_drainage(struct ifmp_ring *r, int budget)
 	 */
 	if (!atomic_cmpset_acq_64(&r->state, os.state, ns.state))
 		return;
-
 
 	drain_ring_lockless(r, ns, os.flags, budget);
 #endif

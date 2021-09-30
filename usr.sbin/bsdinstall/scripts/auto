@@ -1,7 +1,7 @@
 #!/bin/sh
 #-
 # Copyright (c) 2011 Nathan Whitehorn
-# Copyright (c) 2013 Devin Teske
+# Copyright (c) 2013-2018 Devin Teske
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f86ccb62c179fdfd2bb41a7edf242a3933ec9524 $
+# $FreeBSD: 58e74acb2d922ede2def590edf438bcde6d2b45a $
 #
 ############################################################ INCLUDES
 
@@ -33,30 +33,70 @@ BSDCFG_SHARE="/usr/share/bsdconfig"
 . $BSDCFG_SHARE/common.subr || exit 1
 f_include $BSDCFG_SHARE/dialog.subr
 
-############################################################ FUNCTIONS
+############################################################ GLOBALS
 
-error() {
-	local msg
-	if [ -n "$1" ]; then
-		msg="$1\n\n"
-	fi
-	test -n "$DISTDIR_IS_UNIONFS" && umount -f $BSDINSTALL_DISTDIR
-	test -f $PATH_FSTAB && bsdinstall umount
-	dialog --backtitle "FreeBSD Installer" --title "Abort" \
-	    --no-label "Exit" --yes-label "Restart" --yesno \
-	    "${msg}An installation step has been aborted. Would you like to restart the installation or exit the installer?" 0 0
-	if [ $? -ne 0 ]; then
-		exit 1
-	else
-		exec $0
-	fi
-}
-
+#
+# Strings that should be moved to an i18n file and loaded with f_include_lang()
+#
 hline_arrows_tab_enter="Press arrows, TAB or ENTER"
+hline_arrows_tab_space_enter="Press arrows, TAB, SPACE or ENTER"
+msg_abort="Abort"
+msg_an_installation_step_has_been_aborted="An installation step has been aborted. Would you like\nto restart the installation or exit the installer?"
+msg_auto_ufs="Auto (UFS)"
+msg_auto_ufs_desc="Guided UFS Disk Setup"
+msg_auto_ufs_help="Menu options help choose which disk to setup using UFS and standard partitions"
+msg_auto_zfs="Auto (ZFS)"
+msg_auto_zfs_desc="Guided Root-on-ZFS"
+msg_auto_zfs_help="To use ZFS with less than 8GB RAM, see https://wiki.freebsd.org/ZFSTuningGuide"
+msg_exit="Exit"
+msg_freebsd_installer="FreeBSD Installer"
 msg_gpt_active_fix="Your hardware is known to have issues booting in CSM/Legacy/BIOS mode from GPT partitions that are not set active. Would you like the installer to apply this workaround for you?"
 msg_lenovo_fix="Your model of Lenovo is known to have a BIOS bug that prevents it booting from GPT partitions without UEFI. Would you like the installer to apply a workaround for you?"
+msg_manual="Manual"
+msg_manual_desc="Manual Disk Setup (experts)"
+msg_manual_help="Create customized partitions from menu options"
 msg_no="NO"
+msg_restart="Restart"
+msg_shell="Shell"
+msg_shell_desc="Open a shell and partition by hand"
+msg_shell_help="Create customized partitions using command-line utilities"
 msg_yes="YES"
+
+############################################################ FUNCTIONS
+
+# error [$msg]
+#
+# Display generic error message when a script fails. An optional message
+# argument can preceed the generic message. User is given the choice of
+# restarting the installer or exiting.
+#
+error()
+{
+	local title="$msg_abort"
+	local btitle="$msg_freebsd_installer"
+	local prompt="${1:+$1\n\n}$msg_an_installation_step_has_been_aborted"
+	local hline="$hline_arrows_tab_space_enter"
+
+	[ "$DISTDIR_IS_UNIONFS" ] && umount -f "$BSDINSTALL_DISTDIR"
+	[ -f "$PATH_FSTAB" ] && bsdinstall umount
+
+	local height width
+	f_dialog_buttonbox_size height width \
+		"$title" "$btitle" "$prompt" "$hline"
+
+	if $DIALOG \
+		--title "$title"           \
+		--backtitle "$btitle"      \
+		--hline "$hline"           \
+		--no-label "$msg_exit"     \
+		--yes-label "$msg_restart" \
+		--yesno "$prompt" $height $width
+	then
+		exec $0
+		# NOTREACHED
+	fi
+	exit 1
+}
 
 # dialog_workaround
 #
@@ -253,48 +293,53 @@ if f_interactive; then
 	esac
 fi
 
-PMODES="\
-\"Auto (UFS)\" \"Guided Disk Setup\" \
-Manual \"Manual Disk Setup (experts)\" \
-Shell \"Open a shell and partition by hand\""
+PMODES="
+	'$msg_auto_ufs' '$msg_auto_ufs_desc' '$msg_auto_ufs_help'
+	'$msg_manual' '$msg_manual_desc' '$msg_manual_help'
+	'$msg_shell' '$msg_shell_desc' '$msg_shell_help'
+" # END-QUOTE
 
 CURARCH=$( uname -m )
 case $CURARCH in
-	amd64|arm64|i386)	# Booting ZFS Supported
-		PMODES="$PMODES \"Auto (ZFS)\" \"Guided Root-on-ZFS\""
+	amd64|arm64|i386|riscv)	# Booting ZFS Supported
+		PMODES="
+			'$msg_auto_zfs' '$msg_auto_zfs_desc' '$msg_auto_zfs_help'
+			$PMODES
+		" # END-QUOTE
 		;;
-	*)		# Booting ZFS Unspported
+	*)			# Booting ZFS Unsupported
 		;;
 esac
 
 exec 3>&1
 PARTMODE=`echo $PMODES | xargs dialog --backtitle "FreeBSD Installer" \
 	--title "Partitioning" \
+	--item-help \
 	--menu "How would you like to partition your disk?" \
 	0 0 0 2>&1 1>&3` || exit 1
 exec 3>&-
 
 case "$PARTMODE" in
-"Auto (UFS)")	# Guided
+"$msg_auto_zfs")	# ZFS
+	bsdinstall zfsboot || error "ZFS setup failed"
+	bsdinstall mount || error "Failed to mount filesystem"
+	;;
+"$msg_auto_ufs")	# Guided UFS
 	bsdinstall autopart || error "Partitioning error"
 	bsdinstall mount || error "Failed to mount filesystem"
 	;;
-"Shell")	# Shell
+"$msg_shell")		# Shell
 	clear
 	echo "Use this shell to set up partitions for the new system. When finished, mount the system at $BSDINSTALL_CHROOT and place an fstab file for the new system at $PATH_FSTAB. Then type 'exit'. You can also enter the partition editor at any time by entering 'bsdinstall partedit'."
 	sh 2>&1
 	;;
-"Manual")	# Manual
+"$msg_manual")		# Manual
 	if f_isset debugFile; then
 		# Give partedit the path to our logfile so it can append
 		BSDINSTALL_LOG="${debugFile#+}" bsdinstall partedit || error "Partitioning error"
 	else
 		bsdinstall partedit || error "Partitioning error"
 	fi
-	bsdinstall mount || error "Failed to mount filesystem"
-	;;
-"Auto (ZFS)")	# ZFS
-	bsdinstall zfsboot || error "ZFS setup failed"
 	bsdinstall mount || error "Failed to mount filesystem"
 	;;
 *)

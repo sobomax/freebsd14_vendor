@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23a16ff7444d2cb0211bf449af064d726e02e92b $");
+__FBSDID("$FreeBSD: 0c58e69e590998b3b8a90bfd17e5f9e50daf655c $");
 #include "opt_ppb_1284.h"
 
 #include <sys/param.h>
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: 23a16ff7444d2cb0211bf449af064d726e02e92b $");
 #define DEVTOSOFTC(dev) ((struct ppb_data *)device_get_softc(dev))
 
 static MALLOC_DEFINE(M_PPBUSDEV, "ppbusdev", "Parallel Port bus device");
-
 
 static int	ppbus_intr(void *arg);
 
@@ -593,7 +592,6 @@ static device_method_t ppbus_methods[] = {
 	DEVMETHOD(bus_teardown_intr,	ppbus_teardown_intr),
 	DEVMETHOD(bus_alloc_resource,	bus_generic_alloc_resource),
 	DEVMETHOD(bus_release_resource,	bus_generic_release_resource),
-
 	{ 0, 0 }
 };
 

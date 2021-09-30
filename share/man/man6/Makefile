@@ -1,7 +1,5 @@
-# $FreeBSD: dbf4b14a596eed7d142856224b77b03825a3826d $
+# $FreeBSD: be6547e592b531d7588a1dae9eee25224e27ccf9 $
 
 MAN=	intro.6
-
-PACKAGE=runtime-manuals
 
 .include <bsd.prog.mk>

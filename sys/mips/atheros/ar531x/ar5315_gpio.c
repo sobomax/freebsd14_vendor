@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88d7c8099cae6cc1503c04fc736359bd34706d02 $");
+__FBSDID("$FreeBSD: 8e824cd237c07195b61f8498df881056e192b525 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -307,8 +307,6 @@ ar5315_gpio_filter(void *arg)
 	/* TODO: something useful */
 	return (FILTER_STRAY);
 }
-
-
 
 static void
 ar5315_gpio_intr(void *arg)

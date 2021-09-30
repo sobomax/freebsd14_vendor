@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3077eb95def926aad63592914fc8e95788dee551 $
+ * $FreeBSD: 4b301cfd1c4e3544b36f206f669fae7d6c3cc423 $
  */
 #ifndef MACHINE_CPU_V6_H
 #define MACHINE_CPU_V6_H
@@ -38,10 +38,6 @@
 #include <machine/cpufunc.h>
 #include <machine/cpuinfo.h>
 #include <machine/sysreg.h>
-
-#if __ARM_ARCH < 6
-#error Only include this file for ARMv6
-#endif
 
 /*
  * Some kernel modules (dtrace all for example) are compiled

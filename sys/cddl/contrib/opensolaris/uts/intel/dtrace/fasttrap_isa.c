@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2010 The FreeBSD Foundation
  *
- * $FreeBSD: f36c250167f8c35bf9f49d6d924c96895bd6aa75 $
+ * $FreeBSD: 502273b731576b89a2a048ecb1f7b9764fe47fe2 $
  */
 
 /*
@@ -855,7 +855,7 @@ fasttrap_do_seg(fasttrap_tracepoint_t *tp, struct reg *rp, uintptr_t *addr)
 #ifdef __i386__
 		desc = &gdt[ndx].sd;
 #else
-		desc = &gdt[ndx];
+		desc = PCPU_PTR(gdt)[ndx];
 #endif
 	}
 

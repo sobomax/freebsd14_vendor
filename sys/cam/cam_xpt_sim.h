@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 62b581024458030e072cc93596ab56cc1b2e6d49 $
+ * $FreeBSD: aa974601998157a01076050489c7336bb7c39c16 $
  */
 
 #ifndef _CAM_CAM_XPT_SIM_H
@@ -52,4 +52,3 @@ void		xpt_done_direct(union ccb *done_ccb);
 #endif
 
 #endif /* _CAM_CAM_XPT_SIM_H */
-

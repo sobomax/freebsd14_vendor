@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5d4dbcb90dd69409ed0295999e522701f4629a4 $");
+__FBSDID("$FreeBSD: 5594d8ec8ec5ec2f2cd90de194fe3acbcab5a4d8 $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -207,7 +207,7 @@ script_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 }
 
 static int
-script_limit(const nvlist_t *oldlimits, const nvlist_t *newlimits __unused)
+script_limit(const nvlist_t *oldlimits, const nvlist_t *newlimits)
 {
 	const char *name;
 	void *cookie;

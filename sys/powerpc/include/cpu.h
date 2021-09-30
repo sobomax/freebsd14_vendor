@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: cpu.h,v 1.11 2000/05/26 21:19:53 thorpej Exp $
- * $FreeBSD: 00f8437c8c49809da91cbd24596fdb46cd2d868b $
+ * $FreeBSD: 9ae18e13900a43dc77595953c5a5d58b36b00d4d $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -81,6 +81,7 @@ extern u_long cpu_features2;
 #define	PPC_FEATURE2_ARCH_2_07	0x80000000
 #define	PPC_FEATURE2_HTM	0x40000000
 #define	PPC_FEATURE2_DSCR	0x20000000
+#define	PPC_FEATURE2_EBB	0x10000000
 #define	PPC_FEATURE2_ISEL	0x08000000
 #define	PPC_FEATURE2_TAR	0x04000000
 #define	PPC_FEATURE2_HAS_VEC_CRYPTO	0x02000000
@@ -89,7 +90,7 @@ extern u_long cpu_features2;
 #define	PPC_FEATURE2_HAS_IEEE128	0x00400000
 #define	PPC_FEATURE2_DARN	0x00200000
 #define	PPC_FEATURE2_SCV	0x00100000
-#define	PPC_FEATURE2_HTM_NOSUSPEND	0x01000000
+#define	PPC_FEATURE2_HTM_NOSUSPEND	0x00080000
 
 #define	PPC_FEATURE_BITMASK						\
 	"\20"								\
@@ -133,6 +134,8 @@ get_cyclecount(void)
 extern char btext[];
 extern char etext[];
 
+struct thread;
+
 #ifdef __powerpc64__
 extern void enter_idle_powerx(void);
 extern uint64_t can_wakeup;
@@ -145,5 +148,6 @@ void	cpu_sleep(void);
 void	flush_disable_caches(void);
 void	fork_trampoline(void);
 void	swi_vm(void *);
+int	cpu_machine_check(struct thread *, struct trapframe *, int *);
 
 #endif	/* _MACHINE_CPU_H_ */

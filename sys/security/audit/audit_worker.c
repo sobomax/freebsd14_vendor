@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f169ab8d9dd1d26ffb18a546ea3a05443d30197b $");
+__FBSDID("$FreeBSD: de9bdfc4b5e41da6cee0c423b3238530f7164238 $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -119,7 +119,7 @@ audit_worker_sync_vp(struct vnode *vp, struct mount *mp, const char *fmt, ...)
 	if (error == 0) {
 		VOP_LOCK(vp, LK_EXCLUSIVE | LK_RETRY);
 		(void)VOP_FSYNC(vp, MNT_WAIT, curthread);
-		VOP_UNLOCK(vp, 0);
+		VOP_UNLOCK(vp);
 		vn_finished_write(mp1);
 	}
 	vfs_unbusy(mp);
@@ -503,7 +503,7 @@ audit_rotate_vnode(struct ucred *cred, struct vnode *vp)
 		vn_lock(vp, LK_SHARED | LK_RETRY);
 		if (VOP_GETATTR(vp, &vattr, cred) != 0)
 			vattr.va_size = 0;
-		VOP_UNLOCK(vp, 0);
+		VOP_UNLOCK(vp);
 	} else {
 		vattr.va_size = 0;
 	}

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abe7bfa465fdb34c934d226ddb0f5ba476836f9b $");
+__FBSDID("$FreeBSD: 8fd8c1e411b23a67ad8e74adb74e75cedd31565f $");
 
 #ifdef _KERNEL
 #include "opt_bpf.h"
@@ -57,7 +57,8 @@ static u_int	bpf_jit_accept_all(u_char *, u_int, u_int);
 #ifdef _KERNEL
 MALLOC_DEFINE(M_BPFJIT, "BPF_JIT", "BPF JIT compiler");
 
-SYSCTL_NODE(_net, OID_AUTO, bpf_jitter, CTLFLAG_RW, 0, "BPF JIT compiler");
+SYSCTL_NODE(_net, OID_AUTO, bpf_jitter, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "BPF JIT compiler");
 int bpf_jitter_enable = 1;
 SYSCTL_INT(_net_bpf_jitter, OID_AUTO, enable, CTLFLAG_RW,
     &bpf_jitter_enable, 0, "enable BPF JIT compiler");

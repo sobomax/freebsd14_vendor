@@ -27,7 +27,7 @@
  *
  *	@(#)endian.h	8.1 (Berkeley) 6/10/93
  * $NetBSD: endian.h,v 1.7 1999/08/21 05:53:51 simonb Exp $
- * $FreeBSD: 52b9a324291a3610b1a3df3cd50ae09a7546e3c8 $
+ * $FreeBSD: 8cb5c6976b37f8d9a83c43263f36ea43afd7daed $
  */
 
 #ifndef _MACHINE_ENDIAN_H_
@@ -66,7 +66,7 @@ __bswap64(__uint64_t x)
 
 	__asm __volatile("rev %0, %1\n"
 			 : "=&r" (ret), "+r" (x));
-	
+
 	return (ret);
 }
 
@@ -77,7 +77,7 @@ __bswap32_var(__uint32_t v)
 
 	__asm __volatile("rev32 %x0, %x1\n"
 			 : "=&r" (ret), "+r" (v));
-	
+
 	return (ret);
 }
 

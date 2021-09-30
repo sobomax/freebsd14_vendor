@@ -1,4 +1,4 @@
-# $FreeBSD: efe78b2602db0531a705e5b7234b364ffeda4747 $
+# $FreeBSD: 68f54c801297029df43e17175ad1d6a16189132a $
 
 PACKAGE=	tests
 
@@ -6,25 +6,28 @@ TESTSDIR=       ${TESTSBASE}/sys/netpfil/pf
 TESTS_SUBDIRS+=	ioctl
 
 ATF_TESTS_SH+=	anchor \
-		pass_block \
+		checksum \
 		forward \
 		fragmentation \
+		icmp \
 		names \
 		nat \
-		set_tos \
+		pass_block \
+		pfsync	\
 		rdr \
 		route_to \
-		synproxy \
 		set_skip \
-		pfsync \
+		set_tos \
+		src_track \
+		synproxy \
 		table
 
-${PACKAGE}FILES+=	utils.subr \
+${PACKAGE}FILES+=	CVE-2019-5597.py \
+			CVE-2019-5598.py \
 			echo_inetd.conf \
-			pft_ping.py \
-			CVE-2019-5597.py
+			utils.subr
 
-${PACKAGE}FILESMODE_pft_ping.py=	0555
 ${PACKAGE}FILESMODE_CVE-2019-5597.py=	0555
+${PACKAGE}FILESMODE_CVE-2019-5598.py=	0555
 
 .include <bsd.test.mk>

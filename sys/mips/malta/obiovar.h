@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cf8ccb920d17f748815bbf724059a56af37d748c $
+ * $FreeBSD: 9f99c893d29f6cf5197ad566c822392de52f17aa $
  *
  */
 
@@ -53,7 +53,7 @@ struct obio_softc {
 	int oba_irq;			/* XINT interrupt bit # */
 	struct rman oba_rman;
 	struct rman oba_irq_rman;
-	
+
 };
 extern struct bus_space obio_bs_tag;
 

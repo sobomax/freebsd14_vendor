@@ -35,11 +35,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1ad4053a843e5becdb5ae3d56014b42f5eff3486 $");
+__FBSDID("$FreeBSD: ef9c3b4d55c2c9d801b6c518a9797f071709d1bf $");
 
 #include <sys/param.h>
 
 #include <err.h>
+#include <paths.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -105,7 +106,7 @@ main(int argc, char *argv[], char *envp[])
 	addarg(&al, argv[0]);
 
 	snprintf(localmailerconf, MAXPATHLEN, "%s/etc/mail/mailer.conf",
-	    getenv("LOCALBASE") ? getenv("LOCALBASE") : "/usr/local");
+	    getlocalbase());
 
 	mailerconf = localmailerconf;
 	if ((config = fopen(localmailerconf, "r")) == NULL)

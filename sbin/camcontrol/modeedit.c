@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c35ad143e1da2f0b23bf6950a84e2f91cdf05abd $");
+__FBSDID("$FreeBSD: 15e5c6608f47fdc025b8468ede8d32e7e68f5c52 $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -329,10 +329,9 @@ editentry_set(char *name, char *newvalue, int editonly)
 
 	case 'c':		/* Character array. */
 	case 'z':		/* Null-padded string. */
-		if ((cval = malloc(dest->size + 1)) == NULL)
+		if ((cval = calloc(1, dest->size + 1)) == NULL)
 			err(EX_OSERR, NULL);
-		bzero(cval, dest->size + 1);
-		strncpy(cval, newvalue, dest->size);
+		strlcpy(cval, newvalue, dest->size + 1);
 		if (dest->type == 'z') {
 			/* Convert trailing spaces to nulls. */
 			char *convertend2;

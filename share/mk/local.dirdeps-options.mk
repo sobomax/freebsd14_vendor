@@ -1,9 +1,8 @@
-# $FreeBSD: 67b30f351f9f657a99d7cfcc9e57b129bdbab7e7 $
+# $FreeBSD: 86d6f3530e23d8d7fb9d9d4faa2a7045d0cd7672 $
 
 # avoid duplication
 DIRDEPS.AUDIT.yes= lib/libbsm
 DIRDEPS.BLACKLIST_SUPPORT.yes+= lib/libblacklist
-DIRDEPS.BSD_CRTBEGIN.no+= gnu/lib/csu
 DIRDEPS.CASPER.yes+= lib/libcasper/libcasper
 DIRDEPS.GSSAPI.yes+= lib/libgssapi
 DIRDEPS.JAIL.yes+= lib/libjail

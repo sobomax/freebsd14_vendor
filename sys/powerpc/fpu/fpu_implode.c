@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e05747631661ab9fb0b8b6a6730e69c6e063beed $");
+__FBSDID("$FreeBSD: 69a58bf79315bdfb85241d64a882cda781f36187 $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -105,7 +105,6 @@ round(struct fpemu *fe, struct fpn *fp)
 
 	/* Go to rounddown to round down; break to round up. */
 	switch ((fe->fe_fpscr) & FPSCR_RN) {
-
 	case FP_RN:
 	default:
 		/*
@@ -169,7 +168,6 @@ toinf(struct fpemu *fe, int sign)
 
 	/* look at rounding direction */
 	switch ((fe->fe_fpscr) & FPSCR_RN) {
-
 	default:
 	case FP_RN:		/* the nearest value is always Inf */
 		inf = 1;
@@ -206,7 +204,6 @@ fpu_ftoi(struct fpemu *fe, struct fpn *fp)
 
 	sign = fp->fp_sign;
 	switch (fp->fp_class) {
-
 	case FPC_ZERO:
 		return (0);
 
@@ -253,7 +250,6 @@ fpu_ftox(struct fpemu *fe, struct fpn *fp, u_int *res)
 
 	sign = fp->fp_sign;
 	switch (fp->fp_class) {
-
 	case FPC_ZERO:
 		res[1] = 0;
 		return (0);
@@ -432,7 +428,6 @@ fpu_implode(struct fpemu *fe, struct fpn *fp, int type, u_int *space)
 {
 
 	switch (type) {
-
 	case FTYPE_LNG:
 		space[0] = fpu_ftox(fe, fp, space);
 		DPRINTF(FPE_REG, ("fpu_implode: long %x %x\n",

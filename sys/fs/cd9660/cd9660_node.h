@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cd9660_node.h	8.6 (Berkeley) 5/14/95
- * $FreeBSD: b2fd05c17d805caee75b776b98376f3b45357d08 $
+ * $FreeBSD: 7d0c55e74505507aef09a987d98c52ee997c555a $
  */
 
 /*
@@ -56,7 +56,6 @@ typedef	struct	{
 	short		iso_links;	/* links of file */
 	dev_t		iso_rdev;	/* Major/Minor number for special */
 } ISO_RRIP_INODE;
-
 
 struct iso_node {
 	struct	vnode *i_vnode;	/* vnode associated with this inode */

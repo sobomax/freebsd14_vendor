@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1ee4be59fbc5fdfd6fcd0bba60b42d5c5ce6aee0 $");
+__FBSDID("$FreeBSD: 4e887ab27c7b40478e0a1579326b023d46ef17f4 $");
 
 #include <sys/capsicum.h>
 #include <sys/stat.h>
@@ -299,6 +299,7 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 			if ((f1 = opentemp(file1)) == NULL ||
 			    fstat(fileno(f1), &stb1) == -1) {
 				warn("%s", file1);
+				rval = D_ERROR;
 				status |= 2;
 				goto closem;
 			}
@@ -309,6 +310,7 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 	}
 	if (f1 == NULL) {
 		warn("%s", file1);
+		rval = D_ERROR;
 		status |= 2;
 		goto closem;
 	}
@@ -320,6 +322,7 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 			if ((f2 = opentemp(file2)) == NULL ||
 			    fstat(fileno(f2), &stb2) == -1) {
 				warn("%s", file2);
+				rval = D_ERROR;
 				status |= 2;
 				goto closem;
 			}
@@ -330,6 +333,7 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 	}
 	if (f2 == NULL) {
 		warn("%s", file2);
+		rval = D_ERROR;
 		status |= 2;
 		goto closem;
 	}
@@ -365,11 +369,14 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 		break;
 	default:
 		/* error */
+		rval = D_ERROR;
 		status |= 2;
 		goto closem;
 	}
 
-	if (diff_format == D_BRIEF && ignore_pats == NULL) {
+	if (diff_format == D_BRIEF && ignore_pats == NULL &&
+	    (flags & (D_FOLDBLANKS|D_IGNOREBLANKS|D_IGNORECASE|D_STRIPCR)) == 0)
+	{
 		rval = D_DIFFER;
 		status |= 1;
 		goto closem;
@@ -412,10 +419,10 @@ diffreg(char *file1, char *file2, int flags, int capsicum)
 	ixnew = xreallocarray(ixnew, len[1] + 2, sizeof(*ixnew));
 	check(f1, f2, flags);
 	output(file1, f1, file2, f2, flags);
-	if (pr != NULL)
-		stop_pr(pr);
 
 closem:
+	if (pr != NULL)
+		stop_pr(pr);
 	if (anychange) {
 		status |= 1;
 		if (rval == D_SAME)

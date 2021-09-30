@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 735bb366ba863388923f16bd8704b1c027b49364 $
+ * $FreeBSD: 034d186de56ca3883e46cdda5eb4c7a9b66a1f19 $
  */
 
 #ifndef _GEN_PRIVATE_H_
@@ -51,7 +51,11 @@ struct _dirdesc {
 	int	dd_len;		/* size of data buffer */
 	off_t	dd_seek;	/* magic cookie returned by getdirentries */
 	int	dd_flags;	/* flags for readdir */
+#ifndef IN_RTLD
 	struct pthread_mutex	*dd_lock;	/* lock */
+#else
+	struct _donotuse	*dd_lock; /* unused in rtld, keep same layout */
+#endif
 	struct _telldir *dd_td;	/* telldir position recording */
 	void	*dd_compat_de;	/* compat dirent */
 };

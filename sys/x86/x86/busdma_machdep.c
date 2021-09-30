@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 152fec591417ce039f3b3e9bc695e3c97eaebc14 $");
+__FBSDID("$FreeBSD: d0f0526a75c7da2d5cafc5715f2d75a9bad637e3 $");
 
 #include "opt_acpi.h"
 
@@ -223,8 +223,6 @@ bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment,
 	struct bus_dma_tag_common *tc;
 	int error;
 
-	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL, "%s", __func__);
-
 	if (parent == NULL) {
 		error = bus_dma_bounce_impl.tag_create(parent, alignment,
 		    boundary, lowaddr, highaddr, filter, filterarg, maxsize,
@@ -238,6 +236,29 @@ bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment,
 	return (error);
 }
 
+void
+bus_dma_template_clone(bus_dma_template_t *t, bus_dma_tag_t dmat)
+{
+	struct bus_dma_tag_common *common;
+
+	if (t == NULL || dmat == NULL)
+		return;
+
+	common = (struct bus_dma_tag_common *)dmat;
+
+	t->parent = (bus_dma_tag_t)common->parent;
+	t->alignment = common->alignment;
+	t->boundary = common->boundary;
+	t->lowaddr = common->lowaddr;
+	t->highaddr = common->highaddr;
+	t->maxsize = common->maxsize;
+	t->nsegments = common->nsegments;
+	t->maxsegsize = common->maxsegsz;
+	t->flags = common->flags;
+	t->lockfunc = common->lockfunc;
+	t->lockfuncarg = common->lockfuncarg;
+}
+
 int
 bus_dma_tag_destroy(bus_dma_tag_t dmat)
 {
@@ -246,18 +267,3 @@ bus_dma_tag_destroy(bus_dma_tag_t dmat)
 	tc = (struct bus_dma_tag_common *)dmat;
 	return (tc->impl->tag_destroy(dmat));
 }
-
-#ifndef ACPI_DMAR
-bool
-bus_dma_dmar_set_buswide(device_t dev)
-{
-	return (false);
-}
-
-int
-bus_dma_dmar_load_ident(bus_dma_tag_t dmat, bus_dmamap_t map,
-    vm_paddr_t start, vm_size_t length, int flags)
-{
-	return (0);
-}
-#endif

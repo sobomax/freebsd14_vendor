@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 773ebd3b84102bc2c9d5e573155611eaccb4cb2f $");
+__FBSDID("$FreeBSD: b5007a89966b06b6752dc57893277caaaa851640 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -268,7 +268,6 @@ idr_remove(struct idr *idr, int id)
 
 	return (res);
 }
-
 
 static inline struct idr_layer *
 idr_find_layer_locked(struct idr *idr, int id)

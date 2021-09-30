@@ -27,8 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8874fe6e55cf3750b0f4eebfcc535fac1e8740a4 $");
-
+__FBSDID("$FreeBSD: ea025737416ae67a36b09e3c0947788b5157ee78 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -99,7 +98,6 @@ sbni_probe_isa(device_t dev)
 	device_set_desc(dev, "Granch SBNI12/ISA adapter");
 	return (0);
 }
-
 
 static int
 sbni_attach_isa(device_t dev)

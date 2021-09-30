@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4dad7153e1d603babb1e42dc9ec261a6d9f2ba5d $");
+__FBSDID("$FreeBSD: 84aa16aa05f4d8d3b972c02d73532c57826a2852 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -256,7 +256,7 @@ targbhenlun(struct cam_periph *periph)
 		    status);
 		return (status);
 	}
-	
+
 	softc->flags |= TARGBH_FLAG_LUN_ENABLED;
 
 	/*
@@ -449,7 +449,7 @@ targbhstart(struct cam_periph *periph, union ccb *start_ccb)
 	ccb_flags flags;
 
 	softc = (struct targbh_softc *)periph->softc;
-	
+
 	ccbh = TAILQ_FIRST(&softc->work_queue);
 	if (ccbh == NULL) {
 		xpt_release_ccb(start_ccb);	
@@ -478,7 +478,6 @@ targbhstart(struct cam_periph *periph, union ccb *start_ccb)
 				csio->sense_data = atio->sense_data;
 				flags |= CAM_SEND_SENSE;
 			}
-
 		}
 
 		cam_fill_ctio(csio,
@@ -683,7 +682,6 @@ targbhdone(struct cam_periph *periph, union ccb *done_ccb)
 		desc->data_resid -= desc->data_increment;
 		xpt_release_ccb(done_ccb);
 		if (softc->state != TARGBH_STATE_TEARDOWN) {
-
 			/*
 			 * Send the original accept TIO back to the
 			 * controller to handle more work.
@@ -737,7 +735,7 @@ targbherror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
 #endif
 
 static struct targbh_cmd_desc*
-targbhallocdescr()
+targbhallocdescr(void)
 {
 	struct targbh_cmd_desc* descr;
 

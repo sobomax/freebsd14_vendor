@@ -1,4 +1,4 @@
-# $FreeBSD: 8cf0e682e36f0dde1158b01acb90e7a6c94ad354 $
+# $FreeBSD: 096699c7602feca467d6c36b86bad9e7ae0084cd $
 
 # Vendor sources and generated files
 LDNSDIR= ${SRCTOP}/contrib/ldns
@@ -9,7 +9,7 @@ PROG=	drill
 SRCS=	drill.c drill_util.c error.c root.c work.c \
 	chasetrace.c dnssec.c securetrace.c
 CFLAGS+= -I${LDNSDIR}
-NO_WERROR= true
+MK_WERROR=	no
 MAN=	drill.1
 
 LIBADD=	ldns crypto

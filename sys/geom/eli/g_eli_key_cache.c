@@ -1,7 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2011 Pawel Jakub Dawidek <pawel@dawidek.net>
+ * Copyright (c) 2011-2019 Pawel Jakub Dawidek <pawel@dawidek.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431c90f5d9f25797e0862737fb37a8f392e6e355 $");
+__FBSDID("$FreeBSD: cc60be89b815063cd3c807fd18cbf75f3b59c4d8 $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -118,8 +118,7 @@ g_eli_key_allocate(struct g_eli_softc *sc, uint64_t keyno)
 	keysearch.gek_keyno = keyno;
 	ekey = RB_FIND(g_eli_key_tree, &sc->sc_ekeys_tree, &keysearch);
 	if (ekey != NULL) {
-		explicit_bzero(key, sizeof(*key));
-		free(key, M_ELI);
+		zfree(key, M_ELI);
 		key = ekey;
 		TAILQ_REMOVE(&sc->sc_ekeys_queue, key, gek_next);
 	} else {
@@ -175,8 +174,7 @@ g_eli_key_remove(struct g_eli_softc *sc, struct g_eli_key *key)
 	RB_REMOVE(g_eli_key_tree, &sc->sc_ekeys_tree, key);
 	TAILQ_REMOVE(&sc->sc_ekeys_queue, key, gek_next);
 	sc->sc_ekeys_allocated--;
-	explicit_bzero(key, sizeof(*key));
-	free(key, M_ELI);
+	zfree(key, M_ELI);
 }
 
 void
@@ -249,6 +247,52 @@ g_eli_key_destroy(struct g_eli_softc *sc)
 		TAILQ_INIT(&sc->sc_ekeys_queue);
 		RB_INIT(&sc->sc_ekeys_tree);
 	}
+	mtx_unlock(&sc->sc_ekeys_lock);
+}
+
+void
+g_eli_key_resize(struct g_eli_softc *sc)
+{
+	uint64_t new_ekeys_total;
+	off_t mediasize;
+	size_t blocksize;
+
+	if ((sc->sc_flags & G_ELI_FLAG_SINGLE_KEY) != 0) {
+		return;
+	}
+
+	mtx_lock(&sc->sc_ekeys_lock);
+
+	if ((sc->sc_flags & G_ELI_FLAG_AUTH) != 0) {
+		struct g_provider *pp;
+
+		pp = LIST_FIRST(&sc->sc_geom->consumer)->provider;
+		mediasize = pp->mediasize;
+		blocksize = pp->sectorsize;
+	} else {
+		mediasize = sc->sc_mediasize;
+		blocksize = sc->sc_sectorsize;
+	}
+	new_ekeys_total = ((mediasize - 1) >> G_ELI_KEY_SHIFT) / blocksize + 1;
+	/* We only allow to grow. */
+	KASSERT(new_ekeys_total >= sc->sc_ekeys_total,
+	    ("new_ekeys_total=%ju < sc_ekeys_total=%ju",
+	    (uintmax_t)new_ekeys_total, (uintmax_t)sc->sc_ekeys_total));
+	if (new_ekeys_total <= g_eli_key_cache_limit) {
+		uint64_t keyno;
+
+		for (keyno = sc->sc_ekeys_total; keyno < new_ekeys_total;
+		    keyno++) {
+			(void)g_eli_key_allocate(sc, keyno);
+		}
+		KASSERT(new_ekeys_total == sc->sc_ekeys_allocated,
+		    ("new_ekeys_total=%ju != sc_ekeys_allocated=%ju",
+		    (uintmax_t)new_ekeys_total,
+		    (uintmax_t)sc->sc_ekeys_allocated));
+	}
+
+	sc->sc_ekeys_total = new_ekeys_total;
+
 	mtx_unlock(&sc->sc_ekeys_lock);
 }
 

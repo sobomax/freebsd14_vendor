@@ -1,6 +1,7 @@
 #
+# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+#
 # Copyright (c) 2017 Kyle Evans <kevans@FreeBSD.org>
-# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -23,15 +24,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 071f407cdb102f007abd58d2921f62b6a5a568b9 $
+# $FreeBSD: 5e4e49c3ad38a33a06422ea770204335f4b5130d $
 
 check()
 {
 	local dataname="${1}"; shift
-
-	if [ "${dataname}" == "gnuext" ]; then
-		atf_expect_fail "GNU extensions are not currently implemented"
-	fi
 
 	prog="$(atf_get_srcdir)/h_regex"
 	data="$(atf_get_srcdir)/data/${dataname}.in"

@@ -10,7 +10,7 @@
 # + 32MB RAM
 # + uboot environment
 
-# $FreeBSD: e331f7764d2db4e9dbe3173369e868c06b3313a3 $
+# $FreeBSD: 38e3d69c05091dca10d0cbf88bd6107eee3b88ba $
 
 #NO_UNIVERSE
 
@@ -68,6 +68,3 @@ device		arswitch
 # Enable GPIO
 device         gpio
 device         gpioled
-
-# RNG
-device        random

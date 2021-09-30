@@ -1,4 +1,4 @@
-# $FreeBSD: 692528047078b85eb25f2fef5e8dec818423146a $
+# $FreeBSD: 482f8d5f30a6759b9271207b18d9f6316d67eaad $
 # DTS files for the Raspberry Pi-B
 .if ${MACHINE_ARCH:Marmv[67]*} != ""
 DTSO=	\
@@ -6,7 +6,8 @@ DTSO=	\
 	spigen-rpi2.dtso
 .elif ${MACHINE_ARCH} == "aarch64"
 DTSO=	\
-	spigen-rpi3.dtso
+	spigen-rpi3.dtso \
+	spigen-rpi4.dtso
 .endif
 
 .include <bsd.dtb.mk>

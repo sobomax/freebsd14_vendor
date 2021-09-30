@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78c11817dd92597c20757a7f01b3f1a4c4860bf3 $");
+__FBSDID("$FreeBSD: 07566e64a2122f815ee9ca7e628d26b43d1d4619 $");
 
 #include "opt_syscons.h"
 
@@ -491,7 +491,6 @@ sc_vid_ioctl(struct tty *tp, u_long cmd, caddr_t data, struct thread *td)
 	return ENODEV;
 
     switch (cmd) {
-
     case CONS_CURRENTADP:	/* get current adapter index */
     case FBIO_ADAPTER:
 	return fb_ioctl(adp, FBIO_ADAPTER, data);

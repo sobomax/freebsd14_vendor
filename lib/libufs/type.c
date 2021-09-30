@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bcbb1914c497319378908aa1a9ff1bf45cf63d78 $");
+__FBSDID("$FreeBSD: 653ef8ceeea1c4162ae4eff3fc43c8ae692cb885 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -69,9 +69,10 @@ ufs_disk_close(struct uufsd *disk)
 		free((char *)(uintptr_t)disk->d_name);
 		disk->d_name = NULL;
 	}
-	if (disk->d_sbcsum != NULL) {
-		free(disk->d_sbcsum);
-		disk->d_sbcsum = NULL;
+	if (disk->d_si != NULL) {
+		free(disk->d_si->si_csp);
+		free(disk->d_si);
+		disk->d_si = NULL;
 	}
 	return (0);
 }
@@ -164,7 +165,7 @@ again:	if ((ret = stat(name, &st)) < 0) {
 	disk->d_mine = 0;
 	disk->d_ufs = 0;
 	disk->d_error = NULL;
-	disk->d_sbcsum = NULL;
+	disk->d_si = NULL;
 
 	if (oname != name) {
 		name = strdup(name);

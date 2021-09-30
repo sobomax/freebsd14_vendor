@@ -62,7 +62,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 28a7a18c3f186138ddbd75cb43fcffe722db613d $
+ * $FreeBSD: d716f4f01a1728d46d18cc5306e4e8466cb533c3 $
  */
 
 #ifndef _ARM_BUS_DMA_H
@@ -74,29 +74,5 @@
 /* Bus Space DMA macros */
 
 #define BUS_DMA_TAG_VALID(t)    ((t) != (bus_dma_tag_t)0)
-
-#if defined(_ARM32_BUS_DMA_PRIVATE) && __ARM_ARCH < 6
-/*
- *	arm32_dma_range
- *
- *	This structure describes a valid DMA range.
- */
-struct arm32_dma_range {
-	bus_addr_t	dr_sysbase;	/* system base address */
-	bus_addr_t	dr_busbase;	/* appears here on bus */
-	bus_size_t	dr_len;		/* length of range */
-};
-
-/* _dm_buftype */
-#define	ARM32_BUFTYPE_INVALID		0
-#define	ARM32_BUFTYPE_LINEAR		1
-#define	ARM32_BUFTYPE_MBUF		2
-#define	ARM32_BUFTYPE_UIO		3
-#define	ARM32_BUFTYPE_RAW		4
-
-struct arm32_dma_range	*bus_dma_get_range(void);
-int	bus_dma_get_range_nb(void);
-
-#endif /* _ARM32_BUS_DMA_PRIVATE */
 
 #endif /* _ARM_BUS_DMA_H */

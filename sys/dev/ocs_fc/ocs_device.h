@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 337737aeb9448a60931112f8d5135978430c1879 $
+ * $FreeBSD: f4c5baae0c5422c8bf1ffacb75548b66568884cb $
  */
 
 /**
@@ -47,7 +47,6 @@
 #define OCS_FC_RQ_SIZE_DEFAULT			1024
 #endif
 
-
 /***************************************************************************
  * IO Configuration
  */
@@ -58,7 +57,6 @@
 #ifndef OCS_FC_MAX_SGL
 #define OCS_FC_MAX_SGL		128
 #endif
-
 
 /***************************************************************************
  * DIF Configuration

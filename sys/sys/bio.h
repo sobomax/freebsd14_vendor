@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)buf.h	8.9 (Berkeley) 3/30/95
- * $FreeBSD: 1dab615578ec0b2a0c2ca81bf353fa26033b3183 $
+ * $FreeBSD: 5fdf0ecbb917c2b1f97bf71233ca7bbeaeeabcd2 $
  */
 
 #ifndef _SYS_BIO_H_
@@ -53,6 +53,7 @@
 #define BIO_CMD1	0x07	/* Available for local hacks */
 #define BIO_CMD2	0x08	/* Available for local hacks */
 #define BIO_ZONE	0x09	/* Zone command */
+#define BIO_SPEEDUP	0x0a	/* Upper layers face shortage */
 
 /* bio_flags */
 #define BIO_ERROR	0x01	/* An error occurred processing this bio. */
@@ -67,13 +68,16 @@
 #define	BIO_TRANSIENT_MAPPING	0x20
 #define	BIO_VLIST	0x40
 
+#define	PRINT_BIO_FLAGS "\20\7vlist\6transient_mapping\5unmapped" \
+	"\4ordered\3onqueue\2done\1error"
+
+#define BIO_SPEEDUP_WRITE	0x4000	/* Resource shortage at upper layers */
+#define BIO_SPEEDUP_TRIM	0x8000	/* Resource shortage at upper layers */
+
 #ifdef _KERNEL
 struct disk;
 struct bio;
 struct vm_map;
-
-/* Empty classifier tag, to prevent further classification. */
-#define	BIO_NOTCLASSIFIED		(void *)(~0UL)
 
 typedef void bio_task_t(void *);
 
@@ -115,8 +119,8 @@ struct bio {
 	bio_task_t *bio_task;		/* Task_queue handler */
 	void	*bio_task_arg;		/* Argument to above */
 
-	void	*bio_classifier1;	/* Classifier tag. */
-	void	*bio_classifier2;	/* Classifier tag. */
+	void	*bio_spare1;
+	void	*bio_spare2;
 
 #ifdef DIAGNOSTIC
 	void	*_bio_caller1;

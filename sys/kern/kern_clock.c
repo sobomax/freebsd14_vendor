@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 307c08a287f5ab738a81da2206d6a8f115df22b6 $");
+__FBSDID("$FreeBSD: c215471ab2d9637e345e47ad69ce3302fa42e08c $");
 
 #include "opt_kdb.h"
 #include "opt_device_polling.h"
@@ -49,6 +49,7 @@ __FBSDID("$FreeBSD: 307c08a287f5ab738a81da2206d6a8f115df22b6 $");
 #include <sys/systm.h>
 #include <sys/callout.h>
 #include <sys/epoch.h>
+#include <sys/eventhandler.h>
 #include <sys/gtaskqueue.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
@@ -212,7 +213,7 @@ deadlres_td_on_lock(struct proc *p, struct thread *td, int blkticks)
 static void
 deadlres_td_sleep_q(struct proc *p, struct thread *td, int slpticks)
 {
-	void *wchan;
+	const void *wchan;
 	int i, slptype, tticks;
 
 	sx_assert(&allproc_lock, SX_LOCKED);
@@ -228,7 +229,6 @@ deadlres_td_sleep_q(struct proc *p, struct thread *td, int slpticks)
 	slptype = sleepq_type(wchan);
 	if ((slptype == SLEEPQ_SX || slptype == SLEEPQ_LK) &&
 	    tticks > slpticks) {
-
 		/*
 		 * Accordingly with provided thresholds, this thread is stuck
 		 * for too long on a sleepqueue.
@@ -283,8 +283,7 @@ deadlkres(void)
 				if (TD_ON_LOCK(td))
 					deadlres_td_on_lock(p, td,
 					    blkticks);
-				else if (TD_IS_SLEEPING(td) &&
-				    TD_ON_SLEEPQ(td))
+				else if (TD_IS_SLEEPING(td))
 					deadlres_td_sleep_q(p, td,
 					    slpticks);
 				thread_unlock(td);
@@ -306,7 +305,7 @@ static struct kthread_desc deadlkres_kd = {
 
 SYSINIT(deadlkres, SI_SUB_CLOCKS, SI_ORDER_ANY, kthread_start, &deadlkres_kd);
 
-static SYSCTL_NODE(_debug, OID_AUTO, deadlkres, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_debug, OID_AUTO, deadlkres, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Deadlock resolver");
 SYSCTL_INT(_debug_deadlkres, OID_AUTO, slptime_threshold, CTLFLAG_RW,
     &slptime_threshold, 0,
@@ -423,36 +422,14 @@ initclocks(void *dummy)
 #endif
 }
 
-void
-hardclock(int cnt, int usermode)
+static __noinline void
+hardclock_itimer(struct thread *td, struct pstats *pstats, int cnt, int usermode)
 {
-	struct pstats *pstats;
-	struct thread *td = curthread;
-	struct proc *p = td->td_proc;
-	int *t = DPCPU_PTR(pcputicks);
-	int flags, global, newticks;
-	int i;
+	struct proc *p;
+	int flags;
 
-	/*
-	 * Update per-CPU and possibly global ticks values.
-	 */
-	*t += cnt;
-	do {
-		global = ticks;
-		newticks = *t - global;
-		if (newticks <= 0) {
-			if (newticks < -1)
-				*t = global - 1;
-			newticks = 0;
-			break;
-		}
-	} while (!atomic_cmpset_int(&ticks, global, *t));
-
-	/*
-	 * Run current process's virtual and profile time, as needed.
-	 */
-	pstats = p->p_stats;
 	flags = 0;
+	p = td->td_proc;
 	if (usermode &&
 	    timevalisset(&pstats->p_timer[ITIMER_VIRTUAL].it_value)) {
 		PROC_ITIMLOCK(p);
@@ -473,6 +450,40 @@ hardclock(int cnt, int usermode)
 		td->td_flags |= flags;
 		thread_unlock(td);
 	}
+}
+
+void
+hardclock(int cnt, int usermode)
+{
+	struct pstats *pstats;
+	struct thread *td = curthread;
+	struct proc *p = td->td_proc;
+	int *t = DPCPU_PTR(pcputicks);
+	int global, i, newticks;
+
+	/*
+	 * Update per-CPU and possibly global ticks values.
+	 */
+	*t += cnt;
+	global = ticks;
+	do {
+		newticks = *t - global;
+		if (newticks <= 0) {
+			if (newticks < -1)
+				*t = global - 1;
+			newticks = 0;
+			break;
+		}
+	} while (!atomic_fcmpset_int(&ticks, &global, *t));
+
+	/*
+	 * Run current process's virtual and profile time, as needed.
+	 */
+	pstats = p->p_stats;
+	if (__predict_false(
+	    timevalisset(&pstats->p_timer[ITIMER_VIRTUAL].it_value) ||
+	    timevalisset(&pstats->p_timer[ITIMER_PROF].it_value)))
+		hardclock_itimer(td, pstats, cnt, usermode);
 
 #ifdef	HWPMC_HOOKS
 	if (PMC_CPU_HAS_SAMPLES(PCPU_GET(cpuid)))
@@ -496,6 +507,7 @@ hardclock(int cnt, int usermode)
 			if (i > 0 && i <= newticks)
 				watchdog_fire();
 		}
+		intr_event_handle(clk_intr_event, NULL);
 	}
 	if (curcpu == CPU_FIRST())
 		cpu_tick_calibration();
@@ -700,8 +712,7 @@ statclock(int cnt, int usermode)
 	td->td_incruntime += runtime;
 	PCPU_SET(switchtime, new_switchtime);
 
-	for ( ; cnt > 0; cnt--)
-		sched_clock(td);
+	sched_clock(td, cnt);
 	thread_unlock(td);
 #ifdef HWPMC_HOOKS
 	if (td->td_intr_frame != NULL)

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61e66e0ad27f726987cd5ad7918607d0b13f13ab $
+ * $FreeBSD: 2227b12c3674f884aa35c6ed0277bab53f309e76 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 61e66e0ad27f726987cd5ad7918607d0b13f13ab $");
+__FBSDID("$FreeBSD: 2227b12c3674f884aa35c6ed0277bab53f309e76 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -67,7 +67,6 @@ static struct a10_sramc_softc *a10_sramc_sc;
     bus_space_read_4((sc)->bst, (sc)->bsh, (reg))
 #define	sramc_write_4(sc, reg, val)	\
     bus_space_write_4((sc)->bst, (sc)->bsh, (reg), (val))
-
 
 static int
 a10_sramc_probe(device_t dev)

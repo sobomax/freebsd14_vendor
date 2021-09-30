@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0becdb06626a2f14d1f961533114b3213c8bef33 $");
+__FBSDID("$FreeBSD: 1ed592cc04ba3dae393cb7b1ce97940feca8fcb1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: 0becdb06626a2f14d1f961533114b3213c8bef33 $");
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include "tegra_soctherm_if.h"
-
 
 enum therm_info {
 	CORETEMP_TEMP,
@@ -71,11 +70,9 @@ coretemp_get_val_sysctl(SYSCTL_HANDLER_ARGS)
 	enum therm_info type;
 	char stemp[16];
 
-
 	dev = (device_t) arg1;
 	sc = device_get_softc(dev);
 	type = arg2;
-
 
 	rv = TEGRA_SOCTHERM_GET_TEMPERATURE(sc->tsens_dev, sc->dev,
 	     sc->tsens_id, &temp);
@@ -102,7 +99,6 @@ coretemp_get_val_sysctl(SYSCTL_HANDLER_ARGS)
 		val +=  2731;
 		break;
 	}
-
 
 	if ((temp > sc->core_max_temp)  && !sc->overheat_log) {
 		sc->overheat_log = 1;
@@ -220,7 +216,8 @@ tegra124_coretemp_attach(device_t dev)
 
 	oid = SYSCTL_ADD_NODE(ctx,
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(pdev)), OID_AUTO,
-	    "coretemp", CTLFLAG_RD, NULL, "Per-CPU thermal information");
+	    "coretemp", CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+	    "Per-CPU thermal information");
 
 	/*
 	 * Add the MIBs to dev.cpu.N and dev.cpu.N.coretemp.
@@ -260,7 +257,6 @@ static device_method_t tegra124_coretemp_methods[] = {
 	DEVMETHOD(device_probe,		tegra124_coretemp_probe),
 	DEVMETHOD(device_attach,	tegra124_coretemp_attach),
 	DEVMETHOD(device_detach,	tegra124_coretemp_detach),
-
 
 	DEVMETHOD_END
 };

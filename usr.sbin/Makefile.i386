@@ -1,4 +1,4 @@
-# $FreeBSD: 4a4dcbea95587c2b8e513d1cc16ec54b0e2ff561 $
+# $FreeBSD: 6724115b82177230eb866036f8eb9a236f1ed015 $
 
 .if ${MK_ACPI} != "no"
 SUBDIR+=	acpi
@@ -16,7 +16,6 @@ SUBDIR+=	cpucontrol
 SUBDIR+=	hyperv
 .endif
 SUBDIR+=	kgmon
-SUBDIR+=	kgzip
 SUBDIR+=	lptcontrol
 SUBDIR+=	mptable
 .if ${MK_NDIS} != "no"

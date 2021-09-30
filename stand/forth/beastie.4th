@@ -24,7 +24,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 752cce22a4ff6adec4eed2e8bf8ba675f2581fb1 $
+\ $FreeBSD: f64cf9f8720ba547aa9419b6289f1fce173e9a0d $
 
 marker task-beastie.4th
 
@@ -80,6 +80,10 @@ variable logoY
 			logoX @ logoY @ rot execute
 		else drop then
 	then
+;
+
+: draw-beastie
+	['] draw-beastie console-iterate
 ;
 
 also support-functions

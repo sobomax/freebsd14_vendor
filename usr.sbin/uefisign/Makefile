@@ -1,11 +1,9 @@
-# $FreeBSD: 3fdebc2499a309477f2113173c191aae3b76d371 $
+# $FreeBSD: d404a4c2363afae870edfe20880695422aba49e2 $
 
 PROG=	uefisign
 SRCS=	uefisign.c child.c pe.c
 MAN=	uefisign.8
 
 LIBADD=	crypto
-
-WARNS=	6
 
 .include <bsd.prog.mk>

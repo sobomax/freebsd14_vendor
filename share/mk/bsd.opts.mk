@@ -1,4 +1,4 @@
-# $FreeBSD: 8c410617a33aed350d5a3b8b02064a43b1fe73bd $
+# $FreeBSD: 88c73cc6bfe47bafcc6a14036666cf6d36c43f9e $
 #
 # Option file for src builds.
 #
@@ -63,15 +63,17 @@ __DEFAULT_YES_OPTIONS = \
     OPENSSH \
     PROFILE \
     SSP \
-    SYMVER \
     TESTS \
     TOOLCHAIN \
-    WARNS
+    WARNS \
+    WERROR
 
 __DEFAULT_NO_OPTIONS = \
     BIND_NOW \
     CCACHE_BUILD \
     CTF \
+    INIT_ALL_PATTERN \
+    INIT_ALL_ZERO \
     INSTALL_AS_USER \
     PIE \
     RETPOLINE \
@@ -86,6 +88,10 @@ __DEFAULT_DEPENDENT_OPTIONS = \
 
 .include <bsd.mkopt.mk>
 
+.if ${MK_INIT_ALL_PATTERN} == "yes" && ${MK_INIT_ALL_ZERO} == "yes"
+.warning WITH_INIT_ALL_PATTERN and WITH_INIT_ALL_ZERO are mutually exclusive.
+.endif
+
 #
 # Supported NO_* options (if defined, MK_* will be forced to "no",
 # regardless of user's setting).
@@ -98,9 +104,10 @@ __DEFAULT_DEPENDENT_OPTIONS = \
     INSTALLLIB \
     MAN \
     PROFILE \
-    WARNS
+    WARNS \
+    WERROR
 .if defined(NO_${var})
-.warning "NO_${var} is defined, but deprecated. Please use MK_${var}=no instead."
+.error "NO_${var} is defined, but deprecated. Please use MK_${var}=no instead."
 MK_${var}:=no
 .endif
 .endfor

@@ -103,7 +103,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7657190e763e42a2e6958c27dedb9972273f9321 $");
+__FBSDID("$FreeBSD: b89c895efb50f505f3c82721a448b766dc31a57e $");
 
 #include "opt_wlan.h"
 #include "opt_iwm.h"
@@ -354,7 +354,6 @@ static struct ieee80211_node *
 static uint8_t	iwm_rate_from_ucode_rate(uint32_t);
 static int	iwm_rate2ridx(struct iwm_softc *, uint8_t);
 static void	iwm_setrates(struct iwm_softc *, struct iwm_node *, int);
-static int	iwm_media_change(struct ifnet *);
 static int	iwm_newstate(struct ieee80211vap *, enum ieee80211_state, int);
 static void	iwm_endscan_cb(void *, int);
 static int	iwm_send_bt_init_conf(struct iwm_softc *);
@@ -3465,6 +3464,7 @@ static bool
 iwm_rx_mpdu(struct iwm_softc *sc, struct mbuf *m, uint32_t offset,
     bool stolen)
 {
+  	struct epoch_tracker et;
 	struct ieee80211com *ic;
 	struct ieee80211_frame *wh;
 	struct ieee80211_node *ni;
@@ -3484,6 +3484,8 @@ iwm_rx_mpdu(struct iwm_softc *sc, struct mbuf *m, uint32_t offset,
 	ni = ieee80211_find_rxnode(ic, (struct ieee80211_frame_min *)wh);
 
 	IWM_UNLOCK(sc);
+
+	NET_EPOCH_ENTER(et);
 	if (ni != NULL) {
 		IWM_DPRINTF(sc, IWM_DEBUG_RECV, "input m %p\n", m);
 		ieee80211_input_mimo(ni, m);
@@ -3492,6 +3494,8 @@ iwm_rx_mpdu(struct iwm_softc *sc, struct mbuf *m, uint32_t offset,
 		IWM_DPRINTF(sc, IWM_DEBUG_RECV, "inputall m %p\n", m);
 		ieee80211_input_mimo_all(ic, m);
 	}
+	NET_EPOCH_EXIT(et);
+
 	IWM_LOCK(sc);
 
 	return true;
@@ -4410,31 +4414,6 @@ iwm_setrates(struct iwm_softc *sc, struct iwm_node *in, int rix)
 		KASSERT(tab != 0, ("invalid tab"));
 		lq->rs_table[i] = htole32(tab);
 	}
-}
-
-static int
-iwm_media_change(struct ifnet *ifp)
-{
-#if 0
-	struct ieee80211vap *vap = ifp->if_softc;
-	struct ieee80211com *ic = vap->iv_ic;
-	struct iwm_softc *sc = ic->ic_softc;
-#endif
-	int error;
-
-	error = ieee80211_media_change(ifp);
-	if (error != 0)
-		return (error);
-
-#if 0
-	IWM_LOCK(sc);
-	if (ic->ic_nrunning > 0) {
-		iwm_stop(sc);
-		iwm_init(sc);
-	}
-	IWM_UNLOCK(sc);
-#endif
-	return (0);
 }
 
 static void
@@ -5899,6 +5878,7 @@ iwm_intr(void *arg)
 #define	PCI_PRODUCT_INTEL_WL_8265_1	0x24fd
 #define	PCI_PRODUCT_INTEL_WL_9560_1	0x9df0
 #define	PCI_PRODUCT_INTEL_WL_9560_2	0xa370
+#define	PCI_PRODUCT_INTEL_WL_9560_3	0x31dc
 #define	PCI_PRODUCT_INTEL_WL_9260_1	0x2526
 
 static const struct iwm_devices {
@@ -5919,6 +5899,7 @@ static const struct iwm_devices {
 	{ PCI_PRODUCT_INTEL_WL_8265_1, &iwm8265_cfg },
 	{ PCI_PRODUCT_INTEL_WL_9560_1, &iwm9560_cfg },
 	{ PCI_PRODUCT_INTEL_WL_9560_2, &iwm9560_cfg },
+	{ PCI_PRODUCT_INTEL_WL_9560_3, &iwm9560_cfg },
 	{ PCI_PRODUCT_INTEL_WL_9260_1, &iwm9260_cfg },
 };
 
@@ -6431,8 +6412,8 @@ iwm_vap_create(struct ieee80211com *ic, const char name[IFNAMSIZ], int unit,
 
 	ieee80211_ratectl_init(vap);
 	/* Complete setup. */
-	ieee80211_vap_attach(vap, iwm_media_change, ieee80211_media_status,
-	    mac);
+	ieee80211_vap_attach(vap, ieee80211_media_change,
+	    ieee80211_media_status, mac);
 	ic->ic_opmode = opmode;
 
 	return vap;

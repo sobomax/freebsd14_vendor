@@ -1,22 +1,30 @@
-# $FreeBSD: 9fc66a097cd891c3859e288292ddd9e7c3582a9b $
+# $FreeBSD: 46d43306b9ca209df9848da34bcb8f503b36d6aa $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	bectl
 MAN=	bectl.8
 
 SRCS=	bectl.c bectl_jail.c bectl_list.c
 
-LIBADD+= be
-LIBADD+= jail
-LIBADD+= nvpair
-LIBADD+= util
+LIBADD+= be \
+	jail \
+	nvpair \
+	spl \
+	util \
+	zfsbootenv
 
-CFLAGS+= -I${SRCTOP}/cddl/contrib/opensolaris/lib/libzfs/common
-CFLAGS+= -I${SRCTOP}/sys/cddl/compat/opensolaris
-CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common
-
-CFLAGS+= -DNEED_SOLARIS_BOOLEAN
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -I${SRCTOP}/sys
+CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/module/icp/include
+CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
+CFLAGS+= -DHAVE_ISSETUGID 
+CFLAGS+= -include ${SRCTOP}/sys/modules/zfs/zfs_config.h
 
 HAS_TESTS=	yes
 SUBDIR.${MK_TESTS}+= tests

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4cb9f1335f506252a96f4b4374710e9abc7df33 $");
+__FBSDID("$FreeBSD: b186bebbfefc7ba5b22b46a7b99a105bbfd90975 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -69,6 +69,7 @@ __FBSDID("$FreeBSD: b4cb9f1335f506252a96f4b4374710e9abc7df33 $");
 #include "rtld_malloc.h"
 #include "rtld_utrace.h"
 #include "notes.h"
+#include "rtld_libc.h"
 
 /* Types. */
 typedef void (*func_ptr_type)(void);
@@ -78,7 +79,6 @@ typedef void * (*path_enum_proc) (const char *path, size_t len, void *arg);
 /* Variables that cannot be static: */
 extern struct r_debug r_debug; /* For GDB */
 extern int _thread_autoinit_dummy_decl;
-extern char* __progname;
 extern void (*__cleanup)(void);
 
 
@@ -252,7 +252,6 @@ void _rtld_error(const char *, ...) __exported;
 
 /* Only here to fix -Wmissing-prototypes warnings */
 int __getosreldate(void);
-void __pthread_cxa_finalize(struct dl_phdr_info *a);
 func_ptr_type _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp);
 Elf_Addr _rtld_bind(Obj_Entry *obj, Elf_Size reloff);
 
@@ -288,6 +287,7 @@ Elf_Addr tls_dtv_generation = 1;	/* Used to detect when dtv size changes */
 int tls_max_index = 1;		/* Largest module index allocated */
 
 static bool ld_library_path_rpath = false;
+bool ld_fast_sigblock = false;
 
 /*
  * Globals for path names, and such
@@ -386,6 +386,9 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     char buf[MAXPATHLEN];
     int argc, fd, i, mib[4], old_osrel, osrel, phnum, rtld_argc;
     size_t sz;
+#ifdef __powerpc__
+    int old_auxv_format = 1;
+#endif
     bool dir_enable, direct_exec, explicit_fd, search_in_path;
 
     /*
@@ -411,7 +414,28 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     for (auxp = aux;  auxp->a_type != AT_NULL;  auxp++) {
 	if (auxp->a_type < AT_COUNT)
 	    aux_info[auxp->a_type] = auxp;
+#ifdef __powerpc__
+	if (auxp->a_type == 23) /* AT_STACKPROT */
+	    old_auxv_format = 0;
+#endif
     }
+
+#ifdef __powerpc__
+    if (old_auxv_format) {
+	/* Remap from old-style auxv numbers. */
+	aux_info[23] = aux_info[21];	/* AT_STACKPROT */
+	aux_info[21] = aux_info[19];	/* AT_PAGESIZESLEN */
+	aux_info[19] = aux_info[17];	/* AT_NCPUS */
+	aux_info[17] = aux_info[15];	/* AT_CANARYLEN */
+	aux_info[15] = aux_info[13];	/* AT_EXECPATH */
+	aux_info[13] = NULL;		/* AT_GID */
+
+	aux_info[20] = aux_info[18];	/* AT_PAGESIZES */
+	aux_info[18] = aux_info[16];	/* AT_OSRELDATE */
+	aux_info[16] = aux_info[14];	/* AT_CANARY */
+	aux_info[14] = NULL;		/* AT_EGID */
+    }
+#endif
 
     /* Initialize and relocate ourselves. */
     assert(aux_info[AT_BASE] != NULL);
@@ -422,6 +446,10 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     environ = env;
     main_argc = argc;
     main_argv = argv;
+
+    if (aux_info[AT_BSDFLAGS] != NULL &&
+	(aux_info[AT_BSDFLAGS]->a_un.a_val & ELF_BSDF_SIGFASTBLK) != 0)
+	    ld_fast_sigblock = true;
 
     trust = !issetugid();
     direct_exec = false;
@@ -441,19 +469,6 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
 		rtld_die();
 	    }
 	    direct_exec = true;
-
-	    /*
-	     * Set osrel for us, it is later reset to the binary'
-	     * value before first instruction of code from the binary
-	     * is executed.
-	     */
-	    mib[0] = CTL_KERN;
-	    mib[1] = KERN_PROC;
-	    mib[2] = KERN_PROC_OSREL;
-	    mib[3] = getpid();
-	    osrel = __FreeBSD_version;
-	    sz = sizeof(old_osrel);
-	    (void)sysctl(mib, 4, &old_osrel, &sz, &osrel, sizeof(osrel));
 
 	    dbg("opening main program in direct exec mode");
 	    if (argc >= 2) {
@@ -508,17 +523,25 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
 		    argv[i] = argv[i + rtld_argc];
 		*argcp -= rtld_argc;
 		environ = env = envp = argv + main_argc + 1;
+		dbg("move env from %p to %p", envp + rtld_argc, envp);
 		do {
 		    *envp = *(envp + rtld_argc);
-		    envp++;
-		} while (*envp != NULL);
+		}  while (*envp++ != NULL);
 		aux = auxp = (Elf_Auxinfo *)envp;
 		auxpf = (Elf_Auxinfo *)(envp + rtld_argc);
+		dbg("move aux from %p to %p", auxpf, aux);
 		/* XXXKIB insert place for AT_EXECPATH if not present */
 		for (;; auxp++, auxpf++) {
 		    *auxp = *auxpf;
 		    if (auxp->a_type == AT_NULL)
 			    break;
+		}
+		/* Since the auxiliary vector has moved, redigest it. */
+		for (i = 0;  i < AT_COUNT;  i++)
+		    aux_info[i] = NULL;
+		for (auxp = aux;  auxp->a_type != AT_NULL;  auxp++) {
+		    if (auxp->a_type < AT_COUNT)
+			aux_info[auxp->a_type] = auxp;
 		}
 
 		/* Point AT_EXECPATH auxv and aux_info to the binary path. */
@@ -780,12 +803,6 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
 	    obj_main->fini_array = (Elf_Addr)NULL;
     }
 
-    /*
-     * Execute MD initializers required before we call the objects'
-     * init functions.
-     */
-    pre_init();
-
     if (direct_exec) {
 	/* Set osrel for direct-execed binary */
 	mib[0] = CTL_KERN;
@@ -877,8 +894,10 @@ _rtld_bind(Obj_Entry *obj, Elf_Size reloff)
 	target = (Elf_Addr)(defobj->relocbase + def->st_value);
 
     dbg("\"%s\" in \"%s\" ==> %p in \"%s\"",
-      defobj->strtab + def->st_name, basename(obj->path),
-      (void *)target, basename(defobj->path));
+      defobj->strtab + def->st_name,
+      obj->path == NULL ? NULL : basename(obj->path),
+      (void *)target,
+      defobj->path == NULL ? NULL : basename(defobj->path));
 
     /*
      * Write the new contents for the jmpslot. Note that depending on
@@ -1066,7 +1085,10 @@ digest_dynamic1(Obj_Entry *obj, int early, const Elf_Dyn **dyn_rpath,
     *dyn_runpath = NULL;
 
     obj->bind_now = false;
-    for (dynp = obj->dynamic;  dynp->d_tag != DT_NULL;  dynp++) {
+    dynp = obj->dynamic;
+    if (dynp == NULL)
+	return;
+    for (;  dynp->d_tag != DT_NULL;  dynp++) {
 	switch (dynp->d_tag) {
 
 	case DT_REL:
@@ -1321,6 +1343,13 @@ digest_dynamic1(Obj_Entry *obj, int early, const Elf_Dyn **dyn_rpath,
 		*((Elf_Addr *)(dynp->d_un.d_ptr)) = (Elf_Addr) &r_debug;
 		break;
 
+	case DT_MIPS_RLD_MAP_REL:
+		// The MIPS_RLD_MAP_REL tag stores the offset to the .rld_map
+		// section relative to the address of the tag itself.
+		*((Elf_Addr *)(__DECONST(char*, dynp) + dynp->d_un.d_val)) =
+		    (Elf_Addr) &r_debug;
+		break;
+
 	case DT_MIPS_PLTGOT:
 		obj->mips_pltgot = (Elf_Addr *)(obj->relocbase +
 		    dynp->d_un.d_ptr);
@@ -1328,10 +1357,16 @@ digest_dynamic1(Obj_Entry *obj, int early, const Elf_Dyn **dyn_rpath,
 		
 #endif
 
+#ifdef __powerpc__
 #ifdef __powerpc64__
 	case DT_PPC64_GLINK:
 		obj->glink = (Elf_Addr)(obj->relocbase + dynp->d_un.d_ptr);
 		break;
+#else
+	case DT_PPC_GOT:
+		obj->gotptr = (Elf_Addr *)(obj->relocbase + dynp->d_un.d_ptr);
+		break;
+#endif
 #endif
 
 	case DT_FLAGS_1:
@@ -1474,8 +1509,6 @@ digest_phdr(const Elf_Phdr *phdr, int phnum, caddr_t entry, const char *path)
 	    if (nsegs == 0) {	/* First load segment */
 		obj->vaddrbase = trunc_page(ph->p_vaddr);
 		obj->mapbase = obj->vaddrbase + obj->relocbase;
-		obj->textsize = round_page(ph->p_vaddr + ph->p_memsz) -
-		  obj->vaddrbase;
 	    } else {		/* Last load segment */
 		obj->mapsize = round_page(ph->p_vaddr + ph->p_memsz) -
 		  obj->vaddrbase;
@@ -2235,8 +2268,10 @@ init_rtld(caddr_t mapbase, Elf_Auxinfo **aux_info)
     parse_rtld_phdr(&obj_rtld);
     obj_enforce_relro(&obj_rtld);
 
+    r_debug.r_version = R_DEBUG_VERSION;
     r_debug.r_brk = r_debug_state;
     r_debug.r_state = RT_CONSISTENT;
+    r_debug.r_ldbase = obj_rtld.relocbase;
 }
 
 /*
@@ -2807,7 +2842,7 @@ objlist_call_init(Objlist *list, RtldLockState *lockstate)
 	        (void *)elm->obj->init);
 	    LD_UTRACE(UTRACE_INIT_CALL, elm->obj, (void *)elm->obj->init,
 	        0, 0, elm->obj->path);
-	    call_initfini_pointer(elm->obj, elm->obj->init);
+	    call_init_pointer(elm->obj, elm->obj->init);
 	}
 	init_addr = (Elf_Addr *)elm->obj->init_array;
 	if (init_addr != NULL) {
@@ -2949,7 +2984,8 @@ reloc_textrel_prot(Obj_Entry *obj, bool before)
 		base = obj->relocbase + trunc_page(ph->p_vaddr);
 		sz = round_page(ph->p_vaddr + ph->p_filesz) -
 		    trunc_page(ph->p_vaddr);
-		prot = convert_prot(ph->p_flags) | (before ? PROT_WRITE : 0);
+		prot = before ? (PROT_READ | PROT_WRITE) :
+		    convert_prot(ph->p_flags);
 		if (mprotect(base, sz, prot) == -1) {
 			_rtld_error("%s: Cannot write-%sable text segment: %s",
 			    obj->path, before ? "en" : "dis",
@@ -2976,11 +3012,8 @@ relocate_object(Obj_Entry *obj, bool bind_now, Obj_Entry *rtldobj,
 		dbg("relocating \"%s\"", obj->path);
 
 	if (obj->symtab == NULL || obj->strtab == NULL ||
-	    !(obj->valid_hash_sysv || obj->valid_hash_gnu)) {
-		_rtld_error("%s: Shared object has no run-time symbol table",
-			    obj->path);
-		return (-1);
-	}
+	    !(obj->valid_hash_sysv || obj->valid_hash_gnu))
+		dbg("object %s has no run-time symbol table", obj->path);
 
 	/* There are relocations to the write-protected text segment. */
 	if (obj->textrel && reloc_textrel_prot(obj, true) != 0)
@@ -4997,7 +5030,7 @@ free_tls(void *tcb, size_t tcbsize, size_t tcbalign __unused)
 
 #endif
 
-#if defined(__i386__) || defined(__amd64__) || defined(__sparc64__)
+#if defined(__i386__) || defined(__amd64__)
 
 /*
  * Allocate Static TLS using the Variant II method.
@@ -5818,26 +5851,6 @@ __getosreldate(void)
 		osreldate = osrel;
 	return (osreldate);
 }
-
-void
-exit(int status)
-{
-
-	_exit(status);
-}
-
-void (*__cleanup)(void);
-int __isthreaded = 0;
-int _thread_autoinit_dummy_decl = 1;
-
-/*
- * No unresolved symbols for rtld.
- */
-void
-__pthread_cxa_finalize(struct dl_phdr_info *a __unused)
-{
-}
-
 const char *
 rtld_strerror(int errnum)
 {
@@ -5845,28 +5858,6 @@ rtld_strerror(int errnum)
 	if (errnum < 0 || errnum >= sys_nerr)
 		return ("Unknown error");
 	return (sys_errlist[errnum]);
-}
-
-/*
- * No ifunc relocations.
- */
-void *
-memset(void *dest, int c, size_t len)
-{
-	size_t i;
-
-	for (i = 0; i < len; i++)
-		((char *)dest)[i] = c;
-	return (dest);
-}
-
-void
-bzero(void *dest, size_t len)
-{
-	size_t i;
-
-	for (i = 0; i < len; i++)
-		((char *)dest)[i] = 0;
 }
 
 /* malloc */

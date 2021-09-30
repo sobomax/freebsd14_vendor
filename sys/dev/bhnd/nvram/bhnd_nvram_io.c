@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7ceb33e5cbc586b759a7ca1a92da38d899c231c2 $");
+__FBSDID("$FreeBSD: 5af048906bfb56e50491f5a8b5d8cd739aab25e1 $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -65,7 +65,6 @@ bhnd_nvram_io_read(struct bhnd_nvram_io *io, size_t offset, void *buffer,
 {
 	return (io->iops->read(io, offset, buffer, nbytes));
 }
-
 
 /**
  * Attempt to fetch a pointer to @p io's internal read buffer, if
@@ -202,4 +201,3 @@ bhnd_nvram_io_free(struct bhnd_nvram_io *io)
 {
 	return (io->iops->free(io));
 }
-

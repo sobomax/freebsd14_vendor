@@ -1,9 +1,8 @@
 #
-# $FreeBSD: e9bfba606c10f6ecc19dc353a75055576dbd30a6 $
+# $FreeBSD: d3b3f42ce2a886f4277304fe5db5bd8610a9fc82 $
 #
 
 PROG=	accept_fd_leak
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -1,5 +1,4 @@
 .\" Copyright (c) 2018 Edward Tomasz Napierala <trasz@FreeBSD.org>
-.\" All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -22,9 +21,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: da149c2511f6800f5667e9b624eb8b48b8612a2c $
+.\" $FreeBSD: 3feb133e0534d55d2ac70dfd7488ece42f0c9f43 $
 .\"
-.Dd June 23, 2020
+.Dd March 11, 2021
 .Dt DEVELOPMENT 7
 .Os
 .Sh NAME
@@ -59,17 +58,25 @@ can be found at:
 .Lk https://www.FreeBSD.org/doc/en/articles/committers-guide/
 .Pp
 .Fx
-src development takes place in the CURRENT branch in Subversion,
-located at:
+src development takes place in the project-hosted
+Git repository, located at:
 .Pp
-.Lk https://svn.FreeBSD.org/base/head
+.Lk https://git.FreeBSD.org/src.git
 .Pp
-There is also a read-only GitHub mirror at:
+The push URL is:
 .Pp
-.Lk https://github.com/freebsd/freebsd
+.Lk ssh://git@gitrepo.FreeBSD.org/src.git
 .Pp
-Changes are first committed to CURRENT and then usually merged back
-to STABLE.
+There is also a public, read-only GitHub mirror at:
+.Pp
+.Lk https://github.com/freebsd/freebsd-src
+.Pp
+The
+.Ql main
+Git branch represents CURRENT;
+all changes are first committed to CURRENT and then usually cherry-picked
+back to STABLE, which refers to Git branches such as
+.Ql stable/13 .
 Every few years the CURRENT branch is renamed to STABLE, and a new
 CURRENT is branched, with an incremented major version number.
 Releases are then branched off STABLE and numbered with consecutive minor
@@ -83,7 +90,7 @@ and
 .Xr release 7 .
 Kernel programming interfaces (KPIs) are documented in section 9
 manual pages; use
-.Ql "apropos -s 9 ''"
+.Ql "apropos -s 9 ."
 for a list.
 Regression test suite is described in
 .Xr tests 7 .
@@ -93,7 +100,7 @@ For coding conventions, see
 To ask questions regarding development, use the mailing lists,
 such as freebsd-arch@ and freebsd-hackers@:
 .Pp
-.Lk https://lists.FreeBSD.org/
+.Lk https://lists.FreeBSD.org
 .Pp
 To get your patches integrated into the main
 .Fx
@@ -102,7 +109,7 @@ it is a code review tool that allows other developers to review the changes,
 suggest improvements, and, eventually, allows them to pick up the change and
 commit it:
 .Pp
-.Lk https://reviews.FreeBSD.org/
+.Lk https://reviews.FreeBSD.org
 .Pp
 To check the latest
 .Fx
@@ -115,10 +122,10 @@ the continuous integration system is at:
 Check out the CURRENT branch, build it, and install, overwriting the current
 system:
 .Bd -literal -offset indent
-svnlite co https://svn.FreeBSD.org/base/head src
+git clone https://git.FreeBSD.org/src.git src
 cd src
-make -j8 buildworld buildkernel installkernel
-reboot
+make -sj8 buildworld buildkernel installkernel
+shutdown -r now
 .Ed
 .Pp
 After reboot:
@@ -127,12 +134,53 @@ cd src
 make -j8 installworld
 reboot
 .Ed
+.Pp
+Rebuild and reinstall a single piece of userspace, in this
+case
+.Xr ls 1 :
+.Bd -literal -offset indent
+cd src/bin/ls
+make clean all install
+.Ed
+.Pp
+Quickly rebuild and reinstall the kernel, only recompiling the files
+changed since last build; note that this will only work if the full kernel
+build has been completed in the past, not on a fresh source tree:
+.Bd -literal -offset indent
+cd src
+make -sj8 kernel KERNFAST=1
+.Ed
+.Pp
+To rebuild parts of
+.Fx
+for another CPU architecture,
+first prepare your source tree by building the cross-toolchain:
+.Bd -literal -offset indent
+cd src
+make -sj8 toolchain TARGET_ARCH=armv6
+.Ed
+.Pp
+Afterwards, to build and install a single piece of userspace, use:
+.Bd -literal -offset indent
+cd src/bin/ls
+make buildenv TARGET_ARCH=armv6
+make clean all install DESTDIR=/clients/arm
+.Ed
+.Pp
+Likewise, to quickly rebuild and reinstall the kernel, use:
+.Bd -literal -offset indent
+cd src
+make buildenv TARGET_ARCH=armv6
+make -sj8 kernel KERNFAST=1 DESTDIR=/clients/arm
+.Ed
 .Sh SEE ALSO
-.Xr svnlite 1 ,
+.Xr git 1 ,
 .Xr witness 4 ,
 .Xr build 7 ,
 .Xr hier 7 ,
+.Xr ports 7 ,
 .Xr release 7 ,
+.Xr tests 7 ,
 .Xr locking 9 ,
 .Xr style 9
 .Sh HISTORY

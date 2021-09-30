@@ -1,13 +1,14 @@
-# $FreeBSD: 5b0beb334785d21fb4969cf899dcaba9e468c87a $
+# $FreeBSD: c857f62790dc2a2e26733a8f226165fada234e0c $
 
 PROG=	rpc.statd
 MAN=	rpc.statd.8
 SRCS=	file.c sm_inter_svc.c sm_inter.h statd.c procs.c
 
-CFLAGS+= -I.
-WARNS?= 2
-
+CFLAGS+= -I${.OBJDIR}
 LIBADD=	rpcsvc
+
+# XXX: mismatch between (xdrproc_t) and xdr_void().
+WARNS?=	2
 
 CLEANFILES= sm_inter_svc.c sm_inter.h
 
@@ -20,7 +21,8 @@ sm_inter_svc.c: ${RPCSRC}
 sm_inter.h: ${RPCSRC}
 	${RPCGEN} -h -o ${.TARGET} ${.ALLSRC}
 
-test: test.c
-	cc -o test test.c -lrpcsvc
+test: test.o
+	${CC} ${LDFLAGS} -o ${.TARGET} ${.ALLSRC} ${LIBADD:S/^/-l/}
+CLEANFILES+=	test test.o
 
 .include <bsd.prog.mk>

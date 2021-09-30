@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 3d029d17a328900e5c4c0e67f294262b094217ca $
+ * $FreeBSD: 07a4103bd71673cd0648712f60f7ebdaeaa77ee6 $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -73,12 +73,8 @@ dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
 	frame = (struct amd64_frame *)rbp;
 	td = curthread;
 	while (depth < pcstack_limit) {
-		if (!INKERNEL((long) frame))
-			break;
-
-		if ((vm_offset_t)frame >=
-		    td->td_kstack + ptoa(td->td_kstack_pages) ||
-		    (vm_offset_t)frame < td->td_kstack)
+		if (!kstack_contains(curthread, (vm_offset_t)frame,
+		    sizeof(*frame)))
 			break;
 
 		callpc = frame->f_retaddr;
@@ -466,14 +462,11 @@ dtrace_getstackdepth(int aframes)
 	frame = (struct amd64_frame *)rbp;
 	depth++;
 	for(;;) {
-		if (!INKERNEL((long) frame))
-			break;
-		if (!INKERNEL((long) frame->f_frame))
+		if (!kstack_contains(curthread, (vm_offset_t)frame,
+		    sizeof(*frame)))
 			break;
 		depth++;
-		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >= curthread->td_kstack +
-		    curthread->td_kstack_pages * PAGE_SIZE)
+		if (frame->f_frame <= frame)
 			break;
 		frame = frame->f_frame;
 	}
@@ -509,7 +502,11 @@ dtrace_getreg(struct trapframe *rp, uint_t reg)
 		REG_SS		/* 18 SS */
 	};
 
+#ifdef illumos
 	if (reg <= SS) {
+#else	/* !illumos */
+	if (reg <= GS) {
+#endif
 		if (reg >= sizeof (regmap) / sizeof (int)) {
 			DTRACE_CPUFLAG_SET(CPU_DTRACE_ILLOP);
 			return (0);
@@ -518,7 +515,11 @@ dtrace_getreg(struct trapframe *rp, uint_t reg)
 		reg = regmap[reg];
 	} else {
 		/* This is dependent on reg.d. */
+#ifdef illumos
 		reg -= SS + 1;
+#else	/* !illumos */
+		reg -= GS + 1;
+#endif
 	}
 
 	switch (reg) {
@@ -675,7 +676,7 @@ dtrace_fuword64(void *uaddr)
  */
 void dtrace_copy_nosmap(uintptr_t, uintptr_t, size_t);
 void dtrace_copy_smap(uintptr_t, uintptr_t, size_t);
-DEFINE_IFUNC(, void, dtrace_copy, (uintptr_t, uintptr_t, size_t), static)
+DEFINE_IFUNC(, void, dtrace_copy, (uintptr_t, uintptr_t, size_t))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -685,7 +686,7 @@ DEFINE_IFUNC(, void, dtrace_copy, (uintptr_t, uintptr_t, size_t), static)
 void dtrace_copystr_nosmap(uintptr_t, uintptr_t, size_t, volatile uint16_t *);
 void dtrace_copystr_smap(uintptr_t, uintptr_t, size_t, volatile uint16_t *);
 DEFINE_IFUNC(, void, dtrace_copystr, (uintptr_t, uintptr_t, size_t,
-    volatile uint16_t *), static)
+    volatile uint16_t *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -694,7 +695,7 @@ DEFINE_IFUNC(, void, dtrace_copystr, (uintptr_t, uintptr_t, size_t,
 
 uintptr_t dtrace_fulword_nosmap(void *);
 uintptr_t dtrace_fulword_smap(void *);
-DEFINE_IFUNC(, uintptr_t, dtrace_fulword, (void *), static)
+DEFINE_IFUNC(, uintptr_t, dtrace_fulword, (void *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -703,7 +704,7 @@ DEFINE_IFUNC(, uintptr_t, dtrace_fulword, (void *), static)
 
 uint8_t dtrace_fuword8_nocheck_nosmap(void *);
 uint8_t dtrace_fuword8_nocheck_smap(void *);
-DEFINE_IFUNC(, uint8_t, dtrace_fuword8_nocheck, (void *), static)
+DEFINE_IFUNC(, uint8_t, dtrace_fuword8_nocheck, (void *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -712,7 +713,7 @@ DEFINE_IFUNC(, uint8_t, dtrace_fuword8_nocheck, (void *), static)
 
 uint16_t dtrace_fuword16_nocheck_nosmap(void *);
 uint16_t dtrace_fuword16_nocheck_smap(void *);
-DEFINE_IFUNC(, uint16_t, dtrace_fuword16_nocheck, (void *), static)
+DEFINE_IFUNC(, uint16_t, dtrace_fuword16_nocheck, (void *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -721,7 +722,7 @@ DEFINE_IFUNC(, uint16_t, dtrace_fuword16_nocheck, (void *), static)
 
 uint32_t dtrace_fuword32_nocheck_nosmap(void *);
 uint32_t dtrace_fuword32_nocheck_smap(void *);
-DEFINE_IFUNC(, uint32_t, dtrace_fuword32_nocheck, (void *), static)
+DEFINE_IFUNC(, uint32_t, dtrace_fuword32_nocheck, (void *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -730,7 +731,7 @@ DEFINE_IFUNC(, uint32_t, dtrace_fuword32_nocheck, (void *), static)
 
 uint64_t dtrace_fuword64_nocheck_nosmap(void *);
 uint64_t dtrace_fuword64_nocheck_smap(void *);
-DEFINE_IFUNC(, uint64_t, dtrace_fuword64_nocheck, (void *), static)
+DEFINE_IFUNC(, uint64_t, dtrace_fuword64_nocheck, (void *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?

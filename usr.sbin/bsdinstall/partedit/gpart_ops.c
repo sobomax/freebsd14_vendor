@@ -25,12 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d6a2c44c4dd425272ff7f4a413655739547b2915 $
+ * $FreeBSD: b49ff1c9fd4211709193f74bc1f2ae43f13c61be $
  */
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <libutil.h>
 #include <inttypes.h>
 
@@ -192,7 +193,9 @@ newfs_command(const char *fstype, char *command, int use_default)
 		for (i = 0; i < (int)nitems(items); i++) {
 			if (items[i].state == 0)
 				continue;
-			if (strcmp(items[i].name, "FAT16") == 0)
+			if (strcmp(items[i].name, "FAT32") == 0)
+				strcat(command, "-F 32 -c 1");
+			else if (strcmp(items[i].name, "FAT16") == 0)
 				strcat(command, "-F 16 ");
 			else if (strcmp(items[i].name, "FAT12") == 0)
 				strcat(command, "-F 12 ");
@@ -220,8 +223,6 @@ choose_part_type(const char *def_scheme)
 		    "Bootable on most x86 systems and EFI aware ARM64", 0 },
 		{"MBR", "DOS Partitions",
 		    "Bootable on most x86 systems", 0 },
-		{"VTOC8", "Sun VTOC8 Partition Table",
-		    "Bootable on Sun SPARC systems", 0 },
 	};
 
 parttypemenu:
@@ -400,7 +401,7 @@ gpart_bootcode(struct ggeom *gp)
 		    TRUE);
 		return;
 	}
-		
+
 	bootsize = lseek(bootfd, 0, SEEK_END);
 	boot = malloc(bootsize);
 	lseek(bootfd, 0, SEEK_SET);
@@ -711,11 +712,6 @@ set_default_part_metadata(const char *name, const char *scheme,
 		else if (mountpoint == NULL || strlen(mountpoint) == 0)
 			mountpoint = default_bootmount;
 	}
-
-	/* VTOC8 needs partcode at the start of partitions */
-	if (strcmp(scheme, "VTOC8") == 0 && (strcmp(type, "freebsd-ufs") == 0
-	    || strcmp(type, "freebsd-zfs") == 0))
-		md->bootcode = 1;
 
 	if (mountpoint == NULL || mountpoint[0] == '\0') {
 		if (md->fstab != NULL) {

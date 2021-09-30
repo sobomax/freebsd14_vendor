@@ -101,7 +101,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2adaa95df32a484562204c3e453527d5b10639c8 $");
+__FBSDID("$FreeBSD: 94c568c4c20502644d2c0f17ab272b8a51c14835 $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h>
@@ -372,10 +372,6 @@ mpt_pci_attach(device_t dev)
 	mpt->verbose = MPT_PRT_NONE;
 	mpt->role = MPT_ROLE_NONE;
 	mpt->mpt_ini_id = MPT_INI_ID_NONE;
-#ifdef __sparc64__
-	if (mpt->is_spi)
-		mpt->mpt_ini_id = OF_getscsinitid(dev);
-#endif
 	mpt_set_options(mpt);
 	if (mpt->verbose == MPT_PRT_NONE) {
 		mpt->verbose = MPT_PRT_WARN;

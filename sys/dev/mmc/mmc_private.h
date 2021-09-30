@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -49,7 +49,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: 633d0784d9689aa916a4f47ec5b2617ea5054332 $
+ * $FreeBSD: 4e969402aa7a1204565c4a9a8669adc4abd1b7c1 $
  */
 
 #ifndef DEV_MMC_PRIVATE_H

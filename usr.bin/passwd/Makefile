@@ -1,8 +1,9 @@
 # From:	@(#)Makefile	8.3 (Berkeley) 4/2/94
-# $FreeBSD: 1ec051fb3b36c4a7d2976a7915eca1c6023bfe8b $
+# $FreeBSD: c8eacf577443d92209432e62c194abac32f63158 $
 
 .include <src.opts.mk>
 
+PACKAGE	 = runtime
 PROG	 = passwd
 BINOWN	 = root
 BINMODE	 = 4555

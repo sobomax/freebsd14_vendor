@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 524130b89ff1ef4b9113c711e5409191d0f6dee3 $
+ * $FreeBSD: fd2b00355f89a13dc71591c689f377742c5e4089 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 524130b89ff1ef4b9113c711e5409191d0f6dee3 $");
+__FBSDID("$FreeBSD: fd2b00355f89a13dc71591c689f377742c5e4089 $");
 
 #include "opt_ddb.h"
 
@@ -54,8 +54,11 @@ __FBSDID("$FreeBSD: 524130b89ff1ef4b9113c711e5409191d0f6dee3 $");
 #include <sys/user.h>
 
 #include <vm/vm.h>
+#include <vm/vm_param.h>
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
+#include <vm/vm_dumpset.h>
 
 #include <machine/clock.h>
 #include <machine/cpu.h>
@@ -70,8 +73,7 @@ __FBSDID("$FreeBSD: 524130b89ff1ef4b9113c711e5409191d0f6dee3 $");
 #endif
 
 #ifdef TICK_USE_MALTA_RTC
-#include <mips/mips4k/malta/maltareg.h>
-#include <dev/mc146818/mc146818reg.h>
+#include <mips/malta/maltareg.h>
 #include <isa/rtc.h>
 #endif
 
@@ -132,7 +134,7 @@ static void
 malta_lcd_print(char *str)
 {
 	int i;
-	
+
 	if (str == NULL)
 		return;
 
@@ -154,7 +156,7 @@ lcd_puts(char *s)
 
 #ifdef TICK_USE_MALTA_RTC
 static __inline uint8_t
-rtcin(uint8_t addr)
+malta_rtcin(uint8_t addr)
 {
 
 	*((volatile uint8_t *)
@@ -164,7 +166,7 @@ rtcin(uint8_t addr)
 }
 
 static __inline void
-writertc(uint8_t addr, uint8_t val)
+malta_writertc(uint8_t addr, uint8_t val)
 {
 
 	*((volatile uint8_t *)
@@ -254,19 +256,19 @@ malta_cpu_freq(void)
 	u_int64_t counterval[2];
 
 	/* Set RTC to binary mode. */
-	writertc(RTC_STATUSB, (rtcin(RTC_STATUSB) | RTCSB_BCD));
+	malta_writertc(RTC_STATUSB, (malta_rtcin(RTC_STATUSB) | RTCSB_BCD));
 
 	/* Busy-wait for falling edge of RTC update. */
-	while (((rtcin(RTC_STATUSA) & RTCSA_TUP) == 0))
+	while (((malta_rtcin(RTC_STATUSA) & RTCSA_TUP) == 0))
 		;
-	while (((rtcin(RTC_STATUSA)& RTCSA_TUP) != 0))
+	while (((malta_rtcin(RTC_STATUSA)& RTCSA_TUP) != 0))
 		;
 	counterval[0] = mips_rd_count();
 
 	/* Busy-wait for falling edge of RTC update. */
-	while (((rtcin(RTC_STATUSA) & RTCSA_TUP) == 0))
+	while (((malta_rtcin(RTC_STATUSA) & RTCSA_TUP) == 0))
 		;
-	while (((rtcin(RTC_STATUSA)& RTCSA_TUP) != 0))
+	while (((malta_rtcin(RTC_STATUSA)& RTCSA_TUP) != 0))
 		;
 	counterval[1] = mips_rd_count();
 

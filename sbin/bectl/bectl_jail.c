@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c01c4ebabd369c32496c9f9bdf9ae05b041aad86 $");
+__FBSDID("$FreeBSD: 1d7d4a1496a2c127600848d4b93de14072952479 $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -356,10 +356,8 @@ bectl_cmd_jail(int argc, char *argv[])
 	}
 	free(jargv);
 
-	if (!interactive)
-		return (0);
-
-	if (unjail) {
+	/* Non-interactive (-b) mode means the jail sticks around. */
+	if (interactive && unjail) {
 		/*
 		 *  We're not checking the jail id result here because in the
 		 *  case of invalid param, or last command in jail was an error

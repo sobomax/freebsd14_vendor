@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fdd3a45e25725742bfed681d44ee02bfa56afaee $");
+__FBSDID("$FreeBSD: dcf8275e566ded2bf477a9cfe244b4373fe07c95 $");
 
 /*
  * Support functions for the PCI:PCI bridge driver.  This has to be in a
@@ -79,4 +79,3 @@ pcib_decode_rid(device_t pcib, uint16_t rid, int *bus, int *slot,
 	*slot = PCI_RID2SLOT(rid);
 	*func = PCI_RID2FUNC(rid);
 }
-

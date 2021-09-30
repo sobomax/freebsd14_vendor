@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)crypt.c	5.11 (Berkeley) 6/25/91");
-__FBSDID("$FreeBSD: 65033091d8edc8444855a01f1d2761864ee390c3 $");
+__FBSDID("$FreeBSD: 7995196ef234f67b829b2820c9474a80c95371dc $");
 
 #include <stdio.h>
 #include <string.h>
@@ -46,6 +46,11 @@ __FBSDID("$FreeBSD: 65033091d8edc8444855a01f1d2761864ee390c3 $");
  * since this is non-exportable, this is just a dummy.  if you want real
  * encryption, make sure you've got libcrypt.a around.
  */
+
+int __freebsd11_des_setkey(const char *key);
+int __freebsd11_des_cipher(const char *in, char *out, long salt, int num_iter);
+int __freebsd11_setkey(const char *key);
+int __freebsd11_encrypt(char *block, int flag);
 
 /* ARGSUSED */
 int

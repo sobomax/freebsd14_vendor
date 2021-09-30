@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7e88f0a1b856ebade71356c0e32dd742e0e3f856 $
+ * $FreeBSD: 6983188ba34fd19f85c9b8db7a8f3a06eef3c8b2 $
  */
 
 #include <sys/types.h>
@@ -35,8 +35,7 @@
 #include "partedit.h"
 
 /* EFI partition size in bytes */
-#define	EFI_BOOTPART_SIZE	(200 * 1024 * 1024)
-#define	EFI_BOOTPART_PATH	"/boot/boot1.efifat"
+#define	EFI_BOOTPART_SIZE	(260 * 1024 * 1024)
 
 static const char *
 x86_bootmethod(void)
@@ -114,8 +113,10 @@ const char *
 bootpart_type(const char *scheme, const char **mountpoint)
 {
 
-	if (strcmp(x86_bootmethod(), "UEFI") == 0)
+	if (strcmp(x86_bootmethod(), "UEFI") == 0) {
+		*mountpoint = "/boot/efi";
 		return ("efi");
+	}
 
 	return ("freebsd-boot");
 }
@@ -141,16 +142,14 @@ const char *
 partcode_path(const char *part_type, const char *fs_type)
 {
 
-	if (strcmp(part_type, "GPT") == 0) {
-		if (strcmp(x86_bootmethod(), "UEFI") == 0)
-			return (EFI_BOOTPART_PATH);
-		else if (strcmp(fs_type, "zfs") == 0)
+	if (strcmp(part_type, "GPT") == 0 && strcmp(x86_bootmethod(), "UEFI") != 0) {
+		if (strcmp(fs_type, "zfs") == 0)
 			return ("/boot/gptzfsboot");
 		else
 			return ("/boot/gptboot");
 	}
 	
-	/* No partcode except for GPT */
+	/* No partcode except for non-UEFI GPT */
 	return (NULL);
 }
 

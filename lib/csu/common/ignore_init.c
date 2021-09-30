@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-1-Clause
  *
  * Copyright 2012 Konstantin Belousov <kib@FreeBSD.org>
  * Copyright (c) 2018 The FreeBSD Foundation
@@ -12,9 +12,6 @@
  * are met:
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -29,13 +26,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8712661b44f791e108d9e3c6309ff80a3fc90b84 $");
+__FBSDID("$FreeBSD: 2cdb869c4a87cd6ce438508b24a6d4537cbf1f52 $");
 
 #include <sys/param.h>
 #include <sys/elf.h>
 #include <sys/elf_common.h>
-
-#include "notes.h"
 
 extern int main(int, char **, char **);
 
@@ -143,18 +138,3 @@ handle_argv(int argc, char *argv[], char **env)
 		}
 	}
 }
-
-static const struct {
-	int32_t	namesz;
-	int32_t	descsz;
-	int32_t	type;
-	char	name[sizeof(NOTE_FREEBSD_VENDOR)];
-	uint32_t desc;
-} crt_noinit_tag __attribute__ ((section (NOTE_SECTION),
-    aligned(4))) __used = {
-	.namesz = sizeof(NOTE_FREEBSD_VENDOR),
-	.descsz = sizeof(uint32_t),
-	.type = NT_FREEBSD_NOINIT_TAG,
-	.name = NOTE_FREEBSD_VENDOR,
-	.desc = 0
-};

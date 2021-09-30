@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_ulpi.h,v 1.2 2003/04/26 22:35:21 max Exp $
- * $FreeBSD: 18fcb4e8dd40b0be9ceff5d6ce82c9e31851a0e1 $
+ * $FreeBSD: 16fdaa3ced63454b450fc4cc13b6f6a29c0cd51d $
  */
 
 #ifndef _NETGRAPH_HCI_ULPI_H_
@@ -54,4 +54,3 @@ int  ng_hci_lp_enc_change                (ng_hci_unit_con_p, int);
 void ng_hci_process_con_timeout          (node_p, hook_p, void *, int);
 
 #endif /* ndef _NETGRAPH_HCI_ULPI_H_ */
-

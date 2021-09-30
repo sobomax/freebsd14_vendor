@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	 $SourceForge: netflow.h,v 1.8 2004/09/16 17:05:11 glebius Exp $
- *	 $FreeBSD: d6e061a7ff14fcac38955b4aa301351aa1714303 $
+ *	 $FreeBSD: 894692bd4f903807a2a2e8e203a4ed7da8704811 $
  */
 
 /* netflow timeouts in seconds */
@@ -144,7 +144,6 @@ struct netflow_v5_export_dgram {
 	struct netflow_v5_header	header;
 	struct netflow_v5_record	r[NETFLOW_V5_MAX_RECORDS];
 } __attribute__((__packed__));
-
 
 /* RFC3954 field definitions */
 #define NETFLOW_V9_FIELD_IN_BYTES		1	/* Input bytes count for a flow. Default 4, can be 8 */

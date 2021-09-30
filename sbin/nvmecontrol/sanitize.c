@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1cb6cb0cda2f6b0143f4b3fd2fe7d938a50ae09 $");
+__FBSDID("$FreeBSD: d5f649959d706593cf4b0b9c95f54e1900a4d262 $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: b1cb6cb0cda2f6b0143f4b3fd2fe7d938a50ae09 $");
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sysexits.h>
 #include <unistd.h>
 
 #include "nvmecontrol.h"
@@ -154,23 +155,24 @@ sanitize(const struct cmd *f, int argc, char *argv[])
 		goto wait;
 
 	/* Check that controller can execute this command. */
-	read_controller_data(fd, &cd);
+	if (read_controller_data(fd, &cd))
+		errx(EX_IOERR, "Identify request failed");
 	if (((cd.sanicap >> NVME_CTRLR_DATA_SANICAP_BES_SHIFT) &
 	     NVME_CTRLR_DATA_SANICAP_BES_MASK) == 0 && sanact == 2)
-		errx(1, "controller does not support Block Erase");
+		errx(EX_UNAVAILABLE, "controller does not support Block Erase");
 	if (((cd.sanicap >> NVME_CTRLR_DATA_SANICAP_OWS_SHIFT) &
 	     NVME_CTRLR_DATA_SANICAP_OWS_MASK) == 0 && sanact == 3)
-		errx(1, "controller does not support Overwrite");
+		errx(EX_UNAVAILABLE, "controller does not support Overwrite");
 	if (((cd.sanicap >> NVME_CTRLR_DATA_SANICAP_CES_SHIFT) &
 	     NVME_CTRLR_DATA_SANICAP_CES_MASK) == 0 && sanact == 4)
-		errx(1, "controller does not support Crypto Erase");
+		errx(EX_UNAVAILABLE, "controller does not support Crypto Erase");
 
 	/*
 	 * If controller supports only one namespace, we may sanitize it.
 	 * If there can be more, make user explicit in his commands.
 	 */
 	if (nsid != 0 && cd.nn > 1)
-		errx(1, "can't sanitize one of namespaces, specify controller");
+		errx(EX_UNAVAILABLE, "can't sanitize one of namespaces, specify controller");
 
 	memset(&pt, 0, sizeof(pt));
 	pt.cmd.opc = NVME_OPC_SANITIZE;
@@ -179,10 +181,10 @@ sanitize(const struct cmd *f, int argc, char *argv[])
 	pt.cmd.cdw11 = htole32(opt.ovrpat);
 
 	if (ioctl(fd, NVME_PASSTHROUGH_CMD, &pt) < 0)
-		err(1, "sanitize request failed");
+		err(EX_IOERR, "sanitize request failed");
 
 	if (nvme_completion_is_error(&pt.cpl))
-		errx(1, "sanitize request returned error");
+		errx(EX_IOERR, "sanitize request returned error");
 
 wait:
 	read_logpage(fd, NVME_LOG_SANITIZE_STATUS,

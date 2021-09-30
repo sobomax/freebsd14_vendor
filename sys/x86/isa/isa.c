@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7a98a2bf9ed88ddcfdbd5200b9ec8b5dbfb58c7d $");
+__FBSDID("$FreeBSD: 49402b44ffbaa392560e6b872fdc3dd03d3a3f47 $");
 
 /*-
  * Modifications for Intel architecture by Garrett A. Wollman.
@@ -97,7 +97,7 @@ isa_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	struct isa_device* idev = DEVTOISA(child);
 	struct resource_list *rl = &idev->id_resources;
 	struct resource_list_entry *rle;
-	
+
 	if (!passthrough && !isdefault) {
 		rle = resource_list_find(rl, type, *rid);
 		if (!rle) {

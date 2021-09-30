@@ -1,14 +1,10 @@
-# $FreeBSD: 24751a361a2bc9be1d05054ff76eaa80ecea04ee $
+# $FreeBSD: 3974581ff57f1f145794f21751e00d693588ee87 $
 
 .include <src.opts.mk>
 
 CONFSDIR=	/etc/newsyslog.conf.d
 
 CONFS=
-
-.if ${MK_AMD} != "no"
-CONFS+=		amd.conf
-.endif
 
 .if ${MK_FTP} != "no"
 CONFS+=		ftp.conf

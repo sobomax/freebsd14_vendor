@@ -1,6 +1,7 @@
-# $FreeBSD: ffbae7ede829ff85837608e12f3c40961d8bb5f1 $
+# $FreeBSD: a0cdc30c164c6c2b733bc5d8ad2d26165951eeb6 $
 
-NAME=	pptp
-SRCS=	alias_pptp.c
+PACKAGE=	natd
+NAME=		pptp
+SRCS=		alias_pptp.c
 
 .include <bsd.lib.mk>

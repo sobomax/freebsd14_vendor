@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3144e44d72b31892f2d31873519a2c450abd67b6 $");
+__FBSDID("$FreeBSD: f4651acea840f2dc493a355aedd69299a82cda05 $");
 
 #include <ctype.h>
 #include <err.h>
@@ -1220,9 +1220,12 @@ main(int argc, char **argv)
 	int		opt;
 
 	/* Collect any -P arguments, regardless of where they appear. */
-	while ((opt = getopt(argc, argv, optstring)) != -1)
+	while ((opt = getopt(argc, argv, optstring)) != -1) {
 		if (opt == 'P')
 			add_keymap_path(optarg);
+		if (opt == '?')
+			usage();
+	}
 
 	optind = optreset = 1;
 	while ((opt = getopt(argc, argv, optstring)) != -1)

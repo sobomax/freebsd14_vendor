@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a2260ecfcf95f9daea6991cb94f6be8eb8985347 $
+ * $FreeBSD: 9583ec71465e69a9af009a637fff86deb55c64a1 $
  *
  */
 
@@ -166,7 +166,7 @@ static int
 ng_split_disconnect(hook_p hook)
 {
 	hook_p		*localhook = NG_HOOK_PRIVATE(hook);
-	
+
 	KASSERT(localhook != NULL, ("%s: null info", __func__));
 	*localhook = NULL;
 	if ((NG_NODE_NUMHOOKS(NG_HOOK_NODE(hook)) == 0)

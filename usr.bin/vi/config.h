@@ -1,14 +1,10 @@
-/* $Id: config.h.in,v 9.5 2013/03/11 01:20:53 zy Exp $ */
-/* $FreeBSD: 94e780807fbaf6d476e6c52db9d9d8a272c8abab $ */
-
-/* Define if you want a debugging version. */
-/* #undef DEBUG */
+/* $FreeBSD: 85ffb2874b34138c1cb5fc663d5048d3b9846474 $ */
 
 /* Define when using wide characters */
-/* #define USE_WIDECHAR set by Makefile */
+#define USE_WIDECHAR
 
 /* Define when iconv can be used */
-/* #define USE_ICONV set by Makefile */
+/* #undef USE_ICONV */
 
 /* Define when the 2nd argument of iconv(3) is not const */
 /* #undef ICONV_TRADITIONAL */

@@ -1,6 +1,5 @@
 #-
-# Copyright (c) 2006 M. Warner Losh
-# All rights reserved.
+# Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -50,7 +49,7 @@
 # or the SD Card Association to disclose or distribute any technical
 # information, know-how or other confidential information to any third party.
 #
-# $FreeBSD: 497ff3acca27f4110c13c9a0523008896f0043b1 $
+# $FreeBSD: 72f712d75948a913706afb804b9039b4a6cc9651 $
 #
 
 #include <sys/types.h>

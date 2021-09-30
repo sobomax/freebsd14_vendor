@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5409c56cb00abd7da2ace95b8d1259ca8f1f0a0c $");
+__FBSDID("$FreeBSD: 19397627a8b0ebe9c07e8092224aa13b2f601741 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -106,6 +105,7 @@ struct rk805_softc {
 static int rk805_regnode_status(struct regnode *regnode, int *status);
 static int rk805_regnode_set_voltage(struct regnode *regnode, int min_uvolt,
     int max_uvolt, int *udelay);
+static int rk805_regnode_get_voltage(struct regnode *regnode, int *uvolt);
 
 static struct rk805_regdef rk805_regdefs[] = {
 	{
@@ -367,13 +367,21 @@ rk805_regnode_init(struct regnode *regnode)
 {
 	struct rk805_reg_sc *sc;
 	struct regnode_std_param *param;
-	int rv, udelay, status;
+	int rv, udelay, uvolt, status;
 
 	sc = regnode_get_softc(regnode);
+	dprintf(sc, "Regulator %s init called\n", sc->def->name);
 	param = regnode_get_stdparam(regnode);
 	if (param->min_uvolt == 0)
 		return (0);
 
+	/* Check that the regulator is preset to the correct voltage */
+	rv  = rk805_regnode_get_voltage(regnode, &uvolt);
+	if (rv != 0)
+		return(rv);
+
+	if (uvolt >= param->min_uvolt && uvolt <= param->max_uvolt)
+		return(0);
 	/* 
 	 * Set the regulator at the correct voltage if it is not enabled.
 	 * Do not enable it, this is will be done either by a

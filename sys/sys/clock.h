@@ -43,19 +43,13 @@
  *
  * All that code should go here for service.
  *
- * $FreeBSD: bfbd6efd2ad3b8b19c8967bdc1b79888d30e9364 $
+ * $FreeBSD: 790efdfee19f3a6de4990dfb4288b277ce9ec7a4 $
  */
 
 #ifndef _SYS_CLOCK_H_
 #define _SYS_CLOCK_H_
 
 #ifdef _KERNEL		/* No user serviceable parts */
-
-/*
- * Timezone info from settimeofday(2), usually not used
- */
-extern int tz_minuteswest;
-extern int tz_dsttime;
 
 int utc_offset(void);
 

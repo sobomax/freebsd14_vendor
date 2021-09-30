@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 125212f5e818efbd7b12926bc5f1779aad672ab1 $
+ * $FreeBSD: f81bc0e6ddd6118d205c4f78ea66b8bacf50b19a $
  */
 
 #ifndef _DEV_RTC_DS1553_H_
@@ -85,7 +85,6 @@
 #define DS1553_MASK_SECONDS		0x7f
 
 struct ds1553_softc {
-
 	bus_space_tag_t		sc_bst;	/* bus space tag */
 	bus_space_handle_t	sc_bsh;	/* bus space handle */
 

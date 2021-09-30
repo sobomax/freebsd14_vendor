@@ -1,4 +1,4 @@
-$FreeBSD: 86fb5ec554b329b439a8d13f345e8d68f0f04e80 $
+$FreeBSD: 1afee1bfd07c5f2e50c664a280dc2b1701bc1c85 $
 
 sendmail 8.16.1
 	originals can be found at: ftp://ftp.sendmail.org/pub/sendmail/
@@ -102,4 +102,4 @@ infrastructure in FreeBSD:
 	usr.sbin/mailwrapper/Makefile
 
 gshapiro@FreeBSD.org
-23-July-2020
+15-July-2020

@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe21dc2881b0c0d19fa07c1a1f32631cbc9b4cfa $");
+__FBSDID("$FreeBSD: d19e49358a222e0025a4f2accb32acbf3b07fb5c $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -124,7 +124,8 @@ int	fuse_data_cache_mode = FUSE_CACHE_WT;
  * The sysctl is retained primarily for use by jails supporting older FUSE
  * protocols.  It may be removed entirely once FreeBSD 11.3 and 12.0 are EOL.
  */
-SYSCTL_PROC(_vfs_fusefs, OID_AUTO, data_cache_mode, CTLTYPE_INT|CTLFLAG_RW,
+SYSCTL_PROC(_vfs_fusefs, OID_AUTO, data_cache_mode,
+    CTLTYPE_INT | CTLFLAG_MPSAFE | CTLFLAG_RW,
     &fuse_data_cache_mode, 0, sysctl_fuse_cache_mode, "I",
     "Zero: disable caching of FUSE file data; One: write-through caching "
     "(default); Two: write-back caching (generally unsafe)");
@@ -439,7 +440,7 @@ out:
 	vnode_pager_setsize(vp, newsize);
 	return err;
 }
-	
+
 /* Get the current, possibly dirty, size of the file */
 int
 fuse_vnode_size(struct vnode *vp, off_t *filesize, struct ucred *cred,
@@ -484,7 +485,7 @@ fuse_vnode_update(struct vnode *vp, int flags)
 		fvdat->cached_attrs.va_mtime = ts;
 	if (flags & FN_CTIMECHANGE)
 		fvdat->cached_attrs.va_ctime = ts;
-	
+
 	fvdat->flag |= flags;
 }
 

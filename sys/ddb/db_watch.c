@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a3ccbf8b00efda4304294503fec64188f58edec $");
+__FBSDID("$FreeBSD: f0fbb6768c12d472049570579912770ebb43069a $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -276,8 +276,6 @@ db_find_watchpoint(vm_map_t map, db_addr_t addr, db_regs_t regs)
 	return (false);
 }
 #endif
-
-
 
 /* Delete hardware watchpoint */
 /*ARGSUSED*/

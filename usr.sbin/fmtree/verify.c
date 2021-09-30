@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)verify.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9291c00e218061d4116ddd25d467d18dd89c311 $");
+__FBSDID("$FreeBSD: 2f9ca3dae92761f67e468861bb08f7503230f5af $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -86,7 +86,7 @@ vwalk(void)
 		err(1, "line %d: fts_open", lineno);
 	level = root;
 	specdepth = rval = 0;
-	while ((p = fts_read(t))) {
+	while (errno = 0, (p = fts_read(t))) {
 		if (check_excludes(p->fts_name, p->fts_path)) {
 			fts_set(t, p, FTS_SKIP);
 			continue;
@@ -149,6 +149,8 @@ extra:
 		}
 		(void)fts_set(t, p, FTS_SKIP);
 	}
+	if (errno != 0)
+		err(1, "fts_read()");
 	(void)fts_close(t);
 	if (sflag)
 		warnx("%s checksum: %lu", fullpath, (unsigned long)crc_total);

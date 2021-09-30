@@ -1,4 +1,4 @@
-# $FreeBSD: a13f9a42c289458c4da42a9db6213a6c82fbfe90 $
+# $FreeBSD: c99b2d1159676562b9699d3ae4240bb9154ce0db $
 
 .include <bsd.init.mk>
 
@@ -26,6 +26,13 @@ ${PACKAGE}FILES+=	unused_test.c
 		utils_test
 ATF_TESTS_C+=	${_T}
 SRCS.${_T}=	${_T}.c test_helpers.c
+.endfor
+
+.for _T in	atf_c_test \
+		build_test \
+		check_test \
+		macros_test
+TEST_METADATA.${_T}+=	required_programs="cc"
 .endfor
 
 .include <bsd.test.mk>

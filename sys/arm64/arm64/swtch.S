@@ -35,7 +35,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: d9921f7e952881b7169745e6d820798289d86e6a $");
+__FBSDID("$FreeBSD: ee64f89502ccb01bb4fde84fc808e96fcbc40431 $");
 
 .macro clear_step_flag pcbflags, tmp
 	tbz	\pcbflags, #PCB_SINGLE_STEP_SHIFT, 999f
@@ -101,7 +101,7 @@ ENTRY(cpu_throw)
 	ldp	x24, x25, [x4, #PCB_REGS + 24 * 8]
 	ldp	x26, x27, [x4, #PCB_REGS + 26 * 8]
 	ldp	x28, x29, [x4, #PCB_REGS + 28 * 8]
-	ldr	x30, [x4, #PCB_REGS + 30 * 8]
+	ldr	lr, [x4, #PCB_LR]
 
 	ret
 END(cpu_throw)
@@ -132,7 +132,7 @@ ENTRY(cpu_switch)
 	stp	x24, x25, [x4, #PCB_REGS + 24 * 8]
 	stp	x26, x27, [x4, #PCB_REGS + 26 * 8]
 	stp	x28, x29, [x4, #PCB_REGS + 28 * 8]
-	str	x30, [x4, #PCB_REGS + 30 * 8]
+	str	lr, [x4, #PCB_LR]
 	/* And the old stack pointer */
 	mov	x5, sp
 	mrs	x6, tpidrro_el0
@@ -198,7 +198,7 @@ ENTRY(cpu_switch)
 	ldp	x24, x25, [x4, #PCB_REGS + 24 * 8]
 	ldp	x26, x27, [x4, #PCB_REGS + 26 * 8]
 	ldp	x28, x29, [x4, #PCB_REGS + 28 * 8]
-	ldr	x30, [x4, #PCB_REGS + 30 * 8]
+	ldr	lr, [x4, #PCB_LR]
 
 	str	xzr, [x4, #PCB_REGS + 18 * 8]
 	ret
@@ -253,7 +253,7 @@ ENTRY(fork_trampoline)
 	 * No need for interrupts reenabling since PSR
 	 * will be set to the desired value anyway.
 	 */
-	eret
+	ERET
 	
 END(fork_trampoline)
 
@@ -270,7 +270,7 @@ ENTRY(savectx)
 	stp	x24, x25, [x0, #PCB_REGS + 24 * 8]
 	stp	x26, x27, [x0, #PCB_REGS + 26 * 8]
 	stp	x28, x29, [x0, #PCB_REGS + 28 * 8]
-	str	x30, [x0, #PCB_REGS + 30 * 8]
+	str	lr, [x0, #PCB_LR]
 	/* And the old stack pointer */
 	mov	x5, sp
 	mrs	x6, tpidrro_el0

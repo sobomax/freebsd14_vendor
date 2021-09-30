@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 753221d8c1c00c1b91ecedef1af86fc3a62fdced $
+ * $FreeBSD: a9cc24dfcb5e58071355e6ebe67c2d424601727c $
  */
 
 #ifndef _NETGRAPH_NG_ONE2MANY_H_
@@ -111,4 +111,3 @@ enum {
 };
 
 #endif /* _NETGRAPH_NG_ONE2MANY_H_ */
-

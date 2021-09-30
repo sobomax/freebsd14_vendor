@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f2d0db784369fecb1c05c76cd3b3fcd3daf6fef $");
+__FBSDID("$FreeBSD: d049a099847c0d78f9c9a869eb88fb94e6e5146f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 0f2d0db784369fecb1c05c76cd3b3fcd3daf6fef $");
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
 #include <sys/signalvar.h>
+#include <sys/sysent.h>
 #include <sys/sx.h>
 #include <sys/umtx.h>
 #include <sys/unistd.h>
@@ -146,7 +147,8 @@ kproc_create(void (*func)(void *), void *arg,
 	/* Delay putting it on the run queue until now. */
 	if (!(flags & RFSTOPPED))
 		sched_add(td, SRQ_BORING); 
-	thread_unlock(td);
+	else
+		thread_unlock(td);
 
 	return 0;
 }
@@ -229,7 +231,6 @@ kproc_suspend_check(struct proc *p)
 	PROC_UNLOCK(p);
 }
 
-
 /*
  * Start a kernel thread.  
  *
@@ -283,8 +284,6 @@ kthread_add(void (*func)(void *), void *arg, struct proc *p,
 
 	bzero(&newtd->td_startzero,
 	    __rangeof(struct thread, td_startzero, td_endzero));
-	newtd->td_pflags2 = 0;
-	newtd->td_errno = 0;
 	bcopy(&oldtd->td_startcopy, &newtd->td_startcopy,
 	    __rangeof(struct thread, td_startcopy, td_endcopy));
 
@@ -326,7 +325,6 @@ kthread_add(void (*func)(void *), void *arg, struct proc *p,
 	if (!(flags & RFSTOPPED)) {
 		thread_lock(newtd);
 		sched_add(newtd, SRQ_BORING); 
-		thread_unlock(newtd);
 	}
 	if (newtdp)
 		*newtdp = newtd;
@@ -353,15 +351,16 @@ kthread_exit(void)
 	 * The last exiting thread in a kernel process must tear down
 	 * the whole process.
 	 */
-	rw_wlock(&tidhash_lock);
 	PROC_LOCK(p);
 	if (p->p_numthreads == 1) {
 		PROC_UNLOCK(p);
-		rw_wunlock(&tidhash_lock);
 		kproc_exit(0);
 	}
-	LIST_REMOVE(td, td_hash);
-	rw_wunlock(&tidhash_lock);
+
+	if (p->p_sysent->sv_ontdexit != NULL)
+		p->p_sysent->sv_ontdexit(td);
+
+	tidhash_remove(td);
 	umtx_thread_exit(td);
 	tdsigcleanup(td);
 	PROC_SLOCK(p);

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 334f9a0ac8857c8a4668623cd5fa17fd1514e6fb $");
+__FBSDID("$FreeBSD: dfde6edce7344dbd5889bf5002765a54bab7a1d7 $");
 
 /*
  * Portions of this code were taken from or based on ftpio.c:
@@ -1088,8 +1088,8 @@ ftp_get_proxy(struct url * url, const char *flags)
 		}
 		if (!purl->port)
 			purl->port = fetch_default_proxy_port(purl->scheme);
-		if (strcasecmp(purl->scheme, SCHEME_FTP) == 0 ||
-		    strcasecmp(purl->scheme, SCHEME_HTTP) == 0)
+		if (strcmp(purl->scheme, SCHEME_FTP) == 0 ||
+		    strcmp(purl->scheme, SCHEME_HTTP) == 0)
 			return (purl);
 		fetchFreeURL(purl);
 	}
@@ -1107,7 +1107,8 @@ ftp_request(struct url *url, const char *op, struct url_stat *us,
 	int oflag;
 
 	/* check if we should use HTTP instead */
-	if (purl && strcasecmp(purl->scheme, SCHEME_HTTP) == 0) {
+	if (purl && (strcmp(purl->scheme, SCHEME_HTTP) == 0 ||
+	    strcmp(purl->scheme, SCHEME_HTTPS) == 0)) {
 		if (strcmp(op, "STAT") == 0)
 			return (http_request(url, "HEAD", us, purl, flags));
 		else if (strcmp(op, "RETR") == 0)

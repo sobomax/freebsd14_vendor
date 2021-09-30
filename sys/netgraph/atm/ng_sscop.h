@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d535c3c2505fa12ed073f07186eb1be3d075a391 $
+ * $FreeBSD: cc67916ca49cac2fb254dc46760856c2a4332f1a $
  *
  * Netgraph module for Q.2110 SSCOP
  */
@@ -66,7 +66,6 @@ enum {
 	  { "flags",		&ng_parse_uint32_type },	\
 	  { NULL }						\
 	}
-
 
 struct ng_sscop_setparam {
 	uint32_t		mask;

@@ -1,5 +1,5 @@
 /*
- * Copyright 1995-2020 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 1995-2021 The OpenSSL Project Authors. All Rights Reserved.
  * Copyright (c) 2002, Oracle and/or its affiliates. All rights reserved
  * Copyright 2005 Nokia. All rights reserved.
  *
@@ -2578,7 +2578,7 @@ int tls_construct_server_key_exchange(SSL *s, WPACKET *pkt)
 
         s->s3->tmp.pkey = ssl_generate_pkey(pkdhp);
         if (s->s3->tmp.pkey == NULL) {
-            /* SSLfatal() already called */
+            SSLfatal(s, SSL_AD_INTERNAL_ERROR, 0, ERR_R_INTERNAL_ERROR);
             goto err;
         }
 

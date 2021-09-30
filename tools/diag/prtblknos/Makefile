@@ -1,4 +1,4 @@
-# $FreeBSD: a813bb6a2fd07c1c38f750552cc5d7552cc13263 $
+# $FreeBSD: 385692c820ca2c1c188686faa402fc771cdcc8ac $
 
 BINDIR?=	/usr/bin
 
@@ -10,6 +10,8 @@ SRCS=	main.c prtblknos.c
 LIBADD+=ufs
 
 WARNS?=	3
+
+CFLAGS+=-DPRTBLKNOS
 
 test:	${PROG}
 	./${PROG} > a

@@ -1,3 +1,3 @@
-/* $FreeBSD: 995815294d589ddc593ccd9dd6649b41d71fe579 $ */
+/* $FreeBSD: d2bd738d4c203d6ce3568c7d6e6dcccd6704b7ef $ */
 
-#include "../../sys/libkern/crc32.c"
+#include "../../sys/libkern/gsb_crc32.c"

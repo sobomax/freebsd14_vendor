@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2009 M. Warner Losh.
- * All rights reserved.
+ * Copyright (c) 2009 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,7 +28,7 @@
 
 #if 0
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 372995c23699543975310ae2265cae7c5d597b2e $");
+__FBSDID("$FreeBSD: 8de58d6cc236c6ebd7bdad5a303c82dfba11ff6c $");
 
 /*
  * This file is a place holder for MIPS.  Some models of MIPS may need special

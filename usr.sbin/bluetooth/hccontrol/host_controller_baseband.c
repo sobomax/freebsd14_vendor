@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: host_controller_baseband.c,v 1.4 2003/08/18 19:19:53 max Exp $
- * $FreeBSD: 04141688493143c1cb8c973ae12f46d486193e33 $
+ * $FreeBSD: 6f912c2238bab81ce63cbf935b339d0a0a4805d2 $
  */
 
 #define L2CAP_SOCKET_CHECKED
@@ -1526,14 +1526,14 @@ hci_write_le_host_support(int s, int argc, char **argv)
 	switch (argc) {
 	case 2:
 		if (sscanf(argv[1], "%d", &n) != 1 || (n != 0 && n != 1)){
-			printf("ARGC2: %d\n", n);
+			printf("-ARGC2: %d\n", n);
 			return (USAGE);
 		}
 		cp.simultaneous_le_host = (n &1);
 		
 	case 1:
 		if (sscanf(argv[0], "%d", &n) != 1 || (n != 0 && n != 1)){
-			printf("ARGC1: %d\n", n);
+			printf("+ARGC1: %d\n", n);
 			return (USAGE);
 		}
 

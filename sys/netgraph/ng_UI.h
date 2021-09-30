@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 216570aaf1dc15c323f79cf06bac538fc53396e0 $
+ * $FreeBSD: 82ff49540515231f4ef7d51f7089e597c9d7fb02 $
  * $Whistle: ng_UI.h,v 1.6 1999/01/20 00:54:15 archie Exp $
  */
 
@@ -53,4 +53,3 @@
 #define NG_UI_HOOK_UPSTREAM	"upstream"
 
 #endif /* _NETGRAPH_NG_UI_H_ */
-

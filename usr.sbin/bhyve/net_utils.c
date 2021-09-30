@@ -23,17 +23,21 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 10429063c988e35c94790fb5431e0563edf50d49 $
  */
 
-#include "net_utils.h"
-#include "bhyverun.h"
-#include <md5.h>
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: d602cac3eb0a26cb123b2406b48d116521308bf7 $");
+
+#include <sys/types.h>
 #include <net/ethernet.h>
-#include <string.h>
-#include <stdio.h>
+
+#include <assert.h>
 #include <errno.h>
+#include <limits.h>
+#include <md5.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "bhyverun.h"
 #include "debug.h"
@@ -58,6 +62,37 @@ net_parsemac(char *mac_str, uint8_t *mac_addr)
 		memcpy(mac_addr, ea->octet, ETHER_ADDR_LEN);
 
         return (0);
+}
+
+int
+net_parsemtu(const char *mtu_str, unsigned long *mtu)
+{
+	char *end;
+	unsigned long val;
+
+	assert(mtu_str != NULL);
+
+	if (*mtu_str == '-')
+		goto err;
+
+	val = strtoul(mtu_str, &end, 0);
+
+	if (*end != '\0')
+		goto err;
+
+	if (val == ULONG_MAX)
+		return (ERANGE);
+
+	if (val == 0 && errno == EINVAL)
+		return (EINVAL);
+
+	*mtu = val;
+
+	return (0);
+
+err:
+	errno = EINVAL;
+	return (EINVAL);
 }
 
 void

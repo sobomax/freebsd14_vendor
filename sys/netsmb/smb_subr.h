@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: db5d757512a9862a35f5727e7da36e68441fd166 $
+ * $FreeBSD: e24c50f7978cf19a6551d77e6fd9f55636c6c7ab $
  */
 #ifndef _NETSMB_SMB_SUBR_H_
 #define _NETSMB_SMB_SUBR_H_
@@ -64,7 +64,7 @@ void m_dumpm(struct mbuf *m);
 	 SIGISMEMBER(set, SIGHUP) || SIGISMEMBER(set, SIGKILL) ||	\
 	 SIGISMEMBER(set, SIGQUIT))
 
-#define	smb_suser(cred)	priv_check_cred(cred, PRIV_NETSMB, 0)
+#define	smb_suser(cred)	priv_check_cred(cred, PRIV_NETSMB)
 
 /*
  * Compatibility wrappers for simple locks
@@ -78,7 +78,6 @@ void m_dumpm(struct mbuf *m);
 #define	smb_sl_destroy(mtx)		mtx_destroy(mtx)
 #define	smb_sl_lock(mtx)		mtx_lock(mtx)
 #define	smb_sl_unlock(mtx)		mtx_unlock(mtx)
-
 
 #define SMB_STRFREE(p)	do { if (p) smb_strfree(p); } while(0)
 

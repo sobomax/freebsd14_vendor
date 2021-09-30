@@ -1,8 +1,7 @@
-# $FreeBSD: cd78eb335ecc458765057288711cebfe4459a78b $
+# $FreeBSD: 80423741e4a9199aeb5dd74efbcd0cc86357fc0a $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=	proc
 
 SRCS=	crc32.c			\
@@ -30,6 +29,12 @@ LIBADD+=	elf procstat rtld_db util
 .if ${MK_CDDL} != "no"
 LIBADD+=	ctf
 IGNORE_PRAGMA=	YES
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
+CFLAGS+= -DHAVE_ISSETUGID -DHAVE_BOOLEAN
 CFLAGS+=	-I${SRCTOP}/cddl/contrib/opensolaris/lib/libctf/common \
 		-I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common \
 		-I${SRCTOP}/sys/cddl/compat/opensolaris

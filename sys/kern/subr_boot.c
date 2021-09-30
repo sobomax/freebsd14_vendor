@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4aa135df5c83be7c136012f9720e1d783c0d062c $");
+__FBSDID("$FreeBSD: 82dd4195edfd7dc46a685a2537e921311aec873f $");
 
 /* Note: This is compiled in both the kernel and boot loader contexts */
 
@@ -199,13 +199,13 @@ boot_parse_cmdline_delim(char *cmdline, const char *delim)
 }
 
 /**
- * @brief Simplified interface for common 'space separated' args
+ * @brief Simplified interface for common 'space or tab separated' args
  */
 int
 boot_parse_cmdline(char *cmdline)
 {
 
-	return (boot_parse_cmdline_delim(cmdline, " \n"));
+	return (boot_parse_cmdline_delim(cmdline, " \t\n"));
 }
 
 /**

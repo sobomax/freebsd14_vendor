@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: a830519d909e629f43a349c3d07c8c85c69b9f88 $
+# $FreeBSD: 68d7bf037525b2f56c406f9eaceaec72c10e2425 $
 
 include  	"std.armv7"
 include 	"../nvidia/tegra124/std.tegra124"
@@ -40,10 +40,10 @@ device		clk
 device		phy
 device		hwreset
 device		regulator
+device		syscon
 
 # Pseudo devices.
 device		loop			# Network loopback
-device		random			# Entropy device
 device		vlan			# 802.1Q VLAN support
 #device		tuntap			# Packet tunnel.
 device		md			# Memory "disks"
@@ -129,6 +129,9 @@ device		drm2
 # Sound
 #device		sound
 #device		snd_hda
+
+# HID support
+device		hid			# Generic HID support
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data

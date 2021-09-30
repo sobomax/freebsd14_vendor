@@ -1,6 +1,9 @@
-# $FreeBSD: f4e5fe72317a1e4e8579c0703ae2acfd4f675862 $
+# $FreeBSD: fcb22af5021a63271f77eee0f7d8c51afb10d0de $
+.include <src.opts.mk>
 
 PACKAGE=	tests
+
+WARNS?=		3
 
 _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 
@@ -15,7 +18,6 @@ PROGS+=	libarchive_test
 CFLAGS+= -I${.CURDIR} -I${.CURDIR:H} -I${.OBJDIR}
 CFLAGS+= -I${_LIBARCHIVEDIR}/libarchive -I${_LIBARCHIVEDIR}/libarchive/test
 CFLAGS+= -I${_LIBARCHIVEDIR}/test_utils
-CFLAGS+= -DHAVE_LIBLZMA=1 -DHAVE_LZMA_H=1
 
 # Uncomment to link against dmalloc
 #LDADD+= -L/usr/local/lib -ldmalloc
@@ -298,16 +300,15 @@ TESTS_SRCS= \
 	test_zip_filename_encoding.c
 
 # Deterministic failures:
-# Crashes with SIGBUS
-BROKEN_TESTS+=			test_archive_rmd160
-# Fails with `libarchive/test/test_archive_crypto.c:121: md != actualmd`
-BROKEN_TESTS+=			test_archive_sha384
 # Fails with `test_read_disk_directory_traversals.c:1094: File at has atime 886622, 1443306049 seconds ago`
 BROKEN_TESTS+=			test_read_disk_directory_traversals
 
 # Non-deterministic failures:
 # (Times out?) [and] crashes
 BROKEN_TESTS+=			test_fuzz_rar
+
+# https://bugs.freebsd.org/240683
+BROKEN_TESTS+=			test_write_filter_zstd
 
 # Build the test program.
 SRCS.libarchive_test=		\
@@ -532,12 +533,12 @@ ${PACKAGE}FILES+=	test_read_format_rar5_different_solid_window_size.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_different_window_size.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_different_winsize_on_merge.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_distance_overflow.rar.uu
-${PACKAGE}FILES+=	test_read_format_rar5_extra_field_version.rar.uu	
+${PACKAGE}FILES+=	test_read_format_rar5_extra_field_version.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_fileattr.rar.uu
-${PACKAGE}FILES+=	test_read_format_rar5_hardlink.rar.uu	
-${PACKAGE}FILES+=	test_read_format_rar5_invalid_dict_reference.rar.uu	
-${PACKAGE}FILES+=	test_read_format_rar5_leftshift1.rar.uu	
-${PACKAGE}FILES+=	test_read_format_rar5_leftshift2.rar.uu	
+${PACKAGE}FILES+=	test_read_format_rar5_hardlink.rar.uu
+${PACKAGE}FILES+=	test_read_format_rar5_invalid_dict_reference.rar.uu
+${PACKAGE}FILES+=	test_read_format_rar5_leftshift1.rar.uu
+${PACKAGE}FILES+=	test_read_format_rar5_leftshift2.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_multiarchive.part01.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_multiarchive.part02.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_multiarchive.part03.rar.uu
@@ -553,13 +554,13 @@ ${PACKAGE}FILES+=	test_read_format_rar5_multiarchive_solid.part04.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_multiple_files.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_multiple_files_solid.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_nonempty_dir_stream.rar.uu
-${PACKAGE}FILES+=	test_read_format_rar5_owner.rar.uu	
-${PACKAGE}FILES+=	test_read_format_rar5_readtables_overflow.rar.uu	
+${PACKAGE}FILES+=	test_read_format_rar5_owner.rar.uu
+${PACKAGE}FILES+=	test_read_format_rar5_readtables_overflow.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_solid.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_stored.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_stored_manyfiles.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_symlink.rar.uu
-${PACKAGE}FILES+=	test_read_format_rar5_truncated_huff.rar.uu	
+${PACKAGE}FILES+=	test_read_format_rar5_truncated_huff.rar.uu
 ${PACKAGE}FILES+=	test_read_format_rar5_win32.rar.uu
 ${PACKAGE}FILES+=	test_read_format_raw.bufr.uu
 ${PACKAGE}FILES+=	test_read_format_raw.data.Z.uu
@@ -576,6 +577,7 @@ ${PACKAGE}FILES+=	test_read_format_ustar_filename_koi8r.tar.Z.uu
 ${PACKAGE}FILES+=	test_read_format_warc.warc.uu
 ${PACKAGE}FILES+=	test_read_format_zip.zip.uu
 ${PACKAGE}FILES+=	test_read_format_zip_7075_utf8_paths.zip.uu
+${PACKAGE}FILES+=	test_read_format_zip_7z_lzma.zip.uu
 ${PACKAGE}FILES+=	test_read_format_zip_bz2_hang.zip.uu
 ${PACKAGE}FILES+=	test_read_format_zip_bzip2.zipx.uu
 ${PACKAGE}FILES+=	test_read_format_zip_bzip2_multi.zipx.uu

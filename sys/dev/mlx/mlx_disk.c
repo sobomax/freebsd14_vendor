@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1fb0a27c9da73d2c6ae76b6102ea421fd902372e $");
+__FBSDID("$FreeBSD: bc487d1330a0950523bd0472fe63b07d731a9277 $");
 
 /*
  * Disk driver for Mylex DAC960 RAID adapters.
@@ -154,6 +154,11 @@ mlxd_strategy(struct bio *bp)
     if (sc == NULL) {
 	bp->bio_error = EINVAL;
 	bp->bio_flags |= BIO_ERROR;
+	goto bad;
+    }
+
+    if ((bp->bio_cmd != BIO_READ) && (bp->bio_cmd != BIO_WRITE)) {
+	bp->bio_error = EOPNOTSUPP;
 	goto bad;
     }
 

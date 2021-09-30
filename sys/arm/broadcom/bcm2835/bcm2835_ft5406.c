@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 48fa702f5c467be08dd4a48603352d0414b2fe69 $");
+__FBSDID("$FreeBSD: d9a01b4a929a40d2b7849e3f962964373da06230 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -246,13 +246,13 @@ ft5406ts_init(void *arg)
 	evdev_support_event(sc->sc_evdev, EV_SYN);
 	evdev_support_event(sc->sc_evdev, EV_ABS);
 
-	evdev_support_abs(sc->sc_evdev, ABS_MT_SLOT, 0, 0,
+	evdev_support_abs(sc->sc_evdev, ABS_MT_SLOT, 0,
 	    MAX_TOUCH_ID, 0, 0, 0);
-	evdev_support_abs(sc->sc_evdev, ABS_MT_TRACKING_ID, 0, -1,
+	evdev_support_abs(sc->sc_evdev, ABS_MT_TRACKING_ID, -1,
 	    MAX_TOUCH_ID, 0, 0, 0);
-	evdev_support_abs(sc->sc_evdev, ABS_MT_POSITION_X, 0, 0,
+	evdev_support_abs(sc->sc_evdev, ABS_MT_POSITION_X, 0,
 	    SCREEN_WIDTH, 0, 0, SCREEN_RES_X);
-	evdev_support_abs(sc->sc_evdev, ABS_MT_POSITION_Y, 0, 0,
+	evdev_support_abs(sc->sc_evdev, ABS_MT_POSITION_Y, 0,
 	    SCREEN_HEIGHT, 0, 0, SCREEN_RES_Y);
 
 	err = evdev_register_mtx(sc->sc_evdev, &sc->sc_mtx);

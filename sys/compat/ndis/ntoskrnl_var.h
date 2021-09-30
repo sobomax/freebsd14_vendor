@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9c8c199645049fb84d98bef6632216b08017cdea $
+ * $FreeBSD: 3f9f604da947ed5ef8b39d748d59009eb294ad2d $
  */
 
 #ifndef _NTOSKRNL_VAR_H_
@@ -362,19 +362,6 @@ typedef struct nt_objref nt_objref;
 
 #define	EVENT_TYPE_NOTIFY	0
 #define	EVENT_TYPE_SYNC		1
-
-/*
- * We need to use the timeout()/untimeout() API for ktimers
- * since timers can be initialized, but not destroyed (so
- * malloc()ing our own callout structures would mean a leak,
- * since there'd be no way to free() them). This means we
- * need to use struct callout_handle, which is really just a
- * pointer. To make it easier to deal with, we use a union
- * to overlay the callout_handle over the k_timerlistentry.
- * The latter is a list_entry, which is two pointers, so
- * there's enough space available to hide a callout_handle
- * there.
- */
 
 struct ktimer {
 	nt_dispatch_header	k_header;
@@ -918,7 +905,6 @@ typedef struct devobj_extension devobj_extension;
 
 #define	IOCTL_CODE(dev, func, iomethod, acc)	\
 	((dev) << 16) | (acc << 14) | (func << 2) | (iomethod))
-
 
 struct io_status_block {
 	union {

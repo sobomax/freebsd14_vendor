@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 0f7791c9567bf8d6b7a824deb062ec94d78abf30 $
+ * $FreeBSD: 3844251ff4baba20810a2c6ac28e6df747f7656b $
  */
 
 #include "common.h"
@@ -114,7 +114,7 @@ oneshot(void)
 }
 
 void
-test_evfilt_user()
+test_evfilt_user(void)
 {
     kqfd = kqueue();
 

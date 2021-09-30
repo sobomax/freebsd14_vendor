@@ -28,7 +28,7 @@
  *
  * Author: Ruslan Ermilov <ru@FreeBSD.org>
  *
- * $FreeBSD: 456f531b1224534590728c5aaaa9acc2efe22bc4 $
+ * $FreeBSD: ce70d4ec1e464f033bc579929f0a3be41a7d7ac5 $
  */
 
 #include <sys/param.h>
@@ -194,7 +194,6 @@ static struct ng_type ng_vlan_typestruct = {
 };
 NETGRAPH_INIT(vlan, &ng_vlan_typestruct);
 
-
 /*
  * Helper functions.
  */
@@ -213,7 +212,6 @@ m_chk(struct mbuf **mp, int len)
 
 	return (0);
 }
-
 
 /*
  * Netgraph node functions.
@@ -523,7 +521,6 @@ ng_vlan_rcvdata(hook_p hook, item_p item)
 	uint16_t vid, eth_vtag;
 	struct mbuf *m;
 	hook_p dst_hook;
-
 
 	NGI_GET_M(item, m);
 

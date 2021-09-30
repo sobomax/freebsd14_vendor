@@ -25,7 +25,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)rc	5.27 (Berkeley) 6/5/91
-# $FreeBSD: 69edcf4ac9ff6ab53fdd23a8eae2a42d105bca84 $
+# $FreeBSD: 35db4a85051626905998d37368b4e4c697248318 $
 #
 
 # System startup script run by init on autoboot
@@ -58,6 +58,8 @@ else
 	autoboot=no
 	_boot="quietstart"
 fi
+
+_localbase=`/sbin/sysctl -n user.localbase 2> /dev/null`
 
 dlv=`/sbin/sysctl -n vfs.nfs.diskless_valid 2> /dev/null`
 if [ ${dlv:=0} -ne 0 -o -f /etc/diskless ]; then

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ed44af6974dad0dccc4adfbc9fecb58db62190e $");
+__FBSDID("$FreeBSD: 1e749206e9b95d7b911bc223c2839d89c3479b8c $");
 
 #include <sys/types.h>
 
@@ -363,7 +363,7 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 			}
 
 			*where = (def->st_value + rela->r_addend +
-			    defobj->tlsoffset - TLS_TP_OFFSET);
+			    defobj->tlsoffset - TLS_TP_OFFSET - TLS_TCB_SIZE);
 			break;
 		case R_RISCV_RELATIVE:
 			*where = (Elf_Addr)(obj->relocbase + rela->r_addend);
@@ -380,12 +380,6 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 
 void
 ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
-{
-
-}
-
-void
-pre_init(void)
 {
 
 }

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3cf3db16ee8c4c2846c60416e013a05034f2973d $");
+__FBSDID("$FreeBSD: c39df7f438149e18858296299b6f3adf451e90ad $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -86,7 +86,8 @@ struct ofw_pcib_softc {
 
 DEFINE_CLASS_1(pcib, ofw_pcib_pci_driver, ofw_pcib_pci_methods,
     sizeof(struct ofw_pcib_softc), pcib_driver);
-DRIVER_MODULE(ofw_pcib, pci, ofw_pcib_pci_driver, pcib_devclass, 0, 0);
+EARLY_DRIVER_MODULE(ofw_pcib, pci, ofw_pcib_pci_driver, pcib_devclass, 0, 0,
+    BUS_PASS_BUS);
 
 static int
 ofw_pcib_pci_probe(device_t dev)
@@ -172,4 +173,3 @@ ofw_pcib_pci_route_interrupt(device_t bridge, device_t dev, int intpin)
 	return (PCIB_ROUTE_INTERRUPT(device_get_parent(device_get_parent(
 	    bridge)), bridge, intpin));
 }
-

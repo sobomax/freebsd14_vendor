@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a50e679f0addf44cbe958ac70433197664a6fe11 $
+ * $FreeBSD: 7943be3124ca4b3544c587891b009567fa7b0347 $
  */
 
 extern "C" {
@@ -132,7 +132,7 @@ TEST_F(Opendir, open)
 	}));
 
 	fd = open(FULLPATH, O_DIRECTORY);
-	EXPECT_LE(0, fd) << strerror(errno);
+	ASSERT_LE(0, fd) << strerror(errno);
 
 	leak(fd);
 }

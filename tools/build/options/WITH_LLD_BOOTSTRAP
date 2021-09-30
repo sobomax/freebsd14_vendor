@@ -1,2 +1,3 @@
-.\" $FreeBSD: 4977b9767abf2a258d63cadcf1caee4659e2da2e $
-Set to build the LLD linker during the bootstrap phase of the build.
+.\" $FreeBSD: b3b392eb4d134142dba3bdcb06241d87c91622e3 $
+Set to build the LLD linker during the bootstrap phase of the build,
+and use it during buildworld and buildkernel.

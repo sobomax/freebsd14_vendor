@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ff742937ac1e2fe2822514aeb8a26d45d60129cd $
+ * $FreeBSD: cb138ed5ded530e150acaa237461e5506d862b6a $
  */
 
 #ifndef DEV_SYSCON_H
@@ -73,6 +73,7 @@ struct syscon *syscon_create_ofw_node(device_t pdev,
 phandle_t syscon_get_ofw_node(struct syscon *syscon);
 int syscon_get_by_ofw_property(device_t consumer, phandle_t node, char *name,
     struct syscon **syscon);
+int syscon_get_by_ofw_node(device_t cdev, phandle_t node, struct syscon **syscon);
 #endif
 
 #endif /* DEV_SYSCON_H */

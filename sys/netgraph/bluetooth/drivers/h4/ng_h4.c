@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_h4.c,v 1.10 2005/10/31 17:57:43 max Exp $
- * $FreeBSD: a747e6bce0d3f51338f91ead1a7f5ae0aa29cf98 $
+ * $FreeBSD: 11560b7c66810597ec9f0abb195352ca4db1c296 $
  * 
  * Based on:
  * ---------
@@ -1018,4 +1018,3 @@ ng_h4_mod_event(module_t mod, int event, void *data)
 
 	return (error);
 } /* ng_h4_mod_event */
-

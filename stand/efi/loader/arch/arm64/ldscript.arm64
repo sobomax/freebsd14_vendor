@@ -1,4 +1,4 @@
-/* $FreeBSD: 685c0967840d8308410a7a830aa33e0fd42b4366 $ */
+/* $FreeBSD: d0ed320a319c2834320dd019cda7ccd69b543d5c $ */
 /*
 OUTPUT_FORMAT("elf64-aarch64-freebsd", "elf64-aarch64-freebsd", "elf64-aarch64-freebsd")
 */
@@ -80,6 +80,7 @@ SECTIONS
   _edata = .;
 
   /* Unused sections */
+  .interp	: { *(.interp) }
   .dynstr	: { *(.dynstr) }
   .hash		: { *(.hash) }
 }

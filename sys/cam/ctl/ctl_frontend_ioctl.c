@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0280391242d25bb9a2b1317f9e54ba490d413a4b $");
+__FBSDID("$FreeBSD: 370e553042c51d6eab3668e0bcfc2a343f26f185 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,9 +84,7 @@ struct cfi_softc {
 	TAILQ_HEAD(, cfi_port)	ports;
 };
 
-
 static struct cfi_softc cfi_softc;
-
 
 static int cfi_init(void);
 static int cfi_shutdown(void);
@@ -183,7 +181,7 @@ cfi_ioctl_port_create(struct ctl_req *req)
 	val = dnvlist_get_string(req->args_nvl, "pp", NULL);
 	if (val != NULL)
 		pp = strtol(val, NULL, 10);
-	
+
 	val = dnvlist_get_string(req->args_nvl, "vp", NULL);
 	if (val != NULL)
 		vp = strtol(val, NULL, 10);

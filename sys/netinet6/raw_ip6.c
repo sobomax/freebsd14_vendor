@@ -62,10 +62,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 304ee4a8899be7a503cf625734f6c3509f476c7c $");
+__FBSDID("$FreeBSD: aea99add4391a140257adb4249d6dc4d34e1fafb $");
 
 #include "opt_ipsec.h"
 #include "opt_inet6.h"
+#include "opt_route.h"
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -103,6 +104,7 @@ __FBSDID("$FreeBSD: 304ee4a8899be7a503cf625734f6c3509f476c7c $");
 #include <netinet6/ip6_var.h>
 #include <netinet6/nd6.h>
 #include <netinet6/raw_ip6.h>
+#include <netinet6/in6_fib.h>
 #include <netinet6/scope6_var.h>
 #include <netinet6/send.h>
 
@@ -165,7 +167,8 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 	struct inpcb *last = NULL;
 	struct mbuf *opts = NULL;
 	struct sockaddr_in6 fromsa;
-	struct epoch_tracker et;
+
+	NET_EPOCH_ASSERT();
 
 	RIP6STAT_INC(rip6s_ipackets);
 
@@ -173,7 +176,6 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 
 	ifp = m->m_pkthdr.rcvif;
 
-	INP_INFO_RLOCK_ET(&V_ripcbinfo, et);
 	CK_LIST_FOREACH(inp, &V_ripcb, inp_list) {
 		/* XXX inp locking */
 		if ((inp->inp_vflag & INP_IPV6) == 0)
@@ -303,7 +305,6 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 skip_2:
 		INP_RUNLOCK(inp);
 	}
-	INP_INFO_RUNLOCK_ET(&V_ripcbinfo, et);
 #if defined(IPSEC) || defined(IPSEC_SUPPORT)
 	/*
 	 * Check AH/ESP integrity.
@@ -390,6 +391,7 @@ rip6_ctlinput(int cmd, struct sockaddr *sa, void *d)
 int
 rip6_output(struct mbuf *m, struct socket *so, ...)
 {
+	struct epoch_tracker et;
 	struct mbuf *control;
 	struct m_tag *mtag;
 	struct sockaddr_in6 *dstsock;
@@ -462,6 +464,17 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 	}
 	ip6 = mtod(m, struct ip6_hdr *);
 
+#ifdef ROUTE_MPATH
+	if (CALC_FLOWID_OUTBOUND) {
+		uint32_t hash_type, hash_val;
+
+		hash_val = fib6_calc_software_hash(&inp->in6p_laddr,
+		    &dstsock->sin6_addr, 0, 0, so->so_proto->pr_protocol,
+		    &hash_type);
+		inp->inp_flowid = hash_val;
+		inp->inp_flowtype = hash_type;
+	}
+#endif
 	/*
 	 * Source address selection.
 	 */
@@ -537,7 +550,9 @@ rip6_output(struct mbuf *m, struct socket *so, ...)
 		}
 	}
 
+	NET_EPOCH_ENTER(et);
 	error = ip6_output(m, optp, NULL, 0, inp->in6p_moptions, &oifp, inp);
+	NET_EPOCH_EXIT(et);
 	if (so->so_proto->pr_protocol == IPPROTO_ICMPV6) {
 		if (oifp)
 			icmp6_ifoutstat_inc(oifp, type, code);
@@ -734,6 +749,7 @@ rip6_disconnect(struct socket *so)
 static int
 rip6_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 {
+	struct epoch_tracker et;
 	struct inpcb *inp;
 	struct sockaddr_in6 *addr = (struct sockaddr_in6 *)nam;
 	struct ifaddr *ifa = NULL;
@@ -751,20 +767,20 @@ rip6_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 	if ((error = sa6_embedscope(addr, V_ip6_use_defzone)) != 0)
 		return (error);
 
-	NET_EPOCH_ENTER();
+	NET_EPOCH_ENTER(et);
 	if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr) &&
 	    (ifa = ifa_ifwithaddr((struct sockaddr *)addr)) == NULL) {
-		NET_EPOCH_EXIT();
+		NET_EPOCH_EXIT(et);
 		return (EADDRNOTAVAIL);
 	}
 	if (ifa != NULL &&
 	    ((struct in6_ifaddr *)ifa)->ia6_flags &
 	    (IN6_IFF_ANYCAST|IN6_IFF_NOTREADY|
 	     IN6_IFF_DETACHED|IN6_IFF_DEPRECATED)) {
-		NET_EPOCH_EXIT();
+		NET_EPOCH_EXIT(et);
 		return (EADDRNOTAVAIL);
 	}
-	NET_EPOCH_EXIT();
+	NET_EPOCH_EXIT(et);
 	INP_INFO_WLOCK(&V_ripcbinfo);
 	INP_WLOCK(inp);
 	inp->in6p_laddr = addr->sin6_addr;

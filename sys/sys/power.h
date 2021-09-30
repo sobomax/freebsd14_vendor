@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 3fcc2c387d619d043a40596c94c7230f92bd6bb7 $
+ *	$FreeBSD: 524bc3fabb24705dfd605dcd98f01388873fad1c $
  */
 
 #ifndef _SYS_POWER_H_
 #define _SYS_POWER_H_
 
-#include <sys/eventhandler.h>
+#include <sys/_eventhandler.h>
 
 /* Power management system type */
 #define POWER_PM_TYPE_APM		0x00
@@ -64,4 +64,3 @@ typedef void (*power_profile_change_hook)(void *, int);
 EVENTHANDLER_DECLARE(power_profile_change, power_profile_change_hook);
 
 #endif	/* !_SYS_POWER_H_ */
-

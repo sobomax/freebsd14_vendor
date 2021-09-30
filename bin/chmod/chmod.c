@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)chmod.c	8.8 (Berkeley) 4/1/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 07b7c37312d56075a73b31f27df3a32f3ebfa85e $");
+__FBSDID("$FreeBSD: e8657af0d97bc3c3636fc49d355b26eaba126d28 $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -164,7 +164,7 @@ done:	argv += optind;
 
 	if ((ftsp = fts_open(++argv, fts_options, 0)) == NULL)
 		err(1, "fts_open");
-	for (rval = 0; (p = fts_read(ftsp)) != NULL;) {
+	for (rval = 0; errno = 0, (p = fts_read(ftsp)) != NULL;) {
 		int atflag;
 
 		if ((fts_options & FTS_LOGICAL) ||

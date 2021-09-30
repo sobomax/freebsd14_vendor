@@ -28,7 +28,7 @@
  * File : ecore_mcp.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60d7e7f163bdad05b27d2c7e46315a56e4896ea8 $");
+__FBSDID("$FreeBSD: 65a854293e2d0b4955c390a2fe19eed700e551d5 $");
 
 #include "bcm_osal.h"
 #include "ecore.h"
@@ -2545,7 +2545,6 @@ enum _ecore_status_t ecore_mcp_get_board_config(struct ecore_hwfn *p_hwfn,
 		*p_board_config = NVM_CFG1_PORT_PORT_TYPE_UNDEFINED;
 		return ECORE_INVAL;
 	} else {
-
 	nvm_cfg_addr = ecore_rd(p_hwfn, p_ptt,
 			MISC_REG_GEN_PURP_CR0);
 	nvm_cfg1_offset = ecore_rd(p_hwfn, p_ptt,

@@ -1,4 +1,4 @@
-# $FreeBSD: 423bca9c454e0722c28f8798cd93ca5988f9c1fc $
+# $FreeBSD: 3a3a6a029f875dc7be526978561a895b5e9ab4ae $
 
 PROG=	decryptcore
 
@@ -7,7 +7,5 @@ LIBADD=	crypto pjdlog
 MAN=	decryptcore.8
 
 CFLAGS+=-I${SRCTOP}/lib/libpjdlog
-
-WARNS?=	6
 
 .include <bsd.prog.mk>

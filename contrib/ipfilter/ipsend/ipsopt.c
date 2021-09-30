@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7f9ab5e32d7955c93715cef3c9ad0e50d4f765da $	*/
+/*	$FreeBSD: ce6616525ca1ef66d8a3bac9c9a1a9004674091e $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -27,11 +27,7 @@ static const char rcsid[] = "@(#)$Id$";
 
 
 #ifndef	__P
-# ifdef	__STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 
 

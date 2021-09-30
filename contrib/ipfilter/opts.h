@@ -1,4 +1,4 @@
-/*	$FreeBSD: 6e973186756e670c683ff088345ae1a597c92dc9 $	*/
+/*	$FreeBSD: 17844e89ecfc245474c99d384c5bc77e4182faf2 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -54,11 +54,7 @@
 
 
 #ifndef __P
-# ifdef	__STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 
 #if defined(sun) && !SOLARIS

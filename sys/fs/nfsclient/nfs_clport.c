@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f6bbe622180dea141a04cf5c2bd0d0f1e8d5d23 $");
+__FBSDID("$FreeBSD: 9c0ac5c4364e53be9725da11c3de792c678c2244 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -53,6 +53,7 @@ __FBSDID("$FreeBSD: 7f6bbe622180dea141a04cf5c2bd0d0f1e8d5d23 $");
 #include <netinet/if_ether.h>
 #include <netinet6/ip6_var.h>
 #include <net/if_types.h>
+#include <net/route/nhop.h>
 
 #include <fs/nfsclient/nfs_kdtrace.h>
 
@@ -79,7 +80,7 @@ extern struct vop_vector newnfs_vnodeops;
 extern struct vop_vector newnfs_fifoops;
 extern uma_zone_t newnfsnode_zone;
 extern struct buf_ops buf_ops_newnfs;
-extern int ncl_pbuf_freecnt;
+extern uma_zone_t ncl_pbuf_zone;
 extern short nfsv4_cbport;
 extern int nfscl_enablecallb;
 extern int nfs_numnfscbd;
@@ -149,13 +150,13 @@ nfscl_nget(struct mount *mntp, struct vnode *dvp, struct nfsfh *nfhp,
 		 * get called on this vnode between when NFSVOPLOCK() drops
 		 * the VI_LOCK() and vget() acquires it again, so that it
 		 * hasn't yet had v_usecount incremented. If this were to
-		 * happen, the VI_DOOMED flag would be set, so check for
+		 * happen, the VIRF_DOOMED flag would be set, so check for
 		 * that here. Since we now have the v_usecount incremented,
-		 * we should be ok until we vrele() it, if the VI_DOOMED
+		 * we should be ok until we vrele() it, if the VIRF_DOOMED
 		 * flag isn't set now.
 		 */
 		VI_LOCK(nvp);
-		if ((nvp->v_iflag & VI_DOOMED)) {
+		if (VN_IS_DOOMED(nvp)) {
 			VI_UNLOCK(nvp);
 			vrele(nvp);
 			error = ENOENT;
@@ -248,7 +249,7 @@ nfscl_nget(struct mount *mntp, struct vnode *dvp, struct nfsfh *nfhp,
 	}
 
 	vp->v_vflag |= VV_VMSIZEVNLOCK;
-	
+
 	np->n_fhp = nfhp;
 	/*
 	 * For NFSv4, we have to attach the directory file handle and
@@ -336,7 +337,7 @@ nfscl_ngetreopen(struct mount *mntp, u_int8_t *fhp, int fhsize,
 	error = vfs_hash_get(mntp, hash, (LK_EXCLUSIVE | LK_NOWAIT), td, &nvp,
 	    newnfs_vncmpf, nfhp);
 	if (error == 0 && nvp != NULL) {
-		NFSVOPUNLOCK(nvp, 0);
+		NFSVOPUNLOCK(nvp);
 	} else if (error == EBUSY) {
 		/*
 		 * It is safe so long as a vflush() with
@@ -350,7 +351,7 @@ nfscl_ngetreopen(struct mount *mntp, u_int8_t *fhp, int fhsize,
 			vfs_hash_ref(mntp, hash, td, &nvp, newnfs_vncmpf, nfhp);
 			if (nvp == NULL) {
 				error = ENOENT;
-			} else if ((nvp->v_iflag & VI_DOOMED) != 0) {
+			} else if (VN_IS_DOOMED(nvp)) {
 				error = ENOENT;
 				vrele(nvp);
 			} else {
@@ -970,30 +971,35 @@ u_int8_t *
 nfscl_getmyip(struct nfsmount *nmp, struct in6_addr *paddr, int *isinet6p)
 {
 #if defined(INET6) || defined(INET)
-	int error, fibnum;
+	int fibnum;
 
 	fibnum = curthread->td_proc->p_fibnum;
 #endif
 #ifdef INET
 	if (nmp->nm_nam->sa_family == AF_INET) {
+		struct epoch_tracker et;
+		struct nhop_object *nh;
 		struct sockaddr_in *sin;
-		struct nhop4_extended nh_ext;
+		struct in_addr addr = {};
 
 		sin = (struct sockaddr_in *)nmp->nm_nam;
+		NET_EPOCH_ENTER(et);
 		CURVNET_SET(CRED_TO_VNET(nmp->nm_sockreq.nr_cred));
-		error = fib4_lookup_nh_ext(fibnum, sin->sin_addr, 0, 0,
-		    &nh_ext);
+		nh = fib4_lookup(fibnum, sin->sin_addr, 0, NHR_NONE, 0);
 		CURVNET_RESTORE();
-		if (error != 0)
+		if (nh != NULL)
+			addr = IA_SIN(ifatoia(nh->nh_ifa))->sin_addr;
+		NET_EPOCH_EXIT(et);
+		if (nh == NULL)
 			return (NULL);
 
-		if (IN_LOOPBACK(ntohl(nh_ext.nh_src.s_addr))) {
+		if (IN_LOOPBACK(ntohl(addr.s_addr))) {
 			/* Ignore loopback addresses */
 			return (NULL);
 		}
 
 		*isinet6p = 0;
-		*((struct in_addr *)paddr) = nh_ext.nh_src;
+		*((struct in_addr *)paddr) = addr;
 
 		return (u_int8_t *)paddr;
 	}
@@ -1001,6 +1007,7 @@ nfscl_getmyip(struct nfsmount *nmp, struct in6_addr *paddr, int *isinet6p)
 #ifdef INET6
 	if (nmp->nm_nam->sa_family == AF_INET6) {
 		struct sockaddr_in6 *sin6;
+		int error;
 
 		sin6 = (struct sockaddr_in6 *)nmp->nm_nam;
 
@@ -1039,7 +1046,6 @@ newnfs_copyincred(struct ucred *cr, struct nfscred *nfscr)
 		nfscr->nfsc_groups[i] = cr->cr_groups[i];
 }
 
-
 /*
  * Do any client specific initialization.
  */
@@ -1052,7 +1058,7 @@ nfscl_init(void)
 		return;
 	inited = 1;
 	nfscl_inited = 1;
-	ncl_pbuf_freecnt = nswbuf / 2 + 1;
+	ncl_pbuf_zone = pbuf_zsecond_create("nfspbuf", nswbuf / 2);
 }
 
 /*
@@ -1186,7 +1192,7 @@ nfscl_procdoesntexist(u_int8_t *own)
 	tl.cval[2] = *own++;
 	tl.cval[3] = *own++;
 	pid = tl.lval;
-	p = pfind_locked(pid);
+	p = pfind_any_locked(pid);
 	if (p == NULL)
 		return (1);
 	if (p->p_stats == NULL) {
@@ -1241,7 +1247,7 @@ nfssvc_nfscl(struct thread *td, struct nfssvc_args *uap)
 		 * careful than too reckless.
 		 */
 		error = fget(td, nfscbdarg.sock,
-		    cap_rights_init(&rights, CAP_SOCK_CLIENT), &fp);
+		    cap_rights_init_one(&rights, CAP_SOCK_CLIENT), &fp);
 		if (error)
 			return (error);
 		if (fp->f_type != DTYPE_SOCKET) {
@@ -1386,6 +1392,7 @@ nfscl_modevent(module_t mod, int type, void *data)
 #if 0
 		ncl_call_invalcaches = NULL;
 		nfsd_call_nfscl = NULL;
+		uma_zdestroy(ncl_pbuf_zone);
 		/* and get rid of the mutexes */
 		mtx_destroy(&ncl_iod_mutex);
 		loaded = 0;
@@ -1411,5 +1418,3 @@ MODULE_VERSION(nfscl, 1);
 MODULE_DEPEND(nfscl, nfscommon, 1, 1, 1);
 MODULE_DEPEND(nfscl, krpc, 1, 1, 1);
 MODULE_DEPEND(nfscl, nfssvc, 1, 1, 1);
-MODULE_DEPEND(nfscl, nfslock, 1, 1, 1);
-

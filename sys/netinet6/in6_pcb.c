@@ -67,12 +67,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee38e52c57f22fea91fa7516138f0a59ac86d778 $");
+__FBSDID("$FreeBSD: 567a7918f159cd929c9c2052c84f37e8a1fe3e3c $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
 #include "opt_pcbgroup.h"
+#include "opt_route.h"
 #include "opt_rss.h"
 
 #include <sys/param.h>
@@ -97,6 +98,7 @@ __FBSDID("$FreeBSD: ee38e52c57f22fea91fa7516138f0a59ac86d778 $");
 #include <net/if_llatbl.h>
 #include <net/if_types.h>
 #include <net/route.h>
+#include <net/route/nhop.h>
 
 #include <netinet/in.h>
 #include <netinet/in_var.h>
@@ -109,6 +111,7 @@ __FBSDID("$FreeBSD: ee38e52c57f22fea91fa7516138f0a59ac86d778 $");
 #include <netinet6/nd6.h>
 #include <netinet/in_pcb.h>
 #include <netinet6/in6_pcb.h>
+#include <netinet6/in6_fib.h>
 #include <netinet6/scope6_var.h>
 
 int
@@ -177,14 +180,15 @@ in6_pcbbind(struct inpcb *inp, struct sockaddr *nam,
 			    (SO_REUSEADDR|SO_REUSEPORT_LB)) != 0)
 				reuseport_lb = SO_REUSEADDR|SO_REUSEPORT_LB;
 		} else if (!IN6_IS_ADDR_UNSPECIFIED(&sin6->sin6_addr)) {
+			struct epoch_tracker et;
 			struct ifaddr *ifa;
 
 			sin6->sin6_port = 0;		/* yech... */
-			NET_EPOCH_ENTER();
+			NET_EPOCH_ENTER(et);
 			if ((ifa = ifa_ifwithaddr((struct sockaddr *)sin6)) ==
 			    NULL &&
 			    (inp->inp_flags & INP_BINDANY) == 0) {
-				NET_EPOCH_EXIT();
+				NET_EPOCH_EXIT(et);
 				return (EADDRNOTAVAIL);
 			}
 
@@ -197,10 +201,10 @@ in6_pcbbind(struct inpcb *inp, struct sockaddr *nam,
 			if (ifa != NULL &&
 			    ((struct in6_ifaddr *)ifa)->ia6_flags &
 			    (IN6_IFF_ANYCAST|IN6_IFF_NOTREADY|IN6_IFF_DETACHED)) {
-				NET_EPOCH_EXIT();
+				NET_EPOCH_EXIT(et);
 				return (EADDRNOTAVAIL);
 			}
-			NET_EPOCH_EXIT();
+			NET_EPOCH_EXIT(et);
 		}
 		if (lport) {
 			struct inpcb *t;
@@ -209,12 +213,10 @@ in6_pcbbind(struct inpcb *inp, struct sockaddr *nam,
 			/* GROSS */
 			if (ntohs(lport) <= V_ipport_reservedhigh &&
 			    ntohs(lport) >= V_ipport_reservedlow &&
-			    priv_check_cred(cred, PRIV_NETINET_RESERVEDPORT,
-			    0))
+			    priv_check_cred(cred, PRIV_NETINET_RESERVEDPORT))
 				return (EACCES);
 			if (!IN6_IS_ADDR_MULTICAST(&sin6->sin6_addr) &&
-			    priv_check_cred(inp->inp_cred,
-			    PRIV_NETINET_REUSEPORT, 0) != 0) {
+			    priv_check_cred(inp->inp_cred, PRIV_NETINET_REUSEPORT) != 0) {
 				t = in6_pcblookup_local(pcbinfo,
 				    &sin6->sin6_addr, lport,
 				    INPLOOKUP_WILDCARD, cred);
@@ -422,6 +424,17 @@ in6_pcbconnect_mbuf(struct inpcb *inp, struct sockaddr *nam,
 	INP_WLOCK_ASSERT(inp);
 	INP_HASH_WLOCK_ASSERT(pcbinfo);
 
+#ifdef ROUTE_MPATH
+	if (CALC_FLOWID_OUTBOUND) {
+		uint32_t hash_type, hash_val;
+
+		hash_val = fib6_calc_software_hash(&inp->in6p_laddr,
+		    &sin6->sin6_addr, 0, sin6->sin6_port,
+		    inp->inp_socket->so_proto->pr_protocol, &hash_type);
+		inp->inp_flowid = hash_val;
+		inp->inp_flowtype = hash_type;
+	}
+#endif
 	/*
 	 * Call inner routine, to assign local interface address.
 	 * in6_pcbladdr() may automatically fill in sin6_scope_id.
@@ -433,17 +446,26 @@ in6_pcbconnect_mbuf(struct inpcb *inp, struct sockaddr *nam,
 			       sin6->sin6_port,
 			      IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_laddr)
 			      ? &laddr6.sin6_addr : &inp->in6p_laddr,
-			      inp->inp_lport, 0, NULL) != NULL) {
+			      inp->inp_lport, 0, NULL, M_NODOM) != NULL) {
 		return (EADDRINUSE);
 	}
 	if (IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_laddr)) {
 		if (inp->inp_lport == 0) {
+			/*
+			 * rehash was required to be true in the past for
+			 * this case; retain that convention.  However,
+			 * we now call in_pcb_lport_dest rather than
+			 * in6_pcbbind; the former does not insert into
+			 * the hash table, the latter does.  Change rehash
+			 * to false to do the in_pcbinshash below.
+			 */
 			KASSERT(rehash == true,
 			    ("Rehashing required for unbound inps"));
 			rehash = false;
 			error = in_pcb_lport_dest(inp,
 			    (struct sockaddr *) &laddr6, &inp->inp_lport,
-			    (struct sockaddr *) sin6, sin6->sin6_port, cred, 0);
+			    (struct sockaddr *) sin6, sin6->sin6_port, cred,
+			    INPLOOKUP_WILDCARD);
 			if (error)
 				return (error);
 		}
@@ -724,7 +746,7 @@ in6_pcblookup_local(struct inpcbinfo *pcbinfo, struct in6_addr *laddr,
 	KASSERT((lookupflags & ~(INPLOOKUP_WILDCARD)) == 0,
 	    ("%s: invalid lookup flags %d", __func__, lookupflags));
 
-	INP_HASH_WLOCK_ASSERT(pcbinfo);
+	INP_HASH_LOCK_ASSERT(pcbinfo);
 
 	if ((lookupflags & INPLOOKUP_WILDCARD) == 0) {
 		struct inpcbhead *head;
@@ -881,9 +903,9 @@ in6_rtchange(struct inpcb *inp, int errno __unused)
 static struct inpcb *
 in6_pcblookup_lbgroup(const struct inpcbinfo *pcbinfo,
     const struct in6_addr *laddr, uint16_t lport, const struct in6_addr *faddr,
-    uint16_t fport, int lookupflags)
+    uint16_t fport, int lookupflags, uint8_t numa_domain)
 {
-	struct inpcb *local_wild;
+	struct inpcb *local_wild, *numa_wild;
 	const struct inpcblbgrouphead *hdr;
 	struct inpcblbgroup *grp;
 	uint32_t idx;
@@ -903,6 +925,7 @@ in6_pcblookup_lbgroup(const struct inpcbinfo *pcbinfo,
 	 * - Load balanced does not contain IPv4 mapped INET6 wild sockets.
 	 */
 	local_wild = NULL;
+	numa_wild = NULL;
 	CK_LIST_FOREACH(grp, hdr, il_list) {
 #ifdef INET
 		if (!(grp->il_vflag & INP_IPV6))
@@ -913,12 +936,23 @@ in6_pcblookup_lbgroup(const struct inpcbinfo *pcbinfo,
 
 		idx = INP_PCBLBGROUP_PKTHASH(INP6_PCBHASHKEY(faddr), lport,
 		    fport) % grp->il_inpcnt;
-		if (IN6_ARE_ADDR_EQUAL(&grp->il6_laddr, laddr))
-			return (grp->il_inp[idx]);
+		if (IN6_ARE_ADDR_EQUAL(&grp->il6_laddr, laddr)) {
+			if (numa_domain == M_NODOM ||
+			    grp->il_numa_domain == numa_domain) {
+				return (grp->il_inp[idx]);
+			}
+			else
+				numa_wild = grp->il_inp[idx];
+		}
 		if (IN6_IS_ADDR_UNSPECIFIED(&grp->il6_laddr) &&
-		    (lookupflags & INPLOOKUP_WILDCARD) != 0)
+		    (lookupflags & INPLOOKUP_WILDCARD) != 0 &&
+		    (local_wild == NULL || numa_domain == M_NODOM ||
+			grp->il_numa_domain == numa_domain)) {
 			local_wild = grp->il_inp[idx];
+		}
 	}
+	if (numa_wild != NULL)
+		return (numa_wild);
 	return (local_wild);
 }
 
@@ -1129,7 +1163,7 @@ found:
 struct inpcb *
 in6_pcblookup_hash_locked(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
     u_int fport_arg, struct in6_addr *laddr, u_int lport_arg,
-    int lookupflags, struct ifnet *ifp)
+    int lookupflags, struct ifnet *ifp, uint8_t numa_domain)
 {
 	struct inpcbhead *head;
 	struct inpcb *inp, *tmpinp;
@@ -1173,7 +1207,7 @@ in6_pcblookup_hash_locked(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
 	 */
 	if ((lookupflags & INPLOOKUP_WILDCARD) != 0) {
 		inp = in6_pcblookup_lbgroup(pcbinfo, laddr, lport, faddr,
-		    fport, lookupflags);
+		    fport, lookupflags, numa_domain);
 		if (inp != NULL)
 			return (inp);
 	}
@@ -1251,13 +1285,13 @@ in6_pcblookup_hash_locked(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
 static struct inpcb *
 in6_pcblookup_hash(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
     u_int fport, struct in6_addr *laddr, u_int lport, int lookupflags,
-    struct ifnet *ifp)
+    struct ifnet *ifp, uint8_t numa_domain)
 {
 	struct inpcb *inp;
 
-	INP_HASH_RLOCK(pcbinfo);
 	inp = in6_pcblookup_hash_locked(pcbinfo, faddr, fport, laddr, lport,
-	    (lookupflags & ~(INPLOOKUP_RLOCKPCB | INPLOOKUP_WLOCKPCB)), ifp);
+	    (lookupflags & ~(INPLOOKUP_RLOCKPCB | INPLOOKUP_WLOCKPCB)), ifp,
+	    numa_domain);
 	if (inp != NULL) {
 		if (lookupflags & INPLOOKUP_WLOCKPCB) {
 			INP_WLOCK(inp);
@@ -1282,7 +1316,6 @@ in6_pcblookup_hash(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
 		}
 #endif
 	}
-	INP_HASH_RUNLOCK(pcbinfo);
 	return (inp);
 }
 
@@ -1324,7 +1357,7 @@ in6_pcblookup(struct inpcbinfo *pcbinfo, struct in6_addr *faddr, u_int fport,
 	}
 #endif
 	return (in6_pcblookup_hash(pcbinfo, faddr, fport, laddr, lport,
-	    lookupflags, ifp));
+	    lookupflags, ifp, M_NODOM));
 }
 
 struct inpcb *
@@ -1366,7 +1399,7 @@ in6_pcblookup_mbuf(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
 	}
 #endif
 	return (in6_pcblookup_hash(pcbinfo, faddr, fport, laddr, lport,
-	    lookupflags, ifp));
+	    lookupflags, ifp, m->m_pkthdr.numa_domain));
 }
 
 void

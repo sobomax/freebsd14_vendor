@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7ec80258ee4e35fff2a1db49d9718ab69f82b949 $
+ * $FreeBSD: 5d5c5290a60d1c1803b71aa13c86ff091c210fad $
  */
 
 struct _sem;
@@ -55,7 +55,6 @@ const char *cache_mode_to_s(enum cache_mode cm);
 bool is_unsafe_aio_enabled(void);
 
 extern const uint32_t libfuse_max_write;
-extern const uint32_t default_max_write;
 class FuseTest : public ::testing::Test {
 	protected:
 	uint32_t m_maxreadahead;
@@ -80,7 +79,7 @@ class FuseTest : public ::testing::Test {
 
 	FuseTest():
 		m_maxreadahead(0),
-		m_maxwrite(default_max_write),
+		m_maxwrite(0),
 		m_init_flags(0),
 		m_allow_other(false),
 		m_default_permissions(false),

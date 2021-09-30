@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 418790524e4a3d2eb2fc4d3a3440f42b63f54e16 $");
+__FBSDID("$FreeBSD: c52b11d32ec8a198fa4a14ee421ebd18e1b933f8 $");
 
 #include <sys/param.h>
 #include <net/ethernet.h>
@@ -371,6 +371,8 @@ efinet_dev_init()
 	status = BS->LocateHandle(ByProtocol, &sn_guid, NULL, &sz, NULL);
 	if (status == EFI_BUFFER_TOO_SMALL) {
 		handles = (EFI_HANDLE *)malloc(sz);
+		if (handles == NULL)
+			return (ENOMEM);
 		status = BS->LocateHandle(ByProtocol, &sn_guid, NULL, &sz,
 		    handles);
 		if (EFI_ERROR(status))

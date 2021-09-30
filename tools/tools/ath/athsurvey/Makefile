@@ -1,4 +1,4 @@
-# $FreeBSD: 0b023eebc01cb5e2790096e4583bb55f8d59a2b1 $
+# $FreeBSD: 6c0106095016bc9973cc0b5608c2261336cbedad $
 
 PROG=	athsurvey
 
@@ -11,6 +11,5 @@ CLEANFILES+=	opt_ah.h
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h
 	echo "#define AH_DEBUG_COUNTRY 1" >> opt_ah.h
-	echo "#define AH_SUPPORT_AR5416 1" >> opt_ah.h
 
 .include <bsd.prog.mk>

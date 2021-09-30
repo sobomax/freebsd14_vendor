@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ffe41f2e865f80d20c940f6aefa82216dc84e1b $");
+__FBSDID("$FreeBSD: d4bda2183ba17860ad8e9fd72c6e779065f97fbe $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -231,7 +230,6 @@ static device_method_t mptable_pcib_pci_methods[] = {
 
 	/* pcib interface */
 	DEVMETHOD(pcib_route_interrupt,	mptable_pci_route_interrupt),
-
 	{0, 0}
 };
 

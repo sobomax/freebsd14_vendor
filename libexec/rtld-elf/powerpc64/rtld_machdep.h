@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c6fa414e18145ca728ab8b6a953ce6c6bcb54b18 $
+ * $FreeBSD: 486f4ffe95bcf582ad80cde89dd8725518188c7e $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -53,8 +53,13 @@ void reloc_non_plt_self(Elf_Dyn *dynp, Elf_Addr relocbase);
 #define call_init_pointer(obj, target) \
 	(((InitArrFunc)(target))(main_argc, main_argv, environ))
 
+extern u_long cpu_features; /* r3 */
+extern u_long cpu_features2; /* r4 */
+/* r5-r10: ifunc resolver parameters reserved for future assignment. */
 #define	call_ifunc_resolver(ptr) \
-	(((Elf_Addr (*)(void))ptr)())
+	(((Elf_Addr (*)(uint32_t, uint32_t, uint64_t, uint64_t, uint64_t, \
+           uint64_t, uint64_t, uint64_t))ptr)((uint32_t)cpu_features, \
+           (uint32_t)cpu_features2, 0, 0, 0, 0, 0, 0))
 
 /*
  * TLS
@@ -83,6 +88,7 @@ extern void *__tls_get_addr(tls_index* ti);
 #define	RTLD_DEFAULT_STACK_PF_EXEC	PF_X
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
-#define md_abi_variant_hook(x)
+extern void powerpc64_abi_variant_hook(Elf_Auxinfo **);
+#define md_abi_variant_hook(x) powerpc64_abi_variant_hook(x)
 
 #endif

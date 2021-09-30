@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3c83519931c754e54729b8e19a45b6f758a195b1 $
+ * $FreeBSD: 1ca20ddb74ab560a8a2b31cf1082dc11c9914813 $
  */
 
 #ifndef _NET_UTILS_H_
@@ -35,5 +35,6 @@
 
 void	net_genmac(struct pci_devinst *pi, uint8_t *macaddr);
 int	net_parsemac(char *mac_str, uint8_t *mac_addr);
+int	net_parsemtu(const char *mtu_str, unsigned long *mtu);
 
 #endif /* _NET_UTILS_H_ */

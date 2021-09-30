@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3da5ec0d143c9b3549b8f89bb3f4c7c759702879 $");
+__FBSDID("$FreeBSD: 0fdc4b54666fb09a7096172652ef8fd9c9ef6bb9 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -150,7 +150,7 @@ amdsmb_attach(device_t dev)
 
 	/* Allocate I/O space */
 	amdsmb_sc->rid = PCIR_BAR(0);
-	
+
 	amdsmb_sc->res = bus_alloc_resource_any(dev, SYS_RES_IOPORT,
 		&amdsmb_sc->rid, RF_ACTIVE);
 
@@ -563,7 +563,6 @@ static device_method_t amdsmb_methods[] = {
 	DEVMETHOD(smbus_readw,		amdsmb_readw),
 	DEVMETHOD(smbus_bwrite,		amdsmb_bwrite),
 	DEVMETHOD(smbus_bread,		amdsmb_bread),
-
 	{ 0, 0 }
 };
 

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42d9146c6df166a2d6294a3e0631b3f351e31db1 $");
+__FBSDID("$FreeBSD: 1883b18eeb6019dde657e4020d0db4bd92833262 $");
 
 #include "opt_compat.h"
 
@@ -90,7 +90,6 @@ struct l_old_select_argv {
 	l_uintptr_t	exceptfds;
 	l_uintptr_t	timeout;
 } __packed;
-
 
 static void
 bsd_to_linux_rusage(struct rusage *ru, struct l_rusage *lru)
@@ -405,7 +404,6 @@ linux_set_cloned_tls(struct thread *td, void *desc)
 	if (error) {
 		linux_msg(td, "set_cloned_tls copyin info failed!");
 	} else {
-
 		/* We might copy out the entry_number as GUGS32_SEL. */
 		info.entry_number = GUGS32_SEL;
 		error = copyout(&info, desc, sizeof(struct l_user_desc));
@@ -617,8 +615,8 @@ linux_gettimeofday(struct thread *td, struct linux_gettimeofday_args *uap)
 		error = copyout(&atv32, uap->tp, sizeof(atv32));
 	}
 	if (error == 0 && uap->tzp != NULL) {
-		rtz.tz_minuteswest = tz_minuteswest;
-		rtz.tz_dsttime = tz_dsttime;
+		rtz.tz_minuteswest = 0;
+		rtz.tz_dsttime = 0;
 		error = copyout(&rtz, uap->tzp, sizeof(rtz));
 	}
 	return (error);
@@ -742,7 +740,7 @@ linux_set_thread_area(struct thread *td,
 
 int futex_xchgl_nosmap(int oparg, uint32_t *uaddr, int *oldval);
 int futex_xchgl_smap(int oparg, uint32_t *uaddr, int *oldval);
-DEFINE_IFUNC(, int, futex_xchgl, (int, uint32_t *, int *), static)
+DEFINE_IFUNC(, int, futex_xchgl, (int, uint32_t *, int *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -751,7 +749,7 @@ DEFINE_IFUNC(, int, futex_xchgl, (int, uint32_t *, int *), static)
 
 int futex_addl_nosmap(int oparg, uint32_t *uaddr, int *oldval);
 int futex_addl_smap(int oparg, uint32_t *uaddr, int *oldval);
-DEFINE_IFUNC(, int, futex_addl, (int, uint32_t *, int *), static)
+DEFINE_IFUNC(, int, futex_addl, (int, uint32_t *, int *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -760,7 +758,7 @@ DEFINE_IFUNC(, int, futex_addl, (int, uint32_t *, int *), static)
 
 int futex_orl_nosmap(int oparg, uint32_t *uaddr, int *oldval);
 int futex_orl_smap(int oparg, uint32_t *uaddr, int *oldval);
-DEFINE_IFUNC(, int, futex_orl, (int, uint32_t *, int *), static)
+DEFINE_IFUNC(, int, futex_orl, (int, uint32_t *, int *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -769,7 +767,7 @@ DEFINE_IFUNC(, int, futex_orl, (int, uint32_t *, int *), static)
 
 int futex_andl_nosmap(int oparg, uint32_t *uaddr, int *oldval);
 int futex_andl_smap(int oparg, uint32_t *uaddr, int *oldval);
-DEFINE_IFUNC(, int, futex_andl, (int, uint32_t *, int *), static)
+DEFINE_IFUNC(, int, futex_andl, (int, uint32_t *, int *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?
@@ -778,7 +776,7 @@ DEFINE_IFUNC(, int, futex_andl, (int, uint32_t *, int *), static)
 
 int futex_xorl_nosmap(int oparg, uint32_t *uaddr, int *oldval);
 int futex_xorl_smap(int oparg, uint32_t *uaddr, int *oldval);
-DEFINE_IFUNC(, int, futex_xorl, (int, uint32_t *, int *), static)
+DEFINE_IFUNC(, int, futex_xorl, (int, uint32_t *, int *))
 {
 
 	return ((cpu_stdext_feature & CPUID_STDEXT_SMAP) != 0 ?

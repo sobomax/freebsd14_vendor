@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stat.h	8.12 (Berkeley) 6/16/95
- * $FreeBSD: df9cbd4489cf87a226877d1fdedf86dcfb0d457a $
+ * $FreeBSD: 03040f74eba448c33dd373ef06febe8593c9217a $
  */
 
 #ifndef _SYS_STAT_H_
@@ -224,6 +224,10 @@ struct nstat {
 #define	st_ctime		st_ctim.tv_sec
 #if __BSD_VISIBLE
 #define	st_birthtime		st_birthtim.tv_sec
+#define	st_atimensec		st_atim.tv_nsec
+#define	st_mtimensec		st_mtim.tv_nsec
+#define	st_ctimensec		st_ctim.tv_nsec
+#define	st_birthtimensec	st_birthtim.tv_nsec
 #endif
 
 /* For compatibility. */

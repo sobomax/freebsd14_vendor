@@ -1,5 +1,5 @@
 .\"	$NetBSD: poll.2,v 1.3 1996/09/07 21:53:08 mycroft Exp $
-.\" $FreeBSD: 319f60b4d77d26dca3bf75e3d74054941a98ad38 $
+.\" $FreeBSD: bea4aac82bd39dc0a879b764a1f91e9e256b2a57 $
 .\"
 .\" Copyright (c) 1996 Charles M. Hannum.  All rights reserved.
 .\"
@@ -233,7 +233,15 @@ points outside the process's allocated address space.
 A signal was delivered before the time limit expired and
 before any of the selected events occurred.
 .It Bq Er EINVAL
-The specified time limit is invalid. One of its components is negative or too large.
+The specified time limit is invalid.
+One of its components is negative or too large.
+.It Bq Er EINVAL
+The number of pollfd structures specified by
+.Fa nfds
+exceeds the system tunable
+.Va kern.maxfilesperproc
+and
+.Dv FD_SETSIZE .
 .El
 .Sh SEE ALSO
 .Xr accept 2 ,

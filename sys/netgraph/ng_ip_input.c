@@ -66,7 +66,7 @@
  * Author:		Brooks Davis <brooks@FreeBSD.org>
  * Derived from:	ng_hole.c
  *
- * $FreeBSD: 5e6dce38f6d18a342b72ce591d7e387fa53181dd $
+ * $FreeBSD: 88e0e11c08d3262fd6a3eba425aaececfa55240f $
  */
 
 /*
@@ -125,8 +125,13 @@ ngipi_rcvdata(hook_p hook, item_p item)
 	NG_FREE_ITEM(item);
 	if (curthread->td_ng_outbound)
 		netisr_queue(NETISR_IP, m);
-	else
+	else {
+		struct epoch_tracker et;
+
+		NET_EPOCH_ENTER(et);
 		netisr_dispatch(NETISR_IP, m);
+		NET_EPOCH_EXIT(et);
+	}
 	return 0;
 }
 

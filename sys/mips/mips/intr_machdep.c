@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b278276865c1a2bf18cb70f6db547c35562bf11 $");
+__FBSDID("$FreeBSD: a36944f657ca55c606bf1fd2ff2e796b01aebcf6 $");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -49,6 +49,19 @@ __FBSDID("$FreeBSD: 3b278276865c1a2bf18cb70f6db547c35562bf11 $");
 #include <machine/intr_machdep.h>
 #include <machine/md_var.h>
 #include <machine/trap.h>
+
+#ifndef INTRNG
+#define INTRCNT_COUNT	256
+#define	INTRNAME_LEN	(2*MAXCOMLEN + 1)
+
+MALLOC_DECLARE(M_MIPSINTR);
+MALLOC_DEFINE(M_MIPSINTR, "mipsintr", "MIPS interrupt handling");
+
+u_long *intrcnt;
+char *intrnames;
+size_t sintrcnt;
+size_t sintrnames;
+#endif
 
 static struct intr_event *hardintr_events[NHARD_IRQS];
 static struct intr_event *softintr_events[NSOFT_IRQS];
@@ -120,6 +133,15 @@ cpu_init_interrupts()
 {
 	int i;
 	char name[MAXCOMLEN + 1];
+
+#ifndef INTRNG
+	intrcnt = mallocarray(INTRCNT_COUNT, sizeof(u_long), M_MIPSINTR,
+	    M_WAITOK | M_ZERO);
+	intrnames = mallocarray(INTRCNT_COUNT, INTRNAME_LEN, M_MIPSINTR,
+	    M_WAITOK | M_ZERO);
+	sintrcnt = INTRCNT_COUNT * sizeof(u_long);
+	sintrnames = INTRCNT_COUNT * INTRNAME_LEN;
+#endif
 
 	/*
 	 * Initialize all available vectors so spare IRQ

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 1412ababcd5395d15bf72356b5b7fb1f05b55fd3 $
+ *	$FreeBSD: b3a4155b893054e61978333262ebb17c66d2c656 $
  */
 
 /*
@@ -314,7 +314,6 @@ struct ciss_softc
 	    sc->ciss_qstat[qname].q_length = 0;	\
 	    sc->ciss_qstat[qname].q_max = 0;	\
 	} while(0)
-
 
 #define CISSQ_REQUEST_QUEUE(name, index)				\
 static __inline void							\

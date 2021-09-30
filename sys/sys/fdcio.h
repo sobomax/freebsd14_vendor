@@ -26,7 +26,7 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: f041a6a8a8e3cef883362510f9daf92425eaeba6 $
+ * $FreeBSD: bceffaed2a374f4b4dbfa97c42a724e76399bf06 $
  */
 
 #ifndef	_MACHINE_IOCTL_FD_H_
@@ -124,7 +124,6 @@ enum fd_drivetype {
 	FDT_NONE, FDT_360K, FDT_12M, FDT_720K, FDT_144M, FDT_288M_1,
 	FDT_288M
 };
-
 
 #define FD_FORM   _IOW('F', 61, struct fd_formb) /* format a track */
 #define FD_GTYPE  _IOR('F', 62, struct fd_type)  /* get drive type */

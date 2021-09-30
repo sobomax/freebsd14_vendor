@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97b4dcb05dc177be5a9904fb4faf329a7dc12e2e $");
+__FBSDID("$FreeBSD: 53e5b97ada483a89537f136cfee7356e9d3cbea2 $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -49,7 +49,7 @@ __FBSDID("$FreeBSD: 97b4dcb05dc177be5a9904fb4faf329a7dc12e2e $");
  * of some frags.
  */
 void
-ffs_fragacct_swap(struct fs *fs, int fragmap, int32_t fraglist[], int cnt, int needswap)
+ffs_fragacct_swap(struct fs *fs, int fragmap, uint32_t fraglist[], int cnt, int needswap)
 {
 	int inblk;
 	int field, subfield;

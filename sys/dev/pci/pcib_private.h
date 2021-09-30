@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5cda3a3890ef579d6f373b56056314c0faa601aa $
+ * $FreeBSD: 8be7b2123174f76585ce8a9b9ff9432bd302a4d8 $
  */
 
 #ifndef __PCIB_PRIVATE_H__
@@ -141,7 +141,12 @@ struct pcib_softc
     struct callout pcie_ab_timer;
     struct callout pcie_cc_timer;
     struct callout pcie_dll_timer;
+    struct mtx	*pcie_hp_lock;
 };
+
+#define PCIB_HP_LOCK(sc)	mtx_lock((sc)->pcie_hp_lock)
+#define PCIB_HP_UNLOCK(sc)	mtx_unlock((sc)->pcie_hp_lock)
+#define PCIB_HP_LOCK_ASSERT(sc)	mtx_assert((sc)->pcie_hp_lock, MA_OWNED)
 
 #define	PCIB_SUPPORTED_ARI_VER	1
 

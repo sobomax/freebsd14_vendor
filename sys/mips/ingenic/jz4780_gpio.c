@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe1de7ccb9155b27f7a5b8323788d025d0d4753e $");
+__FBSDID("$FreeBSD: 77d1f5baaa3a016acfcded02d2fa9794966ad03f $");
 
 #include "opt_platform.h"
 
@@ -51,7 +51,7 @@ __FBSDID("$FreeBSD: fe1de7ccb9155b27f7a5b8323788d025d0d4753e $");
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <mips/ingenic/jz4780_regs.h>
-#include <gnu/dts/include/dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 
 #include "jz4780_gpio_if.h"
 #include "gpio_if.h"

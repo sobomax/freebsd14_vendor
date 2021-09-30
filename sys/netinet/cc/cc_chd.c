@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2cad20f5dda70a299f51789e07d99cff9c959db $");
+__FBSDID("$FreeBSD: fc995b0ebb02da3361919352dabb8afd431ee40b $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -465,21 +465,21 @@ chd_qthresh_handler(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_DECL(_net_inet_tcp_cc_chd);
-SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, chd, CTLFLAG_RW, NULL,
+SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, chd, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
     "CAIA Hamilton delay-based congestion control related settings");
 
 SYSCTL_PROC(_net_inet_tcp_cc_chd, OID_AUTO, loss_fair,
-    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     &VNET_NAME(chd_loss_fair), 1, &chd_loss_fair_handler,
     "IU", "Flag to enable shadow window functionality.");
 
 SYSCTL_PROC(_net_inet_tcp_cc_chd, OID_AUTO, pmax,
-    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     &VNET_NAME(chd_pmax), 5, &chd_pmax_handler,
     "IU", "Per RTT maximum backoff probability as a percentage");
 
 SYSCTL_PROC(_net_inet_tcp_cc_chd, OID_AUTO, queue_threshold,
-    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     &VNET_NAME(chd_qthresh), 20, &chd_qthresh_handler,
     "IU", "Queueing congestion threshold in ticks");
 

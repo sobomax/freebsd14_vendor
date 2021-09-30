@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd0bae96b1dff2f0330c785d9c497c27fe5cd1f3 $");
+__FBSDID("$FreeBSD: e1f74d81955eca2402ecb77ab352932f40792c3c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -142,6 +142,15 @@ gpio_check_flags(uint32_t caps, uint32_t flags)
 		return (EINVAL);
 	/* Cannot mix pull-up/pull-down together. */
 	if (flags & GPIO_PIN_PULLUP && flags & GPIO_PIN_PULLDOWN)
+		return (EINVAL);
+	/* Cannot mix output and interrupt flags together */
+	if (flags & GPIO_PIN_OUTPUT && flags & GPIO_INTR_MASK)
+		return (EINVAL);
+	/* Only one interrupt flag can be defined at once */
+	if ((flags & GPIO_INTR_MASK) & ((flags & GPIO_INTR_MASK) - 1))
+		return (EINVAL);
+	/* The interrupt attached flag cannot be set */
+	if (flags & GPIO_INTR_ATTACHED)
 		return (EINVAL);
 
 	return (0);

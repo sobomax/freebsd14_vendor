@@ -30,7 +30,7 @@
  */
 %{
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e7434a8a53e6bda4fc584fac343c0905f79c8dc $");
+__FBSDID("$FreeBSD: 1182dde3b079bf19230e52c6f5b0d11ab88d550c $");
 
 #define PFIOC_USE_LATEST
 
@@ -758,8 +758,16 @@ numberstring	: NUMBER				{
 		;
 
 varset		: STRING '=' varstring	{
+			char *s = $1;
 			if (pf->opts & PF_OPT_VERBOSE)
 				printf("%s = \"%s\"\n", $1, $3);
+			while (*s++) {
+				if (isspace((unsigned char)*s)) {
+					yyerror("macro name cannot contain "
+					   "whitespace");
+					YYERROR;
+				}
+			}
 			if (symset($1, $3, 0) == -1)
 				err(1, "cannot store variable %s", $1);
 			free($1);

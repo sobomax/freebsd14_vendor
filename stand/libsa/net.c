@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1834a7525e76124c0e4b1506b40f273846ea59be $");
+__FBSDID("$FreeBSD: 3142616a5bf0c92a6d499a128658f8da21ca3b29 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: 1834a7525e76124c0e4b1506b40f273846ea59be $");
  * timeout is hit.
  */
 #ifndef MAXWAIT
-#define MAXWAIT 0	/* seconds */
+#define MAXWAIT 300	/* seconds */
 #endif
 
 #if MAXWAIT < 0

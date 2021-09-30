@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39137e8261d0b5888e36fb6e1dbee3061e8d1ba1 $");
+__FBSDID("$FreeBSD: 05e42b0ae04a87939777527df01e8413da7516fe $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -75,15 +75,7 @@ fiq_installhandler(void *func, size_t size)
 {
 	const uint32_t fiqvector = 7 * sizeof(uint32_t);
 
-#if __ARM_ARCH < 6 && !defined(__ARM_FIQ_INDIRECT)
-	vector_page_setprot(VM_PROT_READ|VM_PROT_WRITE);
-#endif
-
 	memcpy((void *)(vector_page + fiqvector), func, size);
-
-#if __ARM_ARCH < 6 && !defined(__ARM_FIQ_INDIRECT)
-	vector_page_setprot(VM_PROT_READ);
-#endif
 	icache_sync((vm_offset_t) fiqvector, size);
 }
 

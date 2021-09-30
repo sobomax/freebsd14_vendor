@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 858ef56dbc0d83adeefaab5d83f9bb9dcd7511fa $
+# $FreeBSD: 19cb9a6c5c0173b9fd5d33c8bcdecfaf315533a6 $
 #
 
 # PROVIDE: local_unbound
@@ -106,7 +106,7 @@ local_unbound_poststart()
 	local retry=5
 
 	echo -n "Waiting for nameserver to start..."
-	until "${command}-control" status | grep -q "is running" ; do
+	until "${command}-control" -c "${local_unbound_config}" status | grep -q "is running" ; do
 		if [ $((retry -= 1)) -eq 0 ] ; then
 			echo " giving up"
 			return 1

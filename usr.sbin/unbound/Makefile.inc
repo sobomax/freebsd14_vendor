@@ -1,6 +1,6 @@
-# $FreeBSD: cdb1faf5a14f7cc099ef4e7b3924bdddd29d8907 $
+# $FreeBSD: 7cdeaa592d2a3b0cda1acb0fdbb3b17dab6e7c7e $
 
-NO_WERROR=	true
+MK_WERROR=	no
 NO_WTHREAD_SAFETY= true
 PACKAGE=	unbound
 

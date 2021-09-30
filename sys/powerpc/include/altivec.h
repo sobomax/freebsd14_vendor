@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fa666a988d4109bd57304f4f26b30f4cbc1f9a5d $
+ * $FreeBSD: f392c708e6df961780766527e0919e77c584fd6c $
  */
 
 #ifndef	_MACHINE_ALTIVEC_H_
@@ -39,4 +39,3 @@ void    save_vec(struct thread *);
 void    save_vec_nodrop(struct thread *);
 
 #endif	/* _MACHINE_ALTIVEC_H_ */
-

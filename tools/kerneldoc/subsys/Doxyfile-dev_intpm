@@ -1,0 +1,21 @@
+# Doxyfile 1.5.2
+
+# $FreeBSD: ce79f71bf6f854a2df0dfe64328f69dd058cc18c $
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "FreeBSD kernel intpm device code"
+OUTPUT_DIRECTORY       = $(DOXYGEN_DEST_PATH)/dev_intpm/
+EXTRACT_ALL            = YES    # for undocumented src, no warnings enabled
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = $(DOXYGEN_SRC_PATH)/dev/intpm/ \
+                         $(NOTREVIEWED)
+
+GENERATE_TAGFILE       = dev_intpm/dev_intpm.tag
+
+@INCLUDE_PATH          = $(DOXYGEN_INCLUDE_PATH)
+@INCLUDE               = common-Doxyfile
+

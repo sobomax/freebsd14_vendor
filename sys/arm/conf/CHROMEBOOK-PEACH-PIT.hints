@@ -1,5 +1,0 @@
-# $FreeBSD: 81737c1280e20ec661ba87224cad0db4f95732d4 $
-
-# Chrome Embedded Controller
-hint.chrome_ec.0.at="spibus0"
-hint.chrome_ec.0.addr=0x00

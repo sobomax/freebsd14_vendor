@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ef08dc2b5d504696683090f61ba5ec1405515d2 $");
+__FBSDID("$FreeBSD: ba7cd170286b22933078f6657cb60a2a6ff324d3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -60,7 +60,7 @@ __FBSDID("$FreeBSD: 0ef08dc2b5d504696683090f61ba5ec1405515d2 $");
  * icc needs to be special cased here, as the asm code below results
  * in broken code if compiled with icc.
  */
-#if !defined(__GNUCLIKE_ASM) || defined(__INTEL_COMPILER)
+#if !defined(__GNUCLIKE_ASM)
 /* non gcc parts stolen from sys/alpha/alpha/in_cksum.c */
 #define REDUCE32							  \
     {									  \
@@ -77,7 +77,7 @@ __FBSDID("$FreeBSD: 0ef08dc2b5d504696683090f61ba5ec1405515d2 $");
 #endif
 #define REDUCE          {sum = (sum & 0xffff) + (sum >> 16); ADDCARRY(sum);}
 
-#if !defined(__GNUCLIKE_ASM) || defined(__INTEL_COMPILER)
+#if !defined(__GNUCLIKE_ASM)
 static const u_int32_t in_masks[] = {
 	/*0 bytes*/ /*1 byte*/	/*2 bytes*/ /*3 bytes*/
 	0x00000000, 0x000000FF, 0x0000FFFF, 0x00FFFFFF,	/* offset 0 */

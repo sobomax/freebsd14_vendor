@@ -1,4 +1,4 @@
-# $FreeBSD: 36cc79009b45d914034008d2257ec176a8a9a691 $
+# $FreeBSD: 17ffb33a57e758b52e54a0e3563f45655e5643f7 $
 
 .include <src.opts.mk>
 
@@ -15,7 +15,7 @@ CFLAGS+= -I${.CURDIR:H} -I${SRCTOP}/contrib/tzcode/stdtime
 
 WARNS?=	2
 
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 50300
+.if ${COMPILER_TYPE} == "gcc"
 CWARNFLAGS+=	-Wno-error=strict-overflow
 .endif
 

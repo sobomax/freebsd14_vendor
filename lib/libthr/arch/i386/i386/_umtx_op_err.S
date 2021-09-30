@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 113412c851000bd2880a92811e1e8cb1f74afe4a $
+ * $FreeBSD: dad6495132f70a532c6dd8ccc2ce8ac982d5bdb9 $
  */
 
 #include <machine/asm.h>
@@ -31,7 +31,10 @@
 
 #define SYSCALL_ERR(x)		 			\
 			ENTRY(__CONCAT(x, _err));	\
-			mov __CONCAT($SYS_,x),%eax; int $0x80; ret
+			mov __CONCAT($SYS_,x),%eax;	\
+			int $0x80;			\
+			ret;				\
+			END(__CONCAT(x, _err))
 
 SYSCALL_ERR(_umtx_op)
 

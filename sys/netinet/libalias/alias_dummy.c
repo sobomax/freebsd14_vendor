@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 084436cc4ea17e5c3d346cfe7a5538a342d82849 $");
+__FBSDID("$FreeBSD: 375dbc9f5b4c7b5137438f021c2bfcb24abbc0b2 $");
 
 /*
  * Alias_dummy is just an empty skeleton used to demostrate how to write
@@ -90,7 +90,7 @@ fingerprint(struct libalias *la, struct alias_data *ah)
 static int
 protohandler(struct libalias *la, struct ip *pip, struct alias_data *ah)
 {
-	
+
 	AliasHandleDummy(la, pip, ah);
 	return (0);
 }
@@ -152,4 +152,3 @@ AliasHandleDummy(struct libalias *la, struct ip *ip, struct alias_data *ah)
 {
 	; /* Dummy. */
 }
-

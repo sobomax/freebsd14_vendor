@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d27322607925cabf4550789d7b8f28c080d3f2c $");
+__FBSDID("$FreeBSD: 7ae489ea820184fac78ba2710a8012fbd4ebf387 $");
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>
@@ -109,6 +109,13 @@ static void ipsd_strategy(struct bio *iobuf)
 	dsc = iobuf->bio_disk->d_drv1;	
 	DEVICE_PRINTF(8,dsc->dev,"in strategy\n");
 	iobuf->bio_driver1 = (void *)(uintptr_t)dsc->sc->drives[dsc->disk_number].drivenum;
+
+	if ((iobuf->bio_cmd != BIO_READ) &&
+	    (iobuf->bio_cmd != BIO_WRITE)) {
+		biofinish(iobuf, NULL, EOPNOTSUPP);
+		return;
+	}
+
 	mtx_lock(&dsc->sc->queue_mtx);
 	bioq_insert_tail(&dsc->sc->queue, iobuf);
 	ips_start_io_request(dsc->sc);

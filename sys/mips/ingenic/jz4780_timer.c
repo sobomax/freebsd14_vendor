@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1d30a9a61073ef38ccef2cb897c37efb9229d45 $");
+__FBSDID("$FreeBSD: 75f9bb2fe34a04882da6cd60c9eec706dc045e83 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -336,4 +336,3 @@ platform_initclocks(void)
 {
 
 }
-

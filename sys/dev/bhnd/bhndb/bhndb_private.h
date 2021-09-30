@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 1a21c78f3b0faaef1f8096780857a053b2deebed $
+ * $FreeBSD: 269310ade73e0714506aae4c363c6cc2e69ad761 $
  */
 
 #ifndef _BHND_BHNDB_PRIVATE_H_
@@ -143,7 +143,6 @@ const struct bhndb_port_priority *bhndb_hw_priorty_find_port(
 				     bhnd_port_type port_type, u_int port,
 				     u_int region);
 
-
 /**
  * Dynamic register window allocation reference.
  */
@@ -198,7 +197,7 @@ struct bhndb_resources {
 	const struct bhndb_hwcfg	*cfg;		/**< hardware configuration */
 
 	struct bhndb_host_resources	*res;		/**< host resources, or NULL if not allocated */
-	
+
 	struct rman			 ht_mem_rman;	/**< host memory manager */
 	struct rman			 br_mem_rman;	/**< bridged memory manager */
 	struct rman			 br_irq_rman;	/**< bridged irq manager */
@@ -268,7 +267,6 @@ bhndb_dw_is_free(struct bhndb_resources *br, struct bhndb_dw_alloc *dwa)
 
 	return (is_free);
 }
-
 
 #define	BHNDB_LOCK_INIT(sc) \
 	mtx_init(&(sc)->sc_mtx, device_get_nameunit((sc)->dev), \

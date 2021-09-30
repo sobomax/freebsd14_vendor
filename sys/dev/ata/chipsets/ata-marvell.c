@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a57e471590210e984273a458e715d9d495abb95 $");
+__FBSDID("$FreeBSD: 626f3fc0a506f43474293c84b008200c07917a7b $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -147,7 +147,7 @@ ata_marvell_ch_attach(device_t dev)
 {
 	struct ata_channel *ch = device_get_softc(dev);
 	int error;
- 
+
 	error = ata_pci_ch_attach(dev);
     	/* dont use 32 bit PIO transfers */
 	ch->flags |= ATA_USE_16BIT;

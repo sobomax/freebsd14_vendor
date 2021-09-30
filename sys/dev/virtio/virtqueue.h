@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7b2db673f7ae04a2152db599dd5963e75831d65b $
+ * $FreeBSD: 4bde4e32edc657773acf960b135aad30e974fa42 $
  */
 
 #ifndef _VIRTIO_VIRTQUEUE_H
@@ -67,11 +67,9 @@ struct vq_alloc_info {
 	(_i)->vqai_vq = (_vqp);						\
 } while (0)
 
-uint64_t virtqueue_filter_features(uint64_t features);
-
 int	 virtqueue_alloc(device_t dev, uint16_t queue, uint16_t size,
-	     int align, vm_paddr_t highaddr, struct vq_alloc_info *info,
-	     struct virtqueue **vqp);
+	     bus_size_t notify_offset, int align, vm_paddr_t highaddr,
+	     struct vq_alloc_info *info, struct virtqueue **vqp);
 void	*virtqueue_drain(struct virtqueue *vq, int *last);
 void	 virtqueue_free(struct virtqueue *vq);
 int	 virtqueue_reinit(struct virtqueue *vq, uint16_t size);

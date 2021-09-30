@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ca67eb343975890ed3008cc405d5eda9a60ec8f9 $
+ * $FreeBSD: 0f535397408032674e5df86ba8e6b369661b6557 $
  */
 
 #ifndef _BUS_DMA_INTERNAL_H_
@@ -58,4 +58,3 @@ void	_bus_dmamap_waitok(bus_dma_tag_t dmat, bus_dmamap_t map,
 	    void *callback_arg);
 
 #endif /* !_BUS_DMA_INTERNAL_H_ */
-

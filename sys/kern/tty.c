@@ -30,9 +30,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ab79091d70a12487a3496d3c1b4c4cd1bab2480 $");
+__FBSDID("$FreeBSD: 00b4df675311df0fbb7d1c5f1ad9bf2b697aa786 $");
 
 #include "opt_capsicum.h"
+#include "opt_printf.h"
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -66,6 +67,8 @@ __FBSDID("$FreeBSD: 9ab79091d70a12487a3496d3c1b4c4cd1bab2480 $");
 #include <sys/ucred.h>
 #include <sys/vnode.h>
 
+#include <fs/devfs/devfs.h>
+
 #include <machine/stdarg.h>
 
 static MALLOC_DEFINE(M_TTY, "tty", "tty device");
@@ -92,7 +95,7 @@ static const char	*dev_console_filename;
 			FLUSHO|NOKERNINFO|NOFLSH)
 #define TTYSUP_CFLAG	(CIGNORE|CSIZE|CSTOPB|CREAD|PARENB|PARODD|\
 			HUPCL|CLOCAL|CCTS_OFLOW|CRTS_IFLOW|CDTR_IFLOW|\
-			CDSR_OFLOW|CCAR_OFLOW)
+			CDSR_OFLOW|CCAR_OFLOW|CNO_RTSDTR)
 
 #define	TTY_CALLOUT(tp,d) (dev2unit(d) & TTYUNIT_CALLOUT)
 
@@ -105,6 +108,12 @@ SYSCTL_INT(_kern, OID_AUTO, tty_drainwait, CTLFLAG_RWTUN,
  */
 
 #define	TTYBUF_MAX	65536
+
+#ifdef PRINTF_BUFR_SIZE
+#define	TTY_PRBUF_SIZE	PRINTF_BUFR_SIZE
+#else
+#define	TTY_PRBUF_SIZE	256
+#endif
 
 /*
  * Allocate buffer space if necessary, and set low watermarks, based on speed.
@@ -322,7 +331,8 @@ ttydev_open(struct cdev *dev, int oflags, int devtype __unused,
 		if (TTY_CALLOUT(tp, dev) || dev == dev_console)
 			tp->t_termios.c_cflag |= CLOCAL;
 
-		ttydevsw_modem(tp, SER_DTR|SER_RTS, 0);
+		if ((tp->t_termios.c_cflag & CNO_RTSDTR) == 0)
+			ttydevsw_modem(tp, SER_DTR|SER_RTS, 0);
 
 		error = ttydevsw_open(tp);
 		if (error != 0)
@@ -413,7 +423,7 @@ tty_is_ctty(struct tty *tp, struct proc *p)
 int
 tty_wait_background(struct tty *tp, struct thread *td, int sig)
 {
-	struct proc *p = td->td_proc;
+	struct proc *p;
 	struct pgrp *pg;
 	ksiginfo_t ksi;
 	int error;
@@ -421,8 +431,22 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 	MPASS(sig == SIGTTIN || sig == SIGTTOU);
 	tty_assert_locked(tp);
 
+	p = td->td_proc;
 	for (;;) {
+		pg = p->p_pgrp;
+		PGRP_LOCK(pg);
 		PROC_LOCK(p);
+
+		/*
+		 * pg may no longer be our process group.
+		 * Re-check after locking.
+		 */
+		if (p->p_pgrp != pg) {
+			PROC_UNLOCK(p);
+			PGRP_UNLOCK(pg);
+			continue;
+		}
+
 		/*
 		 * The process should only sleep, when:
 		 * - This terminal is the controlling terminal
@@ -435,6 +459,7 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 		if (!tty_is_ctty(tp, p) || p->p_pgrp == tp->t_pgrp) {
 			/* Allow the action to happen. */
 			PROC_UNLOCK(p);
+			PGRP_UNLOCK(pg);
 			return (0);
 		}
 
@@ -442,13 +467,15 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 		    SIGISMEMBER(td->td_sigmask, sig)) {
 			/* Only allow them in write()/ioctl(). */
 			PROC_UNLOCK(p);
+			PGRP_UNLOCK(pg);
 			return (sig == SIGTTOU ? 0 : EIO);
 		}
 
-		pg = p->p_pgrp;
-		if (p->p_flag & P_PPWAIT || pg->pg_jobc == 0) {
+		if ((p->p_flag & P_PPWAIT) != 0 ||
+		    (pg->pg_flags & PGRP_ORPHANED) != 0) {
 			/* Don't allow the action to happen. */
 			PROC_UNLOCK(p);
+			PGRP_UNLOCK(pg);
 			return (EIO);
 		}
 		PROC_UNLOCK(p);
@@ -463,7 +490,7 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 			ksi.ksi_signo = sig;
 			sig = 0;
 		}
-		PGRP_LOCK(pg);
+
 		pgsignal(pg, ksi.ksi_signo, 1, &ksi);
 		PGRP_UNLOCK(pg);
 
@@ -1048,7 +1075,9 @@ tty_alloc_mutex(struct ttydevsw *tsw, void *sc, struct mtx *mutex)
 	PATCH_FUNC(busy);
 #undef PATCH_FUNC
 
-	tp = malloc(sizeof(struct tty), M_TTY, M_WAITOK|M_ZERO);
+	tp = malloc(sizeof(struct tty) + TTY_PRBUF_SIZE, M_TTY,
+	    M_WAITOK | M_ZERO);
+	tp->t_prbufsz = TTY_PRBUF_SIZE;
 	tp->t_devsw = tsw;
 	tp->t_devswsoftc = sc;
 	tp->t_flags = tsw->tsw_flags;
@@ -1240,13 +1269,13 @@ tty_drop_ctty(struct tty *tp, struct proc *p)
 	 * If we did have a vnode, release our reference.  Ordinarily we manage
 	 * these at the devfs layer, but we can't necessarily know that we were
 	 * invoked on the vnode referenced in the session (i.e. the vnode we
-	 * hold a reference to).  We explicitly don't check VBAD/VI_DOOMED here
+	 * hold a reference to).  We explicitly don't check VBAD/VIRF_DOOMED here
 	 * to avoid a vnode leak -- in circumstances elsewhere where we'd hit a
-	 * VI_DOOMED vnode, release has been deferred until the controlling TTY
+	 * VIRF_DOOMED vnode, release has been deferred until the controlling TTY
 	 * is either changed or released.
 	 */
 	if (vp != NULL)
-		vrele(vp);
+		devfs_ctty_unref(vp);
 	return (0);
 }
 
@@ -1449,15 +1478,23 @@ void
 tty_signal_sessleader(struct tty *tp, int sig)
 {
 	struct proc *p;
+	struct session *s;
 
 	tty_assert_locked(tp);
 	MPASS(sig >= 1 && sig < NSIG);
 
 	/* Make signals start output again. */
 	tp->t_flags &= ~TF_STOPPED;
+	tp->t_termios.c_lflag &= ~FLUSHO;
 
-	if (tp->t_session != NULL && tp->t_session->s_leader != NULL) {
-		p = tp->t_session->s_leader;
+	/*
+	 * Load s_leader exactly once to avoid race where s_leader is
+	 * set to NULL by a concurrent invocation of killjobc() by the
+	 * session leader.  Note that we are not holding t_session's
+	 * lock for the read.
+	 */
+	if ((s = tp->t_session) != NULL &&
+	    (p = atomic_load_ptr(&s->s_leader)) != NULL) {
 		PROC_LOCK(p);
 		kern_psignal(p, sig);
 		PROC_UNLOCK(p);
@@ -1474,6 +1511,7 @@ tty_signal_pgrp(struct tty *tp, int sig)
 
 	/* Make signals start output again. */
 	tp->t_flags &= ~TF_STOPPED;
+	tp->t_termios.c_lflag &= ~FLUSHO;
 
 	if (sig == SIGINFO && !(tp->t_termios.c_lflag & NOKERNINFO))
 		tty_info(tp);
@@ -1918,6 +1956,7 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 		return (0);
 	case TIOCSTART:
 		tp->t_flags &= ~TF_STOPPED;
+		tp->t_termios.c_lflag &= ~FLUSHO;
 		ttydevsw_outwakeup(tp);
 		ttydevsw_pktnotify(tp, TIOCPKT_START);
 		return (0);
@@ -2048,8 +2087,8 @@ ttyhook_register(struct tty **rtp, struct proc *p, int fd, struct ttyhook *th,
 
 	/* Validate the file descriptor. */
 	fdp = p->p_fd;
-	error = fget_unlocked(fdp, fd, cap_rights_init(&rights, CAP_TTYHOOK),
-	    &fp, NULL);
+	error = fget_unlocked(fdp, fd, cap_rights_init_one(&rights, CAP_TTYHOOK),
+	    &fp);
 	if (error != 0)
 		return (error);
 	if (fp->f_ops == &badfileops) {
@@ -2357,9 +2396,8 @@ DB_SHOW_COMMAND(tty, db_show_tty)
 	_db_show_hooks("\t", tp->t_hook);
 
 	/* Process info. */
-	db_printf("\tpgrp: %p gid %d jobc %d\n", tp->t_pgrp,
-	    tp->t_pgrp ? tp->t_pgrp->pg_id : 0,
-	    tp->t_pgrp ? tp->t_pgrp->pg_jobc : 0);
+	db_printf("\tpgrp: %p gid %d\n", tp->t_pgrp,
+	    tp->t_pgrp ? tp->t_pgrp->pg_id : 0);
 	db_printf("\tsession: %p", tp->t_session);
 	if (tp->t_session != NULL)
 	    db_printf(" count %u leader %p tty %p sid %d login %s",

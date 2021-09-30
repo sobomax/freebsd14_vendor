@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1f8c9c868d4c28455143cc8a8e5e848e12896283 $");
+__FBSDID("$FreeBSD: d054aee4078c42376fdd29c5a104c9d0ff3436f3 $");
 
 #include <assert.h>
 #include <stdio.h>

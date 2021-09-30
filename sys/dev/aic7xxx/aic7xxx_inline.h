@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aic7xxx_inline.h#47 $
  *
- * $FreeBSD: d495fc4c601cd1ca5249e9c0470a63f3767a5a8e $
+ * $FreeBSD: 47617c2c921f59a7639b59316398382444bb1a5f $
  */
 
 #ifndef _AIC7XXX_INLINE_H_
@@ -637,7 +637,6 @@ ahc_intr(struct ahc_softc *ahc)
 	} else if (intstat & BRKADRINT) {
 		ahc_handle_brkadrint(ahc);
 	} else if ((intstat & (SEQINT|SCSIINT)) != 0) {
-
 		ahc_pause_bug_fix(ahc);
 
 		if ((intstat & SEQINT) != 0)

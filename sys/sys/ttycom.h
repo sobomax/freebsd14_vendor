@@ -34,29 +34,19 @@
  * SUCH DAMAGE.
  *
  *	@(#)ttycom.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: 5aabb074a009cc6b0a994f3d737971b97020551b $
+ * $FreeBSD: a7309d4c5d6bb36b3b95196058885c3649699bf0 $
  */
 
 #ifndef	_SYS_TTYCOM_H_
 #define	_SYS_TTYCOM_H_
 
 #include <sys/ioccom.h>
+#include <sys/_winsize.h>
 
 /*
  * Tty ioctl's except for those supported only for backwards compatibility
  * with the old tty driver.
  */
-
-/*
- * Window/terminal size structure.  This information is stored by the kernel
- * in order to provide a consistent interface, but is not used by the kernel.
- */
-struct winsize {
-	unsigned short	ws_row;		/* rows, in characters */
-	unsigned short	ws_col;		/* columns, in characters */
-	unsigned short	ws_xpixel;	/* horizontal size, pixels */
-	unsigned short	ws_ypixel;	/* vertical size, pixels */
-};
 
 						/* 0-2 compat */
 						/* 3-7 unused */

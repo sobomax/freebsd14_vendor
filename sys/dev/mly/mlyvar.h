@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: c205bdf3d33e5a87f37f20b0d41e075eb5cae228 $
+ *	$FreeBSD: 336d47ac609686376d96ed6fd33f3727b15a497c $
  */
 
 /********************************************************************************
@@ -308,7 +308,6 @@ struct mly_softc {
 	    sc->mly_qstat[qname].q_length = 0;	\
 	    sc->mly_qstat[qname].q_max = 0;	\
 	} while(0)
-
 
 #define MLYQ_COMMAND_QUEUE(name, index)					\
 static __inline void							\

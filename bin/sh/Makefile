@@ -1,11 +1,14 @@
 #	@(#)Makefile	8.4 (Berkeley) 5/5/95
-# $FreeBSD: abd756bb8e6deb274cef5f3340edea546b8d7e3a $
+# $FreeBSD: b074121d0ecde27e3e4fb53b052c84dc5e90ce7d $
 
 .include <src.opts.mk>
 
-CONFS=	dot.profile profile
-CONFSDIR_dot.profile=	/root
-CONFSNAME_dot.profile=	.profile
+CONFGROUPS=	ETC ROOT
+ETC=	profile
+ROOT=	dot.shrc dot.profile
+ROOTDIR=	/root
+ROOTNAME_dot.shrc=	.shrc
+ROOTNAME_dot.profile=	.profile
 PACKAGE=runtime
 PROG=	sh
 INSTALLFLAGS= -S
@@ -27,8 +30,6 @@ LIBADD=	edit
 CFLAGS+=-DSHELL -I. -I${.CURDIR}
 # for debug:
 # DEBUG_FLAGS+= -g -DDEBUG=2 -fno-inline
-WARNS?=	2
-WFORMAT=0
 
 .PATH:	${.CURDIR}/bltin \
 	${.CURDIR:H}/kill \
@@ -45,6 +46,7 @@ builtins.h: .NOMETA
 builtins.c builtins.h: mkbuiltins builtins.def
 	sh ${.CURDIR}/mkbuiltins ${.CURDIR}
 
+DEPENDOBJS+= mknodes mksyntax
 mknodes mksyntax: ${BUILD_TOOLS_META}
 
 .ORDER: nodes.c nodes.h

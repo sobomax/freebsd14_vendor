@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df8199901c4fcda1e78210c9322212afafa07ce7 $");
+__FBSDID("$FreeBSD: e1fac8b72fcb8a5d13e2b2d2db3116dd362156ff $");
 
 #include "opt_wlan.h"
 
@@ -75,7 +75,8 @@ __FBSDID("$FreeBSD: df8199901c4fcda1e78210c9322212afafa07ce7 $");
 #include "if_otusreg.h"
 
 static int otus_debug = 0;
-static SYSCTL_NODE(_hw_usb, OID_AUTO, otus, CTLFLAG_RW, 0, "USB otus");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, otus, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB otus");
 SYSCTL_INT(_hw_usb_otus, OID_AUTO, debug, CTLFLAG_RWTUN, &otus_debug, 0,
     "Debug level");
 #define	OTUS_DEBUG_XMIT		0x00000001
@@ -98,7 +99,6 @@ SYSCTL_INT(_hw_usb_otus, OID_AUTO, debug, CTLFLAG_RWTUN, &otus_debug, 0,
 		if ((dm == OTUS_DEBUG_ANY) || (dm & otus_debug)) \
 			device_printf(sc->sc_dev, __VA_ARGS__); \
 	} while (0)
-
 #define	OTUS_DEV(v, p) { USB_VPI(v, p, 0) }
 static const STRUCT_USB_HOST_ID otus_devs[] = {
 	OTUS_DEV(USB_VENDOR_ACCTON,		USB_PRODUCT_ACCTON_WN7512),
@@ -1540,7 +1540,6 @@ otus_sub_rxeof(struct otus_softc *sc, uint8_t *buf, int len, struct mbufq *rxq)
 	struct mbuf *m;
 //	int s;
 
-
 	if (otus_debug & OTUS_DEBUG_RX_BUFFER) {
 		device_printf(sc->sc_dev, "%s: %*D\n",
 		    __func__, len, buf, "-");
@@ -1807,6 +1806,7 @@ otus_rxeof(struct usb_xfer *xfer, struct otus_data *data, struct mbufq *rxq)
 static void
 otus_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 {
+	struct epoch_tracker et;
 	struct otus_softc *sc = usbd_xfer_softc(xfer);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
@@ -1857,6 +1857,7 @@ tr_setup:
 		 * callback and safe to unlock.
 		 */
 		OTUS_UNLOCK(sc);
+		NET_EPOCH_ENTER(et);
 		while ((m = mbufq_dequeue(&scrx)) != NULL) {
 			wh = mtod(m, struct ieee80211_frame *);
 			ni = ieee80211_find_rxnode(ic,
@@ -1869,6 +1870,7 @@ tr_setup:
 			} else
 				(void)ieee80211_input_mimo_all(ic, m);
 		}
+		NET_EPOCH_EXIT(et);
 #ifdef	IEEE80211_SUPPORT_SUPERG
 		ieee80211_ff_age_all(ic, 100);
 #endif
@@ -2192,7 +2194,6 @@ otus_hw_rate_is_ofdm(struct otus_softc *sc, uint8_t hw_rate)
 	}
 }
 
-
 static void
 otus_tx_update_ratectl(struct otus_softc *sc, struct ieee80211_node *ni)
 {
@@ -2383,7 +2384,6 @@ otus_hash_maddr(void *arg, struct sockaddr_dl *sdl, u_int cnt)
 
 	return (1);
 }
-
 
 int
 otus_set_multi(struct otus_softc *sc)

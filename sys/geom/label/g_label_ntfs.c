@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 653524ab654ce8d6b4fcbdaa4e4c6b293df04643 $");
+__FBSDID("$FreeBSD: dee105bcc833345d989bacea84f9e702fcdc7aed $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,8 +40,6 @@ __FBSDID("$FreeBSD: 653524ab654ce8d6b4fcbdaa4e4c6b293df04643 $");
 #define	NTFS_A_VOLUMENAME	0x60
 #define	NTFS_FILEMAGIC		((uint32_t)(0x454C4946))
 #define	NTFS_VOLUMEINO		3
-
-#define G_LABEL_NTFS_DIR	"ntfs"
 
 struct ntfs_attr {
 	uint32_t	a_type;
@@ -170,7 +168,7 @@ done:
 
 struct g_label_desc g_label_ntfs = {
 	.ld_taste = g_label_ntfs_taste,
-	.ld_dir = G_LABEL_NTFS_DIR,
+	.ld_dirprefix = "ntfs/",
 	.ld_enabled = 1
 };
 

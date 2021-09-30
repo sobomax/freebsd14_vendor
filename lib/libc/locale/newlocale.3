@@ -25,8 +25,8 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: c7414be73d3a85aa0893618db20f5b2f975afefd $
-.Dd September 17, 2011
+.\" $FreeBSD: cc5043df8eb1d1c26c37d3c9b8c97b34f9140fe0 $
+.Dd October 2, 2020
 .Dt NEWLOCALE 3
 .Os
 .Sh NAME
@@ -46,7 +46,20 @@ defines the components that the new locale will have set to the locale with the
 name specified in the
 .Fa locale
 parameter.
-Any other components will be inherited from
+Any components not specified in
+.Fa mask
+will be inherited from the locale referenced by
+.Fa base ,
+if
+.Fa base
+is not
+.Dv NULL .
+If the call is successful, the state of the locale referenced by
+.Fa base
+is unspecified, and it must not be accessed.
+The special locale
+.Dv LC_GLOBAL_LOCALE
+may not be specified for
 .Fa base .
 The
 .Fa mask

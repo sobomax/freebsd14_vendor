@@ -1,12 +1,12 @@
-# $FreeBSD: b64b0636ad09381a387c9511656f90234553dd6c $
+# $FreeBSD: afb7b43743706d94987449e3b84b694ef74f0324 $
 
 SHLIBDIR?=	/lib/casper
 
 .include <src.opts.mk>
 
-PACKAGE=libcasper
+PACKAGE=	runtime
 
-SHLIB_MAJOR=	1
+SHLIB_MAJOR=	2
 INCSDIR?=	${INCLUDEDIR}/casper
 
 .if ${MK_CASPER} != "no"
@@ -25,8 +25,12 @@ HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests
 
 MAN+=	cap_sysctl.3
-
-MLINKS+=cap_sysctl.3 libcap_sysctl.3
-MLINKS+=cap_sysctl.3 cap_sysctlbyname.3
+MLINKS+=cap_sysctl.3 libcap_sysctl.3 \
+	cap_sysctl.3 cap_sysctlbyname.3 \
+	cap_sysctl.3 cap_nametomib.3 \
+	cap_sysctl.3 cap_sysctl_limit_init.3 \
+	cap_sysctl.3 cap_sysctl_limit_mib.3 \
+	cap_sysctl.3 cap_sysctl_limit_name.3 \
+	cap_sysctl.3 cap_sysctl_limit.3
 
 .include <bsd.lib.mk>

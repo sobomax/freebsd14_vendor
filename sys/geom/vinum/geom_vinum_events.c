@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d34adc794e641a9ab2e3fc4ed122daa25839a42 $");
+__FBSDID("$FreeBSD: 78aa0adab8cf932da6d9ba984e8a4d733ad27a0e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -38,6 +38,7 @@ __FBSDID("$FreeBSD: 5d34adc794e641a9ab2e3fc4ed122daa25839a42 $");
 #include <sys/systm.h>
 
 #include <geom/geom.h>
+#include <geom/geom_dbg.h>
 #include <geom/vinum/geom_vinum_var.h>
 #include <geom/vinum/geom_vinum.h>
 

@@ -1,6 +1,6 @@
 # MMCCAM is the kernel config for doing MMC on CAM development
 # and testing on bhyve
-# $FreeBSD: 19dc27b95e3d8afd82c03d992aa86d8057eac0b9 $
+# $FreeBSD: 8a5bc7175d6846c48be588b712529006e690d659 $
 
 include         MINIMAL
 
@@ -11,9 +11,6 @@ options         GEOM_LABEL
 
 # UART -- for bhyve console
 device          uart
-
-# kgdb stub
-device          bvmdebug
 
 # VirtIO support, needed for bhyve
 device		virtio			# Generic VirtIO bus (required)

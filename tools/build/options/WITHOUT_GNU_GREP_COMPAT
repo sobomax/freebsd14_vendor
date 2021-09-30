@@ -1,3 +1,0 @@
-.\" $FreeBSD: 037b9321589a71f484b47c4654b37a79fc7f1e44 $
-Set this option to omit the gnu extensions to grep from being included in
-BSD grep.

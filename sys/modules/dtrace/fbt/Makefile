@@ -1,4 +1,4 @@
-# $FreeBSD: 68156981d0778ccf245a84c20e2449dc9df19d55 $
+# $FreeBSD: 360d920007764a7fa4e1a5e3c6752300a834c4ee $
 
 SYSDIR?=	${SRCTOP}/sys
 
@@ -8,6 +8,7 @@ KMOD=		fbt
 SRCS=		fbt.c fbt_isa.c
 SRCS+=		vnode_if.h
 
+
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 CFLAGS+=	-I${SYSDIR}/cddl/dev/fbt/x86
 .PATH:		${SYSDIR}/cddl/dev/fbt/x86
@@ -16,11 +17,10 @@ CFLAGS+=	-I${SYSDIR}/cddl/dev/fbt/${MACHINE_CPUARCH}
 .PATH:		${SYSDIR}/cddl/dev/fbt/${MACHINE_CPUARCH}
 .endif
 
-CFLAGS+=	-I${SYSDIR}/cddl/dev/fbt \
-		-I${SYSDIR}/cddl/compat/opensolaris \
-		-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
-		-I${SYSDIR}
+CFLAGS+= 	${OPENZFS_CFLAGS}
+CFLAGS+=  -I${SYSDIR}/cddl/dev/fbt
 
 .include <bsd.kmod.mk>
 
 CFLAGS+=	-include ${SYSDIR}/cddl/compat/opensolaris/sys/debug_compat.h
+CWARNFLAGS+=	${OPENZFS_CWARNFLAGS}

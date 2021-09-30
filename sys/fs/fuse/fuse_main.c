@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 674c8b698a34a5b887ab6545ff2ca389f021d895 $");
+__FBSDID("$FreeBSD: ac15ad9607256b56686207f2a5464772d32b9a74 $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -95,7 +95,7 @@ struct mtx fuse_mtx;
 extern struct vfsops fuse_vfsops;
 extern struct cdevsw fuse_cdevsw;
 extern struct vop_vector fuse_fifonops;
-extern int fuse_pbuf_freecnt;
+extern uma_zone_t fuse_pbuf_zone;
 
 static struct vfsconf fuse_vfsconf = {
 	.vfc_version = VFS_VERSION,
@@ -105,8 +105,10 @@ static struct vfsconf fuse_vfsconf = {
 	.vfc_flags = VFCF_JAIL | VFCF_SYNTHETIC
 };
 
-SYSCTL_NODE(_vfs, OID_AUTO, fusefs, CTLFLAG_RW, 0, "FUSE tunables");
-SYSCTL_NODE(_vfs_fusefs, OID_AUTO, stats, CTLFLAG_RW, 0, "FUSE statistics");
+SYSCTL_NODE(_vfs, OID_AUTO, fusefs, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "FUSE tunables");
+SYSCTL_NODE(_vfs_fusefs, OID_AUTO, stats, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "FUSE statistics");
 SYSCTL_INT(_vfs_fusefs, OID_AUTO, kernelabi_major, CTLFLAG_RD,
     SYSCTL_NULL_INT_PTR, FUSE_KERNEL_VERSION, "FUSE kernel abi major version");
 SYSCTL_INT(_vfs_fusefs, OID_AUTO, kernelabi_minor, CTLFLAG_RD,
@@ -138,7 +140,6 @@ fuse_loader(struct module *m, int what, void *arg)
 
 	switch (what) {
 	case MOD_LOAD:			/* kldload */
-		fuse_pbuf_freecnt = nswbuf / 2 + 1;
 		mtx_init(&fuse_mtx, "fuse_mtx", NULL, MTX_DEF);
 		err = fuse_device_init();
 		if (err) {
@@ -149,6 +150,7 @@ fuse_loader(struct module *m, int what, void *arg)
 		fuse_file_init();
 		fuse_internal_init();
 		fuse_node_init();
+		fuse_pbuf_zone = pbuf_zsecond_create("fusepbuf", nswbuf / 2);
 
 		/* vfs_modevent ignores its first arg */
 		if ((err = vfs_modevent(NULL, what, &fuse_vfsconf)))
@@ -158,6 +160,7 @@ fuse_loader(struct module *m, int what, void *arg)
 		if ((err = vfs_modevent(NULL, what, &fuse_vfsconf)))
 			return (err);
 		fuse_bringdown(eh_tag);
+		uma_zdestroy(fuse_pbuf_zone);
 		break;
 	default:
 		return (EINVAL);

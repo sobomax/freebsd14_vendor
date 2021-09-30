@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD: fb55bfefd85e305c76f64ab6b4533b653c340663 $
+ * $FreeBSD: 9bffca204d5679cd9ddc17d55cc951129ef22170 $
  */
 
 #ifndef _SYS_TIME_H_
@@ -492,7 +492,7 @@ struct clockinfo {
 #define	CPUCLOCK_WHICH_TID	1
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_STANDALONE)
 
 /*
  * Kernel to clock driver interface.
@@ -600,7 +600,7 @@ int	tvtohz(struct timeval *tv);
 	(((sbt2) >= sbt_timethreshold) ?				\
 	    ((*(sbt) = getsbinuptime()), 1) : ((*(sbt) = sbinuptime()), 0))
 
-#else /* !_KERNEL */
+#else /* !_KERNEL && !_STANDALONE */
 #include <time.h>
 
 #include <sys/cdefs.h>

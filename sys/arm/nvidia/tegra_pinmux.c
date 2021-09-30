@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae8ed5d83e6445e0251251e03f627f60d27b346c $");
+__FBSDID("$FreeBSD: 17356233306fff5c13f97a98649e3d72286da886 $");
 
 /*
  * Pin multiplexer driver for Tegra SoCs.
@@ -58,7 +58,6 @@ __FBSDID("$FreeBSD: ae8ed5d83e6445e0251251e03f627f60d27b346c $");
 #define	TEGRA_MUX_LOCK_SHIFT 7
 #define	TEGRA_MUX_IORESET_SHIFT 8
 #define	TEGRA_MUX_RCV_SEL_SHIFT 9
-
 
 /* Pin goup register. */
 #define	TEGRA_GRP_HSM_SHIFT 2
@@ -708,7 +707,6 @@ static int pinmux_configure(device_t dev, phandle_t cfgxref)
 	sc = device_get_softc(dev);
 	cfgnode = OF_node_from_xref(cfgxref);
 
-
 	for (node = OF_child(cfgnode); node != 0; node = OF_peer(node)) {
 		if (!ofw_bus_node_status_okay(node))
 			continue;
@@ -778,7 +776,6 @@ pinmux_attach(device_t dev)
 
 	return (0);
 }
-
 
 static device_method_t tegra_pinmux_methods[] = {
 	/* Device interface */

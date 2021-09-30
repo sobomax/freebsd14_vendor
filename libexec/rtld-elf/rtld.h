@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 195480ba5e4911e1bb1ab6f32e7248ae6737ea37 $
+ * $FreeBSD: 85472826a4ec5337269d88876c8856825324a3a8 $
  */
 
 #ifndef RTLD_H /* { */
@@ -37,6 +37,7 @@
 #include <elf-hints.h>
 #include <link.h>
 #include <stdarg.h>
+#include <stdbool.h>
 #include <setjmp.h>
 #include <stddef.h>
 
@@ -45,11 +46,6 @@
 
 #define NEW(type)	((type *) xmalloc(sizeof(type)))
 #define CNEW(type)	((type *) xcalloc(1, sizeof(type)))
-
-/* We might as well do booleans like C++. */
-typedef unsigned char bool;
-#define false	0
-#define true	1
 
 extern size_t tls_last_offset;
 extern size_t tls_last_size;
@@ -151,7 +147,6 @@ typedef struct Struct_Obj_Entry {
     /* These items are computed by map_object() or by digest_phdr(). */
     caddr_t mapbase;		/* Base address of mapped region */
     size_t mapsize;		/* Size of mapped region in bytes */
-    size_t textsize;		/* Size of text segment in bytes */
     Elf_Addr vaddrbase;		/* Base address in shared object file */
     caddr_t relocbase;		/* Relocation constant = mapbase - vaddrbase */
     const Elf_Dyn *dynamic;	/* Dynamic section */
@@ -192,8 +187,12 @@ typedef struct Struct_Obj_Entry {
     Elf_Word gotsym;		/* First dynamic symbol in GOT */
     Elf_Addr *mips_pltgot;	/* Second PLT GOT */
 #endif
+#ifdef __powerpc__
 #ifdef __powerpc64__
     Elf_Addr glink;		/* GLINK PLT call stub section */
+#else
+    Elf_Addr *gotptr;		/* GOT pointer (secure-plt only) */
+#endif
 #endif
 
     const Elf_Verneed *verneed; /* Required versions. */
@@ -371,6 +370,7 @@ void free_aligned(void *ptr);
 extern Elf_Addr _GLOBAL_OFFSET_TABLE_[];
 extern Elf_Sym sym_zero;	/* For resolving undefined weak refs. */
 extern bool ld_bind_not;
+extern bool ld_fast_sigblock;
 
 void dump_relocations(Obj_Entry *);
 void dump_obj_relocations(Obj_Entry *);
@@ -414,7 +414,6 @@ int reloc_iresolve(Obj_Entry *, struct Struct_RtldLockState *);
 int reloc_iresolve_nonplt(Obj_Entry *, struct Struct_RtldLockState *);
 int reloc_gnu_ifunc(Obj_Entry *, int flags, struct Struct_RtldLockState *);
 void ifunc_init(Elf_Auxinfo[__min_size(AT_COUNT)]);
-void pre_init(void);
 void init_pltgot(Obj_Entry *);
 void allocate_initial_tls(Obj_Entry *);
 

@@ -1,6 +1,6 @@
-# $FreeBSD: 6d495462b0865960032769e9e8741dbf6fec35c5 $
+# $FreeBSD: b995e81b29ab45ffbd2c4b834b91303861ad8b7f $
 
-PACKAGE=lib${LIB}
+PACKAGE=	dpv
 LIB=		figpar
 SHLIB_MAJOR=	0
 INCS=		figpar.h string_m.h

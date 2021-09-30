@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 436dc4e76d1da6a2fbb1772ab34cc7b877f3ca89 $
+ * $FreeBSD: d576415c5920f43353384731c4620f451ccc4053 $
  */
 
 #ifndef _NFS_NFSRVCACHE_H_
@@ -53,7 +53,7 @@ struct nfsrvcache {
 	u_int32_t	rc_xid;			/* rpc id number */
 	time_t		rc_timestamp;		/* Time done */
 	union {
-		mbuf_t repmb;			/* Reply mbuf list OR */
+		struct mbuf *repmb;		/* Reply mbuf list OR */
 		int repstat;			/* Reply status */
 	} rc_un;
 	union {

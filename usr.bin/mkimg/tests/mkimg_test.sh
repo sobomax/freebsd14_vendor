@@ -1,4 +1,4 @@
-# $FreeBSD: 329f2684ac6f09f9b3a17b4cf96f1295ceccb21d $
+# $FreeBSD: 5d2e93ea144d143c343b64fe5c2ba7df0572edde $
 
 mkimg_blksz_list="512 4096"
 mkimg_format_list="qcow qcow2 raw vhd vhdf vhdx vmdk"
@@ -56,7 +56,7 @@ makeimage()
     if test -z "$partarg"; then
 	local swap ufs
 	swap="-p freebsd-swap::128K"
-	ufs="-p freebsd-ufs:=`mkcontents P 4194304`"
+	ufs="-p freebsd-ufs:=$(atf_get_srcdir)/partition_data_4M.bin"
 	partarg="$ufs $swap"
     fi
 

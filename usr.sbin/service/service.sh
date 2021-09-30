@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: fa002fb0a817425d56676dc9c9df148e812eb544 $
+# $FreeBSD: df2869f98a6c35679a13292107289fe838bc8f1d $
 
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -165,7 +165,7 @@ cd /
 for dir in /etc/rc.d $local_startup; do
 	if [ -x "$dir/$script" ]; then
 		[ -n "$VERBOSE" ] && echo "$script is located in $dir"
-		exec env -i HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin $dir/$script "$@"
+		exec env -i -L -/daemon HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin "$dir/$script" "$@"
 	fi
 done
 

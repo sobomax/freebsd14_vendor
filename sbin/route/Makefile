@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: a1db0b6528ddf5ffbff4c804fbc8c4123b901fdd $
+# $FreeBSD: e65030f805bb389d0b5e0de6ba6df0626948c18c $
 
 .include <src.opts.mk>
 
@@ -18,6 +18,9 @@ CFLAGS+= -DINET
 CFLAGS+= -DINET6
 .endif
 CFLAGS+= -I.
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 keywords.h: keywords
 	LC_ALL=C awk '!/^#|^$$/ { \

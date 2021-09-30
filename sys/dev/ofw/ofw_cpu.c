@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 336b6fc6d28d77af0f7dd3f216ca0cb5f74942e5 $");
+__FBSDID("$FreeBSD: 293d765e8cbd660708cfc46a6f62197b3ca17fd4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -361,7 +361,6 @@ ofw_cpu_early_foreach(ofw_cpu_foreach_cb callback, boolean_t only_runnable)
 
 	for (child = OF_child(node); child != 0; child = OF_peer(child),
 	    id = next_id) {
-
 		/* Check if child is a CPU */
 		memset(device_type, 0, sizeof(device_type));
 		rv = OF_getprop(child, "device_type", device_type,

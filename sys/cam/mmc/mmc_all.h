@@ -50,7 +50,7 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: cbc32c0d988204959132c997c069dc6e4d1d972b $
+ * $FreeBSD: cb8c1bc7ae2baea103e3fbe20ee798550e8e72cb $
  */
 
 /*
@@ -64,9 +64,14 @@
 #ifndef CAM_MMC_ALL_H
 #define CAM_MMC_ALL_H
 
+#include <cam/cam_sim.h>
 #include <cam/mmc/mmc.h>
 #include <dev/mmc/mmcreg.h>
 
-void	mmc_print_ident(struct mmc_params *ident_data);
+struct ccb_pathinq;
+struct cam_sim;
+void	mmc_path_inq(struct ccb_pathinq *cpi, const char *hba,
+    const struct cam_sim *sim, size_t maxio);
+void    mmccam_start_discovery(struct cam_sim *sim);
 
 #endif

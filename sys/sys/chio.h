@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 15d52202374a71d71f17de12249dc95c621d843c $
+ * $FreeBSD: 99cfd4528fb0fe437ba46542cd10e03cb2383234 $
  */
 
 #ifndef	_SYS_CHIO_H_
@@ -248,7 +248,6 @@ struct changer_element_status_request {
 	struct changer_element_status	*cesr_element_status;
 };
 
-
 struct changer_set_voltag_request {
 	u_int16_t		csvr_type;
 	u_int16_t		csvr_addr;
@@ -264,9 +263,8 @@ struct changer_set_voltag_request {
 	changer_voltag_t     	csvr_voltag;
 };
 
-
 #define	CESTATUS_BITS	\
-	"\20\6INEAB\5EXENAB\4ACCESS\3EXCEPT\2IMPEXP\1FULL"
+	"\20\6INENAB\5EXENAB\4ACCESS\3EXCEPT\2IMPEXP\1FULL"
 
 #define	CHIOMOVE	_IOW('c', 0x01, struct changer_move)
 #define	CHIOEXCHANGE	_IOW('c', 0x02, struct changer_exchange)

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1dccc653aea1e0e7fd6e48ac0444eed1603aa362 $
+ * $FreeBSD: e989decc2359c462c217933b80ca4b4cc0073494 $
  */
 
 #ifndef _PARTEDIT_PARTEDIT_H
@@ -38,6 +38,8 @@
 struct gprovider;
 struct gmesh;
 struct ggeom;
+
+extern int tmpdfd;
 
 TAILQ_HEAD(pmetadata_head, partition_metadata);
 extern struct pmetadata_head part_metadata;

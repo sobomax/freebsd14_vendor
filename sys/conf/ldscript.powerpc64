@@ -1,4 +1,4 @@
-/* $FreeBSD: 6ee7697ce3f80ae3803c3a855c20d821f3511cbc $ */
+/* $FreeBSD: 5dd84c65c09fea7f099af7b9d48d96ad8d9677e7 $ */
 
 OUTPUT_FORMAT("elf64-powerpc-freebsd", "elf64-powerpc-freebsd",
 	      "elf64-powerpc-freebsd")
@@ -6,12 +6,17 @@ OUTPUT_ARCH(powerpc:common64)
 ENTRY(__start)
 SEARCH_DIR(/usr/lib);
 PROVIDE (__stack = 0);
+PHDRS
+{
+	kernel PT_LOAD;
+	dynamic PT_DYNAMIC;
+}
 SECTIONS
 {
 
   /* Low-address wrapper for bootloaders (kexec/kboot) that can't parse ELF */
   . = kernbase - 0x100;
-  .kboot : { *(.text.kboot) }
+  .kboot : { *(.text.kboot) } :kernel
 
   /* Read-only sections, merged into text segment: */
   . = kernbase;
@@ -19,6 +24,7 @@ SECTIONS
 
   .text      :
   {
+    *(.glink)
     *(.text)
     *(.stub)
     /* .gnu.warning sections are handled specially by elf32.em.  */
@@ -29,11 +35,7 @@ SECTIONS
   PROVIDE (etext = .);
 
   /* Do not emit PT_INTERP section, which confuses some loaders (kexec-lite) */
-  .interpX    : { *(.interp) 	} : NONE
   /DISCARD/   : { *(.interp)	} 
-
-  /* Also delete notes */
-  /DISCARD/   : { *(.note.*)	} 
 
   .hash          : { *(.hash)		}
   .dynsym        : { *(.dynsym)		}
@@ -46,6 +48,10 @@ SECTIONS
     *(.note.gnu.build-id)
     PROVIDE (__build_id_end = .);
   }
+
+  /* Do not emit any additional notes. */
+  /DISCARD/   : { *(.note.*)	} 
+
   .rela.text     :
     { *(.rela.text) *(.rela.gnu.linkonce.t*) }
   .rela.data     :
@@ -101,7 +107,7 @@ SECTIONS
   .got       : ALIGN(8) { __tocbase = .; *(.got) }
   .toc       : ALIGN(8) { *(.toc) }
 
-  .dynamic        : { *(.dynamic) }
+  .dynamic        : { *(.dynamic) } :kernel :dynamic
   /* Put .ctors and .dtors next to the .got2 section, so that the pointers
      get relocated with -mrelocatable. Also put in the .fixup pointers.
      The current compiler no longer needs this, but keep it around for 2.7.2  */
@@ -120,7 +126,7 @@ SECTIONS
   /* We want the small data sections together, so single-instruction offsets
      can access them all, and initialized data all before uninitialized, so
      we can shorten the on-disk segment size.  */
-  .sdata     : { *(.sdata) }
+  .sdata     : { *(.sdata) } :kernel
   _edata  =  .;
   PROVIDE (edata = .);
   .sbss      :

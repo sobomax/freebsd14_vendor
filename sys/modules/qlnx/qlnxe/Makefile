@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: fbb0b4537bdc1cf3c3601968174f7f0f806789b0 $
+# $FreeBSD: 718040776496fe607ffa83a384f5c99e0fb190be $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlnx/qlnxe
@@ -46,6 +46,16 @@ SRCS+=ecore_mng_tlv.c
 
 SRCS+=ecore_sriov.c
 SRCS+=ecore_vf.c
+
+#roce/iwarp files. Compilation can be turned off roce/iwarp are not required.
+# In other words if you don't need RDMA please comment out SRCS adds for
+# ecore_rdma.c ecore_roce.c ecore_iwarp.c ecore_ooo.c ecore_ll2.c qlnx_rdma.c
+SRCS+=ecore_rdma.c
+SRCS+=ecore_roce.c
+SRCS+=ecore_iwarp.c
+SRCS+=ecore_ooo.c
+SRCS+=ecore_ll2.c
+SRCS+=qlnx_rdma.c
 
 SRCS+=qlnx_ioctl.c
 SRCS+=qlnx_os.c
@@ -70,5 +80,14 @@ CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
 #CFLAGS += -DQLNX_USER_LLDP
 
 CFLAGS += -DCONFIG_ECORE_SRIOV
+
+# For roce/iwarp files. Compilation can be turned off if roce/iwarp are not required.
+# In other words if you don't need RDMA please comment out the CFLAGS which define
+# CONFIG_ECORE_LL2 CONFIG_ECORE_ROCE CONFIG_ECORE_IWARP QLNX_ENABLE_IWARP
+CFLAGS += -DCONFIG_ECORE_LL2
+CFLAGS += -DCONFIG_ECORE_ROCE
+CFLAGS += -DCONFIG_ECORE_IWARP
+CFLAGS += -DCONFIG_ECORE_RDMA
+CFLAGS += -DQLNX_ENABLE_IWARP
 
 CWARNFLAGS+= -Wno-cast-qual

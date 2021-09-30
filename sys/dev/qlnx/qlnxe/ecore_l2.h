@@ -24,13 +24,12 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2d15d4cc5c550bdb5752c7c7218e1e1e4879e054 $
+ * $FreeBSD: de3712afa02aff9cfbea5f72262d5e6fa437c64c $
  *
  */
 
 #ifndef __ECORE_L2_H__
 #define __ECORE_L2_H__
-
 
 #include "ecore.h"
 #include "ecore_hw.h"

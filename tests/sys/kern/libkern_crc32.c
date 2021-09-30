@@ -23,20 +23,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 03d02312434617589eca9232ca0ff9094e35c54e $
+ * $FreeBSD: 39cb8ca5aeeb8857d9b20496f56ed6b9887ffd47 $
  */
 
 #include <sys/param.h>
+#include <sys/gsb_crc32.h>
 
 #include <stdint.h>
 
 #include <atf-c.h>
 
-#if defined(__amd64__) || defined(__i386__)
-extern uint32_t sse42_crc32c(uint32_t, const unsigned char *, unsigned);
-#elif defined(__aarch64__)
-extern uint32_t armv8_crc32c(uint32_t, const unsigned char *, unsigned);
-#else
+#if !defined(__amd64__) && !defined(__i386__) && !defined(__aarch64__)
 #error These tests are not supported on this platform
 #endif
 

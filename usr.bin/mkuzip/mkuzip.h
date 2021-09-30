@@ -23,10 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f41507c86964b6506f4df9c2caffee5454e7219c $
+ * $FreeBSD: b4bec58525eedf2f6163b05c7bfb8cb798af9e2e $
  */
 
 #define DEFINE_RAW_METHOD(func, rval, args...) typedef rval (*func##_t)(args)
+
+/* Use an algorithm-specific default level if no explicit level is selected. */
+#define USE_DEFAULT_LEVEL INT_MIN
 
 void *mkuz_safe_malloc(size_t);
 void *mkuz_safe_zmalloc(size_t);

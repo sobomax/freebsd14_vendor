@@ -27,7 +27,7 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b773e379e8836785a639b2bff913ce5dd16590d $");
+__FBSDID("$FreeBSD: df7840845fcd13cc9d251b415805b13990517388 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -106,12 +106,33 @@ mvneta_fdt_probe(device_t dev)
 static int
 mvneta_fdt_attach(device_t dev)
 {
+	struct mvneta_softc *sc;
+	uint32_t tx_csum_limit;
 	int err;
+
+	sc = device_get_softc(dev);
 
 	/* Try to fetch PHY information from FDT */
 	err = mvneta_fdt_phy_acquire(dev);
 	if (err != 0)
 		return (err);
+
+	if (ofw_bus_is_compatible(dev, "marvell,armada-370-neta")) {
+		tx_csum_limit = MVNETA_A370_MAX_CSUM_MTU;
+	} else {
+		tx_csum_limit = MVNETA_A3700_MAX_CSUM_MTU;
+	}
+
+	if (ofw_bus_has_prop(dev, "tx-csum-limit")) {
+		err = OF_getprop(ofw_bus_get_node(dev), "tx-csum-limit",
+			    &tx_csum_limit, sizeof(tx_csum_limit));
+		if (err <= 0) {
+			device_printf(dev,
+				"Failed to acquire tx-csum-limit property\n");
+			return (ENXIO);
+		}
+	}
+	sc->tx_csum_limit = tx_csum_limit;
 
 	return (mvneta_attach(dev));
 }

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e6562da5c02e143f24dc588a1b86fce338251afb $
+ * $FreeBSD: a10c0b4e8309e9083f9de148852f8d9cb963e0f0 $
  */
 
 #ifndef _VPMTMR_H_
@@ -34,11 +34,16 @@
 #define	IO_PMTMR 0x408
 
 struct vpmtmr;
+struct vm_snapshot_meta;
 
 struct vpmtmr *vpmtmr_init(struct vm *vm);
 void vpmtmr_cleanup(struct vpmtmr *pmtmr);
 
 int vpmtmr_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
     uint32_t *val);
+
+#ifdef BHYVE_SNAPSHOT
+int vpmtmr_snapshot(struct vpmtmr *vpmtmr, struct vm_snapshot_meta *meta);
+#endif
 
 #endif

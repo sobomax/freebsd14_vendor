@@ -54,7 +54,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: 5e2bdbcb847170e8020091c14c3e4d318d34f0be $");
+SND_DECLARE_FILE("$FreeBSD: 7d965860f886bc0c1e08c1615b2e612ba46ca5c0 $");
 #endif
 
 #define FEEDMATRIX_RESERVOIR	(SND_CHN_MAX * PCM_32_BPS)
@@ -296,7 +296,6 @@ feed_matrix_setup(struct feed_matrix_info *info, struct pcmchan_matrix *m_in,
 {
 	uint32_t i, j, ch, in_mask, merge_mask;
 	int mul, shift;
-
 
 	if (info == NULL || m_in == NULL || m_out == NULL ||
 	    AFMT_CHANNEL(info->in) != m_in->channels ||

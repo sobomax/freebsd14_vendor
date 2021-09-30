@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fcb0ccfd2ead52de4b2d9ff57af4685f7bc00b51 $");
+__FBSDID("$FreeBSD: d3327399fb88fe81831c6d6f1a7c32f70b3f01e4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -454,13 +454,6 @@ fman_attach(device_t dev)
 		device_printf(dev, "could not allocate interrupt.\n");
 		goto err;
 	}
-
-	/*
-	 * XXX: Fix FMan interrupt. This is workaround for the issue with
-	 * interrupts directed to multiple CPUs by the interrupts subsystem.
-	 * Workaround is to bind the interrupt to only one CPU0.
-	 */
-	XX_FmanFixIntr(rman_get_start(sc->irq_res));
 
 	sc->err_irq_rid = 1;
 	sc->err_irq_res = bus_alloc_resource_any(dev, SYS_RES_IRQ,

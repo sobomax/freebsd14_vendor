@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d9f0e7bdcbfcd1f11f4c7861286cda50d82cb0f0 $
+ * $FreeBSD: c80c348f95f9c37cda44d684bdbb6fd9ca9b1383 $
  */
 #ifndef	_ATOMIC_LONG_H_
 #define	_ATOMIC_LONG_H_
@@ -34,7 +34,6 @@
 #include <linux/compiler.h>
 #include <sys/types.h>
 #include <machine/atomic.h>
-
 #define	ATOMIC_LONG_INIT(x)	{ .counter = (x) }
 
 typedef struct {
@@ -79,15 +78,7 @@ atomic_long_dec(atomic_long_t *v)
 static inline long
 atomic_long_xchg(atomic_long_t *v, long val)
 {
-#if defined(__i386__) || defined(__amd64__) || defined(__aarch64__)
 	return atomic_swap_long(&v->counter, val);
-#else
-	long ret = atomic_long_read(v);
-
-	while (!atomic_fcmpset_long(&v->counter, &ret, val))
-		;
-	return (ret);
-#endif
 }
 
 static inline long

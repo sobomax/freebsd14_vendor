@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a7d440440b45fc02d5620d8375941cd1d1b72628 $
+ * $FreeBSD: bab8dabd208078584e95e0b11d9a90dc197d2f90 $
  */
 
 #ifndef _SYS__STACK_H_
 #define	_SYS__STACK_H_
 
-#define	STACK_MAX	18	/* Don't change, stack_ktr relies on this. */
+#define	STACK_MAX	18
 
 struct stack {
 	int		depth;

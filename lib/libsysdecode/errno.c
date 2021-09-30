@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b6ae6083fb27dcb7d7c44fe54b63382cbf51362 $");
+__FBSDID("$FreeBSD: d66493ad739d1093ea41074b90d66b2c8a476b3c $");
 
 #include <sys/param.h>
 #include <sys/acl.h>
@@ -37,7 +36,7 @@ __FBSDID("$FreeBSD: 0b6ae6083fb27dcb7d7c44fe54b63382cbf51362 $");
 #include <sysdecode.h>
 
 #if defined(__aarch64__) || defined(__amd64__) || defined(__i386__)
-static
+#include <compat/linux/linux_errno.h>
 #include <compat/linux/linux_errno.inc>
 #endif
 

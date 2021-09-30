@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2006 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d3342e497d12c392d7df428ffd0fe25e80476d2 $");
+__FBSDID("$FreeBSD: cf1af0ee7af9cde21c40b9e09b7f23daf5689a23 $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
@@ -95,18 +94,20 @@ struct lock_class lock_class_rw = {
 };
 
 #ifdef ADAPTIVE_RWLOCKS
-static int __read_frequently rowner_retries;
-static int __read_frequently rowner_loops;
-static SYSCTL_NODE(_debug, OID_AUTO, rwlock, CTLFLAG_RD, NULL,
+#ifdef RWLOCK_CUSTOM_BACKOFF
+static u_short __read_frequently rowner_retries;
+static u_short __read_frequently rowner_loops;
+static SYSCTL_NODE(_debug, OID_AUTO, rwlock,
+    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
     "rwlock debugging");
-SYSCTL_INT(_debug_rwlock, OID_AUTO, retry, CTLFLAG_RW, &rowner_retries, 0, "");
-SYSCTL_INT(_debug_rwlock, OID_AUTO, loops, CTLFLAG_RW, &rowner_loops, 0, "");
+SYSCTL_U16(_debug_rwlock, OID_AUTO, retry, CTLFLAG_RW, &rowner_retries, 0, "");
+SYSCTL_U16(_debug_rwlock, OID_AUTO, loops, CTLFLAG_RW, &rowner_loops, 0, "");
 
 static struct lock_delay_config __read_frequently rw_delay;
 
-SYSCTL_INT(_debug_rwlock, OID_AUTO, delay_base, CTLFLAG_RW, &rw_delay.base,
+SYSCTL_U16(_debug_rwlock, OID_AUTO, delay_base, CTLFLAG_RW, &rw_delay.base,
     0, "");
-SYSCTL_INT(_debug_rwlock, OID_AUTO, delay_max, CTLFLAG_RW, &rw_delay.max,
+SYSCTL_U16(_debug_rwlock, OID_AUTO, delay_max, CTLFLAG_RW, &rw_delay.max,
     0, "");
 
 static void
@@ -118,6 +119,11 @@ rw_lock_delay_init(void *arg __unused)
 	rowner_loops = max(10000, rw_delay.max);
 }
 LOCK_DELAY_SYSINIT(rw_lock_delay_init);
+#else
+#define rw_delay	locks_delay
+#define rowner_retries	locks_delay_retries
+#define rowner_loops	locks_delay_loops
+#endif
 #endif
 
 /*
@@ -469,7 +475,7 @@ __rw_rlock_hard(struct rwlock *rw, struct thread *td, uintptr_t v
 #if defined(ADAPTIVE_RWLOCKS)
 	lock_delay_arg_init(&lda, &rw_delay);
 #elif defined(KDTRACE_HOOKS)
-	lock_delay_arg_init(&lda, NULL);
+	lock_delay_arg_init_noadapt(&lda);
 #endif
 
 #ifdef HWPMC_HOOKS
@@ -942,11 +948,6 @@ __rw_wlock_hard(volatile uintptr_t *c, uintptr_t v LOCK_FILE_LINE_ARG_DEF)
 	if (SCHEDULER_STOPPED())
 		return;
 
-#if defined(ADAPTIVE_RWLOCKS)
-	lock_delay_arg_init(&lda, &rw_delay);
-#elif defined(KDTRACE_HOOKS)
-	lock_delay_arg_init(&lda, NULL);
-#endif
 	if (__predict_false(v == RW_UNLOCKED))
 		v = RW_READ_VALUE(rw);
 
@@ -964,6 +965,12 @@ __rw_wlock_hard(volatile uintptr_t *c, uintptr_t v LOCK_FILE_LINE_ARG_DEF)
 	if (LOCK_LOG_TEST(&rw->lock_object, 0))
 		CTR5(KTR_LOCK, "%s: %s contested (lock=%p) at %s:%d", __func__,
 		    rw->lock_object.lo_name, (void *)rw->rw_lock, file, line);
+
+#if defined(ADAPTIVE_RWLOCKS)
+	lock_delay_arg_init(&lda, &rw_delay);
+#elif defined(KDTRACE_HOOKS)
+	lock_delay_arg_init_noadapt(&lda);
+#endif
 
 #ifdef HWPMC_HOOKS
 	PMC_SOFT_CALL( , , lock, failed);

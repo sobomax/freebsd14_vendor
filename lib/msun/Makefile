@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: 0cba3fc8b53b8807007d78c75f50f32bdf601e3a $
+# $FreeBSD: 4491bc216a4c5026717f4949589c58730b5712fb $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -108,6 +108,15 @@ COMMON_SRCS+=	catrigl.c \
 	s_nextafterl.c s_nexttoward.c s_remquol.c s_rintl.c s_roundl.c \
 	s_scalbnl.c s_sinl.c s_sincosl.c \
 	s_tanhl.c s_tanl.c s_truncl.c w_cabsl.c
+# Work around this warning from gcc:
+#     lib/msun/ld80/e_powl.c:275:1: error: floating constant exceeds range of
+#     'long double' [-Werror=overflow]
+#     if( y >= LDBL_MAX )
+# See also: https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=130067
+.include <bsd.compiler.mk>
+.if ${COMPILER_TYPE} == "gcc"
+CFLAGS.e_powl.c+= -Wno-error=overflow
+.endif
 .endif
 
 # C99 complex functions

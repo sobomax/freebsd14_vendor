@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 56ae129370fdff90884dcb50f5d68342ec625015 $
+ * $FreeBSD: c5ebe778b82d04d23501a053f71043cee41d350b $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 56ae129370fdff90884dcb50f5d68342ec625015 $");
+__FBSDID("$FreeBSD: c5ebe778b82d04d23501a053f71043cee41d350b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -251,6 +251,9 @@ dtrace_invop_start(struct trapframe *frame)
 	int invop;
 
 	invop = dtrace_invop(frame->pc, frame, frame->pc);
+	if (invop == 0)
+		return (-1);
+
 	offs = (invop & LDSD_DATA_MASK);
 	sp = (register_t *)((uint8_t *)frame->sp + offs);
 

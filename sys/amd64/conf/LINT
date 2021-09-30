@@ -1,0 +1,5 @@
+# $FreeBSD: 9618f78944ab5c9ea10bf57f15c0d49fcb03e87b $
+
+include "../../conf/NOTES"
+include "../../x86/conf/NOTES"
+include NOTES

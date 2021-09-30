@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf8944b1e2331eb607a9b7bd96bf7ad643b30810 $");
+__FBSDID("$FreeBSD: bfd118d6270517d52390ee7c90baeef88479080a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -319,4 +319,3 @@ armadaxp_l2_init(void)
 	reg |= (7 << 16);
 	write_coher_fabric(COHER_FABRIC_CIB_CTRL, reg);
 }
-

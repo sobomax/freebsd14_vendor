@@ -1,4 +1,4 @@
-# $FreeBSD: 46c8436ebff3455a51acb3cd6752afac0d35a89a $
+# $FreeBSD: a311126f38b5ac54f5d7acaf7ce19064e778533b $
 
 .include <bsd.own.mk>
 
@@ -6,6 +6,10 @@ TESTS_SUBDIRS+=	common
 
 .if ${MACHINE_CPUARCH} == "i386"
 TESTS_SUBDIRS+= i386
+.endif
+
+.if ${MACHINE_CPUARCH} == "amd64"
+TESTS_SUBDIRS+= amd64
 .endif
 
 .PATH:		${SRCTOP}/tests

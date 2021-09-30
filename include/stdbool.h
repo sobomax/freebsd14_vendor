@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 267e1ad2a1a0cb415ddbda63f45f3f2a7794436a $
+ * $FreeBSD: 2879da798da64181a7c093235f27b0c69d02a092 $
  */
 
 #ifndef __bool_true_false_are_defined
@@ -37,9 +37,6 @@
 #define	true	1
 
 #define	bool	_Bool
-#if __STDC_VERSION__ < 199901L && __GNUC__ < 3 && !defined(__INTEL_COMPILER)
-typedef	int	_Bool;
-#endif
 
 #endif /* !__cplusplus */
 #endif /* __bool_true_false_are_defined */

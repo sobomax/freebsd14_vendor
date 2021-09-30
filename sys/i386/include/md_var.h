@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 53e1861c8fffeb80b16dda43bf62d1cae3a5ee25 $
+ * $FreeBSD: c41de85b9bc949d9ae05800a243089cc06148627 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -47,7 +47,6 @@ extern	int	szfreebsd4_sigcode;
 extern	int	szosigcode;
 extern	int	sz_lcall_tramp;
 #endif
-extern	uint32_t *vm_page_dump;
 extern  vm_offset_t proc0kstack;
 extern	uintptr_t setidt_disp;
 
@@ -69,6 +68,8 @@ void	doreti_popl_fs_fault(void) __asm(__STRING(doreti_popl_fs_fault));
 void	fill_based_sd(struct segment_descriptor *sdp, uint32_t base);
 void	i686_pagezero(void *addr);
 void	sse2_pagezero(void *addr);
+int	minidumpsys_nopae(struct dumperinfo *);
+int	minidumpsys_pae(struct dumperinfo *);
 void	init_AMD_Elan_sc520(void);
 vm_paddr_t kvtop(void *addr);
 void	panicifcpuunsupported(void);

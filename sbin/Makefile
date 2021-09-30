@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: 4b2908bffb04dacb637ad8f68ffa3160fa350d5f $
+# $FreeBSD: 64840bae82bb7043663b6ef3dada1c22eba161fa $
 
 .include <src.opts.mk>
 
@@ -52,6 +52,7 @@ SUBDIR=adjkerntz \
 	newfs_msdos \
 	nfsiod \
 	nos-tun \
+	pfilctl \
 	ping \
 	rcorder \
 	reboot \
@@ -72,14 +73,11 @@ SUBDIR.${MK_CCD}+=	ccdconfig
 SUBDIR.${MK_CXX}+=	devd
 SUBDIR.${MK_HAST}+=	hastctl
 SUBDIR.${MK_HAST}+=	hastd
-SUBDIR.${MK_INET6}+=	ping6
 SUBDIR.${MK_INET6}+=	rtsol
 SUBDIR.${MK_IPFILTER}+=	ipf
 SUBDIR.${MK_IPFW}+=	ipfw
 SUBDIR.${MK_IPFW}+=	natd
 SUBDIR.${MK_ISCSI}+=	iscontrol
-SUBDIR.${MK_NAND}+=	nandfs
-SUBDIR.${MK_NAND}+=	newfs_nandfs
 SUBDIR.${MK_NVME}+=	nvmecontrol
 SUBDIR.${MK_OPENSSL}+=	decryptcore
 SUBDIR.${MK_PF}+=	pfctl

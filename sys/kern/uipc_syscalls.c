@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0a76832a1be4db827d3ea372b1f438addd14804 $");
+__FBSDID("$FreeBSD: 23fae343924a8ee0d29c4d0e85ee49c16ba66661 $");
 
 #include "opt_capsicum.h"
 #include "opt_inet.h"
@@ -457,9 +457,7 @@ sys_accept4(td, uap)
 
 #ifdef COMPAT_OLDSOCK
 int
-oaccept(td, uap)
-	struct thread *td;
-	struct accept_args *uap;
+oaccept(struct thread *td, struct oaccept_args *uap)
 {
 
 	return (accept1(td, uap->s, uap->name, uap->anamelen,
@@ -829,7 +827,7 @@ sys_sendto(struct thread *td, struct sendto_args *uap)
 	struct msghdr msg;
 	struct iovec aiov;
 
-	msg.msg_name = uap->to;
+	msg.msg_name = __DECONST(void *, uap->to);
 	msg.msg_namelen = uap->tolen;
 	msg.msg_iov = &aiov;
 	msg.msg_iovlen = 1;
@@ -838,7 +836,7 @@ sys_sendto(struct thread *td, struct sendto_args *uap)
 	if (SV_PROC_FLAG(td->td_proc, SV_AOUT))
 		msg.msg_flags = 0;
 #endif
-	aiov.iov_base = uap->buf;
+	aiov.iov_base = __DECONST(void *, uap->buf);
 	aiov.iov_len = uap->len;
 	return (sendit(td, uap->s, &msg, uap->flags));
 }
@@ -854,7 +852,7 @@ osend(struct thread *td, struct osend_args *uap)
 	msg.msg_namelen = 0;
 	msg.msg_iov = &aiov;
 	msg.msg_iovlen = 1;
-	aiov.iov_base = uap->buf;
+	aiov.iov_base = __DECONST(void *, uap->buf);
 	aiov.iov_len = uap->len;
 	msg.msg_control = 0;
 	msg.msg_flags = 0;
@@ -1235,7 +1233,7 @@ sys_setsockopt(struct thread *td, struct setsockopt_args *uap)
 }
 
 int
-kern_setsockopt(struct thread *td, int s, int level, int name, void *val,
+kern_setsockopt(struct thread *td, int s, int level, int name, const void *val,
     enum uio_seg valseg, socklen_t valsize)
 {
 	struct socket *so;
@@ -1251,7 +1249,7 @@ kern_setsockopt(struct thread *td, int s, int level, int name, void *val,
 	sopt.sopt_dir = SOPT_SET;
 	sopt.sopt_level = level;
 	sopt.sopt_name = name;
-	sopt.sopt_val = val;
+	sopt.sopt_val = __DECONST(void *, val);
 	sopt.sopt_valsize = valsize;
 	switch (valseg) {
 	case UIO_USERSPACE:
@@ -1558,7 +1556,7 @@ sockargs(struct mbuf **mp, char *buf, socklen_t buflen, int type)
 }
 
 int
-getsockaddr(struct sockaddr **namp, caddr_t uaddr, size_t len)
+getsockaddr(struct sockaddr **namp, const struct sockaddr *uaddr, size_t len)
 {
 	struct sockaddr *sa;
 	int error;

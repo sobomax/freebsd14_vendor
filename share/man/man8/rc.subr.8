@@ -27,7 +27,7 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: d3cfedf7dc05982f22734b542ef9a0771cc63c7e $
+.\" $FreeBSD: f522a5d162c3a5de689d5d8f0c2f804557df6595 $
 .\"
 .Dd July 31, 2020
 .Dt RC.SUBR 8
@@ -496,16 +496,22 @@ Check for the existence of the listed directories
 before running the
 .Cm start
 method.
+The list is checked before running
+.Va start_precmd .
 .It Va required_files
 Check for the readability of the listed files
 before running the
 .Cm start
 method.
+The list is checked before running
+.Va start_precmd .
 .It Va required_modules
 Ensure that the listed kernel modules are loaded
 before running the
 .Cm start
 method.
+The list is checked after running
+.Va start_precmd .
 This is done after invoking the commands from
 .Va start_precmd
 so that the missing modules are not loaded in vain
@@ -536,6 +542,8 @@ on each of the list variables
 before running the
 .Cm start
 method.
+The list is checked after running
+.Va start_precmd .
 .It Va ${name}_chdir
 Directory to
 .Ic cd
@@ -556,9 +564,19 @@ is mounted.
 A list of environment variables to run
 .Va command
 with.
-This will be passed as arguments to the
+Those variables will be passed as arguments to the
 .Xr env 1
-utility.
+utility unless
+.Ar argument Ns Va _cmd
+is defined.
+In that case the contents of
+.Va ${name}_env
+will be exported via the
+.Xr export 1
+builtin of
+.Xr sh 1 ,
+which puts some limitations on the names of variables
+(e.g., a variable name may not start with a digit).
 .It Va ${name}_env_file
 A file to source for environmental variables to run
 .Va command

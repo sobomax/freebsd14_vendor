@@ -43,7 +43,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed682abdd91fdc9108cf511ef1d9a70e71de57df $");
+__FBSDID("$FreeBSD: 7b82036873222a6e77df28247789d2bda4125a7c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -343,12 +343,14 @@ static char *chvgpio_hids[] = {
 static int
 chvgpio_probe(device_t dev)
 {
-    if (acpi_disabled("chvgpio") ||
-    ACPI_ID_PROBE(device_get_parent(dev), dev, chvgpio_hids) == NULL)
+    int rv;
+    
+    if (acpi_disabled("chvgpio"))
         return (ENXIO);
-
-    device_set_desc(dev, "Intel Cherry View GPIO");
-    return (0);
+    rv = ACPI_ID_PROBE(device_get_parent(dev), dev, chvgpio_hids, NULL);
+    if (rv <= 0)
+	device_set_desc(dev, "Intel Cherry View GPIO");
+    return (rv);
 }
 
 static int

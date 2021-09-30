@@ -87,7 +87,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	JNPR: gdb_machdep.c,v 1.1 2007/08/09 12:25:25 katta
- * $FreeBSD: 63ae21591513250515ba954aebd7d59fa2310e87 $
+ * $FreeBSD: 130a78f9eb876596c8c0163c8ba5e02d7701da36 $
  */
 
 #include <sys/cdefs.h>
@@ -115,7 +115,7 @@ gdb_cpu_getreg(int regnum, size_t *regsz)
 		register_t *zero_ptr = &kdb_frame->zero;
 		return zero_ptr + regnum;
 	}
-	
+
 	switch (regnum) {
 	/* 
 	 * S0..S7

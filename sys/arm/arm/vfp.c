@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9495b36b308ce810682c5a5ac562d4768bc5676 $");
+__FBSDID("$FreeBSD: 8a929dd75f277951c7bb97f5fa4cac6f69074f23 $");
 
 #ifdef VFP
 #include <sys/param.h>
@@ -100,7 +100,6 @@ set_coprocessorACR(u_int val)
 	isb();
 }
 
-
 	/* called for each cpu */
 void
 vfp_init(void)
@@ -169,7 +168,6 @@ vfp_init(void)
 }
 
 SYSINIT(vfp, SI_SUB_CPU, SI_ORDER_ANY, vfp_init, NULL);
-
 
 /* start VFP unit, restore the vfp registers from the PCB  and retry
  * the instruction
@@ -324,4 +322,3 @@ vfp_discard(struct thread *td)
 }
 
 #endif
-

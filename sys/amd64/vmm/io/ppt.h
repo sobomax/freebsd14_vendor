@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: df84130311675b1cfcf181f35a38b5df85cf3b01 $
+ * $FreeBSD: 223afb343e8c35d781675d33dd4a0c70648f7190 $
  */
 
 #ifndef _IO_PPT_H_
@@ -38,6 +38,7 @@ int	ppt_setup_msi(struct vm *vm, int vcpu, int bus, int slot, int func,
 		      uint64_t addr, uint64_t msg, int numvec);
 int	ppt_setup_msix(struct vm *vm, int vcpu, int bus, int slot, int func,
 		int idx, uint64_t addr, uint64_t msg, uint32_t vector_control);
+int	ppt_disable_msix(struct vm *vm, int bus, int slot, int func);
 int	ppt_assigned_devices(struct vm *vm);
 bool	ppt_is_mmio(struct vm *vm, vm_paddr_t gpa);
 

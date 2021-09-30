@@ -1,3 +1,3 @@
-# $FreeBSD: fe5164308b9bf6cdfd7a3f4e43737b2f8d1995ed $
+# $FreeBSD: 9a4df6e7b6480601f9681f4372f2a1c26a1e362a $
 
-CFLAGS+=	${CFLAGS_NO_SIMD} -msoft-float
+CFLAGS+=	${CFLAGS_NO_SIMD} -msoft-float -fvisibility=hidden

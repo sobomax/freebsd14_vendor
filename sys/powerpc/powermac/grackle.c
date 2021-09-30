@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a77d80351b62b2a9a9d740c9cb8ad188d4daf002 $");
+__FBSDID("$FreeBSD: af5f5a3899987c98e5c7a7ff896fde1c104b69b8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -152,7 +152,6 @@ grackle_read_config(device_t dev, u_int bus, u_int slot, u_int func, u_int reg,
 	caoff = sc->sc_data + (reg & 0x03);
 
 	if (grackle_enable_config(sc, bus, slot, func, reg) != 0) {
-
 		/*
 		 * Config probes to non-existent devices on the
 		 * secondary bus generates machine checks. Be sure
@@ -311,7 +310,6 @@ static device_method_t grackle_hb_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,         grackle_hb_probe),
 	DEVMETHOD(device_attach,        grackle_hb_attach),
-
 	{ 0, 0 }
 };
 

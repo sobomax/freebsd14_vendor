@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b500067649f8ce76b73c303861b39dab8dc51682 $");
+__FBSDID("$FreeBSD: 1570238300e93aa31707e17e3f49a14ba5f94317 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -24,9 +24,7 @@ __FBSDID("$FreeBSD: b500067649f8ce76b73c303861b39dab8dc51682 $");
 #include <err.h>
 #include <errno.h>
 #include <inttypes.h>
-#include <limits.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

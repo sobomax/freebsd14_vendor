@@ -27,7 +27,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba4cd7785e7d6429cb58807eb765c01f6008fe7d $");
+__FBSDID("$FreeBSD: de34b82c0cff3eaf2ad56bff76fa90d853d336df $");
+
+#include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -42,6 +44,7 @@ __FBSDID("$FreeBSD: ba4cd7785e7d6429cb58807eb765c01f6008fe7d $");
 #include <dev/ic/i8259.h>
 
 #include <machine/vmm.h>
+#include <machine/vmm_snapshot.h>
 
 #include "vmm_ktr.h"
 #include "vmm_lapic.h"
@@ -720,11 +723,11 @@ vatpic_master_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
 
 	if (bytes != 1)
 		return (-1);
- 
+
 	if (in) {
 		return (vatpic_read(vatpic, atpic, in, port, bytes, eax));
 	}
- 
+
 	return (vatpic_write(vatpic, atpic, in, port, bytes, eax));
 }
 
@@ -808,3 +811,42 @@ vatpic_cleanup(struct vatpic *vatpic)
 {
 	free(vatpic, M_VATPIC);
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+vatpic_snapshot(struct vatpic *vatpic, struct vm_snapshot_meta *meta)
+{
+	int ret;
+	int i;
+	struct atpic *atpic;
+
+	for (i = 0; i < nitems(vatpic->atpic); i++) {
+		atpic = &vatpic->atpic[i];
+
+		SNAPSHOT_VAR_OR_LEAVE(atpic->ready, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->icw_num, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->rd_cmd_reg, meta, ret, done);
+
+		SNAPSHOT_VAR_OR_LEAVE(atpic->aeoi, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->poll, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->rotate, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->sfn, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->irq_base, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->request, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->service, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->mask, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->smm, meta, ret, done);
+
+		SNAPSHOT_BUF_OR_LEAVE(atpic->acnt, sizeof(atpic->acnt),
+				      meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->lowprio, meta, ret, done);
+		SNAPSHOT_VAR_OR_LEAVE(atpic->intr_raised, meta, ret, done);
+	}
+
+	SNAPSHOT_BUF_OR_LEAVE(vatpic->elc, sizeof(vatpic->elc),
+			      meta, ret, done);
+
+done:
+	return (ret);
+}
+#endif

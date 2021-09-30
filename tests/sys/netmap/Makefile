@@ -1,4 +1,4 @@
-# $FreeBSD: a1d61ddf895243414a1fe76b0bebb81c19fc86e6 $
+# $FreeBSD: 0228271dd6681df003713e2bdbcd021368a68049 $
 
 PACKAGE=	tests
 
@@ -10,7 +10,5 @@ PLAIN_TESTS_C+=	ctrl-api-test
 
 CFLAGS+=	-I${SRCTOP}/tests
 LIBADD+= 	pthread
-
-WARNS?=		6
 
 .include <bsd.test.mk>

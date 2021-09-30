@@ -1,6 +1,7 @@
-# $FreeBSD: 74e6616e991b394c02a1fa27d5d1a549233fe3ff $
+# $FreeBSD: 284e517bfbb85be45d9d88d7de6f22ff5e412438 $
 
 SRCS+=	exec.c \
+	efiserialio.c \
 	start.S
 
 HAVE_FDT=yes

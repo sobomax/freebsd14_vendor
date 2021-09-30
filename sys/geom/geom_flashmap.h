@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b2ab5148f0c78ee93acbd693dfeab0d97c6dec63 $
+ * $FreeBSD: c9bdd22f93b820094fd8de8f73fd6498e927b33d $
  */
 
 #ifndef _GEOM_GEOM_FLASHMAP_H_
@@ -36,4 +36,3 @@ struct g_flashmap {
 };
 
 #endif
-

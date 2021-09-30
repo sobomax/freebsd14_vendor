@@ -2,7 +2,7 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  * Copyright (c) 2017 Marius Strobl <marius@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3519f1b0ed3aadc513a91cdca07e42e4c3bb7176 $");
+__FBSDID("$FreeBSD: ddbc2669b1f74912616530a4db1bc7487f47ebb2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -130,11 +130,11 @@ static const struct mmc_quirk mmc_quirks[] = {
 	 */
 	{ 0x70, MMC_QUIRK_OID_ANY,	"V10008", MMC_QUIRK_BROKEN_TRIM },
 	{ 0x70, MMC_QUIRK_OID_ANY,	"V10016", MMC_QUIRK_BROKEN_TRIM },
-
 	{ 0x0, 0x0, NULL, 0x0 }
 };
 
-static SYSCTL_NODE(_hw, OID_AUTO, mmc, CTLFLAG_RD, NULL, "mmc driver");
+static SYSCTL_NODE(_hw, OID_AUTO, mmc, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+    "mmc driver");
 
 static int mmc_debug;
 SYSCTL_INT(_hw_mmc, OID_AUTO, debug, CTLFLAG_RWTUN, &mmc_debug, 0,

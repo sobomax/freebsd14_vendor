@@ -1,4 +1,4 @@
-# $FreeBSD: fd502fd8bae3511ac7e7835de2c639be8facc2aa $
+# $FreeBSD: a0094091ecc6df41aa7529a422518c0e3babfae8 $
 
 PACKAGE=	tests
 
@@ -14,13 +14,11 @@ ATF_TESTS_C+=	blake2_test poly1305_test
 
 TAP_TESTS_SH+=	runtests
 
-TEST_METADATA.runtests+= required_programs="python2"
+TEST_METADATA.runtests+= required_programs="python3"
 TEST_METADATA.runtests+= required_user="root"
 
 PYMODULES=	cryptodev.py cryptodevh.py cryptotest.py
 
 ${PACKAGE}FILES+=	${PYMODULES}
-
-WARNS?=	6
 
 .include <bsd.test.mk>

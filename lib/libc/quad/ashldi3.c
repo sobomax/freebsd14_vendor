@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)ashldi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b9e0df1c385029badc90cb9cede04df42223983 $");
+__FBSDID("$FreeBSD: cec1ce7ca13602f1421c97d0e5754ad11e225af7 $");
 
 #include "quad.h"
 
@@ -46,9 +46,7 @@ __FBSDID("$FreeBSD: 7b9e0df1c385029badc90cb9cede04df42223983 $");
  * This is the same as logical shift left!
  */
 quad_t
-__ashldi3(a, shift)
-	quad_t a;
-	qshift_t shift;
+__ashldi3(quad_t a, qshift_t shift)
 {
 	union uu aa;
 

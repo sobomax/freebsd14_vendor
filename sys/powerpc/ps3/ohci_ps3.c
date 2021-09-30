@@ -24,11 +24,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e39505664f1117dda7a1f751d14e923e87a0d002 $
+ * $FreeBSD: 1a2e64b2a1c312fac10ad78487c9493ebf8b1306 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e39505664f1117dda7a1f751d14e923e87a0d002 $");
+__FBSDID("$FreeBSD: 1a2e64b2a1c312fac10ad78487c9493ebf8b1306 $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -171,4 +171,3 @@ static devclass_t ohci_ps3_devclass;
 
 DRIVER_MODULE(ohci_ps3, ps3bus, ohci_ps3_driver, ohci_ps3_devclass, 0, 0);
 MODULE_DEPEND(ohci_ps3, usb, 1, 1, 1);
-

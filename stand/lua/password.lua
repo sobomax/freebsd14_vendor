@@ -2,7 +2,7 @@
 -- SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 --
 -- Copyright (c) 2015 Pedro Souza <pedrosouza@freebsd.org>
--- Copyright (C) 2018 Kyle Evans <kevans@FreeBSD.org>
+-- Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
 -- All rights reserved.
 --
 -- Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 8042a5d3d0b52baa5111b904391deae3b6d4127f $
+-- $FreeBSD: 8edd4edd7ec3bffbea8a328760d2f8e10b1b837a $
 --
 
 local core = require("core")

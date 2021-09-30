@@ -1,4 +1,4 @@
-# $FreeBSD: 079c73d336a9ae9232c9846482a99e97a2892b32 $
+# $FreeBSD: fcdb6324b2f084686e60681b9f57f7da6291f0ce $
 
 SRCS+=	start.S \
 	elf32_freebsd.c \
@@ -9,5 +9,5 @@ SRCS+=	nullconsole.c \
 	comconsole.c \
 	spinconsole.c
 
-CFLAGS+=	-fPIC -DTERM_EMU
+CFLAGS+=	-fPIC
 LDFLAGS+=	-Wl,-znocombreloc

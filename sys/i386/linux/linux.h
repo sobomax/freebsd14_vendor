@@ -24,7 +24,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * $FreeBSD: b9f693acf722bef94c09b3889458d8e40a0e3a2d $
+ * $FreeBSD: ab78a96495111ff38982e01c7e63579db9d1b3e8 $
  */
 
 #ifndef _I386_LINUX_H_
@@ -507,7 +507,6 @@ struct l_user_desc {
 struct l_desc_struct {
 	unsigned long	a, b;
 };
-
 
 #define	LINUX_LOWERWORD	0x0000ffff
 

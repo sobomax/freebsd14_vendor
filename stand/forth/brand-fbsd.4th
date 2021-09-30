@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 9cd017f84a3fda91bc706ae605879a182023e3e3 $
+\ $FreeBSD: 84245ef232b685c6ecc75bbd3436fd72ae03eb07 $
 
 2 brandX ! 1 brandY ! \ Initialize brand placement defaults
 
@@ -33,6 +33,18 @@
 ;
 
 : brand ( x y -- ) \ "FreeBSD" [wide] logo in B/W (7 rows x 42 columns)
+
+	framebuffer? if
+		s" term-putimage" sfind if
+			\ note, we use 0, 0 for image upper left as origin,
+			\ and 0, 7 for lower right to preserve aspect ratio
+			>r 0 1 1 0 7
+			s" /boot/images/freebsd-brand-rev.png"
+			r> execute if 2drop exit then
+		else
+			drop
+		then
+	then
 
 	s"  ______               ____   _____ _____  " brand+
 	s" |  ____|             |  _ \ / ____|  __ \ " brand+

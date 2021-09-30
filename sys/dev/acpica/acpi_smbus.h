@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: dd0d9b250ccd32b9cae004575f7eb63b3ebfbe9c $
+ *	$FreeBSD: 527b22700ee6fed6389a74cd2d6f550741d3a970 $
  */
 
 #ifndef _ACPI_SMBUS_H_
@@ -48,7 +48,6 @@
 
 /* Base address */
 #define SMBATT_ADDRESS		0x16
-
 
 /* access: READ WRITE WORD */
 #define SMBATT_CMD_MANUFACTURER_ACCESS		0

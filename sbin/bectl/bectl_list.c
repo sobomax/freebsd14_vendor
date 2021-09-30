@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 757a773e6d325b027fc23b0b95b3f01c4d248c77 $");
+__FBSDID("$FreeBSD: e43c3000d8f2bcd3aaed3fa89bf77df382f8729f $");
 
 #include <sys/param.h>
 #include <stdbool.h>
@@ -182,7 +182,7 @@ print_info(const char *name, nvlist_t *dsprops, struct printc *pc)
 	const char *oname;
 	char *dsname, *propstr;
 	int active_colsz;
-	boolean_t active_now, active_reboot;
+	boolean_t active_now, active_reboot, bootonce;
 
 	dsname = NULL;
 	originprops = NULL;
@@ -228,6 +228,11 @@ print_info(const char *name, nvlist_t *dsprops, struct printc *pc)
 	if (nvlist_lookup_boolean_value(dsprops, "nextboot",
 	    &active_reboot) == 0 && active_reboot) {
 		printf("R");
+		active_colsz--;
+	}
+	if (nvlist_lookup_boolean_value(dsprops, "bootonce",
+	    &bootonce) == 0 && bootonce) {
+		printf("T");
 		active_colsz--;
 	}
 	if (active_colsz == pc->active_colsz_def) {

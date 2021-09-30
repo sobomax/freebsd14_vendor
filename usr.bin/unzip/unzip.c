@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c9e53f27ed74b063c351098bdfa397693191b2d1 $
+ * $FreeBSD: 937176111a0255c906cb2b6611f755e397f32b53 $
  *
  * This file would be much shorter if we didn't care about command-line
  * compatibility with Info-ZIP's UnZip, which requires us to duplicate
@@ -385,6 +385,13 @@ extract_dir(struct archive *a, struct archive_entry *e, const char *path)
 {
 	int mode;
 
+	/*
+	 * Dropbox likes to create '/' directory entries, just ignore
+	 * such junk.
+	 */
+	if (*path == '\0')
+		return;
+
 	mode = archive_entry_mode(e) & 0777;
 	if (mode == 0)
 		mode = 0755;
@@ -451,7 +458,7 @@ handle_existing_file(char **path)
 			free(*path);
 			*path = NULL;
 			alen = 0;
-			len = getdelim(path, &alen, '\n', stdin);
+			len = getline(path, &alen, stdin);
 			if ((*path)[len - 1] == '\n')
 				(*path)[len - 1] = '\0';
 			return 0;
@@ -601,7 +608,7 @@ recheck:
 	if (lstat(*path, &sb) == 0) {
 		if (u_opt || f_opt) {
 			/* check if up-to-date */
-			if ((S_ISREG(sb.st_mode) || S_ISLNK(sb.st_mode)) &&
+			if (S_ISREG(sb.st_mode) &&
 			    (sb.st_mtim.tv_sec > mtime.tv_sec ||
 			    (sb.st_mtim.tv_sec == mtime.tv_sec &&
 			    sb.st_mtim.tv_nsec >= mtime.tv_nsec)))
@@ -916,8 +923,7 @@ unzip(const char *fn)
 		}
 	}
 
-	ac(archive_read_close(a));
-	(void)archive_read_free(a);
+	ac(archive_read_free(a));
 
 	if (t_opt) {
 		if (error_count > 0) {

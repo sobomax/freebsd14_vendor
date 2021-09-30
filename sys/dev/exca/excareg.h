@@ -1,10 +1,10 @@
 /*	$NetBSD: i82365reg.h,v 1.3 1998/12/20 17:53:28 nathanw Exp $	*/
-/* $FreeBSD: 547d53122f8a8b15442778a7f0c335b37d7791d9 $ */
+/* $FreeBSD: ac7a064b368350eea65588617db714867eee5945 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause AND BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2002 M. Warner Losh.
+ * Copyright (c) 2002 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4dec076b47fea3da6ddbca9bf620889ba4a1bbb5 $");
+__FBSDID("$FreeBSD: 4fcd161281ec2ae417db27225477ba5b6ded5a86 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -97,7 +97,7 @@ dbdma_resize_channel(dbdma_channel_t *chan, int newslots)
 
 	if (newslots > (PAGE_SIZE / sizeof(struct dbdma_command)))
 		return (-1);
-	
+
 	chan->sc_nslots = newslots;
 	return (0);
 }
@@ -234,7 +234,7 @@ void
 dbdma_set_device_status(dbdma_channel_t *chan, uint8_t mask, uint8_t value)
 {
 	uint32_t control_reg;
-	
+
 	control_reg = mask;
 	control_reg <<= DBDMA_REG_MASK_SHIFT;
 	control_reg |= value;

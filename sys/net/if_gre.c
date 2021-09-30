@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb0e83d1053787c41e653174e1e2c0f2b8b7de22 $");
+__FBSDID("$FreeBSD: aa3e4062b06064d5365465c976eaea04771247c6 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -118,7 +118,7 @@ static int	gre_output(struct ifnet *, struct mbuf *,
 static void	gre_delete_tunnel(struct gre_softc *);
 
 SYSCTL_DECL(_net_link);
-static SYSCTL_NODE(_net_link, IFT_TUNNEL, gre, CTLFLAG_RW, 0,
+static SYSCTL_NODE(_net_link, IFT_TUNNEL, gre, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "Generic Routing Encapsulation");
 #ifndef MAX_GRE_NEST
 /*
@@ -413,7 +413,7 @@ gre_delete_tunnel(struct gre_softc *sc)
 	if ((gs = sc->gre_so) != NULL && CK_LIST_EMPTY(&gs->list)) {
 		CK_LIST_REMOVE(gs, chain);
 		soclose(gs->so);
-		epoch_call(net_epoch_preempt, &gs->epoch_ctx, gre_sofree);
+		NET_EPOCH_CALL(gre_sofree, &gs->epoch_ctx);
 		sc->gre_so = NULL;
 	}
 	GRE2IFP(sc)->if_drv_flags &= ~IFF_DRV_RUNNING;

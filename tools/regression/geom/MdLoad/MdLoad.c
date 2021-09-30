@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 33ee4de3876e58e8df1f7205afb10d7aa8f59871 $
+ * $FreeBSD: c2e5a8af66f4b761fb9449646c7e657732abeb10 $
  */
 
 #include <stdio.h>
@@ -216,7 +216,7 @@ g_simdisk_xml_load(const char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		err(1, file);
+		err(1, "%s", file);
 	fstat(fd, &st);
 	p = mmap(NULL, st.st_size, PROT_READ, MAP_NOCORE|MAP_PRIVATE, fd, 0);
 	i = XML_Parse(parser, p, st.st_size, 1);

@@ -37,7 +37,7 @@
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
-SND_DECLARE_FILE("$FreeBSD: 486964c00c49dcddf90096d449244eb898cdb7cd $");
+SND_DECLARE_FILE("$FreeBSD: f4b9906e20e050cd99c861114c2680ce292c59be $");
 
 /* PCI IDs of supported chips */
 #define AU8820_PCI_ID 0x000112eb
@@ -434,7 +434,6 @@ au_intr (void *p)
 	au_rd(au, 0, AU_REG_IRQSRC, 4);
 }
 
-
 /* -------------------------------------------------------------------- */
 
 /* Probe and attach the card */
@@ -673,7 +672,6 @@ static device_method_t au_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		au_pci_probe),
 	DEVMETHOD(device_attach,	au_pci_attach),
-
 	{ 0, 0 }
 };
 

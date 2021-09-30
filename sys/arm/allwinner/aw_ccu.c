@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0503b3b2ca2c2aa74a3fb763b6491916dc4457b1 $
+ * $FreeBSD: 6cdf75ffecf9e92e89422e0576694fae6600cbc1 $
  */
 
 /*
@@ -31,14 +30,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0503b3b2ca2c2aa74a3fb763b6491916dc4457b1 $");
+__FBSDID("$FreeBSD: 6cdf75ffecf9e92e89422e0576694fae6600cbc1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/rman.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <machine/bus.h>
 
 #include <dev/fdt/simplebus.h>

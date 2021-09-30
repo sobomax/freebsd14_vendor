@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ddac84a30f9810e23eb72c0a4d088e26aa399d6e $");
+__FBSDID("$FreeBSD: 82b34fd71203fe94417ff49b5838efb43f6c102a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,7 +38,7 @@ __FBSDID("$FreeBSD: ddac84a30f9810e23eb72c0a4d088e26aa399d6e $");
 
 #include <dev/extres/clk/clk.h>
 
-#include <gnu/dts/include/dt-bindings/clock/tegra124-car.h>
+#include <dt-bindings/clock/tegra124-car.h>
 #include "tegra124_car.h"
 
 /* #define TEGRA_PLL_DEBUG */
@@ -415,7 +415,6 @@ pll_enable(struct pll_sc *sc)
 {
 	uint32_t reg;
 
-
 	RD4(sc, sc->base_reg, &reg);
 	if (sc->type != PLL_E)
 		reg &= ~PLL_BASE_BYPASS;
@@ -567,7 +566,6 @@ plle_enable(struct pll_sc *sc)
 
 	mnp_bits = &sc->mnp_bits;
 
-
 	/* Disable lock override. */
 	RD4(sc, sc->base_reg, &reg);
 	reg &= ~PLLE_BASE_LOCK_OVERRIDE;
@@ -646,7 +644,6 @@ plle_enable(struct pll_sc *sc)
 
 	reg |= XUSBIO_PLL_CFG0_SEQ_ENABLE;
 	WR4(sc, XUSBIO_PLL_CFG0, reg);
-
 
 	/* Enable HW control and unreset SATA PLL. */
 	RD4(sc, SATA_PLL_CFG0, &reg);
@@ -986,7 +983,6 @@ tegra124_pll_set_freq(struct clknode *clknode, uint64_t fin, uint64_t *fout,
 
 	return (rv);
 }
-
 
 static int
 tegra124_pll_init(struct clknode *clk, device_t dev)

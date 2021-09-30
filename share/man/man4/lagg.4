@@ -14,9 +14,9 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.\" $FreeBSD: 9345935519052069a0b566226b912bc3d8a755dc $
+.\" $FreeBSD: f7d8e1c5e1f59c6ae42fa5777ce86d6f17a157e7 $
 .\"
-.Dd November 18, 2017
+.Dd October 21, 2020
 .Dt LAGG 4
 .Os
 .Sh NAME
@@ -192,6 +192,15 @@ device will be used:
 .Pp
 (Note the mac address of the wireless device is forced to match the wired
 device as a workaround.)
+.Pp
+The following example shows how to create an infiniband failover interface.
+.Bd -literal -offset indent
+# ifconfig ib0 up
+# ifconfig ib1 up
+# ifconfig lagg0 create laggtype infiniband
+# ifconfig lagg0 laggproto failover laggport ib0 laggport ib1 \e
+	1.1.1.1 netmask 255.255.255.0
+.Ed
 .Sh SEE ALSO
 .Xr ng_one2many 4 ,
 .Xr ifconfig 8 ,

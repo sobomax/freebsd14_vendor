@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 5a81e56cf7c7c092f7bb705181cf80935a63b226 $
+.\" $FreeBSD: 473406660b8b26fc398255675b5146d2ef3b3cb9 $
 .\"
-.Dd June 23, 2020
+.Dd January 10, 2021
 .Dt RC.CONF 5
 .Os
 .Sh NAME
@@ -58,6 +58,11 @@ which specifies the default settings for all the available options.
 Options need only be specified in
 .Pa /etc/rc.conf
 when the system administrator wishes to override these defaults.
+The file
+.Pa /etc/defaults/vendor.conf
+allows vendors to override
+.Fx
+defaults.
 The file
 .Pa /etc/rc.conf.local
 is used to override settings in
@@ -246,14 +251,26 @@ Configuration file for
 .Xr ddb 8 .
 Default
 .Pa /etc/ddb.conf .
+.It Va devmatch_enable
+.Pq Vt bool
+If set to
+.Dq Li NO ,
+disable auto-loading of kernel modules with
+.Xr devmatch 8 .
+.It Va devmatch_blacklist
+.Pq Vt str
+A whitespace-separated list of kernel modules to be ignored by
+.Xr devmatch 8 .
 .It Va kld_list
 .Pq Vt str
-A list of kernel modules to load right after the local
-disks are mounted.
+A whitespace-separated list of kernel modules to load right after
+the local disks are mounted, without any
+.Pa .ko
+extension or path.
 Loading modules at this point in the boot process is
 much faster than doing it via
 .Pa /boot/loader.conf
-for those modules not necessary for mounting local disk.
+for those modules not necessary for mounting local disks.
 .It Va kldxref_enable
 .Pq Vt bool
 Set to
@@ -423,7 +440,7 @@ is used to set the hostname via DHCP,
 this variable should be set to an empty string.
 Within a
 .Xr jail 8
-the hostname is generally already set and this variable may absent.
+the hostname is generally already set and this variable may be absent.
 If this value remains unset when the system is done booting
 your console login will display the default hostname of
 .Dq Amnesiac .
@@ -1180,11 +1197,20 @@ break some legitimate applications.
 .It Va icmp_drop_redirect
 .Pq Vt bool
 Set to
-.Dq Li NO
+.Dq Li AUTO
 by default.
+This setting will be identical to
+.Dq Li YES ,
+if a dynamicrouting daemon is enabled, because redirect processing may
+cause performance issues for large routing tables.
+If no such service is enabled, this setting behaves like a
+.Dq Li NO .
 Setting to
 .Dq Li YES
 will cause the kernel to ignore ICMP REDIRECT packets.
+Setting to
+.Dq Li NO
+will cause the kernel to process ICMP REDIRECT packets.
 Refer to
 .Xr icmp 4
 for more information.
@@ -1262,11 +1288,11 @@ It is possible to add IP alias entries using
 syntax with the address family keyword such as
 .Li inet .
 Assuming that the interface in question was
-.Li ed0 ,
+.Li em0 ,
 it might look something like this:
 .Bd -literal
-ifconfig_ed0_alias0="inet 127.0.0.253 netmask 0xffffffff"
-ifconfig_ed0_alias1="inet 127.0.0.254 netmask 0xffffffff"
+ifconfig_em0_alias0="inet 127.0.0.253 netmask 0xffffffff"
+ifconfig_em0_alias1="inet 127.0.0.254 netmask 0xffffffff"
 .Ed
 .Pp
 It also possible to configure multiple IP addresses in Classless
@@ -1306,21 +1332,21 @@ not for the other address families such as
 .Li inet6 .
 .Pp
 With the interface in question being
-.Li ed0 ,
+.Li em0 ,
 an example could look like:
 .Bd -literal
-ifconfig_ed0_alias2="inet 192.0.2.129/27"
-ifconfig_ed0_alias3="inet 192.0.2.1-5/28"
+ifconfig_em0_alias2="inet 192.0.2.129/27"
+ifconfig_em0_alias3="inet 192.0.2.1-5/28"
 .Ed
 .Pp
 and so on.
 .Pp
-Note that
+Note that deprecated
 .Va ipv4_addrs_ Ns Aq Ar interface
 variable was supported for IPv4 CIDR address notation.
-It is now deprecated because the functionality was integrated into
+The
 .Va ifconfig_ Ns Ao Ar interface Ac Ns Va _alias Ns Aq Ar n
-though
+variable replaces it, though
 .Va ipv4_addrs_ Ns Aq Ar interface
 is still supported for backward compatibility.
 .Pp
@@ -1332,10 +1358,10 @@ its contents are passed to
 Execution stops at the first unsuccessful access, so if
 something like this is present:
 .Bd -literal
-ifconfig_ed0_alias0="inet 127.0.0.251 netmask 0xffffffff"
-ifconfig_ed0_alias1="inet 127.0.0.252 netmask 0xffffffff"
-ifconfig_ed0_alias2="inet 127.0.0.253 netmask 0xffffffff"
-ifconfig_ed0_alias4="inet 127.0.0.254 netmask 0xffffffff"
+ifconfig_em0_alias0="inet 127.0.0.251 netmask 0xffffffff"
+ifconfig_em0_alias1="inet 127.0.0.252 netmask 0xffffffff"
+ifconfig_em0_alias2="inet 127.0.0.253 netmask 0xffffffff"
+ifconfig_em0_alias4="inet 127.0.0.254 netmask 0xffffffff"
 .Ed
 .Pp
 Then note that alias4 would
@@ -1351,7 +1377,7 @@ variable, which has the same functionality as
 .Va ifconfig_ Ns Ao Ar interface Ac Ns Va _alias Ns Aq Ar n
 and can have all of entries in a variable like the following:
 .Bd -literal
-ifconfig_ed0_aliases="\\
+ifconfig_em0_aliases="\\
 	inet 127.0.0.251 netmask 0xffffffff \\
 	inet 127.0.0.252 netmask 0xffffffff \\
 	inet 127.0.0.253 netmask 0xffffffff \\
@@ -1458,11 +1484,11 @@ to the
 .Va ifconfig_ Ns Aq Ar interface
 variable.
 For instance, to initialize the
-.Li ed0
+.Li em0
 device via DHCP,
 it is possible to use something like:
 .Bd -literal
-ifconfig_ed0="DHCP"
+ifconfig_em0="DHCP"
 .Ed
 .Pp
 If you want to configure your wireless interface with
@@ -1513,7 +1539,7 @@ variable.
 .Pp
 It is also possible to rename an interface by doing:
 .Bd -literal
-ifconfig_ed0_name="net0"
+ifconfig_em0_name="net0"
 ifconfig_net0="inet 192.0.2.1 netmask 0xffffff00"
 .Ed
 .It Va ipv6_enable
@@ -1663,7 +1689,8 @@ This static setting may be overridden by commands
 started with dynamic interface configuration utilities
 like
 .Xr dhclient 8
-hooks. The description can be seen with
+hooks.
+The description can be seen with
 .Xr ifconfig 8
 command and it may be exported with
 .Xr bsnmpd 1
@@ -1686,8 +1713,8 @@ with
 keyword.
 For example:
 .Bd -literal
-ifconfig_ed0_ipv6="inet6 2001:db8:1::1 prefixlen 64"
-ifconfig_ed0_alias0="inet6 2001:db8:2::1 prefixlen 64"
+ifconfig_em0_ipv6="inet6 2001:db8:1::1 prefixlen 64"
+ifconfig_em0_alias0="inet6 2001:db8:2::1 prefixlen 64"
 .Ed
 .Pp
 Interfaces that have an
@@ -1714,7 +1741,7 @@ defined in
 If only a link-local address is needed on the interface,
 the following configuration can be used:
 .Bd -literal
-ifconfig_ed0_ipv6="inet6 auto_linklocal"
+ifconfig_em0_ipv6="inet6 auto_linklocal"
 .Ed
 .Pp
 A link-local address can also be configured manually.
@@ -1723,7 +1750,7 @@ so that it does not change when the network interface
 card is replaced.
 For example:
 .Bd -literal
-ifconfig_ed0_ipv6="inet6 fe80::1 prefixlen 64"
+ifconfig_em0_ipv6="inet6 fe80::1 prefixlen 64"
 .Ed
 .It Va ipv6_prefix_ Ns Aq Ar interface
 .Pq Vt str
@@ -1737,15 +1764,15 @@ is empty.
 .Pp
 For example, the following configuration
 .Bd -literal
-ipv6_prefix_ed0="2001:db8:1:0 2001:db8:2:0"
+ipv6_prefix_em0="2001:db8:1:0 2001:db8:2:0"
 .Ed
 .Pp
 is equivalent to the following:
 .Bd -literal
-ifconfig_ed0_alias0="inet6 2001:db8:1:: eui64 prefixlen 64"
-ifconfig_ed0_alias1="inet6 2001:db8:1:: prefixlen 64 anycast"
-ifconfig_ed0_alias2="inet6 2001:db8:2:: eui64 prefixlen 64"
-ifconfig_ed0_alias3="inet6 2001:db8:2:: prefixlen 64 anycast"
+ifconfig_em0_alias0="inet6 2001:db8:1:: eui64 prefixlen 64"
+ifconfig_em0_alias1="inet6 2001:db8:1:: prefixlen 64 anycast"
+ifconfig_em0_alias2="inet6 2001:db8:2:: eui64 prefixlen 64"
+ifconfig_em0_alias3="inet6 2001:db8:2:: prefixlen 64 anycast"
 .Ed
 .Pp
 These Subnet-Router anycast addresses will be added only when
@@ -1777,10 +1804,10 @@ or
 .Dq Li ipv6_prefer
 is specified,
 .Xr ip6addrctl 8
-installs a pre-defined policy table described in Section 2.1
-.Pq IPv6-preferred
-or 10.3
+installs a pre-defined policy table described in Section 10.3
 .Pq IPv4-preferred
+or 2.1
+.Pq IPv6-preferred
 of RFC 3484.
 .Pp
 If
@@ -1938,6 +1965,8 @@ Used in conjunction with
 .Va gateway_enable
 allows hosts on private network addresses access to the Internet using
 this host as a network address translating router.
+Default is
+.Dq Li YES .
 .It Va ppp_ Ns Ao Ar profile Ac Ns _nat
 .Pq Vt str
 Overrides the global
@@ -3277,11 +3306,9 @@ is set to
 this is the actual port the mouse is on.
 It might be
 .Pa /dev/cuau0
-for a COM1 serial mouse,
+for a COM1 serial mouse, or
 .Pa /dev/psm0
-for a PS/2 mouse or
-.Pa /dev/mse0
-for a bus mouse, for example.
+for a PS/2 mouse, for example.
 .It Va moused_flags
 .Pq Vt str
 If
@@ -3454,7 +3481,9 @@ the first suitable swap device listed in
 .Pa /etc/fstab
 will be used as dump device.
 Otherwise, the value of this variable is passed as the argument to
-.Xr dumpon 8 .
+.Xr dumpon 8
+and
+.Xr savecore 8 .
 To disable crash dumps, set this variable to
 .Dq Li NO .
 .It Va dumpon_flags
@@ -3563,21 +3592,6 @@ Set to
 to enable system accounting through the
 .Xr accton 8
 facility.
-.It Va ibcs2_enable
-.Pq Vt bool
-Set to
-.Dq Li YES
-to enable iBCS2 (SCO) binary emulation at system initial boot
-time.
-.It Va ibcs2_loaders
-.Pq Vt str
-If not set to
-.Dq Li NO
-and if
-.Va ibcs2_enable
-is set to
-.Dq Li YES ,
-this specifies a list of additional iBCS2 loaders to enable.
 .It Va firstboot_sentinel
 .Pq Vt str
 This variable specifies the full path to a
@@ -3635,13 +3649,6 @@ will always be added first, so they need not appear in this list.
 Set to the list of 32-bit compatibility shared library paths to
 use with
 .Xr ldconfig 8 .
-.It Va ldconfig_paths_aout
-.Pq Vt str
-Set to the list of shared library paths to use with
-.Xr ldconfig 8
-legacy
-.Xr a.out 5
-support.
 .It Va ldconfig_insecure
 .Pq Vt bool
 The
@@ -4577,10 +4584,17 @@ If set to
 removes empty
 .Dq Li rc.conf.d
 files.
+.It Va zfs_bootonce_activate
+.Pq Vt bool
+If set to
+.Dq Li YES ,
+and a boot environment marked bootonce is successfully booted,
+it will be made permanently active.
 .El
 .Sh FILES
 .Bl -tag -width ".Pa /etc/defaults/rc.conf" -compact
 .It Pa /etc/defaults/rc.conf
+.It Pa /etc/defaults/vendor.conf
 .It Pa /etc/rc.conf
 .It Pa /etc/rc.conf.local
 .El

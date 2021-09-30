@@ -1,4 +1,4 @@
-/* $FreeBSD: c6e801e875f23f31e2d703a468f49f3628833892 $ */
+/* $FreeBSD: 822b3c0775bf7267cce1529ac419f360033697ba $ */
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 
@@ -6,7 +6,7 @@ SEARCH_DIR(/usr/lib);
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
-  . = KERNVIRTADDR + SIZEOF_HEADERS;
+  . = text_start; /* This is set using --defsym= on the command line. */
   .text      :
   {
     *(.text)

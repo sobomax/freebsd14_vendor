@@ -13,14 +13,14 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: d9e043e15a982035593cde87fc9014e571f96924 $
+ * $FreeBSD: 8f4311e90745da0889d4e3f68001a3defc2db6de $
  */
 
 #include "common.h"
 
 int vnode_fd;
 
-void
+static void
 test_kevent_vnode_add(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, EV_ADD)";
@@ -44,7 +44,7 @@ test_kevent_vnode_add(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_note_delete(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, NOTE_DELETE)";
@@ -64,7 +64,7 @@ test_kevent_vnode_note_delete(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_note_write(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, NOTE_WRITE)";
@@ -88,7 +88,7 @@ test_kevent_vnode_note_write(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_note_attrib(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, NOTE_ATTRIB)";
@@ -107,7 +107,7 @@ test_kevent_vnode_note_attrib(void)
     nfds = kevent(kqfd, NULL, 0, &kev, 1, NULL);
     if (nfds < 1)
         err(1, "%s", test_id);
-    if (kev.ident != vnode_fd ||
+    if (kev.ident != (uintptr_t)vnode_fd ||
             kev.filter != EVFILT_VNODE || 
             kev.fflags != NOTE_ATTRIB)
         err(1, "%s - incorrect event (sig=%u; filt=%d; flags=%d)", 
@@ -116,7 +116,7 @@ test_kevent_vnode_note_attrib(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_note_rename(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, NOTE_RENAME)";
@@ -135,7 +135,7 @@ test_kevent_vnode_note_rename(void)
     nfds = kevent(kqfd, NULL, 0, &kev, 1, NULL);
     if (nfds < 1)
         err(1, "%s", test_id);
-    if (kev.ident != vnode_fd ||
+    if (kev.ident != (uintptr_t)vnode_fd ||
             kev.filter != EVFILT_VNODE || 
             kev.fflags != NOTE_RENAME)
         err(1, "%s - incorrect event (sig=%u; filt=%d; flags=%d)", 
@@ -147,7 +147,7 @@ test_kevent_vnode_note_rename(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_del(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, EV_DELETE)";
@@ -162,7 +162,7 @@ test_kevent_vnode_del(void)
     success();
 }
 
-void
+static void
 test_kevent_vnode_disable_and_enable(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, EV_DISABLE and EV_ENABLE)";
@@ -195,7 +195,7 @@ test_kevent_vnode_disable_and_enable(void)
     nfds = kevent(kqfd, NULL, 0, &kev, 1, NULL);
     if (nfds < 1)
         err(1, "%s", test_id);
-    if (kev.ident != vnode_fd ||
+    if (kev.ident != (uintptr_t)vnode_fd ||
             kev.filter != EVFILT_VNODE || 
             kev.fflags != NOTE_ATTRIB)
         err(1, "%s - incorrect event (sig=%u; filt=%d; flags=%d)", 
@@ -205,7 +205,7 @@ test_kevent_vnode_disable_and_enable(void)
 }
 
 #if HAVE_EV_DISPATCH
-void
+static void
 test_kevent_vnode_dispatch(void)
 {
     const char *test_id = "kevent(EVFILT_VNODE, EV_DISPATCH)";
@@ -226,7 +226,7 @@ test_kevent_vnode_dispatch(void)
     nfds = kevent(kqfd, NULL, 0, &kev, 1, NULL);
     if (nfds < 1)
         err(1, "%s", test_id);
-    if (kev.ident != vnode_fd ||
+    if (kev.ident != (uintptr_t)vnode_fd ||
             kev.filter != EVFILT_VNODE || 
             kev.fflags != NOTE_ATTRIB)
         err(1, "%s - incorrect event (sig=%u; filt=%d; flags=%d)", 
@@ -248,7 +248,7 @@ test_kevent_vnode_dispatch(void)
 #endif 	/* HAVE_EV_DISPATCH */
 
 void
-test_evfilt_vnode()
+test_evfilt_vnode(void)
 {
     kqfd = kqueue();
     test_kevent_vnode_add();

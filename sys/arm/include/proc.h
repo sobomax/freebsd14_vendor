@@ -34,7 +34,7 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: 94855b6f60e77f314a39c0f98bafa8b2836d95a0 $
+ * $FreeBSD: a37ccd8f621c0252509b0139b5f7e4f692c0a222 $
  */
 
 #ifndef	_MACHINE_PROC_H_
@@ -55,11 +55,6 @@ struct mdthread {
 	int md_ptrace_addr;
 	int md_ptrace_instr_alt;
 	int md_ptrace_addr_alt;
-#if __ARM_ARCH < 6
-	register_t md_tp;
-	void *md_ras_start;
-	void *md_ras_end;
-#endif
 };
 
 struct mdproc {
@@ -82,8 +77,6 @@ struct syscall_args {
 	u_int code;
 	struct sysent *callp;
 	register_t args[MAXARGS];
-	int narg;
-	u_int nap;
 } __aligned(8);
 
 #endif /* !_MACHINE_PROC_H_ */

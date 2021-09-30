@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62a70e9ce0724a4d97380b10f0581eb1f2759b2f $");
+__FBSDID("$FreeBSD: b53656d3b439ca507f69fea2b136e4a81b0d86d4 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -58,14 +58,11 @@ __FBSDID("$FreeBSD: 62a70e9ce0724a4d97380b10f0581eb1f2759b2f $");
 #include <string.h>
 
 #include <fs/msdosfs/bpb.h>
+#include "msdos/direntry.h"
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include "makefs.h"
 #include "msdos.h"
-
-#include "msdos/denode.h"
-#include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
 
 static int char8ucs2str(const uint8_t *in, int n, uint16_t *out, int m);
 static void ucs2pad(uint16_t *buf, int len, int size);

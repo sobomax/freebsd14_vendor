@@ -15,12 +15,12 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: 1e44c1212ef43c3ed192a085f2614eb6d1aa5aba $
+# $FreeBSD: cf35005f0768eaaf917b2f48404c12273f2f8651 $
 
 machine 	mips mips64
 ident           XLP64
 
-makeoptions	ARCH_FLAGS="-march=mips64r2 -mabi=64"
+makeoptions	ARCH_FLAGS="-march=mips64r2"
 makeoptions	KERNLOADADDR=0xffffffff80100000
 
 include		"std.XLP"

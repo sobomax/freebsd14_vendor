@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)link.2	8.3 (Berkeley) 1/12/94
-.\" $FreeBSD: 05cf3382159cd69cc5d2c31f65f5cc7aba2f6e21 $
+.\" $FreeBSD: de0efd5e510f853750e456c56dea32eb1a357ccc $
 .\"
-.Dd March 30, 2020
+.Dd February 23, 2021
 .Dt LINK 2
 .Os
 .Sh NAME
@@ -115,6 +115,15 @@ If
 .Fa name1
 names a symbolic link, a new link for the target of the symbolic link is
 created.
+.It Dv AT_RESOLVE_BENEATH
+Only walk paths below the directory specified by the
+.Ar fd
+descriptor.
+See the description of the
+.Dv O_RESOLVE_BENEATH
+flag in the
+.Xr open 2
+manual page.
 .El
 .Pp
 If
@@ -259,6 +268,17 @@ or
 respectively, is neither
 .Dv AT_FDCWD
 nor a file descriptor associated with a directory.
+.It Bq Er ENOTCAPABLE
+.Fa name1
+is not strictly relative to the starting directory.
+For example,
+.Fa name1
+is absolute or includes a ".." component that escapes
+the directory hierarchy specified by
+.Fa fd ,
+and the process is in capability mode or the
+.Dv AT_RESOLVE_BENEATH
+flag was specified.
 .El
 .Sh SEE ALSO
 .Xr chflags 2 ,

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9fa465a11f9ae6ada1165a187e1d4e901d9de1ad $
+ * $FreeBSD: 648fc5648e72112fbcbd263fc75fdfb39185ab58 $
  */
 
 /*
@@ -60,7 +60,6 @@
  * i2c calls.  The Chelsio T4/T5 driver (dev/cxgbe) is one such
  * driver.
  */
-
 
 /* Table 3.1 Two-wire interface ID: Data Fields */
 

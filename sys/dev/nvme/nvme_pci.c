@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af06e579ad47c336d8f55802d44efd9643fde934 $");
+__FBSDID("$FreeBSD: 1b28ab4d40e65b08286997b257f79d34bb944425 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -92,7 +92,6 @@ static struct _pcsid
 	{ 0xa822144d,		0, 0, "Samsung PM1725a", QUIRK_DELAY_B4_CHK_RDY },
 	{ 0x00000000,		0, 0, NULL  }
 };
-
 
 static int
 nvme_match(uint32_t devid, uint16_t subdevice, struct _pcsid *ep)

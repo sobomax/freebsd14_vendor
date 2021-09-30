@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8f9a1a05af9b480c569112a33828060d05b5743f $
+ * $FreeBSD: 3e31805f19fe9cd5343bf786af9adc284d41a13d $
  */
 
 /*
@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f9a1a05af9b480c569112a33828060d05b5743f $");
+__FBSDID("$FreeBSD: 3e31805f19fe9cd5343bf786af9adc284d41a13d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -97,7 +97,6 @@ struct zy7_gpio_softc {
 
 #define WR4(sc, off, val)	bus_write_4((sc)->mem_res, (off), (val))
 #define RD4(sc, off)		bus_read_4((sc)->mem_res, (off))
-
 
 /* Xilinx Zynq-7000 GPIO register definitions:
  */

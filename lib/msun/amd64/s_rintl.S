@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c7eb512e169e21430c6ce1061cb01647be2b1e16 $
+ * $FreeBSD: f8fd7b665964a22f400f44038b45fe1acf7419e4 $
  */
 
 /*
@@ -41,5 +41,6 @@ ENTRY(rintl)
 	fldt	8(%rsp)
 	frndint
 	ret
+END(rintl)
 
 	.section .note.GNU-stack,"",%progbits

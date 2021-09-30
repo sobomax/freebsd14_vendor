@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8e0a703345d2e774071a19202156e98d5eeb6a6 $");
+__FBSDID("$FreeBSD: e74093f6e5ddd46ae4df22dc3d1e5565de090222 $");
 
 /*
     Alias_ftp.c performs special processing for FTP sessions under
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: f8e0a703345d2e774071a19202156e98d5eeb6a6 $");
     this causes a certain amount of bookkeeping to keep track of the
     changes of sequence and acknowledgment numbers, since the client
     machine is totally unaware of the modification to the TCP stream.
-
 
     References: RFC 959, RFC 2428.
 
@@ -139,7 +138,6 @@ protohandler_out(struct libalias *la, struct ip *pip, struct alias_data *ah)
 	AliasHandleFtpOut(la, pip, ah->lnk, ah->maxpktsize);
 	return (0);
 }
-
 
 static int
 protohandler_in(struct libalias *la, struct ip *pip, struct alias_data *ah)

@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)cmpdi2.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e34735d9bc240d320b7031aef3e66a8d6ddd548 $");
+__FBSDID("$FreeBSD: 08916702e1ebad4e4462aa90c1461c75d032ff1a $");
 
 #include "quad.h"
 
@@ -47,8 +47,7 @@ __FBSDID("$FreeBSD: 1e34735d9bc240d320b7031aef3e66a8d6ddd548 $");
  * signed.
  */
 int
-__cmpdi2(a, b)
-	quad_t a, b;
+__cmpdi2(quad_t a, quad_t b)
 {
 	union uu aa, bb;
 

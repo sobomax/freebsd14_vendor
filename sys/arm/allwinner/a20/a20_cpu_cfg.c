@@ -29,7 +29,7 @@
 /* CPU configuration module for Allwinner A20 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b340a586268545cca2725a29839ef75f5232944 $");
+__FBSDID("$FreeBSD: d26b30cd94498fc655a8704c8d6bf741ad9fc083 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -136,4 +136,3 @@ a20_read_counter64(void)
 
 	return (((uint64_t)hi << 32) | lo);
 }
-

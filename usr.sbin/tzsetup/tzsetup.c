@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1802747d52a7c90dba99466a44a14d7c42719119 $");
+__FBSDID("$FreeBSD: 6446800ce519d79e8339122e2d8bb4c8eaa5d408 $");
 
 #include <err.h>
 #include <errno.h>
@@ -1020,9 +1020,7 @@ main(int argc, char **argv)
 		    "If it is set to local time,\n"
 		    "or you don't know, please choose NO here!");
 		dlg_save_vars(&save_vars);
-#if !defined(__sparc64__)
 		dialog_vars.defaultno = TRUE;
-#endif
 		yesno = dialog_yesno(title, prompt, 7, 73);
 		dlg_restore_vars(&save_vars);
 		if (!yesno) {

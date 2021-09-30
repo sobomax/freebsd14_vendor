@@ -1,10 +1,13 @@
 #!/bin/sh
 #
-# $FreeBSD: 1ac03dc3b14ee117e8818a201146ef31785eb066 $
+# $FreeBSD: 7bd971013656792f5bd2e94e70edad1e6d863589 $
 #
 #
 # Common functions for virtual machine image build scripts.
 #
+
+scriptdir=$(dirname $(realpath $0))
+. ${scriptdir}/../../tools/boot/install-boot.sh
 
 export PATH="/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
 trap "cleanup" INT QUIT TRAP ABRT TERM
@@ -21,32 +24,55 @@ write_partition_layout() {
 
 	case "${TARGET}:${TARGET_ARCH}" in
 		amd64:amd64 | i386:i386)
-			mkimg -s gpt -f ${VMFORMAT} \
-				-b ${BOOTFILES}/i386/pmbr/pmbr \
-				-p freebsd-boot/bootfs:=${BOOTFILES}/i386/gptboot/gptboot \
-				-p efi:=${BOOTFILES}/efi/boot1/boot1.efifat \
-				${SWAPOPT} \
-				-p freebsd-ufs/rootfs:=${VMBASE} \
-				-o ${VMIMAGE}
+			ESP=yes
+			SCHEME=gpt
+			BOOTPARTS="-b ${BOOTFILES}/i386/pmbr/pmbr \
+				   -p freebsd-boot/bootfs:=${BOOTFILES}/i386/gptboot/gptboot"
+			ROOTFSPART="-p freebsd-ufs/rootfs:=${VMBASE}"
 			;;
-		arm64:aarch64)
-			mkimg -s mbr -f ${VMFORMAT} \
-				-p efi:=${BOOTFILES}/efi/boot1/boot1.efifat \
-				-p freebsd:=${VMBASE} \
-				-o ${VMIMAGE}
+		arm64:aarch64 | riscv:riscv64*)
+			ESP=yes
+			SCHEME=gpt
+			BOOTPARTS=
+			ROOTFSPART="-p freebsd-ufs/rootfs:=${VMBASE}"
 			;;
 		powerpc:powerpc*)
-			mkimg -s apm -f ${VMFORMAT} \
-				-p apple-boot/bootfs:=${BOOTFILES}/powerpc/boot1.chrp/boot1.hfs \
-				${SWAPOPT} \
-				-p freebsd-ufs/rootfs:=${VMBASE} \
-				-o ${VMIMAGE}
+			ESP=no
+			SCHEME=apm
+			BOOTPARTS="-p apple-boot/bootfs:=${BOOTFILES}/powerpc/boot1.chrp/boot1.hfs"
+			ROOTFSPART="-p freebsd-ufs/rootfs:=${VMBASE}"
 			;;
 		*)
-			# ENOTSUPP
-			return 1
+			echo "vmimage.subr: unsupported target '${TARGET}:${TARGET_ARCH}'" >&2
+			exit 1
 			;;
 	esac
+
+	if [ ${ESP} = "yes" ]; then
+		# Create an ESP
+		espfilename=$(mktemp /tmp/efiboot.XXXXXX)
+		make_esp_file ${espfilename} ${fat32min} ${BOOTFILES}/efi/loader_lua/loader_lua.efi
+		BOOTPARTS="${BOOTPARTS} -p efi/efiesp:=${espfilename}"
+
+		# Add this to fstab, requires temporarily remounting the fs
+		mddev=$(mdconfig -f ${VMBASE})
+		mount /dev/${mddev} ${DESTDIR}
+		mkdir -p ${DESTDIR}/boot/efi
+		echo "/dev/${ROOTLABEL}/efiesp	/boot/efi       msdosfs     rw      2       2" \
+			>> ${DESTDIR}/etc/fstab
+		umount ${DESTDIR}
+		mdconfig -d -u ${mddev}
+	fi
+
+	mkimg -s ${SCHEME} -f ${VMFORMAT} \
+		${BOOTPARTS} \
+		${SWAPOPT} \
+		${ROOTFSPART} \
+		-o ${VMIMAGE}
+
+	if [ ${ESP} = "yes" ]; then
+		rm ${espfilename}
+	fi
 
 	return 0
 }

@@ -1,4 +1,4 @@
-/* $FreeBSD: 9c84c244524ef0010180a558d41f2fbb93adf4c0 $ */
+/* $FreeBSD: 6d5bfc7fa46e813ac3e24d79db136258e67a86da $ */
 /*	$NetBSD: msdosfs_fat.c,v 1.28 1997/11/17 15:36:49 ws Exp $	*/
 
 /*-
@@ -202,7 +202,6 @@ pcbmap(struct denode *dep, u_long findcn, daddr_t *bnp, u_long *cnp, int *sp)
 				brelse(bp);
 			error = bread(pmp->pm_devvp, bn, bsize, NOCRED, &bp);
 			if (error) {
-				brelse(bp);
 				return (error);
 			}
 			bp_bn = bn;
@@ -506,7 +505,6 @@ fatentry(int function, struct msdosfsmount *pmp, u_long cn, u_long *oldcontents,
 	fatblock(pmp, byteoffset, &bn, &bsize, &bo);
 	error = bread(pmp->pm_devvp, bn, bsize, NOCRED, &bp);
 	if (error) {
-		brelse(bp);
 		return (error);
 	}
 
@@ -589,7 +587,6 @@ fatchain(struct msdosfsmount *pmp, u_long start, u_long count, u_long fillwith)
 		fatblock(pmp, byteoffset, &bn, &bsize, &bo);
 		error = bread(pmp->pm_devvp, bn, bsize, NOCRED, &bp);
 		if (error) {
-			brelse(bp);
 			return (error);
 		}
 		while (count > 0) {
@@ -819,7 +816,6 @@ clusteralloc1(struct msdosfsmount *pmp, u_long start, u_long count,
 		return (chainalloc(pmp, foundcn, foundl, fillwith, retcluster, got));
 }
 
-
 /*
  * Free a chain of clusters.
  *
@@ -845,7 +841,6 @@ freeclusterchain(struct msdosfsmount *pmp, u_long cluster)
 				updatefats(pmp, bp, lbn);
 			error = bread(pmp->pm_devvp, bn, bsize, NOCRED, &bp);
 			if (error) {
-				brelse(bp);
 				MSDOSFS_UNLOCK_MP(pmp);
 				return (error);
 			}
@@ -1123,7 +1118,7 @@ extendfile(struct denode *dep, u_long count, struct buf **bpp, u_long *ncp,
  *	?	(other errors from called routines)
  */
 int
-markvoldirty(struct msdosfsmount *pmp, int dirty)
+markvoldirty_upgrade(struct msdosfsmount *pmp, bool dirty, bool rw_upgrade)
 {
 	struct buf *bp;
 	u_long bn, bo, bsize, byteoffset, fatval;
@@ -1136,8 +1131,11 @@ markvoldirty(struct msdosfsmount *pmp, int dirty)
 	if (FAT12(pmp))
 		return (0);
 
-	/* Can't change the bit on a read-only filesystem. */
-	if (pmp->pm_flags & MSDOSFSMNT_RONLY)
+	/*
+	 * Can't change the bit on a read-only filesystem, except as part of
+	 * ro->rw upgrade.
+	 */
+	if ((pmp->pm_flags & MSDOSFSMNT_RONLY) != 0 && !rw_upgrade)
 		return (EROFS);
 
 	/*
@@ -1147,10 +1145,8 @@ markvoldirty(struct msdosfsmount *pmp, int dirty)
 	byteoffset = FATOFS(pmp, 1);
 	fatblock(pmp, byteoffset, &bn, &bsize, &bo);
 	error = bread(pmp->pm_devvp, bn, bsize, NOCRED, &bp);
-	if (error) {
-		brelse(bp);
+	if (error)
 		return (error);
-	}
 
 	/*
 	 * Get the current value of the FAT entry and set/clear the relevant
@@ -1174,6 +1170,29 @@ markvoldirty(struct msdosfsmount *pmp, int dirty)
 			fatval |= 0x8000;
 		putushort(&bp->b_data[bo], fatval);
 	}
+
+	/*
+	 * The concern here is that a devvp may be readonly, without reporting
+	 * itself as such through the usual channels.  In that case, we'd like
+	 * it if attempting to mount msdosfs rw didn't panic the system.
+	 *
+	 * markvoldirty is invoked as the first write on backing devvps when
+	 * either msdosfs is mounted for the first time, or a ro mount is
+	 * upgraded to rw.
+	 *
+	 * In either event, if a write error occurs dirtying the volume:
+	 *   - No user data has been permitted to be written to cache yet.
+	 *   - We can abort the high-level operation (mount, or ro->rw) safely.
+	 *   - We don't derive any benefit from leaving a zombie dirty buf in
+	 *   the cache that can not be cleaned or evicted.
+	 *
+	 * So, mark B_INVALONERR to have bwrite() -> brelse() detect that
+	 * condition and force-invalidate our write to the block if it occurs.
+	 *
+	 * PR 210316 provides more context on the discovery and diagnosis of
+	 * the problem, as well as earlier attempts to solve it.
+	 */
+	bp->b_flags |= B_INVALONERR;
 
 	/* Write out the modified FAT block synchronously. */
 	return (bwrite(bp));

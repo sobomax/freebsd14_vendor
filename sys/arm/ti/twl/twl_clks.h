@@ -26,15 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ccc397e3e76bbab49f0cce7ef443637f57fd035c $
+ * $FreeBSD: 85aeb4368e4f1c5d9235f4f8730718d49892f0ed $
  */
 #ifndef _TWL_CLKS_H_
 #define _TWL_CLKS_H_
 
-
 int twl_clks_enable(device_t dev, const char *name);
 int twl_clks_disable(device_t dev, const char *name);
 int twl_clks_is_enabled(device_t dev, const char *name, int *enabled);
-
 
 #endif /* _TWL_CLKS_H_ */

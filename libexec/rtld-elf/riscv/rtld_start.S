@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: c37cd62e49ec110944a19e161dca7f26999beee6 $");
+__FBSDID("$FreeBSD: 71806123debc19e99af3ec3a58fa4b8fe357a9f6 $");
 
 /*
  * func_ptr_type
@@ -64,7 +64,8 @@ END(.rtld_start)
  */
 ENTRY(_rtld_bind_start)
 	/* Save the arguments and ra */
-	addi	sp, sp, -(8 * 17)
+	/* We require 17 dwords, but the stack must be aligned to 16-bytes */
+	addi	sp, sp, -(8 * 18)
 	sd	a0, (8 * 0)(sp)
 	sd	a1, (8 * 1)(sp)
 	sd	a2, (8 * 2)(sp)
@@ -122,7 +123,7 @@ ENTRY(_rtld_bind_start)
 	fld	fa6, (8 * 15)(sp)
 	fld	fa7, (8 * 16)(sp)
 #endif
-	addi	sp, sp, (8 * 17)
+	addi	sp, sp, (8 * 18)
 
 	/* Call into the correct function */
 	jr	t0

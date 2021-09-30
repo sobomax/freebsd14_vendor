@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71d4b001e6e6f8fbd30345fa215682d53fbeba42 $");
+__FBSDID("$FreeBSD: b7f154f6bfad90e77b6f73631fc07892002fd9b9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,4 +139,3 @@ ctl_backend_find(char *backend_name)
 
 	return (NULL);
 }
-

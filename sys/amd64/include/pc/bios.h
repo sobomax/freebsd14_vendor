@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7534b5111299d5b4c6336f37a1f05ab29408fd3d $
+ * $FreeBSD: 99e346a4a344f09c3afc6b9778f22c6693d742da $
  */
 
 #ifndef _MACHINE_PC_BIOS_H_
@@ -63,7 +63,7 @@ struct bios_smap_xattr {
     u_int32_t	type;
     u_int32_t	xattr;
 } __packed;
-	
+
 /*
  * System Management BIOS
  */

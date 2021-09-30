@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 47af645923adc658874f967c5228015c35db0b99 $
+ * $FreeBSD: 5bc0655a0a4a20725fffa9937c0e1d609e101cde $
  */
 
 #ifndef _BHND_NVRAM_BHND_NVRAM_H_
@@ -56,7 +56,7 @@ typedef enum {
 
 	BHND_NVRAM_SRC_FLASH,	/**< External flash */
 	BHND_NVRAM_SRC_SPROM,	/**< External serial EEPROM. */
-	
+
 	BHND_NVRAM_SRC_UNKNOWN	/**< No NVRAM source is directly
 				  *  attached.
 				  *
@@ -124,7 +124,6 @@ typedef enum {
 	BHND_NVRAM_TYPE_BOOL_ARRAY	= 26,	/**< array of uint8 boolean
 						     values */
 } bhnd_nvram_type;
-
 
 bool		 bhnd_nvram_is_signed_type(bhnd_nvram_type type);
 bool		 bhnd_nvram_is_unsigned_type(bhnd_nvram_type type);

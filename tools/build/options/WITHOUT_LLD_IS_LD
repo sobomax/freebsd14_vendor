@@ -1,2 +1,7 @@
-.\" $FreeBSD: 0d48f205d85d0ecd9bcb5688794e8800d6033831 $
-Set to use GNU binutils ld as the system linker, instead of LLVM's LLD.
+.\" $FreeBSD: 8ca789dfdc45d513be4cde13a8ccb1eaca0b08c6 $
+Do not install a
+.Pa /usr/bin/ld symlink
+to
+.Pa ld.lld .
+The system will not have a usable tool chain unless a linker is provided
+some other way.

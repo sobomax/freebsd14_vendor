@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 062694d77674b3c55dde18530180277b55f6c3c1 $
+ * $FreeBSD: 729a00b8e45d11eefdfe4dc0c020624350504f60 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 062694d77674b3c55dde18530180277b55f6c3c1 $");
+__FBSDID("$FreeBSD: 729a00b8e45d11eefdfe4dc0c020624350504f60 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -170,7 +170,7 @@ mpc85xx_gpio_pin_toggle(device_t dev, uint32_t pin)
 	val = bus_read_4(sc->out_res, 0);
 	val ^= (1 << (31 - pin));
 	bus_write_4(sc->out_res, 0, val);
-	
+
 	GPIO_UNLOCK(sc);
 
 	return (0);

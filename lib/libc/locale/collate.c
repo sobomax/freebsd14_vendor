@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c67f7bcd646ea6327f3febf2a2f072233d8cbcd9 $");
+__FBSDID("$FreeBSD: c992d2299ab7dc9ca4b0bdc0b41133a5bb7ab1aa $");
 
 #include "namespace.h"
 
@@ -140,7 +140,9 @@ __collate_load_tables_l(const char *encoding, struct xlocale_collate *table)
 		(void) _close(fd);
 		return (_LDP_ERROR);
 	}
-	if (sbuf.st_size < (COLLATE_STR_LEN + sizeof (info))) {
+	if (sbuf.st_size < (COLLATE_FMT_VERSION_LEN +
+			    XLOCALE_DEF_VERSION_LEN +
+			    sizeof (info))) {
 		(void) _close(fd);
 		errno = EINVAL;
 		return (_LDP_ERROR);
@@ -151,12 +153,14 @@ __collate_load_tables_l(const char *encoding, struct xlocale_collate *table)
 		return (_LDP_ERROR);
 	}
 
-	if (strncmp(TMP, COLLATE_VERSION, COLLATE_STR_LEN) != 0) {
+	if (strncmp(TMP, COLLATE_FMT_VERSION, COLLATE_FMT_VERSION_LEN) != 0) {
 		(void) munmap(map, sbuf.st_size);
 		errno = EINVAL;
 		return (_LDP_ERROR);
 	}
-	TMP += COLLATE_STR_LEN;
+	TMP += COLLATE_FMT_VERSION_LEN;
+	strlcat(table->header.version, TMP, sizeof (table->header.version));
+	TMP += XLOCALE_DEF_VERSION_LEN;
 
 	info = (void *)TMP;
 	TMP += sizeof (*info);

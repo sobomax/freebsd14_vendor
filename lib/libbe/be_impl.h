@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 98fd3b29f932019c2e79a06d511dfb865da32397 $
+ * $FreeBSD: 0b0f0db3cb5ca784f4f584da6481b26aeaef5778 $
  */
 
 #ifndef _LIBBE_IMPL_H
@@ -63,6 +63,7 @@ typedef struct prop_data {
 	nvlist_t *list;
 	libbe_handle_t *lbh;
 	bool single_object;	/* list will contain props directly */
+	char *bootonce;
 } prop_data_t;
 
 int prop_list_builder_cb(zfs_handle_t *, void *);

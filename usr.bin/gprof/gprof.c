@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)gprof.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e1b0709229a9d6b106323330db17fff287fc059 $");
+__FBSDID("$FreeBSD: 2723eb2d8178e2b78bd084a75ccbf96e37d88e08 $");
 
 #include <err.h>
 #include <limits.h>
@@ -161,11 +161,7 @@ main(int argc, char **argv)
 	 *	get information from the executable file.
 	 */
     if ((Kflag && kernel_getnfile(a_outname, &defaultEs) == -1) ||
-      (!Kflag && elf_getnfile(a_outname, &defaultEs) == -1
-#ifdef WITH_AOUT
-      && aout_getnfile(a_outname, &defaultEs) == -1
-#endif
-      ))
+      (!Kflag && elf_getnfile(a_outname, &defaultEs) == -1))
 	errx(1, "%s: bad format", a_outname);
 	/*
 	 *	sort symbol table.

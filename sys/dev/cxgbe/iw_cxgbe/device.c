@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51b7bf0c4a08b229ab29727165201a844e0bfd4f $");
+__FBSDID("$FreeBSD: 7f5bf4b86da7fc04fb3a84aed0d736934b9a4ae7 $");
 
 #include "opt_inet.h"
 
@@ -261,11 +261,13 @@ static int c4iw_mod_load(void);
 static int c4iw_mod_unload(void);
 static int c4iw_activate(struct adapter *);
 static int c4iw_deactivate(struct adapter *);
+static void c4iw_async_event(struct adapter *);
 
 static struct uld_info c4iw_uld_info = {
 	.uld_id = ULD_IWARP,
 	.activate = c4iw_activate,
 	.deactivate = c4iw_deactivate,
+	.async_event = c4iw_async_event,
 };
 
 static int
@@ -324,6 +326,23 @@ c4iw_deactivate(struct adapter *sc)
 	sc->iwarp_softc = NULL;
 
 	return (0);
+}
+
+static void
+c4iw_async_event(struct adapter *sc)
+{
+	struct c4iw_dev *iwsc = sc->iwarp_softc;
+
+	if (iwsc) {
+		struct ib_event event = {0};
+
+		device_printf(sc->dev,
+			      "iWARP driver received FATAL ERROR event.\n");
+		iwsc->rdev.flags |= T4_FATAL_ERROR;
+		event.event  = IB_EVENT_DEVICE_FATAL;
+		event.device = &iwsc->ibdev;
+		ib_dispatch_event(&event);
+	}
 }
 
 static void

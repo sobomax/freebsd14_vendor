@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1017f3e71d00e584658445e3eacc7fbe3dc14c3c $");
+__FBSDID("$FreeBSD: 2d466275ff1631e06f39d346e0de71395762d248 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,4 +42,3 @@ __FBSDID("$FreeBSD: 1017f3e71d00e584658445e3eacc7fbe3dc14c3c $");
 #include <machine/fdt.h>
 
 #include <arm/altera/socfpga/socfpga_rstmgr.h>
-

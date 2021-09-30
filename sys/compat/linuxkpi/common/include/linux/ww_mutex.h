@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c23d4dd6fa2456c9e1fdc4385802eff68bfcfcbb $
+ * $FreeBSD: 49bec6628486d599978e02771089ec2124391dae $
  */
 #ifndef	_LINUX_WW_MUTEX_H_
 #define	_LINUX_WW_MUTEX_H_
@@ -76,7 +76,8 @@ ww_mutex_trylock(struct ww_mutex *lock)
 	return (mutex_trylock(&lock->base));
 }
 
-extern int linux_ww_mutex_lock_sub(struct ww_mutex *, int catch_signal);
+extern int linux_ww_mutex_lock_sub(struct ww_mutex *,
+    struct ww_acquire_ctx *, int catch_signal);
 
 static inline int
 ww_mutex_lock(struct ww_mutex *lock, struct ww_acquire_ctx *ctx)
@@ -86,7 +87,7 @@ ww_mutex_lock(struct ww_mutex *lock, struct ww_acquire_ctx *ctx)
 	else if ((struct thread *)SX_OWNER(lock->base.sx.sx_lock) == curthread)
 		return (-EALREADY);
 	else
-		return (linux_ww_mutex_lock_sub(lock, 0));
+		return (linux_ww_mutex_lock_sub(lock, ctx, 0));
 }
 
 static inline int
@@ -97,7 +98,7 @@ ww_mutex_lock_interruptible(struct ww_mutex *lock, struct ww_acquire_ctx *ctx)
 	else if ((struct thread *)SX_OWNER(lock->base.sx.sx_lock) == curthread)
 		return (-EALREADY);
 	else
-		return (linux_ww_mutex_lock_sub(lock, 1));
+		return (linux_ww_mutex_lock_sub(lock, ctx, 1));
 }
 
 extern void linux_ww_mutex_unlock_sub(struct ww_mutex *);

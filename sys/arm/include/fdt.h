@@ -28,23 +28,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 026e8557befee60620f545714e819e36f5fc6b3c $
+ * $FreeBSD: e8af11c8c4b09ae75d3fe150de9a30b0b112a477 $
  */
 
 #ifndef _MACHINE_FDT_H_
 #define _MACHINE_FDT_H_
 
 #include <machine/bus.h>
-
-#ifndef INTRNG
-
-/* Max interrupt number */
-#define FDT_INTR_MAX	NIRQ
-
-/* Map phandle/intpin pair to global IRQ number */
-#define	FDT_MAP_IRQ(node, pin)	(pin)
-
-#endif
 
 /*
  * Bus space tag. XXX endianess info needs to be derived from the blob.

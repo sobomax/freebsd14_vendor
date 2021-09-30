@@ -25,16 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69ca52a2f2dbe25f175b31ae5f8088f10e2334b1 $");
+__FBSDID("$FreeBSD: 4dd85f039d0fb794cbed3c7d26280182ad21da6f $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
 #include <sys/stat.h>
 
 #include <err.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "setfacl.h"
 

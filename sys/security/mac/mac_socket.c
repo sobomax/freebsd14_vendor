@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95cfc6b060239622cf78422a9f3f755c9c0dbfcb $");
+__FBSDID("$FreeBSD: d5548789752288cbc1c8cee75c7e5c79dc217d17 $");
 
 #include "opt_mac.h"
 
@@ -275,7 +275,7 @@ mac_socketpeer_set_from_mbuf(struct mbuf *m, struct socket *so)
 void
 mac_socketpeer_set_from_socket(struct socket *oldso, struct socket *newso)
 {
-	
+
 	if (mac_policy_count == 0)
 		return;
 

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: faa61bfea3529085167dddc2bee9e7fd2feca539 $");
+__FBSDID("$FreeBSD: db1d84696df0ddc6a9ce55c9160e589ba8ef979d $");
 
 #include "opt_posix.h"
 
@@ -176,7 +176,7 @@ ksem_stat(struct file *fp, struct stat *sb, struct ucred *active_cred,
 	if (error)
 		return (error);
 #endif
-	
+
 	/*
 	 * Attempt to return sanish values for fstat() on a semaphore
 	 * file descriptor.
@@ -212,7 +212,7 @@ ksem_chmod(struct file *fp, mode_t mode, struct ucred *active_cred,
 		goto out;
 #endif
 	error = vaccess(VREG, ks->ks_mode, ks->ks_uid, ks->ks_gid, VADMIN,
-	    active_cred, NULL);
+	    active_cred);
 	if (error != 0)
 		goto out;
 	ks->ks_mode = mode & ACCESSPERMS;
@@ -242,7 +242,7 @@ ksem_chown(struct file *fp, uid_t uid, gid_t gid, struct ucred *active_cred,
                  gid = ks->ks_gid;
 	if (((uid != ks->ks_uid && uid != active_cred->cr_uid) ||
 	    (gid != ks->ks_gid && !groupmember(gid, active_cred))) &&
-	    (error = priv_check_cred(active_cred, PRIV_VFS_CHOWN, 0)))
+	    (error = priv_check_cred(active_cred, PRIV_VFS_CHOWN)))
 		goto out;
 	ks->ks_uid = uid;
 	ks->ks_gid = gid;
@@ -362,9 +362,9 @@ ksem_access(struct ksem *ks, struct ucred *ucred)
 	int error;
 
 	error = vaccess(VREG, ks->ks_mode, ks->ks_uid, ks->ks_gid,
-	    VREAD | VWRITE, ucred, NULL);
+	    VREAD | VWRITE, ucred);
 	if (error)
-		error = priv_check_cred(ucred, PRIV_SEM_WRITE, 0);
+		error = priv_check_cred(ucred, PRIV_SEM_WRITE);
 	return (error);
 }
 
@@ -465,7 +465,7 @@ static int
 ksem_create(struct thread *td, const char *name, semid_t *semidp, mode_t mode,
     unsigned int value, int flags, int compat32)
 {
-	struct filedesc *fdp;
+	struct pwddesc *pdp;
 	struct ksem *ks;
 	struct file *fp;
 	char *path;
@@ -481,8 +481,8 @@ ksem_create(struct thread *td, const char *name, semid_t *semidp, mode_t mode,
 	if (value > SEM_VALUE_MAX)
 		return (EINVAL);
 
-	fdp = td->td_proc->p_fd;
-	mode = (mode & ~fdp->fd_cmask) & ACCESSPERMS;
+	pdp = td->td_proc->p_pd;
+	mode = (mode & ~pdp->pd_cmask) & ACCESSPERMS;
 	error = falloc(td, &fp, &fd, O_CLOEXEC);
 	if (error) {
 		if (name == NULL)
@@ -725,7 +725,7 @@ sys_ksem_post(struct thread *td, struct ksem_post_args *uap)
 
 	AUDIT_ARG_FD(uap->id);
 	error = ksem_get(td, uap->id,
-	    cap_rights_init(&rights, CAP_SEM_POST), &fp);
+	    cap_rights_init_one(&rights, CAP_SEM_POST), &fp);
 	if (error)
 		return (error);
 	ks = fp->f_data;
@@ -817,7 +817,8 @@ kern_sem_wait(struct thread *td, semid_t id, int tryflag,
 
 	DP((">>> kern_sem_wait entered! pid=%d\n", (int)td->td_proc->p_pid));
 	AUDIT_ARG_FD(id);
-	error = ksem_get(td, id, cap_rights_init(&rights, CAP_SEM_WAIT), &fp);
+	error = ksem_get(td, id, cap_rights_init_one(&rights, CAP_SEM_WAIT),
+	    &fp);
 	if (error)
 		return (error);
 	ks = fp->f_data;
@@ -886,7 +887,7 @@ sys_ksem_getvalue(struct thread *td, struct ksem_getvalue_args *uap)
 
 	AUDIT_ARG_FD(uap->id);
 	error = ksem_get(td, uap->id,
-	    cap_rights_init(&rights, CAP_SEM_GETVALUE), &fp);
+	    cap_rights_init_one(&rights, CAP_SEM_GETVALUE), &fp);
 	if (error)
 		return (error);
 	ks = fp->f_data;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a783735f4bf45ac94da7c5df86509dca22f0e94 $");
+__FBSDID("$FreeBSD: 070270367e1de3adc28effa7c9af771755938f9d $");
 
 /*
  * RTC driver for Tegra SoCs.
@@ -142,7 +142,6 @@ tegra_rtc_gettime(device_t dev, struct timespec *ts)
 	return (0);
 }
 
-
 static int
 tegra_rtc_settime(device_t dev, struct timespec *ts)
 {
@@ -159,7 +158,6 @@ tegra_rtc_settime(device_t dev, struct timespec *ts)
 
 	return (0);
 }
-
 
 static void
 tegra_rtc_intr(void *arg)

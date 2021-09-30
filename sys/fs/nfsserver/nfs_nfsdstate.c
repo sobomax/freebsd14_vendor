@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b92e7c297fa9a1088940967abeea0d857e77576 $");
+__FBSDID("$FreeBSD: 1f6e8b7ef526d2f6c6f056e530cf1681f5caf2db $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -213,7 +213,6 @@ static void nfsrv_freealllayouts(void);
 static void nfsrv_freedevid(struct nfsdevice *ds);
 static int nfsrv_setdsserver(char *dspathp, char *mdspathp, NFSPROC_T *p,
     struct nfsdevice **dsp);
-static int nfsrv_delds(char *devid, NFSPROC_T *p);
 static void nfsrv_deleteds(struct nfsdevice *fndds);
 static void nfsrv_allocdevid(struct nfsdevice *ds, char *addr, char *dnshost);
 static void nfsrv_freealldevids(void);
@@ -1554,7 +1553,7 @@ nfsrv_freeallnfslocks(struct nfsstate *stp, vnode_t vp, int cansleep,
 			else if (vp == NULL && cansleep != 0) {
 				tvp = nfsvno_getvp(&lfp->lf_fh);
 				if (tvp != NULL)
-					NFSVOPUNLOCK(tvp, 0);
+					NFSVOPUNLOCK(tvp);
 			} else
 				tvp = vp;
 			gottvp = 1;
@@ -1780,7 +1779,7 @@ tryagain:
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl1");
 				vnode_unlocked = 1;
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			reterr = nfsrv_locallock(vp, lfp,
 			    (new_lop->lo_flags & (NFSLCK_READ | NFSLCK_WRITE)),
@@ -1960,7 +1959,7 @@ tryagain:
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl2");
 				vnode_unlocked = 1;
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			nfsrv_locallock_rollback(vp, lfp, p);
 			NFSLOCKSTATE();
@@ -2044,7 +2043,7 @@ tryagain:
 					ASSERT_VOP_ELOCKED(vp,
 					    "nfsrv_lockctrl3");
 					vnode_unlocked = 1;
-					NFSVOPUNLOCK(vp, 0);
+					NFSVOPUNLOCK(vp);
 				}
 				nfsrv_locallock_rollback(vp, lfp, p);
 				NFSLOCKSTATE();
@@ -2156,7 +2155,7 @@ tryagain:
 			NFSUNLOCKSTATE();
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl4");
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			nfsrv_locallock_rollback(vp, lfp, p);
 			NFSLOCKSTATE();
@@ -2164,7 +2163,7 @@ tryagain:
 			NFSUNLOCKSTATE();
 			NFSVOPLOCK(vp, LK_EXCLUSIVE | LK_RETRY);
 			vnode_unlocked = 0;
-			if ((vp->v_iflag & VI_DOOMED) != 0)
+			if (VN_IS_DOOMED(vp))
 				ret = NFSERR_SERVERFAULT;
 			NFSLOCKSTATE();
 		}
@@ -2211,7 +2210,7 @@ tryagain:
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl5");
 				vnode_unlocked = 1;
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			/* Update the local locks. */
 			nfsrv_localunlock(vp, lfp, first, end, p);
@@ -2253,7 +2252,7 @@ tryagain:
 		    if (filestruct_locked != 0) {
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl6");
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			/* Roll back local locks. */
 			nfsrv_locallock_rollback(vp, lfp, p);
@@ -2262,7 +2261,7 @@ tryagain:
 			NFSUNLOCKSTATE();
 			NFSVOPLOCK(vp, LK_EXCLUSIVE | LK_RETRY);
 			vnode_unlocked = 0;
-			if ((vp->v_iflag & VI_DOOMED) != 0) {
+			if (VN_IS_DOOMED(vp)) {
 				error = NFSERR_SERVERFAULT;
 				goto out;
 			}
@@ -2302,7 +2301,7 @@ tryagain:
 			if (vnode_unlocked == 0) {
 				ASSERT_VOP_ELOCKED(vp, "nfsrv_lockctrl7");
 				vnode_unlocked = 1;
-				NFSVOPUNLOCK(vp, 0);
+				NFSVOPUNLOCK(vp);
 			}
 			nfsrv_locallock_rollback(vp, lfp, p);
 			NFSLOCKSTATE();
@@ -2384,7 +2383,7 @@ out:
 	}
 	if (vnode_unlocked != 0) {
 		NFSVOPLOCK(vp, LK_EXCLUSIVE | LK_RETRY);
-		if (error == 0 && (vp->v_iflag & VI_DOOMED) != 0)
+		if (error == 0 && VN_IS_DOOMED(vp))
 			error = NFSERR_SERVERFAULT;
 	}
 	if (other_lop)
@@ -3531,7 +3530,7 @@ nfsrv_openupdate(vnode_t vp, struct nfsstate *new_stp, nfsquad_t clientid,
 			nfsrv_locklf(lfp);
 			NFSUNLOCKSTATE();
 			ASSERT_VOP_ELOCKED(vp, "nfsrv_openupdate");
-			NFSVOPUNLOCK(vp, 0);
+			NFSVOPUNLOCK(vp);
 			if (nfsrv_freeopen(stp, vp, 1, p) == 0) {
 				NFSLOCKSTATE();
 				nfsrv_unlocklf(lfp);
@@ -4017,6 +4016,11 @@ nfsrv_checkseqid(struct nfsrv_descript *nd, u_int32_t seqid,
 		printf("refcnt=%d\n", stp->ls_op->rc_refcnt);
 		panic("nfsrvstate op refcnt");
 	}
+
+	/* If ND_ERELOOKUP is set, the seqid has already been handled. */
+	if ((nd->nd_flag & ND_ERELOOKUP) != 0)
+		goto out;
+
 	if ((stp->ls_seq + 1) == seqid) {
 		if (stp->ls_op)
 			nfsrvd_derefcache(stp->ls_op);
@@ -4062,10 +4066,10 @@ nfsrv_getclientipaddr(struct nfsrv_descript *nd, struct nfsclient *clp)
 	int i, j, maxalen = 0, minalen = 0;
 	sa_family_t af;
 #ifdef INET
-	struct sockaddr_in *rin, *sin;
+	struct sockaddr_in *rin = NULL, *sin;
 #endif
 #ifdef INET6
-	struct sockaddr_in6 *rin6, *sin6;
+	struct sockaddr_in6 *rin6 = NULL, *sin6;
 #endif
 	u_char *addr;
 	int error = 0, cantparse = 0;
@@ -4422,7 +4426,7 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
     int trunc, fhandle_t *fhp, struct nfsvattr *nap, nfsattrbit_t *attrbitp,
     int laytype, NFSPROC_T *p)
 {
-	mbuf_t m;
+	struct mbuf *m;
 	u_int32_t *tl;
 	struct nfsrv_descript *nd;
 	struct ucred *cred;
@@ -4430,6 +4434,7 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 	u_int32_t callback;
 	struct nfsdsession *sep = NULL;
 	uint64_t tval;
+	bool dotls;
 
 	nd = malloc(sizeof(*nd), M_TEMP, M_WAITOK | M_ZERO);
 	cred = newnfs_getcred();
@@ -4460,6 +4465,8 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 		nd->nd_flag |= ND_KERBV;
 	if ((clp->lc_flags & LCL_NFSV41) != 0)
 		nd->nd_flag |= ND_NFSV41;
+	if ((clp->lc_flags & LCL_NFSV42) != 0)
+		nd->nd_flag |= ND_NFSV42;
 	nd->nd_repstat = 0;
 	cred->cr_uid = clp->lc_uid;
 	cred->cr_gid = clp->lc_gid;
@@ -4471,10 +4478,10 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 	 * Get the first mbuf for the request.
 	 */
 	MGET(m, M_WAITOK, MT_DATA);
-	mbuf_setlen(m, 0);
+	m->m_len = 0;
 	nd->nd_mreq = nd->nd_mb = m;
-	nd->nd_bpos = NFSMTOD(m, caddr_t);
-	
+	nd->nd_bpos = mtod(m, caddr_t);
+
 	/*
 	 * and build the callback request.
 	 */
@@ -4483,7 +4490,7 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 		error = nfsrv_cbcallargs(nd, clp, callback, NFSV4OP_CBGETATTR,
 		    "CB Getattr", &sep);
 		if (error != 0) {
-			mbuf_freem(nd->nd_mreq);
+			m_freem(nd->nd_mreq);
 			goto errout;
 		}
 		(void)nfsm_fhtom(nd, (u_int8_t *)fhp, NFSX_MYFH, 0);
@@ -4493,7 +4500,7 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 		error = nfsrv_cbcallargs(nd, clp, callback, NFSV4OP_CBRECALL,
 		    "CB Recall", &sep);
 		if (error != 0) {
-			mbuf_freem(nd->nd_mreq);
+			m_freem(nd->nd_mreq);
 			goto errout;
 		}
 		NFSM_BUILD(tl, u_int32_t *, NFSX_UNSIGNED + NFSX_STATEID);
@@ -4513,7 +4520,7 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 		    NFSV4OP_CBLAYOUTRECALL, "CB Reclayout", &sep);
 		NFSD_DEBUG(4, "aft cbcallargs=%d\n", error);
 		if (error != 0) {
-			mbuf_freem(nd->nd_mreq);
+			m_freem(nd->nd_mreq);
 			goto errout;
 		}
 		NFSM_BUILD(tl, u_int32_t *, 4 * NFSX_UNSIGNED);
@@ -4539,19 +4546,22 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 		if ((clp->lc_flags & LCL_NFSV41) != 0) {
 			error = nfsv4_getcbsession(clp, &sep);
 			if (error != 0) {
-				mbuf_freem(nd->nd_mreq);
+				m_freem(nd->nd_mreq);
 				goto errout;
 			}
 		}
 	} else {
 		error = NFSERR_SERVERFAULT;
-		mbuf_freem(nd->nd_mreq);
+		m_freem(nd->nd_mreq);
 		goto errout;
 	}
 
 	/*
 	 * Call newnfs_connect(), as required, and then newnfs_request().
 	 */
+	dotls = false;
+	if ((clp->lc_flags & LCL_TLSCB) != 0)
+		dotls = true;
 	(void) newnfs_sndlock(&clp->lc_req.nr_lock);
 	if (clp->lc_req.nr_client == NULL) {
 		if ((clp->lc_flags & LCL_NFSV41) != 0) {
@@ -4559,10 +4569,10 @@ nfsrv_docallback(struct nfsclient *clp, int procnum, nfsv4stateid_t *stateidp,
 			nfsrv_freesession(sep, NULL);
 		} else if (nd->nd_procnum == NFSV4PROC_CBNULL)
 			error = newnfs_connect(NULL, &clp->lc_req, cred,
-			    NULL, 1);
+			    NULL, 1, dotls);
 		else
 			error = newnfs_connect(NULL, &clp->lc_req, cred,
-			    NULL, 3);
+			    NULL, 3, dotls);
 	}
 	newnfs_sndunlock(&clp->lc_req.nr_lock);
 	NFSD_DEBUG(4, "aft sndunlock=%d\n", error);
@@ -4629,7 +4639,7 @@ errout:
 			error = nfsv4_loadattr(nd, NULL, nap, NULL, NULL, 0,
 			    NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL,
 			    p, NULL);
-		mbuf_freem(nd->nd_mrep);
+		m_freem(nd->nd_mrep);
 	}
 	NFSLOCKSTATE();
 	clp->lc_cbref--;
@@ -4658,7 +4668,10 @@ nfsrv_cbcallargs(struct nfsrv_descript *nd, struct nfsclient *clp,
 	(void)nfsm_strtom(nd, optag, len);
 	NFSM_BUILD(tl, uint32_t *, 4 * NFSX_UNSIGNED);
 	if ((nd->nd_flag & ND_NFSV41) != 0) {
-		*tl++ = txdr_unsigned(NFSV41_MINORVERSION);
+		if ((nd->nd_flag & ND_NFSV42) != 0)
+			*tl++ = txdr_unsigned(NFSV42_MINORVERSION);
+		else
+			*tl++ = txdr_unsigned(NFSV41_MINORVERSION);
 		*tl++ = txdr_unsigned(callback);
 		*tl++ = txdr_unsigned(2);
 		*tl = txdr_unsigned(NFSV4OP_CBSEQUENCE);
@@ -4980,7 +4993,7 @@ nfsrv_updatestable(NFSPROC_T *p)
 	if (NFSVOPLOCK(vp, LK_EXCLUSIVE) == 0) {
 		error = nfsvno_setattr(vp, &nva, NFSFPCRED(sf->nsf_fp), p,
 		    NULL);
-		NFSVOPUNLOCK(vp, 0);
+		NFSVOPUNLOCK(vp);
 	} else
 		error = EPERM;
 	vn_finished_write(mp);
@@ -5138,7 +5151,7 @@ nfsrv_checkstable(struct nfsclient *clp)
  * Return 0 to indicate the conflict can't be revoked and 1 to indicate
  * the revocation worked and the conflicting client is "bye, bye", so it
  * can be tried again.
- * Return 2 to indicate that the vnode is VI_DOOMED after NFSVOPLOCK().
+ * Return 2 to indicate that the vnode is VIRF_DOOMED after NFSVOPLOCK().
  * Unlocks State before a non-zero value is returned.
  */
 static int
@@ -5157,7 +5170,7 @@ nfsrv_clientconflict(struct nfsclient *clp, int *haslockp, vnode_t vp,
 		NFSUNLOCKSTATE();
 		if (vp != NULL) {
 			lktype = NFSVOPISLOCKED(vp);
-			NFSVOPUNLOCK(vp, 0);
+			NFSVOPUNLOCK(vp);
 		}
 		NFSLOCKV4ROOTMUTEX();
 		nfsv4_relref(&nfsv4rootfs_lock);
@@ -5169,7 +5182,7 @@ nfsrv_clientconflict(struct nfsclient *clp, int *haslockp, vnode_t vp,
 		*haslockp = 1;
 		if (vp != NULL) {
 			NFSVOPLOCK(vp, lktype | LK_RETRY);
-			if ((vp->v_iflag & VI_DOOMED) != 0)
+			if (VN_IS_DOOMED(vp))
 				return (2);
 		}
 		return (1);
@@ -5332,7 +5345,7 @@ nfsrv_delegconflict(struct nfsstate *stp, int *haslockp, NFSPROC_T *p,
 		NFSUNLOCKSTATE();
 		if (vp != NULL) {
 			lktype = NFSVOPISLOCKED(vp);
-			NFSVOPUNLOCK(vp, 0);
+			NFSVOPUNLOCK(vp);
 		}
 		NFSLOCKV4ROOTMUTEX();
 		nfsv4_relref(&nfsv4rootfs_lock);
@@ -5344,7 +5357,7 @@ nfsrv_delegconflict(struct nfsstate *stp, int *haslockp, NFSPROC_T *p,
 		*haslockp = 1;
 		if (vp != NULL) {
 			NFSVOPLOCK(vp, lktype | LK_RETRY);
-			if ((vp->v_iflag & VI_DOOMED) != 0) {
+			if (VN_IS_DOOMED(vp)) {
 				*haslockp = 0;
 				NFSLOCKV4ROOTMUTEX();
 				nfsv4_unlock(&nfsv4rootfs_lock, 1);
@@ -5391,13 +5404,16 @@ out:
  * delegations.
  */
 int
-nfsrv_checkremove(vnode_t vp, int remove, NFSPROC_T *p)
+nfsrv_checkremove(vnode_t vp, int remove, struct nfsrv_descript *nd,
+    nfsquad_t clientid, NFSPROC_T *p)
 {
+	struct nfsclient *clp;
 	struct nfsstate *stp;
 	struct nfslockfile *lfp;
 	int error, haslock = 0;
 	fhandle_t nfh;
 
+	clp = NULL;
 	/*
 	 * First, get the lock file structure.
 	 * (A return of -1 means no associated state, so remove ok.)
@@ -5405,6 +5421,9 @@ nfsrv_checkremove(vnode_t vp, int remove, NFSPROC_T *p)
 	error = nfsrv_getlockfh(vp, NFSLCK_CHECK, NULL, &nfh, p);
 tryagain:
 	NFSLOCKSTATE();
+	if (error == 0 && clientid.qval != 0)
+		error = nfsrv_getclient(clientid, CLOPS_RENEW, &clp, NULL,
+		    (nfsquad_t)((u_quad_t)0), 0, nd, p);
 	if (!error)
 		error = nfsrv_getlockfile(NFSLCK_CHECK, NULL, &lfp, &nfh, 0);
 	if (error) {
@@ -5422,7 +5441,7 @@ tryagain:
 	/*
 	 * Now, we must Recall any delegations.
 	 */
-	error = nfsrv_cleandeleg(vp, lfp, NULL, &haslock, p);
+	error = nfsrv_cleandeleg(vp, lfp, clp, &haslock, p);
 	if (error) {
 		/*
 		 * nfsrv_cleandeleg() unlocks state for non-zero
@@ -5559,8 +5578,9 @@ nfsd_recalldelegation(vnode_t vp, NFSPROC_T *p)
 	starttime = NFSD_MONOSEC;
 	do {
 		if (NFSVOPLOCK(vp, LK_EXCLUSIVE) == 0) {
-			error = nfsrv_checkremove(vp, 0, p);
-			NFSVOPUNLOCK(vp, 0);
+			error = nfsrv_checkremove(vp, 0, NULL,
+			    (nfsquad_t)((u_quad_t)0), p);
+			NFSVOPUNLOCK(vp);
 		} else
 			error = EPERM;
 		if (error == NFSERR_DELAY) {
@@ -6210,6 +6230,10 @@ nfsrv_checksequence(struct nfsrv_descript *nd, uint32_t sequenceid,
 	sep->sess_clp->lc_expiry = nfsrv_leaseexpiry();
 	nd->nd_clientid.qval = sep->sess_clp->lc_clientid.qval;
 	nd->nd_flag |= ND_IMPLIEDCLID;
+
+	/* Save maximum request and reply sizes. */
+	nd->nd_maxreq = sep->sess_maxreq;
+	nd->nd_maxresp = sep->sess_maxresp;
 
 	/*
 	 * If this session handles the backchannel, save the nd_xprt for this
@@ -7107,7 +7131,7 @@ nfsrv_recalloldlayout(NFSPROC_T *p)
 	nfsquad_t clientid;
 	nfsv4stateid_t stateid;
 	fhandle_t fh;
-	int error, laytype, ret;
+	int error, laytype = 0, ret;
 
 	lhyp = &nfslayouthash[arc4random() % nfsrv_layouthashsize];
 	NFSLOCKLAYOUT(lhyp);
@@ -7631,7 +7655,7 @@ nfsrv_setdsserver(char *dspathp, char *mdspathp, NFSPROC_T *p,
 	    M_NFSDSTATE, M_WAITOK | M_ZERO);
 	ds->nfsdev_dvp = nd.ni_vp;
 	ds->nfsdev_nmp = VFSTONFS(nd.ni_vp->v_mount);
-	NFSVOPUNLOCK(nd.ni_vp, 0);
+	NFSVOPUNLOCK(nd.ni_vp);
 
 	dsdirsize = strlen(dspathp) + 16;
 	dsdirpath = malloc(dsdirsize, M_TEMP, M_WAITOK);
@@ -7657,7 +7681,7 @@ nfsrv_setdsserver(char *dspathp, char *mdspathp, NFSPROC_T *p,
 			break;
 		}
 		ds->nfsdev_dsdir[i] = nd.ni_vp;
-		NFSVOPUNLOCK(nd.ni_vp, 0);
+		NFSVOPUNLOCK(nd.ni_vp);
 	}
 	free(dsdirpath, M_TEMP);
 
@@ -7793,7 +7817,7 @@ nfsrv_deldsnmp(int op, struct nfsmount *nmp, NFSPROC_T *p)
  * point.
  * Also, returns an error instead of the nfsdevice found.
  */
-static int
+int
 nfsrv_delds(char *devid, NFSPROC_T *p)
 {
 	struct nfsdevice *ds, *fndds;
@@ -7923,7 +7947,7 @@ nfsrv_allocdevid(struct nfsdevice *ds, char *addr, char *dnshost)
 	 * as defined for Flexible File Layout) in XDR.
 	 */
 	addrlen = NFSM_RNDUP(strlen(addr)) + NFSM_RNDUP(strlen(netprot)) +
-	    9 * NFSX_UNSIGNED;
+	    14 * NFSX_UNSIGNED;
 	ds->nfsdev_flexaddrlen = addrlen;
 	tl = malloc(addrlen, M_NFSDSTATE, M_WAITOK | M_ZERO);
 	ds->nfsdev_flexaddr = (char *)tl;
@@ -7935,7 +7959,12 @@ nfsrv_allocdevid(struct nfsdevice *ds, char *addr, char *dnshost)
 	*tl++ = txdr_unsigned(strlen(addr));
 	NFSBCOPY(addr, tl, strlen(addr));
 	tl += (NFSM_RNDUP(strlen(addr)) / NFSX_UNSIGNED);
-	*tl++ = txdr_unsigned(1);		/* One NFS Version. */
+	*tl++ = txdr_unsigned(2);		/* Two NFS Versions. */
+	*tl++ = txdr_unsigned(NFS_VER4);	/* NFSv4. */
+	*tl++ = txdr_unsigned(NFSV42_MINORVERSION); /* Minor version 2. */
+	*tl++ = txdr_unsigned(NFS_SRVMAXIO);	/* DS max rsize. */
+	*tl++ = txdr_unsigned(NFS_SRVMAXIO);	/* DS max wsize. */
+	*tl++ = newnfs_true;			/* Tightly coupled. */
 	*tl++ = txdr_unsigned(NFS_VER4);	/* NFSv4. */
 	*tl++ = txdr_unsigned(NFSV41_MINORVERSION); /* Minor version 1. */
 	*tl++ = txdr_unsigned(NFS_SRVMAXIO);	/* DS max rsize. */
@@ -7947,7 +7976,6 @@ nfsrv_allocdevid(struct nfsdevice *ds, char *addr, char *dnshost)
 	    M_WAITOK);
 	NFSBCOPY(dnshost, ds->nfsdev_host, ds->nfsdev_hostnamelen + 1);
 }
-
 
 /*
  * Create the device id list.
@@ -8043,7 +8071,7 @@ nfsrv_freealldevids(void)
  */
 #define	NFSCLIDVECSIZE	6
 int
-nfsrv_checkdsattr(struct nfsrv_descript *nd, vnode_t vp, NFSPROC_T *p)
+nfsrv_checkdsattr(vnode_t vp, NFSPROC_T *p)
 {
 	fhandle_t fh, *tfhp;
 	struct nfsstate *stp;
@@ -8265,7 +8293,7 @@ nfsrv_copymr(vnode_t vp, vnode_t fvp, vnode_t dvp, struct nfsdevice *ds,
 	didprintf = 0;
 	TAILQ_INIT(&thl);
 	/* Unlock the MDS vp, so that a LayoutReturn can be done on it. */
-	NFSVOPUNLOCK(vp, 0);
+	NFSVOPUNLOCK(vp);
 	/* Now, do a recall for all layouts not yet recalled. */
 tryagain:
 	NFSDRECALLLOCK();
@@ -8357,7 +8385,7 @@ tryagain2:
 	 * changed until the copy is complete.
 	 */
 	NFSVOPLOCK(vp, LK_EXCLUSIVE | LK_RETRY);
-	if (ret == 0 && (vp->v_iflag & VI_DOOMED) != 0) {
+	if (ret == 0 && VN_IS_DOOMED(vp)) {
 		NFSD_DEBUG(4, "nfsrv_copymr: lk_exclusive doomed\n");
 		ret = ESTALE;
 	}
@@ -8561,7 +8589,7 @@ nfsrv_mdscopymr(char *mdspathp, char *dspathp, char *curdspathp, char *buf,
 			return (ENXIO);
 		}
 		curnmp = VFSTONFS(nd.ni_vp->v_mount);
-	
+
 		/* Search the nfsdev list for a match. */
 		NFSDDSLOCK();
 		*fdsp = nfsv4_findmirror(curnmp);
@@ -8609,7 +8637,7 @@ nfsrv_mdscopymr(char *mdspathp, char *dspathp, char *curdspathp, char *buf,
 			return (ENXIO);
 		}
 		nmp = VFSTONFS(nd.ni_vp->v_mount);
-	
+
 		/*
 		 * Search the nfsdevice list for a match.  If curnmp == NULL,
 		 * this is a recovery and there must be a mirror.
@@ -8741,4 +8769,3 @@ nfsrv_findmirroredds(struct nfsmount *nmp)
 	}
 	return (fndds);
 }
-

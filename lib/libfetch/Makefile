@@ -1,8 +1,7 @@
-# $FreeBSD: 6990e7b1bb83fc47b7ddc7976cfec741d92f382a $
+# $FreeBSD: 99c4ceea9dd94a49e3d37ccdbe056de94146f36d $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
 LIB=		fetch
 CFLAGS+=	-I.
 SRCS=		fetch.c common.c ftp.c http.c file.c \
@@ -23,8 +22,6 @@ LIBADD+=	md
 .endif
 
 CFLAGS+=	-DFTP_COMBINE_CWDS
-
-CSTD?=		c99
 
 SHLIB_MAJOR=    6
 

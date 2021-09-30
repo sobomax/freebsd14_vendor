@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$NetBSD: SYS.h,v 1.8 2002/01/14 00:55:56 thorpej Exp $
- * $FreeBSD: 63a5ec47c4b4fec68d03a15d19d1c818082e9f0a $
+ * $FreeBSD: 8d019144cdd6d3ecf8a0f37ec9d13d00ee2a0f9f $
  */
 
 #include <sys/syscall.h>
@@ -44,7 +44,7 @@
 #define	SYSCALL(name)						\
 	.text;							\
 	.align 2;						\
-2:	b	PIC_PLT(CNAME(HIDENAME(cerror)));		\
+2:	b	CNAME(HIDENAME(cerror));			\
 ENTRY(__sys_##name);						\
 	WEAK_REFERENCE(__sys_##name, name);			\
 	WEAK_REFERENCE(__sys_##name, _##name);			\
@@ -58,15 +58,16 @@ ENTRY(__sys_##name);						\
 	WEAK_REFERENCE(__sys_##name, _##name);			\
 	_SYSCALL(name);						\
 	bnslr;							\
-	b	PIC_PLT(CNAME(HIDENAME(cerror)))
+	b	CNAME(HIDENAME(cerror));			\
+END(__sys_##name)
 
 #define	RSYSCALL(name)						\
 	.text;							\
 	.align 2;						\
-2:	b	PIC_PLT(CNAME(HIDENAME(cerror)));		\
 ENTRY(__sys_##name);						\
 	WEAK_REFERENCE(__sys_##name, name);			\
 	WEAK_REFERENCE(__sys_##name, _##name);			\
 	_SYSCALL(name);						\
 	bnslr;							\
-	b	PIC_PLT(CNAME(HIDENAME(cerror)))
+	b	CNAME(HIDENAME(cerror));			\
+END(__sys_##name)

@@ -28,14 +28,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 95684e30354f00edf1d9f6b00a8317296fbe02cd $
+ * $FreeBSD: 14e91825549caf5d38f8d91b4daf23832ca9bc37 $
  */
 
 /**
  * @file
  * OCS linux driver common include file
  */
-
 
 #if !defined(__OCS_DRV_FC_H__)
 #define __OCS_DRV_FC_H__
@@ -52,7 +51,6 @@
 #include "ocs_stats.h"
 
 struct ocs_s {
-
 	ocs_os_t ocs_os;
 	char display_name[OCS_DISPLAY_NAME_LENGTH];
 	ocs_rlock_t lock;			/*>> Device wide lock */
@@ -207,6 +205,5 @@ extern int32_t ocs_start_event_processing(ocs_os_t *ocs_os);
 
 #include "ocs_ioctl.h"
 #include "ocs_elxu.h"
-
 
 #endif 

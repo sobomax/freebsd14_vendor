@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4fcd26db61b153e58eeb8194e71079a9c7353f26 $");
+__FBSDID("$FreeBSD: 4c184095ad355961a38fc860118fb8284fa84ac1 $");
 
 /*
  * IEEE 802.11 scanning support.
@@ -37,7 +37,7 @@ __FBSDID("$FreeBSD: 4fcd26db61b153e58eeb8194e71079a9c7353f26 $");
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/condvar.h>
- 
+
 #include <sys/socket.h>
 
 #include <net/if.h>
@@ -231,7 +231,6 @@ ieee80211_swscan_start_scan_locked(const struct ieee80211_scanner *scan,
 	}
 	return 0;
 }
-
 
 /*
  * Start a scan unless one is already going.

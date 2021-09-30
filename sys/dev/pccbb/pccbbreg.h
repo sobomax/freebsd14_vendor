@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3fb7e6a53074d26368493ed74d2a0508a24ec5db $
+ * $FreeBSD: 55597ec0cb725638e66f0521deb40576e9a90b01 $
  */
 
 /*
@@ -61,7 +61,6 @@
 /*
  * Register definitions for PCI to Cardbus Bridge chips
  */
-
 
 /* PCI header registers */
 #define	CBBR_SOCKBASE				0x10	/* len=4 */
@@ -187,7 +186,6 @@
 # define TOPIC97_REG_CTRL_RI_DISABLE  0x00000004
 # define TOPIC97_REG_CTRL_CAUDIO_OFF  0x00000002
 # define TOPIC_REG_CTRL_CAUDIO_INVERT 0x00000001
-
 
 /* Socket definitions */
 #define	CBB_SOCKET_EVENT_CSTS		0x01	/* Card Status Change */

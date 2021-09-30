@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 7a39efa7787d9bef75058932d3e4b74ea2faf383 $*/
+/*$FreeBSD: d7da9f81fbf89a16655702939b1552ec1d22919f $*/
 
 #include "ixgbe_common.h"
 #include "ixgbe_phy.h"
@@ -5147,8 +5147,8 @@ void ixgbe_get_oem_prod_version(struct ixgbe_hw *hw,
 	nvm_ver->oem_valid = FALSE;
 	hw->eeprom.ops.read(hw, NVM_OEM_PROD_VER_PTR, &offset);
 
-	/* Return is offset to OEM Product Version block is invalid */
-	if (offset == 0x0 && offset == NVM_INVALID_PTR)
+	/* Return if offset to OEM Product Version block is invalid */
+	if (offset == 0x0 || offset == NVM_INVALID_PTR)
 		return;
 
 	/* Read product version block */

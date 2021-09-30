@@ -47,11 +47,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51d6ef93ec00fa74c5e086f44af33b000be4d5f1 $");
+__FBSDID("$FreeBSD: 452b014d224038f5c2e8446672615baeabe64df4 $");
 
 #include "opt_amdsbwd.h"
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/systm.h>
@@ -130,7 +131,6 @@ static driver_t		amdsbwd_driver = {
 };
 
 DRIVER_MODULE(amdsbwd, isa, amdsbwd_driver, amdsbwd_devclass, NULL, NULL);
-
 
 static uint8_t
 pmio_read(struct resource *res, uint8_t reg)
@@ -278,7 +278,6 @@ amdsbwd_identify(driver_t *driver, device_t parent)
 	if (child == NULL)
 		device_printf(parent, "add amdsbwd child failed\n");
 }
-
 
 static void
 amdsbwd_probe_sb7xx(device_t dev, struct resource *pmres, uint32_t *addr)

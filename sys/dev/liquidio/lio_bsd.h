@@ -30,12 +30,14 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 4d07f210d26c9eaaad61f3443fdb100cc2660e69 $*/
+/*$FreeBSD: fd6402ea2297af2d756842437069fba773218a21 $*/
 
 #ifndef __LIO_BSD_H__
 #define __LIO_BSD_H__
 
 #include <sys/param.h>
+#include <sys/gsb_crc32.h>
+#include <sys/eventhandler.h>
 #include <sys/socket.h>
 #include <sys/kernel.h>
 #include <sys/module.h>

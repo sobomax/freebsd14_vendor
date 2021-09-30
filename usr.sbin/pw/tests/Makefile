@@ -1,11 +1,10 @@
-# $FreeBSD: 8c3cd36f8d0c92e989f275f81e2a179e4c4caa80 $
+# $FreeBSD: ecdb0fe1665d7b1896bcf6aec2b5779563c63049 $
 
 PACKAGE=	tests
 
 BINDIR=		${TESTSDIR}
 
 PROGS+=		crypt
-WARNS?=		6
 LIBADD+=	crypt
 
 ATF_TESTS_SH=	pw_etcdir_test \

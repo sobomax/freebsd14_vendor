@@ -1,6 +1,7 @@
-# $FreeBSD: a8cfc8c5fdc0d41bcbd1a609eb0463b5446ebd6a $
+# $FreeBSD: 99df1ff8aea9abc52723f0c69e2f0d928220d092 $
 
-NAME=	nbt
-SRCS=	alias_nbt.c
+PACKAGE=	natd
+NAME=		nbt
+SRCS=		alias_nbt.c
 
 .include <bsd.lib.mk>

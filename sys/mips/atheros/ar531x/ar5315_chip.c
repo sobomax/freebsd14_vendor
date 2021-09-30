@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94374e5ddda2a770b061e9e37f33186139b6e0a0 $");
+__FBSDID("$FreeBSD: f04b3aabfe5f027b8104a0a6df6a43fcea7ab980 $");
 
 #include "opt_ddb.h"
 
@@ -181,7 +181,7 @@ ar5315_chip_device_start(void)
 	ATH_WRITE_REG(AR5315_SYSREG_BASE+AR5315_SYSREG_AHB_ARB_CTL,
 		ATH_READ_REG(AR5315_SYSREG_BASE+AR5315_SYSREG_AHB_ARB_CTL) |
 		AR5315_ARB_ENET);
-	
+
 	// set Ethernet controller byteswap control
 /*
 	ATH_WRITE_REG(AR5315_SYSREG_BASE+AR5315_SYSREG_ENDIAN,

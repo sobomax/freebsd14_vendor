@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.h,v 1.6 2003/04/13 21:34:42 max Exp $
- * $FreeBSD: 48ee265143d5b69701fcc20edb807f194c69ff9d $
+ * $FreeBSD: 9f713259d966ee18d91fbdbade72e70304a023aa $
  */
 
 #ifndef _NG_UBT_H_
@@ -90,4 +90,3 @@ typedef struct {
 typedef u_int16_t	ng_ubt_node_dev_nodes_ep;
 
 #endif /* ndef _NG_UBT_H_ */
-

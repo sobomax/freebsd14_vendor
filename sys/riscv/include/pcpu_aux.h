@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3d4c70c491d629009fdc0e1a70862146fb83d4d4 $
+ * $FreeBSD: 9fecd25c67cbcfcee916d5841081dd71ef9f7646 $
  */
 
 #ifndef _MACHINE_PCPU_AUX_H_
@@ -46,6 +46,9 @@
  * be a multiple of the size of struct pcpu.
  */
 _Static_assert(PAGE_SIZE % sizeof(struct pcpu) == 0, "fix pcpu size");
+_Static_assert(offsetof(struct pcpu, __pad) +
+    sizeof(((struct pcpu *)0)->__pad) == sizeof(struct pcpu),
+    "fix pcpu padding");
 
 extern struct pcpu __pcpu[];
 

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 1b6ba327c59f41c1d9435275445e1e4860b8aac0 $");
+__FBSDID("$FreeBSD: 3c676b9c1ea27160bdf1b31667d334df2297ad62 $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)look_up.c	8.1 (Berkeley) 6/6/93";
@@ -59,13 +59,9 @@ check_local(void)
 	struct sockaddr addr;
 
 	/* the rest of msg was set up in get_names */
-#ifdef MSG_EOR
 	/* copy new style sockaddr to old, swap family (short in old) */
-	msg.ctl_addr = *(struct osockaddr *)&ctl_addr;
+	msg.ctl_addr = *(struct tsockaddr *)&ctl_addr;
 	msg.ctl_addr.sa_family = htons(ctl_addr.sin_family);
-#else
-	msg.ctl_addr = *(struct sockaddr *)&ctl_addr;
-#endif
 	/* must be initiating a talk */
 	if (!look_for_invite(rp))
 		return (0);

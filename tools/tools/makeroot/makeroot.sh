@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e5b854604b22002e01bb8776dd410d23c25ceb7a $
+# $FreeBSD: a1b450e1d8367ec060d7ff1eb31707993d7a62ef $
 
 usage()
 {
@@ -237,10 +237,6 @@ fi
 if [ -n "${SIZE}" ]; then
 SIZEFLAG="-s ${SIZE}"
 fi
-
-# Zero out subsecond component of time= keywords as they are currently not
-# supported by makefs
-sed -i '' -E 's/(time=[0-9]*)\.[0-9]*/\1.0/' ${manifest}
 
 cd ${BSDROOT}; makefs ${DUPFLAG} -N ${DBDIR} ${SIZEFLAG} ${BFLAG} \
      -t ffs ${LABELFLAG} -f 256 ${IMGFILE} ${manifest}

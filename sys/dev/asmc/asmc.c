@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5e78e75422d8be6cba30a1aa83462f08e51f02be $");
+__FBSDID("$FreeBSD: 5c10d512361dcff7cbe334a81840354751f53568 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -371,7 +371,6 @@ struct asmc_model asmc_models[] = {
 	  ASMC_LIGHT_FUNCS,
 	  ASMC_MBA7_TEMPS, ASMC_MBA7_TEMPNAMES, ASMC_MBA7_TEMPDESCS
 	},
-
 	{ NULL, NULL }
 };
 
@@ -389,7 +388,6 @@ static device_method_t	asmc_methods[] = {
 	DEVMETHOD(device_attach,	asmc_attach),
 	DEVMETHOD(device_detach,	asmc_detach),
 	DEVMETHOD(device_resume,	asmc_resume),
-
 	{ 0, 0 }
 };
 
@@ -445,11 +443,13 @@ static int
 asmc_probe(device_t dev)
 {
 	struct asmc_model *model;
+	int rv;
 
 	if (resource_disabled("asmc", 0))
 		return (ENXIO);
-	if (ACPI_ID_PROBE(device_get_parent(dev), dev, asmc_ids) == NULL)
-		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, asmc_ids, NULL);
+	if (rv > 0)
+		return (rv);
 
 	model = asmc_match(dev);
 	if (!model) {
@@ -458,7 +458,7 @@ asmc_probe(device_t dev)
 	}
 	device_set_desc(dev, model->smc_desc);
 
-	return (BUS_PROBE_DEFAULT);
+	return (rv);
 }
 
 static int
@@ -494,7 +494,7 @@ asmc_attach(device_t dev)
 	 */
 	sc->sc_fan_tree[0] = SYSCTL_ADD_NODE(sysctlctx,
 	    SYSCTL_CHILDREN(sysctlnode), OID_AUTO, "fan",
-	    CTLFLAG_RD, 0, "Fan Root Tree");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "Fan Root Tree");
 
 	for (i = 1; i <= sc->sc_nfan; i++) {
 		j = i - 1;
@@ -502,46 +502,48 @@ asmc_attach(device_t dev)
 		name[1] = 0;
 		sc->sc_fan_tree[i] = SYSCTL_ADD_NODE(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[0]),
-		    OID_AUTO, name, CTLFLAG_RD, 0,
+		    OID_AUTO, name, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
 		    "Fan Subtree");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
-		    OID_AUTO, "id", CTLTYPE_STRING | CTLFLAG_RD,
+		    OID_AUTO, "id",
+		    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_id, "I",
 		    "Fan ID");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
-		    OID_AUTO, "speed", CTLTYPE_INT | CTLFLAG_RD,
+		    OID_AUTO, "speed",
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_speed, "I",
 		    "Fan speed in RPM");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
 		    OID_AUTO, "safespeed",
-		    CTLTYPE_INT | CTLFLAG_RD,
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_safespeed, "I",
 		    "Fan safe speed in RPM");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
 		    OID_AUTO, "minspeed",
-		    CTLTYPE_INT | CTLFLAG_RW,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_minspeed, "I",
 		    "Fan minimum speed in RPM");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
 		    OID_AUTO, "maxspeed",
-		    CTLTYPE_INT | CTLFLAG_RW,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_maxspeed, "I",
 		    "Fan maximum speed in RPM");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_fan_tree[i]),
 		    OID_AUTO, "targetspeed",
-		    CTLTYPE_INT | CTLFLAG_RW,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 		    dev, j, model->smc_fan_targetspeed, "I",
 		    "Fan target speed in RPM");
 	}
@@ -551,13 +553,13 @@ asmc_attach(device_t dev)
 	 */
 	sc->sc_temp_tree = SYSCTL_ADD_NODE(sysctlctx,
 	    SYSCTL_CHILDREN(sysctlnode), OID_AUTO, "temp",
-	    CTLFLAG_RD, 0, "Temperature sensors");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "Temperature sensors");
 
 	for (i = 0; model->smc_temps[i]; i++) {
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_temp_tree),
 		    OID_AUTO, model->smc_tempnames[i],
-		    CTLTYPE_INT | CTLFLAG_RD,
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, i, asmc_temp_sysctl, "I",
 		    model->smc_tempdescs[i]);
 	}
@@ -568,25 +570,29 @@ asmc_attach(device_t dev)
 	if (model->smc_light_left) {
 		sc->sc_light_tree = SYSCTL_ADD_NODE(sysctlctx,
 		    SYSCTL_CHILDREN(sysctlnode), OID_AUTO, "light",
-		    CTLFLAG_RD, 0, "Keyboard backlight sensors");
+		    CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+		    "Keyboard backlight sensors");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_light_tree),
-		    OID_AUTO, "left", CTLTYPE_INT | CTLFLAG_RD,
+		    OID_AUTO, "left",
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, 0, model->smc_light_left, "I",
 		    "Keyboard backlight left sensor");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_light_tree),
-		    OID_AUTO, "right", CTLTYPE_INT | CTLFLAG_RD,
+		    OID_AUTO, "right",
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 		    dev, 0, model->smc_light_right, "I",
 		    "Keyboard backlight right sensor");
 
 		SYSCTL_ADD_PROC(sysctlctx,
 		    SYSCTL_CHILDREN(sc->sc_light_tree),
 		    OID_AUTO, "control",
-		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY,
-		    dev, 0, model->smc_light_control, "I",
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
+		    CTLFLAG_NEEDGIANT, dev, 0,
+		    model->smc_light_control, "I",
 		    "Keyboard backlight brightness control");
 	}
 
@@ -598,23 +604,26 @@ asmc_attach(device_t dev)
 	 */
 	sc->sc_sms_tree = SYSCTL_ADD_NODE(sysctlctx,
 	    SYSCTL_CHILDREN(sysctlnode), OID_AUTO, "sms",
-	    CTLFLAG_RD, 0, "Sudden Motion Sensor");
+	    CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "Sudden Motion Sensor");
 
 	SYSCTL_ADD_PROC(sysctlctx,
 	    SYSCTL_CHILDREN(sc->sc_sms_tree),
-	    OID_AUTO, "x", CTLTYPE_INT | CTLFLAG_RD,
+	    OID_AUTO, "x",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    dev, 0, model->smc_sms_x, "I",
 	    "Sudden Motion Sensor X value");
 
 	SYSCTL_ADD_PROC(sysctlctx,
 	    SYSCTL_CHILDREN(sc->sc_sms_tree),
-	    OID_AUTO, "y", CTLTYPE_INT | CTLFLAG_RD,
+	    OID_AUTO, "y",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    dev, 0, model->smc_sms_y, "I",
 	    "Sudden Motion Sensor Y value");
 
 	SYSCTL_ADD_PROC(sysctlctx,
 	    SYSCTL_CHILDREN(sc->sc_sms_tree),
-	    OID_AUTO, "z", CTLTYPE_INT | CTLFLAG_RD,
+	    OID_AUTO, "z",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    dev, 0, model->smc_sms_z, "I",
 	    "Sudden Motion Sensor Z value");
 
@@ -700,7 +709,6 @@ asmc_resume(device_t dev)
     asmc_key_write(dev, ASMC_KEY_LIGHTVALUE, buf, sizeof buf);
     return (0);
 }
-
 
 #ifdef DEBUG
 void asmc_dumpall(device_t dev)
@@ -860,7 +868,6 @@ asmc_wait(device_t dev, uint8_t val)
  */
 static int
 asmc_command(device_t dev, uint8_t command) {
-
 	int i;
 	struct asmc_softc *sc = device_get_softc(dev);
 
@@ -1160,7 +1167,6 @@ asmc_mb_sysctl_fansafespeed(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-
 static int
 asmc_mb_sysctl_fanminspeed(SYSCTL_HANDLER_ARGS)
 {
@@ -1304,8 +1310,6 @@ asmc_sms_intrfast(void *arg)
 	taskqueue_enqueue(sc->sc_sms_tq, &sc->sc_sms_task);
 	return (FILTER_HANDLED);
 }
-
-
 
 static void
 asmc_sms_printintr(device_t dev, uint8_t type)

@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)create.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 204f40abc15cff82adbda3e62a0dabc93e843c55 $");
+__FBSDID("$FreeBSD: edfb09ebd2f2979ffd204e15fd2e737e822f760f $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -102,7 +102,7 @@ cwalk(void)
 	argv[1] = NULL;
 	if ((t = fts_open(argv, ftsoptions, dsort)) == NULL)
 		err(1, "fts_open()");
-	while ((p = fts_read(t))) {
+	while (errno = 0, (p = fts_read(t))) {
 		if (iflag)
 			indent = p->fts_level * 4;
 		if (check_excludes(p->fts_name, p->fts_path)) {
@@ -137,6 +137,8 @@ cwalk(void)
 
 		}
 	}
+	if (errno != 0)
+		err(1, "fts_read()");
 	(void)fts_close(t);
 	if (sflag && keys & F_CKSUM)
 		warnx("%s checksum: %lu", fullpath, (unsigned long)crc_total);

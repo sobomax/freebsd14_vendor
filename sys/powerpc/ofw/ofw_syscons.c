@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2abc155ed224d1ae38ed66d86679f5aa5b02cff2 $");
+__FBSDID("$FreeBSD: 633750e1351cb4381f9339c7008697edd2e5a6d1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -60,7 +60,8 @@ __FBSDID("$FreeBSD: 2abc155ed224d1ae38ed66d86679f5aa5b02cff2 $");
 
 static int ofwfb_ignore_mmap_checks = 1;
 static int ofwfb_reset_on_switch = 1;
-static SYSCTL_NODE(_hw, OID_AUTO, ofwfb, CTLFLAG_RD, 0, "ofwfb");
+static SYSCTL_NODE(_hw, OID_AUTO, ofwfb, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "ofwfb");
 SYSCTL_INT(_hw_ofwfb, OID_AUTO, relax_mmap, CTLFLAG_RW,
     &ofwfb_ignore_mmap_checks, 0, "relaxed mmap bounds checking");
 SYSCTL_INT(_hw_ofwfb, OID_AUTO, reset_on_mode_switch, CTLFLAG_RW,
@@ -815,7 +816,6 @@ ofwfb_putc8(video_adapter_t *adp, vm_offset_t off, uint8_t c, uint8_t a)
 		uint32_t l;
 		uint8_t  c[4];
 	} ch1, ch2;
-
 
 	sc = (struct ofwfb_softc *)adp;
         row = (off / adp->va_info.vi_width) * adp->va_info.vi_cheight;

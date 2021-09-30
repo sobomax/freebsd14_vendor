@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e7e0cc79b54c3b4cd00cdbb09e9c40114f74c580 $");
+__FBSDID("$FreeBSD: bb902610b0f4dc6f55033adbdd4634b737061b9a $");
 
 #include "opt_auto_eoi.h"
 #include "opt_isa.h"
@@ -311,7 +310,6 @@ atpic_disable_intr(struct intsrc *isrc)
 {
 }
 
-
 static int
 atpic_vector(struct intsrc *isrc)
 {
@@ -563,7 +561,7 @@ static int
 atpic_probe(device_t dev)
 {
 	int result;
-	
+
 	result = ISA_PNP_PROBE(device_get_parent(dev), dev, atpic_ids);
 	if (result <= 0)
 		device_quiet(dev);

@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b903620040637962522891191f9db8a8535d7bb $");
+__FBSDID("$FreeBSD: 672575b75701a661bfcf4cf9e36a731c8ecf22f5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,7 +73,6 @@ SYSINIT(configure2, SI_SUB_CONFIGURE, SI_ORDER_THIRD, configure, NULL);
 SYSINIT(configure3, SI_SUB_CONFIGURE, SI_ORDER_ANY, configure_final, NULL);
 
 device_t nexus_dev;
-
 
 /*
  * Determine i/o configuration for a machine.

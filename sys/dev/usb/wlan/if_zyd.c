@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zyd.c,v 1.52 2007/02/11 00:08:04 jsg Exp $	*/
 /*	$NetBSD: if_zyd.c,v 1.7 2007/06/21 04:04:29 kiyohara Exp $	*/
-/*	$FreeBSD: d823034ea94f4d0962768f69b4aeb04e2912cf34 $	*/
+/*	$FreeBSD: 8a6e41bcd27f364d4877a551f3c84e51c1598fc6 $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d823034ea94f4d0962768f69b4aeb04e2912cf34 $");
+__FBSDID("$FreeBSD: 8a6e41bcd27f364d4877a551f3c84e51c1598fc6 $");
 
 /*
  * ZyDAS ZD1211/ZD1211B USB WLAN driver.
@@ -77,7 +77,8 @@ __FBSDID("$FreeBSD: d823034ea94f4d0962768f69b4aeb04e2912cf34 $");
 #ifdef USB_DEBUG
 static int zyd_debug = 0;
 
-static SYSCTL_NODE(_hw_usb, OID_AUTO, zyd, CTLFLAG_RW, 0, "USB zyd");
+static SYSCTL_NODE(_hw_usb, OID_AUTO, zyd, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "USB zyd");
 SYSCTL_INT(_hw_usb_zyd, OID_AUTO, debug, CTLFLAG_RWTUN, &zyd_debug, 0,
     "zyd debug level");
 
@@ -434,7 +435,6 @@ zyd_drain_mbufq(struct zyd_softc *sc)
 	}
 }
 
-
 static int
 zyd_detach(device_t dev)
 {
@@ -675,7 +675,6 @@ zyd_intr_read_callback(struct usb_xfer *xfer, usb_error_t error)
 					txs->status =
 					    IEEE80211_RATECTL_TX_SUCCESS;
 				}
-
 
 				ieee80211_ratectl_tx_complete(ni, txs);
 				ieee80211_free_node(ni);
@@ -1238,7 +1237,7 @@ zyd_al2230_bandedge6(struct zyd_rf *rf, struct ieee80211_channel *c)
 
 	if (chan == 1 || chan == 11)
 		r[0].val = 0x12;
-	
+
 	for (i = 0; i < nitems(r); i++)
 		zyd_write16_m(sc, r[i].reg, r[i].val);
 fail:
@@ -2223,6 +2222,7 @@ zyd_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 	struct zyd_softc *sc = usbd_xfer_softc(xfer);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_node *ni;
+	struct epoch_tracker et;
 	struct zyd_rx_desc desc;
 	struct mbuf *m;
 	struct usb_page_cache *pc;
@@ -2278,6 +2278,7 @@ tr_setup:
 		 * "ieee80211_input" here, and not some lines up!
 		 */
 		ZYD_UNLOCK(sc);
+		NET_EPOCH_ENTER(et);
 		for (i = 0; i < sc->sc_rx_count; i++) {
 			rssi = sc->sc_rx_data[i].rssi;
 			m = sc->sc_rx_data[i].m;
@@ -2293,6 +2294,7 @@ tr_setup:
 			} else
 				(void)ieee80211_input_all(ic, m, rssi, nf);
 		}
+		NET_EPOCH_EXIT(et);
 		ZYD_LOCK(sc);
 		zyd_start(sc);
 		break;

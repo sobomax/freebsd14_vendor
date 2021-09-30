@@ -1,9 +1,8 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
+ * Copyright (c) 2006 Wojciech A. Koszek <wkoszek@FreeBSD.org> All rights reserved.
  * Copyright (c) 2009 M. Warner Losh <imp@FreeBSD.org>
- * Copyright (c) 2006 Wojciech A. Koszek <wkoszek@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,7 +30,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c81c2741a724e7214b8fd35dd3323374b7115dc6 $");
+__FBSDID("$FreeBSD: 5aca02becee0129a994f573681029b719b99f9cb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

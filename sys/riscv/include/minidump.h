@@ -24,14 +24,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * From i386: FreeBSD:  157909 2006-04-21 04:28:43Z peter
- * $FreeBSD: 314040e85a8d1e187064decce9f15743130fedae $
+ * $FreeBSD: 377db88b5338174ef4c74632e7655294f6017e30 $
  */
 
 #ifndef	_MACHINE_MINIDUMP_H_
 #define	_MACHINE_MINIDUMP_H_ 1
 
 #define	MINIDUMP_MAGIC		"minidump FreeBSD/riscv"
-#define	MINIDUMP_VERSION	1
+#define	MINIDUMP_VERSION	2
 
 struct minidumphdr {
 	char magic[24];
@@ -43,6 +43,7 @@ struct minidumphdr {
 	uint64_t dmapphys;
 	uint64_t dmapbase;
 	uint64_t dmapend;
+	uint32_t dumpavailsize;
 };
 
 #endif /* _MACHINE_MINIDUMP_H_ */

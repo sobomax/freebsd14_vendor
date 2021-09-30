@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 08fb68ecdcc6ea8dc3c0bc969fd31f24d88069a6 $");
+__FBSDID("$FreeBSD: 5656d45dea8e88ee3939d6746cd4e7884c276040 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: 08fb68ecdcc6ea8dc3c0bc969fd31f24d88069a6 $");
 
 struct siba_erom;
 struct siba_erom_io;
-
 
 static int			siba_eio_init(struct siba_erom_io *io,
 				    struct bhnd_erom_io *eio, u_int ncores);
@@ -509,7 +508,7 @@ siba_erom_lookup_core_addr(bhnd_erom_t *erom, const struct bhnd_core_match *desc
 	uint32_t		 am;
 	u_int			 am_offset;
 	u_int			 addrspace, cfg;
-	
+
 	int			 error;
 
 	sc = (struct siba_erom *)erom;

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89d5006e5c347023202a6a6a063bf6b501c5c62d $");
+__FBSDID("$FreeBSD: 5d2353b54ba39d655be7d90b0284d0a5ba1b6006 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -197,7 +197,8 @@ ofw_gpiobus_register_provider(device_t provider)
 	phandle_t node;
 
 	node = ofw_bus_get_node(provider);
-	OF_device_register_xref(OF_xref_from_node(node), provider);
+	if (node != -1)
+		OF_device_register_xref(OF_xref_from_node(node), provider);
 }
 
 void
@@ -206,7 +207,8 @@ ofw_gpiobus_unregister_provider(device_t provider)
 	phandle_t node;
 
 	node = ofw_bus_get_node(provider);
-	OF_device_register_xref(OF_xref_from_node(node), NULL);
+	if (node != -1)
+		OF_device_register_xref(OF_xref_from_node(node), NULL);
 }
 
 static struct ofw_gpiobus_devinfo *

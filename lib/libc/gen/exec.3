@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)exec.3	8.3 (Berkeley) 1/24/94
-.\" $FreeBSD: 798e6d815443769fcb51ee917d8dc905f440786f $
+.\" $FreeBSD: 37954fe1bf7549664cca6f1fcc365dd1ebb78f62 $
 .\"
 .Dd March 22, 2020
 .Dt EXEC 3
@@ -315,6 +315,20 @@ The
 .Fn exec
 function appeared in
 .At v1 .
+The
+.Fn execl
+and
+.Fn execv
+functions appeared in
+.At v2 .
+The
+.Fn execlp ,
+.Fn execle ,
+.Fn execve ,
+and
+.Fn execvp
+functions appeared in
+.At v7 .
 The
 .Fn execvP
 function first appeared in

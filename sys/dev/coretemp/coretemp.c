@@ -32,18 +32,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b9fc3b82350302d740627280837b68c9e35b092 $");
+__FBSDID("$FreeBSD: 884ed6309f0e4c8b550c9f8165df249c59252119 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
-#include <sys/systm.h>
-#include <sys/types.h>
-#include <sys/module.h>
 #include <sys/conf.h>
 #include <sys/kernel.h>
-#include <sys/sysctl.h>
+#include <sys/lock.h>
+#include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/proc.h>	/* for curthread */
 #include <sys/sched.h>
+#include <sys/sysctl.h>
+#include <sys/systm.h>
 
 #include <machine/specialreg.h>
 #include <machine/cpufunc.h>
@@ -273,7 +274,8 @@ coretemp_attach(device_t dev)
 
 	oid = SYSCTL_ADD_NODE(ctx,
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(pdev)), OID_AUTO,
-	    "coretemp", CTLFLAG_RD, NULL, "Per-CPU thermal information");
+	    "coretemp", CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
+	    "Per-CPU thermal information");
 
 	/*
 	 * Add the MIBs to dev.cpu.N and dev.cpu.N.coretemp.

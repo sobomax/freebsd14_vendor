@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2022c64c0f1575c6b588afadbb40a7498bf6aa40 $
+ * $FreeBSD: 9f9ede84ca44bcd9c8a2fddf55480f4fdd763b1e $
  */
 
 #ifndef	__ATHEROS_AR71XX_MACADDR_H__
@@ -34,6 +34,6 @@ extern	uint8_t ar71xx_board_mac_addr[ETHER_ADDR_LEN];
 
 extern	int ar71xx_mac_addr_init(unsigned char *dst, const unsigned char *src,
 	    int offset, int is_local);
-extern	int ar71xx_mac_addr_random_init(unsigned char *dst);
+extern	int ar71xx_mac_addr_random_init(struct ifnet *ifp, struct ether_addr *dst);
 
 #endif /* __ATHEROS_AR71XX_MACADDR_H__ */

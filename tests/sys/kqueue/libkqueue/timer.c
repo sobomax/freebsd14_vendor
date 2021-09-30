@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: 1861030d697a1a5df4810f4f2fd71ccd1ee75110 $
+ * $FreeBSD: cb22887be2764245e4f1ab8228625525e0ec5d7f $
  */
 
 #include "common.h"
@@ -43,7 +43,7 @@ now(void)
 /* Sleep for a given number of milliseconds. The timeout is assumed to
  * be less than 1 second.
  */
-void
+static void
 mssleep(int t)
 {
     struct timespec stime = {
@@ -57,7 +57,7 @@ mssleep(int t)
 /* Sleep for a given number of microseconds. The timeout is assumed to
  * be less than 1 second.
  */
-void
+static void
 ussleep(int t)
 {
     struct timespec stime = {
@@ -68,7 +68,7 @@ ussleep(int t)
     nanosleep(&stime, NULL);
 }
 
-void
+static void
 test_kevent_timer_add(void)
 {
     const char *test_id = "kevent(EVFILT_TIMER, EV_ADD)";
@@ -83,7 +83,7 @@ test_kevent_timer_add(void)
     success();
 }
 
-void
+static void
 test_kevent_timer_del(void)
 {
     const char *test_id = "kevent(EVFILT_TIMER, EV_DELETE)";
@@ -100,7 +100,7 @@ test_kevent_timer_del(void)
     success();
 }
 
-void
+static void
 test_kevent_timer_get(void)
 {
     const char *test_id = "kevent(EVFILT_TIMER, wait)";
@@ -508,7 +508,7 @@ test_update_timing(void)
 }
 
 void
-test_evfilt_timer()
+test_evfilt_timer(void)
 {
     kqfd = kqueue();
     test_kevent_timer_add();

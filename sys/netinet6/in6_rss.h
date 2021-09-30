@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f5b48c71408ab88f4716de3c383d85ff451b9aba $
+ * $FreeBSD: 5846e515d18553a317e92ca98995f65ff03df0a9 $
  */
 
 #ifndef _NETINET6_IN6_RSS_H_
@@ -54,5 +54,8 @@ int		rss_proto_software_hash_v6(const struct in6_addr *src,
 		    uint32_t *hashtype);
 struct mbuf *	rss_soft_m2cpuid_v6(struct mbuf *m, uintptr_t source,
 		    u_int *cpuid);
+uint32_t	xps_proto_software_hash_v6(const struct in6_addr *s,
+		    const struct in6_addr *d, u_short sp, u_short dp,
+		    int proto, uint32_t *hashtype);
 
 #endif /* !_NETINET6_IN6_RSS_H_ */

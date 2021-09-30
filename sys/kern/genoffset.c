@@ -24,20 +24,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aadb909e943ca3180c93cb02c1497d56670bf63f $
+ * $FreeBSD: 11ba6372ae8fa8c3c101973fd3dcf7e457d0193c $
  */
 
 #ifndef OFFSET_TEST
 #define GENOFFSET
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aadb909e943ca3180c93cb02c1497d56670bf63f $");
+__FBSDID("$FreeBSD: 11ba6372ae8fa8c3c101973fd3dcf7e457d0193c $");
 #include <sys/param.h>
 #include <sys/assym.h>
 #include <sys/proc.h>
 
 OFFSYM(td_priority, thread, u_char);
-OFFSYM(td_epochnest, thread, u_char);
 OFFSYM(td_critnest, thread, u_int);
 OFFSYM(td_pinned, thread, int);
 OFFSYM(td_owepreempt, thread, u_char);

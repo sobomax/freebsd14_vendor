@@ -1,4 +1,4 @@
-/*	$FreeBSD: a176fe756c66c2265050f79787febb8ac6aa1d85 $	*/
+/*	$FreeBSD: cad7e5272d4712e10df9af8db754879b70baa374 $	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-
@@ -31,7 +31,6 @@
 #ifndef _CRYPTO_XFORM_H_
 #define _CRYPTO_XFORM_H_
 
-#include <sys/md5.h>
 #include <crypto/sha1.h>
 #include <crypto/sha2/sha256.h>
 #include <crypto/sha2/sha384.h>

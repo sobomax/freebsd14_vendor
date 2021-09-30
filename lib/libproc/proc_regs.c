@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a611640ad4ea1c703b5365ce0a4ae9a47bffe1ad $");
+__FBSDID("$FreeBSD: da2cba18bbbdd1e4c7d88015de70b2720d4dafaa $");
 
 #include <sys/types.h>
 #define	_WANT_MIPS_REGNUM
@@ -139,7 +139,7 @@ proc_regset(struct proc_handle *phdl, proc_reg_t reg, unsigned long regvalue)
 #elif defined(__i386__)
 		regs.r_esp = regvalue;
 #elif defined(__mips__)
-		regs.r_regs[PC] = regvalue;
+		regs.r_regs[SP] = regvalue;
 #elif defined(__powerpc__)
 		regs.fixreg[1] = regvalue;
 #elif defined(__riscv)

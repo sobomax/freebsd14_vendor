@@ -35,9 +35,9 @@
 .\" the referee document.  The original Standard can be obtained online at
 .\"	http://www.opengroup.org/unix/online.html.
 .\"
-.\" $FreeBSD: ef6154b7ff5a98ab57459b6e92faebb137320c8c $
+.\" $FreeBSD: a810ee01cc1834dc998ebd1bb782ddc117ea7333 $
 .\"
-.Dd September 15, 2014
+.Dd September 28, 2019
 .Dt MQ_OPEN 2
 .Os
 .Sh NAME
@@ -317,6 +317,13 @@ This implementation places strict requirements on the value of
 it must begin with a slash
 .Pq Ql /
 and contain no other slash characters.
+.Pp
+The
+.Fa mode
+and
+.Fa attr
+arguments are variadic and may result in different calling conventions
+than might otherwise be expected.
 .Sh COPYRIGHT
 Portions of this text are reprinted and reproduced in electronic form
 from IEEE Std 1003.1, 2004 Edition, Standard for Information Technology --

@@ -1,4 +1,4 @@
-# $FreeBSD: d010cc45efddbe8b6630c41a630a28482ff17203 $
+# $FreeBSD: 515fe383b971a2e0acd0c29722037069556b9077 $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,5 @@ LIBADD+=	cap_pwd
 CFLAGS+=-DWITH_CASPER
 .endif
 LIBADD+=	nv
-
-WARNS?=		3
 
 .include <bsd.test.mk>

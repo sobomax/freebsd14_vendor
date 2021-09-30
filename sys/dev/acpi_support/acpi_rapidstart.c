@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f28414cef3717551bc2b2137dcc5b9cd0043191f $");
+__FBSDID("$FreeBSD: 0724abdefcac877d3a4f0e40f137e620f51e5578 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -39,7 +39,6 @@ __FBSDID("$FreeBSD: f28414cef3717551bc2b2137dcc5b9cd0043191f $");
 #include <dev/acpica/acpivar.h>
 #include <sys/sysctl.h>
 static int sysctl_acpi_rapidstart_gen_handler(SYSCTL_HANDLER_ARGS);
-
 
 static struct acpi_rapidstart_name_list
 {
@@ -62,15 +61,17 @@ static char    *rapidstart_ids[] = {"INT3392", NULL};
 static int
 acpi_rapidstart_probe(device_t dev)
 {
+	int rv;
+
 	if (acpi_disabled("rapidstart") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, rapidstart_ids) == NULL ||
 	    device_get_unit(dev) != 0)
 		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, rapidstart_ids, NULL);
+	if (rv <= 0)
+		device_set_desc(dev, "Intel Rapid Start ACPI device");
 
-	device_set_desc(dev, "Intel Rapid Start ACPI device");
+	return (rv);
 
-	return (0);
-	
 }
 
 static int
@@ -80,7 +81,7 @@ acpi_rapidstart_attach(device_t dev)
 	int i;
 
 	sc = device_get_softc(dev);
-	
+
 	sc->sysctl_ctx = device_get_sysctl_ctx(dev);
 	sc->sysctl_tree = device_get_sysctl_tree(dev);
 	for (i = 0 ; acpi_rapidstart_oids[i].nodename != NULL; i++){
@@ -88,14 +89,14 @@ acpi_rapidstart_attach(device_t dev)
 			SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 			    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 			    i, acpi_rapidstart_oids[i].nodename,
-			    CTLTYPE_INT | CTLFLAG_RW,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
 			    dev, i, sysctl_acpi_rapidstart_gen_handler, "I",
 			    acpi_rapidstart_oids[i].comment);
 		} else {
 			SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 			    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 			    i, acpi_rapidstart_oids[i].nodename,
-			    CTLTYPE_INT | CTLFLAG_RD,
+			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 			    dev, i, sysctl_acpi_rapidstart_gen_handler, "I",
 			    acpi_rapidstart_oids[i].comment);
 		}
@@ -139,4 +140,3 @@ static devclass_t acpi_rapidstart_devclass;
 DRIVER_MODULE(acpi_rapidstart, acpi, acpi_rapidstart_driver, acpi_rapidstart_devclass,
 	      0, 0);
 MODULE_DEPEND(acpi_rapidstart, acpi, 1, 1, 1);
-

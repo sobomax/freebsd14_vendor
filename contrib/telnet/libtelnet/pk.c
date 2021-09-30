@@ -30,7 +30,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 29be15e5f8eb1aa49f09d8cd64da333009553ae6 $");
+__FBSDID("$FreeBSD: a3d17f396c64fd927a819ea48d4e4dac9823d94c $");
 
 /* public key routines */
 /* functions:
@@ -142,12 +142,7 @@ common_key(char *xsecret, char *xpublic, IdeaData *ideakey, DesData *deskey)
 static void
 getseed(char *seed, int seedsize)
 {
-	int i;
-
-	srandomdev();
-	for (i = 0; i < seedsize; i++) {
-		seed[i] = random() & 0xff;
-	}
+	arc4random_buf(seed, seedsize);
 }
 
 /*

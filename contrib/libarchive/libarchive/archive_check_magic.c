@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 89e631442749ad7a5a63d7a3cbb19ebebcefca51 $");
+__FBSDID("$FreeBSD: 9a69bd92b641cd9d30710375c795414899a7e9e2 $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -54,7 +54,7 @@ errmsg(const char *m)
 	ssize_t written;
 
 	while (s > 0) {
-		written = write(2, m, strlen(m));
+		written = write(2, m, s);
 		if (written <= 0)
 			return;
 		m += written;

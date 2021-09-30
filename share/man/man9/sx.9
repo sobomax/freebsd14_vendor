@@ -24,7 +24,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: a911e07e083a4cdc2f0ac20f97f2a9e86a9487ae $
+.\" $FreeBSD: 74d115ede245e981421f0b1e4d22526cba9a420e $
 .\"
 .Dd November 11, 2017
 .Dt SX 9
@@ -124,12 +124,7 @@ argument to
 specifies a set of optional flags to alter the behavior of
 .Fa sx .
 It contains one or more of the following flags:
-.Bl -tag -width SX_NOADAPTIVE
-.It Dv SX_NOADAPTIVE
-Disable adaptive spinning, rather than sleeping, for lock operations
-while an exclusive lock holder is executing on another CPU.
-Adaptive spinning is the default unless the kernel is compiled with
-.Cd "options NO_ADAPTIVE_SX" .
+.Bl -tag -width SX_NOWITNESS
 .It Dv SX_DUPOK
 Witness should not log messages about duplicate locks being acquired.
 .It Dv SX_NOWITNESS

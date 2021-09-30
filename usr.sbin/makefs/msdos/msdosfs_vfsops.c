@@ -49,31 +49,32 @@
 
 #include <sys/cdefs.h>
 /* $NetBSD: msdosfs_vfsops.c,v 1.10 2016/01/30 09:59:27 mlelstv Exp $ */
-__FBSDID("$FreeBSD: 1599790704a6c7923c5b918e9de2ea58c5eb27a9 $");
+__FBSDID("$FreeBSD: 07fc91cccd4a53c9a1d4849370fa7215a787d8b2 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <util.h>
 
+#include "ffs/buf.h"
 #include <fs/msdosfs/bootsect.h>
 #include <fs/msdosfs/bpb.h>
+#include "msdos/direntry.h"
+#include <fs/msdosfs/denode.h>
+#include <fs/msdosfs/fat.h>
+#include <fs/msdosfs/msdosfsmount.h>
 
 #include <mkfs_msdos.h>
 
 #include "makefs.h"
 #include "msdos.h"
 
-#include "ffs/buf.h"
 
-#include "msdos/denode.h"
-#include "msdos/direntry.h"
-#include "msdos/fat.h"
-#include "msdos/msdosfsmount.h"
 
 struct msdosfsmount *
 msdosfs_mount(struct vnode *devvp)

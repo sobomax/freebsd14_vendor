@@ -1,5 +1,5 @@
-# $FreeBSD: 0f77bcb048724e454481f462a005117fcaf78a5d $
+# $FreeBSD: 169befd6e726294ced93ab3994fcba34b69a7fdf $
 
-SUBDIR=	portsnap make_index phttpget
+SUBDIR=	portsnap make_index
 
 .include <bsd.subdir.mk>

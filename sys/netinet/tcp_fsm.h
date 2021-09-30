@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_fsm.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: dcc4a4e8aa6338e07939db8dedfc0f4b522d631c $
+ * $FreeBSD: 8bd129f613cf5eb7b5b3c921173757eb67b11e7c $
  */
 
 #ifndef _NETINET_TCP_FSM_H_
@@ -97,7 +97,7 @@ static u_char	tcp_outflags[TCP_NSTATES] = {
 	TH_FIN|TH_ACK,		/* 8, LAST_ACK */
 	TH_ACK,			/* 9, FIN_WAIT_2 */
 	TH_ACK,			/* 10, TIME_WAIT */
-};	
+};
 #endif
 
 #ifdef KPROF

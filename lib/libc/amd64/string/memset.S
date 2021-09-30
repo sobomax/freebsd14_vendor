@@ -25,11 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67f21714b3d17d0e508c30362872559325bdda75 $
+ * $FreeBSD: 0507113023541976baa3aab9e680aeefda54fa02 $
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 67f21714b3d17d0e508c30362872559325bdda75 $");
+__FBSDID("$FreeBSD: 0507113023541976baa3aab9e680aeefda54fa02 $");
+
+/*
+ * Note: this routine was written with kernel use in mind (read: no simd),
+ * it is only present in userspace as a temporary measure until something
+ * better gets imported.
+ */
 
 #define ALIGN_TEXT      .p2align 4,0x90 /* 16-byte alignment, nop filled */
 
@@ -46,6 +52,7 @@ __FBSDID("$FreeBSD: 67f21714b3d17d0e508c30362872559325bdda75 $");
 	cmpq	$256,%rcx
 	ja	1256f
 
+	ALIGN_TEXT
 103200:
 	movq	%r10,(%rdi)
 	movq	%r10,8(%rdi)

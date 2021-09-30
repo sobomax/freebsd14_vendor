@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c1f562f0aed2b7323dac27bf0f592cbebecb5727 $");
+__FBSDID("$FreeBSD: 11262231c3b21c4bb9802e93932a9be139a52b4d $");
 
 #include "opt_fdc.h"
 
@@ -270,7 +270,8 @@ static driver_filter_t fdc_intr_fast;
 static void fdc_reset(struct fdc_data *);
 static int fd_probe_disk(struct fd_data *, int *);
 
-static SYSCTL_NODE(_debug, OID_AUTO, fdc, CTLFLAG_RW, 0, "fdc driver");
+static SYSCTL_NODE(_debug, OID_AUTO, fdc, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "fdc driver");
 
 static int fifo_threshold = 8;
 SYSCTL_INT(_debug_fdc, OID_AUTO, fifo, CTLFLAG_RW, &fifo_threshold, 0,
@@ -1160,10 +1161,8 @@ fdc_thread(void *arg)
 		mtx_unlock(&fdc->fdc_mtx);
 		i = fdc_worker(fdc);
 		if (i && debugflags & 0x20) {
-			if (fdc->bp != NULL) {
-				g_print_bio(fdc->bp);
-				printf("\n");
-			}
+			if (fdc->bp != NULL)
+				g_print_bio("", fdc->bp, "");
 			printf("Retry line %d\n", retry_line);
 		}
 		fdc->retry += i;

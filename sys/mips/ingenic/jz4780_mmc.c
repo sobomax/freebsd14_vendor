@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed7e14fc0fab44e6aa0981b2fbe2844390d305fd $");
+__FBSDID("$FreeBSD: f7622f4709a1b4ab399731e3135063e0fce6a212 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,7 +58,7 @@ __FBSDID("$FreeBSD: ed7e14fc0fab44e6aa0981b2fbe2844390d305fd $");
 #define	JZ_MSC_IRQRES		1
 #define	JZ_MSC_RESSZ		2
 #define	JZ_MSC_DMA_SEGS		128
-#define	JZ_MSC_DMA_MAX_SIZE	MAXPHYS
+#define	JZ_MSC_DMA_MAX_SIZE	maxphys
 
 #define JZ_MSC_INT_ERR_BITS	(JZ_INT_CRC_RES_ERR | JZ_INT_CRC_READ_ERR | \
 				JZ_INT_CRC_WRITE_ERR | JZ_INT_TIMEOUT_RES | \
@@ -775,7 +775,7 @@ jz4780_mmc_read_ivar(device_t bus, device_t child, int which,
 		*(int *)result = sc->sc_host.ios.power_mode;
 		break;
 	case MMCBR_IVAR_RETUNE_REQ:
-		*(int *)result = return_req_none;
+		*(int *)result = retune_req_none;
 		break;
 	case MMCBR_IVAR_VDD:
 		*(int *)result = sc->sc_host.ios.vdd;

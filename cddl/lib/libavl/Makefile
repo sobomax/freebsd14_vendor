@@ -1,11 +1,15 @@
-# $FreeBSD: 5939a78c4e116607f3da2cf59a050b8585b7c878 $
+# $FreeBSD: 2f7b9ad30856e75b2ada6ac89c1f53ada1617b94 $
 
-.PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/avl
+.PATH: ${SRCTOP}/sys/contrib/openzfs/module/avl
 
+PACKAGE=	runtime
 LIB=	avl
 SRCS=	avl.c
 WARNS?=	3
-CFLAGS+= -I${SRCTOP}/sys/cddl/compat/opensolaris
-CFLAGS+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common
-
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -I${SRCTOP}/sys
+CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
 .include <bsd.lib.mk>

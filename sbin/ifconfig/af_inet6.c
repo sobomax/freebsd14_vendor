@@ -31,7 +31,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 6a556c15059d4ce66cbf3be4abd4f0f89a29b444 $";
+  "$FreeBSD: 50568de4f1486a6e9600ee432af108b3896e7379 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -505,6 +505,10 @@ static struct cmd inet6_cmds[] = {
 	DEF_CMD_ARG("pltime",        			setip6pltime),
 	DEF_CMD_ARG("vltime",        			setip6vltime),
 	DEF_CMD("eui64",	0,			setip6eui64),
+#ifdef EXPERIMENTAL
+	DEF_CMD("ipv6_only",	ND6_IFF_IPV6_ONLY_MANUAL,setnd6flags),
+	DEF_CMD("-ipv6_only",	-ND6_IFF_IPV6_ONLY_MANUAL,setnd6flags),
+#endif
 };
 
 static struct afswtch af_inet6 = {

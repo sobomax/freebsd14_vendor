@@ -1,12 +1,10 @@
-# $FreeBSD: 410f268a39d11a44b5af685e06adfe8e93a92564 $
+# $FreeBSD: eaed0aea04aa2733ec5923396a0e08a2fe239fa1 $
 
 PACKAGE=runtime
 PROG=	fdisk
-SRCS=	fdisk.c geom_mbr_enc.c
+SRCS=	fdisk.c fdisk_mbr_enc.c
 WARNS?=	4
 MAN=	fdisk.8
-
-.PATH:	${SRCTOP}/sys/geom
 
 LIBADD=	geom
 

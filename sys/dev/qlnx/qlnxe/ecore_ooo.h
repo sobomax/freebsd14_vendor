@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 407b633e6915a6775637567c6403f4a5f0c5175c $
+ * $FreeBSD: 166ec2fd02d567e8cbd0b5cef167d78e3adc0765 $
  *
  */
 
@@ -99,7 +99,6 @@ static inline void
 ecore_ooo_free(struct ecore_hwfn OSAL_UNUSED *p_hwfn) {}
 #endif
 
-
 void ecore_ooo_save_history_entry(struct ecore_ooo_info *p_ooo_info,
 				  struct ooo_opaque *p_cqe);
 
@@ -149,4 +148,3 @@ void ecore_ooo_dump_rx_event(struct ecore_hwfn	*p_hwfn,
 			     struct ecore_ooo_buffer *p_buffer);
 
 #endif  /*__ECORE_OOO_H__*/
-

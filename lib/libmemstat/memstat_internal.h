@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 12345d9f884c56b91fffef09cbf224a2d9c0c9b7 $
+ * $FreeBSD: 26a9e64f8f0524791eab86221a5929dad39a4c9f $
  */
 
 #ifndef _MEMSTAT_INTERNAL_H_
@@ -69,6 +69,7 @@ struct memory_type {
 	uint64_t	 mt_free;	/* Number of cached free items. */
 	uint64_t	 mt_failures;	/* Number of allocation failures. */
 	uint64_t	 mt_sleeps;	/* Number of allocation sleeps. */
+	uint64_t	 mt_xdomain;	/* Number of cross domain sleeps. */
 
 	/*
 	 * Caller-owned memory.

@@ -16,7 +16,7 @@
  */
 
 /*
- * $FreeBSD: e25519fa89eb8b2f97acfa05ad424db7d9747ca2 $
+ * $FreeBSD: b0edbd897a28c8084cb5a791ff48d15736b41df5 $
  */
 
 #if (defined(BSD)) && (BSD >= 199103) || defined(__linux) || defined(AIX)
@@ -59,7 +59,7 @@
 			/* 4.3BSD-style crontab */
 #define SYSCRONTAB	"/etc/crontab"
 #define SYSCRONTABS	"/etc/cron.d"
-#define LOCALSYSCRONTABS	"/usr/local/etc/cron.d"
+#define LOCALSYSCRONTABS	_PATH_LOCALBASE "/etc/cron.d"
 
 			/* what editor to use if no EDITOR or VISUAL
 			 * environment variable specified.

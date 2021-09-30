@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68d6422a76312ec1c560c0fa86bdbbc47eec09d2 $");
+__FBSDID("$FreeBSD: 5a0145e76ccd25bafd0885071dbc076595bd5621 $");
 
 #include "opt_capsicum.h"
 
@@ -426,8 +426,7 @@ amd64_set_ioperm(td, uap)
 		memset(iomap, 0xff, IOPERM_BITMAP_SIZE);
 		critical_enter();
 		/* Takes care of tss_rsp0. */
-		memcpy(tssp, &common_tss[PCPU_GET(cpuid)],
-		    sizeof(struct amd64tss));
+		memcpy(tssp, PCPU_PTR(common_tss), sizeof(struct amd64tss));
 		tssp->tss_iobase = sizeof(*tssp);
 		pcb->pcb_tssp = tssp;
 		tss_sd = PCPU_GET(tss);

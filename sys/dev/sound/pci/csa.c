@@ -54,7 +54,7 @@
 
 #include <dev/sound/pci/cs461x_dsp.h>
 
-SND_DECLARE_FILE("$FreeBSD: 73235f79c416e32a858ffd3b4a3742565e06b673 $");
+SND_DECLARE_FILE("$FreeBSD: e3f611ed29499429740d2f71b6830c71f3f57aab $");
 
 /* This is the pci device id. */
 #define CS4610_PCI_ID 0x60011013
@@ -876,7 +876,7 @@ static int
 csa_transferimage(csa_res *resp, u_int32_t *src, u_long dest, u_long len)
 {
 	u_long ul;
-	
+
 	/*
 	 * We do not allow DMAs from host memory to host memory (although the DMA
 	 * can do it) and we do not allow DMAs which are not a multiple of 4 bytes

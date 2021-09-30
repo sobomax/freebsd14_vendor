@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: db7659e8d04f720bfb67e5d775494ab0380f8b35 $*/
+/*$FreeBSD: 722596b36e341f226692f2153f2cfb3d8021728c $*/
 
 #ifndef _E1000_DEFINES_H_
 #define _E1000_DEFINES_H_
@@ -1205,10 +1205,6 @@
 #define PCIE_LINK_SPEED_2500		0x01
 #define PCIE_LINK_SPEED_5000		0x02
 #define PCIE_DEVICE_CONTROL2_16ms	0x0005
-
-#ifndef ETH_ADDR_LEN
-#define ETH_ADDR_LEN			6
-#endif
 
 #define PHY_REVISION_MASK		0xFFFFFFF0
 #define MAX_PHY_REG_ADDRESS		0x1F  /* 5 bit address bus (0-0x1F) */

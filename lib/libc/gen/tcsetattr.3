@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)tcsetattr.3	8.3 (Berkeley) 1/2/94
-.\" $FreeBSD: b28e86dadb64a35ac9de0b7224fa4b7f59764924 $
+.\" $FreeBSD: ce28e985cd60c8ba96bfdff1cbc3a6e004804d40 $
 .\"
 .Dd July 15, 2020
 .Dt TCSETATTR 3
@@ -126,24 +126,24 @@ represented, however, the following symbolic values are defined.
 The
 .Fn cfgetispeed
 function returns the input baud rate in the termios structure referenced by
-.Fa tp .
+.Fa t .
 .Pp
 The
 .Fn cfsetispeed
 function sets the input baud rate in the termios structure referenced by
-.Fa tp
+.Fa t
 to
 .Fa speed .
 .Pp
 The
 .Fn cfgetospeed
 function returns the output baud rate in the termios structure referenced by
-.Fa tp .
+.Fa t .
 .Pp
 The
 .Fn cfsetospeed
 function sets the output baud rate in the termios structure referenced by
-.Fa tp
+.Fa t
 to
 .Fa speed .
 .Pp
@@ -151,7 +151,7 @@ The
 .Fn cfsetspeed
 function sets both the input and output baud rate in the termios structure
 referenced by
-.Fa tp
+.Fa t
 to
 .Fa speed .
 .Pp
@@ -210,7 +210,7 @@ function copies the parameters associated with the terminal referenced
 by
 .Fa fd
 in the termios structure referenced by
-.Fa tp .
+.Fa t .
 This function is allowed from a background process, however, the terminal
 attributes may be subsequently changed by a foreground process.
 .Pp
@@ -218,7 +218,7 @@ The
 .Fn tcsetattr
 function sets the parameters associated with the terminal from the
 termios structure referenced by
-.Fa tp .
+.Fa t .
 The
 .Fa action
 argument is one of

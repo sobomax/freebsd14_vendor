@@ -1,4 +1,4 @@
-# $FreeBSD: ce30af05ac5f2071b042e932af5c056ec147c506 $
+# $FreeBSD: 3d258ff9aabdc1bd13749d85ee2ac951c2e7e7a6 $
 
 PROG_CXX=	clang-tblgen
 MAN=
@@ -20,6 +20,7 @@ SRCS+=		ClangSACheckersEmitter.cpp
 SRCS+=		ClangTypeNodesEmitter.cpp
 SRCS+=		MveEmitter.cpp
 SRCS+=		NeonEmitter.cpp
+SRCS+=		SveEmitter.cpp
 SRCS+=		TableGen.cpp
 
 .include "../llvm.prog.mk"

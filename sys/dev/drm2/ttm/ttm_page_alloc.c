@@ -39,11 +39,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8895338797db301cc78951eb4566fc764c8ba777 $");
+__FBSDID("$FreeBSD: fbb830405de039ff00336406df66926fda8c18a3 $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
 #include <dev/drm2/ttm/ttm_page_alloc.h>
+#include <sys/eventhandler.h>
 #include <vm/vm_pageout.h>
 
 #define NUM_PAGES_TO_ALLOC		(PAGE_SIZE/sizeof(vm_page_t))
@@ -131,7 +132,7 @@ ttm_vm_page_free(vm_page_t m)
 {
 
 	KASSERT(m->object == NULL, ("ttm page %p is owned", m));
-	KASSERT(m->wire_count == 1, ("ttm lost wire %p", m));
+	KASSERT(vm_page_wired(m), ("ttm lost wire %p", m));
 	KASSERT((m->flags & PG_FICTITIOUS) != 0, ("ttm lost fictitious %p", m));
 	KASSERT((m->oflags & VPO_UNMANAGED) == 0, ("ttm got unmanaged %p", m));
 	m->flags &= ~PG_FICTITIOUS;

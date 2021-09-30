@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cac537c2a17ef1ac4d914f7f66407b6a569e12fc $");
+__FBSDID("$FreeBSD: 5cac8ffd994c87fb93a868430bee82d0861724ea $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>
@@ -117,7 +117,7 @@ tasklet_subsystem_init(void *arg __unused)
 		GROUPTASK_INIT(&tw->gtask, 0, tasklet_handler, tw);
 		snprintf(buf, sizeof(buf), "softirq%d", i);
 		taskqgroup_attach_cpu(qgroup_softirq, &tw->gtask,
-		    "tasklet", i, -1, buf);
+		    "tasklet", i, NULL, NULL, buf);
        }
 }
 SYSINIT(linux_tasklet, SI_SUB_TASKQ, SI_ORDER_THIRD, tasklet_subsystem_init, NULL);

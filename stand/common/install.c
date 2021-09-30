@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de0fd88fc4e388b8aef6bf1a7f53d866316766c6 $");
+__FBSDID("$FreeBSD: ea6eaaa7cebc42650ebc9d87132a81961875b182 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -286,10 +286,6 @@ install(char *pkgname)
 
 		setenv("serverip", inet_ntoa(servip), 1);
 
-		if (proto == &tftp_fsops) {
-			tftpip.s_addr = servip.s_addr;
-		}
-
 		*pkgname = '/';
 	} else
 		pkgname = s;
@@ -340,7 +336,7 @@ install(char *pkgname)
 	fd = open(s, O_RDONLY);
 	if (fd != -1) {
 		close(fd);
-		error = inter_include(s);
+		error = interp_include(s);
 		if (error == CMD_ERROR)
 			goto fail;
 	}

@@ -19,7 +19,7 @@
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ******************************************************************************/
-/* $FreeBSD: 365ba5ae41168a21163af238e734c1e8c419f601 $ */
+/* $FreeBSD: ceafe98084e326aad826e7463f555f9596ec8a1a $ */
 /******************************************************************************
 This program is part of PMC-Sierra initiator/target device driver. 
 The functions here are commonly used by different type of drivers that support
@@ -63,7 +63,7 @@ STATIC agBOOLEAN agtiapi_typhAlloc( ag_card_info_t *thisCardInst )
   struct agtiapi_softc *pmsc = thisCardInst->pCard;
   int wait = 0;
 
-  if( bus_dma_tag_create( agNULL,                      // parent
+  if( bus_dma_tag_create( bus_get_dma_tag(pmsc->my_dev), // parent
                           32,                          // alignment
                           0,                           // boundary
                           BUS_SPACE_MAXADDR,           // lowaddr

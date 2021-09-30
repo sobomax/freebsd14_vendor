@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/pcpu.h,v 1.15 2004/11/05 19:16:44 jhb
- * $FreeBSD: 8ff14bf06e0121fc1a6ac2a8d441b4b25dbdf994 $
+ * $FreeBSD: fea594729e908634dd22c0b5fbb13c0bdd3c217e $
  */
 
 #ifndef _MACHINE_PCPU_H_
@@ -51,7 +51,13 @@
 #else
 #define	PCPU_MD_MIPS32_FIELDS						\
 	PCPU_MD_COMMON_FIELDS						\
-	char		__pad[125]
+	pt_entry_t	*pc_cmap1_ptep;		/* PTE for copy window 1 KVA */ \
+	pt_entry_t	*pc_cmap2_ptep;		/* PTE for copy window 2 KVA */ \
+	vm_offset_t	pc_cmap1_addr;		/* KVA page for copy window 1 */ \
+	vm_offset_t	pc_cmap2_addr;		/* KVA page for copy window 2 */ \
+	vm_offset_t	pc_qmap_addr;		/* KVA page for temporary mappings */ \
+	pt_entry_t	*pc_qmap_ptep;		/* PTE for temporary mapping KVA */ \
+	char		__pad[97]
 #endif
 
 #ifdef	__mips_n64

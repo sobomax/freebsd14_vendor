@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)parse.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1872194241e2a5a14acf9a9bbf548e4745529ecf $");
+__FBSDID("$FreeBSD: f59f0d9b6356ea322a71ecce8a5853df0764d0b1 $");
 
 #include <sys/types.h>
 
@@ -169,7 +169,10 @@ size(FS *fs)
 			 * skip any special chars -- save precision in
 			 * case it's a %s format.
 			 */
-			while (strchr(spec + 1, *++fmt));
+			while (*++fmt != 0 && strchr(spec + 1, *fmt) != NULL)
+				;
+			if (*fmt == 0)
+				badnoconv();
 			if (*fmt == '.' && isdigit(*++fmt)) {
 				prec = atoi(fmt);
 				while (isdigit(*++fmt));
@@ -241,10 +244,16 @@ rewrite(FS *fs)
 			if (fu->bcnt) {
 				sokay = USEBCNT;
 				/* Skip to conversion character. */
-				for (++p1; strchr(spec, *p1); ++p1);
+				while (*++p1 != 0 && strchr(spec, *p1) != NULL)
+					;
+				if (*p1 == 0)
+					badnoconv();
 			} else {
 				/* Skip any special chars, field width. */
-				while (strchr(spec + 1, *++p1));
+				while (*++p1 != 0 && strchr(spec + 1, *p1) != NULL)
+					;
+				if (*p1 == 0)
+					badnoconv();
 				if (*p1 == '.' && isdigit(*++p1)) {
 					sokay = USEPREC;
 					prec = atoi(p1);
@@ -511,4 +520,10 @@ void
 badconv(const char *ch)
 {
 	errx(1, "%%%s: bad conversion character", ch);
+}
+
+void
+badnoconv(void)
+{
+	errx(1, "missing conversion character");
 }

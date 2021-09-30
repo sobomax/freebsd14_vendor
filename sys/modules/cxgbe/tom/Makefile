@@ -1,5 +1,5 @@
 #
-# $FreeBSD: f20fef47d436fb087c264a87b420f1cf7f717381 $
+# $FreeBSD: e64fb8a4ae138eb4359a92c8898dff749260d607 $
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
@@ -10,6 +10,7 @@ SRCS=	bus_if.h
 SRCS+=	device_if.h
 SRCS+=	opt_inet.h
 SRCS+=	opt_inet6.h
+SRCS+=	opt_kern_tls.h
 SRCS+=	opt_ratelimit.h
 SRCS+=	pci_if.h
 SRCS+=	t4_connect.c

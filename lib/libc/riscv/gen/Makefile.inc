@@ -1,8 +1,10 @@
-# $FreeBSD: 6380db6c265ac7793d55cc1f1a8b825eefba5bfe $
+# $FreeBSD: f13800829d7fcb838f1ed932c399319b4e70c34c $
 
 SRCS+=	_ctx_start.S \
 	fabs.S \
 	flt_rounds.c \
+	fpgetmask.c \
+	fpsetmask.c \
 	infinity.c \
 	ldexp.c \
 	makecontext.c \

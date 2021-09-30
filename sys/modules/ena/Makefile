@@ -1,7 +1,7 @@
 #
-# BSD LICENSE
+# SPDX-License-Identifier: BSD-2-Clause
 #
-# Copyright (c) 2015-2019 Amazon.com, Inc. or its affiliates.
+# Copyright (c) 2015-2020 Amazon.com, Inc. or its affiliates.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 64e4633a21db31d3b57fe390b5500aa44712dfa1 $
+# $FreeBSD: c6a0c56e7ffb59100795549c3ea45e12e7014f34 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/ena \

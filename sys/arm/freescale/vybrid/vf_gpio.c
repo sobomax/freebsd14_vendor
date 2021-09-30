@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f68627cb192448f94c0d384d7170a3d75e5566f2 $");
+__FBSDID("$FreeBSD: cfa40693dfbe2073315fdf5bb297d08340451771 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -288,7 +288,6 @@ vf_gpio_pin_toggle(device_t dev, uint32_t pin)
 	return (0);
 }
 
-
 static void
 vf_gpio_pin_configure(struct vf_gpio_softc *sc, struct gpio_pin *pin,
     unsigned int flags)
@@ -313,7 +312,6 @@ vf_gpio_pin_configure(struct vf_gpio_softc *sc, struct gpio_pin *pin,
 
 	GPIO_UNLOCK(sc);
 }
-
 
 static int
 vf_gpio_pin_setflags(device_t dev, uint32_t pin, uint32_t flags)

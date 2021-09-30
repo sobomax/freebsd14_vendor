@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: proc.h,v 1.2 1997/04/16 22:57:48 thorpej Exp $
- * $FreeBSD: d01b6cda4dcdcc2875138824aae1502b9372e34d $
+ * $FreeBSD: d4df3ccfefeff53f999917c63fd57942965bdd93 $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -46,6 +46,10 @@ struct mdthread {
 };
 
 struct mdproc {
+	/*
+	 * Avoid empty structs because they are undefined behavior.
+	 */
+	long	md_spare;
 };
 
 #ifdef __powerpc64__
@@ -55,11 +59,11 @@ struct mdproc {
 #define	KINFO_PROC_SIZE 816
 #endif
 
+#define	MAXARGS		8
 struct syscall_args {
 	u_int code;
 	struct sysent *callp;
-	register_t args[10];
-	int narg;
+	register_t args[MAXARGS];
 };
 
 #ifdef _KERNEL

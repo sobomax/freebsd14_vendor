@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 M. Warner Losh <imp@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a57a8aad52a20ec21198c0b84f0bf5e364b3bb61 $");
+__FBSDID("$FreeBSD: d31b1f54bb11c7d0c3642d705c6c9ab92b37ac0d $");
 
 #include "namespace.h"
 #include <sys/param.h>

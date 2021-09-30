@@ -1,7 +1,6 @@
 /*-
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.Org>
  * Copyright (c) 2016 Jared McNeill <jmcneill@invisible.ca>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 64d4155b97045567fe2b13d74de5609a85fc1b6e $
+ * $FreeBSD: 3beffeb7063a85054db02629521701f2a32d5d9e $
  */
 
 /*
@@ -32,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 64d4155b97045567fe2b13d74de5609a85fc1b6e $");
+__FBSDID("$FreeBSD: 3beffeb7063a85054db02629521701f2a32d5d9e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -253,7 +252,6 @@ cpufreq_dt_set(device_t dev, const struct cf_setting *set)
 
 	return (0);
 }
-
 
 static int
 cpufreq_dt_type(device_t dev, int *type)
@@ -547,7 +545,6 @@ cpufreq_dt_attach(device_t dev)
 
 	return (0);
 }
-
 
 static device_method_t cpufreq_dt_methods[] = {
 	/* Device interface */

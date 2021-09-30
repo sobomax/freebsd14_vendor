@@ -1,4 +1,4 @@
-# $FreeBSD: f2f25843dda3de03fa9a6ce5cdd490b877dfb46a $
+# $FreeBSD: 01bfd72b5a7e4ea40637eaecfd9fe5e8a2dd3018 $
 
 .include <bsd.compiler.mk>
 
@@ -14,7 +14,7 @@ CRTSRC=		${SRCTOP}/contrib/llvm-project/compiler-rt
 
 .PATH:		${CRTSRC}/lib
 
-CLANGDIR=	/usr/lib/clang/10.0.1
+CLANGDIR=	/usr/lib/clang/11.0.1
 LIBDIR=		${CLANGDIR}/lib/freebsd
 SHLIBDIR=	${LIBDIR}
 
@@ -32,7 +32,7 @@ CFLAGS+=	${PICFLAG}
 CFLAGS+=	-fno-builtin
 CFLAGS+=	-fno-exceptions
 CXXFLAGS+=	-fno-rtti
-.if ${COMPILER_TYPE} == clang && ${COMPILER_VERSION} >= 30700
+.if ${COMPILER_TYPE} == clang
 CFLAGS+=	-fno-sanitize=safe-stack
 .endif
 CFLAGS+=	-fno-stack-protector

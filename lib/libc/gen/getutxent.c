@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0d993221e7ed4db5e740f6d445b2e3080a8e21f $");
+__FBSDID("$FreeBSD: 664498126f132a78b969b16bd16438f51034ebed $");
 
 #include "namespace.h"
 #include <sys/endian.h>
@@ -40,13 +40,8 @@ __FBSDID("$FreeBSD: e0d993221e7ed4db5e740f6d445b2e3080a8e21f $");
 #include "utxdb.h"
 #include "un-namespace.h"
 
-#ifdef __NO_TLS
-static FILE *uf = NULL;
-static int udb;
-#else
 static _Thread_local FILE *uf = NULL;
 static _Thread_local int udb;
-#endif
 
 int
 setutxdb(int db, const char *file)

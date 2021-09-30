@@ -17,7 +17,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 274d96642d6b159886e3e056f0e131c4c6a1c28b $
+# $FreeBSD: 24490a5129e541a7cd42a3d6c423a4bceb50966a $
 
 ident		ZEDBOARD
 
@@ -48,15 +48,20 @@ device		pl310			# PL310 L2 cache controller
 device		mpcore_timer
 
 device		loop
-device		random
 device		ether
-device		cgem			# Zynq-7000 gig ethernet device
+device		cgem			# Cadence GEM Gigabit Ethernet device
 device		mii
 device		e1000phy
 device		rgephy			# Zybo uses Realtek RTL8211E
 device		pty
 device		uart
 device		gpio
+
+device		spibus
+device		spigen
+device		mx25l
+device		zy7_qspi		# Xilinx Zynq QSPI controller
+device		zy7_spi			# Xilinx Zynq SPI controller
 
 device		md
 device		mmc			# mmc/sd bus

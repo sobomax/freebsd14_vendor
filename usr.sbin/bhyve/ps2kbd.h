@@ -25,17 +25,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 17be6d0466735b924c39d6b70c2fddb42e46689e $
+ * $FreeBSD: 3cf87be1b7f39cdd953e2ce969288aea41da853a $
  */
 
 #ifndef _PS2KBD_H_
 #define	_PS2KBD_H_
 
 struct atkbdc_softc;
+struct vm_snapshot_meta;
 
 struct ps2kbd_softc *ps2kbd_init(struct atkbdc_softc *sc);
 
 int ps2kbd_read(struct ps2kbd_softc *sc, uint8_t *val);
 void ps2kbd_write(struct ps2kbd_softc *sc, uint8_t val);
+
+#ifdef BHYVE_SNAPSHOT
+int ps2kbd_snapshot(struct ps2kbd_softc *sc, struct vm_snapshot_meta *meta);
+#endif
 
 #endif /* _PS2KBD_H_ */

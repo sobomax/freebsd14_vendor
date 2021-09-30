@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 85ca663e767387fa8723eda1d8ec9f9ec76c6ae5 $
+ * $FreeBSD: 77a34a2d6bc78fa8006db2b96d485a4010ac7da7 $
  */
 
 #ifndef _CSA_REG_H
@@ -1970,6 +1970,5 @@ struct cs461x_firmware_struct
 
 	u_int32_t BA1Array[INKY_BA1_DWORD_SIZE];
 };
-
 
 #endif /* _CSA_REG_H */

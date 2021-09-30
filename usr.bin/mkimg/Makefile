@@ -1,4 +1,4 @@
-# $FreeBSD: 622ca442640c75da038c54455f46ca3a949859ea $
+# $FreeBSD: 89aeefe813b7ddf84632524eb2948d3d06346180 $
 
 .include <src.opts.mk>
 
@@ -33,8 +33,6 @@ SRCS+=	\
 BINDIR?=/usr/bin
 
 LIBADD=	util
-
-WARNS?=	6
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4071ad40fafd4a2b15391de5b97bec24206f25b2 $");
+__FBSDID("$FreeBSD: 0b51a5289c9ed3cf2a677df3e30a4a02bd37a9c1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -249,7 +249,6 @@ mv_pcib_ctrl_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	int i;
 
 	if (RMAN_IS_DEFAULT_RANGE(start, end)) {
-
 		if ((di = device_get_ivars(child)) == NULL)
 			return (NULL);
 		if (type != SYS_RES_MEMORY)

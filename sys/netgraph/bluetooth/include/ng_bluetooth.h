@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bluetooth.h,v 1.4 2003/04/26 22:32:34 max Exp $
- * $FreeBSD: 4eb2c7b79d96b24e63d5f8b2de2e465ae2b2f82b $
+ * $FreeBSD: ae68392cc54c9161d939a2c4a5cbad9195824f6c $
  */
 
 #ifndef _NETGRAPH_BLUETOOTH_H_
@@ -231,4 +231,3 @@ u_int32_t      bluetooth_sco_rtx_timeout       (void);
 #define BDADDR_LE_RANDOM 2
 
 #endif /* _NETGRAPH_BLUETOOTH_H_ */
-

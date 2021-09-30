@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6761e9675b629b80b14106a1c0d1eb8ef2fa94bd $");
+__FBSDID("$FreeBSD: efd1fa18ac713e9ab72f0702b9921f0e21d0c397 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -852,7 +852,7 @@ smb_smb_write(struct smb_share *ssp, u_int16_t fid, int *len, int *rresid,
 
 	if (*len && SSTOVC(ssp)->vc_sopt.sv_caps & SMB_CAP_LARGE_WRITEX)
 		return (smb_smb_writex(ssp, fid, len, rresid, uio, scred));
- 
+
 	blksz = SSTOVC(ssp)->vc_txmax - SMB_HDRLEN - 16;
 	if (blksz > 0xffff)
 		blksz = 0xffff;

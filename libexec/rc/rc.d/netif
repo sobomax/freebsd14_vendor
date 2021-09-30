@@ -22,12 +22,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: eb1efc4d627494015cbc1d3558aec10a7a309302 $
+# $FreeBSD: 3dbb3e1a958885ded8d9534dadd29fb9fc815dab $
 #
 
 # PROVIDE: netif
 # REQUIRE: FILESYSTEMS iovctl serial sppp sysctl
-# REQUIRE: hostid ipfs
+# REQUIRE: hostid
 # KEYWORD: nojailvnet
 
 . /etc/rc.subr

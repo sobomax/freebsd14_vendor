@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f88565db8355f7c9e44bb5088ec0a39c050cb613 $");
+__FBSDID("$FreeBSD: 714240fe8228939059f29d5f1ea8f18c47da9064 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,7 +70,6 @@ static int tpcl_init(void);
 static int tpcl_shutdown(void);
 static void tpcl_datamove(union ctl_io *io);
 static void tpcl_done(union ctl_io *io);
-
 
 static struct ctl_frontend tpcl_frontend =
 {

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bba45425343cb0a0f85dc61e03976b5e08376798 $
+ * $FreeBSD: 920acc67164d5714d748949abb219dd039073330 $
  */
 
 /* Format L3.0, since we move to XZ API */
@@ -38,5 +38,6 @@
     "exit $?\n"
 #define DEFAULT_SUFX_LZMA   ".ulzma"
 
-void *mkuz_lzma_init(uint32_t);
-struct mkuz_blk *mkuz_lzma_compress(void *, const struct mkuz_blk *);
+size_t mkuz_lzma_cbound(size_t);
+void *mkuz_lzma_init(int *);
+void mkuz_lzma_compress(void *, const struct mkuz_blk *, struct mkuz_blk *);

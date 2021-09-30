@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 59430b01e2b1ce7255477f6b1af2b64d24a6882b $
+ * $FreeBSD: 4ae755ef4411fb732a8c295ec09cdd789a36b02f $
  */
 
 #ifndef _PS2MOUSE_H_
 #define	_PS2MOUSE_H_
 
 struct atkbdc_softc;
+struct vm_snapshot_meta; 
 
 struct ps2mouse_softc *ps2mouse_init(struct atkbdc_softc *sc);
 
@@ -39,5 +40,9 @@ int ps2mouse_read(struct ps2mouse_softc *sc, uint8_t *val);
 void ps2mouse_write(struct ps2mouse_softc *sc, uint8_t val, int insert);
 void ps2mouse_toggle(struct ps2mouse_softc *sc, int enable);
 int ps2mouse_fifocnt(struct ps2mouse_softc *sc);
+
+#ifdef BHYVE_SNAPSHOT
+int ps2mouse_snapshot(struct ps2mouse_softc *sc, struct vm_snapshot_meta *meta);
+#endif
 
 #endif /* _PS2MOUSE_H_ */

@@ -1,14 +1,11 @@
-# $FreeBSD: 3eb2465158b8d7e7b4bcc0e5859c2b7a13e5dadd $
+# $FreeBSD: 2f4c69ae094921f9ab2a7cf0836e6477592f7c0b $
 
 .PATH: ${SRCTOP}/sys/kgssapi/krb5
 KMOD=	kgssapi_krb5
 
 SRCS=	krb5_mech.c \
 	kcrypto.c \
-	kcrypto_des.c \
-	kcrypto_des3.c \
 	kcrypto_aes.c \
-	kcrypto_arcfour.c \
 	opt_inet6.h
 
 SRCS+=		kgss_if.h gssd.h

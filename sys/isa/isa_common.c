@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 56fa0f2ba9873e772973ec560b79a4c28772ddd8 $");
+__FBSDID("$FreeBSD: 7bc66d552e312afa8a052c2c84a043a1a2118a39 $");
 
 #include "opt_isa.h"
 
@@ -576,7 +576,7 @@ isa_probe_children(device_t dev)
 		    strcmp(kern_ident, "GENERIC") == 0 &&
 		    device_is_attached(child))
 			device_printf(child,
-			    "non-PNP ISA device will be removed from GENERIC in FreeBSD 12.\n");
+			    "non-PNP ISA device will be removed from GENERIC in FreeBSD 14.\n");
 	}
 
 	/*

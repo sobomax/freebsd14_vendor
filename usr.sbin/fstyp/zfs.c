@@ -25,12 +25,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52d05a4df55a86eea222c06494613943a9196301 $");
+__FBSDID("$FreeBSD: 96ff0485d71eb24194228ab5a26e805aa8d692ee $");
 
 #include <sys/types.h>
-#include <cddl/compat/opensolaris/sys/types.h>
 #include <sys/time.h>
-#include <cddl/compat/opensolaris/sys/time.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

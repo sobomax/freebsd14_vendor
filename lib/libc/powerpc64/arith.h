@@ -1,7 +1,7 @@
 /*
  * MD header for contrib/gdtoa
  *
- * $FreeBSD: 8e2c9ec597b38c302578c436dbf3b65ef8561eb8 $
+ * $FreeBSD: 03a162fd035b31cdc1d3cd1e08d16efc879c2f42 $
  */
 
 /*
@@ -11,6 +11,14 @@
  * architecture.  See contrib/gdtoa/gdtoaimp.h for details.
  */
 
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define IEEE_8087
+#define Arith_Kind_ASL 1
+#else
 #define IEEE_MC68k
 #define Arith_Kind_ASL 2
+#endif
+#define Long int
+#define Intcast (int)(long)
 #define Double_Align
+#define X64_bit_pointers

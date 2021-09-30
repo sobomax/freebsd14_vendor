@@ -1,4 +1,4 @@
-# $FreeBSD: 9693f579f801f168dc8b84cd68997d7bd626a791 $
+# $FreeBSD: 68fa2da64fdb3586009b2f647266a3cdb4eb4d3e $
 
 .include <bsd.init.mk>
 
@@ -23,17 +23,19 @@ SRCS+=	lauxlib.c lbaselib.c lstrlib.c loadlib.c
 #SRCS+=	lbitlib.c liolib.c lmathlib.c loslib.c ltablib.c
 
 # Our utilities.
-SRCS+=	lerrno.c lstd.c lutils.c
+SRCS+=	lerrno.c lpager.c lstd.c lutils.c
 
 .PATH:	${FLUASRC}/modules
 SRCS+=	lfs.c
 
-WARNS=	3
+WARNS?=	3
 
 CFLAGS+= -DLUA_PATH=\"${LUAPATH}\" -DLUA_PATH_DEFAULT=\"${LUAPATH}/\?.lua\"
 CFLAGS+= -ffreestanding -nostdlib -DLUA_USE_POSIX
 CFLAGS+= -fno-stack-protector -D__BSD_VISIBLE
 CFLAGS+= -I${BOOTSRC}/include -I${LIBLUASRC} -I${LUASRC} -I${LDRSRC}
+
+CFLAGS.lutils.c+= -I${SRCTOP}/sys/teken -I${SRCTOP}/contrib/pnglite
 
 .if ${MACHINE_CPUARCH} == "amd64" && ${DO32:U0} == 0
 CFLAGS+=	-fPIC

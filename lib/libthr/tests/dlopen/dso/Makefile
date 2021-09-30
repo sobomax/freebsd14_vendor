@@ -1,6 +1,7 @@
-# $FreeBSD: b9a90310bf2b3ae42f151bba067babd2e97a1ce7 $
+# $FreeBSD: dfd926586c90b88414139e149acb53a6a5979c31 $
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread/dlopen/dso
+WARNS?=		3
 
 SHLIB=		h_pthread_dlopen
 SHLIB_MAJOR=    1

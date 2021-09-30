@@ -1,4 +1,4 @@
-# $FreeBSD: 2d3b26f0f1aa05b6f82a227187a2892b3c264e51 $
+# $FreeBSD: 4ba885405ce72c1d928f4e196c6cf9ae95a5d37e $
 
 .include <src.opts.mk>
 
@@ -10,6 +10,7 @@ TESTS_SUBDIRS+=		${_audit}
 TESTS_SUBDIRS+=		auditpipe
 TESTS_SUBDIRS+=		capsicum
 TESTS_SUBDIRS+=		${_cddl}
+TESTS_SUBDIRS+=		devrandom
 TESTS_SUBDIRS+=		fifo
 TESTS_SUBDIRS+=		file
 TESTS_SUBDIRS+=		fs
@@ -18,6 +19,8 @@ TESTS_SUBDIRS+=		kern
 TESTS_SUBDIRS+=		kqueue
 TESTS_SUBDIRS+=		mac
 TESTS_SUBDIRS+=		mqueue
+TESTS_SUBDIRS+=		net
+TESTS_SUBDIRS+=		netgraph
 TESTS_SUBDIRS+=		netinet
 TESTS_SUBDIRS+=		netinet6
 TESTS_SUBDIRS+=		netipsec

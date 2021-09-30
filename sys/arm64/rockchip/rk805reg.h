@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,9 +24,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f4d9cc07b93cc8dd7f4b0ea67a1332957f79896a $
+ * $FreeBSD: db489d77c26e7a18a46e0d255d8eaa0c63e5c49d $
  */
-
 
 #ifndef _RK805REG_H_
 #define	 _RK805REG_H_

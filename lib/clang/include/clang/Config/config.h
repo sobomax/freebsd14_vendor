@@ -1,4 +1,4 @@
-/* $FreeBSD: b16df1ac0e85c81811ec523b279e28758f2f65f4 $ */
+/* $FreeBSD: 830fc4d98959159ce6f5ebfe96c30be4ea3cbd03 $ */
 /* This generated file is for internal use. Do not include it from headers. */
 
 #ifdef CLANG_CONFIG_H
@@ -36,6 +36,9 @@
 /* Default architecture for OpenMP offloading to Nvidia GPUs. */
 #define CLANG_OPENMP_NVPTX_DEFAULT_ARCH "sm_35"
 
+/* Default architecture for SystemZ. */
+#define CLANG_SYSTEMZ_DEFAULT_ARCH "z10"
+
 /* Multilib suffix for libdir. */
 #define CLANG_LIBDIR_SUFFIX ""
 
@@ -62,7 +65,7 @@
 #define CLANG_HAVE_RLIMITS 1
 
 /* The LLVM product name and version */
-#define BACKEND_PACKAGE_STRING "LLVM 10.0.1"
+#define BACKEND_PACKAGE_STRING "LLVM 11.0.1"
 
 /* Linker version detected at compile time. */
 /* #undef HOST_LINK_VERSION */

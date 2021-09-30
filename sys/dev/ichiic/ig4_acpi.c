@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 673f160c6312032f5d87b0ef197dc72481681196 $");
+__FBSDID("$FreeBSD: c538422b18bc8f77ae01ba705910ab10b4b86cb1 $");
 
 #include "opt_acpi.h"
 
@@ -68,16 +68,16 @@ static char *ig4iic_ids[] = {
 static int
 ig4iic_acpi_probe(device_t dev)
 {
-
+	int rv;
 
 	if (acpi_disabled("ig4iic"))
 		return (ENXIO);
-
-	if (ACPI_ID_PROBE(device_get_parent(dev), dev, ig4iic_ids) == NULL)
-		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, ig4iic_ids, NULL);
+	if (rv > 0)
+		return (rv);
 
 	device_set_desc(dev, "Designware I2C Controller");
-	return (0);
+	return (rv);
 }
 
 static int

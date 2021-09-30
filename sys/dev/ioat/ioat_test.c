@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 43405c87623c7ab21659c52999399b551b548f04 $");
+__FBSDID("$FreeBSD: 0bd6a3377bead9581550801ef75314c02a4d7ffa $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -576,8 +576,9 @@ sysctl_enable_ioat_test(SYSCTL_HANDLER_ARGS)
 	enable_ioat_test(enabled);
 	return (0);
 }
-SYSCTL_PROC(_hw_ioat, OID_AUTO, enable_ioat_test, CTLTYPE_INT | CTLFLAG_RW,
-    0, 0, sysctl_enable_ioat_test, "I",
+SYSCTL_PROC(_hw_ioat, OID_AUTO, enable_ioat_test,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, 0, 0,
+    sysctl_enable_ioat_test, "I",
     "Non-zero: Enable the /dev/ioat_test device");
 
 void

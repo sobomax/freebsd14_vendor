@@ -1,8 +1,11 @@
 #!/bin/sh
-# $FreeBSD: 3185d826c7ddec1725632e86f39e47779c271e34 $
+# $FreeBSD: 5fc31a8e1985c2b2e6ab910b851fc691dacad863 $
+
+# Temporarily disable evfilt_proc tests: https://bugs.freebsd.org/233586
+skip="--no-proc"
 
 i=1
-"$(dirname $0)/kqtest" | while read line; do
+"$(dirname $0)/kqtest" ${skip} | while read line; do
 	echo $line | grep -q passed
 	if [ $? -eq 0 ]; then
 		echo "ok - $i $line"

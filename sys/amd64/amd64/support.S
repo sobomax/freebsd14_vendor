@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 023ca66f0883740eb6a53ce187077f2863db6f5d $
+ * $FreeBSD: 7963071303b7f1ddd4ec5820c7d2e8ce10ac2882 $
  */
 
 #include "opt_ddb.h"
@@ -48,7 +48,7 @@
 /* Address: %rdi */
 ENTRY(pagezero_std)
 	PUSH_FRAME_POINTER
-	movq	$PAGE_SIZE/8,%rcx
+	movl	$PAGE_SIZE/8,%ecx
 	xorl	%eax,%eax
 	rep
 	stosq
@@ -58,7 +58,7 @@ END(pagezero_std)
 
 ENTRY(pagezero_erms)
 	PUSH_FRAME_POINTER
-	movq	$PAGE_SIZE,%rcx
+	movl	$PAGE_SIZE,%ecx
 	xorl	%eax,%eax
 	rep
 	stosb
@@ -71,7 +71,7 @@ END(pagezero_erms)
  */
 ENTRY(pagecopy)
 	PUSH_FRAME_POINTER
-	movq	$PAGE_SIZE/8,%rcx
+	movl	$PAGE_SIZE/8,%ecx
 	movq	%rdi,%r9
 	movq	%rsi,%rdi
 	movq	%r9,%rsi
@@ -80,30 +80,6 @@ ENTRY(pagecopy)
 	POP_FRAME_POINTER
 	ret
 END(pagecopy)
-
-/* Address: %rdi */
-ENTRY(sse2_pagezero)
-	PUSH_FRAME_POINTER
-	movq	$-PAGE_SIZE,%rdx
-	subq	%rdx,%rdi
-	xorl	%eax,%eax
-	jmp	1f
-	/*
-	 * The loop takes 29 bytes.  Ensure that it doesn't cross a 32-byte
-	 * cache line.
-	 */
-	.p2align 5,0x90
-1:
-	movnti	%rax,(%rdi,%rdx)
-	movnti	%rax,8(%rdi,%rdx)
-	movnti	%rax,16(%rdi,%rdx)
-	movnti	%rax,24(%rdi,%rdx)
-	addq	$32,%rdx
-	jne	1b
-	sfence
-	POP_FRAME_POINTER
-	ret
-END(sse2_pagezero)
 
 /*
  * memcmpy(b1, b2, len)
@@ -117,9 +93,26 @@ ENTRY(memcmp)
 	cmpq	$16,%rdx
 	ja	101632f
 
-100816:
 	cmpb	$8,%dl
-	jl	100408f
+	jg	100816f
+
+	cmpb	$4,%dl
+	jg	100408f
+
+	cmpb	$2,%dl
+	jge	100204f
+
+	cmpb	$1,%dl
+	jl	100000f
+	movzbl	(%rdi),%eax
+	movzbl	(%rsi),%r8d
+	subl	%r8d,%eax
+100000:
+	POP_FRAME_POINTER
+	ret
+
+	ALIGN_TEXT
+100816:
 	movq	(%rdi),%r8
 	movq	(%rsi),%r9
 	cmpq	%r8,%r9
@@ -130,9 +123,8 @@ ENTRY(memcmp)
 	jne	10081608f
 	POP_FRAME_POINTER
 	ret
+	ALIGN_TEXT
 100408:
-	cmpb	$4,%dl
-	jl	100204f
 	movl	(%rdi),%r8d
 	movl	(%rsi),%r9d
 	cmpl	%r8d,%r9d
@@ -143,9 +135,8 @@ ENTRY(memcmp)
 	jne	10040804f
 	POP_FRAME_POINTER
 	ret
+	ALIGN_TEXT
 100204:
-	cmpb	$2,%dl
-	jl	100001f
 	movzwl	(%rdi),%r8d
 	movzwl	(%rsi),%r9d
 	cmpl	%r8d,%r9d
@@ -156,16 +147,7 @@ ENTRY(memcmp)
 	jne	1f
 	POP_FRAME_POINTER
 	ret
-100001:
-	cmpb	$1,%dl
-	jl	100000f
-	movzbl	(%rdi),%eax
-	movzbl	(%rsi),%r8d
-	subl	%r8d,%eax
-100000:
-	POP_FRAME_POINTER
-	ret
-ALIGN_TEXT
+	ALIGN_TEXT
 101632:
 	cmpq	$32,%rdx
 	ja	103200f
@@ -187,7 +169,7 @@ ALIGN_TEXT
 	jne	10163224f
 	POP_FRAME_POINTER
 	ret
-ALIGN_TEXT
+	ALIGN_TEXT
 103200:
 	movq	(%rdi),%r8
 	movq	8(%rdi),%r9
@@ -218,7 +200,7 @@ ALIGN_TEXT
  *
  * Before we compute it we narrow down the range (16 -> 8 -> 4 bytes).
  */
-ALIGN_TEXT
+	ALIGN_TEXT
 10320016:
 	leaq	16(%rdi),%rdi
 	leaq	16(%rsi),%rsi
@@ -230,29 +212,29 @@ ALIGN_TEXT
 	leaq	8(%rdi),%rdi
 	leaq	8(%rsi),%rsi
 	jmp	80f
-ALIGN_TEXT
+	ALIGN_TEXT
 10081608:
 10163224:
 	leaq	-8(%rdi,%rdx),%rdi
 	leaq	-8(%rsi,%rdx),%rsi
 	jmp	80f
-ALIGN_TEXT
+	ALIGN_TEXT
 10163216:
 	leaq	-16(%rdi,%rdx),%rdi
 	leaq	-16(%rsi,%rdx),%rsi
 	jmp	80f
-ALIGN_TEXT
+	ALIGN_TEXT
 10163208:
 	leaq	8(%rdi),%rdi
 	leaq	8(%rsi),%rsi
 	jmp	80f
-ALIGN_TEXT
+	ALIGN_TEXT
 10040804:
 	leaq	-4(%rdi,%rdx),%rdi
 	leaq	-4(%rsi,%rdx),%rsi
 	jmp	1f
 
-ALIGN_TEXT
+	ALIGN_TEXT
 80:
 	movl	(%rdi),%r8d
 	movl	(%rsi),%r9d
@@ -299,7 +281,7 @@ END(memcmp)
  * rsi - source
  * rdx - count
  *
- * The macro possibly clobbers the above and: rcx, r8, r9, 10
+ * The macro possibly clobbers the above and: rcx, r8, r9, r10
  * It does not clobber rax nor r11.
  */
 .macro MEMMOVE erms overlap begin end
@@ -322,6 +304,7 @@ END(memcmp)
 	cmpq	$256,%rcx
 	ja	1256f
 
+	ALIGN_TEXT
 103200:
 	movq	(%rsi),%rdx
 	movq	%rdx,(%rdi)
@@ -455,6 +438,7 @@ END(memcmp)
 	cmpq	$32,%rcx
 	jb	2016f
 
+	ALIGN_TEXT
 2032:
 	movq	(%rsi),%rdx
 	movq	%rdx,(%rdi)
@@ -595,6 +579,7 @@ END(memcpy_erms)
 	cmpq	$256,%rcx
 	ja	1256f
 
+	ALIGN_TEXT
 103200:
 	movq	%r10,(%rdi)
 	movq	%r10,8(%rdi)
@@ -1181,7 +1166,6 @@ ENTRY(suword_nosmap)
 
 	movq	%rsi,(%rdi)
 	xorl	%eax,%eax
-	movq	PCPU(CURPCB),%rcx
 	movq	%rax,PCB_ONFAULT(%rcx)
 	POP_FRAME_POINTER
 	ret
@@ -1200,7 +1184,6 @@ ENTRY(suword_smap)
 	movq	%rsi,(%rdi)
 	clac
 	xorl	%eax,%eax
-	movq	PCPU(CURPCB),%rcx
 	movq	%rax,PCB_ONFAULT(%rcx)
 	POP_FRAME_POINTER
 	ret
@@ -1217,7 +1200,6 @@ ENTRY(suword32_nosmap)
 
 	movl	%esi,(%rdi)
 	xorl	%eax,%eax
-	movq	PCPU(CURPCB),%rcx
 	movq	%rax,PCB_ONFAULT(%rcx)
 	POP_FRAME_POINTER
 	ret
@@ -1236,7 +1218,6 @@ ENTRY(suword32_smap)
 	movl	%esi,(%rdi)
 	clac
 	xorl	%eax,%eax
-	movq	PCPU(CURPCB),%rcx
 	movq	%rax,PCB_ONFAULT(%rcx)
 	POP_FRAME_POINTER
 	ret
@@ -1425,43 +1406,6 @@ copyinstr_toolong:
 	jae	cpystrflt
 	movl	$ENAMETOOLONG,%eax
 	jmp	cpystrflt_x
-
-/*
- * copystr(from, to, maxlen, int *lencopied)
- *         %rdi, %rsi, %rdx, %rcx
- */
-ENTRY(copystr)
-	PUSH_FRAME_POINTER
-	movq	%rdx,%r8			/* %r8 = maxlen */
-
-	incq    %rdx
-1:
-	decq	%rdx
-	jz	4f
-	movb	(%rdi),%al
-	movb	%al,(%rsi)
-	incq	%rsi
-	incq	%rdi
-	testb	%al,%al
-	jnz	1b
-
-	/* Success -- 0 byte reached */
-	decq	%rdx
-	xorl	%eax,%eax
-2:
-	testq	%rcx,%rcx
-	jz      3f
-	/* set *lencopied and return %rax */
-	subq	%rdx,%r8
-	movq	%r8,(%rcx)
-3:
-	POP_FRAME_POINTER
-	ret
-4:
-	/* rdx is zero -- return ENAMETOOLONG */
-	movl    $ENAMETOOLONG,%eax
-	jmp	2b
-END(copystr)
 
 /*
  * Handling of special amd64 registers and descriptor tables etc
@@ -1698,7 +1642,8 @@ END(handle_ibrs_exit_rs)
  *
  * N.B. The function does not follow ABI calling conventions, it corrupts %rbx.
  * The vmm.ko caller expects that only %rax, %rdx, %rbx, %rcx, %r9, and %rflags
- * registers are clobbered.  The NMI handler caller only needs %r13 preserved.
+ * registers are clobbered.  The NMI handler caller only needs %r13 and %r15
+ * preserved.
  */
 ENTRY(flush_l1d_sw)
 #define	L1D_FLUSH_SIZE	(64 * 1024)
@@ -1911,7 +1856,7 @@ ENTRY(mds_handler_skl_avx512)
 1:	movq	PCPU(MDS_BUF), %rdi
 	movq	PCPU(MDS_BUF64), %rdx
 	vmovdqa64	%zmm0, PCPU(MDS_TMP)
-	vpxor	%zmm0, %zmm0, %zmm0
+	vpxord	%zmm0, %zmm0, %zmm0
 
 	lfence
 	vorpd	(%rdx), %zmm0, %zmm0

@@ -1,0 +1,21 @@
+# Doxyfile 1.5.2
+
+# $FreeBSD: 8ba54b9bf6161823204d31acad40f541449759b8 $
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "FreeBSD kernel altera device code"
+OUTPUT_DIRECTORY       = $(DOXYGEN_DEST_PATH)/dev_altera/
+EXTRACT_ALL            = YES    # for undocumented src, no warnings enabled
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = $(DOXYGEN_SRC_PATH)/dev/altera/ \
+                         $(NOTREVIEWED)
+
+GENERATE_TAGFILE       = dev_altera/dev_altera.tag
+
+@INCLUDE_PATH          = $(DOXYGEN_INCLUDE_PATH)
+@INCLUDE               = common-Doxyfile
+

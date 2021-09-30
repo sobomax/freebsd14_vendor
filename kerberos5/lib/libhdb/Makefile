@@ -1,4 +1,4 @@
-# $FreeBSD: 29ba7d2c58a23470fdaac24bff18beed1fda142b $
+# $FreeBSD: fda622d6945a879e568c7cd224857d6e7d218423 $
 
 LIB=	hdb
 LDFLAGS=	-Wl,--no-undefined ${LDAPLDFLAGS}
@@ -6,6 +6,8 @@ VERSION_MAP=	${KRB5DIR}/lib/hdb/version-script.map
 LIBADD=	asn1 com_err krb5 roken sqlite3
 LDADD=	${LDAPLDADD}
 DPADD=	${LDAPDPADD}
+
+WARNS?=	0
 
 MAN=	HDB.3 hdb_entry_ex.3
 

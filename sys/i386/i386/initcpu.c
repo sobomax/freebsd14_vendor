@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 64c06b20f7d2b6689ac80e5ef98766d386dab681 $");
+__FBSDID("$FreeBSD: 9ba269af2b32eaf722ba4db5daf0a4e3db32fcd7 $");
 
 #include "opt_cpu.h"
 
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: 64c06b20f7d2b6689ac80e5ef98766d386dab681 $");
 
 #include <machine/cputypes.h>
 #include <machine/md_var.h>
+#include <machine/psl.h>
 #include <machine/specialreg.h>
 
 #include <vm/vm.h>
@@ -158,7 +159,6 @@ init_486dlc(void)
 	intr_restore(saveintr);
 }
 
-
 /*
  * Cyrix 486S/DX series
  */
@@ -179,7 +179,6 @@ init_cy486dx(void)
 	write_cyrix_reg(CCR2, ccr2);
 	intr_restore(saveintr);
 }
-
 
 /*
  * Cyrix 5x86
@@ -627,11 +626,24 @@ init_transmeta(void)
 }
 #endif
 
+/*
+ * The value for the TSC_AUX MSR and rdtscp/rdpid on the invoking CPU.
+ *
+ * Caller should prevent CPU migration.
+ */
+u_int
+cpu_auxmsr(void)
+{
+	KASSERT((read_eflags() & PSL_I) == 0, ("context switch possible"));
+	return (PCPU_GET(cpuid));
+}
+
 extern int elf32_nxstack;
 
 void
 initializecpu(void)
 {
+	uint64_t msr;
 
 	switch (cpu) {
 #ifdef I486_CPU
@@ -708,8 +720,8 @@ initializecpu(void)
 				break;
 			}
 			break;
-#ifdef CPU_ATHLON_SSE_HACK
 		case CPU_VENDOR_AMD:
+#ifdef CPU_ATHLON_SSE_HACK
 			/*
 			 * Sometimes the BIOS doesn't enable SSE instructions.
 			 * According to AMD document 20734, the mobile
@@ -726,8 +738,16 @@ initializecpu(void)
 				do_cpuid(1, regs);
 				cpu_feature = regs[3];
 			}
-			break;
 #endif
+			/*
+			 * Detect C1E that breaks APIC.  See comment in
+			 * amd64/initcpu.c.
+			 */
+			if ((CPUID_TO_FAMILY(cpu_id) == 0xf ||
+			    CPUID_TO_FAMILY(cpu_id) == 0x10) &&
+			    (cpu_feature2 & CPUID2_HV) == 0)
+				cpu_amdc1e_bug = 1;
+			break;
 		case CPU_VENDOR_CENTAUR:
 			init_via();
 			break;
@@ -744,19 +764,13 @@ initializecpu(void)
 		load_cr4(rcr4() | CR4_FXSR | CR4_XMM);
 		cpu_fxsr = hw_instruction_sse = 1;
 	}
-#if defined(PAE) || defined(PAE_TABLES)
-	if ((amd_feature & AMDID_NX) != 0) {
-		uint64_t msr;
-
+	if (elf32_nxstack) {
 		msr = rdmsr(MSR_EFER) | EFER_NXE;
 		wrmsr(MSR_EFER, msr);
-		pg_nx = PG_NX;
-		elf32_nxstack = 1;
 	}
-#endif
 	if ((amd_feature & AMDID_RDTSCP) != 0 ||
 	    (cpu_stdext_feature2 & CPUID_STDEXT2_RDPID) != 0)
-		wrmsr(MSR_TSC_AUX, PCPU_GET(cpuid));
+		wrmsr(MSR_TSC_AUX, cpu_auxmsr());
 }
 
 void
@@ -853,7 +867,7 @@ enable_K6_wt_alloc(void)
 	 */
 	/*
 	 * The AMD-K6 processer provides the 64-bit Test Register 12(TR12),
-	 * but only the Cache Inhibit(CI) (bit 3 of TR12) is suppported.
+	 * but only the Cache Inhibit(CI) (bit 3 of TR12) is supported.
 	 * All other bits in TR12 have no effect on the processer's operation.
 	 * The I/O Trap Restart function (bit 9 of TR12) is always enabled
 	 * on the AMD-K6.
@@ -903,7 +917,7 @@ enable_K6_2_wt_alloc(void)
 	 */
 	/*
 	 * The AMD-K6 processer provides the 64-bit Test Register 12(TR12),
-	 * but only the Cache Inhibit(CI) (bit 3 of TR12) is suppported.
+	 * but only the Cache Inhibit(CI) (bit 3 of TR12) is supported.
 	 * All other bits in TR12 have no effect on the processer's operation.
 	 * The I/O Trap Restart function (bit 9 of TR12) is always enabled
 	 * on the AMD-K6.
@@ -951,7 +965,6 @@ DB_SHOW_COMMAND(cyrixreg, cyrixreg)
 	cr0 = rcr0();
 	if (cpu_vendor_id == CPU_VENDOR_CYRIX) {
 		saveintr = intr_disable();
-
 
 		if ((cpu != CPU_M1SC) && (cpu != CPU_CY486DX)) {
 			ccr0 = read_cyrix_reg(CCR0);

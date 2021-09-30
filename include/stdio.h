@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdio.h	8.5 (Berkeley) 4/29/95
- * $FreeBSD: eb155a0c231ee27aa7854296011f7c348a654842 $
+ * $FreeBSD: e392bd5eb3e2238f137fbd4e0b6c56eddbaf5a0a $
  */
 
 #ifndef	_STDIO_H_
@@ -269,7 +269,6 @@ long	 ftell(FILE *);
 size_t	 fwrite(const void * __restrict, size_t, size_t, FILE * __restrict);
 int	 getc(FILE *);
 int	 getchar(void);
-char	*gets(char *);
 #if __EXT1_VISIBLE
 char	*gets_s(char *, rsize_t);
 #endif

@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7710b9d61812ea8e770101845c1fb305a0e7cb96 $
+ * $FreeBSD: f6f53afbc8a9c2f5c7aa0593aaeb9d085f1be02e $
  */
 #ifndef	_LINUX_MM_H_
 #define	_LINUX_MM_H_
@@ -219,9 +219,7 @@ mark_page_accessed(struct vm_page *page)
 static inline void
 get_page(struct vm_page *page)
 {
-	vm_page_lock(page);
 	vm_page_wire(page);
-	vm_page_unlock(page);
 }
 
 extern long
@@ -242,10 +240,7 @@ get_user_pages_remote(struct task_struct *, struct mm_struct *,
 static inline void
 put_page(struct vm_page *page)
 {
-	vm_page_lock(page);
-	if (vm_page_unwire(page, PQ_ACTIVE) && page->object == NULL)
-		vm_page_free(page);
-	vm_page_unlock(page);
+	vm_page_unwire(page, PQ_ACTIVE);
 }
 
 #define	copy_highpage(to, from) pmap_copy_page(from, to)

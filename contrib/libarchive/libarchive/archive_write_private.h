@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5529809b2b2d949dfa307e9c12f7fa5c358b80f5 $
+ * $FreeBSD: 98518a39c39bdc0782d950dfaf6938c0a90cd2c8 $
  */
 
 #ifndef ARCHIVE_WRITE_PRIVATE_H_INCLUDED
@@ -89,6 +89,7 @@ struct archive_write {
 	archive_open_callback	*client_opener;
 	archive_write_callback	*client_writer;
 	archive_close_callback	*client_closer;
+	archive_free_callback	*client_freer;
 	void			*client_data;
 
 	/*

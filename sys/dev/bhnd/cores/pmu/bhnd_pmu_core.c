@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d04f07ea714ac8bd0e159a2b75290a609a4b4ab $");
+__FBSDID("$FreeBSD: 5a991d0cd9428918df404900d9a598959b173ff7 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -121,7 +121,7 @@ bhnd_pmu_core_detach(device_t dev)
 	int			 error;
 
 	sc = device_get_softc(dev);
-	
+
 	/* Delegate to common driver implementation */
 	if ((error = bhnd_pmu_detach(dev)))
 		return (error);

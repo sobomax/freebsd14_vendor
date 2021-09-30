@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1198c96bbcf7249ff95f9b58a62ca4c1826cdd3 $");
+__FBSDID("$FreeBSD: dd8b17c8d21c06cef347adb1d649ab1bc9044535 $");
 
 /*
  * Driver for Intel PRO/Wireless 3945ABG 802.11 network adapters.
@@ -1909,6 +1909,7 @@ static void
 wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
     struct wpi_rx_data *data)
 {
+	struct epoch_tracker et;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct wpi_rx_ring *ring = &sc->rxq;
 	struct wpi_rx_stat *stat;
@@ -2028,6 +2029,7 @@ wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
 	}
 
 	WPI_UNLOCK(sc);
+	NET_EPOCH_ENTER(et);
 
 	/* Send the frame to the 802.11 layer. */
 	if (ni != NULL) {
@@ -2037,6 +2039,7 @@ wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
 	} else
 		(void)ieee80211_input_all(ic, m, stat->rssi, WPI_RSSI_OFFSET);
 
+	NET_EPOCH_EXIT(et);
 	WPI_LOCK(sc);
 
 	return;

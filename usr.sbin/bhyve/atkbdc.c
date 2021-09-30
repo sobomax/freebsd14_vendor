@@ -28,11 +28,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c1838c2e80cfb8305037c6523a0a8c06d0392b0 $");
+__FBSDID("$FreeBSD: a08f58f84b22b2ea73199cd3d2d2f73721d092f5 $");
 
 #include <sys/types.h>
 
 #include <machine/vmm.h>
+#include <machine/vmm_snapshot.h>
 
 #include <vmmapi.h>
 
@@ -136,6 +137,10 @@ struct atkbdc_softc {
 	struct kbd_dev kbd;
 	struct aux_dev aux;
 };
+
+#ifdef BHYVE_SNAPSHOT
+static struct atkbdc_softc *atkbdc_sc = NULL;
+#endif
 
 static void
 atkbdc_assert_kbd_intr(struct atkbdc_softc *sc)
@@ -548,7 +553,48 @@ atkbdc_init(struct vmctx *ctx)
 
 	sc->ps2kbd_sc = ps2kbd_init(sc);
 	sc->ps2mouse_sc = ps2mouse_init(sc);
+
+#ifdef BHYVE_SNAPSHOT
+	assert(atkbdc_sc == NULL);
+	atkbdc_sc = sc;
+#endif
 }
+
+#ifdef BHYVE_SNAPSHOT
+int
+atkbdc_snapshot(struct vm_snapshot_meta *meta)
+{
+	int ret;
+
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->status, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->outport, meta, ret, done);
+	SNAPSHOT_BUF_OR_LEAVE(atkbdc_sc->ram,
+			      sizeof(atkbdc_sc->ram), meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->curcmd, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->ctrlbyte, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd, meta, ret, done);
+
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd.irq_active, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd.irq, meta, ret, done);
+	SNAPSHOT_BUF_OR_LEAVE(atkbdc_sc->kbd.buffer,
+			      sizeof(atkbdc_sc->kbd.buffer), meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd.brd, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd.bwr, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->kbd.bcnt, meta, ret, done);
+
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->aux.irq_active, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(atkbdc_sc->aux.irq, meta, ret, done);
+
+	ret = ps2kbd_snapshot(atkbdc_sc->ps2kbd_sc, meta);
+	if (ret != 0)
+		goto done;
+
+	ret = ps2mouse_snapshot(atkbdc_sc->ps2mouse_sc, meta);
+
+done:
+	return (ret);
+}
+#endif
 
 static void
 atkbdc_dsdt(void)

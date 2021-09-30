@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 77704690f6f3ed1b02289118ddbb14a9af4e9fd3 $
+ * $FreeBSD: f2f21a0811d03d67f8fb1a2a30a4fe36e60a493e $
  *
  * userspace compatibility code for dummynet schedulers
  */
@@ -27,7 +27,6 @@ extern int debug;
         __FILE__, __LINE__, __FUNCTION__, ## args)
 #define DX(lev, fmt, args...) do {              \
         if (debug > lev) D(fmt, ## args); } while (0)
-
 
 #ifndef offsetof
 #define offsetof(t,m) (int)(intptr_t)((&((t *)0L)->m))

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b573254cb12b2d048ae9db89b5d28b732f1f89c $");
+__FBSDID("$FreeBSD: 21307ff89b64763752e1cd24046a0ec5a030dbc9 $");
 
 /*
  * Parallel port TCP/IP interfaces added.  I looked at the driver from
@@ -539,7 +539,6 @@ lp_intr(void *arg)
 
 	ppb_assert_locked(ppbus);
 	if (sc->sc_ifp->if_flags & IFF_LINK0) {
-
 		/* Ack. the request */
 		ppb_wdtr(ppbus, 0x01);
 
@@ -599,7 +598,6 @@ lp_intr(void *arg)
 		len = sc->sc_ifp->if_mtu + LPIPHDRLEN;
 		bp  = sc->sc_ifbuf;
 		while (len--) {
-
 			cl = ppb_rstr(ppbus);
 			ppb_wdtr(ppbus, 8);
 
@@ -842,7 +840,6 @@ static device_method_t lp_methods[] = {
 	DEVMETHOD(device_probe,		lp_probe),
 	DEVMETHOD(device_attach,	lp_attach),
 	DEVMETHOD(device_detach,	lp_detach),
-
 	{ 0, 0 }
 };
 

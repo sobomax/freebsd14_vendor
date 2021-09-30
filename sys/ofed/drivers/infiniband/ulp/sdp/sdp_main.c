@@ -63,9 +63,10 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5fefa2929b12b92d1cf305a7c5275ec917cfce0e $");
+__FBSDID("$FreeBSD: 46a43e1b8e3ba401acfdfed06f78b6a3ea9e353d $");
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 
@@ -1880,10 +1881,12 @@ next:
 	return (error);
 }
 
-static SYSCTL_NODE(_net_inet, -1,  sdp,    CTLFLAG_RW, 0,  "SDP");
+SYSCTL_NODE(_net_inet, -1, sdp, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "SDP");
 
 SYSCTL_PROC(_net_inet_sdp, TCPCTL_PCBLIST, pcblist,
-    CTLFLAG_RD | CTLTYPE_STRUCT, 0, 0, sdp_pcblist, "S,xtcpcb",
+    CTLFLAG_RD | CTLTYPE_STRUCT | CTLFLAG_MPSAFE,
+    0, 0, sdp_pcblist, "S,xtcpcb",
     "List of active SDP connections");
 
 static void

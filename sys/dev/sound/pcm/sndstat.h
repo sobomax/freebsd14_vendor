@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 026b37722449f6bace9044a09f1eb25795430c17 $
+ * $FreeBSD: b0b59c3d7ea344fb2f545d4c84bc8ba7be5e94a4 $
  */
 
 #ifndef _SND_SNDSTAT_H_
@@ -61,7 +61,6 @@
 	    ((d->playcount != 0 && d->reccount != 0) &&			\
 	    (d->flags & SD_F_SIMPLEX)) ? " simplex" : "",		\
 	    (device_get_unit(dev) == snd_unit) ? " default" : "")
-
 
 #define SNDSTAT_PREPARE_PCM_END()					\
 	if (verbose <= 1)						\

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31bb70979cf989339a7bc3a02e7b588ab8e18dae $");
+__FBSDID("$FreeBSD: 269d46d46afada9591e02ae941765493ae76de38 $");
 
 #include "opt_stack.h"
 #include "opt_ddb.h"
@@ -34,7 +34,9 @@ __FBSDID("$FreeBSD: 31bb70979cf989339a7bc3a02e7b588ab8e18dae $");
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/pcpu.h>
 #include <sys/smp.h>
 #include <sys/stack.h>

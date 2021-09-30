@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b34983affac0a72c73bdef922ceecc2ab99876ec $
+ * $FreeBSD: 4b2f86d00052966c0ebf3664d6487db56d7449f9 $
  *
  */
 
@@ -35,6 +35,7 @@
 
 #include <sys/kernel.h>
 #include <sys/bus.h>
+#include <sys/counter.h>
 #include <sys/rman.h>
 #include <sys/types.h>
 #include <sys/lock.h>
@@ -53,6 +54,7 @@
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_media.h>
+#include <net/pfil.h>
 #include <netinet/in.h>
 #include <netinet/tcp_lro.h>
 
@@ -116,7 +118,10 @@ enum {
 	SGE_MAX_WR_NDESC = SGE_MAX_WR_LEN / EQ_ESIZE, /* max WR size in desc */
 	TX_SGL_SEGS = 39,
 	TX_SGL_SEGS_TSO = 38,
+	TX_SGL_SEGS_VM = 38,
+	TX_SGL_SEGS_VM_TSO = 37,
 	TX_SGL_SEGS_EO_TSO = 30,	/* XXX: lower for IPv6. */
+	TX_SGL_SEGS_VXLAN_TSO = 37,
 	TX_WR_FLITS = SGE_MAX_WR_LEN / 8
 };
 
@@ -158,6 +163,7 @@ enum {
 	ADAP_ERR	= (1 << 5),
 	BUF_PACKING_OK	= (1 << 6),
 	IS_VF		= (1 << 7),
+	KERN_TLS_OK	= (1 << 8),
 
 	CXGBE_BUSY	= (1 << 9),
 
@@ -169,6 +175,7 @@ enum {
 	DOOMED		= (1 << 0),
 	VI_INIT_DONE	= (1 << 1),
 	VI_SYSCTL_CTX	= (1 << 2),
+	TX_USES_VM_WR 	= (1 << 3),
 
 	/* adapter debug_flags */
 	DF_DUMP_MBOX		= (1 << 0),	/* Log all mbox cmd/rpl. */
@@ -190,6 +197,7 @@ struct vi_info {
 	struct adapter *adapter;
 
 	struct ifnet *ifp;
+	struct pfil_head *pfil;
 
 	unsigned long flags;
 	int if_flags;
@@ -282,6 +290,7 @@ struct port_info {
 	int nvi;
 	int up_vis;
 	int uld_vis;
+	bool vxlan_tcam_entry;
 
 	struct tx_sched_params *sched_params;
 
@@ -305,6 +314,8 @@ struct port_info {
  	struct port_stats stats;
 	u_int tnl_cong_drops;
 	u_int tx_parse_error;
+	int fcs_reg;
+	uint64_t fcs_base;
 	u_long	tx_toe_tls_records;
 	u_long	tx_toe_tls_octets;
 	u_long	rx_toe_tls_records;
@@ -374,7 +385,7 @@ enum {
 	CPL_COOKIE_TOM,
 	CPL_COOKIE_HASHFILTER,
 	CPL_COOKIE_ETHOFLD,
-	CPL_COOKIE_AVAILABLE3,
+	CPL_COOKIE_KERN_TLS,
 
 	NUM_CPL_COOKIES = 8	/* Limited by M_COOKIE.  Do not increase. */
 };
@@ -550,7 +561,7 @@ struct txpkts {
 	uint8_t wr_type;	/* type 0 or type 1 */
 	uint8_t npkt;		/* # of packets in this work request */
 	uint8_t len16;		/* # of 16B pieces used by this work request */
-	uint8_t score;		/* 1-10. coalescing attempted if score > 3 */
+	uint8_t score;
 	uint8_t max_npkt;	/* maximum number of packets allowed */
 	uint16_t plen;		/* total payload (sum of all packets) */
 
@@ -573,6 +584,7 @@ struct sge_txq {
 	struct sglist *gl;
 	__be32 cpl_ctrl0;	/* for convenience */
 	int tc_idx;		/* traffic class */
+	uint64_t last_tx;	/* cycle count when eth_tx was last called */
 	struct txpkts txp;
 
 	struct task tx_reclaim_task;
@@ -588,9 +600,28 @@ struct sge_txq {
 	uint64_t txpkts1_wrs;	/* # of type1 coalesced tx work requests */
 	uint64_t txpkts0_pkts;	/* # of frames in type0 coalesced tx WRs */
 	uint64_t txpkts1_pkts;	/* # of frames in type1 coalesced tx WRs */
+	uint64_t txpkts_flush;	/* # of times txp had to be sent by tx_update */
 	uint64_t raw_wrs;	/* # of raw work requests (alloc_wr_mbuf) */
+	uint64_t vxlan_tso_wrs;	/* # of VXLAN TSO work requests */
+	uint64_t vxlan_txcsum;
+
+	uint64_t kern_tls_records;
+	uint64_t kern_tls_short;
+	uint64_t kern_tls_partial;
+	uint64_t kern_tls_full;
+	uint64_t kern_tls_octets;
+	uint64_t kern_tls_waste;
+	uint64_t kern_tls_options;
+	uint64_t kern_tls_header;
+	uint64_t kern_tls_fin;
+	uint64_t kern_tls_fin_short;
+	uint64_t kern_tls_cbc;
+	uint64_t kern_tls_gcm;
 
 	/* stats for not-that-common events */
+
+	/* Optional scratch space for constructing work requests. */
+	uint8_t ss[SGE_MAX_WR_LEN] __aligned(16);
 } __aligned(CACHE_LINE_SIZE);
 
 /* rxq: SGE ingress queue + SGE free list + miscellaneous items */
@@ -599,14 +630,13 @@ struct sge_rxq {
 	struct sge_fl fl;	/* MUST follow iq */
 
 	struct ifnet *ifp;	/* the interface this rxq belongs to */
-#if defined(INET) || defined(INET6)
 	struct lro_ctrl lro;	/* LRO state */
-#endif
 
 	/* stats for common events first */
 
 	uint64_t rxcsum;	/* # of times hardware assisted with checksum */
 	uint64_t vlan_extraction;/* # of times VLAN tag was extracted */
+	uint64_t vxlan_rxcsum;
 
 	/* stats for not-that-common events */
 
@@ -704,6 +734,7 @@ struct sge_nm_rxq {
 	uint32_t fl_sidx2;	/* copy of fl_sidx */
 	uint32_t fl_db_val;
 	u_int fl_db_saved;
+	u_int fl_db_threshold;	/* in descriptors */
 	u_int fl_hwidx:4;
 
 	/*
@@ -770,6 +801,8 @@ struct sge {
 	uint16_t iq_base;	/* first abs_id */
 	int eq_start;		/* first cntxt_id */
 	int eq_base;		/* first abs_id */
+	int iqmap_sz;
+	int eqmap_sz;
 	struct sge_iq **iqmap;	/* iq->cntxt_id to iq mapping */
 	struct sge_eq **eqmap;	/* eq->cntxt_id to eq mapping */
 
@@ -830,7 +863,13 @@ struct adapter {
 	int lro_timeout;
 	int sc_do_rxcopy;
 
+	int vxlan_port;
+	u_int vxlan_refcount;
+	int rawf_base;
+	int nrawf;
+
 	struct taskqueue *tq[MAX_NCHAN];	/* General purpose taskqueues */
+	struct task async_event_task;
 	struct port_info *port[MAX_NPORTS];
 	uint8_t chan_map[MAX_NCHAN];		/* channel -> port */
 
@@ -851,6 +890,7 @@ struct adapter {
 	struct smt_data *smt;	/* Source MAC Table */
 	struct tid_info tids;
 	vmem_t *key_map;
+	struct tls_tunables tlst;
 
 	uint8_t doorbells;
 	int offload_map;	/* ports with IFCAP_TOE enabled */
@@ -909,6 +949,8 @@ struct adapter {
 
 	int swintr;
 	int sensor_resets;
+
+	struct callout ktls_tick;
 };
 
 #define ADAPTER_LOCK(sc)		mtx_lock(&(sc)->sc_lock)
@@ -1171,8 +1213,6 @@ int vi_full_uninit(struct vi_info *);
 void vi_sysctls(struct vi_info *);
 void vi_tick(void *);
 int rw_via_memwin(struct adapter *, int, uint32_t, uint32_t *, int, int);
-int alloc_atid_tab(struct tid_info *, int);
-void free_atid_tab(struct tid_info *);
 int alloc_atid(struct adapter *, void *);
 void *lookup_atid(struct adapter *, int);
 void free_atid(struct adapter *, int);
@@ -1182,6 +1222,18 @@ void cxgbe_media_status(struct ifnet *, struct ifmediareq *);
 bool t4_os_dump_cimla(struct adapter *, int, bool);
 void t4_os_dump_devlog(struct adapter *);
 
+#ifdef KERN_TLS
+/* t4_kern_tls.c */
+int cxgbe_tls_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
+    struct m_snd_tag **);
+void cxgbe_tls_tag_free(struct m_snd_tag *);
+void t6_ktls_modload(void);
+void t6_ktls_modunload(void);
+int t6_ktls_try(struct ifnet *, struct socket *, struct ktls_session *);
+int t6_ktls_parse_pkt(struct mbuf *, int *, int *);
+int t6_ktls_write_wr(struct sge_txq *, void *, struct mbuf *, u_int, u_int);
+#endif
+
 /* t4_keyctx.c */
 struct auth_hash;
 union authctx;
@@ -1189,7 +1241,7 @@ union authctx;
 void t4_aes_getdeckey(void *, const void *, unsigned int);
 void t4_copy_partial_hash(int, union authctx *, void *);
 void t4_init_gmac_hash(const char *, int, char *);
-void t4_init_hmac_digest(struct auth_hash *, u_int, char *, int, char *);
+void t4_init_hmac_digest(struct auth_hash *, u_int, const char *, int, char *);
 
 #ifdef DEV_NETMAP
 /* t4_netmap.c */
@@ -1197,6 +1249,12 @@ struct sge_nm_rxq;
 void cxgbe_nm_attach(struct vi_info *);
 void cxgbe_nm_detach(struct vi_info *);
 void service_nm_rxq(struct sge_nm_rxq *);
+int alloc_nm_rxq(struct vi_info *, struct sge_nm_rxq *, int, int,
+    struct sysctl_oid *);
+int free_nm_rxq(struct vi_info *, struct sge_nm_rxq *);
+int alloc_nm_txq(struct vi_info *, struct sge_nm_txq *, int, int,
+    struct sysctl_oid *);
+int free_nm_txq(struct vi_info *, struct sge_nm_txq *);
 #endif
 
 /* t4_sge.c */
@@ -1209,6 +1267,11 @@ int t4_create_dma_tag(struct adapter *);
 void t4_sge_sysctls(struct adapter *, struct sysctl_ctx_list *,
     struct sysctl_oid_list *);
 int t4_destroy_dma_tag(struct adapter *);
+int alloc_ring(struct adapter *, size_t, bus_dma_tag_t *, bus_dmamap_t *,
+    bus_addr_t *, void **);
+int free_ring(struct adapter *, bus_dma_tag_t, bus_dmamap_t, bus_addr_t,
+    void *);
+int sysctl_uint16(SYSCTL_HANDLER_ARGS);
 int t4_setup_adapter_queues(struct adapter *);
 int t4_teardown_adapter_queues(struct adapter *);
 int t4_setup_vi_queues(struct vi_info *);
@@ -1224,7 +1287,7 @@ void t4_intr_evt(void *);
 void t4_wrq_tx_locked(struct adapter *, struct sge_wrq *, struct wrqe *);
 void t4_update_fl_bufsize(struct ifnet *);
 struct mbuf *alloc_wr_mbuf(int, int);
-int parse_pkt(struct adapter *, struct mbuf **);
+int parse_pkt(struct mbuf **, bool);
 void *start_wrq_wr(struct sge_wrq *, int, struct wrq_cookie *);
 void commit_wrq_wr(struct sge_wrq *, void *, struct wrq_cookie *);
 int tnl_cong(struct port_info *, int);
@@ -1234,7 +1297,7 @@ void t4_register_cpl_handler(int, cpl_handler_t);
 void t4_register_shared_cpl_handler(int, cpl_handler_t, int);
 #ifdef RATELIMIT
 int ethofld_transmit(struct ifnet *, struct mbuf *);
-void send_etid_flush_wr(struct cxgbe_snd_tag *);
+void send_etid_flush_wr(struct cxgbe_rate_tag *);
 #endif
 
 /* t4_tracer.c */
@@ -1260,13 +1323,14 @@ int sysctl_tc_params(SYSCTL_HANDLER_ARGS);
 #ifdef RATELIMIT
 void t4_init_etid_table(struct adapter *);
 void t4_free_etid_table(struct adapter *);
-struct cxgbe_snd_tag *lookup_etid(struct adapter *, int);
-int cxgbe_snd_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
+struct cxgbe_rate_tag *lookup_etid(struct adapter *, int);
+int cxgbe_rate_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
     struct m_snd_tag **);
-int cxgbe_snd_tag_modify(struct m_snd_tag *, union if_snd_tag_modify_params *);
-int cxgbe_snd_tag_query(struct m_snd_tag *, union if_snd_tag_query_params *);
-void cxgbe_snd_tag_free(struct m_snd_tag *);
-void cxgbe_snd_tag_free_locked(struct cxgbe_snd_tag *);
+int cxgbe_rate_tag_modify(struct m_snd_tag *, union if_snd_tag_modify_params *);
+int cxgbe_rate_tag_query(struct m_snd_tag *, union if_snd_tag_query_params *);
+void cxgbe_rate_tag_free(struct m_snd_tag *);
+void cxgbe_rate_tag_free_locked(struct cxgbe_rate_tag *);
+void cxgbe_ratelimit_query(struct ifnet *, struct if_ratelimit_query_results *);
 #endif
 
 /* t4_filter.c */

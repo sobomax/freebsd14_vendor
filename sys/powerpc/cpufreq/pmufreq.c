@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b902e04ac03b23165b642fe1720ac8720a43bb8a $");
+__FBSDID("$FreeBSD: 8dae34c38fff688db00a4fbf8de4468bbac48b16 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,7 +70,6 @@ static device_method_t pmufreq_methods[] = {
 	DEVMETHOD(cpufreq_drv_get,	pmufreq_get),
 	DEVMETHOD(cpufreq_drv_type,	pmufreq_type),
 	DEVMETHOD(cpufreq_drv_settings,	pmufreq_settings),
-
 	{0, 0}
 };
 
@@ -220,4 +219,3 @@ pmufreq_type(device_t dev, int *type)
 	*type = CPUFREQ_TYPE_ABSOLUTE;
 	return (0);
 }
-

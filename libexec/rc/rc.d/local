@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: c5aa0e4a690d608dd966fc1a65b021b7071bf41d $
+# $FreeBSD: ba17a674ae9d485d3e419f55fcd56fea3aa0329a $
 #
 
 # PROVIDE: local
@@ -11,7 +11,7 @@
 . /etc/rc.subr
 
 name="local"
-desc="Run /etc/rc.local and /etc/shutdown.local"
+desc="Run /etc/rc.local and /etc/rc.shutdown.local"
 start_cmd="local_start"
 stop_cmd="local_stop"
 

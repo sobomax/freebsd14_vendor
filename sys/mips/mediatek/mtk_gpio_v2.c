@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd1708261fd4cb318ba3e72bfd86eedae01ce5ac $");
+__FBSDID("$FreeBSD: 677c42c64c0b8fed367a812d1df0fea2a3bc30d0 $");
         
 #include "opt_platform.h"
 
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: cd1708261fd4cb318ba3e72bfd86eedae01ce5ac $");
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
-#include <gnu/dts/include/dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 
 #include "gpio_if.h"
 #include "pic_if.h"

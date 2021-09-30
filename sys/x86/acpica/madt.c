@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d590a639bf7159726be106b9cfc2a1ee958d4040 $");
+__FBSDID("$FreeBSD: 5683f7eb321d57fd018cd7414a33f7b4d5a4af59 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -405,7 +404,6 @@ madt_setup_cpus_handler(ACPI_SUBTABLE_HEADER *entry, void *arg)
 		break;
 	}
 }
-
 
 /*
  * Add an I/O APIC from an entry in the table.

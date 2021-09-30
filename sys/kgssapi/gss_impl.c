@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4359c9edc07b6087df64a5e7dc5d32e5c7c9d09a $");
+__FBSDID("$FreeBSD: 07e10d0999c4bb8d58ce9d59d0059e9c8fcd7223 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -342,5 +342,6 @@ static moduledata_t kgssapi_mod = {
 	NULL,
 };
 DECLARE_MODULE(kgssapi, kgssapi_mod, SI_SUB_VFS, SI_ORDER_ANY);
+MODULE_DEPEND(kgssapi, xdr, 1, 1, 1);
 MODULE_DEPEND(kgssapi, krpc, 1, 1, 1);
 MODULE_VERSION(kgssapi, 1);

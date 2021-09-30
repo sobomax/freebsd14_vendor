@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_cmds.h,v 1.1 2002/11/24 19:46:58 max Exp $
- * $FreeBSD: 9290eddcc8cb7cf10dd14a21df639482711f126f $
+ * $FreeBSD: 18f14c93ced372dbfadbf15223fe794be2198d05 $
  */
 
 #ifndef _NETGRAPH_HCI_CMDS_H_
@@ -46,4 +46,3 @@ int  ng_hci_process_command_status   (ng_hci_unit_p, struct mbuf *);
 void ng_hci_process_command_timeout  (node_p, hook_p, void *, int);
 
 #endif /* ndef _NETGRAPH_HCI_CMDS_H_ */
-

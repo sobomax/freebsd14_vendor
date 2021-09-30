@@ -1,7 +1,7 @@
 #
 # Custom kernel for Freescale MPC85XX development boards like the CDS etc.
 #
-# $FreeBSD: c122167094ccae335189baf5bee80500bd892539 $
+# $FreeBSD: 553a616bb70714d6b199ee890c9adf69e0193ab4 $
 #
 
 cpu		BOOKE
@@ -15,6 +15,7 @@ makeoptions	DEBUG=-g		#Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1
 
 options 	FPU_EMU
+options 	MAXCPU=2
 
 options 	_KPOSIX_PRIORITY_SCHEDULING
 options 	ALT_BREAK_TO_DEBUGGER
@@ -60,6 +61,7 @@ options 	WITNESS
 options 	WITNESS_SKIPSPIN
 options 	COMPAT_FREEBSD10
 options 	COMPAT_FREEBSD11
+options 	COMPAT_FREEBSD12
 options 	HWPMC_HOOKS
 options 	KDTRACE_HOOKS		# Kernel DTrace hooks
 options 	DDB_CTF			# Kernel ELF linker loads CTF data
@@ -91,7 +93,6 @@ device  	mmcsd
 device		pass
 device		pci
 device		quicc
-device		random
 #device		rl
 device		scbus
 device		scc
@@ -117,3 +118,7 @@ device  	diu
 device  	videomode
 device  	vt
 device  	fbd
+
+# HID support
+options 	HID_DEBUG	# enable debug msgs
+device		hid		# Generic HID support

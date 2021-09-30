@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD: c69510164f3b59de78b5bd79d72fb80722810581 $
+ * $FreeBSD: 6c7e02232c24838d4293eae0c1e3c04c553b104a $
  */
 
 /*
@@ -92,6 +92,7 @@ void	fpu_save_area_reset(union savefpu *fsa);
 #define	FPU_KERN_NORMAL	0x0000
 #define	FPU_KERN_NOWAIT	0x0001
 #define	FPU_KERN_KTHR	0x0002
+#define	FPU_KERN_NOCTX	0x0004
 
 #endif
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 6f70121da14f7ca89ec288851fdae78f7e0e1b26 $
+# $FreeBSD: c2267e52698f2650f4a552c0238e76f595f4d0c1 $
 
 TESTSDIR=	${TESTSBASE}/sys/audit
 
@@ -49,10 +49,10 @@ SRCS.miscellaneous+=		utils.c
 TEST_METADATA+= timeout="30"
 TEST_METADATA+= required_user="root"
 TEST_METADATA+= is_exclusive="true"
-TEST_METADATA+=	required_files="/etc/rc.d/auditd"
-
-WARNS?=	6
+TEST_METADATA+=	required_files="/etc/rc.d/auditd /dev/auditpipe"
 
 LDFLAGS+=	-lbsm -lutil
+
+CFLAGS.process-control.c+=	-I${SRCTOP}/tests
 
 .include <bsd.test.mk>

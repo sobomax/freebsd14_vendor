@@ -1,0 +1,5 @@
+# $FreeBSD: 7eb8abbd52472b934872ecd55f1e9e5b9cdd58fa $
+
+unset somestrangevar
+export somestrangevar
+[ "`$SH -c 'echo ${somestrangevar-unset}'`" = unset ]

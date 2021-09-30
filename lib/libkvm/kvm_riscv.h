@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  * Copyright (c) 2019 Mitchell Horne
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 28472de998ca29b0ba1cf01b10d90770b3d9971d $
+ * $FreeBSD: d6b3ee99b98c467f2163e526bc1643c20d0f8978 $
  */
 
 #ifndef __KVM_RISCV_H__

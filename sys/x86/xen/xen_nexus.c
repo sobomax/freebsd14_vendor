@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65d4281a14261a7a6931884aebd0275ba8504ca7 $");
+__FBSDID("$FreeBSD: 2469abb63266fd1dbd1f880f63d77967331f130d $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -157,7 +157,6 @@ static device_method_t nexus_xen_methods[] = {
 	DEVMETHOD(pcib_alloc_msix,	nexus_xen_alloc_msix),
 	DEVMETHOD(pcib_release_msix,	nexus_xen_release_msix),
 	DEVMETHOD(pcib_map_msi,		nexus_xen_map_msi),
-
 	{ 0, 0 }
 };
 

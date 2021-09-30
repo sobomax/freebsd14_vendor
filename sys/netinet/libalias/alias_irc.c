@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d44aaf16fc7bc4e13b80ab18dc04d0e5e8772a49 $");
+__FBSDID("$FreeBSD: ed8e9a95926d7e5aad661ce4eeb6ceb2fc4d5219 $");
 
 /* Alias_irc.c intercepts packages contain IRC CTCP commands, and
 	changes DCC commands to export a port on the aliasing host instead
@@ -348,7 +348,6 @@ lCTCP_START:
 		{
 			struct alias_link *dcc_lnk;
 			struct in_addr destaddr;
-
 
 			true_port = htons(org_port);
 			true_addr.s_addr = htonl(org_addr);

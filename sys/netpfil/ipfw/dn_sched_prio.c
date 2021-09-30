@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: 495cf816225431e0fb92daf12b362bcc4948b74a $
+ * $FreeBSD: 703158c0d82918f199b98e4bc5be7f43ed880079 $
  */
 #ifdef _KERNEL
 #include <sys/malloc.h>
@@ -207,7 +207,6 @@ prio_free_queue(struct dn_queue *q)
 	return 0;
 }
 
-
 static struct dn_alg prio_desc = {
 	_SI( .type = ) DN_SCHED_PRIO,
 	_SI( .name = ) "PRIO",
@@ -235,6 +234,5 @@ static struct dn_alg prio_desc = {
 	_SI( .getconfig = )  NULL,
 #endif
 };
-
 
 DECLARE_DNSCHED_MODULE(dn_prio, &prio_desc);

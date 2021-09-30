@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c9dc19e95a7d126d2e8caeff22d61bf37ffa088 $");
+__FBSDID("$FreeBSD: 7f4d025b55f42d26acc97219a61e223b4b7d1b96 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -34,6 +34,7 @@ __FBSDID("$FreeBSD: 4c9dc19e95a7d126d2e8caeff22d61bf37ffa088 $");
 
 #include <machine/bus.h>
 #include <sys/rman.h>
+#include <sys/eventhandler.h>
 #include <sys/ioccom.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
@@ -46,7 +47,7 @@ __FBSDID("$FreeBSD: 4c9dc19e95a7d126d2e8caeff22d61bf37ffa088 $");
 #include <dev/acpica/acpiio.h>
 #include <isa/isavar.h>
 #include <isa/pnpvar.h>
- 
+
 /* Hooks for the ACPI CA debugging infrastructure */
 #define _COMPONENT	ACPI_AC_ADAPTER
 ACPI_MODULE_NAME("AC_ADAPTER")
@@ -115,6 +116,7 @@ acpi_acad_get_status(void *context)
 	ACPI_VPRINT(dev, acpi_device_get_parent_softc(dev),
 	    "%s Line\n", newstatus ? "On" : "Off");
 	acpi_UserNotify("ACAD", h, newstatus);
+	EVENTHANDLER_INVOKE(acpi_acad_event, newstatus);
     } else
 	ACPI_SERIAL_END(acad);
 }
@@ -142,13 +144,14 @@ static int
 acpi_acad_probe(device_t dev)
 {
     static char *acad_ids[] = { "ACPI0003", NULL };
+    int rv;
 
-    if (acpi_disabled("acad") ||
-	ACPI_ID_PROBE(device_get_parent(dev), dev, acad_ids) == NULL)
+    if (acpi_disabled("acad"))
 	return (ENXIO);
-
-    device_set_desc(dev, "AC Adapter");
-    return (0);
+    rv = ACPI_ID_PROBE(device_get_parent(dev), dev, acad_ids, NULL);
+    if (rv <= 0)
+	device_set_desc(dev, "AC Adapter");
+    return (rv);
 }
 
 static int
@@ -169,9 +172,9 @@ acpi_acad_attach(device_t dev)
     if (device_get_unit(dev) == 0) {
 	acpi_sc = acpi_device_get_parent_softc(dev);
 	SYSCTL_ADD_PROC(&acpi_sc->acpi_sysctl_ctx,
-			SYSCTL_CHILDREN(acpi_sc->acpi_sysctl_tree),
-			OID_AUTO, "acline", CTLTYPE_INT | CTLFLAG_RD,
-			&sc->status, 0, acpi_acad_sysctl, "I", "");
+	    SYSCTL_CHILDREN(acpi_sc->acpi_sysctl_tree), OID_AUTO, "acline",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, &sc->status, 0,
+	    acpi_acad_sysctl, "I", "");
     }
 
     /* Get initial status after whole system is up. */

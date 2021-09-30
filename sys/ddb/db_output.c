@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 147a4c597787c26c36c2485c82400e7777ca7e40 $");
+__FBSDID("$FreeBSD: 3517187f82069c0eb0f16e830b77ff29db508d06 $");
 
 #include "opt_ddb.h"
 
@@ -124,11 +124,9 @@ db_putchar(int c, void *arg)
 	struct dbputchar_arg *dap = arg;
 
 	if (dap->da_pbufr == NULL) {
-
 		 /* No bufferized output is provided. */
 		db_putc(c);
 	} else {
-
 		*dap->da_pnext++ = c;
 		dap->da_remain--;
 

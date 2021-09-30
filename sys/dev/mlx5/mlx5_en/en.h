@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bdec02e97b94db836f1a5d3e4f84051c26429732 $
+ * $FreeBSD: b990bb754962ccf9b390f919638fd8ed14052e29 $
  */
 
 #ifndef _MLX5_EN_H_
@@ -50,8 +50,10 @@
 #include <netinet/tcp_lro.h>
 #include <netinet/udp.h>
 #include <net/ethernet.h>
+#include <net/pfil.h>
 #include <sys/buf_ring.h>
 #include <sys/kthread.h>
+#include <sys/counter.h>
 
 #include "opt_rss.h"
 
@@ -147,7 +149,7 @@ MALLOC_DECLARE(M_MLX5EN);
 struct mlx5_core_dev;
 struct mlx5e_cq;
 
-typedef void (mlx5e_cq_comp_t)(struct mlx5_core_cq *);
+typedef void (mlx5e_cq_comp_t)(struct mlx5_core_cq *, struct mlx5_eqe *);
 
 #define	mlx5_en_err(_dev, format, ...)				\
 	if_printf(_dev, "ERR: ""%s:%d:(pid %d): " format, \
@@ -166,6 +168,7 @@ typedef void (mlx5e_cq_comp_t)(struct mlx5_core_cq *);
 
 #define	MLX5E_STATS_COUNT(a, ...) a
 #define	MLX5E_STATS_VAR(a, b, c, ...) b c;
+#define	MLX5E_STATS_COUNTER(a, b, c, ...) counter_##b##_t c;
 #define	MLX5E_STATS_DESC(a, b, c, d, e, ...) d, e,
 
 #define	MLX5E_VPORT_STATS(m)						\
@@ -724,6 +727,7 @@ struct mlx5e_params_ethtool {
 	u8	fec_avail_10x_25x[MLX5E_MAX_FEC_10X_25X];
 	u16	fec_avail_50x[MLX5E_MAX_FEC_50X];
 	u32	fec_mode_active;
+	u32	hw_mtu_msb;
 	s32	hw_val_temp[MLX5_MAX_TEMPERATURE];
 	u32	hw_num_temp;
 };
@@ -777,6 +781,7 @@ struct mlx5e_rq {
 struct mlx5e_sq_mbuf {
 	bus_dmamap_t dma_map;
 	struct mbuf *mbuf;
+	volatile s32 *p_refcount;	/* in use refcount, if any */
 	u32	num_bytes;
 	u32	num_wqebbs;
 };
@@ -786,17 +791,12 @@ enum {
 	MLX5E_SQ_FULL
 };
 
-struct mlx5e_snd_tag {
-	struct m_snd_tag m_snd_tag;	/* send tag */
-	u32	type;	/* tag type */
-};
-
 struct mlx5e_sq {
 	/* persistant fields */
 	struct	mtx lock;
 	struct	mtx comp_lock;
 	struct	mlx5e_sq_stats stats;
-  	struct	callout cev_callout;
+	struct	callout cev_callout;
 
 	/* data path */
 #define	mlx5e_sq_zero_start dma_tag
@@ -807,7 +807,6 @@ struct mlx5e_sq {
 
 	/* dirtied @xmit */
 	u16	pc __aligned(MLX5E_CACHELINE_SIZE);
-	u16	bf_offset;
 	u16	cev_counter;		/* completion event counter */
 	u16	cev_factor;		/* completion event factor */
 	u16	cev_next_state;		/* next completion event state */
@@ -827,10 +826,9 @@ struct mlx5e_sq {
 
 	/* read only */
 	struct	mlx5_wq_cyc wq;
-	struct	mlx5_uar uar;
+	void __iomem *uar_map;
 	struct	ifnet *ifp;
 	u32	sqn;
-	u32	bf_buf_size;
 	u32	mkey_be;
 	u16	max_inline;
 	u8	min_inline_mode;
@@ -871,9 +869,10 @@ mlx5e_sq_queue_level(struct mlx5e_sq *sq)
 
 struct mlx5e_channel {
 	struct mlx5e_rq rq;
-	struct mlx5e_snd_tag tag;
+	struct m_snd_tag tag;
 	struct mlx5e_sq sq[MLX5E_MAX_TX_NUM_TC];
 	struct mlx5e_priv *priv;
+	struct completion completion;
 	int	ix;
 } __aligned(MLX5E_CACHELINE_SIZE);
 
@@ -959,9 +958,14 @@ struct mlx5e_flow_tables {
 	struct mlx5e_flow_table inner_rss;
 };
 
-#ifdef RATELIMIT
+struct mlx5e_xmit_args {
+	volatile s32 *pref;
+	u32 tisn;
+	u16 ihs;
+};
+
 #include "en_rl.h"
-#endif
+#include "en_hw_tls.h"
 
 #define	MLX5E_TSTMP_PREC 10
 
@@ -995,11 +999,9 @@ struct mlx5e_priv {
 #define	PRIV_LOCKED(priv) sx_xlocked(&(priv)->state_lock)
 #define	PRIV_ASSERT_LOCKED(priv) sx_assert(&(priv)->state_lock, SA_XLOCKED)
 	struct sx state_lock;		/* Protects Interface state */
-	struct mlx5_uar cq_uar;
 	u32	pdn;
 	u32	tdn;
 	struct mlx5_core_mr mr;
-	volatile unsigned int channel_refs;
 
 	u32	tisn[MLX5E_MAX_TX_NUM_TC];
 	u32	rqtn;
@@ -1036,9 +1038,10 @@ struct mlx5e_priv {
 	int	media_active_last;
 
 	struct callout watchdog;
-#ifdef RATELIMIT
+
 	struct mlx5e_rl_priv_data rl;
-#endif
+
+	struct mlx5e_tls tls;
 
 	struct callout tstmp_clbr;
 	int	clbr_done;
@@ -1049,6 +1052,9 @@ struct mlx5e_priv {
 	struct mlx5e_dcbx dcbx;
 	bool	sw_is_port_buf_owner;
 
+	struct mlx5_sq_bfreg bfreg;
+
+	struct pfil_head *pfil;
 	struct mlx5e_channel channel[];
 };
 
@@ -1057,6 +1063,17 @@ struct mlx5e_priv {
 struct mlx5e_tx_wqe {
 	struct mlx5_wqe_ctrl_seg ctrl;
 	struct mlx5_wqe_eth_seg eth;
+};
+
+struct mlx5e_tx_umr_wqe {
+	struct mlx5_wqe_ctrl_seg ctrl;
+	struct mlx5_wqe_umr_ctrl_seg umr;
+	uint8_t mkc[64];
+};
+
+struct mlx5e_tx_psv_wqe {
+	struct mlx5_wqe_ctrl_seg ctrl;
+	struct mlx5_seg_set_psv psv;
 };
 
 struct mlx5e_rx_wqe {
@@ -1081,14 +1098,16 @@ struct mlx5e_eeprom {
 
 #define	MLX5E_FLD_MAX(typ, fld) ((1ULL << __mlx5_bit_sz(typ, fld)) - 1ULL)
 
+bool	mlx5e_do_send_cqe(struct mlx5e_sq *);
+int	mlx5e_get_full_header_size(const struct mbuf *, const struct tcphdr **);
 int	mlx5e_xmit(struct ifnet *, struct mbuf *);
 
 int	mlx5e_open_locked(struct ifnet *);
 int	mlx5e_close_locked(struct ifnet *);
 
 void	mlx5e_cq_error_event(struct mlx5_core_cq *mcq, int event);
-void	mlx5e_rx_cq_comp(struct mlx5_core_cq *);
-void	mlx5e_tx_cq_comp(struct mlx5_core_cq *);
+mlx5e_cq_comp_t mlx5e_rx_cq_comp;
+mlx5e_cq_comp_t mlx5e_tx_cq_comp;
 struct mlx5_cqe64 *mlx5e_get_cqe(struct mlx5e_cq *cq);
 
 void	mlx5e_dim_work(struct work_struct *);
@@ -1107,10 +1126,8 @@ int	mlx5e_add_all_vlan_rules(struct mlx5e_priv *priv);
 void	mlx5e_del_all_vlan_rules(struct mlx5e_priv *priv);
 
 static inline void
-mlx5e_tx_notify_hw(struct mlx5e_sq *sq, u32 *wqe, int bf_sz)
+mlx5e_tx_notify_hw(struct mlx5e_sq *sq, u32 *wqe)
 {
-	u16 ofst = MLX5_BF_OFFSET + sq->bf_offset;
-
 	/* ensure wqe is visible to device before updating doorbell record */
 	wmb();
 
@@ -1122,18 +1139,8 @@ mlx5e_tx_notify_hw(struct mlx5e_sq *sq, u32 *wqe, int bf_sz)
 	 */
 	wmb();
 
-	if (bf_sz) {
-		__iowrite64_copy(sq->uar.bf_map + ofst, wqe, bf_sz);
-
-		/* flush the write-combining mapped buffer */
-		wmb();
-
-	} else {
-		mlx5_write64(wqe, sq->uar.map + ofst,
-		    MLX5_GET_DOORBELL_LOCK(&sq->priv->doorbell_lock));
-	}
-
-	sq->bf_offset ^= sq->bf_buf_size;
+	mlx5_write64(wqe, sq->uar_map,
+	    MLX5_GET_DOORBELL_LOCK(&sq->priv->doorbell_lock));
 }
 
 static inline void
@@ -1145,24 +1152,6 @@ mlx5e_cq_arm(struct mlx5e_cq *cq, spinlock_t *dblock)
 	mlx5_cq_arm(mcq, MLX5_CQ_DB_REQ_NOT, mcq->uar->map, dblock, cq->wq.cc);
 }
 
-static inline void
-mlx5e_ref_channel(struct mlx5e_priv *priv)
-{
-
-	KASSERT(priv->channel_refs < INT_MAX,
-	    ("Channel refs will overflow"));
-	atomic_fetchadd_int(&priv->channel_refs, 1);
-}
-
-static inline void
-mlx5e_unref_channel(struct mlx5e_priv *priv)
-{
-
-	KASSERT(priv->channel_refs > 0,
-	    ("Channel refs is not greater than zero"));
-	atomic_fetchadd_int(&priv->channel_refs, -1);
-}
-
 #define	mlx5e_dbg(_IGN, _priv, ...) mlx5_core_dbg((_priv)->mdev, __VA_ARGS__)
 
 extern const struct ethtool_ops mlx5e_ethtool_ops;
@@ -1170,7 +1159,12 @@ void	mlx5e_create_ethtool(struct mlx5e_priv *);
 void	mlx5e_create_stats(struct sysctl_ctx_list *,
     struct sysctl_oid_list *, const char *,
     const char **, unsigned, u64 *);
+void	mlx5e_create_counter_stats(struct sysctl_ctx_list *,
+    struct sysctl_oid_list *, const char *,
+    const char **, unsigned, counter_u64_t *);
 void	mlx5e_send_nop(struct mlx5e_sq *, u32);
+int	mlx5e_sq_dump_xmit(struct mlx5e_sq *, struct mlx5e_xmit_args *, struct mbuf **);
+int	mlx5e_sq_xmit(struct mlx5e_sq *, struct mbuf **);
 void	mlx5e_sq_cev_timeout(void *);
 int	mlx5e_refresh_channel_params(struct mlx5e_priv *);
 int	mlx5e_open_cq(struct mlx5e_priv *, struct mlx5e_cq_param *,
@@ -1190,5 +1184,10 @@ void	mlx5e_refresh_sq_inline(struct mlx5e_priv *priv);
 int	mlx5e_update_buf_lossy(struct mlx5e_priv *priv);
 int	mlx5e_fec_update(struct mlx5e_priv *priv);
 int	mlx5e_hw_temperature_update(struct mlx5e_priv *priv);
+
+if_snd_tag_alloc_t mlx5e_ul_snd_tag_alloc;
+if_snd_tag_modify_t mlx5e_ul_snd_tag_modify;
+if_snd_tag_query_t mlx5e_ul_snd_tag_query;
+if_snd_tag_free_t mlx5e_ul_snd_tag_free;
 
 #endif					/* _MLX5_EN_H_ */

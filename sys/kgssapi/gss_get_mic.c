@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab8dcab3a40128927ba55faf86daa01dcc07061e $");
+__FBSDID("$FreeBSD: f454daea939918b44ccecf130d2154ce996380bf $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -88,4 +88,3 @@ gss_get_mic_mbuf(OM_uint32 *minor_status, const gss_ctx_id_t ctx,
 
 	return (KGSS_GET_MIC(ctx, minor_status, qop_req, m, micp));
 }
-

@@ -5,7 +5,7 @@
 # all of the Atheros MIPS platforms without a lot of configuration file
 # duplication.
 #
-# $FreeBSD: d9edf8aad34e008d465fc4c96f839761eabb1346 $
+# $FreeBSD: ab0947a391ea9adf8cb3cb3d4a0fc64c91fe5ae1 $
 
 # debugging
 options 	EARLY_PRINTF
@@ -24,9 +24,6 @@ options 	NO_SYSCTL_DESCR
 makeoptions 	MODULES_OVERRIDE+="gpio ar71xx if_gif if_vlan if_gre if_tuntap"
 makeoptions 	MODULES_OVERRIDE+="if_bridge bridgestp usb"
 makeoptions 	MODULES_OVERRIDE+="alq"
-
-# Random - required during early boot!
-device 		random
 
 # net80211
 options 	IEEE80211_DEBUG
@@ -55,7 +52,6 @@ options 	ATH_ENABLE_DFS
 
 options 	AH_DEBUG_ALQ
 options 	AH_DEBUG
-options 	AH_SUPPORT_AR5416
 options 	AH_AR5416_INTERRUPT_MITIGATION
 options 	AH_RXCFG_SDMAMW_4BYTES
 

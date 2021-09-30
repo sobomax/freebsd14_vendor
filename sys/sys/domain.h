@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)domain.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 513d624b227cfb92b273fdd2fe0d3e42f6547c7f $
+ * $FreeBSD: 3d17879f1ccd97106a61dff7f22bd5fe9dc8f2c1 $
  */
 
 #ifndef _SYS_DOMAIN_H_
@@ -45,6 +45,7 @@
 struct	mbuf;
 struct	ifnet;
 struct	socket;
+struct	rib_head;
 
 struct domain {
 	int	dom_family;		/* AF_xxx */
@@ -59,10 +60,10 @@ struct domain {
 		(struct socket *);
 	struct	protosw *dom_protosw, *dom_protoswNPROTOSW;
 	struct	domain *dom_next;
-	int	(*dom_rtattach)		/* initialize routing table */
-		(void **, int);
-	int	(*dom_rtdetach)		/* clean up routing table */
-		(void **, int);
+	struct rib_head *(*dom_rtattach)	/* initialize routing table */
+		(uint32_t);
+	void	(*dom_rtdetach)		/* clean up routing table */
+		(struct rib_head *);
 	void	*(*dom_ifattach)(struct ifnet *);
 	void	(*dom_ifdetach)(struct ifnet *, void *);
 	int	(*dom_ifmtu)(struct ifnet *);

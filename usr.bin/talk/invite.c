@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 8f811a5c55e471ebbdbf680298585ba7b758281c $");
+__FBSDID("$FreeBSD: e000e54b0c35fdacfdde0a0e7f1492ac92844e45 $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)invite.c	8.1 (Berkeley) 6/6/93";
@@ -77,13 +77,9 @@ invite_remote(void)
 	itimer.it_interval = itimer.it_value;
 	if (listen(sockt, 5) != 0)
 		p_error("Error on attempt to listen for caller");
-#ifdef MSG_EOR
 	/* copy new style sockaddr to old, swap family (short in old) */
-	msg.addr = *(struct osockaddr *)&my_addr;  /* XXX new to old  style*/
+	msg.addr = *(struct tsockaddr *)&my_addr;
 	msg.addr.sa_family = htons(my_addr.sin_family);
-#else
-	msg.addr = *(struct sockaddr *)&my_addr;
-#endif
 	msg.id_num = htonl(-1);		/* an impossible id_num */
 	invitation_waiting = 1;
 	announce_invite();

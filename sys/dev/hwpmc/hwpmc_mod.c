@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e62c484b6a88968b70df3a1478ff94f987af7d5 $");
+__FBSDID("$FreeBSD: 6f7753dd11c13314e76fa00c1d50aa23b616636b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -275,7 +275,8 @@ static void pmc_process_allproc(struct pmc *pm);
  */
 
 SYSCTL_DECL(_kern_hwpmc);
-SYSCTL_NODE(_kern_hwpmc, OID_AUTO, stats, CTLFLAG_RW, 0, "HWPMC stats");
+SYSCTL_NODE(_kern_hwpmc, OID_AUTO, stats, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "HWPMC stats");
 
 
 /* Stats. */
@@ -313,8 +314,9 @@ char	pmc_debugstr[PMC_DEBUG_STRSIZE];
 TUNABLE_STR(PMC_SYSCTL_NAME_PREFIX "debugflags", pmc_debugstr,
     sizeof(pmc_debugstr));
 SYSCTL_PROC(_kern_hwpmc, OID_AUTO, debugflags,
-    CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_NOFETCH,
-    0, 0, pmc_debugflags_sysctl_handler, "A", "debug flags");
+    CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_NEEDGIANT,
+    0, 0, pmc_debugflags_sysctl_handler, "A",
+    "debug flags");
 #endif
 
 
@@ -830,7 +832,7 @@ pmc_getfilename(struct vnode *v, char **fullpath, char **freepath)
 
 	*fullpath = "unknown";
 	*freepath = NULL;
-	vn_fullpath(curthread, v, fullpath, freepath);
+	vn_fullpath(v, fullpath, freepath);
 }
 
 /*
@@ -1884,7 +1886,7 @@ pmc_log_process_mappings(struct pmc_owner *po, struct proc *p)
 	map = &vm->vm_map;
 	vm_map_lock_read(map);
 
-	for (entry = map->header.next; entry != &map->header; entry = entry->next) {
+	VM_MAP_ENTRY_FOREACH(entry, map) {
 
 		if (entry == NULL) {
 			PMCDBG2(LOG,OPS,2, "hwpmc: vm_map entry unexpectedly "
@@ -1988,7 +1990,7 @@ pmc_log_process_mappings(struct pmc_owner *po, struct proc *p)
 		 * new lookup for this entry.  If there is no entry
 		 * for this address range, vm_map_lookup_entry() will
 		 * return the previous one, so we always want to go to
-		 * entry->next on the next loop iteration.
+		 * the next entry on the next loop iteration.
 		 * 
 		 * There is an edge condition here that can occur if
 		 * there is no entry at or before this address.  In
@@ -5891,13 +5893,13 @@ pmc_cleanup(void)
 		KASSERT(pmc_pcpu[cpu]->pc_sb[PMC_UR] != NULL,
 		    ("[pmc,%d] Null userret cpu sample buffer cpu=%d", __LINE__,
 			cpu));
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_HR]->ps_callchains, M_PMC);
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_HR], M_PMC);
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_SR]->ps_callchains, M_PMC);
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_SR], M_PMC);
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_UR]->ps_callchains, M_PMC);
-		free_domain(pmc_pcpu[cpu]->pc_sb[PMC_UR], M_PMC);
-		free_domain(pmc_pcpu[cpu], M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_HR]->ps_callchains, M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_HR], M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_SR]->ps_callchains, M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_SR], M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_UR]->ps_callchains, M_PMC);
+		free(pmc_pcpu[cpu]->pc_sb[PMC_UR], M_PMC);
+		free(pmc_pcpu[cpu], M_PMC);
 	}
 
 	free(pmc_pcpu, M_PMC);

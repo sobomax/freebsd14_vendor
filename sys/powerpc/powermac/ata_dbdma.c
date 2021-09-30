@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("* $FreeBSD: 8bfc8ad7a3eaad4558f20b2f12d4ed3a5b2337eb $");
+__FBSDID("* $FreeBSD: f2484bc0ae0f7e4c6900b94275b63222b987db9e $");
 
 /*
  * Common routines for the DMA engine on both the Apple Kauai and MacIO
@@ -175,7 +175,7 @@ ata_dbdma_stop(struct ata_request *request)
 	struct ata_dbdma_channel *sc = device_get_softc(request->parent);
 
 	uint16_t status;
-	
+
 	status = dbdma_get_chan_status(sc->dbdma);
 
 	dbdma_pause(sc->dbdma);

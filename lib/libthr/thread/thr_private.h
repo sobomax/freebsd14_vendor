@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 80ece7bdb1eeb25f36f26b7c3fd7bff0b294030b $
+ * $FreeBSD: a1258940a8960f275b50eef4a10dfe440c205c9d $
  */
 
 #ifndef _THR_PRIVATE_H
@@ -395,6 +395,9 @@ struct pthread {
 
 	/* Signal blocked counter. */
 	int			sigblock;
+
+	/* Fast sigblock var. */
+	uint32_t		fsigblock;
 
 	/* Queue entry for list of all threads. */
 	TAILQ_ENTRY(pthread)	tle;	/* link for all threads in process */
@@ -776,7 +779,7 @@ extern struct pthread	*_single_thread __hidden;
  * Function prototype definitions.
  */
 __BEGIN_DECLS
-int	_thr_setthreaded(int) __hidden;
+void	_thr_setthreaded(int) __hidden;
 int	_mutex_cv_lock(struct pthread_mutex *, int, bool) __hidden;
 int	_mutex_cv_unlock(struct pthread_mutex *, int *, int *) __hidden;
 int     _mutex_cv_attach(struct pthread_mutex *, int) __hidden;
@@ -813,6 +816,8 @@ void	_thr_cancel_leave(struct pthread *, int) __hidden;
 void	_thr_testcancel(struct pthread *) __hidden;
 void	_thr_signal_block(struct pthread *) __hidden;
 void	_thr_signal_unblock(struct pthread *) __hidden;
+void	_thr_signal_block_check_fast(void) __hidden;
+void	_thr_signal_block_setup(struct pthread *) __hidden;
 void	_thr_signal_init(int) __hidden;
 void	_thr_signal_deinit(void) __hidden;
 int	_thr_send_sig(struct pthread *, int sig) __hidden;
@@ -865,10 +870,6 @@ int     __sys_openat(int, const char *, int, ...);
 
 /* #include <signal.h> */
 #ifdef _SIGNAL_H_
-int	__sys_kill(pid_t, int);
-int     __sys_sigaltstack(const struct sigaltstack *, struct sigaltstack *);
-int     __sys_sigpending(sigset_t *);
-int     __sys_sigreturn(const ucontext_t *);
 #ifndef _LIBC_PRIVATE_H_
 int     __sys_sigaction(int, const struct sigaction *, struct sigaction *);
 int     __sys_sigprocmask(int, const sigset_t *, sigset_t *);
@@ -899,8 +900,6 @@ int	__sys_swapcontext(ucontext_t *oucp, const ucontext_t *ucp);
 
 /* #include <unistd.h> */
 #ifdef  _UNISTD_H_
-void	__sys_exit(int);
-pid_t	__sys_getpid(void);
 #ifndef _LIBC_PRIVATE_H_
 int     __sys_close(int);
 int	__sys_fork(void);
@@ -985,6 +984,7 @@ void __pthread_distribute_static_tls(size_t offset, void *src, size_t len,
 int *__error_threaded(void) __hidden;
 void __thr_interpose_libc(void) __hidden;
 pid_t __thr_fork(void);
+pid_t __thr_pdfork(int *, int);
 int __thr_setcontext(const ucontext_t *ucp);
 int __thr_sigaction(int sig, const struct sigaction *act,
     struct sigaction *oact) __hidden;

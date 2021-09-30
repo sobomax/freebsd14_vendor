@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bd8b1b4235a857f672c5a5bc1de0d9bf75e15c17 $
+ * $FreeBSD: 012ed2c927416dc3796e653db397833fe5ea53c8 $
  */
 
 #ifndef	_MACHINE_PCB_H_
@@ -31,14 +31,15 @@
 
 #ifndef LOCORE
 
+#include <machine/debug_monitor.h>
 #include <machine/vfp.h>
 
 struct trapframe;
 
-#define	PCB_LR		30
 struct pcb {
-	uint64_t	pcb_x[31];
-	uint64_t	pcb_pc;
+	uint64_t	pcb_x[30];
+	uint64_t	pcb_lr;
+	uint64_t	_reserved;	/* Was pcb_pc */
 	/* These two need to be in order as we access them together */
 	uint64_t	pcb_sp;
 	uint64_t	pcb_tpidr_el0;
@@ -66,6 +67,8 @@ struct pcb {
 	 * Place last to simplify the asm to access the rest if the struct.
 	 */
 	struct vfpstate	pcb_fpustate;
+
+	struct debug_monitor_state pcb_dbg_regs;
 };
 
 #ifdef _KERNEL

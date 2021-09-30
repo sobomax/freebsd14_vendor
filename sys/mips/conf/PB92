@@ -2,7 +2,7 @@
 # PB92 -- Kernel configuration file for FreeBSD/mips for Atheros PB92 reference
 #         board (AR7242)
 #
-# $FreeBSD: d399874a47090b59fb2a4341595dcbf6771d0c3c $
+# $FreeBSD: 64a0e6db120b8dbd22298bd855f657a9f4f42e9c $
 #
 
 ident		PB92
@@ -84,7 +84,6 @@ options 	ATH_ENABLE_11N
 options 	ATH_DIAGAPI
 
 # device		ath_hal
-options 	AH_SUPPORT_AR5416
 options 	AH_DEBUG
 options 	AH_DEBUG_ALQ
 
@@ -134,5 +133,4 @@ device		loop
 device		ether
 #device		md
 #device		bpf
-#device		random
 #device		if_bridge

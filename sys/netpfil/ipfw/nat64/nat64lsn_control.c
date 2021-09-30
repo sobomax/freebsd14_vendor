@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac8f4355a7f6b74e4724ef7d1b3b50026798f377 $");
+__FBSDID("$FreeBSD: 52eb22a0953c5e73b6a2a7b795e3ca11f9bd7a0e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: ac8f4355a7f6b74e4724ef7d1b3b50026798f377 $");
 #include <sys/sockopt.h>
 
 #include <net/if.h>
-#include <net/pfil.h>
 
 #include <netinet/in.h>
 #include <netinet/ip.h>
@@ -942,4 +941,3 @@ nat64lsn_uninit(struct ip_fw_chain *ch, int last)
 	if (last != 0)
 		nat64lsn_uninit_internal();
 }
-

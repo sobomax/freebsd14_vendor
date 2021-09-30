@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4fb16e92117978d78d2af4c3b2b0d4158ebc6e01 $
+ * $FreeBSD: b6f406a4aabbd8e9939954464d447657c5caade4 $
  *
  */
 #ifndef __PPI_H
@@ -51,6 +51,6 @@
 #define	PPISFIFO	_IOW('P', 21, u_int8_t)
 
 #define	PPIGEPPA	_IOR('P', 22, u_int8_t)
-#define	PPISEPPA	_IOR('P', 23, u_int8_t)
+#define	PPISEPPA	_IOW('P', 23, u_int8_t)
 
 #endif

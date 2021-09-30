@@ -25,7 +25,7 @@
  * HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
  * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: c8f86c6ec5554c824b32e0bbd3c23f4237b996fe $
+ * $FreeBSD: a7856ed276cc6f9384a44bed5d1a198b7dbe52ca $
  */
 
 #ifndef _KGSSAPI_GSSAPI_H_
@@ -248,7 +248,6 @@ extern gss_OID GSS_C_NT_HOSTBASED_SERVICE;
  * to that gss_OID_desc.
  */
 extern gss_OID GSS_C_NT_ANONYMOUS;
-
 
 /*
  * The implementation must reserve static storage for a

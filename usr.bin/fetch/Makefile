@@ -1,7 +1,6 @@
-# $FreeBSD: 93c43a7c816bb6109ee28b3586cf3aa16f88d6da $
+# $FreeBSD: 1c2ea1d78595006006309dcf46b48b4a0384caed $
 
 PROG=		fetch
-CSTD?=		c99
 LIBADD=		fetch
 
 .include <bsd.prog.mk>

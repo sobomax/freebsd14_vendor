@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)miscbltin.c	8.4 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a49dd05d109f2787f4e5f870f721ef4d7dd67fb6 $");
+__FBSDID("$FreeBSD: faccfa92d221316aa544e64f0c906230dd6947dc $");
 
 /*
  * Miscellaneous builtins.
@@ -124,7 +124,7 @@ fdctx_destroy(struct fdctx *fdc)
 	 * Reposition the file offset.  Here is the layout of buf:
 	 *
 	 *     | off
-	 *     v 
+	 *     v
 	 * |*****************|-------|
 	 * buf               ep   buf+buflen
 	 *     |<- residue ->|
@@ -142,8 +142,6 @@ fdctx_destroy(struct fdctx *fdc)
 /*
  * The read builtin.  The -r option causes backslashes to be treated like
  * ordinary characters.
- *
- * This uses unbuffered input, which may be avoidable in some cases.
  *
  * Note that if IFS=' :' then read x y should work so that:
  * 'a b'	x='a', y='b'
@@ -245,6 +243,7 @@ readcmd(int argc __unused, char **argv __unused)
 	lastnonifs = lastnonifsws = -1;
 	fdctx_init(STDIN_FILENO, &fdctx);
 	for (;;) {
+		c = 0;
 		nread = fdgetc(&fdctx, &c);
 		if (nread == -1) {
 			if (errno == EINTR) {

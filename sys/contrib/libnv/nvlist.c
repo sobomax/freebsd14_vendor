@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69b32a62a4cca9619aeaa6a960f8d48c64a409a6 $");
+__FBSDID("$FreeBSD: 311325d822cec48c543f3c75801b19d063e27e2f $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -245,6 +245,15 @@ nvlist_set_array_next(nvlist_t *nvl, nvpair_t *ele)
 	}
 
 	nvl->nvl_array_next = ele;
+}
+
+nvpair_t *
+nvlist_get_array_next_nvpair(nvlist_t *nvl)
+{
+
+	NVLIST_ASSERT(nvl);
+
+	return (nvl->nvl_array_next);
 }
 
 bool

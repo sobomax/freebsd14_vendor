@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8e554b4b95b999b9ff58615834527aa41853cdb6 $
+# $FreeBSD: fa0d48388ea3d4c73d072c13b4820f0eae17c69b $
 
 LOADER_MSDOS_SUPPORT?=	yes
 LOADER_UFS_SUPPORT?=	yes
@@ -48,7 +48,8 @@ SRCS=		start.S						\
 		devicename.c					\
 		exec.c						\
 		vers.c						\
-		arch.c
+		arch.c						\
+		gfx_fb.c
 
 # libstand front-ends for shared driver code
 SRCS+=		beri_console.c					\
@@ -59,6 +60,9 @@ SRCS+=		beri_console.c					\
 SRCS+=		altera_jtag_uart.c				\
 		cfi.c						\
 		sdcard.c
+
+CFLAGS.gfx_fb.c += -I${SRCTOP}/contrib/pnglite
+CFLAGS.gfx_fb.c += -I${SRCTOP}/sys/teken
 
 # Since we don't have a backward compatibility issue, default to this on BERI.
 CFLAGS+=	-DBOOT_PROMPT_123

@@ -33,12 +33,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3eda97b35961bc68e8f5aad342f634cf663c79b3 $");
+__FBSDID("$FreeBSD: d84f4ea1cb91eb1573d8971c98ddae1f7f359657 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/module.h>
 #include <sys/cpuset.h>
 #include <sys/interrupt.h>
@@ -72,9 +73,9 @@ struct intc_irqsrc isrcs[INTC_NIRQS];
 static void
 riscv_mask_irq(void *source)
 {
-	uintptr_t irq;
+	int irq;
 
-	irq = (uintptr_t)source;
+	irq = (int)(uintptr_t)source;
 
 	switch (irq) {
 	case IRQ_TIMER_SUPERVISOR:
@@ -94,9 +95,9 @@ riscv_mask_irq(void *source)
 static void
 riscv_unmask_irq(void *source)
 {
-	uintptr_t irq;
+	int irq;
 
-	irq = (uintptr_t)source;
+	irq = (int)(uintptr_t)source;
 
 	switch (irq) {
 	case IRQ_TIMER_SUPERVISOR:
@@ -157,29 +158,25 @@ riscv_cpu_intr(struct trapframe *frame)
 	struct intr_irqsrc *isrc;
 	int active_irq;
 
-	critical_enter();
-
-	KASSERT(frame->tf_scause & EXCP_INTR,
+	KASSERT((frame->tf_scause & SCAUSE_INTR) != 0,
 		("riscv_cpu_intr: wrong frame passed"));
 
-	active_irq = (frame->tf_scause & EXCP_MASK);
+	active_irq = frame->tf_scause & SCAUSE_CODE;
 
 	switch (active_irq) {
 	case IRQ_SOFTWARE_USER:
 	case IRQ_SOFTWARE_SUPERVISOR:
 	case IRQ_TIMER_SUPERVISOR:
+		critical_enter();
 		isrc = &isrcs[active_irq].isrc;
 		if (intr_isrc_dispatch(isrc, frame) != 0)
 			printf("stray interrupt %d\n", active_irq);
+		critical_exit();
 		break;
 	case IRQ_EXTERNAL_SUPERVISOR:
 		intr_irq_handler(frame);
 		break;
-	default:
-		break;
 	}
-
-	critical_exit();
 }
 
 #ifdef SMP

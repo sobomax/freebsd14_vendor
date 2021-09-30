@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
- * $FreeBSD: 94dfe44d1596554345ebc4d8036afe25ce96c562 $
+ * $FreeBSD: 81f372ed426d7ed8d360b82e6a5bc24479315781 $
  */
 
 #ifndef _VMCI_DEFS_H_
@@ -385,7 +385,6 @@ struct vmci_queue_header {
 	volatile uint64_t	producer_tail;	/* Offset in this queue. */
 	volatile uint64_t	consumer_head;	/* Offset in peer queue. */
 };
-
 
 /*
  * If one client of a QueuePair is a 32bit entity, we restrict the QueuePair

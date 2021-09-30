@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2814a4697527405bb9b3a114ce8ef0e5e7771dad $
+ * $FreeBSD: 12e8becd7325493720220846a82ef943b0b07411 $
  */
 
 #ifndef _PSERIES_PHYP_IOMMU_H_
@@ -42,4 +42,3 @@ int phyp_iommu_unmap(device_t dev, bus_dma_segment_t *segs, int nsegs,
     void *cookie);
 
 #endif
-

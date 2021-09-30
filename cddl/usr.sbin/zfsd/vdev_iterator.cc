@@ -29,7 +29,7 @@
  *
  * Authors: Justin T. Gibbs     (Spectra Logic Corporation)
  *
- * $FreeBSD: 31a4ce962970ed985abd352e1476cd0c2e878cb9 $
+ * $FreeBSD: b5a4f22c1c6058493cc21f98b1317017e9f6d702 $
  */
 
 /**
@@ -38,6 +38,7 @@
  * Implementation of the VdevIterator class.
  */
 #include <sys/cdefs.h>
+#include <sys/byteorder.h>
 #include <sys/fs/zfs.h>
 
 #include <stdint.h>

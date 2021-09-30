@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ee9ebe1d94f463f3c52170bc3b5c139a7818af8e $
+ * $FreeBSD: 268c1aed1bff16ac2bf5b0fcf9b98e32ff7feec6 $
  */
 
 /*
@@ -276,4 +276,3 @@ typedef struct qls_mpi_coredump qls_mpi_coredump_t;
 #define Q81_BAD_DATA	0xDEADBEEF
 
 #endif /* #ifndef  _QLS_DUMP_H_ */
-

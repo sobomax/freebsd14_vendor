@@ -28,7 +28,7 @@
  * File : ecore_int.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c1aaaccd2c1e8c5e0e05e7696adc58a1af3111af $");
+__FBSDID("$FreeBSD: 14285a35afa5c8143614a664a8e5bff9c72006ae $");
 
 #include "bcm_osal.h"
 #include "ecore.h"
@@ -497,7 +497,6 @@ static enum _ecore_status_t ecore_dorq_attn_cb(struct ecore_hwfn *p_hwfn)
 	/* check if db_drop or overflow happened */
 	if (int_sts & (DORQ_REG_INT_STS_DB_DROP |
 		       DORQ_REG_INT_STS_DORQ_FIFO_OVFL_ERR)) {
-	
 		/* obtain data about db drop/overflow */
 		first_drop_reason = ecore_rd(p_hwfn, p_ptt,
 				  DORQ_REG_DB_DROP_REASON) &
@@ -1818,7 +1817,6 @@ static enum _ecore_status_t ecore_int_sp_sb_alloc(struct ecore_hwfn *p_hwfn,
 		OSAL_FREE(p_hwfn->p_dev, p_sb);
 		return ECORE_NOMEM;
 	}
-
 
 	/* Status Block setup */
 	p_hwfn->p_sp_sb = p_sb;

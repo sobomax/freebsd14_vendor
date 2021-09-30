@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 43e352dd288dc928a039d8711497a9d3db7ff168 $
+ * $FreeBSD: 3d2db9563e35455583ce06036b9a0f4c56ebb438 $
  */
 
 #define	SYS_syscall	0
@@ -418,7 +418,7 @@
 #define	SYS_truncate	479
 #define	SYS_ftruncate	480
 #define	SYS_thr_kill2	481
-#define	SYS_shm_open	482
+#define	SYS_freebsd12_shm_open	482
 #define	SYS_shm_unlink	483
 #define	SYS_cpuset	484
 #define	SYS_cpuset_setid	485
@@ -445,7 +445,7 @@
 #define	SYS_jail_get	506
 #define	SYS_jail_set	507
 #define	SYS_jail_remove	508
-#define	SYS_closefrom	509
+#define	SYS_freebsd12_closefrom	509
 #define	SYS___semctl	510
 #define	SYS_msgctl	511
 #define	SYS_shmctl	512
@@ -503,6 +503,16 @@
 #define	SYS_fhlink	565
 #define	SYS_fhlinkat	566
 #define	SYS_fhreadlink	567
+#define	SYS_funlinkat	568
+#define	SYS_copy_file_range	569
 #define	SYS___sysctlbyname	570
+#define	SYS_shm_open2	571
+#define	SYS_shm_rename	572
+#define	SYS_sigfastblock	573
+#define	SYS___realpathat	574
 #define	SYS_close_range	575
-#define	SYS_MAXSYSCALL	576
+#define	SYS_rpctls_syscall	576
+#define	SYS___specialfd	577
+#define	SYS_aio_writev	578
+#define	SYS_aio_readv	579
+#define	SYS_MAXSYSCALL	580

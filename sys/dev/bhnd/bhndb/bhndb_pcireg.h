@@ -18,7 +18,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: 0384645ee8c96c42277a74675e11070888eadb8d $
+ * $FreeBSD: 5b5af3ac85bfe5a0adedc1d0c2eef2a067f77fca $
  */
 
 #ifndef _BHND_BHNDB_PCIREG_H_
@@ -204,7 +204,6 @@
 #define	BHNDB_PCI_SPROM_BOOTROM_WE	0x20	/**< external bootrom write enable */
 #define	BHNDB_PCI_SPROM_BACKPLANE_EN	0x40	/**< enable indirect backplane access (BHNDB_PCI_BACKPLANE_*) */
 #define	BHNDB_PCI_SPROM_OTPIN_USE	0x80	/**< device OTP in use */
-
 
 /* PCI (non-PCIe) BHNDB_PCI_GPIO_OUTEN  */
 #define	BHNDB_PCI_GPIO_SCS		0x10	/* PCI config space bit 4 for 4306c0 slow clock source */

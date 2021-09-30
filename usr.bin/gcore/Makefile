@@ -1,11 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: ad4b540f819b69f4e7b1a451a172ed624b8d8adf $
+# $FreeBSD: c774d8e423d5b15adeb9328ed4fa3183e2cb7280 $
 
 PROG=	gcore
 SRCS=	elfcore.c gcore.c
 LIBADD=	sbuf util
 
-.if ${MACHINE_ARCH} == "amd64"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_ARCH} == "amd64" || \
+    ${MACHINE_ARCH} == "powerpc64"
 SRCS+=	elf32core.c
 .endif
 

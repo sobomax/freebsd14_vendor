@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b26e9697dc6aa033a36d57200965eb76f851fe06 $");
+__FBSDID("$FreeBSD: 748770c83449b25fcc6a3f66cdbf2b84b49722b4 $");
 
 #include "opt_vm.h"
 
@@ -245,7 +245,7 @@ vm_domainset_iter_page(struct vm_domainset_iter *di, struct vm_object *obj,
 	/* Wait for one of the domains to accumulate some free pages. */
 	if (obj != NULL)
 		VM_OBJECT_WUNLOCK(obj);
-	vm_wait_doms(&di->di_domain->ds_mask);
+	vm_wait_doms(&di->di_domain->ds_mask, 0);
 	if (obj != NULL)
 		VM_OBJECT_WLOCK(obj);
 	if ((di->di_flags & VM_ALLOC_WAITFAIL) != 0)
@@ -310,7 +310,7 @@ vm_domainset_iter_policy(struct vm_domainset_iter *di, int *domain)
 		return (ENOMEM);
 
 	/* Wait for one of the domains to accumulate some free pages. */
-	vm_wait_doms(&di->di_domain->ds_mask);
+	vm_wait_doms(&di->di_domain->ds_mask, 0);
 
 	/* Restart the search. */
 	vm_domainset_iter_first(di, domain);

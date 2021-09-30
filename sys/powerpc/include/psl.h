@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: psl.h,v 1.5 2000/11/19 19:52:37 matt Exp $
- * $FreeBSD: 1179d7441865618ee2a45c66d523a1222af7329a $
+ * $FreeBSD: 9d1c746de74170f1096445145c8bdbe9e1a77351 $
  */
 
 #ifndef	_MACHINE_PSL_H_
@@ -88,7 +88,7 @@
 #define	PSL_FE_NONREC	PSL_FE1		/* imprecise non-recoverable */
 #define	PSL_FE_REC	PSL_FE0		/* imprecise recoverable */
 #define	PSL_FE_PREC	(PSL_FE0 | PSL_FE1) /* precise */
-#define	PSL_FE_DFLT	PSL_FE_DIS	/* default == none */
+#define	PSL_FE_DFLT	PSL_FE_PREC	/* default == precise */
 
 #ifndef LOCORE
 extern register_t psl_kernset;		/* Default MSR values for kernel */

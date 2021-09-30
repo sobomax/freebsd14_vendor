@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 116e370d193edf2258e2bd63c22e142f481a4b1c $");
+__FBSDID("$FreeBSD: cc8cc92fac3cdd9548adf11c8b977c06e6efdc51 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -184,7 +184,6 @@ put_pdev(struct pcifront_device *pdev)
 
 	free(pdev, M_DEVBUF);
 }
-
 
 /* Write to the xenbus info needed by backend */
 static int
@@ -434,7 +433,6 @@ pcifront_init(void *unused)
 
 SYSINIT(pciif, SI_SUB_PSEUDO, SI_ORDER_ANY, pcifront_init, NULL)
 
-
 /* Newbus xpcife device driver probe */
 static int
 xpcife_probe(device_t dev)
@@ -536,7 +534,6 @@ static driver_t xpcife_driver = {
 
 DRIVER_MODULE(xpcife, nexus, xpcife_driver, xpcife_devclass, 0, 0);
 
-
 /* Newbus xen pcib device driver probe */
 static int
 xpcib_probe(device_t dev)
@@ -549,7 +546,7 @@ xpcib_probe(device_t dev)
 	sc->domain = pdev->xdev->otherend_id;
 	sc->bus = device_get_unit(dev);
 	sc->pdev = pdev;
-	
+
 	return 0;
 }
 
@@ -603,7 +600,7 @@ xpcib_read_config(device_t dev, int bus, int slot, int func,
 	int err;
 
 	err = do_pci_op(sc->pdev, &op);
-	
+
 	DPRINTF("read config (b=%d, s=%d, f=%d, reg=%d, len=%d, val=%x, err=%d)\n",
 			bus, slot, func, reg, bytes, op.value, err);
 

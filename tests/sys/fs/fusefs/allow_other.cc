@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0281a9262401554ec65860b170b6d8a511527dc8 $
+ * $FreeBSD: 0ddcc920f4af13a068105e12fffdd12f693e2947 $
  */
 
 /*
@@ -168,7 +168,7 @@ TEST_F(AllowOther, privilege_escalation)
 		.WillRepeatedly(Invoke(ReturnErrno(EPERM)));
 
 		fd1 = open(FULLPATH, O_RDONLY);
-		EXPECT_LE(0, fd1) << strerror(errno);
+		ASSERT_LE(0, fd1) << strerror(errno);
 	}, [] {
 		int fd0;
 

@@ -23,11 +23,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: cacf87520d2d430186c6c25317d232e7b5103a57 $
+# $FreeBSD: 10450dff2399bd77b656ae35fdf042265d08e34e $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
 
+PACKAGE=	tests
 LIB_CXX=	atf-c++
 PRIVATELIB=	true
 SHLIB_MAJOR=	2

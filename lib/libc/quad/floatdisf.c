@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)floatdisf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1d2c87ae716240b54aab5557c1af998729f3d46 $");
+__FBSDID("$FreeBSD: 411e106ec4f0cf083db7f309fccdffe55b1a256f $");
 
 #include "quad.h"
 
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: f1d2c87ae716240b54aab5557c1af998729f3d46 $");
  * Convert (signed) quad to float.
  */
 float
-__floatdisf(x)
-	quad_t x;
+__floatdisf(quad_t x)
 {
 	float f;
 	union uu u;

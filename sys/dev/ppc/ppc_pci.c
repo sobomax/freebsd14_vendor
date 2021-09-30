@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b3a2826c6f0c23ebfb8e408b28a128fd14885b7f $");
+__FBSDID("$FreeBSD: 58a34d0d2700d903c67b54fd3f295ff6eb324683 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -67,7 +67,6 @@ static device_method_t ppc_pci_methods[] = {
 	DEVMETHOD(ppbus_ecp_sync,	ppc_ecp_sync),
 	DEVMETHOD(ppbus_read,		ppc_read),
 	DEVMETHOD(ppbus_write,		ppc_write),
-
 	{ 0, 0 }
 };
 

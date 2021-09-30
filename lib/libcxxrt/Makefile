@@ -1,4 +1,4 @@
-# $FreeBSD: 8480cad426747f1d43c7c8e907289284b02f00e4 $
+# $FreeBSD: 16847f2ddb280412df850e3fd4ea0f286c61963d $
 
 PACKAGE=	clibs
 SRCDIR=		${SRCTOP}/contrib/libcxxrt
@@ -20,7 +20,7 @@ SRCS+=		libelftc_dem_gnu3.c\
 		typeinfo.cc\
 		guard.cc
 
-WARNS=		0
+WARNS?=		0
 CFLAGS+=	-isystem ${SRCDIR} -nostdinc++
 CXXSTD?=	c++14
 VERSION_MAP=	${.CURDIR}/Version.map

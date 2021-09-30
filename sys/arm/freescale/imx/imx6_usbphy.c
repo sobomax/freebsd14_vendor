@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8ca013aabf6df7b5c56920b4bbe86e01adae157 $");
+__FBSDID("$FreeBSD: 56d3cce907a67d2eff362b721a01705fdb43fd39 $");
 
 /*
  * USBPHY driver for Freescale i.MX6 family of SoCs.
@@ -207,4 +207,3 @@ static devclass_t usbphy_devclass;
  */
 EARLY_DRIVER_MODULE(usbphy, simplebus, usbphy_driver, usbphy_devclass, 0, 0,
     BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_MIDDLE);
-

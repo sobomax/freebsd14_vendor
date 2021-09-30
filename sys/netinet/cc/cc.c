@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70022e1b9604004e0a49aa851e5b438ba1058052 $");
+__FBSDID("$FreeBSD: 0d60b64dbe321d1102b08cb9cc5cb826710fe665 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -317,14 +317,16 @@ cc_modevent(module_t mod, int event_type, void *data)
 SYSINIT(cc, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_FIRST, cc_init, NULL);
 
 /* Declare sysctl tree and populate it. */
-SYSCTL_NODE(_net_inet_tcp, OID_AUTO, cc, CTLFLAG_RW, NULL,
+SYSCTL_NODE(_net_inet_tcp, OID_AUTO, cc, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
     "Congestion control related settings");
 
 SYSCTL_PROC(_net_inet_tcp_cc, OID_AUTO, algorithm,
-    CTLFLAG_VNET | CTLTYPE_STRING | CTLFLAG_RW,
-    NULL, 0, cc_default_algo, "A", "Default congestion control algorithm");
+    CTLFLAG_VNET | CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE,
+    NULL, 0, cc_default_algo, "A",
+    "Default congestion control algorithm");
 
-SYSCTL_PROC(_net_inet_tcp_cc, OID_AUTO, available, CTLTYPE_STRING|CTLFLAG_RD,
+SYSCTL_PROC(_net_inet_tcp_cc, OID_AUTO, available,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE,
     NULL, 0, cc_list_available, "A",
     "List available congestion control algorithms");
 

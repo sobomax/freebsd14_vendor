@@ -26,9 +26,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THEPOSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9b9c19e52a3cac0af9a4074bd816d674cdb553df $
+ * $FreeBSD: de1b0a54025f005cfd3f2de0ae64c8d8a36530d9 $
  */
-
 
 /* -------------------------------------------------------------------- */
 
@@ -92,7 +91,7 @@
 #define ENVY24HT_CCSM_SPDIF_OUT      0x01 /* External S/PDIF Out implemented */
 
 /* Professional Multi-Track Control Registers */
- 
+
 #define ENVY24HT_MT_INT_STAT    0x00 /* DMA Interrupt Mask and Status Register */ 
 #define ENVY24HT_MT_INT_RSTAT   0x02 /* Multi-track record interrupt status */
 #define ENVY24HT_MT_INT_PSTAT   0x01 /* Multi-track playback interrupt status */
@@ -185,4 +184,3 @@
 #define ENVY24HT_CCS_GPIO_LMASK 0x16
 #define ENVY24HT_CCS_GPIO_HMASK 0x1F
 #define ENVY24HT_CCS_GPIO_CTLDIR 0x18
-

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3be01180a10704741fac40dd0923fcfffe7f5b74 $
+ * $FreeBSD: ee60d6d4320bc840465dfe4aaae952bf3ff12695 $
  */
 
 #ifndef _SYS_IOV_H_
@@ -256,4 +256,3 @@ struct pci_iov_arg
 #define	IOV_GET_SCHEMA	_IOWR('p', 12, struct pci_iov_schema)
 
 #endif
-

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9763b78a091990c6ca4e519fb1c16c3b0f987823 $");
+__FBSDID("$FreeBSD: 2f48802d9ca3f6173db66969ed202ad1484067c7 $");
 
 #include <sys/types.h>
 #include <machine/spr.h>
@@ -42,12 +42,12 @@ fp_except_t
 fpsetmask(fp_except_t mask)
 {
 	uint32_t fpscr;
-	fp_rnd_t old;
+	fp_except_t old;
 
 	__asm__ __volatile("mfspr %0, %1" : "=r"(fpscr) : "K"(SPR_SPEFSCR));
-	old = (fp_rnd_t)((fpscr >> 2) & 0x1f);
-	fpscr = (fpscr & 0xffffff83) | (mask << 2);
-	__asm__ __volatile("mtspr %1,%0" :: "r"(fpscr), "K"(SPR_SPEFSCR));
+	old = (fp_except_t)((fpscr >> 2) & 0x1f);
+	fpscr = (fpscr & 0xffffff83) | ((mask & 0x1f) << 2);
+	__asm__ __volatile("mtspr %1,%0;isync" :: "r"(fpscr), "K"(SPR_SPEFSCR));
 	return (old);
 }
 #endif

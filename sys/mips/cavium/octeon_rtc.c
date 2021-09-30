@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bd4a9088c5c00266cfcb8cf93184a4160e56aef7 $
+ * $FreeBSD: 052694102f63f95685166f8a63090355bd4e3bda $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd4a9088c5c00266cfcb8cf93184a4160e56aef7 $");
+__FBSDID("$FreeBSD: 052694102f63f95685166f8a63090355bd4e3bda $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,7 +58,6 @@ static device_method_t octeon_rtc_methods[] = {
 	/* clock interface */
 	DEVMETHOD(clock_gettime,	octeon_rtc_gettime),
 	DEVMETHOD(clock_settime,	octeon_rtc_settime),
-
 	{ 0, 0 }
 };
 

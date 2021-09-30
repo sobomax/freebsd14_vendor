@@ -1,4 +1,4 @@
-# $FreeBSD: d407c8ff9681b95fbe27f194664194e4b21c1519 $
+# $FreeBSD: 05d4f33c9ab5ee918b8ea7adfc4305124114f285 $
 
 _spath=${SRCTOP}/contrib/ofed/librdmacm
 .PATH: ${_spath}/examples ${_spath}/man
@@ -6,3 +6,5 @@ _spath=${SRCTOP}/contrib/ofed/librdmacm
 BINDIR?=	/usr/bin
 CFLAGS+=	-I${SRCTOP}/contrib/ofed
 LIBADD+=	ibverbs rdmacm mlx4 mlx5 cxgb4 pthread
+
+WARNS?=	0

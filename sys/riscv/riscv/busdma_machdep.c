@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 531371f5dda944c596208dbf34a45a31883380a6 $");
+__FBSDID("$FreeBSD: 7b1c3027badbe341589e5770e5e39cfaf9cb8c4d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -212,6 +212,29 @@ bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment,
 		    nsegments, maxsegsz, flags, lockfunc, lockfuncarg, dmat);
 	}
 	return (error);
+}
+
+void
+bus_dma_template_clone(bus_dma_template_t *t, bus_dma_tag_t dmat)
+{
+	struct bus_dma_tag_common *common;
+
+	if (t == NULL || dmat == NULL)
+		return;
+
+	common = (struct bus_dma_tag_common *)dmat;
+
+	t->parent = (bus_dma_tag_t)common->parent;
+	t->alignment = common->alignment;
+	t->boundary = common->boundary;
+	t->lowaddr = common->lowaddr;
+	t->highaddr = common->highaddr;
+	t->maxsize = common->maxsize;
+	t->nsegments = common->nsegments;
+	t->maxsegsize = common->maxsegsz;
+	t->flags = common->flags;
+	t->lockfunc = common->lockfunc;
+	t->lockfuncarg = common->lockfuncarg;
 }
 
 int

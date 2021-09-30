@@ -55,7 +55,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)dumpfs.c	8.5 (Berkeley) 4/29/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: d1ba635f9f265b6f8b35fd03b8c2b88f41098b68 $";
+  "$FreeBSD: 3ac59ccc087571b7ca0e7bff5ebd503a20de939d $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -156,7 +156,7 @@ dumpfsid(void)
 static int
 dumpfs(const char *name)
 {
-	time_t fstime;
+	time_t fstime, fsmtime;
 	int64_t fssize;
 	int32_t fsflags;
 	int i;
@@ -165,8 +165,10 @@ dumpfs(const char *name)
 	case 2:
 		fssize = afs.fs_size;
 		fstime = afs.fs_time;
-		printf("magic\t%x (UFS2)\ttime\t%s",
-		    afs.fs_magic, ctime(&fstime));
+		fsmtime = afs.fs_mtime;
+		printf("magic\t%x (UFS2)\n", afs.fs_magic);
+		printf("last mounted time\t%s", ctime(&fsmtime));
+		printf("last modified time\t%s", ctime(&fstime));
 		printf("superblock location\t%jd\tid\t[ %08x %08x ]\n",
 		    (intmax_t)afs.fs_sblockloc, afs.fs_id[0], afs.fs_id[1]);
 		printf("ncg\t%d\tsize\t%jd\tblocks\t%jd\n",

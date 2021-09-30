@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f64dd2d8c49ddc7289b2bf2dd775bd450d97550 $");
+__FBSDID("$FreeBSD: fbd0baaa7d375384fe7528fb50af60903e67e2e0 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -481,7 +481,19 @@ acpi_parse_resources(device_t dev, ACPI_HANDLE handle,
      * UARTs on ThunderX2 set ResourceProducer on memory resources, with
      * 7.2 firmware.
      */
-    if (acpi_MatchHid(handle, "ARMH0011"))
+    if (acpi_MatchHid(handle, "ARMH0011") != ACPI_MATCHHID_NOMATCH)
+	    arc.ignore_producer_flag = true;
+
+    /*
+     * ARM Coresight on N1SDP set ResourceProducer on memory resources.
+     * Coresight devices: ETM, STM, TPIU, ETF/ETR, REP, FUN.
+     */
+    if (acpi_MatchHid(handle, "ARMHC500") != ACPI_MATCHHID_NOMATCH ||
+        acpi_MatchHid(handle, "ARMHC502") != ACPI_MATCHHID_NOMATCH ||
+        acpi_MatchHid(handle, "ARMHC979") != ACPI_MATCHHID_NOMATCH ||
+        acpi_MatchHid(handle, "ARMHC97C") != ACPI_MATCHHID_NOMATCH ||
+        acpi_MatchHid(handle, "ARMHC98D") != ACPI_MATCHHID_NOMATCH ||
+        acpi_MatchHid(handle, "ARMHC9FF") != ACPI_MATCHHID_NOMATCH)
 	    arc.ignore_producer_flag = true;
 
     status = AcpiWalkResources(handle, "_CRS", acpi_parse_resource, &arc);
@@ -631,17 +643,13 @@ acpi_res_set_irq(device_t dev, void *context, uint8_t *irq, int count,
     int trig, int pol)
 {
     struct acpi_res_context	*cp = (struct acpi_res_context *)context;
-    rman_res_t intr;
+    int i;
 
     if (cp == NULL || irq == NULL)
 	return;
 
-    /* This implements no resource relocation. */
-    if (count != 1)
-	return;
-
-    intr = *irq;
-    bus_set_resource(dev, SYS_RES_IRQ, cp->ar_nirq++, intr, 1);
+    for (i = 0; i < count; i++)
+        bus_set_resource(dev, SYS_RES_IRQ, cp->ar_nirq++, irq[i], 1);
 }
 
 static void
@@ -649,17 +657,13 @@ acpi_res_set_ext_irq(device_t dev, void *context, uint32_t *irq, int count,
     int trig, int pol)
 {
     struct acpi_res_context	*cp = (struct acpi_res_context *)context;
-    rman_res_t intr;
+    int i;
 
     if (cp == NULL || irq == NULL)
 	return;
 
-    /* This implements no resource relocation. */
-    if (count != 1)
-	return;
-
-    intr = *irq;
-    bus_set_resource(dev, SYS_RES_IRQ, cp->ar_nirq++, intr, 1);
+    for (i = 0; i < count; i++)
+        bus_set_resource(dev, SYS_RES_IRQ, cp->ar_nirq++, irq[i], 1);
 }
 
 static void
@@ -733,14 +737,17 @@ static int
 acpi_sysres_probe(device_t dev)
 {
     static char *sysres_ids[] = { "PNP0C01", "PNP0C02", NULL };
+    int rv;
 
-    if (acpi_disabled("sysresource") ||
-	ACPI_ID_PROBE(device_get_parent(dev), dev, sysres_ids) == NULL)
+    if (acpi_disabled("sysresource"))
 	return (ENXIO);
-
+    rv = ACPI_ID_PROBE(device_get_parent(dev), dev, sysres_ids, NULL);
+    if (rv > 0){
+	return (rv);
+    }
     device_set_desc(dev, "System Resource");
     device_quiet(dev);
-    return (BUS_PROBE_DEFAULT);
+    return (rv);
 }
 
 static int

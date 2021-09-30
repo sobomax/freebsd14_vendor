@@ -1,4 +1,4 @@
-# $FreeBSD: 0736ae93f12f975a0768359ef5023f8168decf5a $
+# $FreeBSD: 0c43685fa236fcbf754da0d6fb69268653cdfd5b $
 
 .include <src.opts.mk>
 
@@ -31,9 +31,7 @@ LIBADD=		osmcomp ibmad ibumad
 CFLAGS+=	-DHAVE_CONFIG_H=1
 CFLAGS+=	-I${_spath}
 CFLAGS+=	-I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/infiniband
-.if ${COMPILER_FEATURES:Mc++11}
 CXXSTD=		c++11
-.endif
 VERSION_MAP=	${_spath}/libibnetdisc.map
 
 .include <bsd.lib.mk>

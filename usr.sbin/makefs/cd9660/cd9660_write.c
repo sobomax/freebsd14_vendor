@@ -38,7 +38,7 @@
 #include "iso9660_rrip.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d4df08275db60aaa77c593a2870e22b54aee174 $");
+__FBSDID("$FreeBSD: 3d50fcd6b23202a211508b9a0566efe8736acc6d $");
 
 #include <util.h>
 
@@ -64,7 +64,7 @@ cd9660_write_image(iso9660_disk *diskStructure, const char* image)
 {
 	FILE *fd;
 	int status;
-	char buf[CD9660_SECTOR_SIZE];
+	unsigned char buf[CD9660_SECTOR_SIZE];
 
 	if ((fd = fopen(image, "w+")) == NULL) {
 		err(EXIT_FAILURE, "%s: Can't open `%s' for writing", __func__,

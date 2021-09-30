@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 650f0632f05e89c4e4d13f60533a809300916a9c $
+ * $FreeBSD: b82c42a6446c286da00fa81fcde529568e689357 $
  */
 
 #ifndef _NFSCL_NFS_KDTRACE_H_
@@ -65,7 +65,7 @@ extern uint32_t	nfscl_attrcache_load_done_id;
 		    nfscl_accesscache_get_hit_id, (vp), (uid),		\
 		    (mode));						\
 } while (0)
-	
+
 #define	KDTRACE_NFS_ACCESSCACHE_GET_MISS(vp, uid, mode)	do {		\
 	if (dtrace_nfscl_accesscache_get_miss_probe != NULL)		\
 		(dtrace_nfscl_accesscache_get_miss_probe)(		\

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ef38c8dc7826b399debf3133067219b4dd92c20a $");
+__FBSDID("$FreeBSD: f14a2f631387d78b0a5f2a3f0c6b48f82cd6ecae $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -489,7 +489,7 @@ nvme_ns_bio_process(struct nvme_namespace *ns, struct bio *bp,
 			free(dsm_range, M_NVME);
 		break;
 	default:
-		err = EIO;
+		err = EOPNOTSUPP;
 		break;
 	}
 

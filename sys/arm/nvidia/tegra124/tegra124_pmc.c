@@ -23,16 +23,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cae31238037f54066cb74dad8d5e82a685b8ccbe $
+ * $FreeBSD: 2af3826587cd3b2a316a5b9f344505d36a5bf320 $
  */
 
 #include <sys/param.h>
-#include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
-#include <sys/module.h>
+#include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/module.h>
+#include <sys/mutex.h>
 #include <sys/rman.h>
+#include <sys/systm.h>
 
 #include <machine/bus.h>
 
@@ -443,7 +445,6 @@ tegra124_pmc_parse_fdt(struct tegra124_pmc_softc *sc, phandle_t node)
 
 	rv = OF_getencprop(node, "nvidia,lp0-vec", tmparr, sizeof(tmparr));
 	if (rv == sizeof(tmparr)) {
-
 		sc->lp0_vec_phys = tmparr[0];
 		sc->core_pmu_time = tmparr[1];
 		sc->lp0_vec_size = TEGRA_SUSPEND_NONE;

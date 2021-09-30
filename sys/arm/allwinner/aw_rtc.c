@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6310c185009f40c2bbc0a12da9201b9858b2031b $");
+__FBSDID("$FreeBSD: a7002234d41a1103eca9032d4b10ee8d531d2b4e $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -138,6 +138,7 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun6i-a31-rtc", (uintptr_t) &a31_conf },
 	{ "allwinner,sun8i-h3-rtc", (uintptr_t) &h3_conf },
 	{ "allwinner,sun50i-h5-rtc", (uintptr_t) &h3_conf },
+	{ "allwinner,sun50i-h6-rtc", (uintptr_t) &h3_conf },
 	{ NULL, 0 }
 };
 
@@ -235,7 +236,7 @@ aw_rtc_attach(device_t dev)
 	aw_rtc_install_clocks(sc, dev);
 
 	clock_register(dev, RTC_RES_US);
-	
+
 	return (0);
 }
 
@@ -290,7 +291,7 @@ aw_rtc_gettime(device_t dev, struct timespec *ts)
 
 	rdate = RTC_READ(sc, sc->conf->rtc_date);
 	rtime = RTC_READ(sc, sc->conf->rtc_time);
-	
+
 	if ((rtime & TIME_MASK) == 0)
 		rdate = RTC_READ(sc, sc->conf->rtc_date);
 
@@ -303,7 +304,7 @@ aw_rtc_gettime(device_t dev, struct timespec *ts)
 	ct.dow = -1;
 	/* RTC resolution is 1 sec */
 	ct.nsec = 0;
-	
+
 	return (clock_ct_to_ts(&ct, ts));
 }
 
@@ -320,7 +321,7 @@ aw_rtc_settime(device_t dev, struct timespec *ts)
 	ts->tv_nsec = 0;
 
 	clock_ts_to_ct(ts, &ct);
-	
+
 	if ((ct.year < YEAR_MIN) || (ct.year > YEAR_MAX)) {
 		device_printf(dev, "could not set time, year out of range\n");
 		return (EINVAL);

@@ -1,11 +1,12 @@
-# $FreeBSD: 434c5532b63ebd6d22aa3f8b86556bed8d5a360e $
+# $FreeBSD: b6c90f2b3c86a21a8c4d0972983c07db66e01aff $
 
 .include <src.opts.mk>
 
 TESTSDIR=		${TESTSBASE}/sys/netpfil
 
 .if ${MK_PF} != "no"
-TESTS_SUBDIRS+=		pf
+TESTS_SUBDIRS+=		pf \
+					common
 .endif
 
 .include <bsd.test.mk>

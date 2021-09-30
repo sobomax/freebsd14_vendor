@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8cf8d549dfb16f376272c8b69244ed7ab2afccb9 $");
+__FBSDID("$FreeBSD: d001450cba6f98a7e8332f17785bb289c48ff258 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -67,7 +67,8 @@ static int kobj_next_id = 1;
 #define	KOBJ_ASSERT(what)	mtx_assert(&kobj_mtx, what);
 
 SYSCTL_INT(_kern, OID_AUTO, kobj_methodcount, CTLFLAG_RD,
-	   &kobj_next_id, 0, "");
+    &kobj_next_id, 0,
+    "Number of kernel object methods registered");
 
 static void
 kobj_init_mutex(void *arg)
@@ -252,7 +253,7 @@ kobj_class_free(kobj_class_t cls)
 		ops = cls->ops;
 		cls->ops = NULL;
 	}
-	
+
 	KOBJ_UNLOCK();
 
 	if (ops)

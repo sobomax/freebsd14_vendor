@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a700c6eaf23e994334eefc3646f2a169b9447d4b $
+ * $FreeBSD: f7c72810ead590928cf69836be7ddb931ceb5c1a $
  */
 
 #ifndef	_SYS__RANGESET_H
@@ -48,4 +48,3 @@ struct rangeset {
 };
 
 #endif
-

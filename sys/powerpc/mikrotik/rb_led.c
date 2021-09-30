@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f6125f5162f9c8ed2033e583dca0ebdbfc676780 $");
+__FBSDID("$FreeBSD: d533df956cea38c49617689ef0007e964312e80d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -113,7 +113,7 @@ rbled_attach(device_t dev)
 
 	if (OF_getprop(node, "user_led", gp, sizeof(gp)) <= 0)
 		return (ENXIO);
-	
+
 	sc->sc_gpio = OF_device_from_xref(gp[0]);
 	if (sc->sc_gpio == NULL) {
 		device_printf(dev, "No GPIO resource found!\n");

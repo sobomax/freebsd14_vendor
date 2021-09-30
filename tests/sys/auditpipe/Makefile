@@ -1,10 +1,10 @@
-# $FreeBSD: 9610599a22b68dce0fa4935798109c7525468aea $
+# $FreeBSD: ac7715d57f5d7bb1f499c28688aa27a4b44d2809 $
 
 TESTSDIR=	${TESTSBASE}/sys/auditpipe
 
 ATF_TESTS_C=	auditpipe_test
 
 TEST_METADATA+= required_user="root"
-WARNS?=	6
+TEST_METADATA+= required_files="/dev/auditpipe"
 
 .include <bsd.test.mk>

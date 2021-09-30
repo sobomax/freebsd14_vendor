@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d25df8fc44a58de52921b2ec0b1b15ee8cc82bba $
+ * $FreeBSD: dbd6565f8d1c85cc6bc8c5aaa8b524e8275f5537 $
  */
 
 
@@ -145,6 +145,7 @@ void	biosacpi_detect(void);
 
 int	i386_autoload(void);
 
+void	bi_load_vbe_data(struct preloaded_file *kfp);
 int	bi_getboothowto(char *kargs);
 void	bi_setboothowto(int howto);
 vm_offset_t	bi_copyenv(vm_offset_t addr);

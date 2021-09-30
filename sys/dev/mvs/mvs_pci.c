@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4774390b272cb449bb61a6e80bea9f75d0c0024c $");
+__FBSDID("$FreeBSD: 7e9c4111ca60a2973fb5ef27b1950f4b1b0d961f $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -525,4 +525,3 @@ MODULE_PNP_INFO("W32:vendor/device", pci, mvs, mvs_ids,
     nitems(mvs_ids) - 1);
 MODULE_VERSION(mvs, 1);
 MODULE_DEPEND(mvs, cam, 1, 1, 1);
-

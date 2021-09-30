@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abd34b09dde248c511ae01ddbec8dd64e1df78c0 $");
+__FBSDID("$FreeBSD: aeebd81e33506776bb5d1bfac26898d364191bb2 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -2027,7 +2027,7 @@ err1:
 err:
 	return rc;
 #endif
-	return (EDOOFUS);
+	return (CUDBG_STATUS_NOT_IMPLEMENTED);
 }
 /* CIM OBQ */
 
@@ -2664,7 +2664,7 @@ err1:
 err:
 	return rc;
 #endif
-	return (EDOOFUS);
+	return (CUDBG_STATUS_NOT_IMPLEMENTED);
 }
 
 static void collect_mem_info(struct cudbg_init *pdbg_init,
@@ -3130,7 +3130,7 @@ err1:
 err:
 	return rc;
 #endif
-	return (EDOOFUS);
+	return (CUDBG_STATUS_NOT_IMPLEMENTED);
 }
 
 static int collect_pbt_tables(struct cudbg_init *pdbg_init,
@@ -4450,5 +4450,5 @@ err1:
 err:
 	return rc;
 #endif
-	return (EDOOFUS);
+	return (CUDBG_STATUS_NOT_IMPLEMENTED);
 }

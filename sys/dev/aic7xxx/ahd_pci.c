@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2524cd222e1bb70f69704162cbc5c0c2cd2e9e56 $");
+__FBSDID("$FreeBSD: 11093e91a459b8c3fbc4d0b7b5483c2bbbc2f17a $");
 
 #include <dev/aic7xxx/aic79xx_osm.h>
 
@@ -165,7 +165,6 @@ ahd_pci_map_registers(struct ahd_softc *ahd)
 
 	if ((ahd->bugs & AHD_PCIX_MMAPIO_BUG) == 0
 	 && allow_memio != 0) {
-
 		regs_type = SYS_RES_MEMORY;
 		regs_id = AHD_PCI_MEMADDR;
 		regs = bus_alloc_resource_any(ahd->dev_softc, regs_type,

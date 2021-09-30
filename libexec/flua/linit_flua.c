@@ -1,4 +1,4 @@
-/* $FreeBSD: 4b4069e9ad629e4a244fc8dc1784dd59adabc593 $ */
+/* $FreeBSD: b62084b66ffa0d281e8741014a8639a6fc8435c5 $ */
 /*
 ** $Id: linit.c,v 1.39.1.1 2017/04/19 17:20:42 roberto Exp $
 ** Initialization of libraries for lua.c and other clients
@@ -36,6 +36,7 @@
 #include "lauxlib.h"
 #include "lfs.h"
 #include "lposix.h"
+#include "lua_ucl.h"
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -57,7 +58,9 @@ static const luaL_Reg loadedlibs[] = {
 #endif
   /* FreeBSD Extensions */
   {"lfs", luaopen_lfs},
+  {"posix.sys.stat", luaopen_posix_sys_stat},
   {"posix.unistd", luaopen_posix_unistd},
+  {"ucl", luaopen_ucl},
   {NULL, NULL}
 };
 

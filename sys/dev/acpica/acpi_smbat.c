@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23507bad32ee6d521be3a97ae46aa28c86178eec $");
+__FBSDID("$FreeBSD: 65995ac77eec515eea664ecd328f70171ca36bca $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -62,7 +62,8 @@ static int	acpi_smbat_get_bst(device_t dev, struct acpi_bst *bst);
 
 ACPI_SERIAL_DECL(smbat, "ACPI Smart Battery");
 
-static SYSCTL_NODE(_debug_acpi, OID_AUTO, batt, CTLFLAG_RD, NULL,
+static SYSCTL_NODE(_debug_acpi, OID_AUTO, batt,
+    CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
     "Battery debugging");
 
 /* On some laptops with smart batteries, enabling battery monitoring
@@ -107,16 +108,18 @@ acpi_smbat_probe(device_t dev)
 {
 	static char *smbat_ids[] = {"ACPI0001", "ACPI0005", NULL};
 	ACPI_STATUS status;
+	int rv;
 
-	if (acpi_disabled("smbat") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, smbat_ids) == NULL)
+	if (acpi_disabled("smbat"))
 		return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, smbat_ids, NULL);
+	if (rv > 0)
+	  return (rv);
 	status = AcpiEvaluateObject(acpi_get_handle(dev), "_EC", NULL, NULL);
 	if (ACPI_FAILURE(status))
 		return (ENXIO);
-
 	device_set_desc(dev, "ACPI Smart Battery");
-	return (0);
+	return (rv);
 }
 
 static int

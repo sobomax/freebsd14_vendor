@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57984ef6d0e60733ac9c2258438ee1464387438f $");
+__FBSDID("$FreeBSD: 303386db7fe7faf901f64136b59e32179b228d8f $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -383,6 +383,8 @@ __Tthr_mutex_init(pthread_mutex_t * __restrict mutex,
 {
 	struct pthread_mutex *pmtx;
 	int ret;
+
+	_thr_check_init();
 
 	if (mutex_attr != NULL) {
 		ret = mutex_check_attr(*mutex_attr);

@@ -2,7 +2,7 @@
 # Copyright 1990 W. Jolitz
 #	from: @(#)Makefile.i386	7.1 5/10/91
 #	from FreeBSD: src/sys/conf/Makefile.i386,v 1.255 2002/02/20 23:35:49
-# $FreeBSD: 06ce602f25e8dd9e533fc25fb97c4f42312055b3 $
+# $FreeBSD: d4b1e6934ae879cacdd0cc27a2f0c0625f72937e $
 #
 # Makefile for FreeBSD
 #
@@ -26,7 +26,7 @@ S=	../../..
 .endif
 .include "$S/conf/kern.pre.mk"
 
-INCLUDES+= -I$S/contrib/libfdt
+INCLUDES+= -I$S/contrib/libfdt -I$S/contrib/device-tree/include
 
 # Set the ELF LMA to the address that OpenSBI's fw_jump jumps to. This allows
 # us to load the kernel with the -kernel flag in QEMU without having to embed

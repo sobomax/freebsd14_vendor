@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2017-2018 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bab7e0f92c062c65dfac36ae31a794f6ed6bcf8d $");
+__FBSDID("$FreeBSD: b0f0c034b2c72279b844d5f745732571a37475f8 $");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
@@ -252,7 +251,8 @@ guest_paging_info(int vcpu, struct vm_guest_paging *paging)
 	else if (!(regs[2] & CR4_PAE))
 		paging->paging_mode = PAGING_MODE_32;
 	else if (regs[3] & EFER_LME)
-		paging->paging_mode = PAGING_MODE_64;
+		paging->paging_mode = (regs[2] & CR4_LA57) ?
+		    PAGING_MODE_64_LA57 :  PAGING_MODE_64;
 	else
 		paging->paging_mode = PAGING_MODE_PAE;
 	return (0);

@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: cc4250424b2f4a41672dba5b7e928b1bbe2f65ed $
+ * $FreeBSD: 2527d3fbd992831c19f76534c538ba2500bba012 $
  */
 
 #ifndef _BCMA_BCMAVAR_H_
@@ -61,7 +61,6 @@
  */
 #define	BCMA_DINFO_COREIDX(_dinfo)	\
 	((_dinfo)->corecfg->core_info.core_idx)
-
 
 /** BCMA port identifier. */
 typedef u_int		bcma_pid_t;
@@ -165,10 +164,10 @@ struct bcma_corecfg {
 
 	u_long		num_dev_ports;		/**< number of device slave port descriptors. */
 	struct bcma_sport_list	dev_ports;	/**< device port descriptors */
-	
+
 	u_long		num_bridge_ports;	/**< number of bridge slave port descriptors. */
 	struct bcma_sport_list	bridge_ports;	/**< bridge port descriptors */
-	
+
 	u_long		num_wrapper_ports;	/**< number of wrapper slave port descriptors. */	
 	struct bcma_sport_list	wrapper_ports;	/**< wrapper port descriptors */	
 };
@@ -189,7 +188,6 @@ struct bcma_devinfo {
 
 	void			*pmu_info;	/**< Bus-managed PMU state, or NULL */
 };
-
 
 /** BMCA per-instance state */
 struct bcma_softc {

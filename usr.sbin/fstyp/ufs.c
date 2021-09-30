@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 340119dada4cae4ef51c34be779a80ecd0c403d0 $");
+__FBSDID("$FreeBSD: e4de1283e7698699dbd859510aac4aded1e00a0f $");
 
 #include <sys/types.h>
 #include <ufs/ufs/dinode.h>
@@ -50,9 +50,12 @@ fstyp_ufs(FILE *fp, char *label, size_t labelsize)
 {
 	struct fs *fs;
 
-	switch (sbget(fileno(fp), &fs, -1)) {
+	switch (sbget(fileno(fp), &fs, STDSB)) {
 	case 0:
 		strlcpy(label, fs->fs_volname, labelsize);
+		free(fs->fs_csp);
+		free(fs->fs_si);
+		free(fs);
 		return (0);
 	case ENOENT:
 		/* Cannot find file system superblock */

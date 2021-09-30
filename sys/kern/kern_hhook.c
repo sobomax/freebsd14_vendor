@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 334de1f2ac7bc1b64e70242227c86fafcec12d3e $");
+__FBSDID("$FreeBSD: fa30802664acdeb2657e1d516b78951f63e9dd78 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -507,7 +507,6 @@ hhook_vnet_uninit(const void *unused __unused)
 	}
 	HHHLIST_UNLOCK();
 }
-
 
 /*
  * When a vnet is created and being initialised, init the V_hhook_vhead_list.

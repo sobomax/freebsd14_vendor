@@ -28,21 +28,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ef501b04324454c44455ee1bfc1440ca3dc43ba7 $
+ * $FreeBSD: 16665b18407fe75e2346f027bb13c7ff6e440671 $
  */
 
 #include "defs.h"
 #include "pathnames.h"
 #include <sys/stat.h>
 
-#ifdef __NetBSD__
-__RCSID("$NetBSD$");
-#elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: ef501b04324454c44455ee1bfc1440ca3dc43ba7 $");
-#else
-__RCSID("$Revision: 2.26 $");
-#ident "$Revision: 2.26 $"
-#endif
+__RCSID("$FreeBSD: 16665b18407fe75e2346f027bb13c7ff6e440671 $");
 
 
 static struct parm *parms;

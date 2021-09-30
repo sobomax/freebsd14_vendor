@@ -34,7 +34,7 @@
  * This file was derived from src/sys/netgraph/ng_sample.h, revision 1.1
  * written by Julian Elischer, Whistle Communications.
  *
- * $FreeBSD: e6fd8532615211d8578ad5c90a4640ef9e4dab5a $
+ * $FreeBSD: ec455f1426cc0a9f8bc577f4cf271194a50a44cf $
  */
 
 #ifndef	_NETGRAPH_UDBP_H_
@@ -48,7 +48,6 @@
    The de facto method for generating cookies is to take the output of the
    date command: date -u +'%s' */
 #define	NGM_UDBP_COOKIE		944609300
-
 
 #define	NG_UDBP_HOOK_NAME	"data"
 

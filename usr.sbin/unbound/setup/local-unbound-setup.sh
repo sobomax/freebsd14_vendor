@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 0e75112dd99befa2973443036ce70047f87c56a6 $
+# $FreeBSD: 3be78339b0ba0ddef2a1e166a451b5340317dd16 $
 #
 
 D="${DESTDIR}"
@@ -66,7 +66,7 @@ bkext=$(date "+%Y%m%d.%H%M%S")
 RE_octet="([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])"
 RE_ipv4="(${RE_octet}(\\.${RE_octet}){3})"
 RE_word="([0-9A-Fa-f]{1,4})"
-RE_ipv6="((${RE_word}:){1,}(:|(:${RE_word})*)|::1)"
+RE_ipv6="((${RE_word}:){1,}(:|${RE_word}?(:${RE_word})*)|::1)"
 RE_port="([1-9][0-9]{0,3}|[1-5][0-9]{4,4}|6([0-4][0-9]{3}|5([0-4][0-9]{2}|5([0-2][0-9]|3[0-5]))))"
 RE_dnsname="([0-9A-Za-z-]{1,}(\\.[0-9A-Za-z-]{1,})*\\.?)"
 RE_forward_addr="((${RE_ipv4}|${RE_ipv6})(@${RE_port})?)"
@@ -218,7 +218,7 @@ gen_forward_conf() {
 	if [ "${use_tls}" = "yes" ] ; then
 		echo "        forward-tls-upstream: yes"
 		sed -nE \
-		    -e "s/^(${RE_forward_tls})$/        forward-addr: \\1/p"
+		    -e "s/^${RE_forward_tls}\$/        forward-addr: \\1/p"
 	else
 		sed -nE \
 		    -e "s/^${RE_forward_addr}\$/        forward-addr: \\1/p" \
@@ -411,8 +411,10 @@ main() {
 		style=recursing
 		;;
 	"")
-		echo "Extracting forwarders from ${resolv_conf}."
-		forwarders=$(get_nameservers <"${D}${resolv_conf}")
+		if [ -f "${D}${resolv_conf}" ] ; then
+			echo "Extracting forwarders from ${resolv_conf}."
+			forwarders=$(get_nameservers <"${D}${resolv_conf}")
+		fi
 		style=dynamic
 		;;
 	*)

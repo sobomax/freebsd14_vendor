@@ -1,11 +1,11 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/12/93
-# $FreeBSD: 0e60b0b403598fc421a1bb9d14aec165c0b21c2b $
+# $FreeBSD: febab940be4acfea4a81df31d0132a1a66f93104 $
 
 .include <src.opts.mk>
 
 PROG=	netstat
 SRCS=	if.c inet.c main.c mbuf.c mroute.c netisr.c nl_symbols.c route.c \
-	unix.c mroute6.c ipsec.c bpf.c pfkey.c sctp.c \
+	unix.c mroute6.c ipsec.c bpf.c pfkey.c sctp.c common.c nhops.c nhgrp.c \
 	nl_defs.h
 
 nl_symbols.c: nlist_symbols

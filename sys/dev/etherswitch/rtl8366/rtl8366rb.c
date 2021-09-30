@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 279c33bcaf4af978ebe8e709b92ab7f1ff5b98c7 $
+ * $FreeBSD: de35e2dc62ba57bd8933138107ad92ddd6352266 $
  */
 
 #include "opt_etherswitch.h"
@@ -107,7 +107,8 @@ struct rtl8366rb_softc {
 static int callout_blocked = 0;
 static int iic_select_retries = 0;
 static int phy_access_retries = 0;
-static SYSCTL_NODE(_debug, OID_AUTO, rtl8366rb, CTLFLAG_RD, 0, "rtl8366rb");
+static SYSCTL_NODE(_debug, OID_AUTO, rtl8366rb, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
+    "rtl8366rb");
 SYSCTL_INT(_debug_rtl8366rb, OID_AUTO, callout_blocked, CTLFLAG_RW, &callout_blocked, 0,
 	"number of times the callout couldn't acquire the bus");
 SYSCTL_INT(_debug_rtl8366rb, OID_AUTO, iic_select_retries, CTLFLAG_RW, &iic_select_retries, 0,

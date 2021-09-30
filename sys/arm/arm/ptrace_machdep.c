@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a6f2938ab881317304fc5268f8beac304595ab8 $");
+__FBSDID("$FreeBSD: 563f962dc473fcc666173ff69ba1dfceb296d5a3 $");
 
 #include <sys/types.h>
 #include <sys/proc.h>

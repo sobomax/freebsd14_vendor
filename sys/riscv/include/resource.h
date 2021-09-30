@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 723d1458e51958ead4055c5fea7c46c146e16a29 $
+ * $FreeBSD: aef4fad4516d5f588560031b9088a3506ba2c281 $
  */
 
 #ifndef _MACHINE_RESOURCE_H_
@@ -42,5 +42,8 @@
 #define	SYS_RES_MEMORY	3	/* i/o memory */
 #define	SYS_RES_IOPORT	4	/* i/o ports */
 #define	SYS_RES_GPIO	5	/* general purpose i/o */
+#ifdef NEW_PCIB
+#define	PCI_RES_BUS	6	/* PCI bus numbers */
+#endif
 
 #endif /* !_MACHINE_RESOURCE_H_ */

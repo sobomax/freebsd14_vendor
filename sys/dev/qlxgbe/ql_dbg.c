@@ -31,7 +31,7 @@
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a7e29fd26ded57c9503356963bd7c2b7dd2cd2f $");
+__FBSDID("$FreeBSD: 1a683d54506e20549bcae6dde843287588435084 $");
 
 #include "ql_os.h"
 #include "ql_hw.h"
@@ -153,7 +153,7 @@ void ql_dump_buf8(qla_host_t *ha, const char *msg, void *dbuf, uint32_t len)
 	buf = dbuf;
 
 	device_printf(dev, "%s: %s 0x%x dump start\n", __func__, msg, len);
-	
+
 	while (len >= 16) {
 		device_printf(dev,"0x%08x:"
 			" %02x %02x %02x %02x %02x %02x %02x %02x"
@@ -256,7 +256,6 @@ void ql_dump_buf8(qla_host_t *ha, const char *msg, void *dbuf, uint32_t len)
 	default:
 		break;
 	}
-	
+
 	device_printf(dev, "%s: %s dump end\n", __func__, msg);
 }
-

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cac36fa6adf6a07c833c9e6dcd93745b92aeb62a $
+ * $FreeBSD: 4dc6d680f9348122ed0113ea8f0db5696adb3de7 $
  */
 
 #ifndef _STDATOMIC_H_
@@ -373,7 +373,6 @@ __extension__ ({							\
 typedef struct {
 	atomic_bool	__flag;
 } atomic_flag;
-
 #define	ATOMIC_FLAG_INIT		{ ATOMIC_VAR_INIT(0) }
 
 static __inline _Bool

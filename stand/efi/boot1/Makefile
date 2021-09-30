@@ -1,11 +1,11 @@
-# $FreeBSD: c8320274a8dcc96916949e2efd2248d7147192bf $
+# $FreeBSD: 39dc4f8e70ad7eb765f254784349cb4144bf1969 $
 
 .include <bsd.init.mk>
 
 BOOT1?=		boot1
 PROG=		${BOOT1}.sym
 INTERNALPROG=
-WARNS=		6
+WARNS?=		6
 
 CFLAGS+=	-DEFI_BOOT1
 # We implement a slightly non-standard %S in that it always takes a
@@ -36,14 +36,13 @@ SRCS+=		zfs_module.c
 CFLAGS.zfs_module.c+=	-I${ZFSSRC}
 CFLAGS.zfs_module.c+=	-I${SYSDIR}/cddl/boot/zfs
 CFLAGS.zfs_module.c+=	-I${SYSDIR}/crypto/skein
-CFLAGS.zfs_module.c+=	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common
+CFLAGS.zfs_module.c+=	-I${SYSDIR}/contrib/openzfs/include
+CFLAGS.zfs_module.c+=	-I${SYSDIR}/contrib/openzfs/include/os/freebsd/spl
+CFLAGS.zfs_module.c+=	-I${SYSDIR}/contrib/openzfs/include/os/freebsd/zfs
 CFLAGS.zfs_module.c+=	-I${SYSDIR}/cddl/contrib/opensolaris/common/lz4
+CFLAGS.zfs_module.c+=	-include ${ZFSOSINC}/spl/sys/ccompile.h
 
 CFLAGS+=	-DEFI_ZFS_BOOT
-.endif
-
-.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} > 40201
-CWARNFLAGS.self_reloc.c+=	-Wno-error=maybe-uninitialized
 .endif
 
 CFLAGS+=	-I${EFIINC}
@@ -61,11 +60,11 @@ CFLAGS+=	-DEFI_DEBUG
 .PATH:		${EFISRC}/libefi
 CFLAGS+=	-I${LDRSRC}
 
-FILES=	${BOOT1}.efi ${BOOT1}.efifat
+FILES=	${BOOT1}.efi
 FILESMODE_${BOOT1}.efi=	${BINMODE}
 
 LDSCRIPT=	${EFISRC}/loader/arch/${MACHINE}/ldscript.${MACHINE}
-LDFLAGS+=	-Wl,-T${LDSCRIPT},-Bsymbolic,-znotext -shared
+LDFLAGS+=	-Wl,-T${LDSCRIPT},-Bsymbolic,-znotext -pie
 
 .if ${MACHINE_CPUARCH} == "aarch64"
 CFLAGS+=	-mgeneral-regs-only
@@ -97,23 +96,5 @@ ${BOOT1}.efi: ${PROG}
 		-j .dynamic -j .dynsym -j .rel.dyn \
 		-j .rela.dyn -j .reloc -j .eh_frame \
 		--output-target=${EFI_TARGET} ${.ALLSRC} ${.TARGET}
-
-# The following inserts our objects into a template FAT file system
-# created by generate-fat.sh
-
-.include "Makefile.fat"
-
-${BOOT1}.efifat: ${BOOT1}.efi
-	@set -- `ls -l ${.ALLSRC}`; \
-	x=$$(($$5-${BOOT1_MAXSIZE})); \
-	if [ $$x -ge 0 ]; then \
-	    echo "boot1 $$x bytes too large; regenerate FAT templates?" >&2 ;\
-	    exit 1; \
-	fi
-	echo ${.OBJDIR}
-	xz -d -c ${BOOTSRC}/efi/boot1/fat-${MACHINE}.tmpl.xz > ${.TARGET}
-	${DD} if=${.ALLSRC} of=${.TARGET} seek=${BOOT1_OFFSET} conv=notrunc
-
-CLEANFILES+= ${BOOT1}.efi ${BOOT1}.efifat
 
 .include <bsd.prog.mk>

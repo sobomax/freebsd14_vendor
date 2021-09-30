@@ -24,11 +24,11 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: e075fbfa0a5bb6365e6a4018517d2af3fea84736 $ */
+/* $FreeBSD: 30dcc52f1506fb927eb6a46eea5c7d540882c79b $ */
 
 #include "smartpqi_includes.h"
 
-MALLOC_DEFINE(M_SMARTRAID, "smartraidbuf", "Buffers for the smartraid driver");
+MALLOC_DEFINE(M_SMARTPQI, "smartpqi", "Buffers for the smartpqi(4) driver");
 
 /*
  * DMA map load callback function
@@ -123,7 +123,6 @@ void os_dma_mem_free(pqisrc_softstate_t *softs, struct dma_mem *dma_mem)
 	/* DBG_FUNC("OUT\n");  */
 }
 
-
 /*
  * Mem resource allocation wrapper function
  */
@@ -133,7 +132,7 @@ void  *os_mem_alloc(pqisrc_softstate_t *softs, size_t size)
 
 	/* DBG_FUNC("IN\n");  */
 
-	addr = malloc((unsigned long)size, M_SMARTRAID,
+	addr = malloc((unsigned long)size, M_SMARTPQI,
 			M_NOWAIT | M_ZERO);
 
 /*	DBG_FUNC("OUT\n"); */
@@ -149,7 +148,7 @@ void os_mem_free(pqisrc_softstate_t *softs,
 {
 	/* DBG_FUNC("IN\n"); */
 
-	free((void*)addr, M_SMARTRAID);
+	free((void*)addr, M_SMARTPQI);
 
 	/* DBG_FUNC("OUT\n"); */
 }

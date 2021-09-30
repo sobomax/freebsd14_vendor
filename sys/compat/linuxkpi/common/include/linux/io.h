@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 754bc4303ded3ad73d7a145cf60c89309797d29b $
+ * $FreeBSD: 0104eea90ace5d3975ed94a38cc56e8e671e2ca2 $
  */
 #ifndef	_LINUX_IO_H_
 #define	_LINUX_IO_H_
@@ -42,7 +42,6 @@
 /*
  * XXX This is all x86 specific.  It should be bus space access.
  */
-
 
 /* rmb and wmb are declared in machine/atomic.h, so should be included first. */
 #ifndef __io_br

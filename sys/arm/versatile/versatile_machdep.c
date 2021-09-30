@@ -39,7 +39,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14275ed61ad032ff12978421fd99731249bdc436 $");
+__FBSDID("$FreeBSD: 87f52ceab12b67030d37517a22b42a40d4fdd437 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -71,7 +71,6 @@ static struct devmap_entry fdt_devmap[FDT_DEVMAP_MAX] = {
 	{ 0, 0, 0, },
 	{ 0, 0, 0, }
 };
-
 
 /*
  * Construct devmap table with DT-derived config data.

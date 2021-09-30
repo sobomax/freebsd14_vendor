@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ *
  * Copyright (c) 2017 Netflix, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f73256003a53d2bef80e711890470feefc50b84 $");
+__FBSDID("$FreeBSD: e2ad59b2fd23a536aa937d7449b0c42d4c692c7a $");
 
 #include <sys/endian.h>
 #include "nvmecontrol.h"

@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: a496e404a03003e1cbbfe2c98f78c2d1ff13b133 $
+ * $FreeBSD: a7e6e2cf98f29c42c6dcea8c258bf1cd55a46eda $
  */
 
 #ifndef _BHND_EROM_BHND_EROMVAR_H_
@@ -59,10 +59,8 @@ typedef uint32_t	(bhnd_erom_io_read_t)(struct bhnd_erom_io *eio,
 /** @see bhnd_erom_io_fini() */
 typedef void		(bhnd_erom_io_fini_t)(struct bhnd_erom_io *eio);
 
-
 int			 bhnd_erom_read_chipid(struct bhnd_erom_io *eio,
 			     struct bhnd_chipid *cid);
-
 
 /**
  * Abstract EROM bus I/O support.

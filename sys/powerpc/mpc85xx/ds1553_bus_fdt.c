@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 18c3e7a70ee4e276d272643e272743001dc1b30b $");
+__FBSDID("$FreeBSD: 021bd529fe74e094019be5aa627204e6295d350f $");
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
@@ -64,7 +64,6 @@ static device_method_t rtc_methods[] = {
 	/* clock interface */
 	DEVMETHOD(clock_gettime,	ds1553_gettime),
 	DEVMETHOD(clock_settime,	ds1553_settime),
-
 	{ 0, 0 }
 };
 

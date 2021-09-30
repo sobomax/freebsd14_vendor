@@ -1,4 +1,4 @@
-$FreeBSD: 2df4117393137e9d7e7a070b1ab98fd42ea1dcaf $
+$FreeBSD: ab1d1339d58773c52e9ffdd687fb6ed296ec35d8 $
 /* $NetBSD: usbdevs,v 1.392 2004/12/29 08:38:44 imp Exp $ */
 
 /*-
@@ -103,7 +103,7 @@ vendor CREATIVE		0x041e	Creative Labs
 vendor NOKIA		0x0421	Nokia
 vendor ADI		0x0422	ADI Systems
 vendor CATC		0x0423	Computer Access Technology
-vendor SMC2		0x0424	Microchip (Standard Microsystems)
+vendor SMC2		0x0424	Microchip Technology
 vendor MOTOROLA_HK	0x0425	Motorola HK
 vendor GRAVIS		0x0428	Advanced Gravis Computer
 vendor CIRRUSLOGIC	0x0429	Cirrus Logic
@@ -184,7 +184,7 @@ vendor ITTCANON		0x04d1	ITT Canon
 vendor ALTEC		0x04d2	Altec Lansing
 vendor LSI		0x04d4	LSI
 vendor MENTORGRAPHICS	0x04d6	Mentor Graphics
-vendor ITUNERNET	0x04d8	I-Tuner Networks
+vendor MICROCHIP	0x04d8	Microchip Technology, Inc.
 vendor HOLTEK		0x04d9	Holtek Semiconductor, Inc.
 vendor PANASONIC	0x04da	Panasonic (Matsushita)
 vendor HUANHSIN		0x04dc	Huan Hsin
@@ -768,7 +768,6 @@ vendor SIMTEC		0x20df	Simtec Electronics
 vendor TRENDNET		0x20f4  TRENDnet
 vendor RTSYSTEMS	0x2100	RT Systems
 vendor DLINK4		0x2101	D-Link
-vendor INTENSO		0x2109	INTENSO
 vendor VIALABS		0x2109	VIA Labs
 vendor ERICSSON		0x2282	Ericsson
 vendor MOTOROLA2	0x22b8	Motorola
@@ -1276,6 +1275,7 @@ product ATEN UC1284		0x2001	Parallel printer
 product ATEN UC10T		0x2002	10Mbps Ethernet
 product ATEN UC110T		0x2007	UC-110T Ethernet
 product ATEN UC232A		0x2008	Serial
+product ATEN UC232B		0x2022  Serial
 product ATEN UC210T		0x2009	UC-210T Ethernet
 product ATEN DSB650C		0x4000	DSB-650C
 
@@ -1367,6 +1367,7 @@ product BELKIN F5U109		0x0109	F5U109 Serial
 product BELKIN USB2SCSI		0x0115	USB to SCSI
 product BELKIN F8T012		0x0121	F8T012xx1 Bluetooth USB Adapter
 product BELKIN USB2LAN		0x0121	USB to LAN
+product BELKIN B2B128		0x0128	USB3 to LAN
 product BELKIN F5U208		0x0208	F5U208 VideoBus II
 product BELKIN F5U237		0x0237	F5U237 USB 2.0 7-Port Hub
 product BELKIN F5U257		0x0257	F5U257 Serial
@@ -1414,6 +1415,10 @@ product BILLIONTON USBLP100	0x0987	USB100LP
 product BILLIONTON USBEL100	0x0988	USB100EL
 product BILLIONTON USBE100	0x8511	USBE100
 product BILLIONTON USB2AR	0x90ff	USB2AR Ethernet
+
+/* Brainboxes Limited products */
+product BRAINBOXES US257	0x5001	US-257 USB2Serial 2xRS232
+product BRAINBOXES US25701	0x5002	US-25701 USB2Serial 2xRS232
 
 /* Broadcom products */
 product BROADCOM BCM2033	0x2033	BCM2033 Bluetooth USB dongle
@@ -1880,6 +1885,7 @@ product ELV USBI2C		0xe00f	USB-I2C interface
 product EMS DUAL_SHOOTER	0x0003	PSX gun controller converter
 
 /* Emtec products */
+product EMTEC DANEELEC4GB	0x1e20 USB DISK Pro PMAP
 product EMTEC RUF2PS 		0x2240 Flash Drive
 
 /* Encore products */
@@ -2248,7 +2254,9 @@ product FUJITSU AH_F401U	0x105b	AH-F401U Air H device
 product FUJITSUSIEMENS SCR	0x0009	Fujitsu-Siemens SCR USB Reader
 
 /* Garmin products */
+product GARMIN DAKOTA20		0x23c0	Dakota 20
 product GARMIN FORERUNNER230	0x086d	ForeRunner 230
+product GARMIN GPSMAP62S	0x2459	GPSMAP 62s
 product GARMIN IQUE_3600	0x0004	iQue 3600
 
 /* Gemalto products */
@@ -2579,9 +2587,6 @@ product INSYSTEM ISD105		0x0202	IDE Adapter ISD105
 product INSYSTEM USBCABLE	0x081a	USB cable
 product INSYSTEM STORAGE_V2	0x5701	USB Storage Adapter V2
 
-/* Intenso products */
-product INTENSO MEMORY_BOX	0x0701	External disk
-
 /* Intel products */
 product INTEL EASYPC_CAMERA	0x0110	Easy PC Camera
 product INTEL TESTBOARD		0x9890	82930 test board
@@ -2642,9 +2647,9 @@ product ISSC ISSCBTA		0x1001	Bluetooth USB Adapter
 product ITEGNO WM1080A		0x1080	WM1080A GSM/GPRS modem
 product ITEGNO WM2080A		0x2080	WM2080A CDMA modem
 
-/* Ituner networks products */
-product ITUNERNET USBLCD2X20	0x0002	USB-LCD 2x20
-product ITUNERNET USBLCD4X20	0xc001	USB-LCD 4x20
+/* Microchip Technology, Inc. products */
+product MICROCHIP PICOLCD20X2	0x0002	Mini-Box picoLCD 20x2
+product MICROCHIP PICOLCD4X20	0xc001	Mini-Box picoLCD 4x20
 
 /* Jablotron products */
 product JABLOTRON PC60B		0x0001	PC-60B
@@ -2793,6 +2798,11 @@ product LEADTEK 9531		0x2101	9531 GPS
 product LENOVO GIGALAN		0x304b	USB 3.0 Ethernet
 product LENOVO ETHERNET		0x7203	USB 2.0 Ethernet
 product LENOVO RTL8153		0x7205	USB 3.0 Ethernet
+product LENOVO ONELINK		0x720a	USB 3.0 Ethernet
+product LENOVO TBT3LAN		0x3069	LAN port in Thinkpad TB3 dock
+product LENOVO USBCLAN		0x3062	LAN port in Thinkpad USB-C dock
+product LENOVO TBT3LANGEN2	0x3082  LAN port in Thinkpad TB3 dock gen2 
+product LENOVO USBCLANGEN2	0xa387  LAN port in Thinkpad UBS-C dock gen2
 
 /* Lexar products */
 product LEXAR JUMPSHOT		0x0001	jumpSHOT CompactFlash Reader
@@ -3785,6 +3795,12 @@ product PROLIFIC MICROMAX_610U	0x0612	Micromax 610U
 product PROLIFIC DCU11		0x1234	DCU-11 Phone Cable
 product PROLIFIC UIC_MSR206	0x206a	UIC MSR206 Card Reader
 product PROLIFIC PL2303		0x2303	PL2303 Serial (ATEN/IOGEAR UC232A)
+product PROLIFIC PL2303GC	0x23a3	PL2303HXN Serial, type GC
+product PROLIFIC PL2303GB	0x23b3	PL2303HXN Serial, type GB
+product PROLIFIC PL2303GT	0x23c3	PL2303HXN Serial, type GT
+product PROLIFIC PL2303GL	0x23d3	PL2303HXN Serial, type GL
+product PROLIFIC PL2303GE	0x23e3	PL2303HXN Serial, type GE
+product PROLIFIC PL2303GS	0x23f3	PL2303HXN Serial, type GS
 product PROLIFIC PL2305		0x2305	Parallel printer
 product PROLIFIC ATAPI4		0x2307	ATAPI-4 Controller
 product PROLIFIC PL2501		0x2501	PL2501 Host-Host interface
@@ -3973,6 +3989,7 @@ product REALTEK RTL8188RU_2	0x317f	RTL8188RU
 product REALTEK USBKR100	0x8150	USBKR100 USB Ethernet
 product REALTEK RTL8152		0x8152	RTL8152 USB Ethernet
 product REALTEK RTL8153		0x8153	RTL8153 USB Ethernet
+product REALTEK RTL8156		0x8156	RTL8156 USB Ethernet
 product REALTEK RTL8188CE_0     0x8170  RTL8188CE
 product REALTEK RTL8171		0x8171	RTL8171
 product REALTEK RTL8172		0x8172	RTL8172
@@ -4426,13 +4443,15 @@ product SMART2 G2MEMKEY		0x1700	G2 Memory Key
 product SMARTBRIDGES SMARTLINK	0x0001	SmartLink USB Ethernet
 product SMARTBRIDGES SMARTNIC	0x0003	smartNIC 2 PnP Ethernet
 
-/* SMC products */
+/* Microchip Technology (formerly SMC) products */
 product SMC 2102USB		0x0100	10Mbps Ethernet
 product SMC 2202USB		0x0200	10/100 Ethernet
 product SMC 2206USB		0x0201	EZ Connect USB Ethernet
 product SMC 2862WG		0xee13	EZ Connect Wireless Adapter
 product SMC2 2020HUB		0x2020	USB Hub
+product SMC2 2513HUB		0x2513	USB Hub
 product SMC2 2514HUB		0x2514	USB Hub
+product SMC2 2517HUB		0x2517	USB Hub
 product SMC3 2662WUSB		0xa002	2662W-AR Wireless
 product SMC2 LAN7800_ETH	0x7800	USB/Ethernet
 product SMC2 LAN7801_ETH	0x7801	USB/Ethernet
@@ -4757,6 +4776,7 @@ product VIA USB2IDEBRIDGE	0x6204	USB 2.0 IDE Bridge
 
 /* VIA Labs */
 product VIALABS USB30SATABRIDGE	0x0700	USB 3.0 SATA Bridge
+product VIALABS VL701		0x0701	VL701 USB 3.0 SATA Bridge
 
 /* Vaisala products */
 product VAISALA CABLE		0x0200	USB Interface cable
@@ -4847,6 +4867,7 @@ product WIENERPLEINBAUS MPOD	0x0012	MPOD PSU
 product WIENERPLEINBAUS CML	0x0015	CML Data Logger
 
 /* Windbond Electronics */
+product WINBOND CDC		0x5011	CDC serial device
 product WINBOND UH104		0x5518	4-port USB Hub
 
 /* WinMaxGroup products */

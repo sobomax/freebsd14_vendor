@@ -37,7 +37,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: a98553aa52f4c1d4f85f53eee411c02e298da4ab $
+ * $FreeBSD: cca75a70b4c6b34732722367dfa4b1b617681ed1 $
  */
 #include "opt_altq.h"
 #include "opt_inet.h"
@@ -245,7 +245,6 @@ codel_dequeue(struct ifaltq *ifq, int op)
 
 	if (op == ALTDQ_POLL)
 		return (qhead(cif->cl_q));
-
 
 	m = codel_getq(&cif->codel, cif->cl_q);
 	if (m != NULL) {

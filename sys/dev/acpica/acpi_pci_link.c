@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 660407604256c391b5b28f0935fee3bbd28e8346 $");
+__FBSDID("$FreeBSD: ecc4f26d3fb4150c8a9fb88e701edd5892d6324f $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -146,14 +146,17 @@ static int
 acpi_pci_link_probe(device_t dev)
 {
 	char descr[28], name[12];
+	int rv;
 
 	/*
 	 * We explicitly do not check _STA since not all systems set it to
 	 * sensible values.
 	 */
-	if (acpi_disabled("pci_link") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, pci_link_ids) == NULL)
-		return (ENXIO);
+	if (acpi_disabled("pci_link"))
+	    return (ENXIO);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, pci_link_ids, NULL);
+	if (rv > 0)
+	  return (rv);
 
 	if (ACPI_SUCCESS(acpi_short_name(acpi_get_handle(dev), name,
 	    sizeof(name)))) {
@@ -162,7 +165,7 @@ acpi_pci_link_probe(device_t dev)
 	} else
 		device_set_desc(dev, "ACPI PCI Link");
 	device_quiet(dev);
-	return (0);
+	return (rv);
 }
 
 static ACPI_STATUS
@@ -808,11 +811,9 @@ acpi_pci_link_srs_from_links(struct acpi_pci_link_softc *sc,
 	srsbuf->Pointer = NULL;
 	link = sc->pl_links;
 	for (i = 0; i < sc->pl_num_links; i++) {
-
 		/* Add a new IRQ resource from each link. */
 		link = &sc->pl_links[i];
 		if (link->l_prs_template.Type == ACPI_RESOURCE_TYPE_IRQ) {
-
 			/* Build an IRQ resource. */
 			bcopy(&link->l_prs_template, &newres,
 			    ACPI_RS_SIZE(newres.Data.Irq));
@@ -825,7 +826,6 @@ acpi_pci_link_srs_from_links(struct acpi_pci_link_softc *sc,
 			} else
 				newres.Data.Irq.Interrupts[0] = 0;
 		} else {
-
 			/* Build an ExtIRQ resuorce. */
 			bcopy(&link->l_prs_template, &newres,
 			    ACPI_RS_SIZE(newres.Data.ExtendedIrq));

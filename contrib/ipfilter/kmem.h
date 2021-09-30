@@ -1,4 +1,4 @@
-/*	$FreeBSD: ce6ad56f52d968e7e20bff74af5c4c5dd158e8de $	*/
+/*	$FreeBSD: ea21c052599fdba1fd2388dc8ad173d22e93f52b $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -11,11 +11,7 @@
 #define	__KMEM_H__
 
 #ifndef	__P
-# ifdef	__STDC__
 #  define	__P(x)	x
-# else
-#  define	__P(x)	()
-# endif
 #endif
 extern	int	openkmem __P((char *, char *));
 extern	int	kmemcpy __P((char *, long, int));

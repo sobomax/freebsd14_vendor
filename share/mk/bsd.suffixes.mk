@@ -1,4 +1,4 @@
-# $FreeBSD: 0fefb1179c2ca776e96db5b394f87e7318ec2d3c $
+# $FreeBSD: 5396bae05087891ff3b7ea267e30f7d5f86fdfb4 $
 
 .sh:
 	cp -f ${.IMPSRC} ${.TARGET}
@@ -19,7 +19,7 @@
 	${CC} -emit-llvm ${IR_CFLAGS} -S ${.IMPSRC} -o ${.TARGET}
 
 .cc .cpp .cxx .C:
-	${CXX} ${CXXFLAGS} ${LDFLAGS} ${.IMPSRC} ${LDLIBS} -o ${.TARGET}
+	${CXX:N${CCACHE_BIN}} ${CXXFLAGS} ${LDFLAGS} ${.IMPSRC} ${LDLIBS} -o ${.TARGET}
 
 .cc.o .cpp.o .cxx.o .C.o:
 	${CXX} ${STATIC_CXXFLAGS} ${CXXFLAGS} -c ${.IMPSRC} -o ${.TARGET}

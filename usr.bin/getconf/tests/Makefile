@@ -1,11 +1,9 @@
-# $FreeBSD: 3b2fdafc7bd0812a15c2da73c6dbf11753d7dc8c $
+# $FreeBSD: f61bbabf1a0911d82a8f07fabca26078f4ffe645 $
 
 ATF_TESTS_SH+=	getconf_test
 
 PROGS+=		arch_type
 
 BINDIR=		${TESTSDIR}
-
-WARNS?=		6
 
 .include <bsd.test.mk>

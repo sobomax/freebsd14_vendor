@@ -1,7 +1,6 @@
-# $FreeBSD: 75e7b9f0b6061c4d85e5c6bab6b7f7e5b46ffb12 $
+# $FreeBSD: 7d26fc8b13834e0b70707df633602e5bb32cdbfd $
 
 PROG=	unix_sendtorace
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

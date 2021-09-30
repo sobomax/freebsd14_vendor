@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ac46a6f48a5db938fcaa08c030e2b0d798d0aede $
+ * $FreeBSD: abbf004704e5f3eeab7274aef6fb5928ebe52ff9 $
  */
 
 #ifndef _ISCI_H
@@ -303,10 +303,8 @@ void isci_request_construct(struct ISCI_REQUEST *request,
 void isci_io_request_execute_scsi_io(union ccb *ccb,
     struct ISCI_CONTROLLER *controller);
 
-#if __FreeBSD_version >= 900026
 void isci_io_request_execute_smp_io(
     union ccb *ccb, struct ISCI_CONTROLLER *controller);
-#endif
 
 void isci_io_request_timeout(void *);
 

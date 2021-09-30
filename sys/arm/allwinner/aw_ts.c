@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2963fb84ce6b6557cfbd98006a2bb1c5e757b1fc $");
+__FBSDID("$FreeBSD: 91e51894c18110fbf1c6b7745aabb65ce8d03cd1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -205,7 +204,8 @@ aw_ts_attach(device_t dev)
 	/* Add sysctl */
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-	    OID_AUTO, "temperature", CTLTYPE_INT | CTLFLAG_RD,
+	    OID_AUTO, "temperature",
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
 	    &sc->temp_data, 0, sysctl_handle_int,
 	    "IK3", "CPU Temperature");
 

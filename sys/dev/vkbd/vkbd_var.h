@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd_var.h,v 1.4 2004/08/17 17:43:14 max Exp $
- * $FreeBSD: d5f3ec81d03bcec332c0e0e49f8d239d850dbf7b $
+ * $FreeBSD: 73b7466498b26d28de56b8ed9f4f313623832dd8 $
  */
 
 #ifndef _VKBD_VAR_H_
@@ -50,4 +50,3 @@ typedef struct vkbd_status	vkbd_status_t;
 typedef struct vkbd_status *	vkbd_status_p;
 
 #endif /* ndef _VKBD_VAR_H_ */
-

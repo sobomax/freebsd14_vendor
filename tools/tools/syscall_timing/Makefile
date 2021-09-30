@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 2b4accaa2470b4579c41e43e04dc0afef6cefe3f $
+# $FreeBSD: 1aeafb632ce6e38cb4b58eaca674fa3185aab5aa $
 #
 
 PROG=	syscall_timing
@@ -7,7 +7,5 @@ CFLAGS+=	-static -O
 MAN=
 
 #LIBADD=	pthread
-
-WARNS=	6
 
 .include <bsd.prog.mk>

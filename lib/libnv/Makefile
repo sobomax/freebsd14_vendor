@@ -1,10 +1,10 @@
-# $FreeBSD: bf92041d4c87005ad6a31768867aeb4b475904c2 $
+# $FreeBSD: b13758931c4e74c2dbc21b6f9570fda60e91b06e $
 
-PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
 
+PACKAGE=	runtime
 LIB=	nv
 SHLIB_MAJOR= 0
 
@@ -15,7 +15,7 @@ SRCS=	cnvlist.c
 SRCS+=	dnvlist.c
 SRCS+=	msgio.c
 SRCS+=	nvlist.c
-SRCS+=	nvpair.c
+SRCS+=	bsd_nvpair.c
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

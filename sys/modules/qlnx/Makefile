@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: 0a846999d4720e978431ed77857616c1b0f977ca $
+# $FreeBSD: e5dbaa01ba7625c7c98d299215ffc1e07baf59a8 $
 #
 
 SYSDIR?=${SRCTOP}/sys
@@ -37,5 +37,6 @@ SYSDIR?=${SRCTOP}/sys
 
 SUBDIR=qlnxe
 SUBDIR+=qlnxev
+SUBDIR+=qlnxr
 
 .include <bsd.subdir.mk>

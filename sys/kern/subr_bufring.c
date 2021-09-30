@@ -27,8 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73590e49368b57c00d5f51a1839716ea3a3e7004 $");
-
+__FBSDID("$FreeBSD: 490c7cfa2fb8c852e169e13ddd2ef57308ca126c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -37,14 +36,13 @@ __FBSDID("$FreeBSD: 73590e49368b57c00d5f51a1839716ea3a3e7004 $");
 #include <sys/ktr.h>
 #include <sys/buf_ring.h>
 
-
 struct buf_ring *
 buf_ring_alloc(int count, struct malloc_type *type, int flags, struct mtx *lock)
 {
 	struct buf_ring *br;
 
 	KASSERT(powerof2(count), ("buf ring must be size power of 2"));
-	
+
 	br = malloc(sizeof(struct buf_ring) + count*sizeof(caddr_t),
 	    type, flags|M_ZERO);
 	if (br == NULL)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 379048223cf5ca0aea52def594254bcc04a90a9d $");
+__FBSDID("$FreeBSD: 6e9613b1ef7d26b638dc6a3bfe2b3eddac25f9ca $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -75,7 +75,6 @@ struct a37x0_gpio_softc {
 #define	A37X0_GPIO_INPUT(_p)		(0x10 + ((_p) / 32) * 4)
 #define	A37X0_GPIO_OUTPUT(_p)		(0x18 + ((_p) / 32) * 4)
 #define	A37X0_GPIO_SEL			0x30
-
 
 static struct ofw_compat_data compat_data[] = {
 	{ "marvell,armada3710-nb-pinctrl",	A37X0_NB_GPIO },

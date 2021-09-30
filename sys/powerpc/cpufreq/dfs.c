@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de4d077a73380c8ffe4b0a0f251bea22811e4478 $");
+__FBSDID("$FreeBSD: d5c605908951d19e78c7e4dfd46d8bb8974a5efd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -62,7 +62,6 @@ static device_method_t dfs_methods[] = {
 	DEVMETHOD(cpufreq_drv_get,	dfs_get),
 	DEVMETHOD(cpufreq_drv_type,	dfs_type),
 	DEVMETHOD(cpufreq_drv_settings,	dfs_settings),
-
 	{0, 0}
 };
 
@@ -170,7 +169,7 @@ static int
 dfs_set(device_t dev, const struct cf_setting *set)
 {
 	register_t hid1;
-	
+
 	if (set == NULL)
 		return (EINVAL);
 
@@ -181,7 +180,7 @@ dfs_set(device_t dev, const struct cf_setting *set)
 		hid1 |= HID1_DFS2;
 	else if (set->freq == 2500)
 		hid1 |= HID1_DFS4;
-	
+
 	/*
 	 * Now set the HID1 register with new values. Calling sequence
 	 * taken from page 2-26 of the MPC7450 family CPU manual.
@@ -229,4 +228,3 @@ dfs_type(device_t dev, int *type)
 	*type = CPUFREQ_TYPE_RELATIVE;
 	return (0);
 }
-

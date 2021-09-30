@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 John H. Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae587c916df5a56de0eae7aa73892e255cd60535 $");
+__FBSDID("$FreeBSD: 897f7e0fa53b51d8b7272bf33f8a8e50693b01cc $");
 
 /*
  * Map system call codes to names for the supported ABIs on each

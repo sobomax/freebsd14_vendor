@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2f89e15629ddb49c393d734efeef6a9fb18df5af $
+ * $FreeBSD: 2676977011916c20761831244503340d3fc6dbbd $
  */
 
 #ifndef _FS_TMPFS_TMPFS_VNOPS_H_
@@ -49,6 +49,8 @@ extern struct vop_vector tmpfs_vnodeop_entries;
 extern struct vop_vector tmpfs_vnodeop_nonc_entries;
 
 vop_access_t	tmpfs_access;
+vop_fplookup_vexec_t tmpfs_fplookup_vexec;
+vop_stat_t	tmpfs_stat;
 vop_getattr_t	tmpfs_getattr;
 vop_setattr_t	tmpfs_setattr;
 vop_pathconf_t	tmpfs_pathconf;

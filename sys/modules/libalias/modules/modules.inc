@@ -1,7 +1,6 @@
-# $FreeBSD: 9582ab53828cd9cc6fc3d01869d537c4e70b8db7 $
+# $FreeBSD: 0f7f68900209afe26723eb37b8169ac18b551110 $
 
 MODULES		 =
-MODULES		+= cuseeme
 MODULES		+= dummy
 MODULES		+= ftp
 MODULES		+= irc

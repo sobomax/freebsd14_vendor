@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8ad29107f7da110a9c8aaf959bc7c3659e22088f $
+ * $FreeBSD: 2917793246b7d1d524507bc2db7df837858a4920 $
  */
 
 #include <sys/param.h>
@@ -140,7 +140,7 @@ mtkswitch_reg_read32_mt7621(struct mtkswitch_softc *sc, int reg)
 	low = mtkswitch_phy_read_locked(sc, MTKSWITCH_GLOBAL_PHY,
 	    MTKSWITCH_REG_LO(reg));
 	hi = mtkswitch_phy_read_locked(sc, MTKSWITCH_GLOBAL_PHY,
-	    MTKSWITCH_REG_HI(reg));;
+	    MTKSWITCH_REG_HI(reg));
 	return (low | (hi << 16));
 }
 

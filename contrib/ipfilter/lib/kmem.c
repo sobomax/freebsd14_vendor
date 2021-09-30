@@ -1,4 +1,4 @@
-/*	$FreeBSD: de97512cf5d35c15602df6881c2798857719ab38 $	*/
+/*	$FreeBSD: 26252a02f0bf89aaed43bd225fe785161d2c1de0 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -29,10 +29,6 @@
 #include <net/if.h>
 
 #include "kmem.h"
-
-#ifndef __STDC__
-# define	const
-#endif
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)kmem.c	1.4 1/12/96 (C) 1992 Darren Reed";

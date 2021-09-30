@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: db1b6890fc8337e9843ddc25d6906af7536f1c9b $
+ * $FreeBSD: 22a5cc20c488904f5fbf244a21a96c0d9f42cb9f $
  */
 
 /*
@@ -101,6 +101,5 @@ extern void ql_dump_buf32(qla_host_t *ha, const char *str, void *dbuf,
 #define QL_ERR_INJECT(ha, val)		0
 
 #endif
-
 
 #endif /* #ifndef _QL_DBG_H_ */

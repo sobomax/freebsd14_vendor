@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a0727a4c939dcacbfd3e9d4b822c9ee885c2ea3 $");
+__FBSDID("$FreeBSD: 4497dfe9bfebe343d3c58639f3c6e0b00c10b808 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -67,7 +67,6 @@ static int ata_serverworks_status(device_t dev);
 #define SWKS_66		1
 #define SWKS_100	2
 #define SWKS_MIO	3
-
 
 /*
  * ServerWorks chipset support functions
@@ -235,7 +234,7 @@ ata_serverworks_ch_attach(device_t dev)
 	 * The status register must be read as a long to fill the other
 	 * registers.
 	 */
-	
+
 	ch->hw.status = ata_serverworks_status;
 	ch->flags |= ATA_STATUS_IS_LONG;
     }

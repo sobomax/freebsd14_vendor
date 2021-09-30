@@ -17,7 +17,7 @@
 
 #if !defined(lint) && !defined(LINT)
 static const char rcsid[] =
-  "$FreeBSD: 5687323f8c64ef46e679ad0b40043b90689cbb53 $";
+  "$FreeBSD: 4dcbce2c1165e16826697f5f7a812b7b19bb88e6 $";
 #endif
 
 
@@ -41,6 +41,8 @@ static const char rcsid[] =
 static void		child_process(entry *, user *);
 
 static WAIT_T		wait_on_child(PID_T, const char *);
+
+extern char	*environ;
 
 void
 do_command(e, u)
@@ -95,6 +97,7 @@ child_process(e, u)
 	register FILE	*mail;
 	register int	bytes = 1;
 	int		status = 0;
+	const char	*homedir = NULL;
 # if defined(LOGIN_CAP)
 	struct passwd	*pwd;
 	login_cap_t *lc;
@@ -275,21 +278,31 @@ child_process(e, u)
 		close(stdin_pipe[READ_PIPE]);
 		close(stdout_pipe[WRITE_PIPE]);
 
+		environ = NULL;
+
 # if defined(LOGIN_CAP)
-		/* Set user's entire context, but skip the environment
-		 * as cron provides a separate interface for this
+		/* Set user's entire context, but note that PATH will
+		 * be overridden later
 		 */
 		if ((pwd = getpwnam(usernm)) == NULL)
 			pwd = getpwuid(e->uid);
 		lc = NULL;
 		if (pwd != NULL) {
+			if (pwd->pw_dir != NULL
+			    && pwd->pw_dir[0] != '\0') {
+				homedir = strdup(pwd->pw_dir);
+				if (homedir == NULL) {
+					warn("strdup");
+					_exit(ERROR_EXIT);
+				}
+			}
 			pwd->pw_gid = e->gid;
 			if (e->class != NULL)
 				lc = login_getclass(e->class);
 		}
 		if (pwd &&
 		    setusercontext(lc, pwd, e->uid,
-			    LOGIN_SETALL & ~(LOGIN_SETPATH|LOGIN_SETENV)) == 0)
+			    LOGIN_SETALL) == 0)
 			(void) endpwent();
 		else {
 			/* fall back to the old method */
@@ -326,12 +339,64 @@ child_process(e, u)
 		if (lc != NULL)
 			login_close(lc);
 #endif
-		chdir(env_get("HOME", e->envp));
 
-		/* exec the command.
+		/* For compatibility, we chdir to the value of HOME if it was
+		 * specified explicitly in the crontab file, but not if it was
+		 * set in the environment by some other mechanism. We chdir to
+		 * the homedir given by the pw entry otherwise.
+		 *
+		 * If !LOGIN_CAP, then HOME is always set in e->envp.
+		 *
+		 * XXX: probably should also consult PAM.
+		 */
+		{
+			char	*new_home = env_get("HOME", e->envp);
+			if (new_home != NULL && new_home[0] != '\0')
+				chdir(new_home);
+			else if (homedir != NULL)
+				chdir(homedir);
+			else
+				chdir("/");
+		}
+
+		/* exec the command. Note that SHELL is not respected from
+		 * either login.conf or pw_shell, only an explicit setting
+		 * in the crontab. (default of _PATH_BSHELL is supplied when
+		 * setting up the entry)
 		 */
 		{
 			char	*shell = env_get("SHELL", e->envp);
+			char	**p;
+
+			/* Apply the environment from the entry, overriding
+			 * existing values (this will always set LOGNAME and
+			 * SHELL). putenv should not fail unless malloc does.
+			 */
+			for (p = e->envp; *p; ++p) {
+				if (putenv(*p) != 0) {
+					warn("putenv");
+					_exit(ERROR_EXIT);
+				}
+			}
+
+			/* HOME in login.conf overrides pw, and HOME in the
+			 * crontab overrides both. So set pw's value only if
+			 * nothing was already set (overwrite==0).
+			 */
+			if (homedir != NULL
+			    && setenv("HOME", homedir, 0) < 0) {
+				warn("setenv(HOME)");
+				_exit(ERROR_EXIT);
+			}
+
+			/* PATH in login.conf is respected, but the crontab
+			 * overrides; set a default value only if nothing
+			 * already set.
+			 */
+			if (setenv("PATH", _PATH_DEFPATH, 0) < 0) {
+				warn("setenv(PATH)");
+				_exit(ERROR_EXIT);
+			}
 
 # if DEBUGGING
 			if (DebugFlags & DTEST) {
@@ -342,9 +407,8 @@ child_process(e, u)
 				_exit(OK_EXIT);
 			}
 # endif /*DEBUGGING*/
-			execle(shell, shell, "-c", e->cmd, (char *)NULL,
-			    e->envp);
-			warn("execle: couldn't exec `%s'", shell);
+			execl(shell, shell, "-c", e->cmd, (char *)NULL);
+			warn("execl: couldn't exec `%s'", shell);
 			_exit(ERROR_EXIT);
 		}
 		break;

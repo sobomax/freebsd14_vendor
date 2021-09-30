@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 586effe08f9d8f27adfbeb601e421634cbbb5836 $");
+__FBSDID("$FreeBSD: 1bd12ea2a8d82030a19cd013dd58e372784338c5 $");
 
 #include <sys/types.h>
 #include <sys/fcntl.h>
@@ -43,6 +43,7 @@ __sym_compat(openat, __impl_openat, FBSD_1.1);
 __weak_reference(openat, __impl_openat);
 __sym_default(openat, openat, FBSD_1.2);
 
+#pragma weak openat
 int
 openat(int fd, const char *path, int flags, ...)
 {

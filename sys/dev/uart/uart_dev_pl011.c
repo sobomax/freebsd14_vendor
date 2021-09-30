@@ -30,7 +30,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b4f6ba573812eb769305e00b65f6162e0acb695 $");
+__FBSDID("$FreeBSD: 822283369075a59afff4d975a6c96be3adb960fd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -317,7 +317,6 @@ static kobj_method_t uart_pl011_methods[] = {
 	KOBJMETHOD(uart_transmit,	uart_pl011_bus_transmit),
 	KOBJMETHOD(uart_grab,		uart_pl011_bus_grab),
 	KOBJMETHOD(uart_ungrab,		uart_pl011_bus_ungrab),
-
 	{ 0, 0 }
 };
 
@@ -330,7 +329,6 @@ static struct uart_class uart_pl011_class = {
 	.uc_rclk = 0,
 	.uc_rshift = 2
 };
-
 
 #ifdef FDT
 static struct ofw_compat_data fdt_compat_data[] = {

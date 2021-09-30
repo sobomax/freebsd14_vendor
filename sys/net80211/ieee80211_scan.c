@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee05d89efb5ef72b052ceea8c1b88fd0a6eb1f8c $");
+__FBSDID("$FreeBSD: 1e07aacfc201e25e4730dc004f1b5312290e0c8a $");
 
 /*
  * IEEE 802.11 scanning support.
@@ -39,7 +39,7 @@ __FBSDID("$FreeBSD: ee05d89efb5ef72b052ceea8c1b88fd0a6eb1f8c $");
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/condvar.h>
- 
+
 #include <sys/socket.h>
 
 #include <net/if.h>

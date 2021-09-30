@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e528dc8d2e4384e713ddb614d964dde9e0bfc584 $");
+__FBSDID("$FreeBSD: 03cd20790d1d9a9a96266054d6428b2103ab983f $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -557,6 +557,7 @@ ath_edma_recv_proc_deferred_queue(struct ath_softc *sc, HAL_RX_QUEUE qtype,
 	int16_t nf;
 	ath_bufhead rxlist;
 	struct mbuf *m;
+	struct epoch_tracker et;
 
 	TAILQ_INIT(&rxlist);
 
@@ -572,6 +573,8 @@ ath_edma_recv_proc_deferred_queue(struct ath_softc *sc, HAL_RX_QUEUE qtype,
 	ATH_RX_LOCK(sc);
 	TAILQ_CONCAT(&rxlist, &sc->sc_rx_rxlist[qtype], bf_list);
 	ATH_RX_UNLOCK(sc);
+
+	NET_EPOCH_ENTER(et);
 
 	/* Handle the completed descriptors */
 	/*
@@ -596,6 +599,7 @@ ath_edma_recv_proc_deferred_queue(struct ath_softc *sc, HAL_RX_QUEUE qtype,
 	if (ngood) {
 		sc->sc_lastrx = tsf;
 	}
+	NET_EPOCH_EXIT(et);
 
 	ATH_KTR(sc, ATH_KTR_INTERRUPTS, 1,
 	    "ath edma rx deferred proc: ngood=%d\n",

@@ -1,5 +1,5 @@
 /*	$KAME: rtsock.c,v 1.3 2000/10/10 08:46:45 itojun Exp $	*/
-/*	$FreeBSD: 37f7df29d0b7f967ef203c82976d1bacf1b8ccc5 $	*/
+/*	$FreeBSD: 4dfbf61f47db30ffaf6ed2acdab70370e8ae3664 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -84,7 +84,7 @@ rtsock_open(void)
 	if (caph_rights_limit(s, &rights) != 0) {
 		error = errno;
 		(void)close(s);
-		errno = errno;
+		errno = error;
 		return (-1);
 	}
 	return (s);

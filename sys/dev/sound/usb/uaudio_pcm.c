@@ -1,4 +1,4 @@
-/* $FreeBSD: 916d90a17402b7841147e19da9f6e3cd34a55ab9 $ */
+/* $FreeBSD: 9c4666c41bba14215267b3a5be6b516c39b3281e $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -27,7 +27,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_snd.h"
@@ -189,7 +188,6 @@ static kobj_method_t ua_mixer_methods[] = {
 
 MIXER_DECLARE(ua_mixer);
 /************************************************************/
-
 
 static int
 ua_probe(device_t dev)

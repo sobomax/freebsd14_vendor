@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74d275f7e66ea1bedf1b589d621373cbb279464c $");
+__FBSDID("$FreeBSD: af2d262e4ff34637f9f26e7f33dacecd85f06750 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -159,7 +159,8 @@ sysctl_netinet6_intr_queue_maxlen(SYSCTL_HANDLER_ARGS)
 }
 SYSCTL_DECL(_net_inet6_ip6);
 SYSCTL_PROC(_net_inet6_ip6, IPV6CTL_INTRQMAXLEN, intr_queue_maxlen,
-    CTLTYPE_INT|CTLFLAG_RW, 0, 0, sysctl_netinet6_intr_queue_maxlen, "I",
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+    0, 0, sysctl_netinet6_intr_queue_maxlen, "I",
     "Maximum size of the IPv6 input queue");
 
 #ifdef RSS
@@ -186,12 +187,13 @@ sysctl_netinet6_intr_direct_queue_maxlen(SYSCTL_HANDLER_ARGS)
 	return (netisr_setqlimit(&ip6_direct_nh, qlimit));
 }
 SYSCTL_PROC(_net_inet6_ip6, IPV6CTL_INTRDQMAXLEN, intr_direct_queue_maxlen,
-    CTLTYPE_INT|CTLFLAG_RW, 0, 0, sysctl_netinet6_intr_direct_queue_maxlen,
-    "I", "Maximum size of the IPv6 direct input queue");
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+    0, 0, sysctl_netinet6_intr_direct_queue_maxlen, "I",
+    "Maximum size of the IPv6 direct input queue");
 
 #endif
 
-VNET_DEFINE(struct pfil_head, inet6_pfil_hook);
+VNET_DEFINE(pfil_head_t, inet6_pfil_head);
 
 VNET_PCPUSTAT_DEFINE(struct ip6stat, ip6stat);
 VNET_PCPUSTAT_SYSINIT(ip6stat);
@@ -211,6 +213,7 @@ static int ip6_hopopts_input(u_int32_t *, u_int32_t *, struct mbuf **, int *);
 void
 ip6_init(void)
 {
+	struct pfil_head_args args;
 	struct protosw *pr;
 	int i;
 
@@ -224,11 +227,11 @@ ip6_init(void)
 	    &V_in6_ifaddrhmask);
 
 	/* Initialize packet filter hooks. */
-	V_inet6_pfil_hook.ph_type = PFIL_TYPE_AF;
-	V_inet6_pfil_hook.ph_af = AF_INET6;
-	if ((i = pfil_head_register(&V_inet6_pfil_hook)) != 0)
-		printf("%s: WARNING: unable to register pfil hook, "
-			"error %d\n", __func__, i);
+	args.pa_version = PFIL_VERSION;
+	args.pa_flags = PFIL_IN | PFIL_OUT;
+	args.pa_type = PFIL_TYPE_IP6;
+	args.pa_headname = PFIL_INET6_NAME;
+	V_inet6_pfil_head = pfil_head_register(&args);
 
 	if (hhook_head_register(HHOOK_TYPE_IPSEC_IN, AF_INET6,
 	    &V_ipsec_hhh_in[HHOOK_IPSEC_INET6],
@@ -356,9 +359,7 @@ ip6_destroy(void *unused __unused)
 #endif
 	netisr_unregister_vnet(&ip6_nh);
 
-	if ((error = pfil_head_unregister(&V_inet6_pfil_hook)) != 0)
-		printf("%s: WARNING: unable to unregister pfil hook, "
-		    "error %d\n", __func__, error);
+	pfil_head_unregister(V_inet6_pfil_head);
 	error = hhook_head_deregister(V_ipsec_hhh_in[HHOOK_IPSEC_INET6]);
 	if (error != 0) {
 		printf("%s: WARNING: unable to deregister input helper hook "
@@ -378,7 +379,6 @@ ip6_destroy(void *unused __unused)
 		/* Cannot lock here - lock recursion. */
 		/* IF_ADDR_LOCK(ifp); */
 		CK_STAILQ_FOREACH_SAFE(ifa, &ifp->if_addrhead, ifa_link, nifa) {
-
 			if (ifa->ifa_addr->sa_family != AF_INET6)
 				continue;
 			in6_purgeaddr(ifa);
@@ -386,10 +386,11 @@ ip6_destroy(void *unused __unused)
 		/* IF_ADDR_UNLOCK(ifp); */
 		in6_ifdetach_destroy(ifp);
 		mld_domifdetach(ifp);
-		/* Make sure any routes are gone as well. */
-		rt_flushifroutes_af(ifp, AF_INET6);
 	}
 	IFNET_RUNLOCK();
+
+	/* Make sure any routes are gone as well. */
+	rib_flush_routes_family(AF_INET6);
 
 	frag6_destroy();
 	nd6_destroy();
@@ -744,14 +745,12 @@ ip6_input(struct mbuf *m)
 	 */
 
 	/* Jump over all PFIL processing if hooks are not active. */
-	if (!PFIL_HOOKED(&V_inet6_pfil_hook))
+	if (!PFIL_HOOKED_IN(V_inet6_pfil_head))
 		goto passin;
 
 	odst = ip6->ip6_dst;
-	if (pfil_run_hooks(&V_inet6_pfil_hook, &m,
-	    m->m_pkthdr.rcvif, PFIL_IN, 0, NULL))
-		return;
-	if (m == NULL)			/* consumed by filter */
+	if (pfil_run_hooks(V_inet6_pfil_head, &m, m->m_pkthdr.rcvif, PFIL_IN,
+	    NULL) != PFIL_PASS)
 		return;
 	ip6 = mtod(m, struct ip6_hdr *);
 	srcrt = !IN6_ARE_ADDR_EQUAL(&odst, &ip6->ip6_dst);
@@ -1493,7 +1492,6 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 				 * other cases).
 				 */
 				goto loopend;
-
 			}
 
 			/* proceed with the next header. */

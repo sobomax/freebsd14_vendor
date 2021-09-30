@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1e56cfbedd90b2db8bd0c5773e9cd374b1476104 $
+ * $FreeBSD: babc913c5637b1b10ad922b799d05aa8fd4f0602 $
  */
 
 #ifndef	_CNV_H_
@@ -74,7 +74,6 @@ const nvlist_t * const	*cnvlist_get_nvlist_array(const void *cookie, size_t *nit
 int			 cnvlist_get_descriptor(const void *cookie);
 const int		*cnvlist_get_descriptor_array(const void *cookie, size_t *nitemsp);
 #endif
-
 
 /*
  * The cnvlist_take functions returns value associated with the given cookie and

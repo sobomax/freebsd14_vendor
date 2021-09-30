@@ -43,7 +43,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsd.c	8.9 (Berkeley) 3/29/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 2325a10f804d23ca39a67804bdd1b166354364e6 $";
+  "$FreeBSD: 0eb9c2560cf13f8ce4c0a707d2f9610adfdbe031 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -189,9 +189,9 @@ main(int argc, char **argv)
 	    "usage:\n"
 	    "  nfsd [-ardtue] [-h bindip]\n"
 	    "       [-n numservers] [--minthreads #] [--maxthreads #]\n"
-	    "       [-p/--pnfs dsserver0:/dsserver0-mounted-on-dir,...,\n"
-	    "       [-V virtual_hostname]\n"
-	    "       dsserverN:/dsserverN-mounted-on-dir] [-m mirrorlevel]\n";
+	    "       [-p/--pnfs dsserver0:/dsserver0-mounted-on-dir,...,"
+	    "dsserverN:/dsserverN-mounted-on-dir] [-m mirrorlevel]\n"
+	    "       [-V virtual_hostname]\n";
 	while ((ch = getopt_long(argc, argv, getopt_shortopts, longopts,
 		    &longindex)) != -1)
 		switch (ch) {

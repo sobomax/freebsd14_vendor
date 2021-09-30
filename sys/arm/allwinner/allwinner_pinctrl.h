@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 Emmanuel Vadot <manu@freebsd.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dc17d809a3d9d4660abe09e85f28d25f42a30509 $
+ * $FreeBSD: d9fb056dff67666c76d6b1a5b8123411aef40d15 $
  */
 
 #ifndef _ALLWINNER_PINCTRL_H_

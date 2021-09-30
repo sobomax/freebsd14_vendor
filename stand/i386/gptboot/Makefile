@@ -1,4 +1,4 @@
-# $FreeBSD: 345a7e762e7dcd28c8d124db520f7e34aafcce5e $
+# $FreeBSD: ee8f4797f3d628bb5730c7070f0d01915cc4c277 $
 
 .include <bsd.init.mk>
 
@@ -30,6 +30,7 @@ CFLAGS+=-DBOOTPROG=\"gptboot\" \
 	-I${LDRSRC} \
 	-I${BOOTSRC}/i386/common \
 	-I${BOOTSRC}/i386/boot2 \
+	-DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib \
 	-Wall -Waggregate-return -Wbad-function-cast -Wno-cast-align \
 	-Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
 	-Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings \
@@ -53,16 +54,13 @@ gptldr.bin: gptldr.out
 gptldr.out: gptldr.o
 	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} gptldr.o
 
-CLEANFILES+=	gptboot.bin gptboot.out gptboot.o sio.o crc32.o drv.o \
+CLEANFILES+=	gptboot.bin gptboot.out gptboot.o sio.o drv.o \
 		cons.o ${OPENCRYPTO_XTS}
 
 gptboot.bin: gptboot.out
 	${OBJCOPY} -S -O binary gptboot.out ${.TARGET}
 
-gptboot.out: ${BTXCRT} gptboot.o sio.o crc32.o drv.o cons.o ${OPENCRYPTO_XTS}
+gptboot.out: ${BTXCRT} gptboot.o sio.o drv.o cons.o ${OPENCRYPTO_XTS}
 	${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC} ${LIBSA32}
 
 .include <bsd.prog.mk>
-
-# XXX: clang integrated-as doesn't grok .codeNN directives yet
-CFLAGS.gptldr.S=	${CLANG_NO_IAS}

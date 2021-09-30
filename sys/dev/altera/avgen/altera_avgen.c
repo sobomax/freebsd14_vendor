@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86f45ea42f4a992eb45f50c3bdcb26eb31a362f5 $");
+__FBSDID("$FreeBSD: d7dd7d29b1e0ef51a8905b7d5ebb998bf72eed7a $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -252,11 +252,13 @@ altera_avgen_disk_strategy(struct bio *bp)
 	void *data;
 	long bcount;
 	daddr_t pblkno;
+	int error;
 
 	sc = bp->bio_disk->d_drv1;
 	data = bp->bio_data;
 	bcount = bp->bio_bcount;
 	pblkno = bp->bio_pblkno;
+	error = 0;
 
 	/*
 	 * Serialize block reads / writes.
@@ -265,7 +267,7 @@ altera_avgen_disk_strategy(struct bio *bp)
 	switch (bp->bio_cmd) {
 	case BIO_READ:
 		if (!(sc->avg_flags & ALTERA_AVALON_FLAG_GEOM_READ)) {
-			biofinish(bp, NULL, EIO);
+			error = EROFS;
 			break;
 		}
 		switch (sc->avg_width) {
@@ -324,11 +326,11 @@ altera_avgen_disk_strategy(struct bio *bp)
 		break;
 
 	default:
-		panic("%s: unsupported I/O operation %d", __func__,
-		    bp->bio_cmd);
+		error = EOPNOTSUPP;
+		break;
 	}
 	mtx_unlock(&sc->avg_disk_mtx);
-	biofinish(bp, NULL, 0);
+	biofinish(bp, NULL, error);
 }
 
 static int

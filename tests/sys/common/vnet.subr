@@ -1,4 +1,4 @@
-# $FreeBSD: 53b387ec07e532263877495cae86e134374af927 $
+# $FreeBSD: f9a9e9c428fde4ff868cfa05f4bb13e6a8c3b289 $
 # VNAT/jail utility functions
 ##
 
@@ -13,7 +13,22 @@ vnet_mkepair()
 {
 	ifname=$(ifconfig epair create)
 	echo $ifname >> created_interfaces.lst
+	echo ${ifname%a}b >> created_interfaces.lst
 	echo ${ifname%a}
+}
+
+vnet_mkbridge()
+{
+	ifname=$(ifconfig bridge create)
+	echo $ifname >> created_interfaces.lst
+	echo ${ifname}
+}
+
+vnet_mkloopback()
+{
+	ifname=$(ifconfig lo create)
+	echo $ifname >> created_interfaces.lst
+	echo ${ifname}
 }
 
 vnet_mkjail()

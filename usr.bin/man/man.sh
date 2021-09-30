@@ -26,7 +26,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD: 12a370cd8efb7024fee84de7d2ed19d92992864f $
+# $FreeBSD: f31c464fcc8fa0f52596476f54baf2382420e02e $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -1012,7 +1012,7 @@ STTY=/bin/stty
 SYSCTL=/sbin/sysctl
 
 debug=0
-man_default_sections='1:8:2:3:n:4:5:6:7:9:l'
+man_default_sections='1:8:2:3:3lua:n:4:5:6:7:9:l'
 man_default_path='/usr/share/man:/usr/share/openssl/man:/usr/local/share/man:/usr/local/man'
 cattool='/usr/bin/zcat -f'
 

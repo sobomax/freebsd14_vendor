@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8925a6cbb25c1f65a70f2c35b6011eaa738823d9 $
+ * $FreeBSD: 9cfc5ea1d43730e9249b92f3489e657cc674b839 $
  */
 
 #ifndef	_MACHINE_REG_H_
@@ -42,7 +42,11 @@ struct reg {
 };
 
 struct reg32 {
-	int dummy;
+	unsigned int r[13];
+	unsigned int r_sp;
+	unsigned int r_lr;
+	unsigned int r_pc;
+	unsigned int r_cpsr;
 };
 
 struct fpreg {
@@ -56,7 +60,21 @@ struct fpreg32 {
 };
 
 struct dbreg {
-	int dummy;
+	uint8_t		db_debug_ver;
+	uint8_t		db_nbkpts;
+	uint8_t		db_nwtpts;
+	uint8_t		db_pad[5];
+
+	struct {
+		uint64_t dbr_addr;
+		uint32_t dbr_ctrl;
+		uint32_t dbr_pad;
+	} db_breakregs[16];
+	struct {
+		uint64_t dbw_addr;
+		uint32_t dbw_ctrl;
+		uint32_t dbw_pad;
+	} db_watchregs[16];
 };
 
 struct dbreg32 {

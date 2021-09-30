@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c43b480d2566b6ea94df73ea134ca7224da9c57 $");
+__FBSDID("$FreeBSD: d502431b1e287a26f3a2e612b2e9eb2444284b31 $");
 
 /*
  * Subset of the i386 bios support code.  We cannot make bios16 nor bios32
@@ -85,7 +85,6 @@ bios_sigsearch(u_int32_t start, u_char *sig, int siglen, int paralen, int sigofs
 
     /* loop searching */
     while ((sp + sigofs + siglen) < end) {
-	
 	/* compare here */
 	if (!bcmp(sp + sigofs, sig, siglen)) {
 	    /* convert back to physical address */

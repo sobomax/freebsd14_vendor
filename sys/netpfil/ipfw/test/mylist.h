@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 109592256f471b80509f587e9e090f2ed1404362 $
+ * $FreeBSD: 2a62546e543f037e89d86740fbd88d8b1682ea67 $
  *
  * linux-like bidirectional lists
  */
@@ -22,7 +22,7 @@ __list_add(struct list_head *o, struct list_head *prev,
         o->prev = prev;
         prev->next = o;
 }
- 
+
 static inline void
 list_add_tail(struct list_head *o, struct list_head *head)
 {

@@ -25,8 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: cb752557e7bca1dc33a97f592261deb1588cc543 $
+ *	$FreeBSD: 4db328f72b4b6bee6155a44228372443dbe0a61d $
  */
+
+#include <sys/lock.h>
+#include <sys/mutex.h>
 
 /*
  * Debugging levels:

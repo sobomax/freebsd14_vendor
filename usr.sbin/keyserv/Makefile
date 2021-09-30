@@ -1,10 +1,10 @@
-# $FreeBSD: 42d86b27c29c6caa61b6bd69063757019eae0c25 $
+# $FreeBSD: 367919271ee8f102b64327a742b87278701f1092 $
 
 PROG=	keyserv
 MAN=	keyserv.8
 SRCS=	keyserv.c setkey.c crypt_svc.c crypt_server.c crypt.h
 
-CFLAGS+= -DKEYSERV_RANDOM -DBROKEN_DES -I.
+CFLAGS+= -DBROKEN_DES -I.
 
 LIBADD=	mp rpcsvc
 

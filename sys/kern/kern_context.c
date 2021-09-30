@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3bd5f31082ac395a9eb1018f984bc9dc9be7c5a4 $");
+__FBSDID("$FreeBSD: 516c54b758524e91fe01e1318f94d767fdd29023 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -75,7 +75,6 @@ sys_getcontext(struct thread *td, struct getcontext_args *uap)
 		PROC_LOCK(td->td_proc);
 		uc.uc_sigmask = td->td_sigmask;
 		PROC_UNLOCK(td->td_proc);
-		bzero(uc.__spare__, sizeof(uc.__spare__));
 		ret = copyout(&uc, uap->ucp, UC_COPY_SIZE);
 	}
 	return (ret);
@@ -85,7 +84,7 @@ int
 sys_setcontext(struct thread *td, struct setcontext_args *uap)
 {
 	ucontext_t uc;
-	int ret;	
+	int ret;
 
 	if (uap->ucp == NULL)
 		ret = EINVAL;
@@ -106,14 +105,13 @@ int
 sys_swapcontext(struct thread *td, struct swapcontext_args *uap)
 {
 	ucontext_t uc;
-	int ret;	
+	int ret;
 
 	if (uap->oucp == NULL || uap->ucp == NULL)
 		ret = EINVAL;
 	else {
 		bzero(&uc, sizeof(ucontext_t));
 		get_mcontext(td, &uc.uc_mcontext, GET_MC_CLEAR_RET);
-		bzero(uc.__spare__, sizeof(uc.__spare__));
 		PROC_LOCK(td->td_proc);
 		uc.uc_sigmask = td->td_sigmask;
 		PROC_UNLOCK(td->td_proc);

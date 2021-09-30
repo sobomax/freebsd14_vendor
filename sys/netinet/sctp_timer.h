@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35be6c51b266c18b8b3e4c0b5e26bc271d656f2f $");
+__FBSDID("$FreeBSD: 6c6d37c88f9988f5fb0148ad1353485f4feb492e $");
 
 #ifndef _NETINET_SCTP_TIMER_H_
 #define _NETINET_SCTP_TIMER_H_
@@ -88,7 +88,6 @@ void
 void sctp_audit_retranmission_queue(struct sctp_association *);
 
 void sctp_iterator_timer(struct sctp_iterator *it);
-
 
 #endif
 #endif

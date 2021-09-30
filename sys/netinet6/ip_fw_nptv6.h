@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a1c12c26e21db2ca5bc65ddeba33d57893e9d811 $
+ * $FreeBSD: d777db98dd98d37f79ede42f9dcbcc97bf0c9e95 $
  */
 
 #ifndef	_NETINET6_IP_FW_NPTV6_H_
@@ -52,4 +52,3 @@ typedef struct _ipfw_nptv6_cfg {
 } ipfw_nptv6_cfg;
 
 #endif /* _NETINET6_IP_FW_NPTV6_H_ */
-

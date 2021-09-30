@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_sco.c,v 1.2 2005/10/31 18:08:51 max Exp $
- * $FreeBSD: 733a038f106b2a709201f5320392654c33c414e0 $
+ * $FreeBSD: da8f22befc79f7ff5adf7f9ac9cd9368d61fcda8 $
  */
 
 #include <sys/param.h>
@@ -112,8 +112,9 @@ static int					ng_btsocket_sco_curpps;
 
 /* Sysctl tree */
 SYSCTL_DECL(_net_bluetooth_sco_sockets);
-static SYSCTL_NODE(_net_bluetooth_sco_sockets, OID_AUTO, seq, CTLFLAG_RW,
-	0, "Bluetooth SEQPACKET SCO sockets family");
+static SYSCTL_NODE(_net_bluetooth_sco_sockets, OID_AUTO, seq,
+    CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "Bluetooth SEQPACKET SCO sockets family");
 SYSCTL_UINT(_net_bluetooth_sco_sockets_seq, OID_AUTO, debug_level,
 	CTLFLAG_RW,
 	&ng_btsocket_sco_debug_level, NG_BTSOCKET_WARN_LEVEL,
@@ -1322,7 +1323,6 @@ ng_btsocket_sco_bind(struct socket *so, struct sockaddr *nam,
 
 			mtx_unlock(&pcb->pcb_mtx);
 		}
-
 	}
 
 	pcb = so2sco_pcb(so);
@@ -1507,7 +1507,7 @@ ng_btsocket_sco_ctloutput(struct socket *so, struct sockopt *sopt)
 	}
 
 	mtx_unlock(&pcb->pcb_mtx);
-	
+
 	return (error);
 } /* ng_btsocket_sco_ctloutput */
 
@@ -1979,4 +1979,3 @@ ng_btsocket_sco_process_timeout(void *xpcb)
 
 	mtx_unlock(&pcb->pcb_mtx);
 } /* ng_btsocket_sco_process_timeout */
-

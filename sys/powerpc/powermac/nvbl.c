@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5112385e74e9f0dde9c622738f824ca5a94cd1d $");
+__FBSDID("$FreeBSD: ba1f84badf9418211cb129dfdbc3868306e068b7 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: d5112385e74e9f0dde9c622738f824ca5a94cd1d $");
 #define  NVIDIA_PMC_OFF         (NVIDIA_MMIO_PMC + 0x10f0)
 #define   NVIDIA_PMC_BL_SHIFT    (16)
 #define   NVIDIA_PMC_BL_EN       (1U << 31)
-
 
 struct nvbl_softc {
 	device_t	 dev;
@@ -144,8 +143,8 @@ nvbl_attach(device_t dev)
 	tree = device_get_sysctl_tree(dev);
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-			"level", CTLTYPE_INT | CTLFLAG_RW, sc, 0,
-			nvbl_sysctl, "I", "Backlight level (0-100)");
+	    "level", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, 0,
+	    nvbl_sysctl, "I", "Backlight level (0-100)");
 
 	return (0);
 }

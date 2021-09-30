@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sockio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: 447e2c884028b1e7fe704f7e7409a06d4cabccda $
+ * $FreeBSD: 93b8af28e1714c626897c6a5144b4e1c0c7ce95a $
  */
 
 #ifndef _SYS_SOCKIO_H_
@@ -83,6 +83,8 @@
 #define	SIOCSIFDESCR	 _IOW('i', 41, struct ifreq)	/* set ifnet descr */ 
 #define	SIOCGIFDESCR	_IOWR('i', 42, struct ifreq)	/* get ifnet descr */ 
 #define	SIOCAIFADDR	 _IOW('i', 43, struct ifaliasreq)/* add/chg IF alias */
+#define	SIOCGIFDATA	 _IOW('i', 44, struct ifreq)	/* get if_data */
+#define	SIOCGIFALIAS	_IOWR('i', 45, struct ifaliasreq)/* get IF alias */
 
 #define	SIOCADDMULTI	 _IOW('i', 49, struct ifreq)	/* add m'cast addr */
 #define	SIOCDELMULTI	 _IOW('i', 50, struct ifreq)	/* del m'cast addr */

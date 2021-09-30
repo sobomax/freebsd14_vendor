@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63c65b65cf6ef68caea7667b02e4cf4e738488d2 $");
+__FBSDID("$FreeBSD: a744d2d3812700148d493c341e27dbf7e2cfce47 $");
 
 /*
  * See s_expl.c for more comments about __k_expl().
@@ -277,7 +277,7 @@ hexpl(long double x)
 static inline long double complex
 __ldexp_cexpl(long double complex z, int expt)
 {
-	long double exp_x, hi, lo;
+	long double c, exp_x, hi, lo, s;
 	long double x, y, scale1, scale2;
 	int half_expt, k;
 
@@ -285,16 +285,17 @@ __ldexp_cexpl(long double complex z, int expt)
 	y = cimagl(z);
 	__k_expl(x, &hi, &lo, &k);
 
-	exp_x = (lo + hi) * 0x1p16382;
+	exp_x = (lo + hi) * 0x1p16382L;
 	expt += k - 16382;
 
 	scale1 = 1;
 	half_expt = expt / 2;
 	SET_LDBL_EXPSIGN(scale1, BIAS + half_expt);
 	scale2 = 1;
-	SET_LDBL_EXPSIGN(scale1, BIAS + expt - half_expt);
+	SET_LDBL_EXPSIGN(scale2, BIAS + expt - half_expt);
 
-	return (CMPLXL(cos(y) * exp_x * scale1 * scale2,
-	    sinl(y) * exp_x * scale1 * scale2));
+	sincosl(y, &s, &c);
+	return (CMPLXL(c * exp_x * scale1 * scale2,
+	    s * exp_x * scale1 * scale2));
 }
 #endif /* _COMPLEX_H */

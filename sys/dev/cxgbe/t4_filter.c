@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 49a57684c42bdd5435ec5c7f71eadc9694ffe643 $");
+__FBSDID("$FreeBSD: 65a87f4c416348377896cb99d19353841ca211df $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -888,11 +888,6 @@ set_filter(struct adapter *sc, struct t4_filter *t)
 	if (t->fs.hash) {
 		if (__predict_false(ti->hftid_hash_4t == NULL)) {
 			rc = alloc_hftid_hash(&sc->tids, HASH_NOWAIT);
-			if (rc != 0)
-				goto done;
-		}
-		if (__predict_false(sc->tids.atid_tab == NULL)) {
-			rc = alloc_atid_tab(&sc->tids, M_NOWAIT);
 			if (rc != 0)
 				goto done;
 		}

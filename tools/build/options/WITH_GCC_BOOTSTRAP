@@ -1,2 +1,4 @@
-.\" $FreeBSD: 8e04b11fb483d67d2a1647e7c013cee118a16e12 $
+.\" $FreeBSD: 323602a75f802a6efc4eda17d71a65cc1ddfe840 $
 Set to build gcc and g++ as part of the bootstrap process.
+This option is deprecated and will be removed before
+.Fx 13 .

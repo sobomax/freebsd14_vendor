@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2afc930bd94a145cc5ebd15af734989a0a1b2bbf $");
+__FBSDID("$FreeBSD: 395988020c5f035c5480b44c1fdb2d88a7eb4074 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -90,11 +90,11 @@ static int
 ata_netcell_ch_attach(device_t dev)
 {
     struct ata_channel *ch = device_get_softc(dev);
- 
+
     /* setup the usual register normal pci style */
     if (ata_pci_ch_attach(dev))
 	return ENXIO;
- 
+
     /* the NetCell only supports 16 bit PIO transfers */
     ch->flags |= ATA_USE_16BIT;
     /* It is a hardware RAID without cable. */

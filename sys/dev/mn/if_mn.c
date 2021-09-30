@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 028de7d6c6ffb8304ea9d857bef9d4efb3d6777a $");
+__FBSDID("$FreeBSD: 7c769965674395355f1e0f015283a7cbb3328c65 $");
 
 /*
  * Stuff to describe the MUNIC32X and FALC54 chips.
@@ -165,7 +165,6 @@ struct m32_mem {
 
 struct mn_softc;
 struct sockaddr;
-struct rtentry;
 
 static	int	mn_probe(device_t self);
 static	int	mn_attach(device_t self);
@@ -744,8 +743,6 @@ ngmn_connect(hook_p hook)
 	if (!(u & 1))
 		printf("%s: init chan %d stat %08x\n", sc->name, chan, u);
 	sc->m32x->stat = 1; 
-	/* probably not at splnet, force outward queueing */
-	NG_HOOK_FORCE_QUEUE(NG_HOOK_PEER(hook));
 
 	return (0);
 }
@@ -1395,6 +1392,7 @@ mn_attach (device_t self)
 	default:
 		printf(" Rev 0x%x\n", sc->f54r->vstr);
 	}
+	gone_in_dev(self, 14, "sync serial (T1/E1) driver");
 
 	if (ng_make_node_common(&mntypestruct, &sc->node) != 0) {
 		printf("ng_make_node_common failed\n");

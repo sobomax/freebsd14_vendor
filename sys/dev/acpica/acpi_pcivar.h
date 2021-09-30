@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 John Baldwin <jhb@FreeBSD.org>
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a720cc25ab1e9315b2e59d5623e42ca96809ae12 $
+ * $FreeBSD: d2720c44b5e7f8efbe9f03fdd1adcee2e9394475 $
  */
 
 #ifndef	_ACPI_PCIVAR_H_

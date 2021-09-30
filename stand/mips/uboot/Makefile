@@ -1,4 +1,4 @@
-# $FreeBSD: 1751bcb80d544c1ebf27973c07eb453836880057 $
+# $FreeBSD: 1162b7fed3b0bcd17391892be725da5fee3c5c59 $
 
 LOADER_CD9660_SUPPORT?=	no
 LOADER_EXT2FS_SUPPORT?=	no
@@ -19,7 +19,11 @@ INSTALLFLAGS=	-b
 WARNS?=		1
 # Address at which ubldr will be loaded.
 # This varies for different boards and SOCs.
+.if ${MACHINE_ARCH:Mmips64*}
 UBLDR_LOADADDR?=	0xffffffff80800000
+.else
+UBLDR_LOADADDR?=	0x80800000
+.endif
 
 # Architecture-specific loader code
 SRCS=		start.S conf.c vers.c

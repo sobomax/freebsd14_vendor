@@ -16,10 +16,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6eec32d8cbee55ce6f66c679372066747c218668 $");
+__FBSDID("$FreeBSD: 3f858952255c69ef071fff504e95d4e51090d543 $");
 
 #include "namespace.h"
 #include <sys/param.h>
+#include <sys/elf_common.h>
 #include <sys/exec.h>
 #include <sys/sysctl.h>
 
@@ -112,6 +113,10 @@ setproctitle_internal(const char *fmt, va_list ap)
 		/* Nothing to restore */
 		return (NULL);
 
+	if (ps_strings == NULL)
+		(void)_elf_aux_info(AT_PS_STRINGS, &ps_strings,
+		    sizeof(ps_strings));
+
 	if (ps_strings == NULL) {
 		len = sizeof(ul_ps_strings);
 		if (sysctlbyname("kern.ps_strings", &ul_ps_strings, &len, NULL,
@@ -119,6 +124,9 @@ setproctitle_internal(const char *fmt, va_list ap)
 			return (NULL);
 		ps_strings = (struct ps_strings *)ul_ps_strings;
 	}
+
+	if (ps_strings == NULL)
+		return (NULL);
 
 	/*
 	 * PS_STRINGS points to zeroed memory on a style #2 kernel.
@@ -176,7 +184,7 @@ setproctitle_fast(const char *fmt, ...)
 		oid[0] = CTL_KERN;
 		oid[1] = KERN_PROC;
 		oid[2] = KERN_PROC_ARGS;
-		oid[3] = getpid();
+		oid[3] = -1;
 		sysctl(oid, 4, 0, 0, "", 0);
 		fast_update = 1;
 	}
@@ -198,7 +206,7 @@ setproctitle(const char *fmt, ...)
 		oid[0] = CTL_KERN;
 		oid[1] = KERN_PROC;
 		oid[2] = KERN_PROC_ARGS;
-		oid[3] = getpid();
+		oid[3] = -1;
 		sysctl(oid, 4, 0, 0, buf, strlen(buf) + 1);
 		fast_update = 0;
 	}

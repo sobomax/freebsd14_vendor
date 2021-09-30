@@ -23,14 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c163cdc26980b559e699af95f54f121a67a60b06 $
+ * $FreeBSD: a1b9fe43fe22df863ef98331c1b4f7bf196fd8ec $
  */
 
 #ifndef ARCHIVE_ENTRY_H_INCLUDED
 #define	ARCHIVE_ENTRY_H_INCLUDED
 
 /* Note: Compiler will complain if this does not match archive.h! */
-#define	ARCHIVE_VERSION_NUMBER 3004003
+#define	ARCHIVE_VERSION_NUMBER 3005001
 
 /*
  * Note: archive_entry.h is for use outside of libarchive; the
@@ -395,6 +395,19 @@ __LA_DECL void	archive_entry_copy_stat(struct archive_entry *, const struct stat
 
 __LA_DECL const void * archive_entry_mac_metadata(struct archive_entry *, size_t *);
 __LA_DECL void archive_entry_copy_mac_metadata(struct archive_entry *, const void *, size_t);
+
+/*
+ * Digest routine. This is used to query the raw hex digest for the
+ * given entry. The type of digest is provided as an argument.
+ */
+#define ARCHIVE_ENTRY_DIGEST_MD5              0x00000001
+#define ARCHIVE_ENTRY_DIGEST_RMD160           0x00000002
+#define ARCHIVE_ENTRY_DIGEST_SHA1             0x00000003
+#define ARCHIVE_ENTRY_DIGEST_SHA256           0x00000004
+#define ARCHIVE_ENTRY_DIGEST_SHA384           0x00000005
+#define ARCHIVE_ENTRY_DIGEST_SHA512           0x00000006
+
+__LA_DECL const unsigned char * archive_entry_digest(struct archive_entry *, int /* type */);
 
 /*
  * ACL routines.  This used to simply store and return text-format ACL

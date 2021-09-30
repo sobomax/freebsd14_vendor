@@ -1,4 +1,4 @@
-# $FreeBSD: 352bacb7685f6d3353d70af1c9ed0df25aa33f81 $
+# $FreeBSD: aefe03347b29fb84950003eba2b6098471bf75e6 $
 
 PROG_CXX=	llvm-objcopy
 
@@ -18,6 +18,10 @@ SRCS+=		MachO/MachOReader.cpp
 SRCS+=		MachO/MachOWriter.cpp
 SRCS+=		MachO/Object.cpp
 SRCS+=		llvm-objcopy.cpp
+SRCS+=		wasm/Object.cpp
+SRCS+=		wasm/Reader.cpp
+SRCS+=		wasm/WasmObjcopy.cpp
+SRCS+=		wasm/Writer.cpp
 
 .include "${SRCTOP}/lib/clang/llvm.pre.mk"
 

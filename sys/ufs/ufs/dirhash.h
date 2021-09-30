@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 693cb662d859e954eb987b3ec7642e036b94b7ea $
+ * $FreeBSD: d38c1112ff5c9f642178efab85c1443f7525266f $
  */
 
 #ifndef _UFS_UFS_DIRHASH_H_
@@ -111,7 +111,6 @@ struct dirhash {
 	/* Protected by ufsdirhash_mtx. */
 	TAILQ_ENTRY(dirhash) dh_list;	/* chain of all dirhashes */
 };
-
 
 /*
  * Dirhash functions.

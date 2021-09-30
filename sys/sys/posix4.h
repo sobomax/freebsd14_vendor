@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3019c6d5ccf8ee5aa45d407915285f7dc07a961a $
+ * $FreeBSD: bb3195e8a1a5e4061ca9b7e7ddd6022d3d2d843a $
  */
 
 #include <sys/param.h>
@@ -55,7 +55,6 @@ int sys_ ## SC (struct thread *td, struct SC##_args *uap) \
 	return syscall_not_present(td, #SC , (struct nosys_args *)uap); \
 }
 
-
 MALLOC_DECLARE(M_P31B);
 
 int p31b_proc(struct proc *, pid_t, struct proc **);
@@ -75,7 +74,6 @@ void p31b_unsetcfg(int);
  */
 
 enum ksched_op {
-
 #define KSCHED_OP_RW { 1, 0, 1, 0, 0, 0, 0, 0 }
 
 	SCHED_SETPARAM,

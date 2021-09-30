@@ -1,0 +1,3 @@
+.\" $FreeBSD: 693cce921be184d993f2b29ebe7b5a1145875b7e $
+Do not build the base system with the retpoline speculative execution
+vulnerability mitigation.

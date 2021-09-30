@@ -28,12 +28,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1efdc3debda571cf75625493389ed3178b0a057c $");
+__FBSDID("$FreeBSD: 63ca8a05355559b889fb1bf0bafed37b785cf9e7 $");
+
+#include <sys/types.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
+#include <sys/stat.h>
+#include <sys/time.h>
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>
-#include <sys/stat.h>
-#include <sys/time.h>
 
 static d_open_t ips_open;
 static d_close_t ips_close;

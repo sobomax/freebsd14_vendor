@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1fbed212a95fa5bb1d90e4283e475a8726da3b7c $
+ * $FreeBSD: 889a43acaea1bbc07a577ee0571b6e01f7eaea62 $
  */
 #ifndef _NETSMB_SMB_TRANTCP_H_
 #define	_NETSMB_SMB_TRANTCP_H_
@@ -46,7 +46,6 @@ enum nbstate {
 	NBST_RETARGET,
 	NBST_REFUSED
 };
-
 
 /*
  * socket specific data

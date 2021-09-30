@@ -1,4 +1,4 @@
-# $FreeBSD: 3a2c49fed0db09648eb94d11421f3f2ca2c55634 $
+# $FreeBSD: d12cf0245df299e21fefeffcd6e2385418f7fea0 $
 
 PACKAGE=runtime
 PROG=	newfs_msdos
@@ -9,5 +9,6 @@ SRCS=	newfs_msdos.c mkfs_msdos.c
 .if ${MACHINE_CPUARCH} == "arm"
 WARNS?= 3
 .endif
+CSTD=	c11
 
 .include <bsd.prog.mk>

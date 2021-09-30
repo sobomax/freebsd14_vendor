@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 704c7b5feef4aab52b4557b85dc0b4851eb77720 $");
+__FBSDID("$FreeBSD: 05988f43133e77bc3fc86317b5a6aa5eb844ac9e $");
 
 #define _WANT_KERNEL_ERRNO
 #ifdef __LP64__
@@ -254,14 +254,21 @@ print_integer_arg_valid(const char *(*decoder)(int), int value)
 	}
 }
 
+static bool
+print_mask_arg_part(bool (*decoder)(FILE *, int, int *), int value, int *rem)
+{
+
+	printf("%#x<", value);
+	return (decoder(stdout, value, rem));
+}
+
 static void
 print_mask_arg(bool (*decoder)(FILE *, int, int *), int value)
 {
 	bool invalid;
 	int rem;
 
-	printf("%#x<", value);
-	invalid = !decoder(stdout, value, &rem);
+	invalid = !print_mask_arg_part(decoder, value, &rem);
 	printf(">");
 	if (invalid)
 		printf("<invalid>%u", rem);
@@ -1247,7 +1254,8 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				ip++;
 				narg--;
 				break;
-			case SYS_shm_open:
+#ifdef SYS_freebsd12_shm_open
+			case SYS_freebsd12_shm_open:
 				if (ip[0] == (uintptr_t)SHM_ANON) {
 					printf("(SHM_ANON");
 					ip++;
@@ -1260,6 +1268,23 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				decode_filemode(ip[1]);
 				ip += 2;
 				narg -= 2;
+				break;
+#endif
+			case SYS_shm_open2:
+				if (ip[0] == (uintptr_t)SHM_ANON) {
+					printf("(SHM_ANON");
+					ip++;
+				} else {
+					print_number(ip, narg, c);
+				}
+				putchar(',');
+				print_mask_arg(sysdecode_open_flags, ip[0]);
+				putchar(',');
+				decode_filemode(ip[1]);
+				putchar(',');
+				print_mask_arg(sysdecode_shmflags, ip[2]);
+				ip += 3;
+				narg -= 3;
 				break;
 			case SYS_minherit:
 				print_number(ip, narg, c);
@@ -1437,10 +1462,16 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				ip++;
 				narg--;
 				break;
-			case SYS__umtx_op:
+			case SYS__umtx_op: {
+				int op;
+
 				print_number(ip, narg, c);
 				putchar(',');
-				print_integer_arg(sysdecode_umtx_op, *ip);
+				if (print_mask_arg_part(sysdecode_umtx_op_flags,
+				    *ip, &op))
+					putchar('|');
+				print_integer_arg(sysdecode_umtx_op, op);
+				putchar('>');
 				switch (*ip) {
 				case UMTX_OP_CV_WAIT:
 					ip++;
@@ -1460,6 +1491,7 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				ip++;
 				narg--;
 				break;
+			}
 			case SYS_ftruncate:
 			case SYS_truncate:
 				print_number(ip, narg, c);
@@ -2012,7 +2044,7 @@ ktrcapfail(struct ktr_cap_fail *ktr)
 		printf("disallowed system call");
 		break;
 	case CAPFAIL_LOOKUP:
-		/* used ".." in strict-relative mode */
+		/* absolute or AT_FDCWD path, ".." path, etc. */
 		printf("restricted VFS lookup");
 		break;
 	default:

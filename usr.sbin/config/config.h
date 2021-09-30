@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 66da254b6d7016d84ebb6ac8aea86b7b9082d7ce $
+ * $FreeBSD: a1591486b390006935d7af3d5433ff104abda625 $
  */
 
 /*
@@ -82,6 +82,7 @@ struct files_name {
 #define NO_OBJ		2
 #define BEFORE_DEPEND	4
 #define NOWERROR	16
+#define NO_CTFCONVERT	32
 
 struct device {
 	int	d_done;			/* processed */

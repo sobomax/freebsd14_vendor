@@ -30,7 +30,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: 0ed8152447552b7b2a84c8310732e770fe3ea766 $");
+__FBSDID("$FreeBSD: 1e25960d9bec039f779f061a3da7d84f6b10519a $");
 
 .syntax unified
 
@@ -39,9 +39,6 @@ __FBSDID("$FreeBSD: 0ed8152447552b7b2a84c8310732e770fe3ea766 $");
  * bit, then multiplies the number by 0x0450fbaf which leaves the top
  * 6 bits as an index into the table.  This algorithm should be a win
  * over the checking each bit in turn as per the C compiled version.
- *
- * under ARMv5 there's an instruction called CLZ (count leading Zero's) that
- * could be used
  *
  * This is the ffs algorithm devised by d.seal and posted to comp.sys.arm on
  * 16 Feb 1994.

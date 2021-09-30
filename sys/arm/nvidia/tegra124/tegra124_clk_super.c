@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1ff81797ed6cfa230b11342dc6c268522be9f66a $");
+__FBSDID("$FreeBSD: 43582508edea7a90e99ff302739e34afc536614f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,9 +38,8 @@ __FBSDID("$FreeBSD: 1ff81797ed6cfa230b11342dc6c268522be9f66a $");
 
 #include <dev/extres/clk/clk.h>
 
-#include <gnu/dts/include/dt-bindings/clock/tegra124-car.h>
+#include <dt-bindings/clock/tegra124-car.h>
 #include "tegra124_car.h"
-
 
 /* Flags */
 #define	SMF_HAVE_DIVIDER_2	1

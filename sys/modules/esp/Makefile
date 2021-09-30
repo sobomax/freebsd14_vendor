@@ -1,14 +1,9 @@
-# $FreeBSD: d582a2da5dbe1a932fd763b4d9e5e5f2b3c95a4e $
+# $FreeBSD: 8540b4434ae36dc7eb02dae34e5be7c1f30584b8 $
 
 .PATH: ${SRCTOP}/sys/dev/esp
 
 KMOD=	esp
-SRCS=	device_if.h esp_pci.c ${esp_sbus} bus_if.h ncr53c9x.c ${ofw_bus_if}
+SRCS=	device_if.h esp_pci.c bus_if.h ncr53c9x.c
 SRCS+=	opt_cam.h pci_if.h
-
-.if ${MACHINE} == "sparc64"
-ofw_bus_if=	ofw_bus_if.h
-esp_sbus=	esp_sbus.c
-.endif
 
 .include <bsd.kmod.mk>

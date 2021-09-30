@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1df49ada13cedaade5193a244f461bdc35ec303 $");
+__FBSDID("$FreeBSD: 535301a1b474c0e4d0f367aef18ce2bea651bbd9 $");
 
 #if 0
 #ifndef lint
@@ -100,7 +100,7 @@ char _nc_termcap[TBUFSIZ + 1]; /* Last getcap, provided to tgetent() emul */
  * file.
  */
 int
-_nc_read_termcap_entry(const char *const name, TERMTYPE *const tp)
+_nc_read_termcap_entry(const char *const name, TERMTYPE2 *const tp)
 {
 	ENTRY	*ep;
 	char *p;

@@ -1,4 +1,4 @@
-/* $FreeBSD: 8f4acdb80a802ac17dbc0e7fb624b152013999f0 $ */
+/* $FreeBSD: 81471391d7a8d7520f69698bd2a94efe12520261 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -275,7 +275,7 @@ midi_init(void *arg __unused)
 
 	parent = SYSCTL_ADD_NODE(&midi_ctx_list,
 	    SYSCTL_STATIC_CHILDREN(_hw_usb_templates), OID_AUTO,
-	    parent_name, CTLFLAG_RW,
+	    parent_name, CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    0, "USB MIDI device side template");
 	SYSCTL_ADD_U16(&midi_ctx_list, SYSCTL_CHILDREN(parent), OID_AUTO,
 	    "vendor_id", CTLFLAG_RWTUN,

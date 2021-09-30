@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1214d440b3f67222bf5c78f5a2821aefc6f40d69 $");
+__FBSDID("$FreeBSD: e235dcd07c7c9a0fc0ee50550c2d0fdd8e35c8b2 $");
 
 #include "opt_platform.h"
 
@@ -62,9 +62,7 @@ __FBSDID("$FreeBSD: 1214d440b3f67222bf5c78f5a2821aefc6f40d69 $");
 #include <dev/ofw/ofw_bus_subr.h>
 #include <dev/fdt/fdt_common.h>
 
-#ifdef INTRNG
 #include "pic_if.h"
-#endif
 
 #ifdef DEBUG
 #define debugf(fmt, args...) do { printf("%s(): ", __func__);	\

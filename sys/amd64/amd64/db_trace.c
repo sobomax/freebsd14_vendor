@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ace90a1f8ac58012e509d8efecc0d4432719f537 $");
+__FBSDID("$FreeBSD: 7d1544a5d0bcdef4e8f95230430c58efcd78a4b6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -454,7 +454,6 @@ amd64_set_watch(watchnum, watchaddr, size, access, d)
 	return (watchnum);
 }
 
-
 int
 amd64_clr_watch(watchnum, d)
 	int watchnum;
@@ -469,7 +468,6 @@ amd64_clr_watch(watchnum, d)
 
 	return (0);
 }
-
 
 int
 db_md_set_watchpoint(addr, size)
@@ -538,7 +536,6 @@ db_md_clr_watchpoint(addr, size)
 			if (DBREG_DRX((d), i) >= addr &&
 			    DBREG_DRX((d), i) < addr + size)
 				amd64_clr_watch(i, d);
-
 		}
 	}
 
@@ -554,7 +551,6 @@ db_md_clr_watchpoint(addr, size)
 	return (0);
 }
 
-
 static const char *
 watchtype_str(type)
 	int type;
@@ -566,7 +562,6 @@ watchtype_str(type)
 		default		      : return "invalid";    break;
 	}
 }
-
 
 void
 db_md_list_watchpoints(void)

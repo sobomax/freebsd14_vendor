@@ -7,9 +7,6 @@
  * are met:
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -22,11 +19,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 17ac0e392345c1330ca344925d2169daf666529a $
+ * $FreeBSD: 1bd9a42839873fb956bb6d12caa085473836ccbb $
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 17ac0e392345c1330ca344925d2169daf666529a $");
+__FBSDID("$FreeBSD: 1bd9a42839873fb956bb6d12caa085473836ccbb $");
 
 	.text
 	.align	4

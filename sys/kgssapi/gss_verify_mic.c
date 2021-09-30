@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5c233bb9bc101b6daa08c12204e3441df6d641e $");
+__FBSDID("$FreeBSD: 45b8c18f2000fa679e1835b74445a3339d20bf77 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -86,4 +86,3 @@ gss_verify_mic_mbuf(OM_uint32 *minor_status, const gss_ctx_id_t ctx,
 
 	return (KGSS_VERIFY_MIC(ctx, minor_status, m, mic, qop_state));
 }
-

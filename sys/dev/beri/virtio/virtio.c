@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78e3e2168f48114c12544c424fa504ba09a4b016 $");
+__FBSDID("$FreeBSD: 92ec57dee116cd73801ad1f2a5ab0daf76d461ee $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -109,7 +109,6 @@ paddr_unmap(void *phys, uint32_t size)
 static inline void
 _vq_record(uint32_t offs, int i, volatile struct vring_desc *vd,
 	struct iovec *iov, int n_iov, uint16_t *flags) {
-
 	if (i >= n_iov)
 		return;
 

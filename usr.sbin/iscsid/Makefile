@@ -1,4 +1,4 @@
-# $FreeBSD: c22fb9aaa60d40ec9005763d9879ad6fee16ddea $
+# $FreeBSD: e3b1acb636b2880d9620ac3deb1672c7675ba8c5 $
 
 PACKAGE=	iscsi
 PROG=		iscsid
@@ -10,7 +10,5 @@ CFLAGS+=	-DICL_KERNEL_PROXY
 MAN=		iscsid.8
 
 LIBADD=		md util
-
-WARNS=		6
 
 .include <bsd.prog.mk>

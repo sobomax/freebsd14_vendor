@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 7e3f67a9aa87c96c8ab68a192181707befeee35e $
+ * $FreeBSD: afcfdfadaf1e46f937c2fafc8811def63fabfb17 $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
@@ -244,7 +244,7 @@ translator tcpsinfo_t < struct tcpcb *p > {
 	tcps_cwnd_ssthresh =	p == NULL ? -1 : p->snd_ssthresh;
 	tcps_srecover =		p == NULL ? -1 : p->snd_recover;
 	tcps_sack_fack =	p == NULL ? 0  : p->snd_fack;
-	tcps_sack_snxt =	p == NULL ? 0  : p->sack_newdata;
+	tcps_sack_snxt =	p == NULL ? 0  : p->snd_recover;
 	tcps_rto =		p == NULL ? -1 : (p->t_rxtcur * 1000) / `hz;
 	tcps_mss =		p == NULL ? -1 : p->t_maxseg;
 	tcps_retransmit =	p == NULL ? -1 : p->t_rxtshift > 0 ? 1 : 0;

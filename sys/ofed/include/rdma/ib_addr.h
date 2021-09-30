@@ -32,7 +32,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 49caf7a7844d4fb4821657153273b55de2bebd9a $
+ * $FreeBSD: 15d6a937c4db274d9b39abd3362672fbbcd7c71c $
  */
 
 #if !defined(IB_ADDR_H)
@@ -55,6 +55,13 @@
 struct rdma_addr_client {
 	atomic_t refcount;
 	struct completion comp;
+};
+
+union rdma_sockaddr {
+	struct sockaddr         _sockaddr;
+	struct sockaddr_in      _sockaddr_in;
+	struct sockaddr_in6     _sockaddr_in6;
+	struct sockaddr_storage _sockaddr_ss;
 };
 
 /**
@@ -354,9 +361,13 @@ static inline u16 rdma_get_vlan_id(union ib_gid *dgid)
 
 static inline struct net_device *rdma_vlan_dev_real_dev(struct net_device *dev)
 {
-	if (dev->if_type == IFT_ETHER && dev->if_pcp != IFNET_PCP_NONE)
-		return dev; /* prio-tagged traffic */
-	return VLAN_TRUNKDEV(__DECONST(struct ifnet *, dev));
+	struct epoch_tracker et;
+
+	NET_EPOCH_ENTER(et);
+	if (dev->if_type != IFT_ETHER || dev->if_pcp == IFNET_PCP_NONE)
+		dev = VLAN_TRUNKDEV(dev);	/* non prio-tagged traffic */
+	NET_EPOCH_EXIT(et);
+	return (dev);
 }
 
 #endif /* IB_ADDR_H */

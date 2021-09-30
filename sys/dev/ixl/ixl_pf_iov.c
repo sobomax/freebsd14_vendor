@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 36f1aae28d61511265fb1076ce7c66e226a387cf $*/
+/*$FreeBSD: c3cf90d1c4b5d031a4af958b68365b7084ed0cb3 $*/
 
 #include "ixl_pf_iov.h"
 
@@ -38,8 +38,6 @@
 static void	ixl_vf_map_vsi_queue(struct i40e_hw *hw, struct ixl_vf *vf, int qnum, uint32_t val);
 static void	ixl_vf_disable_queue_intr(struct i40e_hw *hw, uint32_t vfint_reg);
 static void	ixl_vf_unregister_intr(struct i40e_hw *hw, uint32_t vpint_reg);
-
-static bool	ixl_zero_mac(const uint8_t *addr);
 
 static int	ixl_vc_opcode_level(uint16_t opcode);
 
@@ -1014,20 +1012,11 @@ ixl_vf_disable_queues_msg(struct ixl_pf *pf, struct ixl_vf *vf,
 	ixl_send_vf_ack(pf, vf, VIRTCHNL_OP_DISABLE_QUEUES);
 }
 
-static bool
-ixl_zero_mac(const uint8_t *addr)
-{
-	uint8_t zero[ETHER_ADDR_LEN] = {0, 0, 0, 0, 0, 0};
-
-	return (cmp_etheraddr(addr, zero));
-}
-
-
 static int
 ixl_vf_mac_valid(struct ixl_vf *vf, const uint8_t *addr)
 {
 
-	if (ixl_zero_mac(addr) || ETHER_IS_BROADCAST(addr))
+	if (ETHER_IS_ZERO(addr) || ETHER_IS_BROADCAST(addr))
 		return (EINVAL);
 
 	/*
@@ -1036,7 +1025,7 @@ ixl_vf_mac_valid(struct ixl_vf *vf, const uint8_t *addr)
 	 * is not its assigned MAC.
 	 */
 	if (!(vf->vf_flags & VF_FLAG_SET_MAC_CAP) &&
-	    !(ETHER_IS_MULTICAST(addr) || cmp_etheraddr(addr, vf->mac)))
+	    !(ETHER_IS_MULTICAST(addr) || !ixl_ether_is_equal(addr, vf->mac)))
 		return (EPERM);
 
 	return (0);
@@ -1096,7 +1085,7 @@ ixl_vf_del_mac_msg(struct ixl_pf *pf, struct ixl_vf *vf, void *msg,
 
 	for (i = 0; i < addr_list->num_elements; i++) {
 		addr = &addr_list->list[i];
-		if (ixl_zero_mac(addr->addr) || ETHER_IS_BROADCAST(addr->addr)) {
+		if (ETHER_IS_ZERO(addr->addr) || ETHER_IS_BROADCAST(addr->addr)) {
 			i40e_send_vf_nack(pf, vf,
 			    VIRTCHNL_OP_DEL_ETH_ADDR, I40E_ERR_PARAM);
 			return;
@@ -1728,7 +1717,7 @@ ixl_if_iov_uninit(if_ctx_t ctx)
 		if (pf->vfs[i].vsi.seid != 0)
 			i40e_aq_delete_element(hw, pf->vfs[i].vsi.seid, NULL);
 		ixl_pf_qmgr_release(&pf->qmgr, &pf->vfs[i].qtag);
-		ixl_free_mac_filters(&pf->vfs[i].vsi);
+		ixl_free_filters(&pf->vfs[i].vsi.ftl);
 		ixl_dbg_iov(pf, "VF %d: %d released\n",
 		    i, pf->vfs[i].qtag.num_allocated);
 		ixl_dbg_iov(pf, "Unallocated total: %d\n", ixl_pf_qmgr_get_num_free(&pf->qmgr));

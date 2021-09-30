@@ -28,7 +28,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: b6e699c1fed9cfa6bb4354620169ce1d89f52b43 $
+ * $FreeBSD: 98d60f2646d2bd1b7cbd9fe84612edbbd466142e $
  */
 
 #ifndef _XEN_XENSTORE_XENSTOREVAR_H
@@ -341,7 +341,7 @@ int xs_gather(struct xs_transaction t, const char *dir, ...);
  *          xenbus_watch objects, to watch the same path in the XenStore.
  */
 int xs_register_watch(struct xs_watch *watch);
- 
+
 /**
  * Unregister a XenStore watch.
  *
@@ -377,4 +377,3 @@ void xs_lock(void);
 void xs_unlock(void);
 
 #endif /* _XEN_XENSTORE_XENSTOREVAR_H */
-

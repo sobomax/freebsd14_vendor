@@ -1,4 +1,4 @@
-/* $FreeBSD: d75e67eee8feb00e9d6ea13df4e507b17a650187 $ */
+/* $FreeBSD: ca0631e2ce535d8f8e205f251848a7116adddc5b $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -87,7 +87,6 @@ struct usb_page_search {
  * memory allocation.
  */
 struct usb_page_cache {
-
 #if USB_HAVE_BUSDMA
 	bus_dma_tag_t tag;
 	bus_dmamap_t map;

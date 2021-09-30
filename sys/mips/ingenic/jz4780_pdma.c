@@ -31,7 +31,7 @@
 /* Ingenic JZ4780 PDMA Controller. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5637db93a16417b63bf2720b797bf40c9a1ae6ba $");
+__FBSDID("$FreeBSD: 874dd0f5d6ac1b02957c78b63a77b346827c3f4a $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -451,7 +451,7 @@ pdma_channel_request(device_t dev, struct xdma_channel *xchan, struct xdma_reque
 		chan->flags = CHAN_DESCR_RELINK;
 	chan->cur_desc = 0;
 	chan->req = req;
-	
+
 	for (i = 0; i < req->block_num; i++) {
 		desc = &chan->desc_ring[i];
 

@@ -1,4 +1,4 @@
-# $FreeBSD: bf018e16c9e064979f0acce6a63d12c0e046771e $
+# $FreeBSD: ecffbf9cfd6a5d66b785184eb4b328b7a9c85769 $
 
 .include <src.opts.mk>
 
@@ -8,6 +8,7 @@ NO_PIC=
 MK_SSP=		no
 WARNS?=	2
 
+SRCS_EXC+=	int_util.c
 .include "Makefile.inc"
 
 .if ${.MAKE.LEVEL} > 0

@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 53d8506054cc88fbfe0ec459bf8bf33a2f7dd95a $*/
+/*$FreeBSD: b4f8b6a2b694bc7e9e49c505f6f06dc462e35d35 $*/
 
 /* 82562G 10/100 Network Connection
  * 82562G-2 10/100 Network Connection
@@ -2780,7 +2780,7 @@ s32 e1000_lv_jumbo_workaround_ich8lan(struct e1000_hw *hw, bool enable)
 		 * SHRAL/H) and initial CRC values to the MAC
 		 */
 		for (i = 0; i < hw->mac.rar_entry_count; i++) {
-			u8 mac_addr[ETH_ADDR_LEN] = {0};
+			u8 mac_addr[ETHER_ADDR_LEN] = {0};
 			u32 addr_high, addr_low;
 
 			addr_high = E1000_READ_REG(hw, E1000_RAH(i));

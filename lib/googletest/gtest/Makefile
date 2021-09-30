@@ -1,4 +1,4 @@
-# $FreeBSD: b580c33eb45a8c7a4cb15aef412ec4b259e2e92e $
+# $FreeBSD: 470682faebc1b47c2757e17421f14907573298bd $
 
 .include <bsd.init.mk>
 
@@ -45,9 +45,6 @@ INTERNAL_CUSTOM_INCS+=	gtest/internal/custom/gtest.h
 
 SRCS+=		gtest-all.cc
 
-LIBADD+=	pthread
-
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
+LIBADD+=	pthread regex
 
 .include <bsd.lib.mk>

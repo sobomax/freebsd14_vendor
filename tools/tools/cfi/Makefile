@@ -1,8 +1,7 @@
-# $FreeBSD: 5a49f2d38438b0467dcbee47bb986775740efc9c $
+# $FreeBSD: 9f4dd10a28282c0fa65d105a1ea8861a8f52776c $
 
 PROG=	cfi
 BINDIR=	/usr/local/bin
 MAN=
-WARNS?=6
 
 .include <bsd.prog.mk>

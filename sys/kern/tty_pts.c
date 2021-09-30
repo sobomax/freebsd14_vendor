@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4800161e1a3d7b836b46e80110712bfd4f373986 $");
+__FBSDID("$FreeBSD: dbbf35cf1a1246ebe3971aa9ebc26e6298c24ab5 $");
 
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT
@@ -282,7 +282,11 @@ ptsdev_ioctl(struct file *fp, u_long cmd, void *data,
 		}
 		tty_unlock(tp);
 		return (0);
-	case FIODGNAME: {
+	case FIODGNAME:
+#ifdef COMPAT_FREEBSD32
+	case FIODGNAME_32:
+#endif
+	{
 		struct fiodgname_arg *fgn;
 		const char *p;
 		int i;
@@ -293,7 +297,7 @@ ptsdev_ioctl(struct file *fp, u_long cmd, void *data,
 		i = strlen(p) + 1;
 		if (i > fgn->len)
 			return (EINVAL);
-		return copyout(p, fgn->buf, i);
+		return (copyout(p, fiodgname_buf_get_ptr(fgn, cmd), i));
 	}
 
 	/*

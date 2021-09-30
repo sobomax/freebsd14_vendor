@@ -36,7 +36,7 @@
 # From src/sys/kern/makedevops.pl,v 1.12 1999/11/22 14:40:04 n_hibma Exp
 # From src/sys/kern/makeobjops.pl,v 1.8 2001/11/16 02:02:42 joe Exp
 #
-# $FreeBSD: 225e48d43497d81dc7035c4e37306326aadae2ce $
+# $FreeBSD: c0fb8db10f3e66dbd5cc6de0f154e80730cd0baf $
 
 #
 #   Script to produce kobj front-end sugar.
@@ -325,13 +325,18 @@ function handle_method (static, doc)
 		    line_width, length(prototype)));
 	}
 	printh("{");
-	printh("\tkobjop_t _m;");
+	if (singleton)
+		printh("\tstatic kobjop_t _m;");
+	else
+		printh("\tkobjop_t _m;");
 	if (ret != "void")
 		printh("\t" ret " rc;");
 	if (!static)
 		firstvar = "((kobj_t)" firstvar ")";
 	if (prolog != "")
 		printh(prolog);
+	if (singleton)
+		printh("\tif (_m == NULL)");
 	printh("\tKOBJOPLOOKUP(" firstvar "->ops," mname ");");
 	rceq = (ret != "void") ? "rc = " : "";
 	printh("\t" rceq "((" mname "_t *) _m)(" varname_list ");");
@@ -422,9 +427,12 @@ for (file_i = 0; file_i < num_files; file_i++) {
 	ctmpfilename = cfilename ".tmp";
 	htmpfilename = hfilename ".tmp";
 
+	# Avoid a literal generated file tag here.
+	generated = "@" "generated";
+
 	common_head = \
 	    "/*\n" \
-	    " * This file is produced automatically.\n" \
+	    " * This file is " generated " automatically.\n" \
 	    " * Do not modify anything in here by hand.\n" \
 	    " *\n" \
 	    " * Created from source file\n" \
@@ -450,6 +458,7 @@ for (file_i = 0; file_i < num_files; file_i++) {
 	lastdoc = "";
 	prolog = "";
 	epilog = "";
+	singleton = 0;
 
 	while (!error && (getline < src) > 0) {
 		lineno++;
@@ -494,6 +503,8 @@ for (file_i = 0; file_i < num_files; file_i++) {
 			prolog = handle_code();
 		else if (/^EPILOG[ 	]*{$/)
 			epilog = handle_code();
+		else if (/^SINGLETON/)
+			singleton = 1;
 		else {
 			debug($0);
 			warnsrc("Invalid line encountered");

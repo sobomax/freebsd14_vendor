@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90b24ac98906183210c0442335b31b9a60c7b01a $");
+__FBSDID("$FreeBSD: a635bace4a09761efd043558e7c4f8e83f2da775 $");
 
 #include "opt_ddb.h"
 
@@ -88,12 +88,10 @@ __FBSDID("$FreeBSD: 90b24ac98906183210c0442335b31b9a60c7b01a $");
  * ready to run and return to user mode.
  */
 void
-cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2,int flags)
+cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 {
-	struct proc *p1;
 	struct pcb *pcb2;
 
-	p1 = td1->td_proc;
 	if ((flags & RFPROC) == 0)
 		return;
 	/* It is assumed that the vm_thread_alloc called
@@ -103,7 +101,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2,int flags)
 	/* Point the pcb to the top of the stack */
 	pcb2 = td2->td_pcb;
 
-	/* Copy p1's pcb, note that in this case
+	/* Copy td1's pcb, note that in this case
 	 * our pcb also includes the td_frame being copied
 	 * too. The older mips2 code did an additional copy
 	 * of the td_frame, for us that's not needed any
@@ -143,7 +141,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2,int flags)
 	 */
 
 	td2->td_md.md_tls = td1->td_md.md_tls;
-	td2->td_md.md_tls_tcb_offset = td1->td_md.md_tls_tcb_offset;
+	p2->p_md.md_tls_tcb_offset = td1->td_proc->p_md.md_tls_tcb_offset;
 	td2->td_md.md_saved_intr = MIPS_SR_INT_IE;
 	td2->td_md.md_spinlock_count = 1;
 #ifdef CPU_CNMIPS
@@ -405,6 +403,7 @@ cpu_copy_thread(struct thread *td, struct thread *td0)
 	                          (MIPS_SR_PX | MIPS_SR_UX | MIPS_SR_KX | MIPS_SR_SX) |
 	                          (MIPS_SR_INT_IE | MIPS_HARD_INT_MASK));
 #endif
+	td->td_md.md_tls = NULL;
 }
 
 /*
@@ -416,7 +415,7 @@ cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
     stack_t *stack)
 {
 	struct trapframe *tf;
-	register_t sp;
+	register_t sp, sr;
 
 	sp = (((intptr_t)stack->ss_sp + stack->ss_size) & ~(STACK_ALIGN - 1)) -
 	    CALLFRAME_SIZ;
@@ -426,8 +425,10 @@ cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
 	 * function.
 	 */
 	tf = td->td_frame;
+	sr = tf->sr;
 	bzero(tf, sizeof(struct trapframe));
 	tf->sp = sp;
+	tf->sr = sr;
 	tf->pc = (register_t)(intptr_t)entry;
 	/* 
 	 * MIPS ABI requires T9 to be the same as PC 
@@ -436,18 +437,6 @@ cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
 	tf->t9 = (register_t)(intptr_t)entry; 
 	tf->a0 = (register_t)(intptr_t)arg;
 
-	/*
-	 * Keep interrupt mask
-	 */
-	td->td_frame->sr = MIPS_SR_KSU_USER | MIPS_SR_EXL | MIPS_SR_INT_IE |
-	    (mips_rd_status() & MIPS_SR_INT_MASK);
-#if defined(__mips_n32) 
-	td->td_frame->sr |= MIPS_SR_PX;
-#elif  defined(__mips_n64)
-	td->td_frame->sr |= MIPS_SR_PX | MIPS_SR_UX | MIPS_SR_KX;
-#endif
-/*	tf->sr |= (ALL_INT_MASK & idle_mask) | SR_INT_ENAB; */
-	/**XXX the above may now be wrong -- mips2 implements this as panic */
 	/*
 	 * FREEBSD_DEVELOPERS_FIXME:
 	 * Setup any other CPU-Specific registers (Not MIPS Standard)
@@ -485,16 +474,10 @@ int
 cpu_set_user_tls(struct thread *td, void *tls_base)
 {
 
-#if defined(__mips_n64) && defined(COMPAT_FREEBSD32)
-	if (td->td_proc && SV_PROC_FLAG(td->td_proc, SV_ILP32))
-		td->td_md.md_tls_tcb_offset = TLS_TP_OFFSET + TLS_TCB_SIZE32;
-	else
-#endif
-	td->td_md.md_tls_tcb_offset = TLS_TP_OFFSET + TLS_TCB_SIZE;
 	td->td_md.md_tls = (char*)tls_base;
 	if (td == curthread && cpuinfo.userlocal_reg == true) {
 		mips_wr_userlocal((unsigned long)tls_base +
-		    td->td_md.md_tls_tcb_offset);
+		    td->td_proc->p_md.md_tls_tcb_offset);
 	}
 
 	return (0);
@@ -577,7 +560,7 @@ DB_SHOW_COMMAND(pcb, ddb_dump_pcb)
 		td = db_lookup_thread(addr, true);
 	else
 		td = curthread;
-	
+
 	pcb = td->td_pcb;
 
 	db_printf("Thread %d at %p\n", td->td_tid, td);
@@ -618,7 +601,7 @@ DB_SHOW_COMMAND(pcb, ddb_dump_pcb)
  */
 DB_SHOW_COMMAND(trapframe, ddb_dump_trapframe)
 {
-	
+
 	if (!have_addr)
 		return;
 

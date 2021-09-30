@@ -1,5 +1,5 @@
 /* $OpenBSD: version.h,v 1.83 2018/10/10 16:43:49 deraadt Exp $ */
-/* $FreeBSD: c4df47dde8cf2792288b677aa1db9c5187e1e9be $ */
+/* $FreeBSD: 9dbaf16e71927c45c7234e6320e832f40163ab0b $ */
 
 #define SSH_VERSION	"OpenSSH_7.9"
 
@@ -9,7 +9,7 @@
 #define SSH_VERSION_FREEBSD	"FreeBSD-20200214"
 
 #ifdef WITH_OPENSSL
-#define OPENSSL_VERSION_STRING	SSLeay_version(SSLEAY_VERSION)
+#define OPENSSL_VERSION_STRING	OpenSSL_version(OPENSSL_VERSION)
 #else
 #define OPENSSL_VERSION_STRING	"without OpenSSL"
 #endif

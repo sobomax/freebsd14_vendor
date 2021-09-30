@@ -1,6 +1,5 @@
-# $FreeBSD: fc163e90efd0bc7bddc3d013c29085758052c4bc $
+# $FreeBSD: 94118d6eb00d4964000ff879d7c19101ac4beb4b $
 
-PACKAGE=lib${LIB}
 LIB=	gpio
 SHLIB_MAJOR= 0
 

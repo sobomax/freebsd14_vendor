@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74e7428eefb33c1809d8d6dfb1634095415ba64a $");
+__FBSDID("$FreeBSD: 9827476629fc6c764763049303e7c647bf5cef80 $");
 
 #include "opt_vga.h"
 
@@ -61,7 +61,6 @@ vesa_ioctl(struct tty *tp, u_long cmd, caddr_t data, struct thread *td)
 	scp = SC_STAT(tp);
 
 	switch (cmd) {
-
 	/* generic text modes */
 	case SW_TEXT_132x25: case SW_TEXT_132x30:
 	case SW_TEXT_132x43: case SW_TEXT_132x50:

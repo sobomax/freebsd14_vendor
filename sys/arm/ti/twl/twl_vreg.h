@@ -26,11 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 45543705e25530264a0822d3f03934dfee348582 $
+ * $FreeBSD: ee7165fce92095836a1ca7e866b6162050b3969a $
  */
 #ifndef _TWL_VREG_H_
 #define _TWL_VREG_H_
-
 
 int twl_vreg_get_voltage(device_t dev, const char *name, int *millivolts);
 int twl_vreg_set_voltage(device_t dev, const char *name, int millivolts);

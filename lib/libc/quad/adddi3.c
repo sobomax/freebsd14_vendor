@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)adddi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f3d897f9df69a6fbfc10ae89813b0f175df01c3 $");
+__FBSDID("$FreeBSD: 6aaaf828ccb6a3be13ef6c108c1024ee3e86f7e5 $");
 
 #include "quad.h"
 
@@ -47,8 +47,7 @@ __FBSDID("$FreeBSD: 5f3d897f9df69a6fbfc10ae89813b0f175df01c3 $");
  * either x or y (the choice to compare with x or y is arbitrary).
  */
 quad_t
-__adddi3(a, b)
-	quad_t a, b;
+__adddi3(quad_t a, quad_t b)
 {
 	union uu aa, bb, sum;
 

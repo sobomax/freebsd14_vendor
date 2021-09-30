@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_prse.h,v 1.2 2003/03/18 00:09:36 max Exp $
- * $FreeBSD: 5d456ebea4ded5931a55e9f43d8223e73698aa86 $
+ * $FreeBSD: 9731de6aa9fa2bd1ff97ee196100976b55590c7d $
  */
 
 /***************************************************************************
@@ -218,4 +218,3 @@ static const struct ng_cmdlist	ng_hci_cmdlist[] = {
 };
 
 #endif /* ndef _NETGRAPH_HCI_PRSE_H_ */
-

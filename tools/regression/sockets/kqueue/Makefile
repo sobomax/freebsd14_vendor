@@ -1,9 +1,8 @@
 #
-# $FreeBSD: 6771d25acf662afe8eaa8fabb28a8bfc81e828a2 $
+# $FreeBSD: e37eadfbb203779d89148d17c1d2d6cd99db0ac1 $
 #
 
 PROG=	kqueue
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

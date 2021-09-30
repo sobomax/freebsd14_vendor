@@ -1,10 +1,10 @@
-# $FreeBSD: 5a37f7c25851c47e206b79db33ab8817a3891e5b $
+# $FreeBSD: a6b4af5640d6b50cb25d45a1f710afb764ec7aeb $
 
 SHLIBDIR?=	/lib/casper
 
 .include <src.opts.mk>
 
-PACKAGE=libcasper
+PACKAGE=	runtime
 
 SHLIB_MAJOR=	1
 INCSDIR?=	${INCLUDEDIR}/casper

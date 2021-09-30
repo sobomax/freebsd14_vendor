@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67f710f52ec6de82e02f015169ceed412d2a3fdc $");
+__FBSDID("$FreeBSD: b24c25444014856daf7c91dcab20e43299e33c01 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -551,7 +551,6 @@ cpuctl_do_eval_cpu_features(int cpu, struct thread *td)
 	printcpuinfo();
 	return (0);
 }
-
 
 int
 cpuctl_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)

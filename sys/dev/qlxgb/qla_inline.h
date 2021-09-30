@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 807bae765a3844d6b18d1b42c6289c1b2708160d $
+ * $FreeBSD: 91974815149a244d23e7183292552853d356f3da $
  */
 /*
  * File: qla_inline.h
@@ -44,7 +44,6 @@ static __inline void qla_hw_reset(qla_host_t *ha)
 }
 
 #define QL8_SEMLOCK_TIMEOUT	1000/* QLA8020 Semaphore Lock Timeout 10ms */
-
 
 /*
  * Inline functions for hardware semaphores

@@ -1,0 +1,4 @@
+.\" $FreeBSD: a343670548c29b7d056227a97223326419182912 $
+Set to build and install
+.Lb libstats
+and dependent binaries.

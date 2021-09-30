@@ -1,4 +1,4 @@
-# $FreeBSD: e676cc036bad7b04281eaa718e7c770be541d312 $
+# $FreeBSD: 53e29c3891fb24c5e03e999384cea8da2c95e847 $
 
 PACKAGE=	tests
 
@@ -9,7 +9,5 @@ PROG=		pjdfstest
 MAN=
 
 CFLAGS+=	-I${.CURDIR:H}
-
-WARNS?=		6
 
 .include <bsd.prog.mk>

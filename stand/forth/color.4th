@@ -22,13 +22,13 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: fc5a4d564d0a72c84bcc69af3d4fd5a2c341dacb $
+\ $FreeBSD: e73e8b725c31eedaa4aabbb32624a68b2f122159 $
 
 marker task-color.4th
 
 \ This function returns FALSE if the `loader_color' environment variable is set
 \ to NO, no, or 0. It returns TRUE if `loader_color' is set to any other value.
-\ If `loader_color' is unset, TRUE is returned (unless booting serial).
+\ If `loader_color' is unset, TRUE is returned.
 \ 
 : loader_color? ( -- t )
 
@@ -44,12 +44,8 @@ marker task-color.4th
 			FALSE exit
 		then
 		drop
-		\ It is enabled.
-		TRUE
-	else
-		\ `loader_color' is unset.
-		\ Default to using color unless serial boot is active.
-		drop
-		boot_serial? 0=
 	then
+	drop
+	\ It is enabled.
+	TRUE
 ;

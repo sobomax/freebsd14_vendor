@@ -1,9 +1,9 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/2/94
-# $FreeBSD: fb70df886ee2d88171d13716d5ca2fceff6a873d $
+# $FreeBSD: bd5baa3c4d0755f2ac45df682509666c84ad577b $
 
 .include <src.opts.mk>
 
-.PATH: ${SRCTOP}/usr.sbin/pwd_mkdb ${SRCTOP}/lib/libc/gen
+.PATH: ${SRCTOP}/lib/libc/gen
 
 PROG=	chpass
 SRCS=	chpass.c edit.c field.c pw_scan.c table.c util.c
@@ -15,7 +15,7 @@ CFLAGS+= -DYP
 .endif
 #Some people need this, uncomment to activate
 #CFLAGS+=-DRESTRICT_FULLNAME_CHANGE
-CFLAGS+=-I${SRCTOP}/usr.sbin/pwd_mkdb -I${SRCTOP}/lib/libc/gen -I.
+CFLAGS+=-I${SRCTOP}/lib/libc/gen -I.
 
 LIBADD=	crypt util
 .if ${MK_NIS} != "no"

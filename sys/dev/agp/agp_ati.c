@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6dc2746f144e55727a9ad85067af94f2dfa7a158 $");
+__FBSDID("$FreeBSD: dc56af11f72fe91d27c76796122a0ce54111de91 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,7 +74,6 @@ struct agp_ati_softc {
 	u_int32_t      *ag_vdir;	/* virtual address of page dir */
 	vm_offset_t	ag_pdir;	/* physical address of page dir */
 };
-
 
 static const char*
 agp_ati_match(device_t dev)
@@ -166,7 +165,6 @@ agp_ati_alloc_gatt(device_t dev)
 
 	return 0;
 }
-
 
 static int
 agp_ati_attach(device_t dev)
@@ -369,7 +367,6 @@ static device_method_t agp_ati_methods[] = {
 	DEVMETHOD(agp_free_memory,	agp_generic_free_memory),
 	DEVMETHOD(agp_bind_memory,	agp_generic_bind_memory),
 	DEVMETHOD(agp_unbind_memory,	agp_generic_unbind_memory),
-
 	{ 0, 0 }
 };
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a945212af275f069db99a83ca6a9ad3cb5023384 $");
+__FBSDID("$FreeBSD: e3254570b49630092074c95a99bba3f56969f277 $");
 
 /* Debugging tables for MPT2 */
 
@@ -564,4 +564,3 @@ mps_print_scsiio_cmd(struct mps_softc *sc, struct mps_command *cm)
 	req = (MPI2_SCSI_IO_REQUEST *)cm->cm_req;
 	mps_print_sgl(sc, cm, req->SGLOffset0);
 }
-

@@ -1,4 +1,4 @@
-# $FreeBSD: 140440336cad2ff30a83aac41be9f74f36585aab $
+# $FreeBSD: 8d106615822f1a6ebd822f9360c226976f240e9f $
 
 .include <bsd.init.mk>
 # Grab all the options for a kernel build. For backwards compat, we need to
@@ -11,12 +11,7 @@ DTC?=		dtc
 .if defined(S)
 SYSDIR=	${S}
 .else
-# Search for kernel source tree in standard places.
-.for _dir in ${.CURDIR}/../.. ${.CURDIR}/../../.. /sys /usr/src/sys
-.if exists(${_dir}/kern/)
-SYSDIR=	${_dir:tA}
-.endif
-.endfor
+.include <bsd.sysdir.mk>
 .endif	# defined(S)
 .endif	# defined(SYSDIR)
 
@@ -27,7 +22,7 @@ SYSDIR=	${_dir:tA}
 .for _dts in ${DTS}
 # DTB for aarch64 needs to preserve the immediate parent of the .dts, because
 # these DTS are vendored and should be installed into their vendored directory.
-.if ${MACHINE_ARCH} == "aarch64"
+.if ${MACHINE_CPUARCH} == "aarch64"
 DTB+=	${_dts:R:S/$/.dtb/}
 .else
 DTB+=	${_dts:T:R:S/$/.dtb/}
@@ -37,7 +32,7 @@ DTB+=	${_dts:T:R:S/$/.dtb/}
 DTBO=${DTSO:T:R:S/$/.dtbo/}
 
 .SUFFIXES: .dtb .dts .dtbo .dtso
-.PATH.dts: ${SYSDIR}/gnu/dts/${MACHINE} ${SYSDIR}/dts/${MACHINE}
+.PATH.dts: ${SYSDIR}/contrib/device-tree/src/${MACHINE} ${SYSDIR}/dts/${MACHINE}
 .PATH.dtso: ${SYSDIR}/dts/${MACHINE}/overlays
 
 .export DTC ECHO

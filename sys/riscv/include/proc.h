@@ -28,7 +28,7 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: 644bb91c4ad65c13dd537dead50491fdc28667cd $
+ * $FreeBSD: 4b5ae9ebe3ede70ce067785036e027616549a03f $
  */
 
 #ifndef	_MACHINE_PROC_H_
@@ -50,7 +50,6 @@ struct syscall_args {
 	u_int code;
 	struct sysent *callp;
 	register_t args[MAXARGS];
-	int narg;
 };
 
 #endif /* !_MACHINE_PROC_H_ */

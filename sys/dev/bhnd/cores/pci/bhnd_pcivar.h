@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: d1ef94c1b23e0d4a405f9b9b6ce585f670e71766 $
+ * $FreeBSD: 4125b3742718c636051399acb32fb53c87605bb2 $
  */
 
 #ifndef _BHND_CORES_PCI_BHND_PCIVAR_H_
@@ -103,7 +103,6 @@ struct bhnd_pci_softc {
 	int			 mem_rid;	/**< register block RID */
 };
 
-
 #define	BHND_PCI_LOCK_INIT(sc) \
 	mtx_init(&(sc)->mtx, device_get_nameunit((sc)->dev), \
 	    "BHND PCI driver lock", MTX_DEF)
@@ -168,7 +167,6 @@ struct bhnd_pci_softc {
 	    BHND_PCI_COMMON_REG((_regf), _attr ## _MASK),	\
 	    BHND_PCI_COMMON_REG((_regf), _attr ## _SHIFT),	\
 	    _val)
-
 
 /**
  * Evaluates to the offset of a common PCI/PCIe register definition. 

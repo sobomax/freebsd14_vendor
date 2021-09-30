@@ -26,12 +26,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 63e1ac6aca8cb4cec8de46bd3914d51e9d96de55 $
+ * $FreeBSD: daa5d83616a2e717381e78d1aceab5c7e898a372 $
  */
 #ifndef	_ASM_TYPES_H_
 #define	_ASM_TYPES_H_
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_STANDALONE)
 
 #include <sys/types.h>
 
@@ -59,6 +59,6 @@ typedef vm_paddr_t dma64_addr_t;
 
 typedef unsigned short umode_t;
 
-#endif	/* _KERNEL */
+#endif	/* _KERNEL || _STANDALONE */
 
 #endif	/* _ASM_TYPES_H_ */

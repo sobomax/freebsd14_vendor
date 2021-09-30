@@ -1,4 +1,4 @@
-#! $FreeBSD: 4b5c4ee55416719139856fbe96100325850c6f27 $
+#! $FreeBSD: cfa1f2460f5f6a5f71612850bb83fe5f39633da3 $
 
 .include <src.lua.mk>
 
@@ -30,6 +30,13 @@ CFLAGS+=	-DLUA_PROGNAME="\"${PROG}\""
 CFLAGS+=	-DLUA_USE_READLINE
 CFLAGS+=	-I${SRCTOP}/lib/libedit -I${SRCTOP}/contrib/libedit
 LIBADD+=	edit
+LDFLAGS+=	-Wl,-E
 .endif
+
+UCLSRC?=	${SRCTOP}/contrib/libucl
+.PATH: ${UCLSRC}/lua
+SRCS+=	lua_ucl.c
+CFLAGS+=	-I${UCLSRC}/include -I${UCLSRC}/src -I${UCLSRC}/uthash
+LIBADD+=	ucl
 
 .include <bsd.prog.mk>

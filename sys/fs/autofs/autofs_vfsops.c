@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Edward Tomasz Napierala under sponsorship
  * from the FreeBSD Foundation.
@@ -31,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
- __FBSDID("$FreeBSD: df2958ddf8aa1589aedef8a1e3fd91b397eac96e $");
+ __FBSDID("$FreeBSD: 45b3943d5b704b77eb3e78f4ece110feb675ed92 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -128,7 +127,7 @@ autofs_unmount(struct mount *mp, int mntflags)
 		flags |= FORCECLOSE;
 	error = vflush(mp, 0, flags, curthread);
 	if (error != 0) {
-		AUTOFS_WARN("vflush failed with error %d", error);
+		AUTOFS_DEBUG("vflush failed with error %d", error);
 		return (error);
 	}
 

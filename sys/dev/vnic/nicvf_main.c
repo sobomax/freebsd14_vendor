@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 19ea5bcdb7e52f65af5e77d0c78f3a867821bf67 $
+ * $FreeBSD: c8b088dee1faa85285ca0db3d50ac5239692a8ec $
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19ea5bcdb7e52f65af5e77d0c78f3a867821bf67 $");
+__FBSDID("$FreeBSD: c8b088dee1faa85285ca0db3d50ac5239692a8ec $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -425,6 +425,7 @@ nicvf_if_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 	struct nicvf *nic;
 	struct rcv_queue *rq;
 	struct ifreq *ifr;
+	uint32_t flags;
 	int mask, err;
 	int rq_idx;
 #if defined(INET) || defined(INET6)
@@ -479,10 +480,10 @@ nicvf_if_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 		break;
 	case SIOCSIFFLAGS:
 		NICVF_CORE_LOCK(nic);
-		if (if_getflags(ifp) & IFF_UP) {
+		flags = if_getflags(ifp);
+		if (flags & IFF_UP) {
 			if (if_getdrvflags(ifp) & IFF_DRV_RUNNING) {
-				if ((nic->if_flags & if_getflags(ifp)) &
-				    IFF_PROMISC) {
+				if ((flags ^ nic->if_flags) & IFF_PROMISC) {
 					/* Change promiscous mode */
 #if 0
 					/* ARM64TODO */
@@ -490,8 +491,7 @@ nicvf_if_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 #endif
 				}
 
-				if ((nic->if_flags ^ if_getflags(ifp)) &
-				    IFF_ALLMULTI) {
+				if ((flags ^ nic->if_flags) & IFF_ALLMULTI) {
 					/* Change multicasting settings */
 #if 0
 					/* ARM64TODO */
@@ -504,7 +504,7 @@ nicvf_if_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 		} else if (if_getdrvflags(ifp) & IFF_DRV_RUNNING)
 			nicvf_stop_locked(nic);
 
-		nic->if_flags = if_getflags(ifp);
+		nic->if_flags = flags;
 		NICVF_CORE_UNLOCK(nic);
 		break;
 
@@ -655,7 +655,6 @@ nicvf_if_transmit(struct ifnet *ifp, struct mbuf *mbuf)
 	struct mbuf *mtmp;
 	int qidx;
 	int err = 0;
-
 
 	if (__predict_false(qs == NULL)) {
 		panic("%s: missing queue set for %s", __func__,

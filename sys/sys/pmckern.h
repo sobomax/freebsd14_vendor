@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e892d658a1ca215ba9190d63f73e6fba93626135 $
+ * $FreeBSD: 5b337f8d76df03975a3ac244347f941c1876c70d $
  */
 
 /*
@@ -226,7 +226,7 @@ do {						\
  */
 #define	PMC_CALL_HOOK_UNLOCKED(t, cmd, arg)	\
 do {						\
-	if (pmc_hook != NULL)				\
+	if (pmc_hook != NULL)			\
 		(pmc_hook)((t), (cmd), (arg));	\
 } while (0)
 

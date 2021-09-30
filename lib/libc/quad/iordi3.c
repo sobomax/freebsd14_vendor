@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)iordi3.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6cc3a4125841136b695c8c58696d7d2a1f866006 $");
+__FBSDID("$FreeBSD: 7d323264532680bf2c7f287a06e174777fc11cb8 $");
 
 #include "quad.h"
 
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: 6cc3a4125841136b695c8c58696d7d2a1f866006 $");
  * Return a | b, in quad.
  */
 quad_t
-__iordi3(a, b)
-	quad_t a, b;
+__iordi3(quad_t a, quad_t b)
 {
 	union uu aa, bb;
 

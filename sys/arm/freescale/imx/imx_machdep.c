@@ -29,7 +29,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39adbc7ffbc9a03fe0a77daf57800c9a6266c5e7 $");
+__FBSDID("$FreeBSD: d920c41171b739ed17d71687469046abb4ac0d94 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,8 @@ __FBSDID("$FreeBSD: 39adbc7ffbc9a03fe0a77daf57800c9a6266c5e7 $");
 #include <arm/freescale/imx/imx_machdep.h>
 #include <arm/freescale/imx/imx_wdogreg.h>
 
-SYSCTL_NODE(_hw, OID_AUTO, imx, CTLFLAG_RW, NULL, "i.MX container");
+SYSCTL_NODE(_hw, OID_AUTO, imx, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
+    "i.MX container");
 
 static int last_reset_status;
 SYSCTL_UINT(_hw_imx, OID_AUTO, last_reset_status, CTLFLAG_RD, 
@@ -129,4 +130,3 @@ imx_wdog_init_last_reset(vm_offset_t wdsr_phys)
 		sysctl___hw_imx_last_reset_reason.oid_arg1 = "PowerOnReset";
 	}
 }
-

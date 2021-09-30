@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 81b1882d71f04ab08d23c88e1d88ba48a776838a $
+ * $FreeBSD: 6da4966738b43ebd5b9b97d9da902189c13aee79 $
  * From	$NetBSD: stand.h,v 1.22 1997/06/26 19:17:40 drochner Exp $	
  */
 
@@ -119,7 +119,6 @@ extern struct fs_ops ufs_fsops;
 extern struct fs_ops tftp_fsops;
 extern struct fs_ops nfs_fsops;
 extern struct fs_ops cd9660_fsops;
-extern struct fs_ops nandfs_fsops;
 extern struct fs_ops gzipfs_fsops;
 extern struct fs_ops bzipfs_fsops;
 extern struct fs_ops dosfs_fsops;
@@ -338,6 +337,7 @@ extern struct env_var	*env_getenv(const char *name);
 extern int		env_setenv(const char *name, int flags,
 				   const void *value, ev_sethook_t sethook,
 				   ev_unsethook_t unsethook);
+extern void		env_discard(struct env_var *);
 extern char		*getenv(const char *name);
 extern int		setenv(const char *name, const char *value,
 			       int overwrite);
@@ -409,6 +409,11 @@ extern struct fs_ops	*exclusive_file_system;
 extern struct devsw	*devsw[];
 
 /*
+ * Time routines
+ */
+time_t time(time_t *);
+
+/*
  * Expose byteorder(3) functions.
  */
 #ifndef _BYTEORDER_PROTOTYPED
@@ -437,7 +442,14 @@ extern void	mallocstats(void);
 
 const char *x86_hypervisor(void);
 
-#ifdef DEBUG_MALLOC
+#ifdef USER_MALLOC
+extern void *malloc(size_t);
+extern void *memalign(size_t, size_t);
+extern void *calloc(size_t, size_t);
+extern void free(void *);
+extern void *realloc(void *, size_t);
+extern void *reallocf(void *, size_t);
+#elif defined(DEBUG_MALLOC)
 #define malloc(x)	Malloc(x, __FILE__, __LINE__)
 #define memalign(x, y)	Memalign(x, y, __FILE__, __LINE__)
 #define calloc(x, y)	Calloc(x, y, __FILE__, __LINE__)
@@ -452,5 +464,13 @@ const char *x86_hypervisor(void);
 #define realloc(x, y)	Realloc(x, y, NULL, 0)
 #define reallocf(x, y)	Reallocf(x, y, NULL, 0)
 #endif
+
+/*
+ * va <-> pa routines. MD code must supply.
+ */
+caddr_t ptov(uintptr_t);
+
+/* hexdump.c */
+void	hexdump(caddr_t region, size_t len);
 
 #endif	/* STAND_H */

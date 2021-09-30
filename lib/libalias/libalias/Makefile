@@ -1,15 +1,15 @@
-# $FreeBSD: bfbd523aa0b7dd0ac998613eaeb3478a9fb2ce8b $
+# $FreeBSD: 17d4c2458abf7bb9f87e77c9e1d0ee51589de981 $
 
 .PATH: ${SRCTOP}/sys/netinet/libalias
 
+PACKAGE=	natd
 CONFS=	libalias.conf
-PACKAGE=lib${LIB}
 LIB=	alias
 SHLIBDIR?= /lib
 SHLIB_MAJOR= 7
 MAN=	libalias.3
 SRCS=	alias.c alias_db.c alias_proxy.c alias_util.c alias_mod.c
 INCS=	alias.h
-NO_WERROR=
+MK_WERROR=	no
 
 .include <bsd.lib.mk>

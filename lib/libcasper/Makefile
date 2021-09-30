@@ -1,4 +1,6 @@
-# $FreeBSD: 3101f3378ff3dd63e0f7966761449bd966b8d4d8 $
+# $FreeBSD: 2f2d613bd1d94befa05a3aac8593219ba0ef5e9e $
+
+.include <src.opts.mk>
 
 SUBDIR=		libcasper
 SUBDIR+=	services

@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 5d85823792f4bafd3db3ec272e982c4e6a2549ad $
+ * $FreeBSD: 54bf9965a7930e66586aebd497ad722e8d92b751 $
  */
 
 #ifndef _CLOUDABI64_SYSPROTO_H_
@@ -356,6 +356,12 @@ int	cloudabi_sys_thread_yield(struct thread *, struct cloudabi_sys_thread_yield_
 
 
 #endif /* COMPAT_FREEBSD11 */
+
+
+#ifdef COMPAT_FREEBSD12
+
+
+#endif /* COMPAT_FREEBSD12 */
 
 #define	CLOUDABI64_SYS_AUE_cloudabi_sys_clock_res_get	AUE_NULL
 #define	CLOUDABI64_SYS_AUE_cloudabi_sys_clock_time_get	AUE_NULL

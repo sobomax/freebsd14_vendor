@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91038ca16df5c8698334aeb55a6ffd6f24812439 $");
+__FBSDID("$FreeBSD: 68b18eac9ad4c659aa2861a3fb93b0677038a89e $");
 
 #include <sys/param.h>
 
@@ -165,7 +165,7 @@ bhnd_nvram_value_nelem(const void *inp, size_t ilen, bhnd_nvram_type itype,
 			/* Determine string length */
 			slen = strnlen(p, nleft);
 			nleft -= slen;
-	
+
 			/* Advance input */
 			p += slen;
 
@@ -364,7 +364,6 @@ bhnd_nvram_value_size(const void *inp, size_t ilen, bhnd_nvram_type itype,
 	/* Quiesce gcc4.2 */
 	BHND_NV_PANIC("bhnd nvram type %u unknown", itype);
 }
-
 
 /**
  * Format a string representation of @p inp using @p fmt, with, writing the

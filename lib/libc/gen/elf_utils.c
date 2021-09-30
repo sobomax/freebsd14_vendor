@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0d32c18ed34c3f1e392600a0f8c039e0afbba5e7 $
+ * $FreeBSD: fbf3bf17082c3858dc2a1c53db477a6d238659d6 $
  */
 
 #include <sys/types.h>
@@ -65,7 +65,7 @@ __elf_phdr_match_addr(struct dl_phdr_info *phdr_info, void *addr)
 #endif
 
 		if (phdr_info->dlpi_addr + ph->p_vaddr <= (uintptr_t)addr &&
-		    (uintptr_t)addr + sizeof(addr) < phdr_info->dlpi_addr +
+		    (uintptr_t)addr < phdr_info->dlpi_addr +
 		    ph->p_vaddr + ph->p_memsz)
 			break;
 	}

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a4b97b95334aa52d72d3e478ffade03045bed59 $
+ * $FreeBSD: 800c33d8e6192013670e698cdccddb699bea9271 $
  */
 
 #ifndef	_IF_AGEVAR_H
@@ -248,7 +248,6 @@ struct age_softc {
 #define AGE_LOCK(_sc)		mtx_lock(&(_sc)->age_mtx)
 #define AGE_UNLOCK(_sc)		mtx_unlock(&(_sc)->age_mtx)
 #define AGE_LOCK_ASSERT(_sc)	mtx_assert(&(_sc)->age_mtx, MA_OWNED)
-
 
 #define	AGE_COMMIT_MBOX(_sc)						\
 do {									\

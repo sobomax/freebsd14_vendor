@@ -1,4 +1,4 @@
-# $FreeBSD: fcf9988793b96fa859feabf934723af90193fbb4 $
+# $FreeBSD: 76826547ddbf0ccc7f6b97d8e85cb979a1e31259 $
 
 .include "../llvm.pre.mk"
 
@@ -7,6 +7,7 @@ INTERNALLIB=
 
 SRCDIR=		llvm/lib
 SRCS+=		Demangle/ItaniumDemangle.cpp
+SRCS+=		Support/ABIBreak.cpp
 SRCS+=		Support/APFloat.cpp
 SRCS+=		Support/APInt.cpp
 SRCS+=		Support/ARMTargetParser.cpp
@@ -31,6 +32,7 @@ SRCS+=		Support/Locale.cpp
 SRCS+=		Support/LowLevelType.cpp
 SRCS+=		Support/MD5.cpp
 SRCS+=		Support/ManagedStatic.cpp
+SRCS+=		Support/MemAlloc.cpp
 SRCS+=		Support/MemoryBuffer.cpp
 SRCS+=		Support/NativeFormatting.cpp
 SRCS+=		Support/Path.cpp

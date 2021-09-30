@@ -1,5 +1,5 @@
 /*	$NetBSD: uaudioreg.h,v 1.12 2004/11/05 19:08:29 kent Exp $	*/
-/* $FreeBSD: 13ebf06c9d6b5df102066a67b957ffa3b8e0c7cb $ */
+/* $FreeBSD: 39fd2a7c0299af1bbfdfe7d4b6a69596db334fdd $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -351,7 +351,6 @@ struct usb_audio_extension_unit_1 {
 #define	UATF_RADIOXMIT		0x0711
 #define	UATF_MULTITRACK		0x0712
 #define	UATF_SYNTHESIZER	0x0713
-
 
 #define	SET_CUR 0x01
 #define	GET_CUR 0x81

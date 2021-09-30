@@ -1,5 +1,5 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: 5b88ae5d9f0b0a615f472e747e635cd7ef1e9b56 $
+# $FreeBSD: 725b8033444c9e500f1fc0b940955d169b02eae3 $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #
@@ -83,7 +83,7 @@ TRFLAGS+=	-t
 
 .if defined(NO_ROOT)
 .if !defined(TAGS) || ! ${TAGS:Mpackage=*}
-TAGS+=		package=${PACKAGE:Uruntime}
+TAGS+=		package=${PACKAGE:Uutilities}
 .endif
 TAG_ARGS=	-T ${TAGS:[*]:S/ /,/g}
 .endif

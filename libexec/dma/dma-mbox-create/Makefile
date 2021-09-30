@@ -1,8 +1,8 @@
-# $FreeBSD: a745f591c776cec8c8522d17ba51a9722e42fa8e $
+# $FreeBSD: 16b03b956f3c154fc475d0cb06e8b5adeb5c5f8f $
 
 MAN=
 
-WARNS=	2
+WARNS?=	2
 
 PROG=	dma-mbox-create
 BINMODE=	4554

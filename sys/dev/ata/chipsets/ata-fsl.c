@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a888a7c3947b266e4a8824e2cd71b1c2911bdd9 $");
+__FBSDID("$FreeBSD: f7545e2113586367b63a5ac4726101f90bdff71f $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -153,7 +153,6 @@ imx_ata_ch_attach(device_t dev)
 	DELAY(100);
 	bus_write_2(ctrl->r_res1, 0x24, 0xc0);
 	DELAY(100);
-
 
 	/* Write TIME_OFF/ON/1/2W */
 	bus_write_1(ctrl->r_res1, 0x00, 3);

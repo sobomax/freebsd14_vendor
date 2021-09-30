@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac04fcc8c11d3a3bef88eaa394f8a34e2db060cb $");
+__FBSDID("$FreeBSD: 80fea4c53df01d85316a31d83f8724ddbad4fe6c $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: ac04fcc8c11d3a3bef88eaa394f8a34e2db060cb $");
 /* local prototypes */
 static int ata_cypress_chipinit(device_t dev);
 static int ata_cypress_setmode(device_t dev, int target, int mode);
-
 
 /*
  * Cypress chipset support functions

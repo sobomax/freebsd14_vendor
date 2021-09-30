@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: dd8ffbb2daeb25f0c225cc39cad0840aae9bc215 $ */
+/* $FreeBSD: 823424e9c30e58777851360c8865d86606283a1d $ */
 
 #ifndef _PQI_INCLUDES_H
 #define _PQI_INCLUDES_H
@@ -37,8 +37,7 @@
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/disk.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <sys/eventhandler.h>
 #include <sys/malloc.h>
 #include <sys/rman.h>
 #include <sys/bus.h>
@@ -79,12 +78,9 @@
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
-
-
 #include "smartpqi_defines.h"
 #include "smartpqi_structures.h"
 #include "smartpqi_prototypes.h"
 #include "smartpqi_ioctl.h"
-
 
 #endif // _PQI_INCLUDES_H

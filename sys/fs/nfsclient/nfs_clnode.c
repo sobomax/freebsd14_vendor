@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f41cb8749020037323ecc0af19cb26bf9dbcb05d $");
+__FBSDID("$FreeBSD: a59b96bf3c8b8a08366a166ca6bbfc0dfd08d874 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -164,7 +164,7 @@ ncl_nget(struct mount *mntp, u_int8_t *fhp, int fhsize, struct nfsnode **npp,
 	}
 
 	vp->v_vflag |= VV_VMSIZEVNLOCK;
-	
+
 	np->n_fhp = malloc(sizeof (struct nfsfh) + fhsize,
 	    M_NFSFH, M_WAITOK);
 	bcopy(fhp, np->n_fhp->nfh_fh, fhsize);
@@ -239,8 +239,10 @@ ncl_inactive(struct vop_inactive_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct nfsnode *np;
+	struct thread *td;
 	boolean_t retv;
 
+	td = curthread;
 	if (NFS_ISV4(vp) && vp->v_type == VREG) {
 		/*
 		 * Since mmap()'d files do I/O after VOP_CLOSE(), the NFSv4
@@ -256,14 +258,14 @@ ncl_inactive(struct vop_inactive_args *ap)
 		} else
 			retv = TRUE;
 		if (retv == TRUE) {
-			(void)ncl_flush(vp, MNT_WAIT, ap->a_td, 1, 0);
-			(void)nfsrpc_close(vp, 1, ap->a_td);
+			(void)ncl_flush(vp, MNT_WAIT, td, 1, 0);
+			(void)nfsrpc_close(vp, 1, td);
 		}
 	}
 
 	np = VTONFS(vp);
 	NFSLOCKNODE(np);
-	ncl_releasesillyrename(vp, ap->a_td);
+	ncl_releasesillyrename(vp, td);
 
 	/*
 	 * NMODIFIED means that there might be dirty/stale buffers
@@ -286,6 +288,9 @@ ncl_reclaim(struct vop_reclaim_args *ap)
 	struct vnode *vp = ap->a_vp;
 	struct nfsnode *np = VTONFS(vp);
 	struct nfsdmap *dp, *dp2;
+	struct thread *td;
+
+	td = curthread;
 
 	/*
 	 * If the NLM is running, give it a chance to abort pending
@@ -295,13 +300,8 @@ ncl_reclaim(struct vop_reclaim_args *ap)
 		nfs_reclaim_p(ap);
 
 	NFSLOCKNODE(np);
-	ncl_releasesillyrename(vp, ap->a_td);
+	ncl_releasesillyrename(vp, td);
 	NFSUNLOCKNODE(np);
-
-	/*
-	 * Destroy the vm object and flush associated pages.
-	 */
-	vnode_destroy_vobject(vp);
 
 	if (NFS_ISV4(vp) && vp->v_type == VREG)
 		/*
@@ -310,7 +310,7 @@ ncl_reclaim(struct vop_reclaim_args *ap)
 		 * ncl_inactive(), but there are cases where it is not
 		 * called, so we need to do it again here.
 		 */
-		(void) nfsrpc_close(vp, 1, ap->a_td);
+		(void) nfsrpc_close(vp, 1, td);
 
 	vfs_hash_remove(vp);
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ea872ebbb85ff3162eeb4262f3384fabcd9ff6a $
+ * $FreeBSD: ccd99d6cb6c1a72798d1c487629d8a0958f46b20 $
  */
 
 #ifndef _ATIIXP_H_
@@ -34,7 +34,7 @@
 /*
  * Constants, pretty much FreeBSD specific.
  */
- 
+
 /* Number of playback / recording channel */
 #define ATI_IXP_NPCHAN		1
 #define ATI_IXP_NRCHAN		1

@@ -27,13 +27,14 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee65805738e3bb71d7dcf9fad20233b8fb419643 $");
+__FBSDID("$FreeBSD: 0bb55666c17569e5dc8657a68ccaa43bf3982078 $");
 
 #include <sys/param.h>
-#include <sys/systm.h>
 #include <sys/bus.h>
-#include <sys/reboot.h>
 #include <sys/devmap.h>
+#include <sys/lock.h>
+#include <sys/reboot.h>
+#include <sys/systm.h>
 
 #include <vm/vm.h>
 
@@ -61,7 +62,6 @@ __FBSDID("$FreeBSD: ee65805738e3bb71d7dcf9fad20233b8fb419643 $");
 					PMC_SCRATCH0_MODE_RCM)
 
 static platform_attach_t tegra124_attach;
-static platform_lastaddr_t tegra124_lastaddr;
 static platform_devmap_init_t tegra124_devmap_init;
 static platform_late_init_t tegra124_late_init;
 static platform_cpu_reset_t tegra124_cpu_reset;

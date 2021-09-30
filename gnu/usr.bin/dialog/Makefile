@@ -1,4 +1,4 @@
-# $FreeBSD: bcca9b3533038df19aea59f59a77edcc0c792e1d $
+# $FreeBSD: 71496f77483007f17785449aadc6d637afd15c8a $
 
 DIALOG=	${SRCTOP}/contrib/dialog
 PROG=   dialog
@@ -6,7 +6,5 @@ PROG=   dialog
 LIBADD=	dialog ncursesw m
 CFLAGS+= -I${.CURDIR} -I${DIALOG}
 .PATH:	${DIALOG}
-
-WARNS?= 6
 
 .include <bsd.prog.mk>

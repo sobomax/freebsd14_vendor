@@ -26,14 +26,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * From: FreeBSD: src/sys/i386/include/minidump.h,v 1.1 2006/04/21 04:28:43
- * $FreeBSD: 2708030f27c3b8b48e10e4c34d90a20a6e3ecb70 $
+ * $FreeBSD: d11e997d94dc49e76cf598426133350ea041adf1 $
  */
 
 #ifndef	_MACHINE_MINIDUMP_H_
 #define	_MACHINE_MINIDUMP_H_
 
 #define	MINIDUMP_MAGIC		"minidump FreeBSD/arm"
-#define	MINIDUMP_VERSION	1
+#define	MINIDUMP_VERSION	2
 
 /*
  * The first page of vmcore is dedicated to the following header.
@@ -51,6 +51,7 @@ struct minidumphdr {
 	uint32_t kernbase;
 	uint32_t arch;
 	uint32_t mmuformat;
+	uint32_t dumpavailsize;
 };
 
 #define MINIDUMP_MMU_FORMAT_UNKNOWN	0

@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d13dd9018125a8ac5b31f2a0631d98bbe5503395 $");
+__FBSDID("$FreeBSD: 4eee088345f8a64bb7d88baf8c52919dd0e44d5a $");
 
 /*
  * Disk driver for AMI MegaRaid controllers
@@ -148,7 +148,6 @@ amrd_dump(void *arg, void *virtual, vm_offset_t physical, off_t offset, size_t l
 	int	driveno = amrd_sc->amrd_drive - amr_sc->amr_drive;
 	if ((error = amr_dump_blocks(amr_sc,driveno,offset / AMR_BLKSIZE ,(void *)virtual,(int) length / AMR_BLKSIZE  )) != 0)
 	    	return(error);
-
     }
     return(0);
 }
@@ -266,4 +265,3 @@ amrd_detach(device_t dev)
 #endif
     return(0);
 }
-

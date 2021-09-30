@@ -1,4 +1,4 @@
-# $FreeBSD: b2683e11527248fc7917b163a21662ce73f7f7ed $
+# $FreeBSD: 2fea81540bc0172591ee04d4e5cfe58947f9e8d7 $
 
 PROG=	ncpus
 MAN=
@@ -7,7 +7,6 @@ SRCS=	ncpus.c acpi.c
 SRCS+=	biosmptable.c
 .endif
 BINDIR=	/usr/local/bin
-WARNS?=	6
 
 LIBADD=	devinfo
 

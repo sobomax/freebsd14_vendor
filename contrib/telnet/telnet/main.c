@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)main.c	8.3 (Berkeley) 5/30/95";
 #endif
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8703968efe10d6ec7692580e85c2989cb2ed4b69 $");
+__FBSDID("$FreeBSD: befb3eecee662cb262937aaec2011f52d12daf1f $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -121,6 +121,8 @@ main(int argc, char *argv[])
 	extern int forward_flags;
 #endif	/* FORWARD */
 
+	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
 	tninit();		/* Clear out things */
 
 	TerminalSaveState();

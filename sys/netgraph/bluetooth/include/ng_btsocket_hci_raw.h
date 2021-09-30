@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_hci_raw.h,v 1.3 2003/03/25 23:53:32 max Exp $
- * $FreeBSD: a40470a518943885f80b6a19455526c6a7e13710 $
+ * $FreeBSD: 5a51452dc884a436ad202039e22d55e9d4bc7044 $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_HCI_RAW_H_
@@ -87,6 +87,5 @@ int  ng_btsocket_hci_raw_send       (struct socket *, int, struct mbuf *,
 int  ng_btsocket_hci_raw_sockaddr   (struct socket *, struct sockaddr **);
 
 #endif /* _KERNEL */
- 
-#endif /* ndef _NETGRAPH_BTSOCKET_HCI_RAW_H_ */
 
+#endif /* ndef _NETGRAPH_BTSOCKET_HCI_RAW_H_ */

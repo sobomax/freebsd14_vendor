@@ -1,7 +1,6 @@
-# $FreeBSD: 1846609650695075a9651845f4b55db9122e2355 $
+# $FreeBSD: 09ba07ae65ee94f40e315e4f2689781fb8d353f3 $
 
 PROG=	unix_gc
 MAN=
-WARNS?=	6
 
 .include <bsd.prog.mk>

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright (c) 2018-2020 Gavin D. Howard and contributors.
+ * Copyright (c) 2018-2021 Gavin D. Howard and contributors.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -41,8 +41,8 @@
 #include <file.h>
 #include <vm.h>
 
-void bc_file_ultoa(unsigned long long val, char buf[BC_FILE_ULL_LENGTH]) {
-
+static void bc_file_ultoa(unsigned long long val, char buf[BC_FILE_ULL_LENGTH])
+{
 	char buf2[BC_FILE_ULL_LENGTH];
 	size_t i, len;
 
@@ -105,7 +105,7 @@ void bc_file_flush(BcFile *restrict f) {
 			vm.status = (sig_atomic_t) s;
 			BC_VM_JMP;
 		}
-		else bc_vm_err(BC_ERROR_FATAL_IO_ERR);
+		else bc_vm_fatalError(BC_ERR_FATAL_IO_ERR);
 	}
 }
 

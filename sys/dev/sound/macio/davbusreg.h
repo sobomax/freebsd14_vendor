@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c8307d9f35c24794a968064f0b9723acb7cd1b3f $
+ * $FreeBSD: 8b5a8ccefa65f3d6306f409d9edba7a37bc373db $
  */
 
 /*
@@ -77,7 +77,6 @@
 
 /* DAVBUS_CODEC_CTRL bit definitions. */
 #define DAVBUS_CODEC_BUSY	0x01000000
-
 
 /*
  * Burgundy Codec Control Bits
@@ -235,7 +234,6 @@
 #define SCREAMER_CODEC_EMSEL2	0x00800000
 #define SCREAMER_CODEC_EMSEL4	0x00c00000
 
-
 /* cc0 */
 /*
  * Bits 7-4 specify the left ADC input gain;
@@ -284,4 +282,3 @@
 #define SCREAMER_STATUS_REVSHFT	12
 
 #endif /* _SOUND_DAVBUS_H */
-

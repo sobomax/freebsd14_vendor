@@ -7,7 +7,7 @@
 /* VMCI QueuePair API implementation. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65ae00c8d1670e5fc43eafb7d1cee900747b1841 $");
+__FBSDID("$FreeBSD: 2ff963c691d00ad1ad051b804cb6c9ee9a011556 $");
 
 #include "vmci.h"
 #include "vmci_driver.h"
@@ -838,7 +838,6 @@ vmci_queue_pair_detach_guest_work(struct vmci_handle handle)
 		result = vmci_queue_pair_detach_hypercall(handle);
 		if (entry->hibernate_failure) {
 			if (result == VMCI_ERROR_NOT_FOUND) {
-
 				/*
 				 * If a queue pair detach failed when entering
 				 * hibernation, the guest driver and the device
@@ -856,7 +855,6 @@ vmci_queue_pair_detach_guest_work(struct vmci_handle handle)
 			}
 		}
 		if (result < VMCI_SUCCESS) {
-
 			/*
 			 * We failed to notify a non-local queuepair. That other
 			 * queuepair might still be accessing the shared

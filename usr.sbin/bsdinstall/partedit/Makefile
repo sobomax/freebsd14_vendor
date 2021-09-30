@@ -1,4 +1,4 @@
-# $FreeBSD: 7d8f0659da252a5d6437af61229ae1552a93b54a $
+# $FreeBSD: a250302a1962a3e2d7361e1415ce9d985e5e1465 $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	partedit
@@ -10,6 +10,8 @@ LIBADD+=	geom ncursesw util dialog m
 PARTEDIT_ARCH= ${MACHINE}
 .if ${MACHINE} == "i386" || ${MACHINE} == "amd64"
 PARTEDIT_ARCH= x86
+.elif ${MACHINE} == "arm64" || ${MACHINE} == "riscv"
+PARTEDIT_ARCH= efi
 .endif
 .if !exists(partedit_${PARTEDIT_ARCH}.c)
 PARTEDIT_ARCH= generic

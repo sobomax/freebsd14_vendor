@@ -37,7 +37,7 @@ __RCSID("$NetBSD: stat.c,v 1.33 2011/01/15 22:54:10 njoly Exp $"
 #endif
 #endif
 
-__FBSDID("$FreeBSD: 0b63a4067cafc4ab3acf7518d9ef9797e65ea562 $");
+__FBSDID("$FreeBSD: e504333c3329160d862b89dedce9b4b5a72b4b8b $");
 
 #if HAVE_CONFIG_H
 #include "config.h" 
@@ -112,7 +112,8 @@ __FBSDID("$FreeBSD: 0b63a4067cafc4ab3acf7518d9ef9797e65ea562 $");
 	"Device: %Hd,%Ld   Inode: %i    Links: %l%n" \
 	"Access: %Sa%n" \
 	"Modify: %Sm%n" \
-	"Change: %Sc"
+	"Change: %Sc%n"	\
+	" Birth: %SB"
 
 #define TIME_FORMAT	"%b %e %T %Y"
 

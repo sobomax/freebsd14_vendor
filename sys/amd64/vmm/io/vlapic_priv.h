@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 43abd20a0a90c2ed160cbaa6a82e046b620071de $
+ * $FreeBSD: fe7965cb65d724451ad1cebd459127d55449f395 $
  */
 
 #ifndef _VLAPIC_PRIV_H_
@@ -156,7 +156,6 @@ struct vlapic {
 	struct vlapic_ops	ops;
 
 	uint32_t		esr_pending;
-	int			esr_firing;
 
 	struct callout	callout;	/* vlapic timer */
 	struct bintime	timer_fire_bt;	/* callout expiry time */

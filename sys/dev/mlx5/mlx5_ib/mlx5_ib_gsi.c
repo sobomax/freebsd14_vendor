@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 31d1c11a2d35f1a024752bf1dc45b5b9757161bd $
+ * $FreeBSD: 6c04178516653424d884df2b86bc9b5c2e60231a $
  */
 
 #include "mlx5_ib.h"
@@ -258,7 +258,7 @@ static struct ib_qp *create_gsi_ud_qp(struct mlx5_ib_gsi_qp *gsi)
 		},
 		.sq_sig_type = gsi->sq_sig_type,
 		.qp_type = IB_QPT_UD,
-		.create_flags = mlx5_ib_create_qp_sqpn_qp1(),
+		.create_flags = MLX5_IB_QP_CREATE_SQPN_QP1,
 	};
 
 	return ib_create_qp(pd, &init_attr);

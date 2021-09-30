@@ -15,14 +15,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: a1c8976494b4ffa3abef3f79a6d0e0ac9631fbfd $
+ * $FreeBSD: 904977e1ec142c1411f9c43f4151c68f69d7d7dc $
  */
 
 /*
  * NOTE: all function names beginning like "uark_cfg_" can only
  * be called from within the config thread function !
  */
-
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -119,7 +118,6 @@ static void	uark_poll(struct ucom_softc *ucom);
 
 static const struct usb_config
 	uark_xfer_config[UARK_N_TRANSFER] = {
-
 	[UARK_BULK_DT_WR] = {
 		.type = UE_BULK,
 		.endpoint = UE_ADDR_ANY,
@@ -298,7 +296,6 @@ tr_setup:
 			goto tr_setup;
 		}
 		return;
-
 	}
 }
 

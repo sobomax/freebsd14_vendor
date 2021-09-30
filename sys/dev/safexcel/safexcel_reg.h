@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fb26a8f99a508781e58963896caf4ca2ec17d079 $
+ * $FreeBSD: 5aa8064091472492978f0bf6f0105a5aa6f1e982 $
  */
 
 #ifndef _SAFEXCEL_REGS_H_
@@ -34,7 +34,6 @@
 #define	EIP201_VERSION_LE			0x36c9
 #define	SAFEXCEL_REG_LO16(_reg)			((_reg) & 0xffff)
 #define	SAFEXCEL_REG_HI16(_reg)			(((_reg) >> 16) & 0xffff)
-
 
 /* HIA, Command Descriptor Ring Manager */
 #define	CDR_BASE_ADDR_LO(x)			(0x0 + ((x) << 12))

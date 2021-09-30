@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: e2147091780d63660eb3b94ae3cb0952dce2d33f $
+ * $FreeBSD: 5c29a0665f6233d495262800e4d9dc0e8c2dae03 $
  */
 #include "diag.h"
 
@@ -169,7 +169,7 @@ ani_read_state(struct ath_driver_req *req, const char *ifname)
 	printf("  firstep_level=%d\n", state.firstepLevel);
 	printf("  ofdm_weak_signal_detect=%d\n", state.ofdmWeakSigDetectOff);
 	printf("  cck_weak_signal_threshold=%d\n", state.cckWeakSigThreshold);
-	printf("  mrc_cck=%d\n", state.mrcCckOff);
+	printf("  mrc_cck=%d\n", state.mrcCck);
 	/* XXX TODO: cycle counts? */
 }
 

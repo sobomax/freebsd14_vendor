@@ -26,7 +26,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 05a7f2cc47736f79cd019a4b2e08de65618aca8e $
+.\" $FreeBSD: 51397a123d43b80c759a2bff51af3f29e2c58d4c $
 .\"
 .Dd March 15, 2019
 .Dt VOP_INACTIVE 9
@@ -57,7 +57,7 @@ to exclusive without sleeping.
 This may be
 because the reference count reaches zero or it may be that the
 file system is being forcibly unmounted while there are open files.
-It can be used to reclaim space on the last close of an 
+It can be used to reclaim space on the last close of an
 .Sq open but deleted
 file.
 .Pp

@@ -1,5 +1,5 @@
-.\" $FreeBSD: 0eef59c99a88a79acda2476c36dc1c8b3940b796 $
-Set to install the GCC compiler as
+.\" $FreeBSD: 85d80ad476a52ca731648a1506fcea05ac7a992b $
+Do not install links to the Clang C/C++ compiler as
 .Pa /usr/bin/cc ,
 .Pa /usr/bin/c++
 and

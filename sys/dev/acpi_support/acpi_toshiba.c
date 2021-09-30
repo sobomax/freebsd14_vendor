@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d5a9cef535de4521591b7cb6f39b208dbc169f7 $");
+__FBSDID("$FreeBSD: a9b537edf993a515f80d3d8314c5f6b8e15fa2c2 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -220,14 +220,15 @@ static int
 acpi_toshiba_probe(device_t dev)
 {
 	static char *tosh_ids[] = { "TOS6200", "TOS6207", "TOS6208", NULL };
+	int rv;
 
 	if (acpi_disabled("toshiba") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, tosh_ids) == NULL ||
 	    device_get_unit(dev) != 0)
 		return (ENXIO);
-
-	device_set_desc(dev, "Toshiba HCI Extras");
-	return (0);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, tosh_ids, NULL);
+	if (rv <= 0)
+		device_set_desc(dev, "Toshiba HCI Extras");
+	return (rv);
 }
 
 static int
@@ -246,14 +247,14 @@ acpi_toshiba_attach(device_t dev)
 	sysctl_ctx_init(&sc->sysctl_ctx);
 	sc->sysctl_tree = SYSCTL_ADD_NODE(&sc->sysctl_ctx,
 	    SYSCTL_CHILDREN(acpi_sc->acpi_sysctl_tree), OID_AUTO,
-	    "toshiba", CTLFLAG_RD, 0, "");
+	    "toshiba", CTLFLAG_RD | CTLFLAG_MPSAFE, 0, "");
 
 	for (i = 0; sysctl_table[i].name != NULL; i++) {
 		SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 		    sysctl_table[i].name,
-		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY,
-		    sc, i, acpi_toshiba_sysctl, "I", "");
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
+		    CTLFLAG_NEEDGIANT, sc, i, acpi_toshiba_sysctl, "I", "");
 	}
 
 	if (enable_fn_keys != 0) {
@@ -543,15 +544,17 @@ static int
 acpi_toshiba_video_probe(device_t dev)
 {
 	static char *vid_ids[] = { "TOS6201", NULL };
+	int rv;
 
 	if (acpi_disabled("toshiba") ||
-	    ACPI_ID_PROBE(device_get_parent(dev), dev, vid_ids) == NULL ||
 	    device_get_unit(dev) != 0)
 		return (ENXIO);
 
 	device_quiet(dev);
-	device_set_desc(dev, "Toshiba Video");
-	return (0);
+	rv = ACPI_ID_PROBE(device_get_parent(dev), dev, vid_ids, NULL);
+	if (rv <= 0)
+		device_set_desc(dev, "Toshiba Video");
+	return (rv);
 }
 
 static int

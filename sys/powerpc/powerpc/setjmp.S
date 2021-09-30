@@ -1,4 +1,4 @@
-/*	$FreeBSD: 910f58bf66730370961cf33109c66f4871fe80d1 $  */
+/*	$FreeBSD: f58c4aa0cf7a1998a6b6dd1fe8291e20f10af7c6 $  */
 /*	from:	NetBSD: setjmp.S,v 1.1 1998/01/27 15:13:12 sakamoto Exp $  */
 /*	from:	OpenBSD: setjmp.S,v 1.2 1996/12/28 06:22:18 rahnds Exp 	*/
 /* kernel version of this file, does not have signal goop */
@@ -75,6 +75,7 @@ ASENTRY_NOPROF(setjmp)
 	/* f14-f31, fpscr */
 	li 3, 0
 	blr
+ASEND(setjmp)
 
 
 .extern sigsetmask
@@ -112,3 +113,4 @@ ASENTRY_NOPROF(longjmp)
 	/* f14-f31, fpscr */
 	mr 3, 4
 	blr
+ASEND(longjmp)

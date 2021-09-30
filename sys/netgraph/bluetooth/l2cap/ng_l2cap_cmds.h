@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_cmds.h,v 1.4 2003/04/01 18:15:26 max Exp $
- * $FreeBSD: dafea71bf8ed52bf745a1dac71739766dfb4e0bd $
+ * $FreeBSD: 1d9b80b173a7365e19ceeb9ee9e7f07aae2d4ba2 $
  */
 
 #ifndef _NETGRAPH_L2CAP_CMDS_H_
@@ -427,4 +427,3 @@ void ng_l2cap_con_fail                (ng_l2cap_con_p, u_int16_t);
 void ng_l2cap_process_command_timeout (node_p, hook_p, void *, int);
 
 #endif /* ndef _NETGRAPH_L2CAP_CMDS_H_ */
-

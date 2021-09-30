@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 53454764a5d6eada589475763015696b635667e6 $ */
+/* $FreeBSD: a8028be51720b7223be266e6645936b55281a387 $ */
 
 #ifndef	__AR71XX_CPUDEF_H__
 #define	__AR71XX_CPUDEF_H__
@@ -171,7 +171,6 @@ extern uint32_t u_ar71xx_ddr_freq;
 extern uint32_t u_ar71xx_uart_freq;
 extern uint32_t u_ar71xx_wdt_freq;
 extern uint32_t u_ar71xx_mdio_freq;
-
 static inline uint64_t ar71xx_refclk(void) { return u_ar71xx_refclk; }
 static inline uint64_t ar71xx_cpu_freq(void) { return u_ar71xx_cpu_freq; }
 static inline uint64_t ar71xx_ahb_freq(void) { return u_ar71xx_ahb_freq; }

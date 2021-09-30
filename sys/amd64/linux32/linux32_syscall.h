@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 63c2b4c054479a0cc51a42ee831584de3f6fd03a $
+ * $FreeBSD: 198941a856b1022850309d1a1a7647f7a50b47da $
  */
 
 #define	LINUX32_SYS_linux_exit	1
@@ -216,6 +216,7 @@
 #define	LINUX32_SYS_linux_lremovexattr	236
 #define	LINUX32_SYS_linux_fremovexattr	237
 #define	LINUX32_SYS_linux_tkill	238
+#define	LINUX32_SYS_linux_sendfile64	239
 #define	LINUX32_SYS_linux_sys_futex	240
 #define	LINUX32_SYS_linux_sched_setaffinity	241
 #define	LINUX32_SYS_linux_sched_getaffinity	242

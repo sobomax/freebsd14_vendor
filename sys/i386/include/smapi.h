@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 72edd9202d19ee329b392072e86fc5e1672114bb $
+ * $FreeBSD: 57eb1ee26e7f99cb8ad2243e44cf9c3491c457f6 $
  */
 
 #ifndef _MACHINE_SMAPI_H_
@@ -58,7 +58,7 @@ struct smapi_bios_header {
 
 	u_int32_t	prot32_offset;
 	u_int32_t	prot32_segment;
-	
+
 } __packed;
 
 struct smapi_bios_parameter {

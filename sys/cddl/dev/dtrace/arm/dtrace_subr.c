@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 8cd9c9c1f2046b79612e2e86a4a896370aa0d98a $
+ * $FreeBSD: e98a9ded5442dbab21c97ed3d8cda01bcfd4935c $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8cd9c9c1f2046b79612e2e86a4a896370aa0d98a $");
+__FBSDID("$FreeBSD: e98a9ded5442dbab21c97ed3d8cda01bcfd4935c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: 8cd9c9c1f2046b79612e2e86a4a896370aa0d98a $");
 extern dtrace_id_t	dtrace_probeid_error;
 extern int (*dtrace_invop_jump_addr)(struct trapframe *);
 extern void dtrace_getnanotime(struct timespec *tsp);
+extern void dtrace_getnanouptime(struct timespec *tsp);
 
 int dtrace_invop(uintptr_t, struct trapframe *, uintptr_t);
 void dtrace_invop_init(void);
@@ -174,7 +175,7 @@ dtrace_gethrtime()
 {
 	struct	timespec curtime;
 
-	nanouptime(&curtime);
+	dtrace_getnanouptime(&curtime);
 
 	return (curtime.tv_sec * 1000000000UL + curtime.tv_nsec);
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 221f8bff011e7e7f1fdaf2d8bb972b87bfe62df1 $");
+__FBSDID("$FreeBSD: 062407713730ef24832b3fe425225f96537d31e1 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: 221f8bff011e7e7f1fdaf2d8bb972b87bfe62df1 $");
 #include <dev/ofw/openfirm.h>
 
 #include <powerpc/mpc85xx/mpc85xx.h>
-
 
 /*
  * MPC85xx system specific routines

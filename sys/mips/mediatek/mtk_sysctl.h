@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 59824307ad0e3bbd5f0b996ef8ca114c2bde4d0e $
+ * $FreeBSD: e07e07280c01b5b3ff592aac83d00ff1218230ad $
  */
 
 #ifndef _MTK_SYSCTL_H_
@@ -53,6 +53,9 @@
 #define SYSCFG1_USB_HOST_MODE	(1<<10)
 
 #define RT3350_CHIPID0_3	0x33335452
+
+#define MTK_UNKNOWN_CHIPID0_3	0x6E6B6E75	/* "unkn" */
+#define MTK_UNKNOWN_CHIPID4_7	0x206E776F	/* "own " */
 
 extern uint32_t	mtk_sysctl_get(uint32_t);
 extern void	mtk_sysctl_set(uint32_t, uint32_t);

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: cc7a007947f2a6d3be29de97ef0a7e05de0256ce $
+# $FreeBSD: c6bc89da3330a1c4ff12759c254c2c647d9fdbd1 $
 
 # Run linter on the lua scripts in stand/lua. luacheck, available in ports as
 # devel/lua-luacheck, must be installed as a dependency of this script.
@@ -17,4 +17,5 @@ LUACHECK=$(which luacheck)
 cd $(make -V SRCTOP)/stand
 ${LUACHECK} . --globals loader --globals lfs --globals io.getchar \
 	--globals io.ischar --globals printc --globals cli_execute \
-	--globals cli_execute_unparsed --globals try_include --std lua53
+	--globals cli_execute_unparsed --globals try_include \
+	--globals pager --std lua53

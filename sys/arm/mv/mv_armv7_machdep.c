@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 810ebd26078287e33b3a6515632bee1f992584df $");
+__FBSDID("$FreeBSD: 3ecd69f435a6c8acba3e58bfe4dcd86663fd8f0c $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -480,4 +480,3 @@ static platform_method_t mv_axp_methods[] = {
 	PLATFORMMETHOD_END,
 };
 FDT_PLATFORM_DEF(mv_axp, "mv_axp", 0, "marvell,armadaxp", 100);
-

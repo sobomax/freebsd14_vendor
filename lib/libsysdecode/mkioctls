@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 05ae930888a180c37ff040fcf10b0fb5dd900524 $
+# $FreeBSD: 19e898dcc85d4060d0e52a288837b9b5dde12caa $
 
 set -e
 
@@ -51,6 +51,7 @@ BEGIN {
 	print "#include <sys/param.h>"
 	print "#include <sys/devicestat.h>"
 	print "#include <sys/disklabel.h>"
+	print "#include <sys/mman.h>"
 	print "#include <sys/socket.h>"
 	print "#include <sys/time.h>"
 	print "#include <sys/tty.h>"

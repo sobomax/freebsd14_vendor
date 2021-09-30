@@ -29,9 +29,9 @@
 .\"
 .\" * Other names and brands may be claimed as the property of others.
 .\"
-.\" $FreeBSD: 9f264de9d9c4f66b1c949a0762d4754c87274337 $
+.\" $FreeBSD: 320971a74f52b7e8f8e95f995cf5e5547bd325bb $
 .\"
-.Dd June 27, 2020
+.Dd January 19, 2021
 .Dt IXL 4
 .Os
 .Sh NAME
@@ -227,6 +227,15 @@ contains the speeds that are allowed to be set.
 Displays the current speed.
 .It Va dev.ixl.#.fw_version
 Displays the current firmware and NVM versions of the adapter.
+.It Va dev.ixl.#.debug.switch_vlans
+Set the Ethertype used by the hardware itself to handle internal
+services.
+Frames with this Ethertype will be dropped without notice.
+Defaults to
+.Dv 0x88a8 ,
+which is a well known number for IEEE 802.1ad VLAN stacking.
+If you need 802.1ad support, set this number to any another Ethertype i.e.
+.Dv 0xffff .
 .El
 .Sh INTERRUPT STORMS
 It is important to note that 40G operation can generate high
@@ -275,8 +284,7 @@ email all the specific information related to the issue to
 .Xr netintro 4 ,
 .Xr vlan 4 ,
 .Xr ifconfig 8 ,
-.Xr iovctl 8 ,
-.Xr iflib 9
+.Xr iovctl 8
 .Sh HISTORY
 The
 .Nm

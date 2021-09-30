@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ddcaeea091f55eceb5f9c1662aaacac55541d8b1 $
+ * $FreeBSD: 5fcc3d94211807154917cc5bfa263642c6997fc1 $
  */
 
 #include <sys/param.h>
@@ -359,7 +359,7 @@ daemon_init(video_adapter_t *adp)
 	for (;;) {
 		hostlen = strlen(prison0.pr_hostname);
 		mtx_unlock(&prison0.pr_mtx);
-	
+
 		messagelen = hostlen + 3 + strlen(ostype) + 1 +
 		    strlen(osrelease);
 		message = malloc(messagelen + 1, M_DEVBUF, M_WAITOK);

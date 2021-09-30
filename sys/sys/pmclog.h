@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 51a8a20d14a6a988d68d95325a0183d7f58ec83e $
+ * $FreeBSD: 0ee9b7e2e85361d770df91a1767760a91dcf6bca $
  */
 
 #ifndef	_SYS_PMCLOG_H_
@@ -267,10 +267,13 @@ union pmclog_entry {		/* only used to size scratch areas */
 	struct pmclog_pmcattach		pl_t;
 	struct pmclog_pmcdetach		pl_d;
 	struct pmclog_proccsw		pl_c;
+	struct pmclog_proccreate	pl_pc;
 	struct pmclog_procexec		pl_x;
 	struct pmclog_procexit		pl_e;
 	struct pmclog_procfork		pl_f;
 	struct pmclog_sysexit		pl_se;
+	struct pmclog_threadcreate	pl_tc;
+	struct pmclog_threadexit	pl_te;
 	struct pmclog_userdata		pl_u;
 };
 

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_types.h	8.3 (Berkeley) 4/28/95
- * $FreeBSD: 61c432ba890fdbeb897607a1e801e4b7cb5d05d9 $
+ * $FreeBSD: 1103d5f90928a11dcea79f60d34c67b393e7e0dc $
  * $NetBSD: if_types.h,v 1.16 2000/04/19 06:30:53 itojun Exp $
  */
 
@@ -242,6 +242,7 @@ typedef enum {
 	IFT_OPTICALCHANNEL = 0xc3,	/* Optical Channel */
 	IFT_OPTICALTRANSPORT = 0xc4,	/* Optical Transport */
 	IFT_INFINIBAND	= 0xc7,		/* Infiniband */
+	IFT_INFINIBANDLAG = 0xc8,	/* Infiniband Link Aggregate */
 	IFT_BRIDGE	= 0xd1,		/* Transparent bridge interface */
 	IFT_STF		= 0xd7,		/* 6to4 interface */
 

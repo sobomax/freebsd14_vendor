@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)var.c	8.3 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42f9556aad7b377879a196bf2e2a075c14e4854c $");
+__FBSDID("$FreeBSD: 0758289151ba6c5f1f1c8b918a35508a4834a2a8 $");
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -558,13 +558,13 @@ environment(void)
 	nenv = 0;
 	for (vpp = vartab ; vpp < vartab + VTABSIZE ; vpp++) {
 		for (vp = *vpp ; vp ; vp = vp->next)
-			if (vp->flags & VEXPORT)
+			if ((vp->flags & (VEXPORT|VUNSET)) == VEXPORT)
 				nenv++;
 	}
 	ep = env = stalloc((nenv + 1) * sizeof *env);
 	for (vpp = vartab ; vpp < vartab + VTABSIZE ; vpp++) {
 		for (vp = *vpp ; vp ; vp = vp->next)
-			if (vp->flags & VEXPORT)
+			if ((vp->flags & (VEXPORT|VUNSET)) == VEXPORT)
 				*ep++ = vp->text;
 	}
 	*ep = NULL;

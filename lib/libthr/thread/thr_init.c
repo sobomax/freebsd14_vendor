@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fed933a6f2a72c6355d033ff8b0ff126f3c17a89 $");
+__FBSDID("$FreeBSD: 82bde10a153edbcb2af5ca7320df0680dec06931 $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -271,6 +271,7 @@ static pthread_func_t jmp_table[][2] = {
 	[PJT_MUTEXATTR_GETROBUST] = {DUAL_ENTRY(_thr_mutexattr_getrobust)},
 	[PJT_MUTEXATTR_SETROBUST] = {DUAL_ENTRY(_thr_mutexattr_setrobust)},
 	[PJT_GETTHREADID_NP] = {DUAL_ENTRY(_thr_getthreadid_np)},
+	[PJT_ATTR_GET_NP] = {DUAL_ENTRY(_thr_attr_get_np)},
 };
 
 static int init_once = 0;
@@ -474,8 +475,9 @@ init_private(void)
 				PANIC("Cannot get stack rlimit");
 			_thr_stack_initial = rlim.rlim_cur;
 		}
-		len = sizeof(_thr_is_smp);
-		sysctlbyname("kern.smp.cpus", &_thr_is_smp, &len, NULL, 0);
+		_thr_is_smp = sysconf(_SC_NPROCESSORS_CONF);
+		if (_thr_is_smp == -1)
+			PANIC("Cannot get _SC_NPROCESSORS_CONF");
 		_thr_is_smp = (_thr_is_smp > 1);
 		_thr_page_size = getpagesize();
 		_thr_guard_default = _thr_page_size;

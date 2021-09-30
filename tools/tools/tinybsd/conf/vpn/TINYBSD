@@ -1,4 +1,4 @@
-# $FreeBSD: 956c13b00413cf1a4405fcee7c9fe5dd36570eb2 $
+# $FreeBSD: 25848510f5983d2e59bfb893c700ee23bc2d717c $
 machine		i386
 cpu		I486_CPU
 cpu		I586_CPU
@@ -63,11 +63,6 @@ device		sc
 
 device		agp		# support several AGP chipsets
 
-# Power management support (see NOTES for more options)
-#device		apm
-# Add suspend/resume support for the i8254.
-device		pmtimer
-
 # PCCARD (PCMCIA) support
 # PCMCIA and cardbus bridge support
 #device		cbb		# cardbus (yenta) bridge
@@ -130,7 +125,6 @@ device		xe		# Xircom pccard Ethernet
 
 # Pseudo devices.
 device		loop		# Network loopback
-device		random		# Entropy device
 device		ether		# Ethernet support
 device		ppp		# Kernel PPP
 device		tun		# Packet tunnel.

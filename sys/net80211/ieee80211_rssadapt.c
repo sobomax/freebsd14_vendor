@@ -1,4 +1,4 @@
-/*	$FreeBSD: 7d9158414a4ca9211e743f457e36c13eb924c383 $	*/
+/*	$FreeBSD: 4ca0b29fa56998348959e46fa1328c7f215e562b $	*/
 /* $NetBSD: ieee80211_rssadapt.c,v 1.9 2005/02/26 22:45:09 perry Exp $ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -381,6 +381,7 @@ rssadapt_sysctlattach(struct ieee80211vap *vap,
 {
 
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "rssadapt_rate_interval", CTLTYPE_INT | CTLFLAG_RW, vap,
-	    0, rssadapt_sysctl_interval, "I", "rssadapt operation interval (ms)");
+	    "rssadapt_rate_interval",
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, vap, 0,
+	    rssadapt_sysctl_interval, "I", "rssadapt operation interval (ms)");
 }

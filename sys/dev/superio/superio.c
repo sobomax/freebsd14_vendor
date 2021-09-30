@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5a9591e4d46649934f9959754d7143f7101ef8cb $
+ * $FreeBSD: b102159c2810279a874d5cacf76b53d8f0a32fa2 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a9591e4d46649934f9959754d7143f7101ef8cb $");
+__FBSDID("$FreeBSD: b102159c2810279a874d5cacf76b53d8f0a32fa2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: 5a9591e4d46649934f9959754d7143f7101ef8cb $");
 #include <dev/superio/superio_io.h>
 
 #include "isa_if.h"
-
 
 typedef void (*sio_conf_enter_f)(struct resource*, uint16_t);
 typedef void (*sio_conf_exit_f)(struct resource*, uint16_t);
@@ -234,9 +233,29 @@ static const struct sio_conf_methods nvt_conf_methods = {
 	.vendor = SUPERIO_VENDOR_NUVOTON
 };
 
+static void
+fintek_conf_enter(struct resource* res, uint16_t port)
+{
+	bus_write_1(res, 0, 0x87);
+	bus_write_1(res, 0, 0x87);
+}
+
+static void
+fintek_conf_exit(struct resource* res, uint16_t port)
+{
+	bus_write_1(res, 0, 0xaa);
+}
+
+static const struct sio_conf_methods fintek_conf_methods = {
+	.enter = fintek_conf_enter,
+	.exit = fintek_conf_exit,
+	.vendor = SUPERIO_VENDOR_FINTEK
+};
+
 static const struct sio_conf_methods * const methods_table[] = {
 	&ite_conf_methods,
 	&nvt_conf_methods,
+	&fintek_conf_methods,
 	NULL
 };
 
@@ -259,6 +278,11 @@ const struct sio_device nct5104_devices[] = {
 	{ .ldn = 7, .type = SUPERIO_DEV_GPIO },
 	{ .ldn = 8, .type = SUPERIO_DEV_WDT },
 	{ .ldn = 15, .type = SUPERIO_DEV_GPIO },
+	{ .type = SUPERIO_DEV_NONE },
+};
+
+const struct sio_device fintek_devices[] = {
+	{ .ldn = 7, .type = SUPERIO_DEV_WDT },
 	{ .type = SUPERIO_DEV_NONE },
 };
 
@@ -411,6 +435,11 @@ static const struct {
 		.descr = "Nuvoton NCT6795",
 		.devices = nvt_devices,
 	},
+	{
+		.vendor = SUPERIO_VENDOR_FINTEK, .devid = 0x1210, .mask = 0xff,
+		.descr = "Fintek F81803",
+		.devices = fintek_devices,
+	},
 	{ 0, 0 }
 };
 
@@ -419,7 +448,7 @@ devtype_to_str(superio_dev_type_t type)
 {
 	switch (type) {
 	case SUPERIO_DEV_NONE:
-		return ("invalid");
+		return ("none");
 	case SUPERIO_DEV_HWM:
 		return ("HWM");
 	case SUPERIO_DEV_WDT:
@@ -429,6 +458,7 @@ devtype_to_str(superio_dev_type_t type)
 	case SUPERIO_DEV_MAX:
 		return ("invalid");
 	}
+	return ("invalid");
 }
 
 static int
@@ -472,6 +502,10 @@ superio_detect(device_t dev, bool claim, struct siosc *sc)
 			devid = sio_readw(res, 0x20);
 			revid = sio_read(res, 0x22);
 		} else if (methods_table[m]->vendor == SUPERIO_VENDOR_NUVOTON) {
+			devid = sio_read(res, 0x20);
+			revid = sio_read(res, 0x21);
+			devid = (devid << 8) | revid;
+		} else if (methods_table[m]->vendor == SUPERIO_VENDOR_FINTEK) {
 			devid = sio_read(res, 0x20);
 			revid = sio_read(res, 0x21);
 			devid = (devid << 8) | revid;

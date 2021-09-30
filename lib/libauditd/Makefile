@@ -1,8 +1,7 @@
 #
-# $FreeBSD: c29c32ceb12b947629aab7e33cb44625298580d4 $
+# $FreeBSD: 0d79b46620e1c3d7d54ef7743399109f009c4025 $
 #
 
-PACKAGE=lib${LIB}
 OPENBSMDIR=		${SRCTOP}/contrib/openbsm
 _LIBAUDITDDIR=		${OPENBSMDIR}/libauditd
 _LIBBSMDIR=		${OPENBSMDIR}/libbsm
@@ -19,6 +18,7 @@ SRCS=	auditd_lib.c
 CFLAGS+=	-I${OPENBSMDIR} -I${_LIBBSMDIR}
 
 WARNS?=		3
+PRIVATELIB=	true
 
 MAN=
 

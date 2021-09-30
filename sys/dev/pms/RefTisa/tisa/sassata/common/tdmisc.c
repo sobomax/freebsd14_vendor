@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 302a1163758a8b869206f173be2236b186acb456 $");
+__FBSDID("$FreeBSD: bb5c75f6ecd1d7fe2562ebd11d97b63c62c37ec5 $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>
@@ -1599,7 +1599,7 @@ tiCOMPassthroughCmndStart(
         break;
         
       case tiConfigureRteInfo:
-        SMPFn = SMP_CONFIGURE_ROUTING_INFORMATION;;
+        SMPFn = SMP_CONFIGURE_ROUTING_INFORMATION;
         if (tdPTCmndBody->protocol.SMP.IT == SMP_INITIATOR)
         {
           SMPFrameLen = sizeof(SmpReqConfigureRouteInformation_t);

@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 891c05eb1f0574b36f5f3ee280297a88ccca425b $
+ * $FreeBSD: a683cce6196cbcf51c3be04f58fb45a37f53249b $
  */
 
 /*
@@ -36,7 +36,7 @@
 
 #ifndef	_MACHINE_PERFMON_H_
 #define	_MACHINE_PERFMON_H_
- 
+
 #ifndef _KERNEL
 #include <sys/types.h>
 #endif

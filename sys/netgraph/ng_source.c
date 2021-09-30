@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da8f42381ac3de4cd77409e53aca04b6aae2c14b $");
+__FBSDID("$FreeBSD: 401548da65d0a869138edaa4151e1605756027ea $");
 
 /*
  * This node is used for high speed packet geneneration.  It queues
@@ -683,8 +683,8 @@ ng_source_clr_data (sc_p sc)
 static int
 ng_source_start(sc_p sc, uint64_t packets)
 {
-	if (sc->output_ifp == NULL) {
-		printf("ng_source: start without iface configured\n");
+	if (sc->output_ifp == NULL && sc->stats.maxPps == 0) {
+		printf("ng_source: start without iface or pps configured\n");
 		return (ENXIO);
 	}
 

@@ -1,7 +1,7 @@
 /*	$NetBSD: openfirmio.c,v 1.4 2002/09/06 13:23:19 gehenna Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6ee962b5c8fc00134dba00d2700ae8eaaf15edd $");
+__FBSDID("$FreeBSD: 2112d45d4dd950f7a837f5d0f95901f91ee4ed10 $");
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -115,7 +115,7 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 	phandle_t node;
 	int len, ok, error;
 	char *name, *value;
-	char newname[32];
+	char newname[OFIOCSUGGPROPNAMELEN];
 
 	if ((flags & FREAD) == 0)
 		return (EBADF);
@@ -151,7 +151,6 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 	name = value = NULL;
 	error = 0;
 	switch (cmd) {
-
 	case OFIOCGET:
 	case OFIOCGETPROPLEN:
 		if (node == 0)
@@ -223,8 +222,19 @@ openfirm_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 			break;
 		}
 		len = strlen(newname) + 1;
-		if (len > of->of_buflen)
+		if (len > of->of_buflen) {
+			/*
+			 * Passed buffer was insufficient.
+			 *
+			 * Instead of returning an error here, truncate the
+			 * property name to fit the buffer.
+			 *
+			 * This allows us to retain compatibility with old
+			 * tools which always pass a 32 character buffer.
+			 */
 			len = of->of_buflen;
+			newname[len - 1] = '\0';
+		}
 		else
 			of->of_buflen = len;
 		error = copyout(newname, of->of_buf, len);

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a25faed1890113b9aaa8328c1f61857e241a72ff $
+ * $FreeBSD: 4a5e58ffbe726807080f7a3ba4ba2692a7b7c48b $
  */
 
 #include "mvs_if.h"
@@ -392,7 +392,7 @@
 #define MVS_MAX_SLOTS			32
 
 /* Pessimistic prognosis on number of required S/G entries */
-#define MVS_SG_ENTRIES		(btoc(MAXPHYS) + 1)
+#define MVS_SG_ENTRIES		(btoc(maxphys) + 1)
 
 /* EDMA Command Request Block (CRQB) Data */
 struct mvs_crqb {
@@ -505,6 +505,7 @@ struct mvs_slot {
     int				slot;           /* Number of this slot */
     int				tag;            /* Used command tag */
     enum mvs_slot_states	state;          /* Slot state */
+    u_int			eprd_offset;	/* EPRD offset */
     union ccb			*ccb;		/* CCB occupying slot */
     struct ata_dmaslot          dma;            /* DMA data of this slot */
     struct callout              timeout;        /* Execution timeout */

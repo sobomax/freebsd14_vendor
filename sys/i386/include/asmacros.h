@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d558842d6b42c890d97a6543994d3c888afe1b9b $
+ * $FreeBSD: 27515744fcb381eb3653bb2aad13821e8662b204 $
  */
 
 #ifndef _MACHINE_ASMACROS_H_
@@ -157,6 +157,7 @@
 	movw	%es,(%esp)
 	pushl	$0
 	movw	%fs,(%esp)
+	movl	%esp,%ebp
 	.endm
 
 	.macro	PUSH_FRAME
@@ -164,7 +165,7 @@
 	pushl	$0		/* dummy trap type */
 	PUSH_FRAME2
 	.endm
-	
+
 /*
  * Access per-CPU data.
  */

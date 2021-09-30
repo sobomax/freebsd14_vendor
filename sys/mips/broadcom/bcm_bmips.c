@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 100664bb26a11788aa1677cf517bdcab3e63bf8e $");
+__FBSDID("$FreeBSD: 0efd4706941c4cbc988daee28041eeb68460aa6e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -102,7 +102,6 @@ bcm_bmips_probe(device_t dev)
 	bhnd_set_default_core_desc(dev);
 	return (BUS_PROBE_DEFAULT);
 }
-
 
 static int
 bcm_bmips_attach(device_t dev)

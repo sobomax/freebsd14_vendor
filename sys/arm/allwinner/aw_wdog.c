@@ -25,9 +25,10 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2510076f03b239cc1c192628521a0cdb3977449e $");
+__FBSDID("$FreeBSD: 0fc5895eff9f68d9cf97b0586d37984162dc9048 $");
 
 #include <sys/param.h>
+#include <sys/eventhandler.h>
 #include <sys/systm.h>
 #include <sys/watchdog.h>
 #include <sys/reboot.h>
@@ -175,7 +176,7 @@ aw_wdog_attach(device_t dev)
 	EVENTHANDLER_REGISTER(watchdog_list, aw_wdog_watchdog_fn, sc, 0);
 	EVENTHANDLER_REGISTER(shutdown_final, aw_wdog_shutdown_fn, sc,
 	    SHUTDOWN_PRI_LAST - 1);
-	
+
 	return (0);
 }
 

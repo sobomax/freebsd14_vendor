@@ -1,9 +1,9 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2006 M. Warner Losh.  All rights reserved.
  * Copyright (c) 2009 Oleksandr Tymoshenko.  All rights reserved.
  * Copyright (c) 2018 Ian Lepore.  All rights reserved.
+ * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6067bf9471cf8e5eb16090f23bd931119ff61ba0 $");
+__FBSDID("$FreeBSD: be845c2064f9aac61f77d01ad9e9e97c10c110b5 $");
 
 #include "opt_platform.h"
 
@@ -133,6 +133,7 @@ static struct mx25l_flash_ident flash_devices[] = {
 	{ "s25fl064",	0x01, 0x0216, 64 * 1024, 128, FL_NONE },
 	{ "s25fl128",	0x01, 0x2018, 64 * 1024, 256, FL_NONE },
 	{ "s25fl256s",	0x01, 0x0219, 64 * 1024, 512, FL_NONE },
+	{ "s25fl512s",	0x01, 0x0220, 64 * 1024, 1024, FL_NONE },
 	{ "SST25VF010A", 0xbf, 0x2549, 4 * 1024, 32, FL_ERASE_4K | FL_ERASE_32K },
 	{ "SST25VF032B", 0xbf, 0x254a, 64 * 1024, 64, FL_ERASE_4K | FL_ERASE_32K },
 
@@ -658,7 +659,7 @@ mx25l_task(void *arg)
 			    bp->bio_data, bp->bio_bcount);
 			break;
 		default:
-			bp->bio_error = EINVAL;
+			bp->bio_error = EOPNOTSUPP;
 		}
 
 

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ecca1f65f19708e5e2b753f28b0461885f63de5b $");
+__FBSDID("$FreeBSD: f4bf434d6f5f40ab54887226d5f9602dd9f9d452 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -90,7 +90,6 @@ generic_bs_alloc(bus_space_tag_t t, bus_addr_t rstart, bus_addr_t rend, bus_size
 
 	panic("generic_bs_alloc(): not implemented");
 }
-
 
 void
 generic_bs_unmap(bus_space_tag_t t, bus_space_handle_t h, bus_size_t size)

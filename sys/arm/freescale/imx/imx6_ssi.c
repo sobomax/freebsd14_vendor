@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 811bde6b77cea2a3dc37ac9f9ee6b9db0928da48 $");
+__FBSDID("$FreeBSD: 2330978849e99ed589e55c1bc4e6f4dabc377e4e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -278,7 +278,6 @@ static kobj_method_t ssimixer_methods[] = {
 	KOBJMETHOD_END
 };
 MIXER_DECLARE(ssimixer);
-
 
 /*
  * Channel interface.

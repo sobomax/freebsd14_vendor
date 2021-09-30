@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e20763b3764718a924f44ffa43d4c96097cc7ae4 $");
+__FBSDID("$FreeBSD: 922ff5478a4261ea10bf061d346e5381949c18af $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -57,7 +57,7 @@ linux_ioctl_tdfx(struct thread *td, struct linux_ioctl_args* args)
 
    struct file *fp;
 
-   error = fget(td, args->fd, cap_rights_init(&rights, CAP_IOCTL), &fp);
+   error = fget(td, args->fd, cap_rights_init_one(&rights, CAP_IOCTL), &fp);
    if (error != 0)
 	   return (error);
    /* We simply copy the data and send it right to ioctl */

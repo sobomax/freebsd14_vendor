@@ -1,4 +1,4 @@
-# $FreeBSD: cb263fb427a78e5df9c025c2cbbf0b5bcfae0eaf $
+# $FreeBSD: c267a2135c3b5803c2eb31428c2b7715e156e51a $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/plockstat
 
@@ -8,6 +8,12 @@ BINDIR?=	/usr/sbin
 
 WARNS?=		1
 
+CFLAGS+= -DIN_BASE
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/include
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/
+CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/lib/libspl/include/os/freebsd
+CFLAGS+= -I${SRCTOP}/sys
+CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/include
 CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${SRCTOP}/cddl/compat/opensolaris/include \
 		-I${OPENSOLARIS_USR_DISTDIR}/head \
@@ -17,6 +23,7 @@ CFLAGS+=	-I${SRCTOP}/sys/cddl/compat/opensolaris \
 		-I${OPENSOLARIS_SYS_DISTDIR}/compat \
 		-I${SRCTOP}/cddl/lib/libdtrace \
 		-I${SRCTOP}/sys
+CFLAGS+= -DHAVE_ISSETUGID
 
 LIBADD=	dtrace proc
 

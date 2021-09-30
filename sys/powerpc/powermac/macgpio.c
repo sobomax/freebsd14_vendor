@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ba24a6dbfae0f358ee4a2f846a44d59114f54de $
+ * $FreeBSD: 68eb07e7b3914d33b25627c9d03cba7973497333 $
  */
 
 /*
@@ -92,7 +92,7 @@ static device_method_t macgpio_methods[] = {
 	DEVMETHOD(device_shutdown,      bus_generic_shutdown),
 	DEVMETHOD(device_suspend,       macgpio_suspend),
 	DEVMETHOD(device_resume,        macgpio_resume),
-	
+
 	/* Bus interface */
 	DEVMETHOD(bus_print_child,      macgpio_print_child),
 	DEVMETHOD(bus_probe_nomatch,    macgpio_probe_nomatch),
@@ -113,7 +113,6 @@ static device_method_t macgpio_methods[] = {
 	DEVMETHOD(ofw_bus_get_name,	ofw_bus_gen_get_name),
 	DEVMETHOD(ofw_bus_get_node,	ofw_bus_gen_get_node),
 	DEVMETHOD(ofw_bus_get_type,	ofw_bus_gen_get_type),
-
 	{ 0, 0 }
 };
 
@@ -125,7 +124,8 @@ static driver_t macgpio_pci_driver = {
 
 devclass_t macgpio_devclass;
 
-DRIVER_MODULE(macgpio, macio, macgpio_pci_driver, macgpio_devclass, 0, 0);
+EARLY_DRIVER_MODULE(macgpio, macio, macgpio_pci_driver, macgpio_devclass, 0, 0,
+    BUS_PASS_BUS);
 
 struct macgpio_devinfo {
 	struct ofw_bus_devinfo mdi_obdinfo;
@@ -144,7 +144,7 @@ macgpio_probe(device_t dev)
 		device_set_desc(dev, "MacIO GPIO Controller");
 		return (0);
 	}
-	
+
         return (ENXIO);	
 }
 
@@ -159,11 +159,11 @@ macgpio_attach(device_t dev)
         struct macgpio_devinfo *dinfo;
         phandle_t root, child, iparent;
         device_t cdev;
-	uint32_t irq;
+	uint32_t irq[2];
 
 	sc = device_get_softc(dev);
 	root = sc->sc_node = ofw_bus_get_node(dev);
-	
+
 	sc->sc_gpios = bus_alloc_resource_any(dev, SYS_RES_MEMORY,
 	    &sc->sc_gpios_rid, RF_ACTIVE);
 
@@ -192,13 +192,13 @@ macgpio_attach(device_t dev)
 
 		resource_list_init(&dinfo->mdi_resources);
 
-		if (OF_getencprop(child, "interrupts", &irq, sizeof(irq)) == 
+		if (OF_getencprop(child, "interrupts", irq, sizeof(irq)) == 
 		    sizeof(irq)) {
 			OF_searchencprop(child, "interrupt-parent", &iparent,
 			    sizeof(iparent));
 			resource_list_add(&dinfo->mdi_resources, SYS_RES_IRQ,
-			    0, MAP_IRQ(iparent, irq), MAP_IRQ(iparent, irq),
-			    1);
+			    0, MAP_IRQ(iparent, irq[0]),
+			    MAP_IRQ(iparent, irq[0]), 1);
 		}
 
 		/* Fix messed-up offsets */
@@ -219,7 +219,6 @@ macgpio_attach(device_t dev)
 	return (bus_generic_attach(dev));
 }
 
-
 static int
 macgpio_print_child(device_t dev, device_t child)
 {
@@ -229,7 +228,7 @@ macgpio_print_child(device_t dev, device_t child)
         dinfo = device_get_ivars(child);
 
         retval += bus_print_child_header(dev, child);
-	
+
 	if (dinfo->gpio_num >= GPIO_BASE)
 		printf(" gpio %d", dinfo->gpio_num - GPIO_BASE);
 	else if (dinfo->gpio_num >= GPIO_EXTINT_BASE)
@@ -243,7 +242,6 @@ macgpio_print_child(device_t dev, device_t child)
 
         return (retval);
 }
-
 
 static void
 macgpio_probe_nomatch(device_t dev, device_t child)
@@ -264,7 +262,6 @@ macgpio_probe_nomatch(device_t dev, device_t child)
 		printf(" (no driver attached)\n");
 	}
 }
-
 
 static struct resource *
 macgpio_alloc_resource(device_t bus, device_t child, int type, int *rid,
@@ -304,7 +301,6 @@ macgpio_activate_resource(device_t bus, device_t child, int type, int rid,
 
 	return (bus_activate_resource(bus, type, rid, res));
 }
-
 
 static int
 macgpio_deactivate_resource(device_t bus, device_t child, int type, int rid,

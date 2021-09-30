@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce4b4400cb84abad5109ce99b07acbd3930c89ab $");
+__FBSDID("$FreeBSD: d47c128949a56375ef9793e3c7d54ce4885b14ab $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -240,7 +240,6 @@ mpu401_minit(struct snd_midi *sm, void *arg)
 	printf("mpu401_minit failed active sensing\n");
 	return 1;
 }
-
 
 int
 mpu401_muninit(struct snd_midi *sm, void *arg)

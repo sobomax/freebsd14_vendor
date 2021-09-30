@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ef4a4c8e70d639785054462f3532861c3a968bed $");
+__FBSDID("$FreeBSD: 7fd80cb7c3d76d08e6ef87a80d13a4fafb633ef1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,10 +59,6 @@ __FBSDID("$FreeBSD: ef4a4c8e70d639785054462f3532861c3a968bed $");
 #include <arm/mv/mvreg.h>
 
 #include "gpio_if.h"
-
-#ifdef __aarch64__
-#include "opt_soc.h"
-#endif
 
 #define GPIO_MAX_INTR_COUNT	8
 #define GPIO_PINS_PER_REG	32
@@ -199,9 +195,6 @@ EARLY_DRIVER_MODULE(mv_gpio, simplebus, mv_gpio_driver, mv_gpio_devclass, 0, 0,
 struct ofw_compat_data compat_data[] = {
 	{ "mrvl,gpio", 1 },
 	{ "marvell,orion-gpio", 1 },
-#ifdef SOC_MARVELL_8K
-	{ "marvell,armada-8k-gpio", 1 },
-#endif
 	{ NULL, 0 }
 };
 
@@ -534,7 +527,6 @@ mv_gpio_exec_intr_handlers(device_t dev, uint32_t status, int high)
 static void
 mv_gpio_intr_handler(device_t dev, int pin)
 {
-#ifdef INTRNG
 	struct intr_irqsrc isrc;
 	struct mv_gpio_softc *sc;
 	sc = (struct mv_gpio_softc *)device_get_softc(dev);
@@ -551,7 +543,6 @@ mv_gpio_intr_handler(device_t dev, int pin)
 		return;
 
 	intr_isrc_dispatch(&isrc, NULL);
-#endif
 }
 
 int

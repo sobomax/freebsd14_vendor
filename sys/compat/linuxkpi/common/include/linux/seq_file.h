@@ -24,18 +24,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67e2ce0797e2346511926911b2e9b4685ba87e0d $
+ * $FreeBSD: dab8020a0336aec6b063b8717a368279ac911713 $
  */
 
 #ifndef _LINUX_SEQ_FILE_H_
 #define _LINUX_SEQ_FILE_H_
 
+#include <linux/types.h>
+#include <linux/fs.h>
 #include <sys/sbuf.h>
 
-struct seq_operations;
-struct linux_file;
-
+#undef file
 #define inode vnode
+
+#define	DEFINE_SHOW_ATTRIBUTE(__name)					\
+static int __name ## _open(struct inode *inode, struct linux_file *file)	\
+{									\
+	return single_open(file, __name ## _show, inode->i_private);	\
+}									\
+									\
+static const struct file_operations __name ## _fops = {			\
+	.owner		= THIS_MODULE,					\
+	.open		= __name ## _open,				\
+	.read		= seq_read,					\
+	.llseek		= seq_lseek,					\
+	.release	= single_release,				\
+}
+
+struct seq_operations;
 
 struct seq_file {
 	struct sbuf	*buf;
@@ -67,5 +83,6 @@ int single_release(struct inode *, struct linux_file *);
 #define seq_puts(m, str)	sbuf_printf((m)->buf, str)
 #define seq_putc(m, str)	sbuf_putc((m)->buf, str)
 
+#define	file			linux_file
 
 #endif	/* _LINUX_SEQ_FILE_H_ */

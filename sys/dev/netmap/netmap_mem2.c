@@ -38,7 +38,7 @@
 
 #ifdef __FreeBSD__
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: 01ecf6cef186ab52009004b887b5a0c52eaf486e $");
+__FBSDID("$FreeBSD: 7d798ee5a7faf87ef1d77b9160c3ba0212e5758e $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>
@@ -2007,7 +2007,6 @@ netmap_mem2_if_new(struct netmap_adapter *na, struct netmap_priv_d *priv)
 	len = sizeof(struct netmap_if) + (ntot * sizeof(ssize_t));
 	nifp = netmap_if_malloc(na->nm_mem, len);
 	if (nifp == NULL) {
-		NMA_UNLOCK(na->nm_mem);
 		return NULL;
 	}
 

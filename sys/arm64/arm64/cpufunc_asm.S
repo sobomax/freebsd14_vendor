@@ -29,9 +29,13 @@
  *
  */
 
+#include <sys/errno.h>
 #include <machine/asm.h>
 #include <machine/param.h>
-__FBSDID("$FreeBSD: c316c7c691666422a0f43bfc3518cdb8049d4f0f $");
+
+#include "assym.inc"
+
+__FBSDID("$FreeBSD: 2f28c4f682714462a7b53788e8cc5b2cdad02ffb $");
 
 /*
  * FIXME:
@@ -89,14 +93,6 @@ END(arm64_nullop)
  * Generic functions to read/modify/write the internal coprocessor registers
  */
 
-ENTRY(arm64_setttb)
-	dsb	ish
-	msr	ttbr0_el1, x0
-	dsb	ish
-	isb
-	ret
-END(arm64_setttb)
-
 ENTRY(arm64_tlb_flushID)
 	dsb	ishst
 #ifdef SMP
@@ -137,17 +133,20 @@ ENTRY(arm64_dcache_inv_range)
 END(arm64_dcache_inv_range)
 
 /*
- * void arm64_idcache_wbinv_range(vm_offset_t, vm_size_t)
+ * void arm64_dic_idc_icache_sync_range(vm_offset_t, vm_size_t)
+ * When the CTR_EL0.IDC bit is set cleaning to PoU becomes a dsb.
+ * When the CTR_EL0.DIC bit is set icache invalidation becomes an isb.
  */
-ENTRY(arm64_idcache_wbinv_range)
-	cache_handle_range	dcop = civac, ic = 1, icop = ivau
+ENTRY(arm64_dic_idc_icache_sync_range)
+	dsb	ishst
+	isb
 	ret
-END(arm64_idcache_wbinv_range)
+END(arm64_dic_idc_icache_sync_range)
 
 /*
- * void arm64_icache_sync_range(vm_offset_t, vm_size_t)
+ * void arm64_aliasing_icache_sync_range(vm_offset_t, vm_size_t)
  */
-ENTRY(arm64_icache_sync_range)
+ENTRY(arm64_aliasing_icache_sync_range)
 	/*
 	 * XXX Temporary solution - I-cache flush should be range based for
 	 * PIPT cache or IALLUIS for VIVT or VIPT caches
@@ -158,4 +157,26 @@ ENTRY(arm64_icache_sync_range)
 	dsb	ish
 	isb
 	ret
-END(arm64_icache_sync_range)
+END(arm64_aliasing_icache_sync_range)
+
+/*
+ * int arm64_icache_sync_range_checked(vm_offset_t, vm_size_t)
+ */
+ENTRY(arm64_icache_sync_range_checked)
+	adr	x5, cache_maint_fault
+	SET_FAULT_HANDLER(x5, x6)
+	/* XXX: See comment in arm64_icache_sync_range */
+	cache_handle_range	dcop = cvau
+	ic	ialluis
+	dsb	ish
+	isb
+	SET_FAULT_HANDLER(xzr, x6)
+	mov	x0, #0
+	ret
+END(arm64_icache_sync_range_checked)
+
+ENTRY(cache_maint_fault)
+	SET_FAULT_HANDLER(xzr, x1)
+	mov	x0, #EFAULT
+	ret
+END(cache_maint_fault)

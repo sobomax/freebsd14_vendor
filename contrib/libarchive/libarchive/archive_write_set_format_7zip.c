@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: fb7697f659ca7d899a3c85a725c6d82a31c93644 $");
+__FBSDID("$FreeBSD: f3a7446a0a024675c0f4fece2fbb621f01717c64 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1927,8 +1927,8 @@ compression_init_encoder_lzma(struct archive *a,
 		return (ARCHIVE_FATAL);
 	}
 	lzmafilters = (lzma_filter *)(strm+1);
-	if (level > 6)
-		level = 6;
+	if (level > 9)
+		level = 9;
 	if (lzma_lzma_preset(&lzma_opt, level)) {
 		free(strm);
 		lastrm->real_stream = NULL;

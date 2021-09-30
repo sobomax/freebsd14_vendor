@@ -25,13 +25,14 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: ea9f4252a562237ec4156d90bfaf4b4239165dec $ */
+/* $FreeBSD: 2cedea4440fe43d0efeb3735a620c736d7b7af44 $ */
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
 #include <sys/param.h>
 #include <sys/module.h>
 #include <sys/errno.h>
+#include <sys/eventhandler.h>
 #include <sys/jail.h>
 #include <sys/poll.h>  /* POLLIN, POLLOUT */
 #include <sys/kernel.h> /* types used in module initialization */
@@ -663,6 +664,7 @@ nm_os_vi_detach(struct ifnet *ifp)
 
 #ifdef WITH_EXTMEM
 #include <vm/vm_map.h>
+#include <vm/vm_extern.h>
 #include <vm/vm_kern.h>
 struct nm_os_extmem {
 	vm_object_t obj;
@@ -725,17 +727,18 @@ nm_os_extmem_create(unsigned long p, struct nmreq_pools_info *pi, int *perror)
 			&obj, &index, &prot, &wired);
 	if (rv != KERN_SUCCESS) {
 		nm_prerr("address %lx not found", p);
+		error = vm_mmap_to_errno(rv);
 		goto out_free;
 	}
+	vm_object_reference(obj);
+
 	/* check that we are given the whole vm_object ? */
 	vm_map_lookup_done(map, entry);
 
-	// XXX can we really use obj after releasing the map lock?
 	e->obj = obj;
-	vm_object_reference(obj);
-	/* wire the memory and add the vm_object to the kernel map,
-	 * to make sure that it is not fred even if the processes that
-	 * are mmap()ing it all exit
+	/* Wire the memory and add the vm_object to the kernel map,
+	 * to make sure that it is not freed even if all the processes
+	 * that are mmap()ing should munmap() it.
 	 */
 	e->kva = vm_map_min(kernel_map);
 	e->size = obj->size << PAGE_SHIFT;
@@ -744,12 +747,14 @@ nm_os_extmem_create(unsigned long p, struct nmreq_pools_info *pi, int *perror)
 			VM_PROT_READ | VM_PROT_WRITE, 0);
 	if (rv != KERN_SUCCESS) {
 		nm_prerr("vm_map_find(%zx) failed", (size_t)e->size);
+		error = vm_mmap_to_errno(rv);
 		goto out_rel;
 	}
 	rv = vm_map_wire(kernel_map, e->kva, e->kva + e->size,
 			VM_MAP_WIRE_SYSTEM | VM_MAP_WIRE_NOHOLES);
 	if (rv != KERN_SUCCESS) {
 		nm_prerr("vm_map_wire failed");
+		error = vm_mmap_to_errno(rv);
 		goto out_rem;
 	}
 
@@ -759,9 +764,9 @@ nm_os_extmem_create(unsigned long p, struct nmreq_pools_info *pi, int *perror)
 
 out_rem:
 	vm_map_remove(kernel_map, e->kva, e->kva + e->size);
-	e->obj = NULL;
 out_rel:
 	vm_object_deallocate(e->obj);
+	e->obj = NULL;
 out_free:
 	nm_os_free(e);
 out:
@@ -1021,12 +1026,10 @@ netmap_dev_pager_fault(vm_object_t object, vm_ooffset_t offset,
 	vm_paddr_t paddr;
 	vm_page_t page;
 	vm_memattr_t memattr;
-	vm_pindex_t pidx;
 
 	nm_prdis("object %p offset %jd prot %d mres %p",
 			object, (intmax_t)offset, prot, mres);
 	memattr = object->memattr;
-	pidx = OFF_TO_IDX(offset);
 	paddr = netmap_mem_ofstophys(na->nm_mem, offset);
 	if (paddr == 0)
 		return VM_PAGER_FAIL;
@@ -1051,13 +1054,10 @@ netmap_dev_pager_fault(vm_object_t object, vm_ooffset_t offset,
 		VM_OBJECT_WUNLOCK(object);
 		page = vm_page_getfake(paddr, memattr);
 		VM_OBJECT_WLOCK(object);
-		vm_page_lock(*mres);
-		vm_page_free(*mres);
-		vm_page_unlock(*mres);
+		vm_page_replace(page, object, (*mres)->pindex, *mres);
 		*mres = page;
-		vm_page_insert(page, object, pidx);
 	}
-	page->valid = VM_PAGE_BITS_ALL;
+	vm_page_valid(page);
 	return (VM_PAGER_OK);
 }
 

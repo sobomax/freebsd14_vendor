@@ -30,13 +30,14 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd.c,v 1.20 2004/11/15 23:53:30 max Exp $
- * $FreeBSD: f03932d6ecd7ffa4d0d06da1436a9442d7d32997 $
+ * $FreeBSD: fdd244ec252578e0ecc2bcf8ee98ff6158c4e954 $
  */
 
 #include "opt_kbd.h"
 
 #include <sys/param.h>
 #include <sys/conf.h>
+#include <sys/eventhandler.h>
 #include <sys/fcntl.h>
 #include <sys/kbio.h>
 #include <sys/kernel.h>
@@ -343,7 +344,7 @@ done:
 	state->ks_flags &= ~READ;
 
 	VKBD_UNLOCK(state);
-	
+
 	return (error);
 }
 
@@ -648,7 +649,7 @@ vkbd_init(int unit, keyboard_t **kbdp, void *arg, int flags)
 			imin(fkeymap_size*sizeof(fkeymap[0]), sizeof(fkey_tab)));
 		kbd_set_maps(kbd, keymap, accmap, fkeymap, fkeymap_size);
 		kbd->kb_data = (void *)state;
-	
+
 		KBD_FOUND_DEVICE(kbd);
 		KBD_PROBE_DONE(kbd);
 
@@ -1070,7 +1071,7 @@ vkbd_check_char(keyboard_t *kbd)
 		return (FALSE);
 
 	state = (vkbd_state_t *) kbd->kb_data;
-	
+
 	VKBD_LOCK(state);
 	if (!(state->ks_flags & COMPOSE) && (state->ks_composed_char > 0))
 		ready = TRUE;
@@ -1376,4 +1377,3 @@ vkbd_modevent(module_t mod, int type, void *data)
 }
 
 DEV_MODULE(vkbd, vkbd_modevent, NULL);
-

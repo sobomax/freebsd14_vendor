@@ -30,9 +30,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *   $FreeBSD: 4a29e5a8dc114f3e04acceed9c0b0e715ab3ba5e $
+ *   $FreeBSD: 954a24d91972f0d77c44d412148ce0cb1f41e170 $
  */
-
 
 #include <machine/../linux/linux.h>
 #include <machine/../linux/linux_proto.h>

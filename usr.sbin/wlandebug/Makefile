@@ -1,9 +1,9 @@
-# $FreeBSD: 8f3455f2ebac7f259646adc5d7fdda00c7c35136 $
+# $FreeBSD: d03fa4a07f8272f16c69b1a57bd0c3a89c79521d $
 
 PROG=	wlandebug
 MAN=	wlandebug.8
-MK_PIE:=	no
 
+CFLAGS+=	-I${SRCTOP}/lib/libifconfig
 LIBADD+=	ifconfig
 
 WARNS?=	2

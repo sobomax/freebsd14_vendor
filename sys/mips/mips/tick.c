@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c2417edd0ad87f57d657cbcf7c1a246f40a6328a $");
+__FBSDID("$FreeBSD: cdeb479e735b1a34f2b7930b9efc5b3718de7310 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -178,8 +178,9 @@ sysctl_machdep_counter_freq(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, counter_freq, CTLTYPE_U64 | CTLFLAG_RW,
-    NULL, 0, sysctl_machdep_counter_freq, "QU",
+SYSCTL_PROC(_machdep, OID_AUTO, counter_freq,
+    CTLTYPE_U64 | CTLFLAG_RW | CTLFLAG_NEEDGIANT, NULL, 0,
+    sysctl_machdep_counter_freq, "QU",
     "Timecounter frequency in Hz");
 
 static unsigned
@@ -283,14 +284,13 @@ clock_intr(void *arg)
 	DPCPU_SET(counter_lower_last, count);
 
 	if (cycles_per_tick > 0) {
-
 		/*
 		 * Account for the "lost time" between when the timer interrupt
 		 * fired and when 'clock_intr' actually started executing.
 		 */
 		lost_ticks = DPCPU_GET(lost_ticks);
 		lost_ticks += count - compare_last;
-	
+
 		/*
 		 * If the COUNT and COMPARE registers are no longer in sync
 		 * then make up some reasonable value for the 'lost_ticks'.
@@ -387,7 +387,6 @@ static device_method_t clock_methods[] = {
 	DEVMETHOD(device_attach, clock_attach),
 	DEVMETHOD(device_detach, bus_generic_detach),
 	DEVMETHOD(device_shutdown, bus_generic_shutdown),
-
 	{0, 0}
 };
 

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9696f0e45b2bca5129c35f1551c3f4b06d57dc9 $");
+__FBSDID("$FreeBSD: 6794412ef76085e48558ba5c430befbacd1df4bb $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -134,7 +134,7 @@ siba_read_ivar(device_t dev, device_t child, int index, uintptr_t *result)
 	sc = device_get_softc(dev);
 	dinfo = device_get_ivars(child);
 	cfg = &dinfo->core_id.core_info;
-	
+
 	switch (index) {
 	case BHND_IVAR_VENDOR:
 		*result = cfg->vendor;
@@ -1194,7 +1194,7 @@ siba_map_cfg_resources(device_t dev, struct siba_devinfo *dinfo)
 		    num_cfg);
 		return (ENXIO);
 	}
-	
+
 	/* Fetch the core register address space */
 	addrspace = siba_find_addrspace(dinfo, BHND_PORT_DEVICE, 0, 0);
 	if (addrspace == NULL) {
@@ -1401,7 +1401,7 @@ static device_method_t siba_methods[] = {
 	DEVMETHOD(device_detach,		siba_detach),
 	DEVMETHOD(device_resume,		siba_resume),
 	DEVMETHOD(device_suspend,		siba_suspend),
-	
+
 	/* Bus interface */
 	DEVMETHOD(bus_add_child,		siba_add_child),
 	DEVMETHOD(bus_child_deleted,		siba_child_deleted),

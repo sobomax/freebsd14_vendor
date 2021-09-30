@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: 1977fb9dcce2cab6d7a10a5e26e2791f43a8d85c $
+# $FreeBSD: c18f0a5c69be31686d5f9aaeb77a05e370d00703 $
 #
 
 # Arch dependent files
@@ -48,8 +48,8 @@ mips/mips/uma_machdep.c			standard
 mips/mips/vm_machdep.c			standard
 
 # misc opt-in bits
-kern/kern_clocksource.c			standard
 kern/link_elf_obj.c			standard
+kern/subr_atomic64.c			optional	mips | mipsel | mipshf | mipselhf
 kern/subr_busdma_bufalloc.c		standard
 kern/subr_dummy_vdso_tc.c		standard
 kern/subr_sfbuf.c			optional	mips | mipsel | mipsn32
@@ -75,25 +75,22 @@ dev/cfe/cfe_env.c			optional	cfe_env
 # syscons support
 dev/fb/fb.c				optional	sc
 dev/syscons/scgfbrndr.c			optional	sc
-dev/syscons/scterm-teken.c		optional	sc
-dev/syscons/scvtb.c			optional	sc
 mips/mips/sc_machdep.c			optional	sc
 
 # FDT support
 dev/uart/uart_cpu_fdt.c			optional	uart fdt
 
 # crypto support -- use generic
-crypto/blowfish/bf_enc.c		optional	crypto | ipsec | \
-	ipsec_support
-crypto/des/des_enc.c			optional	crypto | ipsec | \
-	ipsec_support | netsmb
+crypto/des/des_enc.c			optional	netsmb
 
 # AP common nvram interface MIPS specific, but maybe should be more generic
 dev/nvram2env/nvram2env_mips.c		optional	nvram2env
 dev/nvram2env/nvram2env.c		optional	nvram2env
 
 # hwpmc support
-dev/hwpmc/hwpmc_mips.c			optional	hwpmc
+dev/hwpmc/hwpmc_beri.c			optional	hwpmc_beri
+dev/hwpmc/hwpmc_mips.c			optional	hwpmc_mips24k | \
+	hwpmc_mips74k
 dev/hwpmc/hwpmc_mips24k.c		optional	hwpmc_mips24k
 dev/hwpmc/hwpmc_mips74k.c		optional	hwpmc_mips74k
 

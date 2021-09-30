@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)strncpy.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c02ccae41d8a15f25cab42d3bfb978034cdda42 $");
+__FBSDID("$FreeBSD: 2ffce161c5c5a90239498952e9163a9a9ac3bfb0 $");
 
 #include <string.h>
 
@@ -44,8 +44,17 @@ __FBSDID("$FreeBSD: 3c02ccae41d8a15f25cab42d3bfb978034cdda42 $");
  * Copy src to dst, truncating or null-padding to always copy n bytes.
  * Return dst.
  */
+#ifdef WEAK_STRNCPY
+__weak_reference(__strncpy, strncpy);
+#endif
+
 char *
-strncpy(char * __restrict dst, const char * __restrict src, size_t n)
+#ifdef WEAK_STRNCPY
+__strncpy
+#else
+strncpy
+#endif
+(char * __restrict dst, const char * __restrict src, size_t n)
 {
 	if (n != 0) {
 		char *d = dst;

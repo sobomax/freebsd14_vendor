@@ -1,7 +1,7 @@
 /*
  * Memory range attribute operations, performed on /dev/mem
  *
- * $FreeBSD: 6d6ff0ecc9c6f537547c4bc2edb567a415683b21 $
+ * $FreeBSD: 454b033775f4f2fa86c4bd8c4c2d6876bc1b9bab $
  */
 
 #ifndef _SYS_MEMRANGE_H_
@@ -44,6 +44,20 @@ struct mem_range_op
 
 #define MEMRANGE_GET	_IOWR('m', 50, struct mem_range_op)
 #define MEMRANGE_SET	_IOW('m', 51, struct mem_range_op)
+
+#define	ME_STATE_INVALID	0
+#define	ME_STATE_VALID		1
+#define	ME_STATE_MAPPED		2
+
+struct mem_extract {
+	uint64_t	me_vaddr;
+	uint64_t	me_paddr;
+	int		me_domain;
+	int		me_state;
+	uint64_t	pad1[5];
+};
+
+#define	MEM_EXTRACT_PADDR	_IOWR('m', 52, struct mem_extract)
 
 #ifdef _KERNEL
 

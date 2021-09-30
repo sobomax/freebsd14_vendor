@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9aa30fa24a2791b24cf37592c6c8b34a97460b85 $
+ * $FreeBSD: 403b3de8a09271b6cd5c7ca0d5258861ca4dfb0b $
  */
 #ifndef _SYS_ATOMIC_COMMON_H_
 #define	_SYS_ATOMIC_COMMON_H_
@@ -41,7 +41,7 @@
 #define	atomic_load_short(p)	(*(volatile u_short *)(p))
 #define	atomic_load_int(p)	(*(volatile u_int *)(p))
 #define	atomic_load_long(p)	(*(volatile u_long *)(p))
-#define	atomic_load_ptr(p)	(*(volatile uintptr_t*)(p))
+#define	atomic_load_ptr(p)	(*(volatile __typeof(*p) *)(p))
 #define	atomic_load_8(p)	(*(volatile uint8_t *)(p))
 #define	atomic_load_16(p)	(*(volatile uint16_t *)(p))
 #define	atomic_load_32(p)	(*(volatile uint32_t *)(p))
@@ -58,7 +58,7 @@
 #define	atomic_store_long(p, v)		\
     (*(volatile u_long *)(p) = (u_long)(v))
 #define	atomic_store_ptr(p, v)		\
-    (*(uintptr_t *)(p) = (uintptr_t)(v))
+    (*(volatile __typeof(*p) *)(p) = (v))
 #define	atomic_store_8(p, v)		\
     (*(volatile uint8_t *)(p) = (uint8_t)(v))
 #define	atomic_store_16(p, v)		\
@@ -69,5 +69,15 @@
 #define	atomic_store_64(p, v)		\
     (*(volatile uint64_t *)(p) = (uint64_t)(v))
 #endif
+
+/*
+ * Currently all architectures provide acquire and release fences on their own,
+ * but they don't provide consume. Kludge below allows relevant code to stop
+ * openly resorting to the stronger acquire fence, to be sorted out.
+ */
+#define	atomic_load_consume_ptr(p)	\
+    ((__typeof(*p)) atomic_load_acq_ptr((uintptr_t *)p))
+
+#define	atomic_interrupt_fence()	__compiler_membar()
 
 #endif

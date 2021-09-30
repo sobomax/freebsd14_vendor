@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d17db1a14afde026f27f53fd235e8a77c28d51ca $");
+__FBSDID("$FreeBSD: 96e3137498a941b75c533fd0671aff9ef255e623 $");
 
 #include <dev/mpt/mpt.h>
 
@@ -591,7 +591,6 @@ mpt_print_scsi_tmf_request(MSG_SCSI_TASK_MGMT *msg)
 	printf("\tTaskType        %s\n", mpt_scsi_tm_type(msg->TaskType));
 	printf("\tTaskMsgContext  0x%08x\n", msg->TaskMsgContext);
 }
-
 
 static void
 mpt_print_scsi_target_assist_request(PTR_MSG_TARGET_ASSIST_REQUEST msg)

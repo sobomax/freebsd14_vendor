@@ -1,4 +1,4 @@
-# $FreeBSD: d8e71b9781d74cb415c16c683dd3207821016c19 $
+# $FreeBSD: 767840101200cfadbc8b3b9b177dd1652456881e $
 
 LOADER_MSDOS_SUPPORT?=	yes
 LOADER_UFS_SUPPORT?=	yes
@@ -20,7 +20,6 @@ SRCS+=		bootinfo.c
 SRCS+=		bootinfo32.c
 SRCS+=		bootinfo64.c
 SRCS+=		conf.c
-SRCS+=		console.c
 SRCS+=		copy.c
 SRCS+=		devicename.c
 SRCS+=		elf32_freebsd.c
@@ -30,10 +29,14 @@ SRCS+=		main.c
 SRCS+=		userboot_cons.c
 SRCS+=		userboot_disk.c
 SRCS+=		vers.c
+SRCS+=		gfx_fb.c
 
 CFLAGS+=	-Wall
 CFLAGS+=	-I${BOOTSRC}/userboot
-
+CFLAGS.main.c+=	-I${BOOTSRC}/libsa/zfs
+CFLAGS.main.c+=	-I${SYSDIR}/contrib/openzfs/include
+CFLAGS.main.c+=	-I${SYSDIR}/contrib/openzfs/include/os/freebsd/zfs
+CFLAGS.gfx_fb.c+= -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 CWARNFLAGS.main.c += -Wno-implicit-function-declaration
 
 LDFLAGS+=	-nostdlib -Wl,-Bsymbolic
