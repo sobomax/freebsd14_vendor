@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 483d67ba6deb5621ea4bed5a001dc0910ee32ef5 $");
+__FBSDID("$FreeBSD: d2c0611c91671cdce00c03903ee80f5a2cee44ad $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

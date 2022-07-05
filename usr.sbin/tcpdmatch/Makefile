@@ -1,8 +1,10 @@
-# $FreeBSD: 49720c0b5cd942b13bb33c474d4077561393d279 $
+# $FreeBSD: 81e04e7582250c852ac427169b35349573613cfa $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/contrib/tcp_wrappers
+
+PACKAGE=	tcpd
 
 PROG=	tcpdmatch
 MAN=	tcpdmatch.8

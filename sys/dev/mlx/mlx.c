@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: bafd0902e09acc07099110b4b6c28d8b3083660d $
+ *	$FreeBSD: f5b023eafc9c21552abc9ce77e3ab3f89af6747b $
  */
 
 /*
@@ -1083,7 +1083,7 @@ mlx_periodic(void *data)
 
 	mlx_pause_action(sc);		/* pause is running */
 	sc->mlx_pause.mp_when = 0;
-	sysbeep(500, hz);
+	sysbeep(500, SBT_1S);
 
 	/* 
 	 * Bus pause still running?
@@ -1095,9 +1095,9 @@ mlx_periodic(void *data)
 	if (time_second >= sc->mlx_pause.mp_howlong) {
 	    mlx_pause_action(sc);
 	    sc->mlx_pause.mp_which = 0;	/* pause is complete */
-	    sysbeep(500, hz);
+	    sysbeep(500, SBT_1S);
 	} else {
-	    sysbeep((time_second % 5) * 100 + 500, hz/8);
+	    sysbeep((time_second % 5) * 100 + 500, SBT_1S / 8);
 	}
 
 	/* 

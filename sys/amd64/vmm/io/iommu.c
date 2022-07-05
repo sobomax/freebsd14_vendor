@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3fe4d299a49746aa17a86c6bbb2c08170ceec426 $
+ * $FreeBSD: 6a589f15381529cbc9720dd0260527a2d1fb14e7 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3fe4d299a49746aa17a86c6bbb2c08170ceec426 $");
+__FBSDID("$FreeBSD: 6a589f15381529cbc9720dd0260527a2d1fb14e7 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -59,7 +59,7 @@ static int iommu_enable = 1;
 SYSCTL_INT(_hw_vmm_iommu, OID_AUTO, enable, CTLFLAG_RDTUN, &iommu_enable, 0,
     "Enable use of I/O MMU (required for PCI passthrough).");
 
-static struct iommu_ops *ops;
+static const struct iommu_ops *ops;
 static void *host_domain;
 static eventhandler_tag add_tag, delete_tag;
 

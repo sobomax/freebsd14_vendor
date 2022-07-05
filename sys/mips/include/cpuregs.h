@@ -54,7 +54,7 @@
  * from: Header: /sprite/src/kernel/vm/ds3100.md/RCS/vmPmaxConst.h,
  *	v 9.1 89/09/18 17:33:00 shirriff Exp  SPRITE (DECWRL)
  *
- * $FreeBSD: c61724564a599650ef808c9c1513b6a90f6fe3bf $
+ * $FreeBSD: 2b5a0ce554dc323e2d4e7b3e1d0e7d602ccd90eb $
  */
 
 #ifndef _MIPS_CPUREGS_H_
@@ -222,7 +222,7 @@
 #define MIPS_SR_INT_MASK	0x0000ff00
 
 /*
- * R4000 status register bit definitons,
+ * R4000 status register bit definitions,
  * where different from r2000/r3000.
  */
 #define	MIPS_SR_XX		0x80000000

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: e39b552ab8cf652e420d7aa0d74ac4164454c0e4 $
+ * $FreeBSD: 9811ae42534d96a7ceca721c78b5ff9fb7f15f2a $
  */
 
 #ifndef _IF_VMXVAR_H
@@ -81,6 +81,7 @@ struct vmxnet3_comp_ring {
 	int			 vxcr_gen;
 	bus_addr_t		 vxcr_paddr;
 	uint64_t		 vxcr_zero_length;
+	uint64_t		 vcxr_zero_length_frag;
 	uint64_t		 vxcr_pkt_errors;
 };
 

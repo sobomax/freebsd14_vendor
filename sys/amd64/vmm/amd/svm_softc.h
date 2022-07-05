@@ -25,11 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8735353bb472ac3ebb3313430640c8826f5d26a6 $
+ * $FreeBSD: 5f6a267617d220d6572852cf67db4cec4be2b539 $
  */
 
 #ifndef _SVM_SOFTC_H_
 #define _SVM_SOFTC_H_
+
+#include "x86.h"
 
 #define SVM_IO_BITMAP_SIZE	(3 * PAGE_SIZE)
 #define SVM_MSR_BITMAP_SIZE	(2 * PAGE_SIZE)
@@ -64,6 +66,7 @@ struct svm_softc {
 	uint8_t		*iopm_bitmap;    /* shared by all vcpus */
 	uint8_t		*msr_bitmap;    /* shared by all vcpus */
 	struct vm	*vm;
+	struct vm_mtrr  mtrr[VM_MAXCPU];
 };
 
 CTASSERT((offsetof(struct svm_softc, nptp) & PAGE_MASK) == 0);

@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)getbsize.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: c0b46bf9e2350564145d85546208c64fa4b7a757 $
+.\" $FreeBSD: acbe409a84563729139abb21e4bc319984c96ba7 $
 .\"
 .Dd June 11, 2017
 .Dt GETBSIZE 3
@@ -45,10 +45,9 @@ The
 .Fn getbsize
 function returns a preferred block size for reporting by system utilities
 .Xr df 1 ,
-.Xr du 1 ,
-.Xr ls 1
+.Xr du 1
 and
-.Xr systat 1 ,
+.Xr ls 1 ,
 based on the value of the
 .Ev BLOCKSIZE
 environment variable.

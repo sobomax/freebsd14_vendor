@@ -22,12 +22,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6088fb48bb5fae10d8d4811cadbc7b5069128706 $
+ * $FreeBSD: d6d15fb2d27e60f3a565fe53d6c741806e3b3bb8 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/module.h>
 #include <dev/mlx5/vport.h>
-#include "mlx5_ib.h"
+#include <dev/mlx5/mlx5_ib/mlx5_ib.h>
 
 int mlx5_ib_get_vf_config(struct ib_device *device, int vf, u8 port,
 			  struct ifla_vf_info *info)

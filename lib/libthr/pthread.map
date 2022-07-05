@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 232d65084ba9d8234f1a510b03f096eef4d2f3f6 $
+ * $FreeBSD: 15195ce0847b978a62ef132d2a58b9eb2c8d5f10 $
  */
 
 /*
@@ -296,6 +296,9 @@ FBSDprivate_1.0 {
 	_thread_size_key;
 	_thread_state_running;
 	_thread_state_zoombie;
+
+	/* ABI bug workaround, indicate that pli->rtli_version is valid */
+	_pli_rtli_version;
 };
 
 FBSD_1.1 {

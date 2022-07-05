@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c06ddf7b1f2eb99d660bdd6e8dd4e3b340ce5d97 $");
+__FBSDID("$FreeBSD: 2250d084ca06a4d0348fd156c7559093f3178a5a $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -1704,7 +1704,7 @@ sctp_handle_asconf_ack(struct mbuf *m, int offset,
 		SCTPDBG(SCTP_DEBUG_ASCONF1, "handle_asconf_ack: got unexpected next serial number! Aborting asoc!\n");
 		SCTP_SNPRINTF(msg, sizeof(msg), "Never sent serial number %8.8x", serial_num);
 		op_err = sctp_generate_cause(SCTP_CAUSE_PROTOCOL_VIOLATION, msg);
-		sctp_abort_an_association(stcb->sctp_ep, stcb, op_err, SCTP_SO_NOT_LOCKED);
+		sctp_abort_an_association(stcb->sctp_ep, stcb, op_err, false, SCTP_SO_NOT_LOCKED);
 		*abort_no_unlock = 1;
 		return;
 	}
@@ -2195,7 +2195,6 @@ sctp_asconf_iterator_stcb(struct sctp_inpcb *inp, struct sctp_tcb *stcb,
 				return;
 			else
 				continue;
-			break;
 		}
 
 		if (type == SCTP_ADD_IP_ADDRESS) {

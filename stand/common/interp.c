@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a0a6bd4866149721c482d79f16c5feb90898719a $");
+__FBSDID("$FreeBSD: ab68694d61b7c633a993ccfa0bd7f9c6eb7ccf86 $");
 
 /*
  * Simple commandline interpreter, toplevel and misc.
@@ -47,6 +47,8 @@ interact(void)
 {
 	static char		input[256];		/* big enough? */
 	const char * volatile	interp_identifier;
+
+	TSENTER();
 
 	/*
 	 * Because interp_identifier is volatile, it cannot be optimized out by

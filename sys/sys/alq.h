@@ -31,12 +31,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 536fa2077357e5ca2b29e80be1f83209a6f51593 $
+ * $FreeBSD: fc8962c13cdb0de9744a05c829be1ad038fddf88 $
  *
  */
 #ifndef _SYS_ALQ_H_
 #define	_SYS_ALQ_H_
 
+#ifdef _KERNEL
 /*
  * Opaque type for the Async. Logging Queue
  */
@@ -143,4 +144,5 @@ alq_post(struct alq *alq, struct ale *ale)
 	alq_post_flags(alq, ale, 0);
 }
 
+#endif	/* _KERNEL */
 #endif	/* _SYS_ALQ_H_ */

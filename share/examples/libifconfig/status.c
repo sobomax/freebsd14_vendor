@@ -24,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 62fd3f35c8dec551641ec0522e26d636b650d933 $
+ * $FreeBSD: 114cf7e87a6801e59288b0b12ed6c2437f6a1099 $
  */
 
 #include <sys/param.h>
@@ -406,7 +406,6 @@ print_media(ifconfig_handle_t *lifh, struct ifaddrs *ifa)
 	 *    tables,  finding an entry with the right media subtype
 	 */
 	struct ifmediareq *ifmr;
-	char opts[80];
 
 	if (ifconfig_media_get_mediareq(lifh, ifa->ifa_name, &ifmr) != 0) {
 		if (ifconfig_err_errtype(lifh) != OK) {
@@ -419,14 +418,19 @@ print_media(ifconfig_handle_t *lifh, struct ifaddrs *ifa)
 	printf("\tmedia: %s %s", ifconfig_media_get_type(ifmr->ifm_current),
 	    ifconfig_media_get_subtype(ifmr->ifm_current));
 	if (ifmr->ifm_active != ifmr->ifm_current) {
+		const char **options;
+
 		printf(" (%s", ifconfig_media_get_subtype(ifmr->ifm_active));
-		ifconfig_media_get_options_string(ifmr->ifm_active, opts,
-		    sizeof(opts));
-		if (opts[0] != '\0') {
-			printf(" <%s>)\n", opts);
+		options = ifconfig_media_get_options(ifmr->ifm_active);
+		if (options != NULL && options[0] != NULL) {
+			printf(" <%s", options[0]);
+			for (size_t i = 1; options[i] != NULL; ++i)
+				printf(",%s", options[i]);
+			printf(">)\n");
 		} else {
 			printf(")\n");
 		}
+		free(options);
 	} else {
 		printf("\n");
 	}
@@ -438,15 +442,20 @@ print_media(ifconfig_handle_t *lifh, struct ifaddrs *ifa)
 
 	printf("\tsupported media:\n");
 	for (i = 0; i < ifmr->ifm_count; i++) {
+		const char **options;
+
 		printf("\t\tmedia %s",
 		    ifconfig_media_get_subtype(ifmr->ifm_ulist[i]));
-		ifconfig_media_get_options_string(ifmr->ifm_ulist[i], opts,
-		    sizeof(opts));
-		if (opts[0] != '\0') {
-			printf(" mediaopt %s\n", opts);
+		options = ifconfig_media_get_options(ifmr->ifm_ulist[i]);
+		if (options != NULL && options[0] != NULL) {
+			printf(" mediaopt %s", options[0]);
+			for (size_t i = 1; options[i] != NULL; ++i)
+				printf(",%s", options[i]);
+			printf("\n");
 		} else {
 			printf("\n");
 		}
+		free(options);
 	}
 	free(ifmr);
 }

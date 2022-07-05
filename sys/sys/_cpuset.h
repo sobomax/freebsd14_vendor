@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cb3c0f9d586e1d0589e195a670edf7fea5f3bb43 $
+ * $FreeBSD: b75ee595da3c2b7013994c5f2521941b4c86ba69 $
  */
 
 #ifndef _SYS__CPUSET_H_
@@ -46,7 +46,14 @@
 #define	CPU_SETSIZE	CPU_MAXSIZE
 #endif
 
-BITSET_DEFINE(_cpuset, CPU_SETSIZE);
+__BITSET_DEFINE(_cpuset, CPU_SETSIZE);
 typedef struct _cpuset cpuset_t;
+
+#ifndef _KERNEL
+__BEGIN_DECLS
+cpuset_t *__cpuset_alloc(size_t set_size);
+void __cpuset_free(cpuset_t *ptr);
+__END_DECLS
+#endif
 
 #endif /* !_SYS__CPUSET_H_ */

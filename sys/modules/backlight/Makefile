@@ -1,4 +1,4 @@
-# $FreeBSD: 1c49d7b5513869229f2bb12a6a2b7cdc734475af $
+# $FreeBSD: 31de4e804127f4b69654611c729a722c6d79c020 $
 
 .PATH:	${SRCTOP}/sys/dev/backlight
 KMOD=	backlight
@@ -9,5 +9,7 @@ SRCS+=	bus_if.h \
 	opt_platform.h \
 	backlight_if.h \
 	backlight_if.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

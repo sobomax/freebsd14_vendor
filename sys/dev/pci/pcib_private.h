@@ -29,14 +29,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8be7b2123174f76585ce8a9b9ff9432bd302a4d8 $
+ * $FreeBSD: af0b70a7add3d280eafc12bae55ef703a9b93784 $
  */
 
 #ifndef __PCIB_PRIVATE_H__
 #define	__PCIB_PRIVATE_H__
 
-#include <sys/_callout.h>
-#include <sys/_task.h>
+#include <sys/taskqueue.h>
 
 #ifdef NEW_PCIB
 /*
@@ -138,9 +137,9 @@ struct pcib_softc
     struct resource *pcie_irq;
     void	*pcie_ihand;
     struct task	pcie_hp_task;
-    struct callout pcie_ab_timer;
-    struct callout pcie_cc_timer;
-    struct callout pcie_dll_timer;
+    struct timeout_task pcie_ab_task;
+    struct timeout_task pcie_cc_task;
+    struct timeout_task pcie_dll_task;
     struct mtx	*pcie_hp_lock;
 };
 

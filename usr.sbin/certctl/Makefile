@@ -1,5 +1,6 @@
-# $FreeBSD: ea10cdf77e6cf8c3d850bb35b8a2876b62ceac9b $
+# $FreeBSD: df5acb60614305129daf3393c33b4ded36fe030e $
 
+PACKAGE=	caroot
 SCRIPTS=certctl.sh
 MAN=	certctl.8
 

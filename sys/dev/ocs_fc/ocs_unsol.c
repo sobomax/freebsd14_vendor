@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 12b600132c00ba66046be56b9c215990905f01ee $
+ * $FreeBSD: c6c9bab02bd823fc6898b2f657a78079aa9d9582 $
  */
 
 /**
@@ -690,7 +690,7 @@ ocs_node_dispatch_frame(void *arg, ocs_hw_sequence_t *seq)
 			break;
 
 		case FC_RCTL_BLS:
-			if (sit_set) {
+			if ((sit_set) && (hdr->info == FC_INFO_ABTS)) {
 				rc = ocs_node_recv_abts_frame(node, seq);
 			}else {
 				rc = ocs_node_recv_bls_no_sit(node, seq);

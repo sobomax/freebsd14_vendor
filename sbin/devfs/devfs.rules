@@ -13,7 +13,7 @@
 # references must include a dollar sign '$' in front of the
 # name to be expanded properly.
 #
-# $FreeBSD: 01d8e5194c174f03d23ef9000957e2a8ee9f9b89 $
+# $FreeBSD: 9543e20947d9340835c948079e8e5e65c56f0c3d $
 #
 
 # Very basic and secure ruleset: Hide everything.
@@ -88,5 +88,8 @@ add path fuse unhide
 add path zfs unhide
 
 [devfsrules_jail_vnet=5]
+add include $devfsrules_hide_all
+add include $devfsrules_unhide_basic
+add include $devfsrules_unhide_login
 add include $devfsrules_jail
 add path pf unhide

@@ -35,7 +35,7 @@ static char *sccsid2 = "@(#)auth_unix.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)auth_unix.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4a3df5f70e3a17f3c955315bc40913f471819aa8 $");
+__FBSDID("$FreeBSD: be0a241baa3678e3ced5d377816fd53320b72df6 $");
 
 /*
  * auth_unix.c, Implements UNIX style authentication parameters.
@@ -76,7 +76,7 @@ static bool_t authunix_refresh (AUTH *, void *);
 static void authunix_destroy (AUTH *);
 static void marshal_new_auth (AUTH *);
 
-static struct auth_ops authunix_ops = {
+static const struct auth_ops authunix_ops = {
 	.ah_nextverf =		authunix_nextverf,
 	.ah_marshal =		authunix_marshal,
 	.ah_validate =		authunix_validate,

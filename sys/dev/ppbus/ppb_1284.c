@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5752e4599a8d9ecf4cd7fce7350e3343e5f4263c $");
+__FBSDID("$FreeBSD: 52dfb27931edce4339d53b095b4f5e0c6bad56e3 $");
 
 /*
  * General purpose routines for the IEEE1284-1994 Standard
@@ -737,7 +737,7 @@ ppb_1284_negociate(device_t bus, int mode, int options)
 		goto error;
 	}
 
-	/* Event 7 - quering result consider nACK not to misunderstand
+	/* Event 7 - querying result consider nACK not to misunderstand
 	 * a remote computer terminate sequence */
 	if (options & PPB_EXTENSIBILITY_LINK) {
 		/* XXX not fully supported yet */

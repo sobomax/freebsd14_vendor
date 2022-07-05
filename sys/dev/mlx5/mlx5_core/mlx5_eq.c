@@ -22,18 +22,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2dc134d0f9c45818ce6923d1035f1d5abc0009b5 $
+ * $FreeBSD: c9467509620d4184d6ac490bac730a42ede6b502 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/interrupt.h>
 #include <linux/module.h>
 #include <dev/mlx5/port.h>
 #include <dev/mlx5/mlx5_ifc.h>
 #include <dev/mlx5/mlx5_fpga/core.h>
-#include "mlx5_core.h"
-#include "eswitch.h"
-
-#include "opt_rss.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
+#include <dev/mlx5/mlx5_core/eswitch.h>
 
 #ifdef  RSS
 #include <net/rss_config.h>

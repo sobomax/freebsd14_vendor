@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b2f2c640b1755d38efc12b935cacd99b70a05b60 $
+ * $FreeBSD: 0f7f2ce7cba570f948f037b6a9dbac6fcdac26c0 $
  */
 
 #include <sys/param.h>
@@ -262,6 +262,7 @@ lladdropt_length(struct sockaddr_dl *sdl)
 {
 	switch (sdl->sdl_type) {
 	case IFT_ETHER:
+	case IFT_L2VLAN:
 		return (ROUNDUP8(ETHER_ADDR_LEN + 2));
 	default:
 		return (0);
@@ -277,6 +278,7 @@ lladdropt_fill(struct sockaddr_dl *sdl, struct nd_opt_hdr *ndopt)
 
 	switch (sdl->sdl_type) {
 	case IFT_ETHER:
+	case IFT_L2VLAN:
 		ndopt->nd_opt_len = (ROUNDUP8(ETHER_ADDR_LEN + 2)) >> 3;
 		addr = (char *)(ndopt + 1);
 		memcpy(addr, LLADDR(sdl), ETHER_ADDR_LEN);

@@ -71,7 +71,7 @@ static const char sccsid[] = "@(#)res_init.c	8.1 (Berkeley) 6/7/93";
 static const char rcsid[] = "$Id: res_init.c,v 1.26 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 515c86c2378db1d5fad477ccbc7f6cfd750440ab $");
+__FBSDID("$FreeBSD: 274ffbf999d6e71facb94014e17a158e4922cca0 $");
 
 #include "port_before.h"
 
@@ -202,11 +202,7 @@ __res_vinit(res_state statp, int preinit) {
 	statp->id = res_nrandomid(statp);
 
 	memset(u, 0, sizeof(u));
-#ifdef USELOOPBACK
-	u[nserv].sin.sin_addr = inet_makeaddr(IN_LOOPBACKNET, 1);
-#else
 	u[nserv].sin.sin_addr.s_addr = INADDR_ANY;
-#endif
 	u[nserv].sin.sin_family = AF_INET;
 	u[nserv].sin.sin_port = htons(NAMESERVER_PORT);
 #ifdef HAVE_SA_LEN
@@ -214,11 +210,7 @@ __res_vinit(res_state statp, int preinit) {
 #endif
 	nserv++;
 #ifdef HAS_INET6_STRUCTS
-#ifdef USELOOPBACK
-	u[nserv].sin6.sin6_addr = in6addr_loopback;
-#else
 	u[nserv].sin6.sin6_addr = in6addr_any;
-#endif
 	u[nserv].sin6.sin6_family = AF_INET6;
 	u[nserv].sin6.sin6_port = htons(NAMESERVER_PORT);
 #ifdef HAVE_SA_LEN

@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9477ba739e3141a3b5a670a52b2bc5d4e482d29b $
+ * $FreeBSD: f2a5b53effec04d43265b69ddcda59e38d01d507 $
  */
-#ifndef	_LINUX_KDEV_T_H_
-#define	_LINUX_KDEV_T_H_
+#ifndef	_LINUXKPI_LINUX_KDEV_T_H_
+#define	_LINUXKPI_LINUX_KDEV_T_H_
 
 #include <sys/types.h>
 
@@ -43,4 +43,4 @@ old_encode_dev(dev_t dev)
 	return ((MAJOR(dev) << 8) | MINOR(dev));
 }
 
-#endif	/* _LINUX_KDEV_T_H_ */
+#endif	/* _LINUXKPI_LINUX_KDEV_T_H_ */

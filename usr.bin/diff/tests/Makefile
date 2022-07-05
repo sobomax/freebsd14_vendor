@@ -1,4 +1,4 @@
-# $FreeBSD: 78744d3bed8e23eb9361366f19fe9d5aacf84933 $
+# $FreeBSD: 303a37911fbd9288883d0dca697d163f486b6215 $
 
 PACKAGE=	tests
 
@@ -26,7 +26,8 @@ ${PACKAGE}FILES+=	\
 	header.out \
 	header_ns.out \
 	ifdef.out \
-	group-format.out
+	group-format.out \
+	strip_o.out
 
 NETBSD_ATF_TESTS_SH+=	netbsd_diff_test
 

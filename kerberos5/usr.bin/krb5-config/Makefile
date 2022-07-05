@@ -1,4 +1,6 @@
-# $FreeBSD: 5224f7c54503ea453b5e2c09958172927da26db7 $
+# $FreeBSD: 38a47811c6a89a3d1f6f70c9056f2165166b8b7e $
+
+PACKAGE=	kerberos
 
 SCRIPTS=krb5-config
 MAN=	krb5-config.1

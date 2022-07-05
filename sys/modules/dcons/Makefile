@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.6 2003/10/24 15:41:26 simokawa Exp $
-# $FreeBSD: be27ee22dae0d64e22c293b27623656577d81503 $
+# $FreeBSD: bdc86609c16cd4251703ddaae806e3df3e2adeb0 $
 
 .PATH:	${SRCTOP}/sys/dev/dcons
 
@@ -16,5 +16,7 @@ opt_ddb.h:
 .endif
 
 CFLAGS+= -I${SRCTOP}/sys 
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ddd88ffc5289ad1e836d1edb42dded9415e6e2cf $
+ * $FreeBSD: 871fc6fc90e9af9833d0661ca8493a9105af7112 $
  */
 
 #ifndef ISCSI_H
@@ -44,8 +44,9 @@ struct iscsi_outstanding {
 	TAILQ_ENTRY(iscsi_outstanding)	io_next;
 	union ccb			*io_ccb;
 	size_t				io_received;
-	uint32_t			io_initiator_task_tag;
 	uint32_t			io_datasn;
+	uint32_t			io_initiator_task_tag;
+	uint32_t			io_referenced_task_tag;
 	void				*io_icl_prv;
 };
 
@@ -67,8 +68,6 @@ struct iscsi_session {
 	uint8_t				is_isid[6];
 	uint16_t			is_tsih;
 	bool				is_immediate_data;
-	int				is_max_recv_data_segment_length;
-	int				is_max_send_data_segment_length;
 	char				is_target_alias[ISCSI_ALIAS_LEN];
 
 	TAILQ_HEAD(, iscsi_outstanding)	is_outstanding;
@@ -132,6 +131,7 @@ struct iscsi_softc {
 	TAILQ_HEAD(, iscsi_session)	sc_sessions;
 	struct cv			sc_cv;
 	unsigned int			sc_last_session_id;
+	bool				sc_unloading;
 	eventhandler_tag		sc_shutdown_pre_eh;
 	eventhandler_tag		sc_shutdown_post_eh;
 };

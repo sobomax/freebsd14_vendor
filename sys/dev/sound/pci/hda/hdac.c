@@ -51,7 +51,7 @@
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
 
-SND_DECLARE_FILE("$FreeBSD: ec907715c5b1de20a90ce14076248f036827b9a5 $");
+SND_DECLARE_FILE("$FreeBSD: 4988a1a28fa24cc15276f2018c4e3143d28aaed9 $");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -112,6 +112,7 @@ static const struct {
 	{ HDA_INTEL_CMLKH,   "Intel Comet Lake-H",	0, 0 },
 	{ HDA_INTEL_TGLK,    "Intel Tiger Lake",	0, 0 },
 	{ HDA_INTEL_GMLK,    "Intel Gemini Lake",	0, 0 },
+	{ HDA_INTEL_ALLK,    "Intel Alder Lake",	0, 0 },
 	{ HDA_INTEL_82801F,  "Intel 82801F",	0, 0 },
 	{ HDA_INTEL_63XXESB, "Intel 631x/632xESB",	0, 0 },
 	{ HDA_INTEL_82801G,  "Intel 82801G",	0, 0 },
@@ -164,6 +165,7 @@ static const struct {
 	{ HDA_ATI_RS600,     "ATI RS600",	0, 0 },
 	{ HDA_ATI_RS690,     "ATI RS690",	0, 0 },
 	{ HDA_ATI_RS780,     "ATI RS780",	0, 0 },
+	{ HDA_ATI_RS880,     "ATI RS880",	0, 0 },
 	{ HDA_ATI_R600,      "ATI R600",	0, 0 },
 	{ HDA_ATI_RV610,     "ATI RV610",	0, 0 },
 	{ HDA_ATI_RV620,     "ATI RV620",	0, 0 },
@@ -182,6 +184,8 @@ static const struct {
 	{ HDA_ATI_RV940,     "ATI RV940",	0, 0 },
 	{ HDA_ATI_RV970,     "ATI RV970",	0, 0 },
 	{ HDA_ATI_R1000,     "ATI R1000",	0, 0 },
+	{ HDA_ATI_KABINI,    "ATI Kabini",	0, 0 },
+	{ HDA_ATI_TRINITY,   "ATI Trinity",	0, 0 },
 	{ HDA_AMD_X370,      "AMD X370",	0, 0 },
 	{ HDA_AMD_X570,      "AMD X570",	0, 0 },
 	{ HDA_AMD_STONEY,    "AMD Stoney",	0, 0 },
@@ -380,13 +384,13 @@ hdac_intr_handler(void *context)
 	 * re-examine GIS then we can leave it set and never get an interrupt
 	 * again.
 	 */
+	hdac_lock(sc);
 	intsts = HDAC_READ_4(&sc->mem, HDAC_INTSTS);
-	while ((intsts & HDAC_INTSTS_GIS) != 0) {
-		hdac_lock(sc);
+	while (intsts != 0xffffffff && (intsts & HDAC_INTSTS_GIS) != 0) {
 		hdac_one_intr(sc, intsts);
-		hdac_unlock(sc);
 		intsts = HDAC_READ_4(&sc->mem, HDAC_INTSTS);
 	}
+	hdac_unlock(sc);
 }
 
 static void

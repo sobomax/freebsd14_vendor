@@ -29,7 +29,7 @@
 #
 # mk-vmimage.sh: Create virtual machine disk images in various formats.
 #
-# $FreeBSD: cf795e04655bf995a84d8d64b1cc3248dac8c3a2 $
+# $FreeBSD: d5985ceb0d25866676a7048d3c4953209809c75f $
 #
 
 usage() {
@@ -92,8 +92,6 @@ main() {
 	if [ ! -z "${VMCONFIG}" ] && [ ! -c "${VMCONFIG}" ]; then
 		. "${VMCONFIG}"
 	fi
-
-	ROOTLABEL="gpt"
 
 	vm_create_base
 	vm_install_base

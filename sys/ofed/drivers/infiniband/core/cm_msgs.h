@@ -33,7 +33,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS THE
  * SOFTWARE.
  *
- * $FreeBSD: 9b8ef9a93d5b121e36c8e275dc58def896d28c2e $
+ * $FreeBSD: fa88aa711aa313a0fa00b1a36531672654636390 $
  */
 
 #if !defined(CM_MSGS_H)
@@ -48,13 +48,6 @@
  */
 
 #define IB_CM_CLASS_VERSION	2 /* IB specification 1.2 */
-
-enum cm_msg_sequence {
-	CM_MSG_SEQUENCE_REQ,
-	CM_MSG_SEQUENCE_LAP,
-	CM_MSG_SEQUENCE_DREQ,
-	CM_MSG_SEQUENCE_SIDR
-};
 
 struct cm_req_msg {
 	struct ib_mad_hdr hdr;

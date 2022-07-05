@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e38740fe263e2b9677558bd2972db486d2cee3e $");
+__FBSDID("$FreeBSD: ab9f0c4febc6ef01cd11691bce029cac7cc68110 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -221,6 +221,19 @@ divert_packet(struct mbuf *m, bool incoming)
 		m->m_pkthdr.csum_flags &= ~CSUM_SCTP;
 	}
 #endif
+#ifdef INET6
+	if (m->m_pkthdr.csum_flags & CSUM_DELAY_DATA_IPV6) {
+		in6_delayed_cksum(m, m->m_pkthdr.len -
+		    sizeof(struct ip6_hdr), sizeof(struct ip6_hdr));
+		m->m_pkthdr.csum_flags &= ~CSUM_DELAY_DATA_IPV6;
+	}
+#if defined(SCTP) || defined(SCTP_SUPPORT)
+	if (m->m_pkthdr.csum_flags & CSUM_SCTP_IPV6) {
+		sctp_delayed_cksum(m, sizeof(struct ip6_hdr));
+		m->m_pkthdr.csum_flags &= ~CSUM_SCTP_IPV6;
+	}
+#endif
+#endif /* INET6 */
 	bzero(&divsrc, sizeof(divsrc));
 	divsrc.sin_len = sizeof(divsrc);
 	divsrc.sin_family = AF_INET;
@@ -280,12 +293,16 @@ divert_packet(struct mbuf *m, bool incoming)
 		/* XXX why does only one socket match? */
 		if (inp->inp_lport == nport) {
 			INP_RLOCK(inp);
+			if (__predict_false(inp->inp_flags2 & INP_FREED)) {
+				INP_RUNLOCK(inp);
+				continue;
+			}
 			sa = inp->inp_socket;
 			SOCKBUF_LOCK(&sa->so_rcv);
 			if (sbappendaddr_locked(&sa->so_rcv,
 			    (struct sockaddr *)&divsrc, m,
 			    (struct mbuf *)0) == 0) {
-				SOCKBUF_UNLOCK(&sa->so_rcv);
+				soroverflow_locked(sa);
 				sa = NULL;	/* force mbuf reclaim below */
 			} else
 				sorwakeup_locked(sa);
@@ -317,6 +334,22 @@ div_output(struct socket *so, struct mbuf *m, struct sockaddr_in *sin,
 	struct ipfw_rule_ref *dt;
 	int error, family;
 
+	if (control) {
+		m_freem(control);		/* XXX */
+		control = NULL;
+	}
+
+	if (sin != NULL) {
+		if (sin->sin_family != AF_INET) {
+			m_freem(m);
+			return (EAFNOSUPPORT);
+		}
+		if (sin->sin_len != sizeof(*sin)) {
+			m_freem(m);
+			return (EINVAL);
+		}
+	}
+
 	/*
 	 * An mbuf may hasn't come from userland, but we pretend
 	 * that it has.
@@ -324,9 +357,6 @@ div_output(struct socket *so, struct mbuf *m, struct sockaddr_in *sin,
 	m->m_pkthdr.rcvif = NULL;
 	m->m_nextpkt = NULL;
 	M_SETFIB(m, so->so_fibnum);
-
-	if (control)
-		m_freem(control);		/* XXX */
 
 	mtag = m_tag_locate(m, MTAG_IPFW_RULE, 0, NULL);
 	if (mtag == NULL) {
@@ -619,6 +649,8 @@ div_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 	 */
 	if (nam->sa_family != AF_INET)
 		return EAFNOSUPPORT;
+	if (nam->sa_len != sizeof(struct sockaddr_in))
+		return EINVAL;
 	((struct sockaddr_in *)nam)->sin_addr.s_addr = INADDR_ANY;
 	INP_INFO_WLOCK(&V_divcbinfo);
 	INP_WLOCK(inp);
@@ -652,6 +684,8 @@ div_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *nam,
 	if (m->m_len < sizeof (struct ip) &&
 	    (m = m_pullup(m, sizeof (struct ip))) == NULL) {
 		KMOD_IPSTAT_INC(ips_toosmall);
+		if (control != NULL)
+			m_freem(control);
 		m_freem(m);
 		return EINVAL;
 	}

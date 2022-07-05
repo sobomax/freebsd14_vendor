@@ -25,19 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9b278255ac07a56d9a3268165ee1574b50597595 $
+ * $FreeBSD: 8aff4e6a5ef20d2f4a1440cd00d5bc0edc2073af $
  */
 
 #ifndef LDCONFIG_H
 #define LDCONFIG_H 1
 
 #include <sys/cdefs.h>
+#include <stdbool.h>
 
-extern int	insecure;	/* -i flag, needed here for elfhints.c */
+extern bool insecure;		/* -i flag, needed here for elfhints.c */
 
 __BEGIN_DECLS
 void	list_elf_hints(const char *);
-void	update_elf_hints(const char *, int, char **, int);
+void	update_elf_hints(const char *, int, char **, bool);
 __END_DECLS
 
 #endif

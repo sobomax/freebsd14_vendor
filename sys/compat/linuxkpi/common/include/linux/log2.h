@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d79eedf38176859c204fa0ed0c74f35fcdeb6a55 $
+ * $FreeBSD: 4c356136ca988e59dbe1a143f2040a3de007ef19 $
  */
-#ifndef	_LINUX_LOG2_H_
-#define	_LINUX_LOG2_H_
+#ifndef	_LINUXKPI_LINUX_LOG2_H_
+#define	_LINUXKPI_LINUX_LOG2_H_
 
 #include <linux/types.h>
 
@@ -128,4 +128,4 @@ rounddown_pow_of_two(unsigned long x)
 
 #define	order_base_2(x) ilog2(roundup_pow_of_two(x))
 
-#endif	/* _LINUX_LOG2_H_ */
+#endif	/* _LINUXKPI_LINUX_LOG2_H_ */

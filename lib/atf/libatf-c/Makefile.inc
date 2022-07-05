@@ -1,3 +1,10 @@
-# $FreeBSD: 265f86d1ed55a835d2a83a23d722a96d779b931f $
+# $FreeBSD: f668e36b2d6ab5edd59bb6ceb3be32134df74c20 $
 
 .include "../Makefile.inc"
+
+CFLAGS+=	-DATF_BUILD_CC='"cc"'
+CFLAGS+=	-DATF_BUILD_CFLAGS='"-Wall"'
+CFLAGS+=	-DATF_BUILD_CPP='"cpp"'
+CFLAGS+=	-DATF_BUILD_CPPFLAGS='""'
+CFLAGS+=	-DATF_BUILD_CXX='"c++"'
+CFLAGS+=	-DATF_BUILD_CXXFLAGS='"-Wall"'

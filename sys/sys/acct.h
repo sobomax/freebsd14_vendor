@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)acct.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: 36c6a5e23d068cc8e65e10eb0b0b93a522ae5822 $
+ * $FreeBSD: 7f61f3f4fc108b66bd13078b7f14ffddf18f9fb4 $
  */
 
 #ifndef _SYS_ACCT_H_
@@ -42,6 +42,8 @@
 
 #ifdef _KERNEL
 #define float uint32_t
+#else
+#include <sys/types.h>
 #endif
 
 #define AC_COMM_LEN 16

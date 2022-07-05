@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 64f7c6e049a484f44ee9287cdb1706b22908868c $
+# $FreeBSD: da7226dfa8901854362f0bd04be6586f9d1b4ca8 $
 #
 
 # Figure out where the git binary is.
@@ -22,7 +22,7 @@ GITREV!=	${GIT_CMD} -C ${.CURDIR} rev-parse --verify --short HEAD 2>/dev/null ||
 . export GITREV
 . endif
 . if !defined(GITCOUNT) || empty(GITCOUNT)
-GITCOUNT!=	${GIT_CMD} -C ${.CURDIR} rev-list --count HEAD 2>/dev/null || true
+GITCOUNT!=	${GIT_CMD} -C ${.CURDIR} rev-list --first-parent --count HEAD 2>/dev/null || true
 . export GITCOUNT
 . endif
 .else

@@ -2,7 +2,7 @@
  *  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
  *  code or tables extracted from it, as desired without restriction.
  *
- * $FreeBSD: c5a42d3d3152fba492920050593be696a81fc35f $
+ * $FreeBSD: dc126a5258fbde17716b687a64861da24a95472c $
  */
 
 #ifndef _SYS_GSB_CRC32_H_
@@ -32,16 +32,21 @@ crc32(const void *buf, size_t size)
 	crc = crc32_raw(buf, size, ~0U);
 	return (crc ^ ~0U);
 }
+#endif
 
 uint32_t calculate_crc32c(uint32_t crc32c, const unsigned char *buffer,
     unsigned int length);
-#endif
 
 #if defined(__amd64__) || defined(__i386__)
 uint32_t sse42_crc32c(uint32_t, const unsigned char *, unsigned);
 #endif
 #if defined(__aarch64__)
 uint32_t armv8_crc32c(uint32_t, const unsigned char *, unsigned int);
+#endif
+
+#ifdef TESTING
+uint32_t singletable_crc32c(uint32_t, const void *, size_t);
+uint32_t multitable_crc32c(uint32_t, const void *, size_t);
 #endif
 
 #endif /* !_SYS_GSB_CRC32_H_ */

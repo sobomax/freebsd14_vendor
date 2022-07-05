@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa44a6bc9e0997e3474663f77e183b1731738c25 $");
+__FBSDID("$FreeBSD: d3623b2302ecbbb91c67c58609b2aa65addc77fd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,14 +209,17 @@ static int
 rk_gpio_pin_getname(device_t dev, uint32_t pin, char *name)
 {
 	struct rk_gpio_softc *sc;
+	uint32_t bank;
 
 	sc = device_get_softc(dev);
 
 	if (pin >= 32)
 		return (EINVAL);
 
+	bank = pin / 8;
+	pin = pin - (bank * 8);
 	RK_GPIO_LOCK(sc);
-	snprintf(name, GPIOMAXNAME, "gpio%d", pin);
+	snprintf(name, GPIOMAXNAME, "P%c%d", bank + 'A', pin);
 	RK_GPIO_UNLOCK(sc);
 
 	return (0);

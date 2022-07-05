@@ -27,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a7fef099cd7034abea7cecf6dd603b6e97dbf372 $
+ * $FreeBSD: d13097109758be0b8120f278605056beabb4948a $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7fef099cd7034abea7cecf6dd603b6e97dbf372 $");
+__FBSDID("$FreeBSD: d13097109758be0b8120f278605056beabb4948a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -265,7 +265,7 @@ ffs_susp_dtor(void *data)
 	KASSERT((mp->mnt_kern_flag & MNTK_SUSPEND) != 0,
 	    ("MNTK_SUSPEND not set"));
 
-	error = ffs_reload(mp, curthread, FFSR_FORCE | FFSR_UNSUSPEND);
+	error = ffs_reload(mp, FFSR_FORCE | FFSR_UNSUSPEND);
 	if (error != 0)
 		panic("failed to unsuspend writes on %s", fs->fs_fsmnt);
 

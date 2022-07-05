@@ -12,8 +12,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 12fb56e1340b3fe6d7b238d348a4f5f73b219c08 $");
+__FBSDID("$FreeBSD: 37351a425ce41e20a9dc648e3f809be50afbc28b $");
 
+#include <float.h>
+
+#include "math.h"
+#include "math_private.h"
+
+#ifdef USE_BUILTIN_SQRT
+double
+__ieee754_sqrt(double x)
+{
+	return (__builtin_sqrt(x));
+}
+#else
 /* __ieee754_sqrt(x)
  * Return correctly rounded sqrt.
  *           ------------------------------------------
@@ -83,11 +95,6 @@ __FBSDID("$FreeBSD: 12fb56e1340b3fe6d7b238d348a4f5f73b219c08 $");
  * Other methods : see the appended file at the end of the program below.
  *---------------
  */
-
-#include <float.h>
-
-#include "math.h"
-#include "math_private.h"
 
 static	const double	one	= 1.0, tiny=1.0e-300;
 
@@ -187,6 +194,7 @@ __ieee754_sqrt(double x)
 	INSERT_WORDS(z,ix0,ix1);
 	return z;
 }
+#endif
 
 #if (LDBL_MANT_DIG == 53)
 __weak_reference(sqrt, sqrtl);

@@ -1,2 +1,2 @@
-.\" $FreeBSD: 163a43671a2a1a708852874b597dd9a972c33ca5 $
-Set to build libraries, programs, and kernel modules without netgraph support.
+.\" $FreeBSD: 15d409e5493a4e0465a561152385788fce298b41 $
+Build libraries, programs, and kernel modules without netgraph support.

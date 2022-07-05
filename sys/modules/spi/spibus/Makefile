@@ -1,4 +1,4 @@
-# $FreeBSD: 7832c870ca68f70615b5e100af76b0950fadd745 $
+# $FreeBSD: 01386d39e1182994a356f850903e211ca0c951b4 $
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 
@@ -16,5 +16,7 @@ SRCS+=	\
 	opt_platform.h \
 	spibus_if.c \
 	spibus_if.h \
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68ffcef57ac2c3793b5132e4b6c1e3dfa68d4424 $");
+__FBSDID("$FreeBSD: a5451c631336a435dc747766997edfaab711614a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -93,6 +93,9 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_pcb = pcb2;
 	bcopy(td1->td_pcb, pcb2, sizeof(*pcb2));
 
+	/* Clear the debug register state. */
+	bzero(&pcb2->pcb_dbg_regs, sizeof(pcb2->pcb_dbg_regs));
+
 	tf = (struct trapframe *)STACKALIGN((struct trapframe *)pcb2 - 1);
 	bcopy(td1->td_frame, tf, sizeof(*tf));
 	tf->tf_x[0] = 0;
@@ -108,11 +111,15 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_pcb->pcb_sp = (uintptr_t)td2->td_frame;
 	td2->td_pcb->pcb_fpusaved = &td2->td_pcb->pcb_fpustate;
 	td2->td_pcb->pcb_vfpcpu = UINT_MAX;
-	td2->td_pcb->pcb_fpusaved->vfp_fpcr = initial_fpcr;
 
 	/* Setup to release spin count in fork_exit(). */
 	td2->td_md.md_spinlock_count = 1;
-	td2->td_md.md_saved_daif = td1->td_md.md_saved_daif & ~DAIF_I_MASKED;
+	td2->td_md.md_saved_daif = PSR_DAIF_DEFAULT;
+
+#if defined(PERTHREAD_SSP)
+	/* Set the new canary */
+	arc4random_buf(&td2->td_md.md_canary, sizeof(td2->td_md.md_canary));
+#endif
 }
 
 void
@@ -143,12 +150,14 @@ cpu_set_syscall_retval(struct thread *td, int error)
 
 	frame = td->td_frame;
 
-	switch (error) {
-	case 0:
+	if (__predict_true(error == 0)) {
 		frame->tf_x[0] = td->td_retval[0];
 		frame->tf_x[1] = td->td_retval[1];
 		frame->tf_spsr &= ~PSR_C;	/* carry bit */
-		break;
+		return;
+	}
+
+	switch (error) {
 	case ERESTART:
 		frame->tf_elr -= 4;
 		break;
@@ -184,7 +193,12 @@ cpu_copy_thread(struct thread *td, struct thread *td0)
 
 	/* Setup to release spin count in fork_exit(). */
 	td->td_md.md_spinlock_count = 1;
-	td->td_md.md_saved_daif = td0->td_md.md_saved_daif & ~DAIF_I_MASKED;
+	td->td_md.md_saved_daif = PSR_DAIF_DEFAULT;
+
+#if defined(PERTHREAD_SSP)
+	/* Set the new canary */
+	arc4random_buf(&td->td_md.md_canary, sizeof(td->td_md.md_canary));
+#endif
 }
 
 /*

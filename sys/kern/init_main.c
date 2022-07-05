@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5eb8186c23cace76e138c42337bfddc1a13e347e $");
+__FBSDID("$FreeBSD: b4e1c6683f8d3d1d7425fa7d990b92a9b43d5b1c $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -418,6 +418,7 @@ struct sysentvec null_sysvec = {
 	.sv_maxuser	= VM_MAXUSER_ADDRESS,
 	.sv_usrstack	= USRSTACK,
 	.sv_psstrings	= PS_STRINGS,
+	.sv_psstringssz	= sizeof(struct ps_strings),
 	.sv_stackprot	= VM_PROT_ALL,
 	.sv_copyout_strings	= NULL,
 	.sv_setregs	= NULL,
@@ -524,6 +525,7 @@ proc0_init(void *dummy __unused)
 	callout_init_mtx(&p->p_itcallout, &p->p_mtx, 0);
 	callout_init_mtx(&p->p_limco, &p->p_mtx, 0);
 	callout_init(&td->td_slpcallout, 1);
+	TAILQ_INIT(&p->p_kqtim_stop);
 
 	/* Create credentials. */
 	newcred = crget();
@@ -765,7 +767,7 @@ start_init(void *dummy)
 		 */
 		KASSERT((td->td_pflags & TDP_EXECVMSPC) == 0,
 		    ("nested execve"));
-		oldvmspace = td->td_proc->p_vmspace;
+		oldvmspace = p->p_vmspace;
 		error = kern_execve(td, &args, NULL, oldvmspace);
 		KASSERT(error != 0,
 		    ("kern_execve returned success, not EJUSTRETURN"));

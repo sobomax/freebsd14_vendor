@@ -1,8 +1,9 @@
-# $FreeBSD: 78e551d80a3370acf6cf0c9be4c05060a7efd730 $
+# $FreeBSD: 1a671bc9f4022af44d968e0d05f06412a212ccf3 $
 
 PROG?=		ldd
 SRCS=		ldd.c
 
+CFLAGS+=	-I${SRCTOP}/libexec/rtld-elf
 LIBADD=		elf
 
 .include <bsd.prog.mk>

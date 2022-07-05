@@ -63,7 +63,7 @@
 #include "event_factory.h"
 #include "exception.h"
 
-__FBSDID("$FreeBSD: 36c9b725fed133fd0a8f7b0571ae7e0598350409 $");
+__FBSDID("$FreeBSD: 76ef1896975a0f576921b5c89a3ccd0c952767c9 $");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))
@@ -277,6 +277,7 @@ Event::GetTimestamp() const
 bool
 Event::DevPath(std::string &path) const
 {
+	char buf[SPECNAMELEN + 1];
 	string devName;
 
 	if (!DevName(devName))
@@ -288,7 +289,11 @@ Event::DevPath(std::string &path) const
 		return (false);
 
 	/* Normalize the device name in case the DEVFS event is for a link. */
-	devName = fdevname(devFd);
+	if (fdevname_r(devFd, buf, sizeof(buf)) == NULL) {
+		close(devFd);
+		return (false);
+	}
+	devName = buf;
 	path = _PATH_DEV + devName;
 
 	close(devFd);

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -30,7 +29,7 @@
 /* Common PCIe functions for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f1d4834b1a5219da351860626a393722edb2ad9 $");
+__FBSDID("$FreeBSD: a47b3ba1890881781293790fc5f15ec102e878dd $");
 
 #include "opt_platform.h"
 

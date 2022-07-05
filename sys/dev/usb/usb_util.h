@@ -1,4 +1,4 @@
-/* $FreeBSD: 87e54d35150ea2f13b121240f632dbc74d8f5bf4 $ */
+/* $FreeBSD: 1bb20b86914b96aa88c27e9fe12b703a4e3bb674 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -29,8 +29,12 @@
 #ifndef _USB_UTIL_H_
 #define	_USB_UTIL_H_
 
+struct usb_device;
+struct usb_device_request;
+
 uint8_t	usb_make_str_desc(void *ptr, uint16_t max_len, const char *s);
 void	usb_printbcd(char *p, uint16_t p_len, uint16_t bcd);
 void	usb_trim_spaces(char *p);
+int	usb_check_request(struct usb_device *, struct usb_device_request *);
 
 #endif					/* _USB_UTIL_H_ */

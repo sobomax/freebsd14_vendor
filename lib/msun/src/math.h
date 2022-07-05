@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: fee69498708a5aa321a5b7964a4ed57f4e7f0c7b $
+ * $FreeBSD: 98601f825bbee44b21e5824aa86e79a3a00af194 $
  */
 
 #ifndef _MATH_H_
@@ -77,9 +77,8 @@ extern const union __nan_un {
 #define	FP_SUBNORMAL	0x08
 #define	FP_ZERO		0x10
 
-#if (__STDC_VERSION__ >= 201112L && defined(__clang__)) || \
-    __has_extension(c_generic_selections)
-#define	__fp_type_select(x, f, d, ld) _Generic((x),			\
+#if __STDC_VERSION__ >= 201112L || __has_extension(c_generic_selections)
+#define	__fp_type_select(x, f, d, ld) __extension__ _Generic((x),	\
     float: f(x),							\
     double: d(x),							\
     long double: ld(x),							\
@@ -509,6 +508,15 @@ long double	lgammal_r(long double, int *);
 void		sincos(double, double *, double *);
 void		sincosf(float, float *, float *);
 void		sincosl(long double, long double *, long double *);
+double		cospi(double);
+float		cospif(float);
+long double 	cospil(long double);
+double		sinpi(double);
+float		sinpif(float);
+long double 	sinpil(long double);
+double		tanpi(double);
+float		tanpif(float);
+long double	tanpil(long double);
 #endif
 
 __END_DECLS

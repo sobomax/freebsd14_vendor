@@ -1,4 +1,4 @@
-/* $FreeBSD: ca0631e2ce535d8f8e205f251848a7116adddc5b $ */
+/* $FreeBSD: 2f60b30963d2cad3697ffbd1283d1c1edbd4eded $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -101,6 +101,7 @@ struct usb_page_cache {
 					 * from the memory. Else write. */
 	uint8_t	ismultiseg:1;		/* set if we can have multiple
 					 * segments */
+	uint8_t isloaded:1;		/* Set if map is currently loaded. */
 #endif
 };
 

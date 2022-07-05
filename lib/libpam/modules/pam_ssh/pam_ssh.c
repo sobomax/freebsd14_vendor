@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b30ba935a7b98cae08a65a3a7cce32fc3809520 $");
+__FBSDID("$FreeBSD: d066ca253a89c32e084a5361a2a8ea4118bfafa0 $");
 
 #include <sys/param.h>
 #include <sys/wait.h>
@@ -65,7 +65,7 @@ __FBSDID("$FreeBSD: 9b30ba935a7b98cae08a65a3a7cce32fc3809520 $");
 #include "sshkey.h"
 
 #define ssh_add_identity(auth, key, comment) \
-	ssh_add_identity_constrained(auth, key, comment, 0, 0, 0)
+	ssh_add_identity_constrained(auth, key, comment, 0, 0, 0, NULL)
 
 extern char **environ;
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa875dc45e70d36b01237e8d9f837a2bbfbc908a $");
+__FBSDID("$FreeBSD: 14f6adc2fd98b72d4c99bdb60e377e1269628ec2 $");
 
 #include <efivar.h>
 #include <stdio.h>
@@ -255,7 +255,7 @@ DevPathToTextVendor (
         UefiDevicePathLibCatPrint (Str, "VenVt100Plus()");
         return ;
       } else if (CompareGuid (&Vendor->Guid, &gEfiVTUTF8Guid)) {
-        UefiDevicePathLibCatPrint (Str, "VenUft8()");
+        UefiDevicePathLibCatPrint (Str, "VenUtf8()");
         return ;
       } else if (CompareGuid (&Vendor->Guid, &gEfiUartDevicePathGuid)) {
         FlowControlMap = (((UART_FLOW_CONTROL_DEVICE_PATH *) Vendor)->FlowControlMap);

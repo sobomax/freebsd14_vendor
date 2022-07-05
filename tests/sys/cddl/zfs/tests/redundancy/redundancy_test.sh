@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 73ea03171510fba3681bca5c21833aac34843804 $
+# $FreeBSD: 5cb4827feae54d143d6b9d5c5ab9bde8e802aa49 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -105,7 +105,7 @@ atf_test_case redundancy_004_neg cleanup
 redundancy_004_neg_head()
 {
 	atf_set "descr" "Verify striped pool have no data redundancy."
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 	atf_set "timeout" 1800
 }
 redundancy_004_neg_body()

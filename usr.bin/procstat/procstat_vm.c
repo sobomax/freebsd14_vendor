@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13a4e1cf03af5626d7bdf68ba1178eaf8a9f3ea5 $");
+__FBSDID("$FreeBSD: 7d698fefdc30639f6da9f7e1ee269ce851e5fbdb $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -154,6 +154,10 @@ procstat_vm(struct procstat *procstat, struct kinfo_proc *kipp)
 		case KVME_TYPE_MGTDEVICE:
 			str = "md";
 			lstr = "managed_device";
+			break;
+		case KVME_TYPE_GUARD:
+			str = "gd";
+			lstr = "guard";
 			break;
 		case KVME_TYPE_UNKNOWN:
 		default:

@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c3811cc32e845f7fe2268f20cbd23a026d12e897 $
+ * $FreeBSD: 9d7b9cbb7cceeab1d5306975b6cc60284a92c181 $
  */
 #ifndef _NET80211_IEEE80211_FREEBSD_H_
 #define _NET80211_IEEE80211_FREEBSD_H_
@@ -359,7 +359,7 @@ struct ieee80211com;
 int	ieee80211_parent_xmitpkt(struct ieee80211com *, struct mbuf *);
 int	ieee80211_vap_xmitpkt(struct ieee80211vap *, struct mbuf *);
 
-void	get_random_bytes(void *, size_t);
+void	net80211_get_random_bytes(void *, size_t);
 
 void	ieee80211_sysctl_attach(struct ieee80211com *);
 void	ieee80211_sysctl_detach(struct ieee80211com *);

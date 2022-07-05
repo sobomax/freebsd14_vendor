@@ -1,4 +1,4 @@
-/*	$FreeBSD: 86dc9ea41024999ed3833fe4c4f04f2bc09615dd $	*/
+/*	$FreeBSD: b9d867a1d83aab829eac7363e561c6e3172b7101 $	*/
 /*	$KAME: key.c,v 1.191 2001/06/27 10:46:49 sakane Exp $	*/
 
 /*-
@@ -4739,7 +4739,7 @@ key_timehandler(void *arg)
 }
 
 u_long
-key_random()
+key_random(void)
 {
 	u_long value;
 
@@ -5023,7 +5023,7 @@ key_do_getnewspi(struct sadb_spirange *spirange, struct secasindex *saidx)
 	}
 
 	if (min == max) {
-		if (!key_checkspidup(htonl(min))) {
+		if (key_checkspidup(htonl(min))) {
 			ipseclog((LOG_DEBUG, "%s: SPI %u exists already.\n",
 			    __func__, min));
 			return 0;

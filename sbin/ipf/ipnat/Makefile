@@ -1,4 +1,4 @@
-#	$FreeBSD: ba9c50ee70e3fa39784ade46e87b19c035a2fa43 $
+#	$FreeBSD: 1bdbe61235fb633d719da861df88874fb81c460d $
 
 PACKAGE=	ipf
 PROG=		ipnat
@@ -14,7 +14,6 @@ ipnat_y.c: ipnat_y.y
 	${YACC} -d ${.ALLSRC}
 	sed -e 's/yy/ipnat_yy/g' \
 	    -e 's/y.tab.c/ipnat_y.c/' \
-	    -e s/\"ipnat_y.y\"/\"..\\/tools\\/ipnat_y.y\"/ \
 	    y.tab.c > ${.TARGET}
 	sed -e 's/yy/ipnat_yy/g' \
 	    -e 's/y.tab.h/ipnat_y.h/' \

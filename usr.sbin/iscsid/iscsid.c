@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 797a7561f79cb86201b64ddfdf4f0574d212a275 $");
+__FBSDID("$FreeBSD: db8b5d4f5e4c15f5dcb1ea39721ef3e43b2c08eb $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -164,7 +164,7 @@ connection_new(int iscsi_fd, const struct iscsi_daemon_request *request)
 #ifdef ICL_KERNEL_PROXY
 	struct iscsi_daemon_connect idc;
 #endif
-	int error, sockbuf;
+	int error, optval;
 
 	conn = calloc(1, sizeof(*conn));
 	if (conn == NULL)
@@ -275,14 +275,18 @@ connection_new(int iscsi_fd, const struct iscsi_daemon_request *request)
 		fail(conn, strerror(errno));
 		log_err(1, "failed to create socket for %s", from_addr);
 	}
-	sockbuf = SOCKBUF_SIZE;
+	optval = SOCKBUF_SIZE;
 	if (setsockopt(conn->conn_socket, SOL_SOCKET, SO_RCVBUF,
-	    &sockbuf, sizeof(sockbuf)) == -1)
+	    &optval, sizeof(optval)) == -1)
 		log_warn("setsockopt(SO_RCVBUF) failed");
-	sockbuf = SOCKBUF_SIZE;
+	optval = SOCKBUF_SIZE;
 	if (setsockopt(conn->conn_socket, SOL_SOCKET, SO_SNDBUF,
-	    &sockbuf, sizeof(sockbuf)) == -1)
+	    &optval, sizeof(optval)) == -1)
 		log_warn("setsockopt(SO_SNDBUF) failed");
+	optval = 1;
+	if (setsockopt(conn->conn_socket, SOL_SOCKET, SO_NO_DDP,
+	    &optval, sizeof(optval)) == -1)
+		log_warn("setsockopt(SO_NO_DDP) failed");
 	if (conn->conn_conf.isc_dscp != -1) {
 		int tos = conn->conn_conf.isc_dscp << 2;
 		if (to_ai->ai_family == AF_INET) {

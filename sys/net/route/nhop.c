@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0db47db9916e33f1f60d0d997474751330462263 $");
+__FBSDID("$FreeBSD: ab5e393ae56a799f03e9f78a45ac2bebc5c4c1f2 $");
 #include "opt_inet.h"
 #include "opt_route.h"
 
@@ -337,7 +337,7 @@ unlink_nhop(struct nh_control *ctl, struct nhop_priv *nh_priv_del)
 	idx = 0;
 
 	NHOPS_WLOCK(ctl);
-	CHT_SLIST_REMOVE_BYOBJ(&ctl->nh_head, nhops, nh_priv_del, priv_ret);
+	CHT_SLIST_REMOVE(&ctl->nh_head, nhops, nh_priv_del, priv_ret);
 
 	if (priv_ret != NULL) {
 		idx = priv_ret->nh_idx;

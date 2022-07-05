@@ -1,5 +1,5 @@
-#ifndef	_LINUX_JHASH_H_
-#define	_LINUX_JHASH_H_
+#ifndef	_LINUXKPI_LINUX_JHASH_H_
+#define	_LINUXKPI_LINUX_JHASH_H_
 
 #include <asm/types.h>
 
@@ -21,7 +21,7 @@
  * I've modified Bob's hash to be useful in the Linux kernel, and
  * any bugs present are surely my fault.  -DaveM
  *
- * $FreeBSD: 08300083212f40cbde0ade53fcd8a08bd945106c $
+ * $FreeBSD: 1bab37f22b5d911698f3a8d2d6320c62b0f78e32 $
  */
 
 /* NOTE: Arguments are modified. */
@@ -143,4 +143,4 @@ static inline u32 jhash_1word(u32 a, u32 initval)
 	return jhash_3words(a, 0, 0, initval);
 }
 
-#endif	/* _LINUX_JHASH_H_ */
+#endif	/* _LINUXKPI_LINUX_JHASH_H_ */

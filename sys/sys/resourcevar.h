@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: e83b170ca2914d48cdebf11fcef8bec2c2080fe4 $
+ * $FreeBSD: d1c9e6d4985fef231c62a35c656a6300de20ff03 $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -135,7 +135,7 @@ rlim_t	 lim_cur(struct thread *td, int which);
 	int _which = (which);						\
 	if (__builtin_constant_p(which) && which != RLIMIT_DATA &&	\
 	    which != RLIMIT_STACK && which != RLIMIT_VMEM) {		\
-		_rlim = td->td_limit->pl_rlimit[which].rlim_cur;	\
+		_rlim = _td->td_limit->pl_rlimit[_which].rlim_cur;	\
 	} else {							\
 		_rlim = lim_cur(_td, _which);				\
 	}								\

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3beffeb7063a85054db02629521701f2a32d5d9e $
+ * $FreeBSD: 4ab021a97d3136add2c9229bfad64489474888d7 $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3beffeb7063a85054db02629521701f2a32d5d9e $");
+__FBSDID("$FreeBSD: 4ab021a97d3136add2c9229bfad64489474888d7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -309,7 +309,8 @@ cpufreq_dt_identify(driver_t *driver, device_t parent)
 	if (device_find_child(parent, "cpufreq_dt", -1) != NULL)
 		return;
 
-	if (BUS_ADD_CHILD(parent, 0, "cpufreq_dt", -1) == NULL)
+	if (BUS_ADD_CHILD(parent, 0, "cpufreq_dt", device_get_unit(parent))
+	    == NULL)
 		device_printf(parent, "add cpufreq_dt child failed\n");
 }
 

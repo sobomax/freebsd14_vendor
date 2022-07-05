@@ -1,4 +1,4 @@
-# $FreeBSD: c309559b06e74b7424ab22969f77c2ed0ace9520 $
+# $FreeBSD: d594d9593be4ffb2435b9c20ec692278dec1b60b $
 
 .include "${SRCTOP}/lib/clang/lldb.pre.mk"
 
@@ -22,15 +22,15 @@ DPADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 LDADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 .endfor
 
-LLVM_TBLGEN?=	llvm-tblgen
 INCFILE=	Options.inc
-TDFILE=		${LLDB_SRCS}/tools/driver/Options.td
+TDFILE=		${LLVM_BASE}/${SRCDIR}/Options.td
 GENOPT=		-gen-opt-parser-defs
 ${INCFILE}: ${TDFILE}
 	${LLVM_TBLGEN} ${GENOPT} -I ${LLVM_SRCS}/include -d ${.TARGET:C/$/.d/} \
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
 
+DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}
 CLEANFILES+=	${TGHDRS} ${TGHDRS:C/$/.d/}
 

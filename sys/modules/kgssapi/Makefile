@@ -1,4 +1,4 @@
-# $FreeBSD: a720cdd6a48708b6b15458484147e97c23341a72 $
+# $FreeBSD: a21524cb419aa8b0a44fb0a6c92277c9a8e90793 $
 
 .PATH: ${SRCTOP}/sys/kgssapi ${SRCTOP}/sys/rpc/rpcsec_gss
 KMOD=	kgssapi
@@ -50,5 +50,7 @@ gssd_xdr.c:	$S/kgssapi/gssd.x
 
 gssd_clnt.c:	$S/kgssapi/gssd.x
 	RPCGEN_CPP=${CPP:Q} rpcgen -lM $S/kgssapi/gssd.x | grep -v string.h > gssd_clnt.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

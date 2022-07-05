@@ -1,5 +1,5 @@
 /*	$NetBSD: queue.c,v 1.5 2011/08/31 16:24:57 plunky Exp $	*/
-/*	$FreeBSD: ac15185f06943af6efeaae7f44c652c364075b64 $	*/
+/*	$FreeBSD: 9babdbf74af8ed6db1761f8644777ae3cf4d869d $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac15185f06943af6efeaae7f44c652c364075b64 $");
+__FBSDID("$FreeBSD: 9babdbf74af8ed6db1761f8644777ae3cf4d869d $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -95,12 +95,14 @@ enqueue(struct str *x)
 		rotated = true;
 		free(item->dat);
 	}
-	item->dat = grep_malloc(sizeof(char) * x->len);
+	/* len + 1 for NUL-terminator */
+	item->dat = grep_malloc(sizeof(char) * x->len + 1);
 	item->len = x->len;
 	item->line_no = x->line_no;
 	item->boff = x->boff;
 	item->off = x->off;
 	memcpy(item->dat, x->dat, x->len);
+	item->dat[x->len] = '\0';
 	item->file = x->file;
 
 	return (rotated);

@@ -1,9 +1,12 @@
-# $FreeBSD: 1e5c68fe1848fd01ab14e5578bd06cea3430663f $
+# $FreeBSD: 182d1d9fdf6314352bdc6d68f09411794348a18b $
 
 .PATH: ${SRCTOP}/sys/dev/hid
 
 KMOD=	hconf
 SRCS=	hconf.c
+SRCS+=	opt_hid.h
 SRCS+=	bus_if.h device_if.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

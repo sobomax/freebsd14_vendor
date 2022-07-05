@@ -1,6 +1,6 @@
-# $FreeBSD: d79afc53c8651626e0e7cc0ee8ced5015c0bb86e $
+# $FreeBSD: 5cbbca25370056df5cf98cd5b8961fe45717f2c8 $
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
 EXPAT=		${SRCTOP}/contrib/expat
 
 LIB=		bsdxml

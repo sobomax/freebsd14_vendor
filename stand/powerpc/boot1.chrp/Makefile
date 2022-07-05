@@ -1,4 +1,4 @@
-# $FreeBSD: e2f1739a4f4e2c5f978501f80cf5c035b98e665a $
+# $FreeBSD: 928f30e7eabbcc7d2266ab51fc28ac8c94e536e5 $
 
 .include <bsd.init.mk>
 
@@ -42,6 +42,8 @@ boot1.hfs: boot1.elf bootinfo.txt
 	    conv=notrunc
 
 CLEANFILES+= boot1.hfs
+
+MK_PIE=		no
 
 .include <bsd.prog.mk>
 

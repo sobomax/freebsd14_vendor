@@ -1,4 +1,4 @@
-# $FreeBSD: b66509549bee83d5fa478780509c79daedbee4b8 $
+# $FreeBSD: 338deb41c5343ff6a261e4043edd2ada47f0c0af $
 
 .include <bsd.own.mk>
 
@@ -12,8 +12,8 @@ TESTSDIR=		${TESTSBASE}/usr.bin/gh-bc
 
 FILESGROUPS+=		FILESf
 FILESfPACKAGE=		${PACKAGE}
-FILESfDIR=		${TESTSDIR}
-FILESf=			${TEST_DIR}/functions.sh
+FILESfDIR=		${TESTSDIR}/scripts
+FILESf=			${TEST_DIR}/scripts/functions.sh
 FILESfMODE=		0755
 
 FILESGROUPS+=		FILEStests

@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: de40194cd1dd9dc813f875483a13e0c824660b92 $
+.\" $FreeBSD: 8460ed174ea64117a38f006d68b4293aa0226da0 $
 .\"
 .Dd December 20, 2019
 .Dt NFSV4 4
@@ -143,7 +143,9 @@ by default.
 However, this can normally be overridden by a command line
 option or configuration file for the daemon used to do the name<->number
 mapping.
-Under FreeBSD, the mapping daemon is called
+Under
+.Fx ,
+the mapping daemon is called
 .Xr nfsuserd 8
 and has a command line option that overrides the domain component of the
 machine's hostname.

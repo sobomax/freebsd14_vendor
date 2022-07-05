@@ -1,4 +1,4 @@
-# $FreeBSD: 98817b3954b9eed12d500d8114bf101c5175c4a4 $
+# $FreeBSD: 3ab9b0f3950dde91f7ff31bc3668eb6acf18e36c $
 .PATH:  ${SRCTOP}/sys/dev/mlxfw
 
 KMOD=mlxfw
@@ -13,5 +13,7 @@ CFLAGS+= \
 	-I${SRCTOP}/sys/compat/linuxkpi/common/include \
 	-I${SRCTOP}/sys/contrib/xz-embedded/freebsd \
 	-I${SRCTOP}/sys/contrib/xz-embedded/linux/lib/xz
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: 435106c7e9bd4bcf9fc6c1765bac363ba595b56a $
+# $FreeBSD: 0aa489d8fa2615037b464c1a23e052025a752c8c $
 
 .PATH:	${SRCTOP}/sys/dev/hyperv/vmbus \
 	${SRCTOP}/sys/dev/hyperv/vmbus/${MACHINE_CPUARCH}
@@ -13,8 +13,11 @@ SRCS=	hyperv.c \
 	vmbus_et.c \
 	vmbus_if.c \
 	vmbus_res.c \
-	vmbus_vector.S \
 	vmbus_xact.c
+
+.if ${MACHINE_CPUARCH} != "i386"
+SRCS+=	vmbus_vector.S
+.endif
 SRCS+=	acpi_if.h bus_if.h device_if.h opt_acpi.h pci_if.h pcib_if.h vmbus_if.h
 
 # XXX: for assym.inc
@@ -31,5 +34,7 @@ vmbus_vector.o:
 
 CFLAGS+= -I${SRCTOP}/sys/dev/hyperv/include \
 	 -I${SRCTOP}/sys/dev/hyperv/vmbus
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

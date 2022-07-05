@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89eee32567a8fec77333e6798b59fea0341af33e $");
+__FBSDID("$FreeBSD: b1f0afd5bc1f706ed43553e11cf7cd1777b8c241 $");
 
 #include <stand.h>
 #include <string.h>
@@ -195,12 +195,12 @@ beri_arch_fmtdev(void *vdev)
 int
 beri_arch_setcurrdev(struct env_var *ev, int flags, const void *value)
 {
-    struct disk_devdesc	*ncurr;
-    int			rv;
+	struct disk_devdesc	*ncurr;
+	int			rv;
 
-    if ((rv = beri_arch_parsedev(&ncurr, value, NULL)) != 0)
-	return(rv);
-    free(ncurr);
-    env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
-    return(0);
+	if ((rv = beri_arch_parsedev(&ncurr, value, NULL)) != 0)
+		return (rv);
+	free(ncurr);
+
+	return (mount_currdev(ev, flags, value));
 }

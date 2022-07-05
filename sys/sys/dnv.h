@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Pawel Jakub Dawidek under sponsorship from
  * the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3e0322e8565f70a358cf06a5146c57dbd8acc65f $
+ * $FreeBSD: 9ddd8720c923ee8c314ec7858a470f92b26b7277 $
  */
 
 #ifndef	_DNV_H_

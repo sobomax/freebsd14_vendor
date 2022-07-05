@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 6dd9f2b62f27d8e076bd4422ca6b33b60704781e $
+# $FreeBSD: f1bb19636f7530e82540ad2c9a24a8f304b6ce14 $
 #
 
 set -e
@@ -86,7 +86,9 @@ ${PKGCMD} fetch -o ${PKG_REPODIR} -d ${DVD_PACKAGES}
 # using the on-disc packages.
 mkdir -p ${PKG_REPODIR}/Latest
 (cd ${PKG_REPODIR}/Latest && \
-	ln -s ../All/$(${PKGCMD} rquery %n-%v pkg).txz pkg.txz)
+	ln -s ../All/$(${PKGCMD} rquery %n-%v pkg).pkg pkg.pkg)
+(cd ${PKG_REPODIR}/Latest && \
+	rm -f pkg.txz && ln -s pkg.pkg pkg.txz)
 
 ${PKGCMD} repo ${PKG_REPODIR}
 

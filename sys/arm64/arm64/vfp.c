@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015-2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -28,11 +27,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62244ddc80e84d7d2bcb7bc387f6b0af3087c511 $");
+__FBSDID("$FreeBSD: c740832f9ef090f9df001244e2480caf18230929 $");
 
 #ifdef VFP
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/limits.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/pcpu.h>
@@ -102,7 +102,7 @@ vfp_discard(struct thread *td)
 static void
 vfp_store(struct vfpstate *state)
 {
-	__int128_t *vfp_state;
+	__uint128_t *vfp_state;
 	uint64_t fpcr, fpsr;
 
 	vfp_state = state->vfp_regs;
@@ -134,7 +134,7 @@ vfp_store(struct vfpstate *state)
 static void
 vfp_restore(struct vfpstate *state)
 {
-	__int128_t *vfp_state;
+	__uint128_t *vfp_state;
 	uint64_t fpcr, fpsr;
 
 	vfp_state = state->vfp_regs;
@@ -196,6 +196,26 @@ vfp_save_state(struct thread *td, struct pcb *pcb)
 		dsb(ish);
 		vfp_disable();
 	}
+	critical_exit();
+}
+
+/*
+ * Reset the FP state to avoid leaking state from the parent process across
+ * execve() (and to ensure that we get a consistent floating point environment
+ * in every new process).
+ */
+void
+vfp_reset_state(struct thread *td, struct pcb *pcb)
+{
+	critical_enter();
+	bzero(&pcb->pcb_fpustate.vfp_regs, sizeof(pcb->pcb_fpustate.vfp_regs));
+	KASSERT(pcb->pcb_fpusaved == &pcb->pcb_fpustate,
+	    ("pcb_fpusaved should point to pcb_fpustate."));
+	pcb->pcb_fpustate.vfp_fpcr = initial_fpcr;
+	pcb->pcb_fpustate.vfp_fpsr = 0;
+	pcb->pcb_vfpcpu = UINT_MAX;
+	pcb->pcb_fpflags = 0;
+	vfp_discard(td);
 	critical_exit();
 }
 
@@ -357,7 +377,7 @@ fpu_kern_leave(struct thread *td, struct fpu_kern_ctx *ctx)
 }
 
 int
-fpu_kern_thread(u_int flags)
+fpu_kern_thread(u_int flags __unused)
 {
 	struct pcb *pcb = curthread->td_pcb;
 
@@ -372,7 +392,7 @@ fpu_kern_thread(u_int flags)
 }
 
 int
-is_fpu_kern_thread(u_int flags)
+is_fpu_kern_thread(u_int flags __unused)
 {
 	struct pcb *curpcb;
 

@@ -28,7 +28,7 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: bb933dc982418c0cf5c24e2c16c57f741676b203 $
+ * $FreeBSD: 24f967e560f6a8733158424be05f2f23e1a7ea37 $
  */
 
 #ifndef	_MACHINE_PROC_H_
@@ -37,6 +37,7 @@
 struct mdthread {
 	int	md_spinlock_count;	/* (k) */
 	register_t md_saved_daif;	/* (k) */
+	uintptr_t md_canary;
 };
 
 struct mdproc {
@@ -60,9 +61,7 @@ struct syscall_args {
 #define	GET_STACK_USAGE(total, used) do {				\
 	struct thread *td = curthread;					\
 	(total) = td->td_kstack_pages * PAGE_SIZE - sizeof(struct pcb);	\
-	(used) = (char *)td->td_kstack +				\
-	    td->td_kstack_pages * PAGE_SIZE -				\
-	    (char *)&td;						\
+	(used) = td->td_kstack + (total) - (vm_offset_t)&td;		\
 } while (0)
 
 #endif

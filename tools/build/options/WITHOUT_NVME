@@ -1,2 +1,2 @@
-.\" $FreeBSD: be0a452b65727512534a144c1c40866265a9a11a $
-Set to not build nvme related tools and kernel modules.
+.\" $FreeBSD: 507f708cd6979fefc85ead9337c236053cb61dfd $
+Do not build nvme related tools and kernel modules.

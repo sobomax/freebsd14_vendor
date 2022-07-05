@@ -1,4 +1,4 @@
-# $FreeBSD: 9ae998942a12dd14a9a529d071290f89d2401622 $
+# $FreeBSD: b8354e1b6f2df0a207066bdfacf3ec192d693d15 $
 
 # Use the following command to build local debug version of dynamic
 # linker:
@@ -11,7 +11,9 @@ PACKAGE=	clibs
 MK_PIE=		no # Always position independent using local rules
 MK_SSP=		no
 
+.if !defined(NEED_COMPAT)
 CONFS=		libmap.conf
+.endif
 PROG?=		ld-elf.so.1
 .if (${PROG:M*ld-elf32*} != "")
 TAGS+=		lib32

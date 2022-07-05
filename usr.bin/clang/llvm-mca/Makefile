@@ -1,4 +1,4 @@
-# $FreeBSD: 9bde2446cab1593c7dfe356745972146cab22c05 $
+# $FreeBSD: f1e24f7c9d35a700507bc0bd3299fb3a61a8d114 $
 
 PROG_CXX=	llvm-mca
 
@@ -9,6 +9,7 @@ SRCS+=		PipelinePrinter.cpp
 SRCS+=		Views/BottleneckAnalysis.cpp
 SRCS+=		Views/DispatchStatistics.cpp
 SRCS+=		Views/InstructionInfoView.cpp
+SRCS+=		Views/InstructionView.cpp
 SRCS+=		Views/RegisterFileStatistics.cpp
 SRCS+=		Views/ResourcePressureView.cpp
 SRCS+=		Views/RetireControlUnitStatistics.cpp

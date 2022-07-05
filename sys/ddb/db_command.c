@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21ff75f78e6ac278c4688e7c3709eb95ffb8e172 $");
+__FBSDID("$FreeBSD: bfd6c700dc2249b2e03491b968409f6138f4df09 $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -293,7 +293,7 @@ db_cmd_match(char *name, struct command *cmd, struct command **cmdp,
 			*resultp = CMD_AMBIGUOUS;
 			/* but keep looking for a full match -
 			   this lets us match single letters */
-		} else {
+		} else if (*resultp == CMD_NONE) {
 			*cmdp = cmd;
 			*resultp = CMD_FOUND;
 		}

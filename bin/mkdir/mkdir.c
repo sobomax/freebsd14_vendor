@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)mkdir.c	8.2 (Berkeley) 1/25/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 122ec4458858574c36ee761bb21a8d55eba823eb $");
+__FBSDID("$FreeBSD: cc699d3893dcf4be050fced92256238d124e70ea $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -163,7 +163,7 @@ build(char *path, mode_t omode)
 			 * POSIX 1003.2:
 			 * For each dir operand that does not name an existing
 			 * directory, effects equivalent to those caused by the
-			 * following command shall occcur:
+			 * following command shall occur:
 			 *
 			 * mkdir -p -m $(umask -S),u+wx $(dirname dir) &&
 			 *    mkdir [-m mode] dir

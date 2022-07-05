@@ -26,7 +26,7 @@
  *
  * Portions of this file were taken from GELI's implementation of hmac.
  *
- * $FreeBSD: 08e058d6affacb136b327c7adf08e9bd327e6460 $
+ * $FreeBSD: e240f5b0ddcae2d856e921eddd6a8fcd7f0dae90 $
  */
 
 #ifndef _ZFS_FREEBSD_CRYPTO_H
@@ -92,7 +92,7 @@ int freebsd_crypt_newsession(freebsd_crypt_session_t *sessp,
 void freebsd_crypt_freesession(freebsd_crypt_session_t *sessp);
 
 int freebsd_crypt_uio(boolean_t, freebsd_crypt_session_t *,
-	struct zio_crypt_info *, uio_t *, crypto_key_t *, uint8_t *,
+	struct zio_crypt_info *, zfs_uio_t *, crypto_key_t *, uint8_t *,
 	size_t, size_t);
 
 #endif /* _ZFS_FREEBSD_CRYPTO_H */

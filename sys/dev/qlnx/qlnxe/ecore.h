@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 33af8f1246585bb8572fe03ca5ed992b4983e3d9 $
+ * $FreeBSD: 32a6b98156c5088b8010a6c0f86c5c2a513718a0 $
  *
  */
 
@@ -702,7 +702,7 @@ struct ecore_hwfn {
 	struct ecore_ptt		*p_main_ptt;
 	struct ecore_ptt		*p_dpc_ptt;
 
-	/* PTP will be used only by the leading funtion.
+	/* PTP will be used only by the leading function.
 	 * Usage of all PTP-apis should be synchronized as result.
 	 */
 	struct ecore_ptt		*p_ptp_ptt;

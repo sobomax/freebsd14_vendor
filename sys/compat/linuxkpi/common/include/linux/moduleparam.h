@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3a16c20fd92ed2f18ed754fd7fb54802172ac067 $
+ * $FreeBSD: d9485de88f56f4f3220bf7f87daaeff9d90e2786 $
  */
-#ifndef	_LINUX_MODULEPARAM_H_
-#define	_LINUX_MODULEPARAM_H_
+#ifndef	_LINUXKPI_LINUX_MODULEPARAM_H_
+#define	_LINUXKPI_LINUX_MODULEPARAM_H_
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -102,6 +102,12 @@
 	LINUXKPI_PARAM_NAME(name), LINUXKPI_PARAM_PERM(perm), &(var), 0, \
 	LINUXKPI_PARAM_DESC(name)))
 
+#define	LINUXKPI_PARAM_charp(name, var, perm)				\
+	extern const char LINUXKPI_PARAM_DESC(name)[];			\
+	LINUXKPI_PARAM_PASS(SYSCTL_STRING(LINUXKPI_PARAM_PARENT, OID_AUTO, \
+	LINUXKPI_PARAM_NAME(name), LINUXKPI_PARAM_PERM(perm), &(var), 0, \
+	LINUXKPI_PARAM_DESC(name)))
+
 #define	module_param_string(name, str, len, perm)			\
 	extern const char LINUXKPI_PARAM_DESC(name)[];			\
 	LINUXKPI_PARAM_PASS(SYSCTL_STRING(LINUXKPI_PARAM_PARENT, OID_AUTO, \
@@ -130,4 +136,4 @@
 
 SYSCTL_DECL(_compat_linuxkpi);
 
-#endif					/* _LINUX_MODULEPARAM_H_ */
+#endif					/* _LINUXKPI_LINUX_MODULEPARAM_H_ */

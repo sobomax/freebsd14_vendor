@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/kdb.h,v 1.2 2005/01/05 20:05:50 imp
- * $FreeBSD: 33e54bc5fc05e7528e2ead1bdacf0c750a4b9f34 $
+ * $FreeBSD: 64e39e154f219867bc98bcaee8fb310bbcae2e3d $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -55,4 +55,19 @@ static __inline void
 kdb_cpu_sync_icache(unsigned char *addr, size_t size)
 {
 }
+
+static __inline int
+kdb_cpu_set_watchpoint(vm_offset_t addr, vm_size_t size, int access)
+{
+
+	return (ENXIO);
+}
+
+static __inline int
+kdb_cpu_clr_watchpoint(vm_offset_t addr, vm_size_t size)
+{
+
+	return (0);
+}
+
 #endif /* _MACHINE_KDB_H_ */

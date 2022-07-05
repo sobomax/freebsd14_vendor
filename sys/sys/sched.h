@@ -58,7 +58,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 64651ffa9c90775f25d0f3f1f66d0e3af4893abd $
+ * $FreeBSD: 8041a2bc12d4d238409f0f689e3e51e42dde79b1 $
  */
 
 #ifndef _SCHED_H_
@@ -226,6 +226,11 @@ SYSINIT(name, SI_SUB_LAST, SI_ORDER_MIDDLE, name ## _add_proc, NULL);
  * Fixup scheduler state for proc0 and thread0
  */
 void schedinit(void);
+
+/*
+ * Fixup scheduler state for secondary APs
+ */
+void schedinit_ap(void);
 #endif /* _KERNEL */
 
 /* POSIX 1003.1b Process Scheduling */

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63967d7f8e3c6a5e760116bc9e36d18617d0dadc $");
+__FBSDID("$FreeBSD: 7cc38b14f3fd415e4112c2b34af4ddde221f9b84 $");
 
 #include "opt_ddb.h"
 
@@ -100,6 +100,9 @@ ccp_populate_sglist(struct sglist *sg, struct crypto_buffer *cb)
 	switch (cb->cb_type) {
 	case CRYPTO_BUF_MBUF:
 		error = sglist_append_mbuf(sg, cb->cb_mbuf);
+		break;
+	case CRYPTO_BUF_SINGLE_MBUF:
+		error = sglist_append_single_mbuf(sg, cb->cb_mbuf);
 		break;
 	case CRYPTO_BUF_UIO:
 		error = sglist_append_uio(sg, cb->cb_uio);

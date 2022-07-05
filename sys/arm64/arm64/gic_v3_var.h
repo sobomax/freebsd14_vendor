@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1645c417fd8d242d1849de62055be28d79115e24 $
+ * $FreeBSD: 7722a48cb45677b2496d6122f0a558b10ac715f4 $
  */
 
 #ifndef _GIC_V3_VAR_H_

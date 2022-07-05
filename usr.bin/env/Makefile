@@ -1,6 +1,7 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 14c3d4cca3f39075e1db2785503490e6b254011c $
+# $FreeBSD: f672ce77f4dd1eadfe1d5be35f3d7c800e96ca28 $
 
+PACKAGE=	runtime
 PROG=	env
 SRCS=	env.c envopts.c
 

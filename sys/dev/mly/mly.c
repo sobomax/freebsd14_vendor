@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 1bdcdbb87443690e299fb005eb6b1b8e6a5a0211 $
+ *	$FreeBSD: 194a14e257e48919ba265bd345159f48f39ce500 $
  */
 
 #include <sys/param.h>
@@ -336,7 +336,7 @@ mly_attach(device_t dev)
     if (error != 0)
 	mly_free(sc);
     else
-	gone_in_dev(dev, 13, "mly(4) removed");
+	gone_in_dev(dev, 14, "mly(4) removed");
     return(error);
 }
 

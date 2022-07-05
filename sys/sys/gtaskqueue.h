@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aa352902c65bcc31de73c8d1500c8ec6770c1fde $
+ * $FreeBSD: f662aa39f00e269a41c9d12e9b26a5a1acb4ce03 $
  */
 
 #ifndef _SYS_GTASKQUEUE_H_
@@ -80,6 +80,7 @@ void	taskqgroup_detach(struct taskqgroup *qgroup, struct grouptask *gtask);
 struct taskqgroup *taskqgroup_create(const char *name, int cnt, int stride);
 void	taskqgroup_destroy(struct taskqgroup *qgroup);
 void	taskqgroup_bind(struct taskqgroup *qgroup);
+void	taskqgroup_drain_all(struct taskqgroup *qgroup);
 
 #define	GTASK_INIT(gtask, flags, priority, func, context) do {	\
 	(gtask)->ta_flags = flags;				\

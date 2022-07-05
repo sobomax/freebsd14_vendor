@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d03ddf652f420492e92418587522714b0d14263a $
+ * $FreeBSD: 16805b9e64129fc9e2d741706b142acb76a93ef0 $
  */
 
 #include <sys/types.h>
@@ -163,7 +163,7 @@ test_ip_options(int sock, const char *socktypename)
 		    "returned %d bytes of data", socktypename, len);
 
 	/*
-	 * One posible failure mode is that the call succeeds but neglects to
+	 * One possible failure mode is that the call succeeds but neglects to
 	 * copy out the data.
  	 */
 	if (test_options[0] == TEST_MAGIC)

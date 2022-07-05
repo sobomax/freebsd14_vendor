@@ -1,4 +1,4 @@
-# $FreeBSD: 96431c19d2afee6e931aaf9de4cf97747925140d $ 
+# $FreeBSD: 8e10a654a7547a5aa908ad22b84fa1c56d1199b0 $ 
 
 .sinclude <src.opts.mk>
 
@@ -9,6 +9,10 @@
 
 .if exists(${.CURDIR}/tests)
 PROG= make
+.if ${PROGNAME:U} != "bmake"
+LINKS= ${BINDIR}/make ${BINDIR}/bmake
+MLINKS= ${MAN} b${MAN}
+.endif
 .endif
 
 .if !defined(MK_SHARED_TOOLCHAIN) || ${MK_SHARED_TOOLCHAIN} == "no"

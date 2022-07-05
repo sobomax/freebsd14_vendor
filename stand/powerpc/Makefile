@@ -1,10 +1,14 @@
-# $FreeBSD: 888fe0e9702861d99a87b075249735cbd25f943f $
+# $FreeBSD: a16d3933ff7e52655e5a0449f3e6e7b463f28dfb $
 
 NO_OBJ=t
 
 .include <bsd.init.mk>
 
-SUBDIR.yes=		boot1.chrp ofw uboot
+SUBDIR.yes=		boot1.chrp ofw
+
+.if "${MACHINE_ARCH}" != "powerpc64le"
+SUBDIR.${MK_FDT}+=	uboot
+.endif
 
 .if "${MACHINE_ARCH}" == "powerpc64"
 SUBDIR.${MK_FDT}+=	kboot

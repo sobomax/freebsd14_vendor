@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 068328d83345f2034f1863ba25a19686e0294264 $
+ * $FreeBSD: 166021d3aa09c040a2b93202bd5bdd90376ba9fa $
  *
  * Author: George V. Neville-Neil
  *

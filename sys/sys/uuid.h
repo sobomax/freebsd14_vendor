@@ -25,13 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 95050d0f8d20a285fe8f7546491829905a0b1b02 $
+ * $FreeBSD: bbb85732dd50d5fd661bb65b1b87a01c82729d41 $
  */
 
 #ifndef _SYS_UUID_H_
 #define	_SYS_UUID_H_
 
-#include <sys/cdefs.h>
+#include <sys/types.h>
 
 /* Length of a node address (an IEEE 802 address). */
 #define	_UUID_NODE_LEN		6

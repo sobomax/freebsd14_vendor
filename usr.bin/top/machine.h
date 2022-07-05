@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c2616e9052e348253b5381c18b589f4b90272fe6 $
+ * $FreeBSD: af66eaead76bfc81ec972fdf98f3ee7b17c612b3 $
  */
 
 /*
@@ -75,7 +75,7 @@ struct process_select
     bool swap;		/* show swap usage */
     bool kidle;		/* show per-CPU idle threads */
     int pid;		/* only this pid (unless pid == -1) */
-    const char *command;	/* only this command (unless == NULL) */
+    char *command;	/* only this command (unless == NULL) */
 };
 
 /* routines defined by the machine dependent module */

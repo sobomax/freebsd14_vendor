@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d2cdc4071d820b6fd7a91053d2dabf8f7877e4c $");
+__FBSDID("$FreeBSD: e6ee80c41f1a8f418dda9907da5fbca953655899 $");
 
 #ifndef _NETINET_SCTP_OUTPUT_H_
 #define _NETINET_SCTP_OUTPUT_H_
@@ -117,7 +117,7 @@ void sctp_send_asconf(struct sctp_tcb *, struct sctp_nets *, int addr_locked);
 
 void sctp_send_asconf_ack(struct sctp_tcb *);
 
-int sctp_get_frag_point(struct sctp_tcb *, struct sctp_association *);
+uint32_t sctp_get_frag_point(struct sctp_tcb *);
 
 void sctp_toss_old_cookies(struct sctp_tcb *, struct sctp_association *);
 

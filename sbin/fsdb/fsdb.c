@@ -32,7 +32,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 785aeb2b5a750dc39d5e69004de29b2e58f75ceb $";
+  "$FreeBSD: c935f88952b4ff3575acbff939a25523e154725f $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -111,7 +111,7 @@ main(int argc, char *argv[])
 		fsys = argv[0];
 
 	sblock_init();
-	if (!setup(fsys))
+	if (openfilesys(fsys) == 0 || readsb(0) == 0 || setup(fsys) == 0)
 		errx(1, "cannot set up file system `%s'", fsys);
 	if (fswritefd < 0)
 		nflag++;

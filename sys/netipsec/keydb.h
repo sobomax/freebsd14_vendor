@@ -1,4 +1,4 @@
-/*	$FreeBSD: e3c1417a2f9a5ba1a9978e5bffeafcd2931db13d $	*/
+/*	$FreeBSD: 69c1cb29db3439b9c6379fae50977ea66442851e $	*/
 /*	$KAME: keydb.h,v 1.14 2000/08/02 17:58:26 sakane Exp $	*/
 
 /*-
@@ -55,7 +55,7 @@ union sockaddr_union {
 };
 #endif /* _SOCKADDR_UNION_DEFINED */
 
-/* Security Assocciation Index */
+/* Security Association Index */
 /* NOTE: Ensure to be same address family */
 struct secasindex {
 	union sockaddr_union src;	/* source address for SA */

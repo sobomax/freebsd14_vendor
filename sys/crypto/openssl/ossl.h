@@ -25,7 +25,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 533d497f1be3e647235ff30efdbffd4de2b38a54 $
+ * $FreeBSD: 11793dca037a24132d13af22bb1fbea5d4486fb2 $
  */
 
 #ifndef __OSSL_H__
@@ -34,13 +34,23 @@
 /* Compatibility shims. */
 #define	OPENSSL_cleanse		explicit_bzero
 
+struct cryptop;
+struct crypto_session_params;
+
+int	ossl_chacha20(struct cryptop *crp,
+	    const struct crypto_session_params *csp);
+int	ossl_chacha20_poly1305_decrypt(struct cryptop *crp,
+	    const struct crypto_session_params *csp);
+int	ossl_chacha20_poly1305_encrypt(struct cryptop *crp,
+	    const struct crypto_session_params *csp);
 void ossl_cpuid(void);
 
 /* Needs to be big enough to hold any hash context. */
 struct ossl_hash_context {
-	uint32_t	dummy[54];
+	uint32_t	dummy[61];
 } __aligned(32);
 
+extern struct auth_hash ossl_hash_poly1305;
 extern struct auth_hash ossl_hash_sha1;
 extern struct auth_hash ossl_hash_sha224;
 extern struct auth_hash ossl_hash_sha256;

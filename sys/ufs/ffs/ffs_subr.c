@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e6cefa7be0c068e8ed6f3a9536b0e7d99044267 $");
+__FBSDID("$FreeBSD: 361746571fdfb0f46557ea3f29eb3c99a23159e3 $");
 
 #include <sys/param.h>
 
@@ -301,12 +301,9 @@ readsuper(void *devfd, struct fs **fsp, off_t sblockloc, int isaltsblk,
 				    "check-hash 0x%x != computed check-hash "
 				    "0x%x%s\n", fs->fs_ckhash, ckhash,
 				    chkhash == 0 ? " (Ignored)" : "");
-			if (chkhash == 0) {
-				fs->fs_flags |= FS_NEEDSFSCK;
-				fs->fs_fmod = 1;
+			/* STDSB_NOHASHFAIL */
+			if (chkhash == 0)
 				return (0);
-			}
-			fs->fs_fmod = 0;
 			return (EINTEGRITY);
 		}
 		/* Have to set for old filesystems that predate this field */

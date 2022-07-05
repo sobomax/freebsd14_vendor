@@ -1,4 +1,4 @@
-.\" $FreeBSD: f4c11553d3718b915d9e28ec8f332943007fcb24 $
-Set to not install
+.\" $FreeBSD: 3de8ad73d28c7b92bfb9dec1aa8dff3d9a7cf24b $
+Do not install
 .Xr make 1
 and related support files.

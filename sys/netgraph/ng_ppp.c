@@ -60,7 +60,7 @@
  *
  * Authors: Archie Cobbs <archie@freebsd.org>, Alexander Motin <mav@alkar.net>
  *
- * $FreeBSD: eb639aa3d90010c08a2c493a8292bfed49de02c5 $
+ * $FreeBSD: c9cb28fd9d047ee94966bfb85e79d1c312c7584f $
  * $Whistle: ng_ppp.c,v 1.24 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -1514,7 +1514,7 @@ done:
  *	is increased.
  *
  *    o If we receive a fragment with seq# < MSEQ, we throw it away
- *	because we've already delcared it lost.
+ *	because we've already declared it lost.
  *
  * This assumes linkNum != NG_PPP_BUNDLE_LINKNUM.
  */

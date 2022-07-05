@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: 24dbf269df3f1b0dba4117c4b5486a16a869ad8a $
+# $FreeBSD: 8bb09dd920bdea93bea6f7287638b4843553075f $
 #
 
 # PROVIDE: securelevel
-# REQUIRE: adjkerntz ipfw pf
+# REQUIRE: adjkerntz ipfw pf sysctl_lastload
 
 . /etc/rc.subr
 
@@ -13,10 +13,6 @@ desc="Securelevel configuration"
 rcvar='kern_securelevel_enable'
 start_cmd="securelevel_start"
 stop_cmd=":"
-
-# Last chance to set sysctl variables that failed the first time.
-#
-/etc/rc.d/sysctl lastload
 
 securelevel_start()
 {

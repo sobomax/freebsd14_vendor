@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 892bc55e514581081be32af791551e0e1a6ada3d $
+ * $FreeBSD: c31c15d9da4b38e44f829f2e8a65bba1f1eda62b $
  */
 
 #ifndef _COMPLEX_H
@@ -98,6 +98,8 @@ double complex	ccosh(double complex);
 float complex	ccoshf(float complex);
 double complex	cexp(double complex);
 float complex	cexpf(float complex);
+long double complex
+		cexpl(long double complex);
 double		cimag(double complex) __pure2;
 float		cimagf(float complex) __pure2;
 long double	cimagl(long double complex) __pure2;

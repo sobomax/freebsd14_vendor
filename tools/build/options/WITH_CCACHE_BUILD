@@ -1,5 +1,5 @@
-.\" $FreeBSD: 97a45ea7b2216439fd32b5440d33941736b4a63d $
-Set to use
+.\" $FreeBSD: 88b20db606e2f3f2435be05e8fc56f7084701062 $
+Use
 .Xr ccache 1
 for the build.
 No configuration is required except to install the

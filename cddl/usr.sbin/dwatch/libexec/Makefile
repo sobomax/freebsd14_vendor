@@ -1,5 +1,6 @@
-# $FreeBSD: d84fc370519b30d7b70747ae369346368697552c $
+# $FreeBSD: 581556eeebd0de455348b96496e800995db3c448 $
 
+PACKAGE=	dwatch
 FILESDIR=	${LIBEXECDIR}/dwatch
 FILES=		chmod \
 		errno \

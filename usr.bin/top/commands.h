@@ -9,7 +9,7 @@
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *  Copyright (c) 2016, Randy Westlund
  *
- * $FreeBSD: 0071fbe62fc63419d391821701e67e838d5e07aa $
+ * $FreeBSD: 863effd2ddd96171805e3f0f5ca6f0943ff0a47c $
  */
 #ifndef COMMANDS_H
 #define COMMANDS_H
@@ -24,6 +24,7 @@ enum cmd_id {
 	CMD_update,
 	CMD_quit,
 	CMD_help,
+	CMD_grep,
 	CMD_errors,
 	CMD_number,
 	CMD_delay,

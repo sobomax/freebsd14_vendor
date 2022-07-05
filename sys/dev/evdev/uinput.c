@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ceecee652ac3425c303356e2d26343ad6c59b804 $
+ * $FreeBSD: e7854e89f645bdeeb385afe43579822914422db8 $
  */
 
 #include "opt_evdev.h"
@@ -495,6 +495,7 @@ uinput_ioctl_sub(struct uinput_cdev_state *state, u_long cmd, caddr_t data)
 
 		evdev_set_methods(state->ucs_evdev, state, &uinput_ev_methods);
 		evdev_set_flag(state->ucs_evdev, EVDEV_FLAG_SOFTREPEAT);
+		evdev_set_flag(state->ucs_evdev, EVDEV_FLAG_MT_KEEPID);
 		ret = evdev_register(state->ucs_evdev);
 		if (ret == 0)
 			state->ucs_state = UINPUT_RUNNING;

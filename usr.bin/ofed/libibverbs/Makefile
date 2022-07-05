@@ -1,4 +1,6 @@
-# $FreeBSD: bd164751c9ce8d86427ccc873bcb69d690629f13 $
+# $FreeBSD: 5334743683724b39552cad684737d05d06c82d83 $
+
+PACKAGE=	FreeBSD-rdma
 
 SUBDIR= \
 asyncwatch \

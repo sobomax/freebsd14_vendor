@@ -1,5 +1,5 @@
 #
-# $FreeBSD: e3265d5ba5dad8a23f9707453a99d24d62757c1b $
+# $FreeBSD: f7cba54925fc2bf9a2043b90edff4a53fa99f6ae $
 #
 
 SYSDIR?=${SRCTOP}/sys
@@ -19,7 +19,7 @@ SUBDIR+=	${_iw_cxgbe}
 SUBDIR+=	${_cxgbei}
 SUBDIR+=	ccr
 
-.if ${MACHINE_CPUARCH} == "amd64"
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "aarch64"
 _tom=	tom
 _cxgbei=	cxgbei
 .if ${MK_OFED} != "no" || defined(ALL_MODULES)

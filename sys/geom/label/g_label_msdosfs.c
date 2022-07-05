@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6ccb8b334ee539f8e580f46feff22d35152827e $");
+__FBSDID("$FreeBSD: 67ac879d62c294e67b5bb76186ce19f074e4c156 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -152,6 +152,12 @@ g_label_msdosfs_taste(struct g_consumer *cp, char *label, size_t size)
 		G_LABEL_DEBUG(2,
 		    "MSDOSFS: FAT_FirstDataSector=0x%x, FAT_BytesPerSector=%d",
 		    fat_FirstDataSector, fat_BytesPerSector);
+		if (fat_BytesPerSector == 0 ||
+		    fat_BytesPerSector % pp->sectorsize != 0) {
+			G_LABEL_DEBUG(1, "MSDOSFS: %s: corrupted BPB",
+			    pp->name);
+			goto error;
+		}
 
 		for (offset = fat_BytesPerSector * fat_FirstDataSector;;
 		    offset += fat_BytesPerSector) {

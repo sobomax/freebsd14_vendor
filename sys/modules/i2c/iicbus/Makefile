@@ -1,4 +1,4 @@
-# $FreeBSD: 8923615ecada10f160a37f36852cc75ca2663c87 $
+# $FreeBSD: c6d2822bc20d4dfdd09c08596da7350cdd53d437 $
 
 .PATH:	${SRCTOP}/sys/dev/iicbus
 
@@ -23,5 +23,7 @@ SRCS+=	acpi_iicbus.c opt_acpi.h acpi_if.h
 .if !empty(OPT_FDT)
 SRCS+=	ofw_iicbus.c ofw_bus_if.h
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

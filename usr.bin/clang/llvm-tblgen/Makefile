@@ -1,4 +1,4 @@
-# $FreeBSD: a0bc16b1249753da23382cd5c00b18dd08a293a4 $
+# $FreeBSD: 2a108c850a83148d2ca765c48695b7c2d1bec41e $
 
 PROG_CXX=	llvm-tblgen
 
@@ -9,6 +9,7 @@ SRCS+=		AsmWriterInst.cpp
 SRCS+=		Attributes.cpp
 SRCS+=		CTagsEmitter.cpp
 SRCS+=		CallingConvEmitter.cpp
+SRCS+=		CodeBeadsGen.cpp
 SRCS+=		CodeEmitterGen.cpp
 SRCS+=		CodeGenDAGPatterns.cpp
 SRCS+=		CodeGenHwModes.cpp

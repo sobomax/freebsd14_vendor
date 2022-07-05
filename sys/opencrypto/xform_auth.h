@@ -1,4 +1,4 @@
-/*	$FreeBSD: dbdb278209b5c7d65723b02d4bb26bcc3cc07db2 $	*/
+/*	$FreeBSD: 6427965671d3831f7a08aafc08db9df95221ca11 $	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-
@@ -84,6 +84,7 @@ extern struct auth_hash auth_hash_poly1305;
 extern struct auth_hash auth_hash_ccm_cbc_mac_128;
 extern struct auth_hash auth_hash_ccm_cbc_mac_192;
 extern struct auth_hash auth_hash_ccm_cbc_mac_256;
+extern struct auth_hash auth_hash_chacha20_poly1305;
 
 union authctx {
 	SHA1_CTX sha1ctx;

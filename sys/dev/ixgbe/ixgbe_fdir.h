@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: f5e1593072a586c0daa4605ea4f2e1c14b67055e $*/
+/*$FreeBSD: 8631a675c7b7b1d2366c949ca58b9b4b315c9c6c $*/
 
 #ifndef _IXGBE_FDIR_H_
 #define _IXGBE_FDIR_H_
@@ -40,11 +40,11 @@
 /*
  * Flow Director actually 'steals' part of the packet buffer
  * as its filter pool, this variable controls how much it uses:
- *  0 = 64K, 1 = 128K, 2 = 256K
+ * 0 = 64K, 1 = 128K, 2 = 256K
  */
 int fdir_pballoc = 1;
 
-void ixgbe_init_fdir(struct adapter *);
+void ixgbe_init_fdir(struct ixgbe_softc *);
 
 #else
 

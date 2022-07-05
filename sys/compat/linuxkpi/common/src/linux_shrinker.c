@@ -22,12 +22,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0423f4e05804315f9ec9bb986b93cbebb173d014 $
+ * $FreeBSD: b66316c22013a7bf646a560b3298db5bc3ecb6b2 $
  */
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0423f4e05804315f9ec9bb986b93cbebb173d014 $");
+__FBSDID("$FreeBSD: b66316c22013a7bf646a560b3298db5bc3ecb6b2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 0423f4e05804315f9ec9bb986b93cbebb173d014 $");
 #include <sys/eventhandler.h>
 #include <sys/mutex.h>
 
+#include <linux/compat.h>
 #include <linux/shrinker.h>
 
 TAILQ_HEAD(, shrinker) lkpi_shrinkers = TAILQ_HEAD_INITIALIZER(lkpi_shrinkers);
@@ -93,6 +94,7 @@ linuxkpi_vm_lowmem(void *arg __unused)
 {
 	struct shrinker *s;
 
+	linux_set_current(curthread);
 	mtx_lock(&mtx_shrinker);
 	TAILQ_FOREACH(s, &lkpi_shrinkers, next) {
 		shrinker_shrink(s);

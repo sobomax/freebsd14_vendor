@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b1c3027badbe341589e5770e5e39cfaf9cb8c4d $");
+__FBSDID("$FreeBSD: f510a3c437d067ea364d7b0fd75471d25b89b21b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,9 +53,7 @@ __FBSDID("$FreeBSD: 7b1c3027badbe341589e5770e5e39cfaf9cb8c4d $");
 
 /*
  * Convenience function for manipulating driver locks from busdma (during
- * busdma_swi, for example).  Drivers that don't provide their own locks
- * should specify &Giant to dmat->lockfuncarg.  Drivers that use their own
- * non-mutex locking scheme don't have to use this at all.
+ * busdma_swi, for example).
  */
 void
 busdma_lock_mutex(void *arg, bus_dma_lock_op_t op)

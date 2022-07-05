@@ -24,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: cfdc69a520a0f82f9424c61c5105ab1445af9578 $
+-- $FreeBSD: 12f6b57642dbbed7f47b0ee8b25a83c872234e1e $
 --
 
 local config = require("config")
@@ -238,6 +238,21 @@ cli["show-module-options"] = function()
 		pager.output(v .. "\n")
 	end
 	pager.close()
+end
+
+cli["disable-device"] = function(...)
+	local _, argv = cli.arguments(...)
+	local d, u
+
+	if #argv == 0 then
+		print("usage error: disable-device device")
+		return
+	end
+
+	d, u = string.match(argv[1], "(%w*%a)(%d+)")
+	if d ~= nil then
+		loader.setenv("hint." .. d .. "." .. u .. ".disabled", "1")
+	end
 end
 
 -- Used for splitting cli varargs into cmd_name and the rest of argv

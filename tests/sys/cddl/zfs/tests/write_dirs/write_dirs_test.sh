@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 1028070f69913820b34f5c8fc4e7273205f72e15 $
+# $FreeBSD: 59b1405561edb7e1bda62ce46d81a4172087d9cf $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case write_dirs_001_pos cleanup
 write_dirs_001_pos_head()
 {
 	atf_set "descr" "Creating directories with 50 big files in each, until file systemis full."
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 	atf_set "timeout" 1200
 }
 write_dirs_001_pos_body()
@@ -55,7 +55,7 @@ atf_test_case write_dirs_002_pos cleanup
 write_dirs_002_pos_head()
 {
 	atf_set "descr" "Creating directories with 5000 files in each, until file systemis full."
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 	atf_set "timeout" 1200
 }
 write_dirs_002_pos_body()

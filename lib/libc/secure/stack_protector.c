@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15460278502dc43a40816ec797369a2597ee0347 $");
+__FBSDID("$FreeBSD: 7ddd6338ec55547bb08c035dce339c2f3a51318a $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -64,9 +64,9 @@ extern int __sysctl(const int *name, u_int namelen, void *oldp,
 
 long __stack_chk_guard[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static void __guard_setup(void) _GUARD_SETUP_CTOR_ATTR;
-static void __fail(const char *);
-void __stack_chk_fail(void);
-void __chk_fail(void);
+static void __fail(const char *) __dead2;
+void __stack_chk_fail(void) __dead2;
+void __chk_fail(void) __dead2;
 
 /*LINTED used*/
 static void

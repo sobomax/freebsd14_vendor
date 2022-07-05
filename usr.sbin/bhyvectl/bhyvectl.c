@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c54aa1f33dc1d0ec265d610bf3d67cc19da8b5ed $
+ * $FreeBSD: 1b882e1e0504c5f08b3a13c889288c9c2c06316f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c54aa1f33dc1d0ec265d610bf3d67cc19da8b5ed $");
+__FBSDID("$FreeBSD: 1b882e1e0504c5f08b3a13c889288c9c2c06316f $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -1960,7 +1960,9 @@ main(int argc, char *argv[])
 	if (!error) {
 		ctx = vm_open(vmname);
 		if (ctx == NULL) {
-			printf("VM:%s is not created.\n", vmname);
+			fprintf(stderr,
+			    "vm_open: %s could not be opened: %s\n",
+			    vmname, strerror(errno));
 			exit (1);
 		}
 	}

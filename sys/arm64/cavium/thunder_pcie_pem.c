@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -30,7 +29,7 @@
 /* PCIe external MAC root complex driver (PEM) for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9296280ad95f92d2bc780e1163696d4bd5c7f576 $");
+__FBSDID("$FreeBSD: 45d9880571b0644bc17577dc3ac85616932a40a6 $");
 
 #include "opt_platform.h"
 

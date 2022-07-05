@@ -1,4 +1,4 @@
-# $FreeBSD: 82c5d4b85b10e2cc790d758c9e8846ca19309218 $
+# $FreeBSD: d1dcae623df46330cd5afe0ea0abf22a6858b760 $
 
 TESTSDIR=	${TESTSBASE}/sys/kern/execve
 
@@ -10,6 +10,7 @@ ATF_TESTS_SH+=	execve_test
 
 PROGS+=		good_aout
 PROGS+=		execve_helper
+PROGS+=		execve_argc_helper
 
 LDFLAGS.goodaout+=	-static
 

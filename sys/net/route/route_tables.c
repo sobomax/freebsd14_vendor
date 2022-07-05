@@ -34,7 +34,7 @@
  ***********************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3743d55404d86dd439df7f5c80b870663093e22 $");
+__FBSDID("$FreeBSD: c9a9d6a915eb2598a2cc28c1f23ef933da84756c $");
 #include "opt_route.h"
 
 #include <sys/param.h>
@@ -214,13 +214,6 @@ grow_rtables(uint32_t num_tables)
 			if (rh == NULL)
 				log(LOG_ERR, "unable to create routing table for %d.%d\n",
 				    dom->dom_family, i);
-#ifdef FIB_ALGO
-			if (fib_select_algo_initial(rh) != 0) {
-				log(LOG_ERR, "unable to select algo for table %d.%d\n",
-				    dom->dom_family, i);
-				// TODO: detach table
-			}
-#endif
 			*prnh = rh;
 		}
 	}
@@ -238,8 +231,16 @@ grow_rtables(uint32_t num_tables)
 	atomic_thread_fence_rel();
 	epoch_wait_preempt(net_epoch_preempt);
 
-	/* Finally, set number of fibs to a new value */
+	/* Set number of fibs to a new value */
 	V_rt_numfibs = num_tables;
+
+#ifdef FIB_ALGO
+	/* Attach fib algo to the new rtables */
+	for (dom = domains; dom; dom = dom->dom_next) {
+		if (dom->dom_rtattach != NULL)
+			fib_setup_family(dom->dom_family, num_tables);
+	}
+#endif
 
 	if (old_rt_tables != NULL)
 		free(old_rt_tables, M_RTABLE);

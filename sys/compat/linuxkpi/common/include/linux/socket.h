@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a9a952e4ffd8de72273c91c43757c24972213dfd $
+ * $FreeBSD: 3afb9bdfe3ba7cc605df31e55543f8012cea868b $
  */
-#ifndef	_LINUX_SOCKET_H_
-#define	_LINUX_SOCKET_H_
+#ifndef	_LINUXKPI_LINUX_SOCKET_H_
+#define	_LINUXKPI_LINUX_SOCKET_H_
 
 #include <sys/socket.h>
 
@@ -66,4 +66,4 @@ memcpy_fromiovec(unsigned char *kdata, struct iovec *iov, int len)
 }
 #endif
 
-#endif	/* _LINUX_SOCKET_H_ */
+#endif	/* _LINUXKPI_LINUX_SOCKET_H_ */

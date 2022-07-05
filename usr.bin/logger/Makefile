@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: c40baf2e3dc053574dc749cf7f7795104feaf7cb $
+# $FreeBSD: 14663709632a1f744ead332249d3bd13b1e8f6a2 $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=	logger
 

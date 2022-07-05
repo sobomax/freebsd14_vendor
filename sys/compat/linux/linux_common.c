@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a0ac015ed0ec4fba6d919f1b1abe1f50716a32b $");
+__FBSDID("$FreeBSD: 4d81470649de3ee616374ee60fce39e42b6d7279 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,8 +42,6 @@ __FBSDID("$FreeBSD: 5a0ac015ed0ec4fba6d919f1b1abe1f50716a32b $");
 #include <compat/linux/linux_ioctl.h>
 #include <compat/linux/linux_mib.h>
 #include <compat/linux/linux_util.h>
-
-MODULE_VERSION(linux_common, 1);
 
 SET_DECLARE(linux_device_handler_set, struct linux_device_handler);
 
@@ -83,10 +81,10 @@ linux_common_modevent(module_t mod, int type, void *data)
 }
 
 static moduledata_t linux_common_mod = {
-	"linuxcommon",
+	"linux_common",
 	linux_common_modevent,
 	0
 };
 
-DECLARE_MODULE(linuxcommon, linux_common_mod, SI_SUB_EXEC, SI_ORDER_ANY);
-MODULE_VERSION(linuxcommon, 1);
+DECLARE_MODULE(linux_common, linux_common_mod, SI_SUB_EXEC, SI_ORDER_ANY);
+MODULE_VERSION(linux_common, 1);

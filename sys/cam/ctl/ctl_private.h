@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_private.h#7 $
- * $FreeBSD: cf67deb13ef7ace87c67c6922837d40f08386bac $
+ * $FreeBSD: a891041e8f50fa49dc07e9d84d075b3398c814a1 $
  */
 /*
  * CAM Target Layer driver private data structures/definitions.
@@ -65,22 +65,20 @@ struct ctl_io_pool {
 };
 
 typedef enum {
-	CTL_SER_BLOCK,
-	CTL_SER_BLOCKOPT,
-	CTL_SER_EXTENT,
-	CTL_SER_EXTENTOPT,
-	CTL_SER_EXTENTSEQ,
+	CTL_SER_SEQ,
 	CTL_SER_PASS,
-	CTL_SER_SKIP
+	CTL_SER_EXTENTOPT,
+	CTL_SER_EXTENT,
+	CTL_SER_BLOCKOPT,
+	CTL_SER_BLOCK,
 } ctl_serialize_action;
 
 typedef enum {
-	CTL_ACTION_BLOCK,
-	CTL_ACTION_OVERLAP,
-	CTL_ACTION_OVERLAP_TAG,
 	CTL_ACTION_PASS,
 	CTL_ACTION_SKIP,
-	CTL_ACTION_ERROR
+	CTL_ACTION_BLOCK,
+	CTL_ACTION_OVERLAP,
+	CTL_ACTION_OVERLAP_TAG
 } ctl_action;
 
 /*
@@ -391,7 +389,7 @@ struct ctl_lun {
 	sbintime_t			idle_time;
 	sbintime_t			last_busy;
 #endif
-	TAILQ_HEAD(ctl_ooaq, ctl_io_hdr)  ooa_queue;
+	LIST_HEAD(ctl_ooaq, ctl_io_hdr)	ooa_queue;
 	STAILQ_ENTRY(ctl_lun)		links;
 	struct scsi_sense_data		**pending_sense;
 	ctl_ua_type			**pending_ua;

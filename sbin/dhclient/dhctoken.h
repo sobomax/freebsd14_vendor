@@ -41,7 +41,7 @@
  * see ``http://www.vix.com/isc''.  To learn more about Vixie
  * Enterprises, see ``http://www.vix.com''.
  *
- * $FreeBSD: 26c81aa734dcf196d362c8672502600c41da6672 $
+ * $FreeBSD: c929307c7e06f347dabdfdfe90a3e9d711675a98 $
  */
 
 #define SEMI ';'
@@ -133,6 +133,7 @@
 #define AUTHORITATIVE	333
 #define TOKEN_NOT	334
 #define ALWAYS_REPLY_RFC1048 335
+#define VLAN_PCP	336
 
 #define is_identifier(x)	((x) >= FIRST_TOKEN &&	\
 				 (x) != STRING &&	\

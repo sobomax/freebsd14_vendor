@@ -1,7 +1,8 @@
-# $FreeBSD: 681087e01d2cbdefec2ae1adaae172c443b3286e $
+# $FreeBSD: 6ddbfdfd9b09c1dc9497b4895af03f7d07a82489 $
 
 .PATH: ${SRCTOP}/libexec/ypxfr ${SRCTOP}/usr.sbin/ypserv
 
+PACKAGE=	yp
 PROG=	yp_mkdb
 MAN=	yp_mkdb.8
 SRCS=	yp_mkdb.c yp_dblookup.c yp_dbwrite.c

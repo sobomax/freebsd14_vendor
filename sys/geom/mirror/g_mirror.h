@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57f341f752e1cd1e85058e13d5f7dfb8162d9fa0 $
+ * $FreeBSD: 7cec94adae18ed5ba1af09ce783f28bda08b9d46 $
  */
 
 #ifndef	_G_MIRROR_H_
@@ -207,6 +207,7 @@ struct g_mirror_softc {
 
 	TAILQ_HEAD(, g_mirror_event) sc_events;
 	struct mtx	sc_events_mtx;
+	struct g_mirror_event *sc_timeout_event;
 
 	struct callout	sc_callout;
 

@@ -26,8 +26,9 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: e5d0ff80d97b68e21e159f7f7eac4fa825535f36 $");
-.arch armv8-a+crc
+__FBSDID("$FreeBSD: 6a1991262a3383e66b7e9cdaf8f1add012b40b92 $");
+
+.arch_extension crc
 
 /*
  * uint32_t

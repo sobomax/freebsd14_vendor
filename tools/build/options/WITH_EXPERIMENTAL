@@ -1,2 +1,2 @@
-.\" $FreeBSD: 677edb6a081aff0d856cc6903c7187e87390e340 $
-Set to include experimental features in the build.
+.\" $FreeBSD: d854f2980dda33604e07a848a989acc79f272163 $
+Include experimental features in the build.

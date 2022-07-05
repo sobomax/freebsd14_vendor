@@ -1,4 +1,4 @@
-.\" $FreeBSD: 2d369c331a135fcadb26d8427a1fa23f1c55dd13 $
-Set to build and install gcc and g++.
+.\" $FreeBSD: d4dfc3d17291fdb591e723f96846907324feb177 $
+Build and install gcc and g++.
 This option is deprecated and will be removed before
 .Fx 13 .

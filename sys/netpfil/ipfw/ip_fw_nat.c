@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 81229b2707e9391cedeeeefb070b0c5ae939921d $");
+__FBSDID("$FreeBSD: d7b31c29d4ecb878e3baa0449ec36dc88c73bca6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -93,6 +93,8 @@ struct cfg_nat {
 	/* chain of redir instances */
 	LIST_HEAD(redir_chain, cfg_redir) redir_chain;  
 	char			if_name[IF_NAMESIZE];	/* interface name */
+	u_short			alias_port_lo;	/* low range for port aliasing */
+	u_short			alias_port_hi;	/* high range for port aliasing */
 };
 
 static eventhandler_tag ifaddr_event_tag;
@@ -305,6 +307,7 @@ ipfw_nat(struct ip_fw_args *args, struct cfg_nat *t, struct mbuf *m)
 		args->m = NULL;
 		return (IP_FW_DENY);
 	}
+	M_ASSERTMAPPED(mcl);
 	ip = mtod(mcl, struct ip *);
 
 	/*
@@ -528,9 +531,12 @@ nat44_config(struct ip_fw_chain *chain, struct nat44_cfg_nat *ucfg)
 	ptr->ip = ucfg->ip;
 	ptr->redir_cnt = ucfg->redir_cnt;
 	ptr->mode = ucfg->mode;
+	ptr->alias_port_lo = ucfg->alias_port_lo;
+	ptr->alias_port_hi = ucfg->alias_port_hi;
 	strlcpy(ptr->if_name, ucfg->if_name, sizeof(ptr->if_name));
 	LibAliasSetMode(ptr->lib, ptr->mode, ~0);
 	LibAliasSetAddress(ptr->lib, ptr->ip);
+	LibAliasSetAliasPortRange(ptr->lib, ptr->alias_port_lo, ptr->alias_port_hi);
 
 	/*
 	 * Redir and LSNAT configuration.
@@ -658,6 +664,8 @@ export_nat_cfg(struct cfg_nat *ptr, struct nat44_cfg_nat *ucfg)
 	ucfg->ip = ptr->ip;
 	ucfg->redir_cnt = ptr->redir_cnt;
 	ucfg->mode = ptr->mode;
+	ucfg->alias_port_lo = ptr->alias_port_lo;
+	ucfg->alias_port_hi = ptr->alias_port_hi;
 	strlcpy(ucfg->if_name, ptr->if_name, sizeof(ucfg->if_name));
 }
 

@@ -32,7 +32,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 09fa5c084e36f15d4289bb68873d6478422b3fcb $
+ * $FreeBSD: 8b9b386013253523325201b502c45f718af1f724 $
  */
 
 #if !defined(RDMA_CM_H)
@@ -385,11 +385,20 @@ int rdma_set_reuseaddr(struct rdma_cm_id *id, int reuse);
  */
 int rdma_set_afonly(struct rdma_cm_id *id, int afonly);
 
+int rdma_set_ack_timeout(struct rdma_cm_id *id, u8 timeout);
  /**
  * rdma_get_service_id - Return the IB service ID for a specified address.
  * @id: Communication identifier associated with the address.
  * @addr: Address for the service ID.
  */
 __be64 rdma_get_service_id(struct rdma_cm_id *id, struct sockaddr *addr);
+
+/**
+ * rdma_reject_msg - return a pointer to a reject message string.
+ * @id: Communication identifier that received the REJECT event.
+ * @reason: Value returned in the REJECT event status field.
+ */
+const char *__attribute_const__ rdma_reject_msg(struct rdma_cm_id *id,
+						int reason);
 
 #endif /* RDMA_CM_H */

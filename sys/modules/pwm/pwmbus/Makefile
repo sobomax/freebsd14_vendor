@@ -1,4 +1,4 @@
-# $FreeBSD: 3cf56697f200038bf5214d29d94f9ec2c80551a2 $
+# $FreeBSD: 1b3c9f3077c3789213dd75a4e2a7b9d0ef8b950d $
 
 .PATH:	${SRCTOP}/sys/dev/pwm
 
@@ -16,5 +16,7 @@ SRCS+=	\
 	opt_platform.h \
 	pwmbus_if.c \
 	pwmbus_if.h \
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

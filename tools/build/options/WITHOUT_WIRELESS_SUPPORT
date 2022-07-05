@@ -1,3 +1,3 @@
-.\" $FreeBSD: 8878105d1cdfaf319aced7725d780ea4bd25b70c $
-Set to build libraries, programs, and kernel modules without
+.\" $FreeBSD: 1d07092e10d75984787097565016de7f29838af4 $
+Build libraries, programs, and kernel modules without
 802.11 wireless support.

@@ -27,13 +27,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 389cf1b11bee6ae8631f0bffae326cc8c3f8f36b $");
+__FBSDID("$FreeBSD: 4591cc219bbbf4e5612b650d292c2c26bd5ef9d0 $");
 
 #include <fenv.h>
 
 #include "math.h"
 #include "math_private.h"
 
+#ifdef USE_BUILTIN_FMAF
+float
+fmaf(float x, float y, float z)
+{
+	return (__builtin_fmaf(x, y, z));
+}
+#else
 /*
  * Fused multiply-add: Compute x * y + z with a single rounding error.
  *
@@ -69,3 +76,4 @@ fmaf(float x, float y, float z)
 		SET_LOW_WORD(adjusted_result, lr + 1);
 	return (adjusted_result);
 }
+#endif /* !USE_BUILTIN_FMAF */

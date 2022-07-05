@@ -33,8 +33,12 @@
  *
  * so there!
  *
- * $FreeBSD: 67c25f5921d646ba40006e4696d81a286356ec69 $
+ * $FreeBSD: 2c0b8a100b0de5c70ea278f4f582ef3f50f09ef3 $
  */
+
+#pragma once
+
+#include <libifconfig.h>
 
 #define	__constructor	__attribute__((constructor))
 
@@ -106,7 +110,8 @@ struct afswtch {
 	void		(*af_getaddr)(const char *, int);
 					/* parse prefix method (IPv6) */
 	void		(*af_getprefix)(const char *, int);
-	void		(*af_postproc)(int s, const struct afswtch *);
+	void		(*af_postproc)(int s, const struct afswtch *,
+			    int newaddr, int ifflags);
 	u_long		af_difaddr;	/* set dst if address ioctl */
 	u_long		af_aifaddr;	/* set if address ioctl */
 	void		*af_ridreq;	/* */
@@ -128,6 +133,7 @@ struct option {
 };
 void	opt_register(struct option *);
 
+extern	ifconfig_handle_t *lifh;
 extern	struct ifreq ifr;
 extern	char name[IFNAMSIZ];	/* name of interface */
 extern	int allmedia;
@@ -156,7 +162,7 @@ void	sfp_status(int s, struct ifreq *ifr, int verbose);
  * XXX expose this so modules that neeed to know of any pending
  * operations on ifmedia can avoid cmd line ordering confusion.
  */
-struct ifmediareq *ifmedia_getstate(int s);
+struct ifmediareq *ifmedia_getstate(void);
 
 void print_vhid(const struct ifaddrs *, const char *);
 

@@ -1,6 +1,5 @@
 #-
 # Copyright (c) 2015 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Semihalf under
 # the sponsorship of the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: e8770f22ce113d3178bdb33670599693ce0a73bd $
+# $FreeBSD: 59fa635c5a4d80d2648503081e9d762be715897c $
 
 # LMAC (BGX controller) interface description
 #

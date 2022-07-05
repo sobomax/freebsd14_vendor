@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 486f4ffe95bcf582ad80cde89dd8725518188c7e $
+ * $FreeBSD: 98bdbb33affe39e5027b6e8573a7f970869e0cdf $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -65,6 +65,7 @@ extern u_long cpu_features2; /* r4 */
  * TLS
  */
 
+#define	TLS_VARIANT_I	1
 #define TLS_TP_OFFSET	0x7000
 #define TLS_DTV_OFFSET	0x8000
 #define TLS_TCB_SIZE	16
@@ -75,7 +76,6 @@ extern u_long cpu_features2; /* r4 */
     TLS_TCB_SIZE
 #define calculate_tls_offset(prev_offset, prev_size, size, align, offset) \
     round(prev_offset + prev_size, align)
-#define calculate_tls_end(off, size)    ((off) + (size))
 #define calculate_tls_post_size(align)  0
  
 typedef struct {

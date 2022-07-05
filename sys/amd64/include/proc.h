@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)proc.h	7.1 (Berkeley) 5/15/91
- * $FreeBSD: 59796e729ac4cdc18b76b6a51af4934aac63daee $
+ * $FreeBSD: 507529f6506b7818ee43f5796e5010919eeaa269 $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -75,6 +75,7 @@ struct mdthread {
 	int	md_efirt_dis_pf;	/* (k) */
 	struct pcb md_pcb;
 	vm_offset_t md_stack_base;
+	void *md_usr_fpu_save;
 };
 
 struct mdproc {

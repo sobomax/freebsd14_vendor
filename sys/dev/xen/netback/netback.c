@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44159f60d9960ca612ba89569fab511904f0bb59 $");
+__FBSDID("$FreeBSD: 8710120ecef330edfcbf0d291beed808433604dd $");
 
 /**
  * \file netback.c
@@ -2296,6 +2296,7 @@ xnb_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			break;
 		case SIOCADDMULTI:
 		case SIOCDELMULTI:
+			break;
 		case SIOCSIFMEDIA:
 		case SIOCGIFMEDIA:
 			error = ifmedia_ioctl(ifp, ifr, &xnb->sc_media, cmd);

@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1cfc568db323fa2bda49a49794c4399c239328f1 $
+ * $FreeBSD: 6fadfd92b8e8087f94ecd3cdc75c89a747ec3fe0 $
  */
-#ifndef _LINUX_NET_IP_H_
-#define	_LINUX_NET_IP_H_
+#ifndef _LINUXKPI_NET_IP_H_
+#define	_LINUXKPI_NET_IP_H_
 
 #include "opt_inet.h"
 
@@ -100,4 +100,4 @@ ip_ib_mc_map(uint32_t addr, const unsigned char *bcast, char *buf)
 	buf[19] = addr & 0xff;
 }
 
-#endif	/* _LINUX_NET_IP_H_ */
+#endif	/* _LINUXKPI_NET_IP_H_ */

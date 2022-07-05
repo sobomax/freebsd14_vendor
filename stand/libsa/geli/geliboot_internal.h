@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2af74466179fe481973a09dd6041523180f1f9fe $
+ * $FreeBSD: 2318690297f8c19bf757e951c731a8a29c7e8d2e $
  */
 
 #ifndef _GELIBOOT_INTERNAL_H_
@@ -68,6 +68,6 @@ struct geli_dev {
 };
 
 int geliboot_crypt(u_int algo, geli_op_t  enc, u_char *data, size_t datasize,
-    const u_char *key, size_t keysize, u_char *iv);
+    const u_char *key, size_t keysize, u_char *iv, size_t ivlen);
 
 #endif /* _GELIBOOT_INTERNAL_H_ */

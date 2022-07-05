@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 682375c805da1011ab2b1b9a9d45efb3611b5166 $");
+__FBSDID("$FreeBSD: 3b542bd86acc1f76be0c94ed2151e39d591b55ed $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -682,9 +682,9 @@ bypass:
 	return (error);
 
 done:
+	NG_FREE_M(m);
 drop:
 	NG_FREE_ITEM(item);
-	NG_FREE_M(m);
 
 	priv->stats.dropped++;
 

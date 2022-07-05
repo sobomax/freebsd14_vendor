@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6431044e30f688dd6adf7bb113d2c95ed5bded7 $");
+__FBSDID("$FreeBSD: 809cfa6f9e14311a98df197c168f015e27d20c97 $");
 
 /*
  * SysKonnect SK-NET gigabit ethernet driver for FreeBSD. Supports
@@ -2445,7 +2445,7 @@ sk_encap(sc_if, m_head)
 	}
 	sc_if->sk_cdata.sk_tx_prod = frag;
 
-	/* set EOF on the last desciptor */
+	/* set EOF on the last descriptor */
 	frag = (frag + SK_TX_RING_CNT - 1) % SK_TX_RING_CNT;
 	f = &sc_if->sk_rdata.sk_tx_ring[frag];
 	f->sk_ctl |= htole32(SK_TXCTL_LASTFRAG | SK_TXCTL_EOF_INTR);

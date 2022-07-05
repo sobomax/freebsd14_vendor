@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: db86bcc15b0f2be48392b985b263c52365745d86 $
+# $FreeBSD: b2b3072b25a7ad14d708e71f2c8cf5f476fcbb88 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case enospc_001_pos cleanup
 enospc_001_pos_head()
 {
 	atf_set "descr" "ENOSPC is returned when file system is full."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 enospc_001_pos_body()
 {

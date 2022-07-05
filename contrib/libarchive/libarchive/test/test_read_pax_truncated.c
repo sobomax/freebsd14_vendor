@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0ad13e657d02a4e08092dbe9718825e69272918d $");
+__FBSDID("$FreeBSD: 3d3570e5662e89f8e17268ed4077f67319a5840e $");
 
 DEFINE_TEST(test_read_pax_truncated)
 {
@@ -48,8 +48,8 @@ DEFINE_TEST(test_read_pax_truncated)
 	assert((ae = archive_entry_new()) != NULL);
 	archive_entry_copy_pathname(ae, "file");
 	archive_entry_set_mode(ae, S_IFREG | 0755);
-	for (i = 0; i < filedata_size; i++)
-		filedata[i] = (unsigned char)rand();
+	fill_with_pseudorandom_data(filedata, filedata_size);
+
 	archive_entry_set_atime(ae, 1, 2);
 	archive_entry_set_ctime(ae, 3, 4);
 	archive_entry_set_mtime(ae, 5, 6);

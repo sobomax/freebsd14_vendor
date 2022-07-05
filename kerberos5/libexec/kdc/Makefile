@@ -1,4 +1,6 @@
-# $FreeBSD: 338a508de20b8cf512aeec182dc0ec3f5887e52c $
+# $FreeBSD: 66063a5d669f73eb803560f0d0158f4ce65712e6 $
+
+PACKAGE=	kerberos
 
 PROG=	kdc
 MAN=	kdc.8

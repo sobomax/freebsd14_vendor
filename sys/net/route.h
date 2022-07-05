@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: 55b075e51c0181da213dde82dad23888065e2abe $
+ * $FreeBSD: 36399fb712c0876fa6ff5daa4f397163c7e136c1 $
  */
 
 #ifndef _NET_ROUTE_H_
@@ -197,7 +197,7 @@ VNET_DECLARE(u_int, fib_hash_outbound);
 					/* 0x8000000 and up unassigned */
 #define	RTF_STICKY	 0x10000000	/* always route dst->src */
 
-#define	RTF_RNH_LOCKED	 0x40000000	/* radix node head is locked */
+/*			0x40000000	   unused, was RTF_RNH_LOCKED */
 
 #define	RTF_GWFLAG_COMPAT 0x80000000	/* a compatibility bit for interacting
 					   with existing routing apps */
@@ -394,6 +394,10 @@ struct rt_addrinfo {
 		}							\
 	} while (0)
 
+#define RO_GET_FAMILY(ro, dst)	((ro) != NULL &&		\
+	(ro)->ro_flags & RT_HAS_GW				\
+	? (ro)->ro_dst.sa_family : (dst)->sa_family)
+
 /*
  * Validate a cached route based on a supplied cookie.  If there is an
  * out-of-date cache, simply free it.  Update the generation number
@@ -444,6 +448,7 @@ void	rib_free_info(struct rt_addrinfo *info);
 void rib_flush_routes_family(int family);
 struct nhop_object *rib_lookup(uint32_t fibnum, const struct sockaddr *dst,
 	    uint32_t flags, uint32_t flowid);
+const char *rib_print_family(int family);
 #endif
 
 #endif

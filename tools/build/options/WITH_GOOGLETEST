@@ -1,5 +1,5 @@
-.\" $FreeBSD: 8ed29dd7a88146a547e29a89814dc5d3dae5415f $
-Set to build and install
+.\" $FreeBSD: 28a59d697bb728ce65cd51c340a1f951a98f3afe $
+Build and install
 .Lb libgmock ,
 .Lb libgtest ,
 and dependent tests.

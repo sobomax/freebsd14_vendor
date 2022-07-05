@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8f98a0b4695243b1df2dd6faf6970c5a41bb61b $");
+__FBSDID("$FreeBSD: b0aaa822211f6f42a22f328174999cd94184c29c $");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"
@@ -1591,6 +1591,25 @@ vm_phys_avail_split(vm_paddr_t pa, int i)
 	vm_phys_avail_check(i+2);
 
 	return (0);
+}
+
+/*
+ * Check if a given physical address can be included as part of a crash dump.
+ */
+bool
+vm_phys_is_dumpable(vm_paddr_t pa)
+{
+	vm_page_t m;
+	int i;
+
+	if ((m = vm_phys_paddr_to_vm_page(pa)) != NULL)
+		return ((m->flags & PG_NODUMP) == 0);
+
+	for (i = 0; dump_avail[i] != 0 || dump_avail[i + 1] != 0; i += 2) {
+		if (pa >= dump_avail[i] && pa < dump_avail[i + 1])
+			return (true);
+	}
+	return (false);
 }
 
 void

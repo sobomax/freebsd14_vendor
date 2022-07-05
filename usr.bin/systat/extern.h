@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *      @(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 6e3117bece4ebae4510ba36a24887f4ca826bb17 $
+ * $FreeBSD: 322065f79312bfd9e4922472b027343d0689dbd3 $
  */
 
 #include <sys/cdefs.h>
@@ -168,6 +168,7 @@ char	*sysctl_dynread(const char *, size_t *);
 void	 sysputpage(WINDOW* , int, int, int, uint64_t, int);
 void	 sysputspaces(WINDOW* , int, int, int);
 void	 sysputstrs(WINDOW* , int, int, int);
+void	 sysputXs(WINDOW* , int, int, int);
 void	 sysputuint64(WINDOW* , int, int, int, uint64_t, int);
 void	 sysputwuint64(WINDOW* , int, int, int, uint64_t, int);
 

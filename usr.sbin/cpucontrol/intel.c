@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dfe86f7185c61a97dd3bced4a6272c2f324c3b7e $");
+__FBSDID("$FreeBSD: f4700898d5eb61c86dfa349639bcac70073b30f0 $");
 
 #include <assert.h>
 #include <stdio.h>
@@ -242,8 +242,8 @@ no_table:
 			    (flags & ext_table[i].cpu_flags) != 0)
 				goto matched;
 		}
-	} else
-		goto fail;
+	}
+	goto fail;
 
 matched:
 	if (revision >= fw_header->revision) {

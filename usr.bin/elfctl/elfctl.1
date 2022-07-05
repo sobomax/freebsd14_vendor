@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 23e2dabea49c42783c6efba3f9a8b9d65e2004ff $
+.\" $FreeBSD: 1f4014bb70d0bdee812b68e40905695614f41721 $
 .\"
-.Dd January 22, 2021
+.Dd February 4, 2022
 .Dt ELFCTL 1
 .Os
 .Sh NAME
@@ -85,7 +85,7 @@ of the
 command:
 .Bd -literal -offset indent
 elfctl file
-elfctl -e +aslr file
+elfctl -e +noaslr file
 .Ed
 .Pp
 Features may be specified as numerical values:

@@ -25,10 +25,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f9922aaa9717b6913452784b899d5718e99c121c $
+# $FreeBSD: fff5c1efbe1744af63cf14800b816d435f3d1c42 $
 #
 
 import argparse
+import logging
+logging.getLogger("scapy").setLevel(logging.CRITICAL)
 import scapy.all as sp
 import socket
 import sys

@@ -1,4 +1,4 @@
-# $FreeBSD: aac554b3bc74d31f6b5e119db3fe9abba106c9eb $
+# $FreeBSD: d4c48a8793032f599f8f3b60577abc56b25c21dc $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -137,5 +137,6 @@ MLINKS+=	bsnmplib.3	snmp_value_parse.3
 FILESGROUPS+=	DEFS
 DEFS=	tc.def
 DEFSDIR?=	${SHAREDIR}/snmp/defs
+DEFSPACKAGE=	bsnmp
 
 .include <bsd.lib.mk>

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 8c5aa258ed28e50d944eae85a6ce4e98c4896290 $
+ * $FreeBSD: 9ae7b543e4a1f06f8f6155503d899530014f792d $
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -265,16 +265,15 @@ struct filedesc_to_leader *
 	    struct filedesc *fdp, struct proc *leader);
 int	getvnode(struct thread *td, int fd, cap_rights_t *rightsp,
 	    struct file **fpp);
+int	getvnode_path(struct thread *td, int fd, cap_rights_t *rightsp,
+	    struct file **fpp);
 void	mountcheckdirs(struct vnode *olddp, struct vnode *newdp);
 
 int	fget_cap_locked(struct filedesc *fdp, int fd, cap_rights_t *needrightsp,
 	    struct file **fpp, struct filecaps *havecapsp);
 int	fget_cap(struct thread *td, int fd, cap_rights_t *needrightsp,
 	    struct file **fpp, struct filecaps *havecapsp);
-
 /* Return a referenced file from an unlocked descriptor. */
-int	fget_unlocked_seq(struct filedesc *fdp, int fd, cap_rights_t *needrightsp,
-	    struct file **fpp, seqc_t *seqp);
 int	fget_unlocked(struct filedesc *fdp, int fd, cap_rights_t *needrightsp,
 	    struct file **fpp);
 /* Return a file pointer without a ref. FILEDESC_IS_ONLY_USER must be true.  */
@@ -339,6 +338,7 @@ void	pwd_set_rootvnode(void);
 
 struct pwd *pwd_hold_pwddesc(struct pwddesc *pdp);
 bool	pwd_hold_smr(struct pwd *pwd);
+struct pwd *pwd_hold_proc(struct proc *p);
 struct pwd *pwd_hold(struct thread *td);
 void	pwd_drop(struct pwd *pwd);
 static inline void

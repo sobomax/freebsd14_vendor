@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1486c7aa91c779cec7a9f9e1d6b66d62d30bf2f8 $
+ * $FreeBSD: 31b0e6094e04a75f48594f5010818f4f74e5cf35 $
  */
 
 #ifndef _SYS_PMC_H_
@@ -111,6 +111,8 @@ extern char pmc_cpuid[PMC_CPUID_LEN];
 	__PMC_CPU(INTEL_SKYLAKE, 0x98,   "Intel Skylake")		\
 	__PMC_CPU(INTEL_SKYLAKE_XEON, 0x99,   "Intel Skylake Xeon")	\
 	__PMC_CPU(INTEL_ATOM_GOLDMONT, 0x9A,   "Intel Atom Goldmont")	\
+	__PMC_CPU(INTEL_ICELAKE, 0x9B,	"Intel Icelake")		\
+	__PMC_CPU(INTEL_ICELAKE_XEON, 0x9C,	"Intel Icelake Xeon")	\
 	__PMC_CPU(INTEL_XSCALE,	0x100,	"Intel XScale")		\
 	__PMC_CPU(MIPS_24K,     0x200,  "MIPS 24K")		\
 	__PMC_CPU(MIPS_OCTEON,  0x201,  "Cavium Octeon")	\
@@ -138,7 +140,7 @@ enum pmc_cputype {
 };
 
 #define	PMC_CPU_FIRST	PMC_CPU_AMD_K7
-#define	PMC_CPU_LAST	PMC_CPU_GENERIC
+#define	PMC_CPU_LAST	PMC_CPU_ARMV8_CORTEX_A76
 
 /*
  * Classes of PMCs

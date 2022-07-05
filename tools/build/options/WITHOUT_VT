@@ -1,4 +1,4 @@
-.\" $FreeBSD: ea01349fe6177de610bf41342700fcfc98cd02ef $
-Set to not build
+.\" $FreeBSD: c07a9e56f0e0ab6702447a53c7ff76b8a278053e $
+Do not build
 .Xr vt 4
 support files (fonts and keymaps).

@@ -1,2 +1,2 @@
-.\" $FreeBSD: 13067bf05a8b74031bf727cecec9031e344ed60b $
-Set to not build games.
+.\" $FreeBSD: 7102c377e07c43c7477eb4173ffd145e3eba41f2 $
+Do not build games.

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c459b3fb55a7d42562ad67f47c3a10b9b4e6ff7f $");
+__FBSDID("$FreeBSD: 35fd7875b77db8db200c5dd6f5933cf220717ace $");
 
 #include "ipoib.h"
 
@@ -254,11 +254,9 @@ void ipoib_transport_dev_cleanup(struct ipoib_dev_priv *priv)
 		clear_bit(IPOIB_PKEY_ASSIGNED, &priv->flags);
 	}
 
-	if (ib_destroy_cq(priv->send_cq))
-		ipoib_warn(priv, "ib_cq_destroy (send) failed\n");
+	ib_destroy_cq(priv->send_cq);
 
-	if (ib_destroy_cq(priv->recv_cq))
-		ipoib_warn(priv, "ib_cq_destroy (recv) failed\n");
+	ib_destroy_cq(priv->recv_cq);
 
 	ipoib_cm_dev_cleanup(priv);
 

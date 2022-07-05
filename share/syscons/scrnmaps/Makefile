@@ -1,4 +1,6 @@
-# $FreeBSD: 0f11c777fa02fa75eab8f6460bab430512385b07 $
+# $FreeBSD: fb6bf59131b9aa2e6905652556c662c6afac4998 $
+
+PACKAGE=	syscons-data
 
 SCRMAPS = armscii8-2haik8.scm \
 	  iso-8859-1_to_cp437.scm iso-8859-4_for_vga9.scm \

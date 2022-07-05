@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b76f424650ab8791592f508a6129debfc8117de $");
+__FBSDID("$FreeBSD: ce79982bd95e5f744f46a62bc6b53f95628e98ee $");
 
 /*
  * AMCC'S 3ware driver for 9000 series storage controllers.
@@ -413,7 +413,7 @@ twa_attach(device_t dev)
 	callout_init(&(sc->watchdog_callout[0]), 1);
 	callout_init(&(sc->watchdog_callout[1]), 1);
 	callout_reset(&(sc->watchdog_callout[0]), 5*hz, twa_watchdog, &sc->ctlr_handle);
-	gone_in_dev(dev, 13, "twa(4) removed");
+	gone_in_dev(dev, 14, "twa(4) removed");
 
 	return(0);
 }

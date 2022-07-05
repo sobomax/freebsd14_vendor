@@ -36,7 +36,7 @@
 #include <dev/sound/version.h>
 #include <sys/sx.h>
 
-SND_DECLARE_FILE("$FreeBSD: 31c4a1b14a79f9cf42ea892b0bec59877066b56c $");
+SND_DECLARE_FILE("$FreeBSD: 7eb21c6840e712a93e4bcc7f4df508af3d3b55ba $");
 
 #define	SS_TYPE_MODULE		0
 #define	SS_TYPE_PCM		1
@@ -101,7 +101,7 @@ sysctl_hw_sndverbose(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_hw_snd, OID_AUTO, verbose,
-    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, 0, sizeof(int),
     sysctl_hw_sndverbose, "I",
     "verbosity level");
 

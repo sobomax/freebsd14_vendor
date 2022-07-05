@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 4fd05db08d7d83b149c1d31cba01b049f826deb0 $
+# $FreeBSD: 9d910032616d0d9b89ce77459de1419ab6ade406 $
 
 field_password="Password:"
 field_username="Username:"
@@ -61,6 +61,7 @@ msg_bootstrapping_pkg="Bootstrapping pkg(8)..."
 msg_brazil="Brazil"
 msg_building_package_menus="Building package menu(s)..."
 msg_building_package_main_menu="Building package main menu..."
+msg_bulgaria="Bulgaria"
 msg_cad_desc="Computer Aided Design utilities."
 msg_canada="Canada"
 msg_cancel="Cancel"

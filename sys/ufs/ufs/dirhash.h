@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d38c1112ff5c9f642178efab85c1443f7525266f $
+ * $FreeBSD: 1f9097e58af38ae1183d92e6af087622d73ccd32 $
  */
 
 #ifndef _UFS_UFS_DIRHASH_H_
@@ -66,7 +66,7 @@
  * placed at the most-recently-used end of the list. This helps a lot
  * in the worst-case case scenario where every directory access is
  * to a directory that is not hashed (i.e. the working set of hash
- * candidates is much larger than the configured memry limit). In this
+ * candidates is much larger than the configured memory limit). In this
  * case it limits the number of hash builds to 1/DH_SCOREINIT of the
  * number of accesses.
  */ 

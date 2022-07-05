@@ -25,13 +25,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d0de299c7227066937a9befe50c8f1a030918c6d $
+ * $FreeBSD: 19d7fcc120793d46a8da01daa35e409941479842 $
  */
 
 #ifndef _VIRTIO_ENDIAN_H_
 #define _VIRTIO_ENDIAN_H_
 
 #include <sys/endian.h>
+#ifndef _KERNEL
+#include <stdbool.h>
+#endif /* _KERNEL */
 
 /*
  * VirtIO V1 (modern) uses little endian, while legacy VirtIO uses the guest's

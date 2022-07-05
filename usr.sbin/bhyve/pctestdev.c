@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be445e5c75aea26fa19549c668fbdb61446a60f9 $");
+__FBSDID("$FreeBSD: 49e03b2a4343c71202ac74584745090b8ab095c5 $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -86,15 +86,6 @@ const char *
 pctestdev_getname(void)
 {
 	return (PCTESTDEV_NAME);
-}
-
-int
-pctestdev_parse(const char *opts)
-{
-	if (opts != NULL && *opts != '\0')
-		return (-1);
-
-	return (0);
 }
 
 int

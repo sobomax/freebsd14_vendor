@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     from: @(#)atanh.3	5.2 (Berkeley) 5/6/91
-.\" $FreeBSD: 5c3bb7e30f16824a0da6a920dfcc6516e1926142 $
+.\" $FreeBSD: 5984ee89337e04958a2be61becc62eb123308447 $
 .\"
 .Dd June 9, 2013
 .Dt ATANH 3
@@ -55,18 +55,18 @@ and
 functions compute the inverse hyperbolic tangent
 of the real
 argument
-.Ar x .
+.Fa x .
 For a discussion of error due to roundoff, see
 .Xr math 3 .
 .Sh RETURN VALUES
 These functions
 return the inverse hyperbolic tangent of
-.Ar x
+.Fa x
 if successful.
 If the argument has absolute value 1, a divide-by-zero exception
 is raised and an infinity is returned.
 If
-.Ar |x|
+.Fa |x|
 > 1, an invalid exception is raised and an \*(Na is returned.
 .Sh SEE ALSO
 .Xr acosh 3 ,

@@ -25,9 +25,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: f961fbbd15590d640a90d0a1b646a7f590efaa40 $
+.\" $FreeBSD: 9f7287c287dd7139d198940ff20619bcc117f65d $
 .\"
-.Dd November 23, 2008
+.Dd June 15, 2021
 .Dt VN_FULLPATH 9
 .Os
 .Sh NAME
@@ -38,7 +38,7 @@
 .In sys/vnode.h
 .Ft int
 .Fo vn_fullpath
-.Fa "struct thread *td" "struct vnode *vp" "char **retbuf" "char **freebuf"
+.Fa "struct vnode *vp" "char **retbuf" "char **freebuf"
 .Fc
 .Sh DESCRIPTION
 The
@@ -68,10 +68,6 @@ properly handle) failure.
 .Pp
 Its arguments are:
 .Bl -tag -width ".Fa freebuf"
-.It Fa td
-The thread performing the call; this pointer will be dereferenced to find
-the process and its file descriptor structure, in order to identify the
-root vnode to use.
 .It Fa vp
 The vnode to search for.
 No need to be locked by the caller.

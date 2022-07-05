@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_inode.c	8.5 (Berkeley) 12/30/93
- * $FreeBSD: 1e7584ebaa66d1a2f2d7a0a641e0f0787ec78ed3 $
+ * $FreeBSD: 090caf783a3b77f3f44a2f0e22695c499fa99d3c $
  */
 
 #include <sys/param.h>
@@ -562,7 +562,7 @@ ext2_truncate(struct vnode *vp, off_t length, int flags, struct ucred *cred,
 
 	ip = VTOI(vp);
 	if (vp->v_type == VLNK &&
-	    ip->i_size < vp->v_mount->mnt_maxsymlinklen) {
+	    ip->i_size < VFSTOEXT2(vp->v_mount)->um_e2fs->e2fs_maxsymlinklen) {
 #ifdef INVARIANTS
 		if (length != 0)
 			panic("ext2_truncate: partial truncate of symlink");

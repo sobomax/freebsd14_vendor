@@ -1,6 +1,8 @@
-# $FreeBSD: ce9e5f7ba5c5e73236a0092e76e5179f2e458fa2 $
+# $FreeBSD: 02d2264be15a12cef071cbe8545fbe43a8c846f3 $
 
 .include <src.opts.mk>
+
+PACKAGE=	periodic
 
 CONFGROUPS=	CONFS DATA
 
@@ -12,23 +14,31 @@ CONFS=	100.chksetuid \
 	410.logincheck \
 	700.kernelmsg \
 	800.loginfail
-DATA=	security.functions
+
+DATA=		security.functions
 DATAMODE=	444
+DATAPACKAGE=	periodic
 
 # NB: keep these sorted by MK_* knobs
 
 .if ${MK_IPFILTER} != "no"
-CONFS+=	510.ipfdenied
-CONFS+=	610.ipf6denied
+CONFGROUPS+=		IPFILTER
+IPFILTER+=		510.ipfdenied
+IPFILTER+=		610.ipf6denied
+IPFILTERPACKAGE=	ipfilter
 .endif
 
 .if ${MK_IPFW} != "no"
-CONFS+=	500.ipfwdenied \
-	550.ipfwlimit
+CONFGROUPS+=	IPFW
+IPFW+=		500.ipfwdenied \
+		550.ipfwlimit
+IPFWPACKAGE=	ipfw
 .endif
 
 .if ${MK_PF} != "no"
-CONFS+=	520.pfdenied
+CONFGROUPS+=	PF
+PF+=		520.pfdenied
+PFPACKAGE=	pf
 .endif
 
 .if ${MK_INETD} != "no" && ${MK_TCP_WRAPPERS} != "no"

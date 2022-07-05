@@ -27,7 +27,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: b48139659b514d67020ae635253338ef2c31464c $
+ * $FreeBSD: 5ec43ff71bc8c37a2e4d0e1074422d49fe041b49 $
  */
 
 #ifndef __XEN_BLKFRONT_BLOCK_H__
@@ -40,7 +40,7 @@
  * \note This calculation assumes that all but the first and last segments 
  *       of the I/O are fully utilized.
  *
- * \note We reserve a segement from the maximum supported by the transport to
+ * \note We reserve a segment from the maximum supported by the transport to
  *       guarantee we can handle an unaligned transfer without the need to
  *       use a bounce buffer.
  */
@@ -54,7 +54,7 @@
  * \note This calculation assumes that all but the first and last segments
  *       of the I/O are fully utilized.
  *
- * \note We reserve a segement to guarantee we can handle an unaligned
+ * \note We reserve a segment to guarantee we can handle an unaligned
  *       transfer without the need to use a bounce buffer.
  */
 #define	XBD_SIZE_TO_SEGS(size)						\

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cdb5f9a97fbabe344174b91a75e52369c6ce1da $");
+__FBSDID("$FreeBSD: 1feb242db060feab782f9fe047b6042041f928f9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -105,7 +105,7 @@ gdb_trapper(vm_offset_t va, uint32_t insn, struct trapframe *frame,
 
 			ksiginfo_init_trap(&ksi);
 			ksi.ksi_signo = SIGTRAP;
-			ksi.ksi_code = TRAP_TRACE;
+			ksi.ksi_code = TRAP_BRKPT;
 			ksi.ksi_addr = (void *)va;
 			trapsignal(td, &ksi);
 			return 1;

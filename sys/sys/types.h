@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: c026fa023bd00530d7064c665c3c6a28aa3e2da9 $
+ * $FreeBSD: 58abcf00cebbd62515c1ab0bfa380268831233ac $
  */
 
 #ifndef _SYS_TYPES_H_
@@ -272,7 +272,7 @@ typedef __rman_res_t    rman_res_t;
 
 #ifdef _KERNEL
 typedef	int		boolean_t;
-typedef	struct device	*device_t;
+typedef	struct _device	*device_t;
 typedef	__intfptr_t	intfptr_t;
 
 /*

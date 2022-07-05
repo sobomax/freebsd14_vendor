@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86b7369883fb84dd4db312389da36c626a704da7 $");
+__FBSDID("$FreeBSD: 6cd7ad0fdc2d91eac0726f2a0b254cd46a656d89 $");
 
 #include <sys/param.h>
 
@@ -175,6 +175,8 @@ print_namespace(struct nvme_namespace_data *nsdata)
 		lbaf = nsdata->lbaf[i];
 		lbads = (lbaf >> NVME_NS_DATA_LBAF_LBADS_SHIFT) &
 			NVME_NS_DATA_LBAF_LBADS_MASK;
+		if (lbads == 0)
+			continue;
 		ms = (lbaf >> NVME_NS_DATA_LBAF_MS_SHIFT) &
 			NVME_NS_DATA_LBAF_MS_MASK;
 		rp = (lbaf >> NVME_NS_DATA_LBAF_RP_SHIFT) &

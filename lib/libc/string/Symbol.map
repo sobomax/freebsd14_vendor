@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 450b745c7e0a19ffff8af9c68d5ba64de6e72908 $
+ * $FreeBSD: ec45d7fd7ddb7d4ac11740e6105e8f2cae39b60c $
  */
 
 FBSD_1.0 {
@@ -112,6 +112,11 @@ FBSD_1.5 {
 
 FBSD_1.6 {
 	strerror_l;
+};
+
+FBSD_1.7 {
+	mempcpy;
+	wmempcpy;
 };
 
 FBSDprivate_1.0 {

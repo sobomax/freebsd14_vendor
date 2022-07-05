@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cdff305b07ec9f914f7564ff96e03a5efa734d7f $");
+__FBSDID("$FreeBSD: 1123f2849905adebf0be03ca23496faa77a9104c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,6 +38,7 @@ __FBSDID("$FreeBSD: cdff305b07ec9f914f7564ff96e03a5efa734d7f $");
 #include <sys/module.h>
 #include <sys/rman.h>
 #include <sys/selinfo.h>
+#include <sys/efi.h>
 
 #include <machine/pci_cfgreg.h>
 #include <dev/pci/pcireg.h>
@@ -286,3 +287,6 @@ static driver_t ipmi_isa_driver = {
 };
 
 DRIVER_MODULE(ipmi_isa, isa, ipmi_isa_driver, ipmi_devclass, 0, 0);
+#ifdef ARCH_MAY_USE_EFI
+MODULE_DEPEND(ipmi_isa, efirt, 1, 1, 1);
+#endif

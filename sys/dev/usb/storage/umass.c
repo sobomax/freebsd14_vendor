@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8260226e5d12d1bd6568c3021e224ef1472a1f2f $");
+__FBSDID("$FreeBSD: b8b5024942644b173c21e9936a8aa85458ffcf02 $");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -29,7 +29,7 @@ __FBSDID("$FreeBSD: 8260226e5d12d1bd6568c3021e224ef1472a1f2f $");
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 8260226e5d12d1bd6568c3021e224ef1472a1f2f $
+ *	$FreeBSD: b8b5024942644b173c21e9936a8aa85458ffcf02 $
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 
@@ -2289,6 +2289,13 @@ umass_cam_action(struct cam_sim *sim, union ccb *ccb)
 					}
 				} else if (sc->sc_transfer.cmd_data[0] == SYNCHRONIZE_CACHE) {
 					if (sc->sc_quirks & NO_SYNCHRONIZE_CACHE) {
+						ccb->csio.scsi_status = SCSI_STATUS_OK;
+						ccb->ccb_h.status = CAM_REQ_CMP;
+						xpt_done(ccb);
+						goto done;
+					}
+				} else if (sc->sc_transfer.cmd_data[0] == START_STOP_UNIT) {
+					if (sc->sc_quirks & NO_START_STOP) {
 						ccb->csio.scsi_status = SCSI_STATUS_OK;
 						ccb->ccb_h.status = CAM_REQ_CMP;
 						xpt_done(ccb);

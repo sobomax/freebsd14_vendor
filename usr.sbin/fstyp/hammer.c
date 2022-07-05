@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fdad1d642a49a41a25edd9907c04aaed3d9d8c3 $");
+__FBSDID("$FreeBSD: 777f5d312371b95a2431c5f5cac1857f4b8d59b8 $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,6 +42,9 @@ __FBSDID("$FreeBSD: 6fdad1d642a49a41a25edd9907c04aaed3d9d8c3 $");
 #include "hammer_disk.h"
 
 #include "fstyp.h"
+
+extern int fsvtyp_hammer(const char *blkdevs, char *label, size_t size);
+extern int fsvtyp_hammer_partial(const char *blkdevs, char *label, size_t size);
 
 static hammer_volume_ondisk_t
 read_ondisk(FILE *fp)

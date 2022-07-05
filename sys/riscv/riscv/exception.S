@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 50134980c7af0f8eaf2a4ad2a104b2bfcd21ceef $");
+__FBSDID("$FreeBSD: abd1307174f1c4e644c4dcf158ef89013a8f2009 $");
 
 #include "assym.inc"
 
@@ -104,6 +104,11 @@ __FBSDID("$FreeBSD: 50134980c7af0f8eaf2a4ad2a104b2bfcd21ceef $");
 	sd	t0, (TF_SEPC)(sp)
 	csrr	t0, sstatus
 	sd	t0, (TF_SSTATUS)(sp)
+.if \mode == 1
+	/* Disable user address access for supervisor mode exceptions. */
+	li	t0, SSTATUS_SUM
+	csrc	sstatus, t0
+.endif
 	csrr	t0, stval
 	sd	t0, (TF_STVAL)(sp)
 	csrr	t0, scause

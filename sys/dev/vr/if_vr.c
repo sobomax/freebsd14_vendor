@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e81c027cf2cd37b306a0d02603962aa5055ab8f3 $");
+__FBSDID("$FreeBSD: 3a3490b7095cf29707b31eceaad649b853b7cf5a $");
 
 /*
  * VIA Rhine fast ethernet PCI NIC driver
@@ -1934,7 +1934,7 @@ vr_encap(struct vr_softc *sc, struct mbuf **m_head)
 	desc = &sc->vr_rdata.vr_tx_ring[prod];
 
 	/*
-	 * Set EOP on the last desciptor and reuqest Tx completion
+	 * Set EOP on the last descriptor and reuqest Tx completion
 	 * interrupt for every VR_TX_INTR_THRESH-th frames.
 	 */
 	VR_INC(sc->vr_cdata.vr_tx_pkts, VR_TX_INTR_THRESH);

@@ -1,2 +1,2 @@
-.\" $FreeBSD: 73d39e55322c0e5dfd9431b979ef43032fcba0ab $
-Set to disable debugging assertions in LLVM.
+.\" $FreeBSD: b4f07b0bb1f2290005a7a1fa43cdb596fe592378 $
+Disable debugging assertions in LLVM.

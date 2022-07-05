@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 8611fc170816dd751cd2b720cf0dc3da747df13e $*/
+/*$FreeBSD: 2d092c6037c4357e4c5ec0282cec5d579baaa331 $*/
 
 #ifndef _ICE_DEVIDS_H_
 #define _ICE_DEVIDS_H_
@@ -50,12 +50,24 @@
 #define ICE_DEV_ID_E810C_QSFP		0x1592
 /* Intel(R) Ethernet Controller E810-C for SFP */
 #define ICE_DEV_ID_E810C_SFP		0x1593
+#define ICE_SUBDEV_ID_E810T		0x000E
+#define ICE_SUBDEV_ID_E810T2		0x000F
 /* Intel(R) Ethernet Controller E810-XXV for backplane */
 #define ICE_DEV_ID_E810_XXV_BACKPLANE	0x1599
 /* Intel(R) Ethernet Controller E810-XXV for QSFP */
 #define ICE_DEV_ID_E810_XXV_QSFP	0x159A
 /* Intel(R) Ethernet Controller E810-XXV for SFP */
 #define ICE_DEV_ID_E810_XXV_SFP		0x159B
+/* Intel(R) Ethernet Connection E823-C for backplane */
+#define ICE_DEV_ID_E823C_BACKPLANE	0x188A
+/* Intel(R) Ethernet Connection E823-C for QSFP */
+#define ICE_DEV_ID_E823C_QSFP		0x188B
+/* Intel(R) Ethernet Connection E823-C for SFP */
+#define ICE_DEV_ID_E823C_SFP		0x188C
+/* Intel(R) Ethernet Connection E823-C/X557-AT 10GBASE-T */
+#define ICE_DEV_ID_E823C_10G_BASE_T	0x188D
+/* Intel(R) Ethernet Connection E823-C 1GbE */
+#define ICE_DEV_ID_E823C_SGMII		0x188E
 /* Intel(R) Ethernet Connection E822-C for backplane */
 #define ICE_DEV_ID_E822C_BACKPLANE	0x1890
 /* Intel(R) Ethernet Connection E822-C for QSFP */

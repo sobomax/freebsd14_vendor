@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e9ac3052430c78d74d998ad0b4a5d93e15fec147 $
+ * $FreeBSD: c96cec264b87f2b0458338d31ae0ad45a510e6e6 $
  */
 
 #ifndef _GEOM_PART_H_
@@ -72,6 +72,8 @@ enum g_part_alias {
 	G_PART_ALIAS_FREEBSD_UFS,	/* A UFS/UFS2 file system entry. */
 	G_PART_ALIAS_FREEBSD_VINUM,	/* A Vinum partition entry. */
 	G_PART_ALIAS_FREEBSD_ZFS,	/* A ZFS file system entry. */
+	G_PART_ALIAS_HIFIVE_FSBL,	/* HiFive First Stage Bootloader */
+	G_PART_ALIAS_HIFIVE_BBL,	/* HiFive Second Stage Bootloader */
 	G_PART_ALIAS_LINUX_DATA,	/* A Linux data partition entry. */
 	G_PART_ALIAS_LINUX_LVM,		/* A Linux LVM partition entry. */
 	G_PART_ALIAS_LINUX_RAID,	/* A Linux RAID partition entry. */

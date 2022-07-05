@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 807c51b6190b4fe443878dca88fe46798c5c5783 $
+# $FreeBSD: 94975687f4e2ea3d0cb521556e08072ba38b8616 $
 
 #
 # Script to generate module .c file from a list of firmware images
@@ -127,7 +127,7 @@ gsub(/[-\.]/, "_", modname);
 generated = "@" "generated";
 printc("/*\
  * Automatically " generated " by:\
- * $FreeBSD: 807c51b6190b4fe443878dca88fe46798c5c5783 $\
+ * $FreeBSD: 94975687f4e2ea3d0cb521556e08072ba38b8616 $\
  */");
 printc("#include <sys/param.h>");
 printc("#include <sys/errno.h>");
@@ -151,8 +151,10 @@ for (file_i = 0; file_i < num_files; file_i++) {
 printc("\nstatic int\n"\
 modname "_fw_modevent(module_t mod, int type, void *unused)\
 {\
-	const struct firmware *fp, *parent;\
-	int error;\
+	const struct firmware *fp;");
+if (num_files > 1)
+	printc("\tconst struct firmware *parent;");
+printc("\tint error;\
 	switch (type) {\
 	case MOD_LOAD:\n");
 
@@ -187,7 +189,7 @@ for (file_i = 0; file_i < num_files; file_i++) {
 
 	printc("\t\tif (fp == NULL)");
 	printc("\t\t\tgoto fail_" file_i ";");
-	if (file_i == 0)
+	if (file_i == 0 && num_files > 1)
 		printc("\t\tparent = fp;");
 }
 

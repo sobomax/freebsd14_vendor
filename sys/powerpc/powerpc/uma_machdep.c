@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 43e2a86456fed0c51842ebe331da9c0a21be2164 $");
+__FBSDID("$FreeBSD: ac3d98e18d0b12e07c2abe7d1a8f27442b4d26bf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: 43e2a86456fed0c51842ebe331da9c0a21be2164 $");
 #include <vm/vm_param.h>
 #include <vm/pmap.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
 #include <vm/vm_dumpset.h>
 #include <vm/uma.h>
 #include <vm/uma_int.h>
@@ -54,8 +55,8 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, int domain, u_int8_t *flags,
 
 	*flags = UMA_SLAB_PRIV;
 
-	m = vm_page_alloc_domain(NULL, 0, domain,
-	    malloc2vm_flags(wait) | VM_ALLOC_WIRED | VM_ALLOC_NOOBJ);
+	m = vm_page_alloc_noobj_domain(domain, malloc2vm_flags(wait) |
+	    VM_ALLOC_WIRED);
 	if (m == NULL) 
 		return (NULL);
 
@@ -71,9 +72,6 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, int domain, u_int8_t *flags,
 	} else {
 		va = (void *)(vm_offset_t)PHYS_TO_DMAP(pa);
 	}
-
-	if ((wait & M_ZERO) && (m->flags & PG_ZERO) == 0)
-		bzero(va, PAGE_SIZE);
 	atomic_add_int(&hw_uma_mdpages, 1);
 
 	return (va);

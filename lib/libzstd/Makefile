@@ -1,4 +1,4 @@
-# $FreeBSD: 5f7cd8248d8882896e59334724cc2e6ae28cf1d2 $
+# $FreeBSD: e4f034f288a272b424e8b706257434e16c010eb3 $
 
 LIB=	zstd
 SRCS=	entropy_common.c \
@@ -48,6 +48,8 @@ ZSTDDIR=	${SRCTOP}/sys/contrib/zstd
 	${ZSTDDIR}/lib/dictBuilder ${ZSTDDIR}/lib
 
 .include <bsd.compiler.mk>
+
+CFLAGS.huf_decompress.c+=	${NO_WBITWISE_INSTEAD_OF_LOGICAL}
 
 # https://github.com/facebook/zstd/commit/812e8f2a [zstd 1.4.1]
 # "Note that [GCC] autovectorization still does not do a good job on the

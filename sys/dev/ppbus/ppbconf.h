@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6a90f572997127aadf56e269b558a3770c4d8ad4 $
+ * $FreeBSD: 723db73412f86d4e04e678265e66081c70099bdd $
  *
  */
 #ifndef __PPBCONF_H
@@ -259,6 +259,7 @@ extern int ppb_release_bus(device_t, device_t);
 /* bus related functions */
 extern void ppb_lock(device_t);
 extern void ppb_unlock(device_t);
+extern struct mtx *ppb_get_lock(device_t);
 extern void _ppb_assert_locked(device_t, const char *, int);
 extern void ppb_init_callout(device_t, struct callout *, int);
 extern int ppb_sleep(device_t, void *, int, const char *, int);

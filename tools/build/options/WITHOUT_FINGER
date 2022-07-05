@@ -1,5 +1,5 @@
-.\" $FreeBSD: 7f654083a3c4d0d9af3f4a221d21d3484ba2657a $
-Set to not build or install
+.\" $FreeBSD: d421612454784d2dab2209d2e824f5984223cb5c $
+Do not build or install
 .Xr finger 1
 and
 .Xr fingerd 8 .

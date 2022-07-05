@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 34257c1caeff5b8c7c02a5596108972fc26feb01 $
+ * $FreeBSD: e68a0be5f7c8e0c4050c30d6b8f1eb0a1be0091f $
  */
 
 #ifndef AUTOMOUNTD_H
@@ -96,6 +96,7 @@ char	*defined_expand(const char *string);
 void	defined_init(void);
 void	defined_parse_and_add(char *def);
 void	lesser_daemon(void);
+void	rpc_umntall(void);
 
 int	main_automount(int argc, char **argv);
 int	main_automountd(int argc, char **argv);

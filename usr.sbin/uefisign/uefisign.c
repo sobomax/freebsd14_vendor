@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa2a7621998dac7aa9025442664cd7d77b63cada $");
+__FBSDID("$FreeBSD: 7eab934c339442cd11b4b0f09981ebba50bc9628 $");
 
 #include <sys/wait.h>
 #include <assert.h>
@@ -350,13 +350,22 @@ main(int argc, char **argv)
 			Vflag = true;
 			break;
 		case 'c':
-			certpath = checked_strdup(optarg);
+			if (certpath == NULL)
+				certpath = checked_strdup(optarg);
+			else
+				err(1, "-c can only be specified once");
 			break;
 		case 'k':
-			keypath = checked_strdup(optarg);
+			if (keypath == NULL)
+				keypath = checked_strdup(optarg);
+			else
+				err(1, "-k can only be specified once");
 			break;
 		case 'o':
-			outpath = checked_strdup(optarg);
+			if (outpath == NULL)
+				outpath = checked_strdup(optarg);
+			else
+				err(1, "-o can only be specified once");
 			break;
 		case 'v':
 			vflag = true;
@@ -401,8 +410,12 @@ main(int argc, char **argv)
 	if (pid < 0)
 		err(1, "fork");
 
-	if (pid == 0)
-		return (child(inpath, outpath, pipefds[1], Vflag, vflag));
+	if (pid == 0) {
+		close(pipefds[0]);
+		exit(child(inpath, outpath, pipefds[1], Vflag, vflag));
+	}
+
+	close(pipefds[1]);
 
 	if (!Vflag) {
 		certfp = checked_fopen(certpath, "r");
@@ -422,5 +435,5 @@ main(int argc, char **argv)
 		sign(cert, key, pipefds[0]);
 	}
 
-	return (wait_for_child(pid));
+	exit(wait_for_child(pid));
 }

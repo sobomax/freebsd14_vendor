@@ -1,4 +1,4 @@
-# $FreeBSD: 7772508066010010f6bbf0ce88526dceaf419a9c $
+# $FreeBSD: 00839c05d37dbe586a417893c57c34bea2e05659 $
 
 .PATH:		${ZFSSRC}
 .PATH:		${SYSDIR}/crypto/skein
@@ -30,6 +30,7 @@ CFLAGS.nvlist.c+= -I${ZFSOSINC}/spl
 CFLAGS.zfs.c+=	-I${ZFSOSINC}/spl 				\
 		-I${SRCTOP}/sys/cddl/contrib/opensolaris/common/lz4
 CFLAGS.zstd.c+=	-U__BMI__
+CFLAGS.zstd.c+=	${NO_WBITWISE_INSTEAD_OF_LOGICAL}
 CFLAGS.zstd_shim.c+= -DIN_BASE -I${OZFS}/include
 
 # Do not unroll skein loops, reduce code size

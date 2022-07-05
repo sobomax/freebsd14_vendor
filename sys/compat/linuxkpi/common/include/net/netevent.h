@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3c6fba2f28d6a4d990d718f3d8be5317902cfecf $
+ * $FreeBSD: 40df26705c7b35ec06d959c9a309123fe7a08b43 $
  */
-#ifndef	_LINUX_NET_NETEVENT_H_
-#define	_LINUX_NET_NETEVENT_H_
+#ifndef	_LINUXKPI_NET_NETEVENT_H_
+#define	_LINUXKPI_NET_NETEVENT_H_
 
 #include <sys/types.h>
 #include <sys/eventhandler.h>
@@ -72,4 +72,4 @@ unregister_netevent_notifier(struct notifier_block *nb)
 	return (0);
 }
 
-#endif /* _LINUX_NET_NETEVENT_H_ */
+#endif /* _LINUXKPI_NET_NETEVENT_H_ */

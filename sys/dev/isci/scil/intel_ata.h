@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 86f584b35d618dddfd3b7ab5d3fb5a8ab35af362 $
+ * $FreeBSD: e213d0efcb0675bc95c41feaae0bb975a20f762d $
  */
 /**
  * @file
@@ -244,7 +244,7 @@
  *
  * The following constants define bit masks utilized to determine if a
  * feature is supported/enabled or if a bit is simply set inside of the
- * IDENTIFY DEVICE data structre.
+ * IDENTIFY DEVICE data structure.
  */
 /*@{*/
 #define ATA_IDENTIFY_REMOVABLE_MEDIA_ENABLE              0x0080

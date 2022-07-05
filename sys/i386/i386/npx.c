@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 34fd2e957169fe449906d5600dae69a74787a57d $");
+__FBSDID("$FreeBSD: dc04d84b0eb5e3a50e08188941b9d3674a6ab261 $");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"
@@ -527,7 +527,10 @@ npxinitstate(void *arg __unused)
 
 	/*
 	 * Create a table describing the layout of the CPU Extended
-	 * Save Area.
+	 * Save Area.  See Intel SDM rev. 075 Vol. 1 13.4.1 "Legacy
+	 * Region of an XSAVE Area" for the source of offsets/sizes.
+	 * Note that 32bit XSAVE does not use %xmm8-%xmm15, see
+	 * 10.5.1.2 and 13.5.2 "SSE State".
 	 */
 	if (use_xsave) {
 		xstate_bv = (uint64_t *)((char *)(npx_initialstate + 1) +
@@ -551,7 +554,7 @@ npxinitstate(void *arg __unused)
 	start_emulating();
 	intr_restore(saveintr);
 }
-SYSINIT(npxinitstate, SI_SUB_DRIVERS, SI_ORDER_ANY, npxinitstate, NULL);
+SYSINIT(npxinitstate, SI_SUB_CPU, SI_ORDER_ANY, npxinitstate, NULL);
 
 /*
  * Free coprocessor (if we have it).

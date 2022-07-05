@@ -26,7 +26,7 @@
 /*      $NetBSD: cerror.S,v 1.5 2000/01/27 14:58:48 kleink Exp $        */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 3362c9fdf0461bcced1b47d615d301a0b46d389f $");
+__FBSDID("$FreeBSD: 93172fdb822e6ee7351354a6c400e72e7cbd0114 $");
 	
 #include "SYS.h"
 
@@ -35,7 +35,7 @@ __FBSDID("$FreeBSD: 3362c9fdf0461bcced1b47d615d301a0b46d389f $");
 
 	/*
 	 * The __error() function is thread aware. For non-threaded
-	 * programs and the initial threaded in threaded programs,
+	 * programs and the initial thread in threaded programs,
 	 * it returns a pointer to the global errno variable.
 	 */
 ENTRY_NOPROF(HIDENAME(cerror))

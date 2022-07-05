@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9fd06d49d3b019e96c17480131834f62a48cc316 $");
+__FBSDID("$FreeBSD: be421fee7aa93bfd524c100f677464df69bf5393 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -426,7 +425,7 @@ domain_map_buf_locked(struct dmar_domain *domain, iommu_gaddr_t base,
 {
 	dmar_pte_t *pte;
 	struct sf_buf *sf;
-	iommu_gaddr_t pg_sz, base1, size1;
+	iommu_gaddr_t pg_sz, base1;
 	vm_pindex_t pi, c, idx, run_sz;
 	int lvl;
 	bool superpage;
@@ -434,7 +433,6 @@ domain_map_buf_locked(struct dmar_domain *domain, iommu_gaddr_t base,
 	DMAR_DOMAIN_ASSERT_PGLOCKED(domain);
 
 	base1 = base;
-	size1 = size;
 	flags |= IOMMU_PGF_OBJL;
 	TD_PREP_PINNED_ASSERT;
 

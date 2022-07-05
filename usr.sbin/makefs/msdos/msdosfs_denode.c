@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 283ef2e83e0b1c737c0aa3b58c396f49b66f9eee $");
+__FBSDID("$FreeBSD: 7d37c7df3a3dde96d65f1f31624b46a40685b75f $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -87,7 +87,7 @@ __FBSDID("$FreeBSD: 283ef2e83e0b1c737c0aa3b58c396f49b66f9eee $");
  */
 int
 deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
-    struct denode **depp)
+    int lkflags __unused, struct denode **depp)
 {
 	int error;
 	uint64_t inode;

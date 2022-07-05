@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 049a9f862f2bc459a975c1f2abaac1d40845ddbf $");
+__FBSDID("$FreeBSD: 7f8543a5a1085717c878821c51608a2e700b8237 $");
 
 #include <assert.h>
 #include <err.h>
@@ -100,6 +100,8 @@ fstyp_apfs(FILE *fp, char *label, size_t size)
 	retval = 0;
 
 	/* No label support yet. */
+	(void)size;
+	(void)label;
 
 fail:
 	free(csb);

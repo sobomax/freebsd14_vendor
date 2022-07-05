@@ -1,5 +1,5 @@
-.\" $FreeBSD: 8fc3f3e54f75b113c916651bd5bd841a9689dddb $
-Set to not build utilities for manual pages,
+.\" $FreeBSD: c80206c830c8ecd8c72e087c05d584f4c56f9785 $
+Do not build utilities for manual pages,
 .Xr apropos 1 ,
 .Xr makewhatis 1 ,
 .Xr man 1 ,

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: a56a55f2765732a0d9b40ac55c2153f6d34b707c $
+# $FreeBSD: 5788e37a22717d04920c7dc3f4e9a403fc82a875 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zvol_thrash_001_pos cleanup
 zvol_thrash_001_pos_head()
 {
 	atf_set "descr" "Cause frequent device removal and arrival in the prescence of zvols.  ZFS should not misbehave while tasting them for VDev GUIDs."
-	atf_set "require.progs"  zfs zpool gnop
+	atf_set "require.progs" "ksh93 zfs zpool gnop"
 	atf_set "timeout" 900
 }
 zvol_thrash_001_pos_body()

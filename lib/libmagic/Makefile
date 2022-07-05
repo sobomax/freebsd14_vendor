@@ -1,4 +1,4 @@
-# $FreeBSD: e390ff1261c6e154a3509b407869e3c84430685b $
+# $FreeBSD: 5f967102fe0244545f41d8a1f01029af6f559fb1 $
 # Copyright (c) David E. O'Brien, 2000-2004, 2006, 2009
 
 PACKAGE=lib${LIB}
@@ -86,7 +86,6 @@ ${inc}: ${inc}.in
 	sed -e 's,X.YY,${FILEVER:S,",,g:S,.,,g},g' ${.ALLSRC} > ${.TARGET}
 .endfor
 
-FILES+=			libmagic.pc
-FILESDIR_libmagic.pc=	${LIBDATADIR}/pkgconfig
+PCFILES=	libmagic.pc
 
 .include <bsd.lib.mk>

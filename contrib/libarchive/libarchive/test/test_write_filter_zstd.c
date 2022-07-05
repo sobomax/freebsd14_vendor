@@ -25,7 +25,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: b5f061a001aa77bc1fe5bd84b53e273bbb734e0a $");
+__FBSDID("$FreeBSD: 6601e6aaf898067662b0960f672b6ddb1b0a8adc $");
 
 DEFINE_TEST(test_write_filter_zstd)
 {
@@ -129,6 +129,10 @@ DEFINE_TEST(test_write_filter_zstd)
 	    archive_write_set_filter_option(a, NULL, "compression-level", "-1")); */
 	assertEqualIntA(a, ARCHIVE_OK,
 	    archive_write_set_filter_option(a, NULL, "compression-level", "7"));
+	assertEqualIntA(a, ARCHIVE_FAILED,
+	    archive_write_set_filter_option(a, NULL, "threads", "-1")); /* negative */
+	assertEqualIntA(a, ARCHIVE_OK,
+	    archive_write_set_filter_option(a, NULL, "threads", "4"));
 	assertEqualIntA(a, ARCHIVE_OK, archive_write_open_memory(a, buff, buffsize, &used2));
 	for (i = 0; i < 100; i++) {
 		sprintf(path, "file%03d", i);

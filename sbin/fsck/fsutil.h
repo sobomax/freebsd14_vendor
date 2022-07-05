@@ -25,9 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c6300a0cc0c4bd507257bc38b96876dd2e54fd30 $
+ * $FreeBSD: e65f5ddecb01b51dff63be626d0dabca9e2f2066 $
  */
 
+struct fstab;
+int checkfstab(int, int (*)(struct fstab *), 
+    int (*) (const char *, const char *, const char *, const char *, pid_t *));
+int getfsopt(struct fstab *, const char *);
 void pfatal(const char *, ...) __printflike(1, 2);
 void pwarn(const char *, ...) __printflike(1, 2);
 void perr(const char *, ...) __printflike(1, 2);
@@ -46,7 +50,3 @@ char *estrdup(const char *);
 #define	CHECK_BACKGRD	0x0008
 #define	DO_BACKGRD	0x0010
 #define	CHECK_CLEAN	0x0020
-
-struct fstab;
-int checkfstab(int, int (*)(struct fstab *), 
-    int (*) (const char *, const char *, const char *, const char *, pid_t *));

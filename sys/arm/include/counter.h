@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e3fb03abd352c928c4ef50b49129029958d854ac $
+ * $FreeBSD: 203a1ebda64edf70e41dae4d2b9ee9a91db30b27 $
  */
 
 #ifndef __MACHINE_COUNTER_H__
@@ -45,8 +45,7 @@ static inline uint64_t
 counter_u64_read_one(uint64_t *p, int cpu)
 {
 
-	return (atomic_load_64((uint64_t *)((char *)p + UMA_PCPU_ALLOC_SIZE *
-	    cpu)));
+	return (atomic_load_64((uint64_t *)zpcpu_get_cpu(p, cpu)));
 }
 
 static inline uint64_t
@@ -66,8 +65,7 @@ static void
 counter_u64_zero_one_cpu(void *arg)
 {
 
-	atomic_store_64((uint64_t *)((char *)arg + UMA_PCPU_ALLOC_SIZE *
-	    PCPU_GET(cpuid)), 0);
+	atomic_store_64((uint64_t *)zpcpu_get(arg), 0);
 }
 
 static inline void

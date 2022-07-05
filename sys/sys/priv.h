@@ -28,7 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7ef54782a60d2cf16897426f1bc0559e98faf17c $
+ * $FreeBSD: 8757db879a5cdc1ae0273a9626dc9a2c6ad5cf9c $
  */
 
 /*
@@ -192,6 +192,7 @@
 #define	PRIV_SCHED_SETPARAM	205	/* Can set thread scheduler params. */
 #define	PRIV_SCHED_CPUSET	206	/* Can manipulate cpusets. */
 #define	PRIV_SCHED_CPUSET_INTR	207	/* Can adjust IRQ to CPU binding. */
+#define	PRIV_SCHED_IDPRIO	208	/* Can set idle time scheduling. */
 
 /*
  * POSIX semaphore privileges.

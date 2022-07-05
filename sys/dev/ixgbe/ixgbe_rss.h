@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 7e7620be63f4c2656761082d977be6e3af21b643 $*/
+/*$FreeBSD: 7eda43ec1609cccb29565d119b9864b2d3bca031 $*/
 
 #ifndef _IXGBE_RSS_H_
 #define _IXGBE_RSS_H_

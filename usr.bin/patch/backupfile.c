@@ -13,7 +13,7 @@
  * David MacKenzie <djm@ai.mit.edu>. Some algorithms adapted from GNU Emacs.
  *
  * $OpenBSD: backupfile.c,v 1.20 2009/10/27 23:59:41 deraadt Exp $
- * $FreeBSD: ecdca19e2a713b06d9f147466d28b2d25da32314 $
+ * $FreeBSD: a35e6fd21dc83d59074506937b83610ac5d2e8b3 $
  */
 
 #include <ctype.h>
@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "backupfile.h"
 

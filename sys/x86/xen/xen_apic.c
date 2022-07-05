@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01dae36de2e8bd487f105c31e920aa7ae06e1491 $");
+__FBSDID("$FreeBSD: b553e52487168fde54662f3b6ae1dd72fa3daa73 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -221,6 +221,12 @@ xen_pv_apic_free_vector(u_int apic_id, u_int vector, u_int irq)
 {
 
 	XEN_APIC_UNSUPPORTED;
+}
+
+static void
+xen_pv_lapic_calibrate_timer(void)
+{
+
 }
 
 static void
@@ -420,6 +426,7 @@ struct apic_ops xen_apic_ops = {
 	.enable_vector		= xen_pv_apic_enable_vector,
 	.disable_vector		= xen_pv_apic_disable_vector,
 	.free_vector		= xen_pv_apic_free_vector,
+	.calibrate_timer	= xen_pv_lapic_calibrate_timer,
 	.enable_pmc		= xen_pv_lapic_enable_pmc,
 	.disable_pmc		= xen_pv_lapic_disable_pmc,
 	.reenable_pmc		= xen_pv_lapic_reenable_pmc,

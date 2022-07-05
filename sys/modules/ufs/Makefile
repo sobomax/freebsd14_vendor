@@ -1,4 +1,4 @@
-# $FreeBSD: e587cf0f9b9d8db0700ede8ffc108b4fce7e3874 $
+# $FreeBSD: 9e4a0148111a592db1839814a7015fbb550cb58b $
 
 .PATH:	${SRCTOP}/sys/ufs/ufs ${SRCTOP}/sys/ufs/ffs
 
@@ -13,5 +13,7 @@ SRCS=	opt_ddb.h opt_directio.h opt_ffs.h opt_quota.h opt_suiddir.h opt_ufs.h \
 .if !defined(KERNBUILDDIR)
 CFLAGS+= -DSOFTUPDATES -DUFS_DIRHASH
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

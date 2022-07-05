@@ -1,4 +1,4 @@
-# $FreeBSD: 20e728f4642d3f3e43a2d316f76f295b8e8946b5 $
+# $FreeBSD: b5490b3972b3bf05312ae27d6166fffbe110d9bc $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -8,6 +8,7 @@ INTERNALLIB=	yes
 LIB=		svn_subr
 
 SRCS=		adler32.c \
+		apr_escape.c \
 		atomic.c \
 		auth.c \
 		base64.c \

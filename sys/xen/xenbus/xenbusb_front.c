@@ -36,7 +36,7 @@
  * Xen split devices.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 961539b07c302e84b61717cc71b85428f3a457f7 $");
+__FBSDID("$FreeBSD: 7cb5bc33d1e78443946a90a3e311115eaae44e23 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -60,7 +60,7 @@ __FBSDID("$FreeBSD: 961539b07c302e84b61717cc71b85428f3a457f7 $");
 
 /*------------------ Private Device Attachment Functions  --------------------*/
 /**
- * \brief Probe for the existance of the XenBus front bus.
+ * \brief Probe for the existence of the XenBus front bus.
  *
  * \param dev  NewBus device_t for this XenBus front bus instance.
  *

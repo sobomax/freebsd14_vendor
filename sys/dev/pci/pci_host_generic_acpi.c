@@ -32,7 +32,7 @@
 /* Generic ECAM PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 763a84d2fd53dc0754a3d0b70d5e19994cacee86 $");
+__FBSDID("$FreeBSD: 9628517813a9862fe221bf4d74cc384eac305c89 $");
 
 #include "opt_platform.h"
 
@@ -88,6 +88,21 @@ __FBSDID("$FreeBSD: 763a84d2fd53dc0754a3d0b70d5e19994cacee86 $");
 #define	SPACE_CODE_IO_SPACE	0x1
 #define	PROPS_CELL_SIZE		1
 #define	PCI_ADDR_CELL_SIZE	2
+
+static struct {
+	char		oem_id[ACPI_OEM_ID_SIZE + 1];
+	char		oem_table_id[ACPI_OEM_TABLE_ID_SIZE + 1];
+	uint32_t	quirks;
+} pci_acpi_quirks[] = {
+	{ "MRVL  ", "CN9130  ", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MRVL  ", "CN913X  ", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MVEBU ", "ARMADA7K", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MVEBU ", "ARMADA8K", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MVEBU ", "CN9130  ", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MVEBU ", "CN9131  ", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ "MVEBU ", "CN9132  ", PCIE_ECAM_DESIGNWARE_QUIRK },
+	{ 0 },
+};
 
 /* Forward prototypes */
 
@@ -170,6 +185,23 @@ pci_host_generic_acpi_parse_resource(ACPI_RESOURCE *res, void *arg)
 	return (AE_OK);
 }
 
+static void
+pci_host_acpi_get_oem_quirks(struct generic_pcie_acpi_softc *sc,
+    ACPI_TABLE_HEADER *hdr)
+{
+	int i;
+
+	for (i = 0; pci_acpi_quirks[i].quirks; i++) {
+		if (memcmp(hdr->OemId, pci_acpi_quirks[i].oem_id,
+		    ACPI_OEM_ID_SIZE) != 0)
+			continue;
+		if (memcmp(hdr->OemTableId, pci_acpi_quirks[i].oem_table_id,
+		    ACPI_OEM_TABLE_ID_SIZE) != 0)
+			continue;
+		sc->base.quirks |= pci_acpi_quirks[i].quirks;
+	}
+}
+
 static int
 pci_host_acpi_get_ecam_resource(device_t dev)
 {
@@ -209,6 +241,9 @@ pci_host_acpi_get_ecam_resource(device_t dev)
 			    sc->base.bus_start, sc->base.bus_end);
 			return (ENXIO);
 		}
+		pci_host_acpi_get_oem_quirks(sc, hdr);
+		if (sc->base.quirks & PCIE_ECAM_DESIGNWARE_QUIRK)
+			device_set_desc(dev, "Synopsys DesignWare PCIe Controller");
 	} else {
 		status = acpi_GetInteger(handle, "_CBA", &val);
 		if (ACPI_SUCCESS(status))

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17f551f27234ead12aca231a703801db898a4afb $");
+__FBSDID("$FreeBSD: 7554db0fbc94b4c6e1415441818f6d40c1dad5c9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -120,8 +120,6 @@ a10_twsi_attach(device_t dev)
 	sc->reg_status = TWI_STAT;
 	sc->reg_baud_rate = TWI_CCR;
 	sc->reg_soft_reset = TWI_SRST;
-
-	sc->need_ack = true;
 
 	if (ofw_bus_is_compatible(dev, "allwinner,sun6i-a31-i2c") ||
 	    ofw_bus_is_compatible(dev, "allwinner,sun6i-a83t-i2c"))

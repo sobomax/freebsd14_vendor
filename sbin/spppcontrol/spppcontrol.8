@@ -22,9 +22,9 @@
 .\" IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 4d948a60651a53c0962c803f91f1c4449e9837b4 $
+.\" $FreeBSD: b92ca4a883c9b83380e8c19148b3093a99650ecf $
 .\"
-.Dd December 30, 2001
+.Dd October 22, 2021
 .Dt SPPPCONTROL 8
 .Os
 .Sh NAME
@@ -36,6 +36,14 @@
 .Ar ifname
 .Op Ar parameter Ns Op Li = Ns Ar value
 .Op Ar ...
+.Sh DEPRECATION NOTICE
+The
+.Xr sppp 4
+module and the
+.Nm
+utility is not present in
+.Fx 14.0
+and later.
 .Sh DESCRIPTION
 The
 .Xr sppp 4

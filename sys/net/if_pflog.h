@@ -25,11 +25,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5ed341a85d861e6a7312ff55391b4ccb0bce51ce $
+ * $FreeBSD: 443c1cc36cf6d63438e2f3839f7a76cde81a7b87 $
  */
 
 #ifndef _NET_IF_PFLOG_H_
 #define	_NET_IF_PFLOG_H_
+
+#include <sys/types.h>
+
+#include <net/if.h>
 
 #define	PFLOGIFS_MAX	16
 
@@ -50,11 +54,16 @@ struct pfloghdr {
 	pid_t		rule_pid;
 	u_int8_t	dir;
 	u_int8_t	pad[3];
+	u_int32_t	ridentifier;
+	u_int8_t	reserve;	/* Appease broken software like Wireshark. */
+	u_int8_t	pad2[3];
 };
 
-#define	PFLOG_HDRLEN		sizeof(struct pfloghdr)
+#define PFLOG_ALIGNMENT		sizeof(uint32_t)
+#define PFLOG_ALIGN(x)		(((x) + PFLOG_ALIGNMENT - 1) & ~(PFLOG_ALIGNMENT - 1))
+#define	PFLOG_HDRLEN		PFLOG_ALIGN(offsetof(struct pfloghdr, pad2))
 /* minus pad, also used as a signature */
-#define	PFLOG_REAL_HDRLEN	offsetof(struct pfloghdr, pad)
+#define	PFLOG_REAL_HDRLEN	offsetof(struct pfloghdr, pad2)
 
 #ifdef _KERNEL
 struct pf_rule;

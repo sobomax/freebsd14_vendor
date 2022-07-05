@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a0145e76ccd25bafd0885071dbc076595bd5621 $");
+__FBSDID("$FreeBSD: c10b15896132e0c92a9cd1dc5d0d34ebaac0875d $");
 
 #include "opt_capsicum.h"
 
@@ -492,15 +492,19 @@ set_user_ldt(struct mdproc *mdp)
 }
 
 static void
-set_user_ldt_rv(struct vmspace *vmsp)
+set_user_ldt_rv(void *arg)
 {
-	struct thread *td;
+	struct proc *orig, *target;
+	struct proc_ldt *ldt;
 
-	td = curthread;
-	if (vmsp != td->td_proc->p_vmspace)
+	orig = arg;
+	target = curthread->td_proc;
+
+	ldt = (void *)atomic_load_acq_ptr((uintptr_t *)&orig->p_md.md_ldt);
+	if (target->p_md.md_ldt != ldt)
 		return;
 
-	set_user_ldt(&td->td_proc->p_md);
+	set_user_ldt(&target->p_md);
 }
 
 struct proc_ldt *
@@ -550,8 +554,7 @@ user_ldt_alloc(struct proc *p, int force)
 	atomic_thread_fence_rel();
 	mdp->md_ldt = new_ldt;
 	critical_exit();
-	smp_rendezvous(NULL, (void (*)(void *))set_user_ldt_rv, NULL,
-	    p->p_vmspace);
+	smp_rendezvous(NULL, set_user_ldt_rv, NULL, p);
 
 	return (mdp->md_ldt);
 }

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 883b5d34de092dc10c4cfe12a08e7a34965c72b4 $");
+__FBSDID("$FreeBSD: a9cc2d77ecf91e444d313e0afbfce4a12a27c647 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -157,7 +157,8 @@ acpi_throttle_identify(driver_t *driver, device_t parent)
 	obj = (ACPI_OBJECT *)buf.Pointer;
 	if ((obj->Processor.PblkAddress && obj->Processor.PblkLength >= 4) ||
 	    ACPI_SUCCESS(AcpiEvaluateObject(handle, "_PTC", NULL, NULL))) {
-		if (BUS_ADD_CHILD(parent, 0, "acpi_throttle", -1) == NULL)
+		if (BUS_ADD_CHILD(parent, 0, "acpi_throttle",
+		    device_get_unit(parent)) == NULL)
 			device_printf(parent, "add throttle child failed\n");
 	}
 	AcpiOsFree(obj);

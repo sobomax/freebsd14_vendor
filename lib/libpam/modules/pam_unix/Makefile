@@ -32,10 +32,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5330ae4a5f9817daf139078a037f1e0db89e0348 $
+# $FreeBSD: 639afd79cedbee75b2d2cdcf26eb62923be68cc3 $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
+
+PACKAGE=	runtime
 
 LIB=	pam_unix
 SRCS=	pam_unix.c

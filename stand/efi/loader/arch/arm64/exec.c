@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 45321261def0a5966ffbb08e2b6c3cdbc7fe2bf2 $");
+__FBSDID("$FreeBSD: a3021083dc08a459e3237d9e60d97318990bf309 $");
 
 #include <stand.h>
 #include <string.h>
@@ -127,7 +127,7 @@ elf64_exec(struct preloaded_file *fp)
 	clean_size = (vm_offset_t)efi_translate(kernendp) - clean_addr;
 
 	cpu_flush_dcache((void *)clean_addr, clean_size);
-	cpu_inval_icache(NULL, 0);
+	cpu_inval_icache();
 
 	(*entry)(modulep);
 	panic("exec returned");

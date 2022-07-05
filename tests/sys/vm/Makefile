@@ -1,4 +1,4 @@
-# $FreeBSD: c2c95d25407ffa61d361892747b61510db0407c3 $
+# $FreeBSD: 8ef8a45e5f39489c5efcf0eb89f5e072cac49c1a $
 
 PACKAGE=	tests
 
@@ -6,6 +6,7 @@ TESTSDIR=	${TESTSBASE}/sys/vm
 
 ATF_TESTS_C+=	mlock_test \
 		mmap_test \
-		page_fault_signal
+		page_fault_signal \
+		shared_shadow_inval_test
 
 .include <bsd.test.mk>

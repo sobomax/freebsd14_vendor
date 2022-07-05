@@ -2,7 +2,7 @@ FreeBSD Source:
 ---------------
 This is the top level of the FreeBSD source directory.  This file
 was last revised on:
-$FreeBSD: 72bd634cd813603b2c9c7c3ad25b695314d541c9 $
+$FreeBSD: 632b4542c064d6d6503de0d420c7ff897c3b7f51 $
 
 FreeBSD is an operating system used to power modern servers,
 desktops, and embedded platforms. A large community has
@@ -37,8 +37,9 @@ crypto		Cryptography stuff (see crypto/README).
 
 etc		Template files for /etc.
 
-gnu		Various commands and libraries under the GNU Public License.
-		Please see gnu/COPYING* for more information.
+gnu		Commands and libraries under the GNU General Public License
+		(GPL) or Lesser General Public License (LGPL).  Please see
+		gnu/COPYING* for more information.
 
 include		System include files.
 

@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe197928085e7142231bbe7c01937804308c8d08 $");
+__FBSDID("$FreeBSD: be535f72146aa808720f877fd51b536427c0fb85 $");
 
 /*
  *			P I N G . C
@@ -301,15 +301,7 @@ ping(int argc, char *const *argv)
 	alarmtimeout = df = preload = tos = pcp = 0;
 
 	outpack = outpackhdr + sizeof(struct ip);
-	while ((ch = getopt(argc, argv,
-		"4AaC:c:DdfG:g:Hh:I:i:Ll:M:m:nop:QqRrS:s:T:t:vW:z:"
-#ifdef IPSEC
-#ifdef IPSEC_POLICY_IPSEC
-		"P:"
-#endif /*IPSEC_POLICY_IPSEC*/
-#endif /*IPSEC*/
-		)) != -1)
-	{
+	while ((ch = getopt(argc, argv, PING4OPTS)) != -1) {
 		switch(ch) {
 		case '4':
 			/* This option is processed in main(). */

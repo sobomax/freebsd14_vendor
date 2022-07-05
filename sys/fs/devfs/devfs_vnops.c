@@ -33,7 +33,7 @@
  *	@(#)kernfs_vnops.c	8.15 (Berkeley) 5/21/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vnops.c 1.43
  *
- * $FreeBSD: 983bfc8039998baf1ff7e49436c43a86ce55a0ae $
+ * $FreeBSD: a1a06eb6c3e6b38324486dc62621e192ef269e35 $
  */
 
 /*
@@ -974,7 +974,7 @@ devfs_ioctl(struct vop_ioctl_args *ap)
 
 		/* Get rid of reference to old control tty */
 		if (vpold)
-			vrele(vpold);
+			devfs_ctty_unref(vpold);
 	}
 	return (error);
 }
@@ -1354,7 +1354,7 @@ devfs_pathconf(struct vop_pathconf_args *ap)
 #ifdef MAC
 		/*
 		 * If MAC is enabled, devfs automatically supports
-		 * trivial non-persistant label storage.
+		 * trivial non-persistent label storage.
 		 */
 		*ap->a_retval = 1;
 #else

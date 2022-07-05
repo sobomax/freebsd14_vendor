@@ -44,7 +44,7 @@ static char const sccsid[] = "@(#)from: arp.c	8.2 (Berkeley) 1/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 08698c7bc299c35e7ba612ede66ea0f6f1a40e99 $");
+__FBSDID("$FreeBSD: f018baa2679eb17974fd85f1bea8c4a84ea24e5e $");
 
 /*
  * arp - display, set, and delete arp table entries
@@ -299,6 +299,7 @@ valid_type(int type)
 	switch (type) {
 	case IFT_ETHER:
 	case IFT_FDDI:
+	case IFT_IEEE1394:
 	case IFT_INFINIBAND:
 	case IFT_ISO88023:
 	case IFT_ISO88024:

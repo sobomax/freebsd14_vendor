@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 71476d2b5f3c92e226a75bb52069f3c3fb735fd2 $
+ * $FreeBSD: ae450ac88ba17d99c7e07c2dab3215172de288bb $
  */
 
 #ifndef _NET_ROUTING_RTSOCK_COMMON_H_
@@ -454,7 +454,7 @@ sa_equal_msg_flags(const struct sockaddr *a, const struct sockaddr *b, char *msg
 		b6 = (const struct sockaddr_in6 *)b;
 		if (!IN6_ARE_ADDR_EQUAL(&a6->sin6_addr, &b6->sin6_addr)) {
 			inet_ntop(AF_INET6, &a6->sin6_addr, a_s, sizeof(a_s));
-			inet_ntop(AF_INET6, &b6->sin6_addr, a_s, sizeof(a_s));
+			inet_ntop(AF_INET6, &b6->sin6_addr, b_s, sizeof(b_s));
 			snprintf(msg, sz, "addr diff: %s vs %s", a_s, b_s);
 			return 0;
 		}

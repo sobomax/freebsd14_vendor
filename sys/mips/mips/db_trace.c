@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0762fdb8a1da89fcfda73df39f29681de0d8301c $");
+__FBSDID("$FreeBSD: 4903b6d3d432ef74008bdc45b0cd6395987611e5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -393,20 +393,6 @@ done:
 			goto loop;
 		}
 	}
-}
-
-int
-db_md_set_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return(0);
-}
-
-int
-db_md_clr_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return(0);
 }
 
 void

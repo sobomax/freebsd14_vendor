@@ -9,7 +9,7 @@
  *
  * Ari Suutari <suutari@iki.fi>
  *
- * $FreeBSD: 1509b965f4b81f7aa5b8caa44138e2f16cced6c7 $
+ * $FreeBSD: f85457ac4773f880c56f640974b73f855f078487 $
  */
 
 #include <stdlib.h>
@@ -30,7 +30,6 @@
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
-#include <machine/in_cksum.h>
 
 #include <alias.h>
 

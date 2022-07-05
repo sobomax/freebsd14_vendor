@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f627706860afd6cad06835499d845b652e90d0c $");
+__FBSDID("$FreeBSD: 58bcd0fbd2bb4d156f49264e52efbb94507c03df $");
 
 #include "opt_platform.h"
 
@@ -144,6 +144,8 @@ gpioleds_detach_led(struct gpioled *led)
 static int
 gpioled_probe(device_t dev)
 {
+	if (!ofw_bus_status_okay(dev))
+		return (ENXIO);
 	if (!ofw_bus_is_compatible(dev, "gpio-leds"))
 		return (ENXIO);
 

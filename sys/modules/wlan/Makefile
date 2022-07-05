@@ -1,4 +1,4 @@
-# $FreeBSD: f50aa750280941c0bb1aa36824808bf6732ca346 $
+# $FreeBSD: 2a31e11492b0dfbf2060dc5b9796fecacbe8b580 $
 
 .PATH: ${SRCTOP}/sys/net80211
 
@@ -15,6 +15,8 @@ SRCS=	ieee80211.c ieee80211_action.c ieee80211_ageq.c \
 	ieee80211_tdma.c ieee80211_superg.c ieee80211_vht.c
 SRCS+=	bus_if.h device_if.h opt_ddb.h opt_inet.h opt_inet6.h \
 	opt_tdma.h opt_wlan.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>
 

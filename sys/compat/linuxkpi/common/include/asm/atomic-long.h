@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c80c348f95f9c37cda44d684bdbb6fd9ca9b1383 $
+ * $FreeBSD: f8bd9edfccf9b159ac89b509b08b4dc11c4d072b $
  */
-#ifndef	_ATOMIC_LONG_H_
-#define	_ATOMIC_LONG_H_
+#ifndef	_LINUXKPI_ASM_ATOMIC_LONG_H_
+#define	_LINUXKPI_ASM_ATOMIC_LONG_H_
 
 #include <linux/compiler.h>
 #include <sys/types.h>
@@ -130,4 +130,4 @@ atomic_long_dec_and_test(atomic_long_t *v)
 	return i == 0 ;
 }
 
-#endif	/* _ATOMIC_LONG_H_ */
+#endif	/* _LINUXKPI_ASM_ATOMIC_LONG_H_ */

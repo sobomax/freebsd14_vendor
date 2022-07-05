@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1366e75ad26a33f3c07d24c238234dc57e3c05d5 $
+ * $FreeBSD: 6273fa969db880fbbded8ff1e427145fd60890b0 $
  */
-#ifndef	_LINUX_GFP_H_
-#define	_LINUX_GFP_H_
+#ifndef	_LINUXKPI_LINUX_GFP_H_
+#define	_LINUXKPI_LINUX_GFP_H_
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
@@ -184,4 +184,4 @@ gfpflags_allow_blocking(const gfp_t gfp_flags)
 #define	SetPageReserved(page)	do { } while (0)	/* NOP */
 #define	ClearPageReserved(page)	do { } while (0)	/* NOP */
 
-#endif	/* _LINUX_GFP_H_ */
+#endif	/* _LINUXKPI_LINUX_GFP_H_ */

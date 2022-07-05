@@ -1,6 +1,8 @@
-# $FreeBSD: e40017016f1894913b08bc2ece436ece6eb150d6 $
+# $FreeBSD: d22a01597ced17fe1002e95f00aa683c98264ed3 $
 
 .include <src.opts.mk>
+
+PACKAGE=	kerberos
 
 PROG=	gssd
 MAN=	gssd.8

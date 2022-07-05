@@ -1,4 +1,4 @@
-# $FreeBSD: 2c9fdc00e3b5395a9a9a65abdcca719efd168786 $
+# $FreeBSD: 16ef1d3fc5047778f06bea039ed8e3dc601fa18d $
 
 GCC_3.0 {
 };
@@ -29,3 +29,6 @@ GCC_4.2.0 {
 
 GCC_4.3.0 {
 } GCC_4.2.0;
+
+GCC_4.6.0 {
+} GCC_4.3.0;

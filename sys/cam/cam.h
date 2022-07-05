@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2aaa2e3a577505da1df06af08668268fc2376987 $
+ * $FreeBSD: cb26d06723f5901ae01f52e63a0d5c1074c91967 $
  */
 
 #ifndef _CAM_CAM_H
@@ -377,6 +377,8 @@ caddr_t	cam_quirkmatch(caddr_t target, caddr_t quirk_table, int num_entries,
 		       int entry_size, cam_quirkmatch_t *comp_func);
 
 void	cam_strvis(u_int8_t *dst, const u_int8_t *src, int srclen, int dstlen);
+void	cam_strvis_flag(u_int8_t *dst, const u_int8_t *src, int srclen,
+			int dstlen, uint32_t flags);
 void	cam_strvis_sbuf(struct sbuf *sb, const u_int8_t *src, int srclen,
 			uint32_t flags);
 

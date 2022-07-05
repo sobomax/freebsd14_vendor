@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4ed04f632324850811c1743dc17fe3cd2b755492 $");
+__FBSDID("$FreeBSD: d6f9a0428b6ab4b7bb44c8e7934880bfac575b6d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -61,8 +61,10 @@ g_label_reiserfs_read_super(struct g_consumer *cp, off_t offset)
 
 	if ((offset % secsize) != 0)
 		return (NULL);
+	if (secsize < sizeof(*fs))
+		return (NULL);
 
-	fs = (reiserfs_sb_t *)g_read_data(cp, offset, secsize, NULL);
+	fs = g_read_data(cp, offset, secsize, NULL);
 	if (fs == NULL)
 		return (NULL);
 

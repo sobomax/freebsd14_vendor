@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_alloc.c	8.8 (Berkeley) 2/21/94
- * $FreeBSD: 4c265a1a8bccc435f5f76e97dc649e5153309db0 $
+ * $FreeBSD: 79df804aceb85e80780ade6b4ac0d027124eb599 $
  */
 
 #include <sys/param.h>
@@ -90,13 +90,13 @@ static daddr_t  ext2_mapsearch(struct m_ext2fs *, char *, daddr_t);
  *   1) allocate the requested block.
  *   2) allocate a rotationally optimal block in the same cylinder.
  *   3) allocate a block in the same cylinder group.
- *   4) quadradically rehash into other cylinder groups, until an
+ *   4) quadratically rehash into other cylinder groups, until an
  *        available block is located.
  * If no block preference is given the following hierarchy is used
  * to allocate a block:
  *   1) allocate a block in the cylinder group that contains the
  *        inode for the file.
- *   2) quadradically rehash into other cylinder groups, until an
+ *   2) quadratically rehash into other cylinder groups, until an
  *        available block is located.
  */
 int
@@ -744,7 +744,7 @@ ext2_blkpref(struct inode *ip, e2fs_lbn_t lbn, int indx, e2fs_daddr_t *bap,
  *
  * The policy implemented by this algorithm is:
  *   1) allocate the block in its requested cylinder group.
- *   2) quadradically rehash on the cylinder group number.
+ *   2) quadratically rehash on the cylinder group number.
  *   3) brute force search for a free block.
  */
 static e4fs_daddr_t

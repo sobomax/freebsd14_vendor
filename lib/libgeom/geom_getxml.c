@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-3-Clause-FreeBSD
  *
  * Copyright (c) 2003 Poul-Henning Kamp
  * All rights reserved.
@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f3d7ba9deb03504d014a446b798dd501d20f2904 $
+ * $FreeBSD: 48565f707b03a318983c46237ec61e89f8c4f354 $
  */
 
 #include <sys/types.h>

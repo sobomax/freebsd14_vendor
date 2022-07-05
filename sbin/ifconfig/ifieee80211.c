@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bb406469829aabbd9d4c31867043dd11c3e4f7ae $
+ * $FreeBSD: ee611a14b45e3dc035a4f540dd4f0b4fb76cb0d7 $
  */
 
 /*-
@@ -239,7 +239,7 @@ getchaninfo(int s)
 	if (get80211(s, IEEE80211_IOC_CHANINFO, chaninfo,
 	    IEEE80211_CHANINFO_SIZE(MAXCHAN)) < 0)
 		err(1, "unable to get channel information");
-	ifmr = ifmedia_getstate(s);
+	ifmr = ifmedia_getstate();
 	gethtconf(s);
 	getvhtconf(s);
 }
@@ -5060,6 +5060,8 @@ ieee80211_status(int s)
 				printkey(&ik);
 			}
 		}
+		if (i > 0 && verbose)
+			LINE_BREAK();
 end:
 		;
 	}

@@ -1,5 +1,7 @@
 #	from: @(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: a65d1d7da981e68e62746dc3ff921400ff11e750 $
+# $FreeBSD: 0296e455f3988348be08d9224280435572d042ca $
+
+PACKAGE=	runtime
 
 CONFS=	gettytab
 PROG=	getty

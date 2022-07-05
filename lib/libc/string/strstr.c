@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: MIT
  *
  * Copyright (c) 2005-2014 Rich Felker, et al.
  *
@@ -23,7 +23,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72f8abb9e2005653e363175ec3de09a7396f143b $");
+__FBSDID("$FreeBSD: 2ca0d4fd03c1a17558c99d850865d1d8170659dc $");
 
 #include <stdint.h>
 #include <string.h>
@@ -149,7 +149,7 @@ twoway_strstr(const unsigned char *h, const unsigned char *n)
 	for (;;) {
 		/* Update incremental end-of-haystack pointer */
 		if (z - h < l) {
-			/* Fast estimate for MIN(l,63) */
+			/* Fast estimate for MAX(l,63) */
 			size_t grow = l | 63;
 			const unsigned char *z2 = memchr(z, 0, grow);
 			if (z2) {

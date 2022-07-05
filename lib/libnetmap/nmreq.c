@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7f4b2703d22dc2efa67c3192d920b7250c061e64 $
+ * $FreeBSD: 31ddea91f6a53e9dc62aa5e443ee5b90ef1177ad $
  */
 
 #include <sys/types.h>
@@ -256,6 +256,8 @@ nmreq_register_decode(const char **pifname, struct nmreq_register *r, struct nmc
 	uint16_t nr_mem_id;
 	uint16_t nr_ringid;
 	uint64_t nr_flags;
+
+	errno = 0;
 
 	/* fill the request */
 

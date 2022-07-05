@@ -1,5 +1,5 @@
-.\" $FreeBSD: 829a3a704f50c491194dd2d1454ec0d7364d712b $
-Set to install
+.\" $FreeBSD: 0d32dfde25c56592ad340b40d5ef9ad262fd8eda $
+Install
 .Xr svnlite 1
 as
 .Xr svn 1 .

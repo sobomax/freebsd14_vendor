@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b0ba01a2a3194cf26996567eabd122d7ff6d5e35 $
+ * $FreeBSD: 9808b3a8d8316aee02b173467a55db85fb7664cc $
  */
 
 #ifndef _MACHINE_VFP_H_
@@ -68,6 +67,7 @@ struct thread;
 
 void	vfp_init(void);
 void	vfp_discard(struct thread *);
+void	vfp_reset_state(struct thread *, struct pcb *);
 void	vfp_restore_state(void);
 void	vfp_save_state(struct thread *, struct pcb *);
 

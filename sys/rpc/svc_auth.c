@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)svc_auth.c 1.26 89/02/07 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c5a68688d489ae216a52ae09f2fc26210963f9a $");
+__FBSDID("$FreeBSD: 75d1f21d348479ba057789f325417ca21171af23 $");
 
 /*
  * svc_auth.c, Server-side rpc authenticator interface.
@@ -60,7 +60,7 @@ static enum auth_stat (*_svcauth_rpcsec_gss)(struct svc_req *,
 static int (*_svcauth_rpcsec_gss_getcred)(struct svc_req *,
     struct ucred **, int *);
 
-static struct svc_auth_ops svc_auth_null_ops;
+static const struct svc_auth_ops svc_auth_null_ops;
 
 /*
  * The call rpc message, msg has been obtained from the wire.  The msg contains
@@ -145,10 +145,10 @@ svcauth_null_release(SVCAUTH *auth)
 
 }
 
-static struct svc_auth_ops svc_auth_null_ops = {
-	svcauth_null_wrap,
-	svcauth_null_unwrap,
-	svcauth_null_release,
+static const struct svc_auth_ops svc_auth_null_ops = {
+	.svc_ah_wrap = svcauth_null_wrap,
+	.svc_ah_unwrap = svcauth_null_unwrap,
+	.svc_ah_release = svcauth_null_release,
 };
 
 /*ARGSUSED*/

@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dd25b02115a84eeeafe6f6b6ac45ff891d286458 $
+ * $FreeBSD: c349edb16bf444a854a123feeae56660eaa8a985 $
  */
 
-#ifndef _ASM_SMP_H_
-#define	_ASM_SMP_H_
+#ifndef _LINUXKPI_ASM_SMP_H_
+#define	_LINUXKPI_ASM_SMP_H_
 
 #if defined(__i386__) || defined(__amd64__)
 
@@ -45,4 +45,4 @@ int	linux_wbinvd_on_all_cpus(void);
 #define	put_cpu()			\
 	critical_exit()
 
-#endif /* _ASM_SMP_H_ */
+#endif /* _LINUXKPI_ASM_SMP_H_ */

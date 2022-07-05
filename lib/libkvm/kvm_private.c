@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d853d164310189623aea3af66cdc9520ddc975ef $");
+__FBSDID("$FreeBSD: a45f66caf2fe7c99bfb55bea56a2cd18bc97e54b $");
 
 #include <sys/param.h>
 #include <sys/fnv_hash.h>
@@ -792,8 +792,8 @@ _kvm_bitmap_next(struct kvm_bitmap *bm, u_long *idx)
 
 	/* Find the next valid idx. */
 	for (; *idx < first_invalid; (*idx)++) {
-		unsigned int mask = *idx % CHAR_BIT;
-		if ((bm->map[*idx * CHAR_BIT] & mask) == 0)
+		unsigned int mask = 1U << (*idx % CHAR_BIT);
+		if ((bm->map[*idx / CHAR_BIT] & mask) != 0)
 			break;
 	}
 

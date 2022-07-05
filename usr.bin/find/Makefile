@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: b227c95509f66c081c4564bc8338778f45cbd759 $
+# $FreeBSD: b93fdba5bd4fbf962d5db4b4b37e5f822ada1bf8 $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=	find
 SRCS=	find.c function.c ls.c main.c misc.c operator.c option.c \

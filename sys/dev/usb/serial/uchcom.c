@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b17141c6ece111433cd9a7e2ffd1c888f22f1d4 $");
+__FBSDID("$FreeBSD: 4abef78c4b2e0664e8266ddac569780d96062cdd $");
 
 /*
  * Driver for WinChipHead CH341/340, the worst USB-serial chip in the
@@ -329,6 +329,7 @@ uchcom_attach(device_t dev)
 		device_printf(dev, "CH340 detected\n");
 		break;
 	case USB_PRODUCT_WCH2_CH341SER_2:
+	case USB_PRODUCT_WCH2_CH341SER_3:
 		device_printf(dev, "CH341 detected\n");
 		break;
 	default:

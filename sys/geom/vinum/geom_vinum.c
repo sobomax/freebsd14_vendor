@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c60a051619f3b5cf8a48231c92def6b5d0fe1e3 $");
+__FBSDID("$FreeBSD: 86f5c9f08e1f47ae9d15b23c78cb41e223ec9d4e $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -599,6 +599,7 @@ gv_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	sc = gp->softc;
 
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	if (g_attach(cp, pp) != 0) {
 		g_destroy_consumer(cp);
 		return (NULL);

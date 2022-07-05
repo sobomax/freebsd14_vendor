@@ -23,12 +23,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3f5684015547cb86046637a0a5a58b491e1a3429 $
+ * $FreeBSD: c6d011fceb5f04804304bcc033f02d5d9defa693 $
  */
 
-#ifndef _LINUX_SMP_H_
-#define	_LINUX_SMP_H_
+#ifndef _LINUXKPI_LINUX_SMP_H_
+#define	_LINUXKPI_LINUX_SMP_H_
 
+/*
+ * Important note about the use of the function provided below:
+ *
+ * The callback function passed to on_each_cpu() is called from a
+ * so-called critical section, and if you need a mutex you will have
+ * to rewrite the code to use native FreeBSD mtx spinlocks instead of
+ * the spinlocks provided by the LinuxKPI! Be very careful to not call
+ * any LinuxKPI functions inside the on_each_cpu()'s callback
+ * function, because they may sleep, unlike in native Linux.
+ *
+ * Enabling witness(4) when testing, can catch such issues.
+ */
 #define	on_each_cpu(cb, data, wait) ({				\
 	CTASSERT(wait);						\
 	linux_on_each_cpu(cb, data);				\
@@ -36,4 +48,4 @@
 
 extern int	linux_on_each_cpu(void (*)(void *), void *);
 
-#endif /* _LINUX_SMP_H_ */
+#endif /* _LINUXKPI_LINUX_SMP_H_ */

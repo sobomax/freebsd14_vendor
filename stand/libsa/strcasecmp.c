@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8131019384c1c7726d8fc0fd4cba23e12475b33 $");
+__FBSDID("$FreeBSD: 12ec81b022c4b21f246a3592e9c42ffa4bb1e7c4 $");
 
 #include <sys/cdefs.h>
 #include <string.h>
@@ -39,8 +39,7 @@ static char sccsid[] = "@(#)strcasecmp.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 
 int
-strcasecmp(s1, s2)
-	const char *s1, *s2;
+strcasecmp(const char *s1, const char *s2)
 {
 	const u_char
 			*us1 = (const u_char *)s1,
@@ -53,9 +52,7 @@ strcasecmp(s1, s2)
 }
 
 int
-strncasecmp(s1, s2, n)
-	const char *s1, *s2;
-	size_t n;
+strncasecmp(const char *s1, const char *s2, size_t n)
 {
 	if (n != 0) {
 		const u_char

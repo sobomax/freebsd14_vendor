@@ -1,3 +1,5 @@
-.\" $FreeBSD: b8880d9459ccf2a96ec6b6174cbf1adb03ba4d6e $
-Set to build profiled libraries for use with
+.\" $FreeBSD: 3f91c43949112993a60eb82e9b5fda484644ab23 $
+Build profiled libraries for use with
 .Xr gprof 8 .
+This option is deprecated and is not present in
+.Fx 14 .

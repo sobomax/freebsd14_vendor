@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015-2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -34,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f1118d36bf5ba676d94d1ea1a90298e520bbd86 $");
+__FBSDID("$FreeBSD: 76304eadf3815d85eacf39986d2b822f2497776f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -239,6 +238,7 @@ init_secondary(uint64_t cpu)
 	 * We need this before signalling the CPU is ready to
 	 * let the boot CPU use the results.
 	 */
+	pcpup->pc_midr = get_midr();
 	identify_cpu(cpu);
 
 	/* Ensure the stores in identify_cpu have completed */
@@ -249,11 +249,10 @@ init_secondary(uint64_t cpu)
 	while (!atomic_load_int(&aps_ready))
 		__asm __volatile("wfe");
 
-	pcpup->pc_midr = get_midr();
-
 	/* Initialize curthread */
 	KASSERT(PCPU_GET(idlethread) != NULL, ("no idle thread"));
 	pcpup->pc_curthread = pcpup->pc_idlethread;
+	schedinit_ap();
 
 	/* Initialize curpmap to match TTBR0's current setting. */
 	pmap0 = vmspace_pmap(&vmspace0);
@@ -364,6 +363,8 @@ intr_pic_ipi_setup(u_int ipi, const char *name, intr_ipi_handler_t *hand,
 	ii->ii_send_arg = isrc;
 	strlcpy(ii->ii_name, name, INTR_IPI_NAMELEN);
 	ii->ii_count = intr_ipi_setup_counters(name);
+
+	PIC_ENABLE_INTR(intr_irq_root_dev, isrc);
 }
 
 static void
@@ -437,8 +438,35 @@ ipi_stop(void *dummy __unused)
 struct cpu_group *
 cpu_topo(void)
 {
+	struct cpu_group *dom, *root;
+	int i;
 
-	return (smp_topo_none());
+	root = smp_topo_alloc(1);
+	dom = smp_topo_alloc(vm_ndomains);
+
+	root->cg_parent = NULL;
+	root->cg_child = dom;
+	CPU_COPY(&all_cpus, &root->cg_mask);
+	root->cg_count = mp_ncpus;
+	root->cg_children = vm_ndomains;
+	root->cg_level = CG_SHARE_NONE;
+	root->cg_flags = 0;
+
+	/*
+	 * Redundant layers will be collapsed by the caller so we don't need a
+	 * special case for a single domain.
+	 */
+	for (i = 0; i < vm_ndomains; i++, dom++) {
+		dom->cg_parent = root;
+		dom->cg_child = NULL;
+		CPU_COPY(&cpuset_domain[i], &dom->cg_mask);
+		dom->cg_count = CPU_COUNT(&dom->cg_mask);
+		dom->cg_children = 0;
+		dom->cg_level = CG_SHARE_L3;
+		dom->cg_flags = 0;
+	}
+
+	return (root);
 }
 
 /* Determine if we running MP machine */

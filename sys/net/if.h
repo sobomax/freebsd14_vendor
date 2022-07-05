@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 83597a7d390a6319bb64712b8d3d672f0b0586dd $
+ * $FreeBSD: e6073563bce234cf7399a50e5050025586abb96c $
  */
 
 #ifndef _NET_IF_H_
@@ -245,7 +245,7 @@ struct if_data {
 #define	IFCAP_HWSTATS		0x800000 /* manages counters internally */
 #define	IFCAP_TXRTLMT		0x1000000 /* hardware supports TX rate limiting */
 #define	IFCAP_HWRXTSTMP		0x2000000 /* hardware rx timestamping */
-#define	IFCAP_NOMAP		0x4000000 /* can TX unmapped mbufs */
+#define	IFCAP_MEXTPG		0x4000000 /* understands M_EXTPG mbufs */
 #define	IFCAP_TXTLS4		0x8000000 /* can do TLS encryption and segmentation for TCP */
 #define	IFCAP_TXTLS6		0x10000000 /* can do TLS encryption and segmentation for TCP6 */
 #define	IFCAP_VXLAN_HWCSUM	0x20000000 /* can do IFCAN_HWCSUM on VXLANs */

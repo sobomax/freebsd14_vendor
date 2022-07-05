@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ae292439bf5427e9f9f1cde5e23bc04fe3fb9278 $
+ * $FreeBSD: cafbb64f3f3e2087f40cf555e892121cd27edbcb $
  */
-#ifndef	_LINUX_NOTIFIER_H_
-#define	_LINUX_NOTIFIER_H_
+#ifndef	_LINUXKPI_LINUX_NOTIFIER_H_
+#define	_LINUXKPI_LINUX_NOTIFIER_H_
 
 #include <sys/types.h>
 #include <sys/eventhandler.h>
@@ -54,4 +54,4 @@ struct notifier_block {
 	eventhandler_tag tags[LINUX_NOTIFY_TAGS];
 };
 
-#endif					/* _LINUX_NOTIFIER_H_ */
+#endif					/* _LINUXKPI_LINUX_NOTIFIER_H_ */

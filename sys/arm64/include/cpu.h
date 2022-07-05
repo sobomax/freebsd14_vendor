@@ -35,7 +35,7 @@
  *
  *	from: @(#)cpu.h 5.4 (Berkeley) 5/9/91
  *	from: FreeBSD: src/sys/i386/include/cpu.h,v 1.62 2001/06/29
- * $FreeBSD: 529f156f2e96d610b13a3b6ce2cbd3929270c943 $
+ * $FreeBSD: b37301c276cefd4cf119839acea9a27bab473f45 $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -45,7 +45,7 @@
 #include <machine/frame.h>
 #include <machine/armreg.h>
 
-#define	TRAPF_PC(tfp)		((tfp)->tf_lr)
+#define	TRAPF_PC(tfp)		((tfp)->tf_elr)
 #define	TRAPF_USERMODE(tfp)	(((tfp)->tf_spsr & PSR_M_MASK) == PSR_M_EL0t)
 
 #define	cpu_getstack(td)	((td)->td_frame->tf_sp)
@@ -77,6 +77,7 @@
 #define	CPU_IMPL_APM		0x50
 #define	CPU_IMPL_QUALCOMM	0x51
 #define	CPU_IMPL_MARVELL	0x56
+#define	CPU_IMPL_APPLE		0x61
 #define	CPU_IMPL_INTEL		0x69
 
 /* ARM Part numbers */
@@ -93,6 +94,7 @@
 #define	CPU_PART_NEOVERSE_N1	0xD0C
 #define	CPU_PART_CORTEX_A77	0xD0D
 #define	CPU_PART_CORTEX_A76AE	0xD0E
+#define	CPU_PART_AEM_V8		0xD0F
 
 /* Cavium Part numbers */
 #define	CPU_PART_THUNDERX	0x0A1
@@ -196,7 +198,8 @@ arm64_address_translate_ ##stage (uint64_t addr)		\
 	uint64_t ret;						\
 								\
 	__asm __volatile(					\
-	    "at " __STRING(stage) ", %1 \n"					\
+	    "at " __STRING(stage) ", %1 \n"			\
+	    "isb \n"						\
 	    "mrs %0, par_el1" : "=r"(ret) : "r"(addr));		\
 								\
 	return (ret);						\

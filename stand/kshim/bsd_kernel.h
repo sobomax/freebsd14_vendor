@@ -1,4 +1,4 @@
-/* $FreeBSD: 3ec1f54f74e46dea1cec908dd720920619ce80bc $ */
+/* $FreeBSD: 9e870475127f1e122af6c9c5f52336ddf979c921 $ */
 /*-
  * Copyright (c) 2011 Hans Petter Selasky. All rights reserved.
  *
@@ -241,6 +241,8 @@ typedef unsigned long size_t;
 typedef signed long ssize_t;
 #define	_OFF_T_DECLARED
 typedef unsigned long off_t;
+
+typedef int64_t sbintime_t;
 
 typedef unsigned char   u_char;
 typedef unsigned short  u_short;

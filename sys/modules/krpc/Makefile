@@ -1,4 +1,4 @@
-# $FreeBSD: 72adceac32ceee0d4bef397f8e04a6c6858caebe $
+# $FreeBSD: e8946f0ba4ef3b1f28337ca0e5343821ad3923da $
 
 .PATH: ${SRCTOP}/sys/rpc ${SRCTOP}/sys/rpc/rpcsec_tls
 KMOD=	krpc
@@ -54,5 +54,7 @@ rpctlssd_xdr.c:	$S/rpc/rpcsec_tls/rpctlssd.x
 
 rpctlssd_clnt.c:	$S/rpc/rpcsec_tls/rpctlssd.x
 	RPCGEN_CPP=${CPP:Q} rpcgen -lM $S/rpc/rpcsec_tls/rpctlssd.x | grep -v string.h > rpctlssd_clnt.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

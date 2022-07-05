@@ -1,17 +1,16 @@
-# $FreeBSD: 9fd4e3ca98a0e4ce18e086f70994b1c0bd103865 $
+# $FreeBSD: d3b6933412764df17c946b937a0da9720b132ff3 $
 
 .include "../Makefile.inc"
 
-.PATH.c:${WPA_SUPPLICANT_DISTDIR} \
-	${WPA_DISTDIR}/src/drivers
+.include "../Makefile.crypto"
+
+.PATH.c:${WPA_SUPPLICANT_DISTDIR}
 
 PACKAGE=	wpa
 PROG=	wpa_priv
-SRCS=	drivers.c os_unix.c eloop.c common.c wpa_debug.c wpabuf.c wpa_priv.c \
-	driver_common.c l2_packet_freebsd.c
+SRCS=	os_unix.c eloop.c common.c wpa_debug.c wpabuf.c wpa_priv.c \
+	l2_packet_freebsd.c
 
-LIBADD=	pcap
-
-.include "../Makefile.crypto"
+LIBADD+=pcap wpadrivers
 
 .include <bsd.prog.mk>

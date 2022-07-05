@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61d1388c26852242a44402d90c55399ea281eec8 $
+ * $FreeBSD: 3db51da04887735df36ffb88986143d1de682074 $
  */
 
 #pragma D depends_on provider ipfw
@@ -212,8 +212,8 @@ translator ipfw_rule_info_t < struct ip_fw *r > {
 	flags =		r->flags;
 	set =		r->set;
 	rule_id =	r->id;
-	cached_id =	r->cached_id;
-	cached_pos =	r->cached_pos;
+	cached_id =	r->cache.id;
+	cached_pos =	r->cache.pos;
 	refcnt =	r->refcnt;
 };
 

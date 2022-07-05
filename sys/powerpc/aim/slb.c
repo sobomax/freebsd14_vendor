@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 886e11c9b35656ad86be5c03cbbba912e4c1cb56 $
+ * $FreeBSD: c107fcbcfc432755f5875b0cc0cfb3a8946b087a $
  */
 
 #include <sys/param.h>
@@ -500,9 +500,9 @@ slb_uma_real_alloc(uma_zone_t zone, vm_size_t bytes, int domain,
 		realmax = platform_real_maxaddr();
 
 	*flags = UMA_SLAB_PRIV;
-	m = vm_page_alloc_contig_domain(NULL, 0, domain,
-	    malloc2vm_flags(wait) | VM_ALLOC_NOOBJ | VM_ALLOC_WIRED,
-	    1, 0, realmax, PAGE_SIZE, PAGE_SIZE, VM_MEMATTR_DEFAULT);
+	m = vm_page_alloc_noobj_contig_domain(domain, malloc2vm_flags(wait) |
+	    VM_ALLOC_WIRED, 1, 0, realmax, PAGE_SIZE, PAGE_SIZE,
+	    VM_MEMATTR_DEFAULT);
 	if (m == NULL)
 		return (NULL);
 
@@ -512,9 +512,6 @@ slb_uma_real_alloc(uma_zone_t zone, vm_size_t bytes, int domain,
 		va = (void *)(VM_PAGE_TO_PHYS(m) | DMAP_BASE_ADDRESS);
 		pmap_kenter((vm_offset_t)va, VM_PAGE_TO_PHYS(m));
 	}
-
-	if ((wait & M_ZERO) && (m->flags & PG_ZERO) == 0)
-		bzero(va, PAGE_SIZE);
 
 	return (va);
 }

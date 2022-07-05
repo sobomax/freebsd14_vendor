@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e6bea1e244cc4a998429f0c263a1314b842bc78 $");
+__FBSDID("$FreeBSD: 9cb5550344ca9d9dcb7f56296f7f2d9532e8bf46 $");
 
 #include <string.h>
 #include <stand.h>
@@ -178,4 +178,26 @@ dev_cleanup(void)
     for (i = 0; devsw[i] != NULL; ++i)
 	if (devsw[i]->dv_cleanup != NULL)
 	    (devsw[i]->dv_cleanup)();
+}
+
+/*
+ * mount new rootfs and unmount old, set "currdev" environment variable.
+ */
+int mount_currdev(struct env_var *ev, int flags, const void *value)
+{
+	int rv;
+
+	/* mount new rootfs */
+	rv = mount(value, "/", 0, NULL);
+	if (rv == 0) {
+		/*
+		 * Note we unmount any previously mounted fs only after
+		 * successfully mounting the new because we do not want to
+		 * end up with unmounted rootfs.
+		 */
+		if (ev->ev_value != NULL)
+			unmount(ev->ev_value, 0);
+		env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
+	}
+	return (rv);
 }

@@ -1,4 +1,4 @@
-# $FreeBSD: 8174f4e06bba5060bb9fcd86b908e09fc31c0f73 $
+# $FreeBSD: 9f21da5267eb1f4df4138f2a983354b744b68ff1 $
 
 SHLIBDIR?= /lib
 
@@ -132,6 +132,7 @@ MAN=	elf.3							\
 	gelf_checksum.3						\
 	gelf_fsize.3						\
 	gelf_getcap.3						\
+	gelf_getchdr.3						\
 	gelf_getclass.3						\
 	gelf_getdyn.3						\
 	gelf_getehdr.3						\
@@ -179,6 +180,7 @@ MLINKS+= \
 MLINKS+= \
 	gelf_checksum.3	elf${E}_checksum.3 	\
 	gelf_fsize.3	elf${E}_fsize.3 	\
+	gelf_getchdr.3	elf${E}_getchdr.3	\
 	gelf_getehdr.3	elf${E}_getehdr.3	\
 	gelf_getphdr.3	elf${E}_getphdr.3	\
 	gelf_getshdr.3	elf${E}_getshdr.3	\

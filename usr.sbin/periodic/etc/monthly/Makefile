@@ -1,6 +1,8 @@
-# $FreeBSD: ddcc9d9372c14f4cfbd7cec57a74dcfd39cc0eaa $
+# $FreeBSD: b4aaf6967891ff8c82f0c00700ebe39cad707810 $
 
 .include <src.opts.mk>
+
+PACKAGE=	periodic
 
 CONFGROUPS=	CONFS
 

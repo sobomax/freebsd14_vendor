@@ -1,5 +1,5 @@
-.\" $FreeBSD: 6d130e106a93eba42261ccc60c78f6402afa8137 $
-Set to make install targets succeed for non-root users by installing
+.\" $FreeBSD: 8e4a3f35842927770a695c7cf82ba2efd62819cb $
+Make install targets succeed for non-root users by installing
 files with owner and group attributes set to that of the user running
 the
 .Xr make 1

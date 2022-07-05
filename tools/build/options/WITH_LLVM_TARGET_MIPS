@@ -1,5 +1,5 @@
-.\" $FreeBSD: 9f660fe24cb763d9b342791052ca16bd2691378c $
-Set to build LLVM target support for MIPS.
+.\" $FreeBSD: 2f625a5ede4b8e9df8b72f525b10b29a50520309 $
+Build LLVM target support for MIPS.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

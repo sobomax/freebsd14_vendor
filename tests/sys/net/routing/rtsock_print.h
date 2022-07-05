@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b44fcca250533be7db2b8c6d7e5079932fb588f7 $
+ * $FreeBSD: 20bb1c51bc33a110dfd1a5dc3165a0ceb2ef4ead $
  */
 
 #ifndef _NET_ROUTING_RTSOCK_PRINT_H_
@@ -40,7 +40,10 @@
 #define	RTSOCK_ATF_REQUIRE_MSG(_rtm, _cond, _fmt, ...)	 do {	\
 	if (!(_cond)) {						\
 		printf("-- CONDITION FAILED, rtm dump  --\n\n");\
-		rtsock_print_message(_rtm);				\
+		rtsock_print_message(_rtm);			\
+		rtsock_print_table(AF_INET);			\
+		rtsock_print_table(AF_INET6);			\
+		printf("===================================\n");\
 	}							\
 	ATF_REQUIRE_MSG(_cond, _fmt, ##__VA_ARGS__);		\
 } while (0);
@@ -379,6 +382,33 @@ rtsock_print_message(struct rt_msghdr *rtm)
 	default:
 		printf("unknown rt message type %X\n", rtm->rtm_type);
 	}
+}
+
+static void
+print_command(char *cmd)
+{
+	char line[1024];
+
+	FILE *fp = popen(cmd, "r");
+	if (fp != NULL) {
+		while (fgets(line, sizeof(line), fp) != NULL)
+			printf("%s", line);
+		pclose(fp);
+	}
+}
+
+void
+rtsock_print_table(int family)
+{
+	char cmdbuf[128];
+	char *key = (family == AF_INET) ? "4" : "6";
+
+	snprintf(cmdbuf, sizeof(cmdbuf), "/usr/bin/netstat -%srnW", key);
+	printf("==== %s ===\n", cmdbuf);
+	print_command(cmdbuf);
+	snprintf(cmdbuf, sizeof(cmdbuf), "/usr/bin/netstat -%sonW", key);
+	printf("==== %s ===\n", cmdbuf);
+	print_command(cmdbuf);
 }
 
 #endif

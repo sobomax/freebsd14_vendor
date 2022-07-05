@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 46e6f46e202bec3e8f7787ef85ba2a64cb10fde4 $
+ * $FreeBSD: 0eae6684ce4463d20f68faf628576467599517ad $
  */
 
 #ifndef _LINUX_ERRNO_H_
@@ -181,5 +181,11 @@
 #define	LINUX_EHWPOISON		133
 
 #define	LINUX_ELAST		LINUX_EHWPOISON
+
+/*
+ * This is a special "internal" errno that must never be returned
+ * to a Linux process, but might be observed via ptrace(2).
+ */
+#define	LINUX_ERESTARTSYS	512
 
 #endif /* _LINUX_ERRNO_H_ */

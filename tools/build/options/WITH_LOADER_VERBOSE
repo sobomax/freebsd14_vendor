@@ -1,4 +1,4 @@
-.\" $FreeBSD: 79b79e9ff9960ad793151ad220ed5c5696293332 $
-Set to build with extra verbose debugging in the loader.
+.\" $FreeBSD: 8c6064d86180dfcf0194fbd130d1cf8b715e9684 $
+Build with extra verbose debugging in the loader.
 May explode already nearly too large loader over the limit.
 Use with care.

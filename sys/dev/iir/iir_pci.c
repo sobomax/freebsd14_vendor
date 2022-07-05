@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1dcdb7397e972cb336b7a72c343c8d3e67a71524 $");
+__FBSDID("$FreeBSD: 51ed27584a93a1265d05ec55b332d55fabda7712 $");
 
 /*
  *  iir_pci.c:  PCI Bus Attachment for Intel Integrated RAID Controller driver
@@ -336,7 +336,7 @@ iir_pci_attach(device_t dev)
     }
 
     gdt_pci_enable_intr(gdt);
-    gone_in_dev(dev, 13, "iir(4) removed");
+    gone_in_dev(dev, 14, "iir(4) removed");
     return (0);
     
 err:

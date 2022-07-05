@@ -38,7 +38,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 296d4a4e25b8f912b07fd62374889f7db4fbf5c8 $
+ * $FreeBSD: 08df65cc289ddeef2df60adb935ed5dd309b6833 $
  */
 
 /*
@@ -1975,6 +1975,7 @@ biba_priv_check(struct ucred *cred, int priv)
 	case PRIV_SCHED_SETPOLICY:
 	case PRIV_SCHED_SET:
 	case PRIV_SCHED_SETPARAM:
+	case PRIV_SCHED_IDPRIO:
 
 	/*
 	 * More IPC privileges.

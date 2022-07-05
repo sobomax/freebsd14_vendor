@@ -1,6 +1,8 @@
-# $FreeBSD: cb5d886e9d365855058af6bdac5e78105e82ce66 $
+# $FreeBSD: 33c8b9cba19315752d66a809103817ffa894c3c5 $
 
 .include <src.opts.mk>
+
+PACKAGE=	telnet
 
 TELNETDIR=	${SRCTOP}/contrib/telnet
 .PATH:		${TELNETDIR}/telnet

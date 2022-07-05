@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e46b32ffcba464bdb91b9a9a35ba15037578ef5 $");
+__FBSDID("$FreeBSD: 15d0848fc0209ed36bb42df48010e122286e5623 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -618,7 +618,7 @@ gpioc_detach(device_t dev)
 
 	for (int i = 0; i < sc->sc_npins; i++) {
 		mtx_destroy(&sc->sc_pin_intr[i].mtx);
-		free(&sc->sc_pin_intr[i].pin, M_GPIOC);
+		free(sc->sc_pin_intr[i].pin, M_GPIOC);
 	}
 	free(sc->sc_pin_intr, M_GPIOC);
 

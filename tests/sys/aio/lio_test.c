@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fb519aac978d070f5a9e5f0fb4bae0815a567844 $
+ * $FreeBSD: a4f5a6a3863248afedeffdd016001c8b66c3b555 $
  */
 
 #define _WANT_ALL_LIO_OPCODES
@@ -131,6 +131,15 @@ ATF_TC_BODY(lio_listio_empty_wait, tc)
 	struct aiocb *list = NULL;
 
 	ATF_REQUIRE_EQ(0, lio_listio(LIO_WAIT, &list, 0, NULL));
+}
+
+/* With LIO_NOWAIT, an empty lio_listio should return immediately */
+ATF_TC_WITHOUT_HEAD(lio_listio_empty_nowait);
+ATF_TC_BODY(lio_listio_empty_nowait, tc)
+{
+	struct aiocb *list = NULL;
+
+	ATF_REQUIRE_EQ(0, lio_listio(LIO_NOWAIT, &list, 0, NULL));
 }
 
 /*
@@ -253,6 +262,7 @@ ATF_TP_ADD_TCS(tp)
 {
 
 	ATF_TP_ADD_TC(tp, lio_listio_eagain_kevent);
+	ATF_TP_ADD_TC(tp, lio_listio_empty_nowait);
 	ATF_TP_ADD_TC(tp, lio_listio_empty_nowait_kevent);
 	ATF_TP_ADD_TC(tp, lio_listio_empty_nowait_signal);
 	ATF_TP_ADD_TC(tp, lio_listio_empty_nowait_thread);

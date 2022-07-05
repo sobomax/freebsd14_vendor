@@ -26,12 +26,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9235e2dff9cf58a8ab63ca83fd3cd367eec806ad $
+ * $FreeBSD: abd30eac49c92484820db6852d3a4b22dcbbc008 $
  */
-#ifndef	_LINUX_IF_ARP_H_
-#define	_LINUX_IF_ARP_H_
+#ifndef	_LINUXKPI_LINUX_IF_ARP_H_
+#define	_LINUXKPI_LINUX_IF_ARP_H_
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if_arp.h>
-#endif	/* _LINUX_IF_ARP_H_ */
+#endif	/* _LINUXKPI_LINUX_IF_ARP_H_ */

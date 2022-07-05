@@ -54,7 +54,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b83cf4b0b27f2156f73facd4bccf8e39fb7bf07f $
+ * $FreeBSD: 0981dbf093eb216cda83962ba48dfee8cca2015a $
  */
 #ifndef _OPENFIRM_H_
 #define	_OPENFIRM_H_
@@ -65,9 +65,9 @@
 #include <sys/cdefs.h>
 #include <sys/types.h>
 
-typedef	unsigned int		ihandle_t;
-typedef unsigned int		phandle_t;
-typedef unsigned long int	cell_t;
+typedef uint32_t		ihandle_t;
+typedef uint32_t		phandle_t;
+typedef uint32_t		cell_t;
 
 extern int		(*openfirmware)(void *);
 extern phandle_t	chosen;
@@ -91,6 +91,7 @@ phandle_t	OF_parent(phandle_t);
 phandle_t	OF_instance_to_package(ihandle_t);
 int		OF_getproplen(phandle_t, const char *);
 int		OF_getprop(phandle_t, const char *, void *, int);
+int		OF_getencprop(phandle_t, const char *, cell_t *, int);
 int		OF_nextprop(phandle_t, const char *, char *);
 int		OF_setprop(phandle_t, const char *, void *, int);
 int		OF_canon(const char *, char *, int);

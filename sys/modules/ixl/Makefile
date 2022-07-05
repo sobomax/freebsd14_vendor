@@ -1,4 +1,4 @@
-#$FreeBSD: 2b524e9744040fa08ab733d90c36292704c9195f $
+#$FreeBSD: fb2fcf6574acc0e4390e3341235e2b2aad7bd0a6 $
 
 .PATH:  ${SRCTOP}/sys/dev/ixl
 
@@ -21,5 +21,7 @@ SRCS    += i40e_common.c i40e_nvm.c i40e_adminq.c i40e_lan_hmc.c i40e_hmc.c i40e
 # Enable iWARP client interface
 # CFLAGS += -DIXL_IW
 # SRCS	+= ixl_iw.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

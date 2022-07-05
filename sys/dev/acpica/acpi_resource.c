@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbd0baaa7d375384fe7528fb50af60903e67e2e0 $");
+__FBSDID("$FreeBSD: 2e813276af8fecad29906d0fbbfc8295abe17f87 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -420,6 +420,27 @@ acpi_parse_resource(ACPI_RESOURCE *res, void *context)
 		ACPI_DEBUG_PRINT((ACPI_DB_RESOURCES, "%s/IO 0x%jx/%ju\n", name,
 		    (uintmax_t)min, (uintmax_t)length));
 		set->set_ioport(dev, arc->context, min, length);
+	    }
+	} else if (res->Data.Address.MinAddressFixed != ACPI_ADDRESS_FIXED &&
+	    res->Data.Address.MaxAddressFixed != ACPI_ADDRESS_FIXED) {
+	    /* Fixed size, variable location resource descriptor */
+	    min = roundup(min, gran + 1);
+	    if ((min + length - 1) > max) {
+		device_printf(dev,
+		    "invalid memory range: start: %jx end: %jx max: %jx\n",
+		    (uintmax_t)min, (uintmax_t)(min + length - 1),
+		    (uintmax_t)max);
+	    } else {
+		if (res->Data.Address.ResourceType == ACPI_MEMORY_RANGE) {
+		    ACPI_DEBUG_PRINT((ACPI_DB_RESOURCES,
+			"%s/Memory 0x%jx/%ju\n", name, (uintmax_t)min,
+			(uintmax_t)length));
+		    set->set_memory(dev, arc->context, min, length);
+		} else {
+		    ACPI_DEBUG_PRINT((ACPI_DB_RESOURCES, "%s/IO 0x%jx/%ju\n",
+			name, (uintmax_t)min, (uintmax_t)length));
+		    set->set_ioport(dev, arc->context, min, length);
+		}
 	    }
 	} else {
 	    if (res->Data.Address32.ResourceType == ACPI_MEMORY_RANGE) {

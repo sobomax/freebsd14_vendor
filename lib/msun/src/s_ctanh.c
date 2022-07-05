@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88afeb50e26e3097c9799cf7ccff978be7e713ed $");
+__FBSDID("$FreeBSD: e5840a1bf67b823512aca9e5ac4e3c93f3f5aa25 $");
 
 #include <complex.h>
 #include <math.h>
@@ -111,11 +111,13 @@ ctanh(double complex z)
 	}
 
 	/*
-	 * ctanh(x + I NaN) = d(NaN) + I d(NaN)
-	 * ctanh(x +- I Inf) = dNaN + I dNaN
+	 * ctanh(+-0 + i NAN) = +-0 + i NaN
+	 * ctanh(+-0 +- i Inf) = +-0 + i NaN
+	 * ctanh(x + i NAN) = NaN + i NaN
+	 * ctanh(x +- i Inf) = NaN + i NaN
 	 */
 	if (!isfinite(y))
-		return (CMPLX(y - y, y - y));
+		return (CMPLX(x ? y - y : x, y - y));
 
 	/*
 	 * ctanh(+-huge +- I y) ~= +-1 +- I 2sin(2y)/exp(2x), using the

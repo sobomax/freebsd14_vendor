@@ -1,4 +1,6 @@
-# $FreeBSD: 76ebee6f360b55172fc828843f7215d5866efcce $
+# $FreeBSD: 0e23063431c241b88dbf670b68a8082e0eaf57c0 $
+
+PACKAGE=	runtime
 
 PROG=	mktemp
 

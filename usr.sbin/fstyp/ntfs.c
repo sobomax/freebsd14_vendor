@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ce1fa81181a75ade598ef843c24b1b3ab259855 $");
+__FBSDID("$FreeBSD: c286d950dc2bfd588b3dbaa6679995f983793cd4 $");
 
 #include <err.h>
 #ifdef WITH_ICONV
@@ -179,6 +179,11 @@ fstyp_ntfs(FILE *fp, char *label, size_t size)
 	}
 
 ok:
+#else
+	if (show_label) {
+		warnx("label not available without iconv support");
+		memset(label, 0, size);
+	}
 #endif /* WITH_ICONV */
 	free(bf);
 	free(filerecp);

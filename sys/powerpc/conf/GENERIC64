@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: 249823d4efa9ee7d30accdbda5aa6300870de743 $
+# $FreeBSD: 5785bf293c8be164bfbea06bf3e33819f2a9e465 $
 
 cpu		AIM
 ident		GENERIC
@@ -138,6 +138,7 @@ device		ispfw		# Firmware module for Qlogic host adapters
 device		mrsas		# LSI/Avago MegaRAID SAS/SATA, 6Gb/s and 12Gb/s
 device		mpt		# LSI-Logic MPT-Fusion
 device		mps		# LSI-Logic MPT-Fusion 2
+device		mpr		# LSI SAS3008 MPT-Fusion SAS-3
 device		sym		# NCR/Symbios/LSI Logic 53C8XX/53C1010/53C1510D
 
 # ATA/SCSI peripherals

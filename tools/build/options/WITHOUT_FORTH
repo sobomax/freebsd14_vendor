@@ -1,2 +1,2 @@
-.\" $FreeBSD: db409964f34e6f4a3dfc52711f70069952551e35 $
-Set to build bootloaders without Forth support.
+.\" $FreeBSD: dd3de7d18e9120ace247c0adcd32b09814a6c7d2 $
+Build bootloaders without Forth support.

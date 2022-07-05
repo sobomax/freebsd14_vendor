@@ -38,7 +38,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc044749ae7245ed3230f115521606ddf17c4600 $");
+__FBSDID("$FreeBSD: c43163afe3a76f120a9945628e30593502c47738 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -697,7 +697,7 @@ static void
 mge_free_dma(struct mge_softc *sc)
 {
 
-	/* Free desciptors and mbufs */
+	/* Free descriptors and mbufs */
 	mge_free_desc(sc, sc->mge_rx_desc, MGE_RX_DESC_NUM, sc->mge_rx_dtag, 1);
 	mge_free_desc(sc, sc->mge_tx_desc, MGE_TX_DESC_NUM, sc->mge_tx_dtag, 0);
 
@@ -883,7 +883,7 @@ mge_attach(device_t dev)
 
 	mge_get_mac_address(sc, hwaddr);
 	ether_ifattach(ifp, hwaddr);
-	callout_init(&sc->wd_callout, 0);
+	callout_init(&sc->wd_callout, 1);
 
 	/* Attach PHY(s) */
 	if (sc->phy_attached) {
@@ -2147,10 +2147,10 @@ mge_add_sysctls(struct mge_softc *sc)
 	children = SYSCTL_CHILDREN(tree);
 
 	SYSCTL_ADD_PROC(ctx, children, OID_AUTO, "rx_time",
-	    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, MGE_IC_RX,
+	    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_MPSAFE, sc, MGE_IC_RX,
 	    mge_sysctl_ic, "I", "IC RX time threshold");
 	SYSCTL_ADD_PROC(ctx, children, OID_AUTO, "tx_time",
-	    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, MGE_IC_TX,
+	    CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_MPSAFE, sc, MGE_IC_TX,
 	    mge_sysctl_ic, "I", "IC TX time threshold");
 }
 

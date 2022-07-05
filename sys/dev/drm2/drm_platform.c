@@ -25,7 +25,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8972b44f5f1a8169aac9a25bebdda8863880bba $");
+__FBSDID("$FreeBSD: 17f3367719e293689dc41fc9cb7794f0b837ba04 $");
 
 #include <dev/drm2/drmP.h>
 
@@ -107,7 +107,7 @@ static struct drm_bus drm_platform_bus = {
 /**
  * Register.
  *
- * \param platdev - Platform device struture
+ * \param platdev - Platform device structure
  * \return zero on success or a negative number on failure.
  *
  * Attempt to gets inter module "drm" information. If we are first

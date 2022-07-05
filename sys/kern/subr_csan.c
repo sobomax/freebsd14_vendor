@@ -30,12 +30,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define	KCSAN_RUNTIME
+#define	SAN_RUNTIME
 
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3fa59ef2ea66aef38557d0b887aceee3d6f301f7 $");
+__FBSDID("$FreeBSD: 56d2e59ff12cc64ba06c49bd2aaf009ee8166d9d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -350,12 +350,6 @@ kcsan_strlen(const char *str)
 	return (s - str);
 }
 
-#undef copyin
-#undef copyin_nofault
-#undef copyinstr
-#undef copyout
-#undef copyout_nofault
-
 int
 kcsan_copyin(const void *uaddr, void *kaddr, size_t len)
 {
@@ -380,7 +374,8 @@ kcsan_copyout(const void *kaddr, void *uaddr, size_t len)
 /* -------------------------------------------------------------------------- */
 
 #include <machine/atomic.h>
-#include <sys/_cscan_atomic.h>
+#define	ATOMIC_SAN_PREFIX	kcsan
+#include <sys/atomic_san.h>
 
 #define	_CSAN_ATOMIC_FUNC_ADD(name, type)				\
 	void kcsan_atomic_add_##name(volatile type *ptr, type val)	\
@@ -684,11 +679,18 @@ CSAN_ATOMIC_FUNC_THREAD_FENCE(acq_rel)
 CSAN_ATOMIC_FUNC_THREAD_FENCE(rel)
 CSAN_ATOMIC_FUNC_THREAD_FENCE(seq_cst)
 
+void
+kcsan_atomic_interrupt_fence(void)
+{
+	atomic_interrupt_fence();
+}
+
 /* -------------------------------------------------------------------------- */
 
 #include <sys/bus.h>
 #include <machine/bus.h>
-#include <sys/_cscan_bus.h>
+#define	BUS_SAN_PREFIX		kcsan
+#include <sys/bus_san.h>
 
 int
 kcsan_bus_space_map(bus_space_tag_t tag, bus_addr_t hnd, bus_size_t size,

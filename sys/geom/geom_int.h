@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9f2a011b23f09e246d96089faec743d4882402b9 $
+ * $FreeBSD: 67c46d715885e471bb7a6f208e8ef94d8eeb2daa $
  */
 
 LIST_HEAD(class_list_head, g_class);
@@ -69,6 +69,8 @@ void g_io_schedule_up(struct thread *tp);
 
 /* geom_kern.c / geom_kernsim.c */
 void g_init(void);
+extern struct thread *g_up_td;
+extern struct thread *g_down_td;
 extern int g_shutdown;
 extern int g_notaste;
 

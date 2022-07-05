@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 835d76cf5152155190ce4a37af2d88a11dc9394c $");
+__FBSDID("$FreeBSD: dba9a0553af51cdb896111362c97121a0a728e41 $");
 
 #ifdef _KERNEL
 #include <sys/libkern.h>
@@ -97,7 +97,6 @@ LibAliasAttachHandlers(struct proto_handler *p)
 int
 LibAliasDetachHandlers(struct proto_handler *p)
 {
-
 	while (p->dir != NODIR) {
 		TAILQ_REMOVE(&handler_chain, p, link);
 		p++;
@@ -123,7 +122,6 @@ find_handler(int8_t dir, int8_t proto, struct libalias *la, struct ip *ip,
 struct proto_handler *
 first_handler(void)
 {
-
 	return (TAILQ_FIRST(&handler_chain));
 }
 

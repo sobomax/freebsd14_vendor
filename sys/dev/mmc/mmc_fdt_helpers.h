@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 73ec324d6b9f7b5c06815fb15b14746dd9b41ffc $
+ * $FreeBSD: e6d6f3fbfd8412148d9a32ceb84d972f72fa0c88 $
  */
 
 #ifndef _MMC_FDT_HELPERS_H_
@@ -63,6 +63,8 @@ struct mmc_fdt_helper {
 	regulator_t	vmmc_supply;
 	regulator_t	vqmmc_supply;
 #endif
+
+	device_t	mmc_pwrseq;
 };
 
 typedef void (*mmc_fdt_cd_handler)(device_t dev, bool present);
@@ -72,5 +74,6 @@ int mmc_fdt_gpio_setup(device_t dev, phandle_t node, struct mmc_fdt_helper *help
 void mmc_fdt_gpio_teardown(struct mmc_fdt_helper *helper);
 bool mmc_fdt_gpio_get_present(struct mmc_fdt_helper *helper);
 bool mmc_fdt_gpio_get_readonly(struct mmc_fdt_helper *helper);
+void mmc_fdt_set_power(struct mmc_fdt_helper *helper, enum mmc_power_mode power_mode);
 
 #endif

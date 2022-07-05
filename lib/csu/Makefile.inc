@@ -1,10 +1,9 @@
-# $FreeBSD: 5681ef65117a3262e09c136bc70d84137c98fd4d $
-
-SSP_CFLAGS=
+# $FreeBSD: 6efeb1d7ff93ecdcf8650ada3a4028a375384427 $
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
 .include <src.opts.mk>
+MK_SSP=	no
 
 .if !defined(BUILDING_TESTS)
 
@@ -17,6 +16,7 @@ CRT1OBJS+=	crtbrand.o feature_note.o ignore_init_note.o
 
 ACFLAGS+=	-DLOCORE
 
+CFLAGS+=	-DSTRIP_FBSDID
 CFLAGS+=	-fno-asynchronous-unwind-tables
 CFLAGS+=	-fno-omit-frame-pointer
 CFLAGS+=	-I${.CURDIR:H}/common \

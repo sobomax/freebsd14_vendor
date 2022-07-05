@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: d4a52e322ea8f852149141abe8eeb66691888d0f $
+.\" $FreeBSD: dd573588d573606ac4d7570fbb9c7f2efc751873 $
 .\"
 .Dd January 31, 2020
 .Dt ARCHIVE_WRITE_OPTIONS 3
@@ -279,7 +279,7 @@ Values between 0 and 9 are supported.
 The interpretation of the compression level depends on the chosen
 compression method.
 .El
-.It Format cpio
+.It Format bin
 .Bl -tag -compact -width indent
 .It Cm hdrcharset
 The value is used as a character set name that will be
@@ -514,6 +514,18 @@ lines that specify default values for the following files and/or directories.
 XXX needs explanation XXX
 .El
 .It Format newc
+.Bl -tag -compact -width indent
+.It Cm hdrcharset
+The value is used as a character set name that will be
+used when translating file names.
+.El
+.It Format odc
+.Bl -tag -compact -width indent
+.It Cm hdrcharset
+The value is used as a character set name that will be
+used when translating file names.
+.El
+.It Format pwb
 .Bl -tag -compact -width indent
 .It Cm hdrcharset
 The value is used as a character set name that will be

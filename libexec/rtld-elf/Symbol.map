@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 13068c5626dc80f457617f0cf188ab74e90599a5 $
+ * $FreeBSD: 0a9eac82cf05f82577aa174fc57c2f2978fc2b9e $
  */
 
 FBSD_1.0 {
@@ -34,4 +34,5 @@ FBSDprivate_1.0 {
     _r_debug_postinit;
     _rtld_version__FreeBSD_version;
     _rtld_version_laddr_offset;
+    _rtld_version_dlpi_tls_data;
 };

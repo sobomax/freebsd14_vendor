@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-# $FreeBSD: f9d52cf8a78052a20711c7823f0598fe8bd88a49 $
+# $FreeBSD: ba691cb9b05acc9dc91a7a46b49f8524b9656f2a $
 
 atf_test_case "basic" "cleanup"
 atf_test_case "nested" "cleanup"
@@ -99,7 +99,7 @@ nested_cleanup()
 	jail -r basejail_nochild
 }
 
-commands_header()
+commands_head()
 {
 	atf_set descr 'Commands jail test'
 	atf_set require.user root

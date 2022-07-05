@@ -1,7 +1,7 @@
-# $FreeBSD: 22bbf9377ea8a4234953790a5bcc9a4125ae2507 $
+# $FreeBSD: 4677e7c7e6c7cd83ce66c62bf35f721965fa76b5 $
 
 PROG=	lesskey
-SRCS=	lesskey.c version.c
+SRCS=	lesskey.c lesskey_parse.c version.c xbuf.c
 CLEANFILES= lesskey.1
 
 .include "${SRCTOP}/usr.bin/less/Makefile.common"

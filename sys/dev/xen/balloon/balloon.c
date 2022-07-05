@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01d75204f5bfe536fbf5085a1509a1c0f0e38d7a $");
+__FBSDID("$FreeBSD: 007fada24259827347ac5fbd2fc1156a097b36be $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -228,23 +228,16 @@ decrease_reservation(unsigned long nr_pages)
 		nr_pages = nitems(frame_list);
 
 	for (i = 0; i < nr_pages; i++) {
-		if ((page = vm_page_alloc(NULL, 0, 
-			    VM_ALLOC_NORMAL | VM_ALLOC_NOOBJ | 
-			    VM_ALLOC_ZERO)) == NULL) {
+		/*
+		 * Zero the page, or else we might be leaking important data to
+		 * other domains on the same host. Xen doesn't scrub ballooned
+		 * out memory pages, the guest is in charge of making sure that
+		 * no information is leaked.
+		 */
+		if ((page = vm_page_alloc_noobj(VM_ALLOC_ZERO)) == NULL) {
 			nr_pages = i;
 			need_sleep = 1;
 			break;
-		}
-
-		if ((page->flags & PG_ZERO) == 0) {
-			/*
-			 * Zero the page, or else we might be leaking
-			 * important data to other domains on the same
-			 * host. Xen doesn't scrub ballooned out memory
-			 * pages, the guest is in charge of making
-			 * sure that no information is leaked.
-			 */
-			pmap_zero_page(page);
 		}
 
 		frame_list[i] = (VM_PAGE_TO_PHYS(page) >> PAGE_SHIFT);

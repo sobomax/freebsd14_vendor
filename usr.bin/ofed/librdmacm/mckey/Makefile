@@ -1,5 +1,6 @@
-# $FreeBSD: f0dd7f023fed4b9d67a2690ae4dd66a3e97af8cd $
+# $FreeBSD: b9d9f8deeb46bc8eab78150fdf18d45ef6f215d9 $
 
+PACKAGE=	rdma
 PROG=	mckey
 MAN=	mckey.1
 SRCS=	mckey.c

@@ -1,3 +1,3 @@
-.\" $FreeBSD: 32c657b9476ad150b38ec66b933a2be11f998deb $
-Set to not build
+.\" $FreeBSD: a28a856910901fb458b7206b0b10d5426141d836 $
+Do not build
 programs and libraries related to IPv6 networking.

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47c8133adc11f3edf3aac71dafa81acd7aaeb19f $");
+__FBSDID("$FreeBSD: 4dff74f759456774d99cc6ac967bf8aacecdc4b9 $");
 
 #include "opt_ffs.h"
 
@@ -562,6 +562,7 @@ quotaon(struct thread *td, struct mount *mp, int type, void *fname)
 	VOP_UNLOCK(vp);
 	MNT_ILOCK(mp);
 	mp->mnt_flag |= MNT_QUOTA;
+	mp->mnt_stat.f_flags |= MNT_QUOTA;
 	MNT_IUNLOCK(mp);
 
 	vpp = &ump->um_quotas[type];
@@ -764,6 +765,7 @@ quotaoff_inchange(struct thread *td, struct mount *mp, int type)
 	if (i == MAXQUOTAS) {
 		MNT_ILOCK(mp);
 		mp->mnt_flag &= ~MNT_QUOTA;
+		mp->mnt_stat.f_flags &= ~MNT_QUOTA;
 		MNT_IUNLOCK(mp);
 	}
 	UFS_UNLOCK(ump);

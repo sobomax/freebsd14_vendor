@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2009-2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under sponsorship from
  * the FreeBSD Foundation.
@@ -32,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 107c91e11425b1c76e63e5fd66ac1edf84080163 $");
+__FBSDID("$FreeBSD: 18ac3957f7f95e8092b428573e13993fb49eab34 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

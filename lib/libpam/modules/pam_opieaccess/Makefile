@@ -1,4 +1,6 @@
-# $FreeBSD: 2e764cd43a5b4cfb1b19a0ae002ff4dd0cb7e0e2 $
+# $FreeBSD: 426bd8216ce4aa19066ce56f95606d9234f1322b $
+
+PACKAGE=	runtime
 
 LIB=	pam_opieaccess
 SRCS=	${LIB}.c

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.3 (Berkeley) 4/4/95
- * $FreeBSD: a19091e1716780d7ee2db9fd7295d1479c2c7307 $
+ * $FreeBSD: 8003ab65872e137fc0bef958b88dc69de5983827 $
  */
 
 #ifndef _SYS_PARAM_H_
@@ -52,7 +52,7 @@
  * there.
  * Currently this lives here in the doc/ repository:
  *
- *	documentation/content/en/books/porters-handbook/versions/chapter.adoc
+ *	documentation/content/en/books/porters-handbook/versions/_index.adoc
  *
  * scheme is:  <major><two digit minor>Rxx
  *		'R' is in the range 0 to 4 if this is a release branch or
@@ -60,7 +60,7 @@
  *		in the range 5 to 9.
  */
 #undef __FreeBSD_version
-#define __FreeBSD_version 1300139	/* Master, propagated to newvers */
+#define __FreeBSD_version 1301000	/* Master, propagated to newvers */
 
 /*
  * __FreeBSD_kernel__ indicates that this system uses the kernel of FreeBSD,
@@ -305,9 +305,9 @@
 #endif
 #define	nitems(x)	(sizeof((x)) / sizeof((x)[0]))
 #define	rounddown(x, y)	(((x)/(y))*(y))
-#define	rounddown2(x, y) ((x)&(~((y)-1)))          /* if y is power of two */
+#define	rounddown2(x, y) __align_down(x, y) /* if y is power of two */
 #define	roundup(x, y)	((((x)+((y)-1))/(y))*(y))  /* to any y */
-#define	roundup2(x, y)	(((x)+((y)-1))&(~((y)-1))) /* if y is powers of two */
+#define	roundup2(x, y)	__align_up(x, y) /* if y is powers of two */
 #define powerof2(x)	((((x)-1)&(x))==0)
 
 /* Macros for min/max. */

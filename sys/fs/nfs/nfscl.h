@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 52da0af6fa51e6a850faa15f659f75acbfe945c0 $
+ * $FreeBSD: 3d7afaf684326ceebbae4ee85400341ebc20597d $
  */
 
 #ifndef	_NFS_NFSCL_H
@@ -80,5 +80,10 @@ struct nfsv4node {
 		if (nfscl_debuglevel >= (level))			\
 			printf(__VA_ARGS__);				\
 	} while (0)
+
+struct nfscl_reconarg {
+	int	minorvers;
+	uint8_t	sessionid[NFSX_V4SESSIONID];
+};
 
 #endif	/* _NFS_NFSCL_H */

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a8fddfad8d0f85b23cf108a47a9f0ce8ad57d809 $
+ * $FreeBSD: 6db16e5b8291f6c243bb4af846a9e88ecc4ceb7c $
  */
 
 #ifndef __ARM64_INCLUDE_EFI_H_
@@ -36,6 +36,8 @@
 #define	EFIABI_ATTR
 
 #ifdef _KERNEL
+#define ARCH_MAY_USE_EFI
+
 #define	EFI_TIME_LOCK()
 #define	EFI_TIME_UNLOCK()
 #define	EFI_TIME_OWNED()

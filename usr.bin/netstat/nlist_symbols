@@ -1,4 +1,4 @@
-# $FreeBSD: afad45d353bd610efb06bb37bbbd773f9e89bbc3 $
+# $FreeBSD: 1c09d81c0b985cb255c0068da94a26d7105cf74c $
 #
 # module_name	symbol_name
 all	_ahstat
@@ -39,7 +39,6 @@ all	_rip6stat
 all	_ripcbinfo
 all	_rtree
 all	_rtstat
-all	_rttrash
 all	_sctpstat
 all	_sfstat
 all	_tcbinfo

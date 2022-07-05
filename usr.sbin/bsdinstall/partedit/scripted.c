@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57dcbca816a3a6fde7ab959dcf97b81cb3255696 $
+ * $FreeBSD: 37ac6de131b5b8f59d29dc60956e81590f0e8990 $
  */
 
 #include <sys/param.h>
@@ -183,10 +183,14 @@ int parse_disk_config(char *input)
 		}
 	} while (input != NULL && *input != 0);
 
-	if (disk != NULL)
-		return (part_config(disk, scheme, partconfig));
+	if (disk == NULL || strcmp(disk, "DEFAULT") == 0) {
+		struct gmesh mesh;
+		geom_gettree(&mesh);
+		disk = boot_disk_select(&mesh);
+		geom_deletetree(&mesh);
+	}
 
-	return (0);
+	return (part_config(disk, scheme, partconfig));
 }
 
 int

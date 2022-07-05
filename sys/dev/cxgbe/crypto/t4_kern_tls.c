@@ -32,7 +32,7 @@
 #include "opt_kern_tls.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 957d0202fa3f77249412713a55b5d580ab7d78f8 $");
+__FBSDID("$FreeBSD: 99d0d33cf12859dcf4941a782348b215a199c407 $");
 
 #include <sys/param.h>
 #include <sys/ktr.h>
@@ -379,7 +379,7 @@ send_ktls_act_open_req(struct adapter *sc, struct vi_info *vi,
 
 	isipv6 = (inp->inp_vflag & INP_IPV6) != 0;
 	if (isipv6) {
-		tlsp->ce = t4_hold_lip(sc, &inp->in6p_laddr, NULL);
+		tlsp->ce = t4_get_clip_entry(sc, &inp->in6p_laddr, true);
 		if (tlsp->ce == NULL)
 			return (ENOENT);
 	}
@@ -2333,7 +2333,7 @@ cxgbe_tls_tag_free(struct m_snd_tag *mst)
 	if (tlsp->tid >= 0)
 		release_tid(sc, tlsp->tid, tlsp->ctrlq);
 	if (tlsp->ce)
-		t4_release_lip(sc, tlsp->ce);
+		t4_release_clip_entry(sc, tlsp->ce);
 	if (tlsp->tx_key_addr >= 0)
 		free_keyid(tlsp, tlsp->tx_key_addr);
 

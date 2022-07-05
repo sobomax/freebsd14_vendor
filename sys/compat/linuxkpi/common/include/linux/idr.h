@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7387032fd989a1653078e7f0fefe08fbcc7bcc18 $
+ * $FreeBSD: 99f8fb3305acee13c5f550216ed15ea409eeead1 $
  */
-#ifndef	_LINUX_IDR_H_
-#define	_LINUX_IDR_H_
+#ifndef	_LINUXKPI_LINUX_IDR_H_
+#define	_LINUXKPI_LINUX_IDR_H_
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -147,4 +147,4 @@ ida_is_empty(struct ida *ida)
 	return (idr_is_empty(&ida->idr));
 }
 
-#endif	/* _LINUX_IDR_H_ */
+#endif	/* _LINUXKPI_LINUX_IDR_H_ */

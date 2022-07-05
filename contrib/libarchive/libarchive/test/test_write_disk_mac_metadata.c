@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6e9e72365e138fb1a1f60c857ea5da9848bc8586 $");
+__FBSDID("$FreeBSD: be13d96afddf075267a5fb36c5e8734ef4b2bf1e $");
 
 #ifdef HAVE_SYS_ACL_H
 #include <sys/acl.h>
@@ -67,7 +67,7 @@ has_xattr(const char *filename, const char *xattrname)
 {
 	char *nl, *nlp;
 	ssize_t r;
-	int exisiting;
+	int existing;
 
 	r = listxattr(filename, NULL, 0, XATTR_SHOWCOMPRESSION);
 	if (r < 0)
@@ -85,15 +85,15 @@ has_xattr(const char *filename, const char *xattrname)
 		return (0);
 	}
 
-	exisiting = 0;
+	existing = 0;
 	for (nlp = nl; nlp < nl + r; nlp += strlen(nlp) + 1) {
 		if (strcmp(nlp, xattrname) == 0) {
-			exisiting = 1;
+			existing = 1;
 			break;
 		}
 	}
 	free(nl);
-	return (exisiting);
+	return (existing);
 }
 
 #endif

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c49d1e89448886b70eb4054adb70f82c3cf776ff $");
+__FBSDID("$FreeBSD: b2f12add3e2be57fb8cdcbf489c44af40c8b4938 $");
 
 #include "opt_platform.h"
 
@@ -80,9 +80,16 @@ pwm_ioctl(struct cdev *dev, u_long cmd, caddr_t data,
 		bcopy(data, &state, sizeof(state));
 		rv = PWMBUS_CHANNEL_CONFIG(bus, sc->chan,
 		    state.period, state.duty);
-		if (rv == 0)
-			rv = PWMBUS_CHANNEL_ENABLE(bus, sc->chan,
-			    state.enable);
+		if (rv != 0)
+			return (rv);
+
+		rv = PWMBUS_CHANNEL_SET_FLAGS(bus,
+		    sc->chan, state.flags);
+		if (rv != 0 && rv != EOPNOTSUPP)
+			return (rv);
+
+		rv = PWMBUS_CHANNEL_ENABLE(bus, sc->chan,
+		    state.enable);
 		break;
 	case PWMGETSTATE:
 		bcopy(data, &state, sizeof(state));
@@ -90,6 +97,12 @@ pwm_ioctl(struct cdev *dev, u_long cmd, caddr_t data,
 		    &state.period, &state.duty);
 		if (rv != 0)
 			return (rv);
+
+		rv = PWMBUS_CHANNEL_GET_FLAGS(bus, sc->chan,
+		    &state.flags);
+		if (rv != 0)
+			return (rv);
+
 		rv = PWMBUS_CHANNEL_IS_ENABLED(bus, sc->chan,
 		    &state.enable);
 		if (rv != 0)

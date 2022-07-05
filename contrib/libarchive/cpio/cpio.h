@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cd789b580f8e24a6a47e5a1c57bf21057c5d4989 $
+ * $FreeBSD: 6ab55e474c81ac5617510181383525b5567ac687 $
  */
 
 #ifndef CPIO_H_INCLUDED
@@ -62,6 +62,7 @@ struct cpio {
 	int		  option_list; /* -t */
 	char		  option_null; /* --null */
 	int		  option_numeric_uid_gid; /* -n */
+	int		  option_pwb; /* -6 */
 	int		  option_rename; /* -r */
 	char		 *destdir;
 	size_t		  destdir_len;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39e2f98eb1e0436f453a156bae3ba9691867bf80 $");
+__FBSDID("$FreeBSD: 8154b0f95a9a98b8e704e1ccd71970b42c16c50b $");
 
 #include "stand.h"
 
@@ -315,6 +315,9 @@ zf_seek(struct open_file *f, off_t offset, int where)
 	    target - zf->zf_zstream.total_out), NULL);
 	if (errno)
 	    return(-1);
+	/* Break out of loop if end of file has been reached. */
+	if (zf->zf_endseen)
+	    break;
     }
     /* This is where we are (be honest if we overshot) */
     return(zf->zf_zstream.total_out);

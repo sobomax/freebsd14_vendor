@@ -1,5 +1,5 @@
 #
-# $FreeBSD: e196c5cee5ca7885a8ebef6ae127c2eb6eea3677 $
+# $FreeBSD: 398ca760e11f575981295c48659a2e78cec28b04 $
 #
 
 name = "%PKG_NAME_PREFIX%-%PKGNAME%"
@@ -10,7 +10,7 @@ categories = [ base ]
 maintainer = "%PKG_MAINTAINER%"
 www = "%PKG_WWW%"
 prefix = "/"
-vital = true
+vital = %VITAL%
 licenselogic = "single"
 licenses = [ BSD2CLAUSE ]
 desc = <<EOD

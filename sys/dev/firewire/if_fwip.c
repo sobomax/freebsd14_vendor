@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: 46cd56e30748956b73551757109b1d3683aebb83 $
+ * $FreeBSD: e45fd67baea7e8c68d560631321a0bb714302215 $
  */
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
@@ -838,6 +838,7 @@ fwip_unicast_input(struct fw_xfer *xfer)
 	uint64_t address;
 	struct mbuf *m;
 	struct m_tag *mtag;
+	struct epoch_tracker et;
 	struct ifnet *ifp;
 	struct fwip_softc *fwip;
 	struct fw_pkt *fp;
@@ -863,6 +864,7 @@ fwip_unicast_input(struct fw_xfer *xfer)
 	} else {
 		rtcode = FWRCODE_COMPLETE;
 	}
+	NET_EPOCH_ENTER(et);
 
 	/*
 	 * Pick up a new mbuf and stick it on the back of the receive
@@ -876,7 +878,7 @@ fwip_unicast_input(struct fw_xfer *xfer)
 	if (rtcode != FWRCODE_COMPLETE) {
 		m_freem(m);
 		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
-		return;
+		goto done;
 	}
 
 	if (bpf_peers_present(ifp->if_bpf)) {
@@ -911,6 +913,8 @@ fwip_unicast_input(struct fw_xfer *xfer)
 	m->m_pkthdr.rcvif = ifp;
 	firewire_input(ifp, m, fp->mode.wreqb.src);
 	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
+done:
+	NET_EPOCH_EXIT(et);
 }
 
 static devclass_t fwip_devclass;

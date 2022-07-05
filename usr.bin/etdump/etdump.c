@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aedd53a9f6d12d4afb31e4147467570a0a55ef12 $");
+__FBSDID("$FreeBSD: e536aa5e51cb0b6d14fb2fc39a9ac92375e544ea $");
 
 #include <err.h>
 #include <getopt.h>
@@ -262,7 +262,7 @@ main(int argc, char **argv)
 		} else {
 			iso = fopen(argv[i], "r");
 			if (iso == NULL)
-				err(1, "could not open %s", argv[1]);
+				err(1, "could not open %s", argv[i]);
 		}
 		dump_eltorito(iso, argv[i], outfile, outputter);
 	}

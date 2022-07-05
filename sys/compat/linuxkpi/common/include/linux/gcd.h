@@ -26,11 +26,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bff28340cfaedfdcc343ceb54ee841b41395a582 $
+ * $FreeBSD: 40523bd6cba6b76f1286012920a868a7c09a3551 $
  */
 
-#ifndef _LINUX_GCD_H_
-#define _LINUX_GCD_H_
+#ifndef _LINUXKPI_LINUX_GCD_H_
+#define _LINUXKPI_LINUX_GCD_H_
 
 static inline unsigned long
 gcd(unsigned long a, unsigned long b)

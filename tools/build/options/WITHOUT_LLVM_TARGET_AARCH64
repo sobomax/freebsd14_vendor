@@ -1,5 +1,5 @@
-.\" $FreeBSD: f72ae3ece812fea291e99c99ef405d34017839a1 $
-Set to not build LLVM target support for AArch64.
+.\" $FreeBSD: 4306b30dd37bd884c09310cf6024cb7f1a999ce5 $
+Do not build LLVM target support for AArch64.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

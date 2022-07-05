@@ -92,7 +92,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55833779495051f8e0eacc1ab3b5d1a903f2c0c2 $");
+__FBSDID("$FreeBSD: b19fe8dbc0c017141d970ef9f494393423fcbece $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -391,6 +391,7 @@ fail:
 #ifdef MAC
 	mac_pipe_destroy(pp);
 #endif
+	uma_zfree(pipe_zone, pp);
 	return (error);
 }
 
@@ -1470,7 +1471,8 @@ pipe_poll(struct file *fp, int events, struct ucred *active_cred,
 				rpipe->pipe_state |= PIPE_SEL;
 		}
 
-		if ((fp->f_flag & FWRITE) != 0) {
+		if ((fp->f_flag & FWRITE) != 0 &&
+		    wpipe->pipe_present == PIPE_ACTIVE) {
 			selrecord(td, &wpipe->pipe_sel);
 			if (SEL_WAITING(&wpipe->pipe_sel))
 				wpipe->pipe_state |= PIPE_SEL;

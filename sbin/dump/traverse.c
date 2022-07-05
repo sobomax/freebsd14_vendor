@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)traverse.c	8.7 (Berkeley) 6/15/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: d094a08a7eb01620cb26addcfce002efbd7ddf26 $";
+  "$FreeBSD: 3630d2240f589a230ae2856d76b29ac83abce5c1 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -756,7 +756,7 @@ appendextdata(union dinode *dp)
 	 * data by the writeextdata() routine.
 	 */
 	tbperdb = sblock->fs_bsize >> tp_bshift;
-	assert(spcl.c_count + blks < TP_NINDIR);
+	assert(spcl.c_count + blks <= TP_NINDIR);
 	for (i = 0; i < blks; i++)
 		if (&dp->dp2.di_extb[i / tbperdb] != 0)
 				spcl.c_addr[spcl.c_count + i] = 1;

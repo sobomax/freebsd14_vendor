@@ -1,4 +1,4 @@
-# $FreeBSD: 19fd66b47b3df127b417fe7e650467ffcdd93bb9 $
+# $FreeBSD: 62fe84086c16672f95968293c549e1c56e3d4b06 $
 
 .PATH:	${SRCTOP}/contrib/pf/authpf
 
@@ -12,8 +12,9 @@ SRCS=   authpf.c
 
 # XXX ALTQ:
 CFLAGS+= -DENABLE_ALTQ
+CFLAGS+= -I${SRCTOP}/lib/libpfctl -I${OBJTOP}/lib/libpfctl
 
-LIBADD=	m util
+LIBADD=	m util pfctl
 
 WARNS?=	3
 

@@ -274,8 +274,6 @@ taskq_lowest_id(taskq_t *tq)
 	taskq_ent_t *t;
 	taskq_thread_t *tqt;
 
-	ASSERT(tq);
-
 	if (!list_empty(&tq->tq_pend_list)) {
 		t = list_entry(tq->tq_pend_list.next, taskq_ent_t, tqent_list);
 		lowest_id = MIN(lowest_id, t->tqent_id);
@@ -995,6 +993,7 @@ error:
 	spin_unlock_irqrestore(&tq->tq_lock, flags);
 
 	tsd_set(taskq_tsd, NULL);
+	thread_exit();
 
 	return (0);
 }
@@ -1299,8 +1298,10 @@ spl_taskq_expand(unsigned int cpu, struct hlist_node *node)
 	ASSERT(tq);
 	spin_lock_irqsave_nested(&tq->tq_lock, flags, tq->tq_lock_class);
 
-	if (!(tq->tq_flags & TASKQ_ACTIVE))
-		goto out;
+	if (!(tq->tq_flags & TASKQ_ACTIVE)) {
+		spin_unlock_irqrestore(&tq->tq_lock, flags);
+		return (err);
+	}
 
 	ASSERT(tq->tq_flags & TASKQ_THREADS_CPU_PCT);
 	int nthreads = MIN(tq->tq_cpu_pct, 100);
@@ -1309,13 +1310,12 @@ spl_taskq_expand(unsigned int cpu, struct hlist_node *node)
 
 	if (!((tq->tq_flags & TASKQ_DYNAMIC) && spl_taskq_thread_dynamic) &&
 	    tq->tq_maxthreads > tq->tq_nthreads) {
-		ASSERT3U(tq->tq_maxthreads, ==, tq->tq_nthreads + 1);
+		spin_unlock_irqrestore(&tq->tq_lock, flags);
 		taskq_thread_t *tqt = taskq_thread_create(tq);
 		if (tqt == NULL)
 			err = -1;
+		return (err);
 	}
-
-out:
 	spin_unlock_irqrestore(&tq->tq_lock, flags);
 	return (err);
 }

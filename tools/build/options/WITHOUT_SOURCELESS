@@ -1,2 +1,2 @@
-.\" $FreeBSD: 995252ec9215a2ffaba3f32df8e2218cb67f392a $
-Set to not build kernel modules that include sourceless code (either microcode or native code for host CPU).
+.\" $FreeBSD: 18bf0fc91a428e321946f123c17a43a7782852a9 $
+Do not build kernel modules that include sourceless code (either microcode or native code for host CPU).

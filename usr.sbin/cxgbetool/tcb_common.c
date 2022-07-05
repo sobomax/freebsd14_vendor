@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b17889f94a88af7b8bd7d98c70e51e713af8c097 $");
+__FBSDID("$FreeBSD: c6c3fed19c3e7585b03f7273f7ef7ec17d49be36 $");
 
 #include "tcb_common.h"
 
@@ -169,7 +169,7 @@ tcb_startswith_nc(char *cs, char *ct)
 
 
 /***:-----------------------------------------------------------------------
- ***: print utilties
+ ***: print utilities
  ***:-----------------------------------------------------------------------
  */
 

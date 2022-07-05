@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 1e586d68724413c70e9f67682a502f3a956672ed $
+ * $FreeBSD: e6871435fa88a84d45b887b55a8f0d62f1f7349a $
  * $Whistle: ng_iface.c,v 1.33 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -371,7 +371,7 @@ ng_iface_output(struct ifnet *ifp, struct mbuf *m,
 	if (dst->sa_family == AF_UNSPEC)
 		bcopy(dst->sa_data, &af, sizeof(af));
 	else
-		af = dst->sa_family;
+		af = RO_GET_FAMILY(ro, dst);
 
 	/* Berkeley packet filter */
 	ng_iface_bpftap(ifp, m, af);

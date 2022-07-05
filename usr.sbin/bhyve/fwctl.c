@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0640bc28ba2b49aecd23daead7c9f96bc7f30acd $
+ * $FreeBSD: 7c27d7e9253218497e19fe2b2792e241fb2ad8d2 $
  */
 
 /*
@@ -33,7 +33,7 @@
  * but with a request/response messaging protocol.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0640bc28ba2b49aecd23daead7c9f96bc7f30acd $");
+__FBSDID("$FreeBSD: 7c27d7e9253218497e19fe2b2792e241fb2ad8d2 $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -472,16 +472,18 @@ fwctl_inb(void)
 static void
 fwctl_outw(uint16_t val)
 {
-	switch (be_state) {
-	case IDENT_WAIT:
-		if (val == 0) {
-			be_state = IDENT_SEND;
-			ident_idx = 0;
-		}
-		break;
-	default:
-		/* ignore */
-		break;
+	if (be_state == DORMANT) {
+		return;
+	}
+
+	if (val == 0) {
+		/*
+		 * The guest wants to read the signature. It's possible that the
+		 * guest is unaware of the fwctl state at this moment. For that
+		 * reason, reset the state machine unconditionally.
+		 */
+		be_state = IDENT_SEND;
+		ident_idx = 0;
 	}
 }
 
@@ -538,12 +540,32 @@ fwctl_handler(struct vmctx *ctx, int vcpu, int in, int port, int bytes,
 
 	return (0);
 }
-INOUT_PORT(fwctl_wreg, FWCTL_OUT, IOPORT_F_INOUT, fwctl_handler);
-INOUT_PORT(fwctl_rreg, FWCTL_IN,  IOPORT_F_IN,    fwctl_handler);
 
 void
 fwctl_init(void)
 {
+	struct inout_port iop;
+	int error;
+
+	bzero(&iop, sizeof(iop));
+	iop.name = "fwctl_wreg";
+	iop.port = FWCTL_OUT;
+	iop.size = 1;
+	iop.flags = IOPORT_F_INOUT;
+	iop.handler = fwctl_handler;
+	
+	error = register_inout(&iop);
+	assert(error == 0);
+
+	bzero(&iop, sizeof(iop));
+	iop.name = "fwctl_rreg";
+	iop.port = FWCTL_IN;
+	iop.size = 1;
+	iop.flags = IOPORT_F_IN;
+	iop.handler = fwctl_handler;
+
+	error = register_inout(&iop);
+	assert(error == 0);
 
 	ops[OP_GET_LEN] = &fgetlen_info;
 	ops[OP_GET]     = &fgetval_info;

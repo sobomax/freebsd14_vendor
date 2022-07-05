@@ -59,7 +59,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 97b841bbdda6bbe401e813e8d014bb7be2de20d4 $
+ * $FreeBSD: f898a2392be681d5fc129361d76e0c39ba65036b $
  */
 #ifndef _SYS_BITSTRING_H_
 #define	_SYS_BITSTRING_H_
@@ -418,5 +418,21 @@ bit_count(bitstr_t *_bitstr, int _start, int _nbits, int *_result)
 out:
 	*_result = _value;
 }
+
+/* Traverse all set bits, assigning each location in turn to iter */
+#define	bit_foreach_at(_bitstr, _start, _nbits, _iter)			\
+	for (bit_ffs_at((_bitstr), (_start), (_nbits), &(_iter));	\
+	     (_iter) != -1;						\
+	     bit_ffs_at((_bitstr), (_iter) + 1, (_nbits), &(_iter)))
+#define	bit_foreach(_bitstr, _nbits, _iter)				\
+	bit_foreach_at(_bitstr, /*start*/0, _nbits, _iter)
+
+/* Traverse all unset bits, assigning each location in turn to iter */
+#define	bit_foreach_unset_at(_bitstr, _start, _nbits, _iter)		\
+	for (bit_ffc_at((_bitstr), (_start), (_nbits), &(_iter));	\
+	     (_iter) != -1;						\
+	     bit_ffc_at((_bitstr), (_iter) + 1, (_nbits), &(_iter)))
+#define	bit_foreach_unset(_bitstr, _nbits, _iter)			\
+	bit_foreach_unset_at(_bitstr, /*start*/0, _nbits, _iter)
 
 #endif	/* _SYS_BITSTRING_H_ */

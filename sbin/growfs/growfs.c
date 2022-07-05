@@ -53,7 +53,7 @@ All rights reserved.\n";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 510192dada0b030a89c644f862111ea31f3b9f97 $");
+__FBSDID("$FreeBSD: 1f1bcf82c9650bc7eb82d3b172fcf4c0982d1f5e $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -1503,7 +1503,10 @@ main(int argc, char **argv)
 		humanize_number(newsizebuf, sizeof(newsizebuf), size,
 		    "B", HN_AUTOSCALE, HN_B | HN_NOSPACE | HN_DECIMAL);
 
-		errx(1, "requested size %s is not larger than the current "
+		if (size == (uint64_t)(osblock.fs_size * osblock.fs_fsize))
+			errx(0, "requested size %s is equal to the current "
+			    "filesystem size %s", newsizebuf, oldsizebuf);
+		errx(1, "requested size %s is smaller than the current "
 		   "filesystem size %s", newsizebuf, oldsizebuf);
 	}
 

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1449c3b565dc63a6ff8d995fafd36b62d5a9c58d $");
+__FBSDID("$FreeBSD: f0e3afb486c0f1b46a8ce2e8535a03dbc8576f6b $");
 
 /*
  * Broadcom ChipCommon driver.
@@ -621,11 +621,8 @@ chipc_child_location_str(device_t dev, device_t child, char *buf,
 static device_t
 chipc_add_child(device_t dev, u_int order, const char *name, int unit)
 {
-	struct chipc_softc	*sc;
 	struct chipc_devinfo	*dinfo;
 	device_t		 child;
-
-	sc = device_get_softc(dev);
 
 	child = device_add_child_ordered(dev, order, name, unit);
 	if (child == NULL)

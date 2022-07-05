@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 37b4a9148495112eebf898e02f78d57dc7e731c1 $
+ * $FreeBSD: aa9018a58417955d252c74299886851af08e5b18 $
  */
 #include <sys/param.h>
 
@@ -35,20 +35,6 @@
 #include <ddb/db_sym.h>
 #include <ddb/db_variables.h>
 #include <ddb/db_watch.h>
-
-int
-db_md_set_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (0);
-}
-
-int
-db_md_clr_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (0);
-}
 
 void
 db_md_list_watchpoints(void)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 559e9a234b8744e03364b5e9eaab4e43abe73fec $");
+__FBSDID("$FreeBSD: a3be7470354f7b9f1901fa02c46bb561902b1c90 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1756,9 +1756,11 @@ ata_dev_advinfo(union ccb *start_ccb)
 		break;
 	case CDAI_TYPE_PHYS_PATH:
 		if (cdai->flags & CDAI_FLAG_STORE) {
-			if (device->physpath != NULL)
+			if (device->physpath != NULL) {
 				free(device->physpath, M_CAMXPT);
-			device->physpath_len = cdai->bufsiz;
+				device->physpath = NULL;
+				device->physpath_len = 0;
+			}
 			/* Clear existing buffer if zero length */
 			if (cdai->bufsiz == 0)
 				break;
@@ -1767,6 +1769,7 @@ ata_dev_advinfo(union ccb *start_ccb)
 				start_ccb->ccb_h.status = CAM_REQ_ABORTED;
 				return;
 			}
+			device->physpath_len = cdai->bufsiz;
 			memcpy(device->physpath, cdai->buf, cdai->bufsiz);
 		} else {
 			cdai->provsiz = device->physpath_len;

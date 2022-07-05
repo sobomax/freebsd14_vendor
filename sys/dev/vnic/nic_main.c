@@ -23,12 +23,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8e6aa60f6ca8ce2cfd0c4376d617dce656b303f4 $
+ * $FreeBSD: 08559442dbc705efad0cf2116f743ad0a352d29c $
  *
  */
 
+/*
+ * Marvell/Cavium ThunderX vnic/bgx network controller
+ *
+ * UNIMPLEMENTED FEATURES
+ * ----------------------
+ * A number of features supported by the hardware are not yet implemented in
+ * this driver:
+ *
+ * - PR223573 multicast rx filter
+ * - PR223575 non-promiscuous mode (driver currently forces promisc)
+ */
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e6aa60f6ca8ce2cfd0c4376d617dce656b303f4 $");
+__FBSDID("$FreeBSD: 08559442dbc705efad0cf2116f743ad0a352d29c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

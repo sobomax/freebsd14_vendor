@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba0dfb200ba0fa7e41280059b21835193dadf1d2 $");
+__FBSDID("$FreeBSD: 3ad18005c9356960c56e50ba9a027ed0ec863f3b $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -68,7 +68,7 @@ VIA_RNG_store(void *buf)
 #ifdef __GNUCLIKE_ASM
 	__asm __volatile(
 		"movl	$0,%%edx\n\t"
-		"xstore"
+		".byte 0x0f, 0xa7, 0xc0"
 			: "=a" (retval), "+d" (rate), "+D" (buf)
 			:
 			: "memory"

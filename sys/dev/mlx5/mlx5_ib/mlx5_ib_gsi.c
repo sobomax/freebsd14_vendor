@@ -22,10 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6c04178516653424d884df2b86bc9b5c2e60231a $
+ * $FreeBSD: dc273bf5d179fa38d37dc7751310eab0148c2a69 $
  */
 
-#include "mlx5_ib.h"
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
+
+#include <dev/mlx5/mlx5_ib/mlx5_ib.h>
 
 struct mlx5_ib_gsi_wr {
 	struct ib_cqe cqe;
@@ -472,8 +475,8 @@ static struct ib_qp *get_tx_qp(struct mlx5_ib_gsi_qp *gsi, struct ib_ud_wr *wr)
 	return gsi->tx_qps[qp_index];
 }
 
-int mlx5_ib_gsi_post_send(struct ib_qp *qp, struct ib_send_wr *wr,
-			  struct ib_send_wr **bad_wr)
+int mlx5_ib_gsi_post_send(struct ib_qp *qp, const struct ib_send_wr *wr,
+			  const struct ib_send_wr **bad_wr)
 {
 	struct mlx5_ib_gsi_qp *gsi = gsi_qp(qp);
 	struct ib_qp *tx_qp;
@@ -517,8 +520,8 @@ err:
 	return ret;
 }
 
-int mlx5_ib_gsi_post_recv(struct ib_qp *qp, struct ib_recv_wr *wr,
-			  struct ib_recv_wr **bad_wr)
+int mlx5_ib_gsi_post_recv(struct ib_qp *qp, const struct ib_recv_wr *wr,
+			  const struct ib_recv_wr **bad_wr)
 {
 	struct mlx5_ib_gsi_qp *gsi = gsi_qp(qp);
 

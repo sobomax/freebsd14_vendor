@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b2ddfb10f69908967d6475ae5ccf45767e495c6 $");
+__FBSDID("$FreeBSD: ff864276f96cf07c185a77097d03f3d9cc0fdb9d $");
 
 #include <stand.h>
 #include <string.h>
@@ -53,8 +53,10 @@ cons_probe(void)
 	int	active;
 	char	*prefconsole;
 
+	TSENTER();
+
 	/* We want a callback to install the new value when this var changes. */
-	env_setenv("twiddle_divisor", EV_VOLATILE, "1", twiddle_set,
+	env_setenv("twiddle_divisor", EV_VOLATILE, "16", twiddle_set,
 	    env_nounset);
 
 	/* Do all console probes */
@@ -98,6 +100,8 @@ cons_probe(void)
 		    env_nounset);
 		free(prefconsole);
 	}
+
+	TSEXIT();
 }
 
 int

@@ -1,4 +1,6 @@
-# $FreeBSD: 44d91830baaf23033d8b9b3d80a1f7d063261546 $
+# $FreeBSD: 65618e1f59dc86f2c07d60439fbefcb88462ce88 $
+
+PACKAGE=	kerberos
 
 PROG=	kf
 MAN=	kf.1

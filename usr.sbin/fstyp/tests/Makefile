@@ -1,9 +1,10 @@
-# $FreeBSD: 9c4624af3a4c10db3a97b3e3294622ecafcfd22a $
+# $FreeBSD: c821bc9b45eb2b87856febd7d3d3c04edcfd8b27 $
 
 PACKAGE=	tests
 
 ATF_TESTS_SH=	fstyp_test
 
+${PACKAGE}FILES+=	befs.img.bz2
 ${PACKAGE}FILES+=	dfr-01-xfat.img.bz2
 ${PACKAGE}FILES+=	ext2.img.bz2
 ${PACKAGE}FILES+=	ext3.img.bz2

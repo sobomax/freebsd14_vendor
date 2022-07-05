@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 893c9626e67f9130af80cf2c9e6da63ffb75eed7 $
+ * $FreeBSD: 5a5744a3fb16e1d84f3504bb897d69ee94bd837b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 893c9626e67f9130af80cf2c9e6da63ffb75eed7 $");
+__FBSDID("$FreeBSD: 5a5744a3fb16e1d84f3504bb897d69ee94bd837b $");
 
 #include "opt_bhyve_snapshot.h"
 
@@ -174,7 +174,7 @@ struct vm {
 	struct mem_map	mem_maps[VM_MAX_MEMMAPS]; /* (i) guest address space */
 	struct mem_seg	mem_segs[VM_MAX_MEMSEGS]; /* (o) guest memory regions */
 	struct vmspace	*vmspace;		/* (o) guest's address space */
-	char		name[VM_MAX_NAMELEN];	/* (o) virtual machine name */
+	char		name[VM_MAX_NAMELEN+1];	/* (o) virtual machine name */
 	struct vcpu	vcpu[VM_MAXCPU];	/* (i) guest vcpus */
 	/* The following describe the vm cpu topology */
 	uint16_t	sockets;		/* (o) num of sockets */
@@ -480,7 +480,8 @@ vm_create(const char *name, struct vm **retvm)
 	if (!vmm_initialized)
 		return (ENXIO);
 
-	if (name == NULL || strlen(name) >= VM_MAX_NAMELEN)
+	if (name == NULL || strnlen(name, VM_MAX_NAMELEN + 1) ==
+	    VM_MAX_NAMELEN + 1)
 		return (EINVAL);
 
 	vmspace = vmmops_vmspace_alloc(0, VM_MAXUSER_ADDRESS_LA48);
@@ -798,6 +799,24 @@ vm_mmap_memseg(struct vm *vm, vm_paddr_t gpa, int segid, vm_ooffset_t first,
 }
 
 int
+vm_munmap_memseg(struct vm *vm, vm_paddr_t gpa, size_t len)
+{
+	struct mem_map *m;
+	int i;
+
+	for (i = 0; i < VM_MAX_MEMMAPS; i++) {
+		m = &vm->mem_maps[i];
+		if (m->gpa == gpa && m->len == len &&
+		    (m->flags & VM_MEMMAP_F_IOMMU) == 0) {
+			vm_free_memmap(vm, i);
+			return (0);
+		}
+	}
+
+	return (EINVAL);
+}
+
+int
 vm_mmap_getnext(struct vm *vm, vm_paddr_t *gpa, int *segid,
     vm_ooffset_t *segoff, size_t *len, int *prot, int *flags)
 {
@@ -919,10 +938,8 @@ vm_iommu_modify(struct vm *vm, bool map)
 			hpa = DMAP_TO_PHYS((uintptr_t)vp);
 			if (map) {
 				iommu_create_mapping(vm->iommu, gpa, hpa, sz);
-				iommu_remove_mapping(host_domain, hpa, sz);
 			} else {
 				iommu_remove_mapping(vm->iommu, gpa, sz);
-				iommu_create_mapping(host_domain, hpa, hpa, sz);
 			}
 
 			gpa += PAGE_SIZE;
@@ -1285,7 +1302,7 @@ vm_handle_rendezvous(struct vm *vm, int vcpuid)
 	mtx_lock(&vm->rendezvous_mtx);
 	while (vm->rendezvous_func != NULL) {
 		/* 'rendezvous_req_cpus' must be a subset of 'active_cpus' */
-		CPU_AND(&vm->rendezvous_req_cpus, &vm->active_cpus);
+		CPU_AND(&vm->rendezvous_req_cpus, &vm->rendezvous_req_cpus, &vm->active_cpus);
 
 		if (vcpuid != -1 &&
 		    CPU_ISSET(vcpuid, &vm->rendezvous_req_cpus) &&

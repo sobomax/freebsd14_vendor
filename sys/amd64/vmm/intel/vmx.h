@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57499a3a6869ccab8ef00922dd2d44900dc520dd $
+ * $FreeBSD: 81e508e30d3d87d2394f023425d1122a91a10c0b $
  */
 
 #ifndef _VMX_H_
 #define	_VMX_H_
 
 #include "vmcs.h"
+#include "x86.h"
 
 struct pmap;
 
@@ -134,6 +135,7 @@ struct vmx {
 	uint64_t	eptp;
 	struct vm	*vm;
 	long		eptgen[MAXCPU];		/* cached pmap->pm_eptgen */
+	struct vm_mtrr  mtrr[VM_MAXCPU];
 };
 CTASSERT((offsetof(struct vmx, vmcs) & PAGE_MASK) == 0);
 CTASSERT((offsetof(struct vmx, msr_bitmap) & PAGE_MASK) == 0);

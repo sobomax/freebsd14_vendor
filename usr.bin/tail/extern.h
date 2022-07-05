@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: 65ddb519dc61bf57bbfbb2ec7595f5407cf668e8 $
+ * $FreeBSD: 3d8c126296825f30bfd3919acb5113cb010ec1ad $
  */
 
 #define	WR(p, size) do { \
@@ -56,7 +56,7 @@ struct mapinfo {
 
 struct file_info {
 	FILE *fp;
-	char *file_name;
+	const char *file_name;
 	struct stat st;
 };
 

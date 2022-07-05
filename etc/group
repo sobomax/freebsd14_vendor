@@ -1,4 +1,4 @@
-# $FreeBSD: 9f24beda5aea5b259e0d7f83de31f263e09397d0 $
+# $FreeBSD: 2a24f55303ca5946a6f546ff3724830334b0b2ff $
 #
 wheel:*:0:root
 daemon:*:1:
@@ -18,6 +18,8 @@ smmsp:*:25:
 mailnull:*:26:
 guest:*:31:
 video:*:44:
+realtime:*:47:
+idletime:*:48:
 bind:*:53:
 unbound:*:59:
 proxy:*:62:

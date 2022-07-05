@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: d853e6078e4f0b79512fdc2904d8f28154022aeb $
+# $FreeBSD: 08b603703f722a2ea2fb7a43d13aa9abbc318bc0 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case interop_001_pos cleanup
 interop_001_pos_head()
 {
 	atf_set "descr" "Create a SVM device and add this to an existing ZFS pool"
-	atf_set "require.progs"  metadb zfs metaclear metastat metainit zpool
+	atf_set "require.progs" "ksh93 metadb zfs metaclear metastat metainit zpool"
 }
 interop_001_pos_body()
 {

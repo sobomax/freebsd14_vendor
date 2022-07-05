@@ -1,4 +1,4 @@
-# $FreeBSD: f3b17c5cff9a2cf82f25ad14da8ac3a8bccd4076 $
+# $FreeBSD: 5861c78f6122d678b3cf13255d254258edded693 $
 
 .include <src.opts.mk>
 
@@ -15,6 +15,7 @@ SRCS+=		memory_resource.cpp
 
 WARNS?=		0
 CXXFLAGS+=	${PICFLAG}
+CFLAGS+=	-isystem ${.CURDIR}/../libc++
 CXXFLAGS+=	-isystem ${SRCDIR}/include
 CXXFLAGS+=	-nostdinc++
 CXXFLAGS+=	-nostdlib

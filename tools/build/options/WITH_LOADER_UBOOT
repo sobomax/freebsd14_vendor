@@ -1,2 +1,2 @@
-.\" $FreeBSD: a8ced0f8bf1b8f371e9207aedc47b3980565fb34 $
-Set to build ubldr.
+.\" $FreeBSD: 0750d635e495b744a92e53879905df50b9c237e9 $
+Build ubldr.

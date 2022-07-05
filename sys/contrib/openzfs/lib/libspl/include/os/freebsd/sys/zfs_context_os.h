@@ -23,12 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f5a136d221253de2c1b27548628ca9ccff3aa96e $
+ * $FreeBSD: b9bf487c2aef132992f80715e95c296c2d51a2b7 $
  */
 
 #ifndef ZFS_CONTEXT_OS_H_
 #define	ZFS_CONTEXT_OS_H_
 
+#define	HAVE_LARGE_STACKS	1
 #define	ZFS_EXPORTS_PATH	"/etc/zfs/exports"
 
 #endif

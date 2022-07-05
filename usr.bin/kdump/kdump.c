@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05988f43133e77bc3fc86317b5a6aa5eb844ac9e $");
+__FBSDID("$FreeBSD: 19616338fc1f86c500e9be25e0603b5a49701bfc $");
 
 #define _WANT_KERNEL_ERRNO
 #ifdef __LP64__
@@ -869,6 +869,14 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				ip++;
 				narg--;
 				break;
+			case SYS_close_range:
+				print_number(ip, narg, c);
+				print_number(ip, narg, c);
+				putchar(',');
+				print_mask_arg(sysdecode_close_range_flags, *ip);
+				ip += 3;
+				narg -= 3;
+				break;
 			case SYS_open:
 			case SYS_openat:
 				print_number(ip, narg, c);
@@ -1638,7 +1646,7 @@ visdump(char *dp, int datalen, int screenwidth)
 	printf("       \"");
 	col = 8;
 	for (;datalen > 0; datalen--, dp++) {
-		 vis(visbuf, *dp, VIS_CSTYLE, *(dp+1));
+		vis(visbuf, *dp, VIS_CSTYLE | VIS_NOLOCALE, *(dp+1));
 		cp = visbuf;
 		/*
 		 * Keep track of printables and

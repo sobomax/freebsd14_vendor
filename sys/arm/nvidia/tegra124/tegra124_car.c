@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89f3e392c0bcc0340a7400bd6a3b0fc0d5c6b0ec $");
+__FBSDID("$FreeBSD: 49246889c06259cc9156c2bf17d0510f93138213 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -191,7 +191,7 @@ PLIST(mux_plld_out0_plld2_out0) = {"pllD_out0", "pllD2_out0"};
 PLIST(mux_xusb_hs) = {"xusb_ss_div2", "pllU_60"};
 PLIST(mux_xusb_ss) = {"pc_xusb_ss", "osc_div_clk"};
 
-/* Clocks ajusted online. */
+/* Clocks adjusted online. */
 static struct clk_fixed_def fixed_clk_m =
 	FRATE(TEGRA124_CLK_CLK_M, "clk_m", 12000000);
 static struct clk_fixed_def fixed_osc_div_clk =

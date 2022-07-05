@@ -1,6 +1,4 @@
-# $FreeBSD: 36175b7e525891108867edb26fc7786bc64e0bf2 $
+# $FreeBSD: f8ffe675db6efba616117e0eb6ed8da537fd32b1 $
 
 # modify to taste
 BINDIR?= /usr/bin
-
-WARNS?=	2

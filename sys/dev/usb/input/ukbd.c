@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3314a3b3e70f6b0c8dd6a2d67ea5adca847d070a $");
+__FBSDID("$FreeBSD: f2ff476150ff4fbc89b290a3c08231ffd421db1b $");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -722,11 +722,16 @@ ukbd_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 					    hid_get_udata(sc->sc_buffer, len, &tmp_loc);
 					/* advance to next location */
 					tmp_loc.pos += tmp_loc.size;
+					if (key == KEY_ERROR) {
+						DPRINTF("KEY_ERROR\n");
+						sc->sc_ndata = sc->sc_odata;
+						goto tr_setup; /* ignore */
+					}
 					if (modifiers & MOD_FN)
 						key = ukbd_apple_fn(key);
 					if (sc->sc_flags & UKBD_FLAG_APPLE_SWAP)
 						key = ukbd_apple_swap(key);
-					if (key == KEY_NONE || key == KEY_ERROR || key >= UKBD_NKEYCODE)
+					if (key == KEY_NONE || key >= UKBD_NKEYCODE)
 						continue;
 					/* set key in bitmap */
 					sc->sc_ndata.bitmap[key / 64] |= 1ULL << (key % 64);

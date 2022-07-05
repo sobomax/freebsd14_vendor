@@ -1,6 +1,6 @@
-# $FreeBSD: 2da13d579e822e6cc2462a124e9c9befaecba60d $
+# $FreeBSD: a2f9d83cc59a8155d5e2ef2906e040284942050d $
 
-PACKAGE=	utilities
+PACKAGE=	pkg-bootstrap
 
 FILES=	pkg.freebsd.org.2013102301
 

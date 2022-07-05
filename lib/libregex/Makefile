@@ -1,8 +1,9 @@
-# $FreeBSD: 5e54c3a5312a6861b3bc7e365b24b44aa1bf89af $
+# $FreeBSD: 36c8b778d3945d43d47c1b9a47f50f1ae7d23ed7 $
 
 .include <src.opts.mk>
 
-PACKAGE=lib${LIB}
+PACKAGE=	runtime
+
 LIB=	regex
 SHLIB_MAJOR=	1
 SHLIB_MINOR=	0

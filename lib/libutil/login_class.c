@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd0b232d0a43eb1b01af3c250ed5d83b349029c1 $");
+__FBSDID("$FreeBSD: 38666bc8e3d3e3d542653b79e5e8227dc0153c39 $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -231,12 +231,17 @@ setclassenvironment(login_cap_t *lc, const struct passwd * pwd, int paths)
 	    while (*set_env != NULL) {
 		char	*p = strchr(*set_env, '=');
 
-		if (p != NULL) {  /* Discard invalid entries */
+		if (p != NULL && p != *set_env) {  /* Discard invalid entries */
+		    const char	*ep;
 		    char	*np;
 
 		    *p++ = '\0';
+		    /* Strip leading spaces from variable name */
+		    ep = *set_env;
+		    while (*ep == ' ' || *ep == '\t')
+			ep++;
 		    if ((np = substvar(p, pwd, hlen, pch, nlen)) != NULL) {
-			setenv(*set_env, np, 1);
+			setenv(ep, np, 1);
 			free(np);
 		    }
 		}

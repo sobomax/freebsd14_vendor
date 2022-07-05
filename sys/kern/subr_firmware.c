@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0465f2a88483a83ff49c76dbd84fd33e19151e3f $");
+__FBSDID("$FreeBSD: aafb2a2ba26585eaef48295c1b95e42dc94b3dcf $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -412,7 +412,6 @@ static void
 unloadentry(void *unused1, int unused2)
 {
 	struct priv_fw *fp;
-	int err;
 
 	mtx_lock(&firmware_mtx);
 restart:
@@ -434,7 +433,7 @@ restart:
 		 * on unload to actually free the entry.
 		 */
 		mtx_unlock(&firmware_mtx);
-		err = linker_release_module(NULL, NULL, fp->file);
+		(void)linker_release_module(NULL, NULL, fp->file);
 		mtx_lock(&firmware_mtx);
 
 		/*

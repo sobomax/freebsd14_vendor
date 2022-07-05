@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 42677499ed786af28f717a6936a56e63b8731440 $
+ * $FreeBSD: 728bf211dc623923e3cd9818ab35fbbb015d57cf $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -41,6 +41,8 @@
 extern void kdb_cpu_clear_singlestep(void);
 extern void kdb_cpu_set_singlestep(void);
 boolean_t kdb_cpu_pc_is_singlestep(db_addr_t);
+int kdb_cpu_set_watchpoint(vm_offset_t addr, size_t size, int access);
+int kdb_cpu_clr_watchpoint(vm_offset_t addr, size_t size);
 
 static __inline void
 kdb_cpu_sync_icache(unsigned char *addr, size_t size)

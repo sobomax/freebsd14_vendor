@@ -24,10 +24,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define	KCSAN_RUNTIME
+#if defined(KASAN) || defined(KCSAN)
+#define	SAN_RUNTIME
+#endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67edbb976415109dfd4fe7b836757175a82b78e5 $");
+__FBSDID("$FreeBSD: 3dc203f656947eda644fe6ec84a725bab171b0e0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

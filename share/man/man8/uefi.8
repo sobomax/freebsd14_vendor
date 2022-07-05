@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 64bc30139f97e6e85956b1c6e0f9c7ec4eb495b6 $
+.\" $FreeBSD: 76fcedbfff1691a3557b6464b01f42e845711f03 $
 .\"
 .Dd February 22, 2021
 .Dt UEFI 8
@@ -86,24 +86,6 @@ reads boot configuration from
 .Pa /boot.config
 or
 .Pa /boot/config .
-.It
-.Pa loader.efi
-searches partitions of type
-.Li freebsd-ufs
-and
-.Li freebsd-zfs
-for
-.Pa loader.efi .
-The search begins with partitions on the device from which
-.Pa loader.efi
-was loaded, and continues with other available partitions.
-If both
-.Li freebsd-ufs
-and
-.Li freebsd-zfs
-partitions exist on the same device the
-.Li freebsd-zfs
-partition is preferred.
 .It
 .Pa loader.efi
 loads and boots the kernel, as described in

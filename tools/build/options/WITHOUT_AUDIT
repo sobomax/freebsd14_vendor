@@ -1,2 +1,2 @@
-.\" $FreeBSD: 8dfe0fc887d8b042daeaff655319c7f52f0c07c6 $
-Set to not build audit support into system programs.
+.\" $FreeBSD: 479bf77655e192f122669496b85b8afc716ec2d4 $
+Do not build audit support into system programs.

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7daf012499a2c5d46fcded2015027f4a134bca69 $");
+__FBSDID("$FreeBSD: f7a6ef311a40be91d3fce775131bd3dbd398e5d0 $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -729,7 +729,7 @@ NVME_LOGPAGE(ple,
     NVME_LOG_PREDICTABLE_LATENCY_EVENT_AGGREGATE,	NULL,	"Predictable Latency Event Aggregate",
     NULL,				DEFAULT_SIZE);
 NVME_LOGPAGE(ana,
-    NVME_LOG_ASYMMETRIC_NAMESPAVE_ACCESS,	NULL,	"Asymmetric Namespace Access",
+    NVME_LOG_ASYMMETRIC_NAMESPACE_ACCESS,	NULL,	"Asymmetric Namespace Access",
     NULL,				DEFAULT_SIZE);
 NVME_LOGPAGE(pel,
     NVME_LOG_PERSISTENT_EVENT_LOG,	NULL,	"Persistent Event Log",

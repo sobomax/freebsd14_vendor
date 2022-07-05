@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6169a3499dadcf4b9c9362aa6fe3a626de7e263d $
+ * $FreeBSD: 7c12ae215018afa4eb26492e736b8fa748b79831 $
  */
 
 #ifndef _SYS_LINKER_SET_H_
@@ -59,12 +59,23 @@
  * Private macros, not to be used outside this header file.
  */
 #ifdef __GNUCLIKE___SECTION
+
+/*
+ * The userspace address sanitizer inserts redzones around global variables,
+ * violating the assumption that linker set elements are packed.
+ */
+#ifdef _KERNEL
+#define	__NOASAN
+#else
+#define	__NOASAN	__nosanitizeaddress
+#endif
+
 #define __MAKE_SET_QV(set, sym, qv)			\
-	__GLOBL(__CONCAT(__start_set_,set));		\
-	__GLOBL(__CONCAT(__stop_set_,set));		\
+	__WEAK(__CONCAT(__start_set_,set));		\
+	__WEAK(__CONCAT(__stop_set_,set));		\
 	static void const * qv				\
+	__NOASAN					\
 	__set_##set##_sym_##sym __section("set_" #set)	\
-	__nosanitizeaddress				\
 	__used = &(sym)
 #define __MAKE_SET(set, sym)	__MAKE_SET_QV(set, sym, __MAKE_SET_CONST)
 #else /* !__GNUCLIKE___SECTION */

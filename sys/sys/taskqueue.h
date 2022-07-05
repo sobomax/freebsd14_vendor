@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f0cc00af986eb9fb5e505c0b141d9c7e18a89c3d $
+ * $FreeBSD: 7e59187e01142ede64edbea8039679bb063f3376 $
  */
 
 #ifndef _SYS_TASKQUEUE_H_
@@ -191,7 +191,7 @@ SYSINIT(taskqueue_##name, SI_SUB_TASKQ, SI_ORDER_SECOND,		\
 struct __hack
 #define TASKQUEUE_FAST_DEFINE_THREAD(name)				\
 TASKQUEUE_FAST_DEFINE(name, taskqueue_thread_enqueue,			\
-	&taskqueue_##name, taskqueue_start_threads(&taskqueue_##name	\
+	&taskqueue_##name, taskqueue_start_threads(&taskqueue_##name,	\
 	1, PWAIT, "%s taskq", #name))
 
 /*

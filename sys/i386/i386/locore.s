@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)locore.s	7.3 (Berkeley) 5/13/91
- * $FreeBSD: 2bc751ba8ffc28396091ccaa4172ee067ed4c86d $
+ * $FreeBSD: d350c3abaeaa8b70e4b6c9c6ff202b74b98eaac5 $
  *
  *		originally from: locore.s, by William F. Jolitz
  *
@@ -340,7 +340,7 @@ ENTRY(identify_cpu)
 	testl	%eax,%eax
 	jnz	try486
 
-	/* NexGen CPU does not have aligment check flag. */
+	/* NexGen CPU does not have alignment check flag. */
 	pushfl
 	movl	$0x5555, %eax
 	xorl	%edx, %edx

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da5598557387438ace5b9abacb0b24b5b1ce4e4c $");
+__FBSDID("$FreeBSD: 977798ab2f770048da95b85eea88736f96706100 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -876,7 +876,8 @@ pn_identify(driver_t *driver, device_t parent)
 	}
 	if (device_find_child(parent, "powernow", -1) != NULL)
 		return;
-	if (BUS_ADD_CHILD(parent, 10, "powernow", -1) == NULL)
+	if (BUS_ADD_CHILD(parent, 10, "powernow", device_get_unit(parent))
+	    == NULL)
 		device_printf(parent, "powernow: add child failed\n");
 }
 

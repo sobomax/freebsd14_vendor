@@ -26,11 +26,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5cdfbe674ef3a6f7f17b530535d710878e9a8c9c $
+ * $FreeBSD: 8c201ad6a1016dbead384990b6f19933872a2133 $
  */
 
-#ifndef _ASM_ATOMIC_H_
-#define	_ASM_ATOMIC_H_
+#ifndef _LINUXKPI_ASM_ATOMIC_H_
+#define	_LINUXKPI_ASM_ATOMIC_H_
 
 #include <linux/compiler.h>
 #include <sys/types.h>
@@ -317,4 +317,4 @@ LINUX_ATOMIC_FETCH_OP(and, &)
 LINUX_ATOMIC_FETCH_OP(andnot, &~)
 LINUX_ATOMIC_FETCH_OP(xor, ^)
 
-#endif					/* _ASM_ATOMIC_H_ */
+#endif					/* _LINUXKPI_ASM_ATOMIC_H_ */

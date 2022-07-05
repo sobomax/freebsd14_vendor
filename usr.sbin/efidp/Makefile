@@ -1,4 +1,6 @@
-# $FreeBSD: 56dd2659b77788e0849621b70a5a5eeb16ffaf97 $
+# $FreeBSD: 7b8bf2d1d5562cdc128ff68f0bd3ceb0355cfdab $
+
+PACKAGE=	efi-tools
 
 PROG=	efidp
 MAN=	efidp.8

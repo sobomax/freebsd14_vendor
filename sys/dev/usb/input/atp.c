@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3515c08a1a6d5f75c5e31595297b1091d351ca5d $");
+__FBSDID("$FreeBSD: 585afbaf1a1b6edbd6e76feee4f56092e90a3730 $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -2175,11 +2175,11 @@ atp_probe(device_t self)
 
 	if ((usbd_lookup_id_by_uaa(fg_devs, sizeof(fg_devs), uaa)) == 0)
 		return ((uaa->info.bInterfaceProtocol == UIPROTO_MOUSE) ?
-			0 : ENXIO);
+			BUS_PROBE_DEFAULT : ENXIO);
 
 	if ((usbd_lookup_id_by_uaa(wsp_devs, sizeof(wsp_devs), uaa)) == 0)
 		if (uaa->info.bIfaceIndex == WELLSPRING_INTERFACE_INDEX)
-			return (0);
+			return (BUS_PROBE_DEFAULT);
 
 	return (ENXIO);
 }

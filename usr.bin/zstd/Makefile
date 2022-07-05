@@ -1,4 +1,4 @@
-# $FreeBSD: 797558940c3689e54faac62f0a0633ce1faefeef $
+# $FreeBSD: 4ecf16f07b400f77feeb2755f03de3c80241de8d $
 
 PROG=	zstd
 SRCS=	\
@@ -26,6 +26,7 @@ MLINKS=	zstd.1 unzstd.1 \
 	zstd.1 zstdcat.1 \
 	zstd.1 zstdmt.1
 
+CSTD=c11
 WARNS?=	2
 LIBADD=	zstd
 .PATH: ${SRCTOP}/sys/contrib/zstd/programs

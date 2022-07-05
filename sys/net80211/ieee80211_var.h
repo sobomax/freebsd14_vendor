@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 350c9b98441d5e4aaca5d810e8fb00cb6b1004a4 $
+ * $FreeBSD: a361e2c72028f6f5ec037622ca72056bb2891668 $
  */
 #ifndef _NET80211_IEEE80211_VAR_H_
 #define _NET80211_IEEE80211_VAR_H_
@@ -605,7 +605,13 @@ struct ieee80211vap {
 	struct ieee80211_rx_histogram	*rx_histogram;
 	struct ieee80211_tx_histogram	*tx_histogram;
 
-	uint64_t		iv_spare[6];
+	struct ieee80211_node *	(*iv_update_bss)(struct ieee80211vap *,
+				    struct ieee80211_node *);
+
+#ifdef __ILP32__
+	uint32_t		iv_spare0;
+#endif
+	uint64_t		iv_spare[5];
 };
 MALLOC_DECLARE(M_80211_VAP);
 
@@ -1067,15 +1073,18 @@ void	ieee80211_note_frame(const struct ieee80211vap *,
  */
 #define	IEEE80211_DISCARD(_vap, _m, _wh, _type, _fmt, ...) do {		\
 	if ((_vap)->iv_debug & (_m))					\
-		ieee80211_discard_frame(_vap, _wh, _type, _fmt, __VA_ARGS__);\
+		ieee80211_discard_frame(_vap, _wh, _type,		\
+		   "%s:%d: " _fmt, __func__, __LINE__, __VA_ARGS__);	\
 } while (0)
 #define	IEEE80211_DISCARD_IE(_vap, _m, _wh, _type, _fmt, ...) do {	\
 	if ((_vap)->iv_debug & (_m))					\
-		ieee80211_discard_ie(_vap, _wh, _type, _fmt, __VA_ARGS__);\
+		ieee80211_discard_ie(_vap, _wh, _type,			\
+		    "%s:%d: " _fmt, __func__, __LINE__, __VA_ARGS__);	\
 } while (0)
 #define	IEEE80211_DISCARD_MAC(_vap, _m, _mac, _type, _fmt, ...) do {	\
 	if ((_vap)->iv_debug & (_m))					\
-		ieee80211_discard_mac(_vap, _mac, _type, _fmt, __VA_ARGS__);\
+		ieee80211_discard_mac(_vap, _mac, _type,		\
+		    "%s:%d: " _fmt, __func__, __LINE__, __VA_ARGS__);	\
 } while (0)
 
 void ieee80211_discard_frame(const struct ieee80211vap *,

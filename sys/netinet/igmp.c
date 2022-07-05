@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21bce1ff885a7906741cca2c54e66e282e07b66c $");
+__FBSDID("$FreeBSD: ef0da5e5cb460097a619bc05dbd6a57206c377d1 $");
 
 #include "opt_ddb.h"
 
@@ -382,7 +382,7 @@ sysctl_igmp_stat(SYSCTL_HANDLER_ARGS)
 		 * igps0 must be "all zero".
 		 */
 		p = (char *)&igps0;
-		while (*p == '\0' && p < (char *)&igps0 + sizeof(igps0))
+		while (p < (char *)&igps0 + sizeof(igps0) && *p == '\0')
 			p++;
 		if (p != (char *)&igps0 + sizeof(igps0)) {
 			error = EINVAL;

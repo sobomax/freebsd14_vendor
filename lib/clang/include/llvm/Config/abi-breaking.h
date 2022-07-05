@@ -1,4 +1,4 @@
-/* $FreeBSD: 643e1018b20f95b85ae55ed91c5688f3a506febf $ */
+/* $FreeBSD: 1254d6218db384eb67f1639882f5c944633420a1 $ */
 /*===------- llvm/Config/abi-breaking.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /* Part of the LLVM Project, under the Apache License v2.0 with LLVM          */
@@ -21,7 +21,7 @@
 
 /* Allow selectively disabling link-time mismatch checking so that header-only
    ADT content from LLVM can be used without linking libSupport. */
-#if !LLVM_DISABLE_ABI_BREAKING_CHECKS_ENFORCING
+#if !defined(LLVM_DISABLE_ABI_BREAKING_CHECKS_ENFORCING) || !LLVM_DISABLE_ABI_BREAKING_CHECKS_ENFORCING
 
 // ABI_BREAKING_CHECKS protection: provides link-time failure when clients build
 // mismatch with LLVM

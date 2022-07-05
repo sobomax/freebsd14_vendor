@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6fe027f5df3200baaf7bb374879eab230bf5134 $");
+__FBSDID("$FreeBSD: 13f7a59d5215edda6a5ba5a20ef170f022e7f9a6 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -959,6 +959,17 @@ be_validate_name(libbe_handle_t *lbh, const char *name)
 		return (BE_ERR_PATHLEN);
 
 	if (!zfs_name_valid(name, ZFS_TYPE_DATASET))
+		return (BE_ERR_INVALIDNAME);
+
+	/*
+	 * ZFS allows spaces in boot environment names, but the kernel can't
+	 * handle booting from such a dataset right now.  vfs.root.mountfrom
+	 * is defined to be a space-separated list, and there's no protocol for
+	 * escaping whitespace in the path component of a dev:path spec.  So
+	 * while loader can handle this situation alright, it can't safely pass
+	 * it on to mountroot.
+	 */
+	if (strchr(name, ' ') != NULL)
 		return (BE_ERR_INVALIDNAME);
 
 	return (BE_ERR_SUCCESS);

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 847644ca1e67b63e9d4c2b58f335c6b1fd7fde5e $");
+__FBSDID("$FreeBSD: c9ee3b0e3dfb93a7329c17fd8aa9c22007d2f914 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -925,7 +925,7 @@ xbd_setup_sysctl(struct xbd_softc *xbd)
 	    "communication channel pages (negotiated)");
 
 	SYSCTL_ADD_PROC(sysctl_ctx, children, OID_AUTO,
-	    "features", CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, xbd,
+	    "features", CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, xbd,
 	    0, xbd_sysctl_features, "A", "protocol features (negotiated)");
 }
 

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 51deded732f022920f9ec2e22a35de090f9ad6f2 $
+ * $FreeBSD: 8650d56eb9d52617531a09df33cb1cc5ddede12f $
  */
 
 /* 7.0-CURRENT */
@@ -303,4 +303,18 @@ FBSD_1.5 {
 	sincos;
 	sincosf;
 	sincosl;
+};
+
+/* First added in 14.0-CURRENT */
+FBSD_1.7 {
+	cexpl;
+	cospi;
+	cospif;
+	cospil;
+	sinpi;
+	sinpif;
+	sinpil;
+	tanpi;
+	tanpif;
+	tanpil;
 };

@@ -37,7 +37,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: 93d39103929c086a493a7f63664efab4225dd27b $");
+__FBSDID("$FreeBSD: e1482f004d47353e9627c99be5fa8235192f2710 $");
 #else
 #if defined(_KERNEL)
 __KERNEL_RCSID(0, "$NetBSD: ubsan.c,v 1.3 2018/08/03 16:31:04 kamil Exp $");
@@ -717,7 +717,7 @@ HandleAlignmentAssumption(bool isFatal, struct CAlignmentAssumptionData *pData, 
 	if (pData->mAssumptionLocation.mFilename != NULL) {
 		DeserializeLocation(szAssumptionLocation, LOCATION_MAXLEN,
 		    &pData->mAssumptionLocation);
-		Report(isFatal, "UBSan: Undefined Behavior in %s, alignment assumption of %#lx for pointer %#lx (offset %#lx), asumption made in %s\n",
+		Report(isFatal, "UBSan: Undefined Behavior in %s, alignment assumption of %#lx for pointer %#lx (offset %#lx), assumption made in %s\n",
 		    szLocation, ulAlignment, ulRealPointer, ulOffset,
 		    szAssumptionLocation);
 	} else {

@@ -30,7 +30,7 @@
  *
  *	from: src/sys/i386/include/md_var.h,v 1.35 2000/02/20 20:51:23 bsd
  *	JNPR: md_var.h,v 1.4 2006/10/16 12:30:34 katta
- * $FreeBSD: 8462b1beb22e482a129770f1bbf8a021958501a3 $
+ * $FreeBSD: 3d8981456654056d9376d2e63b002f658771a111 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -82,6 +82,7 @@ extern int busdma_swi_pending;
 void	busdma_swi(void);
 
 struct	dumperinfo;
-int	minidumpsys(struct dumperinfo *);
+struct	minidumpstate;
+int	cpu_minidumpsys(struct dumperinfo *, const struct minidumpstate *);
 
 #endif /* !_MACHINE_MD_VAR_H_ */

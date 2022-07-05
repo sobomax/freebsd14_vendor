@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b6579f42774ed8458483720312aceb98cd53ee53 $
+ * $FreeBSD: e996301e27f04645c3bd6cdf7c3ba1d2b93fc566 $
  */
 
-#ifndef _ACPI_ACPI_H_
-#define _ACPI_ACPI_H_
+#ifndef _LINUXKPI_ACPI_ACPI_H_
+#define _LINUXKPI_ACPI_ACPI_H_
 
 /*
  * FreeBSD import of ACPICA has a typedef for BOOLEAN which conflicts with
@@ -97,4 +97,4 @@ acpi_get_table(ACPI_STRING Signature, UINT32 Instance,
 	return (AcpiGetTable(Signature, Instance, OutTable));
 }
 
-#endif /* _ACPI_ACPI_H_ */
+#endif /* _LINUXKPI_ACPI_ACPI_H_ */

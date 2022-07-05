@@ -42,7 +42,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_gram.y#29 $
  *
- * $FreeBSD: c479c8fdf2db8f9b6aef08a36ab78ca42d823721 $
+ * $FreeBSD: d32793f4c12bb2524136cd0b47b9154ea90579fa $
  */
 
 #include <sys/types.h>
@@ -59,7 +59,7 @@
 #include "aicasm_symbol.h"
 #include "aicasm_insformat.h"
 
-int yylineno;
+extern int yylineno;
 char *yyfilename;
 char stock_prefix[] = "aic_";
 char *prefix = stock_prefix;

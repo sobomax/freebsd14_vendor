@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1b55231b2bf575fdc8c235fb96c6b5d4807e37a6 $
+ * $FreeBSD: fd0ad2c846f4268dbec6076abb5b5e61d2aa1e11 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b55231b2bf575fdc8c235fb96c6b5d4807e37a6 $");
+__FBSDID("$FreeBSD: fd0ad2c846f4268dbec6076abb5b5e61d2aa1e11 $");
 
 #include <sys/types.h>
 #include <dev/ic/ns16550.h>
@@ -679,7 +679,7 @@ uart_stdio_backend(struct uart_softc *sc)
 }
 
 static int
-uart_tty_backend(struct uart_softc *sc, const char *opts)
+uart_tty_backend(struct uart_softc *sc, const char *path)
 {
 #ifndef WITHOUT_CAPSICUM
 	cap_rights_t rights;
@@ -687,7 +687,7 @@ uart_tty_backend(struct uart_softc *sc, const char *opts)
 #endif
 	int fd;
 
-	fd = open(opts, O_RDWR | O_NONBLOCK);
+	fd = open(path, O_RDWR | O_NONBLOCK);
 	if (fd < 0)
 		return (-1);
 
@@ -711,17 +711,17 @@ uart_tty_backend(struct uart_softc *sc, const char *opts)
 }
 
 int
-uart_set_backend(struct uart_softc *sc, const char *opts)
+uart_set_backend(struct uart_softc *sc, const char *device)
 {
 	int retval;
 
-	if (opts == NULL)
+	if (device == NULL)
 		return (0);
 
-	if (strcmp("stdio", opts) == 0)
+	if (strcmp("stdio", device) == 0)
 		retval = uart_stdio_backend(sc);
 	else
-		retval = uart_tty_backend(sc, opts);
+		retval = uart_tty_backend(sc, device);
 	if (retval == 0)
 		uart_opentty(sc);
 

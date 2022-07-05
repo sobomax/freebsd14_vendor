@@ -31,27 +31,29 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9e94b4a5768d215ed9b8d7bdcb93c75c9705b538 $
+ * $FreeBSD: 08f953f128de84bc041b3a0603bb5527753328b1 $
  */
 
 #ifndef	_MACHINE_REG_H_
 #define	_MACHINE_REG_H_
 
+#include <sys/_types.h>
+
 struct reg {
-	uint64_t ra;		/* return address */
-	uint64_t sp;		/* stack pointer */
-	uint64_t gp;		/* global pointer */
-	uint64_t tp;		/* thread pointer */
-	uint64_t t[7];		/* temporaries */
-	uint64_t s[12];		/* saved registers */
-	uint64_t a[8];		/* function arguments */
-	uint64_t sepc;		/* exception program counter */
-	uint64_t sstatus;	/* status register */
+	__uint64_t	ra;		/* return address */
+	__uint64_t	sp;		/* stack pointer */
+	__uint64_t	gp;		/* global pointer */
+	__uint64_t	tp;		/* thread pointer */
+	__uint64_t	t[7];		/* temporaries */
+	__uint64_t	s[12];		/* saved registers */
+	__uint64_t	a[8];		/* function arguments */
+	__uint64_t	sepc;		/* exception program counter */
+	__uint64_t	sstatus;	/* status register */
 };
 
 struct fpreg {
-	uint64_t	fp_x[32][2];	/* Floating point registers */
-	uint64_t	fp_fcsr;	/* Floating point control reg */
+	__uint64_t	fp_x[32][2];	/* Floating point registers */
+	__uint64_t	fp_fcsr;	/* Floating point control reg */
 };
 
 struct dbreg {

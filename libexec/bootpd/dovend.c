@@ -1,7 +1,7 @@
 /*
  * dovend.c : Inserts all but the first few vendor options.
  *
- * $FreeBSD: cb0b4a0448c45b54b7f1e1bada93fb71275976c1 $
+ * $FreeBSD: 65543a2700c06e091591830149b6ec4748b4f70d $
  */
 
 #include <sys/types.h>
@@ -14,15 +14,6 @@
 #include <string.h>
 #include <errno.h>
 #include <syslog.h>
-
-#ifndef USE_BFUNCS
-# include <memory.h>
-/* Yes, memcpy is OK here (no overlapped copies). */
-# define bcopy(a,b,c)    memcpy(b,a,c)
-# define bzero(p,l)      memset(p,0,l)
-# define bcmp(a,b,c)     memcmp(a,b,c)
-# define index           strchr
-#endif
 
 #include "bootp.h"
 #include "bootpd.h"

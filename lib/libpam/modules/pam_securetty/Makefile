@@ -22,7 +22,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8eb3e6e7a6d1efa18d9f170afb54c2a2b3464d63 $
+# $FreeBSD: 7bd27c32efb70db35179191d6fe770d13fb1ce88 $
+
+PACKAGE=	runtime
 
 LIB=	pam_securetty
 SRCS=	pam_securetty.c

@@ -30,7 +30,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63b52193b8729b4d9075f07a013eb229f08c1363 $");
+__FBSDID("$FreeBSD: 4272299ce135994e3e9bf7dbec4066abf816408f $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -629,7 +629,13 @@ read_mtree_keywords(FILE *fp, fsnode *node)
 				error = ENOSYS;
 			break;
 		case 't':
-			if (strcmp(keyword, "time") == 0) {
+			if (strcmp(keyword, "tags") == 0) {
+				if (value == NULL) {
+					error = ENOATTR;
+					break;
+				}
+				/* Ignore. */
+			} else if (strcmp(keyword, "time") == 0) {
 				if (value == NULL) {
 					error = ENOATTR;
 					break;
@@ -783,6 +789,8 @@ read_mtree_keywords(FILE *fp, fsnode *node)
 			free(node->inode);
 			node->inode = curino;
 			node->inode->nlink++;
+			/* Reset st since node->inode has been updated. */
+			st = &node->inode->st;
 		}
 	}
 

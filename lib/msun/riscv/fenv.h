@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f9d840d156faafa1caf41c333177c39b10fc2cbf $
+ * $FreeBSD: f5c56f73b2295f0cfa56cc22658480755b3a62b7 $
  */
 
 #ifndef	_FENV_H_
@@ -186,7 +186,7 @@ fegetenv(fenv_t *__envp)
 }
 
 __fenv_static inline int
-feholdexcept(fenv_t *__envp)
+feholdexcept(fenv_t *__envp __unused)
 {
 
 	/* No exception traps. */
@@ -226,16 +226,16 @@ int fedisableexcept(int __mask);
 int fegetexcept(void);
 #else
 static inline int
-feenableexcept(int __mask)
+feenableexcept(int __mask __unused)
 {
 
 	/* No exception traps. */
 
-	return (-1);
+	return (0);
 }
 
 static inline int
-fedisableexcept(int __mask)
+fedisableexcept(int __mask __unused)
 {
 
 	/* No exception traps. */

@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc.h	8.5 (Berkeley) 1/21/94
  *
- * $FreeBSD: b578b7309130c2b123b6dfc1f3eb673f1ab1fac0 $
+ * $FreeBSD: 94682f42cdb397b5de350a96554c0b535178d364 $
  */
 
 #ifndef _FS_FDESC_H_
@@ -42,6 +42,7 @@
 /* Private mount flags for fdescfs. */
 #define FMNT_UNMOUNTF	0x01
 #define FMNT_LINRDLNKF	0x02
+#define	FMNT_NODUP	0x04
 
 struct fdescmount {
 	struct vnode	*f_root;	/* Root node */

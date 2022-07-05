@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.11 (Berkeley) 5/21/91
-# $FreeBSD: 8ca259b10a17cff8a485f11d40f492287888d16d $
+# $FreeBSD: 104e40b6e345e0ac6033d0ecd26c36980d148038 $
 
 .include <src.opts.mk>
 .include <src.tools.mk>
@@ -76,10 +76,10 @@ distribution:
 
 .if ${MK_MAIL} != "no"
 	cd ${.CURDIR}/mail; ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
-	    -T "package=runtime" ${ETCMAIL} ${DESTDIR}/etc/mail
+	    -T "package=sendmail" ${ETCMAIL} ${DESTDIR}/etc/mail
 	if [ -d ${DESTDIR}/etc/mail -a -f ${DESTDIR}/etc/mail/aliases -a \
 	      ! -f ${DESTDIR}/etc/aliases ]; then \
-		${INSTALL_SYMLINK} -T "package=runtime" \
+		${INSTALL_SYMLINK} -T "package=sendmail" \
 		mail/aliases ${DESTDIR}/etc/aliases; \
 	fi
 .endif

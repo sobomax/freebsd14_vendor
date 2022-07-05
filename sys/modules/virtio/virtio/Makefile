@@ -1,5 +1,5 @@
 #
-# $FreeBSD: ed67f03ea9f9f7bcb05487eaf59732841df93fbe $
+# $FreeBSD: f60c1a4a4bc0e583a9bce3f5b6f2eb40ddc57f31 $
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -31,5 +31,7 @@ SRCS=	virtio.c virtqueue.c
 SRCS+=	virtio_bus_if.c virtio_bus_if.h
 SRCS+=	virtio_if.c virtio_if.h
 SRCS+=	bus_if.h device_if.h 
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

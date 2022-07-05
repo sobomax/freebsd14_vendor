@@ -1,6 +1,8 @@
-# $FreeBSD: 66dd94a71f4a10b4cb739133a22ceb0d3c32f841 $
+# $FreeBSD: 49f14d7ba4abaa67a8b0b914a05015d3dc590660 $
 
 .include <src.opts.mk>
+
+PACKAGE=	nfs
 
 PROG=	nfsdumpstate
 MAN=	nfsdumpstate.8

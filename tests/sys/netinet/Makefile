@@ -1,16 +1,18 @@
-# $FreeBSD: 7dd21c3545b5e6650573c593427098123e2cea2a $
+# $FreeBSD: ec2e6e679c18e6f8e7e12ac4748e5ed0048fb4a9 $
 
 PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/netinet
 BINDIR=		${TESTSDIR}
 
+TESTS_SUBDIRS+=	libalias
+
 ATF_TESTS_C=	ip_reass_test \
 		so_reuseport_lb_test \
 		socket_afinet \
 		tcp_connect_port_test
 
-ATF_TESTS_SH=	carp fibs fibs_test redirect divert forward output lpm
+ATF_TESTS_SH=	carp fibs fibs_test redirect divert forward output lpm arp
 TEST_METADATA.output+=	required_programs="python"
 
 PROGS=	udp_dontroute tcp_user_cookie

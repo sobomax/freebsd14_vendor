@@ -1,5 +1,5 @@
 #
-# $FreeBSD: f42f3d61147e6417acbc7cbefaadab86b9ba41d7 $
+# $FreeBSD: 24a17f75a47f187a3f48f61f0a08b7aab8d24673 $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -40,5 +40,7 @@ SRCS=	bus_if.h device_if.h usb_if.h usb_if.c vnode_if.h \
 .if !empty(OPT_FDT)
 SRCS+=	usb_fdt_support.c ofw_bus_if.h
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

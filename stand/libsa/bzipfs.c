@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47380ae72e5e5dc7f76e26e7a0a28062b17a502b $");
+__FBSDID("$FreeBSD: bb67bda2aa19620f766cac293f3869c0c4c22276 $");
 
 #ifndef REGRESSION
 #include "stand.h"
@@ -340,6 +340,9 @@ bzf_seek(struct open_file *f, off_t offset, int where)
 	    target - bzf->bzf_bzstream.total_out_lo32), NULL);
 	if (errno)
 	    return(-1);
+	/* Break out of loop if end of file has been reached. */
+	if (bzf->bzf_endseen)
+	    break;
     }
     /* This is where we are (be honest if we overshot) */
     return(bzf->bzf_bzstream.total_out_lo32);

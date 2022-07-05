@@ -1,4 +1,4 @@
-# $FreeBSD: 9a67602185b8f3ceb2f46d8ddc52df4d770c3465 $
+# $FreeBSD: 0de1c90377639e08fd532c81bf3762612fada36c $
 
 ZLIB_1.2.4.0 {
 };
@@ -12,12 +12,12 @@ ZLIB_1.2.7.1 {
 ZLIB_1.2.9 {
 } ZLIB_1.2.7.1;
 
+ZLIB_1.2.12 {
+} ZLIB_1.2.9;
+
 FBSD_1.2 {
 } ZLIB_1.2.4.0;
 
 FBSD_1.6 {
 } FBSD_1.2;
-
-ZLIBprivate_1.0 {
-} ZLIB_1.2.4.0;
 

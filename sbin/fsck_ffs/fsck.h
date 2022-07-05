@@ -59,7 +59,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fsck.h	8.4 (Berkeley) 5/9/95
- * $FreeBSD: 676350b757678a3d851aa165f05f210ac54d15c8 $
+ * $FreeBSD: daa346826eff7531bfc66b09716dbb737b3ac50a $
  */
 
 #ifndef _FSCK_H_
@@ -236,10 +236,12 @@ extern int sujrecovery;			/* 1 => doing check using the journal */
 } while (0)
 #define	initbarea(bp, type) do { \
 	(bp)->b_bno = (ufs2_daddr_t)-1; \
+	(bp)->b_size = 0; \
+	(bp)->b_errs = 0; \
 	(bp)->b_flags = 0; \
+	(bp)->b_type = type; \
 	(bp)->b_refcnt = 0; \
 	(bp)->b_index = 0; \
-	(bp)->b_type = type; \
 } while (0)
 
 #define	sbdirty()	dirty(&sblk)
@@ -354,6 +356,7 @@ extern char	preen;			/* just fix normal inconsistencies */
 extern char	rerun;			/* rerun fsck. Only used in non-preen mode */
 extern int	returntosingle;		/* 1 => return to single user mode on exit */
 extern char	resolved;		/* cleared if unresolved changes => not clean */
+extern int	sbhashfailed;		/* when reading superblock check hash failed */
 extern char	havesb;			/* superblock has been read */
 extern char	skipclean;		/* skip clean file systems if preening */
 extern int	fsmodified;		/* 1 => write done to file system */
@@ -487,6 +490,7 @@ struct inostat *inoinfo(ino_t inum);
 void		IOstats(char *what);
 int		linkup(ino_t orphan, ino_t parentdir, char *name);
 int		makeentry(ino_t parent, ino_t ino, const char *name);
+int		openfilesys(char *dev);
 void		panic(const char *fmt, ...) __printflike(1, 2);
 void		pass1(void);
 void		pass1b(void);

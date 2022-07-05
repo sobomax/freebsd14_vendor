@@ -8,7 +8,7 @@
 # Copyright (c) 1998-2012 Douglas Barton, All rights reserved
 # Please see detailed copyright below
 
-# $FreeBSD: 7703e2856111f091bedbc2ba628047ac21d97379 $
+# $FreeBSD: 4a19dda8ff9d8a863f147bb57562a33f3a595e80 $
 
 PATH=/bin:/usr/bin:/usr/sbin
 
@@ -1278,7 +1278,7 @@ for COMPSYMLINK in `find . -type l | sort`; do
       continue
     else
       echo ''
-      echo " *** Target of temp symbolic link is differnt from that of installed one"
+      echo " *** Target of temp symbolic link is different from that of installed one"
       echo "     Temp (${COMPSYMLINK}): $(readlink ${COMPSYMLINK})"
       echo "     Installed (${DESTDIR}${COMPSYMLINK#.})): $(readlink ${DESTDIR}${COMPSYMLINK#.})"
       echo ''

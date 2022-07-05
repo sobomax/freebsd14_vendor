@@ -1,5 +1,5 @@
 
-# $FreeBSD: 41bf2d70c9a2ec671d24dfa8e1aff68f57649a23 $
+# $FreeBSD: 57451e77f2a19f54ad70aca9e497877fd853f009 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -51,5 +51,7 @@ SRCS+= device_if.h bus_if.h pci_if.h
 cleanfirmware: clean
 CLEANFILES= ${GENSRCS}
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

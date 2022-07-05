@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5cac8ffd994c87fb93a868430bee82d0861724ea $");
+__FBSDID("$FreeBSD: 26e7bb75cf19a1dda7ebc7dcffa0d3e70098d902 $");
 
 #include <sys/types.h>
 #include <sys/malloc.h>
@@ -128,6 +128,8 @@ tasklet_subsystem_uninit(void *arg __unused)
 	struct tasklet_worker *tw;
 	int i;
 
+	taskqgroup_drain_all(qgroup_softirq);
+
 	CPU_FOREACH(i) {
 		if (CPU_ABSENT(i))
 			continue;
@@ -225,6 +227,13 @@ tasklet_disable(struct tasklet_struct *ts)
 
 	atomic_inc(&ts->count);
 	tasklet_unlock_wait(ts);
+}
+
+void
+tasklet_disable_nosync(struct tasklet_struct *ts)
+{
+	atomic_inc(&ts->count);
+	barrier();
 }
 
 int

@@ -1,9 +1,10 @@
-# $FreeBSD: 670253eff7c12f09ccefb3276b25cf789fa9c0ef $
+# $FreeBSD: aaf76ed3fb2842f6e225d2e9b5e92e3cca26348b $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/nvpair
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libnvpair
 
 LIB=	nvpair
+LIBADD=	spl
 
 PACKAGE=	runtime
 # user

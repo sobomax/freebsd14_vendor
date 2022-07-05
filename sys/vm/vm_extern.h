@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vm_extern.h	8.2 (Berkeley) 1/12/94
- * $FreeBSD: acdb361d3262a0ae60d9795ec62b38f65ac5ca0f $
+ * $FreeBSD: b81087a385589e4df5978e932b20374c7f47cac6 $
  */
 
 #ifndef _VM_EXTERN_H_
@@ -42,6 +42,8 @@ struct vnode;
 struct vmem;
 
 #ifdef _KERNEL
+#include <sys/kassert.h>
+
 struct cdev;
 struct cdevsw;
 struct domainset;

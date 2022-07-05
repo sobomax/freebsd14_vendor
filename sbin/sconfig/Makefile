@@ -1,7 +1,7 @@
 # Cronyx Id: sbin.sconfig.Makefile,v 1.1.4.1 2003/02/17 12:51:24 rik Exp $
-# $FreeBSD: bce914f4086869b6500d8f382e4b2b53e9b10609 $
+# $FreeBSD: 3a7e4b2c7b828553ca9dedcd6fa0df65b0cdc884 $
 
-PACKAGE=runtime
+PACKAGE=utilities
 PROG=	sconfig
 MAN=	sconfig.8
 MANSUBDIR= /i386

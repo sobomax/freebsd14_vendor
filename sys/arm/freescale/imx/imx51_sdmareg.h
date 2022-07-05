@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012, 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Oleksandr Rybalko under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 71c28f6bec14811d41f27ae0f2612c245eaab757 $
+ * $FreeBSD: 7c6f14a3e715f310c1fc70d28491003418c1d112 $
  */
 
 /* Internal Registers definition for Freescale i.MX515 SDMA Core */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63efe4f520fdef0a2fe6519ee83f1c108f1daece $");
+__FBSDID("$FreeBSD: e8810ac88009ee9b9661bb4bd466a1126d458689 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -280,7 +280,7 @@ nexus_acpi_probe(device_t dev)
 	error = acpi_identify();
 	if (error)
 		return (error);
-
+	device_quiet(dev);
 	return (BUS_PROBE_DEFAULT);
 }
 

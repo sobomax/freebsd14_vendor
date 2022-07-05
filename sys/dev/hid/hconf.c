@@ -27,12 +27,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb0465e71b3ebd07bba733fa17b6f31500c18f18 $");
+__FBSDID("$FreeBSD: 90cd52d3116c26d422a7043fb5c194c1cff88bd2 $");
 
 /*
  * Digitizer configuration top-level collection support.
  * https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/windows-precision-touchpad-required-hid-top-level-collections
  */
+
+#include "opt_hid.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>

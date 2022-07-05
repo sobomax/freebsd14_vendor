@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1c108eed99694b04d0a0dfafb51d2cdfbf41d046 $
+ * $FreeBSD: c8b3572e93c6b623058d0defe2c920702f9f0c59 $
  */
 
 #ifndef _RTC_H_
 #define _RTC_H_
 
-void	rtc_init(struct vmctx *ctx, int use_localtime);
+void	rtc_init(struct vmctx *ctx);
 
 #endif /* _RTC_H_ */

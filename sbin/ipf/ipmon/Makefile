@@ -1,4 +1,4 @@
-#	$FreeBSD: 8227811db2ada6853a7943e08d69ef59fb967be5 $
+#	$FreeBSD: 7225f8c8bcb1a80360e216c0fcc9b908a9c1ed2b $
 
 PACKAGE=	ipf
 PROG=		ipmon
@@ -14,7 +14,6 @@ CLEANFILES+=	${GENHDRS} ipmon_y.c ipmon_l.c
 ipmon_y.c: ipmon_y.y
 	${YACC} -d ${.ALLSRC}
 	sed -e 's/yy/ipmon_yy/g' \
-	    -e 's/"ipmon_y.y"/"..\/tools\/ipmon_y.y"/' \
 	    y.tab.c > ${.TARGET}
 	sed -e 's/yy/ipmon_yy/g' \
 	    y.tab.h > ${.TARGET:.c=.h}

@@ -1,8 +1,9 @@
-# $FreeBSD: a87be5bf956c1d23c6db94039f4744ca7344d2e5 $
+# $FreeBSD: 897e308c351c53532a2e88da3ac62735576b5ebc $
 
 RPCDIR=	${SRCTOP}/include/rpcsvc
 .PATH: ${RPCDIR} ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr
 
+PACKAGE=	yp
 PROG=	yppush
 MAN=	yppush.8
 SRCS=	ypxfr_getmap.c yp_dblookup.c yp_error.c ypxfr_misc.c yppush_main.c \

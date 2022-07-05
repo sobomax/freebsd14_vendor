@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7479fd8bc8da6f6dc6c451d8864a47eb88241283 $");
+__FBSDID("$FreeBSD: ba614d014564329ca206394a0bc752b49192d045 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -97,21 +97,19 @@ tegra_bo_alloc_contig(size_t npages, u_long alignment, vm_memattr_t memattr,
     vm_page_t **ret_page)
 {
 	vm_page_t m;
-	int pflags, tries, i;
+	int tries, i;
 	vm_paddr_t low, high, boundary;
 
 	low = 0;
 	high = -1UL;
 	boundary = 0;
-	pflags = VM_ALLOC_NORMAL  | VM_ALLOC_NOOBJ | VM_ALLOC_NOBUSY |
-	    VM_ALLOC_WIRED | VM_ALLOC_ZERO;
 	tries = 0;
 retry:
-	m = vm_page_alloc_contig(NULL, 0, pflags, npages, low, high, alignment,
-	    boundary, memattr);
+	m = vm_page_alloc_noobj_contig(VM_ALLOC_WIRED | VM_ALLOC_ZERO, npages,
+	    low, high, alignment, boundary, memattr);
 	if (m == NULL) {
 		if (tries < 3) {
-			if (!vm_page_reclaim_contig(pflags, npages, low, high,
+			if (!vm_page_reclaim_contig(0, npages, low, high,
 			    alignment, boundary))
 				vm_wait(NULL);
 			tries++;
@@ -121,8 +119,6 @@ retry:
 	}
 
 	for (i = 0; i < npages; i++, m++) {
-		if ((m->flags & PG_ZERO) == 0)
-			pmap_zero_page(m);
 		m->valid = VM_PAGE_BITS_ALL;
 		(*ret_page)[i] = m;
 	}

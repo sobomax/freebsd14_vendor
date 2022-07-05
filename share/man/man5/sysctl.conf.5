@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 664eee8080fca64a7edd5f8a2d1638b1798df2d7 $
+.\" $FreeBSD: 99df8b794d83f33609c5801e7fb7c8914cfb69b1 $
 .\"
-.Dd July 21, 2018
+.Dd April 8, 2021
 .Dt SYSCTL.CONF 5
 .Os
 .Sh NAME
@@ -52,10 +52,13 @@ as seen in the
 .Sx EXAMPLES
 section, below.
 .Sh FILES
-.Bl -tag -width /etc/sysctl.conf -compact
+.Bl -tag -width /etc/sysctl.conf.local -compact
 .It Pa /etc/sysctl.conf
 Initial settings for
 .Xr sysctl 8 .
+.It Pa /etc/sysctl.conf.local
+Machine-specific settings for sites with a common
+.Pa /etc/sysctl.conf .
 .El
 .Sh EXAMPLES
 To turn off logging of programs that exit due to fatal signals you may use

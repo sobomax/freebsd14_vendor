@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e16fc1669ffd19fe8e35fcf7cbf83adaa9becda $");
+__FBSDID("$FreeBSD: 0e4bf1bf29306fe568680ab8fdc1f47f9ea13e44 $");
 
 #include "opt_stack.h"
 
@@ -70,7 +70,7 @@ static struct mtx intr_lock;
 MTX_SYSINIT(intr_lock, &intr_lock, "stack intr", MTX_DEF);
 #endif
 
-static void
+static void __nosanitizeaddress
 stack_capture(struct thread *td, struct stack *st, register_t fp)
 {
 	x86_frame_t frame;

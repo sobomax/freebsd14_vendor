@@ -1,5 +1,5 @@
-.\" $FreeBSD: b80a72697a2690a63a208db95cbf5d8c9bab7efd $
-Set to not build or install
+.\" $FreeBSD: 52cef5d142e3a6bec9437d92868ddb406adca0b4 $
+Do not build or install
 .Xr bhyve 8 ,
 associated utilities, and examples.
 .Pp

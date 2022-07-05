@@ -1,5 +1,5 @@
-.\" $FreeBSD: 8e78036d9e24bffa86222b6a1efbe41edc2cc737 $
-Set to not build
+.\" $FreeBSD: 763a89fd28f2416168fbd09d1811ad8eea90c289 $
+Do not build
 .Xr kdump 1
 and
 .Xr truss 1 .

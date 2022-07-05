@@ -1,4 +1,4 @@
-$FreeBSD: 78f6c31b2c6d79f8c889b4f24a9c57e3820f936e $
+$FreeBSD: b77d3302d8610ce18d8bb6084d2ef5a5211ddf13 $
 
 Example for creating many different builds (including different
 arch) from a common set of files, as well as building natively
@@ -31,17 +31,8 @@ qemu-powerpc.cfg	Create a bootable 32-bit powerpc image for
 			qemu
 qemu-powerpc64.cfg	Create a bootable 64-bit IBM-flavor image for
 			qemu
-qemu-sparc64.cfg	Create a bootable sparc64 image for qemu
 rpi.cfg			Create a bootable image for Raspberry Pi B
 rpi2.cfg		Create a bootable image for Raspberry Pi2
-sam9260ek.cfg		Create a bootable image for an Atmel SAM9260-EK
-			evaluation board (still needs a kernel loaded
-			into dataflash or NAND, so experimental).
-sam9g20ek.cfg		Create a bootable image for an Atmel SAM9G20-EK
-			evaluation board (still needs a kernel loaded
-			into dataflash or NAND, so experimental). Also
-			works on many after-market boards that are somewhat
-			compatible with the references board.
 
 QEMU command lines for serial console access
 

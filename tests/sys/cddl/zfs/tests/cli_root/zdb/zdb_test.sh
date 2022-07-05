@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: e75da9201b5df75912c72ee504636e268d3ce043 $
+# $FreeBSD: 60168a3da4936b5b48a66bac40bcb764c68ecca6 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zdb_001_neg cleanup
 zdb_001_neg_head()
 {
 	atf_set "descr" "Execute zdb using invalid parameters."
-	atf_set "require.progs"  zdb
+	atf_set "require.progs" "ksh93 zdb"
 }
 zdb_001_neg_body()
 {

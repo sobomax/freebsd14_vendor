@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 707316036604f3a172da75fc284794fd4f71d014 $
+# $FreeBSD: 7e1611350438ac26463342e285ba5c6611c906eb $
 #
 
 # PROVIDE: hostapd
@@ -12,6 +12,13 @@
 name="hostapd"
 desc="Authenticator for IEEE 802.11 networks"
 command=${hostapd_program}
+start_postcmd="hostapd_poststart"
+
+hostapd_poststart() {
+	ifconfig ${ifn} down
+	sleep 2
+	ifconfig ${ifn} up
+}
 
 ifn="$2"
 if [ -z "$ifn" ]; then

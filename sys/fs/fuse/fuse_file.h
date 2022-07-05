@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 10c799d5d40dc46ed5203e7c404e31160993e788 $
+ * $FreeBSD: 25004beead5197317160b9f7543ffb6e84d5fa08 $
  */
 
 #ifndef _FUSE_FILE_H_
@@ -211,7 +211,8 @@ int fuse_filehandle_getrw(struct vnode *vp, int fflag,
 
 void fuse_filehandle_init(struct vnode *vp, fufh_type_t fufh_type,
 		          struct fuse_filehandle **fufhp, struct thread *td,
-			  struct ucred *cred, struct fuse_open_out *foo);
+			  const struct ucred *cred,
+			  const struct fuse_open_out *foo);
 int fuse_filehandle_open(struct vnode *vp, int mode,
                          struct fuse_filehandle **fufhp, struct thread *td,
                          struct ucred *cred);

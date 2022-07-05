@@ -1,4 +1,6 @@
-# $FreeBSD: 1f71f9b2a400505c32735a293f222d660dcd11d2 $
+# $FreeBSD: 736b702f76299ed58626214c422277247abfa124 $
+
+PACKAGE=	kerberos
 
 PROG=	iprop-log
 MAN=	iprop-log.8

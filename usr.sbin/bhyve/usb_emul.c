@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ecdd9530eb14c749b2da55f2fe79ec289de9812 $");
+__FBSDID("$FreeBSD: d97d7b38d2f89aa7c1077d32953af6f54aaca8d8 $");
 
 #include <sys/types.h>
 #include <sys/queue.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: 6ecdd9530eb14c749b2da55f2fe79ec289de9812 $");
 SET_DECLARE(usb_emu_set, struct usb_devemu);
 
 struct usb_devemu *
-usb_emu_finddev(char *name)
+usb_emu_finddev(const char *name)
 {
 	struct usb_devemu **udpp, *udp;
 

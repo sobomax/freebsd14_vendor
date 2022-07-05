@@ -52,7 +52,7 @@
  *                        xnb1
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e49dfd9424c43a8d58e7a6fcdaf43bca46d6ac6 $");
+__FBSDID("$FreeBSD: 457d396c8f982fb2dc9708e2370c80b7b807e0ba $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -428,7 +428,7 @@ xenbusb_release_confighook(struct xenbusb_softc *xbs)
 }
 
 /**
- * \brief Verify the existance of attached device instances and perform
+ * \brief Verify the existence of attached device instances and perform
  *        probe/attach processing for newly arrived devices.
  *
  * \param dev  The NewBus device representing this XenBus bus.

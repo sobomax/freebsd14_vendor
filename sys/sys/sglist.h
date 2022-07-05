@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 82a3ac6ed6ac7432e02cdeb6fe4dbb6e6ac61632 $
+ * $FreeBSD: bf8aa482e3ce0047744bc661821d3a366a3225ae $
  */
 
 /*
@@ -94,6 +94,7 @@ int	sglist_append_phys(struct sglist *sg, vm_paddr_t paddr,
 	    size_t len);
 int	sglist_append_sglist(struct sglist *sg, struct sglist *source,
 	    size_t offset, size_t length);
+int	sglist_append_single_mbuf(struct sglist *sg, struct mbuf *m);
 int	sglist_append_uio(struct sglist *sg, struct uio *uio);
 int	sglist_append_user(struct sglist *sg, void *buf, size_t len,
 	    struct thread *td);

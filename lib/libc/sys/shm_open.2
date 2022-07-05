@@ -26,7 +26,7 @@
 .\" OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: e231115613cf987dd9059ae72a7fc4c6b4159395 $
+.\" $FreeBSD: ec12f9f2c0b7d10a7c7476d46c651035f7ee5b0b $
 .\"
 .Dd September 26, 2019
 .Dt SHM_OPEN 2
@@ -369,7 +369,7 @@ does not begin with a slash
 character.
 .It Bq Er ENOENT
 .Dv O_CREAT
-is specified and the named shared memory object does not exist.
+is not specified and the named shared memory object does not exist.
 .It Bq Er EEXIST
 .Dv O_CREAT
 and

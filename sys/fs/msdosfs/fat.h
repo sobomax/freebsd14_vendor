@@ -1,4 +1,4 @@
-/* $FreeBSD: bb0f128eaa8707b5781b1058cf4690e827553c80 $ */
+/* $FreeBSD: b28a9bed13563e4c5892699d820652cf32ae7482 $ */
 /*	$NetBSD: fat.h,v 1.12 1997/11/17 15:36:36 ws Exp $	*/
 
 /*-
@@ -97,7 +97,7 @@
 #define	DE_CLEAR	1	/* Zero out the blocks allocated */
 
 int pcbmap(struct denode *dep, u_long findcn, daddr_t *bnp, u_long *cnp, int* sp);
-int clusterfree(struct msdosfsmount *pmp, u_long cn, u_long *oldcnp);
+void clusterfree(struct msdosfsmount *pmp, u_long cn);
 int clusteralloc(struct msdosfsmount *pmp, u_long start, u_long count, u_long fillwith, u_long *retcluster, u_long *got);
 int fatentry(int function, struct msdosfsmount *pmp, u_long cluster, u_long *oldcontents, u_long newcontents);
 int freeclusterchain(struct msdosfsmount *pmp, u_long startchain);

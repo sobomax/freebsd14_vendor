@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 242b2f0df1159d88ddfabfa622b7b4096c43d7b9 $
+ * $FreeBSD: 704eb951d2b76877764ebc8a67e16a6a4c8a6da7 $
  */
 
 /**
@@ -966,7 +966,7 @@ hw_queue_teardown(ocs_hw_t *hw)
  * If wq_steering is OCS_HW_WQ_STEERING_REQUEST, then a WQ from the EQ that
  * the IO request came in on is selected.
  *
- * If wq_steering is OCS_HW_WQ_STEERING_CPU, then a WQ associted with the
+ * If wq_steering is OCS_HW_WQ_STEERING_CPU, then a WQ associated with the
  * CPU the request is made on is selected.
  *
  * @param hw pointer to HW object

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 926a2c5a850e2978402a76afffba963aedfcc7c7 $");
+__FBSDID("$FreeBSD: 061f2ba9ce9f42bd5429547d9a56a092767245f2 $");
 
 #include <stand.h>
 #include <string.h>
@@ -204,12 +204,12 @@ i386_fmtdev(void *vdev)
 int
 i386_setcurrdev(struct env_var *ev, int flags, const void *value)
 {
-    struct i386_devdesc	*ncurr;
-    int			rv;
+	struct i386_devdesc	*ncurr;
+	int			rv;
 
-    if ((rv = i386_parsedev(&ncurr, value, NULL)) != 0)
-	return(rv);
-    free(ncurr);
-    env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
-    return(0);
+	if ((rv = i386_parsedev(&ncurr, value, NULL)) != 0)
+		return (rv);
+	free(ncurr);
+
+	return (mount_currdev(ev, flags, value));
 }

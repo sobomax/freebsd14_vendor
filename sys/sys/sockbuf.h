@@ -30,7 +30,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: 4c56f4eaf234a56ad563c665dd1a06d8817d9d3d $
+ * $FreeBSD: a263555b3a2148c07b543cf35b0e6bce919d5390 $
  */
 #ifndef _SYS_SOCKBUF_H_
 #define _SYS_SOCKBUF_H_
@@ -78,7 +78,6 @@ struct selinfo;
  *
  * Locking key to struct sockbuf:
  * (a) locked by SOCKBUF_LOCK().
- * (b) locked by sblock()
  */
 struct	sockbuf {
 	struct	mtx sb_mtx;		/* sockbuf lock */
@@ -183,8 +182,6 @@ struct mbuf *
 struct mbuf *
 	sbsndmbuf(struct sockbuf *sb, u_int off, u_int *moff);
 int	sbwait(struct sockbuf *sb);
-int	sblock(struct sockbuf *sb, int flags);
-void	sbunlock(struct sockbuf *sb);
 void	sballoc(struct sockbuf *, struct mbuf *);
 void	sbfree(struct sockbuf *, struct mbuf *);
 void	sballoc_ktls_rx(struct sockbuf *sb, struct mbuf *m);

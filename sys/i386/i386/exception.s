@@ -33,12 +33,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b288543dafe1694a5fff9f013056a81fda09dfdf $
+ * $FreeBSD: 4e806e8b3bd944994fe6ff0ff1ee4be1a9de5379 $
  */
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
 #include "opt_hwpmc_hooks.h"
+#include "opt_hyperv.h"
 
 #include "assym.inc"
 
@@ -428,6 +429,14 @@ MCOUNT_LABEL(bintr)
 
 #ifdef DEV_APIC
 #include <i386/i386/apic_vector.s>
+#endif
+
+#ifdef HYPERV
+	.data
+	.p2align 4
+	.text
+	SUPERALIGN_TEXT
+#include <dev/hyperv/vmbus/i386/vmbus_vector.S>
 #endif
 
 	.data

@@ -1,4 +1,4 @@
-# $FreeBSD: c99b2d1159676562b9699d3ae4240bb9154ce0db $
+# $FreeBSD: 3bcdfc8f70713216e52963c2faba0569c3208a71 $
 
 .include <bsd.init.mk>
 
@@ -35,4 +35,5 @@ SRCS.${_T}=	${_T}.c test_helpers.c
 TEST_METADATA.${_T}+=	required_programs="cc"
 .endfor
 
+.include "Makefile.inc"
 .include <bsd.test.mk>

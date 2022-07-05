@@ -1,3 +1,3 @@
-.\" $FreeBSD: b812e3b33dc817cb630e9804197c70ea5d022001 $
-Set to build Flattened Device Tree support as part of the base system.
+.\" $FreeBSD: 63484d91221eadecf21bd8ae59af9c2b3cc8ebbc $
+Build Flattened Device Tree support as part of the base system.
 This includes the device tree compiler (dtc) and libfdt support library.

@@ -23,14 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a1b9fe43fe22df863ef98331c1b4f7bf196fd8ec $
+ * $FreeBSD: 8b76360a777f071a8fe2fae409ee2ef01b0f7913 $
  */
 
 #ifndef ARCHIVE_ENTRY_H_INCLUDED
 #define	ARCHIVE_ENTRY_H_INCLUDED
 
 /* Note: Compiler will complain if this does not match archive.h! */
-#define	ARCHIVE_VERSION_NUMBER 3005001
+#define	ARCHIVE_VERSION_NUMBER 3006000
 
 /*
  * Note: archive_entry.h is for use outside of libarchive; the
@@ -99,7 +99,7 @@ typedef ssize_t la_ssize_t;
 #endif
 
 /* Large file support for Android */
-#ifdef __ANDROID__
+#if defined(__LIBARCHIVE_BUILD) && defined(__ANDROID__)
 #include "android_lf.h"
 #endif
 

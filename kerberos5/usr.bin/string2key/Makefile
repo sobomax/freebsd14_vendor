@@ -1,4 +1,6 @@
-# $FreeBSD: 129d12cbcf0df48ff8a5c0366b85a7ae2252e21b $
+# $FreeBSD: bf343ceaddaa9a98612f4e4b077141160c0f88ab $
+
+PACKAGE=	kerberos
 
 PROG=	string2key
 MAN=	string2key.8

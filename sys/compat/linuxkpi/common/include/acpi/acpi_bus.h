@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: abee5223af601adb93dca65eb15ce7c7bb7d7d6b $
+ * $FreeBSD: c8a6385f26b2a3ba35a63abf98f5434eec5a423c $
  */
 
-#ifndef _ACPI_ACPI_BUS_H_
-#define _ACPI_ACPI_BUS_H_
+#ifndef _LINUXKPI_ACPI_ACPI_BUS_H_
+#define _LINUXKPI_ACPI_ACPI_BUS_H_
 
 typedef char acpi_device_class[20];
 
@@ -49,4 +49,4 @@ int		register_acpi_notifier(struct notifier_block *nb);
 int		unregister_acpi_notifier(struct notifier_block *nb);
 uint32_t	acpi_target_system_state(void);
 
-#endif /* !_ACPI_ACPI_BUS_H_ */
+#endif /* _LINUXKPI_ACPI_ACPI_BUS_H_ */

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: a69da905a3d3b4f211aebd760133502ff5074ff1 $
+# $FreeBSD: 714269245bcd947e57d3768354e569736ab99c11 $
 
 #
 # Copyright 2017 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zfs_diff_001_pos cleanup
 zfs_diff_001_pos_head()
 {
 	atf_set "descr" "zfs diff output for typical operations"
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_diff_001_pos_body()
 {

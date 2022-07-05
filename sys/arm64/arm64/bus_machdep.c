@@ -25,12 +25,14 @@
  *
  */
 
-#define	KCSAN_RUNTIME
+#if defined(KASAN) || defined(KCSAN)
+#define	SAN_RUNTIME
+#endif
 
 #include "opt_platform.h"
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 7fc83e6924f22a4ee64f191aa3c41dc71961791c $");
+__FBSDID("$FreeBSD: 69d7c5b591b22459de413ab09af81a43dda4d040 $");
 
 #include <vm/vm.h>
 #include <vm/pmap.h>

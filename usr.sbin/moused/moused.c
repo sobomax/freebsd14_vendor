@@ -47,7 +47,7 @@
  **/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9c385a9f7b162deae2af7a35912539a2d33ac383 $");
+__FBSDID("$FreeBSD: 08aa16f6103bd6843c11d4cabf6e03ee944960e4 $");
 
 #include <sys/param.h>
 #include <sys/consio.h>
@@ -314,11 +314,11 @@ static symtab_t pnpprod[] = {
     { "PNP0F0A",	MOUSE_PROTO_MS,		MOUSE_MODEL_GENERIC },
     /* MS PnP BallPoint serial */
     { "PNP0F0B",	MOUSE_PROTO_MS,		MOUSE_MODEL_GENERIC },
-    /* MS serial comatible */
+    /* MS serial compatible */
     { "PNP0F0C",	MOUSE_PROTO_MS,		MOUSE_MODEL_GENERIC },
-    /* MS PS/2 comatible */
+    /* MS PS/2 compatible */
     { "PNP0F0E",	MOUSE_PROTO_PS2,	MOUSE_MODEL_GENERIC },
-    /* MS BallPoint comatible */
+    /* MS BallPoint compatible */
     { "PNP0F0F",	MOUSE_PROTO_MS,		MOUSE_MODEL_GENERIC },
 #if notyet
     /* TI QuickPort */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c145c817f88ae50da97588f39e6f069d787c2f6 $");
+__FBSDID("$FreeBSD: f36125ba247b520f636797a839c02786e0ef4966 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -143,10 +143,7 @@ nvme_detach(device_t dev)
 {
 	struct nvme_controller	*ctrlr = DEVICE2SOFTC(dev);
 
-	if (ctrlr->config_hook.ich_arg != NULL) {
-		config_intrhook_disestablish(&ctrlr->config_hook);
-		ctrlr->config_hook.ich_arg = NULL;
-	}
+	config_intrhook_drain(&ctrlr->config_hook);
 
 	nvme_ctrlr_destruct(ctrlr, dev);
 	return (0);

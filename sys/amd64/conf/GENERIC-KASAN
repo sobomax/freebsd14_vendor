@@ -1,0 +1,7 @@
+# $FreeBSD: 8d5703141e86b15e50dbd65bf6b6037b31398cf5 $
+
+include GENERIC
+
+ident   GENERIC-KASAN
+
+options 	KASAN

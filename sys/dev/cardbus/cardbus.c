@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 391267944ec48cabaf286dab5180a7f1f128e814 $");
+__FBSDID("$FreeBSD: 50a21dfc0b82774027160032479079b729fdbbc8 $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -256,10 +256,11 @@ cardbus_detach_card(device_t cbdev)
 {
 	int err = 0;
 
+	mtx_lock(&Giant);
 	err = bus_generic_detach(cbdev);
-	if (err)
-		return (err);
-	err = device_delete_children(cbdev);
+	if (err == 0)
+		err = device_delete_children(cbdev);
+	mtx_unlock(&Giant);
 	if (err)
 		return (err);
 

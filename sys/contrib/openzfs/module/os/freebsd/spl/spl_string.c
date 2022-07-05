@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: d13b64b4cd26edec1a84f15b670c37c5a681f8b4 $
+ * $FreeBSD: 00b1df766ab97aa58e91b68c151d52ba59c1cec1 $
  */
 /*
  * Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -102,6 +102,6 @@ kmem_asprintf(const char *fmt, ...)
 void
 kmem_strfree(char *str)
 {
-	ASSERT(str != NULL);
+	ASSERT3P(str, !=, NULL);
 	kmem_free(str, strlen(str) + 1);
 }

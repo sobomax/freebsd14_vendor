@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8a6f1a6a3f6b9160c99008efcc4ca6af6ebc714a $");
+__FBSDID("$FreeBSD: 4700acf19bcd2d3dff7eb7dab77a48f1dc875ab9 $");
 
 #include <sys/param.h>
 #include <sys/gpio.h>
@@ -130,7 +130,7 @@ gpiopps_ifltr(void *arg)
 	 * written only by the pps_capture() routine and read only by the
 	 * pps_event() routine.  We don't need lock-based management of access
 	 * to the capture area because we have time-based access management:  we
-	 * can't be reading and writing concurently because we can't be running
+	 * can't be reading and writing concurrently because we can't be running
 	 * both the threaded and filter handlers concurrently (because a new
 	 * hardware interrupt can't happen until the threaded handler for the
 	 * current interrupt exits, after which the system does the EOI that

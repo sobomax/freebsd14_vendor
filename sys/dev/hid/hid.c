@@ -1,4 +1,4 @@
-/* $FreeBSD: 699bfa4a8bb3b31ff498be05d22fd77759cc5be8 $ */
+/* $FreeBSD: f201182ac20faf42b879c447a3df8384aa5f8df2 $ */
 /*	$NetBSD: hid.c,v 1.17 2001/11/13 06:24:53 lukem Exp $	*/
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -856,6 +856,7 @@ hid_item_resolution(struct hid_item *hi)
 		divisor = 10;
 		break;
 	case HUM_INCH:
+	case HUM_INCH_EGALAX:
 		multiplier = 10;
 		divisor = 254;
 		break;

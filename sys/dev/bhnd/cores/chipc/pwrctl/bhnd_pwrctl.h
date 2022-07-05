@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Landon Fuller under sponsorship from
  * the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3d05709d5b38526d7a3ba8782cf5eb541d9741ea $
+ * $FreeBSD: 01d3e76298dd546f204b2258188e43985040a375 $
  */
 
 #ifndef _BHND_PWRCTL_BHND_PWRCTL_H_

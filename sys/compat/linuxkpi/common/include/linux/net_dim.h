@@ -32,13 +32,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: f1b7e06b820e0500ddd28cfc365708a9101e1736 $
+ * $FreeBSD: 08a8bb758c328bd5c6b073178fb9a96eb852ac27 $
  */
 
 /* This file implements Dynamic Interrupt Moderation, DIM */
 
-#ifndef NET_DIM_H
-#define	NET_DIM_H
+#ifndef _LINUXKPI_LINUX_NET_DIM_H
+#define	_LINUXKPI_LINUX_NET_DIM_H
 
 #include <asm/types.h>
 
@@ -407,4 +407,4 @@ net_dim(struct net_dim *dim,
 	}
 }
 
-#endif					/* NET_DIM_H */
+#endif					/* _LINUXKPI_LINUX_NET_DIM_H */

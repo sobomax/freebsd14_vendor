@@ -35,7 +35,7 @@
 #include <sys/wait.h>
 #include <getopt.h>
 #include "eval_expr.h"
-__FBSDID("$FreeBSD: 69d926a05e5d3f1372561fdb2ccf561bcff45cba $");
+__FBSDID("$FreeBSD: 97b059bb70be7cc646d81926392a66b6b13c091a $");
 
 static int max_pmc_counters = 1;
 static int run_all = 0;
@@ -2859,7 +2859,7 @@ main(int argc, char **argv)
 			       argv[0]);
 			printf("-i inputfile -- use source as inputfile not stdin (if stdin collect)\n");
 			printf("-v -- verbose dump debug type things -- you don't want this\n");
-			printf("-m N -- maximum to collect is N measurments\n");
+			printf("-m N -- maximum to collect is N measurements\n");
 			printf("-e expr-name -- Do expression expr-name\n");
 			printf("-E 'your expression' -- Do your expression\n");
 			printf("-h -- Don't do the expression I put in -e xxx just explain what it does and exit\n");

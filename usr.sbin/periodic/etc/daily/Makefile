@@ -1,6 +1,8 @@
-# $FreeBSD: f6557a10ba80cb5f50e70f50d584cc98bbac9556 $
+# $FreeBSD: 2bffdba05d2bf907fa1c049f25967352af33b65b $
 
 .include <src.opts.mk>
+
+PACKAGE=	periodic
 
 CONFGROUPS=	CONFS
 
@@ -49,10 +51,12 @@ CONFS+=	480.status-ntpd \
 .endif
 
 .if ${MK_SENDMAIL} != "no"
-CONFS+=	150.clean-hoststat \
-	440.status-mailq \
-	460.status-mail-rejects \
-	500.queuerun
+CONFGROUPS+=		SENDMAIL
+SENDMAIL+=		150.clean-hoststat \
+			440.status-mailq \
+			460.status-mail-rejects \
+			500.queuerun
+SENDMAILPACKAGE=	sendmail
 .endif
 
 .if ${MK_ZFS} != "no"

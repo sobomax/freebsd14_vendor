@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b415f1d63467f3551e4cb8bc236c8bd3ecdebe0 $");
+__FBSDID("$FreeBSD: d7f807752aa6a95da7aa8fae91b98a2b4977d193 $");
 
 #include <sys/types.h>
 #include <opencrypto/xform_enc.h>
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: 0b415f1d63467f3551e4cb8bc236c8bd3ecdebe0 $");
 static	int aes_xts_setkey(void *, const uint8_t *, int);
 static	void aes_xts_encrypt(void *, const uint8_t *, uint8_t *);
 static	void aes_xts_decrypt(void *, const uint8_t *, uint8_t *);
-static	void aes_xts_reinit(void *, const uint8_t *);
+static	void aes_xts_reinit(void *, const uint8_t *, size_t);
 
 /* Encryption instances */
 struct enc_xform enc_xform_aes_xts = {
@@ -77,11 +77,16 @@ struct enc_xform enc_xform_aes_xts = {
  * Encryption wrapper routines.
  */
 static void
-aes_xts_reinit(void *key, const uint8_t *iv)
+aes_xts_reinit(void *key, const uint8_t *iv, size_t ivlen)
 {
 	struct aes_xts_ctx *ctx = key;
 	uint64_t blocknum;
 	u_int i;
+
+#ifndef _STANDALONE
+	KASSERT(ivlen == sizeof(blocknum),
+	    ("%s: invalid IV length", __func__));
+#endif
 
 	/*
 	 * Prepare tweak as E_k2(IV). IV is specified as LE representation

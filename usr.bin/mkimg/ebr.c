@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a069982e7aa3bcff658853ce887350e469ebdc0a $");
+__FBSDID("$FreeBSD: bee2e64bea14b8430cc1b67e0958019871e76bd6 $");
 
 #include <sys/errno.h>
 #include <stdint.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: a069982e7aa3bcff658853ce887350e469ebdc0a $");
 static struct mkimg_alias ebr_aliases[] = {
     {	ALIAS_FAT16B, ALIAS_INT2TYPE(DOSPTYP_FAT16) },
     {	ALIAS_FAT32, ALIAS_INT2TYPE(DOSPTYP_FAT32) },
+    {	ALIAS_FAT32LBA, ALIAS_INT2TYPE(DOSPTYP_FAT32LBA) },
     {	ALIAS_FREEBSD, ALIAS_INT2TYPE(DOSPTYP_386BSD) },
     {	ALIAS_NONE, 0 }
 };

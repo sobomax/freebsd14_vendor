@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2dd5bf19d7d9f982ac673e89d4172fef89a2106d $");
+__FBSDID("$FreeBSD: 9c32ab9fad21c3757b41888a362bebf70b1b837a $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -174,7 +174,7 @@ acpi_panasonic_attach(device_t dev)
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 		    sysctl_table[i].name,
 		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
-		    CTLFLAG_NEEDGIANT, sc, i, acpi_panasonic_sysctl, "I", "");
+		    CTLFLAG_MPSAFE, sc, i, acpi_panasonic_sysctl, "I", "");
 	}
 
 #if 0

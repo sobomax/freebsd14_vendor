@@ -1,5 +1,5 @@
 #
-# $FreeBSD: f64e53c91a7af133efb0d5ac234f64805cea0542 $
+# $FreeBSD: 7210d4e8835e77fab4434c09051aed0dfcdbdf81 $
 #
 
 .include <kmod.opts.mk>
@@ -43,5 +43,7 @@ SRCS+=  fastlz_api.c
 SRCS+=  fastlz.c
 
 CFLAGS+= -I${CXGBE}
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

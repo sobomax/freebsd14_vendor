@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4d077514e4234d4619f10a06ec1e6704e66e756e $
+ * $FreeBSD: 8254d16b159248fbef060bb9811cd379c2bbe08e $
  */
 
 #ifndef	_LOADER_EFI_COPY_H_
@@ -33,6 +33,15 @@
 
 #include <stand.h>
 #include <readin.h>
+
+#ifdef __amd64__
+enum {
+	COPY_STAGING_ENABLE,
+	COPY_STAGING_DISABLE,
+	COPY_STAGING_AUTO,
+};
+extern int copy_staging;
+#endif
 
 int	efi_autoload(void);
 
@@ -44,5 +53,6 @@ ssize_t	efi_readin(readin_handle_t fd, vm_offset_t dest, const size_t len);
 void * efi_translate(vm_offset_t ptr);
 
 void	efi_copy_finish(void);
+void	efi_copy_finish_nop(void);
 
 #endif	/* _LOADER_EFI_COPY_H_ */

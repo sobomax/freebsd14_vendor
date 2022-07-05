@@ -16,7 +16,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: f5ab91bebc987c0b4c1665d5db49427771b013c9 $
+  * $FreeBSD: 58998055b516ff1263594d4e2a9936fefca99a60 $
   */
 
 #ifndef lint
@@ -46,7 +46,6 @@ static char sccsid[] = "@(#) hosts_access.c 1.21 97/02/12 02:13:22";
 #endif
 #include <stdlib.h>
 
-extern char *fgets();
 extern int errno;
 
 #ifndef	INADDR_NONE

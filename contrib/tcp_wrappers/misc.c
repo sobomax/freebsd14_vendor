@@ -3,7 +3,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 8f04f870e1b4f3c13225e9cd3741040cf27097f8 $
+  * $FreeBSD: 258d7091adce0ee458334cedbc0888a3c3306778 $
   */
 
 #ifndef lint
@@ -18,8 +18,6 @@ static char sccsic[] = "@(#) misc.c 1.2 96/02/11 17:01:29";
 #include <string.h>
 
 #include "tcpd.h"
-
-extern char *fgets();
 
 #ifndef	INADDR_NONE
 #define	INADDR_NONE	(-1)		/* XXX should be 0xffffffff */

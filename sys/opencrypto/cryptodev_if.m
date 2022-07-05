@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1d767be3f4e47245c84b048626663888f3dc5d9e $
+# $FreeBSD: ceb2564b8af57a787691129f6c9bbd5825e0f8a3 $
 #
 
 #include <sys/malloc.h>
@@ -100,7 +100,7 @@ METHOD int newsession {
  * @brief Destroy a crypto session object
  *
  * The crypto framework invokes this method when tearing down a crypto
- * session.  After this callback returns, the frame will explicitly
+ * session.  After this callback returns, the framework will explicitly
  * zero and free the drvier's per-session memory object.  If the
  * driver requires additional actions to destroy a session, it should
  * perform those in this method.  If the driver does not require

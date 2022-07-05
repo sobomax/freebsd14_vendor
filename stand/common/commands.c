@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c1c9b2b6a86ca8d7826caeeac124678d6a00dc5 $");
+__FBSDID("$FreeBSD: e56d37c497b11f135c83030604801c651215d1ac $");
 
 #include <stand.h>
 #include <string.h>
@@ -484,10 +484,7 @@ command_more(int argc, char *argv[])
 	}
 	pager_close();
 
-	if (res == 0)
-		return (CMD_OK);
-	else
-		return (CMD_ERROR);
+	return (CMD_OK);
 }
 
 static int
@@ -548,3 +545,36 @@ command_lsdev(int argc, char *argv[])
 	pager_close();
 	return (CMD_OK);
 }
+
+#ifndef __mips__
+static int
+command_readtest(int argc, char *argv[])
+{
+	int fd;
+	time_t start, end;
+	char buf[512];
+	ssize_t rv, count = 0;
+
+	if (argc != 2) {
+		snprintf(command_errbuf, sizeof(command_errbuf),
+		  "Usage: readtest <filename>");
+		return (CMD_ERROR);
+	}
+
+	start = getsecs();
+	if ((fd = open(argv[1], O_RDONLY)) < 0) {
+		snprintf(command_errbuf, sizeof(command_errbuf),
+		  "can't open '%s'", argv[1]);
+		return (CMD_ERROR);
+	}
+	while ((rv = read(fd, buf, sizeof(buf))) > 0)
+		count += rv;
+	end = getsecs();
+
+	printf("Received %zd bytes during %jd seconds\n", count, (intmax_t)end - start);
+	close(fd);
+	return (CMD_OK);
+}
+
+COMMAND_SET(readtest, "readtest", "Time a file read", command_readtest);
+#endif

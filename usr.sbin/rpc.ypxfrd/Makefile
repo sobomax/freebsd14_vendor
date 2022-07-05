@@ -1,7 +1,8 @@
-# $FreeBSD: 0e98d83638e0bdeb8c57c808cce064640e9a647b $
+# $FreeBSD: d07ee6d5c70c94b918fd3f76f786e63ac52b9c4b $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv
 
+PACKAGE=yp
 PROG=	rpc.ypxfrd
 MAN=	rpc.ypxfrd.8
 SRCS=	ypxfrd_svc.c ypxfrd.h ypxfrd_server.c yp_error.c \

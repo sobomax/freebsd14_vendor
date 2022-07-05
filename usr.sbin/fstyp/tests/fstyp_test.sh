@@ -25,7 +25,17 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-# $FreeBSD: 8f76424f5f7545570d172356f7aae6a3767d3ad3 $
+# $FreeBSD: 81a549629dd75a76cdcff4edce19a2f1e2f633eb $
+
+atf_test_case befs
+befs_head() {
+	atf_set "descr" "fstyp(8) can detect BeFS and label filesystem"
+}
+befs_body() {
+	bzcat $(atf_get_srcdir)/befs.img.bz2 > befs.img
+	atf_check -s exit:0 -o inline:"befs\n" fstyp befs.img
+	atf_check -s exit:0 -o inline:"befs BeFS\n" fstyp -l befs.img
+}
 
 atf_test_case cd9660
 cd9660_head() {
@@ -257,6 +267,7 @@ zeros_body() {
 
 
 atf_init_test_cases() {
+	atf_add_test_case befs
 	atf_add_test_case cd9660
 	atf_add_test_case cd9660_label
 	atf_add_test_case dir

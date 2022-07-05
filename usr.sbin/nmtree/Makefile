@@ -1,8 +1,10 @@
-#	$FreeBSD: 57705671f1552b7e1f4dd8699e8ba2290fb6bad5 $
+#	$FreeBSD: 19a4bd9a1516ea0a7e3882285bf7bb78af814f3d $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/contrib/mtree
+
+PACKAGE=	mtree
 
 PROG=		mtree
 MAN=		mtree.5 mtree.8

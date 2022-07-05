@@ -29,7 +29,7 @@
 .\"
 .\" Authors: Ken Merry           (Spectra Logic Corporation)
 .\"
-.\" $FreeBSD: 39b418ceb395ca7c9441a2e90a5d21ace09e956c $
+.\" $FreeBSD: 1338bf197eb24e36c90bea9340a42ad70d40bca9 $
 .\"
 .Dd May 18, 2016
 .Dt ZONECTL 8
@@ -226,5 +226,7 @@ zonectl -d /dev/da5 -c rwp -l 0x2c80000
 .Pp
 Issue the Reset Write Pointer command to disk da5 for the zone
 that starts at LBA 0x2c80000.
+.Sh SEE ALSO
+.Xr camcontrol 8
 .Sh AUTHORS
 .An Kenneth Merry Aq ken@FreeBSD.org

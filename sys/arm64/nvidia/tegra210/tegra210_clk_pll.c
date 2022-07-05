@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 624404c3e074c5d8d9a8d493c8731db58a096701 $");
+__FBSDID("$FreeBSD: 64e3f6623d29fcb5a0646eb805c75e850d9e44e4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -568,6 +568,7 @@ static struct clk_div_def tegra210_pll_divs[] = {
 
 static int tegra210_pll_init(struct clknode *clk, device_t dev);
 static int tegra210_pll_set_gate(struct clknode *clk, bool enable);
+static int tegra210_pll_get_gate(struct clknode *clk, bool *enabled);
 static int tegra210_pll_recalc(struct clknode *clk, uint64_t *freq);
 static int tegra210_pll_set_freq(struct clknode *clknode, uint64_t fin,
     uint64_t *fout, int flags, int *stop);
@@ -588,6 +589,7 @@ static clknode_method_t tegra210_pll_methods[] = {
 	/* Device interface */
 	CLKNODEMETHOD(clknode_init,		tegra210_pll_init),
 	CLKNODEMETHOD(clknode_set_gate,		tegra210_pll_set_gate),
+	CLKNODEMETHOD(clknode_get_gate,		tegra210_pll_get_gate),
 	CLKNODEMETHOD(clknode_recalc_freq,	tegra210_pll_recalc),
 	CLKNODEMETHOD(clknode_set_freq,		tegra210_pll_set_freq),
 	CLKNODEMETHOD_END
@@ -884,6 +886,19 @@ tegra210_pll_set_gate(struct clknode *clknode, bool enable)
 	else
 		rv = pll_enable(sc);
 	return (rv);
+}
+
+static int
+tegra210_pll_get_gate(struct clknode *clknode, bool *enabled)
+{
+	uint32_t reg;
+	struct pll_sc *sc;
+
+	sc = clknode_get_softc(clknode);
+	RD4(sc, sc->base_reg, &reg);
+	*enabled = reg & PLL_BASE_ENABLE ? true: false;
+	WR4(sc, sc->base_reg, reg);
+	return (0);
 }
 
 static int

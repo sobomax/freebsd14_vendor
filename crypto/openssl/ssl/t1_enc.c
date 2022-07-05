@@ -1,5 +1,5 @@
 /*
- * Copyright 1995-2019 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 1995-2022 The OpenSSL Project Authors. All Rights Reserved.
  * Copyright 2005 Nokia. All rights reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -362,11 +362,7 @@ int tls1_change_cipher_state(SSL *s, int which)
         goto err;
     }
 #ifndef OPENSSL_NO_KTLS
-    if (s->compress)
-        goto skip_ktls;
-
-    if (((which & SSL3_CC_READ) && (s->mode & SSL_MODE_NO_KTLS_RX))
-        || ((which & SSL3_CC_WRITE) && (s->mode & SSL_MODE_NO_KTLS_TX)))
+    if (s->compress || (s->options & SSL_OP_ENABLE_KTLS) == 0)
         goto skip_ktls;
 
     /* ktls supports only the maximum fragment size */
@@ -799,6 +795,8 @@ int tls1_alert_code(int code)
     case SSL_AD_NO_APPLICATION_PROTOCOL:
         return TLS1_AD_NO_APPLICATION_PROTOCOL;
     case SSL_AD_CERTIFICATE_REQUIRED:
+        return SSL_AD_HANDSHAKE_FAILURE;
+    case SSL_AD_MISSING_EXTENSION:
         return SSL_AD_HANDSHAKE_FAILURE;
     default:
         return -1;

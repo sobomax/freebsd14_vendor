@@ -1,5 +1,5 @@
-.\" $FreeBSD: 5e0fc8eedc19b1c9d98987507ff8a53107aad647 $
-Set to not build or install
+.\" $FreeBSD: e037640b59f03d8de3d2c48ec214950a7c417331 $
+Do not build or install
 .Xr ftp 1
 and
 .Xr ftpd 8 .

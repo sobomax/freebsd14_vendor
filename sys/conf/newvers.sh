@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: 83b0c973bc13d6fa03d29ec3588b833b40614b2e $
+# $FreeBSD: c594724d814fb9a8516834ce9a97d9cd77f6cb0a $
 
 # Command line options:
 #
@@ -53,8 +53,8 @@
 #
 
 TYPE="FreeBSD"
-REVISION="13.0"
-BRANCH="RELEASE-p4"
+REVISION="13.1"
+BRANCH="RELEASE"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi
@@ -127,7 +127,7 @@ while getopts crRvV: opt; do
 		v=$OPTARG
 		eval val=\$${v}
 		echo ${v}=\"${val}\"
-		exit 0
+		VARS_ONLY=1
 		;;
 	esac
 done
@@ -311,7 +311,7 @@ EOF
 )
 vers_content_old=$(cat vers.c 2>/dev/null || true)
 if [ "$vers_content_new" != "$vers_content_old" ]; then
-	printf "%s" "$vers_content_new" > vers.c
+	printf "%s\n" "$vers_content_new" > vers.c
 fi
 
 echo $((v + 1)) > version

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c9399d1a52fd66fbd38dc22f4660400fa3283b5 $");
+__FBSDID("$FreeBSD: 0104a5f91c990092f8abf1dca8423f675465b896 $");
 
 /*
  * 386 Trap and System call handling
@@ -90,6 +90,12 @@ __FBSDID("$FreeBSD: 6c9399d1a52fd66fbd38dc22f4660400fa3283b5 $");
 #include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/cpufunc.h>
+
+#include "vdso_ia32_offsets.h"
+
+extern const char _binary_elf_vdso32_so_1_start[];
+extern const char _binary_elf_vdso32_so_1_end[];
+extern char _binary_elf_vdso32_so_1_size;
 
 #define	IDTVEC(name)	__CONCAT(X,name)
 
@@ -260,7 +266,9 @@ setup_lcall_gate(void)
 	bzero(&uap, sizeof(uap));
 	uap.start = 0;
 	uap.num = 1;
-	lcall_addr = curproc->p_sysent->sv_psstrings - sz_lcall_tramp;
+	lcall_addr = PROC_PS_STRINGS(curproc) -
+	    (_binary_elf_vdso32_so_1_end - _binary_elf_vdso32_so_1_start) +
+	    VDSO_LCALL_TRAMP_OFFSET;
 	bzero(&desc, sizeof(desc));
 	desc.sd_type = SDT_MEMERA;
 	desc.sd_dpl = SEL_UPL;

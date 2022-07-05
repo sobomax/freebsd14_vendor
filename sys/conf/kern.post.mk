@@ -1,4 +1,4 @@
-# $FreeBSD: 7df67e24f44512c1ddeb86970e1ca36ed127e74b $
+# $FreeBSD: 79a6d3b516ca8090d97ab3fa38dbd649fc3a3b86 $
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES
@@ -48,6 +48,10 @@ MKMODULESENV+=	SAN_CFLAGS="${SAN_CFLAGS}"
 
 .if defined(GCOV_CFLAGS)
 MKMODULESENV+=	GCOV_CFLAGS="${GCOV_CFLAGS}"
+.endif
+
+.if !empty(COMPAT_FREEBSD32_ENABLED)
+MKMODULESENV+=	COMPAT_FREEBSD32_ENABLED="yes"
 .endif
 
 # Allow overriding the kernel debug directory, so kernel and user debug may be

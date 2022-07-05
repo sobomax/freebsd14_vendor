@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: eea7e2f56968090dae28a8f3a4cd7735e4066d06 $
+ * $FreeBSD: b6945902ab31ae0826375fd834f817e66ffb34c4 $
  */
 
 #define	FREEBSD32_SYS_syscall	0
@@ -356,6 +356,8 @@
 #define	FREEBSD32_SYS_thr_exit	431
 #define	FREEBSD32_SYS_thr_self	432
 #define	FREEBSD32_SYS_thr_kill	433
+#define	FREEBSD32_SYS_freebsd10_freebsd32_umtx_lock	434
+#define	FREEBSD32_SYS_freebsd10_freebsd32_umtx_unlock	435
 #define	FREEBSD32_SYS_jail_attach	436
 #define	FREEBSD32_SYS_extattr_list_fd	437
 #define	FREEBSD32_SYS_extattr_list_file	438
@@ -506,4 +508,5 @@
 #define	FREEBSD32_SYS___specialfd	577
 #define	FREEBSD32_SYS_freebsd32_aio_writev	578
 #define	FREEBSD32_SYS_freebsd32_aio_readv	579
-#define	FREEBSD32_SYS_MAXSYSCALL	580
+#define	FREEBSD32_SYS_sched_getcpu	581
+#define	FREEBSD32_SYS_MAXSYSCALL	583

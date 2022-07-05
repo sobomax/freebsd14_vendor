@@ -22,13 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d16347f31a62d89df602324d396d4032e11d341d $
+ * $FreeBSD: d5e2b1c9bd357afd137b135895b4d6bbb2d65f5b $
  */
 
 #ifndef __MLX5_EN_PORT_BUFFER_H__
 #define __MLX5_EN_PORT_BUFFER_H__
 
-#include "en.h"
+#include <dev/mlx5/mlx5_en/en.h>
 #include <dev/mlx5/port.h>
 
 #define MLX5E_MAX_BUFFER 8

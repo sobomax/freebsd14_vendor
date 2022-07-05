@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e989decc2359c462c217933b80ca4b4cc0073494 $
+ * $FreeBSD: 5c0405922d2163544f2a4701d3b128f9f18651b9 $
  */
 
 #ifndef _PARTEDIT_PARTEDIT_H
@@ -38,8 +38,6 @@
 struct gprovider;
 struct gmesh;
 struct ggeom;
-
-extern int tmpdfd;
 
 TAILQ_HEAD(pmetadata_head, partition_metadata);
 extern struct pmetadata_head part_metadata;
@@ -60,6 +58,7 @@ void delete_part_metadata(const char *name);
 
 int part_wizard(const char *fstype);
 int scripted_editor(int argc, const char **argv);
+char *boot_disk_select(struct gmesh *mesh);
 int wizard_makeparts(struct gmesh *mesh, const char *disk, const char *fstype,
     int interactive);
 

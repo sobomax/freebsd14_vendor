@@ -28,7 +28,7 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.h,v 1.12 2003/10/03 05:05:15 kjc Exp $
- * $FreeBSD: a319edb72e976bf46db5869e2f9884bbd792b968 $
+ * $FreeBSD: 70c07c11d86dc351152f5c89b0f1e819b54b9b4c $
  */
 
 #ifndef _ALTQ_ALTQ_CBQ_H_
@@ -119,7 +119,7 @@ typedef struct _cbq_class_stats_ {
 #define	CBQ_TIMEOUT		10
 #define	CBQ_LS_TIMEOUT		(20 * hz / 1000)
 
-#define	CBQ_MAX_CLASSES	256
+#define	CBQ_MAX_CLASSES	2048
 
 /*
  * Define State structures.

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc4ccbee659fde92efeb200732af7f3ea23e2b18 $");
+__FBSDID("$FreeBSD: 975873c4a19cb4982ef3774827e3241e091bdac5 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -81,13 +81,11 @@ int
 iflib_pseudo_detach(device_t dev)
 {
 	if_ctx_t ctx;
-	uint32_t ifc_flags;
 
 	ctx = device_get_softc(dev);
-	ifc_flags = iflib_get_flags(ctx);
-	if ((ifc_flags & IFC_INIT_DONE) == 0)
-		return (0);
-	return (IFDI_DETACH(ctx));
+	if ((iflib_get_flags(ctx) & IFC_IN_DETACH) == 0)
+		return (EBUSY);
+	return (0);
 }
 
 static device_t iflib_pseudodev;

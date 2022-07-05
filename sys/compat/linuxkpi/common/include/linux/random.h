@@ -26,11 +26,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 31d8b996aa0b7f2e58ef6b6be451c7e1f6daa972 $
+ * $FreeBSD: fafb87cae9fe398c99aedb495321837336fc9e4e $
  */
 
-#ifndef _LINUX_RANDOM_H_
-#define	_LINUX_RANDOM_H_
+#ifndef _LINUXKPI_LINUX_RANDOM_H_
+#define	_LINUXKPI_LINUX_RANDOM_H_
 
 #include <linux/types.h>
 #include <sys/random.h>
@@ -63,10 +63,19 @@ get_random_long(void)
 	return (val);
 }
 
+static __inline uint32_t
+prandom_u32(void)
+{
+	uint32_t val;
+
+	get_random_bytes(&val, sizeof(val));
+	return (val);
+}
+
 static inline u32
 prandom_u32_max(u32 max)
 {
 	return (arc4random_uniform(max));
 }
 
-#endif /* _LINUX_RANDOM_H_ */
+#endif /* _LINUXKPI_LINUX_RANDOM_H_ */

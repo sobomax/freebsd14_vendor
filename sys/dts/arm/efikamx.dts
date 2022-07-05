@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under sponsorship from
  * the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  *
  * Freescale i.MX515 Device Tree Source.
  *
- * $FreeBSD: e077fb78ad0fb439b8747024b309796ae44c7ffc $
+ * $FreeBSD: 6a2cfcae54b5f9a9a00e8abc95e06ccef83f2900 $
  */
 
 /dts-v1/;

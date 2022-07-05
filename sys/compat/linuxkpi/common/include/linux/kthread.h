@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3afd21dc9356be6b558156ee7f2385b06fbfef52 $
+ * $FreeBSD: f4791d5f0db358bcab3da73449c5513fc6d5e503 $
  */
-#ifndef	_LINUX_KTHREAD_H_
-#define	_LINUX_KTHREAD_H_
+#ifndef	_LINUXKPI_LINUX_KTHREAD_H_
+#define	_LINUXKPI_LINUX_KTHREAD_H_
 
 #include <linux/sched.h>
 
@@ -70,4 +70,4 @@ int linux_in_atomic(void);
 
 #define	in_atomic()			linux_in_atomic()
 
-#endif /* _LINUX_KTHREAD_H_ */
+#endif /* _LINUXKPI_LINUX_KTHREAD_H_ */

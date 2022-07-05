@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/4/94
- * $FreeBSD: 80d24b46d2e43aa0d0cc099f6b0dcedca9cf5e2f $
+ * $FreeBSD: aa48ea67e320273dfa82db428ac6b10972b10b6f $
  */
 
 #include <sys/types.h>
@@ -59,9 +59,6 @@ char   *renamefrom(char *);
 void	reply(int, const char *, ...) __printflike(2, 3);
 void	retrieve(char *, char *);
 void	send_file_list(char *);
-#ifdef OLD_SETPROCTITLE
-void	setproctitle(const char *, ...);
-#endif
 void	statcmd(void);
 void	statfilecmd(char *);
 void	store(char *, char *, int);

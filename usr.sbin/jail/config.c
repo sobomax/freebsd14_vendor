@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6ebc585bcd7b3622534c3504e4d8d6f391fb05b $");
+__FBSDID("$FreeBSD: 4cf28820452a530e50c544ffe9cabda3721dfa71 $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -198,7 +198,7 @@ load_config(void)
 				TAILQ_FOREACH(vp, &j->params, tq)
 					if (!strcmp(vp->name, v->name))
 						break;
-				if (!vp) {
+				if (!vp || TAILQ_EMPTY(&vp->val)) {
 					jail_warnx(j,
 					    "%s: variable \"%s\" not found",
 					    p->name, v->name);

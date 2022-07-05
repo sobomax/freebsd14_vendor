@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e3dddaade498aa9e64678fd6fc7f15c01f721c56 $
+ * $FreeBSD: 66c1149da4325637c6e8e9413d5bd00c801565fa $
  */
 
-#ifndef __LINUX_WAITBIT_H__
-#define	__LINUX_WAITBIT_H__
+#ifndef __LINUXKPI_LINUX_WAITBIT_H__
+#define	__LINUXKPI_LINUX_WAITBIT_H__
 
 #include <linux/wait.h>
 #include <linux/bitops.h>
@@ -39,6 +39,9 @@ extern wait_queue_head_t linux_var_waitq;
 
 #define	wait_var_event_killable(var, cond) \
 	wait_event_killable(linux_var_waitq, cond)
+
+#define	wait_var_event_interruptible(var, cond) \
+	wait_event_interruptible(linux_var_waitq, cond)
 
 static inline void
 clear_and_wake_up_bit(int bit, void *word)
@@ -61,4 +64,10 @@ wake_up_var(void *var)
 	wake_up(&linux_var_waitq);
 }
 
-#endif	/* __LINUX_WAITBIT_H__ */
+static inline wait_queue_head_t *
+__var_waitqueue(void *p)
+{
+	return (&linux_var_waitq);
+}
+
+#endif	/* __LINUXKPI_LINUX_WAITBIT_H__ */

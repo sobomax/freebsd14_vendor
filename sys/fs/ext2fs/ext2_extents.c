@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a5dca66dd76074574000c9e669eae2bf31b4896 $
+ * $FreeBSD: b33ff9fa8a1a1e2fde0ebeead37e9f429fca59fd $
  */
 
 #include <sys/param.h>
@@ -249,6 +249,10 @@ ext4_ext_check_header(struct inode *ip, struct ext4_extent_header *eh)
 	}
 	if (le16toh(eh->eh_ecount) > le16toh(eh->eh_max)) {
 		error_msg = "header: invalid eh_entries";
+		goto corrupted;
+	}
+	if (eh->eh_depth > 5) {
+		error_msg = "header: invalid eh_depth";
 		goto corrupted;
 	}
 

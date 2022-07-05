@@ -1,4 +1,4 @@
-# $FreeBSD: 8555eaee67b892ee3f5ed0a5a3b444d470ad3e3c $
+# $FreeBSD: 05d617279ff0857a66a752406b668202af1af383 $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -119,6 +119,9 @@ MLINKS+=	snmpmod.3 usm_new_user.3
 MLINKS+=	snmpmod.3 usm_user.3
 
 FILESGROUPS= BMIBS DEFS
+
+DEFSPACKAGE=	bsnmp
+BMIBSPACKAGE=	bsnmp
 
 BMIBS=	FOKUS-MIB.txt BEGEMOT-MIB.txt BEGEMOT-SNMPD.txt
 BMIBSDIR= ${SHAREDIR}/snmp/mibs

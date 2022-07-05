@@ -1,10 +1,11 @@
-# $FreeBSD: 74856aaa3b1f0643c8b585c733263cdd1422a1c1 $
+# $FreeBSD: 893ea6ebed79e0c98f9963806b13a7812c9527a5 $
 
 .include <src.opts.mk>
 
 LIB=		ssl
 SHLIB_MAJOR=	111
 VERSION_MAP=	${.CURDIR}/Version.map
+PACKAGE=	openssl
 
 NO_LINT=
 

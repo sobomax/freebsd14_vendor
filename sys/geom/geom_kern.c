@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e06824afc9fd10bce2468b124445976b241f775b $");
+__FBSDID("$FreeBSD: 429bd7a05a4b0564eafef01f68ab657844678774 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -61,8 +61,8 @@ MALLOC_DEFINE(M_GEOM, "GEOM", "Geom data structures");
 struct sx topology_lock;
 
 static struct proc *g_proc;
-static struct thread __read_mostly *g_up_td;
-static struct thread __read_mostly *g_down_td;
+struct thread __read_mostly *g_up_td;
+struct thread __read_mostly *g_down_td;
 static struct thread __read_mostly *g_event_td;
 
 int __read_mostly g_debugflags;
@@ -208,17 +208,17 @@ SYSCTL_NODE(_kern, OID_AUTO, geom, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "GEOMetry management");
 
 SYSCTL_PROC(_kern_geom, OID_AUTO, confxml,
-    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, 0, 0,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, 0, 0,
     sysctl_kern_geom_confxml, "",
     "Dump the GEOM config in XML");
 
 SYSCTL_PROC(_kern_geom, OID_AUTO, confdot,
-    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, 0, 0,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, 0, 0,
     sysctl_kern_geom_confdot, "",
     "Dump the GEOM config in dot");
 
 SYSCTL_PROC(_kern_geom, OID_AUTO, conftxt,
-    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, 0, 0,
+    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, 0, 0,
     sysctl_kern_geom_conftxt, "",
     "Dump the GEOM config in txt");
 

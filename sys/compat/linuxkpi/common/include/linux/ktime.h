@@ -25,11 +25,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e480de3181a980ae5196d4f5d8f8a29a585e306f $
+ * $FreeBSD: e0722aa2589b91a8b5b027bb5ecefaca2f022331 $
  */
 
-#ifndef _LINUX_KTIME_H
-#define	_LINUX_KTIME_H
+#ifndef _LINUXKPI_LINUX_KTIME_H
+#define	_LINUXKPI_LINUX_KTIME_H
 
 #include <linux/types.h>
 #include <linux/time.h>
@@ -220,6 +220,13 @@ ktime_get_boottime(void)
 	return (timespec_to_ktime(ts));
 }
 
+static inline uint64_t
+ktime_get_boottime_ns(void)
+{
+
+	return (ktime_to_ns(ktime_get_boottime()));
+}
+
 static inline ktime_t
 ktime_get_real(void)
 {
@@ -256,4 +263,4 @@ ktime_get_raw_ns(void)
 	return (ktime_to_ns(timespec_to_ktime(ts)));
 }
 
-#endif /* _LINUX_KTIME_H */
+#endif /* _LINUXKPI_LINUX_KTIME_H */

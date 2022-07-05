@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fc7583e8436781da181f3ed855447d04d8059f4b $
+ * $FreeBSD: 3de39864811cda13d970939691ebfca5fcb916f4 $
  */
 #ifndef _SCIF_SAS_CONTROLLER_H_
 #define _SCIF_SAS_CONTROLLER_H_
@@ -121,7 +121,7 @@ typedef struct SCIF_SAS_CONTROLLER
    SCI_BASE_CONTROLLER_STATE_HANDLER_T * state_handlers;
 
    /**
-    * This field contains the memory desciptors defining the physical
+    * This field contains the memory descriptors defining the physical
     * memory requirements for this controller.
     */
    SCI_PHYSICAL_MEMORY_DESCRIPTOR_T mdes[SCIF_SAS_MAX_MEMORY_DESCRIPTORS];

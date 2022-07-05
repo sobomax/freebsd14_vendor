@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9b14c7c855cfd03c548d19ed5b7a08c73f78895a $
+ * $FreeBSD: f0cf4ecd5eb66f4d67a59975a50175aa50181de7 $
  */
 #include <sys/types.h>
 
@@ -39,7 +39,7 @@ struct node {
 	int key;
 };
 
-SPLAY_HEAD(tree, node) root;
+static SPLAY_HEAD(tree, node) root;
 
 static int
 compare(struct node *a, struct node *b)

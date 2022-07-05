@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73e7e889916a398292daebd78dfb06977148a008 $
+ * $FreeBSD: 5110ce2f9fb4a01019e8ff4acc6740b9e2e9092a $
  */
 
 /* A10/A20 EMAC driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73e7e889916a398292daebd78dfb06977148a008 $");
+__FBSDID("$FreeBSD: 5110ce2f9fb4a01019e8ff4acc6740b9e2e9092a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -409,7 +409,7 @@ emac_rxeof(struct emac_softc *sc, int count)
 		m->m_len = m->m_pkthdr.len = len - ETHER_CRC_LEN;
 
 		/*
-		 * Emac controller needs strict aligment, so to avoid
+		 * Emac controller needs strict alignment, so to avoid
 		 * copying over an entire frame to align, we allocate
 		 * a new mbuf and copy ethernet header + IP header to
 		 * the new mbuf. The new mbuf is prepended into the

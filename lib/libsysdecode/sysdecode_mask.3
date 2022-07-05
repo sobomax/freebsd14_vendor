@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 54e182db31d76f0f7c937c4461d5e9930c1f806d $
+.\" $FreeBSD: 45464e333eb409bfc1a62b7a529911ea3d37fb3a $
 .\"
-.Dd January 16, 2018
+.Dd March 3, 2022
 .Dt sysdecode_mask 3
 .Os
 .Sh NAME
@@ -32,6 +32,7 @@
 .Nm sysdecode_accessmode ,
 .Nm sysdecode_atflags ,
 .Nm sysdecode_capfcntlrights ,
+.Nm sysdecode_close_range_flags ,
 .Nm sysdecode_fcntl_fileflags ,
 .Nm sysdecode_fileflags ,
 .Nm sysdecode_filemode ,
@@ -73,6 +74,8 @@
 .Fn sysdecode_atflags "FILE *fp" "int flags" "int *rem"
 .Ft bool
 .Fn sysdecode_cap_fcntlrights "FILE *fp" "uint32_t rights" "uint32_t *rem"
+.Ft bool
+.Fn sysdecode_close_range_flags "FILE *fp" "int flags" "int *rem"
 .Ft bool
 .Fn sysdecode_fcntl_fileflags "FILE *fp" "int flags" "int *rem"
 .Ft bool

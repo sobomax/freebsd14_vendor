@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 750f138f548565786564acf6a28d7b1770b45dc1 $");
+__FBSDID("$FreeBSD: bbe8fb19aae92e6b3dc222779a008915ae96a45d $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -56,11 +56,11 @@ __FBSDID("$FreeBSD: 750f138f548565786564acf6a28d7b1770b45dc1 $");
 static void usage(void);
 
 static struct nlist nl[] = {
-	{ "_ktr_version" },
-	{ "_ktr_entries" },
-	{ "_ktr_idx" },
-	{ "_ktr_buf" },
-	{ NULL }
+	{ .n_name = "_ktr_version" },
+	{ .n_name = "_ktr_entries" },
+	{ .n_name = "_ktr_idx" },
+	{ .n_name = "_ktr_buf" },
+	{ .n_name = NULL }
 };
 
 static int cflag;
@@ -262,7 +262,7 @@ main(int ac, char **av)
 		fprintf(out, "\n");
 	}
 
-	tlast = -1;
+	tlast = UINTPTR_MAX;
 	/*
 	 * Now tear through the trace buffer.
 	 *
@@ -327,7 +327,7 @@ next:			if ((c = *p++) == '\0')
 		if (tflag) {
 			tnow = (uintmax_t)buf[i].ktr_timestamp;
 			if (rflag) {
-				if (tlast == -1)
+				if (tlast == UINTPTR_MAX)
 					tlast = tnow;
 				fprintf(out, "%16ju ", !iflag ? tlast - tnow :
 				    tnow - tlast);

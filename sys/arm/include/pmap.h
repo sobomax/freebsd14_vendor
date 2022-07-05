@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2f407a9c8760743c25b96cecfef46daf26c4c025 $
+ * $FreeBSD: d06d44d648d58631699e560e4fb6971c876f70eb $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -72,6 +72,8 @@ pmap_vmspace_copy(pmap_t dst_pmap __unused, pmap_t src_pmap __unused)
 }
 
 #define	PMAP_ENTER_QUICK_LOCKED	0x10000000
+
+#define	pmap_vm_page_alloc_check(m)
 
 #endif	/* _KERNEL */
 #endif	/* !_MACHINE_PMAP_H_ */

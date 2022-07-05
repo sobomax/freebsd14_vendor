@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f650b65e1609866e26b19d44ef513f2181645d9 $");
+__FBSDID("$FreeBSD: a0a1c273f467942b7150e5aa1d21cefa2825174e $");
 
 #include "opt_capsicum.h"
 #include "opt_kstack_pages.h"
@@ -108,7 +108,8 @@ set_fsbase(struct thread *td, uint32_t base)
 	fill_based_sd(&sd, base);
 	critical_enter();
 	td->td_pcb->pcb_fsd = sd;
-	PCPU_GET(fsgs_gdt)[0] = sd;
+	if (td == curthread)
+		PCPU_GET(fsgs_gdt)[0] = sd;
 	critical_exit();
 }
 
@@ -120,7 +121,8 @@ set_gsbase(struct thread *td, uint32_t base)
 	fill_based_sd(&sd, base);
 	critical_enter();
 	td->td_pcb->pcb_gsd = sd;
-	PCPU_GET(fsgs_gdt)[1] = sd;
+	if (td == curthread)
+		PCPU_GET(fsgs_gdt)[1] = sd;
 	critical_exit();
 }
 

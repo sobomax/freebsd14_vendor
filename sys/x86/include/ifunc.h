@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015-2018 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 690d491d39b9f26fe5fdb83a3b1a9bc4f408d28d $
+ * $FreeBSD: 8756e81eeb9f316425db5e695553066bded06f65 $
  */
 
 #ifndef __X86_IFUNC_H

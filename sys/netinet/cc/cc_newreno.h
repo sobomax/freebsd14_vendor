@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9e2a3cff5fe927f9b8eff3fb5714e81bbd2a62ac $
+ * $FreeBSD: 16cf1757e83050ac84bd3b5932a65a48f601149a $
  */
 
 #ifndef _CC_NEWRENO_H
@@ -31,12 +31,17 @@
 
 #define CCALGONAME_NEWRENO "newreno"
 
+struct newreno {
+	uint32_t beta;
+	uint32_t beta_ecn;
+	uint32_t newreno_flags;
+};
+
 struct cc_newreno_opts {
-	int			name;
+	int		name;
 	uint32_t	val;
 };
 
-#define CC_NEWRENO_BETA		1
-#define CC_NEWRENO_BETA_ECN	2
-
+#define CC_NEWRENO_BETA		1	/* Beta for normal DUP-ACK/Sack recovery */
+#define CC_NEWRENO_BETA_ECN	2	/* ECN Beta for Abe */
 #endif /* _CC_NEWRENO_H */

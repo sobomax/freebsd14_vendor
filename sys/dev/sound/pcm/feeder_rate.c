@@ -61,7 +61,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: 88a58461b1ed93524a293741d58e53eaa240302b $");
+SND_DECLARE_FILE("$FreeBSD: f6bb1836089bf9655d9b3178774f371052e26ce8 $");
 #endif
 
 #include "feeder_rate_gen.h"
@@ -186,7 +186,7 @@ sysctl_hw_snd_feeder_rate_min(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 SYSCTL_PROC(_hw_snd, OID_AUTO, feeder_rate_min,
-    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, 0, sizeof(int),
     sysctl_hw_snd_feeder_rate_min, "I",
     "minimum allowable rate");
 
@@ -209,7 +209,7 @@ sysctl_hw_snd_feeder_rate_max(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 SYSCTL_PROC(_hw_snd, OID_AUTO, feeder_rate_max,
-    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, 0, sizeof(int),
     sysctl_hw_snd_feeder_rate_max, "I",
     "maximum allowable rate");
 
@@ -232,7 +232,7 @@ sysctl_hw_snd_feeder_rate_round(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 SYSCTL_PROC(_hw_snd, OID_AUTO, feeder_rate_round,
-    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, 0, sizeof(int),
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, 0, sizeof(int),
     sysctl_hw_snd_feeder_rate_round, "I",
     "sample rate converter rounding threshold");
 

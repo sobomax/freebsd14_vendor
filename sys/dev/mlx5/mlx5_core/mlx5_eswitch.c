@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ccf05b0384350f6a1981782699dcc06db8fb3301 $
+ * $FreeBSD: 6d3be72427c99a3b640cef4acdcab703ddfaa49f $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/etherdevice.h>
 #include <dev/mlx5/driver.h>
@@ -31,8 +34,8 @@
 #include <dev/mlx5/vport.h>
 #include <dev/mlx5/fs.h>
 #include <dev/mlx5/mpfs.h>
-#include "mlx5_core.h"
-#include "eswitch.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
+#include <dev/mlx5/mlx5_core/eswitch.h>
 
 #define UPLINK_VPORT 0xFFFF
 

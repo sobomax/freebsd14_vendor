@@ -42,8 +42,10 @@
  *	$NetBSD: krpc_subr.c,v 1.10 1995/08/08 20:43:43 gwr Exp $
  */
 
+#define IN_HISTORICAL_NETS		/* include class masks */
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd0e0653a02c670aebdd9932d163940aa7375155 $");
+__FBSDID("$FreeBSD: a012bc914aa5320a757747d446233746ed0a2345 $");
 
 #include "opt_bootp.h"
 #include "opt_nfs.h"
@@ -654,7 +656,7 @@ bootpc_call(struct bootpc_globalcontext *gctx, struct thread *td)
 				    error, (int )bootp_so->so_state);
 
 			/* Set netmask to 255.0.0.0 */
-			sin->sin_addr.s_addr = htonl(IN_CLASSA_NET);
+			sin->sin_addr.s_addr = htonl(0xff000000);
 			error = ifioctl(bootp_so, SIOCAIFADDR, (caddr_t)ifra,
 			    td);
 			if (error != 0)
@@ -882,7 +884,7 @@ bootpc_fakeup_interface(struct bootpc_ifcontext *ifctx, struct thread *td)
 	clear_sinaddr(sin);
 	sin = (struct sockaddr_in *)&ifra->ifra_mask;
 	clear_sinaddr(sin);
-	sin->sin_addr.s_addr = htonl(IN_CLASSA_NET);
+	sin->sin_addr.s_addr = htonl(0xff000000);
 	sin = (struct sockaddr_in *)&ifra->ifra_broadaddr;
 	clear_sinaddr(sin);
 	sin->sin_addr.s_addr = htonl(INADDR_BROADCAST);
@@ -1485,6 +1487,11 @@ bootpc_decode_reply(struct nfsv3_diskless *nd, struct bootpc_ifcontext *ifctx,
 	printf("\n");
 
 	if (ifctx->gotnetmask == 0) {
+		/*
+		 * If there is no netmask, use historical default,
+		 * but we really need the right mask from the server.
+		 */
+		printf("%s: no netmask received!\n", ifctx->ireq.ifr_name);
 		if (IN_CLASSA(ntohl(ifctx->myaddr.sin_addr.s_addr)))
 			ifctx->netmask.sin_addr.s_addr = htonl(IN_CLASSA_NET);
 		else if (IN_CLASSB(ntohl(ifctx->myaddr.sin_addr.s_addr)))

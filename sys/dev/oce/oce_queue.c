@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: 04c92a5f397b66500094705c0d7b39fe604f9c47 $ */
+/* $FreeBSD: da4d33065d409ff2fc2f6fe834e431bdfba3d6f7 $ */
 
 #include "oce_if.h"
 
@@ -1233,13 +1233,15 @@ oce_rx_cq_clean(struct oce_rq *rq)
 void
 oce_stop_rx(POCE_SOFTC sc)
 {
+        struct epoch_tracker et;
         struct oce_mbx mbx;
         struct mbx_delete_nic_rq *fwcmd;
         struct mbx_delete_nic_rq_v1 *fwcmd1;
         struct oce_rq *rq;
         int i = 0;
 
-       /* before deleting disable hwlro */
+        NET_EPOCH_ENTER(et);
+        /* before deleting disable hwlro */
 	if(sc->enable_hwlro)
         	oce_mbox_nic_set_iface_lro_config(sc, 0);
 
@@ -1274,6 +1276,7 @@ oce_stop_rx(POCE_SOFTC sc)
 			UNLOCK(&rq->rx_lock);
                 }
         }
+        NET_EPOCH_EXIT(et);
 }
 
 int

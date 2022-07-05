@@ -27,13 +27,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c234bcc5f7f0f472f47cd722e365fb25b4edd1a $");
+__FBSDID("$FreeBSD: b53b1e64da04b38025d71da017fa71a9435c022b $");
 
 #include <float.h>
 #include <math.h>
 
 #include "fpmath.h"
 
+#ifdef USE_BUILTIN_FMAX
+double
+fmax(double x, double y)
+{
+	return (__builtin_fmax(x, y));
+}
+#else
 double
 fmax(double x, double y)
 {
@@ -54,6 +61,7 @@ fmax(double x, double y)
 
 	return (x > y ? x : y);
 }
+#endif
 
 #if (LDBL_MANT_DIG == 53)
 __weak_reference(fmax, fmaxl);

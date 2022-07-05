@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)getprotoent.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73b069250499384eec3dc4e3cefd67b146bb8115 $");
+__FBSDID("$FreeBSD: b3bb52195dfcf7be65adab483361c2479a2d124b $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -144,11 +144,11 @@ int
 __proto_marshal_func(char *buffer, size_t *buffer_size, void *retval,
     va_list ap, void *cache_mdata)
 {
-	char *name;
-	int num;
+	char *name __unused;
+	int num __unused;
 	struct protoent *proto;
-	char *orig_buf;
-	size_t orig_buf_size;
+	char *orig_buf __unused;
+	size_t orig_buf_size __unused;
 
 	struct protoent new_proto;
 	size_t desired_size, size, aliases_size;
@@ -231,8 +231,8 @@ int
 __proto_unmarshal_func(char *buffer, size_t buffer_size, void *retval,
     va_list ap, void *cache_mdata)
 {
-	char *name;
-	int num;
+	char *name __unused;
+	int num __unused;
 	struct protoent *proto;
 	char *orig_buf;
 	size_t orig_buf_size;

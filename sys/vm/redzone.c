@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: affaa5008a2203681a63d5bdf16d3ea24eb9f40d $");
+__FBSDID("$FreeBSD: 88e36c41b928e5f0e2cbcfe06c93741ac81cf7a0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,6 +36,10 @@ __FBSDID("$FreeBSD: affaa5008a2203681a63d5bdf16d3ea24eb9f40d $");
 #include <sys/sysctl.h>
 
 #include <vm/redzone.h>
+
+#ifdef KASAN
+#error KASAN and DEBUG_REDZONE cannot be configured together
+#endif
 
 static SYSCTL_NODE(_vm, OID_AUTO, redzone, CTLFLAG_RW | CTLFLAG_MPSAFE, NULL,
     "RedZone data");

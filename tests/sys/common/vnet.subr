@@ -1,4 +1,4 @@
-# $FreeBSD: f9a9e9c428fde4ff868cfa05f4bb13e6a8c3b289 $
+# $FreeBSD: 590e8dea992ece1541f5e4d151a32a7125506ad9 $
 # VNAT/jail utility functions
 ##
 
@@ -21,6 +21,13 @@ vnet_mkbridge()
 {
 	ifname=$(ifconfig bridge create)
 	echo $ifname >> created_interfaces.lst
+	echo ${ifname}
+}
+
+vnet_mkvlan()
+{
+	ifname=$(ifconfig vlan create)
+	echo ${ifname} >> created_interfaces.lst
 	echo ${ifname}
 }
 

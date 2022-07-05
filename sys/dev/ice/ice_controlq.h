@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 947f1d6d1767421716511db83c02eba0d7eb51ac $*/
+/*$FreeBSD: 4ed0809f2bad3eacc10c623a106b214c599a556e $*/
 
 #ifndef _ICE_CONTROLQ_H_
 #define _ICE_CONTROLQ_H_
@@ -43,8 +43,8 @@
 	(&(((struct ice_aq_desc *)((R).desc_buf.va))[i]))
 
 #define ICE_CTL_Q_DESC_UNUSED(R) \
-	(u16)((((R)->next_to_clean > (R)->next_to_use) ? 0 : (R)->count) + \
-	      (R)->next_to_clean - (R)->next_to_use - 1)
+	((u16)((((R)->next_to_clean > (R)->next_to_use) ? 0 : (R)->count) + \
+	       (R)->next_to_clean - (R)->next_to_use - 1))
 
 /* Defines that help manage the driver vs FW API checks.
  * Take a look at ice_aq_ver_check in ice_controlq.c for actual usage.
@@ -112,7 +112,6 @@ struct ice_rq_event_info {
 /* Control Queue information */
 struct ice_ctl_q_info {
 	enum ice_ctl_q qtype;
-	enum ice_aq_err rq_last_status;	/* last status on receive queue */
 	struct ice_ctl_q_ring rq;	/* receive queue */
 	struct ice_ctl_q_ring sq;	/* send queue */
 	u32 sq_cmd_timeout;		/* send queue cmd write back timeout */

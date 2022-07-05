@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: b5a19d381adaadf09ced65b231b7503932ad55e0 $");
+__FBSDID("$FreeBSD: b84351379f417cda436c0b68066faf21e607ea93 $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
@@ -135,6 +135,21 @@ parse_cmd_args (int argc, char **argv)
 
 }
 
+static void
+resize(int signo __unused)
+{
+
+	endwin();
+	refresh();
+	clear();
+
+	CMDLINE = LINES - 1;
+	labels();
+	display();
+	status();
+}
+
+
 int
 main(int argc, char **argv)
 {
@@ -191,6 +206,7 @@ main(int argc, char **argv)
 	signal(SIGINT, die);
 	signal(SIGQUIT, die);
 	signal(SIGTERM, die);
+	signal(SIGWINCH, resize);
 
 	/*
 	 * Initialize display.  Load average appears in a one line

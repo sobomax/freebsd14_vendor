@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  *
- * $FreeBSD: 5805254c0623239151349f4d4c11ea992d4e3ffd $
+ * $FreeBSD: 4eb9ce748376e2822290a7d204b10f6157202361 $
  *
  */
 
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5805254c0623239151349f4d4c11ea992d4e3ffd $");
+__FBSDID("$FreeBSD: 4eb9ce748376e2822290a7d204b10f6157202361 $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -207,6 +207,8 @@ static device_method_t bcm_xhci_methods[] = {
 	/* Device interface. */
 	DEVMETHOD(device_probe,			bcm_xhci_probe),
 	DEVMETHOD(device_attach,		bcm_xhci_attach),
+
+	DEVMETHOD_END,
 };
 
 DEFINE_CLASS_1(bcm_xhci, bcm_xhci_driver, bcm_xhci_methods,

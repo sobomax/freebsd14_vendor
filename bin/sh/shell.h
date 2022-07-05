@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)shell.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: c06e737e658ff5a7c241ee0e9ca894c69e24aeed $
+ * $FreeBSD: 536efe6ce2280006484b2e775227cb7044bc4c4b $
  */
 
 #ifndef SHELL_H_
@@ -55,7 +55,7 @@
 /* #define DEBUG 1 */
 
 /*
- * Type of used arithmetics. SUSv3 requires us to have at least signed long.
+ * Type of used arithmetic. SUSv3 requires us to have at least signed long.
  */
 typedef intmax_t arith_t;
 #define	ARITH_FORMAT_STR  "%" PRIdMAX

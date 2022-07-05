@@ -1,4 +1,4 @@
-# $FreeBSD: e86fd7e82dd6a28086fa2815084e9062b3537349 $
+# $FreeBSD: f598db2743dd244a4f1d8f6c4ab4492f262b0b99 $
 
 .PATH:	${SRCTOP}/sys/net
 
@@ -10,5 +10,7 @@ SRCS= \
 SRCS+=	ifdi_if.c
 SRCS+=	device_if.h bus_if.h pci_if.h pci_iov_if.h ifdi_if.h
 SRCS+=	opt_acpi.h opt_inet.h opt_inet6.h opt_sched.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

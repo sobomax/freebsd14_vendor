@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 2cbcd9554949477f29e6c2d29767db00cd3fdbc4 $
+# $FreeBSD: 406e5979b38080f79c3ca66407d7d81b0dd8b98e $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_remove_001_neg cleanup
 zpool_remove_001_neg_head()
 {
 	atf_set "descr" "Check zpool remove <pool> <device> can not removeactive device from pool"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_remove_001_neg_body()
 {
@@ -54,7 +54,7 @@ atf_test_case zpool_remove_002_pos cleanup
 zpool_remove_002_pos_head()
 {
 	atf_set "descr" "zpool remove can only remove inactive hotspare device from pool"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_remove_002_pos_body()
 {
@@ -78,7 +78,7 @@ atf_test_case zpool_remove_003_pos cleanup
 zpool_remove_003_pos_head()
 {
 	atf_set "descr" "zpool remove can remove hotspare device which state go though active to inactive in pool"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_remove_003_pos_body()
 {

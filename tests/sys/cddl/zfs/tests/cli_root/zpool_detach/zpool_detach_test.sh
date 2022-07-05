@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: e33bf7f0e75df1370e25dc27abf759c8f14f2d36 $
+# $FreeBSD: 98d23fe9f12fde20251331aba2309e683997c0c2 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_detach_001_neg cleanup
 zpool_detach_001_neg_head()
 {
 	atf_set "descr" "Executing 'zpool detach' with bad options fails"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_detach_001_neg_body()
 {

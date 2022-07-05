@@ -1,9 +1,7 @@
-# $FreeBSD: 284900c1bc0572bcba60f9a0f81d0067224f6e11 $
+# $FreeBSD: 72473764f31332e6030a237b6ed76ce38836c55f $
 
 .include <bsd.own.mk>
 
 CSMAPPERDIR?= /usr/share/i18n/csmapper
-.if ${MK_STAGING} == "yes"
-MKCSMAPPER= ${STAGE_HOST_OBJTOP}/usr/bin/mkcsmapper_static
-.endif
-MKCSMAPPER?= ${.OBJDIR:H:H:H}/usr.bin/mkcsmapper_static/mkcsmapper_static
+# mkcsmapper builds as part of bootstrap-tools and can therefore be found in $PATH
+MKCSMAPPER?=	mkcsmapper

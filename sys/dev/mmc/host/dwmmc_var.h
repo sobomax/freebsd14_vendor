@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6c7aae79640dbbea48ad14f3784dbbcf1dcde2dd $
+ * $FreeBSD: ef7c91fa628ef45e559683ca6337f946d8266566 $
  */
 
 #ifndef DEV_MMC_HOST_DWMMC_VAR_H
@@ -40,6 +40,8 @@
 #endif
 
 #include "opt_mmccam.h"
+
+#include <cam/mmc/mmc_sim.h>
 
 enum {
 	HWTYPE_NONE,
@@ -58,9 +60,7 @@ struct dwmmc_softc {
 	struct mtx		sc_mtx;
 #ifdef MMCCAM
 	union ccb *		ccb;
-	struct cam_devq *	devq;
-	struct cam_sim * 	sim;
-	struct mtx		sim_mtx;
+	struct mmc_sim		mmc_sim;
 #else
 	struct mmc_request	*req;
 #endif

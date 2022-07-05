@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: c280393ef1c8b5f0beb283ba57ae378b6580721e $*/
+/*$FreeBSD: eb2c44c920676c5853c1572889ecdda0bd671e94 $*/
 
 #include "i40e_osdep.h"
 #include "i40e_register.h"
@@ -546,7 +546,7 @@ configure_lan_hmc_out:
 }
 
 /**
- * i40e_delete_hmc_object - remove hmc objects
+ * i40e_delete_lan_hmc_object - remove hmc objects
  * @hw: pointer to the HW structure
  * @info: pointer to i40e_hmc_delete_obj_info struct
  *

@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: cpu.h,v 1.11 2000/05/26 21:19:53 thorpej Exp $
- * $FreeBSD: 9ae18e13900a43dc77595953c5a5d58b36b00d4d $
+ * $FreeBSD: 256e6d3eabf0de0393b6d0305dd8f25e1d8e8140 $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -144,10 +144,14 @@ extern register_t lpcr;
 
 void	cpu_halt(void);
 void	cpu_reset(void);
-void	cpu_sleep(void);
 void	flush_disable_caches(void);
 void	fork_trampoline(void);
 void	swi_vm(void *);
 int	cpu_machine_check(struct thread *, struct trapframe *, int *);
+
+
+#ifndef __powerpc64__
+void	mpc745x_sleep(void);
+#endif
 
 #endif	/* _MACHINE_CPU_H_ */

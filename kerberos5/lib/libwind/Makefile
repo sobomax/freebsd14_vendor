@@ -1,4 +1,6 @@
-#$FreeBSD: 0e4fa4303b9845fce36f334e0f566814184e25bd $
+#$FreeBSD: ef1ca66696c9b8c7be4526d9b470f8bea24b0627 $
+
+PACKAGE=	kerberos
 
 LIB=	wind
 LDFLAGS=	-Wl,--no-undefined

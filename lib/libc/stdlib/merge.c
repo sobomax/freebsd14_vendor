@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)merge.c	8.2 (Berkeley) 2/14/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 853d6ae93fcbb9d577dfd037891613edf81f3de6 $");
+__FBSDID("$FreeBSD: 7d8484ed10b99a3755704fdeca4b8f11ccf8f96e $");
 
 /*
  * Hybrid exponential search/linear search merge sort with hybrid
@@ -129,12 +129,8 @@ mergesort(void *base, size_t nmemb, size_t size, cmp_t cmp)
 	if (nmemb == 0)
 		return (0);
 
-	/*
-	 * XXX
-	 * Stupid subtraction for the Cray.
-	 */
 	iflag = 0;
-	if (!(size % ISIZE) && !(((char *)base - (char *)0) % ISIZE))
+	if (__is_aligned(size, ISIZE) && __is_aligned(base, ISIZE))
 		iflag = 1;
 
 	if ((list2 = malloc(nmemb * size + PSIZE)) == NULL)

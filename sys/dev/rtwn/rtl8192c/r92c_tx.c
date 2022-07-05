@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab2d05635358fa3c7d8e746abcd84c00a66240a3 $");
+__FBSDID("$FreeBSD: b01731ba29eda9ea78a3b72ea02dad3e86e4dc67 $");
 
 #include "opt_wlan.h"
 
@@ -335,7 +335,7 @@ r92c_fill_tx_desc(struct rtwn_softc *sc, struct ieee80211_node *ni,
 		uint16_t seqno;
 
 		if (m->m_flags & M_AMPDU_MPDU) {
-			seqno = ni->ni_txseqs[tid];
+			seqno = ni->ni_txseqs[tid] % IEEE80211_SEQ_RANGE;
 			ni->ni_txseqs[tid]++;
 		} else
 			seqno = M_SEQNO_GET(m) % IEEE80211_SEQ_RANGE;

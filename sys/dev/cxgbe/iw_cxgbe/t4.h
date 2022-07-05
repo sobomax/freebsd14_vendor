@@ -30,7 +30,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 70385b4ff6b6e8e7c3be7f27d4f16a9de3429313 $
+ * $FreeBSD: 88e7d64186159407c3701931d3826fd3376169c5 $
  */
 #ifndef __T4_H__
 #define __T4_H__
@@ -103,11 +103,8 @@ struct t4_status_page {
 #define T4_MAX_FR_IMMD_DEPTH (T4_MAX_FR_IMMD / sizeof(u64))
 #define T4_MAX_FR_DSGL 1024
 #define T4_MAX_FR_DSGL_DEPTH (T4_MAX_FR_DSGL / sizeof(u64))
-
-static inline int t4_max_fr_depth(int use_dsgl)
-{
-	return use_dsgl ? T4_MAX_FR_DSGL_DEPTH : T4_MAX_FR_IMMD_DEPTH;
-}
+#define T4_MAX_FR_FW_DSGL 4096
+#define T4_MAX_FR_FW_DSGL_DEPTH (T4_MAX_FR_FW_DSGL / sizeof(u64))
 
 #define T4_RQ_NUM_SLOTS 2
 #define T4_RQ_NUM_BYTES (T4_EQ_ENTRY_SIZE * T4_RQ_NUM_SLOTS)

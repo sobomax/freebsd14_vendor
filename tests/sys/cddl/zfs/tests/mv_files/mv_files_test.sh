@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 943b447e107d9af37edc735bc2e94ac5d0592059 $
+# $FreeBSD: 5fe8a0dafac074d315daf3de9b03484e074ffd05 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case mv_files_001_pos cleanup
 mv_files_001_pos_head()
 {
 	atf_set "descr" "Doing a 'mv' of a large amount of files within a zfs filesystemworks without errors."
-	atf_set "require.progs"  zfs zdb
+	atf_set "require.progs" "ksh93 zfs zdb"
 	atf_set "timeout" 1200
 }
 mv_files_001_pos_body()
@@ -57,7 +57,7 @@ atf_test_case mv_files_002_pos cleanup
 mv_files_002_pos_head()
 {
 	atf_set "descr" "Doing a 'mv' of a large amount of files across two zfs filesystemsworks without errors."
-	atf_set "require.progs"  zfs zdb
+	atf_set "require.progs" "ksh93 zfs zdb"
 	atf_set "timeout" 1200
 }
 mv_files_002_pos_body()

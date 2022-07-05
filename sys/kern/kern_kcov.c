@@ -32,13 +32,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cedfa2c081ba8d7765a7ad746258da19327e29f8 $
+ * $FreeBSD: 23e0da4cdb792ce06deb846981d11790190771dd $
  */
 
-#define	KCSAN_RUNTIME
+#ifdef KCSAN
+#define	SAN_RUNTIME
+#endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cedfa2c081ba8d7765a7ad746258da19327e29f8 $");
+__FBSDID("$FreeBSD: 23e0da4cdb792ce06deb846981d11790190771dd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

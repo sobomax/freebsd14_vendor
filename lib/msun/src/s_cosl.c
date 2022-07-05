@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46a2e8620a223de4b70baf3879fb090e250e866c $");
+__FBSDID("$FreeBSD: 3d066483f227c0ff897e20241abea450856c993c $");
 
 /*
  * Limited testing on pseudorandom numbers drawn within [-2e8:4e8] shows
@@ -39,12 +39,17 @@ __FBSDID("$FreeBSD: 46a2e8620a223de4b70baf3879fb090e250e866c $");
 #include <ieeefp.h>
 #endif
 
+#include "fpmath.h"
 #include "math.h"
 #include "math_private.h"
 #if LDBL_MANT_DIG == 64
 #include "../ld80/e_rem_pio2l.h"
+static const union IEEEl2bits
+pio4u = LD80C(0xc90fdaa22168c235, -00001,  7.85398163397448309628e-01L);
+#define	pio4	(pio4u.e)
 #elif LDBL_MANT_DIG == 113
 #include "../ld128/e_rem_pio2l.h"
+long double pio4 =  7.85398163397448309615660845819875721e-1L;
 #else
 #error "Unsupported long double format"
 #endif
@@ -71,7 +76,7 @@ cosl(long double x)
 	ENTERI();
 
 	/* Optimize the case where x is already within range. */
-	if (z.e < M_PI_4)
+	if (z.e < pio4)
 		RETURNI(__kernel_cosl(z.e, 0));
 
 	e0 = __ieee754_rem_pio2l(x, y);

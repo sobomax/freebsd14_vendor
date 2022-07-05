@@ -36,7 +36,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: e97b9c3cb74428cf2a1a12d44b816cb428b9a7c0 $");
+__FBSDID("$FreeBSD: 109505e4b9da9b959edf7fa20e03e9b2b1608b38 $");
 
 #ifndef lint
 static const char copyright[] =
@@ -256,8 +256,12 @@ NATIVE_SYSCTL2_GET(version, CTL_KERN, KERN_VERSION) {
 	p = NATIVE_BUFFER;
 	n = NATIVE_LENGTH;
 	for (; n--; ++p)
-		if (*p == '\n' || *p == '\t')
-			*p = ' ';
+		if (*p == '\n' || *p == '\t') {
+			if (n > 1)
+				*p = ' ';
+			else
+				*p = '\0';
+		}
 } NATIVE_SET;
 
 NATIVE_SYSCTL2_GET(platform, CTL_HW, HW_MACHINE) {

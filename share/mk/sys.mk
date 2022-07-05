@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: 8f456b28593a02d8a497d9f01ca21f2e292dad30 $
+# $FreeBSD: 89ac2c54965638918340db31eaecb42708948ee6 $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -209,6 +209,8 @@ ECHODIR		?=	echo
 ECHODIR		?=	true
 .endif
 .endif
+
+ELFCTL		?=	elfctl
 
 .if ${.MAKEFLAGS:M-N}
 # bmake -N is supposed to skip executing anything but it does not skip

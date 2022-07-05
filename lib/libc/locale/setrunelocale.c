@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 551d32b7ab6a72150b1ab715ea3d9356734d9494 $");
+__FBSDID("$FreeBSD: 41c82e637529a75a3f8f1eadd33ec28cb7fa574a $");
 
 #define	__RUNETYPE_INTERNAL 1
 
@@ -214,6 +214,8 @@ void *
 __ctype_load(const char *locale, locale_t unused __unused)
 {
 	struct xlocale_ctype *l = calloc(sizeof(struct xlocale_ctype), 1);
+	if (l == NULL)
+		return (NULL);
 
 	l->header.header.destructor = destruct_ctype;
 	if (__setrunelocale(l, locale)) {

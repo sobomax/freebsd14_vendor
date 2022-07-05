@@ -1,14 +1,10 @@
 #	@(#)Makefile	8.3 (Berkeley) 5/8/95
-# $FreeBSD: 445a999a49a78eac8bed8874cee7db14244ce624 $
+# $FreeBSD: 9e875613c9c92c8cad7739f72099a5b553cfe093 $
 
 PACKAGE=runtime
-MOUNT=	${SRCTOP}/sbin/mount
-.PATH: ${MOUNT}
 
 PROG=	df
-SRCS=	df.c vfslist.c
-
-CFLAGS+= -I${MOUNT}
+SRCS=	df.c
 
 LIBADD=	xo util
 

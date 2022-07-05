@@ -1,4 +1,4 @@
-# $FreeBSD: 851be7af97c4c378f01b66a0d5459725aac1110b $
+# $FreeBSD: d045b0526ed6fe09e47468a2015218c962f811c8 $
 
 .include <bsd.init.mk>
 
@@ -10,6 +10,8 @@ ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-c++
 .PATH:		${ATF}/atf-c++/detail
 
+CFLAGS+=	-DATF_BUILD_CXX='"c++"'
+CFLAGS+=	-DATF_BUILD_CXXFLAGS='"-Wall"'
 CFLAGS+=	-DATF_C_TESTS_BASE='"${TESTSBASE}/lib/atf/libatf-c"'
 CFLAGS+=	-DATF_INCLUDEDIR='"${INCLUDEDIR}"'
 CFLAGS+=	-I${ATF}

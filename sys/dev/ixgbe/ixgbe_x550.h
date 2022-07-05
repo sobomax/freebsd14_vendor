@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 44c9d06a42d94daad57b7a9515e5695de9428cca $*/
+/*$FreeBSD: 7a24e50e1b5a046295f4a6330261181a6a6fce82 $*/
 
 #ifndef _IXGBE_X550_H_
 #define _IXGBE_X550_H_
@@ -122,4 +122,5 @@ s32 ixgbe_reset_phy_t_X550em(struct ixgbe_hw *hw);
 s32 ixgbe_identify_sfp_module_X550em(struct ixgbe_hw *hw);
 s32 ixgbe_led_on_t_X550em(struct ixgbe_hw *hw, u32 led_idx);
 s32 ixgbe_led_off_t_X550em(struct ixgbe_hw *hw, u32 led_idx);
+bool ixgbe_fw_recovery_mode_X550(struct ixgbe_hw *hw);
 #endif /* _IXGBE_X550_H_ */

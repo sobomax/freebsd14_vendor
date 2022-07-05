@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2207fffc557342b1daf14dc5247eee43f13e312f $");
+__FBSDID("$FreeBSD: 699d330ebdb4e4fcf1a4ecabcbe9f2342e61ed71 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -97,11 +97,6 @@ do_mount_(const char *spec, const char *dir, int mflag, char *fstype,
 	iovlen = 0;
 	if (strstr(optstr, MNTOPT_REMOUNT) != NULL)
 		build_iovec(&iov, &iovlen, "update", NULL, 0);
-	if (strstr(optstr, MNTOPT_NOXATTR) == NULL &&
-	    strstr(optstr, MNTOPT_XATTR) == NULL &&
-	    strstr(optstr, MNTOPT_SAXATTR) == NULL &&
-	    strstr(optstr, MNTOPT_DIRXATTR) == NULL)
-		build_iovec(&iov, &iovlen, "xattr", NULL, 0);
 	if (mflag & MS_RDONLY)
 		build_iovec(&iov, &iovlen, "ro", NULL, 0);
 	build_iovec(&iov, &iovlen, "fstype", fstype, (size_t)-1);
@@ -128,8 +123,9 @@ do_mount(zfs_handle_t *zhp, const char *mntpt, char *opts, int flags)
 int
 do_unmount(const char *mntpt, int flags)
 {
-
-	return (unmount(mntpt, flags));
+	if (unmount(mntpt, flags) < 0)
+		return (errno);
+	return (0);
 }
 
 int

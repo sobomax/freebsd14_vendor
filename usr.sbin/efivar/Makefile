@@ -1,4 +1,6 @@
-# $FreeBSD: 3bc1868bf77b0088c2a7b736dd5e44a3e688086f $
+# $FreeBSD: aa00f4b79502cf41aaeeb7400f588121eacaefb5 $
+
+PACKAGE=	efi-tools
 
 PROG=	efivar
 MAN=	efivar.8

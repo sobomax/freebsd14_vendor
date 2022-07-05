@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 1f110f52072063148d791a647a4702ece9e894ae $
+# $FreeBSD: 21d083c228e8709c4e09f5e822403576ba254027 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zfs_inherit_001_neg cleanup
 zfs_inherit_001_neg_head()
 {
 	atf_set "descr" "'zfs inherit' should return an error when attempting to inherit un-inheritable properties."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_inherit_001_neg_body()
 {
@@ -54,7 +54,7 @@ atf_test_case zfs_inherit_002_neg cleanup
 zfs_inherit_002_neg_head()
 {
 	atf_set "descr" "'zfs inherit' should return an error with bad parameters in one command."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_inherit_002_neg_body()
 {
@@ -78,7 +78,7 @@ atf_test_case zfs_inherit_003_pos cleanup
 zfs_inherit_003_pos_head()
 {
 	atf_set "descr" "'zfs inherit' should inherit user property."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_inherit_003_pos_body()
 {

@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab835b0c1853343b6d3de3d1358f483743ba0b72 $");
+__FBSDID("$FreeBSD: 5c0bdd569fab97ac4beefe104490ca6cd8d23816 $");
 
 #include "opt_inet.h"
 
@@ -1042,6 +1042,9 @@ cxgb_port_attach(device_t dev)
 	ifp->if_capenable = CXGB_CAP_ENABLE;
 	ifp->if_hwassist = CSUM_TCP | CSUM_UDP | CSUM_IP | CSUM_TSO |
 	    CSUM_UDP_IPV6 | CSUM_TCP_IPV6;
+	ifp->if_hw_tsomax = IP_MAXPACKET;
+	ifp->if_hw_tsomaxsegcount = 36;
+	ifp->if_hw_tsomaxsegsize = 65536;
 
 	/*
 	 * Disable TSO on 4-port - it isn't supported by the firmware.

@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012, 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Oleksandr Rybalko under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3846b49507503233fa9e6f51689b04af2fe18295 $
+ * $FreeBSD: 05c01a79a449d6d256b81635f1cc0002cf1b8f49 $
  */
 
 /* Registers definition for Freescale i.MX515 Synchronous Serial Interface */

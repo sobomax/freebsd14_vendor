@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53106073d10111ec49bc95ab75a81f313b5f1aaa $");
+__FBSDID("$FreeBSD: 02a32fa4c1fc17983a1a16181ff46ad07dfd274b $");
 
 #define	LINUXKPI_PARAM_PREFIX iw_cxgbe_
 
@@ -348,8 +348,7 @@ c4iw_query_device(struct ib_device *ibdev, struct ib_device_attr *props,
 	props->max_mr = c4iw_num_stags(&dev->rdev);
 	props->max_pd = T4_MAX_NUM_PD;
 	props->local_ca_ack_delay = 0;
-	props->max_fast_reg_page_list_len =
-		t4_max_fr_depth(sc->params.ulptx_memwrite_dsgl && use_dsgl);
+	props->max_fast_reg_page_list_len = t4_max_fr_depth(&dev->rdev, use_dsgl);
 
 	return (0);
 }

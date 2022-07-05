@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 57420c65593f5a1feb65d11cc9c54f929d6b4973 $
+ * $FreeBSD: 26e677f26d5a58eed5dfb6a760d4f642fae227dd $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -68,7 +68,6 @@ typedef struct {
     round(8, align)
 #define calculate_tls_offset(prev_offset, prev_size, size, align, offset) \
     round(prev_offset + prev_size, align)
-#define calculate_tls_end(off, size)    ((off) + (size))
 #define calculate_tls_post_size(align) \
     round(TLS_TCB_SIZE, align) - TLS_TCB_SIZE
 	
@@ -81,9 +80,11 @@ extern void arm_abi_variant_hook(Elf_Auxinfo **);
 
 #ifdef __ARM_FP
 #define md_abi_variant_hook(x)		arm_abi_variant_hook(x)
-#define RTLD_VARIANT_ENV_NAMES
 #else
 #define md_abi_variant_hook(x)
 #endif
+
+#define	TLS_VARIANT_I	1
+#define	TLS_DTV_OFFSET	0
 
 #endif

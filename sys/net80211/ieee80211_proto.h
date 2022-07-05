@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fafedf46cab523feb88785ae2956953ecfee392c $
+ * $FreeBSD: 4b324caa694baf0df27b7c0a745a00226f0d8fe8 $
  */
 #ifndef _NET80211_IEEE80211_PROTO_H_
 #define _NET80211_IEEE80211_PROTO_H_
@@ -114,6 +114,8 @@ struct mbuf *ieee80211_encap(struct ieee80211vap *, struct ieee80211_node *,
 void	ieee80211_free_mbuf(struct mbuf *);
 int	ieee80211_send_mgmt(struct ieee80211_node *, int, int);
 struct ieee80211_appie;
+int	ieee80211_probereq_ie(struct ieee80211vap *, struct ieee80211com *,
+		uint8_t **, uint32_t *, const uint8_t *, size_t, bool);
 int	ieee80211_send_probereq(struct ieee80211_node *ni,
 		const uint8_t sa[IEEE80211_ADDR_LEN],
 		const uint8_t da[IEEE80211_ADDR_LEN],

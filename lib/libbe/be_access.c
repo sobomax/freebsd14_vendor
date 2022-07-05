@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74059a0a56930cdc85cfc5712a64cdbdc6625d33 $");
+__FBSDID("$FreeBSD: ec966bc85fb77a19ae035baab0367f3f8c1515ca $");
 
 #include <sys/mntent.h>
 
@@ -210,7 +210,7 @@ be_mounted_at(libbe_handle_t *lbh, const char *path, nvlist_t *details)
 
 	if (info.name != NULL) {
 		if (details != NULL) {
-			if ((root_hdl = zfs_open(lbh->lzh, lbh->root,
+			if ((root_hdl = zfs_open(lbh->lzh, info.name,
 			    ZFS_TYPE_FILESYSTEM)) == NULL) {
 				free(info.name);
 				return (BE_ERR_ZFSOPEN);
@@ -219,6 +219,7 @@ be_mounted_at(libbe_handle_t *lbh, const char *path, nvlist_t *details)
 			propinfo.lbh = lbh;
 			propinfo.list = details;
 			propinfo.single_object = false;
+			propinfo.bootonce = NULL;
 			prop_list_builder_cb(root_hdl, &propinfo);
 			zfs_close(root_hdl);
 		}

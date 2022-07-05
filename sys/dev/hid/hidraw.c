@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6cc67ff14d2306931aa23c029baea7671f88d93a $");
+__FBSDID("$FreeBSD: e71b2e2c7d5dd749f137e3c78bb122cebf4fe069 $");
 
 #include "opt_hid.h"
 
@@ -703,7 +703,7 @@ hidraw_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int flag,
 		return (0);
 
 	case HIDIOCGRDESCSIZE:
-		*(int *)addr = sc->sc_rdesc->len;
+		*(int *)addr = sc->sc_hw->rdescsize;
 		return (0);
 
 	case HIDIOCGRDESC:

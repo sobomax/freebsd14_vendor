@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 949e3fd6112b725fde90062ed3f72349448e84f0 $
+.\" $FreeBSD: 8be124392d191ed751604433d1aa109525c27ddd $
 .\"
-.Dd June 6, 2020
+.Dd April 22, 2021
 .Dt STATS 7
 .Os
 .Sh NAME
@@ -46,6 +46,8 @@ are currently included in the base system, with more appearing periodically.
 Show Bluetooth socket information
 .It Nm ctlstat
 CAM Target Layer statistics utility
+.It Nm dwatch
+Watch processes as they trigger a particular DTrace probe
 .It Nm fstat
 Identify active files
 .It Nm gstat
@@ -89,6 +91,7 @@ Report ZFS I/O statistics
 .El
 .Sh SEE ALSO
 .Xr btsockstat 1 ,
+.Xr dwatch 1 ,
 .Xr fstat 1 ,
 .Xr intro 1 ,
 .Xr lockstat 1 ,

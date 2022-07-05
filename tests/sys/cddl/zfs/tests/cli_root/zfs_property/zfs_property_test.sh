@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 6f01d23d4961f4d0ff728accb43c0c12c0bf8202 $
+# $FreeBSD: 8b4766a5e5590981efbcb509d7fd3a5dc3e0d2d1 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zfs_set_property_001_pos cleanup
 zfs_set_property_001_pos_head()
 {
 	atf_set "descr" "Verify each of the file system properties."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_set_property_001_pos_body()
 {

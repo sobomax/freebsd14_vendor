@@ -46,7 +46,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9f8af0565f01c06125ab7554222472c2f4ab4e9 $");
+__FBSDID("$FreeBSD: fa9e0a6422d89fc5459a371a3eaf3536863f1b8d $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -264,8 +264,7 @@ ptbl_alloc(pmap_t pmap, unsigned int pdir_idx, boolean_t nosleep)
 
 	for (i = 0; i < PTBL_PAGES; i++) {
 		pidx = (PTBL_PAGES * pdir_idx) + i;
-		while ((m = vm_page_alloc(NULL, pidx,
-		    VM_ALLOC_NOOBJ | VM_ALLOC_WIRED)) == NULL) {
+		while ((m = vm_page_alloc_noobj(VM_ALLOC_WIRED)) == NULL) {
 			if (nosleep) {
 				ptbl_free_pmap_ptbl(pmap, ptbl);
 				for (j = 0; j < i; j++)
@@ -279,6 +278,7 @@ ptbl_alloc(pmap_t pmap, unsigned int pdir_idx, boolean_t nosleep)
 			rw_wlock(&pvh_global_lock);
 			PMAP_LOCK(pmap);
 		}
+		m->pindex = pidx;
 		mtbl[i] = m;
 	}
 

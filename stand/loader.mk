@@ -1,4 +1,4 @@
-# $FreeBSD: 3a38a9bc9e6391c710de88f3ffcc048667b0e0a5 $
+# $FreeBSD: 85d3aad326dec1f08c73f361c39de6da5ae10885 $
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 
@@ -6,7 +6,7 @@ CFLAGS+=-I${LDRSRC}
 
 SRCS+=	boot.c commands.c console.c devopen.c interp.c 
 SRCS+=	interp_backslash.c interp_parse.c ls.c misc.c 
-SRCS+=	module.c nvstore.c pnglite.c
+SRCS+=	module.c nvstore.c pnglite.c tslog.c
 
 CFLAGS.module.c += -I$(SRCTOP)/sys/teken -I${SRCTOP}/contrib/pnglite
 

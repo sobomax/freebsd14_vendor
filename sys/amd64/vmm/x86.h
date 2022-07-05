@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7c8fccf78f28d7bc4a156146b4be181afba76a6f $
+ * $FreeBSD: 318f0b5cf87167780405df64ba74293950478a0b $
  */
 
 #ifndef _X86_H_
@@ -80,4 +80,24 @@ enum vm_cpuid_capability {
  * and 'false' otherwise.
  */
 bool vm_cpuid_capability(struct vm *vm, int vcpuid, enum vm_cpuid_capability);
+
+#define VMM_MTRR_VAR_MAX 10
+#define VMM_MTRR_DEF_MASK \
+	(MTRR_DEF_ENABLE | MTRR_DEF_FIXED_ENABLE | MTRR_DEF_TYPE)
+#define VMM_MTRR_PHYSBASE_MASK (MTRR_PHYSBASE_PHYSBASE | MTRR_PHYSBASE_TYPE)
+#define VMM_MTRR_PHYSMASK_MASK (MTRR_PHYSMASK_PHYSMASK | MTRR_PHYSMASK_VALID)
+struct vm_mtrr {
+	uint64_t def_type;
+	uint64_t fixed4k[8];
+	uint64_t fixed16k[2];
+	uint64_t fixed64k;
+	struct {
+		uint64_t base;
+		uint64_t mask;
+	} var[VMM_MTRR_VAR_MAX];
+};
+
+int vm_rdmtrr(struct vm_mtrr *mtrr, u_int num, uint64_t *val);
+int vm_wrmtrr(struct vm_mtrr *mtrr, u_int num, uint64_t val);
+
 #endif

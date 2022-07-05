@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7df7870d006f5643c291185ceeee58afbef20c2d $
+ * $FreeBSD: 5cd4bd08e051e2f19f05800f54fe72c74960e6c7 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -33,7 +36,7 @@
 #include <linux/delay.h>
 #include <dev/mlx5/driver.h>
 #include <dev/mlx5/mlx5_ifc.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 #define	MLX5_HEALTH_POLL_INTERVAL	(2 * HZ)
 #define	MAX_MISSES			3

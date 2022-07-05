@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0a1baec39826f9c1bb753164992e84569b7d5a00 $
+ * $FreeBSD: 8f2b87e5f3a66c8c74f5ea24a20edac56d2a1f81 $
  */
 
 #ifndef _LINUX_MIB_H_
@@ -69,5 +69,8 @@ extern int linux_dummy_rlimits;
 extern int linux_ignore_ip_recverr;
 extern int linux_preserve_vstatus;
 extern bool linux_map_sched_prio;
+
+struct image_params;
+int linux_setid_allowed_query(struct thread *td, struct image_params *imgp);
 
 #endif /* _LINUX_MIB_H_ */

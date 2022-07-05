@@ -1,2 +1,2 @@
-.\" $FreeBSD: ef63f70ea80e4f57c7ca1ffd81fd2fa11849aa0d $
-Set to not build or install HyperV utilities.
+.\" $FreeBSD: c717a4e943f8df86a3a8d6472853deab87fdfc7c $
+Do not build or install HyperV utilities.

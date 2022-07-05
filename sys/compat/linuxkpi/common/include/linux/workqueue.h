@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 768ce33bb20db24b5166d87192d02d4f960d1091 $
+ * $FreeBSD: 7ced4270e1db7071a26916360122c78f0cb28c4c $
  */
-#ifndef	_LINUX_WORKQUEUE_H_
-#define	_LINUX_WORKQUEUE_H_
+#ifndef	_LINUXKPI_LINUX_WORKQUEUE_H_
+#define	_LINUXKPI_LINUX_WORKQUEUE_H_
 
 #include <linux/types.h>
 #include <linux/kernel.h>
@@ -256,4 +256,4 @@ extern struct work_struct *linux_current_work(void);
 extern bool linux_queue_rcu_work(struct workqueue_struct *wq, struct rcu_work *rwork);
 extern bool linux_flush_rcu_work(struct rcu_work *rwork);
 
-#endif					/* _LINUX_WORKQUEUE_H_ */
+#endif					/* _LINUXKPI_LINUX_WORKQUEUE_H_ */

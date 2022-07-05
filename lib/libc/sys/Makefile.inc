@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 10/24/94
-# $FreeBSD: 82d16fb81b6b8d6f4408d41fcc03df4552a51e9c $
+# $FreeBSD: 5c30f7d6b79601d5332dbdc97238e2b49c050a24 $
 
 # sys sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/sys ${LIBC_SRCTOP}/sys
@@ -36,6 +36,9 @@ SRCS+=	\
 
 SRCS+= getdents.c lstat.c mknod.c stat.c
 
+NOASM+=  sched_getcpu.o
+PSEUDO+= _sched_getcpu.o
+
 SRCS+= fstat.c fstatat.c fstatfs.c getfsstat.c statfs.c
 NOASM+= fstat.o fstatat.o fstatfs.o getfsstat.o statfs.o
 PSEUDO+= _fstat.o _fstatat.o _fstatfs.o _getfsstat.o _statfs.o
@@ -49,6 +52,7 @@ SRCS+= closefrom.c
 SRCS+= pipe.c
 SRCS+= shm_open.c
 SRCS+= vadvise.c
+SRCS+= POSIX2x_Fork.c
 
 SRCS+=	compat-stub.c
 
@@ -68,6 +72,7 @@ INTERPOSED = \
 	nanosleep \
 	open \
 	openat \
+	pdfork \
 	poll \
 	ppoll \
 	pselect \

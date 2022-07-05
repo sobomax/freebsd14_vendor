@@ -1,5 +1,5 @@
 # $Whistle: Makefile,v 1.5 1999/01/24 06:48:37 archie Exp $
-# $FreeBSD: df97324a19f9a581b3623b38910f44bf52a58711 $
+# $FreeBSD: 1c5da9a1692e86ec237bd3d30e8135fc62baa919 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -54,7 +54,8 @@ SUBDIR=	async \
 	tty \
 	UI \
 	vjc \
-	vlan
+	vlan \
+	vlan_rotate
 
 .if ${MK_BLUETOOTH} != "no" || defined(ALL_MODULES)
 _bluetooth=	bluetooth

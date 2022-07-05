@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8bd4d3d498d8863d5d59f388eeecda579c028f1f $");
+__FBSDID("$FreeBSD: 6f1275ee125d73153a6f6c7b198fa805c4bedafb $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -637,7 +637,7 @@ msdosfs_mkdire(const char *path, struct denode *pdep, fsnode *node) {
 	return dep;
 
 bad:
-	clusterfree(pmp, newcluster, NULL);
+	clusterfree(pmp, newcluster);
 bad2:
 	errno = error;
 	return NULL;

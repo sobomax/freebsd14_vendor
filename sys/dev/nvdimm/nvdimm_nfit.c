@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae00b88f80182f3ef192cc8f23038d7267d0ba12 $");
+__FBSDID("$FreeBSD: 7396393a3a2c070484d1ed78bd10a7a4d874b6b6 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -200,4 +200,14 @@ acpi_nfit_get_flush_addrs(ACPI_TABLE_NFIT *nfitbl, nfit_handle_t dimm,
 	    M_WAITOK);
 	for (i = 0; i < subtable->HintCount; i++)
 		(*listp)[i] = (uint64_t *)(intptr_t)subtable->HintAddress[i];
+}
+
+void
+acpi_nfit_get_memory_maps_by_dimm(ACPI_TABLE_NFIT *nfitbl, nfit_handle_t dimm,
+    ACPI_NFIT_MEMORY_MAP ***listp, int *countp)
+{
+
+	malloc_find_matches(nfitbl, ACPI_NFIT_TYPE_MEMORY_MAP,
+	    offsetof(ACPI_NFIT_MEMORY_MAP, DeviceHandle), UINT32_MAX, dimm,
+	    (void ***)listp, countp);
 }

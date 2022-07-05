@@ -54,7 +54,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: 7d965860f886bc0c1e08c1615b2e612ba46ca5c0 $");
+SND_DECLARE_FILE("$FreeBSD: d4925fe0d7e6ebf52608deb2859d2ba93e698b66 $");
 #endif
 
 #define FEEDMATRIX_RESERVOIR	(SND_CHN_MAX * PCM_32_BPS)
@@ -552,7 +552,7 @@ feeder_matrix_setup(struct pcm_feeder *f, struct pcmchan_matrix *m_in,
 
 /*
  * feeder_matrix_default_id(): For a given number of channels, return
- *                             default prefered id (example: both 5.1 and
+ *                             default preferred id (example: both 5.1 and
  *                             6.0 are simply 6 channels, but 5.1 is more
  *                             preferable).
  */
@@ -699,7 +699,7 @@ feeder_matrix_compare(struct pcmchan_matrix *m_in, struct pcmchan_matrix *m_out)
 }
 
 /*
- * XXX 4front intepretation of "surround" is ambigous and sort of
+ * XXX 4front interpretation of "surround" is ambigous and sort of
  *     conflicting with "rear"/"back". Map it to "side". Well.. 
  *     who cares?
  */

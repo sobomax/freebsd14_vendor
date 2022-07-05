@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 6a0ccbc29df1f620eb1a6ec9ef83c9172d2e6082 $
+# $FreeBSD: a0db8d7ce8eb17eaf84bd1f11efe270b506a3212 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -31,7 +31,7 @@ inherit_001_pos_head()
 {
 	atf_set "descr" "Test properties are inherited correctly"
 	atf_set "timeout" 1800
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 inherit_001_pos_body()
 {

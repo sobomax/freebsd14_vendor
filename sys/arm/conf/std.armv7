@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv7 systems.
 #
-# $FreeBSD: b15f9f9a70fac2777919711184b37cfe5803cb29 $
+# $FreeBSD: dbe863d9da926afd4d3e8d102416c1d26d8bd90e $
 
 options 	HZ=1000
 options 	INTRNG			# All arm systems use INTRNG these days
@@ -71,3 +71,9 @@ options 	KDB_TRACE		# Print a stack trace for a panic.
 #options 	KTR_VERBOSE=0
 #options 	USB_REQ_DEBUG
 #options 	USB_VERBOSE
+
+# Enable support for the kernel PLL to use an external PPS signal,
+# under supervision of [x]ntpd(8)
+# More info in ntpd documentation: http://www.eecis.udel.edu/~ntp
+
+options 	PPS_SYNC

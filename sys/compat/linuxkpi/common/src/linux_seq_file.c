@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6f4f1a368c4a90d11fe6e731540b9753bc192b1e $");
+__FBSDID("$FreeBSD: ed23bf8d010f46395f9b10f7f7e89952c9a11b9a $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -147,9 +147,15 @@ seq_release(struct inode *inode __unused, struct linux_file *file)
 int
 single_release(struct vnode *v, struct linux_file *f)
 {
-	const struct seq_operations *op = ((struct seq_file *)f->private_data)->op;
+	const struct seq_operations *op;
+	struct seq_file *m;
 	int rc;
 
+	/* be NULL safe */
+	if ((m = f->private_data) == NULL)
+		return (0);
+
+	op = m->op;
 	rc = seq_release(v, f);
 	free(__DECONST(void *, op), M_LSEQ);
 	return (rc);

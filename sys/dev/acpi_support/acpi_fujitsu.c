@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ebfe00bdca91605a115e609ed896e03f774911fd $");
+__FBSDID("$FreeBSD: 8d0f2c5a8d2756b5ec430840b6039cfd0e777fd7 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -417,7 +417,7 @@ acpi_fujitsu_init(struct acpi_fujitsu_softc *sc)
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 		    sysctl_table[i].name,
 		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
-		    CTLFLAG_NEEDGIANT, sc, i, acpi_fujitsu_sysctl, "I",
+		    CTLFLAG_MPSAFE, sc, i, acpi_fujitsu_sysctl, "I",
 		    sysctl_table[i].description);
 	}
 

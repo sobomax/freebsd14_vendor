@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 061304471905b7db0ae23bf12b07f85c2c23f5db $");
+__FBSDID("$FreeBSD: ea44458885d2d7fdbf6262a22065f33e27c0e373 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -484,6 +484,13 @@ nvd_new_disk(struct nvme_namespace *ns, void *ctrlr_arg)
 	    NVME_MODEL_NUMBER_LENGTH);
 	strlcpy(disk->d_descr, descr, sizeof(descr));
 
+	/*
+	 * For devices that are reported as children of the AHCI controller,
+	 * which has no access to the config space for this controller, report
+	 * the AHCI controller's data.
+	 */
+	if (ctrlr->ctrlr->quirks & QUIRK_AHCI)
+		dev = device_get_parent(dev);
 	disk->d_hba_vendor = pci_get_vendor(dev);
 	disk->d_hba_device = pci_get_device(dev);
 	disk->d_hba_subvendor = pci_get_subvendor(dev);

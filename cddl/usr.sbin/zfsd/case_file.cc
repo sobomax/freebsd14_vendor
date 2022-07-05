@@ -74,7 +74,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD: da2125b4d716d2f75fe255553ff66325ad549380 $");
+__FBSDID("$FreeBSD: 8da711fc10cb74f4e2c7bf9f7c29c7dbf6cf5cf9 $");
 
 /*============================ Namespace Control =============================*/
 using std::hex;
@@ -280,9 +280,17 @@ CaseFile::ReEvaluate(const string &devPath, const string &physPath, Vdev *vdev)
 	   || vdev->PoolGUID() == Guid::InvalidGuid())
 	 && vdev->GUID() == m_vdevGUID) {
 
-		zpool_vdev_online(pool, vdev->GUIDString().c_str(),
-				  ZFS_ONLINE_CHECKREMOVE | ZFS_ONLINE_UNSPARE,
-				  &m_vdevState);
+		if (zpool_vdev_online(pool, vdev->GUIDString().c_str(),
+		    ZFS_ONLINE_CHECKREMOVE | ZFS_ONLINE_UNSPARE,
+		    &m_vdevState) != 0) {
+			syslog(LOG_ERR,
+			    "Failed to online vdev(%s/%s:%s): %s: %s\n",
+			    zpool_get_name(pool), vdev->GUIDString().c_str(),
+			    devPath.c_str(), libzfs_error_action(g_zfsHandle),
+			    libzfs_error_description(g_zfsHandle));
+			return (/*consumed*/false);
+		}
+
 		syslog(LOG_INFO, "Onlined vdev(%s/%s:%s).  State now %s.\n",
 		       zpool_get_name(pool), vdev->GUIDString().c_str(),
 		       devPath.c_str(),

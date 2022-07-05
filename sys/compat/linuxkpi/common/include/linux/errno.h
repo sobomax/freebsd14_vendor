@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e824480ab640a709deac624f2e4e68be6f7adc7c $
+ * $FreeBSD: f9c0ceeac5e2d4a39ac7b66c28a4d7453e6f4301 $
  */
-#ifndef	_LINUX_ERRNO_H_
-#define	_LINUX_ERRNO_H_
+#ifndef	_LINUXKPI_LINUX_ERRNO_H_
+#define	_LINUXKPI_LINUX_ERRNO_H_
 
 #include <sys/errno.h>
 
@@ -45,6 +45,10 @@
 #define	ENOTSUPP	EOPNOTSUPP
 #define	ENONET		EHOSTDOWN
 
+/*
+ * The error numbers below are arbitrary and do not resemble the numbers
+ * used in Linux.  They should not be returned to user space.
+ */
 #define	ERESTARTNOINTR	513
 #define	ERESTARTNOHAND	514
 #define	ERESTART_RESTARTBLOCK 516
@@ -58,5 +62,10 @@
 #define	EBADTYPE	527
 #define	EJUKEBOX	528
 #define	EIOCBQUEUED	529
+#define	ERFKILL		530
+#define	EBADE		531
+#define	ENOMEDIUM	532
+#define	ENOSR		533
+#define	ELNRNG		534
 
-#endif					/* _LINUX_ERRNO_H_ */
+#endif					/* _LINUXKPI_LINUX_ERRNO_H_ */

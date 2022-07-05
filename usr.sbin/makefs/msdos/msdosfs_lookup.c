@@ -1,4 +1,4 @@
-/* $FreeBSD: 27ce216a488f73ec060d37c945f59c3785c7f277 $ */
+/* $FreeBSD: dd6acb7ee37c996a2a45dc3c91e06b2cc6d0e6da $ */
 /*	$NetBSD: msdosfs_lookup.c,v 1.37 1997/11/17 15:36:54 ws Exp $	*/
 
 /*-
@@ -188,7 +188,7 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 			else
 				diroffset = 0;
 		}
-		return deget(pmp, dirclust, diroffset, depp);
+		return deget(pmp, dirclust, diroffset, 0, depp);
 	}
 
 	return 0;

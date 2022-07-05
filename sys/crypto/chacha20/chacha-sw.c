@@ -1,7 +1,7 @@
 /* This file is in the public domain. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c28b9a0c459f70849ceeb25e7533ac104cd6a35 $");
+__FBSDID("$FreeBSD: ef62e67316c028b9d071c75f2a2656c8ef748a0c $");
 
 #include <crypto/chacha20/chacha.h>
 #include <opencrypto/xform_enc.h>
@@ -18,9 +18,10 @@ chacha20_xform_setkey(void *ctx, const uint8_t *key, int len)
 }
 
 static void
-chacha20_xform_reinit(void *ctx, const uint8_t *iv)
+chacha20_xform_reinit(void *ctx, const uint8_t *iv, size_t ivlen)
 {
-
+	KASSERT(ivlen == CHACHA_NONCELEN + CHACHA_CTRLEN,
+	    ("%s: invalid IV length", __func__));
 	chacha_ivsetup(ctx, iv + 8, iv);
 }
 

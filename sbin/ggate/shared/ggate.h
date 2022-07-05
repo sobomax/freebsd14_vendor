@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e2e1a57d817ca1f7a1030e7400e09abb79ec49d2 $
+ * $FreeBSD: d399b247cd75c31760ed82ebb6bc6cc74c22bc48 $
  */
 
 #ifndef _GGATE_H_
@@ -57,6 +57,7 @@
 
 #define	GGATE_CMD_READ		0
 #define	GGATE_CMD_WRITE		1
+#define	GGATE_CMD_FLUSH		3
 
 extern int g_gate_devfd;
 extern int g_gate_verbose;

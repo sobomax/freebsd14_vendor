@@ -1,6 +1,8 @@
-# $FreeBSD: 2c5f460488db8a7336c75f81b0afde3483679619 $
+# $FreeBSD: 7e1d283dbf9114f8d120866fc954310efd496ed8 $
 
 import threading
+import logging
+logging.getLogger("scapy").setLevel(logging.CRITICAL)
 import scapy.all as sp
 
 class Sniffer(threading.Thread):

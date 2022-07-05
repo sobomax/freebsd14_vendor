@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 07144fa0adb3401052ec746331c87dd761f6e114 $
+ * $FreeBSD: 0e885440687cd795b182070c69c7c0f457128a00 $
  */
 #ifndef _NET80211_IEEE80211_NODE_H_
 #define _NET80211_IEEE80211_NODE_H_
@@ -259,6 +259,8 @@ struct ieee80211_node {
 
 	/* U-APSD */
 	uint8_t			ni_uapsd;	/* U-APSD per-node flags matching WMM STA QoS Info field */
+
+	void			*ni_drv_data;	/* driver specific */
 
 	uint64_t		ni_spare[3];
 };

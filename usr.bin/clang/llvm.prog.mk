@@ -1,4 +1,4 @@
-# $FreeBSD: 58fd3eedd113613595000636db4b8c3ab25afa89 $
+# $FreeBSD: 56698c4138d391925d7bab486c88692b36ca54a9 $
 
 .include "${SRCTOP}/lib/clang/llvm.pre.mk"
 
@@ -22,8 +22,10 @@ LDADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 
 PACKAGE=	clang
 
+.if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
 LIBADD+=	execinfo
 LIBADD+=	ncursesw
+.endif
 LIBADD+=	pthread
 
 .include <bsd.prog.mk>

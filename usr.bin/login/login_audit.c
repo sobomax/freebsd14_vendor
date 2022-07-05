@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a45adb7b9e7133a681adceb60a8cdf28170224f4 $");
+__FBSDID("$FreeBSD: 91aa4336c6594aca8f7a9e86ee0b40e348eaa399 $");
 
 #include <sys/types.h>
 
@@ -180,7 +180,7 @@ audit_logout(void)
 	int au_cond;
 
 	/* If we are not auditing, don't cut an audit record; just return. */
- 	if (auditon(A_GETCOND, &au_cond, sizeof(int)) < 0) {
+	if (auditon(A_GETCOND, &au_cond, sizeof(au_cond)) < 0) {
 		if (errno == ENOSYS)
 			return;
 		errx(1, "could not determine audit condition");

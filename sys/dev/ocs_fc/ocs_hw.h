@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 14fe4bbd3e8b162d8abe21c65629d57ca11ea8ab $
+ * $FreeBSD: 287e45acd539457f2f5407c9218b46bd44e6429e $
  */
 
 /**
@@ -1374,6 +1374,8 @@ extern ocs_hw_io_t * ocs_hw_io_lookup(ocs_hw_t *hw, uint32_t indicator);
 extern uint32_t ocs_hw_xri_move_to_port_owned(ocs_hw_t *hw, uint32_t num_xri);
 extern ocs_hw_rtn_e ocs_hw_xri_move_to_host_owned(ocs_hw_t *hw, uint8_t num_xri);
 extern int32_t ocs_hw_reque_xri(ocs_hw_t *hw, ocs_hw_io_t *io);
+ocs_hw_rtn_e ocs_hw_set_persistent_topology(ocs_hw_t *hw, uint32_t topology, uint32_t opts);
+extern uint32_t ocs_hw_get_config_persistent_topology(ocs_hw_t *hw);
 
 typedef struct {
 	/* structure elements used by HW */

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 736376c1386491c4c4cc1f9768549ac38f8880cb $
+ * $FreeBSD: 1488bd3a55da69b3ec5024f26a693e3944a334ca $
  */
 
 #ifndef _MACHINE_BUS_DMA_IMPL_H_

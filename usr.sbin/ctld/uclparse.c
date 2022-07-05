@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b73e6b48b2f6042899ff82e2ca28338b6f5d4295 $
+ * $FreeBSD: d02530d1b808f69ccc510ff8c9dba7024bf2e34f $
  */
 
 #include <sys/queue.h>
@@ -847,7 +847,7 @@ uclparse_target(const char *name, const ucl_object_t *top)
 					return (1);
 				}
 
-				return (0);
+				continue;
 			}
 
 			pp = pport_find(conf, value);

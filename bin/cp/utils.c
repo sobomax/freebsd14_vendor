@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)utils.c	8.3 (Berkeley) 4/1/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7742b0d0a516ae6a4368ea6c306a9143debfe894 $");
+__FBSDID("$FreeBSD: e7ae0c9dd7334a3f2a05eaa34bb24bfa21f05b09 $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
@@ -235,7 +235,7 @@ copy_file(const FTSENT *entp, int dne)
 			do {
 				if (use_copy_file_range) {
 					rcount = copy_file_range(from_fd, NULL,
-			    		    to_fd, NULL, SSIZE_MAX, 0);
+					    to_fd, NULL, SSIZE_MAX, 0);
 					if (rcount < 0 && errno == EINVAL) {
 						/* Prob a non-seekable FD */
 						use_copy_file_range = 0;

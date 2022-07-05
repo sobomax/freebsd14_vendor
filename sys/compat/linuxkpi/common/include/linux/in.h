@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 96d66fbae2f0d31157c4936c1ff30071bc218427 $
+ * $FreeBSD: ae2be5be1799381df7c68461b5cf9a886effa066 $
  */
-#ifndef	_LINUX_IN_H_
-#define	_LINUX_IN_H_
+#ifndef	_LINUXKPI_LINUX_IN_H_
+#define	_LINUXKPI_LINUX_IN_H_
 
 #include "opt_inet.h"
 
@@ -44,4 +44,4 @@
 #define	ipv4_is_multicast(be)	IN_MULTICAST(ntohl(be))
 #define	ipv4_is_lbcast(be)	((be) == INADDR_BROADCAST)
 
-#endif	/* _LINUX_IN_H_ */
+#endif	/* _LINUXKPI_LINUX_IN_H_ */

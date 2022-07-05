@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2017 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Landon Fuller under sponsorship from
  * the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aae25349e90edb0a93a09e2c2ede02c49d3b58c4 $
+ * $FreeBSD: 224ea67a0b767e90553b491b044c42982fe623ae $
  */
 
 #ifndef _BHND_BHND_PRIVATE_H_

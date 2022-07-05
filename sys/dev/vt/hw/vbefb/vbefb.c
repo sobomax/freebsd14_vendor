@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Aleksandr Rybalko under sponsorship from the
  * FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8789e3bddacf3ec87570c38db382397b4e894ae $");
+__FBSDID("$FreeBSD: 2e8fe8330e5676562c75b78139c8a1c0941e8b9a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,12 +49,14 @@ __FBSDID("$FreeBSD: c8789e3bddacf3ec87570c38db382397b4e894ae $");
 #include <dev/vt/colors/vt_termcolors.h>
 
 static vd_init_t vt_vbefb_init;
+static vd_fini_t vt_vbefb_fini;
 static vd_probe_t vt_vbefb_probe;
 
 static struct vt_driver vt_vbefb_driver = {
 	.vd_name = "vbefb",
 	.vd_probe = vt_vbefb_probe,
 	.vd_init = vt_vbefb_init,
+	.vd_fini = vt_vbefb_fini,
 	.vd_blank = vt_fb_blank,
 	.vd_bitblt_text = vt_fb_bitblt_text,
 	.vd_invalidate_text = vt_fb_invalidate_text,
@@ -150,4 +151,13 @@ vt_vbefb_init(struct vt_device *vd)
 	vt_fb_init(vd);
 
 	return (CN_INTERNAL);
+}
+
+static void
+vt_vbefb_fini(struct vt_device *vd, void *softc)
+{
+	struct fb_info	*info = softc;
+
+	vt_fb_fini(vd, softc);
+	pmap_unmapdev(info->fb_vbase, info->fb_size);
 }

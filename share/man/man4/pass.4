@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: e09b08e007c49565e63e3c9f32eed82ca1526cdd $
+.\" $FreeBSD: 4232190b0b27e0ecdc5edff99b2cfea961942e87 $
 .\"
 .Dd May 3, 2017
 .Dt PASS 4
@@ -141,7 +141,7 @@ All other errors will be reported as standard CAM CCB status errors.
 Since the CCB is not copied back to the user process from the pass driver
 in the
 .Dv CAMIOQUEUE
-ioctl, the user's passed-in CCB will not be modfied.
+ioctl, the user's passed-in CCB will not be modified.
 This is the case even with immediate CCBs.
 Instead, the completed CCB must be retrieved via the
 .Dv CAMIOGET

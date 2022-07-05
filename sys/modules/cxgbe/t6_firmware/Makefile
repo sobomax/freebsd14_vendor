@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 071db2bab2dc21f297601330a2b4d47bea8efc6b $
+# $FreeBSD: 3269432e8ac1df97256608a5bf06d471f04f8eac $
 #
 
 T6FW=	${SRCTOP}/sys/dev/cxgbe/firmware
@@ -17,7 +17,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T6FW_VER=	1.25.0.40
+T6FW_VER=	1.26.6.0
 FIRMWS+=	t6fw-${T6FW_VER}.bin:t6fw:${T6FW_VER}
 
 .include <bsd.kmod.mk>

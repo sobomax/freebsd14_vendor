@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 821b0faf68d0ff6517befc84124f9d856f62301d $
+ * $FreeBSD: c017b481c7fafe0bfdc797348b23fce9c9550a83 $
  */
 
 /*
@@ -1743,6 +1743,7 @@ lomac_priv_check(struct ucred *cred, int priv)
 	case PRIV_SCHED_SETPOLICY:
 	case PRIV_SCHED_SET:
 	case PRIV_SCHED_SETPARAM:
+	case PRIV_SCHED_IDPRIO:
 
 	/*
 	 * More IPC privileges.

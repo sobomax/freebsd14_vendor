@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4334a3ddf506c624e5a06463a518563bfe7cfaa6 $");
+__FBSDID("$FreeBSD: c7e086655f791e5ef006632c20b0cda945a3d039 $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -162,6 +162,9 @@ dump_openstate(void)
 				printf("%-45s ", " ");
 			break;
 #endif
+		default:
+			printf("%-45s ", " ");
+			break;
 		}
 		for (i = 0; i < dp[cnt].ndcl_clid.nclid_idlen; i++)
 			printf("%02x", dp[cnt].ndcl_clid.nclid_id[i]);

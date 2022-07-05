@@ -31,7 +31,7 @@
 .\"
 .\" Author: Jim Harris <jimharris@FreeBSD.org>
 .\"
-.\" $FreeBSD: db31b6f26b3e374b80590a6b718c7d72648fa3b3 $
+.\" $FreeBSD: eb9f9b222f51c64bc40d00454cbd2bb82e83e183 $
 .\"
 .Dd June 6, 2020
 .Dt NVME 4
@@ -170,6 +170,14 @@ value in
 .Xr loader.conf 5 :
 .Bd -literal -offset indent
 hw.nvme.verbose_cmd_dump=1
+.Ed
+.Pp
+Prior versions of the driver reset the card twice on boot.
+This proved to be unnecessary and inefficient, so the driver now resets drive
+controller only once.
+The old behavior may be restored in the kernel config file with
+.Bd -literal -offset indent
+.Cd options NVME_2X_RESET
 .Ed
 .Pp
 .Sh SYSCTL VARIABLES

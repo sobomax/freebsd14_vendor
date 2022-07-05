@@ -1,4 +1,4 @@
-# $FreeBSD: 7e934ccc59842d12520b5f3eab6a0d33c1e8a10c $
+# $FreeBSD: f1b87ac20faeb113288d4c2d0685d96c699b1e35 $
 
 PACKAGE=	ipf
 PROG=		ipf
@@ -13,7 +13,6 @@ CLEANFILES+=	${GENHDRS} ipf_y.c ipf_l.c
 ipf_y.c: ipf_y.y
 	${YACC} -d ${.ALLSRC}
 	sed -e 's/yy/ipf_yy/g' \
-	    -e 's/"ipf_y.y"/"..\/tools\/ipf_y.y"/' \
 	    y.tab.c > ${.TARGET}
 	sed -e 's/yy/ipf_yy/g' \
 	    y.tab.h > ${.TARGET:.c=.h}

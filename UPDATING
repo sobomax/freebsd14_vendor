@@ -9,99 +9,128 @@ handbook:
     https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/makeworld.html
 
 Items affecting the ports and packages system can be found in
-/usr/ports/UPDATING.  Please read that file before running portupgrade.
+/usr/ports/UPDATING.  Please read that file before updating system packages
+and/or ports.
 
-20210824:
-	13.0-RELEASE-p4	FreeBSD-EN-21:23.virtio_blk
-			FreeBSD-EN-21:24.libcrypto
-			FreeBSD-EN-21:25.bhyve
-			FreeBSD-SA-21:13.bhyve
-			FreeBSD-SA-21:14.ggatec
-			FreeBSD-SA-21:15.libfetch
-			FreeBSD-SA-21:16.openssl
+20220516:
+	13.1-RELEASE.
 
-	Fix virtio_blk(4) failing to attach on some hypervisors. [EN-21:23.virtio_blk]
+20220123:
+	For 64-bit architectures the base system is now built with Position
+	Independent Executable (PIE) support enabled by default.  It may be
+	disabled using the WITHOUT_PIE knob.  A clean build is required.
 
-	Fix OpenSSL 1.1.1e API functions not being exported. [EN-21:24.libcrypto]
+20220114:
+	The macros provided for the manipulation of CPU sets (e.g. CPU_AND)
+	have been modified to take 2 source arguments instead of only 1.
+	Externally maintained sources that use these macros will have to
+	be adapted. The FreeBSD version has been bumped to 1300524 to
+	reflect this change.
 
-	Fix NVMe iovec construction for large IOs. [EN-21:25.bhyve]
+20211218:
+	Commit 18f5b477ee66 adds two arguments to VOP_ALLOCATE().
+	Normally changes to VOP calls are not MFC'd, but a
+	discussion on freebsd-current@ seemed to agree that
+	it was acceptable in this case, to fix the NFSv4.2 server.
+	Any out of source tree file system with a custom
+	VOP_ALLOCATE() call will need to be modified.
+	Bump __FreeBSD_version to 1300523 since the NFS modules need
+	to be rebuilt from sources.
 
-	Fix missing error handling in bhyve(8) device models. [SA-21:13.bhyve]
+20211124:
+	Commit 6e8e261f0d4e changed the internal KAPI between the NFS
+	modules.  As such, all the modules must be rebuilt from sources.
+	__FreeBSD_version has been bumped to 1300522.
 
-	Fix remote code execution in ggatec(8). [SA-21:14.ggatec]
+20211119:
+	Bump __FreeBSD_version to 1300521 after merging LinuxKPI and
+	net80211 changes in order to support building various wireless
+	drivers.  This is to help other external consumers of LinuxKPI
+	and net80211 to deal accordingly.
 
-	Fix libfetch out of bounds read. [SA-21:15.libfetch]
+20211003:
+	Commit a599f9f7620b deleted the variable called nfs_maxcopyrange
+	from nfscommon.ko, since it no longer needs to be global.  As such,
+	the other nfs modules must be rebuilt from up to date sources.
+	Bump __FreeBSD_version to 1300516 for this.
 
-	Fix multiple OpenSSL vulnerabilities. [SA-21:16.openssl]
+20210823:
+	As of commit 622809b0868f OpenSSL no longer enables kernel TLS
+	by default.  Users can enable kernel TLS via the "KTLS" SSL
+	option.  This can be enabled globally by using a custom
+	OpenSSL config file via OPENSSL_CONF or via an
+	application-specific configuration option for applications
+	which permit setting SSL options via SSL_CONF_cmd(3).
 
-20210629:
-	13.0-RELEASE-p3	FreeBSD-EN-21:18.libc++
-			FreeBSD-EN-21:19.libcasper
-			FreeBSD-EN-21:20.vlan
-			FreeBSD-EN-21:21.ipfw
-			FreeBSD-EN-21:22.linux_futex
+20210803:
+	Commits 9fb6e613373c and 9ec7dbf46b0a both changed the internal
+	KAPI between the NFS modules.  Bump __FreeBSD_version to 1300514.
+	All NFS modules must be rebuilt from sources.
 
-	Missing C++20 headers in libc++ [EN-21:18.libc++]
+20210730:
+	Commit b69019c14cd8 removes pf's DIOCGETSTATESNV ioctl.
+	As of be70c7a50d32 it is no longer used by userspace, but it does mean
+	users may not be able to enumerate pf states if they update the kernel
+	past c021ff986e2b without first updating userspace past be70c7a50d32.
 
-	libcasper assertion failure [EN-21:19.libcasper]
+20210718:
+	Bump __FreeBSD_version to 1300512 after merging LinuxKPI, OFED,
+	net80211, and driver changes in order to support building
+	Intel wireless iwlwifi drivers.  This is especially needed for
+	drm-kmod which needs updates after this.
 
-	Missing backwards compatibility in vlan(4) [EN-21:20.vlan]
+20210715:
+	The 20210707 awk update brought in a change in behavior. This has
+	been corrected as of d4d252c49976. Between these dates, if you
+	installed a new awk binary, you may not be able to build a new
+	kernel because the change in behavior affected the genoffset
+	script used to build the kernel. If you did update, the fix is
+	to update your sources past the above hash and do
+		% cd usr.bin/awk
+		% make clean all
+		% sudo -E make install
+	to enable building kernels again.
 
-	Kernel panic with ipfw link-layer filtering enabled [EN-21:21.ipfw]
+20210711:
+	Commit 8a04edfdcbd2 changes the default minor version
+	used for NFSv4 mounts to the highest minor version supported
+	by the NFSv4 server.  This default can be overridden by using
+	the "minorversion" mount option.
+	The consensus of a discussion on freebsd-current@ indicated
+	that this would be acceptable to do and would not be considered
+	a POLA violation.
 
-	Linux compatibility layer futex(2) system call vulnerability [EN-21:22.linux_futex]
+20210710:
+	awk has been updated to the latest one-true-awk version 20210215.
+	This contains a number of minor bug fixes.
 
-20210601:
-	13.0-RELEASE-p2 FreeBSD-EN-21:17.libradius
+20210630:
+        Commit ca179c4d74f2/632e3f2f3a66 changed the package in which
+	the OpenSSL libraries and utilities are packaged.
+        It is recommended for pkgbase user to do:
+        pkg install -f FreeBSD-openssl
+        before pkg upgrade otherwise some dependencies might not be met
+        and pkg will stop working as libssl will not be present anymore
+        on the system.
 
-	Incorrect validation in rad_get_attr(3) [FreeBSD-EN-21:17.libradius]
+20210626:
+	Commit 841006678745 changed the internal KAPI between the krpc
+	and nfsd modules.  As such, they must both be rebuilt from
+	sources.
+	__FreeBSD_version is bumped to 1300510.
 
-20210526:
-	13.0-RELEASE-p1	FreeBSD-EN-21:12.divert
-			FreeBSD-EN-21:13.mpt
-			FreeBSD-EN-21:14.pms
-			FreeBSD-EN-21:15.virtio
-			FreeBSD-EN-21:16.bc
-			FreeBSD-SA-21:11.smap
-			FreeBSD-SA-21:12.libradius
+20210510:
+	Commit 272f39942254 changed the internal KAPI between the
+	nscl.ko and nfscommon.ko modules, so they both need to be
+	rebuilt from sources.
 
-	Kernel double free when transmitting on a divert socket [FreeBSD-EN-21:12.divert]
-
-	mpt(4) I/O errors with a large maxphys value [FreeBSD-EN-21:13.mpt]
-
-	pms(4) data corruption [FreeBSD-EN-21:14.pms]
-
-	virtio(4) device probing fails [FreeBSD-EN-21:15.virtio]
-
-	dc update [FreeBSD-EN-21:16.bc]
-
-	SMAP bypass [FreeBSD-SA-21:11.smap]
-
-	Missing message validation in libradius(3) [FreeBSD-SA-21:12.libradius]
-
-20210413:
-	13.0-RELEASE.
-
-20210406:
-	13.0-RC5-p1	FreeBSD-SA-21:08.vm
-			FreeBSD-SA-21:10.jail_mount
-
-	Memory disclosure by stale virtual memory mapping [SA-21:08.vm]
-
-	Jail escape possible by mounting over jail root [SA-21:10.jail_mount]
-
-20210325:
-	13.0-RC3-p1	FreeBSD-SA-21:07.openssl
-
-	Fix multiple OpenSSL issues [SA-21:07.openssl]
-
-20210223:
-	13.0-BETA3-p1	FreeBSD-SA-21:03.pam_login_access
-			FreeBSD-SA-21:06.xen
-
-	login.access fails to apply rules [SA-21:03.pam_login_access]
-
-	Xen grant mapping error handling issues [SA-21:06.xen]
+20210429:
+	Commit 5a45802b3c8c changed the internal KAPI between
+	the krpc and NFS.  As such, the krpc, nfscommon and
+	nfscl modules must all be rebuilt from sources.
+	Without this patch, NFSv4.1/4.2 mounts should not
+	be done with the nfscbd(8) daemon running, to avoid
+	needing a working back channel for server->client RPCs.
 
 20210202:
 	Various LinuxKPI functionality was added which conflicts with DRM.
@@ -2521,4 +2550,4 @@ POSSIBILITY OF SUCH DAMAGE.
 Contact Warner Losh if you have any questions about your use of
 this document.
 
-$FreeBSD: 804f8d7af2631637eafea0f1bf1b71f8552603b9 $
+$FreeBSD: cf87aedb8121d08759bc73a7fc56dd29c65479f7 $

@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 154d1c2928b9102a4b5f6fa491e452e2c8c0e02c $
+ * $FreeBSD: 4eaf9ddbe680ca699a8555aceaeeca8858e6387a $
  */
 
 #ifndef ARCHIVE_PRIVATE_H_INCLUDED
@@ -44,6 +44,13 @@
 #define	__LA_DEAD	__attribute__((__noreturn__))
 #else
 #define	__LA_DEAD
+#endif
+
+#if defined(__GNUC__) && (__GNUC__ > 2 || \
+			  (__GNUC__ == 2 && __GNUC_MINOR__ >= 7))
+#define	__LA_UNUSED	__attribute__((__unused__))
+#else
+#define	__LA_UNUSED
 #endif
 
 #define	ARCHIVE_WRITE_MAGIC	(0xb0c5c0deU)
@@ -100,13 +107,10 @@ struct archive {
 	 * Some public API functions depend on the "real" type of the
 	 * archive object.
 	 */
-	struct archive_vtable *vtable;
+	const struct archive_vtable *vtable;
 
 	int		  archive_format;
 	const char	 *archive_format_name;
-
-	int	  compression_code;	/* Currently active compression. */
-	const char *compression_name;
 
 	/* Number of file entries processed. */
 	int		  file_count;

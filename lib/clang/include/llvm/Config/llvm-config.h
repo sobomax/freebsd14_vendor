@@ -1,4 +1,4 @@
-/* $FreeBSD: a80b21672e86c4fe08151da59675becb38ef987b $ */
+/* $FreeBSD: 7932c7d9435a4f469179bb1da2d5590aeeefeeb9 $ */
 /*===------- llvm/Config/llvm-config.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /* Part of the LLVM Project, under the Apache License v2.0 with LLVM          */
@@ -64,16 +64,16 @@
 #define LLVM_USE_PERF 0
 
 /* Major version of the LLVM API */
-#define LLVM_VERSION_MAJOR 11
+#define LLVM_VERSION_MAJOR 13
 
 /* Minor version of the LLVM API */
 #define LLVM_VERSION_MINOR 0
 
 /* Patch version of the LLVM API */
-#define LLVM_VERSION_PATCH 1
+#define LLVM_VERSION_PATCH 0
 
 /* LLVM version string */
-#define LLVM_VERSION_STRING "11.0.1"
+#define LLVM_VERSION_STRING "13.0.0"
 
 /* Whether LLVM records statistics for use with GetStatistics(),
  * PrintStatistics() or PrintStatisticsJSON()
@@ -85,5 +85,27 @@
 
 /* Define if LLVM was built with a dependency to the libtensorflow dynamic library */
 /* #undef LLVM_HAVE_TF_API */
+
+/* Define if LLVM was built with a dependency to the tensorflow compiler */
+/* #undef LLVM_HAVE_TF_AOT */
+
+/* Define to 1 if you have the <sysexits.h> header file. */
+#define HAVE_SYSEXITS_H 1
+
+/* Define to 1 to enable the experimental new pass manager by default */
+#define LLVM_ENABLE_NEW_PASS_MANAGER 1
+
+/* Define if the xar_open() function is supported on this platform. */
+#if defined(__APPLE__)
+#define LLVM_HAVE_LIBXAR 1
+#endif
+
+/* Whether Timers signpost passes in Xcode Instruments */
+#if defined(__APPLE__)
+#define LLVM_SUPPORT_XCODE_SIGNPOSTS 1
+#else
+#define LLVM_SUPPORT_XCODE_SIGNPOSTS 0
+#endif
+
 
 #endif

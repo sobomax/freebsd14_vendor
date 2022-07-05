@@ -1,5 +1,5 @@
-.\" $FreeBSD: e8dd49519ee1c9b570e7ba9cec04e9c3a16fb00a $
-Set to build some programs without Kerberos support, like
+.\" $FreeBSD: 1a50b28678bc362f51bc293b96a801108758d0d5 $
+Build some programs without Kerberos support, like
 .Xr ssh 1 ,
 .Xr telnet 1 ,
 .Xr sshd 8 ,

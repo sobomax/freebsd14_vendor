@@ -35,7 +35,7 @@ static char *sccsid2 = "@(#)auth_none.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)auth_none.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 236b4aa166aecd4b5961ee03ba45ce7c784f9930 $");
+__FBSDID("$FreeBSD: 91597114c069e8b250c54c98ea64ead97cc58dfb $");
 
 /*
  * auth_none.c
@@ -70,7 +70,7 @@ static bool_t authnone_validate (AUTH *, uint32_t, struct opaque_auth *,
 static bool_t authnone_refresh (AUTH *, void *);
 static void authnone_destroy (AUTH *);
 
-static struct auth_ops authnone_ops = {
+static const struct auth_ops authnone_ops = {
 	.ah_nextverf =		authnone_verf,
 	.ah_marshal =		authnone_marshal,
 	.ah_validate =		authnone_validate,

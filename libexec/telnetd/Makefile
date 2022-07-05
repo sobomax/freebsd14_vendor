@@ -1,9 +1,11 @@
-# $FreeBSD: 24119797ec8be64d64b1c792db87c40531eadbc5 $
+# $FreeBSD: 15dc0af01f0bb3d89deea85460aa66da52c6491f $
 
 # Do not define -DKLUDGELINEMODE, as it does not interact well with many
 # telnet implementations.
 
 .include <src.opts.mk>
+
+PACKAGE=	telnet
 
 TELNETDIR=	${SRCTOP}/contrib/telnet
 .PATH:		${TELNETDIR}/telnetd

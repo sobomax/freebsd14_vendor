@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aafc07c2b203a67759a97dac0f424ac5bc6ae8d5 $");
+__FBSDID("$FreeBSD: 067ab22cd84d92684b7790303777daf0cd5edb8a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -533,14 +533,14 @@ drop:
 
 static int
 me_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
-   struct route *ro __unused)
+   struct route *ro)
 {
 	uint32_t af;
 
 	if (dst->sa_family == AF_UNSPEC)
 		bcopy(dst->sa_data, &af, sizeof(af));
 	else
-		af = dst->sa_family;
+		af = RO_GET_FAMILY(ro, dst);
 	m->m_pkthdr.csum_data = af;
 	return (ifp->if_transmit(ifp, m));
 }

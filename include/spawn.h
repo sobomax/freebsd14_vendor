@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 79753bba0510e408d5670082cbeeb34d67fea710 $
+ * $FreeBSD: 53373a6c8db829f96c4a0c48a41fec9f9b9d12f6 $
  */
 
 #ifndef _SPAWN_H_
@@ -86,6 +86,15 @@ int posix_spawn_file_actions_addopen(posix_spawn_file_actions_t * __restrict,
     int, const char * __restrict, int, mode_t);
 int posix_spawn_file_actions_adddup2(posix_spawn_file_actions_t *, int, int);
 int posix_spawn_file_actions_addclose(posix_spawn_file_actions_t *, int);
+
+#if __BSD_VISIBLE
+int posix_spawn_file_actions_addchdir_np(posix_spawn_file_actions_t *
+    __restrict, const char * __restrict);
+int posix_spawn_file_actions_addfchdir_np(posix_spawn_file_actions_t *,
+    int);
+int posix_spawn_file_actions_addclosefrom_np(posix_spawn_file_actions_t *,
+    int);
+#endif
 
 /*
  * Spawn attributes

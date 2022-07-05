@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20f3100852e7961b41ca820207bd2d035266ae56 $");
+__FBSDID("$FreeBSD: 1d1dd075580e643354998f8875b8f2a55289f533 $");
 
 #include <sys/param.h>
 #include <sys/reboot.h>
@@ -40,22 +40,19 @@ __FBSDID("$FreeBSD: 20f3100852e7961b41ca820207bd2d035266ae56 $");
 #include "stand.h"
 
 int
-nodev()
+nodev(void)
 {
 	return (ENXIO);
 }
 
 void
-nullsys()
+nullsys(void)
 {
 }
 
 /* ARGSUSED */
 int
-noioctl(f, cmd, data)
-	struct open_file *f;
-	u_long cmd;
-	void *data;
+noioctl(struct open_file *f __unused, u_long cmd __unused, void *data __unused)
 {
 	return (EINVAL);
 }

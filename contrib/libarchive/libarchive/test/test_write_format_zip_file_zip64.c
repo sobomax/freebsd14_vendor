@@ -29,7 +29,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 4e6344fb53335a389caa4d699b3058343385b6a8 $");
+__FBSDID("$FreeBSD: 71da98668d8db36d9b7a57f207201874c348501d $");
 
 /*
  * Detailed byte-for-byte verification of the format of a zip archive

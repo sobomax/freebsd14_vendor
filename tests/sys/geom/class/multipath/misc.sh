@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 583434e1cfa5ad8e72db3e5f0dbc11b420bdd8c7 $
+# $FreeBSD: 4da8462588ca211b5dfe12a093f71aadd6b38dfc $
 
 . $(atf_get_srcdir)/conf.sh
 
@@ -198,7 +198,7 @@ fail_on_error_cleanup()
 atf_test_case physpath cleanup
 physpath_head()
 {
-	atf_set "descr" "gmultipath should pass through the underlying providers' physical path"
+	atf_set "descr" "gmultipath should append /mp to the underlying providers' physical path"
 	atf_set "require.user" "root"
 }
 physpath_body()
@@ -217,7 +217,7 @@ physpath_body()
 	atf_check gnop create -z $physpath /dev/${md1}
 	atf_check -s exit:0 gmultipath create "$name" ${md0}.nop ${md1}.nop
 	gmultipath_physpath=$(diskinfo -p multipath/"$name") 
-	atf_check_equal "$physpath" "$gmultipath_physpath"
+	atf_check_equal "$physpath/mp" "$gmultipath_physpath"
 }
 physpath_cleanup()
 {

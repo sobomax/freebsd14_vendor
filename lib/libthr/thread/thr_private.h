@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a1258940a8960f275b50eef4a10dfe440c205c9d $
+ * $FreeBSD: a5bbc5997d3006956f952378a8ea877a3b9fe77f $
  */
 
 #ifndef _THR_PRIVATE_H
@@ -577,6 +577,10 @@ struct pthread {
 
 	/* pthread_set/get_name_np */
 	char			*name;
+
+	/* rtld thread-local dlerror message and seen control */
+	char			dlerror_msg[512];
+	int			dlerror_seen;
 };
 
 #define THR_SHOULD_GC(thrd) 						\

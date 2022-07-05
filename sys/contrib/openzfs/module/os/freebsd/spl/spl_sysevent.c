@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8c0e495681e9f216727661bbfe729df0c4813399 $");
+__FBSDID("$FreeBSD: 16188c71b53d5693927ff836a4ad7cb3d19a443d $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -245,12 +245,22 @@ sysevent_worker(void *arg __unused)
 			if (error == ESHUTDOWN)
 				break;
 		} else {
-			VERIFY(event != NULL);
+			VERIFY3P(event, !=, NULL);
 			log_sysevent(event);
 			nvlist_free(event);
 		}
 	}
-	zfs_zevent_destroy(ze);
+
+	/*
+	 * We avoid zfs_zevent_destroy() here because we're otherwise racing
+	 * against fm_fini() destroying the zevent_lock.  zfs_zevent_destroy()
+	 * will currently only clear `ze->ze_zevent` from an event list then
+	 * free `ze`, so just inline the free() here -- events have already
+	 * been drained.
+	 */
+	VERIFY3P(ze->ze_zevent, ==, NULL);
+	kmem_free(ze, sizeof (zfs_zevent_t));
+
 	kthread_exit();
 }
 

@@ -1,7 +1,8 @@
-# $FreeBSD: 9f7386bdc36c0b27a8fa7f74ca9154373a3152d8 $
+# $FreeBSD: c98643b50dcbbb0d9db132124b268796f80087bb $
 
 .include <src.opts.mk>
 
+PACKAGE=	iscsi
 PROG=		ctladm
 SRCS=		ctladm.c util.c ctl_util.c ctl_scsi_all.c
 .PATH:		${SRCTOP}/sys/cam/ctl

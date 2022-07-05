@@ -1,5 +1,6 @@
 /*-
  * Copyright (c) 2015-2017 Ruslan Bukin <br@bsdpad.com>
+ * Copyright (c) 2021 Alex Richardson <arichardson@FreeBSD.org>
  * All rights reserved.
  *
  * Portions of this software were developed by SRI International and the
@@ -9,6 +10,9 @@
  * Portions of this software were developed by the University of Cambridge
  * Computer Laboratory as part of the CTSRD Project, with support from the
  * UK Higher Education Innovation Fund (HEIF).
+ *
+ * This work was supported by Innovate UK project 105694, "Digital Security
+ * by Design (DSbD) Technology Platform Prototype".
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,11 +37,14 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 44249252e9c115cd208eb5d251ad3db79cc9d3c5 $");
+__FBSDID("$FreeBSD: 036d50eddf90212637d8b58fe76ace7f7d51b846 $");
 
-#ifdef __riscv_float_abi_double
 ENTRY(fabs)
+#ifdef __riscv_float_abi_double
 	fabs.d	fa0, fa0
+#else
+	slli	a0, a0, 1
+	srli	a0, a0, 1
+#endif
 	ret
 END(fabs)
-#endif

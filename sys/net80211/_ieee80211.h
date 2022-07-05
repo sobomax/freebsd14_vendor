@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 928d7b0fd95737fe683e4c78e7ad72632f148574 $
+ * $FreeBSD: 3444dfe0a7fa283f9175a43d40f894486920215b $
  */
 #ifndef _NET80211__IEEE80211_H_
 #define _NET80211__IEEE80211_H_
@@ -580,6 +580,7 @@ struct ieee80211_mimo_info {
 #define	IEEE80211_RX_FW_20MHZ		1
 #define	IEEE80211_RX_FW_40MHZ		2
 #define	IEEE80211_RX_FW_80MHZ		3
+#define	IEEE80211_RX_FW_160MHZ		4
 
 /* PHY type */
 #define	IEEE80211_RX_FP_11B		1
@@ -601,8 +602,8 @@ struct ieee80211_rx_stats {
 	int16_t c_rssi_ext[IEEE80211_MAX_CHAINS];	/* per-chain RSSI */
 
 	/* 32 bits */
-	uint8_t c_nf;			/* global NF */
-	uint8_t c_rssi;			/* global RSSI */
+	int8_t c_nf;			/* global NF */
+	int8_t c_rssi;			/* global RSSI */
 	uint8_t c_chain;		/* number of RX chains involved */
 	uint8_t c_rate;			/* legacy; 11n rate code; VHT MCS */
 
@@ -610,6 +611,9 @@ struct ieee80211_rx_stats {
 	uint16_t c_freq;		/* Frequency, MHz */
 	uint8_t c_ieee;			/* Channel */
 	uint8_t c_width;		/* channel width, FW flags above */
+
+	/* 32 bits */
+	uint32_t c_band;		/* Band; XXX we do not have a real band. */
 
 	/* Force alignment to DWORD */
 	union {
@@ -619,7 +623,7 @@ struct ieee80211_rx_stats {
 	} evm;
 
 	/* 32 bits */
-	uint8_t c_phytype;		/* PHY type, FP flags above */
+	uint8_t c_phytype;		/* PHY type, FW flags above */
 	uint8_t c_vhtnss;		/* VHT - number of spatial streams */
 	uint8_t c_pad2[2];
 };

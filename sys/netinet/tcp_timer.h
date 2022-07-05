@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 6f0c3a46605a5d40ec919f9f7320165f4b007e78 $
+ * $FreeBSD: 316b76e50f7eff31818acf9a02a313145963cabb $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -115,8 +115,6 @@
 
 #define TCPTV_TWTRUNC	8			/* RTO factor to truncate TW */
 
-#define	TCP_LINGERTIME	120			/* linger at most 2 minutes */
-
 #define	TCP_MAXRXTSHIFT	12			/* maximum retransmits */
 
 #define	TCPTV_DELACK	( hz/25 )		/* 40ms timeout */
@@ -197,7 +195,6 @@ extern int tcp_maxpersistidle;
 extern int tcp_rexmit_initial;
 extern int tcp_rexmit_min;
 extern int tcp_rexmit_slop;
-extern int tcp_msl;
 extern int tcp_ttl;			/* time to live for TCP segs */
 extern int tcp_backoff[];
 extern int tcp_totbackoff;
@@ -214,6 +211,8 @@ VNET_DECLARE(int, tcp_pmtud_blackhole_mss);
 #define	V_tcp_pmtud_blackhole_mss	VNET(tcp_pmtud_blackhole_mss)
 VNET_DECLARE(int, tcp_v6pmtud_blackhole_mss);
 #define V_tcp_v6pmtud_blackhole_mss	VNET(tcp_v6pmtud_blackhole_mss)
+VNET_DECLARE(int, tcp_msl);
+#define V_tcp_msl			VNET(tcp_msl)
 
 void tcp_inpinfo_lock_del(struct inpcb *inp, struct tcpcb *tp);
 

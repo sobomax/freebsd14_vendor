@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 33f8de4721a44165be5ba1075c3444ecd53f2668 $
+ * $FreeBSD: a080895bed980bff006dfd44b2adda0a17921d4c $
  */
 
-#ifndef	_LINUX_SWAP_H_
-#define	_LINUX_SWAP_H_
+#ifndef	_LINUXKPI_LINUX_SWAP_H_
+#define	_LINUXKPI_LINUX_SWAP_H_
 
 #include <vm/swap_pager.h>
 #include <vm/vm_pageout.h>

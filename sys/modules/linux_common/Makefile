@@ -1,4 +1,4 @@
-# $FreeBSD: c7d139e2fb9a080ca9f70fa75b9ce0a3c9d0a48a $
+# $FreeBSD: 1815714e9202116c64af851b5c9b6b9a078252f8 $
 
 .PATH: ${SRCTOP}/sys/compat/linux
 
@@ -9,13 +9,14 @@ SRCS=	linux_common.c linux_mib.c linux_mmap.c linux_util.c linux_emul.c \
 
 EXPORT_SYMS=
 EXPORT_SYMS+=	linux_emul_path
-EXPORT_SYMS+=	linux_ioctl_register_handler
-EXPORT_SYMS+=	linux_ioctl_unregister_handler
 EXPORT_SYMS+=	linux_get_osname
 EXPORT_SYMS+=	linux_get_osrelease
+EXPORT_SYMS+=	linux_use_real_ifname
 
 .if !defined(KERNBUILDDIR)
 .warning Building Linuxulator outside of a kernel does not make sense
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f0d43aa58ef88ed2a84bea6a8705e06a2811d6c8 $
+ * $FreeBSD: fb7637a39c60966a89bce685ec4c1573065280af $
  */
 
 #ifndef _DEV_HWPMC_ARMV8_H_
@@ -40,7 +40,6 @@
 
 #define	ARMV8_RELOAD_COUNT_TO_PERFCTR_VALUE(R)	(-(R))
 #define	ARMV8_PERFCTR_VALUE_TO_RELOAD_COUNT(P)	(-(P))
-#define	EVENT_ID_MASK	0xFF
 
 #ifdef _KERNEL
 /* MD extension for 'struct pmc' */

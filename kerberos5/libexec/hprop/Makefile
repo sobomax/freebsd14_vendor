@@ -1,4 +1,6 @@
-# $FreeBSD: 1c5d4b20e1bf0e439e43ac0fbf9878243be87e82 $
+# $FreeBSD: 0a8c46e15a44b023b548ff4c5bb93a13ae634e92 $
+
+PACKAGE=	kerberos
 
 PROG=	hprop
 MAN=	hprop.8

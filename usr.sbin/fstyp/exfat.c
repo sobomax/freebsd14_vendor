@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f10cb6a9e5ac849497256ae83a61d727581f913 $");
+__FBSDID("$FreeBSD: d92d9c8284274ab2f9a741b62473b82e4e2a3904 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -365,6 +365,11 @@ fstyp_exfat(FILE *fp, char *label, size_t size)
 #ifdef WITH_ICONV
 	if (show_label)
 		exfat_find_label(fp, ev, bytespersec, label, size);
+#else
+	if (show_label) {
+		warnx("label not available without iconv support");
+		memset(label, 0, size);
+	}
 #endif
 
 out:

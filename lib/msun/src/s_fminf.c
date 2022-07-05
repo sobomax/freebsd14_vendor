@@ -27,12 +27,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 258316725ddd656a4245d43a59a4b918f7b86584 $");
+__FBSDID("$FreeBSD: 58b6a489b82049f41c6986c8acd3a1906c06f983 $");
 
 #include <math.h>
 
 #include "fpmath.h"
 
+#ifdef USE_BUILTIN_FMINF
+float
+fminf(float x, float y)
+{
+	return (__builtin_fminf(x, y));
+}
+#else
 float
 fminf(float x, float y)
 {
@@ -53,3 +60,4 @@ fminf(float x, float y)
 
 	return (x < y ? x : y);
 }
+#endif

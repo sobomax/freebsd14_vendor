@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b540de973de5eb6bf5b22931eb4f5e954e9b570 $");
+__FBSDID("$FreeBSD: d62ed60285698a35eecc25779499475597663675 $");
 
 #include <sys/param.h>
 #include <sys/elf.h>
@@ -232,6 +232,18 @@ procstat_auxv(struct procstat *procstat, struct kinfo_proc *kipp)
 		case AT_PS_STRINGS:
 			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_PS_STRINGS/%p}\n",
 			    prefix, "AT_PS_STRINGS", auxv[i].a_un.a_ptr);
+			break;
+#endif
+#ifdef AT_FXRNG
+		case AT_FXRNG:
+			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_FXRNG/%p}\n",
+			    prefix, "AT_FXRNG", auxv[i].a_un.a_ptr);
+			break;
+#endif
+#ifdef AT_KPRELOAD
+		case AT_KPRELOAD:
+			xo_emit("{dw:/%s}{Lw:/%-16s/%s}{:AT_KPRELOAD/%p}\n",
+			    prefix, "AT_KPRELOAD", auxv[i].a_un.a_ptr);
 			break;
 #endif
 		default:

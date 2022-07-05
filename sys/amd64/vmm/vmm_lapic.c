@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89a1ebc8eff9fbb430f7833e3e33c611d9097a8a $
+ * $FreeBSD: 8191da758100d840cb8a0d7a0615be22e065c614 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89a1ebc8eff9fbb430f7833e3e33c611d9097a8a $");
+__FBSDID("$FreeBSD: 8191da758100d840cb8a0d7a0615be22e065c614 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,9 +87,7 @@ lapic_set_local_intr(struct vm *vm, int cpu, int vector)
 	else
 		CPU_SETOF(cpu, &dmask);
 	error = 0;
-	while ((cpu = CPU_FFS(&dmask)) != 0) {
-		cpu--;
-		CPU_CLR(cpu, &dmask);
+	CPU_FOREACH_ISSET(cpu, &dmask) {
 		vlapic = vm_lapic(vm, cpu);
 		error = vlapic_trigger_lvt(vlapic, vector);
 		if (error)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bff74764922dc0790b8105c86bb1ed0cd0f3b0d $");
+__FBSDID("$FreeBSD: f3c84cf313684556b201d6029a159c1d4c688c1a $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -264,6 +264,8 @@ __elfN(obj_loadimage)(struct preloaded_file *fp, elf_file_t ef, uint64_t off)
 #if defined(__i386__) || defined(__amd64__)
 		case SHT_X86_64_UNWIND:
 #endif
+		case SHT_INIT_ARRAY:
+		case SHT_FINI_ARRAY:
 			if ((shdr[i].sh_flags & SHF_ALLOC) == 0)
 				break;
 			lastaddr = roundup(lastaddr, shdr[i].sh_addralign);
@@ -280,8 +282,6 @@ __elfN(obj_loadimage)(struct preloaded_file *fp, elf_file_t ef, uint64_t off)
 		case SHT_SYMTAB:
 			nsym++;
 			ef->symtabindex = i;
-			shdr[i].sh_addr = (Elf_Addr)lastaddr;
-			lastaddr += shdr[i].sh_size;
 			break;
 		}
 	}

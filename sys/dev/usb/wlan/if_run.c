@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbbdc9bdcbd25653f02e6f9758863422ac643366 $");
+__FBSDID("$FreeBSD: 52933a4812dc70a10f154f1d745ec07b041e35c5 $");
 
 /*-
  * Ralink Technology RT2700U/RT2800U/RT3000U/RT3900E chipset driver.
@@ -173,6 +173,7 @@ static const STRUCT_USB_HOST_ID run_devs[] = {
     RUN_DEV(ASUS,		RT3070_1),
     RUN_DEV(ASUS,		USBN66),
     RUN_DEV(ASUS,		USB_N53),
+    RUN_DEV(ASUS,		USBN14),
     RUN_DEV(ASUS2,		USBN11),
     RUN_DEV(AZUREWAVE,		RT2870_1),
     RUN_DEV(AZUREWAVE,		RT2870_2),
@@ -214,6 +215,7 @@ static const STRUCT_USB_HOST_ID run_devs[] = {
     RUN_DEV(DLINK,		DWA140B3),
     RUN_DEV(DLINK,		DWA160B2),
     RUN_DEV(DLINK,		DWA140D1),
+    RUN_DEV(DLINK,		DWA130F1),
     RUN_DEV(DLINK,		DWA162),
     RUN_DEV(DLINK2,		DWA130),
     RUN_DEV(DLINK2,		RT2870_1),

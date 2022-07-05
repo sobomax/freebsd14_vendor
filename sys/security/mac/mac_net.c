@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 161040edf84f5610ed0fa7f7796a455554590918 $");
+__FBSDID("$FreeBSD: 372619c7b5833c03dce8557e739e7b7554d9df17 $");
 
 #include "opt_mac.h"
 
@@ -337,13 +337,10 @@ mac_bpfdesc_create_mbuf(struct bpf_d *d, struct mbuf *m)
 }
 
 void
-mac_ifnet_create_mbuf(struct ifnet *ifp, struct mbuf *m)
+mac_ifnet_create_mbuf_impl(struct ifnet *ifp, struct mbuf *m)
 {
 	struct label *label;
 	int locked;
-
-	if (mac_policy_count == 0)
-		return;
 
 	label = mac_mbuf_to_label(m);
 
@@ -380,15 +377,12 @@ MAC_CHECK_PROBE_DEFINE2(ifnet_check_transmit, "struct ifnet *",
     "struct mbuf *");
 
 int
-mac_ifnet_check_transmit(struct ifnet *ifp, struct mbuf *m)
+mac_ifnet_check_transmit_impl(struct ifnet *ifp, struct mbuf *m)
 {
 	struct label *label;
 	int error, locked;
 
 	M_ASSERTPKTHDR(m);
-
-	if (mac_policy_count == 0)
-		return (0);
 
 	label = mac_mbuf_to_label(m);
 

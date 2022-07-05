@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd23784f5ebf8f2ccbd85b80c7de76747e553b6b $");
+__FBSDID("$FreeBSD: 9afde553283e4c65f14445488897e23cbe02cb0d $");
 
 /*
  * auth_none.c
@@ -70,7 +70,7 @@ static bool_t authtls_validate (AUTH *, uint32_t, struct opaque_auth *,
 static bool_t authtls_refresh (AUTH *, void *);
 static void authtls_destroy (AUTH *);
 
-static struct auth_ops authtls_ops = {
+static const struct auth_ops authtls_ops = {
 	.ah_nextverf =		authtls_verf,
 	.ah_marshal =		authtls_marshal,
 	.ah_validate =		authtls_validate,

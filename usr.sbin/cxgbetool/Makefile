@@ -1,5 +1,6 @@
-# $FreeBSD: ee31cdda585867e43075f283e59fe15c22c8f7c0 $
+# $FreeBSD: ed0f90d1ef331e5361885b4fbb7486e8ab29f788 $
 
+PACKAGE=	cxgbe-tools
 PROG=	cxgbetool
 MAN=	cxgbetool.8
 SRCS=	cxgbetool.c

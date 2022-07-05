@@ -1,4 +1,6 @@
-# $FreeBSD: 9fd3952198f61d7d75893ca8b126ba58ef43ae47 $
+# $FreeBSD: 4cefca6af6903192d4eb65f4c2148e291ad5c647 $
+
+PACKAGE=	nfs
 
 PROG=	pnfsdscopymr
 MAN=	pnfsdscopymr.8

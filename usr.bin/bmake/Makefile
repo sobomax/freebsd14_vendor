@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: 272ac6cf3b5a16d554486ecd389c3d8a323d25a6 $
+# $FreeBSD: 14389de562dd6f54a46db2fe1c6b85f52b1aff87 $
 
 SRCTOP?= ${.CURDIR:H:H}
 
@@ -12,7 +12,7 @@ CFLAGS+= -I${.CURDIR}
 CLEANDIRS+= FreeBSD
 CLEANFILES+= bootstrap
 
-#	$Id: Makefile,v 1.114 2020/11/13 21:47:25 sjg Exp $
+#	$Id: Makefile,v 1.117 2021/12/04 18:51:30 sjg Exp $
 
 PROG?=	${.CURDIR:T}
 
@@ -22,7 +22,6 @@ SRCS= \
 	compat.c \
 	cond.c \
 	dir.c \
-	enum.c \
 	for.c \
 	hash.c \
 	job.c \
@@ -96,7 +95,7 @@ SUBDIR+= unit-tests
 MAN= ${PROG}.1
 MAN1= ${MAN}
 
-.if (${PROG} != "make")
+.if ${PROG} != "make"
 CLEANFILES+= my.history
 .if make(${MAN}) || !exists(${srcdir}/${MAN})
 my.history:

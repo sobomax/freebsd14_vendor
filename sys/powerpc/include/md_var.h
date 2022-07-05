@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: da9232313ffb9d8367f8283b06f125e47c14a22a $
+ * $FreeBSD: 6e74000340b98d41416bdda4501a940426d9d0d2 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -43,8 +43,8 @@ extern	char	sigcode64[], sigcode64_elfv2[];
 extern	int	szsigcode64, szsigcode64_elfv2;
 
 struct	dumperinfo;
-int	minidumpsys(struct dumperinfo *);
-int	is_dumpable(vm_paddr_t);
+struct	minidumpstate;
+int	cpu_minidumpsys(struct dumperinfo *, const struct minidumpstate *);
 #endif
 
 extern	long	Maxmem;

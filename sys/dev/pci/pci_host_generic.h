@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: 36a12b9559ba371ad0b67e6cc2de5a4af949e525 $
+ * $FreeBSD: 20117cbe32e35df578caf70a958a6e7c4658ed9a $
  *
  */
 
@@ -85,7 +85,11 @@ struct generic_pcie_core_softc {
 	device_t		dev;
 	bus_space_handle_t	ioh;
 	bus_dma_tag_t		dmat;
+	uint32_t		quirks;
 };
+
+/* Quirks */
+#define PCIE_ECAM_DESIGNWARE_QUIRK	(1 << 0)
 
 DECLARE_CLASS(generic_pcie_core_driver);
 

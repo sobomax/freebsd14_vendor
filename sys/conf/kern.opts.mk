@@ -1,4 +1,4 @@
-# $FreeBSD: 5a66849b36da39feded88e5104ba733705916e91 $
+# $FreeBSD: b64a1b27dccb50f66be7658245642f55546695f0 $
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -41,7 +41,9 @@ __DEFAULT_YES_OPTIONS = \
     ISCSI \
     KERNEL_SYMBOLS \
     NETGRAPH \
+    OFED \
     PF \
+    REPRODUCIBLE_BUILD \
     SCTP_SUPPORT \
     SOURCELESS_HOST \
     SOURCELESS_UCODE \
@@ -55,9 +57,7 @@ __DEFAULT_NO_OPTIONS = \
     INIT_ALL_PATTERN \
     INIT_ALL_ZERO \
     KERNEL_RETPOLINE \
-    OFED \
-    RATELIMIT \
-    REPRODUCIBLE_BUILD
+    RATELIMIT
 
 # Some options are totally broken on some architectures. We disable
 # them. If you need to enable them on an experimental basis, you

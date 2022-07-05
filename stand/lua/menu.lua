@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: f7ca0a486ee468f3f0c7007eac3a756d9495a6fd $
+-- $FreeBSD: fe6f7da6428330bac031777749a004dbd0aeb4d4 $
 --
 
 local cli = require("cli")
@@ -515,8 +515,7 @@ function menu.autoboot(delay)
 			last = time
 			screen.setcursor(x, y)
 			print("Autoboot in " .. time ..
-			    " seconds, hit [Enter] to boot" ..
-			    " or any other key to stop     ")
+			    " seconds. [Space] to pause ")
 			screen.defcursor()
 		end
 		if io.ischar() then

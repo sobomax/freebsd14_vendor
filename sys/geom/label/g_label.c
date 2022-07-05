@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 026f5318b4ed845a7f4753d4418333880ac99088 $");
+__FBSDID("$FreeBSD: 2244931cd19bea5f17770aaf91150abc2f6fef62 $");
 
 #include "opt_geom.h"
 
@@ -310,6 +310,8 @@ g_label_read_metadata(struct g_consumer *cp, struct g_label_metadata *md)
 	int error;
 
 	pp = cp->provider;
+	if (pp->sectorsize < sizeof(*md))
+		return (EINVAL);
 	buf = g_read_data(cp, pp->mediasize - pp->sectorsize, pp->sectorsize,
 	    &error);
 	if (buf == NULL)
@@ -400,6 +402,7 @@ g_label_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	gp->access = g_label_access_taste;
 	gp->orphan = g_label_orphan_taste;
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	if (g_attach(cp, pp) != 0)
 		goto end2;
 	if (g_access(cp, 1, 0, 0) != 0)

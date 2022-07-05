@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2009-2010 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under sponsorship from
  * the FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 467e29515d008b209487824f0f307ecd20e61bfd $");
+__FBSDID("$FreeBSD: c3b7b13d2bf76294c0b068425139ae8ca46aff19 $");
 
 #include "opt_platform.h"
 

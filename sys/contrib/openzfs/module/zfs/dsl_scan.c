@@ -20,7 +20,7 @@
  */
 /*
  * Copyright (c) 2008, 2010, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2011, 2018 by Delphix. All rights reserved.
+ * Copyright (c) 2011, 2021 by Delphix. All rights reserved.
  * Copyright 2016 Gary Mills
  * Copyright (c) 2017, 2019, Datto Inc. All rights reserved.
  * Copyright (c) 2015, Nexenta Systems, Inc. All rights reserved.
@@ -126,7 +126,7 @@ static boolean_t scan_ds_queue_contains(dsl_scan_t *scn, uint64_t dsobj,
 static void scan_ds_queue_insert(dsl_scan_t *scn, uint64_t dsobj, uint64_t txg);
 static void scan_ds_queue_remove(dsl_scan_t *scn, uint64_t dsobj);
 static void scan_ds_queue_sync(dsl_scan_t *scn, dmu_tx_t *tx);
-static uint64_t dsl_scan_count_leaves(vdev_t *vd);
+static uint64_t dsl_scan_count_data_disks(vdev_t *vd);
 
 extern int zfs_vdev_async_write_active_min_dirty_percent;
 
@@ -451,7 +451,7 @@ dsl_scan_init(dsl_pool_t *dp, uint64_t txg)
 	 * phase are done per top-level vdev and are handled separately.
 	 */
 	scn->scn_maxinflight_bytes = MAX(zfs_scan_vdev_limit *
-	    dsl_scan_count_leaves(spa->spa_root_vdev), 1ULL << 20);
+	    dsl_scan_count_data_disks(spa->spa_root_vdev), 1ULL << 20);
 
 	avl_create(&scn->scn_queue, scan_ds_queue_compare, sizeof (scan_ds_t),
 	    offsetof(scan_ds_t, sds_node));
@@ -700,10 +700,10 @@ dsl_scan_sync_state(dsl_scan_t *scn, dmu_tx_t *tx, state_sync_type_t sync_type)
 	}
 }
 
-/* ARGSUSED */
-static int
+int
 dsl_scan_setup_check(void *arg, dmu_tx_t *tx)
 {
+	(void) arg;
 	dsl_scan_t *scn = dmu_tx_pool(tx)->dp_scan;
 	vdev_t *rvd = scn->scn_dp->dp_spa->spa_root_vdev;
 
@@ -854,7 +854,6 @@ dsl_scan(dsl_pool_t *dp, pool_scan_func_t func)
 	    dsl_scan_setup_sync, &func, 0, ZFS_SPACE_CHECK_EXTRA_RESERVED));
 }
 
-/* ARGSUSED */
 static void
 dsl_scan_done(dsl_scan_t *scn, boolean_t complete, dmu_tx_t *tx)
 {
@@ -987,6 +986,10 @@ dsl_scan_done(dsl_scan_t *scn, boolean_t complete, dmu_tx_t *tx)
 			    (u_longlong_t)spa_get_errlog_size(spa));
 			spa_async_request(spa, SPA_ASYNC_RESILVER);
 		}
+
+		/* Clear recent error events (i.e. duplicate events tracking) */
+		if (complete)
+			zfs_ereport_clear(spa, NULL);
 	}
 
 	scn->scn_phys.scn_end_time = gethrestime_sec();
@@ -997,10 +1000,10 @@ dsl_scan_done(dsl_scan_t *scn, boolean_t complete, dmu_tx_t *tx)
 	ASSERT(!dsl_scan_is_running(scn));
 }
 
-/* ARGSUSED */
 static int
 dsl_scan_cancel_check(void *arg, dmu_tx_t *tx)
 {
+	(void) arg;
 	dsl_scan_t *scn = dmu_tx_pool(tx)->dp_scan;
 
 	if (!dsl_scan_is_running(scn))
@@ -1008,10 +1011,10 @@ dsl_scan_cancel_check(void *arg, dmu_tx_t *tx)
 	return (0);
 }
 
-/* ARGSUSED */
 static void
 dsl_scan_cancel_sync(void *arg, dmu_tx_t *tx)
 {
+	(void) arg;
 	dsl_scan_t *scn = dmu_tx_pool(tx)->dp_scan;
 
 	dsl_scan_done(scn, B_FALSE, tx);
@@ -1373,11 +1376,11 @@ typedef struct zil_scan_arg {
 	zil_header_t	*zsa_zh;
 } zil_scan_arg_t;
 
-/* ARGSUSED */
 static int
 dsl_scan_zil_block(zilog_t *zilog, const blkptr_t *bp, void *arg,
     uint64_t claim_txg)
 {
+	(void) zilog;
 	zil_scan_arg_t *zsa = arg;
 	dsl_pool_t *dp = zsa->zsa_dp;
 	dsl_scan_t *scn = dp->dp_scan;
@@ -1404,11 +1407,11 @@ dsl_scan_zil_block(zilog_t *zilog, const blkptr_t *bp, void *arg,
 	return (0);
 }
 
-/* ARGSUSED */
 static int
 dsl_scan_zil_record(zilog_t *zilog, const lr_t *lrc, void *arg,
     uint64_t claim_txg)
 {
+	(void) zilog;
 	if (lrc->lrc_txtype == TX_WRITE) {
 		zil_scan_arg_t *zsa = arg;
 		dsl_pool_t *dp = zsa->zsa_dp;
@@ -1633,6 +1636,7 @@ static void
 dsl_scan_prefetch_cb(zio_t *zio, const zbookmark_phys_t *zb, const blkptr_t *bp,
     arc_buf_t *buf, void *private)
 {
+	(void) zio;
 	scan_prefetch_ctx_t *spc = private;
 	dsl_scan_t *scn = spc->spc_scn;
 	spa_t *spa = scn->scn_dp->dp_spa;
@@ -1692,7 +1696,6 @@ out:
 	scan_prefetch_ctx_rele(spc, scn);
 }
 
-/* ARGSUSED */
 static void
 dsl_scan_prefetch_thread(void *arg)
 {
@@ -1816,6 +1819,19 @@ dsl_scan_recurse(dsl_scan_t *scn, dsl_dataset_t *ds, dmu_objset_type_t ostype,
 	int err;
 
 	ASSERT(!BP_IS_REDACTED(bp));
+
+	/*
+	 * There is an unlikely case of encountering dnodes with contradicting
+	 * dn_bonuslen and DNODE_FLAG_SPILL_BLKPTR flag before in files created
+	 * or modified before commit 4254acb was merged. As it is not possible
+	 * to know which of the two is correct, report an error.
+	 */
+	if (dnp != NULL &&
+	    dnp->dn_bonuslen > DN_MAX_BONUS_LEN(dnp)) {
+		scn->scn_phys.scn_errors++;
+		spa_log_error(dp->dp_spa, zb);
+		return (SET_ERROR(EINVAL));
+	}
 
 	if (BP_GET_LEVEL(bp) > 0) {
 		arc_flags_t flags = ARC_FLAG_WAIT;
@@ -2319,7 +2335,6 @@ dsl_scan_ds_clone_swapped(dsl_dataset_t *ds1, dsl_dataset_t *ds2, dmu_tx_t *tx)
 	dsl_scan_sync_state(scn, tx, SYNC_CACHED);
 }
 
-/* ARGSUSED */
 static int
 enqueue_clones_cb(dsl_pool_t *dp, dsl_dataset_t *hds, void *arg)
 {
@@ -2503,10 +2518,10 @@ out:
 	dsl_dataset_rele(ds, FTAG);
 }
 
-/* ARGSUSED */
 static int
 enqueue_cb(dsl_pool_t *dp, dsl_dataset_t *hds, void *arg)
 {
+	(void) arg;
 	dsl_dataset_t *ds;
 	int err;
 	dsl_scan_t *scn = dp->dp_scan;
@@ -2542,16 +2557,15 @@ enqueue_cb(dsl_pool_t *dp, dsl_dataset_t *hds, void *arg)
 	return (0);
 }
 
-/* ARGSUSED */
 void
 dsl_scan_ddt_entry(dsl_scan_t *scn, enum zio_checksum checksum,
     ddt_entry_t *dde, dmu_tx_t *tx)
 {
+	(void) tx;
 	const ddt_key_t *ddk = &dde->dde_key;
 	ddt_phys_t *ddp = dde->dde_phys;
 	blkptr_t bp;
 	zbookmark_phys_t zb = { 0 };
-	int p;
 
 	if (!dsl_scan_is_running(scn))
 		return;
@@ -2570,7 +2584,7 @@ dsl_scan_ddt_entry(dsl_scan_t *scn, enum zio_checksum checksum,
 	if (scn->scn_done_txg != 0)
 		return;
 
-	for (p = 0; p < DDT_PHYS_TYPES; p++, ddp++) {
+	for (int p = 0; p < DDT_PHYS_TYPES; p++, ddp++) {
 		if (ddp->ddp_phys_birth == 0 ||
 		    ddp->ddp_phys_birth > scn->scn_phys.scn_max_txg)
 			continue;
@@ -2755,22 +2769,16 @@ dsl_scan_visit(dsl_scan_t *scn, dmu_tx_t *tx)
 }
 
 static uint64_t
-dsl_scan_count_leaves(vdev_t *vd)
+dsl_scan_count_data_disks(vdev_t *rvd)
 {
 	uint64_t i, leaves = 0;
 
-	/* we only count leaves that belong to the main pool and are readable */
-	if (vd->vdev_islog || vd->vdev_isspare ||
-	    vd->vdev_isl2cache || !vdev_readable(vd))
-		return (0);
-
-	if (vd->vdev_ops->vdev_op_leaf)
-		return (1);
-
-	for (i = 0; i < vd->vdev_children; i++) {
-		leaves += dsl_scan_count_leaves(vd->vdev_child[i]);
+	for (i = 0; i < rvd->vdev_children; i++) {
+		vdev_t *vd = rvd->vdev_child[i];
+		if (vd->vdev_islog || vd->vdev_isspare || vd->vdev_isl2cache)
+			continue;
+		leaves += vdev_get_ndisks(vd) - vdev_get_nparity(vd);
 	}
-
 	return (leaves);
 }
 
@@ -3013,8 +3021,6 @@ scan_io_queues_run_one(void *arg)
 	range_seg_t *rs = NULL;
 	scan_io_t *sio = NULL;
 	list_t sio_list;
-	uint64_t bytes_per_leaf = zfs_scan_vdev_limit;
-	uint64_t nr_leaves = dsl_scan_count_leaves(queue->q_vd);
 
 	ASSERT(queue->q_scn->scn_is_sorted);
 
@@ -3022,9 +3028,9 @@ scan_io_queues_run_one(void *arg)
 	    offsetof(scan_io_t, sio_nodes.sio_list_node));
 	mutex_enter(q_lock);
 
-	/* calculate maximum in-flight bytes for this txg (min 1MB) */
-	queue->q_maxinflight_bytes =
-	    MAX(nr_leaves * bytes_per_leaf, 1ULL << 20);
+	/* Calculate maximum in-flight bytes for this vdev. */
+	queue->q_maxinflight_bytes = MAX(1, zfs_scan_vdev_limit *
+	    (vdev_get_ndisks(queue->q_vd) - vdev_get_nparity(queue->q_vd)));
 
 	/* reset per-queue scan statistics for this txg */
 	queue->q_total_seg_size_this_txg = 0;
@@ -3661,16 +3667,14 @@ dsl_scan_sync(dsl_pool_t *dp, dmu_tx_t *tx)
 		/* Need to scan metadata for more blocks to scrub */
 		dsl_scan_phys_t *scnp = &scn->scn_phys;
 		taskqid_t prefetch_tqid;
-		uint64_t bytes_per_leaf = zfs_scan_vdev_limit;
-		uint64_t nr_leaves = dsl_scan_count_leaves(spa->spa_root_vdev);
 
 		/*
 		 * Recalculate the max number of in-flight bytes for pool-wide
 		 * scanning operations (minimum 1MB). Limits for the issuing
 		 * phase are done per top-level vdev and are handled separately.
 		 */
-		scn->scn_maxinflight_bytes =
-		    MAX(nr_leaves * bytes_per_leaf, 1ULL << 20);
+		scn->scn_maxinflight_bytes = MAX(zfs_scan_vdev_limit *
+		    dsl_scan_count_data_disks(spa->spa_root_vdev), 1ULL << 20);
 
 		if (scnp->scn_ddt_bookmark.ddb_class <=
 		    scnp->scn_ddt_class_max) {
@@ -4046,9 +4050,8 @@ scan_exec_io(dsl_pool_t *dp, const blkptr_t *bp, int zio_flags,
 	size_t size = BP_GET_PSIZE(bp);
 	abd_t *data = abd_alloc_for_io(size, B_FALSE);
 
-	ASSERT3U(scn->scn_maxinflight_bytes, >, 0);
-
 	if (queue == NULL) {
+		ASSERT3U(scn->scn_maxinflight_bytes, >, 0);
 		mutex_enter(&spa->spa_scrub_lock);
 		while (spa->spa_scrub_inflight >= scn->scn_maxinflight_bytes)
 			cv_wait(&spa->spa_scrub_io_cv, &spa->spa_scrub_lock);
@@ -4057,6 +4060,7 @@ scan_exec_io(dsl_pool_t *dp, const blkptr_t *bp, int zio_flags,
 	} else {
 		kmutex_t *q_lock = &queue->q_vd->vdev_scan_io_queue_lock;
 
+		ASSERT3U(queue->q_maxinflight_bytes, >, 0);
 		mutex_enter(q_lock);
 		while (queue->q_inflight_bytes >= queue->q_maxinflight_bytes)
 			cv_wait(&queue->q_zio_cv, q_lock);

@@ -1,4 +1,6 @@
-# $FreeBSD: 372870c1ecc95b21663e6daed1532726540f099c $
+# $FreeBSD: c56112a028aa1f2344f8bcbc14e1937c5d7cdf20 $
+
+PACKAGE=	kerberos
 
 PROG=	verify_krb5_conf
 MAN=	verify_krb5_conf.8

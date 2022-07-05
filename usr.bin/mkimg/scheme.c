@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c81182837b2e7afd2da1f007d7580d4d6ce589fc $");
+__FBSDID("$FreeBSD: 5afe3245a2bad8fc3997d6682122ccb3d2eed992 $");
 
 #include <sys/stat.h>
 #include <assert.h>
@@ -47,6 +47,7 @@ static struct {
 	{ "efi", ALIAS_EFI },
 	{ "fat16b", ALIAS_FAT16B },
 	{ "fat32", ALIAS_FAT32 },
+	{ "fat32lba", ALIAS_FAT32LBA },
 	{ "freebsd", ALIAS_FREEBSD },
 	{ "freebsd-boot", ALIAS_FREEBSD_BOOT },
 	{ "freebsd-nandfs", ALIAS_FREEBSD_NANDFS },

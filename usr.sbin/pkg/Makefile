@@ -1,4 +1,6 @@
-# $FreeBSD: 980faafc6b6c6db8380e4e32a7623d7c52454a28 $
+# $FreeBSD: 29bd6ea5e1af6628a455c406a3f81277a3e36005 $
+
+PACKAGE=	pkg-bootstrap
 
 _BRANCH!=	${MAKE} -C ${SRCTOP}/release -V BRANCH
 BRANCH?=	${_BRANCH}
@@ -15,8 +17,9 @@ PKGCONFBRANCH?=	latest
 .  endif
 . endif
 .endif
-CONFS=		FreeBSD.conf.${PKGCONFBRANCH}
-CONFSNAME=	FreeBSD.conf
+PKGCONF?=	FreeBSD.conf.${PKGCONFBRANCH}
+CONFS=		${PKGCONF}
+CONFSNAME_${PKGCONF}=	${PKGCONF:C/\.conf.+$/.conf/}
 CONFSDIR=	/etc/pkg
 CONFSMODE=	644
 PROG=	pkg
@@ -25,6 +28,6 @@ MAN=	pkg.7
 
 CFLAGS+=-I${SRCTOP}/contrib/libucl/include
 .PATH:	${SRCTOP}/contrib/libucl/include
-LIBADD=	archive fetch ucl sbuf crypto ssl util
+LIBADD=	archive fetch ucl crypto ssl util
 
 .include <bsd.prog.mk>

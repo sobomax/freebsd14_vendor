@@ -1,7 +1,7 @@
 /*	$NetBSD: openfirmio.c,v 1.4 2002/09/06 13:23:19 gehenna Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2112d45d4dd950f7a837f5d0f95901f91ee4ed10 $");
+__FBSDID("$FreeBSD: 30afb85baf8acab3518a30b69820bd11b18ab558 $");
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -66,7 +66,7 @@ static d_ioctl_t openfirm_ioctl;
 
 static struct cdevsw openfirm_cdevsw = {
 	.d_version =	D_VERSION,
-	.d_flags =	D_NEEDGIANT,
+	.d_flags =	D_NEEDGIANT | D_GIANTOK,
 	.d_ioctl =	openfirm_ioctl,
 	.d_name =	"openfirm",
 };

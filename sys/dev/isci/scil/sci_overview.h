@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3cde341efb1f492ecc6526f664b4de4ec5ea22b3 $
+ * $FreeBSD: cba4f8351fbda2b5e598953ae179a827445be61b $
  */
 #ifndef _SCI_OVERVIEW_H_
 #define _SCI_OVERVIEW_H_
@@ -216,7 +216,7 @@ associate one object to another.  An SCI object can be made to have an
 association to another SCI object.  Additionally, an SCI object can be
 made to have an association to a non-SCI based object.  For example, an SCI
 Framework library can have it's association set to an operating system
-specific adapter/device driver structre.
+specific adapter/device driver structure.
 
 Simply put, the association that an object has is a handle (i.e. a void pointer)
 to a user structure.  This enables the user of the SCI object to

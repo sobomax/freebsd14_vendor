@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2ca8e1cb71ad9f5257192a125396a6273e525cb $");
+__FBSDID("$FreeBSD: 68f46a553f3c5123f59305ce7a43659d24bcf267 $");
 
 #include "opt_ddb.h"
 
@@ -1356,10 +1356,9 @@ ccp_collect_iv(struct cryptop *crp, const struct crypto_session_params *csp,
 	crypto_read_iv(crp, iv);
 
 	/*
-	 * If the input IV is 12 bytes, append an explicit counter of 1.
+	 * Append an explicit counter of 1 for GCM.
 	 */
-	if (csp->csp_cipher_alg == CRYPTO_AES_NIST_GCM_16 &&
-	    csp->csp_ivlen == 12)
+	if (csp->csp_cipher_alg == CRYPTO_AES_NIST_GCM_16)
 		*(uint32_t *)&iv[12] = htobe32(1);
 
 	if (csp->csp_cipher_alg == CRYPTO_AES_XTS &&

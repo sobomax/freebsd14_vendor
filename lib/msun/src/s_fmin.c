@@ -27,13 +27,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7f24c121fb28065b4818824dbbd93708cc1779c $");
+__FBSDID("$FreeBSD: 53f36c1c2d3df37a75a13ee5c6ab7f7520444b22 $");
 
 #include <float.h>
 #include <math.h>
 
 #include "fpmath.h"
 
+#ifdef USE_BUILTIN_FMIN
+double
+fmin(double x, double y)
+{
+	return (__builtin_fmin(x, y));
+}
+#else
 double
 fmin(double x, double y)
 {
@@ -54,6 +61,7 @@ fmin(double x, double y)
 
 	return (x < y ? x : y);
 }
+#endif
 
 #if (LDBL_MANT_DIG == 53)
 __weak_reference(fmin, fminl);

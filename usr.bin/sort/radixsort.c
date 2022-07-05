@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4993566aeb770e93cf2707af90ed107108acf545 $");
+__FBSDID("$FreeBSD: 4c448fad69e969244faf585f8c4642976a11e767 $");
 
 #include <errno.h>
 #include <err.h>
@@ -258,7 +258,7 @@ add_leaf(struct sort_level *sl, struct sort_list_item *item)
 static inline int
 get_wc_index(struct sort_list_item *sli, size_t level)
 {
-	const size_t wcfact = (MB_CUR_MAX == 1) ? 1 : sizeof(wchar_t);
+	const size_t wcfact = (mb_cur_max == 1) ? 1 : sizeof(wchar_t);
 	const struct key_value *kv;
 	const struct bwstring *bws;
 
@@ -331,7 +331,7 @@ free_sort_level(struct sort_level *sl)
 static void
 run_sort_level_next(struct sort_level *sl)
 {
-	const size_t wcfact = (MB_CUR_MAX == 1) ? 1 : sizeof(wchar_t);
+	const size_t wcfact = (mb_cur_max == 1) ? 1 : sizeof(wchar_t);
 	struct sort_level *slc;
 	size_t i, sln, tosort_num;
 

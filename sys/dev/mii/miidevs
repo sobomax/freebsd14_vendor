@@ -1,4 +1,4 @@
-$FreeBSD: 87035e1b7392e1850094fef968ae108078bd4437 $
+$FreeBSD: 259718303ee5e3dcded089c928bb1988212321b5 $
 /*$NetBSD: miidevs,v 1.105 2011/11/25 23:28:14 jakllsch Exp $*/
 
 /*-
@@ -33,7 +33,7 @@ $FreeBSD: 87035e1b7392e1850094fef968ae108078bd4437 $
 
 /*
  * List of known MII OUIs.
- * For a complete list see http://standards.ieee.org/regauth/oui/
+ * For a complete list see http://standards-oui.ieee.org/
  *
  * XXX Vendors do obviously not agree how OUIs (24 bit) are mapped
  * to the 22 bits available in the id registers.

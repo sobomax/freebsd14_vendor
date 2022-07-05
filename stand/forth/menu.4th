@@ -24,7 +24,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 6b0869cfe3b9c4f5452ee60628827276be6b30ce $
+\ $FreeBSD: 75e75e3e36545ca4f30a174ebc9d61d1942b0cb8 $
 
 marker task-menu.4th
 
@@ -489,7 +489,12 @@ also menu-infrastructure definitions
 	if ( use default center alignement? )
 		menuX @ 19 + over 2 / - menuY @ 1-
 	then
-	at-xy type 
+	swap 1- swap
+	at-xy dup 0= if
+		2drop ( empty loader_menu_title )
+	else
+		space type space
+	then
 
 	\ If $menu_init is set, evaluate it (allowing for whole menus to be
 	\ constructed dynamically -- as this function could conceivably set

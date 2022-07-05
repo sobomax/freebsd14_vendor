@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ioccom.h	8.3 (Berkeley) 1/9/95
- * $FreeBSD: 0329ac358491bcd92211845483feabe24143220d $
+ * $FreeBSD: 13faba04671940c076627aca51cf768bdde87cad $
  */
 
 #ifndef	_SYS_IOCCOM_H_
@@ -78,6 +78,9 @@
     defined(COMPAT_FREEBSD4) || defined(COMPAT_43)
 #define	IOCPARM_IVAL(x)	((int)(intptr_t)(void *)*(caddr_t *)(void *)(x))
 #endif
+
+#define	_IOC_INVALID	(_IOC_VOID|_IOC_INOUT)	/* Never valid cmd value,
+						   use as filler */
 
 #else
 

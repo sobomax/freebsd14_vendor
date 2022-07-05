@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbce0016338cf1a084a9046819750c3980448c5a $");
+__FBSDID("$FreeBSD: cdf4830697fd6e05b42d1ba5164898ec0455833f $");
 
 #include <stand.h>
 #include <string.h>
@@ -209,8 +209,7 @@ efi_setcurrdev(struct env_var *ev, int flags, const void *value)
 	rv = efi_parsedev(&ncurr, value, NULL);
 	if (rv != 0)
 		return (rv);
-
 	free(ncurr);
-	env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
-	return (0);
+
+	return (mount_currdev(ev, flags, value));
 }

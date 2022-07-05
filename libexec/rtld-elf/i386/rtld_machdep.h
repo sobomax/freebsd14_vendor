@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5116f97073373ba6ab69160c2da1bd448ccba339 $
+ * $FreeBSD: 33e7d95f966da3a076a290fc3a9363ccd28f34bb $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -74,8 +74,10 @@ void *__tls_get_addr(tls_index *ti) __exported;
 
 #define md_abi_variant_hook(x)
 
+#define	TLS_VARIANT_II	1
+#define	TLS_DTV_OFFSET	0
+
 size_t calculate_first_tls_offset(size_t size, size_t align, size_t offset);
 size_t calculate_tls_offset(size_t prev_offset, size_t prev_size, size_t size,
     size_t align, size_t offset);
-size_t calculate_tls_end(size_t off, size_t size);
 #endif

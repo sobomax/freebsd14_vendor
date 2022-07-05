@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92bc8a03c96f5e78d11e5a59d159703be23f6ab7 $");
+__FBSDID("$FreeBSD: 33b3a366cb8d38e7b037793b067509a0ec5b25e6 $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -170,7 +170,8 @@ unmount_by_fsid(const fsid_t fsid, const char *mountpoint)
 			log_warn("cannot unmount %s (%s)",
 			    mountpoint, fsid_str);
 		}
-	}
+	} else
+		rpc_umntall();
 
 	free(fsid_str);
 

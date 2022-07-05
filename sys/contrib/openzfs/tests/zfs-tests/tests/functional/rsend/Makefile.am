@@ -49,11 +49,14 @@ dist_pkgdata_SCRIPTS = \
 	send_realloc_files.ksh \
 	send_realloc_encrypted_files.ksh \
 	send_spill_block.ksh \
+	send_raw_spill_block.ksh \
+	send_raw_ashift.ksh \
 	send_holds.ksh \
 	send_hole_birth.ksh \
 	send_invalid.ksh \
 	send_mixed_raw.ksh \
-	send-wR_encrypted_zvol.ksh
+	send-wR_encrypted_zvol.ksh \
+	send_doall.ksh
 
 dist_pkgdata_DATA = \
 	dedup.zsend.bz2 \
@@ -62,3 +65,4 @@ dist_pkgdata_DATA = \
 	fs.tar.gz \
 	rsend.cfg \
 	rsend.kshlib
+

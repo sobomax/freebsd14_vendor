@@ -35,7 +35,7 @@
  *
  *      @(#)bpfdesc.h	8.1 (Berkeley) 6/10/93
  *
- * $FreeBSD: be978280311db6dadc4910d21179cd418f468119 $
+ * $FreeBSD: 52cc5f130eb364dae5175e407c167f2734ea3dc1 $
  */
 
 #ifndef _NET_BPFDESC_H_
@@ -91,6 +91,7 @@ struct bpf_d {
 	int		bd_feedback;	/* true to feed back sent packets */
 	int		bd_async;	/* non-zero if packet reception should generate signal */
 	int		bd_sig;		/* signal to send upon packet reception */
+	int		bd_pcp;		/* VLAN pcp tag */
 	struct sigio *	bd_sigio;	/* information for async I/O */
 	struct selinfo	bd_sel;		/* bsd select info */
 	struct mtx	bd_lock;	/* per-descriptor lock */

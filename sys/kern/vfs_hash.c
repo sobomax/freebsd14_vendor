@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e10e9b57e316584cee53cfe6c16379b0d0793782 $");
+__FBSDID("$FreeBSD: 2e446e69a31407bef14678bd34b09850489d8a58 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -93,8 +93,14 @@ vfs_hash_get(const struct mount *mp, u_int hash, int flags, struct thread *td,
 			error = vget_finish(vp, flags, vs);
 			if (error == ENOENT && (flags & LK_NOWAIT) == 0)
 				break;
-			if (error)
+			if (error != 0)
 				return (error);
+			if (vp->v_hash != hash ||
+			    (fn != NULL && fn(vp, arg))) {
+				vput(vp);
+				/* Restart the bucket walk. */
+				break;
+			}
 			*vpp = vp;
 			return (0);
 		}
@@ -190,6 +196,7 @@ vfs_hash_insert(struct vnode *vp, u_int hash, int flags, struct thread *td,
 void
 vfs_hash_rehash(struct vnode *vp, u_int hash)
 {
+	ASSERT_VOP_ELOCKED(vp, "rehash requires excl lock");
 
 	rw_wlock(&vfs_hash_lock);
 	LIST_REMOVE(vp, v_hashlist);

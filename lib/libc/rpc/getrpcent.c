@@ -34,7 +34,7 @@
 static char *sccsid = "@(#)getrpcent.c 1.14 91/03/11 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f3df270de0c1ff02eb025a93fbc5e013bd9c373 $");
+__FBSDID("$FreeBSD: e4770e4e88c59b4d04ee51b062ca9223a61c5ea9 $");
 
 /*
  * Copyright (c) 1984 by Sun Microsystems, Inc.
@@ -657,11 +657,11 @@ static int
 rpc_marshal_func(char *buffer, size_t *buffer_size, void *retval, va_list ap,
     void *cache_mdata)
 {
-	char *name;
-	int num;
+	char *name __unused;
+	int num __unused;
 	struct rpcent *rpc;
-	char *orig_buf;
-	size_t orig_buf_size;
+	char *orig_buf __unused;
+	size_t orig_buf_size __unused;
 
 	struct rpcent new_rpc;
 	size_t desired_size, size, aliases_size;
@@ -744,8 +744,8 @@ static int
 rpc_unmarshal_func(char *buffer, size_t buffer_size, void *retval, va_list ap,
     void *cache_mdata)
 {
-	char *name;
-	int num;
+	char *name __unused;
+	int num __unused;
 	struct rpcent *rpc;
 	char *orig_buf;
 	size_t orig_buf_size;

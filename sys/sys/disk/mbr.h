@@ -27,11 +27,13 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: 39b47c4a7386fe5f181bd00badfd579a5474930d $
+ * $FreeBSD: 1241059b02ea0d75a25707005c4673413b43971d $
  */
 
 #ifndef _SYS_DISK_MBR_H_
 #define	_SYS_DISK_MBR_H_
+
+#include <sys/types.h>
 
 #define	DOSBBSECTOR	0	/* DOS boot block relative sector number */
 #define	DOSDSNOFF	440	/* WinNT/2K/XP Drive Serial Number offset */

@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 520ace1a1b5362f6cf1e5eff97b686e672fbf690 $");
+__FBSDID("$FreeBSD: a29a562719d4fcda5964acc4bd3a6ad01202e3e9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -742,8 +742,6 @@ ipu3fb_ioctl(video_adapter_t *adp, u_long cmd, caddr_t data)
 			fb->fb_cmsize = 1 << sc->depth;
 		fb->fb_size = sc->fb_size;
 		break;
-	case FBIOSCURSOR:
-		return (ENODEV);
 	default:
 		return (fb_commonioctl(adp, cmd, data));
 	}

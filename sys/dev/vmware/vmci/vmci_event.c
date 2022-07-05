@@ -7,7 +7,7 @@
 /* This file implements VMCI Event code. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f3bf9039e12c7433c6207531600d05daea6f904 $");
+__FBSDID("$FreeBSD: 192828cc6f6a8ebffe2bd0a2bc4becc6ea472d3c $");
 
 #include "vmci.h"
 #include "vmci_driver.h"
@@ -592,6 +592,9 @@ static struct vmci_subscription *
 vmci_event_unregister_subscription(vmci_id sub_id)
 {
 	struct vmci_subscription *s;
+
+	if (!vmci_initialized_lock(&subscriber_lock))
+		return NULL;
 
 	vmci_grab_lock_bh(&subscriber_lock);
 	s = vmci_event_find(sub_id);

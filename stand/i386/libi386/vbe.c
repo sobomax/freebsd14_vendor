@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ef4daffa8380202746aa07daca48be85a4cfc7ad $
+ * $FreeBSD: cd90e5d6daed0115f788b27e5177aa483f09ffa8 $
  */
 
 #include <sys/cdefs.h>
@@ -708,6 +708,10 @@ vbe_set_mode(int modenum)
 	gfx_state.tg_fb.fb_height = mi.YResolution;
 	gfx_state.tg_fb.fb_width = mi.XResolution;
 	gfx_state.tg_fb.fb_bpp = mi.BitsPerPixel;
+
+	free(gfx_state.tg_shadow_fb);
+	gfx_state.tg_shadow_fb = malloc(mi.YResolution * mi.XResolution *
+	    sizeof(struct paletteentry));
 
 	/* Bytes per pixel */
 	bpp = roundup2(mi.BitsPerPixel, NBBY) / NBBY;

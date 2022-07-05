@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: 0ab717600e5650515f73899e27e22a54ddcd5cc9 $
+# $FreeBSD: fd8a0feeb748b97558107f3c03b2b560a06e4fac $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen ${SRCTOP}/etc
@@ -30,6 +30,8 @@ SRCS+=	__getosreldate.c \
 	clock_getcpuclockid.c \
 	closedir.c \
 	confstr.c \
+	cpuset_alloc.c \
+	cpuset_free.c \
 	crypt.c \
 	ctermid.c \
 	daemon.c \
@@ -123,6 +125,8 @@ SRCS+=	__getosreldate.c \
 	scandir.c \
 	scandir_b.c \
 	scandir-compat11.c \
+	sched_getaffinity.c \
+	sched_setaffinity.c \
 	seed48.c \
 	seekdir.c \
 	semctl.c \
@@ -171,6 +175,9 @@ SRCS+=	__getosreldate.c \
 	wordexp.c
 
 CFLAGS.arc4random.c= -I${SRCTOP}/sys -I${SRCTOP}/sys/crypto/chacha20
+
+CFLAGS.dlfcn.c= ${RTLD_HDRS}
+CFLAGS.tls.c= ${RTLD_HDRS}
 
 .PATH: ${SRCTOP}/contrib/libc-pwcache
 SRCS+=	pwcache.c pwcache.h
@@ -458,7 +465,10 @@ MLINKS+=modf.3 modff.3 \
 MLINKS+=popen.3 pclose.3
 MLINKS+=posix_spawn.3 posix_spawnp.3 \
 	posix_spawn_file_actions_addopen.3 posix_spawn_file_actions_addclose.3 \
+	posix_spawn_file_actions_addopen.3 posix_spawn_file_actions_addclosefrom_np.3 \
 	posix_spawn_file_actions_addopen.3 posix_spawn_file_actions_adddup2.3 \
+	posix_spawn_file_actions_addopen.3 posix_spawn_file_actions_addchdir_np.3 \
+	posix_spawn_file_actions_addopen.3 posix_spawn_file_actions_addfchdir_np.3 \
 	posix_spawn_file_actions_init.3 posix_spawn_file_actions_destroy.3 \
 	posix_spawnattr_getflags.3 posix_spawnattr_setflags.3 \
 	posix_spawnattr_getpgroup.3 posix_spawnattr_setpgroup.3 \

@@ -1,5 +1,6 @@
-# $FreeBSD: 1c2ea1d78595006006309dcf46b48b4a0384caed $
+# $FreeBSD: 37ddb7393904c76d065fa788851c92f67450b0b2 $
 
+PACKAGE=	fetch
 PROG=		fetch
 LIBADD=		fetch
 

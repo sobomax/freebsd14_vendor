@@ -1,4 +1,4 @@
-# $FreeBSD: 02cbe95640f5aabde486797f30fdc73545411440 $
+# $FreeBSD: 78b65020452a991bbba6bb7c2dd7696bf08ee729 $
 
 .include <src.opts.mk>
 
@@ -18,8 +18,6 @@ SRCS=		alist.c \
 		memory.c \
 		merge.c \
 		output.c \
-		st_parse.c \
-		stabs.c \
 		stack.c \
 		strtab.c \
 		symbol.c \

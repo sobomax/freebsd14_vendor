@@ -1,4 +1,6 @@
-# $FreeBSD: c79d09e6d94d2af3e63e0c072fb91b4babe72952 $
+# $FreeBSD: 4adbbcef15abe816e496becda701e2cdbebcee55 $
+
+PACKAGE=	kerberos
 
 PROG=	ktutil
 MAN=	ktutil.8

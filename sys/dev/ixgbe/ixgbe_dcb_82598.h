@@ -1,7 +1,7 @@
 /******************************************************************************
   SPDX-License-Identifier: BSD-3-Clause
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: d16471bc395a2d821d1b683a8622c2e2ee917eca $*/
+/*$FreeBSD: 74cf2760cc6decb8ff8ce9d88fcccad38cd9199b $*/
 
 #ifndef _IXGBE_DCB_82598_H_
 #define _IXGBE_DCB_82598_H_

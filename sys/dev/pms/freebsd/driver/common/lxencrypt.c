@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: c53c52fb23786ea32c40b90ca0651766b6790794 $
+* $FreeBSD: 0d469f9fdbf7cf99e5ca57bbfb7505a2f54b0296 $
 *
 *******************************************************************************/
 /*******************************************************************************
@@ -838,7 +838,7 @@ printf("%s: Minor %d\n", __FUNCTION__, pIoctlPayload->hdr.MinorFunction);
                 printf("%s: Add kek at index 0x%x wrapper 0x%x format 0x%x\n", __FUNCTION__, kek_add->kekIndex, kek_add->wrapperKekIndex, kek_add->blobFormat);
                 
                 /* Copy kek_blob from user pointer to local buffer */
-                if(access_ok(VERIFY_READ, kek_add->EncryptKekBlob, sizeof(kek_blob))) {
+                if(access_ok(kek_add->EncryptKekBlob, sizeof(kek_blob))) {
                     printf("%s: Starting copy from user %p to kernel %p\n", __FUNCTION__, kek_add->EncryptKekBlob, &kek_blob);
                     if((rv = copy_from_user(&kek_blob, kek_add->EncryptKekBlob, sizeof(kek_blob))) != 0) {
                         printf("%s: Copy error, %d left\n", __FUNCTION__, rv);
@@ -873,7 +873,7 @@ printf("%s: Minor %d\n", __FUNCTION__, pIoctlPayload->hdr.MinorFunction);
                 printf("%s: Add dek at index 0x%x, table %x, kek index %x, blob format %x, entry size %x\n", __FUNCTION__, dek_index, dek_table, kek_index, blob_format, entry_sz);
                 
                 /* Copy dek_blob from user pointer to local buffer */
-                if(access_ok(VERIFY_READ, dek_add->dekBlob, sizeof(dek_blob))) {
+                if(access_ok(dek_add->dekBlob, sizeof(dek_blob))) {
                     printf("%s: Starting copy from user %p to kernel %p\n", __FUNCTION__, dek_add->dekBlob, &dek_blob);
                     if((rv = copy_from_user(&dek_blob, dek_add->dekBlob, sizeof(dek_blob))) != 0) {
                         printf("%s: Copy error, %d left\n", __FUNCTION__, rv);

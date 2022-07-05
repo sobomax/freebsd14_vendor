@@ -1,4 +1,4 @@
-# $FreeBSD: ef271e85bf3fd40e5dc1aa18d5eddbbdb4fe74d2 $
+# $FreeBSD: 888e240de43e588fea4fe1b5e11ec2123935fe65 $
 
 .include <src.opts.mk>
 
@@ -40,7 +40,7 @@ TARGET_ABI=	-gnueabi
 TARGET_ABI=
 .endif
 VENDOR=		unknown
-OS_VERSION=	freebsd13.0
+OS_VERSION=	freebsd13.1
 
 LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
 LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}
@@ -100,12 +100,25 @@ CFLAGS+=	-DLLVM_NATIVE_TARGETMC=LLVMInitialize${LLVM_NATIVE_ARCH}TargetMC
 
 CFLAGS+=	-ffunction-sections
 CFLAGS+=	-fdata-sections
+.include "bsd.linker.mk"
+.if ${LINKER_TYPE} == "mac"
+LDFLAGS+=	-Wl,-dead_strip
+.else
 LDFLAGS+=	-Wl,--gc-sections
+.endif
 
 CXXSTD?=	c++14
 CXXFLAGS+=	-fno-exceptions
 CXXFLAGS+=	-fno-rtti
+.if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
 CXXFLAGS.clang+= -stdlib=libc++
+.else
+# Building on macOS/Linux needs the real sysctl() not the bootstrap tools stub.
+CFLAGS+=	-DBOOTSTRAPPING_WANT_NATIVE_SYSCTL
+.endif
+.if defined(BOOTSTRAPPING) && ${.MAKE.OS} == "Linux"
+LIBADD+=	dl
+.endif
 
 .if ${MACHINE_ARCH:Mmips64}
 STATIC_CFLAGS+= -mxgot

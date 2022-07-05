@@ -1,2 +1,2 @@
-.\" $FreeBSD: 6d41aeb0602cf4df883558909caa6462011af4cc $
-Set to build LLVM's OpenMP runtime.
+.\" $FreeBSD: 03158075daed7fed051ed9ad596bffbab88d82da $
+Build LLVM's OpenMP runtime.

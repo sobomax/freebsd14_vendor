@@ -63,7 +63,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0f80d079b0b32298d7f6df2917da8f98ff4f60d $");
+__FBSDID("$FreeBSD: ada7ac606e1569fa32fcc68ed9d53054dd6840fd $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -335,7 +335,9 @@ static int
 nss_configure(void)
 {
 	static time_t	 confmod;
+#ifndef NS_REREAD_CONF
 	static int	 already_initialized = 0;
+#endif
 	struct stat	 statbuf;
 	int		 result, isthreaded;
 	const char	*path;

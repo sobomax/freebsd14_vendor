@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cda16ded62a7133e00c09c5f82ba6063d18811f1 $");
+__FBSDID("$FreeBSD: b6b0e6e406391f634f51a644625671cb58937532 $");
 
 #include <stand.h>
 #include <string.h>
@@ -195,6 +195,6 @@ uboot_setcurrdev(struct env_var *ev, int flags, const void *value)
 	if ((rv = uboot_parsedev(&ncurr, value, NULL)) != 0)
 		return (rv);
 	free(ncurr);
-	env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
-	return (0);
+
+	return (mount_currdev(ev, flags, value));
 }

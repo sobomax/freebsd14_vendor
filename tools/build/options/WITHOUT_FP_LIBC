@@ -1,4 +1,4 @@
-.\" $FreeBSD: 5d591b515031577ecfe3b1f5ebed46c6e6180b61 $
-Set to build
+.\" $FreeBSD: a2975088c6cf83ec25afa7032b7b7811fdfc4554 $
+Build
 .Nm libc
 without floating-point support.

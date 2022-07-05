@@ -1,9 +1,11 @@
 #	from: @(#)Makefile    5.10 (Berkeley) 6/24/90
-# $FreeBSD: 35669a5e35706c812a5dc029cb9e8a4eb8c1825d $
+# $FreeBSD: 7ee85d93b3108dffe488e312e466666bf7e8df41 $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/include/rpcsvc
+
+PACKAGE=	runtime
 
 LIB=    rpcsvc
 

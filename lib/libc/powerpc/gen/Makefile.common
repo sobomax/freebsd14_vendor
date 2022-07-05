@@ -1,6 +1,8 @@
-# $FreeBSD: 4ba72799a5cfa08228de6e87d5f8f41cc4f8e389 $
+# $FreeBSD: b2f898c9faae5629fbd3a9c398668fb4e5bac127 $
 
 .PATH: ${LIBC_SRCTOP}/powerpc/gen
 
 SRCS += _ctx_start.S eabi.S infinity.c ldexp.c makecontext.c \
-	signalcontext.c syncicache.c _set_tp.c trivial-getcontextx.c
+	signalcontext.c syncicache.c _get_tp.c _set_tp.c trivial-getcontextx.c
+
+CFLAGS._get_tp.c+= ${RTLD_HDRS}

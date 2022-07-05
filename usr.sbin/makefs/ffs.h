@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8b4fbc33dc8362a1a8fcc4f1a5da40f4243ab9fb $
+ * $FreeBSD: e1dda429ff262a65d6f97f3a0f5569f85b4c6166 $
  */
 
 #ifndef _FFS_H
@@ -44,6 +44,7 @@
 
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>
+#include <stdbool.h>
 
 typedef struct {
 	char	label[MAXVOLLEN];	/* volume name/label */
@@ -52,6 +53,7 @@ typedef struct {
 	int	cpg;		/* cylinders per group */
 	int	cpgflg;		/* cpg was specified by user */
 	int	density;	/* bytes per inode */
+	bool	min_inodes;	/* allocate minimum number of inodes */
 	int	ntracks;	/* number of tracks */
 	int	nsectors;	/* number of sectors */
 	int	rpm;		/* rpm */

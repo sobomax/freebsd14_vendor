@@ -24,12 +24,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 54c42503f2d4858f05626c6a0f698052d2e1f746 $
+ * $FreeBSD: d4422caf0fcd4b5d61f22948c1d391a6a70ea7bc $
  *
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54c42503f2d4858f05626c6a0f698052d2e1f746 $");
+__FBSDID("$FreeBSD: d4422caf0fcd4b5d61f22948c1d391a6a70ea7bc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -264,11 +264,13 @@ snps_dwc3_do_quirks(struct snps_dwc3_softc *sc)
 		reg |= DWC3_GUCTL1_TX_IPGAP_LINECHECK_DIS;
 	DWC3_WRITE(sc, DWC3_GUCTL1, reg);
 
-	if (OF_hasprop(sc->node, "snps,dis-del-phy-power-chg-quirk")) {
-		reg = DWC3_READ(sc, DWC3_GUSB3PIPECTL0);
+	reg = DWC3_READ(sc, DWC3_GUSB3PIPECTL0);
+	if (OF_hasprop(sc->node, "snps,dis-del-phy-power-chg-quirk"))
 		reg |= DWC3_GUSB3PIPECTL0_DELAYP1TRANS;
-		DWC3_WRITE(sc, DWC3_GUSB3PIPECTL0, reg);
-	}
+	if (OF_hasprop(sc->node, "snps,dis_rxdet_inp3_quirk"))
+		reg |= DWC3_GUSB3PIPECTL0_DISRXDETINP3;
+	DWC3_WRITE(sc, DWC3_GUSB3PIPECTL0, reg);
+
 }
 
 static int

@@ -1,4 +1,6 @@
-# $FreeBSD: 21cb45d18ad0ade81b79b7ceae0e4444b893b4b8 $
+# $FreeBSD: 52f302e0f00bb2da5923f1fb28692266a9c09411 $
+
+PACKAGE=	nfs
 
 PROG =	rpc.rquotad
 SRCS =	rquotad.c

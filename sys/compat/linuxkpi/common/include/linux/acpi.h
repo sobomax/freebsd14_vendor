@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 068e0fe6fb0678adffdaa6324041c443001cecc1 $
+ * $FreeBSD: 1a9d25e7a7ffc1241dd711360fd136acf42ba038 $
  */
 
-#ifndef _LINUX_ACPI_H_
-#define _LINUX_ACPI_H_
+#ifndef _LINUXKPI_LINUX_ACPI_H_
+#define _LINUXKPI_LINUX_ACPI_H_
 
 #include <linux/device.h>
+#include <linux/uuid.h>
 
 #if defined(__aarch64__) || defined(__amd64__) || defined(__i386__)
 
@@ -43,4 +44,4 @@
 
 #endif
 
-#endif /* _LINUX_ACPI_H_ */
+#endif /* _LINUXKPI_LINUX_ACPI_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: 49ba041ce224a64efc52fc34b7fa6d2147fa1b54 $
+# $FreeBSD: 5ff72216b3293ad291bc80ce86da03c0d64bb4b7 $
 
 .PATH: ${SRCTOP}/sys/cam/ctl
 
@@ -27,5 +27,7 @@ SRCS+=	opt_cam.h
 #CFLAGS+=-DICL_KERNEL_PROXY
 
 MFILES=	kern/bus_if.m kern/device_if.m
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

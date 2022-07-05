@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed01de7d7014e4d0764382acb9212fa6cfea73d7 $");
+__FBSDID("$FreeBSD: a18dbb5e66e2c45266e2fade846b5ef02b08b240 $");
 
 #ifndef _NETINET_SCTP_VAR_H_
 #define _NETINET_SCTP_VAR_H_
@@ -328,7 +328,7 @@ int sctp_ctloutput(struct socket *, struct sockopt *);
 void sctp_input_with_port(struct mbuf *, int, uint16_t);
 int sctp_input(struct mbuf **, int *, int);
 #endif
-void sctp_pathmtu_adjustment(struct sctp_tcb *, uint16_t);
+void sctp_pathmtu_adjustment(struct sctp_tcb *, uint32_t, bool);
 void sctp_drain(void);
 void sctp_init(void);
 void

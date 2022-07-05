@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_hci_raw.c,v 1.14 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 5f6b98d03359b9a8e98cda5105422b7860b8d750 $
+ * $FreeBSD: c82515f8263120e4210cc5a90baff2d0eee66824 $
  */
 
 #include <sys/param.h>
@@ -539,6 +539,7 @@ ng_btsocket_hci_raw_data_input(struct mbuf *nam)
 
 				NG_FREE_M(m);
 				NG_FREE_M(ctl);
+				soroverflow(pcb->so);
 			}
 		}
 next:

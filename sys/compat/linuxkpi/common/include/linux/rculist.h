@@ -24,11 +24,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bff2f7e1318442221dfc93e2ef584a8e4b4fe185 $
+ * $FreeBSD: e0c3f79d9e5af1f826c2064b4f2ec4871e33c70e $
  */
 
-#ifndef _LINUX_RCULIST_H_
-#define	_LINUX_RCULIST_H_
+#ifndef _LINUXKPI_LINUX_RCULIST_H_
+#define	_LINUXKPI_LINUX_RCULIST_H_
 
 #include <linux/list.h>
 #include <linux/rcupdate.h>
@@ -43,6 +43,9 @@
 	for (pos = list_entry_rcu((head)->next, typeof(*(pos)), member); \
 	     &(pos)->member != (head);					\
 	     pos = list_entry_rcu((pos)->member.next, typeof(*(pos)), member))
+
+#define	list_for_each_entry_lockless(pos, head, member) \
+	list_for_each_entry_rcu(pos, head, member)
 
 static inline void
 linux_list_add_rcu(struct list_head *new, struct list_head *prev,
@@ -138,4 +141,4 @@ hlist_del_init_rcu(struct hlist_node *n)
 	}
 }
 
-#endif					/* _LINUX_RCULIST_H_ */
+#endif					/* _LINUXKPI_LINUX_RCULIST_H_ */

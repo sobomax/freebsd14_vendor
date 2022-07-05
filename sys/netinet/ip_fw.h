@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f0531a67132ddb9054353b176705a2ae22ea151f $
+ * $FreeBSD: 4d3099a781a0422d3f75f9af3efa6ec5e4000a90 $
  */
 
 #ifndef _IPFW2_H
@@ -549,6 +549,8 @@ struct nat44_cfg_nat {
 	struct in_addr	ip;		/* nat IPv4 address */
 	uint32_t	mode;		/* aliasing mode */
 	uint32_t	redir_cnt;	/* number of entry in spool chain */
+	u_short		alias_port_lo;	/* low range for port aliasing */
+	u_short		alias_port_hi;	/* high range for port aliasing */
 };
 
 /* Nat command. */

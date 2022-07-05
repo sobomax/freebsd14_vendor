@@ -1,4 +1,4 @@
-# $FreeBSD: f31c50ad86da7d81798282f4d12ad30a9a42ff46 $
+# $FreeBSD: 0a7c327c91f1f9780976c05d385b9686c3519fce $
 # Makefile for file(1) cmd.
 # Copyright (c) David E. O'Brien, 2000-2004, 2009
 # Copyright (c) Ian F. Darwin 86/09/01 - see LEGAL.NOTICE.
@@ -20,6 +20,8 @@
 #    ever read sources, credits must appear in the documentation.
 # 4. This notice may not be removed or altered.
 
+.include <src.opts.mk>
+
 SRCDIR=	${SRCTOP}/contrib/file
 .PATH: ${SRCDIR}/src
 .PATH: ${SRCDIR}/doc
@@ -37,6 +39,9 @@ FILEVER!= awk '$$1 == "\#define" && $$2 == "VERSION" { print $$3; exit }' \
 			${SRCTOP}/lib/libmagic/config.h
 
 CLEANFILES+=	${MAN}
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: da4c6cab036a7d028f476b9a592b6c769403eaab $
+# $FreeBSD: 9da97cacc20b6b8ba954e78c554bc21b57b44eec $
 
 .include <bsd.init.mk>
 
@@ -10,6 +10,7 @@ SRCS+=		sanitizer_common/sancov_flags.cpp
 SRCS+=		sanitizer_common/sanitizer_allocator.cpp
 SRCS+=		sanitizer_common/sanitizer_allocator_checks.cpp
 SRCS+=		sanitizer_common/sanitizer_allocator_report.cpp
+SRCS+=		sanitizer_common/sanitizer_chained_origin_depot.cpp
 SRCS+=		sanitizer_common/sanitizer_common.cpp
 SRCS+=		sanitizer_common/sanitizer_common_libcdep.cpp
 SRCS+=		sanitizer_common/sanitizer_coverage_libcdep_new.cpp
@@ -23,6 +24,7 @@ SRCS+=		sanitizer_common/sanitizer_libc.cpp
 SRCS+=		sanitizer_common/sanitizer_libignore.cpp
 SRCS+=		sanitizer_common/sanitizer_linux.cpp
 SRCS+=		sanitizer_common/sanitizer_linux_libcdep.cpp
+SRCS+=		sanitizer_common/sanitizer_mutex.cpp
 SRCS+=		sanitizer_common/sanitizer_persistent_allocator.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_freebsd.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_linux.cpp

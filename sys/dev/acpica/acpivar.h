@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fb196c2f4713869d96a9e284cd69af7422567f6f $
+ * $FreeBSD: fb568169cf28dac7a0781cae2f31eb8c5fd4e646 $
  */
 
 #ifndef _ACPIVAR_H_
@@ -578,6 +578,10 @@ int		acpi_get_domain(device_t dev, device_t child, int *domain);
 int	acpi_iort_map_pci_msi(u_int seg, u_int rid, u_int *xref, u_int *devid);
 int	acpi_iort_map_pci_smmuv3(u_int seg, u_int rid, u_int *xref, u_int *devid);
 int	acpi_iort_its_lookup(u_int its_id, u_int *xref, int *pxm);
+int	acpi_iort_map_named_msi(const char *devname, u_int rid, u_int *xref,
+	    u_int *devid);
+int	acpi_iort_map_named_smmuv3(const char *devname, u_int rid, u_int *xref,
+	    u_int *devid);
 #endif
 #endif /* _KERNEL */
 #endif /* !_ACPIVAR_H_ */

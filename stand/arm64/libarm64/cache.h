@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89b094b19c1854590da481c6dd94352efc73870f $
+ * $FreeBSD: 5e560c4d578de6367ac6486e57ec4dd51eaf525e $
  */
 
 #ifndef _CACHE_H_
@@ -33,6 +33,6 @@
 
 /* cache.c */
 void cpu_flush_dcache(const void *, size_t);
-void cpu_inval_icache(const void *, size_t);
+void cpu_inval_icache(void);
 
 #endif /* _CACHE_H_ */

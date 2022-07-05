@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5154515848bf250d2017ba6a90900592969e9b95 $
+ * $FreeBSD: a3ce8f27d953ccadb24e0226d277577b66eb6e2a $
  */
 
 #include <sys/queue.h>
@@ -58,6 +58,8 @@ struct extra_syscall {
 struct procabi {
 	const char *type;
 	enum sysdecode_abi abi;
+	size_t pointer_size;
+	const char *compat_prefix;
 	STAILQ_HEAD(, extra_syscall) extra_syscalls;
 	struct syscall *syscalls[SYSCALL_NORMAL_COUNT];
 };

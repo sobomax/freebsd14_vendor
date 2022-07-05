@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d054e005cdac733e81778aa0bb0fb1c5fb28688 $");
+__FBSDID("$FreeBSD: db82d7eaf4f622e46d53d50df5ed9659358678f1 $");
 
 #include <sys/param.h>
 #include "stand.h"
@@ -69,10 +69,11 @@ __FBSDID("$FreeBSD: 7d054e005cdac733e81778aa0bb0fb1c5fb28688 $");
 ssize_t
 write(int fd, const void *dest, size_t bcount)
 {
-	struct open_file *f = &files[fd];
+	struct open_file *f;
 	size_t resid;
 
-	if ((unsigned)fd >= SOPEN_MAX || !(f->f_flags & F_WRITE)) {
+	f = fd2open_file(fd);
+	if (f == NULL || !(f->f_flags & F_WRITE)) {
 		errno = EBADF;
 		return (-1);
 	}

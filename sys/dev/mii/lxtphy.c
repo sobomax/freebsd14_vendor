@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 699c1d6f83b6c5377cf3e868f62fa01904334886 $");
+__FBSDID("$FreeBSD: 31900cc5a34b486eb127b6cdc8ae8d888deff230 $");
 
 /*
  * driver for Level One's LXT-970 ethernet 10/100 PHY
@@ -203,7 +203,7 @@ lxtphy_status(struct mii_softc *sc)
 	/*
 	 * Get link status from the CSR; we need to read the CSR
 	 * for media type anyhow, and the link status in the CSR
-	 * doens't latch, so fewer register reads are required.
+	 * doesn't latch, so fewer register reads are required.
 	 */
 	csr = PHY_READ(sc, MII_LXTPHY_CSR);
 	if (csr & CSR_LINK)

@@ -23,12 +23,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: baadf535b42489d36c02a4350e3792ca5c7b0797 $
+# $FreeBSD: 05c7973fdc02aa526583943026fbf7eedef1a604 $
 
 .include <src.opts.mk>
 
-SUBDIR=		libatf-c \
-		libatf-c++ \
+SUBDIR=			libatf-c
+SUBDIR.${MK_CXX}+=	libatf-c++
 
 SUBDIR.${MK_TESTS}+= tests
 

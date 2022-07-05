@@ -1,10 +1,11 @@
-# $FreeBSD: af58c73ce1b6265be758727ac926d1ed7b066f04 $
+# $FreeBSD: 13fb7c2fcf43441a7f639c29bffafed49ea8950c $
 
 .PATH: ${.CURDIR:H}/shared
 
 PROG=	ggatel
 MAN=	ggatel.8
 SRCS=	ggatel.c ggate.c
+PACKAGE=	ggate
 
 CFLAGS+= -DLIBGEOM
 CFLAGS+= -I${.CURDIR:H}/shared

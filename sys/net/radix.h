@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)radix.h	8.2 (Berkeley) 10/31/94
- * $FreeBSD: a0e5e5c5aa3fa9e836e9884a5e383575470117df $
+ * $FreeBSD: 97555ee9e16d87c0763e0e8b3cf4556f2857a966 $
  */
 
 #ifndef _RADIX_H_
@@ -119,6 +119,7 @@ typedef int rn_walktree_t(struct radix_head *head, walktree_f_t *f,
 typedef int rn_walktree_from_t(struct radix_head *head,
     void *a, void *m, walktree_f_t *f, void *w);
 typedef void rn_close_t(struct radix_node *rn, struct radix_head *head);
+struct radix_node *rn_nextprefix(struct radix_node *rn);
 
 struct radix_mask_head;
 

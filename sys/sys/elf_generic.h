@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 301ee52cf7a118d98f1d135a8e60f9cc74866914 $
+ * $FreeBSD: 177de7339d3fbdf682c7135cf8ab39fbfdace5df $
  */
 
 #ifndef _SYS_ELF_GENERIC_H_
@@ -57,6 +57,9 @@
 #define	__ELFN(x)	__CONCAT(__CONCAT(__CONCAT(ELF,__ELF_WORD_SIZE),_),x)
 #define	__ElfType(x)	typedef __ElfN(x) __CONCAT(Elf_,x)
 
+/* Define ElfW for compatibility with Linux, prefer __ElfN() in FreeBSD code */
+#define	ElfW(x)		__ElfN(x)
+
 __ElfType(Addr);
 __ElfType(Half);
 __ElfType(Off);
@@ -68,6 +71,7 @@ __ElfType(Phdr);
 __ElfType(Dyn);
 __ElfType(Rel);
 __ElfType(Rela);
+__ElfType(Relr);
 __ElfType(Sym);
 __ElfType(Verdef);
 __ElfType(Verdaux);

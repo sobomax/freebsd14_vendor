@@ -1,6 +1,5 @@
 #-
 # Copyright (c) 2016 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Andrew Turner under
 # sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: df3f930af086297dff0510b656efd3250cdbd060 $
+# $FreeBSD: 9142a89453c527475309350974eeb77ef5fca95a $
 
 #include <sys/types.h>
 #include <sys/systm.h>

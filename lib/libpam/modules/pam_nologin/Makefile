@@ -22,7 +22,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 746e9e8882ee43b135be9a81e29cbbfc61097b06 $
+# $FreeBSD: 37b05d82f6caeec8aa3b6304e1e69e0f3f8da1de $
+
+PACKAGE=	runtime
 
 LIB=	pam_nologin
 SRCS=	pam_nologin.c

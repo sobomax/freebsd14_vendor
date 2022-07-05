@@ -1,4 +1,4 @@
-# $FreeBSD: 1ee2ece51a16eedfc61b1f699d29151aba3df292 $
+# $FreeBSD: a17ed246b8c7bbaeea8336daaecc9c89cb4b4938 $
 
 .PATH: ${SRCTOP}/sys/dev/amr
 
@@ -15,5 +15,7 @@ SRCS=	amr.c amr_pci.c amr_disk.c device_if.h bus_if.h pci_if.h
 
 # Debugging
 #CFLAGS+= -DAMR_DEBUG=3
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

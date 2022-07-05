@@ -1,4 +1,4 @@
-/*	$FreeBSD: 44c46fd3b71d5b16503c4ba735b9ab993479a03f $	*/
+/*	$FreeBSD: 1bc79a98e6890ecdbdd5dedd989ed104ba0f3e08 $	*/
 /*	$KAME: ip6.h,v 1.18 2001/03/29 05:34:30 itojun Exp $	*/
 
 /*-
@@ -105,6 +105,10 @@ struct ip6_hdr {
 #endif /* LITTLE_ENDIAN */
 #endif
 #define IPV6_FLOWLABEL_LEN	20
+
+#define	IPV6_TRAFFIC_CLASS(ip6)	((ntohl((ip6)->ip6_flow) >> 20) & 0xff)
+#define	IPV6_DSCP(ip6)		((ntohl((ip6)->ip6_flow) >> 20) & 0xfc)
+#define	IPV6_ECN(ip6)		((ntohl((ip6)->ip6_flow) >> 20) & 0x03)
 
 /*
  * Extension Headers

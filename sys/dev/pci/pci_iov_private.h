@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0d1dda871b44121524051cac3c5004e8491019a2 $
+ * $FreeBSD: be3456d4781fed9ae521336056f1493a76f1987a $
  */
 
 #ifndef _PCI_IOV_PRIVATE_H_
@@ -37,6 +37,7 @@ struct pci_iov_bar {
 };
 
 struct pcicfg_iov {
+	device_t iov_pf;
 	struct cdev *iov_cdev;
 	nvlist_t *iov_schema;
 

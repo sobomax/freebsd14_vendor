@@ -20,7 +20,7 @@
 /* Driver for Microdia's HID based TEMPer Temperature sensor */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5fb9591857fcba8ba9239cbc2d5abd14014afb9 $");
+__FBSDID("$FreeBSD: 0057d042006d931a4ff7194b6d2a1fa882c6df3c $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -250,7 +250,7 @@ ugold_attach(device_t dev)
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),
 	    OID_AUTO, "inner", CTLFLAG_RD, &sc->sc_sensor[UGOLD_INNER], 0,
-	    "Inner temperature in microCelcius");
+	    "Inner temperature in microCelsius");
 
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),
@@ -260,17 +260,17 @@ ugold_attach(device_t dev)
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),
 	    OID_AUTO, "inner_calib", CTLFLAG_RWTUN, &sc->sc_calib[UGOLD_INNER], 0,
-	    "Inner calibration temperature in microCelcius");
+	    "Inner calibration temperature in microCelsius");
 
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),
 	    OID_AUTO, "outer", CTLFLAG_RD, &sc->sc_sensor[UGOLD_OUTER], 0,
-	    "Outer temperature in microCelcius");
+	    "Outer temperature in microCelsius");
 
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),
 	    OID_AUTO, "outer_calib", CTLFLAG_RWTUN, &sc->sc_calib[UGOLD_OUTER], 0,
-	    "Outer calibration temperature in microCelcius");
+	    "Outer calibration temperature in microCelsius");
 
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(sensor_tree),

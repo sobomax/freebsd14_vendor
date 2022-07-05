@@ -1,4 +1,6 @@
-# $FreeBSD: 6906bf0c7e8af51ad7f3b92b5d7a44c1a2e024af $
+# $FreeBSD: a9355ed2ba297e60af930e1e20d7b5266f290a39 $
+
+PACKAGE=	nfs
 
 PROG=	clear_locks
 MAN=	clear_locks.8

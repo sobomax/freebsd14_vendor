@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 1f73940076677548ca2a388ead4997cef7ad47f3 $
+# $FreeBSD: fa1b49643cc55d1cddbf31908925b5e22830996f $
 #
 
 # PROVIDE: pf
@@ -23,11 +23,28 @@ extra_commands="check reload resync"
 required_files="$pf_rules"
 required_modules="pf"
 
+pf_fallback()
+{
+	warn "Unable to load $pf_rules."
+
+	if ! checkyesno pf_fallback_rules_enable; then
+		return
+	fi
+
+	if [ -f $pf_fallback_rules_file ]; then
+		warn "Loading fallback rules file: $pf_fallback_rules_file"
+		$pf_program -f "$pf_fallback_rules_file" $pf_flags
+	else
+		warn "Loading fallback rules: $pf_fallback_rules"
+		echo $pf_fallback_rules | $pf_program -f - $pf_flags
+	fi
+}
+
 pf_start()
 {
 	check_startmsgs && echo -n 'Enabling pf'
 	$pf_program -F all > /dev/null 2>&1
-	$pf_program -f "$pf_rules" $pf_flags
+	$pf_program -f "$pf_rules" $pf_flags || pf_fallback
 	if ! $pf_program -s info | grep -q "Enabled" ; then
 		$pf_program -eq
 	fi

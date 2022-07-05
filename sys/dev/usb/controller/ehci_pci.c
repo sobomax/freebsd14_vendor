@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7783c157046f681ce922e1a68c0be4a467324ba8 $");
+__FBSDID("$FreeBSD: dbc2def5b8d2fd2c57595d2922db1c56fc134e0a $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -116,6 +116,8 @@ ehci_pci_match(device_t self)
 	case 0x20951022:
 		return ("AMD CS5536 (Geode) USB 2.0 controller");
 	case 0x78081022:
+		return ("AMD FCH USB 2.0 controller");
+	case 0x79081022:
 		return ("AMD FCH USB 2.0 controller");
 
 	case 0x43451002:

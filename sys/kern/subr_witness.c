@@ -87,7 +87,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7e21db5d7c91bad3cb455cd015eba72cf00b8b4d $");
+__FBSDID("$FreeBSD: c849a191bf169e2f9d4ce1e059dadae0be92f2a8 $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
@@ -664,7 +664,6 @@ static struct witness_order_list_entry order_lists[] = {
 	{ "ap boot", &lock_class_mtx_spin },
 #endif
 	{ "rm.mutex_mtx", &lock_class_mtx_spin },
-	{ "sio", &lock_class_mtx_spin },
 #ifdef __i386__
 	{ "cy", &lock_class_mtx_spin },
 #endif

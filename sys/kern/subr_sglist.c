@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71be45b4231d70fef7e2293a84faa6bb6f738e2f $");
+__FBSDID("$FreeBSD: 7c520fda00f504ae41453e125baedf60d258dc8d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -464,6 +464,21 @@ sglist_append_mbuf(struct sglist *sg, struct mbuf *m0)
 		}
 	}
 	return (0);
+}
+
+/*
+ * Append the segments that describe a single mbuf to a scatter/gather
+ * list.  If there are insufficient segments, then this fails with
+ * EFBIG.
+ */
+int
+sglist_append_single_mbuf(struct sglist *sg, struct mbuf *m)
+{
+	if ((m->m_flags & M_EXTPG) != 0)
+		return (sglist_append_mbuf_epg(sg, m,
+		    mtod(m, vm_offset_t), m->m_len));
+	else
+		return (sglist_append(sg, m->m_data, m->m_len));
 }
 
 /*

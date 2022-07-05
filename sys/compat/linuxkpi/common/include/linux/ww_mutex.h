@@ -23,10 +23,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 49bec6628486d599978e02771089ec2124391dae $
+ * $FreeBSD: 82ba7a55a7e8c495dca6c2a6afbf9f8cb72296b4 $
  */
-#ifndef	_LINUX_WW_MUTEX_H_
-#define	_LINUX_WW_MUTEX_H_
+#ifndef	_LINUXKPI_LINUX_WW_MUTEX_H_
+#define	_LINUXKPI_LINUX_WW_MUTEX_H_
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -141,4 +141,4 @@ ww_acquire_done(struct ww_acquire_ctx *ctx)
 {
 }
 
-#endif					/* _LINUX_WW_MUTEX_H_ */
+#endif					/* _LINUXKPI_LINUX_WW_MUTEX_H_ */

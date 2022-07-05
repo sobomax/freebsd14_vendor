@@ -25,11 +25,31 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f9707ccfb5ff52d408a126ee8c8cb48399aa21a2 $
+ * $FreeBSD: 0f987e9a20ae820483dab2c15b203fa03814d55a $
  */
 
 #ifndef MAIN_H
 #define MAIN_H 1
+
+#ifdef IPSEC
+#include <netipsec/ipsec.h>
+#endif /*IPSEC*/
+
+#if defined(INET) && defined(IPSEC) && defined(IPSEC_POLICY_IPSEC)
+ #define PING4ADDOPTS "P:"
+#else
+ #define PING4ADDOPTS
+#endif
+#define PING4OPTS "4AaC:c:DdfG:g:Hh:I:i:Ll:M:m:nop:QqRrS:s:T:t:vW:z:" PING4ADDOPTS
+
+#if defined(INET6) && defined(IPSEC) && defined(IPSEC_POLICY_IPSEC)
+ #define PING6ADDOPTS "P:"
+#elif defined(INET6) && defined(IPSEC) && !defined(IPSEC_POLICY_IPSEC)
+ #define PING6ADDOPTS "ZE"
+#else
+ #define PING6ADDOPTS
+#endif
+#define PING6OPTS "6Aab:C:c:Dde:fHI:i:k:l:m:nNoOp:qS:s:t:uvyYW:z:" PING6ADDOPTS
 
 void usage(void) __dead2;
 

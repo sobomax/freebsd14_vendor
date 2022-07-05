@@ -1,2 +1,2 @@
-.\" $FreeBSD: 06d6f81c8fe1e7fa522687e965dd6224ed86a739 $
-Set to build or install HyperV utilities.
+.\" $FreeBSD: 22d2728138d6267ccdc2e0b4fda9c7d301a4570a $
+Build or install HyperV utilities.

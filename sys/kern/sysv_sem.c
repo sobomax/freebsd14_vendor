@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: deee60d87a5af574f9c509eb8b8501671c1dc834 $");
+__FBSDID("$FreeBSD: dd8925246d1ede47c2923f12ee1caf7605b61a77 $");
 
 #include "opt_sysvipc.h"
 
@@ -321,7 +321,7 @@ seminit(void)
 		if (rsv == NULL)
 			rsv = osd_reserve(sem_prison_slot);
 		prison_lock(pr);
-		if (prison_isvalid(pr) && (pr->pr_allow & PR_ALLOW_SYSVIPC)) {
+		if (pr->pr_allow & PR_ALLOW_SYSVIPC) {
 			(void)osd_jail_set_reserved(pr, sem_prison_slot, rsv,
 			    &prison0);
 			rsv = NULL;

@@ -1,4 +1,6 @@
-# $FreeBSD: b2f3f71cc1e81c44e208fe670ff9f9fadeacaeac $
+# $FreeBSD: ac92fc3ba2920237e80c40769bdbfc350cb3fee2 $
+
+PACKAGE=	kerberos
 
 PROG=	kadmind
 MAN=	kadmind.8

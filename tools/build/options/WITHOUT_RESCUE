@@ -1,3 +1,3 @@
-.\" $FreeBSD: 8e0eb95e4962a9b415da3ddc0282818c7e06a94d $
-Set to not build
+.\" $FreeBSD: 9b71cd0de3f260d741d2c84fa3252996f512c65d $
+Do not build
 .Xr rescue 8 .

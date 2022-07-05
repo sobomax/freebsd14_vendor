@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 439b3bf282e42a8ad904a3727294ecb6f9b46a94 $");
+__FBSDID("$FreeBSD: ec7d8eb6de884c5084cb57bd074b9cc0864d7306 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1028,10 +1028,8 @@ archive_write_pax_header(struct archive_write *a,
 	archive_string_init(&entry_name);
 	archive_strcpy(&entry_name, archive_entry_pathname(entry_main));
 
-	/* If file size is too large, add 'size' to pax extended attrs. */
+	/* If file size is too large, we need pax extended attrs. */
 	if (archive_entry_size(entry_main) >= (((int64_t)1) << 33)) {
-		add_pax_attr_int(&(pax->pax_header), "size",
-		    archive_entry_size(entry_main));
 		need_extension = 1;
 	}
 
@@ -1345,6 +1343,12 @@ archive_write_pax_header(struct archive_write *a,
 		pax->sparse_map_padding = 0x1ff & (-(ssize_t)mapsize);
 		archive_entry_set_size(entry_main,
 		    mapsize + pax->sparse_map_padding + sparse_total);
+	}
+
+	/* If file size is too large, add 'size' to pax extended attrs. */
+	if (archive_entry_size(entry_main) >= (((int64_t)1) << 33)) {
+		add_pax_attr_int(&(pax->pax_header), "size",
+		    archive_entry_size(entry_main));
 	}
 
 	/* Format 'ustar' header for main entry.

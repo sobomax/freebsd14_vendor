@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ed2c5f774d23e1f78fc61b155df1e5507ca408c6 $
+ * $FreeBSD: 76c9c6a749c19f9bff109a7ec536a861ecc73828 $
  */
-#ifndef	_LINUX_JIFFIES_H_
-#define	_LINUX_JIFFIES_H_
+#ifndef	_LINUXKPI_LINUX_JIFFIES_H_
+#define	_LINUXKPI_LINUX_JIFFIES_H_
 
 #include <linux/types.h>
 #include <linux/time.h>
@@ -53,6 +53,7 @@
 #define	time_in_range(a,b,c)	\
 	(time_after_eq(a,b) && time_before_eq(a,c))
 #define	time_is_after_eq_jiffies(a) time_after_eq(a, jiffies)
+#define	time_is_after_jiffies(a) time_after(a, jiffies)
 
 #define	HZ	hz
 
@@ -163,4 +164,4 @@ linux_timer_jiffies_until(int expires)
 	return (delta);
 }
 
-#endif	/* _LINUX_JIFFIES_H_ */
+#endif	/* _LINUXKPI_LINUX_JIFFIES_H_ */

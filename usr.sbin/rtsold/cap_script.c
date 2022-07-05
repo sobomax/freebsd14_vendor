@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5594d8ec8ec5ec2f2cd90de194fe3acbcab5a4d8 $");
+__FBSDID("$FreeBSD: 971d0bae4172dc90b6f7e3cb7a1a46d653e2aee8 $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -162,7 +162,7 @@ script_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 	const char *const *iargv, *const *scripts;
 	char **argv;
 	size_t argc, i, nscripts;
-	int fd, status;
+	int error, fd, status;
 
 	if (strcmp(cmd, "script_wait") == 0) {
 		/* Wait for the result of a previous "script_run" command. */
@@ -198,8 +198,10 @@ script_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 	memcpy(argv, iargv, sizeof(*argv) * argc);
 
 	fd = script_run(argv);
+	error = errno;
+	free(argv);
 	if (fd < 0)
-		return (errno);
+		return (error);
 
 	(void)caph_rights_limit(fd, cap_rights_init(&rights, CAP_WRITE));
 	nvlist_move_descriptor(nvlout, "fd", fd);

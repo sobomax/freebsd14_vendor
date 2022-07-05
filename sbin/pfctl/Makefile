@@ -1,4 +1,4 @@
-# $FreeBSD: 14dc83eb97b0d10f602791f9ecea9053026475a7 $
+# $FreeBSD: 49bdfb9e3733c2c8fa6434c3dc7ba84f9ba158a6 $
 
 .include <src.opts.mk>
 
@@ -16,6 +16,7 @@ WARNS?=	2
 CFLAGS+= -Wall -Wmissing-prototypes -Wno-uninitialized
 CFLAGS+= -Wstrict-prototypes
 CFLAGS+= -DENABLE_ALTQ -I${.CURDIR}
+CFLAGS+= -I${SRCTOP}/lib/libpfctl -I${OBJTOP}/lib/libpfctl
 
 # Need to use "WITH_" prefix to not conflict with the l/y INET/INET6 keywords
 .if ${MK_INET6_SUPPORT} != "no"
@@ -27,7 +28,7 @@ CFLAGS+= -DWITH_INET
 
 YFLAGS=
 
-LIBADD=	m md
+LIBADD=	m md pfctl
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

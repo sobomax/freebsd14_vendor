@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 583d6b1d101f31e76e9e47351f17c15584c5a8da $
+ * $FreeBSD: 7aaca72e30f1d3ccfec51c5a8bdf824cf97757a1 $
  */
 #include <stddef.h>
 #include <stdarg.h>
@@ -160,7 +160,7 @@ load(const char *filepath, dev_info_t *devinfo, void **bufp, size_t *bufsize)
 		return (EFI_NOT_FOUND);
 	}
 
-	if ((err = zfs_mount(spa, 0, &zmount)) != 0) {
+	if ((err = zfs_mount_impl(spa, 0, &zmount)) != 0) {
 		DPRINTF("Failed to mount pool '%s' (%d)\n", spa->spa_name, err);
 		return (EFI_NOT_FOUND);
 	}

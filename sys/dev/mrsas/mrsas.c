@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01173387c8d422d505148295c9e74219f0276b38 $");
+__FBSDID("$FreeBSD: 0055ddda8ce9b4fbeedbece4bf5649b93c258546 $");
 
 #include <dev/mrsas/mrsas.h>
 #include <dev/mrsas/mrsas_ioctl.h>
@@ -1198,6 +1198,7 @@ mrsas_shutdown(device_t dev)
 		if (sc->reset_in_progress) {
 			mrsas_dprint(sc, MRSAS_INFO,
 			    "gave up waiting for OCR to be finished\n");
+			return (0);
 		}
 	}
 
@@ -1914,15 +1915,16 @@ mrsas_alloc_mem(struct mrsas_softc *sc)
 	/*
 	 * Allocate parent DMA tag
 	 */
-	if (bus_dma_tag_create(NULL,	/* parent */
+	if (bus_dma_tag_create(
+	    bus_get_dma_tag(sc->mrsas_dev),	/* parent */
 	    1,				/* alignment */
 	    0,				/* boundary */
 	    BUS_SPACE_MAXADDR,		/* lowaddr */
 	    BUS_SPACE_MAXADDR,		/* highaddr */
 	    NULL, NULL,			/* filter, filterarg */
-	    maxphys,			/* maxsize */
-	    sc->max_num_sge,		/* nsegments */
-	    maxphys,			/* maxsegsize */
+	    BUS_SPACE_MAXSIZE,		/* maxsize */
+	    BUS_SPACE_UNRESTRICTED,	/* nsegments */
+	    BUS_SPACE_MAXSIZE,		/* maxsegsize */
 	    0,				/* flags */
 	    NULL, NULL,			/* lockfunc, lockarg */
 	    &sc->mrsas_parent_tag	/* tag */
@@ -2533,7 +2535,7 @@ mrsas_init_fw(struct mrsas_softc *sc)
 	    sc->ctrl_info->max_strips_per_io;
 	max_sectors_2 = sc->ctrl_info->max_request_size;
 	tmp_sectors = min(max_sectors_1, max_sectors_2);
-	sc->max_sectors_per_req = sc->max_num_sge * MRSAS_PAGE_SIZE / 512;
+	sc->max_sectors_per_req = (sc->max_num_sge - 1) * MRSAS_PAGE_SIZE / 512;
 
 	if (tmp_sectors && (sc->max_sectors_per_req > tmp_sectors))
 		sc->max_sectors_per_req = tmp_sectors;

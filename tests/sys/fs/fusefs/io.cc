@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 65ba1ea19bc317e5ce03139473031884f29a6173 $
+ * $FreeBSD: 1502bd263f518de405e3cce249c0e1c8081e2a46 $
  */
 
 extern "C" {
@@ -114,6 +114,7 @@ void SetUp()
 		default:
 			FAIL() << "Unknown cache mode";
 	}
+	m_noatime = true;	// To prevent SETATTR for atime on close
 
 	FuseTest::SetUp();
 	if (IsSkipped())

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b006809740d7b6bcff5778cc24c6e2385b4a6bd8 $");
+__FBSDID("$FreeBSD: 4bd339de4af59ba95314733035fb09a7950fe2f4 $");
 
 #include "opt_compat.h"
 
@@ -61,3 +61,4 @@ DUMMY(mq_timedreceive);
 DUMMY(mq_notify);
 DUMMY(mq_getsetattr);
 DUMMY(semtimedop);
+DUMMY(kexec_file_load);

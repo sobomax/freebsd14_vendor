@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a3ec6637337a4996a8d70d46e0396347c16ba5a $");
+__FBSDID("$FreeBSD: d4ceae3434479be8ea177973dffd34ba5b2aa650 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -1046,8 +1046,11 @@ ddf_meta_read(struct g_consumer *cp, struct ddf_meta *meta)
 	uint32_t val;
 
 	ddf_meta_free(meta);
+
 	pp = cp->provider;
 	ss = meta->sectorsize = pp->sectorsize;
+	if (ss < sizeof(*hdr))
+		return (ENXIO);
 	/* Read anchor block. */
 	abuf = g_read_data(cp, pp->mediasize - ss, ss, &error);
 	if (abuf == NULL) {

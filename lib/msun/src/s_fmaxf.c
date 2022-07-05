@@ -27,12 +27,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e9d1baf3e8e398843bce3f96a2562079e85cc43 $");
+__FBSDID("$FreeBSD: 8d3d14f4b52acdae756cf5c20c31fb2d875bd955 $");
 
 #include <math.h>
 
 #include "fpmath.h"
 
+#ifdef USE_BUILTIN_FMAXF
+float
+fmaxf(float x, float y)
+{
+	return (__builtin_fmaxf(x, y));
+}
+#else
 float
 fmaxf(float x, float y)
 {
@@ -53,3 +60,4 @@ fmaxf(float x, float y)
 
 	return (x > y ? x : y);
 }
+#endif

@@ -1,4 +1,6 @@
-#$FreeBSD: 24267a8dd4199b3a110303a3189144eb9df99762 $
+#$FreeBSD: 423a8919bc28d909fe23f81207c9b4b65aedf183 $
+
+PACKAGE=	kerberos
 
 LIB=	kdc
 LDFLAGS=	-Wl,--no-undefined

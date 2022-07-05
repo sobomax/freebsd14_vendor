@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: cd212b628bd18520c6cd8c2793d4c6149c8a9f9b $
+ * $FreeBSD: 4d7671aa8fb6a64eceaf7abe928ac3694ad8f60c $
  */
 
 /**
@@ -64,14 +64,10 @@ typedef struct ocs_intr_ctx_s {
 typedef struct ocs_fc_rport_db_s {
 	uint32_t	node_id;
 	uint32_t	state;
-	uint8_t		is_target;
-	uint8_t		is_initiator;
-
 	uint32_t	port_id;
 	uint64_t	wwnn;
 	uint64_t	wwpn;
 	uint32_t	gone_timer;
-
 } ocs_fc_target_t;
 
 #define OCS_TGT_STATE_NONE		0	/* Empty DB slot */

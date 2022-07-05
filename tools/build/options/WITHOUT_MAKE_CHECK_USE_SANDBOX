@@ -1,5 +1,5 @@
-.\" $FreeBSD: 9ab94f04f36ea4a4a303dde4b8e9b7145c2bd580 $
-Set to not execute
+.\" $FreeBSD: 0d9d06a699312f965e60040e24fb5924da2d3295 $
+Do not execute
 .Dq Li "make check"
 in limited sandbox mode.
 This option should be paired with

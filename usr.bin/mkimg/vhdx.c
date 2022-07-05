@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c97b20f5996a5c9e9f8fce8051a3fb7594db2c2 $");
+__FBSDID("$FreeBSD: 744d6e810ca57810b8cba42ceec6b0b9f82781f4 $");
 
 #include <sys/errno.h>
 #include <stdlib.h>
@@ -331,6 +331,7 @@ vhdx_write_metadata(int fd, uint64_t image_size)
 	memset(metadata, 0, SIZE_1MB);
 
 	memset(&header, 0, sizeof(header));
+	memset(&entry, 0, sizeof(entry));
 
 	le64enc(&header.signature, VHDX_METADATA_TABLE_HEADER_SIGNATURE);
 	le16enc(&header.entry_count, 5);

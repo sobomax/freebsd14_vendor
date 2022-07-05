@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD: 9fa9bebbc4c05b52cbca84ef36df8d52f31190c0 $
+ * $FreeBSD: 8e44e472c6d6c57417bd6af2b70643960967e2b8 $
  */
 
 #ifndef _UNISTD_H_
@@ -579,13 +579,14 @@ int	 setruid(uid_t);
 void	 setusershell(void);
 int	 strtofflags(char **, u_long *, u_long *);
 int	 swapon(const char *);
-int	 swapoff(const char *);
+int	 swapoff(const char *, u_int);
 int	 syscall(int, ...);
 off_t	 __syscall(quad_t, ...);
 int	 undelete(const char *);
 int	 unwhiteout(const char *);
 void	*valloc(size_t);			/* obsoleted by malloc() */
 int	 funlinkat(int, const char *, int, int);
+pid_t	 _Fork(void);
 
 #ifndef _OPTRESET_DECLARED
 #define	_OPTRESET_DECLARED

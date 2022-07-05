@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97782152d71d4bdd1b82cc997670eee985e94026 $");
+__FBSDID("$FreeBSD: 2f8c448fc0eb6bc60d96e6dafddfc83697652e67 $");
 
 #include <sys/types.h>
 #include <machine/endian.h>
@@ -50,9 +50,7 @@ __FBSDID("$FreeBSD: 97782152d71d4bdd1b82cc997670eee985e94026 $");
  * In particular, it should not be this one.
  */
 int
-in_cksum(p, len)
-	void *p;
-	int len;
+in_cksum(void *p, int len)
 {
 	int sum = 0, oddbyte = 0, v = 0;
 	u_char *cp = p;

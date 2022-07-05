@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7f07f87e52b89c4f993827109f632ccf1bb7f0db $
+ * $FreeBSD: 410161af29ee0078a921d6cfab23f11552867a1b $
  */
 
 #ifndef _NETGRAPH_NG_CAR_H_
@@ -103,8 +103,7 @@ struct ng_car_hookconf {
 enum {
     NG_CAR_ACTION_FORWARD = 1,
     NG_CAR_ACTION_DROP,
-    NG_CAR_ACTION_MARK,
-    NG_CAR_ACTION_SET_TOS
+    NG_CAR_ACTION_MARK
 };
 
 /* operation modes (mode) */
@@ -115,7 +114,7 @@ enum {
     NG_CAR_SHAPE
 };
 
-/* mode options (opt) */
+/* mode options (bits in opt) */
 #define NG_CAR_COLOR_AWARE	1
 #define NG_CAR_COUNT_PACKETS	2
 

@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1067c4c6cd4286579c93620122b6b5e550e58fe6 $");
+__FBSDID("$FreeBSD: 8dd3066f15e530d46ad25c34e2356286052a34da $");
 
 #include <stand.h>
 
@@ -206,6 +206,10 @@ main(void)
 	/* Set up fall back device name. */
 	snprintf(boot_devname, sizeof (boot_devname), "disk%d:",
 	    bd_bios2unit(bootinfo.bi_bios_dev));
+
+	/* Set up currdev variable to have hooks in place. */
+	env_setenv("currdev", EV_VOLATILE, "", i386_setcurrdev,
+	    env_nounset);
 
 	for (i = 0; devsw[i] != NULL; i++)
 		if (devsw[i]->dv_init != NULL)

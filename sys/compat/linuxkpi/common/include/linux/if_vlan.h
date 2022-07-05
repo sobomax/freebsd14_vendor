@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4d8b8926a03202d128099162e630992346d22e98 $
+ * $FreeBSD: 7c5531f6ec115c4eb61a2fb0b7af754b9f7cffab $
  */
-#ifndef	_LINUX_IF_VLAN_H_
-#define	_LINUX_IF_VLAN_H_
+#ifndef	_LINUXKPI_LINUX_IF_VLAN_H_
+#define	_LINUXKPI_LINUX_IF_VLAN_H_
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -56,4 +56,4 @@ vlan_dev_vlan_id(struct ifnet *ifp)
 	return (0);
 }
 
-#endif	/* _LINUX_IF_VLAN_H_ */
+#endif	/* _LINUXKPI_LINUX_IF_VLAN_H_ */

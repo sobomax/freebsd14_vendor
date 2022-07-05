@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: d87cf16a16dd3bb83531d693b511dca457aa29d9 $
+\ $FreeBSD: 999ac5005f5dddc4bec635d66ed7b3e25dde30b7 $
 
 \ Loader.rc support functions:
 \
@@ -486,6 +486,7 @@ get-current ( -- wid ) previous definitions >search ( wid -- )
 
 : reset_line_reading
   0 to read_buffer_ptr
+  0 read_buffer .len !
 ;
 
 : read_line

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e30ef0487a86f63e6f0d432cb70344fa2d5dc21 $");
+__FBSDID("$FreeBSD: 311c8cba09a9b2c1a1e20ea1791a242243b9e1a8 $");
 
 #include <sys/param.h>
 
@@ -138,7 +138,7 @@ nvme_print_controller(struct nvme_controller_data *cdata)
 		fmt ? "Supported" : "Not Supported");
 	printf("Firmware Activate/Download:  %s\n",
 		fw ? "Supported" : "Not Supported");
-	printf("Namespace Managment:         %s\n",
+	printf("Namespace Management:        %s\n",
 		nsmgmt ? "Supported" : "Not Supported");
 	printf("Device Self-test:            %sSupported\n",
 	    ((oacs >> NVME_CTRLR_DATA_OACS_SELFTEST_SHIFT) &

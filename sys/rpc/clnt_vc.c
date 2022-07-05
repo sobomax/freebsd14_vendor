@@ -36,7 +36,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92c216e227d11d5f84ab7724e30a88b15d37edb0 $");
+__FBSDID("$FreeBSD: 7d22c670b017cf744f7bdbc6f1c4666f5f4f0c68 $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -104,7 +104,7 @@ static bool_t time_not_ok(struct timeval *);
 static int clnt_vc_soupcall(struct socket *so, void *arg, int waitflag);
 static void clnt_vc_dotlsupcall(void *data);
 
-static struct clnt_ops clnt_vc_ops = {
+static const struct clnt_ops clnt_vc_ops = {
 	.cl_call =	clnt_vc_call,
 	.cl_abort =	clnt_vc_abort,
 	.cl_geterr =	clnt_vc_geterr,

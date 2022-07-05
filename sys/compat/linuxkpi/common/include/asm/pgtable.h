@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1df1030603685e8ab1a1698444c52ad340ac64a7 $
+ * $FreeBSD: 9e66fab8eae4ffeb27a533be7bffa49f2c69f9b1 $
  */
-#ifndef _ASM_PGTABLE_H_
-#define	_ASM_PGTABLE_H_
+#ifndef _LINUXKPI_ASM_PGTABLE_H_
+#define	_LINUXKPI_ASM_PGTABLE_H_
 
 #include <linux/page.h>
 
@@ -40,4 +40,6 @@ typedef unsigned long	pgdval_t;
 typedef unsigned long	pgprotval_t;
 typedef struct page *pgtable_t;
 
-#endif	/* _ASM_PGTABLE_H_ */
+#define	pgprot_decrypted(prot)	(prot)
+
+#endif	/* _LINUXKPI_ASM_PGTABLE_H_ */

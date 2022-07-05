@@ -1,4 +1,6 @@
-# $FreeBSD: 5e9cbfa5ea45509ef45cafd5396d3bc37a5dbb3f $
+# $FreeBSD: ac54c9dfa134343190b7a9275dde139dcfd992cc $
+
+PACKAGE=	kerberos
 
 PROG=	asn1_compile
 MAN=

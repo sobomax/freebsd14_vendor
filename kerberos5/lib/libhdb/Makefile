@@ -1,4 +1,6 @@
-# $FreeBSD: fda622d6945a879e568c7cd224857d6e7d218423 $
+# $FreeBSD: 647ee1513148cec7ba0915f5121359b6032edde0 $
+
+PACKAGE=	kerberos
 
 LIB=	hdb
 LDFLAGS=	-Wl,--no-undefined ${LDAPLDFLAGS}

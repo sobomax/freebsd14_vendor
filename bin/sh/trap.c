@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)trap.c	8.5 (Berkeley) 6/5/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7a98604c22c27f845f229d481cc0ea2e9ed91b5 $");
+__FBSDID("$FreeBSD: d7ef402742704583957b97d66f3555c10e61d378 $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -274,12 +274,8 @@ setsignal(int signo)
 			break;
 		case SIGQUIT:
 #ifdef DEBUG
-			{
-			extern int debug;
-
 			if (debug)
 				break;
-			}
 #endif
 			action = S_CATCH;
 			break;

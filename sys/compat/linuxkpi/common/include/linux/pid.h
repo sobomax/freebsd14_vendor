@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 73d8f1f6edfe0539ad0074a2e7ac1be777f8bd20 $
+ * $FreeBSD: be7c9384d4cfea71e80ae9d7c699d25af6f55de7 $
  */
 
-#ifndef	_LINUX_PID_H_
-#define	_LINUX_PID_H_
+#ifndef	_LINUXKPI_LINUX_PID_H_
+#define	_LINUXKPI_LINUX_PID_H_
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -67,4 +67,4 @@ struct task_struct;
 extern struct task_struct *linux_pid_task(pid_t);
 extern struct task_struct *linux_get_pid_task(pid_t);
 
-#endif					/* _LINUX_PID_H_ */
+#endif					/* _LINUXKPI_LINUX_PID_H_ */

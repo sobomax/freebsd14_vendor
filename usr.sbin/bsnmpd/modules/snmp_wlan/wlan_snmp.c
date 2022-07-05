@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2010 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Shteryana Sotirova Shopova under
  * sponsorship from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aa156a2f23210e24cabceaeb5f03a195672172bf $
+ * $FreeBSD: aaa2b3071352edffd0317ebca6df840e08beb322 $
  */
 
 #include <sys/queue.h>

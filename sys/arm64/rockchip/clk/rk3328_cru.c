@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e110564f773da15c8eb4d06a59eb90c8cb470853 $
+ * $FreeBSD: 95a87cfd0e0050c61514b8164bd7c4b486c6f107 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e110564f773da15c8eb4d06a59eb90c8cb470853 $");
+__FBSDID("$FreeBSD: 95a87cfd0e0050c61514b8164bd7c4b486c6f107 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,7 +114,7 @@ static struct rk_cru_gate rk3328_gates[] = {
 	/* CRU_CLKGATE_CON1 */
 	CRU_GATE(SCLK_I2S0, "clk_i2s0", "clk_i2s0_mux", 0x204, 3)
 	CRU_GATE(SCLK_I2S1, "clk_i2s1", "clk_i2s1_mux", 0x204, 6)
-	CRU_GATE(SCLK_I2S1, "clk_i2s2", "clk_i2s2_mux", 0x204, 10)
+	CRU_GATE(SCLK_I2S2, "clk_i2s2", "clk_i2s2_mux", 0x204, 10)
 
 	/* CRU_CLKGATE_CON4 */
 	CRU_GATE(0, "gpll_peri", "gpll", 0x210, 0)

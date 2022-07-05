@@ -47,9 +47,9 @@
 .\" This document is derived in part from the enet man page (enet.4)
 .\" distributed with 4.3BSD Unix.
 .\"
-.\" $FreeBSD: 200328891041b39f7e72f555f39cce97b5589d7b $
+.\" $FreeBSD: f285d5276376f58dd83fc68df80ddf6c68e923d6 $
 .\"
-.Dd October 9, 2020
+.Dd October 13, 2021
 .Dt BPF 4
 .Os
 .Sh NAME
@@ -659,6 +659,8 @@ therefore ownership is not assigned, the user process must check
 .Vt bzh_kernel_gen
 against
 .Vt bzh_user_gen .
+.It Dv BIOCSETVLANPCP
+Set the VLAN PCP bits to the supplied value.
 .El
 .Sh STANDARD IOCTLS
 .Nm
@@ -1077,7 +1079,7 @@ struct bpf_insn insns[] = {
 	BPF_STMT(BPF_LD+BPF_H+BPF_ABS, 12),
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ETHERTYPE_REVARP, 0, 3),
 	BPF_STMT(BPF_LD+BPF_H+BPF_ABS, 20),
-	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, REVARP_REQUEST, 0, 1),
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARPOP_REVREQUEST, 0, 1),
 	BPF_STMT(BPF_RET+BPF_K, sizeof(struct ether_arp) +
 		 sizeof(struct ether_header)),
 	BPF_STMT(BPF_RET+BPF_K, 0),

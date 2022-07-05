@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f26ad0452e0741ae9dafb9faa975e2af6e378adc $");
+__FBSDID("$FreeBSD: d361c175aa8e7442b84f97496e566a4b2efe0ab5 $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -118,6 +118,7 @@ ncl_uninit(struct vfsconf *vfsp)
 #endif
 }
 
+/* Returns with NFSLOCKNODE() held. */
 void 
 ncl_dircookie_lock(struct nfsnode *np)
 {
@@ -125,7 +126,6 @@ ncl_dircookie_lock(struct nfsnode *np)
 	while (np->n_flag & NDIRCOOKIELK)
 		(void) msleep(&np->n_flag, &np->n_mtx, PZERO, "nfsdirlk", 0);
 	np->n_flag |= NDIRCOOKIELK;
-	NFSUNLOCKNODE(np);
 }
 
 void 
@@ -330,6 +330,7 @@ ncl_invaldir(struct vnode *vp)
 	KASSERT(vp->v_type == VDIR, ("nfs: invaldir not dir"));
 	ncl_dircookie_lock(np);
 	np->n_direofoffset = 0;
+	NFSUNLOCKNODE(np);
 	np->n_cookieverf.nfsuquad[0] = 0;
 	np->n_cookieverf.nfsuquad[1] = 0;
 	if (LIST_FIRST(&np->n_cookies))

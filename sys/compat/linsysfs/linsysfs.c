@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66cb36db98681359ec35dad7229e6d0da78fbe05 $");
+__FBSDID("$FreeBSD: 8d3be1507de948492bcf7ba2a6d577cd7bb596e8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -633,6 +633,9 @@ linsysfs_init(PFS_INIT_ARGS)
 
 	root = pi->pi_root;
 
+	/* /sys/bus/... */
+	dir = pfs_create_dir(root, "bus", NULL, NULL, NULL, 0);
+
 	/* /sys/class/... */
 	class = pfs_create_dir(root, "class", NULL, NULL, NULL, 0);
 	scsi = pfs_create_dir(class, "scsi_host", NULL, NULL, NULL, 0);
@@ -678,6 +681,9 @@ linsysfs_init(PFS_INIT_ARGS)
 	kernel = pfs_create_dir(root, "kernel", NULL, NULL, NULL, 0);
 	/* /sys/kernel/debug, mountpoint for lindebugfs. */
 	debug = pfs_create_dir(kernel, "debug", NULL, NULL, NULL, 0);
+
+	/* /sys/subsystem/... */
+	dir = pfs_create_dir(root, "subsystem", NULL, NULL, NULL, 0);
 
 	return (0);
 }

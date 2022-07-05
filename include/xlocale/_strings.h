@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2011, 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: da1cff3e7077ce914326be6e36f42b608831fbbe $
+ * $FreeBSD: 1ec05ac79f2d1a86b0fbe2dac2b333085b0659eb $
  */
 
 #ifndef _LOCALE_T_DEFINED

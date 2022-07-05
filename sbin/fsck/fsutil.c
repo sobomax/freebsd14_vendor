@@ -35,13 +35,14 @@
 #ifndef lint
 __RCSID("$NetBSD: fsutil.c,v 1.15 2006/06/05 16:52:05 christos Exp $");
 #endif /* not lint */
-__FBSDID("$FreeBSD: 012bd434dce6e895509873464a9e47bfccf6fb60 $");
+__FBSDID("$FreeBSD: 9644697e2530a63851e9316f8f1e8c4993d09008 $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
 
 #include <err.h>
+#include <fstab.h>
 #include <paths.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -54,6 +55,44 @@ static const char *dev = NULL;
 static int preen = 0;
 
 static void vmsg(int, const char *, va_list) __printflike(2, 0);
+
+/*
+ * The getfsopt() function checks whether an option is present in
+ * an fstab(5) fs_mntops entry. There are six possible cases:
+ *
+ * fs_mntops  getfsopt  result
+ *  rw,foo       foo    true
+ *  rw,nofoo    nofoo   true
+ *  rw,nofoo     foo    false
+ *  rw,foo      nofoo   false
+ *  rw           foo    false
+ *  rw          nofoo   false
+ *
+ * This function should be part of and documented in getfsent(3).
+ */
+int
+getfsopt(struct fstab *fs, const char *option)
+{
+	int negative, found;
+	char *opt, *optbuf;
+
+	if (option[0] == 'n' && option[1] == 'o') {
+		negative = 1;
+		option += 2;
+	} else
+		negative = 0;
+	optbuf = strdup(fs->fs_mntops);
+	found = 0;
+	for (opt = optbuf; (opt = strtok(opt, ",")) != NULL; opt = NULL) {
+		if (opt[0] == 'n' && opt[1] == 'o') {
+			if (!strcasecmp(opt + 2, option))
+				found = negative;
+		} else if (!strcasecmp(opt, option))
+			found = !negative;
+	}
+	free(optbuf);
+	return (found);
+}
 
 void
 setcdevname(const char *cd, int pr)

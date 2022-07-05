@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2de61855815b22cfd2501a388f40ac44d71383e $");
+__FBSDID("$FreeBSD: 9409fb0e1964b6731f1d241036d65a2d23061fc4 $");
 
 #include <sys/param.h>
 #include <sys/elf.h>
@@ -868,9 +868,7 @@ procstat_getfiles_sysctl(struct procstat *procstat, struct kinfo_proc *kp,
 	cap_rights_t cap_rights;
 
 	assert(kp);
-	if (kp->ki_fd == NULL)
-		return (NULL);
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_SYSCTL:
 		files = kinfo_getfile(kp->ki_pid, &cnt);
 		break;
@@ -2612,7 +2610,8 @@ procstat_getkstack_sysctl(pid_t pid, int *cntp)
 		warn("malloc(%zu)", len);
 		return (NULL);
 	}
-	if (sysctl(name, nitems(name), kkstp, &len, NULL, 0) == -1) {
+	if (sysctl(name, nitems(name), kkstp, &len, NULL, 0) == -1 &&
+	    errno != ENOMEM) {
 		warn("sysctl: kern.proc.pid: %d", pid);
 		free(kkstp);
 		return (NULL);

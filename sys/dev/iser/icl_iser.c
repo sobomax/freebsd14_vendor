@@ -1,4 +1,4 @@
-/* $FreeBSD: be09a3649dd9cc707c3b01010cef8f8be4ab7006 $ */
+/* $FreeBSD: f3780a441e01af685383bf10cf7d02a8a2084888 $ */
 /*-
  * Copyright (c) 2015, Mellanox Technologies, Inc. All rights reserved.
  *
@@ -566,5 +566,4 @@ moduledata_t icl_iser_data = {
 DECLARE_MODULE(icl_iser, icl_iser_data, SI_SUB_DRIVERS, SI_ORDER_MIDDLE);
 MODULE_DEPEND(icl_iser, icl, 1, 1, 1);
 MODULE_DEPEND(icl_iser, ibcore, 1, 1, 1);
-MODULE_DEPEND(icl_iser, linuxkpi, 1, 1, 1);
 MODULE_VERSION(icl_iser, 1);

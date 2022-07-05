@@ -1,6 +1,9 @@
 /*
- * $FreeBSD: 3bfce70c8d2ca9bfb70302f0bb51185447f88627 $
+ * $FreeBSD: b04fe67b476de572ee3a9d6570b232708590d5e8 $
  */
+#ifndef _SYS_CK_H_
+#define _SYS_CK_H_
+
 #ifdef _KERNEL
 #include <ck_queue.h>
 #include <ck_epoch.h>
@@ -11,3 +14,5 @@
 #define CK_LIST_HEAD LIST_HEAD
 #define CK_LIST_ENTRY LIST_ENTRY
 #endif
+
+#endif /* !_SYS_CK_H_ */

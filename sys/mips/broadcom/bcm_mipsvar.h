@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Landon Fuller under sponsorship from
  * the FreeBSD Foundation.
@@ -29,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: b2c10026895cbd35041842e5f415141440f72d01 $
+ * $FreeBSD: bb530ae6c3ee841f4483fdaccf812383ff667dbc $
  */
 
 #ifndef _MIPS_BROADCOM_BCM_MIPSVAR_H_

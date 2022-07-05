@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: b7210e204a145bf57dd4e862069495d34ec7c6eb $");
+__FBSDID("$FreeBSD: 0af44d246a115fb22de7406edaaf8001b65b20f5 $");
 
 #ifdef HAVE_SYS_XATTR_H
 #include <sys/xattr.h>
@@ -37,7 +37,7 @@ has_xattr(const char *filename, const char *xattrname)
 {
 	char *nl, *nlp;
 	ssize_t r;
-	int exisiting;
+	int existing;
 
 	r = listxattr(filename, NULL, 0, XATTR_SHOWCOMPRESSION);
 	if (r < 0)
@@ -55,15 +55,15 @@ has_xattr(const char *filename, const char *xattrname)
 		return (0);
 	}
 
-	exisiting = 0;
+	existing = 0;
 	for (nlp = nl; nlp < nl + r; nlp += strlen(nlp) + 1) {
 		if (strcmp(nlp, xattrname) == 0) {
-			exisiting = 1;
+			existing = 1;
 			break;
 		}
 	}
 	free(nl);
-	return (exisiting);
+	return (existing);
 }
 #endif
 

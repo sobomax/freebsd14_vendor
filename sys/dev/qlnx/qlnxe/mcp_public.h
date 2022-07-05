@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 71c59b16408edf31175da87b5679fdbf938e3fb5 $
+ * $FreeBSD: 585dc6634d71159839578e9de4aa5d740ca151b0 $
  *
  */
 
@@ -513,7 +513,7 @@ struct public_global {
 	u32 debug_mb_offset;
 	u32 phymod_dbg_mb_offset;
 	struct couple_mode_teaming cmt;
-	s32 internal_temperature; /* Temperature in Celcius (-255C / +255C), measured every second. */
+	s32 internal_temperature; /* Temperature in Celsius (-255C / +255C), measured every second. */
 	u32 mfw_ver;
 	u32 running_bundle_id;
 	s32 external_temperature;

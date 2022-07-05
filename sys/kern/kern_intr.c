@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e11af2123e2d91273e5621a5e9ca661ee23939e $");
+__FBSDID("$FreeBSD: 0cbfce030a36f95854908c649e8d83017fab03db $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_usage_prof.h"
@@ -783,8 +783,8 @@ intr_handler_barrier(struct intr_handler *handler)
  * Sleep until an ithread finishes executing an interrupt handler.
  *
  * XXX Doesn't currently handle interrupt filters or fast interrupt
- * handlers.  This is intended for compatibility with linux drivers
- * only.  Do not use in BSD code.
+ * handlers. This is intended for LinuxKPI drivers only.
+ * Do not use in BSD code.
  */
 void
 _intr_drain(int irq)
@@ -1612,7 +1612,7 @@ sysctl_intrnames(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_hw, OID_AUTO, intrnames,
-    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_NEEDGIANT, NULL, 0,
+    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
     sysctl_intrnames, "",
     "Interrupt Names");
 
@@ -1641,7 +1641,7 @@ sysctl_intrcnt(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_hw, OID_AUTO, intrcnt,
-    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_NEEDGIANT, NULL, 0,
+    CTLTYPE_OPAQUE | CTLFLAG_RD | CTLFLAG_MPSAFE, NULL, 0,
     sysctl_intrcnt, "",
     "Interrupt Counts");
 

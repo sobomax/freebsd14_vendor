@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 25d2bb3dc6e37e4d2e5f054191ba7177c4b1da15 $
+ * $FreeBSD: 85c791d3df6ce76885f0eaba4b08d28f0123ca8d $
  */
 
 #ifndef _SYS_EPOCH_H_
@@ -55,6 +55,7 @@ struct epoch_tracker {
 	TAILQ_ENTRY(epoch_tracker) et_link;
 	struct thread *et_td;
 	ck_epoch_section_t et_section;
+	uint8_t et_old_priority;
 #ifdef EPOCH_TRACE
 	struct epoch *et_epoch;
 	SLIST_ENTRY(epoch_tracker) et_tlink;

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)buf_subs.c	8.2 (Berkeley) 4/18/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 153b599193d8d7dbad509109f7ce7ced06344acc $");
+__FBSDID("$FreeBSD: 6d50a280f29ca2a9f2072ae8b125e73975528302 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -540,7 +540,7 @@ rd_wrbuf(char *in, int cpcnt)
 		}
 
 		/*
-		 * calculate how much data to copy based on whats left and
+		 * calculate how much data to copy based on what's left and
 		 * state of buffer
 		 */
 		cnt = MIN(cnt, incnt);

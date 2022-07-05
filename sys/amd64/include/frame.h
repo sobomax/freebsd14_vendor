@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2018 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f0a6fcf5bc9ccc78e9a4a3269ec4936580f3b310 $
+ * $FreeBSD: 5eb96d03b9817f9df4cbaa11be901f2ccf5329ad $
  */
 
 #ifndef	_AMD64_FRAME_H
@@ -46,5 +45,10 @@ struct pti_frame {
 	register_t	pti_rsp;
 	register_t	pti_ss;
 };
+
+#ifdef _KERNEL
+#define	CS_SECURE(cs)		(ISPL(cs) == SEL_UPL)
+#define	EFL_SECURE(ef, oef)	((((ef) ^ (oef)) & ~PSL_USERCHANGE) == 0)
+#endif
 
 #endif

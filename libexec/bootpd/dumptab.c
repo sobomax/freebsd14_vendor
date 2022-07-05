@@ -1,7 +1,7 @@
 /*
  * dumptab.c - handles dumping the database
  *
- * $FreeBSD: 43e94ec4cef2b01c9e1e367ab0c006b819c9290a $
+ * $FreeBSD: daab93f609a63f66b97255dc8876d7af70ef8e7b $
  */
 
 #include <sys/types.h>
@@ -10,16 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 #include <syslog.h>
 #include <time.h>
-
-#ifndef USE_BFUNCS
-#include <memory.h>
-/* Yes, memcpy is OK here (no overlapped copies). */
-#define bcopy(a,b,c)    memcpy(b,a,c)
-#define bzero(p,l)      memset(p,0,l)
-#define bcmp(a,b,c)     memcmp(a,b,c)
-#endif
 
 #include "bootp.h"
 #include "hash.h"

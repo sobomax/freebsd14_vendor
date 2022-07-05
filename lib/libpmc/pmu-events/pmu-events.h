@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c4c01e20114d5e540cfc08a2617b10691c9576f8 $
+ * $FreeBSD: cfc82f20364cbce5c08fd26316298d75ddeefaec $
  */
 
 #ifndef PMU_EVENTS_H
@@ -10,7 +10,6 @@
  */
 struct pmu_event {
 	const char *name;
-	const char *alias;
 	const char *event;
 	const char *desc;
 	const char *topic;

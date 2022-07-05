@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)hostname.c	8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5cc6b1cfff2bc47284321bcdbece7193c1d63c3 $");
+__FBSDID("$FreeBSD: 3dbafa9d3566f494e5b38aaa04d0fdef49db97ed $");
 
 #include <sys/param.h>
 
@@ -57,7 +57,7 @@ int
 main(int argc, char *argv[])
 {
 	int ch, sflag, dflag;
-	char *p, hostname[MAXHOSTNAMELEN];
+	char hostname[MAXHOSTNAMELEN], *hostp, *p;
 
 	sflag = 0;
 	dflag = 0;
@@ -90,6 +90,7 @@ main(int argc, char *argv[])
 		if (sethostname(*argv, (int)strlen(*argv)))
 			err(1, "sethostname");
 	} else {
+		hostp = hostname;
 		if (gethostname(hostname, (int)sizeof(hostname)))
 			err(1, "gethostname");
 		if (sflag) {
@@ -99,9 +100,9 @@ main(int argc, char *argv[])
 		} else if (dflag) {
 			p = strchr(hostname, '.');
 			if (p != NULL)
-				strcpy(hostname, ++p);
+				hostp = p + 1;
 		}
-		(void)printf("%s\n", hostname);
+		(void)printf("%s\n", hostp);
 	}
 	exit(0);
 }

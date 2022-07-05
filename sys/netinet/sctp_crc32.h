@@ -33,13 +33,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b86074b696f14284eee96eef6bdf647eb8c562c $");
+__FBSDID("$FreeBSD: 96ab7b96b6e47fba773c5ced2e5008a3ff034b5e $");
 
 #ifndef _NETINET_SCTP_CRC32_H_
 #define _NETINET_SCTP_CRC32_H_
 
 #if defined(_KERNEL)
-uint32_t sctp_calculate_cksum(struct mbuf *, uint32_t);
+uint32_t sctp_calculate_cksum(struct mbuf *, int32_t);
 #if defined(SCTP) || defined(SCTP_SUPPORT)
 void sctp_delayed_cksum(struct mbuf *, uint32_t offset);
 #endif

@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 42119c06db8bc2e7859343be983aa89544446908 $
+ * $FreeBSD: 6250235c6ca96fb3a5893ea75cf9d4452176ee87 $
  */
 
 #ifndef	TEST_COMMON_H
@@ -470,5 +470,7 @@ void assertVersion(const char *prog, const char *base);
 #ifdef USE_DMALLOC
 #include <dmalloc.h>
 #endif
+
+#include "test_utils.h"
 
 #endif	/* TEST_COMMON_H */

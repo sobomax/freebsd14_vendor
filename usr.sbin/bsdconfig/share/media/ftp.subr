@@ -24,7 +24,7 @@ if [ ! "$_MEDIA_FTP_SUBR" ]; then _MEDIA_FTP_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a6d0e1ca1ad0af1d92e2043be7cb8c15ba16a012 $
+# $FreeBSD: fb2579f59f897e17b622e34f6952de88e1e765c4 $
 #
 ############################################################ INCLUDES
 
@@ -101,6 +101,7 @@ f_dialog_menu_media_ftp()
 		'$msg_brazil'             'ftp2.br.freebsd.org'
 		' $msg_brazil #3'         'ftp3.br.freebsd.org'
 		' $msg_brazil #4'         'ftp4.br.freebsd.org'
+		'$msg_bulgaria'           'ftp.bg.freebsd.org'
 		'$msg_china'              'ftp.cn.freebsd.org'
 		'$msg_czech_republic'     'ftp.cz.freebsd.org'
 		'$msg_denmark'            'ftp.dk.freebsd.org'

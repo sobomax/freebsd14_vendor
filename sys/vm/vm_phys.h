@@ -30,7 +30,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a650d7dbc380328c856d5cd10161ca31ba676af0 $
+ * $FreeBSD: d10eb96f938f74dded89a3f0df3216237adc9f23 $
  */
 
 /*
@@ -87,6 +87,7 @@ vm_paddr_t vm_phys_early_alloc(int domain, size_t alloc_size);
 void vm_phys_early_startup(void);
 int vm_phys_avail_largest(void);
 vm_paddr_t vm_phys_avail_size(int i);
+bool vm_phys_is_dumpable(vm_paddr_t pa);
 
 static inline int
 vm_phys_domain(vm_paddr_t pa)

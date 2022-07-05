@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5526102606f636eb68aac97c2b9715f9ca0c538c $
+# $FreeBSD: cda56e2225cd5a9b16231e8351e28e2d5440bb6d $
 
 BEGIN {
 	# Init global vars.
@@ -134,7 +134,7 @@ function write_v8booti() {
 	write_le32(0)                         # code1
 	write_le64(0)                         # text_offset
 	write_le64(gEndOff)                   # image_size
-	write_le64(0)                         # flags
+	write_le64(hexstr_to_num("8"))        # flags
 	write_le64(0)                         # res1[0]
 	write_le64(0)                         # res1[1]
 	write_le64(0)                         # res1[2]
@@ -144,22 +144,22 @@ function write_v8booti() {
 
 /kernbase/ {
 	# If the symbol name is exactly "kernbase" save its address.
-	if ($8 == "kernbase") {
-		gKernbase = hexstr_to_num($2)
+	if ($3 == "kernbase") {
+		gKernbase = hexstr_to_num($1)
 	}
 }
 
 /_start/ {
 	# If the symbol name is exactly "_start" save its address.
-	if ($8 == "_start") {
-		gStart = hexstr_to_num($2)
+	if ($3 == "_start") {
+		gStart = hexstr_to_num($1)
 	}
 }
 
 /_end/ {
 	# If the symbol name is exactly "_end" remember its value.
-	if ($8 == "_end") {
-		gEnd = hexstr_to_num($2)
+	if ($3 == "_end") {
+		gEnd = hexstr_to_num($1)
 	}
 }
 

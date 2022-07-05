@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8bd1cf05089405bfbb60c6d80a0ab99a9bd8ec3 $");
+__FBSDID("$FreeBSD: 85ddf5db1f9022e0f808275fa6c3dd8d4c61a67d $");
 #include <sys/param.h>
 
 #include <stand.h>
@@ -474,6 +474,9 @@ main(int argc, char **argv)
 	dump_addr_info();
 
 	meminfo();
+
+	/* Set up currdev variable to have hooks in place. */
+	env_setenv("currdev", EV_VOLATILE, "", uboot_setcurrdev, env_nounset);
 
 	/*
 	 * Enumerate U-Boot devices

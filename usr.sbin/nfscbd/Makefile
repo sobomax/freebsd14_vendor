@@ -1,4 +1,6 @@
-# $FreeBSD: 1e11e3a8171118f9531e41bb297794d9a0555a6c $
+# $FreeBSD: 668914a88154263cb82021daf9ceb01bb719bf3c $
+
+PACKAGE=	nfs
 
 PROG=	nfscbd
 MAN=	nfscbd.8

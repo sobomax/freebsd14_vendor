@@ -1,4 +1,4 @@
-/* $FreeBSD: 830fc4d98959159ce6f5ebfe96c30be4ea3cbd03 $ */
+/* $FreeBSD: 0882737f125bd08c758236cc2fe6d33f759edc47 $ */
 /* This generated file is for internal use. Do not include it from headers. */
 
 #ifdef CLANG_CONFIG_H
@@ -65,7 +65,7 @@
 #define CLANG_HAVE_RLIMITS 1
 
 /* The LLVM product name and version */
-#define BACKEND_PACKAGE_STRING "LLVM 11.0.1"
+#define BACKEND_PACKAGE_STRING "LLVM 13.0.0"
 
 /* Linker version detected at compile time. */
 /* #undef HOST_LINK_VERSION */
@@ -74,10 +74,7 @@
 /* #undef ENABLE_LINKER_BUILD_ID */
 
 /* enable x86 relax relocations by default */
-#define ENABLE_X86_RELAX_RELOCATIONS 0
-
-/* Enable the experimental new pass manager by default */
-#define ENABLE_EXPERIMENTAL_NEW_PASS_MANAGER 0
+#define ENABLE_X86_RELAX_RELOCATIONS 1
 
 /* Enable each functionality of modules */
 /* #undef CLANG_ENABLE_ARCMT */

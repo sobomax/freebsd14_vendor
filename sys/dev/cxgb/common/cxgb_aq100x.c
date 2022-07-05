@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78a76b2cc47c9ef9faaba46395133ad462710c77 $");
+__FBSDID("$FreeBSD: 8c06f9f5ab208764e28fc74a8cb3dc33a1b14693 $");
 
 #include <cxgb_include.h>
 
@@ -79,7 +79,7 @@ enum {
 } while (0)
 
 /*
- * Return value is temperature in celcius, 0xffff for error or don't know.
+ * Return value is temperature in celsius, 0xffff for error or don't know.
  */
 static int
 aq100x_temperature(struct cphy *phy)

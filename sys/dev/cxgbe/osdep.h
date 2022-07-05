@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 95c93d83cff834f635d7dac2b99af3e665ec998a $
+ * $FreeBSD: 3f41ccaf3d2c8102abebfc0456406f284ef9d44a $
  *
  */
 
@@ -43,13 +43,13 @@
 #include <dev/pci/pcireg.h>
 
 #define CH_ERR(adap, fmt, ...) log(LOG_ERR, "%s: " fmt, \
-    device_get_nameunit(adap->dev), ##__VA_ARGS__)
+    device_get_nameunit((adap)->dev), ##__VA_ARGS__)
 #define CH_WARN(adap, fmt, ...) log(LOG_WARNING, "%s: " fmt, \
-    device_get_nameunit(adap->dev), ##__VA_ARGS__)
+    device_get_nameunit((adap)->dev), ##__VA_ARGS__)
 #define CH_ALERT(adap, fmt, ...) log(LOG_ALERT, "%s: " fmt, \
-    device_get_nameunit(adap->dev), ##__VA_ARGS__)
+    device_get_nameunit((adap)->dev), ##__VA_ARGS__)
 #define CH_WARN_RATELIMIT(adap, fmt, ...) log(LOG_WARNING, "%s: " fmt, \
-    device_get_nameunit(adap->dev), ##__VA_ARGS__)
+    device_get_nameunit((adap)->dev), ##__VA_ARGS__)
 
 #ifndef LINUX_TYPES_DEFINED
 typedef int8_t  s8;

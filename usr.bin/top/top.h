@@ -1,7 +1,7 @@
 /*-
  * Top - a top users display for Berkeley Unix
  *
- * $FreeBSD: 7ec2d7f2c199ba9516aecca392525ef4e312ced7 $
+ * $FreeBSD: 2f31d5812ee41fb432fbf11d35e61d6ed63f4d63 $
  */
 
 #ifndef TOP_H
@@ -36,6 +36,8 @@ extern int overstrike;
 extern pid_t mypid;
 
 extern int (*compares[])(const void*, const void*);
+
+extern int show_args;
 
 const char* kill_procs(char *);
 const char* renice_procs(char *);

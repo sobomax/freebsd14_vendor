@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ef11e6991aedd26188d03c562e45a652654f18a0 $");
+__FBSDID("$FreeBSD: 6cd098a8113bc9978e11528ce0a0f847422720d1 $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -237,7 +237,7 @@ static int
 tsc_read_pmc(int cpu, int ri, pmc_value_t *v)
 {
 	struct pmc *pm;
-	enum pmc_mode mode;
+	enum pmc_mode mode __diagused;
 	const struct pmc_hw *phw;
 
 	KASSERT(cpu >= 0 && cpu < pmc_cpu_max(),
@@ -265,7 +265,7 @@ tsc_read_pmc(int cpu, int ri, pmc_value_t *v)
 static int
 tsc_release_pmc(int cpu, int ri, struct pmc *pmc)
 {
-	struct pmc_hw *phw;
+	struct pmc_hw *phw __diagused;
 
 	(void) pmc;
 

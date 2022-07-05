@@ -34,11 +34,11 @@
 static char sccsid[] = "@(#)mkheaders.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 62f81553bb5c9acb481d8589ebb39544bead91db $";
+  "$FreeBSD: 5dfde12c1db8420586a4511001be51a7632000ee $";
 #endif /* not lint */
 
 /*
- * This used to generate a bunch of hearders files related to devices when
+ * This used to generate a bunch of headers files related to devices when
  * device counters were supported. Support for that was removed in 2005.
  * Since then, all we've done is to report unknown devices in this file.
  * It's kept its historical name, despite no longer generating headers.

@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b953d2679fb99854d94a34403266f731256f097 $");
+__FBSDID("$FreeBSD: 8f6c88f81f7c214d08c1c5e7a9a7f01ea40463cc $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -169,6 +169,24 @@ uart_opal_real_unmap_outbuffer(uint64_t *len)
 	mtx_assert(&opalcons_buffer.mtx, MA_OWNED);
 	*len = opalcons_buffer.size;
 	mtx_unlock_spin(&opalcons_buffer.mtx);
+}
+
+static int64_t
+uart_opal_console_write_buffer_space(int vtermid)
+{
+	int64_t buffer_space_val = 0;
+	vm_paddr_t buffer_space_ptr;
+
+	if (pmap_bootstrapped)
+		buffer_space_ptr = vtophys(&buffer_space_val);
+	else
+		buffer_space_ptr = (vm_paddr_t)&buffer_space_val;
+
+	if (opal_call(OPAL_CONSOLE_WRITE_BUFFER_SPACE, vtermid,
+	    buffer_space_ptr) != OPAL_SUCCESS)
+		return (-1);
+
+	return (be64toh(buffer_space_val));
 }
 
 static int
@@ -420,12 +438,12 @@ uart_opal_put(struct uart_opal_softc *sc, void *buffer, size_t bufsize)
 		len -= 4;
 	}
 
-#if 0
-	if (err != OPAL_SUCCESS)
-		len = 0;
-#endif
+	if (err == OPAL_SUCCESS)
+		return (len);
+	else if (err == OPAL_BUSY_EVENT)
+		return(0);
 
-	return (len);
+	return (-1);
 }
 
 static int
@@ -481,11 +499,28 @@ uart_opal_ttyoutwakeup(struct tty *tp)
 	struct uart_opal_softc *sc;
 	char buffer[8];
 	int len;
+	int64_t buffer_space;
 
 	sc = tty_softc(tp);
 
-	while ((len = ttydisc_getc(tp, buffer, sizeof(buffer))) != 0)
-		uart_opal_put(sc, buffer, len);
+	while ((len = ttydisc_getc(tp, buffer, sizeof(buffer))) != 0) {
+		int bytes_written = 0;
+		while (bytes_written == 0) {
+			buffer_space = uart_opal_console_write_buffer_space(sc->vtermid);
+			if (buffer_space == -1)
+				/* OPAL failure or invalid terminal */
+				break;
+			else if (buffer_space >= len)
+				bytes_written = uart_opal_put(sc, buffer, len);
+
+			if (bytes_written == 0)
+				/* OPAL must be busy, poll and retry */
+				opal_call(OPAL_POLL_EVENTS, NULL);
+			else if (bytes_written == -1)
+				/* OPAL failure or invalid terminal */
+				break;
+		}
+	}
 }
 
 static void

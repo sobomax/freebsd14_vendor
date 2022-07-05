@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2017 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Landon Fuller under sponsorship from
  * the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a3540416dff9d2650c28dc15926986539e90d28e $");
+__FBSDID("$FreeBSD: 2c4e8e696a8bd41d72b99ae2945c4fedf03a80a8 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>

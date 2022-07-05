@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80ec182c53beed9abf9cfb6aaf1cd1eee08422f2 $");
+__FBSDID("$FreeBSD: 54fa7535bc0e5ae032c365c15df1fa3d577c0c1a $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -593,7 +593,8 @@ intel_meta_read(struct g_consumer *cp)
 	uint32_t checksum, *ptr;
 
 	pp = cp->provider;
-
+	if (pp->sectorsize < sizeof(*meta))
+		return (NULL);
 	/* Read the anchor sector. */
 	buf = g_read_data(cp,
 	    pp->mediasize - pp->sectorsize * 2, pp->sectorsize, &error);

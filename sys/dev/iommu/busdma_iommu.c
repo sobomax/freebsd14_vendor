@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9cafd49807ffb30e2a539ead71d1f23444cbce0c $");
+__FBSDID("$FreeBSD: 02ac5845bdccc9cae066653f9be49c1832f8cf01 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -398,7 +397,8 @@ iommu_bus_dma_tag_set_domain(bus_dma_tag_t dmat)
 static int
 iommu_bus_dma_tag_destroy(bus_dma_tag_t dmat1)
 {
-	struct bus_dma_tag_iommu *dmat, *dmat_copy, *parent;
+	struct bus_dma_tag_iommu *dmat, *parent;
+	struct bus_dma_tag_iommu *dmat_copy __unused;
 	int error;
 
 	error = 0;

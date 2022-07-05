@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -30,7 +29,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1743d77658615b196cc68e34747cd66ca3e27c64 $");
+__FBSDID("$FreeBSD: 39850ce3bf02f2dd56d2983d5a557ca76c84ea46 $");
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/kdb.h>
@@ -48,20 +47,6 @@ db_md_list_watchpoints()
 {
 
 	dbg_show_watchpoint();
-}
-
-int
-db_md_clr_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (dbg_remove_watchpoint(NULL, addr, size));
-}
-
-int
-db_md_set_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (dbg_setup_watchpoint(NULL, addr, size, HW_BREAKPOINT_RW));
 }
 
 static void

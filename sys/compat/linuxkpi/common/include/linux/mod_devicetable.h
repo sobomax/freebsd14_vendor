@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f2a913bc6346aa269cd275337179c4a8f567afb3 $
+ * $FreeBSD: 5609c6f775e96668631037227d57525a04b5c977 $
  */
 
-#ifndef __LINUX_MOD_DEVICETABLE_H__
-#define	__LINUX_MOD_DEVICETABLE_H__
+#ifndef __LINUXKPI_LINUX_MOD_DEVICETABLE_H__
+#define	__LINUXKPI_LINUX_MOD_DEVICETABLE_H__
 
 enum dmi_field {
 	DMI_NONE,
@@ -69,4 +69,4 @@ struct dmi_system_id {
 #define DMI_MATCH(a, b) { .slot = a, .substr = b }
 #define DMI_EXACT_MATCH(a, b)   { .slot = a, .substr = b, }
 
-#endif	/* __LINUX_MOD_DEVICETABLE_H__ */
+#endif	/* __LINUXKPI_LINUX_MOD_DEVICETABLE_H__ */

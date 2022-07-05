@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 517ce8d1bab78afd622a85229f9d6b314c442d53 $");
+__FBSDID("$FreeBSD: 39f3349d521777a1c72e83c6bd6ecd8a17bea0b0 $");
 
 /*
  * CYAPA - Cypress APA trackpad with I2C Interface driver
@@ -1377,7 +1377,7 @@ cyapa_raw_input(struct cyapa_softc *sc, struct cyapa_regs *regs, int freq)
 #ifdef EVDEV_SUPPORT
 	if (evdev_rcpt_mask & EVDEV_RCPT_HW_MOUSE) {
 		for (i = 0; i < nfingers; ++i) {
-			int32_t slot = evdev_get_mt_slot_by_tracking_id(
+			int slot = evdev_mt_id_to_slot(
 			    sc->evdev, regs->touch[i].id);
 			if (slot == -1) {
 				if (cyapa_debug)

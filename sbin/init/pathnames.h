@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/5/93
- * $FreeBSD: 2ed366e4f7f74667fed662027760a310f29b6a51 $
+ * $FreeBSD: 7dc75ba524914467c334150a9c4144596b8ae127 $
  */
 
 #include <paths.h>
@@ -41,5 +41,6 @@
 #define	_PATH_SLOGGER		"/sbin/session_logger"
 #define	_PATH_RUNCOM		"/etc/rc"
 #define	_PATH_RUNDOWN		"/etc/rc.shutdown"
+#define	_PATH_RUNFINAL		"/etc/rc.final"
 #define	_PATH_REROOT		"/dev/reroot"
 #define	_PATH_REROOT_INIT	_PATH_REROOT "/init"

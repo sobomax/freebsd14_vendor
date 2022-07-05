@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0398c8cc1c8b3e488f3e4a71ea69e1abd89cf71a $");
+__FBSDID("$FreeBSD: e76e2b6652f469d9ee2e762933c2ea9256801b6d $");
 
 #include "opt_ffclock.h"
 
@@ -402,7 +402,7 @@ sys_ffclock_getcounter(struct thread *td, struct ffclock_getcounter_args *uap)
 }
 
 /*
- * System call allowing the synchronisation daemon to push new feed-foward clock
+ * System call allowing the synchronisation daemon to push new feed-forward clock
  * estimates to the kernel. Acquire ffclock_mtx to prevent concurrent updates
  * and ensure data consistency.
  * NOTE: ffclock_updated signals the fftimehands that new estimates are

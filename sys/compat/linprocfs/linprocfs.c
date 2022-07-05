@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79ffc4dfd5aa428c6c26a6a6430a410ee642c044 $");
+__FBSDID("$FreeBSD: 27acd7d651a73f108b14969a3b4540d163d74adc $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -1089,12 +1089,12 @@ linprocfs_doprocstatus(PFS_FILL_ARGS)
 	sbuf_printf(sb, "Pid:\t%d\n",		p->p_pid);
 	sbuf_printf(sb, "PPid:\t%d\n",		kp.ki_ppid );
 	sbuf_printf(sb, "TracerPid:\t%d\n",	kp.ki_tracer );
-	sbuf_printf(sb, "Uid:\t%d %d %d %d\n",	p->p_ucred->cr_ruid,
+	sbuf_printf(sb, "Uid:\t%d\t%d\t%d\t%d\n", p->p_ucred->cr_ruid,
 						p->p_ucred->cr_uid,
 						p->p_ucred->cr_svuid,
 						/* FreeBSD doesn't have fsuid */
 						p->p_ucred->cr_uid);
-	sbuf_printf(sb, "Gid:\t%d %d %d %d\n",	p->p_ucred->cr_rgid,
+	sbuf_printf(sb, "Gid:\t%d\t%d\t%d\t%d\n", p->p_ucred->cr_rgid,
 						p->p_ucred->cr_gid,
 						p->p_ucred->cr_svgid,
 						/* FreeBSD doesn't have fsgid */
@@ -1169,7 +1169,7 @@ linprocfs_doproccwd(PFS_FILL_ARGS)
 	char *fullpath = "unknown";
 	char *freepath = NULL;
 
-	pwd = pwd_hold(td);
+	pwd = pwd_hold_proc(p);
 	vn_fullpath(pwd->pwd_cdir, &fullpath, &freepath);
 	sbuf_printf(sb, "%s", fullpath);
 	if (freepath)
@@ -1189,7 +1189,7 @@ linprocfs_doprocroot(PFS_FILL_ARGS)
 	char *fullpath = "unknown";
 	char *freepath = NULL;
 
-	pwd = pwd_hold(td);
+	pwd = pwd_hold_proc(p);
 	vp = jailed(p->p_ucred) ? pwd->pwd_jdir : pwd->pwd_rdir;
 	vn_fullpath(vp, &fullpath, &freepath);
 	sbuf_printf(sb, "%s", fullpath);
@@ -1414,11 +1414,6 @@ linprocfs_doprocmem(PFS_FILL_ARGS)
 	return (error);
 }
 
-/*
- * Criteria for interface name translation
- */
-#define IFP_IS_ETH(ifp) (ifp->if_type == IFT_ETHER)
-
 static int
 linux_ifname(struct ifnet *ifp, char *buffer, size_t buflen)
 {
@@ -1428,7 +1423,7 @@ linux_ifname(struct ifnet *ifp, char *buffer, size_t buflen)
 	IFNET_RLOCK_ASSERT();
 
 	/* Short-circuit non ethernet interfaces */
-	if (!IFP_IS_ETH(ifp))
+	if (linux_use_real_ifname(ifp))
 		return (strlcpy(buffer, ifp->if_xname, buflen));
 
 	/* Determine the (relative) unit number for ethernet interfaces */
@@ -1436,7 +1431,7 @@ linux_ifname(struct ifnet *ifp, char *buffer, size_t buflen)
 	CK_STAILQ_FOREACH(ifscan, &V_ifnet, if_link) {
 		if (ifscan == ifp)
 			return (snprintf(buffer, buflen, "eth%d", ethno));
-		if (IFP_IS_ETH(ifscan))
+		if (!linux_use_real_ifname(ifscan))
 			ethno++;
 	}
 

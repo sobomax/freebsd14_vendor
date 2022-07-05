@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 1f2a44121ecd88e00e2df98780cfb41344afb774 $");
+__FBSDID("$FreeBSD: 5a171f5a5e17f6b44cb3ba1c1813f9f3e48d904f $");
 
 #include <machine/riscvreg.h>
 #include <sys/errno.h>
@@ -118,7 +118,7 @@ ENTRY(copyout)
 	beqz	a2, copyout_end	/* If len == 0 then skip loop */
 	add	a3, a1, a2
 	li	a4, VM_MAXUSER_ADDRESS
-	bgt	a3, a4, copyio_fault_nopcb
+	bgeu	a3, a4, copyio_fault_nopcb
 
 	copycommon
 
@@ -136,7 +136,7 @@ ENTRY(copyin)
 	beqz	a2, copyin_end	/* If len == 0 then skip loop */
 	add	a3, a0, a2
 	li	a4, VM_MAXUSER_ADDRESS
-	bgt	a3, a4, copyio_fault_nopcb
+	bgeu	a3, a4, copyio_fault_nopcb
 
 	copycommon
 
@@ -159,7 +159,7 @@ ENTRY(copyinstr)
 	ENTER_USER_ACCESS(a7)
 
 	li	a7, VM_MAXUSER_ADDRESS
-1:	bgt	a0, a7, copyio_fault
+1:	bgeu	a0, a7, copyio_fault
 	lb	a4, 0(a0)	/* Load from uaddr */
 	addi	a0, a0, 1
 	sb	a4, 0(a1)	/* Store in kaddr */

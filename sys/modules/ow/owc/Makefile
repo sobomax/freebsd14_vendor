@@ -1,4 +1,4 @@
-# $FreeBSD: 909c2382ad7d581aa69ccbbab16e4eeb8b9063ee $
+# $FreeBSD: 78da808c82bca75231240a0647c9e639161f5981 $
 
 .PATH: ${SRCTOP}/sys/dev/ow
 
@@ -6,5 +6,7 @@ KMOD=	owc
 SRCS=	owc_gpiobus.c
 SRCS+=	gpio_if.h gpiobus_if.h owll_if.h ofw_bus_if.h bus_if.h device_if.h
 SRCS+=	opt_platform.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

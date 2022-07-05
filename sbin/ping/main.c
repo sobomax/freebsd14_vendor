@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01442679efffa25ef5c37eeffb81993bde10d373 $");
+__FBSDID("$FreeBSD: 1d0b714f1480aa38f0b23a3ba66e7b83f64a4f43 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -52,13 +52,13 @@ __FBSDID("$FreeBSD: 01442679efffa25ef5c37eeffb81993bde10d373 $");
 #endif
 
 #if defined(INET) && defined(INET6)
-#define	OPTSTR ":46"
+#define	OPTSTR PING6OPTS PING4OPTS
 #elif defined(INET)
-#define OPTSTR ":4"
+#define	OPTSTR PING4OPTS
 #elif defined(INET6)
-#define	OPTSTR ":6"
+#define	OPTSTR PING6OPTS
 #else
-#define OPTSTR ""
+#error At least one of INET and INET6 is required
 #endif
 
 int
@@ -82,7 +82,7 @@ main(int argc, char *argv[])
 		ipv6 = true;
 #endif
 
-	while ((ch = getopt(argc, argv, OPTSTR)) != -1) {
+	while ((ch = getopt(argc, argv, ":" OPTSTR)) != -1) {
 		switch(ch) {
 #ifdef INET
 		case '4':
@@ -170,7 +170,7 @@ usage(void)
 	    "[-G sweepmaxsize]\n"
 	    "	    [-g sweepminsize] [-h sweepincrsize] [-i wait] "
 	    "[-l preload]\n"
-	    "	    [-M mask | time] [-m ttl]" 
+	    "	    [-M mask | time] [-m ttl] "
 #ifdef IPSEC
 	    "[-P policy] "
 #endif
@@ -188,7 +188,7 @@ usage(void)
 	    "            [-z tos] IPv4-mcast-group\n"
 #endif /* INET */
 #ifdef INET6
-            "\tping [-6aADd"
+            "\tping [-6AaDd"
 #if defined(IPSEC) && !defined(IPSEC_POLICY_IPSEC)
             "E"
 #endif

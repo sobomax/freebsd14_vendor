@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: acfe0c6a1e07f54e10aef19c63ad571f82da7d1d $");
+__FBSDID("$FreeBSD: b5d3f4d9629a8ed69f80381393108c50153a53c3 $");
 #if 0
 __KERNEL_RCSID(0, "$NetBSD: qat.c,v 1.6 2020/06/14 23:23:12 riastradh Exp $");
 #endif
@@ -276,8 +276,8 @@ static const struct qat_sym_hash_def qat_sym_hash_defs[] = {
 static const struct qat_product *qat_lookup(device_t);
 static int	qat_probe(device_t);
 static int	qat_attach(device_t);
-static int	qat_init(struct device *);
-static int	qat_start(struct device *);
+static int	qat_init(device_t);
+static int	qat_start(device_t);
 static int	qat_detach(device_t);
 
 static int	qat_newsession(device_t dev, crypto_session_t cses,
@@ -352,8 +352,7 @@ qat_attach(device_t dev)
 {
 	struct qat_softc *sc = device_get_softc(dev);
 	const struct qat_product *qatp;
-	bus_size_t msixtbl_offset;
-	int bar, count, error, i, msixoff, msixtbl_bar;
+	int bar, count, error, i;
 
 	sc->sc_dev = dev;
 	sc->sc_rev = pci_get_revid(dev);
@@ -389,16 +388,6 @@ qat_attach(device_t dev)
 	sc->sc_sku = sc->sc_hw.qhw_get_sku(sc);
 	sc->sc_accel_cap = sc->sc_hw.qhw_get_accel_cap(sc);
 	sc->sc_fw_uof_name = sc->sc_hw.qhw_get_fw_uof_name(sc);
-
-	/* Map BARs */
-	msixtbl_bar = 0;
-	msixtbl_offset = 0;
-	if (pci_find_cap(dev, PCIY_MSIX, &msixoff) == 0) {
-		uint32_t msixtbl;
-		msixtbl = pci_read_config(dev, msixoff + PCIR_MSIX_TABLE, 4);
-		msixtbl_offset = msixtbl & ~PCIM_MSIX_BIR_MASK;
-		msixtbl_bar = PCIR_BAR(msixtbl & PCIM_MSIX_BIR_MASK);
-	}
 
 	i = 0;
 	if (sc->sc_hw.qhw_sram_bar_id != NO_PCI_REG) {
@@ -1119,7 +1108,7 @@ qat_etr_bank_intr(void *arg)
 	struct qat_bank *qb = arg;
 	struct qat_softc *sc = qb->qb_sc;
 	uint32_t estat;
-	int i, handled = 0;
+	int i;
 
 	mtx_lock(&qb->qb_bank_mtx);
 
@@ -1137,7 +1126,7 @@ qat_etr_bank_intr(void *arg)
 	while ((i = ffs(estat)) != 0) {
 		struct qat_ring *qr = &qb->qb_et_rings[--i];
 		estat &= ~(1 << i);
-		handled |= qat_etr_ring_intr(sc, qb, qr);
+		(void)qat_etr_ring_intr(sc, qb, qr);
 	}
 }
 

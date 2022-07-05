@@ -1,4 +1,4 @@
-// $FreeBSD: 1201fbd7faca7495e9e498a1cea2964bc2c92fd8 $
+// $FreeBSD: a9a33dde6667c2c7788c3e1506abdef1a2685338 $
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -21,6 +21,8 @@
 
 #define HAVE_PPOLL 1
 
+#define HAVE_PTSNAME_R 1
+
 #define HAVE_SIGACTION 1
 
 #define HAVE_PROCESS_VM_READV 0
@@ -38,6 +40,8 @@
 #define LLDB_ENABLE_LZMA 1
 
 #define LLDB_ENABLE_CURSES 1
+
+#define CURSES_HAVE_NCURSES_CURSES_H 0
 
 #define LLDB_ENABLE_LIBEDIT 1
 

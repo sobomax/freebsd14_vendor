@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a5c776ef6db6f7ea1b2b09cfbee731af50c994e8 $
+ * $FreeBSD: cd34429143119ad7f343f72847a36905de9f2a8c $
  */
 
 #include <sys/param.h>
@@ -961,6 +961,8 @@ ng_nat_translate_flags(unsigned int x)
 		res |= PKT_ALIAS_PROXY_ONLY;
 	if (x & NG_NAT_REVERSE)
 		res |= PKT_ALIAS_REVERSE;
+	if (x & NG_NAT_UNREGISTERED_CGN)
+		res |= PKT_ALIAS_UNREGISTERED_CGN;
 
 	return (res);
 }

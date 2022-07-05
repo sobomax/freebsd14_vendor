@@ -1,6 +1,8 @@
-# $FreeBSD: 68e540df3a49e86d6ffe1b7914a1d8b1fd2b3c9c $
+# $FreeBSD: b3471cce40ed04b65902d37f48ce93a5b0a45afc $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=	limits
 LIBADD=	util

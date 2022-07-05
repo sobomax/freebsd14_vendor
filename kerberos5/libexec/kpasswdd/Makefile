@@ -1,4 +1,6 @@
-# $FreeBSD: ec36c24fc03441812731e04da2c187e737f793f8 $
+# $FreeBSD: 867c9f19961d54cb6460b85e512fb9dee8c28393 $
+
+PACKAGE=	kerberos
 
 PROG=	kpasswdd
 MAN=	kpasswdd.8

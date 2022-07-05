@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d338e11c5a6f35698771e20a8b17182d2cce17d0 $
+ * $FreeBSD: 07f00f07686032e4d052f97f641ea39ac8ed0fba $
  */
-#ifndef _LINUX_HARDIRQ_H_
-#define	_LINUX_HARDIRQ_H_
+#ifndef _LINUXKPI_LINUX_HARDIRQ_H_
+#define	_LINUXKPI_LINUX_HARDIRQ_H_
 
 #include <linux/types.h>
 #include <linux/lockdep.h>
@@ -40,4 +40,4 @@
 
 #define	synchronize_irq(irq)	_intr_drain((irq))
 
-#endif	/* _LINUX_HARDIRQ_H_ */
+#endif	/* _LINUXKPI_LINUX_HARDIRQ_H_ */

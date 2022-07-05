@@ -1,4 +1,4 @@
-#$FreeBSD: 1add2348666831ff47d2b5886ad649e2d3a177b0 $
+#$FreeBSD: fb307fa7dba2870e4c0ba40a639c45f6d331b867 $
 
 .PATH:  ${SRCTOP}/sys/dev/ice
 
@@ -7,9 +7,10 @@ SRCS    = device_if.h bus_if.h pci_if.h ifdi_if.h
 SRCS    += opt_inet.h opt_inet6.h opt_rss.h opt_iflib.h
 SRCS    += ice_lib.c ice_osdep.c ice_resmgr.c ice_strings.c
 SRCS    += ice_iflib_recovery_txrx.c ice_iflib_txrx.c if_ice_iflib.c
+SRCS	+= ice_fw_logging.c
 
 # Shared source
 SRCS    += ice_common.c ice_controlq.c ice_dcb.c ice_flex_pipe.c ice_flow.c
-SRCS    += ice_nvm.c ice_sched.c ice_sriov.c ice_switch.c ice_vlan_mode.c
+SRCS    += ice_nvm.c ice_sched.c ice_switch.c ice_vlan_mode.c ice_fwlog.c
 
 .include <bsd.kmod.mk>

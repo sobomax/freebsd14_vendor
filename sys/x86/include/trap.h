@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)trap.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: 74c4522c02a8b9022eaa302a7c3bd119de5269be $
+ * $FreeBSD: c31e454cd05f2fcd4829e784ffb936b3b9b1790d $
  */
 
 #ifndef _MACHINE_TRAP_H_
@@ -65,8 +65,5 @@
 #define	T_XMMFLT	29	/* SIMD floating-point exception */
 #define	T_RESERVED	30	/* reserved (unknown) */
 #define	T_DTRACE_RET	32	/* DTrace pid return */
-
-/* Trap's coming from user mode */
-#define	T_USER	0x100
 
 #endif /* !_MACHINE_TRAP_H_ */

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 51833a212f6c52067ec0b74b65d3959e86e85b03 $
+ *	$FreeBSD: 50694e5d4b44a218091df6174e6eecffc1526597 $
  *
  */
 
@@ -46,13 +46,11 @@
  * the encryption one is similar.
  */
 struct aes_cbc_mac_ctx {
-	uint64_t	authDataLength, authDataCount;
-	uint64_t	cryptDataLength, cryptDataCount;
-	int		blockIndex;
 	uint8_t		staging_block[CCM_CBC_BLOCK_LEN];
 	uint8_t		block[CCM_CBC_BLOCK_LEN];
-	const uint8_t	*nonce;
+	int		blockIndex;
 	int		nonceLength;	/* This one is in bytes, not bits! */
+	const uint8_t	*nonce;
 	/* AES state data */
 	int		rounds;
 	uint32_t	keysched[4*(RIJNDAEL_MAXNR+1)];

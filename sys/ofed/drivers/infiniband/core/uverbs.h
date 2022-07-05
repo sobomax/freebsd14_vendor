@@ -35,7 +35,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 6c8d9632b0dca43b5f52b6914f4e6175e2f83b91 $
+ * $FreeBSD: 9f2a519fa2595375e32ae836f1900a38e78d327f $
  */
 
 #ifndef UVERBS_H
@@ -54,21 +54,28 @@
 #include <rdma/ib_umem.h>
 #include <rdma/ib_user_verbs.h>
 
-#define INIT_UDATA(udata, ibuf, obuf, ilen, olen)			\
-	do {								\
-		(udata)->inbuf  = (const void __user *) (ibuf);		\
-		(udata)->outbuf = (void __user *) (obuf);		\
-		(udata)->inlen  = (ilen);				\
-		(udata)->outlen = (olen);				\
-	} while (0)
+static inline void
+ib_uverbs_init_udata(struct ib_udata *udata,
+		     const void __user *ibuf,
+		     void __user *obuf,
+		     size_t ilen, size_t olen)
+{
+	udata->inbuf  = ibuf;
+	udata->outbuf = obuf;
+	udata->inlen  = ilen;
+	udata->outlen = olen;
+}
 
-#define INIT_UDATA_BUF_OR_NULL(udata, ibuf, obuf, ilen, olen)			\
-	do {									\
-		(udata)->inbuf  = (ilen) ? (const void __user *) (ibuf) : NULL;	\
-		(udata)->outbuf = (olen) ? (void __user *) (obuf) : NULL;	\
-		(udata)->inlen  = (ilen);					\
-		(udata)->outlen = (olen);					\
-	} while (0)
+static inline void
+ib_uverbs_init_udata_buf_or_null(struct ib_udata *udata,
+				 const void __user *ibuf,
+				 void __user *obuf,
+				 size_t ilen, size_t olen)
+{
+	ib_uverbs_init_udata(udata,
+			     ilen ? ibuf : NULL, olen ? obuf : NULL,
+			     ilen, olen);
+}
 
 /*
  * Our lifetime rules for these structs are the following:

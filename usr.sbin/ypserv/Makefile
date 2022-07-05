@@ -1,10 +1,11 @@
-# $FreeBSD: c229c4a34d83c1a7452a59684ddab7a01cdd35c8 $
+# $FreeBSD: 6d5948554ec859b3c8514c32db58e217a889aaa7 $
 
 .include <src.opts.mk>
 
 RPCDIR=	${SRCTOP}/include/rpcsvc
 .PATH: ${RPCDIR} ${.CURDIR}/common
 
+PACKAGE=	yp
 PROG=	ypserv
 MAN=	ypserv.8 ypinit.8
 SRCS=	yp_svc.c yp_server.c yp_dblookup.c yp_dnslookup.c \

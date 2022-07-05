@@ -1,6 +1,0 @@
-# $FreeBSD: f48cbb6c307980a166fff2fa444b839a5a0e8e19 $
-Project:	Portable OpenSSH
-ProjectURL:	http://www.openssh.com/portable.html
-Version:	7.9p1
-License:	BSD
-Maintainer:	des

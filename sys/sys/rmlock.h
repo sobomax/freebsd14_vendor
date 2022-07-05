@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3e4db5d853c62a0fd29292d5f6c0e8f597fa123a $
+ * $FreeBSD: 5aaf8f039026078feb1b1e9af42ee1b5ff69ee78 $
  */
 
 #ifndef _SYS_RMLOCK_H_
@@ -48,6 +48,7 @@
 #define	RM_RECURSE	0x00000002
 #define	RM_SLEEPABLE	0x00000004
 #define	RM_NEW		0x00000008
+#define	RM_DUPOK	0x00000010
 
 void	rm_init(struct rmlock *rm, const char *name);
 void	rm_init_flags(struct rmlock *rm, const char *name, int opts);

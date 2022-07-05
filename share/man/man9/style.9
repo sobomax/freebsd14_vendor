@@ -23,7 +23,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	From: @(#)style	1.14 (Berkeley) 4/28/95
-.\" $FreeBSD: 10ca64cde81743331a4856dbff6d330603d28613 $
+.\" $FreeBSD: 16782fe22197b07a123bca3cd4ea45264c9a4a17 $
 .\"
 .Dd October 28, 2020
 .Dt STYLE 9
@@ -45,7 +45,7 @@ is silent on an issue.
  * Style guide for FreeBSD.  Based on the CSRG's KNF (Kernel Normal Form).
  *
  *	@(#)style	1.14 (Berkeley) 4/28/95
- * $FreeBSD: 10ca64cde81743331a4856dbff6d330603d28613 $
+ * $FreeBSD: 16782fe22197b07a123bca3cd4ea45264c9a4a17 $
  */
 
 /*
@@ -132,7 +132,7 @@ in front of foreign VCS IDs if the file is renamed.
 /* From: @(#)style	1.14 (Berkeley) 4/28/95 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 10ca64cde81743331a4856dbff6d330603d28613 $");
+__FBSDID("$FreeBSD: 16782fe22197b07a123bca3cd4ea45264c9a4a17 $");
 .Ed
 .Pp
 Leave one blank line before the header files.
@@ -718,9 +718,6 @@ scope is undesirable and will elicit complaints from a good compiler.
 Casts and
 .Ic sizeof Ns 's
 are not followed by a space.
-Note that
-.Xr indent 1
-does not understand this rule.
 .Ic sizeof Ns 's
 are written with parenthesis always.
 The redundant parenthesis rules do not apply to

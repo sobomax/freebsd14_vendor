@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd996f7a06ad84696f738f477f81db62c0c1d305 $");
+__FBSDID("$FreeBSD: 70c0ef15a56e14b7a86dc16b71ec176d01fcb87d $");
 
 #include "opt_kbd.h"
 
@@ -453,7 +453,7 @@ static d_poll_t		genkbdpoll;
 
 static struct cdevsw kbd_cdevsw = {
 	.d_version =	D_VERSION,
-	.d_flags =	D_NEEDGIANT,
+	.d_flags =	D_NEEDGIANT | D_GIANTOK,
 	.d_open =	genkbdopen,
 	.d_close =	genkbdclose,
 	.d_read =	genkbdread,

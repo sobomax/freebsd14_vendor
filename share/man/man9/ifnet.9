@@ -26,7 +26,7 @@
 .\" OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 126fcb9bc671234fe0fb3759229e4286550e004c $
+.\" $FreeBSD: 90a95106b1d558a7825d5eee0340dad4413207d3 $
 .\"
 .Dd September 28, 2020
 .Dt IFNET 9
@@ -1393,15 +1393,6 @@ The socket's protocol control routine is called to implement the
 requested action.
 .El
 .El
-.Pp
-.Fn if_down ,
-.Fn ifioctl ,
-.Fn ifpromisc ,
-and
-.Fn if_up
-must be called at
-.Fn splnet
-or higher.
 .Ss "Interface Address Functions"
 Several functions exist to look up an interface address structure
 given an address.

@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)lorder.1	8.2 (Berkeley) 4/28/95
-.\" $FreeBSD: b3bfc2d37d35da4433f2883c64979c6a9a3b9bb3 $
+.\" $FreeBSD: de03b626fc5f4e6a1c7ac3aa44bda502169d1473 $
 .\"
-.Dd August 14, 2015
+.Dd December 20, 2021
 .Dt LORDER 1
 .Os
 .Sh NAME
@@ -61,6 +61,13 @@ When linking static binaries,
 and
 .Xr tsort 1
 can be used to properly order library archives automatically.
+.Pp
+The use of
+.Nm
+is not required by contemporary linkers, and
+.Nm
+may be removed from a future version of
+.Fx .
 .Sh ENVIRONMENT
 .Bl -tag -width indent
 .It Ev NM

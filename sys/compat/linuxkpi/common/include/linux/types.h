@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: aa3580c81a275e1081850cdaa33f2660cefc030a $
+ * $FreeBSD: dab5e6ddce427a9fc3ac6eb081d2736d5f226bed $
  */
-#ifndef	_LINUX_TYPES_H_
-#define	_LINUX_TYPES_H_
+#ifndef	_LINUXKPI_LINUX_TYPES_H_
+#define	_LINUXKPI_LINUX_TYPES_H_
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
@@ -72,6 +72,7 @@ typedef unsigned __poll_t;
 typedef uint64_t phys_addr_t;
 
 typedef size_t __kernel_size_t;
+typedef	unsigned long	kernel_ulong_t;
 
 #define	DECLARE_BITMAP(n, bits)						\
 	unsigned long n[howmany(bits, sizeof(long) * 8)]
@@ -86,4 +87,4 @@ typedef void (*rcu_callback_t)(struct rcu_head *head);
 typedef void (*call_rcu_func_t)(struct rcu_head *head, rcu_callback_t func);
 typedef int linux_task_fn_t(void *data);
 
-#endif	/* _LINUX_TYPES_H_ */
+#endif	/* _LINUXKPI_LINUX_TYPES_H_ */

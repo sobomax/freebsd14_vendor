@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e035b4f156b424d32cc45d6b9f659e4a79db00e7 $
+ * $FreeBSD: 2e2dbca4e24b1b8f200be0c28588f026e4aab06d $
  */
 
 #include "linux32_assym.h"		/* system definitions */
@@ -130,16 +130,16 @@ ENTRY(futex_orl_smap)
 	movq	$VM_MAXUSER_ADDRESS-4,%rax
 	cmpq	%rax,%rsi
 	ja	futex_fault
+	stac
 	movl	(%rsi),%eax
 1:	movl	%eax,%ecx
 	orl	%edi,%ecx
-	stac
 #ifdef SMP
 	lock
 #endif
 	cmpxchgl %ecx,(%rsi)
-	clac
 	jnz	1b
+	clac
 	movl	%eax,(%rdx)
 	xorl	%eax,%eax
 	movq	%rax,PCB_ONFAULT(%r8)
@@ -172,16 +172,16 @@ ENTRY(futex_andl_smap)
 	movq	$VM_MAXUSER_ADDRESS-4,%rax
 	cmpq	%rax,%rsi
 	ja	futex_fault
+	stac
 	movl	(%rsi),%eax
 1:	movl	%eax,%ecx
 	andl	%edi,%ecx
-	stac
 #ifdef SMP
 	lock
 #endif
 	cmpxchgl %ecx,(%rsi)
-	clac
 	jnz	1b
+	clac
 	movl	%eax,(%rdx)
 	xorl	%eax,%eax
 	movq	%rax,PCB_ONFAULT(%r8)
@@ -214,16 +214,16 @@ ENTRY(futex_xorl_smap)
 	movq	$VM_MAXUSER_ADDRESS-4,%rax
 	cmpq	%rax,%rsi
 	ja	futex_fault
+	stac
 	movl	(%rsi),%eax
 1:	movl	%eax,%ecx
 	xorl	%edi,%ecx
-	stac
 #ifdef SMP
 	lock
 #endif
 	cmpxchgl %ecx,(%rsi)
-	clac
 	jnz	1b
+	clac
 	movl	%eax,(%rdx)
 	xorl	%eax,%eax
 	movq	%rax,PCB_ONFAULT(%r8)

@@ -40,7 +40,7 @@
  * see ``http://www.vix.com/isc''.  To learn more about Vixie
  * Enterprises, see ``http://www.vix.com''.
  *
- * $FreeBSD: 240a3ae23bdafac9abbd983c6db5adb425f631cb $
+ * $FreeBSD: b151daa90a1cba9c8137501c6fa8cb519151495e $
  */
 
 #include <sys/param.h>
@@ -159,6 +159,7 @@ struct client_config {
 	u_int8_t		 required_options[256];
 	u_int8_t		 requested_options[256];
 	int			 requested_option_count;
+	u_int			 vlan_pcp;
 	time_t			 timeout;
 	time_t			 initial_interval;
 	time_t			 retry_interval;

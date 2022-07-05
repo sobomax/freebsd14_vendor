@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63b7d116f4167310e774c542ec3efd2e57747a4e $");
+__FBSDID("$FreeBSD: eab79e9dfbc304a228030821e85569298e81a112 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -985,6 +985,10 @@ regulator_status(regulator_t reg, int *status)
 	KASSERT(regnode->ref_cnt > 0,
 	   ("Attempt to access unreferenced regulator: %s\n", regnode->name));
 
+	if (reg->enable_cnt == 0) {
+		*status = 0;
+		return (0);
+	}
 	REG_TOPO_SLOCK();
 	rv = regnode_status(regnode, status);
 	REG_TOPO_UNLOCK();

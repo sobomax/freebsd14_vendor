@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8e11d553a3e487ecff2d6d76d86d2cb9973c1c6f $
+ * $FreeBSD: 7857609b28950cc271a03fbf20f6c1482628c04d $
  */
 
 #ifndef _PCM_MIXER_H_
@@ -60,8 +60,10 @@ device_t mix_get_dev(struct snd_mixer *m);
 
 void mix_setdevs(struct snd_mixer *m, u_int32_t v);
 void mix_setrecdevs(struct snd_mixer *m, u_int32_t v);
+void mix_setmutedevs(struct snd_mixer *m, u_int32_t v);
 u_int32_t mix_getdevs(struct snd_mixer *m);
 u_int32_t mix_getrecdevs(struct snd_mixer *m);
+u_int32_t mix_getmutedevs(struct snd_mixer *m);
 void mix_setparentchild(struct snd_mixer *m, u_int32_t parent, u_int32_t childs);
 void mix_setrealdev(struct snd_mixer *m, u_int32_t dev, u_int32_t realdev);
 u_int32_t mix_getparent(struct snd_mixer *m, u_int32_t dev);

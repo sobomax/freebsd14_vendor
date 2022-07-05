@@ -31,7 +31,7 @@
 #
 #	@(#)lorder.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: 390b0b7fe8459988081a979a06ea4984fee4230d $
+# $FreeBSD: 676f8995fc928d6101c9ccc687b322bd3d186e2d $
 #
 
 # only one argument is a special case, just output the name twice
@@ -57,14 +57,14 @@ for i in $*; do
 	echo $i $i
 done
 
-# if the line has " [TDW] " it's a globally defined symbol, put it
+# if the line has " [RTDW] " it's a globally defined symbol, put it
 # into the symbol file.
 #
 # if the line has " U " it's a globally undefined symbol, put it into
 # the reference file.
 ${NM} ${NMFLAGS} -go $* | sed "
-	/ [TDW] / {
-		s/:.* [TDW] / /
+	/ [RTDW] / {
+		s/:.* [RTDW] / /
 		w $S
 		d
 	}

@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: acf51e4ed62b813deeab12ee51fe6a8c1ddc87d8 $
+.\" $FreeBSD: a02f58d4b4faafb99b8b8d977b3ed13dcc524da7 $
 .\"
 .Dd January 10, 2021
 .Dt CAP_FILEARGS 3
@@ -222,6 +222,7 @@ argument contains a list of the capability rights which file should be limited t
 Any number of
 .Dv NV_TYPE_NULL
 where the name of the element is name of the file which can be opened.
+.El
 .Sh EXAMPLES
 The following example first parse some options and then create the
 .Nm system.fileargs
@@ -279,6 +280,8 @@ The
 .Nm cap_fileargs
 service first appeared in
 .Fx 10.3 .
+.Sh AUTHORS
+.An Mariusz Zaborski Aq Mt oshogbo@FreeBSD.org
 .Sh BUGS
 The
 .Lb cap_fileargs
@@ -287,5 +290,3 @@ included in
 is considered experimental, and should not be deployed in production
 environments without careful consideration of the risks associated with
 the use of experimental operating system features.
-.Sh AUTHORS
-.An Mariusz Zaborski Aq Mt oshogbo@FreeBSD.org

@@ -1,5 +1,5 @@
-.\" $FreeBSD: 31f5aab012b7496b2cb14845932819e7ac294b26 $
-Set to not build radius support into various applications, like
+.\" $FreeBSD: 6d1a97de1baa652371faeab777747b1f2fd54b5f $
+Do not build radius support into various applications, like
 .Xr pam_radius 8
 and
 .Xr ppp 8 .

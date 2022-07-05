@@ -1,2 +1,2 @@
-.\" $FreeBSD: 03868c5cc5f7269497f55b00ec7e874238e23f47 $
-Set to not build gcc and g++ as part of the bootstrap process.
+.\" $FreeBSD: 88820cf67e052e03d99ee7c14f7bffbc7a3b9b60 $
+Do not build gcc and g++ as part of the bootstrap process.

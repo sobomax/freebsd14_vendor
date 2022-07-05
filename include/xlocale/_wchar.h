@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2011, 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by David Chisnall under sponsorship from
  * the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a7261354f84c5efbec1e1f09b483b124b1f96b2 $
+ * $FreeBSD: 7ce562eb7c2106be3830e6d75bce7cb9369ec4aa $
  */
 
 #ifndef _LOCALE_T_DEFINED

@@ -33,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * 
- * $FreeBSD: 93ad991e3a76e52e24b6fd4f48c1704579c7f81a $
+ * $FreeBSD: f50723556763a747588659a934961ce6cc18fce4 $
  *
  */
 
@@ -126,7 +126,7 @@ struct sbp_status {
 #define STATUS_LUR		5
 /*   6: Maximum payload too small */
 /*   7: Reserved for future standardization */
-/*   8: Resource unavailabe */
+/*   8: Resource unavailable */
 #define STATUS_RES_UNAVAIL	8
 /*   9: Function Rejected */
 /*  10: Login ID not recognized */

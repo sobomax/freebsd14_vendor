@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 852909aa9032b079ee2c9256037fe808d88f193b $
+ * $FreeBSD: 0f76ca6149f17e486d04ba064fa96ff4d94f9be7 $
  */
 
 #include <sys/param.h>
@@ -423,7 +423,7 @@ md_set_file(const char *fn)
 /*
  * Lists md(4) disks. Is used also as a query routine, since it handles XML
  * interface. 'units' can be NULL for listing memory disks. It might be
- * coma-separated string containing md(4) disk names. 'opt' distinguished
+ * comma-separated string containing md(4) disk names. 'opt' distinguished
  * between list and query mode.
  */
 static int

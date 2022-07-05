@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: b71978e4518aa1ebdaa0b8da6f114a91f60c6e98 $
+# $FreeBSD: a057069cba639401bb50780e482ce71498f41ad0 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case exec_001_pos cleanup
 exec_001_pos_head()
 {
 	atf_set "descr" "Setting exec=on on a filesystem, processes can be executed fromthis file system."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 exec_001_pos_body()
 {
@@ -53,7 +53,7 @@ atf_test_case exec_002_neg cleanup
 exec_002_neg_head()
 {
 	atf_set "descr" "Setting exec=off on a filesystem, processes can not be executedfrom this file system."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 exec_002_neg_body()
 {

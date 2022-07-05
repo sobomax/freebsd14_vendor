@@ -26,7 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: 6b604c6e9dbbc93e3369385d2b1919a6946c7cc2 $
+# $FreeBSD: 902c32a95b19cd7ee62bb5960267d907125f9690 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/ath
@@ -43,5 +43,7 @@ CFLAGS+=  -I. -I${SRCTOP}/sys/dev/ath -I${SRCTOP}/sys/dev/ath/ath_hal
 CFLAGS+=  -I. -I${SRCTOP}/sys/contrib/dev/ath/ath_hal/
 
 .include <bsd.kmod.mk>
+
+EXPORT_SYMS=	YES
 
 CWARNFLAGS.ah_regdomain.c=	${NO_WSHIFT_COUNT_NEGATIVE} ${NO_WSHIFT_COUNT_OVERFLOW}

@@ -1,12 +1,11 @@
-# $FreeBSD: e3fc51c66432fd51842af36732d118a08b691dcc $
+# $FreeBSD: 72acf1c2d75ef2be28e664a6e0adb07fe767926b $
 
 .include <src.opts.mk>
+.include "${SRCTOP}/secure/ssh.mk"
 
 PROG=	ssh-keysign
 SRCS=	ssh-keysign.c readconf.c uidswap.c
 MAN=	ssh-keysign.8
-CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-SRCS+=	ssh_namespace.h
 BINMODE=4555
 
 LIBADD=	ssh

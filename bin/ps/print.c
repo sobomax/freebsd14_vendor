@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)print.c	8.6 (Berkeley) 4/16/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d3a543c8a5df93d31cac5a7969d2b2dd5fb2e9f $");
+__FBSDID("$FreeBSD: d4dbd962401157552a627ebbaf2fbbf3b07d8bc8 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -236,7 +236,7 @@ state(KINFO *k, VARENT *ve __unused)
 		break;
 
 	case SSLEEP:
-		if (tdflags & TDF_SINTR)	/* interruptable (long) */
+		if (tdflags & TDF_SINTR)	/* interruptible (long) */
 			*cp = k->ki_p->ki_slptime >= MAXSLP ? 'I' : 'S';
 		else
 			*cp = 'D';
@@ -311,7 +311,7 @@ upr(KINFO *k, VARENT *ve __unused)
 #undef scalepri
 
 char *
-uname(KINFO *k, VARENT *ve __unused)
+username(KINFO *k, VARENT *ve __unused)
 {
 
 	return (strdup(user_from_uid(k->ki_p->ki_uid, 0)));

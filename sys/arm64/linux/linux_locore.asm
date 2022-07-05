@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0383e677095426a780ffc79c781137727ed247a3 $
+ * $FreeBSD: 5f0729b363e866106d324f05d13533363c3efc7c $
  */
 
 /*
@@ -40,7 +40,7 @@
 
 	.globl linux_platform
 linux_platform:
-	.asciz "arm64"
+	.asciz "aarch64"
 
 	.text
 

@@ -28,7 +28,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: b80937ffcb6e39f86dfb5bde0e7565738cfa7ec8 $");
+__FBSDID("$FreeBSD: d49e5b0d16e7bbb415e35f84b5ef33cf01dccbf8 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -122,6 +122,7 @@ static const struct bsdtar_option {
 	{ "no-acls",              0, OPTION_NO_ACLS },
 	{ "no-fflags",            0, OPTION_NO_FFLAGS },
 	{ "no-mac-metadata",      0, OPTION_NO_MAC_METADATA },
+	{ "no-read-sparse",       0, OPTION_NO_READ_SPARSE },
 	{ "no-recursion",         0, 'n' },
 	{ "no-safe-writes",	  0, OPTION_NO_SAFE_WRITES },
 	{ "no-same-owner",	  0, OPTION_NO_SAME_OWNER },
@@ -145,6 +146,7 @@ static const struct bsdtar_option {
 	{ "posix",		  0, OPTION_POSIX },
 	{ "preserve-permissions", 0, 'p' },
 	{ "read-full-blocks",	  0, 'B' },
+	{ "read-sparse",	  0, OPTION_READ_SPARSE },
 	{ "safe-writes",	  0, OPTION_SAFE_WRITES },
 	{ "same-owner",	          0, OPTION_SAME_OWNER },
 	{ "same-permissions",     0, 'p' },

@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bcf08a7f95513d23d35858439f090128a28a62d3 $
+ * $FreeBSD: dec90b386b13a438c02dadab5d41c1e15b7f7906 $
  */
 
 #ifndef _MACHINE_PMC_MDEP_H_
@@ -38,6 +38,11 @@
 #include <dev/hwpmc/hwpmc_arm64.h>
 
 union pmc_md_op_pmcallocate {
+	struct {
+		uint32_t	pm_md_config;
+		uint32_t	pm_md_flags;
+#define	PM_MD_RAW_EVENT		0x1
+	};
 	uint64_t		__pad[4];
 };
 

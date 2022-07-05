@@ -32,7 +32,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7a94e4f5cffd759f082400120c891c4ccd492bd0 $
+ * $FreeBSD: da81980039f1cb5c252c09a214433e47ecd474b9 $
  */
 
 #ifndef _ICHIIC_IG4_VAR_H_
@@ -49,7 +49,8 @@ enum ig4_vers {
 	IG4_SKYLAKE,
 	IG4_APL,
 	IG4_CANNONLAKE,
-	IG4_TIGERLAKE
+	IG4_TIGERLAKE,
+	IG4_GEMINILAKE
 };
 
 /* Controller has additional registers */

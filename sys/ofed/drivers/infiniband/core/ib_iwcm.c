@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2abfec40668fbc122b148e61514e2d4721064e9 $");
+__FBSDID("$FreeBSD: 6ac7b06569deb6831846f614cf64a9548eddf9f9 $");
 
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
@@ -62,6 +62,27 @@ __FBSDID("$FreeBSD: a2abfec40668fbc122b148e61514e2d4721064e9 $");
 MODULE_AUTHOR("Tom Tucker");
 MODULE_DESCRIPTION("iWARP CM");
 MODULE_LICENSE("Dual BSD/GPL");
+
+static const char * const iwcm_rej_reason_strs[] = {
+	[ECONNRESET]			= "reset by remote host",
+	[ECONNREFUSED]			= "refused by remote application",
+	[ETIMEDOUT]			= "setup timeout",
+};
+
+const char *__attribute_const__ iwcm_reject_msg(int reason)
+{
+	size_t index;
+
+	/* iWARP uses negative errnos */
+	index = -reason;
+
+	if (index < ARRAY_SIZE(iwcm_rej_reason_strs) &&
+	    iwcm_rej_reason_strs[index])
+		return iwcm_rej_reason_strs[index];
+	else
+		return "unrecognized reason";
+}
+EXPORT_SYMBOL(iwcm_reject_msg);
 
 static struct workqueue_struct *iwcm_wq;
 struct iwcm_work {

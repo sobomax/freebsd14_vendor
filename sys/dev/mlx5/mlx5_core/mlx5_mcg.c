@@ -22,14 +22,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0e214c57798a35f4ca7eed1fcbd69b9f32c95d50 $
+ * $FreeBSD: aa9c94a843b74fb9569fb17e208ce04e06c06b75 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <dev/mlx5/driver.h>
 #include <rdma/ib_verbs.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 int mlx5_core_attach_mcg(struct mlx5_core_dev *dev, union ib_gid *mgid, u32 qpn)
 {

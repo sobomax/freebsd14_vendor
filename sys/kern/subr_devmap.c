@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23baceb0512980455228b765dcc7420106ea69d8 $");
+__FBSDID("$FreeBSD: 1c9b192cc4c847e29bcbba1b2f175bc492da695d $");
 
 /* Routines for mapping device memory. */
 
@@ -290,7 +290,7 @@ pmap_mapdev(vm_offset_t pa, vm_size_t size)
 	return ((void *)(va + offset));
 }
 
-#if defined(__aarch64__)
+#if defined(__aarch64__) || defined(__riscv)
 void *
 pmap_mapdev_attr(vm_offset_t pa, vm_size_t size, vm_memattr_t ma)
 {

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 58fab199803b68998c90011cc3d4fc6e39a9f728 $");
+__FBSDID("$FreeBSD: c6c9a8f48ba93e610f579495da9a9c24842a88d9 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -82,9 +82,6 @@ xdma_enqueue_mbuf(xdma_channel_t *xchan, struct mbuf **mp,
     enum xdma_direction dir)
 {
 	struct xdma_request *xr;
-	xdma_controller_t *xdma;
-
-	xdma = xchan->xdma;
 
 	xr = xchan_bank_get(xchan);
 	if (xr == NULL)

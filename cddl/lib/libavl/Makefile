@@ -1,9 +1,10 @@
-# $FreeBSD: 2f7b9ad30856e75b2ada6ac89c1f53ada1617b94 $
+# $FreeBSD: b5e3b458f982e86051312230db25227bf19cb16b $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/avl
 
 PACKAGE=	runtime
 LIB=	avl
+LIBADD=	spl
 SRCS=	avl.c
 WARNS?=	3
 CFLAGS+= -DIN_BASE

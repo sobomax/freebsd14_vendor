@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9eb168b9a74f70132a9c5afd879547429efbe64f $");
+__FBSDID("$FreeBSD: 261c9f2a4087b9cff89377b83cd93976ae8d4610 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -231,6 +231,7 @@ pflog_packet(struct pfi_kkif *kif, struct mbuf *m, sa_family_t af, u_int8_t dir,
 			strlcpy(hdr.ruleset, ruleset->anchor->name,
 			    sizeof(hdr.ruleset));
 	}
+	hdr.ridentifier = htonl(rm->ridentifier);
 	/*
 	 * XXXGL: we avoid pf_socket_lookup() when we are holding
 	 * state lock, since this leads to unsafe LOR.

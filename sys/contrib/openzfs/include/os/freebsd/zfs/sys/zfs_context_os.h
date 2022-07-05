@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8dbe907d098c0687127d2f01906982ecdb4713eb $
+ * $FreeBSD: a32eb52c53c1cea12e125e320e3402f580ab2124 $
  */
 
 #ifndef ZFS_CONTEXT_OS_H_
@@ -40,6 +40,10 @@
 #include <sys/types.h>
 #include <sys/ccompat.h>
 #include <linux/types.h>
+
+#if KSTACK_PAGES * PAGE_SIZE >= 16384
+#define	HAVE_LARGE_STACKS	1
+#endif
 
 #define	cond_resched()		kern_yield(PRI_USER)
 

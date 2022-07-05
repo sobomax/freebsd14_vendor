@@ -36,12 +36,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 568097d18fdf0c04b1b2cde769935c2657f5de85 $");
+__FBSDID("$FreeBSD: 62a026b92d993a65a6c720576e2cfcd31c097b73 $");
 
 /*
  * Routines to handle clock hardware.
  */
 
+#ifdef __amd64__
+#define	DEV_APIC
+#else
+#include "opt_apic.h"
+#endif
 #include "opt_clock.h"
 #include "opt_isa.h"
 
@@ -66,6 +71,7 @@ __FBSDID("$FreeBSD: 568097d18fdf0c04b1b2cde769935c2657f5de85 $");
 #include <machine/intr_machdep.h>
 #include <machine/ppireg.h>
 #include <machine/timerreg.h>
+#include <x86/apicvar.h>
 #include <x86/init.h>
 
 #include <isa/rtc.h>
@@ -411,6 +417,11 @@ cpu_initclocks(void)
 	int i;
 
 	td = curthread;
+
+	tsc_calibrate();
+#ifdef DEV_APIC
+	lapic_calibrate_timer();
+#endif
 	cpu_initclocks_bsp();
 	CPU_FOREACH(i) {
 		if (i == 0)
@@ -425,6 +436,10 @@ cpu_initclocks(void)
 		sched_unbind(td);
 	thread_unlock(td);
 #else
+	tsc_calibrate();
+#ifdef DEV_APIC
+	lapic_calibrate_timer();
+#endif
 	cpu_initclocks_bsp();
 #endif
 }
@@ -454,7 +469,7 @@ sysctl_machdep_i8254_freq(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_machdep, OID_AUTO, i8254_freq,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
     0, sizeof(u_int), sysctl_machdep_i8254_freq, "IU",
     "i8254 timer frequency");
 

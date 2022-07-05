@@ -26,20 +26,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 03b7dc60b7a1cf8801d7aa7be34110864c51e03b $
+ * $FreeBSD: 5e4dd1daf67db8c62384778544e34f65a51ebad8 $
  */
-#ifndef	_LINUX_COMPAT_H_
-#define	_LINUX_COMPAT_H_
+#ifndef	_LINUXKPI_LINUX_COMPAT_H_
+#define	_LINUXKPI_LINUX_COMPAT_H_
 
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/malloc.h>
 
+struct domainset;
 struct thread;
 struct task_struct;
 
 extern int linux_alloc_current(struct thread *, int flags);
 extern void linux_free_current(struct task_struct *);
+extern struct domainset *linux_get_vm_domain_set(int node);
 
 static inline void
 linux_set_current(struct thread *td)
@@ -56,4 +58,4 @@ linux_set_current_flags(struct thread *td, int flags)
 	return (0);
 }
 
-#endif	/* _LINUX_COMPAT_H_ */
+#endif	/* _LINUXKPI_LINUX_COMPAT_H_ */

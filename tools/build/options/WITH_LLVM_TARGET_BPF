@@ -1,5 +1,5 @@
-.\" $FreeBSD: cb4a6a5633f2d44e1064ba51bca55dd2d4b4db1c $
-Set to build LLVM target support for BPF.
+.\" $FreeBSD: 1c01641de5a18239fc8e3e6feb132adbe5530b91 $
+Build LLVM target support for BPF.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

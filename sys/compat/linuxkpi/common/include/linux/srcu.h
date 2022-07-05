@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1de7e8acedb837a5fc4e2a2b519b9bdde2dbb9b0 $
+ * $FreeBSD: 0742d25d11acee672f8fc8f044e93cf5f17b935f $
  */
 
-#ifndef	_LINUX_SRCU_H_
-#define	_LINUX_SRCU_H_
+#ifndef	_LINUXKPI_LINUX_SRCU_H_
+#define	_LINUXKPI_LINUX_SRCU_H_
 
 #include <linux/compiler.h>
 
@@ -53,4 +53,4 @@ extern void cleanup_srcu_struct(struct srcu_struct *);
 	synchronize_srcu(srcu);			\
 } while (0)
 
-#endif					/* _LINUX_SRCU_H_ */
+#endif					/* _LINUXKPI_LINUX_SRCU_H_ */

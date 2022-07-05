@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14ee0385cf5e7a2302c84e3ff34de659e68972ca $");
+__FBSDID("$FreeBSD: d04702c10f978645b2f47b2e4e3ad54ef13ac6d0 $");
 
 /*
  * ChipCommon attachment support for the bhnd(4) PMU driver.
@@ -61,7 +61,6 @@ __FBSDID("$FreeBSD: 14ee0385cf5e7a2302c84e3ff34de659e68972ca $");
 static int
 bhnd_pmu_chipc_probe(device_t dev)
 {
-	struct bhnd_pmu_softc	*sc;
 	struct chipc_caps	*ccaps;
 	struct chipc_softc	*chipc_sc;
 	device_t		 chipc;
@@ -69,8 +68,6 @@ bhnd_pmu_chipc_probe(device_t dev)
 	int			 error;
 	uint32_t		 pcaps;
 	uint8_t			 rev;
-
-	sc = device_get_softc(dev);
 
 	/* Look for chipc parent */
 	chipc = device_get_parent(dev);

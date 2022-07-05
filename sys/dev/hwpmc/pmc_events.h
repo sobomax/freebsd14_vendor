@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: df56d728907a01190b8e50841b560214d2bbe484 $
+ * $FreeBSD: 6a727c6e7f25b39186abee1fb4a92ed8a7292942 $
  */
 
 #ifndef _DEV_HWPMC_PMC_EVENTS_H_
@@ -53,6 +53,9 @@
 
 #define        PMC_EV_TSC_FIRST        PMC_EV_TSC_TSC
 #define        PMC_EV_TSC_LAST         PMC_EV_TSC_TSC
+
+#define	__PMC_EV_ALIAS_TSC()			\
+__PMC_EV_ALIAS("cycles",	TSC_TSC)
 
 /*
  * Software events are dynamically defined.

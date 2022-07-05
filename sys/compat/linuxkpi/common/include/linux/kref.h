@@ -27,10 +27,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d5b45ba59313489c7aa3c689378b7b2f0d2494f5 $
+ * $FreeBSD: 2c59794f4ddc9cb3dc21fc44ca96b4f7d23551c4 $
  */
-#ifndef _LINUX_KREF_H_
-#define _LINUX_KREF_H_
+#ifndef _LINUXKPI_LINUX_KREF_H_
+#define _LINUXKPI_LINUX_KREF_H_
 
 #include <sys/types.h>
 #include <sys/refcount.h>
@@ -128,4 +128,4 @@ static inline int kref_put_mutex(struct kref *kref,
 	return 0;
 }
 
-#endif /* _LINUX_KREF_H_ */
+#endif /* _LINUXKPI_LINUX_KREF_H_ */

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: df9a1377b99c4f3ddb16e5e7e77bc99b7821572a $
+# $FreeBSD: 7d78c072b3317a7ffeb35ec766cd696b519d3511 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_status_001_pos cleanup
 zpool_status_001_pos_head()
 {
 	atf_set "descr" "Executing 'zpool status' with bad options fails"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_status_001_pos_body()
 {
@@ -54,7 +54,7 @@ atf_test_case zpool_status_002_pos cleanup
 zpool_status_002_pos_head()
 {
 	atf_set "descr" "Executing 'zpool status' with correct options succeeds"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_status_002_pos_body()
 {

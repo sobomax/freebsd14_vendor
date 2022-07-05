@@ -1,4 +1,4 @@
-# $FreeBSD: 1d642bf3e5ae55ee7c618aca46cad6b22af59fc7 $
+# $FreeBSD: b3f52c6c926ea9cacafa042cb708ae6dec6adf64 $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus/mux
 
@@ -15,5 +15,7 @@ SRCS+=	\
 .if !empty(OPT_FDT)
 SRCS+=	ofw_bus_if.h
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

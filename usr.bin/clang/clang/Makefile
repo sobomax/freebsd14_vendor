@@ -1,4 +1,4 @@
-# $FreeBSD: ec42fe78cf9090312b907171a18102b651561b67 $
+# $FreeBSD: 31f0926085835d0a3b5d8e89f3f722f39907d770 $
 
 .include <src.opts.mk>
 
@@ -33,5 +33,8 @@ MLINKS+= clang.1 cc.1 \
 .endif
 
 LIBADD+=	z
+
+# Ensure we don't add CFLAGS.clang when using GCC
+NO_TARGET_FLAGS=
 
 .include "../clang.prog.mk"

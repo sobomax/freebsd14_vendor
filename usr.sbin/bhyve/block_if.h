@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f3b5b6938ef12ae32592fc2c0cde5d878fb0d05a $
+ * $FreeBSD: 0407ff43cf947799cc3a9611cdab79f9da775c26 $
  */
 
 /*
@@ -38,6 +38,7 @@
 #ifndef _BLOCK_IF_H_
 #define _BLOCK_IF_H_
 
+#include <sys/nv.h>
 #include <sys/uio.h>
 #include <sys/unistd.h>
 
@@ -62,7 +63,13 @@ struct blockif_req {
 };
 
 struct blockif_ctxt;
-struct blockif_ctxt *blockif_open(const char *optstr, const char *ident);
+
+typedef void blockif_resize_cb(struct blockif_ctxt *, void *, size_t);
+
+int	blockif_legacy_config(nvlist_t *nvl, const char *opts);
+struct blockif_ctxt *blockif_open(nvlist_t *nvl, const char *ident);
+int	blockif_register_resize_callback(struct blockif_ctxt *bc,
+    blockif_resize_cb *cb, void *cb_arg);
 off_t	blockif_size(struct blockif_ctxt *bc);
 void	blockif_chs(struct blockif_ctxt *bc, uint16_t *c, uint8_t *h,
     uint8_t *s);

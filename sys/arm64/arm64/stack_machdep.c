@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -29,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 673da833afb4e7ed12d595c6b72b4f50fb61da7a $");
+__FBSDID("$FreeBSD: b41a19d76b324b2d525ed619ad0029ba2c15419b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

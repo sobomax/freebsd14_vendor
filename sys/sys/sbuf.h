@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *      $FreeBSD: 10b59f360cd0e7bab0de77a560137b73e02e2097 $
+ *      $FreeBSD: d87e3917b84ceb0bf05da7ceeb27450b3e97a9ec $
  */
 
 #ifndef _SYS_SBUF_H_
@@ -95,6 +95,7 @@ int		 sbuf_vprintf(struct sbuf *, const char *, __va_list)
 int		 sbuf_nl_terminate(struct sbuf *);
 int		 sbuf_putc(struct sbuf *, int);
 void		 sbuf_set_drain(struct sbuf *, sbuf_drain_func *, void *);
+int		 sbuf_drain(struct sbuf *);
 int		 sbuf_trim(struct sbuf *);
 int		 sbuf_error(const struct sbuf *);
 int		 sbuf_finish(struct sbuf *);

@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 66fb9f1c62b24d5039459cb34052a9a2581ded45 $");
+__FBSDID("$FreeBSD: 3e3db02603456a79b6ab159f1bfd394fdf99b560 $");
 
 /*
 Execute the following to rebuild the data for this program:
@@ -141,7 +141,7 @@ compat_lzma(const char *name)
 
 DEFINE_TEST(test_compat_lzma)
 {
-	/* This sample has been added junk datas to its tail. */
+	/* This sample has been added junk data to its tail. */
 	compat_lzma("test_compat_lzma_1.tlz");
 	/* This sample has been made by lzma with option -e,
 	 * the first byte of which is 0x5e.

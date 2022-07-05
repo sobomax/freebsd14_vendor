@@ -1,4 +1,4 @@
-.\" $FreeBSD: 783d7f9be0d772e54217f8640a1e151b9e8f0b22 $
-Set to not build the
+.\" $FreeBSD: 84ca9e8a5a0dc8ac62a1d71fd23f2dd3832bf87a $
+Do not build the
 .Xr llvm-cov 1
 tool.

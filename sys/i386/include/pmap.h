@@ -40,7 +40,7 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: f2e65c829ff47ea06a4adc599aaad2966eb871f3 $
+ * $FreeBSD: 5ac99b92cad30884d9cbb9041d7de08d54dd8bc4 $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -237,6 +237,8 @@ pmap_vmspace_copy(pmap_t dst_pmap __unused, pmap_t src_pmap __unused)
 }
 
 struct sf_buf;
+
+#define	pmap_vm_page_alloc_check(m)
 
 /*
  * Only the following functions or macros may be used before pmap_bootstrap()

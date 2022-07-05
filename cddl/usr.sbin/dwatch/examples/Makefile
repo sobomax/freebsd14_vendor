@@ -1,5 +1,6 @@
-# $FreeBSD: 33364044942ff67bb936a3ac6628f4d91c461435 $
+# $FreeBSD: 344d67d27ec8185ee99ca9f73a9e0c0410351d8a $
 
+PACKAGE=	dwatch
 FILESDIR=	${SHAREDIR}/examples/dwatch
 FILES=		profile_template
 

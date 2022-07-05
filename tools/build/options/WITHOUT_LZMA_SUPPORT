@@ -1,2 +1,0 @@
-.\" $FreeBSD: 627d4643306684096980049371bd9618af523491 $
-Set to build some programs without optional lzma compression support.

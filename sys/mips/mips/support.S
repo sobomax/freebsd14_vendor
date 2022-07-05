@@ -47,7 +47,7 @@
  *
  *	from: @(#)locore.s	8.5 (Berkeley) 1/4/94
  *	JNPR: support.S,v 1.5.2.2 2007/08/29 10:03:49 girish
- * $FreeBSD: 13a2d32a156cf5f9f2f92ea30b1639671bafe744 $
+ * $FreeBSD: cfcdc27b1d0e9f61ab2faf669cbcfd50c90a67af $
  */
 
 /*
@@ -271,6 +271,19 @@ LEAF(fubyte)
 	j	ra
 	PTR_S	zero, U_PCB_ONFAULT(v1)
 END(fubyte)
+
+LEAF(suword16)
+	PTR_LA	v0, fswberr
+	blt	a0, zero, fswberr	# make sure address is in user space
+	nop
+	GET_CPU_PCPU(v1)
+	PTR_L	v1, PC_CURPCB(v1)
+	PTR_S	v0, U_PCB_ONFAULT(v1)
+	sh	a1, 0(a0)		# store short
+	PTR_S	zero, U_PCB_ONFAULT(v1)
+	j	ra
+	move	v0, zero
+END(suword16)
 
 LEAF(suword32)
 #ifndef __mips_n64

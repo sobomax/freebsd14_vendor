@@ -1,10 +1,11 @@
-# $FreeBSD: 0f4eb70e67aa5f1460587d72083d212790cf465c $
+# $FreeBSD: 84db486472b1d8f3a312c9b68925be4287d44140 $
 
 .PATH: ${.CURDIR:H}/shared
 
 PROG=	ggatec
 MAN=	ggatec.8
 SRCS=	ggatec.c ggate.c
+PACKAGE=	ggate
 
 CFLAGS+= -DMAX_SEND_SIZE=32768
 CFLAGS+= -DLIBGEOM

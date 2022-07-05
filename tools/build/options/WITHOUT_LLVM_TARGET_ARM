@@ -1,5 +1,5 @@
-.\" $FreeBSD: 4dd47d20b7d044f9193d359393d8215687742bf4 $
-Set to not build LLVM target support for ARM.
+.\" $FreeBSD: f89d26ae394039bc4a566194520ac0fe30d94e3b $
+Do not build LLVM target support for ARM.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

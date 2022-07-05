@@ -1,4 +1,4 @@
-# $FreeBSD: 55f9f4f66f36d645179b936da73a856784f40a2e $
+# $FreeBSD: 712e10331a38d868fa81fa2b5d26d19a0c894842 $
 
 SYSDIR?=	${SRCTOP}/sys
 
@@ -49,9 +49,7 @@ CFLAGS+=	-I${SYSDIR}/cddl/compat/opensolaris \
 		-I${SYSDIR}/cddl/contrib/opensolaris/common/util \
 		-I${SYSDIR} -DDIS_MEM
 
-EXPORT_SYMS=	dtrace_register \
-		dtrace_unregister \
-		dtrace_probe_lookup
+EXPORT_SYMS=	YES
 
 dtrace_asm.o:  assym.inc
 

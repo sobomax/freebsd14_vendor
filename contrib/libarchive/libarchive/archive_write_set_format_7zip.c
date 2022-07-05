@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: f3a7446a0a024675c0f4fece2fbb621f01717c64 $");
+__FBSDID("$FreeBSD: d5ca9a66565446fadca801690d1e0eb7314abf59 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -755,6 +755,10 @@ _7z_close(struct archive_write *a)
 		 */
 #if HAVE_LZMA_H
 		header_compression = _7Z_LZMA1;
+		if(zip->opt_compression == _7Z_LZMA2 ||
+		   zip->opt_compression == _7Z_COPY)
+			header_compression = zip->opt_compression;
+
 		/* If the stored file is only one, do not encode the header.
 		 * This is the same way 7z command does. */
 		if (zip->total_number_entry == 1)
@@ -762,7 +766,8 @@ _7z_close(struct archive_write *a)
 #else
 		header_compression = _7Z_COPY;
 #endif
-		r = _7z_compression_init_encoder(a, header_compression, 6);
+		r = _7z_compression_init_encoder(a, header_compression,
+		                                 zip->opt_compression_level);
 		if (r < 0)
 			return (r);
 		zip->crc32flg = PRECODE_CRC32;

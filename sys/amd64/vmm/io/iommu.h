@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f8003a5d4552aa11377d7b676fc9ce1d9b52910d $
+ * $FreeBSD: 090415b575051c0d8bffd92ddb96ef1b45749ef0 $
  */
 
 #ifndef _IO_IOMMU_H_
@@ -60,8 +60,8 @@ struct iommu_ops {
 	iommu_invalidate_tlb_t	invalidate_tlb;
 };
 
-extern struct iommu_ops iommu_ops_intel;
-extern struct iommu_ops iommu_ops_amd;
+extern const struct iommu_ops iommu_ops_intel;
+extern const struct iommu_ops iommu_ops_amd;
 
 void	iommu_cleanup(void);
 void	*iommu_host_domain(void);

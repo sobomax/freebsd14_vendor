@@ -25,12 +25,14 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 483210e54fcb2133cb21b3510c2c91778d351801 $
+# $FreeBSD: 2ff699a8ef6d8c014070036403de0b9b0048ee6e $
 #
 
 
 from functools import partial
 import socket
+import logging
+logging.getLogger("scapy").setLevel(logging.CRITICAL)
 import scapy.all as sc
 import argparse
 import time

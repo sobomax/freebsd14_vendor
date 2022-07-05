@@ -1,11 +1,11 @@
-# $FreeBSD: 7aea9da14e90ed39ab567dc09204c144e9468d33 $
+# $FreeBSD: b2677eb3f8ae90209713293ff152305efef09873 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzutil
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzutil/os/freebsd
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/os/freebsd/zfs
 
 LIB=	zutil
-LIBADD=	avl tpool
+LIBADD=	avl geom m tpool
 PACKAGE=	runtime
 
 INCS = zutil_import.h

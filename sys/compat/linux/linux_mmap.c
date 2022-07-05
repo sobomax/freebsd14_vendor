@@ -28,11 +28,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1b4b0b78280c90e77535d3151cef77ee33f2b111 $
+ * $FreeBSD: f4655adcbb521500696766c8fc36255a5724b574 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b4b0b78280c90e77535d3151cef77ee33f2b111 $");
+__FBSDID("$FreeBSD: f4655adcbb521500696766c8fc36255a5724b574 $");
 
 #include <sys/capsicum.h>
 #include <sys/file.h>
@@ -178,7 +178,7 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 			 * mmap's return value.
 			 */
 			PROC_LOCK(p);
-			vms->vm_maxsaddr = (char *)p->p_sysent->sv_usrstack -
+			vms->vm_maxsaddr = (char *)round_page(vms->vm_stacktop) -
 			    lim_cur_proc(p, RLIMIT_STACK);
 			PROC_UNLOCK(p);
 		}

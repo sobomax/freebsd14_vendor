@@ -1,4 +1,4 @@
-.\" $FreeBSD: 7c41198308b508eeea38b806f787742751b7cdcf $
-Set to not build or install
+.\" $FreeBSD: e63d5b3bb7fb49d0ecc1eea61e33625219f98aed $
+Do not build or install
 .Xr tcpd 8 ,
 and related utilities.

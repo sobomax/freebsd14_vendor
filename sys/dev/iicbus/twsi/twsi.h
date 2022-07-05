@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 631486fb3f0c37f8a6a5e31990908a9a2f632526 $
+ * $FreeBSD: ed0ea72ab81976c61efb79013fffd35c34507bc3 $
  */
 
 #ifndef _TWSI_H_
@@ -64,8 +64,8 @@ struct twsi_softc {
 	uint16_t		recv_bytes;
 	int			transfer;
 	int			error;
+	int			debug;
 	uint32_t		control_val;
-	bool			need_ack;
 	bool			iflag_w1c;
 
 	bus_size_t	reg_data;

@@ -27,7 +27,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: c6a0c56e7ffb59100795549c3ea45e12e7014f34 $
+# $FreeBSD: d619b5d7fa56f2b54d8ac78bccb6203811cadad0 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/ena \
@@ -35,7 +35,7 @@
 
 KMOD	= if_ena
 SRCS	= ena_com.c ena_eth_com.c
-SRCS	+= ena.c ena_sysctl.c ena_datapath.c ena_netmap.c
+SRCS	+= ena.c ena_sysctl.c ena_datapath.c ena_netmap.c ena_rss.c
 SRCS	+= device_if.h bus_if.h pci_if.h
 SRCS	+= opt_rss.h
 CFLAGS  += -I${SRCTOP}/sys/contrib

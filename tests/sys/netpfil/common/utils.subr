@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 3f9d6b40183a9b7ce9c1abd560b0fe72793cf00f $
+# $FreeBSD: 722271981af4a6d2e529a5180918849f21f9185b $
 #
 
 . $(atf_get_srcdir)/../../common/vnet.subr
@@ -101,6 +101,21 @@ firewall_init()
 		atf_fail "$fw is not a valid firewall to initialize"
 	fi
 
+}
+
+dummynet_init()
+{
+	firewall=$1
+
+	if ! kldstat -q -m dummynet; then
+		atf_skip "This test requires dummynet"
+	fi
+
+	if [ ${firewall} == "ipfw" ]; then
+		# Nothing. This is okay.
+	else
+		atf_skip "${firewall} does not support dummynet"
+	fi
 }
 
 nat_init()

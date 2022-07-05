@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e19e7ee09a489b06beef816ea4b3a57e0ec11162 $
+ * $FreeBSD: b8deb23d7089022b1e635ed975d961a51e082c99 $
  */
 
-#ifndef _LINUX_PREEMPT_H_
-#define	_LINUX_PREEMPT_H_
+#ifndef _LINUXKPI_LINUX_PREEMPT_H_
+#define	_LINUXKPI_LINUX_PREEMPT_H_
 
 #include <linux/hardirq.h>
 #include <linux/list.h>
@@ -40,4 +40,4 @@
 #define	preempt_disable()	critical_enter()
 #define	preempt_enable()	critical_exit()
 
-#endif					/* _LINUX_PREEMPT_H_ */
+#endif					/* _LINUXKPI_LINUX_PREEMPT_H_ */

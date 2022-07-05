@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3eac29631244835fc293121a7e794e90ec79cfed $");
+__FBSDID("$FreeBSD: c4db60890eee4e5500970bdb51e5d641098e02de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -816,4 +816,17 @@ taskqgroup_create(const char *name, int cnt, int stride)
 void
 taskqgroup_destroy(struct taskqgroup *qgroup)
 {
+}
+
+void
+taskqgroup_drain_all(struct taskqgroup *tqg)
+{
+	struct gtaskqueue *q;
+
+	for (int i = 0; i < mp_ncpus; i++) {
+		q = tqg->tqg_queue[i].tgc_taskq;
+		if (q == NULL)
+			continue;
+		gtaskqueue_drain_all(q);
+	}
 }

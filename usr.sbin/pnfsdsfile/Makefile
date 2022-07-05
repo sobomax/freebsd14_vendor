@@ -1,4 +1,6 @@
-# $FreeBSD: 83d82eb6ec69c802319bb18d16344d44d314b3bd $
+# $FreeBSD: 2a85baf33fc1b8de45e5c94fd3897bc1e69147b8 $
+
+PACKAGE=	nfs
 
 PROG=	pnfsdsfile
 MAN=	pnfsdsfile.8

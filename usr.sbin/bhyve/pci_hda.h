@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7b6bba92e496775ca2d2d67a53450c07c76ec7f3 $
+ * $FreeBSD: 65a85f6d603da69aae983feeffefb55ec9f14d8b $
  */
 
 #ifndef _HDA_EMUL_H_ 
@@ -72,7 +72,7 @@ struct hda_codec_inst {
 struct hda_codec_class {
 	char *name;
 	int (*init)(struct hda_codec_inst *hci, const char *play,
-		const char *rec, const char *opts);
+		const char *rec);
 	int (*reset)(struct hda_codec_inst *hci);
 	int (*command)(struct hda_codec_inst *hci, uint32_t cmd_data);
 	int (*notify)(struct hda_codec_inst *hci, uint8_t run, uint8_t stream,

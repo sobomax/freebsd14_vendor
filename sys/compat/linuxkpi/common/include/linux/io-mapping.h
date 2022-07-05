@@ -26,11 +26,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 12643be9c6e6445747ecb17faa59870148fcf5ab $
+ * $FreeBSD: 5c24f1ff8659fb0fcf7256fc94cd2fdaedaef653 $
  */
 
-#ifndef _LINUX_IO_MAPPING_H_
-#define	_LINUX_IO_MAPPING_H_
+#ifndef _LINUXKPI_LINUX_IO_MAPPING_H_
+#define	_LINUXKPI_LINUX_IO_MAPPING_H_
 
 #include <sys/types.h>
 #include <machine/vm.h>
@@ -45,6 +45,8 @@ struct io_mapping {
 	void *mem;
 	vm_memattr_t attr;
 };
+
+struct io_mapping *io_mapping_create_wc(resource_size_t base, unsigned long size);
 
 static inline struct io_mapping *
 io_mapping_init_wc(struct io_mapping *mapping, resource_size_t base,
@@ -61,17 +63,6 @@ io_mapping_init_wc(struct io_mapping *mapping, resource_size_t base,
 	mapping->attr = VM_MEMATTR_UNCACHEABLE;
 #endif
 	return (mapping);
-}
-
-static inline struct io_mapping *
-io_mapping_create_wc(resource_size_t base, unsigned long size)
-{
-	struct io_mapping *mapping;
-
-	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
-	if (mapping == NULL)
-		return (NULL);
-	return (io_mapping_init_wc(mapping, base, size));
 }
 
 static inline void
@@ -114,4 +105,4 @@ io_mapping_unmap(void *vaddr)
 {
 }
 
-#endif /* _LINUX_IO_MAPPING_H_ */
+#endif /* _LINUXKPI_LINUX_IO_MAPPING_H_ */

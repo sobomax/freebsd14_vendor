@@ -1,4 +1,4 @@
-.\" $FreeBSD: f86dca299823adb80ab29cf17695ca918788e820 $
-Set to build the non-essential components of the
+.\" $FreeBSD: ed3a9515bc8e071ee8b60d7c4afa6d3c67952231 $
+Build the non-essential components of the
 .Dq "OpenFabrics Enterprise Distribution"
 Infiniband software stack, mostly examples.

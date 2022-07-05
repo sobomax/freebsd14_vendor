@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cdb9205f3da1af8bfd715091d5a63a2b147b5ce9 $
+ * $FreeBSD: 47e37aeeed988063d5de550b31f5a6351d21c2b7 $
  */
 
 #ifndef __SYSDECODE_H__
@@ -45,6 +45,7 @@ const char *sysdecode_atfd(int _fd);
 bool	sysdecode_atflags(FILE *_fp, int _flags, int *_rem);
 bool	sysdecode_cap_fcntlrights(FILE *_fp, uint32_t _rights, uint32_t *_rem);
 void	sysdecode_cap_rights(FILE *_fp, cap_rights_t *_rightsp);
+bool	sysdecode_close_range_flags(FILE *_fp, int _flags, int *_rem);
 const char *sysdecode_cmsg_type(int _cmsg_level, int _cmsg_type);
 const char *sysdecode_extattrnamespace(int _namespace);
 const char *sysdecode_fadvice(int _advice);

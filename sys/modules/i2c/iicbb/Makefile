@@ -1,4 +1,4 @@
-# $FreeBSD: c7737f09e8b9f7ddc4ef214d26973f3dd9744dda $
+# $FreeBSD: 9b74a5da39d6eb96c2c722ba014a6077a43aafe0 $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm" || \
@@ -9,5 +9,7 @@ ofw_bus_if=	ofw_bus_if.h
 KMOD		= iicbb
 SRCS		= device_if.h bus_if.h iicbus_if.h \
 		  iicbb_if.h iicbb_if.c iicbb.c ${ofw_bus_if} opt_platform.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

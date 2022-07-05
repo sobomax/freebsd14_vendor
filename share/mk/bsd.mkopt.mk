@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 5a9cf1b2f1be74b77bd9f9b8d9f90fa21ae88344 $
+# $FreeBSD: 98d23dd46c2ab0ee133a6add6f3c468d964b4677 $
 #
 # Generic mechanism to deal with WITH and WITHOUT options and turn
 # them into MK_ options.
@@ -36,6 +36,9 @@
 #
 .for var in ${__DEFAULT_YES_OPTIONS}
 .if !defined(MK_${var})
+.if defined(WITH_${var}) && ${WITH_${var}} == "no"
+.warning "Use WITHOUT_${var}=1 insetad of WITH_${var}=no"
+.endif
 .if defined(WITHOUT_${var})			# WITHOUT always wins
 MK_${var}:=	no
 .else
@@ -54,6 +57,9 @@ MK_${var}:=	yes
 #
 .for var in ${__DEFAULT_NO_OPTIONS}
 .if !defined(MK_${var})
+.if defined(WITH_${var}) && ${WITH_${var}} == "no"
+.warning "Use WITHOUT_${var}=1 insetad of WITH_${var}=no"
+.endif
 .if defined(WITH_${var}) && !defined(WITHOUT_${var}) # WITHOUT always wins
 MK_${var}:=	yes
 .else

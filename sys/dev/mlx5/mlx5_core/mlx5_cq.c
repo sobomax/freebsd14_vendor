@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 248d8c9d75c8bb21fbcb251e9c0eadbe58c11313 $
+ * $FreeBSD: 8f873bde60737856f57705d80388c0b0a8c7f707 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -31,7 +34,7 @@
 #include <dev/mlx5/driver.h>
 #include <rdma/ib_verbs.h>
 #include <dev/mlx5/cq.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 #include <sys/epoch.h>
 

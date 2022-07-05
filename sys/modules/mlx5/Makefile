@@ -1,4 +1,4 @@
-# $FreeBSD: 26b46f8efdbdca24bbe1ce707efb2cbadeea2181 $
+# $FreeBSD: fcd6197e948828f8873db3b4e73b6204694fa22a $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga
@@ -12,6 +12,7 @@ mlx5_diagnostics.c \
 mlx5_eq.c \
 mlx5_eswitch.c \
 mlx5_fs_cmd.c \
+mlx5_fs_tcp.c \
 mlx5_fs_tree.c \
 mlx5_fw.c \
 mlx5_fwdump.c \
@@ -49,6 +50,8 @@ SRCS+= \
 	mlx5fpga_xfer.c \
 	mlx5fpga_ipsec.c
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>
 

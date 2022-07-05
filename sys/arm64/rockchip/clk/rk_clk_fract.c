@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: afdf56cfade74e535c6ed831966e2eb3c6e0809d $");
+__FBSDID("$FreeBSD: 2b347db9179083bc48e73fccea69ab60c49d8733 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -179,9 +179,6 @@ rk_clk_fract_set_gate(struct clknode *clk, bool enable)
 	return (0);
 }
 
-static int
-rk_clk_fract_set_freq(struct clknode *clk, uint64_t fin, uint64_t *fout,
-    int flags, int *stop);
 static int
 rk_clk_fract_recalc(struct clknode *clk, uint64_t *freq)
 {

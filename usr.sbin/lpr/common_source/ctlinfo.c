@@ -34,7 +34,7 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: d1f828e5ed99e0f9ec53d2b9d5e3664c754dc4fc $");
+__FBSDID("$FreeBSD: 15fed7bc32ef90363b8bc662bd82bc94dcd23b3e $");
 
 /*
  * ctlinfo - This collection of routines will know everything there is to
@@ -44,7 +44,7 @@ __FBSDID("$FreeBSD: d1f828e5ed99e0f9ec53d2b9d5e3664c754dc4fc $");
  */
 
 /*
- * Some define's useful for debuging.
+ * Some define's useful for debugging.
  * TRIGGERTEST_FNAME and DEBUGREADCF_FNAME, allow us to do testing on
  * a per-spool-directory basis.
  */

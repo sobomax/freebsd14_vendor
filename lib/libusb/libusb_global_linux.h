@@ -1,4 +1,4 @@
-/* $FreeBSD: 9886bd4486f5177d2e5fe87808ce4b3c45c3f1d0 $ */
+/* $FreeBSD: 3e83bb2a6ea4ebbf5fd6bdd56d7d677f9b71d796 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -50,6 +50,7 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <setjmp.h>
+#include <signal.h>
 #include <pthread.h>
 #include <sys/queue.h>
 #include <sys/ioctl.h>

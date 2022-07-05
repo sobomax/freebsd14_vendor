@@ -71,7 +71,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsstat.c	8.2 (Berkeley) 3/31/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 72a2c08963cf0877829c2535a94fb2730b35771a $";
+  "$FreeBSD: da075d57c52e7c9888919d941602a9e7c9668fef $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -182,7 +182,7 @@ main(int argc, char **argv)
 						    mntbuf->f_mntfromname,
 						    mntbuf->f_mntonname, buf);
 					else if (errno == EPERM)
-						errx(1, "Only priviledged users"
+						errx(1, "Only privileged users"
 						    " can use the -m option");
 				}
 				mntbuf++;
@@ -749,10 +749,14 @@ exp_intpr(int clientOnly, int serverOnly, int nfs41)
 			  (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_WRITEDS],
 			  (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_COMMITDS]);
 
-			xo_emit("{T:OpenLayout/%13.13s}{T:CreateLayout/%13.13s}\n");
-			xo_emit("{:openlayout/%13ju}{:createlayout/%13ju}\n",
+			xo_emit("{T:OpenLayout/%13.13s}{T:CreateLayout/%13.13s}"
+			    "{T:BindConnSess/%13.13s}{T:LookupOpen/%13.13s}\n");
+			xo_emit("{:openlayout/%13ju}{:createlayout/%13ju}"
+			    "{:bindconnsess/%13ju}{:lookupopen/%13ju}\n",
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_OPENLAYGET],
-			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_CREATELAYGET]);
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_CREATELAYGET],
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_BINDCONNTOSESS],
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_LOOKUPOPEN]);
 
 			xo_close_container("nfsv41");
 
@@ -772,17 +776,23 @@ exp_intpr(int clientOnly, int serverOnly, int nfs41)
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_GETEXTATTR]);
 
 			xo_emit("{T:SetExtattr/%13.13s}{T:RmExtattr/%13.13s}"
-			    "{T:ListExtattr/%13.13s}\n");
+			    "{T:ListExtattr/%13.13s}{T:Deallocate/%13.13s}"
+			    "{T:LayoutError/%13.13s}\n");
 			xo_emit("{:setextattr/%13ju}{:rmextattr/%13ju}"
-			    "{:listextattr/%13ju}\n",
+			    "{:listextattr/%13ju}{:deallocate/%13ju}"
+			    "{:layouterror/%13ju}\n",
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_SETEXTATTR],
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_RMEXTATTR],
-			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_LISTEXTATTR]);
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_LISTEXTATTR],
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_DEALLOCATE],
+			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_LAYOUTERROR]);
 
 			xo_close_container("nfsv42");
 		}
 		xo_close_container("operations");
 
+		if (printtitle)
+			xo_emit("{T:Client:}\n");
 		xo_open_container("client");
 		xo_emit("{T:OpenOwner/%13.13s}{T:Opens/%13.13s}"
 		    "{T:LockOwner/%13.13s}{T:Locks/%13.13s}"
@@ -798,12 +808,13 @@ exp_intpr(int clientOnly, int serverOnly, int nfs41)
 		    (uintmax_t)ext_nfsstats.cllocalopenowners);
 
 		xo_emit("{T:LocalOpen/%13.13s}{T:LocalLown/%13.13s}"
-		    "{T:LocalLock/%13.13s}\n");
+		    "{T:LocalLock/%13.13s}{T:Layouts/%13.13s}\n");
 		xo_emit("{:localopen/%13ju}{:locallown/%13ju}"
-		    "{:locallock/%13ju}\n",
+		    "{:locallock/%13ju}{:layouts/%13ju}\n",
 		    (uintmax_t)ext_nfsstats.cllocalopens,
 		    (uintmax_t)ext_nfsstats.cllocallockowners,
-		    (uintmax_t)ext_nfsstats.cllocallocks);
+		    (uintmax_t)ext_nfsstats.cllocallocks,
+		    (uintmax_t)ext_nfsstats.cllayouts);
 		xo_close_container("client");
 
 		xo_open_container("rpc");
@@ -1061,6 +1072,9 @@ exp_intpr(int clientOnly, int serverOnly, int nfs41)
 		    (uintmax_t)ext_nfsstats.srvlockowners,
 		    (uintmax_t)ext_nfsstats.srvlocks,
 		    (uintmax_t)ext_nfsstats.srvdelegates);
+		xo_emit("{T:Layouts/%13.13s}\n");
+		xo_emit("{:layouts/%13ju}\n",
+		    (uintmax_t)ext_nfsstats.srvlayouts);
 		xo_close_container("server");
 
 		if (printtitle)

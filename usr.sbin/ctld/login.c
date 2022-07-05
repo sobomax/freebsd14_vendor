@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f219a3044586838d0aefbf0f2757b1eeea5ab507 $");
+__FBSDID("$FreeBSD: 63b2cfd51d923f3271aa4dc7f11da8d21598c78f $");
 
 #include <assert.h>
 #include <stdbool.h>
@@ -565,10 +565,6 @@ login_negotiate_key(struct pdu *request, const char *name,
 			tmp = conn->conn_max_send_data_segment_limit;
 		}
 		conn->conn_max_send_data_segment_length = tmp;
-		conn->conn_max_recv_data_segment_length =
-		    conn->conn_max_recv_data_segment_limit;
-		keys_add_int(response_keys, name,
-		    conn->conn_max_recv_data_segment_length);
 	} else if (strcmp(name, "MaxBurstLength") == 0) {
 		tmp = strtoul(value, NULL, 10);
 		if (tmp <= 0) {
@@ -795,6 +791,11 @@ login_negotiate(struct connection *conn, struct pdu *request)
 	    conn->conn_first_burst_length > conn->conn_max_burst_length) {
 		log_errx(1, "initiator sent FirstBurstLength > MaxBurstLength");
 	}
+
+	conn->conn_max_recv_data_segment_length =
+	    conn->conn_max_recv_data_segment_limit;
+	keys_add_int(response_keys, "MaxRecvDataSegmentLength",
+		    conn->conn_max_recv_data_segment_length);
 
 	log_debugx("operational parameter negotiation done; "
 	    "transitioning to Full Feature Phase");

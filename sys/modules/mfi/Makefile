@@ -1,4 +1,4 @@
-# $FreeBSD: 53f4164add7bc61831460906135f264957cd2c5d $
+# $FreeBSD: 7a17f9b0f4fa5721cbed22c2dfe7e57ad7ca2c3d $
 
 .PATH: ${SRCTOP}/sys/dev/mfi
 
@@ -14,5 +14,7 @@ SRCS+=	opt_mfi.h opt_cam.h
 SRCS+=	device_if.h bus_if.h pci_if.h
 
 #CFLAGS += -DMFI_DEBUG
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

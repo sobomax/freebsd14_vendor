@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36ab8c5bcf87caef787fe0b2f6ab7d4cbaf54486 $");
+__FBSDID("$FreeBSD: c9a09438d90731754d042277a027df5dbc80f8e5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -90,10 +90,10 @@ static void     svc_rpc_gss_release(SVCAUTH *);
 static enum auth_stat svc_rpc_gss(struct svc_req *, struct rpc_msg *);
 static int rpc_gss_svc_getcred(struct svc_req *, struct ucred **, int *);
 
-static struct svc_auth_ops svc_auth_gss_ops = {
-	svc_rpc_gss_wrap,
-	svc_rpc_gss_unwrap,
-	svc_rpc_gss_release,
+static const struct svc_auth_ops svc_auth_gss_ops = {
+	.svc_ah_wrap =		svc_rpc_gss_wrap,
+	.svc_ah_unwrap =	svc_rpc_gss_unwrap,
+	.svc_ah_release =	svc_rpc_gss_release,
 };
 
 struct sx svc_rpc_gss_lock;

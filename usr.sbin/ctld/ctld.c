@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7af1d88da44a05e7a3e20c25a8e6958e414e1066 $");
+__FBSDID("$FreeBSD: c37181ff00d0bf4f7b7636788f6428d6d336a4a2 $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -2177,6 +2177,10 @@ conf_apply(struct conf *oldconf, struct conf *newconf)
 			if (setsockopt(newp->p_socket, SOL_SOCKET, SO_SNDBUF,
 			    &sockbuf, sizeof(sockbuf)) == -1)
 				log_warn("setsockopt(SO_SNDBUF) failed "
+				    "for %s", newp->p_listen);
+			if (setsockopt(newp->p_socket, SOL_SOCKET, SO_NO_DDP,
+			    &one, sizeof(one)) == -1)
+				log_warn("setsockopt(SO_NO_DDP) failed "
 				    "for %s", newp->p_listen);
 			error = setsockopt(newp->p_socket, SOL_SOCKET,
 			    SO_REUSEADDR, &one, sizeof(one));

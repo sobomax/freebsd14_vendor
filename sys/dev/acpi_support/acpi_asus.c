@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa9f41cd6cd93eb0416633e6fa65dd4f75878a24 $");
+__FBSDID("$FreeBSD: 4f7ebdcf3c8c5406d69e44c5f9e604b62c791fb2 $");
 
 /*
  * Driver for extra ACPI-controlled gadgets (hotkeys, leds, etc) found on
@@ -737,13 +737,13 @@ acpi_asus_attach(device_t dev)
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_asus_sysctls[i].name,
 			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
-			    CTLFLAG_NEEDGIANT, sc, i, acpi_asus_sysctl, "I",
+			    CTLFLAG_MPSAFE, sc, i, acpi_asus_sysctl, "I",
 			    acpi_asus_sysctls[i].description);
 		} else {
 			SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_asus_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 			    sc, i, acpi_asus_sysctl, "I",
 			    acpi_asus_sysctls[i].description);
 		}

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6248dd5205112098d0c44e83bb4a3320d929b11e $");
+__FBSDID("$FreeBSD: a7ad30e77715dffa09754d16943e2481c42caf98 $");
 
 #include "opt_bus.h"
 #include "opt_iommu.h"
@@ -169,6 +169,27 @@ _bus_dmamap_load_mbuf_epg(bus_dma_tag_t dmat, bus_dmamap_t map,
 		    &m->m_epg_trail[off], len, kernel_pmap, flags, segs,
 		    nsegs);
 	}
+	return (error);
+}
+
+/*
+ * Load a single mbuf.
+ */
+static int
+_bus_dmamap_load_single_mbuf(bus_dma_tag_t dmat, bus_dmamap_t map,
+    struct mbuf *m, bus_dma_segment_t *segs, int *nsegs, int flags)
+{
+	int error;
+
+	error = 0;
+	if ((m->m_flags & M_EXTPG) != 0)
+		error = _bus_dmamap_load_mbuf_epg(dmat, map, m, segs, nsegs,
+		    flags);
+	else
+		error = _bus_dmamap_load_buffer(dmat, map, m->m_data, m->m_len,
+		    kernel_pmap, flags | BUS_DMA_LOAD_MBUF, segs, nsegs);
+	CTR5(KTR_BUSDMA, "%s: tag %p tag flags 0x%x error %d nsegs %d",
+	    __func__, dmat, flags, error, *nsegs);
 	return (error);
 }
 
@@ -656,6 +677,10 @@ bus_dmamap_load_crp_buffer(bus_dma_tag_t dmat, bus_dmamap_t map,
 		break;
 	case CRYPTO_BUF_MBUF:
 		error = _bus_dmamap_load_mbuf_sg(dmat, map, cb->cb_mbuf,
+		    NULL, &nsegs, flags);
+		break;
+	case CRYPTO_BUF_SINGLE_MBUF:
+		error = _bus_dmamap_load_single_mbuf(dmat, map, cb->cb_mbuf,
 		    NULL, &nsegs, flags);
 		break;
 	case CRYPTO_BUF_UIO:

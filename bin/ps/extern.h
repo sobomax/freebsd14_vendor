@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: 723d7fcb85dd8d53d8e2189ca0e3934b6c0f72e9 $
+ * $FreeBSD: ea4362eeadd9744a345ab136f92d77a025801e71 $
  */
 
 struct kinfo;
@@ -86,7 +86,7 @@ char	 *tdev(KINFO *, VARENT *);
 char	 *tdnam(KINFO *, VARENT *);
 char	 *tname(KINFO *, VARENT *);
 char	 *ucomm(KINFO *, VARENT *);
-char	 *uname(KINFO *, VARENT *);
+char	 *username(KINFO *, VARENT *);
 char	 *upr(KINFO *, VARENT *);
 char	 *usertime(KINFO *, VARENT *);
 char	 *vsize(KINFO *, VARENT *);

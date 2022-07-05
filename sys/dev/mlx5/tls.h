@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2019, Mellanox Technologies, Ltd.  All rights reserved.
+ * Copyright (c) 2019-2021, Mellanox Technologies, Ltd.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 86f56e1aebaa6dfd4310a19853601a3a2522f959 $
+ * $FreeBSD: d9e62540b8fe857f3a342e08c04b7a1fbd99170c $
  */
 
 #ifndef __MLX5_TLS_H__
@@ -35,5 +35,7 @@ int mlx5_encryption_key_create(struct mlx5_core_dev *mdev, u32 pdn,
 int mlx5_encryption_key_destroy(struct mlx5_core_dev *mdev, u32 oid);
 int mlx5_tls_open_tis(struct mlx5_core_dev *mdev, int tc, int tdn, int pdn, u32 *p_tisn);
 void mlx5_tls_close_tis(struct mlx5_core_dev *mdev, u32 tisn);
+int mlx5_tls_open_tir(struct mlx5_core_dev *mdev, int tdn, int rqtn, u32 *p_tirn);
+void mlx5_tls_close_tir(struct mlx5_core_dev *mdev, u32 tirn);
 
 #endif					/* __MLX5_TLS_H__ */

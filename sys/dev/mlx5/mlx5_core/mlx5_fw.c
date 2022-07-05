@@ -22,12 +22,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1f8165c0ed89c3c6a623bb0a7d750335d05182ac $
+ * $FreeBSD: ceafe49ac4360466123b4dcaef4240e0a6d0467b $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <dev/mlx5/driver.h>
 #include <linux/module.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 static int mlx5_cmd_query_adapter(struct mlx5_core_dev *dev, u32 *out,
 				  int outlen)

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 43827b1af4fa297b331741730ec0aa3d9c431354 $
+ * $FreeBSD: cfc8a215707c537c0451ddaf8da773910ba45b52 $
  */
 
 #ifndef _SYS_PCPU_H_
@@ -187,7 +187,7 @@ struct pcpu {
 	STAILQ_ENTRY(pcpu) pc_allcpu;
 	struct lock_list_entry *pc_spinlocks;
 	long		pc_cp_time[CPUSTATES];	/* statclock ticks */
-	struct device	*pc_device;
+	struct _device	*pc_device;		/* CPU device handle */
 	void		*pc_netisr;		/* netisr SWI cookie */
 	int		pc_unused1;		/* unused field */
 	int		pc_domain;		/* Memory domain. */

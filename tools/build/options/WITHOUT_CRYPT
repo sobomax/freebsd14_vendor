@@ -1,2 +1,2 @@
-.\" $FreeBSD: 044055d8844105876d8f2628e638043df3748c82 $
-Set to not build any crypto code.
+.\" $FreeBSD: 9b0e2a5dfe0eedd8a1480c5cbc934fad8fdbeef6 $
+Do not build any crypto code.

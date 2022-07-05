@@ -39,7 +39,7 @@
  *
  *	@(#)procfs_vfsops.c	8.7 (Berkeley) 5/10/95
  *
- * $FreeBSD: c492533c52bb8f9bffbd405fb2c904216d33a84a $
+ * $FreeBSD: 38cfb47522793d8e8b9d340f6d27cbc1be5da427 $
  */
 
 #include <sys/param.h>
@@ -69,22 +69,17 @@
 int
 procfs_doprocfile(PFS_FILL_ARGS)
 {
-	char *fullpath;
-	char *freepath;
-	struct vnode *textvp;
+	char *fullpath, *freepath, *binpath;
 	int error;
 
 	freepath = NULL;
+	binpath = malloc(MAXPATHLEN, M_TEMP, M_WAITOK);
 	PROC_LOCK(p);
-	textvp = p->p_textvp;
-	vhold(textvp);
-	PROC_UNLOCK(p);
-	error = vn_fullpath(textvp, &fullpath, &freepath);
-	vdrop(textvp);
+	error = proc_get_binpath(p, binpath, &fullpath, &freepath);
 	if (error == 0)
-		sbuf_printf(sb, "%s", fullpath);
-	if (freepath != NULL)
-		free(freepath, M_TEMP);
+		sbuf_cat(sb, fullpath);
+	free(binpath, M_TEMP);
+	free(freepath, M_TEMP);
 	return (error);
 }
 

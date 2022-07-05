@@ -35,7 +35,7 @@
  *
  *	@(#)proc.h	8.1 (Berkeley) 6/10/93
  *	JNPR: proc.h,v 1.7.2.1 2007/09/10 06:25:24 girish
- * $FreeBSD: 0cb1d433387c0d26e686d975a490605fcae76c24 $
+ * $FreeBSD: 8f6f46b8651374b4aefe2f0c0fc0cf9cd7df1e00 $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -95,4 +95,15 @@ struct syscall_args {
 #define	KINFO_PROC_SIZE 816
 #endif
 
+#ifdef _KERNEL
+#include <machine/pcb.h>
+
+/* Get the current kernel thread stack usage. */
+#define	GET_STACK_USAGE(total, used) do {				\
+	struct thread *td = curthread;					\
+	(total) = td->td_kstack_pages * PAGE_SIZE - sizeof(struct pcb);	\
+	(used) = td->td_kstack + (total) - (vm_offset_t)&td;		\
+} while (0)
+
+#endif  /* _KERNEL */
 #endif	/* !_MACHINE_PROC_H_ */

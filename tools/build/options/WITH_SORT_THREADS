@@ -1,3 +1,3 @@
-.\" $FreeBSD: f4545c94dc4160ed40ded7a06d2127d09932d168 $
-Set to enable threads in
+.\" $FreeBSD: 0aa579b4b29a920688e0bf45107fda84032a3b4c $
+Enable threads in
 .Xr sort 1 .

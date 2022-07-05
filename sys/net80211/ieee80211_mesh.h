@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2009 The FreeBSD Foundation 
- * All rights reserved. 
  * 
  * This software was developed by Rui Paulo under sponsorship from the
  * FreeBSD Foundation. 
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  * 
- * $FreeBSD: 9fff6c3c548c195178e7bc8f7dfe9941060a37d4 $
+ * $FreeBSD: cff4adb1504d82c1fe68ceca2995d5a8f86786d7 $
  */
 #ifndef _NET80211_IEEE80211_MESH_H_
 #define _NET80211_IEEE80211_MESH_H_

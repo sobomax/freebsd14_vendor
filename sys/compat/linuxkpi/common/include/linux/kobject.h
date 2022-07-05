@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 403ec1495c3222a11125613e824d34d128f15cc2 $
+ * $FreeBSD: ad25058028fc0d4698ce72519d8109c28983e1f5 $
  */
-#ifndef	_LINUX_KOBJECT_H_
-#define	_LINUX_KOBJECT_H_
+#ifndef	_LINUXKPI_LINUX_KOBJECT_H_
+#define	_LINUXKPI_LINUX_KOBJECT_H_
 
 #include <machine/stdarg.h>
 
@@ -68,6 +68,8 @@ struct attribute {
 	mode_t		mode;
 };
 
+extern const struct sysfs_ops kobj_sysfs_ops;
+
 struct kobj_attribute {
 	struct attribute attr;
 	ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr,
@@ -105,22 +107,10 @@ kobject_get(struct kobject *kobj)
 	return kobj;
 }
 
+struct kobject *kobject_create(void);
 int	kobject_set_name_vargs(struct kobject *kobj, const char *fmt, va_list);
 int	kobject_add(struct kobject *kobj, struct kobject *parent,
 	    const char *fmt, ...);
-
-static inline struct kobject *
-kobject_create(void)
-{
-	struct kobject *kobj;
-
-	kobj = kzalloc(sizeof(*kobj), GFP_KERNEL);
-	if (kobj == NULL)
-		return (NULL);
-	kobject_init(kobj, &linux_kfree_type);
-
-	return (kobj);
-}
 
 static inline struct kobject *
 kobject_create_and_add(const char *name, struct kobject *parent)
@@ -165,4 +155,4 @@ kobject_uevent_env(struct kobject *kobj, int action, char *envp[])
 	 */
 }
 
-#endif /* _LINUX_KOBJECT_H_ */
+#endif /* _LINUXKPI_LINUX_KOBJECT_H_ */

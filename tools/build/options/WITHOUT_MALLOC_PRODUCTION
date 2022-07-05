@@ -1,4 +1,4 @@
-.\" $FreeBSD: 4bcbc02184a1801ce5342a3bba930cf43777823b $
-Set to enable assertions and statistics gathering in
+.\" $FreeBSD: 25ea84b59c3c5541e65b431de01a4049852c3005 $
+Enable assertions and statistics gathering in
 .Xr malloc 3 .
 It also defaults the A and J runtime options to on.

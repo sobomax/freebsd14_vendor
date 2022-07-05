@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.c,v 1.16 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 2bd15ac3589551d6c0b7b8bc3468c30c698ffcad $
+ * $FreeBSD: cd620fe3aef95e182d95480ccd49f44051b4a7bd $
  */
 
 #include <sys/param.h>
@@ -2733,8 +2733,7 @@ ng_btsocket_l2cap_pcb_by_addr(bdaddr_p bdaddr, int psm)
 	mtx_assert(&ng_btsocket_l2cap_sockets_mtx, MA_OWNED);
 
 	LIST_FOREACH(p, &ng_btsocket_l2cap_sockets, next) {
-		if (p->so == NULL || !(p->so->so_options & SO_ACCEPTCONN) || 
-		    p->psm != psm) 
+		if (p->so == NULL || !SOLISTENING(p->so) || p->psm != psm)
 			continue;
 
 		if (bcmp(&p->src, bdaddr, sizeof(p->src)) == 0)

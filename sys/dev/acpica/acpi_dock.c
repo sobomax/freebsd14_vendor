@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4c1b1e7c31752a031486bcf0b508b4c3b3bc5512 $
+ * $FreeBSD: 211994640031bd1d9f6f7199ea56a5d2b61fb50e $
  */
 
 #include "opt_acpi.h"
@@ -517,7 +517,7 @@ acpi_dock_attach(device_t dev)
 	SYSCTL_ADD_PROC(sc->sysctl_ctx,
 		SYSCTL_CHILDREN(sc->sysctl_tree),
 		OID_AUTO, "status",
-		CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, dev, 0,
+		CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, dev, 0,
 		acpi_dock_status_sysctl, "I",
 		"Dock/Undock operation");
 

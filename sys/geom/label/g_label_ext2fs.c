@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2003d9b631f6de76025a88074707eb9553e99d49 $");
+__FBSDID("$FreeBSD: 3420efb7ca3a6e0ecef132d939a6fcab5c67c574 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -64,8 +64,10 @@ g_label_ext2fs_taste(struct g_consumer *cp, char *label, size_t size)
 
 	if ((EXT2FS_SB_OFFSET % pp->sectorsize) != 0)
 		return;
+	if (pp->sectorsize < sizeof(*fs))
+		return;
 
-	fs = (e2sb_t *)g_read_data(cp, EXT2FS_SB_OFFSET, pp->sectorsize, NULL);
+	fs = g_read_data(cp, EXT2FS_SB_OFFSET, pp->sectorsize, NULL);
 	if (fs == NULL)
 		return;
 

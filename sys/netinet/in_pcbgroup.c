@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: cade2574db5dd9572b42b0df71096db8d3c0a465 $");
+__FBSDID("$FreeBSD: 11ed75be1198c5065579c02f1c72bf06a752ea95 $");
 
 #include "opt_inet6.h"
 #include "opt_rss.h"
@@ -186,7 +186,7 @@ in_pcbgroup_init(struct inpcbinfo *pcbinfo, u_int hashfields,
 		 * XXXRW: The notion of a bucket to CPU mapping is common at
 		 * both pcbgroup and RSS layers -- does that mean that we
 		 * should migrate it all from RSS to here, and just leave RSS
-		 * responsible only for providing hashing and mapping funtions?
+		 * responsible only for providing hashing and mapping functions?
 		 */
 #ifdef RSS
 		pcbgroup->ipg_cpu = rss_getcpu(pgn);

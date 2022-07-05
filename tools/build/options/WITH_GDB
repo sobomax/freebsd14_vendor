@@ -1,3 +1,3 @@
-.\" $FreeBSD: 994942e8ff9e57b33a1e3697b29fcf570e4c3126 $
-Set to build
+.\" $FreeBSD: f65058824794ae1dbed91d77cf7854b8963411b4 $
+Build
 .Xr gdb 1 .

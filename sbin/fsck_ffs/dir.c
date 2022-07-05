@@ -35,7 +35,7 @@ static const char sccsid[] = "@(#)dir.c	8.8 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e88d1650ce5ad7b8f1bcf5191a814a69cecb1721 $");
+__FBSDID("$FreeBSD: 42ecf41122536b795c36014de60d8ce2f0c648a7 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -132,7 +132,6 @@ dirscan(struct inodesc *idesc)
 			    (size_t)dsize);
 			dirty(bp);
 			sbdirty();
-			rerun = 1;
 		}
 		if (n & STOP)
 			return (n);
@@ -801,6 +800,8 @@ allocdir(ino_t parent, ino_t request, int mode)
 	struct dirtemplate *dirp;
 
 	ino = allocino(request, IFDIR|mode);
+	if (ino == 0)
+		return (0);
 	dirp = &dirhead;
 	dirp->dot_ino = ino;
 	dirp->dotdot_ino = parent;

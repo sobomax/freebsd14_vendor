@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0e4cd91e7062c3736b0aa3f790ab56e0e63129a6 $
+ * $FreeBSD: 855aabd8bac313317d5401d7416512dcd432f322 $
  */
 
 #ifndef _ARMV8_CRYPTO_H_

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1defe4e9674eb3f54c6b21e1126f3bb0623304d1 $");
+__FBSDID("$FreeBSD: d6a1ce38da48343b4e7efe132b8c8aab7483ad29 $");
 
 #include "opt_compat.h"
 
@@ -57,13 +57,3 @@ DUMMY(quotactl);
 DUMMY(inotify_init);
 /* Linux 2.6.22: */
 DUMMY(signalfd);
-/* Linux 4.11: */
-DUMMY(statx);
-/* Linux 4.18: */
-DUMMY(io_pgetevents);
-DUMMY(rseq);
-/* Linux 5.0: */
-DUMMY(pidfd_send_signal);
-DUMMY(io_uring_setup);
-DUMMY(io_uring_enter);
-DUMMY(io_uring_register);

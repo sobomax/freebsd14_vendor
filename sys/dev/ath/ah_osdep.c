@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: 44878486a0c725f2a92d37d29b28e2da2e16b693 $
+ * $FreeBSD: a760540b0f3acb68d06a108268faa254647873b0 $
  */
 #include "opt_ah.h"
 
@@ -434,11 +434,13 @@ ath_hal_modevent(module_t mod __unused, int type, void *data __unused)
 
 	switch (type) {
 	case MOD_LOAD:
-		printf("[ath_hal] loaded\n");
+		if (bootverbose)
+			printf("[ath_hal] loaded\n");
 		break;
 
 	case MOD_UNLOAD:
-		printf("[ath_hal] unloaded\n");
+		if (bootverbose)
+			printf("[ath_hal] unloaded\n");
 		break;
 
 	case MOD_SHUTDOWN:

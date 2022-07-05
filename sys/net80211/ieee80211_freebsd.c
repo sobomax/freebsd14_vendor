@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 850c93d1e5df40840ec7939f20b6232c73f8efa1 $");
+__FBSDID("$FreeBSD: 011ae7060a6c8df03ebc702261ba10db738bdd03 $");
 
 /*
  * IEEE 802.11 support (FreeBSD-specific code)
@@ -749,7 +749,7 @@ ieee80211_vap_xmitpkt(struct ieee80211vap *vap, struct mbuf *m)
 #include <sys/libkern.h>
 
 void
-get_random_bytes(void *p, size_t n)
+net80211_get_random_bytes(void *p, size_t n)
 {
 	uint8_t *dp = p;
 

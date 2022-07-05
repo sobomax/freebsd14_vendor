@@ -1,9 +1,11 @@
-# $FreeBSD: ec6421ac7b6680cf973bda74493e1cdcc35379c5 $
+# $FreeBSD: f318ff0f88b9dad5dd76bafef98b75ae4fd577ef $
 
 .PATH:  ${SRCTOP}/sys/dev/ntb
 
 KMOD    = ntb
 SRCS    = ntb.c ntb_if.c
 SRCS += device_if.h bus_if.h ntb_if.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

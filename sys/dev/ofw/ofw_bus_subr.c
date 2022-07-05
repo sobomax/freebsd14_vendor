@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ce8d7b7bd4888533b2a6349eab83fdf485507a4 $");
+__FBSDID("$FreeBSD: a630e4333fd9bcb18faa2b6df5b049384f0458a3 $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -147,7 +147,7 @@ ofw_bus_gen_get_node(device_t bus, device_t dev)
 
 	obd = OFW_BUS_GET_DEVINFO(bus, dev);
 	if (obd == NULL)
-		return (0);
+		return ((phandle_t)-1);
 	return (obd->obd_node);
 }
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6c5a2bf091ff9bfcff5f199f4a4b16abaf43c7f $");
+__FBSDID("$FreeBSD: 5bd8e3abf862695ac0910ceb6c7ec83afaa52db8 $");
 
 /*
  * The following controllers are supported by this driver:
@@ -625,7 +625,7 @@ static int bce_rx_quick_cons_trip_int = DEFAULT_RX_QUICK_CONS_TRIP_INT;
 #endif
 SYSCTL_UINT(_hw_bce, OID_AUTO, rx_quick_cons_trip_int, CTLFLAG_RDTUN,
     &bce_rx_quick_cons_trip_int, 0,
-    "Receive BD trip point duirng interrupts");
+    "Receive BD trip point during interrupts");
 
 /* Allowable values are 1 ... 100 */
 #ifdef BCE_DEBUG
@@ -3163,7 +3163,7 @@ bce_init_media(struct bce_softc *sc)
 /****************************************************************************/
 /* Free any DMA memory owned by the driver.                                 */
 /*                                                                          */
-/* Scans through each data structre that requires DMA memory and frees      */
+/* Scans through each data structure that requires DMA memory and frees     */
 /* the memory if allocated.                                                 */
 /*                                                                          */
 /* Returns:                                                                 */
@@ -5553,7 +5553,7 @@ bce_init_tx_chain(struct bce_softc *sc)
 	DBRUN(sc->tx_full_count = 0);
 
 	/*
-	 * The NetXtreme II supports a linked-list structre called
+	 * The NetXtreme II supports a linked-list structure called
 	 * a Buffer Descriptor Chain (or BD chain).  A BD chain
 	 * consists of a series of 1 or more chain pages, each of which
 	 * consists of a fixed number of BD entries.

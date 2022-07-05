@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 880166a3e83a0905589a67a9ecd764651c7e221a $
+ * $FreeBSD: cc5c682e07da197e8842cc4dd32a39df5a28564e $
  */
 
 #ifndef _SYS_ELF64_H_
@@ -165,6 +165,8 @@ typedef struct {
 #define	ELF64_R_TYPE_ID(info)	(((Elf64_Xword)(info)<<56)>>56)
 #define	ELF64_R_TYPE_INFO(data, type)	\
 				(((Elf64_Xword)(data)<<8)+(Elf64_Xword)(type))
+
+typedef Elf64_Xword Elf64_Relr;
 
 /*
  *	Note entry header

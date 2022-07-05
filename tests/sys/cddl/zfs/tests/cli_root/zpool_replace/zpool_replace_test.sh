@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: f8f85d1680739b2a2e025bdeb4c60ecb5d486556 $
+# $FreeBSD: 78add31df15cc39b174883d6c1eb3d1c5bea7f4c $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_replace_001_neg cleanup
 zpool_replace_001_neg_head()
 {
 	atf_set "descr" "Executing 'zpool replace' with bad options fails"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_replace_001_neg_body()
 {
@@ -53,7 +53,7 @@ atf_test_case zpool_replace_002_neg cleanup
 zpool_replace_002_neg_head()
 {
 	atf_set "descr" "'zpool replace' should fail if the new device is too small"
-	atf_set "require.progs"  zpool
+	atf_set "require.progs" "ksh93 zpool"
 }
 zpool_replace_002_neg_body()
 {

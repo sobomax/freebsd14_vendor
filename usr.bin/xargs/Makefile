@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 04cc44840a638accd4b43326faa2f77d945afbfc $
+# $FreeBSD: a795582348c69827bf1d698fed94a1627e5be26b $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=	xargs
 SRCS=	xargs.c strnsubst.c

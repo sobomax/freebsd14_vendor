@@ -1,5 +1,5 @@
-.\" $FreeBSD: 73d71ccc8a3b34288e41b4d5817af6eaa616d8cb $
-Set to not build the kernel with
+.\" $FreeBSD: 03ab11bda52254636f9d4a28328fd37455061502 $
+Do not build the kernel with
 .Xr ipsec 4
 support.
 This option is needed for

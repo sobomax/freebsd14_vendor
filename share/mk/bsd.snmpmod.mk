@@ -1,4 +1,4 @@
-# $FreeBSD: 6ecbbcf09bf727834f2dc2246a1583adea75b351 $
+# $FreeBSD: 7956b89382b5066859e221745d6546ce463df358 $
 
 INCSDIR=	${INCLUDEDIR}/bsnmp
 
@@ -31,6 +31,9 @@ DEFSDIR?=	${SHAREDIR}/snmp/defs
 FILESGROUPS+=	BMIBS
 BMIBSDIR?=	${SHAREDIR}/snmp/mibs
 .endif
+
+DEFSPACKAGE=	bsnmp
+BMIBSPACKAGE=	bsnmp
 
 .if !target(smilint) && !empty(BMIBS)
 LOCALBASE?=	/usr/local

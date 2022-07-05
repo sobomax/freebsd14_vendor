@@ -11,13 +11,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01927419fe33c38aa9b8dda48a515da770bf06d9 $");
+__FBSDID("$FreeBSD: eea3c772ea4f325657c572d01a3e8e2993fb8ad7 $");
 
 #include <sys/types.h>
+#include <sys/param.h>  /* defines used in kernel.h and module.h */
 #include <sys/module.h>
 #include <sys/systm.h>  /* uprintf */
 #include <sys/errno.h>
-#include <sys/param.h>  /* defines used in kernel.h */
 #include <sys/kernel.h> /* types used in module initialization */
 #include <sys/conf.h>   /* cdevsw struct */
 #include <sys/uio.h>    /* uio struct */

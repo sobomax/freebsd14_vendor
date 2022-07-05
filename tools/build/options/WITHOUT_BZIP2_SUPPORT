@@ -1,2 +1,2 @@
-.\" $FreeBSD: 12b1c7b132f8d08e9f97b235513ebaaf2ec3b3ac $
-Set to build some programs without optional bzip2 support.
+.\" $FreeBSD: ca0e80d44e29887404fe6192fa61a99c2a0b0739 $
+Build some programs without optional bzip2 support.

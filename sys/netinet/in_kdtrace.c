@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2cb6748eacdb4b672fe157a8bed4b55ab16e9032 $
+ * $FreeBSD: a7314a27dbac3de6581a8bf9e0a5b376ebe21376 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cb6748eacdb4b672fe157a8bed4b55ab16e9032 $");
+__FBSDID("$FreeBSD: a7314a27dbac3de6581a8bf9e0a5b376ebe21376 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -111,7 +111,7 @@ SDT_PROBE_DEFINE1_XLATE(tcp, , , siftr,
 SDT_PROBE_DEFINE3_XLATE(tcp, , , debug__input,
     "struct tcpcb *", "tcpsinfo_t *" ,
     "struct tcphdr *", "tcpinfoh_t *",
-    "uint8_t *", "ipinfo_t *");
+    "struct mbuf *", "ipinfo_t *");
 
 SDT_PROBE_DEFINE3_XLATE(tcp, , , debug__output,
     "struct tcpcb *", "tcpsinfo_t *" ,

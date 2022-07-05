@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8527e39466b26af475652e4607dab9f815893d10 $");
+__FBSDID("$FreeBSD: 9a1d9ead4f216a06ae2e300969fe96321103e029 $");
 
 static unsigned char testdata[10 * 1024 * 1024];
 static unsigned char testdatacopy[10 * 1024 * 1024];
@@ -37,7 +37,6 @@ static unsigned char buff[11 * 1024 * 1024];
 /* Check correct behavior on large reads. */
 DEFINE_TEST(test_read_large)
 {
-	unsigned int i;
 	int tmpfilefd;
 	char tmpfilename[] = "test-read_large.XXXXXX";
 	size_t used;
@@ -45,8 +44,7 @@ DEFINE_TEST(test_read_large)
 	struct archive_entry *entry;
 	FILE *f;
 
-	for (i = 0; i < sizeof(testdata); i++)
-		testdata[i] = (unsigned char)(rand());
+	fill_with_pseudorandom_data(testdata, sizeof(testdata));
 
 	assert(NULL != (a = archive_write_new()));
 	assertA(0 == archive_write_set_format_ustar(a));

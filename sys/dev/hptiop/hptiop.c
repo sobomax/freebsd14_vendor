@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50d26231a91c9adc9e4e649e0798fa9051300b89 $");
+__FBSDID("$FreeBSD: eddc8da5bd8ed7687b3079322279abdaa1a7b31e $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -214,8 +214,6 @@ static int hptiop_ioctl(ioctl_dev_t dev, u_long cmd, caddr_t data,
 	int ret = EFAULT;
 	struct hpt_iop_hba *hba = hba_from_dev(dev);
 
-	mtx_lock(&Giant);
-
 	switch (cmd) {
 	case HPT_DO_IOCONTROL:
 		ret = hba->ops->do_ioctl(hba,
@@ -225,9 +223,6 @@ static int hptiop_ioctl(ioctl_dev_t dev, u_long cmd, caddr_t data,
 		ret = hptiop_rescan_bus(hba);
 		break;
 	}
-
-	mtx_unlock(&Giant);
-
 	return ret;
 }
 

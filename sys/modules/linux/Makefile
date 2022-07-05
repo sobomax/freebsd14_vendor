@@ -1,4 +1,4 @@
-# $FreeBSD: 49d787e2cb995cd87a43708ca7649aea61786e5b $
+# $FreeBSD: fd027e2118df1d38b63aa8afaf281bc29be187fe $
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32
@@ -89,5 +89,7 @@ linux${SFX}_genassym.o: offset.inc
 .if !defined(KERNBUILDDIR)
 .warning Building Linuxulator outside of a kernel does not make sense
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 987a524218af1714d6ce098e3eb59d8998bcf98e $
+# $FreeBSD: 77fc785b94ae1a76811bf7e808be19b4bacb80a4 $
 
 : ${DIALOG_OK=0}
 : ${DIALOG_CANCEL=1}
@@ -63,6 +63,7 @@ MIRROR=`dialog --backtitle "FreeBSD Installer" \
 	ftp://ftp2.br.freebsd.org 	"Brazil #2"\
 	ftp://ftp3.br.freebsd.org 	"Brazil #3"\
 	ftp://ftp4.br.freebsd.org 	"Brazil #4"\
+	ftp://ftp.bg.freebsd.org 	"Bulgaria"\
 	ftp://ftp.cn.freebsd.org 	"China"\
 	ftp://ftp.cz.freebsd.org 	"Czech Republic"\
 	ftp://ftp.dk.freebsd.org 	"Denmark"\

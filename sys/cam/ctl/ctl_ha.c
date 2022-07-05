@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80dfc543303dd06fc80f7cd3d74ee5e8b4f25e90 $");
+__FBSDID("$FreeBSD: e2ecb9706f564064aa10984aa54be5d0227a870b $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -896,7 +896,7 @@ ctl_ha_msg_init(struct ctl_softc *ctl_softc)
 	SYSCTL_ADD_PROC(&ctl_softc->sysctl_ctx,
 	    SYSCTL_CHILDREN(ctl_softc->sysctl_tree),
 	    OID_AUTO, "ha_peer",
-	    CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT,
+	    CTLTYPE_STRING | CTLFLAG_RWTUN | CTLFLAG_MPSAFE,
 	    softc, 0, ctl_ha_peer_sysctl, "A", "HA peer connection method");
 
 	if (ctl_ha_msg_register(CTL_HA_CHAN_DATA, ctl_dt_event_handler)

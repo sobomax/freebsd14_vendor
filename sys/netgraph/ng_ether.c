@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 5718de235c4cd6337c1ef11accdcc205c84544a5 $
+ * $FreeBSD: 40e06604b8bbd82e004ad96f8195299e5631e784 $
  */
 
 /*
@@ -414,7 +414,9 @@ ng_ether_ifnet_arrival_event(void *arg __unused, struct ifnet *ifp)
 	node_p node;
 
 	/* Only ethernet interfaces are of interest. */
-	if (ifp->if_type != IFT_ETHER && ifp->if_type != IFT_L2VLAN)
+	if (ifp->if_type != IFT_ETHER &&
+	    ifp->if_type != IFT_L2VLAN &&
+	    ifp->if_type != IFT_BRIDGE)
 		return;
 
 	/*
@@ -868,8 +870,9 @@ vnet_ng_ether_init(const void *unused)
 	/* Create nodes for any already-existing Ethernet interfaces. */
 	IFNET_RLOCK();
 	CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
-		if (ifp->if_type == IFT_ETHER
-		    || ifp->if_type == IFT_L2VLAN)
+		if (ifp->if_type == IFT_ETHER ||
+		    ifp->if_type == IFT_L2VLAN ||
+		    ifp->if_type == IFT_BRIDGE)
 			ng_ether_attach(ifp);
 	}
 	IFNET_RUNLOCK();

@@ -1,4 +1,4 @@
-.\" $FreeBSD: 12ae1bed98a65c37018afd0cc52e47e261d19068 $
-Set to not build
+.\" $FreeBSD: 0b8e38c443733ccfde52b695e6df69fe0370ac0d $
+Do not build
 .Xr ntpd 8
 and related programs.

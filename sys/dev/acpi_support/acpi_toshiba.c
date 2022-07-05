@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9b537edf993a515f80d3d8314c5f6b8e15fa2c2 $");
+__FBSDID("$FreeBSD: c5233579d560f0c8c5cd4f758fdd9be393a3ad90 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -254,7 +254,7 @@ acpi_toshiba_attach(device_t dev)
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 		    sysctl_table[i].name,
 		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_ANYBODY |
-		    CTLFLAG_NEEDGIANT, sc, i, acpi_toshiba_sysctl, "I", "");
+		    CTLFLAG_MPSAFE, sc, i, acpi_toshiba_sysctl, "I", "");
 	}
 
 	if (enable_fn_keys != 0) {

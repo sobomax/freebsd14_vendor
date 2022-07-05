@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 30b897cff218d971705b06e603df9380dd0105c2 $
+ * $FreeBSD: b5fd3e9b946b24b1ebb6b3de55da351cca0542d4 $
  */
 
 #ifndef _NETINET_TCP_BBR_H_
@@ -71,7 +71,7 @@ struct bbr_sendmap {
 	uint32_t r_del_time;	/* The time of the last delivery update */
 	uint8_t r_rtr_cnt:4,	/* Retran count, index this -1 to get time
 				 * sent */
-		unused_bit:1,
+		r_rtt_not_allowed:1,	/* No rtt measurement allowed */
 	        r_is_drain:1,	/* In a draining cycle */
 		r_app_limited:1,/* We went app limited */
 	        r_ts_valid:1;	/* Timestamp field is valid (r_del_ack_ts) */
@@ -588,9 +588,9 @@ struct bbr_control {
 
 	uint32_t rc_reorder_ts;	/* Last time we saw reordering Lock(a) */
 	uint32_t rc_init_rwnd;	/* Initial rwnd when we transitioned */
-                                /*- ---
+				/*- ---
 				 * used only initial and close
-                                 */
+				 */
 	uint32_t rc_high_rwnd;	/* Highest rwnd seen */
 	uint32_t rc_lowest_rtt;	/* Smallest RTT we have seen */
 

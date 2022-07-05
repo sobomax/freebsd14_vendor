@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: b6cda150df8a5e08fa39c48032aa4a07f59f39c3 $ */
+/* $FreeBSD: dfd1456c8dac462e8bc4ce063722c23fcf4d55aa $ */
 
 #include "ficl.h"
 
@@ -810,7 +810,7 @@ static void ToF(FICL_VM *pVM)
 
 /**************************************************************************
                      F l o a t P a r s e S t a t e
-** Enum to determine the current segement of a floating point number
+** Enum to determine the current segment of a floating point number
 ** being parsed.
 **************************************************************************/
 #define NUMISNEG 1

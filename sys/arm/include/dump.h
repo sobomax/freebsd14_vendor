@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a7432fd49d39c794587b56817eba9c077179151 $
+ * $FreeBSD: 97db0a8197019c5515591dce1d5eae0fcdbe5ac0 $
  */
 
 #ifndef _MACHINE_DUMP_H_
@@ -35,6 +35,9 @@
 /* XXX: I suppose 20 should be enough. */
 #define	DUMPSYS_MD_PA_NPAIRS	20
 #define	DUMPSYS_NUM_AUX_HDRS	1
+
+/* How often to check the dump progress bar? */
+#define	DUMPSYS_PB_CHECK_BITS	22	/* Every 4MB */
 
 void dumpsys_wbinv_all(void);
 int dumpsys_write_aux_headers(struct dumperinfo *di);

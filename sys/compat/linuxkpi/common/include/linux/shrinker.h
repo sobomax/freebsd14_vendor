@@ -22,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d18bb60645f8acbfff0b553dc0474761f690e080 $
+ * $FreeBSD: 05f702e62fd5750d64ef140a7b14965334b967be $
  */
 
-#ifndef __LINUX_SHRINKER_H__
-#define	__LINUX_SHRINKER_H__
+#ifndef _LINUXKPI_LINUX_SHRINKER_H_
+#define	_LINUXKPI_LINUX_SHRINKER_H_
 
 #include <sys/queue.h>
 
@@ -53,4 +53,4 @@ void	linuxkpi_unregister_shrinker(struct shrinker *s);
 #define	register_shrinker(s)	linuxkpi_register_shrinker(s)
 #define	unregister_shrinker(s)	linuxkpi_unregister_shrinker(s)
 
-#endif	/* __LINUX_SHRINKER_H__ */
+#endif	/* _LINUXKPI_LINUX_SHRINKER_H_ */

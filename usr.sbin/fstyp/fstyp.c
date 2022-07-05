@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46b5d61000114525f3af8b7ab4afa0c0125a5b22 $");
+__FBSDID("$FreeBSD: 91c36d9d91915189ac1a1c93a5013e1f9ee23bb5 $");
 
 #include <sys/capsicum.h>
 #include <sys/disk.h>
@@ -61,9 +61,10 @@ static struct {
 	const char	*name;
 	fstyp_function	function;
 	bool		unmountable;
-	char		*precache_encoding;
+	const char	*precache_encoding;
 } fstypes[] = {
 	{ "apfs", &fstyp_apfs, true, NULL },
+	{ "befs", &fstyp_befs, false, NULL },
 	{ "cd9660", &fstyp_cd9660, false, NULL },
 	{ "exfat", &fstyp_exfat, false, EXFAT_ENC },
 	{ "ext2fs", &fstyp_ext2fs, false, NULL },
@@ -205,7 +206,7 @@ main(int argc, char **argv)
 #ifdef WITH_ICONV
 	/* Cache iconv conversion data before entering capability mode. */
 	if (show_label) {
-		for (i = 0; i < nitems(fstypes); i++) {
+		for (i = 0; i < (int)nitems(fstypes); i++) {
 			iconv_t cd;
 
 			if (fstypes[i].precache_encoding == NULL)

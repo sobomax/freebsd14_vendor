@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 619c344b69a7a543ab7e896b6c9de09b41af5a74 $");
+__FBSDID("$FreeBSD: a9f2aaf36adc1f488f62ee6406844691e53c94f9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,7 +65,6 @@ __FBSDID("$FreeBSD: 619c344b69a7a543ab7e896b6c9de09b41af5a74 $");
 volatile static int ap_awake;
 volatile static u_int ap_letgo;
 volatile static u_quad_t ap_timebase;
-static u_int ipi_msg_cnt[32];
 static struct mtx ap_boot_mtx;
 struct pcb stoppcbs[MAXCPU];
 
@@ -309,7 +308,6 @@ powerpc_ipi_handler(void *arg)
 		return (FILTER_STRAY);
 	while ((msg = ffs(ipimask) - 1) != -1) {
 		ipimask &= ~(1u << msg);
-		ipi_msg_cnt[msg]++;
 		switch (msg) {
 		case IPI_AST:
 			CTR1(KTR_SMP, "%s: IPI_AST", __func__);

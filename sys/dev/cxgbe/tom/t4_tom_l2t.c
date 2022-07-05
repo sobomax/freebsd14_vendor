@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 682c99840dcdd00a793e9ce7b071c46aab6ce7d3 $");
+__FBSDID("$FreeBSD: 1d094c30d25e41fa2761892341e1b4812d298ae5 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -271,8 +271,7 @@ again:
 	switch (e->state) {
 	case L2T_STATE_STALE:     /* entry is stale, kick off revalidation */
 
-		if (resolve_entry(sc, e) != EWOULDBLOCK)
-			goto again;	/* entry updated, re-examine state */
+		resolve_entry(sc, e);
 
 		/* Fall through */
 

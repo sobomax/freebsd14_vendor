@@ -1,5 +1,5 @@
-.\" $FreeBSD: 33d41675000bd3551c4faa08afb52acaf053e48e $
-Set to not build or install
+.\" $FreeBSD: 21d103bde0c101031dbd62a8af5a1966140742e7 $
+Do not build or install
 .Xr talk 1
 and
 .Xr talkd 8 .

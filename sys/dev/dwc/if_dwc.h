@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d475974fcff92a305e21c68ad5406688ebc7f77b $
+ * $FreeBSD: d8c10258388a6f89fca307c724103ceaa0dad6e3 $
  */
 
 /*
@@ -40,6 +40,7 @@
 #define	PHY_MODE_UNKNOWN	0x0
 #define	PHY_MODE_RMII		0x1
 #define	PHY_MODE_RGMII		0x2
+#define	PHY_MODE_MII		0x3
 
 #define	MAC_CONFIGURATION	0x0
 #define	 CONF_JD		(1 << 22)	/* jabber timer disable */

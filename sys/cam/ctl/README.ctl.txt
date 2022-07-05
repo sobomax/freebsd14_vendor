@@ -1,4 +1,4 @@
-/* $FreeBSD: 27ebe49aec56e23ae9119f888cd5fcf779353ce5 $ */
+/* $FreeBSD: db8666ea99db9a649d2e7dbfcfcf223e6852e8cd $ */
 
 CTL - CAM Target Layer Description
 
@@ -258,7 +258,7 @@ point.
 Here is a roadmap of some of the primary functions in ctl.c.  Starting here
 and following the various leaf functions will show the command flow.
 
-ctl_queue() 		This is where commands from the frontend ports come
+ctl_queue() / ctl_run()	This is where commands from the frontend ports come
 			in.
 
 ctl_queue_sense()	This is only used for non-packetized SCSI.  i.e.

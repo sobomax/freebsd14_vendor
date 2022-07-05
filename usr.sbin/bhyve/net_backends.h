@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b55437fc7bbc4ad01b77cbc1fd11b58d0bda74f9 $
+ * $FreeBSD: bc7834546bc1e8106811b18e12d45c1c1e1d0356 $
  */
 
 #ifndef __NET_BACKENDS_H__
@@ -37,8 +37,9 @@ typedef struct net_backend net_backend_t;
 
 /* Interface between network frontends and the network backends. */
 typedef void (*net_be_rxeof_t)(int, enum ev_type, void *param);
-int	netbe_init(net_backend_t **be, const char *opts, net_be_rxeof_t cb,
+int	netbe_init(net_backend_t **be, nvlist_t *nvl, net_be_rxeof_t cb,
             void *param);
+int	netbe_legacy_config(nvlist_t *nvl, const char *opts);
 void	netbe_cleanup(net_backend_t *be);
 uint64_t netbe_get_cap(net_backend_t *be);
 int	 netbe_set_cap(net_backend_t *be, uint64_t cap,

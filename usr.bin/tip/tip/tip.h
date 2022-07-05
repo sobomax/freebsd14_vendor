@@ -1,6 +1,6 @@
 /*	$OpenBSD: tip.h,v 1.27 2006/08/18 03:06:18 jason Exp $	*/
 /*	$NetBSD: tip.h,v 1.7 1997/04/20 00:02:46 mellon Exp $	*/
-/*	$FreeBSD: ab6b2c4cd9a0afe2131e787d3899a90808a81d48 $	*/
+/*	$FreeBSD: 51178cb0836534ec4bc238265503cdd0cd60004b $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -249,7 +249,7 @@ EXTERN int	gotdefterm;
 EXTERN FILE	*fscript;		/* FILE for scripting */
 
 EXTERN int	fildes[2];		/* file transfer synchronization channel */
-EXTERN int	repdes[2];		/* read process sychronization channel */
+EXTERN int	repdes[2];		/* read process synchronization channel */
 EXTERN int	FD;			/* open file descriptor to remote host */
 EXTERN int	AC;			/* open file descriptor to dialer (v831 only) */
 EXTERN int	vflag;			/* print .tiprc initialization sequence */

@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 43c35c137c2b8de01f109c5c5841a4f5323486ac $
+ * $FreeBSD: 1985bc97ce9867e64c96e24bd564ef6672c50806 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/types.h>
 #include <linux/module.h>
@@ -31,8 +34,8 @@
 #include <dev/mlx5/device.h>
 #include <dev/mlx5/fs.h>
 
-#include "fs_core.h"
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/fs_core.h>
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 int mlx5_cmd_update_root_ft(struct mlx5_core_dev *dev,
 			    enum fs_ft_type type,

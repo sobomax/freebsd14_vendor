@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b77475a6badfca08efb50d7cd21c4e93d7384ba $");
+__FBSDID("$FreeBSD: d22c9844638eab05a37aedc727649d9486a587e0 $");
 
 /*
  * Driver for extra ACPI-controlled features found on HP laptops
@@ -593,14 +593,14 @@ acpi_hp_attach(device_t dev)
 			SYSCTL_ADD_PROC(sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_hp_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 			    sc, i, acpi_hp_sysctl, "I",
 			    acpi_hp_sysctls[i].description);
 		} else {
 			SYSCTL_ADD_PROC(sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_hp_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 			    sc, i, acpi_hp_sysctl, "I",
 			    acpi_hp_sysctls[i].description);
 		}

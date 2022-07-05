@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8249eaba8bccdf61a5b4a9e9e63a2218bf85e4b8 $");
+__FBSDID("$FreeBSD: 0c89133ca1b02eadcbe3e319e65589c83535e679 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -368,19 +368,12 @@ gntdev_alloc_gref(struct ioctl_gntdev_alloc_gref *arg)
 		grefs[i].file_index = file_offset + i * PAGE_SIZE;
 		grefs[i].gref_id = GRANT_REF_INVALID;
 		grefs[i].notify = NULL;
-		grefs[i].page = vm_page_alloc(NULL, 0, VM_ALLOC_NORMAL
-			| VM_ALLOC_NOOBJ | VM_ALLOC_WIRED | VM_ALLOC_ZERO);
+		grefs[i].page = vm_page_alloc_noobj(VM_ALLOC_WIRED |
+		    VM_ALLOC_ZERO);
 		if (grefs[i].page == NULL) {
 			log(LOG_ERR, "Page allocation failed.");
 			error = ENOMEM;
 			break;
-		}
-		if ((grefs[i].page->flags & PG_ZERO) == 0) {
-			/*
-			 * Zero the allocated page, as we don't want to 
-			 * leak our memory to other domains.
-			 */
-			pmap_zero_page(grefs[i].page);
 		}
 		grefs[i].page->valid = VM_PAGE_BITS_ALL;
 

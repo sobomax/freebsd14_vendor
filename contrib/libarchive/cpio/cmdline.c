@@ -26,7 +26,7 @@
 
 
 #include "cpio_platform.h"
-__FBSDID("$FreeBSD: 830caf659a07680fd5f11d3f7636166c3fea8d04 $");
+__FBSDID("$FreeBSD: 3d5a0ecad7f742a9434f25a73b4acc0f8a3a1bb4 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -51,7 +51,7 @@ __FBSDID("$FreeBSD: 830caf659a07680fd5f11d3f7636166c3fea8d04 $");
 /*
  * Short options for cpio.  Please keep this sorted.
  */
-static const char *short_options = "0AaBC:cdE:F:f:H:hI:iJjLlmnO:opR:rtuVvW:yZz";
+static const char *short_options = "067AaBC:cdE:F:f:H:hI:iJjLlmnO:opR:rtuVvW:yZz";
 
 /*
  * Long options for cpio.  Please keep this sorted.
@@ -62,6 +62,7 @@ static const struct option {
 	int equivalent;	/* Equivalent short option. */
 } cpio_longopts[] = {
 	{ "b64encode",			0, OPTION_B64ENCODE },
+	{ "binary",			0, '7' },
 	{ "create",			0, 'o' },
 	{ "dereference",		0, 'L' },
 	{ "dot",			0, 'V' },
@@ -86,6 +87,7 @@ static const struct option {
 	{ "pass-through",		0, 'p' },
 	{ "preserve-modification-time", 0, 'm' },
 	{ "preserve-owner",		0, OPTION_PRESERVE_OWNER },
+	{ "pwb",			0, '6' },
 	{ "quiet",			0, OPTION_QUIET },
 	{ "unconditional",		0, 'u' },
 	{ "uuencode",			0, OPTION_UUENCODE },

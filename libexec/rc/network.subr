@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 808e48532a13346354341f6e35b686933c8202be $
+# $FreeBSD: 2475841ffb409bf10868bc87abf64862acbe959d $
 #
 IFCONFIG_CMD="/sbin/ifconfig"
 : ${netif_ipexpand_max:=2048}
@@ -1746,7 +1746,7 @@ network6_getladdr()
 	_if=$1
 	_flag=$2
 
-	${IFCONFIG_CMD} $_if 2>/dev/null | while read proto addr rest; do
+	${IFCONFIG_CMD} $_if inet6 2>/dev/null | while read proto addr rest; do
 		case "${proto}/${addr}/${_flag}/${rest}" in
 		inet6/fe80::*//*)
 			echo ${addr}

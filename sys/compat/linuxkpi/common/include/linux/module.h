@@ -26,17 +26,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a5a8dd540dd67629dd87670cb7bc436cce3ff33d $
+ * $FreeBSD: ac7dfc07e4682d774cd1f883f0b82ca7f001af1f $
  */
-#ifndef	_LINUX_MODULE_H_
-#define	_LINUX_MODULE_H_
+#ifndef	_LINUXKPI_LINUX_MODULE_H_
+#define	_LINUXKPI_LINUX_MODULE_H_
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
+#include <sys/param.h>
 #include <sys/module.h>
 
 #include <linux/list.h>
 #include <linux/compiler.h>
+#include <linux/stringify.h>
 #include <linux/kmod.h>
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
@@ -49,6 +51,8 @@
 #define MODULE_LICENSE(name)
 #define	MODULE_INFO(tag, info)
 #define	MODULE_FIRMWARE(firmware)
+#define	MODULE_SUPPORTED_DEVICE(name)
+#define	MODULE_IMPORT_NS(_name)
 
 #define	THIS_MODULE	((struct module *)0)
 
@@ -102,4 +106,4 @@ _module_run(void *arg)
 
 #define	postcore_initcall(fn)	module_init(fn)
 
-#endif	/* _LINUX_MODULE_H_ */
+#endif	/* _LINUXKPI_LINUX_MODULE_H_ */

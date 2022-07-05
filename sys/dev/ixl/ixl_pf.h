@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 83c764bc617cc2b902e223ac523565c7719f800f $*/
+/*$FreeBSD: 888949245133b7734844b21095f8504bf89d3e0a $*/
 
 
 #ifndef _IXL_PF_H_
@@ -290,7 +290,6 @@ void	ixl_print_nvm_cmd(device_t, struct i40e_nvm_access *);
 void	ixl_handle_que(void *context, int pending);
 
 void	ixl_init(void *);
-void	ixl_local_timer(void *);
 void	ixl_register_vlan(void *, struct ifnet *, u16);
 void	ixl_unregister_vlan(void *, struct ifnet *, u16);
 int	ixl_intr(void *);

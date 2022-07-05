@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28cbd8b43e4f45e5cccb3a1b6d438ea934247b71 $");
+__FBSDID("$FreeBSD: fbe2658551d87e5f9c55324f4d5d5584e04dbea8 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -352,7 +352,7 @@ toe_syncache_add(struct in_conninfo *inc, struct tcpopt *to, struct tcphdr *th,
 
 	INP_WLOCK_ASSERT(inp);
 
-	syncache_add(inc, to, th, inp, &lso, NULL, tod, todctx, iptos);
+	syncache_add(inc, to, th, inp, &lso, NULL, tod, todctx, iptos, htons(0));
 }
 
 int
@@ -362,7 +362,7 @@ toe_syncache_expand(struct in_conninfo *inc, struct tcpopt *to,
 
 	NET_EPOCH_ASSERT();
 
-	return (syncache_expand(inc, to, th, lsop, NULL));
+	return (syncache_expand(inc, to, th, lsop, NULL, htons(0)));
 }
 
 /*
@@ -474,7 +474,8 @@ toe_l2_resolve(struct toedev *tod, struct ifnet *ifp, struct sockaddr *sa,
 #endif
 #ifdef INET6
 	case AF_INET6:
-		rc = nd6_resolve(ifp, 0, NULL, sa, lladdr, NULL, NULL);
+		rc = nd6_resolve(ifp, LLE_SF(AF_INET6, 0), NULL, sa, lladdr,
+		    NULL, NULL);
 		break;
 #endif
 	default:

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46e789fa7cecd60e98599614a21c7e77b20e3393 $");
+__FBSDID("$FreeBSD: d787b298b41dfc9934f2bd8f9957a3c517188221 $");
 
 /*
  * Abstract 1 to 1 HID input usage to evdev event mapper driver.
@@ -451,7 +451,8 @@ hidmap_probe_hid_descr(void *d_ptr, hid_size_t d_len, uint8_t tlc_index,
 	bool do_free = false;
 
 	if (caps == NULL) {
-		caps = malloc(HIDMAP_CAPS_SZ(nitems_map), M_DEVBUF, M_WAITOK);
+		caps = malloc(HIDMAP_CAPS_SZ(nitems_map), M_DEVBUF,
+		    M_WAITOK | M_ZERO);
 		do_free = true;
 	} else
 		bzero (caps, HIDMAP_CAPS_SZ(nitems_map));
@@ -481,7 +482,10 @@ hidmap_probe_hid_descr(void *d_ptr, hid_size_t d_len, uint8_t tlc_index,
 	/* Check that all mandatory usages are present in report descriptor */
 	if (items != 0) {
 		for (i = 0; i < nitems_map; i++) {
-			if (map[i].required && isclr(caps, i)) {
+			KASSERT(!(map[i].required && map[i].forbidden),
+			    ("both required & forbidden item flags are set"));
+			if ((map[i].required && isclr(caps, i)) ||
+			    (map[i].forbidden && isset(caps, i))) {
 				items = 0;
 				break;
 			}

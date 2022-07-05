@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22cc16753d9a1145a50da7cc8db9747b12abf90f $");
+__FBSDID("$FreeBSD: 3ae6a0e3f8718557b205edb4f3cbca830b1e8291 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -77,20 +77,8 @@ static u_int g_stripe_debug = 0;
 SYSCTL_UINT(_kern_geom_stripe, OID_AUTO, debug, CTLFLAG_RWTUN, &g_stripe_debug, 0,
     "Debug level");
 static int g_stripe_fast = 0;
-static int
-g_sysctl_stripe_fast(SYSCTL_HANDLER_ARGS)
-{
-	int error, fast;
-
-	fast = g_stripe_fast;
-	error = sysctl_handle_int(oidp, &fast, 0, req);
-	if (error == 0 && req->newptr != NULL)
-		g_stripe_fast = fast;
-	return (error);
-}
-SYSCTL_PROC(_kern_geom_stripe, OID_AUTO, fast,
-    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, NULL, 0,
-    g_sysctl_stripe_fast, "I",
+SYSCTL_INT(_kern_geom_stripe, OID_AUTO, fast,
+    CTLFLAG_RWTUN, &g_stripe_fast, 0,
     "Fast, but memory-consuming, mode");
 static u_long g_stripe_maxmem;
 SYSCTL_ULONG(_kern_geom_stripe, OID_AUTO, maxmem,
@@ -966,6 +954,7 @@ g_stripe_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	gp->access = g_stripe_access;
 	gp->orphan = g_stripe_orphan;
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	error = g_attach(cp, pp);
 	if (error == 0) {
 		error = g_stripe_read_metadata(cp, &md);

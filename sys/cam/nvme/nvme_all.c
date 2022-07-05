@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14fcd3a7536e7cff2fe60b0d1271b8f11f56020b $");
+__FBSDID("$FreeBSD: 1eafdb1cece6d2cab93f9362263910348df2c837 $");
 
 #include <sys/param.h>
 
@@ -91,11 +91,14 @@ nvme_print_ident(const struct nvme_controller_data *cdata,
 {
 
 	sbuf_printf(sb, "<");
-	cam_strvis_sbuf(sb, cdata->mn, sizeof(cdata->mn), 0);
+	cam_strvis_sbuf(sb, cdata->mn, sizeof(cdata->mn),
+	    CAM_STRVIS_FLAG_NONASCII_SPC);
 	sbuf_printf(sb, " ");
-	cam_strvis_sbuf(sb, cdata->fr, sizeof(cdata->fr), 0);
+	cam_strvis_sbuf(sb, cdata->fr, sizeof(cdata->fr),
+	    CAM_STRVIS_FLAG_NONASCII_SPC);
 	sbuf_printf(sb, " ");
-	cam_strvis_sbuf(sb, cdata->sn, sizeof(cdata->sn), 0);
+	cam_strvis_sbuf(sb, cdata->sn, sizeof(cdata->sn),
+	    CAM_STRVIS_FLAG_NONASCII_SPC);
 	sbuf_printf(sb, ">\n");
 }
 

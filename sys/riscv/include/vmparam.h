@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: 94782da779f775ba7be95d9b5365a27fd6f5a50a $
+ * $FreeBSD: 4ed95def2caa2f859b84ac11ee9d14f12f2aed1a $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -185,6 +185,10 @@
 
 #define	VM_MINUSER_ADDRESS	(VM_MIN_USER_ADDRESS)
 #define	VM_MAXUSER_ADDRESS	(VM_MAX_USER_ADDRESS)
+
+/* Check if an address resides in a mappable region. */
+#define	VIRT_IS_VALID(va)						\
+    (((va) < VM_MAX_USER_ADDRESS) || ((va) >= VM_MIN_KERNEL_ADDRESS))
 
 #define	KERNBASE		(VM_MIN_KERNEL_ADDRESS)
 #define	SHAREDPAGE		(VM_MAXUSER_ADDRESS - PAGE_SIZE)

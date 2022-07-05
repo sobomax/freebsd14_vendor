@@ -1,4 +1,4 @@
-# $FreeBSD: 282b200e5a6050c186f7b698b41eef7746f79f93 $
+# $FreeBSD: ee41bb8b116de9aad44c9727f0e4ab502f1da869 $
 
 .PATH: ${SRCTOP}/sys/fs/procfs
 
@@ -18,11 +18,11 @@ SRCS+=		procfs_type.c
 SRCS+=		procfs.c
 
 EXPORT_SYMS=
-EXPORT_SYMS+=	procfs_attr
 EXPORT_SYMS+=	procfs_candebug
 EXPORT_SYMS+=	procfs_docurproc
 EXPORT_SYMS+=	procfs_doprocfile
 EXPORT_SYMS+=	procfs_doprocmem
 EXPORT_SYMS+=	procfs_notsystem
+EXPORT_SYMS+=	procfs_attr_rw
 
 .include <bsd.kmod.mk>

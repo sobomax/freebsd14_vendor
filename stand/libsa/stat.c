@@ -32,14 +32,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9875372b441d57d6bae2610b4559316cc14b6979 $");
+__FBSDID("$FreeBSD: f3b198955ab88400ceed39746e64c603acd54857 $");
 
 #include "stand.h"
 
 int
-stat(str, sb)
-	const char *str;
-	struct stat *sb;
+stat(const char *str, struct stat *sb)
 {
 	int fd, rv;
 

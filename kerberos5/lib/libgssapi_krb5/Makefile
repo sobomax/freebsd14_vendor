@@ -1,4 +1,6 @@
-# $FreeBSD: 9ba59dcb48c5d816fbe461ff2ef5eee109656d2e $
+# $FreeBSD: fe64b99d57f05d4bf1ae4dfaec12bea524d14542 $
+
+PACKAGE=	kerberos
 
 LIB=	gssapi_krb5
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

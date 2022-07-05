@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57d45911c54d948e5d5277dccf540e956ecadf64 $");
+__FBSDID("$FreeBSD: a0981d89b04216f903c5460ba8b1edd91fa693be $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -103,6 +103,8 @@ struct g_part_alias_list {
 	{ "freebsd-ufs", G_PART_ALIAS_FREEBSD_UFS },
 	{ "freebsd-vinum", G_PART_ALIAS_FREEBSD_VINUM },
 	{ "freebsd-zfs", G_PART_ALIAS_FREEBSD_ZFS },
+	{ "hifive-fsbl", G_PART_ALIAS_HIFIVE_FSBL },
+	{ "hifive-bbl", G_PART_ALIAS_HIFIVE_BBL },
 	{ "linux-data", G_PART_ALIAS_LINUX_DATA },
 	{ "linux-lvm", G_PART_ALIAS_LINUX_LVM },
 	{ "linux-raid", G_PART_ALIAS_LINUX_RAID },

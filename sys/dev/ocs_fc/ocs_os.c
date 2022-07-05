@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 985a611ba91ef86cc96d20b6962f7d7e9fbd5e3a $
+ * $FreeBSD: 4e4edea2e63f8a18e186a33433b3549b6ed9fb9f $
  */
 
 /**
@@ -883,13 +883,12 @@ ocs_pci_model(uint16_t vendor, uint16_t device)
 	return "unknown";
 }
 
-int32_t
+void
 ocs_get_bus_dev_func(ocs_t *ocs, uint8_t* bus, uint8_t* dev, uint8_t* func)
 {
 	*bus = pci_get_bus(ocs->dev);
 	*dev = pci_get_slot(ocs->dev);
 	*func= pci_get_function(ocs->dev);
-	return 0;
 }
 
 /**

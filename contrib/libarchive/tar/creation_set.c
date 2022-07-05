@@ -24,7 +24,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: bdc607daeb20f37d4a7c75442ce03a77f697d821 $");
+__FBSDID("$FreeBSD: cfc5a642aed3235661d82d0f18b527dd3e757663 $");
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -95,7 +95,7 @@ get_format_code(const char *suffix)
 		{ ".7z",	"7zip" },
 		{ ".ar",	"arbsd" },
 		{ ".cpio",	"cpio" },
-		{ ".iso",	"iso9960" },
+		{ ".iso",	"iso9660" },
 		{ ".mtree",	"mtree" },
 		{ ".shar",	"shar" },
 		{ ".tar",	"paxr" },

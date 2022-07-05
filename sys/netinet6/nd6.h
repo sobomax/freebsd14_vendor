@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: a64c786efcc8c3aca41e634cc96d8c0bdfa4e42f $
+ * $FreeBSD: 3f9f8219b018d58016575c529d7cd11ceb59d375 $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -376,10 +376,10 @@ int nd6_resolve(struct ifnet *, int, struct mbuf *,
 int nd6_ioctl(u_long, caddr_t, struct ifnet *);
 void nd6_cache_lladdr(struct ifnet *, struct in6_addr *,
 	char *, int, int, int);
-void nd6_grab_holdchain(struct llentry *, struct mbuf **,
-    struct sockaddr_in6 *);
-int nd6_flush_holdchain(struct ifnet *, struct mbuf *,
-    struct sockaddr_in6 *);
+bool nd6_try_set_entry_addr(struct ifnet *ifp, struct llentry *lle, char *lladdr);
+struct mbuf *nd6_grab_holdchain(struct llentry *);
+int nd6_flush_holdchain(struct ifnet *, struct llentry *, struct mbuf *);
+void nd6_flush_children_holdchain(struct ifnet *, struct llentry *);
 int nd6_add_ifa_lle(struct in6_ifaddr *);
 void nd6_rem_ifa_lle(struct in6_ifaddr *, int);
 int nd6_output_ifp(struct ifnet *, struct ifnet *, struct mbuf *,

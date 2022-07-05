@@ -1,4 +1,4 @@
-#$FreeBSD: 7352828a822ceb6cfacf4c8765b92085e9a62024 $
+#$FreeBSD: f2aa614f1dfcabe6c021edb06cfc22d746e7eece $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 .include <src.opts.mk>
@@ -6,7 +6,12 @@
 PACKAGE=rescue
 MAN=
 MK_SSP=	no
+# Static-PIE is not supported so we should not be linking against _pie.a libs.
+# This is also needed to avoid linking against sanitizer-instrumented libraries
+# since MK_ASAN/MK_UBSAN will instrument the .pieo object files.
+MK_PIE=	no
 NO_SHARED=	yes
+CRUNCH_BUILDOPTS+=	MK_PIE=no NO_SHARED=yes
 
 PROG=	rescue
 BINDIR?=/rescue

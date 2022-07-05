@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1ca20ddb74ab560a8a2b31cf1082dc11c9914813 $
+ * $FreeBSD: 3dd44572588c2216e5209b8b3d8949d383e80b46 $
  */
 
 #ifndef _NET_UTILS_H_
@@ -34,7 +34,7 @@
 #include "pci_emul.h"
 
 void	net_genmac(struct pci_devinst *pi, uint8_t *macaddr);
-int	net_parsemac(char *mac_str, uint8_t *mac_addr);
+int	net_parsemac(const char *mac_str, uint8_t *mac_addr);
 int	net_parsemtu(const char *mtu_str, unsigned long *mtu);
 
 #endif /* _NET_UTILS_H_ */

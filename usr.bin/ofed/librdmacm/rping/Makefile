@@ -1,5 +1,6 @@
-# $FreeBSD: 1112357558f89c0385d818dd0a9ae8d20828a68b $
+# $FreeBSD: 99881c73682b9a42ed19cde5e4f3d6dccb24fcd8 $
 
+PACKAGE=	rdma
 PROG=	rping
 MAN=	rping.1
 SRCS=	rping.c common.c

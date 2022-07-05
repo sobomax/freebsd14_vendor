@@ -1,9 +1,9 @@
-# $FreeBSD: d01199b5d9af594a53cba58b5663aa79af120825 $
+# $FreeBSD: 284a370c0167afe212269af68edb78ea08ff317f $
 
 .include <src.opts.mk>
 
 SUBDIR=	lib .WAIT \
-	sbin usr.bin usr.sbin
+	sbin share usr.bin usr.libexec usr.sbin
 
 SUBDIR.${MK_TESTS}+= tests
 

@@ -26,7 +26,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 5777cdd4264d132bce092e7248ae597a2a0b7aaf $
+.\" $FreeBSD: 063313045137a38b3631f368a7d70b47c7642e7e $
 .\"
 .Dd November 2, 2012
 .Dt HWPMC 4
@@ -426,7 +426,7 @@ The default buffer size is 4KB.
 .It Va kern.hwpmc.mtxpoolsize Pq integer, read-only
 The size of the spin mutex pool used by the PMC driver.
 The default is 32.
-.It Va kern.hwpmc.nbuffers Pq integer, read-only
+.It Va kern.hwpmc.nbuffers_pcpu Pq integer, read-only
 The number of log buffers used by
 .Nm
 for logging.

@@ -1,12 +1,11 @@
-# $FreeBSD: 95ccd05811fe5dd014815979fb2f19b03a648143 $
+# $FreeBSD: c8139ec376c331630ba629a275b5c08682c9128b $
 
 .include <src.opts.mk>
+.include "${SRCTOP}/secure/ssh.mk"
 
 PROG=	ssh-agent
 SRCS=	ssh-agent.c
 PACKAGE=	ssh
-CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 

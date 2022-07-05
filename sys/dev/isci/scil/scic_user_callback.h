@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 292237062ae39a7c44de06f3d5f4e32128e9f263 $
+ * $FreeBSD: 2260f14c2705eacab18f6376e90ad8add67ecd18 $
  */
 #ifndef _SCIC_USER_CALLBACK_H_
 #define _SCIC_USER_CALLBACK_H_
@@ -76,7 +76,7 @@ extern "C" {
  *        a handle for this timer for use in further timer interactions.
  *
  * @warning The "timer_callback" method should be executed in a mutually
- *          exlusive manner from the controller completion handler
+ *          exclusive  manner from the controller completion handler
  *          handler (refer to scic_controller_get_handler_methods()).
  *
  * @param[in]  controller This parameter specifies the controller with

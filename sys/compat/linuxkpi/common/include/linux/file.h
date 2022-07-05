@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 21b254211cfd1e1f6da95018c3d13b6378aa0034 $
+ * $FreeBSD: 43027979061ea9f84df58efb7e2494e6f3099ee1 $
  */
-#ifndef	_LINUX_FILE_H_
-#define	_LINUX_FILE_H_
+#ifndef	_LINUXKPI_LINUX_FILE_H_
+#define	_LINUXKPI_LINUX_FILE_H_
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -187,4 +187,4 @@ static inline struct fd fdget(unsigned int fd)
 #define	file		linux_file
 #define	fget(...)	linux_fget(__VA_ARGS__)
 
-#endif	/* _LINUX_FILE_H_ */
+#endif	/* _LINUXKPI_LINUX_FILE_H_ */

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b228c3bcee37f9ff25b45797827c18e760798f59 $
+ * $FreeBSD: 6a3f853e073dfccbf48d111d9592f8a21b777d69 $
  */
 #include "opt_inet.h"
 #include "opt_route.h"
@@ -255,7 +255,6 @@ static struct nhgrp_priv *
 alloc_nhgrp(struct weightened_nhop *wn, int num_nhops)
 {
 	uint32_t nhgrp_size;
-	int flags = M_NOWAIT;
 	struct nhgrp_object *nhg;
 	struct nhgrp_priv *nhg_priv;
 
@@ -266,7 +265,7 @@ alloc_nhgrp(struct weightened_nhop *wn, int num_nhops)
 	}
 
 	size_t sz = get_nhgrp_alloc_size(nhgrp_size, num_nhops);
-	nhg = malloc(sz, M_NHOP, flags | M_ZERO);
+	nhg = malloc(sz, M_NHOP, M_NOWAIT | M_ZERO);
 	if (nhg == NULL) {
 		return (NULL);
 	}
@@ -578,9 +577,9 @@ nhgrp_get_group(struct rib_head *rh, struct weightened_nhop *wn, int num_nhops,
 }
 
 /*
- * Creates new nexthop group based on @src group with the nexthops defined in bitmask
- *  @nhop_mask removed.
- * Returns referenced nexthop group or NULL on failure.
+ * Creates new nexthop group based on @src group without the nexthops
+ * chosen by @flt_func.
+ * Returns 0 on success, storring the reference nhop group/object in @rnd.
  */
 int
 nhgrp_get_filtered_group(struct rib_head *rh, const struct nhgrp_object *src,
@@ -806,7 +805,9 @@ nhgrp_dump_sysctl(struct rib_head *rh, struct sysctl_req *w)
 	sz = sizeof(struct rt_msghdr) + sizeof(struct nhgrp_external);
 	sz += 2 * sizeof(struct nhgrp_container);
 	sz += 2 * sizeof(struct nhgrp_nhop_external) * RIB_MAX_MPATH_WIDTH;
-	buffer = malloc(sz, M_TEMP, M_WAITOK);
+	buffer = malloc(sz, M_TEMP, M_NOWAIT);
+	if (buffer == NULL)
+		return (ENOMEM);
 
 	NET_EPOCH_ENTER(et);
 	NHOPS_RLOCK(ctl);

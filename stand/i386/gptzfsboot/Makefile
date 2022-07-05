@@ -1,4 +1,4 @@
-# $FreeBSD: aa8b497f8f3a898950e3c345a6edb90c7bf0ab68 $
+# $FreeBSD: 09615c5f97c116fde16a7b5a5d6ab53ebcb14207 $
 
 .include <bsd.init.mk>
 
@@ -66,7 +66,7 @@ gptldr.bin: gptldr.out
 gptldr.out: gptldr.o
 	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} gptldr.o
 
-OBJS=	zfsboot.o sio.o cons.o bcache.o devopen.o disk.o part.o zfs_cmd.o
+OBJS=	zfsboot.o sio.o cons.o bcache.o devopen.o disk.o part.o zfs_cmd.o misc.o
 CLEANFILES+=	gptzfsboot.bin gptzfsboot.out ${OBJS} ${OPENCRYPTO_XTS}
 
 # i386 standalone support library

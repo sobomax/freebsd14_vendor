@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6ed90909ec9d6688832a5367e5c70c71fabedb3 $");
+__FBSDID("$FreeBSD: 4581e5c4f2f925e780d82bcbbdfd3584f6d750ba $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -140,7 +140,7 @@ create_directory(const char *path)
 	 */
 	copy = tofree = checked_strdup(path + 1);
 
-	partial = checked_strdup("");
+	partial = checked_strdup("/");
 	for (;;) {
 		component = strsep(&copy, "/");
 		if (component == NULL)
@@ -1202,6 +1202,19 @@ lesser_daemon(void)
 		/* Bloody hell. */
 		log_warn("close");
 	}
+}
+
+/*
+ * Applicable to NFSv3 only, see rpc.umntall(8).
+ */
+void
+rpc_umntall(void)
+{
+	FILE *f;
+
+	f = auto_popen("rpc.umntall", "-k", NULL);
+	assert(f != NULL);
+	auto_pclose(f);
 }
 
 int

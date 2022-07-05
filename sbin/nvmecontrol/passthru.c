@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (C) 2012-2013 Intel Corporation
- * All rights reserved.
+ * Copyright (c) 2019-2021 Netflix, Inc
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: add6cf1cc7caf60a22b0945722d8fecbddeb7602 $");
+__FBSDID("$FreeBSD: 0b24d7b1ea1f357fa85248292b25b872b17419af $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -246,7 +245,8 @@ passthru(const struct cmd *f, int argc, char *argv[])
 	errno = 0;
 	if (ioctl(fd, NVME_PASSTHROUGH_CMD, &pt) < 0)
 		err(EX_IOERR, "passthrough request failed");
-	/* XXX report status */
+	if (!opt.binary)
+		printf("DWORD0 status= %#x\n", pt.cpl.cdw0);
 	if (opt.read) {
 		if (opt.binary)
 			write(STDOUT_FILENO, data, opt.data_len);

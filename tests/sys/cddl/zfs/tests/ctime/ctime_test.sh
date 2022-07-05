@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: d4a1c52c776ad4d3f69a6b53b6ae7d34dda37c5d $
+# $FreeBSD: ee5cd9ee93f9f7ed2bcdfb00ced133e9c0de3002 $
 
 #
 # Copyright 2014 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case ctime_001_pos cleanup
 ctime_001_pos_head()
 {
 	atf_set "descr" "A file's ctime should change when the file is modified"
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 ctime_001_pos_body()
 {

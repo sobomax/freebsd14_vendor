@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: bbe33cf1fef7e867869a6625b3ae0fccc1b0641b $
+* $FreeBSD: 5968ecba8021e8d68a8256c79a9cf2e6894b8982 $
 *
 *******************************************************************************/
 /******************************************************************************
@@ -614,7 +614,7 @@ bit8 *data; //buffer
 
 /*
 ** link data, need to be included at the start (offset 0) 
-** of any strutures that are to be stored in the link list
+** of any structures that are to be stored in the link list
 */
 typedef struct _LINK_NODE
 {

@@ -1,12 +1,10 @@
-# $FreeBSD: 18c8ac7344065f0c788e909b70485c6105c866e5 $
+# $FreeBSD: f245ebe59100d64ba8767665399bf627187b9347 $
 
 PACKAGE=ipf
 FILES=	README
 
 # dist sample files
-.PATH: ${SRCTOP}/contrib/ipfilter/rules \
-       ${SRCTOP}/contrib/ipfilter \
-       ${SRCTOP}/contrib/ipfilter/man
+.PATH: ${.CURDIR}/rules
 FILES+=	BASIC.NAT BASIC_1.FW BASIC_2.FW \
 	example.1 example.2 example.3 example.4 example.5 \
 	example.6 example.7 example.8 example.9 example.10 \

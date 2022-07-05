@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0725936cf84d0871062ef3ce0d0e88f62dfc5408 $
+ * $FreeBSD: f6333a65fb398415e6b3ab6c86f1d42ea4143516 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0725936cf84d0871062ef3ce0d0e88f62dfc5408 $");
+__FBSDID("$FreeBSD: f6333a65fb398415e6b3ab6c86f1d42ea4143516 $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -71,9 +71,6 @@ __FBSDID("$FreeBSD: 0725936cf84d0871062ef3ce0d0e88f62dfc5408 $");
 #include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/cpufunc.h>
-
-#define	CS_SECURE(cs)		(ISPL(cs) == SEL_UPL)
-#define	EFL_SECURE(ef, oef)	((((ef) ^ (oef)) & ~PSL_USERCHANGE) == 0)
 
 int
 fill_regs32(struct thread *td, struct reg32 *regs)

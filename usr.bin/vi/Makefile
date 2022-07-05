@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 993970fd30514cd02e3ea3f9a620cc333f292392 $
+# $FreeBSD: 5769a34c6d2e865be2e6a15d4de77204e1c937da $
 #
 
 .include <src.opts.mk>
@@ -16,7 +16,7 @@ VIEW=	nview
 
 PROG=	nvi
 
-CFLAGS+=	-D__REGEX_PRIVATE
+CFLAGS+=	-D__REGEX_PRIVATE -D_XOPEN_SOURCE_EXTENDED=1
 
 LINKS=	${BINDIR}/${VI} ${BINDIR}/${EX} ${BINDIR}/${VI} ${BINDIR}/${VIEW}
 LINKS+= ${BINDIR}/${VI} ${BINDIR}/vi ${BINDIR}/${EX} ${BINDIR}/ex
@@ -32,7 +32,8 @@ MLINKS+=vi.1 nex.1 vi.1 nview.1 vi.1 nvi.1
 .PATH:	${SRCDIR}/vi
 .PATH:	${SRCDIR}/regex
 
-CFLAGS+=-I${.CURDIR} -I${SRCDIR} -I${SRCDIR}/regex
+CFLAGS+=-I${.CURDIR} -I${SRCDIR} -I${SRCDIR}/regex \
+	-I${.CURDIR}/ex
 
 LIBADD=	util ncursesw
 

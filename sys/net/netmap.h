@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: c040683651d0da8b133ce63e21cc0f353862a7d5 $
+ * $FreeBSD: 4d091ccc635dd69d9afdd55d84fec15143d6e32e $
  *
  * Definitions of constants and the structures used by the netmap
  * framework, for the part visible to both kernel and userspace.
@@ -217,6 +217,11 @@ struct netmap_slot {
          * ixgbe and i40e on Linux)
 	 * Set on all but the last slot of a multi-segment packet.
 	 * The 'len' field refers to the individual fragment.
+	 */
+
+#define NS_TXMON	0x0040
+	/* (monitor ports only) the packet comes from the TX
+	 * ring of the monitored port
 	 */
 
 #define	NS_PORT_SHIFT	8

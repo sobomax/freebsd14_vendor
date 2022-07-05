@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 1d7e740b89c4750018a1e8f891dd7eae75b19a95 $
+.\" $FreeBSD: 3b90baa0b6f26d9fa4e7d6b02ec27b38f44dd26d $
 .\"
 .Dd February 13, 2013
 .Dt CONNECTAT 2
@@ -45,7 +45,8 @@
 .Sh DESCRIPTION
 The
 .Fn connectat
-system call initiates a connection on a socket.
+system call initiates a connection on the socket
+.Fa s .
 When passed the special value
 .Dv AT_FDCWD
 in the

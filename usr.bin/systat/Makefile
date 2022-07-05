@@ -1,11 +1,11 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: ca3f7ed72ce47cdb241adc4fb47e6f2eb94d6253 $
+# $FreeBSD: bfbe1336d29193dd9dd3f14913dd0bf2725990b0 $
 
 .include <src.opts.mk>
 
 PROG=	systat
 SRCS=	cmds.c cmdtab.c devs.c fetch.c iostat.c keyboard.c main.c sysput.c \
-	netcmds.c netstat.c pigs.c swap.c icmp.c \
+	netcmds.c netstat.c pigs.c proc.c swap.c icmp.c \
 	mode.c ip.c sctp.c tcp.c zarc.c \
 	vmstat.c convtbl.c ifcmds.c ifstat.c
 
@@ -16,6 +16,6 @@ CFLAGS+= -DINET6
 
 WARNS?=	1
 
-LIBADD=	ncursesw m devstat kvm util
+LIBADD=	ncursesw m devstat kvm util procstat
 
 .include <bsd.prog.mk>

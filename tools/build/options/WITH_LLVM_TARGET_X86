@@ -1,5 +1,5 @@
-.\" $FreeBSD: e6bc3a52ce8f8b47197dff6e59d066e63035f6d4 $
-Set to build LLVM target support for X86.
+.\" $FreeBSD: 48886740d414ba45dfcc53c311b1b83416ca63e8 $
+Build LLVM target support for X86.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

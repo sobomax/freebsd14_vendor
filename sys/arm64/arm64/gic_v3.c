@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015-2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * the sponsorship of the FreeBSD Foundation.
@@ -34,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 954ed3cd878a45ea13dca43e5a0b601e0410d31a $");
+__FBSDID("$FreeBSD: 3e7cd30140eb2063813e7f99c85548944e0fc387 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1462,7 +1461,6 @@ gic_v3_map_msi(device_t dev, device_t child, struct intr_irqsrc *isrc,
 	struct gic_v3_softc *sc = device_get_softc(dev);
 	struct gic_v3_irqsrc *gi = (struct gic_v3_irqsrc *)isrc;
 
-#define GICD_SETSPI_NSR 0x40
 	*addr = vtophys(rman_get_virtual(sc->gic_dist)) + GICD_SETSPI_NSR;
 	*data = gi->gi_irq;
 

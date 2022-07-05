@@ -1,6 +1,6 @@
-# $FreeBSD: c6f847e1847831e07d0f28b8f27a5460ea369131 $
+# $FreeBSD: e5e9588df7bb407ef9c73b66deb4d266758ecc3a $
 
 PROG=   posixshmcontrol
-LIBADD=	util
+LIBADD=	jail util
 
 .include <bsd.prog.mk>

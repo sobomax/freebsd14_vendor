@@ -1,3 +1,3 @@
-.\" $FreeBSD: b4fe5dce7b302db1e132ed2a277fa8aa1ef1cd42 $
-Set to not build
+.\" $FreeBSD: 4d47f6e17c7a36b094638e5a13b26b6df5de19aa $
+Do not build
 .Xr inetd 8 .

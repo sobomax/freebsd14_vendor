@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ca64dd21e252308ab166b7831cfd6d6448489d0 $");
+__FBSDID("$FreeBSD: 792c53c7bafffb92a44b6747386a93a1b02880a5 $");
 
 #define ACCEPT_FILTER_MOD
 
@@ -172,7 +172,7 @@ accept_filt_getopt(struct socket *so, struct sockopt *sopt)
 	error = 0;
 	afap = malloc(sizeof(*afap), M_TEMP, M_WAITOK | M_ZERO);
 	SOCK_LOCK(so);
-	if ((so->so_options & SO_ACCEPTCONN) == 0) {
+	if (!SOLISTENING(so)) {
 		error = EINVAL;
 		goto out;
 	}
@@ -208,7 +208,7 @@ accept_filt_setopt(struct socket *so, struct sockopt *sopt)
 		int wakeup;
 
 		SOCK_LOCK(so);
-		if ((so->so_options & SO_ACCEPTCONN) == 0) {
+		if (!SOLISTENING(so)) {
 			SOCK_UNLOCK(so);
 			return (EINVAL);
 		}
@@ -278,8 +278,7 @@ accept_filt_setopt(struct socket *so, struct sockopt *sopt)
 	 * without first removing it.
 	 */
 	SOCK_LOCK(so);
-	if ((so->so_options & SO_ACCEPTCONN) == 0 ||
-	    so->sol_accept_filter != NULL) {
+	if (!SOLISTENING(so) || so->sol_accept_filter != NULL) {
 		error = EINVAL;
 		goto out;
 	}

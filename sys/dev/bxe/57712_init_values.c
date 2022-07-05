@@ -27,8 +27,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e730584dae98d532bb7d4d26aa87c6445d0f308 $");
-
+__FBSDID("$FreeBSD: 393cf795c76a5753607731e95b8796bc1035dae3 $");
+/* clang-format off */
 
 /*
 * This file contains an array of operations needed to initialize the chip:

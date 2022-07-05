@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b7fc29ff249d0e8cddb38a6bd4f532b7cd4d8d2 $");
+__FBSDID("$FreeBSD: eda3878ff5fb6e5e1fb60e25979f15f0508d3f67 $");
 
 #include <sys/time.h>
 
@@ -241,8 +241,6 @@ struct umouse_bos_desc umouse_bosd = {
 struct umouse_softc {
 	struct usb_hci *hci;
 
-	char	*opt;
-
 	struct umouse_report um_report;
 	int	newdata;
 	struct {
@@ -299,7 +297,7 @@ umouse_event(uint8_t button, int x, int y, void *arg)
 }
 
 static void *
-umouse_init(struct usb_hci *hci, char *opt)
+umouse_init(struct usb_hci *hci, nvlist_t *nvl)
 {
 	struct umouse_softc *sc;
 
@@ -307,7 +305,6 @@ umouse_init(struct usb_hci *hci, char *opt)
 	sc->hci = hci;
 
 	sc->hid.protocol = 1;	/* REPORT protocol */
-	sc->opt = strdup(opt);
 	pthread_mutex_init(&sc->mtx, NULL);
 	pthread_mutex_init(&sc->ev_mtx, NULL);
 

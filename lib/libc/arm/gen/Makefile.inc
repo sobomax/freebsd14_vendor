@@ -1,9 +1,10 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 6cc9b69d2b0e05153b728f4a2f9ea3f0cd684b25 $
+# $FreeBSD: 35aa465e4904ff82ea6d30714b4dcdc99b43d7da $
 
 SRCS+=	\
 	__aeabi_read_tp.S \
 	_ctx_start.S \
+	_get_tp.c \
 	_set_tp.c \
 	_setjmp.S \
 	alloca.S \

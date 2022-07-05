@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2103f6dc240ca8faaf2d4fb4b1d1a222e759949b $");
+__FBSDID("$FreeBSD: 5ce6fe8a67609b9c80db8e9088f903a09f5abc24 $");
 
 /*
  * Loading modules, booting the system
@@ -112,6 +112,9 @@ command_boot(int argc, char *argv[])
 	pass_manifest_export_envs();
 #endif
 #endif
+
+	/* Pass the tslog buffer to the kernel as a preloaded module. */
+	tslog_publish();
 
 	/* Call the exec handler from the loader matching the kernel */
 	file_formats[fp->f_loader]->l_exec(fp);

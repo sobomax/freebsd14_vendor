@@ -1,4 +1,6 @@
-# $FreeBSD: 6b2da5b1e03c7c939afa2b5c2c959869477e74ed $
+# $FreeBSD: 62a1cff105a25eaad9cf18898474258b858cc609 $
+
+PACKAGE=	periodic
 
 CONFS=	periodic.conf
 CONFSDIR=	/etc/defaults

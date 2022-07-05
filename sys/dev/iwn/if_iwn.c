@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2121a15bad6ebd6d3b222c36ae0b9c070989cbe6 $");
+__FBSDID("$FreeBSD: 334ba644e04bebf54bf62ee00b5dcbcd002e8c18 $");
 
 #include "opt_wlan.h"
 #include "opt_iwn.h"
@@ -1688,13 +1688,13 @@ iwn_read_prom_data(struct iwn_softc *sc, uint32_t addr, void *data, int count)
 	addr += sc->prom_base;
 	for (; count > 0; count -= 2, addr++) {
 		IWN_WRITE(sc, IWN_EEPROM, addr << 2);
-		for (ntries = 0; ntries < 10; ntries++) {
+		for (ntries = 0; ntries < 20; ntries++) {
 			val = IWN_READ(sc, IWN_EEPROM);
 			if (val & IWN_EEPROM_READ_VALID)
 				break;
 			DELAY(5);
 		}
-		if (ntries == 10) {
+		if (ntries == 20) {
 			device_printf(sc->sc_dev,
 			    "timeout reading ROM at 0x%x\n", addr);
 			return ETIMEDOUT;

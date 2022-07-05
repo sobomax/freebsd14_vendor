@@ -1,4 +1,4 @@
-# $FreeBSD: cb140a59854f5abc1885590e9b47d8625202433f $
+# $FreeBSD: 96818c2ef3d099f7d757a7afc073196d116922d7 $
 .PATH:  ${SRCTOP}/sys/dev/mlx4/mlx4_core
 
 KMOD=	mlx4
@@ -29,6 +29,8 @@ SRCS+=	opt_inet.h opt_inet6.h
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
 CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>
 

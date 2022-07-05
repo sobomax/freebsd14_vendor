@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4de94333c99ff31c3983206572157ddb8862d0bd $
+ * $FreeBSD: 1ae6078966a45c18026b2a81290054f531a640a1 $
  */
 
-#ifndef _LINUX_BITMAP_H_
-#define	_LINUX_BITMAP_H_
+#ifndef _LINUXKPI_LINUX_BITMAP_H_
+#define	_LINUXKPI_LINUX_BITMAP_H_
 
 #include <linux/bitops.h>
 #include <linux/slab.h>
@@ -351,4 +351,4 @@ bitmap_free(const unsigned long *bitmap)
 	kfree(bitmap);
 }
 
-#endif					/* _LINUX_BITMAP_H_ */
+#endif					/* _LINUXKPI_LINUX_BITMAP_H_ */

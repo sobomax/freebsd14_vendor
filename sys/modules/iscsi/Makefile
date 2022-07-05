@@ -1,4 +1,4 @@
-# $FreeBSD: 9b150f5c2213b3525ff9497c1618b4dde6311b3f $
+# $FreeBSD: e74f8ff132e227ea920896c50294d46342a3d6ce $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -21,5 +21,7 @@ CFLAGS+=-DICL_KERNEL_PROXY
 .endif
 
 MFILES=	kern/bus_if.m kern/device_if.m dev/iscsi/icl_conn_if.m
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

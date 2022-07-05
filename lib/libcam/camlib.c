@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 438b0e502fe0055400fbc42342e9159f92a7e56f $");
+__FBSDID("$FreeBSD: 6ebdb30ab82bc6fb79c48c0923f6fb3313f09bbc $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -128,10 +128,13 @@ cam_get_device(const char *path, char *dev_name, int devnamelen, int *unit)
 	}
 
 	/*
-	 * We can be rather destructive to the path string.  Make a copy of
-	 * it so we don't hose the user's string.
+	 * Resolve the given path to a real device path in case we are given
+	 * an alias or other symbolic link.  If the path cannot be resolved
+	 * then try to parse it as is.
 	 */
-	newpath = (char *)strdup(path);
+	newpath = realpath(path, NULL);
+	if (newpath == NULL)
+		newpath = strdup(path);
 	if (newpath == NULL)
 		return (-1);
 

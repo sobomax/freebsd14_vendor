@@ -1,7 +1,8 @@
-# $FreeBSD: b38949d1d5fe296e605423247400329134ccb0b8 $
+# $FreeBSD: 321352c7100c87729a8ea572cdd25d5b1958a3af $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libdtrace/common
 
+PACKAGE=	dtrace
 SRCS=		drti.c
 FILES=		${SRCS:R:S/$/.o/g}
 FILESOWN=	${LIBOWN}

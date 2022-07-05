@@ -1,4 +1,4 @@
-# $FreeBSD: 3ccdf50188c882b36fb6a30a3d79236ca38a17e2 $
+# $FreeBSD: 270d672b336e903ef70a989f4c29e1464f978583 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -31,7 +31,7 @@
             ..
             lib
                 clang
-                    11.0.1
+                    13.0.0
                         lib
                             freebsd
                             ..
@@ -53,6 +53,8 @@
                 sendmail
                 ..
                 sm.bin
+                ..
+                zfs
                 ..
             ..
             sbin

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/bwi/if_bwivar.h,v 1.14 2008/02/15 11:15:38 sephe Exp $
- * $FreeBSD: 90b4aeab6d26c6652805b56646bdc61e216b569b $
+ * $FreeBSD: 9961cfca91930714bb5b1c63df63858d56953f5b $
  */
 
 #ifndef _IF_BWIVAR_H
@@ -305,7 +305,7 @@ struct bwi_fw_iv {
 	union {
 		uint32_t	val32;
 		uint16_t	val16;
-	} 			iv_val;
+	} __packed		iv_val;
 } __packed;
 
 #define BWI_FW_IV_OFS_MASK	__BITS(14, 0)

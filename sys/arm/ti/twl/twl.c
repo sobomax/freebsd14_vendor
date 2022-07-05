@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1b20cbbaa5f7fc8b8b92a6fb324888d1b830f6c $");
+__FBSDID("$FreeBSD: c7755b524f0aff799e31d79d9c8b09af9bf8545b $");
 
 /*
  * Texas Instruments TWL4030/TWL5030/TWL60x0/TPS659x0 Power Management and
@@ -80,7 +80,7 @@ __FBSDID("$FreeBSD: e1b20cbbaa5f7fc8b8b92a6fb324888d1b830f6c $");
 /* Each TWL device typically has more than one I2C address */
 #define TWL_MAX_SUBADDRS            4
 
-/* The maxium number of bytes that can be written in one call */
+/* The maximum number of bytes that can be written in one call */
 #define TWL_MAX_IIC_DATA_SIZE       63
 
 /* The TWL devices typically use 4 I2C address for the different internal

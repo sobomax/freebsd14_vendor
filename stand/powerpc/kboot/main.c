@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 10a5e89adb9b75761e3f029245797787a2cbbbb6 $");
+__FBSDID("$FreeBSD: d25b6216f4216745d3d1c639bb5b61ee508f159e $");
 
 #include <stand.h>
 #include <sys/endian.h>
@@ -45,7 +45,6 @@ ssize_t kboot_copyout(vm_offset_t src, void *dest, const size_t len);
 ssize_t kboot_readin(readin_handle_t fd, vm_offset_t dest, const size_t len);
 int kboot_autoload(void);
 uint64_t kboot_loadaddr(u_int type, void *data, uint64_t addr);
-int kboot_setcurrdev(struct env_var *ev, int flags, const void *value);
 static void kboot_kseg_get(int *nseg, void **ptr);
 
 extern int command_fdt_internal(int argc, char *argv[]);

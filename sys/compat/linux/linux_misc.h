@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c7e4fa38682c61e7a7ab98b82e4ccb6cae84f82f $
+ * $FreeBSD: bd8b2f3f63b4f17a34762dbf98ecbbef5e71b9c0 $
  */
 
 #ifndef _LINUX_MISC_H_
@@ -88,6 +88,7 @@ extern const char *linux_kplatform;
 					 * differ from AT_PLATFORM.
 					 */
 #define	LINUX_AT_RANDOM		25	/* address of random bytes */
+#define	LINUX_AT_HWCAP2		26	/* CPU capabilities, second part */
 #define	LINUX_AT_EXECFN		31	/* filename of program */
 #define	LINUX_AT_SYSINFO	32	/* vsyscall */
 #define	LINUX_AT_SYSINFO_EHDR	33	/* vdso header */
@@ -181,7 +182,7 @@ extern int stclohz;
 int linux_ptrace_status(struct thread *td, int pid, int status);
 #endif
 void linux_to_bsd_waitopts(int options, int *bsdopts);
-int linux_set_upcall_kse(struct thread *td, register_t stack);
+int linux_set_upcall(struct thread *td, register_t stack);
 int linux_set_cloned_tls(struct thread *td, void *desc);
 struct thread	*linux_tdfind(struct thread *, lwpid_t, pid_t);
 

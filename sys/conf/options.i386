@@ -1,4 +1,4 @@
-# $FreeBSD: 73957449413ffab9a39503f1b56fbf7d399d0c9a $
+# $FreeBSD: fea6efdb991df31a44a71bd7c4dcc492e3ad915b $
 # Options specific to the i386 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h
@@ -109,6 +109,9 @@ NPX_DEBUG		opt_npx.h
 
 # BPF just-in-time compiler
 BPF_JITTER		opt_bpf.h
+
+# Hyper-V support
+HYPERV			opt_hyperv.h
 
 XENHVM			opt_global.h
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: c664895b054cac8144b0e41800f2a744f0a651d3 $ */
+/* $FreeBSD: 0dfded94a5832ef9e6eaf4a35958aaa0df38d9d8 $ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.
@@ -62,7 +62,7 @@ geteltnm(int type)
 		sprintf(rbuf, "Cooling");
 		break;
 	case ELMTYP_THERM:
-		sprintf(rbuf, "Temperature Sensors");
+		sprintf(rbuf, "Temperature Sensor");
 		break;
 	case ELMTYP_DOORLOCK:
 		sprintf(rbuf, "Door Lock");

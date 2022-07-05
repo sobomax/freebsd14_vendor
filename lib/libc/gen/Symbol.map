@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: c89eb63caada2a6d8e76c891c9686f5e8344efd9 $
+ * $FreeBSD: 012c9ff11f0428460ffe62fc5308fbd32866f89f $
  */
 
 FBSD_1.0 {
@@ -433,6 +433,17 @@ FBSD_1.6 {
 	sigorset;
 	tcgetwinsize;
 	tcsetwinsize;
+};
+
+FBSD_1.7 {
+	 posix_spawn_file_actions_addchdir_np;
+	 posix_spawn_file_actions_addclosefrom_np;
+	 posix_spawn_file_actions_addfchdir_np;
+	 sched_getaffinity;
+	 sched_setaffinity;
+	 sched_getcpu;
+	 __cpuset_alloc;
+	 __cpuset_free;
 };
 
 FBSDprivate_1.0 {

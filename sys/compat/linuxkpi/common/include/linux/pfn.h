@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 162ca102c951be1a10520a66f35af34242a265b8 $
+ * $FreeBSD: 675f5d21364afc7a4b0715c97e648a59a82875ee $
  */
 
-#ifndef _LINUX_PFN_H_
-#define	_LINUX_PFN_H_
+#ifndef _LINUXKPI_LINUX_PFN_H_
+#define	_LINUXKPI_LINUX_PFN_H_
 
 #include <linux/types.h>
 
@@ -41,4 +41,4 @@ typedef struct {
 #define	PFN_PHYS(x)	((phys_addr_t)(x) << PAGE_SHIFT)
 #define	PHYS_PFN(x)	((unsigned long)((x) >> PAGE_SHIFT))
 
-#endif					/* _LINUX_PFN_H_ */
+#endif					/* _LINUXKPI_LINUX_PFN_H_ */

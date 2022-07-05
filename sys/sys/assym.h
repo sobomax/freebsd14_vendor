@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 858989fe505fc7546b2e6736c50a749bb647b6e8 $
+ * $FreeBSD: 3cb4afd5803c0a75d5183da9f536a1277ab989ef $
  */
 
 #ifndef _SYS_ASSYM_H_
@@ -51,9 +51,7 @@ char name ## w3[((ASSYM_ABS(value) & 0xFFFF000000000000ULL) >> 48) + ASSYM_BIAS]
 #endif
 
 #define OFFSYM(name, parenttype, datatype)				\
-ASSYM(name, offsetof(struct parenttype, name));	\
-char name ## _datatype_ ## datatype [1]; \
-char name ## _parenttype_ ## parenttype [1]; \
+char __assym_offset__ ## parenttype ## __ ## name ## __ ## datatype [offsetof(struct parenttype, name)]; \
 CTASSERT(__builtin_types_compatible_p(__typeof(((struct parenttype *)(0x0))-> name), datatype)); \
 OFFSET_CTASSERT(offsetof(struct parenttype, name) == offsetof(struct parenttype ## _lite, name))
 

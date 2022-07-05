@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 254841b6c04ade1de36bbd721e9cd8e1ca704bbe $");
+__FBSDID("$FreeBSD: 355504a6f90fff0671dc16aad15c8afa74789852 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -747,7 +747,7 @@ again:
 			bzero(md.md_provider, sizeof(md.md_provider));
 		}
 		md.md_provsize = pp->mediasize;
-		sector = g_malloc(pp->sectorsize, M_WAITOK);
+		sector = g_malloc(pp->sectorsize, M_WAITOK | M_ZERO);
 		mirror_metadata_encode(&md, sector);
 		error = g_write_data(disks[i].consumer,
 		    pp->mediasize - pp->sectorsize, sector, pp->sectorsize);

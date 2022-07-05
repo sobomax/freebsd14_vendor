@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9d12085364e543847fbd5b1f9ad41075c98d67da $
+ * $FreeBSD: 7579f93a42b165d647a864fda671ef0a6709fbb0 $
  */
 
 #ifndef _PMC_H_
@@ -122,7 +122,6 @@ uint64_t pmc_pmu_sample_rate_get(const char *);
 int pmc_pmu_pmcallocate(const char *, struct pmc_op_pmcallocate *);
 const char *pmc_pmu_event_get_by_idx(const char *, int idx);
 int pmc_pmu_idx_get_by_event(const char*, const char *);
-int pmc_pmu_stat_mode(const char ***);
 __END_DECLS
 
 #endif

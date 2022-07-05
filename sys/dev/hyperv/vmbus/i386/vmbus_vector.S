@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f503e3d812038b6ebd7a40b1c13bcdca82a74c27 $
+ * $FreeBSD: 4bb51be2623d5374f51c2efb92b5a494411a9d37 $
  */
 
 #include "assym.inc"
@@ -35,6 +35,9 @@
 /*
  * This is the Hyper-V vmbus channel direct callback interrupt.
  * Only used when it is running on Hyper-V.
+ *
+ * Note that this file is not compiled directly, it is included into
+ * i386/exception.s.
  */
 	.text
 	SUPERALIGN_TEXT
@@ -46,7 +49,8 @@ IDTVEC(vmbus_isr)
 	KENTER
 	FAKE_MCOUNT(TF_EIP(%esp))
 	pushl	%esp
-	call	vmbus_handle_intr
+	mov	$vmbus_handle_intr, %eax
+	call	*%eax
 	add	$4, %esp
 	MEXITCOUNT
 	jmp	doreti

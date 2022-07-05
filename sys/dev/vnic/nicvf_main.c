@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c8b088dee1faa85285ca0db3d50ac5239692a8ec $
+ * $FreeBSD: 1dc49ee855a9b9f724bd782d1136ee4a40092582 $
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8b088dee1faa85285ca0db3d50ac5239692a8ec $");
+__FBSDID("$FreeBSD: 1dc49ee855a9b9f724bd782d1136ee4a40092582 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -485,16 +485,14 @@ nicvf_if_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			if (if_getdrvflags(ifp) & IFF_DRV_RUNNING) {
 				if ((flags ^ nic->if_flags) & IFF_PROMISC) {
 					/* Change promiscous mode */
-#if 0
-					/* ARM64TODO */
+#if 0 /* XXX */
 					nicvf_set_promiscous(nic);
 #endif
 				}
 
 				if ((flags ^ nic->if_flags) & IFF_ALLMULTI) {
 					/* Change multicasting settings */
-#if 0
-					/* ARM64TODO */
+#if 0 /* XXX */
 					nicvf_set_multicast(nic);
 #endif
 				}

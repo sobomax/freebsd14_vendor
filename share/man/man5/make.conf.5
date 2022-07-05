@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 3dffdf7b402c3da60476f2ab9222e4a8b52bbcc9 $
+.\" $FreeBSD: b8bb71ddc165e19e14c73736423b372af74b9535 $
 .\"
-.Dd December 20, 2020
+.Dd June 11, 2021
 .Dt MAKE.CONF 5
 .Os
 .Sh NAME
@@ -229,29 +229,6 @@ Setting this variable will prevent CPU specific compiler flags
 from being automatically added to
 .Va CFLAGS
 during compile time.
-.It Va NO_DOCUPDATE
-.Pq Vt bool
-Set this to not update the doc tree during
-.Dq Li "make update" .
-.It Va NO_PORTSUPDATE
-.Pq Vt bool
-Set this to not update the ports tree during
-.Dq Li "make update" .
-.It Va SVN_UPDATE
-.Pq Vt bool
-Set this to use
-.Xr svn 1
-or
-.Xr svnlite 1
-to update your
-.Pa src
-tree with
-.Dq Li "make update" .
-Note that you can set
-.Va SVN
-to the full path of a
-.Xr svn 1
-binary.
 .El
 .Ss "BUILDING THE KERNEL"
 The following list provides a name and short description for variables

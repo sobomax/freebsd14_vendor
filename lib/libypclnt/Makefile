@@ -1,5 +1,6 @@
-# $FreeBSD: 636c9b6c81b940a719a18eecc0b4769a47e6034d $
+# $FreeBSD: c3e6b23249c4c0e5549c95ec418c4c22531ccea8 $
 
+PACKAGE=	runtime
 LIB=	ypclnt
 SHLIB_MAJOR= 4
 SRCS=	ypclnt_connect.c \

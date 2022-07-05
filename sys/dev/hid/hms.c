@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94267b3fcd52d6c06e52b82cd2387f7c82bc3ccb $");
+__FBSDID("$FreeBSD: e9923f55861f03451c7d267f1f0bc2a94c53b731 $");
 
 /*
  * HID spec: https://www.usb.org/sites/default/files/documents/hid1_11.pdf
@@ -109,6 +109,7 @@ static const struct hidmap_item hms_map_wheel_rev[] = {
 
 /* A match on these entries will load hms */
 static const struct hid_device_id hms_devs[] = {
+	{ HID_TLC(HUP_GENERIC_DESKTOP, HUG_POINTER) },
 	{ HID_TLC(HUP_GENERIC_DESKTOP, HUG_MOUSE) },
 };
 
@@ -271,7 +272,7 @@ hms_attach(device_t dev)
 		SYSCTL_ADD_U32(device_get_sysctl_ctx(dev),
 		    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
 		    "drift_thresh", CTLFLAG_RW, &sc->drift_thresh, 0,
-		    "drift detection threshhold");
+		    "drift detection threshold");
 	}
 #endif
 

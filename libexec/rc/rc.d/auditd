@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 637214282de0a0201dd01bcad3a0b8b28ebdcb97 $
+# $FreeBSD: 084b2b764655b31442a6cd630c5b4a923d79401b $
 #
 # Start up for the Audit daemon.
 #
@@ -16,6 +16,7 @@ name="auditd"
 desc="Audit daemon"
 stop_cmd="auditd_stop"
 command="/usr/sbin/${name}"
+pidfile="/var/run/${name}.pid"
 rcvar="auditd_enable"
 command_args="${auditd_flags}"
 required_files="/etc/security/audit_class /etc/security/audit_control

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 577c65d588e8425a33af3f7079225bce9bcde8c1 $
+# $FreeBSD: 2d3f4d1dc182f8f353568ab61e2b207503456cc4 $
 
 #
 # Copyright 2014 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case link_count_001 cleanup
 link_count_001_head()
 {
 	atf_set "descr" "Verify file link count is zero on zfs"
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 link_count_001_body()
 {

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b9e6429d9e346e2a14d020f7dcf37050bd57bb3 $");
+__FBSDID("$FreeBSD: d830257fbd16f7ff7d29dce8745fa4390f05b05d $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -91,16 +91,28 @@ optadd(char *mntopts, size_t size, const char *opt)
 	strlcat(mntopts, opt, size);
 }
 
+static __thread char gfstypename[MFSNAMELEN];
+static __thread char gmntfromname[MNAMELEN];
+static __thread char gmntonname[MNAMELEN];
+static __thread char gmntopts[MNTMAXSTR];
+
 void
 statfs2mnttab(struct statfs *sfs, struct mnttab *mp)
 {
-	static char mntopts[MNTMAXSTR];
 	long flags;
 
-	mntopts[0] = '\0';
+	strlcpy(gfstypename, sfs->f_fstypename, sizeof (gfstypename));
+	mp->mnt_fstype = gfstypename;
+
+	strlcpy(gmntfromname, sfs->f_mntfromname, sizeof (gmntfromname));
+	mp->mnt_special = gmntfromname;
+
+	strlcpy(gmntonname, sfs->f_mntonname, sizeof (gmntonname));
+	mp->mnt_mountp = gmntonname;
 
 	flags = sfs->f_flags;
-#define	OPTADD(opt)	optadd(mntopts, sizeof (mntopts), (opt))
+	gmntopts[0] = '\0';
+#define	OPTADD(opt)	optadd(gmntopts, sizeof (gmntopts), (opt))
 	if (flags & MNT_RDONLY)
 		OPTADD(MNTOPT_RO);
 	else
@@ -121,10 +133,7 @@ statfs2mnttab(struct statfs *sfs, struct mnttab *mp)
 	else
 		OPTADD(MNTOPT_EXEC);
 #undef	OPTADD
-	mp->mnt_special = strdup(sfs->f_mntfromname);
-	mp->mnt_mountp = strdup(sfs->f_mntonname);
-	mp->mnt_fstype = strdup(sfs->f_fstypename);
-	mp->mnt_mntopts = strdup(mntopts);
+	mp->mnt_mntopts = gmntopts;
 }
 
 static struct statfs *gsfs = NULL;
@@ -140,14 +149,14 @@ statfs_init(void)
 		free(gsfs);
 		gsfs = NULL;
 	}
-	allfs = getfsstat(NULL, 0, MNT_WAIT);
+	allfs = getfsstat(NULL, 0, MNT_NOWAIT);
 	if (allfs == -1)
 		goto fail;
 	gsfs = malloc(sizeof (gsfs[0]) * allfs * 2);
 	if (gsfs == NULL)
 		goto fail;
 	allfs = getfsstat(gsfs, (long)(sizeof (gsfs[0]) * allfs * 2),
-	    MNT_WAIT);
+	    MNT_NOWAIT);
 	if (allfs == -1)
 		goto fail;
 	sfs = realloc(gsfs, allfs * sizeof (gsfs[0]));
@@ -166,7 +175,6 @@ fail:
 int
 getmntany(FILE *fd __unused, struct mnttab *mgetp, struct mnttab *mrefp)
 {
-	//	struct statfs *sfs;
 	int i, error;
 
 	error = statfs_init();
@@ -195,7 +203,6 @@ getmntany(FILE *fd __unused, struct mnttab *mgetp, struct mnttab *mrefp)
 int
 getmntent(FILE *fp, struct mnttab *mp)
 {
-	//	struct statfs *sfs;
 	int error, nfs;
 
 	nfs = (int)lseek(fileno(fp), 0, SEEK_CUR);

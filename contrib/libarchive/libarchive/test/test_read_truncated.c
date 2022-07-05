@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: fbfd75c1cea731b7d4c194d3076d8c3b02b3f303 $");
+__FBSDID("$FreeBSD: 4d5e4385e92aac1a3b16ada8b260771112ff698a $");
 
 static char buff[1000000];
 static char buff2[100000];
@@ -47,8 +47,7 @@ DEFINE_TEST(test_read_truncated)
 	assert((ae = archive_entry_new()) != NULL);
 	archive_entry_copy_pathname(ae, "file");
 	archive_entry_set_mode(ae, S_IFREG | 0755);
-	for (i = 0; i < sizeof(buff2); i++)
-		buff2[i] = (unsigned char)rand();
+	fill_with_pseudorandom_data(buff2, sizeof(buff2));
 	archive_entry_set_size(ae, sizeof(buff2));
 	assertEqualIntA(a, ARCHIVE_OK, archive_write_header(a, ae));
 	archive_entry_free(ae);

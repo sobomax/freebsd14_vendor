@@ -87,7 +87,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: a3ee3c3b93bacd91ba6490381af6e7c8c99a14c3 $");
+__FBSDID("$FreeBSD: 83b295feafcef93d900e2eac740684141e0ca9a4 $");
 
 #include "assym.inc"
 
@@ -241,6 +241,7 @@ EEND(memset)
 END(bzero)
 
 ENTRY(bcmp)
+EENTRY(memcmp)
 	mov	ip, r0
 	cmp	r2, #0x06
 	beq	.Lmemcmp_6bytes
@@ -348,6 +349,7 @@ ENTRY(bcmp)
 	RETne			/* Return if mismatch on #4 */
 	sub	r0, r3, r2		/* r0 = b1#5 - b2#5 */
 	RET
+EEND(memcmp)
 END(bcmp)
 
 ENTRY(bcopy)

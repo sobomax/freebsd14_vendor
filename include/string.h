@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)string.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 774cf5fe975638fa64242ee83942e251578a3238 $
+ * $FreeBSD: afa90c3f2536d8ab7668988ddfa244db15c6e1a2 $
  */
 
 #ifndef _STRING_H_
@@ -66,6 +66,9 @@ void	*memcpy(void * __restrict, const void * __restrict, size_t);
 void	*memmem(const void *, size_t, const void *, size_t) __pure;
 #endif
 void	*memmove(void *, const void *, size_t);
+#if __BSD_VISIBLE
+void	*mempcpy(void * __restrict, const void * __restrict, size_t);
+#endif
 void	*memset(void *, int, size_t);
 #if __POSIX_VISIBLE >= 200809
 char	*stpcpy(char * __restrict, const char * __restrict);

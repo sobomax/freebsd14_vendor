@@ -1,4 +1,6 @@
-# $FreeBSD: 733242ce99af75b025d5a8df3c5623cd3823ec08 $
+# $FreeBSD: fac25253d26e85f19877d9d090813970b454dd91 $
+
+PACKAGE=	kerberos
 
 LIB=	kadm5srv
 LDFLAGS=	-Wl,--no-undefined

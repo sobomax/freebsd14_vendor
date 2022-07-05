@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 00740095b3e193f17e7a1594ea6a4a817eaa0cef $
+ * $FreeBSD: 17aa2ca4c91bce0d487f1ccb97db5729f49751f0 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <dev/mlx5/driver.h>
 #include <dev/mlx5/port.h>

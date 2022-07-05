@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: fbc0f5139c8814523e64286904b2fa5af6b8f6d2 $
+# $FreeBSD: 4d405a0ffacbf59f2ed5d3942a0fc6a88b4aace2 $
 #
 
 configure_args="
@@ -8,10 +8,11 @@ configure_args="
     --sysconfdir=/etc/ssh
     --with-pam
     --with-ssl-dir=/usr
-    --with-tcp-wrappers
+    --without-tcp-wrappers
     --with-libedit
     --with-ssl-engine
     --without-xauth
+    --without-security-key-builtin
 "
 
 set -e
@@ -30,14 +31,14 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
 # Generate config.h with krb5 and stash it
 sh configure $configure_args --with-kerberos5=/usr
-mv config.log config.log.orig
-mv config.h config.h.orig
+mv config.log config.log.kerberos5
+mv config.h config.h.kerberos5
 
 # Generate config.h without krb5
 sh configure $configure_args --without-kerberos5
 
 # Extract the difference
 echo '/* $Free''BSD$ */' > krb5_config.h
-diff -u config.h.orig config.h |
+diff -u config.h.kerberos5 config.h |
 	sed -n '/^-#define/s/^-//p' |
-	grep -Ff /dev/stdin config.h.orig >> krb5_config.h
+	grep -Ff /dev/stdin config.h.kerberos5 >> krb5_config.h

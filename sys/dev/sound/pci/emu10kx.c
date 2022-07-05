@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5ae7608450082d7437e5878b2b706520735519b0 $
+ * $FreeBSD: 784fd7e27ae1315d2df45468bc2f6bea911744ab $
  */
 
 #include <sys/param.h>
@@ -1569,7 +1569,7 @@ emu_addefxmixer(struct emu_sc_info *sc, const char *mix_name, const int mix_id, 
 		snprintf(sysctl_name, 32, "_%s", mix_name);
 		SYSCTL_ADD_PROC(sc->ctx,
 		    SYSCTL_CHILDREN(sc->root), OID_AUTO, sysctl_name,
-		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, mix_id,
+		    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, sc, mix_id,
 		    sysctl_emu_mixer_control, "I", "");
 	}
 
@@ -1609,7 +1609,7 @@ emu_digitalswitch(struct emu_sc_info *sc)
 {
 	/* XXX temporary? */
 	SYSCTL_ADD_PROC(sc->ctx, SYSCTL_CHILDREN(sc->root), OID_AUTO,
-	    "_digital", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    "_digital", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    sc, 0, sysctl_emu_digitalswitch_control, "I",
 	    "Enable digital output");
 

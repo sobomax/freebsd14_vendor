@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)diff.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 1974b5cc08d6e28132e8ce3a357b998c05941bf2 $
+ * $FreeBSD: b5536bd7bf771d93fb0da065fa0489769fbc434e $
  */
 
 #include <sys/types.h>
@@ -102,9 +102,6 @@ extern regex_t	ignore_re;
 
 char	*splice(char *, char *);
 int	diffreg(char *, char *, int, int);
-int	easprintf(char **, const char *, ...);
-void	*emalloc(size_t);
-void	*erealloc(void *, size_t);
 void	diffdir(char *, char *, int);
 void	print_only(const char *, size_t, const char *);
 void	print_status(int, char *, char *, const char *);

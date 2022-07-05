@@ -24,11 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4742d40e746c00fbb5b9ad7c4e2d7b7aabaf8c74 $
+ * $FreeBSD: 697e0b6b6349cb4360b31b629d0fa73240aa2705 $
  */
 
 #ifndef __BACKLIGHT_H__
 #define	__BACKLIGHT_H__
+
+#include <sys/types.h>
 
 #define	BACKLIGHTMAXLEVELS 100
 

@@ -41,9 +41,10 @@ static char sccsid[] = "@(#)chroot.c	8.1 (Berkeley) 6/9/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60ef631ca8757cb50c56412c7e9845e68ac27d6a $");
+__FBSDID("$FreeBSD: b14e1cbf4597c9e8f04f43345e986827d52ec7bd $");
 
 #include <sys/types.h>
+#include <sys/procctl.h>
 
 #include <ctype.h>
 #include <err.h>
@@ -51,6 +52,7 @@ __FBSDID("$FreeBSD: 60ef631ca8757cb50c56412c7e9845e68ac27d6a $");
 #include <limits.h>
 #include <paths.h>
 #include <pwd.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,13 +69,15 @@ main(int argc, char *argv[])
 	const char	*shell;
 	gid_t		gid, *gidlist;
 	uid_t		uid;
-	int		ch, gids;
+	int		arg, ch, error, gids;
 	long		ngroups_max;
+	bool		nonprivileged;
 
 	gid = 0;
 	uid = 0;
 	user = group = grouplist = NULL;
-	while ((ch = getopt(argc, argv, "G:g:u:")) != -1) {
+	nonprivileged = false;
+	while ((ch = getopt(argc, argv, "G:g:u:n")) != -1) {
 		switch(ch) {
 		case 'u':
 			user = optarg;
@@ -89,6 +93,9 @@ main(int argc, char *argv[])
 			grouplist = optarg;
 			if (*grouplist == '\0')
 				usage();
+			break;
+		case 'n':
+			nonprivileged = true;
 			break;
 		case '?':
 		default:
@@ -153,6 +160,13 @@ main(int argc, char *argv[])
 		}
 	}
 
+	if (nonprivileged) {
+		arg = PROC_NO_NEW_PRIVS_ENABLE;
+		error = procctl(P_PID, getpid(), PROC_NO_NEW_PRIVS_CTL, &arg);
+		if (error != 0)
+			err(1, "procctl");
+	}
+
 	if (chdir(argv[0]) == -1 || chroot(".") == -1)
 		err(1, "%s", argv[0]);
 
@@ -179,6 +193,6 @@ static void
 usage(void)
 {
 	(void)fprintf(stderr, "usage: chroot [-g group] [-G group,group,...] "
-	    "[-u user] newroot [command]\n");
+	    "[-u user] [-n] newroot [command]\n");
 	exit(1);
 }

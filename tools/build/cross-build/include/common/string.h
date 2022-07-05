@@ -33,12 +33,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dd039d54583e353a6728cfad4e4635e4ad1fbb49 $
+ * $FreeBSD: 8a33f4d4ff195375a7b03e8ee61239374fe77b08 $
  */
 #pragma once
 
 /* Avoid incompatible opensolaris redeclarations (without _FORTIFY_SOURCE). */
+#undef HAVE_STRLCAT
 #define HAVE_STRLCAT 1
+#undef HAVE_STRLCPY
 #define HAVE_STRLCPY 1
 
 #include_next <string.h>

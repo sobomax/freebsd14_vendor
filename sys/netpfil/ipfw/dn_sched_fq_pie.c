@@ -1,7 +1,7 @@
 /* 
  * FQ_PIE - The FlowQueue-PIE scheduler/AQM
  *
- * $FreeBSD: 2f21ca77e33ac726696a9f8a50902fef261c5be5 $
+ * $FreeBSD: 76215aed610ad3517e0f33b6f5c8470ec42e8af3 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -81,6 +81,9 @@
 #endif
 
 #define DN_SCHED_FQ_PIE 7
+
+VNET_DECLARE(unsigned long, io_pkt_drop);
+#define V_io_pkt_drop VNET(io_pkt_drop)
 
 /* list of queues */
 STAILQ_HEAD(fq_pie_list, fq_pie_flow) ;
@@ -299,7 +302,7 @@ fq_update_stats(struct fq_pie_flow *q, struct fq_pie_si *si, int len,
 		si->main_q.ni.drops ++;
 		q->stats.drops ++;
 		si->_si.ni.drops ++;
-		io_pkt_drop ++;
+		V_dn_cfg.io_pkt_drop ++;
 	} 
 
 	if (!drop || (drop && len < 0)) {
@@ -347,7 +350,7 @@ fq_pie_extract_head(struct fq_pie_flow *q, aqm_time_t *pkt_ts,
 	fq_update_stats(q, si, -m->m_pkthdr.len, 0);
 
 	if (si->main_q.ni.length == 0) /* queue is now idle */
-			si->main_q.q_time = dn_cfg.curr_time;
+			si->main_q.q_time = V_dn_cfg.curr_time;
 
 	if (getts) {
 		/* extract packet timestamp*/
@@ -734,11 +737,11 @@ pie_enqueue(struct fq_pie_flow *q, struct mbuf* m, struct fq_pie_si *si)
 			mtag = m_tag_alloc(MTAG_ABI_COMPAT, DN_AQM_MTAG_TS,
 				sizeof(aqm_time_t), M_NOWAIT);
 		if (mtag == NULL) {
-			m_freem(m); 
 			t = DROP;
+		} else {
+			*(aqm_time_t *)(mtag + 1) = AQM_UNOW;
+			m_tag_prepend(m, mtag);
 		}
-		*(aqm_time_t *)(mtag + 1) = AQM_UNOW;
-		m_tag_prepend(m, mtag);
 	}
 
 	if (t != DROP) {
@@ -768,7 +771,7 @@ pie_drop_head(struct fq_pie_flow *q, struct fq_pie_si *si)
 	fq_update_stats(q, si, -m->m_pkthdr.len, 1);
 
 	if (si->main_q.ni.length == 0) /* queue is now idle */
-			si->main_q.q_time = dn_cfg.curr_time;
+			si->main_q.q_time = V_dn_cfg.curr_time;
 	/* reset accu_prob after packet drop */
 	q->pst.accu_prob = 0;
 

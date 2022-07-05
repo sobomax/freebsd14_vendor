@@ -1,4 +1,4 @@
-# $FreeBSD: 9bab50eba5bc6f1db59ec8b56e5cb539f7c7e7f3 $
+# $FreeBSD: 8d546f9eabfdd9be1cb728a1382d37bcfe06d347 $
 
 .PATH:	${SRCTOP}/sys/dev/ocs_fc
 KMOD = ocs_fc
@@ -33,7 +33,8 @@ SRCS += \
 	ocs_scsi.c \
 	ocs_unsol.c \
 	ocs_ddump.c \
-	ocs_mgmt.c 
+	ocs_mgmt.c \
+	ocs_gendump.c
 
 
 # CAM initiator/target

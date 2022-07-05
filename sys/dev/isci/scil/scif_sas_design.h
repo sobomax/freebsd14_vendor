@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1f2e8a851287c4d040e1a0791c8a4010602020d0 $
+ * $FreeBSD: 18c9e86e861d44f45b69dc900c09b3a3947003c5 $
  */
 #ifndef _SCIF_SAS_DESIGN_H_
 #define _SCIF_SAS_DESIGN_H_
@@ -334,7 +334,7 @@ Please refer to these files directly for further design information:
 The SCIF SAS SMP REMOTE DEVICE object represents the expander device and fulfills
 its SMP discover activities. The discover procedure includes a initial discover
 phase and a following SATA spinup_hold release phase, if there are expander attached
-SATA device is discovered and in spinup_hold conditon. The SCIF SAS SMP REMOTE DEVICE
+SATA device is discovered and in spinup_hold condition. The SCIF SAS SMP REMOTE DEVICE
 object also fulfills expander attached device Target Reset (Phy Control) activity.
 
 @image latex Discover Process.eps "SMP Discover Activity Diagram" width=10cm

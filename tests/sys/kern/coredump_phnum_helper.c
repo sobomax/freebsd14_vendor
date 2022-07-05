@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: da023e691a245dedda251e8641c0e0da9736f961 $
+ * $FreeBSD: 0dff59b918d9a5534b1e71c5273de6781efc7aa2 $
  */
 
 #include <sys/param.h>
@@ -42,18 +42,21 @@ int
 main(int argc __unused, char **argv __unused)
 {
 	void *v;
-	unsigned i;
+	size_t i, pages;
 
-	for (i = 0; i < UINT16_MAX + 1000; i++) {
+	pages = UINT16_MAX + 1000;
+	v = mmap(NULL, pages * PAGE_SIZE, PROT_READ | PROT_WRITE,
+	    MAP_ANON | MAP_PRIVATE, -1, 0);
+	if (v == NULL)
+		err(1, "mmap");
+	for (i = 0; i < pages; i += 2) {
 		/*
-		 * Alternate protections; otherwise the kernel will just extend
-		 * the adjacent same-protection previous mapping.
+		 * Alternate protections to interleave RW and R PT_LOAD
+		 * segments.
 		 */
-		v = mmap(NULL, PAGE_SIZE,
-		    (((i % 2) == 0) ? PROT_READ : 0) | PROT_WRITE,
-		    MAP_ANON | MAP_PRIVATE, -1, 0);
-		if (v == MAP_FAILED)
-			err(1, "mmap");
+		if (mprotect((char *)v + i * PAGE_SIZE, PAGE_SIZE,
+		    PROT_READ) != 0)
+			err(1, "mprotect");
 	}
 
 	/* Dump core. */

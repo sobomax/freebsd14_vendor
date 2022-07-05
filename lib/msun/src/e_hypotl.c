@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9189b1fab54d9c507d954180334375578acea176 $");
+__FBSDID("$FreeBSD: fc43538dfa655ae717ff07bd3a7ed7fa954f4ad0 $");
 
 /* long double version of hypot().  See e_hypot.c for most comments. */
 
@@ -82,7 +82,7 @@ hypotl(long double x, long double y)
 	        man_t manh, manl;
 		GET_LDBL_MAN(manh,manl,b);
 		if((manh|manl)==0) return a;
-		t1=0;
+		t1=1;
 		SET_HIGH_WORD(t1,ESW(MAX_EXP-2));	/* t1=2^(MAX_EXP-2) */
 		b *= t1;
 		a *= t1;

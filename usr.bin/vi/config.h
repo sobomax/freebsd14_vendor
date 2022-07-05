@@ -1,4 +1,4 @@
-/* $FreeBSD: 85ffb2874b34138c1cb5fc663d5048d3b9846474 $ */
+/* $FreeBSD: 2b4348870db4f0184f14840712787ee577185b75 $ */
 
 /* Define when using wide characters */
 #define USE_WIDECHAR
@@ -15,5 +15,14 @@
 /* Define if you have <ncurses.h> */
 #define HAVE_NCURSES_H
 
+/* Define if you have <ncursesw/ncurses.h> */
+/* #undef HAVE_NCURSESW_NCURSES_H */
+
+/* Define if you have <pty.h> */
+/* #undef HAVE_PTY_H */
+
 /* Define if you have <term.h> */
 #define HAVE_TERM_H
+
+/* Define if struct dirent has field d_namlen */
+#define HAVE_DIRENT_D_NAMLEN

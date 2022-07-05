@@ -1,6 +1,8 @@
-# $FreeBSD: 9c54eaa6483f9ae099ec03cc16870b396343f37b $
+# $FreeBSD: 74ab84f3684e6c9af8b2f376870545667e27aa5c $
 
 .include <src.opts.mk>
+
+PACKAGE=	periodic
 
 CONFS=	340.noid \
 	450.status-security \

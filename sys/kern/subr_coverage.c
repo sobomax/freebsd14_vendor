@@ -32,13 +32,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f3ab27c2ca3ddb304f9424cc466868d6a0d37b37 $
+ * $FreeBSD: 9a719bcaecad10ae5b44d8c5caa4d3731582715e $
  */
 
-#define	KCSAN_RUNTIME
+#ifdef KCSAN
+#define	SAN_RUNTIME
+#endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3ab27c2ca3ddb304f9424cc466868d6a0d37b37 $");
+__FBSDID("$FreeBSD: 9a719bcaecad10ae5b44d8c5caa4d3731582715e $");
 
 #include <sys/param.h>
 #include <sys/coverage.h>

@@ -27,7 +27,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)vnode_if.src	8.12 (Berkeley) 5/14/95
-# $FreeBSD: b506237f385de03406de4ca767e66550d97a5e2a $
+# $FreeBSD: bc89ff57c631a1db3dc3ddb2585f0636c9bc684d $
 #
 
 #
@@ -296,7 +296,9 @@ vop_revoke {
 };
 
 
-%% fsync	vp	L L L
+%% fsync	vp	- - -
+%! fsync	pre	vop_fsync_debugpre
+%! fsync	post	vop_fsync_debugpost
 
 vop_fsync {
 	IN struct vnode *vp;
@@ -703,6 +705,8 @@ vop_allocate {
 	IN struct vnode *vp;
 	INOUT off_t *offset;
 	INOUT off_t *len;
+	IN int ioflag;
+	IN struct ucred *cred;
 };
 
 
@@ -768,7 +772,9 @@ vop_add_writecount {
 };
 
 
-%% fdatasync	vp	L L L
+%% fdatasync	vp	- - -
+%! fdatasync	pre	vop_fdatasync_debugpre
+%! fdatasync	post	vop_fdatasync_debugpost
 
 vop_fdatasync {
 	IN struct vnode *vp;

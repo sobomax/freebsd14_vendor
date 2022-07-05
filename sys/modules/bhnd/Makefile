@@ -1,4 +1,4 @@
-# $FreeBSD: 18e5ad4c214995dcb9c197afc46d4afcd2799db5 $
+# $FreeBSD: 54a72a11e28d43c58609b5dc7f3fdb9ad6e4ffab $
 
 .PATH: ${SRCTOP}/sys/dev/bhnd
 .PATH: ${SRCTOP}/sys/dev/bhnd/cores/chipc
@@ -22,7 +22,7 @@ SRCS+=	opt_platform.h
 
 SRCS+=	bhnd_sprom_chipc.c \
 	bhnd_pmu_chipc.c
-	
+
 SRCS+=	bhnd_pwrctl.c \
 	bhnd_pwrctl_subr.c \
 	bhnd_pwrctl_if.c \
@@ -70,6 +70,8 @@ SUBDIR=	bcma \
 	cores \
 	siba \
 	siba_bhndb
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>
 .include <bsd.subdir.mk>

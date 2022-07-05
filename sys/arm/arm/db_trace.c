@@ -31,7 +31,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 195ed0f4e3d94208e8d2135739f6fc0686717d6a $");
+__FBSDID("$FreeBSD: 3f308c9f546c02572f16cc34b224f3aca508331f $");
 #include <sys/param.h>
 #include <sys/systm.h>
 
@@ -132,20 +132,6 @@ db_md_list_watchpoints(void)
 {
 
 	dbg_show_watchpoint();
-}
-
-int
-db_md_clr_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (dbg_remove_watchpoint(addr, size));
-}
-
-int
-db_md_set_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (dbg_setup_watchpoint(addr, size, HW_WATCHPOINT_RW));
 }
 
 int

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: b546701608f166d801e13b065756252dced477a4 $*/
+/*$FreeBSD: 896da955843a5f81c5ee1d9a4fa6d3a507981b6b $*/
 
 
 #include "ixl_pf.h"
@@ -3169,27 +3169,28 @@ ixl_set_link(struct ixl_pf *pf, bool enable)
 	config.phy_type = 0;
 	config.phy_type_ext = 0;
 
+	config.abilities &= ~(I40E_AQ_PHY_FLAG_PAUSE_TX |
+			I40E_AQ_PHY_FLAG_PAUSE_RX);
+
+	switch (pf->fc) {
+	case I40E_FC_FULL:
+		config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_TX |
+			I40E_AQ_PHY_FLAG_PAUSE_RX;
+		break;
+	case I40E_FC_RX_PAUSE:
+		config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_RX;
+		break;
+	case I40E_FC_TX_PAUSE:
+		config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_TX;
+		break;
+	default:
+		break;
+	}
+
 	if (enable) {
 		config.phy_type = phy_type;
 		config.phy_type_ext = phy_type_ext;
 
-		config.abilities &= ~(I40E_AQ_PHY_FLAG_PAUSE_TX |
-		    I40E_AQ_PHY_FLAG_PAUSE_RX);
-
-		switch (pf->fc) {
-		case I40E_FC_FULL:
-			config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_TX |
-			    I40E_AQ_PHY_FLAG_PAUSE_RX;
-			break;
-		case I40E_FC_RX_PAUSE:
-			config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_RX;
-			break;
-		case I40E_FC_TX_PAUSE:
-			config.abilities |= I40E_AQ_PHY_FLAG_PAUSE_TX;
-			break;
-		default:
-			break;
-		}
 	}
 
 	aq_error = i40e_aq_set_phy_config(hw, &config, NULL);
@@ -4594,6 +4595,11 @@ ixl_attach_get_link_status(struct ixl_pf *pf)
 	/* Determine link state */
 	hw->phy.get_link_info = TRUE;
 	i40e_get_link_status(hw, &pf->link_up);
+
+	/* Flow Control mode not set by user, read current FW settings */
+	if (pf->fc == -1)
+		pf->fc = hw->fc.current_mode;
+
 	return (0);
 }
 

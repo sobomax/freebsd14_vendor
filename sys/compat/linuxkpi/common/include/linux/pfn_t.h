@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bfa80b14ae94023ca71e51a56f1ae0d6e0f4e481 $
+ * $FreeBSD: 48fb4f59a3c630de6cf5df29e012c46be305b949 $
  */
 
-#ifndef _LINUX_PFN_T_H_
-#define	_LINUX_PFN_T_H_
+#ifndef _LINUXKPI_LINUX_PFN_T_H_
+#define	_LINUXKPI_LINUX_PFN_T_H_
 
 #include <linux/mm.h>
 
@@ -53,4 +53,4 @@ pfn_to_pfn_t(unsigned long pfn)
 	return (__pfn_to_pfn_t (pfn, 0));
 }
 
-#endif					/* _LINUX_PFN_T_H_ */
+#endif					/* _LINUXKPI_LINUX_PFN_T_H_ */

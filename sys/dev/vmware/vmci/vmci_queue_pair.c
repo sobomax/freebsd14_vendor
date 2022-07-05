@@ -7,7 +7,7 @@
 /* VMCI QueuePair API implementation. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2ff963c691d00ad1ad051b804cb6c9ee9a011556 $");
+__FBSDID("$FreeBSD: 0e2f83b20c676ff60c2ec7d05e9f2ea01bdd8253 $");
 
 #include "vmci.h"
 #include "vmci_driver.h"
@@ -337,6 +337,9 @@ void
 vmci_qp_guest_endpoints_exit(void)
 {
 	struct qp_guest_endpoint *entry;
+
+	if (!vmci_mutex_initialized(&qp_guest_endpoints.mutex))
+		return;
 
 	vmci_mutex_acquire(&qp_guest_endpoints.mutex);
 

@@ -32,7 +32,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: ddb12dfd9256795444d0818c8510c9848cada817 $
+ * $FreeBSD: e9e118c9dea5fa3a623b403d621f9bee102c858a $
  */
 
 #ifndef IW_CM_H
@@ -256,5 +256,11 @@ int iw_cm_disconnect(struct iw_cm_id *cm_id, int abrupt);
  */
 int iw_cm_init_qp_attr(struct iw_cm_id *cm_id, struct ib_qp_attr *qp_attr,
 		       int *qp_attr_mask);
+
+/**
+ * iwcm_reject_msg - return a pointer to a reject message string.
+ * @reason: Value returned in the REJECT event status field.
+ */
+const char *__attribute_const__ iwcm_reject_msg(int reason);
 
 #endif /* IW_CM_H */

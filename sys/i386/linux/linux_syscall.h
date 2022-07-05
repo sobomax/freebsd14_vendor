@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 9364e4b9cbb369a9df4a9b99049081914436094f $
+ * $FreeBSD: 49ce9295642bafe07cafe05ac85eb1258292871a $
  */
 
 #define	LINUX_SYS_linux_exit	1
@@ -396,4 +396,19 @@
 #define	LINUX_SYS_linux_io_uring_setup	425
 #define	LINUX_SYS_linux_io_uring_enter	426
 #define	LINUX_SYS_linux_io_uring_register	427
-#define	LINUX_SYS_MAXSYSCALL	429
+#define	LINUX_SYS_linux_open_tree	428
+#define	LINUX_SYS_linux_move_mount	429
+#define	LINUX_SYS_linux_fsopen	430
+#define	LINUX_SYS_linux_fsconfig	431
+#define	LINUX_SYS_linux_fsmount	432
+#define	LINUX_SYS_linux_fspick	433
+#define	LINUX_SYS_linux_pidfd_open	434
+#define	LINUX_SYS_linux_clone3	435
+#define	LINUX_SYS_linux_close_range	436
+#define	LINUX_SYS_linux_openat2	437
+#define	LINUX_SYS_linux_pidfd_getfd	438
+#define	LINUX_SYS_linux_faccessat2	439
+#define	LINUX_SYS_linux_process_madvise	440
+#define	LINUX_SYS_linux_epoll_pwait2	441
+#define	LINUX_SYS_linux_mount_setattr	442
+#define	LINUX_SYS_MAXSYSCALL	444

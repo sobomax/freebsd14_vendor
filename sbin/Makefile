@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: 64840bae82bb7043663b6ef3dada1c22eba161fa $
+# $FreeBSD: c9b548a8a3908a6bef2063ecbe45cfd24dee1c65 $
 
 .include <src.opts.mk>
 
@@ -53,7 +53,6 @@ SUBDIR=adjkerntz \
 	nfsiod \
 	nos-tun \
 	pfilctl \
-	ping \
 	rcorder \
 	reboot \
 	recoverdisk \
@@ -68,6 +67,10 @@ SUBDIR=adjkerntz \
 	sysctl \
 	tunefs \
 	umount
+
+.if ${MK_INET} != "no" || ${MK_INET6} != "no"
+SUBDIR+=	ping
+.endif
 
 SUBDIR.${MK_CCD}+=	ccdconfig
 SUBDIR.${MK_CXX}+=	devd

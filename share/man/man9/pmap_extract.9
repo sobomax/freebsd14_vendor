@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: d2154ebe8a0be0e605aeed1a3118822d40d3a552 $
+.\" $FreeBSD: 77f3b47ec51e27ca5d5594d52f01167727f19dd7 $
 .\"
 .Dd July 21, 2003
 .Dt PMAP_EXTRACT 9
@@ -38,7 +38,7 @@
 .In vm/pmap.h
 .Ft vm_paddr_t
 .Fn pmap_extract "pmap_t pmap" "vm_offset_t va"
-.Ft vm_paddr_t
+.Ft vm_page_t
 .Fn pmap_extract_and_hold "pmap_t pmap" "vm_offset_t va" "vm_prot_t prot"
 .Sh DESCRIPTION
 The
@@ -73,7 +73,9 @@ will be returned.
 .Pp
 The
 .Fn pmap_extract_and_hold
-function will return the physical page address associated with the
+function will return the
+.Ft vm_page_t
+associated with the
 virtual address
 .Fa va
 inside the physical map

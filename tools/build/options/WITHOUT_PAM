@@ -1,5 +1,5 @@
-.\" $FreeBSD: 08ae805c5a9c20837df5ea8d2847dd5dc7612e2a $
-Set to not build PAM library and modules.
+.\" $FreeBSD: a980bba139bf2ef2cb73fe5aa42db4864c4c2d9f $
+Do not build PAM library and modules.
 .Bf -symbolic
 This option is deprecated and does nothing.
 .Ef

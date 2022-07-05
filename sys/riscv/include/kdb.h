@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 312cac502824cace6de16791286be1510967b66f $
+ * $FreeBSD: 0fdff26bb432a0c3751ae7914f15ac697f63d7bf $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -57,6 +57,20 @@ kdb_cpu_sync_icache(unsigned char *addr, size_t size)
 static __inline void
 kdb_cpu_trap(int type, int code)
 {
+}
+
+static __inline int
+kdb_cpu_set_watchpoint(vm_offset_t addr, vm_size_t size, int access)
+{
+
+	return (ENXIO);
+}
+
+static __inline int
+kdb_cpu_clr_watchpoint(vm_offset_t addr, vm_size_t size)
+{
+
+	return (0);
 }
 
 #endif /* _MACHINE_KDB_H_ */

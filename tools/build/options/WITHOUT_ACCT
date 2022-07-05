@@ -1,5 +1,5 @@
-.\" $FreeBSD: a0e0f545265e3189715d876b4c07df91e1156102 $
-Set to not build process accounting tools such as
+.\" $FreeBSD: b885bc1136928af0c5d47015047f8841512bfac8 $
+Do not build process accounting tools such as
 .Xr accton 8
 and
 .Xr sa 8 .

@@ -38,7 +38,7 @@
 #ident	"@(#)svc_dg.c	1.17	94/04/24 SMI"
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2bdd0700c044f85e3940ad1e2bcda16dc286c355 $");
+__FBSDID("$FreeBSD: db1928655618ed3eaf008f6f789e60534324e384 $");
 
 /*
  * svc_dg.c, Server side for connectionless RPC.
@@ -73,7 +73,7 @@ static void svc_dg_destroy(SVCXPRT *);
 static bool_t svc_dg_control(SVCXPRT *, const u_int, void *);
 static int svc_dg_soupcall(struct socket *so, void *arg, int waitflag);
 
-static struct xp_ops svc_dg_ops = {
+static const struct xp_ops svc_dg_ops = {
 	.xp_recv =	svc_dg_recv,
 	.xp_stat =	svc_dg_stat,
 	.xp_reply =	svc_dg_reply,

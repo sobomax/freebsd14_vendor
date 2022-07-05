@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b4ffc0ca4ae08fbf785654fa3047c8b52baebe7 $");
+__FBSDID("$FreeBSD: 5086cc4b7d81f5d66d3f690e54874218c7f33f2f $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -41,8 +41,17 @@ sysctlbyname(const char *name, void *oldp, size_t *oldlenp,
     const void *newp, size_t newlen)
 {
 	size_t len;
+	int oid[2];
 
-	len = strlen(name);
-	return (__sysctlbyname(name, len, oldp, oldlenp, newp,
-	    newlen));
+	if (__predict_true(strncmp(name, "user.", 5) != 0)) {
+		len = strlen(name);
+		return (__sysctlbyname(name, len, oldp, oldlenp, newp,
+			newlen));
+	} else {
+		len = nitems(oid);
+		if (sysctlnametomib(name, oid, &len) == -1)
+			return (-1);
+		return (sysctl(oid, (u_int)len, oldp, oldlenp, newp,
+		    newlen));
+	}
 }

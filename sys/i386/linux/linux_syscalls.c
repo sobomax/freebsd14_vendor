@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: eb192bfab00d40a8bbb5ffed7275818d98328fb7 $
+ * $FreeBSD: 71a7312aa7ee855ed62640659b5092d72983f98c $
  */
 
 const char *linux_syscallnames[] = {
@@ -435,5 +435,20 @@ const char *linux_syscallnames[] = {
 	"linux_io_uring_setup",			/* 425 = linux_io_uring_setup */
 	"linux_io_uring_enter",			/* 426 = linux_io_uring_enter */
 	"linux_io_uring_register",			/* 427 = linux_io_uring_register */
-	"#428",			/* 428 = nosys */
+	"linux_open_tree",			/* 428 = linux_open_tree */
+	"linux_move_mount",			/* 429 = linux_move_mount */
+	"linux_fsopen",			/* 430 = linux_fsopen */
+	"linux_fsconfig",			/* 431 = linux_fsconfig */
+	"linux_fsmount",			/* 432 = linux_fsmount */
+	"linux_fspick",			/* 433 = linux_fspick */
+	"linux_pidfd_open",			/* 434 = linux_pidfd_open */
+	"linux_clone3",			/* 435 = linux_clone3 */
+	"linux_close_range",			/* 436 = linux_close_range */
+	"linux_openat2",			/* 437 = linux_openat2 */
+	"linux_pidfd_getfd",			/* 438 = linux_pidfd_getfd */
+	"linux_faccessat2",			/* 439 = linux_faccessat2 */
+	"linux_process_madvise",			/* 440 = linux_process_madvise */
+	"linux_epoll_pwait2",			/* 441 = linux_epoll_pwait2 */
+	"linux_mount_setattr",			/* 442 = linux_mount_setattr */
+	"#443",			/* 443 = nosys */
 };

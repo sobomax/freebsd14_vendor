@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ed5ae0767a4877693e22402b6f5d2eefa2dbb564 $
+ * $FreeBSD: fcb8e3ab1f1e8bf3fa4dfad6e50488fda71bda99 $
  */
 
 #ifndef _PCI_EARLY_QUIRKS_H_
@@ -413,6 +413,7 @@
 	INTEL_VGA_DEVICE(0x3E91, info), /* SRV GT2 */ \
 	INTEL_VGA_DEVICE(0x3E92, info), /* SRV GT2 */ \
 	INTEL_VGA_DEVICE(0x3E96, info), /* SRV GT2 */ \
+	INTEL_VGA_DEVICE(0x3E98, info), /* SRV GT2 */ \
 	INTEL_VGA_DEVICE(0x3E9A, info)  /* SRV GT2 */
 
 /* CFL H */

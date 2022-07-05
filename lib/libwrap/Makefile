@@ -1,8 +1,10 @@
 #
-# $FreeBSD: f45e8f9dda6bd415168449be12734617399a89b6 $
+# $FreeBSD: 71559b17e6ad88789c1bcc77c5ecf39f88209114 $
 #
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 CONFS=	hosts.allow
 LIB=	wrap

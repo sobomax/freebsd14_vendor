@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b684dc7d87cd3bc4caff54ea2423074d5422b2b1 $");
+__FBSDID("$FreeBSD: f24b26f5336625b41f563efaa2369a3cedbf1f53 $");
 
 /*
  * Intel fourth generation mobile cpus integrated I2C device.
@@ -124,6 +124,12 @@ static const struct ig4_hw ig4iic_hw[] = {
 		.sda_fall_time = 171,
 		.scl_fall_time = 208,
 		.sda_hold_time = 42,
+	},
+	[IG4_GEMINILAKE] = {
+		.ic_clock_rate = 133,
+		.sda_fall_time = 171,
+		.scl_fall_time = 290,
+		.sda_hold_time = 313,
 	},
 };
 

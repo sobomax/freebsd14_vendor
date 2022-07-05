@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 2960fe2ed6dd0622c58abd123ee28c2cc29d9f1b $");
+__FBSDID("$FreeBSD: 8a2e7df3b9b2445b9cafc67f8ed9f797d32408be $");
 
 #ifdef HAVE_SYS_XATTR_H
 #include <sys/xattr.h>
@@ -37,7 +37,7 @@ has_xattr(const char *filename, const char *xattrname)
 {
 	char *nl, *nlp;
 	ssize_t r;
-	int exisiting;
+	int existing;
 
 	r = listxattr(filename, NULL, 0, XATTR_SHOWCOMPRESSION);
 	if (r < 0)
@@ -55,15 +55,15 @@ has_xattr(const char *filename, const char *xattrname)
 		return (0);
 	}
 
-	exisiting = 0;
+	existing = 0;
 	for (nlp = nl; nlp < nl + r; nlp += strlen(nlp) + 1) {
 		if (strcmp(nlp, xattrname) == 0) {
-			exisiting = 1;
+			existing = 1;
 			break;
 		}
 	}
 	free(nl);
-	return (exisiting);
+	return (existing);
 }
 static int
 get_rsrc_footer(const char *filename, char *buff, size_t s)

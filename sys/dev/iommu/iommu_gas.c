@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431c0c195c358f2a1c1dd4f43c83a0ca6a626d85 $");
+__FBSDID("$FreeBSD: c4faebec9d081c7426e40ea58dcfe62675569bc8 $");
 
 #define	RB_AUGMENT(entry) iommu_gas_augment_entry(entry)
 
@@ -355,7 +354,7 @@ iommu_gas_match_one(struct iommu_gas_match_args *a, iommu_gaddr_t beg,
 static void
 iommu_gas_match_insert(struct iommu_gas_match_args *a)
 {
-	bool found;
+	bool found __diagused;
 
 	/*
 	 * The prev->end is always aligned on the page size, which
@@ -476,7 +475,7 @@ iommu_gas_alloc_region(struct iommu_domain *domain, struct iommu_map_entry *entr
     u_int flags)
 {
 	struct iommu_map_entry *next, *prev;
-	bool found;
+	bool found __diagused;
 
 	IOMMU_DOMAIN_ASSERT_LOCKED(domain);
 

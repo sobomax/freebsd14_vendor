@@ -24,7 +24,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: eb25ac612b5c1324c0dab2e297e489b04494103e $
+.\" $FreeBSD: acd7c911a1fc27af7ebd0de3d213788fbc251d5c $
 .\"
 .Dd January 23, 2019
 .Dt UCRED 9
@@ -187,7 +187,7 @@ To avoid this scenario, it is recommended that system calls updating the
 process credential be designed to avoid other authorization functions.
 .Pp
 If temporarily elevated privileges are required for a thread, the thread
-credential can by replaced for the duration of an activity, or for
+credential can be replaced for the duration of an activity, or for
 the remainder of the system call.
 However, as a thread credential is often shared, appropriate care should be
 taken to make sure modifications are made to a writable credential

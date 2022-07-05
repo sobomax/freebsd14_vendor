@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2012, 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Oleksandr Rybalko under sponsorship
  * from the FreeBSD Foundation.
@@ -32,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8324d8daa30cac06fdab6e4bd0e93f577860d50b $");
+__FBSDID("$FreeBSD: ef4c7917f3425771df79a2ba01d95fc012c100ae $");
 
 #include "opt_platform.h"
 

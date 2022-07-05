@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ef43a032d4702c0db6dd48c487cc4521e81b12f2 $");
+__FBSDID("$FreeBSD: c533a758a2363431c770f2d8ddd0b98039c1dabd $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -49,7 +49,7 @@ static SYSCTL_NODE(_kern_geom, OID_AUTO, zero, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "GEOM_ZERO stuff");
 static int g_zero_clear = 1;
 SYSCTL_PROC(_kern_geom_zero, OID_AUTO, clear,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, &g_zero_clear, 0,
+    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, &g_zero_clear, 0,
     g_zero_clear_sysctl, "I",
     "Clear read data buffer");
 static int g_zero_byte = 0;

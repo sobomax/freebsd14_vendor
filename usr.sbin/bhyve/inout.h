@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 45ad5f4ac6540d004bea1c69508001516a20179f $
+ * $FreeBSD: afbae34c2dd0ebb5583559280247c1449d3a8f0b $
  */
 
 #ifndef _INOUT_H_
@@ -72,8 +72,7 @@ struct inout_port {
 	DATA_SET(inout_port_set, __CONCAT(__inout_port, __LINE__))
 	
 void	init_inout(void);
-int	emulate_inout(struct vmctx *, int vcpu, struct vm_exit *vmexit,
-		      int strict);
+int	emulate_inout(struct vmctx *, int vcpu, struct vm_exit *vmexit);
 int	register_inout(struct inout_port *iop);
 int	unregister_inout(struct inout_port *iop);
 

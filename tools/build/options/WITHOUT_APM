@@ -1,5 +1,5 @@
-.\" $FreeBSD: 6ed47d073756b391a44f42aed4893018fe29e9a8 $
-Set to not build
+.\" $FreeBSD: cb1334e1e654d96f2c9b81812d66087a9cdc51d5 $
+Do not build
 .Xr apm 8 ,
 .Xr apmd 8
 and related programs.

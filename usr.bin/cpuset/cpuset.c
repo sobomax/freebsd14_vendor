@@ -30,7 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e039030415bb1ab8b70167b4d0e647512e6e39cf $");
+__FBSDID("$FreeBSD: 79c6c2b6ca79417ab380918fc4fbd5f1f77f1f80 $");
+
+#define _WANT_FREEBSD_BITSET
 
 #include <sys/param.h>
 #include <sys/types.h>

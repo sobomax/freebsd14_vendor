@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b08eab8a6c46bc55a02d84394d7c2608461e1d40 $
+ * $FreeBSD: 9bc663e2a8d01bf47a40464bdcca89995a75746d $
  */
 
 /*
@@ -41,7 +41,6 @@
 #include <linux/spinlock.h>
 #include <linux/idr.h>
 #include <linux/completion.h>
-#include <linux/netdevice.h>
 #include <linux/sched.h>
 #include <linux/pci.h>
 #include <linux/dma-mapping.h>
@@ -365,7 +364,7 @@ struct qlnxr_dev {
 	struct ecore_dev	*cdev;
 
 	/* Added to extend Applications Support */
-        struct pci_dev          *pdev;
+        struct pci_dev          pdev;
 	uint32_t		dp_module;
 	uint8_t			dp_level;
 

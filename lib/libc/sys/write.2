@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)write.2	8.5 (Berkeley) 4/2/94
-.\" $FreeBSD: f05db0de81c4776bf6dcd5e44b0107093273e7b0 $
+.\" $FreeBSD: 937e95b53a14e934d00407a7710f9e1aada8bb08 $
 .\"
-.Dd October 25, 2020
+.Dd February 11, 2021
 .Dt WRITE 2
 .Os
 .Sh NAME
@@ -298,3 +298,17 @@ The
 .Fn write
 function appeared in
 .At v1 .
+.Sh BUGS
+The
+.Fn pwrite
+system call appends the file without changing the file offset if
+.Dv O_APPEND
+is set, contrary to
+.St -p1003.1-2008
+where
+.Fn pwrite
+writes into
+.Fa offset
+regardless of whether
+.Dv O_APPEND
+is set.

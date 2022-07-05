@@ -28,13 +28,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9b7deba0dda98149effd74528da02248c7e845d $");
+__FBSDID("$FreeBSD: 8eb47e6a8d0e4b5a4b09da5437bba82260d6eca5 $");
 
 #include <err.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sysexits.h>
 
 #include "y.tab.h"
 
@@ -72,7 +72,7 @@ SAVE|save		{ return (SAVE); }
 [-_A-Za-z0-9/:$.\\]+	{
 	yylval.str = strdup(yytext);
 	if (yylval.str == NULL)
-		errc(EX_SOFTWARE, errno, "strdup failed");
+		errc(EXIT_FAILURE, errno, "strdup failed");
 	return (FNAME);
 }
 

@@ -1,7 +1,8 @@
-# $FreeBSD: c267a2135c3b5803c2eb31428c2b7715e156e51a $
+# $FreeBSD: 22610870c8465df1fd978c0b88e7fd6ee3de2d6e $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/plockstat
 
+PACKAGE=	dtrace
 PROG=		plockstat
 SRCS=		plockstat.c
 BINDIR?=	/usr/sbin

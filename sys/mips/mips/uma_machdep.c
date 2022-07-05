@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: faf70b20b74832d936b1ed29b998b64c6f359f0e $");
+__FBSDID("$FreeBSD: 321804d634d5294e2c10465b48acbc6f5ab55b15 $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: faf70b20b74832d936b1ed29b998b64c6f359f0e $");
 #include <vm/vm_param.h>
 #include <vm/vm_page.h>
 #include <vm/vm_pageout.h>
+#include <vm/vm_phys.h>
 #include <vm/vm_dumpset.h>
 #include <vm/uma.h>
 #include <vm/uma_int.h>
@@ -74,8 +75,6 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, int domain, u_int8_t *flags,
 	if ((wait & M_NODUMP) == 0)
 		dump_add_page(pa);
 	va = (void *)MIPS_PHYS_TO_DIRECT(pa);
-	if ((wait & M_ZERO) && (m->flags & PG_ZERO) == 0)
-		bzero(va, PAGE_SIZE);
 	return (va);
 }
 

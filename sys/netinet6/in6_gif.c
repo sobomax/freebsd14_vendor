@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 33cc06d065b84c8fc69b3aa23de32143024c5c9b $");
+__FBSDID("$FreeBSD: 54cb81c6130fff94ada4fdd2947d2799e3ccbf47 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -344,7 +344,7 @@ in6_gif_input(struct mbuf *m, int off, int proto, void *arg)
 	gifp = GIF2IFP(sc);
 	if ((gifp->if_flags & IFF_UP) != 0) {
 		ip6 = mtod(m, struct ip6_hdr *);
-		ecn = (ntohl(ip6->ip6_flow) >> 20) & 0xff;
+		ecn = IPV6_TRAFFIC_CLASS(ip6);
 		m_adj(m, off);
 		gif_input(m, gifp, proto, ecn);
 	} else {

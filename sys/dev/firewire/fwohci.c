@@ -33,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 30eca83900e7782a7fb91e2d5798b76b18869ca4 $
+ * $FreeBSD: 634c78e6afe89bdc1eafbdf86b3abe9bc01f53ea $
  *
  */
 
@@ -2696,7 +2696,7 @@ fwohci_get_plen(struct fwohci_softc *sc, struct fwohci_dbch *dbch, struct fw_pkt
 	info = &tinfo[fp->mode.common.tcode];
 	r = info->hdr_len + sizeof(uint32_t);
 	if ((info->flag & FWTI_BLOCK_ASY) != 0)
-		r += roundup2(fp->mode.wreqb.len, sizeof(uint32_t));
+		r += roundup2((uint32_t)fp->mode.wreqb.len, sizeof(uint32_t));
 
 	if (r == sizeof(uint32_t)) {
 		/* XXX */

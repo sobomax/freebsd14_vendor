@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: beb2bd0e4132a9aadecb158f103af8268a334df0 $
+ * $FreeBSD: 29a23fde0aad82932bc6265e9bd843acdb39e728 $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -35,6 +35,9 @@
 #include <machine/psl.h>
 
 #define	KDB_STOPPEDPCB(pc)	&stoppcbs[pc->pc_cpuid]
+
+int kdb_cpu_set_watchpoint(vm_offset_t addr, vm_size_t size, int access);
+int kdb_cpu_clr_watchpoint(vm_offset_t addr, vm_size_t size);
 
 static __inline void
 kdb_cpu_clear_singlestep(void)

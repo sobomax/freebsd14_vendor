@@ -1,2 +1,2 @@
-.\" $FreeBSD: 582b81fce25ce7c3a09447eb165d2f6b19387e00 $
-Set to not build the timezone database.
+.\" $FreeBSD: 647a10daf61261e46a46a0a6fe6013994a1adb22 $
+Do not build the timezone database.

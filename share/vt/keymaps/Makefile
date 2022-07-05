@@ -1,4 +1,6 @@
-# $FreeBSD: 8b9fc4d26dc919f328931fcc4a578cfb2f87ae3b $
+# $FreeBSD: 31ef7e3466dc107948db6fc6cbf9fbf292b8559f $
+
+PACKAGE=	vt-data
 
 FILES=	INDEX.keymaps \
 	am.kbd \

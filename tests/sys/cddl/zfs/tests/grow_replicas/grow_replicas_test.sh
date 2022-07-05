@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 435446a9fff3702eae78b1f539682ad276f8b126 $
+# $FreeBSD: add662ba5739a0ff3a28c8f007de6aa8cb2ad654 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case grow_replicas_001_pos cleanup
 grow_replicas_001_pos_head()
 {
 	atf_set "descr" "A zpool mirror/raidz may be increased in capacity by adding a disk."
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 grow_replicas_001_pos_body()
 {

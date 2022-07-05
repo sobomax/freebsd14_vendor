@@ -1,4 +1,6 @@
-# $FreeBSD: 772efd38266f03bd872a9af3d5e9933a8afeac39 $
+# $FreeBSD: 42060884f710f49bcd56cc4e331b3df5788d8ce8 $
+
+PACKAGE=	autofs
 
 CONFS=		include_ldap \
 		include_nis \

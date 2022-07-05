@@ -31,7 +31,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 50568de4f1486a6e9600ee432af108b3896e7379 $";
+  "$FreeBSD: 08902b934ad887be9df0140c07d18371dbd6dd47 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -419,7 +419,8 @@ sec2str(time_t total)
 }
 
 static void
-in6_postproc(int s, const struct afswtch *afp)
+in6_postproc(int s, const struct afswtch *afp, int newaddr __unused,
+    int ifflags __unused)
 {
 	if (explicit_prefix == 0) {
 		/* Aggregatable address architecture defines all prefixes

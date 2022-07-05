@@ -1,8 +1,9 @@
-# $FreeBSD: 45ca1692cf486ba5266347a8771d568296e5a20d $
+# $FreeBSD: 05b183215f4c42c70e3fdbe00e074f64b353bd50 $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libdtrace/common
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libgen/common
 
+PACKAGE=	dtrace
 LIB=		dtrace
 SRCS=		dt_aggregate.c \
 		dt_as.c \
@@ -69,7 +70,6 @@ SYSINCSDIR=	${INCLUDEDIR}/sys
 INCS+=		${SRCTOP}/cddl/contrib/opensolaris/lib/libdtrace/common/dtrace.h
 SYSINCS+=	${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/sys/dtrace.h
 SYSINCS+=	${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/sys/ctf_api.h
-SYSINCS+=	${SRCTOP}/sys/cddl/contrib/opensolaris/uts/common/sys/ctf.h
 
 WARNS?=		1
 

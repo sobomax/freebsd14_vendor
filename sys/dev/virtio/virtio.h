@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b22327351b43f81dab67c090662f3857ead95ed5 $
+ * $FreeBSD: 8d32d5a8742f6835f7f85379c14d1283d11218af $
  */
 
 #ifndef _VIRTIO_H_
@@ -34,6 +34,8 @@
 #include <dev/virtio/virtio_endian.h>
 #include <dev/virtio/virtio_ids.h>
 #include <dev/virtio/virtio_config.h>
+
+#ifdef _KERNEL
 
 struct sbuf;
 struct vq_alloc_info;
@@ -186,5 +188,7 @@ virtio_simple_probe(device_t dev, const struct virtio_pnp_match *match)
 	device_set_desc(dev, match->description);
 	return (BUS_PROBE_DEFAULT);
 }
+
+#endif /* _KERNEL */
 
 #endif /* _VIRTIO_H_ */

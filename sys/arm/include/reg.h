@@ -1,7 +1,9 @@
 /*	$NetBSD: reg.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $	*/
-/* $FreeBSD: ab70ae128d39c2a3495f18f8c7a50d6d03cf9fe2 $ */
+/* $FreeBSD: 494052f64732417e931bc36423302de4a87c4113 $ */
 #ifndef MACHINE_REG_H
 #define MACHINE_REG_H
+
+#include <sys/_types.h>
 
 struct reg {
 	unsigned int r[13];
@@ -12,9 +14,9 @@ struct reg {
 };
 
 struct fp_extended_precision {
-	u_int32_t fp_exponent;
-	u_int32_t fp_mantissa_hi;
-	u_int32_t fp_mantissa_lo;
+	__uint32_t fp_exponent;
+	__uint32_t fp_mantissa_hi;
+	__uint32_t fp_mantissa_lo;
 };
 
 typedef struct fp_extended_precision fp_reg_t;

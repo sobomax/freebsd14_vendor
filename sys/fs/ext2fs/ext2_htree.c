@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 44120940236af6ccf31212a359d8695c3483dba4 $
+ * $FreeBSD: 84f3d26d252ade7e6a036e790b0fa3b6c4e1998b $
  */
 
 #include <sys/param.h>
@@ -439,6 +439,7 @@ ext2_htree_append_block(struct vnode *vp, char *data,
 	auio.uio_iovcnt = 1;
 	auio.uio_rw = UIO_WRITE;
 	auio.uio_segflg = UIO_SYSSPACE;
+	auio.uio_td = NULL;
 	error = VOP_WRITE(vp, &auio, IO_SYNC, cnp->cn_cred);
 	if (!error)
 		dp->i_size = newsize;

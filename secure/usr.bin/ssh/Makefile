@@ -1,6 +1,7 @@
-# $FreeBSD: 023fa4a55be9f5782994be151a6429fdbaa5ad15 $
+# $FreeBSD: 5528aceed5eefbf1e461423cc23b9d48403057b6 $
 
 .include <src.opts.mk>
+.include "${SRCTOP}/secure/ssh.mk"
 
 CONFS=	ssh_config
 CONFSDIR=	/etc/ssh
@@ -15,9 +16,6 @@ SRCS=	ssh.c readconf.c clientloop.c sshtty.c \
 
 # gss-genr.c really belongs in libssh; see src/secure/lib/libssh/Makefile
 SRCS+=	gss-genr.c
-
-CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 
@@ -36,9 +34,6 @@ LIBADD+=	crypto
 .if defined(LOCALBASE)
 CFLAGS+= -DXAUTH_PATH=\"${LOCALBASE}/bin/xauth\"
 .endif
-
-# Workaround VMware Workstation NAT bug
-CFLAGS+=-DVMWARE_GUEST_WORKAROUND
 
 .include <bsd.prog.mk>
 

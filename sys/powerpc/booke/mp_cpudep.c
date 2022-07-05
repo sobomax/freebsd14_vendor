@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c07e8c06ce05f3382bf6f1b2d1d3a83092c16e9d $");
+__FBSDID("$FreeBSD: 709578d8e1b4e7f9abdca34ea4d79d418a03104e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: c07e8c06ce05f3382bf6f1b2d1d3a83092c16e9d $");
 #include <sys/bus.h>
 #include <sys/pcpu.h>
 #include <sys/proc.h>
+#include <sys/sched.h>
 #include <sys/smp.h>
 
 #include <machine/pcb.h>
@@ -85,6 +86,7 @@ cpudep_ap_bootstrap()
 #endif
 	pcpup->pc_curpcb = pcpup->pc_curthread->td_pcb;
 	sp = pcpup->pc_curpcb->pcb_sp;
+	schedinit_ap();
 
 	/* XXX shouldn't the pcb_sp be checked/forced for alignment here?? */
 

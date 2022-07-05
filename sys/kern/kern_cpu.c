@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f44405aef37dbb7738fb10a342ecb13d35a07bf $");
+__FBSDID("$FreeBSD: 380849974a3577aacd17fdd01ccddb15173fb921 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1103,7 +1103,7 @@ cpufreq_register(device_t dev)
 	}
 
 	/* Add the child device and possibly sysctls. */
-	cf_dev = BUS_ADD_CHILD(cpu_dev, 0, "cpufreq", -1);
+	cf_dev = BUS_ADD_CHILD(cpu_dev, 0, "cpufreq", device_get_unit(cpu_dev));
 	if (cf_dev == NULL)
 		return (ENOMEM);
 	device_quiet(cf_dev);

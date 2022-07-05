@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 93ee524e1de2aea47b2a6a35165652a085678620 $
+ * $FreeBSD: cf1d2bd0a5867fdd15d6db8a66c0a5f34470c086 $
  */
 
 #ifndef _AMD64_INCLUDE_PARAM_H_
@@ -134,7 +134,11 @@
 #define	IOPERM_BITMAP_SIZE	(IOPAGES * PAGE_SIZE + 1)
 
 #ifndef	KSTACK_PAGES
+#ifdef KASAN
+#define	KSTACK_PAGES	6
+#else
 #define	KSTACK_PAGES	4	/* pages of kstack (with pcb) */
+#endif
 #endif
 #define	KSTACK_GUARD_PAGES 1	/* pages of kstack guard; 0 disables */
 

@@ -1,7 +1,8 @@
-# $FreeBSD: 9b5886bf2061b7d405c2b664cadc6b5bbaec9336 $
+# $FreeBSD: a4bec42df367d783a7e775b6766e45f9f71ab4d1 $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/lockstat
 
+PACKAGE=	dtrace
 PROG=		lockstat
 SRCS=		lockstat.c sym.c
 BINDIR?=	/usr/sbin

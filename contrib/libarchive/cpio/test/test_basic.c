@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 9a23399aa7cbc891493e22a810c77fcdb24e7b44 $");
+__FBSDID("$FreeBSD: 3662b529e2351b8e521881bfbac962dbbd687b68 $");
 
 static void
 verify_files(const char *msg)
@@ -230,6 +230,8 @@ DEFINE_TEST(test_basic)
 	basic_cpio("copy_odc", "--format=odc", "", msg, msg);
 	basic_cpio("copy_newc", "-H newc", "", result, "2 blocks\n");
 	basic_cpio("copy_cpio", "-H odc", "", msg, msg);
+	msg = "1 block\n";
+	basic_cpio("copy_bin", "-H bin", "", msg, msg);
 	msg = canSymlink() ? "9 blocks\n" : "8 blocks\n";
 	basic_cpio("copy_ustar", "-H ustar", "", msg, msg);
 

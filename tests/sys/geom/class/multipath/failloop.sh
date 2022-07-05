@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f9a1417ae37ffa0e5d3b4a0660b1b5ea005755ad $
+# $FreeBSD: 0f0202bb8b015c239c824bc075c952cf5692a777 $
 
 . $(atf_get_srcdir)/conf.sh
 
@@ -56,6 +56,9 @@ failloop_body()
 		-i 'geom:multipath:config:restore {@restore = count()}' \
 		-c "dd if=/dev/zero of=/dev/multipath/"$name" bs=4096 count=1" \
 		2>&1 | awk '/exited with status/ {print $NF}'`
+	if [ ! -f restore_count ]; then
+		atf_fail "dtrace didn't execute successfully"
+	fi
 	# The dd command should've failed ...
 	atf_check_equal 1 $dd_status
 	# and triggered 1 or 2 path restores

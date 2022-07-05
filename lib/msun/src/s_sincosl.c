@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aef36c2320b1f2bbfd47ad5bd7ac7530564135a4 $");
+__FBSDID("$FreeBSD: 3dd34575f894a2833ea81c5109c9f6b0fd62f05a $");
 
 #include <float.h>
 #ifdef __i386__
@@ -50,11 +50,10 @@ void
 sincosl(long double x, long double *sn, long double *cs)
 {
 	union IEEEl2bits z;
-	int e0, sgn;
+	int e0;
 	long double y[2];
 
 	z.e = x;
-	sgn = z.bits.sign;
 	z.bits.sign = 0;
 
 	ENTERV();

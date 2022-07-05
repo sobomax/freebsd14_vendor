@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 2888bd18816ee45a289a70c9f360c1ce5ed11d99 $");
+__FBSDID("$FreeBSD: 878cb5a4550b8bf1ffb9c470a8c1374f52169ab7 $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)forward.c	8.1 (Berkeley) 6/6/93";
@@ -367,7 +367,7 @@ follow(file_info_t *files, enum STYLE style, off_t off)
 					continue;
 				ftmp = fileargs_fopen(fa, file->file_name, "r");
 				if (ftmp == NULL ||
-				    fstat(fileno(file->fp), &sb2) == -1) {
+				    fstat(fileno(ftmp), &sb2) == -1) {
 					if (errno != ENOENT)
 						ierr(file->file_name);
 					show(file);

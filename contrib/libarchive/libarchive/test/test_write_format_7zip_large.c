@@ -25,9 +25,9 @@
 
 
 #include "test.h"
-__FBSDID("$FreeBSD: 5c49f59a1d4d88e87cc98760e7cd8a418cc012e9 $");
+__FBSDID("$FreeBSD: b7a90d187bae88fbf06c4a650997af3798fca2e4 $");
 
-#define LARGE_SIZE	(16*1024*1024)
+#define LARGE_SIZE	(1*1024*1024)
 static void
 test_large(const char *compression_type)
 {
@@ -37,7 +37,6 @@ test_large(const char *compression_type)
 	size_t buffsize = LARGE_SIZE + 1024 * 256;
 	size_t datasize = LARGE_SIZE;
 	char *buff, *filedata, *filedata2;
-	unsigned i;
 
 	assert((buff = malloc(buffsize)) != NULL);
 	assert((filedata = malloc(datasize)) != NULL);
@@ -87,8 +86,7 @@ test_large(const char *compression_type)
 		/* NOTE: PPMd cannot handle random data correctly.*/
 		memset(filedata, 'a', datasize);
 	} else {
-		for (i = 0; i < datasize; i++)
-			filedata[i] = (char)rand();
+		fill_with_pseudorandom_data(filedata, datasize);
 	}
 	assertEqualInt(datasize, archive_write_data(a, filedata, datasize));
 

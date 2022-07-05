@@ -1,7 +1,7 @@
-# $FreeBSD: dd99f5814565816669694ae41a210505ba88b7f8 $
+# $FreeBSD: 0bc9813666505d6d7ec6339c78971f2b4f39b19e $
 
 PROG=	mpsutil
-SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_show.c mps_slot.c mpsutil.c
+SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_set.c mps_show.c mps_slot.c mpsutil.c
 MAN=	mpsutil.8
 
 WARNS?= 3

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 50b9b9dbb0e504dbd62b04284241f9bc651ab1c3 $
+ * $FreeBSD: 9ea1d6636c20ce090cc53b357bb900403c2e8c46 $
  *
  */
 
@@ -53,7 +53,7 @@
 #define __GPIO_H__
 
 #include <sys/ioccom.h>
-#ifndef _KERNEL
+#if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <stdbool.h>
 #endif
 

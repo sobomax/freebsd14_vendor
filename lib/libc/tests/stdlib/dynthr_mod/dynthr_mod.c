@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f5622f47a8187579625f3d45e6f8d0883cffb8a $");
+__FBSDID("$FreeBSD: c19a1a54a8b6fc5a86557982664f8891ef7eb94a $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,6 +51,7 @@ mod_thread(void *ptr __unused)
 	char *volatile dummy;
 
 	dummy = malloc(500);
+	*dummy = 'a';
 	return (NULL);
 }
 

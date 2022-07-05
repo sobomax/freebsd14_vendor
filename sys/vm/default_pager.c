@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 057dbe895050152babe693835018ee1a6f07db26 $");
+__FBSDID("$FreeBSD: d07a84f8c98e5d042f10a7bebcc1f687a8e75d3e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: 057dbe895050152babe693835018ee1a6f07db26 $");
 #include <sys/proc.h>
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
+#include <sys/user.h>
 
 #include <vm/vm.h>
 #include <vm/vm_object.h>
@@ -70,7 +71,8 @@ static boolean_t	default_pager_haspage(vm_object_t, vm_pindex_t, int *,
  * On the first request to page out a page from a default object, the
  * object is converted to swap pager type.
  */
-struct pagerops defaultpagerops = {
+const struct pagerops defaultpagerops = {
+	.pgo_kvme_type = KVME_TYPE_DEFAULT,
 	.pgo_alloc =	default_pager_alloc,
 	.pgo_dealloc =	default_pager_dealloc,
 	.pgo_getpages =	default_pager_getpages,

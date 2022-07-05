@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: adb882288f6c5d1f92bbdf9fbd8f4c667a8b4496 $");
+__FBSDID("$FreeBSD: 43b000c78110f50aa33eb6be3f31b7b2b0f1bb0d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -242,7 +242,7 @@ sys_extattr_set_fd(struct thread *td, struct extattr_set_fd_args *uap)
 		return (error);
 	AUDIT_ARG_TEXT(attrname);
 
-	error = getvnode(td, uap->fd,
+	error = getvnode_path(td, uap->fd,
 	    cap_rights_init_one(&rights, CAP_EXTATTR_SET), &fp);
 	if (error)
 		return (error);
@@ -409,7 +409,7 @@ sys_extattr_get_fd(struct thread *td, struct extattr_get_fd_args *uap)
 		return (error);
 	AUDIT_ARG_TEXT(attrname);
 
-	error = getvnode(td, uap->fd,
+	error = getvnode_path(td, uap->fd,
 	    cap_rights_init_one(&rights, CAP_EXTATTR_GET), &fp);
 	if (error)
 		return (error);
@@ -544,7 +544,7 @@ sys_extattr_delete_fd(struct thread *td, struct extattr_delete_fd_args *uap)
 		return (error);
 	AUDIT_ARG_TEXT(attrname);
 
-	error = getvnode(td, uap->fd,
+	error = getvnode_path(td, uap->fd,
 	    cap_rights_init_one(&rights, CAP_EXTATTR_DELETE), &fp);
 	if (error)
 		return (error);
@@ -690,7 +690,7 @@ sys_extattr_list_fd(struct thread *td, struct extattr_list_fd_args *uap)
 
 	AUDIT_ARG_FD(uap->fd);
 	AUDIT_ARG_VALUE(uap->attrnamespace);
-	error = getvnode(td, uap->fd,
+	error = getvnode_path(td, uap->fd,
 	    cap_rights_init_one(&rights, CAP_EXTATTR_LIST), &fp);
 	if (error)
 		return (error);

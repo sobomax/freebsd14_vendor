@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)clnt_dg.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a3662a02a39d26e6eb2e968026f280f9b11091c $");
+__FBSDID("$FreeBSD: 63a26cc0b9acfa5a944db54c1266b6dd675a4104 $");
 
 /*
  * Implements a connectionless client side RPC.
@@ -84,7 +84,7 @@ static void clnt_dg_close(CLIENT *);
 static void clnt_dg_destroy(CLIENT *);
 static int clnt_dg_soupcall(struct socket *so, void *arg, int waitflag);
 
-static struct clnt_ops clnt_dg_ops = {
+static const struct clnt_ops clnt_dg_ops = {
 	.cl_call =	clnt_dg_call,
 	.cl_abort =	clnt_dg_abort,
 	.cl_geterr =	clnt_dg_geterr,

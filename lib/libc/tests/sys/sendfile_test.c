@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c12e4f7c1de3c3234676b2021a00c16acf215900 $");
+__FBSDID("$FreeBSD: 0a205f2bb1d16481d1dc1006308da9f2bf0f9e6b $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -1062,7 +1062,7 @@ ATF_TC_BODY(s_negative_not_socket_file_descriptor, tc)
 	ATF_REQUIRE_MSG(fd != -1, "open failed: %s", strerror(errno));
 
 	client_sock = open(_PATH_DEVNULL, O_WRONLY);
-	ATF_REQUIRE_MSG(fd != -1, "open failed: %s", strerror(errno));
+	ATF_REQUIRE_MSG(client_sock != -1, "open failed: %s", strerror(errno));
 
 	error = sendfile(fd, client_sock, 0, 0, NULL, NULL, SF_FLAGS(0, 0));
 	ATF_REQUIRE_ERRNO(ENOTSOCK, error == -1);

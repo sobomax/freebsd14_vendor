@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50229b4b96b7b510491d82438fc17909a85cd4a7 $");
+__FBSDID("$FreeBSD: 2b7af4e5541913ccf28c1c39e2d617a80988c964 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -133,7 +133,6 @@ get_cmd_info(const char *cmd)
 
 	return (NULL);
 }
-
 
 static int
 bectl_cmd_activate(int argc, char *argv[])
@@ -260,6 +259,10 @@ bectl_cmd_create(int argc, char *argv[])
 
 	switch (err) {
 	case BE_ERR_SUCCESS:
+		break;
+	case BE_ERR_INVALIDNAME:
+		fprintf(stderr,
+		    "bectl create: boot environment name must not contain spaces\n");
 		break;
 	default:
 		if (atpos != NULL)
@@ -471,7 +474,6 @@ bectl_cmd_rename(int argc, char *argv[])
 	dest = argv[2];
 
 	err = be_rename(be, src, dest);
-
 	switch (err) {
 	case BE_ERR_SUCCESS:
 		break;
@@ -480,7 +482,7 @@ bectl_cmd_rename(int argc, char *argv[])
 		    src, dest);
 	}
 
-	return (0);
+	return (err);
 }
 
 static int

@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3fb518179406ae34385a2d25c13fefbd67bfd32e $
+ * $FreeBSD: bd9f235626eb999c49e6cd5b0aa8e11e11962cc1 $
  */
 
 #include "opt_atpic.h"
@@ -525,7 +525,6 @@ prot_addrf:
 	SUPERALIGN_TEXT
 IDTVEC(fast_syscall_pti)
 	swapgs
-	lfence
 	cmpq	$~0,PCPU(UCR3)
 	je	fast_syscall_common
 	movq	%rax,PCPU(SCRATCH_RAX)
@@ -536,7 +535,6 @@ IDTVEC(fast_syscall_pti)
 	SUPERALIGN_TEXT
 IDTVEC(fast_syscall)
 	swapgs
-	lfence
 fast_syscall_common:
 	movq	%rsp,PCPU(SCRATCH_RSP)
 	movq	PCPU(RSP0),%rsp

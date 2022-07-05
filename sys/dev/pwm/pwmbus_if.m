@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 4e7b49bf405c5ac285761f7c7b7f1abaf4e21954 $
+# $FreeBSD: f81e92907847de41a9e098d1104b7ec8870747a7 $
 #
 
 #include <sys/bus.h>
@@ -33,14 +33,14 @@ INTERFACE pwmbus;
 
 CODE {
 	static int
-	pwm_default_set_flags(device_t dev, u_int channel, uint32_t flags)
+	pwm_default_set_flags(device_t bus, u_int channel, uint32_t flags)
 	{
 
 		return (EOPNOTSUPP);
 	}
 
 	static int
-	pwm_default_get_flags(device_t dev, u_int channel, uint32_t *flags)
+	pwm_default_get_flags(device_t bus, u_int channel, uint32_t *flags)
 	{
 
 		*flags = 0;
@@ -55,8 +55,8 @@ CODE {
 METHOD int channel_config {
 	device_t bus;
 	u_int channel;
-	unsigned int period;
-	unsigned int duty;
+	u_int period;
+	u_int duty;
 };
 
 #
@@ -66,8 +66,8 @@ METHOD int channel_config {
 METHOD int channel_get_config {
 	device_t bus;
 	u_int channel;
-	unsigned int *period;
-	unsigned int *duty;
+	u_int *period;
+	u_int *duty;
 };
 
 #
@@ -83,7 +83,7 @@ METHOD int channel_set_flags {
 # Get the flags
 #
 METHOD int channel_get_flags {
-	device_t dev;
+	device_t bus;
 	u_int channel;
 	uint32_t *flags;
 } DEFAULT pwm_default_get_flags;

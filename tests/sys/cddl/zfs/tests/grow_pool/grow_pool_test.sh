@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 93d223f90cf1b6f614b979bcae61546c550e71e3 $
+# $FreeBSD: 90ae7c4f37d4215a488cb652fc31ba5e7414c4a4 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case grow_pool_001_pos cleanup
 grow_pool_001_pos_head()
 {
 	atf_set "descr" "A zpool may be increased in capacity by adding a disk"
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 grow_pool_001_pos_body()
 {

@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 53e104c7fb4f9ed41e4a1f1c1ed494408e27bcf1 $");
+__FBSDID("$FreeBSD: 1fac678df9715577c6fdec62e3e548130775e481 $");
 
 ENTRY(generic_bs_r_1)
 	ldrb	w0, [x1, x2]
@@ -400,7 +400,7 @@ END(generic_bs_wr_8)
 ENTRY(generic_bs_fault)
 	mov	x0, #-1
 	ret
-END(bus_fault)
+END(generic_bs_fault)
 
 ENTRY(generic_bs_peek_1)
 	.globl	generic_bs_peek_1f

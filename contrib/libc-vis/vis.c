@@ -60,7 +60,7 @@
 __RCSID("$NetBSD: vis.c,v 1.74 2017/11/27 16:37:21 christos Exp $");
 #endif /* LIBC_SCCS and not lint */
 #ifdef __FBSDID
-__FBSDID("$FreeBSD: 21c07b70619ddc092cf8e10548e1166067372ec7 $");
+__FBSDID("$FreeBSD: c43186a44b5126aa2aacc744a1ee76cacbde650a $");
 #define	_DIAGASSERT(x)	assert(x)
 #endif
 
@@ -465,7 +465,8 @@ istrsenvisx(char **mbdstp, size_t *dlen, const char *mbsrc, size_t mblength,
 	while (mbslength > 0) {
 		/* Convert one multibyte character to wchar_t. */
 		if (!cerr)
-			clen = mbrtowc(src, mbsrc, MB_LEN_MAX, &mbstate);
+			clen = mbrtowc(src, mbsrc, MIN(mbslength, MB_LEN_MAX),
+			    &mbstate);
 		if (cerr || clen < 0) {
 			/* Conversion error, process as a byte instead. */
 			*src = (wint_t)(u_char)*mbsrc;

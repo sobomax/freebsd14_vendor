@@ -1,4 +1,4 @@
-# $FreeBSD: 0c801318609ea1b87d9014fc4e84f2902ba460f8 $
+# $FreeBSD: 07b3f3963d0baa940cc0d7cf02ea3697d9958b19 $
 
 #-
 # Copyright (c) 2014 M. Warner Losh <imp@FreeBSD.org>
@@ -41,11 +41,11 @@ NANO_CFG_BASE=$(pwd)
 NANO_CFG_BASE=${NANO_CFG_BASE%/dhcpd}
 NANO_SRC=$(pwd)
 NANO_SRC=${NANO_SRC%/tools/tools/nanobsd/dhcpd}
-NANO_OBJ=${NANO_SRC}/../dhcpd/obj
+NANO_OBJ=${NANO_SRC}/../nanobsd-builds/dhcpd/obj
 # Where cust_pkg() finds packages to install
 #XXX: Is this the right place?
-#NANO_PORTS=$(realpath ${NANO_SRC}/../ports)
-NANO_PORTS=/usr/ports
+NANO_PORTS=$(realpath ${NANO_SRC}/../ports)
+#NANO_PORTS=/usr/ports
 NANO_PACKAGE_DIR=${NANO_SRC}/${NANO_TOOLS}/Pkg
 NANO_DATADIR=${NANO_OBJ}/_.data
 NANO_DATASIZE=40960

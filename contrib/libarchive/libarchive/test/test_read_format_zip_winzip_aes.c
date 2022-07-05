@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: cc1e3110d65b1f281d5c948485299c15c8e28594 $");
+__FBSDID("$FreeBSD: 3f543927a41e9e3312e4da2c995878a4124a18c6 $");
 
 static void
 test_winzip_aes(const char *refname, int need_libz)
@@ -115,7 +115,7 @@ test_winzip_aes(const char *refname, int need_libz)
 	} else {
 		assertEqualInt(ARCHIVE_FAILED, archive_read_data(a, buff, 19));
 		assertEqualString(archive_error_string(a),
-		    "Unsupported ZIP compression method (deflation)");
+		    "Unsupported ZIP compression method (8: deflation)");
 		assert(archive_errno(a) != 0);
 	}
 	

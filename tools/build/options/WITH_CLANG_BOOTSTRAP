@@ -1,2 +1,2 @@
-.\" $FreeBSD: 792512d57e93a504854ff7f9b75ebe4e120bf0b4 $
-Set to build the Clang C/C++ compiler during the bootstrap phase of the build.
+.\" $FreeBSD: 0dfeaf9009be2f749e95220b8cc353602e73105b $
+Build the Clang C/C++ compiler during the bootstrap phase of the build.

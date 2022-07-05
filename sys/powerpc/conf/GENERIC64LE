@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: b94eac412b1e0297ecbc2c5ac24ccbfba8440a33 $
+# $FreeBSD: 969208dc83b114c63a79dea811c6b919d3c68022 $
 
 cpu		AIM
 ident		GENERIC
@@ -130,6 +130,7 @@ device		ispfw		# Firmware module for Qlogic host adapters
 device		mrsas		# LSI/Avago MegaRAID SAS/SATA, 6Gb/s and 12Gb/s
 device		mpt		# LSI-Logic MPT-Fusion
 device		mps		# LSI-Logic MPT-Fusion 2
+device		mpr		# LSI SAS3008 MPT-Fusion SAS-3
 device		sym		# NCR/Symbios/LSI Logic 53C8XX/53C1010/53C1510D
 
 # ATA/SCSI peripherals
@@ -157,6 +158,7 @@ device		em		# Intel PRO/1000 Gigabit Ethernet Family
 device		ix		# Intel PRO/10GbE PCIE PF Ethernet Family
 device		ixl		# Intel 700 Series Physical Function
 device		ixv		# Intel PRO/10GbE PCIE VF Ethernet Family
+device		ice		# Intel 800 Series Physical Function
 device		llan		# IBM pSeries Virtual Ethernet
 device		cxgbe		# Chelsio 10/25G NIC
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a5a023db381fccaa2fc0d96cfb6ff2d87c3c7da $");
+__FBSDID("$FreeBSD: dc089db1d18926fa347afa505fd6c131f54516d9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -311,6 +311,7 @@ smp_init_secondary(u_int32_t cpuid)
 	/* Initialize curthread. */
 	KASSERT(PCPU_GET(idlethread) != NULL, ("no idle thread"));
 	PCPU_SET(curthread, PCPU_GET(idlethread));
+	schedinit_ap();
 
 	mtx_lock_spin(&ap_boot_mtx);
 

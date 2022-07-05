@@ -1,10 +1,11 @@
-# $FreeBSD: f13800829d7fcb838f1ed932c399319b4e70c34c $
+# $FreeBSD: 1c1a90bda7304f6a48b02931c984af088d863890 $
 
 SRCS+=	_ctx_start.S \
 	fabs.S \
 	flt_rounds.c \
 	fpgetmask.c \
 	fpsetmask.c \
+	_get_tp.c \
 	infinity.c \
 	ldexp.c \
 	makecontext.c \
@@ -13,3 +14,5 @@ SRCS+=	_ctx_start.S \
 	setjmp.S \
 	sigsetjmp.S \
 	trivial-getcontextx.c
+
+CFLAGS._get_tp.c+= ${RTLD_HDRS}

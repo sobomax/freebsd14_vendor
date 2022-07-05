@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* @(#) $FreeBSD: 3536a8c263f8a7af6e70de42eba47fdc575c4871 $ */
+/* @(#) $FreeBSD: 283c77f93e65759cce813022c75630fa49462fc8 $ */
 
 #ifndef ZCONF_H
 #define ZCONF_H
@@ -11,6 +11,11 @@
 #ifdef __FreeBSD__
 #ifdef _KERNEL
 #define Z_SOLO
+#endif
+#if defined(Z_SOLO)
+#include <sys/types.h>
+#define Z_U8 __uint64_t
+#define Z_U4 __uint32_t
 #endif
 #endif
 

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9cf3f205268894f87146c96a3caf0a312ef70b3f $
+ * $FreeBSD: adbd7794e6f8cecdb841d5965a83a6478b8d6a59 $
  */
 #include <sys/types.h>
 
@@ -41,7 +41,7 @@ struct node {
 	int key;
 };
 
-ARB32_HEAD(tree, node) *root;
+static ARB32_HEAD(tree, node) *root;
 
 static int
 compare(const struct node *a, const struct node *b)

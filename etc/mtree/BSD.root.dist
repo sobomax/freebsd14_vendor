@@ -1,4 +1,4 @@
-# $FreeBSD: 2cfa18dd56621d7026ec9fea0401db6d49f176ef $
+# $FreeBSD: 8bea31212217d1d9aabe83f266d37eb36005d348 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -56,6 +56,8 @@
         ..
         gss
         ..
+        jail.conf.d
+        ..
         kyua             tags=package=tests
         ..
         mail
@@ -95,6 +97,8 @@
         syslog.d
         ..
         zfs
+            compatibility.d
+            ..
         ..
     ..
     lib

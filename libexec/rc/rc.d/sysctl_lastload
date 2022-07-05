@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# $FreeBSD: 22aafd96d0516a8733864fa8ddbace502db67e83 $
+#
+
+# PROVIDE: sysctl_lastload
+# REQUIRE: LOGIN
+# BEFORE:  jail
+
+. /etc/rc.subr
+
+name="sysctl_lastload"
+desc="Last chance to set sysctl variables that failed the first time."
+start_cmd="/etc/rc.d/sysctl lastload"
+stop_cmd=":"
+
+load_rc_config $name
+run_rc_command "$1"

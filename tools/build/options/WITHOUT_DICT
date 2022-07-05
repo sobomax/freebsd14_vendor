@@ -1,2 +1,2 @@
-.\" $FreeBSD: dc3d28167109d391129d7b7318264cbc82384a18 $
-Set to not build the Webster dictionary files.
+.\" $FreeBSD: 86a8523122e868f37125c49378d13e5b70ac7c9a $
+Do not build the Webster dictionary files.

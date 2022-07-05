@@ -1,2 +1,2 @@
-.\" $FreeBSD: 78bb7de9e228279625e0aef4ca30244d758b4c0f $
-Set to not build LLVM's lld linker.
+.\" $FreeBSD: 519eca7572c207e41efc7c9645450d19b814ef5c $
+Do not build LLVM's lld linker.

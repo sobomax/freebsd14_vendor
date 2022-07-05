@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd8b17c8d21c06cef347adb1d649ab1bc9044535 $");
+__FBSDID("$FreeBSD: 3d4e80ab61adfb79d10aa27f17b60013fe731744 $");
 
 /*
  * Driver for Intel PRO/Wireless 3945ABG 802.11 network adapters.
@@ -4547,6 +4547,7 @@ wpi_run(struct wpi_softc *sc, struct ieee80211vap *vap)
 	    sc->rxon.chan, sc->rxon.flags);
 
 	if ((error = wpi_send_rxon(sc, 0, 1)) != 0) {
+		WPI_RXON_UNLOCK(sc);
 		device_printf(sc->sc_dev, "%s: could not send RXON\n",
 		    __func__);
 		return error;

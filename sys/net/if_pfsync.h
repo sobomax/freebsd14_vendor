@@ -44,7 +44,7 @@
 
 /*
  *	$OpenBSD: if_pfsync.h,v 1.35 2008/06/29 08:42:15 mcbride Exp $
- *	$FreeBSD: f26a2ae34eedf25293073dbf52fbff75deecbaf4 $
+ *	$FreeBSD: e0b67ad95fcd204058d433f24a8ffabe110dc206 $
  */
 
 #ifndef _NET_IF_PFSYNC_H_
@@ -236,6 +236,8 @@ struct pfsyncreq {
 	char		 pfsyncr_syncdev[IFNAMSIZ];
 	struct in_addr	 pfsyncr_syncpeer;
 	int		 pfsyncr_maxupdates;
+#define	PFSYNCF_OK		0x00000001
+#define	PFSYNCF_DEFER		0x00000002
 	int		 pfsyncr_defer;
 };
 

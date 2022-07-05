@@ -1,4 +1,4 @@
-# $FreeBSD: 75dd0238895f29d07423c7628e817429036681f0 $
+# $FreeBSD: ded91803cf8a0aabe10818f484bda290bdd9c25d $
 
 .include <src.opts.mk>
 
@@ -35,7 +35,7 @@ SRCS.capsicum-test+=	\
 	overhead.cc \
 	rename.cc
 
-LIBADD.capsicum-test+=	gtest pthread
+LIBADD.capsicum-test+=	gtest pthread procstat
 TEST_METADATA.capsicum-test=	required_user="unprivileged"
 
 .for p in mini-me mini-me.noexec mini-me.setuid

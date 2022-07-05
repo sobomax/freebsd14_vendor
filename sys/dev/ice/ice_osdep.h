@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 0c7d42911fb0ce00f45c2daa52f20c87fd57bbb5 $*/
+/*$FreeBSD: f8d33b72ceb6bdd7de3656879af03a6b2fd74a00 $*/
 
 /**
  * @file ice_osdep.h
@@ -69,6 +69,8 @@ device_t ice_hw_to_dev(struct ice_hw *hw);
 void ice_debug(struct ice_hw *hw, uint64_t mask, char *fmt, ...) __printflike(3, 4);
 void ice_debug_array(struct ice_hw *hw, uint64_t mask, uint32_t rowsize,
 		     uint32_t groupsize, uint8_t *buf, size_t len);
+void ice_info_fwlog(struct ice_hw *hw, uint32_t rowsize, uint32_t groupsize,
+		    uint8_t *buf, size_t len);
 
 #define ice_info(_hw, _fmt, args...) \
 	device_printf(ice_hw_to_dev(_hw), (_fmt), ##args)

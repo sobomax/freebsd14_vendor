@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: 8fbd89da0e574021b3bf543bc95635c6edd047ff $
+ * $FreeBSD: 84ee73cef72379ca7ea55ad07c3ecae69f73570d $
  *
  */
 
@@ -38,8 +38,7 @@ inthand_t
 	IDTVEC(rendezvous_pti);
 
 void	invlop_handler(void);
-int	native_start_all_aps(void);
-void	mp_bootaddress(vm_paddr_t *, unsigned int *);
+int native_start_all_aps(void);
 
 #endif /* !LOCORE */
 #endif /* SMP */

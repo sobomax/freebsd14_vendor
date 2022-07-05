@@ -1,2 +1,2 @@
-.\" $FreeBSD: 535f60365cf6e831150e0f667f35a799826f4a46 $
-Set to build leapsecond information in to the timezone database.
+.\" $FreeBSD: efa830c7f2e254decc2d47e21e70df2b2fb6c5c7 $
+Build leapsecond information in to the timezone database.

@@ -1,4 +1,4 @@
-.\" $FreeBSD: b45f2f3acceb5945fa452c7b2b3da4326bc998a5 $
-Set to not install header or
+.\" $FreeBSD: 57deb32a51f7206a24113dd230f0ae6c2d8ae96e $
+Do not install header or
 programs used for program development,
 compilers, debuggers etc.

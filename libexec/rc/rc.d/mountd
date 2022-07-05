@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 85d04c37a018679d9ecfe8d0ad59aa4fa3c03850 $
+# $FreeBSD: ba573ad732cc934ccfbf6a46c30c919bdca50212 $
 #
 
 # PROVIDE: mountd
@@ -34,6 +34,9 @@ mountd_precmd()
 		rc_flags="${rc_flags} -R"
 	else
 		force_depend rpcbind || return 1
+		if ! checkyesno nfsv4_server_enable; then
+			sysctl vfs.nfsd.server_max_nfsvers=3 > /dev/null
+		fi
 	fi
 
 	# mountd flags will differ depending on rc.conf settings

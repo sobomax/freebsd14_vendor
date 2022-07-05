@@ -1,4 +1,4 @@
-# $FreeBSD: af0a1eb08b157a08543214e5ba2c57b1e3e3de63 $
+# $FreeBSD: c1d11b5b3801a74332d67c3579c15323e4b88210 $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_ib
 
 KMOD=mlx5ib
@@ -16,7 +16,7 @@ mlx5_ib_qp.c \
 mlx5_ib_srq.c \
 mlx5_ib_virt.c
 SRCS+=	${LINUXKPI_GENSRCS}
-SRCS+= 	opt_inet.h opt_inet6.h opt_ratelimit.h
+SRCS+= 	opt_inet.h opt_inet6.h opt_ratelimit.h opt_rss.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

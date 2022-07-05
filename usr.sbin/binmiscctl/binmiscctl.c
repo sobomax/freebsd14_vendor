@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 471f4c2c68dde09ecefb6748b8c0431feffba669 $");
+__FBSDID("$FreeBSD: 3c5e19def67b22b91e500a633ae601b0253d7401 $");
 
 #include <sys/types.h>
 #include <sys/imgact_binmisc.h>
@@ -284,6 +284,8 @@ add_cmd(__unused int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
 	char *magic = NULL, *mask = NULL;
 	int sz;
 
+	if (argc == 0)
+		usage("Required argument missing\n");
 	if (strlen(argv[0]) > IBE_NAME_MAX)
 		usage("'%s' string length longer than IBE_NAME_MAX (%d)",
 		    IBE_NAME_MAX);

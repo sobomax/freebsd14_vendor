@@ -35,7 +35,7 @@ static const char sccsid[] = "@(#)pass1b.c	8.4 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8c09ef36acada14807c6c3d3dcd07ff222c4a339 $");
+__FBSDID("$FreeBSD: 17a3b6495dc448cbd9a70c74e939c948fa1611cb $");
 
 #include <sys/param.h>
 
@@ -60,7 +60,6 @@ pass1b(void)
 	memset(&idesc, 0, sizeof(struct inodesc));
 	idesc.id_func = pass1bcheck;
 	duphead = duplist;
-	inumber = 0;
 	for (c = 0; c < sblock.fs_ncg; c++) {
 		if (got_siginfo) {
 			printf("%s: phase 1b: cyl group %d of %d (%d%%)\n",
@@ -77,9 +76,12 @@ pass1b(void)
 		if (inosused == 0)
 			continue;
 		setinodebuf(c, inosused);
+		inumber = c * sblock.fs_ipg;
 		for (i = 0; i < inosused; i++, inumber++) {
-			if (inumber < UFS_ROOTINO)
+			if (inumber < UFS_ROOTINO) {
+				(void)getnextinode(inumber, 0);
 				continue;
+			}
 			dp = getnextinode(inumber, 0);
 			idesc.id_number = inumber;
 			idesc.id_type = inoinfo(inumber)->ino_idtype;

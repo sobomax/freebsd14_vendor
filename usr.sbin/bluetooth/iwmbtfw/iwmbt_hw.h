@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6a87f499fa26116fd0695ddbf2222c6b27ee37ed $
+ * $FreeBSD: 5bc1d15181cd3f1912d1917f5ea466235d239906 $
  */
 #ifndef	__IWMBT_HW_H__
 #define	__IWMBT_HW_H__
@@ -73,8 +73,13 @@ struct iwmbt_hci_event_cmd_compl {
 #define	IWMBT_HCI_CMD_TIMEOUT		2000	/* ms */
 #define	IWMBT_LOADCMPL_TIMEOUT		5000	/* ms */
 
+extern	int iwmbt_patch_fwfile(struct libusb_device_handle *hdl,
+	    const struct iwmbt_firmware *fw);
 extern	int iwmbt_load_fwfile(struct libusb_device_handle *hdl,
 	    const struct iwmbt_firmware *fw, uint32_t *boot_param);
+extern	int iwmbt_enter_manufacturer(struct libusb_device_handle *hdl);
+extern	int iwmbt_exit_manufacturer(struct libusb_device_handle *hdl,
+	    int mode);
 extern	int iwmbt_get_version(struct libusb_device_handle *hdl,
 	    struct iwmbt_version *version);
 extern	int iwmbt_get_boot_params(struct libusb_device_handle *hdl,

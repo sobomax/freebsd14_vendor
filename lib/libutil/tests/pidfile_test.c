@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e516c35273c9a03422743d346e43822af969c12 $");
+__FBSDID("$FreeBSD: 9bfa6754ce544e8329751f317d5f5c8e0ed63fbf $");
 
 #include <sys/param.h>
 #include <sys/wait.h>
@@ -286,7 +286,8 @@ test_pidfile_relative(void)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (strerror(errno));
-	if (read(fd, pid, sizeof(pid)) < 0)
+	memset(pid, 0, sizeof(pid));
+	if (read(fd, pid, sizeof(pid) - 1) < 0)
 		return (strerror(errno));
 	if (atoi(pid) != getpid())
 		return ("pid mismatch");

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 3470d1988a4332590f9b0ea45595f9c8c59ef20d $
+# $FreeBSD: d51c24add360a8a5ec59954f84ddf8236d6f5149 $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case sparse_001_pos cleanup
 sparse_001_pos_head()
 {
 	atf_set "descr" "Ensure random blocks are read back correctly"
-	atf_set "require.progs" zdb
+	atf_set "require.progs" "ksh93 zdb"
 	atf_set "timeout" 3600
 }
 sparse_001_pos_body()

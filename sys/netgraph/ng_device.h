@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $FreeBSD: 00877b7452b38148bb6aa17a73549b9cc3cf866c $
+ * $FreeBSD: e8f8bfd626877e942b34d4a692f0300d2e44d765 $
  *
  */
 
@@ -39,6 +39,7 @@
 /* Netgraph control messages */
 enum {
 	NGM_DEVICE_GET_DEVNAME,
+	NGM_DEVICE_ETHERALIGN,
 };
 
 #if 0

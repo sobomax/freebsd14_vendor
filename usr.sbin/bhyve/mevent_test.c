@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a9c168da6de113983f212b98517e1acc60df4c1 $
+ * $FreeBSD: 3a7aac98a65c32c967744b5482d239fcbcfaa18b $
  */
 
 /*
@@ -55,8 +55,6 @@ static pthread_mutex_t accept_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t accept_condvar = PTHREAD_COND_INITIALIZER;
 
 static struct mevent *tevp;
-
-char *vmname = "test vm";
 
 
 #define MEVENT_ECHO

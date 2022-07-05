@@ -1,6 +1,8 @@
-# $FreeBSD: aef51aa4c54dd32dbb30b175803c23c69ab2c59e $
+# $FreeBSD: c8a3553191a72b49c702f19021586a476479bb33 $
 
 .include <src.opts.mk>
+
+PACKAGE=	nfs
 
 PROG=	nfsuserd
 MAN=	nfsuserd.8

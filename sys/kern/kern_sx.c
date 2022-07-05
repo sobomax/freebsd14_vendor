@@ -43,7 +43,7 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d914375ec8796038237b646f4e1ca2b75971e60 $");
+__FBSDID("$FreeBSD: d8bdf4a173580618824d2b308c2a28a0fae0bf90 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -648,7 +648,7 @@ _sx_xlock_hard(struct sx *sx, uintptr_t x, int opts LOCK_FILE_LINE_ARG_DEF)
 #ifdef HWPMC_HOOKS
 	PMC_SOFT_CALL( , , lock, failed);
 #endif
-	lock_profile_obtain_lock_failed(&sx->lock_object, &contested,
+	lock_profile_obtain_lock_failed(&sx->lock_object, false, &contested,
 	    &waittime);
 
 #ifndef INVARIANTS
@@ -1069,7 +1069,7 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 #ifdef HWPMC_HOOKS
 	PMC_SOFT_CALL( , , lock, failed);
 #endif
-	lock_profile_obtain_lock_failed(&sx->lock_object, &contested,
+	lock_profile_obtain_lock_failed(&sx->lock_object, false, &contested,
 	    &waittime);
 
 #ifndef INVARIANTS
@@ -1272,7 +1272,7 @@ _sx_slock_int(struct sx *sx, int opts LOCK_FILE_LINE_ARG_DEF)
 	    !__sx_slock_try(sx, td, &x, true LOCK_FILE_LINE_ARG)))
 		error = _sx_slock_hard(sx, opts, x LOCK_FILE_LINE_ARG);
 	else
-		lock_profile_obtain_lock_success(&sx->lock_object, 0, 0,
+		lock_profile_obtain_lock_success(&sx->lock_object, false, 0, 0,
 		    file, line);
 	if (error == 0) {
 		LOCK_LOG_LOCK("SLOCK", &sx->lock_object, 0, 0, file, line);
@@ -1379,7 +1379,7 @@ _sx_sunlock_int(struct sx *sx LOCK_FILE_LINE_ARG_DEF)
 	    !_sx_sunlock_try(sx, td, &x)))
 		_sx_sunlock_hard(sx, td, x LOCK_FILE_LINE_ARG);
 	else
-		lock_profile_release_lock(&sx->lock_object);
+		lock_profile_release_lock(&sx->lock_object, false);
 
 	TD_LOCKS_DEC(curthread);
 }

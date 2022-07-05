@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)date.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cde299f6de61122d625d48daafeaa6508a305bda $");
+__FBSDID("$FreeBSD: 4dc5df0dccfc1a39be6f6af19b70db1443f2d049 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -383,11 +383,11 @@ static void
 usage(void)
 {
 	(void)fprintf(stderr, "%s\n%s\n%s\n",
-	    "usage: date [-jnRu] [-r seconds|file] [-v[+|-]val[ymwdHMS]]",
+	    "usage: date [-jnRu] [-I[date|hours|minutes|seconds]] [-f input_fmt]",
 	    "            "
-	    "[-I[date | hours | minutes | seconds]]",
+	    "[-r filename|seconds] [-v[+|-]val[y|m|w|d|H|M|S]]",
 	    "            "
-	    "[-f fmt date | [[[[[cc]yy]mm]dd]HH]MM[.ss]] [+format]"
+	    "[[[[[[cc]yy]mm]dd]HH]MM[.SS] | new_date] [+output_fmt]"
 	    );
 	exit(1);
 }

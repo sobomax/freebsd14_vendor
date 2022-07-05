@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ed8f1838e178f70be22ac14185362d64c2e15d00 $
+ * $FreeBSD: aa997d50a3f31f627eeb69ec34d7277d5bdc49ab $
  */
 
-#ifndef _LINUX_PREFETCH_H_
-#define	_LINUX_PREFETCH_H_
+#ifndef _LINUXKPI_LINUX_PREFETCH_H_
+#define	_LINUXKPI_LINUX_PREFETCH_H_
 
 #define prefetchw(x) __builtin_prefetch(x,1)
 
-#endif /* _LINUX_PREFETCH_H_ */
+#endif /* _LINUXKPI_LINUX_PREFETCH_H_ */

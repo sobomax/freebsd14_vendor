@@ -28,7 +28,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6368f7b72da990e212a182f21e9f3e0581963987 $");
+__FBSDID("$FreeBSD: 4089af5929eb03020694aba8efca9318f3b1224d $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -182,6 +182,7 @@ init_secondary(int cpu)
 	pc->pc_curthread = pc->pc_idlethread;
 	pc->pc_curpcb = pc->pc_idlethread->td_pcb;
 	set_curthread(pc->pc_idlethread);
+	schedinit_ap();
 #ifdef VFP
 	vfp_init();
 #endif

@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a48c83f73a8012535630eec469885fd41961ff97 $
+ * $FreeBSD: 3a42d1dcec67836d5cc157cddfe3135b2426559b $
  */
 
 /*
@@ -1012,7 +1012,7 @@ camellia_encrypt128(const uint32_t *subkey, uint32_t *io)
 void
 camellia_decrypt128(const uint32_t *subkey, uint32_t *io)
 {
-    uint32_t il,ir,t0,t1;               /* temporary valiables */
+    uint32_t il,ir,t0,t1;               /* temporary variables */
     
     /* pre whitening but absorb kw2*/
     io[0] ^= SUBL(24);
@@ -1082,7 +1082,7 @@ camellia_decrypt128(const uint32_t *subkey, uint32_t *io)
 void
 camellia_encrypt256(const uint32_t *subkey, uint32_t *io)
 {
-    uint32_t il,ir,t0,t1;           /* temporary valiables */
+    uint32_t il,ir,t0,t1;           /* temporary variables */
 
     /* pre whitening but absorb kw2*/
     io[0] ^= SUBL(0);
@@ -1165,7 +1165,7 @@ camellia_encrypt256(const uint32_t *subkey, uint32_t *io)
 void
 camellia_decrypt256(const uint32_t *subkey, uint32_t *io)
 {
-    uint32_t il,ir,t0,t1;           /* temporary valiables */
+    uint32_t il,ir,t0,t1;           /* temporary variables */
 
     /* pre whitening but absorb kw2*/
     io[0] ^= SUBL(32);

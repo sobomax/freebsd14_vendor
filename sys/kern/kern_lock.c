@@ -32,7 +32,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 091abcda2a1e7b7c356774d513ccdf9813c08ec7 $");
+__FBSDID("$FreeBSD: e90c55947676e5ba279f15b7abfef3487b2f327d $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -623,6 +623,9 @@ lockmgr_slock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 		if (lockmgr_slock_try(lk, &x, flags, false))
 			break;
 
+		lock_profile_obtain_lock_failed(&lk->lock_object, false,
+		    &contested, &waittime);
+
 		if ((flags & (LK_ADAPTIVE | LK_INTERLOCK)) == LK_ADAPTIVE) {
 			if (lockmgr_slock_adaptive(&lda, lk, &x, flags))
 				continue;
@@ -631,8 +634,6 @@ lockmgr_slock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 #ifdef HWPMC_HOOKS
 		PMC_SOFT_CALL( , , lock, failed);
 #endif
-		lock_profile_obtain_lock_failed(&lk->lock_object,
-		    &contested, &waittime);
 
 		/*
 		 * If the lock is expected to not sleep just give up
@@ -837,6 +838,10 @@ lockmgr_xlock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 				break;
 			continue;
 		}
+
+		lock_profile_obtain_lock_failed(&lk->lock_object, false,
+		    &contested, &waittime);
+
 		if ((flags & (LK_ADAPTIVE | LK_INTERLOCK)) == LK_ADAPTIVE) {
 			if (lockmgr_xlock_adaptive(&lda, lk, &x))
 				continue;
@@ -844,8 +849,6 @@ lockmgr_xlock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 #ifdef HWPMC_HOOKS
 		PMC_SOFT_CALL( , , lock, failed);
 #endif
-		lock_profile_obtain_lock_failed(&lk->lock_object,
-		    &contested, &waittime);
 
 		/*
 		 * If the lock is expected to not sleep just give up
@@ -1434,7 +1437,7 @@ __lockmgr_args(struct lock *lk, u_int flags, struct lock_object *ilk,
 #ifdef HWPMC_HOOKS
 			PMC_SOFT_CALL( , , lock, failed);
 #endif
-			lock_profile_obtain_lock_failed(&lk->lock_object,
+			lock_profile_obtain_lock_failed(&lk->lock_object, false,
 			    &contested, &waittime);
 
 			/*
@@ -1581,7 +1584,7 @@ __lockmgr_args(struct lock *lk, u_int flags, struct lock_object *ilk,
 
 		if (error == 0) {
 			lock_profile_obtain_lock_success(&lk->lock_object,
-			    contested, waittime, file, line);
+			    false, contested, waittime, file, line);
 			LOCK_LOG_LOCK("DRAIN", &lk->lock_object, 0,
 			    lk->lk_recurse, file, line);
 			WITNESS_LOCK(&lk->lock_object, LOP_EXCLUSIVE |
@@ -1627,7 +1630,7 @@ _lockmgr_disown(struct lock *lk, const char *file, int line)
 	 */
 	if (LK_HOLDER(lk->lk_lock) != tid)
 		return;
-	lock_profile_release_lock(&lk->lock_object);
+	lock_profile_release_lock(&lk->lock_object, false);
 	LOCKSTAT_RECORD1(lockmgr__disown, lk, LOCKSTAT_WRITER);
 	LOCK_LOG_LOCK("XDISOWN", &lk->lock_object, 0, 0, file, line);
 	WITNESS_UNLOCK(&lk->lock_object, LOP_EXCLUSIVE, file, line);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f99ba03c2c869f03ac18e84478b93c9cf2b8a97 $");
+__FBSDID("$FreeBSD: f5d8a1e25e3cb1fa4f8599d7c334781da256cff1 $");
 
 #include <sys/types.h>
 #include <sys/queue.h>
@@ -224,7 +224,7 @@ get_extension(const char *name)
 static char *
 get_font(void)
 {
-	char line[256], buf[20];
+	char line[256], buf[21];
 	char *fnt = NULL;
 
 	FILE *fp = fopen(sysconfig, "r");
@@ -580,7 +580,7 @@ menu_read(void)
 	char *p;
 	int mark, num_keymaps, items, i;
 	char buffer[256], filename[PATH_MAX];
-	char keym[64], lng[64], desc[256];
+	char keym[65], lng[65], desc[257];
 	char dialect[64], lang_abk[64];
 	struct keymap *km;
 	struct keymap **km_sorted;

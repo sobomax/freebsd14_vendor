@@ -1,2 +1,2 @@
-.\" $FreeBSD: 03cbdc4a2a99f25c0009c2a70adaad28e92caf62 $
-Set to not build HTML docs.
+.\" $FreeBSD: 04c1174f136f337772c8d38e58071ca456210383 $
+Do not build HTML docs.

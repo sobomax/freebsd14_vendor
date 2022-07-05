@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61dc9c4880cf39cf525456dafe81d55d3a77aeaa $
+ * $FreeBSD: c8eabd1051d48f8626ac1f745c177cb29aa9ed6a $
  */
 
 #ifndef __MLX5_VPORT_H__
@@ -56,6 +56,7 @@ enum mlx5_local_lb_selection {
 int mlx5_nic_vport_query_local_lb(struct mlx5_core_dev *mdev,
 				  enum mlx5_local_lb_selection selection,
 				  u8 *value);
+int mlx5_nic_vport_update_local_lb(struct mlx5_core_dev *mdev, bool enable);
 int mlx5_nic_vport_modify_local_lb(struct mlx5_core_dev *mdev,
 				   enum mlx5_local_lb_selection selection,
 				   u8 value);

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e67c4e4de04e727c20c917707ab348b7fe9ba9d3 $
+ * $FreeBSD: 1733239132a097b54c755270f8da0923347f0c50 $
  */
 
 #include <sys/types.h>
@@ -511,7 +511,9 @@ ifconfig_get_groups(ifconfig_handle_t *h, const char *name,
 	len = ifgr->ifgr_len;
 	ifgr->ifgr_groups = (struct ifg_req *)malloc(len);
 	if (ifgr->ifgr_groups == NULL) {
-		return (1);
+		h->error.errtype = OTHER;
+		h->error.errcode = ENOMEM;
+		return (-1);
 	}
 	bzero(ifgr->ifgr_groups, len);
 	if (ifconfig_ioctlwrap(h, AF_LOCAL, SIOCGIFGROUP, ifgr) == -1) {

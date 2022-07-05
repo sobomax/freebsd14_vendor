@@ -22,7 +22,18 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1c283b58fef4dac39ff58beaa4d8f255378ae73b $
+# $FreeBSD: 5106307ad66abc9e055e33630bbb062bb517c478 $
+
+require_sparse_file_support()
+{
+	if ! getconf MIN_HOLE_SIZE "$(pwd)"; then
+		echo "getconf MIN_HOLE_SIZE $(pwd) failed; sparse files " \
+		    "probably not supported by file system"
+		mount
+		atf_skip "Test's work directory does not support sparse files;" \
+		    "try with a different TMPDIR?"
+	fi
+}
 
 atf_test_case A_flag
 A_flag_head()
@@ -31,6 +42,7 @@ A_flag_head()
 }
 A_flag_body()
 {
+	require_sparse_file_support
 	# XXX: compressed volumes?
 	atf_check truncate -s 10g sparse.file
 	atf_check -o inline:'1\tsparse.file\n' du -g sparse.file
@@ -103,6 +115,7 @@ g_flag_head()
 }
 g_flag_body()
 {
+	require_sparse_file_support
 	atf_check truncate -s 1k A
 	atf_check truncate -s 1m B
 	atf_check truncate -s 1g C
@@ -117,6 +130,7 @@ h_flag_head()
 }
 h_flag_body()
 {
+	require_sparse_file_support
 	atf_check truncate -s 1k A
 	atf_check truncate -s 1m B
 	atf_check truncate -s 1g C

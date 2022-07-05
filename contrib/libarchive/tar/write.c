@@ -25,7 +25,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: 6eaa85c9dbc076f9dda24149b1da804b81353d8b $");
+__FBSDID("$FreeBSD: b1ec470e8a30142c9bb753b9b84f21d7fac2c495 $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -196,6 +196,10 @@ set_reader_options(struct bsdtar *bsdtar, struct archive *a)
 		else
 			archive_clear_error(a);
 	}
+	if (bsdtar->flags & OPTFLAG_IGNORE_ZEROS)
+		if (archive_read_set_options(a,
+		    "read_concatenated_archives") != ARCHIVE_OK)
+			lafe_errc(1, 0, "%s", archive_error_string(a));
 }
 
 void

@@ -1,6 +1,8 @@
-# $FreeBSD: 27dfcc751ae58563cd23453f14c7ed69dde08784 $
+# $FreeBSD: 22882b8826d6cf3b27ce3333c4e819f4bebc3b63 $
 
 .include <src.opts.mk>
+
+PACKAGE=	mtree
 
 # NOTE: BSD.debug.dist is unconditionally installed for developer ease-of-use.
 FILES=	\

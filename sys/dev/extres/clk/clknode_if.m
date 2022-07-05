@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 80d67547b6950d70a2987289145dae27d3622696 $
+# $FreeBSD: 367bc0c432ed1097956a65056e44d07c875cd4d5 $
 #
 
 INTERFACE clknode;
@@ -68,6 +68,17 @@ METHOD int set_freq {
 METHOD int set_gate {
 	struct clknode	*clk;
 	bool		enable;
+};
+
+#
+# Get gate status
+#   Return: ENXIO - method is not implemented
+#	    ENOENT - HW doesn't support reading of gate enable
+#	    0 - success
+#
+METHOD int get_gate {
+	struct clknode	*clk;
+	bool		*enabled;
 };
 
 #

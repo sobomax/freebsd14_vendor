@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 41cd8593914ab719e8988d7d7e30b70d61540edd $
+ * $FreeBSD: 285f26986434a56c7dcc6c34cd1a91d41d40d02f $
  */
 
 /*
@@ -484,7 +484,7 @@ struct sysex_info {
  * This structure is also used with ioctl(SNDCTL_PGMR_IFACE) which allows
  * a patch manager daemon to read and write device parameters. This
  * ioctl available through /dev/sequencer also. Avoid using it since it's
- * extremely hardware dependent. In addition access trough /dev/sequencer
+ * extremely hardware dependent. In addition access through /dev/sequencer
  * may confuse the patch manager daemon.
  */
 

@@ -37,13 +37,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e881e8f909a44e6cd7f2d5201003a0e65e189abe $");
+__FBSDID("$FreeBSD: 7fee9d2c488ff545732a5cd1671cf85926a1f502 $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/dirent.h>
 #include <sys/kernel.h>
 #include <sys/capsicum.h>
 #include <sys/fcntl.h>
@@ -287,10 +288,8 @@ static int
 namei_setup(struct nameidata *ndp, struct vnode **dpp, struct pwd **pwdp)
 {
 	struct componentname *cnp;
-	struct file *dfp;
 	struct thread *td;
 	struct pwd *pwd;
-	cap_rights_t rights;
 	int error;
 	bool startdir_used;
 
@@ -351,56 +350,16 @@ namei_setup(struct nameidata *ndp, struct vnode **dpp, struct pwd **pwdp)
 			*dpp = pwd->pwd_cdir;
 			vrefact(*dpp);
 		} else {
-			rights = *ndp->ni_rightsneeded;
-			cap_rights_set_one(&rights, CAP_LOOKUP);
-
 			if (cnp->cn_flags & AUDITVNODE1)
 				AUDIT_ARG_ATFD1(ndp->ni_dirfd);
 			if (cnp->cn_flags & AUDITVNODE2)
 				AUDIT_ARG_ATFD2(ndp->ni_dirfd);
-			/*
-			 * Effectively inlined fgetvp_rights, because we need to
-			 * inspect the file as well as grabbing the vnode.
-			 */
-			error = fget_cap(td, ndp->ni_dirfd, &rights,
-			    &dfp, &ndp->ni_filecaps);
-			if (error != 0) {
-				/*
-				 * Preserve the error; it should either be EBADF
-				 * or capability-related, both of which can be
-				 * safely returned to the caller.
-				 */
-			} else {
-				if (dfp->f_ops == &badfileops) {
-					error = EBADF;
-				} else if (dfp->f_vnode == NULL) {
-					error = ENOTDIR;
-				} else {
-					*dpp = dfp->f_vnode;
-					vrefact(*dpp);
 
-					if ((dfp->f_flag & FSEARCH) != 0)
-						cnp->cn_flags |= NOEXECCHECK;
-				}
-				fdrop(dfp, td);
-			}
-#ifdef CAPABILITIES
-			/*
-			 * If file descriptor doesn't have all rights,
-			 * all lookups relative to it must also be
-			 * strictly relative.
-			 */
-			CAP_ALL(&rights);
-			if (!cap_rights_contains(&ndp->ni_filecaps.fc_rights,
-			    &rights) ||
-			    ndp->ni_filecaps.fc_fcntls != CAP_FCNTL_ALL ||
-			    ndp->ni_filecaps.fc_nioctls != -1) {
-				ndp->ni_lcf |= NI_LCF_STRICTRELATIVE;
-				ndp->ni_resflags |= NIRES_STRICTREL;
-			}
-#endif
+			error = fgetvp_lookup(ndp->ni_dirfd, ndp, dpp);
 		}
-		if (error == 0 && (*dpp)->v_type != VDIR)
+		if (error == 0 && (*dpp)->v_type != VDIR &&
+		    (cnp->cn_pnbuf[0] != '\0' ||
+		    (cnp->cn_flags & EMPTYPATH) == 0))
 			error = ENOTDIR;
 	}
 	if (error == 0 && (cnp->cn_flags & RBENEATH) != 0) {
@@ -457,21 +416,55 @@ namei_getpath(struct nameidata *ndp)
 		    &ndp->ni_pathlen);
 	}
 
-	if (__predict_false(error != 0)) {
-		namei_cleanup_cnp(cnp);
+	if (__predict_false(error != 0))
 		return (error);
-	}
-
-	/*
-	 * Don't allow empty pathnames.
-	 */
-	if (__predict_false(*cnp->cn_pnbuf == '\0')) {
-		namei_cleanup_cnp(cnp);
-		return (ENOENT);
-	}
 
 	cnp->cn_nameptr = cnp->cn_pnbuf;
 	return (0);
+}
+
+static int
+namei_emptypath(struct nameidata *ndp)
+{
+	struct componentname *cnp;
+	struct pwd *pwd;
+	struct vnode *dp;
+	int error;
+
+	cnp = &ndp->ni_cnd;
+	MPASS(*cnp->cn_pnbuf == '\0');
+	MPASS((cnp->cn_flags & EMPTYPATH) != 0);
+	MPASS((cnp->cn_flags & (LOCKPARENT | WANTPARENT)) == 0);
+
+	ndp->ni_resflags |= NIRES_EMPTYPATH;
+	error = namei_setup(ndp, &dp, &pwd);
+	if (error != 0) {
+		namei_cleanup_cnp(cnp);
+		goto errout;
+	}
+
+	/*
+	 * Usecount on dp already provided by namei_setup.
+	 */
+	ndp->ni_vp = dp;
+	namei_cleanup_cnp(cnp);
+	pwd_drop(pwd);
+	NDVALIDATE(ndp);
+	if ((cnp->cn_flags & LOCKLEAF) != 0) {
+		VOP_LOCK(dp, (cnp->cn_flags & LOCKSHARED) != 0 ?
+		    LK_SHARED : LK_EXCLUSIVE);
+		if (VN_IS_DOOMED(dp)) {
+			vput(dp);
+			error = ENOENT;
+			goto errout;
+		}
+	}
+	SDT_PROBE4(vfs, namei, lookup, return, 0, ndp->ni_vp, false, ndp);
+	return (0);
+
+errout:
+	SDT_PROBE4(vfs, namei, lookup, return, error, NULL, false, ndp);
+	return (error);
 }
 
 /*
@@ -510,6 +503,8 @@ namei(struct nameidata *ndp)
 	cnp = &ndp->ni_cnd;
 	td = cnp->cn_thread;
 #ifdef INVARIANTS
+	KASSERT(cnp->cn_thread == curthread,
+	    ("namei not using curthread"));
 	KASSERT((ndp->ni_debugflags & NAMEI_DBG_CALLED) == 0,
 	    ("%s: repeated call to namei without NDREINIT", __func__));
 	KASSERT(ndp->ni_debugflags == NAMEI_DBG_INITED,
@@ -554,16 +549,18 @@ namei(struct nameidata *ndp)
 
 	error = namei_getpath(ndp);
 	if (__predict_false(error != 0)) {
+		namei_cleanup_cnp(cnp);
+		SDT_PROBE4(vfs, namei, lookup, return, error, NULL,
+		    false, ndp);
 		return (error);
 	}
 
 #ifdef KTRACE
 	if (KTRPOINT(td, KTR_NAMEI)) {
-		KASSERT(cnp->cn_thread == curthread,
-		    ("namei not using curthread"));
 		ktrnamei(cnp->cn_pnbuf);
 	}
 #endif
+	TSNAMEI(curthread->td_proc->p_pid, cnp->cn_pnbuf);
 
 	/*
 	 * First try looking up the target without locking any vnodes.
@@ -587,12 +584,22 @@ namei(struct nameidata *ndp)
 		ndp->ni_loopcnt = 0;
 		error = namei_getpath(ndp);
 		if (__predict_false(error != 0)) {
+			namei_cleanup_cnp(cnp);
 			return (error);
 		}
 		/* FALLTHROUGH */
 	case CACHE_FPL_STATUS_ABORTED:
 		TAILQ_INIT(&ndp->ni_cap_tracker);
 		MPASS(ndp->ni_lcf == 0);
+		if (*cnp->cn_pnbuf == '\0') {
+			if ((cnp->cn_flags & EMPTYPATH) != 0) {
+				return (namei_emptypath(ndp));
+			}
+			namei_cleanup_cnp(cnp);
+			SDT_PROBE4(vfs, namei, lookup, return, ENOENT, NULL,
+			    false, ndp);
+			return (ENOENT);
+		}
 		error = namei_setup(ndp, &dp, &pwd);
 		if (error != 0) {
 			namei_cleanup_cnp(cnp);
@@ -748,6 +755,14 @@ needs_exclusive_leaf(struct mount *mp, int flags)
 }
 
 /*
+ * Various filesystems expect to be able to copy a name component with length
+ * bounded by NAME_MAX into a directory entry buffer of size MAXNAMLEN.  Make
+ * sure that these are the same size.
+ */
+_Static_assert(MAXNAMLEN == NAME_MAX,
+    "MAXNAMLEN and NAME_MAX have different values");
+
+/*
  * Search a pathname.
  * This is a very central and rather complicated routine.
  *
@@ -790,6 +805,7 @@ lookup(struct nameidata *ndp)
 {
 	char *cp;			/* pointer into pathname argument */
 	char *prev_ni_next;		/* saved ndp->ni_next */
+	char *nulchar;			/* location of '\0' in cn_pnbuf */
 	struct vnode *dp = NULL;	/* the directory we are searching */
 	struct vnode *tdp;		/* saved dp */
 	struct mount *mp;		/* mount table entry */
@@ -849,9 +865,23 @@ dirloop:
 	 * cnp->cn_nameptr for callers that need the name. Callers needing
 	 * the name set the SAVENAME flag. When done, they assume
 	 * responsibility for freeing the pathname buffer.
+	 *
+	 * Store / as a temporary sentinel so that we only have one character
+	 * to test for. Pathnames tend to be short so this should not be
+	 * resulting in cache misses.
 	 */
-	for (cp = cnp->cn_nameptr; *cp != 0 && *cp != '/'; cp++)
+	nulchar = &cnp->cn_nameptr[ndp->ni_pathlen - 1];
+	KASSERT(*nulchar == '\0',
+	    ("%s: expected nul at %p; string [%s]\n", __func__, nulchar,
+	    cnp->cn_pnbuf));
+	*nulchar = '/';
+	for (cp = cnp->cn_nameptr; *cp != '/'; cp++) {
+		KASSERT(*cp != '\0',
+		    ("%s: encountered unexpected nul; string [%s]\n", __func__,
+		    cnp->cn_nameptr));
 		continue;
+	}
+	*nulchar = '\0';
 	cnp->cn_namelen = cp - cnp->cn_nameptr;
 	if (cnp->cn_namelen > NAME_MAX) {
 		error = ENAMETOOLONG;

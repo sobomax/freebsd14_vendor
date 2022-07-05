@@ -1,4 +1,4 @@
-# $FreeBSD: 3593a4006ba29b15e3989f0c7769e743eb7b873e $
+# $FreeBSD: fccc90fb9051a3e4f92480280ea26c7cef920dbc $
 
 .include <src.opts.mk>
 
@@ -19,6 +19,8 @@ MLINKS=		ld.lld.1 ld.1
 .if ${MK_SHARED_TOOLCHAIN} == "no"
 NO_SHARED?= yes
 .endif
+
+.include "${SRCTOP}/lib/clang/llvm.pre.mk"
 
 CFLAGS+=	-I${LLD_SRCS}/ELF
 CFLAGS+=	-I${LLD_SRCS}/include
@@ -90,7 +92,6 @@ DPADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 LDADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 .endfor
 
-LLVM_TBLGEN?=	llvm-tblgen
 INCFILE=	Options.inc
 TDFILE=		${LLD_SRCS}/ELF/Options.td
 GENOPT=		-gen-opt-parser-defs
@@ -99,11 +100,14 @@ ${INCFILE}: ${TDFILE}
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
 
+DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}
 CLEANFILES+=	${TGHDRS} ${TGHDRS:C/$/.d/}
 
+.if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
 LIBADD+=	execinfo
 LIBADD+=	ncursesw
+.endif
 LIBADD+=	pthread
 LIBADD+=	z
 

@@ -1,4 +1,6 @@
-# $FreeBSD: df64d829d08040508bf7fc91995f4283b3873c32 $
+# $FreeBSD: 7b34a442019dbc851eab0cdc7f3023fa71512e0e $
+
+PACKAGE=	kerberos
 
 PROG=	slc
 LIBROKEN_A=     ${.OBJDIR:H:H}/lib/libroken/libroken.a

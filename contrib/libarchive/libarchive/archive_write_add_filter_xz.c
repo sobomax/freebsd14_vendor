@@ -26,7 +26,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: 9dd2c30e5de7a1cba73a5bc47d4f960f8a0d2de8 $");
+__FBSDID("$FreeBSD: 04bee90efa46130cef253056cbe0dac4156002ff $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -251,13 +251,13 @@ archive_compressor_xz_init_stream(struct archive_write_filter *f,
 		int ds, log2dic, wedges;
 
 		/* Calculate a coded dictionary size */
-		if (dict_size < (1 << 12) || dict_size > (1 << 27)) {
+		if (dict_size < (1 << 12) || dict_size > (1 << 29)) {
 			archive_set_error(f->archive, ARCHIVE_ERRNO_MISC,
 			    "Unacceptable dictionary size for lzip: %d",
 			    dict_size);
 			return (ARCHIVE_FATAL);
 		}
-		for (log2dic = 27; log2dic >= 12; log2dic--) {
+		for (log2dic = 29; log2dic >= 12; log2dic--) {
 			if (dict_size & (1 << log2dic))
 				break;
 		}

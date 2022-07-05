@@ -1,6 +1,7 @@
 # $OpenBSD: Makefile,v 1.8 2015/09/09 15:33:18 deraadt Exp $
-# $FreeBSD: 5c909e3d79fea0ee7994fbd5be5b0df44bfef524 $
+# $FreeBSD: 1fcaf238ca2a3b75201556c92ee17a835061cf79 $
 
+PACKAGE=	yp
 PROG=		ypldap
 SRCS=		parse.y ypldap.c log.c	\
 		ldapclient.c entries.c yp.c \

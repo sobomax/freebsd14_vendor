@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f0724b7859f6cf1757a98a617c867c2ba43eae7 $");
+__FBSDID("$FreeBSD: 41b05ae2ca5399bbf2331ced378d664db70752fd $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1554,10 +1554,10 @@ in6ifa_ifpforlinklocal(struct ifnet *ifp, int ignoreflags)
 
 /*
  * find the interface address corresponding to a given IPv6 address.
- * ifaddr is returned referenced.
+ * ifaddr is returned referenced if @referenced flag is set.
  */
 struct in6_ifaddr *
-in6ifa_ifwithaddr(const struct in6_addr *addr, uint32_t zoneid)
+in6ifa_ifwithaddr(const struct in6_addr *addr, uint32_t zoneid, bool referenced)
 {
 	struct rm_priotracker in6_ifa_tracker;
 	struct in6_ifaddr *ia;
@@ -1568,7 +1568,8 @@ in6ifa_ifwithaddr(const struct in6_addr *addr, uint32_t zoneid)
 			if (zoneid != 0 &&
 			    zoneid != ia->ia_addr.sin6_scope_id)
 				continue;
-			ifa_ref(&ia->ia_ifa);
+			if (referenced)
+				ifa_ref(&ia->ia_ifa);
 			break;
 		}
 	}
@@ -1925,10 +1926,8 @@ in6_ifawithifp(struct ifnet *ifp, struct in6_addr *dst)
 				besta = (struct in6_ifaddr *)ifa;
 		}
 	}
-	if (besta) {
-		ifa_ref(&besta->ia_ifa);
+	if (besta)
 		return (besta);
-	}
 
 	CK_STAILQ_FOREACH(ifa, &ifp->if_addrhead, ifa_link) {
 		if (ifa->ifa_addr->sa_family != AF_INET6)
@@ -1945,20 +1944,14 @@ in6_ifawithifp(struct ifnet *ifp, struct in6_addr *dst)
 			continue;
 		}
 
-		if (ifa != NULL)
-			ifa_ref(ifa);
 		return (struct in6_ifaddr *)ifa;
 	}
 
 	/* use the last-resort values, that are, deprecated addresses */
-	if (dep[0]) {
-		ifa_ref((struct ifaddr *)dep[0]);
+	if (dep[0])
 		return dep[0];
-	}
-	if (dep[1]) {
-		ifa_ref((struct ifaddr *)dep[1]);
+	if (dep[1])
 		return dep[1];
-	}
 
 	return NULL;
 }
@@ -2221,25 +2214,6 @@ in6_lltable_rtcheck(struct ifnet *ifp,
 	return 0;
 }
 
-/*
- * Called by the datapath to indicate that the entry was used.
- */
-static void
-in6_lltable_mark_used(struct llentry *lle)
-{
-
-	LLE_REQ_LOCK(lle);
-	lle->r_skip_req = 0;
-
-	/*
-	 * Set the hit time so the callback function
-	 * can determine the remaining time before
-	 * transiting to the DELAY state.
-	 */
-	lle->lle_hittime = time_uptime;
-	LLE_REQ_UNLOCK(lle);
-}
-
 static inline uint32_t
 in6_lltable_hash_dst(const struct in6_addr *dst, uint32_t hsize)
 {
@@ -2349,6 +2323,7 @@ in6_lltable_lookup(struct lltable *llt, u_int flags,
 	const struct sockaddr *l3addr)
 {
 	const struct sockaddr_in6 *sin6 = (const struct sockaddr_in6 *)l3addr;
+	int family = flags >> 16;
 	struct llentry *lle;
 
 	IF_AFDATA_LOCK_ASSERT(llt->llt_ifp);
@@ -2359,8 +2334,13 @@ in6_lltable_lookup(struct lltable *llt, u_int flags,
 	    ("wrong lle request flags: %#x", flags));
 
 	lle = in6_lltable_find_dst(llt, &sin6->sin6_addr);
+
+	if (__predict_false(family != AF_INET6))
+		lle = llentry_lookup_family(lle, family);
+
 	if (lle == NULL)
 		return (NULL);
+
 	if (flags & LLE_UNLOCKED)
 		return (lle);
 
@@ -2476,9 +2456,20 @@ in6_lltattach(struct ifnet *ifp)
 	llt->llt_fill_sa_entry = in6_lltable_fill_sa_entry;
 	llt->llt_free_entry = in6_lltable_free_entry;
 	llt->llt_match_prefix = in6_lltable_match_prefix;
-	llt->llt_mark_used = in6_lltable_mark_used;
+	llt->llt_mark_used = llentry_mark_used;
  	lltable_link(llt);
 
+	return (llt);
+}
+
+struct lltable *
+in6_lltable_get(struct ifnet *ifp)
+{
+	struct lltable *llt = NULL;
+
+	void *afdata_ptr = ifp->if_afdata[AF_INET6];
+	if (afdata_ptr != NULL)
+		llt = ((struct in6_ifextra *)afdata_ptr)->lltable;
 	return (llt);
 }
 

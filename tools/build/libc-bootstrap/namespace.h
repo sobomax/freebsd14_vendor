@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73e27f8cb02b88618c3641b87ef5e10fcf021238 $
+ * $FreeBSD: 2c242f88072d3dbca9839bdb118ce75f9768243f $
  */
 #pragma once
 
@@ -45,7 +45,9 @@
 #define _writev(a, b, c)	writev(a, b, c)
 #define _fsync(a)	fsync(a)
 #define	_getprogname()	getprogname()
-#define	_err(...)	err(__VA_ARGS__)
+/* These two need to be renamed to build libc/gen/err.c */
+#define	err	_err
+#define	warn	_warn
 
 #define _pthread_mutex_unlock	pthread_mutex_unlock
 #define _pthread_mutex_lock	pthread_mutex_lock

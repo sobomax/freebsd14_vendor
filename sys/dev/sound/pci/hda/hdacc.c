@@ -43,7 +43,7 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: 3b1ca7ea61e5f8ceb6d322e2b0d10ac8eb4c2664 $");
+SND_DECLARE_FILE("$FreeBSD: 06c1eb444dcece36eb7d391350b93b8b0e2301c4 $");
 
 struct hdacc_fg {
 	device_t	dev;
@@ -147,6 +147,7 @@ static const struct {
 	{ HDA_CODEC_ALC888, 0,		"Realtek ALC888" },
 	{ HDA_CODEC_ALC889, 0,		"Realtek ALC889" },
 	{ HDA_CODEC_ALC892, 0,		"Realtek ALC892" },
+	{ HDA_CODEC_ALC897, 0,		"Realtek ALC897" },
 	{ HDA_CODEC_ALC899, 0,		"Realtek ALC899" },
 	{ HDA_CODEC_ALC1150, 0,		"Realtek ALC1150" },
 	{ HDA_CODEC_ALCS1200A, 0,	"Realtek ALCS1200A" },
@@ -392,6 +393,7 @@ static const struct {
 	{ HDA_CODEC_INTELGMLK1, 0,	"Intel Gemini Lake" },
 	{ HDA_CODEC_INTELICLK, 0,	"Intel Ice Lake" },
 	{ HDA_CODEC_INTELTGLK, 0,	"Intel Tiger Lake" },
+	{ HDA_CODEC_INTELALLK, 0,	"Intel Alder Lake" },
 	{ HDA_CODEC_SII1390, 0,		"Silicon Image SiI1390" },
 	{ HDA_CODEC_SII1392, 0,		"Silicon Image SiI1392" },
 	/* Unknown CODECs */

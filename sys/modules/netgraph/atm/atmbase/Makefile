@@ -1,4 +1,4 @@
-# $FreeBSD: f495cdbbda78372708f980aff6d770651ffccd26 $
+# $FreeBSD: 68959693811ef8e6173989317063459e9ac137f6 $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 #
@@ -14,5 +14,7 @@ SRCS= 	ngatmbase.c unimsg_common.c straddr.c				\
 	traffic.c uni_ie.c uni_msg.c
 
 CFLAGS+= -I${LIBBASE} # -DNGATM_DEBUG
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

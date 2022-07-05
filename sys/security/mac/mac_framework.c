@@ -69,7 +69,7 @@
 #include "opt_mac.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0b4f89db7cad849e5dd1d7ae7e86246f11acf6f $");
+__FBSDID("$FreeBSD: e773a3840464d5715e57242153846dc09b8c0970 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -145,6 +145,8 @@ FPFLAG_RARE(vnode_check_access);
 FPFLAG_RARE(vnode_check_readlink);
 FPFLAG_RARE(pipe_check_stat);
 FPFLAG_RARE(pipe_check_poll);
+FPFLAG_RARE(ifnet_create_mbuf);
+FPFLAG_RARE(ifnet_check_transmit);
 
 #undef FPFLAG
 #undef FPFLAG_RARE
@@ -445,6 +447,10 @@ struct mac_policy_fastpath_elem mac_policy_fastpath_array[] = {
 		.flag = &mac_pipe_check_stat_fp_flag },
 	{ .offset = FPO(pipe_check_poll),
 		.flag = &mac_pipe_check_poll_fp_flag },
+	{ .offset = FPO(ifnet_create_mbuf),
+		.flag = &mac_ifnet_create_mbuf_fp_flag },
+	{ .offset = FPO(ifnet_check_transmit),
+		.flag = &mac_ifnet_check_transmit_fp_flag },
 };
 
 static void

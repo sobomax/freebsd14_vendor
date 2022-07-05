@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a180cee5f0225d1a0b71f7cc96ba00f0a9b192c8 $
+ * $FreeBSD: b132eedff933a1f39ca5da41df82fadaff03c396 $
  */
 
-#ifndef __LINUX_SIZES_H__
-#define	__LINUX_SIZES_H__
+#ifndef _LINUXKPI_LINUX_SIZES_H_
+#define	_LINUXKPI_LINUX_SIZES_H_
 
 #define SZ_1K	(1024 * 1)
 #define SZ_4K	(1024 * 4)

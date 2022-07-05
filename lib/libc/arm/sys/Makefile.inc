@@ -1,6 +1,7 @@
-# $FreeBSD: be6a58f8aaf5d7fb70ff215f9593db4968f3f6e0 $
+# $FreeBSD: c6e854e7954ae81e630f2897b767f151014ce608 $
 
-SRCS+=	__vdso_gettc.c
+SRCS+=	__vdso_gettc.c \
+	sched_getcpu_gen.c
 
 MDASM= Ovfork.S cerror.S syscall.S
 

@@ -1,7 +1,5 @@
-# $FreeBSD: 703854e6e5274c55130d2ca35e7d1f0be3fca8df $
+# $FreeBSD: 0378b117a5cac63d0ef1da02c419c2f7e1a48227 $
 # $NetBSD: Makefile.part,v 1.6 2008/10/25 22:35:36 apb Exp $
-
-MKESDB?= ${.OBJDIR:H:H:H:H}/usr.bin/mkesdb_static/mkesdb_static
 
 PARTFILE?= ${.CURDIR}/${CODE}.part
 ALIASFILE?= ${.CURDIR}/${CODE}.alias

@@ -1,12 +1,11 @@
-# $FreeBSD: 19e114be935dab98420b98157cce2df57c82c97c $
+# $FreeBSD: c4ae4f50319766f827bcb2c0c1531ea5a00fa341 $
 
 .include <src.opts.mk>
+.include "${SRCTOP}/secure/ssh.mk"
 
 PROG=	ssh-pkcs11-helper
 SRCS=	ssh-pkcs11.c ssh-pkcs11-helper.c
 MAN=	ssh-pkcs11-helper.8
-CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 

@@ -22,7 +22,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5679a62f7fba244544fb3611b902bf7c89851e53 $
+# $FreeBSD: f94fe6e1ef7d89e6f25e16e27f35a682bb5f2cd2 $
+
+PACKAGE=	runtime
 
 LIB=	pam_login_access
 SRCS=	pam_login_access.c login_access.c

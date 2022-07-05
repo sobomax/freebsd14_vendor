@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 542efef9cb8247f2f28102157d0ba646c1294cdc $
+ * $FreeBSD: 073c51696387c944166f3e851a1bc6ebfd5b22f4 $
  */
 
 #ifndef _LINUX_VDSO_H_
@@ -39,7 +39,7 @@ struct linux_vdso_sym {
 };
 
 vm_object_t __elfN(linux_shared_page_init)(char **);
-void	__elfN(linux_shared_page_fini)(vm_object_t);
+void	__elfN(linux_shared_page_fini)(vm_object_t, void *);
 void	__elfN(linux_vdso_fixup)(struct sysentvec *);
 void	__elfN(linux_vdso_reloc)(struct sysentvec *);
 void	__elfN(linux_vdso_sym_init)(struct linux_vdso_sym *);

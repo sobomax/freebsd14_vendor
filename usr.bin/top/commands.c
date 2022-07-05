@@ -8,7 +8,7 @@
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *
- * $FreeBSD: 88f4b0867d47d0c03813f93ed3c52dd13c55c87d $
+ * $FreeBSD: 9efc693020baa7a1297c3b2dad2fb5f6704f4025 $
  */
 
 /*
@@ -59,6 +59,7 @@ const struct command all_commands[] =
 	{'H', "toggle the displaying of threads", false, CMD_thrtog},
 	{'h', "show this help text", true, CMD_help},
 	{'?', NULL, true, CMD_help},
+	{'/', "filter on command name (+ selects all commands)", false, CMD_grep},
 	{'i', "toggle the displaying of idle processes", false, CMD_idletog},
 	{'I', NULL, false, CMD_idletog},
 	{'j', "toggle the displaying of jail ID", false, CMD_jidtog},

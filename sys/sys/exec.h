@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)exec.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: c7b3aa8b95502c9feb1dd29fc920198a08388e13 $
+ * $FreeBSD: 94d2f698bd6308108da3ab3651deec345424cc64 $
  */
 
 #ifndef _SYS_EXEC_H_
@@ -77,6 +77,8 @@ struct execsw {
  * Prefer the kern.ps_strings or kern.proc.ps_strings sysctls to this constant.
  */
 #define	PS_STRINGS	(USRSTACK - sizeof(struct ps_strings))
+#define	PROC_PS_STRINGS(p)	\
+	((p)->p_vmspace->vm_stacktop - (p)->p_sysent->sv_psstringssz)
 
 int exec_map_first_page(struct image_params *);        
 void exec_unmap_first_page(struct image_params *);       

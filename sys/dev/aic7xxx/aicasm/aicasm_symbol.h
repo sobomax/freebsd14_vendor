@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.h#17 $
  *
- * $FreeBSD: 616dfd28fdeb109a7eeac478ac4fc0def2726e95 $
+ * $FreeBSD: a15fa12176d1e4943d55bd7ecdd3aecc45add02c $
  */
 
 #include <sys/queue.h>
@@ -110,7 +110,7 @@ struct macro_arg {
 	regex_t	arg_regex;
 	char   *replacement_text;
 };
-STAILQ_HEAD(macro_arg_list, macro_arg) args;
+STAILQ_HEAD(macro_arg_list, macro_arg);
 
 struct macro_info {
 	struct macro_arg_list args;

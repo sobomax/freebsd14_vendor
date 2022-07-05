@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8e2282a09a3aea3528975a2fad083b0305f6bf40 $
+ * $FreeBSD: 7dd6e34c9ae264b0b2c71b83dcfb4ab0d8e0101f $
  */
 
 #ifndef _GEOM_GEOM_DISK_H_
@@ -125,6 +125,7 @@ struct disk {
 
 	/* Fields private to geom_disk, to be moved on next version bump */
 	LIST_HEAD(,disk_alias)	d_aliases;
+	void			*d_event;
 };
 
 #define	DISKFLAG_RESERVED		0x0001	/* Was NEEDSGIANT */

@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6b78fbc6055db8d1f31571dadfadf460adf1f149 $
+ * $FreeBSD: 21516c13231c48b9435fa60342c9657ba0ef85d2 $
  */
 #ifndef _SCI_MEMORY_DESCRIPTOR_LIST_H_
 #define _SCI_MEMORY_DESCRIPTOR_LIST_H_
@@ -96,7 +96,7 @@ typedef struct SCI_PHYSICAL_MEMORY_DESCRIPTOR
    void * virtual_address;
 
    /**
-    * This field contains the physical address associated with this desciptor
+    * This field contains the physical address associated with this descriptor 
     * element. This field shall be zero when the descriptor is retrieved from
     * the SCI implementation.  The user shall set this field prior
     * sci_controller_start()

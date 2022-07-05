@@ -1,6 +1,8 @@
-# $FreeBSD: 81237126afede5796e3d0bd24149aae1dc39f42c $
+# $FreeBSD: a0f933333320429e72624175e629926574469c94 $
 
 .include <src.opts.mk>
+
+PACKAGE=	newsyslog
 
 CONFS=	newsyslog.conf
 PROG=	newsyslog

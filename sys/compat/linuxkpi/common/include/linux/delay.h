@@ -27,10 +27,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 860d36368a8ede2052aa56a4c4c18602413ec8f5 $
+ * $FreeBSD: 300bd800f162e43a3744f7422caa57a0ae834057 $
  */
-#ifndef _LINUX_DELAY_H_
-#define	_LINUX_DELAY_H_
+#ifndef _LINUXKPI_LINUX_DELAY_H_
+#define	_LINUXKPI_LINUX_DELAY_H_
 
 #include <linux/jiffies.h>
 #include <sys/systm.h>
@@ -73,4 +73,14 @@ usleep_range(unsigned long min, unsigned long max)
 
 extern unsigned int linux_msleep_interruptible(unsigned int ms);
 
-#endif	/* _LINUX_DELAY_H_ */
+static inline void
+fsleep(unsigned long us)
+{
+
+	if (us < 10)
+		udelay(us);
+	else
+		usleep_range(us, us);
+}
+
+#endif	/* _LINUXKPI_LINUX_DELAY_H_ */

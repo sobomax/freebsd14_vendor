@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2874f49f13f5765ca802292106f2785ab8425aa $");
+__FBSDID("$FreeBSD: dd06ca7d64ba687a6139e402b9990961f57d4d03 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,6 @@ static struct filterops targread_filtops = {
 
 static struct cdevsw targ_cdevsw = {
 	.d_version =	D_VERSION,
-	.d_flags =	D_NEEDGIANT,
 	.d_open =	targopen,
 	.d_read =	targread,
 	.d_write =	targwrite,

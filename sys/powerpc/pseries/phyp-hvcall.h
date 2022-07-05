@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fdc6a774ce03e02bb7c9b1599874c1c6cfe2c194 $
+ * $FreeBSD: 90f75807e56a92c33794495801db50161e201069 $
  */
 
 #ifndef	_PSERIES_PHYP_HVCALL_H_
@@ -321,7 +321,9 @@
 #define H_SET_MODE		0x31C
 /* Reserved ... */
 #define H_GET_DMA_XLATES_L	0x324
-#define MAX_HCALL_OPCODE	H_GET_DMA_XLATES_L
+/* Reserved ... */
+#define H_REGISTER_PROC_TBL	0x37c
+#define MAX_HCALL_OPCODE	H_REGISTER_PROC_TBL
 
 int64_t phyp_hcall(uint64_t opcode, ...);
 int64_t phyp_pft_hcall(uint64_t opcode, uint64_t flags, uint64_t pteidx,

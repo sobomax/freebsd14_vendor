@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75bd213bfd23966f670a20f14e06fd1c09e06fc5 $");
+__FBSDID("$FreeBSD: 816bb26a9e16463586037e7d926b8c2916c954e7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -252,7 +252,6 @@ rk_pcie_phy_enable(struct phynode *phynode, bool enable)
 }
 
 /* Phy class and methods. */
-static int rk_pcie_phy_enable(struct phynode *phynode, bool enable);
 static phynode_method_t rk_pcie_phy_phynode_methods[] = {
 	PHYNODEMETHOD(phynode_enable,		 rk_pcie_phy_enable),
 

@@ -34,7 +34,7 @@
 /* Generic ECAM PCIe driver FDT attachment */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 48e032ad4389dbf0bae7c88931d0a040624e0301 $");
+__FBSDID("$FreeBSD: 3e3aee0d172ae4dc928b46da9977799c766d97cb $");
 
 #include "opt_platform.h"
 
@@ -153,6 +153,13 @@ pci_host_generic_setup_fdt(device_t dev)
 	error = pci_host_generic_core_attach(dev);
 	if (error != 0)
 		return (error);
+
+	if (ofw_bus_is_compatible(dev, "marvell,armada8k-pcie-ecam") ||
+	    ofw_bus_is_compatible(dev, "socionext,synquacer-pcie-ecam") ||
+	    ofw_bus_is_compatible(dev, "snps,dw-pcie-ecam")) {
+		device_set_desc(dev, "Synopsys DesignWare PCIe Controller");
+		sc->base.quirks |= PCIE_ECAM_DESIGNWARE_QUIRK;
+	}
 
 	ofw_bus_setup_iinfo(node, &sc->pci_iinfo, sizeof(cell_t));
 

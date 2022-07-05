@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b9d10b756a0c9bb03cc487b7ec826c91791ccc5c $
+ * $FreeBSD: d280c7d3db198d92c1325f4f043d05e4a5511d82 $
  *
  */
 
@@ -34,6 +34,10 @@
 
 #include <sys/_types.h>
 #include <sys/_timespec.h>
+
+struct umtx {
+	volatile unsigned long	u_owner;	/* Owner of the mutex. */
+};
 
 struct umutex {
 	volatile __lwpid_t	m_owner;	/* Owner of the mutex */

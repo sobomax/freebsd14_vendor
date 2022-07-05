@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: fa52ecd4ce6f246d52f68b293352e193d7b27ee7 $");
+__FBSDID("$FreeBSD: ac66eee2c496c7a0e677826f258c7042dc86725c $");
 
 /*
  * Basic resizable string support, to simplify manipulating arbitrary-sized
@@ -745,7 +745,7 @@ archive_string_append_from_wcs_in_codepage(struct archive_string *as,
 				dp = &defchar_used;
 			count = WideCharToMultiByte(to_cp, 0, ws, wslen,
 			    as->s + as->length,
-			    (int)as->buffer_length - as->length - 1, NULL, dp);
+			    (int)as->buffer_length - (int)as->length - 1, NULL, dp);
 			if (count == 0 &&
 			    GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
 				/* Expand the MBS buffer and retry. */

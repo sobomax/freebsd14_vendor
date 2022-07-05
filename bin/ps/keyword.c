@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)keyword.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a8382a2273e5c7a057063f5712e4d3c3fef8ab0 $");
+__FBSDID("$FreeBSD: e78cf984e4557f51ba6baf0f67ad47c5b4e9c1d6 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -222,7 +222,7 @@ static VAR var[] = {
 	{"upr", "UPR", NULL, "user-priority", 0, upr, 0, CHAR, NULL, 0},
 	{"uprocp", "UPROCP", NULL, "process-address", 0, kvar, KOFF(ki_paddr),
 	    KPTR, "lx", 0},
-	{"user", "USER", NULL, "user", LJUST, uname, 0, CHAR, NULL, 0},
+	{"user", "USER", NULL, "user", LJUST, username, 0, CHAR, NULL, 0},
 	{"usertime", "USERTIME", NULL, "user-time", USER, usertime, 0, CHAR,
 	    NULL, 0},
 	{"usrpri", "", "upr", NULL, 0, NULL, 0, CHAR, NULL, 0},

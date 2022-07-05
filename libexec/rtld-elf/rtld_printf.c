@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aedaf5104e313cd4678ff4f851853501de061eda $
+ * $FreeBSD: 48a148f72dff2fc3cf2fec0032a1a2b4b364fc76 $
  */
 
 #include <sys/param.h>
@@ -479,6 +479,18 @@ rtld_vfdprintf(int fd, const char *fmt, va_list ap)
 
 int
 rtld_fdprintf(int fd, const char *fmt, ...)
+{
+	va_list ap;
+	int retval;
+
+	va_start(ap, fmt);
+	retval = rtld_vfdprintf(fd, fmt, ap);
+	va_end(ap);
+	return (retval);
+}
+
+int
+rtld_fdprintfx(int fd, const char *fmt, ...)
 {
 	va_list ap;
 	int retval;

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt_var.h,v 1.2 2003/03/22 23:44:36 max Exp $
- * $FreeBSD: e93c85569f100d155948e2ae5009ce299a5d9529 $
+ * $FreeBSD: c2bd75c7faf0cef46014f01aced7f5901a897958 $
  */
 
 #ifndef _NG_UBT_VAR_H_
@@ -102,6 +102,10 @@ struct ubt_hci_event_command_compl {
 } __attribute__ ((packed));
 #define	UBT_HCI_EVENT_SIZE(evt) \
 	((evt)->header.length + offsetof(struct ubt_hci_event, data))
+#define	UBT_HCI_EVENT_COMPL_HEAD_SIZE \
+	(offsetof(struct ubt_hci_event_command_compl, data) - \
+	 offsetof(struct ubt_hci_event_command_compl, numpkt))
+
 
 /* USB device softc structure */
 struct ubt_softc {

@@ -1,4 +1,4 @@
-# $FreeBSD: e370fad97df45e5f434bd7ec958c1167194a2b8e $
+# $FreeBSD: f397e66a22bc424ec3a08bcde3c21c74a38442f2 $
 
 PACKAGE=	tests
 
@@ -7,8 +7,19 @@ BINDIR=		${TESTSDIR}
 
 TAP_TESTS_SH+=	ng_macfilter_test
 
-TEST_METADATA.runtests+= required_user="root"
+TEST_METADATA.ng_macfilter_test+=	required_user="root"
+TEST_METADATA.ng_macfilter_test+=	required_programs="perl"
 
-MAN=
+ATF_TESTS_C+=	basic		\
+		bridge		\
+		hub		\
+		vlan_rotate	\
+
+SRCS.basic=	basic.c util.c
+SRCS.bridge=	bridge.c util.c
+SRCS.hub=	hub.c util.c
+SRCS.vlan_rotate=vlan_rotate.c util.c
+
+LIBADD+=	netgraph
 
 .include <bsd.test.mk>

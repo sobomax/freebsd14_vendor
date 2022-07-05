@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d86802f6a2e0f27780955c139337e185acf34ca $");
+__FBSDID("$FreeBSD: 2e74f769ca97e0308c8c9f452bc96cc276ac97eb $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,6 +40,24 @@ __FBSDID("$FreeBSD: 3d86802f6a2e0f27780955c139337e185acf34ca $");
 #include "msdosfs.h"
 
 #define LABEL_NO_NAME		"NO NAME    "
+
+/*
+ * XXX the signature 0x55 0xAA as the last two bytes of 512 is not required
+ * by specifications, but was historically required by fstyp.  This check
+ * should be removed, with a more comprehensive BPB validation instead.
+ */
+static bool
+check_signature(uint8_t sector0[512])
+{
+	/* Check for the FAT boot sector signature. */
+	if (sector0[510] == 0x55 && sector0[511] == 0xaa)
+		return (true);
+	/* Special case for Raspberry Pi Pico bootloader. */
+	if (sector0[510] == 0 && sector0[511] == 0 &&
+	    sector0[0] == 0xeb && sector0[1] == 0x3c && sector0[2] == 0x90)
+		return (true);
+	return (false);
+}
 
 int
 fstyp_msdosfs(FILE *fp, char *label, size_t size)
@@ -57,8 +75,7 @@ fstyp_msdosfs(FILE *fp, char *label, size_t size)
 	if (sector0 == NULL)
 		return (1);
 
-	/* Check for the FAT boot sector signature. */
-	if (sector0[510] != 0x55 || sector0[511] != 0xaa) {
+	if (!check_signature(sector0)) {
 		goto error;
 	}
 

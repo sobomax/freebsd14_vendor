@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8b735ccda7cc33b0869f295f3ad010f36ca157d $");
+__FBSDID("$FreeBSD: aec3b3d10e04638f9751883763d60369814b4a05 $");
 
 #include "opt_sched.h"
 
@@ -143,7 +143,7 @@ sysctl_stats_reset(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_kern_sched_stats, OID_AUTO, reset,
-    CTLTYPE_INT | CTLFLAG_WR | CTLFLAG_NEEDGIANT, NULL, 0,
+    CTLTYPE_INT | CTLFLAG_WR | CTLFLAG_MPSAFE, NULL, 0,
     sysctl_stats_reset, "I",
     "Reset scheduler statistics");
 #endif

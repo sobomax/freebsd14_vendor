@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 272aaf988ba1b41ff087ace68a4a4a3ee61fa5c1 $");
+__FBSDID("$FreeBSD: e649b3c86fdaebbdb516df8048ea004eedb85d5b $");
 
 #include "opt_ddb.h"
 #include "opt_wlan.h"
@@ -236,7 +236,7 @@ _db_show_sta(const struct ieee80211_node *ni)
 {
 	int i;
 
-	db_printf("0x%p: mac %s refcnt %d\n", ni,
+	db_printf("%p: mac %s refcnt %d\n", ni,
 		ether_sprintf(ni->ni_macaddr), ieee80211_node_refcnt(ni));
 	db_printf("\tvap %p wdsvap %p ic %p table %p\n",
 		ni->ni_vap, ni->ni_wdsvap, ni->ni_ic, ni->ni_table);

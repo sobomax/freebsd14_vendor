@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dab8020a0336aec6b063b8717a368279ac911713 $
+ * $FreeBSD: 9ab5ecce77688e674e53bc15397e4c9af8c50b0d $
  */
 
-#ifndef _LINUX_SEQ_FILE_H_
-#define _LINUX_SEQ_FILE_H_
+#ifndef _LINUXKPI_LINUX_SEQ_FILE_H_
+#define _LINUXKPI_LINUX_SEQ_FILE_H_
 
 #include <linux/types.h>
 #include <linux/fs.h>
@@ -85,4 +85,4 @@ int single_release(struct inode *, struct linux_file *);
 
 #define	file			linux_file
 
-#endif	/* _LINUX_SEQ_FILE_H_ */
+#endif	/* _LINUXKPI_LINUX_SEQ_FILE_H_ */

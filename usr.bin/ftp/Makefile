@@ -1,4 +1,4 @@
-# $FreeBSD: e7de6e6c496c96185676ac9427b6269fd3f8628a $
+# $FreeBSD: 3be674cfb2c61d11cc0595c88922316a1878553f $
 #	$NetBSD: Makefile,v 1.15 1997/10/18 15:31:20 lukem Exp $
 #	from: @(#)Makefile	8.2 (Berkeley) 4/3/94
 
@@ -7,6 +7,8 @@
 # Uncomment the following to provide defaults for gate-ftp operation
 #
 #CFLAGS+=-DGATE_SERVER=\"ftp-gw.host\" # -DGATE_PORT=21
+
+PACKAGE=	ftp
 
 TNFTP=	${SRCTOP}/contrib/tnftp
 .PATH: ${TNFTP}/src

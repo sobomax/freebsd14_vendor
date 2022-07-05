@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 48da7e8d757f9bdf14b8eeb8253b72f6a8c0b884 $");
+__FBSDID("$FreeBSD: 9c73248472bdaf5505552ed60ea79dd24089ac6d $");
 
 /*
  * CAM front-end for communicating with non-DASD devices
@@ -1011,7 +1011,7 @@ aac_cam_action(struct cam_sim *sim, union ccb *ccb)
 		cpi->max_lun = 7;	/* Per the controller spec */
 		cpi->initiator_id = camsc->inf->InitiatorBusId;
 		cpi->bus_id = camsc->inf->BusNumber;
-		cpi->maxio = sc->aac_max_sectors << 9;
+		cpi->maxio = AAC_MAXIO_SIZE(sc);
 
 		/*
 		 * Resetting via the passthrough or parallel bus scan

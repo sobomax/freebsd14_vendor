@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d891f592bdbdb86fc85280ce4243b86076f4d7c2 $
+ * $FreeBSD: fec5db2e4ad5436cf7a1ae9aabf99f4505f7df1e $
  *
  */
 
@@ -162,6 +162,10 @@ void		pci_read_bar(device_t dev, int reg, pci_addr_t *mapp,
 		    pci_addr_t *testvalp, int *bar64);
 struct pci_map *pci_add_bar(device_t dev, int reg, pci_addr_t value,
 		    pci_addr_t size);
+
+struct resource *pci_reserve_map(device_t dev, device_t child, int type,
+		    int *rid, rman_res_t start, rman_res_t end,
+		    rman_res_t count, u_int num, u_int flags);
 
 struct resource *pci_alloc_multi_resource(device_t dev, device_t child,
 		    int type, int *rid, rman_res_t start, rman_res_t end,

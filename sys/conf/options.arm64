@@ -1,4 +1,4 @@
-# $FreeBSD: 24e34c1e3b6aae34873c928069c34ad212f3aa65 $
+# $FreeBSD: 34ca3e221f27c16d045069a96c257c6a062d787f $
 
 ARM64				opt_global.h
 INTRNG				opt_global.h
@@ -8,6 +8,10 @@ THUNDERX_PASS_1_1_ERRATA	opt_global.h
 VFP				opt_global.h
 LINUX_BOOT_ABI			opt_global.h
 LSE_ATOMICS			opt_global.h
+
+# Per-thread stack smashing protection support
+# Needs clang >= 13
+PERTHREAD_SSP			opt_global.h
 
 # Binary compatibility
 COMPAT_FREEBSD32		opt_global.h
@@ -21,6 +25,7 @@ SOC_ALLWINNER_H5		opt_soc.h
 SOC_ALLWINNER_H6		opt_soc.h
 SOC_BRCM_BCM2837		opt_soc.h
 SOC_BRCM_BCM2838		opt_soc.h
+SOC_BRCM_NS2			opt_soc.h
 SOC_CAVM_THUNDERX		opt_soc.h
 SOC_FREESCALE_IMX8		opt_soc.h
 SOC_HISI_HI6220			opt_soc.h

@@ -1,10 +1,11 @@
-# $FreeBSD: 41e0d1a8ad663ccd9edacd6c80111972c66c8005 $
+# $FreeBSD: ef0bfbdbe7060e6d78d5bcb0e75687390820be27 $
 
 .PATH:	${LIBC_SRCTOP}/x86/sys
 
 SRCS+= \
 	__vdso_gettc.c \
-	pkru.c
+	pkru.c \
+	sched_getcpu_x86.c
 
 MAN+=	\
 	pkru.3

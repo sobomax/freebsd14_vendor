@@ -29,9 +29,9 @@
 .\"
 .\" * Other names and brands may be claimed as the property of others.
 .\"
-.\" $FreeBSD: f4484b6448029e6b06c4a5b7923d244b92afee46 $
+.\" $FreeBSD: 5f959299d2add20a8790fcacf8942d4ef2ae9827 $
 .\"
-.Dd October 19, 2020
+.Dd November 10, 2021
 .Dt CXGBE 4
 .Os
 .Sh NAME
@@ -300,8 +300,10 @@ Bit 0 enables RS FEC, bit 1 enables BASE-R FEC (aka Firecode FEC), bit
 transceiver/cable that is plugged in.
 These bits can be set together in any combination.
 This tunable establishes the default FEC settings for all ports.
-Settings can be displayed and controlled on a per-port basis via the
-dev.<port>.X.fec sysctl.
+Settings can be controlled on a per-port basis via the
+dev.<port>.X.requested_fec sysctl.
+The FEC in use on the link is available in dev.<port>.X.link_fec when
+the link is up.
 .It Va hw.cxgbe.autoneg
 Link autonegotiation settings.
 This tunable establishes the default autonegotiation settings for all ports.

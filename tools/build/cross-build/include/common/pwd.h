@@ -33,13 +33,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e167fe47701fb57be79c5d6d31fc68997b6d237a $
+ * $FreeBSD: 03814b62c254ada92323b74131267b96937febec $
  */
 #pragma once
 
 #include_next <pwd.h>
 
 #define user_from_uid __nbcompat_user_from_uid
+
+#ifndef _PASSWORD_EFMT1
+#define	_PASSWORD_EFMT1		'_'	/* extended encryption format */
+#endif
 
 int pwcache_userdb(int (*a_setpassent)(int), void (*a_endpwent)(void),
     struct passwd *(*a_getpwnam)(const char *),

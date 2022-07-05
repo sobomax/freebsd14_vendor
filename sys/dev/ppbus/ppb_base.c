@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20782385acc03ee47cbb9c45d85287425b97d461 $");
+__FBSDID("$FreeBSD: b399f4cc2d17b2d99ed5697f218f43b941fd2642 $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -218,6 +218,14 @@ ppb_unlock(device_t bus)
 	struct ppb_data *ppb = DEVTOSOFTC(bus);
 
 	mtx_unlock(ppb->ppc_lock);
+}
+
+struct mtx *
+ppb_get_lock(device_t bus)
+{
+	struct ppb_data *ppb = DEVTOSOFTC(bus);
+
+	return (ppb->ppc_lock);
 }
 
 void

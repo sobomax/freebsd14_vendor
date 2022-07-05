@@ -2,6 +2,12 @@
  * Copyright (c) 2003 Peter Wemm <peter@FreeBSD.org>
  * All rights reserved.
  *
+ * Copyright (c) 2020, 2021 The FreeBSD Foundation
+ *
+ * Portions of this software were developed by
+ * Konstantin Belousov <kib@FreeBSD.org> under sponsorship from
+ * the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -23,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3addc3fb10cde7d8483d55d8a276babbfa55fd99 $
+ * $FreeBSD: 6e866269b687455b9f83645dccd28997f57bb7c6 $
  */
 
 #include <machine/asmacros.h>
@@ -36,7 +42,7 @@
 /*
  * Compiled KERNBASE location
  */
-	.globl	kernbase, kernload, loc_PTmap, loc_PDmap, loc_PDPmap, dmapbase, dmapend
+	.globl	kernbase, kernload, dmapbase, dmapend
 	.set	kernbase,KERNBASE
 	.set    kernload,KERNLOAD
 	.set	dmapbase,DMAP_MIN_ADDRESS
@@ -55,9 +61,6 @@
  * We are already in long mode, on a 64 bit %cs and running at KERNBASE.
  */
 NON_GPROF_ENTRY(btext)
-
-	/* Tell the bios to warmboot next time */
-	movw	$0x1234,0x472
 
 	/* Don't trust what the loader gives for rflags. */
 	pushq	$PSL_KERNEL

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 47cb4665b832a50f8ba52773596f06821e113518 $");
+__FBSDID("$FreeBSD: 0b771a509c9fb9b5c6dbe18605363d698afca862 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -405,7 +405,7 @@ ofw_pcibus_get_cpus(device_t dev, device_t child, enum cpu_sets op, size_t setsi
 			return (error);
 		if (setsize != sizeof(cpuset_t))
 			return (EINVAL);
-		CPU_AND(cpuset, &cpuset_domain[d]);
+		CPU_AND(cpuset, cpuset, &cpuset_domain[d]);
 		return (0);
 	default:
 		return (bus_generic_get_cpus(dev, child, op, setsize, cpuset));

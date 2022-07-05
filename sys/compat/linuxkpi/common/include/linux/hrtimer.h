@@ -22,11 +22,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a5ff7480a271f7d38cfea700296d7994c4cda25e $
+ * $FreeBSD: 23e707d906b465d3c3420607b6d8a004d952e758 $
  */
 
-#ifndef _LINUX_HRTIMER_H_
-#define	_LINUX_HRTIMER_H_
+#ifndef _LINUXKPI_LINUX_HRTIMER_H_
+#define	_LINUXKPI_LINUX_HRTIMER_H_
 
 #include <sys/_callout.h>
 #include <sys/_mutex.h>
@@ -86,4 +86,4 @@ void	linux_hrtimer_start(struct hrtimer *, ktime_t);
 void	linux_hrtimer_start_range_ns(struct hrtimer *, ktime_t, int64_t);
 void	linux_hrtimer_forward_now(struct hrtimer *, ktime_t);
 
-#endif /* _LINUX_HRTIMER_H_ */
+#endif /* _LINUXKPI_LINUX_HRTIMER_H_ */

@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f016c0cc0c1aa3891108de0d89f76fbed708c67 $");
+__FBSDID("$FreeBSD: dab812d58eecc2c701978dafd61034eadf1b326b $");
 
 #include "opt_inet.h"
 
@@ -624,8 +624,7 @@ struct ib_mr *c4iw_alloc_mr(struct ib_pd *pd,
 	rhp = php->rhp;
 
 	if (mr_type != IB_MR_TYPE_MEM_REG ||
-	    max_num_sg > t4_max_fr_depth(
-		    rhp->rdev.adap->params.ulptx_memwrite_dsgl && use_dsgl))
+	    max_num_sg > t4_max_fr_depth(&rhp->rdev, use_dsgl))
 		return ERR_PTR(-EINVAL);
 
 	mhp = kzalloc(sizeof(*mhp), GFP_KERNEL);

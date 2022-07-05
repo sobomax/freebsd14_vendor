@@ -1,0 +1,4 @@
+.\" $FreeBSD: 63cb5b94eb283df043fd01a496738805cb042eb6 $
+Disable the build of the
+.Dq "OpenFabrics Enterprise Distribution"
+Infiniband software stack, including kernel modules and userspace libraries.

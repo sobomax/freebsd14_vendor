@@ -1,4 +1,4 @@
-# $FreeBSD: 465187e19f35cfe9eab0a596d41fecef04af2c0d $
+# $FreeBSD: 8f72a28a1e05e9799918fddcc0a14dcfbd605613 $
 
 .PATH: ${SRCTOP}/sys/dev/rtwn
 
@@ -46,5 +46,7 @@ opt_rtwn.h:
 .if ${MK_SOURCELESS_UCODE} == "no"
 	@echo "#define RTWN_WITHOUT_UCODE 1" >> ${.TARGET}
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: e14585cc42c967bbaebe67646d53808fb670cbea $
+# $FreeBSD: 3ee71231f9faa8a34679969006ec6bc2f6b1875b $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zfs_reservation_001_pos cleanup
 zfs_reservation_001_pos_head()
 {
 	atf_set "descr" "Verify that a reservation > 2^64 -1 fails."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_reservation_001_pos_body()
 {
@@ -54,7 +54,7 @@ atf_test_case zfs_reservation_002_pos cleanup
 zfs_reservation_002_pos_head()
 {
 	atf_set "descr" "Ensure a reservation of 0 or 'none' is allowed."
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 zfs_reservation_002_pos_body()
 {

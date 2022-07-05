@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 36ce6271dad6adb60dc16fdbc17c5e00f1f4b611 $
+ * $FreeBSD: c0625b7529627919fc53c6dd414c357d15ce452d $
  *
  */
 
@@ -55,6 +55,7 @@ enum {
 	NTRACE          = 4,     /* # of tracing filters */
 	TRACE_LEN       = 112,   /* length of trace data and mask */
 	FILTER_OPT_LEN  = 36,    /* filter tuple width of optional components */
+	T5_FILTER_OPT_LEN = 40,
 	NWOL_PAT        = 8,     /* # of WoL patterns */
 	WOL_PAT_LEN     = 128,   /* length of WoL patterns */
 	UDBS_SEG_SIZE   = 128,   /* Segment size of BAR2 doorbells */

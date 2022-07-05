@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov under sponsorship from
  * the FreeBSD Foundation.
@@ -30,7 +29,7 @@
  */
 
 #include <dev/drm2/drmP.h>
-__FBSDID("$FreeBSD: bd7085e2a86df563f1c060449cc0ab4aa1e7d721 $");
+__FBSDID("$FreeBSD: f9a64154c7962e5702a5dda0af5e9fee6824cbdd $");
 
 struct drm_list_sort_thunk {
 	int (*cmp)(void *, struct list_head *, struct list_head *);

@@ -4,7 +4,7 @@
  *  Aug 1995, Godmar Back (gback@cs.utah.edu)
  *  University of Utah, Department of Computer Science
  *
- * $FreeBSD: 81ff6838f16f516b2d5b7ac2a8f621f63f4164aa $
+ * $FreeBSD: f43ebcfebb92d525c9289d2e0e2b44bf4210b17c $
  */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -184,6 +184,7 @@ struct m_ext2fs {
 	struct   csum *e2fs_clustersum; /* cluster summary in each cyl group */
 	int32_t  e2fs_uhash;	  /* 3 if hash should be signed, 0 if not */
 	uint32_t e2fs_csum_seed;  /* sb checksum seed */
+	uint64_t e2fs_maxsymlinklen; /* max size of short symlink */
 };
 
 /* cluster summary information */

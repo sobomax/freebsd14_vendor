@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 202421120e6056152252141576bbe4b524a14dc7 $");
+__FBSDID("$FreeBSD: 3aac4562408947d88e819b699e917d9358ba1267 $");
 
 #include <machine/_inttypes.h>
 #include <sys/param.h>
@@ -234,7 +234,7 @@ aibs_sensor_added(struct aibs_softc *sc, struct sysctl_oid *so,
 #endif
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(sc->sc_dev),
 	    SYSCTL_CHILDREN(so), idx, sysctl_name,
-	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, sc, (uintptr_t)sensor,
+	    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE, sc, (uintptr_t)sensor,
 	    sc->sc_ggrp_method ? aibs_sysctl_ggrp : aibs_sysctl,
 	    sensor->t == AIBS_SENS_TYPE_TEMP ? "IK" : "I", descr);
 }

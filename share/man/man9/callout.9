@@ -27,9 +27,9 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 9e0cf5e6dc5e345587fd18bbafd36ec4a3fbee6a $
+.\" $FreeBSD: 5c011a20d338fd3e346f303b47c2b8e0210659e1 $
 .\"
-.Dd December 13, 2019
+.Dd September 1, 2021
 .Dt CALLOUT 9
 .Os
 .Sh NAME
@@ -241,9 +241,6 @@ and the associated lock is released.
 This ensures that stopping or rescheduling the callout will abort any
 previously scheduled invocation.
 .Pp
-Only regular mutexes may be used with
-.Fn callout_init_mtx ;
-spin mutexes are not supported.
 A sleepable read-mostly lock
 .Po
 one initialized with the

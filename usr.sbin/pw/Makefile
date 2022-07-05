@@ -1,4 +1,4 @@
-# $FreeBSD: 8db96d90f6e229af5e02ab678e8e7552b6be59a7 $
+# $FreeBSD: 353eac132c7d2cb25933336abb36574ebc258022 $
 
 PROG=	pw
 MAN=	pw.conf.5 pw.8
@@ -8,7 +8,7 @@ SRCS=	pw.c pw_conf.c pw_user.c pw_group.c pw_log.c pw_nis.c pw_vpw.c \
 
 WARNS?=	3
 
-LIBADD=	crypt util sbuf
+LIBADD=	crypt util
 
 .include <src.opts.mk>
 

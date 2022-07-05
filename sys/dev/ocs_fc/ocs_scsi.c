@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c2df898bda4b97734da8a3665fc6ba99de602c00 $
+ * $FreeBSD: 8938c0e2819f36889dbe591bdb979cf994a71945 $
  */
 
 /**
@@ -43,9 +43,7 @@
 #include "ocs.h"
 #include "ocs_els.h"
 #include "ocs_scsi.h"
-#if defined(OCS_ENABLE_VPD_SUPPORT)
 #include "ocs_vpd.h"
-#endif
 #include "ocs_utils.h"
 #include "ocs_device.h"
 
@@ -201,6 +199,7 @@ ocs_scsi_io_alloc(ocs_node_t *node, ocs_scsi_io_role_e role)
 
 		if (io->hio != NULL) {
 			ocs_log_err(node->ocs, "assertion failed: io->hio is not NULL\n");
+			ocs_io_free(ocs, io);
 			ocs_unlock(&node->active_ios_lock);
 			return NULL;
 		}
@@ -2807,7 +2806,6 @@ void *ocs_scsi_get_property_ptr(ocs_t *ocs, ocs_scsi_property_e prop)
 	case OCS_SCSI_BIOS_VERSION_STRING:
 		rc = ocs_hw_get_ptr(&ocs->hw, OCS_HW_BIOS_VERSION_STRING);
 		break;
-#if defined(OCS_ENABLE_VPD_SUPPORT)
 	case OCS_SCSI_SERIALNUMBER:
 	{
 		uint8_t *pvpd;
@@ -2858,7 +2856,6 @@ void *ocs_scsi_get_property_ptr(ocs_t *ocs, ocs_scsi_property_e prop)
 		}
 		break;
 	}
-#endif
 	default:
 		break;
 	}

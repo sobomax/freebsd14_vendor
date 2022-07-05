@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 84d2e2fe422fd584e267494faf62da30daec61a9 $");
+__FBSDID("$FreeBSD: bb053fe56253943e49e0f54cb0d62910e11b274b $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -254,6 +254,9 @@ isok(struct fstab *fs)
 		return (0);
 	if (!selected(fs->fs_vfstype))
 		return (0);
+	/* If failok, always check now */
+	if (getfsopt(fs, "failok"))
+		return (1);
 	/*
 	 * If the -B flag has been given, then process the needed
 	 * background checks. Background checks cannot be run on

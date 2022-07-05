@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 074b0545a1fd2b771ca11d26bf3bc70a43220d6a $");
+__FBSDID("$FreeBSD: d426850577913863d7bc5169d4872e9b9ac0fe46 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -77,7 +77,7 @@ camq_init(struct camq *camq, int size)
 
 /*
  * Free a camq structure.  This should only be called if a controller
- * driver failes somehow during its attach routine or is unloaded and has
+ * driver fails somehow during its attach routine or is unloaded and has
  * obtained a camq structure.  The XPT should ensure that the queue
  * is empty before calling this routine.
  */

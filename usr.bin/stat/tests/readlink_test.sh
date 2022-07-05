@@ -23,9 +23,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8e5deb173653e23402fbb016490c5114c3e6ba89 $
+# $FreeBSD: 19f6fd1b50ae8f272b4cf94e8cff4f57d5e53eb2 $
 
-atf_test_case f_flag
+atf_test_case basic
 basic_head()
 {
 	atf_set	"descr" "Verify that calling readlink without any flags " \

@@ -1,4 +1,6 @@
-# $FreeBSD: 1eec313766d30a9377c4cd9068b189f58558112d $
+# $FreeBSD: cd7318f014624e97ab7c06b3bd54ca268a52921a $
+
+PACKAGE=	kerberos
 
 PROG=	kstash
 MAN=	kstash.8

@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc_vnops.c	8.9 (Berkeley) 1/21/94
  *
- * $FreeBSD: 1271b50e6e947ce91ab0eca5b445a245f0f6e277 $
+ * $FreeBSD: c5a7b86f1de56832cc41b1b9e2904c126daa36dd $
  */
 
 /*
@@ -264,10 +264,20 @@ fdesc_get_ino_alloc(struct mount *mp, void *arg, int lkflags,
     struct vnode **rvp)
 {
 	struct fdesc_get_ino_args *a;
+	struct fdescmount *fdm;
+	struct vnode *vp;
 	int error;
 
 	a = arg;
-	error = fdesc_allocvp(a->ftype, a->fd_fd, a->ix, mp, rvp);
+	fdm = VFSTOFDESC(mp);
+	if ((fdm->flags & FMNT_NODUP) != 0 && a->fp->f_type == DTYPE_VNODE) {
+		vp = a->fp->f_vnode;
+		vget(vp, lkflags | LK_RETRY);
+		*rvp = vp;
+		error = 0;
+	} else {
+		error = fdesc_allocvp(a->ftype, a->fd_fd, a->ix, mp, rvp);
+	}
 	fdrop(a->fp, a->td);
 	return (error);
 }

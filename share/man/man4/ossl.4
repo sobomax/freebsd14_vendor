@@ -24,9 +24,9 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 .\" THE POSSIBILITY OF SUCH DAMAGES.
 .\"
-.\" $FreeBSD: ce97a9fc0f7145353da747294363a16692b27ae7 $
+.\" $FreeBSD: 5929e46e9fe3817a15e2c3015f036ddbc9551dad $
 .\"
-.Dd December 4, 2020
+.Dd March 3, 2021
 .Dt OSSL 4
 .Os
 .Sh NAME
@@ -73,6 +73,12 @@ The
 driver includes support for the following algorithms:
 .Pp
 .Bl -bullet -compact
+.It
+ChaCha20
+.It
+ChaCha20-Poly1305 (RFC 8439)
+.It
+Poly1305
 .It
 SHA1
 .It

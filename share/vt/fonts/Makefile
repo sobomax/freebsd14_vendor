@@ -1,4 +1,6 @@
-# $FreeBSD: 7062c0c695426a885b9d6d795a077d4904a8b5e2 $
+# $FreeBSD: 2599d1d1ce1dce3c374bafaf9ce215d0b019e1c8 $
+
+PACKAGE=	vt-data
 
 FONTS=	gallant.fnt \
 	terminus-b32.fnt \

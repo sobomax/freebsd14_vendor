@@ -1,11 +1,11 @@
-# $FreeBSD: 33a00452c6079752cb0b12f75d28195694780dc2 $
+# $FreeBSD: b730b86be5b42f37c499b275e966a0ebdc48d748 $
 
 # This file is meant to show the infrastructural organization of the
 # FreeBSD Project; what kind of teams we have and how they relate to
 # each other.
 # For a detailed description of the responsibilities and duties of the listed
 # teams, please see our Administration page at
-# https://www.freebsd.org/administration.html .
+# https://www.freebsd.org/administration/ .
 # 
 # The graphical output can be generated from this file with the following
 # command:

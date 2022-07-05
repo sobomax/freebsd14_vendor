@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b92bec8f39b09d2017aa3de36741414bba0b10ba $");
+__FBSDID("$FreeBSD: 246600fd657ce4fa1869d2868a9e0626fc949396 $");
 
 #include <stdarg.h>
 #include <errno.h>
@@ -260,8 +260,7 @@ parse_indexes(xz_file_info *xfi, int src_fd)
 {
 	struct stat st;
 
-	fstat(src_fd, &st);
-	if (st.st_size <= 0) {
+	if (fstat(src_fd, &st) != 0) {
 		return true;
 	}
 

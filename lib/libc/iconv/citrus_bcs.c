@@ -1,4 +1,4 @@
-/* $FreeBSD: b8484a0d793e932d633066aeeac0fc6830d13fb3 $ */
+/* $FreeBSD: cd88ea7fe2fdb46f21078dbc1db7655b084b4886 $ */
 /* $NetBSD: citrus_bcs.c,v 1.5 2005/05/14 17:55:42 tshiozak Exp $ */
 
 /*-
@@ -109,7 +109,7 @@ const char *
 _citrus_bcs_skip_ws_len(const char * __restrict p, size_t * __restrict len)
 {
 
-	while (*p && *len > 0 && _bcs_isspace(*p)) {
+	while (*len > 0 && *p && _bcs_isspace(*p)) {
 		p++;
 		(*len)--;
 	}
@@ -124,7 +124,7 @@ const char *
 _citrus_bcs_skip_nonws_len(const char * __restrict p, size_t * __restrict len)
 {
 
-	while (*p && *len > 0 && !_bcs_isspace(*p)) {
+	while (*len > 0 && *p && !_bcs_isspace(*p)) {
 		p++;
 		(*len)--;
 	}

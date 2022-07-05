@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: f1acfbe6da749ea859bc0cb610eeb719617ae54b $
+.\" $FreeBSD: 8cc0b7f97c52a9490682220cf9cb92e08c9eaaf7 $
 .\"
-.Dd June 19, 2018
+.Dd November 3, 2021
 .Dt COMPLEX 3
 .Os
 .Sh NAME
@@ -121,3 +121,9 @@ The
 .In complex.h
 functions described here conform to
 .St -isoC-99 .
+.Sh BUGS
+The power functions,
+.Fn cpowf, cpow ,
+and
+.Fn cpowl ,
+are implemented, but the code was neither reviewed nor tested.

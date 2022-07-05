@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8c2156ffc2148fc8747ecb924e51d714591221b $");
+__FBSDID("$FreeBSD: 9b3ffbff22d07ebd5b5e583ce8f58c6611290e4c $");
 
 #include <stdlib.h>
 
@@ -57,8 +57,10 @@ __start(int argc, char *argv[], char *env[], void (*cleanup)(void))
 
 	if (&_DYNAMIC != NULL)
 		atexit(cleanup);
-	else
+	else {
+		process_irelocs();
 		_init_tls();
+	}
 
 #ifdef GCRT
 	atexit(_mcleanup);

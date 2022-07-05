@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63f7c2a8a824144af2475e0f770b83c8b3dade57 $");
+__FBSDID("$FreeBSD: aad2e0a672ede9f0cfc9462251f6aa8fbdcdd840 $");
 __SCCSID("@(#)kvm_proc.c	8.3 (Berkeley) 9/23/93");
 
 /*
@@ -218,7 +218,7 @@ kvm_proclist(kvm_t *kd, int what, int arg, struct proc *p,
 		/* kp->ki_kstack = proc.p_thread.td_kstack; XXXKSE */
 		kp->ki_args = proc.p_args;
 		kp->ki_numthreads = proc.p_numthreads;
-		kp->ki_tracep = proc.p_tracevp;
+		kp->ki_tracep = NULL;	/* XXXKIB do not expose ktr_io_params */
 		kp->ki_textvp = proc.p_textvp;
 		kp->ki_fd = proc.p_fd;
 		kp->ki_pd = proc.p_pd;

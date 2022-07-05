@@ -1,4 +1,4 @@
-# $FreeBSD: 7574c612f49c5005fb242f1f46c331546ae24432 $
+# $FreeBSD: 46d36631dea8225c600f6cd7888da54e5218ec4e $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -120,6 +120,7 @@ SUBDIR=	\
 	fdc \
 	fdescfs \
 	${_ffec} \
+	${_fib_dxr} \
 	filemon \
 	firewire \
 	firmware \
@@ -165,6 +166,7 @@ SUBDIR=	\
 	if_vlan \
 	if_vxlan \
 	iflib \
+	${_igc} \
 	${_iir} \
 	imgact_binmisc \
 	${_intelspi} \
@@ -192,6 +194,8 @@ SUBDIR=	\
 	${_itwd} \
 	${_iwi} \
 	${_iwifw} \
+	${_iwlwifi} \
+	${_iwlwififw} \
 	${_iwm} \
 	${_iwmfw} \
 	${_iwn} \
@@ -214,6 +218,7 @@ SUBDIR=	\
 	libmchain \
 	lindebugfs \
 	linuxkpi \
+	linuxkpi_wlan \
 	${_lio} \
 	lpt \
 	mac_biba \
@@ -225,12 +230,14 @@ SUBDIR=	\
 	mac_ntpd \
 	mac_partition \
 	mac_portacl \
+	mac_priority \
 	mac_seeotheruids \
 	mac_stub \
 	mac_test \
 	${_malo} \
 	md \
 	mdio \
+	${_mgb} \
 	mem \
 	mfi \
 	mii \
@@ -332,6 +339,7 @@ SUBDIR=	\
 	${_sctp} \
 	sdhci \
 	${_sdhci_acpi} \
+	${_sdhci_fdt} \
 	sdhci_pci \
 	sdio \
 	sem \
@@ -476,6 +484,7 @@ _ipfilter=	ipfilter
 
 .if ${MK_INET_SUPPORT} != "no" && ${KERN_OPTS:MFIB_ALGO}
 _dpdk_lpm4=	dpdk_lpm4
+_fib_dxr=	fib_dxr
 .endif
 
 .if ${MK_INET6_SUPPORT} != "no" && ${KERN_OPTS:MFIB_ALGO}
@@ -515,6 +524,10 @@ _ipoib=		ipoib
 _iser=		iser
 .endif
 _ipmi=		ipmi
+_iwlwifi=	iwlwifi
+.if ${MK_SOURCELESS_UCODE} != "no"
+_iwlwififw=	iwlwififw
+.endif
 _mlx4=		mlx4
 _mlx5=		mlx5
 .if (${MK_INET_SUPPORT} != "no" && ${MK_INET6_SUPPORT} != "no") || \
@@ -565,7 +578,7 @@ _rtwnfw=	rtwnfw
 _cxgbe=		cxgbe
 .endif
 
-.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "arm64"
+.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "arm64" || ${MACHINE_ARCH:Mpowerpc64*}
 _ice=		ice
 .if ${MK_SOURCELESS_UCODE} != "no"
 _ice_ddp=	ice_ddp
@@ -616,10 +629,16 @@ _em=		em
 _rockchip=	rockchip
 .endif
 
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
+_sdhci_fdt=	sdhci_fdt
+.endif
+
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 _agp=		agp
 _an=		an
+.if ${MACHINE_CPUARCH} == "i386" || !empty(COMPAT_FREEBSD32_ENABLED)
 _aout=		aout
+.endif
 _bios=		bios
 .if ${MK_SOURCELESS_UCODE} != "no"
 _bxe=		bxe
@@ -634,6 +653,7 @@ _et=		et
 _ftwd=		ftwd
 _exca=		exca
 _if_ndis=	if_ndis
+_igc=		igc
 _io=		io
 _itwd=		itwd
 _ix=		ix
@@ -641,6 +661,7 @@ _ixv=		ixv
 .if ${MK_SOURCELESS_UCODE} != "no"
 _lio=		lio
 .endif
+_mgb=		mgb
 _nctgpio=	nctgpio
 _ndis=		ndis
 _ntb=		ntb
@@ -721,6 +742,7 @@ _tpm=		tpm
 _twa=		twa
 _vesa=		vesa
 _viawd=		viawd
+_vmd=		vmd
 _wpi=		wpi
 .if ${MK_SOURCELESS_UCODE} != "no"
 _wpifw=		wpifw
@@ -739,7 +761,6 @@ _pms=		pms
 _qlxge=		qlxge
 _qlxgb=		qlxgb
 _sume=		sume
-_vmd=		vmd
 .if ${MK_SOURCELESS_UCODE} != "no"
 _qlxgbe=	qlxgbe
 _qlnx=		qlnx

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4b163636c7753392ccd3089743c15cc87bb17c51 $
+ * $FreeBSD: 6326fbdae0becda698d7fe09271689910429d64b $
  */
 
 #ifndef _MACHINE_PCPU_H_
@@ -76,7 +76,6 @@ _Static_assert(sizeof(struct monitorbuf) == 128, "2x cache line");
 	struct system_segment_descriptor *pc_ldt;			\
 	/* Pointer to the CPU TSS descriptor */				\
 	struct system_segment_descriptor *pc_tss;			\
-	uint64_t	pc_pm_save_cnt;					\
 	u_int	pc_cmci_mask;		/* MCx banks for CMCI */	\
 	uint64_t pc_dbreg[16];		/* ddb debugging regs */	\
 	uint64_t pc_pti_stack[PC_PTI_STACK_SZ];				\
@@ -89,7 +88,7 @@ _Static_assert(sizeof(struct monitorbuf) == 128, "2x cache line");
 	uint32_t pc_ibpb_set;						\
 	void	*pc_mds_buf;						\
 	void	*pc_mds_buf64;						\
-	uint32_t pc_pad[2];						\
+	uint32_t pc_pad[4];						\
 	uint8_t	pc_mds_tmp[64];						\
 	u_int 	pc_ipi_bitmap;						\
 	struct amd64tss pc_common_tss;					\

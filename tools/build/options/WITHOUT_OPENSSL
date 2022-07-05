@@ -1,2 +1,2 @@
-.\" $FreeBSD: e6ee7f7ae53c45984641a0f9822311f188e0aef5 $
-Set to not build OpenSSL.
+.\" $FreeBSD: 88cced32ade81051f4fa83152a16970ffccffd1e $
+Do not build OpenSSL.

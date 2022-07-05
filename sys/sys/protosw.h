@@ -29,11 +29,13 @@
  * SUCH DAMAGE.
  *
  *	@(#)protosw.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 9c3139c866bde1d01895da7cb927a272c9eda21a $
+ * $FreeBSD: 5c876a2052d52992ead9d6b259377893012f1c2e $
  */
 
 #ifndef _SYS_PROTOSW_H_
 #define _SYS_PROTOSW_H_
+
+#include <sys/queue.h>
 
 /* Forward declare these structures referenced from prototypes below. */
 struct kaiocb;
@@ -93,6 +95,8 @@ struct protosw {
 	pr_drain_t *pr_drain;		/* flush any excess space possible */
 
 	struct	pr_usrreqs *pr_usrreqs;	/* user-protocol hook */
+	LIST_ENTRY(protosw)  pr_fasttimos;
+	LIST_ENTRY(protosw)  pr_slowtimos;
 };
 /*#endif*/
 

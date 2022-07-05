@@ -1,4 +1,4 @@
-# $FreeBSD: 1162b7fed3b0bcd17391892be725da5fee3c5c59 $
+# $FreeBSD: 984582027de5075cb5b8b7346628ef3ffc24d7c6 $
 
 LOADER_CD9660_SUPPORT?=	no
 LOADER_EXT2FS_SUPPORT?=	no
@@ -43,6 +43,10 @@ DPADD=		${LDR_INTERP} ${LIBUBOOT} ${LIBFDT} ${LIBUBOOT_FDT} ${LIBSA}
 LDADD=		${LDR_INTERP} ${LIBUBOOT} ${LIBFDT} ${LIBUBOOT_FDT} ${LIBSA}
 
 OBJS+=  ${SRCS:N*.h:R:S/$/.o/g}
+
+# ubldr on MIPS is built with '-mno-abicalls' flag,
+# which is incompatible with PIE
+MK_PIE=		no
 
 ldscript.abs:
 	echo "UBLDR_LOADADDR = ${UBLDR_LOADADDR};" >${.TARGET}

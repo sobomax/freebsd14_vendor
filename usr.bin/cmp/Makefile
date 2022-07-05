@@ -1,10 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: bcde84f0255adad5eb445ede3cf77aafd3dce4a8 $
+# $FreeBSD: 0392fd36850305c6986ab406594144503bc79322 $
 
 .include <src.opts.mk>
 
 PROG=	cmp
 SRCS=	cmp.c link.c misc.c regular.c special.c
+
+LIBADD=	util
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

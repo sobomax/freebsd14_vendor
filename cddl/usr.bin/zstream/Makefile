@@ -1,4 +1,4 @@
-# $FreeBSD: d6ac8c5f3b16f0489ff472a881aee6f32931e024 $
+# $FreeBSD: cfcff71a813f919a5f106832fa7aa633b4565041 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -7,12 +7,15 @@ ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
 PROG=	zstream
 MAN=	zstream.8
+MLINKS=	zstream.8 zstreamdump.8
 INCS=	zstream.h
 SRCS= \
 	zstream.c \
 	zstream_dump.c \
 	zstream_redup.c \
 	zstream_token.c
+
+SYMLINKS=	${BINDIR}/zstream ${BINDIR}/zstreamdump
 
 WARNS?=	2
 CFLAGS+= \

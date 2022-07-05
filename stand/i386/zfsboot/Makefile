@@ -1,4 +1,4 @@
-# $FreeBSD: 7e362b43a39cfd0e2d1534b250c08a3e191afd2b $
+# $FreeBSD: 243b5e99287c0d34f8045014aa42d949dcd101d5 $
 
 .include <bsd.init.mk>
 
@@ -59,7 +59,7 @@ zfsboot1: zfsldr.out
 zfsldr.out: zfsldr.o
 	${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} zfsldr.o
 
-OBJS=	zfsboot.o sio.o cons.o bcache.o devopen.o disk.o part.o zfs_cmd.o
+OBJS=	zfsboot.o sio.o cons.o bcache.o devopen.o disk.o part.o zfs_cmd.o misc.o
 CLEANFILES+=	zfsboot2 zfsboot.ld zfsboot.ldr zfsboot.bin zfsboot.out \
 		${OBJS}
 

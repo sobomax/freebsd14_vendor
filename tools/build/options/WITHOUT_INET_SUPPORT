@@ -1,2 +1,2 @@
-.\" $FreeBSD: 725744099adbe9c369f01fc282d8037100f40487 $
-Set to build libraries, programs, and kernel modules without IPv4 support.
+.\" $FreeBSD: e5c0ded7d56b51270dbad27d5ff4c26307c7ec44 $
+Build libraries, programs, and kernel modules without IPv4 support.

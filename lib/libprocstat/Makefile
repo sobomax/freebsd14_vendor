@@ -1,4 +1,4 @@
-# $FreeBSD: 2e60a7b0dc4d60c3618cbc23630653233e65ed39 $
+# $FreeBSD: e8ca072066d50e5d76548d04abab40ec9ae5f73c $
 
 .include <src.opts.mk>
 
@@ -64,6 +64,8 @@ zfs/zfs_defs.o: .PHONY
 	@cd ${.CURDIR}/zfs && ${MAKE} zfs_defs.o
 zfs/zfs_defs.pico: .PHONY
 	@cd ${.CURDIR}/zfs && ${MAKE} zfs_defs.pico
+zfs/zfs_defs.pieo: .PHONY
+	@cd ${.CURDIR}/zfs && ${MAKE} zfs_defs.pieo
 zfs/zfs_defs.po: .PHONY
 	@cd ${.CURDIR}/zfs && ${MAKE} zfs_defs.po
 .endif

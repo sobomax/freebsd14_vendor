@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 4fed21b1356b0911c245515f95d6d4f772420414 $
+ *	$FreeBSD: bbafdafb8840ea92b1c9021ff28045040f7f2015 $
  */
 
 #include <sys/bio.h>
@@ -469,6 +469,14 @@ struct aac_softc
 	u_int32_t	FwDebugFlags;		/* FW Debug Flags */
 	u_int32_t	FwDebugBufferSize;	/* FW Debug Buffer size */	
 };
+
+/*
+ * Max. I/O size in bytes.
+ * Reserve one page for the DMA subsystem, that may need it when the
+ * I/O buffer is not page aligned.
+ */
+#define AAC_MAXIO_SIZE(sc)	MIN(((sc)->aac_max_sectors << 9) - PAGE_SIZE, \
+					maxphys)
 
 /*
  * Event callback mechanism for the driver

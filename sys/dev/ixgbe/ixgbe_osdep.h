@@ -1,7 +1,7 @@
 /******************************************************************************
   SPDX-License-Identifier: BSD-3-Clause
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: e1b964400988d9683936ff96eb518edfd3be3988 $*/
+/*$FreeBSD: b7eaa788c99ec4583cdd545801e445804f416027 $*/
 
 #ifndef _IXGBE_OSDEP_H_
 #define _IXGBE_OSDEP_H_
@@ -115,10 +115,6 @@ enum {
 	#define ERROR_REPORT3(S,A,B,C)
 #endif
 
-#define FALSE               0
-#define false               0 /* shared code requires this */
-#define TRUE                1
-#define true                1
 #define CMD_MEM_WRT_INVALIDATE          0x0010  /* BIT_4 */
 #define PCI_COMMAND_REGISTER            PCIR_COMMAND
 

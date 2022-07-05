@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f13d2f03180c8579578b0d183c50938c222fdbd4 $");
+__FBSDID("$FreeBSD: 1c4099604a779065121513613db3ab79ea623c29 $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -2105,27 +2105,8 @@ t3_sge_start(adapter_t *sc)
 void
 t3_sge_stop(adapter_t *sc)
 {
-	int i, nqsets;
-	
-	t3_set_reg_field(sc, A_SG_CONTROL, F_GLOBALENABLE, 0);
 
-	if (sc->tq == NULL)
-		return;
-	
-	for (nqsets = i = 0; i < (sc)->params.nports; i++) 
-		nqsets += sc->port[i].nqsets;
-#ifdef notyet
-	/*
-	 * 
-	 * XXX
-	 */
-	for (i = 0; i < nqsets; ++i) {
-		struct sge_qset *qs = &sc->sge.qs[i];
-		
-		taskqueue_drain(sc->tq, &qs->txq[TXQ_OFLD].qresume_task);
-		taskqueue_drain(sc->tq, &qs->txq[TXQ_CTRL].qresume_task);
-	}
-#endif
+	t3_set_reg_field(sc, A_SG_CONTROL, F_GLOBALENABLE, 0);
 }
 
 /**
@@ -2337,11 +2318,9 @@ restart_offloadq(void *data, int npending)
 	struct sge_qset *qs = data;
 	struct sge_txq *q = &qs->txq[TXQ_OFLD];
 	adapter_t *adap = qs->port->adapter;
-	int cleaned;
-		
-	TXQ_LOCK(qs);
-again:	cleaned = reclaim_completed_tx(qs, 16, TXQ_OFLD);
 
+	TXQ_LOCK(qs);
+again:
 	while ((m = mbufq_first(&q->sendq)) != NULL) {
 		unsigned int gen, pidx;
 		struct ofld_hdr *oh = mtod(m, struct ofld_hdr *);
@@ -2773,6 +2752,7 @@ get_packet(adapter_t *adap, unsigned int drop_thres, struct sge_qset *qs,
 		if (mh->mh_tail == NULL) {
 			log(LOG_ERR, "discarding intermediate descriptor entry\n");
 			m_freem(m);
+			m = NULL;
 			break;
 		}
 		mh->mh_tail->m_next = m;
@@ -2780,7 +2760,7 @@ get_packet(adapter_t *adap, unsigned int drop_thres, struct sge_qset *qs,
 		mh->mh_head->m_pkthdr.len += len;
 		break;
 	}
-	if (cxgb_debug)
+	if (cxgb_debug && m != NULL)
 		printf("len=%d pktlen=%d\n", m->m_len, m->m_pkthdr.len);
 done:
 	if (++fl->cidx == fl->size)

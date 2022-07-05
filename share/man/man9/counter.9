@@ -23,9 +23,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 1eb36b571249a166ae5f8027c1d98870bedc9e5e $
+.\" $FreeBSD: 04376ba9c994d6a413f9a3ce9fdd3b2fd15f2ce2 $
 .\"
-.Dd March 6, 2020
+.Dd March 11, 2021
 .Dt COUNTER 9
 .Os
 .Sh NAME
@@ -98,10 +98,13 @@ or
 .Va M_WAITOK .
 If
 .Va M_NOWAIT
-is specified the operation may fail.
+is specified the operation may fail and return
+.Dv NULL .
 .It Fn counter_u64_free c
 Free the previously allocated counter
 .Fa c .
+It is safe to pass
+.Dv NULL .
 .It Fn counter_u64_add c v
 Add
 .Fa v

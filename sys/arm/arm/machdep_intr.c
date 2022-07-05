@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e2fb34ce93c8009ca7b838056cd4d2bd682617f5 $");
+__FBSDID("$FreeBSD: cc2e67a6211eaee7e1ce02626b648678379d69d6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -223,6 +223,7 @@ intr_pic_ipi_setup(u_int ipi, const char *name, intr_ipi_handler_t *hand,
 
 	isrc->isrc_handlers++;
 	intr_ipi_setup(ipi, name, hand, arg, pic_ipi_send, isrc);
+	PIC_ENABLE_INTR(intr_irq_root_dev, isrc);
 	return (0);
 }
 #endif

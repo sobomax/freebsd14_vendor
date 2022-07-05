@@ -1,4 +1,4 @@
-# $FreeBSD: 1fb4604fc33add79e49b6f859cde4fedbe8aa9d3 $
+# $FreeBSD: 7aad95d55e60a64101f9f046618aafb164e9a3a7 $
 
 .PATH: ${SRCTOP}/sys/dev/nvme
 
@@ -22,5 +22,7 @@ SRCS =	nvme.c			\
 	opt_cam.h		\
 	opt_nvme.h		\
 	pci_if.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -1,4 +1,6 @@
-#$FreeBSD: b1201f65a84262748b4a7f17f7ff51a92fcf824c $
+#$FreeBSD: 308b5ecd684055f351f74ec0498d0162bd36d8d7 $
+
+PACKAGE=	kerberos
 
 LIB=	heimipcs
 PRIVATELIB=

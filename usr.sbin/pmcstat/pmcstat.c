@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 688a988436523183b811ceb63e09629955cad1cc $");
+__FBSDID("$FreeBSD: 3e2d101ab1131e8d8b4193641a344b6e1917118a $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -675,7 +675,7 @@ main(int argc, char **argv)
 			if (option == 'S' || option == 'P')
 				ev->ev_count = current_sampling_count ? current_sampling_count : pmc_pmu_sample_rate_get(ev->ev_spec);
 			else
-				ev->ev_count = -1;
+				ev->ev_count = 0;
 
 			if (option == 'S' || option == 's')
 				ev->ev_cpu = CPU_FFS(&cpumask) - 1;
@@ -898,7 +898,8 @@ main(int argc, char **argv)
 		pmcstat_show_usage();
 
 	/* check for -t pid without a process PMC spec */
-	if ((args.pa_required & FLAG_HAS_TARGET) &&
+	if ((args.pa_flags & FLAG_HAS_TARGET) &&
+	    (args.pa_required & FLAG_HAS_PROCESS_PMCS) &&
 	    (args.pa_flags & FLAG_HAS_PROCESS_PMCS) == 0)
 		errx(EX_USAGE,
 "ERROR: option -t requires a process mode PMC to be specified."
@@ -1454,7 +1455,7 @@ main(int argc, char **argv)
 		    args.pa_verbosity > 0)
 			warnx(
 "WARNING: at least %u event%s were discarded while running.\n"
-"Please consider tuning the \"kern.hwpmc.nbuffers\" tunable.",
+"Please consider tuning the \"kern.hwpmc.nbuffers_pcpu\" tunable.",
 	 		    ds_end.pm_buffer_requests_failed -
 			    ds_start.pm_buffer_requests_failed,
 			    ((ds_end.pm_buffer_requests_failed -

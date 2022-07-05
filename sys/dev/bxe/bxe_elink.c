@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bdd8affdb437954bd613ae6158b8b02adc49e985 $");
+__FBSDID("$FreeBSD: dd77e9301ab02810123f657fae31a5cfca51e9fd $");
 
 #include "bxe.h"
 #include "bxe_elink.h"
@@ -4418,7 +4418,7 @@ static uint8_t elink_ext_phy_resolve_fc(struct elink_phy *phy,
 	uint8_t ret = 0;
 	vars->flow_ctrl = ELINK_FLOW_CTRL_NONE;
 	if (phy->req_flow_ctrl != ELINK_FLOW_CTRL_AUTO) {
-		/* Update the advertised flow-controled of LD/LP in AN */
+		/* Update the advertised flow-controlled of LD/LP in AN */
 		if (phy->req_line_speed == ELINK_SPEED_AUTO_NEG)
 			elink_ext_phy_update_adv_fc(phy, params, vars);
 		/* But set the flow-control result as the requested one */
@@ -6262,7 +6262,7 @@ static void elink_flow_ctrl_resolve(struct elink_phy *phy,
 
 	/* Resolve from gp_status in case of AN complete and not sgmii */
 	if (phy->req_flow_ctrl != ELINK_FLOW_CTRL_AUTO) {
-		/* Update the advertised flow-controled of LD/LP in AN */
+		/* Update the advertised flow-controlled of LD/LP in AN */
 		if (phy->req_line_speed == ELINK_SPEED_AUTO_NEG)
 			elink_update_adv_fc(phy, params, vars, gp_status);
 		/* But set the flow-control result as the requested one */

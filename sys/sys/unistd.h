@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.2 (Berkeley) 1/7/94
- * $FreeBSD: 3b3de3aa33bcb0e8576e3225347fafff568ad3fc $
+ * $FreeBSD: 007abbdfbba56dd07ab0332f5ca0a6d25f83fca7 $
  */
 
 #ifndef _SYS_UNISTD_H_
@@ -196,6 +196,13 @@
     RFTHREAD | RFSIGSHARE | RFLINUXTHPN | RFSTOPPED | RFHIGHPID | RFTSIGZMB | \
     RFPROCDESC | RFSPAWN | RFPPWAIT)
 #define	RFKERNELONLY	(RFSTOPPED | RFHIGHPID | RFPROCDESC)
+
+#define	SWAPOFF_FORCE	0x00000001
+
+/*
+ * close_range() options.
+ */
+#define	CLOSE_RANGE_CLOEXEC	(1<<2)
 
 #endif /* __BSD_VISIBLE */
 

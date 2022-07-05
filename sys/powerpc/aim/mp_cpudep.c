@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5931786f8f7714d0983f2e95650fffd3cb7706a $");
+__FBSDID("$FreeBSD: a732464876838cc4caec04be39359e3b896bdc4d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: b5931786f8f7714d0983f2e95650fffd3cb7706a $");
 #include <sys/bus.h>
 #include <sys/pcpu.h>
 #include <sys/proc.h>
+#include <sys/sched.h>
 #include <sys/smp.h>
 
 #include <machine/bus.h>
@@ -134,6 +135,7 @@ cpudep_ap_bootstrap(void)
 #endif
 	pcpup->pc_curpcb = pcpup->pc_curthread->td_pcb;
 	sp = pcpup->pc_curpcb->pcb_sp;
+	schedinit_ap();
 
 	return (sp);
 }
@@ -310,9 +312,6 @@ cpudep_ap_setup()
 	uint16_t	vers;
 
 	vers = mfpvr() >> 16;
-
-	/* The following is needed for restoring from sleep. */
-	platform_smp_timebase_sync(0, 1);
 
 	switch(vers) {
 	case IBM970:

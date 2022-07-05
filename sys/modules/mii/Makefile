@@ -1,4 +1,4 @@
-# $FreeBSD: 5709af97b720526478050f6bf2b2be25e05118a8 $
+# $FreeBSD: 348c9b7b284501f9619e10f4ab18cb470b1b84f9 $
 
 .PATH: ${SRCTOP}/sys/dev/mii
 
@@ -13,12 +13,6 @@ SRCS+=	smscphy.c tdkphy.c truephy.c
 SRCS+=	ukphy.c ukphy_subr.c
 SRCS+=	xmphy.c
 
-EXPORT_SYMS=	mii_attach	\
-		mii_bitbang_readreg \
-		mii_bitbang_sync \
-		mii_bitbang_writereg \
-		mii_mediachg	\
-		mii_pollstat	\
-		mii_tick
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

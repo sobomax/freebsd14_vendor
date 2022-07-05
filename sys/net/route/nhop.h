@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ce18cc04e163de4000e01e630c5ea95bbc14ee56 $
+ * $FreeBSD: 1d37a84b68b489e247888a5b06c04027736b3679 $
  */
 
 /*
@@ -179,6 +179,9 @@ enum nhop_type nhop_get_type(const struct nhop_object *nh);
 int nhop_get_rtflags(const struct nhop_object *nh);
 struct vnet *nhop_get_vnet(const struct nhop_object *nh);
 struct nhop_object *nhop_select_func(struct nhop_object *nh, uint32_t flowid);
+int nhop_get_upper_family(const struct nhop_object *nh);
+int nhop_get_neigh_family(const struct nhop_object *nh);
+uint32_t nhop_get_fibnum(const struct nhop_object *nh);
 
 #endif /* _KERNEL */
 

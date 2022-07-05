@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: df761a1e1a5dc118e2f70622aeee4007d234f182 $
+ * $FreeBSD: d43dd4a441907e55cf9635dc15aa915938f9d091 $
  */
 
 #ifndef _SYS_SIGNALVAR_H_
@@ -404,7 +404,6 @@ int	sig_ast_needsigchk(struct thread *td);
 void	sig_drop_caught(struct proc *p);
 void	sigexit(struct thread *td, int sig) __dead2;
 int	sigev_findtd(struct proc *p, struct sigevent *sigev, struct thread **);
-int	sig_ffs(sigset_t *set);
 void	sigfastblock_clear(struct thread *td);
 void	sigfastblock_fetch(struct thread *td);
 void	sigfastblock_setpend(struct thread *td, bool resched);

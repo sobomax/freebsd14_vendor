@@ -1,4 +1,6 @@
-# $FreeBSD: 7b888f5481cd0efd5529e0aaa6030f9df251b3d3 $
+# $FreeBSD: caeb6427af457bea83ef02d72997e8b10cadf518 $
+
+PACKAGE=	kerberos
 
 PROG=	digest-service
 MAN=

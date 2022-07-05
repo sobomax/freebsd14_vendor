@@ -1,4 +1,4 @@
-/* $FreeBSD: 37ab8c9cdf7e34b6f9e2ca37a0094675c68b4fd9 $ */
+/* $FreeBSD: f0311bae689c545258124bdb61a4492fbcd6f387 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -185,6 +185,7 @@
 #define	HUM_CENTIMETER	0x11
 #define	HUM_RADIAN	0x12
 #define	HUM_INCH	0x13
+#define	HUM_INCH_EGALAX	0x33
 #define	HUM_DEGREE	0x14
 
 #if defined(_KERNEL) || defined(_STANDALONE)

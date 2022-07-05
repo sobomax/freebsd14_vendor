@@ -1,4 +1,4 @@
-/*	$FreeBSD: a1c7f0a822902f1ada40f9a4e4c367ca0788ea66 $	*/
+/*	$FreeBSD: aa576d21b623b678c9aa9e187d0b6d73ec7705ff $	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.
@@ -8,9 +8,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a1c7f0a822902f1ada40f9a4e4c367ca0788ea66 $");
+__FBSDID("$FreeBSD: aa576d21b623b678c9aa9e187d0b6d73ec7705ff $");
 
 #include <sys/types.h>
+#include <sys/param.h>
 #include <sys/module.h>
 #include <dev/videomode/videomode.h>
 

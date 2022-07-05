@@ -25,7 +25,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * __FBSDID("$FreeBSD: 588f5e3c217cdac05f23e4a0a519d35032e2197d $");
+ * __FBSDID("$FreeBSD: b689c912749368a6f2679987f39087b82a78e450 $");
  *
  */
 /**
@@ -43,7 +43,9 @@ struct m_snd_tag;
 struct tcp_hwrate_limit_table {
 	const struct tcp_rate_set *ptbl;	/* Pointer to parent table */
 	struct m_snd_tag *tag;	/* Send tag if needed (chelsio) */
-	uint64_t rate;		/* Rate we get in Bytes per second (Bps) */
+	long	 rate;		/* Rate we get in Bytes per second (Bps) */
+	long	 using;		/* How many flows are using this hdwr rate. */
+	long	 rs_num_enobufs;
 	uint32_t time_between;	/* Time-Gap between packets at this rate */
 	uint32_t flags;
 };
@@ -99,22 +101,30 @@ CK_LIST_HEAD(head_tcp_rate_set, tcp_rate_set);
 					 * shows up in your sysctl tree
 					 * this can be big.
 					 */
+uint64_t inline
+tcp_hw_highest_rate(const struct tcp_hwrate_limit_table *rle)
+{
+	return (rle->ptbl->rs_rlt[rle->ptbl->rs_highest_valid].rate);
+}
+
+uint64_t
+tcp_hw_highest_rate_ifp(struct ifnet *ifp, struct inpcb *inp);
 
 const struct tcp_hwrate_limit_table *
 tcp_set_pacing_rate(struct tcpcb *tp, struct ifnet *ifp,
-    uint64_t bytes_per_sec, int flags, int *error);
+    uint64_t bytes_per_sec, int flags, int *error, uint64_t *lower_rate);
 
 const struct tcp_hwrate_limit_table *
 tcp_chg_pacing_rate(const struct tcp_hwrate_limit_table *crte,
     struct tcpcb *tp, struct ifnet *ifp,
-    uint64_t bytes_per_sec, int flags, int *error);
+    uint64_t bytes_per_sec, int flags, int *error, uint64_t *lower_rate);
 void
 tcp_rel_pacing_rate(const struct tcp_hwrate_limit_table *crte,
     struct tcpcb *tp);
 #else
 static inline const struct tcp_hwrate_limit_table *
 tcp_set_pacing_rate(struct tcpcb *tp, struct ifnet *ifp,
-    uint64_t bytes_per_sec, int flags, int *error)
+    uint64_t bytes_per_sec, int flags, int *error, uint64_t *lower_rate)
 {
 	if (error)
 		*error = EOPNOTSUPP;
@@ -124,7 +134,7 @@ tcp_set_pacing_rate(struct tcpcb *tp, struct ifnet *ifp,
 static inline const struct tcp_hwrate_limit_table *
 tcp_chg_pacing_rate(const struct tcp_hwrate_limit_table *crte,
     struct tcpcb *tp, struct ifnet *ifp,
-    uint64_t bytes_per_sec, int flags, int *error)
+    uint64_t bytes_per_sec, int flags, int *error, uint64_t *lower_rate)
 {
 	if (error)
 		*error = EOPNOTSUPP;
@@ -137,6 +147,20 @@ tcp_rel_pacing_rate(const struct tcp_hwrate_limit_table *crte,
 {
 	return;
 }
+
+static uint64_t inline
+tcp_hw_highest_rate(const struct tcp_hwrate_limit_table *rle)
+{
+	return (0);
+}
+
+static uint64_t inline
+tcp_hw_highest_rate_ifp(struct ifnet *ifp, struct inpcb *inp)
+{
+	return (0);
+}
+
+
 #endif
 /*
  * Given a b/w and a segsiz, and optional hardware
@@ -147,8 +171,12 @@ tcp_rel_pacing_rate(const struct tcp_hwrate_limit_table *crte,
  * delayed ack).
  */
 uint32_t
-tcp_get_pacing_burst_size(uint64_t bw, uint32_t segsiz, int can_use_1mss,
+tcp_get_pacing_burst_size(struct tcpcb *tp, uint64_t bw, uint32_t segsiz, int can_use_1mss,
    const struct tcp_hwrate_limit_table *te, int *err);
+
+
+void
+tcp_rl_log_enobuf(const struct tcp_hwrate_limit_table *rte);
 
 #endif
 #endif

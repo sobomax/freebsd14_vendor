@@ -1,9 +1,9 @@
-# $FreeBSD: 8120126807cea898ed2740e19bf79339cd5fd54c $
+# $FreeBSD: ffc0a9a65a271bf85f1612a45f9d0b661ec0c923 $
 
 .include <src.opts.mk>
 
 WARNS?= 3
-PACKAGE=utilities
+PACKAGE=runtime
 CONFGROUPS=	CONFS DEVD
 CONFS=	devd.conf
 DEVD=	devmatch.conf

@@ -1,8 +1,8 @@
-# $FreeBSD: 1ebe1b0ff649ec5a8357c28bfb32fcb03340b372 $
+# $FreeBSD: a46fd6db3877b71dc05f17c5c4ca0926457ed4d7 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/icp
 
-PACKAGE=	runtime
+PACKAGE=	utilities
 LIB=	icp_rescue
 LIBADD=
 

@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f858952255c69ef071fff504e95d4e51090d543 $");
+__FBSDID("$FreeBSD: 08612e99d9bb4846239eb51a96789fa27f3eab1c $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -62,7 +62,7 @@ setproctitle_internal(const char *fmt, va_list ap)
 	static struct ps_strings *ps_strings;
 	static char *buf = NULL;
 	static char *obuf = NULL;
-	static char **oargv, *kbuf;
+	static char **oargv;
 	static int oargc = -1;
 	static char *nargv[2] = { NULL, NULL };
 	char **nargvp;
@@ -103,12 +103,10 @@ setproctitle_internal(const char *fmt, va_list ap)
 
 		nargvp = nargv;
 		nargc = 1;
-		kbuf = buf;
 	} else if (*obuf != '\0') {
 		/* Idea from NetBSD - reset the title on fmt == NULL */
 		nargvp = oargv;
 		nargc = oargc;
-		kbuf = obuf;
 	} else
 		/* Nothing to restore */
 		return (NULL);

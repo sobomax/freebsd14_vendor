@@ -1,5 +1,5 @@
-.\" $FreeBSD: 61f74b8112507e13782d79e2cc750c9fb9bf5afb $
-Set to not build
+.\" $FreeBSD: 0d72227cda3c67a18f7bc4a18586ac39b518b670 $
+Do not build
 .Xr NIS 8
 support and related programs.
 If set, you might need to adopt your

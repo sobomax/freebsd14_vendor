@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9f010e5d8a463fb6e55ab759bc28f27a976c093b $");
+__FBSDID("$FreeBSD: 6459321441d8d06501758a8b05343800633352cb $");
 
 #include <assert.h>
 #include <err.h>
@@ -244,7 +244,8 @@ parse_section_table(struct executable *x, off_t off, int number_of_sections)
 	x->x_nsections = number_of_sections;
 
 	for (i = 0; i < number_of_sections; i++) {
-		if (psh->psh_pointer_to_raw_data < x->x_headers_len)
+		if (psh->psh_size_of_raw_data > 0 &&
+		    psh->psh_pointer_to_raw_data < x->x_headers_len)
 			errx(1, "section points inside the headers");
 
 		range_check(x, psh->psh_pointer_to_raw_data,

@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8850da91bd4daa2713bd5b447ebd32170de025cf $
+ * $FreeBSD: 1e9eae79dbb81bf4a09d966707ad8e526f66c499 $
  */
-#ifndef	_LINUX_RWSEM_H_
-#define	_LINUX_RWSEM_H_
+#ifndef	_LINUXKPI_LINUX_RWSEM_H_
+#define	_LINUXKPI_LINUX_RWSEM_H_
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -81,4 +81,4 @@ linux_init_rwsem(struct rw_semaphore *rw, const char *name)
 
 extern int linux_down_write_killable(struct rw_semaphore *);
 
-#endif					/* _LINUX_RWSEM_H_ */
+#endif					/* _LINUXKPI_LINUX_RWSEM_H_ */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75fdf4143b9b00c3ca78e08b0236a8794dd7459d $");
+__FBSDID("$FreeBSD: 26d1f1028d820d850505663458579bc79804a911 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -434,6 +434,7 @@ bounce_bus_dmamem_alloc(bus_dma_tag_t dmat, void **vaddr, int flags,
 	/*
 	 * Allocate the buffer from the malloc(9) allocator if...
 	 *  - It's small enough to fit into a single page.
+	 *  - Its alignment requirement is also smaller than the page size.
 	 *  - The low address requirement is fulfilled.
 	 *  - Default cache attributes are requested (WB).
 	 * else allocate non-contiguous pages if...
@@ -448,6 +449,7 @@ bounce_bus_dmamem_alloc(bus_dma_tag_t dmat, void **vaddr, int flags,
 	 * Warn the user if malloc gets it wrong.
 	 */
 	if (dmat->common.maxsize <= PAGE_SIZE &&
+	    dmat->common.alignment <= PAGE_SIZE &&
 	    dmat->common.lowaddr >= ptoa((vm_paddr_t)Maxmem) &&
 	    attr == VM_MEMATTR_DEFAULT) {
 		*vaddr = malloc_domainset_aligned(dmat->common.maxsize,

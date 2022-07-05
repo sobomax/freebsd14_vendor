@@ -1,4 +1,4 @@
-# $FreeBSD: db88ac723539ffd32608d7fdd6560798449e1ca4 $
+# $FreeBSD: cb370bc6be1cd02771a0a2b6f01fc819b0f66b91 $
 
 MDSRCS+= \
 	bcmp.S \
@@ -8,4 +8,5 @@ MDSRCS+= \
 	memset.S \
 	strcat.S \
 	strcmp.S \
+	strlen.S \
 	stpcpy.S

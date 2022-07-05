@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b386ef6bc208340fdc52f1081bfb996f9bb9a741 $");
+__FBSDID("$FreeBSD: a071fbfac27238c55be1ed0bd686d32bf167237a $");
 
 #include <sys/errno.h>
 #include <stddef.h>
@@ -51,6 +51,7 @@ static mkimg_uuid_t gpt_uuid_freebsd_vinum = GPT_ENT_TYPE_FREEBSD_VINUM;
 static mkimg_uuid_t gpt_uuid_freebsd_zfs = GPT_ENT_TYPE_FREEBSD_ZFS;
 static mkimg_uuid_t gpt_uuid_mbr = GPT_ENT_TYPE_MBR;
 static mkimg_uuid_t gpt_uuid_ms_basic_data = GPT_ENT_TYPE_MS_BASIC_DATA;
+static mkimg_uuid_t gpt_uuid_prep_boot = GPT_ENT_TYPE_PREP_BOOT;
 
 static struct mkimg_alias gpt_aliases[] = {
     {	ALIAS_EFI, ALIAS_PTR2TYPE(&gpt_uuid_efi) },
@@ -63,6 +64,7 @@ static struct mkimg_alias gpt_aliases[] = {
     {	ALIAS_FREEBSD_ZFS, ALIAS_PTR2TYPE(&gpt_uuid_freebsd_zfs) },
     {	ALIAS_MBR, ALIAS_PTR2TYPE(&gpt_uuid_mbr) },
     {	ALIAS_NTFS, ALIAS_PTR2TYPE(&gpt_uuid_ms_basic_data) },
+    {	ALIAS_PPCBOOT, ALIAS_PTR2TYPE(&gpt_uuid_prep_boot) },
     {	ALIAS_NONE, 0 }		/* Keep last! */
 };
 

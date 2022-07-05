@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7580eceedb050940cbb53be3575717a4a2edd649 $");
+__FBSDID("$FreeBSD: c14b99768d70179cce18a31701d52ca2e1597cff $");
 
 #include <stand.h>
 #include <libfdt.h>
@@ -466,6 +466,8 @@ fdt_apply_overlays()
 	current_fdtp_size = fdtp_size;
 	overlays_applied = 0;
 	for (fp = file_findfile(NULL, "dtbo"); fp != NULL; fp = fp->f_next) {
+		if (strcmp(fp->f_type, "dtbo") != 0)
+			continue;
 		COPYOUT(fp->f_addr, overlay, fp->f_size);
 		/* Check compatible first to avoid unnecessary allocation */
 		rv = fdt_check_overlay_compatible(current_fdtp, overlay);

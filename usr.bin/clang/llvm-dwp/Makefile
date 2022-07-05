@@ -1,10 +1,9 @@
-# $FreeBSD: a9d5d4f94e843e38d3156094f9fe9f6c3ae594ab $
+# $FreeBSD: bce5474b84b57e35e5722cf4892df19489a0c084 $
 
 PROG_CXX=	llvm-dwp
 MAN=
 
 SRCDIR=		llvm/tools/llvm-dwp
-SRCS+=		DWPError.cpp
 SRCS+=		llvm-dwp.cpp
 
 LIBADD+=	z

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5972b63e680aa17863e62e7b6659c6a13e24ae31 $");
+__FBSDID("$FreeBSD: a721b0bc44598b867851a86dcd140646fd9d1558 $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -394,6 +394,12 @@ g_multipath_done(struct bio *bp)
 			mtx_unlock(&sc->sc_mtx);
 		} else
 			mtx_unlock(&sc->sc_mtx);
+		if (bp->bio_error == 0 &&
+			bp->bio_cmd == BIO_GETATTR &&
+			!strcmp(bp->bio_attribute, "GEOM::physpath"))
+		{
+			strlcat(bp->bio_data, "/mp", bp->bio_length);
+		}
 		g_std_done(bp);
 	}
 }
@@ -823,6 +829,7 @@ g_multipath_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	gp->access = g_multipath_access;
 	gp->orphan = g_multipath_orphan;
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	error = g_attach(cp, pp);
 	if (error == 0) {
 		error = g_multipath_read_metadata(cp, &md);

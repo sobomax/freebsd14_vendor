@@ -1,4 +1,4 @@
-# $FreeBSD: 2e87b95895e776ae1c9e022f7200e297abf26b59 $
+# $FreeBSD: 0f1367f859f261504d6483de72a7829e94c09bf2 $
 #	@(#)Makefile	8.1 (Berkeley) 6/11/93
 
 # Makefile for amd64 links, tags file
@@ -14,7 +14,7 @@ all:
 	@echo "make links or tags only"
 
 # Directories in which to place amd64 tags links
-DAMD64=	acpica amd64 ia32 include linux linux32 pci vmm
+DAMD64=	acpica amd64 ia32 include linux linux32 pci sgx vmm
 
 links::
 	-for i in ${COMMDIR1}; do \
@@ -22,13 +22,13 @@ links::
 	-for i in ${COMMDIR2}; do \
 	    (cd $$i && { rm -f tags; ln -s ../../${TAGDIR}/tags tags; }) done
 	-for i in ${DAMD64}; do \
-	    (cd $$i && { rm -f tags; ln -s ../tags tags; }) done
+	    (cd ${SYS}/amd64/$$i && { rm -f tags; ln -s ../tags tags; }) done
 
 SAMD64=	${SYS}/amd64/acpica/*.[ch] \
 	${SYS}/amd64/amd64/*.[ch] ${SYS}/amd64/ia32/*.[ch] \
 	${SYS}/amd64/include/*.[ch] ${SYS}/amd64/linux/*.[ch] \
 	${SYS}/amd64/linux32/*.[ch] ${SYS}/amd64/pci/*.[ch] \
-	${SYS}/amd64/vmm/*.[ch]
+	${SYS}/amd64/sgx/*.[ch] ${SYS}/amd64/vmm/*.[ch]
 AAMD64=	${SYS}/amd64/amd64/*.S
 
 tags::
@@ -38,3 +38,5 @@ tags::
 		>> tags
 	sort -o tags tags
 	chmod 444 tags
+	rm -f ${SYS}/amd64/tags
+	mv tags ${SYS}/amd64/tags

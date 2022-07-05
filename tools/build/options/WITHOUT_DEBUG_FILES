@@ -1,3 +1,3 @@
-.\" $FreeBSD: 2938f3008e9a000380ff1e1a16c5e59b7a920afc $
-Set to avoid building or installing standalone debug files for each
+.\" $FreeBSD: f9169afccf2a8358a3e2e1e222d4e48063e82c1f $
+Avoid building or installing standalone debug files for each
 executable binary and shared library.

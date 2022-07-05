@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 6468f3b5e10ffd834fb22973cf41bcff81781ccf $
+# $FreeBSD: 141b34cd16e2369d6b8f065e8fbca05bf5d59adc $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_history_001_neg cleanup
 zpool_history_001_neg_head()
 {
 	atf_set "descr" "Verify 'zpool history' can deal with non-existent pools andgarbage to the command."
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 zpool_history_001_neg_body()
 {
@@ -54,7 +54,7 @@ atf_test_case zpool_history_002_pos cleanup
 zpool_history_002_pos_head()
 {
 	atf_set "descr" "Verify zpool history can handle options [-il] correctly."
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 zpool_history_002_pos_body()
 {

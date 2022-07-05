@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 866013cbf38a65a4326693a8cb75ecf7833a329e $");
+__FBSDID("$FreeBSD: 9ca43048ecca8a5ca922ab5fe99b25079caca546 $");
 
 #include "opt_ddb.h"
 #include "opt_pmap.h"
@@ -1115,10 +1115,6 @@ pmap_alloc_direct_page(unsigned int index, int req)
 	    VM_ALLOC_ZERO);
 	if (m == NULL)
 		return (NULL);
-
-	if ((m->flags & PG_ZERO) == 0)
-		pmap_zero_page(m);
-
 	m->pindex = index;
 	return (m);
 }
@@ -1217,9 +1213,13 @@ _pmap_allocpte(pmap_t pmap, unsigned ptepindex, u_int flags)
 		}
 		/* Next level entry */
 		pde = (pd_entry_t *)*pdep;
+		KASSERT(pde[pdeindex] == 0,
+		    ("%s: PTE %p is valid", __func__, pde[pdeindex]));
 		pde[pdeindex] = (pd_entry_t)pageva;
 	}
 #else
+	KASSERT(pmap->pm_segtab[ptepindex] == 0,
+	    ("%s: PTE %p is valid", __func__, pmap->pm_segtab[ptepindex]));
 	pmap->pm_segtab[ptepindex] = (pd_entry_t)pageva;
 #endif
 	pmap->pm_stats.resident_count++;

@@ -1,4 +1,4 @@
-# $FreeBSD: 7d05aa9bf624494103f130ee364663e3be4703b7 $
+# $FreeBSD: 768901f991318a49d2f9132f33044f647d90551f $
 
 .PATH:	${SRCTOP}/contrib/pf/ftp-proxy
 
@@ -8,8 +8,9 @@ MAN=	ftp-proxy.8
 SRCS=	ftp-proxy.c filter.c
 
 CFLAGS+=-I${SRCTOP}/contrib/pf/libevent
+CFLAGS+= -I${SRCTOP}/lib/libpfctl -I${OBJTOP}/lib/libpfctl
 
-LIBADD=	event1
+LIBADD=	event1 pfctl
 
 WARNS?=	3
 

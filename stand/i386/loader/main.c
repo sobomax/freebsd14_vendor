@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a595340d3a13e6711ef97c048b2aef1fd1a3cc95 $");
+__FBSDID("$FreeBSD: cb716d7a9f212303030be70f558acce3253a4bba $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -131,6 +131,12 @@ main(void)
 	setheap(heap_bottom, heap_top);
 
 	/*
+	 * Now that malloc is usable, allocate a buffer for tslog and start
+	 * logging timestamps during the boot process.
+	 */
+	tslog_init();
+
+	/*
 	 * detect ACPI for future reference. This may set console to comconsole
 	 * if we do have ACPI SPCR table.
 	 */
@@ -157,6 +163,10 @@ main(void)
 		setenv("console", "nullconsole", 1);
 	}
 	cons_probe();
+
+	/* Set up currdev variable to have hooks in place. */
+	env_setenv("currdev", EV_VOLATILE | EV_NOHOOK, "",
+	    i386_setcurrdev, env_nounset);
 
 	/*
 	 * Initialise the block cache. Set the upper limit.

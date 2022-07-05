@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a583a0369ebc40f8ecade5c841b5a1d3d5fac8d9 $
+# $FreeBSD: 524f786ccac8571ea74a7c1198762ab6d097e368 $
 #
 
 #include <sys/linker.h>
@@ -40,7 +40,19 @@ METHOD int lookup_symbol {
     c_linker_sym_t*	symp;
 };
 
+METHOD int lookup_debug_symbol {
+    linker_file_t	file;
+    const char*		name;
+    c_linker_sym_t*	symp;
+};
+
 METHOD int symbol_values {
+    linker_file_t	file;
+    c_linker_sym_t	sym;
+    linker_symval_t*	valp;
+};
+
+METHOD int debug_symbol_values {
     linker_file_t	file;
     c_linker_sym_t	sym;
     linker_symval_t*	valp;

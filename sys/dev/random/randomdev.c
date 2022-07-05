@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 114246415aa6d58f0885fff11f785b2d6e4c8204 $");
+__FBSDID("$FreeBSD: 02b92d226417d2a741a122989ef305bebdfac372 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -187,7 +187,6 @@ int
 	if (error != 0)
 		return (error);
 
-	read_rate_increment(howmany(uio->uio_resid + 1, sizeof(uint32_t)));
 	total_read = 0;
 
 	/* Easy to deal with the trivial 0 byte case. */
@@ -286,7 +285,6 @@ void
 
 		(void)randomdev_wait_until_seeded(SEEDWAIT_UNINTERRUPTIBLE);
 	}
-	read_rate_increment(roundup2(len, sizeof(uint32_t)));
 	p_random_alg_context->ra_read(random_buf, len);
 }
 
@@ -342,7 +340,6 @@ randomdev_write(struct cdev *dev __unused, struct uio *uio, int flags __unused)
 		if (error)
 			break;
 		randomdev_accumulate(random_buf, c);
-		tsleep(p_random_alg_context, 0, "randwr", hz/10);
 	}
 	if (nbytes != uio->uio_resid && (error == ERESTART || error == EINTR))
 		/* Partial write, not error. */

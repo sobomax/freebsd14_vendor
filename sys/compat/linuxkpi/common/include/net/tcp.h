@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3f156196aaafa3fec215e12e88eaa23fcbabd8c0 $
+ * $FreeBSD: f083cebd3505dbfb0fdd29eeea80771dfb64815d $
  */
-#ifndef _LINUX_NET_TCP_H_
-#define	_LINUX_NET_TCP_H_
+#ifndef _LINUXKPI_NET_TCP_H_
+#define	_LINUXKPI_NET_TCP_H_
 
 #include <linux/list.h>
 #include <linux/slab.h>
@@ -37,4 +37,4 @@
 
 #include <net/ip.h>
 
-#endif	/* _LINUX_NET_TCP_H_ */
+#endif	/* _LINUXKPI_NET_TCP_H_ */

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cee9ddd0bc25697ee5cf3e7426fdbfba7eb75508 $");
+__FBSDID("$FreeBSD: 9a952e940120235f223d637ecf1d1653f948252b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -137,9 +137,15 @@ sfuart_putc(struct uart_bas *bas, int c)
 static int
 sfuart_rxready(struct uart_bas *bas)
 {
-
-	return ((uart_getreg(bas, SFUART_RXDATA) &
-	    SFUART_RXDATA_EMPTY) == 0);
+	/*
+	 * Unfortunately the FIFO empty flag is in the FIFO data register so
+	 * reading it would dequeue the character. Instead, rely on the fact
+	 * we've configured the watermark to be 0 and that interrupts are off
+	 * when using the low-level console function, and read the interrupt
+	 * pending state instead.
+	 */
+	return ((uart_getreg(bas, SFUART_IRQ_PENDING) &
+	    SFUART_IRQ_PENDING_RXQM) != 0);
 }
 
 static int

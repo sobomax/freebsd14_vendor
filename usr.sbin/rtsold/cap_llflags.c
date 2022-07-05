@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 195f83893b4dacb0603634b5cf406429ada79d3a $");
+__FBSDID("$FreeBSD: aea45d9fb8a08e4c88858fb837b1b79fa02f43d0 $");
 
 #include <sys/types.h>
 #include <sys/dnv.h>
@@ -91,7 +91,7 @@ llflags_get(const char *ifname, int *flagsp)
 		memset(&ifr6, 0, sizeof(ifr6));
 		if (strlcpy(ifr6.ifr_name, ifname, sizeof(ifr6.ifr_name)) >=
 		    sizeof(ifr6.ifr_name)) {
-			error = errno;
+			error = EINVAL;
 			goto out;
 		}
 		memcpy(&ifr6.ifr_ifru.ifru_addr, sin6, sin6->sin6_len);

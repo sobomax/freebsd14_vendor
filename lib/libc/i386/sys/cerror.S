@@ -34,7 +34,7 @@
 	.asciz "@(#)cerror.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 423d716cb651fd565fee7779514b7b5857119d3f $");
+__FBSDID("$FreeBSD: 47bd0fade0005e3895481b743a33b4fd217b1c0e $");
 
 #include "SYS.h"
 
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: 423d716cb651fd565fee7779514b7b5857119d3f $");
 
 	/*
 	 * The __error() function is thread aware. For non-threaded
-	 * programs and the initial threaded in threaded programs,
+	 * programs and the initial thread in threaded programs,
 	 * it returns a pointer to the global errno variable.
 	 */
 	.globl	CNAME(__error)

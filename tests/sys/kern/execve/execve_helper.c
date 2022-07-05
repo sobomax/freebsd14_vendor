@@ -31,24 +31,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 989b3e4b976131ff18990f02bae6663091f30c8c $
+ * $FreeBSD: c14ca2d29554c042e65d392d602252af3cd16235 $
  */
 
 #include <err.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+
+/* Passing -n == null_argv */
+static char * const null_argv[] = { NULL };
 
 int
 main(int argc, char **argv)
 {
 
-	if (argc != 2) {
-		fprintf(stderr, "usage: %s <progname>\n", argv[0]);
+	if (argc == 2) {
+		execve(argv[1], &argv[1], NULL);
+	} else if (argc == 3 && strcmp(argv[1], "-n") == 0) {
+		execve(argv[2], null_argv, NULL);
+	} else {
+		fprintf(stderr, "usage: %s [-n] <progname>\n", argv[0]);
 		exit(2);
 	}
 
-	execve(argv[1], &argv[1], NULL);
 	err(1, "execve failed");
 }

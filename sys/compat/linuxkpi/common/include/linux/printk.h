@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e6510e9e9834ef8bda710ce544309cf0d7e879eb $
+ * $FreeBSD: 317c6232bbc5fae7e593d5eb6a9473442484ce0d $
  */
-#ifndef _LINUX_PRINTK_H_
-#define	_LINUX_PRINTK_H_
+#ifndef _LINUXKPI_LINUX_PRINTK_H_
+#define	_LINUXKPI_LINUX_PRINTK_H_
 
 #include <linux/kernel.h>
 
@@ -127,4 +127,4 @@ print_hex_dump_bytes(const char *prefix_str, const int prefix_type,
 #define	pr_info_ratelimited(fmt, ...) \
 	printk_ratelimited(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
 
-#endif					/* _LINUX_PRINTK_H_ */
+#endif					/* _LINUXKPI_LINUX_PRINTK_H_ */

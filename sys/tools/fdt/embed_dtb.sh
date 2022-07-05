@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
 # Copyright (c) 2010 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Semihalf under sponsorship from
 # the FreeBSD Foundation.
@@ -29,7 +28,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d5c9c00a9e8a32006a8fca85ea9c2b977a31c445 $
+# $FreeBSD: f6daf799a0889c1b11313909b1abd9279578043c $
 
 # $1: kernel filename
 # $2: device tree blob filename

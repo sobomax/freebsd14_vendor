@@ -1,6 +1,5 @@
 #-
 # Copyright (c) 2016 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Andrew Turner under
 # sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 8112450d7580df986fd815cf64633cd43ae2c0fb $
+# $FreeBSD: cb354379535fc64dca8a8c829221ae337aedf116 $
 #
 
 INTERFACE msi;

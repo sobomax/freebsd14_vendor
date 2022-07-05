@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 79c6f730f2a67b1b5370a6883974925449377a69 $
+ * $FreeBSD: 453a6af1a0f83f7719fb6290a0237325ee62d6f8 $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -41,7 +41,7 @@
 #include <machine/cpufunc.h>
 #include <machine/frame.h>
 
-#define	TRAPF_PC(tfp)		((tfp)->tf_ra)
+#define	TRAPF_PC(tfp)		((tfp)->tf_sepc)
 #define	TRAPF_USERMODE(tfp)	(((tfp)->tf_sstatus & SSTATUS_SPP) == 0)
 
 #define	cpu_getstack(td)	((td)->td_frame->tf_sp)

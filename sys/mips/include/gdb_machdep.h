@@ -27,7 +27,7 @@
  *
  *	from: src/sys/alpha/include/gdb_machdep.h,v 1.3 2005/01/05 20:05:50 imp
  *	JNPR: gdb_machdep.h,v 1.1 2007/08/09 12:25:25 katta
- * $FreeBSD: 03378b760024191cf2da408fcb1da3e2b3da8a53 $
+ * $FreeBSD: e8ff620edc88c19311ad01fd2879c4fc22009960 $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
@@ -60,6 +60,12 @@ gdb_begin_write(void)
 
 static __inline void
 gdb_end_write(void *arg __unused)
+{
+
+}
+
+static __inline void
+gdb_cpu_stop_reason(int type __unused, int code __unused)
 {
 
 }

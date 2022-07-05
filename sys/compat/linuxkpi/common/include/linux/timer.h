@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 86048af31b2d4317adf5daf811935f536317c359 $
+ * $FreeBSD: 3432bfc46c4f9a31a5789a470833682849ca5d22 $
  */
-#ifndef _LINUX_TIMER_H_
-#define	_LINUX_TIMER_H_
+#ifndef _LINUXKPI_LINUX_TIMER_H_
+#define	_LINUXKPI_LINUX_TIMER_H_
 
 #include <linux/types.h>
 
@@ -91,4 +91,4 @@ extern int del_timer_sync(struct timer_list *);
 #define	round_jiffies_up(j)	round_jiffies(j)
 #define	round_jiffies_up_relative(j) round_jiffies_up(j)
 
-#endif					/* _LINUX_TIMER_H_ */
+#endif					/* _LINUXKPI_LINUX_TIMER_H_ */

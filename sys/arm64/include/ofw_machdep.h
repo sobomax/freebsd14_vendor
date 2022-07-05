@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2009 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under sponsorship from
  * the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 511fc8d71c19f66427a4c9b968aebf828e14b077 $
+ * $FreeBSD: b2ba37cb441cf49f28cbee1d250dae39b352c23c $
  */
 
 #ifndef _MACHINE_OFW_MACHDEP_H_

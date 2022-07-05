@@ -1,13 +1,12 @@
 #!/bin/sh
 #
-# $FreeBSD: 473474c2c4dab98a88d76698c5344747ca0a780b $
+# $FreeBSD: f98e71822a0ce2acb32a8fd5ceec563c698e1964 $
 #
 
 :>keywords
 :>rcsid
-svn list -R | grep -v '/$' | \
+git ls-files | \
 while read f ; do
-	svn proplist -v $f | grep -q 'FreeBSD=%H' || continue
 	egrep -l '^(#|\.\\"|/\*)[[:space:]]+\$FreeBSD[:\$]' $f >>keywords
 	egrep -l '__RCSID\("\$FreeBSD[:\$]' $f >>rcsid
 done

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1528fafdf787e20faa3a3b569d98cb8c5edd9154 $");
+__FBSDID("$FreeBSD: 338ed26aa41797b500fa42090d76d5184912dfd0 $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -47,7 +47,7 @@ static int	dcons_started = 0;
 static struct dcons_softc sc[DCONS_NPORT];
 uint32_t dcons_paddr;
 
-/* The buffer must be allocated in BSS becase:
+/* The buffer must be allocated in BSS because:
  *    - The dcons driver in the kernel is initialized before VM/pmap is
  *	initialized, so that the buffer must be allocate in the region
  *	that is mapped at the very early boot state.

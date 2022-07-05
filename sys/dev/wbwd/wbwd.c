@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4195089e164b84117e775b6226d1eb194517a3a2 $");
+__FBSDID("$FreeBSD: 2c8cc63dbfdcadaee0cb5e4183fac5a59e32ae25 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -627,15 +627,15 @@ wb_attach(device_t dev)
 	    "debug_verbose", CTLFLAG_RW, &sc->debug_verbose, 0,
             "Enables extra debugging information");
         SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "debug",
-	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, sc, 0,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, sc, 0,
 	    sysctl_wb_debug, "A",
             "Selected register information from last change by driver");
         SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "debug_current",
-	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_SKIP | CTLFLAG_NEEDGIANT,
+	    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_SKIP | CTLFLAG_MPSAFE,
 	    sc, 0, sysctl_wb_debug_current, "A",
 	     "Selected register information (may interfere)");
 	SYSCTL_ADD_PROC(sctx, SYSCTL_CHILDREN(soid), OID_AUTO, "force_timeout",
-	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_SKIP | CTLFLAG_NEEDGIANT, sc, 0,
+	    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_SKIP | CTLFLAG_MPSAFE, sc, 0,
 	    sysctl_wb_force_test_nmi, "I", "Enable to force watchdog to fire.");
 
 	/* Register watchdog. */

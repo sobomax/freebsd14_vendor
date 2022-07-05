@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd44a38cb972aa03546765aacf48174b7094103b $");
+__FBSDID("$FreeBSD: b46a47bbd36a0278471f840f1e0bec57518e55c1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,8 +54,9 @@ g_label_iso9660_taste(struct g_consumer *cp, char *label, size_t size)
 
 	if ((ISO9660_OFFSET % pp->sectorsize) != 0)
 		return;
-	sector = (char *)g_read_data(cp, ISO9660_OFFSET, pp->sectorsize,
-	    NULL);
+	if (pp->sectorsize < 0x28 + VOLUME_LEN)
+		return;
+	sector = g_read_data(cp, ISO9660_OFFSET, pp->sectorsize, NULL);
 	if (sector == NULL)
 		return;
 	if (bcmp(sector, ISO9660_MAGIC, sizeof(ISO9660_MAGIC) - 1) != 0) {

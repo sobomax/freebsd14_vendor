@@ -69,7 +69,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b66fe8df0793ffc7b3eb3fb10bec8b5b41b883a1 $");
+__FBSDID("$FreeBSD: 6aeea44f631c6d312b8de7ca1637abf3354514a9 $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
@@ -1199,7 +1199,7 @@ socket_send(struct socket *s, struct mbuf *mm, struct sockaddr_in *src)
 	    sorwakeup_locked(s);
 	    return 0;
 	}
-	SOCKBUF_UNLOCK(&s->so_rcv);
+	soroverflow_locked(s);
     }
     m_freem(mm);
     return -1;

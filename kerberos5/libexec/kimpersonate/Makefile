@@ -1,4 +1,6 @@
-# $FreeBSD: 3c94db6857d0e4a7720ccae2d69abdfb66d20368 $
+# $FreeBSD: 8bada272688f3b717eef661168a686f23e4ba677 $
+
+PACKAGE=	kerberos
 
 PROG=	kimpersonate
 MAN=	kimpersonate.8

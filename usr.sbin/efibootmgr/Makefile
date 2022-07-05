@@ -1,9 +1,11 @@
-# $FreeBSD: d485537e7515cf8b768206917581833088dff577 $
+# $FreeBSD: 9e98412f6f74cbb2329b0fee0d303edec7ddf1b2 $
 EFIBOOT=${SRCTOP}/stand/efi
 EFIINCL=${SRCTOP}/stand/efi/include
 EFIVAR=${SRCTOP}/usr.sbin/efivar
 .PATH: ${EFIBOOT}/libefi ${EFIVAR}
 CFLAGS+= -I${EFIVAR} -I${EFIINCL}
+
+PACKAGE=	efi-tools
 
 PROG=efibootmgr
 MAN=	efibootmgr.8

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29103f83c0496f88e9460e67d4374fbc768175f6 $");
+__FBSDID("$FreeBSD: cb575114571aa78fcf4607400cdb59e4da9ea80c $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -665,10 +665,13 @@ prep_cdevsw(struct cdevsw *devsw, int flags)
 		devsw->d_kqfilter = dead_kqfilter;
 	}
 
-	if (devsw->d_flags & D_NEEDGIANT) {
-		printf("WARNING: Device \"%s\" is Giant locked and may be "
-		    "deleted before FreeBSD 14.0.\n",
-		    devsw->d_name == NULL ? "???" : devsw->d_name);
+	if ((devsw->d_flags & D_NEEDGIANT) != 0) {
+		if ((devsw->d_flags & D_GIANTOK) == 0) {
+			printf(
+			    "WARNING: Device \"%s\" is Giant locked and may be "
+			    "deleted before FreeBSD 14.0.\n",
+			    devsw->d_name == NULL ? "???" : devsw->d_name);
+		}
 		if (devsw->d_gianttrick == NULL) {
 			memcpy(dsw2, devsw, sizeof *dsw2);
 			devsw->d_gianttrick = dsw2;
@@ -1255,7 +1258,7 @@ dev_stdclone(char *name, char **namep, const char *stem, int *unit)
 	int u, i;
 
 	i = strlen(stem);
-	if (bcmp(stem, name, i) != 0)
+	if (strncmp(stem, name, i) != 0)
 		return (0);
 	if (!isdigit(name[i]))
 		return (0);

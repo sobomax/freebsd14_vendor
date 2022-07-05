@@ -30,7 +30,7 @@
  * Implements low-level interactions with Hyper-V/Azure
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5bb38fde8241e5fd585feff5b1d73e1e582672f2 $");
+__FBSDID("$FreeBSD: 01e0ad9610d95a6a07a96da41bb398d9ff681f9c $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -248,7 +248,11 @@ hyperv_init(void *dummy __unused)
 	wrmsr(MSR_HV_GUEST_OS_ID, MSR_HV_GUESTID_FREEBSD);
 
 	if (hyperv_features & CPUID_HV_MSR_TIME_REFCNT) {
-		/* Register Hyper-V timecounter */
+		/*
+		 * Register Hyper-V timecounter.  This should be done as early
+		 * as possible to let DELAY() work, since the 8254 PIT is not
+		 * reliably emulated or even available.
+		 */
 		tc_init(&hyperv_timecounter);
 
 		/*

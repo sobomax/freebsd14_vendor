@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89b060a02cf92bd7ec00f19ed6c74d8177623457 $
+ * $FreeBSD: 5599ce7b3ae025d0cd2674adc6f095fce92f1e99 $
  */
 
 #ifndef _GFX_FB_H
@@ -210,14 +210,14 @@ typedef struct teken_gfx {
 	teken_t		tg_teken;		/* Teken core */
 	teken_pos_t	tg_cursor;		/* Where cursor was drawn */
 	bool		tg_cursor_visible;
-	uint8_t		*tg_cursor_image;	/* Memory for cursor */
-	size_t		tg_cursor_size;
 	teken_pos_t	tg_tp;			/* Terminal dimensions */
 	teken_pos_t	tg_origin;		/* Point of origin in pixels */
 	uint8_t		*tg_glyph;		/* Memory for glyph */
 	size_t		tg_glyph_size;
 	struct vt_font	tg_font;
 	struct gen_fb	tg_fb;
+	uint32_t	*tg_shadow_fb;		/* units of 4 bytes */
+	size_t		tg_shadow_sz;		/* units of pages */
 	teken_funcs_t	*tg_functions;
 	void		*tg_private;
 	bool		tg_kernel_supported;	/* Loaded kernel is supported */

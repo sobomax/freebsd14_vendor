@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0794de6713d3c5d15d3878d9a0fcfa5f5aa966e3 $");
+__FBSDID("$FreeBSD: dafd24bd4d2587db24ffa3d54dbba4dbfa93b989 $");
 #include <machine/asm.h>
 #include <sys/param.h>
 
@@ -98,7 +98,7 @@ bzero(void *addr, size_t count)
 #define	mkptr(x)	((void *)(intptr_t)(int)(x))
 
 /*
- * Relocate PT_LOAD segements of kernel ELF image to their respective
+ * Relocate PT_LOAD segments of kernel ELF image to their respective
  * virtual addresses and return entry point
  */
 void *

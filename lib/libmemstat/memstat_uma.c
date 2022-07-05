@@ -25,8 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b416cbc63297cc33c8c68e0a98340f89fca3139e $
+ * $FreeBSD: 980a674ab76e70f206b634ba71d40494a06bf020 $
  */
+
+#define _WANT_FREEBSD_BITSET
 
 #include <sys/param.h>
 #include <sys/counter.h>

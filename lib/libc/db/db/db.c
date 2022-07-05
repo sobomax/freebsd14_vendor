@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)db.c	8.4 (Berkeley) 2/21/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9a5b060da62464cfff3623cd774c4b33644f13f $");
+__FBSDID("$FreeBSD: 7158cc80e44e5ee1f5142f5a1a33961095c195a6 $");
 
 #include <sys/types.h>
 
@@ -48,6 +48,12 @@ static int __dberr(void);
 
 #ifndef O_CLOEXEC
 #define O_CLOEXEC 0
+#endif
+#ifndef O_EXLOCK
+#define O_EXLOCK 0
+#endif
+#ifndef O_SHLOCK
+#define O_SHLOCK 0
 #endif
 
 DB *

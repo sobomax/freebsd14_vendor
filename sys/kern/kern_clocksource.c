@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dfc9081ba9f6f23cb1eb7f5859da17ded67c9206 $");
+__FBSDID("$FreeBSD: 48e06ee082fcb8688078f037dae8ec06487eb8d7 $");
 
 /*
  * Common routines to manage event timers hardware.
@@ -239,13 +239,14 @@ getnextcpuevent(int idle)
 	/* Handle hardclock() events, skipping some if CPU is idle. */
 	event = state->nexthard;
 	if (idle) {
-		hardfreq = (u_int)hz / 2;
-		if (tc_min_ticktock_freq > 2
+		if (tc_min_ticktock_freq > 1
 #ifdef SMP
 		    && curcpu == CPU_FIRST()
 #endif
 		    )
 			hardfreq = hz / tc_min_ticktock_freq;
+		else
+			hardfreq = hz;
 		if (hardfreq > 1)
 			event += tick_sbt * (hardfreq - 1);
 	}

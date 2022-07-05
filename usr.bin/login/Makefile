@@ -1,8 +1,10 @@
 # 	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: 2e8b215a449224a06ff2dc80c826ace4f7359595 $
+# $FreeBSD: c876434dcc2e22cf9b020a02022ffee7fa634d8a $
 
 .include <src.opts.mk>
 .include <src.tools.mk>
+
+PACKAGE=	runtime
 
 CONFS=	fbtab login.conf motd.template login.access
 PROG=	login

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73861d7fdc0db082bf29e08951b137102cf4608d $
+ * $FreeBSD: f11d66f5ffc2196849c3e1897a5f6736a34a3520 $
  */
 
 #ifndef FSTYP_H
@@ -50,6 +50,7 @@ char	*checked_strdup(const char *s);
 void	rtrim(char *label, size_t size);
 
 int	fstyp_apfs(FILE *fp, char *label, size_t size);
+int	fstyp_befs(FILE *fp, char *label, size_t size);
 int	fstyp_cd9660(FILE *fp, char *label, size_t size);
 int	fstyp_exfat(FILE *fp, char *label, size_t size);
 int	fstyp_ext2fs(FILE *fp, char *label, size_t size);

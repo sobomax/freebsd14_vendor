@@ -1,4 +1,4 @@
-# $FreeBSD: 58f4f9673c2e4f205372e08db9f5754f5898ddbe $
+# $FreeBSD: 4d6e89bc5d07274f5047ed47ef7aa0c73b492be8 $
 
 .PATH: ${SRCTOP}/sys/${MACHINE}/${MACHINE}
 .PATH: ${SRCTOP}/sys/dev/efidev
@@ -16,5 +16,7 @@ efirt_support.o:	efirt_support.S assym.inc
 	${CC} -c -x assembler-with-cpp -DLOCORE ${CFLAGS} \
 	    ${.IMPSRC} -o ${.TARGET}
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

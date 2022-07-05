@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)error.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bee2a4fe703b1160e16f3cbf950da5070b9aa6d2 $");
+__FBSDID("$FreeBSD: a6b407907e20e14ed36a9318d0763025542dfa5c $");
 
 /*
  * Errors and exceptions.
@@ -74,7 +74,7 @@ static void verrorwithstatus(int, const char *, va_list) __printf0like(2, 0) __d
  * just do a longjmp to the exception handler.  The type of exception is
  * stored in the global variable "exception".
  *
- * Interrupts are disabled; they should be reenabled when the exception is
+ * Interrupts are disabled; they should be re-enabled when the exception is
  * caught.
  */
 

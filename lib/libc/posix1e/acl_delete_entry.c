@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59462c8ae6ab4afac0b1dd3becfea57eedb8f43c $");
+__FBSDID("$FreeBSD: 189669ad753007f1be1190bda770d8086f06f101 $");
 
 #include <sys/types.h>
 #include "namespace.h"
@@ -76,7 +76,6 @@ _entry_matches(const acl_entry_t a, const acl_entry_t b)
 int
 acl_delete_entry(acl_t acl, acl_entry_t entry_d)
 {
-	struct acl *acl_int;
 	struct acl_entry entry_int;
 	int i, j, found = 0;
 
@@ -84,8 +83,6 @@ acl_delete_entry(acl_t acl, acl_entry_t entry_d)
 		errno = EINVAL;
 		return (-1);
 	}
-
-	acl_int = &acl->ats_acl;
 
 	if (_entry_brand(entry_d) != _acl_brand(acl)) {
 		errno = EINVAL;

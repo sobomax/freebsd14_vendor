@@ -1,4 +1,4 @@
-# $FreeBSD: 8ecf2c77f117a2909d9750efd60cd4df24d36d4f $
+# $FreeBSD: 4c192a860f4e01e5858b8e680d0bffb5ae820c0d $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en
@@ -9,6 +9,7 @@ mlx5_en_main.c \
 mlx5_en_tx.c \
 mlx5_en_flow_table.c \
 mlx5_en_hw_tls.c \
+mlx5_en_iq.c \
 mlx5_en_rx.c \
 mlx5_en_rl.c \
 mlx5_en_txrx.c \

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c10301b6680db3824a5cc9f85dfbcf044503a5e2 $");
+__FBSDID("$FreeBSD: 942f980080710e5177d4923e0bdb74386e6db73f $");
 
 /*
  * The main module for truss.  Surprisingly simple, but, then, the other
@@ -55,7 +55,7 @@ __FBSDID("$FreeBSD: c10301b6680db3824a5cc9f85dfbcf044503a5e2 $");
 #include "extern.h"
 #include "syscall.h"
 
-static void
+static __dead2 void
 usage(void)
 {
 	fprintf(stderr, "%s\n%s\n",
@@ -87,7 +87,6 @@ main(int ac, char **av)
 	trussinfo->strsize = 32;
 	trussinfo->curthread = NULL;
 	LIST_INIT(&trussinfo->proclist);
-	init_syscalls();
 	while ((c = getopt(ac, av, "p:o:facedDs:SH")) != -1) {
 		switch (c) {
 		case 'p':	/* specified pid */
@@ -119,7 +118,8 @@ main(int ac, char **av)
 			fname = optarg;
 			break;
 		case 's':	/* Specified string size */
-			trussinfo->strsize = strtonum(optarg, 0, INT_MAX, &errstr);
+			trussinfo->strsize = (int)strtonum(optarg, 0, INT_MAX,
+			    &errstr);
 			if (errstr)
 				errx(1, "maximum string size is %s: %s", errstr, optarg);
 			break;

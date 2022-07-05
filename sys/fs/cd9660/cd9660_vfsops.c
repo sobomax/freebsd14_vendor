@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21d3c3e13a8f78f699bcd58432690e05da3dc9eb $");
+__FBSDID("$FreeBSD: 5d475bec93b8bbe6e22ba4978ff16931d286d1f6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -378,7 +378,6 @@ iso_mountfs(devvp, mp)
 	mp->mnt_data = isomp;
 	mp->mnt_stat.f_fsid.val[0] = dev2udev(dev);
 	mp->mnt_stat.f_fsid.val[1] = mp->mnt_vfc->vfc_typenum;
-	mp->mnt_maxsymlinklen = 0;
 	MNT_ILOCK(mp);
 	if (isverified)
 		mp->mnt_flag |= MNT_VERIFIED;

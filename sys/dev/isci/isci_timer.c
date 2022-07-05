@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60dfb63d83eb48457d61e11a2552ecc477ddb56c $");
+__FBSDID("$FreeBSD: 9bba29c852421824aa6642c12faa6617423af8a0 $");
 
 #include <dev/isci/isci.h>
 
@@ -109,7 +109,7 @@ scif_cb_timer_stop(SCI_CONTROLLER_HANDLE_T controller, void *timer)
  *        a handle for this timer for use in further timer interactions.
  *
  * @warning The "timer_callback" method should be executed in a mutually
- *          exlusive manner from the controller completion handler
+ *          exclusive manner from the controller completion handler
  *          handler (refer to scic_controller_get_handler_methods()).
  *
  * @param[in]  timer_callback This parameter specifies the callback method

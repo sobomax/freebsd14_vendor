@@ -1,4 +1,4 @@
-.\" $FreeBSD: 0b1d091470d081426620799bc5da17c665cb7b11 $
-Set to not build
+.\" $FreeBSD: 70b3673bb5db023f821489e8775b884a754a3561 $
+Do not build
 .Xr gpioctl 8
 as part of the base system.

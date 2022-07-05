@@ -1,4 +1,4 @@
-# $FreeBSD: 14f0845595c96e03c989ccedad4074662796eec4 $
+# $FreeBSD: 486ca47a44be840e176a4df79fc6387e4cff565b $
 
 MDSRCS+= \
 	bcopy.S \
@@ -12,12 +12,7 @@ MDSRCS+= \
 	memmove_resolver.c \
 	strncpy_arch_2_05.S \
 	strncpy.c \
-	strncpy_resolver.c
-
-# XXX Port strcpy to LE.
-.if ${MACHINE_ARCH} == "powerpc64"
-MDSRCS+= \
+	strncpy_resolver.c \
 	strcpy_arch_2_05.S \
 	strcpy.c \
 	strcpy_resolver.c
-.endif

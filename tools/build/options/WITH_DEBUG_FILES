@@ -1,5 +1,5 @@
-.\" $FreeBSD: 16eee2a34f927e48ded92babe9107b43a7561c1d $
-Set to strip debug info into a separate file for each executable binary
+.\" $FreeBSD: 9f476ce422ef66e58e4fc5561a6877ea85fcbce0 $
+Strip debug info into a separate file for each executable binary
 and shared library.
 The debug files will be placed in a subdirectory of
 .Pa /usr/lib/debug

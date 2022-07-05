@@ -25,12 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b921cc90691767a925a67f8c25e41c373881ec91 $
+ * $FreeBSD: 339f622f89b219b79d226adf388d965834fa60e4 $
  */
 
-#ifndef __LINUX_DMI_H__
-#define	__LINUX_DMI_H__
+#ifndef __LINUXKPI_LINUX_DMI_H__
+#define	__LINUXKPI_LINUX_DMI_H__
 
+#include <sys/types.h>
 #include <linux/mod_devicetable.h>
 
 int linux_dmi_check_system(const struct dmi_system_id *);
@@ -43,4 +44,4 @@ const char *linux_dmi_get_system_info(int);
 #define	dmi_first_match(sysid)	linux_dmi_first_match(sysid)
 #define	dmi_get_system_info(sysid)	linux_dmi_get_system_info(sysid)
 
-#endif	/* __LINUX_DMI_H__ */
+#endif	/* __LINUXKPI_LINUX_DMI_H__ */

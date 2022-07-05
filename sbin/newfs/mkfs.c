@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)mkfs.c	8.11 (Berkeley) 5/3/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf5ee60694d0b2643af3503582a83c876dd073cf $");
+__FBSDID("$FreeBSD: a6c4ee60c2d553059386f12092f860a1755f79ca $");
 
 #define	IN_RTLD			/* So we pickup the P_OSREL defines */
 #include <sys/param.h>
@@ -225,7 +225,7 @@ restart:
 	if (maxbsize < bsize || !POWEROF2(maxbsize)) {
 		sblock.fs_maxbsize = sblock.fs_bsize;
 		printf("Extent size set to %d\n", sblock.fs_maxbsize);
-	} else if (sblock.fs_maxbsize > FS_MAXCONTIG * sblock.fs_bsize) {
+	} else if (maxbsize > FS_MAXCONTIG * sblock.fs_bsize) {
 		sblock.fs_maxbsize = FS_MAXCONTIG * sblock.fs_bsize;
 		printf("Extent size reduced to %d\n", sblock.fs_maxbsize);
 	} else {

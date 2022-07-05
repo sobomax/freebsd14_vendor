@@ -1,6 +1,8 @@
-# $FreeBSD: 43e43780ee33e5462e90b2d784f7f153c3ef9469 $
+# $FreeBSD: 1499f916cb17b6d0daa1bc9dc2461080d8921b9a $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 NO_OBJ=
 
@@ -26,6 +28,7 @@ ATPACKAGE+=	at
 .if ${MK_FTP} != "no"
 CONFGROUPS+=	FTP
 FTP+=	ftpd
+FTPPACKAGE=	ftp
 
 afterinstallconfig:
 	${INSTALL_LINK} ${TAG_ARGS} ${DESTDIR}${CONFDIR}/ftpd ${DESTDIR}${CONFDIR}/ftp
@@ -34,6 +37,7 @@ afterinstallconfig:
 .if ${MK_TELNET} != "no"
 CONFGROUPS+=	TELNET
 TELNET+=	telnetd
+TELNETPACKAGE=	telnet
 .endif
 
 .include <bsd.prog.mk>

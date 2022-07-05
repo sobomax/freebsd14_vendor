@@ -49,7 +49,7 @@
 
 #include <sys/cdefs.h>
 /* $NetBSD: msdosfs_vfsops.c,v 1.10 2016/01/30 09:59:27 mlelstv Exp $ */
-__FBSDID("$FreeBSD: 07fc91cccd4a53c9a1d4849370fa7215a787d8b2 $");
+__FBSDID("$FreeBSD: 4a5c658b7949f1cecedfe7fd60791aa9538ca89c $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -353,7 +353,7 @@ msdosfs_root(struct msdosfsmount *pmp, struct vnode *vp) {
 	int error;
 
 	*vp = *pmp->pm_devvp;
-	if ((error = deget(pmp, MSDOSFSROOT, MSDOSFSROOT_OFS, &ndep)) != 0) {
+	if ((error = deget(pmp, MSDOSFSROOT, MSDOSFSROOT_OFS, 0, &ndep)) != 0) {
 		errno = error;
 		return -1;
 	}

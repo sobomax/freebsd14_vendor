@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8edf5c69f7ecebe14a967864b71a1fe6b5dce3b5 $");
+__FBSDID("$FreeBSD: 7b42e8f62253789a0f85ef4d21aefd5f58351083 $");
 
 DEFINE_TEST(test_option_safe_writes)
 {
@@ -58,7 +58,7 @@ DEFINE_TEST(test_option_safe_writes)
 	}
 	assertEqualInt(0, chdir(".."));
 
-	/* Extract created archive withe safe writes */
+	/* Extract created archive with safe writes */
 	assertEqualInt(0,
 	    systemf("%s -x -C out --safe-writes -f t.tar "
 	    ">unpack.out 2>unpack.err", testprog));

@@ -24,7 +24,7 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2708bc5d319f8410a7156b695d4d66650eda38ce $
+ * $FreeBSD: 4eb12a67959030e704333a9dc1b9175d811bd2a1 $
  */
 
 #include <sys/param.h>
@@ -89,7 +89,7 @@ mntfs_allocvp(struct mount *mp, struct vnode *ovp)
 void
 mntfs_freevp(struct vnode *vp)
 {
-
+	ASSERT_VOP_ELOCKED(vp, "mntfs_freevp");
 	vgone(vp);
-	vrele(vp);
+	vput(vp);
 }

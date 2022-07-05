@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf339387c10eeba6eda78f911d765f9160c7e8e1 $");
+__FBSDID("$FreeBSD: 10d5bac15d49deb76a0c077ef8ea187f7622eba8 $");
 
 #include <sys/param.h>
 #ifdef __amd64__
@@ -672,6 +672,10 @@ mpt_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, struct thread *td
 	case MPTIO_READ_CFG_PAGE32:
 #endif
 	case MPTIO_READ_CFG_PAGE:
+		if (page_req->len < (int)sizeof(CONFIG_PAGE_HEADER)) {
+			error = EINVAL;
+			break;
+		}
 		error = mpt_alloc_buffer(mpt, &mpt_page, page_req->len);
 		if (error)
 			break;
@@ -698,6 +702,11 @@ mpt_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, struct thread *td
 	case MPTIO_READ_EXT_CFG_PAGE32:
 #endif
 	case MPTIO_READ_EXT_CFG_PAGE:
+		if (ext_page_req->len <
+		    (int)sizeof(CONFIG_EXTENDED_PAGE_HEADER)) {
+			error = EINVAL;
+			break;
+		}
 		error = mpt_alloc_buffer(mpt, &mpt_page, ext_page_req->len);
 		if (error)
 			break;
@@ -717,6 +726,10 @@ mpt_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, struct thread *td
 	case MPTIO_WRITE_CFG_PAGE32:
 #endif
 	case MPTIO_WRITE_CFG_PAGE:
+		if (page_req->len < (int)sizeof(CONFIG_PAGE_HEADER)) {
+			error = EINVAL;
+			break;
+		}
 		error = mpt_alloc_buffer(mpt, &mpt_page, page_req->len);
 		if (error)
 			break;

@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e5fb8ec90fa25b4e3615658ba4c1c72e75e17174 $
+ * $FreeBSD: fe310a8249a2bf33bd872ffa38a03b02e58ddd66 $
  */
 
 #ifndef	_COMPAT_IA32_IA32_SIGNAL_H
@@ -195,14 +195,6 @@ struct ia32_sigframe3 {
 
 struct ksiginfo;
 struct image_params;
-extern char ia32_sigcode[];
-extern char freebsd4_ia32_sigcode[];
-extern char ia32_osigcode[];
-extern char lcall_tramp;
-extern int sz_ia32_sigcode;
-extern int sz_freebsd4_ia32_sigcode;
-extern int sz_ia32_osigcode;
-extern int sz_lcall_tramp;
 void ia32_sendsig(sig_t, struct ksiginfo *, sigset_t *);
 void ia32_setregs(struct thread *td, struct image_params *imgp,
     uintptr_t stack);

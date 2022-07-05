@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6f53f0b59384a0d36b9e54e523d777fb414a2af0 $
+ * $FreeBSD: f156e968218c44a1ebb5bcef8bd53d64433e9497 $
  */
 
-#ifndef __LINUX_OVERFLOW_H__
-#define	__LINUX_OVERFLOW_H__
+#ifndef __LINUXKPI_LINUX_OVERFLOW_H__
+#define	__LINUXKPI_LINUX_OVERFLOW_H__
 
 #include <sys/stdint.h>
 #include <sys/types.h>
@@ -62,4 +62,4 @@ array_size(size_t x, size_t y)
 #error "Compiler does not support __builtin_mul_overflow"
 #endif
 
-#endif	/* __LINUX_OVERFLOW_H__ */
+#endif	/* __LINUXKPI_LINUX_OVERFLOW_H__ */

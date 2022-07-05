@@ -1,4 +1,6 @@
-# $FreeBSD: f75445e47f63bd75d14da69fb7ea9190fcbf10b4 $
+# $FreeBSD: 1772965239e85349e49a040157187cdc24a38474 $
+
+PACKAGE=	kerberos
 
 LIB=	asn1
 LDFLAGS=	-Wl,--no-undefined

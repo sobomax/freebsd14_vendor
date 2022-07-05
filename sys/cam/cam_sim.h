@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 589d2bd1f16d034392e4619c322a9c70b782e29b $
+ * $FreeBSD: a1595a51fadbbc01404b72715a0fd23acb62323b $
  */
 
 #ifndef _CAM_CAM_SIM_H
@@ -140,6 +140,12 @@ static __inline u_int32_t
 cam_sim_bus(const struct cam_sim *sim)
 {
 	return (sim->bus_id);
+}
+
+static __inline bool
+cam_sim_pollable(const struct cam_sim *sim)
+{
+	return (sim->sim_poll != NULL);
 }
 
 #endif /* _KERNEL */

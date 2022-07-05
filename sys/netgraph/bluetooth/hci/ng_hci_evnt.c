@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_evnt.c,v 1.6 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: 9e299d12fd1e0306ec62d004ec0a67e564fcf1cd $
+ * $FreeBSD: 64ab4f0b36b93d6e35c4f0ae81aa447f23d77b16 $
  */
 
 #include <sys/param.h>
@@ -528,6 +528,7 @@ static int le_connection_complete(ng_hci_unit_p unit, struct mbuf *event)
 		if (error != 0) {
 			ng_hci_con_untimeout(con);
 			ng_hci_free_con(con);
+			goto out;
 		}
 
 	} else if ((error = ng_hci_con_untimeout(con)) != 0)

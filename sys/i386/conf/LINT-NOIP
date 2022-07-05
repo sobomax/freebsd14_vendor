@@ -1,4 +1,4 @@
-# $FreeBSD: a1ea6fa3202a6c0902f0944f9a84a2d114af37c7 $
+# $FreeBSD: 2f21766eb69ecad9ea14d248b8a86fd4c6c7b6ef $
 include LINT
 ident LINT-NOIP
 makeoptions MKMODULESENV+="WITHOUT_INET_SUPPORT="
@@ -12,6 +12,7 @@ nodevice bxe
 nodevice em
 nodevice fxp
 nodevice jme
+nodevice lio
 nodevice msk
 nodevice mxge
 nodevice sge

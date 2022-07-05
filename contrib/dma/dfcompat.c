@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: strlcpy.c,v 1.11 2006/05/05 15:27:38 millert Exp $
- * $FreeBSD: 014fa88b8d49d21fe6863d3173f54cd04308302c $
+ * $FreeBSD: d4ecc1d74ae91ea032c18216939006eb56b4c275 $
  * $DragonFly: src/lib/libc/string/strlcpy.c,v 1.4 2005/09/18 16:32:34 asmodai Exp $
  */
 
@@ -85,7 +85,7 @@ strlcpy(char *dst, const char *src, size_t siz)
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 014fa88b8d49d21fe6863d3173f54cd04308302c $
+ * $FreeBSD: d4ecc1d74ae91ea032c18216939006eb56b4c275 $
  * $DragonFly: src/lib/libc/stdlib/reallocf.c,v 1.2 2003/06/17 04:26:46 dillon Exp $
  */
 #include <stdlib.h>
@@ -96,7 +96,7 @@ reallocf(void *ptr, size_t size)
 	void *nptr;
 
 	nptr = realloc(ptr, size);
-	if (!nptr && ptr)
+	if (!nptr && ptr && size != 0)
 		free(ptr);
 	return (nptr);
 }

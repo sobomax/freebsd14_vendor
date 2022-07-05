@@ -26,7 +26,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD: 97e7d96ec7aa3506d94473a3e081987b3b155b9c $
+$FreeBSD: ae5fa9f357c87c4226d064a3bc56ca7307262325 $
 
 ***************************************************************************/
 
@@ -117,7 +117,7 @@ struct port_info {
 #define PORT_NAME_LEN 32
 	char            lockbuf[PORT_LOCK_NAME_LEN];
 	char            namebuf[PORT_NAME_LEN];
-} __aligned(L1_CACHE_BYTES);
+} __aligned(CACHE_LINE_SIZE);
 
 enum {
 	/* adapter flags */

@@ -1,4 +1,4 @@
-# $FreeBSD: 3d50a1943ce4ecef210b27eb6c792c61c344d10b $
+# $FreeBSD: 75fbc64dce9cf7a54a6795987e1bbbabf04c1635 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -438,7 +438,11 @@
         ..
         ifconfig
         ..
+        md5
+        ..
         mdconfig
+        ..
+        newfs_msdos
         ..
         nvmecontrol
         ..
@@ -864,6 +868,8 @@
         ..
         vm
         ..
+        vmm
+        ..
     ..
     usr.bin
         apply
@@ -992,11 +998,15 @@
         ..
         diff
         ..
+        diff3
+        ..
         dirname
         ..
         du
         ..
         file2c
+        ..
+        file
         ..
         find
         ..
@@ -1056,6 +1066,8 @@
         ..
         soelim
         ..
+        sort
+        ..
         stat
         ..
         tail
@@ -1093,6 +1105,8 @@
     ..
     usr.sbin
         chown
+        ..
+        daemon
         ..
         etcupdate
         ..

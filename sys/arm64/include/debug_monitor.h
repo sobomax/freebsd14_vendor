@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ca1a4c9248e5367d4e562018f1fd454b1d20bd4 $
+ * $FreeBSD: befc51e88304a4169bef3768d60696ee2d86473a $
  */
 
 #ifndef _MACHINE_DEBUG_MONITOR_H_

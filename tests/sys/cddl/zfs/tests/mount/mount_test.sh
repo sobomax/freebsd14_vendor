@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 9fb539db7a561a0b04f8ff0ebb5c60f36eb58f95 $
+# $FreeBSD: 25f1af3ebb7c106a7a01adfcf84b479b9c2d6981 $
 
 #
 # Copyright 2014 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case umount_001 cleanup
 umount_001_head()
 {
 	atf_set "descr" "zfs umount should unmount a file system"
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 umount_001_body()
 {
@@ -54,7 +54,7 @@ atf_test_case umountall_001 cleanup
 umountall_001_head()
 {
 	atf_set "descr" "zfs umount -a should unmount all ZFS file systems"
-	atf_set "require.progs"  zfs
+	atf_set "require.progs" "ksh93 zfs"
 }
 umountall_001_body()
 {

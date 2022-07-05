@@ -1,6 +1,5 @@
 --
 -- Copyright (C) 2010 The FreeBSD Foundation
--- All rights reserved.
 --
 -- This documentation was written by Shteryana Sotirova Shopova under
 -- sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 27f5be7d68f553111b8eb338612226e1513da715 $
+-- $FreeBSD: 69873eddf33dc01509fa16be0a322d68f88fa8ae $
 --
 
 BEGEMOT-WIRELESS-MIB DEFINITIONS ::= BEGIN

@@ -1,0 +1,2 @@
+.\" $FreeBSD: be9280f90b61d0be00d24fc815d23dd9cfd73a88 $
+Split man pages into their own packages during make package.

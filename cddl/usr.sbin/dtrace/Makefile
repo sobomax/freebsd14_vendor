@@ -1,9 +1,10 @@
-# $FreeBSD: f1248f419bee2cdb09fbd705a6d2fe0872385044 $
+# $FreeBSD: d8510e62fb29fd414f64632a5b2c545e1181cf01 $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/cmd/dtrace
 
+PACKAGE=	dtrace
 PROG=		dtrace
 SRCS=		dtrace.c
 BINDIR?=	/usr/sbin

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 223afb343e8c35d781675d33dd4a0c70648f7190 $
+ * $FreeBSD: e6339f57b8ad48a412812fc419bf58345cf97d6b $
  */
 
 #ifndef _IO_PPT_H_
@@ -34,6 +34,8 @@
 int	ppt_unassign_all(struct vm *vm);
 int	ppt_map_mmio(struct vm *vm, int bus, int slot, int func,
 		     vm_paddr_t gpa, size_t len, vm_paddr_t hpa);
+int	ppt_unmap_mmio(struct vm *vm, int bus, int slot, int func,
+		       vm_paddr_t gpa, size_t len);
 int	ppt_setup_msi(struct vm *vm, int vcpu, int bus, int slot, int func,
 		      uint64_t addr, uint64_t msg, int numvec);
 int	ppt_setup_msix(struct vm *vm, int vcpu, int bus, int slot, int func,

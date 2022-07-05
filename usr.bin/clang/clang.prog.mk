@@ -1,4 +1,4 @@
-# $FreeBSD: de5cceac7c6b8281574a00552277b75ccd2df747 $
+# $FreeBSD: d0ed6b8587c5c8366c22c5cfdf975efebc076865 $
 
 .include "${SRCTOP}/lib/clang/clang.pre.mk"
 
@@ -17,8 +17,10 @@ LDADD+=		${OBJTOP}/lib/clang/lib${lib}/lib${lib}.a
 
 PACKAGE=	clang
 
+.if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
 LIBADD+=	execinfo
 LIBADD+=	ncursesw
+.endif
 LIBADD+=	pthread
 
 .include <bsd.prog.mk>

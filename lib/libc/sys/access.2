@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)access.2	8.2 (Berkeley) 4/1/94
-.\" $FreeBSD: 13bfd7e5a88adbd785c8972a3df9e8b149fa255f $
+.\" $FreeBSD: 12af63385780cac90abd6435cc583130d42e1804 $
 .\"
-.Dd February 23, 2021
+.Dd March 30, 2021
 .Dt ACCESS 2
 .Os
 .Sh NAME
@@ -129,6 +129,17 @@ See the description of the
 flag in the
 .Xr open 2
 manual page.
+.It Dv AT_EMPTY_PATH
+If the
+.Fa path
+argument is an empty string, operate on the file or directory
+referenced by the descriptor
+.Fa fd .
+If
+.Fa fd
+is equal to
+.Dv AT_FDCWD ,
+operate on the current working directory.
 .El
 .Pp
 Even if a process's real or effective user has appropriate privileges

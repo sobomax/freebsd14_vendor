@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94f5f50150196faba8ed04d63b479e907e8eabba $");
+__FBSDID("$FreeBSD: d513b7e65538b0b8d81a622c687224ff8f5426e5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -186,9 +186,7 @@ run_filter(bus_dma_tag_t dmat, bus_addr_t paddr)
 
 /*
  * Convenience function for manipulating driver locks from busdma (during
- * busdma_swi, for example).  Drivers that don't provide their own locks
- * should specify &Giant to dmat->lockfuncarg.  Drivers that use their own
- * non-mutex locking scheme don't have to use this at all.
+ * busdma_swi, for example).
  */
 void
 busdma_lock_mutex(void *arg, bus_dma_lock_op_t op)

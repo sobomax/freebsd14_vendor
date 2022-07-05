@@ -1,5 +1,5 @@
 #
-# $FreeBSD: d201e11e19b2d38f2af8d5272b8dc22bcac6b0b7 $
+# $FreeBSD: 67e849369596a38a4807d149873acd18245342b5 $
 #
 #
 # Makefile for building virtual machine and cloud provider disk images.
@@ -7,8 +7,8 @@
 
 VMTARGETS=	vm-image
 VMFORMATS?=	vhd vmdk qcow2 raw
-VMSIZE?=	4096M
-SWAPSIZE?=	1G
+VMSIZE?=	4096m
+SWAPSIZE?=	1g
 VMBASE?=	vm
 
 VHD_DESC=	Azure, VirtualPC, Hyper-V, Xen disk image
@@ -54,7 +54,7 @@ emulator-portinstall:
 .if ( ${TARGET_ARCH} != "i386" ) || ( ${MACHINE_ARCH} != "amd64" )
 .if !exists(/usr/local/bin/qemu-${TARGET_ARCH}-static)
 .if exists(${PORTSDIR}/emulators/qemu-user-static/Makefile)
-	env - PATH=$$PATH make -C ${PORTSDIR}/emulators/qemu-user-static BATCH=1 all install clean
+	env - UNAME_r="${REVISION}-${BRANCH}" PATH=$$PATH make -C ${PORTSDIR}/emulators/qemu-user-static BATCH=1 all install clean
 .else
 .if !exists(/usr/local/sbin/pkg-static)
 	env ASSUME_ALWAYS_YES=yes pkg bootstrap -y

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb154b5d3d79ae5890df53127a24c0662b55b140 $");
+__FBSDID("$FreeBSD: 6e5e715c28f8dceed43d18adc2118059b9758e87 $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -112,6 +112,7 @@ nlm_crypto_form_srcdst_segs(struct xlp_sec_command *cmd,
 
 	switch (crp->crp_buf.cb_type) {
 	case CRYPTO_BUF_MBUF:
+	case CRYPTO_BUF_SINGLE_MBUF:
 	{
 		struct mbuf *m = NULL;
 
@@ -123,6 +124,8 @@ nlm_crypto_form_srcdst_segs(struct xlp_sec_command *cmd,
 				dstseg = nlm_crypto_fill_dst_seg(cmd->paramp,
 				    dstseg, mtod(m,caddr_t), m->m_len);
 			}
+			if (crp->crp_buf.cb_type == CRYPTO_BUF_SINGLE_MBUF)
+				break;
 			m = m->m_next;
 		}
 		break;

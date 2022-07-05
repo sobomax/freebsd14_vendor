@@ -22,13 +22,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d915e15c4f3600f43a560c5ae500fed73318cd2f $
+ * $FreeBSD: d5b6ab5d0902be31f790ff4f6e6f5e3f03eeab4d $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <dev/mlx5/driver.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 static int mlx5_relaxed_ordering_write;
 SYSCTL_INT(_hw_mlx5, OID_AUTO, relaxed_ordering_write, CTLFLAG_RWTUN,

@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2017, Intel Corporation
+  Copyright (c) 2001-2020, Intel Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 36ca7cacc853cad1ed2a2ac0c42bee4f0664d0d0 $*/
+/*$FreeBSD: 28d93672988292cd37c0e231703cb186d0c7014e $*/
 
 
 #ifndef _IXGBE_SRIOV_H_
@@ -70,12 +70,12 @@
 int  ixgbe_if_iov_vf_add(if_ctx_t, u16, const nvlist_t *);
 int  ixgbe_if_iov_init(if_ctx_t, u16, const nvlist_t *);
 void ixgbe_if_iov_uninit(if_ctx_t);
-void ixgbe_initialize_iov(struct adapter *);
-void ixgbe_recalculate_max_frame(struct adapter *);
-void ixgbe_ping_all_vfs(struct adapter *);
+void ixgbe_initialize_iov(struct ixgbe_softc *);
+void ixgbe_recalculate_max_frame(struct ixgbe_softc *);
+void ixgbe_ping_all_vfs(struct ixgbe_softc *);
 int  ixgbe_pci_iov_detach(device_t);
 void ixgbe_define_iov_schemas(device_t, int *);
-void ixgbe_align_all_queue_indices(struct adapter *);
+void ixgbe_align_all_queue_indices(struct ixgbe_softc *);
 int  ixgbe_vf_que_index(int, int, int);
 u32  ixgbe_get_mtqc(int);
 u32  ixgbe_get_mrqc(int);

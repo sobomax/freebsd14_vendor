@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cf982e3ddfa186a48fa4ca894ac23cc8995c46d $");
+__FBSDID("$FreeBSD: d9ac0a2a3d72abe57388b6f314f090470fe598cf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -506,6 +506,17 @@ g_eli_auth_run(struct g_eli_worker *wr, struct bio *bp)
 			/*
 			 * Last encrypted sector of each decrypted sector is
 			 * only partially filled.
+			 */
+			if (bp->bio_cmd == BIO_WRITE)
+				memset(data + sc->sc_alen + data_secsize, 0,
+				    encr_secsize - sc->sc_alen - data_secsize);
+		} else if (data_secsize + sc->sc_alen != encr_secsize) {
+			/*
+			 * If the HMAC size is not a multiple of 128 bits, the
+			 * per-sector data size is rounded down to ensure that
+			 * encryption can be performed without requiring any
+			 * padding.  In this case, each sector contains unused
+			 * bytes.
 			 */
 			if (bp->bio_cmd == BIO_WRITE)
 				memset(data + sc->sc_alen + data_secsize, 0,

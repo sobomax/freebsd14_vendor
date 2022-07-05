@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: eb1798a4e4505aaad42683c481e0808fc5bea5e1 $
+ * $FreeBSD: 0c35747d596c784c1c3723e0d4d85fb5cb2e2480 $
  */
 
-#ifndef __LINUX_IRQ_WORK_H__
-#define	__LINUX_IRQ_WORK_H__
+#ifndef _LINUXKPI_LINUX_IRQ_WORK_H_
+#define	_LINUXKPI_LINUX_IRQ_WORK_H_
 
 #include <sys/param.h>
 #include <sys/taskqueue.h>
@@ -64,4 +64,10 @@ irq_work_queue(struct irq_work *irqw)
 	taskqueue_enqueue(linux_irq_work_tq, &irqw->irq_task);
 }
 
-#endif /* __LINUX_IRQ_WORK_H__ */
+static inline void
+irq_work_sync(struct irq_work *irqw)
+{
+	taskqueue_drain(linux_irq_work_tq, &irqw->irq_task);
+}
+
+#endif /* _LINUXKPI_LINUX_IRQ_WORK_H_ */

@@ -1,19 +1,18 @@
-/* $FreeBSD: c11ffb6ea49fc501e9aa31d6dfbf57c346bf1a6c $ */
+/* $FreeBSD: 68085ff7435cffab5feb30dc4fee02f3e868350c $ */
 OUTPUT_FORMAT("elf64-x86-64-freebsd", "elf64-x86-64-freebsd", "elf64-x86-64-freebsd")
 OUTPUT_ARCH(i386:x86-64)
 ENTRY(btext)
 SEARCH_DIR("/usr/lib");
 SECTIONS
 {
-  kernphys = kernload;
   /* Read-only sections, merged into text segment: */
-  . = kernbase + kernphys + SIZEOF_HEADERS;
+  . = kernbase + kernload + SIZEOF_HEADERS;
   /*
    * Use the AT keyword in order to set the right LMA that contains
    * the physical address where the section should be loaded. This is
    * needed for the Xen loader which honours the LMA.
    */
-  .interp         : AT (kernphys + SIZEOF_HEADERS) { *(.interp) }
+  .interp         : AT (kernload + SIZEOF_HEADERS) { *(.interp) }
   .hash           : { *(.hash) }
   .gnu.hash       : { *(.gnu.hash) }
   .dynsym         : { *(.dynsym) }

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be35648429887decaf21c3bf86ae35ede0c2166a $");
+__FBSDID("$FreeBSD: 0de0a9bc11146fe93b19a3009370fadb50b644d9 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -169,6 +169,25 @@ hidbus_locate(const void *desc, hid_size_t size, int32_t u, enum hid_kind k,
 		*id = 0;
 	hid_end_parse(d);
 	return (0);
+}
+
+bool
+hidbus_is_collection(const void *desc, hid_size_t size, int32_t usage,
+    uint8_t tlc_index)
+{
+	struct hid_data *d;
+	struct hid_item h;
+	bool ret = false;
+
+	d = hid_start_parse(desc, size, 0);
+	HIDBUS_FOREACH_ITEM(d, &h, tlc_index) {
+		if (h.kind == hid_collection && h.usage == usage) {
+			ret = true;
+			break;
+		}
+	}
+	hid_end_parse(d);
+	return (ret);
 }
 
 static device_t
@@ -457,6 +476,9 @@ hidbus_write_ivar(device_t bus, device_t child, int which, uintptr_t value)
 		break;
 	case HIDBUS_IVAR_FLAGS:
 		tlc->flags = value;
+		if ((value & HIDBUS_FLAG_CAN_POLL) != 0)
+			HID_INTR_SETUP(
+			    device_get_parent(bus), NULL, NULL, NULL);
 		break;
 	case HIDBUS_IVAR_DRIVER_INFO:
 		tlc->driver_info = value;

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0824219c00c24b79284c7ce3cbe3ae68c95df5e7 $
+ * $FreeBSD: 585689afe197bd7a873d045f96a0db6b49393009 $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -76,7 +76,6 @@ Elf_Addr reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 	round(16, align)
 #define	calculate_tls_offset(prev_offset, prev_size, size, align, offset) \
 	round(prev_offset + prev_size, align)
-#define	calculate_tls_end(off, size) 	((off) + (size))
 #define calculate_tls_post_size(align) \
 	round(TLS_TCB_SIZE, align) - TLS_TCB_SIZE
 
@@ -92,5 +91,8 @@ extern void *__tls_get_addr(tls_index *ti);
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
 #define md_abi_variant_hook(x)
+
+#define	TLS_VARIANT_I	1
+#define	TLS_DTV_OFFSET	0
 
 #endif

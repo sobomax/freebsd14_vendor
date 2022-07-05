@@ -1,14 +1,15 @@
-# $FreeBSD: 389e0280a6bc8178980ab35a7024f24eb51a424d $
+# $FreeBSD: 00ae29bab26b59a695b36cb573ab0514c2cf1687 $
 
 .include <src.opts.mk>
 
+PACKAGE=clibs
 LIB=rt
 SHLIB_MAJOR= 1
 CFLAGS+=-I${SRCTOP}/lib/libc/include -I${.CURDIR}
 .ifndef NO_THREAD_STACK_UNWIND
 CFLAGS+=-fexceptions
 .endif
-CFLAGS+=-Winline -Wall
+CFLAGS+=-Wall
 LIBADD=	pthread
 
 WARNS?=	2

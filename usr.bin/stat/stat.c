@@ -37,7 +37,7 @@ __RCSID("$NetBSD: stat.c,v 1.33 2011/01/15 22:54:10 njoly Exp $"
 #endif
 #endif
 
-__FBSDID("$FreeBSD: e504333c3329160d862b89dedce9b4b5a72b4b8b $");
+__FBSDID("$FreeBSD: 9d94399a633399906ed86ededa775b3df029e422 $");
 
 #if HAVE_CONFIG_H
 #include "config.h" 
@@ -59,6 +59,7 @@ __FBSDID("$FreeBSD: e504333c3329160d862b89dedce9b4b5a72b4b8b $");
 #include <errno.h>
 #include <grp.h>
 #include <limits.h>
+#include <locale.h>
 #include <paths.h>
 #include <pwd.h>
 #include <stdio.h>
@@ -763,6 +764,7 @@ format1(const struct stat *st,
 			ts.tv_sec = 0;
 			tm = localtime(&ts.tv_sec);
 		}
+		(void)setlocale(LC_TIME, "");
 		(void)strftime(path, sizeof(path), timefmt, tm);
 		sdata = path;
 		formats = FMTF_DECIMAL | FMTF_OCTAL | FMTF_UNSIGNED | FMTF_HEX |

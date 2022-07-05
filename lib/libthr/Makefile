@@ -1,4 +1,4 @@
-# $FreeBSD: c77b6b565a87684e6e54fd801efbd738d413ba34 $
+# $FreeBSD: 0b550d995241a51ebb38c2996a282d681a227f92 $
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does
@@ -19,17 +19,19 @@ CFLAGS+=-DPTHREAD_KERNEL
 CFLAGS+=-I${SRCTOP}/lib/libc/include
 CFLAGS+=-I${SRCTOP}/lib/libc/${MACHINE_CPUARCH}
 CFLAGS+=-I${.CURDIR}/thread
-CFLAGS+=-I${SRCTOP}/include
 CFLAGS+=-I${.CURDIR}/arch/${MACHINE_CPUARCH}/include
 CFLAGS+=-I${.CURDIR}/sys
 CFLAGS+=-I${SRCTOP}/libexec/rtld-elf
 CFLAGS+=-I${SRCTOP}/libexec/rtld-elf/${MACHINE_CPUARCH}
 CFLAGS+=-I${SRCTOP}/lib/libthread_db
-CFLAGS+=-Winline
 
 CFLAGS.thr_stack.c+=	-Wno-cast-align
 CFLAGS.rtld_malloc.c+=	-Wno-cast-align
 CFLAGS.thr_symbols.c+=	-Wno-missing-variable-declarations
+
+.if ${MACHINE_CPUARCH} == "arm"
+NO_THREAD_UNWIND_STACK= yes
+.endif
 
 .ifndef NO_THREAD_UNWIND_STACK
 CFLAGS+=-fexceptions

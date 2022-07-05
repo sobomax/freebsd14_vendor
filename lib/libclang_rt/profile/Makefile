@@ -1,4 +1,4 @@
-# $FreeBSD: ab3eba28ac961069095b2e421bb56dc303ec7515 $
+# $FreeBSD: d683983e5b9705c8ff2c6e6f2760cd3a7b15fb9a $
 
 .include <bsd.init.mk>
 
@@ -13,7 +13,6 @@ CXXFLAGS+=	-fvisibility=default
 
 SRCS+=		profile/GCDAProfiling.c
 SRCS+=		profile/InstrProfiling.c
-SRCS+=		profile/InstrProfilingBiasVar.c
 SRCS+=		profile/InstrProfilingBuffer.c
 SRCS+=		profile/InstrProfilingFile.c
 SRCS+=		profile/InstrProfilingInternal.c
@@ -25,6 +24,7 @@ SRCS+=		profile/InstrProfilingPlatformOther.c
 SRCS+=		profile/InstrProfilingRuntime.cpp
 SRCS+=		profile/InstrProfilingUtil.c
 SRCS+=		profile/InstrProfilingValue.c
+SRCS+=		profile/InstrProfilingVersionVar.c
 SRCS+=		profile/InstrProfilingWriter.c
 
 .PATH:		${CRTSRC}/include/profile

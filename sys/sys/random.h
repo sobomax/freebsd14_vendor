@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e2c4ab144d2a2577175feb30e15b452e866b3c65 $
+ * $FreeBSD: 2786cfad4b8fb4fb79357b20c6750c4090ad12b7 $
  */
 
 #ifndef	_SYS_RANDOM_H_
@@ -108,6 +108,7 @@ _Static_assert(ENTROPYSOURCE <= 32,
     "hardcoded assumption that values fit in a typical word-sized bitset");
 
 #define RANDOM_CACHED_BOOT_ENTROPY_MODULE	"boot_entropy_cache"
+#define RANDOM_PLATFORM_BOOT_ENTROPY_MODULE	"boot_entropy_platform"
 
 extern u_int hc_source_mask;
 void random_harvest_queue_(const void *, u_int, enum random_entropy_source);

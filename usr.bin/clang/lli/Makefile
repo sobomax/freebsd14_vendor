@@ -1,8 +1,9 @@
-# $FreeBSD: cce7d9b5db6502b750eb155cbb46fd7fcaf6ffba $
+# $FreeBSD: ec3e1f3e4ec8d0213888956b008ea97914efdafa $
 
 PROG_CXX=	lli
 
 SRCDIR=		llvm/tools/lli
+SRCS+=		ExecutionUtils.cpp
 SRCS+=		lli.cpp
 
 LIBADD+=	z

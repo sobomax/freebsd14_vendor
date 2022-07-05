@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: f26567dcc42c0bb40e76fd20ad9e7c5d087a2b97 $
+# $FreeBSD: a75a8bbca4ace23decece5d537494776832348cc $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case inuse_005_pos
 inuse_005_pos_head()
 {
 	atf_set "descr" "Verify newfs over active pool fails."
-	atf_set "require.progs"  newfs zpool
+	atf_set "require.progs" "ksh93 newfs zpool"
 	atf_set "require.user" root
 }
 inuse_005_pos_body()
@@ -47,7 +47,7 @@ atf_test_case inuse_010_neg
 inuse_010_neg_head()
 {
 	atf_set "descr" "ZFS shouldn't be able to use a disk with a mounted filesystem"
-	atf_set "require.progs"  newfs zpool
+	atf_set "require.progs" "ksh93 newfs zpool"
 	atf_set "require.user" root
 }
 inuse_010_neg_body()

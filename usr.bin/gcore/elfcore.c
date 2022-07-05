@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d936aa023e79dca99569715e8e590a7f1d58589d $");
+__FBSDID("$FreeBSD: 9c5be76cfd7c4889a36fe7b98b1918303f585aa5 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -516,7 +516,7 @@ elf_puthdr(int efd, pid_t pid, struct map_entry *map, void *hdr, size_t hdrsize,
 	 */
 	phdr = (Elf_Phdr *)((char *)hdr + ehdr->e_phoff);
 
-	/* The note segement. */
+	/* The note segment. */
 	phdr->p_type = PT_NOTE;
 	phdr->p_offset = hdrsize;
 	phdr->p_vaddr = 0;

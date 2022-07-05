@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6c40ae76695ab03519ca5e124cbaac6ebf91c8bb $");
+__FBSDID("$FreeBSD: f05e2183a21b5b09d3fb9a7b8c909b8f38b5f67d $");
 
 DEFINE_TEST(test_read_format_zip_winzip_aes256_large)
 {
@@ -143,7 +143,7 @@ DEFINE_TEST(test_read_format_zip_winzip_aes256_large)
 		assertEqualInt(ARCHIVE_FAILED,
 			archive_read_data(a, buff, sizeof(buff)));
 		assertEqualString(archive_error_string(a),
-		    "Unsupported ZIP compression method (deflation)");
+		    "Unsupported ZIP compression method (8: deflation)");
 		assert(archive_errno(a) != 0);
 	}
 
@@ -161,7 +161,7 @@ DEFINE_TEST(test_read_format_zip_winzip_aes256_large)
 		assertEqualInt(ARCHIVE_FAILED,
 			archive_read_data(a, buff, sizeof(buff)));
 		assertEqualString(archive_error_string(a),
-		    "Unsupported ZIP compression method (deflation)");
+		    "Unsupported ZIP compression method (8: deflation)");
 		assert(archive_errno(a) != 0);
 	}
 
@@ -179,7 +179,7 @@ DEFINE_TEST(test_read_format_zip_winzip_aes256_large)
 		assertEqualInt(ARCHIVE_FAILED,
 			archive_read_data(a, buff, sizeof(buff)));
 		assertEqualString(archive_error_string(a),
-		    "Unsupported ZIP compression method (deflation)");
+		    "Unsupported ZIP compression method (8: deflation)");
 		assert(archive_errno(a) != 0);
 	}
 
@@ -197,7 +197,7 @@ DEFINE_TEST(test_read_format_zip_winzip_aes256_large)
 		assertEqualInt(ARCHIVE_FAILED,
 			archive_read_data(a, buff, sizeof(buff)));
 		assertEqualString(archive_error_string(a),
-		    "Unsupported ZIP compression method (deflation)");
+		    "Unsupported ZIP compression method (8: deflation)");
 		assert(archive_errno(a) != 0);
 	}
 	

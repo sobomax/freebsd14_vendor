@@ -455,8 +455,8 @@ dsl_pool_destroy_obsolete_bpobj(dsl_pool_t *dp, dmu_tx_t *tx)
 }
 
 dsl_pool_t *
-dsl_pool_create(spa_t *spa, nvlist_t *zplprops, dsl_crypto_params_t *dcp,
-    uint64_t txg)
+dsl_pool_create(spa_t *spa, nvlist_t *zplprops __attribute__((unused)),
+    dsl_crypto_params_t *dcp, uint64_t txg)
 {
 	int err;
 	dsl_pool_t *dp = dsl_pool_open_impl(spa, txg);
@@ -568,8 +568,7 @@ dsl_pool_sync_mos(dsl_pool_t *dp, dmu_tx_t *tx)
 	VERIFY0(zio_wait(zio));
 	dmu_objset_sync_done(dp->dp_meta_objset, tx);
 	taskq_wait(dp->dp_sync_taskq);
-	multilist_destroy(dp->dp_meta_objset->os_synced_dnodes);
-	dp->dp_meta_objset->os_synced_dnodes = NULL;
+	multilist_destroy(&dp->dp_meta_objset->os_synced_dnodes);
 
 	dprintf_bp(&dp->dp_meta_rootbp, "meta objset rootbp is %s", "");
 	spa_set_rootblkptr(dp->dp_spa, &dp->dp_meta_rootbp);
@@ -892,6 +891,12 @@ dsl_pool_unreserved_space(dsl_pool_t *dp, zfs_space_check_t slop_policy)
 	    metaslab_class_get_deferred(spa_normal_class(dp->dp_spa));
 	uint64_t quota = (poolsize >= deferred) ? (poolsize - deferred) : 0;
 	return (quota);
+}
+
+uint64_t
+dsl_pool_deferred_space(dsl_pool_t *dp)
+{
+	return (metaslab_class_get_deferred(spa_normal_class(dp->dp_spa)));
 }
 
 boolean_t

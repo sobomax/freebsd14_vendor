@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4886ff1e63912326ffc3df34bd86b807055d8bf1 $
+ * $FreeBSD: f3b721359c72c29e1c5392a225760c2b0d4ebecd $
  *
  */
 
@@ -38,5 +38,8 @@ void	ena_cleanup(void *arg, int pending);
 void	ena_qflush(if_t ifp);
 int	ena_mq_start(if_t ifp, struct mbuf *m);
 void	ena_deferred_mq_start(void *arg, int pending);
+
+#define CSUM_OFFLOAD 	(CSUM_IP|CSUM_TCP|CSUM_UDP)
+#define CSUM6_OFFLOAD	(CSUM_IP6_UDP|CSUM_IP6_TCP)
 
 #endif /* ENA_TXRX_H */

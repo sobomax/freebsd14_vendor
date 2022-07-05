@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 71e76f072693ccc0ba53af7a22d4762c30ade50c $
+ * $FreeBSD: bd246019bcc9c11e883bad07d33e38919be68b7a $
  */
 
 #ifndef _SYS_SYSCALLSUBR_H_
@@ -108,7 +108,7 @@ int	kern_clock_settime(struct thread *td, clockid_t clock_id,
 	    struct timespec *ats);
 void	kern_thread_cputime(struct thread *targettd, struct timespec *ats);
 void	kern_process_cputime(struct proc *targetp, struct timespec *ats);
-int	kern_close_range(struct thread *td, u_int lowfd, u_int highfd);
+int	kern_close_range(struct thread *td, int flags, u_int lowfd, u_int highfd);
 int	kern_close(struct thread *td, int fd);
 int	kern_connectat(struct thread *td, int dirfd, int fd,
 	    struct sockaddr *sa);

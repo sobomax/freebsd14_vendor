@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30c485010ac8210644d7314a320d649495db98a7 $");
+__FBSDID("$FreeBSD: adbecd01ef382763d65f123a835ca6995a75bfcc $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_vm.h"
@@ -929,7 +929,7 @@ retry:
 					VM_OBJECT_WLOCK(object);
 				}
 				if (object->type == OBJT_DEFAULT ||
-				    object->type == OBJT_SWAP ||
+				    (object->flags & OBJ_SWAP) != 0 ||
 				    object->type == OBJT_VNODE) {
 					pindex = OFF_TO_IDX(current->offset +
 					    (addr - current->start));
@@ -1356,7 +1356,8 @@ vm_mmap_vnode(struct thread *td, vm_size_t objsize,
 			goto done;
 		}
 	} else {
-		KASSERT(obj->type == OBJT_DEFAULT || obj->type == OBJT_SWAP,
+		KASSERT(obj->type == OBJT_DEFAULT ||
+		    (obj->flags & OBJ_SWAP) != 0,
 		    ("wrong object type"));
 		vm_object_reference(obj);
 #if VM_NRESERVLEVEL > 0

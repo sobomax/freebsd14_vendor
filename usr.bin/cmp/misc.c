@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)misc.c	8.3 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e84f0d7a5277565632c48a5874076dba5681960 $");
+__FBSDID("$FreeBSD: 1dba34d287921e59b9ad23329e8d2f8ab997fae3 $");
 
 #include <sys/types.h>
 
@@ -56,10 +56,20 @@ eofmsg(const char *file)
 }
 
 void
-diffmsg(const char *file1, const char *file2, off_t byte, off_t line)
+diffmsg(const char *file1, const char *file2, off_t byte, off_t line,
+    int b1, int b2)
 {
-	if (!sflag)
+	if (sflag)
+		goto out;
+
+	if (bflag) {
+		(void)printf("%s %s differ: char %lld, line %lld is %3o %c %3o %c\n",
+		    file1, file2, (long long)byte, (long long)line, b1, b1,
+		    b2, b2);
+	} else {
 		(void)printf("%s %s differ: char %lld, line %lld\n",
 		    file1, file2, (long long)byte, (long long)line);
+	}
+out:
 	exit(DIFF_EXIT);
 }

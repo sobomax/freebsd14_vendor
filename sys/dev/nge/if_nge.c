@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c099896d7bc8e0595623bd643ec8736dd0122e2e $");
+__FBSDID("$FreeBSD: 67e1f03ebdd272d996aa17ea792790fe0f595cc2 $");
 
 /*
  * National Semiconductor DP83820/DP83821 gigabit ethernet driver
@@ -1950,7 +1950,7 @@ nge_encap(struct nge_softc *sc, struct mbuf **m_head)
 	if ((m->m_flags & M_VLANTAG) != 0)
 		desc->nge_extsts |= htole32(NGE_TXEXTSTS_VLANPKT |
 		    bswap16(m->m_pkthdr.ether_vtag));
-	/* Set EOP on the last desciptor. */
+	/* Set EOP on the last descriptor. */
 	desc->nge_cmdsts &= htole32(~NGE_CMDSTS_MORE);
 
 	/* Set checksum offload in the first descriptor. */

@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 6709f54ffa7be9ca8917785b16fe664891a681e8 $
+ * $FreeBSD: b8752526b163048e0840023a43b74dc2dd36868f $
  */
-
-#define ZFS_META_GITREV "zfs-0.7.0-3175-g184df27ee"
+#define ZFS_META_GITREV "zfs-2.1.4-0-g52bad4f23"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fce6d4b8b0717710efa94a1e98c38c86059d91b7 $");
+__FBSDID("$FreeBSD: 62bfcf78eeb722308db9e042c02b8406b28a0aab $");
 
 #include <sys/libkern.h>
 #include <sys/types.h>
@@ -37,7 +37,7 @@ __FBSDID("$FreeBSD: fce6d4b8b0717710efa94a1e98c38c86059d91b7 $");
 #define	BIT(c)	((u_long)1 << ((u_char)(c) % LONG_BIT))
 
 size_t 
-strcspn(const char * __restrict s, const char * __restrict charset) 
+strcspn(const char *s, const char *charset)
 {
 	/*
 	 * NB: idx and bit are temporaries whose use causes gcc 3.4.2 to

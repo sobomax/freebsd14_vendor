@@ -48,7 +48,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55db7a325be5f763148fe3aaf0020e958b376346 $");
+__FBSDID("$FreeBSD: 05db755740a1d36659a44a674da8d760f66c36b7 $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -157,8 +157,8 @@ mmu_booke_alloc_page(pmap_t pmap, unsigned int idx, bool nosleep)
 	vm_page_t	m;
 	int		req;
 
-	req = VM_ALLOC_NOOBJ | VM_ALLOC_WIRED | VM_ALLOC_ZERO;
-	while ((m = vm_page_alloc(NULL, idx, req)) == NULL) {
+	req = VM_ALLOC_WIRED | VM_ALLOC_ZERO;
+	while ((m = vm_page_alloc_noobj(req)) == NULL) {
 		if (nosleep)
 			return (0);
 
@@ -168,10 +168,7 @@ mmu_booke_alloc_page(pmap_t pmap, unsigned int idx, bool nosleep)
 		rw_wlock(&pvh_global_lock);
 		PMAP_LOCK(pmap);
 	}
-
-	if (!(m->flags & PG_ZERO))
-		/* Zero whole ptbl. */
-		mmu_booke_zero_page(m);
+	m->pindex = idx;
 
 	return (PHYS_TO_DMAP(VM_PAGE_TO_PHYS(m)));
 }

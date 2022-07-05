@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 33501165df24d2295119979fdff4439fef56be5e $
+ * $FreeBSD: ff83fb1959f625be48707950ef44524e1bba6a5d $
  */
-#ifndef	_LINUX_POLL_H_
-#define	_LINUX_POLL_H_
+#ifndef	_LINUXKPI_LINUX_POLL_H_
+#define	_LINUXKPI_LINUX_POLL_H_
 
 #include <sys/poll.h>
 #include <sys/fcntl.h>
@@ -45,4 +45,4 @@ extern void linux_poll_wait(struct linux_file *, wait_queue_head_t *, poll_table
 
 extern void linux_poll_wakeup(struct linux_file *);
 
-#endif	/* _LINUX_POLL_H_ */
+#endif	/* _LINUXKPI_LINUX_POLL_H_ */

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 1d0689b3beb7b66b09fd3616d8b3fd2cce8a57e3 $
+# $FreeBSD: b746cf7cea9db899b588a751f26240452afd42a6 $
 #
 
 # PROVIDE: nfsd
@@ -27,6 +27,12 @@ nfsd_precmd()
 	# Load the modules now, so that the vfs.nfsd sysctl
 	# oids are available.
 	load_kld nfsd || return 1
+
+	if [ -n "${nfs_server_maxio}" ]; then
+		if ! sysctl vfs.nfsd.srvmaxio=${nfs_server_maxio} >/dev/null; then
+			warn "Failed to set server max I/O"
+		fi
+	fi
 
 	if checkyesno nfs_reserved_port_only; then
 		echo 'NFS on reserved port only=YES'

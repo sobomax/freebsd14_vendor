@@ -32,18 +32,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb2df8cbf0ac424734e7e48c6d39c03a821eed98 $");
+__FBSDID("$FreeBSD: 47893416e0bf336de1522f04769e16c0a0173c62 $");
 
 #include "stand.h"
 
 int
-fstat(fd, sb)
-	int fd;
-	struct stat *sb;
+fstat(int fd, struct stat *sb)
 {
-	struct open_file *f = &files[fd];
+	struct open_file *f;
 
-	if ((unsigned)fd >= SOPEN_MAX || f->f_flags == 0) {
+	f = fd2open_file(fd);
+	if (f == NULL || f->f_flags == 0) {
 		errno = EBADF;
 		return (-1);
 	}

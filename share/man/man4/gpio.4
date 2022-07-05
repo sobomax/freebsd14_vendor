@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: da95c39f8e98e25f83ac7bf45c9c2b8a71d43bc9 $
+.\" $FreeBSD: 276d6855b49b0461822c980c0a391ec91e268855 $
 .\"
 .Dd June 27, 2019
 .Dt GPIO 4
@@ -71,6 +71,13 @@ architecture include:
 .Bd -ragged -offset indent
 .Cd "device wiigpio"
 .Cd "device macgpio"
+.Ed
+.Pp
+Additional device entries for the
+.Li RISC-V
+architecture include:
+.Bd -ragged -offset indent
+.Cd "device sifive_gpio"
 .Ed
 .Sh DESCRIPTION
 The

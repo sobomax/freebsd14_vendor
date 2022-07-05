@@ -33,7 +33,7 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 8c4fbcb7b3228218cc79dbab3835f38379a83610 $
+.\" $FreeBSD: 4a4c69b0694651c9bc67c40a254337f5292cd921 $
 .\"
 .Dd September 17, 2020
 .Dt MAKEFS 8
@@ -312,7 +312,10 @@ Expected number of files per directory.
 .It Sy bsize
 Block size.
 .It Sy density
-Bytes per inode.
+Bytes per inode. If unset, will allocate the minimum number of inodes to
+represent the filesystem if no free space has been requested (free blocks
+or minimum size set); otherwise the larger of the newfs defaults or what
+is required by the free inode parameters if set.
 .It Sy fsize
 Fragment size.
 .It Sy label

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cb990029047672436054be922cd630013ffa4f6 $");
+__FBSDID("$FreeBSD: c4fbc46548e99a9f4b0cff61447805938e2297a7 $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -59,7 +59,7 @@ static char *status_class1[] = {
      "Too many connections",
      "Missing parameter",
      "Can't include in session",
-     "Session type not suported",
+     "Session type not supported",
      "Session does not exist",
      "Invalid during login",
 };

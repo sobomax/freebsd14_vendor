@@ -1,2 +1,2 @@
-.\" $FreeBSD: db2f45bb55a743e0ab97db6acabf2d527a4c2c11 $
-Set to build Hesiod support.
+.\" $FreeBSD: d42bde2f2aca723c4e91f80f2e04dd2630e1b86f $
+Build Hesiod support.

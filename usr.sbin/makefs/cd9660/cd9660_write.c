@@ -38,7 +38,7 @@
 #include "iso9660_rrip.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d50fcd6b23202a211508b9a0566efe8736acc6d $");
+__FBSDID("$FreeBSD: 71e884f792d9baed35f7bbbe4bfb223371bb3d9e $");
 
 #include <util.h>
 
@@ -97,7 +97,7 @@ cd9660_write_image(iso9660_disk *diskStructure, const char* image)
 
 	/*
 	 * Write the path tables: there are actually four, but right
-	 * now we are only concearned with two.
+	 * now we are only concerned with two.
 	 */
 	status = cd9660_write_path_tables(diskStructure, fd);
 	if (status == 0) {

@@ -1,4 +1,4 @@
-# $FreeBSD: ecffbf9cfd6a5d66b785184eb4b328b7a9c85769 $
+# $FreeBSD: 6f2deda1adf0b3fe7af3fd28afee7f516387f546 $
 
 .include <src.opts.mk>
 
@@ -10,6 +10,10 @@ WARNS?=	2
 
 SRCS_EXC+=	int_util.c
 .include "Makefile.inc"
+
+INCS+=		${UNWINDINCDIR}/__libunwind_config.h
+INCS+=		${UNWINDINCDIR}/libunwind.h
+INCS+=		${UNWINDINCDIR}/unwind.h
 
 .if ${.MAKE.LEVEL} > 0
 # avoid circular dependencies

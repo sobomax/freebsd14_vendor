@@ -1,4 +1,6 @@
-# $FreeBSD: 1451154f9cf8a87745bd4674be8d880f362f8306 $
+# $FreeBSD: 9e4ae650a8a592610a3e0f572594ad110ba217c1 $
+
+PACKAGE=	kerberos
 
 PROG=	kgetcred
 CFLAGS+=	-I${KRB5DIR}/lib/asn1 \

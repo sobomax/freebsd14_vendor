@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: da68b3011f365e61c2ade6e6d92a231445b4823a $
+ * $FreeBSD: 841a162bfd27c0aa5527d7f5443aa08de46fa8ef $
  */
 
 #include <sys/types.h>
@@ -59,6 +59,7 @@ kiconv_lookupconv(const char *drvname)
 				free(drivers);
 				return (0);
 			}
+		free(drivers);
 	}
 	return (ENOENT);
 }
@@ -86,6 +87,7 @@ kiconv_lookupcs(const char *tocode, const char *fromcode)
 				return (0);
 			}
 		}
+		free(csi);
 	}
 	return (ENOENT);
 }

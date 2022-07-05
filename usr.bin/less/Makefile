@@ -1,11 +1,12 @@
-# $FreeBSD: 4ddef921eb140ff4c8d2aad09a29e256a2ec2c1e $
+# $FreeBSD: 08c5249598f9e6c3820c8aa8376fd9abae0ebc3d $
 
 PROG=	less
 SRCS=	main.c screen.c brac.c ch.c charset.c cmdbuf.c command.c cvt.c \
 	decode.c edit.c filename.c forwback.c help.c ifile.c input.c \
-	jump.c line.c linenum.c lsystem.c mark.c optfunc.c option.c \
+	jump.c lesskey_parse.c \
+	line.c linenum.c lsystem.c mark.c optfunc.c option.c \
 	opttbl.c os.c output.c pattern.c position.c prompt.c search.c \
-	signal.c tags.c ttyin.c version.c
+	signal.c tags.c ttyin.c version.c xbuf.c
 SCRIPTS=lesspipe.sh zless.sh
 SCRIPTSNAME_lesspipe.sh=lesspipe.sh
 LIBADD=	ncursesw

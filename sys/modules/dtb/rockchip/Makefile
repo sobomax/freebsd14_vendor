@@ -1,4 +1,4 @@
-# $FreeBSD: 12f59e4ee973640a9aefab32ced2645832eb40a5 $
+# $FreeBSD: 25141bfd4991486e22a86ef61b0e16644ebe5762 $
 # All the dts files for rockchip systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"
@@ -15,7 +15,13 @@ DTS=	\
 	rockchip/rk3399-firefly.dts \
 	rockchip/rk3399-rockpro64.dts
 
-DTSO=	rk3328-dwc3.dtso
+DTSO=	rk3328-analog-sound.dtso \
+	rk3328-i2c0.dtso \
+	rk3328-uart1.dtso \
+	rk3328-dwc3.dtso \
+	rk3399-mmc0-disable.dtso \
+	rk3399-mmc1-disable.dtso \
+	rk3399-sdhci-disable.dtso
 .endif
 
 .include <bsd.dtb.mk>

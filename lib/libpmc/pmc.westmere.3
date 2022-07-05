@@ -21,7 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 36684609f6d54ecb106a783068cf7c4dff246170 $
+.\" $FreeBSD: 09c9d0b421251061adb2daf3bd68ca2f01cac9d1 $
 .\"
 .Dd February 25, 2012
 .Dt PMC.WESTMERE 3
@@ -1168,8 +1168,8 @@ microcode assist is occurring.
 .It Li UOPS_DECODED.ESP_FOLDING
 .Pq Event D1H , Umask 04H
 Counts number of stack pointer (ESP) instructions decoded: push , pop , call
-, ret, etc. ESP instructions do not generate a Uop to increment or decrement
-ESP.
+, ret, etc.
+ESP instructions do not generate a Uop to increment or decrement ESP.
 Instead, they update an ESP_Offset register that keeps track of the
 delta to the current value of the ESP register.
 .It Li UOPS_DECODED.ESP_SYNC
@@ -1376,9 +1376,6 @@ Counts number of SID integer 64 bit shift or move operations.
 .Xr pmc.iaf 3 ,
 .Xr pmc.k7 3 ,
 .Xr pmc.k8 3 ,
-.Xr pmc.p4 3 ,
-.Xr pmc.p5 3 ,
-.Xr pmc.p6 3 ,
 .Xr pmc.soft 3 ,
 .Xr pmc.tsc 3 ,
 .Xr pmc.ucf 3 ,

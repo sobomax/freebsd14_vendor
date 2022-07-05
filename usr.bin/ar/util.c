@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1823c5eba84a81720084de60940b5111378514a2 $");
+__FBSDID("$FreeBSD: b130d6195e47ca7f3d8e9dc695e25298d64f8940 $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -77,12 +77,12 @@ bsdar_verrc(struct bsdar *bsdar, int code, const char *fmt, va_list ap)
 }
 
 void
-bsdar_errc(struct bsdar *bsdar, int eval, int code, const char *fmt, ...)
+bsdar_errc(struct bsdar *bsdar, int code, const char *fmt, ...)
 {
 	va_list ap;
 
 	va_start(ap, fmt);
 	bsdar_verrc(bsdar, code, fmt, ap);
 	va_end(ap);
-	exit(eval);
+	exit(EXIT_FAILURE);
 }

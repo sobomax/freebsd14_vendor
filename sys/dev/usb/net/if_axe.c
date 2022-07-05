@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6da8d7f9b9711e859feecd892388769280ebd130 $");
+__FBSDID("$FreeBSD: faef9cd3cb90a02b505372a90e829005793a96b6 $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.
@@ -709,9 +709,6 @@ axe_ax88772_init(struct axe_softc *sc)
 static void
 axe_ax88772_phywake(struct axe_softc *sc)
 {
-	struct usb_ether *ue;
-
-	ue = &sc->sc_ue;
 	if (sc->sc_phyno == AXE_772_PHY_NO_EPHY) {
 		/* Manually select internal(embedded) PHY - MAC mode. */
 		axe_cmd(sc, AXE_CMD_SW_PHY_SELECT, 0, AXE_SW_PHY_SELECT_SS_ENB |

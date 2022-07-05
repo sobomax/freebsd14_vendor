@@ -1,2 +1,2 @@
-.\" $FreeBSD: 8d719e96dcb25c07ebcb885c147b4a8e663e29cb $
-Set to not build Capsicum support into system programs.
+.\" $FreeBSD: 9d0eb89e491d212402bf8b16edb0467a7a78083a $
+Do not build Capsicum support into system programs.

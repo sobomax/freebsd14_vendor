@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 71fe350311f709f71ea2404e00689452a7dd8bd3 $
+ * $FreeBSD: 7df31b1448f1b2a5cad587d4d61d80a7975ca0a1 $
  */
 
 /**
@@ -263,7 +263,7 @@ ocs_sport_free(ocs_sport_t *sport)
 		ocs_lock_free(&sport->node_group_lock);
 		ocs_scsi_sport_deleted(sport);
 
-		ocs_free(domain->ocs, sport, sizeof(*sport));
+		ocs_free(sport->ocs, sport, sizeof(*sport));
 		
 	}
 }

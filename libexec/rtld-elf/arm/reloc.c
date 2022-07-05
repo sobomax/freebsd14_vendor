@@ -1,7 +1,7 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7779169667be7f84898166d77729b33dbde291a2 $");
+__FBSDID("$FreeBSD: 4eb3fc7e692959a173f27d41d266dfc7e869b33a $");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -16,7 +16,7 @@ __FBSDID("$FreeBSD: 7779169667be7f84898166d77729b33dbde291a2 $");
 
 #include "debug.h"
 #include "rtld.h"
-#include "paths.h"
+#include "rtld_paths.h"
 
 #ifdef __ARM_FP
 /*

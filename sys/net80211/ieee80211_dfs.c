@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: abe67576d711812c3f589ae2bada7c005b085d51 $");
+__FBSDID("$FreeBSD: b3959220bfc952868ad6476e60155aa5d25d56d9 $");
 #endif
 
 /*
@@ -421,7 +421,7 @@ ieee80211_dfs_pickchannel(struct ieee80211com *ic)
 	 * one at random (skipping channels where radar has
 	 * been detected).
 	 */
-	get_random_bytes(&v, sizeof(v));
+	net80211_get_random_bytes(&v, sizeof(v));
 	v %= ic->ic_nchans;
 	for (i = v; i < ic->ic_nchans; i++) {
 		c = &ic->ic_channels[i];

@@ -17,7 +17,7 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- * $FreeBSD: 0daba26579d4c7d28d6d766cd0520865d3545d2c $
+ * $FreeBSD: b2d4bf0dc11aa8f2cf8e6a2238849422a57283f9 $
  */
 
 /*
@@ -332,7 +332,7 @@ verify_file(int fd, const pattern_t* p_pat){
       int file_offset = chunk_start + chunk_offset;
       if (good_data && (actual_buf[i] != desired_buf[i])){
         fprintf(stderr, "fsync_integrity: miscompare at "
-	    "chunk %i, chunk offset %lx, file offset %lx\n",
+	    "chunk %i, chunk offset %x, file offset %x\n",
 	    chunk_idx, chunk_offset, file_offset);
         fprintf(stderr, "Expected %016lx, got %016lx\n",
 	    desired_buf[i], actual_buf[i]);
@@ -341,7 +341,7 @@ verify_file(int fd, const pattern_t* p_pat){
       }
       else if (!good_data && (actual_buf[i] == desired_buf[i])) {
       	fprintf(stderr, "fsync_integrity: miscompare ends at "
-	    "chunk %i, chunk offset %lx, file offset %lx\n",
+	    "chunk %i, chunk offset %x, file offset %x\n",
 	    chunk_idx, chunk_offset, file_offset);
 	good_data = 1;
       }

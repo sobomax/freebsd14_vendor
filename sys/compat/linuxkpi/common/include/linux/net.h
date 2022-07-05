@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 282a45d2db3200df659849b7477e3ec732880573 $
+ * $FreeBSD: 5438fccb8512bd5f4c7c383cbef1045d4b06de9f $
  */
-#ifndef	_LINUX_NET_H_
-#define	_LINUX_NET_H_
+#ifndef	_LINUXKPI_LINUX_NET_H_
+#define	_LINUXKPI_LINUX_NET_H_
 
 #include <sys/types.h>
 #include <sys/malloc.h>
@@ -76,4 +76,14 @@ sock_release(struct socket *so)
 	soclose(so);
 }
 
-#endif	/* _LINUX_NET_H_ */
+
+int linuxkpi_net_ratelimit(void);
+
+static inline int
+net_ratelimit(void)
+{
+
+	return (linuxkpi_net_ratelimit());
+}
+
+#endif	/* _LINUXKPI_LINUX_NET_H_ */

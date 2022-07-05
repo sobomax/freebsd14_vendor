@@ -1,4 +1,4 @@
-# $FreeBSD: 375cf3a964479ac6a5aa961aa763ccf50b235a61 $
+# $FreeBSD: eb887f7d3fdd774c44a4caf9f7fb296ab0c8efc4 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -35,7 +35,7 @@
     ..
     lib
         clang
-            11.0.1
+            13.0.0
                 include
                     cuda_wrappers
                     ..
@@ -155,6 +155,8 @@
         sendmail
         ..
         sm.bin
+        ..
+        zfs
         ..
     ..
     local
@@ -1228,6 +1230,10 @@
             fonts
             ..
             keymaps
+            ..
+        ..
+        zfs
+            compatibility.d
             ..
         ..
         zoneinfo

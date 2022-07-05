@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 23bedee1ea2673fc469bd78dcf2556ed538950d2 $
+# $FreeBSD: b6ad7701c32b25d23a3dd07c5fc80f7c5b37c4fb $
 #
 # Our current make(1)-based approach to dependency tracking cannot cope with
 # certain source tree changes, including:
@@ -30,9 +30,12 @@ clean_dep()
 {
 	if [ -e "$OBJTOP"/$1/.depend.$2.pico ] && \
 	    egrep -qw "$2\.$3" "$OBJTOP"/$1/.depend.$2.pico; then \
-		echo "Removing stale dependencies for $2.$3"; \
-		rm -f "$OBJTOP"/$1/.depend.$2.* \
-		    "$OBJTOP"/obj-lib32/$1/.depend.$2.*
+		echo "Removing stale dependencies and objects for $2.$3"; \
+		rm -f \
+		    "$OBJTOP"/$1/.depend.$2.* \
+		    "$OBJTOP"/$1/$2.*o \
+		    "$OBJTOP"/obj-lib32/$1/.depend.$2.* \
+		    "$OBJTOP"/obj-lib32/$1/$2.*o
 	fi
 }
 
@@ -70,3 +73,8 @@ if [ -e "$OBJTOP"/lib/ncurses/ncursesw ]; then
 	echo "Removing stale ncurses objects"
 	rm -rf "$OBJTOP"/lib/ncurses "$OBJTOP"/obj-lib32/lib/ncurses
 fi
+
+# 20210608  f20893853e8e    move from atomic.S to atomic.c
+clean_dep   cddl/lib/libspl atomic S
+# 20211207  cbdec8db18b5    switch to libthr-friendly pdfork
+clean_dep   lib/libc        pdfork S

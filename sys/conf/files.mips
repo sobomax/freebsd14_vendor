@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: c18f0a5c69be31686d5f9aaeb77a05e370d00703 $
+# $FreeBSD: 70eb44d0165df5855ebc67b9cce144c8ccaaab50 $
 #
 
 # Arch dependent files
@@ -20,7 +20,6 @@ mips/mips/exception.S			standard
 mips/mips/fp.S				standard
 mips/mips/freebsd32_machdep.c		optional	compat_freebsd32
 mips/mips/gdb_machdep.c			standard
-mips/mips/in_cksum.c			optional	inet
 mips/mips/libkern_machdep.c		standard
 mips/mips/locore.S			standard	no-obj
 mips/mips/machdep.c			standard
@@ -66,6 +65,7 @@ libkern/ucmpdi2.c			optional	mips | mipshf | mipsel | mipselhf
 libkern/ashldi3.c			standard
 libkern/ashrdi3.c			standard
 libkern/memcmp.c			standard
+libkern/strlen.c			standard
 
 # cfe support
 dev/cfe/cfe_api.c			optional	cfe

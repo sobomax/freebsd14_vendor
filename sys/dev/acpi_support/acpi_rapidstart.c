@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0724abdefcac877d3a4f0e40f137e620f51e5578 $");
+__FBSDID("$FreeBSD: eb47f347785fced4055d8085b876b449ce1ff57c $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -89,14 +89,14 @@ acpi_rapidstart_attach(device_t dev)
 			SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 			    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 			    i, acpi_rapidstart_oids[i].nodename,
-			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 			    dev, i, sysctl_acpi_rapidstart_gen_handler, "I",
 			    acpi_rapidstart_oids[i].comment);
 		} else {
 			SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 			    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
 			    i, acpi_rapidstart_oids[i].nodename,
-			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 			    dev, i, sysctl_acpi_rapidstart_gen_handler, "I",
 			    acpi_rapidstart_oids[i].comment);
 		}

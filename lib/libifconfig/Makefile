@@ -1,4 +1,4 @@
-# $FreeBSD: 73dad36c1dc5b72f2432b20a56e6d86860c5bdfb $
+# $FreeBSD: c6f00601842700c9ac07cbca08d75bd0ffd5c010 $
 
 PACKAGE=	lib${LIB}
 LIB=		ifconfig
@@ -7,7 +7,7 @@ INTERNALLIB=	true
 LIBADD=		m
 
 SHLIBDIR?=	/lib
-SHLIB_MAJOR=	1
+SHLIB_MAJOR=	2
 
 VERSION_DEF=	${LIBCSRCDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map

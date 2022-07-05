@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)calendar.c  8.3 (Berkeley) 3/25/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24966399c179688319785cc0f18a84c5dbcaf5e1 $");
+__FBSDID("$FreeBSD: 5afcb1a3331454cfb93140839192c8c87ea8f71e $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -405,7 +405,7 @@ cal_parse(FILE *in, FILE *out)
 {
 	char *mylocale = NULL;
 	char *line = NULL;
-	char *buf;
+	char *buf, *bufp;
 	size_t linecap = 0;
 	ssize_t linelen;
 	ssize_t l;
@@ -443,21 +443,27 @@ cal_parse(FILE *in, FILE *out)
 			}
 		}
 		if (!incomment) {
+			bufp = buf;
 			do {
-				c = strstr(buf, "//");
-				cc = strstr(buf, "/*");
+				c = strstr(bufp, "//");
+				cc = strstr(bufp, "/*");
 				if (c != NULL && (cc == NULL || c - cc < 0)) {
-					/* single line comment */
-					*c = '\0';
-					linelen = c - buf;
-					break;
+					bufp = c + 2;
+					/* ignore "//" within string to allow it in an URL */
+					if (c == buf || isspace(c[-1])) {
+						/* single line comment */
+						*c = '\0';
+						linelen = c - buf;
+						break;
+					}
 				} else if (cc != NULL) {
 					c = strstr(cc + 2, "*/");
-					if (c != NULL) {
+					if (c != NULL) { // 'a /* b */ c' -- cc=2, c=7+2
 						/* multi-line comment ending on same line */
 						c += 2;
 						memmove(cc, c, buf + linelen + 1 - c);
 						linelen -= c - cc;
+						bufp = cc;
 					} else {
 						/* multi-line comment */
 						*cc = '\0';

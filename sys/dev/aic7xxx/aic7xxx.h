@@ -41,7 +41,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aic7xxx.h#85 $
  *
- * $FreeBSD: a3abc456f8c50706007b5e866024e20138599452 $
+ * $FreeBSD: f48e793fea6aa64065e65bf6c887bc8be0562140 $
  */
 
 #ifndef _AIC7XXX_H_
@@ -644,7 +644,7 @@ struct scb_data {
 /************************ Target Mode Definitions *****************************/
 
 /*
- * Connection desciptor for select-in requests in target mode.
+ * Connection descriptor for select-in requests in target mode.
  */
 struct target_cmd {
 	uint8_t scsiid;		/* Our ID and the initiator's ID */

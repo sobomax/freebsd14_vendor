@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2012, 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Oleksandr Rybalko under sponsorship
  * from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e1c13b7d0d6ad327412ac83e397f21652b750904 $
+ * $FreeBSD: f37f94b88425c7d2559617dba5b8879f2c3d88ff $
  */
 
 /* Registers definition for Freescale i.MX515 Generic Periodic Timer */

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a30740e67b6ef9c1af2f75b89661a67a6b661089 $
+ * $FreeBSD: 42cab766a2fa07ccbc4f46f7afc00b71552bcd34 $
  */
 #ifndef __IFLIB_H_
 #define __IFLIB_H_
@@ -49,7 +49,7 @@ typedef uint16_t qidx_t;
 struct iflib_ctx;
 typedef struct iflib_ctx *if_ctx_t;
 struct if_shared_ctx;
-typedef struct if_shared_ctx *if_shared_ctx_t;
+typedef const struct if_shared_ctx *if_shared_ctx_t;
 struct if_int_delay_info;
 typedef struct if_int_delay_info  *if_int_delay_info_t;
 struct if_pseudo;
@@ -187,6 +187,7 @@ typedef struct if_txrx {
 	void (*ift_rxd_refill) (void * , if_rxd_update_t iru);
 	void (*ift_rxd_flush) (void *, uint16_t qsidx, uint8_t flidx, qidx_t pidx);
 	int (*ift_legacy_intr) (void *);
+	qidx_t (*ift_txq_select) (void *, struct mbuf *);
 } *if_txrx_t;
 
 typedef struct if_softc_ctx {
@@ -395,6 +396,16 @@ typedef enum {
  * emulating ethernet
  */
 #define IFLIB_PSEUDO_ETHER	0x80000
+
+/* The following IFLIB_FEATURE_* defines are for driver modules to determine
+ * what features this version of iflib supports. They shall be defined to the
+ * first __FreeBSD_version that introduced the feature.
+ */
+/*
+ * Driver can set its own TX queue selection function
+ * as ift_txq_select in struct if_txrx
+ */
+#define IFLIB_FEATURE_QUEUE_SELECT	1300527
 
 /*
  * These enum values are used in iflib_needs_restart to indicate to iflib

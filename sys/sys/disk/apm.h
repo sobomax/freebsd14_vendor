@@ -23,11 +23,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a9183b5e3aa72215a9ebd95e3dc9f9b791ccd9e1 $
+ * $FreeBSD: 1cf64a53b81a6094df4621a3ba02a6734c77f3d5 $
  */
 
 #ifndef _SYS_DISK_APM_H_
 #define	_SYS_DISK_APM_H_
+
+#include <sys/types.h>
 
 /* Driver Descriptor Record. */
 struct apm_ddr {

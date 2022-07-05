@@ -31,7 +31,7 @@
  * Platform (FreeBSD) dependent common attachment code for Qlogic adapters.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 657d3c4446ed8283082176beb89e7319a2ce4c0f $");
+__FBSDID("$FreeBSD: d5e70e96fc44955e8db6b3dfb95fbbfbf24a9e1e $");
 
 #include <dev/isp/isp_freebsd.h>
 #include <sys/unistd.h>
@@ -191,7 +191,7 @@ isp_attach_chan(ispsoftc_t *isp, struct cam_devq *devq, int chan)
 	    "Cause a Lost Frame on a Read");
 #endif
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
-	    "role", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    "role", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 	    isp, chan, isp_role_sysctl, "I", "Current role");
 	SYSCTL_ADD_UINT(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
 	    "speed", CTLFLAG_RD, &fcp->isp_gbspeed, 0,

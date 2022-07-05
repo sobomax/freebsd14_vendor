@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-3-Clause-FreeBSD
  *
  * Copyright (c) 2002 Poul-Henning Kamp
  * Copyright (c) 2002 Networks Associates Technology, Inc.
@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cf20196dfaeb2b1f4323963d02765f473379a28 $");
+__FBSDID("$FreeBSD: 54353005bdc0d79c692e7393dd837c219fb13cab $");
 
 #include <sys/param.h>
 #include <sys/time.h>

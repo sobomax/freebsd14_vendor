@@ -34,7 +34,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: 8806494766f61cdb262a875690a14125add64f54 $
+ * $FreeBSD: 8333b73f1f411c5f992f4421ef91dcb9ba9f2d35 $
  */
 
 #if !defined(IB_CM_H)
@@ -621,5 +621,11 @@ struct ib_cm_sidr_rep_param {
  */
 int ib_send_cm_sidr_rep(struct ib_cm_id *cm_id,
 			struct ib_cm_sidr_rep_param *param);
+
+/**
+ * ibcm_reject_msg - return a pointer to a reject message string.
+ * @reason: Value returned in the REJECT event status field.
+ */
+const char *__attribute_const__ ibcm_reject_msg(int reason);
 
 #endif /* IB_CM_H */

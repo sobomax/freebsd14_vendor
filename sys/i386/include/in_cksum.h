@@ -31,7 +31,7 @@
  *	from tahoe:	in_cksum.c	1.2	86/01/05
  *	from:		@(#)in_cksum.c	1.3 (Berkeley) 1/19/91
  *	from: Id: in_cksum.c,v 1.8 1995/12/03 18:35:19 bde Exp
- * $FreeBSD: 87c18ec4066d7633e896613ba42825cc18d085f3 $
+ * $FreeBSD: 6b9c62942561afd758fbb9605f15c682d0adb5ec $
  */
 
 #ifndef _MACHINE_IN_CKSUM_H_
@@ -83,14 +83,6 @@ in_cksum_hdr(const struct ip *ip)
 
 	return ~sum & 0xffff;
 }
-
-static __inline void
-in_cksum_update(struct ip *ip)
-{
-	int __tmpsum;
-	__tmpsum = (int)ntohs(ip->ip_sum) + 256;
-	ip->ip_sum = htons(__tmpsum + (__tmpsum >> 16));
-}
 #endif
 
 static __inline u_short
@@ -123,20 +115,12 @@ in_pseudo(u_int sum, u_int b, u_int c)
 		sum -= 0xffff;
 	return (sum);
 }
-
-#else
-#if defined(IPVERSION) && (IPVERSION == 4)
-#define	in_cksum_update(ip) \
-	do { \
-		int __tmpsum; \
-		__tmpsum = (int)ntohs(ip->ip_sum) + 256; \
-		ip->ip_sum = htons(__tmpsum + (__tmpsum >> 16)); \
-	} while(0)
-
-#endif
 #endif
 
 #ifdef _KERNEL
+
+#define	HAVE_MD_IN_CKSUM
+
 #if !defined(__GNUCLIKE_ASM)
 #if defined(IPVERSION) && (IPVERSION == 4)
 u_int in_cksum_hdr(const struct ip *ip);

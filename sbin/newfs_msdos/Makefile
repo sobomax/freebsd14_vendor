@@ -1,4 +1,6 @@
-# $FreeBSD: d12cf0245df299e21fefeffcd6e2385418f7fea0 $
+# $FreeBSD: 0123f4dd7a8a6855a770595cc38238048b129b55 $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	newfs_msdos
@@ -10,5 +12,8 @@ SRCS=	newfs_msdos.c mkfs_msdos.c
 WARNS?= 3
 .endif
 CSTD=	c11
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: 2cb1b0446ade4951039d39df5ed02c9698da2618 $
+# $FreeBSD: 0e5d24bd0ec54a739f81fef467d43f23a336f0bf $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -46,7 +46,6 @@ KERNEL_C = \
 	zfs_fletcher_superscalar4.c \
 	zfs_namecheck.c \
 	zfs_prop.c \
-	zfs_uio.c \
 	zfs_zstd.c \
 	zpool_prop.c \
 	zprop_common.c \
@@ -161,9 +160,9 @@ KERNEL_C = \
 	zfs_debug.c \
 	zfs_fm.c \
 	zfs_fuid.c \
-	zfs_racct.c \
 	zfs_sa.c \
 	zfs_znode.c \
+	zfs_racct.c \
 	zfs_ratelimit.c \
 	zfs_rlock.c \
 	zil.c \
@@ -264,5 +263,6 @@ CFLAGS+=	-g -DDEBUG=1
 
 CFLAGS.zfs_zstd.c=	-Wno-cast-qual -Wno-pointer-arith
 CFLAGS.zstd.c+=	-fno-tree-vectorize
+CFLAGS.zstd.c+=	${NO_WBITWISE_INSTEAD_OF_LOGICAL}
 
 .include <bsd.lib.mk>

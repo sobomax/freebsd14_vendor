@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b835baecc93dd72d88e60a6560862c5942c86a05 $");
+__FBSDID("$FreeBSD: f17827757139ecc7978390af15b1bfcd4021c16e $");
 
 #include <sys/ctype.h>
 #include <sys/param.h>
@@ -543,6 +543,7 @@ g_llvm_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 	/* This orphan function should be never called. */
 	gp->orphan = g_llvm_taste_orphan;
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	error = g_attach(cp, pp);
 	if (error == 0) {
 		error = g_llvm_read_label(cp, &ll);

@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 53178314c35a20e0f61f95e7277fb85363aeabd9 $
+ * $FreeBSD: 450db0f761f28dd1a1e7c0b9aa9afaf446037189 $
  */
-#ifndef _LINUX_VMALLOC_H_
-#define	_LINUX_VMALLOC_H_
+#ifndef _LINUXKPI_LINUX_VMALLOC_H_
+#define	_LINUXKPI_LINUX_VMALLOC_H_
 
 #include <linux/page.h>
 
@@ -40,4 +40,4 @@ void *vmap(struct page **pages, unsigned int count, unsigned long flags,
     int prot);
 void vunmap(void *addr);
 
-#endif	/* _LINUX_VMALLOC_H_ */
+#endif	/* _LINUXKPI_LINUX_VMALLOC_H_ */

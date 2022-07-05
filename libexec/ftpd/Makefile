@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: f3a52d08521d9b0b0364c328da881bd9b6bf51e0 $
+# $FreeBSD: 4d38261b9318f8a2937a5f12b2e1be236d56dd4a $
 
 .include <src.opts.mk>
+
+PACKAGE=	ftpd
 
 CONFS=	ftpusers
 PROG=	ftpd

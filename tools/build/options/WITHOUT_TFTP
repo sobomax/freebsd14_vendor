@@ -1,5 +1,5 @@
-.\" $FreeBSD: bdb51ac7cfa6f737e6cafadde1771b1514ac55b9 $
-Set to not build or install
+.\" $FreeBSD: a64128ec4b2e6920efb4637817ad912efc5cead8 $
+Do not build or install
 .Xr tftp 1
 and
 .Xr tftpd 8 .

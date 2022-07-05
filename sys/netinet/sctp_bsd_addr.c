@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aad84f71a6780b1ae4d85c6cacf25fc6cd41aeca $");
+__FBSDID("$FreeBSD: 2a00885d8ddd681a5d9aca6cb79c76ab52b5e73e $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -108,7 +108,7 @@ sctp_startup_iterator(void)
 	kproc_create(sctp_iterator_thread,
 	    (void *)NULL,
 	    &sctp_it_ctl.thread_proc,
-	    RFPROC,
+	    0,
 	    SCTP_KTHREAD_PAGES,
 	    SCTP_KTRHEAD_NAME);
 }

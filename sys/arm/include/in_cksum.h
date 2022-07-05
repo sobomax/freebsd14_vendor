@@ -31,7 +31,7 @@
  *	from tahoe:	in_cksum.c	1.2	86/01/05
  *	from:		@(#)in_cksum.c	1.3 (Berkeley) 1/19/91
  *	from: Id: in_cksum.c,v 1.8 1995/12/03 18:35:19 bde Exp
- * $FreeBSD: a75433830d731905770584c36decc65bb2b320fe $
+ * $FreeBSD: 352d46f07e7bf7e38bf2a4941e262fe573df57ba $
  */
 
 #ifndef _MACHINE_IN_CKSUM_H_
@@ -40,6 +40,9 @@
 #include <sys/cdefs.h>
 
 #ifdef _KERNEL
+
+#define	HAVE_MD_IN_CKSUM
+
 u_short in_cksum(struct mbuf *m, int len);
 u_short in_addword(u_short sum, u_short b);
 u_short in_cksum_skip(struct mbuf *m, int len, int skip);

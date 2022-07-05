@@ -1,4 +1,4 @@
-/*	$FreeBSD: 49efa0a3c510816c6fb37b9d00082c374b00ce6c $	*/
+/*	$FreeBSD: aa893b131a577d88498214c6107512e1f818ae3a $	*/
 /*	$KAME: keysock.c,v 1.25 2001/08/13 20:07:41 itojun Exp $	*/
 
 /*-
@@ -141,7 +141,6 @@ end:
 static int
 key_sendup0(struct rawcb *rp, struct mbuf *m, int promisc)
 {
-	int error;
 
 	if (promisc) {
 		struct sadb_msg *pmsg;
@@ -165,11 +164,12 @@ key_sendup0(struct rawcb *rp, struct mbuf *m, int promisc)
 	    m, NULL)) {
 		PFKEYSTAT_INC(in_nomem);
 		m_freem(m);
-		error = ENOBUFS;
-	} else
-		error = 0;
+		soroverflow(rp->rcb_socket);
+		return ENOBUFS;
+	}
+
 	sorwakeup(rp->rcb_socket);
-	return error;
+	return 0;
 }
 
 /* so can be NULL if target != KEY_SENDUP_ONE */
@@ -322,7 +322,7 @@ key_attach(struct socket *so, int proto, struct thread *td)
 static int
 key_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 {
-  return EINVAL;
+	return EINVAL;
 }
 
 /*

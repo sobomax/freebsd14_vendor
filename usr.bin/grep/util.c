@@ -1,5 +1,5 @@
 /*	$NetBSD: util.c,v 1.9 2011/02/27 17:33:37 joerg Exp $	*/
-/*	$FreeBSD: a2520e24de8edfea241dd2f380be3a3bdd247f37 $	*/
+/*	$FreeBSD: 698e347c192ec821e466de7bf9accf932af9e020 $	*/
 /*	$OpenBSD: util.c,v 1.39 2010/07/02 22:18:03 tedu Exp $	*/
 
 /*-
@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2520e24de8edfea241dd2f380be3a3bdd247f37 $");
+__FBSDID("$FreeBSD: 698e347c192ec821e466de7bf9accf932af9e020 $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -388,7 +388,7 @@ procfile(const char *fn)
 		clearqueue();
 	grep_close(f);
 
-	if (cflag) {
+	if (cflag && !qflag) {
 		if (!hflag)
 			printf("%s:", pc.ln.file);
 		printf("%u\n", lines);

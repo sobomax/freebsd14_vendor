@@ -1,7 +1,8 @@
-# $FreeBSD: dc640d12b592bffd2f6a8016409af3c719ac87cf $
+# $FreeBSD: 1f34a28914d7425efbb28614a8920baf49a50564 $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr
 
+PACKAGE=yp
 PROG=	rpc.ypupdated
 MAN=
 SRCS=	ypupdate_prot_svc.c ypupdate_prot.h ypupdated_main.c \

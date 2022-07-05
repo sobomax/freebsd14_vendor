@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cca95c891964236ab54ccd3e69a4b7f52057a5ab $");
+__FBSDID("$FreeBSD: 569476040a93e862c3cc0110dd609777f5efa15f $");
 
 #include <dev/ce/machdep.h>
 #include <dev/ce/ceddk.h>
@@ -245,7 +245,7 @@ static void TAU32_CALLBACK_TYPE ce_on_receive
 			c->error (c, CE_OVERRUN);
 	} else {
 		CE_DDK_DEBUG (b, c, ("Another receive error: %x\n", error));
-		/* Do some procesing */
+		/* Do some processing */
 	}
 
 	CE_ASSERT (!req->pInternal);
@@ -297,7 +297,7 @@ static void TAU32_CALLBACK_TYPE ce_on_transmit
 	} else {
 		CE_DDK_DEBUG (c->board, c, ("Another transmit error: %x\n",
 				error));
-		/* Do some procesing */
+		/* Do some processing */
 	}
 
 	CE_ENQUEUE (c->tx_queue, req);

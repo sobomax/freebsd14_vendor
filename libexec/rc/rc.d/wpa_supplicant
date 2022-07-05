@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 8a86fec90e4dbf5c0d421f30cbddc67c59d02e0d $
+# $FreeBSD: 9e5f64a5373f677bf2227786bec6abee18d4ca7f $
 #
 
 # PROVIDE: wpa_supplicant
@@ -12,6 +12,7 @@
 
 name="wpa_supplicant"
 desc="WPA/802.11i Supplicant for wireless network devices"
+start_postcmd="wpa_poststart"
 rcvar=
 
 ifn="$2"
@@ -25,6 +26,12 @@ is_ndis_interface()
 		ndis*) true ;;
 		*) false ;;
 	esac
+}
+
+wpa_poststart() {
+	ifconfig ${ifn} down
+	sleep 2
+	ifconfig ${ifn} up
 }
 
 if is_wired_interface ${ifn} ; then

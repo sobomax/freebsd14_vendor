@@ -1,4 +1,4 @@
-# $FreeBSD: b5d62c358272fa454a86135b1236ce702632fc46 $
+# $FreeBSD: ef0d9dcb6786bea1ef8d63d46be2161379f35aeb $
 
 .include <kmod.opts.mk>
 
@@ -51,6 +51,9 @@ SRCS+=	ept.c		\
 # amd-specific files
 .PATH: ${SRCTOP}/sys/amd64/vmm/amd
 SRCS+=	vmcb.c		\
+	amdiommu.c	\
+	ivhd_if.c	\
+	ivhd_if.h	\
 	svm.c		\
 	svm_support.S	\
 	npt.c		\

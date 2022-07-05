@@ -1,4 +1,4 @@
-/*	$FreeBSD: e53343cfbf4a4e8efe2bbad0c5e22de59831380a $	*/
+/*	$FreeBSD: 54945f63df168e753a029d333d13d044c01a44ed $	*/
 /*	$OpenBSD: if_iwnreg.h,v 1.40 2010/05/05 19:41:57 damien Exp $	*/
 
 /*-
@@ -2267,7 +2267,8 @@ static const struct iwn_sensitivity_limits iwn2030_sensitivity_limits = {
 	160,310,
 	97,
 	97,
-	110
+	110,
+	390
 };
 
 /* Map TID to TX scheduler's FIFO. */

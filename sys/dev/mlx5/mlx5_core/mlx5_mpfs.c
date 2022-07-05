@@ -22,8 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6835aa8f853b14640df039c1273d1763aac2f2b5 $
+ * $FreeBSD: 4d59c739105e6ba01f7fbab1186712c51c711229 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/types.h>
 #include <linux/etherdevice.h>
@@ -33,7 +36,7 @@
 #include <dev/mlx5/mpfs.h>
 #include <dev/mlx5/driver.h>
 
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 #define	MPFS_LOCK(dev) spin_lock(&(dev)->mpfs.spinlock)
 #define	MPFS_UNLOCK(dev) spin_unlock(&(dev)->mpfs.spinlock)

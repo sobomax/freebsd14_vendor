@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 9bf9f0798bb5bd40bb8e94706554ea7eb7184770 $
+ * $FreeBSD: 74b3bf7ed7d14149decd7143d800116c3f07c5c1 $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bf9f0798bb5bd40bb8e94706554ea7eb7184770 $");
+__FBSDID("$FreeBSD: 74b3bf7ed7d14149decd7143d800116c3f07c5c1 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -270,7 +270,7 @@ dtrace_invop_start(struct trapframe *frame)
 	int tmp;
 	int i;
 
-	invop = dtrace_invop(frame->tf_elr, frame, frame->tf_elr);
+	invop = dtrace_invop(frame->tf_elr, frame, frame->tf_x[0]);
 
 	tmp = (invop & LDP_STP_MASK);
 	if (tmp == STP_64 || tmp == LDP_64) {
@@ -310,6 +310,11 @@ dtrace_invop_start(struct trapframe *frame)
 
 	if ((invop & SUB_MASK) == SUB_INSTR) {
 		frame->tf_sp -= (invop >> SUB_IMM_SHIFT) & SUB_IMM_MASK;
+		frame->tf_elr += INSN_SIZE;
+		return (0);
+	}
+
+	if (invop == NOP_INSTR) {
 		frame->tf_elr += INSN_SIZE;
 		return (0);
 	}

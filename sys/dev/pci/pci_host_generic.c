@@ -31,7 +31,7 @@
 /* Generic ECAM PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c45f5d316ed3260ef3f32ac703e968a3f463fac $");
+__FBSDID("$FreeBSD: 22b3ccdc17b14945589fd83dafb9bab01e679586 $");
 
 #include "opt_platform.h"
 
@@ -184,6 +184,8 @@ generic_pcie_read_config(device_t dev, u_int bus, u_int slot,
 		return (~0U);
 	if ((slot > PCI_SLOTMAX) || (func > PCI_FUNCMAX) ||
 	    (reg > PCIE_REGMAX))
+		return (~0U);
+	if ((sc->quirks & PCIE_ECAM_DESIGNWARE_QUIRK) && bus == 0 && slot > 0)
 		return (~0U);
 
 	offset = PCIE_ADDR_OFFSET(bus - sc->bus_start, slot, func, reg);

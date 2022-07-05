@@ -1,5 +1,5 @@
-.\" $FreeBSD: d3895ca208717665e1f428c37289efc3496c1fad $
-Set to not build LLVM target support for RISC-V.
+.\" $FreeBSD: 408a8719501665b2013a5a478e679d7fc111aea8 $
+Do not build LLVM target support for RISC-V.
 The
 .Va LLVM_TARGET_ALL
 option should be used rather than this in most cases.

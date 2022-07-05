@@ -1,7 +1,7 @@
-# $FreeBSD: ff8d22b764aa06c58bae3606d04fe83d99559388 $
+# $FreeBSD: 58301eca17d620968a34d167d6d2fdea9337389e $
 #
 
-.PATH:  ${SRCTOP}/sys/x86/bios
+.PATH:  ${SRCTOP}/sys/dev/smbios
 
 KMOD=	smbios
 SRCS=	smbios.c \

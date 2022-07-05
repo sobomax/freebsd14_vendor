@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2009, 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Ed Schouten under sponsorship from the
  * FreeBSD Foundation.
@@ -31,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2d671d6923840a9582b72dde0f7df522713d1157 $
+ * $FreeBSD: 5ba64388bd27ef7c35de6a2b8e75a1803e66a3fd $
  */
 
 #ifndef _DEV_VT_VT_H_
@@ -309,6 +308,8 @@ struct vt_window {
 	struct vt_mode		 vw_smode;	/* switch mode */
 	struct callout		 vw_proc_dead_timer;
 	struct vt_window	*vw_switch_to;
+	int			 vw_bell_pitch;	/* (?) Bell pitch */
+	sbintime_t		 vw_bell_duration; /* (?) Bell duration */
 };
 
 #define	VT_AUTO		0		/* switching is automatic */

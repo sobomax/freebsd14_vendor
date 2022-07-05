@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 718a64defab927633122e8f4637b928cf8e07861 $");
+__FBSDID("$FreeBSD: 2da8024c47f48b4579adcb2bef4bdedccdd0d2bd $");
 
 #include "namespace.h"
 #include "reentrant.h"
@@ -258,10 +258,10 @@ static int
 host_marshal_func(char *buffer, size_t *buffer_size, void *retval, va_list ap,
     void *cache_mdata)
 {
-	char *str;
-	void *addr;
-	socklen_t len;
-	int type;
+	char *str __unused;
+	void *addr __unused;
+	socklen_t len __unused;
+	int type __unused;
 	struct hostent *ht;
 
 	struct hostent new_ht;
@@ -364,10 +364,10 @@ static int
 host_unmarshal_func(char *buffer, size_t buffer_size, void *retval, va_list ap,
     void *cache_mdata)
 {
-	char *str;
-	void *addr;
-	socklen_t len;
-	int type;
+	char *str __unused;
+	void *addr __unused;
+	socklen_t len __unused;
+	int type __unused;
 	struct hostent *ht;
 
 	char *p;

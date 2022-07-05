@@ -22,14 +22,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a662ade0aee955f0db10786e604089fe8fe4be5 $
+ * $FreeBSD: ef92e58064f4eba97bdc0592935daace242583d1 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/io-mapping.h>
 #include <dev/mlx5/driver.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 int mlx5_cmd_alloc_uar(struct mlx5_core_dev *dev, u32 *uarn)
 {

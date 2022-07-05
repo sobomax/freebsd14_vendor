@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)raw_usrreq.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: f43de7dae9ca5bff4d5c23fbbd616e9e19291406 $
+ * $FreeBSD: 5d4e223e5a0abf74859035b6c5c5c5b1de8ca50c $
  */
 
 #include <sys/param.h>
@@ -100,10 +100,10 @@ raw_input_ext(struct mbuf *m0, struct sockproto *proto, struct sockaddr *src,
 			n = m_copym(m, 0, M_COPYALL, M_NOWAIT);
 			if (n) {
 				if (sbappendaddr(&last->so_rcv, src,
-				    n, (struct mbuf *)0) == 0)
-					/* should notify about lost packet */
+				    n, (struct mbuf *)0) == 0) {
+					soroverflow(last);
 					m_freem(n);
-				else
+				} else
 					sorwakeup(last);
 			}
 		}
@@ -111,9 +111,10 @@ raw_input_ext(struct mbuf *m0, struct sockproto *proto, struct sockaddr *src,
 	}
 	if (last) {
 		if (sbappendaddr(&last->so_rcv, src,
-		    m, (struct mbuf *)0) == 0)
+		    m, (struct mbuf *)0) == 0) {
+			soroverflow(last);
 			m_freem(m);
-		else
+		} else
 			sorwakeup(last);
 	} else
 		m_freem(m);

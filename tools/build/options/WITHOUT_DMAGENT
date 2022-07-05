@@ -1,2 +1,2 @@
-.\" $FreeBSD: d5e62093ee265b29a4a881094c7468694ea347d3 $
-Set to not build dma Mail Transport Agent.
+.\" $FreeBSD: 3195ce07ecc3835a76a7908ddf8819c7f308d919 $
+Do not build dma Mail Transport Agent.

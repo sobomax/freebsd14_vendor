@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae551da7fb431d76ad63087b8292074e6a870b92 $");
+__FBSDID("$FreeBSD: aa579d762c936519de22bc1954e1d4b44e658bec $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -132,6 +132,29 @@ DUMMY(pwritev2);
 DUMMY(pkey_mprotect);
 DUMMY(pkey_alloc);
 DUMMY(pkey_free);
+DUMMY(open_tree);
+DUMMY(move_mount);
+DUMMY(fsopen);
+DUMMY(fsconfig);
+DUMMY(fsmount);
+DUMMY(fspick);
+DUMMY(pidfd_open);
+DUMMY(clone3);
+DUMMY(close_range);
+DUMMY(openat2);
+DUMMY(pidfd_getfd);
+DUMMY(faccessat2);
+DUMMY(process_madvise);
+DUMMY(epoll_pwait2);
+DUMMY(mount_setattr);
+/* Linux 4.18: */
+DUMMY(io_pgetevents);
+DUMMY(rseq);
+/* Linux 5.0: */
+DUMMY(pidfd_send_signal);
+DUMMY(io_uring_setup);
+DUMMY(io_uring_enter);
+DUMMY(io_uring_register);
 
 #define DUMMY_XATTR(s)						\
 int								\

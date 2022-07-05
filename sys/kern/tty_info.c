@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cf8be19ebda2e4c0b7b33b1d08fced616656636 $");
+__FBSDID("$FreeBSD: 60675557e4edd4fec56914a0348d20aae4e6777c $");
 
 #include "opt_stack.h"
 
@@ -121,12 +121,12 @@ thread_compare(struct thread *td, struct thread *td2)
 	 * Fetch running stats, pctcpu usage, and interruptable flag.
 	 */
 	thread_lock(td);
-	runa = TD_IS_RUNNING(td) | TD_ON_RUNQ(td);
+	runa = TD_IS_RUNNING(td) || TD_ON_RUNQ(td);
 	slpa = td->td_flags & TDF_SINTR;
 	esta = sched_pctcpu(td);
 	thread_unlock(td);
 	thread_lock(td2);
-	runb = TD_IS_RUNNING(td2) | TD_ON_RUNQ(td2);
+	runb = TD_IS_RUNNING(td2) || TD_ON_RUNQ(td2);
 	estb = sched_pctcpu(td2);
 	slpb = td2->td_flags & TDF_SINTR;
 	thread_unlock(td2);

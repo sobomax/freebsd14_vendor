@@ -47,7 +47,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 8eeeadce66667319f7618a0c730921d5e8d44f16 $");
+SND_DECLARE_FILE("$FreeBSD: 4d872dc8840516c8edcd8a2804d0039c9cc45aec $");
 
 #define hdaa_lock(devinfo)	snd_mtxlock((devinfo)->lock)
 #define hdaa_unlock(devinfo)	snd_mtxunlock((devinfo)->lock)
@@ -2191,7 +2191,7 @@ hdaa_channel_getptr(kobj_t obj, void *data)
 	hdaa_unlock(devinfo);
 
 	/*
-	 * Round to available space and force 128 bytes aligment.
+	 * Round to available space and force 128 bytes alignment.
 	 */
 	ptr %= ch->blksz * ch->blkcnt;
 	ptr &= HDA_BLK_ALIGN;

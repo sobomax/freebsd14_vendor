@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f4c5baae0c5422c8bf1ffacb75548b66568884cb $
+ * $FreeBSD: b6d3a5d4897fcc2ffa62749ebb8fddacd1a368a5 $
  */
 
 /**
@@ -55,7 +55,7 @@
  * @brief Defines the number of SGLs allocated on each IO object
  */
 #ifndef OCS_FC_MAX_SGL
-#define OCS_FC_MAX_SGL		128
+#define OCS_FC_MAX_SGL		256
 #endif
 
 /***************************************************************************

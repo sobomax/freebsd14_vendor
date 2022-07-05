@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: 7470d7a13b07fd5b76d6f671c5591023a6447f46 $ */
+/* $FreeBSD: 321775c13d1eab0789ae55a2eee1e9d15ca165df $ */
 
 #include "oce_if.h"
 
@@ -118,7 +118,7 @@ oce_reset_fun(POCE_SOFTC sc)
 }
 
 /**
- * @brief  		This funtions tells firmware we are
+ * @brief  		This functions tells firmware we are
  *			done with commands.
  * @param sc            software handle to the device
  * @returns             0 on success, ETIMEDOUT on failure

@@ -1,5 +1,5 @@
-.\" $FreeBSD: 6efc01d09c5ecd5886307fc98427dc2dfbbb5e70 $
-Set to use the unified object directory format for
+.\" $FreeBSD: 2a551e1d9e17d5018cd09d79bb432bc4695dd7dc $
+Use the unified object directory format for
 .Xr build 7
 targets.
 For cross-builds, native-builds, and sub-directory builds, the format of

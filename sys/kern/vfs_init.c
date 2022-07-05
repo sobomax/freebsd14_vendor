@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3365ddb11474b248bfed4047717135fde62f0ef2 $");
+__FBSDID("$FreeBSD: e22a9561305ddaf7f9d6255317b92c8bc8f499d6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -545,13 +545,12 @@ vfs_unregister(struct vfsconf *vfc)
 		if (vfc->vfc_vfsops_sd->vfs_uninit != NULL)
 			error = vfc->vfc_vfsops_sd->vfs_uninit(vfsp);
 	} else {
-		if (vfc->vfc_vfsops->vfs_uninit != NULL) {
+		if (vfc->vfc_vfsops->vfs_uninit != NULL)
 			error = vfc->vfc_vfsops->vfs_uninit(vfsp);
 	}
 	if (error != 0) {
 		vfsconf_unlock();
 		return (error);
-	}
 	}
 	TAILQ_REMOVE(&vfsconf, vfsp, vfc_list);
 	maxtypenum = VFS_GENERIC;

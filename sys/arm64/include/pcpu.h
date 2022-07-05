@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: ce4dc46e16094beb7d4440bf8065d58cb48ac746 $
+ * $FreeBSD: d83c9a656634036e3928b4a9e9ec349032318444 $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -58,7 +58,14 @@ struct pcpu;
 
 register struct pcpu *pcpup __asm ("x18");
 
-#define	get_pcpu()	pcpup
+static inline struct pcpu *
+get_pcpu(void)
+{
+	struct pcpu *pcpu;
+
+	__asm __volatile("mov   %0, x18" : "=&r"(pcpu));
+	return (pcpu);
+}
 
 static inline struct thread *
 get_curthread(void)

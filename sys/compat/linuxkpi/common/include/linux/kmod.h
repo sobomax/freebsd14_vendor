@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b8a1a8b677edee809664b5728231636b7529d563 $
+ * $FreeBSD: b8e8a483210f44ad4ecedf0fdbed19d8a4db9ad8 $
  */
-#ifndef	_LINUX_KMOD_H_
-#define	_LINUX_KMOD_H_
+#ifndef	_LINUXKPI_LINUX_KMOD_H_
+#define	_LINUXKPI_LINUX_KMOD_H_
 
 #include <sys/types.h>
 #include <sys/syscallsubr.h>
@@ -48,4 +48,4 @@
 
 #define request_module_nowait request_module
 
-#endif /* _LINUX_KMOD_H_ */
+#endif /* _LINUXKPI_LINUX_KMOD_H_ */

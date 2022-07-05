@@ -35,17 +35,19 @@
 static char sccsid[] = "@(#)rand.c	8.1 (Berkeley) 6/14/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bddb0f040302397a31c2429d18bc03e76ae9d05a $");
+__FBSDID("$FreeBSD: e448d1b1fd14bebd11db0689f1dbbe16f7c11b34 $");
 
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <assert.h>
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <syslog.h>
 #include "un-namespace.h"
 
+#include "libc_private.h"
 #include "random.h"
 
 /*
@@ -64,6 +66,7 @@ __FBSDID("$FreeBSD: bddb0f040302397a31c2429d18bc03e76ae9d05a $");
  * the advantage of being the one already in the tree.
  */
 static struct __random_state *rand3_state;
+static pthread_once_t rand3_state_once = PTHREAD_ONCE_INIT;
 
 static void
 initialize_rand3(void)
@@ -78,16 +81,14 @@ initialize_rand3(void)
 int
 rand(void)
 {
-	if (rand3_state == NULL)
-		initialize_rand3();
+	_once(&rand3_state_once, initialize_rand3);
 	return ((int)random_r(rand3_state));
 }
 
 void
 srand(unsigned seed)
 {
-	if (rand3_state == NULL)
-		initialize_rand3();
+	_once(&rand3_state_once, initialize_rand3);
 	srandom_r(rand3_state, seed);
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 3d258ff9aabdc1bd13749d85ee2ac951c2e7e7a6 $
+# $FreeBSD: 9f18bc1c6353c6d566df81a99e3a8f1667c8d448 $
 
 PROG_CXX=	clang-tblgen
 MAN=
@@ -17,9 +17,11 @@ SRCS+=		ClangOpcodesEmitter.cpp
 SRCS+=		ClangOpenCLBuiltinEmitter.cpp
 SRCS+=		ClangOptionDocEmitter.cpp
 SRCS+=		ClangSACheckersEmitter.cpp
+SRCS+=		ClangSyntaxEmitter.cpp
 SRCS+=		ClangTypeNodesEmitter.cpp
 SRCS+=		MveEmitter.cpp
 SRCS+=		NeonEmitter.cpp
+SRCS+=		RISCVVEmitter.cpp
 SRCS+=		SveEmitter.cpp
 SRCS+=		TableGen.cpp
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99df9efd252291346f2e8a4c0d3355d67ab14e5a $");
+__FBSDID("$FreeBSD: 84b17dbe9bdde040dcfb91d9ab9d1d3eeb923c35 $");
 
 /*
  * Driver for extra ACPI-controlled gadgets found on ThinkPad laptops.
@@ -546,14 +546,14 @@ acpi_ibm_attach(device_t dev)
 			SYSCTL_ADD_PROC(sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_ibm_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 			    sc, i, acpi_ibm_sysctl, "I",
 			    acpi_ibm_sysctls[i].description);
 		} else {
 			SYSCTL_ADD_PROC(sc->sysctl_ctx,
 			    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO,
 			    acpi_ibm_sysctls[i].name,
-			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+			    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
 			    sc, i, acpi_ibm_sysctl, "I",
 			    acpi_ibm_sysctls[i].description);
 		}
@@ -563,7 +563,7 @@ acpi_ibm_attach(device_t dev)
 	if (acpi_ibm_sysctl_init(sc, ACPI_IBM_METHOD_THERMAL)) {
 		SYSCTL_ADD_PROC(sc->sysctl_ctx,
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, "thermal",
-		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_NEEDGIANT, sc, 0,
+		    CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE, sc, 0,
 		    acpi_ibm_thermal_sysctl, "I", "Thermal zones");
 	}
 
@@ -571,7 +571,7 @@ acpi_ibm_attach(device_t dev)
 	if (acpi_ibm_sysctl_init(sc, ACPI_IBM_METHOD_HANDLEREVENTS)) {
 		SYSCTL_ADD_PROC(sc->sysctl_ctx,
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, "handlerevents",
-		    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc, 0,
+		    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE, sc, 0,
 		    acpi_ibm_handlerevents_sysctl, "I",
 		    "devd(8) events handled by acpi_ibm");
 	}

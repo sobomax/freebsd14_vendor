@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be845c2064f9aac61f77d01ad9e9e97c10c110b5 $");
+__FBSDID("$FreeBSD: 9608bbf57314da862a2c36d047526a3c868d5ae9 $");
 
 #include "opt_platform.h"
 
@@ -152,6 +152,9 @@ static struct mx25l_flash_ident flash_devices[] = {
 	/* GigaDevice */
 	{ "gd25q64",	0xc8, 0x4017, 64 * 1024, 128, FL_ERASE_4K },
 	{ "gd25q128",	0xc8, 0x4018, 64 * 1024, 256, FL_ERASE_4K },
+
+	/* Integrated Silicon Solution */
+	{ "is25wp256",	0x9d, 0x7019, 64 * 1024, 512, FL_ERASE_4K | FL_ENABLE_4B_ADDR},
 };
 
 static int

@@ -21,7 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: cd0b4450fdaff99c280156c96363a326154f8d97 $
+.\" $FreeBSD: e74f7dd70d67570b3fdedfd14f20836fc65b8a3c $
 .\"
 .Dd August 15, 2020
 .Dt CAP_NET 3
@@ -83,10 +83,9 @@
 .Ft "cap_net_limit_t *"
 .Fn cap_net_limit_bind "cap_net_limit_t *limit" "const struct sockaddr *sa" "socklen_t salen"
 .Sh DESCRIPTION
-.Pp
 The functions
-.Fn cap_bind,
-.Fn cap_connect,
+.Fn cap_bind ,
+.Fn cap_connect ,
 .Fn cap_gethostbyname ,
 .Fn cap_gethostbyname2 ,
 .Fn cap_gethostbyaddr

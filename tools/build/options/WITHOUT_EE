@@ -1,5 +1,5 @@
-.\" $FreeBSD: 721ddaab9df85842a580320939fa4f56ea75356d $
-Set to not build and install
+.\" $FreeBSD: 4295cd6ddbc26e991005a6afa0507185829c1df5 $
+Do not build and install
 .Xr edit 1 ,
 .Xr ee 1 ,
 and related programs.

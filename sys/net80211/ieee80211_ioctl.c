@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2fef9ac0084ad3029caa7ef3352b09902b8dade4 $");
+__FBSDID("$FreeBSD: 419518eb1224711fb1291a28f426440d16d1f64f $");
 
 /*
  * IEEE 802.11 ioctl support (FreeBSD-specific)
@@ -1591,7 +1591,7 @@ setmlme_assoc_adhoc(struct ieee80211vap *vap,
 	    ("expected opmode IBSS or AHDEMO not %s",
 	    ieee80211_opmode_name[vap->iv_opmode]));
 
-	if (ssid_len == 0)
+	if (ssid_len == 0 || ssid_len > IEEE80211_NWID_LEN)
 		return EINVAL;
 
 	sr = IEEE80211_MALLOC(sizeof(*sr), M_TEMP,

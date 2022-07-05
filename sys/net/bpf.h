@@ -36,7 +36,7 @@
  *      @(#)bpf.h	8.1 (Berkeley) 6/10/93
  *	@(#)bpf.h	1.34 (LBL)     6/16/96
  *
- * $FreeBSD: 54bbfd23bba24cd44376b9e3600e771a8e364a58 $
+ * $FreeBSD: b7cd8036856c15ef5115dde64a21abef81aa06af $
  */
 
 #ifndef _NET_BPF_H_
@@ -153,6 +153,7 @@ struct bpf_zbuf {
 #define	BIOCSETFNR	_IOW('B', 130, struct bpf_program)
 #define	BIOCGTSTAMP	_IOR('B', 131, u_int)
 #define	BIOCSTSTAMP	_IOW('B', 132, u_int)
+#define	BIOCSETVLANPCP	_IOW('B', 133, u_int)
 
 /* Obsolete */
 #define	BIOCGSEESENT	BIOCGDIRECTION

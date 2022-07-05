@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: 450e2747b773f1d85dde699b4d0aaea57ea55f0e $
+ * $FreeBSD: 92978eae88464f6e05cef44a716061cd6d49779a $
  */
 
 #ifndef _SYS_VNODE_H_
@@ -254,6 +254,8 @@ struct xvnode {
 #define	VI_DOINGINACT	0x0004	/* VOP_INACTIVE is in progress */
 #define	VI_OWEINACT	0x0008	/* Need to call inactive */
 #define	VI_DEFINACT	0x0010	/* deferred inactive */
+#define	VI_FOPENING	0x0020	/* In open, with opening process having the
+				   first right to advlock file */
 
 #define	VV_ROOT		0x0001	/* root of its filesystem */
 #define	VV_ISTTY	0x0002	/* vnode represents a tty */
@@ -610,6 +612,11 @@ typedef void vop_getpages_iodone_t(void *, vm_page_t *, int, int);
 #define	VN_OPEN_NOCAPCHECK	0x00000002
 #define	VN_OPEN_NAMECACHE	0x00000004
 #define	VN_OPEN_INVFS		0x00000008
+#define	VN_OPEN_WANTIOCTLCAPS	0x00000010
+
+/* copy_file_range kernel flags */
+#define	COPY_FILE_RANGE_KFLAGS		0xff000000
+#define	COPY_FILE_RANGE_TIMEO1SEC	0x01000000	/* Return after 1sec. */
 
 /*
  * Public vnode manipulation functions.
@@ -636,6 +643,12 @@ int	bnoreuselist(struct bufv *bufv, struct bufobj *bo, daddr_t startn,
 	    daddr_t endn);
 /* cache_* may belong in namei.h. */
 void	cache_changesize(u_long newhashsize);
+
+#define	VFS_CACHE_DROPOLD	0x1
+
+void	cache_enter_time_flags(struct vnode *dvp, struct vnode *vp,
+	    struct componentname *cnp, struct timespec *tsp,
+	    struct timespec *dtsp, int flags);
 #define	cache_enter(dvp, vp, cnp)					\
 	cache_enter_time(dvp, vp, cnp, NULL, NULL)
 void	cache_enter_time(struct vnode *dvp, struct vnode *vp,
@@ -682,6 +695,9 @@ int	vn_vptocnp(struct vnode **vp, char *buf, size_t *buflen);
 int	vn_getcwd(char *buf, char **retbuf, size_t *buflen);
 int	vn_fullpath(struct vnode *vp, char **retbuf, char **freebuf);
 int	vn_fullpath_global(struct vnode *vp, char **retbuf, char **freebuf);
+int	vn_fullpath_hardlink(struct vnode *vp, struct vnode *dvp,
+	    const char *hdrl_name, size_t hrdl_name_length, char **retbuf,
+	    char **freebuf, size_t *buflen);
 struct vnode *
 	vn_dir_dd_ino(struct vnode *vp);
 int	vn_commname(struct vnode *vn, char *buf, u_int buflen);
@@ -748,6 +764,8 @@ int	vn_open_cred(struct nameidata *ndp, int *flagp, int cmode,
 int	vn_open_vnode(struct vnode *vp, int fmode, struct ucred *cred,
 	    struct thread *td, struct file *fp);
 void	vn_pages_remove(struct vnode *vp, vm_pindex_t start, vm_pindex_t end);
+void	vn_pages_remove_valid(struct vnode *vp, vm_pindex_t start,
+	    vm_pindex_t end);
 int	vn_pollrecord(struct vnode *vp, struct thread *p, int events);
 int	vn_rdwr(enum uio_rw rw, struct vnode *vp, void *base,
 	    int len, off_t offset, enum uio_seg segflg, int ioflg,
@@ -783,8 +801,6 @@ int	vn_io_fault_uiomove(char *data, int xfersize, struct uio *uio);
 int	vn_io_fault_pgmove(vm_page_t ma[], vm_offset_t offset, int xfersize,
 	    struct uio *uio);
 
-void	vn_seqc_write_begin_unheld_locked(struct vnode *vp);
-void	vn_seqc_write_begin_unheld(struct vnode *vp);
 void	vn_seqc_write_begin_locked(struct vnode *vp);
 void	vn_seqc_write_begin(struct vnode *vp);
 void	vn_seqc_write_end_locked(struct vnode *vp);
@@ -907,10 +923,14 @@ void	vop_symlink_post(void *a, int rc);
 int	vop_sigdefer(struct vop_vector *vop, struct vop_generic_args *a);
 
 #ifdef DEBUG_VFS_LOCKS
+void	vop_fdatasync_debugpre(void *a);
+void	vop_fdatasync_debugpost(void *a, int rc);
 void	vop_fplookup_vexec_debugpre(void *a);
 void	vop_fplookup_vexec_debugpost(void *a, int rc);
 void	vop_fplookup_symlink_debugpre(void *a);
 void	vop_fplookup_symlink_debugpost(void *a, int rc);
+void	vop_fsync_debugpre(void *a);
+void	vop_fsync_debugpost(void *a, int rc);
 void	vop_strategy_debugpre(void *a);
 void	vop_lock_debugpre(void *a);
 void	vop_lock_debugpost(void *a, int rc);
@@ -919,10 +939,14 @@ void	vop_need_inactive_debugpre(void *a);
 void	vop_need_inactive_debugpost(void *a, int rc);
 void	vop_mkdir_debugpost(void *a, int rc);
 #else
+#define	vop_fdatasync_debugpre(x)		do { } while (0)
+#define	vop_fdatasync_debugpost(x, y)		do { } while (0)
 #define	vop_fplookup_vexec_debugpre(x)		do { } while (0)
 #define	vop_fplookup_vexec_debugpost(x, y)	do { } while (0)
 #define	vop_fplookup_symlink_debugpre(x)	do { } while (0)
 #define	vop_fplookup_symlink_debugpost(x, y)	do { } while (0)
+#define	vop_fsync_debugpre(x)			do { } while (0)
+#define	vop_fsync_debugpost(x, y)		do { } while (0)
 #define	vop_strategy_debugpre(x)		do { } while (0)
 #define	vop_lock_debugpre(x)			do { } while (0)
 #define	vop_lock_debugpost(x, y)		do { } while (0)
@@ -1081,6 +1105,7 @@ int vn_chown(struct file *fp, uid_t uid, gid_t gid, struct ucred *active_cred,
 void vn_fsid(struct vnode *vp, struct vattr *va);
 
 int vn_dir_check_exec(struct vnode *vp, struct componentname *cnp);
+int vn_lktype_write(struct mount *mp, struct vnode *vp);
 
 #define VOP_UNLOCK_FLAGS(vp, flags)	({				\
 	struct vnode *_vp = (vp);					\
@@ -1107,6 +1132,7 @@ int vn_dir_check_exec(struct vnode *vp, struct componentname *cnp);
 #define VFS_SMR()	vfs_smr
 #define vfs_smr_enter()	smr_enter(VFS_SMR())
 #define vfs_smr_exit()	smr_exit(VFS_SMR())
+#define vfs_smr_synchronize()	smr_synchronize(VFS_SMR())
 #define vfs_smr_entered_load(ptr)	smr_entered_load((ptr), VFS_SMR())
 #define VFS_SMR_ASSERT_ENTERED()	SMR_ASSERT_ENTERED(VFS_SMR())
 #define VFS_SMR_ASSERT_NOT_ENTERED()	SMR_ASSERT_NOT_ENTERED(VFS_SMR())

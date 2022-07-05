@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd3cede78124dec255ebe7f6bc50da85940d82bc $");
+__FBSDID("$FreeBSD: 89e568eb13c0eeee1e703223fcf7c1e9d61fe1ef $");
 
 /*-
  * Copyright (c) 1998, 2000 The NetBSD Foundation, Inc.
@@ -1752,7 +1752,7 @@ static gdb_term_f ucom_gdbterm;
 static gdb_getc_f ucom_gdbgetc;
 static gdb_putc_f ucom_gdbputc;
 
-GDB_DBGPORT(sio, ucom_gdbprobe, ucom_gdbinit, ucom_gdbterm, ucom_gdbgetc, ucom_gdbputc);
+GDB_DBGPORT(ucom, ucom_gdbprobe, ucom_gdbinit, ucom_gdbterm, ucom_gdbgetc, ucom_gdbputc);
 
 static int
 ucom_gdbprobe(void)

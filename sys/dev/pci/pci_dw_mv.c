@@ -29,7 +29,7 @@
 /* Armada 8k DesignWare PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d39228dd1825f1de8170d3f05cdb66e14020c27 $");
+__FBSDID("$FreeBSD: 43f45ddef54ed6e54538af411755088cd82ea09a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -166,8 +166,8 @@ pci_mv_init(struct pci_mv_softc *sc)
 
 	/* Enable local interrupts */
 	pci_dw_dbi_wr4(sc->dev, DW_MSI_INTR0_MASK, 0xFFFFFFFF);
-	pci_dw_dbi_wr4(sc->dev, MV_INT_MASK1, 0xFFFFFFFF);
-	pci_dw_dbi_wr4(sc->dev, MV_INT_MASK2, 0xFFFFFFFD);
+	pci_dw_dbi_wr4(sc->dev, MV_INT_MASK1, 0x0001FE00);
+	pci_dw_dbi_wr4(sc->dev, MV_INT_MASK2, 0x00000000);
 	pci_dw_dbi_wr4(sc->dev, MV_INT_CAUSE1, 0xFFFFFFFF);
 	pci_dw_dbi_wr4(sc->dev, MV_INT_CAUSE2, 0xFFFFFFFF);
 

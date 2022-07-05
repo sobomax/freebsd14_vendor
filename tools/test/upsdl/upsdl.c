@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fc4a761e450bda1cb2dd37a8cb5a4403ed2495f5 $
+ * $FreeBSD: 960b034ffcfe36202b699e836ca94467340f1054 $
  */
 
 
@@ -32,20 +32,21 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/mman.h>
 
 
-int prepareFile(char* filename,int* fdp);
+int prepareFile(const char* filename,int* fdp);
 int mapBuffer(char** bufferp,int fd1,int fd2);
 int startIO(int fd,char *buffer);
 
-int pagesize;
+static int pagesize;
 
 #define FILESIZE (32*1024)
-char wbuffer[FILESIZE];
+static char wbuffer[FILESIZE];
 
 /* Create a FILESIZE sized file - then remove file data from the cache*/
-int prepareFile(char* filename,int* fdp)
+int prepareFile(const char* filename,int* fdp)
 {
   int fd;
   int len;
@@ -134,7 +135,7 @@ int startIO(int fd,char *buffer)
 }
 
 
-int main(int argc,char *argv[],char *envp[])
+int main(int argc __unused, char *argv[] __unused)
 {
 
   int fdA,fdB,fdDelayA,fdDelayB;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f14a2f631387d78b0a5f2a3f0c6b48f82cd6ecae $");
+__FBSDID("$FreeBSD: ba6960e476f8d35849dde5712e57a582216db626 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -231,10 +231,15 @@ nvme_ns_get_data(struct nvme_namespace *ns)
 uint32_t
 nvme_ns_get_stripesize(struct nvme_namespace *ns)
 {
+	uint32_t ss;
 
 	if (((ns->data.nsfeat >> NVME_NS_DATA_NSFEAT_NPVALID_SHIFT) &
-	    NVME_NS_DATA_NSFEAT_NPVALID_MASK) != 0 && ns->data.npwg != 0) {
-		return ((ns->data.npwg + 1) * nvme_ns_get_sector_size(ns));
+	    NVME_NS_DATA_NSFEAT_NPVALID_MASK) != 0) {
+		ss = nvme_ns_get_sector_size(ns);
+		if (ns->data.npwa != 0)
+			return ((ns->data.npwa + 1) * ss);
+		else if (ns->data.npwg != 0)
+			return ((ns->data.npwg + 1) * ss);
 	}
 	return (ns->boundary);
 }
@@ -473,7 +478,7 @@ nvme_ns_bio_process(struct nvme_namespace *ns, struct bio *bp,
 	case BIO_DELETE:
 		dsm_range =
 		    malloc(sizeof(struct nvme_dsm_range), M_NVME,
-		    M_ZERO | M_WAITOK);
+		    M_ZERO | M_NOWAIT);
 		if (!dsm_range) {
 			err = ENOMEM;
 			break;
@@ -566,20 +571,14 @@ nvme_ns_construct(struct nvme_namespace *ns, uint32_t id,
 	 * that improves performance.  If present use for the stripe size.  NVMe
 	 * 1.3 standardized this as NOIOB, and newer Intel drives use that.
 	 */
-	switch (pci_get_devid(ctrlr->dev)) {
-	case 0x09538086:		/* Intel DC PC3500 */
-	case 0x0a538086:		/* Intel DC PC3520 */
-	case 0x0a548086:		/* Intel DC PC4500 */
-	case 0x0a558086:		/* Dell Intel P4600 */
+	if ((ctrlr->quirks & QUIRK_INTEL_ALIGNMENT) != 0) {
 		if (ctrlr->cdata.vs[3] != 0)
 			ns->boundary =
 			    (1 << ctrlr->cdata.vs[3]) * ctrlr->min_page_size;
 		else
 			ns->boundary = 0;
-		break;
-	default:
+	} else {
 		ns->boundary = ns->data.noiob * nvme_ns_get_sector_size(ns);
-		break;
 	}
 
 	if (nvme_ctrlr_has_dataset_mgmt(&ctrlr->cdata))

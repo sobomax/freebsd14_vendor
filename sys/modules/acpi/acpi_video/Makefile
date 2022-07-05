@@ -1,9 +1,9 @@
-#	$FreeBSD: 803598144a9ad7a0914393a9d2e056759e1f509a $
+#	$FreeBSD: d2556c8a56dc32629390334890bedfde0f5ed3f2 $
 
 .PATH:	${SRCTOP}/sys/dev/acpica
 
 KMOD=	acpi_video
 SRCS=	acpi_video.c
-SRCS+=	opt_acpi.h acpi_if.h bus_if.h device_if.h
+SRCS+=	opt_acpi.h opt_evdev.h acpi_if.h bus_if.h device_if.h
 
 .include <bsd.kmod.mk>

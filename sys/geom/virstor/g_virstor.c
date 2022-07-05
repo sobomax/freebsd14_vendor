@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e27d92b509d4c5d083a5336d2da858c942ab27cf $");
+__FBSDID("$FreeBSD: 8e4725997ab2c421358ea25d3d24300cd7dfe50f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -780,6 +780,7 @@ g_virstor_taste(struct g_class *mp, struct g_provider *pp, int flags)
 	gp->orphan = (void *)invalid_call;	/* I really want these to fail. */
 
 	cp = g_new_consumer(gp);
+	cp->flags |= G_CF_DIRECT_SEND | G_CF_DIRECT_RECEIVE;
 	error = g_attach(cp, pp);
 	if (error == 0) {
 		error = read_metadata(cp, &md);

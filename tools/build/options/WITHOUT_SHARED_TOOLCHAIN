@@ -1,5 +1,5 @@
-.\" $FreeBSD: 4da9bf0c1859ae4391a10d877d739c793e829d4b $
-Set to build the toolchain binaries as statically linked executables.
+.\" $FreeBSD: 86e309028c215f412f7d5f6662ba54f61c815954 $
+Build the toolchain binaries as statically linked executables.
 The set includes
 .Xr cc 1 ,
 .Xr make 1

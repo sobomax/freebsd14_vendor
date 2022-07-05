@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_frontend.h#2 $
- * $FreeBSD: bdcb7a2e1abd8bc8ce2f848c05dc3a8bbf35841f $
+ * $FreeBSD: c9ab255cdde490cbcdfb13f5257c493d853919d2 $
  */
 /*
  * CAM Target Layer front end registration hooks
@@ -309,6 +309,13 @@ void ctl_port_offline(struct ctl_port *fe);
  * failure.
  */
 int ctl_queue(union ctl_io *io);
+
+/*
+ * This routine starts execution of I/O and task management requests from
+ * the FETD to the CTL layer.  May sleep.  Returns 0 for success, non-zero
+ * for failure.
+ */
+int ctl_run(union ctl_io *io);
 
 /*
  * This routine is used if the front end interface doesn't support

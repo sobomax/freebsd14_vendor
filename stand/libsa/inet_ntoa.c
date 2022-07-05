@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f675a0ff77366e472606235954306c149c913be6 $");
+__FBSDID("$FreeBSD: 45c79f26151d91049ed600c7a96b986159256402 $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)inet_ntoa.c	8.1 (Berkeley) 6/4/93";
@@ -45,8 +45,7 @@ static char sccsid[] = "@(#)inet_ntoa.c	8.1 (Berkeley) 6/4/93";
  * to base 256 d.d.d.d representation.
  */
 char *
-inet_ntoa(in)
-	struct in_addr in;
+inet_ntoa(struct in_addr in)
 {
 	static const char fmt[] = "%u.%u.%u.%u";
 	static char ret[sizeof "255.255.255.255"];

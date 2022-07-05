@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c455ea9482dc4d244823e886ccbebb4283bc6e60 $");
+__FBSDID("$FreeBSD: 3ac3bb80596bec5547d522d8a0dc7b26a6dd29bf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -95,7 +95,7 @@ extern struct sysent linux32_sysent[];
 #elif defined(FREEBSD32_SYSTRACE)
 /*
  * The syscall arguments are processed into a DTrace argument array
- * using a generated function. See sys/kern/makesyscalls.sh.
+ * using a generated function. See sys/tools/makesyscalls.lua.
  */
 #include <compat/freebsd32/freebsd32_proto.h>
 #include <compat/freebsd32/freebsd32_util.h>
@@ -109,7 +109,7 @@ extern const char *freebsd32_syscallnames[];
 #else
 /*
  * The syscall arguments are processed into a DTrace argument array
- * using a generated function. See sys/kern/makesyscalls.sh.
+ * using a generated function. See sys/tools/makesyscalls.lua.
  */
 #include <sys/syscall.h>
 #include <kern/systrace_args.c>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4dac8614123056e671dffa9da8a6798a83ecd4be $");
+__FBSDID("$FreeBSD: 603265a52b133a4914df1dbb6813e4fe33a4793c $");
 
 /*
  * I2C bus IP driver
@@ -372,7 +372,7 @@ icoutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	if (dst->sa_family == AF_UNSPEC)
 		bcopy(dst->sa_data, &hdr, sizeof(hdr));
 	else 
-		hdr = dst->sa_family;
+		hdr = RO_GET_FAMILY(ro, dst);
 
 	mtx_lock(&sc->ic_lock);
 	ifp->if_drv_flags |= IFF_DRV_RUNNING;

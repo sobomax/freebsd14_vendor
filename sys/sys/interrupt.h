@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f1770fe64b0b22016f8027c63c4e9ee3d3a0a38b $
+ * $FreeBSD: 56952e45fe75f7d3ab4a0d7346f928ad027b62fd $
  */
 
 #ifndef _SYS_INTERRUPT_H_
@@ -190,7 +190,7 @@ int	intr_event_resume_handler(void *cookie);
 int	intr_getaffinity(int irq, int mode, void *mask);
 void	*intr_handler_source(void *cookie);
 int	intr_setaffinity(int irq, int mode, void *mask);
-void	_intr_drain(int irq);  /* Linux compat only. */
+void	_intr_drain(int irq);  /* LinuxKPI only. */
 int	swi_add(struct intr_event **eventp, const char *name,
 	    driver_intr_t handler, void *arg, int pri, enum intr_type flags,
 	    void **cookiep);

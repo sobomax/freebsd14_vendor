@@ -25,8 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa3c765c36ab843abb94993a4299e4614926bad9 $");
+__FBSDID("$FreeBSD: 736c1aa56c9948088aad590114c397ce80fccdc3 $");
 
+#include <bootstrap.h>
 #include <efi.h>
 #include <eficonsctl.h>
 #include <efilib.h>
@@ -100,6 +101,9 @@ efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_table)
 	}
 
 	setheap((void *)(uintptr_t)heap, (void *)(uintptr_t)(heap + heapsize));
+
+	/* Start tslog now that we have a heap.*/
+	tslog_init();
 
 	/* Use efi_exit() from here on... */
 

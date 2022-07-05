@@ -1,8 +1,10 @@
-# $FreeBSD: 186e7ed94f4b2d3f6e447115b870fc958ae6903b $
+# $FreeBSD: 89509341c2e5fdeca8fd10f91c7e36720ae1ec7a $
 
 .PATH: ${SRCTOP}/sys/kern
 
 KMOD=	sysvsem
 SRCS=	sysv_sem.c opt_sysvipc.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -1,6 +1,7 @@
 #	from: @(#)Makefile	5.8 (Berkeley) 7/28/90
-# $FreeBSD: d4a5b955e5c74a47a42a33297c7e3ec6c1de8023 $
+# $FreeBSD: 44c821791f29958d9e1304eb024c9864bf72dd85 $
 
+PACKAGE=	yp
 PROG=	ypmatch
 
 WARNS?=	3

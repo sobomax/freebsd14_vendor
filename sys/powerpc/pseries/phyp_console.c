@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 84ab292dae946aca386b45441a19ffab9acb5638 $");
+__FBSDID("$FreeBSD: 484952177d515329f3ec09ab0dcc0dbf15a7b7a0 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -295,6 +295,10 @@ uart_phyp_get(struct uart_phyp_softc *sc, void *buffer, size_t bufsize)
 		err = phyp_pft_hcall(H_GET_TERM_CHAR, sc->vtermid,
 		    0, 0, 0, &sc->inbuflen, &sc->phyp_inbuf.u64[0],
 		    &sc->phyp_inbuf.u64[1]);
+#if BYTE_ORDER == LITTLE_ENDIAN
+		sc->phyp_inbuf.u64[0] = be64toh(sc->phyp_inbuf.u64[0]);
+		sc->phyp_inbuf.u64[1] = be64toh(sc->phyp_inbuf.u64[1]);
+#endif
 		if (err != H_SUCCESS) {
 			uart_unlock(&sc->sc_mtx);
 			return (-1);
@@ -306,11 +310,6 @@ uart_phyp_get(struct uart_phyp_softc *sc, void *buffer, size_t bufsize)
 		uart_unlock(&sc->sc_mtx);
 		return (0);
 	}
-
-#if BYTE_ORDER == LITTLE_ENDIAN
-	sc->phyp_inbuf.u64[0] = be64toh(sc->phyp_inbuf.u64[0]);
-	sc->phyp_inbuf.u64[1] = be64toh(sc->phyp_inbuf.u64[1]);
-#endif
 
 	if ((sc->protocol == HVTERMPROT) && (hdr == 1)) {
 		sc->inbuflen = sc->inbuflen - 4;

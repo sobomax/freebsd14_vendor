@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 63aff012c6bb0fe34c8e27dabca9739ab90aab9a $
+ * $FreeBSD: 240d26c47685f0dfcf84e3d34de3fbb52d1ceea6 $
  */
-#ifndef	_LINUX_SHMEM_FS_H_
-#define	_LINUX_SHMEM_FS_H_
+#ifndef	_LINUXKPI_LINUX_SHMEM_FS_H_
+#define	_LINUXKPI_LINUX_SHMEM_FS_H_
 
 /* Shared memory support */
 unsigned long linux_invalidate_mapping_pages(vm_object_t, pgoff_t, pgoff_t);
@@ -52,4 +52,4 @@ void linux_shmem_truncate_range(vm_object_t, loff_t, loff_t);
 #define	shmem_truncate_range(...) \
   linux_shmem_truncate_range(__VA_ARGS__)
 
-#endif /* _LINUX_SHMEM_FS_H_ */
+#endif /* _LINUXKPI_LINUX_SHMEM_FS_H_ */

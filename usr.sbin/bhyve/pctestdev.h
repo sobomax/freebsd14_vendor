@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c1c940146e05887df5f17a1804477fd6da532606 $
+ * $FreeBSD: 5808abe6e356c172afe5bcbd00cf0e3f309ad79a $
  */
 
 /*
@@ -38,6 +38,5 @@ struct vmctx;
 
 const char	*pctestdev_getname(void);
 int		 pctestdev_init(struct vmctx *ctx);
-int		 pctestdev_parse(const char *opts);
 
 #endif

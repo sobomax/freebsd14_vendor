@@ -22,14 +22,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0fac6e9d304c50310aff6d922d3693c264ff73c8 $
+ * $FreeBSD: d298da67057afc03750f07218636561fdddae678 $
  */
+
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/delay.h>
 #include <dev/mlx5/driver.h>
-#include "mlx5_core.h"
+#include <dev/mlx5/mlx5_core/mlx5_core.h>
 
 CTASSERT((uintptr_t)PAGE_MASK > (uintptr_t)PAGE_SIZE);
 

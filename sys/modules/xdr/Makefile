@@ -1,4 +1,4 @@
-# $FreeBSD: 536d8b88200ce23f0ff58bdcbb0d304b2d0dfac8 $
+# $FreeBSD: e59ca185b5102f8f432c8ecf975390dde03d7534 $
 
 .PATH:	${SRCTOP}/sys/xdr
 KMOD=	xdr
@@ -8,5 +8,7 @@ SRCS=	xdr.c \
 	xdr_mem.c \
 	xdr_reference.c \
 	xdr_sizeof.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -14,12 +14,19 @@
  */
 
 #ifndef lint
-static char rcsid[] = "$FreeBSD: 7eba4d07f92ced188ef314a02500d3a31b1aa41c $";
+static char rcsid[] = "$FreeBSD: 06e5d62fa5f9b643fcd715d50146ea506907ce82 $";
 #endif
 
 #include "math.h"
 #include "math_private.h"
 
+#ifdef USE_BUILTIN_SQRTF
+float
+__ieee754_sqrtf(float x)
+{
+	return (__builtin_sqrtf(x));
+}
+#else
 static	const float	one	= 1.0, tiny=1.0e-30;
 
 float
@@ -87,3 +94,4 @@ __ieee754_sqrtf(float x)
 	SET_FLOAT_WORD(z,ix);
 	return z;
 }
+#endif

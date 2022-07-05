@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e54626367058755a2b3d98be89a8912e3024fe6 $");
+__FBSDID("$FreeBSD: 86266fd3178fb96088852184b4d5888aafa7a59c $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -51,6 +51,10 @@ __FBSDID("$FreeBSD: 8e54626367058755a2b3d98be89a8912e3024fe6 $");
 #include <sys/sysctl.h>
 #include <sys/systm.h>
 #include <sys/vnode.h>
+
+#include <net/if.h>
+#include <net/if_var.h>
+#include <net/if_types.h>
 
 #include <machine/stdarg.h>
 
@@ -85,6 +89,11 @@ char linux_emul_path[MAXPATHLEN] = "/compat/linux";
 SYSCTL_STRING(_compat_linux, OID_AUTO, emul_path, CTLFLAG_RWTUN,
     linux_emul_path, sizeof(linux_emul_path),
     "Linux runtime environment path");
+
+static bool use_real_ifnames = false;
+SYSCTL_BOOL(_compat_linux, OID_AUTO, use_real_ifnames, CTLFLAG_RWTUN,
+    &use_real_ifnames, 0,
+    "Use FreeBSD interface names instead of generating ethN aliases");
 
 /*
  * Search an alternate path before passing pathname arguments on to
@@ -318,4 +327,10 @@ linux_device_unregister_handler(struct linux_device_handler *d)
 	}
 
 	return (EINVAL);
+}
+
+bool
+linux_use_real_ifname(const struct ifnet *ifp)
+{
+	return (use_real_ifnames || !IFP_IS_ETH(ifp));
 }

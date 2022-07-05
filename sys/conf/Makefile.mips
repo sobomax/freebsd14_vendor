@@ -1,5 +1,5 @@
 # Makefile.mips
-# $FreeBSD: add27c1752a1ae4af0abf99492801b9646a4b900 $
+# $FreeBSD: e8dd61d10a1d68f0ffa3ab2446fa03fb19d04b8f $
 #
 # Makefile for FreeBSD
 #
@@ -57,6 +57,8 @@ TRAMP_ARCH_FLAGS?=$(ARCH_FLAGS)
 TRAMP_EXTRA_FLAGS=${EXTRA_FLAGS} ${TRAMP_ARCH_FLAGS}
 # Kernel code is always compiled with soft-float on MIPS
 TRAMP_EXTRA_FLAGS+=-msoft-float
+# No standard library available
+TRAMP_EXTRA_FLAGS+=-ffreestanding
 .if ${MACHINE_ARCH:Mmips64*} != ""
 TRAMP_ELFSIZE=64
 .else

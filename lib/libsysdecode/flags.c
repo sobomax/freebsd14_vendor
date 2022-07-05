@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df461cf0dca150ea9c40ea8dd101e568fc03806b $");
+__FBSDID("$FreeBSD: 35bce1ff77f9690f2ee6782b16b94d2b139553d0 $");
 
 #define L2CAP_SOCKET_CHECKED
 
@@ -398,6 +398,13 @@ sysdecode_cap_fcntlrights(FILE *fp, uint32_t rights, uint32_t *rem)
 {
 
 	return (print_mask_int(fp, capfcntl, rights, rem));
+}
+
+bool
+sysdecode_close_range_flags(FILE *fp, int flags, int *rem)
+{
+
+	return (print_mask_int(fp, closerangeflags, flags, rem));
 }
 
 const char *

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 68b38aaeb5bbf458568c9ac85e72bae5892c03f2 $
+ * $FreeBSD: fa7e93f1a7e7c0b48fd25bb0b0543bd89fe95d56 $
  */
 
 #ifndef _MACHINE_PCI_CFGREG_H

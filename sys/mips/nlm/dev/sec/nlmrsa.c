@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3252ecbed9c9f266d7ecb2af81bfdf9a244e1fba $");
+__FBSDID("$FreeBSD: 42b904d22a646482515a5f203f91093853d9c72e $");
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
@@ -296,6 +296,7 @@ xlp_rsa_attach(device_t dev)
 	if (xlp_rsa_init(sc, node) != 0)
 		goto error_exit;
 	device_printf(dev, "RSA Initialization complete!\n");
+	gone_in_dev(dev, 14, "Asymmetric crypto");
 	return (0);
 
 error_exit:

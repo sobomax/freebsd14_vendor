@@ -1,4 +1,4 @@
-# $FreeBSD: 1e67928a27543c6df806d1303f987ce081ad6918 $
+# $FreeBSD: 21c5fe4f24245c26cbda358758201e2beb9dd885 $
 #
 # The include file <bsd.man.mk> handles installing manual pages and
 # their links.
@@ -50,7 +50,11 @@
 .error bsd.man.mk cannot be included directly.
 .endif
 
+.if ${MK_MANSPLITPKG} == "no"
 MINSTALL?=	${INSTALL} ${TAG_ARGS} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
+.else
+MINSTALL?=	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},man} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
+.endif
 
 CATDIR=		${MANDIR:H:S/$/\/cat/}
 CATEXT=		.cat
@@ -226,8 +230,13 @@ maninstall: ${MAN}
 .endif	# ${MK_MANCOMPRESS} == "no"
 .endif
 .for l t in ${_MANLINKS}
+.if ${MK_MANSPLITPKG} == "no"
 	rm -f ${DESTDIR}${t} ${DESTDIR}${t}${MCOMPRESS_EXT}; \
 	    ${INSTALL_MANLINK} ${TAG_ARGS} ${DESTDIR}${l}${ZEXT} ${DESTDIR}${t}${ZEXT}
+.else
+	rm -f ${DESTDIR}${t} ${DESTDIR}${t}${MCOMPRESS_EXT}; \
+	    ${INSTALL_MANLINK} ${TAG_ARGS:D${TAG_ARGS},man} ${DESTDIR}${l}${ZEXT} ${DESTDIR}${t}${ZEXT}
+.endif
 .endfor
 
 manlint:

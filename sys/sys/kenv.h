@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4c851631f34371729a1e1fbdd1dd3e1baa337349 $
+ * $FreeBSD: eccdc027adcc370371e23967d1b4357dd23648e9 $
  */
 
 #ifndef _SYS_KENV_H_
@@ -34,10 +34,12 @@
 /*
  * Constants for the kenv(2) syscall
  */
-#define KENV_GET	0
-#define KENV_SET	1
-#define KENV_UNSET	2
-#define KENV_DUMP	3
+#define KENV_GET		0
+#define KENV_SET		1
+#define KENV_UNSET		2
+#define KENV_DUMP		3
+#define KENV_DUMP_LOADER	4
+#define KENV_DUMP_STATIC	5
 
 #define KENV_MNAMELEN	128	/* Maximum name length (for the syscall) */
 #define KENV_MVALLEN	128	/* Maximum value length (for the syscall) */

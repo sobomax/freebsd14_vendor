@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 66e55b357fdb8a68f43c480eb608f5e49b5d8d04 $
+# $FreeBSD: 838eeffcb17e5aff34b1f565c97fbc7366d112da $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -33,5 +33,7 @@ KMOD=	uether
 SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h usbdevs.h \
 	miibus_if.h opt_inet.h \
 	usb_ethernet.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

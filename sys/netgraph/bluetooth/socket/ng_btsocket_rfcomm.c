@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 95b28e6cc5e7e55d1fb1ab2d8f367cf758e08be5 $
+ * $FreeBSD: c0704bce55fae98361ce78717928241b87d88c9a $
  */
 
 #include <sys/param.h>
@@ -3398,8 +3398,7 @@ ng_btsocket_rfcomm_pcb_listener(bdaddr_p src, int channel)
 	mtx_lock(&ng_btsocket_rfcomm_sockets_mtx);
 
 	LIST_FOREACH(pcb, &ng_btsocket_rfcomm_sockets, next) {
-		if (pcb->channel != channel ||
-		    !(pcb->so->so_options & SO_ACCEPTCONN))
+		if (pcb->channel != channel || !SOLISTENING(pcb->so))
 			continue;
 
 		if (bcmp(&pcb->src, src, sizeof(*src)) == 0)

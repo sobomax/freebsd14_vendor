@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)stat.2	8.4 (Berkeley) 5/1/95
-.\" $FreeBSD: 0ed70620af635f8b56ab2c5ed57bf83847ea2054 $
+.\" $FreeBSD: 55221d05a60ed73bd4d0fd272b72d7c0770426fd $
 .\"
-.Dd February 23, 2021
+.Dd March 30, 2021
 .Dt STAT 2
 .Os
 .Sh NAME
@@ -111,6 +111,17 @@ See the description of the
 flag in the
 .Xr open 2
 manual page.
+.It Dv AT_EMPTY_PATH
+If the
+.Fa path
+argument is an empty string, operate on the file or directory
+referenced by the descriptor
+.Fa fd .
+If
+.Fa fd
+is equal to
+.Dv AT_FDCWD ,
+operate on the current working directory.
 .El
 .Pp
 If

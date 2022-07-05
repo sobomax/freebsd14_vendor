@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: db9e659bab5b5cb26bc2e6026e38da8966b1819f $
+ * $FreeBSD: a135518cb1c32f6ea5b195b7750c348666acaff7 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db9e659bab5b5cb26bc2e6026e38da8966b1819f $");
+__FBSDID("$FreeBSD: a135518cb1c32f6ea5b195b7750c348666acaff7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -425,10 +425,13 @@ vmx_rdmsr(struct vmx *vmx, int vcpuid, u_int num, uint64_t *val, bool *retu)
 		break;
 	case MSR_MTRRcap:
 	case MSR_MTRRdefType:
-	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 8:
+	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 7:
 	case MSR_MTRR16kBase ... MSR_MTRR16kBase + 1:
 	case MSR_MTRR64kBase:
-		*val = 0;
+	case MSR_MTRRVarBase ... MSR_MTRRVarBase + (VMM_MTRR_VAR_MAX * 2) - 1:
+		if (vm_rdmtrr(&vmx->mtrr[vcpuid], num, val) != 0) {
+			vm_inject_gp(vmx->vm, vcpuid);
+		}
 		break;
 	case MSR_IA32_MISC_ENABLE:
 		*val = misc_enable;
@@ -465,13 +468,15 @@ vmx_wrmsr(struct vmx *vmx, int vcpuid, u_int num, uint64_t val, bool *retu)
 	case MSR_MCG_STATUS:
 		break;		/* ignore writes */
 	case MSR_MTRRcap:
-		vm_inject_gp(vmx->vm, vcpuid);
-		break;
 	case MSR_MTRRdefType:
-	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 8:
+	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 7:
 	case MSR_MTRR16kBase ... MSR_MTRR16kBase + 1:
 	case MSR_MTRR64kBase:
-		break;		/* Ignore writes */
+	case MSR_MTRRVarBase ... MSR_MTRRVarBase + (VMM_MTRR_VAR_MAX * 2) - 1:
+		if (vm_wrmtrr(&vmx->mtrr[vcpuid], num, val) != 0) {
+			vm_inject_gp(vmx->vm, vcpuid);
+		}
+		break;
 	case MSR_IA32_MISC_ENABLE:
 		changed = val ^ misc_enable;
 		/*

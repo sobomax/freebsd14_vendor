@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f30e8ba8cc07b06469df7365942bb0275f654718 $
+ * $FreeBSD: 1aceef34929dfd62d40ca41335ff720d1c1984f0 $
  */
 
 #ifndef __MLX5_EN_RL_H__
@@ -136,6 +136,7 @@ struct mlx5e_rl_channel {
 	uint64_t new_rate;
 	uint64_t init_rate;
 	uint64_t last_rate;
+	uint32_t refcount;
 	uint16_t last_burst;
 	uint16_t state;
 };

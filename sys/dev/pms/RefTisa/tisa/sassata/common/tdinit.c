@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89ac376caaff45388de8d8d7ef280887d508ef3f $");
+__FBSDID("$FreeBSD: eeaac814d1c26f6bad6206f316185ce660ca5968 $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>
@@ -2496,7 +2496,7 @@ tdsaSharedMemCalculate(
 #endif
 
 #ifdef TD_DISCOVER
-  /* adding expander data strutures */
+  /* adding expander data structures */
   tdSharedMem->tdSharedCachedMem1.singleElementLength +=
     sizeof(tdsaExpander_t) * MaxTargets;
 #endif

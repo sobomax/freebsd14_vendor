@@ -17,7 +17,7 @@
 
 #if !defined(lint) && !defined(LINT)
 static const char rcsid[] =
-  "$FreeBSD: 66ead885bea8d689b4f40d9b3efe76390a7a6b9c $";
+  "$FreeBSD: 2693c9c8d07abd68b3bb260d29e60a86b59a821e $";
 #endif
 
 /* vix 26jan87 [RCS'd; rest of log is in RCS file]
@@ -315,6 +315,9 @@ load_entry(file, error_func, pw, envp)
 			goto eof;
 		}
 
+		/* need to have consumed blanks when checking options below */
+		Skip_Blanks(ch, file)
+		unget_char(ch, file);
 #ifdef LOGIN_CAP
 		if ((s = strrchr(username, '/')) != NULL) {
 			*s = '\0';

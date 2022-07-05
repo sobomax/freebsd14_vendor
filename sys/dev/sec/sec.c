@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa3e20806124c6842df4d286e96511466fea3cfe $");
+__FBSDID("$FreeBSD: f485d932727b913ec3b65d96d8f636dc5bfe0adc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -849,6 +849,9 @@ sec_desc_map_dma(struct sec_softc *sc, struct sec_dma_mem *dma_mem,
 		break;
 	case CRYPTO_BUF_MBUF:
 		size = m_length(crp->crp_buf.cb_mbuf, NULL);
+		break;
+	case CRYPTO_BUF_SINGLE_MBUF:
+		size = crp->crp_buf.cb_mbuf->m_len;
 		break;
 	case CRYPTO_BUF_VMPAGE:
 		size = PAGE_SIZE - crp->crp_buf.cb_vm_page_offset;

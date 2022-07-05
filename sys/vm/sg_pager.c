@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2145f487ec34f3484a87748ed9b530075b7ad5f6 $");
+__FBSDID("$FreeBSD: d7af2aed935a2d77b53434ac26cd7d53d9a0a0ec $");
 
 /*
  * This pager manages OBJT_SG objects.  These objects are backed by
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: 2145f487ec34f3484a87748ed9b530075b7ad5f6 $");
 #include <sys/mutex.h>
 #include <sys/rwlock.h>
 #include <sys/sglist.h>
+#include <sys/user.h>
 #include <sys/vmmeter.h>
 
 #include <vm/vm.h>
@@ -59,7 +60,8 @@ static void sg_pager_putpages(vm_object_t, vm_page_t *, int,
 static boolean_t sg_pager_haspage(vm_object_t, vm_pindex_t, int *,
 		int *);
 
-struct pagerops sgpagerops = {
+const struct pagerops sgpagerops = {
+	.pgo_kvme_type = KVME_TYPE_SG,
 	.pgo_alloc =	sg_pager_alloc,
 	.pgo_dealloc =	sg_pager_dealloc,
 	.pgo_getpages =	sg_pager_getpages,

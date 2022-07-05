@@ -1,5 +1,5 @@
-.\" $FreeBSD: 9a13dcf305ff7ca37ccab39f8a385772de452e49 $
-Set to not build
+.\" $FreeBSD: 792b2bede32a820db7b7acb0986c6077679396dd $
+Do not build
 .Xr dialog 1 ,
 .Xr dialog 3 ,
 .Xr dpv 1 ,

@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 09d499309e5a3abc930ad31d2d5b91bf46a75d34 $
+ * $FreeBSD: 2f58bd5c03e654711213754140b73b5728e35517 $
  */
-#ifndef	_LINUX_COMPLETION_H_
-#define	_LINUX_COMPLETION_H_
+#ifndef	_LINUXKPI_LINUX_COMPLETION_H_
+#define	_LINUXKPI_LINUX_COMPLETION_H_
 
 #include <linux/errno.h>
 
@@ -66,4 +66,4 @@ extern int linux_wait_for_timeout_common(struct completion *, int, int);
 extern int linux_try_wait_for_completion(struct completion *);
 extern int linux_completion_done(struct completion *);
 
-#endif					/* _LINUX_COMPLETION_H_ */
+#endif					/* _LINUXKPI_LINUX_COMPLETION_H_ */

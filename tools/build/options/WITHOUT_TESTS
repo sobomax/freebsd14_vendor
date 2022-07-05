@@ -1,5 +1,5 @@
-.\" $FreeBSD: 4d58f9abedc7b230e112f7e473452fc8bd28dac6 $
-Set to not build nor install the
+.\" $FreeBSD: ed90ff41584c16b1314830b2f8c708010afc3a2d $
+Do not build nor install the
 .Fx
 Test Suite in
 .Pa /usr/tests/ .

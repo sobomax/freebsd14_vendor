@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b202d271cfa303c443f88f4650f15feb28f93f3b $");
+__FBSDID("$FreeBSD: 74526a949437f5d6c161c9f3b664fec56ed6a3f7 $");
 
 #include "opt_gzio.h"
 #include "opt_zstdio.h"
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: b202d271cfa303c443f88f4650f15feb28f93f3b $");
 #include <sys/systm.h>
 
 #include <sys/compressor.h>
+#include <sys/endian.h>
 #include <sys/kernel.h>
 #include <sys/linker_set.h>
 #include <sys/malloc.h>
@@ -201,9 +202,9 @@ gz_write(void *stream, void *data, size_t len, compressor_cb_t cb,
 				 * Try to pack as much of the trailer into the
 				 * output buffer as we can.
 				 */
-				((uint32_t *)trailer)[0] = s->gz_crc;
+				((uint32_t *)trailer)[0] = htole32(s->gz_crc);
 				((uint32_t *)trailer)[1] =
-				    s->gz_stream.total_in;
+				    htole32(s->gz_stream.total_in);
 				room = MIN(sizeof(trailer),
 				    s->gz_bufsz - len);
 				memcpy(s->gz_buffer + len, trailer, room);

@@ -1,5 +1,5 @@
-.\" $FreeBSD: 4da663c419bcfaf38669ff38490cfdd5011d69b8 $
-Set to not build programs that support a legacy PC console; e.g.,
+.\" $FreeBSD: 69f5eb5b8f40c798c529da44e7ea205110ac0424 $
+Do not build programs that support a legacy PC console; e.g.,
 .Xr kbdcontrol 1
 and
 .Xr vidcontrol 1 .

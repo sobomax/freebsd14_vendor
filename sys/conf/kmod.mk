@@ -1,5 +1,5 @@
 #	From: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: c0d4441af029a2912d8410f707232ebf8d1b51d1 $
+# $FreeBSD: 736ce26d406cd1ea10b19312baa015ab5806401e $
 #
 # The include file <bsd.kmod.mk> handles building and installing loadable
 # kernel modules.
@@ -236,8 +236,8 @@ EXPORT_SYMS?=	NO
 CLEANFILES+=	export_syms
 .endif
 
-.if exists(${SYSDIR}/conf/ldscript.kmod.${MACHINE_ARCH})
-LDSCRIPT_FLAGS?= -T ${SYSDIR}/conf/ldscript.kmod.${MACHINE_ARCH}
+.if exists(${SYSDIR}/conf/ldscript.kmod.${MACHINE})
+LDSCRIPT_FLAGS?= -T ${SYSDIR}/conf/ldscript.kmod.${MACHINE}
 .endif
 
 .if ${__KLD_SHARED} == yes

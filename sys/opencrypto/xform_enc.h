@@ -1,4 +1,4 @@
-/*	$FreeBSD: b44f1ff0c2704d146fac6bc7f90716571e628c5b $	*/
+/*	$FreeBSD: 1c800ed428fe152fb1454c3f257cc7cf81cdfb67 $	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-
@@ -62,7 +62,7 @@ struct enc_xform {
 	void (*encrypt) (void *, const uint8_t *, uint8_t *);
 	void (*decrypt) (void *, const uint8_t *, uint8_t *);
 	int (*setkey) (void *, const uint8_t *, int len);
-	void (*reinit) (void *, const uint8_t *);
+	void (*reinit) (void *, const uint8_t *, size_t);
 
 	/*
 	 * For stream ciphers, encrypt/decrypt the final partial block
@@ -81,6 +81,7 @@ extern struct enc_xform enc_xform_aes_nist_gmac;
 extern struct enc_xform enc_xform_aes_xts;
 extern struct enc_xform enc_xform_camellia;
 extern struct enc_xform enc_xform_chacha20;
+extern struct enc_xform enc_xform_chacha20_poly1305;
 extern struct enc_xform enc_xform_ccm;
 
 struct aes_icm_ctx {

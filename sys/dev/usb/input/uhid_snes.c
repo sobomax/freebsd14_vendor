@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5b68560a47e9fcd79697b0061904afb806a32f7a $
+ * $FreeBSD: 181e38eba7b18a2e5fb154115040a21d3f43fc40 $
  */
 
 #include <sys/param.h>
@@ -296,7 +296,7 @@ uhid_snes_ioctl(struct usb_fifo *fifo, u_long cmd, void *data, int fflags)
 
 		ugd->ugd_actlen = size;
 		if (ugd->ugd_data == NULL)
-			break; /*desciptor length only*/
+			break; /* descriptor length only*/
 		error = copyout(sc->sc_repdesc_ptr, ugd->ugd_data, size);
 		break;
 

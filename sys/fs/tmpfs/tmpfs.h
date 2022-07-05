@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 28493a550252a1907568e1fef8e7190893e33aec $
+ * $FreeBSD: 99368d67aaaa769de39a9cc6ec53ab3705d148d2 $
  */
 
 #ifndef _FS_TMPFS_TMPFS_H_
@@ -44,6 +44,9 @@
 #ifdef	_SYS_MALLOC_H_
 MALLOC_DECLARE(M_TMPFSNAME);
 #endif
+
+#define	OBJ_TMPFS	OBJ_PAGERPRIV1	/* has tmpfs vnode allocated */
+#define	OBJ_TMPFS_VREF	OBJ_PAGERPRIV2	/* vnode is referenced */
 
 /*
  * Internal representation of a tmpfs directory entry.
@@ -514,8 +517,10 @@ tmpfs_update(struct vnode *vp)
 
 size_t tmpfs_mem_avail(void);
 size_t tmpfs_pages_used(struct tmpfs_mount *tmp);
-void tmpfs_subr_init(void);
+int tmpfs_subr_init(void);
 void tmpfs_subr_uninit(void);
+
+extern int tmpfs_pager_type;
 
 /*
  * Macros/functions to convert from generic data structures to tmpfs

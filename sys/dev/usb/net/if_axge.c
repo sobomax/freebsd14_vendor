@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4a4bef564c7a1b1a314ded94aa56c20b88d01f2d $");
+__FBSDID("$FreeBSD: e2f12e209303cbcb6fa14678c354dda6bb7f8d26 $");
 
 /*
  * ASIX Electronics AX88178A/AX88179 USB 2.0/3.0 gigabit ethernet driver.
@@ -452,11 +452,9 @@ axge_attach_post(struct usb_ether *ue)
 static int
 axge_attach_post_sub(struct usb_ether *ue)
 {
-	struct axge_softc *sc;
 	struct ifnet *ifp;
 	int error;
 
-	sc = uether_getsc(ue);
 	ifp = ue->ue_ifp;
 	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
 	ifp->if_start = uether_start;

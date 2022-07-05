@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4cbfcfcbcbd54ef7e1899f4e1c5ad6bfbb2dcebe $
+ * $FreeBSD: 9140bf10ef07732c3629cd3c4c05285aa5a46345 $
  */
 /*
  * Parts of this program are derived from the original FreeBSD iostat
@@ -888,17 +888,17 @@ devstats(int perf_select, long double etime, int havelast)
 			    mb_per_second_write > ((long double).0005)/1024 ||
 			    busy_pct > 0.5) {
 				if (Iflag == 0)
-					printf("%-8.8s %7d %7d %8.1Lf "
-					    "%8.1Lf %5d %5d %5d %5d "
-					    "%4" PRIu64 " %3.0Lf ",
+					printf("%-8.8s %7.0Lf %7.0Lf %8.1Lf "
+					    "%8.1Lf %5.0Lf %5.0Lf %5.0Lf %5.0Lf"
+					    " %4" PRIu64 " %3.0Lf ",
 					    devicename,
-					    (int)transfers_per_second_read,
-					    (int)transfers_per_second_write,
+					    transfers_per_second_read,
+					    transfers_per_second_write,
 					    mb_per_second_read * 1024,
 					    mb_per_second_write * 1024,
-					    (int)ms_per_read, (int)ms_per_write,
-					    (int)ms_per_other,
-					    (int)ms_per_transaction,
+					    ms_per_read, ms_per_write,
+					    ms_per_other,
+					    ms_per_transaction,
 					    queue_len, busy_pct);
 				else
 					printf("%-8.8s %11.1Lf %11.1Lf "

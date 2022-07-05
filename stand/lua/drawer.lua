@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: eb9b18117cd39a50e8cdb8d3cf68d04dd081eac8 $
+-- $FreeBSD: 6f6e2fe1b3e878c86464361b018cc5ea02edcccc $
 --
 
 local color = require("color")
@@ -285,8 +285,11 @@ local function drawbox()
 	if menu_header_x == nil then
 		menu_header_x = x + (w // 2) - (#menu_header // 2)
 	end
-	screen.setcursor(menu_header_x, y)
-	printc(menu_header)
+	screen.setcursor(menu_header_x - 1, y)
+	if menu_header ~= "" then
+		printc(" " .. menu_header .. " ")
+	end
+
 end
 
 local function drawbrand()
@@ -305,6 +308,11 @@ local function drawbrand()
 
 	x = x + shift.x
 	y = y + shift.y
+	if branddef.shift ~= nil then
+		x = x +	branddef.shift.x
+		y = y + branddef.shift.y
+	end
+
 	if core.isFramebufferConsole() and
 	    loader.term_putimage ~= nil and
 	    branddef.image ~= nil then
@@ -374,7 +382,6 @@ end
 
 local function drawitem(func)
 	local console = loader.getenv("console")
-	local c
 
 	for c in string.gmatch(console, "%w+") do
 		loader.setenv("console", c)

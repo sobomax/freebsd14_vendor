@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 41a9ab1f4fa78db0e465a48bf02c7d2d02c2389c $
+ * $FreeBSD: 5edf4d96cb7ca514c6e6560d76fb53f0b059e65f $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
@@ -124,6 +124,12 @@ gdb_begin_write(void)
 
 static __inline void
 gdb_end_write(void *arg __unused)
+{
+
+}
+
+static __inline void
+gdb_cpu_stop_reason(int type __unused, int code __unused)
 {
 
 }

@@ -1,18 +1,10 @@
 /* bootptest.h */
-/* $FreeBSD: 2df35dea7ffc20d5b8a6739dcac2d05906c703dd $ */
+/* $FreeBSD: 2d9e451bddef6d059276e91b7aa06de6660ee0f4 $ */
 /*
  * Hacks for sharing print-bootp.c between tcpdump and bootptest.
  */
 #define ESRC(p) (p)
 #define EDST(p) (p)
-
-#ifndef	USE_BFUNCS
-/* Use mem/str functions */
-/* There are no overlapped copies, so memcpy is OK. */
-#define bcopy(a,b,c)    memcpy(b,a,c)
-#define bzero(p,l)      memset(p,0,l)
-#define bcmp(a,b,c)     memcmp(a,b,c)
-#endif
 
 extern int vflag; /* verbose flag */
 

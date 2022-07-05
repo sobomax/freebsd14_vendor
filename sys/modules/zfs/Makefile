@@ -1,4 +1,4 @@
-# $FreeBSD: 7050a40758a394bb837a810fe399d0c988ad2e23 $
+# $FreeBSD: f46f08b2d5d57d2315e678b8c1a105f208833c3a $
 
 SRCDIR=${SRCTOP}/sys/contrib/openzfs/module
 INCDIR=${SRCTOP}/sys/contrib/openzfs/include
@@ -22,13 +22,11 @@ CFLAGS+= -I${INCDIR}/os/freebsd
 CFLAGS+= -I${INCDIR}/os/freebsd/spl
 CFLAGS+= -I${INCDIR}/os/freebsd/zfs
 CFLAGS+= -I${SRCDIR}/zstd/include
-CFLAGS+= -include ${INCDIR}/os/freebsd/spl/sys/ccompile.h
-CFLAGS+= -include ${SRCTOP}/sys/modules/zfs/static_ccompile.h
 CFLAGS+= -I${.CURDIR}
 
 CFLAGS+= -D__KERNEL__ -DFREEBSD_NAMECACHE -DBUILDING_ZFS \
 	-DHAVE_UIO_ZEROCOPY -DWITHOUT_NETDUMP -D__KERNEL -D_SYS_CONDVAR_H_ \
-	-D_SYS_VMEM_H_ -DIN_FREEBSD_BASE -DHAVE_KSID
+	-D_SYS_VMEM_H_ -DIN_FREEBSD_BASE
 
 .if ${MACHINE_ARCH} == "amd64"
 CFLAGS+= -DHAVE_AVX2 -DHAVE_AVX -D__x86_64 -DHAVE_SSE2 -DHAVE_AVX512F -DHAVE_AVX512BW -DHAVE_SSSE3
@@ -279,9 +277,14 @@ SRCS+=	abd.c \
 	zvol.c
 
 SRCS+=	zfs_zstd.c \
-	zstd.c
+	zstd.c \
+	zstd_sparc.c
 
 .include <bsd.kmod.mk>
+
+CFLAGS+= -include ${SRCTOP}/sys/cddl/compat/opensolaris/sys/debug_compat.h
+CFLAGS+= -include ${INCDIR}/os/freebsd/spl/sys/ccompile.h
+CFLAGS+= -include ${SRCTOP}/sys/modules/zfs/static_ccompile.h
 
 CWARNFLAGS+=	${OPENZFS_CWARNFLAGS}
 
@@ -297,6 +300,7 @@ CFLAGS.spl_string.c= -Wno-cast-qual
 CFLAGS.spl_vm.c= -Wno-cast-qual
 CFLAGS.spl_zlib.c= -Wno-cast-qual
 CFLAGS.abd.c= -Wno-cast-qual
+CFLAGS.arc.c= -Wno-unused-variable
 CFLAGS.zfs_log.c= -Wno-cast-qual
 CFLAGS.zfs_vnops_os.c= -Wno-pointer-arith
 CFLAGS.u8_textprep.c= -Wno-cast-qual
@@ -336,3 +340,4 @@ CFLAGS.zstd.c= -U__BMI__ -fno-tree-vectorize
 .if ${MACHINE_CPUARCH} == "aarch64"
 CFLAGS.zstd.c+= -include ${SRCDIR}/zstd/include/aarch64_compat.h
 .endif
+CFLAGS.zstd.c+= ${NO_WBITWISE_INSTEAD_OF_LOGICAL}

@@ -1,4 +1,4 @@
-$FreeBSD: c5bca59cac1f17b77c245edb250d9a82014f0df0 $
+$FreeBSD: 87d5b6f8ed766b411162f0cbbd86c06b4c0eb91a $
 
 Version 1.0: August 11, 1996 (cjm)
 
@@ -143,3 +143,8 @@ Version 3.1: May, 2000 (Erik Salander, erik@whistle.com)
 Version 3.2: July, 2000 (Erik Salander, erik@whistle.com and 
       Junichi Satoh, junichi@junichi.org)
     - Added support for streaming media (RTSP and PNA) aliasing.
+
+Version 3.3: May 2021 (donner)
+    - Dropped LibAliasCheckNewLink
+    - Refactor the database handling
+    - Switch to more effienct SPLAY trees

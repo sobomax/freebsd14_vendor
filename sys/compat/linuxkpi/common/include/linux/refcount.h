@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 02f9f32f7eb4d15d674e2336e5fce0a1031d10c4 $
+ * $FreeBSD: 7c055fb3202971074bdda9cdacfe872debc87a2e $
  */
 
-#ifndef _LINUX_REFCOUNT_H
-#define _LINUX_REFCOUNT_H
+#ifndef _LINUXKPI_LINUX_REFCOUNT_H
+#define _LINUXKPI_LINUX_REFCOUNT_H
 
 #include <linux/atomic.h>
 
@@ -79,4 +79,4 @@ refcount_dec_and_lock_irqsave(refcount_t *ref, spinlock_t *lock,
 	return (false);
 }
 
-#endif /* __LINUX_REFCOUNT_H__ */
+#endif /* __LINUXKPI_LINUX_REFCOUNT_H__ */

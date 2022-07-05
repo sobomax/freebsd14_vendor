@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c92874334aa127bf6d41fc55f51d707f5986bfac $
+ * $FreeBSD: 05edede50cc78948f05d9e0dc938ec222984ecb9 $
  */
 
 #ifndef _FUSE_NODE_H_
@@ -91,6 +91,7 @@
  */
 #define	FN_MTIMECHANGE		0x00000800
 #define	FN_CTIMECHANGE		0x00001000
+#define	FN_ATIMECHANGE		0x00002000
 
 struct fuse_vnode_data {
 	/** self **/
@@ -115,6 +116,12 @@ struct fuse_vnode_data {
 	 * by nodeid instead of pathname.
 	 */
 	struct bintime	entry_cache_timeout;
+	/*
+	 * Monotonic time of the last FUSE operation that modified the file
+	 * size.  Used to avoid races between mutator ops like VOP_SETATTR and
+	 * unlocked accessor ops like VOP_LOOKUP.
+	 */
+	struct timespec	last_local_modify;
 	struct vattr	cached_attrs;
 	uint64_t	nlookup;
 	enum vtype	vtype;
@@ -199,9 +206,9 @@ void fuse_vnode_open(struct vnode *vp, int32_t fuse_open_flags,
 
 int fuse_vnode_savesize(struct vnode *vp, struct ucred *cred, pid_t pid);
 
-int fuse_vnode_setsize(struct vnode *vp, off_t newsize);
+int fuse_vnode_setsize(struct vnode *vp, off_t newsize, bool from_server);
 
-void fuse_vnode_undirty_cached_timestamps(struct vnode *vp);
+void fuse_vnode_undirty_cached_timestamps(struct vnode *vp, bool atime);
 
 void fuse_vnode_update(struct vnode *vp, int flags);
 

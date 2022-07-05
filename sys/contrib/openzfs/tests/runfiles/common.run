@@ -28,6 +28,10 @@ failsafe = callbacks/zfs_failsafe
 outputdir = /var/tmp/test_results
 tags = ['functional']
 
+[tests/functional/acl/off]
+tests = ['posixmode']
+tags = ['functional', 'acl']
+
 [tests/functional/alloc_class]
 tests = ['alloc_class_001_pos', 'alloc_class_002_neg', 'alloc_class_003_pos',
     'alloc_class_004_pos', 'alloc_class_005_pos', 'alloc_class_006_pos',
@@ -119,7 +123,7 @@ tests = ['zdb_002_pos', 'zdb_003_pos', 'zdb_004_pos', 'zdb_005_pos',
     'zdb_006_pos', 'zdb_args_neg', 'zdb_args_pos',
     'zdb_block_size_histogram', 'zdb_checksum', 'zdb_decompress',
     'zdb_display_block', 'zdb_object_range_neg', 'zdb_object_range_pos',
-    'zdb_objset_id', 'zdb_decompress_zstd']
+    'zdb_objset_id', 'zdb_decompress_zstd', 'zdb_recover', 'zdb_recover_2']
 pre =
 post =
 tags = ['functional', 'cli_root', 'zdb']
@@ -162,8 +166,8 @@ tags = ['functional', 'cli_root', 'zfs_create']
 
 [tests/functional/cli_root/zfs_destroy]
 tests = ['zfs_clone_livelist_condense_and_disable',
-    'zfs_clone_livelist_condense_races', 'zfs_destroy_001_pos',
-    'zfs_destroy_002_pos', 'zfs_destroy_003_pos',
+    'zfs_clone_livelist_condense_races', 'zfs_clone_livelist_dedup',
+    'zfs_destroy_001_pos', 'zfs_destroy_002_pos', 'zfs_destroy_003_pos',
     'zfs_destroy_004_pos', 'zfs_destroy_005_neg', 'zfs_destroy_006_neg',
     'zfs_destroy_007_neg', 'zfs_destroy_008_pos', 'zfs_destroy_009_pos',
     'zfs_destroy_010_pos', 'zfs_destroy_011_pos', 'zfs_destroy_012_pos',
@@ -194,7 +198,8 @@ tags = ['functional', 'cli_root', 'zfs_inherit']
 
 [tests/functional/cli_root/zfs_load-key]
 tests = ['zfs_load-key', 'zfs_load-key_all', 'zfs_load-key_file',
-    'zfs_load-key_location', 'zfs_load-key_noop', 'zfs_load-key_recursive']
+    'zfs_load-key_https', 'zfs_load-key_location', 'zfs_load-key_noop',
+    'zfs_load-key_recursive']
 tags = ['functional', 'cli_root', 'zfs_load-key']
 
 [tests/functional/cli_root/zfs_mount]
@@ -229,7 +234,8 @@ tests = ['zfs_receive_001_pos', 'zfs_receive_002_pos', 'zfs_receive_003_pos',
     'zfs_receive_016_pos', 'receive-o-x_props_override',
     'zfs_receive_from_encrypted', 'zfs_receive_to_encrypted',
     'zfs_receive_raw', 'zfs_receive_raw_incremental', 'zfs_receive_-e',
-    'zfs_receive_raw_-d', 'zfs_receive_from_zstd', 'zfs_receive_new_props']
+    'zfs_receive_raw_-d', 'zfs_receive_from_zstd', 'zfs_receive_new_props',
+    'zfs_receive_-wR-encrypted-mix']
 tags = ['functional', 'cli_root', 'zfs_receive']
 
 [tests/functional/cli_root/zfs_rename]
@@ -254,7 +260,7 @@ tags = ['functional', 'cli_root', 'zfs_rollback']
 tests = ['zfs_send_001_pos', 'zfs_send_002_pos', 'zfs_send_003_pos',
     'zfs_send_004_neg', 'zfs_send_005_pos', 'zfs_send_006_pos',
     'zfs_send_007_pos', 'zfs_send_encrypted', 'zfs_send_raw',
-    'zfs_send_sparse', 'zfs_send-b']
+    'zfs_send_sparse', 'zfs_send-b', 'zfs_send_skip_missing']
 tags = ['functional', 'cli_root', 'zfs_send']
 
 [tests/functional/cli_root/zfs_set]
@@ -344,8 +350,10 @@ tests = ['zpool_create_001_pos', 'zpool_create_002_pos',
     'zpool_create_draid_003_pos', 'zpool_create_draid_004_pos',
     'zpool_create_features_001_pos', 'zpool_create_features_002_pos',
     'zpool_create_features_003_pos', 'zpool_create_features_004_neg',
-    'zpool_create_features_005_pos',
-    'create-o_ashift', 'zpool_create_tempname', 'zpool_create_dryrun_output']
+    'zpool_create_features_005_pos', 'zpool_create_features_006_pos',
+    'zpool_create_features_007_pos', 'zpool_create_features_008_pos',
+    'zpool_create_features_009_pos', 'create-o_ashift',
+    'zpool_create_tempname', 'zpool_create_dryrun_output']
 tags = ['functional', 'cli_root', 'zpool_create']
 
 [tests/functional/cli_root/zpool_destroy]
@@ -361,7 +369,8 @@ tags = ['functional', 'cli_root', 'zpool_detach']
 
 [tests/functional/cli_root/zpool_events]
 tests = ['zpool_events_clear', 'zpool_events_cliargs', 'zpool_events_follow',
-    'zpool_events_poolname', 'zpool_events_errors', 'zpool_events_duplicates']
+    'zpool_events_poolname', 'zpool_events_errors', 'zpool_events_duplicates',
+    'zpool_events_clear_retained']
 tags = ['functional', 'cli_root', 'zpool_events']
 
 [tests/functional/cli_root/zpool_export]
@@ -396,6 +405,7 @@ tests = ['zpool_import_001_pos', 'zpool_import_002_pos',
     'import_cachefile_device_replaced',
     'import_cachefile_mirror_attached',
     'import_cachefile_mirror_detached',
+    'import_cachefile_paths_changed',
     'import_cachefile_shared_device',
     'import_devices_missing',
     'import_paths_changed',
@@ -469,7 +479,8 @@ tests = ['zpool_split_cliargs', 'zpool_split_devices',
 tags = ['functional', 'cli_root', 'zpool_split']
 
 [tests/functional/cli_root/zpool_status]
-tests = ['zpool_status_001_pos', 'zpool_status_002_pos']
+tests = ['zpool_status_001_pos', 'zpool_status_002_pos',
+    'zpool_status_features_001_pos']
 tags = ['functional', 'cli_root', 'zpool_status']
 
 [tests/functional/cli_root/zpool_sync]
@@ -493,7 +504,7 @@ tests = ['zpool_upgrade_001_pos', 'zpool_upgrade_002_pos',
     'zpool_upgrade_003_pos', 'zpool_upgrade_004_pos',
     'zpool_upgrade_005_neg', 'zpool_upgrade_006_neg',
     'zpool_upgrade_007_pos', 'zpool_upgrade_008_pos',
-    'zpool_upgrade_009_neg']
+    'zpool_upgrade_009_neg', 'zpool_upgrade_features_001_pos']
 tags = ['functional', 'cli_root', 'zpool_upgrade']
 
 [tests/functional/cli_root/zpool_wait]
@@ -565,9 +576,19 @@ tags = ['functional', 'compression']
 tests = ['cp_files_001_pos']
 tags = ['functional', 'cp_files']
 
+[tests/functional/crtime]
+tests = ['crtime_001_pos' ]
+tags = ['functional', 'crtime']
+
 [tests/functional/ctime]
 tests = ['ctime_001_pos' ]
 tags = ['functional', 'ctime']
+
+[tests/functional/deadman]
+tests = ['deadman_ratelimit', 'deadman_sync', 'deadman_zio']
+pre =
+post =
+tags = ['functional', 'deadman']
 
 [tests/functional/delegate]
 tests = ['zfs_allow_001_pos', 'zfs_allow_002_pos', 'zfs_allow_003_pos',
@@ -582,6 +603,10 @@ tags = ['functional', 'delegate']
 [tests/functional/exec]
 tests = ['exec_001_pos', 'exec_002_neg']
 tags = ['functional', 'exec']
+
+[tests/functional/fallocate]
+tests = ['fallocate_punch-hole']
+tags = ['functional', 'fallocate']
 
 [tests/functional/features/async_destroy]
 tests = ['async_destroy_001_pos']
@@ -627,12 +652,6 @@ tags = ['functional', 'inuse']
 tests = ['large_files_001_pos', 'large_files_002_pos']
 tags = ['functional', 'large_files']
 
-[tests/functional/largest_pool]
-tests = ['largest_pool_001_pos']
-pre =
-post =
-tags = ['functional', 'largest_pool']
-
 [tests/functional/limits]
 tests = ['filesystem_count', 'filesystem_limit', 'snapshot_count',
     'snapshot_limit']
@@ -650,7 +669,7 @@ tests = ['migration_001_pos', 'migration_002_pos', 'migration_003_pos',
 tags = ['functional', 'migration']
 
 [tests/functional/mmap]
-tests = ['mmap_write_001_pos', 'mmap_read_001_pos']
+tests = ['mmap_write_001_pos', 'mmap_read_001_pos', 'mmap_seek_001_pos']
 tags = ['functional', 'mmap']
 
 [tests/functional/mount]
@@ -667,7 +686,7 @@ tags = ['functional', 'nestedfs']
 
 [tests/functional/no_space]
 tests = ['enospc_001_pos', 'enospc_002_pos', 'enospc_003_pos',
-    'enospc_df']
+    'enospc_df', 'enospc_rm']
 tags = ['functional', 'no_space']
 
 [tests/functional/nopwrite]
@@ -718,8 +737,8 @@ tests = ['redacted_compressed', 'redacted_contents', 'redacted_deleted',
     'redacted_disabled_feature', 'redacted_embedded', 'redacted_holes',
     'redacted_incrementals', 'redacted_largeblocks', 'redacted_many_clones',
     'redacted_mixed_recsize', 'redacted_mounts', 'redacted_negative',
-    'redacted_origin', 'redacted_props', 'redacted_resume', 'redacted_size',
-    'redacted_volume']
+    'redacted_origin', 'redacted_panic', 'redacted_props', 'redacted_resume',
+    'redacted_size', 'redacted_volume']
 tags = ['functional', 'redacted_send']
 
 [tests/functional/raidz]
@@ -727,12 +746,13 @@ tests = ['raidz_001_neg', 'raidz_002_pos', 'raidz_003_pos', 'raidz_004_pos']
 tags = ['functional', 'raidz']
 
 [tests/functional/redundancy]
-tests = ['redundancy_draid1', 'redundancy_draid2', 'redundancy_draid3',
-    'redundancy_draid_spare1', 'redundancy_draid_spare2',
-    'redundancy_draid_spare3', 'redundancy_mirror', 'redundancy_raidz',
-    'redundancy_raidz1', 'redundancy_raidz2', 'redundancy_raidz3',
-    'redundancy_stripe']
+tests = ['redundancy_draid', 'redundancy_draid1', 'redundancy_draid2',
+    'redundancy_draid3', 'redundancy_draid_damaged', 'redundancy_draid_spare1',
+    'redundancy_draid_spare2', 'redundancy_draid_spare3', 'redundancy_mirror',
+    'redundancy_raidz', 'redundancy_raidz1', 'redundancy_raidz2',
+    'redundancy_raidz3', 'redundancy_stripe']
 tags = ['functional', 'redundancy']
+timeout = 1200
 
 [tests/functional/refquota]
 tests = ['refquota_001_pos', 'refquota_002_pos', 'refquota_003_pos',
@@ -806,7 +826,8 @@ tests = ['recv_dedup', 'recv_dedup_encrypted_zvol', 'rsend_001_pos',
     'send_freeobjects', 'send_realloc_files',
     'send_realloc_encrypted_files', 'send_spill_block', 'send_holds',
     'send_hole_birth', 'send_mixed_raw', 'send-wR_encrypted_zvol',
-    'send_partial_dataset', 'send_invalid']
+    'send_partial_dataset', 'send_invalid', 'send_doall',
+    'send_raw_spill_block', 'send_raw_ashift']
 tags = ['functional', 'rsend']
 
 [tests/functional/scrub_mirror]
@@ -843,7 +864,7 @@ tags = ['functional', 'sparse']
 
 [tests/functional/suid]
 tests = ['suid_write_to_suid', 'suid_write_to_sgid', 'suid_write_to_suid_sgid',
-    'suid_write_to_none']
+    'suid_write_to_none', 'suid_write_zil_replay']
 tags = ['functional', 'suid']
 
 [tests/functional/threadsappend]
@@ -919,8 +940,7 @@ tags = ['functional', 'log_spacemap']
 [tests/functional/l2arc]
 tests = ['l2arc_arcstats_pos', 'l2arc_mfuonly_pos', 'l2arc_l2miss_pos',
     'persist_l2arc_001_pos', 'persist_l2arc_002_pos',
-    'persist_l2arc_003_neg', 'persist_l2arc_004_pos', 'persist_l2arc_005_pos',
-    'persist_l2arc_006_pos', 'persist_l2arc_007_pos', 'persist_l2arc_008_pos']
+    'persist_l2arc_003_neg', 'persist_l2arc_004_pos', 'persist_l2arc_005_pos']
 tags = ['functional', 'l2arc']
 
 [tests/functional/zpool_influxdb]

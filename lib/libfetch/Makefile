@@ -1,6 +1,8 @@
-# $FreeBSD: 99c4ceea9dd94a49e3d37ccdbe056de94146f36d $
+# $FreeBSD: 607ff6e05c5ec1221bb71260be7ec6ceec458112 $
 
 .include <src.opts.mk>
+
+PACKAGE=	fetch
 
 LIB=		fetch
 CFLAGS+=	-I.

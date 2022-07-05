@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ad44b7cf970a73c472ca0b19e9ab555791c333fe $
+ * $FreeBSD: c328ce3b2f8050e6967117809107f576379693eb $
  */
 
 #ifndef _SYS_ELF32_H_
@@ -151,6 +151,8 @@ typedef struct {
 
 /* Macro for constructing r_info from field values. */
 #define ELF32_R_INFO(sym, type)	(((sym) << 8) + (unsigned char)(type))
+
+typedef Elf32_Word Elf32_Relr;
 
 /*
  *	Note entry header

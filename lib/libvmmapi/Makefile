@@ -1,11 +1,9 @@
-# $FreeBSD: bf17566a0d7d70c478249f39589d8acbe9da9663 $
+# $FreeBSD: 9c410833e09c07c615e98abdbadfe5ade9a60acd $
 
 PACKAGE=lib${LIB}
 LIB=	vmmapi
 SRCS=	vmmapi.c vmmapi_freebsd.c
 INCS=	vmmapi.h
-
-WARNS?=	2
 
 LIBADD=	util
 

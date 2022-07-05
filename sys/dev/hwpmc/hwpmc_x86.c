@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b2596328ec0230ece04f0a85ca2629bf13fd0c0 $");
+__FBSDID("$FreeBSD: db6ed6fb11452eaec8283d401e9ec86fb58e13e0 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -156,7 +156,7 @@ pmc_save_user_callchain(uintptr_t *cc, int nframes, struct trapframe *tf)
  * code, and if so we terminate our trace.
  */
 
-int
+int __nosanitizeaddress
 pmc_save_kernel_callchain(uintptr_t *cc, int nframes, struct trapframe *tf)
 {
 	int n;

@@ -90,8 +90,6 @@ int zfs_allow_redacted_dataset_mount = 0;
 
 #define	DS_REF_MAX	(1ULL << 62)
 
-extern inline dsl_dataset_phys_t *dsl_dataset_phys(dsl_dataset_t *ds);
-
 static void dsl_dataset_set_remap_deadlist_object(dsl_dataset_t *ds,
     uint64_t obj, dmu_tx_t *tx);
 static void dsl_dataset_unset_remap_deadlist_object(dsl_dataset_t *ds,
@@ -192,9 +190,8 @@ dsl_dataset_block_born(dsl_dataset_t *ds, const blkptr_t *bp, dmu_tx_t *tx)
 	}
 
 	mutex_exit(&ds->ds_lock);
-	dsl_dir_diduse_space(ds->ds_dir, DD_USED_HEAD, delta,
-	    compressed, uncompressed, tx);
-	dsl_dir_transfer_space(ds->ds_dir, used - delta,
+	dsl_dir_diduse_transfer_space(ds->ds_dir, delta,
+	    compressed, uncompressed, used,
 	    DD_USED_REFRSRV, DD_USED_HEAD, tx);
 }
 
@@ -282,7 +279,7 @@ dsl_dataset_block_kill(dsl_dataset_t *ds, const blkptr_t *bp, dmu_tx_t *tx,
 	if (bp->blk_birth > dsl_dataset_phys(ds)->ds_prev_snap_txg) {
 		int64_t delta;
 
-		dprintf_bp(bp, "freeing ds=%llu", ds->ds_object);
+		dprintf_bp(bp, "freeing ds=%llu", (u_longlong_t)ds->ds_object);
 		dsl_free(tx->tx_pool, tx->tx_txg, bp);
 
 		mutex_enter(&ds->ds_lock);
@@ -291,9 +288,8 @@ dsl_dataset_block_kill(dsl_dataset_t *ds, const blkptr_t *bp, dmu_tx_t *tx,
 		delta = parent_delta(ds, -used);
 		dsl_dataset_phys(ds)->ds_unique_bytes -= used;
 		mutex_exit(&ds->ds_lock);
-		dsl_dir_diduse_space(ds->ds_dir, DD_USED_HEAD,
-		    delta, -compressed, -uncompressed, tx);
-		dsl_dir_transfer_space(ds->ds_dir, -used - delta,
+		dsl_dir_diduse_transfer_space(ds->ds_dir,
+		    delta, -compressed, -uncompressed, -used,
 		    DD_USED_REFRSRV, DD_USED_HEAD, tx);
 	} else {
 		dprintf_bp(bp, "putting on dead list: %s", "");
@@ -721,7 +717,7 @@ dsl_dataset_hold_obj(dsl_pool_t *dp, uint64_t dsobj, void *tag,
 				    dsl_dataset_phys(ds)->ds_fsid_guid,
 				    (long long)ds->ds_fsid_guid,
 				    spa_name(dp->dp_spa),
-				    dsobj);
+				    (u_longlong_t)dsobj);
 			}
 		}
 	}
@@ -2267,8 +2263,7 @@ dsl_dataset_sync_done(dsl_dataset_t *ds, dmu_tx_t *tx)
 
 	dsl_bookmark_sync_done(ds, tx);
 
-	multilist_destroy(os->os_synced_dnodes);
-	os->os_synced_dnodes = NULL;
+	multilist_destroy(&os->os_synced_dnodes);
 
 	if (os->os_encrypted)
 		os->os_next_write_raw[tx->tx_txg & TXG_MASK] = B_FALSE;
@@ -2322,18 +2317,7 @@ void
 get_clones_stat(dsl_dataset_t *ds, nvlist_t *nv)
 {
 	nvlist_t *propval = fnvlist_alloc();
-	nvlist_t *val;
-
-	/*
-	 * We use nvlist_alloc() instead of fnvlist_alloc() because the
-	 * latter would allocate the list with NV_UNIQUE_NAME flag.
-	 * As a result, every time a clone name is appended to the list
-	 * it would be (linearly) searched for a duplicate name.
-	 * We already know that all clone names must be unique and we
-	 * want avoid the quadratic complexity of double-checking that
-	 * because we can have a large number of clones.
-	 */
-	VERIFY0(nvlist_alloc(&val, 0, KM_SLEEP));
+	nvlist_t *val = fnvlist_alloc();
 
 	if (get_clones_stat_impl(ds, val) == 0) {
 		fnvlist_add_nvlist(propval, ZPROP_VALUE, val);
@@ -2957,11 +2941,11 @@ typedef struct dsl_dataset_rename_snapshot_arg {
 	dmu_tx_t *ddrsa_tx;
 } dsl_dataset_rename_snapshot_arg_t;
 
-/* ARGSUSED */
 static int
 dsl_dataset_rename_snapshot_check_impl(dsl_pool_t *dp,
     dsl_dataset_t *hds, void *arg)
 {
+	(void) dp;
 	dsl_dataset_rename_snapshot_arg_t *ddrsa = arg;
 	int error;
 	uint64_t val;
@@ -4319,7 +4303,6 @@ typedef struct dsl_dataset_set_qr_arg {
 } dsl_dataset_set_qr_arg_t;
 
 
-/* ARGSUSED */
 static int
 dsl_dataset_set_refquota_check(void *arg, dmu_tx_t *tx)
 {
@@ -4526,7 +4509,6 @@ typedef struct dsl_dataset_set_compression_arg {
 	uint64_t ddsca_value;
 } dsl_dataset_set_compression_arg_t;
 
-/* ARGSUSED */
 static int
 dsl_dataset_set_compression_check(void *arg, dmu_tx_t *tx)
 {

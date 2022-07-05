@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9336611d6005ecf81a5f656a978d7d79856064c3 $");
+__FBSDID("$FreeBSD: e69fb49b008ff6ec2c2e9924eb6b8214dee6f658 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -98,10 +98,10 @@ static struct cv	log_wakeup;
 struct mtx		msgbuf_lock;
 MTX_SYSINIT(msgbuf_lock, &msgbuf_lock, "msgbuf lock", MTX_DEF);
 
-/* Times per second to check for a pending syslog wakeup. */
 static int	log_wakeups_per_second = 5;
 SYSCTL_INT(_kern, OID_AUTO, log_wakeups_per_second, CTLFLAG_RW,
-    &log_wakeups_per_second, 0, "");
+    &log_wakeups_per_second, 0,
+    "How often (times per second) to check for /dev/log waiters.");
 
 /*ARGSUSED*/
 static	int

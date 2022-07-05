@@ -1,2 +1,2 @@
-.\" $FreeBSD: 143b07e21b9c26d6703cdc51eebeded5a4a5d72c $
-Set to not build LLVM's OpenMP runtime.
+.\" $FreeBSD: f7474b698fe84486ada0eb95ad6ea23fc9e6654a $
+Do not build LLVM's OpenMP runtime.

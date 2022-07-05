@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 406016d7e2c83ea855179b5f71e64932979564cf $
+ * $FreeBSD: 6a3273cbbf3c7db14649bf02b965d5661af0458c $
  */
 
-#ifndef _LINUX_DEBUGFS_H_
-#define _LINUX_DEBUGFS_H_
+#ifndef _LINUXKPI_LINUX_DEBUGFS_H_
+#define _LINUXKPI_LINUX_DEBUGFS_H_
 
 #include <linux/fs.h>
 #include <linux/seq_file.h>

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 866f940a7b293d5332362195cfa1a1bb93dfeb57 $");
+__FBSDID("$FreeBSD: 62daadf35ae57854f501c5148e99bbc594d206ce $");
 
 #include "opt_rss.h"
 
@@ -984,7 +984,7 @@ sfxge_vpd_init(struct sfxge_softc *sc)
 
 	if ((rc = efx_vpd_size(sc->enp, &sc->vpd_size)) != 0) {
 		/*
-		 * Unpriviledged functions deny VPD access.
+		 * Unprivileged functions deny VPD access.
 		 * Simply skip VPD in this case.
 		 */
 		if (rc == EACCES)

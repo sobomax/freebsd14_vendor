@@ -1,4 +1,4 @@
-# $FreeBSD: b35530c324b00026303ae866158d5696eca791e2 $
+# $FreeBSD: 685e40759fb215d11a048adea60d0a271c9fc2a6 $
 
 MAN=
 
@@ -14,6 +14,8 @@ PROG=	iwnstats
 # Because of a clang preprocessor parser limitation causing this
 # to not compile, use gcc for now.
 #CC=	gcc
+
+BINDIR?=/usr/local/sbin
 
 SRCS=	main.c iwn_ioctl.c
 

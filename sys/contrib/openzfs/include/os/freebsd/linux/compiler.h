@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 05e93efa64d73644704339523f96b39747ea3a28 $
+ * $FreeBSD: 20903717b58d1873fa90f8f37a09b390afaa471b $
  */
 #ifndef	_LINUX_COMPILER_H_
 #define	_LINUX_COMPILER_H_
@@ -67,6 +67,7 @@
 #define	__always_inline			inline
 #define	noinline			__noinline
 #define	____cacheline_aligned		__aligned(CACHE_LINE_SIZE)
+#define	fallthrough			__attribute__((__fallthrough__))
 
 #if !defined(_KERNEL) && !defined(_STANDALONE)
 #define	likely(x)			__builtin_expect(!!(x), 1)

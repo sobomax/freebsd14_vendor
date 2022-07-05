@@ -1,4 +1,4 @@
-# $FreeBSD: fce33f53a475787ecff1c8bd528057a494ceda93 $
+# $FreeBSD: fea6693cee8a2e0c1b49cd43465a78f76a8da04d $
 
 #
 # Note: Whenever bumping the FBSD version, always make
@@ -35,6 +35,9 @@ FBSD_1.5 {
 FBSD_1.6 {
 } FBSD_1.5;
 
+FBSD_1.7 {
+} FBSD_1.6;
+
 # This is our private namespace.  Any global interfaces that are
 # strictly for use only by other FreeBSD applications and libraries
 # are listed here.  We use a separate namespace so we can write
@@ -42,4 +45,4 @@ FBSD_1.6 {
 #
 # Please do NOT increment the version of this namespace.
 FBSDprivate_1.0 {
-} FBSD_1.6;
+} FBSD_1.7;

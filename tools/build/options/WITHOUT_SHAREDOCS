@@ -1,4 +1,4 @@
-.\" $FreeBSD: 29f6b3687c5762773a61eab50a0f6a6d61f0ccb6 $
-Set to not build the
+.\" $FreeBSD: 6b99e2a09984482e332ea52ff8a91a038110e090 $
+Do not build the
 .Bx 4.4
 legacy docs.

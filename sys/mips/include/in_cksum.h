@@ -32,7 +32,7 @@
  *	from:		@(#)in_cksum.c	1.3 (Berkeley) 1/19/91
  *	from: Id: in_cksum.c,v 1.8 1995/12/03 18:35:19 bde Exp
  *	from: src/sys/alpha/include/in_cksum.h,v 1.7 2005/03/02 21:33:20 joerg
- * $FreeBSD: d55b838b42ed1d0f68513cf844a34f0b32de41ee $
+ * $FreeBSD: 580fb9c024f8f74ac13065ea12b94f576cf8484f $
  */
 
 #ifndef _MACHINE_IN_CKSUM_H_
@@ -41,35 +41,6 @@
 #include <sys/cdefs.h>
 
 #define	in_cksum(m, len)	in_cksum_skip(m, len, 0)
-
-#if defined(IPVERSION) && (IPVERSION == 4)
-/*
- * It it useful to have an Internet checksum routine which is inlineable
- * and optimized specifically for the task of computing IP header checksums
- * in the normal case (where there are no options and the header length is
- * therefore always exactly five 32-bit words.
- */
-#ifdef __CC_SUPPORTS___INLINE
-
-static __inline void
-in_cksum_update(struct ip *ip)
-{
-	int __tmpsum;
-	__tmpsum = (int)ntohs(ip->ip_sum) + 256;
-	ip->ip_sum = htons(__tmpsum + (__tmpsum >> 16));
-}
-
-#else
-
-#define	in_cksum_update(ip)						\
-	do {								\
-		int __tmpsum;						\
-		__tmpsum = (int)ntohs(ip->ip_sum) + 256;		\
-		ip->ip_sum = htons(__tmpsum + (__tmpsum >> 16));	\
-	} while(0)
-
-#endif
-#endif
 
 #ifdef _KERNEL
 #if defined(IPVERSION) && (IPVERSION == 4)

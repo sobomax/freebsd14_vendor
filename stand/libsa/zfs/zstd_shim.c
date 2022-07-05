@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b94df6f51913ae2aa052df9276d4b3114688ad92 $");
+__FBSDID("$FreeBSD: 91f5171a72b52241dfe81dc8ff4de4811ec1f8eb $");
 
 /*
  * Small amount of shim code needed to get zfs_zstd.c to compile. These items
@@ -36,5 +36,10 @@ __FBSDID("$FreeBSD: b94df6f51913ae2aa052df9276d4b3114688ad92 $");
 
 #define ZFS_MODULE_PARAM_ARGS void
 typedef int boolean_t;	/* This one may be tough to get rid of */
+
+/* TODO: openzfs/include/sys/uio_impl.h must not be included */
+#ifndef _SYS_UIO_IMPL_H
+#define _SYS_UIO_IMPL_H
+#endif
 
 #include <contrib/openzfs/module/zstd/zfs_zstd.c>

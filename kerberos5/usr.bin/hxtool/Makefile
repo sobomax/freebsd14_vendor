@@ -1,4 +1,6 @@
-# $FreeBSD: 7cec9ee729b1242f747e2c54bdaef1f93c06f8af $
+# $FreeBSD: cbae762b30917e8232871b3b5686a1871af193a9 $
+
+PACKAGE=	kerberos
 
 PROG=	hxtool
 MAN=

@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 042c0b07e2974dff540f76965bb6a8eee80cb112 $
+# $FreeBSD: 37a4a29bc6631d1026d1693da9baa1cea25c45da $
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,7 @@ atf_test_case zpool_expand_001_pos cleanup
 zpool_expand_001_pos_head()
 {
 	atf_set "descr" "zpool can be autoexpanded after set autoexpand=on on LUN expansion"
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 zpool_expand_001_pos_body()
 {
@@ -55,7 +55,7 @@ atf_test_case zpool_expand_002_pos cleanup
 zpool_expand_002_pos_head()
 {
 	atf_set "descr" "zpool can expand after zpool online -e zvol vdevs on LUN expansion"
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 zpool_expand_002_pos_body()
 {
@@ -80,7 +80,7 @@ atf_test_case zpool_expand_003_neg cleanup
 zpool_expand_003_neg_head()
 {
 	atf_set "descr" "zpool can not expand if set autoexpand=off after LUN expansion"
-	atf_set "require.progs"  zfs zpool
+	atf_set "require.progs" "ksh93 zfs zpool"
 }
 zpool_expand_003_neg_body()
 {

@@ -27,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4df1c72d50f795d7b08c16583c4bc68020caa6c6 $
+ * $FreeBSD: 797a06cc15b1a14c3bc77e6af596d2b5807fcf67 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4df1c72d50f795d7b08c16583c4bc68020caa6c6 $");
+__FBSDID("$FreeBSD: 797a06cc15b1a14c3bc77e6af596d2b5807fcf67 $");
 
 #include "opt_sched.h"
 
@@ -535,7 +535,7 @@ racct_adjust_resource(struct racct *racct, int resource,
 	 * many processes terminated in a short time span, the ucred %cpu
 	 * resource could grow too much.  Also, the 4BSD scheduler sometimes
 	 * returns for a thread more than 100% cpu usage. So we set a sane
-	 * boundary here to 100% * the maxumum number of CPUs.
+	 * boundary here to 100% * the maximum number of CPUs.
 	 */
 	if ((resource == RACCT_PCTCPU) &&
 	    (racct->r_resources[RACCT_PCTCPU] > 100 * 1000000 * (int64_t)MAXCPU))

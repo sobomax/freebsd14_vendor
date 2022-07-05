@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 13f26b0dd9a168e7f98039d9b95cec36347cb788 $
+ * $FreeBSD: f513e4d7f6b4e5ce2c7447cde661cb755790f15f $
  */
 
 #ifndef __MLX5_WQ_H__
@@ -32,8 +32,6 @@
 
 struct mlx5_wq_param {
 	int		linear;
-	int		buf_numa_node;
-	int		db_numa_node;
 };
 
 struct mlx5_wq_ctrl {

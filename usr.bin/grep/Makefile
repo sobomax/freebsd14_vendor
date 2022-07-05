@@ -1,8 +1,10 @@
 #	$NetBSD: Makefile,v 1.4 2011/02/16 01:31:33 joerg Exp $
-#	$FreeBSD: a6f61b4f9f0191b66cfb17960d052814a4a7ba8d $
+#	$FreeBSD: 661efbd9f0ac80bb7bf1ac9df4e02f15153c7477 $
 #	$OpenBSD: Makefile,v 1.6 2003/06/25 15:00:04 millert Exp $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=	grep
 MAN1=	grep.1 zgrep.1

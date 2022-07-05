@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aacf0106ea1557a3f8735d3cf17f17872bbdb727 $");
+__FBSDID("$FreeBSD: dc9f444f2ac4e062128d093ea1285269d3847f6e $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -344,6 +344,8 @@ promise_meta_read(struct g_consumer *cp, struct promise_raid_conf **metaarr)
 	pp = cp->provider;
 	subdisks = 0;
 
+	if (pp->sectorsize * 4 < sizeof(*meta))
+		return (subdisks);
 	if (pp->sectorsize * 4 > maxphys) {
 		G_RAID_DEBUG(1, "%s: Blocksize is too big.", pp->name);
 		return (subdisks);

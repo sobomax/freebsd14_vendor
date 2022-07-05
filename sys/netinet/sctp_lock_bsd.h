@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d78664e3ba59bce8d44a6b5c026c8f77f3af38e $");
+__FBSDID("$FreeBSD: cd20a730e5b81120dcdde2ec00cd0506df725d2a $");
 
 #ifndef _NETINET_SCTP_LOCK_BSD_H_
 #define _NETINET_SCTP_LOCK_BSD_H_
@@ -105,6 +105,18 @@ __FBSDID("$FreeBSD: 4d78664e3ba59bce8d44a6b5c026c8f77f3af38e $");
 
 #define SCTP_INP_INFO_WUNLOCK() do {					\
 	rw_wunlock(&SCTP_BASE_INFO(ipi_ep_mtx));			\
+} while (0)
+
+#define SCTP_INP_INFO_LOCK_ASSERT() do {				\
+	rw_assert(&SCTP_BASE_INFO(ipi_ep_mtx), RA_LOCKED);		\
+} while (0)
+
+#define SCTP_INP_INFO_RLOCK_ASSERT() do {				\
+	rw_assert(&SCTP_BASE_INFO(ipi_ep_mtx), RA_RLOCKED);		\
+} while (0)
+
+#define SCTP_INP_INFO_WLOCK_ASSERT() do {				\
+	rw_assert(&SCTP_BASE_INFO(ipi_ep_mtx), RA_WLOCKED);		\
 } while (0)
 
 #define SCTP_MCORE_QLOCK_INIT(cpstr) do {				\
@@ -340,6 +352,11 @@ __FBSDID("$FreeBSD: 4d78664e3ba59bce8d44a6b5c026c8f77f3af38e $");
 
 #define SCTP_TCB_SEND_UNLOCK(_tcb) do {					\
 	mtx_unlock(&(_tcb)->tcb_send_mtx);				\
+} while (0)
+
+#define SCTP_TCB_SEND_LOCK_ASSERT(_tcb) do {				\
+	KASSERT(mtx_owned(&(_tcb)->tcb_send_mtx),			\
+	        ("Don't own TCB send lock"));				\
 } while (0)
 
 /*

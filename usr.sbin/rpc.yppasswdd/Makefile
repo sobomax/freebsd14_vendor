@@ -1,10 +1,11 @@
-# $FreeBSD: 22887fb0ec887287a0e05cd8c71bec6211f1b164 $
+# $FreeBSD: b31b34f4db3a1e485c7cb9761c8a8064479c0740 $
 
 RPCDIR=	${DESTDIR}/usr/include/rpcsvc
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/usr.bin/chpass \
        ${SRCTOP}/libexec/ypxfr ${RPCDIR}
 
+PACKAGE=yp
 PROG=	rpc.yppasswdd
 SCRIPTS=yppwupdate
 SCRIPTSDIR= ${LIBEXECDIR}

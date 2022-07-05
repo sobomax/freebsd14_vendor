@@ -43,7 +43,7 @@
  * UCL. This driver is based much more on read/write/poll mode of
  * operation though.
  *
- * $FreeBSD: 0c0a0dd66339626b58efb1fbc3ed989f119912fb $
+ * $FreeBSD: 668bbb217b8ba18c86f072f300b28652c38d56c0 $
  */
 
 #include "opt_inet.h"
@@ -1402,7 +1402,7 @@ tunoutput(struct ifnet *ifp, struct mbuf *m0, const struct sockaddr *dst,
 	if (dst->sa_family == AF_UNSPEC)
 		bcopy(dst->sa_data, &af, sizeof(af));
 	else
-		af = dst->sa_family;
+		af = RO_GET_FAMILY(ro, dst);
 
 	if (bpf_peers_present(ifp->if_bpf))
 		bpf_mtap2(ifp->if_bpf, &af, sizeof(af), m0);

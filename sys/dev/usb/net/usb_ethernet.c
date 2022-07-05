@@ -1,4 +1,4 @@
-/* $FreeBSD: e1eb2c247b5a18f139cd32ec406b9dd3c451a597 $ */
+/* $FreeBSD: 33659049f9704d2fa6a7e28cfe1e62ef09a3291e $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1eb2c247b5a18f139cd32ec406b9dd3c451a597 $");
+__FBSDID("$FreeBSD: 33659049f9704d2fa6a7e28cfe1e62ef09a3291e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -319,15 +319,18 @@ uether_ifdetach(struct usb_ether *ue)
 		/* drain any callouts */
 		usb_callout_drain(&ue->ue_watchdog);
 
+		/*
+		 * Detach ethernet first to stop miibus calls from
+		 * user-space:
+		 */
+		ether_ifdetach(ifp);
+
 		/* detach miibus */
 		if (ue->ue_miibus != NULL) {
 			mtx_lock(&Giant);	/* device_xxx() depends on this */
 			device_delete_child(ue->ue_dev, ue->ue_miibus);
 			mtx_unlock(&Giant);
 		}
-
-		/* detach ethernet */
-		ether_ifdetach(ifp);
 
 		/* free interface instance */
 		if_free(ifp);

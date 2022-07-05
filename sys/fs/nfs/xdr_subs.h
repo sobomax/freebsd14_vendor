@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 54c7d914983ed92585fa37b9b8a20b80cf0c96dd $
+ * $FreeBSD: 9a6d4608d5f1972ec1fdc5526beb6da7dde5e39a $
  */
 
 #ifndef _NFS_XDR_SUBS_H_
@@ -93,9 +93,11 @@
         ((((u_quad_t)ntohl(((u_int32_t *)(f))[0])) << 32) |		\
 	 (u_quad_t)(ntohl(((u_int32_t *)(f))[1])))
 
-#define	txdr_hyper(f, t) do {						\
-	((u_int32_t *)(t))[0] = htonl((u_int32_t)((f) >> 32));		\
-	((u_int32_t *)(t))[1] = htonl((u_int32_t)((f) & 0xffffffff));	\
-    } while (0)
+static inline void
+txdr_hyper(uint64_t f, uint32_t* t)
+{
+	t[0] = htonl((u_int32_t)(f >> 32));
+	t[1] = htonl((u_int32_t)(f & 0xffffffff));
+}
 
 #endif	/* _NFS_XDR_SUBS_H_ */

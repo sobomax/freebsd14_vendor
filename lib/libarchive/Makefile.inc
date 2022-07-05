@@ -1,10 +1,11 @@
-# $FreeBSD: 6e5017d6621a923539c74f1a2fa45a31889783e0 $
+# $FreeBSD: 409e1972191d2baf08b5e86890049fa0b1620b4d $
 # These defines are needed for both libarchive and the tests. If we don't keep
 # them in sync we can get run-time crashes while running tests due to mismatches
 # between structures such as archive_md5_ctx, etc.
 
 LIBADD=	z bz2 lzma bsdxml zstd
-CFLAGS+=	-DHAVE_BZLIB_H=1 -DHAVE_LIBLZMA=1 -DHAVE_LZMA_H=1 -DHAVE_ZSTD_H=1 -DHAVE_LIBZSTD=1
+CFLAGS+=	-DHAVE_BZLIB_H=1 -DHAVE_LIBLZMA=1 -DHAVE_LZMA_H=1 \
+		-DHAVE_ZSTD_H=1 -DHAVE_LIBZSTD=1 -DHAVE_LIBZSTD_COMPRESSOR=1
 CFLAGS+=	-DPLATFORM_CONFIG_H=\"${.CURDIR}/config_freebsd.h\"
 
 .if ${MK_OPENSSL} != "no"

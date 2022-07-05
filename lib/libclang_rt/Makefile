@@ -1,4 +1,4 @@
-# $FreeBSD: c1c72299bdf77a95076f463114454535174b6a25 $
+# $FreeBSD: ca0796b0e65d3e0298848cf85b116c576a625fea $
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
 SUBDIR+=	include
@@ -29,6 +29,16 @@ SUBDIR+=	xray-basic
 SUBDIR+=	xray-fdr
 SUBDIR+=	xray-profiling
 .endif # amd64
+
+.if ${MACHINE_CPUARCH} == "riscv"
+SUBDIR+=	asan
+SUBDIR+=	asan-preinit
+SUBDIR+=	asan_cxx
+SUBDIR+=	asan_dynamic
+SUBDIR+=	ubsan_minimal
+SUBDIR+=	ubsan_standalone
+SUBDIR+=	ubsan_standalone_cxx
+.endif # riscv
 
 SUBDIR+=	profile
 

@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 4bc0d006cb9800bd4699a73e3a1d2ee37aa533a2 $
+# $FreeBSD: ce70cb882190eee0043c4d762f782eb18d40ecdd $
 
 .include <src.opts.mk>
+
+PACKAGE=	runtime
 
 PROG=		xinstall
 PROGNAME=	install

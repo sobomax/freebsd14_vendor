@@ -1,8 +1,14 @@
-# $FreeBSD: 5d5e8b560bbf8fe4bd21fad1a066d9ff43982eb3 $
+# $FreeBSD: eda8f96bf1536a1799204d9cc6e8637d9ca096ec $
 
 .PATH: ${SRCTOP}/lib/libc/iconv
 
 PROG=	mkcsmapper
+.if defined(BOOTSTRAPPING)
+# When bootstrapping, the host libc might not contain these expected symbols
+# so compile them directly into the binary.
+SRCS=	citrus_bcs.c citrus_db_factory.c citrus_db_hash.c \
+	citrus_lookup_factory.c citrus_pivot_factory.c
+.endif
 LDFLAGS+= -L${SRCTOP}/lib/libc
 
 NO_WMISSING_VARIABLE_DECLARATIONS=

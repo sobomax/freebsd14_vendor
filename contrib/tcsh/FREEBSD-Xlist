@@ -1,5 +1,20 @@
-$FreeBSD: b6e5636aa567a584c11ddad913274aed61dfab6b $
+$FreeBSD: 49621ab36f0ff9a406a3d52901e2e6814d71582e $
 */BUGS
+*/Imakefile
+*/MAKEDIFFS
+*/MAKESHAR
+*/Makefile.ADMIN
+*/Makefile.in
+*/Makefile.std
+*/Makefile.vms
+*/config.guess
+*/config.h.in
+*/config.rpath
+*/config.sub
+*/configure
+*/imake.config
+*/install-sh
+*/svn
 */config/a*
 */config/bs2000
 */config/bsd

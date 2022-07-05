@@ -33,8 +33,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 398707791792b43c175c08a1326ac83f8eb76f2a $
+ * $FreeBSD: f08ab41ea5433ac84f1f7c289e6e2d02c91a0b49 $
  */
 #pragma once
-/* This can be empty when building the FreeBSD compatible bootstrap files */
+
+/* Undo the changes made by namespace.h */
+#undef	err
+#undef	warn
 

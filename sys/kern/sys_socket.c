@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e53b0367960b58c06d185af6b1586e9c59d37f4c $");
+__FBSDID("$FreeBSD: 8ac24a048093e70ae877c1d4a161aaf487a8f635 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -583,8 +583,6 @@ soaio_init(void)
 	mtx_init(&soaio_jobs_lock, "soaio jobs", NULL, MTX_DEF);
 	soaio_kproc_unr = new_unrhdr(1, INT_MAX, NULL);
 	TASK_INIT(&soaio_kproc_task, 0, soaio_kproc_create, NULL);
-	if (soaio_target_procs > 0)
-		taskqueue_enqueue(taskqueue_thread, &soaio_kproc_task);
 }
 SYSINIT(soaio, SI_SUB_VFS, SI_ORDER_ANY, soaio_init, NULL);
 

@@ -1,5 +1,6 @@
-# $FreeBSD: 9f984a8a49a8dfd8566d8fe3c91113cc1bdb19a3 $
+# $FreeBSD: 4a5e00854ff057b3b67f4b25331d997a70efb0e8 $
 
+PACKAGE=	rdma
 PROG=	ucmatose
 MAN=	ucmatose.1
 SRCS=	cmatose.c common.c

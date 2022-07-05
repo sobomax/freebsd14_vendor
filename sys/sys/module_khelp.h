@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a66440277a41b8d35aaba55360fb8d3455897709 $
+ * $FreeBSD: bab33e4874977656e6362a2a0353086a8085d172 $
  */
 
 #ifndef _SYS_MODULE_KHELP_H_
@@ -87,7 +87,7 @@ struct khelp_modevent_data {
 		.evhand = khelp_modevent,				\
 		.priv = &kmd_##hname					\
 	};								\
-	DECLARE_MODULE(hname, h_##hname, SI_SUB_KLD, SI_ORDER_ANY);	\
+	DECLARE_MODULE(hname, h_##hname, SI_SUB_KHELP, SI_ORDER_ANY);	\
 	MODULE_VERSION(hname, version)
 
 #define	KHELP_DECLARE_MOD(hname, hdata, hhooks, version)		\

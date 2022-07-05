@@ -1,4 +1,4 @@
-# $FreeBSD: 63424bd3dcc217d7e416c61e75904e19bcf7e69e $
+# $FreeBSD: 4f38ef391e4ad340971befa7bf3a008483d8faf6 $
 
 PACKAGE=lib${LIB}
 LIB=		lzma
@@ -154,8 +154,7 @@ CFLAGS+=	-DSYMBOL_VERSIONING
 
 CLEANFILES+=	liblzma.pc
 
-FILES=		liblzma.pc
-FILESDIR=	${LIBDATADIR}/pkgconfig
+PCFILES=	liblzma.pc
 
 liblzma.pc: liblzma.pc.in
 	sed -e 's,@prefix@,/usr,g ; \

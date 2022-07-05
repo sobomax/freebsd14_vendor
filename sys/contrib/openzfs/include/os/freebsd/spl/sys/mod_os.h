@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5b3b3271e39e9ccefadc72f257d325fc2d9a85c4 $
+ * $FreeBSD: 5695abee7b858e0718d1eb4a1e39c25670f7a22f $
  */
 
 #ifndef _SPL_MOD_H
@@ -61,6 +61,12 @@
 
 #define	param_set_arc_long_args(var) \
     CTLTYPE_ULONG, &var, 0, param_set_arc_long, "LU"
+
+#define	param_set_arc_min_args(var) \
+    CTLTYPE_ULONG, &var, 0, param_set_arc_min, "LU"
+
+#define	param_set_arc_max_args(var) \
+    CTLTYPE_ULONG, &var, 0, param_set_arc_max, "LU"
 
 #define	param_set_arc_int_args(var) \
     CTLTYPE_INT, &var, 0, param_set_arc_int, "I"

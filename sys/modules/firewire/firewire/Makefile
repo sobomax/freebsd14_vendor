@@ -1,4 +1,4 @@
-# $FreeBSD: 72fa049d4326ef8b1d35e8c44529a8564113325d $
+# $FreeBSD: 9ce806ae96d1e7aff106800990a6c6494e64bd41 $
 
 # Makefile for the IEEE1394 OHCI chipset
 
@@ -10,5 +10,7 @@ SRCS	= bus_if.h device_if.h pci_if.h \
 	  fwohci.c fwohci_pci.c fwohcireg.h fwohcivar.h \
 	  iec13213.h iec68113.h \
 	  fwcrom.c fwdev.c fwmem.c fwmem.h fwdma.c fwdma.h
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

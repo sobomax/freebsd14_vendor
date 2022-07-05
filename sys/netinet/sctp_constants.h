@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28c543f88045b04566202ef7bf5c5deb0b6d5b94 $");
+__FBSDID("$FreeBSD: 66f2cca5ab6dcf69cd6769a950351a64c69266f2 $");
 
 #ifndef _NETINET_SCTP_CONSTANTS_H_
 #define _NETINET_SCTP_CONSTANTS_H_
@@ -596,7 +596,7 @@ __FBSDID("$FreeBSD: 28c543f88045b04566202ef7bf5c5deb0b6d5b94 $");
 
 #define SCTP_RTO_UPPER_BOUND	(60000)	/* 60 sec in ms */
 #define SCTP_RTO_LOWER_BOUND	(1000)	/* 1 sec is ms */
-#define SCTP_RTO_INITIAL	(3000)	/* 3 sec in ms */
+#define SCTP_RTO_INITIAL	(1000)	/* 1 sec in ms */
 
 #define SCTP_INP_KILL_TIMEOUT 20	/* number of ms to retry kill of inpcb */
 #define SCTP_ASOC_KILL_TIMEOUT 10	/* number of ms to retry kill of inpcb */
@@ -673,8 +673,6 @@ __FBSDID("$FreeBSD: 28c543f88045b04566202ef7bf5c5deb0b6d5b94 $");
 /* amount peer is obligated to have in rwnd or I will abort */
 #define SCTP_MIN_RWND	1500
 
-#define SCTP_DEFAULT_MAXSEGMENT 65535
-
 #define SCTP_CHUNK_BUFFER_SIZE	512
 #define SCTP_PARAM_BUFFER_SIZE	512
 
@@ -716,6 +714,7 @@ __FBSDID("$FreeBSD: 28c543f88045b04566202ef7bf5c5deb0b6d5b94 $");
 #define SCTP_NOTIFY_NO_PEER_AUTH                25
 #define SCTP_NOTIFY_SENDER_DRY                  26
 #define SCTP_NOTIFY_REMOTE_ERROR                27
+#define SCTP_NOTIFY_ASSOC_TIMEDOUT              28
 
 /* This is the value for messages that are NOT completely
  * copied down where we will start to split the message.

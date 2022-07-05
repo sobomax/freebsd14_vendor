@@ -30,7 +30,7 @@
 /* Modified from the kernel GSSAPI code for RPC-over-TLS. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 110ba107540a0b997ead15a09ca015b16a7f3e6b $");
+__FBSDID("$FreeBSD: c495213b08e28cd43c2d4e91808a5a63adc1c300 $");
 
 #include "opt_kern_tls.h"
 
@@ -711,7 +711,7 @@ rpctls_getinfo(u_int *maxlenp, bool rpctlscd_run, bool rpctlssd_run)
 	int error;
 	size_t siz;
 
-	if (PMAP_HAS_DMAP == 0 || !mb_use_ext_pgs)
+	if (!mb_use_ext_pgs)
 		return (false);
 	siz = sizeof(enable);
 	error = kernel_sysctlbyname(curthread, "kern.ipc.tls.enable",

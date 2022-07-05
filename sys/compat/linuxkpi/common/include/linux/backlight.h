@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1d2224811124d3c43a04949c8665b7375be46045 $
+ * $FreeBSD: 9591a4b671ab85f08b0605f406fcc6c61bfd90f6 $
  */
 
-#ifndef _LINUX_BACKLIGHT_H_
-#define _LINUX_BACKLIGHT_H_
+#ifndef _LINUXKPI_LINUX_BACKLIGHT_H_
+#define _LINUXKPI_LINUX_BACKLIGHT_H_
 
 #include <linux/notifier.h>
 
@@ -79,10 +79,10 @@ void linux_backlight_device_unregister(struct backlight_device *bd);
 	linux_backlight_device_register(name, dev, data, ops, props)
 #define	backlight_device_unregister(bd)	linux_backlight_device_unregister(bd)
 
-static inline void
+static inline int
 backlight_update_status(struct backlight_device *bd)
 {
-	bd->ops->update_status(bd);
+	return (bd->ops->update_status(bd));
 }
 
 static inline void
@@ -91,4 +91,32 @@ backlight_force_update(struct backlight_device *bd, int reason)
 	bd->props.brightness = bd->ops->get_brightness(bd);
 }
 
-#endif	/* _LINUX_BACKLIGHT_H_ */
+static inline int
+backlight_device_set_brightness(struct backlight_device *bd, int brightness)
+{
+
+	if (brightness > bd->props.max_brightness)
+		return (EINVAL);
+	bd->props.brightness = brightness;
+	return (bd->ops->update_status(bd));
+}
+
+static inline int
+backlight_enable(struct backlight_device *bd)
+{
+	if (bd == NULL)
+		return (0);
+	bd->props.power = 0/* FB_BLANK_UNBLANK */;
+	return (backlight_update_status(bd));
+}
+
+static inline int
+backlight_disable(struct backlight_device *bd)
+{
+	if (bd == NULL)
+		return (0);
+	bd->props.power = 4/* FB_BLANK_POWERDOWN */;
+	return (backlight_update_status(bd));
+}
+
+#endif	/* _LINUXKPI_LINUX_BACKLIGHT_H_ */

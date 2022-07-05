@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 500ff79716be8f626635db80c3b78fe894f32da7 $");
+__FBSDID("$FreeBSD: 0ddf73548e3fdab0c57c5d3eaea36b67f7e90893 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -858,12 +858,13 @@ cd9660_gbp_getblkno(struct vnode *vp, vm_ooffset_t off)
 }
 
 static int
-cd9660_gbp_getblksz(struct vnode *vp, daddr_t lbn)
+cd9660_gbp_getblksz(struct vnode *vp, daddr_t lbn, long *sz)
 {
 	struct iso_node *ip;
 
 	ip = VTOI(vp);
-	return (blksize(ip->i_mnt, ip, lbn));
+	*sz = blksize(ip->i_mnt, ip, lbn);
+	return (0);
 }
 
 static int

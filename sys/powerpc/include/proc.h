@@ -31,7 +31,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: proc.h,v 1.2 1997/04/16 22:57:48 thorpej Exp $
- * $FreeBSD: d4df3ccfefeff53f999917c63fd57942965bdd93 $
+ * $FreeBSD: 097891253009a460d36675c404a8049fe2921358 $
  */
 
 #ifndef _MACHINE_PROC_H_
@@ -74,9 +74,7 @@ struct syscall_args {
 #define	GET_STACK_USAGE(total, used) do {				\
 	struct thread *td = curthread;					\
 	(total) = td->td_kstack_pages * PAGE_SIZE - sizeof(struct pcb);	\
-	(used) = (char *)td->td_kstack +				\
-	    td->td_kstack_pages * PAGE_SIZE -				\
-	    (char *)&td;						\
+	(used) = td->td_kstack + (total) - (vm_offset_t)&td;		\
 } while (0)
 #endif
 

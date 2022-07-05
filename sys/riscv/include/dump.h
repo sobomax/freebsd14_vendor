@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 182a89eb8f985418d1e493721b910da60ad9f429 $
+ * $FreeBSD: 3c3152f150e979344ff4e0578aa98fa387058ceb $
  */
 
 #ifndef _MACHINE_DUMP_H_
@@ -36,6 +36,9 @@
 /* 20 phys_avail entry pairs correspond to 10 pa's */
 #define	DUMPSYS_MD_PA_NPAIRS	10
 #define	DUMPSYS_NUM_AUX_HDRS	0
+
+/* How often to check the dump progress bar? */
+#define	DUMPSYS_PB_CHECK_BITS	22	/* Every 4MB */
 
 static inline void
 dumpsys_pa_init(void)

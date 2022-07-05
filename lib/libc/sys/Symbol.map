@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 0044c06fd639eb3d03d483f486d65518444b0a23 $
+ * $FreeBSD: 0c446cca95d4003d2149cdf43b9ba8ab8277c081 $
  */
 
 /*
@@ -260,7 +260,6 @@ FBSD_1.0 {
 	sigwaitinfo;
 	socket;
 	socketpair;
-	swapoff;
 	swapon;
 	symlink;
 	sync;
@@ -415,6 +414,11 @@ FBSD_1.6 {
 	memfd_create;
 	shm_create_largepage;
 	shm_rename;
+};
+
+FBSD_1.7 {
+	 _Fork;
+	swapoff;
 };
 
 FBSDprivate_1.0 {

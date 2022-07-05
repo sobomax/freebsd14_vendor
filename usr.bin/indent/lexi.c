@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)lexi.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a5938689e268a81dce5bcf2e4b01a6beb498398 $");
+__FBSDID("$FreeBSD: 83178a72b4f69ed8931f2d879d7721a8bcea32ba $");
 
 /*
  * Here we have the token scanner for indent.  It scans off one token and puts
@@ -354,7 +354,7 @@ lexi(struct parser_state *state)
 					 * then following sign is unary */
 	    state->last_u_d = true;	/* will make "int a -1" work */
 	return (ident);		/* the ident is not in the list */
-    }				/* end of procesing for alpanum character */
+    }				/* end of processing for alpanum character */
 
     /* Scan a non-alphanumeric token */
 

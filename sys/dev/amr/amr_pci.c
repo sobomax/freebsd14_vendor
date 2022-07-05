@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd7128e372effe7cbf4d97849825b85bcc43f517 $");
+__FBSDID("$FreeBSD: c57262a8ccc24c142fd063b65b097688a00ffee2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -340,7 +340,7 @@ out:
     if (error)
 	amr_pci_free(sc);
     else
-	gone_in_dev(dev, 13, "amr(4) driver");
+	gone_in_dev(dev, 14, "amr(4) driver");
     return(error);
 }
 

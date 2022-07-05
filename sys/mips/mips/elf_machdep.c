@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e27e5e7f2a4f761a60e8a33ed65853cf2b2d45d $");
+__FBSDID("$FreeBSD: 8ac07a5b0ac606607a955a519503a051d7a7d70a $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -89,6 +89,8 @@ static struct sysentvec elf_freebsd_sysvec = {
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
 	.sv_trap	= NULL,
+	.sv_onexec_old	= exec_onexec_old,
+	.sv_onexit	= exit_onexit,
 };
 
 static __ElfN(Brandinfo) freebsd_brand_info = {

@@ -40,7 +40,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cdcc86e715dda4696ae872ede9a2fe7288833747 $");
+__FBSDID("$FreeBSD: 6a66b7eb80f7e95a1ea193e4fd7299f2d7ef06c4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -248,6 +248,7 @@ init_secondary(uint64_t hart)
 	/* Initialize curthread */
 	KASSERT(PCPU_GET(idlethread) != NULL, ("no idle thread"));
 	pcpup->pc_curthread = pcpup->pc_idlethread;
+	schedinit_ap();
 
 	/*
 	 * Identify current CPU. This is necessary to setup

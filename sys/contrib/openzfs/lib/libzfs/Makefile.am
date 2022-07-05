@@ -1,5 +1,4 @@
 include $(top_srcdir)/config/Rules.am
-PHONY =
 
 VPATH = \
 	$(top_srcdir)/module/icp \
@@ -76,7 +75,7 @@ libzfs_la_LIBADD = \
 	$(abs_top_builddir)/lib/libnvpair/libnvpair.la \
 	$(abs_top_builddir)/lib/libuutil/libuutil.la
 
-libzfs_la_LIBADD += -lm $(LIBCRYPTO_LIBS) $(ZLIB_LIBS) $(LTLIBINTL)
+libzfs_la_LIBADD += -lm $(LIBCRYPTO_LIBS) $(ZLIB_LIBS) $(LIBFETCH_LIBS) $(LTLIBINTL)
 
 libzfs_la_LDFLAGS = -pthread
 
@@ -88,7 +87,9 @@ if BUILD_FREEBSD
 libzfs_la_LIBADD += -lutil -lgeom
 endif
 
-libzfs_la_LDFLAGS += -version-info 4:0:0
+libzfs_la_LDFLAGS += -version-info 5:0:1
+
+include $(top_srcdir)/config/CppCheck.am
 
 # Library ABI
 EXTRA_DIST = libzfs.abi libzfs.suppr

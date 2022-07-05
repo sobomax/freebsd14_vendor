@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8ee4643e3c91742d76aa9dfe91695184846d488b $");
+__FBSDID("$FreeBSD: 4c04a9256b5e4243669a3b9e34a5c1f74ce0853e $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -1823,10 +1823,6 @@ eli_resize(struct gctl_req *req)
 		gctl_error(req, "Invalid oldsize: Out of range.");
 		goto out;
 	}
-	if (oldsize == mediasize) {
-		gctl_error(req, "Size hasn't changed.");
-		goto out;
-	}
 
 	/* Read metadata from the 'oldsize' offset. */
 	if (pread(provfd, sector, secsize, oldsize - secsize) != secsize) {
@@ -1864,6 +1860,10 @@ eli_resize(struct gctl_req *req)
 		gctl_error(req, "Provider size mismatch at oldsize.");
 		goto out;
 	}
+
+	/* The metadata is valid and nothing has changed.  Just exit. */
+	if (oldsize == mediasize)
+		goto out;
 
 	/*
 	 * Update the old metadata with the current provider size and write

@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21726aaaeb840611cf6147ece46cf4d6970d1712 $");
+__FBSDID("$FreeBSD: 276bb5c2457fc646aef98ee400e7818096661fa9 $");
 
 #include "dhcpd.h"
 
@@ -157,7 +157,8 @@ decode_hw_header(unsigned char *buf, int bufix, struct hardware *from)
 	from->htype = ARPHRD_ETHER;
 	from->hlen = sizeof(eh.ether_shost);
 
-	return (sizeof(eh));
+	return (sizeof(eh) + (ntohs(eh.ether_type) == ETHERTYPE_VLAN ?
+	    ETHER_VLAN_ENCAP_LEN : 0));
 }
 
 ssize_t

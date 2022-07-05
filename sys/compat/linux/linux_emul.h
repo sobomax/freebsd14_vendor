@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1bbc69ad98bea0d425b69244bacb455e77ffe839 $
+ * $FreeBSD: de66a7a4c82ae48308e5209133acb78be9112294 $
  */
 
 #ifndef _LINUX_EMUL_H_
@@ -68,7 +68,6 @@ int	linux_common_execve(struct thread *, struct image_args *);
 struct linux_pemuldata {
 	uint32_t	flags;		/* process emuldata flags */
 	struct sx	pem_sx;		/* lock for this struct */
-	void		*epoll;		/* epoll data */
 	uint32_t	persona;	/* process execution domain */
 	uint32_t	ptrace_flags;	/* used by ptrace(2) */
 };

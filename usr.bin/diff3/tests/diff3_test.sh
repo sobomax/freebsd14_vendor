@@ -1,4 +1,4 @@
-# $FreeBSD: 6c479de2e9c00b3e78d2d55651d932a1271fa2c4 $
+# $FreeBSD: 64031b023187169f5a364da47848eb29c6251852 $
 
 atf_test_case diff3
 atf_test_case diff3_lesssimple
@@ -7,6 +7,12 @@ diff3_body()
 {
 	atf_check -o file:$(atf_get_srcdir)/1.out \
 		diff3 $(atf_get_srcdir)/1.txt $(atf_get_srcdir)/2.txt $(atf_get_srcdir)/3.txt
+
+	atf_check -o file:$(atf_get_srcdir)/1.out \
+		diff3 --strip-trailing-cr $(atf_get_srcdir)/1cr.txt $(atf_get_srcdir)/2.txt $(atf_get_srcdir)/3.txt
+
+	atf_check -o file:$(atf_get_srcdir)/1t.out \
+		diff3 -T $(atf_get_srcdir)/1.txt $(atf_get_srcdir)/2.txt $(atf_get_srcdir)/3.txt
 
 	atf_check -o file:$(atf_get_srcdir)/2.out \
 		diff3 -e $(atf_get_srcdir)/1.txt $(atf_get_srcdir)/2.txt $(atf_get_srcdir)/3.txt

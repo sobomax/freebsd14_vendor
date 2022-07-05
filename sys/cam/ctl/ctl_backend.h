@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_backend.h#2 $
- * $FreeBSD: be8ab4d1706be032adcc0e84fda107bb4e4db4f0 $
+ * $FreeBSD: fe4e7f5df1d0bcef1c0130302ac55dd806ba379a $
  */
 /*
  * CTL backend driver definitions
@@ -47,6 +47,7 @@
 
 typedef enum {
 	CTL_LUN_SERSEQ_OFF,
+	CTL_LUN_SERSEQ_SOFT,
 	CTL_LUN_SERSEQ_READ,
 	CTL_LUN_SERSEQ_ON
 } ctl_lun_serseq;
@@ -186,7 +187,6 @@ struct ctl_backend_driver {
 	be_init_t	  init;			 /* passed to CTL */
 	be_shutdown_t	  shutdown;		 /* passed to CTL */
 	be_func_t	  data_submit;		 /* passed to CTL */
-	be_func_t	  data_move_done;	 /* passed to CTL */
 	be_func_t	  config_read;		 /* passed to CTL */
 	be_func_t	  config_write;		 /* passed to CTL */
 	be_ioctl_t	  ioctl;		 /* passed to CTL */

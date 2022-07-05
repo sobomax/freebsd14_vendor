@@ -36,7 +36,7 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include "assym.inc"
-__FBSDID("$FreeBSD: 1a77377cb148342db427a8b447e395c3e06b4bb9 $");
+__FBSDID("$FreeBSD: fd366542b283ad6352b2de65a2b16b09692262c7 $");
 
 	.syntax	unified
 
@@ -211,6 +211,35 @@ fusupcbfaulttext:
 	.asciz	"Yikes - no valid PCB during fusuxxx() addr=%08x\n"
 	.align	2
 #endif
+
+/*
+ * suword16(caddr_t uaddr, int x);
+ * Store an uint16_t in the user's address space.
+ */
+
+ENTRY(suword16)
+	ldr	r3, =(VM_MAXUSER_ADDRESS-3)
+	cmp	r0, r3
+	mvncs	r0, #0
+	RETc(cs)
+
+	GET_PCB(r2)
+	ldr	r2, [r2]
+
+#ifdef DIAGNOSTIC
+	teq	r2, #0x00000000
+	beq	.Lfusupcbfault
+#endif
+
+	adr	r3, .Lfusufault
+	str	r3, [r2, #PCB_ONFAULT]
+
+	strht	r1, [r0], #0
+
+	mov	r0, #0x00000000
+	str	r0, [r2, #PCB_ONFAULT]
+	RET
+END(suword16)
 
 /*
  * suword(caddr_t uaddr, int x);

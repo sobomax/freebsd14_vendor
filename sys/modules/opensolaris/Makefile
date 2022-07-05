@@ -1,4 +1,4 @@
-# $FreeBSD: 536b9637cd3c0fd1f8d3f28167dd5c04ae6a49a0 $
+# $FreeBSD: 7010485b0ee75c80e825cafade34ed95ffc63c2c $
 
 SYSDIR?=	${SRCTOP}/sys
 
@@ -27,7 +27,7 @@ SRCS+=		opensolaris_atomic.c
 
 CFLAGS+= 	${OPENZFS_CFLAGS}
 
-EXPORT_SYMS=	cpu_core
+EXPORT_SYMS=	YES
 
 IGNORE_PRAGMA=	1
 

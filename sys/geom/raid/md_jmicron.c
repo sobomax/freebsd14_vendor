@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d0387bef4de0adc91c3cf7b5f020700ac5e9fb02 $");
+__FBSDID("$FreeBSD: 02da9e1f02ab538dfcd642ee3b4cf69dae8264dd $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -270,7 +270,8 @@ jmicron_meta_read(struct g_consumer *cp)
 	uint16_t checksum, *ptr;
 
 	pp = cp->provider;
-
+	if (pp->sectorsize < sizeof(*meta))
+		return (NULL);
 	/* Read the anchor sector. */
 	buf = g_read_data(cp,
 	    pp->mediasize - pp->sectorsize, pp->sectorsize, &error);

@@ -1,6 +1,8 @@
-# $FreeBSD: 647f073888902712cca77cf96fd3265a425694a6 $
+# $FreeBSD: aa2873ec4681ffe971afafdc2f740d0866f9ae61 $
 
 .include <src.opts.mk>
+
+PACKAGE=	dwatch
 
 SUBDIR= libexec
 

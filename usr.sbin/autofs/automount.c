@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e28129eee5b865e66c48bdb4dfba7cb6ff6f38ca $");
+__FBSDID("$FreeBSD: cd29c910bce2fc66fe89625977d4c09256affbe1 $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -80,6 +80,8 @@ unmount_by_statfs(const struct statfs *sb, bool force)
 	free(fsid_str);
 	if (error != 0)
 		log_warn("cannot unmount %s", sb->f_mntonname);
+	else
+		rpc_umntall();
 
 	return (error);
 }

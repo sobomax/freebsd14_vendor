@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e1996862119a2b0b35f531d4a99b63af110eec90 $
+ * $FreeBSD: 7a4d704356b83ee0d2a5d1a0fd0cb45d33015ad3 $
  */
 
 #include <sys/types.h>
@@ -716,7 +716,7 @@ main(int argc, char *argv[])
 
 	if (stat(argv[0], &sb) != 0)
 		err(1, "%s", argv[0]);
-	if ((sb.st_mode & S_IFDIR) == 0) {
+	if ((sb.st_mode & S_IFDIR) == 0 && !dflag) {
 		errno = ENOTDIR;
 		err(1, "%s", argv[0]);
 	}

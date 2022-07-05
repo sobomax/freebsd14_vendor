@@ -1,2 +1,2 @@
-.\" $FreeBSD: 154ebb550c09496298c2e43163adbbcfc56bfb7d $
-Set to not build USB gadget kernel modules.
+.\" $FreeBSD: d8b54b0611770a2c804279d350e7b1fc74b83c96 $
+Do not build USB gadget kernel modules.

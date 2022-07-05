@@ -1,2 +1,2 @@
-.\" $FreeBSD: 46dac02e4018502fe748fe540587e03b4ecee7fa $
-Set to build openfirmware bootloader components.
+.\" $FreeBSD: b050c06406f93433481d2bc1380fcba2ec287e2b $
+Build openfirmware bootloader components.

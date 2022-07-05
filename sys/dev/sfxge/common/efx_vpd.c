@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55ad2fde136e1be12ab6938548db0c07030bbd88 $");
+__FBSDID("$FreeBSD: daebf40d8c89781b6505cca39e2efa821c0281a3 $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -901,7 +901,7 @@ efx_vpd_hunk_set(
 
 				/*
 				 * The keyword doesn't already exist. If the
-				 * user deleting a non-existant keyword then
+				 * user deleting a non-existent keyword then
 				 * this is a no-op.
 				 */
 				if (evvp->evv_length == 0)

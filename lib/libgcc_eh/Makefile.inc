@@ -1,4 +1,4 @@
-# $FreeBSD: 4fe1eff406e1b318aca7736a6e0239ce487d02b6 $
+# $FreeBSD: 20535a5d0bbc2fee46014c2848f5c06107a03905 $
 
 COMPILERRTDIR=	${SRCTOP}/contrib/llvm-project/compiler-rt
 UNWINDINCDIR=	${SRCTOP}/contrib/llvm-project/libunwind/include
@@ -26,7 +26,6 @@ CXXFLAGS.${file}+=	-fno-exceptions -funwind-tables
 .endfor
 
 CFLAGS+=	-I${UNWINDINCDIR}
-CFLAGS+=	-I${.CURDIR}
 CFLAGS+=	-D_LIBUNWIND_IS_NATIVE_ONLY
 CFLAGS+=	-D_LIBUNWIND_USE_FRAME_HEADER_CACHE
 CXXFLAGS+=	-fno-rtti

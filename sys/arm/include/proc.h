@@ -34,18 +34,11 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: a37ccd8f621c0252509b0139b5f7e4f692c0a222 $
+ * $FreeBSD: 9e3cdf142205093849f0ea9c112637cbf9f393c6 $
  */
 
 #ifndef	_MACHINE_PROC_H_
 #define	_MACHINE_PROC_H_
-
-#include <machine/utrap.h>
-
-struct md_utrap {
-	utrap_entry_t *ut_precise[UT_MAX];	/* must be first */
-	int	ut_refcnt;
-};
 
 struct mdthread {
 	int	md_spinlock_count;	/* (k) */
@@ -58,8 +51,7 @@ struct mdthread {
 };
 
 struct mdproc {
-	struct	md_utrap *md_utrap;
-	void	*md_sigtramp;
+	long	md_dummy;
 };
 
 #define	KINFO_PROC_SIZE 816
@@ -79,4 +71,15 @@ struct syscall_args {
 	register_t args[MAXARGS];
 } __aligned(8);
 
+#ifdef _KERNEL
+#include <machine/pcb.h>
+
+/* Get the current kernel thread stack usage. */
+#define	GET_STACK_USAGE(total, used) do {				\
+	struct thread *td = curthread;					\
+	(total) = td->td_kstack_pages * PAGE_SIZE - sizeof(struct pcb);	\
+	(used) = td->td_kstack + (total) - (vm_offset_t)&td;		\
+} while (0)
+
+#endif  /* _KERNEL */
 #endif /* !_MACHINE_PROC_H_ */

@@ -26,7 +26,7 @@
  * Routines to verify files loaded.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9773b02e5a1d5622252735e95bd84a6a95fcbcca $");
+__FBSDID("$FreeBSD: 22f3f06b0edac91d46a9bdad0a30cb0679e57d68 $");
 
 #include <sys/param.h>
 #include <string.h>
@@ -56,6 +56,9 @@ extern char *Skip;
  * We sometimes need to know if input is verified or not.
  * The extra slot is for tracking most recently opened.
  */
+#ifndef SOPEN_MAX
+#define	SOPEN_MAX	64
+#endif
 static int ve_status[SOPEN_MAX+1];
 static int ve_status_state;
 struct verify_status;

@@ -29,7 +29,7 @@
 /* Driver for VirtIO memory balloon devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e2d967dd9af6bdeb873629d247eea2dad1b4cb7 $");
+__FBSDID("$FreeBSD: bf4e5cf916f7e48db6e0e9cf6f5bb241152c0065 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -460,8 +460,7 @@ vtballoon_alloc_page(struct vtballoon_softc *sc)
 {
 	vm_page_t m;
 
-	m = vm_page_alloc(NULL, 0,
-	    VM_ALLOC_NORMAL | VM_ALLOC_NOOBJ | VM_ALLOC_NODUMP);
+	m = vm_page_alloc_noobj(VM_ALLOC_NODUMP);
 	if (m != NULL)
 		sc->vtballoon_current_npages++;
 

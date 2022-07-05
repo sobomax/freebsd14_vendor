@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c758df5157d2575702ed7a83bb7095366406aa2 $");
+__FBSDID("$FreeBSD: 79ec18fe17d7aca48ca728f86051c4a6687f1d4c $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -250,7 +250,8 @@ nvidia_meta_read(struct g_consumer *cp)
 	uint32_t checksum, *ptr;
 
 	pp = cp->provider;
-
+	if (pp->sectorsize < sizeof(*meta))
+		return (NULL);
 	/* Read the anchor sector. */
 	buf = g_read_data(cp,
 	    pp->mediasize - 2 * pp->sectorsize, pp->sectorsize, &error);

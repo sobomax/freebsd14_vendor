@@ -1,4 +1,4 @@
-# $FreeBSD: ae1b597d08ce92f308c5d9a9699da09e5a86084b $
+# $FreeBSD: df9f451d1d0a198f77a59e488d6c5dc49c3e67c0 $
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw
 
@@ -18,5 +18,7 @@ CFLAGS+= -DIPFIREWALL -I${SRCTOP}/sys/contrib/ck/include
 #If you want it to pass all packets by default
 #CFLAGS+= -DIPFIREWALL_DEFAULT_TO_ACCEPT
 #
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

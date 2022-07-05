@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d2a7999cb2c360376052cf5b7e7d38aff90c162d $");
+__FBSDID("$FreeBSD: 6d3585795208cfd9042003a3e862de21323406bc $");
 
 #include "opt_watchdog.h"
 
@@ -50,8 +50,9 @@ __FBSDID("$FreeBSD: d2a7999cb2c360376052cf5b7e7d38aff90c162d $");
 CTASSERT(sizeof(struct kerneldumpheader) == 512);
 
 int
-minidumpsys(struct dumperinfo *di)
+cpu_minidumpsys(struct dumperinfo *di, const struct minidumpstate *state)
 {
 
-	return (pae_mode ? minidumpsys_pae(di) : minidumpsys_nopae(di));
+	return (pae_mode ? cpu_minidumpsys_pae(di, state) :
+	    cpu_minidumpsys_nopae(di, state));
 }

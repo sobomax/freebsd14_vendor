@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cdae5e837cdc90180d5902542fd30c5a45704d46 $
+ * $FreeBSD: 62787a3e689c8bb255a39208578a59e6420ad902 $
  */
 
 /*
@@ -410,6 +410,10 @@ struct snddev_info {
 
 void	sound_oss_sysinfo(oss_sysinfo *);
 int	sound_oss_card_info(oss_card_info *);
+
+#define	PCM_MODE_MIXER		0x01
+#define	PCM_MODE_PLAY		0x02
+#define	PCM_MODE_REC		0x04
 
 #define PCM_LOCKOWNED(d)	mtx_owned((d)->lock)
 #define	PCM_LOCK(d)		mtx_lock((d)->lock)

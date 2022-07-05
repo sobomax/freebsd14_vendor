@@ -1,4 +1,6 @@
-# $FreeBSD: 603ab18a4167833d23118322e56c7eddeb0a14d9 $
+# $FreeBSD: 49b1c3b00d67b315337a97747b7889c7a66b214f $
+
+PACKAGE=	nfs
 
 PROG=	pnfsdskill
 MAN=	pnfsdskill.8

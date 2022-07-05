@@ -26,10 +26,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: daa5d83616a2e717381e78d1aceab5c7e898a372 $
+ * $FreeBSD: e7d3de60e987e888600dee35c3558312f9c0efa9 $
  */
-#ifndef	_ASM_TYPES_H_
-#define	_ASM_TYPES_H_
+#ifndef	_LINUXKPI_ASM_TYPES_H_
+#define	_LINUXKPI_ASM_TYPES_H_
 
 #if defined(_KERNEL) || defined(_STANDALONE)
 
@@ -61,4 +61,4 @@ typedef unsigned short umode_t;
 
 #endif	/* _KERNEL || _STANDALONE */
 
-#endif	/* _ASM_TYPES_H_ */
+#endif	/* _LINUXKPI_ASM_TYPES_H_ */

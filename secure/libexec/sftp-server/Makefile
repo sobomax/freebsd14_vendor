@@ -1,12 +1,11 @@
-# $FreeBSD: 24d675e0cf163c96d1b69dedd52a27253aad42c6 $
+# $FreeBSD: 97408d332d340e9f02b19fed771e2606d4319cad $
 
 .include <src.opts.mk>
+.include "${SRCTOP}/secure/ssh.mk"
 
 PROG=   sftp-server
 SRCS=   sftp-server.c sftp-common.c sftp-server-main.c
 MAN=	sftp-server.8
-CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 

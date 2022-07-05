@@ -1,4 +1,4 @@
-.\" $FreeBSD: 2bc179cc81363bbcea214bf5db1e12063f8c967c $
-Set to compile programs and libraries without the
+.\" $FreeBSD: 66103683229a2e4567e666b0ee5f46600da260bb $
+Compile programs and libraries without the
 .Xr assert 3
 checks.

@@ -38,10 +38,11 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: 8938dd86ecced793cc18e466c25ed827d1868da8 $ */
+/* $FreeBSD: c7386aab68f8eef7da11f35ffcac57f0e499e960 $ */
 
 #include <sys/param.h>
 #include <sys/endian.h>
+#include <sys/epoch.h>
 #include <sys/eventhandler.h>
 #include <sys/malloc.h>
 #include <sys/module.h>

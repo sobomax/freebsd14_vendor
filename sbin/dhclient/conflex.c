@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66fc9e397125c8bc1a013264d6bd183935957389 $");
+__FBSDID("$FreeBSD: c11c9189527edf6423e4b58b8c457cb009fa88d3 $");
 
 #include <ctype.h>
 
@@ -524,6 +524,8 @@ intern(char *atom, int dfv)
 	case 'v':
 		if (!strcasecmp(atom + 1, "endor-class"))
 			return (VENDOR_CLASS);
+		if (!strcasecmp(atom + 1, "lan-pcp"))
+			return (VLAN_PCP);
 		break;
 	case 'y':
 		if (!strcasecmp(atom + 1, "iaddr"))

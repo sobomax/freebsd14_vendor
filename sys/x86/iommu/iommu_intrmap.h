@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov <kib@FreeBSD.org>
  * under sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 92cdf5a76a2f1ac77342e9641f720cc4a42dc06e $
+ * $FreeBSD: 713bdb5d7ef436cb8d2d8a814a9df1d2e9cbd1ad $
  */
 
 #ifndef __X86_IOMMU_IOMMU_INTRMAP_H

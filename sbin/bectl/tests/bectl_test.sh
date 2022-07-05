@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 36c92235b6d8472371365eea4aad9b6344a35d6e $
+# $FreeBSD: b101591c3ee9be865e6dc546f7ca01f450283c6f $
 
 ZPOOL_NAME_FILE=zpool_name
 get_zpool_name()
@@ -49,6 +49,13 @@ bectl_create_setup()
 	atf_check test -n "$zpool"
 
 	kldload -n -q zfs || atf_skip "ZFS module not loaded on the current system"
+	if ! getconf MIN_HOLE_SIZE "$(pwd)"; then
+		echo "getconf MIN_HOLE_SIZE $(pwd) failed; sparse files " \
+		    "probably not supported by file system"
+		mount
+		atf_skip "Test's work directory does not support sparse files;" \
+		    "try with a different TMPDIR?"
+	fi
 	atf_check mkdir -p ${mnt}
 	atf_check truncate -s 1G ${disk}
 	atf_check zpool create -R ${mnt} ${zpool} ${disk}
@@ -114,6 +121,10 @@ bectl_create_body()
 	# of recursive and non-recursive boot environments.
 	atf_check zfs create -o mountpoint=/usr -o canmount=noauto \
 	    ${zpool}/ROOT/default/usr
+
+	# BE datasets with spaces are not bootable, PR 254441.
+	atf_check -e not-empty -s not-exit:0 \
+		bectl -r ${zpool}/ROOT create "foo bar"
 
 	# Test standard creation, creation of a snapshot, and creation from a
 	# snapshot.

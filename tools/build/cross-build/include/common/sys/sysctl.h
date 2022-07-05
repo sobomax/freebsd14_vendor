@@ -33,10 +33,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 856f6be23421ad022213b813fb40b3131f40ffc7 $
+ * $FreeBSD: 6d6f5438c557e693df837e09bb370000b67efa82 $
  */
 #pragma once
 
+#ifdef BOOTSTRAPPING_WANT_NATIVE_SYSCTL
+/* We need the real sysctl.h e.g. when bootstrapping the LLVM tools. */
+#include_next <sys/sysctl.h>
+#else
+/* Otherwise, avoid sysctls since they might not be supported on the host. */
 #include <sys/types.h>
 
 #define sysctlbyname __freebsd_sysctlbyname
@@ -44,3 +49,4 @@
 
 int sysctl(const int *, u_int, void *, size_t *, const void *, size_t);
 int sysctlbyname(const char *, void *, size_t *, const void *, size_t);
+#endif

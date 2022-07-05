@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0b87821836b75e5628d8fde10e71b90dbfdb20a5 $
+ * $FreeBSD: 1a7f98ee222a2fb174de76d3f23a69f60219467e $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b87821836b75e5628d8fde10e71b90dbfdb20a5 $");
+__FBSDID("$FreeBSD: 1a7f98ee222a2fb174de76d3f23a69f60219467e $");
 
 #include <sys/types.h>
 
@@ -123,6 +123,14 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 			 * "RAPL Interfaces" in Intel SDM vol3.
 			 */
 			*val = 0x000a1003;
+			break;
+		case MSR_IA32_FEATURE_CONTROL:
+			/*
+			 * Windows guests check this MSR.
+			 * Set the lock bit to avoid writes
+			 * to this MSR.
+			 */
+			*val = IA32_FEATURE_CONTROL_LOCK;
 			break;
 		default:
 			error = -1;

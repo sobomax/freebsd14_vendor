@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if_loop.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: ac0028c42f70c7a983e82bcaed666564fa5a9ae2 $
+ * $FreeBSD: 14d544dfd86a74ed371eb4c1b22a9b4a169ddf5d $
  */
 
 /*
@@ -185,7 +185,7 @@ discoutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	if (dst->sa_family == AF_UNSPEC)
 		bcopy(dst->sa_data, &af, sizeof(af));
 	else
-		af = dst->sa_family;
+		af = RO_GET_FAMILY(ro, dst);
 
 	if (bpf_peers_present(ifp->if_bpf))
 		bpf_mtap2(ifp->if_bpf, &af, sizeof(af), m);

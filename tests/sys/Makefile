@@ -1,4 +1,4 @@
-# $FreeBSD: 4ba885405ce72c1d928f4e196c6cf9ae95a5d37e $
+# $FreeBSD: 2ba60f41b76c96c3d5a30f39f8889d7c8fac9b6b $
 
 .include <src.opts.mk>
 
@@ -20,7 +20,7 @@ TESTS_SUBDIRS+=		kqueue
 TESTS_SUBDIRS+=		mac
 TESTS_SUBDIRS+=		mqueue
 TESTS_SUBDIRS+=		net
-TESTS_SUBDIRS+=		netgraph
+TESTS_SUBDIRS+=		${_netgraph}
 TESTS_SUBDIRS+=		netinet
 TESTS_SUBDIRS+=		netinet6
 TESTS_SUBDIRS+=		netipsec
@@ -31,6 +31,7 @@ TESTS_SUBDIRS+=		posixshm
 TESTS_SUBDIRS+=		sys
 TESTS_SUBDIRS+=		vfs
 TESTS_SUBDIRS+=		vm
+TESTS_SUBDIRS+=		vmm
 
 .if ${MK_AUDIT} != "no"
 _audit=	audit
@@ -38,6 +39,10 @@ _audit=	audit
 
 .if ${MK_CDDL} != "no"
 _cddl=	cddl
+.endif
+
+.if ${MK_NETGRAPH} != "no"
+_netgraph= netgraph
 .endif
 
 # Items not integrated into kyua runs by default

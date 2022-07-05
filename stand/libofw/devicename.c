@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 786e5549c0fc258125fa1c4d363951a6d1caf7f3 $");
+__FBSDID("$FreeBSD: 11c0a1719ff3ef034517b3b9bd4a878001ba2d64 $");
 
 #include <stand.h>
 
@@ -134,13 +134,13 @@ found:
 int
 ofw_setcurrdev(struct env_var *ev, int flags, const void *value)
 {
-    struct ofw_devdesc	*ncurr;
-    int			rv;
+	struct ofw_devdesc	*ncurr;
+	int			rv;
 
-    if ((rv = ofw_parsedev(&ncurr, value, NULL)) != 0)
-	return rv;
+	if ((rv = ofw_parsedev(&ncurr, value, NULL)) != 0)
+		return (rv);
 
-    free(ncurr);
-    env_setenv(ev->ev_name, flags | EV_NOHOOK, value, NULL, NULL);
-    return 0;
+	free(ncurr);
+
+	return (mount_currdev(ev, flags, value));
 }

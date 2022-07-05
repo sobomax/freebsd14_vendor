@@ -34,15 +34,13 @@
  * attachment point for both processors and buses, and to manage
  * resources which are common to all of them.  In particular,
  * this code implements the core resource managers for interrupt
- * requests, DMA requests (which rightfully should be a part of the
- * ISA code but it's easier to do it here for now), I/O port addresses,
- * and I/O memory address space.
+ * requests and I/O memory address space.
  */
 
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9e9fec7ad2592c6c2a932b35ee0b6b3fbf0b86d $");
+__FBSDID("$FreeBSD: be84ab82d43f979ecfa2399a6c012f7d9e5baee5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

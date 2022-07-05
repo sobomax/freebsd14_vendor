@@ -1,5 +1,5 @@
 #
-# $FreeBSD: cf263b732c350d68a9386ee8a0beef0ae184fbd6 $
+# $FreeBSD: 83c9f1ade07590accb6adb5660e19915a691cdb3 $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
@@ -38,8 +38,7 @@ SRCS+=		libusb10_io.c
 CFLAGS+=	-DCOMPAT_32BIT
 .endif
 
-FILES=		libusb-0.1.pc libusb-1.0.pc libusb-2.0.pc
-FILESDIR=	${LIBDATADIR}/pkgconfig
+PCFILES=	libusb-0.1.pc libusb-1.0.pc libusb-2.0.pc
 
 #
 # Cross platform support

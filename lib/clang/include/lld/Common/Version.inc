@@ -1,3 +1,3 @@
-// $FreeBSD: 336fc0fdb1367ac9c0e7c1fab688de3983c869ab $
+// $FreeBSD: 3de8405e7c35dad268a7986a7c0213d97910d91c $
 
-#define LLD_VERSION_STRING "11.0.1"
+#define LLD_VERSION_STRING "13.0.0"

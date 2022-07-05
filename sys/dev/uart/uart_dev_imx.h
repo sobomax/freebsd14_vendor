@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2012 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Oleksandr Rybalko under sponsorship
  * from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9a3962be23351ac659486b9ac2c812d2b1a0ccb6 $
+ * $FreeBSD: 97d5dc4d5b9ca04f3b47df2af1b2ce1d0a6b7300 $
  */
 
 #ifndef	_UART_DEV_IMX5XX_H

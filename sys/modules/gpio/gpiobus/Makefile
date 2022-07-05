@@ -26,7 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: 458d56d8b9353a54905fa94450ba10aad9b1f456 $
+# $FreeBSD: 6dc40a2a9d6511bd0c565888371976f1d70c6950 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/gpio/
@@ -41,5 +41,7 @@ SRCS+=	ofw_gpiobus.c
 .endif
 
 CFLAGS+=  -I. -I${SRCTOP}/sys/dev/gpio/
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

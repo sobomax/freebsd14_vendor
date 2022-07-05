@@ -1,11 +1,10 @@
-# $FreeBSD: 9cd82717061371d266774bcb8b825495b81669d7 $
+# $FreeBSD: 10a914cf9ccce841ab6ec021337181b9057ce32d $
 
 .PATH: ${SRCTOP}/sys/dev/vmd
 
 KMOD=	vmd
 
 SRCS=	\
-	vmd_bus.c	\
 	vmd.c		\
 	bus_if.h	\
 	device_if.h	\

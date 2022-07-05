@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 920e573b9149cf6fdfa6874df0cabb837d1d0866 $");
+__FBSDID("$FreeBSD: eb3b19f2cb828366d4c681b8233ff199ea5b195c $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1046,7 +1046,7 @@ usage(void)
 	    "       jail [-qv] [-f file] -[rR] ['*' | jail ...]\n"
 	    "       jail [-dhilqv] [-J jid_file] [-u username] [-U username]\n"
 	    "            [-n jailname] [-s securelevel]\n"
-	    "            path hostname [ip[,...]] command ...\n"
+	    "            path hostname ip[,...] command ...\n"
 	    "       jail [-f file] -e separator\n");
 	exit(1);
 }

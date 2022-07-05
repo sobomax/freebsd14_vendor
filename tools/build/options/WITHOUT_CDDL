@@ -1,2 +1,2 @@
-.\" $FreeBSD: 909c52ba7166dabf5176dca0b9d744de038c80e9 $
-Set to not build code licensed under Sun's CDDL.
+.\" $FreeBSD: a2210308ab6743cc509bd1e5382ab9c1779fd539 $
+Do not build code licensed under Sun's CDDL.

@@ -1,4 +1,6 @@
-# $FreeBSD: c7c6a1b36dc74f48c4d1125a4048ae83f3f42852 $
+# $FreeBSD: b60631e3805bb877e3a80070f13c049a1b660ca4 $
+
+PACKAGE=	syscons-data
 
 FILES=	armscii8-8x8.fnt armscii8-8x14.fnt armscii8-8x16.fnt \
 	cp437-8x8.fnt cp437-8x14.fnt cp437-8x16.fnt \

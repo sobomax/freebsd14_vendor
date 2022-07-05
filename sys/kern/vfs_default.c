@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 382fbb2d9aceaeb1933abe037929c66fc3c565b1 $");
+__FBSDID("$FreeBSD: 018660310e685b9ebbcfc004f60b7bc01ba85511 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -423,10 +423,25 @@ int
 vop_stdadvlock(struct vop_advlock_args *ap)
 {
 	struct vnode *vp;
+	struct mount *mp;
 	struct vattr vattr;
 	int error;
 
 	vp = ap->a_vp;
+
+	/*
+	 * Provide atomicity of open(O_CREAT | O_EXCL | O_EXLOCK) for
+	 * local filesystems.  See vn_open_cred() for reciprocal part.
+	 */
+	mp = vp->v_mount;
+	if (mp != NULL && (mp->mnt_flag & MNT_LOCAL) != 0 &&
+	    ap->a_op == F_SETLK && (ap->a_flags & F_FIRSTOPEN) == 0) {
+		VI_LOCK(vp);
+		while ((vp->v_iflag & VI_FOPENING) != 0)
+			msleep(vp, VI_MTX(vp), PLOCK, "lockfo", 0);
+		VI_UNLOCK(vp);
+	}
+
 	if (ap->a_fl->l_whence == SEEK_END) {
 		/*
 		 * The NFSv4 server must avoid doing a vn_lock() here, since it
@@ -665,7 +680,6 @@ vop_stdgetwritemount(ap)
 	} */ *ap;
 {
 	struct mount *mp;
-	struct mount_pcpu *mpcpu;
 	struct vnode *vp;
 
 	/*
@@ -678,29 +692,7 @@ vop_stdgetwritemount(ap)
 	 * with releasing it.
 	 */
 	vp = ap->a_vp;
-	mp = vp->v_mount;
-	if (mp == NULL) {
-		*(ap->a_mpp) = NULL;
-		return (0);
-	}
-	if (vfs_op_thread_enter(mp, mpcpu)) {
-		if (mp == vp->v_mount) {
-			vfs_mp_count_add_pcpu(mpcpu, ref, 1);
-			vfs_op_thread_exit(mp, mpcpu);
-		} else {
-			vfs_op_thread_exit(mp, mpcpu);
-			mp = NULL;
-		}
-	} else {
-		MNT_ILOCK(mp);
-		if (mp == vp->v_mount) {
-			MNT_REF(mp);
-			MNT_IUNLOCK(mp);
-		} else {
-			MNT_IUNLOCK(mp);
-			mp = NULL;
-		}
-	}
+	mp = vfs_ref_from_vp(vp);
 	*(ap->a_mpp) = mp;
 	return (0);
 }
@@ -969,7 +961,7 @@ vop_stdallocate(struct vop_allocate_args *ap)
 	len = *ap->a_len;
 	offset = *ap->a_offset;
 
-	error = VOP_GETATTR(vp, vap, td->td_ucred);
+	error = VOP_GETATTR(vp, vap, ap->a_cred);
 	if (error != 0)
 		goto out;
 	fsize = vap->va_size;
@@ -1006,12 +998,12 @@ vop_stdallocate(struct vop_allocate_args *ap)
 		 */
 		VATTR_NULL(vap);
 		vap->va_size = offset + len;
-		error = VOP_SETATTR(vp, vap, td->td_ucred);
+		error = VOP_SETATTR(vp, vap, ap->a_cred);
 		if (error != 0)
 			goto out;
 		VATTR_NULL(vap);
 		vap->va_size = fsize;
-		error = VOP_SETATTR(vp, vap, td->td_ucred);
+		error = VOP_SETATTR(vp, vap, ap->a_cred);
 		if (error != 0)
 			goto out;
 	}
@@ -1037,7 +1029,7 @@ vop_stdallocate(struct vop_allocate_args *ap)
 			auio.uio_segflg = UIO_SYSSPACE;
 			auio.uio_rw = UIO_READ;
 			auio.uio_td = td;
-			error = VOP_READ(vp, &auio, 0, td->td_ucred);
+			error = VOP_READ(vp, &auio, ap->a_ioflag, ap->a_cred);
 			if (error != 0)
 				break;
 			if (auio.uio_resid > 0) {
@@ -1058,7 +1050,7 @@ vop_stdallocate(struct vop_allocate_args *ap)
 		auio.uio_rw = UIO_WRITE;
 		auio.uio_td = td;
 
-		error = VOP_WRITE(vp, &auio, 0, td->td_ucred);
+		error = VOP_WRITE(vp, &auio, ap->a_ioflag, ap->a_cred);
 		if (error != 0)
 			break;
 
@@ -1185,9 +1177,23 @@ vop_stdset_text(struct vop_set_text_args *ap)
 {
 	struct vnode *vp;
 	struct mount *mp;
-	int error;
+	int error, n;
 
 	vp = ap->a_vp;
+
+	/*
+	 * Avoid the interlock if execs are already present.
+	 */
+	n = atomic_load_int(&vp->v_writecount);
+	for (;;) {
+		if (n > -1) {
+			break;
+		}
+		if (atomic_fcmpset_int(&vp->v_writecount, &n, n - 1)) {
+			return (0);
+		}
+	}
+
 	VI_LOCK(vp);
 	if (vp->v_writecount > 0) {
 		error = ETXTBSY;
@@ -1204,7 +1210,7 @@ vop_stdset_text(struct vop_set_text_args *ap)
 			vrefl(vp);
 		}
 
-		vp->v_writecount--;
+		atomic_subtract_int(&vp->v_writecount, 1);
 		error = 0;
 	}
 	VI_UNLOCK(vp);
@@ -1215,10 +1221,24 @@ static int
 vop_stdunset_text(struct vop_unset_text_args *ap)
 {
 	struct vnode *vp;
-	int error;
+	int error, n;
 	bool last;
 
 	vp = ap->a_vp;
+
+	/*
+	 * Avoid the interlock if this is not the last exec.
+	 */
+	n = atomic_load_int(&vp->v_writecount);
+	for (;;) {
+		if (n >= -1) {
+			break;
+		}
+		if (atomic_fcmpset_int(&vp->v_writecount, &n, n + 1)) {
+			return (0);
+		}
+	}
+
 	last = false;
 	VI_LOCK(vp);
 	if (vp->v_writecount < 0) {
@@ -1227,7 +1247,7 @@ vop_stdunset_text(struct vop_unset_text_args *ap)
 			last = true;
 			vp->v_iflag &= ~VI_TEXT_REF;
 		}
-		vp->v_writecount++;
+		atomic_add_int(&vp->v_writecount, 1);
 		error = 0;
 	} else {
 		error = EINVAL;

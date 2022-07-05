@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 295a136cc554e2b4d9e5822e4b4aef1f4d77d57d $
+ * $FreeBSD: e07f77b9d5414ffd1378e48d78886439e5c8f0d6 $
  * $Whistle: ng_pppoe.c,v 1.10 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -2037,6 +2037,7 @@ ng_pppoe_disconnect(hook_p hook)
 				log(LOG_NOTICE, "ng_pppoe[%x]: session out of "
 				    "mbufs\n", node->nd_ID);
 			else {
+				struct epoch_tracker et;
 				struct pppoe_full_hdr *wh;
 				struct pppoe_tag *tag;
 				int	msglen = strlen(SIGNOFF);
@@ -2067,8 +2068,11 @@ ng_pppoe_disconnect(hook_p hook)
 				m->m_pkthdr.len = m->m_len = sizeof(*wh) + sizeof(*tag) +
 				    msglen;
 				wh->ph.length = htons(sizeof(*tag) + msglen);
+
+				NET_EPOCH_ENTER(et);
 				NG_SEND_DATA_ONLY(error,
 					privp->ethernet_hook, m);
+				NET_EPOCH_EXIT(et);
 			}
 		}
 		if (sp->state == PPPOE_LISTENING)

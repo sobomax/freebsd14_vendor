@@ -25,10 +25,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c38f5da4dea95214ab84166e12ab9c89b9cc9e42 $
+# $FreeBSD: bf5b78cb6d6b79df31ed85862169d59cfa927d6d $
 #
 
 import argparse
+import logging
+logging.getLogger("scapy").setLevel(logging.CRITICAL)
 import scapy.all as sp
 import socket
 import sys
@@ -109,7 +111,7 @@ def main():
 	foffset=(int)(1288/8)
 	mbit=1
 	for i in range(1,30):
-		if i is 29:
+		if i == 29:
 			mbit=0
 		ip6f0n = sp.Ether() / \
 			sp.IPv6(src=args.src[0], dst=args.to[0]) / \

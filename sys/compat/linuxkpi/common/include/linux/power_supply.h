@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6f6d8b28c5ee991035a36b9d7d58f6a492dea991 $
+ * $FreeBSD: cf8a937b04ad3889f560d51a6e821f5ad3c0e1c0 $
  */
 
-#ifndef _LINUX_POWER_SUPPLY_H_
-#define _LINUX_POWER_SUPPLY_H_
+#ifndef _LINUXKPI_LINUX_POWER_SUPPLY_H_
+#define _LINUXKPI_LINUX_POWER_SUPPLY_H_
 
 #include <sys/types.h>
 #include <sys/power.h>

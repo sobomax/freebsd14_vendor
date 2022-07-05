@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7b2bc2d59e0f80e6c8d79c05cab5ad66e71a4938 $");
+__FBSDID("$FreeBSD: 5ae6db1fbca63d0a2e04b36e743df799db9f32df $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -120,10 +120,7 @@ bcma_add_child(device_t dev, u_int order, const char *name, int unit)
 static void
 bcma_child_deleted(device_t dev, device_t child)
 {
-	struct bhnd_softc	*sc;
 	struct bcma_devinfo	*dinfo;
-
-	sc = device_get_softc(dev);
 
 	/* Call required bhnd(4) implementation */
 	bhnd_generic_child_deleted(dev, child);

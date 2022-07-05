@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b42f63c7523d7cfa699878e2cdf096a559cabee $");
+__FBSDID("$FreeBSD: 5da3bbbc35d340702a416591475bd974d26399e2 $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -475,18 +475,18 @@ check_power_mode:
 	 || (ident->enabled2 & ATA_ENABLED_EPC)) {
 		if (mode_name != NULL)
 			printf("%s", mode_name);
-		else if (count == 0xff) {
+		else if (count == ATA_PM_ACTIVE_IDLE) {
 			printf("PM0:Active or PM1:Idle");
 		}
 	} else {
 		switch (count) {
-		case 0x00:
+		case ATA_PM_STANDBY:
 			printf("PM2:Standby");
 			break;
-		case 0x80:
+		case ATA_PM_IDLE:
 			printf("PM1:Idle");
 			break;
-		case 0xff:
+		case ATA_PM_ACTIVE_IDLE:
 			printf("PM0:Active or PM1:Idle");
 			break;
 		}

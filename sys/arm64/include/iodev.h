@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5521ff71bc5fbf856287cce96993b22b3968a960 $
+ * $FreeBSD: 8752c4cb7f6ba29cc2f9c535dca839f9f38ca6a2 $
  */
 
 #ifndef _MACHINE_IODEV_H_

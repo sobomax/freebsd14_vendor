@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: bae693489c7335446e6dc278f31709a8504aa312 $
+.\" $FreeBSD: f2b1159e71a8703ba544f416848409dab967162d $
 .\"
 .Dd September 1, 2020
 .Dt SYSCTL 9
@@ -1024,6 +1024,7 @@ underscore characters, as in
 Underscore characters may be omitted only if the name consists of not more
 than two words, each being not longer than four characters, as in
 .Va bootfile .
+.Pp
 For boolean sysctls, negative logic should be totally avoided.
 That is, do not use names like
 .Va no_foobar

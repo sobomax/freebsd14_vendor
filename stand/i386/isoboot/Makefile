@@ -1,4 +1,4 @@
-# $FreeBSD: 67936e16176af2c424893fcf678bad01e8325c42 $
+# $FreeBSD: 7732882b1e5c9385aadcfc4bab3c758e88bcb3b7 $
 
 .include <bsd.init.mk>
 
@@ -29,7 +29,7 @@ CFLAGS+=-DBOOTPROG=\"isoboot\" \
 	-Wall -Waggregate-return -Wbad-function-cast -Wno-cast-align \
 	-Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
 	-Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings \
-	-Winline -Wno-pointer-sign
+	-Wno-pointer-sign
 
 CFLAGS.gcc+=	--param max-inline-insns-single=100
 CFLAGS.clang+=  -Oz ${CLANG_OPT_SMALL}

@@ -22,10 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cc7680e4013aadb9c1333cc8647e7dcd0009ec0c $
+ * $FreeBSD: 57ca04848bd26743290ffc7f809bae82180c0153 $
  */
 
-#include "en.h"
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
+
+#include <dev/mlx5/mlx5_en/en.h>
 
 void
 mlx5e_dim_build_cq_param(struct mlx5e_priv *priv,

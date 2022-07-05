@@ -1,4 +1,4 @@
-# $FreeBSD: 3b452a1f8e123c21c75dba41c83600a5de1d4398 $
+# $FreeBSD: a61e32db9aa70689b55bf2aff875b6bac46f9d04 $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,22 @@ PROG_CXX=	llvm-cxxfilt
 
 SRCDIR=		llvm/tools/llvm-cxxfilt
 SRCS+=		llvm-cxxfilt.cpp
+
+.include "${SRCTOP}/lib/clang/llvm.pre.mk"
+
+CFLAGS+=	-I${.OBJDIR}
+
+INCFILE=	Opts.inc
+TDFILE=		${LLVM_BASE}/${SRCDIR}/Opts.td
+GENOPT=		-gen-opt-parser-defs
+${INCFILE}: ${TDFILE}
+	${LLVM_TBLGEN} ${GENOPT} -I ${LLVM_SRCS}/include -d ${.TARGET:C/$/.d/} \
+	    -o ${.TARGET} ${TDFILE}
+TGHDRS+=	${INCFILE}
+
+DEPENDFILES+=	${TGHDRS:C/$/.d/}
+DPSRCS+=	${TGHDRS}
+CLEANFILES+=	${TGHDRS} ${TGHDRS:C/$/.d/}
 
 .if ${MK_LLVM_CXXFILT} != "no"
 LINKS=		${BINDIR}/llvm-cxxfilt ${BINDIR}/c++filt

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a47b6d8bf31e81bfdd1e632364da0f4d13e1d4c $");
+__FBSDID("$FreeBSD: a3c227bbde7ddc59e301320c92787232c48fa776 $");
 
 /*
  * Dispatch MI pmap calls to the appropriate MMU implementation
@@ -188,7 +188,7 @@ DEFINE_PMAP_IFUNC(void, tlbie_all, (void));
 DEFINE_DUMPSYS_IFUNC(void, map_chunk, (vm_paddr_t, size_t, void **));
 DEFINE_DUMPSYS_IFUNC(void, unmap_chunk, (vm_paddr_t, size_t, void *));
 DEFINE_DUMPSYS_IFUNC(void, pa_init, (void));
-DEFINE_DUMPSYS_IFUNC(size_t, scan_pmap, (void));
+DEFINE_DUMPSYS_IFUNC(size_t, scan_pmap, (struct bitset *));
 DEFINE_DUMPSYS_IFUNC(void *, dump_pmap_init, (unsigned));
 DEFINE_DUMPSYS_IFUNC(void *, dump_pmap, (void *, void *, u_long *));
 

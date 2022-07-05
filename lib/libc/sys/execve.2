@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)execve.2	8.5 (Berkeley) 6/1/94
-.\" $FreeBSD: a8f5aa14854bc05e60f347e17285f418ba33ac3d $
+.\" $FreeBSD: 1abadba13d91bca5aeaa46c9b0624c216b4009bc $
 .\"
-.Dd March 30, 2020
+.Dd January 26, 2022
 .Dt EXECVE 2
 .Os
 .Sh NAME
@@ -273,6 +273,9 @@ Search permission is denied for a component of the path prefix.
 The new process file is not an ordinary file.
 .It Bq Er EACCES
 The new process file mode denies execute permission.
+.It Bq Er EINVAL
+.Fa argv
+did not contain at least one element.
 .It Bq Er ENOEXEC
 The new process file has the appropriate access
 permission, but has an invalid magic number in its header.

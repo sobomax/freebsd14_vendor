@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c28eaf334613ed3b752ca9ee9b988b1b65e6541a $");
+__FBSDID("$FreeBSD: d5d83ba796bd6d0df94c59fe657e0e43d9cc427b $");
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
@@ -468,12 +468,15 @@ xlp_get_nsegs(struct cryptop *crp, unsigned int *nsegs)
 
 	switch (crp->crp_buf.cb_type) {
 	case CRYPTO_BUF_MBUF:
+	case CRYPTO_BUF_SINGLE_MBUF:
 	{
 		struct mbuf *m = NULL;
 
 		m = crp->crp_buf.cb_mbuf;
 		while (m != NULL) {
 			*nsegs += NLM_CRYPTO_NUM_SEGS_REQD(m->m_len);
+			if (crp->crp_buf.cb_type == CRYPTO_BUF_SINGLE_MBUF)
+				break;
 			m = m->m_next;
 		}
 		break;

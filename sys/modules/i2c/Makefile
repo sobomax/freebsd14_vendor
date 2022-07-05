@@ -1,4 +1,4 @@
-# $FreeBSD: edd92943c6c1392f55a3b340a8a43411f6c3a38d $
+# $FreeBSD: 9fea714975f7181725ec618b39698bb30a89b35e $
 
 SUBDIR = \
 	ads111x \
@@ -18,8 +18,11 @@ SUBDIR = \
 	isl \
 	isl12xx \
 	jedec_dimm \
+	max44009 \
 	mux \
 	nxprtc \
+	pcf8574 \
+	pcf8591 \
 	rtc8583 \
 	s35390a \
 	smb \

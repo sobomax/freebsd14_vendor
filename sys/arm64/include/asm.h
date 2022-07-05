@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 05e618500e592be469f681fd7bcd867618e9e1de $
+ * $FreeBSD: 32b79d256e808eb0b13d447e88fd718e00a26937 $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -38,9 +38,15 @@
 
 #define	_C_LABEL(x)	x
 
+#ifdef KDTRACE_HOOKS
+#define	DTRACE_NOP	nop
+#else
+#define	DTRACE_NOP
+#endif
+
 #define	LENTRY(sym)						\
 	.text; .align 2; .type sym,#function; sym:		\
-	.cfi_startproc
+	.cfi_startproc; DTRACE_NOP
 #define	ENTRY(sym)						\
 	.globl sym; LENTRY(sym)
 #define	EENTRY(sym)						\

@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)id.c	8.2 (Berkeley) 2/16/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5abfb655c9485d290feb5cb21fad0f5a40ece3c3 $");
+__FBSDID("$FreeBSD: b8988dedd6f63a0e948f72ca26f08a2dd6cf7c61 $");
 
 #include <sys/param.h>
 #include <sys/mac.h>
@@ -143,6 +143,8 @@ main(int argc, char *argv[])
 	argv += optind;
 
 	if (iswhoami && argc > 0)
+		usage();
+	if ((cflag || Aflag || Mflag) && argc > 0)
 		usage();
 
 	switch(Aflag + Gflag + Mflag + Pflag + gflag + pflag + uflag) {

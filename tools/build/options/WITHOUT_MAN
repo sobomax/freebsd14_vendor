@@ -1,2 +1,2 @@
-.\" $FreeBSD: 777225427d33777fffaa1519e7a8f7c99c339969 $
-Set to not build manual pages.
+.\" $FreeBSD: 1379508c2627600feae88b152af3f85f08b5a93e $
+Do not build manual pages.

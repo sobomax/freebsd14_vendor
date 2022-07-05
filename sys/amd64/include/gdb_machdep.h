@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 459d4f17e9d1784afc74037da36d1c369ed9b7fb $
+ * $FreeBSD: 4379b8a747098e2394d2f4d554085208b83e3151 $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
@@ -72,5 +72,6 @@ void *gdb_cpu_getreg(int, size_t *);
 void gdb_cpu_setreg(int, void *);
 int gdb_cpu_signal(int, int);
 void gdb_end_write(void *);
+void gdb_cpu_stop_reason(int, int);
 
 #endif /* !_MACHINE_GDB_MACHDEP_H_ */

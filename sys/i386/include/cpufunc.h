@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9646590a6a40f7ae6642dc730d94d1cc6aeca272 $
+ * $FreeBSD: 79cdd3004b779f1539f3730967044f7ec1b617f3 $
  */
 
 /*
@@ -395,11 +395,34 @@ rdtsc(void)
 }
 
 static __inline uint64_t
+rdtsc_ordered_lfence(void)
+{
+	lfence();
+	return (rdtsc());
+}
+
+static __inline uint64_t
+rdtsc_ordered_mfence(void)
+{
+	mfence();
+	return (rdtsc());
+}
+
+static __inline uint64_t
 rdtscp(void)
 {
 	uint64_t rv;
 
 	__asm __volatile("rdtscp" : "=A" (rv) : : "ecx");
+	return (rv);
+}
+
+static __inline uint64_t
+rdtscp_aux(uint32_t *aux)
+{
+	uint64_t rv;
+
+	__asm __volatile("rdtscp" : "=A" (rv), "=c" (*aux));
 	return (rv);
 }
 

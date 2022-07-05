@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ddbc2669b1f74912616530a4db1bc7487f47ebb2 $");
+__FBSDID("$FreeBSD: 24501080a971a5f88f9089c557477f37f6cf548e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -271,6 +271,7 @@ mmc_detach(device_t dev)
 	struct mmc_softc *sc = device_get_softc(dev);
 	int err;
 
+	config_intrhook_drain(&sc->config_intrhook);
 	err = mmc_delete_cards(sc, true);
 	if (err != 0)
 		return (err);
@@ -1548,9 +1549,11 @@ mmc_host_timing(device_t dev, enum mmc_bus_timing timing)
 	case bus_timing_mmc_ddr52:
 		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_DDR52));
 	case bus_timing_mmc_hs200:
-		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS200));
+		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS200_120) ||
+			HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS200_180));
 	case bus_timing_mmc_hs400:
-		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS400));
+		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS400_120) ||
+			HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS400_180));
 	case bus_timing_mmc_hs400es:
 		return (HOST_TIMING_CAP(host_caps, MMC_CAP_MMC_HS400 |
 		    MMC_CAP_MMC_ENH_STROBE));
@@ -1925,7 +1928,7 @@ child_common:
 			if (child != NULL) {
 				device_set_ivars(child, ivar);
 				sc->child_list = realloc(sc->child_list,
-				    sizeof(device_t) * sc->child_count + 1,
+				    sizeof(device_t) * (sc->child_count + 1),
 				    M_DEVBUF, M_WAITOK);
 				sc->child_list[sc->child_count++] = child;
 			} else

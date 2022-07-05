@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: 0374c8844b9acbe3c017f42abef44052ace3ea46 $
+# $FreeBSD: 999090f22d0e2db90b2f1548ba69c911cbeed35d $
 
 usage()
 {
@@ -57,7 +57,7 @@ do
 	*)	usage;;
 	esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 case $# in
 1)	;;
 *)	usage;;
@@ -65,8 +65,8 @@ esac
 
 if [ "$use_outfile" = "yes" ]
 then
-	work $1  3>"$outfile" >&3 3>&-
+	work "$1"  3>"$outfile" >&3 3>&-
 else
-	work $1
+	work "$1"
 fi
 

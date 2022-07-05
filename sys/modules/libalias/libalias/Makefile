@@ -1,8 +1,10 @@
-# $FreeBSD: 655e67bebb5eb7b9da4f7ad77bf42f8c6e94ce9c $
+# $FreeBSD: 4da69ea972b06d1518768151664cbba56f4f9387 $
 
 .PATH: ${SRCTOP}/sys/netinet/libalias
 
 KMOD=	libalias
 SRCS=	alias.c alias_db.c alias_proxy.c alias_util.c alias_mod.c alias_sctp.c
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

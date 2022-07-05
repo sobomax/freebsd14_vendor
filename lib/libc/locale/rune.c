@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)rune.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b7334636f6541eb0919c070099feb8fbb7f524f8 $");
+__FBSDID("$FreeBSD: ce2095763eba1bd658a9c4a816f7bcf287b1f673 $");
 
 #include "namespace.h"
 #include <arpa/inet.h>
@@ -74,7 +74,7 @@ _Read_RuneMagi(const char *fname)
 	int runetype_ext_len = 0;
 	int fd;
 
-	if ((fd = _open(fname, O_RDONLY)) < 0) {
+	if ((fd = _open(fname, O_RDONLY | O_CLOEXEC)) < 0) {
 		errno = EINVAL;
 		return (NULL);
 	}

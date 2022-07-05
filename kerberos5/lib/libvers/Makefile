@@ -1,4 +1,6 @@
-# $FreeBSD: cef5a88a746199f7ed5a61dab66c4bc0bc893487 $
+# $FreeBSD: a4f46d62f0432cbd7fa5dd4fcc2327c9f3416318 $
+
+PACKAGE=	kerberos
 
 LIB=	vers
 INTERNALLIB=

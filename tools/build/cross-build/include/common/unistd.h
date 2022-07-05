@@ -33,11 +33,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 593dd700f1407d727e8a119110865fdcf176c233 $
+ * $FreeBSD: fbcc0cc3179529f623d083cc768de946fb5f2bbb $
  */
 #pragma once
 #include_next <unistd.h>
 #include <getopt.h>
+
+struct crypt_data {
+	int	initialized;	/* For compatibility with glibc. */
+	char	__buf[256];	/* Buffer returned by crypt_r(). */
+};
 
 static inline int
 check_utility_compat(const char *utility __unused)

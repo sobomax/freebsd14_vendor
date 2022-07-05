@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8421fa3aa7af59af4acfb623ca915810b519921 $");
+__FBSDID("$FreeBSD: dbc2ba92bce320bae5a3bc33e39ff780f1c6b51f $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -56,20 +56,6 @@ void
 db_md_list_watchpoints()
 {
 
-}
-
-int
-db_md_clr_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (0);
-}
-
-int
-db_md_set_watchpoint(db_expr_t addr, db_expr_t size)
-{
-
-	return (0);
 }
 
 static void

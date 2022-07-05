@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5e2c485473d0dd26a32661bc5f6f3031afae03ef $");
+__FBSDID("$FreeBSD: 46259cbf8cdeeeafc1f58a5382ca5626a363c13d $");
 
 #include <sys/wait.h>
 #include <errno.h>
@@ -117,17 +117,14 @@ ATF_TC_BODY(posix_spawnp_enoexec_fallback_null_argv0, tc)
 {
 	char buf[FILENAME_MAX];
 	char *myargs[1];
-	int error, status;
-	pid_t pid, waitres;
+	int error;
+	pid_t pid;
 
 	snprintf(buf, sizeof(buf), "%s/spawnp_enoexec.sh",
 	    atf_tc_get_config_var(tc, "srcdir"));
 	myargs[0] = NULL;
 	error = posix_spawnp(&pid, buf, NULL, NULL, myargs, myenv);
-	ATF_REQUIRE(error == 0);
-	waitres = waitpid(pid, &status, 0);
-	ATF_REQUIRE(waitres == pid);
-	ATF_REQUIRE(WIFEXITED(status) && WEXITSTATUS(status) == 42);
+	ATF_REQUIRE(error == EINVAL);
 }
 
 ATF_TP_ADD_TCS(tp)

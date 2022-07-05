@@ -21,9 +21,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 3feb133e0534d55d2ac70dfd7488ece42f0c9f43 $
+.\" $FreeBSD: 2c73c018c3906abe7f323ddd6c294e33e688d90f $
 .\"
-.Dd March 11, 2021
+.Dd November 1, 2021
 .Dt DEVELOPMENT 7
 .Os
 .Sh NAME
@@ -67,9 +67,9 @@ The push URL is:
 .Pp
 .Lk ssh://git@gitrepo.FreeBSD.org/src.git
 .Pp
-There is also a public, read-only GitHub mirror at:
+There is also a list of public, read-only Git mirrors at:
 .Pp
-.Lk https://github.com/freebsd/freebsd-src
+.Lk https://docs.freebsd.org/en/books/handbook/mirrors/#external-mirrors
 .Pp
 The
 .Ql main
@@ -77,8 +77,8 @@ Git branch represents CURRENT;
 all changes are first committed to CURRENT and then usually cherry-picked
 back to STABLE, which refers to Git branches such as
 .Ql stable/13 .
-Every few years the CURRENT branch is renamed to STABLE, and a new
-CURRENT is branched, with an incremented major version number.
+Every few years a new STABLE is branched from CURRENT,
+with an incremented major version number.
 Releases are then branched off STABLE and numbered with consecutive minor
 numbers.
 .Pp
@@ -157,20 +157,20 @@ for another CPU architecture,
 first prepare your source tree by building the cross-toolchain:
 .Bd -literal -offset indent
 cd src
-make -sj8 toolchain TARGET_ARCH=armv6
+make -sj8 toolchain TARGET_ARCH=aarch64
 .Ed
 .Pp
 Afterwards, to build and install a single piece of userspace, use:
 .Bd -literal -offset indent
 cd src/bin/ls
-make buildenv TARGET_ARCH=armv6
+make buildenv TARGET_ARCH=aarch64
 make clean all install DESTDIR=/clients/arm
 .Ed
 .Pp
 Likewise, to quickly rebuild and reinstall the kernel, use:
 .Bd -literal -offset indent
 cd src
-make buildenv TARGET_ARCH=armv6
+make buildenv TARGET_ARCH=aarch64
 make -sj8 kernel KERNFAST=1 DESTDIR=/clients/arm
 .Ed
 .Sh SEE ALSO

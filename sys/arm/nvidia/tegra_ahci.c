@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 725fc999a3a35ab7c7fcf8fef8b76db31a0ab308 $");
+__FBSDID("$FreeBSD: ad7d4bf042fc6421ab3961c1ebb2b5721416cbaf $");
 
 /*
  * AHCI driver for Tegra SoCs.
@@ -626,7 +626,6 @@ tegra_ahci_ctlr_reset(device_t dev)
 	reg &= ~T_AHCI_HBA_CAP_BKDR_NUM_PORTS(~0);
 	reg |= T_AHCI_HBA_CAP_BKDR_NUM_PORTS(0);
 	reg |= T_AHCI_HBA_CAP_BKDR_EXT_SATA;
-	reg |= T_AHCI_HBA_CAP_BKDR_ENCL_MGMT_SUPP;
 	reg |= T_AHCI_HBA_CAP_BKDR_CMD_CMPL_COALESING;
 	reg |= T_AHCI_HBA_CAP_BKDR_FIS_SWITCHING;
 	reg |= T_AHCI_HBA_CAP_BKDR_SUPP_PM;

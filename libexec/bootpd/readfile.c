@@ -19,7 +19,7 @@ PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
 ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
- $FreeBSD: 900d0377279f35db2626cea4fe60c963a37cede0 $
+ $FreeBSD: c09639300310050a05f0dfb67c3e3f52e151be09 $
 
 ************************************************************************/
 
@@ -45,14 +45,6 @@ SOFTWARE.
 #include <ctype.h>
 #include <assert.h>
 #include <syslog.h>
-
-#ifndef USE_BFUNCS
-#include <memory.h>
-/* Yes, memcpy is OK here (no overlapped copies). */
-#define	bcopy(a,b,c)	memcpy(b,a,c)
-#define	bzero(p,l)	memset(p,0,l)
-#define	bcmp(a,b,c)	memcmp(a,b,c)
-#endif
 
 #include "bootp.h"
 #include "hash.h"

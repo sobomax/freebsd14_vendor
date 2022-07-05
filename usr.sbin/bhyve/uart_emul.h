@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5a53294da89e4b98bded652dd816f1afb44aa036 $
+ * $FreeBSD: a66701c1858046b46e40b3a5b9a30da23444c552 $
  */
 
 #ifndef _UART_EMUL_H_
@@ -43,7 +43,7 @@ struct uart_softc *uart_init(uart_intr_func_t intr_assert,
 int	uart_legacy_alloc(int unit, int *ioaddr, int *irq);
 uint8_t	uart_read(struct uart_softc *sc, int offset);
 void	uart_write(struct uart_softc *sc, int offset, uint8_t value);
-int	uart_set_backend(struct uart_softc *sc, const char *opt);
+int	uart_set_backend(struct uart_softc *sc, const char *device);
 #ifdef BHYVE_SNAPSHOT
 int	uart_snapshot(struct uart_softc *sc, struct vm_snapshot_meta *meta);
 #endif

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f95939001ecbaf2e9c06db84f1051778f3e112ca $");
+__FBSDID("$FreeBSD: 129ec2d4884b06d6bc23c5ceed7506830310ccfd $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -205,8 +205,7 @@ set_ownership(device_t dev)
 	    /*alignment*/ PAGE_SIZE, /*no boundary*/ 0,
 	    /*lowaddr*/ BUS_SPACE_MAXADDR_32BIT, /*highaddr*/ BUS_SPACE_MAXADDR,
 	    NULL, NULL, /*maxsize*/ PAGE_SIZE, /*segments*/ 1,
-	    /*maxsegsize*/ PAGE_SIZE, 0, busdma_lock_mutex, &Giant,
-	    &tag) != 0) {
+	    /*maxsegsize*/ PAGE_SIZE, 0, NULL, NULL, &tag) != 0) {
 		device_printf(dev, "can't create mem tag\n");
 		return (ENXIO);
 	}
@@ -311,7 +310,8 @@ smist_identify(driver_t *driver, device_t parent)
 
 	if (device_find_child(parent, "smist", -1) != NULL)
 		return;
-	if (BUS_ADD_CHILD(parent, 30, "smist", -1) == NULL)
+	if (BUS_ADD_CHILD(parent, 30, "smist", device_get_unit(parent))
+	    == NULL)
 		device_printf(parent, "smist: add child failed\n");
 }
 

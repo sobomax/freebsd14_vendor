@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: 1364d4f6c7a7e6ca18ffd51d771a411a4b1fe6df $
+# $FreeBSD: 2919a10dea4db57bab16f0ccf97dc7c092a98308 $
 #
 
 # PROVIDE: ctld
-# REQUIRE: FILESYSTEMS
+# REQUIRE: FILESYSTEMS NETWORKING
 # BEFORE:  DAEMON
 # KEYWORD: nojail
 

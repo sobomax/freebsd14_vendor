@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e386ceba71f87d6dee07977a057d0677875d1956 $");
+__FBSDID("$FreeBSD: 29bb1544e7ade3c899e7b214d3bff3cf2c9d2e19 $");
 
 #include "opt_pseudofs.h"
 
@@ -1100,6 +1100,9 @@ pfs_write(struct vop_write_args *va)
 		PFS_RETURN (EBADF);
 
 	if (pn->pn_fill == NULL)
+		PFS_RETURN (EIO);
+
+	if (uio->uio_resid > PFS_MAXBUFSIZ)
 		PFS_RETURN (EIO);
 
 	/*

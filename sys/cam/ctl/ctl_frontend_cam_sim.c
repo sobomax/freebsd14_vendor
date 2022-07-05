@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fdcccee2f569f894f78529a861766680dba8a6ef $");
+__FBSDID("$FreeBSD: 0e61a80e452c66cf01ed903c02c0b209b854abdf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -415,7 +415,7 @@ cfcs_datamove(union ctl_io *io)
 		xpt_done(ccb);
 	}
 
-	io->scsiio.be_move_done(io);
+	ctl_datamove_done(io, true);
 }
 
 static void

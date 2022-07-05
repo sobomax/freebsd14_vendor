@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 15363613a06cc12c99597344a1fbd44d7b689b73 $
+ * $FreeBSD: 530a42833e956df1e664daff530989e008e46fa7 $
  */
 
 #ifndef __QLNXR_CM_H__
@@ -87,12 +87,12 @@ extern int qlnxr_gsi_poll_cq(struct ib_cq *ibcq,
 			struct ib_wc *wc);
 
 extern int qlnxr_gsi_post_recv(struct ib_qp *ibqp,
-			struct ib_recv_wr *wr,
-			struct ib_recv_wr **bad_wr);
+			const struct ib_recv_wr *wr,
+			const struct ib_recv_wr **bad_wr);
 
 extern int qlnxr_gsi_post_send(struct ib_qp *ibqp,
-			struct ib_send_wr *wr,
-			struct ib_send_wr **bad_wr);
+			const struct ib_send_wr *wr,
+			const struct ib_send_wr **bad_wr);
 
 extern struct ib_qp* qlnxr_create_gsi_qp(struct qlnxr_dev *dev,
 			struct ib_qp_init_attr *attrs,

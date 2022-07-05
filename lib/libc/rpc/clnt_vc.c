@@ -36,7 +36,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dec1791dcc95af41634b934f6b0e93a188bca791 $");
+__FBSDID("$FreeBSD: ebd4e303916fac19523c993f9fe36c00866649fa $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -123,9 +123,9 @@ struct ct_data {
  *      This machinery implements per-fd locks for MT-safety.  It is not
  *      sufficient to do per-CLIENT handle locks for MT-safety because a
  *      user may create more than one CLIENT handle with the same fd behind
- *      it.  Therfore, we allocate an array of flags (vc_fd_locks), protected
+ *      it.  Therefore, we allocate an array of flags (vc_fd_locks), protected
  *      by the clnt_fd_lock mutex, and an array (vc_cv) of condition variables
- *      similarly protected.  Vc_fd_lock[fd] == 1 => a call is activte on some
+ *      similarly protected.  Vc_fd_lock[fd] == 1 => a call is active on some
  *      CLIENT handle created for that fd.
  *      The current implementation holds locks across the entire RPC and reply.
  *      Yes, this is silly, and as soon as this code is proven to work, this

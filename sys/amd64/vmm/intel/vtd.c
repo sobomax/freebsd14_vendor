@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f47e2b56bdcea5864ffb8b9f37c90413b357b79e $
+ * $FreeBSD: 8f06dc8233640a371deb13fedff0e06da0540c7e $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f47e2b56bdcea5864ffb8b9f37c90413b357b79e $");
+__FBSDID("$FreeBSD: 8f06dc8233640a371deb13fedff0e06da0540c7e $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -761,16 +761,16 @@ vtd_destroy_domain(void *arg)
 	free(dom, M_VTD);
 }
 
-struct iommu_ops iommu_ops_intel = {
-	vtd_init,
-	vtd_cleanup,
-	vtd_enable,
-	vtd_disable,
-	vtd_create_domain,
-	vtd_destroy_domain,
-	vtd_create_mapping,
-	vtd_remove_mapping,
-	vtd_add_device,
-	vtd_remove_device,
-	vtd_invalidate_tlb,
+const struct iommu_ops iommu_ops_intel = {
+	.init = vtd_init,
+	.cleanup = vtd_cleanup,
+	.enable = vtd_enable,
+	.disable = vtd_disable,
+	.create_domain = vtd_create_domain,
+	.destroy_domain = vtd_destroy_domain,
+	.create_mapping = vtd_create_mapping,
+	.remove_mapping = vtd_remove_mapping,
+	.add_device = vtd_add_device,
+	.remove_device = vtd_remove_device,
+	.invalidate_tlb = vtd_invalidate_tlb,
 };

@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bb96b2caa5027a525f770488f3e67bc2cfefe3f0 $
+ * $FreeBSD: 17c44de0fce7b861ed22884f5ab0e3e11656d74b $
  */
 
 #ifndef _LIBUTIL_H_
@@ -109,6 +109,8 @@ struct kinfo_vmentry *
 	kinfo_getvmmap(pid_t _pid, int *_cntp);
 struct kinfo_vmobject *
 	kinfo_getvmobject(int *_cntp);
+struct kinfo_vmobject *
+	kinfo_getswapvmobject(int *_cntp);
 struct kinfo_proc *
 	kinfo_getallproc(int *_cntp);
 struct kinfo_proc *

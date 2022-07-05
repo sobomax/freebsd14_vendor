@@ -1,4 +1,6 @@
-# $FreeBSD: f04b4fa75d35cac11940fc689469a8a17a705eca $
+# $FreeBSD: 079ffa91f7bc04bcb78a3ff7a4cf64946e59f703 $
+
+PACKAGE=	syscons-data
 
 FILES=	INDEX.keymaps \
 	be.iso.kbd be.iso.acc.kbd \

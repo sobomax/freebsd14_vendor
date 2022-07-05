@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: 865e9dd7948fd3164f7c3107e14be35b52c8498f $
+ * $FreeBSD: 05f37579aba152184a47b89b67aeb18efaeefd93 $
  * $Whistle: ng_socket.c,v 1.28 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -240,11 +240,16 @@ ngc_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
 		goto release;
 	}
 
+	if (sap->sg_len > NG_NODESIZ + offsetof(struct sockaddr_ng, sg_data)) {
+		error = EINVAL;
+		goto release;
+	}
+
 	/*
 	 * Allocate an expendable buffer for the path, chop off
 	 * the sockaddr header, and make sure it's NUL terminated.
 	 */
-	len = sap->sg_len - 2;
+	len = sap->sg_len - offsetof(struct sockaddr_ng, sg_data);
 	path = malloc(len + 1, M_NETGRAPH_PATH, M_WAITOK);
 	bcopy(sap->sg_data, path, len);
 	path[len] = '\0';
@@ -422,10 +427,16 @@ ngd_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
 		goto release;
 	}
 
-	if (sap == NULL)
+	if (sap == NULL) {
 		len = 0;		/* Make compiler happy. */
-	else
-		len = sap->sg_len - 2;
+	} else {
+		if (sap->sg_len > NG_NODESIZ +
+		    offsetof(struct sockaddr_ng, sg_data)) {
+			error = EINVAL;
+			goto release;
+		}
+		len = sap->sg_len - offsetof(struct sockaddr_ng, sg_data);
+	}
 
 	/*
 	 * If the user used any of these ways to not specify an address
@@ -982,7 +993,7 @@ ngs_rcvmsg(node_p node, item_p item, hook_p lasthook)
 	/* Send it up to the socket. */
 	if (sbappendaddr_locked(&so->so_rcv, (struct sockaddr *)&addr, m,
 	    NULL) == 0) {
-		SOCKBUF_UNLOCK(&so->so_rcv);
+		soroverflow_locked(so);
 		TRAP_ERROR;
 		m_freem(m);
 		return (ENOBUFS);

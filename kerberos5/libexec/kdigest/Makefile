@@ -1,4 +1,6 @@
-# $FreeBSD: 5f3fb245064692704dcf10d8c33b3d609ca1503e $
+# $FreeBSD: 5ce04da70b6dbc3316531250ba5d59319a864bf6 $
+
+PACKAGE=	kerberos
 
 PROG=	kdigest
 MAN=	kdigest.8

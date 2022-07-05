@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 363e1057986bdb13b3a7c6be26f854fc64f672ab $
+ * $FreeBSD: 61c1eb43814240b4740125907d64a103b1638a2f $
  *
  * Private definitions for libc, libc_r and libpthread.
  *
@@ -261,8 +261,9 @@ void _init_tls(void);
 int _once(pthread_once_t *, void (*)(void));
 
 /*
- * Set the TLS thread pointer
+ * Get/set the TLS thread pointer
  */
+void *_get_tp(void);
 void _set_tp(void *tp);
 
 /*
@@ -370,6 +371,7 @@ __ssize_t	__sys_recv(int, void *, __size_t, int);
 __ssize_t	__sys_recvfrom(int, void *, __size_t, int, struct sockaddr *,
 		    __socklen_t *);
 __ssize_t	__sys_recvmsg(int, struct msghdr *, int);
+int		__sys_sched_getcpu(void);
 int		__sys_select(int, struct fd_set *, struct fd_set *,
 		    struct fd_set *, struct timeval *);
 __ssize_t	__sys_sendmsg(int, const struct msghdr *, int);

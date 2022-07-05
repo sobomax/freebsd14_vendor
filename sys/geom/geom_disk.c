@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fb215fb3dab546113348c710fb2cc0eb4f58aec1 $");
+__FBSDID("$FreeBSD: 2f0e72fad52d7f8c533ff9c2c949945e97c46199 $");
 
 #include "opt_geom.h"
 
@@ -745,7 +745,7 @@ g_disk_create(void *arg, int flag)
 		    "LED name");
 		SYSCTL_ADD_PROC(&sc->sysctl_ctx,
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, "flags",
-		    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT, dp, 0,
+		    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, dp, 0,
 		    g_disk_sysctl_flags, "A", "Report disk flags");
 	}
 	pp->private = sc;
@@ -885,6 +885,7 @@ disk_create(struct disk *dp, int version)
 		    dp->d_sectorsize, DEVSTAT_ALL_SUPPORTED,
 		    DEVSTAT_TYPE_DIRECT, DEVSTAT_PRIORITY_MAX);
 	dp->d_geom = NULL;
+	dp->d_event = g_alloc_event(M_WAITOK);
 
 	dp->d_init_level = DISK_INIT_NONE;
 
@@ -896,12 +897,14 @@ void
 disk_destroy(struct disk *dp)
 {
 
+	KASSERT(dp->d_event != NULL,
+	    ("Disk destroy for %p with event NULL", dp));
 	disk_gone(dp);
 	dp->d_destroyed = 1;
 	g_cancel_event(dp);
 	if (dp->d_devstat != NULL)
 		devstat_remove_entry(dp->d_devstat);
-	g_post_event(g_disk_destroy, dp, M_WAITOK, NULL);
+	g_post_event_ep(g_disk_destroy, dp, dp->d_event, NULL);
 }
 
 void

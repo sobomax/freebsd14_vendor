@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89201f3d94639ffa3312110617ba04b4ebbaaafd $");
+__FBSDID("$FreeBSD: 338c091d8c3dcaa3efa5fe60645ab711d8a22b4d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,7 +209,7 @@ uart_pps_init(struct uart_softc *sc)
 #endif
 	TUNABLE_INT_FETCH("hw.uart.pps_mode", &sc->sc_pps_mode);
 	SYSCTL_ADD_PROC(ctx, SYSCTL_CHILDREN(tree), OID_AUTO, "pps_mode",
-	    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NEEDGIANT, sc, 0, 
+	    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, sc, 0,
 	    uart_pps_mode_sysctl, "I", "pulse mode: 0/1/2=disabled/CTS/DCD; "
 	    "add 0x10 to invert, 0x20 for narrow pulse");
 

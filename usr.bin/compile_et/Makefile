@@ -1,6 +1,8 @@
-# $FreeBSD: aeccbf3fd55fb0937fee1e461f0e666c1636cefe $
+# $FreeBSD: a7a7130e92282a220e48026b307125fda9f02b77 $
 
 .PATH: ${SRCTOP}/contrib/com_err
+
+PACKAGE=	kerberos
 
 PROG=	compile_et
 SRCS=	compile_et.c parse.y lex.l

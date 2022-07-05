@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fcdee7a088f44b985f197d2f9a6cca91dd9d3ea $");
+__FBSDID("$FreeBSD: 0fcb93545e86883f9009d29c4e23fd720d082ad2 $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -1244,7 +1244,7 @@ done:
  * The backend always returns POLLHUP/POLLERR if appropriate and we
  * return this as a set bit in any set.
  */
-static int select_flags[3] = {
+static const int select_flags[3] = {
     POLLRDNORM | POLLHUP | POLLERR,
     POLLWRNORM | POLLHUP | POLLERR,
     POLLRDBAND | POLLERR
@@ -1709,10 +1709,10 @@ selsocket(struct socket *so, int events, struct timeval *tvp, struct thread *td)
 	 */
 	for (;;) {
 		selfdalloc(td, NULL);
-		error = sopoll(so, events, NULL, td);
-		/* error here is actually the ready events. */
-		if (error)
-			return (0);
+		if (sopoll(so, events, NULL, td) != 0) {
+			error = 0;
+			break;
+		}
 		error = seltdwait(td, asbt, precision);
 		if (error)
 			break;

@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 36b7cacc95efc4e5c8e2b334c321e30d46e7565b $
+ * $FreeBSD: 77a11c8dcab6ca8c9e8ab5bc84e4e4b8365d6bdb $
  */
 
 #ifndef _STAND_NET_H
@@ -96,8 +96,6 @@ extern	n_long netmask;
 extern	u_int intf_mtu;
 
 extern	int debug;			/* defined in the machdep sources */
-
-extern struct iodesc sockets[SOPEN_MAX];
 
 /* ARP/RevARP functions: */
 u_char	*arpwhohas(struct iodesc *, struct in_addr);

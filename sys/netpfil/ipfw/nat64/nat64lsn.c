@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bde42eeb18d68a6df1483a002f7a670f08e571a9 $");
+__FBSDID("$FreeBSD: 90c27cabdf29d07f7027b1066acc9993a4048d02 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -181,7 +181,7 @@ nat64lsn_log(struct pfloghdr *plog, struct mbuf *m, sa_family_t family,
 {
 
 	memset(plog, 0, sizeof(*plog));
-	plog->length = PFLOG_REAL_HDRLEN;
+	plog->length = PFLOG_HDRLEN;
 	plog->af = family;
 	plog->action = PF_NAT;
 	plog->dir = PF_IN;

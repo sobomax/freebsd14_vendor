@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * the sponsorship of the FreeBSD Foundation.
@@ -30,7 +29,7 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e73e37f8e851bce4e22822dfe1f5fa1977263679 $");
+__FBSDID("$FreeBSD: 6a090baffacfbbd020b5eada7fb884d5d3917982 $");
 
 #include <sys/types.h>
 #include <sys/systm.h>

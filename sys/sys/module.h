@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89377df401a8f3aad9d7fac89ec40a080ef388a9 $
+ * $FreeBSD: efefaf4cb5138ea1d5e4a3b3d953fdfae5d37336 $
  */
 
 #ifndef _SYS_MODULE_H_
@@ -253,7 +253,9 @@ extern int mod_debug;
 #endif
 #endif	/* _KERNEL */
 
-#define	MAXMODNAME	32
+#define	MAXMODNAMEV1V2	32
+#define	MAXMODNAMEV3	MAXPATHLEN
+#define	MAXMODNAME	MAXMODNAMEV3
 
 struct module_stat {
 	int		version;	/* set to sizeof(struct module_stat) */

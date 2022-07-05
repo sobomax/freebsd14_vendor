@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e0c16033b15eb8e84080b047da39eaa1ae651b0 $");
+__FBSDID("$FreeBSD: 7f7e2b72c51abbb17d869ff7bdfe0ac3cf796a9c $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -136,6 +136,23 @@ zfs_ioc_nextboot(const char *unused, nvlist_t *innvl, nvlist_t *outnvl)
 	txg_wait_synced(spa->spa_dsl_pool, 0);
 	spa_close(spa, FTAG);
 	return (error);
+}
+
+/* Update the VFS's cache of mountpoint properties */
+void
+zfs_ioctl_update_mount_cache(const char *dsname)
+{
+	zfsvfs_t *zfsvfs;
+
+	if (getzfsvfs(dsname, &zfsvfs) == 0) {
+		struct mount *mp = zfsvfs->z_vfs;
+		VFS_STATFS(mp, &mp->mnt_stat);
+		zfs_vfs_rele(zfsvfs);
+	}
+	/*
+	 * Ignore errors; we can't do anything useful if either getzfsvfs or
+	 * VFS_STATFS fails.
+	 */
 }
 
 uint64_t

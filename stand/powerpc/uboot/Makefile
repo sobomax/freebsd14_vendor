@@ -1,4 +1,4 @@
-# $FreeBSD: 9124507397ad44c780c1962db5e345ab460a4230 $
+# $FreeBSD: b0635104e454c3d1af9b14aba4aafdc2cda732c7 $
 
 LOADER_UFS_SUPPORT?=	yes
 LOADER_CD9660_SUPPORT?=	no
@@ -30,5 +30,7 @@ LDFLAGS=	-nostdlib -static -T ${.CURDIR}/ldscript.powerpc
 
 DPADD=		${LDR_INTERP} ${LIBUBOOT} ${LIBFDT} ${LIBUBOOT_FDT} ${LIBSA}
 LDADD=		${LDR_INTERP} ${LIBUBOOT} ${LIBFDT} ${LIBUBOOT_FDT} ${LIBSA}
+
+MK_PIE=		no
 
 .include <bsd.prog.mk>

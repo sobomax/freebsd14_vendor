@@ -1,4 +1,4 @@
-# $FreeBSD: 401b69a7ed982bc024a25741a88bc3b323c24ada $
+# $FreeBSD: 5ff4805399b39239eff38e173dc6057176c84586 $
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 KMOD=	spigen
@@ -15,5 +15,7 @@ SRCS+=	\
 .if !empty(OPT_FDT)
 SRCS+=	ofw_bus_if.h
 .endif
+
+EXPORT_SYMS=	YES
 
 .include <bsd.kmod.mk>

@@ -1,9 +1,7 @@
-# $FreeBSD: 63cd2cf2cea94a6a46b22ee6e4b0cbb00818d0ac $
+# $FreeBSD: 796569977f0f206ce97aeeea4632b9588bafaaec $
 
 PROG=	ktrdump
 LIBADD=	kvm
 MAN=	ktrdump.8
-
-WARNS?=	2
 
 .include <bsd.prog.mk>

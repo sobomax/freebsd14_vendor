@@ -22,10 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f453b4759e277247f86ee5a56e1487ff6a61371e $
+ * $FreeBSD: 9fa18f50b9c4b0063ab3dad0df04f113e8417050 $
  */
 
-#include "port_buffer.h"
+#include "opt_rss.h"
+#include "opt_ratelimit.h"
+
+#include <dev/mlx5/mlx5_en/port_buffer.h>
 
 #define MLX5E_MAX_PORT_MTU  9216
 

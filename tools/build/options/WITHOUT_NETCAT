@@ -1,4 +1,4 @@
-.\" $FreeBSD: 2ee46080bd286a0382ea14630b15ce888df35cc3 $
-Set to not build
+.\" $FreeBSD: c89abf1522b7b29e81fd861e3289151ea759db8d $
+Do not build
 .Xr nc 1
 utility.

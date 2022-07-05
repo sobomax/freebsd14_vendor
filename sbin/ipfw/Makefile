@@ -1,9 +1,13 @@
-# $FreeBSD: 552755a1696146d51c8bcdc28390980fb9518c7e $
+# $FreeBSD: c0b7e56226c4b3c4d6f10920c3312ba425462914 $
 
 .include <src.opts.mk>
 
 PACKAGE=ipfw
 PROG=	ipfw
+
+LINKS=	${BINDIR}/ipfw ${BINDIR}/dnctl
+MLINKS=	ipfw.8 dnctl.8
+
 SRCS=	ipfw2.c dummynet.c ipv6.c main.c nat.c tables.c
 SRCS+=	nat64clat.c nat64lsn.c nat64stl.c nptv6.c
 

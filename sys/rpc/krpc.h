@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 77facdcf16ccccbb3e65c91c646830d2d35f97a9 $
+ * $FreeBSD: 48df782e481c090f65ab220910018f9d5aebd9ce $
  */
 
 #ifndef _RPC_KRPC_H_
@@ -81,6 +81,9 @@ struct rc_data {
 	void			*rc_backchannel;
 	bool			rc_tls; /* Enable TLS on connection */
 	char			*rc_tlscertname;
+	void			(*rc_reconcall)(CLIENT *, void *,
+				    struct ucred *); /* reconection upcall */
+	void			*rc_reconarg;	/* upcall arg */
 };
 
 /* Bits for ct_rcvstate. */

@@ -1,2 +1,0 @@
-.\" $FreeBSD: b1391c9818a9341100170003fa2f6e1f6e082ebe $
-Do not build the GNU C++ stack (g++, libstdc++).
