@@ -74,7 +74,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 41346f8635ead0f16f6f94308f8557005ced75ad $");
+__FBSDID("$FreeBSD: 8aa8dca3509ab017aa227a2a759a78e5457d0673 $");
 
 #include "opt_ktrace.h"
 #include "opt_vm.h"
@@ -2099,6 +2099,13 @@ again:
 				VM_OBJECT_WLOCK(dst_object);
 				goto again;
 			}
+
+			/*
+			 * See the comment in vm_fault_cow().
+			 */
+			if (src_object == dst_object &&
+			    (object->flags & OBJ_ONEMAPPING) == 0)
+				pmap_remove_all(src_m);
 			pmap_copy_page(src_m, dst_m);
 			VM_OBJECT_RUNLOCK(object);
 			dst_m->dirty = dst_m->valid = src_m->valid;

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e9773ab5701b28ea080c64ec2792aed3bd41417 $");
+__FBSDID("$FreeBSD: e40d4b192dcee7e9cdfd7a9b8199c95bb5568fb5 $");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"
@@ -739,7 +739,7 @@ filt_timerexpire_l(struct knote *kn, bool proc_locked)
 		if (delta == 0)
 			delta = 1;
 		kn->kn_data += delta;
-		kc->next += (delta + 1) * kc->to;
+		kc->next += delta * kc->to;
 		if (now >= kc->next)	/* overflow */
 			kc->next = now + kc->to;
 		KNOTE_ACTIVATE(kn, 0);	/* XXX - handle locking */

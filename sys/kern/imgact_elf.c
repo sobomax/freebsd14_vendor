@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8f3c6959b3b8077811d19e698ba944670ca8cf8 $");
+__FBSDID("$FreeBSD: 5c4a9889a713a656280d5f5e0c0ae264bff3fded $");
 
 #include "opt_capsicum.h"
 
@@ -2303,13 +2303,16 @@ __elfN(note_prpsinfo)(void *arg, struct sbuf *sb, size_t *sizep)
 			    sizeof(psinfo->pr_psargs), SBUF_FIXEDLEN);
 			error = proc_getargv(curthread, p, &sbarg);
 			PRELE(p);
-			if (sbuf_finish(&sbarg) == 0)
-				len = sbuf_len(&sbarg) - 1;
-			else
+			if (sbuf_finish(&sbarg) == 0) {
+				len = sbuf_len(&sbarg);
+				if (len > 0)
+					len--;
+			} else {
 				len = sizeof(psinfo->pr_psargs) - 1;
+			}
 			sbuf_delete(&sbarg);
 		}
-		if (error || len == 0)
+		if (error != 0 || len == 0 || (ssize_t)len == -1)
 			strlcpy(psinfo->pr_psargs, p->p_comm,
 			    sizeof(psinfo->pr_psargs));
 		else {

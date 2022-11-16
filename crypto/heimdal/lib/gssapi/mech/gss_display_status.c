@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 1e508caa9baf0f04deda925192e97e56e4ee2456 $
+ *	$FreeBSD: 9529fabf319d6c4dc4ea83ca026adcacc18f8d58 $
  */
 /*
  * Copyright (c) 1998 - 2005 Kungliga Tekniska Högskolan
@@ -91,8 +91,7 @@ routine_error(OM_uint32 v)
 	"Incorrect channel bindings were supplied",
 	"An invalid status code was supplied",
 	"A token had an invalid MIC",
-	"No credentials were supplied, "
-	"or the credentials were unavailable or inaccessible.",
+	"No credentials were supplied, or the credentials were unavailable or inaccessible.",
 	"No context has been established",
 	"A token was invalid",
 	"A credential was invalid",

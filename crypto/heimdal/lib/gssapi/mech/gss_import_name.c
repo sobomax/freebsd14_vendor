@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: d1b3dc95b4a4d265ad618bbafa03c22092903c0b $
+ *	$FreeBSD: 830770223583693903ae89f8ac1f39597c197e12 $
  */
 
 #include "mech_locl.h"
@@ -113,7 +113,7 @@ _gss_import_export_name(OM_uint32 *minor_status,
 	len -= t;
 
 	t = (p[0] << 24) | (p[1] << 16) | (p[2] << 8) | p[3];
-	p += 4;
+	/* p += 4; */
 	len -= 4;
 
 	if (!composite && len != t)

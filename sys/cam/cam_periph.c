@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d08adca0ea1c819930504cc443f0e992304cd8ac $");
+__FBSDID("$FreeBSD: a76f20480aff1694807e1ad5e3221dbdfe221d12 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,6 +52,7 @@ __FBSDID("$FreeBSD: d08adca0ea1c819930504cc443f0e992304cd8ac $");
 
 #include <cam/cam.h>
 #include <cam/cam_ccb.h>
+#include <cam/cam_compat.h>
 #include <cam/cam_queue.h>
 #include <cam/cam_xpt_periph.h>
 #include <cam/cam_xpt_internal.h>
@@ -1106,6 +1107,7 @@ cam_periph_ioctl(struct cam_periph *periph, u_long cmd, caddr_t addr,
 	error = found = 0;
 
 	switch(cmd){
+	case CAMGETPASSTHRU_0x19:
 	case CAMGETPASSTHRU:
 		ccb = cam_periph_getccb(periph, CAM_PRIORITY_NORMAL);
 		xpt_setup_ccb(&ccb->ccb_h,
@@ -1421,6 +1423,7 @@ camperiphdone(struct cam_periph *periph, union ccb *done_ccb)
 	 * and the result will be the final one returned to the CCB owher.
 	 */
 	saved_ccb = (union ccb *)done_ccb->ccb_h.saved_ccb_ptr;
+	saved_ccb->ccb_h.periph_links = done_ccb->ccb_h.periph_links;
 	bcopy(saved_ccb, done_ccb, sizeof(*done_ccb));
 	xpt_free_ccb(saved_ccb);
 	if (done_ccb->ccb_h.cbfcnp != camperiphdone)

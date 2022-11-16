@@ -1,5 +1,5 @@
 #
-# $FreeBSD: aa2923bb1b12226219e492068986abdabd71cf30 $
+# $FreeBSD: 4be37f1adf11c6bd5275b8ddce3fc257b0f59c78 $
 #
 # This file lists old files (OLD_FILES), libraries (OLD_LIBS) and
 # directories (OLD_DIRS) which should get removed at an update. Recently
@@ -9640,8 +9640,6 @@ OLD_FILES+=etc/rc.firewall6
 OLD_FILES+=usr/share/examples/etc/rc.firewall6
 # 20091117: removal of rc.early(8) link
 OLD_FILES+=usr/share/man/man8/rc.early.8.gz
-# 20091117: usr/share/zoneinfo/GMT link removed
-OLD_FILES+=usr/share/zoneinfo/GMT
 # 20091027: pselect.3 implemented as syscall
 OLD_FILES+=usr/share/man/man3/pselect.3.gz
 # 20091005: fusword.9 and susword.9 removed
@@ -12638,6 +12636,7 @@ OLD_FILES+=usr/share/zoneinfo/SystemV/EST5
 OLD_FILES+=usr/share/zoneinfo/SystemV/AST4ADT
 OLD_FILES+=usr/share/zoneinfo/SystemV/CST6
 OLD_FILES+=usr/share/zoneinfo/SystemV/AST4
+OLD_DIRS+=usr/share/zoneinfo/SystemV
 OLD_FILES+=usr/share/doc/ntp/accopt.htm
 OLD_FILES+=usr/share/doc/ntp/assoc.htm
 OLD_FILES+=usr/share/doc/ntp/audio.htm

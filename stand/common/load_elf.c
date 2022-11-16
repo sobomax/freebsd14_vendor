@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c75567b4a560a0ac23ed5a248ef3f2a60efa5291 $");
+__FBSDID("$FreeBSD: 9e47d3db382855b8b332f0dde1443e764fd55e78 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -1259,9 +1259,8 @@ __elfN(lookup_symbol)(elf_file_t ef, const char* name, Elf_Sym *symp,
 		strp = strdupout((vm_offset_t)(ef->strtab + sym.st_name));
 		if (strcmp(name, strp) == 0) {
 			free(strp);
-			if (sym.st_shndx != SHN_UNDEF ||
-			    (sym.st_value != 0 &&
-			    ELF_ST_TYPE(sym.st_info) == type)) {
+			if (sym.st_shndx != SHN_UNDEF && sym.st_value != 0 &&
+			    ELF_ST_TYPE(sym.st_info) == type) {
 				*symp = sym;
 				return 0;
 			}

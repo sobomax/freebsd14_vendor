@@ -1,4 +1,4 @@
-# $FreeBSD: eb887f7d3fdd774c44a4caf9f7fb296ab0c8efc4 $
+# $FreeBSD: 2bfa8e185fc7685f45c4ff798acf4c72aef1365e $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -1274,8 +1274,6 @@
             Mexico
             ..
             Pacific
-            ..
-            SystemV
             ..
             US
             ..

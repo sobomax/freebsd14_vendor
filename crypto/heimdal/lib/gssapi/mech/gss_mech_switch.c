@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 55e01094ff91c793ce900b16a70fc61c01930b62 $
+ *	$FreeBSD: 6a100d391c5a2e6606dc10ed115c4409e28d0bdf $
  */
 
 #include "mech_locl.h"
@@ -137,6 +137,8 @@ _gss_string_to_oid(const char* s, gss_OID oid)
 				}
 			}
 		}
+                if (byte_count == 0)
+                    return EINVAL;
 		if (!res) {
 			res = malloc(byte_count);
 			if (!res)
