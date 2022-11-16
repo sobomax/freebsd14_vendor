@@ -9,6 +9,11 @@ FBSD_BR="releng/${FBSD_VER}"
 OUR_BR="releng_${FBSD_VER}"
 TAG_BR="RELENG_${_FBSD_VER}"
 
+if [ -e .freebsd_import ]
+then
+  rm -rf .freebsd_import
+fi
+
 git fetch freebsd
 CHASH="`git rev-parse --short freebsd/${FBSD_BR}`"
 git checkout "${CHASH}"
