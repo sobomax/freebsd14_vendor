@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: ce61c77fd20469e339b8615774f448588245a983 $
+# $FreeBSD: ba1bff62eb1a75435b030d8d840af704c61f8e30 $
 
 # Command line options:
 #
@@ -54,7 +54,7 @@
 
 TYPE="FreeBSD"
 REVISION="13.1"
-BRANCH="RELEASE-p4"
+BRANCH="RELEASE-p5"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi

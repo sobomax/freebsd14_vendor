@@ -12,6 +12,14 @@ Items affecting the ports and packages system can be found in
 /usr/ports/UPDATING.  Please read that file before updating system packages
 and/or ports.
 
+20221129:
+	13.1-RELEASE-p5	FreeBSD-SA-22:15.ping
+			FreeBSD-EN-22:28.heimdal
+
+	Stack overflow in ping [SA-22:15.ping]
+
+	Regression in Heimdal KDC [EN-22:28.heimdal]
+
 20221116:
 	13.1-RELEASE-p4	FreeBSD-SA-22:14.heimdal
 
@@ -2606,4 +2614,4 @@ POSSIBILITY OF SUCH DAMAGE.
 Contact Warner Losh if you have any questions about your use of
 this document.
 
-$FreeBSD: b1a73ddfeff2df1004124fbaed3c1a662380556c $
+$FreeBSD: 0d63c5bb063790e6d30aae0e79e4b33e85949266 $
