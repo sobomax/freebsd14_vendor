@@ -1,4 +1,4 @@
-# $FreeBSD: cf9259a19e1673562bc3168b9cc23566965fa54d $
+# $FreeBSD: 0ccab90a361d4d8972a445332ec3b465de94f008 $
 
 SHLIBDIR?=	/lib
 SUBDIR=		engines
@@ -120,6 +120,7 @@ SRCS+=	ppc.S ppc-mont.S
 .else
 SRCS+=	bn_asm.c
 .endif
+SRCS+=	rsa_sup_mul.c
 
 # buffer
 SRCS+=	buf_err.c buffer.c

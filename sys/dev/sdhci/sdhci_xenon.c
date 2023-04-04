@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6f7513245eb8689d2e267697fcb08e546dde8c7 $");
+__FBSDID("$FreeBSD: 7ed94907e4785a8a3db35fbd0490d37e7dbfa20d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -183,7 +183,7 @@ sdhci_xenon_get_ro(device_t bus, device_t dev)
 	struct sdhci_xenon_softc *sc = device_get_softc(bus);
 
 	return (sdhci_generic_get_ro(bus, dev) ^
-	    (sc->mmc_helper.props & MMC_PROP_WP_INVERTED));
+	    !!(sc->mmc_helper.props & MMC_PROP_WP_INVERTED));
 }
 
 static bool

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 70b7574040e0089da9a9af1a8e3ac43a831c53bb $
+# $FreeBSD: 63b6a3aa160af9ee3196e7d23fd5fb323bb9b7ce $
 #
 # This file add support for the WITHOUT_* and WITH_* knobs in src.conf(5) to
 # the check-old and delete-old* targets.
@@ -9888,6 +9888,7 @@ OLD_FILES+=usr/share/zoneinfo/America/Cayenne
 OLD_FILES+=usr/share/zoneinfo/America/Cayman
 OLD_FILES+=usr/share/zoneinfo/America/Chicago
 OLD_FILES+=usr/share/zoneinfo/America/Chihuahua
+OLD_FILES+=usr/share/zoneinfo/America/Ciudad_Juarez
 OLD_FILES+=usr/share/zoneinfo/America/Costa_Rica
 OLD_FILES+=usr/share/zoneinfo/America/Creston
 OLD_FILES+=usr/share/zoneinfo/America/Cuiaba
