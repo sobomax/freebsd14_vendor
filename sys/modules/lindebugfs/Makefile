@@ -1,4 +1,4 @@
-# $FreeBSD: da61fd519e96152f5ad4a24be824566b5d19317f $
+# $FreeBSD: 024b945dfc6c997419b3acc44ce24f74edf03590 $
 
 .PATH: ${SRCTOP}/sys/compat/lindebugfs
 
@@ -6,6 +6,6 @@ KMOD=	lindebugfs
 SRCS=	lindebugfs.c
 SRCS+=	${LINUXKPI_GENSRCS}
 
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>

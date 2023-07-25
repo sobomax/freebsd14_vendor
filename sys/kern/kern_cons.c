@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d33811f1e3c80f59246a2c6140d2e7e47ed046d4 $");
+__FBSDID("$FreeBSD: acb45c7de2e15f2370c5c700492f045a9204e7f1 $");
 
 #include "opt_ddb.h"
 #include "opt_syscons.h"
@@ -198,7 +198,7 @@ cninit(void)
 }
 
 void
-cninit_finish()
+cninit_finish(void)
 {
 	console_pausing = 0;
 } 
@@ -372,7 +372,7 @@ SYSCTL_PROC(_kern, OID_AUTO, console,
     "Console device control");
 
 void
-cngrab()
+cngrab(void)
 {
 	struct cn_device *cnd;
 	struct consdev *cn;
@@ -385,7 +385,7 @@ cngrab()
 }
 
 void
-cnungrab()
+cnungrab(void)
 {
 	struct cn_device *cnd;
 	struct consdev *cn;
@@ -398,7 +398,7 @@ cnungrab()
 }
 
 void
-cnresume()
+cnresume(void)
 {
 	struct cn_device *cnd;
 	struct consdev *cn;

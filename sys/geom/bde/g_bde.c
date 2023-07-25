@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3d2de334e4bb8a4b77ee9388abe0982c72e94099 $
+ * $FreeBSD: c9ef244bac810fd1eacb56a8d40994fe4df5bb38 $
  *
  */
 
@@ -208,8 +208,7 @@ g_bde_create_geom(struct gctl_req *req, struct g_class *mp, struct g_provider *p
 	g_access(cp, -1, -1, -1);
 	g_detach(cp);
 	g_destroy_consumer(cp);
-	if (gp->softc != NULL)
-		g_free(gp->softc);
+	g_free(gp->softc);
 	g_destroy_geom(gp);
 	switch (error) {
 	case ENOENT:

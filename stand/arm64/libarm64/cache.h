@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Semihalf under
  * the sponsorship of the FreeBSD Foundation.
@@ -25,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5e560c4d578de6367ac6486e57ec4dd51eaf525e $
+ * $FreeBSD: 9778a28837cb4855f9d7f06bd06d733731501a5a $
  */
 
 #ifndef _CACHE_H_

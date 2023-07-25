@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd38ad54614003fee6edf9370a3344258fe8d1bb $");
+__FBSDID("$FreeBSD: a6946f82d21c9c76fce00960e3375bebb008ba7f $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -118,7 +118,7 @@ struct cc_algo vegas_cc_algo = {
 
 /*
  * The vegas window adjustment is done once every RTT, as indicated by the
- * ERTT_NEW_MEASUREMENT flag. This flag is reset once the new measurment data
+ * ERTT_NEW_MEASUREMENT flag. This flag is reset once the new measurement data
  * has been used.
  */
 static void

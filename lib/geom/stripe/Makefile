@@ -1,6 +1,6 @@
-# $FreeBSD: bbea1901749ecfc5d7262cc1013bf371acc45222 $
+# $FreeBSD: 9fc24db55d658260e9b2f3d1306bb39cbf42465d $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	stripe

@@ -1,4 +1,4 @@
-/* $FreeBSD: 4ddc50bcaf5803c46d3de50d7e450c481ea0d75b $ */
+/* $FreeBSD: 58085b33679bf7386406e73d50c63f9b9b1b8f29 $ */
 /* Do not modify. This file is auto-generated from e_padlock-x86.pl. */
 #ifdef PIC
 .text
@@ -69,6 +69,8 @@ padlock_key_bswap:
 .L_padlock_key_bswap_begin:
 	movl	4(%esp),%edx
 	movl	240(%edx),%ecx
+	incl	%ecx
+	shll	$2,%ecx
 .L003bswap_loop:
 	movl	(%edx),%eax
 	bswap	%eax
@@ -1109,6 +1111,8 @@ padlock_key_bswap:
 .L_padlock_key_bswap_begin:
 	movl	4(%esp),%edx
 	movl	240(%edx),%ecx
+	incl	%ecx
+	shll	$2,%ecx
 .L003bswap_loop:
 	movl	(%edx),%eax
 	bswap	%eax

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bd26211735d23305e6a41475556b6feec7502668 $");
+__FBSDID("$FreeBSD: 069da33ab26afa3e5579a31543c7530397cb55fc $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -464,7 +464,6 @@ ttyinq_line_iterate(struct ttyinq *ti,
 		/* Last byte iterated - go to the next block. */
 		if (boff == TTYINQ_DATASIZE - 1)
 			tib = tib->tib_next;
-		MPASS(tib != NULL);
 	}
 }
 

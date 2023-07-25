@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7c7f422a8d1fc5cc8f3403de123fb8e4e7d94eab $
+ * $FreeBSD: 165f0ad79d7087afb25b9add0a14dee5b7d86573 $
  */
 
 #ifndef CTL_FRONTEND_ISCSI_H
@@ -84,6 +84,7 @@ struct cfiscsi_session {
 	int				cs_timeout;
 	struct cv			cs_maintenance_cv;
 	bool				cs_terminating;
+	bool				cs_terminating_tasks;
 	bool				cs_handoff_in_progress;
 	bool				cs_tasks_aborted;
 	int				cs_max_burst_length;

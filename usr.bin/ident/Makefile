@@ -1,10 +1,8 @@
-# $FreeBSD: e0a3a80f7b0981b1ca81c0500ecc43a40c30d887 $
+# $FreeBSD: 0e0734081607ef6593a9d64ba756270dde091115 $
 
 .include <src.opts.mk>
 
 PROG=	ident
-
-LIBADD=	sbuf
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

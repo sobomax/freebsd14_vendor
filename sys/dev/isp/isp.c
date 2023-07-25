@@ -50,7 +50,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c3470529657ebe2ca8042670fce31c855d29aca2 $");
+__FBSDID("$FreeBSD: cc2f5ae23d2f2c4b1a872d4ffaba635bd2160b5d $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -599,7 +599,7 @@ isp_reset(ispsoftc_t *isp, int do_load_defaults)
 
 	/*
 	 * We get some default values established. As a side
-	 * effect, NVRAM is read here (unless overriden by
+	 * effect, NVRAM is read here (unless overridden by
 	 * a configuration flag).
 	 */
 	if (do_load_defaults) {

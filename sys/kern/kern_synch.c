@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88f47ba78601a5f5701df1a667fa4420de238995 $");
+__FBSDID("$FreeBSD: 5abc38d64296045984e5c1fa15c3aa3fd34c3cea $");
 
 #include "opt_ktrace.h"
 #include "opt_sched.h"
@@ -87,7 +87,7 @@ struct loadavg averunnable =
  * Constants for averages over 1, 5, and 15 minutes
  * when sampling at 5 second intervals.
  */
-static fixpt_t cexp[3] = {
+static uint64_t cexp[3] = {
 	0.9200444146293232 * FSCALE,	/* exp(-1/12) */
 	0.9834714538216174 * FSCALE,	/* exp(-1/60) */
 	0.9944598480048967 * FSCALE,	/* exp(-1/180) */
@@ -610,14 +610,15 @@ setrunnable(struct thread *td, int srqflags)
 static void
 loadav(void *arg)
 {
-	int i, nrun;
+	int i;
+	uint64_t nrun;
 	struct loadavg *avg;
 
-	nrun = sched_load();
+	nrun = (uint64_t)sched_load();
 	avg = &averunnable;
 
 	for (i = 0; i < 3; i++)
-		avg->ldavg[i] = (cexp[i] * avg->ldavg[i] +
+		avg->ldavg[i] = (cexp[i] * (uint64_t)avg->ldavg[i] +
 		    nrun * FSCALE * (FSCALE - cexp[i])) >> FSHIFT;
 
 	/*

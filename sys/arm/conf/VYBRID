@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: e7ded5f42d82f7704f602df836c3be10639d5104 $
+# $FreeBSD: daa2177e4c0dfb7a4adcb37672cb4016f8e6c8cd $
 
 ident		VYBRID
 include 	"std.armv7"
@@ -43,6 +43,14 @@ options 	NO_SWAPPING
 
 # Interrupt controller
 device		gic
+
+# pseudo devices
+device		clk
+device		phy
+device		hwreset
+device		nvmem
+device		regulator
+device		syscon
 
 # ARM MPCore timer
 device		mpcore_timer

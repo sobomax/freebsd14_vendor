@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 4d4c189e29391fe1debd682df9116415e50d520d $
+ * $FreeBSD: 572bdd8e9ddcb3b2adc40a2d05e5306c6f620e5f $
  */
 #ifndef	_LINUXKPI_LINUX_MM_H_
 #define	_LINUXKPI_LINUX_MM_H_
@@ -40,6 +40,8 @@
 #include <linux/pfn.h>
 #include <linux/list.h>
 #include <linux/mmap_lock.h>
+#include <linux/shrinker.h>
+#include <linux/page.h>
 
 #include <asm/pgtable.h>
 
@@ -147,6 +149,13 @@ struct sysinfo {
 	uint64_t totalhigh;
 	uint32_t mem_unit;
 };
+
+static inline struct page *
+virt_to_head_page(const void *p)
+{
+
+	return (virt_to_page(p));
+}
 
 /*
  * Compute log2 of the power of two rounded up count of pages
@@ -288,6 +297,19 @@ vmalloc_to_page(const void *addr)
 	return (PHYS_TO_VM_PAGE(paddr));
 }
 
+static inline int
+trylock_page(struct page *page)
+{
+	return (vm_page_trylock(page));
+}
+
+static inline void
+unlock_page(struct page *page)
+{
+
+	vm_page_unlock(page);
+}
+
 extern int is_vmalloc_addr(const void *addr);
 void si_meminfo(struct sysinfo *si);
 
@@ -296,5 +318,7 @@ void lkpi_unmap_mapping_range(void *obj, loff_t const holebegin __unused,
     loff_t const holelen, int even_cows __unused);
 
 #define PAGE_ALIGNED(p)	__is_aligned(p, PAGE_SIZE)
+
+void vma_set_file(struct vm_area_struct *vma, struct linux_file *file);
 
 #endif					/* _LINUXKPI_LINUX_MM_H_ */

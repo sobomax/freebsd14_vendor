@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)nlist.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 3d69157904a4a078b5be0a18b6963e4c8e94e730 $");
+__FBSDID("$FreeBSD: c30fa4dbaca2c64f2b80611d64f4a1c9987d1296 $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -106,7 +106,7 @@ __elf_is_okay__(Elf_Ehdr *ehdr)
 	 * We need to check magic, class size, endianess,
 	 * and version before we look at the rest of the
 	 * Elf_Ehdr structure.  These few elements are
-	 * represented in a machine independant fashion.
+	 * represented in a machine independent fashion.
 	 */
 	if (IS_ELF(*ehdr) &&
 	    ehdr->e_ident[EI_CLASS] == ELF_TARG_CLASS &&

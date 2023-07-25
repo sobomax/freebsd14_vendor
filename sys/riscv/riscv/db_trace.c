@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbc2ba92bce320bae5a3bc33e39ff780f1c6b51f $");
+__FBSDID("$FreeBSD: 295d8631ab2e5327df70eca2a9721554e3771deb $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -53,7 +53,7 @@ __FBSDID("$FreeBSD: dbc2ba92bce320bae5a3bc33e39ff780f1c6b51f $");
 #include <machine/vmparam.h>
 
 void
-db_md_list_watchpoints()
+db_md_list_watchpoints(void)
 {
 
 }
@@ -92,13 +92,18 @@ db_stack_trace_cmd(struct thread *td, struct unwind_state *frame)
 				break;
 			}
 
-			if ((tf->tf_scause & SCAUSE_INTR) != 0)
+			if ((tf->tf_scause & SCAUSE_INTR) != 0) {
 				db_printf("--- interrupt %ld\n",
 				    tf->tf_scause & SCAUSE_CODE);
-			else
+			} else if (tf->tf_scause == SCAUSE_ECALL_USER) {
+				db_printf("--- syscall");
+				db_decode_syscall(td, td->td_sa.code);
+				db_printf("\n");
+			} else {
 				db_printf("--- exception %ld, tval = %#lx\n",
 				    tf->tf_scause & SCAUSE_CODE,
 				    tf->tf_stval);
+			}
 			frame->sp = tf->tf_sp;
 			frame->fp = tf->tf_s[0];
 			frame->pc = tf->tf_sepc;

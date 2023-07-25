@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 74758a0c5660108a6aeae630480740d7ad88ff3d $
+.\" $FreeBSD: efd3c2c93d5e7621b44477063d768d6f834b52a3 $
 .\"
-.Dd September 1, 2020
+.Dd April 6, 2021
 .Dt BOOT1.EFI 8
 .Os
 .Sh NAME
@@ -33,13 +33,19 @@
 .Sh DESCRIPTION
 .Nm
 has been deprecated and will be removed from a future release.
-.Xr loader.efi 8 handles all its former use cases with more flexibility.
+.Xr loader.efi 8
+handles all its former use cases with more flexibility.
 .Pp
 On UEFI systems,
 .Nm
 loads
 .Pa /boot/loader.efi
 from the default root file system and transfers execution there.
+Some systems may need to use
+.Xr gptboot.efi 8
+when
+.Xr loader.efi 8
+cannot be used directly on the ESP (EFI System Partition).
 .Ss Initialization
 Before looking for the boot device,
 .Nm
@@ -94,6 +100,10 @@ When configuring a serial console for FreeBSD, but not for UEFI, no output
 will show up on the serial console from boot1.efi.
 .It
 There's no support for marking partitions as the preferred one.
+See
+.Xr gptboot.efi 8 .
 .It
 There's no support for boot-once functionality.
+See
+.Xr gptboot.efi 8 .
 .El

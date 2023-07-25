@@ -1,6 +1,6 @@
-#$FreeBSD: ef1ca66696c9b8c7be4526d9b470f8bea24b0627 $
+#$FreeBSD: 6c11415f70057767c7581e0e68977cf708ab0ac7 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	wind
 LDFLAGS=	-Wl,--no-undefined

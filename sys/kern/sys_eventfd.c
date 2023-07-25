@@ -1,9 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2007 Roman Divacky
- * Copyright (c) 2014 Dmitry Chagin
- * All rights reserved.
+ * Copyright (c) 2014 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3fdb4afc78507898a82bcca5eb1515c60222fb9e $");
+__FBSDID("$FreeBSD: d4aab88ab09d8e6402eb113dd95ade3c8b5e5f44 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -344,6 +342,7 @@ eventfd_fill_kinfo(struct file *fp, struct kinfo_file *kif, struct filedesc *fdp
 	mtx_lock(&efd->efd_lock);
 	kif->kf_un.kf_eventfd.kf_eventfd_value = efd->efd_count;
 	kif->kf_un.kf_eventfd.kf_eventfd_flags = efd->efd_flags;
+	kif->kf_un.kf_eventfd.kf_eventfd_addr = (uintptr_t)efd;
 	mtx_unlock(&efd->efd_lock);
 	return (0);
 }

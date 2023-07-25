@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 202ee059c5280ace115e0d048f30874d887ae639 $");
+__FBSDID("$FreeBSD: f095e97edaf1d7be702d6b27dfeb2e981c5305e3 $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -154,7 +154,8 @@ chrp_attach(platform_t plat)
 			realmaxaddr = MAX(off, realmaxaddr);
 		}
 
-		pmap_mmu_install("mmu_phyp", BUS_PROBE_SPECIFIC);
+		if (!radix_mmu)
+			pmap_mmu_install("mmu_phyp", BUS_PROBE_SPECIFIC);
 		cpu_idle_hook = phyp_cpu_idle;
 
 		/* Set up important VPA fields */

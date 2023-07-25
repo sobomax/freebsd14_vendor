@@ -26,7 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 23fa847d9bd90669f0d1af403f2fa00b5f99bb5a $
+# $FreeBSD: 379898f9af26da3e5906fe03bf0d37e8c29b9be3 $
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -616,7 +616,7 @@ METHOD int read_iost {
  * @param child The device to query.
  *
  * @retval true If @p child is held in RESET or not clocked (BHND_IOCTL_CLK_EN),
- * or an error occured determining @p child's hardware state.
+ * or an error occurred determining @p child's hardware state.
  * @retval false If @p child is clocked and is not held in RESET.
  */
 METHOD bool is_hw_suspended {

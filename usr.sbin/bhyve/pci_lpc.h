@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9041f79c507a32c6e8f56cd72c9da474ab3422ab $
+ * $FreeBSD: 611b025d4386ad355af419bd3e9d1c98e8a683ca $
  */
 
 #ifndef _LPC_H_
@@ -68,7 +68,7 @@ struct lpc_sysres {
 #define	SYSRES_MEM(base, length)	LPC_SYSRES(LPC_SYSRES_MEM, base, length)
 
 int	lpc_device_parse(const char *opt);
-void    lpc_print_supported_devices();
+void    lpc_print_supported_devices(void);
 char	*lpc_pirq_name(int pin);
 void	lpc_pirq_routed(void);
 const char *lpc_bootrom(void);

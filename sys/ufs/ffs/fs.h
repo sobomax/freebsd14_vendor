@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.13 (Berkeley) 3/21/95
- * $FreeBSD: df003c4282d9ffac2af976e587b6786c48757de0 $
+ * $FreeBSD: 8069b2db54bdc826bafc2bcc7b100f6ff6ca6928 $
  */
 
 #ifndef _UFS_FFS_FS_H_
@@ -767,7 +767,6 @@ lbn_offset(struct fs *fs, int level)
 #define	JREC_SIZE	32	/* Record and segment header size. */
 
 #define	SUJ_MIN		(4 * 1024 * 1024)	/* Minimum journal size */
-#define	SUJ_MAX		(32 * 1024 * 1024)	/* Maximum journal size */
 #define	SUJ_FILE	".sujournal"		/* Journal file name */
 
 /*

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: f564f36363386f0b31aaad27d2ecdead6d99880e $ */
+/* $FreeBSD: b3df6529744655e668b9d111713692df52bcdd78 $ */
 
 #include <gssapi/gssapi.h>
 
@@ -78,7 +78,7 @@ gss_inquire_cred_by_oid (OM_uint32 *minor_status,
 		if (status != GSS_S_COMPLETE)
 			continue;
 
-		for (i = 0; i < rset->count; i++) { 
+		for (i = 0; i < rset->count; i++) {
 			status = gss_add_buffer_set_member(minor_status,
 			     &rset->elements[i], &set);
 			if (status != GSS_S_COMPLETE)

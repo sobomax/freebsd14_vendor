@@ -27,7 +27,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: 9743cd652d1628e9f8c06096cfd4a6f267af461c $
+# $FreeBSD: 4ef44d1ad000f5750fe9fd3428d647c976a4cfb0 $
 
 #### Usage function -- called from command-line handling code.
 
@@ -2543,8 +2543,21 @@ The following file could not be merged automatically: ${F}
 Press Enter to edit this file in ${EDITOR} and resolve the conflicts
 manually...
 			EOF
-			read dummy </dev/tty
-			${EDITOR} `pwd`/merge/new/${F} < /dev/tty
+			while true; do
+				read dummy </dev/tty
+				${EDITOR} `pwd`/merge/new/${F} < /dev/tty
+
+				if ! grep -qE '^(<<<<<<<|=======|>>>>>>>)([[:space:]].*)?$' $(pwd)/merge/new/${F} ; then
+					break
+				fi
+				cat <<-EOF
+
+Merge conflict markers remain in: ${F}
+These must be resolved for the system to be functional.
+
+Press Enter to return to editing this file.
+				EOF
+			done
 		done < failed.merges
 		rm failed.merges
 
@@ -3023,6 +3036,14 @@ Kernel updates have been installed.  Please reboot and run
 		install_from_index INDEX-NEW || return 1
 		install_delete INDEX-OLD INDEX-NEW || return 1
 
+		# Restart sshd if running (PR263489).  Note that this does not
+		# affect child sshd processes handling existing sessions.
+		if service sshd status >/dev/null 2>/dev/null; then
+			echo
+			echo "Restarting sshd after upgrade"
+			service sshd restart
+		fi
+
 		# Rehash certs if we actually have certctl installed.
 		if which certctl>/dev/null; then
 			env DESTDIR=${BASEDIR} certctl rehash
@@ -3483,6 +3504,9 @@ fi
 
 # Set LC_ALL in order to avoid problems with character ranges like [A-Z].
 export LC_ALL=C
+
+# Clear environment variables that may affect operation of tools that we use.
+unset GREP_OPTIONS
 
 get_params $@
 for COMMAND in ${COMMANDS}; do

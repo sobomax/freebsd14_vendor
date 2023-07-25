@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35318c11c3888f127097c2cc0d2fe7dcc17d96ba $");
+__FBSDID("$FreeBSD: c3f980a3342f09a7b9beb2f4b0e7020a4bb5b128 $");
 
 #include <sys/types.h>
 #include <sys/kobj.h>
@@ -228,12 +228,12 @@ iic_dp_aux_add_bus(device_t dev, const char *name,
 	int idx, error;
 	static int dp_bus_counter;
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 
 	idx = atomic_fetchadd_int(&dp_bus_counter, 1);
 	ibus = device_add_child(dev, "drm_iic_dp_aux", idx);
 	if (ibus == NULL) {
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 		DRM_ERROR("drm_iic_dp_aux bus %d creation error\n", idx);
 		return (-ENXIO);
 	}
@@ -241,7 +241,7 @@ iic_dp_aux_add_bus(device_t dev, const char *name,
 	error = device_probe_and_attach(ibus);
 	if (error != 0) {
 		device_delete_child(dev, ibus);
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 		DRM_ERROR("drm_iic_dp_aux bus %d attach failed, %d\n",
 		    idx, error);
 		return (-error);
@@ -256,7 +256,7 @@ iic_dp_aux_add_bus(device_t dev, const char *name,
 		*bus = ibus;
 		*adapter = data->port;
 	}
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	return (-error);
 }
 

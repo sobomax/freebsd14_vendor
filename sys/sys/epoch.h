@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 85c791d3df6ce76885f0eaba4b08d28f0123ca8d $
+ * $FreeBSD: 63e03cafd9858725a67c0b3a48a72f389ee49ce1 $
  */
 
 #ifndef _SYS_EPOCH_H_
@@ -104,6 +104,7 @@ extern epoch_t net_epoch_preempt;
 #define	NET_EPOCH_EXIT(et)	epoch_exit_preempt(net_epoch_preempt, &(et))
 #define	NET_EPOCH_WAIT()	epoch_wait_preempt(net_epoch_preempt)
 #define	NET_EPOCH_CALL(f, c)	epoch_call(net_epoch_preempt, (f), (c))
+#define	NET_EPOCH_DRAIN_CALLBACKS() epoch_drain_callbacks(net_epoch_preempt)
 #define	NET_EPOCH_ASSERT()	MPASS(in_epoch(net_epoch_preempt))
 #define	NET_TASK_INIT(t, p, f, c) TASK_INIT_FLAGS(t, p, f, c, TASK_NETWORK)
 #define	NET_GROUPTASK_INIT(gtask, prio, func, ctx)			\

@@ -31,15 +31,11 @@
  *	from tahoe:	in_cksum.c	1.2	86/01/05
  *	from:		@(#)in_cksum.c	1.3 (Berkeley) 1/19/91
  *	from: Id: in_cksum.c,v 1.8 1995/12/03 18:35:19 bde Exp
- * $FreeBSD: 89ff1097f36934386ee81e0b9f5b5894eb31af1d $
+ * $FreeBSD: 7407b4ad710423c96c51fce6b1939630e84c23fc $
  */
 
 #ifndef _MACHINE_IN_CKSUM_H_
 #define	_MACHINE_IN_CKSUM_H_	1
-
-#ifndef _SYS_CDEFS_H_
-#error this file needs sys/cdefs.h as a prerequisite
-#endif
 
 #include <sys/cdefs.h>
 

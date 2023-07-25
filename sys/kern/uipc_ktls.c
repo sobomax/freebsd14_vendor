@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50bd0a0df21ef19be0bacb9d5d983cc56f45a416 $");
+__FBSDID("$FreeBSD: 901a2df0bd74fd83bdd610f4113f820f1df211b6 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -682,7 +682,7 @@ ktls_create_session(struct socket *so, struct tls_enable *en,
 	return (0);
 
 out:
-	ktls_cleanup(tls);
+	ktls_free(tls);
 	return (error);
 }
 
@@ -1088,11 +1088,6 @@ ktls_enable_rx(struct socket *so, struct tls_enable *en)
 	if (en->cipher_algorithm == CRYPTO_AES_CBC && !ktls_cbc_enable)
 		return (ENOTSUP);
 
-	/* TLS 1.3 is not yet supported. */
-	if (en->tls_vmajor == TLS_MAJOR_VER_ONE &&
-	    en->tls_vminor == TLS_MINOR_VER_THREE)
-		return (ENOTSUP);
-
 	error = ktls_create_session(so, en, &tls);
 	if (error)
 		return (error);
@@ -1104,7 +1099,7 @@ ktls_enable_rx(struct socket *so, struct tls_enable *en)
 		error = ktls_try_sw(so, tls, KTLS_RX);
 
 	if (error) {
-		ktls_cleanup(tls);
+		ktls_free(tls);
 		return (error);
 	}
 
@@ -1175,13 +1170,13 @@ ktls_enable_tx(struct socket *so, struct tls_enable *en)
 		error = ktls_try_sw(so, tls, KTLS_TX);
 
 	if (error) {
-		ktls_cleanup(tls);
+		ktls_free(tls);
 		return (error);
 	}
 
 	error = SOCK_IO_SEND_LOCK(so, SBL_WAIT);
 	if (error) {
-		ktls_cleanup(tls);
+		ktls_free(tls);
 		return (error);
 	}
 
@@ -1322,6 +1317,7 @@ ktls_set_tx_mode(struct socket *so, int mode)
 		return (EBUSY);
 	}
 
+	INP_WLOCK(inp);
 	SOCKBUF_LOCK(&so->so_snd);
 	so->so_snd.sb_tls_info = tls_new;
 	if (tls_new->mode != TCP_TLS_MODE_SW)
@@ -1343,7 +1339,6 @@ ktls_set_tx_mode(struct socket *so, int mode)
 	else
 		counter_u64_add(ktls_switch_to_sw, 1);
 
-	INP_WLOCK(inp);
 	return (0);
 }
 
@@ -1485,10 +1480,11 @@ ktls_modify_txrtlmt(struct ktls_session *tls, uint64_t max_pacing_rate)
 		return (0);
 	}
 
-	MPASS(tls->snd_tag != NULL);
-	MPASS(tls->snd_tag->type == IF_SND_TAG_TYPE_TLS_RATE_LIMIT);
-
 	mst = tls->snd_tag;
+
+	MPASS(mst != NULL);
+	MPASS(mst->type == IF_SND_TAG_TYPE_TLS_RATE_LIMIT);
+
 	ifp = mst->ifp;
 	return (ifp->if_snd_tag_modify(mst, &params));
 }
@@ -1822,6 +1818,78 @@ out:
 	return (top);
 }
 
+/*
+ * Determine the length of the trailing zero padding and find the real
+ * record type in the byte before the padding.
+ *
+ * Walking the mbuf chain backwards is clumsy, so another option would
+ * be to scan forwards remembering the last non-zero byte before the
+ * trailer.  However, it would be expensive to scan the entire record.
+ * Instead, find the last non-zero byte of each mbuf in the chain
+ * keeping track of the relative offset of that nonzero byte.
+ *
+ * trail_len is the size of the MAC/tag on input and is set to the
+ * size of the full trailer including padding and the record type on
+ * return.
+ */
+static int
+tls13_find_record_type(struct ktls_session *tls, struct mbuf *m, int tls_len,
+    int *trailer_len, uint8_t *record_typep)
+{
+	char *cp;
+	u_int digest_start, last_offset, m_len, offset;
+	uint8_t record_type;
+
+	digest_start = tls_len - *trailer_len;
+	last_offset = 0;
+	offset = 0;
+	for (; m != NULL && offset < digest_start;
+	     offset += m->m_len, m = m->m_next) {
+		/* Don't look for padding in the tag. */
+		m_len = min(digest_start - offset, m->m_len);
+		cp = mtod(m, char *);
+
+		/* Find last non-zero byte in this mbuf. */
+		while (m_len > 0 && cp[m_len - 1] == 0)
+			m_len--;
+		if (m_len > 0) {
+			record_type = cp[m_len - 1];
+			last_offset = offset + m_len;
+		}
+	}
+	if (last_offset < tls->params.tls_hlen)
+		return (EBADMSG);
+
+	*record_typep = record_type;
+	*trailer_len = tls_len - last_offset + 1;
+	return (0);
+}
+
+static void
+ktls_drop(struct socket *so, int error)
+{
+	struct epoch_tracker et;
+	struct inpcb *inp = sotoinpcb(so);
+	struct tcpcb *tp;
+
+	NET_EPOCH_ENTER(et);
+	INP_WLOCK(inp);
+	if (!(inp->inp_flags & INP_DROPPED)) {
+		tp = intotcpcb(inp);
+		CURVNET_SET(inp->inp_vnet);
+		tp = tcp_drop(tp, error);
+		CURVNET_RESTORE();
+		if (tp != NULL)
+			INP_WUNLOCK(inp);
+	} else {
+		so->so_error = error;
+		SOCKBUF_LOCK(&so->so_rcv);
+		sorwakeup_locked(so);
+		INP_WUNLOCK(inp);
+	}
+	NET_EPOCH_EXIT(et);
+}
+
 static void
 ktls_decrypt(struct socket *so)
 {
@@ -1833,6 +1901,8 @@ ktls_decrypt(struct socket *so)
 	struct mbuf *control, *data, *m;
 	uint64_t seqno;
 	int error, remain, tls_len, trail_len;
+	bool tls13;
+	uint8_t vminor, record_type;
 
 	hdr = (struct tls_record_layer *)tls_header;
 	sb = &so->so_rcv;
@@ -1843,6 +1913,11 @@ ktls_decrypt(struct socket *so)
 	tls = sb->sb_tls_info;
 	MPASS(tls != NULL);
 
+	tls13 = (tls->params.tls_vminor == TLS_MINOR_VER_THREE);
+	if (tls13)
+		vminor = TLS_MINOR_VER_TWO;
+	else
+		vminor = tls->params.tls_vminor;
 	for (;;) {
 		/* Is there enough queued for a TLS header? */
 		if (sb->sb_tlscc < tls->params.tls_hlen)
@@ -1852,7 +1927,9 @@ ktls_decrypt(struct socket *so)
 		tls_len = sizeof(*hdr) + ntohs(hdr->tls_length);
 
 		if (hdr->tls_vmajor != tls->params.tls_vmajor ||
-		    hdr->tls_vminor != tls->params.tls_vminor)
+		    hdr->tls_vminor != vminor)
+			error = EINVAL;
+		else if (tls13 && hdr->tls_type != TLS_RLTYPE_APP)
 			error = EINVAL;
 		else if (tls_len < tls->params.tls_hlen || tls_len >
 		    tls->params.tls_hlen + TLS_MAX_MSG_SIZE_V10_2 +
@@ -1869,10 +1946,7 @@ ktls_decrypt(struct socket *so)
 			SOCKBUF_UNLOCK(sb);
 			counter_u64_add(ktls_offload_corrupted_records, 1);
 
-			CURVNET_SET(so->so_vnet);
-			so->so_proto->pr_usrreqs->pru_abort(so);
-			so->so_error = error;
-			CURVNET_RESTORE();
+			ktls_drop(so, error);
 			goto deref;
 		}
 
@@ -1895,6 +1969,13 @@ ktls_decrypt(struct socket *so)
 		SOCKBUF_UNLOCK(sb);
 
 		error = tls->sw_decrypt(tls, hdr, data, seqno, &trail_len);
+		if (error == 0) {
+			if (tls13)
+				error = tls13_find_record_type(tls, data,
+				    tls_len, &trail_len, &record_type);
+			else
+				record_type = hdr->tls_type;
+		}
 		if (error) {
 			counter_u64_add(ktls_offload_failed_crypto, 1);
 
@@ -1927,7 +2008,8 @@ ktls_decrypt(struct socket *so)
 		}
 
 		/* Allocate the control mbuf. */
-		tgr.tls_type = hdr->tls_type;
+		memset(&tgr, 0, sizeof(tgr));
+		tgr.tls_type = record_type;
 		tgr.tls_vmajor = hdr->tls_vmajor;
 		tgr.tls_vminor = hdr->tls_vminor;
 		tgr.tls_length = htobe16(tls_len - tls->params.tls_hlen -
@@ -2271,8 +2353,7 @@ retry_page:
 	if (error == 0) {
 		(void)(*so->so_proto->pr_usrreqs->pru_ready)(so, top, npages);
 	} else {
-		so->so_proto->pr_usrreqs->pru_abort(so);
-		so->so_error = EIO;
+		ktls_drop(so, EIO);
 		mb_free_notready(top, total_pages);
 	}
 

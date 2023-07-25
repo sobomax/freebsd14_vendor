@@ -1,4 +1,4 @@
-# $FreeBSD: 9c3883984618ed7d57ec0f8bc23921fc16eaad62 $
+# $FreeBSD: efe8529f36118566edb11a536874a59eab509aff $
 
 .include "${SRCTOP}/lib/clang/lldb.pre.mk"
 
@@ -36,6 +36,8 @@ ${INCFILE}: ${TDFILE}
 	${LLVM_TBLGEN} ${GENOPT} -I ${LLVM_SRCS}/include -d ${.TARGET:C/$/.d/} \
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
+
+${TGHDRS}: ${LLVM_TBLGEN_BIN}
 
 DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}

@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a635bace4a09761efd043558e7c4f8e83f2da775 $");
+__FBSDID("$FreeBSD: eb313e2da8de508beb6159aa9d05814c6a8f779d $");
 
 #include "opt_ddb.h"
 
@@ -457,17 +457,6 @@ cpu_procctl(struct thread *td __unused, int idtype __unused, id_t id __unused,
 {
 
 	return (EINVAL);
-}
-
-/*
- * Software interrupt handler for queued VM system processing.
- */
-void
-swi_vm(void *dummy)
-{
-
-	if (busdma_swi_pending)
-		busdma_swi();
 }
 
 int

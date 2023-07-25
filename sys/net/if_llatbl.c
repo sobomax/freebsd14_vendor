@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b82bc9fc104c13c793ffcfdc8c5614cf5d929772 $");
+__FBSDID("$FreeBSD: 05cd8ea24a46d79e515346c34a8fb73c9158018c $");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"
@@ -300,7 +300,7 @@ lltable_drop_entry_queue(struct llentry *lle)
 	}
 
 	KASSERT(lle->la_numheld == 0,
-		("%s: la_numheld %d > 0, pkts_droped %zd", __func__,
+		("%s: la_numheld %d > 0, pkts_dropped %zd", __func__,
 		 lle->la_numheld, pkts_dropped));
 
 	return (pkts_dropped);
@@ -926,8 +926,10 @@ lla_rt_output(struct rt_msghdr *rtm, struct rt_addrinfo *info)
 
 		linkhdrsize = sizeof(linkhdr);
 		if (lltable_calc_llheader(ifp, dst->sa_family, LLADDR(dl),
-		    linkhdr, &linkhdrsize, &lladdr_off) != 0)
+		    linkhdr, &linkhdrsize, &lladdr_off) != 0) {
+			lltable_free_entry(llt, lle);
 			return (EINVAL);
+		}
 		lltable_set_entry_addr(ifp, lle, linkhdr, linkhdrsize,
 		    lladdr_off);
 		if ((rtm->rtm_flags & RTF_ANNOUNCE))

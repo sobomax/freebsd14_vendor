@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 81b9e28f9959e043616ec980a8338742c7b51a5f $");
+__FBSDID("$FreeBSD: c5b031199a01763d47b1ad5f7e4f678f2b95e16d $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -1323,7 +1323,7 @@ sctp_cwnd_prepare_rtcc_net_for_sack(struct sctp_tcb *stcb SCTP_UNUSED,
     struct sctp_nets *net)
 {
 	if (net->cc_mod.rtcc.tls_needs_set > 0) {
-		/* We had a bw measurment going on */
+		/* We had a bw measurement going on */
 		struct timeval ltls;
 
 		SCTP_GETPTIME_TIMEVAL(&ltls);

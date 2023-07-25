@@ -1,6 +1,6 @@
-# $FreeBSD: 18550053228a9fe26fdeb72db31ff7ed5814d41a $
+# $FreeBSD: 88d6b72425805027e158086385ebb01155280c67 $
 
-PACKAGE=runtime
+PACKAGE=geom
 PROG=	gvinum
 SRCS=	gvinum.c gvinum.h geom_vinum_share.c
 MAN=	gvinum.8

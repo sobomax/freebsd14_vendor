@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 93c457c2ba57c629483634ca436c704e76fccdc4 $");
+__FBSDID("$FreeBSD: 437ede01b4a82b86dfee176567bc157e446f3986 $");
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -203,7 +203,7 @@ DB_SHOW_COMMAND(routetable, db_show_routetable_cmd)
 	}
 }
 
-_DB_FUNC(_show, route, db_show_route_cmd, db_show_table, CS_OWN, NULL)
+DB_SHOW_COMMAND_FLAGS(route, db_show_route_cmd, CS_OWN)
 {
 	char abuf[INET6_ADDRSTRLEN], *buf, *end;
 	struct rib_head *rh;

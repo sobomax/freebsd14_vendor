@@ -1,4 +1,4 @@
-# $FreeBSD: a63b9e46decaf8554129d00c18a86c6590ae1276 $
+# $FreeBSD: 61a7010a8d1ba3a98ae6c73e6ed054173e0296d3 $
 #
 # The include file <bsd.dep.mk> handles Makefile dependencies.
 #
@@ -170,8 +170,11 @@ ${_D}.o: ${_DSRC} ${OBJS:S/^${_D}.o$//}
 	@rm -f ${.TARGET}
 	${DTRACE} ${DTRACEFLAGS} -G -o ${.TARGET} -s ${.ALLSRC:N*.h}
 .if defined(LIB)
-CLEANFILES+= ${_D}.pico ${_D}.po ${_D}.nossppico
+CLEANFILES+= ${_D}.pico ${_D}.pieo ${_D}.po ${_D}.nossppico
 ${_D}.pico: ${_DSRC} ${SOBJS:S/^${_D}.pico$//}
+	@rm -f ${.TARGET}
+	${DTRACE} ${DTRACEFLAGS} -G -o ${.TARGET} -s ${.ALLSRC:N*.h}
+${_D}.pieo: ${_DSRC} ${OBJS:S/^${_D}.pieo$//}
 	@rm -f ${.TARGET}
 	${DTRACE} ${DTRACEFLAGS} -G -o ${.TARGET} -s ${.ALLSRC:N*.h}
 ${_D}.po: ${_DSRC} ${POBJS:S/^${_D}.po$//}

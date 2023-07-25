@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 7fa2318db300259fd09acf5b6b655e78d99ac701 $*/
+/*$FreeBSD: 985843d546fa965cdda5d601b9f0772f85990941 $*/
 
 #include "ixl.h"
 #include "ixl_pf.h"
@@ -49,7 +49,7 @@
  *********************************************************************/
 #define IXL_DRIVER_VERSION_MAJOR	2
 #define IXL_DRIVER_VERSION_MINOR	3
-#define IXL_DRIVER_VERSION_BUILD	1
+#define IXL_DRIVER_VERSION_BUILD	3
 
 #define IXL_DRIVER_VERSION_STRING			\
     __XSTRING(IXL_DRIVER_VERSION_MAJOR) "."		\
@@ -86,6 +86,7 @@ static pci_vendor_info_t ixl_vendor_info_array[] =
 	PVIDV(I40E_INTEL_VENDOR_ID, I40E_DEV_ID_10G_SFP, "Intel(R) Ethernet Controller X710 for 10GbE SFP+"),
 	PVIDV(I40E_INTEL_VENDOR_ID, I40E_DEV_ID_10G_B, "Intel(R) Ethernet Controller X710 for 10GbE backplane"),
 	PVIDV(I40E_INTEL_VENDOR_ID, I40E_DEV_ID_5G_BASE_T_BC, "Intel(R) Ethernet Controller V710 for 5GBASE-T"),
+	PVIDV(I40E_INTEL_VENDOR_ID, I40E_DEV_ID_1G_BASE_T_BC, "Intel(R) Ethernet Controller I710 for 1GBASE-T"),
 	/* required last entry */
 	PVID_END
 };
@@ -1721,9 +1722,10 @@ ixl_if_vlan_unregister(if_ctx_t ctx, u16 vtag)
 	if ((if_getcapenable(ifp) & IFCAP_VLAN_HWFILTER) == 0)
 		return;
 
-	if (vsi->num_vlans < IXL_MAX_VLAN_FILTERS)
+	/* One filter is used for untagged frames */
+	if (vsi->num_vlans < IXL_MAX_VLAN_FILTERS - 1)
 		ixl_del_filter(vsi, hw->mac.addr, vtag);
-	else if (vsi->num_vlans == IXL_MAX_VLAN_FILTERS) {
+	else if (vsi->num_vlans == IXL_MAX_VLAN_FILTERS - 1) {
 		ixl_del_filter(vsi, hw->mac.addr, IXL_VLAN_ANY);
 		ixl_add_vlan_filters(vsi, hw->mac.addr);
 	}

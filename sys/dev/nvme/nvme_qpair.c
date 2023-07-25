@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0bf485cea47fac13c05472d40bbdc5c1ef871f67 $");
+__FBSDID("$FreeBSD: ad6c1be91c3f68dd47663b5d2012dac4e7ebbdf0 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -344,14 +344,18 @@ static void
 nvme_qpair_print_completion(struct nvme_qpair *qpair,
     struct nvme_completion *cpl)
 {
-	uint16_t sct, sc;
+	uint8_t sct, sc, crd, m, dnr;
 
 	sct = NVME_STATUS_GET_SCT(cpl->status);
 	sc = NVME_STATUS_GET_SC(cpl->status);
+	crd = NVME_STATUS_GET_CRD(cpl->status);
+	m = NVME_STATUS_GET_M(cpl->status);
+	dnr = NVME_STATUS_GET_DNR(cpl->status);
 
-	nvme_printf(qpair->ctrlr, "%s (%02x/%02x) sqid:%d cid:%d cdw0:%x\n",
-	    get_status_string(sct, sc), sct, sc, cpl->sqid, cpl->cid,
-	    cpl->cdw0);
+	nvme_printf(qpair->ctrlr, "%s (%02x/%02x) crd:%x m:%x dnr:%x "
+	    "sqid:%d cid:%d cdw0:%x\n",
+	    get_status_string(sct, sc), sct, sc, crd, m, dnr,
+	    cpl->sqid, cpl->cid, cpl->cdw0);
 }
 
 static bool
@@ -537,7 +541,7 @@ nvme_qpair_process_completions(struct nvme_qpair *qpair)
 	bool in_panic = dumping || SCHEDULER_STOPPED();
 
 	/*
-	 * qpair is not enabled, likely because a controller reset is is in
+	 * qpair is not enabled, likely because a controller reset is in
 	 * progress.  Ignore the interrupt - any I/O that was associated with
 	 * this interrupt will get retried when the reset is complete. Any
 	 * pending completions for when we're in startup will be completed

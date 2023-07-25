@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8f06dc8233640a371deb13fedff0e06da0540c7e $
+ * $FreeBSD: c3af7779a7ca54230adb491038f920424e24f1b8 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f06dc8233640a371deb13fedff0e06da0540c7e $");
+__FBSDID("$FreeBSD: c3af7779a7ca54230adb491038f920424e24f1b8 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -117,7 +117,7 @@ struct domain {
 
 static SLIST_HEAD(, domain) domhead;
 
-#define	DRHD_MAX_UNITS	8
+#define	DRHD_MAX_UNITS	16
 static ACPI_DMAR_HARDWARE_UNIT	*drhds[DRHD_MAX_UNITS];
 static int			drhd_num;
 static struct vtdmap		*vtdmaps[DRHD_MAX_UNITS];

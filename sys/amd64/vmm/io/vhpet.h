@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 113683c09b33c75433c7c57f78fe9d584c643a6a $
+ * $FreeBSD: 43a1fde1126e2508b0b0bd2f4e5bc61fa78b80bc $
  */
 
 #ifndef _VHPET_H_
@@ -35,18 +35,21 @@
 #define	VHPET_BASE	0xfed00000
 #define	VHPET_SIZE	1024
 
+#ifdef _KERNEL
 struct vm_snapshot_meta;
 
 struct vhpet *vhpet_init(struct vm *vm);
 void 	vhpet_cleanup(struct vhpet *vhpet);
-int	vhpet_mmio_write(void *vm, int vcpuid, uint64_t gpa, uint64_t val,
+int	vhpet_mmio_write(struct vcpu *vcpu, uint64_t gpa, uint64_t val,
 	    int size, void *arg);
-int	vhpet_mmio_read(void *vm, int vcpuid, uint64_t gpa, uint64_t *val,
+int	vhpet_mmio_read(struct vcpu *vcpu, uint64_t gpa, uint64_t *val,
 	    int size, void *arg);
 int	vhpet_getcap(struct vm_hpet_cap *cap);
 #ifdef BHYVE_SNAPSHOT
 int	vhpet_snapshot(struct vhpet *vhpet, struct vm_snapshot_meta *meta);
 int	vhpet_restore_time(struct vhpet *vhpet);
 #endif
+
+#endif /* _KERNEL */
 
 #endif	/* _VHPET_H_ */

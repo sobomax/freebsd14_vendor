@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 16133903841fb99d44b6366599d75f4820476967 $
+ * $FreeBSD: 691474bac90e6e160e6be5e3bd52e6b3d936c90b $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -241,6 +241,7 @@ extern void (*arm64_icache_sync_range)(vm_offset_t, vm_size_t);
 void arm64_nullop(void);
 void arm64_tlb_flushID(void);
 void arm64_dic_idc_icache_sync_range(vm_offset_t, vm_size_t);
+void arm64_idc_aliasing_icache_sync_range(vm_offset_t, vm_size_t);
 void arm64_aliasing_icache_sync_range(vm_offset_t, vm_size_t);
 int arm64_icache_sync_range_checked(vm_offset_t, vm_size_t);
 void arm64_dcache_wbinv_range(vm_offset_t, vm_size_t);

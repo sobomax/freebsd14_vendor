@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15d0848fc0209ed36bb42df48010e122286e5623 $");
+__FBSDID("$FreeBSD: dec69b434f7a1f984644100d28ae28335a9f8748 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -269,7 +269,8 @@ gpioc_attach_priv_pin(struct gpioc_cdevpriv *priv,
 {
 	struct gpioc_privs	*priv_link;
 	struct gpioc_pins	*pin_link;
-	unsigned int		consistency_a, consistency_b;
+	unsigned int		consistency_a __diagused;
+	unsigned int		consistency_b __diagused;
 
 	consistency_a = 0;
 	consistency_b = 0;
@@ -319,7 +320,8 @@ gpioc_detach_priv_pin(struct gpioc_cdevpriv *priv,
 {
 	struct gpioc_privs	*priv_link, *priv_link_temp;
 	struct gpioc_pins	*pin_link, *pin_link_temp;
-	unsigned int		consistency_a, consistency_b;
+	unsigned int		consistency_a __diagused;
+	unsigned int		consistency_b __diagused;
 
 	consistency_a = 0;
 	consistency_b = 0;
@@ -634,7 +636,7 @@ gpioc_cdevpriv_dtor(void *data)
 	struct gpioc_cdevpriv	*priv;
 	struct gpioc_privs	*priv_link, *priv_link_temp;
 	struct gpioc_pins	*pin_link, *pin_link_temp;
-	unsigned int		consistency;
+	unsigned int		consistency __diagused;
 
 	priv = data;
 

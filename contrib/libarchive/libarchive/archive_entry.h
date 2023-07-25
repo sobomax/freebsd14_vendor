@@ -23,14 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8b76360a777f071a8fe2fae409ee2ef01b0f7913 $
+ * $FreeBSD: ff64a4712a56b3f9886148e5d5a99f9635f24ae0 $
  */
 
 #ifndef ARCHIVE_ENTRY_H_INCLUDED
 #define	ARCHIVE_ENTRY_H_INCLUDED
 
 /* Note: Compiler will complain if this does not match archive.h! */
-#define	ARCHIVE_VERSION_NUMBER 3006000
+#define	ARCHIVE_VERSION_NUMBER 3006002
 
 /*
  * Note: archive_entry.h is for use outside of libarchive; the
@@ -122,6 +122,8 @@ typedef ssize_t la_ssize_t;
 #   define __LA_DECL	__declspec(dllimport)
 #  endif
 # endif
+#elif defined __LIBARCHIVE_ENABLE_VISIBILITY
+#  define __LA_DECL __attribute__((visibility("default")))
 #else
 /* Static libraries on all platforms and shared libraries on non-Windows. */
 # define __LA_DECL

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cbf9a83395a670d5c8071def1dd09d984a1b08de $");
+__FBSDID("$FreeBSD: 5fb1645c85867b7ca9ed797199c223b29abe4028 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -85,7 +85,7 @@ write_buffer(struct dumperinfo *di, char *ptr, size_t sz)
 		wdog_kern_pat(WD_LASTVAL);
 
 		if (ptr) {
-			error = dump_append(di, ptr, 0, len);
+			error = dump_append(di, ptr, len);
 			if (error)
 				return (error);
 			ptr += len;

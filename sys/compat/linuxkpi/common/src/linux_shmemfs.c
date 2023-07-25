@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ead9cc9d9f406553245f608ce88226d522a54cef $");
+__FBSDID("$FreeBSD: 741bb20c1aabb095c3571ec2c22c7bfa75fce360 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,7 +84,7 @@ linux_shmem_file_setup(const char *name, loff_t size, unsigned long flags)
 
 	filp->f_count = 1;
 	filp->f_vnode = vp;
-	filp->f_shmem = vm_pager_allocate(OBJT_DEFAULT, NULL, size,
+	filp->f_shmem = vm_pager_allocate(OBJT_SWAP, NULL, size,
 	    VM_PROT_READ | VM_PROT_WRITE, 0, curthread->td_ucred);
 	if (filp->f_shmem == NULL) {
 		error = -ENOMEM;

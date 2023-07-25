@@ -1,4 +1,4 @@
-#$FreeBSD: f2aa614f1dfcabe6c021edb06cfc22d746e7eece $
+#$FreeBSD: b9cc740af645209f74a871d9ce431cc45bdf35d9 $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 .include <src.opts.mk>
@@ -236,6 +236,9 @@ CRUNCH_LIBS+= -lm
 .if ${MK_ISCSI} != "no"
 CRUNCH_PROGS_usr.bin+=	iscsictl
 CRUNCH_PROGS_usr.sbin+=	iscsid
+
+CRUNCH_LIBS+=		${OBJTOP}/lib/libiscsiutil/libiscsiutil.a
+CRUNCH_BUILDOPTS+=	CRUNCH_CFLAGS+=-I${OBJTOP}/lib/libiscsiutil
 .endif
 
 .include <bsd.crunchgen.mk>

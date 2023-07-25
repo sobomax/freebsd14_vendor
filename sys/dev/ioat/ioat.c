@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2badfedb7488f7f3130932827fdcc641757ac53f $");
+__FBSDID("$FreeBSD: 64ce5f065525bbdd5f32e0197ceee7ffb9954621 $");
 
 #include "opt_ddb.h"
 
@@ -241,6 +241,8 @@ static struct _pcsid
 	{ 0x6f2f8086, "BDX IOAT Ch1 (RAID)" },
 
 	{ 0x20218086, "SKX IOAT" },
+
+	{ 0x0b008086, "ICX IOAT" },
 };
 
 MODULE_PNP_INFO("W32:vendor/device;D:#", pci, ioat, pci_ids,

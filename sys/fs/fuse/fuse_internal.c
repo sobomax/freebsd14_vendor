@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8862a09d2e6cb5881f1c59b0107ad587608e12bd $");
+__FBSDID("$FreeBSD: b3bbf83d0033002785cf25e251a69c1ae5e962b9 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -542,6 +542,7 @@ fuse_internal_mknod(struct vnode *dvp, struct vnode **vpp,
 	if (fuse_libabi_geq(data, 7, 12)) {
 		insize = sizeof(fmni);
 		fmni.umask = curthread->td_proc->p_pd->pd_cmask;
+		fmni.padding = 0;
 	} else {
 		insize = FUSE_COMPAT_MKNOD_IN_SIZE;
 	}
@@ -981,7 +982,7 @@ fuse_internal_init_callback(struct fuse_ticket *tick, struct uio *uio)
 {
 	int err = 0;
 	struct fuse_data *data = tick->tk_data;
-	struct fuse_init_out *fiio;
+	struct fuse_init_out *fiio = NULL;
 
 	if ((err = tick->tk_aw_ohead.error)) {
 		goto out;

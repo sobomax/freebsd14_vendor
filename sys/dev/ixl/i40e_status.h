@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 16dd569c60db3e020194f2d0ca8183366eacd3e6 $*/
+/*$FreeBSD: abba820ff8bb1072c691685ba96c846ead6f6425 $*/
 
 #ifndef _I40E_STATUS_H_
 #define _I40E_STATUS_H_
@@ -49,7 +49,7 @@ enum i40e_status_code {
 	I40E_ERR_ADAPTER_STOPPED		= -9,
 	I40E_ERR_INVALID_MAC_ADDR		= -10,
 	I40E_ERR_DEVICE_NOT_SUPPORTED		= -11,
-	I40E_ERR_MASTER_REQUESTS_PENDING	= -12,
+	I40E_ERR_PRIMARY_REQUESTS_PENDING	= -12,
 	I40E_ERR_INVALID_LINK_SETTINGS		= -13,
 	I40E_ERR_AUTONEG_NOT_COMPLETE		= -14,
 	I40E_ERR_RESET_FAILED			= -15,

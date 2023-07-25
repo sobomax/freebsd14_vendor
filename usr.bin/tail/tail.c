@@ -34,7 +34,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 874557f105ec9bf5acfe2b7cc7fc98c70017a0f5 $");
+__FBSDID("$FreeBSD: 8a65683bef7e9979dd82c83394c510732a9523db $");
 
 #ifndef lint
 static const char copyright[] =
@@ -113,7 +113,7 @@ main(int argc, char *argv[])
 	case '+':							\
 		if (off)						\
 			off -= (units);					\
-			style = (forward);				\
+		style = (forward);					\
 		break;							\
 	case '-':							\
 		off = -off;						\
@@ -263,6 +263,7 @@ main(int argc, char *argv[])
 		} else if (fflag) {
 			file.file_name = fn;
 			file.fp = stdin;
+			file.st = sb;
 			follow(&file, style, off);
 		} else {
 			forward(stdin, fn, style, off, &sb);

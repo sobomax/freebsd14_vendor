@@ -3,7 +3,7 @@
  * Copied from Linux kernel arch/x86/vdso/vdso-layout.lds.S
  * and arch/x86/vdso/vdso32/vdso32.lds.S
  *
- * $FreeBSD: a49c209a1ebc66c43cf4d3c0d65f7f88820ba43c $
+ * $FreeBSD: 6b47a120847ed2650147d8c73bdafaa2f8dba136 $
  */
 
 SECTIONS
@@ -51,16 +51,34 @@ PHDRS
 	eh_frame_hdr	PT_GNU_EH_FRAME;
 }
 
-ENTRY(linux32_vsyscall);
-
 VERSION
 {
+	LINUX_2.6 {
+	global:
+		__vdso_clock_gettime;
+		__vdso_gettimeofday;
+		__vdso_time;
+		__vdso_getcpu;
+		__vdso_clock_getres;
+		__vdso_clock_gettime64;
+	};
+
 	LINUX_2.5 {
 	global:
-		linux32_vsyscall;
-		linux32_sigcode;
-		linux32_rt_sigcode;
+		__kernel_vsyscall;
+		__kernel_sigreturn;
+		__kernel_rt_sigreturn;
+	local: *;
+	};
+
+	LINUX_0.0 {
+	global:
 		linux_platform;
+		kern_timekeep_base;
+		kern_tsc_selector;
+		kern_cpu_selector;
+		linux32_vdso_sigcode;
+		linux32_vdso_rt_sigcode;
 	local: *;
 	};
 }

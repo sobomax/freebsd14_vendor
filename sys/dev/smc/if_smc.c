@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8cd345596cee2b7b0ca2a0ff5c9ec9a9db7d353 $");
+__FBSDID("$FreeBSD: 830a8af829235b335e7316f134ce740b78f60d4c $");
 
 /*
  * Driver for SMSC LAN91C111, may work for older variants.
@@ -1175,9 +1175,9 @@ smc_reset(struct smc_softc *sc)
 	 * Set up the control register.
 	 */
 	smc_select_bank(sc, 1);
-	ctr = smc_read_2(sc, CTR);
-	ctr |= CTR_LE_ENABLE | CTR_AUTO_RELEASE;
-	smc_write_2(sc, CTR, ctr);
+	ctr = smc_read_2(sc, CTRL);
+	ctr |= CTRL_LE_ENABLE | CTRL_AUTO_RELEASE;
+	smc_write_2(sc, CTRL, ctr);
 
 	/*
 	 * Reset the MMU.

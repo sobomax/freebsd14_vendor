@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: f3d6fcab0d688bb8e67dd6b2006842660cdf919b $
+ * $FreeBSD: 75445e1459a11bcf8cfc5f83f8658592fca9dc4c $
  */
 #include "opt_ah.h"
 
@@ -204,11 +204,11 @@ ar5416Reset(struct ath_hal *ah, HAL_OPMODE opmode,
 		    AR_MAC_PCU_ASYNC_FIFO_REG3_SOFT_RESET);
 	}
 
-	/* Override ini values (that can be overriden in this fashion) */
+	/* Override ini values (that can be overridden in this fashion) */
 	ar5416OverrideIni(ah, chan);
 
 	/* Setup 11n MAC/Phy mode registers */
-	ar5416Set11nRegs(ah, chan);	
+	ar5416Set11nRegs(ah, chan);
 
 	OS_MARK(ah, AH_MARK_RESET_LINE, __LINE__);
 

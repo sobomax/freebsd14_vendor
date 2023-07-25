@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd77e9301ab02810123f657fae31a5cfca51e9fd $");
+__FBSDID("$FreeBSD: 52b375816cfca9630a2622b2fa9f5ec37bd1bf4c $");
 
 #include "bxe.h"
 #include "bxe_elink.h"
@@ -4578,7 +4578,7 @@ static void elink_warpcore_enable_AN_KR(struct elink_phy *phy,
 		{MDIO_WC_DEVAD, MDIO_WC_REG_CL72_USERB0_CL72_TX_FIR_TAP, 0},
 	};
 	ELINK_DEBUG_P0(sc, "Enable Auto Negotiation for KR\n");
-	/* Set to default registers that may be overriden by 10G force */
+	/* Set to default registers that may be overridden by 10G force */
 	for (i = 0; i < ARRAY_SIZE(reg_set); i++)
 		elink_cl45_write(sc, phy, reg_set[i].devad, reg_set[i].reg,
 				 reg_set[i].val);
@@ -7773,7 +7773,7 @@ elink_status_t elink_link_update(struct elink_params *params, struct elink_vars 
 			 * hence its link is expected to be down
 			 * - SECOND_PHY means that first phy should not be able
 			 * to link up by itself (using configuration)
-			 * - DEFAULT should be overriden during initialiazation
+			 * - DEFAULT should be overridden during initialiazation
 			 */
 				ELINK_DEBUG_P1(sc, "Invalid link indication"
 					   "mpc=0x%x. DISABLING LINK !!!\n",

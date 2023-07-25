@@ -35,7 +35,7 @@
 #ifndef lint
 __RCSID("$NetBSD: fsutil.c,v 1.15 2006/06/05 16:52:05 christos Exp $");
 #endif /* not lint */
-__FBSDID("$FreeBSD: 9644697e2530a63851e9316f8f1e8c4993d09008 $");
+__FBSDID("$FreeBSD: a3888eeea25ab300b382ddc0be8068ccaffbef5f $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -187,50 +187,6 @@ devcheck(const char *origname)
 	}
 	return (origname);
 }
-
-/*
- * Get the mount point information for name.
- */
-struct statfs *
-getmntpt(const char *name)
-{
-	struct stat devstat, mntdevstat;
-	char device[sizeof(_PATH_DEV) - 1 + MNAMELEN];
-	char *dev_name;
-	struct statfs *mntbuf, *statfsp;
-	int i, mntsize, isdev;
-
-	if (stat(name, &devstat) != 0)
-		return (NULL);
-	if (S_ISCHR(devstat.st_mode) || S_ISBLK(devstat.st_mode))
-		isdev = 1;
-	else
-		isdev = 0;
-	mntsize = getmntinfo(&mntbuf, MNT_NOWAIT);
-	for (i = 0; i < mntsize; i++) {
-		statfsp = &mntbuf[i];
-		dev_name = statfsp->f_mntfromname;
-		if (*dev_name != '/') {
-			if (strlen(_PATH_DEV) + strlen(dev_name) + 1 >
-			    sizeof(statfsp->f_mntfromname))
-				continue;
-			strcpy(device, _PATH_DEV);
-			strcat(device, dev_name);
-			strcpy(statfsp->f_mntfromname, device);
-		}
-		if (isdev == 0) {
-			if (strcmp(name, statfsp->f_mntonname))
-				continue;
-			return (statfsp);
-		}
-		if (stat(dev_name, &mntdevstat) == 0 &&
-		    mntdevstat.st_rdev == devstat.st_rdev)
-			return (statfsp);
-	}
-	statfsp = NULL;
-	return (statfsp);
-}
-
 
 void *
 emalloc(size_t s)

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b56c583b5fa740d914dd4495571f625d4c4546af $");
+__FBSDID("$FreeBSD: c25ae73e463c4e64be83d34756341e6bbcc94676 $");
 
 #include <efi.h>
 #include <efilib.h>
@@ -146,8 +146,8 @@ efi_hw_dev_path(EFI_DEVICE_PATH *node, char *suffix)
 	switch (subtype) {
 	case HW_PCI_DP:
 		if (asprintf(&name, "Pci(%x,%x)%s",
-		    ((PCI_DEVICE_PATH *)node)->Function,
-		    ((PCI_DEVICE_PATH *)node)->Device, tail) < 0)
+		    ((PCI_DEVICE_PATH *)node)->Device,
+		    ((PCI_DEVICE_PATH *)node)->Function, tail) < 0)
 			name = NULL;
 		break;
 	case HW_PCCARD_DP:

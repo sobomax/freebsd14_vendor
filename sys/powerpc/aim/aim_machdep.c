@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bfbea09781a6331cdf81ba5f2abb855b32aee12a $");
+__FBSDID("$FreeBSD: b8e797913408a91f8653946f4dcbe0cee1dcbf29 $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -118,7 +118,6 @@ __FBSDID("$FreeBSD: bfbea09781a6331cdf81ba5f2abb855b32aee12a $");
 #include <machine/metadata.h>
 #include <machine/mmuvar.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/sigframe.h>
 #include <machine/spr.h>
 #include <machine/trap.h>
@@ -587,8 +586,10 @@ pmap_early_io_map_init(void)
 {
 	if ((cpu_features2 & PPC_FEATURE2_ARCH_3_00) == 0)
 		radix_mmu = 0;
-	else
+	else {
+		radix_mmu = 1;
 		TUNABLE_INT_FETCH("radix_mmu", &radix_mmu);
+	}
 
 	/*
 	 * When using Radix, set the start and end of kva early, to be able to
@@ -747,7 +748,7 @@ flush_disable_caches(void)
 
 #ifndef __powerpc64__
 void
-mpc745x_sleep()
+mpc745x_sleep(void)
 {
 	static u_quad_t timebase = 0;
 	static register_t sprgs[4];

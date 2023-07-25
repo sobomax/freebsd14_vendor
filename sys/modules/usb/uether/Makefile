@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 838eeffcb17e5aff34b1f565c97fbc7366d112da $
+# $FreeBSD: c6b87d7d2e2a45e2a0905adcd4c7d8b2a0ea61dc $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -32,7 +32,7 @@ S=     ${SRCTOP}/sys
 KMOD=	uether
 SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h usbdevs.h \
 	miibus_if.h opt_inet.h \
-	usb_ethernet.c
+	usb_ethernet.c opt_platform.h
 
 EXPORT_SYMS=	YES
 

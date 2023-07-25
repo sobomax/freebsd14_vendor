@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90c27cabdf29d07f7027b1066acc9993a4048d02 $");
+__FBSDID("$FreeBSD: 9616ecb29a0b26e9ce859594373e8e83c683ff65 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -969,7 +969,7 @@ nat64lsn_maintain_hosts(struct nat64lsn_cfg *cfg)
 #endif
 
 /*
- * This procedure is used to perform various maintance
+ * This procedure is used to perform various maintenance
  * on dynamic hash list. Currently it is called every 4 seconds.
  */
 static void

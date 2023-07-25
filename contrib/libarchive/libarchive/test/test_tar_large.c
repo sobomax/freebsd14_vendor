@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6fb77768ba4653f6b56d16ae20ccc0740d4ae39c $");
+__FBSDID("$FreeBSD: 8a9405b68e64c4dd443875049a7bdf3ea2398265 $");
 
 #include <errno.h>
 #include <stdlib.h>
@@ -224,7 +224,7 @@ DEFINE_TEST(test_tar_large)
 	 */
 	for (i = 0; tests[i] != 0; i++) {
 		assert((ae = archive_entry_new()) != NULL);
-		sprintf(namebuff, "file_%d", i);
+		snprintf(namebuff, sizeof(namebuff), "file_%d", i);
 		archive_entry_copy_pathname(ae, namebuff);
 		archive_entry_set_mode(ae, S_IFREG | 0755);
 		filesize = tests[i];
@@ -271,7 +271,7 @@ DEFINE_TEST(test_tar_large)
 	 */
 	for (i = 0; tests[i] > 0; i++) {
 		assertEqualIntA(a, 0, archive_read_next_header(a, &ae));
-		sprintf(namebuff, "file_%d", i);
+		snprintf(namebuff, sizeof(namebuff), "file_%d", i);
 		assertEqualString(namebuff, archive_entry_pathname(ae));
 		assert(tests[i] == archive_entry_size(ae));
 	}

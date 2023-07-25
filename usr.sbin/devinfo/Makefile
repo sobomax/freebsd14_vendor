@@ -1,5 +1,6 @@
-# $FreeBSD: 681c8197f5de99bed39bbdc32fc23fd40331ff55 $
+# $FreeBSD: a740fd6a9b17a04a268203b58866bb764622b73c $
 
+PACKAGE=	devmatch
 PROG=	devinfo
 MAN=	devinfo.8
 

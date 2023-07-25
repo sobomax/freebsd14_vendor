@@ -1,8 +1,10 @@
-# $FreeBSD: 255f4a3542b3182f2bf00841ee64b09e934ed638 $
+# $FreeBSD: da180b10e733a8de0069d0f68239b35078516e6b $
 
 ZFSTOP= ${SRCTOP}/sys/contrib/openzfs
 
 .PATH: ${ZFSTOP}/cmd/zpool/compatibility.d
+
+PACKAGE=	zfs
 
 FILES= \
 	compat-2018 \

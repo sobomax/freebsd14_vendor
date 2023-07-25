@@ -1,4 +1,4 @@
-/* $FreeBSD: ad0381366f9830f42d175f4409f3bc604596b266 $ */
+/* $FreeBSD: 0bef7a10bc6cc39296594acb1b9df1543915ede8 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -123,6 +123,7 @@ MALLOC_DECLARE(M_USBDEV);
 #define	USB_RESUME_WAIT			50	/* ms */
 #define	USB_RESUME_RECOVERY		50	/* ms */
 #define	USB_EXTRA_POWER_UP_TIME		20	/* ms */
+#define	USB_ENUM_NICE_TIME		16	/* ms */
 
 #define	USB_MIN_POWER		100	/* mA */
 #define	USB_MAX_POWER		500	/* mA */

@@ -28,7 +28,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: e9d25f2ab170ed3e7f7d11b905e2906e3c14ce00 $");
+__FBSDID("$FreeBSD: 196559d9d2bce2cdcc5d672f074ba7cf9d828e61 $");
 
 ENTRY(.rtld_start)
 	mov	x19, x0		/* Put ps_strings in a callee-saved register */
@@ -194,7 +194,7 @@ ENTRY(_rtld_tlsdesc_dynamic)
 	 *
 	 */
 1:
-	/* Save all interger registers */
+	/* Save all integer registers */
 	stp	x29, x30, [sp, #-(8 * 16)]!
 	.cfi_adjust_cfa_offset	8 * 16
 	.cfi_rel_offset		x29, 0

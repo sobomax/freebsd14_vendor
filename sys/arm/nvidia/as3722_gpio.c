@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1afdb8a94f8b277384ddb327ae28fc9d789cd048 $");
+__FBSDID("$FreeBSD: bbe8b399be8a1f29bc59c75471b0f97ec9ca77bf $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -443,7 +443,7 @@ as3722_gpio_pin_setflags(device_t dev, uint32_t pin, uint32_t flags)
 	}
 	mode = as3722_gpio_get_mode(sc, pin, flags);
 	ctrl &= ~(AS3722_GPIO_MODE_MASK << AS3722_GPIO_MODE_SHIFT);
-	ctrl |= AS3722_MODE_PUSH_PULL << AS3722_GPIO_MODE_SHIFT;
+	ctrl |= mode << AS3722_GPIO_MODE_SHIFT;
 	rv = 0;
 	if (ctrl != sc->gpio_pins[pin]->pin_ctrl_reg) {
 		rv = WR1(sc, AS3722_GPIO0_CONTROL + pin, ctrl);

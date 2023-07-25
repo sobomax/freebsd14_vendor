@@ -1,4 +1,4 @@
-# $FreeBSD: 29bd6ea5e1af6628a455c406a3f81277a3e36005 $
+# $FreeBSD: e40265146657776b82c54c55133f957e58692507 $
 
 PACKAGE=	pkg-bootstrap
 
@@ -10,7 +10,7 @@ PKGCONFBRANCH?=	latest
 . if ${BRANCH:MBETA*} || ${BRANCH:MRC*} || ${BRANCH:MRELEASE*}
 PKGCONFBRANCH?=	quarterly
 . else
-.  if ${MACHINE} != "amd64" && ${MACHINE} != "i386"
+.  if ${MACHINE} != "amd64" && ${MACHINE} != "i386" && ${MACHINE} != "arm64"
 PKGCONFBRANCH?=	quarterly
 .  else
 PKGCONFBRANCH?=	latest

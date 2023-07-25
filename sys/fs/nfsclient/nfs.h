@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ce1747a2ab6bb398c6e5263dbeea4c82b34f910b $
+ * $FreeBSD: 94faeb381ac08cb07103f0d3e7ba6838875fdf0a $
  */
 
 #ifndef _NFSCLIENT_NFS_H_
@@ -107,7 +107,7 @@ void ncl_nodeunlock(struct nfsnode *);
 int ncl_getattrcache(struct vnode *, struct vattr *);
 int ncl_readrpc(struct vnode *, struct uio *, struct ucred *);
 int ncl_writerpc(struct vnode *, struct uio *, struct ucred *, int *, int *,
-    int);
+    int, int);
 int ncl_readlinkrpc(struct vnode *, struct uio *, struct ucred *);
 int ncl_readdirrpc(struct vnode *, struct uio *, struct ucred *,
     struct thread *);

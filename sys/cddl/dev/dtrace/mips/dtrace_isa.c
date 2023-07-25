@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: c09225c734b992109eeffa0ac5d7343428148bdd $
+ * $FreeBSD: 8d65012dadf0640d7fe52a3f4dfb851366c0fca6 $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -35,7 +35,6 @@
 
 #include <machine/frame.h>
 #include <machine/md_var.h>
-#include <machine/reg.h>
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>

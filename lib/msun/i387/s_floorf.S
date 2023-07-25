@@ -5,7 +5,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: e758d0576fa4a62d995f0276723065f65e81495a $");
+__FBSDID("$FreeBSD: ecd9307f7b3d65c55115f5ab3c00bc50471c0d58 $");
 /* RCSID("$NetBSD: s_floorf.S,v 1.3 1995/05/09 00:04:32 jtc Exp $") */
 
 ENTRY(floorf)
@@ -18,7 +18,7 @@ ENTRY(floorf)
 	orw	$0x0400,%dx		/* round towards -oo */
 	andw	$0xf7ff,%dx
 	movw	%dx,-8(%ebp)
-	fldcw	-8(%ebp)		/* load modfied control word */
+	fldcw	-8(%ebp)		/* load modified control word */
 
 	flds	8(%ebp);		/* round */
 	frndint

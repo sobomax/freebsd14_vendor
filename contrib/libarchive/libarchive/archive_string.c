@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: ac66eee2c496c7a0e677826f258c7042dc86725c $");
+__FBSDID("$FreeBSD: 0fd918f47909e9ce8589884445c4faed86b58e7c $");
 
 /*
  * Basic resizable string support, to simplify manipulating arbitrary-sized
@@ -3988,10 +3988,10 @@ int
 archive_mstring_get_mbs_l(struct archive *a, struct archive_mstring *aes,
     const char **p, size_t *length, struct archive_string_conv *sc)
 {
-	int r, ret = 0;
-
-	(void)r; /* UNUSED */
+	int ret = 0;
 #if defined(_WIN32) && !defined(__CYGWIN__)
+	int r;
+
 	/*
 	 * Internationalization programming on Windows must use Wide
 	 * characters because Windows platform cannot make locale UTF-8.

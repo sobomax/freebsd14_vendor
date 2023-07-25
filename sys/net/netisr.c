@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e4abea3174406e82bfef37a736b9408773a66b48 $");
+__FBSDID("$FreeBSD: 8527c165e4f52ec48ba6b7d7f6935ddff3efd77f $");
 
 /*
  * netisr is a packet dispatch service, allowing synchronous (directly
@@ -134,7 +134,7 @@ static SYSCTL_NODE(_net, OID_AUTO, isr, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
  * Three global direct dispatch policies are supported:
  *
  * NETISR_DISPATCH_DEFERRED: All work is deferred for a netisr, regardless of
- * context (may be overriden by protocols).
+ * context (may be overridden by protocols).
  *
  * NETISR_DISPATCH_HYBRID: If the executing context allows direct dispatch,
  * and we're running on the CPU the work would be performed on, then direct

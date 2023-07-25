@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf4c874c3cf2e079259439a3318127f965a5e376 $");
+__FBSDID("$FreeBSD: 5672787d5df740060046d7c8d18ea19329c61b08 $");
 
 #include "opt_compat.h"
 
@@ -46,6 +46,7 @@ __FBSDID("$FreeBSD: bf4c874c3cf2e079259439a3318127f965a5e376 $");
 #include <machine/atomic.h>
 #include <machine/md_var.h>
 
+#include <i386/linux/linux.h>
 #include <compat/linux/linux_emul.h>
 #include <compat/linux/linux_futex.h>
 
@@ -72,7 +73,7 @@ futex_xchgl(int oparg, uint32_t *uaddr, int *oldval)
 	st.oldval = oldval;
 	if (cp_slow0((vm_offset_t)uaddr, sizeof(uint32_t), true,
 	    futex_xchgl_slow0, &st) != 0)
-		return (-EFAULT);
+		return (EFAULT);
 	return (0);
 }
 
@@ -94,7 +95,7 @@ futex_addl(int oparg, uint32_t *uaddr, int *oldval)
 	st.oldval = oldval;
 	if (cp_slow0((vm_offset_t)uaddr, sizeof(uint32_t), true,
 	    futex_addl_slow0, &st) != 0)
-		return (-EFAULT);
+		return (EFAULT);
 	return (0);
 }
 
@@ -120,7 +121,7 @@ futex_orl(int oparg, uint32_t *uaddr, int *oldval)
 	st.oldval = oldval;
 	if (cp_slow0((vm_offset_t)uaddr, sizeof(uint32_t), true,
 	    futex_orl_slow0, &st) != 0)
-		return (-EFAULT);
+		return (EFAULT);
 	return (0);
 }
 
@@ -146,7 +147,7 @@ futex_andl(int oparg, uint32_t *uaddr, int *oldval)
 	st.oldval = oldval;
 	if (cp_slow0((vm_offset_t)uaddr, sizeof(uint32_t), true,
 	    futex_andl_slow0, &st) != 0)
-		return (-EFAULT);
+		return (EFAULT);
 	return (0);
 }
 
@@ -172,6 +173,6 @@ futex_xorl(int oparg, uint32_t *uaddr, int *oldval)
 	st.oldval = oldval;
 	if (cp_slow0((vm_offset_t)uaddr, sizeof(uint32_t), true,
 	    futex_xorl_slow0, &st) != 0)
-		return (-EFAULT);
+		return (EFAULT);
 	return (0);
 }

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 333015cc713983491c5f58fa794ca176ccfaa868 $
+ * $FreeBSD: 7f747b525d9c762a5dc2ace397880a54fa9503d7 $
  */
 
 #ifndef _MACHINE_COUNTER_H_
@@ -32,7 +32,7 @@
 #include <sys/pcpu.h>
 #include <machine/atomic.h>
 
-#define	EARLY_COUNTER	&__pcpu[0].pc_early_dummy_counter
+#define	EARLY_COUNTER	&pcpu0.pc_early_dummy_counter
 
 #define	counter_enter()	do {} while (0)
 #define	counter_exit()	do {} while (0)

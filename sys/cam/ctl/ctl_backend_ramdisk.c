@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6febdd469bddd19a02fc7c82d16673f63089d90b $");
+__FBSDID("$FreeBSD: 9ddee1814aa1f78f5047a1f49344ce1a7733bb8e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -386,6 +386,7 @@ ctl_backend_ramdisk_cmp(union ctl_io *io)
 		if (res < cbe_lun->blocksize)
 			break;
 	}
+	free(io->scsiio.kern_data_ptr, M_RAMDISK);
 	if (lbas > 0) {
 		off += io->scsiio.kern_rel_offset - io->scsiio.kern_data_len;
 		scsi_u64to8b(off, info);

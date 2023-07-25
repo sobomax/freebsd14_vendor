@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e35f2efb8dae3656a1df999d47badeae1cdea616 $
+ * $FreeBSD: 121d985e56fef90ba728f4f7efd1c1376fc5db6d $
  */
 
 extern "C" {
@@ -340,6 +340,9 @@ class MockFS {
 	/* pid of child process, for two-process test cases */
 	pid_t m_child_pid;
 
+	/* the expected errno of the next write to /dev/fuse */
+	int m_expected_write_errno;
+
 	/* Maximum size of a FUSE_WRITE write */
 	uint32_t m_maxwrite;
 
@@ -358,7 +361,7 @@ class MockFS {
 		enum poll_method pm, uint32_t flags,
 		uint32_t kernel_minor_version, uint32_t max_write, bool async,
 		bool no_clusterr, unsigned time_gran, bool nointr,
-		bool noatime);
+		bool noatime, const char *fsname, const char *subtype);
 
 	virtual ~MockFS();
 

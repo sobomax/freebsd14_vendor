@@ -1,4 +1,3 @@
-/* $FreeBSD: af1f80bb599aa75dc5ce278f79d27abcb2dc96df $ */
 #define GSSAPI 1
 #define HAVE_DECL_GSS_C_NT_HOSTBASED_SERVICE 1
 #define HAVE_GSSAPI_GSSAPI_H 1

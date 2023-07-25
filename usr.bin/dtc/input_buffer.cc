@@ -29,13 +29,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1f4775c8b78cef17e248329c1ae42bb7ccf989ce $
+ * $FreeBSD: 052178949cb2dfe92cb74bd056e16fda4fab17ea $
  */
 
 #include "input_buffer.hh"
 #include <ctype.h>
 #include <errno.h>
-#include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,6 +43,7 @@
 #ifndef NDEBUG
 #include <iostream>
 #endif
+#include <limits>
 
 
 #include <sys/stat.h>

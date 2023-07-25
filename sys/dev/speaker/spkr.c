@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5cef331eae5f2d1e461e747f69a5c3f3cf3fed3c $");
+__FBSDID("$FreeBSD: 86b58cda9843d7af5a3db0a4a9a1bd01c86a50ac $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -179,7 +179,7 @@ static int pitchtab[] =
 };
 
 static void
-playinit()
+playinit(void)
 {
     octave = DFLT_OCTAVE;
     whole = (100 * SECS_PER_MIN * WHOLE_NOTE) / DFLT_TEMPO;

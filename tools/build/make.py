@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 799ea89b74b35a91c05930b34f5ab7b9763243be $
+# $FreeBSD: cede0c99e31651d656aa3b2901278fc5dd4dd9da $
 #
 
 # This script makes it easier to build on non-FreeBSD systems by bootstrapping
@@ -267,5 +267,13 @@ if __name__ == "__main__":
         shlex.quote(s) for s in [str(bmake_binary)] + bmake_args)
     debug("Running `env ", env_cmd_str, " ", make_cmd_str, "`", sep="")
     os.environ.update(new_env_vars)
+
+    # Fedora defines bash function wrapper for some shell commands and this
+    # makes 'which <command>' return the function's source code instead of
+    # the binary path. Undefine it to restore the original behavior.
+    os.unsetenv("BASH_FUNC_which%%")
+    os.unsetenv("BASH_FUNC_ml%%")
+    os.unsetenv("BASH_FUNC_module%%")
+
     os.chdir(str(source_root))
     os.execv(str(bmake_binary), [str(bmake_binary)] + bmake_args)

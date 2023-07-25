@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03bbf75ebf7192c4f97e042a08bf8373bc6a8e8a $");
+__FBSDID("$FreeBSD: 4e8068873fca797daecdcecbf659bc031f536a12 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -286,17 +286,6 @@ cpu_fork_kthread_handler(struct thread *td, void (*func)(void *), void *arg)
 {
 	td->td_pcb->pcb_regs.sf_r4 = (register_t)func;	/* function */
 	td->td_pcb->pcb_regs.sf_r5 = (register_t)arg;	/* first arg */
-}
-
-/*
- * Software interrupt handler for queued VM system processing.
- */
-void
-swi_vm(void *dummy)
-{
-
-	if (busdma_swi_pending)
-		busdma_swi();
 }
 
 void

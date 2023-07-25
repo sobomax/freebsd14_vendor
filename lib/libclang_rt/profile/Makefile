@@ -1,4 +1,4 @@
-# $FreeBSD: d683983e5b9705c8ff2c6e6f2760cd3a7b15fb9a $
+# $FreeBSD: 8d1eb6ebd3ba035d3b7bf2a03c1cec69d15a1e1a $
 
 .include <bsd.init.mk>
 
@@ -30,5 +30,6 @@ SRCS+=		profile/InstrProfilingWriter.c
 .PATH:		${CRTSRC}/include/profile
 INCSDIR=	${CLANGDIR}/include/profile
 INCS+=		InstrProfData.inc
+INCS+=		MemProfData.inc
 
 .include <bsd.lib.mk>

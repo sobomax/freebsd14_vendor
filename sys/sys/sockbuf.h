@@ -30,7 +30,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: a263555b3a2148c07b543cf35b0e6bce919d5390 $
+ * $FreeBSD: 57f080615bdce2fc4a20ae68ae2e3c7e500336c1 $
  */
 #ifndef _SYS_SOCKBUF_H_
 #define _SYS_SOCKBUF_H_
@@ -176,6 +176,8 @@ void	sbrelease_locked(struct sockbuf *sb, struct socket *so);
 int	sbsetopt(struct socket *so, int cmd, u_long cc);
 int	sbreserve_locked(struct sockbuf *sb, u_long cc, struct socket *so,
 	    struct thread *td);
+int	sbreserve_locked_limit(struct sockbuf *sb, u_long cc, struct socket *so,
+	    u_long buf_max, struct thread *td);
 void	sbsndptr_adv(struct sockbuf *sb, struct mbuf *mb, u_int len);
 struct mbuf *
 	sbsndptr_noadv(struct sockbuf *sb, u_int off, u_int *moff);

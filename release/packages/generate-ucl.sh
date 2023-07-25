@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 2988b48b10a91b527a417e0a3da0a8dde1bec808 $
+# $FreeBSD: 2b1f71e95c11adbab5815e9a4c7bdb1c8fd9f005 $
 #
 
 main() {
@@ -45,6 +45,21 @@ main() {
 		caroot)
 			pkgdeps="openssl"
 			;;
+
+		# -dev packages that have no corresponding non-dev package
+		# as a dependency.
+		libcompat-dev|liby-dev)
+			outname=${outname%%-dev}
+			_descr="Development Files"
+			;;
+		libcompat-lib32_dev|liby-lib32_dev)
+			outname=${outname%%-lib32_dev}
+			_descr="32-bit Libraries, Development Files"
+			;;
+		libcompat-man|libelftc-man)
+			outname=${outname%%-man}
+			_descr="Manual Pages"
+			;;
 		utilities)
 			uclfile="${uclfile}"
 			;;
@@ -84,7 +99,6 @@ main() {
 			pkgdeps="${outname}"
 			;;
 		${origname})
-			pkgdeps="runtime"
 			;;
 		*)
 			uclfile="${outname##*}${origname}"

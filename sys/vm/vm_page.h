@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 7c996d1f55ab7a553e4710805c3833fa1cf1d25d $
+ * $FreeBSD: c02db5ee52fcf8a9cf894528a4c1195afc470572 $
  */
 
 /*
@@ -984,6 +984,13 @@ vm_page_all_valid(vm_page_t m)
 {
 
 	return (m->valid == VM_PAGE_BITS_ALL);
+}
+
+static inline bool
+vm_page_any_valid(vm_page_t m)
+{
+
+	return (m->valid != 0);
 }
 
 static inline bool

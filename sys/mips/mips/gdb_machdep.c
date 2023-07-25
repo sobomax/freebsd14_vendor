@@ -87,7 +87,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	JNPR: gdb_machdep.c,v 1.1 2007/08/09 12:25:25 katta
- * $FreeBSD: 130a78f9eb876596c8c0163c8ba5e02d7701da36 $
+ * $FreeBSD: 4b999613d7f6887161d329d1b990ad2ff8016594 $
  */
 
 #include <sys/cdefs.h>
@@ -101,7 +101,6 @@
 
 #include <machine/gdb_machdep.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/trap.h>
 
 #include <gdb/gdb.h>

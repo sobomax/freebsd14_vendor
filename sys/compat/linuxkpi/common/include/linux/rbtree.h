@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: de5ef0d6a3ce3dc852235aa7001361dff66250e6 $
+ * $FreeBSD: bd2589392bf1e553f053fe982f11b9ccf6cecad3 $
  */
 #ifndef	_LINUXKPI_LINUX_RBTREE_H_
 #define	_LINUXKPI_LINUX_RBTREE_H_
@@ -41,8 +41,8 @@
 struct rb_node {
 	RB_ENTRY(rb_node)	__entry;
 };
-#define	rb_left		__entry.rbe_left
-#define	rb_right	__entry.rbe_right
+#define	rb_left		__entry.rbe_link[_RB_L-1]
+#define	rb_right	__entry.rbe_link[_RB_R-1]
 
 /*
  * We provide a false structure that has the same bit pattern as tree.h
@@ -74,7 +74,7 @@ RB_PROTOTYPE(linux_root, rb_node, __entry, panic_cmp);
 #define RB_EMPTY_NODE(node)     (RB_PARENT(node, __entry) == node)
 #define RB_CLEAR_NODE(node)     RB_SET_PARENT(node, node, __entry)
 
-#define	rb_insert_color(node, root)					\
+#define rb_insert_color(node, root)					\
 	linux_root_RB_INSERT_COLOR((struct linux_root *)(root), (node))
 #define	rb_erase(node, root)						\
 	linux_root_RB_REMOVE((struct linux_root *)(root), (node))
@@ -132,11 +132,12 @@ rb_replace_node(struct rb_node *victim, struct rb_node *new,
     struct rb_root *root)
 {
 
-	RB_SWAP_CHILD((struct linux_root *)root, victim, new, __entry);
-	if (victim->rb_left)
-		RB_SET_PARENT(victim->rb_left, new, __entry);
-	if (victim->rb_right)
-		RB_SET_PARENT(victim->rb_right, new, __entry);
+	RB_SWAP_CHILD((struct linux_root *)root, rb_parent(victim),
+	    victim, new, __entry);
+	if (RB_LEFT(victim, __entry))
+		RB_SET_PARENT(RB_LEFT(victim, __entry), new, __entry);
+	if (RB_RIGHT(victim, __entry))
+		RB_SET_PARENT(RB_RIGHT(victim, __entry), new, __entry);
 	*new = *victim;
 }
 

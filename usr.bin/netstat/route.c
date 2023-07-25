@@ -36,7 +36,7 @@ static char sccsid[] = "From: @(#)route.c	8.6 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 317e3ffb960781aa276eb5755206cbae0b37b42d $");
+__FBSDID("$FreeBSD: c2a68cae87e83239a2eec4820abe175ce8ab13f2 $");
 
 #include <sys/param.h>
 #include <sys/protosw.h>
@@ -329,6 +329,8 @@ p_rtentry_sysctl(const char *name, struct rt_msghdr *rtm)
 	snprintf(buffer, sizeof(buffer), "{[:-%d}{:flags/%%s}{]:} ",
 	    wid_flags - protrusion);
 	p_flags(rtm->rtm_flags, buffer);
+	/* Output path weight as non-visual property */
+	xo_emit("{e:weight/%u}", rtm->rtm_rmx.rmx_weight);
 	if (Wflag) {
 		/* XXX: use=0? */
 		xo_emit("{t:nhop/%*lu} ", wid_mtu, rtm->rtm_rmx.rmx_nhidx);

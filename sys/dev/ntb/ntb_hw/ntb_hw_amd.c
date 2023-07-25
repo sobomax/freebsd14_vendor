@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 450a3a2fa2b8e4c9f22e2c420101fdbb7bbe04f0 $");
+__FBSDID("$FreeBSD: fc77e39ae1a06d46fadeae24693a9577d517e02d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -1112,10 +1112,10 @@ static void
 print_map_success(struct amd_ntb_softc *ntb, struct amd_ntb_pci_bar_info *bar,
     const char *kind)
 {
-	amd_ntb_printf(0, "Mapped BAR%d v:[%p-%p] p:[%p-%p] (0x%jx bytes) (%s)\n",
+	amd_ntb_printf(0, "Mapped BAR%d v:[%p-%p] p:[0x%jx-0x%jx] (0x%jx bytes) (%s)\n",
 	    PCI_RID2BAR(bar->pci_resource_id), bar->vbase,
-	    (char *)bar->vbase + bar->size - 1, (void *)bar->pbase,
-	    (void *)(bar->pbase + bar->size - 1), (uintmax_t)bar->size, kind);
+	    (char *)bar->vbase + bar->size - 1, (uintmax_t)bar->pbase,
+	    (uintmax_t)(bar->pbase + bar->size - 1), (uintmax_t)bar->size, kind);
 }
 
 static void

@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67c46d715885e471bb7a6f208e8ef94d8eeb2daa $
+ * $FreeBSD: 121793b18007ae17f9da5acbecb1de0491c2235e $
  */
 
 LIST_HEAD(class_list_head, g_class);
@@ -46,7 +46,7 @@ extern int g_collectstats;
 
 /* geom_dump.c */
 void g_confxml(void *, int flag);
-void g_conf_specific(struct sbuf *sb, struct g_class *mp, struct g_geom *gp, struct g_provider *pp, struct g_consumer *cp);
+void g_conf_specific(struct sbuf *sb, struct g_geom **gps);
 void g_conf_cat_escaped(struct sbuf *sb, const char *buf);
 void g_conf_printf_escaped(struct sbuf *sb, const char *fmt, ...);
 void g_confdot(void *, int flag);

@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: 4f9041c43bc08d0f8dd1d9129664a1028ce6e1a1 $
+ *	$FreeBSD: 4b7f3412233770c2e146bea79c94adb6b3b56ee6 $
  */
 
 #ifndef _NET_PFVAR_H_
@@ -349,6 +349,7 @@ struct pfi_dynaddr {
 extern struct mtx_padalign pf_unlnkdrules_mtx;
 #define	PF_UNLNKDRULES_LOCK()	mtx_lock(&pf_unlnkdrules_mtx)
 #define	PF_UNLNKDRULES_UNLOCK()	mtx_unlock(&pf_unlnkdrules_mtx)
+#define	PF_UNLNKDRULES_ASSERT()	mtx_assert(&pf_unlnkdrules_mtx, MA_OWNED)
 
 extern struct rmlock pf_rules_lock;
 #define	PF_RULES_RLOCK_TRACKER	struct rm_priotracker _pf_rules_tracker
@@ -1418,7 +1419,7 @@ struct pf_divert {
 
 /*
  * The number of entries in the fragment queue must be limited
- * to avoid DoS by linear seaching.  Instead of a global limit,
+ * to avoid DoS by linear searching.  Instead of a global limit,
  * use a limit per entry point.  For large packets these sum up.
  */
 #define PF_FRAG_ENTRY_LIMIT		64
@@ -2107,6 +2108,7 @@ int			 pf_set_syncookies(struct pfioc_nv *);
 int			 pf_synflood_check(struct pf_pdesc *);
 void			 pf_syncookie_send(struct mbuf *m, int off,
 			    struct pf_pdesc *);
+bool			 pf_syncookie_check(struct pf_pdesc *);
 u_int8_t		 pf_syncookie_validate(struct pf_pdesc *);
 struct mbuf *		 pf_syncookie_recreate_syn(uint8_t, int,
 			    struct pf_pdesc *);

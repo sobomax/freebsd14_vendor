@@ -1,4 +1,4 @@
-/* $FreeBSD: de286684465223cd73ecccc88e6cffc334fda1cd $ */
+/* $FreeBSD: b19cf1d0b2d33126828820e06545ca10b803273a $ */
 /* Do not modify. This file is auto-generated from e_padlock-x86_64.pl. */
 .text	
 .globl	padlock_capability
@@ -45,6 +45,8 @@ padlock_capability:
 .align	16
 padlock_key_bswap:
 	movl	240(%rdi),%edx
+	incl	%edx
+	shll	$2,%edx
 .Lbswap_loop:
 	movl	(%rdi),%eax
 	bswapl	%eax

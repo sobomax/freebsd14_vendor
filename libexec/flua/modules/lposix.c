@@ -25,11 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: adf3a7bb9a1fa3123525a5301d96aa43988abeda $");
+__FBSDID("$FreeBSD: 22df27ff29711d600d0de1f8db5026d7ad8e4c38 $");
 
 #include <sys/stat.h>
 
 #include <errno.h>
+#include <grp.h>
+#include <pwd.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -64,6 +66,62 @@ lua_chmod(lua_State *L)
 }
 
 static int
+lua_chown(lua_State *L)
+{
+	int n;
+	const char *path;
+	uid_t owner = (uid_t) -1;
+	gid_t group = (gid_t) -1;
+
+	n = lua_gettop(L);
+	luaL_argcheck(L, n > 1, n,
+	   "chown takes at least two arguments");
+	path = luaL_checkstring(L, 1);
+	if (lua_isinteger(L, 2))
+		owner = (uid_t) lua_tointeger(L, 2);
+	else if (lua_isstring(L, 2)) {
+		struct passwd *p = getpwnam(lua_tostring(L, 2));
+		if (p != NULL)
+			owner = p->pw_uid;
+		else
+			return (luaL_argerror(L, 2,
+			    lua_pushfstring(L, "unknown user %s",
+			    lua_tostring(L, 2))));
+	} else if (!lua_isnoneornil(L, 2)) {
+		const char *type = luaL_typename(L, 2);
+		return (luaL_argerror(L, 2,
+		    lua_pushfstring(L, "integer or string expected, got %s",
+		    type)));
+	}
+
+	if (lua_isinteger(L, 3))
+		group = (gid_t) lua_tointeger(L, 3);
+	else if (lua_isstring(L, 3)) {
+		struct group *g = getgrnam(lua_tostring(L, 3));
+		if (g != NULL)
+			group = g->gr_gid;
+		else
+			return (luaL_argerror(L, 3,
+			    lua_pushfstring(L, "unknown group %s",
+			    lua_tostring(L, 3))));
+	} else if (!lua_isnoneornil(L, 3)) {
+		const char *type = luaL_typename(L, 3);
+		return (luaL_argerror(L, 3,
+		    lua_pushfstring(L, "integer or string expected, got %s",
+		    type)));
+	}
+
+	if (chown(path, owner, group) == -1) {
+		lua_pushnil(L);
+		lua_pushstring(L, strerror(errno));
+		lua_pushinteger(L, errno);
+		return (3);
+	}
+	lua_pushinteger(L, 0);
+	return (1);
+}
+
+static int
 lua_getpid(lua_State *L)
 {
 	int n;
@@ -82,6 +140,7 @@ static const struct luaL_Reg sys_statlib[] = {
 
 static const struct luaL_Reg unistdlib[] = {
 	REG_SIMPLE(getpid),
+	REG_SIMPLE(chown),
 	{ NULL, NULL },
 };
 #undef REG_SIMPLE

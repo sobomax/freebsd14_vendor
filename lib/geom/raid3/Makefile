@@ -1,6 +1,6 @@
-# $FreeBSD: 2fdf4e8f8167955f590a5f4dafd97f638edaf593 $
+# $FreeBSD: 29aeb9d595b5a3493ec8d2f0a5242d397bc29b0b $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	raid3

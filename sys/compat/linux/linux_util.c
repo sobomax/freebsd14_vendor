@@ -32,18 +32,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86266fd3178fb96088852184b4d5888aafa7a59c $");
+__FBSDID("$FreeBSD: ad6ad8f26261144e72488c59bea7dc86ea81317e $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/fcntl.h>
 #include <sys/jail.h>
-#include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/kernel.h>
 #include <sys/linker_set.h>
-#include <sys/mutex.h>
 #include <sys/namei.h>
 #include <sys/proc.h>
 #include <sys/sdt.h>
@@ -51,10 +49,6 @@ __FBSDID("$FreeBSD: 86266fd3178fb96088852184b4d5888aafa7a59c $");
 #include <sys/sysctl.h>
 #include <sys/systm.h>
 #include <sys/vnode.h>
-
-#include <net/if.h>
-#include <net/if_var.h>
-#include <net/if_types.h>
 
 #include <machine/stdarg.h>
 
@@ -64,8 +58,6 @@ __FBSDID("$FreeBSD: 86266fd3178fb96088852184b4d5888aafa7a59c $");
 
 MALLOC_DEFINE(M_LINUX, "linux", "Linux mode structures");
 MALLOC_DEFINE(M_EPOLL, "lepoll", "Linux events structures");
-MALLOC_DEFINE(M_FUTEX, "futex", "Linux futexes");
-MALLOC_DEFINE(M_FUTEX_WP, "futex wp", "Linux futex waiting proc");
 
 FEATURE(linuxulator_v4l, "V4L ioctl wrapper support in the linuxulator");
 FEATURE(linuxulator_v4l2, "V4L2 ioctl wrapper support in the linuxulator");
@@ -90,11 +82,6 @@ SYSCTL_STRING(_compat_linux, OID_AUTO, emul_path, CTLFLAG_RWTUN,
     linux_emul_path, sizeof(linux_emul_path),
     "Linux runtime environment path");
 
-static bool use_real_ifnames = false;
-SYSCTL_BOOL(_compat_linux, OID_AUTO, use_real_ifnames, CTLFLAG_RWTUN,
-    &use_real_ifnames, 0,
-    "Use FreeBSD interface names instead of generating ethN aliases");
-
 /*
  * Search an alternate path before passing pathname arguments on to
  * system calls. Useful for keeping a separate 'emulation tree'.
@@ -103,12 +90,12 @@ SYSCTL_BOOL(_compat_linux, OID_AUTO, use_real_ifnames, CTLFLAG_RWTUN,
  * named file, i.e. we check if the directory it should be in exists.
  */
 int
-linux_emul_convpath(struct thread *td, const char *path, enum uio_seg pathseg,
+linux_emul_convpath(const char *path, enum uio_seg pathseg,
     char **pbuf, int cflag, int dfd)
 {
 	int retval;
 
-	retval = kern_alternate_path(td, linux_emul_path, path, pathseg, pbuf,
+	retval = kern_alternate_path(curthread, linux_emul_path, path, pathseg, pbuf,
 	    cflag, dfd);
 
 	return (retval);
@@ -244,7 +231,7 @@ linux_vn_get_major_minor(const struct vnode *vp, int *major, int *minor)
 }
 
 char *
-linux_get_char_devices()
+linux_get_char_devices(void)
 {
 	struct device_element *de;
 	char *temp, *string, *last;
@@ -327,10 +314,4 @@ linux_device_unregister_handler(struct linux_device_handler *d)
 	}
 
 	return (EINVAL);
-}
-
-bool
-linux_use_real_ifname(const struct ifnet *ifp)
-{
-	return (use_real_ifnames || !IFP_IS_ETH(ifp));
 }

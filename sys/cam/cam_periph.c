@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a76f20480aff1694807e1ad5e3221dbdfe221d12 $");
+__FBSDID("$FreeBSD: e7fbc8c41c0a0346383815286ceb6e31df3f57f5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -527,6 +527,20 @@ cam_periph_unhold(struct cam_periph *periph)
 	}
 
 	cam_periph_release_locked(periph);
+}
+
+void
+cam_periph_hold_boot(struct cam_periph *periph)
+{
+
+	root_mount_hold_token(periph->periph_name, &periph->periph_rootmount);
+}
+
+void
+cam_periph_release_boot(struct cam_periph *periph)
+{
+
+	root_mount_rel(&periph->periph_rootmount);
 }
 
 /*

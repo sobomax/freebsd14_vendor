@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f18a7e6fa9945169a5770af8ec09a7ef006a72ac $");
+__FBSDID("$FreeBSD: 4533632500f26efb862768e509c7a1c6acc1c7d7 $");
 
 #include <sys/endian.h>
 #include <sys/types.h>
@@ -60,23 +60,26 @@ __FBSDID("$FreeBSD: f18a7e6fa9945169a5770af8ec09a7ef006a72ac $");
 #else /* BYTE_ORDER != BIG_ENDIAN */
 
 /*
- * Encode a length len/4 vector of (uint64_t) into a length len vector of
- * (unsigned char) in big-endian form.  Assumes len is a multiple of 8.
+ * Encode a length (len + 7) / 8 vector of (uint64_t) into a length len
+ * vector of (unsigned char) in big-endian form.  Assumes len is a
+ * multiple of 4.
  */
-static void
+static inline void
 be64enc_vect(unsigned char *dst, const uint64_t *src, size_t len)
 {
 	size_t i;
 
 	for (i = 0; i < len / 8; i++)
 		be64enc(dst + i * 8, src[i]);
+	if (len % 8 == 4)
+		be32enc(dst + i * 8, src[i] >> 32);
 }
 
 /*
  * Decode a big-endian length len vector of (unsigned char) into a length
- * len/4 vector of (uint64_t).  Assumes len is a multiple of 8.
+ * len/8 vector of (uint64_t).  Assumes len is a multiple of 8.
  */
-static void
+static inline void
 be64dec_vect(uint64_t *dst, const unsigned char *src, size_t len)
 {
 	size_t i;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 84333535dbfccc162e1d2cd03c23e71c955544dd $");
+__FBSDID("$FreeBSD: 4512a9c83bb2cd57860b71c106ccb693e473b1fd $");
 
 #include "opt_bus.h"
 #include "opt_ddb.h"
@@ -865,6 +865,27 @@ static kobj_method_t null_methods[] = {
 
 DEFINE_CLASS(null, null_methods, 0);
 
+struct mtx *
+bus_topo_mtx(void)
+{
+
+	return (&Giant);
+}
+
+void
+bus_topo_lock(void)
+{
+
+	mtx_lock(bus_topo_mtx());
+}
+
+void
+bus_topo_unlock(void)
+{
+
+	mtx_unlock(bus_topo_mtx());
+}
+
 /*
  * Bus pass implementation
  */
@@ -1110,6 +1131,7 @@ int
 devclass_add_driver(devclass_t dc, driver_t *driver, int pass, devclass_t *dcp)
 {
 	driverlink_t dl;
+	devclass_t child_dc;
 	const char *parentname;
 
 	PDEBUG(("%s", DRIVERNAME(driver)));
@@ -1141,7 +1163,9 @@ devclass_add_driver(devclass_t dc, driver_t *driver, int pass, devclass_t *dcp)
 		parentname = driver->baseclasses[0]->name;
 	else
 		parentname = NULL;
-	*dcp = devclass_find_internal(driver->name, parentname, TRUE);
+	child_dc = devclass_find_internal(driver->name, parentname, TRUE);
+	if (dcp != NULL)
+		*dcp = child_dc;
 
 	dl->driver = driver;
 	TAILQ_INSERT_TAIL(&dc->drivers, dl, link);
@@ -2420,6 +2444,47 @@ device_printf(device_t dev, const char * fmt, ...)
 }
 
 /**
+ * @brief Print the name of the device followed by a colon, a space
+ * and the result of calling log() with the value of @p fmt and
+ * the following arguments.
+ *
+ * @returns the number of characters printed
+ */
+int
+device_log(device_t dev, int pri, const char * fmt, ...)
+{
+	char buf[128];
+	struct sbuf sb;
+	const char *name;
+	va_list ap;
+	size_t retval;
+
+	retval = 0;
+
+	sbuf_new(&sb, buf, sizeof(buf), SBUF_FIXEDLEN);
+
+	name = device_get_name(dev);
+
+	if (name == NULL)
+		sbuf_cat(&sb, "unknown: ");
+	else
+		sbuf_printf(&sb, "%s%d: ", name, device_get_unit(dev));
+
+	va_start(ap, fmt);
+	sbuf_vprintf(&sb, fmt, ap);
+	va_end(ap);
+
+	sbuf_finish(&sb);
+
+	log(pri, "%.*s", (int) sbuf_len(&sb), sbuf_data(&sb));
+	retval = sbuf_len(&sb);
+
+	sbuf_delete(&sb);
+
+	return (retval);
+}
+
+/**
  * @internal
  */
 static void
@@ -2648,6 +2713,38 @@ void
 device_verbose(device_t dev)
 {
 	dev->flags &= ~DF_QUIET;
+}
+
+ssize_t
+device_get_property(device_t dev, const char *prop, void *val, size_t sz,
+    device_property_type_t type)
+{
+	device_t bus = device_get_parent(dev);
+
+	switch (type) {
+	case DEVICE_PROP_ANY:
+	case DEVICE_PROP_BUFFER:
+	case DEVICE_PROP_HANDLE:	/* Size checks done in implementation. */
+		break;
+	case DEVICE_PROP_UINT32:
+		if (sz % 4 != 0)
+			return (-1);
+		break;
+	case DEVICE_PROP_UINT64:
+		if (sz % 8 != 0)
+			return (-1);
+		break;
+	default:
+		return (-1);
+	}
+
+	return (BUS_GET_PROPERTY(bus, dev, prop, val, sz, type));
+}
+
+bool
+device_has_property(device_t dev, const char *prop)
+{
+	return (device_get_property(dev, prop, NULL, 0, DEVICE_PROP_ANY) >= 0);
 }
 
 /**
@@ -4049,6 +4146,23 @@ bus_generic_write_ivar(device_t dev, device_t child, int index,
 }
 
 /**
+ * @brief Helper function for implementing BUS_GET_PROPERTY().
+ *
+ * This simply calls the BUS_GET_PROPERTY of the parent of dev,
+ * until a non-default implementation is found.
+ */
+ssize_t
+bus_generic_get_property(device_t dev, device_t child, const char *propname,
+    void *propvalue, size_t size, device_property_type_t type)
+{
+	if (device_get_parent(dev) != NULL)
+		return (BUS_GET_PROPERTY(device_get_parent(dev), child,
+		    propname, propvalue, size, type));
+
+	return (-1);
+}
+
+/**
  * @brief Stub function for implementing BUS_GET_RESOURCE_LIST().
  *
  * @returns NULL
@@ -4541,7 +4655,7 @@ bus_generic_get_domain(device_t dev, device_t child, int *domain)
 int
 bus_null_rescan(device_t dev)
 {
-	return (ENXIO);
+	return (ENODEV);
 }
 
 /*
@@ -5674,7 +5788,7 @@ devctl2_ioctl(struct cdev *cdev, u_long cmd, caddr_t data, int fflag,
 	int error, old;
 
 	/* Locate the device to control. */
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	req = (struct devreq *)data;
 	switch (cmd) {
 	case DEV_ATTACH:
@@ -5701,7 +5815,7 @@ devctl2_ioctl(struct cdev *cdev, u_long cmd, caddr_t data, int fflag,
 		break;
 	}
 	if (error) {
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 		return (error);
 	}
 
@@ -5922,7 +6036,7 @@ devctl2_ioctl(struct cdev *cdev, u_long cmd, caddr_t data, int fflag,
 		    req->dr_flags);
 		break;
 	}
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	return (error);
 }
 

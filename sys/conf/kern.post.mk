@@ -1,4 +1,4 @@
-# $FreeBSD: 79a6d3b516ca8090d97ab3fa38dbd649fc3a3b86 $
+# $FreeBSD: fd5abb039b1a25d61c7b8aadcf898625f19aeaa1 $
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES
@@ -349,8 +349,6 @@ ${__obj}: ${OBJS_DEPEND_GUESS.${__obj}}
 
 .depend: .PRECIOUS ${SRCS}
 
-_MAP_DEBUG_PREFIX= yes
-
 _ILINKS= machine
 .if ${MACHINE} != ${MACHINE_CPUARCH} && ${MACHINE} != "arm64"
 _ILINKS+= ${MACHINE_CPUARCH}
@@ -365,12 +363,10 @@ _ILINKS+= x86
 .if !exists(${.OBJDIR}/${_link})
 ${SRCS} ${DEPENDOBJS}: ${_link}
 .endif
-.if defined(_MAP_DEBUG_PREFIX)
 .if ${_link} == "machine"
 CFLAGS+= -fdebug-prefix-map=./machine=${SYSDIR}/${MACHINE}/include
 .else
 CFLAGS+= -fdebug-prefix-map=./${_link}=${SYSDIR}/${_link}/include
-.endif
 .endif
 .endfor
 

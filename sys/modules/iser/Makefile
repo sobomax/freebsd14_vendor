@@ -1,4 +1,4 @@
-# $FreeBSD: c24c42a0f6fb75f26f777cb17a9c36f33eeac50b $
+# $FreeBSD: 4961c95599af08c95bf3e4d1e66e7a98ef1ecd03 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -18,7 +18,7 @@ SRCS+=	opt_inet.h opt_inet6.h opt_cam.h icl_conn_if.h
 CFLAGS+= -I${SYSDIR}/
 CFLAGS+= -I${SYSDIR}/ofed/include
 CFLAGS+= -I${SYSDIR}/ofed/include/uapi
-CFLAGS+= -I${SYSDIR}/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 CFLAGS+= -DCONFIG_INFINIBAND_USER_MEM
 CFLAGS+= -DINET6 -DINET
 CFLAGS+= -fms-extensions

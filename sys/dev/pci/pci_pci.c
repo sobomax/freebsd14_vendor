@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cecf75024d3f56589caf2b947b04f2afb8b280b5 $");
+__FBSDID("$FreeBSD: b735da657a6cd61b44c654653eb7bc6227ef4a95 $");
 
 /*
  * PCI:PCI bridge support.
@@ -1096,6 +1096,11 @@ pcib_hotplug_present(struct pcib_softc *sc)
 	return (-1);
 }
 
+static int pci_enable_pcie_ei = 0;
+SYSCTL_INT(_hw_pci, OID_AUTO, enable_pcie_ei, CTLFLAG_RWTUN,
+    &pci_enable_pcie_ei, 0,
+    "Enable support for PCI-express Electromechanical Interlock.");
+
 static void
 pcib_pcie_hotplug_update(struct pcib_softc *sc, uint16_t val, uint16_t mask,
     bool schedule_task)
@@ -1135,7 +1140,8 @@ pcib_pcie_hotplug_update(struct pcib_softc *sc, uint16_t val, uint16_t mask,
 	 * process of detaching), disable the Electromechanical
 	 * Interlock.
 	 */
-	if (sc->pcie_slot_cap & PCIEM_SLOT_CAP_EIP) {
+	if ((sc->pcie_slot_cap & PCIEM_SLOT_CAP_EIP) &&
+	    pci_enable_pcie_ei) {
 		mask |= PCIEM_SLOT_CTL_EIC;
 		ei_engaged = (sc->pcie_slot_sta & PCIEM_SLOT_STA_EIS) != 0;
 		if (card_inserted != ei_engaged)
@@ -1397,7 +1403,7 @@ pcib_setup_hotplug(struct pcib_softc *sc)
 	    pcib_pcie_cc_timeout, sc);
 	TIMEOUT_TASK_INIT(taskqueue_pci_hp, &sc->pcie_dll_task, 0,
 	    pcib_pcie_dll_timeout, sc);
-	sc->pcie_hp_lock = &Giant;
+	sc->pcie_hp_lock = bus_topo_mtx();
 
 	/* Allocate IRQ. */
 	if (pcib_alloc_pcie_irq(sc) != 0)

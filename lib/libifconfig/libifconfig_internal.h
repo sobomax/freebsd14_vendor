@@ -23,7 +23,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d9803a05c6752d64232df5646d980b7e59ffa337 $
+ * $FreeBSD: 77add7574fa809430448b4fec0f800790dc0fdf9 $
  */
 
 #pragma once
@@ -38,13 +38,13 @@ struct errstate {
 	ifconfig_errtype errtype;
 
 	/**
-	 * The error occured in this ioctl() request.
+	 * The error occurred in this ioctl() request.
 	 * Populated if errtype = IOCTL
 	 */
 	unsigned long ioctl_request;
 
 	/**
-	 * The value of the global errno variable when the error occured.
+	 * The value of the global errno variable when the error occurred.
 	 */
 	int errcode;
 };

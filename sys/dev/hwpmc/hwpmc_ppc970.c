@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39dc4efb290a9993f15b4b4c049b6e9ba05b8e7e $");
+__FBSDID("$FreeBSD: 3e92c4dc6aa266a96568e5ad0c25ce5baeeb646d $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -380,6 +380,7 @@ pmc_ppc970_initialize(struct pmc_mdep *pmc_mdep)
 	ppc_event_first = PMC_EV_PPC970_FIRST;
 	ppc_event_last = PMC_EV_PPC970_LAST;
 	ppc_max_pmcs = PPC970_MAX_PMCS;
+	ppc_class = pcd->pcd_class;
 
 	powerpc_set_pmc = ppc970_set_pmc;
 	powerpc_pmcn_read = powerpc_pmcn_read_default;

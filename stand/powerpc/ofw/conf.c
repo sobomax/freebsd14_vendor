@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7ac892e71fc6b07a1b3054deeda510494cc92ad $");
+__FBSDID("$FreeBSD: c2b28f4fe0f0aa9d8a6669b7f947f2f5c4127896 $");
 
 #include <stand.h>
 #include "bootstrap.h"
@@ -48,13 +48,13 @@ void (*exitfn)(int) = exit;
  * XXX rename these arrays to be consistent and less namespace-hostile
  */
 
-/* Exported for libstand */
+/* Exported for libsa */
 struct devsw *devsw[] = {
 #if defined(LOADER_DISK_SUPPORT) || defined(LOADER_CD9660_SUPPORT)
     &ofwdisk,
 #endif
 #if defined(LOADER_NET_SUPPORT)
-    &netdev,
+    &ofw_netdev,
 #endif
     NULL
 };

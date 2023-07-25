@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8c201ad6a1016dbead384990b6f19933872a2133 $
+ * $FreeBSD: 67f7d3858e24861e100c8462053f439ca8a9cb74 $
  */
 
 #ifndef _LINUXKPI_ASM_ATOMIC_H_
@@ -220,6 +220,7 @@ atomic_cmpxchg(atomic_t *v, int old, int new)
 	__ret.val;							\
 })
 
+#define	cmpxchg64(...)		cmpxchg(__VA_ARGS__)
 #define	cmpxchg_relaxed(...)	cmpxchg(__VA_ARGS__)
 
 #define	xchg(ptr, new) ({						\
@@ -268,6 +269,28 @@ atomic_cmpxchg(atomic_t *v, int old, int new)
 	__ret.val;							\
 })
 
+#define try_cmpxchg(p, op, n)							\
+({										\
+	__typeof(p) __op = (__typeof((p)))(op);					\
+	__typeof(*(p)) __o = *__op;						\
+	__typeof(*(p)) __p = __sync_val_compare_and_swap((p), (__o), (n));	\
+	if (__p != __o)								\
+		*__op = __p;							\
+	(__p == __o);								\
+})
+
+#define __atomic_try_cmpxchg(type, _p, _po, _n)		\
+({							\
+	__typeof(_po) __po = (_po);			\
+	__typeof(*(_po)) __r, __o = *__po;		\
+	__r = atomic_cmpxchg##type((_p), __o, (_n));	\
+	if (unlikely(__r != __o))			\
+		*__po = __r;				\
+	likely(__r == __o);				\
+})
+
+#define	atomic_try_cmpxchg(_p, _po, _n)	__atomic_try_cmpxchg(, _p, _po, _n)
+
 static inline int
 atomic_dec_if_positive(atomic_t *v)
 {
@@ -305,6 +328,13 @@ static inline int atomic_fetch_##op(int i, atomic_t *v)		\
 		c = old;					\
 								\
 	return (c);						\
+}
+
+static inline int
+atomic_fetch_inc(atomic_t *v)
+{
+
+	return ((atomic_inc_return(v) - 1));
 }
 
 LINUX_ATOMIC_OP(or, |)

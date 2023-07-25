@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9a395f593162712099d5f387d655eae16e207609 $");
+__FBSDID("$FreeBSD: fea54cdcc5cb40dee69db6d9e8fef6ece62f7a54 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -219,6 +219,7 @@ tcp_output(struct tcpcb *tp)
 	int tso, mtu;
 	struct tcpopt to;
 	struct udphdr *udp = NULL;
+	struct tcp_log_buffer *lgb;
 	unsigned int wanted_cookie = 0;
 	unsigned int dont_sendalot = 0;
 #if 0
@@ -325,16 +326,19 @@ again:
 				 */
 				p = NULL;
 				goto after_sack_rexmit;
-			} else
+			} else {
 				/* Can rexmit part of the current hole */
 				len = ((int32_t)ulmin(cwin,
-						   tp->snd_recover - p->rxmit));
-		} else
-			len = ((int32_t)ulmin(cwin, p->end - p->rxmit));
-		off = p->rxmit - tp->snd_una;
-		KASSERT(off >= 0,("%s: sack block to the left of una : %d",
-		    __func__, off));
+				    SEQ_SUB(tp->snd_recover, p->rxmit)));
+			}
+		} else {
+			len = ((int32_t)ulmin(cwin,
+			    SEQ_SUB(p->end, p->rxmit)));
+		}
 		if (len > 0) {
+			off = SEQ_SUB(p->rxmit, tp->snd_una);
+			KASSERT(off >= 0,("%s: sack block to the left of una : %d",
+			    __func__, off));
 			sack_rxmit = 1;
 			sendalot = 1;
 			TCPSTAT_INC(tcps_sack_rexmits);
@@ -408,7 +412,7 @@ after_sack_rexmit:
 		else {
 			int32_t cwin;
 
-                        /*
+			/*
 			 * We are inside of a SACK recovery episode and are
 			 * sending new data, having retransmitted all the
 			 * data possible in the scoreboard.
@@ -424,8 +428,8 @@ after_sack_rexmit:
 			 * of len is bungled by the optimizer.
 			 */
 			if (len > 0) {
-				cwin = tp->snd_cwnd -
-					(tp->snd_nxt - tp->snd_recover) -
+				cwin = tp->snd_cwnd - imax(0, (int32_t)
+					(tp->snd_nxt - tp->snd_recover)) -
 					sack_bytes_rxmt;
 				if (cwin < 0)
 					cwin = 0;
@@ -1449,8 +1453,13 @@ send:
 	TCP_PROBE3(debug__output, tp, th, m);
 
 	/* We're getting ready to send; log now. */
-	TCP_LOG_EVENT(tp, th, &so->so_rcv, &so->so_snd, TCP_LOG_OUT, ERRNO_UNK,
-	    len, NULL, false);
+	/* XXXMT: We are not honoring verbose logging. */
+	if (tp->t_logstate != TCP_LOG_STATE_OFF)
+		lgb = tcp_log_event_(tp, th, &so->so_rcv, &so->so_snd,
+		    TCP_LOG_OUT, ERRNO_UNK, len, NULL, false, NULL, NULL, 0,
+		    NULL);
+	else
+		lgb = NULL;
 
 	/*
 	 * Fill in IP length and desired time to live and
@@ -1550,6 +1559,10 @@ send:
     }
 #endif /* INET */
 
+	if (lgb != NULL) {
+		lgb->tlb_errno = error;
+		lgb = NULL;
+	}
 out:
 	if (error == 0)
 		tcp_account_for_send(tp, len, (tp->snd_nxt != tp->snd_max), 0, hw_tls);
@@ -1663,10 +1676,6 @@ timer:
 		    tcp_clean_dsack_blocks(tp);
 	}
 	if (error) {
-		/* Record the error. */
-		TCP_LOG_EVENT(tp, NULL, &so->so_rcv, &so->so_snd, TCP_LOG_OUT,
-		    error, 0, NULL, false);
-
 		/*
 		 * We know that the packet was lost, so back out the
 		 * sequence number advance, if any.

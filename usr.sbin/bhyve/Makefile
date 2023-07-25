@@ -1,5 +1,5 @@
 #
-# $FreeBSD: e35d528ab6056a32e557289bab6d63d35cff90a7 $
+# $FreeBSD: a456d507a071b43d2db4f90f92ac9b9aa07dae0e $
 #
 
 .include <src.opts.mk>
@@ -18,6 +18,7 @@ SRCS=	\
 	atkbdc.c		\
 	acpi.c			\
 	audio.c			\
+	basl.c			\
 	bhyvegc.c		\
 	bhyverun.c		\
 	block_if.c		\
@@ -50,6 +51,7 @@ SRCS=	\
 	pci_virtio_9p.c		\
 	pci_virtio_block.c	\
 	pci_virtio_console.c	\
+	pci_virtio_input.c	\
 	pci_virtio_net.c	\
 	pci_virtio_rnd.c	\
 	pci_virtio_scsi.c	\
@@ -130,6 +132,12 @@ CFLAGS+= -DBHYVE_SNAPSHOT
 CFLAGS+=-DGDB_LOG
 .endif
 
-WARNS?=	2
+# Disable thread safety analysis since it only finds very simple bugs and
+# yields many false positives.
+NO_WTHREAD_SAFETY=
+
+NO_WCAST_ALIGN=
+
+SUBDIR=	kbdlayout
 
 .include <bsd.prog.mk>

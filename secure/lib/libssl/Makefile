@@ -1,4 +1,4 @@
-# $FreeBSD: 893ea6ebed79e0c98f9963806b13a7812c9527a5 $
+# $FreeBSD: 8c72c6221056e248616b84b5d195c7b87a8dddad $
 
 .include <src.opts.mk>
 
@@ -8,6 +8,8 @@ VERSION_MAP=	${.CURDIR}/Version.map
 PACKAGE=	openssl
 
 NO_LINT=
+
+PCFILES=	libssl.pc openssl.pc
 
 .include "../libcrypto/Makefile.inc"
 

@@ -3,7 +3,7 @@
  * Garrett Wollman, September 1994.
  * This file is in the public domain.
  *
- * $FreeBSD: 83c8351ed31c13c2e74a389ba2e78776d9d4c8fb $
+ * $FreeBSD: 9aeccadf89aac7efd86c6db7a6adcaad4732645e $
  */
 
 #ifndef _MACHINE_CLOCK_H_
@@ -28,6 +28,7 @@ void	i8254_init(void);
 void	i8254_delay(int);
 void	clock_init(void);
 void	lapic_calibrate(void);
+void	tsc_init(void);
 void	tsc_calibrate(void);
 
 /*
@@ -35,7 +36,7 @@ void	tsc_calibrate(void);
  */
 
 void	startrtclock(void);
-void	init_TSC(void);
+void	start_TSC(void);
 void	resume_TSC(void);
 
 #define	HAS_TIMER_SPKR 1

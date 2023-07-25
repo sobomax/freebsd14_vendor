@@ -1,7 +1,7 @@
 /*
  * Fundamental constants relating to ethernet.
  *
- * $FreeBSD: 9a80a6db794f6d08d8d9154cef8a0350342dc28a $
+ * $FreeBSD: bb856df2b4e7ec2a1a30869af43fa99f68a53bdc $
  *
  */
 
@@ -43,7 +43,7 @@
 #define	M_HASFCS	M_PROTO5	/* FCS included at end of frame */
 
 /*
- * Ethernet CRC32 polynomials (big- and little-endian verions).
+ * Ethernet CRC32 polynomials (big- and little-endian versions).
  */
 #define	ETHER_CRC_POLY_LE	0xedb88320
 #define	ETHER_CRC_POLY_BE	0x04c11db6

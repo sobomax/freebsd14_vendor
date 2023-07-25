@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9acac222fb64e129078805ea96bb8c2eb3719a76 $
+ * $FreeBSD: 7f6435aa7266ebc0cf65cf3617e2d63994272e11 $
  */
 #ifndef _COMMAND_H_
 #define _COMMAND_H_
@@ -240,7 +240,7 @@ DPC_ROUTINE;
  * Maximum command blocks needed for each VBus:
  *   Each OS command requests 1+MAX_MEMBERS*2 command blocks (RAID1/0 case)
  *   This space is allocated by platform dependent part, either static or 
- *   dynamic, continuous or non-continous.
+ *   dynamic, continuous or non-continuous.
  *   The code only needs _vbus_(pFreeCommands) to be set.
  *
  * PendingRoutines[] size:

@@ -29,7 +29,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ab4edf616e2e69ceba09d966ff3f1f0e8a6f712 $");
+__FBSDID("$FreeBSD: 9b519f25236905aed8bf46d7019033f4ee7ecfee $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,9 +53,10 @@ __FBSDID("$FreeBSD: 9ab4edf616e2e69ceba09d966ff3f1f0e8a6f712 $");
 
 extern int *end;
 static char *loader_envp;
-static char static_kenv[4096];
 
 #ifdef FDT
+static char static_kenv[4096];
+
 #define	CMDLINE_GUARD "FreeBSD:"
 #define	LBABI_MAX_COMMAND_LINE 512
 static char linux_command_line[LBABI_MAX_COMMAND_LINE + 1];

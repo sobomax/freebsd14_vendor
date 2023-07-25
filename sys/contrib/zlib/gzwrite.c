@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* $FreeBSD: a02b87e565ed149c3e640bac0718f6c059d091fd $ */
+/* $FreeBSD: 5a9aebb6ff8df31bda264b926f294e8f9c3603eb $ */
 
 #include "gzguts.h"
 #include <unistd.h>
@@ -477,7 +477,7 @@ int ZEXPORTVA gzprintf(gzFile file, const char *format, ...)
 #else /* !STDC && !Z_HAVE_STDARG_H */
 
 /* -- see zlib.h -- */
-int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
+int ZEXPORTVA gzprintf(file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                        a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)
     gzFile file;
     const char *format;

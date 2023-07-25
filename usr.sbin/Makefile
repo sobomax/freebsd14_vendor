@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	5.20 (Berkeley) 6/12/93
-# $FreeBSD: a961d0626568ba11756fe90648a18e16dc821798 $
+# $FreeBSD: e387625e158e7ab7e9bfe8b5feee9b42747a2032 $
 
 .include <src.opts.mk>
 
@@ -100,6 +100,7 @@ SUBDIR=	adduser \
 	wake \
 	watch \
 	watchdogd \
+	zdump \
 	zic \
 	zonectl
 

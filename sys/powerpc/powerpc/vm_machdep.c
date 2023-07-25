@@ -40,7 +40,7 @@
  *
  *	from: @(#)vm_machdep.c	7.3 (Berkeley) 5/13/91
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
- * $FreeBSD: 4aab71ec036c0bcbf4fa2a102e28c48eeb192213 $
+ * $FreeBSD: e22f36f0b8be87867eaa5531ba3d8bf38fc18996 $
  */
 /*-
  * Copyright (c) 1994, 1995, 1996 Carnegie-Mellon University.
@@ -201,34 +201,6 @@ void
 cpu_exit(struct thread *td)
 {
 
-}
-
-/*
- * Software interrupt handler for queued VM system processing.
- */
-void
-swi_vm(void *dummy)
-{
-
-	if (busdma_swi_pending != 0)
-		busdma_swi();
-}
-
-/*
- * Tell whether this address is in some physical memory region.
- * Currently used by the kernel coredump code in order to avoid
- * dumping the ``ISA memory hole'' which could cause indefinite hangs,
- * or other unpredictable behaviour.
- */
-int
-is_physical_memory(vm_offset_t addr)
-{
-
-	/*
-	 * stuff other tests for known memory-mapped devices (PCI?)
-	 * here
-	 */
-	return (1);
 }
 
 /*

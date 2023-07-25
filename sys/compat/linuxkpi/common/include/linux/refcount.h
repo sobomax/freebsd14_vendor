@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7c055fb3202971074bdda9cdacfe872debc87a2e $
+ * $FreeBSD: 6a49da530c0a15b585f384e763847b8be182d43f $
  */
 
 #ifndef _LINUXKPI_LINUX_REFCOUNT_H
@@ -77,6 +77,17 @@ refcount_dec_and_lock_irqsave(refcount_t *ref, spinlock_t *lock,
 		return (true);
 	}
 	return (false);
+}
+
+/*
+ * struct kref uses atomic_t and not refcount_t so
+ * we differ from Linux here.
+ */
+static inline bool
+refcount_dec_and_test(atomic_t *r)
+{
+
+	return (atomic_dec_and_test(r));
 }
 
 #endif /* __LINUXKPI_LINUX_REFCOUNT_H__ */

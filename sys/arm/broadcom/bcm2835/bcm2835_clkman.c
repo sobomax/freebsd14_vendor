@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d33ff1ff73f0d91bb663a44e7597a33ad7e3081a $");
+__FBSDID("$FreeBSD: 28247b5b9847ad2a311408c2bff3176432b47581 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: d33ff1ff73f0d91bb663a44e7597a33ad7e3081a $");
 #include <arm/broadcom/bcm2835/bcm2835_clkman.h>
 
 static struct ofw_compat_data compat_data[] = {
+	{"brcm,bcm2711-cprman",		1},
 	{"brcm,bcm2835-cprman",		1},
 	{"broadcom,bcm2835-cprman",	1},
 	{NULL,				0}

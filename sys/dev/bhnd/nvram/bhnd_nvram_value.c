@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8bdfa31a22a49636814b0b5d5c90f9665cf5a4c7 $");
+__FBSDID("$FreeBSD: b2e0ef3a9556cdf0ea3c52e703bbaec5a5951812 $");
 
 #include <sys/param.h>
 #include <sys/limits.h>
@@ -1342,7 +1342,7 @@ bhnd_nvram_val_encode(bhnd_nvram_val *value, void *outp, size_t *olen,
  * Encode the given @p value's element as @p otype, writing the result to
  * @p outp.
  *
- * @param		inp	The element to be be encoded. Must be a value
+ * @param		inp	The element to be encoded. Must be a value
  *				previously returned by bhnd_nvram_val_next()
  *				or bhnd_nvram_val_elem().
  * @param		ilen	The size of @p inp, as returned by

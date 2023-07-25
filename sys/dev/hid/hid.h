@@ -1,4 +1,4 @@
-/* $FreeBSD: f0311bae689c545258124bdb61a4492fbcd6f387 $ */
+/* $FreeBSD: df822fcddffb902df52ec185af33c8d9d4411270 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -344,5 +344,6 @@ int	hid_get_report(device_t, void *, hid_size_t, hid_size_t *, uint8_t,
 int	hid_set_report(device_t, const void *, hid_size_t, uint8_t, uint8_t);
 int	hid_set_idle(device_t, uint16_t, uint8_t);
 int	hid_set_protocol(device_t, uint16_t);
+int	hid_ioctl(device_t, unsigned long, uintptr_t);
 #endif	/* _KERNEL || _STANDALONE */
 #endif	/* _HID_HID_H_ */

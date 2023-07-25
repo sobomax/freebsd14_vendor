@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6537dce62c439efd8dfbcbe6f88ec0122d608a3b $
+ * $FreeBSD: 7de1913840a11ac4a0fd262edfacd9d144225a03 $
  *
  */
 
@@ -41,6 +41,7 @@
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/rwlock.h>
+#include <sys/seqc.h>
 #include <sys/sx.h>
 #include <sys/vmem.h>
 #include <vm/uma.h>
@@ -128,7 +129,7 @@ enum {
 enum {
 	/* adapter intr_type */
 	INTR_INTX	= (1 << 0),
-	INTR_MSI 	= (1 << 1),
+	INTR_MSI	= (1 << 1),
 	INTR_MSIX	= (1 << 2)
 };
 
@@ -165,10 +166,10 @@ enum {
 	CXGBE_BUSY	= (1 << 9),
 
 	/* adapter error_flags.  reg_lock for HW_OFF_LIMITS, atomics for the rest. */
-	ADAP_STOPPED 	= (1 << 0),	/* Adapter has been stopped. */
-	ADAP_FATAL_ERR 	= (1 << 1),	/* Encountered a fatal error. */
-	HW_OFF_LIMITS 	= (1 << 2),	/* off limits to all except reset_thread */
-	ADAP_CIM_ERR 	= (1 << 3),	/* Error was related to FW/CIM. */
+	ADAP_STOPPED	= (1 << 0),	/* Adapter has been stopped. */
+	ADAP_FATAL_ERR	= (1 << 1),	/* Encountered a fatal error. */
+	HW_OFF_LIMITS	= (1 << 2),	/* off limits to all except reset_thread */
+	ADAP_CIM_ERR	= (1 << 3),	/* Error was related to FW/CIM. */
 
 	/* port flags */
 	HAS_TRACEQ	= (1 << 3),
@@ -178,8 +179,8 @@ enum {
 	DOOMED		= (1 << 0),
 	VI_INIT_DONE	= (1 << 1),
 	/* 1 << 2 is unused, was VI_SYSCTL_CTX */
-	TX_USES_VM_WR 	= (1 << 3),
-	VI_SKIP_STATS 	= (1 << 4),
+	TX_USES_VM_WR	= (1 << 3),
+	VI_SKIP_STATS	= (1 << 4),
 
 	/* adapter debug_flags */
 	DF_DUMP_MBOX		= (1 << 0),	/* Log all mbox cmd/rpl. */
@@ -222,7 +223,7 @@ struct vi_info {
 	/* These need to be int as they are used in sysctl */
 	int ntxq;		/* # of tx queues */
 	int first_txq;		/* index of first tx queue */
-	int rsrv_noflowq; 	/* Reserve queue 0 for non-flowid packets */
+	int rsrv_noflowq;	/* Reserve queue 0 for non-flowid packets */
 	int nrxq;		/* # of rx queues */
 	int first_rxq;		/* index of first rx queue */
 	int nofldtxq;		/* # of offload tx queues */
@@ -254,6 +255,8 @@ struct vi_info {
 	struct sysctl_oid *ofld_txq_oid;
 
 	uint8_t hw_addr[ETHER_ADDR_LEN]; /* factory MAC address, won't change */
+	u_int txq_rr;
+	u_int rxq_rr;
 };
 
 struct tx_ch_rl_params {
@@ -330,7 +333,7 @@ struct port_info {
 	struct link_config link_cfg;
 	struct ifmedia media;
 
- 	struct port_stats stats;
+	struct port_stats stats;
 	u_int tnl_cong_drops;
 	u_int tx_parse_error;
 	int fcs_reg;
@@ -374,6 +377,11 @@ struct iq_desc {
 CTASSERT(sizeof(struct iq_desc) == IQ_ESIZE);
 
 enum {
+	/* iq type */
+	IQ_OTHER	= FW_IQ_IQTYPE_OTHER,
+	IQ_ETH		= FW_IQ_IQTYPE_NIC,
+	IQ_OFLD		= FW_IQ_IQTYPE_OFLD,
+
 	/* iq flags */
 	IQ_SW_ALLOCATED	= (1 << 0),	/* sw resources allocated */
 	IQ_HAS_FL	= (1 << 1),	/* iq associated with a freelist */
@@ -417,14 +425,15 @@ typedef int (*fw_msg_handler_t)(struct adapter *, const __be64 *);
  * Ingress Queue: T4 is producer, driver is consumer.
  */
 struct sge_iq {
-	uint32_t flags;
+	uint16_t flags;
+	uint8_t qtype;
 	volatile int state;
 	struct adapter *adapter;
 	struct iq_desc  *desc;	/* KVA of descriptor ring */
 	int8_t   intr_pktc_idx;	/* packet count threshold index */
 	uint8_t  gen;		/* generation bit */
 	uint8_t  intr_params;	/* interrupt holdoff parameters */
-	int8_t   cong;		/* congestion settings */
+	int8_t   cong_drop;	/* congestion drop settings for the queue */
 	uint16_t qsize;		/* size (# of entries) of the queue */
 	uint16_t sidx;		/* index of the entry with the status page */
 	uint16_t cidx;		/* consumer index */
@@ -861,6 +870,15 @@ struct devnames {
 
 struct clip_entry;
 
+#define CNT_CAL_INFO 3
+struct clock_sync {
+	uint64_t hw_cur;
+	uint64_t hw_prev;
+	sbintime_t sbt_cur;
+	sbintime_t sbt_prev;
+	seqc_t gen;
+};
+
 struct adapter {
 	SLIST_ENTRY(adapter) link;
 	device_t dev;
@@ -980,6 +998,11 @@ struct adapter {
 	struct mtx sfl_lock;	/* same cache-line as sc_lock? but that's ok */
 	TAILQ_HEAD(, sge_fl) sfl;
 	struct callout sfl_callout;
+	struct callout cal_callout;
+	struct clock_sync cal_info[CNT_CAL_INFO];
+	int cal_current;
+	int cal_count;
+	uint32_t cal_gen;
 
 	/*
 	 * Driver code that can run when the adapter is suspended must use this
@@ -1297,10 +1320,10 @@ void cxgbe_media_status(struct ifnet *, struct ifmediareq *);
 void t4_os_cim_err(struct adapter *);
 
 #ifdef KERN_TLS
-/* t4_kern_tls.c */
-int cxgbe_tls_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
+/* t6_kern_tls.c */
+int t6_tls_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
     struct m_snd_tag **);
-void cxgbe_tls_tag_free(struct m_snd_tag *);
+void t6_tls_tag_free(struct m_snd_tag *);
 void t6_ktls_modload(void);
 void t6_ktls_modunload(void);
 int t6_ktls_try(struct ifnet *, struct socket *, struct ktls_session *);
@@ -1311,11 +1334,28 @@ int t6_ktls_write_wr(struct sge_txq *, void *, struct mbuf *, u_int, u_int);
 /* t4_keyctx.c */
 struct auth_hash;
 union authctx;
+#ifdef KERN_TLS
+struct ktls_session;
+struct tls_key_req;
+struct tls_keyctx;
+#endif
 
 void t4_aes_getdeckey(void *, const void *, unsigned int);
 void t4_copy_partial_hash(int, union authctx *, void *);
 void t4_init_gmac_hash(const char *, int, char *);
 void t4_init_hmac_digest(struct auth_hash *, u_int, const char *, int, char *);
+#ifdef KERN_TLS
+u_int t4_tls_key_info_size(const struct ktls_session *);
+int t4_tls_proto_ver(const struct ktls_session *);
+int t4_tls_cipher_mode(const struct ktls_session *);
+int t4_tls_auth_mode(const struct ktls_session *);
+int t4_tls_hmac_ctrl(const struct ktls_session *);
+void t4_tls_key_ctx(const struct ktls_session *, int, struct tls_keyctx *);
+int t4_alloc_tls_keyid(struct adapter *);
+void t4_free_tls_keyid(struct adapter *, int);
+void t4_write_tlskey_wr(const struct ktls_session *, int, int, int, int,
+    struct tls_key_req *);
+#endif
 
 #ifdef DEV_NETMAP
 /* t4_netmap.c */
@@ -1363,7 +1403,7 @@ struct mbuf *alloc_wr_mbuf(int, int);
 int parse_pkt(struct mbuf **, bool);
 void *start_wrq_wr(struct sge_wrq *, int, struct wrq_cookie *);
 void commit_wrq_wr(struct sge_wrq *, void *, struct wrq_cookie *);
-int tnl_cong(struct port_info *, int);
+int t4_sge_set_conm_context(struct adapter *, int, int, int);
 void t4_register_an_handler(an_handler_t);
 void t4_register_fw_msg_handler(int, fw_msg_handler_t);
 void t4_register_cpl_handler(int, cpl_handler_t);

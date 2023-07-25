@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54a7e66a5baf0b842f4cec05f9dd02aa3b4d6e92 $");
+__FBSDID("$FreeBSD: f91cb3a8cebeac46b86d4af60acfdaef0578e23b $");
 
 /*
  * Functions that need to be different for different versions of BSD
@@ -599,7 +599,7 @@ nfssvc_call(struct thread *p, struct nfssvc_args *uap, struct ucred *cred)
 					    nfsstatsv1.biocache_readdirs;
 					nfsstatsov1.readdir_bios =
 					    nfsstatsv1.readdir_bios;
-					for (i = 0; i < NFSV42_NPROCS; i++)
+					for (i = 0; i < NFSV42_OLDNPROCS; i++)
 						nfsstatsov1.rpccnt[i] =
 						    nfsstatsv1.rpccnt[i];
 					nfsstatsov1.rpcretries =

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bdc6113ce2a0f6c94e76bacea2fc9ad0a207886b $");
+__FBSDID("$FreeBSD: 6656ebb2b400cf14ae1c270f62fc7ab3a8d58ce8 $");
 
 #include "opt_kern_tls.h"
 #include "opt_ratelimit.h"
@@ -49,6 +49,7 @@ __FBSDID("$FreeBSD: bdc6113ce2a0f6c94e76bacea2fc9ad0a207886b $");
 #include <sys/lock.h>
 #include <sys/rwlock.h>
 #include <sys/taskqueue.h>
+#include <sys/time.h>
 
 #include <net/if.h>
 #include <net/if_var.h>
@@ -919,7 +920,8 @@ lacp_suppress_distributing(struct lacp_softc *lsc, struct lacp_aggregator *la)
 	/* send a marker frame down each port to verify the queues are empty */
 	LIST_FOREACH(lp, &lsc->lsc_ports, lp_next) {
 		lp->lp_flags |= LACP_PORT_MARK;
-		lacp_xmit_marker(lp);
+		if (lacp_xmit_marker(lp) != 0)
+			lp->lp_flags &= ~LACP_PORT_MARK;
 	}
 
 	/* set a timeout for the marker frames */
@@ -1088,6 +1090,8 @@ lacp_update_portmap(struct lacp_softc *lsc)
 		speed = lacp_aggregator_bandwidth(la);
 	}
 	sc->sc_ifp->if_baudrate = speed;
+	EVENTHANDLER_INVOKE(ifnet_event, sc->sc_ifp,
+	    IFNET_EVENT_UPDATE_BAUDRATE);
 
 	/* switch the active portmap over */
 	atomic_store_rel_int(&lsc->lsc_activemap, newmap);
@@ -1730,6 +1734,7 @@ lacp_sm_rx(struct lacp_port *lp, const struct lacpdu *du)
 	 * EXPIRED, DEFAULTED, CURRENT -> CURRENT
 	 */
 
+	microuptime(&lp->lp_last_lacpdu_rx);
 	lacp_sm_rx_update_selected(lp, du);
 	lacp_sm_rx_update_ntt(lp, du);
 	lacp_sm_rx_record_pdu(lp, du);
@@ -1939,14 +1944,26 @@ static void
 lacp_run_timers(struct lacp_port *lp)
 {
 	int i;
+	struct timeval time_diff;
 
 	for (i = 0; i < LACP_NTIMER; i++) {
 		KASSERT(lp->lp_timer[i] >= 0,
 		    ("invalid timer value %d", lp->lp_timer[i]));
 		if (lp->lp_timer[i] == 0) {
 			continue;
-		} else if (--lp->lp_timer[i] <= 0) {
-			if (lacp_timer_funcs[i]) {
+		} else {
+			if (i == LACP_TIMER_CURRENT_WHILE) {
+				microuptime(&time_diff);
+				timevalsub(&time_diff, &lp->lp_last_lacpdu_rx);
+				if (time_diff.tv_sec) {
+					/* At least one sec has elapsed since last LACP packet. */
+					--lp->lp_timer[i];
+				}
+			} else {
+				--lp->lp_timer[i];
+			}
+
+			if ((lp->lp_timer[i] <= 0) && (lacp_timer_funcs[i])) {
 				(*lacp_timer_funcs[i])(lp);
 			}
 		}

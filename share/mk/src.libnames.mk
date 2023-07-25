@@ -1,4 +1,4 @@
-# $FreeBSD: 111a7070e91d623ace5be2d837a132665d25642e $
+# $FreeBSD: d74926c7aca7d70babd6053ba6262bb6048be9b6 $
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition
@@ -47,6 +47,7 @@ _INTERNALLIBS=	\
 		fifolog \
 		ifconfig \
 		ipf \
+		iscsiutil \
 		lpr \
 		lua \
 		lutok \
@@ -95,6 +96,7 @@ _LIBRARIES=	\
 		archive \
 		asn1 \
 		avl \
+		BlocksRuntime \
 		be \
 		begemot \
 		bluetooth \
@@ -238,6 +240,7 @@ _LIBRARIES+= \
 		ibnetdisc \
 		ibumad \
 		ibverbs \
+		irdma \
 		mlx4 \
 		mlx5 \
 		rdmacm \
@@ -329,7 +332,7 @@ _DP_proc=	supcplusplus
 .if ${MK_CDDL} != "no"
 _DP_proc+=	ctf
 .endif
-_DP_proc+=	elf procstat rtld_db util
+_DP_proc+=	elf procstat rtld_db util z
 _DP_mp=	crypto
 _DP_memstat=	kvm
 _DP_magic=	z
@@ -377,8 +380,8 @@ _DP_heimbase=	pthread
 _DP_heimipcc=	heimbase roken pthread
 _DP_heimipcs=	heimbase roken pthread
 _DP_kafs5=	asn1 krb5 roken
-_DP_krb5+=	asn1 com_err crypt crypto hx509 roken wind heimbase heimipcc
-_DP_gssapi_krb5+=	gssapi krb5 crypto roken asn1 com_err
+_DP_krb5=	asn1 com_err crypt crypto hx509 roken wind heimbase heimipcc
+_DP_gssapi_krb5=	gssapi krb5 crypto roken asn1 com_err
 _DP_lzma=	md pthread
 _DP_ucl=	m
 _DP_vmmapi=	util
@@ -427,6 +430,7 @@ _DP_ibmad=	ibumad
 _DP_ibnetdisc=	osmcomp ibmad ibumad
 _DP_ibumad=	
 _DP_ibverbs=
+_DP_irdma=	ibverbs pthread
 _DP_mlx4=	ibverbs pthread
 _DP_mlx5=	ibverbs pthread
 _DP_rdmacm=	ibverbs
@@ -563,6 +567,9 @@ LIBIFCONFIG?=	${LIBIFCONFIGDIR}/libifconfig${PIE_SUFFIX}.a
 LIBIPFDIR=	${_LIB_OBJTOP}/sbin/ipf/libipf
 LIBIPF?=	${LIBIPFDIR}/libipf${PIE_SUFFIX}.a
 
+LIBISCSIUTILDIR=	${_LIB_OBJTOP}/lib/libiscsiutil
+LIBISCSIUTIL?=	${LIBISCSIUTILDIR}/libiscsiutil${PIE_SUFFIX}.a
+
 LIBTELNETDIR=	${_LIB_OBJTOP}/lib/libtelnet
 LIBTELNET?=	${LIBTELNETDIR}/libtelnet${PIE_SUFFIX}.a
 
@@ -673,6 +680,7 @@ LIBIBMADDIR=	${OBJTOP}/lib/ofed/libibmad
 LIBIBNETDISCDIR=${OBJTOP}/lib/ofed/libibnetdisc
 LIBIBUMADDIR=	${OBJTOP}/lib/ofed/libibumad
 LIBIBVERBSDIR=	${OBJTOP}/lib/ofed/libibverbs
+LIBIRDMADIR=	${OBJTOP}/lib/ofed/libirdma
 LIBMLX4DIR=	${OBJTOP}/lib/ofed/libmlx4
 LIBMLX5DIR=	${OBJTOP}/lib/ofed/libmlx5
 LIBRDMACMDIR=	${OBJTOP}/lib/ofed/librdmacm

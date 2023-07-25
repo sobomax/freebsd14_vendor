@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cbd1af6c63411c2b770c7942f2c4a31bf7f8673f $");
+__FBSDID("$FreeBSD: 805fab2ddac86a04bdbe737c72635d136e0830c4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -101,10 +101,20 @@ SYSCTL_COUNTER_U64(_kern_ipc_tls_stats_ocf, OID_AUTO, tls12_chacha20_encrypts,
     CTLFLAG_RD, &ocf_tls12_chacha20_encrypts,
     "Total number of OCF TLS 1.2 Chacha20-Poly1305 encryption operations");
 
+static COUNTER_U64_DEFINE_EARLY(ocf_tls13_gcm_decrypts);
+SYSCTL_COUNTER_U64(_kern_ipc_tls_stats_ocf, OID_AUTO, tls13_gcm_decrypts,
+    CTLFLAG_RD, &ocf_tls13_gcm_decrypts,
+    "Total number of OCF TLS 1.3 GCM decryption operations");
+
 static COUNTER_U64_DEFINE_EARLY(ocf_tls13_gcm_encrypts);
 SYSCTL_COUNTER_U64(_kern_ipc_tls_stats_ocf, OID_AUTO, tls13_gcm_encrypts,
     CTLFLAG_RD, &ocf_tls13_gcm_encrypts,
     "Total number of OCF TLS 1.3 GCM encryption operations");
+
+static COUNTER_U64_DEFINE_EARLY(ocf_tls13_chacha20_decrypts);
+SYSCTL_COUNTER_U64(_kern_ipc_tls_stats_ocf, OID_AUTO, tls13_chacha20_decrypts,
+    CTLFLAG_RD, &ocf_tls13_chacha20_decrypts,
+    "Total number of OCF TLS 1.3 Chacha20-Poly1305 decryption operations");
 
 static COUNTER_U64_DEFINE_EARLY(ocf_tls13_chacha20_encrypts);
 SYSCTL_COUNTER_U64(_kern_ipc_tls_stats_ocf, OID_AUTO, tls13_chacha20_encrypts,
@@ -448,12 +458,18 @@ ktls_ocf_tls12_aead_decrypt(struct ktls_session *tls,
 	struct ocf_session *os;
 	struct ocf_operation oo;
 	int error;
-	uint16_t tls_comp_len;
+	uint16_t tls_comp_len, tls_len;
 
 	os = tls->cipher;
 
 	oo.os = os;
 	oo.done = false;
+
+	/* Ensure record contains at least an explicit IV and tag. */
+	tls_len = ntohs(hdr->tls_length);
+	if (tls_len + sizeof(*hdr) < tls->params.tls_hlen +
+	    tls->params.tls_tlen)
+		return (EMSGSIZE);
 
 	crypto_initreq(&crp, os->sid);
 
@@ -474,10 +490,10 @@ ktls_ocf_tls12_aead_decrypt(struct ktls_session *tls,
 
 	/* Setup the AAD. */
 	if (tls->params.cipher_algorithm == CRYPTO_AES_NIST_GCM_16)
-		tls_comp_len = ntohs(hdr->tls_length) -
+		tls_comp_len = tls_len -
 		    (AES_GMAC_HASH_LEN + sizeof(uint64_t));
 	else
-		tls_comp_len = ntohs(hdr->tls_length) - POLY1305_HASH_LEN;
+		tls_comp_len = tls_len - POLY1305_HASH_LEN;
 	ad.seq = htobe64(seqno);
 	ad.type = hdr->tls_type;
 	ad.tls_vmajor = hdr->tls_vmajor;
@@ -599,6 +615,60 @@ ktls_ocf_tls13_aead_encrypt(struct ktls_session *tls,
 	return (error);
 }
 
+static int
+ktls_ocf_tls13_aead_decrypt(struct ktls_session *tls,
+    const struct tls_record_layer *hdr, struct mbuf *m, uint64_t seqno,
+    int *trailer_len)
+{
+	struct tls_aead_data_13 ad;
+	struct cryptop crp;
+	struct ocf_session *os;
+	int error;
+	u_int tag_len;
+	uint16_t tls_len;
+
+	os = tls->cipher;
+
+	tag_len = tls->params.tls_tlen - 1;
+
+	/* Payload must contain at least one byte for the record type. */
+	tls_len = ntohs(hdr->tls_length);
+	if (tls_len < tag_len + 1)
+		return (EMSGSIZE);
+
+	crypto_initreq(&crp, os->sid);
+
+	/* Setup the nonce. */
+	memcpy(crp.crp_iv, tls->params.iv, tls->params.iv_len);
+	*(uint64_t *)(crp.crp_iv + 4) ^= htobe64(seqno);
+
+	/* Setup the AAD. */
+	ad.type = hdr->tls_type;
+	ad.tls_vmajor = hdr->tls_vmajor;
+	ad.tls_vminor = hdr->tls_vminor;
+	ad.tls_length = hdr->tls_length;
+	crp.crp_aad = &ad;
+	crp.crp_aad_length = sizeof(ad);
+
+	crp.crp_payload_start = tls->params.tls_hlen;
+	crp.crp_payload_length = tls_len - tag_len;
+	crp.crp_digest_start = crp.crp_payload_start + crp.crp_payload_length;
+
+	crp.crp_op = CRYPTO_OP_DECRYPT | CRYPTO_OP_VERIFY_DIGEST;
+	crp.crp_flags = CRYPTO_F_CBIMM | CRYPTO_F_IV_SEPARATE;
+	crypto_use_mbuf(&crp, m);
+
+	if (tls->params.cipher_algorithm == CRYPTO_AES_NIST_GCM_16)
+		counter_u64_add(ocf_tls13_gcm_decrypts, 1);
+	else
+		counter_u64_add(ocf_tls13_chacha20_decrypts, 1);
+	error = ktls_ocf_dispatch(os, &crp);
+
+	crypto_destroyreq(&crp);
+	*trailer_len = tag_len;
+	return (error);
+}
+
 static void
 ktls_ocf_free(struct ktls_session *tls)
 {
@@ -606,6 +676,7 @@ ktls_ocf_free(struct ktls_session *tls)
 
 	os = tls->cipher;
 	crypto_freesession(os->sid);
+	crypto_freesession(os->mac_sid);
 	mtx_destroy(&os->lock);
 	zfree(os, M_KTLS_OCF);
 }
@@ -636,11 +707,6 @@ ktls_ocf_try(struct socket *so, struct ktls_session *tls, int direction)
 		if (tls->params.tls_vmajor != TLS_MAJOR_VER_ONE ||
 		    tls->params.tls_vminor < TLS_MINOR_VER_TWO ||
 		    tls->params.tls_vminor > TLS_MINOR_VER_THREE)
-			return (EPROTONOSUPPORT);
-
-		/* TLS 1.3 is not yet supported for receive. */
-		if (direction == KTLS_RX &&
-		    tls->params.tls_vminor == TLS_MINOR_VER_THREE)
 			return (EPROTONOSUPPORT);
 
 		csp.csp_flags |= CSP_F_SEPARATE_OUTPUT | CSP_F_SEPARATE_AAD;
@@ -710,11 +776,6 @@ ktls_ocf_try(struct socket *so, struct ktls_session *tls, int direction)
 		    tls->params.tls_vminor > TLS_MINOR_VER_THREE)
 			return (EPROTONOSUPPORT);
 
-		/* TLS 1.3 is not yet supported for receive. */
-		if (direction == KTLS_RX &&
-		    tls->params.tls_vminor == TLS_MINOR_VER_THREE)
-			return (EPROTONOSUPPORT);
-
 		csp.csp_flags |= CSP_F_SEPARATE_OUTPUT | CSP_F_SEPARATE_AAD;
 		csp.csp_mode = CSP_MODE_AEAD;
 		csp.csp_cipher_alg = CRYPTO_CHACHA20_POLY1305;
@@ -758,7 +819,10 @@ ktls_ocf_try(struct socket *so, struct ktls_session *tls, int direction)
 			else
 				tls->sw_encrypt = ktls_ocf_tls12_aead_encrypt;
 		} else {
-			tls->sw_decrypt = ktls_ocf_tls12_aead_decrypt;
+			if (tls->params.tls_vminor == TLS_MINOR_VER_THREE)
+				tls->sw_decrypt = ktls_ocf_tls13_aead_decrypt;
+			else
+				tls->sw_decrypt = ktls_ocf_tls12_aead_decrypt;
 		}
 	} else {
 		tls->sw_encrypt = ktls_ocf_tls_cbc_encrypt;

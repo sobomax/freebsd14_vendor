@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9d1bd1bf402554b7314d91d9d8127ce000691b2f $
+ * $FreeBSD: cd0b28ba39edd44ac40dec1043a43ada641399d9 $
  */
 #pragma once
 
@@ -76,10 +76,6 @@ getentropy(void *buf, size_t buflen)
 	return (syscall(__NR_getrandom, buf, buflen, 0));
 }
 #endif
-
-/* Used by elftoolchain: */
-extern char *program_invocation_name;
-extern char *program_invocation_short_name;
 
 void *setmode(const char *);
 mode_t getmode(const void *, mode_t);

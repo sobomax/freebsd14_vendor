@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6b79b353e30639ca7f58a2cdcb34a91de5c1088 $");
+__FBSDID("$FreeBSD: 09d259e841a7f2f1fdf97290dbb6d6907f3fc6b6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1404,7 +1404,7 @@ bfe_rxeof(struct bfe_softc *sc)
 		/*
 		 * Rx status should be read from mbuf such that we can't
 		 * delay bus_dmamap_sync(9). This hardware limiation
-		 * results in inefficent mbuf usage as bfe(4) couldn't
+		 * results in inefficient mbuf usage as bfe(4) couldn't
 		 * reuse mapped buffer from errored frame. 
 		 */
 		if (bfe_list_newbuf(sc, cons) != 0) {

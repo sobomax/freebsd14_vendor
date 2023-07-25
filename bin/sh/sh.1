@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	from: @(#)sh.1	8.6 (Berkeley) 5/4/95
-.\" $FreeBSD: 76335cfaa2cdf4d10fce9ec5b2073b5be73e718c $
+.\" $FreeBSD: ca3faeff13af9f68a2173f48f0a6700766b3242c $
 .\"
-.Dd July 6, 2020
+.Dd May 10, 2021
 .Dt SH 1
 .Os
 .Sh NAME
@@ -1351,6 +1351,15 @@ If not set, the default editor is
 The default editor used with the
 .Ic fc
 built-in.
+.It Va HISTFILE
+File used for persistent history storage.
+If unset
+.Pa ~/.sh_history
+will be used.
+If set but empty or
+.Va HISTSIZE
+is set to 0
+the shell will not load and save the history.
 .It Va HISTSIZE
 The number of previous commands that are accessible.
 .It Va HOME

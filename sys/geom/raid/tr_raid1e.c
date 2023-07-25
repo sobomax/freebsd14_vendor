@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 45a48acfd3b2dbf3a207d35df54bd16d7f1e0328 $");
+__FBSDID("$FreeBSD: 937d5ee8bb08556805528e6548dfe80e2229e41a $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -1144,8 +1144,8 @@ rebuild_round_done:
 }
 
 static int
-g_raid_tr_kerneldump_raid1e(struct g_raid_tr_object *tr,
-    void *virtual, vm_offset_t physical, off_t boffset, size_t blength)
+g_raid_tr_kerneldump_raid1e(struct g_raid_tr_object *tr, void *virtual,
+    off_t boffset, size_t blength)
 {
 	struct g_raid_volume *vol;
 	struct g_raid_subdisk *sd;
@@ -1177,8 +1177,8 @@ g_raid_tr_kerneldump_raid1e(struct g_raid_tr_object *tr,
 			default:
 				goto nextdisk;
 			}
-			error = g_raid_subdisk_kerneldump(sd,
-			    addr, 0, offset + start, length);
+			error = g_raid_subdisk_kerneldump(sd, addr,
+			    offset + start, length);
 			if (error != 0)
 				return (error);
 nextdisk:

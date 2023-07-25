@@ -1,9 +1,9 @@
-# $FreeBSD: 51a4faec75bb103efdc394b7f4f805e50f9095c4 $
+# $FreeBSD: 119968c6088a76263aae0dd0559c2c4964d5f50a $
 
 .PATH: ${SRCTOP}/sys/dev/rl
 
 KMOD=	if_rl
 SRCS=	if_rl.c device_if.h bus_if.h pci_if.h
-SRCS+=	miibus_if.h
+SRCS+=	miibus_if.h opt_platform.h
 
 .include <bsd.kmod.mk>

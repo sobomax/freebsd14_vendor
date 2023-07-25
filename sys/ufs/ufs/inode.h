@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)inode.h	8.9 (Berkeley) 5/14/95
- * $FreeBSD: 3e555dc52a32603c439a91c2c6ad11381f05fdbd $
+ * $FreeBSD: 8cdd40894608fc9628fbb875591576eeb5a8d7a9 $
  */
 
 #ifndef _UFS_UFS_INODE_H_
@@ -242,8 +242,6 @@ I_IS_UFS2(const struct inode *ip)
 		(ip)->i_din2->d##field = (val); 		\
 	} while (0)
 
-#define	SHORTLINK(ip)	(I_IS_UFS1(ip) ?			\
-    (caddr_t)(ip)->i_din1->di_db : (caddr_t)(ip)->i_din2->di_db)
 #define	IS_SNAPSHOT(ip)		((ip)->i_flags & SF_SNAPSHOT)
 #define	IS_UFS(vp)		((vp)->v_data != NULL)
 

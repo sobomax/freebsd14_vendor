@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: e499967d23d560bb6980c7b73a09b34e68dc9cb5 $
+# $FreeBSD: 6bda75437275688eca35d63e673458347c9dbac7 $
 
 PACKAGE=runtime
 PROG=	md5
@@ -17,6 +17,8 @@ LINKS=	${BINDIR}/md5 ${BINDIR}/md5sum \
 	${BINDIR}/md5 ${BINDIR}/sha384sum \
 	${BINDIR}/md5 ${BINDIR}/sha512 \
 	${BINDIR}/md5 ${BINDIR}/sha512sum \
+	${BINDIR}/md5 ${BINDIR}/sha512t224 \
+	${BINDIR}/md5 ${BINDIR}/sha512t224sum \
 	${BINDIR}/md5 ${BINDIR}/sha512t256 \
 	${BINDIR}/md5 ${BINDIR}/sha512t256sum \
 	${BINDIR}/md5 ${BINDIR}/skein256 \
@@ -39,6 +41,8 @@ MLINKS=	md5.1 md5sum.1 \
 	md5.1 sha384sum.1 \
 	md5.1 sha512.1 \
 	md5.1 sha512sum.1 \
+	md5.1 sha512t224.1 \
+	md5.1 sha512t224sum.1 \
 	md5.1 sha512t256.1 \
 	md5.1 sha512t256sum.1 \
 	md5.1 skein256.1 \

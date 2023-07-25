@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5233579d560f0c8c5cd4f758fdd9be393a3ad90 $");
+__FBSDID("$FreeBSD: 208cc36c9a591cd898a0de7d60683cb43852d668 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -562,9 +562,7 @@ acpi_toshiba_video_attach(device_t dev)
 {
 	struct		acpi_toshiba_softc *sc;
 
-	sc = devclass_get_softc(acpi_toshiba_devclass, 0);
-	if (sc == NULL)
-		return (ENXIO);
+	sc = device_get_softc(dev);
 	sc->video_handle = acpi_get_handle(dev);
 	return (0);
 }

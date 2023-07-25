@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a00885d8ddd681a5d9aca6cb79c76ab52b5e73e $");
+__FBSDID("$FreeBSD: a36c360279ffa5415c6166246b731de77669c84c $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -224,7 +224,7 @@ sctp_init_ifns_for_vrf(int vrfid)
 #ifdef INET6
 			case AF_INET6:
 				if (IN6_IS_ADDR_UNSPECIFIED(&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr)) {
-					/* skip unspecifed addresses */
+					/* skip unspecified addresses */
 					continue;
 				}
 				break;
@@ -326,7 +326,7 @@ sctp_addr_change(struct ifaddr *ifa, int cmd)
 	case AF_INET6:
 		ifa_flags = ((struct in6_ifaddr *)ifa)->ia6_flags;
 		if (IN6_IS_ADDR_UNSPECIFIED(&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr)) {
-			/* skip unspecifed addresses */
+			/* skip unspecified addresses */
 			return;
 		}
 		break;

@@ -24,7 +24,14 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 3c33eff7e105feca79ff5e9155237ac93b974dfd $
+# $FreeBSD: a5d96ffffd32345a5843bdf1850e344c49d01270 $
+
+# If we mounted the DVD packages, unmount them
+if [ -d $BSDINSTALL_CHROOT/dist/packages ]; then
+	umount $BSDINSTALL_CHROOT/dist/packages
+	rmdir $BSDINSTALL_CHROOT/dist/packages
+	rmdir $BSDINSTALL_CHROOT/dist
+fi
 
 TMP_FSTAB=${TMPDIR:-"/tmp"}/bsdinstall-tmp-fstab
 

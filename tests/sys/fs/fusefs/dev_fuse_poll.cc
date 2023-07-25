@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 951777701e1e54986b4f2f6d8d970644dac8f667 $
+ * $FreeBSD: 5ac66a915ea572aafb97f299c836d46c628cba0c $
  */
 
 /*
@@ -93,7 +93,6 @@ TEST_P(DevFusePoll, access)
 /* Ensure that we wake up pollers during unmount */
 TEST_P(DevFusePoll, destroy)
 {
-	expect_forget(FUSE_ROOT_ID, 1);
 	expect_destroy(0);
 
 	m_mock->unmount();

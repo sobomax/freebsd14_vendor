@@ -1,8 +1,8 @@
-# $FreeBSD: a79ae2f7341723fc7a01aa0b5ddbb7e965ab0749 $
+# $FreeBSD: 53690a39805ff61d4c4b7e659b9e0f3cfdc26a32 $
 
 .PATH:	${.CURDIR:H}/mount
 
-PACKAGE=runtime
+PACKAGE=ufs
 PROG=	mksnap_ffs
 SRCS=	mksnap_ffs.c getmntopts.c
 MAN=	mksnap_ffs.8

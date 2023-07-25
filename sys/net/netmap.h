@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: 4d091ccc635dd69d9afdd55d84fec15143d6e32e $
+ * $FreeBSD: ce47de7fa884a008149fff9fc1e3d5727ef1bdf9 $
  *
  * Definitions of constants and the structures used by the netmap
  * framework, for the part visible to both kernel and userspace.
@@ -147,7 +147,7 @@
  *   netmap:foo*, or another registration should be done to open at least a
  *   NIC TX queue in netmap mode.
  *
- * + Netmap is not currently able to deal with intercepted trasmit mbufs which
+ * + Netmap is not currently able to deal with intercepted transmit mbufs which
  *   require offloadings like TSO, UFO, checksumming offloadings, etc. It is
  *   responsibility of the user to disable those offloadings (e.g. using
  *   ifconfig on FreeBSD or ethtool -K on Linux) for an interface that is being
@@ -479,7 +479,7 @@ struct netmap_if {
 
 /* Header common to all request options. */
 struct nmreq_option {
-	/* Pointer ot the next option. */
+	/* Pointer to the next option. */
 	uint64_t		nro_next;
 	/* Option type. */
 	uint32_t		nro_reqtype;
@@ -762,7 +762,7 @@ struct nmreq_pools_info {
  */
 struct nmreq_sync_kloop_start {
 	/* Sleeping is the default synchronization method for the kloop.
-	 * The 'sleep_us' field specifies how many microsconds to sleep for
+	 * The 'sleep_us' field specifies how many microseconds to sleep for
 	 * when there is no work to do, before doing another kloop iteration.
 	 */
 	uint32_t	sleep_us;

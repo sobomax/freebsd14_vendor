@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97865174cc2f67a215e0cedf82ff2e1cfa90cd77 $");
+__FBSDID("$FreeBSD: ae01b9251b111052542038fb7dc944a40eaaf737 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -964,7 +964,7 @@ pmu_battery_notify(struct pmu_battstate *batt, struct pmu_battstate *old)
 }
 
 static void
-pmu_battquery_proc()
+pmu_battquery_proc(void)
 {
 	struct pmu_softc *sc;
 	struct pmu_battstate batt;
@@ -977,8 +977,10 @@ pmu_battquery_proc()
 	while (1) {
 		kproc_suspend_check(curproc);
 		error = pmu_query_battery(sc, 0, &batt);
-		pmu_battery_notify(&batt, &cur_batt);
-		cur_batt = batt;
+		if (error == 0) {
+			pmu_battery_notify(&batt, &cur_batt);
+			cur_batt = batt;
+		}
 		pause("pmu_batt", hz);
 	}
 }

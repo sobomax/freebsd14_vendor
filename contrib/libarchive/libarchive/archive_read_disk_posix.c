@@ -29,13 +29,10 @@
 #if !defined(_WIN32) || defined(__CYGWIN__)
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 2b39e672b49c83bf74457f6e6aff6d2fcc466a43 $");
+__FBSDID("$FreeBSD: 5a94ec5d4399fa6848c5161b73806b55000a1075 $");
 
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
-#endif
-#ifdef HAVE_SYS_MOUNT_H
-#include <sys/mount.h>
 #endif
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -54,6 +51,8 @@ __FBSDID("$FreeBSD: 2b39e672b49c83bf74457f6e6aff6d2fcc466a43 $");
 #endif
 #ifdef HAVE_LINUX_FS_H
 #include <linux/fs.h>
+#elif HAVE_SYS_MOUNT_H
+#include <sys/mount.h>
 #endif
 /*
  * Some Linux distributions have both linux/ext2_fs.h and ext2fs/ext2_fs.h.
@@ -2103,6 +2102,8 @@ tree_push(struct tree *t, const char *path, int filesystem_id,
 	struct tree_entry *te;
 
 	te = calloc(1, sizeof(*te));
+	if (te == NULL)
+		__archive_errx(1, "Out of memory");
 	te->next = t->stack;
 	te->parent = t->current;
 	if (te->parent)

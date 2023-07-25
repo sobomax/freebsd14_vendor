@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mntopts.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: 183d6d9e501d34730943498fe4a2e06650bbd26b $
+ * $FreeBSD: 3488d34fe96ce6c7d0962d0c363c3153aa0c9851 $
  */
 
 struct mntopt {
@@ -103,6 +103,9 @@ struct mntopt {
 void getmntopts(const char *, const struct mntopt *, int *, int *);
 void rmslashes(char *, char *);
 int checkpath(const char *, char resolved_path[]);
+int checkpath_allow_file(const char *, char resolved_path[]);
+struct statfs *getmntpoint(const char *);
+int chkdoreload(struct statfs *, void (*)(const char *, ...) __printflike(1,2));
 extern int getmnt_silent;
 void build_iovec(struct iovec **iov, int *iovlen, const char *name, void *val, size_t len);
 void build_iovec_argf(struct iovec **iov, int *iovlen, const char *name, const char *fmt, ...);

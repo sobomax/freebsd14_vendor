@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05f7b394661349044a789bbe5d88397c0498d1a9 $");
+__FBSDID("$FreeBSD: 3f4f8882d0101f904f912c827e2e5e662efbb277 $");
 
 #include "efx.h"
 #include "efx_impl.h"
@@ -1269,7 +1269,7 @@ fail1:
 }
 
 /*
- * Internal routines for for specific MCDI requests.
+ * Internal routines for specific MCDI requests.
  */
 
 	__checkReturn	efx_rc_t

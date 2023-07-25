@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)scanf.3	8.2 (Berkeley) 12/11/93
-.\" $FreeBSD: bcf68205ae7804aece7e0dc7820bfd1dca68a6b6 $
+.\" $FreeBSD: 4a8efdbb37269f95e5b7e9f96b6aea9c8d3dc88d $
 .\"
-.Dd January 4, 2003
+.Dd April 2, 2022
 .Dt SCANF 3
 .Os
 .Sh NAME
@@ -474,6 +474,21 @@ and
 .Fn vsscanf
 conform to
 .St -isoC-99 .
+.Sh HISTORY
+The functions
+.Fn scanf ,
+.Fn fscanf ,
+and
+.Fn sscanf
+first appeared in
+.At v7 ,
+and
+.Fn vscanf ,
+.Fn vsscanf ,
+and
+.Fn vfscanf
+in
+.Bx 4.3 Reno .
 .Sh BUGS
 Earlier implementations of
 .Nm

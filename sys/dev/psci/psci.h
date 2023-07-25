@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f2c8a43c81ea8f1ee078a7db916d57278a37157e $
+ * $FreeBSD: 8004498426c5f3335ed06eb79f37f87df4c31490 $
  */
 
 #ifndef	_MACHINE_PSCI_H_
@@ -37,7 +37,7 @@ typedef int (*psci_callfn_t)(register_t, register_t, register_t, register_t,
 	register_t, register_t, register_t, register_t,
 	struct arm_smccc_res *res);
 
-extern int psci_present;
+extern bool psci_present;
 
 int	psci_cpu_on(unsigned long, unsigned long, unsigned long);
 void	psci_reset(void);

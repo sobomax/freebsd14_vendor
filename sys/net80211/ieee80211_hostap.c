@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: f3a85848fc84f191965516b5bfb2f9885b3c5cdf $");
+__FBSDID("$FreeBSD: 00864fd23ed4f5b8de2e07663d703b64a6511c1c $");
 #endif
 
 /*
@@ -386,7 +386,7 @@ hostap_deliver_data(struct ieee80211vap *vap,
 		struct mbuf *mcopy = NULL;
 
 		if (m->m_flags & M_MCAST) {
-			mcopy = m_dup(m, M_NOWAIT);
+			mcopy = m_dup(m, IEEE80211_M_NOWAIT);
 			if (mcopy == NULL)
 				if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 			else
@@ -507,7 +507,7 @@ hostap_input(struct ieee80211_node *ni, struct mbuf *m,
 		wh = mtod(m, struct ieee80211_frame *);
 		type = IEEE80211_FC0_TYPE_DATA;
 		dir = wh->i_fc[1] & IEEE80211_FC1_DIR_MASK;
-		subtype = IEEE80211_FC0_SUBTYPE_QOS;
+		subtype = IEEE80211_FC0_SUBTYPE_QOS_DATA;
 		hdrspace = ieee80211_hdrspace(ic, wh);	/* XXX optimize? */
 		goto resubmit_ampdu;
 	}
@@ -710,7 +710,7 @@ hostap_input(struct ieee80211_node *ni, struct mbuf *m,
 		/*
 		 * Save QoS bits for use below--before we strip the header.
 		 */
-		if (subtype == IEEE80211_FC0_SUBTYPE_QOS)
+		if (subtype == IEEE80211_FC0_SUBTYPE_QOS_DATA)
 			qos = ieee80211_getqos(wh)[0];
 		else
 			qos = 0;
@@ -1654,7 +1654,7 @@ ieee80211_deliver_l2uf(struct ieee80211_node *ni)
 	struct l2_update_frame *l2uf;
 	struct ether_header *eh;
 
-	m = m_gethdr(M_NOWAIT, MT_DATA);
+	m = m_gethdr(IEEE80211_M_NOWAIT, MT_DATA);
 	if (m == NULL) {
 		IEEE80211_NOTE(vap, IEEE80211_MSG_ASSOC, ni,
 		    "%s", "no mbuf for l2uf frame");

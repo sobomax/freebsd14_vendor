@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7af95e9d2dc57ea81c718650d2335ac265064348 $
+ * $FreeBSD: 3490c6e59a70e1103e0ce90685943edfd440f539 $
  */
 #ifndef	_LINUXKPI_LINUX_MUTEX_H_
 #define	_LINUXKPI_LINUX_MUTEX_H_
@@ -36,6 +36,8 @@
 #include <sys/lock.h>
 #include <sys/sx.h>
 
+#include <linux/kernel.h>
+#include <linux/list.h>
 #include <linux/spinlock.h>
 #include <asm/atomic.h>
 

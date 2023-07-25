@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8fcf511fda08ff0bf50c93463bc9859b2d2d8473 $");
+__FBSDID("$FreeBSD: 0a6329edb472c4ff3905db330650c50dae22c25e $");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"
@@ -279,7 +279,7 @@ arm_gic_reserve_msi_range(device_t dev, u_int start, u_int count)
 
 	sc = device_get_softc(dev);
 
-	KASSERT((start + count) < sc->nirqs,
+	KASSERT((start + count) <= sc->nirqs,
 	    ("%s: Trying to allocate too many MSI IRQs: %d + %d > %d", __func__,
 	    start, count, sc->nirqs));
 	for (i = 0; i < count; i++) {

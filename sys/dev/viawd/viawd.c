@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab99f6fb2e5cab69f8c54c7cf7f019c129cefaf6 $");
+__FBSDID("$FreeBSD: f62edd947d3b57ac23a8b491ba25a4561097702a $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -226,7 +226,7 @@ viawd_detach(device_t dev)
 		viawd_tmr_set(sc, VIAWD_TIMEOUT_SHUTDOWN);
 		viawd_tmr_state(sc, 1);
 		device_printf(dev,
-		    "Keeping watchog alive during shutdown for %d seconds\n",
+		    "Keeping watchdog alive during shutdown for %d seconds\n",
 		    VIAWD_TIMEOUT_SHUTDOWN);
 	}
 

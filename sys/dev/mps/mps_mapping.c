@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e1e0726c57404384224341325d758de488a3511 $");
+__FBSDID("$FreeBSD: 2b0c16a8deb8aecc1cdeebd48564f923b73c5cd6 $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
@@ -2310,7 +2310,7 @@ mps_mapping_enclosure_dev_status_change_event(struct mps_softc *sc,
 
 		/*
 		 * If the Added enclosure is already in the Enclosure Table,
-		 * make sure that all the the enclosure info is up to date. If
+		 * make sure that all the enclosure info is up to date. If
 		 * the enclosure was missing and has just been added back, or if
 		 * the enclosure's Phy Bits have changed, clear the missing
 		 * count and update the Phy Bits in the mapping table and in the

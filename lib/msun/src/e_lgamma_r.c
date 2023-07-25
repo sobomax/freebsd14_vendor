@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be70767ec5c0edd8e849fe9dc558d440abff7113 $");
+__FBSDID("$FreeBSD: 48da493fe1d2b7f27d36ae31d5a6db21de5c81c3 $");
 
 /* __ieee754_lgamma_r(x, signgamp)
  * Reentrant version of the logarithm of the Gamma function
@@ -27,7 +27,7 @@ __FBSDID("$FreeBSD: be70767ec5c0edd8e849fe9dc558d440abff7113 $");
  *			    = log(6.3*5.3) + lgamma(5.3)
  *			    = log(6.3*5.3*4.3*3.3*2.3) + lgamma(2.3)
  *   2. Polynomial approximation of lgamma around its
- *	minimun ymin=1.461632144968362245 to maintain monotonicity.
+ *	minimum ymin=1.461632144968362245 to maintain monotonicity.
  *	On [ymin-0.23, ymin+0.27] (i.e., [1.23164,1.73163]), use
  *		Let z = x-ymin;
  *		lgamma(x) = -1.214862905358496078218 + z^2*poly(z)

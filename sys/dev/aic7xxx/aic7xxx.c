@@ -48,7 +48,7 @@
 #include "aicasm/aicasm_insformat.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 247507d80f7fe42b6ad050b86571b078f8c37661 $");
+__FBSDID("$FreeBSD: 0e43ce1e4318b0c5a86036dcf24d0bbff152583f $");
 #include <dev/aic7xxx/aic7xxx_osm.h>
 #include <dev/aic7xxx/aic7xxx_inline.h>
 #include <dev/aic7xxx/aicasm/aicasm_insformat.h>
@@ -3632,7 +3632,7 @@ ahc_handle_msg_reject(struct ahc_softc *ahc, struct ahc_devinfo *devinfo)
 }
 
 /*
- * Process an ingnore wide residue message.
+ * Process an ignore wide residue message.
  */
 static void
 ahc_handle_ign_wide_residue(struct ahc_softc *ahc, struct ahc_devinfo *devinfo)
@@ -6059,7 +6059,7 @@ ahc_reset_channel(struct ahc_softc *ahc, char channel, int initiate_reset)
 	 *	 we have run out of ATIO resources to drain that
 	 *	 queue, we may not get them all out here.  Further,
 	 *	 the blocked transactions for the reset channel
-	 *	 should just be killed off, irrespecitve of whether
+	 *	 should just be killed off, irrespective of whether
 	 *	 we are blocked on ATIO resources.  Write a routine
 	 *	 to compact the tqinfifo appropriately.
 	 */

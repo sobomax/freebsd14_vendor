@@ -50,7 +50,7 @@
 #include "opt_sched.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c2e5a29bd24460159df2225def44e3391033cd72 $");
+__FBSDID("$FreeBSD: d1d595e9593d449ee57903ea7de9319440353a7c $");
 
 #include <sys/param.h>
 #include <sys/buf.h>
@@ -107,7 +107,7 @@ __FBSDID("$FreeBSD: c2e5a29bd24460159df2225def44e3391033cd72 $");
 #endif
 
 
-#ifndef _ARM_ARCH_6
+#if __ARM_ARCH < 6
 #error FreeBSD requires ARMv6 or later
 #endif
 

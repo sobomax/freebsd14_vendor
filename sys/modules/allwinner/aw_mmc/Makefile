@@ -1,4 +1,4 @@
-# $FreeBSD: 5421b4fc7d6642a5f147553ad3e275d66c72e340 $
+# $FreeBSD: ebca6fec5418874a1be3e69a770e8f18316f1f04 $
 
 .PATH: ${SRCTOP}/sys/arm/allwinner
 
@@ -9,6 +9,7 @@ SRCS+=	\
 	bus_if.h \
 	clknode_if.h \
 	device_if.h \
+	mmc_pwrseq_if.h \
 	ofw_bus_if.h
 
 .include <bsd.kmod.mk>

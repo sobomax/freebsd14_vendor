@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b7ff48dd8cdcda8a3525e4174e5dc4c4cee4aaea $");
+__FBSDID("$FreeBSD: ceb305e337566d6e15a7a142e53073a24385949c $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -76,7 +76,6 @@ static int	aout_fixup(uintptr_t *stack_base, struct image_params *imgp);
 struct sysentvec aout_sysvec = {
 	.sv_size	= SYS_MAXSYSCALL,
 	.sv_table	= sysent,
-	.sv_transtrap	= NULL,
 	.sv_fixup	= aout_fixup,
 	.sv_sendsig	= sendsig,
 	.sv_sigcode	= sigcode,
@@ -104,6 +103,7 @@ struct sysentvec aout_sysvec = {
 	.sv_trap	= NULL,
 	.sv_onexec_old = exec_onexec_old,
 	.sv_onexit =  exit_onexit,
+	.sv_set_fork_retval = x86_set_fork_retval,
 };
 
 #elif defined(__amd64__)
@@ -126,7 +126,6 @@ static int aout_szsigcode;
 struct sysentvec aout_sysvec = {
 	.sv_size	= FREEBSD32_SYS_MAXSYSCALL,
 	.sv_table	= freebsd32_sysent,
-	.sv_transtrap	= NULL,
 	.sv_fixup	= aout_fixup,
 	.sv_sendsig	= ia32_sendsig,
 	.sv_sigcode	= _binary_elf_vdso32_so_1_start,
@@ -151,6 +150,7 @@ struct sysentvec aout_sysvec = {
 	.sv_syscallnames = freebsd32_syscallnames,
 	.sv_onexec_old	= exec_onexec_old,
 	.sv_onexit	= exit_onexit,
+	.sv_set_fork_retval = x86_set_fork_retval,
 };
 
 static void

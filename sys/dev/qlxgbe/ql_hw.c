@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9580a99c47b2df649cd666569e983897c3d02af2 $");
+__FBSDID("$FreeBSD: 717089427d0a8fdc68f1144239f734d8d6253c3d $");
 
 #include "ql_os.h"
 #include "ql_hw.h"
@@ -2757,6 +2757,7 @@ qla_config_rss_ind_table(qla_host_t *ha)
 static int
 qla_config_soft_lro(qla_host_t *ha)
 {
+#if defined(INET) || defined(INET6)
         int i;
         qla_hw_t *hw = &ha->hw;
         struct lro_ctrl *lro;
@@ -2786,12 +2787,14 @@ qla_config_soft_lro(qla_host_t *ha)
         }
 
         QL_DPRINT2(ha, (ha->pci_dev, "%s: LRO initialized\n", __func__));
+#endif
         return (0);
 }
 
 static void
 qla_drain_soft_lro(qla_host_t *ha)
 {
+#if defined(INET) || defined(INET6)
         int i;
         qla_hw_t *hw = &ha->hw;
         struct lro_ctrl *lro;
@@ -2811,6 +2814,7 @@ qla_drain_soft_lro(qla_host_t *ha)
 		}
 #endif /* #if (__FreeBSD_version >= 1100101) */
 	}
+#endif
 
 	return;
 }
@@ -2818,6 +2822,7 @@ qla_drain_soft_lro(qla_host_t *ha)
 static void
 qla_free_soft_lro(qla_host_t *ha)
 {
+#if defined(INET) || defined(INET6)
         int i;
         qla_hw_t *hw = &ha->hw;
         struct lro_ctrl *lro;
@@ -2826,6 +2831,7 @@ qla_free_soft_lro(qla_host_t *ha)
                	lro = &hw->sds[i].lro;
 		tcp_lro_free(lro);
 	}
+#endif
 
 	return;
 }

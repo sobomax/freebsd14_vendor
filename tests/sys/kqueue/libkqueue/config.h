@@ -1,4 +1,4 @@
-/* $FreeBSD: a204092a2ab25fe846dfa63f29f73c48992a0396 $ */
+/* $FreeBSD: 41a67837efe8f0642662bbf448c17734c6fa08e5 $ */
 
 #define HAVE_ERR_H 1
 #define HAVE_SYS_EVENT_H 1
@@ -7,6 +7,7 @@
 #undef HAVE_NOTE_TRUNCATE
 #define HAVE_EVFILT_TIMER 1
 #define HAVE_EVFILT_USER 1
+#define WITH_NATIVE_KQUEUE_BUGS 0
 #define PROGRAM "libkqueue-test"
 #define VERSION "0.1"
 #define TARGET "freebsd"

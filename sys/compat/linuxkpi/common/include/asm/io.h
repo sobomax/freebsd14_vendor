@@ -26,11 +26,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 49eca70a38ebf580d579901a028e947e1d829a0e $
+ * $FreeBSD: 7787125f4f0433b372a62eeb6168c3efbbfcb952 $
  */
 #ifndef _LINUXKPI_ASM_IO_H_
 #define _LINUXKPI_ASM_IO_H_
 
+#include <sys/param.h>
+
+#include <vm/vm.h>
+#include <vm/pmap.h>
+
 #include <linux/io.h>
+
+#define	virt_to_phys(x)		vtophys(x)
 
 #endif	/* _LINUXKPI_ASM_IO_H_ */

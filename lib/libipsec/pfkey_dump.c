@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 365f0ef833af008875c5c6c3060892e3ca4f19b9 $");
+__FBSDID("$FreeBSD: f4a003b949059536acbfef337f67e3a17dade314 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -190,7 +190,7 @@ static struct val2str str_sp_scope[] = {
 };
 
 /*
- * dump SADB_MSG formated.  For debugging, you should use kdebug_sadb().
+ * dump SADB_MSG formatted.  For debugging, you should use kdebug_sadb().
  */
 void
 pfkey_sadump(m)

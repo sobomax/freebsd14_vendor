@@ -1,7 +1,7 @@
 /*
  * Codel - The Controlled-Delay Active Queue Management algorithm.
  *
- * $FreeBSD: 79c6afd8b6354a07433971dfbc1645911630486e $
+ * $FreeBSD: 13d46137a6202fa226b6dd883a1de59b8119e7c7 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -139,7 +139,7 @@ SYSCTL_PROC(_net_inet_ip_dummynet_codel, OID_AUTO, interval,
  * http://betterexplained.com/articles/
  * 	understanding-quakes-fast-inverse-square-root/ 
  */
-aqm_time_t 
+aqm_time_t
 control_law(struct codel_status *cst, struct dn_aqm_codel_parms *cprms,
 	aqm_time_t t)
 {
@@ -156,10 +156,10 @@ control_law(struct codel_status *cst, struct dn_aqm_codel_parms *cprms,
 	}
 
 	/* newguess = g(1.5 - 0.5*c*g^2)
-	 * Multiplying both sides by 2 to make all the constants intergers
+	 * Multiplying both sides by 2 to make all the constants integers
 	 * newguess * 2  = g(3 - c*g^2) g=old guess, c=count
 	 * So, newguess = newguess /2
-	 * Fixed point operations are used here.  
+	 * Fixed point operations are used here.
 	 */
 
 	/* Calculate g^2 */
@@ -167,14 +167,14 @@ control_law(struct codel_status *cst, struct dn_aqm_codel_parms *cprms,
 	/* Calculate (3 - c*g^2) i.e. (3 - c * temp) */
 	temp = (3ULL<< (FIX_POINT_BITS*2)) - (count * temp);
 
-	/* 
-	 * Divide by 2 because we multiplied the original equation by two 
-	 * Also, we shift the result by 8 bits to prevent overflow. 
+	/*
+	 * Divide by 2 because we multiplied the original equation by two
+	 * Also, we shift the result by 8 bits to prevent overflow.
 	 * */
-	temp >>= (1 + 8); 
+	temp >>= (1 + 8);
 
 	/*  Now, temp = (1.5 - 0.5*c*g^2)
-	 * Calculate g (1.5 - 0.5*c*g^2) i.e. g * temp 
+	 * Calculate g (1.5 - 0.5*c*g^2) i.e. g * temp
 	 */
 	temp = (cst->isqrt * temp) >> (FIX_POINT_BITS + FIX_POINT_BITS - 8);
 	cst->isqrt = temp;

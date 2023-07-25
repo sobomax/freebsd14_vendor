@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b5a9d673ecf297246a4ce3d62338391b4ded3c6 $");
+__FBSDID("$FreeBSD: c09c8e0c6d7797692d0bffa58b9c9b92598cddbe $");
 
 /*
    Alias_smedia.c is meant to contain the aliasing code for streaming media
@@ -404,7 +404,7 @@ alias_rtsp_out(struct libalias *la, struct ip *pip,
 
 	tc->th_sum = 0;
 #ifdef _KERNEL
-	tc->th_x2 = 1;
+	tc->th_x2 = (TH_RES1 >> 8);
 #else
 	tc->th_sum = TcpChecksum(pip);
 #endif
@@ -451,7 +451,7 @@ alias_pna_out(struct libalias *la, struct ip *pip,
 				/* Compute TCP checksum for revised packet */
 				tc->th_sum = 0;
 #ifdef _KERNEL
-				tc->th_x2 = 1;
+				tc->th_x2 = (TH_RES1 >> 8);
 #else
 				tc->th_sum = TcpChecksum(pip);
 #endif

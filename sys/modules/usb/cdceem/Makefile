@@ -1,12 +1,12 @@
 #
-# $FreeBSD: 957fae39fbb36356f6929163652acc6331595d39 $
-# $FreeBSD: 957fae39fbb36356f6929163652acc6331595d39 $
+# $FreeBSD: 7cdaadf996733254654021113f1dda3582819bba $
+# $FreeBSD: 7cdaadf996733254654021113f1dda3582819bba $
 
 .PATH: ${SRCTOP}/sys/dev/usb/net
 
 KMOD=	if_cdceem
 SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h usbdevs.h \
 	miibus_if.h opt_inet.h \
-	if_cdceem.c
+	if_cdceem.c opt_platform.h
 
 .include <bsd.kmod.mk>

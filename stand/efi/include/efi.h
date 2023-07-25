@@ -1,4 +1,4 @@
-/* $FreeBSD: fe8d782865290a1b9b63aa6dffff08072f7e8e4a $ */
+/* $FreeBSD: 7e44a5b819fccb719a7ad1895984bef6a1eebb28 $ */
 /*++
 
 Copyright (c)  1999 - 2002 Intel Corporation. All rights reserved
@@ -60,11 +60,13 @@ Revision History
 #include "efitcp.h"
 #include "efipoint.h"
 #include "efiuga.h"
+#include <sys/types.h>
 
 /*
  * Global variables
  */
 extern EFI_LOADED_IMAGE *boot_img;
+extern bool boot_services_active;
 
 /*
  * FreeBSD UUID

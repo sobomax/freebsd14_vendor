@@ -23,17 +23,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dac13980060e755b1c2af577eb28e046a65349bd $
+ * $FreeBSD: 3df3af24c01005136b37668eaba4dd995c88214c $
  */
 
 #ifndef _MACHINE_VM_H_
 #define	_MACHINE_VM_H_
 
 /* Memory attribute configuration. */
-#define	VM_MEMATTR_DEVICE		0
+#define	VM_MEMATTR_DEVICE_nGnRnE	0
 #define	VM_MEMATTR_UNCACHEABLE		1
 #define	VM_MEMATTR_WRITE_BACK		2
 #define	VM_MEMATTR_WRITE_THROUGH	3
+#define	VM_MEMATTR_DEVICE_nGnRE		4
+
+#define	VM_MEMATTR_DEVICE		VM_MEMATTR_DEVICE_nGnRnE
 
 #ifdef _KERNEL
 /* If defined vmstat will try to use both of these in a switch statement */

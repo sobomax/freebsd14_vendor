@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cc38b14f3fd415e4112c2b34af4ddde221f9b84 $");
+__FBSDID("$FreeBSD: 2b059dcee2ca09772d0024ea1968f3a80ad299cd $");
 
 #include "opt_ddb.h"
 
@@ -378,11 +378,6 @@ ccp_probesession(device_t dev, const struct crypto_session_params *csp)
 	case CSP_MODE_AEAD:
 		switch (csp->csp_cipher_alg) {
 		case CRYPTO_AES_NIST_GCM_16:
-			if (csp->csp_ivlen != AES_GCM_IV_LEN)
-				return (EINVAL);
-			if (csp->csp_auth_mlen < 0 ||
-			    csp->csp_auth_mlen > AES_GMAC_HASH_LEN)
-				return (EINVAL);
 			if ((sc->hw_features & VERSION_CAP_AES) == 0)
 				return (EINVAL);
 			break;

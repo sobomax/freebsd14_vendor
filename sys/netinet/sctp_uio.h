@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e974d88a333bcf6bbbf8ef7b1d6093514e990473 $");
+__FBSDID("$FreeBSD: 330a4529b0391fee9e4af389219dbebdca00758a $");
 
 #ifndef _NETINET_SCTP_UIO_H_
 #define _NETINET_SCTP_UIO_H_
@@ -1259,7 +1259,7 @@ int
 sctp_lower_sosend(struct socket *so,
     struct sockaddr *addr,
     struct uio *uio,
-    struct mbuf *i_pak,
+    struct mbuf *top,
     struct mbuf *control,
     int flags,
     struct sctp_sndrcvinfo *srcv

@@ -6,8 +6,6 @@
 # other libraries or applications which link with libssh, either directly
 # or indirectly (e.g. through PAM loading pam_ssh).
 #
-# $FreeBSD: 79416247aff97682b91a4c33e7e501ee052d42ad $
-#
 
 set -e
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: ce70cb882190eee0043c4d762f782eb18d40ecdd $
+# $FreeBSD: 9969ef104e9807ad75e0cbfe5398a2da86c165c4 $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,8 @@ MAN=		install.1
 CFLAGS+=	-I${SRCTOP}/contrib/mtree
 CFLAGS+=	-I${SRCTOP}/lib/libnetbsd
 
-LIBADD=	md
+LIBADD=		md
+CFLAGS+=	-DWITH_MD5 -DWITH_RIPEMD160
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

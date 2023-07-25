@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c635f4d7e46fdd9443a615de70a237c6e2a81e89 $
+ * $FreeBSD: 56821f367a8290d56b6f67f9c6de2096e52a377c $
  */
 
 extern "C" {
@@ -109,6 +109,8 @@ TEST_F(Bmap, bmap)
 	EXPECT_EQ(arg.bn, pbn);
 	EXPECT_EQ(arg.runp, m_maxphys / m_maxbcachebuf - 1);
 	EXPECT_EQ(arg.runb, m_maxphys / m_maxbcachebuf - 1);
+
+	leak(fd);
 }
 
 /* 
@@ -188,12 +190,11 @@ TEST_P(BmapEof, eof)
 	const off_t filesize = 2 * m_maxbcachebuf;
 	const ino_t ino = 42;
 	mode_t mode = S_IFREG | 0644;
-	void *contents, *buf;
+	void *buf;
 	int fd;
 	int ngetattrs;
 
 	ngetattrs = GetParam();
-	contents = calloc(1, filesize);
 	FuseTest::expect_lookup(RELPATH, ino, mode, filesize, 1, 0);
 	expect_open(ino, 0, 1);
 	// Depending on ngetattrs, FUSE_READ could be called with either
@@ -246,6 +247,8 @@ TEST_P(BmapEof, eof)
 	fd = open(FULLPATH, O_RDWR);
 	ASSERT_LE(0, fd) << strerror(errno);
 	read(fd, buf, filesize);
+
+	leak(fd);
 }
 
 INSTANTIATE_TEST_CASE_P(BE, BmapEof,

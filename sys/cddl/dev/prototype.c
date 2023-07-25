@@ -2,7 +2,7 @@
  * This file is freeware. You are free to use it and add your own
  * license.
  *
- * $FreeBSD: 6e31f19d5ce6501b10e41c0e5090b732587b6dbf $
+ * $FreeBSD: 2608c505e49ab65c3a675cb3a05c88f2aba0915e $
  *
  */
 
@@ -93,7 +93,7 @@ prototype_load(void *dummy)
 
 
 static int
-prototype_unload()
+prototype_unload(void)
 {
 	int error = 0;
 

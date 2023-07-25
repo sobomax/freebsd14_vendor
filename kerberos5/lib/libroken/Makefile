@@ -1,6 +1,6 @@
-# $FreeBSD: bea5694ce3481ead082dd7f10c4daa28d78f4e86 $
+# $FreeBSD: 92e1301cb335b4939d7af526eaa8d54d1148132a $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	roken
 LIBADD=	crypt

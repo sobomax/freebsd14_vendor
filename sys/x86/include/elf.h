@@ -25,21 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e587b52202e853d6d0ba8027da9fd2ab6974af1c $
+ * $FreeBSD: 7b2825579e655e11e795b3f9407ebdb1567a0a92 $
  */
 
 #ifndef _MACHINE_ELF_H_
 #define	_MACHINE_ELF_H_ 1
 
 #if defined(__i386__) || defined(_MACHINE_ELF_WANT_32BIT)
-
-/*
- * ELF definitions for the i386 architecture.
- */
-
+/* ELF definitions for the i386 architecture. */
 #include <sys/elf32.h>	/* Definitions common to all 32 bit architectures. */
 #if defined(__ELF_WORD_SIZE) && __ELF_WORD_SIZE == 64
-#include <sys/elf64.h>	/* Definitions common to all 64 bit architectures. */
+/* Definitions common to all 64 bit architectures. */
+#include <sys/elf64.h>
 #endif
 
 #ifndef __ELF_WORD_SIZE
@@ -89,7 +86,7 @@ __ElfType(Auxinfo);
 #define	ELF_TARG_MACH	EM_386
 #define	ELF_TARG_VER	1
 
-#define	ET_DYN_LOAD_ADDR 0x01001000
+#define	ET_DYN_LOAD_ADDR 0x00002000
 
 #elif defined(__amd64__)
 
@@ -150,7 +147,7 @@ __ElfType(Auxinfo);
 #define	ELF_TARG_VER	1
 
 #if __ELF_WORD_SIZE == 32
-#define	ET_DYN_LOAD_ADDR 0x01001000
+#define	ET_DYN_LOAD_ADDR 0x00002000
 #else
 #define	ET_DYN_LOAD_ADDR 0x01021000
 #endif

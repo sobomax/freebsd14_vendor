@@ -81,7 +81,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 087e0c5059fdcc9a7fa101dcb8a721a8046e0c59 $");
+__FBSDID("$FreeBSD: e49f730bb29f7d4b453b3a19cddcbc70eeb25afd $");
 
 #include "opt_inet6.h"
 
@@ -1790,7 +1790,6 @@ pim6_input(struct mbuf *m, int off, int proto, void *arg __unused)
 		struct mbuf *mcp;
 		struct ip6_hdr *eip6;
 		u_int32_t *reghdr;
-		int rc;
 #ifdef MRT6DEBUG
 		char ip6bufs[INET6_ADDRSTRLEN], ip6bufd[INET6_ADDRSTRLEN];
 #endif
@@ -1868,7 +1867,7 @@ pim6_input(struct mbuf *m, int off, int proto, void *arg __unused)
 		    ip6_sprintf(ip6bufs, &eip6->ip6_src),
 		    ip6_sprintf(ip6bufd, &eip6->ip6_dst), reg_mif_num);
 
-		rc = if_simloop(mif6table[reg_mif_num].m6_ifp, m,
+		if_simloop(mif6table[reg_mif_num].m6_ifp, m,
 				dst.sin6_family, 0);
 
 		/* prepare the register head to send to the mrouting daemon */

@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 1621fde6c0b802643eb7823afb224a044fb739c1 $
+ * $FreeBSD: 8f9a7376c9b860002485b9e7916784c73f016a16 $
  */
 
 #define	LINUX_SYS_linux_exit	1
@@ -131,7 +131,7 @@
 #define	LINUX_SYS_linux_mremap	163
 #define	LINUX_SYS_linux_setresuid16	164
 #define	LINUX_SYS_linux_getresuid16	165
-#define	LINUX_SYS_poll	168
+#define	LINUX_SYS_linux_poll	168
 #define	LINUX_SYS_linux_setresgid16	170
 #define	LINUX_SYS_linux_getresgid16	171
 #define	LINUX_SYS_linux_prctl	172

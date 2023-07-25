@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 0c446cca95d4003d2149cdf43b9ba8ab8277c081 $
+ * $FreeBSD: 9150f835ae0c901584fc99591a854ae993a00f45 $
  */
 
 /*
@@ -762,6 +762,8 @@ FBSDprivate_1.0 {
 	__sys_mlock;
 	_mlockall;
 	__sys_mlockall;
+	_mmap;
+	__sys_mmap;
 	_modfind;
 	__sys_modfind;
 	_modfnext;

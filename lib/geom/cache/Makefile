@@ -1,6 +1,6 @@
-# $FreeBSD: e1ba031c9ffe08c164ab2dbced27839097d8c85b $
+# $FreeBSD: 2aee7212dfdaccc15193701d2e3eeeba0e86bff5 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	cache

@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1fac8b72fcb8a5d13e2b2d2db3116dd362156ff $");
+__FBSDID("$FreeBSD: cde1ad990ff93d8359b59b1256686b4f405b72c2 $");
 
 #include "opt_wlan.h"
 
@@ -566,7 +566,7 @@ error:
 		otus_freebuf(sc, bf);
 	OTUS_UNLOCK(sc);
 	m_freem(m);
-	return (ENXIO);
+	return (error);
 }
 
 static void

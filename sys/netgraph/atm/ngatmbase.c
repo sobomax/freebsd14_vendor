@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85409b35e4bd76c36cfb7c0f399f655d33d1f8a3 $");
+__FBSDID("$FreeBSD: 0e2d1597d696eb6a0e5bf95c6e18a99eb3db57d4 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -77,13 +77,15 @@ static struct mtx ngatm_unilist_mtx;
 static void
 uni_msg_init(void)
 {
+	gone_in(14, "ngatmbase: netgraph ATM modules");
+
 	mtx_init(&ngatm_unilist_mtx, "netgraph UNI msg header lists", NULL,
 	    MTX_DEF);
 }
 
 /*
  * Ensure, that the message can be extended by at least s bytes.
- * Re-allocate the message (not the header). If that failes,
+ * Re-allocate the message (not the header). If that fails,
  * free the entire message and return ENOMEM. Free space at the start of
  * the message is retained.
  */

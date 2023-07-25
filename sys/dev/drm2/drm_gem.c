@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2692eb2499ae6b04ddf4a3f8cc1214f2aa44e820 $");
+__FBSDID("$FreeBSD: 7cfe09e46c01aff8c3dd639e749e2a8566d8a2aa $");
 
 #include "opt_vm.h"
 
@@ -111,7 +111,7 @@ int drm_gem_object_init(struct drm_device *dev,
 	    ("Bad size %ju", (uintmax_t)size));
 
 	obj->dev = dev;
-	obj->vm_obj = vm_pager_allocate(OBJT_DEFAULT, NULL, size,
+	obj->vm_obj = vm_pager_allocate(OBJT_SWAP, NULL, size,
 	    VM_PROT_READ | VM_PROT_WRITE, 0, curthread->td_ucred);
 
 	obj->refcount = 1;

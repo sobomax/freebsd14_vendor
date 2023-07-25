@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)strcat.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: a6d0fcef61f09cdb1adb75c4aa250565ece86dc2 $
+.\" $FreeBSD: 500611eb215488263a14e5563d21e6436cab09d6 $
 .\"
-.Dd December 1, 2009
+.Dd April 3, 2022
 .Dt STRCAT 3
 .Os
 .Sh NAME
@@ -107,6 +107,15 @@ and
 functions
 conform to
 .St -isoC .
+.Sh HISTORY
+The
+.Fn strcat
+function first appeared in the Programmer's Workbench (PWB/UNIX)
+and was ported to
+.At v7 ;
+.Fn strncat
+first appeared in
+.At v7 .
 .Sh SECURITY CONSIDERATIONS
 The
 .Fn strcat

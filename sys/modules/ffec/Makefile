@@ -1,8 +1,8 @@
-# $FreeBSD: c092b18169b5abef3ee77c6c1f70765f57b94e73 $
+# $FreeBSD: cf5437ba26ba9f244123afda42e58ea61ef3ca26 $
 
 .PATH: ${SRCTOP}/sys/dev/ffec
 
 KMOD=	if_ffec
-SRCS=	if_ffec.c miibus_if.h device_if.h bus_if.h pci_if.h ofw_bus_if.h opt_global.h
+SRCS=	if_ffec.c miibus_if.h device_if.h bus_if.h pci_if.h ofw_bus_if.h opt_global.h opt_platform.h
 
 .include <bsd.kmod.mk>

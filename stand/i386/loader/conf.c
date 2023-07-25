@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c70a53d4191a26d61bb64432be609ecab82a30e0 $");
+__FBSDID("$FreeBSD: 35052b5423cd1c7f78693826a3615fad90ac9bb1 $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -50,7 +50,7 @@ extern struct devsw fwohci;
 #endif
 extern struct devsw vdisk_dev;
 
-/* Exported for libstand */
+/* Exported for libsa */
 struct devsw *devsw[] = {
     &biosfd,
     &bioscd,

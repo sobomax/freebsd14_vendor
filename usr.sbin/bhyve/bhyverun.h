@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9b0c9fb533e23c162d37289b369ee797dd6bc33d $
+ * $FreeBSD: d3eb8c8b23da61dcdf452a24bab8ce13dd2018a2 $
  */
 
 #ifndef	_FBSDRUN_H_
@@ -34,17 +34,19 @@
 #define	VMEXIT_CONTINUE		(0)
 #define	VMEXIT_ABORT		(-1)
 
-struct vmctx;
 extern int guest_ncpus;
-extern uint16_t cores, sockets, threads;
+extern uint16_t cpu_cores, cpu_sockets, cpu_threads;
+
+struct vmctx;
+struct vm_exit;
 
 void *paddr_guest2host(struct vmctx *ctx, uintptr_t addr, size_t len);
 #ifdef BHYVE_SNAPSHOT
 uintptr_t paddr_host2guest(struct vmctx *ctx, void *addr);
 #endif
 
-void fbsdrun_set_capabilities(struct vmctx *ctx, int cpu);
-void fbsdrun_addcpu(struct vmctx *ctx, int fromcpu, int newcpu, uint64_t rip);
 int  fbsdrun_virtio_msix(void);
+
+int vmexit_task_switch(struct vmctx *, struct vm_exit *, int *vcpu);
 
 #endif

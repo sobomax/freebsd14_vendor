@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 4f062b31a05128f43d025ee5d4f0516b2b1b9583 $
+ * $FreeBSD: 8959d15f5a318aef2d7dff34d24daf652bc883bb $
  */
 
 #ifndef _NETINET_TCP_H_
@@ -72,6 +72,9 @@ struct tcphdr {
 #define	TH_ECE	0x40
 #define	TH_CWR	0x80
 #define	TH_AE	0x100			/* maps into th_x2 */
+#define	TH_RES3	0x200
+#define	TH_RES2	0x400
+#define	TH_RES1	0x800
 #define	TH_FLAGS	(TH_FIN|TH_SYN|TH_RST|TH_PUSH|TH_ACK|TH_URG|TH_ECE|TH_CWR)
 #define	PRINT_TH_FLAGS	"\20\1FIN\2SYN\3RST\4PUSH\5ACK\6URG\7ECE\10CWR\11AE"
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dac2c6b31562052e95ad7381aa2cc244ff5529e5 $
+ * $FreeBSD: 43288a5a8d747e85ae6808f1cc056cdbef95baf6 $
  */
 
 #ifndef _IWL_DEBUG_H
@@ -109,7 +109,11 @@ void __iwl_err(struct device *, enum iwl_err_mode, const char *, ...);
 
 #ifdef CONFIG_IWLWIFI_DEBUG
 bool iwl_have_debug_level(enum iwl_dl);
+#if defined(__linux__)
 void iwl_print_hex_dump(void *, enum iwl_dl, const char *, uint8_t *, size_t);
+#elif defined(__FreeBSD__)
+void iwl_print_hex_dump(void *, enum iwl_dl, const char *, const uint8_t *, size_t);
+#endif
 void __iwl_dbg(struct device *, u32, bool, const char *, const char *fmt, ...);
 
 #define	IWL_DPRINTF_DEV_PREFIX(_dev, _e, _prefix, _fmt, ...)		\

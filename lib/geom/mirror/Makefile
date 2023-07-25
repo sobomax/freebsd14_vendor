@@ -1,6 +1,6 @@
-# $FreeBSD: 553e44787d8bd6d91c322e2c59c723296ab7e008 $
+# $FreeBSD: 0fd7a7bcd13bda0b9f78604b830064bc20d321b9 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	mirror

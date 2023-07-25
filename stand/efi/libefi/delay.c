@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9eb123096636e4c7464fc3afd8afbf463356069e $");
+__FBSDID("$FreeBSD: 9bf40d28f96b72d3e54d5553b84a95f517e0a36f $");
 
 #include <efi.h>
 #include <efilib.h>
@@ -33,5 +33,6 @@ __FBSDID("$FreeBSD: 9eb123096636e4c7464fc3afd8afbf463356069e $");
 void
 delay(int usecs)
 {
-	BS->Stall(usecs);
+	if (boot_services_active)
+		BS->Stall(usecs);
 }

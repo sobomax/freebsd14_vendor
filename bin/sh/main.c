@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/28/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cbe026e13640568daf82c27150adc3371ba71932 $");
+__FBSDID("$FreeBSD: b0a5fac6fd4e06ae803955c0ff0ee4effc80e85f $");
 
 #include <stdio.h>
 #include <signal.h>
@@ -75,6 +75,9 @@ __FBSDID("$FreeBSD: cbe026e13640568daf82c27150adc3371ba71932 $");
 #include "cd.h"
 #include "redir.h"
 #include "builtins.h"
+#ifndef NO_HISTORY
+#include "myhistedit.h"
+#endif
 
 int rootpid;
 int rootshell;
@@ -157,6 +160,10 @@ state2:
 			read_profile(shinit);
 		}
 	}
+#ifndef NO_HISTORY
+	if (iflag)
+		histload();
+#endif
 state3:
 	state = 4;
 	popstackmark(&smark2);

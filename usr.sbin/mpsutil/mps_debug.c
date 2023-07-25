@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: 4c462ef65f6c01ef3e73f2eb023a379c27661120 $");
+__RCSID("$FreeBSD: 83315090d73091d3d64a6757873b6cd275609084 $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -136,11 +136,9 @@ print_sgl(char *buf, int offset, int numframes)
 {
 	MPI2_SGE_SIMPLE64 *sge;
 	MPI2_SGE_CHAIN_UNION *sgc;
-	MPI2_REQUEST_HEADER *req;
 	u_int i = 0, flags;
 	char *frame, tmpbuf[128];
 
-	req = (MPI2_REQUEST_HEADER *)buf;
 	frame = (char *)buf;
 	sge = (MPI2_SGE_SIMPLE64 *)&frame[offset * 4];
 	printf("SGL for command\n");

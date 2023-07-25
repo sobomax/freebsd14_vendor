@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: 4d609b10bf73a6481a628f9b1c847220462defbe $
+ * $FreeBSD: a3a6900f692dda97db99a637fe5a6ab10b9abbb1 $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -139,6 +139,8 @@ set_tls(void *tls)
 #define	PCPU_INC(member)	PCPU_ADD(member, 1)
 #define	PCPU_PTR(member)	(&get_pcpu()->pc_ ## member)
 #define	PCPU_SET(member,value)	(get_pcpu()->pc_ ## member = (value))
+
+#define	PCPU_GET_MPIDR(pc)	((pc)->pc_mpidr)
 
 void pcpu0_init(void);
 #endif	/* _KERNEL */

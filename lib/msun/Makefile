@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: 6274c27c12c5c7ae7a99a742441f14ee5f003007 $
+# $FreeBSD: 0be2813bb93388e2fab9adbff7089e18654949ba $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -152,7 +152,7 @@ COMMON_SRCS+=	catrig.c catrigf.c \
 #COMMON_SRCS+=	s_fabs.c s_frexp.c s_isnan.c s_ldexp.c s_modf.c
 
 # Exclude the generic versions of what we provide in the MD area.
-.if defined(ARCH_SRCS)
+.if defined(ARCH_SRCS) && "${MK_MACHDEP_OPTIMIZATIONS}" != no
 .for i in ${ARCH_SRCS}
 COMMON_SRCS:=  ${COMMON_SRCS:N${i:R}.c}
 .endfor

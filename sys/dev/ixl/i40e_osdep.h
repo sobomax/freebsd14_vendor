@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: e7a1c1226a0ed08bedc027691e45e783d42ff684 $*/
+/*$FreeBSD: 1146ece279b5e6f67d3f16d56e1dd6055de1508b $*/
 
 #ifndef _I40E_OSDEP_H_
 #define _I40E_OSDEP_H_
@@ -160,10 +160,7 @@ struct i40e_dma_mem {
 	u64			pa;
 	bus_dma_tag_t		tag;
 	bus_dmamap_t		map;
-	bus_dma_segment_t	seg;
 	bus_size_t              size;
-	int			nseg;
-	int                     flags;
 };
 
 struct i40e_virt_mem {

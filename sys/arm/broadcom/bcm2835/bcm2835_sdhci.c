@@ -27,7 +27,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d8be703983d6d672d605fde4affe0c0efccad78 $");
+__FBSDID("$FreeBSD: 8225abcb624c1027680537a24ad442f64cc5875b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -157,7 +157,7 @@ struct bcm_sdhci_softc {
 	void *			sc_intrhand;
 	struct mmc_request *	sc_req;
 	struct sdhci_slot	sc_slot;
-	struct mmc_fdt_helper	sc_mmc_helper;
+	struct mmc_helper	sc_mmc_helper;
 	int			sc_dma_ch;
 	bus_dma_tag_t		sc_dma_tag;
 	bus_dmamap_t		sc_dma_map;
@@ -395,13 +395,10 @@ bcm_sdhci_intr(void *arg)
 static int
 bcm_sdhci_update_ios(device_t bus, device_t child)
 {
-#ifdef EXT_RESOURCES
 	struct bcm_sdhci_softc *sc;
 	struct mmc_ios *ios;
-#endif
 	int rv;
 
-#ifdef EXT_RESOURCES
 	sc = device_get_softc(bus);
 	ios = &sc->sc_slot.host.ios;
 
@@ -411,20 +408,17 @@ bcm_sdhci_update_ios(device_t bus, device_t child)
 		if (sc->sc_mmc_helper.vqmmc_supply)
 			regulator_enable(sc->sc_mmc_helper.vqmmc_supply);
 	}
-#endif
 
 	rv = sdhci_generic_update_ios(bus, child);
 	if (rv != 0)
 		return (rv);
 
-#ifdef EXT_RESOURCES
 	if (ios->power_mode == power_off) {
 		if (sc->sc_mmc_helper.vmmc_supply)
 			regulator_disable(sc->sc_mmc_helper.vmmc_supply);
 		if (sc->sc_mmc_helper.vqmmc_supply)
 			regulator_disable(sc->sc_mmc_helper.vqmmc_supply);
 	}
-#endif
 
 	return (0);
 }

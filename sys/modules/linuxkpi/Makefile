@@ -1,4 +1,4 @@
-# $FreeBSD: 468abcdc229f019d666c1f1d8d44e10c444018a8 $
+# $FreeBSD: 2ed6cda98b177d812ea43e8084971fafe08df861 $
 .PATH:	${SRCTOP}/sys/compat/linuxkpi/common/src
 
 KMOD=	linuxkpi
@@ -11,6 +11,8 @@ SRCS=	linux_compat.c \
 	linux_hrtimer.c \
 	linux_idr.c \
 	linux_interrupt.c \
+	linux_i2c.c \
+	linux_i2cbb.c \
 	linux_kmod.c \
 	linux_kthread.c \
 	linux_lock.c \
@@ -19,10 +21,11 @@ SRCS=	linux_compat.c \
 	linux_pci.c \
 	linux_radix.c \
 	linux_rcu.c \
-	linux_seq_file.c \
 	linux_schedule.c \
+	linux_seq_file.c \
 	linux_shmemfs.c \
 	linux_shrinker.c \
+	linux_simple_attr.c \
 	linux_skbuff.c \
 	linux_slab.c \
 	linux_tasklet.c \
@@ -35,9 +38,10 @@ SRCS=	linux_compat.c \
 SRCS+=	opt_acpi.h acpi_if.h linux_acpi.c linux_fpu.c
 .endif
 
+SRCS+=	opt_ddb.h
 SRCS+=	${LINUXKPI_GENSRCS}
 
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 CFLAGS+= -I${SRCTOP}/sys/contrib/ck/include
 
 EXPORT_SYMS=	YES

@@ -74,6 +74,7 @@ class LLVM_LIBRARY_VISIBILITY PPCTargetInfo : public TargetInfo {
   bool HasP10Vector = false;
   bool HasPCRelativeMemops = false;
   bool HasPrefixInstrs = false;
+  bool IsISA2_06 = false;
   bool IsISA2_07 = false;
   bool IsISA3_0 = false;
   bool IsISA3_1 = false;
@@ -89,6 +90,7 @@ public:
     LongDoubleWidth = LongDoubleAlign = 128;
     LongDoubleFormat = &llvm::APFloat::PPCDoubleDouble();
     HasStrictFP = true;
+    HasIbm128 = true;
   }
 
   // Set the language option for altivec based on our value.
@@ -347,8 +349,9 @@ public:
                : "u9__ieee128";
   }
   const char *getFloat128Mangling() const override { return "u9__ieee128"; }
+  const char *getIbm128Mangling() const override { return "g"; }
 
-  bool hasExtIntType() const override { return true; }
+  bool hasBitIntType() const override { return true; }
 
   bool isSPRegName(StringRef RegName) const override {
     return RegName.equals("r1") || RegName.equals("x1");
@@ -411,7 +414,7 @@ public:
     LongWidth = LongAlign = PointerWidth = PointerAlign = 64;
     IntMaxType = SignedLong;
     Int64Type = SignedLong;
-    std::string DataLayout = "";
+    std::string DataLayout;
 
     if (Triple.isOSAIX()) {
       // TODO: Set appropriate ABI for AIX platform.
@@ -421,6 +424,9 @@ public:
       LongDoubleFormat = &llvm::APFloat::IEEEdouble();
     } else if ((Triple.getArch() == llvm::Triple::ppc64le)) {
       DataLayout = "e-m:e-i64:64-n32:64";
+      ABI = "elfv2";
+    } else if (Triple.isOSFreeBSD() && (Triple.getOSMajorVersion() == 0 || Triple.getOSMajorVersion() >= 13)) {
+      DataLayout = "E-m:e-i64:64-n32:64";
       ABI = "elfv2";
     } else {
       DataLayout = "E-m:e-i64:64-n32:64";

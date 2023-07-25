@@ -52,7 +52,7 @@
  *                        xnb1
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 457d396c8f982fb2dc9708e2370c80b7b807e0ba $");
+__FBSDID("$FreeBSD: 561f19f2522d0096f97ce84fdc08660880cb7e4d $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -533,12 +533,9 @@ xenbusb_probe_children_cb(void *arg, int pending __unused)
 {
 	device_t dev = (device_t)arg;
 
-	/*
-	 * Hold Giant until the Giant free newbus changes are committed.
-	 */
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	xenbusb_probe_children(dev);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 }
 
 /**

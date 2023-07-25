@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0055ddda8ce9b4fbeedbece4bf5649b93c258546 $");
+__FBSDID("$FreeBSD: 73c2ae2b0e2bbeb60c7544fbd1de4d3a3c10de8f $");
 
 #include <dev/mrsas/mrsas.h>
 #include <dev/mrsas/mrsas_ioctl.h>
@@ -4783,7 +4783,7 @@ dcmd_timeout:
 
 /*
  * mrsas_alloc_tmp_dcmd:       Allocates memory for temporary command input:
- * Adapter soft state Temp command Size of alloction
+ * Adapter soft state Temp command Size of allocation
  *
  * Allocates DMAable memory for a temporary internal command. The allocated
  * memory is initialized to all zeros upon successful loading of the dma

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad6673f9f9baa51a967f0f0285f3cdf5bd9512fe $");
+__FBSDID("$FreeBSD: 27b0fc15a2abaeda51cc7cf0b07d71000096cc62 $");
 
 #include <sys/types.h>
 #ifndef NO_CTF
@@ -54,7 +54,7 @@ __FBSDID("$FreeBSD: ad6673f9f9baa51a967f0f0285f3cdf5bd9512fe $");
 #endif
 #include <libutil.h>
 
-#include "crc32.h"
+#include <zlib.h>
 #include "_libproc.h"
 
 #define	PATH_DEBUG_DIR	"/usr/lib/debug"
@@ -70,17 +70,14 @@ extern char *__cxa_demangle(const char *, char *, size_t *, int *);
 static int
 crc32_file(int fd, uint32_t *crc)
 {
-	uint8_t buf[PAGE_SIZE], *p;
-	size_t n;
+	char buf[MAXPHYS];
+	ssize_t nr;
 
-	*crc = ~0;
-	while ((n = read(fd, buf, sizeof(buf))) > 0) {
-		p = &buf[0];
-		while (n-- > 0)
-			*crc = crc32_tab[(*crc ^ *p++) & 0xff] ^ (*crc >> 8);
+	*crc = crc32(0L, Z_NULL, 0);
+	while ((nr = read(fd, buf, sizeof(buf))) > 0) {
+		*crc = crc32(*crc, (char *)buf, nr);
 	}
-	*crc = ~*crc;
-	return (n);
+	return (!!nr);
 }
 
 static void

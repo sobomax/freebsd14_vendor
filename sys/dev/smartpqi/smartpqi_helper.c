@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 45d9fca071d3dc782a07f47cba6cbcc58058120b $ */
+/* $FreeBSD: bdc5f6572d8937c7114dfadeaa9c87f70942b3f2 $ */
 
 #include "smartpqi_includes.h"
 
@@ -150,7 +150,7 @@ pqisrc_take_ctrl_offline(pqisrc_softstate_t *softs)
 
 	if (SIS_IS_KERNEL_PANIC(softs)) {
                 lockupcode = PCI_MEM_GET32(softs, &softs->ioa_reg->mb[7], LEGACY_SIS_SRCV_OFFSET_MAILBOX_7);
-                DBG_ERR("Controller FW is not runnning, Lockup code = %x\n", lockupcode);
+                DBG_ERR("Controller FW is not running, Lockup code = %x\n", lockupcode);
         }
         else {
                 pqisrc_trigger_nmi_sis(softs);
@@ -371,7 +371,7 @@ void pqisrc_display_device_info(pqisrc_softstate_t *softs,
 
 /* validate the structure sizes */
 void
-check_struct_sizes()
+check_struct_sizes(void)
 {
 
     ASSERT(sizeof(SCSI3Addr_struct)== 2);

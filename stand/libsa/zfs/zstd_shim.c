@@ -24,11 +24,11 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91f5171a72b52241dfe81dc8ff4de4811ec1f8eb $");
+__FBSDID("$FreeBSD: b1ba4babcf366a15371a52f6777917ad534801ac $");
 
 /*
  * Small amount of shim code needed to get zfs_zstd.c to compile. These items
- * here should all be defined in the SPL or as part of libstand somewhere, but
+ * here should all be defined in the SPL or as part of libsa somewhere, but
  * aren't for reasons that haven't been tracked down yet. Ideally, they would
  * all go away and we'd compile zfs_zstd.c directly. Based on an original by
  * Matt Macey, but only the #include remains untouched from that.

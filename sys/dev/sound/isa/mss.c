@@ -35,7 +35,7 @@
 
 #include <dev/sound/pcm/sound.h>
 
-SND_DECLARE_FILE("$FreeBSD: eacbbf85849cd4cbb0a5fe574ec033e3dcabe8ae $");
+SND_DECLARE_FILE("$FreeBSD: 143baa8c64f090bbff99a4fa36127ab46709d456 $");
 
 /* board-specific include files */
 #include <dev/sound/isa/mss.h>
@@ -1779,6 +1779,7 @@ mss_attach(device_t dev)
     	struct mss_info *mss;
     	int flags = device_get_flags(dev);
 
+	gone_in_dev(dev, 14, "ISA sound driver");
     	mss = (struct mss_info *)malloc(sizeof *mss, M_DEVBUF, M_NOWAIT | M_ZERO);
     	if (!mss) return ENXIO;
 

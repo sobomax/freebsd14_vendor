@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: c0458e907ce08e676d2b581da07d2497d6c4b3fd $");
+__FBSDID("$FreeBSD: 1d5b4d5fc0cabb691773de5559685864424d4738 $");
 
 #include <machine/setjmp.h>
 
@@ -161,6 +161,9 @@ ENTRY(longjmp)
 
 	/* Load the return value */
 	mv	a0, a1
+	bnez	a1, 1f
+	li	a0, 1
+1:
 	ret
 
 botch:

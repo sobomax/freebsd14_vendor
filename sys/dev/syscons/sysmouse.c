@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ef851058a6efdb1c00e28c64e9a95781f372abf6 $");
+__FBSDID("$FreeBSD: 73167bdb34f899b37110030000b40bea08d96426 $");
 
 #include "opt_evdev.h"
 #include "opt_syscons.h"
@@ -295,6 +295,8 @@ sysmouse_event(mouse_info_t *info)
 
 #ifdef EVDEV_SUPPORT
 	smdev_evdev_write(x, y, z, mouse_status.button);
+	if (evdev_is_grabbed(sysmouse_evdev))
+		goto done;
 #endif
 
 	if (!tty_opened(sysmouse_tty))

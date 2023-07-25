@@ -27,7 +27,7 @@
 
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: b6d6689e57a9129ec4973a6aa6edd921db364a32 $");
+__FBSDID("$FreeBSD: 1ee784a48e4096844ceefd2ec0e67b8997120806 $");
 
 #include "assym.inc"
 
@@ -210,10 +210,25 @@ ENTRY(handle_el1h_irq)
 END(handle_el1h_irq)
 
 ENTRY(handle_el0_sync)
+	/*
+	 * Read the fault address early. The current thread structure may
+	 * be transiently unmapped if it is part of a memory range being
+	 * promoted or demoted to/from a superpage. As this involves a
+	 * break-before-make sequence there is a short period of time where
+	 * an access will raise an exception. If this happens the fault
+	 * address will be changed to the kernel address so a later read of
+	 * far_el1 will give the wrong value.
+	 *
+	 * The earliest memory access that could trigger a fault is in a
+	 * function called by the save_registers macro so this is the latest
+	 * we can read the userspace value.
+	 */
+	mrs	x19, far_el1
 	save_registers 0
 	ldr	x0, [x18, #PC_CURTHREAD]
 	mov	x1, sp
 	str	x1, [x0, #TD_FRAME]
+	mov	x2, x19
 	bl	do_el0_sync
 	do_ast
 	restore_registers 0
@@ -241,7 +256,7 @@ ENTRY(handle_empty_exception)
 	mov	x0, sp
 1:	bl	unhandled_exception
 	b	1b
-END(handle_unhandled_exception)
+END(handle_empty_exception)
 
 .macro	vector	name, el
 	.align 7

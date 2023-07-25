@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)options.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73d79ca9a74f708170a9c17141618b53cbe05f4d $");
+__FBSDID("$FreeBSD: 32c504b3fc75639357de5e842183b5adcb2ffa66 $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -589,6 +589,9 @@ nextopt(const char *optstring)
 		shoptarg = p;
 		p = NULL;
 	}
-	nextopt_optptr = p;
+	if (p != NULL && *p != '\0')
+		nextopt_optptr = p;
+	else
+		nextopt_optptr = NULL;
 	return c;
 }

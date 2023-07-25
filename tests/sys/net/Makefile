@@ -1,4 +1,4 @@
-# $FreeBSD: 0eed6cf734fac0397192cb026962b461334ee1fd $
+# $FreeBSD: cdf31477137e2307b70e1aea94b831c25d75be0e $
 
 PACKAGE=	tests
 
@@ -14,6 +14,7 @@ ATF_TESTS_SH+=	if_lagg_test
 ATF_TESTS_SH+=	if_stf
 ATF_TESTS_SH+=	if_tun_test
 ATF_TESTS_SH+=	if_vlan
+ATF_TESTS_SH+=	if_wg
 
 TESTS_SUBDIRS+=	routing
 

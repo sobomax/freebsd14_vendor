@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a0e878fb40adf8d14d9ca51b7a4df8e5c7d7a11f $
+ * $FreeBSD: bceeeae5b0cc005b2c9631587ac2d9347a191330 $
  */
 
 /**
@@ -181,7 +181,7 @@ _ocs_list_insert_link(ocs_list_t *a, ocs_list_t *b, ocs_list_t *c)
  * @brief Initialize a list link for debug purposes
  *
  * For debugging a linked list link element has a magic number that is initialized,
- * and the offset value initialzied and used for subsequent assertions.
+ * and the offset value initialized and used for subsequent assertions.
  *
  *
  * @param list Pointer to list head

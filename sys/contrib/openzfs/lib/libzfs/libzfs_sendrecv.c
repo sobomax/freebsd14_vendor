@@ -2133,7 +2133,6 @@ zfs_send(zfs_handle_t *zhp, const char *fromsnap, const char *tosnap,
 	avl_tree_t *fsavl = NULL;
 	static uint64_t holdseq;
 	int spa_version;
-	int featureflags = 0;
 	FILE *fout;
 
 	(void) snprintf(errbuf, sizeof (errbuf), dgettext(TEXT_DOMAIN,
@@ -2145,16 +2144,22 @@ zfs_send(zfs_handle_t *zhp, const char *fromsnap, const char *tosnap,
 		return (zfs_error(zhp->zfs_hdl, EZFS_NOENT, errbuf));
 	}
 
-	if (zhp->zfs_type == ZFS_TYPE_FILESYSTEM) {
-		uint64_t version;
-		version = zfs_prop_get_int(zhp, ZFS_PROP_VERSION);
-		if (version >= ZPL_VERSION_SA) {
-			featureflags |= DMU_BACKUP_FEATURE_SA_SPILL;
+	if (fromsnap) {
+		char full_fromsnap_name[ZFS_MAX_DATASET_NAME_LEN];
+		if (snprintf(full_fromsnap_name, sizeof (full_fromsnap_name),
+		    "%s@%s", zhp->zfs_name, fromsnap) >=
+		    sizeof (full_fromsnap_name)) {
+			err = EINVAL;
+			goto stderr_out;
 		}
+		zfs_handle_t *fromsnapn = zfs_open(zhp->zfs_hdl,
+		    full_fromsnap_name, ZFS_TYPE_SNAPSHOT);
+		if (fromsnapn == NULL) {
+			err = -1;
+			goto err_out;
+		}
+		zfs_close(fromsnapn);
 	}
-
-	if (flags->holds)
-		featureflags |= DMU_BACKUP_FEATURE_HOLDS;
 
 	if (flags->replicate || flags->doall || flags->props ||
 	    flags->holds || flags->backup) {
@@ -2522,8 +2527,7 @@ zfs_send_one(zfs_handle_t *zhp, const char *from, int fd, sendflags_t *flags,
 
 	if (flags->progress) {
 		void *status = NULL;
-		if (err != 0)
-			(void) pthread_cancel(ptid);
+		(void) pthread_cancel(ptid);
 		(void) pthread_join(ptid, &status);
 		int error = (int)(uintptr_t)status;
 		if (error != 0 && status != PTHREAD_CANCELED)
@@ -3962,6 +3966,15 @@ zfs_setup_cmdline_props(libzfs_handle_t *hdl, zfs_type_t type,
 			goto error;
 		}
 
+		/*
+		 * For plain replicated send, we can ignore encryption
+		 * properties other than first stream
+		 */
+		if ((zfs_prop_encryption_key_param(prop) || prop ==
+		    ZFS_PROP_ENCRYPTION) && !newfs && recursive && !raw) {
+			continue;
+		}
+
 		/* incremental streams can only exclude encryption properties */
 		if ((zfs_prop_encryption_key_param(prop) ||
 		    prop == ZFS_PROP_ENCRYPTION) && !newfs &&
@@ -4009,8 +4022,8 @@ zfs_setup_cmdline_props(libzfs_handle_t *hdl, zfs_type_t type,
 			 * properties: if we're asked to exclude this kind of
 			 * values we remove them from "recvprops" input nvlist.
 			 */
-			if (!zfs_prop_inheritable(prop) &&
-			    !zfs_prop_user(name) && /* can be inherited too */
+			if (!zfs_prop_user(name) && /* can be inherited too */
+			    !zfs_prop_inheritable(prop) &&
 			    nvlist_exists(recvprops, name))
 				fnvlist_remove(recvprops, name);
 			else
@@ -4061,7 +4074,8 @@ zfs_setup_cmdline_props(libzfs_handle_t *hdl, zfs_type_t type,
 		if (cp != NULL)
 			*cp = '\0';
 
-		if (!raw && zfs_crypto_create(hdl, namebuf, voprops, NULL,
+		if (!raw && !(!newfs && recursive) &&
+		    zfs_crypto_create(hdl, namebuf, voprops, NULL,
 		    B_FALSE, wkeydata_out, wkeylen_out) != 0) {
 			fnvlist_free(voprops);
 			ret = zfs_error(hdl, EZFS_CRYPTOFAILED, errbuf);

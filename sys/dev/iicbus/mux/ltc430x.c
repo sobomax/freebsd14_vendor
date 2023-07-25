@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fab791ed31740b15a44eda07b035c8aa52091919 $");
+__FBSDID("$FreeBSD: f8e0db7a3b92a75d8578524137d6095e6cfaa70e $");
 
 #include "opt_platform.h"
 
@@ -168,7 +168,7 @@ ltc430x_attach(device_t dev)
 
 	/*
 	 * Check for the idle-disconnect and ctlreg2 options, first in FDT data,
-	 * then allow them to be overriden by hints data.
+	 * then allow them to be overridden by hints data.
 	 */
 #ifdef FDT
 	phandle_t node;

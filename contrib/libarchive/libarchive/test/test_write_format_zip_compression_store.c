@@ -28,7 +28,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: c969a41d4d41c94da4e7a57679c0fd50f92e7efe $");
+__FBSDID("$FreeBSD: ed0908787579502b760407f2bc1f14982cc1a4ae $");
 
 /* File data */
 static const char file_name[] = "file";
@@ -128,11 +128,30 @@ static void verify_uncompressed_contents(const char *buff, size_t used)
 
 	/* Misc variables */
 	unsigned long crc;
-	struct tm *tm = localtime(&now);
-
+	struct tm *tm;
+#if defined(HAVE_LOCALTIME_R) || defined(HAVE__LOCALTIME64_S)
+	struct tm tmbuf;
+#endif
+#if defined(HAVE__LOCALTIME64_S)
+	errno_t terr;
+	 __time64_t tmptime;
+#endif
 	/* p is the pointer to walk over the central directory,
 	 * q walks over the local headers, the data and the data descriptors. */
 	const char *p, *q, *local_header, *extra_start;
+
+#if defined(HAVE_LOCALTIME_R)
+	tm = localtime_r(&now, &tmbuf);
+#elif defined(HAVE__LOCALTIME64_S)
+	tmptime = now;
+	terr = _localtime64_s(&tmbuf, &tmptime);
+	if (terr)
+		tm = NULL;
+	else
+		tm = &tmbuf;
+#else
+	tm = localtime(&now);
+#endif
 
 	/* Remember the end of the archive in memory. */
 	buffend = buff + used;

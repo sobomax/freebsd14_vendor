@@ -1,6 +1,6 @@
 # JZ4780 -- Kernel config for Ingenic JZ47XX boards
 #
-# $FreeBSD: 962334eeffdabc10c95f48c62468588f6ae21f1d $
+# $FreeBSD: ad18b733881dc401660f9de2d09834303034590e $
 
 #NO_UNIVERSE
 
@@ -73,7 +73,6 @@ device		fdt_pinctrl
 
 device		clk
 device		regulator
-options		EXT_RESOURCES
 
 device		gpio
 

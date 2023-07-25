@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44079bae1e9b1590d7d147da7fb84d7ebf9b4089 $");
+__FBSDID("$FreeBSD: a5f27f6d31484fc8c84ac220b7269b315f2332f1 $");
 
 #include "opt_capsicum.h"
 #include "opt_inet.h"
@@ -57,7 +57,9 @@ __FBSDID("$FreeBSD: 44079bae1e9b1590d7d147da7fb84d7ebf9b4089 $");
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/syscallsubr.h>
+#ifdef COMPAT_43
 #include <sys/sysent.h>
+#endif
 #include <sys/uio.h>
 #include <sys/un.h>
 #include <sys/unpcb.h>

@@ -1,6 +1,6 @@
-# $FreeBSD: bfd235b2798172c7fc1986bdfb6f9b48852708d6 $
+# $FreeBSD: 609ecd69c79ce9ea2e96b5c7667a92753bd65f47 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	gssapi_spnego
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

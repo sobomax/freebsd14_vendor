@@ -1,6 +1,6 @@
-# $FreeBSD: bdc25f711a67007a47a53587de768e8c9d06294b $
+# $FreeBSD: 57b6b074202a704aff936c27bb188d86e6f79515 $
 
-PACKAGE=runtime
+PACKAGE=nvme-tools
 NVMECONTROLDIR=	${SRCTOP}/sbin/nvmecontrol
 
 MK_INSTALLLIB=	no

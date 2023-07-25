@@ -1,4 +1,4 @@
-# $FreeBSD: f46f08b2d5d57d2315e678b8c1a105f208833c3a $
+# $FreeBSD: 6321db2381d86edda2bd0edfe77e43663028d951 $
 
 SRCDIR=${SRCTOP}/sys/contrib/openzfs/module
 INCDIR=${SRCTOP}/sys/contrib/openzfs/include
@@ -330,7 +330,7 @@ CFLAGS.vdev_raidz_math_sse2.c= -Wno-cast-qual -Wno-duplicate-decl-specifier
 CFLAGS.zap_leaf.c= -Wno-cast-qual
 CFLAGS.zap_micro.c= -Wno-cast-qual
 CFLAGS.zcp.c= -Wno-cast-qual
-CFLAGS.zfs_fm.c= -Wno-cast-qual
+CFLAGS.zfs_fm.c= -Wno-cast-qual ${NO_WUNUSED_BUT_SET_VARIABLE}
 CFLAGS.zfs_ioctl.c= -Wno-cast-qual
 CFLAGS.zil.c= -Wno-cast-qual
 CFLAGS.zio.c= -Wno-cast-qual

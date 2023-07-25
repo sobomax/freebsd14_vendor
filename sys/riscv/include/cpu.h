@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 453a6af1a0f83f7719fb6290a0237325ee62d6f8 $
+ * $FreeBSD: ee7b1111af562d66ae05ece75d532c5186c0478c $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -81,7 +81,6 @@ void	cpu_halt(void) __dead2;
 void	cpu_reset(void) __dead2;
 void	fork_trampoline(void);
 void	identify_cpu(void);
-void	swi_vm(void *v);
 
 static __inline uint64_t
 get_cyclecount(void)

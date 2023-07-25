@@ -7,7 +7,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: e7bfe220a9a5bbd98fd741aa24f8f020e249ee7c $";
+  "$FreeBSD: b5065c8a56833f21c99f155b003d03eb1c7ee5bc $";
 #endif /* not lint */
 
 #include <complex.h>
@@ -15,8 +15,7 @@ static const char rcsid[] =
 #include "math_private.h"
 
 float
-cabsf(z)
-	float complex z;
+cabsf(float complex z)
 {
 
 	return hypotf(crealf(z), cimagf(z));

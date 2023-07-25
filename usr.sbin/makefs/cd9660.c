@@ -98,7 +98,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a83ff753b069436c094f24cb737f1357238e1c43 $");
+__FBSDID("$FreeBSD: ac6a263ec2dfa0af4af50070bde8cc9f9d2ebd4c $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -886,7 +886,7 @@ cd9660_translate_node(iso9660_disk *diskStructure, fsnode *node,
  * @param const char * The first file name
  * @param const char * The second file name
  * @returns : -1 if first is less than second, 0 if they are the same, 1 if
- * 	the second is greater than the first
+ *	the second is greater than the first
  */
 static int
 cd9660_compare_filename(const char *first, const char *second)
@@ -1705,7 +1705,7 @@ cd9660_level2_convert_filename(iso9660_disk *diskStructure, const char *oldname,
 				*newname++ = *oldname;
 			else if (diskStructure->allow_multidot &&
 			    *oldname == '.') {
-			    	*newname++ = '.';
+				*newname++ = '.';
 			} else {
 				*newname++ = '_';
 			}
@@ -1852,7 +1852,7 @@ cd9660_compute_offsets(iso9660_disk *diskStructure, cd9660node *node,
 			    cd9660_compute_record_size(diskStructure, child);
 			if ((cd9660_compute_record_size(diskStructure, child) +
 			    current_sector_usage) >=
-		 	    diskStructure->sectorSize) {
+			    diskStructure->sectorSize) {
 				current_sector_usage = 0;
 				node->fileSectorsUsed++;
 			}

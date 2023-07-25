@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 325a1ab4874ba69229bfc1e443f3ba8557a6d1e5 $
+.\" $FreeBSD: 034a76700bdc08b6d1cfbc171bed10e1e10580a9 $
 .\"
 .Dd May 21, 2019
 .Dt SKEIN 3
@@ -133,8 +133,7 @@ is a wrapper for
 .Fn SKEIN256_Final
 which converts the return value to a 33-character
 (including the terminating '\e0')
-.Tn ASCII
-string which represents the 256 bits in hexadecimal.
+ASCII string which represents the 256 bits in hexadecimal.
 .Pp
 .Fn SKEIN256_File
 calculates the digest of a file, and uses

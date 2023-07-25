@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)getnetent.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: adf2760d132fa1cdf7b1cfa4a3f5f89cd8c9acf8 $
+.\" $FreeBSD: de2811f07ac9efc4ee2bb41668254c45f03ed5e4 $
 .\"
-.Dd June 4, 1993
+.Dd June 27, 2022
 .Dt GETNETENT 3
 .Os
 .Sh NAME
@@ -62,9 +62,7 @@ functions
 each return a pointer to an object with the
 following structure describing an internet network.
 This structure contains either the information obtained
-from the nameserver,
-.Xr named 8 ,
-broken-out fields of a line in the network data base
+from the nameserver, broken-out fields of a line in the network data base
 .Pa /etc/networks ,
 or entries supplied by the
 .Xr yp 8

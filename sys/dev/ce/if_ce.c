@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 486397d2a2a9cdae696d1428e5b5f4921754a56c $");
+__FBSDID("$FreeBSD: 7edde5af73bde3cae9911318b9d8ed01075f4e9a $");
 
 #include <sys/param.h>
 
@@ -595,6 +595,7 @@ static int ce_attach (device_t dev)
 	CE_UNLOCK (bd);
 	splx (s);
 
+	gone_in_dev(dev, 14, "sync serial (T1/E1) drivers");
 	return 0;
 }
 

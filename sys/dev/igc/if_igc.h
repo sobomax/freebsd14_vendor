@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 69b2123cd73f42c4104caeced89b259b64c517ce $
+ * $FreeBSD: 86a02266a81cb74c08ccb161b8f23c40bdf8961d $
  */
 
 #include "opt_ddb.h"
@@ -372,7 +372,6 @@ struct igc_adapter {
 	/* Task for FAST handling */
 	struct grouptask link_task;
 
-	u16	        num_vlans;
         u32		txd_cmd;
 
         u32             tx_process_limit;
@@ -384,14 +383,6 @@ struct igc_adapter {
 
 	/* Multicast array memory */
 	u8		*mta;
-
-	/*
-	** Shadow VFTA table, this is needed because
-	** the real vlan filter table gets cleared during
-	** a soft reset and the driver needs to be able
-	** to repopulate it.
-	*/
-	u32		shadow_vfta[IGC_VFTA_SIZE];
 
 	/* Info about the interface */
 	u16		link_active;

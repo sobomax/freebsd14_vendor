@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 62f77d46e429f102c5425cedd2258ea93fefd671 $");
+__FBSDID("$FreeBSD: 1594eacb67d00a1d540bbe05b90d58ae4497dc72 $");
 
 #ifndef lint
 static const char copyright[] =
@@ -177,10 +177,18 @@ main(int argc, char *argv[])
 				/* Create the file. */
 				fd = open(*argv,
 				    O_WRONLY | O_CREAT, DEFFILEMODE);
-				if (fd == -1 || fstat(fd, &sb) || close(fd)) {
+				if (fd == -1) {
 					rval = 1;
 					warn("%s", *argv);
 					continue;
+				}
+				if (fstat(fd, &sb) < 0) {
+					warn("%s", *argv);
+					rval = 1;
+				}
+				if (close(fd) < 0) {
+					warn("%s", *argv);
+					rval = 1;
 				}
 
 				/* If using the current time, we're done. */

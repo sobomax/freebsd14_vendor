@@ -1,0 +1,11 @@
+/* $FreeBSD: a6446bbf9a9e0a600983e234b18b5151c955d3c4 $ */
+
+#ifndef LLVM_TARGETMCA
+#  error Please define the macro LLVM_TARGETMCA(TargetName)
+#endif
+
+#ifdef LLVM_TARGET_ENABLE_X86
+LLVM_TARGETMCA(X86)
+#endif
+
+#undef LLVM_TARGETMCA

@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dab812d58eecc2c701978dafd61034eadf1b326b $");
+__FBSDID("$FreeBSD: 35b9f6f20088b2323ff884824a6f71a8d08b2791 $");
 
 #include "opt_inet.h"
 
@@ -489,7 +489,7 @@ struct ib_mr *c4iw_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
 	}
 
 	shift = ffs(mhp->umem->page_size) - 1;
-	
+
 	n = mhp->umem->nmap;
 	err = alloc_pbl(mhp, n);
 	if (err)

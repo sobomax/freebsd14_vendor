@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Benno Rice under sponsorship from
  * the FreeBSD Foundation.
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5504c9cff354415b8a3b0e8cd5fedd20db59afa $");
+__FBSDID("$FreeBSD: 9dfe547d755795f0667f912c4805f1dc1682855c $");
 
 #include <bootstrap.h>
 #include <sys/endian.h>
@@ -535,6 +534,21 @@ efifb_get_edid(edid_res_list_t *res)
 
 	return (rv);
 }
+
+bool
+efi_has_gop(void)
+{
+	EFI_STATUS status;
+	EFI_HANDLE *hlist;
+	UINTN hsize;
+
+	hsize = 0;
+	hlist = NULL;
+	status = BS->LocateHandle(ByProtocol, &gop_guid, NULL, &hsize, hlist);
+
+	return (status == EFI_BUFFER_TOO_SMALL);
+}
+
 
 int
 efi_find_framebuffer(teken_gfx_t *gfx_state)

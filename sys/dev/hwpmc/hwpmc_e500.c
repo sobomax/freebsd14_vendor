@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72c0868f08b5fda6c51e37020b6920307bd40821 $");
+__FBSDID("$FreeBSD: b82bada95fe37e31dfea61e2816efe4f592ad520 $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -375,6 +375,9 @@ e500_allocate_pmc(int cpu, int ri, struct pmc *pm,
 	    ("[powerpc,%d] illegal CPU value %d", __LINE__, cpu));
 	KASSERT(ri >= 0 && ri < E500_MAX_PMCS,
 	    ("[powerpc,%d] illegal row index %d", __LINE__, ri));
+
+	if (a->pm_class != PMC_CLASS_E500)
+		return (EINVAL);
 
 	caps = a->pm_caps;
 

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: c64873fb241b5e859cd92a41752515484963be1f $
+# $FreeBSD: 5dac4a3e9ee35e42ef7d0425706d851ee5f2a9bd $
 #
 # The user-driven targets are:
 #
@@ -33,6 +33,9 @@
 # delete-old-dirs     - Delete obsolete directories.
 # delete-old-files    - Delete obsolete files.
 # delete-old-libs     - Delete obsolete libraries.
+# list-old-dirs       - Raw list of possibly obsolete directories.
+# list-old-files      - Raw list of possibly obsolete files.
+# list-old-libs       - Raw list of possibly obsolete libraries.
 # targets             - Print a list of supported TARGET/TARGET_ARCH pairs
 #                       for world and kernel targets.
 # toolchains          - Build a toolchain for all world and kernel targets.
@@ -154,6 +157,7 @@ TGTS=	all all-man buildenv buildenvvars buildkernel buildworld \
 	installkernel.debug packagekernel packageworld \
 	reinstallkernel reinstallkernel.debug \
 	installworld kernel-toolchain libraries maninstall \
+	list-old-dirs list-old-files list-old-libs \
 	obj objlink showconfig tags toolchain \
 	makeman sysent \
 	_worldtmp _legacy _bootstrap-tools _cleanobj _obj \
@@ -212,7 +216,12 @@ META_TGT_WHITELIST+= \
 .ORDER: buildkernel reinstallkernel
 .ORDER: buildkernel reinstallkernel.debug
 
+# Only sanitize PATH on FreeBSD.
+# PATH may include tools that are required to cross-build
+# on non-FreeBSD systems.
+.if ${.MAKE.OS} == "FreeBSD"
 PATH=	/sbin:/bin:/usr/sbin:/usr/bin
+.endif
 MAKEOBJDIRPREFIX?=	/usr/obj
 _MAKEOBJDIRPREFIX!= /usr/bin/env -i PATH=${PATH} ${MAKE} MK_AUTO_OBJ=no \
     ${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} __MAKE_CONF=${__MAKE_CONF} \

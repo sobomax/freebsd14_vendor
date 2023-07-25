@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1812e9bc85ec8835dda8f35659f77046839c0314 $");
+__FBSDID("$FreeBSD: 239ae10e0c950ca593c6184df0207d8ce716a2c6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -171,12 +171,9 @@ static struct ofw_compat_data compat_data[] = {
 static int
 a10_timer_probe(device_t dev)
 {
-	struct a10_timer_softc *sc;
 #if defined(__arm__)
 	u_int soc_family;
 #endif
-
-	sc = device_get_softc(dev);
 
 	if (ofw_bus_search_compatible(dev, compat_data)->ocd_data == 0)
 		return (ENXIO);

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 997ad16b211ba8deb778ac59f86cf72696a684b2 $");
+__FBSDID("$FreeBSD: a1a0157b88c09a554a0d2df3dc9377adf54f741a $");
 
 #include "opt_param.h"
 #include "opt_kern_tls.h"
@@ -197,7 +197,7 @@ tunable_mbinit(void *dummy)
 	 * map.
 	 */
 	if (PMAP_HAS_DMAP) {
-		extpg = mb_use_ext_pgs;
+		extpg = 1;
 		TUNABLE_INT_FETCH("kern.ipc.mb_use_ext_pgs", &extpg);
 		mb_use_ext_pgs = extpg != 0;
 	}
@@ -485,7 +485,7 @@ dn_pack_import(void *arg __unused, void **store, int count, int domain __unused,
 	int i;
 
 	for (i = 0; i < count; i++) {
-		m = m_get(MT_DATA, M_NOWAIT);
+		m = m_get(M_NOWAIT, MT_DATA);
 		if (m == NULL)
 			break;
 		clust = uma_zalloc(dn_zone_clust, M_NOWAIT);
@@ -628,7 +628,7 @@ debugnet_mbuf_reinit(int nmbuf, int nclust, int clsize)
 	    NULL, UMA_ZONE_NOBUCKET);
 
 	while (nmbuf-- > 0) {
-		m = m_get(MT_DATA, M_WAITOK);
+		m = m_get(M_WAITOK, MT_DATA);
 		uma_zfree(dn_zone_mbuf, m);
 	}
 	while (nclust-- > 0) {

@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: 3f584dc0860e26ed2da3efa11b87cd72273c1a49 $
+ * $FreeBSD: 3f7cafe078930b0f425d754e38a2f7cc4d295fda $
  *
  */
 
@@ -186,7 +186,7 @@ dtmalloc_load(void *dummy)
 
 
 static int
-dtmalloc_unload()
+dtmalloc_unload(void)
 {
 	int error = 0;
 

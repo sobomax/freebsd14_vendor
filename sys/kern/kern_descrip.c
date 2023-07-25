@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d584c54403b306358236dc9cd75d3e401fb41dc5 $");
+__FBSDID("$FreeBSD: 6b2d95d53db061dd3fb0a1733f5341358e710acd $");
 
 #include "opt_capsicum.h"
 #include "opt_ddb.h"
@@ -3180,7 +3180,7 @@ fgetvp_lookup(int fd, struct nameidata *ndp, struct vnode **vpp)
 		error = ENOTDIR;
 		goto out_free;
 	}
-	vref(vp);
+	vrefact(vp);
 	/*
 	 * XXX does not check for VDIR, handled by namei_setup
 	 */
@@ -3601,7 +3601,7 @@ _fgetvp(struct thread *td, int fd, int flags, cap_rights_t *needrightsp,
 		error = EINVAL;
 	} else {
 		*vpp = fp->f_vnode;
-		vref(*vpp);
+		vrefact(*vpp);
 	}
 	fdrop(fp, td);
 
@@ -3637,7 +3637,7 @@ fgetvp_rights(struct thread *td, int fd, cap_rights_t *needrightsp,
 
 	*havecaps = caps;
 	*vpp = fp->f_vnode;
-	vref(*vpp);
+	vrefact(*vpp);
 	fdrop(fp, td);
 
 	return (0);
@@ -4238,8 +4238,34 @@ mountcheckdirs(struct vnode *olddp, struct vnode *newdp)
 		vrele(olddp);
 }
 
+int
+descrip_check_write_mp(struct filedesc *fdp, struct mount *mp)
+{
+	struct file *fp;
+	struct vnode *vp;
+	int error, i, lastfile;
+
+	error = 0;
+	FILEDESC_SLOCK(fdp);
+	lastfile = fdlastfile(fdp);
+	for (i = 0; i <= lastfile; i++) {
+		fp = fdp->fd_ofiles[i].fde_file;
+		if (fp->f_type != DTYPE_VNODE ||
+		    (atomic_load_int(&fp->f_flag) & FWRITE) == 0)
+			continue;
+		vp = fp->f_vnode;
+		if (vp->v_mount == mp) {
+			error = EDEADLK;
+			break;
+		}
+	}
+	FILEDESC_SUNLOCK(fdp);
+	return (error);
+}
+
 struct filedesc_to_leader *
-filedesc_to_leader_alloc(struct filedesc_to_leader *old, struct filedesc *fdp, struct proc *leader)
+filedesc_to_leader_alloc(struct filedesc_to_leader *old, struct filedesc *fdp,
+    struct proc *leader)
 {
 	struct filedesc_to_leader *fdtol;
 
@@ -4260,6 +4286,15 @@ filedesc_to_leader_alloc(struct filedesc_to_leader *old, struct filedesc *fdp, s
 		fdtol->fdl_next = fdtol;
 		fdtol->fdl_prev = fdtol;
 	}
+	return (fdtol);
+}
+
+struct filedesc_to_leader *
+filedesc_to_leader_share(struct filedesc_to_leader *fdtol, struct filedesc *fdp)
+{
+	FILEDESC_XLOCK(fdp);
+	fdtol->fdl_refcount++;
+	FILEDESC_XUNLOCK(fdp);
 	return (fdtol);
 }
 
@@ -4350,6 +4385,8 @@ sysctl_kern_file(SYSCTL_HANDLER_ARGS)
 		if (fdp == NULL)
 			continue;
 		FILEDESC_SLOCK(fdp);
+		if (refcount_load(&fdp->fd_refcnt) == 0)
+			goto nextproc;
 		lastfile = fdlastfile(fdp);
 		for (n = 0; refcount_load(&fdp->fd_refcnt) > 0 && n <= lastfile;
 		    n++) {
@@ -4365,9 +4402,16 @@ sysctl_kern_file(SYSCTL_HANDLER_ARGS)
 			xf.xf_offset = foffset_get(fp);
 			xf.xf_flag = fp->f_flag;
 			error = SYSCTL_OUT(req, &xf, sizeof(xf));
-			if (error)
+
+			/*
+			 * There is no need to re-check the fdtable refcount
+			 * here since the filedesc lock is not dropped in the
+			 * loop body.
+			 */
+			if (error != 0)
 				break;
 		}
+nextproc:
 		FILEDESC_SUNLOCK(fdp);
 		fddrop(fdp);
 		if (error)
@@ -4627,8 +4671,10 @@ kern_proc_filedesc_out(struct proc *p,  struct sbuf *sb, ssize_t maxlen,
 	if (pwd != NULL)
 		pwd_drop(pwd);
 	FILEDESC_SLOCK(fdp);
+	if (refcount_load(&fdp->fd_refcnt) == 0)
+		goto skip;
 	lastfile = fdlastfile(fdp);
-	for (i = 0; refcount_load(&fdp->fd_refcnt) > 0 && i <= lastfile; i++) {
+	for (i = 0; i <= lastfile; i++) {
 		if ((fp = fdp->fd_ofiles[i].fde_file) == NULL)
 			continue;
 #ifdef CAPABILITIES
@@ -4643,9 +4689,10 @@ kern_proc_filedesc_out(struct proc *p,  struct sbuf *sb, ssize_t maxlen,
 		 * loop continues.
 		 */
 		error = export_file_to_sb(fp, i, &rights, efbuf);
-		if (error != 0)
+		if (error != 0 || refcount_load(&fdp->fd_refcnt) == 0)
 			break;
 	}
+skip:
 	FILEDESC_SUNLOCK(fdp);
 fail:
 	if (fdp != NULL)
@@ -4792,8 +4839,10 @@ sysctl_kern_proc_ofiledesc(SYSCTL_HANDLER_ARGS)
 	if (pwd != NULL)
 		pwd_drop(pwd);
 	FILEDESC_SLOCK(fdp);
+	if (refcount_load(&fdp->fd_refcnt) == 0)
+		goto skip;
 	lastfile = fdlastfile(fdp);
-	for (i = 0; refcount_load(&fdp->fd_refcnt) > 0 && i <= lastfile; i++) {
+	for (i = 0; i <= lastfile; i++) {
 		if ((fp = fdp->fd_ofiles[i].fde_file) == NULL)
 			continue;
 		export_file_to_kinfo(fp, i, NULL, kif, fdp,
@@ -4802,9 +4851,10 @@ sysctl_kern_proc_ofiledesc(SYSCTL_HANDLER_ARGS)
 		kinfo_to_okinfo(kif, okif);
 		error = SYSCTL_OUT(req, okif, sizeof(*okif));
 		FILEDESC_SLOCK(fdp);
-		if (error)
+		if (error != 0 || refcount_load(&fdp->fd_refcnt) == 0)
 			break;
 	}
+skip:
 	FILEDESC_SUNLOCK(fdp);
 	fddrop(fdp);
 	pddrop(pdp);

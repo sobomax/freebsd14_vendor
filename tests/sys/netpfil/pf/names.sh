@@ -1,4 +1,4 @@
-# $FreeBSD: b2102d6443120429a01a2cb08aa0554d7f5cfa3e $
+# $FreeBSD: e3fb3eb5610305b7be950e24ff5c6a1eb644bfd4 $
 #
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -53,7 +53,51 @@ names_cleanup()
 	pft_cleanup
 }
 
+atf_test_case "group" "cleanup"
+group_head()
+{
+	atf_set descr 'Test group cleanup, PR257218'
+	atf_set require.user root
+}
+
+group_body()
+{
+	pft_init
+
+	vnet_mkjail alcatraz
+
+	if [ -n "$(jexec alcatraz pfctl -sI | grep '^epair$')" ];
+	then
+		atf_fail "Unexpected epair group"
+	fi
+
+	epair=$(vnet_mkepair)
+	if [ -n "$(jexec alcatraz pfctl -sI | grep '^epair$')" ];
+	then
+		atf_fail "Unexpected epair group"
+	fi
+
+	ifconfig ${epair}b vnet alcatraz
+	if [ -z "$(jexec alcatraz pfctl -sI | grep '^epair$')" ];
+	then
+		atf_fail "Failed to find epair group"
+	fi
+
+	ifconfig ${epair}a destroy
+
+	if [ -n "$(jexec alcatraz pfctl -sI | grep '^epair$')" ];
+	then
+		atf_fail "Unexpected epair group"
+	fi
+}
+
+group_cleanup()
+{
+	pft_cleanup
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case "names"
+	atf_add_test_case "group"
 }

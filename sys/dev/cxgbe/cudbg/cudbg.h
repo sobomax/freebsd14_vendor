@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5d64b6f4b8a736ebae8b653179fe97e16f521475 $
+ * $FreeBSD: 497ff4777856b36bf2c3ba1611d5ccbb2c7b64a0 $
  *
  */
 
@@ -417,7 +417,7 @@ static inline void reset_dbg_bitmap(u8 *bitmap, enum CUDBG_DBG_ENTITY_TYPE type)
  *  cudbg_alloc_handle - Allocates and initializes a handle that represents
  *  cudbg state.  Needs to called first before calling any other function.
  *
- *  returns a pointer to memory that has a cudbg_init structure at the begining
+ *  returns a pointer to memory that has a cudbg_init structure at the beginning
  *  and enough space after that for internal book keeping.
  */
 
@@ -452,8 +452,8 @@ void cudbg_free_handle(IN void *handle);
 
 /**
  *  cudbg_read_flash_data - Read cudbg “flash” header from adapter flash.
- *  			    This will be used by the consumer mainly to
- *  			    know the size of the data in flash.
+ *			    This will be used by the consumer mainly to
+ *			    know the size of the data in flash.
  *  ## Parameters ##
  *  @handle : A pointer returned by cudbg_hello.
  *  @data : A pointer to data/header buffer

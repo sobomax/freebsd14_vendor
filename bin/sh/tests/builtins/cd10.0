@@ -1,6 +1,6 @@
-# $FreeBSD: f4b5e0ffca5c53f10c869c74a0a7316c8665f1fb $
+# $FreeBSD: 5c165cb21fcc768f293958f3be8bdbacd4719bf2 $
 
 # Precondition
 (cd /bin) || exit
 # Verify write error is ignored.
-$SH +m -ic 'CDPATH=/:; cd bin 1</dev/null'
+ENV= $SH +m -ic 'CDPATH=/:; cd bin 1</dev/null'

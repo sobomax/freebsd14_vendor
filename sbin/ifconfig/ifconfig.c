@@ -37,7 +37,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)ifconfig.c	8.2 (Berkeley) 2/16/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 9e7d38d4c2a4e1aa72d5de78be86206841605f80 $";
+  "$FreeBSD: f01f40e46a8b589e28b8220ffc8de5c4949a7fe8 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -207,7 +207,7 @@ ioctl_ifcreate(int s, struct ifreq *ifr)
 		case EEXIST:
 			errx(1, "interface %s already exists", ifr->ifr_name);
 		default:
-			err(1, "SIOCIFCREATE2");
+			err(1, "SIOCIFCREATE2 (%s)", ifr->ifr_name);
 		}
 	}
 }

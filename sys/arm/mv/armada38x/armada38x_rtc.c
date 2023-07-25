@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff89094194a724a9e8bbd271999a3a246e310a7f $");
+__FBSDID("$FreeBSD: d6f2073b414a6663cef7b5a28cd567fb7d799191 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -208,9 +208,7 @@ static int
 mv_rtc_attach(device_t dev)
 {
 	struct mv_rtc_softc *sc;
-	int unit, ret;
-
-	unit = device_get_unit(dev);
+	int ret;
 
 	sc = device_get_softc(dev);
 	sc->dev = dev;

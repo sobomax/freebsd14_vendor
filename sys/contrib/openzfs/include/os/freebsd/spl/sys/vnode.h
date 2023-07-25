@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d2c900854acb91d83da774becf67de2b284f15c1 $
+ * $FreeBSD: 00f718eadb3f3caaff178d0856cdb6749acf0e31 $
  */
 
 #ifndef _OPENSOLARIS_SYS_VNODE_H_
@@ -96,9 +96,11 @@ vn_flush_cached_data(vnode_t *vp, boolean_t sync)
 	if (vp->v_object->flags & OBJ_MIGHTBEDIRTY) {
 #endif
 		int flags = sync ? OBJPC_SYNC : 0;
+		vn_lock(vp, LK_SHARED | LK_RETRY);
 		zfs_vmobject_wlock(vp->v_object);
 		vm_object_page_clean(vp->v_object, 0, 0, flags);
 		zfs_vmobject_wunlock(vp->v_object);
+		VOP_UNLOCK(vp);
 	}
 }
 #endif

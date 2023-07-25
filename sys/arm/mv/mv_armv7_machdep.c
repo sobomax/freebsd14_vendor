@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ecd69f435a6c8acba3e58bfe4dcd86663fd8f0c $");
+__FBSDID("$FreeBSD: e37d77b9bb1bbac57e442bebc8aaaa878ef52476 $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -160,7 +160,7 @@ platform_mpp_init(void)
 	pcell_t pin_cells, *pinmap_ptr, pin_count;
 	ssize_t len;
 	int par_addr_cells, par_size_cells;
-	int tuple_size, tuples, rv, pins, i, j;
+	int tuple_size, rv, pins, i, j;
 	int mpp_pin, mpp_function;
 
 	/*
@@ -194,7 +194,6 @@ moveon:
 
 	tuple_size = sizeof(pcell_t) * (par_addr_cells + par_size_cells);
 	len = OF_getprop(node, "reg", reg, sizeof(reg));
-	tuples = len / tuple_size;
 	if (tuple_size <= 0)
 		return (EINVAL);
 

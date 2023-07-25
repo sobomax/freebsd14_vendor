@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2244931cd19bea5f17770aaf91150abc2f6fef62 $");
+__FBSDID("$FreeBSD: 8f6ac38179a65488ce18817e0b35d7280a84a0fe $");
 
 #include "opt_geom.h"
 
@@ -392,6 +392,10 @@ g_label_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 
 	/* Skip providers that are already open for writing. */
 	if (pp->acw > 0)
+		return (NULL);
+
+	/* Skip broken disks that don't set their sector size */
+	if (pp->sectorsize == 0)
 		return (NULL);
 
 	if (strcmp(pp->geom->class->name, mp->name) == 0)

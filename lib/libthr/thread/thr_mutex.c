@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 303386db7fe7faf901f64136b59e32179b228d8f $");
+__FBSDID("$FreeBSD: 8dccdf4dfa8ccfbe23466db5dc502d798e8a1586 $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -53,7 +53,7 @@ __FBSDID("$FreeBSD: 303386db7fe7faf901f64136b59e32179b228d8f $");
 
 #include "thr_private.h"
 
-_Static_assert(sizeof(struct pthread_mutex) <= PAGE_SIZE,
+_Static_assert(sizeof(struct pthread_mutex) <= THR_PAGE_SIZE_MIN,
     "pthread_mutex is too large for off-page");
 
 /*

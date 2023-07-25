@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f7370e1cf12c9cd7f2acaf7577b169080277616 $");
+__FBSDID("$FreeBSD: c9c0995cc4e7e396a7db160e88da548a684ec8e4 $");
 
 #include "opt_bpf.h"
 #include "opt_inet.h"
@@ -922,7 +922,7 @@ pf_free_src_nodes(struct pf_ksrc_node_list *head)
 }
 
 void
-pf_mtag_initialize()
+pf_mtag_initialize(void)
 {
 
 	pf_mtag_z = uma_zcreate("pf mtags", sizeof(struct m_tag) +
@@ -932,7 +932,7 @@ pf_mtag_initialize()
 
 /* Per-vnet data storage structures initialization. */
 void
-pf_initialize()
+pf_initialize(void)
 {
 	struct pf_keyhash	*kh;
 	struct pf_idhash	*ih;
@@ -1026,14 +1026,14 @@ pf_initialize()
 }
 
 void
-pf_mtag_cleanup()
+pf_mtag_cleanup(void)
 {
 
 	uma_zdestroy(pf_mtag_z);
 }
 
 void
-pf_cleanup()
+pf_cleanup(void)
 {
 	struct pf_keyhash	*kh;
 	struct pf_idhash	*ih;
@@ -1920,7 +1920,7 @@ pf_state_expires(const struct pf_kstate *state)
 }
 
 void
-pf_purge_expired_src_nodes()
+pf_purge_expired_src_nodes(void)
 {
 	struct pf_ksrc_node_list	 freelist;
 	struct pf_srchash	*sh;
@@ -2108,7 +2108,7 @@ relock:
 }
 
 static void
-pf_purge_unlinked_rules()
+pf_purge_unlinked_rules(void)
 {
 	struct pf_krulequeue tmpq;
 	struct pf_krule *r, *r1;
@@ -4951,9 +4951,11 @@ pf_test_state_tcp(struct pf_kstate **state, int direction, struct pfi_kkif *kif,
 	if ((action = pf_synproxy(pd, state, reason)) != PF_PASS)
 		return (action);
 
-	if (((th->th_flags & (TH_SYN|TH_ACK)) == TH_SYN) &&
-	    dst->state >= TCPS_FIN_WAIT_2 &&
-	    src->state >= TCPS_FIN_WAIT_2) {
+	if (dst->state >= TCPS_FIN_WAIT_2 &&
+	    src->state >= TCPS_FIN_WAIT_2 &&
+	    (((th->th_flags & (TH_SYN|TH_ACK)) == TH_SYN) ||
+	    ((th->th_flags & (TH_SYN|TH_ACK|TH_RST)) == TH_ACK &&
+	    pf_syncookie_check(pd) && pd->dir == PF_IN))) {
 		if (V_pf_status.debug >= PF_DEBUG_MISC) {
 			printf("pf: state reuse ");
 			pf_print_state(*state);
@@ -5885,6 +5887,10 @@ pf_route(struct mbuf **m, struct pf_krule *r, int dir, struct ifnet *oifp,
 				    r->rpool.cur->kif->pfik_ifp : NULL;
 			} else {
 				ifp = s->rt_kif ? s->rt_kif->pfik_ifp : NULL;
+				/* If pfsync'd */
+				if (ifp == NULL)
+					ifp = r->rpool.cur->kif ?
+					    r->rpool.cur->kif->pfik_ifp : NULL;
 				PF_STATE_UNLOCK(s);
 			}
 			if (ifp == oifp) {
@@ -5940,6 +5946,9 @@ pf_route(struct mbuf **m, struct pf_krule *r, int dir, struct ifnet *oifp,
 		ifp = s->rt_kif ? s->rt_kif->pfik_ifp : NULL;
 		PF_STATE_UNLOCK(s);
 	}
+	/* If pfsync'd */
+	if (ifp == NULL)
+		ifp = r->rpool.cur->kif ? r->rpool.cur->kif->pfik_ifp : NULL;
 	if (ifp == NULL)
 		goto bad;
 
@@ -6070,6 +6079,10 @@ pf_route6(struct mbuf **m, struct pf_krule *r, int dir, struct ifnet *oifp,
 				    r->rpool.cur->kif->pfik_ifp : NULL;
 			} else {
 				ifp = s->rt_kif ? s->rt_kif->pfik_ifp : NULL;
+				/* If pfsync'd */
+				if (ifp == NULL)
+					ifp = r->rpool.cur->kif ?
+					    r->rpool.cur->kif->pfik_ifp : NULL;
 				PF_STATE_UNLOCK(s);
 			}
 			if (ifp == oifp) {
@@ -6128,6 +6141,9 @@ pf_route6(struct mbuf **m, struct pf_krule *r, int dir, struct ifnet *oifp,
 	if (s)
 		PF_STATE_UNLOCK(s);
 
+	/* If pfsync'd */
+	if (ifp == NULL)
+		ifp = r->rpool.cur->kif ? r->rpool.cur->kif->pfik_ifp : NULL;
 	if (ifp == NULL)
 		goto bad;
 

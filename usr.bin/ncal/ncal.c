@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f0df22e37fc55608cbaca860325d8c0eca2bd27 $");
+__FBSDID("$FreeBSD: 641c59f71e105dd7fcaf9ac33ff88ecb2b0c6862 $");
 
 #include <calendar.h>
 #include <ctype.h>
@@ -930,7 +930,8 @@ mkmonthb(int y, int m, int jd_flag, struct monthlines *mlines)
 					dt.d = j - jan1 + 1;
 				else
 					sdateb(j, &dt);
-				if (j == highlightdate && !flag_nohighlight)
+				if (j == highlightdate && !flag_nohighlight
+				 && isatty(STDOUT_FILENO))
 					highlight(mlines->lines[i] + k,
 					    ds + dt.d * dw, dw, &l);
 				else

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f79e94f6d0fea3ef7ad517c9320ab79def812b49 $");
+__FBSDID("$FreeBSD: 825d0151c3335500655b529dea5c18dd9c9838a0 $");
 
 #include "opt_bhyve_snapshot.h"
 
@@ -83,8 +83,7 @@ vpmtmr_cleanup(struct vpmtmr *vpmtmr)
 }
 
 int
-vpmtmr_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
-    uint32_t *val)
+vpmtmr_handler(struct vm *vm, bool in, int port, int bytes, uint32_t *val)
 {
 	struct vpmtmr *vpmtmr;
 	sbintime_t now, delta;

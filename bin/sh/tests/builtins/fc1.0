@@ -1,4 +1,4 @@
-# $FreeBSD: ab7a387b507726d8d0245239f457c32467841f9a $
+# $FreeBSD: df4852f0b8ac6763824d3e90c97e4746f1fb105c $
 set -e
 trap 'echo Broken pipe -- test failed' PIPE
 
@@ -8,7 +8,7 @@ T=$(mktemp -d sh-test.XXXXXX)
 cd $T
 
 mkfifo input output error
-HISTFILE=/dev/null ${SH} +m -i <input >output 2>error &
+ENV= HISTFILE=/dev/null ${SH} +m -i <input >output 2>error &
 {
 	# Syntax error
 	echo ')' >&3

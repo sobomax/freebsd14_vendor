@@ -1,4 +1,4 @@
-/*	$FreeBSD: 3a6337ab0f7b8c29b0c556fc858d241b97effb87 $	*/
+/*	$FreeBSD: 222f85a5818b1d9f63dff9d72c8b0aac26bf42d0 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -124,8 +124,8 @@ printactivenat(nat_t *nat, int opts, u_long ticks)
 			getsumd(nat->nat_sumd[1]),
 			nat->nat_pr[0], nat->nat_pr[1],
 			nat->nat_hv[0], nat->nat_hv[1], nat->nat_flags);
-		PRINTF("\tifp %s", getifname(nat->nat_ifps[0]));
-		PRINTF(",%s ", getifname(nat->nat_ifps[1]));
+		PRINTF("\tifp %s,%s ", FORMAT_IF(nat->nat_ifnames[0]),
+			FORMAT_IF(nat->nat_ifnames[1]));
 #ifdef	USE_QUAD_T
 		PRINTF("bytes %"PRIu64"/%"PRIu64" pkts %"PRIu64"/%"PRIu64"",
 			(unsigned long long)nat->nat_bytes[0],

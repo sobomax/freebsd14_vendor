@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3c7bd2a69de7934f0b2fc8d1fd6d95574a0d3410 $
+ * $FreeBSD: 7effa6b8a49bbad1b1c6ce91c9b25c4a909c92ee $
  */
 
 #ifndef _HV_KBD_H
@@ -35,6 +35,12 @@
 #include <sys/systm.h>
 
 #include <dev/kbd/kbdreg.h>
+
+#include "opt_evdev.h"
+#ifdef EVDEV_SUPPORT
+#include <dev/evdev/evdev.h>
+#include <dev/evdev/input.h>
+#endif
 
 #define HVKBD_DRIVER_NAME	"hvkbd"
 #define IS_UNICODE		(1)
@@ -84,9 +90,17 @@ typedef struct hv_kbd_sc_t {
 	keyboard_t			sc_kbd;
 	int				sc_mode;
 	int				sc_state;
+	uint32_t			sc_accents;	/* accent key index (> 0) */
+	uint32_t			sc_composed_char; /* composed char code */
+	uint8_t				sc_prefix;	/* AT scan code prefix */
 	int				sc_polling;	/* polling recursion count */
 	uint32_t			sc_flags;
 	int				debug;
+
+#ifdef EVDEV_SUPPORT
+	struct evdev_dev		*ks_evdev;
+	int				ks_evdev_state;
+#endif
 } hv_kbd_sc;
 
 int	hv_kbd_produce_ks(hv_kbd_sc *sc, const keystroke *ks);

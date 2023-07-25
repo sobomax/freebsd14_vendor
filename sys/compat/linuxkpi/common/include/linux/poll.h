@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ff83fb1959f625be48707950ef44524e1bba6a5d $
+ * $FreeBSD: d3c0d4603b2d69d9e6e4099be4481d088b5e428d $
  */
 #ifndef	_LINUXKPI_LINUX_POLL_H_
 #define	_LINUXKPI_LINUX_POLL_H_
@@ -34,6 +34,7 @@
 #include <sys/poll.h>
 #include <sys/fcntl.h>
 
+#include <linux/eventpoll.h>
 #include <linux/wait.h>
 #include <linux/file.h>
 

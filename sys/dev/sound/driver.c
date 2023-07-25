@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: bd25cfd5a6dc03f840bc2b72fa1de530967c26d3 $
+ * $FreeBSD: 06833430edb484b62f4de9109a691763f2816043 $
  */
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
@@ -61,7 +61,6 @@ MODULE_VERSION(snd_driver, 1);
 MODULE_DEPEND(snd_driver, snd_ad1816, 1, 1, 1);
 MODULE_DEPEND(snd_driver, snd_als4000, 1, 1, 1);
 MODULE_DEPEND(snd_driver, snd_atiixp, 1, 1, 1);
-/* MODULE_DEPEND(snd_driver, snd_aureal, 1, 1, 1); */
 MODULE_DEPEND(snd_driver, snd_cmi, 1, 1, 1);
 MODULE_DEPEND(snd_driver, snd_cs4281, 1, 1, 1);
 MODULE_DEPEND(snd_driver, snd_csa, 1, 1, 1);

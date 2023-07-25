@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 036ce82c45e8a1e9dc72b539ba80df3b1fdea1d7 $");
+__FBSDID("$FreeBSD: 42caa112e8fcbaf90c464878e4cebcea4f0fd26d $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -140,8 +140,7 @@ gv_create_drive(struct gv_softc *sc, struct gv_drive *d)
 			g_topology_unlock();
 			G_VINUM_DEBUG(0, "create drive '%s': unable to update "
 			    "access counts", d->name);
-			if (d->hdr != NULL)
-				g_free(d->hdr);
+			g_free(d->hdr);
 			g_free(d);
 			return (GV_ERR_CREATE);
 		}

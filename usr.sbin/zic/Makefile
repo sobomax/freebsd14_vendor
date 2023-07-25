@@ -1,7 +1,11 @@
-# $FreeBSD: 9d699a8914490207cb2ea4903e45bdbc0a224945 $
+# $FreeBSD: 88d3f12c30160795a1a67b0f116a584529348a95 $
 
-# Vendor contact: tz@elsie.nci.nih.gov
+.PATH: ${SRCTOP}/contrib/tzcode
 
-SUBDIR=	zic zdump
+PROG=	zic
+MAN=	zic.8
+SRCS=	zic.c
 
-.include <bsd.subdir.mk>
+CFLAGS+= -I${SRCTOP}/contrib/tzcode -include tzconfig.h
+
+.include <bsd.prog.mk>

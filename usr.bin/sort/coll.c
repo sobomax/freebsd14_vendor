@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ccd73e19d393a2748efe449b442e26cef5dc6ffa $");
+__FBSDID("$FreeBSD: e3d388743d4ae4c68941284619c7db6bc7dc61be $");
 
 #include <sys/types.h>
 
@@ -73,8 +73,7 @@ keys_array_alloc(void)
 	size_t sz;
 
 	sz = keys_array_size();
-	ka = sort_malloc(sz);
-	memset(ka, 0, sz);
+	ka = sort_calloc(1, sz);
 
 	return (ka);
 }
@@ -157,8 +156,7 @@ sort_list_item_alloc(void)
 	size_t sz;
 
 	sz = sizeof(struct sort_list_item) + keys_array_size();
-	si = sort_malloc(sz);
-	memset(si, 0, sz);
+	si = sort_calloc(1, sz);
 
 	return (si);
 }

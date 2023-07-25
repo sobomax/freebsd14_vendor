@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 878e4d348234ab485ec0cdb8655d6522a0a21160 $");
+__FBSDID("$FreeBSD: 0082c60f0b6cf73659a718b66b547529b51a27bd $");
 
 #include <linux/completion.h>
 #include <linux/file.h>
@@ -508,6 +508,9 @@ err1:
 	mutex_lock(&mut);
 	idr_remove(&ctx_idr, ctx->id);
 	mutex_unlock(&mut);
+	mutex_lock(&file->mut);
+	list_del(&ctx->list);
+	mutex_unlock(&file->mut);
 	kfree(ctx);
 	return ret;
 }

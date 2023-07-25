@@ -1,4 +1,4 @@
-# $FreeBSD: 68fa2da64fdb3586009b2f647266a3cdb4eb4d3e $
+# $FreeBSD: 385f1493bd388e8ef87242c8c7cd7a6ee61676ed $
 
 .include <bsd.init.mk>
 
@@ -40,8 +40,7 @@ CFLAGS.lutils.c+= -I${SRCTOP}/sys/teken -I${SRCTOP}/contrib/pnglite
 .if ${MACHINE_CPUARCH} == "amd64" && ${DO32:U0} == 0
 CFLAGS+=	-fPIC
 .endif
-.if ${MK_LOADER_VERIEXEC} == "yes"
-CFLAGS+= -I${SRCTOP}/lib/libsecureboot/h -DLOADER_VERIEXEC
-.endif
+
+.include "${BOOTSRC}/veriexec.mk"
 
 .include <bsd.lib.mk>

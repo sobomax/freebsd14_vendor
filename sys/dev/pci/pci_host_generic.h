@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: 20117cbe32e35df578caf70a958a6e7c4658ed9a $
+ * $FreeBSD: 80da4f523165f2cab8c9b2aca322aeb2a53d4600 $
  *
  */
 
@@ -94,6 +94,7 @@ struct generic_pcie_core_softc {
 DECLARE_CLASS(generic_pcie_core_driver);
 
 int pci_host_generic_core_attach(device_t);
+int pci_host_generic_core_detach(device_t);
 struct resource *pci_host_generic_core_alloc_resource(device_t, device_t, int,
     int *, rman_res_t, rman_res_t, rman_res_t, u_int);
 int pci_host_generic_core_release_resource(device_t, device_t, int, int,

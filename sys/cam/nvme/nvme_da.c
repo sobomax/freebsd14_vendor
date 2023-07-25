@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a3d72e1017c9a662d30939cbc5898326ec08bcbc $");
+__FBSDID("$FreeBSD: 16214f4a14889727e8cba20e6a5f3afc2579e62b $");
 
 #include <sys/param.h>
 
@@ -499,7 +499,7 @@ ndastrategy(struct bio *bp)
 }
 
 static int
-ndadump(void *arg, void *virtual, vm_offset_t physical, off_t offset, size_t length)
+ndadump(void *arg, void *virtual, off_t offset, size_t length)
 {
 	struct	    cam_periph *periph;
 	struct	    nda_softc *softc;
@@ -881,7 +881,7 @@ ndaregister(struct cam_periph *periph, void *arg)
 	/*
 	 * Register this media as a disk
 	 */
-	(void)cam_periph_hold(periph, PRIBIO);
+	(void)cam_periph_acquire(periph);
 	cam_periph_unlock(periph);
 	snprintf(announce_buf, sizeof(announce_buf),
 	    "kern.cam.nda.%d.quirks", periph->unit_number);
@@ -959,20 +959,7 @@ ndaregister(struct cam_periph *periph, void *arg)
 	if (nda_nvd_compat)
 		disk_add_alias(disk, "nvd");
 
-	/*
-	 * Acquire a reference to the periph before we register with GEOM.
-	 * We'll release this reference once GEOM calls us back (via
-	 * ndadiskgonecb()) telling us that our provider has been freed.
-	 */
-	if (cam_periph_acquire(periph) != 0) {
-		xpt_print(periph->path, "%s: lost periph during "
-			  "registration!\n", __func__);
-		cam_periph_lock(periph);
-		return (CAM_REQ_CMP_ERR);
-	}
-	disk_create(softc->disk, DISK_VERSION);
 	cam_periph_lock(periph);
-	cam_periph_unhold(periph);
 
 	snprintf(announce_buf, sizeof(announce_buf),
 		"%juMB (%ju %u byte sectors)",
@@ -997,6 +984,15 @@ ndaregister(struct cam_periph *periph, void *arg)
 	    ndaasync, periph, periph->path);
 
 	softc->state = NDA_STATE_NORMAL;
+
+	/*
+	 * We'll release this reference once GEOM calls us back via
+	 * ndadiskgonecb(), telling us that our provider has been freed.
+	 */
+	if (cam_periph_acquire(periph) == 0)
+		disk_create(softc->disk, DISK_VERSION);
+
+	cam_periph_release_locked(periph);
 	return(CAM_REQ_CMP);
 }
 
@@ -1317,14 +1313,14 @@ ndaflush(void)
 
 		if (SCHEDULER_STOPPED()) {
 			/*
-			 * If we paniced with the lock held or the periph is not
+			 * If we panicked with the lock held or the periph is not
 			 * open, do not recurse.  Otherwise, call ndadump since
 			 * that avoids the sleeping cam_periph_getccb does if no
 			 * CCBs are available.
 			 */
 			if (!cam_periph_owned(periph) &&
 			    (softc->flags & NDA_FLAG_OPEN)) {
-				ndadump(softc->disk, NULL, 0, 0, 0);
+				ndadump(softc->disk, NULL, 0, 0);
 			}
 			continue;
 		}
@@ -1353,6 +1349,9 @@ ndaflush(void)
 static void
 ndashutdown(void *arg, int howto)
 {
+
+	if ((howto & RB_NOSYNC) != 0)
+		return;
 
 	ndaflush();
 }

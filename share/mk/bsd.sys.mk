@@ -1,4 +1,4 @@
-# $FreeBSD: 3bbe7aa849b442d9a4f102486d6943d3b7094eeb $
+# $FreeBSD: 9e41fefc4fe4c69f914f7d75dd47e70bcb5bb978 $
 #
 # This file contains common settings used for building FreeBSD
 # sources.
@@ -114,6 +114,12 @@ CWARNFLAGS+=		-Wno-misleading-indentation
 .if ${COMPILER_TYPE} == "clang" && ${COMPILER_VERSION} >= 140000
 NO_WBITWISE_INSTEAD_OF_LOGICAL=	-Wno-bitwise-instead-of-logical
 .endif
+.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 110100
+NO_WARRAY_PARAMETER=	-Wno-array-parameter
+.endif
+.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 120100
+NO_WUSE_AFTER_FREE=	-Wno-use-after-free
+.endif
 .endif # WARNS
 
 .if defined(FORMAT_AUDIT)
@@ -198,6 +204,17 @@ CWARNFLAGS+=	-Wno-error=aggressive-loop-optimizations	\
 		-Wno-error=sizeof-pointer-memaccess		\
 		-Wno-error=stringop-truncation
 .endif
+
+# GCC 9.2.0
+.if ${COMPILER_VERSION} >= 90200
+.if ${MACHINE_ARCH} == "i386"
+CWARNFLAGS+=	-Wno-error=overflow
+.endif
+.endif
+
+# GCC produces false positives for functions that switch on an
+# enum (GCC bug 87950)
+CWARNFLAGS+=	-Wno-return-type
 
 # GCC's own arm_neon.h triggers various warnings
 .if ${MACHINE_CPUARCH} == "aarch64"
@@ -316,7 +333,7 @@ LDFLAGS+=	--ld-path=${LD:[1]:S/^ld.//1W}
 .else
 LDFLAGS+=	-fuse-ld=${LD:[1]:S/^ld.//1W}
 .endif
-.else
+.elif ${COMPILER_TYPE} == "gcc"
 # GCC does not support an absolute path for -fuse-ld so we just print this
 # warning instead and let the user add the required symlinks.
 # However, we can avoid this warning if -B is set appropriately (e.g. for

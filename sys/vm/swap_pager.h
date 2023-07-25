@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)swap_pager.h	7.1 (Berkeley) 12/5/90
- * $FreeBSD: 6761d4f99ee47e3c20c73228381e39d8d9ec05ec $
+ * $FreeBSD: 616f6c46164a4053befc292f3af3246131af8422 $
  */
 
 #ifndef	_VM_SWAP_PAGER_H_
@@ -76,6 +76,8 @@ struct xswdev;
 int swap_dev_info(int name, struct xswdev *xs, char *devname, size_t len);
 void swap_pager_copy(vm_object_t, vm_object_t, vm_pindex_t, int);
 vm_pindex_t swap_pager_find_least(vm_object_t object, vm_pindex_t pindex);
+void swap_pager_freespace(vm_object_t object, vm_pindex_t start,
+    vm_size_t size, vm_size_t *freed);
 void swap_pager_swap_init(void);
 int swap_pager_nswapdev(void);
 int swap_pager_reserve(vm_object_t, vm_pindex_t, vm_pindex_t);

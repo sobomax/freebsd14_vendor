@@ -1,4 +1,4 @@
-# $FreeBSD: 8d8cfb693a70c74adb8d99168ce3b78f2bb25c56 $
+# $FreeBSD: 8c4d13083a5407e35371b978e593720c8d15789d $
 
 include		"../nlm/std.xlp"
 makeoptions	MODULES_OVERRIDE=""
@@ -58,6 +58,8 @@ options 	ALT_BREAK_TO_DEBUGGER
 
 device		xz
 options 	GEOM_UZIP
+
+device		clk
 
 # Device tree
 options 	FDT

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59230d3538a7e94ba44b24c84deedfb2a17aea8f $");
+__FBSDID("$FreeBSD: 8e5431db9a607015a08e001698e090b71bf9936d $");
 
 /*
  * IEEE 802.11i TKIP crypto support.
@@ -214,7 +214,7 @@ tkip_encap(struct ieee80211_key *k, struct mbuf *m)
 	/*
 	 * Copy down 802.11 header and add the IV, KeyID, and ExtIV.
 	 */
-	M_PREPEND(m, tkip.ic_header, M_NOWAIT);
+	M_PREPEND(m, tkip.ic_header, IEEE80211_M_NOWAIT);
 	if (m == NULL)
 		return 0;
 	ivp = mtod(m, uint8_t *);
@@ -862,7 +862,7 @@ michael_mic_hdr(const struct ieee80211_frame *wh0, uint8_t hdr[16])
 		break;
 	}
 
-	if (wh->i_fc[0] & IEEE80211_FC0_SUBTYPE_QOS) {
+	if (wh->i_fc[0] & IEEE80211_FC0_SUBTYPE_QOS_DATA) {
 		const struct ieee80211_qosframe *qwh =
 			(const struct ieee80211_qosframe *) wh;
 		hdr[12] = qwh->i_qos[0] & IEEE80211_QOS_TID;

@@ -54,7 +54,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: d4925fe0d7e6ebf52608deb2859d2ba93e698b66 $");
+SND_DECLARE_FILE("$FreeBSD: 576136ce30b318046b45dad0201e4787b99617f1 $");
 #endif
 
 #define FEEDMATRIX_RESERVOIR	(SND_CHN_MAX * PCM_32_BPS)
@@ -308,7 +308,7 @@ feed_matrix_setup(struct feed_matrix_info *info, struct pcmchan_matrix *m_in,
 
 	/*
 	 * If both in and out are part of standard matrix and identical, skip
-	 * everything alltogether.
+	 * everything altogether.
 	 */
 	if (m_in->id == m_out->id && !(m_in->id < SND_CHN_MATRIX_BEGIN ||
 	    m_in->id > SND_CHN_MATRIX_END))

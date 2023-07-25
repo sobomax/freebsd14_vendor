@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 53fa9db424c20c02218a84e97eff9df8aded0a39 $
+ * $FreeBSD: 08e59b33e53ae5770eba19fde3d4289f8dc85d52 $
  */
 
 #ifndef	_LINUXKPI_LINUX_CPU_H
@@ -43,6 +43,8 @@
 typedef	cpuset_t	cpumask_t;
 
 extern cpumask_t cpu_online_mask;
+
+cpumask_t *lkpi_get_static_single_cpu_mask(int);
 
 static __inline int
 cpumask_next(int cpuid, cpumask_t mask)
@@ -72,5 +74,7 @@ cpumask_set_cpu(int cpu, cpumask_t *mask)
 
 	CPU_SET(cpu, mask);
 }
+
+#define	cpumask_of(_cpu)	(lkpi_get_static_single_cpu_mask(_cpu))
 
 #endif	/* _LINUXKPI_LINUX_CPU_H */

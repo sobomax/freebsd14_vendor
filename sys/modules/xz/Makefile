@@ -1,4 +1,4 @@
-# $FreeBSD: c93abcae43f3bc4a332f8e1624b489743fee42aa $
+# $FreeBSD: 45d2a991b2e185513bc3f519c074f0a7748a10ea $
 
 .PATH:	${SRCTOP}/sys/dev/xz
 .PATH:	${SRCTOP}/sys/contrib/xz-embedded/freebsd
@@ -7,12 +7,14 @@
 KMOD=	xz
 SRCS= \
 	xz_crc32.c \
+	xz_crc64.c \
 	xz_dec_bcj.c \
 	xz_dec_lzma2.c \
 	xz_dec_stream.c \
 	xz_mod.c
 
 CFLAGS+= \
+	-DXZ_USE_CRC64 \
 	-I${SRCTOP}/sys/contrib/xz-embedded/freebsd \
 	-I${SRCTOP}/sys/contrib/xz-embedded/linux/lib/xz \
 	-I${SRCTOP}/sys/contrib/xz-embedded/linux/include/linux

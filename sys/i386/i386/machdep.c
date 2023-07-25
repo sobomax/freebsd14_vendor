@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1224e2f8ae8bb9d436e8ba5e2db0530fc8b6697 $");
+__FBSDID("$FreeBSD: 27a323bce62abef25bc8080d4f0e835d0d59bad0 $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -82,6 +82,7 @@ __FBSDID("$FreeBSD: e1224e2f8ae8bb9d436e8ba5e2db0530fc8b6697 $");
 #include <sys/pcpu.h>
 #include <sys/ptrace.h>
 #include <sys/reboot.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
 #include <sys/signalvar.h>
@@ -129,7 +130,6 @@ __FBSDID("$FreeBSD: e1224e2f8ae8bb9d436e8ba5e2db0530fc8b6697 $");
 #include <machine/pcb.h>
 #include <machine/pcb_ext.h>
 #include <machine/proc.h>
-#include <machine/reg.h>
 #include <machine/sigframe.h>
 #include <machine/specialreg.h>
 #include <machine/sysarch.h>
@@ -188,6 +188,8 @@ struct kva_md_info kmi;
 static struct trapframe proc0_tf;
 struct pcpu __pcpu[MAXCPU];
 
+static void i386_clock_source_init(void);
+
 struct mtx icu_lock;
 
 struct mem_range_softc mem_range_softc;
@@ -198,12 +200,19 @@ extern struct sysentvec elf32_freebsd_sysvec;
 
 /* Default init_ops implementation. */
 struct init_ops init_ops = {
-	.early_clock_source_init =	i8254_init,
+	.early_clock_source_init =	i386_clock_source_init,
 	.early_delay =			i8254_delay,
 #ifdef DEV_APIC
 	.msi_init =			msi_init,
 #endif
 };
+
+static void
+i386_clock_source_init(void)
+{
+	i8254_init();
+	tsc_init();
+}
 
 static void
 cpu_startup(dummy)
@@ -1488,13 +1497,14 @@ init386(int first)
 	r_idt.rd_base = (int) idt;
 	lidt(&r_idt);
 
+	finishidentcpu();	/* Final stage of CPU initialization */
+
 	/*
 	 * Initialize the clock before the console so that console
 	 * initialization can use DELAY().
 	 */
 	clock_init();
 
-	finishidentcpu();	/* Final stage of CPU initialization */
 	i386_setidt2();
 	pmap_set_nx();
 	initializecpu();	/* Initialize CPU registers */
@@ -1644,6 +1654,8 @@ machdep_init_trampoline(void)
 
 	/* Re-initialize new IDT since the handlers were relocated */
 	setidt_disp = trampoline - start_exceptions;
+	if (bootverbose)
+		printf("Trampoline disposition %#zx\n", setidt_disp);
 	fixup_idt();
 
 	r_idt.rd_limit = sizeof(struct gate_descriptor) * NIDT - 1;

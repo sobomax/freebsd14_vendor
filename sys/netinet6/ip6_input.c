@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30ad9a53006a7053f1bf9226b1b0513095b86e1f $");
+__FBSDID("$FreeBSD: 2423b61e0b36d764ec15f747d0957314397bd159 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -579,12 +579,11 @@ ip6_input(struct mbuf *m)
 			IP6STAT_INC(ip6s_mext1);
 	} else {
 		if (m->m_next) {
-			if (m->m_flags & M_LOOP) {
-				IP6STAT_INC(ip6s_m2m[V_loif->if_index]);
-			} else if (rcvif->if_index < IP6S_M2MMAX)
-				IP6STAT_INC(ip6s_m2m[rcvif->if_index]);
-			else
-				IP6STAT_INC(ip6s_m2m[0]);
+			struct ifnet *ifp = (m->m_flags & M_LOOP) ? V_loif : rcvif;
+			int ifindex = ifp->if_index;
+			if (ifindex >= IP6S_M2MMAX)
+				ifindex = 0;
+			IP6STAT_INC(ip6s_m2m[ifindex]);
 		} else
 			IP6STAT_INC(ip6s_m1);
 	}

@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 55be19f099eb9572af34d22133a5eb4fb6d284ae $
+# $FreeBSD: 1a415cb5f518fcab13e2e23b31ba09b846c23fbe $
 #
 
 MAKEFS="makefs -t ffs"
@@ -57,7 +57,6 @@ check_ffs_image_contents()
 atf_test_case autocalculate_image_size cleanup
 autocalculate_image_size_body()
 {
-	atf_expect_fail "PR 229929 makefs(8) can underestimate image size"
 	create_test_inputs
 
 	atf_check -e empty -o save:$TEST_SPEC_FILE -s exit:0 \

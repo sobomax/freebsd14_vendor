@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: c7ebff80e56df4631d1853f74e7fbe959b487320 $
+ * $FreeBSD: 18d78a46d815642ab9d1305a3de5f8ed567ef333 $
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -395,7 +395,21 @@ extern struct sx in_multi_sx;
 #define	IN_MULTI_UNLOCK_ASSERT() sx_assert(&in_multi_sx, SA_XUNLOCKED)
 
 void inm_disconnect(struct in_multi *inm);
-extern int ifma_restart;
+
+/*
+ * Get the in_multi pointer from a ifmultiaddr.
+ * Returns NULL if ifmultiaddr is no longer valid.
+ */
+static __inline struct in_multi *
+inm_ifmultiaddr_get_inm(struct ifmultiaddr *ifma)
+{
+
+	NET_EPOCH_ASSERT();
+
+	return ((ifma->ifma_addr->sa_family != AF_INET ||
+	    (ifma->ifma_flags & IFMA_F_ENQUEUED) == 0) ? NULL :
+	    ifma->ifma_protospec);
+}
 
 /* Acquire an in_multi record. */
 static __inline void

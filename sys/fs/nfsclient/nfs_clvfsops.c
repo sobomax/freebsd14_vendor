@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55941170fc69d5e3036a3ef1dfe0530df1b2b6c7 $");
+__FBSDID("$FreeBSD: be863cc9d70a54e815b2ba81b0d05e5562536c53 $");
 
 #include "opt_bootp.h"
 #include "opt_nfsroot.h"
@@ -2130,8 +2130,8 @@ void nfscl_retopts(struct nfsmount *nmp, char *buffer, size_t buflen)
 	    ",noncontigwr", &buf, &blen);
 	nfscl_printopt(nmp, (nmp->nm_flag & (NFSMNT_NOLOCKD | NFSMNT_NFSV4)) ==
 	    0, ",lockd", &buf, &blen);
-	nfscl_printopt(nmp, (nmp->nm_flag & (NFSMNT_NOLOCKD | NFSMNT_NFSV4)) ==
-	    NFSMNT_NOLOCKD, ",nolockd", &buf, &blen);
+	nfscl_printopt(nmp, (nmp->nm_flag & NFSMNT_NOLOCKD) != 0, ",nolockd",
+	    &buf, &blen);
 	nfscl_printopt(nmp, (nmp->nm_flag & NFSMNT_RDIRPLUS) != 0, ",rdirplus",
 	    &buf, &blen);
 	nfscl_printopt(nmp, (nmp->nm_flag & NFSMNT_KERB) == 0, ",sec=sys",

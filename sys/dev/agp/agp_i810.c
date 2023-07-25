@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bca2f556a60532e445a0c2e574040ceb24dc376 $");
+__FBSDID("$FreeBSD: 0fcc10058181ccfbf06c2533bcddaf29f92578b3 $");
 
 #if 0
 #define	KTR_AGP_I810	KTR_DEV
@@ -1744,7 +1744,7 @@ agp_i810_alloc_memory(device_t dev, int type, vm_size_t size)
 	mem->am_size = size;
 	mem->am_type = type;
 	if (type != 1 && (type != 2 || size == AGP_PAGE_SIZE))
-		mem->am_obj = vm_object_allocate(OBJT_DEFAULT,
+		mem->am_obj = vm_object_allocate(OBJT_SWAP,
 		    atop(round_page(size)));
 	else
 		mem->am_obj = 0;

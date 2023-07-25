@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f02a9e7d9a43451242cb372b39bb227d31302cb4 $
+ * $FreeBSD: 0610ed855d50850caa3d0ac9ec17147aee117e95 $
  */
 
 /*
@@ -222,6 +222,7 @@ struct lacp_port {
 #define	lp_key		lp_actor.lip_key
 #define	lp_systemid	lp_actor.lip_systemid
 	struct timeval		lp_last_lacpdu;
+	struct timeval		lp_last_lacpdu_rx;
 	int			lp_lacpdu_sent;
 	enum lacp_mux_state	lp_mux_state;
 	enum lacp_selected	lp_selected;

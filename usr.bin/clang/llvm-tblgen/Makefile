@@ -1,4 +1,4 @@
-# $FreeBSD: 2a108c850a83148d2ca765c48695b7c2d1bec41e $
+# $FreeBSD: 29701f46282ed594d87b7f2de3a692db5d7a4b45 $
 
 PROG_CXX=	llvm-tblgen
 
@@ -18,6 +18,7 @@ SRCS+=		CodeGenMapTable.cpp
 SRCS+=		CodeGenRegisters.cpp
 SRCS+=		CodeGenSchedule.cpp
 SRCS+=		CodeGenTarget.cpp
+SRCS+=		CompressInstEmitter.cpp
 SRCS+=		DAGISelEmitter.cpp
 SRCS+=		DAGISelMatcher.cpp
 SRCS+=		DAGISelMatcherEmitter.cpp
@@ -49,7 +50,6 @@ SRCS+=		OptParserEmitter.cpp
 SRCS+=		OptRSTEmitter.cpp
 SRCS+=		PredicateExpander.cpp
 SRCS+=		PseudoLoweringEmitter.cpp
-SRCS+=		RISCVCompressInstEmitter.cpp
 SRCS+=		RegisterBankEmitter.cpp
 SRCS+=		RegisterInfoEmitter.cpp
 SRCS+=		SDNodeProperties.cpp

@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6f1275ee125d73153a6f6c7b198fa805c4bedafb $");
+__FBSDID("$FreeBSD: 198efae31a0e2697840cdb758b2c2af9160e856f $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -501,6 +501,7 @@ msdosfs_wfile(const char *path, struct denode *dep, fsnode *node)
 		cpsize = MIN((nsize - offs), blsize - on);
 		memcpy(bp->b_data + on, dat + offs, cpsize);
 		bwrite(bp);
+		brelse(bp);
 		offs += cpsize;
 	}
 
@@ -538,7 +539,8 @@ static const struct {
 };
 
 struct denode *
-msdosfs_mkdire(const char *path, struct denode *pdep, fsnode *node) {
+msdosfs_mkdire(const char *path __unused, struct denode *pdep, fsnode *node)
+{
 	struct denode ndirent;
 	struct denode *dep;
 	struct componentname cn;

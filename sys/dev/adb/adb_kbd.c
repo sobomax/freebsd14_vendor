@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: d765e73ed3514303ac7a101b779a9ad15e37301f $
+ * $FreeBSD: 69ef6271bfa29a6e7eb0f02674eb5bc865426317 $
  */
 
 #include <sys/cdefs.h>
@@ -800,6 +800,7 @@ static int akbd_ioctl(keyboard_t *kbd, u_long cmd, caddr_t data)
 	case OPIO_KEYMAP:
 	case PIO_KEYMAPENT:
 	case PIO_DEADKEYMAP:
+	case OPIO_DEADKEYMAP:
 	default:
 		return (genkbd_commonioctl(kbd, cmd, data));
 	}

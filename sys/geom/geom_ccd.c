@@ -80,7 +80,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f4dd3ca11ffb61de1af1afe120cb12855296673 $");
+__FBSDID("$FreeBSD: 8e3859f0ce2fbb81eb68a6a98e5b8ddb02609f62 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -226,8 +226,7 @@ g_ccd_freesc(struct ccd_s *sc)
 	g_free(sc->sc_cinfo);
 	if (sc->sc_itable != NULL) {
 		for (ii = sc->sc_itable; ii->ii_ndisk > 0; ii++)
-			if (ii->ii_index != NULL)
-				g_free(ii->ii_index);
+			g_free(ii->ii_index);
 		g_free(sc->sc_itable);
 	}
 	g_free(sc);

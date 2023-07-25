@@ -1,4 +1,4 @@
-# $FreeBSD: 23ae912589e21edc32d0b563ba092e8438b4bd8e $
+# $FreeBSD: 697230ff61f3ea77e09686cdfdd583e3e141df65 $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_fpga_tools
 
 KMOD=mlx5fpga_tools
@@ -10,7 +10,7 @@ SRCS+=	${LINUXKPI_GENSRCS}
 SRCS+= 	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>
 

@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)bsearch.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 650681b1eafb88ed7a6b3b3b71fd33ef31804265 $");
+__FBSDID("$FreeBSD: 63a9be1a4154b231932c3828c5e863fcf6ed6435 $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: 650681b1eafb88ed7a6b3b3b71fd33ef31804265 $");
  * is odd, moving left simply involves halving lim: e.g., when lim
  * is 5 we look at item 2, so we change lim to 2 so that we will
  * look at items 0 & 1.  If lim is even, the same applies.  If lim
- * is odd, moving right again involes halving lim, this time moving
+ * is odd, moving right again involves halving lim, this time moving
  * the base up one item past p: e.g., when lim is 5 we change base
  * to item 3 and make lim 2 so that we will look at items 3 and 4.
  * If lim is even, however, we have to shrink it by one before

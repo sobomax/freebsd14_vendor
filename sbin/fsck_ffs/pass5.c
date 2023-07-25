@@ -35,7 +35,7 @@ static const char sccsid[] = "@(#)pass5.c	8.9 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 324e725929f601f6f2fd1a36e5b9066dd854925d $");
+__FBSDID("$FreeBSD: 61be54ed54edd870ecb4d42fc9f18c485a222fdd $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -375,6 +375,22 @@ pass5(void)
 	if (cursnapshot == 0 &&
 	    memcmp(&cstotal, &fs->fs_cstotal, sizeof cstotal) != 0
 	    && dofix(&idesc[0], "SUMMARY BLK COUNT(S) WRONG IN SUPERBLK")) {
+		if (debug) {
+			printf("cstotal is currently: %jd dirs, %jd blks free, "
+			    "%jd frags free, %jd inos free, %jd clusters\n",
+			    (intmax_t)fs->fs_cstotal.cs_ndir,
+			    (intmax_t)fs->fs_cstotal.cs_nbfree,
+			    (intmax_t)fs->fs_cstotal.cs_nffree,
+			    (intmax_t)fs->fs_cstotal.cs_nifree,
+			    (intmax_t)fs->fs_cstotal.cs_numclusters);
+			printf("cstotal ought to be:  %jd dirs, %jd blks free, "
+			    "%jd frags free, %jd inos free, %jd clusters\n",
+			    (intmax_t)cstotal.cs_ndir,
+			    (intmax_t)cstotal.cs_nbfree,
+			    (intmax_t)cstotal.cs_nffree,
+			    (intmax_t)cstotal.cs_nifree,
+			    (intmax_t)cstotal.cs_numclusters);
+		}
 		memmove(&fs->fs_cstotal, &cstotal, sizeof cstotal);
 		fs->fs_ronly = 0;
 		fs->fs_fmod = 0;

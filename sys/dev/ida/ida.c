@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 10bba81467065ae67341b80f524ffe17656c4aae $");
+__FBSDID("$FreeBSD: c09e856a75afc373df0350138b1c60f73ad69701 $");
 
 /*
  * Generic driver for Compaq SMART RAID adapters.
@@ -334,9 +334,9 @@ ida_startup(void *arg)
 
 	config_intrhook_disestablish(&ida->ich);
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	bus_generic_attach(ida->dev);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 }
 
 int

@@ -1,7 +1,7 @@
 #
 # Custom kernel for Freescale MPC85XX development boards like the CDS etc.
 #
-# $FreeBSD: 553a616bb70714d6b199ee890c9adf69e0193ab4 $
+# $FreeBSD: 2a9fe54b60ad48dfb7ba55f2abe5f407afc753b0 $
 #
 
 cpu		BOOKE
@@ -34,6 +34,7 @@ options 	FDT
 options 	FFS
 options 	GDB
 options 	GEOM_PART_GPT
+options         GEOM_LABEL              # Provides labelization
 options 	INET
 options 	INET6
 options 	TCP_HHOOK		# hhook(9) framework for TCP

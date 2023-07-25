@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ab021a97d3136add2c9229bfad64489474888d7 $
+ * $FreeBSD: 9d7e90057de876d6de9b6c265510102f4f834bab $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4ab021a97d3136add2c9229bfad64489474888d7 $");
+__FBSDID("$FreeBSD: 9d7e90057de876d6de9b6c265510102f4f834bab $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -123,9 +123,6 @@ static void
 cpufreq_dt_opp_to_setting(device_t dev, const struct cpufreq_dt_opp *opp,
     struct cf_setting *set)
 {
-	struct cpufreq_dt_softc *sc;
-
-	sc = device_get_softc(dev);
 
 	memset(set, 0, sizeof(*set));
 	set->freq = opp->freq / 1000000;

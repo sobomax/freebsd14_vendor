@@ -25,7 +25,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 
--- $FreeBSD: a429c981a71d53f6afcbc42bc11be29a631b48b5 $
+-- $FreeBSD: 72cfcf46c95bd82f47d11982876efea8e8cc6e5a $
 
 function main(args)
 	if #args == 0 then usage() end
@@ -257,6 +257,7 @@ end
 --- @param verbose boolean
 --- @param w_notagdirs boolean turn on to also check directories
 function Analysis_session(metalog, verbose, w_notagdirs)
+	local stage_root = {}
 	local files = {} -- map<string, MetalogRow[]>
 	-- set is map<elem, bool>. if bool is true then elem exists
 	local pkgs = {} -- map<string, set<string>>
@@ -386,6 +387,7 @@ function Analysis_session(metalog, verbose, w_notagdirs)
 			local iseq, offby = metalogrows_all_equal(rows)
 			if iseq then -- repeated line, just a warning
 				warn[#warn+1] = 'warning: '..filename
+					.. ' ' .. rows[1].attrs.type
 					..' repeated with same meta: line '
 					..table.concat(
 						table_map(rows, function(e) return e.linenum end), ',')
@@ -418,17 +420,14 @@ function Analysis_session(metalog, verbose, w_notagdirs)
 			if files[filename][1].attrs.type ~= 'file' then
 				goto continue
 			end
-			-- make ./xxx become /xxx so that we can stat
-			filename = filename:sub(2)
-			local fs = attributes(filename)
+			local fs = attributes(stage_root .. filename)
 			if fs == nil then
 				unstatables[#unstatables+1] = filename
 				goto continue
 			end
 			local inode = fs.ino
 			inm[inode] = inm[inode] or {}
-			-- add back the dot prefix
-			table.insert(inm[inode], '.'..filename)
+			table.insert(inm[inode], filename)
 			::continue::
 		end
 
@@ -462,6 +461,9 @@ function Analysis_session(metalog, verbose, w_notagdirs)
 		return table.concat(warn, ''), table.concat(errs, '')
 	end
 
+	-- The METALOG file is assumed to be at the top of the stage directory.
+	stage_root = string.gsub(metalog, '/[^/]*$', '/')
+
 	do
 	local fp, errmsg, errcode = io.open(metalog, 'r')
 	if fp == nil then
@@ -475,7 +477,7 @@ function Analysis_session(metalog, verbose, w_notagdirs)
 	for line in fp:lines() do
 		-----local isinpkg = false
 		lineno = lineno + 1
-		-- skip lines begining with #
+		-- skip lines beginning with #
 		if line:match('^%s*#') then goto continue end
 		-- skip blank lines
 		if line:match('^%s*$') then goto continue end

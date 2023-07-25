@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ac469585cafe998ff5e70d7125211fa559f519a9 $
+ * $FreeBSD: 10bf603202957eea479495b1f04bdd59896da3d9 $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_IPC_H_
@@ -104,10 +104,10 @@ struct shmid_ds32 {
 
 #ifdef _KERNEL
 struct shmid_kernel32 {
-	struct shmid_ds32	 u;
-	int32_t			*object;
-	int32_t			*label;
-	int32_t			*cred;
+	struct shmid_ds32	u;
+	int32_t			object;
+	int32_t			label;
+	int32_t			cred;
 };
 #endif
 

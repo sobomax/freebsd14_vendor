@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 03f384d3f531c1a9be5a2ce49c1983019997ffb5 $");
+__FBSDID("$FreeBSD: f3ffeed927387acf2ce3e91c7c4ecd661074e476 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -434,11 +434,6 @@ fqueue_getall(const char *bin, char *temp, int asmf)
 		start = agg->ag_ostart;
 		end = agg->ag_oend;
 
-		/*
-		 * Fix-up the end address in order to show it in the objdump's
-		 * trace.
-		 */
-		end++;
 		if (asmf)
 			snprintf(tmpf, sizeof(tmpf),
 			    "objdump --start-address=%p "

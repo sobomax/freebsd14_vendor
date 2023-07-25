@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b5b588234c49d13066f5c08162042149ec44765 $");
+__FBSDID("$FreeBSD: 49051c702df7438eb389f3d03026768c28aee16d $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -197,7 +197,7 @@ xen_hvm_init_hypercall_stubs(enum xen_hvm_init_type init_type)
 		return (EINVAL);
 
 	wrmsr(regs[1], (init_type == XEN_HVM_INIT_EARLY)
-	    ? ((vm_paddr_t)&hypercall_page - KERNBASE)
+	    ? (vm_paddr_t)((uintptr_t)&hypercall_page - KERNBASE)
 	    : vtophys(&hypercall_page));
 
 	return (0);

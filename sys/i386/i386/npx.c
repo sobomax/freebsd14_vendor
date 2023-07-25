@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc04d84b0eb5e3a50e08188941b9d3674a6ab261 $");
+__FBSDID("$FreeBSD: 86291ae9b96b34c3d8c429d68d38a08c428f942d $");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"
@@ -196,6 +196,7 @@ SYSCTL_INT(_hw, OID_AUTO, lazy_fpu_switch, CTLFLAG_RWTUN | CTLFLAG_NOFETCH,
     &lazy_fpu_switch, 0,
     "Lazily load FPU context after context switch");
 
+u_int cpu_fxsr;		/* SSE enabled */
 int use_xsave;
 uint64_t xsave_mask;
 static	uma_zone_t fpu_save_area_zone;
@@ -600,14 +601,14 @@ npxformat(void)
 	return (_MC_FPFMT_387);
 }
 
-/* 
+/*
  * The following mechanism is used to ensure that the FPE_... value
  * that is passed as a trapcode to the signal handler of the user
  * process does not have more than one bit set.
- * 
+ *
  * Multiple bits may be set if the user process modifies the control
  * word while a status word bit is already set.  While this is a sign
- * of bad coding, we have no choise than to narrow them down to one
+ * of bad coding, we have no choice than to narrow them down to one
  * bit, since we must not send a trapcode that is not exactly one of
  * the FPE_ macros.
  *

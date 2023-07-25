@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 9ae7b543e4a1f06f8f6155503d899530014f792d $
+ * $FreeBSD: 5a4b3de33104236dbdb1546b35f8bcc6c6ce682a $
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -214,6 +214,7 @@ enum {
 #define	falloc(td, resultfp, resultfd, flags) \
 	falloc_caps(td, resultfp, resultfd, flags, NULL)
 
+struct mount;
 struct thread;
 
 static __inline void
@@ -230,6 +231,7 @@ void	filecaps_free(struct filecaps *fcaps);
 
 int	closef(struct file *fp, struct thread *td);
 void	closef_nothread(struct file *fp);
+int	descrip_check_write_mp(struct filedesc *fdp, struct mount *mp);
 int	dupfdopen(struct thread *td, struct filedesc *fdp, int dfd, int mode,
 	    int openerror, int *indxp);
 int	falloc_caps(struct thread *td, struct file **resultfp, int *resultfd,
@@ -263,6 +265,9 @@ struct	filedesc *fdshare(struct filedesc *fdp);
 struct filedesc_to_leader *
 	filedesc_to_leader_alloc(struct filedesc_to_leader *old,
 	    struct filedesc *fdp, struct proc *leader);
+struct filedesc_to_leader *
+	filedesc_to_leader_share(struct filedesc_to_leader *fdtol,
+	    struct filedesc *fdp);
 int	getvnode(struct thread *td, int fd, cap_rights_t *rightsp,
 	    struct file **fpp);
 int	getvnode_path(struct thread *td, int fd, cap_rights_t *rightsp,

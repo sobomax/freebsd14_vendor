@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d9ba42b005de3ef123425ec1c4a56038f90bf3a8 $
+ * $FreeBSD: 365afcef60fe8d393e1763998da6cca9073b5cb7 $
  */
 
 #ifndef _GEOM_GEOM_H_
@@ -432,6 +432,7 @@ int g_is_geom_thread(struct thread *td);
 int gctl_set_param(struct gctl_req *req, const char *param, void const *ptr, int len);
 void gctl_set_param_err(struct gctl_req *req, const char *param, void const *ptr, int len);
 void *gctl_get_param(struct gctl_req *req, const char *param, int *len);
+void *gctl_get_param_flags(struct gctl_req *req, const char *param, int flags, int *len);
 char const *gctl_get_asciiparam(struct gctl_req *req, const char *param);
 void *gctl_get_paraml(struct gctl_req *req, const char *param, int len);
 void *gctl_get_paraml_opt(struct gctl_req *req, const char *param, int len);

@@ -32,7 +32,7 @@
 
 #if defined(LIBC_RCS) && !defined(lint)
 	.text
-	.asciz "$FreeBSD: 95b0ea8037f5a99f27c707bcd628e81b3f12413d $"
+	.asciz "$FreeBSD: 5766b25816ae561be973b111a1203eb3b2b75643 $"
 #endif /* LIBC_RCS and not lint */
 
 /*
@@ -75,3 +75,5 @@ ENTRY(_longjmp)
 1:	movl	%ecx,0(%esp)
 	ret
 END(_longjmp)
+
+	.section .note.GNU-stack,"",%progbits

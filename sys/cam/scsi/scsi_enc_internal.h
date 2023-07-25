@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7dd6244253edc144a637eb5281331bf6706e5b43 $
+ * $FreeBSD: c8e0c65be850ae8ef840f5ce2ff27ee99f9b413d $
  */
 
 /*
@@ -161,8 +161,6 @@ struct enc_softc {
 	struct proc		*enc_daemon;
 
 	struct enc_fsm_state 	*enc_fsm_states;
-
-	struct root_hold_token	 enc_rootmount;
 
 #define 	ENC_ANNOUNCE_SZ		400
 	char			announce_buf[ENC_ANNOUNCE_SZ];

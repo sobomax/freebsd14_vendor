@@ -29,7 +29,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 2868123b08b9b14ea7018cfcbe912a3a1b94c413 $");
+__FBSDID("$FreeBSD: 7796a48cdac30f4ba0765b4a3aacb0b6f65602bd $");
 
 /*
  * Detailed byte-for-byte verification of the format of a zip archive
@@ -73,7 +73,14 @@ DEFINE_TEST(test_write_format_zip_file)
 	struct archive *a;
 	struct archive_entry *ae;
 	time_t t = 1234567890;
-	struct tm *tm = localtime(&t);
+	struct tm *tm;
+#if defined(HAVE_LOCALTIME_R) || defined(HAVE__LOCALTIME64_S)
+	struct tm tmbuf;
+#endif
+#if defined(HAVE__LOCALTIME64_S)
+	errno_t terr;
+	__time64_t tmptime;
+#endif
 	size_t used, buffsize = 1000000;
 	unsigned long crc;
 	int file_perm = 00644;
@@ -91,6 +98,18 @@ DEFINE_TEST(test_write_format_zip_file)
 	zip_compression = 0;
 #endif
 
+#if defined(HAVE_LOCALTIME_R)
+	tm = localtime_r(&t, &tmbuf);
+#elif defined(HAVE__LOCALTIME64_S)
+	tmptime = t;
+	terr = _localtime64_s(&tmbuf, &tmptime);
+	if (terr)
+		tm = NULL;
+	else
+		tm = &tmbuf;
+#else
+	tm = localtime(&t);
+#endif
 	buff = malloc(buffsize);
 
 	/* Create a new archive in memory. */

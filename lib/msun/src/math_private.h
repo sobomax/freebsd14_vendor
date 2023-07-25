@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: b91b54cea6895f42ed88dda59bb1ac8d07857d4b $
+ * $FreeBSD: 20ce7bd8846472cb7bf0bafbb1cd02e4f71d3821 $
  */
 
 #ifndef _MATH_PRIVATE_H_
@@ -460,7 +460,7 @@ do {								\
  * or by having |c| a few percent smaller than |a|.  Pre-normalization of
  * (a, b) may help.
  *
- * This is is a variant of an algorithm of Kahan (see Knuth (1981) 4.2.2
+ * This is a variant of an algorithm of Kahan (see Knuth (1981) 4.2.2
  * exercise 19).  We gain considerable efficiency by requiring the terms to
  * be sufficiently normalized and sufficiently increasing.
  */

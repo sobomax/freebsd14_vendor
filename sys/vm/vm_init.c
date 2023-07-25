@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f17f81264eb6dd53f6d0dd8f93075b09a464b053 $");
+__FBSDID("$FreeBSD: 884b367adc2bf95548c2ad95a2b4a0e1b28e2c50 $");
 
 #include <sys/param.h>
 #include <sys/domainset.h>
@@ -235,7 +235,7 @@ again:
 	if (bio_transient_maxcnt != 0) {
 		size = (long)bio_transient_maxcnt * maxphys;
 		vmem_init(transient_arena, "transient arena",
-		    firstaddr, size, PAGE_SIZE, 0, 0);
+		    firstaddr, size, PAGE_SIZE, 0, M_WAITOK);
 		firstaddr += size;
 	}
 	if (firstaddr != kmi->clean_eva)

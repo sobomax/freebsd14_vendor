@@ -17,7 +17,7 @@
 
 #if !defined(lint) && !defined(LINT)
 static const char rcsid[] =
-  "$FreeBSD: 4dcbce2c1165e16826697f5f7a812b7b19bb88e6 $";
+  "$FreeBSD: fcc5a5e3eb2a43b456c4e367621304ae0ca37c3c $";
 #endif
 
 
@@ -527,7 +527,7 @@ child_process(e, u)
 			 */
 			if (mailto == NULL) {
 				/* MAILTO not present, set to USER,
-				 * unless globally overriden.
+				 * unless globally overridden.
 				 */
 				if (defmailto)
 					mailto = defmailto;

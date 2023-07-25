@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f3bb7d8b4aa4a0f996c76fade901efe3730cd907 $
+ * $FreeBSD: 3ef03f7c526cdf628048b5c300a10335bf754071 $
  *
  */
 
@@ -374,6 +374,11 @@ enum {
 	OPEN_TYPE_ACTIVE = 'A',
 	OPEN_TYPE_PASSIVE = 'P',
 	OPEN_TYPE_DONTCARE = 'D',
+};
+
+enum {
+	QUEUE_RANDOM = -1,
+	QUEUE_ROUNDROBIN = -2,
 };
 
 struct offload_settings {

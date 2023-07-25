@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 76fcedbfff1691a3557b6464b01f42e845711f03 $
+.\" $FreeBSD: 6c94f6ca190a2ccd064d972e2476865629b075a7 $
 .\"
-.Dd February 22, 2021
+.Dd March 18, 2022
 .Dt UEFI 8
 .Os
 .Sh NAME
@@ -50,7 +50,7 @@ boot process loads system bootstrap code located in an EFI System Partition
 The ESP is a GPT or MBR partition with a specific identifier that contains an
 .Xr msdosfs 5
 FAT file system with a specified file hierarchy.
-.Bl -column -offset indent ".Sy Partition Scheme" ".Sy ESP Identifier"
+.Bl -column -offset indent "Partition Scheme" "ESP Identifier"
 .It Sy "Partition Scheme" Ta Sy "ESP Identifier"
 .It GPT Ta C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 .It MBR Ta 0xEF
@@ -71,6 +71,8 @@ If not set, an architecture-specific default is used.
 .It amd64 Ta Pa /EFI/BOOT/BOOTX64.EFI
 .It arm Ta Pa /EFI/BOOT/BOOTARM.EFI
 .It arm64 Ta Pa /EFI/BOOT/BOOTAA64.EFI
+.It i386 Ta Pa /EFI/BOOT/BOOTIA32.EFI
+.It riscv Ta Pa /EFI/BOOT/BOOTRISCV64.EFI
 .El
 .Pp
 The default
@@ -103,9 +105,9 @@ bootstrap
 .It Pa /boot/loader.efi
 Final stage bootstrap
 .It Pa /boot/kernel/kernel
-default kernel
+Default kernel
 .It Pa /boot/kernel.old/kernel
-typical non-default kernel (optional)
+Typical non-default kernel (optional)
 .El
 .Sh SEE ALSO
 .Xr vt 4 ,

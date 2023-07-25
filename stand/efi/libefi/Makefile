@@ -1,4 +1,4 @@
-# $FreeBSD: 88f6d3fa0826054136ede0ebf4fa1d5e3181b424 $
+# $FreeBSD: 8f1a30d869004310f7ca4000d0c1cc1693b64b6a $
 
 .include <bsd.init.mk>
 
@@ -67,5 +67,7 @@ CFLAGS+= -I${LDRSRC}
 CFLAGS+= ${FORMAT_EXTENSIONS}
 
 CFLAGS+= -DTERM_EMU
+
+.include "${BOOTSRC}/veriexec.mk"
 
 .include <bsd.lib.mk>

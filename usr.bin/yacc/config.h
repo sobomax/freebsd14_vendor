@@ -1,4 +1,4 @@
-/* $FreeBSD: 649ca3895c75400bd8479cd07c47dee6f009a926 $ */
+/* $FreeBSD: cff3a544de22f1eb8d5bd918a65edffe296e5c34 $ */
 /* config.h.  Generated automatically by configure.  */
 /* config_h.in.  Generated automatically from configure.in by autoheader.  */
 
@@ -87,7 +87,7 @@
 #define STDC_HEADERS 1
 
 /* Define to the system name. */
-#define SYSTEM_NAME "freebsd13.1"
+#define SYSTEM_NAME "freebsd13.2"
 
 /* "Define to 1 if you want to use dbmalloc for testing." */
 /* #undef USE_DBMALLOC */

@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)ferror.3	8.2 (Berkeley) 4/19/94
-.\" $FreeBSD: 1ff0dc48b8ff2670ef8073c52e57e4fae7196276 $
+.\" $FreeBSD: 51dbc386a84b4054dd18435adf47bdef78015e6e $
 .\"
-.Dd January 28, 2009
+.Dd April 2, 2022
 .Dt FERROR 3
 .Os
 .Sh NAME
@@ -129,3 +129,12 @@ and
 .Fn ferror
 conform to
 .St -isoC .
+.Sh HISTORY
+The functions
+.Fn clearerr ,
+.Fn feof ,
+.Fn ferror ,
+and
+.Fn fileno
+first appeared in
+.At v7 .

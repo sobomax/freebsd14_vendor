@@ -1,4 +1,4 @@
-/* $FreeBSD: 8c9b35591018235d7edfe7f69c5dfb8c2fd46c7c $ */
+/* $FreeBSD: adcb632bc93c61e49400e5e312c3a6e596a42701 $ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -936,8 +936,6 @@ ustorage_fs_verify(struct ustorage_fs_softc *sc)
 	struct ustorage_fs_lun *currlun = sc->sc_transfer.currlun;
 	uint32_t lba;
 	uint32_t vlen;
-	uint64_t file_offset;
-	uint64_t amount_left;
 
 	/*
 	 * Get the starting Logical Block Address
@@ -957,12 +955,6 @@ ustorage_fs_verify(struct ustorage_fs_softc *sc)
 		goto done;
 	}
 	/* No default reply */
-
-	/* Prepare to carry out the file verify */
-	amount_left = vlen;
-	amount_left <<= 9;
-	file_offset = lba;
-	file_offset <<= 9;
 
 	/* Range check */
 	vlen += lba;

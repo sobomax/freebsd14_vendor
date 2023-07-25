@@ -1,10 +1,11 @@
-# $FreeBSD: 0b88f2f4634a52fefd4626dcab50b019214e4542 $
+# $FreeBSD: 85bff9dae3e2b8a2d908f63f632d366534ca50d9 $
 
 .include <src.opts.mk>
 
 PROG=	procstat
 MAN=	procstat.1
 SRCS=	procstat.c		\
+	procstat_advlock.c	\
 	procstat_args.c		\
 	procstat_auxv.c		\
 	procstat_basic.c	\

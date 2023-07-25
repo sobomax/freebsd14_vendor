@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: f3c59b0e877b63641b25578481851c37893af73b $
+ *	$FreeBSD: ad11a0b4dac51d3c20713f658e27a140ae1636cf $
  */
 
 #include <gssapi/gssapi.h>
@@ -65,7 +65,7 @@ gss_import_sec_context(OM_uint32 *minor_status,
 	mech_oid.elements = p + 2;
 	buf.length = len - 2 - mech_oid.length;
 	buf.value = p + 2 + mech_oid.length;
-	
+
 	m = _gss_find_mech_switch(&mech_oid);
 	if (!m)
 		return (GSS_S_DEFECTIVE_TOKEN);

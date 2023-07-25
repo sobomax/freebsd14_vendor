@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 701e2ca6a57c78b5da689a88c325d3d8010e1bd9 $");
+__FBSDID("$FreeBSD: 38d0803fa6f9a7d567e5708bff1932d9e380d150 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -269,7 +269,7 @@ g_reset_bio(struct bio *bp)
 }
 
 void
-g_io_init()
+g_io_init(void)
 {
 
 	g_bioq_init(&g_bio_run_down);

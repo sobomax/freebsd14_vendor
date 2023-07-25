@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e4122f57f4bac596fd87457c27efb70e49b1a9d $
+ * $FreeBSD: 5e6bd7a8dccac6dde38600de491ab78e65d9f962 $
  */
 
 #include "opt_rss.h"
@@ -1285,10 +1285,13 @@ static int clean_mr(struct mlx5_ib_mr *mr)
 	mlx5_free_priv_descs(mr);
 
 	if (!umred) {
+		u32 key = mr->mmkey.key;
+
 		err = destroy_mkey(dev, mr);
+		kfree(mr);
 		if (err) {
 			mlx5_ib_warn(dev, "failed to destroy mkey 0x%x (%d)\n",
-				     mr->mmkey.key, err);
+				     key, err);
 			return err;
 		}
 	} else {
@@ -1299,9 +1302,6 @@ static int clean_mr(struct mlx5_ib_mr *mr)
 		}
 		free_cached_mr(dev, mr);
 	}
-
-	if (!umred)
-		kfree(mr);
 
 	return 0;
 }

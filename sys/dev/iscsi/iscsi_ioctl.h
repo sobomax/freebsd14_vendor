@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 81e49d8d9a338e254fd0d4d481bdf32c0918abb6 $
+ * $FreeBSD: fe5a39e29d202576a1e8a7418b842959dc5be9c9 $
  */
 
 #ifndef ISCSI_IOCTL_H
@@ -116,8 +116,13 @@ struct iscsi_daemon_request {
 	uint8_t				idr_isid[6];
 	uint16_t			idr_tsih;
 	uint16_t			idr_spare_cid;
-	struct iscsi_session_limits	idr_limits;
 	int				idr_spare[4];
+};
+
+struct iscsi_daemon_limits {
+	unsigned int			idl_session_id;
+	int				idl_socket;
+	struct iscsi_session_limits	idl_limits;
 };
 
 struct iscsi_daemon_handoff {
@@ -149,6 +154,7 @@ struct iscsi_daemon_fail {
 #define	ISCSIDWAIT	_IOR('I', 0x01, struct iscsi_daemon_request)
 #define	ISCSIDHANDOFF	_IOW('I', 0x02, struct iscsi_daemon_handoff)
 #define	ISCSIDFAIL	_IOW('I', 0x03, struct iscsi_daemon_fail)
+#define	ISCSIDLIMITS	_IOWR('I', 0x07, struct iscsi_daemon_limits)
 
 #ifdef ICL_KERNEL_PROXY
 

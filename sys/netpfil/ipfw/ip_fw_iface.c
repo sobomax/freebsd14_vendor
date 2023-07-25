@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e384105ce143de5ec636b4c57a9fb0867a66ecb $");
+__FBSDID("$FreeBSD: 3e366db3af9ad62ad060e5e7510c2d1c4a28b757 $");
 
 /*
  * Kernel interface tracking API.
@@ -125,7 +125,7 @@ ipfw_kifhandler(void *arg, struct ifnet *ifp)
  * Registers interface tracking handlers for first VNET.
  */
 static void
-iface_khandler_register()
+iface_khandler_register(void)
 {
 	int create;
 
@@ -156,7 +156,7 @@ iface_khandler_register()
  * detach.
  */
 static void
-iface_khandler_deregister()
+iface_khandler_deregister(void)
 {
 	int destroy;
 
@@ -203,7 +203,7 @@ ipfw_kiflookup(char *name)
  * mutex init.
  */
 int
-ipfw_iface_init()
+ipfw_iface_init(void)
 {
 
 	mtx_init(&vnet_mtx, "IPFW ifhandler mtx", NULL, MTX_DEF);
@@ -216,7 +216,7 @@ ipfw_iface_init()
  * Unregister khandlers iff init has been done.
  */
 void
-ipfw_iface_destroy()
+ipfw_iface_destroy(void)
 {
 
 	IPFW_DEL_SOPT_HANDLER(1, scodes);

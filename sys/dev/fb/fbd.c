@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e577768eafdb2adf544cc2bd3cd436d6fb5baf8a $
+ * $FreeBSD: 5a77159ec4b16fa315cc3202cead9d02958b493e $
  */
 
 /* Generic framebuffer */
@@ -35,7 +35,7 @@
 /* TODO done normal /dev/fb methods */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e577768eafdb2adf544cc2bd3cd436d6fb5baf8a $");
+__FBSDID("$FreeBSD: 5a77159ec4b16fa315cc3202cead9d02958b493e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -202,7 +202,7 @@ fb_init(struct fb_list_entry *entry, int unit)
 }
 
 int
-fbd_list()
+fbd_list(void)
 {
 	struct fb_list_entry *entry;
 
@@ -210,8 +210,8 @@ fbd_list()
 		return (ENOENT);
 
 	LIST_FOREACH(entry, &fb_list_head, fb_list) {
-		printf("FB %s @%p\n", entry->fb_info->fb_name,
-		    (void *)entry->fb_info->fb_pbase);
+		printf("FB %s @%#jx\n", entry->fb_info->fb_name,
+		    (uintmax_t)entry->fb_info->fb_pbase);
 	}
 
 	return (0);

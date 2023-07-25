@@ -33,7 +33,7 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 4a4c69b0694651c9bc67c40a254337f5292cd921 $
+.\" $FreeBSD: fdf8d532b69fb093cef7d718a3b56cdf0df5738e $
 .\"
 .Dd September 17, 2020
 .Dt MAKEFS 8
@@ -385,12 +385,12 @@ Filename of a boot image in the format
 where
 .Dq sysid
 is one of
+.Ql efi ,
 .Ql i386 ,
 .Ql mac68k ,
 .Ql macppc ,
-.Ql powerpc ,
 or
-.Ql efi .
+.Ql powerpc .
 .It Sy generic-bootimage
 Load a generic boot image into the first 32K of the cd9660 image.
 .It Sy hard-disk-boot

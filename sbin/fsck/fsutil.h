@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e65f5ddecb01b51dff63be626d0dabca9e2f2066 $
+ * $FreeBSD: bd0954d44ba1c288950d983dfc3dbfd68629452a $
  */
 
 struct fstab;
@@ -39,7 +39,6 @@ void panic(const char *, ...) __dead2 __printflike(1, 2);
 const char *devcheck(const char *);
 const char *cdevname(void);
 void setcdevname(const char *, int);
-struct statfs *getmntpt(const char *);
 void *emalloc(size_t);
 void *erealloc(void *, size_t);
 char *estrdup(const char *);

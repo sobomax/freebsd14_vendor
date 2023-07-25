@@ -25,12 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 226542f6c331b810b0de0c53bc1eee03921079f1 $
+ * $FreeBSD: ee201427c5850f9be41dc1d2fc7802cb4ce5b968 $
  */
 
 #ifndef	_SPINUP_AP_H_
 #define	_SPINUP_AP_H_
 
-int spinup_ap(struct vmctx *ctx, int vcpu, int newcpu, uint64_t rip);
+void spinup_ap(struct vmctx *ctx, int newcpu, uint64_t rip);
 
 #endif

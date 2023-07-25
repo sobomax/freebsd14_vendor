@@ -27,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 90e2f783269192f4414ffee73e9cb6936065d443 $
+ * $FreeBSD: f4356f802f0c0574c851894b6c46fcfe42e667b9 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90e2f783269192f4414ffee73e9cb6936065d443 $");
+__FBSDID("$FreeBSD: f4356f802f0c0574c851894b6c46fcfe42e667b9 $");
 
 #include <sys/param.h>
 #include <sys/devctl.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: 90e2f783269192f4414ffee73e9cb6936065d443 $");
 #include <sys/rctl.h>
 #include <sys/resourcevar.h>
 #include <sys/sx.h>
-#include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <sys/systm.h>
 #include <sys/types.h>

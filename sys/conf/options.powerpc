@@ -1,4 +1,4 @@
-# $FreeBSD: 857fa8091f4ab10221061192221116fb726460a1 $
+# $FreeBSD: 0885ccde15b5a7a08bc42789bf91a6eeed337a64 $
 # Options specific to the powerpc platform kernels
 
 AIM			opt_global.h
@@ -23,7 +23,7 @@ POWERMAC		opt_platform.h
 PS3			opt_platform.h
 MAMBO
 POWERNV			opt_platform.h
-PSERIES
+PSERIES			opt_platform.h
 PSIM
 QEMU			opt_platform.h
 

@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: fe1299d40e5d9b6328ba30172142afcf69815c0f $
+.\" $FreeBSD: c2e9b3943829322248d53ed3d292089e12674bdf $
 .\"
-.Dd October 4, 2017
+.Dd April 21, 2022
 .Dt UNR 9
 .Os
 .Sh NAME
@@ -72,6 +72,9 @@ If
 is not
 .Dv NULL ,
 it is used for locking when allocating and freeing units.
+If the passed value is the token
+.Va UNR_NO_MTX ,
+then no locking is applied internally.
 Otherwise, internal mutex is used.
 .It Fn clear_unrhdr uh
 Clear all units from the specified unit number allocator entity.

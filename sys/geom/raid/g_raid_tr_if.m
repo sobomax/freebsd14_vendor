@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 193b4298691a1357eeb9b37c62d3dc45b614c6dc $
+# $FreeBSD: 8de09ba1eb56959103ec00f8fb0358ab66645d5e $
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -95,7 +95,6 @@ METHOD void iodone {
 METHOD int kerneldump {
 	struct g_raid_tr_object *tr;
 	void *virtual;
-	vm_offset_t physical;
 	off_t offset;
 	size_t length;
 } DEFAULT g_raid_tr_kerneldump_common;

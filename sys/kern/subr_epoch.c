@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 651fd8b419f090db6e75350267c145b3219672ca $");
+__FBSDID("$FreeBSD: 7d4457428bc8dcf57a5f916d436b3d651fb743fc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -443,9 +443,7 @@ _epoch_enter_preempt(epoch_t epoch, epoch_tracker_t et EPOCH_FILE_LINE)
 
 	MPASS(cold || epoch != NULL);
 	td = curthread;
-	MPASS((vm_offset_t)et >= td->td_kstack &&
-	    (vm_offset_t)et + sizeof(struct epoch_tracker) <=
-	    td->td_kstack + td->td_kstack_pages * PAGE_SIZE);
+	MPASS(kstack_contains(td, (vm_offset_t)et, sizeof(*et)));
 
 	INIT_CHECK(epoch);
 	MPASS(epoch->e_flags & EPOCH_PREEMPT);

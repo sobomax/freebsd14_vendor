@@ -36,7 +36,7 @@
 __RCSID("$NetBSD: exec_elf32.c,v 1.6 1999/09/20 04:12:16 christos Exp $");
 #endif
 #endif
-__FBSDID("$FreeBSD: f7b8601911fe20f1823db73316f7b624bb2a60c8 $");
+__FBSDID("$FreeBSD: b9af82e1e5e7073fff042e1525ebe11a671c564a $");
 
 #ifndef ELFSIZE
 #define ELFSIZE         32
@@ -162,7 +162,7 @@ ELFNAMEEND(check)(int fd, const char *fn __unused)
 	unsigned char data;
 
 	/*
-	 * Check the header to maek sure it's an ELF file (of the
+	 * Check the header to make sure it's an ELF file (of the
 	 * appropriate size).
 	 */
 	if (fstat(fd, &sb) == -1)

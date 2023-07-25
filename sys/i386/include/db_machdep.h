@@ -23,14 +23,13 @@
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
  *
- * $FreeBSD: 42f0f19d29a96e3ffbd99703b52679f12d1d4f1a $
+ * $FreeBSD: 83daab106b82177ea169e31b73e7c386f1d4c97e $
  */
 
 #ifndef _MACHINE_DB_MACHDEP_H_
 #define	_MACHINE_DB_MACHDEP_H_
 
 #include <machine/frame.h>
-#include <machine/reg.h>
 #include <machine/trap.h>
 
 typedef	vm_offset_t	db_addr_t;	/* address - unsigned */

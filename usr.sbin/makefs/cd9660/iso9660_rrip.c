@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5ef88d59de6392a4137b689bc0fc80d99d5efd4 $");
+__FBSDID("$FreeBSD: d4440a656bad89230fa6976b236e31472ff6f28b $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -756,7 +756,7 @@ cd9660_rrip_add_NM(cd9660node *node, const char *name)
 	struct ISO_SUSP_ATTRIBUTES *r;
 
 	/*
-	 * Each NM record has 254 byes to work with. This means that
+	 * Each NM record has 254 bytes to work with. This means that
 	 * the name data itself only has 249 bytes to work with. So, a
 	 * name with 251 characters would require two nm records.
 	 */

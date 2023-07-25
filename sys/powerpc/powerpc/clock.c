@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a530d6c71a6bf4a655296536a81adb90815ab182 $");
+__FBSDID("$FreeBSD: 46495108e5f1a6344b5541d0383d822dcde8dfe7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -190,7 +190,7 @@ decr_init(void)
 	ticks_per_sec = platform_timebase_freq(&cpu);
 	ps_per_tick = 1000000000000 / ticks_per_sec;
 
-	set_cputicker(mftb, ticks_per_sec, 0);
+	set_cputicker(mftb, ticks_per_sec, false);
 	snprintf(buf, sizeof(buf), "cpu%d:decrementer", curcpu);
 	intrcnt_add(buf, &decr_counts[curcpu]);
 	decr_et_stop(NULL);

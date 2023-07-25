@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 769309119a4fedaf34f705465df9f6e5ca00c6ca $");
+__FBSDID("$FreeBSD: 090869abeba18a172afd781eef9c3709d0a9e763 $");
 
 /*
  * Driver for Freescale Fast Ethernet Controller, found on imx-series SoCs among
@@ -1425,10 +1425,11 @@ ffec_detach(device_t dev)
 		bus_dma_tag_destroy(sc->rxbuf_tag);
 	if (sc->rxdesc_map != NULL) {
 		bus_dmamap_unload(sc->rxdesc_tag, sc->rxdesc_map);
-		bus_dmamap_destroy(sc->rxdesc_tag, sc->rxdesc_map);
+		bus_dmamem_free(sc->rxdesc_tag, sc->rxdesc_ring,
+		    sc->rxdesc_map);
 	}
 	if (sc->rxdesc_tag != NULL)
-	bus_dma_tag_destroy(sc->rxdesc_tag);
+		bus_dma_tag_destroy(sc->rxdesc_tag);
 
 	/* Clean up TX DMA resources. */
 	for (idx = 0; idx < TX_DESC_COUNT; ++idx) {
@@ -1441,7 +1442,8 @@ ffec_detach(device_t dev)
 		bus_dma_tag_destroy(sc->txbuf_tag);
 	if (sc->txdesc_map != NULL) {
 		bus_dmamap_unload(sc->txdesc_tag, sc->txdesc_map);
-		bus_dmamap_destroy(sc->txdesc_tag, sc->txdesc_map);
+		bus_dmamem_free(sc->txdesc_tag, sc->txdesc_ring,
+		    sc->txdesc_map);
 	}
 	if (sc->txdesc_tag != NULL)
 		bus_dma_tag_destroy(sc->txdesc_tag);
@@ -1724,7 +1726,7 @@ ffec_attach(device_t dev)
 	 *
 	 * All in all, it seems likely that 13 is a safe divisor for now,
 	 * because if we really do need to base it on the peripheral clock
-	 * speed, then we need a platform-independant get-clock-freq API.
+	 * speed, then we need a platform-independent get-clock-freq API.
 	 */
 	mscr = 13 << FEC_MSCR_MII_SPEED_SHIFT;
 	if (OF_hasprop(ofw_node, "phy-disable-preamble")) {

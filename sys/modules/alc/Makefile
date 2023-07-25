@@ -1,8 +1,8 @@
-# $FreeBSD: 439788f6601f1725487cc9fa29c4bc1148033980 $
+# $FreeBSD: 54d6186241cc2becf9558eb49afc6d37f9ccf353 $
 
 .PATH: ${SRCTOP}/sys/dev/alc
 
 KMOD=	if_alc
-SRCS=	if_alc.c device_if.h bus_if.h pci_if.h miibus_if.h
+SRCS=	if_alc.c device_if.h bus_if.h pci_if.h miibus_if.h opt_platform.h
 
 .include <bsd.kmod.mk>

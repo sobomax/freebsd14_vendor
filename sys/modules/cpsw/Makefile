@@ -1,8 +1,8 @@
-# $FreeBSD: de6e57c37466c62cd6ecf356efb93b8ba3e7188e $
+# $FreeBSD: a3c75df0c5e17ecfe4142d2f1f5d59bf7472f2b4 $
 
 .PATH: ${SRCTOP}/sys/arm/ti/cpsw
 
 KMOD=   if_cpsw
-SRCS=   if_cpsw.c device_if.h bus_if.h ofw_bus_if.h miibus_if.h syscon_if.h
+SRCS=   if_cpsw.c device_if.h bus_if.h ofw_bus_if.h miibus_if.h syscon_if.h opt_platform.h
 
 .include <bsd.kmod.mk>

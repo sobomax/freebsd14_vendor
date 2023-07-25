@@ -1,4 +1,4 @@
-/* $FreeBSD: faf900e572c4c07a44dbac2d31c029eaef497159 $ */
+/* $FreeBSD: 70768265be70a704542c3b14695b10ef6343942b $ */
 /* test stack unwinding for a new thread */
 
 #include <pthread.h>
@@ -7,8 +7,8 @@
 
 #include "Test.cpp"
 
-void *
-thr_routine(void *arg)
+static void *
+thr_routine(void *arg __unused)
 {
 	Test test;
 

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 0b6b479d93626a75836315da7d0a593c9c04b91f $
+ * $FreeBSD: e6b8ad210f16af2a161746be8237667e2f75becb $
  */
 #ifndef	_LINUXKPI_LINUX_SYSFS_H_
 #define	_LINUXKPI_LINUX_SYSFS_H_
@@ -246,7 +246,7 @@ sysfs_unmerge_group(struct kobject *kobj, const struct attribute_group *grp)
 	struct attribute **attr;
 	struct sysctl_oid *oidp;
 
-	SLIST_FOREACH(oidp, SYSCTL_CHILDREN(kobj->oidp), oid_link) {
+	SYSCTL_FOREACH(oidp, SYSCTL_CHILDREN(kobj->oidp)) {
 		if (strcmp(oidp->oid_name, grp->name) != 0)
 			continue;
 		for (attr = grp->attrs; *attr != NULL; attr++) {

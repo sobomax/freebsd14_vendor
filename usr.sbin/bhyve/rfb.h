@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dae43b2ec395a9ec02e2c3902a5088c8ee7abc2d $
+ * $FreeBSD: 5a5785af41b04224404ed887ee2407428bf48868 $
  */
 
 #ifndef _RFB_H_
@@ -33,6 +33,7 @@
 
 #define	RFB_PORT	5900
 
-int	rfb_init(char *hostname, int port, int wait, char *password);
+int	rfb_init(const char *hostname, int port, int wait,
+	    const char *password);
 
 #endif /* _RFB_H_ */

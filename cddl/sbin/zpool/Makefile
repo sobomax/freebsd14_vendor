@@ -1,4 +1,4 @@
-# $FreeBSD: 4c2a8b94de1926d168377549942a22e45e18dcbb $
+# $FreeBSD: 7020439a43669e01b96b3dcfd03b53dc9e9186f8 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -10,7 +10,7 @@ ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 .PATH: ${ZFSTOP}/cmd/zpool/os/freebsd
 
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 PROG=	zpool
 MAN= \
 	spl.4 \

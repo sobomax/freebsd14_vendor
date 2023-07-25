@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 555a28d60b38e5d15875f4bda22f047319ee84f2 $");
+__FBSDID("$FreeBSD: 97e1f558cde303c941024d45d8fe8b1b43e6ea2a $");
 
 #ifdef _KERNEL
 
@@ -318,7 +318,7 @@ bhnd_nvram_bcmraw_init(struct bhnd_nvram_bcmraw *bcm, struct bhnd_nvram_io *src)
 			break;
 	}
 
-	/* Reclaim any unused space in he backing buffer */
+	/* Reclaim any unused space in the backing buffer */
 	if (offset < bcm->size) {
 		bcm->data = bhnd_nv_reallocf(bcm->data, bcm->size);
 		if (bcm->data == NULL)

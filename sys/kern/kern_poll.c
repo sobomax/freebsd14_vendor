@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3e84ad0afa7b3fa30703bbb099d24c70ae72a64 $");
+__FBSDID("$FreeBSD: fd1a30f0851ff2e91e763cf59961788659331e55 $");
 
 #include "opt_device_polling.h"
 
@@ -371,7 +371,7 @@ ether_poll(int count)
 static struct timeval poll_start_t;
 
 void
-netisr_pollmore()
+netisr_pollmore(void)
 {
 	struct timeval t;
 	int kern_load;

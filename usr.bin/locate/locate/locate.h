@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: BSD-4-Clause
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  * Copyright (c) 1995 Wolfram Schneider <wosch@FreeBSD.org>. Berlin.
  * Copyright (c) 1989, 1993
@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -34,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)locate.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 5ef97d36688ffb59db76304bed6fee264c2dc491 $
+ * $FreeBSD: 6393160d55b4c595f1c02d4d99b906b7550ce655 $
  */
 
 /* Symbolic constants shared by locate.c and code.c */

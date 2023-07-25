@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d4301ef719f9bf5c4568793788c1f3d956c1cab $");
+__FBSDID("$FreeBSD: 9ce0680725245719e449e3a525db17807e0d2ea6 $");
 
 #include <sys/types.h>
 #include <rtld_tls.h>
@@ -42,7 +42,7 @@ _tcb_ctor(struct pthread *thread, int initial)
 	if (initial)
 		tcb = _tcb_get();
 	else
-		tcb = _rtld_allocate_tls(NULL, sizeof(struct tcb), 16);
+		tcb = _rtld_allocate_tls(NULL, TLS_TCB_SIZE, TLS_TCB_ALIGN);
 	if (tcb)
 		tcb->tcb_thread = thread;
 	return (tcb);
@@ -52,5 +52,5 @@ void
 _tcb_dtor(struct tcb *tcb)
 {
 
-	_rtld_free_tls(tcb, sizeof(struct tcb), 16);
+	_rtld_free_tls(tcb, TLS_TCB_SIZE, TLS_TCB_ALIGN);
 }

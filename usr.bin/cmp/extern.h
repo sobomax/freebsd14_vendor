@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
  *
- * $FreeBSD: d98daf424995475edb6b765d71164bf79e096d91 $
+ * $FreeBSD: 60fd15ba0939a4bebffafbe0135adebb9dd31c49 $
  *
  */
 
@@ -46,3 +46,7 @@ void	diffmsg(const char *, const char *, off_t, off_t, int, int);
 void	eofmsg(const char *);
 
 extern bool bflag, lflag, sflag, xflag, zflag;
+
+#ifdef SIGINFO
+extern volatile sig_atomic_t info;
+#endif

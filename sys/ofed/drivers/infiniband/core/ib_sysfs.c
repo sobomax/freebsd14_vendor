@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4cbb69ad899bed756f6dfcf672bfb7c87657486c $");
+__FBSDID("$FreeBSD: 63f6c2641b837ecc8ff0bff3508ac3a15e919ef7 $");
 
 #include "core_priv.h"
 
@@ -1366,7 +1366,7 @@ err_put:
 	free_port_list_attributes(device);
 
 err_unregister:
-	device_unregister(class_dev);
+	device_del(class_dev);
 
 err:
 	return ret;

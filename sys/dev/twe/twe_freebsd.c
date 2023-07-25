@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad793eb906f4cc93e09b0cc99f9a98cb822f3e5f $");
+__FBSDID("$FreeBSD: 75549f5f8f3d3c92625d06c8e59fbd6ff1715cd0 $");
 
 /*
  * FreeBSD-specific code.
@@ -583,10 +583,10 @@ twe_attach_drive(struct twe_softc *sc, struct twe_drive *dr)
     char	buf[80];
     int		error;
 
-    mtx_lock(&Giant);
+    bus_topo_lock();
     dr->td_disk =  device_add_child(sc->twe_dev, NULL, -1);
     if (dr->td_disk == NULL) {
-	mtx_unlock(&Giant);
+	    bus_topo_unlock();
 	twe_printf(sc, "Cannot add unit\n");
 	return (EIO);
     }
@@ -603,7 +603,7 @@ twe_attach_drive(struct twe_softc *sc, struct twe_drive *dr)
     device_set_desc_copy(dr->td_disk, buf);
 
     error = device_probe_and_attach(dr->td_disk);
-    mtx_unlock(&Giant);
+    bus_topo_unlock();
     if (error != 0) {
 	twe_printf(sc, "Cannot attach unit to controller. error = %d\n", error);
 	return (EIO);
@@ -622,9 +622,9 @@ twe_detach_drive(struct twe_softc *sc, int unit)
     int error = 0;
 
     TWE_CONFIG_ASSERT_LOCKED(sc);
-    mtx_lock(&Giant);
+    bus_topo_lock();
     error = device_delete_child(sc->twe_dev, sc->twe_drive[unit].td_disk);
-    mtx_unlock(&Giant);
+    bus_topo_unlock();
     if (error != 0) {
 	twe_printf(sc, "failed to delete unit %d\n", unit);
 	return(error);
@@ -919,7 +919,7 @@ twe_free_request(struct twe_request *tr)
  * Map/unmap (tr)'s command and data in the controller's addressable space.
  *
  * These routines ensure that the data which the controller is going to try to
- * access is actually visible to the controller, in a machine-independant 
+ * access is actually visible to the controller, in a machine-independent
  * fashion.  Due to a hardware limitation, I/O buffers must be 512-byte aligned
  * and we take care of that here as well.
  */

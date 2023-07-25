@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7fee9d2c488ff545732a5cd1671cf85926a1f502 $");
+__FBSDID("$FreeBSD: 3ded2180ac82b5d192d1967969ef30d3e4fc9a6c $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -1154,8 +1154,8 @@ good:
 	 * Check to see if the vnode has been mounted on;
 	 * if so find the root of the mounted filesystem.
 	 */
-	while (dp->v_type == VDIR && (mp = dp->v_mountedhere) &&
-	       (cnp->cn_flags & NOCROSSMOUNT) == 0) {
+	while ((dp->v_type == VDIR || dp->v_type == VREG) &&
+	    (mp = dp->v_mountedhere) && (cnp->cn_flags & NOCROSSMOUNT) == 0) {
 		if (vfs_busy(mp, 0))
 			continue;
 		vput(dp);
@@ -1599,7 +1599,7 @@ NDVALIDATE(struct nameidata *ndp)
 	case DELETE:
 	case RENAME:
 		/*
-		 * Some filesystems set SAVENAME to provoke HASBUF, accomodate
+		 * Some filesystems set SAVENAME to provoke HASBUF, accommodate
 		 * for it until it gets fixed.
 		 */
 		orig &= NDMODIFYINGFLAGS;

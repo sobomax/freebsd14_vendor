@@ -1,4 +1,4 @@
-# $FreeBSD: ec2e6e679c18e6f8e7e12ac4748e5ed0048fb4a9 $
+# $FreeBSD: 69991395c1af7afc293e55b7757eb829483b859f $
 
 PACKAGE=	tests
 
@@ -12,7 +12,16 @@ ATF_TESTS_C=	ip_reass_test \
 		socket_afinet \
 		tcp_connect_port_test
 
-ATF_TESTS_SH=	carp fibs fibs_test redirect divert forward output lpm arp
+ATF_TESTS_SH=	arp \
+		carp \
+		divert \
+		fibs \
+		fibs_test \
+		forward \
+		lpm \
+		output \
+		redirect
+
 TEST_METADATA.output+=	required_programs="python"
 
 PROGS=	udp_dontroute tcp_user_cookie

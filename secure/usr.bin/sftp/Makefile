@@ -1,10 +1,11 @@
-# $FreeBSD: 868f7a23bfde5fb1e887a1e1ed3aa91e5eb8b010 $
+# $FreeBSD: f8197a3dc55b9483bb2825cf2159f0ba2f15b2d2 $
 
 .include <src.opts.mk>
 .include "${SRCTOP}/secure/ssh.mk"
 
 PROG=	sftp
-SRCS=   sftp.c sftp-client.c sftp-common.c sftp-glob.c progressmeter.c
+SRCS=   sftp.c sftp-client.c sftp-common.c sftp-glob.c sftp-usergroup.c \
+	progressmeter.c
 PACKAGE=	ssh
 
 LIBADD=	ssh edit

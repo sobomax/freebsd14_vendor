@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 675e93c5771d81b252914d8dfe1a454b1b5066ba $");
+__FBSDID("$FreeBSD: 80d97070b913d31fc7dcde9809f8d0e7a51aa386 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -164,7 +164,7 @@ static int
 arm64_allocate_pmc(int cpu, int ri, struct pmc *pm,
   const struct pmc_op_pmcallocate *a)
 {
-	uint32_t caps, config;
+	uint32_t config;
 	struct arm64_cpu *pac;
 	enum pmc_event pe;
 
@@ -175,7 +175,6 @@ arm64_allocate_pmc(int cpu, int ri, struct pmc *pm,
 
 	pac = arm64_pcpu[cpu];
 
-	caps = a->pm_caps;
 	if (a->pm_class != PMC_CLASS_ARMV8) {
 		return (EINVAL);
 	}
@@ -188,6 +187,23 @@ arm64_allocate_pmc(int cpu, int ri, struct pmc *pm,
 		if (config > (PMC_EV_ARMV8_LAST - PMC_EV_ARMV8_FIRST))
 			return (EINVAL);
 	}
+
+	switch (a->pm_caps & (PMC_CAP_SYSTEM | PMC_CAP_USER)) {
+	case PMC_CAP_SYSTEM:
+		config |= PMEVTYPER_U;
+		break;
+	case PMC_CAP_USER:
+		config |= PMEVTYPER_P;
+		break;
+	default:
+		/*
+		 * Trace both USER and SYSTEM if none are specified
+		 * (default setting) or if both flags are specified
+		 * (user explicitly requested both qualifiers).
+		 */
+		break;
+	}
+
 	pm->pm_md.pm_arm64.pm_arm64_evsel = config;
 	PMCDBG2(MDP, ALL, 2, "arm64-allocate ri=%d -> config=0x%x", ri, config);
 
@@ -522,7 +538,7 @@ arm64_pcpu_fini(struct pmc_mdep *md, int cpu)
 }
 
 struct pmc_mdep *
-pmc_arm64_initialize()
+pmc_arm64_initialize(void)
 {
 	struct pmc_mdep *pmc_mdep;
 	struct pmc_classdep *pcd;

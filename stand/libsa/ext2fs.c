@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b81654552af34947469ed742fed3d5e96bbb08ef $");
+__FBSDID("$FreeBSD: 3e91d9fd516f6a6c71c266e03ca4a3c87524a24f $");
 
 /*-
  * Copyright (c) 1993
@@ -108,14 +108,14 @@ static int dtmap[] = { DT_UNKNOWN, DT_REG, DT_DIR, DT_CHR,
 			DT_UNKNOWN : dtmap[x]
 
 struct fs_ops ext2fs_fsops = {
-	"ext2fs",
-	ext2fs_open,
-	ext2fs_close,
-	ext2fs_read,
-	null_write,
-	ext2fs_seek,
-	ext2fs_stat,
-	ext2fs_readdir
+	.fs_name = "ext2fs",
+	.fo_open = ext2fs_open,
+	.fo_close = ext2fs_close,
+	.fo_read = ext2fs_read,
+	.fo_write = null_write,
+	.fo_seek = ext2fs_seek,
+	.fo_stat = ext2fs_stat,
+	.fo_readdir = ext2fs_readdir,
 };
 
 #define	EXT2_SBSIZE	1024

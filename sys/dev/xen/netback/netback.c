@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8710120ecef330edfcbf0d291beed808433604dd $");
+__FBSDID("$FreeBSD: 06d92093d9035e52985946b82c50424087fc6032 $");
 
 /**
  * \file netback.c
@@ -1392,8 +1392,8 @@ xnb_frontend_changed(device_t dev, XenbusState frontend_state)
 
 	switch (frontend_state) {
 	case XenbusStateInitialising:
-		break;
 	case XenbusStateInitialised:
+		break;
 	case XenbusStateConnected:
 		xnb_connect(xnb);
 		break;

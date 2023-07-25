@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 397a1fe5e974547d0711742509f136c48b29ab5c $");
+__FBSDID("$FreeBSD: ceb6754f9d15c42f6c184eca80e4c1e0e63193d4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -88,10 +88,8 @@ g_slice_free(struct g_geom *gp)
 	if (gsp == NULL)
 		return;
 	g_free(gsp->slices);
-	if (gsp->hotspot != NULL)
-		g_free(gsp->hotspot);
-	if (gsp->softc != NULL)
-		g_free(gsp->softc);
+	g_free(gsp->hotspot);
+	g_free(gsp->softc);
 	g_free(gsp);
 }
 

@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 19d273ae55d8584fad8f7a543e318e6e707cb04f $
+ * $FreeBSD: 2d3fe02d33e98c5d312072f9f8ed644906aabe16 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19d273ae55d8584fad8f7a543e318e6e707cb04f $");
+__FBSDID("$FreeBSD: 2d3fe02d33e98c5d312072f9f8ed644906aabe16 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,8 +73,10 @@ backlight_ioctl(struct cdev *dev, u_long cmd, caddr_t data,
 		/* Call the driver function so it fills up the props */
 		bcopy(data, &props, sizeof(struct backlight_props));
 		error = BACKLIGHT_GET_STATUS(sc->dev, &props);
-		if (error == 0)
+		if (error == 0) {
 			bcopy(&props, data, sizeof(struct backlight_props));
+			sc->cached_brightness = props.brightness;
+		}
 		break;
 	case BACKLIGHTUPDATESTATUS:
 		bcopy(data, &props, sizeof(struct backlight_props));

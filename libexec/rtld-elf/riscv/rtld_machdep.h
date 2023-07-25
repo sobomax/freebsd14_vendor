@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7a087ca2ab7cafe82e17166239fb8e9b7e2e1c84 $
+ * $FreeBSD: e422905f38508ab3e0cd5abb4a0c80af74848881 $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -40,6 +40,7 @@
 
 #include <sys/types.h>
 #include <machine/atomic.h>
+#include <machine/tls.h>
 
 struct Struct_Obj_Entry;
 
@@ -82,10 +83,6 @@ Elf_Addr reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 /*
  * TLS
  */
-#define	TLS_VARIANT_I	1
-#define	TLS_TP_OFFSET	0x0
-#define	TLS_DTV_OFFSET	0x800
-#define	TLS_TCB_SIZE	16
 
 #define round(size, align) \
     (((size) + (align) - 1) & ~((align) - 1))

@@ -1,10 +1,11 @@
-# $FreeBSD: efd8c746128fef615b58f8dac1e5a311b556b3b4 $
+# $FreeBSD: 3be2dea0bb95d9fdcf533757725edeadc19dffa6 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
 .PATH: ${ZFSTOP}/cmd/zdb
 .PATH: ${ZFSTOP}/man/man8
 
+PACKAGE=	zfs
 PROG=	zdb
 MAN=	zdb.8
 INCS=	zdb.h

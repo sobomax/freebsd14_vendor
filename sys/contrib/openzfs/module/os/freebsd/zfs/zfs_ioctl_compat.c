@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 81967bed73f92a86e3072e05ddcb830f63e3f3c4 $");
+__FBSDID("$FreeBSD: 43156f2c63665912d11378e7b9a0bd3af403e316 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -319,7 +319,7 @@ zfs_ioctl_legacy_to_ozfs(int request)
 int
 zfs_ioctl_ozfs_to_legacy(int request)
 {
-	if (request > ZFS_IOC_LAST)
+	if (request >= ZFS_IOC_LAST)
 		return (-1);
 
 	if (request > ZFS_IOC_PLATFORM) {

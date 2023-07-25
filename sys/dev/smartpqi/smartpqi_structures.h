@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: eb1394d58f393343bbe5760ac975ac96baf948f9 $ */
+/* $FreeBSD: 2a71cc1d88da1534539c08a1495f88efe17e00cb $ */
 
 #ifndef _PQI_STRUCTURES_H
 #define _PQI_STRUCTURES_H
@@ -791,7 +791,7 @@ struct pqi_enc_info {
 
 
 typedef struct pqi_scsi_device {
-	device_type_t	devtype;		/* as reported by INQUIRY commmand */
+	device_type_t	devtype;		/* as reported by INQUIRY command */
 	uint8_t	device_type;		/* as reported by
 					   BMIC_IDENTIFY_PHYSICAL_DEVICE - only
 					   valid for devtype = TYPE_DISK */

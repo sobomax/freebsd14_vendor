@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bc53d01edad4caa894faa57c4cd9609dda925c03 $");
+__FBSDID("$FreeBSD: a004d04b3bf34ce82893472d99bf739e8e82b29d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -581,10 +581,8 @@ smb_iod_main(struct smbiod *iod)
 /*	struct smb_vc *vcp = iod->iod_vc;*/
 	struct smbiod_event *evp;
 /*	struct timespec tsnow;*/
-	int error;
 
 	SMBIODEBUG("\n");
-	error = 0;
 
 	/*
 	 * Check all interesting events

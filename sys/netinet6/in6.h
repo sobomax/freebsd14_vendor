@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: 10bc1f91c554362215e74c3c9d8631d6f39c3c04 $
+ * $FreeBSD: 82f876506f0f66ac7576b829435210d3132f9ae6 $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_
@@ -219,18 +219,10 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
 
 /*
  * Equality
- * NOTE: Some of kernel programming environment (for example, openbsd/sparc)
- * does not supply memcmp().  For userland memcmp() is preferred as it is
- * in ANSI standard.
  */
-#ifdef _KERNEL
-#define IN6_ARE_ADDR_EQUAL(a, b)			\
-    (bcmp(&(a)->s6_addr[0], &(b)->s6_addr[0], sizeof(struct in6_addr)) == 0)
-#else
 #if __BSD_VISIBLE
 #define IN6_ARE_ADDR_EQUAL(a, b)			\
     (memcmp(&(a)->s6_addr[0], &(b)->s6_addr[0], sizeof(struct in6_addr)) == 0)
-#endif
 #endif
 
 /*

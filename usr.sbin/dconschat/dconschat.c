@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $Id: dconschat.c,v 1.76 2003/10/23 06:21:13 simokawa Exp $
- * $FreeBSD: 6d4750585df6d0d1f6b4e44ffc26bef7f8fe35a0 $
+ * $FreeBSD: ee39aa6e90a6c343bbde132bd1ccf0b7f2dac70a $
  */
 
 #include <sys/param.h>
@@ -281,7 +281,7 @@ dconschat_get_crom(struct dcons_state *dc)
 	for (i = 20; i < 0x400; i += 4) {
 		if (dread(dc, &buf, 4, addr + i) < 0) {
 			if (verbose)
-				warn("crom read faild");
+				warn("crom read failed");
 			goto out;
 		}
 		buf = ntohl(buf);

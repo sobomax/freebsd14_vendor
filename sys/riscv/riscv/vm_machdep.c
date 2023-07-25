@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 094662413f4ea6eb1ec09ff3e45c5fa010c1087a $");
+__FBSDID("$FreeBSD: 84b7fec1516dd50ad269dd1a166507cc4ea92d56 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -268,11 +268,4 @@ cpu_procctl(struct thread *td __unused, int idtype __unused, id_t id __unused,
 {
 
 	return (EINVAL);
-}
-
-void
-swi_vm(void *v)
-{
-
-	/* Nothing to do here - busdma bounce buffers are not implemented. */
 }

@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 991c6a0b482f9f24113cdd673a9be6cb96af32b4 $");
+__FBSDID("$FreeBSD: ddca93e80f5696adad9c998a30f67f8a9291b8dd $");
 
 /**
  * @file
@@ -683,7 +683,7 @@ void scif_sas_remote_device_target_reset_complete(
          else
          {
             //Tell driver to kick off Discover process. If the domain is already
-            //in Discovery state, this discovery requst will not be carried on.
+            //in Discovery state, this discovery request will not be carried on.
             scif_cb_domain_change_notification(
             fw_device->domain->controller, fw_device->domain );
          }
@@ -692,7 +692,7 @@ void scif_sas_remote_device_target_reset_complete(
    else
    {
       //Tell driver to kick off Discover process. If the domain is already
-      //in Discovery state, this discovery requst will not be carried on.
+      //in Discovery state, this discovery request will not be carried on.
       scif_cb_domain_change_notification(
          fw_device->domain->controller, fw_device->domain );
    }

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6cd098a8113bc9978e11528ce0a0f847422720d1 $");
+__FBSDID("$FreeBSD: d59c8908f4ca6ce5a2b22e9dbce1d051a514e878 $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -82,12 +82,6 @@ tsc_allocate_pmc(int cpu, int ri, struct pmc *pm,
 
 	if (a->pm_class != PMC_CLASS_TSC)
 		return (EINVAL);
-
-	if ((pm->pm_caps & TSC_CAPS) == 0)
-		return (EINVAL);
-
-	if ((pm->pm_caps & ~TSC_CAPS) != 0)
-		return (EPERM);
 
 	if (a->pm_ev != PMC_EV_TSC_TSC ||
 	    a->pm_mode != PMC_MODE_SC)

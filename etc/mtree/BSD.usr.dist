@@ -1,4 +1,4 @@
-# $FreeBSD: 2bfa8e185fc7685f45c4ff798acf4c72aef1365e $
+# $FreeBSD: fcaf5c72cef811d1701740886571041a4857c0e3 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -35,7 +35,7 @@
     ..
     lib
         clang
-            13.0.0
+            14.0.5
                 include
                     cuda_wrappers
                     ..
@@ -55,6 +55,8 @@
                 lib
                     freebsd
                     ..
+                ..
+                share
                 ..
             ..
         ..
@@ -167,6 +169,10 @@
     ..
     share
         atf             tags=package=tests
+        ..
+        bhyve
+            kbdlayout
+            ..
         ..
         bsdconfig
             media

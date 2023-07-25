@@ -15,7 +15,7 @@
  * all derivative works or modified versions.
  *
  * Cronyx Id: machdep.h,v 1.3.4.3 2003/11/27 14:21:58 rik Exp $
- * $FreeBSD: 393377d0b40677bccaa4b9a99ba8ef2c14f81fd1 $
+ * $FreeBSD: f715122ae490c8119bf603f9d3df585cf416d461 $
  */
 
 /*
@@ -74,10 +74,6 @@
 #   include <sys/libkern.h>
 #   include <sys/systm.h>
 #   define port_t int
-
-#ifndef _SYS_CDEFS_H_
-#error this file needs sys/cdefs.h as a prerequisite
-#endif
 #endif
 
 #endif

@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)commands.c	8.4 (Berkeley) 5/30/95";
 #endif
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21e973209d9bc68dced9570f9596778ac22f45c7 $");
+__FBSDID("$FreeBSD: fd459794172421e508e12c9eb582d24c9e0893fe $");
 
 #include <sys/param.h>
 #include <sys/un.h>
@@ -938,7 +938,7 @@ setcmd(int argc, char *argv[])
     }
 
     ct = getset(argv[1]);
-    if (ct == 0) {
+    if (ct == 0 || !(ct->name && ct->name[0] != ' ')) {
 	c = GETTOGGLE(argv[1]);
 	if (c == 0) {
 	    fprintf(stderr, "'%s': unknown argument ('set ?' for help).\n",
@@ -1014,7 +1014,7 @@ unsetcmd(int argc, char *argv[])
     while (argc--) {
 	name = *argv++;
 	ct = getset(name);
-	if (ct == 0) {
+	if (ct == 0 || !(ct->name && ct->name[0] != ' ')) {
 	    c = GETTOGGLE(name);
 	    if (c == 0) {
 		fprintf(stderr, "'%s': unknown argument ('unset ?' for help).\n",
@@ -2694,7 +2694,7 @@ help(int argc, char *argv[])
 			printf("?Ambiguous help command %s\n", arg);
 		else if (c == (Command *)0)
 			printf("?Invalid help command %s\n", arg);
-		else
+		else if (c->help)
 			printf("%s\n", c->help);
 	}
 	return 0;

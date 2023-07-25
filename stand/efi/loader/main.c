@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7752751efd0bac9a45ed2419d796106043bcb117 $");
+__FBSDID("$FreeBSD: 446c267a517ad90142e4bbb777651c4727beaf40 $");
 
 #include <stand.h>
 
@@ -60,6 +60,7 @@ __FBSDID("$FreeBSD: 7752751efd0bac9a45ed2419d796106043bcb117 $");
 #include <smbios.h>
 
 #include "efizfs.h"
+#include "framebuffer.h"
 
 #include "loader_efi.h"
 
@@ -185,25 +186,11 @@ out:
 }
 
 static void
-set_currdev(const char *devname)
-{
-
-	env_setenv("currdev", EV_VOLATILE, devname, efi_setcurrdev,
-	    env_nounset);
-	/*
-	 * Don't execute hook here; the loaddev hook makes it immutable
-	 * once we've determined what the proper currdev is.
-	 */
-	env_setenv("loaddev", EV_VOLATILE | EV_NOHOOK, devname, env_noset,
-	    env_nounset);
-}
-
-static void
 set_currdev_devdesc(struct devdesc *currdev)
 {
 	const char *devname;
 
-	devname = efi_fmtdev(currdev);
+	devname = devformat(currdev);
 	printf("Setting currdev to %s\n", devname);
 	set_currdev(devname);
 }
@@ -266,18 +253,18 @@ probe_zfs_currdev(uint64_t guid)
 	char *devname;
 	struct zfs_devdesc currdev;
 	char *buf = NULL;
-	bool rv;
+	bool bootable;
 
 	currdev.dd.d_dev = &zfs_dev;
 	currdev.dd.d_unit = 0;
 	currdev.pool_guid = guid;
 	currdev.root_guid = 0;
 	set_currdev_devdesc((struct devdesc *)&currdev);
-	devname = efi_fmtdev(&currdev);
+	devname = devformat(&currdev.dd);
 	init_zfs_boot_options(devname);
 
-	rv = sanity_check_currdev();
-	if (rv) {
+	bootable = sanity_check_currdev();
+	if (bootable) {
 		buf = malloc(VDEV_PAD_SIZE);
 		if (buf != NULL) {
 			if (zfs_get_bootonce(&currdev, OS_BOOTONCE, buf,
@@ -290,6 +277,21 @@ probe_zfs_currdev(uint64_t guid)
 			(void) zfs_attach_nvstore(&currdev);
 		}
 	}
+	return (bootable);
+}
+#endif
+
+#ifdef MD_IMAGE_SIZE
+static bool
+probe_md_currdev(void)
+{
+	extern struct devsw md_dev;
+	bool rv;
+
+	set_currdev_devsw(&md_dev, 0);
+	rv = sanity_check_currdev();
+	if (!rv)
+		printf("MD not present\n");
 	return (rv);
 }
 #endif
@@ -567,6 +569,15 @@ find_currdev(bool do_bootmgr, bool is_last,
 	}
 #endif /* EFI_ZFS_BOOT */
 
+#ifdef MD_IMAGE_SIZE
+	/*
+	 * If there is an embedded MD, try to use that.
+	 */
+	printf("Trying MD\n");
+	if (probe_md_currdev())
+		return (0);
+#endif /* MD_IMAGE_SIZE */
+
 	/*
 	 * Try to find the block device by its handle based on the
 	 * image we're booting. If we can't find a sane partition,
@@ -677,8 +688,7 @@ interactive_interrupt(const char *msg)
 static int
 parse_args(int argc, CHAR16 *argv[])
 {
-	int i, j, howto;
-	bool vargood;
+	int i, howto;
 	char var[128];
 
 	/*
@@ -695,7 +705,7 @@ parse_args(int argc, CHAR16 *argv[])
 	 * method is flawed for non-ASCII characters).
 	 */
 	howto = 0;
-	for (i = 1; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		cpy16to8(argv[i], var, sizeof(var));
 		howto |= boot_parse_arg(var);
 	}
@@ -736,8 +746,20 @@ parse_uefi_con_out(void)
 	if (rv != EFI_SUCCESS)
 		rv = efi_global_getenv("ConOutDev", buf, &sz);
 	if (rv != EFI_SUCCESS) {
-		/* If we don't have any ConOut default to serial */
-		how = RB_SERIAL;
+		/*
+		 * If we don't have any ConOut default to both. If we have GOP
+		 * make video primary, otherwise just make serial primary. In
+		 * either case, try to use both the 'efi' console which will use
+		 * the GOP, if present and serial. If there's an EFI BIOS that
+		 * omits this, but has a serial port redirect, we'll
+		 * unavioidably get doubled characters (but we'll be right in
+		 * all the other more common cases).
+		 */
+		if (efi_has_gop())
+			how = RB_MULTIPLE;
+		else
+			how = RB_MULTIPLE | RB_SERIAL;
+		setenv("console", "efi,comconsole", 1);
 		goto out;
 	}
 	ep = buf + sz;
@@ -925,13 +947,16 @@ main(int argc, CHAR16 *argv[])
 	setenv("console", "efi", 1);
 	uhowto = parse_uefi_con_out();
 #if defined(__riscv)
+	/*
+	 * This workaround likely is papering over a real issue
+	 */
 	if ((uhowto & RB_SERIAL) != 0)
 		setenv("console", "comconsole", 1);
 #endif
 	cons_probe();
 
 	/* Set up currdev variable to have hooks in place. */
-	env_setenv("currdev", EV_VOLATILE, "", efi_setcurrdev, env_nounset);
+	env_setenv("currdev", EV_VOLATILE, "", gen_setcurrdev, env_nounset);
 
 	/* Init the time source */
 	efi_time_init();
@@ -951,9 +976,7 @@ main(int argc, CHAR16 *argv[])
 		    "failures\n", i);
 	}
 
-	for (i = 0; devsw[i] != NULL; i++)
-		if (devsw[i]->dv_init != NULL)
-			(devsw[i]->dv_init)();
+	devinit();
 
 	/*
 	 * Detect console settings two different ways: one via the command
@@ -1254,15 +1277,6 @@ command_reboot(int argc, char *argv[])
 
 	/* NOTREACHED */
 	return (CMD_ERROR);
-}
-
-COMMAND_SET(quit, "quit", "exit the loader", command_quit);
-
-static int
-command_quit(int argc, char *argv[])
-{
-	exit(0);
-	return (CMD_OK);
 }
 
 COMMAND_SET(memmap, "memmap", "print memory map", command_memmap);

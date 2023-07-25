@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3bab778643475b2a1fb5919333c846d7d8bfb561 $");
+__FBSDID("$FreeBSD: da6bf20536f3d6ef0ecdba76e83f3ca59e7de7e1 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -238,7 +238,7 @@ pccard_attach_card(device_t dev)
 	DEVPRINTF((dev, "Card has %d functions. pccard_mfc is %d\n", i + 1,
 	    pccard_mfc(sc)));
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	STAILQ_FOREACH(pf, &sc->card.pf_head, pf_list) {
 		if (STAILQ_EMPTY(&pf->cfe_head))
 			continue;
@@ -251,7 +251,7 @@ pccard_attach_card(device_t dev)
 		pf->dev = child;
 		pccard_probe_and_attach_child(dev, child, pf);
 	}
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	return (0);
 }
 

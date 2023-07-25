@@ -30,13 +30,13 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6c27b6aacc0f1503b7fae0c061bb3a5bd016595b $
+ * $FreeBSD: 4a7af2c4579b76355944724d1a77aeaeccc5940a $
  *
  * ATM call control and API
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c27b6aacc0f1503b7fae0c061bb3a5bd016595b $");
+__FBSDID("$FreeBSD: 4a7af2c4579b76355944724d1a77aeaeccc5940a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -347,6 +347,8 @@ static int
 ng_ccatm_constructor(node_p node)
 {
 	struct ccnode *priv;
+
+	gone_in(14, "ng_ccatm: netgraph ATM modules");
 
 	priv = malloc(sizeof(*priv), M_NG_CCATM, M_WAITOK | M_ZERO);
 

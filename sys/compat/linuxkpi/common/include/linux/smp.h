@@ -23,11 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c6d011fceb5f04804304bcc033f02d5d9defa693 $
+ * $FreeBSD: 581a5e6205b6d14a73041034bc8f6fb5fbf07160 $
  */
 
 #ifndef _LINUXKPI_LINUX_SMP_H_
 #define	_LINUXKPI_LINUX_SMP_H_
+
+#include <asm/smp.h>
 
 /*
  * Important note about the use of the function provided below:

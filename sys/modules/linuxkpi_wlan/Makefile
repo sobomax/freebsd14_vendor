@@ -1,4 +1,4 @@
-# $FreeBSD: 4aba6f83137f448442f378cd8587c92eda746de5 $
+# $FreeBSD: fccd1249bc7210c26a3a36bf095617a45d4be758 $
 .PATH:	${SRCTOP}/sys/compat/linuxkpi/common/src
 
 KMOD=	linuxkpi_wlan
@@ -8,7 +8,7 @@ SRCS=	linux_80211.c \
 SRCS+=	opt_wlan.h
 SRCS+=	${LINUXKPI_GENSRCS}
 
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 EXPORT_SYMS=	YES
 

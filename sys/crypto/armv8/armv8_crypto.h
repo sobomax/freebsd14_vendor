@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 855aabd8bac313317d5401d7416512dcd432f322 $
+ * $FreeBSD: 816ef087d7260db5217f7f245a2b7cebef1a0933 $
  */
 
 #ifndef _ARMV8_CRYPTO_H_
@@ -63,24 +63,29 @@ void gcm_init_v8(__uint128_val_t Htable[16], const uint64_t Xi[2]);
 void gcm_gmult_v8(uint64_t Xi[2], const __uint128_val_t Htable[16]);
 void gcm_ghash_v8(uint64_t Xi[2], const __uint128_val_t Htable[16], const uint8_t *inp, size_t len);
 
-void armv8_aes_encrypt_cbc(const AES_key_t *, size_t, const uint8_t *,
-    uint8_t *, const uint8_t[static AES_BLOCK_LEN]);
-void armv8_aes_decrypt_cbc(const AES_key_t *, size_t, uint8_t *,
+void armv8_aes_encrypt_cbc(const AES_key_t *key, size_t len,
+    struct crypto_buffer_cursor *fromc, struct crypto_buffer_cursor *toc,
+    const uint8_t iv[static AES_BLOCK_LEN]);
+void armv8_aes_decrypt_cbc(const AES_key_t *, size_t,
+    struct crypto_buffer_cursor *fromc, struct crypto_buffer_cursor *toc,
     const uint8_t[static AES_BLOCK_LEN]);
-void armv8_aes_encrypt_gcm(AES_key_t *, size_t, const uint8_t *,
-    uint8_t *, size_t, const uint8_t*,
+void armv8_aes_encrypt_gcm(AES_key_t *, size_t,
+    struct crypto_buffer_cursor *, struct crypto_buffer_cursor *,
+    size_t, const uint8_t *,
     uint8_t tag[static GMAC_DIGEST_LEN],
-    const uint8_t[static AES_BLOCK_LEN],
+    const uint8_t[static AES_GCM_IV_LEN],
     const __uint128_val_t *);
-int armv8_aes_decrypt_gcm(AES_key_t *, size_t, const uint8_t *,
-    uint8_t *, size_t, const uint8_t*,
-    const uint8_t tag[static GMAC_DIGEST_LEN],
-    const uint8_t[static AES_BLOCK_LEN],
+int armv8_aes_decrypt_gcm(AES_key_t *, size_t,
+    struct crypto_buffer_cursor *, struct crypto_buffer_cursor *,
+    size_t, const uint8_t *, const uint8_t tag[static GMAC_DIGEST_LEN],
+    const uint8_t[static AES_GCM_IV_LEN],
     const __uint128_val_t *);
 
 void armv8_aes_encrypt_xts(AES_key_t *, const void *, size_t,
-    const uint8_t *, uint8_t *, const uint8_t[AES_BLOCK_LEN]);
+    struct crypto_buffer_cursor *, struct crypto_buffer_cursor *,
+    const uint8_t[AES_BLOCK_LEN]);
 void armv8_aes_decrypt_xts(AES_key_t *, const void *, size_t,
-    const uint8_t *, uint8_t *, const uint8_t[AES_BLOCK_LEN]);
+    struct crypto_buffer_cursor *, struct crypto_buffer_cursor *,
+    const uint8_t[AES_BLOCK_LEN]);
 
 #endif /* _ARMV8_CRYPTO_H_ */

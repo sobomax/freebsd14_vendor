@@ -71,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9383fe9dab78473d8f7d10c7ca8dfd3c3d8637ea $");
+__FBSDID("$FreeBSD: c7cc8702f4e50ffb194d0ef6217c9e715787d666 $");
 
 #include "opt_wlan.h"
 #include "opt_iwm.h"
@@ -325,7 +325,7 @@ iwm_send_paging_cmd(struct iwm_softc *sc, const struct iwm_fw_img *fw)
 		.block_num = htole32(sc->num_of_paging_blk),
 	};
 
-	/* loop for for all paging blocks + CSS block */
+	/* loop for all paging blocks + CSS block */
 	for (blk_idx = 0; blk_idx < sc->num_of_paging_blk + 1; blk_idx++) {
 		dev_phy_addr = htole32(
 		    sc->fw_paging_db[blk_idx].fw_paging_block.paddr >>

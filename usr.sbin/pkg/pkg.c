@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1196c78e5cc99df8cb0f2f494ffd36ed13ad417b $");
+__FBSDID("$FreeBSD: f3c338c6961e2c15b4f6216c0bb50580d63f2113 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -236,9 +236,7 @@ fetch_to_fd(const char *url, char *path, const char *fetchOpts)
 			--retry;
 			if (retry <= 0)
 				goto fetchfail;
-			if (mirrors == NULL) {
-				sleep(1);
-			} else {
+			if (mirrors != NULL) {
 				current = current->next;
 				if (current == NULL)
 					current = mirrors;
@@ -1220,10 +1218,10 @@ main(int argc, char *argv[])
 	}
 
 	if ((bootstrap_only && force) || access(pkgpath, X_OK) == -1) {
-		/* 
+		/*
 		 * To allow 'pkg -N' to be used as a reliable test for whether
 		 * a system is configured to use pkg, don't bootstrap pkg
-		 * when that that option is passed.
+		 * when that option is passed.
 		 */
 		if (activation_test)
 			errx(EXIT_FAILURE, "pkg is not installed");

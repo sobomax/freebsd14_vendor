@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 164157559cb2b925f2b7c14ef39f3ecc118d36d5 $");
+__FBSDID("$FreeBSD: 113bb726a54b070246d718a20fa0f4a64c9a9bdd $");
 
 /*
  * IEEE 802.11 WEP crypto support.
@@ -202,7 +202,7 @@ wep_encap(struct ieee80211_key *k, struct mbuf *m)
 	/*
 	 * Copy down 802.11 header and add the IV + KeyID.
 	 */
-	M_PREPEND(m, wep.ic_header, M_NOWAIT);
+	M_PREPEND(m, wep.ic_header, IEEE80211_M_NOWAIT);
 	if (m == NULL)
 		return 0;
 	ivp = mtod(m, uint8_t *);

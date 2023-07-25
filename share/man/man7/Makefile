@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: be7a5ae305001dbe86786c919bfaf6b283684c96 $
+# $FreeBSD: 3ab247aae73cdae9bda5ab36562caff80d9c43b5 $
 
 .include <src.opts.mk>
 
@@ -26,6 +26,7 @@ MAN=	arch.7 \
 	release.7 \
 	sdoc.7 \
 	security.7 \
+	sizeof.7 \
 	sprog.7 \
 	stats.7 \
 	stdint.7 \
@@ -34,6 +35,7 @@ MAN=	arch.7 \
 	tuning.7
 
 MLINKS=	intro.7 miscellaneous.7
+MLINKS+= growfs.7 growfs_fstab.7
 MLINKS+= security.7 securelevel.7
 MLINKS+= c99.7 c.7
 MLINKS+= c99.7 c78.7

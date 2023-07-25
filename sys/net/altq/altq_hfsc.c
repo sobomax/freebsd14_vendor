@@ -28,7 +28,7 @@
  * changes without encumbrance.
  *
  * $KAME: altq_hfsc.c,v 1.24 2003/12/05 05:40:46 kjc Exp $
- * $FreeBSD: 2dbf571cdbb92212e964b0b25212e145e1f9ef25 $
+ * $FreeBSD: 0d15b903cd64a64d51f94cb6a4907bc62faa5580 $
  */
 /*
  * H-FSC is described in Proceedings of SIGCOMM'97,
@@ -514,9 +514,9 @@ hfsc_class_create(struct hfsc_if *hif, struct service_curve *rsc,
 		if ((p = parent->cl_children) == NULL)
 			parent->cl_children = cl;
 		else {
-			while (p->cl_siblings != NULL)
-				p = p->cl_siblings;
-			p->cl_siblings = cl;
+			/* Put new class at beginning of list */
+			cl->cl_siblings = parent->cl_children;
+			parent->cl_children = cl;
 		}
 	}
 	IFQ_UNLOCK(hif->hif_ifq);

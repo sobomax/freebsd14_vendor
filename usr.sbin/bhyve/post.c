@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d3040a8df76f69191571d7e6f1b5df86daf4aac4 $
+ * $FreeBSD: 69cf5cf39db7c0dc5abc5d3c1d6faccde092f49f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3040a8df76f69191571d7e6f1b5df86daf4aac4 $");
+__FBSDID("$FreeBSD: 69cf5cf39db7c0dc5abc5d3c1d6faccde092f49f $");
 
 #include <sys/types.h>
 
@@ -39,8 +39,8 @@ __FBSDID("$FreeBSD: d3040a8df76f69191571d7e6f1b5df86daf4aac4 $");
 #include "pci_lpc.h"
 
 static int
-post_data_handler(struct vmctx *ctx, int vcpu, int in, int port, int bytes,
-		  uint32_t *eax, void *arg)
+post_data_handler(struct vmctx *ctx __unused, int in,
+    int port __unused, int bytes, uint32_t *eax, void *arg __unused)
 {
 	assert(in == 1);
 

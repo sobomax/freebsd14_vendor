@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69124383d413bbb0e6d613034b83870552711c0b $");
+__FBSDID("$FreeBSD: 7705073958dfafd5d2cf1a7db4f74b7781e8337c $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -3964,7 +3964,7 @@ usage(int error)
 "-x                       : output port list in XML format\n"
 "lunmap options:\n"
 "-p targ_port             : specify target port number\n"
-"-L pLUN                  : specify port-visible LUN\n"
+"-l pLUN                  : specify port-visible LUN\n"
 "-L cLUN                  : specify CTL LUN\n",
 CTL_DEFAULT_DEV);
 }

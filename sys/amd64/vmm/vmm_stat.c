@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 89133d4b3868293b02018271dad7c5543f7ad152 $
+ * $FreeBSD: 2750982185aa1522b44c435db0a0922b9761d654 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89133d4b3868293b02018271dad7c5543f7ad152 $");
+__FBSDID("$FreeBSD: 2750982185aa1522b44c435db0a0922b9761d654 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -70,6 +70,9 @@ vmm_stat_register(void *arg)
 	if (vst->scope == VMM_STAT_SCOPE_AMD && !vmm_is_svm())
 		return;
 
+	if (vst->nelems == VMM_STAT_NELEMS_VCPU)
+		vst->nelems = vm_maxcpu;
+
 	if (vst_num_elems + vst->nelems >= MAX_VMM_STAT_ELEMS) {
 		printf("Cannot accommodate vmm stat type \"%s\"!\n", vst->desc);
 		return;
@@ -82,27 +85,37 @@ vmm_stat_register(void *arg)
 }
 
 int
-vmm_stat_copy(struct vm *vm, int vcpu, int *num_stats, uint64_t *buf)
+vmm_stat_copy(struct vcpu *vcpu, int index, int count, int *num_stats,
+    uint64_t *buf)
 {
 	struct vmm_stat_type *vst;
 	uint64_t *stats;
-	int i;
+	int i, tocopy;
 
-	if (vcpu < 0 || vcpu >= vm_get_maxcpus(vm))
+	if (index < 0 || count < 0)
 		return (EINVAL);
+
+	if (index > vst_num_elems)
+		return (ENOENT);
+
+	if (index == vst_num_elems) {
+		*num_stats = 0;
+		return (0);
+	}
+
+	tocopy = min(vst_num_elems - index, count);
 
 	/* Let stats functions update their counters */
 	for (i = 0; i < vst_num_types; i++) {
 		vst = vsttab[i];
 		if (vst->func != NULL)
-			(*vst->func)(vm, vcpu, vst);
+			(*vst->func)(vcpu, vst);
 	}
 
 	/* Copy over the stats */
-	stats = vcpu_stats(vm, vcpu);
-	for (i = 0; i < vst_num_elems; i++)
-		buf[i] = stats[i];
-	*num_stats = vst_num_elems;
+	stats = vcpu_stats(vcpu);
+	memcpy(buf, stats + index, tocopy * sizeof(stats[0]));
+	*num_stats = tocopy;
 	return (0);
 }
 

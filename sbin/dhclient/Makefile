@@ -1,5 +1,5 @@
 # $OpenBSD: Makefile,v 1.9 2004/05/04 12:52:05 henning Exp $
-# $FreeBSD: cdf93b8b814538b6badce0f94535d30c2ab822c7 $
+# $FreeBSD: ec1f71300abdb5513af3576bbcb555ef19169462 $
 #
 # Copyright (c) 1996, 1997 The Internet Software Consortium.
 # All rights reserved.
@@ -34,7 +34,7 @@
 .include <src.opts.mk>
 
 CONFS=	dhclient.conf
-PACKAGE=runtime
+PACKAGE=dhclient
 SRCS=	dhclient.c clparse.c alloc.c dispatch.c hash.c bpf.c options.c \
 	tree.c conflex.c errwarn.c inet.c packet.c convert.c tables.c \
 	parse.c privsep.c

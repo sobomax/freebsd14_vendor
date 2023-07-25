@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3386b5b7459d33f49fd13bbed71b2067b69c86d $");
+__FBSDID("$FreeBSD: 7aff3874ad1baaa7e3074007bdbc126e60224bda $");
 
 #ifdef __amd64__
 #define	DEV_APIC
@@ -108,6 +108,10 @@ static SYSCTL_NODE(_hw, OID_AUTO, mca, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
 static int mca_enabled = 1;
 SYSCTL_INT(_hw_mca, OID_AUTO, enabled, CTLFLAG_RDTUN, &mca_enabled, 0,
     "Administrative toggle for machine check support");
+
+static int log_corrected = 1;
+SYSCTL_INT(_hw_mca, OID_AUTO, log_corrected, CTLFLAG_RWTUN, &log_corrected, 0,
+    "Log corrected errors to the console");
 
 static int amd10h_L1TP = 1;
 SYSCTL_INT(_hw_mca, OID_AUTO, amd10h_L1TP, CTLFLAG_RDTUN, &amd10h_L1TP, 0,
@@ -426,7 +430,12 @@ mca_log(const struct mca_record *rec)
 	uint16_t mca_error;
 
 	if (mca_mute(rec))
-	    	return;
+		return;
+
+	if (!log_corrected && (rec->mr_status & MC_STATUS_UC) == 0 &&
+	    (!tes_supported(rec->mr_mcg_cap) ||
+	    ((rec->mr_status & MC_STATUS_TES_STATUS) >> 53) != 0x2))
+		return;
 
 	printf("MCA: Bank %d, Status 0x%016llx\n", rec->mr_bank,
 	    (long long)rec->mr_status);
@@ -802,7 +811,7 @@ update_threshold(enum scan_mode mode, int valid, int last_intr, int count,
 	if (mode != POLLED)
 		return (limit);
 
-	/* If a CMCI occured recently, do nothing for now. */
+	/* If a CMCI occurred recently, do nothing for now. */
 	if (delta < cmc_throttle)
 		return (limit);
 

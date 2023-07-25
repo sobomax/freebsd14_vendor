@@ -38,7 +38,7 @@
  *	from: Utah Hdr: reg.h 1.1 90/07/09
  *	@(#)reg.h	8.2 (Berkeley) 1/11/94
  *	JNPR: reg.h,v 1.6 2006/09/15 12:52:34 katta
- * $FreeBSD: a1f5aa4da23cde19f618503e64b257469060b75f $
+ * $FreeBSD: 440b791bffc741217fa9c098105f80d2ee603d0b $
  */
 
 #ifndef _MACHINE_REG_H_
@@ -85,23 +85,7 @@ struct dbreg32 {
 #define __HAVE_REG32
 #endif
 
-#ifdef _KERNEL
-int	fill_fpregs(struct thread *, struct fpreg *);
-int	fill_regs(struct thread *, struct reg *);
-int	set_fpregs(struct thread *, struct fpreg *);
-int	set_regs(struct thread *, struct reg *);
-int	fill_dbregs(struct thread *, struct dbreg *);
-int	set_dbregs(struct thread *, struct dbreg *);
-#endif
-
 #ifdef COMPAT_FREEBSD32
-struct image_params;
-
-int	fill_regs32(struct thread *, struct reg32 *);
-int	set_regs32(struct thread *, struct reg32 *);
-int	fill_fpregs32(struct thread *, struct fpreg32 *);
-int	set_fpregs32(struct thread *, struct fpreg32 *);
-
 #define	fill_dbregs32(td, reg)	0
 #define	set_dbregs32(td, reg)	0
 #endif

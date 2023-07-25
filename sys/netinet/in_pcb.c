@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cff8e398eec0390150d7a60386fc0ac970bddd32 $");
+__FBSDID("$FreeBSD: d9247f50d32bb500c17a6228f540916095f3247e $");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"
@@ -872,7 +872,7 @@ inp_so_options(const struct inpcb *inp)
  * Check if a new BINDMULTI socket is allowed to be created.
  *
  * ni points to the new inp.
- * oi points to the exisitng inp.
+ * oi points to the existing inp.
  *
  * This checks whether the existing inp also has BINDMULTI and
  * whether the credentials match.

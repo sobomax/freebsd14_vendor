@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ef221ed239317570a2ea00258904fddc40626da $
+ * $FreeBSD: 8834c91362ad398f1e605e9a5b51be76bcc2a4b4 $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -80,7 +80,7 @@ struct pv_addr {
 struct pmap {
 	struct mtx		pm_mtx;
 	struct pmap_statistics	pm_stats;	/* pmap statictics */
-	pd_entry_t		*pm_l1;
+	pd_entry_t		*pm_top;	/* top-level page table page */
 	u_long			pm_satp;	/* value for SATP register */
 	cpuset_t		pm_active;	/* active on cpus */
 	TAILQ_HEAD(,pv_chunk)	pm_pvchunk;	/* list of mappings in pmap */
@@ -136,6 +136,18 @@ extern vm_offset_t virtual_end;
  */
 #define	L1_MAPPABLE_P(va, pa, size)					\
 	((((va) | (pa)) & L1_OFFSET) == 0 && (size) >= L1_SIZE)
+
+enum pmap_mode {
+	PMAP_MODE_SV39,
+	PMAP_MODE_SV48,
+};
+
+extern enum pmap_mode pmap_mode;
+
+/* Check if an address resides in a mappable region. */
+#define	VIRT_IS_VALID(va)						\
+	((va) < (pmap_mode == PMAP_MODE_SV39 ? VM_MAX_USER_ADDRESS_SV39 : \
+	    VM_MAX_USER_ADDRESS_SV48) || (va) >= VM_MIN_KERNEL_ADDRESS)
 
 struct thread;
 

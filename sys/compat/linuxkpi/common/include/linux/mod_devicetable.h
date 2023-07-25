@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5609c6f775e96668631037227d57525a04b5c977 $
+ * $FreeBSD: 804fbb1df1989d12d940767306fb27ceac846d32 $
  */
 
 #ifndef __LINUXKPI_LINUX_MOD_DEVICETABLE_H__
@@ -55,7 +55,8 @@ enum dmi_field {
 };
 
 struct dmi_strmatch {
-	unsigned char slot;
+	unsigned char slot : 7;
+	unsigned char exact_match : 1;
 	char substr[79];
 };
 
@@ -67,6 +68,9 @@ struct dmi_system_id {
 };
 
 #define DMI_MATCH(a, b) { .slot = a, .substr = b }
-#define DMI_EXACT_MATCH(a, b)   { .slot = a, .substr = b, }
+#define DMI_EXACT_MATCH(a, b)   { .slot = a, .substr = b, .exact_match = 1 }
+
+#define	I2C_NAME_SIZE		20
+#define	I2C_MODULE_PREFIX	"i2c:"
 
 #endif	/* __LINUXKPI_LINUX_MOD_DEVICETABLE_H__ */

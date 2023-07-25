@@ -1,5 +1,5 @@
 #
-# $FreeBSD: cd61474cb6162a85ac816b763b67ab7813d41f75 $
+# $FreeBSD: 4873051f6a25f55148661d735dcd0b52143e5ef0 $
 #
 # Copyright (c) 2011 Rick van der Zwet <info@rickvanderzwet.nl>
 #
@@ -32,6 +32,6 @@ S=     ${SRCTOP}/sys
 KMOD=	if_mos
 SRCS=	opt_bus.h opt_usb.h device_if.h bus_if.h usb_if.h usbdevs.h \
 	miibus_if.h opt_inet.h \
-	if_mos.c
+	if_mos.c opt_platform.h
 
 .include <bsd.kmod.mk>

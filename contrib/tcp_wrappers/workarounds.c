@@ -6,7 +6,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 1ad2c6471ef328fc90bc306f839fa768488fee46 $
+  * $FreeBSD: 38e653993f40c8a0738f37a6e2213e4f78e1c763 $
   */
 
 #ifndef lint
@@ -23,8 +23,9 @@ char    sccsid[] = "@(#) workarounds.c 1.6 96/03/19 16:22:25";
 #include <stdio.h>
 #include <syslog.h>
 #include <string.h>
-
-extern int errno;
+#ifdef USE_GETDOMAIN
+#include <unistd.h>
+#endif
 
 #include "tcpd.h"
 

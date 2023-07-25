@@ -30,13 +30,13 @@
  *
  *	from: src/sys/i386/include/md_var.h,v 1.35 2000/02/20 20:51:23 bsd
  *	JNPR: md_var.h,v 1.4 2006/10/16 12:30:34 katta
- * $FreeBSD: 3d8981456654056d9376d2e63b002f658771a111 $
+ * $FreeBSD: 138047a13b47b1547e5ccebd5cec547d187537c9 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
 #define	_MACHINE_MD_VAR_H_
 
-#include <machine/reg.h>
+#include <machine/regnum.h>
 
 /*
  * Miscellaneous machine-dependent declarations.
@@ -77,9 +77,6 @@ void	mips_proc0_init(void);
 void	mips_postboot_fixup(void);
 void	cpu_identify(void);
 void	cpu_switch_set_userlocal(void) __asm(__STRING(cpu_switch_set_userlocal));
-
-extern int busdma_swi_pending;
-void	busdma_swi(void);
 
 struct	dumperinfo;
 struct	minidumpstate;

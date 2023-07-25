@@ -28,7 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8757db879a5cdc1ae0273a9626dc9a2c6ad5cf9c $
+ * $FreeBSD: 8522231a28634712b21f849c3a840a15c65a1b92 $
  */
 
 /*
@@ -348,6 +348,8 @@
 #define	PRIV_NET_VXLAN		420	/* Administer vxlan. */
 #define	PRIV_NET_SETLANPCP	421	/* Set LAN priority. */
 #define	PRIV_NET_SETVLANPCP	PRIV_NET_SETLANPCP /* Alias Set VLAN priority */
+#define	PRIV_NET_ME		423	/* Administer ME interface. */
+#define	PRIV_NET_WG		424	/* Administer WireGuard interface. */
 
 /*
  * 802.11-related privileges.

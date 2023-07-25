@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b1f2e7e6e3f1ef69fea632c680ceb5bd2c1a09f $");
+__FBSDID("$FreeBSD: bf3a1c4f80c65a0413e89e3ca5e02f65d59decb0 $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting
@@ -78,7 +78,7 @@ int drm_sysctl_init(struct drm_device *dev)
 
 	/* Find the next free slot under hw.dri */
 	i = 0;
-	SLIST_FOREACH(oid, SYSCTL_CHILDREN(drioid), oid_link) {
+	SYSCTL_FOREACH(oid, SYSCTL_CHILDREN(drioid)) {
 		if (i <= oid->oid_arg2)
 			i = oid->oid_arg2 + 1;
 	}

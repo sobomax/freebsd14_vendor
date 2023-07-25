@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c23f6c35e136e802320070bc2b7eedfe5693d5f1 $");
+__FBSDID("$FreeBSD: abb9ebc7281b93cb2252182787b3e12ae510b09a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -3414,7 +3414,7 @@ buf_daemon_shutdown(void *arg __unused, int howto __unused)
 }
 
 static void
-buf_daemon()
+buf_daemon(void)
 {
 	struct bufdomain *bd;
 	int speedupreq;

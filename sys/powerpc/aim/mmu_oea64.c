@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1abf65ab35b304253ab2bcbb60af14ea90233493 $");
+__FBSDID("$FreeBSD: 156463148f647a8bbe47b6293e38f03f5ecec692 $");
 
 /*
  * Manages physical address maps.
@@ -1951,7 +1951,7 @@ moea64_uma_page_alloc(uma_zone_t zone, vm_size_t bytes, int domain,
 extern int elf32_nxstack;
 
 void
-moea64_init()
+moea64_init(void)
 {
 
 	CTR0(KTR_PMAP, "moea64_init");
@@ -2456,7 +2456,7 @@ moea64_get_unique_vsid(void) {
 		u_int	n;
 
 		/*
-		 * Create a new value by mutiplying by a prime and adding in
+		 * Create a new value by multiplying by a prime and adding in
 		 * entropy from the timebase register.  This is to make the
 		 * VSID more random so that the PT hash function collides
 		 * less often.  (Note that the prime casues gcc to do shifts
@@ -3261,7 +3261,7 @@ moea64_dumpsys_map(vm_paddr_t pa, size_t sz, void **va)
 extern struct dump_pa dump_map[PHYS_AVAIL_SZ + 1];
 
 void
-moea64_scan_init()
+moea64_scan_init(void)
 {
 	struct pvo_entry *pvo;
 	vm_offset_t va;

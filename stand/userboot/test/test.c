@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: baf1b6243c1fe929ae12ba7d9c17726437fd971d $
+ * $FreeBSD: 4ad18176ba6e8475f9211f15c95e144a8f9ebc83 $
  */
 
 #include <sys/types.h>
@@ -254,6 +254,11 @@ test_diskread(void *arg, int unit, uint64_t offset, void *dst, size_t size,
 	if (unit > disk_index || disk_fd[unit] == -1)
 		return (EIO);
 	n = pread(disk_fd[unit], dst, size, offset);
+	if (n == 0) {
+		printf("%s: end of disk (%ju)\n", __func__, (intmax_t)offset);
+		return (EIO);
+	}
+
 	if (n < 0)
 		return (errno);
 	*resid_return = size - n;

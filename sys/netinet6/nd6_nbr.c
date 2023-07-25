@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a56964f8eb3c767fc5091308bbaaeae5d63289a $");
+__FBSDID("$FreeBSD: d5895ef5d02dda6a7dfcb8cce22dcd8be21d1257 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -785,11 +785,11 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 			goto freeit;
 
 		flush_holdchain = true;
-		EVENTHANDLER_INVOKE(lle_event, ln, LLENTRY_RESOLVED);
 		if (is_solicited)
 			nd6_llinfo_setstate(ln, ND6_LLINFO_REACHABLE);
 		else
 			nd6_llinfo_setstate(ln, ND6_LLINFO_STALE);
+		EVENTHANDLER_INVOKE(lle_event, ln, LLENTRY_RESOLVED);
 		if ((ln->ln_router = is_router) != 0) {
 			/*
 			 * This means a router's state has changed from

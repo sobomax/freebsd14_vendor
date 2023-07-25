@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aaba91c6d5e710b9e0566938fb503716090575d5 $");
+__FBSDID("$FreeBSD: 445912c965ba9e35952d0108489e970748ea624d $");
 
 #include "opt_ipsec.h"
 #include "opt_inet6.h"
@@ -791,11 +791,11 @@ rip6_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 		return (EADDRNOTAVAIL);
 	}
 	NET_EPOCH_EXIT(et);
-	INP_INFO_WLOCK(&V_ripcbinfo);
 	INP_WLOCK(inp);
+	INP_INFO_WLOCK(&V_ripcbinfo);
 	inp->in6p_laddr = addr->sin6_addr;
-	INP_WUNLOCK(inp);
 	INP_INFO_WUNLOCK(&V_ripcbinfo);
+	INP_WUNLOCK(inp);
 	return (0);
 }
 

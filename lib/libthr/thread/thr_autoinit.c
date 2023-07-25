@@ -34,14 +34,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d741f3cf1af73828d78065559751b6a9149198a3 $");
+__FBSDID("$FreeBSD: a38ab6ebc76e62e807e4466f4a8d070cdbfc449b $");
 
 #include <pthread.h>
 
 #include "thr_private.h"
 
 /*
- * This module uses GCC extentions to initialize the
+ * This module uses GCC extensions to initialize the
  * threads package at program start-up time.
  */
 

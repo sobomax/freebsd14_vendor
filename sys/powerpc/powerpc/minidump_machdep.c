@@ -22,7 +22,7 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * $FreeBSD: 396c6487823ed98effd6b4250846d621304ad929 $
+ * $FreeBSD: d713e11f2ab2a85041867d1d10751685cd2939f7 $
  */
 
 #include <sys/types.h>
@@ -89,7 +89,7 @@ blk_flush(struct dumperinfo *di)
 	if (fragsz == 0)
 		return (0);
 
-	error = dump_append(di, crashdumpmap, 0, fragsz);
+	error = dump_append(di, crashdumpmap, fragsz);
 	DBG(dumptotal += fragsz;)
 	fragsz = 0;
 	return (error);
@@ -134,7 +134,7 @@ blk_write(struct dumperinfo *di, char *ptr, vm_paddr_t pa, size_t sz)
 		dumpsys_pb_progress(len);
 
 		if (ptr) {
-			error = dump_append(di, ptr, 0, len);
+			error = dump_append(di, ptr, len);
 			if (error)
 				return (error);
 			DBG(dumptotal += len;)

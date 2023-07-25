@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ecdd1077215588a048b305ddc7d5128d3b89cd2c $");
+__FBSDID("$FreeBSD: aa1952eb9c82b8cccf6ec9db94cffd6897c597a4 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -76,7 +76,7 @@ __FBSDID("$FreeBSD: ecdd1077215588a048b305ddc7d5128d3b89cd2c $");
 #define	LOCKED_PREFIX		"*LOCKED*"
 #define	LOCKED_PREFIX_LEN	(sizeof(LOCKED_PREFIX) - 1)
 
-static void makesalt(char []);
+static void makesalt(char [SALTSIZE + 1]);
 
 static char password_hash[] =		PASSWORD_HASH;
 

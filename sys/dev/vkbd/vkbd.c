@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd.c,v 1.20 2004/11/15 23:53:30 max Exp $
- * $FreeBSD: fdd244ec252578e0ecc2bcf8ee98ff6158c4e954 $
+ * $FreeBSD: 27cf4549f3db5712184ec4d4ab1aedd7abda9714 $
  */
 
 #include "opt_kbd.h"
@@ -1207,6 +1207,7 @@ vkbd_ioctl(keyboard_t *kbd, u_long cmd, caddr_t arg)
 	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
 	case PIO_KEYMAPENT:	/* set keyboard translation table entry */
 	case PIO_DEADKEYMAP:	/* set accent key translation table */
+	case OPIO_DEADKEYMAP:	/* set accent key translation table (compat) */
 		state->ks_accents = 0;
 		/* FALLTHROUGH */
 

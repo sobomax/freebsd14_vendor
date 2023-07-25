@@ -1,4 +1,4 @@
-# $FreeBSD: 888e240de43e588fea4fe1b5e11ec2123935fe65 $
+# $FreeBSD: bcb46ae2fc5c468861840a7f6fc79f7cd4f46c0d $
 
 .include <src.opts.mk>
 
@@ -26,6 +26,10 @@ CFLAGS+=	-DHAVE_VCS_VERSION_INC
 CFLAGS+=	-DNDEBUG
 .endif
 
+# Note that using TARGET_ARCH here is essential for a functional native-xtools
+# build!  For native-xtools, we're building binaries that will work on the
+# *host* machine (MACHINE_ARCH), but they should default to producing binaries
+# for the *target* machine (TARGET_ARCH).
 TARGET_ARCH?=	${MACHINE_ARCH}
 BUILD_ARCH?=	${MACHINE_ARCH}
 
@@ -40,7 +44,7 @@ TARGET_ABI=	-gnueabi
 TARGET_ABI=
 .endif
 VENDOR=		unknown
-OS_VERSION=	freebsd13.1
+OS_VERSION=	freebsd13.2
 
 LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
 LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}

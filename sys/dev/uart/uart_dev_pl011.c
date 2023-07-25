@@ -30,7 +30,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 822283369075a59afff4d975a6c96be3adb960fd $");
+__FBSDID("$FreeBSD: ae1536bc43004a954b50290e5e2deab0a8adec8f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -341,8 +341,8 @@ UART_FDT_CLASS_AND_DEVICE(fdt_compat_data);
 #ifdef DEV_ACPI
 static struct acpi_uart_compat_data acpi_compat_data[] = {
 	{"ARMH0011", &uart_pl011_class, ACPI_DBG2_ARM_PL011, 2, 0, 0, UART_F_IGNORE_SPCR_REGSHFT, "uart pl011"},
-	{"ARMH0011", &uart_pl011_class, ACPI_DBG2_ARM_SBSA_GENERIC, 2, 0, 0, UART_F_IGNORE_SPCR_REGSHFT, "uart pl011"},
-	{"ARMH0011", &uart_pl011_class, ACPI_DBG2_ARM_SBSA_32BIT, 2, 0, 0, UART_F_IGNORE_SPCR_REGSHFT, "uart pl011"},
+	{"ARMHB000", &uart_pl011_class, ACPI_DBG2_ARM_SBSA_GENERIC, 2, 0, 0, UART_F_IGNORE_SPCR_REGSHFT, "uart pl011"},
+	{"ARMHB000", &uart_pl011_class, ACPI_DBG2_ARM_SBSA_32BIT, 2, 0, 0, UART_F_IGNORE_SPCR_REGSHFT, "uart pl011"},
 	{NULL, NULL, 0, 0, 0, 0, 0, NULL},
 };
 UART_ACPI_CLASS_AND_DEVICE(acpi_compat_data);

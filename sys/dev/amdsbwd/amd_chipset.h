@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f379e54ffe6259e2ae7eb7f791d81543e82fc3c3 $
+ * $FreeBSD: 82bb5554d833f64ad59f0e795a5bf2244beb33f1 $
  */
 
 /*
@@ -53,7 +53,7 @@
  *     "KERNCZ" or "CZ")
  *
  * The register definitions are compatible within the classes and may be
- * incompatible accross them.
+ * incompatible across them.
  */
 
 /*

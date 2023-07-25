@@ -1,4 +1,4 @@
-# $FreeBSD: 1d916f344b778bb20f1907cf6d34f317ba693b63 $
+# $FreeBSD: 7179f1bff1a46b3b1ada2184804ff2229d48809b $
 #
 # Doing a make install builds /usr/share/examples
 
@@ -320,6 +320,8 @@ SE_DIRS+=	sound
 SE_SOUND= \
 	basic.c \
 	ossinit.h \
+	ossmidi.h \
+	midi.c \
 	README
 
 SE_DIRS+=	sunrpc

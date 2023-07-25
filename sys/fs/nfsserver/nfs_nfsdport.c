@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d63a788177b0569fdf689dc14ee4604b043e3bd8 $");
+__FBSDID("$FreeBSD: 407987aa767f738f47e6eba25a8c415d776e1cbe $");
 
 #include <sys/capsicum.h>
 #include <sys/extattr.h>
@@ -101,6 +101,7 @@ struct callout nfsd_callout;
 
 static int nfssvc_srvcall(struct thread *, struct nfssvc_args *,
     struct ucred *);
+static void nfsvno_updateds(struct vnode *, struct ucred *, struct thread *);
 
 int nfsrv_enable_crossmntpt = 1;
 static int nfs_commit_blks;
@@ -1259,8 +1260,8 @@ nfsvno_createsub(struct nfsrv_descript *nd, struct nameidata *ndp,
 				tempsize = nvap->na_size;
 				NFSVNO_ATTRINIT(nvap);
 				nvap->na_size = tempsize;
-				error = VOP_SETATTR(*vpp,
-				    &nvap->na_vattr, nd->nd_cred);
+				error = nfsvno_setattr(*vpp, nvap,
+				    nd->nd_cred, p, exp);
 			}
 		}
 		if (error)
@@ -1929,8 +1930,8 @@ nfsvno_open(struct nfsrv_descript *nd, struct nameidata *ndp,
 					tempsize = nvap->na_size;
 					NFSVNO_ATTRINIT(nvap);
 					nvap->na_size = tempsize;
-					nd->nd_repstat = VOP_SETATTR(vp,
-					    &nvap->na_vattr, cred);
+					nd->nd_repstat = nfsvno_setattr(vp,
+					    nvap, cred, p, exp);
 				}
 			} else if (vp->v_type == VREG) {
 				nd->nd_repstat = nfsrv_opencheck(clientid,
@@ -2724,15 +2725,22 @@ again:
 				 * For NFSv4 the behavior is controlled by
 				 * RDATTRERROR: we either ignore the error or
 				 * fail the request.
+				 * The exception is EOPNOTSUPP, which can be
+				 * returned by nfsvno_getfh() for certain
+				 * file systems, such as devfs.  This indicates
+				 * that the file system cannot be exported,
+				 * so just skip over the entry.
 				 * Note that RDATTRERROR is never set for NFSv3.
 				 */
 				if (r != 0) {
 					if (!NFSISSET_ATTRBIT(&attrbits,
-					    NFSATTRBIT_RDATTRERROR)) {
+					    NFSATTRBIT_RDATTRERROR) ||
+					    r == EOPNOTSUPP) {
 						vput(nvp);
 						if (needs_unbusy != 0)
 							vfs_unbusy(new_mp);
-						if ((nd->nd_flag & ND_NFSV3))
+						if ((nd->nd_flag & ND_NFSV3) ||
+						    r == EOPNOTSUPP)
 							goto invalid;
 						nd->nd_repstat = r;
 						break;
@@ -4053,16 +4061,11 @@ nfsvno_testexp(struct nfsrv_descript *nd, struct nfsexstuff *exp)
 {
 	int i;
 
-	/*
-	 * Allow NFSv3 Fsinfo per RFC2623.
-	 */
-	if (((nd->nd_flag & ND_NFSV4) != 0 ||
-	     nd->nd_procnum != NFSPROC_FSINFO) &&
-	    ((NFSVNO_EXTLS(exp) && (nd->nd_flag & ND_TLS) == 0) ||
-	     (NFSVNO_EXTLSCERT(exp) &&
-	      (nd->nd_flag & ND_TLSCERT) == 0) ||
-	     (NFSVNO_EXTLSCERTUSER(exp) &&
-	      (nd->nd_flag & ND_TLSCERTUSER) == 0))) {
+	if ((NFSVNO_EXTLS(exp) && (nd->nd_flag & ND_TLS) == 0) ||
+	    (NFSVNO_EXTLSCERT(exp) &&
+	     (nd->nd_flag & ND_TLSCERT) == 0) ||
+	    (NFSVNO_EXTLSCERTUSER(exp) &&
+	     (nd->nd_flag & ND_TLSCERTUSER) == 0)) {
 		if ((nd->nd_flag & ND_NFSV4) != 0)
 			return (NFSERR_WRONGSEC);
 #ifdef notnow
@@ -4075,6 +4078,13 @@ nfsvno_testexp(struct nfsrv_descript *nd, struct nfsexstuff *exp)
 		else
 			return (NFSERR_AUTHERR | AUTH_TOOWEAK);
 	}
+
+	/*
+	 * RFC2623 suggests that the NFSv3 Fsinfo RPC be allowed to use
+	 * AUTH_NONE or AUTH_SYS for file systems requiring RPCSEC_GSS.
+	 */
+	if ((nd->nd_flag & ND_NFSV3) != 0 && nd->nd_procnum == NFSPROC_FSINFO)
+		return (0);
 
 	/*
 	 * This seems odd, but allow the case where the security flavor
@@ -5233,7 +5243,7 @@ nfsrv_readdsrpc(fhandle_t *fhp, off_t off, int len, struct ucred *cred,
 	st.other[2] = 0x55555555;
 	st.seqid = 0xffffffff;
 	nfscl_reqstart(nd, NFSPROC_READDS, nmp, (u_int8_t *)fhp, sizeof(*fhp),
-	    NULL, NULL, 0, 0);
+	    NULL, NULL, 0, 0, cred);
 	nfsm_stateidtom(nd, &st, NFSSTATEID_PUTSTATEID);
 	NFSM_BUILD(tl, uint32_t *, NFSX_UNSIGNED * 3);
 	txdr_hyper(off, tl);
@@ -5341,7 +5351,7 @@ nfsrv_writedsdorpc(struct nfsmount *nmp, fhandle_t *fhp, off_t off, int len,
 
 	nd = malloc(sizeof(*nd), M_TEMP, M_WAITOK | M_ZERO);
 	nfscl_reqstart(nd, NFSPROC_WRITE, nmp, (u_int8_t *)fhp,
-	    sizeof(fhandle_t), NULL, NULL, 0, 0);
+	    sizeof(fhandle_t), NULL, NULL, 0, 0, cred);
 
 	/*
 	 * Use a stateid where other is an alternating 01010 pattern and
@@ -5563,7 +5573,7 @@ nfsrv_allocatedsdorpc(struct nfsmount *nmp, fhandle_t *fhp, off_t off,
 
 	nd = malloc(sizeof(*nd), M_TEMP, M_WAITOK | M_ZERO);
 	nfscl_reqstart(nd, NFSPROC_ALLOCATE, nmp, (u_int8_t *)fhp,
-	    sizeof(fhandle_t), NULL, NULL, 0, 0);
+	    sizeof(fhandle_t), NULL, NULL, 0, 0, cred);
 
 	/*
 	 * Use a stateid where other is an alternating 01010 pattern and
@@ -5717,7 +5727,7 @@ nfsrv_setattrdsdorpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 	st.other[2] = 0x55555555;
 	st.seqid = 0xffffffff;
 	nfscl_reqstart(nd, NFSPROC_SETATTR, nmp, (u_int8_t *)fhp, sizeof(*fhp),
-	    NULL, NULL, 0, 0);
+	    NULL, NULL, 0, 0, cred);
 	nfsm_stateidtom(nd, &st, NFSSTATEID_PUTSTATEID);
 	nfscl_fillsattr(nd, &nap->na_vattr, vp, NFSSATTR_FULL, 0);
 
@@ -5902,7 +5912,7 @@ nfsrv_setacldsdorpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 	st.other[2] = 0x55555555;
 	st.seqid = 0xffffffff;
 	nfscl_reqstart(nd, NFSPROC_SETACL, nmp, (u_int8_t *)fhp, sizeof(*fhp),
-	    NULL, NULL, 0, 0);
+	    NULL, NULL, 0, 0, cred);
 	nfsm_stateidtom(nd, &st, NFSSTATEID_PUTSTATEID);
 	NFSZERO_ATTRBIT(&attrbits);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_ACL);
@@ -6037,7 +6047,7 @@ nfsrv_getattrdsrpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 	NFSD_DEBUG(4, "in nfsrv_getattrdsrpc\n");
 	nd = malloc(sizeof(*nd), M_TEMP, M_WAITOK | M_ZERO);
 	nfscl_reqstart(nd, NFSPROC_GETATTR, nmp, (u_int8_t *)fhp,
-	    sizeof(fhandle_t), NULL, NULL, 0, 0);
+	    sizeof(fhandle_t), NULL, NULL, 0, 0, cred);
 	NFSZERO_ATTRBIT(&attrbits);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SIZE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_CHANGE);
@@ -6105,7 +6115,7 @@ nfsrv_seekdsrpc(fhandle_t *fhp, off_t *offp, int content, bool *eofp,
 	st.seqid = 0xffffffff;
 	nd = malloc(sizeof(*nd), M_TEMP, M_WAITOK | M_ZERO);
 	nfscl_reqstart(nd, NFSPROC_SEEKDS, nmp, (u_int8_t *)fhp,
-	    sizeof(fhandle_t), NULL, NULL, 0, 0);
+	    sizeof(fhandle_t), NULL, NULL, 0, 0, cred);
 	nfsm_stateidtom(nd, &st, NFSSTATEID_PUTSTATEID);
 	NFSM_BUILD(tl, uint32_t *, NFSX_HYPER + NFSX_UNSIGNED);
 	txdr_hyper(*offp, tl); tl += 2;
@@ -6566,12 +6576,55 @@ nfsvno_setxattr(struct vnode *vp, char *name, int len, struct mbuf *m,
 	if (error == 0) {
 		error = VOP_SETEXTATTR(vp, EXTATTR_NAMESPACE_USER, name, uiop,
 		    cred, p);
+		if (error == 0) {
+			if (vp->v_type == VREG && nfsrv_devidcnt != 0)
+				nfsvno_updateds(vp, cred, p);
+			error = VOP_FSYNC(vp, MNT_WAIT, p);
+		}
 		free(iv, M_TEMP);
 	}
 
 out:
 	NFSEXITCODE(error);
 	return (error);
+}
+
+/*
+ * For a pNFS server, the DS file's ctime and
+ * va_filerev (TimeMetadata and Change) needs to
+ * be updated.  This is a hack, but works by
+ * flipping the S_ISGID bit in va_mode and then
+ * flipping it back.
+ * It does result in two MDS->DS RPCs, but creating
+ * a custom RPC just to do this seems overkill, since
+ * Setxattr/Rmxattr will not be done that frequently.
+ * If it fails part way through, that is not too
+ * serious, since the DS file is never executed.
+ */
+static void
+nfsvno_updateds(struct vnode *vp, struct ucred *cred, NFSPROC_T *p)
+{
+	struct nfsvattr nva;
+	int ret;
+	u_short tmode;
+
+	ret = VOP_GETATTR(vp, &nva.na_vattr, cred);
+	if (ret == 0) {
+		tmode = nva.na_mode;
+		NFSVNO_ATTRINIT(&nva);
+		tmode ^= S_ISGID;
+		NFSVNO_SETATTRVAL(&nva, mode, tmode);
+		ret = nfsrv_proxyds(vp, 0, 0, cred, p,
+		    NFSPROC_SETATTR, NULL, NULL, NULL, &nva,
+		    NULL, NULL, 0, NULL);
+		if (ret == 0) {
+			tmode ^= S_ISGID;
+			NFSVNO_SETATTRVAL(&nva, mode, tmode);
+			ret = nfsrv_proxyds(vp, 0, 0, cred, p,
+			    NFSPROC_SETATTR, NULL, NULL, NULL,
+			    &nva, NULL, NULL, 0, NULL);
+		}
+	}
 }
 
 /*
@@ -6601,6 +6654,11 @@ nfsvno_rmxattr(struct nfsrv_descript *nd, struct vnode *vp, char *name,
 	if (error == EOPNOTSUPP)
 		error = VOP_SETEXTATTR(vp, EXTATTR_NAMESPACE_USER, name, NULL,
 		    cred, p);
+	if (error == 0) {
+		if (vp->v_type == VREG && nfsrv_devidcnt != 0)
+			nfsvno_updateds(vp, cred, p);
+		error = VOP_FSYNC(vp, MNT_WAIT, p);
+	}
 out:
 	NFSEXITCODE(error);
 	return (error);
@@ -6721,18 +6779,15 @@ nfsm_trimtrailing(struct nfsrv_descript *nd, struct mbuf *mb, char *bpos,
  * Check to see if a put file handle operation should test for
  * NFSERR_WRONGSEC, although NFSv3 actually returns NFSERR_AUTHERR.
  * When Open is the next operation, NFSERR_WRONGSEC cannot be
- * replied for the Open cases that use a component.  Thia can
+ * replied for the Open cases that use a component.  This can
  * be identified by the fact that the file handle's type is VDIR.
  */
 bool
 nfsrv_checkwrongsec(struct nfsrv_descript *nd, int nextop, enum vtype vtyp)
 {
 
-	if ((nd->nd_flag & ND_NFSV4) == 0) {
-		if (nd->nd_procnum == NFSPROC_FSINFO)
-			return (false);
+	if ((nd->nd_flag & ND_NFSV4) == 0)
 		return (true);
-	}
 
 	if ((nd->nd_flag & ND_LASTOP) != 0)
 		return (false);

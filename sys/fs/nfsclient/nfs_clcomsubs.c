@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8f593a8d3c9231bf880af8230c12923d664d9055 $");
+__FBSDID("$FreeBSD: 640d47fed93d2dd4376c2fda913b31ae3ce00d3a $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -51,7 +51,7 @@ NFSCLSTATEMUTEX;
 
 /*
  * copies a uio scatter/gather list to an mbuf chain.
- * NOTE: can ony handle iovcnt == 1
+ * NOTE: can only handle iovcnt == 1
  */
 void
 nfsm_uiombuf(struct nfsrv_descript *nd, struct uio *uiop, int siz)
@@ -155,7 +155,7 @@ nfsm_uiombuf(struct nfsrv_descript *nd, struct uio *uiop, int siz)
 /*
  * copies a uio scatter/gather list to an mbuf chain.
  * This version returns the mbuf list and does not use "nd".
- * NOTE: can ony handle iovcnt == 1
+ * NOTE: can only handle iovcnt == 1
  */
 struct mbuf *
 nfsm_uiombuflist(struct uio *uiop, int siz, u_int maxext)

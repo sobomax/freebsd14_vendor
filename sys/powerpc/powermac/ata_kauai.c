@@ -28,7 +28,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ffe8cea3a77fe39f84d7c01c72250823f0ec27d1 $");
+__FBSDID("$FreeBSD: 32b33f130a6b1b0988212065e44d7121664b5195 $");
 
 /*
  * Mac 'Kauai' PCI ATA controller
@@ -196,10 +196,8 @@ static const u_int udma_timing_shasta[] = {
 static int
 ata_kauai_probe(device_t dev)
 {
-	struct ata_kauai_softc *sc;
 	u_int32_t devid;
 	phandle_t node;
-	const char *compatstring = NULL;
 	int i, found;
 
 	found = 0;
@@ -215,18 +213,6 @@ ata_kauai_probe(device_t dev)
 		return (ENXIO);
 
 	node = ofw_bus_get_node(dev);
-	sc = device_get_softc(dev);
-	bzero(sc, sizeof(struct ata_kauai_softc));
-
-	compatstring = ofw_bus_get_compat(dev);
-	if (compatstring != NULL && strcmp(compatstring,"shasta-ata") == 0)
-		sc->shasta = 1;
-
-	/* Pre-K2 controllers apparently need this hack */
-	if (!sc->shasta &&
-	    (compatstring == NULL || strcmp(compatstring, "K2-UATA") != 0))
-		bus_set_resource(dev, SYS_RES_IRQ, 0, 39, 1);
-
         return (ata_probe(dev));
 }
 
@@ -247,12 +233,22 @@ ata_kauai_attach(device_t dev)
 {
 	struct ata_kauai_softc *sc = device_get_softc(dev);
 	struct ata_channel *ch;
+	const char *compatstring;
 	int i, rid;
 #if USE_DBDMA_IRQ
 	int dbdma_irq_rid = 1;
 	struct resource *dbdma_irq;
 	void *cookie;
 #endif
+
+	compatstring = ofw_bus_get_compat(dev);
+	if (compatstring != NULL && strcmp(compatstring,"shasta-ata") == 0)
+		sc->shasta = 1;
+
+	/* Pre-K2 controllers apparently need this hack */
+	if (!sc->shasta &&
+	    (compatstring == NULL || strcmp(compatstring, "K2-UATA") != 0))
+		bus_set_resource(dev, SYS_RES_IRQ, 0, 39, 1);
 
 	ch = &sc->sc_ch.sc_ch;
 

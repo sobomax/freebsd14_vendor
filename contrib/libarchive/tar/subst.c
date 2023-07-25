@@ -24,7 +24,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: 48370b2fceebd5b499d62619cf9c1720556ab398 $");
+__FBSDID("$FreeBSD: 7f3d1819984f162a6e59cc8451c45a7f301c84a3 $");
 
 #if defined(HAVE_REGEX_H) || defined(HAVE_PCREPOSIX_H)
 #include "bsdtar.h"
@@ -320,6 +320,7 @@ cleanup_substitution(struct bsdtar *bsdtar)
 	while ((rule = subst->first_rule) != NULL) {
 		subst->first_rule = rule->next;
 		free(rule->result);
+		regfree(&rule->re);
 		free(rule);
 	}
 	free(subst);

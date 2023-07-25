@@ -1,4 +1,4 @@
-# $FreeBSD: 679ace661496e3ef083f8bf6e4140a29a339ab18 $
+# $FreeBSD: fffd62ab0d3eecd7cb480221e0163a08d0093839 $
 
 .include <bsd.init.mk>
 
@@ -22,7 +22,6 @@ SRCS+=		sanitizer_common/sanitizer_libignore.cpp
 SRCS+=		sanitizer_common/sanitizer_linux.cpp
 SRCS+=		sanitizer_common/sanitizer_linux_libcdep.cpp
 SRCS+=		sanitizer_common/sanitizer_mutex.cpp
-SRCS+=		sanitizer_common/sanitizer_persistent_allocator.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_freebsd.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_linux.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_posix.cpp
@@ -36,5 +35,8 @@ SRCS+=		sanitizer_common/sanitizer_termination.cpp
 SRCS+=		sanitizer_common/sanitizer_thread_registry.cpp
 SRCS+=		sanitizer_common/sanitizer_tls_get_addr.cpp
 SRCS+=		sanitizer_common/sanitizer_type_traits.cpp
+
+FILESDIR=	${SANITIZER_SHAREDIR}
+FILES+=		cfi/cfi_ignorelist.txt
 
 .include <bsd.lib.mk>

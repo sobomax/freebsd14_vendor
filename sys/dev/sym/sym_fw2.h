@@ -57,7 +57,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 5858fa9ed542364af6ba06f8dfbede8832e7e1d4 $ */
+/* $FreeBSD: ed6f96c3d22134ab7fb230206fb89af6b342f480 $ */
 
 /*
  *  Scripts for SYMBIOS-Processor
@@ -1774,7 +1774,7 @@ static const struct SYM_FWB_SCR SYM_FWB_SCR = {
 	 *  While testing with bogus QUANTUM drives, the C1010 
 	 *  sometimes raised a spurious phase mismatch with 
 	 *  WSR and the CHMOV(1) triggered another PM.
-	 *  Waiting explicitely for the PHASE seemed to avoid 
+	 *  Waiting explicitly for the PHASE seemed to avoid 
 	 *  the nested phase mismatch. Btw, this didn't happen 
 	 *  using my IBM drives.
 	 */

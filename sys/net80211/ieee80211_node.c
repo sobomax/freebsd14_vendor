@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66629ab87af31406de02aef905463fd3e2f1e3c0 $");
+__FBSDID("$FreeBSD: bc8a240811def40c61bec0c9182145a262d68333 $");
 
 #include "opt_wlan.h"
 
@@ -149,7 +149,7 @@ ieee80211_node_vattach(struct ieee80211vap *vap)
 	/* NB: driver can override */
 	vap->iv_max_aid = IEEE80211_AID_DEF;
 
-	/* default station inactivity timer setings */
+	/* default station inactivity timer settings */
 	vap->iv_inact_init = IEEE80211_INACT_INIT;
 	vap->iv_inact_auth = IEEE80211_INACT_AUTH;
 	vap->iv_inact_run = IEEE80211_INACT_RUN;
@@ -1137,6 +1137,14 @@ ieee80211_ies_expand(struct ieee80211_ies *ies)
 	ie = ies->data;
 	ielen = ies->len;
 	while (ielen > 1) {
+		/* Make sure the given IE length fits into the total length. */
+		if ((2 + ie[1]) > ielen) {
+			printf("%s: malformed IEs! ies %p { data %p len %d }: "
+			    "ie %u len 2+%u > total len left %d\n",
+			    __func__, ies, ies->data, ies->len,
+			    ie[0], ie[1], ielen);
+			return;
+		}
 		switch (ie[0]) {
 		case IEEE80211_ELEMID_VENDOR:
 			if (iswpaoui(ie))

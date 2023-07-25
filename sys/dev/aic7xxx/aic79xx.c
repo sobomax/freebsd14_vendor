@@ -48,7 +48,7 @@
 #include "aicasm/aicasm_insformat.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db4f39d39e5ec95619f1e1c66e217aad5d686c57 $");
+__FBSDID("$FreeBSD: 30c383288d0f0fbbb228ee952613c91011feb621 $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 #include <dev/aic7xxx/aic79xx_inline.h>
 #include <dev/aic7xxx/aicasm/aicasm_insformat.h>
@@ -4845,7 +4845,7 @@ ahd_handle_msg_reject(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
 }
 
 /*
- * Process an ingnore wide residue message.
+ * Process an ignore wide residue message.
  */
 static void
 ahd_handle_ign_wide_residue(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
@@ -5492,7 +5492,7 @@ ahd_reset(struct ahd_softc *ahd, int reinit)
 		 * does not disable its parity logic prior to
 		 * the start of the reset.  This may cause a
 		 * parity error to be detected and thus a
-		 * spurious SERR or PERR assertion.  Disble
+		 * spurious SERR or PERR assertion.  Disable
 		 * PERR and SERR responses during the CHIPRST.
 		 */
 		mod_cmd = cmd & ~(PCIM_CMD_PERRESPEN|PCIM_CMD_SERRESPEN);

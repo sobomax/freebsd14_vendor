@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ee611a14b45e3dc035a4f540dd4f0b4fb76cb0d7 $
+ * $FreeBSD: cb465a02b794c3e58a7a52d24f078b2fc9ba766d $
  */
 
 /*-
@@ -5733,7 +5733,7 @@ setdefregdomain(int s)
 	/* Send changes to net80211. */
 	setregdomain_cb(s, &regdomain);
 
-	/* Cleanup (so it can be overriden by subsequent parameters). */
+	/* Cleanup (so it can be overridden by subsequent parameters). */
 	regdomain.regdomain = 0;
 	regdomain.country = CTRY_DEFAULT;
 	regdomain.isocc[0] = 0;

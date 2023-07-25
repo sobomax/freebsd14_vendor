@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 9e5f64a5373f677bf2227786bec6abee18d4ca7f $
+# $FreeBSD: e7a34e6c5f6e6125965830be6715d40410034d8c $
 #
 
 # PROVIDE: wpa_supplicant
@@ -30,7 +30,6 @@ is_ndis_interface()
 
 wpa_poststart() {
 	ifconfig ${ifn} down
-	sleep 2
 	ifconfig ${ifn} up
 }
 

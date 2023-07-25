@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 472f9845117dbafa42ca0b807c63eeedce82ddb7 $
+ * $FreeBSD: e28c02d6678e81274b388a6f324af2fca28319bf $
  */
 
 /* ATA register defines */
@@ -621,6 +621,7 @@ enum ahci_err_type {
 #define AHCI_Q_NOCCS		0x00400000
 #define AHCI_Q_NOAUX		0x00800000
 #define AHCI_Q_IOMMU_BUSWIDE	0x01000000
+#define AHCI_Q_SLOWDEV		0x02000000
 
 #define AHCI_Q_BIT_STRING	\
 	"\020"			\
@@ -648,7 +649,8 @@ enum ahci_err_type {
 	"\026MRVL_SR_DEL"	\
 	"\027NOCCS"		\
 	"\030NOAUX"		\
-	"\031IOMMU_BUSWIDE"
+	"\031IOMMU_BUSWIDE"	\
+	"\032SLOWDEV"
 
 int ahci_attach(device_t dev);
 int ahci_detach(device_t dev);

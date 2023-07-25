@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 96e3137498a941b75c533fd0671aff9ef255e623 $");
+__FBSDID("$FreeBSD: 5ed6493898b23c1adf1691ffe7e47fadfc222b3d $");
 
 #include <dev/mpt/mpt.h>
 
@@ -183,8 +183,8 @@ static const struct Error_Map IOC_SCSIStatus[] = {
 { SCSI_STATUS_CHECK_COND,		"Check Condition" },
 { SCSI_STATUS_COND_MET,			"Check Condition Met" },
 { SCSI_STATUS_BUSY,			"Busy" },
-{ SCSI_STATUS_INTERMED,			"Intermidiate Condition" },
-{ SCSI_STATUS_INTERMED_COND_MET,	"Intermidiate Condition Met" },
+{ SCSI_STATUS_INTERMED,			"Intermediate Condition" },
+{ SCSI_STATUS_INTERMED_COND_MET,	"Intermediate Condition Met" },
 { SCSI_STATUS_RESERV_CONFLICT,		"Reservation Conflict" },
 { SCSI_STATUS_CMD_TERMINATED,		"Command Terminated" },
 { SCSI_STATUS_QUEUE_FULL,		"Queue Full" },

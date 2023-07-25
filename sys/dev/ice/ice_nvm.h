@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: b53e7d9fe91f5d7f45b87884fdc4ae714823a64a $*/
+/*$FreeBSD: 95957c8dd3035053550c36ad177738d8abacd937 $*/
 
 #ifndef _ICE_NVM_H_
 #define _ICE_NVM_H_
@@ -155,5 +155,6 @@ enum ice_status ice_update_sr_checksum(struct ice_hw *hw);
 enum ice_status ice_validate_sr_checksum(struct ice_hw *hw, u16 *checksum);
 enum ice_status ice_nvm_validate_checksum(struct ice_hw *hw);
 enum ice_status ice_nvm_recalculate_checksum(struct ice_hw *hw);
-enum ice_status ice_nvm_write_activate(struct ice_hw *hw, u8 cmd_flags);
+enum ice_status
+ice_nvm_write_activate(struct ice_hw *hw, u16 cmd_flags, u8 *response_flags);
 #endif /* _ICE_NVM_H_ */

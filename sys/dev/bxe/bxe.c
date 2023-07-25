@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 920a5a9bcbcbde77ce60ff4f8b66980396c9a985 $");
+__FBSDID("$FreeBSD: 3b5fb46ed5990024b8ac4c27b0a06ec4317ff12b $");
 
 #define BXE_DRIVER_VERSION "1.78.91"
 
@@ -4163,7 +4163,7 @@ bxe_disable_close_the_gate(struct bxe_softc *sc)
 
 /*
  * Cleans the object that have internal lists without sending
- * ramrods. Should be run when interrutps are disabled.
+ * ramrods. Should be run when interrupts are disabled.
  */
 static void
 bxe_squeeze_objects(struct bxe_softc *sc)
@@ -4438,7 +4438,7 @@ bxe_ifmedia_status(struct ifnet *ifp, struct ifmediareq *ifmr)
     /* Bug 165447: the 'ifconfig' tool skips printing of the "status: ..."
        line if the IFM_AVALID flag is *NOT* set. So we need to set this
        flag unconditionally (irrespective of the admininistrative
-       'up/down' state of the interface) to ensure that that line is always
+       'up/down' state of the interface) to ensure that the line is always
        displayed.
     */
     ifmr->ifm_status = IFM_AVALID;
@@ -15952,7 +15952,7 @@ bxe_sysctl_pauseparam(SYSCTL_HANDLER_ARGS)
                 return (error);
         }
         if ((sc->bxe_pause_param < 0) ||  (sc->bxe_pause_param > 8)) {
-                BLOGW(sc, "invalid pause param (%d) - use intergers between 1 & 8\n",sc->bxe_pause_param);
+                BLOGW(sc, "invalid pause param (%d) - use integers between 1 & 8\n",sc->bxe_pause_param);
                 sc->bxe_pause_param = 8;
         }
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9608bbf57314da862a2c36d047526a3c868d5ae9 $");
+__FBSDID("$FreeBSD: dfe670f73aeec746246df2890cabb8981e68fc08 $");
 
 #include "opt_platform.h"
 
@@ -633,10 +633,8 @@ mx25l_task(void *arg)
 {
 	struct mx25l_softc *sc = (struct mx25l_softc*)arg;
 	struct bio *bp;
-	device_t dev;
 
 	for (;;) {
-		dev = sc->sc_dev;
 		M25PXX_LOCK(sc);
 		do {
 			if (sc->sc_taskstate == TSTATE_STOPPING) {

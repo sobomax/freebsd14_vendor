@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 585afbaf1a1b6edbd6e76feee4f56092e90a3730 $");
+__FBSDID("$FreeBSD: 8f0c6c36626a4455b19c8510f17d5709f2ab49a8 $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -2015,9 +2015,7 @@ atp_reap_sibling_zombies(void *arg)
 	u_int8_t n_touches_reaped = 0;
 	u_int8_t n_slides_reaped = 0;
 	u_int8_t n_horizontal_scrolls = 0;
-	u_int8_t n_vertical_scrolls = 0;
 	int horizontal_scroll = 0;
-	int vertical_scroll = 0;
 	atp_stroke_t *strokep;
 	atp_stroke_t *strokep_next;
 
@@ -2035,9 +2033,6 @@ atp_reap_sibling_zombies(void *arg)
 			if (atp_is_horizontal_scroll(strokep)) {
 				n_horizontal_scrolls++;
 				horizontal_scroll += strokep->cum_movement_x;
-			} else if (atp_is_vertical_scroll(strokep)) {
-				n_vertical_scrolls++;
-				vertical_scroll +=  strokep->cum_movement_y;
 			}
 		}
 

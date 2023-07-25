@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: 327a6a72874493d809a437ff3afc01afd4d04744 $
+ *	$FreeBSD: c30a67687c202db0d218f0f53913f702a0e75aba $
  */
 
 #include <gssapi/gssapi.h>
@@ -45,7 +45,7 @@ gss_compare_name(OM_uint32 *minor_status,
 	struct _gss_name *name2 = (struct _gss_name *) name2_arg;
 
 	/*
-	 * First check the implementation-independant name if both
+	 * First check the implementation-independent name if both
 	 * names have one. Otherwise, try to find common mechanism
 	 * names and compare them.
 	 */

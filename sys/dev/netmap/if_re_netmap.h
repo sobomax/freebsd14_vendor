@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: 0e56a731ac6aa7fce527c606c1c2e4a47240c2d1 $
+ * $FreeBSD: 7c356ab4bd223c55835ebd1da64bf76fd6bb6a1f $
  *
  * netmap support for: re
  *
@@ -176,7 +176,6 @@ re_netmap_rxsync(struct netmap_kring *kring, int flags)
 	struct netmap_ring *ring = kring->ring;
 	u_int nm_i;	/* index into the netmap ring */
 	u_int nic_i;	/* index into the NIC ring */
-	u_int n;
 	u_int const lim = kring->nkr_num_slots - 1;
 	u_int const head = kring->rhead;
 	int force_update = (flags & NAF_FORCE_READ) || kring->nr_kflags & NKR_PENDINTR;
@@ -236,7 +235,7 @@ re_netmap_rxsync(struct netmap_kring *kring, int flags)
 	nm_i = kring->nr_hwcur;
 	if (nm_i != head) {
 		nic_i = netmap_idx_k2n(kring, nm_i);
-		for (n = 0; nm_i != head; n++) {
+		while (nm_i != head) {
 			struct netmap_slot *slot = &ring->slot[nm_i];
 			uint64_t paddr;
 			void *addr = PNMB(na, slot, &paddr);

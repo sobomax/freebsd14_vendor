@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4d16b1c16a1347dfe58df3de7873055bb870450a $
+ * $FreeBSD: e34fdbdf18e81698dd9030908dbc1b700c511744 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d16b1c16a1347dfe58df3de7873055bb870450a $");
+__FBSDID("$FreeBSD: e34fdbdf18e81698dd9030908dbc1b700c511744 $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -46,17 +46,15 @@ kinfo_getproc(pid_t pid)
 	int mib[4];
 	size_t len;
 
-	len = 0;
+	len = sizeof(*kipp);
+	kipp = malloc(len);
+	if (kipp == NULL)
+		return (NULL);
+
 	mib[0] = CTL_KERN;
 	mib[1] = KERN_PROC;
 	mib[2] = KERN_PROC_PID;
 	mib[3] = pid;
-	if (sysctl(mib, nitems(mib), NULL, &len, NULL, 0) < 0)
-		return (NULL);
-
-	kipp = malloc(len);
-	if (kipp == NULL)
-		return (NULL);
 
 	if (sysctl(mib, nitems(mib), kipp, &len, NULL, 0) < 0)
 		goto bad;

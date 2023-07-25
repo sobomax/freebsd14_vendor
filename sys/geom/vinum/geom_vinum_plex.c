@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7b1e1e5a8bd44d422d568b15dbefbbf914f8565 $");
+__FBSDID("$FreeBSD: 3e5b2e3d51a317a23de736b3c71a9de8f2cd34dc $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -860,8 +860,7 @@ gv_init_complete(struct gv_plex *p, struct bio *bp)
 	 */
 	if (start >= s->drive_offset + s->size) {
 		/* Free the data we initialized. */
-		if (data != NULL)
-			g_free(data);
+		g_free(data);
 		g_topology_assert_not();
 		g_topology_lock();
 		g_access(cp, 0, -1, 0);

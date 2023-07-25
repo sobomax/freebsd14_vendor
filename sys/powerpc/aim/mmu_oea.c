@@ -86,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb0c905a53f310e797f2818982e288b77219f4c7 $");
+__FBSDID("$FreeBSD: e86df137c963fa1b17a2477ae43c1538a6e1bbfc $");
 
 /*
  * Manages physical address maps.
@@ -1739,7 +1739,7 @@ moea_pinit(pmap_t pmap)
 		u_int	hash, n;
 
 		/*
-		 * Create a new value by mutiplying by a prime and adding in
+		 * Create a new value by multiplying by a prime and adding in
 		 * entropy from the timebase register.  This is to make the
 		 * VSID more random so that the PT hash function collides
 		 * less often.  (Note that the prime casues gcc to do shifts

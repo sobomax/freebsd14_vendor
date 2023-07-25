@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c6059c9cba3671d4d02b61870dba74da0e388411 $
+ * $FreeBSD: 53bcc0ee4cab45849e4037ed8730736c315ac992 $
  *
  */
 
@@ -39,8 +39,8 @@
 
 #include "ena.h"
 
-void	ena_sysctl_add_nodes(struct ena_adapter *adapter);
-void	ena_sysctl_update_queue_node_nb(struct ena_adapter *adapter, int old,
+void ena_sysctl_add_nodes(struct ena_adapter *adapter);
+void ena_sysctl_update_queue_node_nb(struct ena_adapter *adapter, int old,
     int new);
 
 extern int ena_enable_9k_mbufs;

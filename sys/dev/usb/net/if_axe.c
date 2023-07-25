@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: faef9cd3cb90a02b505372a90e829005793a96b6 $");
+__FBSDID("$FreeBSD: eaab2798c24236759d68df0efd49624b14c31108 $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.
@@ -901,11 +901,11 @@ axe_attach_post_sub(struct usb_ether *ue)
 		adv_pause = MIIF_DOPAUSE;
 	else
 		adv_pause = 0;
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	error = mii_attach(ue->ue_dev, &ue->ue_miibus, ifp,
 	    uether_ifmedia_upd, ue->ue_methods->ue_mii_sts,
 	    BMSR_DEFCAPMASK, sc->sc_phyno, MII_OFFSET_ANY, adv_pause);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 
 	return (error);
 }

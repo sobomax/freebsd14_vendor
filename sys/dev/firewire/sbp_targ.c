@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f1b302528213243b270b0df0aeae616fe8b09db1 $
+ * $FreeBSD: ef94978cbdbe9864943a90129ba76de294550a00 $
  */
 
 #include <sys/param.h>
@@ -1667,7 +1667,7 @@ sbp_targ_mgm_handler(struct fw_xfer *xfer)
 		} else {
 			orbi->status.dead = 1;
 			orbi->status.status = STATUS_ACCESS_DENY;
-			printf("%s: reconnection faild id=%d\n",
+			printf("%s: reconnection failed id=%d\n",
 			    __func__, orb4->id);
 		}
 		break;

@@ -26,9 +26,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: e801a188c732f825aaf943e5054c8d2908743df9 $
+.\" $FreeBSD: 5c47e39eb3d963b26689ee20209f4d0e0a4ff7b3 $
 .\"
-.Dd April 30, 2020
+.Dd April 19, 2022
 .Dt DRIVER 9
 .Os
 .Sh NAME
@@ -67,9 +67,7 @@ static driver_t foo_driver = {
 	sizeof(struct foo_softc)
 };
 
-static devclass_t foo_devclass;
-
-DRIVER_MODULE(foo, bogo, foo_driver, foo_devclass, NULL, NULL);
+DRIVER_MODULE(foo, bogo, foo_driver, NULL, NULL);
 .Ed
 .Sh DESCRIPTION
 Each driver in the kernel is described by a

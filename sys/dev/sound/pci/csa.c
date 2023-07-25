@@ -54,7 +54,7 @@
 
 #include <dev/sound/pci/cs461x_dsp.h>
 
-SND_DECLARE_FILE("$FreeBSD: e3f611ed29499429740d2f71b6830c71f3f57aab $");
+SND_DECLARE_FILE("$FreeBSD: 61f4d750df2d3aaa3239132f225a1c517f32020f $");
 
 /* This is the pci device id. */
 #define CS4610_PCI_ID 0x60011013
@@ -468,7 +468,7 @@ csa_setup_intr(device_t bus, device_t child,
 
 	/*
 	 * Look at the function code of the child to determine
-	 * the appropriate hander for it.
+	 * the appropriate handler for it.
 	 */
 	func = device_get_ivars(child);
 	if (func == NULL || irq != resp->irq)
@@ -508,7 +508,7 @@ csa_teardown_intr(device_t bus, device_t child,
 
 	/*
 	 * Look at the function code of the child to determine
-	 * the appropriate hander for it.
+	 * the appropriate handler for it.
 	 */
 	func = device_get_ivars(child);
 	if (func == NULL || irq != resp->irq || cookie != scp)

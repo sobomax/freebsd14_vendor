@@ -1,6 +1,6 @@
-# $FreeBSD: 36c1e01e112abd6ebbcf16438cfe982e56f9e066 $
+# $FreeBSD: 7924df1a074dcbb6d673869b5a2d8c9a5a713c3a $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	mountver

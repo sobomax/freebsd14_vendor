@@ -1,0 +1,9 @@
+# bhyve ps2kbd keyboard layout file
+#   (gr_101_acc : Greek (101 keys))
+#
+# Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
+#
+# $FreeBSD: 1a4ef7657f1dcff6e8ee1960051ff3ec4232cd77 $
+
+'*',0xb7;	*  (0x2a)
+

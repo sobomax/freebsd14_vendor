@@ -1,4 +1,4 @@
-# $FreeBSD: 3fabb32db80f8e6129a7d023d3a550fd6e1aa7fc $
+# $FreeBSD: a957dfd59c780632ef03ef7b947177dbe2fa36a8 $
 #
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -84,7 +84,43 @@ exhaust_cleanup()
 	pft_cleanup
 }
 
+atf_test_case "nested_anchor" "cleanup"
+nested_anchor_head()
+{
+	atf_set descr 'Test setting and retrieving nested nat anchors'
+	atf_set require.user root
+}
+
+nested_anchor_body()
+{
+	pft_init
+
+	epair=$(vnet_mkepair)
+
+	vnet_mkjail nat ${epair}a
+
+	pft_set_rules nat \
+		"nat-anchor \"foo\""
+
+	echo "nat-anchor \"bar\"" | jexec nat pfctl -g -a foo -f -
+	echo "nat on ${epair}a from any to any -> (${epair}a)" | jexec nat pfctl -g -a "foo/bar" -f -
+
+	atf_check -s exit:0 -o inline:"nat-anchor \"foo\" all {
+  nat-anchor \"bar\" all {
+    nat on ${epair}a all -> (${epair}a) round-robin
+  }
+}
+" jexec nat pfctl -sn -a "*"
+
+}
+
+nested_anchor_cleanup()
+{
+	pft_cleanup
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case "exhaust"
+	atf_add_test_case "nested_anchor"
 }

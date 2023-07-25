@@ -1,4 +1,4 @@
-/* $FreeBSD: 8506890452f173458d679327f78560182cc8df58 $ */
+/* $FreeBSD: acc05d448de18b88dbc39bbabb3301c61d90da10 $ */
 /* Do not modify. This file is auto-generated from aesni-x86.pl. */
 #ifdef PIC
 .text
@@ -1946,7 +1946,7 @@ aesni_ocb_encrypt:
 	movdqu	%xmm6,-32(%edi,%esi,1)
 	movdqu	%xmm7,-16(%edi,%esi,1)
 	cmpl	%eax,%esi
-	jb	.L077grandloop
+	jbe	.L077grandloop
 .L076short:
 	addl	$96,%eax
 	subl	%esi,%eax
@@ -2341,7 +2341,7 @@ aesni_ocb_decrypt:
 	pxor	%xmm7,%xmm1
 	movdqu	%xmm7,-16(%edi,%esi,1)
 	cmpl	%eax,%esi
-	jb	.L087grandloop
+	jbe	.L087grandloop
 .L086short:
 	addl	$96,%eax
 	subl	%esi,%eax
@@ -5184,7 +5184,7 @@ aesni_ocb_encrypt:
 	movdqu	%xmm6,-32(%edi,%esi,1)
 	movdqu	%xmm7,-16(%edi,%esi,1)
 	cmpl	%eax,%esi
-	jb	.L077grandloop
+	jbe	.L077grandloop
 .L076short:
 	addl	$96,%eax
 	subl	%esi,%eax
@@ -5579,7 +5579,7 @@ aesni_ocb_decrypt:
 	pxor	%xmm7,%xmm1
 	movdqu	%xmm7,-16(%edi,%esi,1)
 	cmpl	%eax,%esi
-	jb	.L087grandloop
+	jbe	.L087grandloop
 .L086short:
 	addl	$96,%eax
 	subl	%esi,%eax

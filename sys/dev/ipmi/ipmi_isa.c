@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1123f2849905adebf0be03ca23496faa77a9104c $");
+__FBSDID("$FreeBSD: de21b59692e1fc49a56c054bddd477cf7cf50377 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -140,7 +140,7 @@ ipmi_hint_identify(device_t dev, struct ipmi_get_info *info)
 		bus_delete_resource(dev, SYS_RES_IOPORT, i);
 	}
 
-	/* Allow the I/O address to be overriden via hints. */
+	/* Allow the I/O address to be overridden via hints. */
 	if (resource_int_value(name, unit, "port", &val) == 0 && val != 0) {
 		info->address = val;
 		info->io_mode = 1;
@@ -150,7 +150,7 @@ ipmi_hint_identify(device_t dev, struct ipmi_get_info *info)
 		info->io_mode = 0;
 	}
 
-	/* Allow the spacing to be overriden. */
+	/* Allow the spacing to be overridden. */
 	if (resource_int_value(name, unit, "spacing", &val) == 0) {
 		switch (val) {
 		case 8:

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f12d2b6cbce03055550329342a36c62175dc96d $");
+__FBSDID("$FreeBSD: f81f334ce75f0b438b449b009f5a7565461c8d10 $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 4f12d2b6cbce03055550329342a36c62175dc96d $");
 #include <vm/pmap.h>
 
 #include <machine/frame.h>
+#include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/vmparam.h>
 
@@ -194,6 +195,7 @@ static struct sysentvec cloudabi32_elf_sysvec = {
 	.sv_fetch_syscall_args	= cloudabi32_fetch_syscall_args,
 	.sv_syscallnames	= cloudabi32_syscallnames,
 	.sv_schedtail		= cloudabi32_schedtail,
+	.sv_set_fork_retval	= x86_set_fork_retval,
 };
 
 INIT_SYSENTVEC(elf_sysvec, &cloudabi32_elf_sysvec);

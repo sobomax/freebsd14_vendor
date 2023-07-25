@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d361c175aa8e7442b84f97496e566a4b2efe0ab5 $");
+__FBSDID("$FreeBSD: 7d45c213f6d35fc09358fabb44520522e9643400 $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -56,7 +56,6 @@ __FBSDID("$FreeBSD: d361c175aa8e7442b84f97496e566a4b2efe0ab5 $");
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/malloc.h>
-#include <sys/sysent.h>
 #include <sys/syscall.h>
 #include <sys/sysproto.h>
 #include <sys/taskqueue.h>

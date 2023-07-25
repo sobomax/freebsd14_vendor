@@ -1,4 +1,4 @@
-# $FreeBSD: 3fb104ad1c50c52cec1f4fbce23126882fcb4ccf $
+# $FreeBSD: 76185a2bca494ce761887793e1d0682e7bec15be $
 #
 # Option file for FreeBSD /usr/src builds.
 #
@@ -140,6 +140,7 @@ __DEFAULT_YES_OPTIONS = \
     LOCATE \
     LPR \
     LS_COLORS \
+    MACHDEP_OPTIMIZATIONS \
     MAIL \
     MAILWRAPPER \
     MAKE \
@@ -200,6 +201,7 @@ __DEFAULT_NO_OPTIONS = \
     BHYVE_SNAPSHOT \
     CLANG_EXTRAS \
     CLANG_FORMAT \
+    DETECT_TZ_CHANGES \
     DTRACE_TESTS \
     EXPERIMENTAL \
     HESIOD \
@@ -315,8 +317,12 @@ BROKEN_OPTIONS+=EFI
 .if ${__T:Mpowerpc*} == ""
 BROKEN_OPTIONS+=LOADER_OFW
 .endif
-# UBOOT is only for arm, mips and powerpc, exclude others
-.if ${__T:Marm*} == "" && ${__T:Mmips*} == "" && ${__T:Mpowerpc*} == ""
+# KBOOT is only for powerpc64 (powerpc64le broken) and kinda for amd64
+.if ${__T} != "powerpc64" && ${__T} != "amd64"
+BROKEN_OPTIONS+=LOADER_KBOOT
+.endif
+# UBOOT is only for arm, mips, and big-endian powerpc
+.if (${__T:Marm*} == "" && ${__T:Mmips*} == "" && ${__T:Mpowerpc*} == "") || ${__T} == "powerpc64le"
 BROKEN_OPTIONS+=LOADER_UBOOT
 .endif
 # GELI and Lua in loader currently cause boot failures on powerpc.
@@ -392,6 +398,9 @@ MK_KERBEROS_SUPPORT:=	no
 
 .if ${MK_CXX} == "no"
 MK_CLANG:=	no
+MK_LLD:=	no
+MK_LLDB:=	no
+MK_LLVM_BINUTILS:= no
 MK_GOOGLETEST:=	no
 MK_OFED:=	no
 MK_OPENMP:=	no

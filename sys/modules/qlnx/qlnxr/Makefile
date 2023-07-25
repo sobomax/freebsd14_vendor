@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: f193ff09e7efdf7c402309932fb7ea9a79041156 $
+# $FreeBSD: f02089588942cc78b42409a5ebc22dbcecdced3f $
 #
 
 #.PATH:  ${.CURDIR}
@@ -54,7 +54,7 @@ CFLAGS+= -I${.CURDIR}
 CFLAGS+= -I${ETHDRVR}
 CFLAGS+= -I${OFEDDIR}/ofed/include
 CFLAGS+= -I${OFEDDIR}/ofed/include/uapi
-CFLAGS+= -I${OFEDDIR}/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 CFLAGS+= -DLINUX_TYPES_DEFINED
 CFLAGS+= -DCONFIG_INFINIBAND_USER_MEM

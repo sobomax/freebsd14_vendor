@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)generic.c 1.2 91/03/11 Copyr 1986 Sun Micro";
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 368b051155a4cecd4a24056ed16c268e1f8c4f51 $");
+__FBSDID("$FreeBSD: 324cb5b604ad0b4ea59255b81f81cc79c73c38a6 $");
 
 #include <sys/file.h>
 
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: 368b051155a4cecd4a24056ed16c268e1f8c4f51 $");
 
 #include "extern.h"
 
-static void adjust(char[], char *);
+static void adjust(char[HEXKEYBYTES + 1], char *);
 static void getseed(char *, int, unsigned char *);
 
 /*

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)proc.h	8.15 (Berkeley) 5/19/95
- * $FreeBSD: 96bd2cc8a6cead5db9ca213f217e771eccde4d26 $
+ * $FreeBSD: 23b8fcfe9bd750ca2e46b08007d6721f644bbef0 $
  */
 
 #ifndef _SYS_PROC_H_
@@ -376,7 +376,7 @@ struct thread {
 	int		td_oncpu;	/* (t) Which cpu we are on. */
 	void		*td_lkpi_task;	/* LinuxKPI task struct pointer */
 	int		td_pmcpend;
-	void		*td_coredump;	/* (c) coredump request. */
+	void		*td_remotereq;	/* (c) dbg remote request. */
 	off_t		td_ktr_io_lim;	/* (k) limit for ktrace file size */
 #ifdef EPOCH_TRACE
 	SLIST_HEAD(, epoch_tracker) td_epochs;
@@ -460,7 +460,7 @@ do {									\
 #define	TDF_THRWAKEUP	0x00100000 /* Libthr thread must not suspend itself. */
 #define	TDF_SEINTR	0x00200000 /* EINTR on stop attempts. */
 #define	TDF_SWAPINREQ	0x00400000 /* Swapin request due to wakeup. */
-#define	TDF_UNUSED23	0x00800000 /* --available-- */
+#define	TDF_UNUSED6	0x00800000 /* Available */
 #define	TDF_SCHED0	0x01000000 /* Reserved for scheduler private use */
 #define	TDF_SCHED1	0x02000000 /* Reserved for scheduler private use */
 #define	TDF_SCHED2	0x04000000 /* Reserved for scheduler private use */
@@ -487,7 +487,9 @@ do {									\
 #define	TDB_FSTP	0x00001000 /* The thread is PT_ATTACH leader */
 #define	TDB_STEP	0x00002000 /* (x86) PSL_T set for PT_STEP */
 #define	TDB_SSWITCH	0x00004000 /* Suspended in ptracestop */
-#define	TDB_COREDUMPRQ	0x00008000 /* Coredump request */
+#define	TDB_BOUNDARY	0x00008000 /* ptracestop() at boundary */
+#define	TDB_COREDUMPREQ	0x00010000 /* Coredump request */
+#define	TDB_SCREMOTEREQ	0x00020000 /* Remote syscall request */
 
 /*
  * "Private" flags kept in td_pflags:
@@ -725,6 +727,8 @@ struct proc {
 	TAILQ_HEAD(, kq_timer_cb_data)	p_kqtim_stop;	/* (c) */
 	struct vnode	*p_textdvp;	/* (b) Dir containing textvp. */
 	char		*p_binname;	/* (b) Binary hardlink name. */
+	void		*p_elf_brandinfo; /* (x) Elf_Brandinfo, NULL for
+						 non ELF binaries. */
 };
 
 #define	p_session	p_pgrp->pg_session
@@ -828,6 +832,9 @@ struct proc {
 #define	P2_NO_NEW_PRIVS		0x00008000	/* Ignore setuid */
 #define	P2_WXORX_DISABLE	0x00010000	/* WX mappings enabled */
 #define	P2_WXORX_ENABLE_EXEC	0x00020000	/* WXORX enabled after exec */
+#define	P2_WEXIT		0x00040000	/* exit just started, no
+						   external thread_single() is
+						   permitted */
 
 /* Flags protected by proctree_lock, kept in p_treeflags. */
 #define	P_TREE_ORPHANED		0x00000001	/* Reparented, on orphan list */
@@ -1127,6 +1134,7 @@ void	proc_linkup(struct proc *p, struct thread *td);
 struct proc *proc_realparent(struct proc *child);
 void	proc_reap(struct thread *td, struct proc *p, int *status, int options);
 void	proc_reparent(struct proc *child, struct proc *newparent, bool set_oppid);
+void	proc_set_p2_wexit(struct proc *p);
 void	proc_set_traced(struct proc *p, bool stop);
 void	proc_wkilled(struct proc *p);
 struct	pstats *pstats_alloc(void);
@@ -1203,6 +1211,8 @@ void	thread_unlink(struct thread *td);
 void	thread_unsuspend(struct proc *p);
 void	thread_wait(struct proc *p);
 
+bool	stop_all_proc_block(void);
+void	stop_all_proc_unblock(void);
 void	stop_all_proc(void);
 void	resume_all_proc(void);
 

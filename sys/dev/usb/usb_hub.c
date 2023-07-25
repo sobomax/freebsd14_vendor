@@ -1,4 +1,4 @@
-/* $FreeBSD: 00173a5d14d03430530de6cd6fe1b08925f3916a $ */
+/* $FreeBSD: 4c7b67b92474e29b1d581aad725dceb6d319d406 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *
@@ -1085,6 +1085,21 @@ uhub_explore(struct usb_device *udev)
 		if (sc->sc_st.port_change & (UPS_C_SUSPEND |
 		    UPS_C_PORT_LINK_STATE)) {
 			err = uhub_suspend_resume_port(sc, portno);
+			if (err != USB_ERR_NORMAL_COMPLETION)
+				retval = err;
+		}
+		if (udev->speed == USB_SPEED_SUPER &&
+		    (sc->sc_st.port_change & UPS_C_BH_PORT_RESET) != 0) {
+			DPRINTF("Warm reset finished on port %u.\n", portno);
+			err = usbd_req_clear_port_feature(
+			    udev, NULL, portno, UHF_C_BH_PORT_RESET);
+			if (err != USB_ERR_NORMAL_COMPLETION)
+				retval = err;
+		}
+		if (sc->sc_st.port_change & UPS_C_PORT_RESET) {
+			DPRINTF("Port reset finished on port %u.\n", portno);
+			err = usbd_req_clear_port_feature(
+			    udev, NULL, portno, UHF_C_PORT_RESET);
 			if (err != USB_ERR_NORMAL_COMPLETION)
 				retval = err;
 		}

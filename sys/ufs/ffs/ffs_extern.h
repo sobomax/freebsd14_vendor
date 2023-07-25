@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_extern.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD: c835239986ba4bdd77588438f4f77a901a0f8961 $
+ * $FreeBSD: 1ea473e69f52edd70cae3204741fdb87c198e136 $
  */
 
 #ifndef _UFS_FFS_EXTERN_H
@@ -130,6 +130,7 @@ int	ffs_breadz(struct ufsmount *, struct vnode *, daddr_t, daddr_t, int,
 					   doomed */
 #define	FFSV_FORCEINODEDEP	0x0008	/* Force allocation of inodedep, ignore
 					   MNT_SOFTDEP */
+#define	FFSV_NEWINODE		0x0010	/* Newly allocated inode */
 
 /*
  * Flags to ffs_reload

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7636ace5ff944e3c040d9f13966ce75b3f64bfa7 $");
+__FBSDID("$FreeBSD: 5b8a9c9017a7d5606564e2f6761633121d98d55a $");
 
 #include <stand.h>
 #include <btxv86.h>
@@ -38,7 +38,7 @@ static int	bios_seconds(void);
 /*
  * Return the BIOS time-of-day value.
  *
- * XXX uses undocumented BCD support from libstand.
+ * XXX uses undocumented BCD support from libsa.
  */
 static int
 bios_seconds(void)

@@ -1,4 +1,4 @@
-# $FreeBSD: 8166f481dc998858233f03d018a645e66f125155 $
+# $FreeBSD: 7f69ce1b3f114e864405c26671837a1e4eabda2e $
 
 .include <bsd.init.mk>
 
@@ -8,6 +8,8 @@ LIB=		efi_fdt
 WARNS?=		6
 
 SRCS=		efi_fdt.c
+
+.include	"${BOOTSRC}/veriexec.mk"
 
 # EFI library headers
 CFLAGS+=	-I${EFISRC}/include

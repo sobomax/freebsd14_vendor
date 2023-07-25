@@ -1,4 +1,4 @@
-# $FreeBSD: 55e13fa6485e3adb5657507ea38c6892624199f5 $
+# $FreeBSD: fcad5e8c16e955c837a617e092c44b120844ae4d $
 
 .include <src.opts.mk>
 
@@ -72,6 +72,7 @@ TERM_SRCS=	eqn_term.c \
 		term_ascii.c \
 		term_ps.c \
 		term_tab.c \
+		term_tag.c \
 		tbl_term.c
 
 DBM_SRCS=	dbm.c \

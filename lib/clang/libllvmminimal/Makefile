@@ -1,4 +1,4 @@
-# $FreeBSD: e4f2d19bbb698f40e555123bacee2781649480a7 $
+# $FreeBSD: 065ab48c3b865685758c3518d12aabf649e30dc4 $
 
 .include "../llvm.pre.mk"
 
@@ -62,6 +62,7 @@ SRCS+=		Support/Triple.cpp
 SRCS+=		Support/Twine.cpp
 SRCS+=		Support/TypeSize.cpp
 SRCS+=		Support/Unicode.cpp
+SRCS+=		Support/VersionTuple.cpp
 SRCS+=		Support/VirtualFileSystem.cpp
 SRCS+=		Support/Watchdog.cpp
 SRCS+=		Support/WithColor.cpp

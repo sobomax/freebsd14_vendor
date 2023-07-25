@@ -26,11 +26,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a7b31812e30889cc236b473dfbaf3a34a2a76733 $
+ * $FreeBSD: a020323ae7ddc46c7cb438a87f843c5391d98079 $
  */
 
 #ifndef	_LINUXKPI_NET_REGULATORY_H
 #define	_LINUXKPI_NET_REGULATORY_H
+
+enum environment_cap {
+	ENVIRON_INDOOR		= 1,	/* keep != 0 */
+};
 
 #define	REG_RULE(_begin, _end, _bw, _mag, _meirp, _flags)		\
 {									\

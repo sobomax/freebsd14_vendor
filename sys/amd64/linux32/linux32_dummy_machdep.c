@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5eb54fefd276c5d1e490b9ba14a492ee5d9f3579 $");
+__FBSDID("$FreeBSD: f3bd8717524af423c15712f5d0aee6753e6a5a66 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -67,23 +67,7 @@ DUMMY(mq_getsetattr);
 /* Linux 4.11: */
 DUMMY(arch_prctl);
 /* Linux 5.0: */
-DUMMY(clock_gettime64);
-DUMMY(clock_settime64);
 DUMMY(clock_adjtime64);
-DUMMY(clock_getres_time64);
-DUMMY(clock_nanosleep_time64);
-DUMMY(timer_gettime64);
-DUMMY(timer_settime64);
-DUMMY(timerfd_gettime64);
-DUMMY(timerfd_settime64);
-DUMMY(utimensat_time64);
-DUMMY(pselect6_time64);
-DUMMY(ppoll_time64);
 DUMMY(io_pgetevents_time64);
-DUMMY(recvmmsg_time64);
 DUMMY(mq_timedsend_time64);
 DUMMY(mq_timedreceive_time64);
-DUMMY(semtimedop_time64);
-DUMMY(rt_sigtimedwait_time64);
-DUMMY(futex_time64);
-DUMMY(sched_rr_get_interval_time64);

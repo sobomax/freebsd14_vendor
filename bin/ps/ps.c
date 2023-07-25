@@ -49,7 +49,7 @@ static char sccsid[] = "@(#)ps.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3cfc669d581c97635100f2cb08addc012915366 $");
+__FBSDID("$FreeBSD: 0c656d8a1544180ae5ecbe2e06af8da09f7ddcf4 $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -253,11 +253,9 @@ main(int argc, char *argv[])
 			 * added for compatibility with SUSv3, but for
 			 * now it will not be described in the man page.
 			 */
-			nselectors++;
 			all = xkeep = 1;
 			break;
 		case 'a':
-			nselectors++;
 			all = 1;
 			break;
 		case 'C':
@@ -473,7 +471,7 @@ main(int argc, char *argv[])
 	if (!_fmt)
 		parsefmt(dfmt, 0);
 
-	if (nselectors == 0) {
+	if (!all && nselectors == 0) {
 		uidlist.l.ptr = malloc(sizeof(uid_t));
 		if (uidlist.l.ptr == NULL)
 			xo_errx(1, "malloc failed");
@@ -525,9 +523,6 @@ main(int argc, char *argv[])
 		} else if (uidlist.count == 1) {
 			what = KERN_PROC_UID | showthreads;
 			flag = *uidlist.l.uids;
-			nselectors = 0;
-		} else if (all) {
-			/* No need for this routine to select processes. */
 			nselectors = 0;
 		}
 	}

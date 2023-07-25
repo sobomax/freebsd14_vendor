@@ -1,6 +1,6 @@
-# $FreeBSD: 20d861d4b947c6fa9481f87ad110ed9321475c68 $
+# $FreeBSD: af11f6870ba8b699875c83c7c42cdef5f62bf1a4 $
 
-FWVERSION=	68
+FWVERSION=	73
 NAME=		so-a0-jf-b0
 
 .include <bsd.kmod.mk>

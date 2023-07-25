@@ -1,4 +1,4 @@
-/* $FreeBSD: 5dcf8d1511195e3b29e4bfe91b42512dcfd9b495 $ */
+/* $FreeBSD: 338c17983d9235e9725fab7d4a2b1f021559784f $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -106,6 +106,12 @@ static uint8_t scsi_huawei_eject[] =	{ 0x11, 0x06, 0x00, 0x00, 0x00, 0x00,
 					  0x00, 0x00, 0x00, 0x00 };
 static uint8_t scsi_huawei_eject2[] =	{ 0x11, 0x06, 0x20, 0x00, 0x00, 0x01,
 					  0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+					  0x00, 0x00, 0x00, 0x00 };
+static uint8_t scsi_huawei_eject3[] =	{ 0x11, 0x06, 0x20, 0x00, 0x00, 0x01,
+					  0x01, 0x00, 0x01, 0x00, 0x00, 0x00,
+					  0x00, 0x00, 0x00, 0x00 };
+static uint8_t scsi_huawei_eject4[] =	{ 0x11, 0x06, 0x30, 0x00, 0x00, 0x00,
+					  0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
 					  0x00, 0x00, 0x00, 0x00 };
 static uint8_t scsi_tct_eject[] =	{ 0x06, 0xf5, 0x04, 0x02, 0x52, 0x70 };
 static uint8_t scsi_sync_cache[] =	{ 0x35, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1003,6 +1009,16 @@ usb_msc_eject(struct usb_device *udev, uint8_t iface_index, int method)
 	case MSC_EJECT_HUAWEI2:
 		err = bbb_command_start(sc, DIR_IN, 0, NULL, 0,
 		    &scsi_huawei_eject2, sizeof(scsi_huawei_eject2),
+		    USB_MS_HZ);
+		break;
+	case MSC_EJECT_HUAWEI3:
+		err = bbb_command_start(sc, DIR_IN, 0, NULL, 0,
+		    &scsi_huawei_eject3, sizeof(scsi_huawei_eject3),
+		    USB_MS_HZ);
+		break;
+	case MSC_EJECT_HUAWEI4:
+		err = bbb_command_start(sc, DIR_IN, 0, NULL, 0,
+		    &scsi_huawei_eject4, sizeof(scsi_huawei_eject4),
 		    USB_MS_HZ);
 		break;
 	case MSC_EJECT_TCT:

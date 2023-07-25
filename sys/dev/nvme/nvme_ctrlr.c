@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa41c8fe55402b110cb367beacb4af16ac1f81a8 $");
+__FBSDID("$FreeBSD: bc5f1c7e218e6917b32296c8387298c6efdf8445 $");
 
 #include "opt_cam.h"
 #include "opt_nvme.h"
@@ -138,7 +138,7 @@ nvme_ctrlr_construct_io_qpairs(struct nvme_controller *ctrlr)
 	 * specify a smaller limit, so we need to check the MQES field in the
 	 * capabilities register. We have to cap the number of entries to the
 	 * current stride allows for in BAR 0/1, otherwise the remainder entries
-	 * are inaccessable. MQES should reflect this, and this is just a
+	 * are inaccessible. MQES should reflect this, and this is just a
 	 * fail-safe.
 	 */
 	max_entries =

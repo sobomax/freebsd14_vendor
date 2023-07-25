@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5339145406233d729251cc5da417616cc07f5a4 $");
+__FBSDID("$FreeBSD: ec7065ae306fca04c071203d42d5b7346513b27e $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -110,7 +110,7 @@ SYSCTL_UINT(_net_inet_tcp_lro, OID_AUTO, entries,
 static uint32_t tcp_lro_cpu_set_thresh = TCP_LRO_CPU_DECLARATION_THRESH;
 SYSCTL_UINT(_net_inet_tcp_lro, OID_AUTO, lro_cpu_threshold,
     CTLFLAG_RDTUN | CTLFLAG_MPSAFE, &tcp_lro_cpu_set_thresh, 0,
-    "Number of interrups in a row on the same CPU that will make us declare an 'affinity' cpu?");
+    "Number of interrupts in a row on the same CPU that will make us declare an 'affinity' cpu?");
 
 SYSCTL_COUNTER_U64(_net_inet_tcp_lro, OID_AUTO, fullqueue, CTLFLAG_RD,
     &tcp_inp_lro_direct_queue, "Number of lro's fully queued to transport");

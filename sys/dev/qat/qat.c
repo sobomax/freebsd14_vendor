@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5d3f4d9629a8ed69f80381393108c50153a53c3 $");
+__FBSDID("$FreeBSD: dddfe4da108338cb16b9a1229dc47a55eefc4845 $");
 #if 0
 __KERNEL_RCSID(0, "$NetBSD: qat.c,v 1.6 2020/06/14 23:23:12 riastradh Exp $");
 #endif
@@ -1900,8 +1900,6 @@ qat_probesession(device_t dev, const struct crypto_session_params *csp)
 	case CSP_MODE_AEAD:
 		switch (csp->csp_cipher_alg) {
 		case CRYPTO_AES_NIST_GCM_16:
-			if (csp->csp_ivlen != AES_GCM_IV_LEN)
-				return EINVAL;
 			break;
 		default:
 			return EINVAL;

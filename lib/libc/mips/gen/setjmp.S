@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 3ef6878bb6086906127cd1eb6c6ca307bf73000c $");
+__FBSDID("$FreeBSD: 6b8f196735c448ee0cbe6cbb98d95c60e0bee9e1 $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 	ASMSTR("from: @(#)setjmp.s	8.1 (Berkeley) 6/4/93")
@@ -220,7 +220,10 @@ NESTED(longjmp, LONGJMP_FRAME_SIZE, ra)
 #endif
 #endif	/* ! __mips_soft_float */
 
-	move	v0, a1
+	move	v0, a1			# get return value in 1st arg
+	bne	a1, zero, 1f		# NB: no .set noreorder
+	REG_LI	v0, 1			# return 1 if arg is 0
+1:
 	j	ra
 	nop
 

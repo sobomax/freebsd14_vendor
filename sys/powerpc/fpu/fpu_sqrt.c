@@ -47,13 +47,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1f5bec9006f33c7620d74bbe454697231813e4f $");
+__FBSDID("$FreeBSD: 5a95d7eae115a3841ac547345bd024255cf8dcd9 $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
 
 #include <machine/fpu.h>
-#include <machine/reg.h>
 
 #include <powerpc/fpu/fpu_arith.h>
 #include <powerpc/fpu/fpu_emu.h>

@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 3ad97ac8d62433360477f9b5b1b52d5949f4d120 $
+# $FreeBSD: 83bf79dcb9f9f4e69985398c64c76e5aa4f94cc2 $
 
 .include <src.opts.mk>
 
@@ -24,6 +24,7 @@ SUBDIR= cat \
 	ls \
 	mkdir \
 	mv \
+	nproc \
 	pax \
 	pkill \
 	ps \
@@ -38,6 +39,7 @@ SUBDIR= cat \
 	stty \
 	sync \
 	test \
+	timeout \
 	uuidgen
 
 SUBDIR.${MK_SENDMAIL}+=	rmail

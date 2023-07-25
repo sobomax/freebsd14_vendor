@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 05751c640392ee14b4b8a9f09ae4bf62e60fbcee $
+ * $FreeBSD: db399d7c748500a8fe992c683feb1622c4e1a94d $
  */
 
 #ifndef	_NET_IF_VAR_H_
@@ -484,6 +484,7 @@ EVENTHANDLER_DECLARE(ifnet_link_event, ifnet_link_event_handler_t);
 #define IFNET_EVENT_UP		0
 #define IFNET_EVENT_DOWN	1
 #define IFNET_EVENT_PCP		2	/* priority code point, PCP */
+#define	IFNET_EVENT_UPDATE_BAUDRATE	3
 
 typedef void (*ifnet_event_fn)(void *, struct ifnet *ifp, int event);
 EVENTHANDLER_DECLARE(ifnet_event, ifnet_event_fn);
@@ -659,6 +660,7 @@ void	if_free(struct ifnet *);
 void	if_initname(struct ifnet *, const char *, int);
 void	if_link_state_change(struct ifnet *, int);
 int	if_printf(struct ifnet *, const char *, ...) __printflike(2, 3);
+int	if_log(struct ifnet *, int, const char *, ...) __printflike(3, 4);
 void	if_ref(struct ifnet *);
 void	if_rele(struct ifnet *);
 bool	__result_use_check if_try_ref(struct ifnet *);
@@ -707,6 +709,9 @@ int if_setcapenable(if_t ifp, int capenable);
 int if_setcapenablebit(if_t ifp, int setcap, int clearcap);
 int if_getcapenable(if_t ifp);
 const char *if_getdname(if_t ifp);
+void if_setdescr(if_t ifp, char *descrbuf);
+char *if_allocdescr(size_t sz, int malloc_flag);
+void if_freedescr(char *descrbuf);
 int if_setdev(if_t ifp, void *dev);
 int if_setdrvflagbits(if_t ifp, int if_setflags, int clear_flags);
 int if_getdrvflags(if_t ifp);

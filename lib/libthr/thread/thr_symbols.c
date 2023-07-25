@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cee263c56826f6866ac46b18d24ec0f37975c6dd $");
+__FBSDID("$FreeBSD: 71737392c62fe3eb49f8e3736541a19c1c6b3b48 $");
 
 #include <sys/types.h>
 #include <stddef.h>
@@ -55,7 +55,7 @@ int _thread_size_key = sizeof(struct pthread_key);
 int _thread_off_key_allocated = offsetof(struct pthread_key, allocated);
 int _thread_off_key_destructor = offsetof(struct pthread_key, destructor);
 int _thread_max_keys = PTHREAD_KEYS_MAX;
-int _thread_off_dtv = DTV_OFFSET;
+int _thread_off_dtv = offsetof(struct tcb, tcb_dtv);
 int _thread_off_state = offsetof(struct pthread, state);
 int _thread_state_running = PS_RUNNING;
 int _thread_state_zoombie = PS_DEAD;

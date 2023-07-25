@@ -30,7 +30,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa5697db09ddfa330daaef04623a684ffa8b8dcd $");
+__FBSDID("$FreeBSD: 6178221032eb6ffa9053eb348350a1b35bba92ac $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: aa5697db09ddfa330daaef04623a684ffa8b8dcd $");
 #include <sys/proc.h>
 #include <sys/ptrace.h>
 #include <sys/reboot.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
 #include <sys/signalvar.h>
@@ -82,7 +83,6 @@ __FBSDID("$FreeBSD: aa5697db09ddfa330daaef04623a684ffa8b8dcd $");
 #include <machine/metadata.h>
 #include <machine/md_var.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/undefined.h>
 #include <machine/vmparam.h>
 
@@ -102,7 +102,12 @@ __FBSDID("$FreeBSD: aa5697db09ddfa330daaef04623a684ffa8b8dcd $");
 
 enum arm64_bus arm64_bus_method = ARM64_BUS_NONE;
 
-struct pcpu __pcpu[MAXCPU];
+/*
+ * XXX: The .bss is assumed to be in the boot CPU NUMA domain. If not we
+ * could relocate this, but will need to keep the same virtual address as
+ * it's reverenced by the EARLY_COUNTER macro.
+ */
+struct pcpu pcpu0;
 
 #if defined(PERTHREAD_SSP)
 /*
@@ -295,7 +300,8 @@ cpu_pcpu_init(struct pcpu *pcpu, int cpuid, size_t size)
 {
 
 	pcpu->pc_acpi_id = 0xffffffff;
-	pcpu->pc_mpidr = 0xffffffff;
+	pcpu->pc_mpidr_low = 0xffffffff;
+	pcpu->pc_mpidr_high = 0xffffffff;
 }
 
 void
@@ -352,11 +358,14 @@ makectx(struct trapframe *tf, struct pcb *pcb)
 static void
 init_proc0(vm_offset_t kstack)
 {
-	struct pcpu *pcpup = &__pcpu[0];
+	struct pcpu *pcpup;
+
+	pcpup = cpuid_to_pcpu[0];
+	MPASS(pcpup != NULL);
 
 	proc_linkup0(&proc0, &thread0);
 	thread0.td_kstack = kstack;
-	thread0.td_kstack_pages = KSTACK_PAGES;
+	thread0.td_kstack_pages = kstack_pages;
 #if defined(PERTHREAD_SSP)
 	thread0.td_md.md_canary = boot_canary;
 #endif
@@ -460,7 +469,7 @@ exclude_efi_map_entry(struct efi_md *p)
 		 */
 		break;
 	default:
-		physmem_exclude_region(p->md_phys, p->md_pages * PAGE_SIZE,
+		physmem_exclude_region(p->md_phys, p->md_pages * EFI_PAGE_SIZE,
 		    EXFLAG_NOALLOC);
 	}
 }
@@ -477,6 +486,17 @@ add_efi_map_entry(struct efi_md *p)
 {
 
 	switch (p->md_type) {
+	case EFI_MD_TYPE_RECLAIM:
+		/*
+		 * The recomended location for ACPI tables. Map into the
+		 * DMAP so we can access them from userspace via /dev/mem.
+		 */
+	case EFI_MD_TYPE_RT_CODE:
+		/*
+		 * Some UEFI implementations put the system table in the
+		 * runtime code section. Include it in the DMAP, but will
+		 * be excluded from phys_avail later.
+		 */
 	case EFI_MD_TYPE_RT_DATA:
 		/*
 		 * Runtime data will be excluded after the DMAP
@@ -492,7 +512,7 @@ add_efi_map_entry(struct efi_md *p)
 		 * We're allowed to use any entry with these types.
 		 */
 		physmem_hardware_region(p->md_phys,
-		    p->md_pages * PAGE_SIZE);
+		    p->md_pages * EFI_PAGE_SIZE);
 		break;
 	}
 }
@@ -753,7 +773,9 @@ initarm(struct arm64_bootparams *abp)
 	update_special_regs(0);
 
 	link_elf_ireloc(kmdp);
+#ifdef FDT
 	try_load_dtb(kmdp);
+#endif
 
 	efi_systbl_phys = MD_FETCH(kmdp, MODINFOMD_FW_HANDLE, vm_paddr_t);
 
@@ -783,7 +805,7 @@ initarm(struct arm64_bootparams *abp)
 		    EXFLAG_NOALLOC);
 
 	/* Set the pcpu data, this is needed by pmap_bootstrap */
-	pcpup = &__pcpu[0];
+	pcpup = &pcpu0;
 	pcpu_init(pcpup, 0, sizeof(struct pcpu));
 
 	/*

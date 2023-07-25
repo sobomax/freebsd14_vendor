@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7d73f9e9a10978f25e49f859284318ace1bb8944 $
+ * $FreeBSD: d9eccb6a19f63295f1bb7b8b94155ec2294b1000 $
  */
 
 #ifndef _NET_ROUTING_RTSOCK_CONFIG_H_
@@ -126,8 +126,15 @@ config_setup(const atf_tc_t *tc, struct rtsock_config_options *co)
 	inet_ntop(AF_INET6, &c->net6.sin6_addr, c->net6_str, INET6_ADDRSTRLEN);
 	inet_ntop(AF_INET6, &c->addr6.sin6_addr, c->addr6_str, INET6_ADDRSTRLEN);
 
+	ATF_CHECK_ERRNO(0, true);
+
 	if (co->num_interfaces > 0) {
-		kldload("if_epair");
+		if (kldload("if_epair") == -1) {
+			/* Any errno other than EEXIST is fatal. */
+			ATF_REQUIRE_ERRNO(EEXIST, true);
+			/* Clear errno for the following tests. */
+			errno = 0;
+		}
 		ATF_REQUIRE_KERNEL_MODULE("if_epair");
 
 		c->ifnames = calloc(co->num_interfaces, sizeof(char *));

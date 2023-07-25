@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ioctl.h#4 $
- * $FreeBSD: 49c48afbd76677d3273639b20dc70f32658da953 $
+ * $FreeBSD: 543f97a65d30930abc43c75b0c330766ad2158e1 $
  */
 /*
  * CAM Target Layer ioctl interface.
@@ -460,6 +460,7 @@ struct ctl_lun_req {
 	union ctl_lunreq_data	reqdata;
 	void *			args;
 	nvlist_t *		args_nvl;
+#define	CTL_MAX_ARGS_LEN	(1024 * 1024)
 	size_t			args_len;
 	void *			result;
 	nvlist_t *		result_nvl;
@@ -669,9 +670,12 @@ struct ctl_iscsi_terminate_params {
 struct ctl_iscsi_limits_params {
 	/* passed to kernel */
 	char			offload[CTL_ISCSI_OFFLOAD_LEN];
+	int			socket;
 
 	/* passed to userland */
-	size_t			spare;
+#ifdef __LP64__
+	int			spare;
+#endif
 	int			max_recv_data_segment_length;
 	int			max_send_data_segment_length;
 	int			max_burst_length;

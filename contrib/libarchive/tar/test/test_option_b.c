@@ -23,22 +23,24 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0eee80d86f498aa142933c9caf244448f2e871df $");
+__FBSDID("$FreeBSD: d1b75e35061305fc89fa735ad1e8cd9fbebe0c6c $");
 
 #define USTAR_OPT " --format=ustar"
 
 DEFINE_TEST(test_option_b)
 {
 	char *testprog_ustar;
+	size_t testprog_ustar_len;
 
 	assertMakeFile("file1", 0644, "file1");
 	if (systemf("cat file1 > test_cat.out 2> test_cat.err") != 0) {
 		skipping("This test requires a `cat` program");
 		return;
 	}
-	testprog_ustar = malloc(strlen(testprog) + sizeof(USTAR_OPT) + 1);
-	strcpy(testprog_ustar, testprog);
-	strcat(testprog_ustar, USTAR_OPT);
+	testprog_ustar_len = strlen(testprog) + sizeof(USTAR_OPT) + 1;
+	testprog_ustar = malloc(testprog_ustar_len);
+	strncpy(testprog_ustar, testprog, testprog_ustar_len);
+	strncat(testprog_ustar, USTAR_OPT, testprog_ustar_len);
 
 	/*
 	 * Bsdtar does not pad if the output is going directly to a disk file.

@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* $FreeBSD: a0d48949e681802d03c9707211be0c9112e8f2ec $ */
+/* $FreeBSD: 3cc1f84ad690a28384295d71c9011cff24484194 $ */
 
 #include "gzguts.h"
 #include <unistd.h>
@@ -160,11 +160,9 @@ local int gz_look(state)
        the output buffer is larger than the input buffer, which also assures
        space for gzungetc() */
     state->x.next = state->out;
-    if (strm->avail_in) {
-        memcpy(state->x.next, strm->next_in, strm->avail_in);
-        state->x.have = strm->avail_in;
-        strm->avail_in = 0;
-    }
+    memcpy(state->x.next, strm->next_in, strm->avail_in);
+    state->x.have = strm->avail_in;
+    strm->avail_in = 0;
     state->how = COPY;
     state->direct = 1;
     return 0;

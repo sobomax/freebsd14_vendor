@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/18/94
- * $FreeBSD: ec171f2d177ca4e89e13fa4a7433ae7bb364eb7c $
+ * $FreeBSD: 12b7fe162a6ec09036b725aa22967bb264d4f240 $
  */
 
 /*
@@ -169,10 +169,8 @@ void ls_tty(ARCHD *);
 int l_strncpy(char *, const char *, int);
 u_long asc_ul(char *, int, int);
 int ul_asc(u_long, char *, int, int);
-#ifndef NET2_STAT
 u_quad_t asc_uqd(char *, int, int);
 int uqd_asc(u_quad_t, char *, int, int);
-#endif
 
 /*
  * getoldopt.c

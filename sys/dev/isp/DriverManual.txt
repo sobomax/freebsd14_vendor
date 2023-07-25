@@ -1,4 +1,4 @@
-/* $FreeBSD: b21fab1a9d04bee1d970fc52e9ff7117a5eb0e1d $ */
+/* $FreeBSD: b1ced6b3d06668484b4a8c6c5e79a71697becb6c $ */
 
 		Driver Theory of Operation Manual
 
@@ -331,7 +331,7 @@ is the registry of a function that the SCSI subsystem for this platform
 will call when it has a SCSI command to run.
 
 The platform specific module function that receives this will do whatever
-it needs to to prepare this command for execution in the core module. This
+it needs to prepare this command for execution in the core module. This
 sounds vague, but it's also very flexible. In principle, this could be
 a complete marshalling/demarshalling of this platform's SCSI command
 structure (should it be impossible to represent in an XS_T). In addition,

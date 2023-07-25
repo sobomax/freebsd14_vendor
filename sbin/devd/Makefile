@@ -1,9 +1,9 @@
-# $FreeBSD: ffc0a9a65a271bf85f1612a45f9d0b661ec0c923 $
+# $FreeBSD: 5caccbe6eb61c1ba3937e4b3a6a086b0c1c3d3c0 $
 
 .include <src.opts.mk>
 
 WARNS?= 3
-PACKAGE=runtime
+PACKAGE=devd
 CONFGROUPS=	CONFS DEVD
 CONFS=	devd.conf
 DEVD=	devmatch.conf
@@ -13,7 +13,10 @@ DEVD+=	asus.conf
 .endif
 
 .if ${MK_HYPERV} != "no"
-DEVD+=	hyperv.conf
+CONFGROUPS+=	HYPERV
+HYPERVDIR=${DEVDDIR}
+HYPERV+=	hyperv.conf
+HYPERVPACKAGE=	hyperv-tools
 .endif
 
 .if ${MK_USB} != "no"

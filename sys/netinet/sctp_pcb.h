@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: adbecf9bd00faa9e23bd6a97c9d04a72cb8f5e47 $");
+__FBSDID("$FreeBSD: 687ccf6a1c50ae0dedeeb35e73368906c7730b84 $");
 
 #ifndef _NETINET_SCTP_PCB_H_
 #define _NETINET_SCTP_PCB_H_
@@ -465,7 +465,6 @@ struct sctp_tcb {
 	uint16_t rport;		/* remote port in network format */
 	uint16_t resv;
 	struct mtx tcb_mtx;
-	struct mtx tcb_send_mtx;
 };
 
 #include <netinet/sctp_lock_bsd.h>
@@ -619,6 +618,9 @@ int sctp_destination_is_reachable(struct sctp_tcb *, struct sockaddr *);
 int sctp_swap_inpcb_for_listen(struct sctp_inpcb *inp);
 
 void sctp_clean_up_stream(struct sctp_tcb *stcb, struct sctp_readhead *rh);
+
+void
+     sctp_pcb_add_flags(struct sctp_inpcb *, uint32_t);
 
 /*-
  * Null in last arg inpcb indicate run on ALL ep's. Specific inp in last arg

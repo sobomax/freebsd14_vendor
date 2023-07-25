@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 0d068d5d1c65280a2dfa6d4d8e3c6ba41e22a460 $
+# $FreeBSD: f6881791357cb62272219c57ee58ace078ce7a8f $
 
 # What grep(1) are we working with?
 # - 0 : bsdgrep
@@ -92,9 +92,22 @@ gnuext_body()
 
 }
 
+atf_test_case zflag
+zflag_body()
+{
+
+	# The -z flag should pick up 'foo' and 'bar' as on the same line with
+	# 'some kind of junk' in between; a bug was present that instead made
+	# it process this incorrectly.
+	printf "foo\nbar\0" > in
+
+	atf_check grep -qz "foo.*bar" in
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case grep_r_implied
 	atf_add_test_case rgrep
 	atf_add_test_case gnuext
+	atf_add_test_case zflag
 }

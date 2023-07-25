@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7dd6e34c9ae264b0b2c71b83dcfb4ab0d8e0101f $
+ * $FreeBSD: 0ce3a0a74fec7da81581b018264b5862a53b5b6d $
  */
 
 #ifndef _GEOM_GEOM_DISK_H_
@@ -69,6 +69,7 @@ struct devstat;
 
 typedef enum {
 	DISK_INIT_NONE,
+	DISK_INIT_CREATE,
 	DISK_INIT_START,
 	DISK_INIT_DONE
 } disk_init_level;
@@ -125,7 +126,8 @@ struct disk {
 
 	/* Fields private to geom_disk, to be moved on next version bump */
 	LIST_HEAD(,disk_alias)	d_aliases;
-	void			*d_event;
+	struct g_event		*d_cevent;
+	struct g_event		*d_devent;
 };
 
 #define	DISKFLAG_RESERVED		0x0001	/* Was NEEDSGIANT */

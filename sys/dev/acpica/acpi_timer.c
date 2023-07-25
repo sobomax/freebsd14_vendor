@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0acb1761a1ee9eb33896de716cd4afe92d01dbb9 $");
+__FBSDID("$FreeBSD: e41d9d6a218d11015b311b0267e0fe20b1a2f8e4 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -404,7 +404,7 @@ SYSCTL_PROC(_machdep, OID_AUTO, acpi_timer_freq,
  */
 #define N 2000
 static int
-acpi_timer_test()
+acpi_timer_test(void)
 {
     uint32_t last, this;
     int delta, max, max2, min, n;

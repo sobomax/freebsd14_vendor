@@ -1,4 +1,4 @@
-# $FreeBSD: a34732f868c7c58d80c8b18ca9adb5447a80b9fe $
+# $FreeBSD: 79f9cc942c6b1e97a45db2fd9772e93616cd8d34 $
 
 .include <src.opts.mk>
 .include "${SRCTOP}/secure/ssh.mk"
@@ -12,10 +12,10 @@ SRCS=	sshd.c auth-rhosts.c auth-passwd.c \
 	auth.c auth2.c auth-options.c session.c \
 	auth2-chall.c groupaccess.c \
 	auth-bsdauth.c auth2-hostbased.c auth2-kbdint.c \
-	auth2-none.c auth2-passwd.c auth2-pubkey.c \
+	auth2-none.c auth2-passwd.c auth2-pubkey.c auth2-pubkeyfile.c \
 	monitor.c monitor_wrap.c auth-krb5.c \
 	auth2-gss.c gss-serv.c gss-serv-krb5.c \
-	loginrec.c auth-pam.c auth-shadow.c auth-sia.c md5crypt.c \
+	loginrec.c auth-pam.c auth-shadow.c auth-sia.c \
 	srclimit.c sftp-server.c sftp-common.c \
 	sandbox-null.c sandbox-rlimit.c sandbox-systrace.c sandbox-darwin.c \
 	sandbox-seccomp-filter.c sandbox-capsicum.c sandbox-pledge.c \

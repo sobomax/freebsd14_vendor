@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9ce68353bd9eb5ac69fbdcf60b0bca68ea1bbd60 $
+ * $FreeBSD: 48b4942b42d9fd0d9d7a3b23e4461763b75c6aea $
  */
 
 #ifndef _SYS_EVENTHANDLER_H_
@@ -93,7 +93,7 @@ struct eventhandler_list {
  * to pre-define a symbol for the eventhandler list. This symbol can be used by
  * EVENTHANDLER_DIRECT_INVOKE, which has the advantage of not needing to do a
  * locked search of the global list of eventhandler lists. At least
- * EVENTHANDLER_LIST_DEFINE must be be used for EVENTHANDLER_DIRECT_INVOKE to
+ * EVENTHANDLER_LIST_DEFINE must be used for EVENTHANDLER_DIRECT_INVOKE to
  * work. EVENTHANDLER_LIST_DECLARE is only needed if the call to
  * EVENTHANDLER_DIRECT_INVOKE is in a different compilation unit from
  * EVENTHANDLER_LIST_DEFINE. If the events are even relatively high frequency

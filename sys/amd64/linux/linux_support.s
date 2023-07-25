@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 79e361867f1d2ee988aa71fd866be5007b78cc20 $
+ * $FreeBSD: 1e9ad45b9623b0bc70b31c34f9385d57f48151f7 $
  */
 
 #include "linux_assym.h"		/* system definitions */
@@ -39,7 +39,7 @@ futex_fault:
 	je	1f
 	clac
 1:	movq	$0,PCB_ONFAULT(%r8)
-	movl	$-EFAULT,%eax
+	movl	$EFAULT,%eax
 	ret
 
 ENTRY(futex_xchgl_nosmap)

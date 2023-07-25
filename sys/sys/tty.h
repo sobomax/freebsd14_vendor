@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ee76b343c3a882c574d53b1d3c356a9257cdd80 $
+ * $FreeBSD: f25dc3ca5e8bad54a4519d5328a4bc1098c3417d $
  */
 
 #ifndef _SYS_TTY_H_
@@ -144,7 +144,7 @@ struct xtty {
 	size_t	xt_size;	/* Structure size. */
 	size_t	xt_insize;	/* Input queue size. */
 	size_t	xt_incc;	/* Canonicalized characters. */
-	size_t	xt_inlc;	/* Input line charaters. */
+	size_t	xt_inlc;	/* Input line characters. */
 	size_t	xt_inlow;	/* Input low watermark. */
 	size_t	xt_outsize;	/* Output queue size. */
 	size_t	xt_outcc;	/* Output queue usage. */

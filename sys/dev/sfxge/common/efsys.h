@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: 37f3deeb2fbc4c5c7107f54ff4d8ad77dea1dc07 $
+ * $FreeBSD: 1ba130c967556fa4fac935848347404c7c970543 $
  */
 
 #ifndef	_SYS_EFSYS_H
@@ -846,6 +846,7 @@ typedef struct efsys_bar_s {
 		    ("not power of 2 aligned"));			\
 									\
 		(void) (_esbp);						\
+		(void) (_eqp);						\
 									\
 		/* FIXME: Perform a 64-bit write */			\
 		KASSERT(0, ("not implemented"));			\

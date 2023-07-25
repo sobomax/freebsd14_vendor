@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cf2f7e755520847b4ba62b3ee21462be96249290 $
+ * $FreeBSD: fb9c7210122c8c743e9156aaf042e190c283d941 $
  */
 
 /*
@@ -38,6 +38,19 @@
 
 #include "mvm.h"
 
+#ifdef CONFIG_IWLWIFI_DEBUGFS
+void
+iwl_mvm_update_frame_stats(struct iwl_mvm *mvm, u32 rate, bool agg)
+{
+
+}
+
+void
+iwl_mvm_reset_frame_stats(struct iwl_mvm *mvm)
+{
+
+}
+#endif
 
 int
 iwl_mvm_rate_control_register(void)

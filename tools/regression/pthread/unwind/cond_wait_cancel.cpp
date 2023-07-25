@@ -1,4 +1,4 @@
-/* $FreeBSD: 5975e028a5cab112a8c600e992a583888ef815cd $ */
+/* $FreeBSD: 4dfa57746552ccc539443466be90991944fbe025 $ */
 /* Test stack unwinding for pthread_cond_wait function */
 
 #include <pthread.h>
@@ -8,11 +8,11 @@
 
 #include "Test.cpp"
 
-pthread_mutex_t mtx;
-pthread_cond_t cv;
+static pthread_mutex_t mtx;
+static pthread_cond_t cv;
 
-void *
-thr(void *arg)
+static void *
+thr(void *arg __unused)
 {
 	Test t;
 

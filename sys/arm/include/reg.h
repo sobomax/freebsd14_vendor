@@ -1,5 +1,5 @@
 /*	$NetBSD: reg.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $	*/
-/* $FreeBSD: 494052f64732417e931bc36423302de4a87c4113 $ */
+/* $FreeBSD: 4dc95481688146404c1a4e0a42fecaefe8e55c5d $ */
 #ifndef MACHINE_REG_H
 #define MACHINE_REG_H
 
@@ -31,14 +31,5 @@ struct dbreg {
 	unsigned int dbg_wcr[ARM_WR_MAX]; /* Watchpoint Control Registers */
 	unsigned int dbg_wvr[ARM_WR_MAX]; /* Watchpoint Value Registers */
 };
-
-#ifdef _KERNEL
-int     fill_regs(struct thread *, struct reg *);
-int     set_regs(struct thread *, struct reg *);
-int     fill_fpregs(struct thread *, struct fpreg *);
-int     set_fpregs(struct thread *, struct fpreg *);
-int     fill_dbregs(struct thread *, struct dbreg *);
-int     set_dbregs(struct thread *, struct dbreg *);
-#endif
 
 #endif /* !MACHINE_REG_H */

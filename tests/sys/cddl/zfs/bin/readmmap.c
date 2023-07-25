@@ -17,7 +17,7 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- * $FreeBSD: d2dd5605351d5756d322fc3430c83ba0b611a4af $
+ * $FreeBSD: c21697798285f211bce6fe49363dee758086c994 $
  */
 
 /*
@@ -43,6 +43,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>

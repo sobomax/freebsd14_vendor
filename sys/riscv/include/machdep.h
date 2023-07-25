@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dddc30544a3f70155df34df86373d5cd233289ac $
+ * $FreeBSD: d06cc61655aa3283f37efd86f394ea25c019d16b $
  */
 
 #ifndef _MACHINE_MACHDEP_H_
@@ -45,9 +45,6 @@ struct riscv_bootparams {
 	vm_offset_t	dtbp_phys;	/* Device tree blob physical addr */
 	vm_offset_t	modulep;	/* loader(8) metadata */
 };
-
-extern vm_paddr_t physmap[PHYS_AVAIL_ENTRIES];
-extern u_int physmap_idx;
 
 void initriscv(struct riscv_bootparams *);
 

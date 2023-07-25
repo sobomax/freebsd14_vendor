@@ -1,6 +1,6 @@
-# $FreeBSD: 766d5931d8d8002bcf7e9c629e44290d103fd395 $
+# $FreeBSD: f98fcb3da7d12564a75d6e0b66b1ab685ce1ea37 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	sl
 INTERNALLIB=

@@ -1,6 +1,6 @@
-# $FreeBSD: e9631caf4d84914a6abf16f1653a2a317feaf4f7 $
+# $FreeBSD: 077bc6c64b1dec594756631b57c3468f118095b3 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	part

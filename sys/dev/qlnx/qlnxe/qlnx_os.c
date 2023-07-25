@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 750286d9c45881e04278f3d2962a8ca9c90a188e $");
+__FBSDID("$FreeBSD: 8a0163ba6d3cded769b04c2bafe4217e080937c9 $");
 
 #include "qlnx_os.h"
 #include "bcm_osal.h"
@@ -3251,7 +3251,7 @@ qlnx_tso_check(struct qlnx_fastpath *fp, bus_dma_segment_t *segs, int nsegs,
         uint32_t		window;
         bus_dma_segment_t	*s_seg;
 
-        /* If the header spans mulitple segments, skip those segments */
+        /* If the header spans multiple segments, skip those segments */
 
         if (nsegs < ETH_TX_LSO_WINDOW_BDS_NUM)
                 return (0);

@@ -1,4 +1,4 @@
-/* $FreeBSD: 6f619536f13a4e2e24d29114eadc1354bb27a51a $ */
+/* $FreeBSD: 88bfa8f68a84b9276db115bd0d8cdc783331d4f2 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -31,7 +31,7 @@
  */
 
 /*
- * Mailbox and Queue Entry Definitions for for Qlogic ISP SCSI adapters.
+ * Mailbox and Queue Entry Definitions for Qlogic ISP SCSI adapters.
  */
 #ifndef	_ISPMBOX_H
 #define	_ISPMBOX_H

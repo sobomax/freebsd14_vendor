@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94f9bed3d9b8a04ce7812ea72b14a4b3e5c99e2f $");
+__FBSDID("$FreeBSD: 7228c6201b7edeb1e40ee5de14d7662aa0b78662 $");
 
 #include "opt_vm.h"
 
@@ -204,6 +204,9 @@ vm_object_zdtor(void *mem, int size, void *arg)
 	KASSERT(object->type == OBJT_DEAD,
 	    ("object %p has non-dead type %d",
 	    object, object->type));
+	KASSERT(object->charge == 0 && object->cred == NULL,
+	    ("object %p has non-zero charge %ju (%p)",
+	    object, (uintmax_t)object->charge, object->cred));
 }
 #endif
 
@@ -744,7 +747,7 @@ vm_object_backing_remove_locked(vm_object_t object)
 	vm_object_sub_shadow(backing_object);
 	if ((object->flags & OBJ_SHADOWLIST) != 0) {
 		LIST_REMOVE(object, shadow_list);
-		object->flags &= ~OBJ_SHADOWLIST;
+		vm_object_clear_flag(object, OBJ_SHADOWLIST);
 	}
 	object->backing_object = NULL;
 }
@@ -778,7 +781,7 @@ vm_object_backing_insert_locked(vm_object_t object, vm_object_t backing_object)
 		VM_OBJECT_ASSERT_WLOCKED(backing_object);
 		LIST_INSERT_HEAD(&backing_object->shadow_head, object,
 		    shadow_list);
-		object->flags |= OBJ_SHADOWLIST;
+		vm_object_set_flag(object, OBJ_SHADOWLIST);
 	}
 	object->backing_object = backing_object;
 }
@@ -1230,7 +1233,7 @@ vm_object_sync(vm_object_t object, vm_ooffset_t offset, vm_size_t size,
 	    vm_object_mightbedirty(object) != 0 &&
 	    ((vp = object->handle)->v_vflag & VV_NOSYNC) == 0) {
 		VM_OBJECT_WUNLOCK(object);
-		(void) vn_start_write(vp, &mp, V_WAIT);
+		(void)vn_start_write(vp, &mp, V_WAIT);
 		vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
 		if (syncio && !invalidate && offset == 0 &&
 		    atop(size) == object->size) {
@@ -1251,8 +1254,23 @@ vm_object_sync(vm_object_t object, vm_ooffset_t offset, vm_size_t size,
 		res = vm_object_page_clean(object, offset, offset + size,
 		    flags);
 		VM_OBJECT_WUNLOCK(object);
-		if (fsync_after)
-			error = VOP_FSYNC(vp, MNT_WAIT, curthread);
+		if (fsync_after) {
+			for (;;) {
+				error = VOP_FSYNC(vp, MNT_WAIT, curthread);
+				if (error != ERELOOKUP)
+					break;
+
+				/*
+				 * Allow SU/bufdaemon to handle more
+				 * dependencies in the meantime.
+				 */
+				VOP_UNLOCK(vp);
+				vn_finished_write(mp);
+
+				(void)vn_start_write(vp, &mp, V_WAIT);
+				vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
+			}
+		}
 		VOP_UNLOCK(vp);
 		vn_finished_write(mp);
 		if (error != 0)
@@ -1498,7 +1516,8 @@ vm_object_shadow(vm_object_t *object, vm_ooffset_t *offset, vm_size_t length,
 			vm_object_backing_insert(result, source);
 			result->domain = source->domain;
 #if VM_NRESERVLEVEL > 0
-			result->flags |= source->flags & OBJ_COLORED;
+			vm_object_set_flag(result,
+			    (source->flags & OBJ_COLORED));
 			result->pg_color = (source->pg_color +
 			    OFF_TO_IDX(*offset)) & ((1 << (VM_NFREEORDER -
 			    1)) - 1);
@@ -2563,7 +2582,7 @@ vm_object_list_handler(struct sysctl_req *req, bool swap_only)
 		    count * 11 / 10));
 	}
 
-	kvo = malloc(sizeof(*kvo), M_TEMP, M_WAITOK);
+	kvo = malloc(sizeof(*kvo), M_TEMP, M_WAITOK | M_ZERO);
 	error = 0;
 
 	/*
@@ -2862,8 +2881,6 @@ DB_SHOW_COMMAND(vmopag, vm_object_print_pages)
 		fidx = 0;
 		pa = -1;
 		TAILQ_FOREACH(m, &object->memq, listq) {
-			if (m->pindex > 128)
-				break;
 			if ((prev_m = TAILQ_PREV(m, pglist, listq)) != NULL &&
 			    prev_m->pindex + 1 != m->pindex) {
 				if (rcount) {

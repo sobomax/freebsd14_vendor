@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f45baed634fa0c763da2ac2578e43227091841d $");
+__FBSDID("$FreeBSD: fe8a7d50839f06a43a3b59c2cd556f5208aa4e16 $");
 
 #include "opt_quota.h"
 #include "opt_ufs.h"
@@ -68,10 +68,7 @@ MALLOC_DEFINE(M_UFSMNT, "ufs_mount", "UFS mount structure");
  * Return the root of a filesystem.
  */
 int
-ufs_root(mp, flags, vpp)
-	struct mount *mp;
-	int flags;
-	struct vnode **vpp;
+ufs_root(struct mount *mp, int flags, struct vnode **vpp)
 {
 	struct vnode *nvp;
 	int error;
@@ -87,11 +84,7 @@ ufs_root(mp, flags, vpp)
  * Do operations associated with quotas
  */
 int
-ufs_quotactl(mp, cmds, id, arg)
-	struct mount *mp;
-	int cmds;
-	uid_t id;
-	void *arg;
+ufs_quotactl(struct mount *mp, int cmds, uid_t id, void *arg)
 {
 #ifndef QUOTA
 	if ((cmds >> SUBCMDSHIFT) == Q_QUOTAON ||
@@ -185,8 +178,7 @@ ufs_quotactl(mp, cmds, id, arg)
  * Initial UFS filesystems, done only once.
  */
 int
-ufs_init(vfsp)
-	struct vfsconf *vfsp;
+ufs_init(struct vfsconf *vfsp)
 {
 
 #ifdef QUOTA
@@ -202,8 +194,7 @@ ufs_init(vfsp)
  * Uninitialise UFS filesystems, done before module unload.
  */
 int
-ufs_uninit(vfsp)
-	struct vfsconf *vfsp;
+ufs_uninit(struct vfsconf *vfsp)
 {
 
 #ifdef QUOTA

@@ -31,14 +31,14 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4dedb72edb2254324f9f1e478c917fd8841181cf $");
+__FBSDID("$FreeBSD: b1f04c0832a103dcf5123ce7208284e018f12e01 $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
+#include <sys/reg.h>
 #include <sys/systm.h>
 
 #include <machine/cpu.h>
-#include <machine/reg.h>
 
 #ifdef DDB
 #include <ddb/ddb.h>

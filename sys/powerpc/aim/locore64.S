@@ -1,4 +1,4 @@
-/* $FreeBSD: f0a183c4b331ed864e97d2b39de77bf321a1ee42 $ */
+/* $FreeBSD: 3eb6e546399ce6784bd0e24526c96ac08b6a9257 $ */
 
 /*-
  * Copyright (C) 2010-2016 Nathan Whitehorn
@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f0a183c4b331ed864e97d2b39de77bf321a1ee42 $
+ * $FreeBSD: 3eb6e546399ce6784bd0e24526c96ac08b6a9257 $
  */
 
 #include "assym.inc"
@@ -82,6 +82,9 @@ TOC_ENTRY(trapstk)
  */
 	.section ".text.kboot", "x", @progbits
 kbootentry:
+#ifdef __LITTLE_ENDIAN__
+	RETURN_TO_NATIVE_ENDIAN
+#endif
 	b __start
 . = kbootentry + 0x40	/* Magic address used in platform layer */
 	.global smp_spin_sem

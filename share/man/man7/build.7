@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 015e80c4bc24d1f3beceaeab554acfa1328fb64b $
+.\" $FreeBSD: d8887b534758e8570dc0c6a03d76b6c9bef05a10 $
 .\"
 .Dd August 10, 2021
 .Dt BUILD 7
@@ -40,9 +40,11 @@ normally
 and
 .Pa /usr/ports .
 These directories may be initially empty or non-existent until updated with
-.Xr svn 1
-(or
-.Xr svnlite 1 ) .
+Git
+.Po installed from packages with
+.Xr pkg 7
+or from
+.Xr ports 7 Pc .
 Directory
 .Pa /usr/src
 contains the
@@ -880,11 +882,10 @@ manpage first appeared in
 .Xr cc 1 ,
 .Xr install 1 ,
 .Xr make 1 ,
-.Xr svn 1 ,
-.Xr svnlite 1 ,
 .Xr make.conf 5 ,
 .Xr src.conf 5 ,
 .Xr arch 7 ,
+.Xr pkg 7 ,
 .Xr ports 7 ,
 .Xr release 7 ,
 .Xr tests 7 ,

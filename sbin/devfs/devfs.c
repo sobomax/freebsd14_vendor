@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7be94c4737de15d2582948d4d3f8d1edcb175990 $");
+__FBSDID("$FreeBSD: b5a6bf4015a2a4c4bc337f07f2a9e3d5eac78e80 $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -228,7 +228,7 @@ usage(void)
 {
 
 	fprintf(stderr, "usage: %s\n%s\n",
-	    "\tdevfs [-m mount-point] [-s ruleset] rule ...",
+	    "\tdevfs [-m mount-point] rule [-s ruleset] ...",
 	    "\tdevfs [-m mount-point] ruleset ...");
 	exit(1);
 }

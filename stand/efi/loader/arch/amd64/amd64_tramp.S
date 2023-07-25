@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Benno Rice under sponsorship from
  * the FreeBSD Foundation.
@@ -25,10 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c102d924358943a4d9e43d63b21c96e35577f957 $
+ * $FreeBSD: 7e15eeb4a035f96b6b7eeae291d51324f863677f $
  */
 
 #include <machine/asmacros.h>
+
+#define ASM_FILE
+#include "multiboot2.h"
 
 	.text
 	.globl	amd64_tramp
@@ -57,6 +59,15 @@ amd64_tramp:
 
 	ALIGN_TEXT
 amd64_tramp_end:
+
+/* void multiboot2_exec(uint64_t entry, uint64_t multiboot_info, uint64_t stack) */
+	.globl	multiboot2_exec
+multiboot2_exec:
+	movq	%rdx,%rsp
+	pushq	%rdi
+	movq	%rsi,%rbx
+	movq	$MULTIBOOT2_BOOTLOADER_MAGIC,%rax
+	ret
 
 	.data
 	.globl	amd64_tramp_size

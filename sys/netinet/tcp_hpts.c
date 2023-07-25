@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d18c9db358d2685c446617803fc97c2d87ed7930 $");
+__FBSDID("$FreeBSD: a2069dce7b0b2cb2d7ac4af80fb48a6dfa70602e $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -781,7 +781,7 @@ max_slots_available(struct tcp_hpts_entry *hpts, uint32_t wheel_slot, uint32_t *
 	}
 	/*
 	 * To get the number left we can insert into we simply
-	 * subract the distance the pacer has to run from how
+	 * subtract the distance the pacer has to run from how
 	 * many slots there are.
 	 */
 	avail_on_wheel = NUM_OF_HPTSI_SLOTS - dis_to_travel;
@@ -1407,9 +1407,7 @@ tcp_hptsi(struct tcp_hpts_entry *hpts, int from_callout)
 	struct tcpcb *tp;
 	struct inpcb *inp = NULL, *ninp;
 	struct timeval tv;
-	uint64_t total_slots_processed = 0;
 	int32_t slots_to_run, i, error;
-	int32_t paced_cnt = 0;
 	int32_t loop_cnt = 0;
 	int32_t did_prefetch = 0;
 	int32_t prefetch_ninp = 0;
@@ -1459,7 +1457,7 @@ again:
 		 * p_prev_slot, so that needs to be the last slot
 		 * we run. The next slot after that should be our
 		 * reserved first slot for new, and then starts
-		 * the running postion. Now the problem is the
+		 * the running position. Now the problem is the
 		 * reserved "not to yet" place does not exist
 		 * and there may be inp's in there that need
 		 * running. We can merge those into the
@@ -1529,9 +1527,7 @@ again:
 				/* Record the new position */
 				orig_exit_slot = hpts->p_runningslot;
 			}
-			total_slots_processed++;
 			hpts->p_inp = inp;
-			paced_cnt++;
 			KASSERT(hpts->p_runningslot == inp->inp_hptsslot,
 				("Hpts:%p inp:%p slot mis-aligned %u vs %u",
 				 hpts, inp, hpts->p_runningslot, inp->inp_hptsslot));
@@ -1622,7 +1618,7 @@ again:
 				 * goes off and sees the mis-match. We
 				 * simply correct it here and the CPU will
 				 * switch to the new hpts nextime the tcb
-				 * gets added to the the hpts (not this one)
+				 * gets added to the hpts (not this one)
 				 * :-)
 				 */
 				tcp_set_hpts(inp);
@@ -1668,7 +1664,7 @@ again:
 				 * than the previous inp) and there no
 				 * assurance that ninp was not pulled while
 				 * we were processing inp and freed. If this
-				 * occured it could mean that either:
+				 * occurred it could mean that either:
 				 *
 				 * a) Its NULL (which is fine we won't go
 				 * here) <or> b) Its valid (which is cool we
@@ -1913,7 +1909,7 @@ out_with_mtx:
 }
 
 static struct tcp_hpts_entry *
-tcp_choose_hpts_to_run()
+tcp_choose_hpts_to_run(void)
 {
 	int i, oldest_idx;
 	uint32_t cts, time_since_ran, calc;

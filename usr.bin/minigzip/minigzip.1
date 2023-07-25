@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 754e98f84c37ce686d422cbe2747d4ff89b832db $
+.\" $FreeBSD: d73cd838257b9926e2e30614d068d0cad9a80ca2 $
 .\"
-.Dd May 22, 2012
+.Dd August 1, 2022
 .Dt MINIGZIP 1
 .Os
 .Sh NAME
@@ -74,6 +74,14 @@ option is specified,
 .Nm
 writes the results to standard output and keep the original files
 unchanged.
+.Sh DEPRECATION NOTICE
+.Nm
+is deprecated and will be removed from future versions of the
+.Fx
+base system.
+Users should use
+.Xr gzip 1
+instead.
 .Sh SEE ALSO
 .Xr gzip 1
 .Sh AUTHORS

@@ -1,4 +1,4 @@
-/* $FreeBSD: 62e22805b39c5e70147ae8807e24d233e5041ba5 $ */
+/* $FreeBSD: 69d9ea292523cd68db61647718998c480348af72 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -546,7 +546,7 @@ usb_pc_alloc_mem(struct usb_page_cache *pc, struct usb_page *pg,
 		/*
 		 * XXX BUS-DMA workaround - FIXME later:
 		 *
-		 * We assume that that the alignment at this point of
+		 * We assume that the alignment at this point of
 		 * the code is greater than or equal to the size and
 		 * less than two times the size, so that if we double
 		 * the size, the size will be greater than the

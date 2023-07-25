@@ -1,4 +1,4 @@
-.\" $FreeBSD: 2a551e1d9e17d5018cd09d79bb432bc4695dd7dc $
+.\" $FreeBSD: 8fe8229c597cd80c8d878c2a6a18c729ded590eb $
 Use the unified object directory format for
 .Xr build 7
 targets.
@@ -6,7 +6,8 @@ For cross-builds, native-builds, and sub-directory builds, the format of
 .Pa ${MAKEOBJDIRPREFIX}/${.CURDIR}/${TARGET}.${TARGET_ARCH}
 is used.
 .Pp
-This option is transitional and will be removed before the 12.0 release,
+This option is transitional and will be removed in a future version of
+.Fx ,
 at which time
-.va WITH_UNIFIED_OBJDIR
+.Va WITH_UNIFIED_OBJDIR
 will be enabled permanently.

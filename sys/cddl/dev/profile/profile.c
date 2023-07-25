@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: 1e7a84c272cd1c10bb9daa3869bf9dceac4c3045 $
+ * $FreeBSD: 99381ea7d745536382127a188943062df16d593b $
  *
  */
 
@@ -108,7 +108,7 @@
 /*
  * This value is bogus just to make module compilable on powerpc
  */
-#define	PROF_ARTIFICIAL_FRAMES	3
+#define	PROF_ARTIFICIAL_FRAMES	8
 #endif
 
 struct profile_probe_percpu;
@@ -127,8 +127,7 @@ struct profile_probe_percpu;
 #endif
 
 #ifdef __riscv
-/* TODO: verify */
-#define	PROF_ARTIFICIAL_FRAMES	10
+#define	PROF_ARTIFICIAL_FRAMES	12
 #endif
 
 typedef struct profile_probe {
@@ -649,7 +648,7 @@ profile_load(void *dummy)
 
 
 static int
-profile_unload()
+profile_unload(void)
 {
 	int error = 0;
 

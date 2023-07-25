@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46ce66d4f434a1ced69dcfef3b872c3110d6119d $");
+__FBSDID("$FreeBSD: a0b1e120a0b1265b8182185b53e900a31c031572 $");
 
 #include <sys/endian.h>
 
@@ -359,7 +359,7 @@ bhnd_nvram_sprom_getvar_direct(struct bhnd_nvram_io *io, const char *name,
 	if (error == ENOENT)
 		return (ENOENT);
 
-	/* Some other parse error occured */
+	/* Some other parse error occurred */
 	return (error);
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: 584a86b6ada71b96fe54fecfa50a5d1a65c12a62 $
+# $FreeBSD: d7807157f50c587677dc7384a06a46b034297c28 $
 .PATH:	${SRCTOP}/sys/dev/mthca
 
 KMOD=	mthca
@@ -26,7 +26,7 @@ SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 CFLAGS+= -DCONFIG_INFINIBAND_USER_MEM
 CFLAGS+= -DINET6 -DINET
 

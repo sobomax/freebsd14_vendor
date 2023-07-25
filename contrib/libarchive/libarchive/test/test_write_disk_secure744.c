@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 08c725e12b80795d3d6d217edfc2a1e5334b87ae $");
+__FBSDID("$FreeBSD: 9b12d4cf108272ac80071747c63222595f67d66e $");
 
 #define UMASK 022
 
@@ -75,7 +75,7 @@ DEFINE_TEST(test_write_disk_secure744)
 		archive_entry_free(ae);
 
 		*p++ = '/';
-		sprintf(p, "target%d", n);
+		snprintf(p, buff_size - (p - buff), "target%d", n);
 
 		/* Try to create a file through the symlink, should fail. */
 		assert((ae = archive_entry_new()) != NULL);

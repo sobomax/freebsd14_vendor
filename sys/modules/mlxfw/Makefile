@@ -1,4 +1,4 @@
-# $FreeBSD: 3ab9b0f3950dde91f7ff31bc3668eb6acf18e36c $
+# $FreeBSD: 18f6128d92788794d230c0135df37538aa2d87f0 $
 .PATH:  ${SRCTOP}/sys/dev/mlxfw
 
 KMOD=mlxfw
@@ -10,7 +10,7 @@ SRCS+=	${LINUXKPI_GENSRCS}
 
 CFLAGS+= \
 	-I${SRCTOP}/sys/ofed/include \
-	-I${SRCTOP}/sys/compat/linuxkpi/common/include \
+	${LINUXKPI_INCLUDES} \
 	-I${SRCTOP}/sys/contrib/xz-embedded/freebsd \
 	-I${SRCTOP}/sys/contrib/xz-embedded/linux/lib/xz
 

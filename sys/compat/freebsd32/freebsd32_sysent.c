@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: b683e366c8642fddc926eb1b005ec3b7e2b9954d $
+ * $FreeBSD: 0b6b0a6a5d57c6a2d2d999fcbcca8925eba90e3d $
  */
 
 #include <sys/param.h>
@@ -607,7 +607,7 @@ struct sysent freebsd32_sysent[] = {
 	{ .sy_narg = AS(rctl_remove_rule_args), .sy_call = (sy_call_t *)sys_rctl_remove_rule, .sy_auevent = AUE_NULL, .sy_flags = 0, .sy_thrcnt = SY_THR_STATIC },	/* 529 = rctl_remove_rule */
 #ifdef PAD64_REQUIRED
 	{ .sy_narg = AS(freebsd32_posix_fallocate_args), .sy_call = (sy_call_t *)freebsd32_posix_fallocate, .sy_auevent = AUE_POSIX_FALLOCATE, .sy_flags = SYF_CAPENABLED, .sy_thrcnt = SY_THR_STATIC },	/* 530 = freebsd32_posix_fallocate */
-	{ .sy_narg = AS(freebsd32_posix_fadvise_args), .sy_call = (sy_call_t *)freebsd32_posix_fadvise, .sy_auevent = AUE_POSIX_FADVISE, .sy_flags = 0, .sy_thrcnt = SY_THR_STATIC },	/* 531 = freebsd32_posix_fadvise */
+	{ .sy_narg = AS(freebsd32_posix_fadvise_args), .sy_call = (sy_call_t *)freebsd32_posix_fadvise, .sy_auevent = AUE_POSIX_FADVISE, .sy_flags = SYF_CAPENABLED, .sy_thrcnt = SY_THR_STATIC },	/* 531 = freebsd32_posix_fadvise */
 	{ .sy_narg = AS(freebsd32_wait6_args), .sy_call = (sy_call_t *)freebsd32_wait6, .sy_auevent = AUE_WAIT6, .sy_flags = 0, .sy_thrcnt = SY_THR_STATIC },	/* 532 = freebsd32_wait6 */
 #else
 	{ .sy_narg = AS(freebsd32_posix_fallocate_args), .sy_call = (sy_call_t *)freebsd32_posix_fallocate, .sy_auevent = AUE_POSIX_FALLOCATE, .sy_flags = SYF_CAPENABLED, .sy_thrcnt = SY_THR_STATIC },	/* 530 = freebsd32_posix_fallocate */

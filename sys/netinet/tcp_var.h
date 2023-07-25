@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: 4a05f0f5ab2e19ea08077485cce279c093fc81c7 $
+ * $FreeBSD: 2474f37879037419059cfab85ad40a91d3846917 $
  */
 
 #ifndef _NETINET_TCP_VAR_H_
@@ -211,8 +211,6 @@ struct tcpcb {
 	int	t_blackhole_enter;	/* when to enter blackhole detection */
 	int	t_blackhole_exit;	/* when to exit blackhole detection */
 	u_int	t_rttmin;		/* minimum rtt allowed */
-
-	u_int	t_rttbest;		/* best rtt we've seen */
 
 	int	t_softerror;		/* possible error not yet reported */
 	uint32_t  max_sndwnd;		/* largest window peer has offered */

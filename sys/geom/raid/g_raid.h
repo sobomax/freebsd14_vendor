@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: eeaa8ac325082dbf07894a5037c22f02bcb8161f $
+ * $FreeBSD: 720d588d9118a3dca20c3a7d418deccfef2130e4 $
  */
 
 #ifndef	_G_RAID_H_
@@ -406,8 +406,8 @@ int g_raid_destroy_disk(struct g_raid_disk *disk);
 
 void g_raid_iodone(struct bio *bp, int error);
 void g_raid_subdisk_iostart(struct g_raid_subdisk *sd, struct bio *bp);
-int g_raid_subdisk_kerneldump(struct g_raid_subdisk *sd,
-    void *virtual, vm_offset_t physical, off_t offset, size_t length);
+int g_raid_subdisk_kerneldump(struct g_raid_subdisk *sd, void *virtual,
+    off_t offset, size_t length);
 
 struct g_consumer *g_raid_open_consumer(struct g_raid_softc *sc,
     const char *name);

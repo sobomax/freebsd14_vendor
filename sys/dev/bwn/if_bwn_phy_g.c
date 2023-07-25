@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1659eb2a99bb25d8123a01e44fca1a5213eb2967 $");
+__FBSDID("$FreeBSD: 09f8f0e569e6af4c41f6bf0e9df847067cec58d5 $");
 
 #include "opt_bwn.h"
 #include "opt_wlan.h"
@@ -2136,14 +2136,12 @@ bwn_lo_measure_gain_values(struct bwn_mac *mac, int16_t max_rx_gain,
 		max_rx_gain = 0;
 
 	if (BWN_HAS_LOOPBACK(phy)) {
-		int trsw_rx = 0;
 		int trsw_rx_gain;
 
 		if (use_trsw_rx) {
 			trsw_rx_gain = pg->pg_trsw_rx_gain / 2;
 			if (max_rx_gain >= trsw_rx_gain) {
 				trsw_rx_gain = max_rx_gain - trsw_rx_gain;
-				trsw_rx = 0x20;
 			}
 		} else
 			trsw_rx_gain = max_rx_gain;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 578f719f40e4c50b4af1dd8423fd6869be8a4eca $");
+__FBSDID("$FreeBSD: 31cc3ad15583d3096278c1004249a7391f3962a2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -770,7 +770,7 @@ driver_t ata_pcichannel_driver = {
 DRIVER_MODULE(ata, atapci, ata_pcichannel_driver, ata_devclass, NULL, NULL);
 
 /*
- * misc support fucntions
+ * misc support functions
  */
 int
 ata_legacy(device_t dev)

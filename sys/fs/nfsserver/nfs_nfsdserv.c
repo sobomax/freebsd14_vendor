@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d72716ce7fd8bd5a423ba2e7e8bea93854642b1a $");
+__FBSDID("$FreeBSD: 2d1048d2648698e24323b890900db9edd250e2bb $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -462,7 +462,7 @@ nfsrvd_setattr(struct nfsrv_descript *nd, __unused int isdgram,
 
 	if (!nd->nd_repstat && (nd->nd_flag & ND_NFSV4)) {
 	    /*
-	     * For V4, try setting the attrbutes in sets, so that the
+	     * For V4, try setting the attributes in sets, so that the
 	     * reply bitmap will be correct for an error case.
 	     */
 	    if (NFSISSET_ATTRBIT(&attrbits, NFSATTRBIT_OWNER) ||
@@ -647,8 +647,15 @@ nfsrvd_lookup(struct nfsrv_descript *nd, __unused int isdgram,
 		 * non-exported volumes during NFSv4 mounting.
 		 */
 		nd->nd_repstat = ENOENT;
-	if (nd->nd_repstat == 0)
+	if (nd->nd_repstat == 0) {
 		nd->nd_repstat = nfsvno_getfh(vp, fhp, p);
+		/*
+		 * EOPNOTSUPP indicates the file system cannot be exported,
+		 * so just pretend the entry does not exist.
+		 */
+		if (nd->nd_repstat == EOPNOTSUPP)
+			nd->nd_repstat = ENOENT;
+	}
 	if (!(nd->nd_flag & ND_NFSV4) && !nd->nd_repstat)
 		nd->nd_repstat = nfsvno_getattr(vp, &nva, nd, p, 1, NULL);
 	if (vpp != NULL && nd->nd_repstat == 0)
@@ -3822,6 +3829,11 @@ nfsrvd_secinfononame(struct nfsrv_descript *nd, int isdgram,
 	fhstyle = fxdr_unsigned(int, *tl);
 	switch (fhstyle) {
 	case NFSSECINFONONAME_PARENT:
+		if (dp->v_type != VDIR) {
+			vput(dp);
+			nd->nd_repstat = NFSERR_NOTDIR;
+			goto nfsmout;
+		}
 		NFSNAMEICNDSET(&named.ni_cnd, nd->nd_cred, LOOKUP,
 		    LOCKLEAF | SAVESTART);
 		nfsvno_setpathbuf(&named, &bufp, &hashp);

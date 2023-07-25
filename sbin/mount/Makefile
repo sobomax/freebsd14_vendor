@@ -1,12 +1,19 @@
 #	@(#)Makefile	8.6 (Berkeley) 5/8/95
-# $FreeBSD: 68c7ee9819d89e10ab22139aac847078add86a73 $
+# $FreeBSD: 1bc84039b121bf1466dd1d79a792252e71ed7fd6 $
 
 PACKAGE=runtime
 PROG=	mount
 SRCS=	mount.c mount_fs.c getmntopts.c vfslist.c
-MAN=	mount.8
-# We do NOT install the getmntopts.3 man page.
+MAN=	mntopts.3 mount.8
+MLINKS+= mntopts.3 getmntopts.3
+MLINKS+= mntopts.3 getmntpoint.3
+MLINKS+= mntopts.3 chkdoreload.3
+MLINKS+= mntopts.3 build_iovec.3
+MLINKS+= mntopts.3 build_iovec_argf.3
+MLINKS+= mntopts.3 free_iovec.3
+MLINKS+= mntopts.3 checkpath.3
+MLINKS+= mntopts.3 rmslashes.3
 
-LIBADD=	util
+LIBADD=	util xo
 
 .include <bsd.prog.mk>

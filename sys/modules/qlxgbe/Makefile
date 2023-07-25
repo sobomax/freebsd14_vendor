@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
 # */
 #
-# $FreeBSD: 81402e4f5a8259c0a86489e1048522465b3273eb $
+# $FreeBSD: 3a83bd96708207bb9c6be644ee9b63c79f59e4ad $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlxgbe
@@ -42,7 +42,7 @@ SRCS+= ql_fw.c
 SRCS+= ql_boot.c
 SRCS+= ql_minidump.c
 
-SRCS+= device_if.h bus_if.h pci_if.h
+SRCS+= device_if.h bus_if.h pci_if.h opt_inet.h
 
 CFLAGS += -DQLA_LOCK_NO_SLEEP=1
 #CFLAGS += -DQL_DBG -g

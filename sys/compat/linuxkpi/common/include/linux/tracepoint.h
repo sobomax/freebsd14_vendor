@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0171427439f9ffbe8c68f76c15cfda5d34faf239 $
+ * $FreeBSD: f563b6d99e4ef77e803bcb423afd70c7edfdac36 $
  */
 
 #ifndef	_LINUXKPI_LINUX_TRACEPOINT_H
@@ -37,7 +37,13 @@
 #define	TP_printk(...)
 
 #define	TRACE_EVENT(_name, _proto, _args, _struct, _assign, _printk)	\
-static void trace_ ## _name(_proto)					\
+static inline void trace_ ## _name(_proto)				\
+{									\
+}
+
+#define	DECLARE_EVENT_CLASS(...)
+#define	DEFINE_EVENT(_x, _name, _proto, _args)				\
+static inline void trace_ ## _name(_proto)				\
 {									\
 }
 

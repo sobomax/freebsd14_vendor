@@ -1,23 +1,24 @@
-# $FreeBSD: 00839c05d37dbe586a417893c57c34bea2e05659 $
+# $FreeBSD: f0d8129be9e1bbeffa40f9e14eb3a65df4291921 $
 
 .PATH:		${ZFSSRC}
 .PATH:		${SYSDIR}/crypto/skein
 .PATH:		${ZFSOSSRC}/spl
 .PATH:		${OZFS}/module/zstd/lib
-ZFSSRC=		zfs.c nvlist.c skein.c skein_block.c list.c
-ZFSSRC+=	zstd_shim.c zstd.c
+ZFS_SRC=	zfs.c nvlist.c skein.c skein_block.c list.c
+ZFS_SRC+=	zstd_shim.c zstd.c
 CFLAGS+=	-DHAS_ZSTD_ZFS
-SRCS+=		${ZFSSRC}
+SRCS+=		${ZFS_SRC}
 
 CFLAGS+=	-I${LDRSRC}
 CFLAGS+=	-I${SYSDIR}/cddl/boot/zfs
 CFLAGS+=	-I${SYSDIR}/crypto/skein
 
-ZFS_EARLY=	-I${ZFSOSINC}					\
+ZFS_EARLY=	-I${ZFSSRC}/spl					\
+		-I${ZFSOSINC}					\
 		-I${ZFSOSINC}/spl				\
 		-I${ZFSOSINC}/zfs
 
-.for i in ${ZFSSRC}
+.for i in ${ZFS_SRC}
 CFLAGS.$i+=	-include ${ZFSOSINC}/spl/sys/ccompile.h
 .endfor
 

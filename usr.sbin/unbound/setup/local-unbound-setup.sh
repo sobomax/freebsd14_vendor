@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 3be78339b0ba0ddef2a1e166a451b5340317dd16 $
+# $FreeBSD: dc0768a672a6310b7c25ec18052d0b5a43ef3f64 $
 #
 
 D="${DESTDIR}"
@@ -260,7 +260,7 @@ gen_unbound_conf() {
 	echo "        pidfile: ${pidfile}"
 	echo "        auto-trust-anchor-file: ${anchor}"
 	if [ "${use_tls}" = "yes" ] ; then
-		echo "        tls-cert-bundle: /etc/ssl/cert.pem"
+		echo "        tls-system-cert: yes"
 	fi
 	echo ""
 	if [ -f "${forward_conf}" ] ; then

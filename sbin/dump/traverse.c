@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)traverse.c	8.7 (Berkeley) 6/15/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 3630d2240f589a230ae2856d76b29ac83abce5c1 $";
+  "$FreeBSD: 08e902667759484440c9baf6b2598a71a526cfdf $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -525,12 +525,8 @@ dumpino(union dinode *dp, ino_t ino)
 			spcl.c_count = 1;
 			added = appendextdata(dp);
 			writeheader(ino);
-			if (sblock->fs_magic == FS_UFS1_MAGIC)
-				memmove(buf, (caddr_t)dp->dp1.di_db,
-				    (u_long)DIP(dp, di_size));
-			else
-				memmove(buf, (caddr_t)dp->dp2.di_db,
-				    (u_long)DIP(dp, di_size));
+			memmove(buf, DIP(dp, di_shortlink),
+			    (u_long)DIP(dp, di_size));
 			buf[DIP(dp, di_size)] = '\0';
 			writerec(buf, 0);
 			writeextdata(dp, ino, added);

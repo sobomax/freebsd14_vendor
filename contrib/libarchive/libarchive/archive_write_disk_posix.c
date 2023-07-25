@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: a82dc83f4cda07039a6c0e7705af1c21eb80038c $");
+__FBSDID("$FreeBSD: 1a36e6708c49dd7d8050012a60b02f845528553e $");
 
 #if !defined(_WIN32) || defined(__CYGWIN__)
 
@@ -1996,6 +1996,8 @@ archive_write_disk_new(void)
 		free(a);
 		return (NULL);
 	}
+	a->path_safe.s[0] = 0;
+
 #ifdef HAVE_ZLIB_H
 	a->decmpfs_compression_level = 5;
 #endif
@@ -2793,7 +2795,7 @@ check_symlinks_fsobj(char *path, int *a_eno, struct archive_string *a_estr,
 	char *tail;
 	char *head;
 	int last;
-	char c;
+	char c = '\0';
 	int r;
 	struct stat st;
 	int chdir_fd;

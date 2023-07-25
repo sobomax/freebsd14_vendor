@@ -32,7 +32,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: 2c18d9910c6fef529e51713187f9cbb0cd212448 $";
+  "$FreeBSD: c8a3a8a525e3464e8891b39a36e76a3b92c34aab $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -136,11 +136,8 @@ printstat(const char *cp, ino_t inum, union dinode *dp)
 	if (DIP(dp, di_size) > 0 &&
 	    DIP(dp, di_size) < sblock.fs_maxsymlinklen &&
 	    DIP(dp, di_blocks) == 0) {
-	    if (sblock.fs_magic == FS_UFS1_MAGIC)
-		p = (caddr_t)dp->dp1.di_db;
-	    else
-		p = (caddr_t)dp->dp2.di_db;
-	    printf(" to `%.*s'\n", (int) DIP(dp, di_size), p);
+	    printf(" to `%.*s'\n", (int) DIP(dp, di_size),
+		DIP(dp, di_shortlink));
 	} else {
 	    putchar('\n');
 	}

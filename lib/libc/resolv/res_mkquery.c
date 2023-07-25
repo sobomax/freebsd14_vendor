@@ -71,7 +71,7 @@ static const char sccsid[] = "@(#)res_mkquery.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_mkquery.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b009085af6c5ef9ab61bc88569c77bccac60686 $");
+__FBSDID("$FreeBSD: 6cf6e0864390c5b17ef7b2dda705059b0f8daaf9 $");
 
 #include "port_before.h"
 #include <sys/param.h>
@@ -258,7 +258,7 @@ res_nopt(res_state statp,
 }
 
 /*
- * Construct variable data (RDATA) block for OPT psuedo-RR, append it
+ * Construct variable data (RDATA) block for OPT pseudo-RR, append it
  * to the buffer, then update the RDLEN field (previously set to zero by
  * res_nopt()) with the new RDATA length.
  */

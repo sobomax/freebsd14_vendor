@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 30e58b9e130f5cc9ab30f70129ef8aaac1016987 $
+ * $FreeBSD: 6ad25b3cb7ce58af56e9a3a8790cd90001e93037 $
  */
 
 #ifndef _SVM_H_
@@ -33,6 +33,7 @@
 
 struct pcpu;
 struct svm_softc;
+struct svm_vcpu;
 
 /*
  * Guest register state that is saved outside the VMCB.
@@ -68,7 +69,7 @@ struct svm_regctx {
 
 void svm_launch(uint64_t pa, struct svm_regctx *gctx, struct pcpu *pcpu);
 #ifdef BHYVE_SNAPSHOT
-int  svm_set_tsc_offset(struct svm_softc *sc, int vcpu, uint64_t offset);
+void svm_set_tsc_offset(struct svm_vcpu *vcpu, uint64_t offset);
 #endif
 
 #endif /* _SVM_H_ */

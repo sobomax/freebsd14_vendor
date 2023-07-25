@@ -61,12 +61,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7363236ada0eb360163826879bd99d9f9db6bda4 $");
+__FBSDID("$FreeBSD: 5d38d73bf1067e8a9eceedc3aa255cdc60120cf3 $");
 
 #include "stand.h"
 
 int
-ioctl(int fd, u_long cmd, char *arg)
+ioctl(int fd, u_long cmd, void *arg)
 {
 	struct open_file *f;
 

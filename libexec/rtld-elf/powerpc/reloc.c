@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b624599d7df4a4dadf8c9e5ff928dede0e7a24bc $
+ * $FreeBSD: ab09b1536d80403f9a2bbc3c5c3bae93fb501426 $
  */
 
 #include <sys/param.h>
@@ -812,7 +812,6 @@ ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
 void
 allocate_initial_tls(Obj_Entry *list)
 {
-	Elf_Addr **tp;
 
 	/*
 	* Fix the size of the static TLS block by using the maximum
@@ -822,25 +821,17 @@ allocate_initial_tls(Obj_Entry *list)
 
 	tls_static_space = tls_last_offset + tls_last_size + RTLD_STATIC_TLS_EXTRA;
 
-	tp = (Elf_Addr **)((char *) allocate_tls(list, NULL, TLS_TCB_SIZE, 8)
-	    + TLS_TP_OFFSET + TLS_TCB_SIZE);
-
-	/*
-	 * XXX gcc seems to ignore 'tp = _tp;' 
-	 */
-	 
-	__asm __volatile("mr 2,%0" :: "r"(tp));
+	_tcb_set(allocate_tls(list, NULL, TLS_TCB_SIZE, TLS_TCB_ALIGN));
 }
 
 void*
 __tls_get_addr(tls_index* ti)
 {
-	register Elf_Addr **tp;
+	uintptr_t **dtvp;
 	char *p;
 
-	__asm __volatile("mr %0,2" : "=r"(tp));
-	p = tls_get_addr_common((Elf_Addr**)((Elf_Addr)tp - TLS_TP_OFFSET 
-	    - TLS_TCB_SIZE), ti->ti_module, ti->ti_offset);
+	dtvp = &_tcb_get()->tcb_dtv;
+	p = tls_get_addr_common(dtvp, ti->ti_module, ti->ti_offset);
 
 	return (p + TLS_DTV_OFFSET);
 }

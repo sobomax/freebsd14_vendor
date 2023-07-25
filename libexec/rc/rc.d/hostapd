@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 7e1611350438ac26463342e285ba5c6611c906eb $
+# $FreeBSD: d2d8dd253efa2d3fd5f9a8ae9c452b88635294ff $
 #
 
 # PROVIDE: hostapd
@@ -15,9 +15,11 @@ command=${hostapd_program}
 start_postcmd="hostapd_poststart"
 
 hostapd_poststart() {
-	ifconfig ${ifn} down
-	sleep 2
-	ifconfig ${ifn} up
+	if [ -n "$ifn" ]; then
+		ifconfig ${ifn} down
+		sleep 2
+		ifconfig ${ifn} up
+	fi
 }
 
 ifn="$2"

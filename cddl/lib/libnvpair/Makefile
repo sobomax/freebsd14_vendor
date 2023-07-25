@@ -1,4 +1,4 @@
-# $FreeBSD: aaf76ed3fb2842f6e225d2e9b5e92e3cca26348b $
+# $FreeBSD: b3a5506882938dd93427922fa1bb344bc70fd0d6 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/nvpair
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libnvpair
@@ -6,7 +6,7 @@
 LIB=	nvpair
 LIBADD=	spl
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 # user
 SRCS=	libnvpair.c \
 	libnvpair_json.c \

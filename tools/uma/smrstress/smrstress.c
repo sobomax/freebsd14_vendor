@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 7e7ee4ea065ca07456fc0e4f1eeeb20acb69d93c $
+ * $FreeBSD: 2cf5f50ffae4b8c3e92aa4588881985d982db250 $
  *
  */
 #include <sys/param.h>
@@ -123,6 +123,7 @@ smrs_thread(void *arg)
 	else
 		smrs_read();
 	atomic_add_int(&smrs_completed, 1);
+	kthread_exit();
 }
 
 static void

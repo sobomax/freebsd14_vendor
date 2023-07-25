@@ -27,20 +27,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cb83d839fec4c4638207599efece86c6506a80f $");
+__FBSDID("$FreeBSD: 7523787da5360e6e1a9ba2dce675f9088eee63f3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/proc.h>
+#include <sys/reg.h>
 #include <sys/signal.h>
 
 #include <machine/endian.h>
 #include <machine/frame.h>
 #include <machine/gdb_machdep.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/trap.h>
 
 #include <gdb/gdb.h>

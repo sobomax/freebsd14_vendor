@@ -1,4 +1,4 @@
- $FreeBSD: 72e3038ea352bfb726759a817db89213b5a720e4 $
+ $FreeBSD: 5b46ee6c28399c054a1030070c34447031e6edb5 $
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;
 ; System call name/number master file.
@@ -2927,7 +2927,7 @@
 		    off_t len
 		);
 	}
-531	AUE_POSIX_FADVISE	STD {
+531	AUE_POSIX_FADVISE	STD|CAPENABLED {
 		int posix_fadvise(
 		    int fd,
 		    off_t offset,

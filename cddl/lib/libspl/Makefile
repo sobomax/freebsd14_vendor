@@ -1,4 +1,4 @@
-# $FreeBSD: e8d6368fce8176d68e36bb609f88fd1c7bf65dfa $
+# $FreeBSD: 82f1aa037d4269e5955bcc0a4039b0a2909c0916 $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -8,7 +8,7 @@
 
 LIB=	spl
 LIBADD=
-PACKAGE=	runtime
+PACKAGE=	zfs
 
 SRCS = \
         assert.c \

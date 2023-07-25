@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 3482b4dd174b9aa89d23cd8eced8ef76b1775124 $
+ * $FreeBSD: 6994889f83fdcbbc81f75b7e96876c39251fa92b $
  */
 
 #ifndef _BHND_BHND_H_
@@ -823,7 +823,7 @@ bhnd_read_iost(device_t dev, uint16_t *iost)
  * @param dev The device to query.
  *
  * @retval true If @p dev is held in RESET or not clocked (BHND_IOCTL_CLK_EN),
- * or an error occured determining @p dev's hardware state.
+ * or an error occurred determining @p dev's hardware state.
  * @retval false If @p dev is clocked and is not held in RESET.
  */
 static inline bool

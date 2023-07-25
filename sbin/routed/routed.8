@@ -28,9 +28,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)routed.8	8.2 (Berkeley) 12/11/93
-.\" $FreeBSD: 63f8f4da66edfe2122a3d1693cb2a4a87a6046ac $
+.\" $FreeBSD: 6988e916fa7899904cad1d310f67ad942bf5878c $
 .\"
-.Dd August 26, 2014
+.Dd June 27, 2022
 .Dt ROUTED 8
 .Os
 .Sh NAME
@@ -488,10 +488,9 @@ specified in "dot" notation (see
 .Pa /etc/networks
 or
 .Pa /etc/hosts ,
-or
-.Xr named 8 ,
-must have been started before
-.Nm . )
+or a method in
+.Xr nsswitch.conf 5
+must be able to resolve it.)
 .Pp
 .Ar Mask
 is an optional number between 1 and 32 indicating the netmask associated

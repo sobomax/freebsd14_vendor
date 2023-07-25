@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 1e52214c90282dc244a112a61d0667cf7c6c21c1 $*/
+/*$FreeBSD: 3d414bf0bea1a20ed64037364de708e7fabe2f98 $*/
 
 #ifndef _ICE_VLAN_MODE_H_
 #define _ICE_VLAN_MODE_H_

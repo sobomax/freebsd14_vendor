@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fd9ba7fe666071ec2b490b9a050bdb90aa4cd348 $
+ * $FreeBSD: 314ae0d1dca6692279413ee42066ecab98f5f503 $
  */
 #pragma once
 #include_next <stdlib.h>
@@ -44,7 +44,5 @@ int rpmatch(const char *response);
 
 long long strtonum(const char *numstr, long long minval, long long maxval,
     const char **errstrp);
-
-void *reallocarray(void *optr, size_t nmemb, size_t size);
 
 __END_DECLS

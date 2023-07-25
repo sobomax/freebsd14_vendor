@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 23fc5d1404f152c6fb021b2925ed0d66526f850d $
+ * $FreeBSD: 9140e25e023a2c3fd9bfcb61f041a0566e7c9453 $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -178,6 +178,7 @@ bool	pmap_page_is_mapped(vm_page_t m);
 int	pmap_pinit_stage(pmap_t, enum pmap_stage, int);
 bool	pmap_ps_enabled(pmap_t pmap);
 uint64_t pmap_to_ttbr0(pmap_t pmap);
+void	pmap_disable_promotion(vm_offset_t sva, vm_size_t size);
 
 void	*pmap_mapdev(vm_offset_t, vm_size_t);
 void	*pmap_mapbios(vm_paddr_t, vm_size_t);

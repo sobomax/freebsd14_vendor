@@ -70,7 +70,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6ee2abc4ea1be1ea7a0fb29effe3e70892da5bff $");
+__FBSDID("$FreeBSD: 5166c0a2cbbcf7ad6b4c8f1adbab6a9e29c6de45 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -717,7 +717,7 @@ udp6_output(struct socket *so, int flags_arg, struct mbuf *m,
 	sin6 = (struct sockaddr_in6 *)addr6;
 
 	/*
-	 * In contrast to to IPv4 we do not validate the max. packet length
+	 * In contrast to IPv4 we do not validate the max. packet length
 	 * here due to IPv6 Jumbograms (RFC2675).
 	 */
 

@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fflush.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: decc974907f4a745590ad6edd143cae699ed1eda $");
+__FBSDID("$FreeBSD: f59565abd3694f4ce864654a7b869ceebf8e429c $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -136,7 +136,8 @@ __sflush(FILE *fp)
 				fp->_p += n;
 				if ((fp->_flags & (__SLBF | __SNBF)) == 0)
 					fp->_w -= n;
-			} else if (p == fp->_p) { /* cond. to handle setvbuf */
+			/* conditional to handle setvbuf */
+			} else if (p == fp->_p && errno == EINTR) {
 				fp->_p = old_p;
 				fp->_w = old_w;
 			}

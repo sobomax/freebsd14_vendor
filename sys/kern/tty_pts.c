@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbbf35cf1a1246ebe3971aa9ebc26e6298c24ab5 $");
+__FBSDID("$FreeBSD: eaf2f334ebc1fcc440e6556533488c3a0d11731b $");
 
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT
@@ -60,7 +60,6 @@ __FBSDID("$FreeBSD: dbbf35cf1a1246ebe3971aa9ebc26e6298c24ab5 $");
 #include <sys/syscall.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysctl.h>
-#include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <sys/systm.h>
 #include <sys/tty.h>

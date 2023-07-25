@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)cmp.c	8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13ba3ff47a99d7df8915abe136b4bf8c5691b50f $");
+__FBSDID("$FreeBSD: 4f2c8bcfc846becad10a4ab9acb60db84827e407 $");
 
 
 #include <sys/types.h>
@@ -62,6 +62,20 @@ revnamecmp(const FTSENT *a, const FTSENT *b)
 {
 
 	return (strcoll(b->fts_name, a->fts_name));
+}
+
+int
+verscmp(const FTSENT *a, const FTSENT *b)
+{
+
+	return (strverscmp(a->fts_name, b->fts_name));
+}
+
+int
+revverscmp(const FTSENT *a, const FTSENT *b)
+{
+
+	return (strverscmp(b->fts_name, a->fts_name));
 }
 
 int

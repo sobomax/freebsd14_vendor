@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e914b7ffb40ba5ab1ae649916b26f19cec89abcf $");
+__FBSDID("$FreeBSD: 851cdfbd563d3b70d51ba25fb324505947b2df98 $");
 
 #include <sys/param.h>
 
@@ -217,7 +217,7 @@ zfree(MemPool *mp, void *ptr, uintptr_t bytes)
 			}
 
 			/*
-			 * merge against next area or create independant area
+			 * merge against next area or create independent area
 			 */
 
 			if ((char *)ptr + bytes == (char *)mn) {

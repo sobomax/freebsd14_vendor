@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4e1c2c523b577f0337f9cddff0cf8a9fdfeccb3 $");
+__FBSDID("$FreeBSD: 1313bd062188f7964f8b4a9df9f7e94a795e9243 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -224,6 +224,8 @@ static int
 ng_uni_constructor(node_p node)
 {
 	struct priv *priv;
+
+	gone_in(14, "ng_uni: netgraph ATM modules");
 
 	priv = malloc(sizeof(*priv), M_NG_UNI, M_WAITOK | M_ZERO);
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a61701d54e58e6e836bef45d6abb1a25cd2864ec $");
+__FBSDID("$FreeBSD: 8c9a75bba84ff243d6eb4e97ef7ab9cb4b457a4a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -205,7 +205,7 @@ mlx_pci_attach(device_t dev)
     }
 
     /*
-     * Do bus-independant initialisation.
+     * Do bus-independent initialisation.
      */
     error = mlx_attach(sc);
     if (error != 0) {

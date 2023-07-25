@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a4c62d64a0f33ec1dbdcb8cc35eb3bddbc6551f $");
+__FBSDID("$FreeBSD: 77fdf833c53037882c27b78caf27412cf6a66e16 $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: 2a4c62d64a0f33ec1dbdcb8cc35eb3bddbc6551f $");
 #include <sys/kenv.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
-#include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <sys/libkern.h>
 #include <sys/kenv.h>

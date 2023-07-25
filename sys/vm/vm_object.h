@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: 903c85261254d0b8c960bab199b5328551099838 $
+ * $FreeBSD: f221f1b0759ba7da42a975abb82cd14cecd20298 $
  */
 
 /*
@@ -156,20 +156,13 @@ struct vm_object {
 		/*
 		 * Swap pager
 		 *
-		 *	swp_tmpfs - back-pointer to the tmpfs vnode,
-		 *		     if any, which uses the vm object
-		 *		     as backing store.  The handle
-		 *		     cannot be reused for linking,
-		 *		     because the vnode can be
-		 *		     reclaimed and recreated, making
-		 *		     the handle changed and hash-chain
-		 *		     invalid.
-		 *
-		 *	swp_blks -   pc-trie of the allocated swap blocks.
+		 *	swp_priv - pager-private.
+		 *	swp_blks - pc-trie of the allocated swap blocks.
+		 *	writemappings - count of bytes mapped for write
 		 *
 		 */
 		struct {
-			void *swp_tmpfs;
+			void *swp_priv;
 			struct pctrie swp_blks;
 			vm_ooffset_t writemappings;
 		} swp;
@@ -317,7 +310,7 @@ vm_object_color(vm_object_t object, u_short color)
 
 	if ((object->flags & OBJ_COLORED) == 0) {
 		object->pg_color = color;
-		object->flags |= OBJ_COLORED;
+		vm_object_set_flag(object, OBJ_COLORED);
 	}
 }
 

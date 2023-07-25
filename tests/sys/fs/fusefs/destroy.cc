@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e72464382d4e1f9f95af761fe85e776ae4a67b6d $
+ * $FreeBSD: 91c22ba6975e0b8ecb88469c6b3ae05c4a2d74e8 $
  */
 
 extern "C" {
@@ -141,7 +141,6 @@ TEST_F(Destroy, ok)
 	uint64_t ino = 42;
 
 	expect_lookup(RELPATH, ino, S_IFREG | 0644, 0, 2);
-	expect_forget(FUSE_ROOT_ID, 1);
 	expect_forget(ino, 2);
 	expect_destroy(0);
 

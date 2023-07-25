@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 965faa7eea9e12827a917e1829c1a8265a25d8b9 $
+ * $FreeBSD: f066f821cf2a3e93ce95dc7b67eecd6a82bfcb46 $
  */
 
 #ifndef _MACHINE_PTE_H_
@@ -44,22 +44,24 @@ typedef	uint64_t	pt_entry_t;		/* page table entry */
 typedef	uint64_t	pn_t;			/* page number */
 #endif
 
-/* Level 0 table, 512GiB per entry */
+/* Level 0 table, 512GiB per entry, SV48 only */
 #define	L0_SHIFT	39
+#define	L0_SIZE		(1UL << L0_SHIFT)
+#define	L0_OFFSET	(L0_SIZE - 1)
 
 /* Level 1 table, 1GiB per entry */
 #define	L1_SHIFT	30
-#define	L1_SIZE 	(1 << L1_SHIFT)
+#define	L1_SIZE 	(1UL << L1_SHIFT)
 #define	L1_OFFSET 	(L1_SIZE - 1)
 
 /* Level 2 table, 2MiB per entry */
 #define	L2_SHIFT	21
-#define	L2_SIZE 	(1 << L2_SHIFT)
+#define	L2_SIZE 	(1UL << L2_SHIFT)
 #define	L2_OFFSET 	(L2_SIZE - 1)
 
 /* Level 3 table, 4KiB per entry */
 #define	L3_SHIFT	12
-#define	L3_SIZE 	(1 << L3_SHIFT)
+#define	L3_SIZE 	(1UL << L3_SHIFT)
 #define	L3_OFFSET 	(L3_SIZE - 1)
 
 #define	Ln_ENTRIES_SHIFT 9

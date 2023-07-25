@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c98dc7d3acb5116a0a9a2bb330921adeead8802a $
+ * $FreeBSD: b3e2e3fafa9fc50913b501c6eb19c1091efc5f94 $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -33,6 +33,7 @@
 
 #include <sys/types.h>
 #include <machine/atomic.h>
+#include <machine/tls.h>
 
 struct Struct_Obj_Entry;
 
@@ -72,11 +73,6 @@ void _rtld_powerpc_pltcall(void);
 /*
  * TLS
  */
-
-#define	TLS_VARIANT_I	1
-#define TLS_TP_OFFSET	0x7000
-#define TLS_DTV_OFFSET	0x8000
-#define TLS_TCB_SIZE	8
 
 #define round(size, align) \
     (((size) + (align) - 1) & ~((align) - 1))

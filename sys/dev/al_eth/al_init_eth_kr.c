@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc81db56bf8207098520c6d20ff5ad4ec297415c $");
+__FBSDID("$FreeBSD: fba6b6154a1f34f0ee7a2594a7eec00bf1bfa12c $");
 
 #include "al_init_eth_kr.h"
 #include "al_serdes.h"
@@ -467,7 +467,7 @@ al_eth_kr_lt_transmitter_task_run(struct al_eth_kr_data *kr_data)
 		break;
 	case DO_PRESET:
 		/*
-		 * Send PRESET and wait for for updated for all
+		 * Send PRESET and wait for updated for all
 		 * coefficients from remote
 		 */
 		if (al_eth_kr_lt_all_not_updated(&report) == 0)

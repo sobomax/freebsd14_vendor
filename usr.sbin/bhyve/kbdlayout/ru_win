@@ -1,0 +1,9 @@
+# bhyve ps2kbd keyboard layout file
+#   (ru_win : Russian (winkeys))
+#
+# Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
+#
+# $FreeBSD: 04b2775bf79fe56da0f0f60ebaecf91eab52eccc $
+
+'*',0xb7;	*  (0x2a)
+

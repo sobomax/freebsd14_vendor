@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 35c8449382cf85306f67b907fa88edf6fd5070c4 $
+ * $FreeBSD: 2d65630cd66bc75ba5589c1f89324e71e0ffd940 $
  */
 
 #ifndef _SYS_LINKER_H_
@@ -226,6 +226,7 @@ void linker_kldload_unbusy(int flags);
 #define MODINFOMD_SSYM		0x0003		/* start of symbols */
 #define MODINFOMD_ESYM		0x0004		/* end of symbols */
 #define MODINFOMD_DYNAMIC	0x0005		/* _DYNAMIC pointer */
+#define MODINFOMD_MB2HDR	0x0006		/* MB2 header info */
 /* These values are MD on PowerPC */
 #if !defined(__powerpc__)
 #define MODINFOMD_ENVP		0x0006		/* envp[] */

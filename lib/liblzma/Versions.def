@@ -1,4 +1,4 @@
-# $FreeBSD: 678624078b5ba0ff900922b6619a731c47c66beb $
+# $FreeBSD: f3e2b02c7a7c4a78df93b8c79524f8abab0bfdac $
 
 XZ_5.0 {
 };
@@ -6,6 +6,9 @@ XZ_5.0 {
 XZ_5.2 {
 } XZ_5.0;
 
-XZprivate_1.0 {
+XZ_5.4 {
 } XZ_5.2;
+
+XZprivate_1.0 {
+} XZ_5.4;
 

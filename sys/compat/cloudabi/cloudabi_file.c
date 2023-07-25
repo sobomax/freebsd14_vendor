@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7d93bc85cad9e6f1a16c3a6a766b0467c96294c $");
+__FBSDID("$FreeBSD: 83987b79aa0c00af5197c60fe0791308169e33cf $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -185,7 +185,7 @@ cloudabi_sys_file_link(struct thread *td,
 
 	error = kern_linkat(td, uap->fd1.fd, uap->fd2, path1, path2,
 	    UIO_SYSSPACE, (uap->fd1.flags & CLOUDABI_LOOKUP_SYMLINK_FOLLOW) ?
-	    FOLLOW : NOFOLLOW);
+	    AT_SYMLINK_FOLLOW : 0);
 	cloudabi_freestr(path1);
 	cloudabi_freestr(path2);
 	return (error);

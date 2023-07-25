@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 88a363c8bfc51d453befd67e8500e7018795fbf7 $ *
+ * $FreeBSD: ed52135ee8593ac35d1a8ff8941df199bf3450c9 $ *
  */
 
 #ifndef _LIBNETBSD_SYS_EVENT_H_
@@ -32,7 +32,7 @@
 
 /*
  * kqueue on FreeBSD requires sys/event.h, which in turn uses uintptr_t
- * (defined in sys/types.h), so in order to accomodate their requirements,
+ * (defined in sys/types.h), so in order to accommodate their requirements,
  * pull in sys/types.h as part of event.h.
  */
 #include <sys/types.h>

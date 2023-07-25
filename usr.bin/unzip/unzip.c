@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0b564b0f08ec972ccb218b180d45218cc3769304 $
+ * $FreeBSD: 78731555eadc9d5aaf81dd7e852ffc84712ead3f $
  *
  * This file would be much shorter if we didn't care about command-line
  * compatibility with Info-ZIP's UnZip, which requires us to duplicate
@@ -998,8 +998,9 @@ static void
 usage(void)
 {
 
-	fprintf(stderr, "Usage: unzip [-aCcfjLlnopqtuvyZ1] [-d dir] "
-		"[-x pattern] [-P password] zipfile\n");
+	fprintf(stderr,
+"Usage: unzip [-aCcfjLlnopqtuvyZ1] [-d dir] [-x pattern] [-P password] zipfile\n"
+"             [member ...]\n");
 	exit(EXIT_FAILURE);
 }
 

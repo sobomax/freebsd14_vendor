@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4bda2183ba17860ad8e9fd72c6e779065f97fbe $");
+__FBSDID("$FreeBSD: b1cd1feb11607e90789125487eaba1ec81be1c5c $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,7 +57,7 @@ mptable_hostb_probe(device_t dev)
 
 	if (pci_cfgregopen() == 0)
 		return (ENXIO);
-	if (mptable_pci_probe_table(pcib_get_bus(dev)) != 0)
+	if (mptable_pci_probe_table(legacy_get_pcibus(dev)) != 0)
 		return (ENXIO);
 	device_set_desc(dev, "MPTable Host-PCI bridge");
 	return (0);

@@ -1,4 +1,4 @@
-# $FreeBSD: 3b3bef976fc24d09bf7a43569a810353d07eb20f $
+# $FreeBSD: 83ef57760eef13847472ab0ba971af8a07d8cdb5 $
 #
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -67,8 +67,7 @@ dup_to_body()
 	atf_check -s exit:0 ${common_dir}/pft_ping.py \
 		--sendif ${epair_send}a \
 		--to 198.51.100.3 \
-		--recv ${epair_recv}a \
-		--checkdup ${epair_dupto}a
+		--recv ${epair_recv}a ${epair_dupto}a
 }
 
 dup_to_cleanup()

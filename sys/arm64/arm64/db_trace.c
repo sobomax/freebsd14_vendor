@@ -29,7 +29,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39850ce3bf02f2dd56d2983d5a557ca76c84ea46 $");
+__FBSDID("$FreeBSD: e5f94cb5e18c7840e460c375e493fa6210488f51 $");
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/kdb.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: 39850ce3bf02f2dd56d2983d5a557ca76c84ea46 $");
 #include <machine/stack.h>
 
 void
-db_md_list_watchpoints()
+db_md_list_watchpoints(void)
 {
 
 	dbg_show_watchpoint();

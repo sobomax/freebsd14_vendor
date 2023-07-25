@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2e4f5155cbf4b93d3b138f5e31f69ca419aad0e5 $
+ * $FreeBSD: 851fa248b6f2dd6e35c5777e1d59446b7c517107 $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_H_
@@ -429,11 +429,22 @@ struct timex32 {
 	int32_t	stbcnt;
 };
 
+struct ptrace_sc_ret32 {
+	uint32_t	sr_retval[2];
+	int		sr_error;
+};
+
 struct ptrace_coredump32 {
 	int		pc_fd;
 	uint32_t	pc_flags;
 	uint32_t	pc_limit1, pc_limit2;
 };
 
+struct ptrace_sc_remote32 {
+	struct ptrace_sc_ret32 pscr_ret;
+	u_int		pscr_syscall;
+	u_int		pscr_nargs;
+	uint32_t	pscr_args;
+};
 
 #endif /* !_COMPAT_FREEBSD32_FREEBSD32_H_ */

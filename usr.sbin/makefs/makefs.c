@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 888a2b3edea795d5b0039ae12764cea8033dc58c $");
+__FBSDID("$FreeBSD: 987f4159b403a694da5f56cb11f387fb93eef4f4 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -97,7 +97,7 @@ main(int argc, char *argv[])
 	fstype_t	*fstype;
 	fsinfo_t	 fsoptions;
 	fsnode		*root;
-	int	 	 ch, i, len;
+	int		 ch, i, len;
 	const char	*subtree;
 	const char	*specfile;
 

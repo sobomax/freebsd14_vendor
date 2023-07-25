@@ -1,4 +1,4 @@
-# $FreeBSD: 37f4f203ab21cc280fa70e0c8836a828e0494178 $
+# $FreeBSD: 82beedfd03a265dc9d05ba18bfacad3e0d883532 $
 cddl/dev/dtrace/riscv/dtrace_asm.S			optional dtrace compile-with "${DTRACE_S}"
 cddl/dev/dtrace/riscv/dtrace_subr.c			optional dtrace compile-with "${DTRACE_C}"
 cddl/dev/fbt/riscv/fbt_isa.c				optional dtrace_fbt | dtraceall compile-with "${FBT_C}"
@@ -61,7 +61,7 @@ riscv/riscv/plic.c		standard
 riscv/riscv/pmap.c		standard
 riscv/riscv/ptrace_machdep.c	standard
 riscv/riscv/riscv_console.c	optional	rcons
-riscv/riscv/riscv_syscon.c	optional	ext_resources syscon riscv_syscon fdt
+riscv/riscv/riscv_syscon.c	optional	syscon riscv_syscon fdt
 riscv/riscv/sbi.c		standard
 riscv/riscv/soc.c		standard
 riscv/riscv/stack_machdep.c	optional	ddb | stack

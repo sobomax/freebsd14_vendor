@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32e831742048e8708d4d49efbca94e977401b58b $");
+__FBSDID("$FreeBSD: 524b70b0632cd9842c3139252546de2b0517dbd4 $");
 
 /* Alias_irc.c intercepts packages contain IRC CTCP commands, and
 	changes DCC commands to export a port on the aliasing host instead
@@ -458,7 +458,7 @@ AliasHandleIrcOut(struct libalias *la,
 		/* Compute TCP checksum for revised packet */
 		tc->th_sum = 0;
 #ifdef _KERNEL
-		tc->th_x2 = 1;
+		tc->th_x2 = (TH_RES1 >> 8);
 #else
 		tc->th_sum = TcpChecksum(pip);
 #endif

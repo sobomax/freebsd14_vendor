@@ -1,6 +1,6 @@
-# $FreeBSD: e36eece7a6e232466777bbdaa9349643f6b77a97 $
+# $FreeBSD: 49f34908f9176f0843a21d0fddf72c50e2d5b701 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2
 
 GEOM_CLASS=	eli

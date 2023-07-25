@@ -75,7 +75,7 @@
 #include "zfsd_exception.h"
 #include "zpool_list.h"
 
-__FBSDID("$FreeBSD: 876cca836e9e89f9c6a45a227c47873498c27d37 $");
+__FBSDID("$FreeBSD: 29c6b1ae22e2658032e85e7037007b9b5ce63ef7 $");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))
@@ -276,7 +276,7 @@ ZfsDaemon::RescanSystem()
 	result = geom_gettree(&mesh);
 	if (result != 0) {
 		syslog(LOG_ERR, "ZfsDaemon::RescanSystem: "
-		       "geom_gettree faild with error %d\n", result);
+		       "geom_gettree failed with error %d\n", result);
 		return;
 	}
 

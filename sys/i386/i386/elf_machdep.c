@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9cf34e75ab7e34a9ffd7083e98e66eb9958f1d9e $");
+__FBSDID("$FreeBSD: 4ef57be5afc371cb3874c08d4559016cacd76b6f $");
 
 #include "opt_cpu.h"
 
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 9cf34e75ab7e34a9ffd7083e98e66eb9958f1d9e $");
 #include <sys/exec.h>
 #include <sys/imgact.h>
 #include <sys/linker.h>
+#include <sys/reg.h>
 #include <sys/proc.h>
 #include <sys/sysent.h>
 #include <sys/imgact_elf.h>
@@ -54,13 +55,15 @@ __FBSDID("$FreeBSD: 9cf34e75ab7e34a9ffd7083e98e66eb9958f1d9e $");
 struct sysentvec elf32_freebsd_sysvec = {
 	.sv_size	= SYS_MAXSYSCALL,
 	.sv_table	= sysent,
-	.sv_transtrap	= NULL,
 	.sv_fixup	= __elfN(freebsd_fixup),
 	.sv_sendsig	= sendsig,
 	.sv_sigcode	= sigcode,
 	.sv_szsigcode	= &szsigcode,
 	.sv_name	= "FreeBSD ELF32",
 	.sv_coredump	= __elfN(coredump),
+	.sv_elf_core_osabi = ELFOSABI_FREEBSD,
+	.sv_elf_core_abi_vendor = FREEBSD_ABI_VENDOR,
+	.sv_elf_core_prepare_notes = __elfN(prepare_notes),
 	.sv_imgact_try	= NULL,
 	.sv_minsigstksz	= MINSIGSTKSZ,
 	.sv_minuser	= VM_MIN_ADDRESS,
@@ -86,6 +89,9 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_trap	= NULL,
 	.sv_onexec_old	= exec_onexec_old,
 	.sv_onexit	= exit_onexit,
+	.sv_regset_begin = SET_BEGIN(__elfN(regset)),
+	.sv_regset_end  = SET_LIMIT(__elfN(regset)),
+	.sv_set_fork_retval = x86_set_fork_retval,
 };
 INIT_SYSENTVEC(elf32_sysvec, &elf32_freebsd_sysvec);
 

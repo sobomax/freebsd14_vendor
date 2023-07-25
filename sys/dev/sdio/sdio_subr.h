@@ -54,7 +54,7 @@
  * information, know-how or other confidential information to any third party.
  *
  *
- * $FreeBSD: f16826298e135cf96e489a6444efc843751b5128 $
+ * $FreeBSD: 43a5b10857cc477e77dffcdfc7c950c14849fe2a $
  */
 
 #ifndef _SDIO_SUBR_H_
@@ -95,13 +95,13 @@ int sdio_enable_func(struct sdio_func *);
 int sdio_disable_func(struct sdio_func *);
 int sdio_set_block_size(struct sdio_func *, uint16_t);
 
-uint8_t sdio_readb(struct sdio_func *, uint32_t, int *);
-void sdio_writeb(struct sdio_func *, uint8_t, uint32_t, int *);
-uint32_t sdio_readl(struct sdio_func *, uint32_t, int *);
-void sdio_writel(struct sdio_func *, uint32_t, uint32_t, int *);
+uint8_t sdio_read_1(struct sdio_func *, uint32_t, int *);
+void sdio_write_1(struct sdio_func *, uint32_t, uint8_t, int *);
+uint32_t sdio_read_4(struct sdio_func *, uint32_t, int *);
+void sdio_write_4(struct sdio_func *, uint32_t, uint32_t, int *);
 
-uint8_t sdio_f0_readb(struct sdio_func *, uint32_t, int *);
-void sdio_f0_writeb(struct sdio_func *, uint8_t, uint32_t, int *);
+uint8_t sdio_f0_read_1(struct sdio_func *, uint32_t, int *);
+void sdio_f0_write_1(struct sdio_func *, uint32_t, uint8_t, int *);
 #endif /* _KERNEL */
 
 #endif /* _SDIO_SUBR_H_ */

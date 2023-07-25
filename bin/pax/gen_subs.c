@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)gen_subs.c	8.1 (Berkeley) 5/31/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f91aaff7b809bea45fa862c0a9909e72a61bf38e $");
+__FBSDID("$FreeBSD: b8cb437405a7fb2c9fea4ca4c651cf66cc536c13 $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -119,19 +119,10 @@ ls_list(ARCHD *arcn, time_t now, FILE *fp)
 	 * print device id's for devices, or sizes for other nodes
 	 */
 	if ((arcn->type == PAX_CHR) || (arcn->type == PAX_BLK))
-#		ifdef NET2_STAT
-		(void)fprintf(fp, "%4u,%4u ", MAJOR(sbp->st_rdev),
-		    MINOR(sbp->st_rdev));
-#		else
 		(void)fprintf(fp, "%4lu,%4lu ", (unsigned long)MAJOR(sbp->st_rdev),
 		    (unsigned long)MINOR(sbp->st_rdev));
-#		endif
 	else {
-#		ifdef NET2_STAT
-		(void)fprintf(fp, "%9lu ", sbp->st_size);
-#		else
 		(void)fprintf(fp, "%9ju ", (uintmax_t)sbp->st_size);
-#		endif
 	}
 
 	/*
@@ -300,7 +291,6 @@ ul_asc(u_long val, char *str, int len, int base)
 	return(0);
 }
 
-#ifndef NET2_STAT
 /*
  * asc_uqd()
  *	convert hex/octal character string into a u_quad_t. We do not have to
@@ -396,4 +386,3 @@ uqd_asc(u_quad_t val, char *str, int len, int base)
 		return(-1);
 	return(0);
 }
-#endif

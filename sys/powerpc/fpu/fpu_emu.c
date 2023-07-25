@@ -78,7 +78,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c1b91fb9725f502545e006ce9aa827867866f8a $");
+__FBSDID("$FreeBSD: c8c1f0b4b7ee97fd72b236661663aac1559adb14 $");
 
 #include "opt_ddb.h"
 
@@ -93,7 +93,6 @@ __FBSDID("$FreeBSD: 6c1b91fb9725f502545e006ce9aa827867866f8a $");
 #include <sys/signalvar.h>
 
 #include <machine/fpu.h>
-#include <machine/reg.h>
 
 #include <powerpc/fpu/fpu_emu.h>
 #include <powerpc/fpu/fpu_extern.h>

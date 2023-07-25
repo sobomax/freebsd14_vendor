@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6403b52a9abe9e2a9f7458488139957b5d4f8fbd $
+ * $FreeBSD: 566f9c1d6f91215af6bfdbb1bd360b7e99cd61fd $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6403b52a9abe9e2a9f7458488139957b5d4f8fbd $");
+__FBSDID("$FreeBSD: 566f9c1d6f91215af6bfdbb1bd360b7e99cd61fd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,9 +73,6 @@ struct aw_clk_np_sc {
 static int
 aw_clk_np_init(struct clknode *clk, device_t dev)
 {
-	struct aw_clk_np_sc *sc;
-
-	sc = clknode_get_softc(clk);
 
 	clknode_init_parent_idx(clk, 0);
 	return (0);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa205ad509c950135968353bee0f9ec45a06e006 $");
+__FBSDID("$FreeBSD: fc42588cb41226a66e3d86496330716af5169e23 $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -37,7 +37,7 @@ __FBSDID("$FreeBSD: fa205ad509c950135968353bee0f9ec45a06e006 $");
 
 #include "thr_private.h"
 
-_Static_assert(sizeof(struct pthread_barrier) <= PAGE_SIZE,
+_Static_assert(sizeof(struct pthread_barrier) <= THR_PAGE_SIZE_MIN,
     "pthread_barrier is too large for off-page");
 
 __weak_reference(_pthread_barrier_init,		pthread_barrier_init);

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6a67dbc9f616b9444c0e347df9263310d7860f37 $");
+__FBSDID("$FreeBSD: f342c5e85d74fd614cc25154432ddb495abf56c2 $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -151,6 +151,13 @@ freebsd_zfs_crypt_done(struct cryptop *crp)
 	return (0);
 }
 
+static int
+freebsd_zfs_crypt_done_sync(struct cryptop *crp)
+{
+
+	return (0);
+}
+
 void
 freebsd_crypt_freesession(freebsd_crypt_session_t *sess)
 {
@@ -160,26 +167,36 @@ freebsd_crypt_freesession(freebsd_crypt_session_t *sess)
 }
 
 static int
-zfs_crypto_dispatch(freebsd_crypt_session_t *session, 	struct cryptop *crp)
+zfs_crypto_dispatch(freebsd_crypt_session_t *session, struct cryptop *crp)
 {
 	int error;
 
 	crp->crp_opaque = session;
-	crp->crp_callback = freebsd_zfs_crypt_done;
 	for (;;) {
+#if __FreeBSD_version < 1400004
+		boolean_t async = ((crypto_ses2caps(crp->crp_session) &
+		    CRYPTOCAP_F_SYNC) == 0);
+#else
+		boolean_t async = !CRYPTO_SESS_SYNC(crp->crp_session);
+#endif
+		crp->crp_callback = async ? freebsd_zfs_crypt_done :
+		    freebsd_zfs_crypt_done_sync;
 		error = crypto_dispatch(crp);
-		if (error)
-			break;
-		mtx_lock(&session->fs_lock);
-		while (session->fs_done == false)
-			msleep(crp, &session->fs_lock, 0,
-			    "zfs_crypto", 0);
-		mtx_unlock(&session->fs_lock);
-
-		if (crp->crp_etype == ENOMEM) {
-			pause("zcrnomem", 1);
-		} else if (crp->crp_etype != EAGAIN) {
+		if (error == 0) {
+			if (async) {
+				mtx_lock(&session->fs_lock);
+				while (session->fs_done == false) {
+					msleep(crp, &session->fs_lock, 0,
+					    "zfs_crypto", 0);
+				}
+				mtx_unlock(&session->fs_lock);
+			}
 			error = crp->crp_etype;
+		}
+
+		if (error == ENOMEM) {
+			pause("zcrnomem", 1);
+		} else if (error != EAGAIN) {
 			break;
 		}
 		crp->crp_etype = 0;

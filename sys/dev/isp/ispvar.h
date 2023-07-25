@@ -1,4 +1,4 @@
-/* $FreeBSD: 4ce2c717b9a98bcea4445b6aaed88899045b72db $ */
+/* $FreeBSD: eae81f6ac9edc7c9cdeb32a6ab1de55ece995e66 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -30,7 +30,7 @@
  *
  */
 /*
- * Soft Definitions for for Qlogic ISP SCSI adapters.
+ * Soft Definitions for Qlogic ISP SCSI adapters.
  */
 
 #ifndef	_ISPVAR_H
@@ -895,7 +895,7 @@ void isp_async(ispsoftc_t *, ispasync_t, ...);
  *	DEFAULT_PORTWWN(ispsoftc_t *, chan)	Default FC Port WWN to use
  *
  *		These defines are hooks to allow the setting of node and
- *		port WWNs when NVRAM cannot be read or is to be overriden.
+ *		port WWNs when NVRAM cannot be read or is to be overridden.
  *
  *	ACTIVE_NODEWWN(ispsoftc_t *, chan)	FC Node WWN to use
  *	ACTIVE_PORTWWN(ispsoftc_t *, chan)	FC Port WWN to use

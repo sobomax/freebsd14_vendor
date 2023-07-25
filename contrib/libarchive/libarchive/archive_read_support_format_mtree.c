@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 96eb133ed361a258cded4d0d9c513d08b6af1633 $");
+__FBSDID("$FreeBSD: 33a8045016930beddeeaeb21e932f14c63b2fc67 $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -994,9 +994,11 @@ process_add_entry(struct archive_read *a, struct mtree *mtree,
 			struct mtree_entry *alt;
 			alt = (struct mtree_entry *)__archive_rb_tree_find_node(
 			    &mtree->rbtree, entry->name);
-			while (alt->next_dup)
-				alt = alt->next_dup;
-			alt->next_dup = entry;
+			if (alt != NULL) {
+				while (alt->next_dup)
+					alt = alt->next_dup;
+				alt->next_dup = entry;
+			}
 		}
 	}
 
@@ -1071,7 +1073,7 @@ read_mtree(struct archive_read *a, struct mtree *mtree)
 			continue;
 		/* Non-printable characters are not allowed */
 		for (s = p;s < p + len - 1; s++) {
-			if (!isprint((unsigned char)*s)) {
+			if (!isprint((unsigned char)*s) && *s != '\t') {
 				r = ARCHIVE_FATAL;
 				break;
 			}
@@ -1250,9 +1252,17 @@ parse_file(struct archive_read *a, struct archive_entry *entry,
 				archive_entry_filetype(entry) == AE_IFDIR) {
 			mtree->fd = open(path, O_RDONLY | O_BINARY | O_CLOEXEC);
 			__archive_ensure_cloexec_flag(mtree->fd);
-			if (mtree->fd == -1 &&
-				(errno != ENOENT ||
-				 archive_strlen(&mtree->contents_name) > 0)) {
+			if (mtree->fd == -1 && (
+#if defined(_WIN32) && !defined(__CYGWIN__)
+        /*
+         * On Windows, attempting to open a file with an
+         * invalid name result in EINVAL (Error 22)
+         */
+				(errno != ENOENT && errno != EINVAL)
+#else
+				errno != ENOENT
+#endif
+        || archive_strlen(&mtree->contents_name) > 0)) {
 				archive_set_error(&a->archive, errno,
 						"Can't open %s", path);
 				r = ARCHIVE_WARN;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32832bde2f53789ed8803b0692b367d001e39772 $");
+__FBSDID("$FreeBSD: 2eef7798f3d6555b0e917072b51f179fe615a4c7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,7 +41,7 @@ __FBSDID("$FreeBSD: 32832bde2f53789ed8803b0692b367d001e39772 $");
 #include <sys/signalvar.h>
 #include <sys/sysent.h>
 #include <sys/sx.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <sys/sched.h>

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92deb356a112322d8620d3817bf51dccad0fc052 $");
+__FBSDID("$FreeBSD: bdbd828b7b625e2f6d1db80beb1402094dc78edc $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -165,6 +165,9 @@ static struct sysentvec cloudabi64_elf_sysvec = {
 	.sv_fixup		= cloudabi64_fixup,
 	.sv_name		= "CloudABI ELF64",
 	.sv_coredump		= elf64_coredump,
+	.sv_elf_core_osabi	= ELFOSABI_FREEBSD,
+	.sv_elf_core_abi_vendor	= FREEBSD_ABI_VENDOR,
+	.sv_elf_core_prepare_notes = elf64_prepare_notes,
 	.sv_minuser		= VM_MIN_ADDRESS,
 	.sv_maxuser		= VM_MAXUSER_ADDRESS,
 	.sv_stackprot		= VM_PROT_READ | VM_PROT_WRITE,

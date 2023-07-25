@@ -30,7 +30,7 @@
  */
 %{
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 885b4f5ce50a94b3340d204ebeb21a121b31caac $");
+__FBSDID("$FreeBSD: 043f8faee27b0c2db8d24419dafc6a45154bb2b3 $");
 
 #define PFIOC_USE_LATEST
 
@@ -852,11 +852,16 @@ pfa_anchor	: '{'
 			char ta[PF_ANCHOR_NAME_SIZE];
 			struct pfctl_ruleset *rs;
 
-			/* steping into a brace anchor */
+			/* stepping into a brace anchor */
 			pf->asd++;
 			pf->bn++;
 
-			/* create a holding ruleset in the root */
+			/*
+			* Anchor contents are parsed before the anchor rule
+			* production completes, so we don't know the real
+			* location yet. Create a holding ruleset in the root;
+			* contents will be moved afterwards.
+			*/
 			snprintf(ta, PF_ANCHOR_NAME_SIZE, "_%d", pf->bn);
 			rs = pf_find_or_create_ruleset(ta);
 			if (rs == NULL)
@@ -893,7 +898,14 @@ anchorrule	: ANCHOR anchorname dir quick interface af proto fromto
 
 			memset(&r, 0, sizeof(r));
 			if (pf->astack[pf->asd + 1]) {
-				/* move inline rules into relative location */
+				if ($2 && strchr($2, '/') != NULL) {
+					free($2);
+					yyerror("anchor paths containing '/' "
+					   "cannot be used for inline anchors.");
+					YYERROR;
+				}
+
+				/* Move inline rules into relative location. */
 				pfctl_anchor_setup(&r,
 				    &pf->astack[pf->asd]->ruleset,
 				    $2 ? $2 : pf->alast->name);
@@ -4083,7 +4095,7 @@ pool_opt	: BITMASK	{
 			pool_opts.staticport = 1;
 		}
 		| STICKYADDRESS	{
-			if (filter_opts.marker & POM_STICKYADDRESS) {
+			if (pool_opts.marker & POM_STICKYADDRESS) {
 				yyerror("sticky-address cannot be redefined");
 				YYERROR;
 			}

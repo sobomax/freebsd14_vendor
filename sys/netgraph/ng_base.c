@@ -34,7 +34,7 @@
  * Authors: Julian Elischer <julian@freebsd.org>
  *          Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 5006b08c96554293da0531129031ad8d72153b53 $
+ * $FreeBSD: 1b8b26f38f34b4712910f587f406d63e401c3bed $
  * $Whistle: ng_base.c,v 1.39 1999/01/28 23:54:53 julian Exp $
  */
 
@@ -787,7 +787,7 @@ ng_rmnode(node_p node, hook_p dummy1, void *dummy2, int dummy3)
 
 /*
  * Remove a reference to the node, possibly the last.
- * deadnode always acts as it it were the last.
+ * deadnode always acts as it were the last.
  */
 void
 ng_unref_node(node_p node)
@@ -978,7 +978,7 @@ ng_unname(node_p node)
  * Allocate a bigger name hash.
  */
 static void
-ng_name_rehash()
+ng_name_rehash(void)
 {
 	struct nodehash *new;
 	uint32_t hash;
@@ -1009,7 +1009,7 @@ ng_name_rehash()
  * Allocate a bigger ID hash.
  */
 static void
-ng_ID_rehash()
+ng_ID_rehash(void)
 {
 	struct nodehash *new;
 	uint32_t hash;

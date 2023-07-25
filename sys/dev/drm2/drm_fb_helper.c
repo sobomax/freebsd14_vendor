@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8cb913570c13d0370d1ec89ae7f14b370e50940b $");
+__FBSDID("$FreeBSD: 507b14b06457b7f0ed21b0491bdfade5413c7c7c $");
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
@@ -83,7 +83,7 @@ vt_kms_postswitch(void *arg)
 }
 
 struct fb_info *
-framebuffer_alloc()
+framebuffer_alloc(void)
 {
 	struct fb_info *info;
 	struct vt_kms_softc *sc;

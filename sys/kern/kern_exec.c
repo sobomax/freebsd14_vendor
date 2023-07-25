@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 407c5ab3ed0eb1dc5988444663ba21fa91ee2744 $");
+__FBSDID("$FreeBSD: f8b71e6be35b6143e27e74f8f6c269191e57abd2 $");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 407c5ab3ed0eb1dc5988444663ba21fa91ee2744 $");
 #include <sys/acct.h>
 #include <sys/asan.h>
 #include <sys/capsicum.h>
+#include <sys/compressor.h>
 #include <sys/eventhandler.h>
 #include <sys/exec.h>
 #include <sys/fcntl.h>
@@ -55,6 +56,7 @@ __FBSDID("$FreeBSD: 407c5ab3ed0eb1dc5988444663ba21fa91ee2744 $");
 #include <sys/priv.h>
 #include <sys/proc.h>
 #include <sys/ptrace.h>
+#include <sys/reg.h>
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
@@ -69,7 +71,7 @@ __FBSDID("$FreeBSD: 407c5ab3ed0eb1dc5988444663ba21fa91ee2744 $");
 #include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <sys/timers.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #include <sys/vnode.h>
 #include <sys/wait.h>
 #ifdef KTRACE
@@ -89,8 +91,6 @@ __FBSDID("$FreeBSD: 407c5ab3ed0eb1dc5988444663ba21fa91ee2744 $");
 #ifdef	HWPMC_HOOKS
 #include <sys/pmckern.h>
 #endif
-
-#include <machine/reg.h>
 
 #include <security/audit/audit.h>
 #include <security/mac/mac_framework.h>
@@ -151,7 +151,7 @@ static int map_at_zero = 0;
 SYSCTL_INT(_security_bsd, OID_AUTO, map_at_zero, CTLFLAG_RWTUN, &map_at_zero, 0,
     "Permit processes to map an object at virtual address 0.");
 
-int core_dump_can_intr = 1;
+static int core_dump_can_intr = 1;
 SYSCTL_INT(_kern, OID_AUTO, core_dump_can_intr, CTLFLAG_RWTUN,
     &core_dump_can_intr, 0,
     "Core dumping interruptible with SIGKILL");
@@ -409,6 +409,7 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p,
 #endif
 	int error, i, orig_osrel;
 	uint32_t orig_fctl0;
+	Elf_Brandinfo *orig_brandinfo;
 	size_t freepath_size;
 	static const char fexecv_proc_title[] = "(fexecv)";
 
@@ -443,6 +444,7 @@ do_execve(struct thread *td, struct image_args *args, struct mac *mac_p,
 	oldcred = p->p_ucred;
 	orig_osrel = p->p_osrel;
 	orig_fctl0 = p->p_fctl0;
+	orig_brandinfo = p->p_elf_brandinfo;
 
 #ifdef MAC
 	error = mac_execve_enter(imgp, mac_p);
@@ -502,6 +504,18 @@ interpret:
 				imgp->execpath = args->fname;
 			vn_lock(imgp->vp, LK_SHARED | LK_RETRY);
 		}
+	} else if (imgp->interpreter_vp) {
+		/*
+		 * An image activator has already provided an open vnode
+		 */
+		newtextvp = imgp->interpreter_vp;
+		imgp->interpreter_vp = NULL;
+		if (vn_fullpath(newtextvp, &imgp->execpath,
+		    &imgp->freepath) != 0)
+			imgp->execpath = args->fname;
+		vn_lock(newtextvp, LK_SHARED | LK_RETRY);
+		AUDIT_ARG_VNODE1(newtextvp);
+		imgp->vp = newtextvp;
 	} else {
 		AUDIT_ARG_FD(args->fd);
 
@@ -544,6 +558,7 @@ interpret:
 
 	imgp->proc->p_osrel = 0;
 	imgp->proc->p_fctl0 = 0;
+	imgp->proc->p_elf_brandinfo = NULL;
 
 	/*
 	 * Implement image setuid/setgid.
@@ -699,7 +714,11 @@ interpret:
 		free(imgp->freepath, M_TEMP);
 		imgp->freepath = NULL;
 		/* set new name to that of the interpreter */
-		args->fname = imgp->interpreter_name;
+		if (imgp->interpreter_vp) {
+			args->fname = NULL;
+		} else {
+			args->fname = imgp->interpreter_name;
+		}
 		goto interpret;
 	}
 
@@ -940,6 +959,7 @@ exec_fail_dealloc:
 	if (error != 0) {
 		p->p_osrel = orig_osrel;
 		p->p_fctl0 = orig_fctl0;
+		p->p_elf_brandinfo = orig_brandinfo;
 	}
 
 	if (imgp->firstpage != NULL)
@@ -1139,8 +1159,6 @@ exec_new_vmspace(struct image_params *imgp, struct sysentvec *sv)
 	if (p->p_sysent->sv_onexec_old != NULL)
 		p->p_sysent->sv_onexec_old(td);
 	itimers_exec(p);
-	if (sv->sv_onexec != NULL)
-		sv->sv_onexec(p, imgp);
 
 	EVENTHANDLER_DIRECT_INVOKE(process_exec, p, imgp);
 
@@ -1194,7 +1212,7 @@ exec_new_vmspace(struct image_params *imgp, struct sysentvec *sv)
 		}
 	}
 
-	return (0);
+	return (sv->sv_onexec != NULL ? sv->sv_onexec(p, imgp) : 0);
 }
 
 /*
@@ -1967,4 +1985,153 @@ exec_unregister(const struct execsw *execsw_arg)
 		free(execsw, M_TEMP);
 	execsw = newexecsw;
 	return (0);
+}
+
+/*
+ * Write out a core segment to the compression stream.
+ */
+static int
+compress_chunk(struct coredump_params *cp, char *base, char *buf, size_t len)
+{
+	size_t chunk_len;
+	int error;
+
+	while (len > 0) {
+		chunk_len = MIN(len, CORE_BUF_SIZE);
+
+		/*
+		 * We can get EFAULT error here.
+		 * In that case zero out the current chunk of the segment.
+		 */
+		error = copyin(base, buf, chunk_len);
+		if (error != 0)
+			bzero(buf, chunk_len);
+		error = compressor_write(cp->comp, buf, chunk_len);
+		if (error != 0)
+			break;
+		base += chunk_len;
+		len -= chunk_len;
+	}
+	return (error);
+}
+
+int
+core_write(struct coredump_params *cp, const void *base, size_t len,
+    off_t offset, enum uio_seg seg, size_t *resid)
+{
+
+	return (vn_rdwr_inchunks(UIO_WRITE, cp->vp, __DECONST(void *, base),
+	    len, offset, seg, IO_UNIT | IO_DIRECT | IO_RANGELOCKED,
+	    cp->active_cred, cp->file_cred, resid, cp->td));
+}
+
+int
+core_output(char *base, size_t len, off_t offset, struct coredump_params *cp,
+    void *tmpbuf)
+{
+	vm_map_t map;
+	struct mount *mp;
+	size_t resid, runlen;
+	int error;
+	bool success;
+
+	KASSERT((uintptr_t)base % PAGE_SIZE == 0,
+	    ("%s: user address %p is not page-aligned", __func__, base));
+
+	if (cp->comp != NULL)
+		return (compress_chunk(cp, base, tmpbuf, len));
+
+	map = &cp->td->td_proc->p_vmspace->vm_map;
+	for (; len > 0; base += runlen, offset += runlen, len -= runlen) {
+		/*
+		 * Attempt to page in all virtual pages in the range.  If a
+		 * virtual page is not backed by the pager, it is represented as
+		 * a hole in the file.  This can occur with zero-filled
+		 * anonymous memory or truncated files, for example.
+		 */
+		for (runlen = 0; runlen < len; runlen += PAGE_SIZE) {
+			if (core_dump_can_intr && curproc_sigkilled())
+				return (EINTR);
+			error = vm_fault(map, (uintptr_t)base + runlen,
+			    VM_PROT_READ, VM_FAULT_NOFILL, NULL);
+			if (runlen == 0)
+				success = error == KERN_SUCCESS;
+			else if ((error == KERN_SUCCESS) != success)
+				break;
+		}
+
+		if (success) {
+			error = core_write(cp, base, runlen, offset,
+			    UIO_USERSPACE, &resid);
+			if (error != 0) {
+				if (error != EFAULT)
+					break;
+
+				/*
+				 * EFAULT may be returned if the user mapping
+				 * could not be accessed, e.g., because a mapped
+				 * file has been truncated.  Skip the page if no
+				 * progress was made, to protect against a
+				 * hypothetical scenario where vm_fault() was
+				 * successful but core_write() returns EFAULT
+				 * anyway.
+				 */
+				runlen -= resid;
+				if (runlen == 0) {
+					success = false;
+					runlen = PAGE_SIZE;
+				}
+			}
+		}
+		if (!success) {
+			error = vn_start_write(cp->vp, &mp, V_WAIT);
+			if (error != 0)
+				break;
+			vn_lock(cp->vp, LK_EXCLUSIVE | LK_RETRY);
+			error = vn_truncate_locked(cp->vp, offset + runlen,
+			    false, cp->td->td_ucred);
+			VOP_UNLOCK(cp->vp);
+			vn_finished_write(mp);
+			if (error != 0)
+				break;
+		}
+	}
+	return (error);
+}
+
+/*
+ * Drain into a core file.
+ */
+int
+sbuf_drain_core_output(void *arg, const char *data, int len)
+{
+	struct coredump_params *cp;
+	struct proc *p;
+	int error, locked;
+
+	cp = arg;
+	p = cp->td->td_proc;
+
+	/*
+	 * Some kern_proc out routines that print to this sbuf may
+	 * call us with the process lock held. Draining with the
+	 * non-sleepable lock held is unsafe. The lock is needed for
+	 * those routines when dumping a live process. In our case we
+	 * can safely release the lock before draining and acquire
+	 * again after.
+	 */
+	locked = PROC_LOCKED(p);
+	if (locked)
+		PROC_UNLOCK(p);
+	if (cp->comp != NULL)
+		error = compressor_write(cp->comp, __DECONST(char *, data), len);
+	else
+		error = core_write(cp, __DECONST(void *, data), len, cp->offset,
+		    UIO_SYSSPACE, NULL);
+	if (locked)
+		PROC_LOCK(p);
+	if (error != 0)
+		return (-error);
+	cp->offset += len;
+	return (len);
 }

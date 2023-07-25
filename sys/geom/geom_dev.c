@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b94df9fcda67234646937f7b765d217966a6cdc3 $");
+__FBSDID("$FreeBSD: 32974e3bf822b0f95d0b5195542a226a67d4b36d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -273,8 +273,8 @@ g_dev_set_physpath(struct g_consumer *cp)
 		dev = sc->sc_dev;
 		old_alias_dev = sc->sc_alias;
 		alias_devp = (struct cdev **)&sc->sc_alias;
-		make_dev_physpath_alias(MAKEDEV_WAITOK, alias_devp, dev,
-		    old_alias_dev, physpath);
+		make_dev_physpath_alias(MAKEDEV_WAITOK | MAKEDEV_CHECKNAME,
+		    alias_devp, dev, old_alias_dev, physpath);
 	} else if (sc->sc_alias) {
 		destroy_dev((struct cdev *)sc->sc_alias);
 		sc->sc_alias = NULL;
@@ -570,23 +570,6 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 		if (error == 0 && *(u_int *)data == 0)
 			error = ENOENT;
 		break;
-#ifdef COMPAT_FREEBSD11
-	case DIOCSKERNELDUMP_FREEBSD11:
-	    {
-		struct diocskerneldump_arg kda;
-
-		gone_in(13, "FreeBSD 11.x ABI compat");
-
-		bzero(&kda, sizeof(kda));
-		kda.kda_encryption = KERNELDUMP_ENC_NONE;
-		kda.kda_index = (*(u_int *)data ? 0 : KDA_REMOVE_ALL);
-		if (kda.kda_index == KDA_REMOVE_ALL)
-			error = dumper_remove(devtoname(dev), &kda);
-		else
-			error = g_dev_setdumpdev(dev, &kda);
-		break;
-	    }
-#endif
 #ifdef COMPAT_FREEBSD12
 	case DIOCSKERNELDUMP_FREEBSD12:
 	    {
@@ -737,8 +720,7 @@ g_dev_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread
 			error = copyout(new_entries, old_entries, alloc_size);
 		if (old_entries != NULL && rep != NULL)
 			rep->entries = old_entries;
-		if (new_entries != NULL)
-			g_free(new_entries);
+		g_free(new_entries);
 		break;
 	}
 	default:

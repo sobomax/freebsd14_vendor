@@ -1,14 +1,14 @@
-/* $FreeBSD: 15abc20d1fea6c640bf798f89e82210b9322e597 $ */
+/* $FreeBSD: db0e875ccaebb9181f5380ae45f23480f8973c32 $ */
 /* try to catch thread exiting, and rethrow the exception */
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-int caught;
+static int caught;
 
-void *
-thr_routine(void *arg)
+static void *
+thr_routine(void *arg __unused)
 {
 	try {
 		pthread_exit(NULL);

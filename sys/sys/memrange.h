@@ -1,7 +1,7 @@
 /*
  * Memory range attribute operations, performed on /dev/mem
  *
- * $FreeBSD: 454b033775f4f2fa86c4bd8c4c2d6876bc1b9bab $
+ * $FreeBSD: d3eeeb79b6647781b2548e172054b2991d17a54b $
  */
 
 #ifndef _SYS_MEMRANGE_H_
@@ -58,6 +58,16 @@ struct mem_extract {
 };
 
 #define	MEM_EXTRACT_PADDR	_IOWR('m', 52, struct mem_extract)
+
+struct mem_livedump_arg {
+	int		fd;
+	int		flags;
+	uint8_t		compression;
+	uint8_t		pad1[7];
+	uint64_t	pad2[2];
+};
+
+#define	MEM_KERNELDUMP	_IOW('m', 53, struct mem_livedump_arg)
 
 #ifdef _KERNEL
 

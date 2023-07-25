@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_lookup.c	8.6 (Berkeley) 4/1/94
- * $FreeBSD: 68482e38feb84e4d91156736edeba41b3c8ff533 $
+ * $FreeBSD: 7be45a9945f285e519fb20e200db2fd208910ba6 $
  */
 
 #include <sys/param.h>
@@ -272,7 +272,7 @@ nextentry:
 		error = 0;
 	if (ap->a_ncookies != NULL) {
 		if (error == 0) {
-			ap->a_ncookies -= ncookies;
+			*ap->a_ncookies -= ncookies;
 		} else {
 			free(*ap->a_cookies, M_TEMP);
 			*ap->a_ncookies = 0;

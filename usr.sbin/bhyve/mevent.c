@@ -25,16 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e12a46ac931281e33a941a977265a5c1bccef40a $
+ * $FreeBSD: 8a6267f4acbda0601b2294fd326877c7bf8f4bf3 $
  */
 
 /*
- * Micro event library for FreeBSD, designed for a single i/o thread 
+ * Micro event library for FreeBSD, designed for a single i/o thread
  * using kqueue, and having events be persistent by default.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e12a46ac931281e33a941a977265a5c1bccef40a $");
+__FBSDID("$FreeBSD: 8a6267f4acbda0601b2294fd326877c7bf8f4bf3 $");
 
 #include <assert.h>
 #ifndef WITHOUT_CAPSICUM
@@ -99,7 +99,7 @@ mevent_qunlock(void)
 }
 
 static void
-mevent_pipe_read(int fd, enum ev_type type, void *param)
+mevent_pipe_read(int fd, enum ev_type type __unused, void *param __unused)
 {
 	char buf[MEVENT_MAX];
 	int status;
@@ -117,7 +117,7 @@ static void
 mevent_notify(void)
 {
 	char c = '\0';
-	
+
 	/*
 	 * If calling from outside the i/o thread, write a byte on the
 	 * pipe to force the i/o thread to exit the blocking kevent call.
@@ -196,6 +196,11 @@ mevent_kq_fflags(struct mevent *mevp)
 	case EVF_VNODE:
 		if ((mevp->me_fflags & EVFF_ATTRIB) != 0)
 			retval |= NOTE_ATTRIB;
+		break;
+	case EVF_READ:
+	case EVF_WRITE:
+	case EVF_TIMER:
+	case EVF_SIGNAL:
 		break;
 	}
 
@@ -541,10 +546,10 @@ mevent_dispatch(void)
 		if (ret == -1 && errno != EINTR) {
 			perror("Error return from kevent monitor");
 		}
-		
+
 		/*
 		 * Handle reported events
 		 */
 		mevent_handle(eventlist, ret);
-	}			
+	}
 }

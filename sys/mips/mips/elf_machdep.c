@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8ac07a5b0ac606607a955a519503a051d7a7d70a $");
+__FBSDID("$FreeBSD: 56d587a1c0fd5ebd784ddcd75bb4ac3a14c79218 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: 8ac07a5b0ac606607a955a519503a051d7a7d70a $");
 #include <sys/sysent.h>
 #include <sys/imgact_elf.h>
 #include <sys/proc.h>
+#include <sys/reg.h>
 #include <sys/syscall.h>
 #include <sys/signalvar.h>
 #include <sys/vnode.h>
@@ -54,7 +55,6 @@ __FBSDID("$FreeBSD: 8ac07a5b0ac606607a955a519503a051d7a7d70a $");
 static struct sysentvec elf_freebsd_sysvec = {
 	.sv_size	= SYS_MAXSYSCALL,
 	.sv_table	= sysent,
-	.sv_transtrap	= NULL,
 	.sv_fixup	= __elfN(freebsd_fixup),
 	.sv_sendsig	= sendsig,
 	.sv_sigcode	= sigcode,
@@ -65,6 +65,8 @@ static struct sysentvec elf_freebsd_sysvec = {
 	.sv_name	= "FreeBSD ELF32",
 #endif
 	.sv_coredump	= __elfN(coredump),
+	.sv_elf_core_abi_vendor = FREEBSD_ABI_VENDOR,
+	.sv_elf_core_prepare_notes = __elfN(prepare_notes),
 	.sv_imgact_try	= NULL,
 	.sv_minsigstksz	= MINSIGSTKSZ,
 	.sv_minuser	= VM_MIN_ADDRESS,
@@ -91,6 +93,8 @@ static struct sysentvec elf_freebsd_sysvec = {
 	.sv_trap	= NULL,
 	.sv_onexec_old	= exec_onexec_old,
 	.sv_onexit	= exit_onexit,
+	.sv_regset_begin = SET_BEGIN(__elfN(regset)),
+	.sv_regset_end  = SET_LIMIT(__elfN(regset)),
 };
 
 static __ElfN(Brandinfo) freebsd_brand_info = {

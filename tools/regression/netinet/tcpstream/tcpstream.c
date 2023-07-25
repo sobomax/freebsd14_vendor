@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c8fe9a3fe098d4990dacbe11543eea3a7c97b9d8 $
+ * $FreeBSD: 900197791a022bd3c418a7107bd63907c9981d13 $
  */
 
 /*
  * tcpstream sets up a simple TCP client and server, and then streams a
  * predictable pseudo-random byte sequence through it using variable block
- * sizes.  The intent is to to detect corruption of data in the TCP stream.
+ * sizes.  The intent is to detect corruption of data in the TCP stream.
  */
 
 #include <sys/types.h>

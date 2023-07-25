@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: 0372cb62088d5e851dda171946ec36012b92d171 $
+# $FreeBSD: d7e1dd0633f0dc7f056f253d68e7c869bc7b8e78 $
 
 ident		IMX53
 
@@ -41,6 +41,14 @@ options 	INCLUDE_CONFIG_FILE	# Include this file in kernel
 # Be aware of the administrative consequences of enabling this!
 # Note that 'bpf' is required for DHCP.
 device		bpf			# Berkeley packet filter
+
+# pseudo devices
+device		clk
+device		phy
+device		hwreset
+device		nvmem
+device		regulator
+device		syscon
 
 # Pseudo devices.
 device		loop			# Network loopback

@@ -1,9 +1,9 @@
-/*	$FreeBSD: 872471bac38bf9ebc432691fd39c2b13a5eef2f9 $	*/
+/*	$FreeBSD: aa55ef2d8aecab70adc912d8f78eb91f9b1f094c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
- * $FreeBSD: 872471bac38bf9ebc432691fd39c2b13a5eef2f9 $
+ * $FreeBSD: aa55ef2d8aecab70adc912d8f78eb91f9b1f094c $
  * See the IPFILTER.LICENCE file for details on licencing.
  */
 
@@ -377,10 +377,13 @@ sysctl_error:
 static int
 sysctl_ipf_int_nat ( SYSCTL_HANDLER_ARGS )
 {
+	if (jailed_without_vnet(curthread->td_ucred))
+		return (0);
+
 	ipf_nat_softc_t *nat_softc;
 
 	nat_softc = V_ipfmain.ipf_nat_soft;
-	arg1 = (void *)((uintptr_t)nat_softc + arg2);
+	arg1 = (void *)((uintptr_t)nat_softc + (size_t)arg2);
 
 	return (sysctl_ipf_int(oidp, arg1, 0, req));
 }
@@ -388,10 +391,13 @@ sysctl_ipf_int_nat ( SYSCTL_HANDLER_ARGS )
 static int
 sysctl_ipf_int_state ( SYSCTL_HANDLER_ARGS )
 {
+	if (jailed_without_vnet(curthread->td_ucred))
+		return (0);
+
 	ipf_state_softc_t *state_softc;
 
 	state_softc = V_ipfmain.ipf_state_soft;
-	arg1 = (void *)((uintptr_t)state_softc + arg2);
+	arg1 = (void *)((uintptr_t)state_softc + (size_t)arg2);
 
 	return (sysctl_ipf_int(oidp, arg1, 0, req));
 }
@@ -399,10 +405,13 @@ sysctl_ipf_int_state ( SYSCTL_HANDLER_ARGS )
 static int
 sysctl_ipf_int_auth ( SYSCTL_HANDLER_ARGS )
 {
+	if (jailed_without_vnet(curthread->td_ucred))
+		return (0);
+
 	ipf_auth_softc_t *auth_softc;
 
 	auth_softc = V_ipfmain.ipf_auth_soft;
-	arg1 = (void *)((uintptr_t)auth_softc + arg2);
+	arg1 = (void *)((uintptr_t)auth_softc + (size_t)arg2);
 
 	return (sysctl_ipf_int(oidp, arg1, 0, req));
 }
@@ -410,10 +419,13 @@ sysctl_ipf_int_auth ( SYSCTL_HANDLER_ARGS )
 static int
 sysctl_ipf_int_frag ( SYSCTL_HANDLER_ARGS )
 {
+	if (jailed_without_vnet(curthread->td_ucred))
+		return (0);
+
 	ipf_frag_softc_t *frag_softc;
 
 	frag_softc = V_ipfmain.ipf_frag_soft;
-	arg1 = (void *)((uintptr_t)frag_softc + arg2);
+	arg1 = (void *)((uintptr_t)frag_softc + (size_t)arg2);
 
 	return (sysctl_ipf_int(oidp, arg1, 0, req));
 }

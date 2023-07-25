@@ -30,7 +30,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bb6175f2f464468b5ef1c6d44e08a22abdece97d $
+ * $FreeBSD: 18377fb98cf1f2237eea57257c25d546757e7191 $
  */
 
 /*
@@ -59,7 +59,7 @@ void		vm_reserv_init(void);
 bool		vm_reserv_is_page_free(vm_page_t m);
 int		vm_reserv_level(vm_page_t m);
 int		vm_reserv_level_iffullpop(vm_page_t m);
-bool		vm_reserv_reclaim_contig(int domain, u_long npages,
+vm_page_t	vm_reserv_reclaim_contig(int domain, u_long npages,
 		    vm_paddr_t low, vm_paddr_t high, u_long alignment,
 		    vm_paddr_t boundary);
 bool		vm_reserv_reclaim_inactive(int domain);

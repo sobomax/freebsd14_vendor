@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 33e7d95f966da3a076a290fc3a9363ccd28f34bb $
+ * $FreeBSD: ee41e31bd5917901bb783fd6bb27a8e06529de7c $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -33,6 +33,7 @@
 
 #include <sys/types.h>
 #include <machine/atomic.h>
+#include <machine/tls.h>
 
 struct Struct_Obj_Entry;
 
@@ -73,9 +74,6 @@ void *__tls_get_addr(tls_index *ti) __exported;
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
 #define md_abi_variant_hook(x)
-
-#define	TLS_VARIANT_II	1
-#define	TLS_DTV_OFFSET	0
 
 size_t calculate_first_tls_offset(size_t size, size_t align, size_t offset);
 size_t calculate_tls_offset(size_t prev_offset, size_t prev_size, size_t size,

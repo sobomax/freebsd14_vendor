@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4dc6d680f9348122ed0113ea8f0db5696adb3de7 $
+ * $FreeBSD: f4fd1c6ae60e7046e36c7afb2bde7f123671d530 $
  */
 
 #ifndef _STDATOMIC_H_
@@ -162,6 +162,11 @@ atomic_signal_fence(memory_order __order __unused)
 	__asm volatile ("" ::: "memory");
 #endif
 }
+
+#if defined(__cplusplus) && !defined(_Bool)
+#define	_Bool	bool
+#define	__bool_locally_defined
+#endif
 
 /*
  * 7.17.5 Lock-free property.
@@ -405,5 +410,10 @@ atomic_flag_clear(volatile atomic_flag *__object)
 	atomic_flag_clear_explicit(__object, memory_order_seq_cst);
 }
 #endif /* !_KERNEL */
+
+#ifdef __bool_locally_defined
+#undef _Bool
+#undef __bool_locally_defined
+#endif
 
 #endif /* !_STDATOMIC_H_ */

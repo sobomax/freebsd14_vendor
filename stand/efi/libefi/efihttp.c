@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 05d338fbaf042d34467de8d4c22f410f776012b0 $
+ * $FreeBSD: 728f95a47b42b339027ebe8c7743efdfcc6417fc $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05d338fbaf042d34467de8d4c22f410f776012b0 $");
+__FBSDID("$FreeBSD: 728f95a47b42b339027ebe8c7743efdfcc6417fc $");
 
 #include <sys/types.h>
 
@@ -94,7 +94,7 @@ struct devsw efihttp_dev = {
 	.dv_close =	efihttp_dev_close,
 	.dv_ioctl =	noioctl,
 	.dv_print =	NULL,
-	.dv_cleanup =	NULL,
+	.dv_cleanup =	nullsys,
 };
 
 struct fs_ops efihttp_fsops = {

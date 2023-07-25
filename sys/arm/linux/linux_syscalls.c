@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: d7f743f1a825ae56c93c8ba8ff166624f9e02397 $
+ * $FreeBSD: 8a5344c35cc5b47b0e2e540e19592809d9589660 $
  */
 
 const char *linux_syscallnames[] = {
@@ -175,7 +175,7 @@ const char *linux_syscallnames[] = {
 	"linux_getresuid16",			/* 165 = linux_getresuid16 */
 	"#166",			/* 166 = ; */
 	"#167",			/* 167 = ; */
-	"poll",			/* 168 = poll */
+	"linux_poll",			/* 168 = linux_poll */
 	"#169",			/* 169 = ; */
 	"linux_setresgid16",			/* 170 = linux_setresgid16 */
 	"linux_getresgid16",			/* 171 = linux_getresgid16 */

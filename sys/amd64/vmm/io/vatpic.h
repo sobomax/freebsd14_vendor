@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8990a2a5fcb09f0a83a7ffc67e13cebf594d048d $
+ * $FreeBSD: bf46278f5b0d1ac4719ddc16d1452771e7d3aa50 $
  */
 
 #ifndef _VATPIC_H_
@@ -41,11 +41,11 @@ struct vm_snapshot_meta;
 struct vatpic *vatpic_init(struct vm *vm);
 void vatpic_cleanup(struct vatpic *vatpic);
 
-int vatpic_master_handler(struct vm *vm, int vcpuid, bool in, int port,
-    int bytes, uint32_t *eax);
-int vatpic_slave_handler(struct vm *vm, int vcpuid, bool in, int port,
-    int bytes, uint32_t *eax);
-int vatpic_elc_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
+int vatpic_master_handler(struct vm *vm, bool in, int port, int bytes,
+    uint32_t *eax);
+int vatpic_slave_handler(struct vm *vm, bool in, int port, int bytes,
+    uint32_t *eax);
+int vatpic_elc_handler(struct vm *vm, bool in, int port, int bytes,
     uint32_t *eax);
 
 int vatpic_assert_irq(struct vm *vm, int irq);

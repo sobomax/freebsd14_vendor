@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c1903fcbae67f826785aeb659e1195b0839fecf $");
+__FBSDID("$FreeBSD: d9d4f3c4a1551b5bb15d5259ba8babb7258f5cbc $");
 
 #include "opt_ufs.h"
 #include "opt_quota.h"
@@ -95,9 +95,7 @@ ffs_inode_bwrite(struct vnode *vp, struct buf *bp, int flags)
  * for the write to complete.
  */
 int
-ffs_update(vp, waitfor)
-	struct vnode *vp;
-	int waitfor;
+ffs_update(struct vnode *vp, int waitfor)
 {
 	struct fs *fs;
 	struct buf *bp;
@@ -234,11 +232,10 @@ loop:
  * disk blocks.
  */
 int
-ffs_truncate(vp, length, flags, cred)
-	struct vnode *vp;
-	off_t length;
-	int flags;
-	struct ucred *cred;
+ffs_truncate(struct vnode *vp,
+	off_t length,
+	int flags,
+	struct ucred *cred)
 {
 	struct inode *ip;
 	ufs2_daddr_t bn, lbn, lastblock, lastiblock[UFS_NIADDR];
@@ -342,7 +339,7 @@ ffs_truncate(vp, length, flags, cred)
 		if (length != 0)
 			panic("ffs_truncate: partial truncate of symlink");
 #endif
-		bzero(SHORTLINK(ip), (u_int)ip->i_size);
+		bzero(DIP(ip, i_shortlink), (u_int)ip->i_size);
 		ip->i_size = 0;
 		DIP_SET(ip, i_size, 0);
 		UFS_INODE_SET_FLAG(ip, IN_SIZEMOD | IN_CHANGE | IN_UPDATE);
@@ -695,12 +692,12 @@ extclean:
  * blocks.
  */
 static int
-ffs_indirtrunc(ip, lbn, dbn, lastbn, level, countp)
-	struct inode *ip;
-	ufs2_daddr_t lbn, lastbn;
-	ufs2_daddr_t dbn;
-	int level;
-	ufs2_daddr_t *countp;
+ffs_indirtrunc(struct inode *ip,
+	ufs2_daddr_t lbn,
+	ufs2_daddr_t dbn,
+	ufs2_daddr_t lastbn,
+	int level,
+	ufs2_daddr_t *countp)
 {
 	struct buf *bp;
 	struct fs *fs;

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4cf4f5e98c7b18b080f4385bc1de41f18155194c $
+ * $FreeBSD: c71fcea6ce9fbb57c6996ace2aca04f67825eef7 $
  */
 
 static void
@@ -65,7 +65,7 @@ teken_subr_cons25_set_local_cursor_type(const teken_t *t, unsigned int type)
 }
 
 static const teken_color_t cons25_colors[8] = { TC_BLACK, TC_BLUE,
-    TC_GREEN, TC_CYAN, TC_RED, TC_MAGENTA, TC_BROWN, TC_WHITE };
+    TC_GREEN, TC_CYAN, TC_RED, TC_MAGENTA, TC_YELLOW, TC_WHITE };
 
 static void
 teken_subr_cons25_set_default_background(teken_t *t, unsigned int c)

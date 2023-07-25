@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 74aa704635f7bbf4c4c671d47eeaeece6623f656 $
+ * $FreeBSD: 3a444114027d172d82e43251b43c4940616f6ab6 $
  *
  */
 
@@ -712,6 +712,8 @@ extern struct devlist	pci_devq;
 extern uint32_t	pci_generation;
 
 struct pci_map *pci_find_bar(device_t dev, int reg);
+struct pci_map *pci_first_bar(device_t dev);
+struct pci_map *pci_next_bar(struct pci_map *pm);
 int	pci_bar_enabled(device_t dev, struct pci_map *pm);
 struct pcicfg_vpd *pci_fetch_vpd_list(device_t dev);
 

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2fd7c2e201ea81661474e5576c5ce0f2b711608a $
+ * $FreeBSD: 2bb365125b5a6cf7286a26825216d0d986d928f1 $
  */
 
 #include "opt_evdev.h"
@@ -1092,6 +1092,19 @@ evdev_release_client(struct evdev_dev *evdev, struct evdev_client *client)
 	evdev->ev_grabber = NULL;
 
 	return (0);
+}
+
+bool
+evdev_is_grabbed(struct evdev_dev *evdev)
+{
+	if (kdb_active || SCHEDULER_STOPPED())
+		return (false);
+	/*
+	 * The function is intended to be called from evdev-unrelated parts of
+	 * code like syscons-compatible parts of mouse and keyboard drivers.
+	 * That makes unlocked read-only access acceptable.
+	 */
+	return (evdev->ev_grabber != NULL);
 }
 
 static void

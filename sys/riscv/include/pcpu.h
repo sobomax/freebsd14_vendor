@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: 5068596462fc378da7b9b05a0a11db78a2eafff8 $
+ * $FreeBSD: bdb2a4e2c5dfc697cb3dad67c736c00d926a4a8b $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -44,6 +44,7 @@
 
 #define	ALT_STACK_SIZE	128
 
+/* Keep in sync with db_show_mdpcpu() */
 #define	PCPU_MD_FIELDS							\
 	struct pmap *pc_curpmap;	/* Currently active pmap */	\
 	uint32_t pc_pending_ipis;	/* IPIs pending to this CPU */	\

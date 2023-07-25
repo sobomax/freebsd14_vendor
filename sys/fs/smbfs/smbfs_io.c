@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dd12d12764388005a2cbf399f676c7bded6fbecf $
+ * $FreeBSD: f92fe50ccd994484685e360bf6115860533b7190 $
  *
  */
 #include <sys/param.h>
@@ -285,8 +285,9 @@ smbfs_writevnode(struct vnode *vp, struct uio *uiop,
 	if (uiop->uio_resid == 0)
 		return 0;
 
-	if (vn_rlimit_fsize(vp, uiop, td))
-		return (EFBIG);
+	error = vn_rlimit_fsize(vp, uiop, td);
+	if (error != 0)
+		return (error);
 
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, cred);

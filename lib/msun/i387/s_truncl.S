@@ -4,7 +4,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: c3815ad61a68c8d0175496d291406ccc7a1fa301 $")
+__FBSDID("$FreeBSD: a52471966b904ca8e45bccaf461b6b937c1df9ea $")
 
 ENTRY(truncl)
 	pushl	%ebp
@@ -15,7 +15,7 @@ ENTRY(truncl)
 	movw	-4(%ebp),%dx
 	orw	$0x0c00,%dx		/* round towards -oo */
 	movw	%dx,-8(%ebp)
-	fldcw	-8(%ebp)		/* load modfied control word */
+	fldcw	-8(%ebp)		/* load modified control word */
 
 	fldt	8(%ebp)			/* round */
 	frndint

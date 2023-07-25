@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0b10d5257831a258c3aeba41593d5ff67b7840e $");
+__FBSDID("$FreeBSD: 15892b5109739ba311e1b17dd878a814197f15e0 $");
 
 #include "opt_pseudofs.h"
 
@@ -108,6 +108,7 @@ pfs_vncache_unload(void)
 	KASSERT(pfs_vncache_entries == 0,
 	    ("%d vncache entries remaining", pfs_vncache_entries));
 	mtx_destroy(&pfs_vncache_mutex);
+	hashdestroy(pfs_vncache_hashtbl, M_PFSVNCACHE, pfs_vncache_hash);
 }
 
 /*

@@ -13,7 +13,7 @@
  *          Thomas Moestl <tmoestl@gmx.net>
  *          Eitan Adler <eadler@FreeBSD.org>
  *
- * $FreeBSD: 1fe2a91a655c30e35402b15ee46e1d189ef1dbb4 $
+ * $FreeBSD: be667ec0e461c88e1165de2b46cc7327b6077285 $
  */
 
 #include <sys/errno.h>
@@ -895,7 +895,6 @@ get_process_info(struct system_info *si, struct process_select *sel,
 static int
 cmd_matches(struct kinfo_proc *proc, const char *term)
 {
-	extern int show_args;
 	char **args = NULL;
 
 	if (!term) {
@@ -1568,6 +1567,7 @@ int (*compares[])(const void *arg1, const void *arg2) = {
 	compare_ivcsw,
 	compare_jid,
 	compare_swap,
+	compare_pid,
 	NULL
 };
 

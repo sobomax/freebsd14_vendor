@@ -1,4 +1,4 @@
-# $FreeBSD: 6be49642b04e6e4fb2cf7765c138e6717f7fe131 $
+# $FreeBSD: 6af49075cae8d3f77756f141887765d6079ab5ce $
 
 # Part of a unified Makefile for building kernels.  This part contains all
 # of the definitions that need to be before %BEFORE_DEPEND.
@@ -112,7 +112,8 @@ COMPAT_FREEBSD32_ENABLED!= grep COMPAT_FREEBSD32 opt_global.h || true ; echo
 
 KASAN_ENABLED!=	grep KASAN opt_global.h || true ; echo
 .if !empty(KASAN_ENABLED)
-SAN_CFLAGS+=	-fsanitize=kernel-address \
+SAN_CFLAGS+=	-DSAN_NEEDS_INTERCEPTORS -DSAN_INTERCEPTOR_PREFIX=kasan \
+		-fsanitize=kernel-address \
 		-mllvm -asan-stack=true \
 		-mllvm -asan-instrument-dynamic-allocas=true \
 		-mllvm -asan-globals=true \
@@ -123,7 +124,8 @@ SAN_CFLAGS+=	-fsanitize=kernel-address \
 
 KCSAN_ENABLED!=	grep KCSAN opt_global.h || true ; echo
 .if !empty(KCSAN_ENABLED)
-SAN_CFLAGS+=	-fsanitize=thread
+SAN_CFLAGS+=	-DSAN_NEEDS_INTERCEPTORS -DSAN_INTERCEPTOR_PREFIX=kcsan \
+		-fsanitize=thread
 .endif
 
 KMSAN_ENABLED!= grep KMSAN opt_global.h || true ; echo
@@ -311,13 +313,14 @@ NORMAL_CTFCONVERT=	@:
 .endif
 
 # Linux Kernel Programming Interface C-flags
-LINUXKPI_INCLUDES=	-I$S/compat/linuxkpi/common/include
+LINUXKPI_INCLUDES=	-I$S/compat/linuxkpi/common/include \
+			-I$S/compat/linuxkpi/dummy/include
 LINUXKPI_C=		${NORMAL_C} ${LINUXKPI_INCLUDES}
 
 # Infiniband C flags.  Correct include paths and omit errors that linux
 # does not honor.
 OFEDINCLUDES=	-I$S/ofed/include -I$S/ofed/include/uapi ${LINUXKPI_INCLUDES}
-OFEDNOERR=	-Wno-cast-qual -Wno-pointer-arith
+OFEDNOERR=	-Wno-cast-qual -Wno-pointer-arith -Wno-redundant-decls
 OFEDCFLAGS=	${CFLAGS:N-I*} -DCONFIG_INFINIBAND_USER_MEM \
 		${OFEDINCLUDES} ${CFLAGS:M-I*} ${OFEDNOERR}
 OFED_C_NOIMP=	${CC} -c -o ${.TARGET} ${OFEDCFLAGS} ${WERROR} ${PROF}
@@ -383,5 +386,5 @@ MKMODULESENV+=	__MPATH="${__MPATH}"
 
 # Detect kernel config options that force stack frames to be turned on.
 DDB_ENABLED!=	grep DDB opt_ddb.h || true ; echo
-DTR_ENABLED!=	grep KDTRACE_FRAME opt_kdtrace.h || true ; echo
+DTRACE_ENABLED!=grep KDTRACE_FRAME opt_kdtrace.h || true ; echo
 HWPMC_ENABLED!=	grep HWPMC opt_hwpmc_hooks.h || true ; echo

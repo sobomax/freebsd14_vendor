@@ -1,16 +1,15 @@
-# $FreeBSD: 734bcf6be5e68c718fe4ffb7bbb0336b655823c7 $
+# $FreeBSD: c60cb37c59df4fe06188bb0ff6c151bfc0645438 $
 # Extra stuff for GELI
 
 .PATH: ${SASRC}/geli
 
-CFLAGS+=	-I${LDRSRC}
-
 # Our password input method
-SRCS+=  pwgets.c
+SRCS+=		pwgets.c
 
 # sha256 and sha512 from sys/crypto
 .PATH: ${SYSDIR}/crypto/sha2
-CFLAGS+=	-DWEAK_REFS
+CFLAGS.sha256.c+=	-DWEAK_REFS
+CFLAGS.sha512.c+=	-DWEAK_REFS
 SRCS+=		sha256c.c sha512c.c
 
 # md5 from libmd
@@ -25,13 +24,15 @@ CFLAGS.${i}+=	-DNDEBUG
 SRCS+=		${i}
 .endfor
 
+
 # local GELI Implementation
 .PATH: ${SYSDIR}/geom/eli
-SRCS+=		\
-		geliboot.c \
+.for i in gelidev.c geli_metadata.c
+CFLAGS.${i}+= -I${LDRSRC}
+SRCS+=		${i}
+.endfor
+SRCS+=		geliboot.c \
 		geliboot_crypto.c \
-		gelidev.c \
-		geli_metadata.c \
 		g_eli_hmac.c \
 		g_eli_key.c \
 		g_eli_key_cache.c \

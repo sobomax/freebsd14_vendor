@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: e4ce20c9beac674f0fa5229c777c0e99226d63f7 $
+ * $FreeBSD: d060d3f8343f8e8a2a1d66b2d71a3532c867be78 $
  */
 
 /**
@@ -5669,7 +5669,7 @@ int32_t sli_raise_ue(sli4_t *sli4, uint8_t dump)
 
 /**
  * @ingroup sli
- * @brief Read the SLIPORT_STATUS register to to check if a dump is present.
+ * @brief Read the SLIPORT_STATUS register to check if a dump is present.
  *
  * @param sli4 SLI context.
  *
@@ -8677,7 +8677,7 @@ sli_fc_rq_set_alloc(sli4_t *sli4, uint32_t num_rq_pairs,
 	}
 
 	if (sli_bmbx_command(sli4)){
-		ocs_log_crit(sli4->os, "bootstrap mailbox write faild RQSet\n");
+		ocs_log_crit(sli4->os, "bootstrap mailbox write failed RQSet\n");
 		goto error;
 	}
 

@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d81e5ec8692d48de77339d44cc68cdf6f3e01a10 $");
+__FBSDID("$FreeBSD: cff8f5f9bdc3694d9c831b035d2349f5c4a7bdca $");
 
 #include "opt_param.h"
 
@@ -250,9 +250,14 @@ vm_object_t
 vm_pager_allocate(objtype_t type, void *handle, vm_ooffset_t size,
     vm_prot_t prot, vm_ooffset_t off, struct ucred *cred)
 {
+	vm_object_t object;
+
 	MPASS(type < nitems(pagertab));
 
-	return ((*pagertab[type]->pgo_alloc)(handle, size, prot, off, cred));
+	object = (*pagertab[type]->pgo_alloc)(handle, size, prot, off, cred);
+	if (object != NULL)
+		object->type = type;
+	return (object);
 }
 
 /*
@@ -422,6 +427,9 @@ vm_pager_alloc_dyn_type(struct pagerops *ops, int base_type)
 		FIX(mightbedirty);
 		FIX(getvp);
 		FIX(freespace);
+		FIX(page_inserted);
+		FIX(page_removed);
+		FIX(can_alloc_page);
 #undef FIX
 	}
 	pagertab[res] = ops;	/* XXXKIB should be rel, but acq is too much */

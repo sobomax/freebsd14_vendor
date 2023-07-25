@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 41b05ae2ca5399bbf2331ced378d664db70752fd $");
+__FBSDID("$FreeBSD: 555b75267c669f0c166c0f4bbaf19ccc0f2718e0 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1279,6 +1279,7 @@ in6_handle_dstaddr_rtrequest(int cmd, struct in6_ifaddr *ia)
 
 	struct rt_addrinfo info = {
 		.rti_ifa = ifa,
+		.rti_ifp = ifa->ifa_ifp,
 		.rti_flags = RTF_PINNED | RTF_HOST,
 		.rti_info = {
 			[RTAX_DST] = (struct sockaddr *)&dst,
@@ -2304,7 +2305,7 @@ in6_lltable_alloc(struct lltable *llt, u_int flags,
 		linkhdrsize = LLE_MAX_LINKHDR;
 		if (lltable_calc_llheader(ifp, AF_INET6, IF_LLADDR(ifp),
 		    linkhdr, &linkhdrsize, &lladdr_off) != 0) {
-			NET_EPOCH_CALL(in6_lltable_destroy_lle_unlocked, &lle->lle_epoch_ctx);
+			in6_lltable_free_entry(llt, lle);
 			return (NULL);
 		}
 		lltable_set_entry_addr(ifp, lle, linkhdr, linkhdrsize,

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e03fc98bfe0cb7e2f8b8ed18dbee3e7a492c9c0 $");
+__FBSDID("$FreeBSD: 6590e0659d822dc6c477c14d2f8193258b75d2e3 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -105,7 +105,7 @@ pmu_parse_affinity(device_t dev, struct pmu_softc *sc, struct pmu_intr *irq,
 
 	for (i = 0; i < MAXCPU; i++) {
 		pcpu = pcpu_find(i);
-		if (pcpu != NULL && pcpu->pc_mpidr == mpidr) {
+		if (pcpu != NULL && PCPU_GET_MPIDR(pcpu) == mpidr) {
 			irq->cpuid = i;
 			return (0);
 		}

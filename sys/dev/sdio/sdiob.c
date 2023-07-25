@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: afa111971bf559378d831fea93e02153ac7aec54 $");
+__FBSDID("$FreeBSD: 559e8c50166ab6e87678e60311d79afe5a6d9b87 $");
 
 #include "opt_cam.h"
 
@@ -947,10 +947,10 @@ sdio_newbus_sim_add(struct sdiob_softc *sc)
 		return (ENXIO);
 	}
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	error = devclass_add_driver(bus_devclass, &sdiob_driver,
 	    BUS_PASS_DEFAULT, &sdiob_devclass);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	if (error != 0) {
 		printf("%s: Failed to add driver to devclass: %d.\n",
 		    __func__, error);

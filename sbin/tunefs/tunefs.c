@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)tunefs.c	8.2 (Berkeley) 4/19/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2eca8e0a3e3671fec28012f996d4a16b4871481b $");
+__FBSDID("$FreeBSD: 872c26f673b07efef60a95e43ac84e1ca0973b79 $");
 
 /*
  * tunefs: change layout parameters to an existing file system.
@@ -89,18 +89,14 @@ main(int argc, char *argv[])
 {
 	const char *avalue, *jvalue, *Jvalue, *Lvalue, *lvalue, *Nvalue, *nvalue;
 	const char *tvalue;
-	const char *special, *on;
+	const char *special;
 	const char *name;
-	int active;
+	char *diskname;
 	int Aflag, aflag, eflag, evalue, fflag, fvalue, jflag, Jflag, kflag;
 	int kvalue, Lflag, lflag, mflag, mvalue, Nflag, nflag, oflag, ovalue;
 	int pflag, sflag, svalue, Svalue, tflag;
 	int ch, found_arg, i;
-	int iovlen = 0;
 	const char *chg[2];
-	struct statfs stfs;
-	struct iovec *iov = NULL;
-	char errmsg[255] = {0};
 
 	if (argc < 3)
 		usage();
@@ -108,7 +104,6 @@ main(int argc, char *argv[])
 	lflag = mflag = Nflag = nflag = oflag = pflag = sflag = tflag = 0;
 	avalue = jvalue = Jvalue = Lvalue = lvalue = Nvalue = nvalue = NULL;
 	evalue = fvalue = mvalue = ovalue = svalue = Svalue = 0;
-	active = 0;
 	found_arg = 0;		/* At least one arg is required. */
 	while ((ch = getopt(argc, argv, "Aa:e:f:j:J:k:L:l:m:N:n:o:ps:S:t:"))
 	    != -1)
@@ -307,7 +302,7 @@ main(int argc, char *argv[])
 	if (found_arg == 0 || argc != 1)
 		usage();
 
-	on = special = argv[0];
+	special = argv[0];
 	if (ufs_disk_fillout(&disk, special) == -1)
 		goto err;
 	/*
@@ -317,13 +312,6 @@ main(int argc, char *argv[])
 	    (sblock.fs_flags & (FS_UNCLEAN | FS_NEEDSFSCK)) != 0) &&
 	    (found_arg > 1 || !pflag))
 		errx(1, "%s is not clean - run fsck.\n", special);
-	if (disk.d_name != special) {
-		if (statfs(special, &stfs) != 0)
-			warn("Can't stat %s", special);
-		if (strcmp(special, stfs.f_mntonname) == 0)
-			active = 1;
-	}
-
 	if (pflag) {
 		printfs();
 		exit(0);
@@ -568,20 +556,9 @@ main(int argc, char *argv[])
 
 	if (sbwrite(&disk, Aflag) == -1)
 		goto err;
+	diskname = strdup(disk.d_name);
 	ufs_disk_close(&disk);
-	if (active) {
-		build_iovec_argf(&iov, &iovlen, "fstype", "ufs");
-		build_iovec_argf(&iov, &iovlen, "fspath", "%s", on);
-		build_iovec(&iov, &iovlen, "errmsg", errmsg, sizeof(errmsg));
-		if (nmount(iov, iovlen,
-		    stfs.f_flags | MNT_UPDATE | MNT_RELOAD) < 0) {
-			if (errmsg[0])
-				err(9, "%s: reload: %s", special, errmsg);
-			else
-				err(9, "%s: reload", special);
-		}
-		warnx("file system reloaded");
-	}
+	chkdoreload(getmntpoint(diskname), warnx);
 	exit(0);
 err:
 	if (disk.d_error != NULL)
@@ -974,7 +951,6 @@ journal_alloc(int64_t size)
 	 */
 	if (size == 0) {
 		size = (sblock.fs_size * sblock.fs_bsize) / 1024;
-		size = MIN(SUJ_MAX, size);
 		if (size / sblock.fs_fsize > sblock.fs_fpg)
 			size = sblock.fs_fpg * sblock.fs_fsize;
 		size = MAX(SUJ_MIN, size);

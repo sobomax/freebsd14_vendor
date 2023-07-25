@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80c5e8cfe05fb8488408d78e1373f6506e0bc5c0 $");
+__FBSDID("$FreeBSD: e446914c5113a12d62326117e0509f92b4fc66b3 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -774,7 +774,7 @@ mvs_ch_intr(void *data)
 			}
 			mvs_requeue_frozen(dev);
 			for (i = 0; i < MVS_MAX_SLOTS; i++) {
-				/* XXX: reqests in loading state. */
+				/* XXX: requests in loading state. */
 				if (((ch->rslots >> i) & 1) == 0)
 					continue;
 				if (port >= 0 &&

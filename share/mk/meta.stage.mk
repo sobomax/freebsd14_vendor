@@ -1,4 +1,4 @@
-# $FreeBSD: c362f0b590adb5cef8ed54682c1e0b6a5d3b6adc $
+# $FreeBSD: 9f54f3b1f9c5eeeab178f5005943cc631cda4397 $
 # $Id: meta.stage.mk,v 1.60 2020/08/19 17:51:53 sjg Exp $
 #
 #	@(#) Copyright (c) 2011-2017, Simon J. Gerraty
@@ -52,7 +52,7 @@ _objroot ?= ${_OBJROOT:tA}
 # make sure this is global
 _STAGED_DIRS ?=
 .export _STAGED_DIRS
-# add each dir we stage to to _STAGED_DIRS
+# add each dir we stage to _STAGED_DIRS
 # and make sure we have absolute paths so that bmake
 # will match against .MAKE.META.BAILIWICK
 STAGE_DIR_FILTER = tA:@d@$${_STAGED_DIRS::+=$$d}$$d@

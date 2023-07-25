@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0aeb1e076f7d36ed73c1f906f4d2f61543e95b72 $");
+__FBSDID("$FreeBSD: 13890b5fcb10e8817424aca210ffece816ad0223 $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -312,7 +312,7 @@ hook_check(void)
 		}
 
 		/*
-		 * Skip proccesses younger than 1 minute.
+		 * Skip processes younger than 1 minute.
 		 */
 		if (now - hp->hp_lastreport < REPORT_INTERVAL)
 			continue;

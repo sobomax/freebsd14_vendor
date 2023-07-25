@@ -1,4 +1,4 @@
-# $FreeBSD: c724119cdf48eed62dc15e363ef9e72829661a19 $
+# $FreeBSD: 40a1a212ca3a43eb5095938d074e653ed1aff48b $
 
 .include <src.opts.mk>
 
@@ -24,10 +24,7 @@ CONFS=	DAEMON \
 	ctld \
 	ddb \
 	defaultroute \
-	devd \
 	devfs \
-	devmatch \
-	dhclient \
 	dmesg \
 	dumpon \
 	fsck \
@@ -36,6 +33,7 @@ CONFS=	DAEMON \
 	geli2 \
 	gptboot \
 	growfs \
+	growfs_fstab \
 	hostid \
 	hostid_save \
 	hostname \
@@ -87,7 +85,6 @@ CONFS=	DAEMON \
 	random \
 	rarpd \
 	rctl \
-	resolv \
 	root \
 	route6d \
 	routing \
@@ -113,7 +110,24 @@ CONFS=	DAEMON \
 	ugidfw \
 	${_utx} \
 	var \
+	var_run \
 	watchdogd
+
+CONFGROUPS+=		DEVD
+DEVD=			devd
+DEVDPACKAGE=		devd
+
+CONFGROUPS+=		DEVMATCH
+DEVMATCH=		devmatch
+DEVMATCHPACKAGE=	devmatch
+
+CONFGROUPS+=		DHCLIENT
+DHCLIENT=		dhclient
+DHCLIENTPACKAGE=	dhclient
+
+CONFGROUPS+=		RESOLVCONF
+RESOLVCONF=		resolv
+RESOLVCONFPACKAGE=	resolvconf
 
 .if ${MK_NIS} != "no"
 CONFS+=	ypbind \
@@ -328,6 +342,7 @@ ZFS+=		zfsbe
 ZFS+=		zfsd
 ZFS+=		zfskeys
 ZFS+=		zpool
+ZFS+=		zpoolreguid
 ZFS+=		zvol
 ZFSPACKAGE=	rc
 .endif

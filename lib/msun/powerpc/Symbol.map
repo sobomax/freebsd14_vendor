@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 971112e30c8a41296e8a9807fd8e8792290dd0d2 $
+ * $FreeBSD: 47eca6f99f317c86fffb0b66171836f450b9abb5 $
  */
 FBSD_1.0 {
 };
@@ -10,4 +10,9 @@ FBSD_1.3 {
 	fegetenv;
 	feholdexcept;
 	feupdateenv;
+};
+
+FBSD_1.7 {
+	feenableexcept;
+	fedisableexcept;
 };

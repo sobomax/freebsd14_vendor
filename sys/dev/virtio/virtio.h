@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8d32d5a8742f6835f7f85379c14d1283d11218af $
+ * $FreeBSD: 8c6fdc4638d0f71611208c6218394881c2a9b91e $
  */
 
 #ifndef _VIRTIO_H_
@@ -124,7 +124,7 @@ int	 virtio_child_pnpinfo_str(device_t busdev, device_t child, char *buf,
 void	 virtio_read_device_config(device_t dev, bus_size_t offset,
 	     void *dst, int length);
 void	 virtio_write_device_config(device_t dev, bus_size_t offset,
-	     void *src, int length);
+	     const void *src, int length);
 
 /* Inlined device specific read/write functions for common lengths. */
 #define VIRTIO_RDWR_DEVICE_CONFIG(size, type)				\

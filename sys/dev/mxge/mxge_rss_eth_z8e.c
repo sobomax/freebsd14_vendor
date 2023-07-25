@@ -2,7 +2,7 @@
  * from: FreeBSD: src/sys/tools/fw_stub.awk,v 1.6 2007/03/02 11:42:53 flz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04519f6e8f36e6121c7977e61d480212d94af18f $");
+__FBSDID("$FreeBSD: 889abc367d5738d8137f7f24485e189b237f085e $");
 #include <sys/param.h>
 #include <sys/errno.h>
 #include <sys/kernel.h>
@@ -15,7 +15,7 @@ __FBSDID("$FreeBSD: 04519f6e8f36e6121c7977e61d480212d94af18f $");
 static int
 mxge_rss_eth_z8e_fw_modevent(module_t mod, int type, void *unused)
 {
-	const struct firmware *fp, *parent;
+	const struct firmware *fp;
 	int error;
 	switch (type) {
 	case MOD_LOAD:
@@ -25,7 +25,6 @@ mxge_rss_eth_z8e_fw_modevent(module_t mod, int type, void *unused)
 				       rss_eth_z8e_uncompressed_length, NULL);
 		if (fp == NULL)
 			goto fail_0;
-		parent = fp;
 		return (0);
 	fail_0:
 		return (ENXIO);

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b03df9afc028f42efc26ada421fd1dd729cd2f5c $");
+__FBSDID("$FreeBSD: 4c7108cd74516ba70d86d9df97171f6b6ec17cea $");
 
 #include <sys/procdesc.h>
 #include <sys/wait.h>
@@ -81,19 +81,18 @@ start_pr(char *file1, char *file2)
 			pr->ostdout = dup(STDOUT_FILENO);
 			dup2(pfd[1], STDOUT_FILENO);
 			close(pfd[1]);
-			close(pfd[1]);
-			}
-			close(pfd[0]);
-			rewind(stdout);
-			free(header);
-			pr->kq = kqueue();
-			if (pr->kq == -1)
-				err(2, "kqueue");
-			pr->e = xmalloc(sizeof(struct kevent));
-			EV_SET(pr->e, pr_pd, EVFILT_PROCDESC, EV_ADD, NOTE_EXIT, 0,
-			    NULL);
-			if (kevent(pr->kq, pr->e, 1, NULL, 0, NULL) == -1)
-				err(2, "kevent");
+		}
+		close(pfd[0]);
+		rewind(stdout);
+		free(header);
+		pr->kq = kqueue();
+		if (pr->kq == -1)
+			err(2, "kqueue");
+		pr->e = xmalloc(sizeof(struct kevent));
+		EV_SET(pr->e, pr_pd, EVFILT_PROCDESC, EV_ADD, NOTE_EXIT, 0,
+		    NULL);
+		if (kevent(pr->kq, pr->e, 1, NULL, 0, NULL) == -1)
+			err(2, "kevent");
 	}
 	return (pr);
 }

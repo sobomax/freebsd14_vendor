@@ -36,10 +36,10 @@
 #include "llvm/IR/DataLayout.h"
 #include "llvm/IR/Function.h"
 #include "llvm/InitializePasses.h"
+#include "llvm/MC/TargetRegistry.h"
 #include "llvm/Pass.h"
 #include "llvm/Support/CodeGen.h"
 #include "llvm/Support/CommandLine.h"
-#include "llvm/Support/TargetRegistry.h"
 #include "llvm/Target/TargetLoweringObjectFile.h"
 #include "llvm/Target/TargetOptions.h"
 #include "llvm/Transforms/Scalar.h"
@@ -221,8 +221,11 @@ static PPCTargetMachine::PPCABI computeTargetABI(const Triple &TT,
   assert(Options.MCOptions.getABIName().empty() &&
          "Unknown target-abi option!");
 
-  if (TT.isMacOSX())
+  if (TT.isMacOSX()) {
     return PPCTargetMachine::PPC_ABI_UNKNOWN;
+  } else if (TT.isOSFreeBSD() && TT.getArch() == Triple::ppc64 && (TT.getOSMajorVersion() == 0 || TT.getOSMajorVersion() >= 13)) {
+    return PPCTargetMachine::PPC_ABI_ELFv2;
+  }
 
   switch (TT.getArch()) {
   case Triple::ppc64le:

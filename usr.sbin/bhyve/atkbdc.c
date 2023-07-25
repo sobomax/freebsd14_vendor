@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a08f58f84b22b2ea73199cd3d2d2f73721d092f5 $");
+__FBSDID("$FreeBSD: 5acde3874be3763a6b155507530d6cd5fa003440 $");
 
 #include <sys/types.h>
 
@@ -307,8 +307,8 @@ atkbdc_dequeue_data(struct atkbdc_softc *sc, uint8_t *buf)
 }
 
 static int
-atkbdc_data_handler(struct vmctx *ctx, int vcpu, int in, int port, int bytes,
-    uint32_t *eax, void *arg)
+atkbdc_data_handler(struct vmctx *ctx __unused, int in,
+    int port __unused, int bytes, uint32_t *eax, void *arg)
 {
 	struct atkbdc_softc *sc;
 	uint8_t buf;
@@ -393,8 +393,8 @@ atkbdc_data_handler(struct vmctx *ctx, int vcpu, int in, int port, int bytes,
 }
 
 static int
-atkbdc_sts_ctl_handler(struct vmctx *ctx, int vcpu, int in, int port,
-    int bytes, uint32_t *eax, void *arg)
+atkbdc_sts_ctl_handler(struct vmctx *ctx, int in,
+    int port __unused, int bytes, uint32_t *eax, void *arg)
 {
 	struct atkbdc_softc *sc;
 	int	error, retval;

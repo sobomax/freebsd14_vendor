@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cpu.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: 8ba5e455f71484d23b0245dbfc1a7791e35825ed $
+ * $FreeBSD: df35c9e92cc7368d6d68b0b4d8dc5817212104ff $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -75,7 +75,6 @@ void	cpu_halt(void);
 void	cpu_lock_delay(void);
 void	cpu_reset(void);
 void	fork_trampoline(void);
-void	swi_vm(void *);
 
 /*
  * Return contents of in-cpu fast counter as a sort of "bogo-time"

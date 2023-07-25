@@ -36,7 +36,7 @@
  * 
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 94617fa4dad98595350c72cdce4fdc7f64c1eafd $
+ * $FreeBSD: edb38e4540dae0d89be77cd5de7ac2d72b5d900d $
  */
 
 /*
@@ -1263,7 +1263,6 @@ static void
 ng_l2tp_seq_reset(priv_p priv)
 {
 	struct l2tp_seq *const seq = &priv->seq;
-	hook_p hook;
 	int i;
 
 	SEQ_LOCK_ASSERT(seq);
@@ -1280,7 +1279,7 @@ ng_l2tp_seq_reset(priv_p priv)
 	}
 
 	/* Reset session hooks' sequence number states */
-	NG_NODE_FOREACH_HOOK(priv->node, ng_l2tp_reset_session, NULL, hook);
+	NG_NODE_FOREACH_HOOK(priv->node, ng_l2tp_reset_session, NULL);
 
 	/* Reset node's sequence number state */
 	seq->ns = 0;

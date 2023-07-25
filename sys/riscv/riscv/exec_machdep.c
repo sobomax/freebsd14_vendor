@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e71279e039d25d4cdec3fcdc685e99f9c5650f86 $");
+__FBSDID("$FreeBSD: 08fba5c83e518e9cfa74f074e3203f5ef9792998 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,6 +48,7 @@ __FBSDID("$FreeBSD: e71279e039d25d4cdec3fcdc685e99f9c5650f86 $");
 #include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/ptrace.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
 #include <sys/signalvar.h>
@@ -60,7 +61,6 @@ __FBSDID("$FreeBSD: e71279e039d25d4cdec3fcdc685e99f9c5650f86 $");
 #include <machine/kdb.h>
 #include <machine/pcb.h>
 #include <machine/pte.h>
-#include <machine/reg.h>
 #include <machine/riscvreg.h>
 #include <machine/sbi.h>
 #include <machine/trap.h>

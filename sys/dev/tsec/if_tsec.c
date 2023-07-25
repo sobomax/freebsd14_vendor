@@ -30,7 +30,7 @@
  * Freescale integrated Three-Speed Ethernet Controller (TSEC) driver.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9cbb82385bf7e0dfd1ec7be6acd23739a972afe2 $");
+__FBSDID("$FreeBSD: 5012b7a0e2d4c3841356ad99d374c4dfedd51966 $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -361,7 +361,7 @@ tsec_mii_wait(struct tsec_softc *sc, uint32_t flags)
 	int timeout;
 
 	/*
-	 * The status indicators are not set immediatly after a command.
+	 * The status indicators are not set immediately after a command.
 	 * Discard the first value.
 	 */
 	TSEC_PHY_READ(sc, TSEC_REG_MIIMIND);

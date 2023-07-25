@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: 9f56775f06b8b1437c2b898f5cafc3fc35d739b4 $
+* $FreeBSD: ad62ac40997d31d66972b443a5685dd36470c5a9 $
 *
 ********************************************************************************/
 /*******************************************************************************/
@@ -343,7 +343,7 @@ typedef struct tdsaContext_s {
   bit8   FatalErrorData[(5 * (1024 * 1024))];
 #endif /* TI_GETFOR_ONRESET */
   bit32	 sgpioResponseSet;    /*Used to sync between SGPIO Req and Resp */
-  volatile  NvmdResponseSet;
+  volatile int NvmdResponseSet;
 }  tdsaContext_t;
 
 #ifdef FAST_IO_TEST

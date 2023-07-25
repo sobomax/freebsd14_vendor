@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f87f14b658e662a4b2c21135bc5de6ef110a83fa $
+ * $FreeBSD: e6ce24132e372b28d9984f69c4ed17962b92ee6c $
  */
 #ifndef _SCIC_CONTROLLER_H_
 #define _SCIC_CONTROLLER_H_
@@ -767,7 +767,7 @@ SCI_STATUS scic_controller_set_mode(
  *                results in no interrupt coalescing timeout.
  *
  * @return Indicate if the user successfully set the interrupt coalesce parameters.
- * @retval SCI_SUCCESS The user successfully updated the interrutp coalescence.
+ * @retval SCI_SUCCESS The user successfully updated the interrupt coalescence.
  * @retval SCI_FAILURE_INVALID_PARAMETER_VALUE The user input value is out of range.
  */
 SCI_STATUS scic_controller_set_interrupt_coalescence(

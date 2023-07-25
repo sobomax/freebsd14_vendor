@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5599ce7b3ae025d0cd2674adc6f095fce92f1e99 $
+ * $FreeBSD: f5747e065daf9385b76388684f06d4bdaa786c82 $
  */
 
 #ifndef _GFX_FB_H
@@ -220,7 +220,6 @@ typedef struct teken_gfx {
 	size_t		tg_shadow_sz;		/* units of pages */
 	teken_funcs_t	*tg_functions;
 	void		*tg_private;
-	bool		tg_kernel_supported;	/* Loaded kernel is supported */
 } teken_gfx_t;
 
 extern font_list_t fonts;

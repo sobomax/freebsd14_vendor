@@ -1,17 +1,23 @@
-# $FreeBSD: 348c9b7b284501f9619e10f4ab18cb470b1b84f9 $
+# $FreeBSD: 9d1f76c5db6e8b1c302c9b6c300408d54a57ce8e $
 
 .PATH: ${SRCTOP}/sys/dev/mii
 
 KMOD=	miibus
-SRCS=	acphy.c amphy.c atphy.c axphy.c bmtphy.c brgphy.c bus_if.h
-SRCS+=	ciphy.c device_if.h
+SRCS=	acphy.c amphy.c atphy.c axphy.c bmtphy.c brgphy.c
+SRCS+=	ciphy.c
 SRCS+=	e1000phy.c gentbi.c icsphy.c ip1000phy.c jmphy.c lxtphy.c
-SRCS+=	miibus_if.c miibus_if.h mii.c miidevs.h mii_bitbang.c mii_physubr.c
-SRCS+=	nsgphy.c nsphy.c nsphyter.c pci_if.h pnaphy.c qsphy.c
+SRCS+=	miibus_if.c mii.c mii_bitbang.c mii_physubr.c
+SRCS+=	nsgphy.c nsphy.c nsphyter.c pnaphy.c qsphy.c
 SRCS+=	rdcphy.c rgephy.c rlphy.c smcphy.c
 SRCS+=	smscphy.c tdkphy.c truephy.c
 SRCS+=	ukphy.c ukphy_subr.c
-SRCS+=	xmphy.c
+SRCS+=	vscphy.c xmphy.c
+SRCS+=	bus_if.h device_if.h miibus_if.h miidevs.h opt_platform.h pci_if.h
+
+.if !empty(OPT_FDT)
+SRCS+=	micphy.c mii_fdt.c
+SRCS+=	ofw_bus_if.h
+.endif
 
 EXPORT_SYMS=	YES
 

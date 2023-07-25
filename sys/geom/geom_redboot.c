@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ffdb64d162741961fe320be30d66776617fab694 $");
+__FBSDID("$FreeBSD: 8f21dc30526e1d03f6e10b626bc16800b5392ecd $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -298,15 +298,13 @@ again:
 	if (buf != NULL)
 		head = parse_fis_directory(buf, blksize, offset, offmask);
 	if (head == NULL && offset != 0) {
-		if (buf != NULL)
-			g_free(buf);
+		g_free(buf);
 		offset = 0;			/* check the front */
 		goto again;
 	}
 	g_topology_lock();
 	if (head == NULL) {
-		if (buf != NULL)
-			g_free(buf);
+		g_free(buf);
 		return NULL;
 	}
 	/*

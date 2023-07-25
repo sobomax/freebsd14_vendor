@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 10c4cda5e0c1c264432c2e3d1a50f4b1d0cfd020 $");
+__FBSDID("$FreeBSD: ba9b89f208c4048af9f22102ac7cefbc0f3a48d6 $");
 
 #include "SYS.h"
 
@@ -183,7 +183,10 @@ LEAF(_longjmp)
 #endif	/* ! __mips_soft_float */
 
 	REG_EPILOGUE
+	bne	a1, zero, 1f
 	move	v0, a1			# get return value in 1st arg
+	REG_LI	v0, 1			# return 1 if arg is 0
+1:
 	j	ra
 	nop
 

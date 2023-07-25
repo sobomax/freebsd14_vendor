@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: ab4fb534a8cbba5c825e8948b115dd842a03777c $
+ * $FreeBSD: b3d01a89d0a10b668317ef07301b6459ca18aeae $
  */
 
 #define	LINUX_SYS_linux_setxattr	5
@@ -188,7 +188,7 @@
 #define	LINUX_SYS_linux_semget	190
 #define	LINUX_SYS_linux_semctl	191
 #define	LINUX_SYS_linux_semtimedop	192
-#define	LINUX_SYS_linux_semop	193
+#define	LINUX_SYS_semop	193
 #define	LINUX_SYS_linux_shmget	194
 #define	LINUX_SYS_linux_shmctl	195
 #define	LINUX_SYS_linux_shmat	196

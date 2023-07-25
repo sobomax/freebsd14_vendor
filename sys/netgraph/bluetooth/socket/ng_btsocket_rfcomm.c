@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: c0704bce55fae98361ce78717928241b87d88c9a $
+ * $FreeBSD: 5659dc2ce74297554b0cfa94132b3cef6827e615 $
  */
 
 #include <sys/param.h>
@@ -2000,7 +2000,7 @@ ng_btsocket_rfcomm_receive_sabm(ng_btsocket_rfcomm_session_p s, int dlci)
 	/* Make sure multiplexor channel is open */
 	if (s->state != NG_BTSOCKET_RFCOMM_SESSION_OPEN) {
 		NG_BTSOCKET_RFCOMM_ERR(
-"%s: Got SABM for dlci=%d with mulitplexor channel closed, state=%d, " \
+"%s: Got SABM for dlci=%d with multiplexor channel closed, state=%d, " \
 "flags=%#x\n",		__func__, dlci, s->state, s->flags);
 
 		return (EINVAL);

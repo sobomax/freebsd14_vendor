@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: 92978eae88464f6e05cef44a716061cd6d49779a $
+ * $FreeBSD: 2011f429141caa8f539106f857cbe399c54e79a9 $
  */
 
 #ifndef _SYS_VNODE_H_
@@ -272,6 +272,7 @@ struct xvnode {
 #define	VV_FORCEINSMQ	0x1000	/* force the insmntque to succeed */
 #define	VV_READLINK	0x2000	/* fdescfs linux vnode */
 #define	VV_UNREF	0x4000	/* vunref, do not drop lock in inactive() */
+#define	VV_UNLINKED	0x8000	/* unlinked but stil open directory */
 
 #define	VMP_LAZYLIST	0x0001	/* Vnode is on mnt's lazy list */
 
@@ -703,6 +704,9 @@ struct vnode *
 int	vn_commname(struct vnode *vn, char *buf, u_int buflen);
 int	vn_path_to_global_path(struct thread *td, struct vnode *vp,
 	    char *path, u_int pathlen);
+int	vn_path_to_global_path_hardlink(struct thread *td, struct vnode *vp,
+	    struct vnode *dvp, char *path, u_int pathlen, const char *leaf_name,
+	    size_t leaf_length);
 int	vaccess(enum vtype type, mode_t file_mode, uid_t file_uid,
 	    gid_t file_gid, accmode_t accmode, struct ucred *cred);
 int	vaccess_vexec_smr(mode_t file_mode, uid_t file_uid, gid_t file_gid,
@@ -778,6 +782,10 @@ int	vn_rdwr_inchunks(enum uio_rw rw, struct vnode *vp, void *base,
 int	vn_read_from_obj(struct vnode *vp, struct uio *uio);
 int	vn_rlimit_fsize(const struct vnode *vp, const struct uio *uio,
 	    struct thread *td);
+int	vn_rlimit_fsizex(const struct vnode *vp, struct uio *uio,
+	    off_t maxfsz, ssize_t *resid_adj, struct thread *td);
+void	vn_rlimit_fsizex_res(struct uio *uio, ssize_t resid_adj);
+int	vn_rlimit_trunc(u_quad_t size, struct thread *td);
 int	vn_start_write(struct vnode *vp, struct mount **mpp, int flags);
 int	vn_start_secondary_write(struct vnode *vp, struct mount **mpp,
 	    int flags);

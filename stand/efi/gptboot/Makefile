@@ -1,4 +1,4 @@
-# $FreeBSD: 7d6dee85f93f49d5780075f10cfa29c799116718 $
+# $FreeBSD: 2dcf8dda8f590abee3f3356d774f4b0154ee9790 $
 
 # ZFS is not supported, we want debugging until this is vetted and
 # we don't want the gptboot.efifat thing created.
@@ -6,6 +6,7 @@ MK_LOADER_ZFS=no
 EFI_DEBUG=yes
 
 BOOT1?=		gptboot
+MAN=		gptboot.efi.8
 .PATH:		${SRCTOP}/stand/efi/boot1 ${SRCTOP}/stand/libsa
 CFLAGS+=	-I${SRCTOP}/stand/efi/boot1
 CFLAGS+=	-I${.CURDIR}

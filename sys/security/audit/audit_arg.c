@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a917b5b6e297b3af3ad1b0347c44d6382c2e6144 $");
+__FBSDID("$FreeBSD: 7e0b0de2abffd7c01ec1533167428ef07933ca6f $");
 
 #include <sys/param.h>
 #include <sys/filedesc.h>
@@ -873,6 +873,7 @@ audit_arg_vnode(struct vnode *vp, struct vnode_au_info *vnp)
 
 	ASSERT_VOP_LOCKED(vp, "audit_arg_vnode");
 
+	VATTR_NULL(&vattr);
 	error = VOP_GETATTR(vp, &vattr, curthread->td_ucred);
 	if (error) {
 		/* XXX: How to handle this case? */

@@ -1,6 +1,6 @@
-# $FreeBSD: 8177d3fe7832d6181d5feaab511b717cb4e3464b $
+# $FreeBSD: c7710b2a6fcb0e92b10da95ae18ef1f9b01d4c1e $
 
-PACKAGE=	runtime
+PACKAGE=	acct
 
 PROG=	utx
 MAN=	utx.8

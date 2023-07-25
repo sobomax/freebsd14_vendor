@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: eb9999e1ca5d0932938f090ff211abed562d1e3d $
+ * $FreeBSD: 7ace16944ea05b77a34235647e77a69c7aaa7467 $
  */
 #include "opt_ah.h"
 
@@ -41,7 +41,7 @@
 
 /*
  * ANI processing tunes radio parameters according to PHY errors
- * and related information.  This is done for for noise and spur
+ * and related information.  This is done for noise and spur
  * immunity in all operating modes if the device indicates it's
  * capable at attach time.  In addition, when there is a reference
  * rssi value (e.g. beacon frames from an ap in station mode)

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 0a8505f5d951379d8a5a784d80a48b2ad4129758 $
+ * $FreeBSD: 91232747c19da8bab02c3889e98e95a5382a17c9 $
  *
  * Copyright (c) 2011, 2012, 2013, 2015, 2016, 2019, Juniper Networks, Inc.
  * All rights reserved.
@@ -329,7 +329,7 @@ search:
 				    M_VERIEXEC, M_WAITOK);
 				mtx_lock(&ve_mutex);
 				/*
-				 * Repeat the seach, in case someone
+				 * Repeat the search, in case someone
 				 * added this while we slept.
 				 */
 				goto search;

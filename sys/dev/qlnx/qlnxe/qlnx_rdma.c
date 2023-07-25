@@ -30,7 +30,7 @@
  * Author: David C Somayajulu
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5929fee5d2636716aa4c9dd10eb7e02c395c679f $");
+__FBSDID("$FreeBSD: 276219134843508efa9af73ede6d077ae4e5c54d $");
 
 #include "qlnx_os.h"
 #include "bcm_osal.h"
@@ -249,7 +249,7 @@ qlnx_rdma_register_if(qlnx_rdma_if_t *rdma_if)
 		return (0);
 	}
 
-	return (-1);
+	return (ENXIO);
 }
 
 int

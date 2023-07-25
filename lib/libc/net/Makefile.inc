@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 9/5/93
-# $FreeBSD: 6628028ccc83bc633969b26f91abbaeac9d22b99 $
+# $FreeBSD: 683e2826c401e5e698fc1e6a8927a7c971ed4a8c $
 
 # machine-independent net sources
 .PATH: ${LIBC_SRCTOP}/net
@@ -59,9 +59,10 @@ MLINKS+=eui64.3 eui64_aton.3 eui64.3 eui64_hostton.3 \
 	eui64.3 eui64_ntoa.3 eui64.3 eui64_ntohost.3
 MLINKS+=getaddrinfo.3 freeaddrinfo.3 
 MLINKS+=gethostbyname.3 endhostent.3 gethostbyname.3 gethostbyaddr.3 \
-	gethostbyname.3 gethostbyname2.3 gethostbyname.3 gethostent.3 \
-	gethostbyname.3 herror.3 gethostbyname.3 hstrerror.3 \
-	gethostbyname.3 sethostent.3
+	gethostbyname.3 gethostbyaddr_r.3 gethostbyname.3 gethostbyname2.3 \
+	gethostbyname.3 gethostbyname2_r.3 gethostbyname.3 gethostbyname_r.3 \
+	gethostbyname.3 gethostent.3 gethostbyname.3 herror.3 \
+	gethostbyname.3 hstrerror.3 gethostbyname.3 sethostent.3
 MLINKS+=getifaddrs.3 freeifaddrs.3
 MLINKS+=getifmaddrs.3 freeifmaddrs.3
 MLINKS+=getipnodebyname.3 getipnodebyaddr.3 getipnodebyname.3 freehostent.3

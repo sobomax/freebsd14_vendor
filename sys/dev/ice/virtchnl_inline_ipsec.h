@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: a8b1c7d12d977e4cc8e565e3fc55f6fcd561639a $*/
+/*$FreeBSD: c02b383ce0401745fb4cfb8808c06099dc2977cd $*/
 
 #ifndef _VIRTCHNL_INLINE_IPSEC_H_
 #define _VIRTCHNL_INLINE_IPSEC_H_
@@ -478,6 +478,15 @@ struct virtchnl_ipsec_sp_cfg {
 
 	/* Set TC (congestion domain) if true. For future use. */
 	u8 set_tc;
+
+	/* 0 for NAT-T unsupported, 1 for NAT-T supported */
+	u8 is_udp;
+
+	/* reserved */
+	u8 reserved;
+
+	/* NAT-T UDP port number. Only valid in case NAT-T supported */
+	u16 udp_port;
 };
 
 #pragma pack(1)

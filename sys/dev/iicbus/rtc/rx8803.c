@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb704a0e10f56dc6f2bc2d7efe477a4bc64f818d $");
+__FBSDID("$FreeBSD: 2b8dc3623dd98499a02810eac52b2ae22cd788a4 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -134,11 +134,8 @@ rx8803_settime(device_t dev, struct timespec *ts)
 {
 	struct rx8803_time data;
 	struct bcd_clocktime bcd;
-	device_t bus;
 	uint8_t reg;
 	int rc;
-
-	bus = device_get_parent(dev);
 
 	ts->tv_sec -= utc_offset();
 	clock_ts_to_bcd(ts, &bcd, false);

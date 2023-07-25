@@ -36,13 +36,12 @@
 static char sccsid[] = "@(#)ldiv.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f55ad6de4faf73669c4f65ab3c912aab5f1a5819 $");
+__FBSDID("$FreeBSD: 954626a0c83554cc6b7f4d857add435f6053a5ac $");
 
 #include <stdlib.h>		/* ldiv_t */
 
 ldiv_t
-ldiv(num, denom)
-	long num, denom;
+ldiv(long num, long denom)
 {
 	ldiv_t r;
 

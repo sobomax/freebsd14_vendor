@@ -28,9 +28,9 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 .\" THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 70c932afb4c02c59d4d5ae7e6a117052b500e6c4 $
+.\" $FreeBSD: 4bc96f5ce003739ccc960e877fff88a4b8ad814f $
 .\"
-.Dd September 21, 2016
+.Dd November 7, 2022
 .Dt RE 4
 .Os
 .Sh NAME
@@ -285,3 +285,6 @@ avoid this problem.
 .Pp
 The RealTek 8169, 8169S and 8110S chips appear to only be capable of
 transmitting jumbo frames up to 7.5K in size.
+.Pp
+If this driver is causing problems then an updated driver from
+the vendor can be found in ports under net/realtek-re-kmod.

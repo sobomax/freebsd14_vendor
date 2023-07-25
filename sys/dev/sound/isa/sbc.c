@@ -36,7 +36,7 @@
 
 #include <isa/isavar.h>
 
-SND_DECLARE_FILE("$FreeBSD: d16e45bb30112cfc5879f44791309888ef330e9c $");
+SND_DECLARE_FILE("$FreeBSD: 3c6dd3bba97da5484ef9a2d16985df8d4b2e1560 $");
 
 #define IO_MAX	3
 #define IRQ_MAX	1
@@ -329,6 +329,7 @@ sbc_attach(device_t dev)
     	int flags = device_get_flags(dev);
 	int f, dh, dl, x, irq, i;
 
+	gone_in_dev(dev, 14, "ISA sound driver");
     	if (!logical_id && (flags & DV_F_DUAL_DMA)) {
         	bus_set_resource(dev, SYS_RES_DRQ, 1,
 				 flags & DV_F_DRQ_MASK, 1);

@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 0ba68e250b3da8e295de1a85daed38785207a080 $
+ * $FreeBSD: 9522e5db7c78d4d7305c62bbf9066d2273e2b93c $
  */
 
 /*	$NetBSD: bus.h,v 1.12 1997/10/01 08:25:15 fvdl Exp $	*/
@@ -135,15 +135,7 @@
 #define	BUS_SPACE_BARRIER_READ	0x01		/* force read barrier */
 #define	BUS_SPACE_BARRIER_WRITE	0x02		/* force write barrier */
 
-#ifndef SAN_RUNTIME
-#if defined(KASAN)
-#define	BUS_SAN_PREFIX	kasan
-#elif defined(KCSAN)
-#define	BUS_SAN_PREFIX	kcsan
-#endif
-#endif
-
-#ifdef BUS_SAN_PREFIX
+#if defined(SAN_NEEDS_INTERCEPTORS) && !defined(SAN_RUNTIME)
 #include <sys/bus_san.h>
 #else
 
@@ -1129,6 +1121,6 @@ BUS_POKE_FUNC(4, uint32_t)
 BUS_POKE_FUNC(8, uint64_t)
 #endif
 
-#endif /* !BUS_SAN_PREFIX */
+#endif /* !SAN_NEEDS_INTERCEPTORS && SAN_RUNTIME */
 
 #endif /* !_MACHINE_BUS_H_ */

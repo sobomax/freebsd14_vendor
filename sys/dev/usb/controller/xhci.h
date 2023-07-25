@@ -1,4 +1,4 @@
-/* $FreeBSD: 08f4e42b5fcd7069e9cc46ddb659e0007fc31eac $ */
+/* $FreeBSD: d98df2bdf5127f555f21cdfb44c0da75ba12ddb9 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -461,6 +461,10 @@ union xhci_hub_desc {
 
 typedef int (xhci_port_route_t)(device_t, uint32_t, uint32_t);
 
+enum xhci_quirks {
+	XHCI_QUIRK_DISABLE_PORT_PED			= 0x00000001,
+};
+
 struct xhci_softc {
 	struct xhci_hw_softc	sc_hw;
 	/* base device */
@@ -537,6 +541,9 @@ struct xhci_softc {
 
 	/* vendor string for root HUB */
 	char			sc_vendor[16];
+
+	/* XHCI quirks. */
+	uint32_t		sc_quirks;
 };
 
 #define	XHCI_CMD_LOCK(sc)	sx_xlock(&(sc)->sc_cmd_sx)

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 66bda709606edbb82f8b0f777efe158b372c1c0c $
+ * $FreeBSD: f1bec0efeee8dd1209b267bf40a345e0092947ff $
  */
 
 #ifndef _LINUXKPI_LINUX_LOCKDEP_H_
@@ -48,6 +48,8 @@ struct pin_cookie {
 #define	lockdep_set_current_reclaim_state(g) do { } while (0)
 #define	lockdep_clear_current_reclaim_state() do { } while (0)
 #define	lockdep_init_map(_map, _name, _key, _x) do { } while(0)
+#define	lockdep_register_key(key) do { } while(0)
+#define	lockdep_unregister_key(key) do { } while(0)
 
 #ifdef INVARIANTS
 #define	lockdep_assert_not_held(m) do {					\
@@ -65,6 +67,8 @@ struct pin_cookie {
 	LOCK_CLASS(__lock)->lc_assert(__lock, LA_LOCKED | LA_NOTRECURSED); \
 } while (0)
 
+#define	lockdep_assert_none_held_once() do { } while (0)
+
 static __inline bool
 lockdep_is_held(void *__m)
 {
@@ -79,6 +83,7 @@ lockdep_is_held(void *__m)
 #else
 #define	lockdep_assert_not_held(m) do { (void)(m); } while (0)
 #define	lockdep_assert_held(m) do { (void)(m); } while (0)
+#define	lockdep_assert_none_held_once() do { } while (0)
 
 #define	lockdep_assert_held_once(m) do { (void)(m); } while (0)
 

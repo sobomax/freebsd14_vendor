@@ -30,7 +30,7 @@
 /* Driver for Attansic Technology Corp. L1 Gigabit Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aee1b7eeed09360ab76378c16ea0269c0448bc6f $");
+__FBSDID("$FreeBSD: bbf9a058e9bec64c5ed471a84a23bbd15311a72b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2642,7 +2642,7 @@ age_init_locked(struct age_softc *sc)
 	 * it's hard to separate code path between Tx and Rx without
 	 * locking. If L1 hardware have a separate mail box register
 	 * for Tx and Rx consumer/producer management we could have
-	 * indepent Tx/Rx handler which in turn Rx handler could have
+	 * independent Tx/Rx handler which in turn Rx handler could have
 	 * been run without any locking.
 	 */
 	AGE_COMMIT_MBOX(sc);

@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 85dc3bf8851176bc5080fe3db9ee65d1bba6657b $
+ * $FreeBSD: 54b558d0bea2f65c833e41475f312587eefef471 $
  */
 #ifndef	_LINUXKPI_LINUX_KERNEL_H_
 #define	_LINUXKPI_LINUX_KERNEL_H_
@@ -49,10 +49,13 @@
 #include <linux/errno.h>
 #include <linux/sched.h>
 #include <linux/types.h>
+#include <linux/typecheck.h>
 #include <linux/jiffies.h>
 #include <linux/log2.h>
 
 #include <asm/byteorder.h>
+#include <asm/cpufeature.h>
+#include <asm/processor.h>
 #include <asm/uaccess.h>
 
 #include <machine/stdarg.h>
@@ -105,7 +108,7 @@
 }
 
 #define	BUILD_BUG()			do { CTASSERT(0); } while (0)
-#define	BUILD_BUG_ON(x)			_O_CTASSERT(!(x))
+#define	BUILD_BUG_ON(x)			do { _O_CTASSERT(!(x)) } while (0)
 #define	BUILD_BUG_ON_MSG(x, msg)	BUILD_BUG_ON(x)
 #define	BUILD_BUG_ON_NOT_POWER_OF_2(x)	BUILD_BUG_ON(!powerof2(x))
 #define	BUILD_BUG_ON_INVALID(expr)	while (0) { (void)(expr); }
@@ -150,6 +153,7 @@ extern int linuxkpi_warn_dump_stack;
 
 #undef	ALIGN
 #define	ALIGN(x, y)		roundup2((x), (y))
+#define	ALIGN_DOWN(x, y)	rounddown2(x, y)
 #undef PTR_ALIGN
 #define	PTR_ALIGN(p, a)		((__typeof(p))ALIGN((uintptr_t)(p), (a)))
 #define	IS_ALIGNED(x, a)	(((x) & ((__typeof(x))(a) - 1)) == 0)
@@ -433,19 +437,8 @@ kstrtou16(const char *cp, unsigned int base, u16 *res)
 static inline int
 kstrtou32(const char *cp, unsigned int base, u32 *res)
 {
-	char *end;
-	unsigned long temp;
 
-	*res = temp = strtoul(cp, &end, base);
-
-	/* skip newline character, if any */
-	if (*end == '\n')
-		end++;
-	if (*cp == 0 || *end != 0)
-		return (-EINVAL);
-	if (temp != (u32)temp)
-		return (-ERANGE);
-	return (0);
+	return (kstrtouint(cp, base, res));
 }
 
 static inline int
@@ -525,6 +518,29 @@ kstrtoint_from_user(const char __user *s, size_t count, unsigned int base,
 }
 
 static inline int
+kstrtouint_from_user(const char __user *s, size_t count, unsigned int base,
+    unsigned int *p)
+{
+	char buf[36] = {};
+
+	if (count > (sizeof(buf) - 1))
+		count = (sizeof(buf) - 1);
+
+	if (copy_from_user(buf, s, count))
+		return (-EFAULT);
+
+	return (kstrtouint(buf, base, p));
+}
+
+static inline int
+kstrtou32_from_user(const char __user *s, size_t count, unsigned int base,
+    unsigned int *p)
+{
+
+	return (kstrtouint_from_user(s, count, base, p));
+}
+
+static inline int
 kstrtou8_from_user(const char __user *s, size_t count, unsigned int base,
     u8 *p)
 {
@@ -558,6 +574,8 @@ kstrtou8_from_user(const char __user *s, size_t count, unsigned int base,
 #define offsetofend(t, m)	\
         (offsetof(t, m) + sizeof((((t *)0)->m)))
 
+#define	typeof_member(s, e)	typeof(((s *)0)->e)
+
 #define clamp_t(type, _x, min, max)	min_t(type, max_t(type, _x, min), max)
 #define clamp(x, lo, hi)		min( max(x,lo), hi)
 #define	clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
@@ -580,10 +598,6 @@ kstrtou8_from_user(const char __user *s, size_t count, unsigned int base,
 extern bool linux_cpu_has_clflush;
 #define	cpu_has_clflush		linux_cpu_has_clflush
 #endif
-
-typedef struct pm_message {
-	int event;
-} pm_message_t;
 
 /* Swap values of a and b */
 #define swap(a, b) do {			\
@@ -667,6 +681,8 @@ linux_ratelimited(linux_ratelimit_t *rl)
 
 #define	TAINT_WARN	0
 #define	test_taint(x)	(0)
+#define	add_taint(x,y)	do {	\
+	} while (0)
 
 static inline int
 _h2b(const char c)
@@ -697,6 +713,48 @@ hex2bin(uint8_t *bindst, const char *hexsrc, size_t binlen)
 	}
 
 	return (0);
+}
+
+static inline bool
+mac_pton(const char *macin, uint8_t *macout)
+{
+	const char *s, *d;
+	uint8_t mac[6], hx, lx;;
+	int i;
+
+	if (strlen(macin) < (3 * 6 - 1))
+		return (false);
+
+	i = 0;
+	s = macin;
+	do {
+		/* Should we also support '-'-delimiters? */
+		d = strchrnul(s, ':');
+		hx = lx = 0;
+		while (s < d) {
+			/* Fail on abc:123:xxx:... */
+			if ((d - s) > 2)
+				return (false);
+			/* We do support non-well-formed strings: 3:45:6:... */
+			if ((d - s) > 1) {
+				hx = _h2b(*s);
+				if (hx < 0)
+					return (false);
+				s++;
+			}
+			lx = _h2b(*s);
+			if (lx < 0)
+				return (false);
+			s++;
+		}
+		mac[i] = (hx << 4) | lx;
+		i++;
+		if (i >= 6)
+			return (false);
+	} while (d != NULL && *d != '\0');
+
+	memcpy(macout, mac, 6);
+	return (true);
 }
 
 #define	DECLARE_FLEX_ARRAY(_t, _n)					\

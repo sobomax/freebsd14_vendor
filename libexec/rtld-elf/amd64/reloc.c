@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1fec863c063b1d6e6040f0a1088302a5d624d84a $
+ * $FreeBSD: c7cf7bd58845b0d4a54b4407765bd0d812b252b7 $
  */
 
 /*
@@ -530,7 +530,12 @@ allocate_initial_tls(Obj_Entry *objs)
 	 */
 	tls_static_space = tls_last_offset + RTLD_STATIC_TLS_EXTRA;
 
-	addr = allocate_tls(objs, 0, 3 * sizeof(Elf_Addr), sizeof(Elf_Addr));
+	addr = allocate_tls(objs, 0, TLS_TCB_SIZE, TLS_TCB_ALIGN);
+
+	/*
+	 * This does not use _tcb_set() as it calls amd64_set_fsbase()
+	 * which is an ifunc and rtld must not use ifuncs.
+	 */
 	if (__getosreldate() >= P_OSREL_WRFSBASE &&
 	    (cpu_stdext_feature & CPUID_STDEXT_FSGSBASE) != 0)
 		wrfsbase((uintptr_t)addr);
@@ -541,9 +546,9 @@ allocate_initial_tls(Obj_Entry *objs)
 void *
 __tls_get_addr(tls_index *ti)
 {
-	Elf_Addr **dtvp;
+	uintptr_t **dtvp;
 
-	dtvp = _get_tp();
+	dtvp = &_tcb_get()->tcb_dtv;
 	return (tls_get_addr_common(dtvp, ti->ti_module, ti->ti_offset));
 }
 

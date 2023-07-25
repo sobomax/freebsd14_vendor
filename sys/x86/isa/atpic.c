@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28c10ee7009f9a91ef81f7e8323dbbc9f359241a $");
+__FBSDID("$FreeBSD: a98fb8b9d7161872e13e3d37f3edda13076c747a $");
 
 #include "opt_auto_eoi.h"
 #include "opt_isa.h"
@@ -525,6 +525,7 @@ atpic_handle_intr(u_int vector, struct trapframe *frame)
 
 	/* The frame may have been written into a poisoned region. */
 	kasan_mark(frame, sizeof(*frame), sizeof(*frame), 0);
+	trap_check_kstack();
 
 	KASSERT(vector < NUM_ISA_IRQS, ("unknown int %u\n", vector));
 	isrc = &atintrs[vector].at_intsrc;

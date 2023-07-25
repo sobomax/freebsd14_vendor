@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 888096164b09b7243737d27c68ed19ac6a209900 $");
+__FBSDID("$FreeBSD: bcaeebce99f231a2b9ea61a6ff6048f70855292e $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -175,10 +175,8 @@ g_label_ntfs_taste(struct g_consumer *cp, char *label, size_t size)
 		}
 	}
 done:
-	if (bf != NULL)
-		g_free(bf);
-	if (filerecp != NULL)
-		g_free(filerecp);
+	g_free(bf);
+	g_free(filerecp);
 }
 
 struct g_label_desc g_label_ntfs = {

@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2013 Dmitry Chagin
- * All rights reserved.
+ * Copyright (c) 2013 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa579d762c936519de22bc1954e1d4b44e658bec $");
+__FBSDID("$FreeBSD: 6bfeeaf5c298c7b9494376520126e3039ee1fb2f $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -113,8 +112,6 @@ DUMMY(kcmp);
 DUMMY(finit_module);
 DUMMY(sched_setattr);
 DUMMY(sched_getattr);
-/* Linux 3.17: */
-DUMMY(seccomp);
 /* Linux 3.18: */
 DUMMY(bpf);
 /* Linux 3.19: */
@@ -139,17 +136,13 @@ DUMMY(fsconfig);
 DUMMY(fsmount);
 DUMMY(fspick);
 DUMMY(pidfd_open);
-DUMMY(clone3);
 DUMMY(close_range);
 DUMMY(openat2);
 DUMMY(pidfd_getfd);
-DUMMY(faccessat2);
 DUMMY(process_madvise);
-DUMMY(epoll_pwait2);
 DUMMY(mount_setattr);
 /* Linux 4.18: */
 DUMMY(io_pgetevents);
-DUMMY(rseq);
 /* Linux 5.0: */
 DUMMY(pidfd_send_signal);
 DUMMY(io_uring_setup);

@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2013 Dmitry Chagin
- * All rights reserved.
+ * Copyright (c) 2013 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aba79b69d55da35e7b77f2b46ad4d48cd9e104a9 $");
+__FBSDID("$FreeBSD: 3ce407af291cad7b70ee76aefb2ae4bbbadc6a9f $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -69,6 +68,5 @@ DUMMY(mq_notify);
 DUMMY(mq_getsetattr);
 DUMMY(readahead);
 DUMMY(restart_syscall);
-DUMMY(semtimedop);
 /* Linux 3.15: */
 DUMMY(kexec_file_load);

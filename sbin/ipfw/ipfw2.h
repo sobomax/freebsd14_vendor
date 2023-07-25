@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: 9a39c215692dddffdf52b183f6bfc91f27a4db71 $
+ * $FreeBSD: dd7699987434642b23799359dc71cff3106bd367 $
  */
 
 enum cmdline_prog {
@@ -177,6 +177,8 @@ enum tokens {
 	TOK_SRCIP,
 	TOK_DSTPORT,
 	TOK_SRCPORT,
+	TOK_DSTMAC,
+	TOK_SRCMAC,
 	TOK_ALL,
 	TOK_MASK,
 	TOK_FLOW_MASK,

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 09ef9c4609348aaec93e13c006c893507880d366 $");
+__FBSDID("$FreeBSD: b942de5965b54c4869cb013ad65f202bdc7a427f $");
 
 #include <sys/param.h>
 
@@ -570,7 +570,7 @@ bpf_validate(const struct bpf_insn *f, int len)
 		if (!BPF_VALIDATE_CODE(p->code))
 			return (0);
 		/*
-		 * Check that that jumps are forward, and within
+		 * Check that the jumps are forward, and within
 		 * the code block.
 		 */
 		if (BPF_CLASS(p->code) == BPF_JMP) {

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4baa31a82e2af30965c029ed7cc479e43c74931 $");
+__FBSDID("$FreeBSD: e15dc998c683257719c22ba67340b9f900fbea8c $");
 
 /* Auto-generated file.  Avoid direct editing.     */
 /* Edits will be lost when file regenerated.       */
@@ -879,7 +879,7 @@ _TCBVAR g_tcb_info5[]={
    NULL                           ,        0,   0, /* faka,flo,fhi */
    "rq_start"                     , /* aka */
    COMP_NONE                      , /* comp */
-   "DW aligned starting addres of RQ", /*desc*/
+   "DW aligned starting address of RQ", /*desc*/
     NULL, /*akadesc */
   },
   {"rq_MSN"                       , 2,  986,  998, /* name,aux,lo,hi */

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 135f585ea382754a1b7b604ac7b558666c1b4777 $");
+__FBSDID("$FreeBSD: a7b9b3cb1633fdb299e92d7920dd5fcf61b15de7 $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -125,7 +125,7 @@ randomdev_encrypt_init(union randomdev_key *context, const void *data)
 }
 
 /*
- * Create a psuedorandom output stream of 'bytecount' bytes using a CTR-mode
+ * Create a pseudorandom output stream of 'bytecount' bytes using a CTR-mode
  * cipher or similar.  The 128-bit counter is supplied in the in-out parmeter
  * 'ctr.'  The output stream goes to 'd_out.'
  *

@@ -26,7 +26,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: 32ae0be92e0eea7f3ed8b4a523e32f6411f76de7 $");
+__FBSDID("$FreeBSD: e313d39c0cf2e91b37a0039c474f400a249c5323 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -612,9 +612,11 @@ lzip_tail(struct archive_read_filter *self)
 	/* Check the crc32 value of the uncompressed data of the current
 	 * member */
 	if (state->crc32 != archive_le32dec(f)) {
+#ifndef DONT_FAIL_ON_CRC_ERROR
 		archive_set_error(&self->archive->archive, ARCHIVE_ERRNO_MISC,
 		    "Lzip: CRC32 error");
 		return (ARCHIVE_FAILED);
+#endif
 	}
 
 	/* Check the uncompressed size of the current member */

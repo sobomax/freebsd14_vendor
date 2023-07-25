@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de797abd1af57b85d8345c24be61e292e6b928ce $");
+__FBSDID("$FreeBSD: eea32532131f7d5462ff339a401f22ce57a12b76 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -305,8 +305,7 @@ aesni_probesession(device_t dev, const struct crypto_session_params *csp)
 			if (csp->csp_auth_mlen != 0 &&
 			    csp->csp_auth_mlen != GMAC_DIGEST_LEN)
 				return (EINVAL);
-			if (csp->csp_ivlen != AES_GCM_IV_LEN ||
-			    !sc->has_aes)
+			if (!sc->has_aes)
 				return (EINVAL);
 			break;
 		case CRYPTO_AES_CCM_16:

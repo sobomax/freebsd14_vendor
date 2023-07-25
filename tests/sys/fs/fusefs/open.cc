@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7ac177a65d14dfef7ca17e0ef0217b6ed7df35c0 $
+ * $FreeBSD: c1314fc0d02a23118f5e8f97266d05f51fd08dfd $
  */
 
 extern "C" {
@@ -217,6 +217,7 @@ TEST_F(Open, multiple_creds)
 			perror("open");
 			return(1);
 		}
+		leak(fd0);
 		return 0;
 	}
 	);

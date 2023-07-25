@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 771d79e43ec9e222925eddb8f16091922a43e3a9 $
+ * $FreeBSD: ae53471156a6ce9fa07868a0aa4eceee369fe110 $
  */
 
 #include <sys/param.h>
@@ -99,8 +99,8 @@ prtblknos(fs, dp)
 		if (size < fs->fs_maxsymlinklen) {
 			printf("symbolic link referencing %s\n",
 			    (fs->fs_magic == FS_UFS1_MAGIC) ?
-			    (char *)dp->dp1.di_db :
-			    (char *)dp->dp2.di_db);
+			    dp->dp1.di_shortlink :
+			    dp->dp2.di_shortlink);
 			return;
 		}
 		printf("symbolic link\n");

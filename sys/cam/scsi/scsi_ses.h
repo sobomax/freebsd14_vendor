@@ -1,4 +1,4 @@
-/* $FreeBSD: 8a1c7118f99a00212dc4532020c3f7c837595626 $ */
+/* $FreeBSD: 1ee3e12381f35275dbf85dc34366491c7f1c43cc $ */
 /*-
  * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD OR GPL-2.0)
  *
@@ -2456,7 +2456,7 @@ int ses_elm_sas_descr_type(union ses_elm_sas_hdr *);
  * This structure for SPSP_PROTO_ATA is not defined by SES specs,
  * but purely my own design to make AHCI EM interoperate with SES.
  * Since no other software I know can talk to SEMB, and we do not
- * expose this this outside, it should be safe to do what we want.
+ * expose this outside, it should be safe to do what we want.
  */
 struct ses_elm_ata_hdr {
 	uint8_t bus[4];

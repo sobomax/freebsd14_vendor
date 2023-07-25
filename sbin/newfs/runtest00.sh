@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: a95dbcc83b25046e19580642575ae8102e8233c0 $
+# $FreeBSD: ea51dee8dbdaaf0590bb6332e1d4af978e454b33 $
 
 set -e
 
@@ -10,7 +10,7 @@ do
 	(
 	mdconfig -d -u $MD || true
 	mdconfig -a -t malloc -s $s -u $MD
-	disklabel -r -w md$MD auto
+	disklabel -w md$MD auto
 	./newfs -R /dev/md${MD}c
 	) 1>&2
 	md5 < /dev/md${MD}c

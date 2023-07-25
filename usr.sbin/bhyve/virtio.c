@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13a274a03c0c2ce58f9eca78df99a8d5566c3ecd $");
+__FBSDID("$FreeBSD: 68304f76dc497115dd478c80f0a0d49c6e1f9d31 $");
 
 #include <sys/param.h>
 #include <sys/uio.h>
@@ -174,7 +174,7 @@ vi_intr_init(struct virtio_softc *vs, int barnum, int use_msix)
  * The guest just gave us a page frame number, from which we can
  * calculate the addresses of the queue.
  */
-void
+static void
 vi_vq_init(struct virtio_softc *vs, uint32_t pfn)
 {
 	struct vqueue_info *vq;
@@ -214,10 +214,9 @@ vi_vq_init(struct virtio_softc *vs, uint32_t pfn)
  * descriptor.
  */
 static inline void
-_vq_record(int i, volatile struct vring_desc *vd,
-	   struct vmctx *ctx, struct iovec *iov, int n_iov,
-	   struct vi_req *reqp) {
-
+_vq_record(int i, struct vring_desc *vd, struct vmctx *ctx, struct iovec *iov,
+    int n_iov, struct vi_req *reqp)
+{
 	if (i >= n_iov)
 		return;
 	iov[i].iov_base = paddr_guest2host(ctx, vd->addr, vd->len);
@@ -271,7 +270,7 @@ vq_getchain(struct vqueue_info *vq, struct iovec *iov, int niov,
 	u_int ndesc, n_indir;
 	u_int idx, next;
 	struct vi_req req;
-	volatile struct vring_desc *vdir, *vindir, *vp;
+	struct vring_desc *vdir, *vindir, *vp;
 	struct vmctx *ctx;
 	struct virtio_softc *vs;
 	const char *name;
@@ -409,8 +408,8 @@ vq_retchains(struct vqueue_info *vq, uint16_t n_chains)
 void
 vq_relchain_prepare(struct vqueue_info *vq, uint16_t idx, uint32_t iolen)
 {
-	volatile struct vring_used *vuh;
-	volatile struct vring_used_elem *vue;
+	struct vring_used *vuh;
+	struct vring_used_elem *vue;
 	uint16_t mask;
 
 	/*
@@ -559,8 +558,7 @@ vi_find_cr(int offset) {
  * Otherwise dispatch to the actual driver.
  */
 uint64_t
-vi_pci_read(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
-	    int baridx, uint64_t offset, int size)
+vi_pci_read(struct pci_devinst *pi, int baridx, uint64_t offset, int size)
 {
 	struct virtio_softc *vs = pi->pi_arg;
 	struct virtio_consts *vc;
@@ -603,7 +601,10 @@ vi_pci_read(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 		max = vc->vc_cfgsize ? vc->vc_cfgsize : 0x100000000;
 		if (newoff + size > max)
 			goto bad;
-		error = (*vc->vc_cfgread)(DEV_SOFTC(vs), newoff, size, &value);
+		if (vc->vc_cfgread != NULL)
+			error = (*vc->vc_cfgread)(DEV_SOFTC(vs), newoff, size, &value);
+		else
+			error = 0;
 		if (!error)
 			goto done;
 	}
@@ -676,8 +677,8 @@ done:
  * Otherwise dispatch to the actual driver.
  */
 void
-vi_pci_write(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
-	     int baridx, uint64_t offset, int size, uint64_t value)
+vi_pci_write(struct pci_devinst *pi, int baridx, uint64_t offset, int size,
+    uint64_t value)
 {
 	struct virtio_softc *vs = pi->pi_arg;
 	struct vqueue_info *vq;
@@ -719,7 +720,10 @@ vi_pci_write(struct vmctx *ctx, int vcpu, struct pci_devinst *pi,
 		max = vc->vc_cfgsize ? vc->vc_cfgsize : 0x100000000;
 		if (newoff + size > max)
 			goto bad;
-		error = (*vc->vc_cfgwrite)(DEV_SOFTC(vs), newoff, size, value);
+		if (vc->vc_cfgwrite != NULL)
+			error = (*vc->vc_cfgwrite)(DEV_SOFTC(vs), newoff, size, value);
+		else
+			error = 0;
 		if (!error)
 			goto done;
 	}
@@ -766,7 +770,7 @@ bad:
 		vs->vs_curq = value;
 		break;
 	case VIRTIO_PCI_QUEUE_NOTIFY:
-		if (value >= vc->vc_nvq) {
+		if (value >= (unsigned int)vc->vc_nvq) {
 			EPRINTLN("%s: queue %d notify out of range",
 				name, (int)value);
 			goto done;
@@ -809,7 +813,7 @@ done:
 
 #ifdef BHYVE_SNAPSHOT
 int
-vi_pci_pause(struct vmctx *ctx, struct pci_devinst *pi)
+vi_pci_pause(struct pci_devinst *pi)
 {
 	struct virtio_softc *vs;
 	struct virtio_consts *vc;
@@ -825,7 +829,7 @@ vi_pci_pause(struct vmctx *ctx, struct pci_devinst *pi)
 }
 
 int
-vi_pci_resume(struct vmctx *ctx, struct pci_devinst *pi)
+vi_pci_resume(struct pci_devinst *pi)
 {
 	struct virtio_softc *vs;
 	struct virtio_consts *vc;

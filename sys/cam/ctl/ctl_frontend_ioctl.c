@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f326100cb013ea71f5cdf5e5d553ce529071e094 $");
+__FBSDID("$FreeBSD: f53dae6948679cd9d3f9a795612b83608bc1c22b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -75,7 +75,7 @@ struct ctl_fe_ioctl_params {
 
 struct cfi_port {
 	TAILQ_ENTRY(cfi_port)	link;
-	uint32_t		cur_tag_num;
+	u_int			cur_tag_num;
 	struct cdev *		dev;
 	struct ctl_port		port;
 };
@@ -634,7 +634,7 @@ ctl_ioctl_io(struct cdev *dev, u_long cmd, caddr_t addr, int flag,
 	io->io_hdr.flags |= CTL_FLAG_USER_REQ;
 	if ((io->io_hdr.io_type == CTL_IO_SCSI) &&
 	    (io->scsiio.tag_type != CTL_TAG_UNTAGGED))
-		io->scsiio.tag_num = cfi->cur_tag_num++;
+		io->scsiio.tag_num = atomic_fetchadd_int(&cfi->cur_tag_num, 1);
 
 	retval = cfi_submit_wait(io);
 	if (retval == 0)

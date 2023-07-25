@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9de388f3ad87af7b224e0acb8b48382a34b815e $");
+__FBSDID("$FreeBSD: 46ac7889f3d6c4fa8bae73d54db869ecf4c5e079 $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -1352,7 +1352,7 @@ ath_tx_setds(struct ath_softc *sc, struct ath_buf *bf)
 	);
 
 	/*
-	 * This will be overriden when the descriptor chain is written.
+	 * This will be overridden when the descriptor chain is written.
 	 */
 	bf->bf_lastds = ds;
 	bf->bf_last = bf;

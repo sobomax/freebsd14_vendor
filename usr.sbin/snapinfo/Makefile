@@ -1,6 +1,7 @@
-# $FreeBSD: 76013744e9884f1a4358a672152a39d53898a5b8 $
+# $FreeBSD: 3aded69e2fb7ce0c7bdc4ab29968fcfae8144559 $
 #
 
+PACKAGE=	ufs
 PROG=	snapinfo
 MAN=	snapinfo.8
 

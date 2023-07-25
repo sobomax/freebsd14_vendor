@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431f9cad09de9624bc46cedb8cb8c7560e707080 $");
+__FBSDID("$FreeBSD: 5fa4edd492488c8068d048e2a8ca140ac8704921 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -385,8 +385,8 @@ g_raid_tr_iodone_raid5(struct g_raid_tr_object *tr,
 }
 
 static int
-g_raid_tr_kerneldump_raid5(struct g_raid_tr_object *tr,
-    void *virtual, vm_offset_t physical, off_t offset, size_t length)
+g_raid_tr_kerneldump_raid5(struct g_raid_tr_object *tr, void *virtual,
+    off_t offset, size_t length)
 {
 
 	return (ENODEV);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22c6c878b2a52c1c6bfea9454f62b49ed7bbed8b $");
+__FBSDID("$FreeBSD: 1d110a7bf285ca4e11e9f0ffce24a76020299fc8 $");
 
 #include <errno.h>
 #include <limits.h>
@@ -38,7 +38,7 @@ __FBSDID("$FreeBSD: 22c6c878b2a52c1c6bfea9454f62b49ed7bbed8b $");
 #include "un-namespace.h"
 #include "thr_private.h"
 
-_Static_assert(sizeof(struct pthread_rwlock) <= PAGE_SIZE,
+_Static_assert(sizeof(struct pthread_rwlock) <= THR_PAGE_SIZE_MIN,
     "pthread_rwlock is too large for off-page");
 
 __weak_reference(_thr_rwlock_destroy, pthread_rwlock_destroy);

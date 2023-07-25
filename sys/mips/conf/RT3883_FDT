@@ -4,7 +4,7 @@
 #
 # This includes all the configurable parts of the kernel.
 #
-# $FreeBSD: 68af94118f070d7118870adef59154f4e4ef0141 $
+# $FreeBSD: 1cba5c0bed3044f31251d58d85f7126c7636b59f $
 #
 
 #NO_UNIVERSE
@@ -74,7 +74,6 @@ device 		bpf
 device 		if_bridge
 
 # Extres
-options		EXT_RESOURCES
 device 		clk
 
 # For now there's no etherswitch support for RT3662/RT3883

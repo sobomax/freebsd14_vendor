@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)buf_subs.c	8.2 (Berkeley) 4/18/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d50a280f29ca2a9f2072ae8b125e73975528302 $");
+__FBSDID("$FreeBSD: 54c65150b4679b5cfcaf2aef629d4e66f6df6a43 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -199,7 +199,7 @@ cp_start(void)
  *	A major problem is rewriting this last record. For archives stored
  *	on disk files, this is trivial. However, many devices are really picky
  *	about the conditions under which they will allow a write to occur.
- *	Often devices restrict the conditions where writes can be made writes,
+ *	Often devices restrict the conditions where writes can be made,
  *	so it may not be feasible to append archives stored on all types of
  *	devices.
  * Return:

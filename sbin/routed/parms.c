@@ -28,14 +28,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 16665b18407fe75e2346f027bb13c7ff6e440671 $
+ * $FreeBSD: c05951700581152c1a01c55c7c99d055d9a57bbb $
  */
 
 #include "defs.h"
 #include "pathnames.h"
 #include <sys/stat.h>
 
-__RCSID("$FreeBSD: 16665b18407fe75e2346f027bb13c7ff6e440671 $");
+__RCSID("$FreeBSD: c05951700581152c1a01c55c7c99d055d9a57bbb $");
 
 
 static struct parm *parms;
@@ -1019,7 +1019,7 @@ gethost(char *name,
 	 * might be sick because routing is.
 	 */
 	if (inet_aton(name, &in) == 1) {
-		/* get a good number, but check that it it makes some
+		/* get a good number, but check that it makes some
 		 * sense.
 		 */
 		if (ntohl(in.s_addr)>>24 == 0

@@ -25,14 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4ae755ef4411fb732a8c295ec09cdd789a36b02f $
+ * $FreeBSD: 01f2bfa9ca0f5a539826d639c019dbd5eb9e3cf9 $
  */
 
 #ifndef _PS2MOUSE_H_
 #define	_PS2MOUSE_H_
 
 struct atkbdc_softc;
-struct vm_snapshot_meta; 
+struct vm_snapshot_meta;
 
 struct ps2mouse_softc *ps2mouse_init(struct atkbdc_softc *sc);
 

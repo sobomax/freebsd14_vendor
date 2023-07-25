@@ -38,7 +38,7 @@
 
 #include "vc_vchi_audioserv_defs.h"
 
-SND_DECLARE_FILE("$FreeBSD: ae2c9a14fc6290dd934de02973c49ea538431008 $");
+SND_DECLARE_FILE("$FreeBSD: da5939ec33cba94bd075100643547ba48a708ea9 $");
 
 /* Audio destination */
 #define	DEST_AUTO		0
@@ -207,6 +207,8 @@ bcm2835_audio_callback(void *param, const VCHI_CALLBACK_REASON_T reason, void *m
 
 	status = vchi_msg_dequeue(sc->vchi_handle,
 	    &m, sizeof m, &msg_len, VCHI_FLAGS_NONE);
+	if (status != 0)
+		return;
 	if (m.type == VC_AUDIO_MSG_TYPE_RESULT) {
 		if (m.u.result.success) {
 			device_printf(sc->dev,

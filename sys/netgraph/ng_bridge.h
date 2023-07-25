@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: 4fb3e124637ea34eddf1a7363cb14530cefafbaf $
+ * $FreeBSD: 56daaa163da7fac8db43343a42ac73d7a80f73e7 $
  */
 
 #ifndef _NETGRAPH_NG_BRIDGE_H_
@@ -191,6 +191,7 @@ struct ng_bridge_move_host {
 #define NG_BRIDGE_MOVE_HOST_TYPE_INFO(entype)	{		\
 	  { "addr",		(entype)		},	\
 	  { "hook",		&ng_parse_hookbuf_type	},	\
+	  { NULL }						\
 }
 
 /* Netgraph control messages */

@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 87b213a99b0eb2d2505a9e811de0ee9e9480688d $*/
+/*$FreeBSD: 80cf1ce1925d0302605db1f066fa14c509348f37 $*/
 
 #include "ixgbe_api.h"
 #include "ixgbe_common.h"
@@ -1088,7 +1088,7 @@ s32 ixgbe_disable_mc(struct ixgbe_hw *hw)
  * ixgbe_clear_vfta - Clear VLAN filter table
  * @hw: pointer to hardware structure
  *
- * Clears the VLAN filer table, and the VMDq index associated with the filter
+ * Clears the VLAN filter table, and the VMDq index associated with the filter
  **/
 s32 ixgbe_clear_vfta(struct ixgbe_hw *hw)
 {

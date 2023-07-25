@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4df1208f40aa7bc35afd825c9776fd6c218e7fc7 $
+ * $FreeBSD: a5f0d93263d87d7d7fcd97d0f6458f5ce75eade5 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4df1208f40aa7bc35afd825c9776fd6c218e7fc7 $");
+__FBSDID("$FreeBSD: a5f0d93263d87d7d7fcd97d0f6458f5ce75eade5 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -225,12 +225,10 @@ rk_spi_fill_txfifo(struct rk_spi_softc *sc)
 {
 	uint32_t txlevel;
 	txlevel = RK_SPI_READ_4(sc, RK_SPI_TXFLR);
-	int cnt = 0;
 
 	while (sc->txidx < sc->txlen && txlevel < sc->fifo_size) {
 		RK_SPI_WRITE_4(sc, RK_SPI_TXDR, sc->txbuf[sc->txidx++]);
 		txlevel++;
-		cnt++;
 	}
 
 	if (sc->txidx != sc->txlen)

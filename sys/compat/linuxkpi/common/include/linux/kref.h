@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 2c59794f4ddc9cb3dc21fc44ca96b4f7d23551c4 $
+ * $FreeBSD: 3b5645bf139b672a617834f3743e724c5118d0c2 $
  */
 #ifndef _LINUXKPI_LINUX_KREF_H_
 #define _LINUXKPI_LINUX_KREF_H_
@@ -43,6 +43,7 @@
 #include <asm/atomic.h>
 
 struct kref {
+	/* XXX In Linux this is a refcount_t */
 	atomic_t refcount;
 };
 

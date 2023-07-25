@@ -1,4 +1,4 @@
-/* $FreeBSD: 4e2391b3bf2e5b35c92d45e60da551a18c40e485 $ */
+/* $FreeBSD: 030c96d6d3545c93e8edc15761e6bdb585609a3e $ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-
@@ -128,7 +128,7 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 	 * MSDOSFSROOT, offset MSDOSFSROOT_OFS
 	 *
 	 * NOTE: de_vncmpf will explicitly skip any denodes that do not have
-	 * a de_refcnt > 0.  This insures that that we do not attempt to use
+	 * a de_refcnt > 0.  This insures that we do not attempt to use
 	 * a denode that represents an unlinked but still open file.
 	 * These files are not to be accessible even when the directory
 	 * entry that represented the file happens to be reused while the

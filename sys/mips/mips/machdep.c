@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd0f83e5df9835bde0ee5d8f9d604bcda003ec72 $");
+__FBSDID("$FreeBSD: ec0f3f31c254105992e826b448db28366c53e9ea $");
 
 #include "opt_ddb.h"
 #include "opt_md.h"
@@ -60,6 +60,7 @@ __FBSDID("$FreeBSD: fd0f83e5df9835bde0ee5d8f9d604bcda003ec72 $");
 #include <sys/mbuf.h>
 #include <sys/msgbuf.h>
 #include <sys/reboot.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/sched.h>
 #include <sys/sysctl.h>

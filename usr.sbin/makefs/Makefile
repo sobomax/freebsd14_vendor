@@ -1,4 +1,4 @@
-#	$FreeBSD: cbe4f497d7d1afb937d567111c6a48e3d1009359 $
+#	$FreeBSD: 3fea648f938383735ad3d1ba1cb66aa67fcac0c5 $
 
 SRCDIR:=${.PARSEDIR:tA}
 
@@ -16,7 +16,7 @@ SRCS=	cd9660.c \
 	walk.c
 MAN=	makefs.8
 
-WARNS?=	2
+NO_WCAST_ALIGN=
 CSTD=	c11
 
 .include "${SRCDIR}/cd9660/Makefile.inc"

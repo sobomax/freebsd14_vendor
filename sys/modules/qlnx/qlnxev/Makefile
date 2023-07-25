@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: 4c79eee59a5527f7143eff7f8da1e0da2dce687e $
+# $FreeBSD: 89ba62cd3027189ea93922b174d015ac8f49fae6 $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlnx/qlnxe
@@ -60,7 +60,7 @@ CFLAGS += -DECORE_PACKAGE
 CFLAGS += -DCONFIG_ECORE_L2
 CFLAGS += -DECORE_CONFIG_DIRECT_HWFN
 
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 CFLAGS += -g
 CFLAGS += -fno-inline

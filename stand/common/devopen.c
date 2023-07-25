@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8fd2c179655544155f00c7f866271b00d66098ad $");
+__FBSDID("$FreeBSD: 4fd955d5a9ebfb69f916ad9b7fc55d8f146a99d3 $");
 
 #include <stand.h>
 #include <string.h>
@@ -63,9 +63,7 @@ devopen(struct open_file *f, const char *fname, const char **file)
 	 * pw if needed), this will attach the geli code to the open_file by
 	 * replacing f->f_dev and f_devdata with pointers to a geli_devdesc.
 	 */
-	if (f->f_dev->dv_type == DEVT_DISK) {
-		geli_probe_and_attach(f);
-	}
+	geli_probe_and_attach(f);
 #endif
 
 	return (0);

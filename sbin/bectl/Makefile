@@ -1,8 +1,8 @@
-# $FreeBSD: 46d43306b9ca209df9848da34bcb8f503b36d6aa $
+# $FreeBSD: fe2e6087e243552fc918299957f425aac1bc00dc $
 
 .include <src.opts.mk>
 
-PACKAGE=runtime
+PACKAGE=zfs
 PROG=	bectl
 MAN=	bectl.8
 

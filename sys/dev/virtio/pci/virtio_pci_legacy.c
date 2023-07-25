@@ -29,7 +29,7 @@
 /* Driver for the legacy VirtIO PCI interface. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cebee720975a2e7630a2f267a98c21c30c247bd $");
+__FBSDID("$FreeBSD: bc18c25626902c09bde3791a1e2df942878b2e35 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -97,7 +97,7 @@ static int	vtpci_legacy_reinit(device_t, uint64_t);
 static void	vtpci_legacy_reinit_complete(device_t);
 static void	vtpci_legacy_notify_vq(device_t, uint16_t, bus_size_t);
 static void	vtpci_legacy_read_dev_config(device_t, bus_size_t, void *, int);
-static void	vtpci_legacy_write_dev_config(device_t, bus_size_t, void *, int);
+static void	vtpci_legacy_write_dev_config(device_t, bus_size_t, const void *, int);
 
 static bool	vtpci_legacy_setup_msix(struct vtpci_legacy_softc *sc);
 static void	vtpci_legacy_teardown_msix(struct vtpci_legacy_softc *sc);
@@ -519,11 +519,11 @@ vtpci_legacy_read_dev_config(device_t dev, bus_size_t offset,
 
 static void
 vtpci_legacy_write_dev_config(device_t dev, bus_size_t offset,
-    void *src, int length)
+    const void *src, int length)
 {
 	struct vtpci_legacy_softc *sc;
 	bus_size_t off;
-	uint8_t *s;
+	const uint8_t *s;
 	int i;
 
 	sc = device_get_softc(dev);
@@ -654,10 +654,7 @@ static int
 vtpci_legacy_register_msix(struct vtpci_legacy_softc *sc, int offset,
     struct vtpci_interrupt *intr)
 {
-	device_t dev;
 	uint16_t vector;
-
-	dev = sc->vtpci_dev;
 
 	if (intr != NULL) {
 		/* Map from guest rid to host vector. */

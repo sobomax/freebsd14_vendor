@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 226cd599126149f02d86591c42b53da8ac61cd73 $");
+__FBSDID("$FreeBSD: aca2ca81f057174693aecfc17ca1bd3c1268eb68 $");
 
 #include "opt_ddb.h"
 #include "opt_ktrace.h"
@@ -76,7 +76,7 @@ __FBSDID("$FreeBSD: 226cd599126149f02d86591c42b53da8ac61cd73 $");
 #include <sys/sem.h>
 #include <sys/sysent.h>
 #include <sys/timers.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #ifdef KTRACE
 #include <sys/ktrace.h>
 #endif
@@ -136,7 +136,7 @@ reaper_abandon_children(struct proc *p, bool exiting)
 {
 	struct proc *p1, *p2, *ptmp;
 
-	sx_assert(&proctree_lock, SX_LOCKED);
+	sx_assert(&proctree_lock, SX_XLOCKED);
 	KASSERT(p != initproc, ("reaper_abandon_children for initproc"));
 	if ((p->p_treeflag & P_TREE_REAPER) == 0)
 		return;
@@ -213,6 +213,13 @@ sys_sys_exit(struct thread *td, struct sys_exit_args *uap)
 	/* NOTREACHED */
 }
 
+void
+proc_set_p2_wexit(struct proc *p)
+{
+	PROC_LOCK_ASSERT(p, MA_OWNED);
+	p->p_flag2 |= P2_WEXIT;
+}
+
 /*
  * Exit: deallocate address space and other resources, change proc state to
  * zombie, and unlink proc from allproc and parent's lists.  Save exit status
@@ -251,6 +258,8 @@ exit1(struct thread *td, int rval, int signo)
 	 * MUST abort all other threads before proceeding past here.
 	 */
 	PROC_LOCK(p);
+	proc_set_p2_wexit(p);
+
 	/*
 	 * First check if some other thread or external request got
 	 * here before us.  If so, act appropriately: exit or suspend.
@@ -263,16 +272,15 @@ exit1(struct thread *td, int rval, int signo)
 		 * Kill off the other threads. This requires
 		 * some co-operation from other parts of the kernel
 		 * so it may not be instantaneous.  With this state set
-		 * any thread entering the kernel from userspace will
-		 * thread_exit() in trap().  Any thread attempting to
+		 * any thread attempting to interruptibly
 		 * sleep will return immediately with EINTR or EWOULDBLOCK
 		 * which will hopefully force them to back out to userland
 		 * freeing resources as they go.  Any thread attempting
-		 * to return to userland will thread_exit() from userret().
+		 * to return to userland will thread_exit() from ast().
 		 * thread_exit() will unsuspend us when the last of the
 		 * other threads exits.
 		 * If there is already a thread singler after resumption,
-		 * calling thread_single will fail; in that case, we just
+		 * calling thread_single() will fail; in that case, we just
 		 * re-check all suspension request, the thread should
 		 * either be suspended there or exit.
 		 */
@@ -369,14 +377,13 @@ exit1(struct thread *td, int rval, int signo)
 	 * executing, prevent it from rearming itself and let it finish.
 	 */
 	if (timevalisset(&p->p_realtimer.it_value) &&
-	    _callout_stop_safe(&p->p_itcallout, CS_EXECUTING, NULL) == 0) {
+	    callout_stop(&p->p_itcallout) == 0) {
 		timevalclear(&p->p_realtimer.it_interval);
-		msleep(&p->p_itcallout, &p->p_mtx, PWAIT, "ritwait", 0);
-		KASSERT(!timevalisset(&p->p_realtimer.it_value),
-		    ("realtime timer is still armed"));
+		PROC_UNLOCK(p);
+		callout_drain(&p->p_itcallout);
+	} else {
+		PROC_UNLOCK(p);
 	}
-
-	PROC_UNLOCK(p);
 
 	if (p->p_sysent->sv_onexit != NULL)
 		p->p_sysent->sv_onexit(p);
@@ -494,7 +501,7 @@ exit1(struct thread *td, int rval, int signo)
 		wakeup(q->p_reaper);
 	for (; q != NULL; q = nq) {
 		nq = LIST_NEXT(q, p_sibling);
-		ksi = ksiginfo_alloc(TRUE);
+		ksi = ksiginfo_alloc(M_WAITOK);
 		PROC_LOCK(q);
 		q->p_sigparent = SIGCHLD;
 

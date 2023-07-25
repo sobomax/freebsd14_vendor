@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 09396d854045e89d417e9b23d8755e3c01a17a53 $");
+__FBSDID("$FreeBSD: 5db1a17fc2436eef3fe4fc22aa97870d8b2bbf33 $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
@@ -122,7 +122,6 @@ __FBSDID("$FreeBSD: 09396d854045e89d417e9b23d8755e3c01a17a53 $");
 
 #include <machine/cpu.h>
 #include <machine/kdb.h>
-#include <machine/reg.h>
 #include <machine/vmparam.h>
 #include <machine/spr.h>
 #include <machine/hid.h>

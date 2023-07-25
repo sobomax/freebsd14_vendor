@@ -21,7 +21,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  *
- * $FreeBSD: 0da74c9cf07600267606d71c87673116c71d329b $
+ * $FreeBSD: eb7feceb269db0250a8614b3daccc74c642c05eb $
  *
  */
 
@@ -48,7 +48,7 @@
 
 #define	FBT_ENTRY	"entry"
 #define	FBT_RETURN	"return"
-#define	FBT_AFRAMES	7
+#define	FBT_AFRAMES	5
 
 int
 fbt_invop(uintptr_t addr, struct trapframe *frame, uintptr_t rval)

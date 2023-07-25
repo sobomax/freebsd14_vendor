@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 38a99032f692fe98f46553cefa52b257470f8bd5 $
+ * $FreeBSD: a76021c8aca5362aed76a46520e0076ba81e46f4 $
  */
 
 #ifndef _GEOM_H_
@@ -34,7 +34,7 @@
 
 /*
  * The G_FLAG_VERBOSE flag on a command specification means that the
- * comand will accept a -v option and the GEOM framework will print
+ * command will accept a -v option and the GEOM framework will print
  * out status information after the command when it is run with -v.
  * Additionally a GEOM command can explicitly specify a -v option and
  * handle it as it would any other option. If both a -v option and

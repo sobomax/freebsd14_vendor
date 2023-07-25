@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 39f3349d521777a1c72e83c6bd6ecd8a17bea0b0 $");
+__FBSDID("$FreeBSD: 6846c8b0e3c6ac7608a2a8e54c95bfe40beaf2aa $");
 
 /*
  * CYAPA - Cypress APA trackpad with I2C Interface driver
@@ -1336,7 +1336,6 @@ cyapa_raw_input(struct cyapa_softc *sc, struct cyapa_regs *regs, int freq)
 	int afingers;	/* actual fingers after culling */
 	int i;
 	int j;
-	int k;
 	int isidle;
 	int thumbarea_begin;
 	int seen_thumb;
@@ -1485,7 +1484,6 @@ cyapa_raw_input(struct cyapa_softc *sc, struct cyapa_regs *regs, int freq)
 		sc->track_but = 0;
 		i = 0;
 		j = 0;
-		k = 0;
 	} else {
 		/*
 		 * The id assigned on touch can move around in the array,

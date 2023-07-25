@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 2c3424204842630a5de3b2a69b24c420e65a5c2f $
+# $FreeBSD: 80a99f2afedd28b52f3354c869d18d3e8196f0ee $
 
 #include <sys/bus.h>
 #include <machine/bus.h>
@@ -107,7 +107,7 @@ METHOD void read_device_config {
 METHOD void write_device_config {
 	device_t	dev;
 	bus_size_t	offset;
-	void		*src;
+	const void	*src;
 	int		len;
 };
 

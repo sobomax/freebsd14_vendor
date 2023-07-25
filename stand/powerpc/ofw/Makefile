@@ -1,4 +1,4 @@
-# $FreeBSD: 03844301f0943ae869ce358dadf482454a07eee4 $
+# $FreeBSD: 5912ceae93d52879ee32ef0af344d5a2bc5a30d1 $
 
 LOADER_CD9660_SUPPORT?=	yes
 LOADER_EXT2FS_SUPPORT?=	no
@@ -18,10 +18,9 @@ INSTALLFLAGS=	-b
 
 # Architecture-specific loader code
 SRCS=		conf.c vers.c main.c elf_freebsd.c ppc64_elf_freebsd.c start.c
-SRCS+=		ucmpdi2.c gfx_fb.c
+SRCS+=		ucmpdi2.c gfx_fb_stub.c
 
-CFLAGS.gfx_fb.c += -I${SRCTOP}/contrib/pnglite
-CFLAGS.gfx_fb.c += -I${SRCTOP}/sys/teken
+CFLAGS.gfx_fb_stub.c += -I${SRCTOP}/contrib/pnglite -I${SRCTOP}/sys/teken
 
 .include	"${BOOTSRC}/fdt.mk"
 .if ${MK_FDT} == "yes"
@@ -38,6 +37,7 @@ SRCS+=		trampolineLE.S
 .endif
 
 HELP_FILES=	${FDTSRC}/help.fdt
+HELP_FILENAME=	loader.help.ofw
 
 # Always add MI sources
 .include	"${BOOTSRC}/loader.mk"

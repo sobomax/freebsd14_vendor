@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: 170fef61b70df8ec68b31ec699f3e06bc5881383 $
+ * $FreeBSD: 09694f470efb97a253274420fe77ba795c536bb4 $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -125,7 +125,7 @@
  * Upper region:    0xffffffffffffffff  Top of virtual memory
  *
  *                  0xfffffeffffffffff  End of DMAP
- *                  0xfffffd0000000000  Start of DMAP
+ *                  0xfffffa0000000000  Start of DMAP
  *
  *                  0xffff007fffffffff  End of KVA
  *                  0xffff000000000000  Kernel base address & start of KVA

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c1d418d6cc697c0ecebd5b920019d914266430f5 $");
+__FBSDID("$FreeBSD: 6b23af25b01c3b122801d358195044685abfa960 $");
 
 #include <sys/types.h>
 #include <sys/cpuset.h>
@@ -440,7 +440,7 @@ run_command(struct cfjail *j)
 		} else
 			argc = 4;
 
-		if (!down) {
+		if (!down && extrap != NULL) {
 			for (cs = strtok(extrap, " "); cs;
 			     cs = strtok(NULL, " ")) {
 				size_t len = strlen(cs) + 1;

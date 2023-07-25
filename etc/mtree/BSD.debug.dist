@@ -1,4 +1,4 @@
-# $FreeBSD: 270d672b336e903ef70a989f4c29e1464f978583 $
+# $FreeBSD: d0f706c1ec421f1c89442d015fdb0edf089c0360 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -31,7 +31,7 @@
             ..
             lib
                 clang
-                    13.0.0
+                    14.0.5
                         lib
                             freebsd
                             ..

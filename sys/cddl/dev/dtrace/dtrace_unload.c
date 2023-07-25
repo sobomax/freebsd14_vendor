@@ -18,12 +18,12 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: b0d22e6527f316f029a16e7c919dc1fa2757ffab $
+ * $FreeBSD: 1dfaa774e99fd5340f95fd8611ebf039d89c8542 $
  *
  */
 
 static int
-dtrace_unload()
+dtrace_unload(void)
 {
 	dtrace_state_t *state;
 	int error = 0;

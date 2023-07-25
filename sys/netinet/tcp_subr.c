@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62042df50d18c94a66420a4aae7217dbeeac1def $");
+__FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -843,6 +843,9 @@ sysctl_net_inet_tcp_udp_tunneling_port_check(SYSCTL_HANDLER_ARGS)
 			}
 			if (new != 0) {
 				error = tcp_over_udp_start();
+				if (error != 0) {
+					V_tcp_udp_tunneling_port = 0;
+				}
 			}
 		}
 	}

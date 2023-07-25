@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 67381bf24be08241c0bbc89cd24ad9d905c6d0d9 $
+ * $FreeBSD: 5fa56de6c9fd075271b729d91abf8243afe4186f $
  */
 
 #ifndef ARCHIVE_H_INCLUDED
@@ -36,7 +36,7 @@
  * assert that ARCHIVE_VERSION_NUMBER >= 2012108.
  */
 /* Note: Compiler will complain if this does not match archive_entry.h! */
-#define	ARCHIVE_VERSION_NUMBER 3006000
+#define	ARCHIVE_VERSION_NUMBER 3006002
 
 #include <sys/stat.h>
 #include <stddef.h>  /* for wchar_t */
@@ -120,6 +120,8 @@ typedef ssize_t la_ssize_t;
 #   define __LA_DECL	__declspec(dllimport)
 #  endif
 # endif
+#elif defined __LIBARCHIVE_ENABLE_VISIBILITY
+#  define __LA_DECL __attribute__((visibility("default")))
 #else
 /* Static libraries or non-Windows needs no special declaration. */
 # define __LA_DECL
@@ -155,7 +157,7 @@ __LA_DECL int		archive_version_number(void);
 /*
  * Textual name/version of the library, useful for version displays.
  */
-#define	ARCHIVE_VERSION_ONLY_STRING "3.6.0"
+#define	ARCHIVE_VERSION_ONLY_STRING "3.6.2"
 #define	ARCHIVE_VERSION_STRING "libarchive " ARCHIVE_VERSION_ONLY_STRING
 __LA_DECL const char *	archive_version_string(void);
 

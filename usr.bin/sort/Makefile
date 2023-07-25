@@ -1,7 +1,8 @@
-# $FreeBSD: 3f7b607a177a203459f89bfbca4d3a316d25712f $
+# $FreeBSD: 40cd99086b95fa84f9e892096faefc08e930edb4 $
 
 .include <src.opts.mk>
 
+PACKAGE= runtime
 PROG=	sort
 SRCS=	bwstring.c coll.c file.c mem.c radixsort.c sort.c vsort.c
 CSTD=	c11

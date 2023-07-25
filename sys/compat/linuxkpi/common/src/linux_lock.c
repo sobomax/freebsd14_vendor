@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: b04a7738d036ef8f660da3bb87e177501e3c7438 $
+ * $FreeBSD: 0e9a2fecaf7db46cd1410bf88a533de1e482cfcc $
  */
 
 #include <sys/queue.h>
@@ -152,6 +152,19 @@ linux_mutex_lock_interruptible(mutex_t *m)
 	int error;
 
 	error = -sx_xlock_sig(&m->sx);
+	if (error != 0) {
+		linux_schedule_save_interrupt_value(current, error);
+		error = -EINTR;
+	}
+	return (error);
+}
+
+int
+linux_down_read_killable(struct rw_semaphore *rw)
+{
+	int error;
+
+	error = -sx_slock_sig(&rw->sx);
 	if (error != 0) {
 		linux_schedule_save_interrupt_value(current, error);
 		error = -EINTR;

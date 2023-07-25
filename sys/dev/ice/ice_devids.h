@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,12 +28,13 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 2d092c6037c4357e4c5ec0282cec5d579baaa331 $*/
+/*$FreeBSD: dc8970952b49d6fb1c2feb58e4448f251a1ecffe $*/
 
 #ifndef _ICE_DEVIDS_H_
 #define _ICE_DEVIDS_H_
 
 /* Device IDs */
+#define ICE_DEV_ID_E822_SI_DFLT		0x1888
 /* Intel(R) Ethernet Connection E823-L for backplane */
 #define ICE_DEV_ID_E823L_BACKPLANE	0x124C
 /* Intel(R) Ethernet Connection E823-L for SFP */
@@ -52,6 +53,11 @@
 #define ICE_DEV_ID_E810C_SFP		0x1593
 #define ICE_SUBDEV_ID_E810T		0x000E
 #define ICE_SUBDEV_ID_E810T2		0x000F
+#define ICE_SUBDEV_ID_E810T3		0x02E9
+#define ICE_SUBDEV_ID_E810T4		0x02EA
+#define ICE_SUBDEV_ID_E810T5		0x0010
+#define ICE_SUBDEV_ID_E810T6		0x0012
+#define ICE_SUBDEV_ID_E810T7		0x0011
 /* Intel(R) Ethernet Controller E810-XXV for backplane */
 #define ICE_DEV_ID_E810_XXV_BACKPLANE	0x1599
 /* Intel(R) Ethernet Controller E810-XXV for QSFP */
@@ -86,5 +92,4 @@
 #define ICE_DEV_ID_E822L_10G_BASE_T	0x1899
 /* Intel(R) Ethernet Connection E822-L 1GbE */
 #define ICE_DEV_ID_E822L_SGMII		0x189A
-
 #endif /* _ICE_DEVIDS_H_ */

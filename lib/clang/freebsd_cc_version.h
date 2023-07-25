@@ -1,3 +1,3 @@
-/* $FreeBSD: 9a7e1fe089ec8b602261e5f4a4701e06038b3bf3 $ */
+/* $FreeBSD: 07a0c73ffe9fbaedeff6de5be3781751e8e52448 $ */
 
-#define	FREEBSD_CC_VERSION		1300009
+#define	FREEBSD_CC_VERSION		1300010

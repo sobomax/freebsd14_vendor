@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80a81f9c6c27c85197092c9ff1fd27127f026381 $");
+__FBSDID("$FreeBSD: b4a627cc55ebae8c5e16972b641b14d177484e4e $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -51,8 +51,7 @@ __thr_malloc_init(void)
 		return;
 	npagesizes = getpagesizes(pagesizes_d, nitems(pagesizes_d));
 	if (npagesizes == -1) {
-		npagesizes = 1;
-		pagesizes_d[0] = PAGE_SIZE;
+		PANIC("Unable to read page sizes");
 	}
 	pagesizes = pagesizes_d;
 	_thr_umutex_init(&thr_malloc_umtx);

@@ -1,11 +1,10 @@
-# $FreeBSD: 80423741e4a9199aeb5dd74efbcd0cc86357fc0a $
+# $FreeBSD: 7fe6dd958ebd5ea65b74aa7a432726fd98b4c613 $
 
 .include <src.opts.mk>
 
 LIB=	proc
 
-SRCS=	crc32.c			\
-	proc_bkpt.c		\
+SRCS=	proc_bkpt.c		\
 	proc_create.c		\
 	proc_regs.c		\
 	proc_sym.c		\
@@ -24,7 +23,7 @@ LIBADD+=		cxxrt
 LIBADD+=	supcplusplus
 .endif
 
-LIBADD+=	elf procstat rtld_db util
+LIBADD+=	elf procstat rtld_db util z
 
 .if ${MK_CDDL} != "no"
 LIBADD+=	ctf

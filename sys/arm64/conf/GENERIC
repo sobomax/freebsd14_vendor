@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: b14776d4d9790072e3b5b3ac984d9add2e6a99b3 $
+# $FreeBSD: f8842d672c0e1db8bd14579c18c7ded50732ae31 $
 
 cpu		ARM64
 ident		GENERIC
@@ -32,7 +32,9 @@ options 	INET			# InterNETworking
 options 	INET6			# IPv6 communications protocols
 options 	IPSEC_SUPPORT		# Allow kldload of ipsec and tcpmd5
 options		ROUTE_MPATH		# Multipath routing support
+options		FIB_ALGO		# Modular fib lookups
 options 	TCP_OFFLOAD		# TCP offload
+options 	TCP_BLACKBOX		# Enhanced TCP event logging
 options 	TCP_HHOOK		# hhook(9) framework for TCP
 options		TCP_RFC7413		# TCP Fast Open
 options 	SCTP_SUPPORT		# Allow kldload of SCTP
@@ -189,7 +191,7 @@ device		iicmux
 device		iic
 device		icee		# Generic IIC eeprom
 device		twsi		# Allwinner I2C controller
-device		pca9547		# NPX I2C bus multiplexer
+device		pca954x		# NPX I2C bus multiplexer
 device		pcf8563		# NXP Real-time clock/calendar
 device		rk_i2c		# RockChip I2C controller
 device		syr827		# Silergy SYR827 PMIC
@@ -285,6 +287,7 @@ device		neta			# Marvell Armada 370/38x/XP/3700 NIC
 device		re			# RealTek 8139C+/8169/8169S/8110S
 device		smc			# SMSC LAN91C111
 device		vnic			# Cavium ThunderX NIC
+device		dpaa2			# Data Path Acceleration Architecture (2nd Gen)
 
 # Etherswitch devices
 device		etherswitch		# Enable etherswitch support

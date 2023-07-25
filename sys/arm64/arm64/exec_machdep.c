@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6a7fc64734e129948ebe9bde07bacd3a313a8cd5 $");
+__FBSDID("$FreeBSD: cc589731ae6abfe0e31ac2aef02f3db72a14463a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: 6a7fc64734e129948ebe9bde07bacd3a313a8cd5 $");
 #include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/ptrace.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/signalvar.h>
 #include <sys/syscallsubr.h>
@@ -54,7 +55,6 @@ __FBSDID("$FreeBSD: 6a7fc64734e129948ebe9bde07bacd3a313a8cd5 $");
 #include <machine/kdb.h>
 #include <machine/md_var.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 
 #ifdef VFP
 #include <machine/vfp.h>

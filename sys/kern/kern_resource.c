@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3dd243199088f3de78a1addc3523ed8ac9f2990b $");
+__FBSDID("$FreeBSD: 02be770d8cd722dd413b9b6c91a05faa7a58df74 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,7 +59,7 @@ __FBSDID("$FreeBSD: 3dd243199088f3de78a1addc3523ed8ac9f2990b $");
 #include <sys/sysctl.h>
 #include <sys/sysent.h>
 #include <sys/time.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>
@@ -1199,7 +1199,7 @@ rufetchcalc(struct proc *p, struct rusage *ru, struct timeval *up,
  * reference count and mutex pointer.
  */
 struct plimit *
-lim_alloc()
+lim_alloc(void)
 {
 	struct plimit *limp;
 
@@ -1332,7 +1332,7 @@ lim_rlimit_proc(struct proc *p, int which, struct rlimit *rlp)
 }
 
 void
-uihashinit()
+uihashinit(void)
 {
 
 	uihashtbl = hashinit(maxproc / 16, M_UIDINFO, &uihash);

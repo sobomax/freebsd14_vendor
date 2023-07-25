@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fdd0ab870f43f450e496fc643531cbd5d1bf7d16 $");
+__FBSDID("$FreeBSD: 0fbcde5e0b57e35febe1bbfe6f3fd2743b02e0f9 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -478,7 +478,8 @@ send_get_tcb(struct adapter *sc, u_int tid)
 	struct cpl_get_tcb *cpl;
 	struct wrq_cookie cookie;
 
-	MPASS(tid < sc->tids.ntids);
+	MPASS(tid >= sc->tids.tid_base);
+	MPASS(tid - sc->tids.tid_base < sc->tids.ntids);
 
 	cpl = start_wrq_wr(&sc->sge.ctrlq[0], howmany(sizeof(*cpl), 16),
 	    &cookie);
@@ -531,7 +532,8 @@ add_tid_to_history(struct adapter *sc, u_int tid)
 	struct tom_data *td = sc->tom_softc;
 	int rc;
 
-	MPASS(tid < sc->tids.ntids);
+	MPASS(tid >= sc->tids.tid_base);
+	MPASS(tid - sc->tids.tid_base < sc->tids.ntids);
 
 	if (td->tcb_history == NULL)
 		return (ENXIO);
@@ -581,7 +583,8 @@ lookup_tcb_histent(struct adapter *sc, u_int tid, bool addrem)
 	struct tcb_histent *te;
 	struct tom_data *td = sc->tom_softc;
 
-	MPASS(tid < sc->tids.ntids);
+	MPASS(tid >= sc->tids.tid_base);
+	MPASS(tid - sc->tids.tid_base < sc->tids.ntids);
 
 	if (td->tcb_history == NULL)
 		return (NULL);
@@ -773,7 +776,8 @@ read_tcb_using_memwin(struct adapter *sc, u_int tid, uint64_t *buf)
 	uint32_t addr;
 	u_char *tcb, tmp;
 
-	MPASS(tid < sc->tids.ntids);
+	MPASS(tid >= sc->tids.tid_base);
+	MPASS(tid - sc->tids.tid_base < sc->tids.ntids);
 
 	addr = t4_read_reg(sc, A_TP_CMM_TCB_BASE) + tid * TCB_SIZE;
 	rc = read_via_memwin(sc, 2, addr, (uint32_t *)buf, TCB_SIZE);
@@ -1134,6 +1138,7 @@ init_conn_params(struct vi_info *vi , struct offload_settings *s,
 	struct inpcb *inp = sotoinpcb(so);
 	struct tcpcb *tp = intotcpcb(inp);
 	u_long wnd;
+	u_int q_idx;
 
 	MPASS(s->offload != 0);
 
@@ -1217,18 +1222,22 @@ init_conn_params(struct vi_info *vi , struct offload_settings *s,
 	cp->mtu_idx = find_best_mtu_idx(sc, inc, s);
 
 	/* Tx queue for this connection. */
-	if (s->txq >= 0 && s->txq < vi->nofldtxq)
-		cp->txq_idx = s->txq;
+	if (s->txq == QUEUE_RANDOM)
+		q_idx = arc4random();
+	else if (s->txq == QUEUE_ROUNDROBIN)
+		q_idx = atomic_fetchadd_int(&vi->txq_rr, 1);
 	else
-		cp->txq_idx = arc4random() % vi->nofldtxq;
-	cp->txq_idx += vi->first_ofld_txq;
+		q_idx = s->txq;
+	cp->txq_idx = vi->first_ofld_txq + q_idx % vi->nofldtxq;
 
 	/* Rx queue for this connection. */
-	if (s->rxq >= 0 && s->rxq < vi->nofldrxq)
-		cp->rxq_idx = s->rxq;
+	if (s->rxq == QUEUE_RANDOM)
+		q_idx = arc4random();
+	else if (s->rxq == QUEUE_ROUNDROBIN)
+		q_idx = atomic_fetchadd_int(&vi->rxq_rr, 1);
 	else
-		cp->rxq_idx = arc4random() % vi->nofldrxq;
-	cp->rxq_idx += vi->first_ofld_rxq;
+		q_idx = s->rxq;
+	cp->rxq_idx = vi->first_ofld_rxq + q_idx % vi->nofldrxq;
 
 	if (SOLISTENING(so)) {
 		/* Passive open */
@@ -1587,8 +1596,8 @@ lookup_offload_policy(struct adapter *sc, int open_type, struct mbuf *m,
 		.ecn = -1,
 		.ddp = -1,
 		.tls = -1,
-		.txq = -1,
-		.rxq = -1,
+		.txq = QUEUE_RANDOM,
+		.rxq = QUEUE_RANDOM,
 		.mss = -1,
 	};
 	static const struct offload_settings disallow_offloading_settings = {
@@ -1838,24 +1847,6 @@ t4_aio_queue_tom(struct socket *so, struct kaiocb *job)
 }
 
 static int
-t4_ctloutput_tom(struct socket *so, struct sockopt *sopt)
-{
-
-	if (sopt->sopt_level != IPPROTO_TCP)
-		return (tcp_ctloutput(so, sopt));
-
-	switch (sopt->sopt_name) {
-	case TCP_TLSOM_SET_TLS_CONTEXT:
-	case TCP_TLSOM_GET_TLS_TOM:
-	case TCP_TLSOM_CLR_TLS_TOM:
-	case TCP_TLSOM_CLR_QUIES:
-		return (t4_ctloutput_tls(so, sopt));
-	default:
-		return (tcp_ctloutput(so, sopt));
-	}
-}
-
-static int
 t4_tom_mod_load(void)
 {
 	/* CPL handlers */
@@ -1875,7 +1866,6 @@ t4_tom_mod_load(void)
 	bcopy(tcp_protosw, &toe_protosw, sizeof(toe_protosw));
 	bcopy(tcp_protosw->pr_usrreqs, &toe_usrreqs, sizeof(toe_usrreqs));
 	toe_usrreqs.pru_aio_queue = t4_aio_queue_tom;
-	toe_protosw.pr_ctloutput = t4_ctloutput_tom;
 	toe_protosw.pr_usrreqs = &toe_usrreqs;
 
 	tcp6_protosw = pffindproto(PF_INET6, IPPROTO_TCP, SOCK_STREAM);
@@ -1884,7 +1874,6 @@ t4_tom_mod_load(void)
 	bcopy(tcp6_protosw, &toe6_protosw, sizeof(toe6_protosw));
 	bcopy(tcp6_protosw->pr_usrreqs, &toe6_usrreqs, sizeof(toe6_usrreqs));
 	toe6_usrreqs.pru_aio_queue = t4_aio_queue_tom;
-	toe6_protosw.pr_ctloutput = t4_ctloutput_tom;
 	toe6_protosw.pr_usrreqs = &toe6_usrreqs;
 
 	return (t4_register_uld(&tom_uld_info));

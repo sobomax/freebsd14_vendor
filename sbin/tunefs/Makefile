@@ -1,7 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 9d0754edca89b5b46abefb27a6ed5151f856c4c2 $
+# $FreeBSD: cdb2f313c5f70da132d1d3ee8a5ea73ba6e41e43 $
 
-PACKAGE=runtime
+PACKAGE=ufs
 PROG=	tunefs
 SRCS=	tunefs.c getmntopts.c
 LIBADD=	ufs

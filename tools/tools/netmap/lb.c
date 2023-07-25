@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 37fe97cc6ed4e738e2382539b5799f5edc41ea61 $ */
+/* $FreeBSD: 778360d9ed6ac46af8c6277ecec48a99fd495724 $ */
 #include <ctype.h>
 #include <errno.h>
 #include <inttypes.h>
@@ -498,7 +498,7 @@ init_groups(void)
  * when the need to drop arises, we roll it back to head.
  */
 struct morefrag {
-	uint16_t last_flag;	/* for intput rings */
+	uint16_t last_flag;	/* for input rings */
 	uint32_t last_hash;	/* for input rings */
 	uint32_t shadow_head;	/* for output rings */
 };

@@ -1,4 +1,4 @@
-/* $FreeBSD: ba4e094bab60e5aef1e697ada69979f0b3d876ac $ */
+/* $FreeBSD: 08a7de1b5b9c3ec4c015eef85fc87143aeb3403b $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -36,6 +36,8 @@ enum {
 	MSC_EJECT_CMOTECH,
 	MSC_EJECT_HUAWEI,
 	MSC_EJECT_HUAWEI2,
+	MSC_EJECT_HUAWEI3,
+	MSC_EJECT_HUAWEI4,
 	MSC_EJECT_TCT,
 };
 

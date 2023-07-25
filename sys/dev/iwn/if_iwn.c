@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 334ba644e04bebf54bf62ee00b5dcbcd002e8c18 $");
+__FBSDID("$FreeBSD: ffbfd3a68c8d147e05aaf6a536374343a773ca86 $");
 
 #include "opt_wlan.h"
 #include "opt_iwn.h"
@@ -9108,7 +9108,7 @@ iwn_set_channel(struct ieee80211com *ic)
 		error = iwn_config(sc);
 		if (error != 0)
 		device_printf(sc->sc_dev,
-		    "%s: error %d settting channel\n", __func__, error);
+		    "%s: error %d setting channel\n", __func__, error);
 	}
 	IWN_UNLOCK(sc);
 }

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: e645e7799d1e9bbc8be0f49acc56abe11f921154 $ */
+/* $FreeBSD: afb160c92c866a1ee0c79589168d16862bde8acc $ */
 /* RCSID("$Id: gss_set_cred_option.c 21126 2007-06-18 20:19:59Z lha $"); */
 
 #include <gssapi/gssapi.h>
@@ -102,13 +102,13 @@ gss_set_cred_option (OM_uint32 *minor_status,
 
 		SLIST_FOREACH(mc, &cred->gc_mc, gmc_link) {
 			m = mc->gmc_mech;
-	
+
 			if (m == NULL)
 				return GSS_S_BAD_MECH;
-	
+
 			if (m->gm_set_cred_option == NULL)
 				continue;
-	
+
 			major_status = m->gm_set_cred_option(minor_status,
 			    &mc->gmc_cred, object, value);
 			if (major_status == GSS_S_COMPLETE)

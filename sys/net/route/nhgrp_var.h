@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ba90a3feedc82d672c57312dad0334fa71d71e1c $
+ * $FreeBSD: c1540fbb33cf6ecbc469f53b4d92d4425d0e2baa $
  */
 
 /*
@@ -47,8 +47,10 @@
 
 struct nhgrp_priv {
 	uint32_t		nhg_idx;
+	uint32_t		nhg_uidx;
 	uint8_t			nhg_nh_count;	/* number of items in nh_weights */
-	uint8_t			nhg_spare[3];
+	uint8_t			nhg_origin;	/* protocol which created the group */
+	uint8_t			nhg_spare[2];
 	u_int			nhg_refcount;	/* use refcount */
 	u_int			nhg_linked;	/* refcount(9), == 2 if linked to the list */
 	struct nh_control	*nh_control;	/* parent control structure */

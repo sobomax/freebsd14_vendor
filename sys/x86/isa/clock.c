@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62a026b92d993a65a6c720576e2cfcd31c097b73 $");
+__FBSDID("$FreeBSD: ed92f50d7c1483c64bbdaa3a961d7934f211e306 $");
 
 /*
  * Routines to handle clock hardware.
@@ -403,10 +403,10 @@ i8254_init(void)
 }
 
 void
-startrtclock()
+startrtclock(void)
 {
 
-	init_TSC();
+	start_TSC();
 }
 
 void

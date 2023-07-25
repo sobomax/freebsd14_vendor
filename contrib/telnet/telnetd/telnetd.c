@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)telnetd.c	8.4 (Berkeley) 5/30/95";
 #endif
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52287782973574947a7a027d6d8b265dc65cc84f $");
+__FBSDID("$FreeBSD: e12fe70997ab82fe36415d306501f4b2a8067bdc $");
 
 #include "telnetd.h"
 #include "pathnames.h"
@@ -659,6 +659,11 @@ doit(struct sockaddr *who)
 	int ptynum;
 
 	/*
+	 * Initialize the slc mapping table.
+	 */
+	get_slc_defaults();
+
+	/*
 	 * Find an available pty to use.
 	 */
 #ifndef	convex
@@ -740,11 +745,6 @@ telnet(int f, int p, char *host)
 	int if_fd = -1;
 	struct stat statbuf;
 	int nfd;
-
-	/*
-	 * Initialize the slc mapping table.
-	 */
-	get_slc_defaults();
 
 	/*
 	 * Do some tests where it is desireable to wait for a response.

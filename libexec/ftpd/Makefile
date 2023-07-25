@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: 4d38261b9318f8a2937a5f12b2e1be236d56dd4a $
+# $FreeBSD: 533022c5a033110ca861bf426aaa665e3b1aaf9b $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,7 @@ YFLAGS=
 WARNS?=	2
 WFORMAT=0
 
-LIBADD=	crypt xo util
+LIBADD=	crypt util
 
 # XXX Kluge! Conversation mechanism needs to be fixed.
 LIBADD+=	opie md

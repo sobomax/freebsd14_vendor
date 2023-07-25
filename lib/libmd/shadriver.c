@@ -15,7 +15,7 @@
  * documentation and/or software. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f5026eb3cc5dab2a5b78fee38e40528863b077ba $");
+__FBSDID("$FreeBSD: 3664eab9dbaac7722c8a0f1558ecba4e4151ec7c $");
 
 #include <sys/types.h>
 
@@ -51,6 +51,9 @@ __FBSDID("$FreeBSD: f5026eb3cc5dab2a5b78fee38e40528863b077ba $");
 #elif SHA == 512
 #undef SHA_Data
 #define SHA_Data SHA512_Data
+#elif SHA == 512224
+#undef SHA_Data
+#define SHA_Data SHA512_224_Data
 #elif SHA == 512256
 #undef SHA_Data
 #define SHA_Data SHA512_256_Data

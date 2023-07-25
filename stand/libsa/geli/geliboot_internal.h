@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2318690297f8c19bf757e951c731a8a29c7e8d2e $
+ * $FreeBSD: 74ca17f0b9b65b45455cbc1dfbb6f9b99096aec6 $
  */
 
 #ifndef _GELIBOOT_INTERNAL_H_
@@ -39,8 +39,6 @@
 
 #include <geom/eli/g_eli.h>
 #include <geom/eli/pkcs5v2.h>
-
-#include <bootstrap.h>
 
 /* Pull in the md5, sha256, and sha512 implementations */
 #include <sys/md5.h>
@@ -68,6 +66,6 @@ struct geli_dev {
 };
 
 int geliboot_crypt(u_int algo, geli_op_t  enc, u_char *data, size_t datasize,
-    const u_char *key, size_t keysize, u_char *iv, size_t ivlen);
+    const u_char *key, size_t keysize, u_char *iv);
 
 #endif /* _GELIBOOT_INTERNAL_H_ */

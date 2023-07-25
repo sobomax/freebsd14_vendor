@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a4255c348212b22648f19e94aca63d2b58c48346 $");
+__FBSDID("$FreeBSD: 233f222b49f1dd2bdd162f124ad72050f5a7067c $");
 
 #include "opt_cpu.h"
 #include "opt_ddb.h"
@@ -60,6 +60,7 @@ __FBSDID("$FreeBSD: a4255c348212b22648f19e94aca63d2b58c48346 $");
 #include <sys/malloc.h>
 #include <sys/mutex.h>
 #include <sys/pcpu.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/signalvar.h>
 #ifdef SMP
@@ -90,15 +91,9 @@ __FBSDID("$FreeBSD: a4255c348212b22648f19e94aca63d2b58c48346 $");
 #include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/proc.h>
-#include <machine/reg.h>
 #include <machine/sigframe.h>
 #include <machine/specialreg.h>
 #include <machine/trap.h>
-
-static void get_fpcontext(struct thread *td, mcontext_t *mcp,
-    char **xfpusave, size_t *xfpusave_len);
-static int set_fpcontext(struct thread *td, mcontext_t *mcp,
-    char *xfpustate, size_t xfpustate_len);
 
 /*
  * Send an interrupt to process.
@@ -714,7 +709,7 @@ set_mcontext(struct thread *td, mcontext_t *mcp)
 	return (0);
 }
 
-static void
+void
 get_fpcontext(struct thread *td, mcontext_t *mcp, char **xfpusave,
     size_t *xfpusave_len)
 {
@@ -735,7 +730,7 @@ get_fpcontext(struct thread *td, mcontext_t *mcp, char **xfpusave,
 	}
 }
 
-static int
+int
 set_fpcontext(struct thread *td, mcontext_t *mcp, char *xfpustate,
     size_t xfpustate_len)
 {

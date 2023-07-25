@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: cea78490053681adfbf0acab5e0f1a7bf33017a7 $
+ * $FreeBSD: 3d0f37b5981e5c6ef543eab56fe867c32b9446e4 $
  */
 FBSD_1.2 {
 	procstat_close;
@@ -43,4 +43,9 @@ FBSD_1.5 {
 FBSD_1.6 {
 	procstat_get_pts_info;
 	procstat_get_vnode_info;
+};
+
+FBSD_1.7 {
+	 procstat_getadvlock;
+	 procstat_freeadvlock;
 };

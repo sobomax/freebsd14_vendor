@@ -29,7 +29,7 @@
 #define	_TPM20_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bafbd93dc1368acc2d6e8c800071692a9f49689f $");
+__FBSDID("$FreeBSD: fd1ab55a65e34004f8fe10aab7bc7cf4f9c4737c $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: bafbd93dc1368acc2d6e8c800071692a9f49689f $");
 #include <sys/module.h>
 #include <sys/rman.h>
 #include <sys/sx.h>
+#include <sys/taskqueue.h>
 #include <sys/uio.h>
 
 #include <machine/bus.h>
@@ -123,8 +124,7 @@ struct tpm_sc {
 
 	struct callout 	discard_buffer_callout;
 #ifdef TPM_HARVEST
-	struct callout 	harvest_callout;
-	int		harvest_ticks;
+	struct timeout_task 	harvest_task;
 #endif
 
 	int		(*transmit)(struct tpm_sc *, size_t);

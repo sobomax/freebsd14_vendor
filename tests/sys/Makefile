@@ -1,4 +1,4 @@
-# $FreeBSD: 2ba60f41b76c96c3d5a30f39f8889d7c8fac9b6b $
+# $FreeBSD: 14d96e053b648f254d8c049fb968d6acb4a21740 $
 
 .include <src.opts.mk>
 
@@ -24,6 +24,7 @@ TESTS_SUBDIRS+=		${_netgraph}
 TESTS_SUBDIRS+=		netinet
 TESTS_SUBDIRS+=		netinet6
 TESTS_SUBDIRS+=		netipsec
+TESTS_SUBDIRS+=		netlink
 TESTS_SUBDIRS+=		netmap
 TESTS_SUBDIRS+=		netpfil
 TESTS_SUBDIRS+=		opencrypto

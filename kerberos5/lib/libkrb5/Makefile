@@ -1,6 +1,6 @@
-# $FreeBSD: 2aaa0da9fe1ea72710fc711dec76b96b7fbb7edf $
+# $FreeBSD: 2f3304dc4e7d6f89c5d4e64a4c54dab844d859a5 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	krb5
 LDFLAGS=	-Wl,--no-undefined

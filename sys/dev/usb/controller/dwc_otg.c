@@ -1,4 +1,4 @@
-/* $FreeBSD: 5a1f2d27125118c4026528ccfe91dc1263283281 $ */
+/* $FreeBSD: 8692964e23c33c217f65ea754e8c2f2e1d56a22e $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -2139,7 +2139,7 @@ dwc_otg_data_tx(struct dwc_otg_softc *sc, struct dwc_otg_td *td)
 	max_buffer = sc->sc_hw_ep_profile[td->ep_no].max_buffer;
 
 repeat:
-	/* check for for endpoint 0 data */
+	/* check for endpoint 0 data */
 
 	temp = sc->sc_last_rx_status;
 

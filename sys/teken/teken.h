@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 994298b0dbc6b52a1b79fc448c2d85b522b863f9 $
+ * $FreeBSD: 7545db9b9cdf578b26ea1cb13be81ddda07871e3 $
  */
 
 #ifndef _TEKEN_H_
@@ -53,7 +53,7 @@ typedef unsigned char teken_color_t;
 #define	TC_BLACK	0
 #define	TC_RED		1
 #define	TC_GREEN	2
-#define	TC_BROWN	3
+#define	TC_YELLOW	3
 #define	TC_BLUE		4
 #define	TC_MAGENTA	5
 #define	TC_CYAN		6

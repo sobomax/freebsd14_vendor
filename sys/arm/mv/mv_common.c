@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d2bb17cf3098f33019068278e4dab2cd5211452 $");
+__FBSDID("$FreeBSD: c2e25c686583e35b23d0c581568916a2b0ef43de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -411,7 +411,7 @@ static int mv_win_cesa_attr_armadaxp(int eng_sel)
 }
 
 enum soc_family
-mv_check_soc_family()
+mv_check_soc_family(void)
 {
 	uint32_t dev, rev;
 
@@ -2688,7 +2688,7 @@ fdt_win_process_child(phandle_t child, struct soc_node_spec *soc_node,
 {
 	int addr_cells, size_cells;
 	pcell_t reg[8];
-	u_long size, base;
+	u_long base;
 
 	if (fdt_addrsize_cells(OF_parent(child), &addr_cells,
 	    &size_cells))
@@ -2703,7 +2703,7 @@ fdt_win_process_child(phandle_t child, struct soc_node_spec *soc_node,
 		base = fdt_data_get(&reg[0], addr_cells);
 	else
 		base = fdt_data_get(&reg[addr_cells - 2], 2);
-	size = fdt_data_get(&reg[addr_cells], size_cells);
+	fdt_data_get(&reg[addr_cells], size_cells);
 
 	if (soc_node->valid_handler != NULL)
 		if (!soc_node->valid_handler())

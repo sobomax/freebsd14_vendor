@@ -1,7 +1,9 @@
-# $FreeBSD: faad22df713aa482215e5f29ea7a2243da36359b $
+# $FreeBSD: 1e480ad706d11a179665fc8fe42babd3af3ab6df $
 
 PACKAGE=	tests
 
 ATF_TESTS_SH=	cp_test
+PROGS+=		sparse
+BINDIR=		${TESTSDIR}
 
 .include <bsd.test.mk>

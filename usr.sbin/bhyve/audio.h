@@ -25,10 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2b559a43e5dfef59a4883feebc891c88aabc5353 $
+ * $FreeBSD: 143030b29ae794c55a32d559c8389f0d06680a51 $
  */
 
-#ifndef _AUDIO_EMUL_H_ 
+#ifndef _AUDIO_EMUL_H_
 #define _AUDIO_EMUL_H_
 
 #include <sys/types.h>
@@ -73,7 +73,7 @@ int audio_set_params(struct audio *aud, struct audio_params *params);
  * @count - the number of bytes in buffer
  * Returns -1 on error and 0 on success
  */
-int audio_playback(struct audio *aud, const void *buf, size_t count);
+int audio_playback(struct audio *aud, const uint8_t *buf, size_t count);
 
 /*
  * audio_record - records samples from the sound device using blocking
@@ -83,6 +83,6 @@ int audio_playback(struct audio *aud, const void *buf, size_t count);
  * @count - the number of bytes to capture in buffer
  * Returns -1 on error and 0 on success
  */
-int audio_record(struct audio *aud, void *buf, size_t count);
+int audio_record(struct audio *aud, uint8_t *buf, size_t count);
 
 #endif  /* _AUDIO_EMUL_H_ */

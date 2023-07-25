@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9e0c1de02ccba7622f9c3b3658b3bd4704867703 $
+ * $FreeBSD: 1e559ce1158c7745e9667c6c5677739a0955a3f9 $
  */
 #pragma once
 #include <sys/cdefs.h>
@@ -60,8 +60,6 @@ int cgetustr(char *, const char *, char **);
 const char *getprogname(void);
 void setprogname(const char *progname);
 
-void *reallocarray(void *, size_t, size_t) __result_use_check
-    __alloc_size2(2, 3);
 void *reallocf(void *, size_t) __result_use_check __alloc_size(2);
 
 unsigned arc4random(void);

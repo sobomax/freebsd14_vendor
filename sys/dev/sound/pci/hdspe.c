@@ -40,7 +40,7 @@
 
 #include <mixer_if.h>
 
-SND_DECLARE_FILE("$FreeBSD: 6eb0436816a6f6e34037b728ea413bc7eaf5ca94 $");
+SND_DECLARE_FILE("$FreeBSD: 700b85f776ddc66e0175b5535f6a921cc261eb9f $");
 
 static struct hdspe_channel chan_map_aio[] = {
 	{  0,  1,   "line", 1, 1 },
@@ -122,10 +122,6 @@ hdspe_intr(void *p)
 static void
 hdspe_dmapsetmap(void *arg, bus_dma_segment_t *segs, int nseg, int error)
 {
-	struct sc_info *sc;
-
-	sc = (struct sc_info *)arg;
-
 #if 0
 	device_printf(sc->dev, "hdspe_dmapsetmap()\n");
 #endif

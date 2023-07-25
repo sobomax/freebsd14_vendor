@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 93396c1c6705952664a47dee5036c41fb4bb059a $
+ * $FreeBSD: c5fa522c63e015c6201d9c7c9c1ed7b1cd7a8db6 $
  */
 
 #ifndef __GDB_H__
@@ -34,6 +34,6 @@ void	gdb_cpu_add(int vcpu);
 void	gdb_cpu_breakpoint(int vcpu, struct vm_exit *vmexit);
 void	gdb_cpu_mtrap(int vcpu);
 void	gdb_cpu_suspend(int vcpu);
-void	init_gdb(struct vmctx *ctx, int sport, bool wait);
+void	init_gdb(struct vmctx *ctx);
 
 #endif /* !__GDB_H__ */

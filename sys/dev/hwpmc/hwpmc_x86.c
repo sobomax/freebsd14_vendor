@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db6ed6fb11452eaec8283d401e9ec86fb58e13e0 $");
+__FBSDID("$FreeBSD: 935ffefcf98021320b2892d25da81a8123e8213a $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -242,7 +242,7 @@ pmc_save_kernel_callchain(uintptr_t *cc, int nframes, struct trapframe *tf)
  */
 
 struct pmc_mdep *
-pmc_md_initialize()
+pmc_md_initialize(void)
 {
 	int i;
 	struct pmc_mdep *md;

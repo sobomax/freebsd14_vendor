@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a18dbb5e66e2c45266e2fade846b5ef02b08b240 $");
+__FBSDID("$FreeBSD: d1dec9e39d087452fcf77d6aa1f41b2d490be6fd $");
 
 #ifndef _NETINET_SCTP_VAR_H_
 #define _NETINET_SCTP_VAR_H_
@@ -85,7 +85,7 @@ extern struct pr_usrreqs sctp_usrreqs;
 
 #define	sctp_sbspace(asoc, sb) ((long) ((sctp_maxspace(sb) > (asoc)->sb_cc) ? (sctp_maxspace(sb) - (asoc)->sb_cc) : 0))
 
-#define	sctp_sbspace_failedmsgs(sb) ((long) ((sctp_maxspace(sb) > (sb)->sb_cc) ? (sctp_maxspace(sb) - (sb)->sb_cc) : 0))
+#define	sctp_sbspace_failedmsgs(sb) ((long) ((sctp_maxspace(sb) > SCTP_SBAVAIL(sb)) ? (sctp_maxspace(sb) - SCTP_SBAVAIL(sb)) : 0))
 
 #define sctp_sbspace_sub(a,b) (((a) > (b)) ? ((a) - (b)) : 0)
 

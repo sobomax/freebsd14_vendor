@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5e4dd1daf67db8c62384778544e34f65a51ebad8 $
+ * $FreeBSD: b6bb5e8ed24b78b22a356bf59b8a0b2d309e0d25 $
  */
 #ifndef	_LINUXKPI_LINUX_COMPAT_H_
 #define	_LINUXKPI_LINUX_COMPAT_H_
@@ -57,5 +57,8 @@ linux_set_current_flags(struct thread *td, int flags)
 		return (lkpi_alloc_current(td, flags));
 	return (0);
 }
+
+#define	compat_ptr(x)		((void *)(uintptr_t)x)
+#define	ptr_to_compat(x)	((uintptr_t)x)
 
 #endif	/* _LINUXKPI_LINUX_COMPAT_H_ */

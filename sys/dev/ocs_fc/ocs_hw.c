@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 65fc01f6284616c1225ca66641d94530fdc20bc5 $
+ * $FreeBSD: 4f670b6c5d41fe9c689ed750e617343b7a714852 $
  */
 
 /**
@@ -8688,7 +8688,7 @@ ocs_hw_wq_process_io(void *arg, uint8_t *cqe, int32_t status)
 			ocs_log_debug(hw->os, "aborting xri=%#x tag=%#x\n",
 				      io->indicator, io->reqtag);
 			/*
-			 * Because the initiator will not issue another IO phase, then it is OK to to issue the
+			 * Because the initiator will not issue another IO phase, then it is OK to issue the
 			 * callback on the abort completion, but for consistency with the target, wait for the
 			 * XRI_ABORTED CQE to issue the IO callback.
 			 */

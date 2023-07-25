@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: c107fcbcfc432755f5875b0cc0cfb3a8946b087a $
+ * $FreeBSD: fb198072730afa52b8e0d63f27bba8b2fa08d322 $
  */
 
 #include <sys/param.h>
@@ -535,7 +535,7 @@ slb_zone_init(void *dummy)
 struct slb **
 slb_alloc_user_cache(void)
 {
-	return (uma_zalloc(slb_cache_zone, M_ZERO));
+	return (uma_zalloc(slb_cache_zone, M_WAITOK | M_ZERO));
 }
 
 void

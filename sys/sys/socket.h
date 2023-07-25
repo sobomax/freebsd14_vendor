@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)socket.h	8.4 (Berkeley) 2/21/94
- * $FreeBSD: 2cb76f9c6d63646edd6321c97410dcc2fd7c072b $
+ * $FreeBSD: 3ec0d3b1d06dfdd1bdea99b12098049bd68f18d7 $
  */
 
 #ifndef _SYS_SOCKET_H_
@@ -264,6 +264,7 @@ struct accept_filter_arg {
 #define	AF_ARP		35
 #define	AF_BLUETOOTH	36		/* Bluetooth sockets */
 #define	AF_IEEE80211	37		/* IEEE 802.11 protocol */
+#define	AF_NETLINK	38		/* Netlink protocol */
 #define	AF_INET_SDP	40		/* OFED Socket Direct Protocol ipv4 */
 #define	AF_INET6_SDP	42		/* OFED Socket Direct Protocol ipv6 */
 #define	AF_HYPERV	43		/* HyperV sockets */
@@ -389,6 +390,7 @@ struct sockproto {
 #define	PF_ARP		AF_ARP
 #define	PF_BLUETOOTH	AF_BLUETOOTH
 #define	PF_IEEE80211	AF_IEEE80211
+#define	PF_NETLINK	AF_NETLINK
 #define	PF_INET_SDP	AF_INET_SDP
 #define	PF_INET6_SDP	AF_INET6_SDP
 
@@ -470,7 +472,7 @@ struct msghdr {
 #endif
 #ifdef _KERNEL
 #define	MSG_MORETOCOME	 0x00100000	/* additional data pending */
-#define	MSG_TLSAPPDATA	 0x00200000	/* only soreceive() app. data (TLS) */
+#define	MSG_TLSAPPDATA	 0x00200000	/* do not soreceive() alert rec. (TLS) */
 #endif
 
 /*

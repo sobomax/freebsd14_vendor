@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1004c6b46432db7270541c2c1e8afd44fa0be8e7 $");
+__FBSDID("$FreeBSD: afc9e4b2dd9f833772009eca24a1ef852c925ea3 $");
 
 #include "opt_ppc.h"
 
@@ -164,7 +164,7 @@ static int
 ppc_detect_fifo(struct ppc_data *ppc)
 {
 	char ecr_sav;
-	char ctr_sav, ctr, cc;
+	char ctr_sav, ctr;
 	short i;
 
 	/* save registers */
@@ -194,7 +194,7 @@ ppc_detect_fifo(struct ppc_data *ppc)
 	for (i=0; i<1024; i++) {
 		if (r_ecr(ppc) & PPC_FIFO_EMPTY)
 			break;
-		cc = r_fifo(ppc);
+		r_fifo(ppc);
 	}
 
 	if (i >= 1024) {

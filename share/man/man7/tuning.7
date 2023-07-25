@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 63e09ecce0984580086edbb39e9c3854f83d9e8d $
+.\" $FreeBSD: 6cfb0dd15bc4636b997ecda37a5598529d148250 $
 .\"
-.Dd April 16, 2020
+.Dd October 11, 2022
 .Dt TUNING 7
 .Os
 .Sh NAME
@@ -482,7 +482,7 @@ By default
 is set at the maximum allowable port number.
 .Pp
 The
-.Va kern.ipc.somaxconn
+.Va kern.ipc.soacceptqueue
 sysctl limits the size of the listen queue for accepting new TCP connections.
 The default value of 128 is typically too low for robust handling of new
 connections in a heavily loaded web server environment.

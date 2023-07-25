@@ -1,5 +1,5 @@
 /*	$NetBSD: grep.c,v 1.6 2011/04/18 03:48:23 joerg Exp $	*/
-/* 	$FreeBSD: 6fbd6bee8ace225dbca72e483f8a1471e27916cc $	*/
+/* 	$FreeBSD: f8c38e70e6b3cc6a56b0e074fbecb6b546f7420c $	*/
 /*	$OpenBSD: grep.c,v 1.42 2010/07/02 22:18:03 tedu Exp $	*/
 
 /*-
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fbd6bee8ace225dbca72e483f8a1471e27916cc $");
+__FBSDID("$FreeBSD: f8c38e70e6b3cc6a56b0e074fbecb6b546f7420c $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -562,6 +562,7 @@ main(int argc, char *argv[])
 			break;
 		case 'z':
 			fileeol = '\0';
+			cflags &= ~REG_NEWLINE;
 			break;
 		case BIN_OPT:
 			if (strcasecmp("binary", optarg) == 0)

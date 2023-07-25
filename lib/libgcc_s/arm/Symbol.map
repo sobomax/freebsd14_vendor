@@ -1,10 +1,12 @@
 /*
- * $FreeBSD: fd48eab4d60a7b3b6acc2adfd811ab686239a0ca $
+ * $FreeBSD: c431bd464f55dd843bcab295590199f4108038fd $
  */
 
 GCC_3.5 {
+	_Unwind_Complete;
 	_Unwind_VRS_Get;
 	_Unwind_VRS_Set;
+	_Unwind_VRS_Pop;
 	__aeabi_unwind_cpp_pr0;
 	__aeabi_unwind_cpp_pr1;
 	__aeabi_unwind_cpp_pr2;

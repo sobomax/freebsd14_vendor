@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9e4aef7ec017a72a23c04edfeb999945c78ec70 $");
+__FBSDID("$FreeBSD: c585a6cefd1ea14ebffa3624992a6475bd52e8dc $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: e9e4aef7ec017a72a23c04edfeb999945c78ec70 $");
 #endif
 
 struct pmc_mdep *
-pmc_md_initialize()
+pmc_md_initialize(void)
 {
 #ifdef CPU_CORTEXA
 	if (cpu_class == CPU_CLASS_CORTEXA)
@@ -128,13 +128,11 @@ pmc_save_user_callchain(uintptr_t *cc, int maxsamples,
     struct trapframe *tf)
 {
 	uintptr_t pc, r, oldfp, fp;
-	struct thread *td;
 	int count;
 
 	KASSERT(TRAPF_USERMODE(tf), ("[x86,%d] Not a user trap frame tf=%p",
 	    __LINE__, (void *) tf));
 
-	td = curthread;
 	pc = PMC_TRAPFRAME_TO_PC(tf);
 	*cc++ = pc;
 

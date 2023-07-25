@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a4b467637c2a7ae44dd727a8e43510a1ed040eac $");
+__FBSDID("$FreeBSD: b520d62e6f7348e7732b948dc2881e85787ef2a1 $");
 
 #include "opt_syscons.h"
 
@@ -658,7 +658,7 @@ sc_mouse_ioctl(struct tty *tp, u_long cmd, caddr_t data, struct thread *td)
     scr_stat *scp;
     struct proc *p1;
     int s;
-    int f;
+    int f __unused;
 
     scp = SC_STAT(tp);
 

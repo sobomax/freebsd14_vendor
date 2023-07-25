@@ -1,4 +1,4 @@
-# $FreeBSD: 6549b7157ef687c44b2f3500ff5046ba77f3ed49 $
+# $FreeBSD: 4bbb87ddb65b0ab09ccdc42a0cd9db2957b17e9e $
 
 DIFFSRC=${SRCTOP}/contrib/diff/src
 .PATH:  ${DIFFSRC} \
@@ -19,11 +19,5 @@ CFLAGS+=-DHAVE_CONFIG_H
 CFLAGS+=-DDEFAULT_DIFF_PROGRAM=\"/usr/bin/diff\"
 
 WARNS?=	0
-
-.for f in diff3.c
-${f}: ${DIFFSRC}/${f} ${.CURDIR}/${f}.diff
-	patch -s -o ${.TARGET} < ${.CURDIR}/${f}.diff ${DIFFSRC}/${f}
-CLEANFILES+= ${f}
-.endfor
 
 .include <bsd.prog.mk>

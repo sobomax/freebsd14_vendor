@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53b47004610e0c43bc6bf484cf58c96dcc2ab372 $");
+__FBSDID("$FreeBSD: 050e29c37dda3e4f69672ba2f230e0ad9d409dde $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -321,7 +321,7 @@ virtio_read_device_config(device_t dev, bus_size_t offset, void *dst, int len)
 }
 
 void
-virtio_write_device_config(device_t dev, bus_size_t offset, void *dst, int len)
+virtio_write_device_config(device_t dev, bus_size_t offset, const void *dst, int len)
 {
 
 	VIRTIO_BUS_WRITE_DEVICE_CONFIG(device_get_parent(dev),

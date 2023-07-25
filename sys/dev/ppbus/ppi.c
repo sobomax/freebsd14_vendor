@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 18e2104d803f6ecf3f8473575fde8a412944dce0 $");
+__FBSDID("$FreeBSD: 3c467f10c055c8b293aa5866c237fb0a3d5c7511 $");
 #include "opt_ppb_1284.h"
 
 #include <sys/param.h>
@@ -149,12 +149,8 @@ ppi_identify(driver_t *driver, device_t parent)
 static int
 ppi_probe(device_t dev)
 {
-	struct ppi_data *ppi;
-
 	/* probe is always ok */
 	device_set_desc(dev, "Parallel I/O");
-
-	ppi = DEVTOSOFTC(dev);
 
 	return (0);
 }

@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: 0c7b89ec860b6741700f08b061b2a71a73e0d1fe $
+ * $FreeBSD: 3e1a6cb0e7d893907f358166b845705ae9f15f0d $
  */
 #ifndef __ISO9660_RRIP_H__
 #define __ISO9660_RRIP_H__
@@ -209,7 +209,7 @@ struct ISO_SUSP_ATTRIBUTES {
 	char type_of[2];
 	char last_in_suf;	/* last entry in the System Use Field? */
 	/* Dan's addons - will merge later. This allows use of a switch */
-	char susp_type; 	/* SUSP or RRIP */
+	char susp_type;		/* SUSP or RRIP */
 	char entry_type;	/* Record type */
 	char write_location;
 	TAILQ_ENTRY(ISO_SUSP_ATTRIBUTES) rr_ll;

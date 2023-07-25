@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 599841b33eaec0037fe3c642d2194bf2bc8f805d $");
+__FBSDID("$FreeBSD: e10f864173c457347e4625ee1efc4ab059d00108 $");
 
 #include "opt_ddb.h"
 #ifndef DDB
@@ -333,7 +333,7 @@ netgdb_fini(void)
  * Currently, this command does not support configuring encryption or
  * compression.
  */
-DB_FUNC(netgdb, db_netgdb_cmd, db_cmd_table, CS_OWN, NULL)
+DB_COMMAND_FLAGS(netgdb, db_netgdb_cmd, CS_OWN)
 {
 	struct debugnet_ddb_config params;
 	struct debugnet_conn_params dcp;

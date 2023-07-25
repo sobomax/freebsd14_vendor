@@ -31,32 +31,23 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 0b94a11fdf04123d2150b0b454e6ac66b1102edb $");
+__FBSDID("$FreeBSD: ba10f7493e71254d6a83a8de3a80f909ba50d1b4 $");
 
-/*
- * int arm_smccc_hvc(register_t, register_t, register_t, register_t,
- *     register_t, register_t, register_t, register_t,
- *     struct arm_smccc_res *res)
- */
-ENTRY(arm_smccc_hvc)
-	hvc	#0
+.macro arm_smccc_1_0	insn
+ENTRY(arm_smccc_\insn)
+	\insn	#0
 	ldr	x4, [sp]
 	cbz	x4, 1f
 	stp	x0, x1, [x4, #16 * 0]
 	stp	x2, x3, [x4, #16 * 1]
 1:	ret
-END(arm_smccc_hvc)
+END(arm_smccc_\insn)
+.endm
 
 /*
- * int arm_smccc_smc(register_t, register_t, register_t, register_t,
+ * int arm_smccc_*(register_t, register_t, register_t, register_t,
  *     register_t, register_t, register_t, register_t,
  *     struct arm_smccc_res *res)
  */
-ENTRY(arm_smccc_smc)
-	smc	#0
-	ldr	x4, [sp]
-	cbz	x4, 1f
-	stp	x0, x1, [x4, #16 * 0]
-	stp	x2, x3, [x4, #16 * 1]
-1:	ret
-END(arm_smccc_smc)
+arm_smccc_1_0	hvc
+arm_smccc_1_0	smc

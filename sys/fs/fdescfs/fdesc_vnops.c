@@ -33,7 +33,7 @@
  *
  *	@(#)fdesc_vnops.c	8.9 (Berkeley) 1/21/94
  *
- * $FreeBSD: c5a7b86f1de56832cc41b1b9e2904c126daa36dd $
+ * $FreeBSD: 087f9b2551d19221bd0cf09754a47f56ed0384b6 $
  */
 
 /*
@@ -504,9 +504,15 @@ fdesc_setattr(struct vop_setattr_args *ap)
 
 	/*
 	 * Allow setattr where there is an underlying vnode.
+	 * For O_PATH descriptors, disallow truncate.
 	 */
-	error = getvnode(td, fd,
-	    cap_rights_init_one(&rights, CAP_EXTATTR_SET), &fp);
+	if (vap->va_size != VNOVAL) {
+		error = getvnode(td, fd,
+		    cap_rights_init_one(&rights, CAP_EXTATTR_SET), &fp);
+	} else {
+		error = getvnode_path(td, fd,
+		    cap_rights_init_one(&rights, CAP_EXTATTR_SET), &fp);
+	}
 	if (error) {
 		/*
 		 * getvnode() returns EINVAL if the file descriptor is not

@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60675557e4edd4fec56914a0348d20aae4e6777c $");
+__FBSDID("$FreeBSD: 237aa47a18da0f8287b450a4c672249243801947 $");
 
 #include "opt_stack.h"
 
@@ -302,7 +302,7 @@ tty_info(struct tty *tp)
 	sbuf_set_drain(&sb, sbuf_tty_drain, tp);
 
 	/* Print load average. */
-	load = (averunnable.ldavg[0] * 100 + FSCALE / 2) >> FSHIFT;
+	load = ((int64_t)averunnable.ldavg[0] * 100 + FSCALE / 2) >> FSHIFT;
 	sbuf_printf(&sb, "%sload: %d.%02d ", tp->t_column == 0 ? "" : "\n",
 	    load / 100, load % 100);
 

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2afd5c24cff07d03787e33c6f8dc03138b640e6 $");
+__FBSDID("$FreeBSD: 42cd633f8411d12c766e34f39847bd481407c56d $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -2211,6 +2211,7 @@ pfr_pool_get(struct pfr_ktable *kt, int *pidx, struct pf_addr *counter,
 	int			 idx = -1, use_counter = 0;
 
 	MPASS(pidx != NULL);
+	MPASS(counter != NULL);
 
 	switch (af) {
 	case AF_INET:
@@ -2230,7 +2231,7 @@ pfr_pool_get(struct pfr_ktable *kt, int *pidx, struct pf_addr *counter,
 		return (-1);
 
 	idx = *pidx;
-	if (counter != NULL && idx >= 0)
+	if (idx >= 0)
 		use_counter = 1;
 	if (idx < 0)
 		idx = 0;

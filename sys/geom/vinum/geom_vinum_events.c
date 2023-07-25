@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 78aa0adab8cf932da6d9ba984e8a4d733ad27a0e $");
+__FBSDID("$FreeBSD: 74b9bbe4de9d32b0fffe6350d5c131b48aa9d601 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -185,8 +185,7 @@ gv_drive_tasted(struct gv_softc *sc, struct g_provider *pp)
 	return;
 
 failed:
-	if (hdr != NULL)
-		g_free(hdr);
+	g_free(hdr);
 	g_topology_lock();
 	g_access(cp, -1, 0, 0);
 	g_detach(cp);

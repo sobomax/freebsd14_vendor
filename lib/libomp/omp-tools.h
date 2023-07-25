@@ -1,4 +1,3 @@
-// $FreeBSD: 1749be7e05087685be5bba41e89ebbcd5d6a3aaa $
 /*
  * include/omp-tools.h.var
  */

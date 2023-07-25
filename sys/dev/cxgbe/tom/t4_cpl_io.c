@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f61fe557635cb4f7766b469b6d08871d7f0dc650 $");
+__FBSDID("$FreeBSD: 601692cbcd76ae5c9dc19121a9057ba4b2a76529 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1002,7 +1002,7 @@ write_iscsi_mbuf_wr(struct toepcb *toep, struct mbuf *sndptr)
 	int tx_credits, shove, npdu, wr_len;
 	uint16_t iso_mss;
 	static const u_int ulp_extra_len[] = {0, 4, 4, 8};
-	bool iso;
+	bool iso, nomap_mbuf_seen;
 
 	M_ASSERTPKTHDR(sndptr);
 
@@ -1030,8 +1030,15 @@ write_iscsi_mbuf_wr(struct toepcb *toep, struct mbuf *sndptr)
 	plen = 0;
 	nsegs = 0;
 	max_nsegs_1mbuf = 0; /* max # of SGL segments in any one mbuf */
+	nomap_mbuf_seen = false;
 	for (m = sndptr; m != NULL; m = m->m_next) {
-		int n = sglist_count(mtod(m, void *), m->m_len);
+		int n;
+
+		if (m->m_flags & M_EXTPG)
+			n = sglist_count_mbuf_epg(m, mtod(m, vm_offset_t),
+			    m->m_len);
+		else
+			n = sglist_count(mtod(m, void *), m->m_len);
 
 		nsegs += n;
 		plen += m->m_len;
@@ -1040,9 +1047,11 @@ write_iscsi_mbuf_wr(struct toepcb *toep, struct mbuf *sndptr)
 		 * This mbuf would send us _over_ the nsegs limit.
 		 * Suspend tx because the PDU can't be sent out.
 		 */
-		if (plen > max_imm && nsegs > max_nsegs)
+		if ((nomap_mbuf_seen || plen > max_imm) && nsegs > max_nsegs)
 			return (NULL);
 
+		if (m->m_flags & M_EXTPG)
+			nomap_mbuf_seen = true;
 		if (max_nsegs_1mbuf < n)
 			max_nsegs_1mbuf = n;
 	}
@@ -1075,7 +1084,7 @@ write_iscsi_mbuf_wr(struct toepcb *toep, struct mbuf *sndptr)
 	wr_len = sizeof(*txwr);
 	if (iso)
 		wr_len += sizeof(struct cpl_tx_data_iso);
-	if (plen <= max_imm) {
+	if (plen <= max_imm && !nomap_mbuf_seen) {
 		/* Immediate data tx */
 		imm_data = plen;
 		wr_len += plen;
@@ -1256,12 +1265,8 @@ t4_push_data(struct adapter *sc, struct toepcb *toep, int drop)
 
 	if (ulp_mode(toep) == ULP_MODE_ISCSI)
 		t4_push_pdus(sc, toep, drop);
-	else if (tls_tx_key(toep) && toep->tls.mode == TLS_MODE_TLSOM)
-		t4_push_tls_records(sc, toep, drop);
-#ifdef KERN_TLS
 	else if (toep->flags & TPF_KTLS)
 		t4_push_ktls(sc, toep, drop);
-#endif
 	else
 		t4_push_frames(sc, toep, drop);
 }
@@ -1407,7 +1412,7 @@ do_peer_close(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	switch (tp->t_state) {
 	case TCPS_SYN_RECEIVED:
 		tp->t_starttime = ticks;
-		/* FALLTHROUGH */ 
+		/* FALLTHROUGH */
 
 	case TCPS_ESTABLISHED:
 		tcp_state_change(tp, TCPS_CLOSE_WAIT);
@@ -1903,10 +1908,6 @@ do_fw4_ack(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 		credits -= txsd->tx_credits;
 		toep->tx_credits += txsd->tx_credits;
 		plen += txsd->plen;
-		if (txsd->iv_buffer) {
-			free(txsd->iv_buffer, M_CXGBE);
-			txsd->iv_buffer = NULL;
-		}
 		txsd++;
 		toep->txsd_avail++;
 		KASSERT(toep->txsd_avail <= toep->txsd_total,
@@ -1957,13 +1958,6 @@ do_fw4_ack(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 			    tid, plen);
 #endif
 			sbdrop_locked(sb, plen);
-			if (tls_tx_key(toep) &&
-			    toep->tls.mode == TLS_MODE_TLSOM) {
-				struct tls_ofld_info *tls_ofld = &toep->tls;
-
-				MPASS(tls_ofld->sb_off >= plen);
-				tls_ofld->sb_off -= plen;
-			}
 			if (!TAILQ_EMPTY(&toep->aiotx_jobq))
 				t4_aiotx_queue_toep(so, toep);
 			sowwakeup_locked(so);	/* unlocks so_snd */

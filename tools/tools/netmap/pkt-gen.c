@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: ebc0ac9772198ca6f3e8f379db229dbb9752590e $
+ * $FreeBSD: c6cf78ad85eede8bfe0d21fa68dcc033306e8af3 $
  * $Id: pkt-gen.c 12346 2013-06-12 17:36:25Z luigi $
  *
  * Example program to show how to build a multithreaded packet
@@ -684,6 +684,10 @@ source_hwaddr(const char *ifname, char *buf)
 		return (-1);
 	}
 
+	/* remove 'netmap:' prefix before comparing interfaces */
+	if (!strncmp(ifname, "netmap:", 7))
+		ifname = &ifname[7];
+
 	for (ifap = ifaphead; ifap; ifap = ifap->ifa_next) {
 		struct sockaddr_dl *sdl =
 			(struct sockaddr_dl *)ifap->ifa_addr;
@@ -1322,6 +1326,10 @@ ping_body(void *data)
 		return NULL;
 	}
 
+	if (targ->g->af == AF_INET6) {
+		D("Warning: ping-pong with IPv6 not supported");
+	}
+
 	bzero(&buckets, sizeof(buckets));
 	clock_gettime(CLOCK_REALTIME_PRECISE, &last_print);
 	now = last_print;
@@ -1504,6 +1512,11 @@ pong_body(void *data)
 	if (n > 0)
 		D("understood ponger %llu but don't know how to do it",
 			(unsigned long long)n);
+
+	if (targ->g->af == AF_INET6) {
+		D("Warning: ping-pong with IPv6 not supported");
+	}
+
 	while (!targ->cancel && (n == 0 || sent < n)) {
 		uint32_t txhead, txavail;
 //#define BUSYWAIT
@@ -1547,7 +1560,15 @@ pong_body(void *data)
 				dpkt[3] = spkt[0];
 				dpkt[4] = spkt[1];
 				dpkt[5] = spkt[2];
+				/* swap source and destination IPv4 */
+				if (spkt[6] == htons(ETHERTYPE_IP)) {
+					dpkt[13] = spkt[15];
+					dpkt[14] = spkt[16];
+					dpkt[15] = spkt[13];
+					dpkt[16] = spkt[14];
+				}
 				txring->slot[txhead].len = slot->len;
+				//dump_payload(dst, slot->len, txring, txhead);
 				txhead = nm_ring_next(txring, txhead);
 				txavail--;
 				sent++;
@@ -1816,6 +1837,7 @@ receiver_body(void *data)
 	struct netmap_ring *rxring;
 	int i;
 	struct my_ctrs cur;
+	uint64_t n = targ->g->npackets / targ->g->nthreads;
 
 	memset(&cur, 0, sizeof(cur));
 
@@ -1843,7 +1865,7 @@ receiver_body(void *data)
 	/* main loop, exit after 1s silence */
 	clock_gettime(CLOCK_REALTIME_PRECISE, &targ->tic);
     if (targ->g->dev_type == DEV_TAP) {
-	while (!targ->cancel) {
+	while (!targ->cancel && (n == 0 || targ->ctr.pkts < n)) {
 		char buf[MAX_BODYSIZE];
 		/* XXX should we poll ? */
 		i = read(targ->g->main_fd, buf, sizeof(buf));
@@ -1855,7 +1877,7 @@ receiver_body(void *data)
 	}
 #ifndef NO_PCAP
     } else if (targ->g->dev_type == DEV_PCAP) {
-	while (!targ->cancel) {
+	while (!targ->cancel && (n == 0 || targ->ctr.pkts < n)) {
 		/* XXX should we poll ? */
 		pcap_dispatch(targ->g->p, targ->g->burst, receive_pcap,
 			(u_char *)&targ->ctr);
@@ -1866,7 +1888,7 @@ receiver_body(void *data)
 	int dump = targ->g->options & OPT_DUMP;
 
 	nifp = targ->nmd->nifp;
-	while (!targ->cancel) {
+	while (!targ->cancel && (n == 0 || targ->ctr.pkts < n)) {
 		/* Once we started to receive packets, wait at most 1 seconds
 		   before quitting. */
 #ifdef BUSYWAIT
@@ -2791,7 +2813,7 @@ tap_alloc(char *dev)
 
 	/* try to create the device */
 	if( (err = ioctl(fd, TUNSETIFF, (void *) &ifr)) < 0 ) {
-		D("failed to to a TUNSETIFF: %s", strerror(errno));
+		D("failed to do a TUNSETIFF: %s", strerror(errno));
 		close(fd);
 		return err;
 	}
@@ -3149,7 +3171,7 @@ main(int arc, char **argv)
 
 	if (g.virt_header) {
 		/* Set the virtio-net header length, since the user asked
-		 * for it explicitely. */
+		 * for it explicitly. */
 		set_vnet_hdr_len(&g);
 	} else {
 		/* Check whether the netmap port we opened requires us to send

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a29a7e1d6ecc430567f9d5dcb7ea2829bcb19f4 $
+ * $FreeBSD: ffd612331c1f258686a3cf8c3b9c8db32eabb0df $
  */
 
 #ifndef _NFS_NFS_H_
@@ -142,6 +142,13 @@
 #define	NFSRV_V4DELEGLIMIT(c) (((c) * 5) > nfsrv_v4statelimit)
 
 #define	NFS_READDIRBLKSIZ	DIRBLKSIZ	/* Minimal nm_readdirsize */
+
+/*
+ * The NFSv4 RFCs do not define an upper limit on the length of Owner and
+ * OwnerGroup strings.  Since FreeBSD handles a group name > 1024bytes in
+ * length, set a generous sanity limit of 10Kbytes.
+ */
+#define	NFSV4_MAXOWNERGROUPLEN	(10 * 1024)
 
 /*
  * Oddballs

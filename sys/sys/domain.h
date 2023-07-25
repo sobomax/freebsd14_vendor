@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)domain.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 3d17879f1ccd97106a61dff7f22bd5fe9dc8f2c1 $
+ * $FreeBSD: 8e4ff20b3cf9fba492618d6170208cba298300da $
  */
 
 #ifndef _SYS_DOMAIN_H_
@@ -74,6 +74,7 @@ struct domain {
 extern int	domain_init_status;
 extern struct	domain *domains;
 void		domain_add(void *);
+void		domain_remove(void *);
 void		domain_init(void *);
 #ifdef VIMAGE
 void		vnet_domain_init(void *);
@@ -83,6 +84,8 @@ void		vnet_domain_uninit(void *);
 #define	DOMAIN_SET(name)						\
 	SYSINIT(domain_add_ ## name, SI_SUB_PROTO_DOMAIN,		\
 	    SI_ORDER_FIRST, domain_add, & name ## domain);		\
+	SYSUNINIT(domain_remove_ ## name, SI_SUB_PROTO_DOMAIN,		\
+	    SI_ORDER_FIRST, domain_remove, & name ## domain);		\
 	SYSINIT(domain_init_ ## name, SI_SUB_PROTO_DOMAIN,		\
 	    SI_ORDER_SECOND, domain_init, & name ## domain);
 #ifdef VIMAGE

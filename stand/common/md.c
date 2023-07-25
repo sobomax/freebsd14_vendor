@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5585218b3276b35dfd324bc0e57f214f0cc8973e $");
+__FBSDID("$FreeBSD: 61db56ece7ae05d76cdfdaaed0e11a7d020be62f $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -66,15 +66,15 @@ static int md_close(struct open_file *);
 static int md_print(int);
 
 struct devsw md_dev = {
-	"md",
-	DEVT_DISK,
-	md_init,
-	md_strategy,
-	md_open,
-	md_close,
-	noioctl,
-	md_print,
-	NULL
+	.dv_name = "md",
+	.dv_type = DEVT_DISK,
+	.dv_init = md_init,
+	.dv_strategy = md_strategy,
+	.dv_open = md_open,
+	.dv_close = md_close,
+	.dv_ioctl = noioctl,
+	.dv_print = md_print,
+	.dv_cleanup = nullsys,
 };
 
 static int

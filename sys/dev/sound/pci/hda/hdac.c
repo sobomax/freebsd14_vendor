@@ -51,7 +51,7 @@
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
 
-SND_DECLARE_FILE("$FreeBSD: 4988a1a28fa24cc15276f2018c4e3143d28aaed9 $");
+SND_DECLARE_FILE("$FreeBSD: 9aa0e4bffdc8379b27f761ece61866d11a144866 $");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -113,6 +113,13 @@ static const struct {
 	{ HDA_INTEL_TGLK,    "Intel Tiger Lake",	0, 0 },
 	{ HDA_INTEL_GMLK,    "Intel Gemini Lake",	0, 0 },
 	{ HDA_INTEL_ALLK,    "Intel Alder Lake",	0, 0 },
+	{ HDA_INTEL_ALLKM,   "Intel Alder Lake-M",	0, 0 },
+	{ HDA_INTEL_ALLKN,   "Intel Alder Lake-N",	0, 0 },
+	{ HDA_INTEL_ALLKP1,  "Intel Alder Lake-P",	0, 0 },
+	{ HDA_INTEL_ALLKP2,  "Intel Alder Lake-P",	0, 0 },
+	{ HDA_INTEL_ALLKPS,  "Intel Alder Lake-PS",	0, 0 },
+	{ HDA_INTEL_RPTLK1,  "Intel Raptor Lake-P",	0, 0 },
+	{ HDA_INTEL_RPTLK2,  "Intel Raptor Lake-P",	0, 0 },
 	{ HDA_INTEL_82801F,  "Intel 82801F",	0, 0 },
 	{ HDA_INTEL_63XXESB, "Intel 631x/632xESB",	0, 0 },
 	{ HDA_INTEL_82801G,  "Intel 82801G",	0, 0 },
@@ -193,6 +200,7 @@ static const struct {
 	{ HDA_AMD_HUDSON2,   "AMD Hudson-2",	0, 0 },
 	{ HDA_RDC_M3010,     "RDC M3010",	0, 0 },
 	{ HDA_VIA_VT82XX,    "VIA VT8251/8237A",0, 0 },
+	{ HDA_VMWARE,        "VMware",		0, 0 },
 	{ HDA_SIS_966,       "SiS 966/968",	0, 0 },
 	{ HDA_ULI_M5461,     "ULI M5461",	0, 0 },
 	/* Unknown */
@@ -202,6 +210,7 @@ static const struct {
 	{ HDA_AMD_ALL,    "AMD",		0, 0 },
 	{ HDA_CREATIVE_ALL,    "Creative",	0, 0 },
 	{ HDA_VIA_ALL,    "VIA",		0, 0 },
+	{ HDA_VMWARE_ALL, "VMware",		0, 0 },
 	{ HDA_SIS_ALL,    "SiS",		0, 0 },
 	{ HDA_ULI_ALL,    "ULI",		0, 0 },
 };
@@ -607,9 +616,9 @@ hdac_dma_alloc(struct hdac_softc *sc, struct hdac_dma *dma, bus_size_t size)
 	    BUS_SPACE_MAXADDR,			/* highaddr */
 	    NULL,				/* filtfunc */
 	    NULL,				/* fistfuncarg */
-	    roundsz, 				/* maxsize */
+	    roundsz,				/* maxsize */
 	    1,					/* nsegments */
-	    roundsz, 				/* maxsegsz */
+	    roundsz,				/* maxsegsz */
 	    0,					/* flags */
 	    NULL,				/* lockfunc */
 	    NULL,				/* lockfuncarg */
@@ -1317,9 +1326,9 @@ hdac_attach(device_t dev)
 	    BUS_SPACE_MAXADDR,			/* highaddr */
 	    NULL,				/* filtfunc */
 	    NULL,				/* fistfuncarg */
-	    HDA_BUFSZ_MAX, 			/* maxsize */
+	    HDA_BUFSZ_MAX,			/* maxsize */
 	    1,					/* nsegments */
-	    HDA_BUFSZ_MAX, 			/* maxsegsz */
+	    HDA_BUFSZ_MAX,			/* maxsegsz */
 	    0,					/* flags */
 	    NULL,				/* lockfunc */
 	    NULL,				/* lockfuncarg */

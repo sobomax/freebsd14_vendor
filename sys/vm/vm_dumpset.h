@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f9ba6b2429c55d801d6181f43d73e6c22292acca $
+ * $FreeBSD: aef056246d9625127a9e92ff269d61a6d82edce0 $
  */
 
 #ifndef	_SYS_DUMPSET_H_
@@ -92,7 +92,7 @@ vm_page_dump_index_to_pa(int bit)
 			    (dump_avail[i] & ~PAGE_MASK));
 		bit -= tot;
 	}
-	return ((vm_paddr_t)NULL);
+	return (0);
 }
 
 #define VM_PAGE_DUMP_FOREACH(bitset, pa)				\

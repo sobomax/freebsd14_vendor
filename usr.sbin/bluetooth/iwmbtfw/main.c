@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 20289474080566c039960e00445afc02b0bbb509 $
+ * $FreeBSD: eb1d97a9bb003316e843ba3d2e4abe9de3461a52 $
  */
 
 #include <sys/param.h>
@@ -572,7 +572,7 @@ shutdown:
 		libusb_exit(ctx);
 
 	if (retcode == 0)
-		iwmbt_info("Firmware download is succesful!");
+		iwmbt_info("Firmware download is successful!");
 	else
 		iwmbt_err("Firmware download failed!");
 

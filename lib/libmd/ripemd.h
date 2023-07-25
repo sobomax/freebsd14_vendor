@@ -32,7 +32,7 @@
  *    must display the following acknowledgement:
  *    "This product includes cryptographic software written by
  *     Eric Young (eay@cryptsoft.com)"
- *    The word 'cryptographic' can be left out if the rouines from the library
+ *    The word 'cryptographic' can be left out if the routines from the library
  *    being used are not cryptographic related :-).
  * 4. If you include any Windows specific code (or a derivative thereof) from 
  *    the apps directory (application code) you must include an acknowledgement:
@@ -57,7 +57,7 @@
  */
 
 /*
- * $FreeBSD: f7d0de013273784136b356427a5c0ddb691c74ec $
+ * $FreeBSD: 8f202a53ed84e2063d95d061acdb997dd30c3053 $
  */
 
 #ifndef HEADER_RIPEMD_H

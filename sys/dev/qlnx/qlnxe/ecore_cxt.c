@@ -29,7 +29,7 @@
  * File : ecore_cxt.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 754efc33dd88eded2a6cf758b58983226f456d02 $");
+__FBSDID("$FreeBSD: c584837e8fe40df3f4b041d0282dd89c545d433d $");
 
 #include "bcm_osal.h"
 #include "reg_addr.h"
@@ -239,7 +239,7 @@ struct ecore_cxt_mngr {
 	 * needing for a given block we'd iterate over all the relevant
 	 * connection-types.
 	 * But since then we've had some additional resources, some of which
-	 * require memory which is indepent of the general context/task
+	 * require memory which is independent of the general context/task
 	 * scheme. We add those here explicitly per-feature.
 	 */
 

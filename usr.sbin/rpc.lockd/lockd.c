@@ -1,5 +1,5 @@
 /*	$NetBSD: lockd.c,v 1.7 2000/08/12 18:08:44 thorpej Exp $	*/
-/*	$FreeBSD: e25cef9993bb6c80f674a2b18d6bc709e712a980 $ */
+/*	$FreeBSD: 24dacc81a37a36ff3c20dc58ac0641872fc7262b $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause
@@ -489,7 +489,7 @@ main(int argc, char **argv)
  *
  * It gets called one time for each transport.
  *
- * It returns 0 upon success, 1 for ingore the call and -1 to indicate
+ * It returns 0 upon success, 1 for ignore the call and -1 to indicate
  * bind failed with EADDRINUSE.
  *
  * Any file descriptors that have been created are stored in sock_fd and

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 56499e96b2959905f8bce88d7c48db1d5005a3c6 $
+ * $FreeBSD: f7069e3887ee9b653ebb64e5664523954ec0bd8d $
  */
 
 #include <stand.h>
@@ -165,7 +165,7 @@ geli_taste(geli_readfunc readfunc, void *readpriv, daddr_t lastsector,
 
 	/*
 	 * We have a new known_device.  Whether it's geli-encrypted or not,
-	 * record its existance so we can avoid doing IO to probe it next time.
+	 * record its existence so we can avoid doing IO to probe it next time.
 	 */
 	if ((kdev = malloc(sizeof(*kdev))) == NULL)
 		goto out;
@@ -345,7 +345,7 @@ geli_io(struct geli_dev *gdev, geli_op_t enc, off_t offset, u_char *buf,
 		g_eli_key_fill(&gdev->sc, &gkey, keyno);
 
 		error = geliboot_crypt(gdev->sc.sc_ealgo, enc, pbuf, secsize,
-		    gkey.gek_key, gdev->sc.sc_ekeylen, iv, sizeof(iv));
+		    gkey.gek_key, gdev->sc.sc_ekeylen, iv);
 
 		if (error != 0) {
 			explicit_bzero(&gkey, sizeof(gkey));

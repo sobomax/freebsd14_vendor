@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5344191742bbb8168861f8ae97e212c0125f2940 $
+ * $FreeBSD: b9f877cc83a4dee3a87d5822faf198041c7d9f33 $
  */
 
 #ifndef	_LINUX_TIMER_H
@@ -104,15 +104,43 @@ struct l_itimerspec {
 	struct l_timespec it_value;
 };
 
+#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
+struct l_itimerspec64 {
+	struct l_timespec64 it_interval;
+	struct l_timespec64 it_value;
+};
+#endif
+
 int native_to_linux_timespec(struct l_timespec *,
 				     struct timespec *);
 int linux_to_native_timespec(struct timespec *,
 				     struct l_timespec *);
+int linux_put_timespec(struct timespec *,
+				     struct l_timespec *);
+int linux_get_timespec(struct timespec *,
+				     const struct l_timespec *);
+#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
+int native_to_linux_timespec64(struct l_timespec64 *,
+				     struct timespec *);
+int linux_to_native_timespec64(struct timespec *,
+				     struct l_timespec64 *);
+int linux_put_timespec64(struct timespec *,
+				     struct l_timespec64 *);
+int linux_get_timespec64(struct timespec *,
+				    const  struct l_timespec64 *);
+#endif
 int linux_to_native_clockid(clockid_t *, clockid_t);
 int native_to_linux_itimerspec(struct l_itimerspec *,
 				     struct itimerspec *);
 int linux_to_native_itimerspec(struct itimerspec *,
 				     struct l_itimerspec *);
+#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
+int native_to_linux_itimerspec64(struct l_itimerspec64 *,
+				     struct itimerspec *);
+int linux_to_native_itimerspec64(struct itimerspec *,
+				     struct l_itimerspec64 *);
+#endif
+
 int linux_to_native_timerflags(int *, int);
 
 #endif	/* _LINUX_TIMER_H */

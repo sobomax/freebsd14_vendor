@@ -69,7 +69,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e7ae927dcc3c7cc8e0ffb9ff1acc6defee152ce $");
+__FBSDID("$FreeBSD: e1d6fda7e2a364b4bcfdfa495757b7504b6af929 $");
 
 #include "opt_sysvipc.h"
 
@@ -155,7 +155,7 @@ static void shm_prison_cleanup(struct prison *);
  * Tuneable values.
  */
 #ifndef SHMMAXPGS
-#define	SHMMAXPGS	131072	/* Note: sysv shared memory is swap backed. */
+#define	SHMMAXPGS	131072ul /* Note: sysv shared memory is swap backed. */
 #endif
 #ifndef SHMMAX
 #define	SHMMAX	(SHMMAXPGS*PAGE_SIZE)

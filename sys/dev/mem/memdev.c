@@ -28,13 +28,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f03550aaa49508d788ca578149317758343a54c8 $");
+__FBSDID("$FreeBSD: 7d33066f5678da55e33c8c64a40f3e2a6c045fa7 $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/fcntl.h>
 #include <sys/ioccom.h>
 #include <sys/kernel.h>
+#include <sys/kerneldump.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/memrange.h>
@@ -96,6 +97,7 @@ memioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 {
 	vm_map_t map;
 	vm_map_entry_t entry;
+	const struct mem_livedump_arg *marg;
 	struct mem_extract *me;
 	int error;
 
@@ -119,6 +121,10 @@ memioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 			me->me_state = ME_STATE_INVALID;
 		}
 		vm_map_unlock_read(map);
+		break;
+	case MEM_KERNELDUMP:
+		marg = (const struct mem_livedump_arg *)data;
+		error = livedump_start(marg->fd, marg->flags, marg->compression);
 		break;
 	default:
 		error = memioctl_md(dev, cmd, data, flags, td);

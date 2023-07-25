@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: cd90e5d6daed0115f788b27e5177aa483f09ffa8 $
+ * $FreeBSD: 3caba3081f064fc84c7c2fd25909c36b021f617d $
  */
 
 #include <sys/cdefs.h>
@@ -762,7 +762,7 @@ vbe_set_mode(int modenum)
 }
 
 /*
- * Verify existance of mode number or find mode by
+ * Verify existence of mode number or find mode by
  * dimensions. If depth is not given, walk values 32, 24, 16, 8.
  */
 static int

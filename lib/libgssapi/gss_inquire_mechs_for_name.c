@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: d171ef2b5bd8e9a5a693e7b94e17e2f508b01bef $
+ *	$FreeBSD: 1ff1c30cf2496b70bfbd3ca2a3f8bb1d345856fb $
  */
 
 #include <gssapi/gssapi.h>
@@ -51,7 +51,7 @@ gss_inquire_mechs_for_name(OM_uint32 *minor_status,
 	major_status = gss_create_empty_oid_set(minor_status, mech_types);
 	if (major_status)
 		return (major_status);
-    
+
 	/*
 	 * We go through all the loaded mechanisms and see if this
 	 * name's type is supported by the mechanism. If it is, add

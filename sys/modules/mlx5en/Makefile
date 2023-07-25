@@ -1,4 +1,4 @@
-# $FreeBSD: 4c192a860f4e01e5858b8e680d0bffb5ae820c0d $
+# $FreeBSD: 5dc413c5bfbe2a95a8a28e9f08ad6222d06b540e $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en
@@ -30,7 +30,7 @@ CFLAGS+= -DCONFIG_MLX5_FPGA
 .endif
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>
 

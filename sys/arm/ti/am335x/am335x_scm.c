@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e72c14ba58add0361308d57e84b9f192c6caf347 $");
+__FBSDID("$FreeBSD: 68af3bf6baa078a1d04d90f14da52b6ac0187017 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,7 +141,7 @@ am335x_scm_attach(device_t dev)
 	SYSCON_WRITE_4(sc->syscon, SCM_BGAP_CTRL, 0);
 	reg = SYSCON_READ_4(sc->syscon, SCM_BGAP_CTRL);
 	DELAY(500);
-	/* Set continous mode. */
+	/* Set continuous mode. */
 	SYSCON_WRITE_4(sc->syscon, SCM_BGAP_CTRL, SCM_BGAP_CONTCONV);
 	reg = SYSCON_READ_4(sc->syscon, SCM_BGAP_CTRL);
 	DELAY(500);

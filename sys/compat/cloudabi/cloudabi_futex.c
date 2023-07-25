@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 153e8bce8495e2a15c77b71ea8109598ef03ac14 $");
+__FBSDID("$FreeBSD: fd2a1d5154836195509b68267091752c07b7892d $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -35,7 +35,7 @@ __FBSDID("$FreeBSD: 153e8bce8495e2a15c77b71ea8109598ef03ac14 $");
 #include <sys/proc.h>
 #include <sys/sx.h>
 #include <sys/systm.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 
 #include <contrib/cloudabi/cloudabi_types_common.h>
 

@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c50daa16b79e80613a78c2cc31492a9a14fcc68 $");
+__FBSDID("$FreeBSD: 91d221cee06b4ed8916e2616e08a58cb092ee745 $");
 
 #include "igc_api.h"
 
@@ -169,18 +169,7 @@ static s32 igc_init_phy_params_i225(struct igc_hw *hw)
 		goto out;
 
 	ret_val = igc_get_phy_id(hw);
-	/* Verify phy id and set remaining function pointers */
-	switch (phy->id) {
-	case I225_I_PHY_ID:
-		phy->type		= igc_phy_i225;
-		phy->ops.set_d0_lplu_state = igc_set_d0_lplu_state_i225;
-		phy->ops.set_d3_lplu_state = igc_set_d3_lplu_state_i225;
-		/* TODO - complete with GPY PHY information */
-		break;
-	default:
-		ret_val = -IGC_ERR_PHY;
-		goto out;
-	}
+	phy->type = igc_phy_i225;
 
 out:
 	return ret_val;

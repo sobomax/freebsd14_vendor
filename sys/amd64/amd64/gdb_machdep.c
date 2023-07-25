@@ -27,13 +27,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eb5ab525aa9c66772a82fb9e4e121b0cf5df4105 $");
+__FBSDID("$FreeBSD: 02b76a35d7aee443eeded9dbf830732460f05b72 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/proc.h>
+#include <sys/reg.h>
 #include <sys/signal.h>
 
 #include <machine/cpufunc.h>
@@ -42,7 +43,6 @@ __FBSDID("$FreeBSD: eb5ab525aa9c66772a82fb9e4e121b0cf5df4105 $");
 #include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/psl.h>
-#include <machine/reg.h>
 #include <machine/specialreg.h>
 #include <machine/trap.h>
 #include <machine/frame.h>

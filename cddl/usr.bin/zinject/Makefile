@@ -1,10 +1,11 @@
-# $FreeBSD: fcc472c24214b5b7edcf109cbe01f618e81ad29b $
+# $FreeBSD: 1e25b38d4eea480611b5b091292145fea21f86a5 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
 .PATH: ${ZFSTOP}/cmd/zinject
 .PATH: ${ZFSTOP}/man/man8
 
+PACKAGE=	zfs
 PROG=	zinject
 INCS=	zinject.h
 SRCS=	zinject.c translate.c

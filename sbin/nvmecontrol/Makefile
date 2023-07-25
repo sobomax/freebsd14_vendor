@@ -1,8 +1,8 @@
-# $FreeBSD: b5ceb350ed0d374c95f6135248bbe243e0cffd0a $
+# $FreeBSD: ac71e1aeaa422e1ce644e4912c22beacd8a042dd $
 
 .include <src.opts.mk>
 
-PACKAGE=runtime
+PACKAGE=nvme-tools
 PROG=	nvmecontrol
 SRCS=	comnd.c nvmecontrol.c
 SRCS+=	devlist.c firmware.c format.c identify.c logpage.c ns.c nsid.c

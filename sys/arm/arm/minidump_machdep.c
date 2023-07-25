@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab3034237d174542b5c78e72c8f41fd50fb5e20e $");
+__FBSDID("$FreeBSD: 8a74dc9818ba095635d17afd09afae90c505bfba $");
 
 #include "opt_watchdog.h"
 
@@ -41,9 +41,7 @@ __FBSDID("$FreeBSD: ab3034237d174542b5c78e72c8f41fd50fb5e20e $");
 #include <sys/kernel.h>
 #include <sys/kerneldump.h>
 #include <sys/msgbuf.h>
-#ifdef SW_WATCHDOG
 #include <sys/watchdog.h>
-#endif
 #include <vm/vm.h>
 #include <vm/vm_param.h>
 #include <vm/vm_page.h>
@@ -72,7 +70,7 @@ blk_flush(struct dumperinfo *di)
 	if (fragsz == 0)
 		return (0);
 
-	error = dump_append(di, dump_va, 0, fragsz);
+	error = dump_append(di, dump_va, fragsz);
 	fragsz = 0;
 	return (error);
 }
@@ -114,11 +112,10 @@ blk_write(struct dumperinfo *di, char *ptr, vm_paddr_t pa, size_t sz)
 			len = sz;
 
 		dumpsys_pb_progress(len);
-#ifdef SW_WATCHDOG
 		wdog_kern_pat(WD_LASTVAL);
-#endif
+
 		if (ptr) {
-			error = dump_append(di, ptr, 0, len);
+			error = dump_append(di, ptr, len);
 			if (error)
 				return (error);
 			ptr += len;

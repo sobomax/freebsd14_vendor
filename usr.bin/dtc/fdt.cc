@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3c7b2a8bd9ab343de239d09169d22fd3036f9580 $
+ * $FreeBSD: 0080a7d445f23ef59bc188351a84f621887e8649 $
  */
 
 #define __STDC_LIMIT_MACROS 1
@@ -38,6 +38,7 @@
 #include "dtb.hh"
 
 #include <algorithm>
+#include <limits>
 #include <sstream>
 
 #include <ctype.h>

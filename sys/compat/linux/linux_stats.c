@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e6304500a8bf756375ea6e4d027a069deb74822 $");
+__FBSDID("$FreeBSD: a1cc2bb7bf8b6b10025b6216003d20eb78e91dad $");
 
 #include "opt_compat.h"
 
@@ -241,7 +241,7 @@ linux_newstat(struct thread *td, struct linux_newstat_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_stat(td, args->path, UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		error = linux_kern_stat(td, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -260,7 +260,7 @@ linux_newlstat(struct thread *td, struct linux_newlstat_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_lstat(td, args->path, UIO_USERSPACE, &sb);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		error = linux_kern_lstat(td, path, UIO_SYSSPACE, &sb);
 		LFREEPATH(path);
 	}
@@ -323,7 +323,7 @@ linux_stat(struct thread *td, struct linux_stat_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_stat(td, args->path, UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		error = linux_kern_stat(td, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -343,7 +343,7 @@ linux_lstat(struct thread *td, struct linux_lstat_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_lstat(td, args->path, UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		error = linux_kern_lstat(td, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -411,33 +411,50 @@ bsd_to_linux_ftype(const char *fstypename)
 }
 
 static int
+bsd_to_linux_mnt_flags(int f_flags)
+{
+	int flags = LINUX_ST_VALID;
+
+	if (f_flags & MNT_RDONLY)
+		flags |= LINUX_ST_RDONLY;
+	if (f_flags & MNT_NOEXEC)
+		flags |= LINUX_ST_NOEXEC;
+	if (f_flags & MNT_NOSUID)
+		flags |= LINUX_ST_NOSUID;
+	if (f_flags & MNT_NOATIME)
+		flags |= LINUX_ST_NOATIME;
+	if (f_flags & MNT_NOSYMFOLLOW)
+		flags |= LINUX_ST_NOSYMFOLLOW;
+	if (f_flags & MNT_SYNCHRONOUS)
+		flags |= LINUX_ST_SYNCHRONOUS;
+
+	return (flags);
+}
+
+static int
 bsd_to_linux_statfs(struct statfs *bsd_statfs, struct l_statfs *linux_statfs)
 {
+
 #if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
-	uint64_t tmp;
-
-#define	LINUX_HIBITS	0xffffffff00000000ULL
-
-	tmp = bsd_statfs->f_blocks | bsd_statfs->f_bfree | bsd_statfs->f_files |
-	    bsd_statfs->f_bsize;
-	if ((bsd_statfs->f_bavail != -1 && (bsd_statfs->f_bavail & LINUX_HIBITS)) ||
-	    (bsd_statfs->f_ffree != -1 && (bsd_statfs->f_ffree & LINUX_HIBITS)) ||
-	    (tmp & LINUX_HIBITS))
-		return (EOVERFLOW);
-#undef	LINUX_HIBITS
+	statfs_scale_blocks(bsd_statfs, INT32_MAX);
 #endif
 	linux_statfs->f_type = bsd_to_linux_ftype(bsd_statfs->f_fstypename);
 	linux_statfs->f_bsize = bsd_statfs->f_bsize;
 	linux_statfs->f_blocks = bsd_statfs->f_blocks;
 	linux_statfs->f_bfree = bsd_statfs->f_bfree;
 	linux_statfs->f_bavail = bsd_statfs->f_bavail;
+#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
+	linux_statfs->f_ffree = MIN(bsd_statfs->f_ffree, INT32_MAX);
+	linux_statfs->f_files = MIN(bsd_statfs->f_files, INT32_MAX);
+#else
 	linux_statfs->f_ffree = bsd_statfs->f_ffree;
 	linux_statfs->f_files = bsd_statfs->f_files;
+#endif
 	linux_statfs->f_fsid.val[0] = bsd_statfs->f_fsid.val[0];
 	linux_statfs->f_fsid.val[1] = bsd_statfs->f_fsid.val[1];
 	linux_statfs->f_namelen = MAXNAMLEN;
 	linux_statfs->f_frsize = bsd_statfs->f_bsize;
-	linux_statfs->f_flags = 0;
+	linux_statfs->f_flags = bsd_to_linux_mnt_flags(bsd_statfs->f_flags);
 	memset(linux_statfs->f_spare, 0, sizeof(linux_statfs->f_spare));
 
 	return (0);
@@ -455,7 +472,7 @@ linux_statfs(struct thread *td, struct linux_statfs_args *args)
 		bsd_statfs = malloc(sizeof(struct statfs), M_STATFS, M_WAITOK);
 		error = kern_statfs(td, args->path, UIO_USERSPACE, bsd_statfs);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		bsd_statfs = malloc(sizeof(struct statfs), M_STATFS, M_WAITOK);
 		error = kern_statfs(td, path, UIO_SYSSPACE, bsd_statfs);
 		LFREEPATH(path);
@@ -484,7 +501,7 @@ bsd_to_linux_statfs64(struct statfs *bsd_statfs, struct l_statfs64 *linux_statfs
 	linux_statfs->f_fsid.val[1] = bsd_statfs->f_fsid.val[1];
 	linux_statfs->f_namelen = MAXNAMLEN;
 	linux_statfs->f_frsize = bsd_statfs->f_bsize;
-	linux_statfs->f_flags = 0;
+	linux_statfs->f_flags = bsd_to_linux_mnt_flags(bsd_statfs->f_flags);
 	memset(linux_statfs->f_spare, 0, sizeof(linux_statfs->f_spare));
 }
 
@@ -503,7 +520,7 @@ linux_statfs64(struct thread *td, struct linux_statfs64_args *args)
 		bsd_statfs = malloc(sizeof(struct statfs), M_STATFS, M_WAITOK);
 		error = kern_statfs(td, args->path, UIO_USERSPACE, bsd_statfs);
 	} else {
-		LCONVPATHEXIST(td, args->path, &path);
+		LCONVPATHEXIST(args->path, &path);
 		bsd_statfs = malloc(sizeof(struct statfs), M_STATFS, M_WAITOK);
 		error = kern_statfs(td, path, UIO_SYSSPACE, bsd_statfs);
 		LFREEPATH(path);
@@ -617,7 +634,7 @@ linux_stat64(struct thread *td, struct linux_stat64_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_stat(td, args->filename, UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST(td, args->filename, &filename);
+		LCONVPATHEXIST(args->filename, &filename);
 		error = linux_kern_stat(td, filename, UIO_SYSSPACE, &buf);
 		LFREEPATH(filename);
 	}
@@ -636,7 +653,7 @@ linux_lstat64(struct thread *td, struct linux_lstat64_args *args)
 	if (!LUSECONVPATH(td)) {
 		error = linux_kern_lstat(td, args->filename, UIO_USERSPACE, &sb);
 	} else {
-		LCONVPATHEXIST(td, args->filename, &filename);
+		LCONVPATHEXIST(args->filename, &filename);
 		error = linux_kern_lstat(td, filename, UIO_SYSSPACE, &sb);
 		LFREEPATH(filename);
 	}
@@ -663,11 +680,12 @@ int
 linux_fstatat64(struct thread *td, struct linux_fstatat64_args *args)
 {
 	char *path;
-	int error, dfd, flag;
+	int error, dfd, flag, unsupported;
 	struct stat buf;
 
-	if (args->flag & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH)) {
-		linux_msg(td, "fstatat64 unsupported flag 0x%x", args->flag);
+	unsupported = args->flag & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH);
+	if (unsupported != 0) {
+		linux_msg(td, "fstatat64 unsupported flag 0x%x", unsupported);
 		return (EINVAL);
 	}
 	flag = (args->flag & LINUX_AT_SYMLINK_NOFOLLOW) ?
@@ -680,7 +698,7 @@ linux_fstatat64(struct thread *td, struct linux_fstatat64_args *args)
 		error = linux_kern_statat(td, flag, dfd, args->pathname,
 		    UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST_AT(td, args->pathname, &path, dfd);
+		LCONVPATHEXIST_AT(args->pathname, &path, dfd);
 		error = linux_kern_statat(td, flag, dfd, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -696,11 +714,12 @@ int
 linux_newfstatat(struct thread *td, struct linux_newfstatat_args *args)
 {
 	char *path;
-	int error, dfd, flag;
+	int error, dfd, flag, unsupported;
 	struct stat buf;
 
-	if (args->flag & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH)) {
-		linux_msg(td, "fstatat unsupported flag 0x%x", args->flag);
+	unsupported = args->flag & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH);
+	if (unsupported != 0) {
+		linux_msg(td, "fstatat unsupported flag 0x%x", unsupported);
 		return (EINVAL);
 	}
 
@@ -714,7 +733,7 @@ linux_newfstatat(struct thread *td, struct linux_newfstatat_args *args)
 		error = linux_kern_statat(td, flag, dfd, args->pathname,
 		    UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST_AT(td, args->pathname, &path, dfd);
+		LCONVPATHEXIST_AT(args->pathname, &path, dfd);
 		error = linux_kern_statat(td, flag, dfd, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -769,11 +788,13 @@ int
 linux_statx(struct thread *td, struct linux_statx_args *args)
 {
 	char *path;
-	int error, dirfd, flags;
+	int error, dirfd, flags, unsupported;
 	struct stat buf;
 
-	if (args->flags & ~(LINUX_AT_SYMLINK_NOFOLLOW | LINUX_AT_EMPTY_PATH)) {
-		linux_msg(td, "statx unsupported flags 0x%x", args->flags);
+	unsupported = args->flags & ~(LINUX_AT_SYMLINK_NOFOLLOW |
+	    LINUX_AT_EMPTY_PATH | LINUX_AT_NO_AUTOMOUNT);
+	if (unsupported != 0) {
+		linux_msg(td, "statx unsupported flags 0x%x", unsupported);
 		return (EINVAL);
 	}
 
@@ -787,7 +808,7 @@ linux_statx(struct thread *td, struct linux_statx_args *args)
 		error = linux_kern_statat(td, flags, dirfd, args->pathname,
 		    UIO_USERSPACE, &buf);
 	} else {
-		LCONVPATHEXIST_AT(td, args->pathname, &path, dirfd);
+		LCONVPATHEXIST_AT(args->pathname, &path, dirfd);
 		error = linux_kern_statat(td, flags, dirfd, path, UIO_SYSSPACE, &buf);
 		LFREEPATH(path);
 	}
@@ -796,4 +817,3 @@ linux_statx(struct thread *td, struct linux_statx_args *args)
 
 	return (error);
 }
-

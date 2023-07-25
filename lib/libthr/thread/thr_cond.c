@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9eba3dd437f0028d6180f5a92cc76a20984c66a5 $");
+__FBSDID("$FreeBSD: 925792a926626c166753d601eb117a7f99c470f8 $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: 9eba3dd437f0028d6180f5a92cc76a20984c66a5 $");
 
 #include "thr_private.h"
 
-_Static_assert(sizeof(struct pthread_cond) <= PAGE_SIZE,
+_Static_assert(sizeof(struct pthread_cond) <= THR_PAGE_SIZE_MIN,
     "pthread_cond too large");
 
 /*

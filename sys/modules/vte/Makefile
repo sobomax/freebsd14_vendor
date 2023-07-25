@@ -1,8 +1,8 @@
-# $FreeBSD: f6628a47147098435cba88145894c4bb86e20b04 $
+# $FreeBSD: b6b7b7ba66e9bbb30bb55698eef371d674732481 $
 
 .PATH: ${SRCTOP}/sys/dev/vte
 
 KMOD=	if_vte
-SRCS=	if_vte.c device_if.h bus_if.h pci_if.h miibus_if.h
+SRCS=	if_vte.c device_if.h bus_if.h pci_if.h miibus_if.h opt_platform.h
 
 .include <bsd.kmod.mk>

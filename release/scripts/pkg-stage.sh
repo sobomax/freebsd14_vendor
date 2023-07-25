@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: f1bb19636f7530e82540ad2c9a24a8f304b6ce14 $
+# $FreeBSD: 4e9617184243ac96dbfe709bc3c4b89b6c7568af $
 #
 
 set -e
@@ -13,8 +13,7 @@ export PKGCMD="/usr/sbin/pkg -d"
 export PORTSDIR="${PORTSDIR:-/usr/ports}"
 
 _DVD_PACKAGES="archivers/unzip
-devel/subversion
-devel/subversion-static
+devel/git
 emulators/linux_base-c6
 graphics/drm-legacy-kmod
 graphics/drm-stable-kmod

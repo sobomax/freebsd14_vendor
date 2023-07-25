@@ -36,7 +36,7 @@
  *      @(#)bpf.h	8.1 (Berkeley) 6/10/93
  *	@(#)bpf.h	1.34 (LBL)     6/16/96
  *
- * $FreeBSD: b7cd8036856c15ef5115dde64a21abef81aa06af $
+ * $FreeBSD: e5b8898188f125b25a0dfaa09b8f6191eda523e7 $
  */
 
 #ifndef _NET_BPF_H_
@@ -55,8 +55,8 @@ typedef	int64_t	  bpf_int64;
 typedef	u_int64_t bpf_u_int64;
 
 /*
- * Alignment macros.  BPF_WORDALIGN rounds up to the next
- * even multiple of BPF_ALIGNMENT.
+ * Alignment macros.  BPF_WORDALIGN rounds up to the next multiple of
+ * BPF_ALIGNMENT.
  */
 #define BPF_ALIGNMENT sizeof(long)
 #define BPF_WORDALIGN(x) (((x)+(BPF_ALIGNMENT-1))&~(BPF_ALIGNMENT-1))

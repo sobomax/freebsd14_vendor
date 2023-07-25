@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4c949770d58fdb5306834ae9cc89d51985ce1906 $
+ * $FreeBSD: 755a8bbaab3d6b1d0de8c10a77db1c07dad0f7df $
  */
 
 /*
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c949770d58fdb5306834ae9cc89d51985ce1906 $");
+__FBSDID("$FreeBSD: 755a8bbaab3d6b1d0de8c10a77db1c07dad0f7df $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -364,15 +364,12 @@ aw_sid_read(device_t dev, uint32_t offset, uint32_t size, uint8_t *buffer)
 static int
 aw_sid_sysctl(SYSCTL_HANDLER_ARGS)
 {
-	struct aw_sid_softc *sc;
 	device_t dev = arg1;
 	enum aw_sid_fuse_id fuse = arg2;
 	uint8_t data[32];
 	char out[128];
 	uint32_t size;
 	int ret, i;
-
-	sc = device_get_softc(dev);
 
 	/* Get the size of the efuse data */
 	size = 0;

@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d22e2322c572f14d5092f6c73c6edfc895535c88 $");
+__FBSDID("$FreeBSD: ecabd6c4798e4b28c6bbbf8fa782ee92cddf505d $");
 
 #include "opt_vm.h"
 
@@ -1483,6 +1483,7 @@ vm_page_insert_after(vm_page_t m, vm_object_t object, vm_pindex_t pindex,
 		return (1);
 	}
 	vm_page_insert_radixdone(m, object, mpred);
+	vm_pager_page_inserted(object, m);
 	return (0);
 }
 
@@ -1556,6 +1557,8 @@ vm_page_object_remove(vm_page_t m)
 	/* Deferred free of swap space. */
 	if ((m->a.flags & PGA_SWAP_FREE) != 0)
 		vm_pager_page_unswapped(m);
+
+	vm_pager_page_removed(object, m);
 
 	m->object = NULL;
 	mrem = vm_radix_remove(&object->rtree, m->pindex);
@@ -1879,6 +1882,7 @@ vm_page_rename(vm_page_t m, vm_object_t new_object, vm_pindex_t new_pindex)
 
 	vm_page_insert_radixdone(m, new_object, mpred);
 	vm_page_dirty(m);
+	vm_pager_page_inserted(new_object, m);
 	return (0);
 }
 
@@ -2025,6 +2029,8 @@ vm_page_alloc_domain_after(vm_object_t object, vm_pindex_t pindex, int domain,
 
 	flags = 0;
 	m = NULL;
+	if (!vm_pager_can_alloc_page(object, pindex))
+		return (NULL);
 	pool = object != NULL ? VM_FREEPOOL_DEFAULT : VM_FREEPOOL_DIRECT;
 again:
 #if VM_NRESERVLEVEL > 0
@@ -2187,12 +2193,42 @@ vm_page_alloc_contig(vm_object_t object, vm_pindex_t pindex, int req,
 	return (m);
 }
 
+static vm_page_t
+vm_page_find_contig_domain(int domain, int req, u_long npages, vm_paddr_t low,
+    vm_paddr_t high, u_long alignment, vm_paddr_t boundary)
+{
+	struct vm_domain *vmd;
+	vm_page_t m_ret;
+
+	vmd = VM_DOMAIN(domain);
+	if (!vm_domain_allocate(vmd, req, npages))
+		return (NULL);
+	/*
+	 * Try to allocate the pages from the free page queues.
+	 */
+	vm_domain_free_lock(vmd);
+	m_ret = vm_phys_alloc_contig(domain, npages, low, high,
+	    alignment, boundary);
+	vm_domain_free_unlock(vmd);
+	if (m_ret != NULL)
+		return (m_ret);
+#if VM_NRESERVLEVEL > 0
+	/*
+	 * Try to break a reservation to allocate the pages.
+	 */
+	if ((m_ret = vm_reserv_reclaim_contig(domain, npages, low,
+	    high, alignment, boundary)) != NULL)
+		return (m_ret);
+#endif
+	vm_domain_freecnt_inc(vmd, npages);
+	return (NULL);
+}
+
 vm_page_t
 vm_page_alloc_contig_domain(vm_object_t object, vm_pindex_t pindex, int domain,
     int req, u_long npages, vm_paddr_t low, vm_paddr_t high, u_long alignment,
     vm_paddr_t boundary, vm_memattr_t memattr)
 {
-	struct vm_domain *vmd;
 	vm_page_t m, m_ret, mpred;
 	u_int busy_lock, flags, oflags;
 
@@ -2223,44 +2259,23 @@ vm_page_alloc_contig_domain(vm_object_t object, vm_pindex_t pindex, int domain,
 	 * Can we allocate the pages without the number of free pages falling
 	 * below the lower bound for the allocation class?
 	 */
-	m_ret = NULL;
-again:
+	for (;;) {
 #if VM_NRESERVLEVEL > 0
-	/*
-	 * Can we allocate the pages from a reservation?
-	 */
-	if (vm_object_reserv(object) &&
-	    (m_ret = vm_reserv_alloc_contig(object, pindex, domain, req,
-	    mpred, npages, low, high, alignment, boundary)) != NULL) {
-		goto found;
-	}
-#endif
-	vmd = VM_DOMAIN(domain);
-	if (vm_domain_allocate(vmd, req, npages)) {
 		/*
-		 * allocate them from the free page queues.
+		 * Can we allocate the pages from a reservation?
 		 */
-		vm_domain_free_lock(vmd);
-		m_ret = vm_phys_alloc_contig(domain, npages, low, high,
-		    alignment, boundary);
-		vm_domain_free_unlock(vmd);
-		if (m_ret == NULL) {
-			vm_domain_freecnt_inc(vmd, npages);
-#if VM_NRESERVLEVEL > 0
-			if (vm_reserv_reclaim_contig(domain, npages, low,
-			    high, alignment, boundary))
-				goto again;
-#endif
+		if (vm_object_reserv(object) &&
+		    (m_ret = vm_reserv_alloc_contig(object, pindex, domain, req,
+		    mpred, npages, low, high, alignment, boundary)) != NULL) {
+			break;
 		}
-	}
-	if (m_ret == NULL) {
-		if (vm_domain_alloc_fail(vmd, object, req))
-			goto again;
-		return (NULL);
-	}
-#if VM_NRESERVLEVEL > 0
-found:
 #endif
+		if ((m_ret = vm_page_find_contig_domain(domain, req, npages,
+		    low, high, alignment, boundary)) != NULL)
+			break;
+		if (!vm_domain_alloc_fail(VM_DOMAIN(domain), object, req))
+			return (NULL);
+	}
 	for (m = m_ret; m < &m_ret[npages]; m++) {
 		vm_page_dequeue(m);
 		vm_page_alloc_check(m);
@@ -2513,7 +2528,7 @@ vm_page_alloc_check(vm_page_t m)
 	KASSERT(pmap_page_get_memattr(m) == VM_MEMATTR_DEFAULT,
 	    ("page %p has unexpected memattr %d",
 	    m, pmap_page_get_memattr(m)));
-	KASSERT(m->valid == 0, ("free page %p is valid", m));
+	KASSERT(vm_page_none_valid(m), ("free page %p is valid", m));
 	pmap_vm_page_alloc_check(m);
 }
 
@@ -2621,12 +2636,11 @@ vm_page_scan_contig(u_long npages, vm_page_t m_start, vm_page_t m_end,
 			if (m + npages > m_end)
 				break;
 			pa = VM_PAGE_TO_PHYS(m);
-			if ((pa & (alignment - 1)) != 0) {
+			if (!vm_addr_align_ok(pa, alignment)) {
 				m_inc = atop(roundup2(pa, alignment) - pa);
 				continue;
 			}
-			if (rounddown2(pa ^ (pa + ptoa(npages) - 1),
-			    boundary) != 0) {
+			if (!vm_addr_bound_ok(pa, ptoa(npages), boundary)) {
 				m_inc = atop(roundup2(pa, boundary) - pa);
 				continue;
 			}
@@ -3231,6 +3245,8 @@ vm_wait_doms(const domainset_t *wdoms, int mflags)
 		 */
 		mtx_lock(&vm_domainset_lock);
 		if (vm_page_count_min_set(wdoms)) {
+			if (pageproc == NULL)
+				panic("vm_wait in early boot");
 			vm_min_waiters++;
 			error = msleep(&vm_min_domains, &vm_domainset_lock,
 			    PVM | PDROP | mflags, "vmwait", 0);
@@ -3264,8 +3280,6 @@ vm_wait_domain(int domain)
 		} else
 			mtx_unlock(&vm_domainset_lock);
 	} else {
-		if (pageproc == NULL)
-			panic("vm_wait in early boot");
 		DOMAINSET_ZERO(&wdom);
 		DOMAINSET_SET(vmd->vmd_domain, &wdom);
 		vm_wait_doms(&wdom, 0);
@@ -4197,7 +4211,7 @@ vm_page_release_toq(vm_page_t m, uint8_t nqueue, const bool noreuse)
 	 * If we were asked to not cache the page, place it near the head of the
 	 * inactive queue so that is reclaimed sooner.
 	 */
-	if (noreuse || m->valid == 0) {
+	if (noreuse || vm_page_none_valid(m)) {
 		nqueue = PQ_INACTIVE;
 		nflag = PGA_REQUEUE_HEAD;
 	} else {
@@ -4664,6 +4678,10 @@ retrylookup:
 		*mp = NULL;
 		return (VM_PAGER_FAIL);
 	} else if ((m = vm_page_alloc(object, pindex, pflags)) == NULL) {
+		if (!vm_pager_can_alloc_page(object, pindex)) {
+			*mp = NULL;
+			return (VM_PAGER_AGAIN);
+		}
 		goto retrylookup;
 	}
 
@@ -4675,7 +4693,8 @@ retrylookup:
 		ma[0] = m;
 		for (i = 1; i < after; i++) {
 			if ((ma[i] = vm_page_next(ma[i - 1])) != NULL) {
-				if (ma[i]->valid || !vm_page_tryxbusy(ma[i]))
+				if (vm_page_any_valid(ma[i]) ||
+				    !vm_page_tryxbusy(ma[i]))
 					break;
 			} else {
 				ma[i] = vm_page_alloc(object, m->pindex + i,
@@ -5339,7 +5358,7 @@ vm_page_zero_invalid(vm_page_t m, boolean_t setvalid)
 
 	/*
 	 * setvalid is TRUE when we can safely set the zero'd areas
-	 * as being valid.  We can do this if there are no cache consistancy
+	 * as being valid.  We can do this if there are no cache consistency
 	 * issues.  e.g. it is ok to do with UFS, but not ok to do with NFS.
 	 */
 	if (setvalid)
@@ -5363,7 +5382,7 @@ vm_page_is_valid(vm_page_t m, int base, int size)
 	vm_page_bits_t bits;
 
 	bits = vm_page_bits(base, size);
-	return (m->valid != 0 && (m->valid & bits) == bits);
+	return (vm_page_any_valid(m) && (m->valid & bits) == bits);
 }
 
 /*

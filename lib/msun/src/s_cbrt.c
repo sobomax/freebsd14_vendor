@@ -13,7 +13,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e609e110d9aa39b67b9418059238df2d25ce4ce $");
+__FBSDID("$FreeBSD: 4353d340a1acfdad5d491b21dd88c44b4b58619c $");
 
 #include <float.h>
 #include "math.h"
@@ -108,7 +108,7 @@ cbrt(double x)
 	r=x/s;				/* error <= 0.5 ulps; |r| < |t| */
 	w=t+t;				/* t+t is exact */
 	r=(r-t)/(w+r);			/* r-t is exact; w+r ~= 3*t */
-	t=t+t*r;			/* error <= 0.5 + 0.5/3 + epsilon */
+	t=t+t*r;			/* error <= (0.5 + 0.5/3) * ulp */
 
 	return(t);
 }

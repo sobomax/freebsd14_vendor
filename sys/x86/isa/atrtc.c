@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aff838c53851655e3b0b70289771ea5b8c1c4560 $
+ * $FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aff838c53851655e3b0b70289771ea5b8c1c4560 $");
+__FBSDID("$FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $");
 
 #include "opt_acpi.h"
 #include "opt_isa.h"
@@ -61,6 +61,11 @@ __FBSDID("$FreeBSD: aff838c53851655e3b0b70289771ea5b8c1c4560 $");
 #include <dev/acpica/acpivar.h>
 #include <machine/md_var.h>
 #endif
+
+/* tunable to detect a power loss of the rtc */
+static bool atrtc_power_lost = false;
+SYSCTL_BOOL(_machdep, OID_AUTO, atrtc_power_lost, CTLFLAG_RD, &atrtc_power_lost,
+    false, "RTC lost power on last power cycle (probably caused by an emtpy cmos battery)");
 
 /*
  * atrtc_lock protects low-level access to individual hardware registers.
@@ -597,6 +602,7 @@ atrtc_gettime(device_t dev, struct timespec *ts)
 
 	/* Look if we have a RTC present and the time is valid */
 	if (!(rtcin(RTC_STATUSD) & RTCSD_PWR)) {
+		atrtc_power_lost = true;
 		device_printf(dev, "WARNING: Battery failure indication\n");
 		return (EINVAL);
 	}

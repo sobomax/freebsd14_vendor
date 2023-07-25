@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b74e00fea4b7f5d6d9308998bbb1f58213ba8c57 $");
+__FBSDID("$FreeBSD: faf0a1f815fbddc664356a710960f7578c8bddbf $");
 
 /**
  * @file
@@ -447,7 +447,7 @@ void sati_scsi_common_response_iu_construct(
  *                for which to construct the buffer for sense data.
  * @param[in]     scsi_status This parameter specifies the SCSI status
  *                value for the user's IO request.
- * @param[out]    sense_data This paramater
+ * @param[out]    sense_data This parameter
  *
  * @return none
  */

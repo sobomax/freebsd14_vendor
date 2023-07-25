@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f780e626da0c8065a508f6af9702cab2a314163c $");
+__FBSDID("$FreeBSD: 841c3867ab079f5cb7b72405b9fba115f00ce57e $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -61,8 +61,8 @@ void release_scratch_buff(struct cudbg_buffer *pscratch_buff,
 {
 	pdbg_buff->size += pscratch_buff->size;
 	/* Reset the used buffer to zero.
- 	 * If we dont do this, then it will effect the ext entity logic.
- 	 */
+	 * If we dont do this, then it will effect the ext entity logic.
+	 */
 	memset(pscratch_buff->data, 0, pscratch_buff->size);
 	pscratch_buff->data = NULL;
 	pscratch_buff->offset = 0;

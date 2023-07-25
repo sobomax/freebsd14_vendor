@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fcc5d7bcd7fb921bd72798bc36af791cbed817d1 $
+ * $FreeBSD: 2cdd4483d3236f005de295b2e52dcfb98229c1d3 $
  */
 
 #include <stdio.h>
@@ -36,7 +36,7 @@
 
 int
 geliboot_crypt(u_int algo, geli_op_t enc, u_char *data, size_t datasize,
-    const u_char *key, size_t keysize, u_char *iv, size_t ivlen)
+    const u_char *key, size_t keysize, u_char *iv)
 {
 	keyInstance aeskey;
 	cipherInstance cipher;
@@ -81,7 +81,7 @@ geliboot_crypt(u_int algo, geli_op_t enc, u_char *data, size_t datasize,
 		ctxp = &xtsctx;
 
 		enc_xform_aes_xts.setkey(ctxp, key, xts_len / 8);
-		enc_xform_aes_xts.reinit(ctxp, iv, ivlen);
+		enc_xform_aes_xts.reinit(ctxp, iv, AES_XTS_IV_LEN);
 
 		switch (enc) {
 		case GELI_DECRYPT:
@@ -110,11 +110,10 @@ static int
 g_eli_crypto_cipher(u_int algo, geli_op_t enc, u_char *data, size_t datasize,
     const u_char *key, size_t keysize)
 {
-	u_char iv[keysize];
+	u_char iv[G_ELI_IVKEYLEN];
 
 	explicit_bzero(iv, sizeof(iv));
-	return (geliboot_crypt(algo, enc, data, datasize, key, keysize, iv,
-	    sizeof(iv)));
+	return (geliboot_crypt(algo, enc, data, datasize, key, keysize, iv));
 }
 
 int

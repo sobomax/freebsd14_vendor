@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 258053dfb0b707a801165b216e2a75b4e6903277 $");
+__FBSDID("$FreeBSD: b72e7b1e4851e403ccaed3a2d5a45fd7e8f124f3 $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -296,6 +296,12 @@ fuse_vnode_get(struct mount *mp,
 	 */
 	uint64_t generation = feo ? feo->generation : 0;
 	int err = 0;
+
+	if (dvp != NULL && VTOFUD(dvp)->nid == nodeid) {
+		fuse_warn(fuse_get_mpdata(mp), FSESS_WARN_ILLEGAL_INODE,
+			"Assigned same inode to both parent and child.");
+		return EIO;
+	}
 
 	err = fuse_vnode_alloc(mp, td, nodeid, vtyp, vpp);
 	if (err) {

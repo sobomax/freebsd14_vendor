@@ -25,14 +25,28 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 63f876e78b57af155e996b07e0f8cf12378a7213 $
+ * $FreeBSD: ace4a42a1016df305650c64a6e06b35964b274c5 $
  */
 
 #ifndef _LINUXKPI_ACPI_VIDEO_H_
 #define _LINUXKPI_ACPI_VIDEO_H_
 
+#include <sys/errno.h>
+
 #define	ACPI_VIDEO_CLASS	"video"
 
 #define	ACPI_VIDEO_NOTIFY_PROBE	0x81
+
+static inline int
+acpi_video_register(void)
+{
+
+	return (-ENODEV);
+}
+
+static inline void
+acpi_video_unregister(void)
+{
+}
 
 #endif	/* _LINUXKPI_ACPI_VIDEO_H_ */

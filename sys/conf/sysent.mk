@@ -1,4 +1,4 @@
-# $FreeBSD: 761905f3ffa611bf3dbd974ade9f58a6c4b2a033 $
+# $FreeBSD: 9f5804693f9dd2ae0d22e003416dcfa8c0d7cd8f $
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}
@@ -40,6 +40,11 @@ all:
 # potentially once for each ${GENERATED} file.
 .ORDER: ${GENERATED}
 sysent: ${GENERATED}
+
+# We slap a .PHONY on makesyscalls.lua so that we regenerate every single time,
+# for now, which can be less painful across rebases or other things that may
+# have odd effects on mtimes.
+${MAKESYSCALLS_SCRIPT}: .PHONY
 
 ${GENERATED}: ${MAKESYSCALLS_SCRIPT} ${SRCS}
 	${MAKESYSCALLS} ${SYSENT_FILE} ${SYSENT_CONF}

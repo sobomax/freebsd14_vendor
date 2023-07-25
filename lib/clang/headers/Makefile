@@ -1,11 +1,11 @@
-# $FreeBSD: d4a31b7675236fd8f4ca5eae5a71640131e9dfaf $
+# $FreeBSD: c4643e9353e6bdf47ee9c3de493a137c6f34a09e $
 
 .include "../clang.pre.mk"
 
 .PATH:		${CLANG_SRCS}/lib/Headers
 
 INCSGROUPS=	INCS CUDA OMP PPC
-INCSDIR=	${LIBDIR}/clang/13.0.0/include
+INCSDIR=	${LIBDIR}/clang/14.0.5/include
 CUDADIR=	${INCSDIR}/cuda_wrappers
 OMPDIR=		${INCSDIR}/openmp_wrappers
 PPCDIR=		${INCSDIR}/ppc_wrappers
@@ -19,6 +19,7 @@ INCS+=		__clang_cuda_libdevice_declares.h
 INCS+=		__clang_cuda_math.h
 INCS+=		__clang_cuda_math_forward_declares.h
 INCS+=		__clang_cuda_runtime_wrapper.h
+INCS+=		__clang_cuda_texture_intrinsics.h
 INCS+=		__clang_hip_cmath.h
 INCS+=		__clang_hip_libdevice_declares.h
 INCS+=		__clang_hip_math.h
@@ -33,6 +34,7 @@ INCS+=		amxintrin.h
 INCS+=		arm64intr.h
 INCS+=		arm_acle.h
 INCS+=		arm_cmse.h
+INCS+=		arm_neon_sve_bridge.h
 INCS+=		armintr.h
 INCS+=		avx2intrin.h
 INCS+=		avx512bf16intrin.h
@@ -42,6 +44,7 @@ INCS+=		avx512cdintrin.h
 INCS+=		avx512dqintrin.h
 INCS+=		avx512erintrin.h
 INCS+=		avx512fintrin.h
+INCS+=		avx512fp16intrin.h
 INCS+=		avx512ifmaintrin.h
 INCS+=		avx512ifmavlintrin.h
 INCS+=		avx512pfintrin.h
@@ -53,6 +56,7 @@ INCS+=		avx512vlbitalgintrin.h
 INCS+=		avx512vlbwintrin.h
 INCS+=		avx512vlcdintrin.h
 INCS+=		avx512vldqintrin.h
+INCS+=		avx512vlfp16intrin.h
 INCS+=		avx512vlintrin.h
 INCS+=		avx512vlvbmi2intrin.h
 INCS+=		avx512vlvnniintrin.h
@@ -73,6 +77,7 @@ INCS+=		clflushoptintrin.h
 INCS+=		clwbintrin.h
 INCS+=		clzerointrin.h
 INCS+=		cpuid.h
+INCS+=		crc32intrin.h
 INCS+=		emmintrin.h
 INCS+=		enqcmdintrin.h
 INCS+=		f16cintrin.h
@@ -194,6 +199,8 @@ riscv_${hdr:H}.h: ${CLANG_SRCS}/include/clang/Basic/riscv_${hdr:H}.td
 	    -o ${.TARGET} ${CLANG_SRCS}/include/clang/Basic/riscv_${hdr:H}.td
 GENINCS+=	riscv_${hdr:H}.h
 .endfor
+
+${GENINCS}: ${CLANG_TBLGEN_BIN}
 
 CLEANFILES=	${GENINCS} ${GENINCS:C/$/.d/}
 

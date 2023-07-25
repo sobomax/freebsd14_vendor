@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4f25728d17b62091a2e9b72f5980013585873c9 $");
+__FBSDID("$FreeBSD: 47c3217f399c3742954d315d4263b01c867a8189 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -278,7 +278,7 @@ SYSCTL_NODE(_net, OID_AUTO, pfsync, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
 SYSCTL_STRUCT(_net_pfsync, OID_AUTO, stats, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(pfsyncstats), pfsyncstats,
     "PFSYNC statistics (struct pfsyncstats, net/if_pfsync.h)");
-SYSCTL_INT(_net_pfsync, OID_AUTO, carp_demotion_factor, CTLFLAG_RW,
+SYSCTL_INT(_net_pfsync, OID_AUTO, carp_demotion_factor, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(pfsync_carp_adj), 0, "pfsync's CARP demotion factor adjustment");
 SYSCTL_ULONG(_net_pfsync, OID_AUTO, pfsync_buckets, CTLFLAG_RDTUN,
     &pfsync_buckets, 0, "Number of pfsync hash buckets");
@@ -618,6 +618,7 @@ cleanup:
 
 cleanup_state:	/* pf_state_insert() frees the state keys. */
 	if (st) {
+		st->timeout = PFTM_UNLINKED; /* appease an assert */
 		pf_free_state(st);
 	}
 	return (error);
@@ -1735,13 +1736,15 @@ pfsync_defer(struct pf_kstate *st, struct mbuf *m)
 {
 	struct pfsync_softc *sc = V_pfsyncif;
 	struct pfsync_deferral *pd;
-	struct pfsync_bucket *b = pfsync_get_bucket(sc, st);
+	struct pfsync_bucket *b;
 
 	if (m->m_flags & (M_BCAST|M_MCAST))
 		return (0);
 
 	if (sc == NULL)
 		return (0);
+
+	b = pfsync_get_bucket(sc, st);
 
 	PFSYNC_LOCK(sc);
 
@@ -1819,8 +1822,11 @@ pfsync_defer_tmo(void *arg)
 
 	PFSYNC_BUCKET_LOCK_ASSERT(b);
 
+	if (sc->sc_sync_if == NULL)
+		return;
+
 	NET_EPOCH_ENTER(et);
-	CURVNET_SET(m->m_pkthdr.rcvif->if_vnet);
+	CURVNET_SET(sc->sc_sync_if->if_vnet);
 
 	TAILQ_REMOVE(&b->b_deferrals, pd, pd_entry);
 	b->b_deferred--;
@@ -2148,7 +2154,7 @@ pfsync_bulk_update(void *arg)
 {
 	struct pfsync_softc *sc = arg;
 	struct pf_kstate *s;
-	int i, sent = 0;
+	int i;
 
 	PFSYNC_BLOCK_ASSERT(sc);
 	CURVNET_SET(sc->sc_ifp->if_vnet);
@@ -2189,7 +2195,6 @@ pfsync_bulk_update(void *arg)
 					    pfsync_bulk_update, sc);
 					goto full;
 				}
-				sent++;
 			}
 		}
 		PF_HASHROW_UNLOCK(ih);
@@ -2435,7 +2440,7 @@ static struct protosw in_pfsync_protosw = {
 #endif
 
 static void
-pfsync_pointers_init()
+pfsync_pointers_init(void)
 {
 
 	PF_RULES_WLOCK();
@@ -2449,7 +2454,7 @@ pfsync_pointers_init()
 }
 
 static void
-pfsync_pointers_uninit()
+pfsync_pointers_uninit(void)
 {
 
 	PF_RULES_WLOCK();
@@ -2499,7 +2504,7 @@ VNET_SYSUNINIT(vnet_pfsync_uninit, SI_SUB_PROTO_FIREWALL, SI_ORDER_FOURTH,
     vnet_pfsync_uninit, NULL);
 
 static int
-pfsync_init()
+pfsync_init(void)
 {
 #ifdef INET
 	int error;
@@ -2520,7 +2525,7 @@ pfsync_init()
 }
 
 static void
-pfsync_uninit()
+pfsync_uninit(void)
 {
 	pfsync_detach_ifnet_ptr = NULL;
 

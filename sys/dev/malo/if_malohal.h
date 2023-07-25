@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: b608eaba2abdd268493a201b8926f8fddb41c266 $
+ * $FreeBSD: 8322f18ef739c8682e36a303a3e8179a4ebec8a5 $
  */
 
 #ifndef _DEV_MALOHAL_H
@@ -48,7 +48,7 @@
 /*
  * Calibration data builtin to the firmware.  The firmware image
  * has a single set of calibration tables that we retrieve right
- * after download.  This can be overriden by the driver (e.g. for
+ * after download.  This can be overridden by the driver (e.g. for
  * a different regdomain and/or tx power setup).
  */
 struct malo_hal_caldata {

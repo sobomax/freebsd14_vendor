@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 6ead517e8febea1be7e04c26b38a1beb5d8f916c $
+ * $FreeBSD: 2b8b2698a421539ed097e1b09890aff20d161bc1 $
  */
 
 #ifndef _RTLD_PATHS_H
@@ -45,6 +45,7 @@
 #define	_BASENAME_RTLD		_COMPAT32_BASENAME_RTLD
 #define	STANDARD_LIBRARY_PATH	"/lib32:/usr/lib32"
 #define	LD_			"LD_32_"
+#define	TOKEN_LIB		"lib32"
 #endif
 
 #ifndef _PATH_ELF_HINTS
@@ -80,6 +81,10 @@
 #define	_PATH_SOFT_RTLD		"/libexec/ld-elf.so.1"
 #define	SOFT_STANDARD_LIBRARY_PATH "/usr/libsoft"
 #define	LD_SOFT_		"LD_SOFT_"
+
+#ifndef TOKEN_LIB
+#define	TOKEN_LIB		"lib"
+#endif
 
 #ifdef IN_RTLD
 extern const char *ld_elf_hints_default;

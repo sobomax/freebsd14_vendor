@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ababbaa4b43af327333e9e2d246d55769124aa97 $");
+__FBSDID("$FreeBSD: 8b2776e034fe589e83a02cb494b86575d396ea9f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,6 +74,7 @@ g_label_ufs_taste_common(struct g_consumer *cp, char *label, size_t size, int wh
 	label[0] = '\0';
 
 	fs = NULL;
+	KASSERT(pp->sectorsize != 0, ("Tasting a disk with 0 sectorsize"));
 	if (SBLOCKSIZE % pp->sectorsize != 0 || ffs_sbget(cp, &fs,
 	    STDSB_NOHASHFAIL, M_GEOM, g_use_g_read_data) != 0) {
 		KASSERT(fs == NULL,

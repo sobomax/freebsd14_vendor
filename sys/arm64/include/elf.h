@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3f7c3964d428af34f1c6f0a84b8befae5198983d $
+ * $FreeBSD: 22e968c632bf381ea11b160e0238542c8141e5be $
  */
 
 #ifndef	_MACHINE_ELF_H_
@@ -86,7 +86,7 @@ __ElfType(Auxinfo);
 #endif
 
 #if __ELF_WORD_SIZE == 32
-#define	ET_DYN_LOAD_ADDR 0x12000
+#define	ET_DYN_LOAD_ADDR 0x01001000
 #else
 #define	ET_DYN_LOAD_ADDR 0x100000
 #endif

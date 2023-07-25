@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ed63c44c6a87644f7c7f3e3ab14d206a343384d4 $
+ * $FreeBSD: 0aa3eda3a97d43237d22f1aa6a010669e0e52f2d $
  */
 
 #ifndef	_BCEREG_H_DEFINED
@@ -411,7 +411,7 @@
 	u32 bce_debug_temp = bce_debug;				\
 	bce_debug |= cond;
 
-/* Restore the previously overriden debug level. */
+/* Restore the previously overridden debug level. */
 #define DBPOP()							\
 	bce_debug = bce_debug_temp;
 

@@ -51,7 +51,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3eb9011a5b7931e41e54ede42f8fa317e319b793 $
+ * $FreeBSD: 73cc0caf671fa3575e9449563d91b7cbb6a0c73f $
  */
 #ifndef _SCIC_SDS_REMOTE_NODE_CONTEXT_H_
 #define _SCIC_SDS_REMOTE_NODE_CONTEXT_H_
@@ -266,7 +266,7 @@ typedef struct SCIC_SDS_REMOTE_NODE_CONTEXT
    U16 remote_node_index;
 
    /**
-    * This field is the recored suspension code or the reason for the remote node
+    * This field is the recorded suspension code or the reason for the remote node
     * context suspension.
     */
    U32 suspension_code;

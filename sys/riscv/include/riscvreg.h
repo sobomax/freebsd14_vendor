@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e7b52cae8042ae7bc4055d91d33440c149e40867 $
+ * $FreeBSD: 91b6f9cb3ee96cc87b5984aac25e05ac1f5119c3 $
  */
 
 #ifndef _MACHINE_RISCVREG_H_
@@ -150,11 +150,11 @@
 #define	SIP_STIP	(1 << 5)
 
 #define	SATP_PPN_S	0
-#define	SATP_PPN_M	(0xfffffffffff << SATP_PPN_S)
+#define	SATP_PPN_M	(0xfffffffffffUL << SATP_PPN_S)
 #define	SATP_ASID_S	44
-#define	SATP_ASID_M	(0xffff << SATP_ASID_S)
+#define	SATP_ASID_M	(0xffffUL << SATP_ASID_S)
 #define	SATP_MODE_S	60
-#define	SATP_MODE_M	(0xf << SATP_MODE_S)
+#define	SATP_MODE_M	(0xfUL << SATP_MODE_S)
 #define	SATP_MODE_SV39	(8ULL << SATP_MODE_S)
 #define	SATP_MODE_SV48	(9ULL << SATP_MODE_S)
 

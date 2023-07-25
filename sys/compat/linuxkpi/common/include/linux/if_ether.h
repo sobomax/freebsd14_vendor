@@ -4,6 +4,10 @@
  * Copyright (c) 2010 Panasas, Inc.
  * Copyright (c) 2013 Mellanox Technologies, Ltd.
  * All rights reserved.
+ * Copyright (c) 2021-2022 The FreeBSD Foundation
+ *
+ * Portions of this software were developed by Björn Zeeb
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 178b778ec73665d727daea81608758041b18e192 $
+ * $FreeBSD: cb3e34a0823fd22832c74b1c8d96a8d65eaf284e $
  */
 #ifndef	_LINUXKPI_LINUX_IF_ETHER_H_
 #define	_LINUXKPI_LINUX_IF_ETHER_H_
@@ -55,6 +59,9 @@
 #define	ETH_P_8021AD	ETHERTYPE_QINQ
 #define	ETH_P_PAE	ETHERTYPE_PAE
 #define	ETH_P_802_2	ETHERTYPE_8023
+#define	ETH_P_IPX	ETHERTYPE_IPX
+#define	ETH_P_AARP	ETHERTYPE_AARP
+#define	ETH_P_802_3_MIN	0x05DD		/* See comment in sys/net/ethernet.h */
 #define	ETH_P_LINK_CTL	0x886C		/* ITU-T G.989.2 */
 #define	ETH_P_TDLS	0x890D		/* 802.11z-2010, see wpa. */
 

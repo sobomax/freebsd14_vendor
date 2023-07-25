@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 375b80647e1af5315a533094170b42b70e93f2a4 $*/
+/*$FreeBSD: 9c04b4ca04119ad0cdc14f1d850ff82871493c45 $*/
 
 #include "ice_common.h"
 #include "ice_fwlog.h"

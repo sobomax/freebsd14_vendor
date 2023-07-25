@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9eebeece9727293d587377db68dd4250d826ac53 $
+ * $FreeBSD: 4c171e8b3f5091606f494a7e5d36f88b360ac367 $
  */
 
 #ifndef _NFS_NFSRVSTATE_H_
@@ -99,6 +99,7 @@ struct nfsclient {
 	struct nfsstatehead lc_deleg;		/* Delegations */
 	struct nfsstatehead lc_olddeleg;	/* and old delegations */
 	struct nfssessionhead lc_session;	/* List of NFSv4.1 sessions */
+	uint64_t	lc_prevsess;		/* CreateSession cache */
 	time_t		lc_expiry;		/* Expiry time (sec) */
 	time_t		lc_delegtime;		/* Old deleg expiry (sec) */
 	nfsquad_t	lc_clientid;		/* 64 bit clientid */

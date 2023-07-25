@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 105e8e507ce3a632b0bc986637a9c830c11c98ae $
+ * $FreeBSD: 9ec0b6402a9111717a8b1f4394aaf1f86b09924d $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -97,7 +97,7 @@ typedef long		db_expr_t;
 				  (((ins) & 0xffe00c00u) != 0x3c800000u)) ||  /* unscaled immediate */ \
 				 ((((ins) & 0x3b000000u) == 0x39000000u) && \
 				  (((ins) & 0x3bc00000u) != 0x39000000u) && \
-				  (((ins) & 0xffc00000u) != 0x3d800000u)) &&  /* unsigned immediate */ \
+				  (((ins) & 0xffc00000u) != 0x3d800000u)) ||  /* unsigned immediate */ \
 				 (((ins) & 0x3bc00000u) == 0x28400000u) || /* pair (offset) */ \
 				 (((ins) & 0x3bc00000u) == 0x28c00000u) || /* pair (post-indexed) */ \
 				 (((ins) & 0x3bc00000u) == 0x29800000u)) /* pair (pre-indexed) */

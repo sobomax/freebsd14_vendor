@@ -1,6 +1,6 @@
-# $FreeBSD: 1ad40e3ac0919b2d998473ae91a56eedbd1008d4 $
+# $FreeBSD: eea8eaea37a3aac353d99958f54974d0897c84a6 $
 
-FWVERSION=	68
+FWVERSION=	73
 NAME=		so-a0-gf-a0
 EXT=		pnvm
 _NAME=		iwlwifi-${NAME}.${EXT}

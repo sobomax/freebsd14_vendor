@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0cb56290152effb6708d8234abf772b399b7fe78 $
+ * $FreeBSD: 2826a56f34c1ae72e0ec370850c6546b16357659 $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -76,8 +76,5 @@ extern void *__tls_get_addr(tls_index *ti);
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
 #define md_abi_variant_hook(x)
-
-#define	TLS_VARIANT_I	1
-#define	TLS_DTV_OFFSET	0
 
 #endif

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 06aba31f4013492625f4bc349afc1d874de4ddea $");
+__FBSDID("$FreeBSD: 482c4c5c50c6caaa481b0e69c96285afb5e21a6f $");
 
 /*
  * Broadcom Common PCI/PCIe Support.
@@ -354,7 +354,7 @@ bhnd_pcie_mdio_cmd_write(struct bhnd_pci_softc *sc, uint32_t cmd)
 }
 
 /**
- * Issue an an MDIO read command, wait for completion, and return
+ * Issue an MDIO read command, wait for completion, and return
  * the result in @p data_read.
  */
 static int

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e63a821888e4bd7123025fc3b512a1dab7de26a1 $");
+__FBSDID("$FreeBSD: 0321102301f099ea2ab13005e8206610a0044c75 $");
 
 /*
  * Broadcom BCM57xx(x)/BCM590x NetXtreme and NetLink family Ethernet driver
@@ -130,7 +130,7 @@ MODULE_DEPEND(bge, miibus, 1, 1, 1);
 /*
  * Various supported device vendors/types and their names. Note: the
  * spec seems to indicate that the hardware still has Alteon's vendor
- * ID burned into it, though it will always be overriden by the vendor
+ * ID burned into it, though it will always be overridden by the vendor
  * ID in the EEPROM. Just to be safe, we cover all possibilities.
  */
 static const struct bge_type {

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 38d773c43fdbfbea2d64852f41c8dc6223c84a9a $
+ * $FreeBSD: 965079107476314d4d4ea00f8e7a237fc7c8520e $
  */
 
 #ifndef _MEM_H_
@@ -52,7 +52,7 @@ struct mem_range {
 #define	MEM_F_RW		0x3
 #define	MEM_F_IMMUTABLE		0x4	/* mem_range cannot be unregistered */
 
-void	init_mem(void);
+void	init_mem(int ncpu);
 int     emulate_mem(struct vmctx *, int vcpu, uint64_t paddr, struct vie *vie,
 		    struct vm_guest_paging *paging);
 

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0188be3c640679716aca77ccf8800d56b88ac76d $");
+__FBSDID("$FreeBSD: 1177e67bea2879b95afc7a32c8d6f561318fab5b $");
 
 #ifndef lint
 #if 0
@@ -56,7 +56,7 @@ static jmp_buf jmpbuf;
  * The phone numbers are in PN, and the call unit is in CU.
  *
  * If the PN is an '@', then we consult the PHONES file for
- *   the phone numbers.  This file is /etc/phones, unless overriden
+ *   the phone numbers.  This file is /etc/phones, unless overridden
  *   by an exported shell variable.
  *
  * The data base files must be in the format:

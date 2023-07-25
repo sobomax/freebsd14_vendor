@@ -170,6 +170,8 @@ libzfs_error_description(libzfs_handle_t *hdl)
 		return (dgettext(TEXT_DOMAIN, "I/O error"));
 	case EZFS_INTR:
 		return (dgettext(TEXT_DOMAIN, "signal received"));
+	case EZFS_CKSUM:
+		return (dgettext(TEXT_DOMAIN, "insufficient replicas"));
 	case EZFS_ISSPARE:
 		return (dgettext(TEXT_DOMAIN, "device is reserved as a hot "
 		    "spare"));
@@ -391,6 +393,10 @@ zfs_common_error(libzfs_handle_t *hdl, int error, const char *fmt,
 
 	case EINTR:
 		zfs_verror(hdl, EZFS_INTR, fmt, ap);
+		return (-1);
+
+	case ECKSUM:
+		zfs_verror(hdl, EZFS_CKSUM, fmt, ap);
 		return (-1);
 	}
 
@@ -674,7 +680,7 @@ zpool_standard_error_fmt(libzfs_handle_t *hdl, int error, const char *fmt, ...)
 	case ENOSPC:
 	case EDQUOT:
 		zfs_verror(hdl, EZFS_NOSPC, fmt, ap);
-		return (-1);
+		break;
 
 	case EAGAIN:
 		zfs_error_aux(hdl, dgettext(TEXT_DOMAIN,
@@ -2076,22 +2082,26 @@ use_color(void)
  * color_end();
  */
 void
-color_start(char *color)
+color_start(const char *color)
 {
-	if (use_color())
-		printf("%s", color);
+	if (use_color()) {
+		fputs(color, stdout);
+		fflush(stdout);
+	}
 }
 
 void
 color_end(void)
 {
-	if (use_color())
-		printf(ANSI_RESET);
+	if (use_color()) {
+		fputs(ANSI_RESET, stdout);
+		fflush(stdout);
+	}
 }
 
 /* printf() with a color.  If color is NULL, then do a normal printf. */
 int
-printf_color(char *color, char *format, ...)
+printf_color(const char *color, char *format, ...)
 {
 	va_list aptr;
 	int rc;

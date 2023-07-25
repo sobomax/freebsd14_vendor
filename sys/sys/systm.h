@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)systm.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: cf13c16f8b4a259941e4e249953bb8bf14ec18c7 $
+ * $FreeBSD: 828297e5b948e3ceb0fa6c6defc920efeab7e963 $
  */
 
 #ifndef _SYS_SYSTM_H_
@@ -246,15 +246,9 @@ void	*memcpy(void * _Nonnull to, const void * _Nonnull from, size_t len);
 void	*memmove(void * _Nonnull dest, const void * _Nonnull src, size_t n);
 int	memcmp(const void *b1, const void *b2, size_t len);
 
-#if defined(KASAN)
-#define	SAN_PREFIX	kasan_
-#elif defined(KCSAN)
-#define	SAN_PREFIX	kcsan_
-#endif
-
-#ifdef SAN_PREFIX
-#define	SAN_INTERCEPTOR(func)	__CONCAT(SAN_PREFIX, func)
-
+#ifdef SAN_NEEDS_INTERCEPTORS
+#define	SAN_INTERCEPTOR(func)	\
+	__CONCAT(SAN_INTERCEPTOR_PREFIX, __CONCAT(_, func))
 void	*SAN_INTERCEPTOR(memset)(void *, int, size_t);
 void	*SAN_INTERCEPTOR(memcpy)(void *, const void *, size_t);
 void	*SAN_INTERCEPTOR(memmove)(void *, const void *, size_t);
@@ -268,15 +262,15 @@ int	SAN_INTERCEPTOR(memcmp)(const void *, const void *, size_t);
 #define memmove(dest, src, n)	SAN_INTERCEPTOR(memmove)((dest), (src), (n))
 #define memcmp(b1, b2, len)	SAN_INTERCEPTOR(memcmp)((b1), (b2), (len))
 #endif /* !SAN_RUNTIME */
-#else
-#define bcopy(from, to, len) __builtin_memmove((to), (from), (len))
-#define bzero(buf, len) __builtin_memset((buf), 0, (len))
-#define bcmp(b1, b2, len) __builtin_memcmp((b1), (b2), (len))
-#define memset(buf, c, len) __builtin_memset((buf), (c), (len))
-#define memcpy(to, from, len) __builtin_memcpy((to), (from), (len))
-#define memmove(dest, src, n) __builtin_memmove((dest), (src), (n))
-#define memcmp(b1, b2, len) __builtin_memcmp((b1), (b2), (len))
-#endif /* !SAN_PREFIX */
+#else /* !SAN_NEEDS_INTERCEPTORS */
+#define bcopy(from, to, len)	__builtin_memmove((to), (from), (len))
+#define bzero(buf, len)		__builtin_memset((buf), 0, (len))
+#define bcmp(b1, b2, len)	__builtin_memcmp((b1), (b2), (len))
+#define memset(buf, c, len)	__builtin_memset((buf), (c), (len))
+#define memcpy(to, from, len)	__builtin_memcpy((to), (from), (len))
+#define memmove(dest, src, n)	__builtin_memmove((dest), (src), (n))
+#define memcmp(b1, b2, len)	__builtin_memcmp((b1), (b2), (len))
+#endif /* SAN_NEEDS_INTERCEPTORS */
 
 void	*memset_early(void * _Nonnull buf, int c, size_t len);
 #define bzero_early(buf, len) memset_early((buf), 0, (len))
@@ -307,7 +301,7 @@ int	copyout(const void * _Nonnull __restrict kaddr,
 int	copyout_nofault(const void * _Nonnull __restrict kaddr,
 	    void * __restrict udaddr, size_t len);
 
-#ifdef SAN_PREFIX
+#ifdef SAN_NEEDS_INTERCEPTORS
 int	SAN_INTERCEPTOR(copyin)(const void *, void *, size_t);
 int	SAN_INTERCEPTOR(copyinstr)(const void *, void *, size_t, size_t *);
 int	SAN_INTERCEPTOR(copyout)(const void *, void *, size_t);
@@ -316,7 +310,7 @@ int	SAN_INTERCEPTOR(copyout)(const void *, void *, size_t);
 #define	copyinstr(u, k, l, lc)	SAN_INTERCEPTOR(copyinstr)((u), (k), (l), (lc))
 #define	copyout(k, u, l)	SAN_INTERCEPTOR(copyout)((k), (u), (l))
 #endif /* !SAN_RUNTIME */
-#endif /* SAN_PREFIX */
+#endif /* SAN_NEEDS_INTERCEPTORS */
 
 int	fubyte(volatile const void *base);
 long	fuword(volatile const void *base);
@@ -337,8 +331,6 @@ int	casueword32(volatile uint32_t *base, uint32_t oldval, uint32_t *oldvalp,
 	    uint32_t newval);
 int	casueword(volatile u_long *p, u_long oldval, u_long *oldvalp,
 	    u_long newval);
-
-void	realitexpire(void *);
 
 int	sysbeep(int hertz, sbintime_t duration);
 
@@ -386,7 +378,7 @@ int	getenv_array(const char *name, void *data, int size, int *psize,
 #define	GETENV_SIGNED	true	/* negative numbers allowed */
 
 typedef uint64_t (cpu_tick_f)(void);
-void set_cputicker(cpu_tick_f *func, uint64_t freq, unsigned var);
+void set_cputicker(cpu_tick_f *func, uint64_t freq, bool isvariable);
 extern cpu_tick_f *cpu_ticks;
 uint64_t cpu_tickrate(void);
 uint64_t cputick2usec(uint64_t tick);
@@ -430,8 +422,11 @@ int	msleep_spin_sbt(const void * _Nonnull chan, struct mtx *mtx,
 	    0, C_HARDCLOCK)
 int	pause_sbt(const char *wmesg, sbintime_t sbt, sbintime_t pr,
 	    int flags);
-#define	pause(wmesg, timo)						\
-	pause_sbt((wmesg), tick_sbt * (timo), 0, C_HARDCLOCK)
+static __inline int
+pause(const char *wmesg, int timo)
+{
+	return (pause_sbt(wmesg, tick_sbt * timo, 0, C_HARDCLOCK));
+}
 #define	pause_sig(wmesg, timo)						\
 	pause_sbt((wmesg), tick_sbt * (timo), 0, C_HARDCLOCK | C_CATCH)
 #define	tsleep(chan, pri, wmesg, timo)					\
@@ -477,6 +472,7 @@ int root_mounted(void);
  * Unit number allocation API. (kern/subr_unit.c)
  */
 struct unrhdr;
+#define	UNR_NO_MTX	((void *)(uintptr_t)-1)
 struct unrhdr *new_unrhdr(int low, int high, struct mtx *mutex);
 void init_unrhdr(struct unrhdr *uh, int low, int high, struct mtx *mutex);
 void delete_unrhdr(struct unrhdr *uh);

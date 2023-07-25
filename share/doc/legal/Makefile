@@ -1,11 +1,12 @@
-# $FreeBSD: 7a20215305d27f200ddcf79a91d3639cb85aa682 $
+# $FreeBSD: 9710bfa488323f769abc274261694c247ff7db19 $
 
 SUBDIR=	intel_ipw \
 	intel_iwi \
 	intel_iwlwififw \
 	intel_iwn \
 	intel_wpi \
-	realtek
+	realtek \
+	realtek_rtw88
 
 SUBDIR_PARALLEL=
 

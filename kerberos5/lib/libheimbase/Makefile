@@ -1,6 +1,6 @@
-#$FreeBSD: d98d6ebbb4f426a7f5dda018b16b563128e48d42 $
+#$FreeBSD: b369b666f2ec79844d1b4423ab2af904d08c97f7 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	heimbase
 LDFLAGS=	-Wl,--no-undefined

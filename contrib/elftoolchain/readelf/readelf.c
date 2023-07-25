@@ -1195,8 +1195,10 @@ note_type_freebsd_core(unsigned int nt)
 	case 17: return "NT_PTLWPINFO";
 	case 0x100: return "NT_PPC_VMX (ppc Altivec registers)";
 	case 0x102: return "NT_PPC_VSX (ppc VSX registers)";
+	case 0x200: return "NT_X86_SEGBASES (x86 segment base registers)";
 	case 0x202: return "NT_X86_XSTATE (x86 XSAVE extended state)";
 	case 0x400: return "NT_ARM_VFP (arm VFP registers)";
+	case 0x401: return "NT_ARM_TLS (arm TLS register)";
 	case 0x406: return "NT_ARM_ADDR_MASK (arm address mask)";
 	default: return (note_type_unknown(nt));
 	}
@@ -3261,8 +3263,7 @@ dump_symtab(struct readelf *re, int i)
 		return;
 	if (!get_ent_count(s, &len))
 		return;
-	printf("Symbol table (%s)", s->name);
-	printf(" contains %d entries:\n", len);
+	printf("\nSymbol table '%s' contains %d entries:\n", s->name, len);
 	printf("%7s%9s%14s%5s%8s%6s%9s%5s\n", "Num:", "Value", "Size", "Type",
 	    "Bind", "Vis", "Ndx", "Name");
 

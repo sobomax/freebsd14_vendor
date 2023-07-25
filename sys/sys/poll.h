@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6805704ca39fd6e7dda13a9509d303e3dbee66f5 $
+ * $FreeBSD: 02347ed09a1338e28994fafdc60005295162ad5f $
  */
 
 #ifndef _SYS_POLL_H_
@@ -71,6 +71,7 @@ struct pollfd {
 #if __BSD_VISIBLE
 /* General FreeBSD extension (currently only supported for sockets): */
 #define	POLLINIGNEOF	0x2000		/* like POLLIN, except ignore EOF */
+#define	POLLRDHUP	0x4000		/* half shut down */
 #endif
 
 /*

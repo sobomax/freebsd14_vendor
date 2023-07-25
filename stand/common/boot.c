@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ce6fe8a67609b9c80db8e9088f903a09f5abc24 $");
+__FBSDID("$FreeBSD: 06f604f595df0879ab207a6f21341e92d82ebd55 $");
 
 /*
  * Loading modules, booting the system
@@ -310,7 +310,7 @@ getbootfile(int try)
 
 /*
  * Try to find the /etc/fstab file on the filesystem (rootdev),
- * which should be be the root filesystem, and parse it to find
+ * which should be the root filesystem, and parse it to find
  * out what the kernel ought to think the root filesystem is.
  *
  * If we're successful, set vfs.root.mountfrom to <vfstype>:<path>

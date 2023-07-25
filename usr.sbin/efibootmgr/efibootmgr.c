@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53bc417c4e070f6d95aefd200b33fb4a9b1f65fb $");
+__FBSDID("$FreeBSD: 58d83d28d6e5de27d042b8378ade8af2710e390d $");
 
 #include <sys/stat.h>
 #include <sys/vtoc.h>
@@ -70,6 +70,7 @@ __FBSDID("$FreeBSD: 53bc417c4e070f6d95aefd200b33fb4a9b1f65fb $");
 #define EFI_OS_INDICATIONS_BOOT_TO_FW_UI 0x0000000000000001
 
 typedef struct _bmgr_opts {
+	char	*dev;
 	char	*env;
 	char	*loader;
 	char	*label;
@@ -85,6 +86,7 @@ typedef struct _bmgr_opts {
 	bool    dry_run;
 	bool	device_path;
 	bool	esp_device;
+	bool	find_dev;
 	bool    fw_ui;
 	bool    no_fw_ui;
 	bool	has_bootnum;
@@ -114,6 +116,7 @@ static struct option lopts[] = {
 	{"dry-run", no_argument, NULL, 'D'},
 	{"env", required_argument, NULL, 'e'},
 	{"esp", no_argument, NULL, 'E'},
+	{"efidev", required_argument, NULL, 'u'},
 	{"fw-ui", no_argument, NULL, 'f'},
 	{"no-fw-ui", no_argument, NULL, 'F'},
 	{"help", no_argument, NULL, 'h'},
@@ -284,6 +287,9 @@ parse_args(int argc, char *argv[])
 			opts.set_timeout = true;
 			opts.timeout = strtoul(optarg, NULL, 10);
 			break;
+		case 'u':
+			opts.find_dev = true;
+			opts.dev = strdup(optarg);
 		case 'v':
 			opts.verbose = true;
 			break;
@@ -996,7 +1002,7 @@ report_esp_device(bool do_dp, bool do_unix)
 	char *name, *dev, *relpath, *abspath;
 	uint8_t *walker, *ep;
 	efi_char *descr;
-	efidp dp, edp;
+	efidp dp;
 	char buf[PATH_MAX];
 
 	if (do_dp && do_unix)
@@ -1026,7 +1032,6 @@ report_esp_device(bool do_dp, bool do_unix)
 	// Now we have fplen bytes worth of file path stuff
 	dp = (efidp)walker;
 	walker += fplen;
-	edp = (efidp)walker;
 	if (walker > ep)
 		errx(1, "malformed boot variable %s", name);
 	if (do_dp) {
@@ -1068,6 +1073,26 @@ set_boot_to_fw_ui(bool to_fw)
 		errx(1, "failed to set boot to fw ui");
 }
 
+static void
+find_efi_device(const char *path)
+{
+	efidp dp = NULL;
+	size_t len;
+	int ret;
+	char buf[1024];
+
+	ret = efivar_unix_path_to_device_path(path, &dp);
+	if (ret != 0)
+		errc(1, ret,
+		    "Cannot translate path '%s' to UEFI", path);
+	len = efidp_size(dp);
+	if (len > MAX_DP_LEN)
+		errx(1, "Resulting device path too long.");
+	efidp_format_device_path(buf, sizeof(buf), dp, len);
+	printf("%s -> %s\n", path, buf);
+	exit (0);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -1075,7 +1100,10 @@ main(int argc, char *argv[])
 	memset(&opts, 0, sizeof (bmgr_opts_t));
 	parse_args(argc, argv);
 
-	if (!efi_variables_supported())
+	/*
+	 * find_dev can operate without any efi variables
+	 */
+	if (!efi_variables_supported() && !opts.find_dev)
 		errx(1, "efi variables not supported on this system. root? kldload efirt?");
 
 	read_vars();
@@ -1107,6 +1135,8 @@ main(int argc, char *argv[])
 		set_boot_to_fw_ui(true);
 	else if (opts.no_fw_ui)
 		set_boot_to_fw_ui(false);
+	else if (opts.find_dev)
+		find_efi_device(opts.dev);
 
 	print_boot_vars(opts.verbose);
 }

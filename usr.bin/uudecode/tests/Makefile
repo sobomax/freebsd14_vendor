@@ -1,4 +1,4 @@
-# $FreeBSD: 6c23c8104413a2569dd326dc0161f123b8baa988 $
+# $FreeBSD: 204f25b18c9e64635c1907dcfe386a199dbce340 $
 
 PACKAGE=	tests
 
@@ -8,5 +8,6 @@ ${PACKAGE}FILES+=		regress.base64.in
 ${PACKAGE}FILES+=		regress.out
 ${PACKAGE}FILES+=		regress.sh
 ${PACKAGE}FILES+=		regress.traditional.in
+${PACKAGE}FILES+=		regress.153276.in regress.153276.out
 
 .include <bsd.test.mk>

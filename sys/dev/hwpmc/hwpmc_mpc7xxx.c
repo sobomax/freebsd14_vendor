@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 987480e89efd22d6c32a495f654c8cb8ce86248d $");
+__FBSDID("$FreeBSD: c62c0791af0149b65a91380efaa0d36371c4d817 $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -471,6 +471,7 @@ pmc_mpc7xxx_initialize(struct pmc_mdep *pmc_mdep)
 	ppc_event_first = PMC_EV_PPC7450_FIRST;
 	ppc_event_last = PMC_EV_PPC7450_LAST;
 	ppc_max_pmcs = MPC7XXX_MAX_PMCS;
+	ppc_class = pcd->pcd_class;
 
 	powerpc_set_pmc = mpc7xxx_set_pmc;
 	powerpc_pmcn_read = mpc7xxx_pmcn_read;

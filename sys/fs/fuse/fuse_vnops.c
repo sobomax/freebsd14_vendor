@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f95ee1b7f6b3a0f5733527dc895e8cefee5f87c8 $");
+__FBSDID("$FreeBSD: 7fd96ff639ff4482be35940dba4f18661fa1d973 $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -476,7 +476,9 @@ fuse_vnop_advlock(struct vop_advlock_args *ap)
 	struct fuse_dispatcher fdi;
 	struct fuse_lk_in *fli;
 	struct fuse_lk_out *flo;
+	struct vattr vattr;
 	enum fuse_opcode op;
+	off_t size, start;
 	int dataflags, err;
 	int flags = ap->a_flags;
 
@@ -511,6 +513,33 @@ fuse_vnop_advlock(struct vop_advlock_args *ap)
 
 	vn_lock(vp, LK_SHARED | LK_RETRY);
 
+	switch (fl->l_whence) {
+	case SEEK_SET:
+	case SEEK_CUR:
+		/*
+		 * Caller is responsible for adding any necessary offset
+		 * when SEEK_CUR is used.
+		 */
+		start = fl->l_start;
+		break;
+
+	case SEEK_END:
+		err = fuse_internal_getattr(vp, &vattr, cred, td);
+		if (err)
+			goto out;
+		size = vattr.va_size;
+		if (size > OFF_MAX ||
+		    (fl->l_start > 0 && size > OFF_MAX - fl->l_start)) {
+			err = EOVERFLOW;
+			goto out;
+		}
+		start = size + fl->l_start;
+		break;
+
+	default:
+		return (EINVAL);
+	}
+
 	err = fuse_filehandle_get_anyflags(vp, &fufh, cred, pid);
 	if (err)
 		goto out;
@@ -521,9 +550,9 @@ fuse_vnop_advlock(struct vop_advlock_args *ap)
 	fli = fdi.indata;
 	fli->fh = fufh->fh_id;
 	fli->owner = td->td_proc->p_pid;
-	fli->lk.start = fl->l_start;
+	fli->lk.start = start;
 	if (fl->l_len != 0)
-		fli->lk.end = fl->l_start + fl->l_len - 1;
+		fli->lk.end = start + fl->l_len - 1;
 	else
 		fli->lk.end = INT64_MAX;
 	fli->lk.type = fl->l_type;
@@ -535,8 +564,9 @@ fuse_vnop_advlock(struct vop_advlock_args *ap)
 	if (err == 0 && op == FUSE_GETLK) {
 		flo = fdi.answ;
 		fl->l_type = flo->lk.type;
-		fl->l_pid = flo->lk.pid;
+		fl->l_whence = SEEK_SET;
 		if (flo->lk.type != F_UNLCK) {
+			fl->l_pid = flo->lk.pid;
 			fl->l_start = flo->lk.start;
 			if (flo->lk.end == INT64_MAX)
 				fl->l_len = 0;
@@ -638,6 +668,7 @@ fuse_vnop_allocate(struct vop_allocate_args *ap)
 		}
 	}
 
+	fdisp_destroy(&fdi);
 	return (err);
 }
 
@@ -812,6 +843,7 @@ fuse_vnop_copy_file_range(struct vop_copy_file_range_args *ap)
 	struct thread *td;
 	struct uio io;
 	off_t outfilesize;
+	ssize_t r = 0;
 	pid_t pid;
 	int err;
 
@@ -859,11 +891,11 @@ fuse_vnop_copy_file_range(struct vop_copy_file_range_args *ap)
 	if (err)
 		goto unlock;
 
+	io.uio_resid = *ap->a_lenp;
 	if (ap->a_fsizetd) {
 		io.uio_offset = *ap->a_outoffp;
-		io.uio_resid = *ap->a_lenp;
-		err = vn_rlimit_fsize(outvp, &io, ap->a_fsizetd);
-		if (err)
+		err = vn_rlimit_fsizex(outvp, &io, 0, &r, ap->a_fsizetd);
+		if (err != 0)
 			goto unlock;
 	}
 
@@ -872,7 +904,7 @@ fuse_vnop_copy_file_range(struct vop_copy_file_range_args *ap)
 		goto unlock;
 
 	err = fuse_inval_buf_range(outvp, outfilesize, *ap->a_outoffp,
-		*ap->a_outoffp + *ap->a_lenp);
+		*ap->a_outoffp + io.uio_resid);
 	if (err)
 		goto unlock;
 
@@ -884,7 +916,7 @@ fuse_vnop_copy_file_range(struct vop_copy_file_range_args *ap)
 	fcfri->nodeid_out = VTOI(outvp);
 	fcfri->fh_out = outfufh->fh_id;
 	fcfri->off_out = *ap->a_outoffp;
-	fcfri->len = *ap->a_lenp;
+	fcfri->len = io.uio_resid;
 	fcfri->flags = 0;
 
 	err = fdisp_wait_answ(&fdi);
@@ -916,6 +948,10 @@ fallback:
 		    ap->a_incred, ap->a_outcred, ap->a_fsizetd);
 	}
 
+	/*
+	 * No need to call vn_rlimit_fsizex_res before return, since the uio is
+	 * local.
+	 */
 	return (err);
 }
 
@@ -1043,7 +1079,11 @@ fuse_vnop_create(struct vop_create_args *ap)
 	}
 
 	if (op == FUSE_CREATE) {
-		foo = (struct fuse_open_out*)(feo + 1);
+		if (fuse_libabi_geq(data, 7, 9))
+			foo = (struct fuse_open_out*)(feo + 1);
+		else
+			foo = (struct fuse_open_out*)((char*)feo +
+				FUSE_COMPAT_ENTRY_OUT_SIZE);
 	} else {
 		/* Issue a separate FUSE_OPEN */
 		struct fuse_open_in *foi;
@@ -1065,6 +1105,7 @@ fuse_vnop_create(struct vop_create_args *ap)
 		uint64_t nodeid = feo->nodeid;
 		uint64_t fh_id = foo->fh;
 
+		fdisp_destroy(fdip);
 		fdisp_init(fdip, sizeof(*fri));
 		fdisp_make(fdip, FUSE_RELEASE, mp, nodeid, td, cred);
 		fri = fdip->indata;
@@ -1324,6 +1365,16 @@ fuse_vnop_link(struct vop_link_args *ap)
 	}
 	feo = fdi.answ;
 
+	if (fli.oldnodeid != feo->nodeid) {
+		struct fuse_data *data = fuse_get_mpdata(vnode_mount(vp));
+		fuse_warn(data, FSESS_WARN_ILLEGAL_INODE,
+			"Assigned wrong inode for a hard link.");
+		fuse_vnode_clear_attr_cache(vp);
+		fuse_vnode_clear_attr_cache(tdvp);
+		err = EIO;
+		goto out;
+	}
+
 	err = fuse_internal_checkentry(feo, vnode_vtype(vp));
 	if (!err) {
 		/* 
@@ -1383,6 +1434,7 @@ fuse_vnop_lookup(struct vop_lookup_args *ap)
 	struct mount *mp = vnode_mount(dvp);
 	struct fuse_data *data = fuse_get_mpdata(mp);
 	int default_permissions = data->dataflags & FSESS_DEFAULT_PERMISSIONS;
+	bool is_dot;
 
 	int err = 0;
 	int lookup_err = 0;
@@ -1410,6 +1462,7 @@ fuse_vnop_lookup(struct vop_lookup_args *ap)
 	else if ((err = fuse_internal_access(dvp, VEXEC, td, cred)))
 		return err;
 
+	is_dot = cnp->cn_namelen == 1 && *(cnp->cn_nameptr) == '.';
 	if ((flags & ISDOTDOT) && !(data->dataflags & FSESS_EXPORT_SUPPORT))
 	{
 		if (!(VTOFUD(dvp)->flag & FN_PARENT_NID)) {
@@ -1424,13 +1477,13 @@ fuse_vnop_lookup(struct vop_lookup_args *ap)
 			return ENOENT;
 		/* .. is obviously a directory */
 		vtyp = VDIR;
-	} else if (cnp->cn_namelen == 1 && *(cnp->cn_nameptr) == '.') {
+	} else if (is_dot) {
 		nid = VTOI(dvp);
 		/* . is obviously a directory */
 		vtyp = VDIR;
 	} else {
 		struct timespec timeout;
-		int ncpticks; /* here to accomodate for API contract */
+		int ncpticks; /* here to accommodate for API contract */
 
 		err = cache_lookup(dvp, vpp, cnp, &timeout, &ncpticks);
 		getnanouptime(&now);
@@ -1543,8 +1596,17 @@ fuse_vnop_lookup(struct vop_lookup_args *ap)
 				&vp);
 			*vpp = vp;
 		} else if (nid == VTOI(dvp)) {
-			vref(dvp);
-			*vpp = dvp;
+			if (is_dot) {
+				vref(dvp);
+				*vpp = dvp;
+			} else {
+				fuse_warn(fuse_get_mpdata(mp),
+				    FSESS_WARN_ILLEGAL_INODE,
+				    "Assigned same inode to both parent and "
+				    "child.");
+				err = EIO;
+			}
+
 		} else {
 			struct fuse_vnode_data *fvdat;
 
@@ -1981,7 +2043,24 @@ fuse_vnop_reclaim(struct vop_reclaim_args *ap)
 		fuse_filehandle_close(vp, fufh, td, NULL);
 	}
 
-	if (!fuse_isdeadfs(vp) && fvdat->nlookup > 0) {
+	if (VTOI(vp) == 1) {
+		/*
+		 * Don't send FUSE_FORGET for the root inode, because
+		 * we never send FUSE_LOOKUP for it (see
+		 * fuse_vfsop_root) and we don't want the server to see
+		 * mismatched lookup counts.
+		 */
+		struct fuse_data *data;
+		struct vnode *vroot;
+
+		data = fuse_get_mpdata(vnode_mount(vp));
+		FUSE_LOCK();
+		vroot = data->vroot;
+		data->vroot = NULL;
+		FUSE_UNLOCK();
+		if (vroot)
+			vrele(vroot);
+	} else if (!fuse_isdeadfs(vp) && fvdat->nlookup > 0) {
 		fuse_internal_forget_send(vnode_mount(vp), td, NULL, VTOI(vp),
 		    fvdat->nlookup);
 	}
@@ -2221,6 +2300,9 @@ fuse_vnop_setattr(struct vop_setattr_args *ap)
 		case VREG:
 			if (vfs_isrdonly(mp))
 				return (EROFS);
+			err = vn_rlimit_trunc(vap->va_size, td);
+			if (err)
+				return (err);
 			break;
 		default:
 			/*

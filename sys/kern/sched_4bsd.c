@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7591bef4b14e25ba83848282234de5d7b96547a9 $");
+__FBSDID("$FreeBSD: 87d317d4f586673769671835e4d3dd21b96b740b $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: 7591bef4b14e25ba83848282234de5d7b96547a9 $");
 #include <sys/sysctl.h>
 #include <sys/sx.h>
 #include <sys/turnstile.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #include <machine/pcb.h>
 #include <machine/smp.h>
 
@@ -1248,9 +1248,10 @@ kick_other_cpu(int pri, int cpuid)
 	}
 #endif /* defined(IPI_PREEMPTION) && defined(PREEMPTION) */
 
-	pcpu->pc_curthread->td_flags |= TDF_NEEDRESCHED;
-	ipi_cpu(cpuid, IPI_AST);
-	return;
+	if (pcpu->pc_curthread->td_lock == &sched_lock) {
+		pcpu->pc_curthread->td_flags |= TDF_NEEDRESCHED;
+		ipi_cpu(cpuid, IPI_AST);
+	}
 }
 #endif /* SMP */
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c0bb9a9f50d6abcfd32fd41007f2185dfbf6446e $
+ * $FreeBSD: 70d56c246c10bb6b2f4d65468d0cbcbff6607e3a $
  */
 
 #include <sys/param.h>
@@ -77,16 +77,25 @@ linux_dmi_match(enum dmi_field f, const char *str)
 static bool
 linux_dmi_matches(const struct dmi_system_id *dsi)
 {
+	enum dmi_field slot;
 	int i;
 
 	for (i = 0; i < nitems(dsi->matches); i++) {
-		if (dsi->matches[i].slot == DMI_NONE)
+		slot = dsi->matches[i].slot;
+		if (slot == DMI_NONE)
 			break;
-		if (dmi_match(dsi->matches[i].slot,
-		    dsi->matches[i].substr) == false)
+		if (slot >= DMI_STRING_MAX ||
+		    dmi_data[slot] == NULL)
 			return (false);
+		if (dsi->matches[i].exact_match) {
+			if (dmi_match(slot, dsi->matches[i].substr))
+				continue;
+		} else if (strstr(dmi_data[slot],
+			dsi->matches[i].substr) != NULL) {
+			continue;
+		}
+		return (false);
 	}
-
 	return (true);
 }
 

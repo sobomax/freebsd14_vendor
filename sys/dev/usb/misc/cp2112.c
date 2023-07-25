@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c1fc14d56d077e47d6cc4fa0dac7dc66710b37f $");
+__FBSDID("$FreeBSD: 51b96e5446262d5e55c08aa7562f2ec0aaf9c643 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -752,11 +752,9 @@ static void
 cp2112iic_intr_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
 	struct cp2112iic_softc *sc;
-	struct cp2112_softc *psc;
 	struct usb_page_cache *pc;
 
 	sc = usbd_xfer_softc(xfer);
-	psc = device_get_softc(device_get_parent(sc->dev));
 
 	mtx_assert(&sc->io.lock, MA_OWNED);
 

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: 8b45a521c3ee48de78c95f9aa71248cd4eee3381 $
+ * $FreeBSD: 5985ec9e94eed0a2a6d665565ff11366adfa04f7 $
  */
 
 #ifndef _SYS_SIGNAL_H_
@@ -332,6 +332,7 @@ struct siginfo32 {
 #define FPE_FLTRES	6	/* Floating point inexact result.	*/
 #define FPE_FLTINV	7	/* Invalid floating point operation.	*/
 #define FPE_FLTSUB	8	/* Subscript out of range.		*/
+#define FPE_FLTIDO	9	/* Input denormal operation		*/
 
 /* codes for SIGTRAP */
 #define TRAP_BRKPT	1	/* Process breakpoint.			*/

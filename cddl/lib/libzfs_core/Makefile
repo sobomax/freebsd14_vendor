@@ -1,4 +1,4 @@
-# $FreeBSD: 6350990064f7fb57467788bddbbdfb2d80bfec50 $
+# $FreeBSD: 2f95a34b49f71af89189c0d1ed7da38014a1d6a0 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzfs_core
 .PATH: ${SRCTOP}/sys/contrib/openzfs/include
@@ -6,7 +6,7 @@
 
 LIB=	zfs_core
 LIBADD=	nvpair spl zutil
-PACKAGE=	runtime
+PACKAGE=	zfs
 
 INCS=	libzfs_core.h
 SRCS=	libzfs_core.c 

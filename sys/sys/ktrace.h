@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ktrace.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 739f5a5d7ea060d437d6e99b08bacf354fefa2b5 $
+ * $FreeBSD: b9d80f7f94d02f9af20553bb929543aac394963a $
  */
 
 #ifndef _SYS_KTRACE_H_
@@ -307,6 +307,8 @@ void	ktrcapfail(enum ktr_cap_fail_type, const cap_rights_t *,
 	ktrstruct("stat", (s), sizeof(struct stat))
 #define ktrstat_error(s, error) \
 	ktrstruct_error("stat", (s), sizeof(struct stat), error)
+#define ktrcpuset(s, l) \
+	ktrstruct("cpuset_t", (s), l)
 extern u_int ktr_geniosize;
 #ifdef	KTRACE
 extern int ktr_filesize_limit_signal;

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: 854c73f39ef7d184c393755d32ac6cd27d7693cf $
+ * $FreeBSD: a9d859dc60f5fb76219fe2d7471939211d29f917 $
  */
 
 #include <sys/types.h>
@@ -58,8 +58,8 @@ static const char *quickbasename(const char *);
 			 ((c) == '\n') || ((c) == '\r'))
 
 /*
- * Do not use ctype.h macros, which rely on working TLS.  It is
- * too early to have thread-local variables functional.
+ * Do not use ctype.h macros, which rely on working TLS.  Rtld does
+ * not support TLS for itself.
  */
 #define	rtld_isspace(c)	((c) == ' ' || (c) == '\t')
 
@@ -75,7 +75,7 @@ lm_init(const char *libmap_override)
 
 	if (libmap_override != NULL) {
 		/*
-		 * Do some character replacement to make $LDLIBMAP look
+		 * Do some character replacement to make $LD_LIBMAP look
 		 * like a text file, then parse it.
 		 */
 		l = xstrdup(libmap_override);

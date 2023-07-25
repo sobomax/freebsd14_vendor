@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 791fb7db3e265562143ba23b50add1784e88061c $
+ * $FreeBSD: 0f11b8d5fc5380d7bf8e3df0d3cea4ecad7be15b $
  */
 
 #ifndef _VRTC_H_
@@ -45,9 +45,9 @@ int vrtc_set_time(struct vm *vm, time_t secs);
 int vrtc_nvram_write(struct vm *vm, int offset, uint8_t value);
 int vrtc_nvram_read(struct vm *vm, int offset, uint8_t *retval);
 
-int vrtc_addr_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
+int vrtc_addr_handler(struct vm *vm, bool in, int port, int bytes,
     uint32_t *val);
-int vrtc_data_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
+int vrtc_data_handler(struct vm *vm, bool in, int port, int bytes,
     uint32_t *val);
 
 #ifdef BHYVE_SNAPSHOT

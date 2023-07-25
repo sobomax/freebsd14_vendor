@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba7cd170286b22933078f6657cb60a2a6ff324d3 $");
+__FBSDID("$FreeBSD: ec8b35e8afe8c514c0ddb34b51040699ac2b6362 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -472,7 +472,7 @@ skip_start:
 		} else if (mlen == -1)
 			/*
 			 * This mbuf has odd number of bytes.
-			 * There could be a word split betwen
+			 * There could be a word split between
 			 * this mbuf and the next mbuf.
 			 * Save the last byte (to prepend to next mbuf).
 			 */

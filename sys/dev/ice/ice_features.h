@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 51c60b0dfeeae3dca8584fb39c95333dcdfaacfe $*/
+/*$FreeBSD: efbeb12c3ab12ee91ad621615f8e7e97c7b0d119 $*/
 
 /**
  * @file ice_features.h
@@ -68,6 +68,8 @@ enum feat_list {
 	ICE_FEATURE_HEALTH_STATUS,
 	ICE_FEATURE_FW_LOGGING,
 	ICE_FEATURE_HAS_PBA,
+	ICE_FEATURE_DCB,
+	ICE_FEATURE_TX_BALANCE,
 	/* Must be last entry */
 	ICE_FEATURE_COUNT
 };

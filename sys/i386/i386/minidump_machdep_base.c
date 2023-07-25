@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce26e339d2bea9c0a39aa925cd1299a2ad9dc282 $");
+__FBSDID("$FreeBSD: 5072474b9f8a7840bf9b4677eb43c0818f5fa094 $");
 
 #include "opt_watchdog.h"
 
@@ -69,7 +69,7 @@ blk_flush(struct dumperinfo *di)
 	if (fragsz == 0)
 		return (0);
 
-	error = dump_append(di, dump_va, 0, fragsz);
+	error = dump_append(di, dump_va, fragsz);
 	fragsz = 0;
 	return (error);
 }
@@ -112,7 +112,7 @@ blk_write(struct dumperinfo *di, char *ptr, vm_paddr_t pa, size_t sz)
 		wdog_kern_pat(WD_LASTVAL);
 
 		if (ptr) {
-			error = dump_append(di, ptr, 0, len);
+			error = dump_append(di, ptr, len);
 			if (error)
 				return (error);
 			ptr += len;

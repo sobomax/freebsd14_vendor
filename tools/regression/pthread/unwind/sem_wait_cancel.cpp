@@ -1,4 +1,4 @@
-/* $FreeBSD: 019164cb316612fd03a669a6c3e98e7a4ca3b52e $ */
+/* $FreeBSD: 2086de6037cb955c287928f37c1ea4f052acf03f $ */
 /* Test stack unwinding for libc's sem */
 
 #include <pthread.h>
@@ -8,10 +8,10 @@
 
 #include "Test.cpp"
 
-sem_t sem;
+static sem_t sem;
 
-void *
-thr(void *arg)
+static void *
+thr(void *arg __unused)
 {
 	Test t;
 

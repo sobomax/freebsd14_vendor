@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 Andrew Turner
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: daecd1f04a33ee2120c44af48425a03d4a4c9c04 $");
+__FBSDID("$FreeBSD: 77c1e0cfb0e29ab43085b4348f9afa62cd170be9 $");
 #include "SYS.h"
 
 ENTRY(__sys_vfork)

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67f4f3ff08f1d6b2e6df85cb6d9e18e719f88463 $
+ * $FreeBSD: 9a2844a8db1edecf2ada3550e5e3112517180e32 $
  */
 
 #ifndef _USB_EMUL_H_
@@ -49,7 +49,7 @@ struct vm_snapshot_meta;
 
 /* Device emulation handlers */
 struct usb_devemu {
-	char	*ue_emu;	/* name of device emulation */
+	const char *ue_emu;	/* name of device emulation */
 	int	ue_usbver;	/* usb version: 2 or 3 */
 	int	ue_usbspeed;	/* usb device speed */
 

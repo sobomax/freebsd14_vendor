@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: bb4a7324c46191fb8544352195c4da58db4b950a $");
+__RCSID("$FreeBSD: 396d5706cd5fded30d0f83bbde40f07d098c999c $");
 
 #include <sys/stat.h>
 #include <sys/param.h>
@@ -113,4 +113,4 @@ slot_set(int argc, char **argv)
 }
 
 MPS_COMMAND(slot, set, slot_set, "status <enclosure handle> <slot number> "
-    "<status>", "Set status of the slot in the directly attached enclosure");
+    "<status>", "\n      Set status of the slot in the directly attached enclosure");

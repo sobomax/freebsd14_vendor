@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21e8e3ad44d0e71c1743baae629aa523b1f05006 $");
+__FBSDID("$FreeBSD: b4a0abd7a6f11319cb47bceb0a102f352499c668 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -196,7 +196,7 @@ krpc_call(struct sockaddr_in *sa, u_int prog, u_int vers, u_int func,
 	struct socket *so;
 	struct sockaddr_in *sin, ssin;
 	struct sockaddr *from;
-	struct mbuf *m, *nam, *mhead;
+	struct mbuf *m, *mhead;
 	struct krpc_call *call;
 	struct krpc_reply *reply;
 	struct sockopt sopt;
@@ -215,7 +215,7 @@ krpc_call(struct sockaddr_in *sa, u_int prog, u_int vers, u_int func,
 		return (EAFNOSUPPORT);
 
 	/* Free at end if not null. */
-	nam = mhead = NULL;
+	mhead = NULL;
 	from = NULL;
 
 	/*

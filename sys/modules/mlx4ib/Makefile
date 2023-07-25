@@ -1,4 +1,4 @@
-# $FreeBSD: dc819d7ef01d1b9b6e1d9a935b9d0f90c0cd50c0 $
+# $FreeBSD: 2b0158e025445dc383fdfa18c9fb9b5400a4d04c $
 .PATH:  ${SRCTOP}/sys/dev/mlx4/mlx4_ib
 
 KMOD=	mlx4ib
@@ -21,7 +21,7 @@ SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 CFLAGS+= -DCONFIG_INFINIBAND_USER_MEM
 CFLAGS+= -DINET6 -DINET
 

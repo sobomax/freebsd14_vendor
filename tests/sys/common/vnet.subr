@@ -1,4 +1,4 @@
-# $FreeBSD: 590e8dea992ece1541f5e4d151a32a7125506ad9 $
+# $FreeBSD: 9ba41ec3c365c71c83a9002f7fc92432adc8aaa1 $
 # VNAT/jail utility functions
 ##
 
@@ -51,6 +51,16 @@ vnet_mkjail()
 	jail -c name=${jailname} persist vnet ${vnet_interfaces}
 
 	echo $jailname >> created_jails.lst
+}
+
+vnet_ifrename_jail()
+{
+	jailname=$1
+	ifname=$2
+	ifnewname=$3
+
+	jexec ${jailname} ifconfig $ifname name $ifnewname
+	sed -i "" "/^${jailname}/s/${ifname}/${ifnewname}/" created_jails.lst
 }
 
 vnet_cleanup()

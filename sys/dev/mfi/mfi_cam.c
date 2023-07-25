@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2ea27527e1581e3af39de1faf055931a0a6a8373 $");
+__FBSDID("$FreeBSD: 32fe8b2fdc2585ae6f71612c0dff93c1c881e594 $");
 
 #include "opt_mfi.h"
 
@@ -298,9 +298,9 @@ mfip_cam_rescan(struct mfi_softc *sc, uint32_t tid)
 	struct cam_sim *sim;
 	device_t mfip_dev;
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	mfip_dev = device_find_child(sc->mfi_dev, "mfip", -1);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	if (mfip_dev == NULL) {
 		device_printf(sc->mfi_dev, "Couldn't find mfip child device!\n");
 		return;

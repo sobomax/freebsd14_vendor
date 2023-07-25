@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 577fdad8520751be2407310cd4eb390f34fd868e $
+# $FreeBSD: fd25b81b072bb6e9c2e75537ed4870cf38f2f913 $
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -151,7 +151,7 @@ METHOD void dumpconf {
 	const char *indent;
 };
 
-# dumpto() - return whether the partiton can be used for kernel dumps.
+# dumpto() - return whether the partition can be used for kernel dumps.
 METHOD int dumpto {
 	struct g_part_table *table;
 	struct g_part_entry *entry;

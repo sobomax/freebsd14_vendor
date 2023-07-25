@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.3 (Berkeley) 4/4/95
- * $FreeBSD: 8003ab65872e137fc0bef958b88dc69de5983827 $
+ * $FreeBSD: b6ac2c897fad10b94d47b45df5f10781a40739aa $
  */
 
 #ifndef _SYS_PARAM_H_
@@ -60,7 +60,7 @@
  *		in the range 5 to 9.
  */
 #undef __FreeBSD_version
-#define __FreeBSD_version 1301000	/* Master, propagated to newvers */
+#define __FreeBSD_version 1302001	/* Master, propagated to newvers */
 
 /*
  * __FreeBSD_kernel__ indicates that this system uses the kernel of FreeBSD,
@@ -343,12 +343,12 @@ __END_DECLS
  * Scale factor for scaled integers used to count %cpu time and load avgs.
  *
  * The number of CPU `tick's that map to a unique `%age' can be expressed
- * by the formula (1 / (2 ^ (FSHIFT - 11))).  The maximum load average that
- * can be calculated (assuming 32 bits) can be closely approximated using
- * the formula (2 ^ (2 * (16 - FSHIFT))) for (FSHIFT < 15).
+ * by the formula (1 / (2 ^ (FSHIFT - 11))).  Since the intermediate
+ * calculation is done with 64-bit precision, the maximum load average that can
+ * be calculated is approximately 2^32 / FSCALE.
  *
  * For the scheduler to maintain a 1:1 mapping of CPU `tick' to `%age',
- * FSHIFT must be at least 11; this gives us a maximum load avg of ~1024.
+ * FSHIFT must be at least 11.  This gives a maximum load avg of 2 million.
  */
 #define	FSHIFT	11		/* bits to right of fixed binary point */
 #define FSCALE	(1<<FSHIFT)

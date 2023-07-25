@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0e16fd5d9d1e4e313c2c0110a0ead22384f5415b $
+ * $FreeBSD: 9fc01de5978ce2698cbcfb177c9972a06b562e3d $
  */
 #ifndef _SYS_KTLS_H_
 #define	_SYS_KTLS_H_
@@ -50,6 +50,8 @@ struct tls_record_layer {
 #define	TLS_CBC_IMPLICIT_IV_LEN	16
 
 /* Type values for the record layer */
+#define	TLS_RLTYPE_ALERT	21
+#define	TLS_RLTYPE_HANDSHAKE	22
 #define	TLS_RLTYPE_APP		23
 
 /*

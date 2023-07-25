@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71fd63bb4c88f216e0baa8a1c87f23ed4a53a3a6 $");
+__FBSDID("$FreeBSD: 2d0a4a9b2274d55c50370aeeb06fd022ee3dbeec $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -274,7 +274,7 @@ multiboot_exec(struct preloaded_file *fp)
 
 	bzero(mb_mod, sizeof(struct multiboot_mod_list) * NUM_MODULES);
 
-	error = bi_load64(fp->f_args, 0, &modulep, &kernend, 0);
+	error = bi_load64(fp->f_args, &modulep, &kernend, 0);
 	if (error != 0) {
 		printf("bi_load64 failed: %d\n", error);
 		goto error;

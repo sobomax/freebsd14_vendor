@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af28704bc465834f17695fd10914432f67e7c453 $");
+__FBSDID("$FreeBSD: 30762563d135ddfd3f436b79985c834e4c85d500 $");
 
 #include "stand.h"
 
@@ -52,14 +52,14 @@ static off_t	splitfs_seek(struct open_file *f, off_t offset, int where);
 static int	splitfs_stat(struct open_file *f, struct stat *sb);
 
 struct fs_ops splitfs_fsops = {
-    "split",
-    splitfs_open, 
-    splitfs_close, 
-    splitfs_read,
-    null_write,
-    splitfs_seek,
-    splitfs_stat,
-    null_readdir
+	.fs_name = "split",
+	.fo_open = splitfs_open,
+	.fo_close = splitfs_close,
+	.fo_read = splitfs_read,
+	.fo_write = null_write,
+	.fo_seek = splitfs_seek,
+	.fo_stat = splitfs_stat,
+	.fo_readdir = null_readdir,
 };
 
 static void

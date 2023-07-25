@@ -33,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e7cd30140eb2063813e7f99c85548944e0fc387 $");
+__FBSDID("$FreeBSD: 9a65bdd9d5852ddff02b23b31bf52e16210d8780 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,6 +76,7 @@ __FBSDID("$FreeBSD: 3e7cd30140eb2063813e7f99c85548944e0fc387 $");
 #include "gic_v3_reg.h"
 #include "gic_v3_var.h"
 
+static bus_print_child_t gic_v3_print_child;
 static bus_get_domain_t gic_v3_get_domain;
 static bus_read_ivar_t gic_v3_read_ivar;
 
@@ -111,6 +112,7 @@ static device_method_t gic_v3_methods[] = {
 	DEVMETHOD(device_detach,	gic_v3_detach),
 
 	/* Bus interface */
+	DEVMETHOD(bus_print_child,	gic_v3_print_child),
 	DEVMETHOD(bus_get_domain,	gic_v3_get_domain),
 	DEVMETHOD(bus_read_ivar,	gic_v3_read_ivar),
 
@@ -399,6 +401,21 @@ gic_v3_detach(device_t dev)
 	free(sc->gic_redists.regions, M_GIC_V3);
 
 	return (0);
+}
+
+static int
+gic_v3_print_child(device_t bus, device_t child)
+{
+	struct resource_list *rl;
+	int retval = 0;
+
+	rl = BUS_GET_RESOURCE_LIST(bus, child);
+	KASSERT(rl != NULL, ("%s: No resource list", __func__));
+	retval += bus_print_child_header(bus, child);
+	retval += resource_list_print_type(rl, "mem", SYS_RES_MEMORY, "%#jx");
+	retval += bus_print_child_footer(bus, child);
+
+	return (retval);
 }
 
 static int

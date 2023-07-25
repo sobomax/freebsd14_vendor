@@ -1,4 +1,4 @@
-/*	$FreeBSD: 485050f003a11a56e7aa082030fbf55245ec8f15 $  */
+/*	$FreeBSD: c36f2e6a6b873fe8e7fc3b7502c91738929edfe8 $  */
 /*	from:	NetBSD: setjmp.S,v 1.1 1998/01/27 15:13:12 sakamoto Exp $  */
 /*	from:	OpenBSD: setjmp.S,v 1.2 1996/12/28 06:22:18 rahnds Exp 	*/
 /* kernel version of this file, does not have signal goop */
@@ -115,3 +115,5 @@ ASENTRY_NOPROF(_longjmp)
 	mr 3, 4
 	blr
 ASEND(_longjmp)
+
+	.section .note.GNU-stack,"",%progbits

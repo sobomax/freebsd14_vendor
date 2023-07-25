@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0cb65c768fd896195de2390b459179d3cbbab3e1 $
+ * $FreeBSD: d61fb359e261c27368f963c66f815facb987aa5f $
  */
 #ifndef _MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_
@@ -68,15 +68,7 @@
 #define	OFFSETOF_MONITORBUF	0x100
 #endif
 
-#ifndef SAN_RUNTIME
-#if defined(KASAN)
-#define	ATOMIC_SAN_PREFIX	kasan
-#elif defined(KCSAN)
-#define	ATOMIC_SAN_PREFIX	kcsan
-#endif
-#endif
-
-#ifdef ATOMIC_SAN_PREFIX
+#if defined(SAN_NEEDS_INTERCEPTORS) && !defined(SAN_RUNTIME)
 #include <sys/atomic_san.h>
 #else
 #include <sys/atomic_common.h>
@@ -644,6 +636,6 @@ u_long	atomic_swap_long(volatile u_long *p, u_long v);
 
 #endif /* !WANT_FUNCTIONS */
 
-#endif /* !ATOMIC_SAN_PREFIX */
+#endif /* !SAN_NEEDS_INTERCEPTORS || SAN_RUNTIME */
 
 #endif /* !_MACHINE_ATOMIC_H_ */

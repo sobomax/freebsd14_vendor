@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c9b192cc4c847e29bcbba1b2f175bc492da695d $");
+__FBSDID("$FreeBSD: 3d935791aea79330b5c0664626e80a4ad131d166 $");
 
 /* Routines for mapping device memory. */
 
@@ -84,7 +84,7 @@ devmap_dump_table(int (*prfunc)(const char *, ...))
  * Print the contents of the static mapping table.  Used for bootverbose.
  */
 void
-devmap_print_table()
+devmap_print_table(void)
 {
 	devmap_dump_table(printf);
 }
@@ -95,7 +95,7 @@ devmap_print_table()
  * the first unusable byte of KVA.
  */
 vm_offset_t
-devmap_lastaddr()
+devmap_lastaddr(void)
 {
 	const struct devmap_entry *pd;
 	vm_offset_t lowaddr;

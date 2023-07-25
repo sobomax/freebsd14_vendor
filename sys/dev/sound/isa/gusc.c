@@ -48,7 +48,7 @@
 #include <isa/isavar.h>
 #include <isa/isa_common.h>
 
-SND_DECLARE_FILE("$FreeBSD: 00f59b834f5197bf392de41651673b360fdb7b22 $");
+SND_DECLARE_FILE("$FreeBSD: 6fd49ca1ea7e3c2a111856c975ddb52ef7bca1b9 $");
 
 #define LOGICALID_NOPNP 0
 #define LOGICALID_PCM   0x0000561e
@@ -308,6 +308,7 @@ gusc_attach(device_t dev)
 	sc_p scp;
 	void *ih;
 
+	gone_in_dev(dev, 14, "ISA sound driver");
 	scp = device_get_softc(dev);
 
 	bzero(scp, sizeof(*scp));

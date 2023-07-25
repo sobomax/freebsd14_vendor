@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 219d192b7c9a260b5b00e0c632acfbd35b2909e3 $");
+__FBSDID("$FreeBSD: 6368d5cc79a9a8547ab04c2e93bb28d5d0ff71d0 $");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
@@ -48,6 +48,7 @@ __FBSDID("$FreeBSD: 219d192b7c9a260b5b00e0c632acfbd35b2909e3 $");
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <netdb.h>
 #include <pthread.h>
 #include <pthread_np.h>
 #include <stdbool.h>
@@ -59,6 +60,7 @@ __FBSDID("$FreeBSD: 219d192b7c9a260b5b00e0c632acfbd35b2909e3 $");
 #include <vmmapi.h>
 
 #include "bhyverun.h"
+#include "config.h"
 #include "gdb.h"
 #include "mem.h"
 #include "mevent.h"
@@ -133,7 +135,7 @@ static struct vcpu_state *vcpu_state;
 static int cur_vcpu, stopped_vcpu;
 static bool gdb_active = false;
 
-const int gdb_regset[] = {
+static const int gdb_regset[] = {
 	VM_REG_GUEST_RAX,
 	VM_REG_GUEST_RBX,
 	VM_REG_GUEST_RCX,
@@ -160,7 +162,7 @@ const int gdb_regset[] = {
 	VM_REG_GUEST_GS
 };
 
-const int gdb_regsize[] = {
+static const int gdb_regsize[] = {
 	8,
 	8,
 	8,
@@ -956,7 +958,6 @@ static void
 gdb_read_regs(void)
 {
 	uint64_t regvals[nitems(gdb_regset)];
-	int i;
 
 	if (vm_get_register_set(ctx, cur_vcpu, nitems(gdb_regset),
 	    gdb_regset, regvals) == -1) {
@@ -964,7 +965,7 @@ gdb_read_regs(void)
 		return;
 	}
 	start_packet();
-	for (i = 0; i < nitems(regvals); i++)
+	for (size_t i = 0; i < nitems(regvals); i++)
 		append_unsigned_native(regvals[i], gdb_regsize[i]);
 	finish_packet();
 }
@@ -1702,15 +1703,18 @@ check_command(int fd)
 }
 
 static void
-gdb_readable(int fd, enum ev_type event, void *arg)
+gdb_readable(int fd, enum ev_type event __unused, void *arg __unused)
 {
+	size_t pending;
 	ssize_t nread;
-	int pending;
+	int n;
 
-	if (ioctl(fd, FIONREAD, &pending) == -1) {
+	if (ioctl(fd, FIONREAD, &n) == -1) {
 		warn("FIONREAD on GDB socket");
 		return;
 	}
+	assert(n >= 0);
+	pending = n;
 
 	/*
 	 * 'pending' might be zero due to EOF.  We need to call read
@@ -1741,14 +1745,14 @@ gdb_readable(int fd, enum ev_type event, void *arg)
 }
 
 static void
-gdb_writable(int fd, enum ev_type event, void *arg)
+gdb_writable(int fd, enum ev_type event __unused, void *arg __unused)
 {
 
 	send_pending_data(fd);
 }
 
 static void
-new_connection(int fd, enum ev_type event, void *arg)
+new_connection(int fd, enum ev_type event __unused, void *arg)
 {
 	int optval, s;
 
@@ -1802,7 +1806,7 @@ new_connection(int fd, enum ev_type event, void *arg)
 }
 
 #ifndef WITHOUT_CAPSICUM
-void
+static void
 limit_gdb_socket(int s)
 {
 	cap_rights_t rights;
@@ -1818,12 +1822,31 @@ limit_gdb_socket(int s)
 #endif
 
 void
-init_gdb(struct vmctx *_ctx, int sport, bool wait)
+init_gdb(struct vmctx *_ctx)
 {
-	struct sockaddr_in sin;
 	int error, flags, optval, s;
+	struct addrinfo hints;
+	struct addrinfo *gdbaddr;
+	const char *saddr, *value;
+	char *sport;
+	bool wait;
 
-	debug("==> starting on %d, %swaiting\n", sport, wait ? "" : "not ");
+	value = get_config_value("gdb.port");
+	if (value == NULL)
+		return;
+	sport = strdup(value);
+	if (sport == NULL)
+		errx(4, "Failed to allocate memory");
+
+	wait = get_config_bool_default("gdb.wait", false);
+
+	saddr = get_config_value("gdb.address");
+	if (saddr == NULL) {
+		saddr = "localhost";
+	}
+
+	debug("==> starting on %s:%s, %swaiting\n",
+	    saddr, sport, wait ? "" : "not ");
 
 	error = pthread_mutex_init(&gdb_lock, NULL);
 	if (error != 0)
@@ -1832,20 +1855,24 @@ init_gdb(struct vmctx *_ctx, int sport, bool wait)
 	if (error != 0)
 		errc(1, error, "gdb cv init");
 
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_NUMERICSERV | AI_PASSIVE;
+
+	error = getaddrinfo(saddr, sport, &hints, &gdbaddr);
+	if (error != 0)
+		errx(1, "gdb address resolution: %s", gai_strerror(error));
+
 	ctx = _ctx;
-	s = socket(PF_INET, SOCK_STREAM, 0);
+	s = socket(gdbaddr->ai_family, gdbaddr->ai_socktype, 0);
 	if (s < 0)
 		err(1, "gdb socket create");
 
 	optval = 1;
 	(void)setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 
-	sin.sin_len = sizeof(sin);
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
-	sin.sin_port = htons(sport);
-
-	if (bind(s, (struct sockaddr *)&sin, sizeof(sin)) < 0)
+	if (bind(s, gdbaddr->ai_addr, gdbaddr->ai_addrlen) < 0)
 		err(1, "gdb socket bind");
 
 	if (listen(s, 1) < 0)
@@ -1874,4 +1901,6 @@ init_gdb(struct vmctx *_ctx, int sport, bool wait)
 #endif
 	mevent_add(s, EVF_READ, new_connection, NULL);
 	gdb_active = true;
+	freeaddrinfo(gdbaddr);
+	free(sport);
 }

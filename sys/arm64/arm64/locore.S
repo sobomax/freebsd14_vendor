@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 64067ac31c8fac68c601106dbc2fde697cb2b6aa $
+ * $FreeBSD: bcf60ea0540ee17ad327f74bb76318d46483a788 $
  */
 
 #include "assym.inc"
@@ -38,7 +38,6 @@
 #include <machine/vmparam.h>
 
 #define	VIRT_BITS	48
-#define	DMAP_TABLES	((DMAP_MAX_ADDRESS - DMAP_MIN_ADDRESS) >> L0_SHIFT)
 
 	.globl	kernbase
 	.set	kernbase, KERNBASE
@@ -238,6 +237,16 @@ LENTRY(drop_to_el1)
 	b.eq	1f
 	ret
 1:
+	/*
+	 * Disable the MMU. If the HCR_EL2.E2H field is set we will clear it
+	 * which may break address translation.
+	 */
+	dsb	sy
+	mrs	x2, sctlr_el2
+	bic	x2, x2, SCTLR_M
+	msr	sctlr_el2, x2
+	isb
+
 	/* Configure the Hypervisor */
 	mov	x2, #(HCR_RW)
 	msr	hcr_el2, x2
@@ -270,9 +279,12 @@ LENTRY(drop_to_el1)
 	msr	cntvoff_el2, xzr
 
 	/* Hypervisor trap functions */
-	adrp	x2, hyp_vectors
-	add	x2, x2, :lo12:hyp_vectors
+	adrp	x2, hyp_stub_vectors
+	add	x2, x2, :lo12:hyp_stub_vectors
 	msr	vbar_el2, x2
+
+	/* Zero vttbr_el2 so a hypervisor can tell the host and guest apart */
+	msr	vttbr_el2, xzr
 
 	mov	x2, #(PSR_F | PSR_I | PSR_A | PSR_D | PSR_M_EL1h)
 	msr	spsr_el2, x2
@@ -301,32 +313,6 @@ LENTRY(drop_to_el1)
 .Lsctlr_res1:
 	.quad SCTLR_RES1
 LEND(drop_to_el1)
-
-#define	VECT_EMPTY	\
-	.align 7;	\
-	1:	b	1b
-
-	.align 11
-hyp_vectors:
-	VECT_EMPTY	/* Synchronous EL2t */
-	VECT_EMPTY	/* IRQ EL2t */
-	VECT_EMPTY	/* FIQ EL2t */
-	VECT_EMPTY	/* Error EL2t */
-
-	VECT_EMPTY	/* Synchronous EL2h */
-	VECT_EMPTY	/* IRQ EL2h */
-	VECT_EMPTY	/* FIQ EL2h */
-	VECT_EMPTY	/* Error EL2h */
-
-	VECT_EMPTY	/* Synchronous 64-bit EL1 */
-	VECT_EMPTY	/* IRQ 64-bit EL1 */
-	VECT_EMPTY	/* FIQ 64-bit EL1 */
-	VECT_EMPTY	/* Error 64-bit EL1 */
-
-	VECT_EMPTY	/* Synchronous 32-bit EL1 */
-	VECT_EMPTY	/* IRQ 32-bit EL1 */
-	VECT_EMPTY	/* FIQ 32-bit EL1 */
-	VECT_EMPTY	/* Error 32-bit EL1 */
 
 /*
  * Get the delta between the physical address we were loaded to and the
@@ -368,7 +354,6 @@ LEND(get_virt_delta)
  *    - The Kernel L0 table             (TTBR1)
  *    - The identity (PA = VA) L1 table
  *    - The identity (PA = VA) L0 table (TTBR0)
- *    - The DMAP L1 tables
  */
 LENTRY(create_pagetables)
 	/* Save the Link register */
@@ -464,13 +449,6 @@ common:
 	mov	x9, x6
 	mov	x6, x24
 	mov	x10, #1
-	bl	link_l0_pagetable
-
-	/* Link the DMAP tables */
-	ldr	x8, =DMAP_MIN_ADDRESS
-	adrp	x9, pagetable_dmap
-	add	x9, x9, :lo12:pagetable_dmap
-	mov	x10, #DMAP_TABLES
 	bl	link_l0_pagetable
 
 	/*
@@ -748,12 +726,13 @@ LENTRY(start_mmu)
 
 	.align 3
 mair:
-	.quad	MAIR_ATTR(MAIR_DEVICE_nGnRnE, VM_MEMATTR_DEVICE)    |	\
+	.quad	MAIR_ATTR(MAIR_DEVICE_nGnRnE, VM_MEMATTR_DEVICE_nGnRnE) | \
 		MAIR_ATTR(MAIR_NORMAL_NC, VM_MEMATTR_UNCACHEABLE)   |	\
 		MAIR_ATTR(MAIR_NORMAL_WB, VM_MEMATTR_WRITE_BACK)    |	\
-		MAIR_ATTR(MAIR_NORMAL_WT, VM_MEMATTR_WRITE_THROUGH)
+		MAIR_ATTR(MAIR_NORMAL_WT, VM_MEMATTR_WRITE_THROUGH) |	\
+		MAIR_ATTR(MAIR_DEVICE_nGnRE, VM_MEMATTR_DEVICE_nGnRE)
 tcr:
-	.quad (TCR_TxSZ(64 - VIRT_BITS) | TCR_TG1_4K | \
+	.quad (TCR_TxSZ(64 - VIRT_BITS) | TCR_TG1_4K | TCR_TG0_4K | \
 	    TCR_CACHE_ATTRS | TCR_SMP_ATTRS)
 sctlr_set:
 	/* Bits to set */
@@ -782,6 +761,7 @@ END(abort)
 	 *           L0 bootstrap for user
 	 *           L0 for user
 	 */
+	.globl pagetable_l0_ttbr1
 pagetable:
 	.space	PAGE_SIZE
 pagetable_l1_ttbr1:
@@ -795,9 +775,6 @@ pagetable_l0_ttbr0_boostrap:
 pagetable_l0_ttbr0:
 	.space	PAGE_SIZE
 
-	.globl pagetable_dmap
-pagetable_dmap:
-	.space	PAGE_SIZE * DMAP_TABLES
 pagetable_end:
 
 el2_pagetable:

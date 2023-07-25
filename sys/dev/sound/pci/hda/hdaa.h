@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4fdc3fcead26883fe94f7b2dde7470afdb8f87b3 $
+ * $FreeBSD: 15a3db5edd042c37f222ca1d1c963ee9933187b9 $
  */
 
 /*
@@ -252,10 +252,10 @@ struct hdaa_chan {
 #define RANGEQDB(ctl)							\
 	((ctl)->step * ((ctl)->size + 1))
 
-#define VAL2QDB(ctl, val) 						\
+#define VAL2QDB(ctl, val)						\
 	(((ctl)->size + 1) * ((int)(val) - (ctl)->offset))
 
-#define QDB2VAL(ctl, qdb) 						\
+#define QDB2VAL(ctl, qdb)						\
 	imax(imin((((qdb) + (ctl)->size / 2 * ((qdb) > 0 ? 1 : -1)) /	\
 	 ((ctl)->size + 1) + (ctl)->offset), (ctl)->step), 0)
 

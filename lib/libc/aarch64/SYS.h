@@ -1,7 +1,6 @@
 /*-
  * Copyright (c) 2014 Andrew Turner
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -27,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2cefc8c123d6ef10f3e6edb3ce953031c913d1c3 $
+ * $FreeBSD: 84b41028f2af7a8e91ee5cfe725e8f6216460ecb $
  */
 
 #include <sys/syscall.h>

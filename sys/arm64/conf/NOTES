@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: 8036784370c5072111268fdba28fd20135ce52a4 $
+# $FreeBSD: 0d275c0fdd2c6a6f9d2efa6786d80fc753fc8ec3 $
 #
 
 #
@@ -34,10 +34,10 @@ options 	INTRNG
 # SoC support
 options 	SOC_ALLWINNER_A64
 options 	SOC_ALLWINNER_H5
-options 	SOC_CAVM_THUNDERX
-options 	SOC_HISI_HI6220
 options 	SOC_BRCM_BCM2837
 options 	SOC_BRCM_BCM2838
+options 	SOC_CAVM_THUNDERX
+options 	SOC_HISI_HI6220
 options 	SOC_MARVELL_8K
 options 	SOC_ROCKCHIP_RK3328
 options 	SOC_ROCKCHIP_RK3399

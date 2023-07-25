@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1c2b6627ae29839fecea2e3dd645f5c3b9e5ae5 $");
+__FBSDID("$FreeBSD: 081ea37bb8ef30e0801f66af4915460091e873e8 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -151,6 +151,11 @@ goldfish_rtc_settime(device_t dev, struct timespec *ts)
 
 	sc = device_get_softc(dev);
 
+	/*
+	 * We request a timespec with no resolution-adjustment.  That also
+	 * disables utc adjustment, so apply that ourselves.
+	 */
+	ts->tv_sec -= utc_offset();
 	nsec = (uint64_t)ts->tv_sec * 1000000000 + ts->tv_nsec;
 
 	mtx_lock(&sc->mtx);

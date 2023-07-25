@@ -28,15 +28,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ed0ea72ab81976c61efb79013fffd35c34507bc3 $
+ * $FreeBSD: d61a1eb5aa096e931a6d999bbfa4ba2feeb9033d $
  */
 
 #ifndef _TWSI_H_
 #define	_TWSI_H_
 
-#ifdef EXT_RESOURCES
 #include <dev/extres/clk/clk.h>
-#endif
 
 struct twsi_baud_rate {
 	uint32_t	raw;
@@ -50,10 +48,8 @@ struct twsi_softc {
 	struct resource	*res[2];
 	struct mtx	mutex;
 	device_t	iicbus;
-#ifdef EXT_RESOURCES
 	clk_t		clk_core;
 	clk_t		clk_reg;
-#endif
 	void *			intrhand;
 	bool			have_intr;
 

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: server.c,v 1.9 2006/09/07 21:06:53 max Exp $
- * $FreeBSD: 33915307db0eadb16e629844958e4737bb394a1e $
+ * $FreeBSD: 59b4bafc6a06ea24d910dec8893d6d6c357bed94 $
  */
 
 #include <sys/queue.h>
@@ -114,7 +114,7 @@ server_init(bthid_server_p srv)
 		return (-1);
 	}
 
-	/* Create intrrupt socket */
+	/* Create interrupt socket */
 	srv->intr = socket(PF_BLUETOOTH, SOCK_SEQPACKET, BLUETOOTH_PROTO_L2CAP);
 	if (srv->intr < 0) {
 		syslog(LOG_ERR, "Could not create interrupt L2CAP socket. " \

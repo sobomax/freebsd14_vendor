@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5345be261d161ef6248e0f73f0a1d967d8e8dd1c $");
+__FBSDID("$FreeBSD: c471fddf61f294210235c7eb3e480f19440bf591 $");
 
 #include "tpm20.h"
 
@@ -114,7 +114,7 @@ tpmcrb_acpi_probe(device_t dev)
 	status = AcpiGetTable(ACPI_SIG_TPM2, 1, (ACPI_TABLE_HEADER **) &tbl);
 	if(ACPI_FAILURE(status) ||
 	   tbl->StartMethod != TPM2_START_METHOD_CRB)
-		err = ENXIO;
+		return (ENXIO);
 
 	device_set_desc(dev, "Trusted Platform Module 2.0, CRB mode");
 	return (err);

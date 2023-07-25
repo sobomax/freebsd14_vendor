@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 797f25747479dd1be07d7a5d7061322de2207d75 $");
+__FBSDID("$FreeBSD: f0dfee710c3a9a86d17310c9058343a8f8143f0d $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -83,6 +83,7 @@ __FBSDID("$FreeBSD: 797f25747479dd1be07d7a5d7061322de2207d75 $");
 #include <sys/mutex.h>
 #include <sys/ptrace.h>
 #include <sys/reboot.h>
+#include <sys/reg.h>
 #include <sys/rwlock.h>
 #include <sys/signalvar.h>
 #include <sys/syscallsubr.h>
@@ -119,7 +120,6 @@ __FBSDID("$FreeBSD: 797f25747479dd1be07d7a5d7061322de2207d75 $");
 #include <machine/metadata.h>
 #include <machine/mmuvar.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/sigframe.h>
 #include <machine/spr.h>
 #include <machine/trap.h>

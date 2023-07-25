@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: ae68faa002ff5596b9f7aa8e519f3118a073e71d $
+# $FreeBSD: a5a565483fe8e32733268e80fac81e96b5312deb $
 #
 # This file contains all the x86 devices and such that are
 # common between i386 and amd64, but aren't applicable to
@@ -176,7 +176,6 @@ dev/ipmi/ipmi_smbus.c		optional	ipmi smbus
 dev/ipmi/ipmi_smbios.c		optional	ipmi
 dev/ipmi/ipmi_ssif.c		optional	ipmi smbus
 dev/ipmi/ipmi_pci.c		optional	ipmi pci
-dev/ipmi/ipmi_linux.c		optional	ipmi compat_linux32
 dev/isci/isci.c							optional isci
 dev/isci/isci_controller.c					optional isci
 dev/isci/isci_domain.c						optional isci

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: afe817710f30dc631e775c1d7b9bb62df7999265 $");
+__FBSDID("$FreeBSD: 2ec26f5c4cae3d6909ae6a9a79361335f9ea2c96 $");
 
 #include <sys/types.h>
 
@@ -44,8 +44,9 @@ __FBSDID("$FreeBSD: afe817710f30dc631e775c1d7b9bb62df7999265 $");
 #include <pthread_np.h>
 
 #include "atkbdc.h"
-#include "debug.h"
 #include "console.h"
+#include "debug.h"
+#include "ps2mouse.h"
 
 /* mouse device commands */
 #define	PS2MC_RESET_DEV		0xff

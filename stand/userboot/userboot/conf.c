@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af63528163d5a0b93f196a5b8eec0e84b11c53ea $");
+__FBSDID("$FreeBSD: 066c2aa8749246eeef9f078c1e7f8fac093d0666 $");
 
 #include <stand.h>
 
@@ -41,6 +41,8 @@ __FBSDID("$FreeBSD: af63528163d5a0b93f196a5b8eec0e84b11c53ea $");
 #if defined(USERBOOT_ZFS_SUPPORT)
 #include "libzfs.h"
 #endif
+
+extern struct devsw vdisk_dev;
 
 /*
  * We could use linker sets for some or all of these, but
@@ -51,10 +53,11 @@ __FBSDID("$FreeBSD: af63528163d5a0b93f196a5b8eec0e84b11c53ea $");
  * XXX rename these arrays to be consistent and less namespace-hostile
  */
 
-/* Exported for libstand */
+/* Exported for libsa */
 struct devsw *devsw[] = {
 	&host_dev,
 	&userboot_disk,
+	&vdisk_dev,
 #if defined(USERBOOT_ZFS_SUPPORT)
 	&zfs_dev,
 #endif

@@ -25,22 +25,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 1dba8101ab35fabeb0d9772e0a707bda9b6d6021 $
+ * $FreeBSD: 7b3cab6e31a3434f74a159f89564ef36cd5de513 $
  */
 
 #ifndef _SVM_MSR_H_
 #define	_SVM_MSR_H_
 
 struct svm_softc;
+struct svm_vcpu;
 
 void svm_msr_init(void);
-void svm_msr_guest_init(struct svm_softc *sc, int vcpu);
-void svm_msr_guest_enter(struct svm_softc *sc, int vcpu);
-void svm_msr_guest_exit(struct svm_softc *sc, int vcpu);
+void svm_msr_guest_init(struct svm_softc *sc, struct svm_vcpu *vcpu);
+void svm_msr_guest_enter(struct svm_vcpu *vcpu);
+void svm_msr_guest_exit(struct svm_vcpu *vcpu);
 
-int svm_wrmsr(struct svm_softc *sc, int vcpu, u_int num, uint64_t val,
-    bool *retu);
-int svm_rdmsr(struct svm_softc *sc, int vcpu, u_int num, uint64_t *result,
-    bool *retu);
+int svm_wrmsr(struct svm_vcpu *vcpu, u_int num, uint64_t val, bool *retu);
+int svm_rdmsr(struct svm_vcpu *vcpu, u_int num, uint64_t *result, bool *retu);
 
 #endif	/* _SVM_MSR_H_ */

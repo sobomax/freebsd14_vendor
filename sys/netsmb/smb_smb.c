@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efd1fa18ac713e9ab72f0702b9921f0e21d0c397 $");
+__FBSDID("$FreeBSD: 29bb888fbd24d91ca25c9da7961704e4086b7743 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -602,7 +602,6 @@ int
 smb_smb_treedisconnect(struct smb_share *ssp, struct smb_cred *scred)
 {
 	struct smb_rq *rqp;
-	struct mbchain *mbp;
 	int error;
 
 	if (ssp->ss_tid == SMB_TID_UNKNOWN)
@@ -610,7 +609,6 @@ smb_smb_treedisconnect(struct smb_share *ssp, struct smb_cred *scred)
 	error = smb_rq_alloc(SSTOCP(ssp), SMB_COM_TREE_DISCONNECT, scred, &rqp);
 	if (error)
 		return error;
-	mbp = &rqp->sr_rq;
 	smb_rq_wstart(rqp);
 	smb_rq_wend(rqp);
 	smb_rq_bstart(rqp);

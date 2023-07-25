@@ -1,7 +1,7 @@
-# $FreeBSD: ba8a39a87e1f5bda7f613f9deb7a1ba1c79abb70 $
+# $FreeBSD: 351ec432095d646cb93620c79355de16d4f59d5d $
 #	@(#)Makefile	8.2 (Berkeley) 4/27/95
 
-PACKAGE=runtime
+PACKAGE=ufs
 PROG=	fsck_ffs
 LINKS+=	${BINDIR}/fsck_ffs ${BINDIR}/fsck_ufs
 LINKS+=	${BINDIR}/fsck_ffs ${BINDIR}/fsck_4.2bsd

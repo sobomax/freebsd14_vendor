@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a5bbc5997d3006956f952378a8ea877a3b9fe77f $
+ * $FreeBSD: 0e88c671181753a61c40e48b908c5860c4a04860 $
  */
 
 #ifndef _THR_PRIVATE_H
@@ -1102,6 +1102,8 @@ int _thr_mutex_destroy(pthread_mutex_t *);
 int _thr_mutex_unlock(pthread_mutex_t *);
 int __Tthr_mutex_lock(pthread_mutex_t *);
 int __Tthr_mutex_trylock(pthread_mutex_t *);
+bool __thr_get_main_stack_base(char **base);
+bool __thr_get_main_stack_lim(size_t *lim);
 
 __END_DECLS
 __NULLABILITY_PRAGMA_POP

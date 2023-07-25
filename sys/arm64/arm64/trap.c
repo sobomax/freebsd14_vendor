@@ -28,7 +28,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 849f26ee822081ef2ef56422a548967c6e14c74c $");
+__FBSDID("$FreeBSD: 7d36a9c9dee11d81a8c6269f5afcdeaa112561de $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,7 +76,7 @@ __FBSDID("$FreeBSD: 849f26ee822081ef2ef56422a548967c6e14c74c $");
 
 /* Called from exception.S */
 void do_el1h_sync(struct thread *, struct trapframe *);
-void do_el0_sync(struct thread *, struct trapframe *);
+void do_el0_sync(struct thread *, struct trapframe *, uint64_t far);
 void do_el0_error(struct trapframe *);
 void do_serror(struct trapframe *);
 void unhandled_exception(struct trapframe *);
@@ -409,6 +409,29 @@ print_registers(struct trapframe *frame)
 	printf("spsr:         %8x\n", frame->tf_spsr);
 }
 
+#ifdef VFP
+static void
+fpe_trap(struct thread *td, void *addr, uint32_t exception)
+{
+	int code;
+
+	code = FPE_FLTIDO;
+	if ((exception & ISS_FP_TFV) != 0) {
+		if ((exception & ISS_FP_IOF) != 0)
+			code = FPE_FLTINV;
+		else if ((exception & ISS_FP_DZF) != 0)
+			code = FPE_FLTDIV;
+		else if ((exception & ISS_FP_OFF) != 0)
+			code = FPE_FLTOVF;
+		else if ((exception & ISS_FP_UFF) != 0)
+			code = FPE_FLTUND;
+		else if ((exception & ISS_FP_IXF) != 0)
+			code = FPE_FLTRES;
+	}
+	call_trapsignal(td, SIGFPE, code, addr, exception);
+}
+#endif
+
 void
 do_el1h_sync(struct thread *td, struct trapframe *frame)
 {
@@ -492,6 +515,8 @@ do_el1h_sync(struct thread *td, struct trapframe *frame)
 	case EXCP_UNKNOWN:
 		if (undef_insn(1, frame))
 			break;
+		printf("Undefined instruction: %08x\n",
+		    *(uint32_t *)frame->tf_elr);
 		/* FALLTHROUGH */
 	default:
 		print_registers(frame);
@@ -502,11 +527,11 @@ do_el1h_sync(struct thread *td, struct trapframe *frame)
 }
 
 void
-do_el0_sync(struct thread *td, struct trapframe *frame)
+do_el0_sync(struct thread *td, struct trapframe *frame, uint64_t far)
 {
 	pcpu_bp_harden bp_harden;
 	uint32_t exception;
-	uint64_t esr, far;
+	uint64_t esr;
 	int dfsc;
 
 	/* Check we have a sane environment when entering from userland */
@@ -516,27 +541,15 @@ do_el0_sync(struct thread *td, struct trapframe *frame)
 
 	esr = frame->tf_esr;
 	exception = ESR_ELx_EXCEPTION(esr);
-	switch (exception) {
-	case EXCP_INSN_ABORT_L:
-		far = READ_SPECIALREG(far_el1);
-
+	if (exception == EXCP_INSN_ABORT_L && far > VM_MAXUSER_ADDRESS) {
 		/*
 		 * Userspace may be trying to train the branch predictor to
 		 * attack the kernel. If we are on a CPU affected by this
 		 * call the handler to clear the branch predictor state.
 		 */
-		if (far > VM_MAXUSER_ADDRESS) {
-			bp_harden = PCPU_GET(bp_harden);
-			if (bp_harden != NULL)
-				bp_harden();
-		}
-		break;
-	case EXCP_UNKNOWN:
-	case EXCP_DATA_ABORT_L:
-	case EXCP_DATA_ABORT:
-	case EXCP_WATCHPT_EL0:
-		far = READ_SPECIALREG(far_el1);
-		break;
+		bp_harden = PCPU_GET(bp_harden);
+		if (bp_harden != NULL)
+			bp_harden();
 	}
 	intr_enable();
 
@@ -546,12 +559,24 @@ do_el0_sync(struct thread *td, struct trapframe *frame)
 
 	switch (exception) {
 	case EXCP_FP_SIMD:
-	case EXCP_TRAP_FP:
 #ifdef VFP
 		vfp_restore_state();
 #else
 		panic("VFP exception in userland");
 #endif
+		break;
+	case EXCP_TRAP_FP:
+#ifdef VFP
+		fpe_trap(td, (void *)frame->tf_elr, esr);
+		userret(td, frame);
+#else
+		panic("VFP exception in userland");
+#endif
+		break;
+	case EXCP_SVE:
+		call_trapsignal(td, SIGILL, ILL_ILLTRP, (void *)frame->tf_elr,
+		    exception);
+		userret(td, frame);
 		break;
 	case EXCP_SVC32:
 	case EXCP_SVC64:
@@ -591,6 +616,9 @@ do_el0_sync(struct thread *td, struct trapframe *frame)
 		break;
 	case EXCP_BRKPT_EL0:
 	case EXCP_BRK:
+#ifdef COMPAT_FREEBSD32
+	case EXCP_BRKPT_32:
+#endif /* COMPAT_FREEBSD32 */
 		call_trapsignal(td, SIGTRAP, TRAP_BRKPT, (void *)frame->tf_elr,
 		    exception);
 		userret(td, frame);

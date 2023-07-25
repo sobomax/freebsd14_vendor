@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 7d308a2ba8a5958329c67fe2bce375246113954a $");
+__FBSDID("$FreeBSD: 3d3ba41f523ec7de6f828a718f2b93a50a798cfd $");
 
 /*
  * This file contains the "essential" portions of the write API, that
@@ -201,6 +201,10 @@ __archive_write_allocate_filter(struct archive *_a)
 	struct archive_write_filter *f;
 
 	f = calloc(1, sizeof(*f));
+
+	if (f == NULL)
+		return (NULL);
+
 	f->archive = _a;
 	f->state = ARCHIVE_WRITE_FILTER_STATE_NEW;
 	if (a->filter_first == NULL)
@@ -548,6 +552,10 @@ archive_write_open2(struct archive *_a, void *client_data,
 	a->client_data = client_data;
 
 	client_filter = __archive_write_allocate_filter(_a);
+
+	if (client_filter == NULL)
+		return (ARCHIVE_FATAL);
+
 	client_filter->open = archive_write_client_open;
 	client_filter->write = archive_write_client_write;
 	client_filter->close = archive_write_client_close;

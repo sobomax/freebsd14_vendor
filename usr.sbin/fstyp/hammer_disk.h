@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  * $DragonFly: src/sys/vfs/hammer/hammer_disk.h,v 1.55 2008/11/13 02:18:43 dillon Exp $
- * $FreeBSD: ddedd72ff003c6feb9a1a55a6753709a66b59ab2 $
+ * $FreeBSD: 205c9fb64fd48489ba7b92fbddc12ddded39603f $
  */
 
 #ifndef VFS_HAMMER_DISK_H_
@@ -765,7 +765,7 @@ typedef struct hammer_volume_ondisk {
 
 	/*
 	 * These fields are initialized and space is reserved in every
-	 * volume making up a HAMMER filesytem, but only the root volume
+	 * volume making up a HAMMER filesystem, but only the root volume
 	 * contains valid data.  Note that vol0_stat_bigblocks does not
 	 * include big-blocks for freemap and undomap initially allocated
 	 * by newfs_hammer(8).

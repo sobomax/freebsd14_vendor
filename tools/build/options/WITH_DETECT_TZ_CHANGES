@@ -1,0 +1,2 @@
+.\" $FreeBSD: 6a2d18473892dd78d3e2e66c21b2fec463456bb6 $
+Make the time handling code detect changes to the timezone files.

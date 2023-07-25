@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_ulpi.c,v 1.7 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: 4c275f4250644177b5c3ec2a8682926207746583 $
+ * $FreeBSD: a2804c44406b9d4bb69e8c10218a7a8c316b6877 $
  */
 
 #include <sys/param.h>
@@ -1012,9 +1012,9 @@ ng_hci_lp_con_rsp(ng_hci_unit_p unit, item_p item, hook_p hook)
 				sizeof(req->cp.acc.bdaddr));
 
 			/*
-			 * We are accepting connection, so if we support role 
-			 * switch and role switch was enabled then set role to 
-			 * NG_HCI_ROLE_MASTER and let LM peform role switch.
+			 * We are accepting connection, so if we support role
+			 * switch and role switch was enabled then set role to
+			 * NG_HCI_ROLE_MASTER and let LM perform role switch.
 			 * Otherwise we remain slave. In this case LM WILL NOT
 			 * perform role switch.
 			 */
@@ -1025,8 +1025,8 @@ ng_hci_lp_con_rsp(ng_hci_unit_p unit, item_p item, hook_p hook)
 			else
 				req->cp.acc.role = NG_HCI_ROLE_SLAVE;
 
-			/* 
-			 * Adjust connection state 
+			/*
+			 * Adjust connection state
 			 */
 
 			if (hook == unit->acl)

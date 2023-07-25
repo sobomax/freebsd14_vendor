@@ -1,4 +1,4 @@
-# $FreeBSD: 73ebdef29180316526eb075d0c7f518315af850a $
+# $FreeBSD: 4bb9654b3c2f57dfff2c534585b23d3804005720 $
 
 .include <src.opts.mk>
 
@@ -44,6 +44,7 @@ MAN=	accept_filter.9 \
 	bus_generic_read_ivar.9 \
 	bus_generic_shutdown.9 \
 	BUS_GET_CPUS.9 \
+	BUS_GET_PROPERTY.9 \
 	bus_get_resource.9 \
 	bus_map_resource.9 \
 	BUS_NEW_PASS.9 \
@@ -106,6 +107,7 @@ MAN=	accept_filter.9 \
 	device_get_ivars.9 \
 	device_get_name.9 \
 	device_get_parent.9 \
+	device_get_property.9 \
 	device_get_softc.9 \
 	device_get_state.9 \
 	device_get_sysctl.9 \
@@ -185,8 +187,8 @@ MAN=	accept_filter.9 \
 	ifnet.9 \
 	inittodr.9 \
 	insmntque.9 \
+	intr_event.9 \
 	intro.9 \
-	ithread.9 \
 	kasan.9 \
 	KASSERT.9 \
 	kern_reboot.9 \
@@ -234,6 +236,7 @@ MAN=	accept_filter.9 \
 	OF_package_to_path.9 \
 	ofw_bus_is_compatible.9 \
 	ofw_bus_status_okay.9 \
+	ofw_graph.9 \
 	osd.9 \
 	owll.9 \
 	own.9 \
@@ -700,6 +703,14 @@ MLINKS+=bus_space.9 bus_space_alloc.9 \
 	bus_space.9 bus_space_copy_region_stream_8.9 \
 	bus_space.9 bus_space_free.9 \
 	bus_space.9 bus_space_map.9 \
+	bus_space.9 bus_space_peek_1.9 \
+	bus_space.9 bus_space_peek_2.9 \
+	bus_space.9 bus_space_peek_4.9 \
+	bus_space.9 bus_space_peek_8.9 \
+	bus_space.9 bus_space_poke_1.9 \
+	bus_space.9 bus_space_poke_2.9 \
+	bus_space.9 bus_space_poke_4.9 \
+	bus_space.9 bus_space_poke_8.9 \
 	bus_space.9 bus_space_read_1.9 \
 	bus_space.9 bus_space_read_2.9 \
 	bus_space.9 bus_space_read_4.9 \
@@ -949,7 +960,8 @@ MLINKS+=crypto_driver.9 crypto_copyback.9 \
 	crypto_driver.9 CRYPTODEV_PROCESS.9 \
 	crypto_driver.9 hmac_init_ipad.9 \
 	crypto_driver.9 hmac_init_opad.9
-MLINKS+=crypto_request.9 crypto_destroyreq.9 \
+MLINKS+=crypto_request.9 crypto_clonereq.9 \
+	crypto_request.9 crypto_destroyreq.9 \
 	crypto_request.9 crypto_dispatch.9 \
 	crypto_request.9 crypto_freereq.9 \
 	crypto_request.9 crypto_getreq.9 \
@@ -965,8 +977,15 @@ MLINKS+=crypto_session.9 crypto_auth_hash.9 \
 	crypto_session.9 crypto_get_params.9 \
 	crypto_session.9 crypto_newsession.9 \
 	crypto_session.9 crypto_freesession.9
-MLINKS+=DB_COMMAND.9 DB_SHOW_ALL_COMMAND.9 \
-	DB_COMMAND.9 DB_SHOW_COMMAND.9
+MLINKS+=DB_COMMAND.9 DB_ALIAS.9 \
+	DB_COMMAND.9 DB_ALIAS_FLAGS.9 \
+	DB_COMMAND.9 DB_COMMAND_FLAGS.9 \
+	DB_COMMAND.9 DB_SHOW_ALIAS.9 \
+	DB_COMMAND.9 DB_SHOW_ALIAS_FLAGS.9 \
+	DB_COMMAND.9 DB_SHOW_ALL_ALIAS.9 \
+	DB_COMMAND.9 DB_SHOW_ALL_COMMAND.9 \
+	DB_COMMAND.9 DB_SHOW_COMMAND.9 \
+	DB_COMMAND.9 DB_SHOW_COMMAND_FLAGS.9
 MLINKS+=DECLARE_MODULE.9 DECLARE_MODULE_TIED.9
 MLINKS+=dev_clone.9 drain_dev_clone_events.9
 MLINKS+=dev_refthread.9 devvn_refthread.9 \
@@ -1021,6 +1040,15 @@ MLINKS+=domain.9 DOMAIN_SET.9 \
 	domain.9 pffinddomain.9 \
 	domain.9 pffindproto.9 \
 	domain.9 pffindtype.9
+MLINKS+=dpcpu.9 DPCPU_DECLARE.9 \
+	dpcpu.9 DPCPU_DEFINE.9 \
+	dpcpu.9 DPCPU_DEFINE_STATIC.9 \
+	dpcpu.9 DPCPU_GET.9 \
+	dpcpu.9 DPCPU_ID_PTR.9 \
+	dpcpu.9 DPCPU_ID_GET.9 \
+	dpcpu.9 DPCPU_ID_SET.9 \
+	dpcpu.9 DPCPU_PTR.9 \
+	dpcpu.9 DPCPU_SET.9
 MLINKS+=drbr.9 drbr_free.9 \
 	drbr.9 drbr_enqueue.9 \
 	drbr.9 drbr_dequeue.9 \
@@ -1304,12 +1332,12 @@ MLINKS+=ifnet.9 if_addmulti.9 \
 	ifnet.9 ifunit.9 \
 	ifnet.9 ifunit_ref.9
 MLINKS+=insmntque.9 insmntque1.9
-MLINKS+=ithread.9 ithread_add_handler.9 \
-	ithread.9 ithread_create.9 \
-	ithread.9 ithread_destroy.9 \
-	ithread.9 ithread_priority.9 \
-	ithread.9 ithread_remove_handler.9 \
-	ithread.9 ithread_schedule.9
+MLINKS+=intr_event.9 intr_event_add_handler.9 \
+	intr_event.9 intr_event_create.9 \
+	intr_event.9 intr_event_destroy.9 \
+	intr_event.9 intr_event_handle.9 \
+	intr_event.9 intr_event_remove_handler.9 \
+	intr_event.9 intr_priority.9
 MLINKS+=kernacc.9 useracc.9
 MLINKS+=kernel_mount.9 free_mntarg.9 \
 	kernel_mount.9 kernel_vmount.9 \
@@ -1398,13 +1426,19 @@ MLINKS+=make_dev.9 destroy_dev.9 \
 	make_dev.9 make_dev_p.9 \
 	make_dev.9 make_dev_s.9
 MLINKS+=malloc.9 free.9 \
+	malloc.9 malloc_aligned.9 \
 	malloc.9 malloc_domainset.9 \
+	malloc.9 malloc_domainset_aligned.9 \
+	malloc.9 malloc_domainset_exec.9 \
+	malloc.9 malloc_exec.9 \
+	malloc.9 malloc_usable_size.9 \
 	malloc.9 mallocarray.9 \
 	malloc.9 mallocarray_domainset.9 \
 	malloc.9 MALLOC_DECLARE.9 \
 	malloc.9 MALLOC_DEFINE.9 \
 	malloc.9 realloc.9 \
-	malloc.9 reallocf.9
+	malloc.9 reallocf.9 \
+	malloc.9 zfree.9
 MLINKS+=mbchain.9 mb_detach.9 \
 	mbchain.9 mb_done.9 \
 	mbchain.9 mb_fixhdr.9 \
@@ -1678,6 +1712,12 @@ MLINKS+=ofw_bus_is_compatible.9 ofw_bus_is_compatible_strict.9 \
 	ofw_bus_is_compatible.9 ofw_bus_search_compatible.9
 MLINKS+= ofw_bus_status_okay.9 ofw_bus_get_status.9 \
 	ofw_bus_status_okay.9 ofw_bus_node_status_okay.9
+MLINKS+=ofw_graph.9 ofw_graph_get_device_by_port_ep.9 \
+	ofw_graph.9 ofw_graph_get_endpoint_by_idx.9 \
+	ofw_graph.9 ofw_graph_get_port_by_idx.9 \
+	ofw_graph.9 ofw_graph_get_remove_endpoint.9 \
+	ofw_graph.9 ofw_graph_get_remove_parent.9 \
+	ofw_graph.9 ofw_graph_port_get_num_endpoints.9
 MLINKS+=osd.9 osd_call.9 \
 	osd.9 osd_del.9 \
 	osd.9 osd_deregister.9 \

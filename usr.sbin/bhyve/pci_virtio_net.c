@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d253b081d13a04a7625881f128e0a2e0aa7d1ca8 $
+ * $FreeBSD: 92ea78826391ce79d56a1cb5a84c179d6d977cb6 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d253b081d13a04a7625881f128e0a2e0aa7d1ca8 $");
+__FBSDID("$FreeBSD: 92ea78826391ce79d56a1cb5a84c179d6d977cb6 $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -117,7 +117,7 @@ struct pci_vtnet_softc {
 	int		resetting;	/* protected by tx_mtx */
 
 	uint64_t	vsc_features;	/* negotiated features */
-	
+
 	pthread_mutex_t	rx_mtx;
 	int		rx_merge;	/* merged rx bufs in use */
 
@@ -145,19 +145,18 @@ static int pci_vtnet_snapshot(void *, struct vm_snapshot_meta *);
 #endif
 
 static struct virtio_consts vtnet_vi_consts = {
-	"vtnet",		/* our name */
-	VTNET_MAXQ - 1,		/* we currently support 2 virtqueues */
-	sizeof(struct virtio_net_config), /* config reg size */
-	pci_vtnet_reset,	/* reset */
-	NULL,			/* device-wide qnotify -- not used */
-	pci_vtnet_cfgread,	/* read PCI config */
-	pci_vtnet_cfgwrite,	/* write PCI config */
-	pci_vtnet_neg_features,	/* apply negotiated features */
-	VTNET_S_HOSTCAPS,	/* our capabilities */
+	.vc_name =	"vtnet",
+	.vc_nvq =	VTNET_MAXQ - 1,
+	.vc_cfgsize =	sizeof(struct virtio_net_config),
+	.vc_reset =	pci_vtnet_reset,
+	.vc_cfgread =	pci_vtnet_cfgread,
+	.vc_cfgwrite =	pci_vtnet_cfgwrite,
+	.vc_apply_features = pci_vtnet_neg_features,
+	.vc_hv_caps =	VTNET_S_HOSTCAPS,
 #ifdef BHYVE_SNAPSHOT
-	pci_vtnet_pause,	/* pause rx/tx threads */
-	pci_vtnet_resume,	/* resume rx/tx threads */
-	pci_vtnet_snapshot,	/* save / restore device state */
+	.vc_pause =	pci_vtnet_pause,
+	.vc_resume =	pci_vtnet_resume,
+	.vc_snapshot =	pci_vtnet_snapshot,
 #endif
 };
 
@@ -400,7 +399,7 @@ pci_vtnet_rx(struct pci_vtnet_softc *sc)
  * an entire ethernet frame + rx header.
  */
 static void
-pci_vtnet_rx_callback(int fd, enum ev_type type, void *param)
+pci_vtnet_rx_callback(int fd __unused, enum ev_type type __unused, void *param)
 {
 	struct pci_vtnet_softc *sc = param;
 
@@ -561,7 +560,7 @@ pci_vtnet_ping_ctlq(void *vsc, struct vqueue_info *vq)
 #endif
 
 static int
-pci_vtnet_init(struct vmctx *ctx, struct pci_devinst *pi, nvlist_t *nvl)
+pci_vtnet_init(struct pci_devinst *pi, nvlist_t *nvl)
 {
 	struct pci_vtnet_softc *sc;
 	const char *value;
@@ -628,9 +627,9 @@ pci_vtnet_init(struct vmctx *ctx, struct pci_devinst *pi, nvlist_t *nvl)
 	sc->vsc_consts.vc_hv_caps |= VIRTIO_NET_F_MRG_RXBUF |
 	    netbe_get_cap(sc->vsc_be);
 
-	/* 
+	/*
 	 * Since we do not actually support multiqueue,
-	 * set the maximum virtqueue pairs to 1. 
+	 * set the maximum virtqueue pairs to 1.
 	 */
 	sc->vsc_config.max_virtqueue_pairs = 1;
 
@@ -643,7 +642,7 @@ pci_vtnet_init(struct vmctx *ctx, struct pci_devinst *pi, nvlist_t *nvl)
 
 	/* Link is always up. */
 	sc->vsc_config.status = 1;
-	
+
 	vi_softc_linkup(&sc->vsc_vs, &sc->vsc_consts, sc, pi, sc->vsc_queues);
 	sc->vsc_vs.vs_mtx = &sc->vsc_mtx;
 
@@ -660,12 +659,12 @@ pci_vtnet_init(struct vmctx *ctx, struct pci_devinst *pi, nvlist_t *nvl)
 
 	sc->rx_merge = 0;
 	sc->vhdrlen = sizeof(struct virtio_net_rxhdr) - 2;
-	pthread_mutex_init(&sc->rx_mtx, NULL); 
+	pthread_mutex_init(&sc->rx_mtx, NULL);
 
-	/* 
+	/*
 	 * Initialize tx semaphore & spawn TX processing thread.
 	 * As of now, only one thread for TX desc processing is
-	 * spawned. 
+	 * spawned.
 	 */
 	sc->tx_in_progress = 0;
 	pthread_mutex_init(&sc->tx_mtx, NULL);
@@ -786,9 +785,11 @@ pci_vtnet_snapshot(void *vsc, struct vm_snapshot_meta *meta)
 	 */
 
 	SNAPSHOT_VAR_OR_LEAVE(sc->vsc_features, meta, ret, done);
+	SNAPSHOT_VAR_OR_LEAVE(sc->features_negotiated, meta, ret, done);
 
 	/* Force reapply negociated features at restore time */
-	if (meta->op == VM_SNAPSHOT_RESTORE) {
+	if (meta->op == VM_SNAPSHOT_RESTORE &&
+	    sc->features_negotiated) {
 		pci_vtnet_neg_features(sc, sc->vsc_features);
 		netbe_rx_enable(sc->vsc_be);
 	}
@@ -804,7 +805,7 @@ done:
 }
 #endif
 
-static struct pci_devemu pci_de_vnet = {
+static const struct pci_devemu pci_de_vnet = {
 	.pe_emu = 	"virtio-net",
 	.pe_init =	pci_vtnet_init,
 	.pe_legacy_config = netbe_legacy_config,

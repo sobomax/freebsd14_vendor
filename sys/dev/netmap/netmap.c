@@ -31,7 +31,7 @@
 
 
 /*
- * $FreeBSD: 5baadc3e80149c0792f3c4d3797814baf640f300 $
+ * $FreeBSD: 8c4481c2e6c3ccd241c5be5fc914daf304356c71 $
  *
  * This module supports memory mapped access to network devices,
  * see netmap(4).
@@ -193,7 +193,7 @@ ports attached to the switch)
  * 	      always attached to a bridge.
  * 	      Persistent VALE ports must must be created separately, and i
  * 	      then attached like normal NICs. The NIOCREGIF we are examining
- * 	      will find them only if they had previosly been created and
+ * 	      will find them only if they had previously been created and
  * 	      attached (see VALE_CTL below).
  *
  * 	- netmap_pipe_adapter 	      [netmap_pipe.c]
@@ -763,6 +763,10 @@ netmap_update_config(struct netmap_adapter *na)
 {
 	struct nm_config_info info;
 
+	if (na->ifp && !nm_is_bwrap(na)) {
+		strlcpy(na->name, na->ifp->if_xname, sizeof(na->name));
+	}
+
 	bzero(&info, sizeof(info));
 	if (na->nm_config == NULL ||
 	    na->nm_config(na, &info)) {
@@ -973,7 +977,7 @@ static void
 netmap_mem_drop(struct netmap_adapter *na)
 {
 	int last = netmap_mem_deref(na->nm_mem, na);
-	/* if the native allocator had been overrided on regif,
+	/* if the native allocator had been overridden on regif,
 	 * restore it now and drop the temporary one
 	 */
 	if (last && na->nm_mem_prev) {
@@ -1053,7 +1057,7 @@ netmap_do_unregif(struct netmap_priv_d *priv)
 		}
 	}
 
-	/* possibily decrement counter of tx_si/rx_si users */
+	/* possibly decrement counter of tx_si/rx_si users */
 	netmap_unset_ringid(priv);
 	/* delete the nifp */
 	netmap_mem_if_delete(na, priv->np_nifp);
@@ -1135,7 +1139,7 @@ netmap_dtor(void *data)
  *   they will be forwarded to the hw TX rings, saving the application
  *   from doing the same task in user-space.
  *
- * Transparent fowarding can be enabled per-ring, by setting the NR_FORWARD
+ * Transparent forwarding can be enabled per-ring, by setting the NR_FORWARD
  * flag, or globally with the netmap_fwd sysctl.
  *
  * The transfer NIC --> host is relatively easy, just encapsulate
@@ -1599,7 +1603,7 @@ netmap_get_na(struct nmreq_header *hdr,
 	netmap_adapter_get(ret);
 
 	/*
-	 * if the adapter supports the host rings and it is not alread open,
+	 * if the adapter supports the host rings and it is not already open,
 	 * try to set the number of host rings as requested by the user
 	 */
 	if (((*na)->na_flags & NAF_HOST_RINGS) && (*na)->active_fds == 0) {
@@ -1667,8 +1671,8 @@ netmap_unget_na(struct netmap_adapter *na, struct ifnet *ifp)
 u_int
 nm_txsync_prologue(struct netmap_kring *kring, struct netmap_ring *ring)
 {
-	u_int head = ring->head; /* read only once */
-	u_int cur = ring->cur; /* read only once */
+	u_int head = NM_ACCESS_ONCE(ring->head);
+	u_int cur = NM_ACCESS_ONCE(ring->cur);
 	u_int n = kring->nkr_num_slots;
 
 	nm_prdis(5, "%s kcur %d ktail %d head %d cur %d tail %d",
@@ -1745,8 +1749,8 @@ nm_rxsync_prologue(struct netmap_kring *kring, struct netmap_ring *ring)
 	 * - cur could in principle go back, however it does not matter
 	 *   because we are processing a brand new rxsync()
 	 */
-	cur = kring->rcur = ring->cur;	/* read only once */
-	head = kring->rhead = ring->head;	/* read only once */
+	cur = kring->rcur = NM_ACCESS_ONCE(ring->cur);
+	head = kring->rhead = NM_ACCESS_ONCE(ring->head);
 #if 1 /* kernel sanity checks */
 	NM_FAIL_ON(kring->nr_hwcur >= n || kring->nr_hwtail >= n);
 #endif /* kernel sanity checks */
@@ -2023,7 +2027,7 @@ netmap_krings_get(struct netmap_priv_d *priv)
 			priv->np_qlast[NR_RX]);
 
 	/* first round: check that all the requested rings
-	 * are neither alread exclusively owned, nor we
+	 * are neither already exclusively owned, nor we
 	 * want exclusive ownership when they are already in use
 	 */
 	foreach_selected_ring(priv, t, i, kring) {
@@ -2498,7 +2502,7 @@ netmap_ioctl(struct netmap_priv_d *priv, u_long cmd, caddr_t data,
 		}
 
 		/* Make a kernel-space copy of the user-space nr_body.
-		 * For convenince, the nr_body pointer and the pointers
+		 * For convenience, the nr_body pointer and the pointers
 		 * in the options list will be replaced with their
 		 * kernel-space counterparts. The original pointers are
 		 * saved internally and later restored by nmreq_copyout
@@ -3088,7 +3092,7 @@ nmreq_opt_size_by_type(uint32_t nro_reqtype, uint64_t nro_size)
  * The list of options is copied and the pointers adjusted. The
  * original pointers are saved before the option they belonged.
  *
- * The option table has an entry for every availabe option.  Entries
+ * The option table has an entry for every available option.  Entries
  * for options that have not been passed contain NULL.
  *
  */

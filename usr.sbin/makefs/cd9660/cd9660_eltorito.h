@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: cbc3f8419e3167483dbea2a1f69ecd5a97d50dba $
+ * $FreeBSD: 423fff93ea2167fd2dd2e43b73b4c1bb948b91f0 $
  */
 
 #ifndef _CD9660_ELTORITO_H_
@@ -131,7 +131,7 @@ struct boot_catalog_entry {
 	char entry_type;
 	union {
 		boot_catalog_validation_entry		VE;
-		boot_catalog_initial_entry 		IE;
+		boot_catalog_initial_entry		IE;
 		boot_catalog_section_header		SH;
 		boot_catalog_section_entry		SE;
 		boot_catalog_section_entry_extension	EX;
@@ -144,7 +144,7 @@ struct boot_catalog_entry {
 struct cd9660_boot_image {
 	char *filename;
 	int size;
-	int sector; 			/* copied to LoadRBA */
+	int sector;			/* copied to LoadRBA */
 	int num_sectors;
 	unsigned int loadSegment;
 	u_char targetMode;

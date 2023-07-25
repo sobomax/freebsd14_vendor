@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)uname.1	8.3 (Berkeley) 4/8/94
-.\" $FreeBSD: a29e7ec2d8af61bc70a83b48e9a2c275dc7a9e1a $
+.\" $FreeBSD: ff1b3ec5f3f28b3cdea9d2b0e940e559fb78fffd $
 .\"
-.Dd November 13, 2020
+.Dd September 14, 2022
 .Dt UNAME 1
 .Os
 .Sh NAME
@@ -82,8 +82,10 @@ uses it to set the
 variable.
 .Pc
 .It Fl r
-Write the current release level of the operating system
+Write the current release level of the kernel
 to standard output.
+.Xr freebsd-version 1
+can be used to print the release level of the userland.
 .It Fl s
 Write the name of the operating system implementation to standard output.
 .It Fl U
@@ -138,6 +140,7 @@ and
 would return
 .Va powerpc64 .
 .Sh SEE ALSO
+.Xr freebsd-version 1 ,
 .Xr feature_present 3 ,
 .Xr getosreldate 3 ,
 .Xr sysctl 3 ,

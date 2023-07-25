@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: caf8a13856fcacfd2421869017c14cdd82b82be3 $");
+__FBSDID("$FreeBSD: bf60f3a8973c7dfc484b70eb374b6cd883526fcf $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -55,8 +55,7 @@ __FBSDID("$FreeBSD: caf8a13856fcacfd2421869017c14cdd82b82be3 $");
 #include <dev/altera/sdcard/altera_sdcard.h>
 
 static int
-altera_sdcard_disk_dump(void *arg, void *virtual, vm_offset_t physical,
-    off_t offset, size_t length)
+altera_sdcard_disk_dump(void *arg, void *virtual, off_t offset, size_t length)
 {
 
 	panic("%s: not yet", __func__);

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dfd9506e5e26d279937bd27cf996aea182c8b172 $
+ * $FreeBSD: 0de8504ce3c474679f4cfc9bd571e18724621b9d $
  */
 
 #include <stdio.h>
@@ -534,7 +534,7 @@ g_gatec_rescue(void)
 }
 
 static void
-init_initial_buffer_size()
+init_initial_buffer_size(void)
 {
 	int value;
 	size_t intsize;

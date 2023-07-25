@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: acfc601b93afa9b649fb8716122eb60cab0fdd8f $
+# $FreeBSD: e0223123aae2f16ac7ebd7fcea7df0ac5f06d2f6 $
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,
@@ -673,8 +673,9 @@ install_resolved()
 		return 1
 	fi
 
-	log "cp -Rp ${CONFLICTS}$1 ${DESTDIR}$1"
-	cp -Rp ${CONFLICTS}$1 ${DESTDIR}$1 >&3 2>&1
+	# Use cat rather than cp to preserve metadata
+	log "cat ${CONFLICTS}$1 > ${DESTDIR}$1"
+	cat ${CONFLICTS}$1 > ${DESTDIR}$1 2>&3
 	post_install_file $1
 	return 0
 }
@@ -1610,6 +1611,18 @@ EOF
 	if [ -s $WARNINGS ]; then
 		echo "Warnings:"
 		cat $WARNINGS
+	fi
+
+	# If this was a dryrun, remove the temporary tree if we built
+	# a new one.
+	if [ -n "$dryrun" ]; then
+		if [ -n "$dir" ]; then
+			if [ -n "$rerun" ]; then
+				panic "Should not have a temporary directory"
+			fi
+			remove_tree $dir
+		fi
+		return
 	fi
 
 	# Finally, rotate any needed trees.

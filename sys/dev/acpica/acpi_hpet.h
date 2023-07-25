@@ -23,13 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c3941c39a89ad6a2d3a74f0fb9736fc8e8564e38 $
+ * $FreeBSD: 1d6a6022230e1a404e64981cba3d071319f3be93 $
  */
 
 #ifndef __ACPI_HPET_H__
 #define	__ACPI_HPET_H__
 
 #define HPET_MEM_WIDTH		0x400	/* Expected memory region size */
+#define HPET_MEM_MIN_WIDTH	0x100	/* Minimum memory region size */
 
 /* General registers */
 #define HPET_CAPABILITIES	0x0	/* General capabilities and ID */

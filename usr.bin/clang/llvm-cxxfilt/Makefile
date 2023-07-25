@@ -1,4 +1,4 @@
-# $FreeBSD: a61e32db9aa70689b55bf2aff875b6bac46f9d04 $
+# $FreeBSD: 073316b7b4a7fb5d5e5f2519521098f04e5a61f4 $
 
 .include <src.opts.mk>
 
@@ -18,6 +18,8 @@ ${INCFILE}: ${TDFILE}
 	${LLVM_TBLGEN} ${GENOPT} -I ${LLVM_SRCS}/include -d ${.TARGET:C/$/.d/} \
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
+
+${TGHDRS}: ${LLVM_TBLGEN_BIN}
 
 DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}

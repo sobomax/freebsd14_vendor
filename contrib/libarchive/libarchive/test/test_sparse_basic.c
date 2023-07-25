@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 133a853985474fa9340fec025f974d29dc557073 $");
+__FBSDID("$FreeBSD: 484c2865617259814e4f772c9893eea9012d7c1f $");
 
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
@@ -253,8 +253,10 @@ is_sparse_supported(const char *path)
 #if defined(HAVE_LINUX_FIEMAP_H)
 	if (r < 0)
 		return (is_sparse_supported_fiemap(path));
-#endif
+	return (1);
+#else
 	return (r >= 0);
+#endif
 }
 
 #elif !defined(HAVE_LINUX_FIEMAP_H)

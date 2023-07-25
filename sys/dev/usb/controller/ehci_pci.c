@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dbc2def5b8d2fd2c57595d2922db1c56fc134e0a $");
+__FBSDID("$FreeBSD: b536ea02b649521c8b99cdea597d99e79117e2c7 $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -95,6 +95,7 @@ __FBSDID("$FreeBSD: dbc2def5b8d2fd2c57595d2922db1c56fc134e0a $");
 #define	PCI_EHCI_VENDORID_NVIDIA	0x12D2
 #define	PCI_EHCI_VENDORID_NVIDIA2	0x10DE
 #define	PCI_EHCI_VENDORID_VIA		0x1106
+#define	PCI_EHCI_VENDORID_VMWARE	0x15ad
 
 static device_probe_t ehci_pci_probe;
 static device_attach_t ehci_pci_attach;
@@ -221,6 +222,8 @@ ehci_pci_match(device_t self)
 	case 0x31041106:
 		return ("VIA VT6202 USB 2.0 controller");
 
+	case 0x077015ad:
+		return ("VMware USB 2.0 controller");
 	default:
 		break;
 	}
@@ -402,6 +405,9 @@ ehci_pci_attach(device_t self)
 		break;
 	case PCI_EHCI_VENDORID_VIA:
 		sprintf(sc->sc_vendor, "VIA");
+		break;
+	case PCI_EHCI_VENDORID_VMWARE:
+		sprintf(sc->sc_vendor, "VMware");
 		break;
 	default:
 		if (bootverbose)

@@ -1,4 +1,4 @@
-/* $FreeBSD: 52cd3dda827e1e0078c9081b591e867d7b27dae7 $ */
+/* $FreeBSD: 3231d30d0c61511b3a55c28319122e759a629451 $ */
 /*-
  * Generic defines for LSI '909 FC  adapters.
  * FreeBSD Version.
@@ -805,7 +805,7 @@ mpt_read(struct mpt_softc *mpt, int offset)
 }
 
 /*
- * Some operations (e.g. diagnostic register writes while the ARM proccessor
+ * Some operations (e.g. diagnostic register writes while the ARM processor
  * is disabled), must be performed using "PCI pio" operations.  On non-PCI
  * buses, these operations likely map to normal register accesses.
  */

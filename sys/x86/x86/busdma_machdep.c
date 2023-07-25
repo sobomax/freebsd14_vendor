@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d07cad21c47563331c1b27c05a64e2bd38fcc70e $");
+__FBSDID("$FreeBSD: ae62f83ea30007c65a829d1fff3724e204197ff5 $");
 
 #include "opt_acpi.h"
 
@@ -107,7 +107,7 @@ bus_dma_run_filter(struct bus_dma_tag_common *tc, vm_paddr_t paddr)
 	do {
 		if ((paddr >= BUS_SPACE_MAXADDR ||
 		    (paddr > tc->lowaddr && paddr <= tc->highaddr) ||
-		    (paddr & (tc->alignment - 1)) != 0) &&
+		    !vm_addr_align_ok(paddr, tc->alignment)) &&
 		    (tc->filter == NULL ||
 		    (*tc->filter)(tc->filterarg, paddr) != 0))
 			retval = 1;

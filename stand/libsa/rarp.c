@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a81994e51b5c990b21a74bdbdf2d817848eeb29b $");
+__FBSDID("$FreeBSD: 72aa2650f15ee07f8f5b96272ef9ecbc98fe8802 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -83,7 +83,7 @@ rarp_getipaddress(int sock)
 	}
 #ifdef RARP_DEBUG
  	if (debug)
-		printf("rarp: d=%x\n", (u_int)d);
+		printf("rarp: d=%lx\n", (long)d);
 #endif
 
 	bzero((char*)&wbuf.data, sizeof(wbuf.data));
@@ -161,7 +161,7 @@ rarprecv(struct iodesc *d, void **pkt, void **payload, time_t tleft,
 	if (n == -1 || n < sizeof(struct ether_arp)) {
 #ifdef RARP_DEBUG
 		if (debug)
-			printf("bad len=%d\n", n);
+			printf("bad len=%zd\n", n);
 #endif
 		free(ptr);
 		return (-1);

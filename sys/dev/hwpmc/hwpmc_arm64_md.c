@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9037c4636b1531bf2e14c5aa5c4b7ee501f6f5bd $");
+__FBSDID("$FreeBSD: 015bee227f891e627369098808ff92f058d6bd99 $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -45,7 +45,7 @@ __FBSDID("$FreeBSD: 9037c4636b1531bf2e14c5aa5c4b7ee501f6f5bd $");
 #include <vm/pmap.h>
 
 struct pmc_mdep *
-pmc_md_initialize()
+pmc_md_initialize(void)
 {
 
 	return (pmc_arm64_initialize());

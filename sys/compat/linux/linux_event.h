@@ -1,7 +1,6 @@
 /*-
  * Copyright (c) 2007 Roman Divacky
- * Copyright (c) 2014 Dmitry Chagin
- * All rights reserved.
+ * Copyright (c) 2014 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d6a0c2d42d0cb6af869cc3306a321983ceb185aa $
+ * $FreeBSD: 445564da4150e927cee092b4c289300ca86a2558 $
  */
 
 #ifndef _LINUX_EVENT_H_

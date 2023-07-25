@@ -3,7 +3,7 @@
 #
 # This includes all the configurable parts of the kernel.
 #
-# $FreeBSD: ffd4fa7d6296536d19879fc0186e1bc2547da2ca $
+# $FreeBSD: 498dd8870769d475b673dce286d49b7eabd9387e $
 #
 
 #NO_UNIVERSE
@@ -73,5 +73,4 @@ device 		bpf
 device 		if_bridge
 
 # Extres
-options		EXT_RESOURCES
 device 		clk

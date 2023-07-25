@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2013 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Benno Rice under sponsorship from
  * the FreeBSD Foundation.
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2552ae86d966e0849ce4af542d04e1aa9f4f316b $");
+__FBSDID("$FreeBSD: d7ca5513516b0e995b01c8787eeb2779513942e9 $");
 
 #include <sys/param.h>
 
@@ -41,8 +40,6 @@ __FBSDID("$FreeBSD: 2552ae86d966e0849ce4af542d04e1aa9f4f316b $");
 
 #define	M(x)	((x) * 1024 * 1024)
 #define	G(x)	(1UL * (x) * 1024 * 1024 * 1024)
-
-extern int boot_services_gone;
 
 #if defined(__i386__) || defined(__amd64__)
 #include <machine/cpufunc.h>
@@ -203,7 +200,7 @@ out:
 static u_long staging_slop = EFI_STAGING_SLOP;
 
 EFI_PHYSICAL_ADDRESS	staging, staging_end, staging_base;
-int			stage_offset_set = 0;
+bool			stage_offset_set = false;
 ssize_t			stage_offset;
 
 static void
@@ -211,7 +208,7 @@ efi_copy_free(void)
 {
 	BS->FreePages(staging_base, (staging_end - staging_base) /
 	    EFI_PAGE_SIZE);
-	stage_offset_set = 0;
+	stage_offset_set = false;
 	stage_offset = 0;
 }
 
@@ -289,7 +286,7 @@ COMMAND_SET(staging_slop, "staging_slop", "set staging slop",
 
 #if defined(__i386__) || defined(__amd64__)
 /*
- * The staging area must reside in the the first 1GB or 4GB physical
+ * The staging area must reside in the first 1GB or 4GB physical
  * memory: see elf64_exec() in
  * boot/efi/loader/arch/amd64/elf64_freebsd.c.
  */
@@ -333,7 +330,7 @@ efi_copy_init(void)
 
 	staging = get_staging_max();
 #endif
-	status = BS->AllocatePages(EFI_ALLOC_METHOD, EfiLoaderData,
+	status = BS->AllocatePages(EFI_ALLOC_METHOD, EfiLoaderCode,
 	    nr_pages, &staging);
 	if (EFI_ERROR(status)) {
 		printf("failed to allocate staging area: %lu\n",
@@ -370,7 +367,7 @@ efi_check_space(vm_offset_t end)
 	if (end + staging_slop <= staging_end)
 		return (true);
 
-	if (boot_services_gone) {
+	if (!boot_services_active) {
 		if (end <= staging_end)
 			return (true);
 		panic("efi_check_space: cannot expand staging area "
@@ -401,7 +398,7 @@ efi_check_space(vm_offset_t end)
 
 	/* Try to allocate more space after the previous allocation */
 	addr = staging_end;
-	status = BS->AllocatePages(AllocateAddress, EfiLoaderData, nr_pages,
+	status = BS->AllocatePages(AllocateAddress, EfiLoaderCode, nr_pages,
 	    &addr);
 	if (!EFI_ERROR(status)) {
 		staging_end = staging_end + nr_pages * EFI_PAGE_SIZE;
@@ -418,7 +415,7 @@ before_staging:
 	addr = rounddown2(addr, M(2));
 #endif
 	nr_pages = EFI_SIZE_TO_PAGES(staging_base - addr);
-	status = BS->AllocatePages(AllocateAddress, EfiLoaderData, nr_pages,
+	status = BS->AllocatePages(AllocateAddress, EfiLoaderCode, nr_pages,
 	    &addr);
 	if (!EFI_ERROR(status)) {
 		/*
@@ -441,7 +438,7 @@ expand:
 #if defined(__i386__) || defined(__amd64__)
 	new_base = get_staging_max();
 #endif
-	status = BS->AllocatePages(EFI_ALLOC_METHOD, EfiLoaderData,
+	status = BS->AllocatePages(EFI_ALLOC_METHOD, EfiLoaderCode,
 	    nr_pages, &new_base);
 	if (!EFI_ERROR(status)) {
 #if EFI_STAGING_2M_ALIGN
@@ -481,7 +478,7 @@ efi_copyin(const void *src, vm_offset_t dest, const size_t len)
 
 	if (!stage_offset_set) {
 		stage_offset = (vm_offset_t)staging - dest;
-		stage_offset_set = 1;
+		stage_offset_set = true;
 	}
 
 	/* XXX: Callers do not check for failure. */
@@ -512,7 +509,7 @@ efi_readin(readin_handle_t fd, vm_offset_t dest, const size_t len)
 
 	if (!stage_offset_set) {
 		stage_offset = (vm_offset_t)staging - dest;
-		stage_offset_set = 1;
+		stage_offset_set = true;
 	}
 
 	if (!efi_check_space(dest + stage_offset + len)) {

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9cf62928760abc66a75cb00dfb03a50d754f7e6 $");
+__FBSDID("$FreeBSD: 5d0c13ed2a53bec4b87b1e9910dd229cf6480cb0 $");
 
 #include <linux/workqueue.h>
 #include <linux/wait.h>
@@ -89,7 +89,7 @@ linux_update_state(atomic_t *v, const uint8_t *pstate)
  * completed. This function gives the linux_work_fn() function a hint,
  * that the task is not going away and can have its state checked
  * again. Without this extra hint LinuxKPI tasks cannot be serialized
- * accross multiple worker threads.
+ * across multiple worker threads.
  */
 static bool
 linux_work_exec_unblock(struct work_struct *work)

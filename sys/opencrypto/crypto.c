@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 576382406d88f1dc093ce9e731385ce945a462da $");
+__FBSDID("$FreeBSD: c28f0ff72a439892f9f0321a255875db65e7d04d $");
 
 /*
  * Cryptographic Subsystem.
@@ -881,7 +881,10 @@ check_csp(const struct crypto_session_params *csp)
 				return (false);
 			break;
 		case CRYPTO_AES_NIST_GCM_16:
-			if (csp->csp_auth_mlen > 16)
+			if (csp->csp_auth_mlen > AES_GMAC_HASH_LEN)
+				return (false);
+
+			if (csp->csp_ivlen != AES_GCM_IV_LEN)
 				return (false);
 			break;
 		case CRYPTO_CHACHA20_POLY1305:
@@ -1420,8 +1423,14 @@ crp_sanity(struct cryptop *crp)
 	if (out == NULL) {
 		KASSERT(crp->crp_payload_output_start == 0,
 		    ("payload output start non-zero without output buffer"));
+	} else if (csp->csp_mode == CSP_MODE_DIGEST) {
+		KASSERT(!(crp->crp_op & CRYPTO_OP_VERIFY_DIGEST),
+		    ("digest verify with separate output buffer"));
+		KASSERT(crp->crp_payload_output_start == 0,
+		    ("digest operation with non-zero payload output start"));
 	} else {
-		KASSERT(crp->crp_payload_output_start < olen,
+		KASSERT(crp->crp_payload_output_start == 0 ||
+		    crp->crp_payload_output_start < olen,
 		    ("invalid payload output start"));
 		KASSERT(crp->crp_payload_output_start +
 		    crp->crp_payload_length <= olen,
@@ -1722,6 +1731,7 @@ crypto_task_invoke(void *ctx, int pending)
 static int
 crypto_invoke(struct cryptocap *cap, struct cryptop *crp, int hint)
 {
+	int error;
 
 	KASSERT(crp != NULL, ("%s: crp == NULL", __func__));
 	KASSERT(crp->crp_callback != NULL,
@@ -1770,13 +1780,19 @@ crypto_invoke(struct cryptocap *cap, struct cryptop *crp, int hint)
 
 		crp->crp_etype = EAGAIN;
 		crypto_done(crp);
-		return 0;
+		error = 0;
 	} else {
 		/*
-		 * Invoke the driver to process the request.
+		 * Invoke the driver to process the request.  Errors are
+		 * signaled by setting crp_etype before invoking the completion
+		 * callback.
 		 */
-		return CRYPTODEV_PROCESS(cap->cc_dev, crp, hint);
+		error = CRYPTODEV_PROCESS(cap->cc_dev, crp, hint);
+		KASSERT(error == 0 || error == ERESTART,
+		    ("%s: invalid error %d from CRYPTODEV_PROCESS",
+		    __func__, error));
 	}
+	return (error);
 }
 
 void
@@ -1841,6 +1857,27 @@ crypto_getreq(crypto_session_t cses, int how)
 	if (crp != NULL)
 		_crypto_initreq(crp, cses);
 	return (crp);
+}
+
+/*
+ * Clone a crypto request, but associate it with the specified session
+ * rather than inheriting the session from the original request.  The
+ * fields describing the request buffers are copied, but not the
+ * opaque field or callback function.
+ */
+struct cryptop *
+crypto_clonereq(struct cryptop *crp, crypto_session_t cses, int how)
+{
+	struct cryptop *new;
+
+	MPASS((crp->crp_flags & CRYPTO_F_DONE) == 0);
+	new = crypto_getreq(cses, how);
+	if (new == NULL)
+		return (NULL);
+
+	memcpy(&new->crp_startcopy, &crp->crp_startcopy,
+	    __rangeof(struct cryptop, crp_startcopy, crp_endcopy));
+	return (new);
 }
 
 /*

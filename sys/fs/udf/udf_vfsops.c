@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 132f4e7703d7af84e4e216a7e756391d834b8eea $
+ * $FreeBSD: 502d927ac0fe37a2d3c7fa60ed1809919dab0e1e $
  */
 
 /* udf_vfsops.c */
@@ -542,10 +542,6 @@ udf_unmount(struct mount *mp, int mntflags)
 	free(udfmp, M_UDFMOUNT);
 
 	mp->mnt_data = NULL;
-	MNT_ILOCK(mp);
-	mp->mnt_flag &= ~MNT_LOCAL;
-	MNT_IUNLOCK(mp);
-
 	return (0);
 }
 

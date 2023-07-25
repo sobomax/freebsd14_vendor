@@ -1,6 +1,7 @@
-# $FreeBSD: 7fe146ffd4925d6fe666a6d616708e93521e8bcc $
+# $FreeBSD: 14a4cc03b5d7a4522007f5e455d6d0c5036c1ed0 $
 
 PROG=	lastlogin
+PACKAGE=	acct
 MAN=	lastlogin.8
 LIBADD=	xo
 

@@ -26,7 +26,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: bef0a1a7cd9d386e95886d4021c8bd69d6234963 $
+ * $FreeBSD: 4b492cf786b334f62c5722cf9d04d6019d024be3 $
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
@@ -108,7 +108,7 @@
  * 3. switches to kstack if needed
  *
  * 4. notes:
- *   - R31 can be used as scratch register until a new frame is layed on
+ *   - R31 can be used as scratch register until a new frame is laid on
  *     the stack with FRAME_SETUP
  *
  *   - potential TLB miss: NO. Saveareas are always acessible via TLB1 
@@ -167,13 +167,13 @@
 
 /*
  * FRAME_SETUP assumes:
- *	SPRG{1-3}	SP at the time interrupt occured
+ *	SPRG{1-3}	SP at the time interrupt occurred
  *	savearea	r30-r31, DEAR, ESR, xSRR0-1
  *	r30		CR
  *	r31		scratch
  *	r1		kernel stack
  *
- * sprg_sp - SPRG reg containing SP at the time interrupt occured
+ * sprg_sp - SPRG reg containing SP at the time interrupt occurred
  * savearea - temp save
  * exc - exception number (EXC_xxx)
  *

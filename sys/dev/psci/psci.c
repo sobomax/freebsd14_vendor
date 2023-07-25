@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f2bd4c698e5a325cc77d57b162215f72a8ca6b2e $");
+__FBSDID("$FreeBSD: d54ee62fb328ac6a648a3bcdc2be0fab6035ecbe $");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"
@@ -84,6 +84,7 @@ static int psci_v0_1_init(device_t dev, int default_version);
 static int psci_v0_2_init(device_t dev, int default_version);
 
 struct psci_softc *psci_softc = NULL;
+bool psci_present;
 
 #ifdef __arm__
 #define	USE_ACPI	0
@@ -145,6 +146,7 @@ psci_init(void *dummy)
 	}
 
 	psci_callfn = new_callfn;
+	psci_present = true;
 }
 /* This needs to be before cpu_mp at SI_SUB_CPU, SI_ORDER_THIRD */
 SYSINIT(psci_start, SI_SUB_CPU, SI_ORDER_FIRST, psci_init, NULL);

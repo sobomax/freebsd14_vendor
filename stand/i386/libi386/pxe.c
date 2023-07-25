@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e80a1961e191e9685ccdd775db186b5a96fb8f9d $");
+__FBSDID("$FreeBSD: 3c6c5468fe3764462f9dbcccbdf1edb7fc9b4a0e $");
 
 #include <stand.h>
 #include <errno.h>
@@ -119,7 +119,7 @@ struct devsw pxedisk = {
 	.dv_close = NULL,	/* Will be set in pxe_init */
 	.dv_ioctl = noioctl,
 	.dv_print = pxe_print,
-	.dv_cleanup = pxe_cleanup
+	.dv_cleanup = pxe_cleanup,
 };
 
 /*

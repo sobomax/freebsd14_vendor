@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c7a5ac493f65c972308c41e3b666b6a65402e20 $");
+__FBSDID("$FreeBSD: 1af1ec9120c7c2e985f85340a42e2d1a37b91240 $");
 
 #include "opt_inet.h"
 #include "opt_ath.h"
@@ -457,7 +457,7 @@ ath_compute_num_delims(struct ath_softc *sc, struct ath_buf *first_bf,
 	ndelim += ATH_AGGR_ENCRYPTDELIM;
 
 	/*
-	 * For AR9380, there's a minimum number of delimeters
+	 * For AR9380, there's a minimum number of delimiters
 	 * required when doing RTS.
 	 *
 	 * XXX TODO: this is only needed if (a) RTS/CTS is enabled for

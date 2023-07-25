@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce1f270527b4c136593deea0fd12aba750be2b50 $");
+__FBSDID("$FreeBSD: 974860b77cafdcdc63fb141a2638c1866a632896 $");
 
 #include <linux/mutex.h>
 #include <linux/slab.h>
@@ -153,7 +153,7 @@ int rdma_copy_addr(struct rdma_dev_addr *dev_addr, struct ifnet *dev,
 		return (0);
 	} else if (dev->if_type == IFT_INFINIBAND)
 		dev_addr->dev_type = ARPHRD_INFINIBAND;
-	else if (dev->if_type == IFT_ETHER)
+	else if (dev->if_type == IFT_ETHER || dev->if_type == IFT_L2VLAN)
 		dev_addr->dev_type = ARPHRD_ETHER;
 	else
 		dev_addr->dev_type = 0;

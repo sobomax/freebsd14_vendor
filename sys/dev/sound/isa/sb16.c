@@ -44,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 73ec7c56245e746f2c1cd33f81ec00641523669d $");
+SND_DECLARE_FILE("$FreeBSD: a956b8a6c595984d7999bd04f8bc7b165bf7ed94 $");
 
 #define SB16_BUFFSIZE	4096
 #define PLAIN_SB16(x) ((((x)->bd_flags) & (BD_F_SB16|BD_F_SB16X)) == BD_F_SB16)
@@ -788,14 +788,14 @@ static int
 sb16_probe(device_t dev)
 {
     	char buf[64];
-	uintptr_t func, ver, r, f;
+	uintptr_t func, ver, f;
 
 	/* The parent device has already been probed. */
-	r = BUS_READ_IVAR(device_get_parent(dev), dev, 0, &func);
+	BUS_READ_IVAR(device_get_parent(dev), dev, 0, &func);
 	if (func != SCF_PCM)
 		return (ENXIO);
 
-	r = BUS_READ_IVAR(device_get_parent(dev), dev, 1, &ver);
+	BUS_READ_IVAR(device_get_parent(dev), dev, 1, &ver);
 	f = (ver & 0xffff0000) >> 16;
 	ver &= 0x0000ffff;
 	if (f & BD_F_SB16) {
@@ -814,6 +814,7 @@ sb16_attach(device_t dev)
 	uintptr_t ver;
     	char status[SND_STATUSLEN], status2[SND_STATUSLEN];
 
+	gone_in_dev(dev, 14, "ISA sound driver");
     	sb = malloc(sizeof(*sb), M_DEVBUF, M_WAITOK | M_ZERO);
 	sb->parent_dev = device_get_parent(dev);
 	BUS_READ_IVAR(sb->parent_dev, dev, 1, &ver);

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f510a3c437d067ea364d7b0fd75471d25b89b21b $");
+__FBSDID("$FreeBSD: 5a80def489e9ecc749d7af6e44e62bf74752395f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -102,7 +102,7 @@ bus_dma_run_filter(struct bus_dma_tag_common *tc, bus_addr_t paddr)
 	retval = 0;
 	do {
 		if (((paddr > tc->lowaddr && paddr <= tc->highaddr) ||
-		    ((paddr & (tc->alignment - 1)) != 0)) &&
+		    !vm_addr_align_ok(paddr, tc->alignment)) &&
 		    (tc->filter == NULL ||
 		    (*tc->filter)(tc->filterarg, paddr) != 0))
 			retval = 1;

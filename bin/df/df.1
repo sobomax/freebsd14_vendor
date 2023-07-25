@@ -27,9 +27,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)df.1	8.3 (Berkeley) 5/8/95
-.\" $FreeBSD: d542dbde806791c853662cc99f6835a0049a7102 $
+.\" $FreeBSD: 64e471fedc42da402fca864d75cc5322c7195abb $
 .\"
-.Dd October 5, 2020
+.Dd March 11, 2022
 .Dt DF 1
 .Os
 .Sh NAME
@@ -109,6 +109,9 @@ In conjunction with the
 or
 .Fl H
 options, the number of inodes is scaled by powers of 1000.
+In case the filesystem has no inodes then
+.Sq -
+is displayed instead of the usage percentage.
 .It Fl k
 Use 1024 byte (1 Kibibyte) blocks rather than the default.
 This overrides the

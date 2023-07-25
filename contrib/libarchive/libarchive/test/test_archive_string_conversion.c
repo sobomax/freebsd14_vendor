@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: fb5359b6f3495fbc07eaac9ea1f6cac0885c5ed3 $");
+__FBSDID("$FreeBSD: 7faf58bfa1175437951949af6499452a57fd9f9b $");
 
 #include <locale.h>
 
@@ -847,6 +847,7 @@ test_archive_string_set_get(void)
 	assertEqualInt(0, archive_mstring_update_utf8(a, &mstr, "EEEEE---H"));
 	check_string(a, &mstr, sc, "EEEEE---H", L"EEEEE---H");
 
+        archive_mstring_clean(&mstr);
 	assertEqualInt(ARCHIVE_OK, archive_read_free(a));
 
 }

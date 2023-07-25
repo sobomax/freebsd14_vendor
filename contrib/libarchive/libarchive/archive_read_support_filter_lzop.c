@@ -26,7 +26,7 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: afd2d4d0c49acb21da9cabbd01f5038e8982f99f $");
+__FBSDID("$FreeBSD: 4ebdd3bf3eb1730d191dbace59ffb86a389499c5 $");
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -283,7 +283,9 @@ consume_header(struct archive_read_filter *self)
 	else
 		checksum = adler32(adler32(0, NULL, 0), p, len);
 	if (archive_be32dec(p + len) != checksum)
+#ifndef DONT_FAIL_ON_CRC_ERROR
 		goto corrupted;
+#endif
 	__archive_read_filter_consume(self->upstream, len + 4);
 	if (flags & EXTRA_FIELD) {
 		/* Skip extra field */

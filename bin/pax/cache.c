@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)cache.c	8.1 (Berkeley) 5/31/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 227e5fcc0de7b2f586029ddf0355df41ce0f9a73 $");
+__FBSDID("$FreeBSD: 5e55e70be851b4021ba5195684726702a786f727 $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -68,7 +68,7 @@ static GIDC **grptb = NULL;	/* group name to gid cache */
 
 /*
  * uidtb_start
- *	creates an an empty uidtb
+ *	creates an empty uidtb
  * Return:
  *	0 if ok, -1 otherwise
  */
@@ -92,7 +92,7 @@ uidtb_start(void)
 
 /*
  * gidtb_start
- *	creates an an empty gidtb
+ *	creates an empty gidtb
  * Return:
  *	0 if ok, -1 otherwise
  */
@@ -116,7 +116,7 @@ gidtb_start(void)
 
 /*
  * usrtb_start
- *	creates an an empty usrtb
+ *	creates an empty usrtb
  * Return:
  *	0 if ok, -1 otherwise
  */
@@ -140,7 +140,7 @@ usrtb_start(void)
 
 /*
  * grptb_start
- *	creates an an empty grptb
+ *	creates an empty grptb
  * Return:
  *	0 if ok, -1 otherwise
  */
@@ -211,12 +211,8 @@ name_uid(uid_t uid, int frc)
 			return("");
 		ptr->uid = uid;
 		ptr->valid = INVALID;
-#		ifdef NET2_STAT
-		(void)snprintf(ptr->name, sizeof(ptr->name), "%u", uid);
-#		else
 		(void)snprintf(ptr->name, sizeof(ptr->name), "%lu",
 			       (unsigned long)uid);
-#		endif
 		if (frc == 0)
 			return("");
 	} else {
@@ -282,12 +278,8 @@ name_gid(gid_t gid, int frc)
 			return("");
 		ptr->gid = gid;
 		ptr->valid = INVALID;
-#		ifdef NET2_STAT
-		(void)snprintf(ptr->name, sizeof(ptr->name), "%u", gid);
-#		else
 		(void)snprintf(ptr->name, sizeof(ptr->name), "%lu",
 			       (unsigned long)gid);
-#		endif
 		if (frc == 0)
 			return("");
 	} else {

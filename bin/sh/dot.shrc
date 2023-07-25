@@ -1,4 +1,4 @@
-# $FreeBSD: 5277e5b07b0a4771c3dc0a664c67c3259a6658c5 $
+# $FreeBSD: 75d0ec04773475895c2c70ab3fd60c1186d2a60e $
 #
 # .shrc - bourne shell startup file 
 #
@@ -30,6 +30,19 @@
 # alias cp='cp -ip'
 # alias mv='mv -i'
 # alias rm='rm -i'
+
+# # csh like history on arrow up and down
+bind ^[[A ed-search-prev-history
+bind ^[[B ed-search-next-history
+
+# # ctrl+arrow allow to jump from words to words
+bind "\\e[1;5C" em-next-word
+bind "\\e[1;5D" ed-prev-word
+alias history='fc -l'
+
+# Fix home/del for mobaxterm
+bind ^[[5~ ed-move-to-beg
+bind ^[[6~ ed-move-to-end
 
 # read(2) of directories may not be desirable by default, as this will provoke
 # EISDIR errors from each directory encountered.

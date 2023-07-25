@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: db47423e9d330ebd183a448676c32260f6452e81 $
+ * $FreeBSD: 8e184591b916948108a105d31d141d7cd78394d0 $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -35,7 +35,6 @@
 
 #include <machine/frame.h>
 #include <machine/md_var.h>
-#include <machine/reg.h>
 
 #include <vm/vm.h>
 #include <vm/vm_param.h>
@@ -51,12 +50,6 @@
 
 #include "regset.h"
 
-/*
- * Wee need some reasonable default to prevent backtrace code
- * from wandering too far
- */
-#define	MAX_FUNCTION_SIZE 0x10000
-#define	MAX_PROLOGUE_SIZE 0x100
 #define	MAX_USTACK_DEPTH  2048
 
 uint8_t dtrace_fuword8_nocheck(void *);

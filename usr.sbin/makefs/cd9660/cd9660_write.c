@@ -38,7 +38,7 @@
 #include "iso9660_rrip.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71e884f792d9baed35f7bbbe4bfb223371bb3d9e $");
+__FBSDID("$FreeBSD: c77ba2b5f198c486cf2916ccccd2693652712ca2 $");
 
 #include <util.h>
 
@@ -316,7 +316,7 @@ cd9660_write_file(iso9660_disk *diskStructure, FILE *fd, cd9660node *writenode)
 		/*
 		 * Now loop over children, writing out their directory
 		 * records - beware of sector boundaries
-	 	 */
+		 */
 		TAILQ_FOREACH(temp, &writenode->cn_children, cn_next_child) {
 			/*
 			 * Copy the temporary record and adjust its size

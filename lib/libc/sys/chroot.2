@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)chroot.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 69ee3743d9d31d61f3292804e3445d44a9ee3b71 $
+.\" $FreeBSD: f5d9fa5a851597073f0e917b4dd4596ad00107a5 $
 .\"
 .Dd September 29, 2020
 .Dt CHROOT 2
@@ -147,7 +147,7 @@ open directories, or a MAC check), it is possible that this system
 call may return an error, with the working directory of the process
 left changed.
 .Sh SECURITY CONSIDERATIONS
-The system have many hardcoded paths to files where it may load after
+The system has many hardcoded paths to files which it may load after
 the process starts.
 It is generally recommended to drop privileges immediately after a
 successful
@@ -155,8 +155,8 @@ successful
 call,
 and restrict write access to a limited subtree of the
 .Nm
-root,
-for instance,
+root.
+For instance,
 setup the sandbox so that the sandboxed user will have no write
 access to any well-known system directories.
 .Pp

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5cc42863cf386b789d7474151bc367444703f4f8 $");
+__FBSDID("$FreeBSD: ec746b756b4f75f0c82a7094b01d8b3050fe0462 $");
 
 #include "opt_mptable_force_htt.h"
 #include <sys/param.h>
@@ -50,6 +50,7 @@ __FBSDID("$FreeBSD: 5cc42863cf386b789d7474151bc367444703f4f8 $");
 #include <dev/pci/pcib_private.h>
 #endif
 #include <x86/apicreg.h>
+#include <x86/legacyvar.h>
 #include <x86/mptable.h>
 #include <machine/frame.h>
 #include <machine/intr_machdep.h>
@@ -1250,7 +1251,7 @@ mptable_pci_host_res_init(device_t pcib)
 	struct host_res_args args;
 
 	KASSERT(pci0 != -1, ("do not know how to map PCI bus IDs"));
-	args.bus = pci_get_bus(pcib) + pci0;
+	args.bus = legacy_get_pcibus(pcib) + pci0;
 	args.dev = pcib;
 	args.sc = device_get_softc(pcib);
 	if (pcib_host_res_init(pcib, &args.sc->sc_host_res) != 0)

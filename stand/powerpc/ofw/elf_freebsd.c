@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 89811e965d6eccbbeafff2f68c5334ebad657ad0 $");
+__FBSDID("$FreeBSD: ee173d55e25c2f86e5ba591d1828d0f19eef0abc $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: 89811e965d6eccbbeafff2f68c5334ebad657ad0 $");
 #include "bootstrap.h"
 #include "libofw.h"
 #include "openfirm.h"
+#include "modinfo.h"
 
 extern char		end[];
 extern vm_offset_t	reloc;	/* From <arch>/conf.c */

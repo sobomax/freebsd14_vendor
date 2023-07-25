@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3c805bac099dbf8a2d71c38ec0cc0f5d8c5121be $
+ * $FreeBSD: 9b46d1869101e529f714ec8b6a790a5c51f989ca $
  */
 
 #ifndef __SYS_IPMI_H__
@@ -33,9 +33,11 @@
 
 #define IPMI_MAX_ADDR_SIZE		0x20
 #define IPMI_MAX_RX			1024
-#define IPMI_BMC_SLAVE_ADDR		0x20 /* Linux Default slave address */
-#define IPMI_BMC_CHANNEL		0x0f /* Linux BMC channel */
 
+#define IPMI_BMC_CHANNEL		0x0f /* Linux BMC channel */
+#define IPMI_IPMB_CHANNEL		0x00
+
+#define IPMI_BMC_SLAVE_ADDR		0x20 /* Linux Default slave address */
 #define IPMI_BMC_SMS_LUN		0x02
 
 #define IPMI_SYSTEM_INTERFACE_ADDR_TYPE	0x0c

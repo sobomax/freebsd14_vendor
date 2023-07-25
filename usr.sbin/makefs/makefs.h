@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 68dc0362dd2170a3b9c2a210cd97203304efbf07 $
+ * $FreeBSD: e85c1ac33119500cc48947863f9b2d878c2949c3 $
  */
 
 #ifndef	_MAKEFS_H
@@ -58,7 +58,7 @@
  *
  *	name	"."		"bin"		"netbsd"
  *	type	S_IFDIR		S_IFDIR		S_IFREG
- *	next 	  >		  >		NULL
+ *	next	  >		  >		NULL
  *	parent	NULL		NULL		NULL
  *	child	NULL		  v
  *

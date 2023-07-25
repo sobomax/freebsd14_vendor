@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $
+ * $FreeBSD: 1a24b5f0044a4da6a29a5366f908b0e84a416d3b $
  */
 
 /*-
@@ -53,11 +53,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $
+ * $FreeBSD: 1a24b5f0044a4da6a29a5366f908b0e84a416d3b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db7d995f2466b2a4caf54810ed2b4b897d2b3191 $");
+__FBSDID("$FreeBSD: 1a24b5f0044a4da6a29a5366f908b0e84a416d3b $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -690,7 +690,7 @@ disk_open(char *path)
 	if (ndisks >= NDISKS)
 		return (ERANGE);
 
-	fd = open(path, O_RDONLY);
+	fd = open(path, O_RDWR);
 	if (fd < 0)
 		return (errno);
 

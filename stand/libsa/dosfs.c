@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 452a79ae12dcf9d110893a7a401e503d97312b03 $");
+__FBSDID("$FreeBSD: e50f8f25e16a45ea7d663ba4ce4c36dcae9c1573 $");
 
 /*
  * Readonly filesystem for Microsoft FAT12/FAT16/FAT32 filesystems,
@@ -38,7 +38,6 @@ __FBSDID("$FreeBSD: 452a79ae12dcf9d110893a7a401e503d97312b03 $");
 #include <stddef.h>
 
 #include "stand.h"
-#include "disk.h"
 
 #include "dosfs.h"
 
@@ -314,7 +313,7 @@ dos_open(const char *path, struct open_file *fd)
 	u_int size, clus;
 	int err;
 
-	dev = disk_fmtdev(fd->f_devdata);
+	dev = devformat((struct devdesc *)fd->f_devdata);
 	STAILQ_FOREACH(mnt, &mnt_list, dos_link) {
 		if (strcmp(dev, mnt->dos_dev) == 0)
 			break;
@@ -322,7 +321,7 @@ dos_open(const char *path, struct open_file *fd)
 
 	if (mnt == NULL) {
 		/* Allocate mount structure, associate with open */
-		if ((fs = malloc(sizeof(DOS_FS))) == NULL)
+		if ((fs = calloc(1, sizeof(DOS_FS))) == NULL)
 			return (errno);
 		if ((err = dos_mount_impl(fs, fd))) {
 			free(fs);

@@ -24,7 +24,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 73c4f8e1c39ca7a4be5deb8308735d2c69342614 $
+ * $FreeBSD: cea78141fbe49c13ccd5b7fa62e192f006d5089e $
+ */
+
+/*
+ * This program contains a suite of unit tests for the netmap control device.
+ *
+ * On FreeBSD, you can run these tests with Kyua once installed in the system:
+ *     # kyua test -k /usr/tests/sys/netmap/Kyuafile
+ *
+ * On Linux, you can run them directly:
+ *     # ./ctrl-api-test
  */
 
 #include <sys/ioctl.h>

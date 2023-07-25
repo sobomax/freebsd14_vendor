@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)ktrace.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: ffe967e35ed8133f5e179de5dfd9bd20968ef7a2 $
+.\" $FreeBSD: 8b3f15e1d0017f48fdd5648ac1ec4844cd3538d8 $
 .\"
-.Dd March 30, 2020
+.Dd November 2, 2022
 .Dt KTRACE 2
 .Os
 .Sh NAME
@@ -96,6 +96,7 @@ generate much output).
 .It KTRFAC_CAPFAIL Ta "Trace capability failures."
 .It KTRFAC_FAULT Ta "Trace page faults."
 .It KTRFAC_FAULTEND Ta "Trace the end of page faults."
+.It KTRFAC_STRUCT_ARRAY Ta "Trace arrays of certain data structures."
 .It KTRFAC_INHERIT Ta "Inherit tracing to future children."
 .El
 .Pp

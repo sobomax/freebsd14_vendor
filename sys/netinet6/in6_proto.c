@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21b7d660676f8dd6bfebf6b6c96628d63002260d $");
+__FBSDID("$FreeBSD: fb4f76dd698cdca4a6cf811bb0c69be37e85768d $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -288,6 +288,15 @@ struct protosw inet6sw[] = {
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		encap6_input,
 	.pr_output =		rip6_output,
+	.pr_ctloutput =		rip6_ctloutput,
+	.pr_usrreqs =		&rip6_usrreqs
+},
+{
+	.pr_type =		SOCK_RAW,
+	.pr_domain =		&inet6domain,
+	.pr_protocol =		IPPROTO_ETHERIP,
+	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
+	.pr_input =		encap6_input,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_usrreqs =		&rip6_usrreqs
 },

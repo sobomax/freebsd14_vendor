@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bfc94275a21cc619dbea7cc34ed35a8ba5ab1711 $");
+__FBSDID("$FreeBSD: 854064835f68996a31f03b7a1febad10ecef2347 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1886,7 +1886,7 @@ al_eth_hw_stop(struct al_eth_adapter *adapter)
 
 	/*
 	 * wait till pending rx packets written and UDMA becomes idle,
-	 * the MAC has ~10KB fifo, 10us should be enought time for the
+	 * the MAC has ~10KB fifo, 10us should be enough time for the
 	 * UDMA to write to the memory
 	 */
 	DELAY(10);

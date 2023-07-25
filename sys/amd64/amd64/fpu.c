@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b23cc5773a3e2007213cad8493736623647c37f $");
+__FBSDID("$FreeBSD: f51c042bf8def5b7fc1573c2b1e6983ed9b17f74 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -394,6 +394,7 @@ void
 fpuinit(void)
 {
 	register_t saveintr;
+	uint64_t cr4;
 	u_int mxcsr;
 	u_short control;
 
@@ -401,7 +402,22 @@ fpuinit(void)
 		fpuinit_bsp1();
 
 	if (use_xsave) {
-		load_cr4(rcr4() | CR4_XSAVE);
+		cr4 = rcr4();
+
+		/*
+		 * Revert enablement of PKRU if user disabled its
+		 * saving on context switches by clearing the bit in
+		 * the xsave mask.  Also redundantly clear the bit in
+		 * cpu_stdext_feature2 to prevent pmap from ever
+		 * trying to set the page table bits.
+		 */
+		if ((cpu_stdext_feature2 & CPUID_STDEXT2_PKU) != 0 &&
+		    (xsave_mask & XFEATURE_ENABLED_PKRU) == 0) {
+			cr4 &= ~CR4_PKE;
+			cpu_stdext_feature2 &= ~CPUID_STDEXT2_PKU;
+		}
+
+		load_cr4(cr4 | CR4_XSAVE);
 		load_xcr(XCR0, xsave_mask);
 	}
 
@@ -524,14 +540,14 @@ fpuformat(void)
 	return (_MC_FPFMT_XMM);
 }
 
-/* 
+/*
  * The following mechanism is used to ensure that the FPE_... value
  * that is passed as a trapcode to the signal handler of the user
  * process does not have more than one bit set.
- * 
+ *
  * Multiple bits may be set if the user process modifies the control
  * word while a status word bit is already set.  While this is a sign
- * of bad coding, we have no choise than to narrow them down to one
+ * of bad coding, we have no choice than to narrow them down to one
  * bit, since we must not send a trapcode that is not exactly one of
  * the FPE_ macros.
  *

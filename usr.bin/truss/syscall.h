@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f25cbd81ede5a5ab352d51c69cff160e10cb89d4 $
+ * $FreeBSD: d27bbacfd126b45c5e2bad4de61eeaa138c868f5 $
  */
 
 /*
@@ -101,6 +101,7 @@ enum Argtype {
 	Getfsstatmode,
 	Idtype,
 	Ioctl,
+	Itimerwhich,
 	Kldsymcmd,
 	Kldunloadflags,
 	LioMode,

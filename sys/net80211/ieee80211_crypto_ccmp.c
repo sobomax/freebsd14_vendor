@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4423e8a4ca91bebd2b149212ab1f3eb3ce9111f $");
+__FBSDID("$FreeBSD: a8ef3dab763585b270021e512924f30fbcf8bc70 $");
 
 /*
  * IEEE 802.11i AES-CCMP crypto support.
@@ -189,7 +189,7 @@ ccmp_encap(struct ieee80211_key *k, struct mbuf *m)
 	/*
 	 * Copy down 802.11 header and add the IV, KeyID, and ExtIV.
 	 */
-	M_PREPEND(m, ccmp.ic_header, M_NOWAIT);
+	M_PREPEND(m, ccmp.ic_header, IEEE80211_M_NOWAIT);
 	if (m == NULL)
 		return 0;
 	ivp = mtod(m, uint8_t *);

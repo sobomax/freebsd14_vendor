@@ -32,43 +32,30 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ae5a941977186f2307bdfc94c88a3d8af3cc8e2b $");
+__FBSDID("$FreeBSD: dd7cd6a690bdbf66ebb003ea5eef208a7d9d80fb $");
 
 .arch_extension sec	/* For smc */
 .arch_extension virt	/* For hvc */
+
+.macro arm_smccc_1_0	insn
+ENTRY(arm_smccc_\insn)
+	mov	r12, sp
+	push	{r4-r7}
+	ldm	r12, {r4-r7}
+	\insn	#0
+	pop	{r4-r7}
+	ldr	r12, [sp, #(4 * 4)]
+	cmp     r12, #0
+	beq	1f
+	stm	r12, {r0-r3}
+1:	bx	lr
+END(arm_smccc_\insn)
+.endm
 
 /*
  * int arm_smccc_hvc(register_t, register_t, register_t, register_t,
  *     register_t, register_t, register_t, register_t,
  *     struct arm_smccc_res *res)
  */
-ENTRY(arm_smccc_hvc)
-	mov	r12, sp
-	push	{r4-r7}
-	ldm	r12, {r4-r7}
-	hvc	#0
-	pop	{r4-r7}
-	ldr	r12, [sp, #(4 * 4)]
-	cmp     r12, #0
-	beq	1f
-	stm	r12, {r0-r3}
-1:	bx	lr
-END(arm_smccc_hvc)
-
-/*
- * int arm_smccc_smc(register_t, register_t, register_t, register_t,
- *     register_t, register_t, register_t, register_t,
- *     struct arm_smccc_res *res)
- */
-ENTRY(arm_smccc_smc)
-	mov	r12, sp
-	push	{r4-r7}
-	ldm	r12, {r4-r7}
-	smc	#0
-	pop	{r4-r7}
-	ldr	r12, [sp, #(4 * 4)]
-	cmp     r12, #0
-	beq	1f
-	stm	r12, {r0-r3}
-1:	bx	lr
-END(arm_smccc_smc)
+arm_smccc_1_0	hvc
+arm_smccc_1_0	smc

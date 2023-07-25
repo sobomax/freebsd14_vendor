@@ -1,4 +1,4 @@
-# $FreeBSD: fccc90fb9051a3e4f92480280ea26c7cef920dbc $
+# $FreeBSD: 1113072e4e9d21c7688707a7cfda7a3f298c3e4d $
 
 .include <src.opts.mk>
 
@@ -29,6 +29,7 @@ CFLAGS+=	-I${OBJTOP}/lib/clang/libllvm
 
 SRCDIR=		lld
 SRCS+=		Common/Args.cpp
+SRCS+=		Common/CommonLinkerContext.cpp
 SRCS+=		Common/DWARF.cpp
 SRCS+=		Common/ErrorHandler.cpp
 SRCS+=		Common/Filesystem.cpp
@@ -75,12 +76,6 @@ SRCS+=		ELF/SyntheticSections.cpp
 SRCS+=		ELF/Target.cpp
 SRCS+=		ELF/Thunks.cpp
 SRCS+=		ELF/Writer.cpp
-SRCS+=		lib/Core/Error.cpp
-SRCS+=		lib/Core/File.cpp
-SRCS+=		lib/Core/LinkingContext.cpp
-SRCS+=		lib/Core/Reader.cpp
-SRCS+=		lib/Core/Resolver.cpp
-SRCS+=		lib/Core/SymbolTable.cpp
 SRCS+=		tools/lld/lld.cpp
 
 .include "${SRCTOP}/lib/clang/llvm.build.mk"
@@ -99,6 +94,8 @@ ${INCFILE}: ${TDFILE}
 	${LLVM_TBLGEN} ${GENOPT} -I ${LLVM_SRCS}/include -d ${.TARGET:C/$/.d/} \
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
+
+${TGHDRS}: ${LLVM_TBLGEN_BIN}
 
 DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}

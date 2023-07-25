@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a16ff8b36448ed61fc2df7ffa0eebf8ed33a5528 $");
+__FBSDID("$FreeBSD: bf22817d2b25e8eeef179be6c03934a36629777c $");
 
 #include "opt_nfs.h"
 
@@ -85,7 +85,7 @@ sys_nfssvc(struct thread *td, struct nfssvc_args *uap)
 	AUDIT_ARG_CMD(uap->flag);
 
 	/* Allow anyone to get the stats. */
-	if ((uap->flag & ~NFSSVC_GETSTATS) != 0) {
+	if ((uap->flag & ~(NFSSVC_GETSTATS | NFSSVC_NEWSTRUCT)) != 0) {
 		error = priv_check(td, PRIV_NFS_DAEMON);
 		if (error != 0)
 			return (error);

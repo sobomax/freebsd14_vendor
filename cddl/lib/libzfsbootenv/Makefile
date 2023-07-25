@@ -1,9 +1,9 @@
-# $FreeBSD: f84718a10de793c9758a2979f82474dccd652520 $
+# $FreeBSD: 4e2f35848e041114ca4543f1afb67cd497278b40 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzfsbootenv
 .PATH: ${SRCTOP}/sys/contrib/openzfs/include
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 LIB=		zfsbootenv
 SHLIB_MAJOR=	1
 

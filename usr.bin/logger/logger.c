@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)logger.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44aa8ed3bae1c8cf5af81a7a74b8c2a0c1fa3aa8 $");
+__FBSDID("$FreeBSD: 1ce8d81db6f66989942704b7f9b70129e425b916 $");
 
 #include <sys/capsicum.h>
 #include <sys/param.h>
@@ -182,7 +182,7 @@ main(int argc, char *argv[])
 	caph_cache_catpages();
 	caph_cache_tzdata();
 	if (nsock == 0) {
-		if (caph_enter() < 0)
+		if (caph_enter_casper() < 0)
 			err(1, "Unable to enter capability mode");
 	}
 	capsyslog = cap_service_open(capcas, "system.syslog");

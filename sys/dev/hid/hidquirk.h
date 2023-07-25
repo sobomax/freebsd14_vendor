@@ -1,4 +1,4 @@
-/* $FreeBSD: 0201f2f0746c70b8204cbe3002534a549111eb40 $ */
+/* $FreeBSD: 5f0dafb8a8a24fb6bf9e7b530f7552a3767884fe $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -59,6 +59,7 @@
 	HQ(MS_BAD_CLASS),	/* doesn't identify properly */		\
 	HQ(MS_LEADING_BYTE),	/* mouse sends an unknown leading byte */ \
 	HQ(MS_REVZ),		/* mouse has Z-axis reversed */		\
+	HQ(MS_VENDOR_BTN),	/* mouse has buttons in vendor usage page */ \
 	HQ(SPUR_BUT_UP),	/* spurious mouse button up events */	\
 	HQ(MT_TIMESTAMP)	/* Multitouch device exports HW timestamps */
 

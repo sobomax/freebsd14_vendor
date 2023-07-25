@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3a7aac98a65c32c967744b5482d239fcbcfaa18b $
+ * $FreeBSD: eda1c100e8a3a818af9045d2da5cf0409341180f $
  */
 
 /*
@@ -111,7 +111,7 @@ timer_callback(int fd, enum ev_type type, void *param)
 #ifdef MEVENT_ECHO
 struct esync {
 	pthread_mutex_t	e_mt;
-	pthread_cond_t	e_cond;       
+	pthread_cond_t	e_cond;
 };
 
 static void

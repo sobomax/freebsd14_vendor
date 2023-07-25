@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8a4bfdc154bf16269470b8c54194cefd93133c95 $");
+__FBSDID("$FreeBSD: 336ff1853f164643e292aa389c9b569c80afefc1 $");
 
 #include <sys/param.h>
 #include <sys/elf_common.h>
@@ -45,5 +45,5 @@ __FBSDID("$FreeBSD: 8a4bfdc154bf16269470b8c54194cefd93133c95 $");
 	.4byte		NT_FREEBSD_ABI_TAG
 1:	.asciz		NOTE_FREEBSD_VENDOR
 2:	.p2align	2
-3:	.4byte		1301000
+3:	.4byte		1302001
 4:

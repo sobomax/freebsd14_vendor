@@ -1,6 +1,6 @@
-# $FreeBSD: a767546f457fb24d9c0ff95ab95e7c01ce189b16 $
+# $FreeBSD: 7557228804841cecf92b5cfaf74a52cc932b1944 $
 
-PACKAGE=	runtime
+PACKAGE=	ufs
 LIB=	ufs
 SHLIBDIR?= /lib
 SHLIB_MAJOR=	7

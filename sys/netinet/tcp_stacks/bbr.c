@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3b7f24c68636f18a49bb440618adfd8190f6c80 $");
+__FBSDID("$FreeBSD: 1b4abfb6f5c468b806dd0c7f020820976ed09fa8 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -992,7 +992,7 @@ bbr_timer_audit(struct tcpcb *tp, struct tcp_bbr *bbr, uint32_t cts, struct sock
 		    (tmr_up == PACE_TMR_RXT)) {
 			/*
 			 * if we hit enobufs then we would expect the
-			 * possiblity of nothing outstanding and the RXT up
+			 * possibility of nothing outstanding and the RXT up
 			 * (and the hptsi timer).
 			 */
 			return;
@@ -1098,7 +1098,7 @@ int32_t bbr_clear_lost = 0;
  * If cts is smaller than earlier, we could have
  * had a sequence wrap (our counter wraps every
  * 70 min or so) or it could be just clock skew
- * getting us two differnt time values. Clock skew
+ * getting us two different time values. Clock skew
  * will show up within 10ms or so. So in such
  * a case (where cts is behind earlier time by
  * less than 10ms) we return 0. Otherwise we
@@ -1728,7 +1728,7 @@ bbr_init_sysctls(void)
 	    SYSCTL_CHILDREN(bbr_policer),
 	    OID_AUTO, "false_postive", CTLFLAG_RW,
 	    &bbr_lt_intvl_fp, 0,
-	    "What packet epoch do we do false-postive detection at (0=no)?");
+	    "What packet epoch do we do false-positive detection at (0=no)?");
 	SYSCTL_ADD_S32(&bbr_sysctl_ctx,
 	    SYSCTL_CHILDREN(bbr_policer),
 	    OID_AUTO, "loss_thresh", CTLFLAG_RW,
@@ -2265,8 +2265,7 @@ bbr_log_ack_event(struct tcp_bbr *bbr, struct tcphdr *th, struct tcpopt *to, uin
 				log.u_bbr.lt_epoch = 0;
 			}
 			if (m->m_flags & M_TSTMP_LRO) {
-				tv.tv_sec = m->m_pkthdr.rcv_tstmp / 1000000000;
-				tv.tv_usec = (m->m_pkthdr.rcv_tstmp % 1000000000) / 1000;
+				mbuf_tstmp2timeval(m, &tv);
 				log.u_bbr.flex5 = tcp_tv_to_usectick(&tv);
 			} else {
 				/* No arrival timestamp */
@@ -3169,7 +3168,7 @@ reset_all:
 			return;
 		}
 		if (bbr_lt_intvl_fp == 0) {
-			/* Not doing false-postive detection */
+			/* Not doing false-positive detection */
 			return;
 		}
 		/* False positive detection */
@@ -3896,7 +3895,7 @@ bbr_post_recovery(struct tcpcb *tp)
 			}
 		} else {
 			/*
-			 * A strict drop limit of N is is inplace
+			 * A strict drop limit of N is inplace
 			 */
 			if (newcwnd < (bbr_drop_limit * maxseg)) {
 				newcwnd = bbr_drop_limit * maxseg;
@@ -4457,7 +4456,7 @@ bbr_sack_mergable(struct bbr_sendmap *at,
 {
 	/*
 	 * Given a sack block defined by
-	 * start and end, and a current postion
+	 * start and end, and a current position
 	 * at. Return 1 if either side of at
 	 * would show that the block is mergable
 	 * to that side. A block to be mergable
@@ -4693,7 +4692,7 @@ go_for_it:
 send:
 	if (bbr->r_ctl.rc_tlp_seg_send_cnt > bbr_tlp_max_resend) {
 		/*
-		 * Can't [re]/transmit a segment we have retranmitted the
+		 * Can't [re]/transmit a segment we have retransmitted the
 		 * max times. We need the retransmit timer to take over.
 		 */
 restore:
@@ -6396,8 +6395,6 @@ tcp_bbr_xmit_timer_commit(struct tcp_bbr *bbr, struct tcpcb *tp, uint32_t cts)
 		tp->t_rttvar += delta;
 		if (tp->t_rttvar <= 0)
 			tp->t_rttvar = 1;
-		if (tp->t_rttbest > tp->t_srtt + tp->t_rttvar)
-			tp->t_rttbest = tp->t_srtt + tp->t_rttvar;
 	} else {
 		/*
 		 * No rtt measurement yet - use the unsmoothed rtt. Set the
@@ -6406,7 +6403,6 @@ tcp_bbr_xmit_timer_commit(struct tcp_bbr *bbr, struct tcpcb *tp, uint32_t cts)
 		 */
 		tp->t_srtt = rtt_ticks << TCP_RTT_SHIFT;
 		tp->t_rttvar = rtt_ticks << (TCP_RTTVAR_SHIFT - 1);
-		tp->t_rttbest = tp->t_srtt + tp->t_rttvar;
 	}
 	KMOD_TCPSTAT_INC(tcps_rttupdated);
 	tp->t_rttupdated++;
@@ -6971,7 +6967,7 @@ bbr_log_sack_passed(struct tcpcb *tp,
 	TAILQ_FOREACH_REVERSE_FROM(nrsm, &bbr->r_ctl.rc_tmap,
 	    bbr_head, r_tnext) {
 		if (nrsm == rsm) {
-			/* Skip orginal segment he is acked */
+			/* Skip original segment he is acked */
 			continue;
 		}
 		if (nrsm->r_flags & BBR_ACKED) {
@@ -10031,7 +10027,7 @@ bbr_init(struct tcpcb *tp)
 	if (tp->t_fb_ptr == NULL) {
 		/*
 		 * We need to allocate memory but cant. The INP and INP_INFO
-		 * locks and they are recusive (happens during setup. So a
+		 * locks and they are recursive (happens during setup. So a
 		 * scheme to drop the locks fails :(
 		 *
 		 */
@@ -11722,8 +11718,7 @@ bbr_do_segment(struct mbuf *m, struct tcphdr *th, struct socket *so,
 		}
 	}
 	if (m->m_flags & M_TSTMP_LRO) {
-		tv.tv_sec = m->m_pkthdr.rcv_tstmp /1000000000;
-		tv.tv_usec = (m->m_pkthdr.rcv_tstmp % 1000000000)/1000;
+		mbuf_tstmp2timeval(m, &tv);
 	} else {
 		/* Should not be should we kassert instead? */
 		tcp_get_usecs(&tv);
@@ -11957,7 +11952,6 @@ bbr_output_wtime(struct tcpcb *tp, const struct timeval *tv)
 	int32_t prefetch_rsm = 0;
  	uint32_t what_we_can = 0;
 	uint32_t tot_len = 0;
-	uint32_t rtr_cnt = 0;
 	uint32_t maxseg, pace_max_segs, p_maxseg;
 	int32_t csum_flags = 0;
  	int32_t hw_tls;
@@ -12270,7 +12264,6 @@ recheck_resend:
 			goto recheck_resend;
 #endif
 		}
-		rtr_cnt++;
 		if (rsm->r_flags & BBR_HAS_SYN) {
 			/* Only retransmit a SYN by itself */
 			len = 0;
@@ -12319,7 +12312,6 @@ recheck_resend:
 		bbr->r_ctl.rc_tlp_send = NULL;
 		sack_rxmit = 1;
 		len = rsm->r_end - rsm->r_start;
-		rtr_cnt++;
 		if ((bbr->rc_resends_use_tso == 0) && (len > maxseg))
 			len = maxseg;
 

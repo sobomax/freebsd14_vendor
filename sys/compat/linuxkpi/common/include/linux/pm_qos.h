@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6b9d48c5be6e36c8672aefa48410b55554da1758 $
+ * $FreeBSD: 8a9b3bdbd1efd6b092939efff939cb57d41064f0 $
  */
 
 #ifndef	_LINUXKPI_LINUX_PM_QOS_H
@@ -48,6 +48,12 @@ cpu_latency_qos_update_request(struct pm_qos_request *qos, int x)
 static inline void
 cpu_latency_qos_remove_request(struct pm_qos_request *qos)
 {
+}
+
+static inline bool
+cpu_latency_qos_request_active(struct pm_qos_request *qos)
+{
+	return (false);
 }
 
 #endif	/* _LINUXKPI_LINUX_PM_QOS_H */

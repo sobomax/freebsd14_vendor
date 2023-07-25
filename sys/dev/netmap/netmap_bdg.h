@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e4683885e66c29e50d0869cb8ff9a77a70997266 $
+ * $FreeBSD: 42640128fcbd9159c0031a5ab7a682c165e27ed2 $
  */
 #ifndef _NET_NETMAP_BDG_H_
 #define _NET_NETMAP_BDG_H_
@@ -190,7 +190,6 @@ void netmap_uninit_bridges2(struct nm_bridge *, u_int);
 int netmap_bdg_update_private_data(const char *name, bdg_update_private_data_fn_t callback,
 	void *callback_data, void *auth_token);
 int netmap_bdg_config(struct nm_ifreq *nifr);
-int nm_is_bwrap(struct netmap_adapter *);
 
 #define NM_NEED_BWRAP (-2)
 #endif /* _NET_NETMAP_BDG_H_ */

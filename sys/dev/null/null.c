@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cae470a3bcc41ee8c972e9b57f26f81d0dcac630 $");
+__FBSDID("$FreeBSD: 54b648bbf0861bb3ff147feae68cd541ad497b3f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -109,11 +109,6 @@ null_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t data __unused,
 
 	error = 0;
 	switch (cmd) {
-#ifdef COMPAT_FREEBSD11
-	case DIOCSKERNELDUMP_FREEBSD11:
-		gone_in(13, "FreeBSD 11.x ABI compat");
-		/* FALLTHROUGH */
-#endif
 #ifdef COMPAT_FREEBSD12
 	case DIOCSKERNELDUMP_FREEBSD12:
 		if (cmd == DIOCSKERNELDUMP_FREEBSD12)

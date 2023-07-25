@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 285f26986434a56c7dcc6c34cd1a91d41d40d02f $
+ * $FreeBSD: a4bda665ed602b30da655cce3222bcaf21fa3300 $
  */
 
 /*
@@ -1746,7 +1746,7 @@ typedef struct oss_sysinfo
 	int	openedaudio[8];	/* Bit mask telling which audio devices
 				   are busy */
 
-	int	numsynths;	/* # of availavle synth devices */
+	int	numsynths;	/* # of available synth devices */
 	int	nummidis;	/* # of available MIDI ports */
 	int	numtimers;	/* # of available timer devices */
 	int	nummixers;	/* # of mixer devices */

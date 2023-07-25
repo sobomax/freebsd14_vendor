@@ -28,13 +28,23 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dea37bb3a1108de710405e11d414a37f583346bc $");
+__FBSDID("$FreeBSD: 18794666da51988f665c37f01f81309f15395dc6 $");
 
 #include <err.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "mem.h"
+
+void*
+sort_calloc(size_t nb, size_t size)
+{
+	void *ptr;
+
+	if ((ptr = calloc(nb, size)) == NULL)
+		err(2, NULL);
+	return (ptr);
+}
 
 /*
  * malloc() wrapper.

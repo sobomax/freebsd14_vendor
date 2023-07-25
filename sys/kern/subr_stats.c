@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 946999263898621d615dd63c2856fa3ae6b62159 $
+ * $FreeBSD: ff8ddbac4d8173065410dce880760fabb6027dd7 $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 946999263898621d615dd63c2856fa3ae6b62159 $");
+__FBSDID("$FreeBSD: ff8ddbac4d8173065410dce880760fabb6027dd7 $");
 
 #include <sys/param.h>
 #include <sys/arb.h>
@@ -3406,6 +3406,13 @@ stats_v1_vsd_tdgst_add(enum vsd_dtype vs_dtype, struct voistatdata_tdgst *tdgst,
 
 				Q_TOSTR(rbctd64->mu, -1, 10, qstr,
 				    sizeof(qstr));
+				struct voistatdata_tdgstctd64 *parent;
+				parent = RB_PARENT(rbctd64, rblnk);
+				int rb_color =
+					parent == NULL ? 0 :
+					RB_LEFT(parent, rblnk) == rbctd64 ?
+					(_RB_BITSUP(parent, rblnk) & _RB_L) != 0 :
+ 					(_RB_BITSUP(parent, rblnk) & _RB_R) != 0;
 				printf(" RB ctd=%3d p=%3d l=%3d r=%3d c=%2d "
 				    "mu=%s\n",
 				    (int)ARB_SELFIDX(ctd64tree, rbctd64),
@@ -3415,7 +3422,7 @@ stats_v1_vsd_tdgst_add(enum vsd_dtype vs_dtype, struct voistatdata_tdgst *tdgst,
 				      RB_LEFT(rbctd64, rblnk)),
 				    (int)ARB_SELFIDX(ctd64tree,
 				      RB_RIGHT(rbctd64, rblnk)),
-				    RB_COLOR(rbctd64, rblnk),
+				    rb_color,
 				    qstr);
 
 				panic("RB@%p and ARB@%p trees differ\n",

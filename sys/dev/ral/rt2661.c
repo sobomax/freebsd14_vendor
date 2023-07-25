@@ -1,4 +1,4 @@
-/*	$FreeBSD: 4625121ae0a5dda39938ec0fa80439229d44dea2 $	*/
+/*	$FreeBSD: 9587497e8c60fee407ef75e6c77910ebd1f814bf $	*/
 
 /*-
  * Copyright (c) 2006
@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4625121ae0a5dda39938ec0fa80439229d44dea2 $");
+__FBSDID("$FreeBSD: 9587497e8c60fee407ef75e6c77910ebd1f814bf $");
 
 /*-
  * Ralink Technology RT2561, RT2561S and RT2661 chipset driver
@@ -1443,7 +1443,7 @@ rt2661_tx_data(struct rt2661_softc *sc, struct mbuf *m0,
 	}
 	rate &= IEEE80211_RATE_VAL;
 
-	if (wh->i_fc[0] & IEEE80211_FC0_SUBTYPE_QOS)
+	if (wh->i_fc[0] & IEEE80211_FC0_SUBTYPE_QOS_DATA)
 		noack = !! ieee80211_wme_vap_ac_is_noack(vap, ac);
 
 	if (wh->i_fc[1] & IEEE80211_FC1_PROTECTED) {

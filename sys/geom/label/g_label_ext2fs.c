@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3420efb7ca3a6e0ecef132d939a6fcab5c67c574 $");
+__FBSDID("$FreeBSD: 0f21de1ce31342ebce03e378b6ae0776252143b2 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -62,9 +62,10 @@ g_label_ext2fs_taste(struct g_consumer *cp, char *label, size_t size)
 	pp = cp->provider;
 	label[0] = '\0';
 
-	if ((EXT2FS_SB_OFFSET % pp->sectorsize) != 0)
-		return;
+	KASSERT(pp->sectorsize != 0, ("Tasting a disk with 0 sectorsize"));
 	if (pp->sectorsize < sizeof(*fs))
+		return;
+	if ((EXT2FS_SB_OFFSET % pp->sectorsize) != 0)
 		return;
 
 	fs = g_read_data(cp, EXT2FS_SB_OFFSET, pp->sectorsize, NULL);

@@ -1,8 +1,8 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/27/94
 #
-# $FreeBSD: a896edef898f6377ab482eb3eddd9d6a0250867f $
+# $FreeBSD: 527ea42575a5c8bdf02de6e64df677222e4138b5 $
 
-PACKAGE=runtime
+PACKAGE=nfs
 PROG=	mount_nfs
 SRCS=	mount_nfs.c getmntopts.c mounttab.c
 MAN=	mount_nfs.8

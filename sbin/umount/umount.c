@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)umount.c	8.8 (Berkeley) 5/8/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 6a58fdb5524ec1d161ebfacfc67e92dc0aa491d0 $";
+  "$FreeBSD: 9119c5be0da1952a39bf6c225b95ddf644c8d927 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -427,7 +427,7 @@ umountfs(struct statfs *sfs)
 			return (1);
 		}
 	}
-	/* Mark this this file system as unmounted. */
+	/* Mark this file system as unmounted. */
 	getmntentry(NULL, NULL, &sfs->f_fsid, REMOVE);
 	if (vflag)
 		(void)printf("%s: unmount from %s\n", sfs->f_mntfromname,

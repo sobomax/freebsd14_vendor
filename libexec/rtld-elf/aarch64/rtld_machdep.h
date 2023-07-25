@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 585689afe197bd7a873d045f96a0db6b49393009 $
+ * $FreeBSD: ce6f6fc6c7c0754b4e90656fdeafa0672f512669 $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -35,6 +35,7 @@
 
 #include <sys/types.h>
 #include <machine/atomic.h>
+#include <machine/tls.h>
 
 struct Struct_Obj_Entry;
 
@@ -79,7 +80,6 @@ Elf_Addr reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 #define calculate_tls_post_size(align) \
 	round(TLS_TCB_SIZE, align) - TLS_TCB_SIZE
 
-#define	TLS_TCB_SIZE	16
 typedef struct {
     unsigned long ti_module;
     unsigned long ti_offset;
@@ -91,8 +91,5 @@ extern void *__tls_get_addr(tls_index *ti);
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
 #define md_abi_variant_hook(x)
-
-#define	TLS_VARIANT_I	1
-#define	TLS_DTV_OFFSET	0
 
 #endif

@@ -1,4 +1,4 @@
-# $FreeBSD: f1e24f7c9d35a700507bc0bd3299fb3a61a8d114 $
+# $FreeBSD: 727651146c52574308f37dbb4fbf8e43291f011c $
 
 PROG_CXX=	llvm-mca
 
@@ -16,7 +16,6 @@ SRCS+=		Views/RetireControlUnitStatistics.cpp
 SRCS+=		Views/SchedulerStatistics.cpp
 SRCS+=		Views/SummaryView.cpp
 SRCS+=		Views/TimelineView.cpp
-SRCS+=		Views/View.cpp
 SRCS+=		llvm-mca.cpp
 
 CFLAGS+=	-I${LLVM_BASE}/${SRCDIR}

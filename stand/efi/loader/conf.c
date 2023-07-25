@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21737293968572d22cc9f38384a80abab42f5a61 $");
+__FBSDID("$FreeBSD: 863c9188c72c72d49cc645741aef4669988b8387 $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -34,6 +34,10 @@ __FBSDID("$FreeBSD: 21737293968572d22cc9f38384a80abab42f5a61 $");
 #include <efizfs.h>
 
 extern struct devsw vdisk_dev;
+
+#ifdef MD_IMAGE_SIZE
+extern struct devsw md_dev;
+#endif
 
 struct devsw *devsw[] = {
 	&efipart_fddev,
@@ -46,6 +50,9 @@ struct devsw *devsw[] = {
 	&vdisk_dev,
 #ifdef EFI_ZFS_BOOT
 	&zfs_dev,
+#endif
+#ifdef MD_IMAGE_SIZE
+	&md_dev,
 #endif
 	NULL
 };

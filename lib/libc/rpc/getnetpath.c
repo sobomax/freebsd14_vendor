@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)getnetpath.c	1.11 91/12/19 SMI";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0758de8ded38571fe625cd43ca24f7de0f2d099 $");
+__FBSDID("$FreeBSD: 37e30ad019aa0383463b27988cda1f37c0d0f914 $");
 
 /*
  * Copyright (c) 1989 by Sun Microsystems, Inc.
@@ -135,7 +135,7 @@ failed:
  * NULL and sets errno in case of an error (e.g., setnetpath was not called
  * previously).
  * getnetpath() silently ignores invalid NETPATH components.  A NETPATH
- * compnent is invalid if there is no corresponding entry in the netconfig
+ * component is invalid if there is no corresponding entry in the netconfig
  * database.
  * If the NETPATH variable is unset, getnetpath() behaves as if NETPATH
  * were set to the sequence of default or visible networks in the netconfig

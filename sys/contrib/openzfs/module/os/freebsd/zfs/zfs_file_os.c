@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd86a75416e66fedc1696bd354e6dd7472323ce7 $");
+__FBSDID("$FreeBSD: 60c9ff0581e0f25e507de37de324a8229a8c4264 $");
 
 #include <sys/dmu.h>
 #include <sys/dmu_impl.h>
@@ -226,7 +226,11 @@ zfs_vop_fsync(vnode_t *vp)
 	struct mount *mp;
 	int error;
 
+#if __FreeBSD_version < 1400068
 	if ((error = vn_start_write(vp, &mp, V_WAIT | PCATCH)) != 0)
+#else
+	if ((error = vn_start_write(vp, &mp, V_WAIT | V_PCATCH)) != 0)
+#endif
 		goto drop;
 	vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
 	error = VOP_FSYNC(vp, MNT_WAIT, curthread);

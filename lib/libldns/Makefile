@@ -1,4 +1,4 @@
-# $FreeBSD: 34ffe7d2ed73c9306561d0ae7866d17f6cb6eb55 $
+# $FreeBSD: 40efe0ff0fdae8f9042db58255b78e13b870b65b $
 
 # Vendor sources and generated files
 LDNSDIR = ${SRCTOP}/contrib/ldns
@@ -22,5 +22,7 @@ SRCS+=	b64_ntop.c b64_pton.c
 LIBADD=	ssl crypto
 
 WARNS ?= 3
+
+CWARNFLAGS.sha2.c=	${NO_WARRAY_PARAMETER}
 
 .include <bsd.lib.mk>

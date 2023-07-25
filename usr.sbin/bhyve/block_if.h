@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0407ff43cf947799cc3a9611cdab79f9da775c26 $
+ * $FreeBSD: cf3acc05c98f594010fd8ca9b199f0aac94197ec $
  */
 
 /*
@@ -87,10 +87,6 @@ int	blockif_close(struct blockif_ctxt *bc);
 #ifdef BHYVE_SNAPSHOT
 void	blockif_pause(struct blockif_ctxt *bc);
 void	blockif_resume(struct blockif_ctxt *bc);
-int	blockif_snapshot_req(struct blockif_req *br,
-    struct vm_snapshot_meta *meta);
-int	blockif_snapshot(struct blockif_ctxt *bc,
-    struct vm_snapshot_meta *meta);
 #endif
 
 #endif /* _BLOCK_IF_H_ */

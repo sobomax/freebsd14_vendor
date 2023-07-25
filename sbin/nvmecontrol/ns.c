@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ec6a305b8b9daaa103d8533316c5e1df3c4c4d9 $");
+__FBSDID("$FreeBSD: 040918caf9c53752c9b5da46131ce5829b0fa3ef $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -371,7 +371,7 @@ static struct ns_result_str ns_result[] = {
 	{ 0x2,  "Invalid Field"},
 	{ 0xa,  "Invalid Format"},
 	{ 0xb,  "Invalid Namespace or format"},
-	{ 0x15, "Namespace insufficent capacity"},
+	{ 0x15, "Namespace insufficient capacity"},
 	{ 0x16, "Namespace ID unavaliable"},
 	{ 0x18, "Namespace already attached"},
 	{ 0x19, "Namespace is private"},
@@ -577,30 +577,48 @@ nscreate(const struct cmd *f, int argc, char *argv[])
 	    NVME_CTRLR_DATA_OACS_NSMGMT_MASK) == 0)
 		errx(EX_UNAVAILABLE, "controller does not support namespace management");
 
-	/* Allow namespaces sharing if Multi-Path I/O is supported. */
-	if (create_opt.nmic == NONE) {
-		create_opt.nmic = cd.mic ? (NVME_NS_DATA_NMIC_MAY_BE_SHARED_MASK <<
-		     NVME_NS_DATA_NMIC_MAY_BE_SHARED_SHIFT) : 0;
-	}
-
 	memset(&nsdata, 0, sizeof(nsdata));
 	nsdata.nsze = create_opt.nsze;
 	nsdata.ncap = create_opt.cap;
-	if (create_opt.flbas == NONE)
-		nsdata.flbas = ((create_opt.lbaf & NVME_NS_DATA_FLBAS_FORMAT_MASK)
-		    << NVME_NS_DATA_FLBAS_FORMAT_SHIFT) |
-		    ((create_opt.mset & NVME_NS_DATA_FLBAS_EXTENDED_MASK)
-			<< NVME_NS_DATA_FLBAS_EXTENDED_SHIFT);
-	else
+	if (create_opt.flbas != NONE) {
 		nsdata.flbas = create_opt.flbas;
-	if (create_opt.dps == NONE)
-		nsdata.dps = ((create_opt.pi & NVME_NS_DATA_DPS_MD_START_MASK)
-		    << NVME_NS_DATA_DPS_MD_START_SHIFT) |
-		    ((create_opt.pil & NVME_NS_DATA_DPS_PIT_MASK)
-			<< NVME_NS_DATA_DPS_PIT_SHIFT);
-	else
+	} else {
+		/* Default to the first format, whatever it is. */
+		nsdata.flbas = 0;
+		if (create_opt.lbaf != NONE) {
+			nsdata.flbas |= (create_opt.lbaf &
+			    NVME_NS_DATA_FLBAS_FORMAT_MASK)
+			    << NVME_NS_DATA_FLBAS_FORMAT_SHIFT;
+		}
+		if (create_opt.mset != NONE) {
+			nsdata.flbas |= (create_opt.mset &
+			    NVME_NS_DATA_FLBAS_EXTENDED_MASK)
+			    << NVME_NS_DATA_FLBAS_EXTENDED_SHIFT;
+		}
+	}
+	if (create_opt.dps != NONE) {
 		nsdata.dps = create_opt.dps;
-	nsdata.nmic = create_opt.nmic;
+	} else {
+		/* Default to protection disabled. */
+		nsdata.dps = 0;
+		if (create_opt.pi != NONE) {
+			nsdata.dps |= (create_opt.pi &
+			    NVME_NS_DATA_DPS_MD_START_MASK)
+			    << NVME_NS_DATA_DPS_MD_START_SHIFT;
+		}
+		if (create_opt.pil != NONE) {
+			nsdata.dps |= (create_opt.pil &
+			    NVME_NS_DATA_DPS_PIT_MASK)
+			    << NVME_NS_DATA_DPS_PIT_SHIFT;
+		}
+	}
+	if (create_opt.nmic != NONE) {
+		nsdata.nmic = create_opt.nmic;
+	} else {
+		/* Allow namespaces sharing if Multi-Path I/O is supported. */
+		nsdata.nmic = cd.mic ? (NVME_NS_DATA_NMIC_MAY_BE_SHARED_MASK <<
+		     NVME_NS_DATA_NMIC_MAY_BE_SHARED_SHIFT) : 0;
+	}
 	nvme_namespace_data_swapbytes(&nsdata);
 
 	memset(&pt, 0, sizeof(pt));

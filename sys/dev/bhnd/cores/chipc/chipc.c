@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0e3afb486c0f1b46a8ce2e8535a03dbc8576f6b $");
+__FBSDID("$FreeBSD: 75876fe17a4c6980063a799c6f7af04ff4d4388f $");
 
 /*
  * Broadcom ChipCommon driver.
@@ -411,7 +411,7 @@ chipc_find_nvram_src(struct chipc_softc *sc, struct chipc_caps *caps)
 
 	/*
 	 * We check for hardware presence in order of precedence. For example,
-	 * SPROM is is always used in preference to internal OTP if found.
+	 * SPROM is always used in preference to internal OTP if found.
 	 */
 	if (CHIPC_QUIRK(sc, SUPPORTS_SPROM) && caps->sprom) {
 		srom_ctrl = bhnd_bus_read_4(sc->core, CHIPC_SPROM_CTRL);
@@ -1164,13 +1164,13 @@ chipc_should_enable_muxed_sprom(struct chipc_softc *sc)
 	if (!CHIPC_QUIRK(sc, MUX_SPROM))
 		return (true);
 
-	mtx_lock(&Giant);	/* for newbus */
+	bus_topo_lock();
 
 	parent = device_get_parent(sc->dev);
 	hostb = bhnd_bus_find_hostb_device(parent);
 
 	if ((error = device_get_children(parent, &devs, &devcount))) {
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 		return (false);
 	}
 
@@ -1193,7 +1193,7 @@ chipc_should_enable_muxed_sprom(struct chipc_softc *sc)
 	}
 
 	free(devs, M_TEMP);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	return (result);
 }
 

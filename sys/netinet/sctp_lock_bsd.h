@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cd20a730e5b81120dcdde2ec00cd0506df725d2a $");
+__FBSDID("$FreeBSD: 2087db337a37373c06698f8023d0019878082bdd $");
 
 #ifndef _NETINET_SCTP_LOCK_BSD_H_
 #define _NETINET_SCTP_LOCK_BSD_H_
@@ -336,28 +336,6 @@ __FBSDID("$FreeBSD: cd20a730e5b81120dcdde2ec00cd0506df725d2a $");
 
 #define SCTP_ASOC_CREATE_LOCK_CONTENDED(_inp)				\
 	((_inp)->inp_create_mtx.mtx_lock & MTX_CONTESTED)
-
-#define SCTP_TCB_SEND_LOCK_INIT(_tcb) do {				\
-	mtx_init(&(_tcb)->tcb_send_mtx, "sctp-send-tcb", "tcbs",	\
-	         MTX_DEF | MTX_DUPOK);					\
-} while (0)
-
-#define SCTP_TCB_SEND_LOCK_DESTROY(_tcb) do {				\
-	mtx_destroy(&(_tcb)->tcb_send_mtx);				\
-} while (0)
-
-#define SCTP_TCB_SEND_LOCK(_tcb) do {					\
-	mtx_lock(&(_tcb)->tcb_send_mtx);				\
-} while (0)
-
-#define SCTP_TCB_SEND_UNLOCK(_tcb) do {					\
-	mtx_unlock(&(_tcb)->tcb_send_mtx);				\
-} while (0)
-
-#define SCTP_TCB_SEND_LOCK_ASSERT(_tcb) do {				\
-	KASSERT(mtx_owned(&(_tcb)->tcb_send_mtx),			\
-	        ("Don't own TCB send lock"));				\
-} while (0)
 
 /*
  * For the majority of things (once we have found the association) we will

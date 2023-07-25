@@ -1,4 +1,4 @@
-/* $FreeBSD: d502c5bd541518290a2dc52aeb60c70bf52041ee $ */
+/* $FreeBSD: f82401b98bf30195591e79a4c9b81f16fff441c2 $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky. All rights reserved.
  *
@@ -54,7 +54,7 @@ struct cuse_methods {
 int	cuse_init(void);
 int	cuse_uninit(void);
 
-void   *cuse_vmalloc(int);
+void   *cuse_vmalloc(unsigned);
 int	cuse_is_vmalloc_addr(void *);
 void	cuse_vmfree(void *);
 unsigned long cuse_vmoffset(void *ptr);

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 242f1bcfb90a18c290e7c06f42ebd365de38d8a7 $");
+__FBSDID("$FreeBSD: afb9a51ce2e31077683c78b3192e297ec1df5da4 $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1377,7 +1377,7 @@ safexcel_setkey_xts(const uint8_t *key, int klen, uint8_t *tweakkey)
 }
 
 /*
- * Populate a context record with paramters from a session.  Some consumers
+ * Populate a context record with parameters from a session.  Some consumers
  * specify per-request keys, in which case the context must be re-initialized
  * for each request.
  */
@@ -2304,9 +2304,6 @@ safexcel_probesession(device_t dev, const struct crypto_session_params *csp)
 	case CSP_MODE_AEAD:
 		switch (csp->csp_cipher_alg) {
 		case CRYPTO_AES_NIST_GCM_16:
-			if (csp->csp_ivlen != AES_GCM_IV_LEN)
-				return (EINVAL);
-			break;
 		case CRYPTO_AES_CCM_16:
 			break;
 		default:

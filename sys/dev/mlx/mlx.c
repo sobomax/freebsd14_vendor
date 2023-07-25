@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: f5b023eafc9c21552abc9ce77e3ab3f89af6747b $
+ *	$FreeBSD: 2f961d23e3040af322e43c304d6f9658e6c10c86 $
  */
 
 /*
@@ -830,9 +830,9 @@ mlx_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int32_t flag, struct threa
 	 * Scan the controller to see whether new drives have appeared.
 	 */
     case MLX_RESCAN_DRIVES:
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	mlx_startup(sc);
-	mtx_unlock(&Giant);	
+	bus_topo_unlock();
 	return(0);
 
 	/*
@@ -979,9 +979,9 @@ mlx_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int32_t flag, struct threa
     case MLX_GET_SYSDRIVE:
 	error = ENOENT;
 	MLX_CONFIG_LOCK(sc);
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	mlxd = (struct mlxd_softc *)devclass_get_softc(mlxd_devclass, *arg);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 	if ((mlxd != NULL) && (mlxd->mlxd_drive >= sc->mlx_sysdrive) && 
 	    (mlxd->mlxd_drive < (sc->mlx_sysdrive + MLX_MAXDRIVES))) {
 	    error = 0;

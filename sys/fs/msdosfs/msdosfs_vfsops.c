@@ -1,4 +1,4 @@
-/* $FreeBSD: cbfb0aead8b7d579e5c506b4ecbde77db0691b3d $ */
+/* $FreeBSD: d7efa103581b23666ebcdb83302ddcef53152391 $ */
 /*	$NetBSD: msdosfs_vfsops.c,v 1.51 1997/11/17 15:36:58 ws Exp $	*/
 
 /*-
@@ -872,9 +872,6 @@ msdosfs_unmount(struct mount *mp, int mntflags)
 	lockdestroy(&pmp->pm_checkpath_lock);
 	free(pmp, M_MSDOSFSMNT);
 	mp->mnt_data = NULL;
-	MNT_ILOCK(mp);
-	mp->mnt_flag &= ~MNT_LOCAL;
-	MNT_IUNLOCK(mp);
 	return (error);
 }
 

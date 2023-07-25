@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2018 Turing Robotic Industries Inc.
  * Copyright (C) 2020 Andrew Turner <andrew@FreeBSD.org>
+ * Copyright (C) 2022 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5f0729b363e866106d324f05d13533363c3efc7c $
+ * $FreeBSD: dfaafba155f2741a1b3c3d177e6eec82a8ae79a9 $
  */
 
 /*
- * arm64 Linux VDSO implementation.
+ * arm64 Linux VDSO signal trampoline.
  */
 
 #include <machine/asm.h>
@@ -44,24 +45,15 @@ linux_platform:
 
 	.text
 
-ENTRY(__kernel_rt_sigreturn)
-	brk #0 /* LINUXTODO: implement __kernel_rt_sigreturn */
-	ret
-END(__kernel_rt_sigreturn)
-
-ENTRY(__kernel_gettimeofday)
-	ldr	x8, =LINUX_SYS_gettimeofday
+	nop	/* This is what Linux calls a "Mysterious NOP". */
+EENTRY(__kernel_rt_sigreturn)
+	mov	x8, #LINUX_SYS_linux_rt_sigreturn
 	svc	#0
-	ret
-END(__kernel_gettimeofday)
+EEND(__kernel_rt_sigreturn)
 
-ENTRY(__kernel_clock_gettime)
-	ldr	x8, =LINUX_SYS_linux_clock_gettime
+EENTRY(linux_vdso_sigcode)
+	blr	x8
+
+	mov	x8, #LINUX_SYS_linux_rt_sigreturn
 	svc	#0
-	ret
-END(__kernel_clock_gettime)
-
-ENTRY(__kernel_clock_getres)
-	brk #0 /* LINUXTODO: implement __kernel_clock_getres */
-	ret
-END(__kernel_clock_getres)
+EEND(linux_vdso_sigcode)

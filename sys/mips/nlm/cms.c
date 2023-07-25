@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32ee6e1c9546a20a8fbe04a9033607eced102cf0 $");
+__FBSDID("$FreeBSD: 4b6ad7c95db4d9b0dfadc75063e90da83c9cbada $");
 #include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: 32ee6e1c9546a20a8fbe04a9033607eced102cf0 $");
 #include <sys/sysctl.h>
 #include <sys/malloc.h>
 
-#include <machine/reg.h>
 #include <machine/cpu.h>
 #include <machine/hwfunc.h>
 #include <machine/mips_opcode.h>

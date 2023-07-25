@@ -1,4 +1,4 @@
-# $FreeBSD: 93f3913c687dbc59441fc2ade36042dcd7320f61 $
+# $FreeBSD: 7429233ebeaf65f79a91cb67cbc99ad5a29b6ee1 $
 
 .include <bsd.own.mk>
 
@@ -11,7 +11,7 @@ TEST_DIR=		${SRCTOP}/sbin/md5/tests
 FILESGROUPS+=		FILESinputs
 FILESinputsPACKAGE=	${PACKAGE}
 FILESinputsDIR=		${TESTSDIR}
-FILESinputs!=		echo ${TEST_DIR}/*.inp
+FILESinputs!=		echo ${TEST_DIR}/*.inp ${TEST_DIR}/*.in
 
 FILESGROUPS+=		FILESchkfiles
 FILESchkfilesPACKAGE=	${PACKAGE}
@@ -27,6 +27,8 @@ FILESGROUPS+=		FILESparam
 FILESparamPACKAGE=	${PACKAGE}
 FILESparamDIR=		${TESTSDIR}
 FILESparam!=		echo ${TEST_DIR}/*.txt
+
+ATF_TESTS_SH+=		md5_test
 
 PLAIN_TESTS_SH+=	self-test
 PLAIN_TESTS_SH+=	bsd-c-test

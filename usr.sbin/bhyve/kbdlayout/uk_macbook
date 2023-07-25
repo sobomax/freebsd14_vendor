@@ -1,0 +1,10 @@
+# bhyve ps2kbd keyboard layout file
+#   (uk_macbook : United Kingdom Macbook)
+#
+# Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
+#
+# $FreeBSD: 6283842afa5e1dbfcc42cb61c248bf2319f34e58 $
+
+'`',0x61;	`  (0x60)
+'~',0x61;	~  (0x7e)
+

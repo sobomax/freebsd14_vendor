@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f75622f1755d570b7d519ce67e7464c12f29756b $");
+__FBSDID("$FreeBSD: 9b61f64a6448844f5ee00f8c7c4e3f68082fadda $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -192,11 +192,9 @@ static int
 awusb3phy_set_mode(struct phynode *phynode, int mode)
 {
 	device_t dev;
-	intptr_t phy;
 	struct awusb3phy_softc *sc;
 
 	dev = phynode_get_device(phynode);
-	phy = phynode_get_id(phynode);
 	sc = device_get_softc(dev);
 
 	if (mode != PHY_USB_MODE_HOST)

@@ -2,7 +2,7 @@
 # Copyright 1990 W. Jolitz
 #	from: @(#)Makefile.i386	7.1 5/10/91
 #	from FreeBSD: src/sys/conf/Makefile.i386,v 1.255 2002/02/20 23:35:49
-# $FreeBSD: 6effea176878a02766473320eff01961318b06bb $
+# $FreeBSD: 5438144e6ccc3c5b2241e7d71984f8901204e11e $
 #
 # Makefile for FreeBSD
 #
@@ -33,7 +33,7 @@ S=	../../..
 
 INCLUDES+= -I$S/contrib/libfdt
 
-.if !empty(DDB_ENABLED) || !empty(DTR_ENABLED) || !empty(HWPMC_ENABLED)
+.if !empty(DDB_ENABLED) || !empty(DTRACE_ENABLED) || !empty(HWPMC_ENABLED)
 CFLAGS+=	-fno-omit-frame-pointer -mno-omit-leaf-frame-pointer
 .endif
 

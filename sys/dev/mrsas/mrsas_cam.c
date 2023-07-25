@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8841908051b8ad3a3bdfa713e8e9fed58527125a $");
+__FBSDID("$FreeBSD: c41d9350421cb29fa2fb763f554b2108e23d2dfc $");
 
 #include "dev/mrsas/mrsas.h"
 
@@ -1941,7 +1941,7 @@ mrsas_tm_response_code(struct mrsas_softc *sc,
 /*
  * mrsas_issue_tm:  Fires the TM command to FW and waits for completion
  * input:           Adapter instance soft state
- *                  reqest descriptor compiled by mrsas_reset_targets
+ *                  request descriptor compiled by mrsas_reset_targets
  *
  * Returns FAIL if TM command TIMEDOUT from FW else SUCCESS.
  */

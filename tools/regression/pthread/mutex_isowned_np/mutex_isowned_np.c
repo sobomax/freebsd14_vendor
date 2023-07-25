@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5c23568c33acda646229e92682b0b3cf345784cd $
+ * $FreeBSD: 381921c38a0628c974f0ec00d4c5f9fc8a1b3a85 $
  */
 
 #include <pthread.h>
@@ -46,7 +46,7 @@ thread(void *arg)
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 	pthread_t thr;
 	pthread_mutex_t mtx;

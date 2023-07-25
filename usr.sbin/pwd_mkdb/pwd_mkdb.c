@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)pwd_mkdb.c	8.5 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6297bcb461dba214060c6744301a55645bd8e640 $");
+__FBSDID("$FreeBSD: 261e7951a126f14f362f4c7abd964b086c0b8cb8 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -462,11 +462,14 @@ main(int argc, char *argv[])
 					error("put");
 			}
 		}
-		/* Create original format password file entry */
-		if (is_comment && makeold){	/* copy comments */
-			if (fprintf(oldfp, "%s\n", line) < 0)
-				error("write old");
-		} else if (makeold) {
+		/*
+		 * Create original style password file entry.
+		 *
+		 * Don't copy comments since this could reveal encrypted
+		 * passwords if entries have been simply commented out
+		 * in master.passwd.
+		 */
+		if (makeold && !is_comment) {
 			char uidstr[20];
 			char gidstr[20];
 

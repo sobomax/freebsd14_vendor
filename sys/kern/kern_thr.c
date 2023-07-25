@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69259d78811aa80f465e59f53748353827dc485c $");
+__FBSDID("$FreeBSD: 5da2735facb455211d9d8c1d870e4fb08137341b $");
 
 #include "opt_posix.h"
 #include "opt_hwpmc_hooks.h"
@@ -54,7 +54,7 @@ __FBSDID("$FreeBSD: 69259d78811aa80f465e59f53748353827dc485c $");
 #include <sys/ucontext.h>
 #include <sys/thr.h>
 #include <sys/rtprio.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #include <sys/limits.h>
 #ifdef	HWPMC_HOOKS
 #include <sys/pmckern.h>
@@ -231,8 +231,6 @@ thread_create(struct thread *td, struct rtprio *rtp,
 	if (error)
 		goto fail;
 
-	cpu_copy_thread(newtd, td);
-
 	bzero(&newtd->td_startzero,
 	    __rangeof(struct thread, td_startzero, td_endzero));
 	bcopy(&td->td_startcopy, &newtd->td_startcopy,
@@ -240,6 +238,8 @@ thread_create(struct thread *td, struct rtprio *rtp,
 	newtd->td_proc = td->td_proc;
 	newtd->td_rb_list = newtd->td_rbp_list = newtd->td_rb_inact = 0;
 	thread_cow_get(newtd, td);
+
+	cpu_copy_thread(newtd, td);
 
 	error = initialize_thread(newtd, thunk);
 	if (error != 0) {

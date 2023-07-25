@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4306eea416fe397e2d1a2f0d6bb905d14f1e45e $");
+__FBSDID("$FreeBSD: 7e4b086727266da5c3b20c87ce9aab8fb93e80a0 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -192,6 +192,15 @@ again:
 		if (mcopy) {
 			icmp6_error(mcopy, ICMP6_DST_UNREACH,
 			ICMP6_DST_UNREACH_NOROUTE, 0);
+		}
+		goto bad;
+	}
+
+	if (nh->nh_flags & (NHF_BLACKHOLE | NHF_REJECT)) {
+		IP6STAT_INC(ip6s_cantforward);
+		if ((nh->nh_flags & NHF_REJECT) && (mcopy != NULL)) {
+			icmp6_error(mcopy, ICMP6_DST_UNREACH,
+			    ICMP6_DST_UNREACH_REJECT, 0);
 		}
 		goto bad;
 	}

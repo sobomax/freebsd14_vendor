@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 435235f0384d2609bea62497849aa2d332be1d34 $");
+__FBSDID("$FreeBSD: 0facc9e63b32980b481a546980c907298f870db5 $");
 
 #include "opt_sysvipc.h"
 
@@ -210,7 +210,7 @@ static struct syscall_helper_data msg32_syscalls[] = {
 #endif
 
 static int
-msginit()
+msginit(void)
 {
 	struct prison *pr;
 	void **rsv;
@@ -313,7 +313,7 @@ msginit()
 }
 
 static int
-msgunload()
+msgunload(void)
 {
 	struct msqid_kernel *msqkptr;
 	int msqid;

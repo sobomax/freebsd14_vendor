@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a26293867a0964f3d539702cb3d3aaf9bb852674 $
+ * $FreeBSD: 8c3db9db54a0f25151b6e9b813703c7aebc48147 $
  */
 
 #ifndef	_MEVENT_H_
@@ -44,7 +44,7 @@ enum ev_type {
 
 struct mevent;
 
-struct mevent *mevent_add(int fd, enum ev_type type, 
+struct mevent *mevent_add(int fd, enum ev_type type,
 			  void (*func)(int, enum ev_type, void *),
 			  void *param);
 struct mevent *mevent_add_flags(int fd, enum ev_type type, int fflags,

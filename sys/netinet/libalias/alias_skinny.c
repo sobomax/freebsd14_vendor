@@ -29,7 +29,7 @@
  *
  * Author: Joe Marcus Clarke <marcus@FreeBSD.org>
  *
- * $FreeBSD: 31b33696fc206c4515610ab001e9b72ef3e0bffe $
+ * $FreeBSD: 2c664c2c58d9588b55ce793c341d2a4a06974dcb $
  */
 
 #ifdef _KERNEL
@@ -216,7 +216,7 @@ alias_skinny_reg_msg(struct RegisterMessage *reg_msg, struct ip *pip,
 
 	tc->th_sum = 0;
 #ifdef _KERNEL
-	tc->th_x2 = 1;
+	tc->th_x2 = (TH_RES1 >> 8);
 #else
 	tc->th_sum = TcpChecksum(pip);
 #endif
@@ -259,7 +259,7 @@ alias_skinny_port_msg(struct IpPortMessage *port_msg, struct ip *pip,
 
 	tc->th_sum = 0;
 #ifdef _KERNEL
-	tc->th_x2 = 1;
+	tc->th_x2 = (TH_RES1 >> 8);
 #else
 	tc->th_sum = TcpChecksum(pip);
 #endif
@@ -291,7 +291,7 @@ alias_skinny_opnrcvch_ack(struct libalias *la, struct OpenReceiveChannelAck *opn
 
 	tc->th_sum = 0;
 #ifdef _KERNEL
-	tc->th_x2 = 1;
+	tc->th_x2 = (TH_RES1 >> 8);
 #else
 	tc->th_sum = TcpChecksum(pip);
 #endif

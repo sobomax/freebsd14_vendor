@@ -1,8 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2013 Dmitry Chagin
- * All rights reserved.
+ * Copyright (c) 2013 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bd339de4af59ba95314733035fb09a7950fe2f4 $");
+__FBSDID("$FreeBSD: 22ad39a84eebf1828627569369c99cb8ac2fe97a $");
 
 #include "opt_compat.h"
 
@@ -60,5 +59,4 @@ DUMMY(mq_timedsend);
 DUMMY(mq_timedreceive);
 DUMMY(mq_notify);
 DUMMY(mq_getsetattr);
-DUMMY(semtimedop);
 DUMMY(kexec_file_load);

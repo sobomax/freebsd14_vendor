@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: ae6c8df64c6f9ccf2df809d568b7d00e1f651fb6 $
+ * $FreeBSD: a7e4b6d03a5cf5059c87fdee0282acbba0f5c348 $
  */
 
 #ifndef __CONFIG_H__
@@ -38,14 +38,14 @@
  * The database only stores string values.  Callers should parse
  * values into other types if needed.  String values can reference
  * other configuration variables using a '%(name)' syntax.  In this
- * case, the name must be the the full path of the configuration
+ * case, the name must be the full path of the configuration
  * variable.  The % character can be escaped with a preceding \ to
  * avoid expansion.  Any \ characters must be escaped.
  *
  * Configuration variables are stored in a tree.  The full path of a
  * variable is specified as a dot-separated name similar to sysctl(8)
  * OIDs.
- */ 
+ */
 
 /*
  * Fetches the value of a configuration variable.  If the "raw" value

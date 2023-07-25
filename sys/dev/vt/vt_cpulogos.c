@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6450c89ead6d1a3ebde650cac70d54d113b570d1 $");
+__FBSDID("$FreeBSD: 4337c31e0054bc49e2f5e417af7535f8277e7fcd $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: 6450c89ead6d1a3ebde650cac70d54d113b570d1 $");
 #include <sys/mutex.h>
 #include <sys/smp.h>
 #include <sys/systm.h>
-#include <sys/taskqueue.h>
 #include <sys/terminal.h>
 
 #include <dev/vt/vt.h>
@@ -221,12 +220,14 @@ vt_init_logos(void *dummy)
 	if (!vt_splash_cpu)
 		return;
 
-	tm = &vt_consterm;
-	vw = tm->tm_softc;
+	vd = &vt_consdev;
+	if (vd == NULL)
+		return;
+	vw = vd->vd_curwindow;
 	if (vw == NULL)
 		return;
-	vd = vw->vw_device;
-	if (vd == NULL)
+	tm = vw->vw_terminal;
+	if (tm == NULL)
 		return;
 	vf = vw->vw_font;
 	if (vf == NULL)

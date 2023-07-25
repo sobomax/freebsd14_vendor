@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: f9ea3d573089a262c45b185075594ee139a27ed0 $
+ * $FreeBSD: e59c92f2326fb5171d6da3978036ee7d3887cc40 $
  */
 
 #ifndef _BHYVE_SNAPSHOT_
@@ -41,6 +41,9 @@
 #include <machine/vmm_snapshot.h>
 #include <libxo/xo.h>
 #include <ucl.h>
+
+#define BHYVE_RUN_DIR "/var/run/bhyve/"
+#define MAX_SNAPSHOT_FILENAME PATH_MAX
 
 struct vmctx;
 
@@ -63,8 +66,8 @@ struct checkpoint_thread_info {
 };
 
 typedef int (*vm_snapshot_dev_cb)(struct vm_snapshot_meta *);
-typedef int (*vm_pause_dev_cb) (struct vmctx *, const char *);
-typedef int (*vm_resume_dev_cb) (struct vmctx *, const char *);
+typedef int (*vm_pause_dev_cb) (const char *);
+typedef int (*vm_resume_dev_cb) (const char *);
 
 struct vm_snapshot_dev_info {
 	const char *dev_name;		/* device name */
@@ -93,12 +96,13 @@ int restore_vm_mem(struct vmctx *ctx, struct restore_state *rstate);
 int vm_restore_kern_structs(struct vmctx *ctx, struct restore_state *rstate);
 
 int vm_restore_user_devs(struct vmctx *ctx, struct restore_state *rstate);
-int vm_pause_user_devs(struct vmctx *ctx);
-int vm_resume_user_devs(struct vmctx *ctx);
+int vm_pause_user_devs(void);
+int vm_resume_user_devs(void);
 
 int get_checkpoint_msg(int conn_fd, struct vmctx *ctx);
 void *checkpoint_thread(void *param);
 int init_checkpoint_thread(struct vmctx *ctx);
+void init_snapshot(void);
 
 int load_restore_file(const char *filename, struct restore_state *rstate);
 

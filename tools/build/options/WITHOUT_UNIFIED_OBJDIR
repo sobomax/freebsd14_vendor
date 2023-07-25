@@ -1,4 +1,4 @@
-.\" $FreeBSD: 840196941da4de1c0359bdfb5427470049491b1c $
+.\" $FreeBSD: c20a96aeaea32619340617644c59095e92849354 $
 Use the historical object directory format for
 .Xr build 7
 targets.
@@ -9,7 +9,8 @@ while for cross-builds
 .Pa ${MAKEOBJDIRPREFIX}/${TARGET}.${TARGET_ARCH}/${.CURDIR}
 is used.
 .Pp
-This option is transitional and will be removed before the 12.0 release,
+This option is transitional and will be removed in a future version of
+.Fx ,
 at which time
-.va WITH_UNIFIED_OBJDIR
+.Va WITH_UNIFIED_OBJDIR
 will be enabled permanently.

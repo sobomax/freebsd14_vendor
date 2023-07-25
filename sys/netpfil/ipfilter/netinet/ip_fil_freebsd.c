@@ -1,4 +1,4 @@
-/*	$FreeBSD: f617584394cf576dcff676d44ca7d1a45968018d $	*/
+/*	$FreeBSD: fa0cdbab0ab31dc8d8a7947900618af31953914d $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -47,6 +47,7 @@ static const char rcsid[] = "@(#)$Id$";
 #include <net/route/nhop.h>
 #include <netinet/in.h>
 #include <netinet/in_fib.h>
+#include <netinet/in_pcb.h>
 #include <netinet/in_var.h>
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
@@ -279,6 +280,12 @@ ipfioctl(struct cdev *dev, ioctlcmd_t cmd, caddr_t data,
 		V_ipfmain.ipf_interror = 130001;
 		CURVNET_RESTORE();
 		return (EPERM);
+	}
+
+	if (jailed_without_vnet(p->p_cred)) {
+		V_ipfmain.ipf_interror = 130018;
+		CURVNET_RESTORE();
+		return (EOPNOTSUPP);
 	}
 
 	unit = GET_MINOR(dev);
@@ -1171,17 +1178,17 @@ mbufchainlen(struct mbuf *m0)
 /* We assume that 'xmin' is a pointer to a buffer that is part of the chain */
 /* of buffers that starts at *fin->fin_mp.                                  */
 /* ------------------------------------------------------------------------ */
-void *
+ip_t *
 ipf_pullup(mb_t *xmin, fr_info_t *fin, int len)
 {
 	int dpoff, ipoff;
 	mb_t *m = xmin;
-	char *ip;
+	ip_t *ip;
 
 	if (m == NULL)
 		return (NULL);
 
-	ip = (char *)fin->fin_ip;
+	ip = fin->fin_ip;
 	if ((fin->fin_flx & FI_COALESCE) != 0)
 		return (ip);
 
@@ -1226,6 +1233,7 @@ ipf_pullup(mb_t *xmin, fr_info_t *fin, int len)
 #endif
 		} else
 		{
+
 			m = m_pullup(m, len);
 		}
 		if (n != NULL)
@@ -1252,9 +1260,9 @@ ipf_pullup(mb_t *xmin, fr_info_t *fin, int len)
 			m = m->m_next;
 		}
 		fin->fin_m = m;
-		ip = MTOD(m, char *) + ipoff;
+		ip = MTOD(m, ip_t *) + ipoff;
 
-		fin->fin_ip = (ip_t *)ip;
+		fin->fin_ip = ip;
 		if (fin->fin_dp != NULL)
 			fin->fin_dp = (char *)fin->fin_ip + dpoff;
 		if (fin->fin_fraghdr != NULL)

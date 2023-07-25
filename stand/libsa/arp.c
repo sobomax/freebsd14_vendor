@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d49559b4e048091b4bbb4a635427121cb80730f $");
+__FBSDID("$FreeBSD: 9152cb2773ddb7ce211bf9be5ffcec7df9b128c9 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -178,7 +178,7 @@ arprecv(struct iodesc *d, void **pkt, void **payload, time_t tleft, void *extra)
 	if (n == -1 || n < sizeof(struct ether_arp)) {
 #ifdef ARP_DEBUG
 		if (debug)
-			printf("bad len=%d\n", n);
+			printf("bad len=%zd\n", n);
 #endif
 		free(ptr);
 		return (-1);

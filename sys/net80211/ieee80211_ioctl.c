@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 419518eb1224711fb1291a28f426440d16d1f64f $");
+__FBSDID("$FreeBSD: 839f965f542f3fd3ef06cd3db09490948b553756 $");
 
 /*
  * IEEE 802.11 ioctl support (FreeBSD-specific)
@@ -332,7 +332,7 @@ ieee80211_ioctl_getscanresults(struct ieee80211vap *vap,
 		void *p;
 
 		space = req.space;
-		/* XXX M_WAITOK after driver lock released */
+		/* XXX IEEE80211_M_WAITOK after driver lock released */
 		p = IEEE80211_MALLOC(space, M_TEMP,
 		    IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 		if (p == NULL)
@@ -478,7 +478,7 @@ getstainfo_common(struct ieee80211vap *vap, struct ieee80211req *ireq,
 		req.space = ireq->i_len;
 	if (req.space > 0) {
 		space = req.space;
-		/* XXX M_WAITOK after driver lock released */
+		/* XXX IEEE80211_M_WAITOK after driver lock released */
 		p = IEEE80211_MALLOC(space, M_TEMP,
 		    IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 		if (p == NULL) {

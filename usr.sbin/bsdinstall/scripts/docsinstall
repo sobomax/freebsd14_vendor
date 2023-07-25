@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: cb1f1e1858adddab15ede715a492e2ee5d95f43f $
+# $FreeBSD: ee74ec063151d83556607fea8c586edb7da41d7a $
 #
 ############################################################ INCLUDES
 
@@ -42,7 +42,7 @@ f_include $BSDCFG_SHARE/packages/packages.subr
 # List of languages to display (descriptions pulled from $msg_{lang}doc_desc)
 #
 : ${DOCSINSTALL_LANGS:=\
-	bn da de el en es fr hu it ja ko mn nl pl pt ru tr zh_cn zh_tw \
+	bn da de el en es fr hu id it ja ko mn nl pl pt ru tr zh_cn zh_tw \
 }
 
 ############################################################ GLOBALS
@@ -63,6 +63,7 @@ msg_frdoc_desc="French Documentation"
 msg_freebsd_documentation_installation="FreeBSD Documentation Installation"
 msg_freebsd_installer="FreeBSD Installer"
 msg_hudoc_desc="Hungarian Documentation"
+msg_iddoc_desc="Indonesian Documentation"
 msg_itdoc_desc="Italian Documentation"
 msg_jadoc_desc="Japanese Documentation"
 msg_kodoc_desc="Korean Documentation"

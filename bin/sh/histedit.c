@@ -36,13 +36,16 @@ static char sccsid[] = "@(#)histedit.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3100221d6add890a1c1915419c7f10eff4917ac $");
+__FBSDID("$FreeBSD: b9af20e6e9abf46216f568129095a76f8c80bdb9 $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <paths.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -69,14 +72,77 @@ __FBSDID("$FreeBSD: f3100221d6add890a1c1915419c7f10eff4917ac $");
 History *hist;	/* history cookie */
 EditLine *el;	/* editline cookie */
 int displayhist;
+static int savehist;
 static FILE *el_in, *el_out;
+static bool in_command_completion;
 
 static char *fc_replace(const char *, char *, char *);
 static int not_fcnumber(const char *);
 static int str_to_event(const char *, int);
 static int comparator(const void *, const void *, void *);
 static char **sh_matches(const char *, int, int);
+static const char *append_char_function(const char *);
 static unsigned char sh_complete(EditLine *, int);
+
+static const char *
+get_histfile(void)
+{
+	const char *histfile;
+
+	/* don't try to save if the history size is 0 */
+	if (hist == NULL || histsizeval() == 0)
+		return (NULL);
+	histfile = expandstr("${HISTFILE-${HOME-}/.sh_history}");
+
+	if (histfile[0] == '\0')
+		return (NULL);
+	return (histfile);
+}
+
+void
+histsave(void)
+{
+	HistEvent he;
+	char *histtmpname = NULL;
+	const char *histfile;
+	int fd;
+	FILE *f;
+
+	if (!savehist || (histfile = get_histfile()) == NULL)
+		return;
+	INTOFF;
+	asprintf(&histtmpname, "%s.XXXXXXXXXX", histfile);
+	if (histtmpname == NULL) {
+		INTON;
+		return;
+	}
+	fd = mkstemp(histtmpname);
+	if (fd == -1 || (f = fdopen(fd, "w")) == NULL) {
+		free(histtmpname);
+		INTON;
+		return;
+	}
+	if (history(hist, &he, H_SAVE_FP, f) < 1 ||
+	    rename(histtmpname, histfile) == -1)
+		unlink(histtmpname);
+	fclose(f);
+	free(histtmpname);
+	INTON;
+
+}
+
+void
+histload(void)
+{
+	const char *histfile;
+	HistEvent he;
+
+	if ((histfile = get_histfile()) == NULL)
+		return;
+	errno = 0;
+	if (history(hist, &he, H_LOAD, histfile) != -1 || errno == ENOENT)
+		savehist = 1;
+}
 
 /*
  * Set history and editing status.  Called whenever the status may
@@ -190,7 +256,6 @@ setterm(const char *term)
 int
 histcmd(int argc, char **argv __unused)
 {
-	int ch;
 	const char *editor = NULL;
 	HistEvent he;
 	int lflg = 0, nflg = 0, rflg = 0, sflg = 0;
@@ -212,25 +277,29 @@ histcmd(int argc, char **argv __unused)
 	if (argc == 1)
 		error("missing history argument");
 
-	while (not_fcnumber(*argptr) && (ch = nextopt("e:lnrs")) != '\0')
-		switch ((char)ch) {
-		case 'e':
-			editor = shoptarg;
-			break;
-		case 'l':
-			lflg = 1;
-			break;
-		case 'n':
-			nflg = 1;
-			break;
-		case 'r':
-			rflg = 1;
-			break;
-		case 's':
-			sflg = 1;
-			break;
-		}
-
+	while (not_fcnumber(*argptr))
+		do {
+			switch (nextopt("e:lnrs")) {
+			case 'e':
+				editor = shoptarg;
+				break;
+			case 'l':
+				lflg = 1;
+				break;
+			case 'n':
+				nflg = 1;
+				break;
+			case 'r':
+				rflg = 1;
+				break;
+			case 's':
+				sflg = 1;
+				break;
+			case '\0':
+				goto operands;
+			}
+		} while (nextopt_optptr != NULL);
+operands:
 	savehandler = handler;
 	/*
 	 * If executing...
@@ -540,8 +609,10 @@ static char
 	size_t i = 0, size = 16, uniq;
 	size_t curpos = end - start, lcstring = -1;
 
+	in_command_completion = false;
 	if (start > 0 || memchr("/.~", text[0], 3) != NULL)
 		return (NULL);
+	in_command_completion = true;
 	if ((free_path = path = strdup(pathval())) == NULL)
 		goto out;
 	if ((matches = malloc(size * sizeof(matches[0]))) == NULL)
@@ -635,6 +706,32 @@ out:
 }
 
 /*
+ * If we don't specify this function as app_func in the call to fn_complete2,
+ * libedit will use the default one, which adds a " " to plain files and
+ * a "/" to directories regardless of whether it's a command name or a plain
+ * path (relative or absolute). We never want to add "/" to commands.
+ *
+ * For example, after I did "mkdir rmdir", "rmdi" would be autocompleted to
+ * "rmdir/" instead of "rmdir ".
+ */
+static const char *
+append_char_function(const char *name)
+{
+	struct stat stbuf;
+	char *expname = name[0] == '~' ? fn_tilde_expand(name) : NULL;
+	const char *rs;
+
+	if (!in_command_completion &&
+	    stat(expname ? expname : name, &stbuf) == 0 &&
+	    S_ISDIR(stbuf.st_mode))
+		rs = "/";
+	else
+		rs = " ";
+	free(expname);
+	return (rs);
+}
+
+/*
  * This is passed to el_set(el, EL_ADDFN, ...) so that it's possible to
  * bind a key (tab by default) to execute the function.
  */
@@ -642,8 +739,8 @@ unsigned char
 sh_complete(EditLine *sel, int ch __unused)
 {
 	return (unsigned char)fn_complete2(sel, NULL, sh_matches,
-		L" \t\n\"\\'`@$><=;|&{(", NULL, NULL, (size_t)100,
-		NULL, &((int) {0}), NULL, NULL, FN_QUOTE_MATCH);
+		L" \t\n\"\\'`@$><=;|&{(", NULL, append_char_function,
+		(size_t)100, NULL, &((int) {0}), NULL, NULL, FN_QUOTE_MATCH);
 }
 
 #else

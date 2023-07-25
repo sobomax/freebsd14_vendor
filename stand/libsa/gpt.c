@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46e67a9c9a2dec6aedc16a335313a0f56745c766 $");
+__FBSDID("$FreeBSD: 6f061e4a8096a714d05ee6ee0a4df835de372027 $");
 
 #include <sys/param.h>
 #include <sys/gpt.h>
@@ -79,7 +79,7 @@ gptupdate(const char *which, struct dsk *dskp, struct gpt_hdr *hdr,
 	hdr->hdr_crc_table = crc32(0, Z_NULL, 0);
 	hdr->hdr_crc_table = crc32(hdr->hdr_crc_table, (const Bytef *)table,
 	    hdr->hdr_entries * hdr->hdr_entsz);
-	hdr->hdr_crc_self = crc32(0, Z_NULL, 0);;
+	hdr->hdr_crc_self = crc32(0, Z_NULL, 0);
 	hdr->hdr_crc_self = crc32(hdr->hdr_crc_self, (const Bytef *)hdr,
 	    hdr->hdr_size);
 	bzero(secbuf, DEV_BSIZE);

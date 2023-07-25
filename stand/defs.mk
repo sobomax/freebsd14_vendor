@@ -1,4 +1,4 @@
-# $FreeBSD: bbebf270c7ef55f1aa65f0b891bf3d9d82be054d $
+# $FreeBSD: 765fd046a8790be90eb079632cbb669829f89324 $
 
 .if !defined(__BOOT_DEFS_MK__)
 __BOOT_DEFS_MK__=${MFILE}
@@ -24,6 +24,12 @@ INTERNALLIB=
 # to disable more and more features. Boot loader performance is never improved
 # enough to make that hassle worth chasing.
 _CPUCFLAGS=
+
+.if ${LDFLAGS:M-nostdlib}
+# Sanitizers won't work unless we link against libc (e.g. in userboot/test).
+MK_ASAN:=	no
+MK_UBSAN:=	no
+.endif
 
 .include <src.opts.mk>
 .include <bsd.linker.mk>

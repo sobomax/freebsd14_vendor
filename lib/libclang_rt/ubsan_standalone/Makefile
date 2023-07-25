@@ -1,4 +1,4 @@
-# $FreeBSD: 9da97cacc20b6b8ba954e78c554bc21b57b44eec $
+# $FreeBSD: 53f27fad257943b24980fc66e7d5a2913dde67b1 $
 
 .include <bsd.init.mk>
 
@@ -25,7 +25,6 @@ SRCS+=		sanitizer_common/sanitizer_libignore.cpp
 SRCS+=		sanitizer_common/sanitizer_linux.cpp
 SRCS+=		sanitizer_common/sanitizer_linux_libcdep.cpp
 SRCS+=		sanitizer_common/sanitizer_mutex.cpp
-SRCS+=		sanitizer_common/sanitizer_persistent_allocator.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_freebsd.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_linux.cpp
 SRCS+=		sanitizer_common/sanitizer_platform_limits_posix.cpp
@@ -34,6 +33,7 @@ SRCS+=		sanitizer_common/sanitizer_posix_libcdep.cpp
 SRCS+=		sanitizer_common/sanitizer_printf.cpp
 SRCS+=		sanitizer_common/sanitizer_procmaps_bsd.cpp
 SRCS+=		sanitizer_common/sanitizer_procmaps_common.cpp
+SRCS+=		sanitizer_common/sanitizer_stack_store.cpp
 SRCS+=		sanitizer_common/sanitizer_stackdepot.cpp
 SRCS+=		sanitizer_common/sanitizer_stacktrace.cpp
 SRCS+=		sanitizer_common/sanitizer_stacktrace_libcdep.cpp

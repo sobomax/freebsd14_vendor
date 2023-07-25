@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f9c353052e8dcc5d5b931132bfe1fbe1b96b254 $");
+__FBSDID("$FreeBSD: 9de97d749f6d7c09343e5151784a9b861c322702 $");
 
 #define	LINUXKPI_PARAM_PREFIX ibcore_
 #define	KBUILD_MODNAME "ibcore"
@@ -2874,6 +2874,7 @@ static int ib_mad_post_receive_mads(struct ib_mad_qp_info *qp_info,
 						 DMA_FROM_DEVICE);
 		if (unlikely(ib_dma_mapping_error(qp_info->port_priv->device,
 						  sg_list.addr))) {
+			kfree(mad_priv);
 			ret = -ENOMEM;
 			break;
 		}

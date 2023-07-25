@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66a035554b1712aeef1947b3d3b9424092d2f4ed $");
+__FBSDID("$FreeBSD: d7dea8efc40ece46e4551d0b200b994cde19b2b5 $");
 
 #include "opt_ddb.h"
 
@@ -449,17 +449,13 @@ _rm_rlock(struct rmlock *rm, struct rm_priotracker *tracker, int trylock)
 		THREAD_NO_SLEEPING();
 
 	td->td_critnest++;	/* critical_enter(); */
-
 	atomic_interrupt_fence();
 
 	pc = cpuid_to_pcpu[td->td_oncpu];
-
 	rm_tracker_add(pc, tracker);
-
 	sched_pin();
 
 	atomic_interrupt_fence();
-
 	td->td_critnest--;
 
 	/*
@@ -517,8 +513,12 @@ _rm_runlock(struct rmlock *rm, struct rm_priotracker *tracker)
 		return;
 
 	td->td_critnest++;	/* critical_enter(); */
+	atomic_interrupt_fence();
+
 	pc = cpuid_to_pcpu[td->td_oncpu];
 	rm_tracker_remove(pc, tracker);
+
+	atomic_interrupt_fence();
 	td->td_critnest--;
 	sched_unpin();
 

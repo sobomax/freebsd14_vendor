@@ -253,7 +253,6 @@ void
 zfs_ereport_clear(spa_t *spa, vdev_t *vd)
 {
 	uint64_t vdev_guid, pool_guid;
-	int cnt = 0;
 
 	ASSERT(vd != NULL || spa != NULL);
 	if (vd == NULL) {
@@ -277,7 +276,6 @@ zfs_ereport_clear(spa_t *spa, vdev_t *vd)
 			avl_remove(&recent_events_tree, entry);
 			list_remove(&recent_events_list, entry);
 			kmem_free(entry, sizeof (*entry));
-			cnt++;
 		}
 	}
 
@@ -825,9 +823,6 @@ annotate_ecksum(nvlist_t *ereport, zio_bad_cksum_t *info,
 	const uint64_t *good;
 	const uint64_t *bad;
 
-	uint64_t allset = 0;
-	uint64_t allcleared = 0;
-
 	size_t nui64s = size / sizeof (uint64_t);
 
 	size_t inline_size;
@@ -928,9 +923,6 @@ annotate_ecksum(nvlist_t *ereport, zio_bad_cksum_t *info,
 			set = ((~good[idx]) & bad[idx]);
 			// bits set in good, but not in bad
 			cleared = (good[idx] & (~bad[idx]));
-
-			allset |= set;
-			allcleared |= cleared;
 
 			if (!no_inline) {
 				ASSERT3U(offset, <, inline_size);

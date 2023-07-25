@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 74ff68622075cbd321cbfba45d6007065a03e966 $
+ * $FreeBSD: 37ae9dcdd7745807c953c26d6d4de1590465f995 $
  */
 
 #ifndef	_IMGACT_BINMISC_H_
@@ -57,8 +57,9 @@ _Static_assert(IBE_MAGIC_MAX <= IBE_MATCH_MAX,
  */
 #define	IBF_ENABLED	0x0001	/* Entry is active. */
 #define	IBF_USE_MASK	0x0002	/* Use mask on header magic field. */
+#define	IBF_PRE_OPEN	0x0004	/* Cache the vnode for interpreter */
 
-#define	IBF_VALID_UFLAGS	0x0003	/* Bits allowed from userland. */
+#define	IBF_VALID_UFLAGS	0x0007	/* Bits allowed from userland. */
 
 /*
  * Used with sysctlbyname() to pass imgact bin misc entries in and out of the

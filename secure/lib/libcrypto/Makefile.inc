@@ -1,10 +1,10 @@
-# $FreeBSD: 1cb8a96033ad72c8b77515ba3fdcc2f887abcd58 $
+# $FreeBSD: 8b89b9e36a088cd3c02019f8174d198acf859e8a $
 
 .include <bsd.own.mk>
 
 # OpenSSL version used for manual page generation
-OPENSSL_VER=	1.1.1o
-OPENSSL_DATE=	2022-05-03
+OPENSSL_VER=	1.1.1t
+OPENSSL_DATE=	2023-02-07
 
 LCRYPTO_SRC=	${SRCTOP}/crypto/openssl
 LCRYPTO_DOC=	${LCRYPTO_SRC}/doc
@@ -113,3 +113,9 @@ CFLAGS+=	-DENGINESDIR="\"${LIBDIR}/engines\""
 CFLAGS+=	-DNDEBUG
 
 MANDIR=		${SHAREDIR}/openssl/man/man
+
+.for pcfile in ${PCFILES}
+${pcfile}:	${pcfile}.in
+	sed -e 's,@openssl_ver@,${OPENSSL_VER},g' ${.ALLSRC} > ${.TARGET}
+.endfor
+CLEANFILES+=	${PCFILES}

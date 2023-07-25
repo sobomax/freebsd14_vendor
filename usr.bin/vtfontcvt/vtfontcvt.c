@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d236ff6a3e2f0327ef390e60eb301d3538843ebf $");
+__FBSDID("$FreeBSD: d73dd86414f43c95c043a1c85a7fdca9ba6257ad $");
 
 #include <sys/types.h>
 #include <sys/endian.h>
@@ -180,8 +180,8 @@ usage(void)
 {
 
 	(void)fprintf(stderr, "usage: vtfontcvt "
-	    "[-n] [-f font|source|compressed-source] [-w width] "
-	    "[-h height]\n\t[-v] normal.bdf [bold.bdf] out.fnt\n");
+	    "[-n] [-f font|source|compressed-source] [-w width] [-h height]\n"
+	    "\t[-v] -o output_file normal.bdf [bold.bdf]\n");
 	exit(1);
 }
 
@@ -565,7 +565,7 @@ parse_hex(FILE *fp, unsigned int map_idx)
 			if (bytes != NULL)
 				errx(1, "malformed input: Width tag after font data");
 			set_width(atoi(ln + 9));
-		} else if (sscanf(ln, "%6x:", &curchar)) {
+		} else if (sscanf(ln, "%6x:", &curchar) == 1) {
 			if (bytes == NULL) {
 				bytes = xmalloc(wbytes * height);
 				bytes_r = xmalloc(wbytes * height);

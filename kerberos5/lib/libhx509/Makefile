@@ -1,6 +1,6 @@
-# $FreeBSD: 175dc63a0bb787e018a8ee9b1fa7c9021f748bde $
+# $FreeBSD: a17216d254a6227d83783d96c87a5ce2102558f6 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	hx509
 LDFLAGS=	-Wl,--no-undefined

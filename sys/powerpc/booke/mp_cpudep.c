@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 709578d8e1b4e7f9abdca34ea4d79d418a03104e $");
+__FBSDID("$FreeBSD: b8b939a785ed97a0dc8ac8da3b7e8936173823dc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,7 +51,7 @@ extern void icache_inval(void);
 volatile void *ap_pcpu;
 
 uintptr_t
-cpudep_ap_bootstrap()
+cpudep_ap_bootstrap(void)
 {
 	uint32_t msr, csr;
 	uintptr_t sp;
@@ -94,6 +94,6 @@ cpudep_ap_bootstrap()
 }
 
 void
-cpudep_ap_setup()
+cpudep_ap_setup(void)
 {
 }

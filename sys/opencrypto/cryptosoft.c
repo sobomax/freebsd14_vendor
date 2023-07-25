@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 567a0f4748d52768152c3e9bde206ee15c852d2e $");
+__FBSDID("$FreeBSD: b77a86e8b93ac96cf978c6f05722fe9d896ff43b $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1308,9 +1308,6 @@ swcr_setup_gcm(struct swcr_session *ses,
 	struct swcr_auth *swa;
 	struct auth_hash *axf;
 
-	if (csp->csp_ivlen != AES_GCM_IV_LEN)
-		return (EINVAL);
-
 	/* First, setup the auth side. */
 	swa = &ses->swcr_auth;
 	switch (csp->csp_cipher_klen * 8) {
@@ -1511,6 +1508,15 @@ swcr_probesession(device_t dev, const struct crypto_session_params *csp)
 		switch (csp->csp_cipher_alg) {
 		case CRYPTO_AES_NIST_GCM_16:
 		case CRYPTO_AES_CCM_16:
+			switch (csp->csp_cipher_klen * 8) {
+			case 128:
+			case 192:
+			case 256:
+				break;
+			default:
+				return (EINVAL);
+			}
+			break;
 		case CRYPTO_CHACHA20_POLY1305:
 			break;
 		default:

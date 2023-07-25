@@ -1,4 +1,4 @@
-/* $FreeBSD: b5a387cb08fd8d4d0b4afa3126b2a9335eb57add $ */
+/* $FreeBSD: ba80114eb9be4d10341de8562dbaff484b26401a $ */
 #ifndef _EFI_CON_H
 #define _EFI_CON_H
 
@@ -421,7 +421,7 @@ EFI_STATUS
 
   Routine Description:
     Reads the next keystroke from the input device. The WaitForKey Event can
-    be used to test for existance of a keystroke via WaitForEvent () call.
+    be used to test for existence of a keystroke via WaitForEvent () call.
 
   Arguments:
     This       - Protocol instance pointer.

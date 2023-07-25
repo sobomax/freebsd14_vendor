@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f9c0ceeac5e2d4a39ac7b66c28a4d7453e6f4301 $
+ * $FreeBSD: 72d8af6779a512d4744ac9ba2752ee37e8b96fc2 $
  */
 #ifndef	_LINUXKPI_LINUX_ERRNO_H_
 #define	_LINUXKPI_LINUX_ERRNO_H_
@@ -44,6 +44,7 @@
 #define	ERESTARTSYS     512
 #define	ENOTSUPP	EOPNOTSUPP
 #define	ENONET		EHOSTDOWN
+#define	EHWPOISON	133	/* Memory page hardware error */
 
 /*
  * The error numbers below are arbitrary and do not resemble the numbers

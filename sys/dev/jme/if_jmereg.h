@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 14265334a63b580e6659bf75b24c9ea70d1f4167 $
+ * $FreeBSD: 3b9e0b4ae1cf5a5755724b229698621165514c45 $
  */
 
 #ifndef	_IF_JMEREG_H
@@ -180,7 +180,7 @@
  * Misc registers         128 bytes     BAR2 + 0x80 ~       BAR0 + 0x800 ~
  *                                       BAR2 + 0x7F         BAR0 + 0x87F
  * -----------------------------------------------------------------------
- * To simplify register access fuctions and to get better performance
+ * To simplify register access functions and to get better performance
  * this driver doesn't support IO space access. It could be implemented
  * as a function which selects appropriate BARs to access requested
  * register.

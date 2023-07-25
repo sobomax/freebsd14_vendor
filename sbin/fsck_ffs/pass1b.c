@@ -35,7 +35,7 @@ static const char sccsid[] = "@(#)pass1b.c	8.4 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17a3b6495dc448cbd9a70c74e939c948fa1611cb $");
+__FBSDID("$FreeBSD: e2a200b8b2f222f345ba1df29a7a00261328e590 $");
 
 #include <sys/param.h>
 
@@ -88,10 +88,12 @@ pass1b(void)
 			if (inoinfo(inumber)->ino_state != USTATE &&
 			    (ckinode(dp, &idesc) & STOP)) {
 				rerun = 1;
+				freeinodebuf();
 				return;
 			}
 		}
 	}
+	freeinodebuf();
 }
 
 static int

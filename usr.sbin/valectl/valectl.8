@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: a85118cae7c15a6c9a4117e39c10be2c01fc7ab5 $
+.\" $FreeBSD: 83bddea9207f7427287d0f73f4f76d7e7cfc2eb5 $
 .\"
-.Dd March 31, 2020
+.Dd April 2, 2021
 .Dt VALECTL 8
 .Os
 .Sh NAME
@@ -97,7 +97,7 @@ The name must be different from any other network interface
 already present in the system.
 .It Fl r Ar interface
 Destroy the persistent VALE port with name
-.Ar inteface .
+.Ar interface .
 .It Fl l Ar valeSSS:PPP
 Show the internal bridge number and port number of the given switch port.
 .It Fl p Ar valeSSS:PPP
@@ -150,7 +150,7 @@ Using this option you can let them share memory with other ports.
 Pass 1 as
 .Ar memid
 to use the global memory region already shared by all
-harware netmap ports.
+hardware netmap ports.
 .El
 .Sh SEE ALSO
 .Xr netmap 4 ,
@@ -158,6 +158,6 @@ harware netmap ports.
 .Sh AUTHORS
 .An -nosplit
 .Nm
-was written by
+has been written by
 .An Michio Honda
 at NetApp.

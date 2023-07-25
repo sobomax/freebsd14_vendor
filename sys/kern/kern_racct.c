@@ -27,11 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 797a06cc15b1a14c3bc77e6af596d2b5807fcf67 $
+ * $FreeBSD: 94624e88af51942622c14e5524af0a6886ad143f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 797a06cc15b1a14c3bc77e6af596d2b5807fcf67 $");
+__FBSDID("$FreeBSD: 94624e88af51942622c14e5524af0a6886ad143f $");
 
 #include "opt_sched.h"
 
@@ -55,9 +55,8 @@ __FBSDID("$FreeBSD: 797a06cc15b1a14c3bc77e6af596d2b5807fcf67 $");
 #include <sys/smp.h>
 #include <sys/sx.h>
 #include <sys/sysctl.h>
-#include <sys/sysent.h>
 #include <sys/sysproto.h>
-#include <sys/umtx.h>
+#include <sys/umtxvar.h>
 #include <machine/smp.h>
 
 #ifdef RCTL

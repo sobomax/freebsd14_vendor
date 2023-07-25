@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 410d1bcf952c3027a7b3016b2a133aa4c27a7d17 $");
+__FBSDID("$FreeBSD: 554d56e71c1cec27d980ca52ac0697bad031c58d $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -269,7 +269,7 @@ in6_gre_setup_socket(struct gre_softc *sc)
 	 * NOTE: we are protected with gre_ioctl_sx lock.
 	 *
 	 * First check that socket is already configured.
-	 * If so, check that source addres was not changed.
+	 * If so, check that source address was not changed.
 	 * If address is different, check that there are no other tunnels
 	 * and close socket.
 	 */

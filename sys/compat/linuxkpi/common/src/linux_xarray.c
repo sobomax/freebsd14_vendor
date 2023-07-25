@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c26a2af450e8ab82053423a4cd5e349ee7d615d0 $");
+__FBSDID("$FreeBSD: a41784103852e6f97838e3fb1c4583b0ed59ab42 $");
 
 #include <linux/xarray.h>
 
@@ -103,7 +103,7 @@ __xa_alloc(struct xarray *xa, uint32_t *pindex, void *ptr, uint32_t mask, gfp_t 
 	XA_ASSERT_LOCKED(xa);
 
 	/* mask should allow to allocate at least one item */
-	MPASS(mask > (xa->flags & XA_FLAGS_ALLOC1) != 0 ? 1 : 0);
+	MPASS(mask > ((xa->flags & XA_FLAGS_ALLOC1) != 0 ? 1 : 0));
 
 	/* mask can be any power of two value minus one */
 	MPASS((mask & (mask + 1)) == 0);
@@ -160,7 +160,7 @@ __xa_alloc_cyclic(struct xarray *xa, uint32_t *pindex, void *ptr, uint32_t mask,
 	XA_ASSERT_LOCKED(xa);
 
 	/* mask should allow to allocate at least one item */
-	MPASS(mask > (xa->flags & XA_FLAGS_ALLOC1) != 0 ? 1 : 0);
+	MPASS(mask > ((xa->flags & XA_FLAGS_ALLOC1) != 0 ? 1 : 0));
 
 	/* mask can be any power of two value minus one */
 	MPASS((mask & (mask + 1)) == 0);

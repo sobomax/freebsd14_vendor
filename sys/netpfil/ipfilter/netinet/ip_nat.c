@@ -1,4 +1,4 @@
-/*	$FreeBSD: fd9429a623dd3ed5c697ca5b1737bdb1a6d3364a $	*/
+/*	$FreeBSD: 9ee3082aa8643fc537547c1fae1773260933df75 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -42,6 +42,9 @@ struct file;
 #include <sys/socket.h>
 #if defined(_KERNEL)
 # include <sys/systm.h>
+# if defined(__FreeBSD__)
+#  include <sys/jail.h>
+# endif
 # if !defined(__SVR4)
 #  include <sys/mbuf.h>
 # endif
@@ -105,7 +108,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: fd9429a623dd3ed5c697ca5b1737bdb1a6d3364a $";
+static const char rcsid[] = "@(#)$FreeBSD: 9ee3082aa8643fc537547c1fae1773260933df75 $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -999,6 +1002,12 @@ ipf_nat_ioctl(ipf_main_softc_t *softc, caddr_t data, ioctlcmd_t cmd,
 		IPFERROR(60001);
 		return (EPERM);
 	}
+# if defined(__FreeBSD__)
+	if (jailed_without_vnet(curthread->td_ucred)) {
+		IPFERROR(60076);
+		return (EOPNOTSUPP);
+	}
+# endif
 #endif
 
 	getlock = (mode & NAT_LOCKHELD) ? 0 : 1;

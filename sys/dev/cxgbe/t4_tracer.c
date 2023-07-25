@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f6c85b15c75a150abbd64a0a658ac4a28461ea3a $");
+__FBSDID("$FreeBSD: c4d6f9d48fbcf1affcf4cf217a15a17487587ada $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -231,7 +231,7 @@ t4_cloner_destroy(struct if_clone *ifc, struct ifnet *ifp)
 }
 
 void
-t4_tracer_modload()
+t4_tracer_modload(void)
 {
 
 	sx_init(&t4_trace_lock, "T4/T5 tracer lock");
@@ -240,7 +240,7 @@ t4_tracer_modload()
 }
 
 void
-t4_tracer_modunload()
+t4_tracer_modunload(void)
 {
 
 	if (t4_cloner != NULL) {

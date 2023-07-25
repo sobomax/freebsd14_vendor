@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: fcb50f4b5217d9a75b16fc253c4a7c7fd562cf73 $
+ * $FreeBSD: afcaa69998b8cfaef3fc5b63d3a392459f12d1ed $
  */
 #ifndef	_LINUXKPI_LINUX_DMA_MAPPING_H_
 #define _LINUXKPI_LINUX_DMA_MAPPING_H_
@@ -95,6 +95,8 @@ int linux_dma_tag_init(struct device *, u64);
 int linux_dma_tag_init_coherent(struct device *, u64);
 void *linux_dma_alloc_coherent(struct device *dev, size_t size,
     dma_addr_t *dma_handle, gfp_t flag);
+void *linuxkpi_dmam_alloc_coherent(struct device *dev, size_t size,
+    dma_addr_t *dma_handle, gfp_t flag);
 dma_addr_t linux_dma_map_phys(struct device *dev, vm_paddr_t phys, size_t len);
 void linux_dma_unmap(struct device *dev, dma_addr_t dma_addr, size_t size);
 int linux_dma_map_sg_attrs(struct device *dev, struct scatterlist *sgl,
@@ -157,6 +159,14 @@ dma_zalloc_coherent(struct device *dev, size_t size, dma_addr_t *dma_handle,
 {
 
 	return (dma_alloc_coherent(dev, size, dma_handle, flag | __GFP_ZERO));
+}
+
+static inline void *
+dmam_alloc_coherent(struct device *dev, size_t size, dma_addr_t *dma_handle,
+    gfp_t flag)
+{
+
+	return (linuxkpi_dmam_alloc_coherent(dev, size, dma_handle, flag));
 }
 
 static inline void
@@ -313,6 +323,13 @@ _dma_unmap_single_attrs(struct device *dev, dma_addr_t dma, size_t size,
 	linux_dma_unmap(dev, dma, size);
 }
 
+static inline size_t
+dma_max_mapping_size(struct device *dev)
+{
+
+	return (SCATTERLIST_MAX_SEGMENT);
+}
+
 #define	dma_map_single_attrs(dev, ptr, size, dir, attrs)	\
 	_dma_map_single_attrs(dev, ptr, size, dir, 0)
 
@@ -333,5 +350,30 @@ _dma_unmap_single_attrs(struct device *dev, dma_addr_t dma, size_t size,
 
 extern int uma_align_cache;
 #define	dma_get_cache_alignment()	uma_align_cache
+
+
+static inline int
+dma_map_sgtable(struct device *dev, struct sg_table *sgt,
+    enum dma_data_direction dir,
+    unsigned long attrs)
+{
+	int nents;
+
+	nents = dma_map_sg_attrs(dev, sgt->sgl, sgt->nents, dir, attrs);
+	if (nents < 0)
+		return (nents);
+	sgt->nents = nents;
+	return (0);
+}
+
+static inline void
+dma_unmap_sgtable(struct device *dev, struct sg_table *sgt,
+    enum dma_data_direction dir,
+    unsigned long attrs)
+{
+
+	dma_unmap_sg_attrs(dev, sgt->sgl, sgt->nents, dir, attrs);
+}
+
 
 #endif	/* _LINUXKPI_LINUX_DMA_MAPPING_H_ */

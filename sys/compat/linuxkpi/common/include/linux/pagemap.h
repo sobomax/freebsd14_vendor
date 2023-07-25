@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e25fa743f9a7bff07e481a23858b34877ea31877 $
+ * $FreeBSD: f3c8c04aa13efbcc7ddc94b2e881999e3236b51f $
  */
 
 #ifndef _LINUXKPI_LINUX_PAGEMAP_H_
 #define _LINUXKPI_LINUX_PAGEMAP_H_
 
 #include <linux/mm.h>
+#include <linux/highmem.h>
 
 static inline void
 release_pages(struct page **pages, int nr)
@@ -40,6 +41,11 @@ release_pages(struct page **pages, int nr)
 
 	for (i = 0; i < nr; i++)
 		put_page(pages[i]);
+}
+
+static inline void
+mapping_clear_unevictable(vm_object_t mapping)
+{
 }
 
 #endif

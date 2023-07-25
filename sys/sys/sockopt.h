@@ -30,7 +30,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: cb7fc3ffca2740a8457cb834ae70e606c20453fd $
+ * $FreeBSD: d01d62f216807b5c36b81e26f6a4aa46628be699 $
  */
 #ifndef _SYS_SOCKOPT_H_
 #define _SYS_SOCKOPT_H_
@@ -68,5 +68,6 @@ int	accept_filt_getopt(struct socket *, struct sockopt *);
 int	accept_filt_setopt(struct socket *, struct sockopt *);
 int	so_setsockopt(struct socket *so, int level, int optname,
 	    void *optval, size_t optlen);
+u_long	sogetmaxbuf(struct socket *so);
 
 #endif /* _SYS_SOCKOPT_H_ */

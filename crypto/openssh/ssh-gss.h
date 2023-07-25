@@ -1,5 +1,4 @@
 /* $OpenBSD: ssh-gss.h,v 1.15 2021/01/27 10:05:28 djm Exp $ */
-/* $FreeBSD: e19009770f5d4a6237d9cdae99912b9449d3e682 $ */
 /*
  * Copyright (c) 2001-2003 Simon Wilkinson. All rights reserved.
  *

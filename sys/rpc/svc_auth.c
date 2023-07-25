@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)svc_auth.c 1.26 89/02/07 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75d1f21d348479ba057789f325417ca21171af23 $");
+__FBSDID("$FreeBSD: 21149139b5a5ef45c1b673c0633dae40b542f4e1 $");
 
 /*
  * svc_auth.c, Server-side rpc authenticator interface.
@@ -70,7 +70,7 @@ static const struct svc_auth_ops svc_auth_null_ops;
  * set rqst->rq_xprt->verf to the appropriate response verifier;
  * sets rqst->rq_client_cred to the "cooked" form of the credentials.
  *
- * NB: rqst->rq_cxprt->verf must be pre-alloctaed;
+ * NB: rqst->rq_cxprt->verf must be pre-allocated;
  * its length is set appropriately.
  *
  * The caller still owns and is responsible for msg->u.cmb.cred and

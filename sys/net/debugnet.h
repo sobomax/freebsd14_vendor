@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7b323ad113d76258a1f9a941dec62224c4099ad1 $
+ * $FreeBSD: ce7cba52fcb0e7534547e46623d7fe5003c5fa1f $
  */
 
 /*
@@ -108,7 +108,7 @@ struct debugnet_conn_params {
 	uint32_t	dc_herald_datalen;
 
 	/*
-	 * Consistent with debugnet_send(), aux paramaters to debugnet
+	 * Consistent with debugnet_send(), aux parameters to debugnet
 	 * functions are provided host-endian (but converted to
 	 * network endian on the wire).
 	 */

@@ -1,8 +1,6 @@
 .\"
 .\" Copyright (c) 2009 Sylvestre Gallon
 .\"
-.\" All rights reserved.
-.\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
 .\" are met:
@@ -24,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 0d0e2b1a4ef159099b252e64f4ae3e0b05d7e5fd $
+.\" $FreeBSD: d4c638d986e4847adce03938e2e35dab5a2b0e0d $
 .\"
-.Dd June 9, 2020
+.Dd October, 2, 2022
 .Dt LIBUSB 3
 .Os
 .Sh NAME
@@ -602,6 +600,15 @@ the events lock.
 Determine if an active thread is handling events.
 Returns 1 if there is a thread handling events and 0 if there
 are no threads currently handling events.
+.Pp
+.Ft void
+.Fn libusb_interrupt_event_handler "libusb_context *ctx"
+Causes the
+.Fn libusb_handle_events
+familiy of functions to return to the caller one time.
+The
+.Fn libusb_handle_events
+functions may be called again after calling this function.
 .Pp
 .Ft void
 .Fn libusb_lock_event_waiters "libusb_context *ctx"

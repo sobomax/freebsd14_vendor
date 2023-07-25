@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a1bdf7cde076c0531494f7b7323770aff31798c $");
+__FBSDID("$FreeBSD: be13d1008c7e96d6e1e42b1fb7659135e00c5d4b $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -495,8 +495,6 @@ trap(struct trapframe *frame)
 	}
 
 	if (sig != 0) {
-		if (p->p_sysent->sv_transtrap != NULL)
-			sig = (p->p_sysent->sv_transtrap)(sig, type);
 		ksiginfo_init_trap(&ksi);
 		ksi.ksi_signo = sig;
 		ksi.ksi_code = (int) ucode; /* XXX, not POSIX */

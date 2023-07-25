@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)netnamer.c 1.13 91/03/11 Copyr 1986 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 591f6d5c91e5fd752f3e26bb3a7925da6a023e14 $");
+__FBSDID("$FreeBSD: 8062c446dffe91a3dd10a4361dfb94512d0c5d6a $");
 
 /*
  * netname utility routines convert from unix names to network names and
@@ -64,7 +64,7 @@ static char    *NETID = "netid.byname";
 static char    *NETIDFILE = "/etc/netid";
 
 static int getnetid( char *, char * );
-static int _getgroups( char *, gid_t * );
+static int _getgroups( char *, gid_t [NGRPS] );
 
 /*
  * Convert network-name into unix credential

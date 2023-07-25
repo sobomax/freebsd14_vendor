@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6b816464c167ecb4564347b5b5928e68df9556f2 $
+ * $FreeBSD: 519382ea15a677b1fadaf514d902e53b4c71289f $
  */
 
 #ifndef _MACHINE_PTE_H_
@@ -52,8 +52,8 @@ typedef	uint64_t	pt_entry_t;		/* page table entry */
 #define	ATTR_MASK_L		UINT64_C(0x0000000000000fff)
 #define	ATTR_MASK		(ATTR_MASK_H | ATTR_MASK_L)
 /* Bits 58:55 are reserved for software */
-#define	ATTR_SW_UNUSED2		(1UL << 58)
-#define	ATTR_SW_UNUSED1		(1UL << 57)
+#define	ATTR_SW_UNUSED1		(1UL << 58)
+#define	ATTR_SW_NO_PROMOTE	(1UL << 57)
 #define	ATTR_SW_MANAGED		(1UL << 56)
 #define	ATTR_SW_WIRED		(1UL << 55)
 

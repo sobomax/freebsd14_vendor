@@ -27,7 +27,7 @@
 #include "opt_ratelimit.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c752d87af810d7654f7738ceec7b3a0b0dac2f5b $");
+__FBSDID("$FreeBSD: 315583601831a9b9b1d55cc1abd9b7b451533802 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -343,11 +343,11 @@ mlx5_fw_reset(struct mlx5_core_dev *mdev)
 	error = -mlx5_set_mfrl_reg(mdev, MLX5_FRL_LEVEL3);
 	if (error == 0) {
 		dev = mdev->pdev->dev.bsddev;
-		mtx_lock(&Giant);
+		bus_topo_lock();
 		bus = device_get_parent(dev);
 		error = BUS_RESET_CHILD(device_get_parent(bus), bus,
 		    DEVF_RESET_DETACH);
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 	}
 	return (error);
 }

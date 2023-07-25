@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 11891b56ecbe64674041a4021777250a6e123872 $");
+__FBSDID("$FreeBSD: 3231ca2147753c49abc9e703fd53fa350a3cda1a $");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: 11891b56ecbe64674041a4021777250a6e123872 $");
 #include <sys/racct.h>
 #include <sys/refcount.h>
 #include <sys/sx.h>
-#include <sys/sysent.h>
 #include <sys/namei.h>
 #include <sys/mount.h>
 #include <sys/queue.h>

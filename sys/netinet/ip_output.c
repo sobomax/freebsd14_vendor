@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a23a38b08fa804c20e54864d7ba2f2359799fa71 $");
+__FBSDID("$FreeBSD: 595957afe1466ebac3873611220c065d1356d1b2 $");
 
 #include "opt_inet.h"
 #include "opt_ipsec.h"
@@ -515,7 +515,7 @@ again:
 	} else {
 		struct nhop_object *nh;
 
-		nh = fib4_lookup(M_GETFIB(m), ip->ip_dst, 0, NHR_NONE,
+		nh = fib4_lookup(M_GETFIB(m), dst->sin_addr, 0, NHR_NONE,
 		    m->m_pkthdr.flowid);
 		if (nh == NULL) {
 #if defined(IPSEC) || defined(IPSEC_SUPPORT)

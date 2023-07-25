@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: b6ad7701c32b25d23a3dd07c5fc80f7c5b37c4fb $
+# $FreeBSD: 58a7c72b2082221d5e3397b10322152b9a3ae722 $
 #
 # Our current make(1)-based approach to dependency tracking cannot cope with
 # certain source tree changes, including:
@@ -78,3 +78,17 @@ fi
 clean_dep   cddl/lib/libspl atomic S
 # 20211207  cbdec8db18b5    switch to libthr-friendly pdfork
 clean_dep   lib/libc        pdfork S
+
+# 20220524  68fe988a40ca    kqueue_test binary replaced shell script
+if stat "$OBJTOP"/tests/sys/kqueue/libkqueue/*kqtest* \
+    "$OBJTOP"/tests/sys/kqueue/libkqueue/.depend.kqtest* >/dev/null 2>&1; then
+	echo "Removing old kqtest"
+	rm -f "$OBJTOP"/tests/sys/kqueue/libkqueue/.depend.* \
+	   "$OBJTOP"/tests/sys/kqueue/libkqueue/*
+fi
+
+# 20230110  bc42155199b5    usr.sbin/zic/zic -> usr.sbin/zic
+if [ -d "$OBJTOP"/usr.sbin/zic/zic ] ; then
+	echo "Removing old zic directory"
+	rm -rf "$OBJTOP"/usr.sbin/zic/zic
+fi

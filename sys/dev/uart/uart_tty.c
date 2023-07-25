@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad7052289f0b77f565afd9d947791d9c23cacabb $");
+__FBSDID("$FreeBSD: 482a392cdb279e61cdb780abc25fd1b732bff981 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,6 +76,9 @@ CONSOLE_DRIVER(
 );
 
 static struct uart_devinfo uart_console;
+
+/* TTY swi(9) event. Allows all uart soft handlers to share one ithread. */
+static struct intr_event *tty_intr_event;
 
 static void
 uart_cnprobe(struct consdev *cp)

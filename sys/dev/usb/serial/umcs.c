@@ -35,12 +35,12 @@
  * http://www.moschip.com.  The datasheets don't contain full
  * programming information for the chip.
  *
- * It is nornal to have only two enabled ports in devices, based on
+ * It is normal to have only two enabled ports in devices, based on
  * quad-port mos7840.
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3c8f1a764fb44d1bdb7e42d8729ac0caa1f43a2 $");
+__FBSDID("$FreeBSD: 06480509c576f23ed6113d81514d03da3f2dfeef $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -347,7 +347,7 @@ umcs7840_attach(device_t dev)
 	}
 	device_printf(dev, "Chip mcs%04x, found %d active ports\n", uaa->info.idProduct, sc->sc_numports);
 	if (!umcs7840_get_reg_sync(sc, MCS7840_DEV_REG_MODE, &data)) {
-		device_printf(dev, "On-die confguration: RST: active %s, HRD: %s, PLL: %s, POR: %s, Ports: %s, EEPROM write %s, IrDA is %savailable\n",
+		device_printf(dev, "On-die configuration: RST: active %s, HRD: %s, PLL: %s, POR: %s, Ports: %s, EEPROM write %s, IrDA is %savailable\n",
 		    (data & MCS7840_DEV_MODE_RESET) ? "low" : "high",
 		    (data & MCS7840_DEV_MODE_SER_PRSNT) ? "yes" : "no",
 		    (data & MCS7840_DEV_MODE_PLLBYPASS) ? "bypassed" : "avail",

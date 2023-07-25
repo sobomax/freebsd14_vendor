@@ -1,6 +1,6 @@
-# $FreeBSD: dcc034fd7564f5d8fbc0c2cab6167efc1046d26f $
+# $FreeBSD: 867a7f8e9b55bf84ae02dd7a7418b90f66fde40f $
 
-PACKAGE=runtime
+PACKAGE=geom
 PROG=	gbde
 SRCS=	gbde.c template.c
 SRCS+=	rijndael-alg-fst.c

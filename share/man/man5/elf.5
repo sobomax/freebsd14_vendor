@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 81376e7e6bb9b32b188966f7fc1b602b45d9f873 $
+.\" $FreeBSD: 95bc183a1f911d239cbaa987d0e444bc10c3519b $
 .\"
-.Dd November 27, 2021
+.Dd July 25, 2022
 .Dt ELF 5
 .Os
 .Sh NAME
@@ -1103,6 +1103,10 @@ A value of
 .Dv ELFCOMPRESS_ZLIB
 indicates that the data is compressed using
 .Xr zlib 3 .
+A value of
+.Dv ELFCOMPRESS_ZSTD
+indicates that the data is compressed using
+Zstandard.
 .It Dv ch_size
 The size, in bytes, of the uncompressed section data.
 This corresponds to the

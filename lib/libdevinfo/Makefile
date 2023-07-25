@@ -1,5 +1,6 @@
-# $FreeBSD: 7995660fb7fd48ed5eb2de6ac257731e070354d7 $
+# $FreeBSD: 7edfaecb53b26d47ac65539275b8fb2afd6313f9 $
 
+PACKAGE=	devmatch
 LIB=	devinfo
 SRCS=	devinfo.c
 INCS=	devinfo.h

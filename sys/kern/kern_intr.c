@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0cbfce030a36f95854908c649e8d83017fab03db $");
+__FBSDID("$FreeBSD: 29e88ff42ae4a0614b66a55b8e8741f7748ad92e $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_usage_prof.h"
@@ -87,8 +87,6 @@ struct	intr_entropy {
 };
 
 struct	intr_event *clk_intr_event;
-struct	intr_event *tty_intr_event;
-void	*vm_ih;
 struct proc *intrproc;
 
 static MALLOC_DEFINE(M_ITHREAD, "ithread", "Interrupt Threads");
@@ -507,6 +505,9 @@ int
 intr_event_destroy(struct intr_event *ie)
 {
 
+	if (ie == NULL)
+		return (EINVAL);
+
 	mtx_lock(&event_lock);
 	mtx_lock(&ie->ie_lock);
 	if (!CK_SLIST_EMPTY(&ie->ie_handlers)) {
@@ -749,7 +750,7 @@ intr_event_barrier(struct intr_event *ie)
 
 	/*
 	 * Now wait on the inactive phase.
-	 * The acquire fence is needed so that that all post-barrier accesses
+	 * The acquire fence is needed so that all post-barrier accesses
 	 * are after the check.
 	 */
 	while (ie->ie_active[phase] > 0)
@@ -1590,8 +1591,6 @@ start_softintr(void *dummy)
 	if (swi_add(&clk_intr_event, "clk", NULL, NULL, SWI_CLOCK,
 	    INTR_MPSAFE, NULL))
 		panic("died while creating clk swi ithread");
-	if (swi_add(NULL, "vm", swi_vm, NULL, SWI_VM, INTR_MPSAFE, &vm_ih))
-		panic("died while creating vm swi ithread");
 }
 SYSINIT(start_softintr, SI_SUB_SOFTINTR, SI_ORDER_FIRST, start_softintr,
     NULL);

@@ -39,7 +39,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: e8d7ac7cf62f2c520e83f7be4a972a6d8000d708 $");
+SND_DECLARE_FILE("$FreeBSD: 73bad65b3c1da23f4640c8da53547a082d26e7f6 $");
 
 struct ad1816_info;
 
@@ -599,6 +599,7 @@ ad1816_attach(device_t dev)
 	struct ad1816_info *ad1816;
     	char status[SND_STATUSLEN], status2[SND_STATUSLEN];
 
+	gone_in_dev(dev, 14, "ISA sound driver");
 	ad1816 = malloc(sizeof(*ad1816), M_DEVBUF, M_WAITOK | M_ZERO);
 	ad1816->lock = snd_mtxcreate(device_get_nameunit(dev),
 	    "snd_ad1816 softc");

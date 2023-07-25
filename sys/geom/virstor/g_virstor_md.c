@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9a9eac350abe05b11970a5fc1c69f98e21dd0b7d $");
+__FBSDID("$FreeBSD: 297ec9a7c50b2a53f6db0961f7d39dd5966530c8 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -36,7 +36,7 @@ __FBSDID("$FreeBSD: 9a9eac350abe05b11970a5fc1c69f98e21dd0b7d $");
 #include <geom/virstor/binstream.h>
 
 /*
- * Encode data from g_virstor_metadata structure into a endian-independant
+ * Encode data from g_virstor_metadata structure into a endian-independent
  * byte stream.
  */
 void
@@ -64,7 +64,7 @@ virstor_metadata_encode(struct g_virstor_metadata *md, unsigned char *data)
 }
 
 /*
- * Decode data from endian-independant byte stream into g_virstor_metadata
+ * Decode data from endian-independent byte stream into g_virstor_metadata
  * structure.
  */
 void

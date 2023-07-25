@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85a2da76012d7287c6586cf06e959cccfd115a6a $");
+__FBSDID("$FreeBSD: a0293b9a27453dc72d17c36686dc4e5e12e03d74 $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -265,6 +265,29 @@ domain_add(void *data)
 		printf("WARNING: attempt to domain_add(%s) after "
 		    "domainfinalize()\n", dp->dom_name);
 #endif
+	mtx_unlock(&dom_mtx);
+}
+
+void
+domain_remove(void *data)
+{
+	struct domain *dp = (struct domain *)data;
+
+	if (dp->dom_family != PF_NETLINK)
+		return;
+
+	mtx_lock(&dom_mtx);
+	if (domains == dp) {
+		domains = dp->dom_next;
+	} else {
+		struct domain *curr;
+		for (curr = domains; curr != NULL; curr = curr->dom_next) {
+			if (curr->dom_next == dp) {
+				curr->dom_next = dp->dom_next;
+				break;
+			}
+		}
+	}
 	mtx_unlock(&dom_mtx);
 }
 
@@ -532,7 +555,7 @@ pfslowtimo(void *arg)
 	}
 	NET_EPOCH_EXIT(et);
 	rm_runlock(&pftimo_lock, &tracker);
-	callout_reset(&pfslow_callout, hz/2, pfslowtimo, NULL);
+	callout_reset(&pfslow_callout, hz / PR_SLOWHZ, pfslowtimo, NULL);
 }
 
 static void
@@ -549,5 +572,5 @@ pffasttimo(void *arg)
 	}
 	NET_EPOCH_EXIT(et);
 	rm_runlock(&pftimo_lock, &tracker);
-	callout_reset(&pffast_callout, hz/5, pffasttimo, NULL);
+	callout_reset(&pffast_callout, hz / PR_FASTHZ, pffasttimo, NULL);
 }

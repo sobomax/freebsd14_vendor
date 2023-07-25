@@ -36,7 +36,7 @@
  *
  * From:
  *	$Id: procfs_status.c,v 3.1 1993/12/15 09:40:17 jsp Exp $
- * $FreeBSD: e4e7e51ac02a68f4dc6f7c4726757712e2470949 $
+ * $FreeBSD: 4592f458058d9ab2035f3a404c83ac1d730ed6a7 $
  */
 
 #include <sys/param.h>
@@ -52,7 +52,6 @@
 #include <sys/proc.h>
 #include <sys/resourcevar.h>
 #include <sys/sbuf.h>
-#include <sys/sysent.h>
 #include <sys/tty.h>
 
 #include <vm/vm.h>

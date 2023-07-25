@@ -43,7 +43,7 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: 06c1eb444dcece36eb7d391350b93b8b0e2301c4 $");
+SND_DECLARE_FILE("$FreeBSD: 046dfdc208e63d06d8c5264e903afebef50891af $");
 
 struct hdacc_fg {
 	device_t	dev;
@@ -197,19 +197,19 @@ static const struct {
 	{ HDA_CODEC_STAC9229D, 0,	"Sigmatel STAC9229D" },
 	{ HDA_CODEC_STAC9230X, 0,	"Sigmatel STAC9230X" },
 	{ HDA_CODEC_STAC9230D, 0,	"Sigmatel STAC9230D" },
-	{ HDA_CODEC_STAC9250, 0, 	"Sigmatel STAC9250" },
-	{ HDA_CODEC_STAC9251, 0, 	"Sigmatel STAC9251" },
-	{ HDA_CODEC_STAC9255, 0, 	"Sigmatel STAC9255" },
-	{ HDA_CODEC_STAC9255D, 0, 	"Sigmatel STAC9255D" },
-	{ HDA_CODEC_STAC9254, 0, 	"Sigmatel STAC9254" },
-	{ HDA_CODEC_STAC9254D, 0, 	"Sigmatel STAC9254D" },
+	{ HDA_CODEC_STAC9250, 0,	"Sigmatel STAC9250" },
+	{ HDA_CODEC_STAC9251, 0,	"Sigmatel STAC9251" },
+	{ HDA_CODEC_STAC9255, 0,	"Sigmatel STAC9255" },
+	{ HDA_CODEC_STAC9255D, 0,	"Sigmatel STAC9255D" },
+	{ HDA_CODEC_STAC9254, 0,	"Sigmatel STAC9254" },
+	{ HDA_CODEC_STAC9254D, 0,	"Sigmatel STAC9254D" },
 	{ HDA_CODEC_STAC9271X, 0,	"Sigmatel STAC9271X" },
 	{ HDA_CODEC_STAC9271D, 0,	"Sigmatel STAC9271D" },
 	{ HDA_CODEC_STAC9272X, 0,	"Sigmatel STAC9272X" },
 	{ HDA_CODEC_STAC9272D, 0,	"Sigmatel STAC9272D" },
 	{ HDA_CODEC_STAC9273X, 0,	"Sigmatel STAC9273X" },
 	{ HDA_CODEC_STAC9273D, 0,	"Sigmatel STAC9273D" },
-	{ HDA_CODEC_STAC9274, 0, 	"Sigmatel STAC9274" },
+	{ HDA_CODEC_STAC9274, 0,	"Sigmatel STAC9274" },
 	{ HDA_CODEC_STAC9274D, 0,	"Sigmatel STAC9274D" },
 	{ HDA_CODEC_STAC9274X5NH, 0,	"Sigmatel STAC9274X5NH" },
 	{ HDA_CODEC_STAC9274D5NH, 0,	"Sigmatel STAC9274D5NH" },
@@ -269,6 +269,7 @@ static const struct {
 	{ HDA_CODEC_IDT92HD90BXX, 0,	"IDT 92HD90BXX" },
 	{ HDA_CODEC_IDT92HD91BXX, 0,	"IDT 92HD91BXX" },
 	{ HDA_CODEC_IDT92HD93BXX, 0,	"IDT 92HD93BXX" },
+	{ HDA_CODEC_IDT92HD95B, 0,	"Tempo 92HD95B" },
 	{ HDA_CODEC_IDT92HD98BXX, 0,	"IDT 92HD98BXX" },
 	{ HDA_CODEC_IDT92HD99BXX, 0,	"IDT 92HD99BXX" },
 	{ HDA_CODEC_CX20549, 0,		"Conexant CX20549 (Venice)" },
@@ -396,6 +397,7 @@ static const struct {
 	{ HDA_CODEC_INTELALLK, 0,	"Intel Alder Lake" },
 	{ HDA_CODEC_SII1390, 0,		"Silicon Image SiI1390" },
 	{ HDA_CODEC_SII1392, 0,		"Silicon Image SiI1392" },
+	{ HDA_CODEC_VMWARE, 0,		"VMware" },
 	/* Unknown CODECs */
 	{ HDA_CODEC_ADXXXX, 0,		"Analog Devices" },
 	{ HDA_CODEC_AGEREXXXX, 0,	"Lucent/Agere Systems" },
@@ -413,6 +415,7 @@ static const struct {
 	{ HDA_CODEC_NVIDIAXXXX, 0,	"NVIDIA" },
 	{ HDA_CODEC_SIIXXXX, 0,		"Silicon Image" },
 	{ HDA_CODEC_STACXXXX, 0,	"Sigmatel" },
+	{ HDA_CODEC_VMWAREXXXX, 0,	"VMware" },
 	{ HDA_CODEC_VTXXXX, 0,		"VIA" },
 };
 

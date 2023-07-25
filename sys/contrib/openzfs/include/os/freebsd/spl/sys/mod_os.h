@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5695abee7b858e0718d1eb4a1e39c25670f7a22f $
+ * $FreeBSD: 46ea2d15ac6eed6e338b7b5232593ac1c9dc2677 $
  */
 
 #ifndef _SPL_MOD_H
@@ -52,7 +52,7 @@
 
 #define	ZFS_MODULE_PARAM_CALL_IMPL(parent, name, perm, args, desc) \
     SYSCTL_DECL(parent); \
-    SYSCTL_PROC(parent, OID_AUTO, name, perm | args, desc)
+    SYSCTL_PROC(parent, OID_AUTO, name, CTLFLAG_MPSAFE | perm | args, desc)
 
 #define	ZFS_MODULE_PARAM_CALL(scope_prefix, name_prefix, name, func, _, perm, desc) \
     ZFS_MODULE_PARAM_CALL_IMPL(_vfs_ ## scope_prefix, name, perm, func ## _args(name_prefix ## name), desc)

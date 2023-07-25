@@ -95,6 +95,8 @@ spa_generate_rootconf(const char *name)
 	for (i = 0; i < count; i++) {
 		uint64_t txg;
 
+		if (configs[i] == NULL)
+			continue;
 		txg = fnvlist_lookup_uint64(configs[i], ZPOOL_CONFIG_POOL_TXG);
 		if (txg > best_txg) {
 			best_txg = txg;
@@ -183,7 +185,6 @@ spa_import_rootpool(const char *name, bool checkpointrewind)
 	spa_t *spa;
 	vdev_t *rvd;
 	nvlist_t *config, *nvtop;
-	uint64_t txg;
 	char *pname;
 	int error;
 
@@ -196,7 +197,6 @@ spa_import_rootpool(const char *name, bool checkpointrewind)
 	if (config != NULL) {
 		pname = fnvlist_lookup_string(config, ZPOOL_CONFIG_POOL_NAME);
 		VERIFY0(strcmp(name, pname));
-		txg = fnvlist_lookup_uint64(config, ZPOOL_CONFIG_POOL_TXG);
 
 		if ((spa = spa_lookup(pname)) != NULL) {
 			/*
@@ -252,7 +252,7 @@ spa_import_rootpool(const char *name, bool checkpointrewind)
 		mutex_exit(&spa_namespace_lock);
 		fnvlist_free(config);
 		cmn_err(CE_NOTE, "Can not parse the config for pool '%s'",
-		    pname);
+		    name);
 		return (error);
 	}
 

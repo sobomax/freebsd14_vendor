@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)setjmp.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 5a5c0964ce101ab1203d81e546fa4a935a0d843e $
+.\" $FreeBSD: 2b6ea9afeb64ccbdda83d579ca1b5351a20c1784 $
 .\"
-.Dd June 4, 1993
+.Dd April 2, 2022
 .Dt SETJMP 3
 .Os
 .Sh NAME
@@ -170,3 +170,9 @@ and
 .Fn siglongjmp
 functions conform to
 .St -p1003.1-88 .
+.Sh HISTORY
+The
+.Fn setjmp
+and
+.Fn longjmp
+functions first appeared in the Programmer's Workbench (PWB/UNIX).

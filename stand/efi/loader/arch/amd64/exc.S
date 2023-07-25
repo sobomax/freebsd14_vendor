@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2016 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Konstantin Belousov under sponsorship
  * from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0035d4a37e20aa9a7d84cc31bc059f8aecb0057c $
+ * $FreeBSD: 19981e6e71521358988b44dbbbabb11c9755cdd8 $
  */
 
 	.macro	EH	N, err=1

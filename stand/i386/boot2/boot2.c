@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 898a8c27df1944e502114a3be9839cb597b8693e $");
+__FBSDID("$FreeBSD: 0c35fe9b7d938260e4315c1fa4fff58a3377e334 $");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>
@@ -355,7 +355,7 @@ load(void)
 }
 
 static int
-parse()
+parse(void)
 {
 	char *arg, *ep, *p, *q;
 	const char *cp;

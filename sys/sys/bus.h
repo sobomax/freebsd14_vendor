@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 80fdeb7cd61d92c33881cdbafb8f907e77780f03 $
+ * $FreeBSD: 2179e718c668eddf4c4a0cde3b7be42dac5f1111 $
  */
 
 #ifndef _SYS_BUS_H_
@@ -60,6 +60,21 @@ typedef enum device_state {
 	DS_ATTACHED = 30,		/**< @brief attach method called */
 	DS_BUSY = 40			/**< @brief device is open */
 } device_state_t;
+
+/**
+ * @brief Device proprty types.
+ *
+ * Those are used by bus logic to encode requested properties,
+ * e.g. in DT all properties are stored as BE and need to be converted
+ * to host endianness.
+ */
+typedef enum device_property_type {
+	DEVICE_PROP_ANY = 0,
+	DEVICE_PROP_BUFFER = 1,
+	DEVICE_PROP_UINT32 = 2,
+	DEVICE_PROP_UINT64 = 3,
+	DEVICE_PROP_HANDLE = 4,
+} device_property_type_t;
 
 /**
  * @brief Device information exported to userspace.
@@ -237,17 +252,17 @@ typedef void driver_intr_t(void*);
 
 /**
  * @brief Interrupt type bits.
- * 
- * These flags are used both by newbus interrupt
- * registration (nexus.c) and also in struct intrec, which defines
- * interrupt properties.
  *
- * XXX We should probably revisit this and remove the vestiges of the
- * spls implicit in names like INTR_TYPE_TTY. In the meantime, don't
- * confuse things by renaming them (Grog, 18 July 2000).
+ * These flags may be passed by drivers to bus_setup_intr(9) when
+ * registering a new interrupt handler. The field is overloaded to
+ * specify both the interrupt's type and any special properties.
  *
- * Buses which do interrupt remapping will want to change their type
- * to reflect what sort of devices are underneath.
+ * The INTR_TYPE* bits will be passed to intr_priority(9) to determine the
+ * scheduling priority of the handler's ithread. For the specific priority
+ * values assigned to each type, see sys/priority.h.
+ *
+ * Buses may choose to modify or augment these flags as appropriate,
+ * e.g. nexus may apply INTR_EXCL.
  */
 enum intr_type {
 	INTR_TYPE_TTY = 1,
@@ -441,6 +456,9 @@ bus_dma_tag_t
 bus_space_tag_t
 	bus_generic_get_bus_tag(device_t dev, device_t child);
 int	bus_generic_get_domain(device_t dev, device_t child, int *domain);
+ssize_t	bus_generic_get_property(device_t dev, device_t child,
+				 const char *propname, void *propvalue,
+				 size_t size, device_property_type_t type);
 struct resource_list *
 	bus_generic_get_resource_list (device_t, device_t);
 int	bus_generic_map_resource(device_t dev, device_t child, int type,
@@ -606,6 +624,7 @@ int	device_is_quiet(device_t dev);
 device_t device_lookup_by_name(const char *name);
 int	device_print_prettyname(device_t dev);
 int	device_printf(device_t dev, const char *, ...) __printflike(2, 3);
+int	device_log(device_t dev, int pri, const char *, ...) __printflike(3, 4);
 int	device_probe(device_t dev);
 int	device_probe_and_attach(device_t dev);
 int	device_probe_child(device_t bus, device_t dev);
@@ -626,6 +645,9 @@ int	device_set_unit(device_t dev, int unit);	/* XXX DONT USE XXX */
 int	device_shutdown(device_t dev);
 void	device_unbusy(device_t dev);
 void	device_verbose(device_t dev);
+ssize_t	device_get_property(device_t dev, const char *prop, void *val,
+    size_t sz, device_property_type_t type);
+bool device_has_property(device_t dev, const char *prop);
 
 /*
  * Access functions for devclass.
@@ -732,6 +754,14 @@ extern int bus_current_pass;
 void	bus_set_pass(int pass);
 
 /**
+ * Routines to lock / unlock the newbus lock.
+ * Must be taken out to interact with newbus.
+ */
+void bus_topo_lock(void);
+void bus_topo_unlock(void);
+struct mtx * bus_topo_mtx(void);
+
+/**
  * Shorthands for constructing method tables.
  */
 #define	DEVMETHOD	KOBJMETHOD
@@ -759,14 +789,17 @@ struct driver_module_data {
 	int		dmd_pass;
 };
 
-#define	EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, devclass,	\
+#define	_DRIVER_MODULE_MACRO(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...)	\
+	NAME
+
+#define	_EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, devclass,	\
     evh, arg, order, pass)						\
-									\
+								\
 static struct driver_module_data name##_##busname##_driver_mod = {	\
 	evh, arg,							\
 	#busname,							\
 	(kobj_class_t) &driver,						\
-	&devclass,							\
+	devclass,							\
 	pass								\
 };									\
 									\
@@ -778,18 +811,56 @@ static moduledata_t name##_##busname##_mod = {				\
 DECLARE_MODULE(name##_##busname, name##_##busname##_mod,		\
 	       SI_SUB_DRIVERS, order)
 
-#define	EARLY_DRIVER_MODULE(name, busname, driver, devclass, evh, arg, pass) \
-	EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, devclass,	\
+#define	EARLY_DRIVER_MODULE_ORDERED7(name, busname, driver, evh, arg,	\
+    order, pass)							\
+	_EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, NULL, evh,	\
+	    arg, order, pass)
+
+#define	EARLY_DRIVER_MODULE_ORDERED8(name, busname, driver, devclass,	\
+    evh, arg, order, pass)						\
+	_EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, &devclass,	\
+	    evh, arg, order, pass)
+
+#define	EARLY_DRIVER_MODULE_ORDERED(...)				\
+	_DRIVER_MODULE_MACRO(__VA_ARGS__, EARLY_DRIVER_MODULE_ORDERED8,	\
+	    EARLY_DRIVER_MODULE_ORDERED7)(__VA_ARGS__)
+
+#define	EARLY_DRIVER_MODULE7(name, busname, driver, devclass, evh, arg, pass) \
+	EARLY_DRIVER_MODULE_ORDERED8(name, busname, driver, devclass,	\
 	    evh, arg, SI_ORDER_MIDDLE, pass)
 
-#define	DRIVER_MODULE_ORDERED(name, busname, driver, devclass, evh, arg,\
+#define	EARLY_DRIVER_MODULE6(name, busname, driver, evh, arg, pass)	\
+	EARLY_DRIVER_MODULE_ORDERED7(name, busname, driver, evh, arg,	\
+	    SI_ORDER_MIDDLE, pass)
+
+#define	EARLY_DRIVER_MODULE(...)					\
+	_DRIVER_MODULE_MACRO(__VA_ARGS__, INVALID,			\
+	    EARLY_DRIVER_MODULE7, EARLY_DRIVER_MODULE6)(__VA_ARGS__)
+
+#define	DRIVER_MODULE_ORDERED7(name, busname, driver, devclass, evh, arg,\
     order)								\
-	EARLY_DRIVER_MODULE_ORDERED(name, busname, driver, devclass,	\
+	EARLY_DRIVER_MODULE_ORDERED8(name, busname, driver, devclass,	\
 	    evh, arg, order, BUS_PASS_DEFAULT)
 
-#define	DRIVER_MODULE(name, busname, driver, devclass, evh, arg)	\
-	EARLY_DRIVER_MODULE(name, busname, driver, devclass, evh, arg,	\
+#define	DRIVER_MODULE_ORDERED6(name, busname, driver, evh, arg, order)	\
+	EARLY_DRIVER_MODULE_ORDERED7(name, busname, driver, evh, arg,	\
+	    order, BUS_PASS_DEFAULT)
+
+#define	DRIVER_MODULE_ORDERED(...)					\
+	_DRIVER_MODULE_MACRO(__VA_ARGS__, INVALID,			\
+	    DRIVER_MODULE_ORDERED7, DRIVER_MODULE_ORDERED6)(__VA_ARGS__)
+
+#define	DRIVER_MODULE6(name, busname, driver, devclass, evh, arg)	\
+	EARLY_DRIVER_MODULE7(name, busname, driver, devclass, evh, arg,	\
 	    BUS_PASS_DEFAULT)
+
+#define	DRIVER_MODULE5(name, busname, driver, evh, arg)			\
+	EARLY_DRIVER_MODULE6(name, busname, driver, evh, arg,		\
+	    BUS_PASS_DEFAULT)
+
+#define	DRIVER_MODULE(...)						\
+	_DRIVER_MODULE_MACRO(__VA_ARGS__, INVALID, INVALID,		\
+	    DRIVER_MODULE6, DRIVER_MODULE5)(__VA_ARGS__)
 
 /**
  * Generic ivar accessor generation macros for bus drivers

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6326fbdae0becda698d7fe09271689910429d64b $
+ * $FreeBSD: 13de60f650dece9f98c023b315f68aa1c4c75a22 $
  */
 
 #ifndef _MACHINE_PCPU_H_
@@ -99,7 +99,9 @@ _Static_assert(sizeof(struct monitorbuf) == 128, "2x cache line");
 	uint32_t pc_smp_tlb_gen;					\
 	u_int	pc_smp_tlb_op;						\
 	uint64_t pc_ucr3_load_mask;					\
-	char	__pad[2916]		/* pad to UMA_PCPU_ALLOC_SIZE */
+	u_int	pc_small_core;						\
+	u_int	pc_pcid_invlpg_workaround;				\
+	char	__pad[2908]		/* pad to UMA_PCPU_ALLOC_SIZE */
 
 #define	PC_DBREG_CMD_NONE	0
 #define	PC_DBREG_CMD_LOAD	1

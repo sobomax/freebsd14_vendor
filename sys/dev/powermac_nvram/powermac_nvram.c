@@ -25,7 +25,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 186f80b1de102d325222dcac724f748b64069237 $
+ * $FreeBSD: bce511463d389d0acfc11966b0b6a6ddb238adba $
  */
 
 #include <sys/param.h>
@@ -218,7 +218,7 @@ powermac_nvram_open(struct cdev *dev, int flags, int fmt, struct thread *td)
 	sc->sc_rpos = sc->sc_wpos = 0;
 	sx_xunlock(&sc->sc_lock);
 
-	return 0;
+	return (err);
 }
 
 static int
@@ -362,7 +362,7 @@ adler_checksum(uint8_t *data, int len)
 	high = 0;
 	for (i = 0; i < len; i++) {
 		if ((i % 5000) == 0) {
-			high %= 65521UL;
+			low %= 65521UL;
 			high %= 65521UL;
 		}
 		low += data[i];

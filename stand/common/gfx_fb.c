@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 14524820bea4d3e5570e3905a86f1e8f0adeb70f $
+ * $FreeBSD: 3e163de265ed5262beca7e7cac7809c92fa2279e $
  */
 
 /*
@@ -783,14 +783,16 @@ gfxfb_blt(void *BltBuffer, GFXFB_BLT_OPERATION BltOperation,
 #if defined(EFI)
 	EFI_STATUS status;
 	EFI_GRAPHICS_OUTPUT *gop = gfx_state.tg_private;
-	extern int boot_services_gone;
 	EFI_TPL tpl;
 
 	/*
-	 * We assume Blt() does work, if not, we will need to build
-	 * exception list case by case.
+	 * We assume Blt() does work, if not, we will need to build exception
+	 * list case by case. We only have boot services during part of our
+	 * exectution. Once terminate boot services, these operations cannot be
+	 * done as they are provided by protocols that disappear when exit
+	 * boot services.
 	 */
-	if (gop != NULL && boot_services_gone == 0) {
+	if (gop != NULL && boot_services_active) {
 		tpl = BS->RaiseTPL(TPL_NOTIFY);
 		switch (BltOperation) {
 		case GfxFbBltVideoFill:
@@ -1188,7 +1190,7 @@ gfx_fb_copy_line(teken_gfx_t *state, int ncol, teken_pos_t *s, teken_pos_t *d)
 			screen_buffer[doffset + x] = screen_buffer[soffset + x];
 			if (mark) {
 				/* update end point */
-				sr.tr_end.tp_col = s->tp_col + x;;
+				sr.tr_end.tp_col = s->tp_col + x;
 			} else {
 				/* set up new rectangle */
 				mark = true;

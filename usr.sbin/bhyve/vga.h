@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 36c6dc15fa9e8ddcef78ba30fda00b3a511342a2 $
+ * $FreeBSD: f4c631a9305bb98c4adc34d1b159c65c9ab3bae7 $
  */
 
 #ifndef _VGA_H_
@@ -157,6 +157,8 @@
 #define	DAC_IDX_WR_PORT			0x3c8
 #define	DAC_DATA_PORT			0x3c9
 
+struct bhyvegc;
 void	*vga_init(int io_only);
+void	vga_render(struct bhyvegc *gc, void *arg);
 
 #endif /* _VGA_H_ */

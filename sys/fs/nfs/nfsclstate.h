@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 03400a2cdea5d64b1fb333683a1a9d8772f367af $
+ * $FreeBSD: 2b9b804a08dd533f97bbfa63bf56590a4b61ee27 $
  */
 
 #ifndef _NFS_NFSCLSTATE_H_
@@ -67,6 +67,7 @@ struct nfsclsession {
 	SVCXPRT		*nfsess_xprt;		/* For backchannel callback */
 	uint32_t	nfsess_slotseq[64];	/* Max for 64bit nm_slots */
 	uint64_t	nfsess_slots;
+	uint64_t	nfsess_badslots;	/* Slots possibly broken */
 	uint32_t	nfsess_sequenceid;
 	uint32_t	nfsess_maxcache;	/* Max size for cached reply. */
 	uint32_t	nfsess_maxreq;		/* Max request size. */

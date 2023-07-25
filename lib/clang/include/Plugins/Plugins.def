@@ -1,4 +1,4 @@
-// $FreeBSD: 31445a0449dda535f30c4c7cf2cccbf09fe9e990 $
+// $FreeBSD: f985fa14db9d9eec7709fc61bdf55591ba742efa $
 /*===- lldb/source/Plugin/Plugins.def ---------------------------*- C++ -*-===*\
 |*                                                                            *|
 |* Part of the LLVM Project, under the Apache License v2.0 with LLVM          *|
@@ -63,6 +63,7 @@ LLDB_PLUGIN(PlatformFreeBSD)
 LLDB_PLUGIN(PlatformGDB)
 LLDB_PLUGIN(ScriptedProcess)
 LLDB_PLUGIN(ProcessElfCore)
+LLDB_PLUGIN(ProcessFreeBSDKernel)
 LLDB_SCRIPT_PLUGIN(ScriptInterpreterNone)
 LLDB_SCRIPT_PLUGIN(ScriptInterpreterLua)
 LLDB_PLUGIN(SymbolFileBreakpad)

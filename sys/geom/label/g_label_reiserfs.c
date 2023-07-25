@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6f9a0428b6ab4b7bb44c8e7934880bfac575b6d $");
+__FBSDID("$FreeBSD: 8fe1a72458e4efb22aa5668417eb68778b574068 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,9 +59,10 @@ g_label_reiserfs_read_super(struct g_consumer *cp, off_t offset)
 
 	secsize = cp->provider->sectorsize;
 
-	if ((offset % secsize) != 0)
-		return (NULL);
+	KASSERT(secsize != 0, ("Tasting a disk with 0 sectorsize"));
 	if (secsize < sizeof(*fs))
+		return (NULL);
+	if ((offset % secsize) != 0)
 		return (NULL);
 
 	fs = g_read_data(cp, offset, secsize, NULL);

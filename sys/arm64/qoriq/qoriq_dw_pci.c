@@ -29,7 +29,7 @@
 /* Layerscape DesignWare PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 424a030e094ce0c898df5867800196e4c9433921 $");
+__FBSDID("$FreeBSD: d052c9910a47ce8fcf4c05afef764d383de6f984 $");
 
 
 #include <sys/param.h>
@@ -150,7 +150,7 @@ qorif_dw_pci_get_link(device_t dev, bool *status)
 	reg = pci_dw_dbi_rd4(sc->dev, sc->soc_cfg->pex_pf0_dgb);
 	reg >>=  sc->soc_cfg->ltssm_bit;
 	reg &= 0x3F;
-	*status = (reg = 0x11) ? true: false;
+	*status = (reg == 0x11) ? true : false;
 	return (0);
 }
 

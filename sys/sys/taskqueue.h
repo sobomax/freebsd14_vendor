@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7e59187e01142ede64edbea8039679bb063f3376 $
+ * $FreeBSD: cc98fe5fab856e3f350f17c17b3c7eb75066d6bc $
  */
 
 #ifndef _SYS_TASKQUEUE_H_
@@ -61,6 +61,10 @@ enum taskqueue_callback_type {
 #define	TASKQUEUE_NUM_CALLBACKS		TASKQUEUE_CALLBACK_TYPE_MAX + 1
 #define	TASKQUEUE_NAMELEN		32
 
+/* taskqueue_enqueue flags */
+#define	TASKQUEUE_FAIL_IF_PENDING	(1 << 0)
+#define	TASKQUEUE_FAIL_IF_CANCELING	(1 << 1)
+
 typedef void (*taskqueue_callback_fn)(void *context);
 
 /*
@@ -82,6 +86,8 @@ int	taskqueue_start_threads_in_proc(struct taskqueue **tqp, int count,
 int	taskqueue_start_threads_cpuset(struct taskqueue **tqp, int count,
 	    int pri, cpuset_t *mask, const char *name, ...) __printflike(5, 6);
 int	taskqueue_enqueue(struct taskqueue *queue, struct task *task);
+int	taskqueue_enqueue_flags(struct taskqueue *queue, struct task *task,
+	    int flags);
 int	taskqueue_enqueue_timeout(struct taskqueue *queue,
 	    struct timeout_task *timeout_task, int ticks);
 int	taskqueue_enqueue_timeout_sbt(struct taskqueue *queue,

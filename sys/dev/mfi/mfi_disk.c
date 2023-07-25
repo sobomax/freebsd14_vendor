@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 016d3f99e9ad0f48a55aaec32be0992914e02183 $");
+__FBSDID("$FreeBSD: 002fed7d2853a8f529e84b13c193696704c1c09b $");
 
 #include "opt_mfi.h"
 
@@ -322,7 +322,7 @@ mfi_disk_complete(struct bio *bio)
 }
 
 static int
-mfi_disk_dump(void *arg, void *virt, vm_offset_t phys, off_t offset, size_t len)
+mfi_disk_dump(void *arg, void *virt, off_t offset, size_t len)
 {
 	struct mfi_disk *sc;
 	struct mfi_softc *parent_sc;

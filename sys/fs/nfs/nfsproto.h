@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 968cc6a41cc35b77e18fedc0363b3d1606a814ba $
+ * $FreeBSD: ceecc63a7732ded95613562b1c02a1388fa9ea89 $
  */
 
 #ifndef _NFS_NFSPROTO_H_
@@ -405,10 +405,16 @@
 /* Do an NFSv4.2 LayoutError. */
 #define	NFSPROC_LAYOUTERROR	68
 
+/* Do an NFSv4 Verify+Write. */
+#define	NFSPROC_APPENDWRITE	69
+
 /*
  * Must be defined as one higher than the last NFSv4.2 Proc# above.
  */
-#define	NFSV42_NPROCS		69
+#define	NFSV42_NPROCS		70
+
+/* Value of NFSV42_NPROCS for old nfsstats structure. (Always 69) */
+#define	NFSV42_OLDNPROCS	69
 
 #endif	/* NFS_V3NPROCS */
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8538d6e5323cdacaf7f06211dd98d99dc6d0e298 $");
+__FBSDID("$FreeBSD: 4861d33e3688e691b46b889d0d105737d41a7838 $");
 
 /*
  * IEEE 802.11 power save support.
@@ -582,7 +582,7 @@ ieee80211_sta_tim_notify(struct ieee80211vap *vap, int set)
 		    "%s: wake up from bgscan vap sleep\n",
 		    __func__);
 		/*
-		 * We may be in BGSCAN mode - this means the VAP is is in STA
+		 * We may be in BGSCAN mode - this means the VAP is in STA
 		 * mode powersave.  If it is, we need to wake it up so we
 		 * can process outbound traffic.
 		 */

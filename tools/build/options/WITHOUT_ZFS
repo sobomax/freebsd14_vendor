@@ -1,2 +1,9 @@
-.\" $FreeBSD: 3c809e54cfaacf2f62383de0671884abfcc7e05e $
-Do not build ZFS file system kernel module, libraries, and user commands.
+.\" $FreeBSD: 11605eb6fcabbef9134df1fedca7e65430eb3744 $
+Do not build the ZFS file system kernel module, libraries such as
+.Xr libbe 3 ,
+and user commands such as
+.Xr zpool 8
+or
+.Xr zfs 8 .
+Also disable ZFS support in utilities and libraries which implement
+ZFS-specific functionality.

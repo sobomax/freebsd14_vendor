@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 11d549dc18d2092bd9f13b3befca419ad09a931f $");
+__FBSDID("$FreeBSD: f3f5308fa6dc7fa37c88e7be242d76e0f44a8346 $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -203,7 +203,7 @@ hyperv_tsc_tcinit(void *dummy __unused)
 		break;
 
 	default:
-		/* Unsupport CPU vendors. */
+		/* Unsupported CPU vendors. */
 		return;
 	}
 

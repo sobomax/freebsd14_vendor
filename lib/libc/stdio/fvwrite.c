@@ -36,8 +36,9 @@
 static char sccsid[] = "@(#)fvwrite.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a161859afa9a6cedcb36419bb72de90a4c457dd $");
+__FBSDID("$FreeBSD: b1b363e6f80da751509a6d51c85da1bc8b4011c0 $");
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -140,7 +141,7 @@ __sfvwrite(FILE *fp, struct __suio *uio)
 				fp->_p += w;
 				old_p = fp->_p;
 				if (__fflush(fp) == EOF) {
-					if (old_p == fp->_p)
+					if (old_p == fp->_p && errno == EINTR)
 						fp->_p -= w;
 					goto err;
 				}
@@ -184,7 +185,7 @@ __sfvwrite(FILE *fp, struct __suio *uio)
 				fp->_p += w;
 				old_p = fp->_p;
 				if (__fflush(fp) == EOF) {
-					if (old_p == fp->_p)
+					if (old_p == fp->_p && errno == EINTR)
 						fp->_p -= w;
 					goto err;
 				}

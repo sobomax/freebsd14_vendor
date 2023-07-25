@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a574f8bad0f18bfef6a16ca976790e4e8b976f25 $");
+__FBSDID("$FreeBSD: 0714106ca418c6046df02f09656f6d9547f7273e $");
 
 #include "opt_stack.h"
 
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: a574f8bad0f18bfef6a16ca976790e4e8b976f25 $");
 #include <sys/rwlock.h>
 #include <sys/mman.h>
 #include <sys/stack.h>
+#include <sys/sysent.h>
 #include <sys/time.h>
 #include <sys/user.h>
 
@@ -96,6 +97,7 @@ __FBSDID("$FreeBSD: a574f8bad0f18bfef6a16ca976790e4e8b976f25 $");
 
 #if defined(__i386__) || defined(__amd64__)
 #include <asm/smp.h>
+#include <asm/processor.h>
 #endif
 
 SYSCTL_NODE(_compat, OID_AUTO, linuxkpi, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
@@ -116,7 +118,7 @@ static int lkpi_net_maxpps = 99;
 SYSCTL_INT(_compat_linuxkpi, OID_AUTO, net_ratelimit, CTLFLAG_RWTUN,
     &lkpi_net_maxpps, 0, "Limit number of LinuxKPI net messages per second.");
 
-MALLOC_DEFINE(M_KMALLOC, "linux", "Linux kmalloc compat");
+MALLOC_DEFINE(M_KMALLOC, "lkpikmalloc", "Linux kmalloc compat");
 
 #include <linux/rbtree.h>
 /* Undo Linux compat changes. */
@@ -130,6 +132,7 @@ static void linux_cdev_deref(struct linux_cdev *ldev);
 static struct vm_area_struct *linux_cdev_handle_find(void *handle);
 
 cpumask_t cpu_online_mask;
+static cpumask_t static_single_cpu_mask[MAXCPU];
 struct kobject linux_class_root;
 struct device linux_root_device;
 struct class linux_class_misc;
@@ -831,6 +834,18 @@ zap_vma_ptes(struct vm_area_struct *vma, unsigned long address,
 	return (0);
 }
 
+void
+vma_set_file(struct vm_area_struct *vma, struct linux_file *file)
+{
+	struct linux_file *tmp;
+
+	/* Changing an anonymous vma with this is illegal */
+	get_file(file);
+	tmp = vma->vm_file;
+	vma->vm_file = file;
+	fput(tmp);
+}
+
 static struct file_operations dummy_ldev_ops = {
 	/* XXXKIB */
 };
@@ -1095,8 +1110,8 @@ linux_file_ioctl_sub(struct file *fp, struct linux_file *filp,
 		/* fetch user-space pointer */
 		data = *(void **)data;
 	}
-#if defined(__amd64__)
-	if (td->td_proc->p_elf_machine == EM_386) {
+#ifdef COMPAT_FREEBSD32
+	if (SV_PROC_FLAG(td->td_proc, SV_ILP32)) {
 		/* try the compat IOCTL handler first */
 		if (fop->compat_ioctl != NULL) {
 			error = -OPW(fp, td, fop->compat_ioctl(filp,
@@ -2731,7 +2746,18 @@ io_mapping_create_wc(resource_size_t base, unsigned long size)
 
 #if defined(__i386__) || defined(__amd64__)
 bool linux_cpu_has_clflush;
+struct cpuinfo_x86 boot_cpu_data;
 #endif
+
+cpumask_t *
+lkpi_get_static_single_cpu_mask(int cpuid)
+{
+
+	KASSERT((cpuid >= 0 && cpuid < MAXCPU), ("%s: invalid cpuid %d\n",
+	    __func__, cpuid));
+
+	return (&static_single_cpu_mask[cpuid]);
+}
 
 static void
 linux_compat_init(void *arg)
@@ -2741,6 +2767,9 @@ linux_compat_init(void *arg)
 
 #if defined(__i386__) || defined(__amd64__)
 	linux_cpu_has_clflush = (cpu_feature & CPUID_CLFSH);
+	boot_cpu_data.x86_clflush_size = cpu_clflush_line_size;
+	boot_cpu_data.x86_max_cores = mp_ncpus;
+	boot_cpu_data.x86 = ((cpu_id & 0xf0000) >> 12) | ((cpu_id & 0xf0) >> 4);
 #endif
 	rw_init(&linux_vma_lock, "lkpi-vma-lock");
 
@@ -2768,6 +2797,15 @@ linux_compat_init(void *arg)
 	init_waitqueue_head(&linux_var_waitq);
 
 	CPU_COPY(&all_cpus, &cpu_online_mask);
+	/*
+	 * Generate a single-CPU cpumask_t for each CPU (possibly) in the system.
+	 * CPUs are indexed from 0..(MAXCPU-1).  The entry for cpuid 0 will only
+	 * have itself in the cpumask, cupid 1 only itself on entry 1, and so on.
+	 * This is used by cpumask_of() (and possibly others in the future) for,
+	 * e.g., drivers to pass hints to irq_set_affinity_hint().
+	 */
+	for (i = 0; i < MAXCPU; i++)
+		CPU_SET(i, &static_single_cpu_mask[i]);
 }
 SYSINIT(linux_compat, SI_SUB_DRIVERS, SI_ORDER_SECOND, linux_compat_init, NULL);
 

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a56c15331746118955ea602c8a5ee36e5b67f12b $
+ * $FreeBSD: c2f8c8e2abc06d665e41546fd6103805fa9812e9 $
  */
 
 #ifndef _SYS_IMGACT_H_
@@ -93,6 +93,7 @@ struct image_params {
 	bool opened;			/* we have opened executable vnode */
 	bool textset;
 	u_int map_flags;
+	struct vnode *interpreter_vp;	/* vnode of the interpreter */
 };
 
 #ifdef _KERNEL

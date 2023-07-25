@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b1846822b2078a04febca6ff36fc65efb1ee0221 $");
+__FBSDID("$FreeBSD: 1c2fe014c7f371dbe9732f7848d212a38978c100 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -355,7 +355,7 @@ cc_ack_received(struct tcpcb *tp, struct tcphdr *th, uint16_t nsegs,
 			/*
 			 * Compute goodput in bits per millisecond.
 			 */
-			gput = (((int64_t)(th->th_ack - tp->gput_seq)) << 3) /
+			gput = (((int64_t)SEQ_SUB(th->th_ack, tp->gput_seq)) << 3) /
 			    max(1, tcp_ts_getticks() - tp->gput_ts);
 			stats_voi_update_abs_u32(tp->t_stats, VOI_TCP_GPUT,
 			    gput);
@@ -410,7 +410,6 @@ cc_conn_init(struct tcpcb *tp)
 
 	if (tp->t_srtt == 0 && (rtt = metrics.rmx_rtt)) {
 		tp->t_srtt = rtt;
-		tp->t_rttbest = tp->t_srtt + TCP_RTT_SCALE;
 		TCPSTAT_INC(tcps_usedrtt);
 		if (metrics.rmx_rttvar) {
 			tp->t_rttvar = metrics.rmx_rttvar;
@@ -2758,14 +2757,14 @@ enter_recovery:
 					    maxseg;
 					/*
 					 * Only call tcp_output when there
-					 * is new data available to be sent.
-					 * Otherwise we would send pure ACKs.
+					 * is new data available to be sent
+					 * or we need to send an ACK.
 					 */
 					SOCKBUF_LOCK(&so->so_snd);
 					avail = sbavail(&so->so_snd) -
 					    (tp->snd_nxt - tp->snd_una);
 					SOCKBUF_UNLOCK(&so->so_snd);
-					if (avail > 0)
+					if (avail > 0 || tp->t_flags & TF_ACKNOW)
 						(void) tp->t_fb->tfb_tcp_output(tp);
 					sent = tp->snd_max - oldsndmax;
 					if (sent > maxseg) {
@@ -3642,8 +3641,6 @@ tcp_xmit_timer(struct tcpcb *tp, int rtt)
 		delta -= tp->t_rttvar >> (TCP_RTTVAR_SHIFT - TCP_DELTA_SHIFT);
 		if ((tp->t_rttvar += delta) <= 0)
 			tp->t_rttvar = 1;
-		if (tp->t_rttbest > tp->t_srtt + tp->t_rttvar)
-		    tp->t_rttbest = tp->t_srtt + tp->t_rttvar;
 	} else {
 		/*
 		 * No rtt measurement yet - use the unsmoothed rtt.
@@ -3652,7 +3649,6 @@ tcp_xmit_timer(struct tcpcb *tp, int rtt)
 		 */
 		tp->t_srtt = rtt << TCP_RTT_SHIFT;
 		tp->t_rttvar = rtt << (TCP_RTTVAR_SHIFT - 1);
-		tp->t_rttbest = tp->t_srtt + tp->t_rttvar;
 	}
 	tp->t_rtttime = 0;
 	tp->t_rxtshift = 0;

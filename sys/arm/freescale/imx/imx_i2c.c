@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6f1d69a00a05450e57698ab0bb704057bdc4657b $");
+__FBSDID("$FreeBSD: c3eb5f8b4e2f97ddcecd6a31db7b2afa0ec5091a $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,7 +73,7 @@ __FBSDID("$FreeBSD: 6f1d69a00a05450e57698ab0bb704057bdc4657b $");
 #include <dev/fdt/fdt_pinctrl.h>
 #include <dev/gpio/gpiobusvar.h>
 
-#if defined(EXT_RESOURCES) && defined(__aarch64__)
+#if defined(__aarch64__)
 #define	IMX_ENABLE_CLOCKS
 #endif
 

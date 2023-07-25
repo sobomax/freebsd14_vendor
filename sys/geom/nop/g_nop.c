@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5e383cd3573360a45524400be898bc96d68dead9 $");
+__FBSDID("$FreeBSD: 57208a0744dba65851bf00b7d72a2b175bb487cc $");
 
 #include <sys/param.h>
 #include <sys/ctype.h>
@@ -130,8 +130,7 @@ g_nop_resize(struct g_consumer *cp)
 }
 
 static int
-g_nop_dumper(void *priv, void *virtual, vm_offset_t physical, off_t offset,
-    size_t length)
+g_nop_dumper(void *priv, void *virtual, off_t offset, size_t length)
 {
 
 	return (0);

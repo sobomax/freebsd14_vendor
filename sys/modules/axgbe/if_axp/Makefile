@@ -1,12 +1,12 @@
-#$FreeBSD: 5c2f75c525377fadd6543e0af911124408f6b047 $
+#$FreeBSD: 60b8d24b09093ef137886794acab18746273ad8d $
 
 .PATH:  ${SRCTOP}/sys/dev/axgbe
 
 KMOD    = if_axp
 SRCS    = device_if.h bus_if.h miibus_if.h pci_if.h ifdi_if.h vnode_if.h
-SRCS	+= opt_inet.h opt_inet6.h opt_rss.h opt_iflib.h
+SRCS	+= opt_inet.h opt_inet6.h opt_rss.h opt_iflib.h opt_platform.h
 SRCS    += if_axgbe_pci.c xgbe-sysctl.c xgbe_osdep.c xgbe-desc.c xgbe-drv.c xgbe-mdio.c xgbe-dev.c xgbe-i2c.c xgbe-phy-v2.c xgbe-txrx.c
 
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>

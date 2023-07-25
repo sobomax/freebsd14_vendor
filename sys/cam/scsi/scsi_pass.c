@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9751e26d8ca2e72c0af7b0362dc9961282e3cbe $");
+__FBSDID("$FreeBSD: 78a9ebe0a640b74377b70b633a0c8fdd269abb80 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -458,8 +458,9 @@ pass_add_physpath(void *context, int pending)
 			"GEOM::physpath", periph->path) == 0
 	 && strlen(physpath) != 0) {
 		mtx_unlock(mtx);
-		make_dev_physpath_alias(MAKEDEV_WAITOK, &softc->alias_dev,
-					softc->dev, softc->alias_dev, physpath);
+		make_dev_physpath_alias(MAKEDEV_WAITOK | MAKEDEV_CHECKNAME,
+				&softc->alias_dev, softc->dev,
+				softc->alias_dev, physpath);
 		mtx_lock(mtx);
 	}
 

@@ -26,7 +26,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD: 2653bbe00c9f65dd3ccb8fb6f151c227859e49a9 $
+$FreeBSD: 0e95eecc59316aa9434d9d9e9cb8c4c51a6016ee $
 
 ***************************************************************************/
 #ifndef __CHELSIO_COMMON_H
@@ -191,7 +191,7 @@ struct mac_stats {
 	u64 tx_deferred;          /* frames with deferred transmissions */
 	u64 tx_late_collisions;   /* # of late collisions */
 	u64 tx_total_collisions;  /* # of total collisions */
-	u64 tx_excess_collisions; /* frame errors from excessive collissions */
+	u64 tx_excess_collisions; /* frame errors from excessive collisions */
 	u64 tx_underrun;          /* # of Tx FIFO underruns */
 	u64 tx_len_errs;          /* # of Tx length errors */
 	u64 tx_mac_internal_errs; /* # of internal MAC errors on Tx */

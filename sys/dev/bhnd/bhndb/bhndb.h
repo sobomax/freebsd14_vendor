@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: e53ac6deb4d060d9f30ccb247845d187c6867f90 $
+ * $FreeBSD: 59b237e077564bac928fc27bc5ecc62b9b0e57f4 $
  */
 
 #ifndef _BHND_BHNDB_H_
@@ -153,7 +153,7 @@ typedef enum {
 enum bhndb_alloc_flags {
 	/**
 	 * If resource overcommit prevents fulfilling a request for this
-	 * resource, an in-use resource should be be borrowed to fulfill the
+	 * resource, an in-use resource should be borrowed to fulfill the
 	 * request.
 	 * 
 	 * The only known use case is to support accessing the ChipCommon core

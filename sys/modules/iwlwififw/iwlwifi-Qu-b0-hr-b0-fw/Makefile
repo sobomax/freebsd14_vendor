@@ -1,6 +1,6 @@
-# $FreeBSD: 74fe74eaa982695b93ea2747fc88b3afce898bec $
+# $FreeBSD: ead1ebbbc9afdfcdf4c2d42519864c9fd592edb0 $
 
-FWVERSION=	68
+FWVERSION=	73
 NAME=		Qu-b0-hr-b0
 
 .include <bsd.kmod.mk>

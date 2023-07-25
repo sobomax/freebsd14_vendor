@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/18/93
-# $FreeBSD: fbbf9f03304c0e5558c5af7a05714f753f3ba4aa $
+# $FreeBSD: 0af0246f9328105285a3373ce93e005d34f09461 $
 
 .include <src.opts.mk>
 
@@ -70,6 +70,7 @@ MAN=	aac.4 \
 	axe.4 \
 	axge.4 \
 	bce.4 \
+	bcm5974.4 \
 	bcma.4 \
 	bfe.4 \
 	bge.4 \
@@ -168,6 +169,7 @@ MAN=	aac.4 \
 	gdb.4 \
 	gem.4 \
 	genet.4 \
+	genetlink.4 \
 	geom.4 \
 	geom_linux_lvm.4 \
 	geom_map.4 \
@@ -213,6 +215,7 @@ MAN=	aac.4 \
 	icmp.4 \
 	icmp6.4 \
 	ida.4 \
+	ietp.4 \
 	if_ipsec.4 \
 	iflib.4 \
 	ifmib.4 \
@@ -338,6 +341,7 @@ MAN=	aac.4 \
 	netgdb.4 \
 	netgraph.4 \
 	netintro.4 \
+	netlink.4 \
 	netmap.4 \
 	${_nfe.4} \
 	${_nfsmb.4} \
@@ -472,7 +476,10 @@ MAN=	aac.4 \
 	rl.4 \
 	rndtest.4 \
 	route.4 \
+	rtnetlink.4 \
 	rtsx.4 \
+	rtw88.4 \
+	rtw88fw.4 \
 	rtwn.4 \
 	rtwnfw.4 \
 	rtwn_pci.4 \
@@ -555,6 +562,7 @@ MAN=	aac.4 \
 	targ.4 \
 	tcp.4 \
 	tcp_bbr.4 \
+	tcp_rack.4 \
 	tdfx.4 \
 	terasic_mtl.4 \
 	termios.4 \
@@ -562,6 +570,7 @@ MAN=	aac.4 \
 	ti.4 \
 	timecounters.4 \
 	${_tpm.4} \
+	tslog.4 \
 	tty.4 \
 	tun.4 \
 	twa.4 \
@@ -594,6 +603,7 @@ MAN=	aac.4 \
 	vtnet.4 \
 	watchdog.4 \
 	${_wbwd.4} \
+	wg.4 \
 	witness.4 \
 	wlan.4 \
 	wlan_acl.4 \
@@ -778,6 +788,7 @@ MLINKS+=vr.4 if_vr.4
 MLINKS+=vte.4 if_vte.4
 MLINKS+=vtnet.4 if_vtnet.4
 MLINKS+=watchdog.4 SW_WATCHDOG.4
+MLINKS+=wg.4 if_wg.4
 MLINKS+=${_wpi.4} ${_if_wpi.4}
 MLINKS+=xl.4 if_xl.4
 

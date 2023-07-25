@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f77f2d9eafbfe2fb9e6df408261b060804a6c060 $");
+__FBSDID("$FreeBSD: abd3e5ad25accf20fb18125f8afd0825804a5fb6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -174,6 +174,7 @@ ti_mbox_attach(device_t dev)
 	sysconfig = ti_mbox_reg_read(sc, TI_MBOX_SYSCONFIG);
 	DPRINTF("initial sysconfig %d\n", sysconfig);
 	sysconfig |= TI_MBOX_SYSCONFIG_SOFTRST;
+	ti_mbox_reg_write(sc, TI_MBOX_SYSCONFIG, sysconfig);
 	delay = 100;
 	while (ti_mbox_reg_read(sc, TI_MBOX_SYSCONFIG) & 
 	    TI_MBOX_SYSCONFIG_SOFTRST) {

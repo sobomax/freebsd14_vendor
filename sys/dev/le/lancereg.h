@@ -115,7 +115,7 @@
  * valid on the LANCE.
  */
 
-/* $FreeBSD: 7b08d84f5e9bcef9876aa09256173561950a1e07 $ */
+/* $FreeBSD: b4922b4b90be47db56b77d72b17a3ec2a63d7f84 $ */
 
 #ifndef _DEV_LE_LANCEREG_H_
 #define	_DEV_LE_LANCEREG_H_
@@ -573,7 +573,7 @@
 #define	LE_MODE_PROM	0x8000		/* promiscuous mode */
 /*			0x7f80		   reserved, must be zero */
 /* 0x4000 - 0x0080 are not available on LANCE 7990. */
-#define	LE_MODE_DRCVBC	0x4000		/* disable receive brodcast */
+#define	LE_MODE_DRCVBC	0x4000		/* disable receive broadcast */
 #define	LE_MODE_DRCVPA	0x2000		/* disable physical address detection */
 #define	LE_MODE_DLNKTST	0x1000		/* disable link status */
 #define	LE_MODE_DAPC	0x0800		/* disable automatic polarity correction */

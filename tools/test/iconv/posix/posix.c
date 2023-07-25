@@ -25,10 +25,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2502393b55092f2364d75b73a25f7fc7caa16893 $");
+__FBSDID("$FreeBSD: a95e8863fa3088f4eda3940d87a90ddfb892f029 $");
 
+#include <sys/param.h>
 #include <sys/endian.h>
-#include <sys/types.h>
 
 #include <err.h>
 #include <errno.h>
@@ -66,18 +66,22 @@ static int
 open_2(void)
 {
 	iconv_t cd[MAX_LIMIT];
-	int i, ret;
+	size_t i;
+	int ret;
 
 	errno = 0;
+	ret = 1;
 	for (i = 0; i < MAX_LIMIT; i++) {
 		cd[i] = iconv_open("ASCII", "UTF8");
-		if (cd[i] == (iconv_t)-1)
+		if (cd[i] == (iconv_t)-1) {
+			if (errno == ENFILE || errno == EMFILE)
+				ret = 0;
+			cd[i] = NULL;
 			break;
+		}
 	}
 
-	ret = (cd[i] == (iconv_t)-1) && ((errno == ENFILE) ||
-	    (errno == EMFILE))  ? 0 : 1;
-	for (; i > 0; i--)
+	for (i = MIN(i, nitems(cd) - 1); i > 0; i--)
 		iconv_close(cd[i]);
 	return (ret);
 }

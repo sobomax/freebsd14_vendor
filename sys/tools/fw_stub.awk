@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 94975687f4e2ea3d0cb521556e08072ba38b8616 $
+# $FreeBSD: 1d01cf1f2c29c8c475191d4acb29e41e565ebb32 $
 
 #
 # Script to generate module .c file from a list of firmware images
@@ -127,7 +127,7 @@ gsub(/[-\.]/, "_", modname);
 generated = "@" "generated";
 printc("/*\
  * Automatically " generated " by:\
- * $FreeBSD: 94975687f4e2ea3d0cb521556e08072ba38b8616 $\
+ * $FreeBSD: 1d01cf1f2c29c8c475191d4acb29e41e565ebb32 $\
  */");
 printc("#include <sys/param.h>");
 printc("#include <sys/errno.h>");
@@ -143,8 +143,8 @@ if (opt_l) {
 
 for (file_i = 0; file_i < num_files; file_i++) {
 	symb = filenames[file_i];
-	# '-', '.' and '/' are converted to '_'
-	gsub(/-|\.|\//, "_", symb);
+	# '-', '.', '/', and '@' are converted to '_'
+	gsub(/-|\.|\/|@/, "_", symb);
 	printc("extern char _binary_" symb "_start[], _binary_" symb "_end[];");
 }
 
@@ -172,8 +172,8 @@ for (file_i = 0; file_i < num_files; file_i++) {
 	short = shortnames[file_i];
 	symb = filenames[file_i];
 	version = versions[file_i];
-	# '-', '.' and '/' are converted to '_'
-	gsub(/-|\.|\//, "_", symb);
+	# '-', '.', '/', and '@' are converted to '_'
+	gsub(/-|\.|\/|@/, "_", symb);
 
 	reg = "\t\tfp = ";
 	reg = reg "firmware_register(\"" short "\", _binary_" symb "_start , ";

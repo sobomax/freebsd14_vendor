@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c01cbbcfa0793d8b819e1caea9b5915afeb81ad $");
+__FBSDID("$FreeBSD: 6f9df656cda7a9c4278d53c92b0077fae8f2b762 $");
 
 #include <dev/aic7xxx/aic79xx_osm.h>
 #include <dev/aic7xxx/aic79xx_inline.h>
@@ -1472,7 +1472,7 @@ DB_COMMAND(ahd_in, ahd_ddb_in)
 	}
 }
 
-DB_FUNC(ahd_out, ahd_ddb_out, db_cmd_table, CS_MORE, NULL)
+DB_COMMAND_FLAGS(ahd_out, ahd_ddb_out, CS_MORE)
 {
 	db_expr_t old_value;
 	db_expr_t new_value;

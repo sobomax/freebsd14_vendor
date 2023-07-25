@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: fd8a0feeb748b97558107f3c03b2b560a06e4fac $
+# $FreeBSD: 22573d8ec36c773658272603c6f48c5fa119d3dd $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen ${SRCTOP}/etc
@@ -175,6 +175,8 @@ SRCS+=	__getosreldate.c \
 	wordexp.c
 
 CFLAGS.arc4random.c= -I${SRCTOP}/sys -I${SRCTOP}/sys/crypto/chacha20
+
+CFLAGS.sysconf.c= -I${SRCTOP}/contrib/tzcode
 
 CFLAGS.dlfcn.c= ${RTLD_HDRS}
 CFLAGS.tls.c= ${RTLD_HDRS}
@@ -493,7 +495,10 @@ MLINKS+=rand48.3 _rand48.3 \
 	rand48.3 seed48.3 \
 	rand48.3 srand48.3
 MLINKS+=recv.2 recvmmsg.2
-MLINKS+=scandir.3 alphasort.3
+MLINKS+=scandir.3 alphasort.3 \
+	scandir.3 scandirat.3 \
+	scandir.3 scandir_b.3 \
+	scandir.3 versionsort.3
 MLINKS+=sem_open.3 sem_close.3 \
 	sem_open.3 sem_unlink.3
 MLINKS+=sem_wait.3 sem_trywait.3

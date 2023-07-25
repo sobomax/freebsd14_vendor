@@ -1,4 +1,4 @@
-# $FreeBSD: 86d6f3530e23d8d7fb9d9d4faa2a7045d0cd7672 $
+# $FreeBSD: 9ad08a78cb196543bf4768246085971112e52e95 $
 
 # avoid duplication
 DIRDEPS.AUDIT.yes= lib/libbsm
@@ -13,7 +13,7 @@ DIRDEPS.KERBEROS_SUPPORT.yes+= \
 	kerberos5/lib/libhx509 \
 	kerberos5/lib/libkrb5 \
 	kerberos5/lib/libroken \
-	kerberos5/lib/libwind \
+	kerberos5/lib/libwind
 
 DIRDEPS.NIS.yes+= \
 	include/rpc \

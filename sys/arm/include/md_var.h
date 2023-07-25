@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: 1864d30074c62a44e03606725d57aa2c07c79d95 $
+ * $FreeBSD: c9669d6556bd7d9b2a8f3d757be6d8ce3465f8a1 $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -63,8 +63,6 @@ extern enum cpu_class cpu_class;
 
 struct dumperinfo;
 struct minidumpstate;
-extern int busdma_swi_pending;
-void busdma_swi(void);
 int cpu_minidumpsys(struct dumperinfo *, const struct minidumpstate *);
 
 extern uint32_t initial_fpscr;

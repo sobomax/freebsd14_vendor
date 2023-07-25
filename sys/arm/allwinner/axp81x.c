@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: df083ec49e329febc7b38bd90ae44eb98fb23055 $
+ * $FreeBSD: 8df781c87a0b6bf04bf693fd4ec6dbdd63b0af1f $
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df083ec49e329febc7b38bd90ae44eb98fb23055 $");
+__FBSDID("$FreeBSD: 8df781c87a0b6bf04bf693fd4ec6dbdd63b0af1f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -758,11 +758,9 @@ axp8xx_write(device_t dev, uint8_t reg, uint8_t val)
 static int
 axp8xx_regnode_init(struct regnode *regnode)
 {
-	struct axp8xx_reg_sc *sc;
 	struct regnode_std_param *param;
 	int rv, udelay;
 
-	sc = regnode_get_softc(regnode);
 	param = regnode_get_stdparam(regnode);
 	if (param->min_uvolt == 0)
 		return (0);

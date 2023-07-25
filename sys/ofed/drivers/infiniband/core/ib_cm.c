@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 376dcb420f5b8194f738190dd7fc2b1626614b2f $");
+__FBSDID("$FreeBSD: 5a486336699b195a21f886dd920d7bd12bd91c39 $");
 
 #include <linux/completion.h>
 #include <linux/dma-mapping.h>
@@ -1179,6 +1179,7 @@ struct ib_cm_id *ib_cm_insert_listen(struct ib_device *device,
 			/* Sharing an ib_cm_id with different handlers is not
 			 * supported */
 			spin_unlock_irqrestore(&cm.lock, flags);
+			ib_destroy_cm_id(cm_id);
 			return ERR_PTR(-EINVAL);
 		}
 		atomic_inc(&cm_id_priv->refcount);

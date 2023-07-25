@@ -1,4 +1,4 @@
-# $FreeBSD: 833618b190fd424640cc5b90fae2a563e9afb89f $
+# $FreeBSD: a28162060e7623df9f0197843cd8c90c9646f0d8 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -19,6 +19,20 @@
         v1
             __algorithm
             ..
+            __bit
+            ..
+            __charconv
+            ..
+            __chrono
+            ..
+            __compare
+            ..
+            __concepts
+            ..
+            __coroutine
+            ..
+            __filesystem
+            ..
             __format
             ..
             __functional
@@ -27,9 +41,13 @@
             ..
             __memory
             ..
+            __numeric
+            ..
             __random
             ..
             __ranges
+            ..
+            __thread
             ..
             __utility
             ..
@@ -117,6 +135,8 @@
         veriexec
         ..
         vkbd
+        ..
+        wg
         ..
         wi
         ..
@@ -248,6 +268,10 @@
         ..
     ..
     netinet6
+    ..
+    netlink
+        route
+        ..
     ..
     netipsec
     ..

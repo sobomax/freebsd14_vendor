@@ -34,10 +34,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b7979d912e1568146464c6a2acbb2a0d8d8386ff $");
+__FBSDID("$FreeBSD: 22887679ecd5d8f4033cf343532c49453694890d $");
 
 /** @file drm_vm.c
- * Support code for mmaping of DRM maps.
+ * Support code for mapping of DRM maps.
  */
 
 #include <dev/drm2/drmP.h>

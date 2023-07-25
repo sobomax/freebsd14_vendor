@@ -36,7 +36,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d22c670b017cf744f7bdbc6f1c4666f5f4f0c68 $");
+__FBSDID("$FreeBSD: d6b4f918cf8fe75e00b41ca8334aec3e0fefb56f $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -115,8 +115,6 @@ static const struct clnt_ops clnt_vc_ops = {
 };
 
 static void clnt_vc_upcallsdone(struct ct_data *);
-
-static int	fake_wchan;
 
 /*
  * Create a client handle for a connection.
@@ -453,7 +451,9 @@ call_again:
 		mtx_lock(&ct->ct_lock);
 		TAILQ_REMOVE(&ct->ct_pending, cr, cr_link);
 		/* Sleep for 1 clock tick before trying the sosend() again. */
-		msleep(&fake_wchan, &ct->ct_lock, 0, "rpclpsnd", 1);
+		mtx_unlock(&ct->ct_lock);
+		pause("rpclpsnd", 1);
+		mtx_lock(&ct->ct_lock);
 		goto call_again;
 	}
 
@@ -863,7 +863,6 @@ clnt_vc_destroy(CLIENT *cl)
 	struct ct_data *ct = (struct ct_data *) cl->cl_private;
 	struct socket *so = NULL;
 	SVCXPRT *xprt;
-	enum clnt_stat stat;
 	uint32_t reterr;
 
 	clnt_vc_close(cl);
@@ -906,7 +905,7 @@ clnt_vc_destroy(CLIENT *cl)
 				 * daemon having crashed or been
 				 * restarted, so ignore return stat.
 				 */
-				stat = rpctls_cl_disconnect(ct->ct_sslsec,
+				rpctls_cl_disconnect(ct->ct_sslsec,
 				    ct->ct_sslusec, ct->ct_sslrefno,
 				    &reterr);
 			}
@@ -946,7 +945,7 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 {
 	struct ct_data *ct = (struct ct_data *) arg;
 	struct uio uio;
-	struct mbuf *m, *m2, **ctrlp;
+	struct mbuf *m, *m2;
 	struct ct_request *cr;
 	int error, rcvflag, foundreq;
 	uint32_t xid_plus_direction[2], header;
@@ -994,13 +993,10 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 		m2 = m = NULL;
 		rcvflag = MSG_DONTWAIT | MSG_SOCALLBCK;
 		if (ct->ct_sslrefno != 0 && (ct->ct_rcvstate &
-		    RPCRCVSTATE_NORMAL) != 0) {
+		    RPCRCVSTATE_NORMAL) != 0)
 			rcvflag |= MSG_TLSAPPDATA;
-			ctrlp = NULL;
-		} else
-			ctrlp = &m2;
 		SOCKBUF_UNLOCK(&so->so_rcv);
-		error = soreceive(so, NULL, &uio, &m, ctrlp, &rcvflag);
+		error = soreceive(so, NULL, &uio, &m, &m2, &rcvflag);
 		SOCKBUF_LOCK(&so->so_rcv);
 
 		if (error == EWOULDBLOCK) {
@@ -1025,8 +1021,8 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 		}
 
 		/*
-		 * A return of ENXIO indicates that there is a
-		 * non-application data record at the head of the
+		 * A return of ENXIO indicates that there is an
+		 * alert record at the head of the
 		 * socket's receive queue, for TLS connections.
 		 * This record needs to be handled in userland
 		 * via an SSL_read() call, so do an upcall to the daemon.
@@ -1053,10 +1049,10 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 			    cmsg->cmsg_len == CMSG_LEN(sizeof(tgr))) {
 				memcpy(&tgr, CMSG_DATA(cmsg), sizeof(tgr));
 				/*
-				 * This should have been handled by
-				 * setting RPCRCVSTATE_UPCALLNEEDED in
-				 * ct_rcvstate but if not, all we can do
-				 * is toss it away.
+				 * TLS_RLTYPE_ALERT records should be handled
+				 * since soreceive() would have returned
+				 * ENXIO.  Just throw any other
+				 * non-TLS_RLTYPE_APP records away.
 				 */
 				if (tgr.tls_type != TLS_RLTYPE_APP) {
 					m_freem(m);

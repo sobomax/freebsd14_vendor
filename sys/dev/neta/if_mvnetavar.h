@@ -24,7 +24,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 00bfd1f0848c65f08ce06ad3798fc5bd02c17dd0 $
+ * $FreeBSD: f008c878a1eb258217e5dff74726a9dbfa88f145 $
  *
  */
 
@@ -252,8 +252,8 @@ struct mvneta_softc {
 	uint32_t	version;
 	/*
 	 * mtx must be held by interface functions to/from
-	 * other frameworks. interrupt hander, sysctl hander,
-	 * ioctl hander, and so on.
+	 * other frameworks. interrupt handler, sysctl handler,
+	 * ioctl handler, and so on.
 	 */
 	struct mtx	mtx;
 	struct resource *res[2];

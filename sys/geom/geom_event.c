@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 359c7c984f075d598c3f760da934aca0007ba3d0 $");
+__FBSDID("$FreeBSD: cecd7fe349f66b3469efee4750a94ca1786241d7 $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -258,7 +258,7 @@ one_event(void)
 }
 
 void
-g_run_events()
+g_run_events(void)
 {
 
 	for (;;) {
@@ -402,7 +402,7 @@ g_post_event(g_event_t *func, void *arg, int flag, ...)
 }
 
 void
-g_do_wither()
+g_do_wither(void)
 {
 
 	mtx_lock(&g_eventlock);
@@ -446,7 +446,7 @@ g_waitfor_event(g_event_t *func, void *arg, int flag, ...)
 }
 
 void
-g_event_init()
+g_event_init(void)
 {
 
 	mtx_init(&g_eventlock, "GEOM orphanage", NULL, MTX_DEF);

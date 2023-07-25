@@ -32,9 +32,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62de3ef92bf2a71508e7237b2436c6190e448013 $");
+__FBSDID("$FreeBSD: 750ddfc3a46fedcbab6d3f455451a15f09b9c85a $");
 
 #include "opt_bootp.h"
+#include "opt_inet.h"
 #include "opt_ipstealth.h"
 #include "opt_ipsec.h"
 #include "opt_route.h"

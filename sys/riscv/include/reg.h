@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 08f953f128de84bc041b3a0603bb5527753328b1 $
+ * $FreeBSD: d76b500bce1ba03af4205a04f7d14b1f9c3b1218 $
  */
 
 #ifndef	_MACHINE_REG_H_
@@ -59,17 +59,5 @@ struct fpreg {
 struct dbreg {
 	int dummy;
 };
-
-#ifdef _KERNEL
-/*
- * XXX these interfaces are MI, so they should be declared in a MI place.
- */
-int	fill_regs(struct thread *, struct reg *);
-int	set_regs(struct thread *, struct reg *);
-int	fill_fpregs(struct thread *, struct fpreg *);
-int	set_fpregs(struct thread *, struct fpreg *);
-int	fill_dbregs(struct thread *, struct dbreg *);
-int	set_dbregs(struct thread *, struct dbreg *);
-#endif
 
 #endif /* !_MACHINE_REG_H_ */

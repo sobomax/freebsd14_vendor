@@ -1,8 +1,8 @@
-# $FreeBSD: b5e3b458f982e86051312230db25227bf19cb16b $
+# $FreeBSD: 6a39e342bafc20e0710a85d3f4beac991b73b97b $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/avl
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 LIB=	avl
 LIBADD=	spl
 SRCS=	avl.c

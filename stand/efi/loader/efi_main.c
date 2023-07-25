@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 736c1aa56c9948088aad590114c397ce80fccdc3 $");
+__FBSDID("$FreeBSD: 3e1fa06638e9c550c012bb7c6420a7658208a6ff $");
 
 #include <bootstrap.h>
 #include <efi.h>
@@ -40,8 +40,12 @@ void
 efi_exit(EFI_STATUS exit_code)
 {
 
-	BS->FreePages(heap, EFI_SIZE_TO_PAGES(heapsize));
-	BS->Exit(IH, exit_code, 0, NULL);
+	if (boot_services_active) {
+		BS->FreePages(heap, EFI_SIZE_TO_PAGES(heapsize));
+		BS->Exit(IH, exit_code, 0, NULL);
+	} else {
+		RS->ResetSystem(EfiResetCold, EFI_SUCCESS, 0, NULL);
+	}
 }
 
 void

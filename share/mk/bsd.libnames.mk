@@ -1,4 +1,4 @@
-# $FreeBSD: d030292d3c5e8669da4672165bc9943f148a3292 $
+# $FreeBSD: 499bdeb668059229b2e6a937d22f1118df707396 $
 
 # The include file <bsd.libnames.mk> define library names.
 # Other include files (e.g. bsd.prog.mk, bsd.lib.mk) include this
@@ -27,6 +27,7 @@ LIBAVL?=	${LIBDESTDIR}${LIBDIR_BASE}/libavl.a
 LIBBE?=		${LIBDESTDIR}${LIBDIR_BASE}/libbe.a
 LIBBEGEMOT?=	${LIBDESTDIR}${LIBDIR_BASE}/libbegemot.a
 LIBBLACKLIST?=	${LIBDESTDIR}${LIBDIR_BASE}/libblacklist.a
+LIBBLOCKSRUNTIME?= ${LIBDESTDIR}${LIBDIR_BASE}/libBlocksRuntime.a
 LIBBLUETOOTH?=	${LIBDESTDIR}${LIBDIR_BASE}/libbluetooth.a
 LIBBSDXML?=	${LIBDESTDIR}${LIBDIR_BASE}/libbsdxml.a
 LIBBSM?=	${LIBDESTDIR}${LIBDIR_BASE}/libbsm.a
@@ -83,6 +84,8 @@ LIBIBVERBS?=	${LIBDESTDIR}${LIBDIR_BASE}/libibverbs.a
 LIBICP?=	${LIBDESTDIR}${LIBDIR_BASE}/libicp.a
 LIBIPSEC?=	${LIBDESTDIR}${LIBDIR_BASE}/libipsec.a
 LIBIPT?=	${LIBDESTDIR}${LIBDIR_BASE}/libipt.a
+LIBIRDMA?=	${LIBDESTDIR}${LIBDIR_BASE}/libirdma.a
+LIBISCSIUTIL?=	${LIBDESTDIR}${LIBDIR_BASE}/libiscsiutil.a
 LIBJAIL?=	${LIBDESTDIR}${LIBDIR_BASE}/libjail.a
 LIBKADM5CLNT?=	${LIBDESTDIR}${LIBDIR_BASE}/libkadm5clnt.a
 LIBKADM5SRV?=	${LIBDESTDIR}${LIBDIR_BASE}/libkadm5srv.a

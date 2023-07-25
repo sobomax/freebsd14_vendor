@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 970f46274791f171e2e4ab9fad4aa7396e2c7f44 $");
+__FBSDID("$FreeBSD: 86c5e62fc9b6cf9291366e780c1d44d5bbceca68 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -50,9 +50,7 @@ __FBSDID("$FreeBSD: 970f46274791f171e2e4ab9fad4aa7396e2c7f44 $");
 #include <sys/proc.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
-#ifndef INVARIANTS
 #include <sys/syslog.h>
-#endif
 #include <sys/protosw.h>
 #include <sys/random.h>
 
@@ -389,6 +387,7 @@ tcp_twcheck(struct inpcb *inp, struct tcpopt *to, struct tcphdr *th,
     struct mbuf *m, int tlen)
 {
 	struct tcptw *tw;
+	char *s;
 	int thflags;
 	tcp_seq seq;
 
@@ -439,6 +438,17 @@ tcp_twcheck(struct inpcb *inp, struct tcpopt *to, struct tcphdr *th,
 	 */
 #endif
 
+	/* Honor the drop_synfin sysctl variable. */
+	if ((thflags & TH_SYN) && (thflags & TH_FIN) && V_drop_synfin) {
+		if ((s = tcp_log_addrs(&inp->inp_inc, th, NULL, NULL))) {
+			log(LOG_DEBUG, "%s; %s: "
+			    "SYN|FIN segment ignored (based on "
+			    "sysctl setting)\n", s, __func__);
+			free(s, M_TCPLOG);
+		}
+		goto drop;
+	}
+
 	/*
 	 * If a new connection request is received
 	 * while in TIME_WAIT, drop the old connection
@@ -446,7 +456,8 @@ tcp_twcheck(struct inpcb *inp, struct tcpopt *to, struct tcphdr *th,
 	 * are above the previous ones.
 	 * Allow UDP port number changes in this case.
 	 */
-	if ((thflags & TH_SYN) && SEQ_GT(th->th_seq, tw->rcv_nxt)) {
+	if (((thflags & (TH_SYN | TH_ACK)) == TH_SYN) &&
+	    SEQ_GT(th->th_seq, tw->rcv_nxt)) {
 		tcp_twclose(tw, 0);
 		TCPSTAT_INC(tcps_tw_recycles);
 		return (1);

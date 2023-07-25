@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ddcc920f4af13a068105e12fffdd12f693e2947 $
+ * $FreeBSD: 30488dbbb0eb9f7381e34bdab66162d8d533070f $
  */
 
 /*
@@ -94,6 +94,8 @@ TEST_F(AllowOther, allowed)
 				perror("open");
 				return(1);
 			}
+
+			leak(fd);
 			return 0;
 		}
 	);
@@ -201,6 +203,7 @@ TEST_F(NoAllowOther, disallowed)
 			fd = open(FULLPATH, O_RDONLY);
 			if (fd >= 0) {
 				fprintf(stderr, "open should've failed\n");
+				leak(fd);
 				return(1);
 			} else if (errno != EPERM) {
 				fprintf(stderr, "Unexpected error: %s\n",
@@ -245,6 +248,7 @@ TEST_F(NoAllowOther, disallowed_beneath_root)
 			fd = openat(dfd, RELPATH2, O_RDONLY);
 			if (fd >= 0) {
 				fprintf(stderr, "openat should've failed\n");
+				leak(fd);
 				return(1);
 			} else if (errno != EPERM) {
 				fprintf(stderr, "Unexpected error: %s\n",

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9cf7a0912e95c62fc1fc237cc634698c6f48d28e $
+ * $FreeBSD: b90d46d49f6409734b3af4818538947f8e3756e9 $
  */
 
 #include <sys/types.h>
@@ -65,11 +65,11 @@ static void
 usage(void)
 {
 	fprintf(stderr, "Usage:\n");
-	fprintf(stderr, "\tbacklight [-f dev]\n");
-	fprintf(stderr, "\tbacklight [-f dev] -i\n");
-	fprintf(stderr, "\tbacklight [-f dev] <percent>\n");
-	fprintf(stderr, "\tbacklight [-f dev] incr|+ <percent>\n");
-	fprintf(stderr, "\tbacklight [-f dev] decr|- <percent>\n");
+	fprintf(stderr, "\tbacklight [-q] [-f device]\n");
+	fprintf(stderr, "\tbacklight [-q] [-f device] -i\n");
+	fprintf(stderr, "\tbacklight [-f device] value\n");
+	fprintf(stderr, "\tbacklight [-f device] incr|+ value\n");
+	fprintf(stderr, "\tbacklight [-f device] decr|- value\n");
 	exit(1);
 }
 
@@ -101,11 +101,9 @@ main(int argc, char *argv[])
 	long percent = -1;
 	const char *percent_error;
 	uint32_t i;
-	bool setname;
 	bool quiet = false;
 
 	action = BACKLIGHT_QUERY;
-	setname = false;
 	fd = -1;
 
 	while ((ch = getopt(argc, argv, "f:qhi")) != -1) {
@@ -114,7 +112,6 @@ main(int argc, char *argv[])
 			quiet = true;
 			break;
 		case 'f':
-			setname = true;
 			set_device_name(optarg);
 			break;
 		case 'i':

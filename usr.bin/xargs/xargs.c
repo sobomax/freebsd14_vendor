@@ -46,7 +46,7 @@ static char sccsid[] = "@(#)xargs.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2825a26f4dfae25f82a71bb6cce29fef88f4acae $");
+__FBSDID("$FreeBSD: 6520d43dae507e6ccedd9fc691ffe921671e0f06 $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -314,8 +314,10 @@ parse_input(int argc, char *argv[])
 	switch (ch = getchar()) {
 	case EOF:
 		/* No arguments since last exec. */
-		if (p == bbp)
-			xexit(*av, rval);
+		if (p == bbp) {
+			waitchildren(*av, 1);
+			exit(rval);
+		}
 		goto arg1;
 	case ' ':
 	case '\t':
@@ -405,8 +407,10 @@ arg2:
 					*xp++ = *avj;
 			}
 			prerun(argc, av);
-			if (ch == EOF || foundeof)
-				xexit(*av, rval);
+			if (ch == EOF || foundeof) {
+				waitchildren(*av, 1);
+				exit(rval);
+			}
 			p = bbp;
 			xp = bxp;
 			count = 0;

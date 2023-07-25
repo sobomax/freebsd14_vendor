@@ -1,14 +1,14 @@
 #	@(#)Makefile	8.8 (Berkeley) 6/21/2000
 #
 # $TSHeader: src/sbin/growfs/Makefile,v 1.4 2000/12/05 19:45:24 tomsoft Exp $
-# $FreeBSD: 8aeb9d77509e0d4b2e5a07261f476ed7faf3cba2 $
+# $FreeBSD: 9c0704193446595531f05cf119978cfadd45eec8 $
 #
 
 .include <src.opts.mk>
 
 .PATH:	${.CURDIR:H}/mount
 
-PACKAGE=runtime
+PACKAGE=ufs
 PROG=   growfs
 SRCS=   growfs.c getmntopts.c
 MAN=	growfs.8

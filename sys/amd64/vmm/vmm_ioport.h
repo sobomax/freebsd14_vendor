@@ -25,15 +25,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 14e315f400ceabecba241baf1acd505a3568d783 $
+ * $FreeBSD: 0b6f09f01e9a1ace5736f2418fff4ad23bf537e9 $
  */
 
 #ifndef	_VMM_IOPORT_H_
 #define	_VMM_IOPORT_H_
 
-typedef int (*ioport_handler_func_t)(struct vm *vm, int vcpuid,
+typedef int (*ioport_handler_func_t)(struct vm *vm,
     bool in, int port, int bytes, uint32_t *val);
 
-int vm_handle_inout(struct vm *vm, int vcpuid, struct vm_exit *vme, bool *retu);
+int vm_handle_inout(struct vcpu *vcpu, struct vm_exit *vme, bool *retu);
 
 #endif	/* _VMM_IOPORT_H_ */

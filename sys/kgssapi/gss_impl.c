@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 07e10d0999c4bb8d58ce9d59d0059e9c8fcd7223 $");
+__FBSDID("$FreeBSD: 9b1277298e32a56e4a164d34c7e778faa4cae151 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -119,7 +119,17 @@ sys_gssd_syscall(struct thread *td, struct gssd_syscall_args *uap)
 		 */
 		if (cl != NULL) {
 			int retry_count = 5;
+			struct timeval timo;
 			CLNT_CONTROL(cl, CLSET_RETRIES, &retry_count);
+
+			/*
+			 * Set the timeout for an upcall to 5 minutes.  The
+			 * default of 25 seconds is not long enough for some
+			 * gss_XXX() calls done by the gssd(8) daemon.
+			 */
+			timo.tv_sec = 5 * 60;
+			timo.tv_usec = 0;
+			CLNT_CONTROL(cl, CLSET_TIMEOUT, &timo);
 		}
 	} else
 		cl = NULL;

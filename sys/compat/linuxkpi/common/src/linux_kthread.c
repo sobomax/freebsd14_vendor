@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 26afe005ea59f147bd86f36637b77f37fb0af812 $");
+__FBSDID("$FreeBSD: 19afad6872c36c3e904d19f5a7c54309e47125a9 $");
 
 #include <linux/compat.h>
 #include <linux/kthread.h>
@@ -164,4 +164,20 @@ linux_kthread_fn(void *arg __unused)
 		complete(&task->exited);
 	}
 	kthread_exit();
+}
+
+void
+lkpi_kthread_work_fn(void *context, int pending __unused)
+{
+	struct kthread_work *work = context;
+
+	work->func(work);
+}
+
+void
+lkpi_kthread_worker_init_fn(void *context, int pending __unused)
+{
+	struct kthread_worker *worker = context;
+
+	worker->task = current;
 }

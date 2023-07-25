@@ -21,9 +21,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 5326d81925879c08f9ea9d021be3f998c3850ddb $
+.\" $FreeBSD: 79eaa9b20b393939d98c7e12a559f6a782dd0974 $
 .\"
-.Dd April 8, 2020
+.Dd April 6, 2022
 .Dt SMBFS 5
 .Os
 .Sh NAME
@@ -46,6 +46,25 @@ smbfs_load="YES"
 .Sh DESCRIPTION
 The SMB driver is an implementation of the CIFS (Common Internet Filesystem)
 network protocol.
+.Pp
+.Bf -symbolic
+The
+.Nm
+filesystem driver supports only the obsolete SMBv1 protocol.
+.Nm
+has known bugs and likely has security vulnerabilities.
+.Nm
+and userspace counterparts
+.Xr smbutil 1
+and
+.Xr mount_smbfs 8
+may be removed from a future version of
+.Fx .
+Users are advised to evaluate the
+.Pa sysutils/fusefs-smbnetfs
+port instead.
+.Ef
+.Pp
 .Sh SEE ALSO
 .Xr smbutil 1 ,
 .Xr mount_smbfs 8

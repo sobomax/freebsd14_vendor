@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c52b11d32ec8a198fa4a14ee421ebd18e1b933f8 $");
+__FBSDID("$FreeBSD: a6582bd2c1b54072fb3f4c9bf92cca75edab5053 $");
 
 #include <sys/param.h>
 #include <net/ethernet.h>
@@ -351,7 +351,7 @@ struct devsw efinet_dev = {
 	.dv_close = NULL,		/* Will be set in efinet_dev_init */
 	.dv_ioctl = noioctl,
 	.dv_print = efinet_dev_print,
-	.dv_cleanup = NULL
+	.dv_cleanup = nullsys,
 };
 
 static int

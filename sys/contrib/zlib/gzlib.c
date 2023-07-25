@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* $FreeBSD: 9370974647b40b6d929f6bb0b0bf4df0fce58337 $ */
+/* $FreeBSD: 40830201e4e9b36f15fdab9dda4fa801ae0e17a9 $ */
 
 #include "gzguts.h"
 #include "zutil.h"
@@ -34,7 +34,7 @@ local gzFile gz_open OF((const void *, int, const char *));
 
    The gz_strwinerror function does not change the current setting of
    GetLastError. */
-char ZLIB_INTERNAL *gz_strwinerror (error)
+char ZLIB_INTERNAL *gz_strwinerror(error)
      DWORD error;
 {
     static char buf[1024];

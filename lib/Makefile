@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 5896a6812a5be0270d4bf6e5f320dbe8ce5a9d9c $
+# $FreeBSD: 091bbc2a4ca8b50528dcbdd09e16205134d51486 $
 
 .include <src.opts.mk>
 
@@ -56,12 +56,12 @@ SUBDIR=	${SUBDIR_BOOTSTRAP} \
 	libexecinfo \
 	libexpat \
 	libfetch \
-	libfigpar \
 	libgcc_eh \
 	libgcc_s \
 	libgeom \
 	libifconfig \
 	libipsec \
+	libiscsiutil \
 	libjail \
 	libkiconv \
 	libkvm \
@@ -166,7 +166,7 @@ SUBDIR+=	clang
 SUBDIR.${MK_CUSE}+= 	libcuse
 SUBDIR.${MK_CXX}+=	libdevdctl
 SUBDIR.${MK_TOOLCHAIN}+=libpe
-SUBDIR.${MK_DIALOG}+=	libdpv
+SUBDIR.${MK_DIALOG}+=	libdpv libfigpar
 SUBDIR.${MK_FILE}+=	libmagic
 SUBDIR.${MK_GPIO}+=	libgpio
 SUBDIR.${MK_GSSAPI}+=	libgssapi librpcsec_gss

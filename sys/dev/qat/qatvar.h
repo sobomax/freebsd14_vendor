@@ -57,7 +57,7 @@
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: 3f0ecd41187428538a7b07a59d09ce81f4ed6e0a $ */
+/* $FreeBSD: 284b4c27fa05fafe4613085d09a931ed745000de $ */
 
 #ifndef _DEV_PCI_QATVAR_H_
 #define _DEV_PCI_QATVAR_H_
@@ -147,7 +147,7 @@ struct qat_dmamem {
 #define QAT_SIZE_TO_RING_SIZE_IN_BYTES(SIZE) ((1 << (SIZE - 1)) << 7)
 #define QAT_RING_SIZE_IN_BYTES_TO_SIZE(SIZE) ((1 << (SIZE - 1)) >> 7)
 
-/* Minimum ring bufer size for memory allocation */
+/* Minimum ring buffer size for memory allocation */
 #define QAT_RING_SIZE_BYTES_MIN(SIZE) \
 	((SIZE < QAT_SIZE_TO_RING_SIZE_IN_BYTES(QAT_RING_SIZE_4K)) ? \
 		QAT_SIZE_TO_RING_SIZE_IN_BYTES(QAT_RING_SIZE_4K) : SIZE)
@@ -240,7 +240,7 @@ struct qat_ae {
 	u_int qae_free_addr;		/* free micro-store address */
 	u_int qae_free_size;		/* free micro-store size */
 	u_int qae_live_ctx_mask;	/* live context mask */
-	u_int qae_ustore_dram_addr;	/* mirco-store DRAM address */
+	u_int qae_ustore_dram_addr;	/* micro-store DRAM address */
 	u_int qae_reload_size;		/* reloadable code size */
 
 	/* aefw */

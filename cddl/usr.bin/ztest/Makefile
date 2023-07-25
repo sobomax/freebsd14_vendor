@@ -1,4 +1,4 @@
-# $FreeBSD: 0945bb962c6304f962724db019023bf71f50ca8a $
+# $FreeBSD: 2031fedc97e5626c0d2293898a84ec3b122dc76d $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,7 @@ ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 .PATH: ${ZFSTOP}/cmd/ztest
 .PATH: ${ZFSTOP}/man/man1
 
+PACKAGE=	zfs
 PROG=	ztest
 MAN=	ztest.1
 

@@ -27,7 +27,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)csh.g	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: d5aa32b63c08c933a98b6cde01a1e627d2172933 $
+.\" $FreeBSD: c96e9ea4495633143d4b129df8e51a7eb66bc967 $
 .\"
 .SH
 Glossary
@@ -1503,7 +1503,7 @@ The shell variable
 is set to the
 .I status
 returned by the last command.
-It is most useful in shell commmand scripts (3.6).
+It is most useful in shell command scripts (3.6).
 .IP stop
 The
 .I stop

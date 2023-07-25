@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9dadf83c7ebdad8ddffb8ce691ad3efc20c3fa6 $");
+__FBSDID("$FreeBSD: 20fe1604821262c4745cc53cb8e9da748ca09fce $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -69,7 +69,6 @@ __FBSDID("$FreeBSD: e9dadf83c7ebdad8ddffb8ce691ad3efc20c3fa6 $");
 #include <vm/pmap.h>
 #include <vm/uma.h>
 
-#include <machine/reg.h>
 #include <machine/cpu.h>
 #include <machine/mips_opcode.h>
 #include <machine/asm.h>

@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 077d0230b2614f99ce97e8af0b995e342d175e39 $
+ * $FreeBSD: 68d3561e5fa7166853205d77a02825e0586dae63 $
  */
 
 const char *linux_syscallnames[] = {
@@ -14,7 +14,7 @@ const char *linux_syscallnames[] = {
 	"linux_newstat",			/* 4 = linux_newstat */
 	"linux_newfstat",			/* 5 = linux_newfstat */
 	"linux_newlstat",			/* 6 = linux_newlstat */
-	"poll",			/* 7 = poll */
+	"linux_poll",			/* 7 = linux_poll */
 	"linux_lseek",			/* 8 = linux_lseek */
 	"linux_mmap2",			/* 9 = linux_mmap2 */
 	"linux_mprotect",			/* 10 = linux_mprotect */
@@ -72,7 +72,7 @@ const char *linux_syscallnames[] = {
 	"linux_kill",			/* 62 = linux_kill */
 	"linux_newuname",			/* 63 = linux_newuname */
 	"linux_semget",			/* 64 = linux_semget */
-	"linux_semop",			/* 65 = linux_semop */
+	"semop",			/* 65 = semop */
 	"linux_semctl",			/* 66 = linux_semctl */
 	"linux_shmdt",			/* 67 = linux_shmdt */
 	"linux_msgget",			/* 68 = linux_msgget */

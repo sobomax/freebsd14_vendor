@@ -33,7 +33,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: 0b5d7e9d950dc09d8af615a0da8696942c0d5fb4 $");
+__FBSDID("$FreeBSD: 2c397e1fe6d44c75ebd242d907d406aa8e3b4a89 $");
 #endif
 
 #include "opt_malo.h"
@@ -1573,7 +1573,7 @@ malo_tx_draintxq(struct malo_softc *sc, struct malo_txq *txq)
 {
 	struct ieee80211_node *ni;
 	struct malo_txbuf *bf;
-	u_int ix;
+	u_int ix __unused;
 	
 	/*
 	 * NB: this assumes output has been stopped and

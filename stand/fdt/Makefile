@@ -1,4 +1,4 @@
-# $FreeBSD: 3eee143a9433fd9ff3f6c74a4252420d50371662 $
+# $FreeBSD: e0fd2dbb4e8d5389c69782a8089b3eb570c9884c $
 
 .include <bsd.init.mk>
 
@@ -16,5 +16,7 @@ SRCS+=		fdt_loader_cmd.c
 CFLAGS+=	-I${SYSDIR}/contrib/libfdt/ -I${LDRSRC}
 
 CFLAGS+=	-Wformat -Wall
+
+.include "${BOOTSRC}/veriexec.mk"
 
 .include <bsd.lib.mk>

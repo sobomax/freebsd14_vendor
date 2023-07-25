@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2240eb765c414cd6537b32787e2f3bb01a236962 $");
+__FBSDID("$FreeBSD: 865294dafed4b992dbf9b548605477b55e7b899a $");
 
 /*
  *	Stand-alone ZFS file reader.
@@ -139,6 +139,7 @@ static const char *features_for_read[] = {
 	"com.intel:allocation_classes",
 	"org.freebsd:zstd_compress",
 	"com.delphix:bookmark_written",
+	"com.delphix:head_errlog",
 	NULL
 };
 

@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 935164394b310e5512407bcb9c2990651d05f87c $
+.\" $FreeBSD: 1d0180c98991295619a996d95b20a0ee9aa084d9 $
 .\"
 .Dd July 3, 2018
 .Dt CPUSET 1
@@ -217,6 +217,7 @@ Create a new cpuset that is restricted to CPUs 0 and 2 and move
 into the new set:
 .Dl cpuset -C -c -l 0,2 -p <pid>
 .Sh SEE ALSO
+.Xr nproc 1 ,
 .Xr cpuset 2 ,
 .Xr rctl 8
 .Sh HISTORY

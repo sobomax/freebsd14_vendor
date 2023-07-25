@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8d1ecc1db4b1420bef1a1cfb419e85e12e0b1d4c $
+ * $FreeBSD: d08f980e7988a77b05f2b70d5e1cfb92d1d3208d $
  */
 
 #ifndef _VMM_SNAPSHOT_
@@ -101,13 +101,13 @@ struct vm_snapshot_meta {
 };
 
 void vm_snapshot_buf_err(const char *bufname, const enum vm_snapshot_op op);
-int vm_snapshot_buf(volatile void *data, size_t data_size,
-		    struct vm_snapshot_meta *meta);
+int vm_snapshot_buf(void *data, size_t data_size,
+    struct vm_snapshot_meta *meta);
 size_t vm_get_snapshot_size(struct vm_snapshot_meta *meta);
 int vm_snapshot_guest2host_addr(void **addrp, size_t len, bool restore_null,
-				struct vm_snapshot_meta *meta);
-int vm_snapshot_buf_cmp(volatile void *data, size_t data_size,
-			      struct vm_snapshot_meta *meta);
+    struct vm_snapshot_meta *meta);
+int vm_snapshot_buf_cmp(void *data, size_t data_size,
+    struct vm_snapshot_meta *meta);
 
 #define	SNAPSHOT_BUF_OR_LEAVE(DATA, LEN, META, RES, LABEL)			\
 do {										\

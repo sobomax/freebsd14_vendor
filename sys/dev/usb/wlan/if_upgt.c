@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgt.c,v 1.35 2008/04/16 18:32:15 damien Exp $ */
-/*	$FreeBSD: 26c57d7944f58154018f3effd1528352997320be $ */
+/*	$FreeBSD: b8ae41418695b2c0f84e76f079fbbd03581862f8 $ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>
@@ -1274,7 +1274,7 @@ upgt_eeprom_read(struct upgt_softc *sc)
 	int block, error, offset;
 
 	UPGT_LOCK(sc);
-	usb_pause_mtx(&sc->sc_mtx, 100);
+	usb_pause_mtx(&sc->sc_mtx, USB_MS_TO_TICKS(100));
 
 	offset = 0;
 	block = UPGT_EEPROM_BLOCK_SIZE;
@@ -1887,7 +1887,7 @@ upgt_device_reset(struct upgt_softc *sc)
 	memcpy(data->buf, init_cmd, sizeof(init_cmd));
 	data->buflen = sizeof(init_cmd);
 	upgt_bulk_tx(sc, data);
-	usb_pause_mtx(&sc->sc_mtx, 100);
+	usb_pause_mtx(&sc->sc_mtx, USB_MS_TO_TICKS(100));
 
 	UPGT_UNLOCK(sc);
 	DPRINTF(sc, UPGT_DEBUG_FW, "%s: device initialized\n", __func__);

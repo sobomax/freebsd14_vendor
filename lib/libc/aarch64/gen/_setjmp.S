@@ -1,7 +1,6 @@
 /*-
  * Copyright (c) 2014 Andrew Turner
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * Portions of this software were developed by Andrew Turner
  * under sponsorship from the FreeBSD Foundation
@@ -30,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ae00195d3ff79f23ea64a6af4fdc7a323a4436d4 $");
+__FBSDID("$FreeBSD: 94a58d774f2beb7054a7723a318628e1b7ed071f $");
 
 #include <machine/setjmp.h>
 
@@ -92,7 +91,8 @@ ENTRY(_longjmp)
 #endif
 
 	/* Load the return value */
-	mov	x0, x1
+	cmp	x1, #0
+	csinc	x0, x1, xzr, ne
 	ret
 
 botch:

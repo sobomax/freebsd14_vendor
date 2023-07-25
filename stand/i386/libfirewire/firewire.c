@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9cb1ec0b19a97748f1961e5bd77debf0ff3b494 $");
+__FBSDID("$FreeBSD: c4e4bdaa065fdeb83f96bdc385279645c921efcb $");
 
 /*
  * FireWire disk device handling.
@@ -76,15 +76,15 @@ static void	fw_cleanup(void);
 void		fw_enable(void);
 
 struct devsw fwohci = {
-    "FW1394", 	/* 7 chars at most */
-    DEVT_NET, 
-    fw_init,
-    fw_strategy, 
-    fw_open, 
-    fw_close, 
-    noioctl,
-    fw_print,
-    fw_cleanup
+	.dv_name = "FW1394", 	/* 7 chars at most */
+	.dv_type = DEVT_NET,
+	.dv_init = fw_init,
+	.dv_strategy = fw_strategy,
+	.dv_open = fw_open,
+	.dv_close = fw_close,
+	.dv_ioctl = noioctl,
+	.dv_print = fw_print,
+	.dv_cleanup = fw_cleanup,
 };
 
 static struct fwohci_softc fwinfo[MAX_OHCI];

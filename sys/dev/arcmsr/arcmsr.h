@@ -34,7 +34,7 @@
 **(INCLUDING NEGLIGENCE OR OTHERWISE)ARISING IN ANY WAY OUT OF THE USE OF
 ** THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **************************************************************************
-* $FreeBSD: f01b74342d6183a07fd17b3e4d4604408c91a3d9 $
+* $FreeBSD: 16b708cc5f398ee45209250e6bdf76be0f8d9cba $
 */
 #define ARCMSR_SCSI_INITIATOR_ID	255
 #define ARCMSR_DEV_SECTOR_SIZE		512
@@ -1424,7 +1424,7 @@ struct AdapterControlBlock {
 #define ACB_F_MESSAGE_WQBUFFER_READ     0x0040
 #define ACB_F_BUS_RESET                 0x0080
 #define ACB_F_IOP_INITED                0x0100		/* iop init */
-#define ACB_F_MAPFREESRB_FAILD		0x0200		/* arcmsr_map_freesrb faild */
+#define ACB_F_MAPFREESRB_FAILD		0x0200		/* arcmsr_map_freesrb failed */
 #define ACB_F_CAM_DEV_QFRZN             0x0400
 #define ACB_F_BUS_HANG_ON               0x0800		/* need hardware reset bus */
 #define ACB_F_SRB_FUNCTION_POWER        0x1000

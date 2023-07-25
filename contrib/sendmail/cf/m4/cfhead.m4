@@ -9,7 +9,7 @@
 # forth in the LICENSE file which can be found at the top level of
 # the sendmail distribution.
 #
-# $FreeBSD: 7e5fa99e0ef5a72b489d2ce81802e2a2e8d5859b $
+# $FreeBSD: 64981a94f867c4c6f9c4aaa26c1117cc8d85de34 $
 #
 
 ######################################################################
@@ -171,6 +171,12 @@ ifdef(`_MAILER_DEFINED_',,`errprint(`*** WARNING: MAILER() should be before LOCA
 ')')
 divert(9)
 SLocal_srv_features')
+define(`LOCAL_CLT_FEATURES',
+`define(`_LOCAL_CLT_FEATURES_')
+ifdef(`_MAILER_DEFINED_',,`errprint(`*** WARNING: MAILER() should be before LOCAL_CLT_FEATURES
+')')
+divert(9)
+SLocal_clt_features')
 define(`LOCAL_TRY_TLS',
 `define(`_LOCAL_TRY_TLS_')
 ifdef(`_MAILER_DEFINED_',,`errprint(`*** WARNING: MAILER() should be before LOCAL_TRY_TLS
@@ -213,7 +219,7 @@ define(`SITE', `ifelse(CONCAT($'2`, $3), SU,
 sinclude(_CF_DIR_`'siteconfig/$1.m4)')
 define(`EXPOSED_USER', `PUSHDIVERT(5)C{E}$1
 POPDIVERT`'dnl`'')
-define(`EXPOSED_USER_FILE', `PUSHDIVERT(5)F{E}$1 
+define(`EXPOSED_USER_FILE', `PUSHDIVERT(5)F{E}$1
 POPDIVERT`'dnl`'')
 define(`LOCAL_USER', `PUSHDIVERT(5)C{L}$1
 POPDIVERT`'dnl`'')

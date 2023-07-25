@@ -1,4 +1,4 @@
-# $FreeBSD: 17bb09857fcf0974b9f52832ace487e3fdc7cf7a $
+# $FreeBSD: b3243c2a66cf222dd1b08596badd587e18d64caf $
 
 .include <src.opts.mk>
 
@@ -13,6 +13,11 @@ CFLAGS+=-DSM_CONF_POLL
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=-DNETINET6
+.endif
+
+.if ${MK_OPENSSL} != "no"
+# STARTTLS support
+CFLAGS+=-DSTARTTLS
 .endif
 
 # User customizations to the sendmail build environment

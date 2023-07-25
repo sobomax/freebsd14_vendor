@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: 36399fb712c0876fa6ff5daa4f397163c7e136c1 $
+ * $FreeBSD: 3dac437426b05ecdd1bc4edc3b389eab7b9b862e $
  */
 
 #ifndef _NET_ROUTE_H_
@@ -350,7 +350,7 @@ struct rt_addrinfo {
 	struct	ifaddr *rti_ifa;		/* value of rt_ifa addr */
 	struct	ifnet *rti_ifp;			/* route interface */
 	rib_filter_f_t	*rti_filter;		/* filter function */
-	void	*rti_filterdata;		/* filter paramenters */
+	void	*rti_filterdata;		/* filter parameters */
 	u_long	rti_mflags;			/* metrics RTV_ flags */
 	u_long	rti_spare;			/* Will be used for fib */
 	struct	rt_metrics *rti_rmx;		/* Pointer to route metrics */
@@ -415,15 +415,16 @@ struct ifmultiaddr;
 struct rib_head;
 
 void	 rt_ieee80211msg(struct ifnet *, int, void *, size_t);
-void	 rt_ifannouncemsg(struct ifnet *, int);
 void	 rt_ifmsg(struct ifnet *);
+void	 rt_ifmsg_14(struct ifnet *, int);
 void	 rt_missmsg(int, struct rt_addrinfo *, int, int);
 void	 rt_missmsg_fib(int, struct rt_addrinfo *, int, int, int);
 int	 rt_addrmsg(int, struct ifaddr *, int);
 int	 rt_routemsg(int, struct rtentry *, struct nhop_object *, int);
 int	 rt_routemsg_info(int, struct rt_addrinfo *, int);
 void	 rt_newmaddrmsg(int, struct ifmultiaddr *);
-void 	 rt_maskedcopy(struct sockaddr *, struct sockaddr *, struct sockaddr *);
+void 	 rt_maskedcopy(const struct sockaddr *, struct sockaddr *,
+	    const struct sockaddr *);
 struct rib_head *rt_table_init(int, int, u_int);
 void	rt_table_destroy(struct rib_head *);
 u_int	rt_tables_get_gen(uint32_t table, sa_family_t family);

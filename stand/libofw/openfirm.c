@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2b89581ae70b277edda57a1406906501b4144bd $");
+__FBSDID("$FreeBSD: b780a9e36125a4a4392f86d3c13c1a9922064e14 $");
 
 #include <sys/endian.h>
 
@@ -772,6 +772,7 @@ OF_chain(void *virt, u_int size, void (*entry)(), void *arg, u_int len)
 	if (size > 0)
 		OF_release(virt, size);
 #endif
-	entry(0, 0, openfirmware, arg, len);
+	((int (*)(u_long, u_long, u_long, void *, u_long))entry)
+	    (0, 0, (u_long)openfirmware, arg, len);
 }
 #endif

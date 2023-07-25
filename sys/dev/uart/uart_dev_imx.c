@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24b2e4c65f75b568d846d702655c2329835652ca $");
+__FBSDID("$FreeBSD: 813b30a539c0887d89a7c672c41e27db3eec5e23 $");
 
 #include "opt_ddb.h"
 
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: 24b2e4c65f75b568d846d702655c2329835652ca $");
 #include <dev/uart/uart_bus.h>
 #include <dev/uart/uart_dev_imx.h>
 
-#if defined(EXT_RESOURCES) && defined(__aarch64__)
+#if defined(__aarch64__)
 #define	IMX_ENABLE_CLOCKS
 #endif
 

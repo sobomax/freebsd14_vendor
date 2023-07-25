@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6364cce6626c9d9a595902debaf0e36ee1796a06 $");
+__FBSDID("$FreeBSD: 4d8599c18363ca7cbf36c665396baaad6043d3d7 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -781,7 +781,7 @@ nfscl_start_renewthread(struct nfsclclient *clp)
  */
 int
 nfscl_wcc_data(struct nfsrv_descript *nd, struct vnode *vp,
-    struct nfsvattr *nap, int *flagp, int *wccflagp, void *stuff)
+    struct nfsvattr *nap, int *flagp, int *wccflagp, uint64_t *repsizep)
 {
 	u_int32_t *tl;
 	struct nfsnode *np = VTONFS(vp);
@@ -804,7 +804,7 @@ nfscl_wcc_data(struct nfsrv_descript *nd, struct vnode *vp,
 				NFSUNLOCKNODE(np);
 			}
 		}
-		error = nfscl_postop_attr(nd, nap, flagp, stuff);
+		error = nfscl_postop_attr(nd, nap, flagp, NULL);
 		if (wccflagp != NULL && *flagp == 0)
 			*wccflagp = 0;
 	} else if ((nd->nd_flag & (ND_NOMOREDATA | ND_NFSV4 | ND_V4WCCATTR))
@@ -820,6 +820,8 @@ nfscl_wcc_data(struct nfsrv_descript *nd, struct vnode *vp,
 		NFSM_DISSECT(tl, u_int32_t *, 2 * NFSX_UNSIGNED);
 		if (*++tl)
 			nd->nd_flag |= ND_NOMOREDATA;
+		if (repsizep != NULL)
+			*repsizep = nfsva.na_size;
 		if (wccflagp != NULL &&
 		    nfsva.na_vattr.va_mtime.tv_sec != 0) {
 			NFSLOCKNODE(np);
@@ -1178,7 +1180,6 @@ nfscl_maperr(struct thread *td, int error, uid_t uid, gid_t gid)
 	case NFSERR_FHEXPIRED:
 	case NFSERR_RESOURCE:
 	case NFSERR_MOVED:
-	case NFSERR_NOFILEHANDLE:
 	case NFSERR_MINORVERMISMATCH:
 	case NFSERR_OLDSTATEID:
 	case NFSERR_BADSEQID:
@@ -1188,6 +1189,14 @@ nfscl_maperr(struct thread *td, int error, uid_t uid, gid_t gid)
 	case NFSERR_OPILLEGAL:
 		printf("nfsv4 client/server protocol prob err=%d\n",
 		    error);
+		return (EIO);
+	case NFSERR_NOFILEHANDLE:
+		printf("nfsv4 no file handle: usually means the file "
+		    "system is not exported on the NFSv4 server\n");
+		return (EIO);
+	case NFSERR_WRONGSEC:
+		tprintf(p, LOG_INFO, "NFSv4 error WrongSec: You probably need a"
+		    " Kerberos TGT\n");
 		return (EIO);
 	default:
 		tprintf(p, LOG_INFO, "nfsv4 err=%d\n", error);

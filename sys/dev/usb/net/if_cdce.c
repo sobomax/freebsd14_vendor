@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3c73567b7ceec6f419b16ce66211902e7a12a22 $");
+__FBSDID("$FreeBSD: bb2d08c2a2820f4039838e78aedc0a76e43771f2 $");
 
 #include <sys/gsb_crc32.h>
 #include <sys/eventhandler.h>
@@ -266,6 +266,9 @@ static int  cdce_driver_loaded(struct module *, int, void *);
 
 static const STRUCT_USB_HOST_ID cdce_switch_devs[] = {
 	{USB_VPI(USB_VENDOR_HUAWEI, USB_PRODUCT_HUAWEI_E3272_INIT, MSC_EJECT_HUAWEI2)},
+	{USB_VPI(USB_VENDOR_HUAWEI, USB_PRODUCT_HUAWEI_E3372v153_INIT, MSC_EJECT_HUAWEI2)},
+	{USB_VPI(USB_VENDOR_HUAWEI, USB_PRODUCT_HUAWEI_E3372_INIT, MSC_EJECT_HUAWEI4)},
+	{USB_VPI(USB_VENDOR_HUAWEI, USB_PRODUCT_HUAWEI_E5573Cs322_ECM, MSC_EJECT_HUAWEI3)},
 };
 
 static const STRUCT_USB_HOST_ID cdce_host_devs[] = {

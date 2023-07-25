@@ -1,6 +1,6 @@
-# $FreeBSD: 3be15a13a81ec92e97d444824302510a2da06b2b $
+# $FreeBSD: e789793a68b8a3606a73f65de7999708535d9936 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	journal

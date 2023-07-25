@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: ac97575c8ffa8da10a9da013eebec62c89435c1d $
+ * $FreeBSD: b10a37ecd5d33706fddab06c17bdf4690b02fc66 $
  */
 /*
  * File: qls_os.h
@@ -35,6 +35,8 @@
 
 #ifndef _QLS_OS_H_
 #define _QLS_OS_H_
+
+#include "opt_inet.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>

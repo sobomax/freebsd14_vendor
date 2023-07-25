@@ -1,4 +1,4 @@
-# $FreeBSD: fcd6197e948828f8873db3b4e73b6204694fa22a $
+# $FreeBSD: 2742a5f1ba9081c24098da795ef67db6ec52ade1 $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga
@@ -39,7 +39,7 @@ SRCS+=	${LINUXKPI_GENSRCS}
 SRCS+=	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .if defined(CONFIG_BUILD_FPGA)
 SRCS+= \

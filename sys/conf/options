@@ -1,4 +1,4 @@
-# $FreeBSD: e3154dfd467991d1079f545cf65686aac5ba107f $
+# $FreeBSD: 4ed0707e5c584d2022e4707b00b2f8869d9bc76b $
 #
 #        On the handling of kernel options
 #
@@ -454,6 +454,7 @@ MBUF_STRESS_TEST
 MROUTING		opt_mrouting.h
 NFSLOCKD
 PCBGROUP		opt_pcbgroup.h
+NETLINK
 PF_DEFAULT_TO_DROP	opt_pf.h
 ROUTE_MPATH		opt_route.h
 ROUTETABLES		opt_route.h

@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: ec7d8eb6de884c5084cb57bd074b9cc0864d7306 $");
+__FBSDID("$FreeBSD: a2e6d9ad1c535693fbbe5ee8efba7c9110762354 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1717,7 +1717,7 @@ build_pax_attribute_name(char *dest, const char *src)
 	 * to having clients override it.
 	 */
 #if HAVE_GETPID && 0  /* Disable this for now; see above comment. */
-	sprintf(buff, "PaxHeader.%d", getpid());
+	snprintf(buff, sizeof(buff), "PaxHeader.%d", getpid());
 #else
 	/* If the platform can't fetch the pid, don't include it. */
 	strcpy(buff, "PaxHeader");

@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 23e0da4cdb792ce06deb846981d11790190771dd $
+ * $FreeBSD: cd1547f2ce436e3acb26d783d12934d585638f00 $
  */
 
 #ifdef KCSAN
@@ -40,7 +40,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 23e0da4cdb792ce06deb846981d11790190771dd $");
+__FBSDID("$FreeBSD: cd1547f2ce436e3acb26d783d12934d585638f00 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,8 +209,7 @@ trace_pc(uintptr_t ret)
 	if (info->mode != KCOV_MODE_TRACE_PC)
 		return;
 
-	KASSERT(info->kvaddr != 0,
-	    ("__sanitizer_cov_trace_pc: NULL buf while running"));
+	KASSERT(info->kvaddr != 0, ("%s: NULL buf while running", __func__));
 
 	buf = (uint64_t *)info->kvaddr;
 
@@ -241,8 +240,7 @@ trace_cmp(uint64_t type, uint64_t arg1, uint64_t arg2, uint64_t ret)
 	if (info->mode != KCOV_MODE_TRACE_CMP)
 		return (false);
 
-	KASSERT(info->kvaddr != 0,
-	    ("__sanitizer_cov_trace_pc: NULL buf while running"));
+	KASSERT(info->kvaddr != 0, ("%s: NULL buf while running", __func__));
 
 	buf = (uint64_t *)info->kvaddr;
 

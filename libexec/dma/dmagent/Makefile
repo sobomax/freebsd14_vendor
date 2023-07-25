@@ -1,4 +1,4 @@
-# $FreeBSD: f7f127cf4e7e024f93021c63032868444d6ffcb5 $
+# $FreeBSD: f56b16a0b6f01445584d9ce40815120173e0a971 $
 
 .include <src.opts.mk>
 
@@ -18,6 +18,7 @@ SRCS=	aliases_parse.y \
 	spool.c \
 	util.c
 MAN8=	dma.8
+MLINKS=	dma.8 dma.conf.5
 CONFS=	dma.conf
 CONFSDIR=	${CONFDIR}/dma
 YFLAGS+=	-i

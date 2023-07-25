@@ -77,7 +77,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02ccceed70a51a5aa01aadad303b83263f46b44a $");
+__FBSDID("$FreeBSD: e46c7fb9279351187be3b3f803d7c9201bfca618 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -197,7 +197,7 @@ extern void	nd6_setmtu(struct ifnet *);
  *  - BRIDGE_RT_LOCK, for any change to bridge_rtnodes
  *  - BRIDGE_LOCK, for any other change
  *
- * The BRIDGE_LOCK is a sleepable lock, because it is held accross ioctl()
+ * The BRIDGE_LOCK is a sleepable lock, because it is held across ioctl()
  * calls to bridge member interfaces and these ioctl()s can sleep.
  * The BRIDGE_RT_LOCK is a non-sleepable mutex, because it is sometimes
  * required while we're in NET_EPOCH and then we're not allowed to sleep.
@@ -600,7 +600,7 @@ vnet_bridge_uninit(const void *unused __unused)
 	BRIDGE_LIST_LOCK_DESTROY();
 
 	/* Callbacks may use the UMA zone. */
-	epoch_drain_callbacks(net_epoch_preempt);
+	NET_EPOCH_DRAIN_CALLBACKS();
 
 	uma_zdestroy(V_bridge_rtnode_zone);
 }
@@ -2028,8 +2028,13 @@ bridge_enqueue(struct bridge_softc *sc, struct ifnet *dst_ifp, struct mbuf *m)
 
 		M_ASSERTPKTHDR(m); /* We shouldn't transmit mbuf without pkthdr */
 		if ((err = dst_ifp->if_transmit(dst_ifp, m))) {
-			m_freem(m0);
-			if_inc_counter(sc->sc_ifp, IFCOUNTER_OERRORS, 1);
+			int n;
+
+			for (m = m0, n = 1; m != NULL; m = m0, n++) {
+				m0 = m->m_nextpkt;
+				m_freem(m);
+			}
+			if_inc_counter(sc->sc_ifp, IFCOUNTER_OERRORS, n);
 			break;
 		}
 

@@ -27,34 +27,33 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0e18aa9c21633acac2f2be545a49f75601f2b3b $");
+__FBSDID("$FreeBSD: 1617e4f0d5b4e900ac71e1ca747b2549438ce69f $");
 
 #include "opt_ddb.h"
 #include "opt_kld.h"
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/param.h>
-#include <sys/kernel.h>
 #include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/sysproto.h>
-#include <sys/sysent.h>
-#include <sys/priv.h>
-#include <sys/proc.h>
-#include <sys/lock.h>
-#include <sys/mutex.h>
-#include <sys/sx.h>
-#include <sys/module.h>
-#include <sys/mount.h>
-#include <sys/linker.h>
 #include <sys/eventhandler.h>
 #include <sys/fcntl.h>
 #include <sys/jail.h>
+#include <sys/kernel.h>
 #include <sys/libkern.h>
+#include <sys/linker.h>
+#include <sys/lock.h>
+#include <sys/malloc.h>
+#include <sys/module.h>
+#include <sys/mount.h>
+#include <sys/mutex.h>
 #include <sys/namei.h>
-#include <sys/vnode.h>
+#include <sys/priv.h>
+#include <sys/proc.h>
+#include <sys/sx.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysctl.h>
+#include <sys/sysproto.h>
+#include <sys/vnode.h>
 
 #ifdef DDB
 #include <ddb/ddb.h>

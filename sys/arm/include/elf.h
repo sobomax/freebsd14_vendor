@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: affd4b34916348617f420c1831bdae58c5e5ae07 $
+ * $FreeBSD: 35d0fa55ca1a11ab0aa47afc35f6747fb1818ea7 $
  */
 
 #ifndef _MACHINE_ELF_H_
@@ -78,7 +78,7 @@ __ElfType(Auxinfo);
 #define	EF_ARM_EABI_VERSION_UNKNOWN 0
 #define	EF_ARM_EABI_FREEBSD_MIN 4
 
-#define	ET_DYN_LOAD_ADDR	0x500000
+#define	ET_DYN_LOAD_ADDR 0x01001000
 
 /* Flags passed in AT_HWCAP. */
 #define	HWCAP_SWP		0x00000001	/* Unsupported, never set.    */

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b15953e5754fdd74d805f23f972fd47b72f3c972 $
+ * $FreeBSD: b6b52bd42e7552c5cb0d45d34d89bad82e740f48 $
  */
 
 #ifndef _OPENSOLARIS_SYS_ATOMIC_H_
@@ -57,7 +57,8 @@ extern uint64_t atomic_cas_64(volatile uint64_t *target, uint64_t cmp,
     uint64_t newval);
 #endif
 
-#define	membar_producer	atomic_thread_fence_rel
+#define	membar_consumer()		atomic_thread_fence_acq()
+#define	membar_producer()		atomic_thread_fence_rel()
 
 static __inline uint32_t
 atomic_add_32_nv(volatile uint32_t *target, int32_t delta)

@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36d5f32758002ff3aa6544be20d418ee8848fdb8 $");
+__FBSDID("$FreeBSD: 74439d5884ef4e5d3bbf8df47f4de67360ea9cd6 $");
 
 #include "opt_vm.h"
 
@@ -1886,8 +1886,9 @@ vm_pageout_oom_pagecount(struct vmspace *vmspace)
 		if ((entry->eflags & MAP_ENTRY_NEEDS_COPY) != 0 &&
 		    obj->ref_count != 1)
 			continue;
-		if (obj->type == OBJT_DEFAULT || obj->type == OBJT_PHYS ||
-		    obj->type == OBJT_VNODE || (obj->flags & OBJ_SWAP) != 0)
+		if (obj->type == OBJT_DEFAULT || obj->type == OBJT_SWAP ||
+		    obj->type == OBJT_PHYS || obj->type == OBJT_VNODE ||
+		    (obj->flags & OBJ_SWAP) != 0)
 			res += obj->resident_page_count;
 	}
 	return (res);

@@ -1,4 +1,4 @@
-/* $FreeBSD: 1c12f05c2769e9a748b36db4430db7f9219cfa5b $ */
+/* $FreeBSD: 647d8a58b534fac528caeb5a71c5b31366730e7f $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -61,6 +61,8 @@ struct devsw umass_disk = {
 	.dv_ioctl = umass_disk_ioctl,
 	.dv_print = umass_disk_print,
 	.dv_cleanup = umass_disk_cleanup,
+	.dv_fmtdev = disk_fmtdev,
+	.dv_parsedev = disk_parsedev,
 };
 
 static int

@@ -1,4 +1,4 @@
-# $FreeBSD: b029d8d60419e94189463864ef1d36e833359fd7 $
+# $FreeBSD: 5ddbff94385a00b482dc13e964699432d378688e $
 #
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #
@@ -268,11 +268,11 @@ span_head()
 {
 	atf_set descr 'Bridge span test'
 	atf_set require.user root
+	atf_set require.progs scapy
 }
 
 span_body()
 {
-	set -x
 	vnet_init
 
 	epair=$(vnet_mkepair)

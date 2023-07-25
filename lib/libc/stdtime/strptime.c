@@ -45,7 +45,7 @@ static char copyright[] __unused =
 static char sccsid[] __unused = "@(#)strptime.c	0.1 (Powerdog) 94/03/27";
 #endif /* !defined NOID */
 #endif /* not lint */
-__FBSDID("$FreeBSD: 1bd7d4e8367d7a54dacc184346865b40d752a54d $");
+__FBSDID("$FreeBSD: 091e037b6365aec747fc973f690be552bf5af73d $");
 
 #include "namespace.h"
 #include <time.h>
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: 1bd7d4e8367d7a54dacc184346865b40d752a54d $");
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include "private.h"
 #include "un-namespace.h"
 #include "libc_private.h"
 #include "timelocal.h"

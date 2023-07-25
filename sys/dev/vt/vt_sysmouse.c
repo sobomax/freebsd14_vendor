@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e10ac829abf38b78b00bf4204cbcd18c47ded8a9 $");
+__FBSDID("$FreeBSD: c6426f3a8f17612c1a40ea458670209bcdf9f184 $");
 
 #include "opt_evdev.h"
 
@@ -249,6 +249,8 @@ sysmouse_process_event(mouse_info_t *mi)
 
 #ifdef EVDEV_SUPPORT
 	sysmouse_evdev_store(x, y, z, sysmouse_status.button);
+	if (evdev_is_grabbed(sysmouse_evdev))
+		goto done;
 #endif
 
 	/* The first five bytes are compatible with MouseSystems. */

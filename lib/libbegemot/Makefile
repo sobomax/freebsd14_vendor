@@ -1,4 +1,4 @@
-# $FreeBSD: c5d3bb8badc2ed487f25d3de8412142934b02b95 $
+# $FreeBSD: 6ce1310ae97be2554827f027698b28d4b47cd8d5 $
 
 LIBBEGEMOT_DIR=${SRCTOP}/contrib/libbegemot
 
@@ -25,3 +25,5 @@ MLINKS=	rpoll.3 poll_register.3		\
 	rpoll.3 poll_dispatch.3
 
 .include <bsd.lib.mk>
+
+CWARNFLAGS+=	${NO_WUSE_AFTER_FREE}

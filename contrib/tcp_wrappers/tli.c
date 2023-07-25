@@ -13,7 +13,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 36d6f7eff398cd6b465fd5a1478475efac1845cf $
+  * $FreeBSD: d05f1156b0fb33af5082ae5d6f2389d787dc2e52 $
   */
 
 #ifndef lint
@@ -41,7 +41,6 @@ static char sccsid[] = "@(#) tli.c 1.15 97/03/21 19:27:25";
 #include <string.h>
 
 extern char *nc_sperror();
-extern int errno;
 extern char *sys_errlist[];
 extern int sys_nerr;
 extern int t_errno;

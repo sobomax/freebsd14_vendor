@@ -1,4 +1,4 @@
-# $FreeBSD: d32ba9af54a1d6875eb12e50c0df16d343f4764b $
+# $FreeBSD: 45034ff211b168cb1f41b2b76ed12358d4c0817e $
 
 PACKAGE=	tests
 WARNS?=		1
@@ -7,6 +7,8 @@ TESTSDIR=       ${TESTSBASE}/sys/net/routing
 
 ATF_TESTS_C +=	test_rtsock_l3
 ATF_TESTS_C +=	test_rtsock_lladdr
+ATF_TESTS_PYTEST +=	test_routing_l3.py
+ATF_TESTS_PYTEST +=	test_rtsock_multipath.py
 
 ${PACKAGE}FILES+=	generic_cleanup.sh
 ${PACKAGE}FILESMODE_generic_cleanup.sh=0555

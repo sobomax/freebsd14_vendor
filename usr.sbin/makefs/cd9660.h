@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
- * $FreeBSD: 5f6525d3e94f5153a43e27c9561081374f1a50c6 $
+ * $FreeBSD: d854429a24bfdb5aaf2549888bcd113d123c48c9 $
  */
 
 #ifndef _MAKEFS_CD9660_H
@@ -316,8 +316,8 @@ void			cd9660_721(uint16_t, unsigned char *);
 void			cd9660_731(uint32_t, unsigned char *);
 void			cd9660_722(uint16_t, unsigned char *);
 void			cd9660_732(uint32_t, unsigned char *);
-void 			cd9660_bothendian_dword(uint32_t dw, unsigned char *);
-void 			cd9660_bothendian_word(uint16_t dw, unsigned char *);
+void			cd9660_bothendian_dword(uint32_t dw, unsigned char *);
+void			cd9660_bothendian_word(uint16_t dw, unsigned char *);
 void			cd9660_set_date(char *, time_t);
 void			cd9660_time_8426(unsigned char *, time_t);
 void			cd9660_time_915(unsigned char *, time_t);

@@ -86,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5837886a2a27c7de267874466e5b44aab88e6d1 $");
+__FBSDID("$FreeBSD: aff828a31d6a1aa536affd4da5058b61dadadf35 $");
 
 /*
  * Native 64-bit page table operations for running without a hypervisor.
@@ -303,7 +303,7 @@ static struct moea64_funcs moea64_native_funcs = {
 MMU_DEF_INHERIT(oea64_mmu_native, MMU_TYPE_G5, moea64_native_methods, oea64_mmu);
 
 static void
-moea64_install_native()
+moea64_install_native(void)
 {
 
 	/* Install the MOEA64 ops. */

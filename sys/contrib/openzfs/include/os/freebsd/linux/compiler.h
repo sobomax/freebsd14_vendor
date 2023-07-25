@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 20903717b58d1873fa90f8f37a09b390afaa471b $
+ * $FreeBSD: 79f9b2d8a96a71363a88be555dfeb428ad728ed5 $
  */
 #ifndef	_LINUX_COMPILER_H_
 #define	_LINUX_COMPILER_H_
@@ -83,7 +83,6 @@
 #define	__printf(a, b)			__printflike(a, b)
 
 #define	barrier()			__asm__ __volatile__("": : :"memory")
-#define	smp_rmb()		rmb()
 #define	___PASTE(a, b) a##b
 #define	__PASTE(a, b) ___PASTE(a, b)
 

@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_vfsops.c	8.8 (Berkeley) 4/18/94
- * $FreeBSD: 74a7a08128b4e466cc2a695b8d04ef3bd89ec290 $
+ * $FreeBSD: e35b989c285b32056c402052363c97b0b0ad13c0 $
  */
 
 #include <sys/param.h>
@@ -1056,9 +1056,6 @@ ext2_unmount(struct mount *mp, int mntflags)
 	free(fs, M_EXT2MNT);
 	free(ump, M_EXT2MNT);
 	mp->mnt_data = NULL;
-	MNT_ILOCK(mp);
-	mp->mnt_flag &= ~MNT_LOCAL;
-	MNT_IUNLOCK(mp);
 	return (error);
 }
 

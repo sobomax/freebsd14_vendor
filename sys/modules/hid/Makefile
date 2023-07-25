@@ -1,4 +1,4 @@
-# $FreeBSD: 7d5515480bc09d7870b22fb03a33e0d24542b015 $
+# $FreeBSD: 72368487bc6c0a6d62b240eaed14722e6cd62f7e $
 
 SUBDIR = \
 	hid \
@@ -8,6 +8,7 @@ SUBDIR = \
 	hidraw
 
 SUBDIR += \
+	bcm5974 \
 	hconf \
 	hcons \
 	hgame \
@@ -16,6 +17,7 @@ SUBDIR += \
 	hmt \
 	hpen \
 	hsctrl \
+	ietp \
 	ps4dshock \
 	xb360gp
 

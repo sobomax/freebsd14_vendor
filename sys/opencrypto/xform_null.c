@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1b79e1385b26b789b9b09b9e64ab0b465e1b565 $");
+__FBSDID("$FreeBSD: 729cff37a036e5e85983bc02df6ecd641e8168e9 $");
 
 #include <opencrypto/xform_auth.h>
 #include <opencrypto/xform_enc.h>
@@ -127,6 +127,5 @@ null_update(void *ctx, const void *buf, u_int len)
 static void
 null_final(uint8_t *buf, void *ctx)
 {
-	if (buf != (uint8_t *) 0)
-		bzero(buf, 12);
+	bzero(buf, NULL_HASH_LEN);
 }

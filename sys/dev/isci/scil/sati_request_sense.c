@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f12f0ffcb7e585e4845c09868717621eda76e1c1 $");
+__FBSDID("$FreeBSD: 457b09d92f8ab93425001abc030bf081c3489a07 $");
 
 /**
  * @file
@@ -86,7 +86,7 @@ __FBSDID("$FreeBSD: f12f0ffcb7e585e4845c09868717621eda76e1c1 $");
  * @retval SATI_SUCCESS indicates that the translation was supported and occurred
  *         without error.
  * @retval SATI_FAILURE_CHECK_RESPONSE_DATA This value is returned if
- *         the SATII is processing a format unit commmand.
+ *         the SATII is processing a format unit command.
  * @retval SATI_COMPLETE indicates that the translation was supported, occurred without
  *         error, and no additional translation is necessary.
  */

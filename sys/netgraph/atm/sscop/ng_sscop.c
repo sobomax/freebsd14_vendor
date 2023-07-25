@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b15ef5e258a13cd8c983fe6aa38b35cf770018ae $");
+__FBSDID("$FreeBSD: ae60e7557978e90320d82392a7392c72f787770f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -245,6 +245,8 @@ static int
 ng_sscop_constructor(node_p node)
 {
 	struct priv *p;
+
+	gone_in(14, "ng_sscop: netgraph ATM modules");
 
 	p = malloc(sizeof(*p), M_NG_SSCOP, M_WAITOK | M_ZERO);
 

@@ -34,7 +34,7 @@
  *	@(#)null_vfsops.c	8.2 (Berkeley) 1/21/94
  *
  * @(#)lofs_vfsops.c	1.2 (Berkeley) 6/18/92
- * $FreeBSD: 0bb98072edf41996bc94d4b987f07d43c2b6d19d $
+ * $FreeBSD: 1a83973313b13b2615ccec5456c80e70853bac13 $
  */
 
 /*
@@ -154,6 +154,17 @@ nullfs_mount(struct mount *mp)
 			vput(lowerrootvp);
 			return (EDEADLK);
 		}
+	}
+
+	/*
+	 * Lower vnode must be the same type as the covered vnode - we
+	 * don't allow mounting directories to files or vice versa.
+	 */
+	if ((lowerrootvp->v_type != VDIR && lowerrootvp->v_type != VREG) ||
+	    lowerrootvp->v_type != mp->mnt_vnodecovered->v_type) {
+		NULLFSDEBUG("nullfs_mount: target must be same type as fspath");
+		vput(lowerrootvp);
+		return (EINVAL);
 	}
 
 	xmp = (struct null_mount *) malloc(sizeof(struct null_mount),
@@ -467,4 +478,4 @@ static struct vfsops null_vfsops = {
 	.vfs_unlink_lowervp =	nullfs_unlink_lowervp,
 };
 
-VFS_SET(null_vfsops, nullfs, VFCF_LOOPBACK | VFCF_JAIL);
+VFS_SET(null_vfsops, nullfs, VFCF_LOOPBACK | VFCF_JAIL | VFCF_FILEMOUNT);

@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2009 Stacey Son sson@FreeBSD.org
  *
- * $FreeBSD: 3f625f9f444524aa8de1c54b19edddad9ede42bb $
+ * $FreeBSD: 4140c133b53efbff8c679a84c98c79832d1d2e16 $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -80,11 +80,11 @@ inline int R_R0 = R_EAX;
 inline int R_R1 = R_EBX;
 #pragma D binding "1.0" R_R1
 
-inline int R_RSP = 18 + 1 + 20;
+inline int R_RSP = 18 + 1 + 24;
 #pragma D binding "1.0" R_RSP
-inline int R_RFL = 18 + 1 + 19;
+inline int R_RFL = 18 + 1 + 23;
 #pragma D binding "1.0" R_RFL
-inline int R_RIP = 18 + 1 + 17;
+inline int R_RIP = 18 + 1 + 21;
 #pragma D binding "1.0" R_RIP
 inline int R_RAX = 18 + 1 + 14;
 #pragma D binding "1.0" R_RAX

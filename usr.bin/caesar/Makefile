@@ -1,5 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 2ad96b7c22e361cb03492be71ee621519a5d4dbb $
+# $FreeBSD: 5409d962e3ed890329c8ba02be2f6ee66ad134b0 $
+
+PACKAGE=	games
 
 PROG=	caesar
 LIBADD=	m

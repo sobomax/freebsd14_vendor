@@ -1,6 +1,6 @@
-# $FreeBSD: 3c370520a62475c879f9d76cefe4b8acc662b384 $
+# $FreeBSD: 9d5cfb8b3893d1bc1e9f440cfc8c913a3a3c1fbc $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	concat

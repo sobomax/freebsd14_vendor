@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d475bec93b8bbe6e22ba4978ff16931d286d1f6 $");
+__FBSDID("$FreeBSD: 6fd89be0f8c883309b35f51204309efb2a08f8c6 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -527,9 +527,6 @@ cd9660_unmount(mp, mntflags)
 	dev_rel(isomp->im_dev);
 	free(isomp, M_ISOFSMNT);
 	mp->mnt_data = NULL;
-	MNT_ILOCK(mp);
-	mp->mnt_flag &= ~MNT_LOCAL;
-	MNT_IUNLOCK(mp);
 	return (error);
 }
 

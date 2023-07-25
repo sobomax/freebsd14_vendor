@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad9b3dde3d37a91345bfe84c680165c0dfeecf03 $");
+__FBSDID("$FreeBSD: b0d82299e4871424e9b94d32ddff7cd3d1cb7ecb $");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -391,6 +391,8 @@ hkbd_put_key(struct hkbd_softc *sc, uint32_t key)
 	if (evdev_rcpt_mask & EVDEV_RCPT_HW_KBD && sc->sc_evdev != NULL)
 		evdev_push_event(sc->sc_evdev, EV_KEY,
 		    evdev_hid2key(KEY_INDEX(key)), !(key & KEY_RELEASE));
+	if (sc->sc_evdev != NULL && evdev_is_grabbed(sc->sc_evdev))
+		return;
 #endif
 
 	tail = (sc->sc_inputtail + 1) % HKBD_IN_BUF_SIZE;
@@ -541,6 +543,8 @@ hkbd_interrupt(struct hkbd_softc *sc)
 #ifdef EVDEV_SUPPORT
 	if (evdev_rcpt_mask & EVDEV_RCPT_HW_KBD && sc->sc_evdev != NULL)
 		evdev_sync(sc->sc_evdev);
+	if (sc->sc_evdev != NULL && evdev_is_grabbed(sc->sc_evdev))
+		return;
 #endif
 
 	/* wakeup keyboard system */
@@ -1636,6 +1640,7 @@ hkbd_ioctl_locked(keyboard_t *kbd, u_long cmd, caddr_t arg)
 	case PIO_KEYMAPENT:		/* set keyboard translation table
 					 * entry */
 	case PIO_DEADKEYMAP:		/* set accent key translation table */
+	case OPIO_DEADKEYMAP:		/* set accent key translation table (compat) */
 		sc->sc_accents = 0;
 		/* FALLTHROUGH */
 	default:

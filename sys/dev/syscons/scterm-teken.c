@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b575b4ec3119e353d7bed77bcfae761ba6361514 $");
+__FBSDID("$FreeBSD: ed287a74b8f9e848ef902ee7b33f2f3255931c72 $");
 
 #include "opt_syscons.h"
 #include "opt_teken.h"
@@ -317,7 +317,7 @@ scteken_nop(void)
 
 static const teken_color_t sc_to_te_color[] = {
 	TC_BLACK,     TC_BLUE,         TC_GREEN,     TC_CYAN,
-	TC_RED,       TC_MAGENTA,      TC_BROWN,     TC_WHITE,
+	TC_RED,       TC_MAGENTA,      TC_YELLOW,    TC_WHITE,
 };
 
 static const unsigned char te_to_sc_color[] = {

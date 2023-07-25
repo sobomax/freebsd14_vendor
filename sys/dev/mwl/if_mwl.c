@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2e6747f10c809e2567138312eae4569b56f146c $");
+__FBSDID("$FreeBSD: 07af5258c4500f4de85efa7825d77cb5e1c1c16b $");
 
 /*
  * Driver for the Marvell 88W8363 Wireless LAN controller.
@@ -3447,7 +3447,7 @@ mwl_tx_draintxq(struct mwl_softc *sc, struct mwl_txq *txq)
 {
 	struct ieee80211_node *ni;
 	struct mwl_txbuf *bf;
-	u_int ix;
+	u_int ix __unused;
 
 	/*
 	 * NB: this assumes output has been stopped and

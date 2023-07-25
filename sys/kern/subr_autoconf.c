@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 77c48485e1da5832ec9062495a3eb0904cfc5fd1 $");
+__FBSDID("$FreeBSD: ee77b794b1162a4313868635073487036ae706e8 $");
 
 #include "opt_ddb.h"
 
@@ -116,7 +116,7 @@ run_interrupt_driven_config_hooks_warning(int warned)
 }
 
 static void
-run_interrupt_driven_config_hooks()
+run_interrupt_driven_config_hooks(void)
 {
 	static int running;
 	struct intr_config_hook *hook_entry;

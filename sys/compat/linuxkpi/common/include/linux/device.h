@@ -4,6 +4,10 @@
  * Copyright (c) 2010 Panasas, Inc.
  * Copyright (c) 2013-2016 Mellanox Technologies, Ltd.
  * All rights reserved.
+ * Copyright (c) 2021-2022 The FreeBSD Foundation
+ *
+ * Portions of this software were developed by Björn Zeeb
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: a6e735da92bda95f79691e8f444c142164a90f7d $
+ * $FreeBSD: ced13faffcf0be9c8f850f6613e26b315890c4ac $
  */
 #ifndef	_LINUXKPI_LINUX_DEVICE_H_
 #define	_LINUXKPI_LINUX_DEVICE_H_
@@ -37,7 +41,6 @@
 #include <linux/sysfs.h>
 #include <linux/list.h>
 #include <linux/compiler.h>
-#include <linux/types.h>
 #include <linux/module.h>
 #include <linux/workqueue.h>
 #include <linux/kdev_t.h>
@@ -192,6 +195,22 @@ show_class_attr_string(struct class *class,
 #define	dev_dbg(dev, fmt, ...)	do { } while (0)
 #define	dev_printk(lvl, dev, fmt, ...)					\
 	    device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+
+#define dev_info_once(dev, ...) do {		\
+	static bool __dev_info_once;		\
+	if (!__dev_info_once) {			\
+	__dev_info_once = true;			\
+	dev_info(dev, __VA_ARGS__);		\
+	}					\
+} while (0)
+
+#define	dev_warn_once(dev, ...) do {		\
+	static bool __dev_warn_once;		\
+	if (!__dev_warn_once) {			\
+		__dev_warn_once = 1;		\
+		dev_warn(dev, __VA_ARGS__);	\
+	}					\
+} while (0)
 
 #define	dev_err_once(dev, ...) do {		\
 	static bool __dev_err_once;		\
@@ -451,9 +470,9 @@ device_unregister(struct device *dev)
 	dev->bsddev = NULL;
 
 	if (bsddev != NULL && dev->bsddev_attached_here) {
-		mtx_lock(&Giant);
+		bus_topo_lock();
 		device_delete_child(device_get_parent(bsddev), bsddev);
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 	}
 	put_device(dev);
 }
@@ -467,9 +486,9 @@ device_del(struct device *dev)
 	dev->bsddev = NULL;
 
 	if (bsddev != NULL && dev->bsddev_attached_here) {
-		mtx_lock(&Giant);
+		bus_topo_lock();
 		device_delete_child(device_get_parent(bsddev), bsddev);
-		mtx_unlock(&Giant);
+		bus_topo_unlock();
 	}
 }
 
@@ -515,6 +534,24 @@ device_reprobe(struct device *dev)
 	mtx_unlock(&Giant);
 
 	return (-error);
+}
+
+static inline void
+device_set_wakeup_enable(struct device *dev __unused, bool enable __unused)
+{
+
+	/*
+	 * XXX-BZ TODO This is used by wireless drivers supporting WoWLAN which
+	 * we currently do not support.
+	 */
+}
+
+static inline int
+device_wakeup_enable(struct device *dev)
+{
+
+	device_set_wakeup_enable(dev, true);
+	return (0);
 }
 
 #define	dev_pm_set_driver_flags(dev, flags) do { \
@@ -591,6 +628,21 @@ devm_kmalloc(struct device *dev, size_t size, gfp_t gfp)
 		lkpi_devres_add(dev, p);
 
 	return (p);
+}
+
+static inline void *
+devm_kmemdup(struct device *dev, const void *src, size_t len, gfp_t gfp)
+{
+	void *dst;
+
+	if (len == 0)
+		return (NULL);
+
+	dst = devm_kmalloc(dev, len, gfp);
+	if (dst != NULL)
+		memcpy(dst, src, len);
+
+	return (dst);
 }
 
 #define	devm_kzalloc(_dev, _size, _gfp)				\

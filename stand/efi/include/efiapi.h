@@ -1,4 +1,4 @@
-/* $FreeBSD: 0118027d4b3c2a12b140275e57cd126aeb509aaa $ */
+/* $FreeBSD: 2347a4d9cf73924d397a1d4485c8de3ac889749c $ */
 #ifndef _EFI_API_H
 #define _EFI_API_H
 
@@ -438,7 +438,7 @@ VOID
     IN EFI_STATUS               ResetStatus,
     IN UINTN                    DataSize,
     IN CHAR16                   *ResetData OPTIONAL
-    );
+    ) __dead2;
 
 typedef
 EFI_STATUS

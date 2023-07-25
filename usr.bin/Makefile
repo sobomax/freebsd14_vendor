@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: fc6b94adf4c2ff160027979dee88725eeab49358 $
+# $FreeBSD: 0b32b8a7f74592f14eaa2f526fdcb3471f853e6d $
 
 .include <src.opts.mk>
 
@@ -153,7 +153,6 @@ SUBDIR=	alias \
 	tcopy \
 	tee \
 	time \
-	timeout \
 	tip \
 	top \
 	touch \
@@ -177,6 +176,7 @@ SUBDIR=	alias \
 	w \
 	wall \
 	wc \
+	wg \
 	what \
 	whereis \
 	which \

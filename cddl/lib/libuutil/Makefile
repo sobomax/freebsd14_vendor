@@ -1,8 +1,8 @@
-# $FreeBSD: 76567b50c61038852fe8325dee8fae11d8b7ab56 $
+# $FreeBSD: d1267caa9fd3e6b57c48f1091c92587df8ab5a21 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libuutil
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 LIB=	uutil
 SRCS=\
 	uu_alloc.c \

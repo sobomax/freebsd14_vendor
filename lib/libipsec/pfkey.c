@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1aae7321c2ef03b472096e0c50dae27678f625b $");
+__FBSDID("$FreeBSD: a6706d4ec68ac453ff789d503bde67807a044b26 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -431,7 +431,7 @@ pfkey_send_getspi(so, satype, mode, src, dst, min, max, reqid, seq)
 		return -1;
 	}
 
-	/* proccessing spi range */
+	/* processing spi range */
 	if (need_spirange) {
 		struct sadb_spirange spirange;
 

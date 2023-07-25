@@ -27,13 +27,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d2db1269dc992714bfb19b3017174527266b461 $");
+__FBSDID("$FreeBSD: fb42c3e9df84c12d9e5dbc637b121562ae5b92a7 $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
 #include <sys/fcntl.h>
 #include <sys/file.h>
-#include <sys/imgact.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mman.h>
@@ -61,11 +60,12 @@ __FBSDID("$FreeBSD: 4d2db1269dc992714bfb19b3017174527266b461 $");
 #include <vm/vm.h>
 #include <vm/vm_map.h>
 
-#include <security/audit/audit.h>
+#include <x86/reg.h>
 
 #include <i386/linux/linux.h>
 #include <i386/linux/linux_proto.h>
 #include <compat/linux/linux_emul.h>
+#include <compat/linux/linux_fork.h>
 #include <compat/linux/linux_ipc.h>
 #include <compat/linux/linux_misc.h>
 #include <compat/linux/linux_mmap.h>
@@ -75,8 +75,6 @@ __FBSDID("$FreeBSD: 4d2db1269dc992714bfb19b3017174527266b461 $");
 #include <i386/include/pcb.h>			/* needed for pcb definition in linux_set_thread_area */
 
 #include "opt_posix.h"
-
-extern struct sysentvec elf32_freebsd_sysvec;	/* defined in i386/i386/elf_machdep.c */
 
 struct l_descriptor {
 	l_uint		entry_number;
@@ -98,28 +96,6 @@ struct l_old_select_argv {
 	struct l_timeval	*timeout;
 };
 
-int
-linux_execve(struct thread *td, struct linux_execve_args *args)
-{
-	struct image_args eargs;
-	char *newpath;
-	int error;
-
-	if (!LUSECONVPATH(td)) {
-		error = exec_copyin_args(&eargs, args->path, UIO_USERSPACE,
-		    args->argp, args->envp);
-	} else {
-		LCONVPATHEXIST(td, args->path, &newpath);
-		error = exec_copyin_args(&eargs, newpath, UIO_SYSSPACE,
-		    args->argp, args->envp);
-		LFREEPATH(newpath);
-	}
-	if (error == 0)
-		error = linux_common_execve(td, &eargs);
-	AUDIT_SYSCALL_EXIT(error == EJUSTRETURN ? 0 : error, td);
-	return (error);
-}
-
 struct l_ipc_kludge {
 	struct l_msgbuf *msgp;
 	l_long msgtyp;
@@ -131,12 +107,9 @@ linux_ipc(struct thread *td, struct linux_ipc_args *args)
 
 	switch (args->what & 0xFFFF) {
 	case LINUX_SEMOP: {
-		struct linux_semop_args a;
 
-		a.semid = args->arg1;
-		a.tsops = PTRIN(args->ptr);
-		a.nsops = args->arg2;
-		return (linux_semop(td, &a));
+		return (kern_semop(td, args->arg1, PTRIN(args->ptr),
+		    args->arg2, NULL));
 	}
 	case LINUX_SEMGET: {
 		struct linux_semget_args a;
@@ -157,6 +130,15 @@ linux_ipc(struct thread *td, struct linux_ipc_args *args)
 		if (error)
 			return (error);
 		return (linux_semctl(td, &a));
+	}
+	case LINUX_SEMTIMEDOP: {
+		struct linux_semtimedop_args a;
+
+		a.semid = args->arg1;
+		a.tsops = PTRIN(args->ptr);
+		a.nsops = args->arg2;
+		a.timeout = PTRIN(args->arg5);
+		return (linux_semtimedop(td, &a));
 	}
 	case LINUX_MSGSND: {
 		struct linux_msgsnd_args a;
@@ -520,34 +502,6 @@ linux_pause(struct thread *td, struct linux_pause_args *args)
 }
 
 int
-linux_sigaltstack(struct thread *td, struct linux_sigaltstack_args *uap)
-{
-	stack_t ss, oss;
-	l_stack_t lss;
-	int error;
-
-	if (uap->uss != NULL) {
-		error = copyin(uap->uss, &lss, sizeof(l_stack_t));
-		if (error)
-			return (error);
-
-		ss.ss_sp = lss.ss_sp;
-		ss.ss_size = lss.ss_size;
-		ss.ss_flags = linux_to_bsd_sigaltstack(lss.ss_flags);
-	}
-	error = kern_sigaltstack(td, (uap->uss != NULL) ? &ss : NULL,
-	    (uap->uoss != NULL) ? &oss : NULL);
-	if (!error && uap->uoss != NULL) {
-		lss.ss_sp = oss.ss_sp;
-		lss.ss_size = oss.ss_size;
-		lss.ss_flags = bsd_to_linux_sigaltstack(oss.ss_flags);
-		error = copyout(&lss, uap->uoss, sizeof(l_stack_t));
-	}
-
-	return (error);
-}
-
-int
 linux_set_thread_area(struct thread *td, struct linux_set_thread_area_args *args)
 {
 	struct l_user_desc info;
@@ -722,4 +676,28 @@ linux_mq_getsetattr(struct thread *td, struct linux_mq_getsetattr_args *args)
 #else
 	return (ENOSYS);
 #endif
+}
+
+void
+bsd_to_linux_regset(const struct reg *b_reg,
+    struct linux_pt_regset *l_regset)
+{
+
+	l_regset->ebx = b_reg->r_ebx;
+	l_regset->ecx = b_reg->r_ecx;
+	l_regset->edx = b_reg->r_edx;
+	l_regset->esi = b_reg->r_esi;
+	l_regset->edi = b_reg->r_edi;
+	l_regset->ebp = b_reg->r_ebp;
+	l_regset->eax = b_reg->r_eax;
+	l_regset->ds = b_reg->r_ds;
+	l_regset->es = b_reg->r_es;
+	l_regset->fs = b_reg->r_fs;
+	l_regset->gs = b_reg->r_gs;
+	l_regset->orig_eax = b_reg->r_eax;
+	l_regset->eip = b_reg->r_eip;
+	l_regset->cs = b_reg->r_cs;
+	l_regset->eflags = b_reg->r_eflags;
+	l_regset->esp = b_reg->r_esp;
+	l_regset->ss = b_reg->r_ss;
 }

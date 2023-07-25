@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: 2f2e07c034381930fa5b11490f3c7c986a510a89 $
+# $FreeBSD: 6363cef8d48ba62ba96618c0df26ebeec6a2d84b $
 
 PACKAGE=	clibs
 SHLIBDIR?= /lib
@@ -165,7 +165,7 @@ CFLAGS+= -DSYMBOL_VERSIONING
 
 # If there are no machine dependent sources, append all the
 # machine-independent sources:
-.if empty(MDSRCS)
+.if empty(MDSRCS) || ${MK_MACHDEP_OPTIMIZATIONS} == no
 SRCS+=	${MISRCS}
 .else
 # Append machine-dependent sources, then append machine-independent sources

@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 3110c424790cfbe13a1b6e7f16da3c06f51ff99a $
+ * $FreeBSD: 013988defbc16ebe3b3684249b7314b85231b15a $
  *
  */
 
@@ -47,7 +47,7 @@ enum _ecore_status_t ecore_vf_read_bulletin(struct ecore_hwfn *p_hwfn,
 					    u8 *p_change);
 
 /**
- * @brief Get link paramters for VF from ecore
+ * @brief Get link parameters for VF from ecore
  *
  * @param p_hwfn
  * @param params - the link params structure to be filled for the VF

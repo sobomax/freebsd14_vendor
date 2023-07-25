@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 454823e5e016ae7fa2206913db53fe392aef2584 $");
+__FBSDID("$FreeBSD: e7ccb422dc6a8c11451c86038717a904be50c211 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -40,7 +40,7 @@ __FBSDID("$FreeBSD: 454823e5e016ae7fa2206913db53fe392aef2584 $");
 #include <errno.h>
 
 /*
- * From RFC 2533:
+ * From RFC 2553:
  *
  * The second function maps an interface index into its corresponding
  * name.

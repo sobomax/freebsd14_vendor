@@ -24,28 +24,68 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6a3273cbbf3c7db14649bf02b965d5661af0458c $
+ * $FreeBSD: 4c9f52a0bc0fec84798a322676b480b077503ca9 $
  */
 
 #ifndef _LINUXKPI_LINUX_DEBUGFS_H_
 #define _LINUXKPI_LINUX_DEBUGFS_H_
 
 #include <linux/fs.h>
+#include <linux/module.h>
 #include <linux/seq_file.h>
-
 #include <linux/types.h>
 
-void debugfs_remove(struct dentry *dentry);
+MALLOC_DECLARE(M_DFSINT);
+
+struct debugfs_reg32 {
+	char *name;
+	unsigned long offset;
+};
+
+struct debugfs_regset32 {
+	const struct debugfs_reg32 *regs;
+	int nregs;
+};
+
+struct debugfs_blob_wrapper {
+	void			*data;
+	size_t			size;
+};
 
 struct dentry *debugfs_create_file(const char *name, umode_t mode,
-				   struct dentry *parent, void *data,
-				   const struct file_operations *fops);
+    struct dentry *parent, void *data,
+    const struct file_operations *fops);
+
+struct dentry *debugfs_create_file_unsafe(const char *name, umode_t mode,
+    struct dentry *parent, void *data,
+    const struct file_operations *fops);
+
+struct dentry *debugfs_create_mode_unsafe(const char *name, umode_t mode,
+    struct dentry *parent, void *data,
+    const struct file_operations *fops,
+    const struct file_operations *fops_ro,
+    const struct file_operations *fops_wo);
 
 struct dentry *debugfs_create_dir(const char *name, struct dentry *parent);
 
 struct dentry *debugfs_create_symlink(const char *name, struct dentry *parent,
-				      const char *dest);
+    const char *dest);
+
+void debugfs_remove(struct dentry *dentry);
 
 void debugfs_remove_recursive(struct dentry *dentry);
 
-#endif
+#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt) \
+	DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)
+
+void debugfs_create_bool(const char *name, umode_t mode, struct dentry *parent,
+    bool *value);
+void debugfs_create_u8(const char *name, umode_t mode, struct dentry *parent,
+    uint8_t *value);
+void debugfs_create_ulong(const char *name, umode_t mode, struct dentry *parent,
+    unsigned long *value);
+
+struct dentry *debugfs_create_blob(const char *name, umode_t mode,
+    struct dentry *parent, struct debugfs_blob_wrapper *value);
+
+#endif /* _LINUXKPI_LINUX_DEBUGFS_H_ */

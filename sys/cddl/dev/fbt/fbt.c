@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: aee5376d59819329542e4f55d1b0b2b5fbaee25f $
+ * $FreeBSD: a71c785d125583bdd942578c89d6106cf7b743e9 $
  *
  */
 
@@ -1282,7 +1282,7 @@ fbt_load(void *dummy)
 }
 
 static int
-fbt_unload()
+fbt_unload(void)
 {
 	int error = 0;
 

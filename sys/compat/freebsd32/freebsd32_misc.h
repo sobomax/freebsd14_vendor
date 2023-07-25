@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9e005476f9287eadbc98389c56f059e6c9c29cc6 $
+ * $FreeBSD: f6f85adc8e728b14dab5a874895dc0e76b84cd03 $
  */
 
 #ifndef	_COMPAT_FREEBSD32_MISC_H_
@@ -37,12 +37,12 @@
 
 #if BYTE_ORDER == BIG_ENDIAN
 #define	PAIR32TO64(type, name)	((name ## 2) | ((type)(name ## 1) << 32))
-#define	RETVAL_HI	0	
-#define	RETVAL_LO	1	
+#define	RETVAL_HI	0
+#define	RETVAL_LO	1
 #else
 #define	PAIR32TO64(type, name)	((name ## 1) | ((type)(name ## 2) << 32))
-#define	RETVAL_HI	1	
-#define	RETVAL_LO	0	
+#define	RETVAL_HI	1
+#define	RETVAL_LO	0
 #endif
 
 #endif	/* !_COMPAT_FREEBSD32_MISC_H_ */

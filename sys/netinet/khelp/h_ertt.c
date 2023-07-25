@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0c0493eefda381bd91addaefe829bacf459c168 $");
+__FBSDID("$FreeBSD: 541319285b35be916a3208c884d4eb587dd15439 $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -178,7 +178,7 @@ marked_packet_rtt(struct txseginfo *txsi, struct ertt *e_t, struct tcpcb *tp,
 		e_t->flags |= ERTT_NEW_MEASUREMENT;
 
 		if (tp->t_flags & TF_TSO) {
-			/* Temporarily disable TSO to aid a new measurment. */
+			/* Temporarily disable TSO to aid a new measurement. */
 			tp->t_flags &= ~TF_TSO;
 			/* Keep track that we've disabled it. */
 			e_t->flags |= ERTT_TSO_DISABLED;

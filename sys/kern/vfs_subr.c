@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c01b3dc817cf33c3c8db5ac0173c53d102cc6de $");
+__FBSDID("$FreeBSD: 81bad2da0f0c3926f4b7dc1e8bf7ef94c4b87357 $");
 
 #include "opt_ddb.h"
 #include "opt_watchdog.h"
@@ -98,6 +98,10 @@ __FBSDID("$FreeBSD: 6c01b3dc817cf33c3c8db5ac0173c53d102cc6de $");
 #include <vm/vm_page.h>
 #include <vm/vm_kern.h>
 #include <vm/uma.h>
+
+#if defined(DEBUG_VFS_LOCKS) && (!defined(INVARIANTS) || !defined(WITNESS))
+#error DEBUG_VFS_LOCKS requires INVARIANTS and WITNESS
+#endif
 
 #ifdef DDB
 #include <ddb/ddb.h>
@@ -1588,7 +1592,7 @@ vnlru_proc(void)
 		if (usevnodes <= 0)
 			usevnodes = 1;
 		/*
-		 * The trigger value is is chosen to give a conservatively
+		 * The trigger value is chosen to give a conservatively
 		 * large value to ensure that it alone doesn't prevent
 		 * making progress.  The value can easily be so large that
 		 * it is effectively infinite in some congested and
@@ -6021,6 +6025,7 @@ vop_rmdir_post(void *ap, int rc)
 	vn_seqc_write_end(dvp);
 	vn_seqc_write_end(vp);
 	if (!rc) {
+		vp->v_vflag |= VV_UNLINKED;
 		VFS_KNOTE_LOCKED(dvp, NOTE_WRITE | NOTE_LINK);
 		VFS_KNOTE_LOCKED(vp, NOTE_DELETE);
 	}

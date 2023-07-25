@@ -1,4 +1,4 @@
-/*	$FreeBSD: cb21d6d4a2215258ce2d9583d59624028c42eace $	*/
+/*	$FreeBSD: 6a4edcd59161c943222c68fb8d9622a50684d81d $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
@@ -39,6 +39,7 @@
 /*
  * mem.c
  */
+void *sort_calloc(size_t, size_t);
 void *sort_malloc(size_t);
 void sort_free(const void *ptr);
 void *sort_realloc(void *, size_t);

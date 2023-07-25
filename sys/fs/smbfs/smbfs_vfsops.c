@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d19816a7869cb1d7d56b7782a4be70245c4e1c3d $
+ * $FreeBSD: c27b62693d7ac6d279116639aaf62be89a6cc978 $
  */
 
 #include <sys/param.h>
@@ -299,9 +299,6 @@ smbfs_unmount(struct mount *mp, int mntflags)
 	mp->mnt_data = NULL;
 	SMB_UNLOCK();
 	free(smp, M_SMBFSDATA);
-	MNT_ILOCK(mp);
-	mp->mnt_flag &= ~MNT_LOCAL;
-	MNT_IUNLOCK(mp);
 out:
 	smbfs_free_scred(scred);
 	return error;

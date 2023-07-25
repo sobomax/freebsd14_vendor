@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b9c00179bda447b3cff41d13fa4b977b117d88e $");
+__FBSDID("$FreeBSD: 72e631c70e595212b18f880d7b6cb4bdc9bf5426 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: 1b9c00179bda447b3cff41d13fa4b977b117d88e $");
 #include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
+#include <sys/reg.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysent.h>
 #include <sys/sysproto.h>
@@ -53,8 +54,6 @@ __FBSDID("$FreeBSD: 1b9c00179bda447b3cff41d13fa4b977b117d88e $");
 #include <sys/signalvar.h>
 #include <sys/caprights.h>
 #include <sys/filedesc.h>
-
-#include <machine/reg.h>
 
 #include <security/audit/audit.h>
 
@@ -70,6 +69,9 @@ __FBSDID("$FreeBSD: 1b9c00179bda447b3cff41d13fa4b977b117d88e $");
 #ifdef COMPAT_FREEBSD32
 #include <sys/procfs.h>
 #endif
+
+/* Assert it's safe to unlock a process, e.g. to allocate working memory */
+#define	PROC_ASSERT_TRACEREQ(p)	MPASS(((p)->p_flag2 & P2_PTRACEREQ) != 0)
 
 /*
  * Functions implemented using PROC_ACTION():
@@ -154,6 +156,125 @@ proc_write_fpregs(struct thread *td, struct fpreg *fpregs)
 	PROC_ACTION(set_fpregs(td, fpregs));
 }
 
+static struct regset *
+proc_find_regset(struct thread *td, int note)
+{
+	struct regset **regsetp, **regset_end, *regset;
+	struct sysentvec *sv;
+
+	sv = td->td_proc->p_sysent;
+	regsetp = sv->sv_regset_begin;
+	if (regsetp == NULL)
+		return (NULL);
+	regset_end = sv->sv_regset_end;
+	MPASS(regset_end != NULL);
+	for (; regsetp < regset_end; regsetp++) {
+		regset = *regsetp;
+		if (regset->note != note)
+			continue;
+
+		return (regset);
+	}
+
+	return (NULL);
+}
+
+static int
+proc_read_regset(struct thread *td, int note, struct iovec *iov)
+{
+	struct regset *regset;
+	struct proc *p;
+	void *buf;
+	size_t size;
+	int error;
+
+	regset = proc_find_regset(td, note);
+	if (regset == NULL)
+		return (EINVAL);
+
+	if (iov->iov_base == NULL) {
+		iov->iov_len = regset->size;
+		if (iov->iov_len == 0)
+			return (EINVAL);
+
+		return (0);
+	}
+
+	/* The length is wrong, return an error */
+	if (iov->iov_len != regset->size)
+		return (EINVAL);
+
+	if (regset->get == NULL)
+		return (EINVAL);
+
+	error = 0;
+	size = regset->size;
+	p = td->td_proc;
+
+	/* Drop the proc lock while allocating the temp buffer */
+	PROC_ASSERT_TRACEREQ(p);
+	PROC_UNLOCK(p);
+	buf = malloc(size, M_TEMP, M_WAITOK);
+	PROC_LOCK(p);
+
+	if (!regset->get(regset, td, buf, &size)) {
+		error = EINVAL;
+	} else {
+		KASSERT(size == regset->size,
+		    ("%s: Getter function changed the size", __func__));
+
+		iov->iov_len = size;
+		PROC_UNLOCK(p);
+		error = copyout(buf, iov->iov_base, size);
+		PROC_LOCK(p);
+	}
+
+	free(buf, M_TEMP);
+
+	return (error);
+}
+
+static int
+proc_write_regset(struct thread *td, int note, struct iovec *iov)
+{
+	struct regset *regset;
+	struct proc *p;
+	void *buf;
+	size_t size;
+	int error;
+
+	regset = proc_find_regset(td, note);
+	if (regset == NULL)
+		return (EINVAL);
+
+	/* The length is wrong, return an error */
+	if (iov->iov_len != regset->size)
+		return (EINVAL);
+
+	if (regset->set == NULL)
+		return (EINVAL);
+
+	size = regset->size;
+	p = td->td_proc;
+
+	/* Drop the proc lock while allocating the temp buffer */
+	PROC_ASSERT_TRACEREQ(p);
+	PROC_UNLOCK(p);
+	buf = malloc(size, M_TEMP, M_WAITOK);
+	error = copyin(iov->iov_base, buf, size);
+	PROC_LOCK(p);
+
+	if (error == 0) {
+		if (!regset->set(regset, td, buf, size)) {
+			error = EINVAL;
+		}
+	}
+
+	free(buf, M_TEMP);
+
+	return (error);
+}
+
 #ifdef COMPAT_FREEBSD32
 /* For 32 bit binaries, we need to expose the 32 bit regs layouts. */
 int
@@ -215,11 +336,10 @@ proc_rwmem(struct proc *p, struct uio *uio)
 	int error, fault_flags, page_offset, writing;
 
 	/*
-	 * Assert that someone has locked this vmspace.  (Should be
-	 * curthread but we can't assert that.)  This keeps the process
-	 * from exiting out from under us until this operation completes.
+	 * Make sure that the process' vmspace remains live.
 	 */
-	PROC_ASSERT_HELD(p);
+	if (p != curproc)
+		PROC_ASSERT_HELD(p);
 	PROC_LOCK_ASSERT(p, MA_NOTOWNED);
 
 	/*
@@ -472,13 +592,16 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 		struct ptrace_lwpinfo pl;
 		struct ptrace_vm_entry pve;
 		struct ptrace_coredump pc;
+		struct ptrace_sc_remote sr;
 		struct dbreg dbreg;
 		struct fpreg fpreg;
 		struct reg reg;
+		struct iovec vec;
 		char args[sizeof(td->td_sa.args)];
 		struct ptrace_sc_ret psr;
 		int ptevents;
 	} r;
+	register_t pscr_args[nitems(td->td_sa.args)];
 	void *addr;
 	int error;
 
@@ -504,6 +627,10 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 		break;
 	case PT_GETDBREGS:
 		bzero(&r.dbreg, sizeof(r.dbreg));
+		break;
+	case PT_GETREGSET:
+	case PT_SETREGSET:
+		error = copyin(uap->addr, &r.vec, sizeof(r.vec));
 		break;
 	case PT_SETREGS:
 		error = copyin(uap->addr, &r.reg, sizeof(r.reg));
@@ -532,6 +659,24 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 		else
 			error = copyin(uap->addr, &r.pc, uap->data);
 		break;
+	case PT_SC_REMOTE:
+		if (uap->data != sizeof(r.sr)) {
+			error = EINVAL;
+			break;
+		}
+		error = copyin(uap->addr, &r.sr, uap->data);
+		if (error != 0)
+			break;
+		if (r.sr.pscr_nargs > nitems(td->td_sa.args)) {
+			error = EINVAL;
+			break;
+		}
+		error = copyin(r.sr.pscr_args, pscr_args,
+		    sizeof(u_long) * r.sr.pscr_nargs);
+		if (error != 0)
+			break;
+		r.sr.pscr_args = pscr_args;
+		break;
 	default:
 		addr = uap->addr;
 		break;
@@ -559,6 +704,9 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 	case PT_GETDBREGS:
 		error = copyout(&r.dbreg, uap->addr, sizeof(r.dbreg));
 		break;
+	case PT_GETREGSET:
+		error = copyout(&r.vec, uap->addr, sizeof(r.vec));
+		break;
 	case PT_GET_EVENT_MASK:
 		/* NB: The size in uap->data is validated in kern_ptrace(). */
 		error = copyout(&r.ptevents, uap->addr, uap->data);
@@ -574,6 +722,11 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 	case PT_GET_SC_RET:
 		error = copyout(&r.psr, uap->addr, MIN(uap->data,
 		    sizeof(r.psr)));
+		break;
+	case PT_SC_REMOTE:
+		error = copyout(&r.sr.pscr_ret, uap->addr +
+		    offsetof(struct ptrace_sc_remote, pscr_ret),
+		    sizeof(r.sr.pscr_ret));
 		break;
 	}
 
@@ -684,9 +837,11 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 	struct ptrace_io_desc *piod = NULL;
 	struct ptrace_lwpinfo *pl;
 	struct ptrace_sc_ret *psr;
+	struct ptrace_sc_remote *pscr;
 	struct file *fp;
 	struct ptrace_coredump *pc;
 	struct thr_coredump_req *tcq;
+	struct thr_syscall_req *tsr;
 	int error, num, tmp;
 	lwpid_t tid = 0, *buf;
 #ifdef COMPAT_FREEBSD32
@@ -1292,6 +1447,18 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 		error = PROC_READ(dbregs, td2, addr);
 		break;
 
+	case PT_SETREGSET:
+		CTR2(KTR_PTRACE, "PT_SETREGSET: tid %d (pid %d)", td2->td_tid,
+		    p->p_pid);
+		error = proc_write_regset(td2, data, addr);
+		break;
+
+	case PT_GETREGSET:
+		CTR2(KTR_PTRACE, "PT_GETREGSET: tid %d (pid %d)", td2->td_tid,
+		    p->p_pid);
+		error = proc_read_regset(td2, data, addr);
+		break;
+
 	case PT_LWPINFO:
 		if (data <= 0 || data > sizeof(*pl)) {
 			error = EINVAL;
@@ -1421,7 +1588,8 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 			error = EBUSY;
 			goto coredump_cleanup_locked;
 		}
-		KASSERT((td2->td_dbgflags & TDB_COREDUMPRQ) == 0,
+		KASSERT((td2->td_dbgflags & (TDB_COREDUMPREQ |
+		    TDB_SCREMOTEREQ)) == 0,
 		    ("proc %d tid %d req coredump", p->p_pid, td2->td_tid));
 
 		tcq->tc_vp = fp->f_vnode;
@@ -1431,10 +1599,10 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 			tcq->tc_flags |= SVC_NOCOMPRESS;
 		if ((pc->pc_flags & PC_ALL) != 0)
 			tcq->tc_flags |= SVC_ALL;
-		td2->td_coredump = tcq;
-		td2->td_dbgflags |= TDB_COREDUMPRQ;
+		td2->td_remotereq = tcq;
+		td2->td_dbgflags |= TDB_COREDUMPREQ;
 		thread_run_flash(td2);
-		while ((td2->td_dbgflags & TDB_COREDUMPRQ) != 0)
+		while ((td2->td_dbgflags & TDB_COREDUMPREQ) != 0)
 			msleep(p, &p->p_mtx, PPAUSE, "crdmp", 0);
 		error = tcq->tc_error;
 coredump_cleanup_locked:
@@ -1444,6 +1612,50 @@ coredump_cleanup:
 coredump_cleanup_nofp:
 		free(tcq, M_TEMP);
 		PROC_LOCK(p);
+		break;
+
+	case PT_SC_REMOTE:
+		pscr = addr;
+		CTR2(KTR_PTRACE, "PT_SC_REMOTE: pid %d, syscall %d",
+		    p->p_pid, pscr->pscr_syscall);
+		if ((td2->td_dbgflags & TDB_BOUNDARY) == 0) {
+			error = EBUSY;
+			break;
+		}
+		PROC_UNLOCK(p);
+		MPASS(pscr->pscr_nargs <= nitems(td->td_sa.args));
+
+		tsr = malloc(sizeof(struct thr_syscall_req), M_TEMP,
+		    M_WAITOK | M_ZERO);
+
+		tsr->ts_sa.code = pscr->pscr_syscall;
+		tsr->ts_nargs = pscr->pscr_nargs;
+		memcpy(&tsr->ts_sa.args, pscr->pscr_args,
+		    sizeof(register_t) * tsr->ts_nargs);
+
+		PROC_LOCK(p);
+		error = proc_can_ptrace(td, p);
+		if (error != 0) {
+			free(tsr, M_TEMP);
+			break;
+		}
+		if (td2->td_proc != p) {
+			free(tsr, M_TEMP);
+			error = ESRCH;
+			break;
+		}
+		KASSERT((td2->td_dbgflags & (TDB_COREDUMPREQ |
+		    TDB_SCREMOTEREQ)) == 0,
+		    ("proc %d tid %d req coredump", p->p_pid, td2->td_tid));
+
+		td2->td_remotereq = tsr;
+		td2->td_dbgflags |= TDB_SCREMOTEREQ;
+		thread_run_flash(td2);
+		while ((td2->td_dbgflags & TDB_SCREMOTEREQ) != 0)
+			msleep(p, &p->p_mtx, PPAUSE, "pscrx", 0);
+		error = 0;
+		memcpy(&pscr->pscr_ret, &tsr->ts_ret, sizeof(tsr->ts_ret));
+		free(tsr, M_TEMP);
 		break;
 
 	default:

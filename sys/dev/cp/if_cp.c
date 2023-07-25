@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c8d080fcc60145dfdc3665a8fa4436ab4d559572 $");
+__FBSDID("$FreeBSD: 73af8bafed92ab9c907f3ecf60f1430176ac0d7d $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -530,6 +530,7 @@ static int cp_attach (device_t dev)
 	adapter[unit] = b;
 	CP_UNLOCK (bd);
 	splx (s);
+	gone_in_dev(dev, 14, "sync serial (T1/E1) drivers");
 	return 0;
 }
 

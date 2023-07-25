@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)ls.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92575711251d3c95e8e4a7ff16b66579c8b2bf3f $");
+__FBSDID("$FreeBSD: bd7bd283c317e30ab03ffe6eede4e1ec1c66c18a $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -136,6 +136,7 @@ static int f_numericonly;	/* don't convert uid/gid to name */
        int f_octal_escape;	/* like f_octal but use C escapes if possible */
 static int f_recursive;		/* ls subdirectories also */
 static int f_reversesort;	/* reverse whatever sort is used */
+static int f_verssort;		/* sort names using strverscmp(3) rather than strcoll(3) */
        int f_samesort;		/* sort time and name in same direction */
        int f_sectime;		/* print full time information */
 static int f_singlecol;		/* use single column output */
@@ -159,6 +160,7 @@ char *ansi_fgcol;		/* ANSI sequence to set foreground colour */
 char *ansi_coloff;		/* ANSI sequence to reset colours */
 char *attrs_off;		/* ANSI sequence to turn off attributes */
 char *enter_bold;		/* ANSI sequence to set color to bold mode */
+char *enter_underline;		/* ANSI sequence to enter underline mode */
 #endif
 
 static int rval;
@@ -274,7 +276,7 @@ main(int argc, char *argv[])
 		colorflag = COLORFLAG_AUTO;
 #endif
 	while ((ch = getopt_long(argc, argv,
-	    "+1ABCD:FGHILPRSTUWXZabcdfghiklmnopqrstuwxy,", long_opts,
+	    "+1ABCD:FGHILPRSTUWXZabcdfghiklmnopqrstuvwxy,", long_opts,
 	    NULL)) != -1) {
 		switch (ch) {
 		/*
@@ -438,6 +440,9 @@ main(int argc, char *argv[])
 		case 's':
 			f_size = 1;
 			break;
+		case 'v':
+			f_verssort = 1;
+			break;
 		case 'w':
 			f_nonprint = 0;
 			f_octal = 0;
@@ -485,6 +490,7 @@ main(int argc, char *argv[])
 			ansi_bgcol = tgetstr("AB", &bp);
 			attrs_off = tgetstr("me", &bp);
 			enter_bold = tgetstr("md", &bp);
+			enter_underline = tgetstr("us", &bp);
 
 			/* To switch colours off use 'op' if
 			 * available, otherwise use 'oc', or
@@ -564,10 +570,12 @@ main(int argc, char *argv[])
 	}
 	/* Select a sort function. */
 	if (f_reversesort) {
-		if (!f_timesort && !f_sizesort)
-			sortfcn = revnamecmp;
-		else if (f_sizesort)
+		if (f_sizesort)
 			sortfcn = revsizecmp;
+		else if (f_verssort)
+			sortfcn = revverscmp;
+		else if (!f_timesort)
+			sortfcn = revnamecmp;
 		else if (f_accesstime)
 			sortfcn = revacccmp;
 		else if (f_birthtime)
@@ -577,10 +585,12 @@ main(int argc, char *argv[])
 		else		/* Use modification time. */
 			sortfcn = revmodcmp;
 	} else {
-		if (!f_timesort && !f_sizesort)
-			sortfcn = namecmp;
-		else if (f_sizesort)
+		if (f_sizesort)
 			sortfcn = sizecmp;
+		else if (f_verssort)
+			sortfcn = verscmp;
+		else if (!f_timesort)
+			sortfcn = namecmp;
 		else if (f_accesstime)
 			sortfcn = acccmp;
 		else if (f_birthtime)

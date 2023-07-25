@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sel_subs.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: 7e1ddeedcb877fd2985e1d53dbdc8263bd782eb0 $
+ * $FreeBSD: a628e6981b1af9f75acf3892d7cc47d07e92e929 $
  */
 
 /*
@@ -57,7 +57,7 @@ typedef struct grpt {
  * data structure for storing user supplied time ranges (-T option)
  */
 
-#define ATOI2(s)	((((s)[0] - '0') * 10) + ((s)[1] - '0'))
+#define ATOI2(ar)	((ar)[0] - '0') * 10 + ((ar)[1] - '0'); (ar) += 2;
 
 typedef struct time_rng {
 	time_t		low_time;	/* lower inclusive time limit */

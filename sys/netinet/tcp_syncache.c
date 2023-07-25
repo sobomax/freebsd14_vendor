@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54bcf8173c863346b8c18cdbb0b4b24b149d0456 $");
+__FBSDID("$FreeBSD: 2282373a2c1d8161be1a8939f9f9c441ba4afec9 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1368,6 +1368,7 @@ syncache_tfo_expand(struct syncache *sc, struct socket **lsop, struct mbuf *m,
 		tp->snd_max = tp->iss;
 		tp->snd_nxt = tp->iss;
 		tp->t_tfo_pending = pending_counter;
+		TCPSTATES_INC(TCPS_SYN_RECEIVED);
 		TCPSTAT_INC(tcps_sc_completed);
 	}
 }

@@ -1,4 +1,4 @@
-# $FreeBSD: cdd10435fe753a1b7ccb5502ba5490ef65446b70 $
+# $FreeBSD: e04519d65d971c98df10b9634456a64bf1b67cfb $
 
 .include <bsd.init.mk>
 
@@ -14,6 +14,7 @@ INCS+=		dfsan_interface.h
 INCS+=		hwasan_interface.h
 INCS+=		linux_syscall_hooks.h
 INCS+=		lsan_interface.h
+INCS+=		memprof_interface.h
 INCS+=		msan_interface.h
 INCS+=		netbsd_syscall_hooks.h
 INCS+=		scudo_interface.h

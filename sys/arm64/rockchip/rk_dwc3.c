@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d63ba67907f8324cff1d05c965793bc2fac34355 $");
+__FBSDID("$FreeBSD: 72292e9f890211012ccb7fdfc846772af2fc4158 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,11 +141,7 @@ rk_dwc3_attach(device_t dev)
 		    clk_get_name(sc->clk_bus));
 		return (ENXIO);
 	}
-	if (sc->type == RK3399) {
-		if (clk_get_by_ofw_name(dev, 0, "grf_clk", &sc->clk_grf) != 0) {
-			device_printf(dev, "Cannot get grf_clk clock\n");
-			return (ENXIO);
-		}
+	if (clk_get_by_ofw_name(dev, 0, "grf_clk", &sc->clk_grf) == 0) {
 		err = clk_enable(sc->clk_grf);
 		if (err != 0) {
 			device_printf(dev, "Could not enable clock %s\n",

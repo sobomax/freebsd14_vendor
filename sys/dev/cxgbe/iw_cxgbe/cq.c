@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55d50d5caf1883b4a1b144c4041add002180c165 $");
+__FBSDID("$FreeBSD: a00114150935bfba07d11092ef7efa8a02d28c51 $");
 
 #include "opt_inet.h"
 
@@ -135,7 +135,7 @@ create_cq(struct c4iw_rdev *rdev, struct t4_cq *cq,
 
 	wr = alloc_wrqe(wr_len, &sc->sge.ctrlq[0]);
 	if (wr == NULL)
-        	return (0);
+		return (0);
         res_wr = wrtod(wr);
 
 	memset(res_wr, 0, wr_len);

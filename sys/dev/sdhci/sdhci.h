@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9d68a14b28a23e1b4da456d685293cf5b810a372 $
+ * $FreeBSD: e0f7a7bd0090ab9e5f19d4894a4e5894f8443e84 $
  */
 
 #ifndef	__SDHCI_H__
@@ -57,7 +57,7 @@
 #define	SDHCI_QUIRK_LOWER_FREQUENCY			(1 << 9)
 /* Data timeout is invalid, should use SD clock */
 #define	SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK		(1 << 10)
-/* Timeout value is invalid, should be overriden */
+/* Timeout value is invalid, should be overridden */
 #define	SDHCI_QUIRK_BROKEN_TIMEOUT_VAL			(1 << 11)
 /* SDHCI_CAPABILITIES is invalid */
 #define	SDHCI_QUIRK_MISSING_CAPS			(1 << 12)

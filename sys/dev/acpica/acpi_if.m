@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6e36f398411e3ccf8ff4d68cc7919388e4149f72 $
+# $FreeBSD: e0ed4d72e89939a16f349c10a1a7ad3987de068d $
 #
 
 #include <sys/bus.h>
@@ -119,6 +119,27 @@ METHOD ACPI_STATUS evaluate_object {
 	ACPI_STRING 	pathname;
 	ACPI_OBJECT_LIST *parameters;
 	ACPI_BUFFER	*ret;
+};
+
+#
+# Get property value from Device Specific Data
+#
+# device_t bus:  parent bus for the device
+#
+# device_t dev:  find property for this device's handle.
+#
+# const ACPI_STRING propname: name of the property
+#
+# const ACPI_OBJECT **value: property value output
+#   Specify NULL if ignored
+#
+# Returns:  AE_OK or an error value
+#
+METHOD ACPI_STATUS get_property {
+	device_t	bus;
+	device_t	dev;
+	ACPI_STRING 	propname;
+	const ACPI_OBJECT	**value;
 };
 
 #

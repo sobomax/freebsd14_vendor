@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c293491eadc9bcd9d30ddc9160895c1ca5c8098c $
+ * $FreeBSD: 637eab5c39e5a3dc30c44241bfb645b0b091c5d1 $
  */
 
 #ifndef _SYS_KERNELDUMP_H
@@ -161,6 +161,17 @@ void dumpsys_pb_init(uint64_t);
 void dumpsys_pb_progress(size_t);
 
 extern int do_minidump;
+
+int livedump_start(int, int, uint8_t);
+
+/* Live minidump events */
+typedef void (*livedump_start_fn)(void *arg, int *errorp);
+typedef void (*livedump_dump_fn)(void *arg, void *virtual, off_t offset,
+    size_t len, int *errorp);
+typedef void (*livedump_finish_fn)(void *arg);
+EVENTHANDLER_DECLARE(livedumper_start, livedump_start_fn);
+EVENTHANDLER_DECLARE(livedumper_dump, livedump_dump_fn);
+EVENTHANDLER_DECLARE(livedumper_finish, livedump_finish_fn);
 
 #endif
 

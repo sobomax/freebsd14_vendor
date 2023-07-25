@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: d9121798140cb84c013374889acadc4129e9ac29 $
+ * $FreeBSD: 573dc0e6df0e2ce8bf860b967ab24b49c8bdbbdb $
  */
 
 /*
@@ -11,6 +11,7 @@ FBSD_1.0 {
 	/* PSEUDO syscalls */
 	_exit;
 
+	.mcount;
 	_setjmp;
 	_longjmp;
 	fabs;

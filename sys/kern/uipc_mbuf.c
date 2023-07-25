@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13c98d0895faaec787787f241d5a79bfdccce098 $");
+__FBSDID("$FreeBSD: abe292013d281b4a8868130afe4c1cdbb5a72bcb $");
 
 #include "opt_param.h"
 #include "opt_mbuf_stress_test.h"
@@ -1293,7 +1293,7 @@ m_apply_extpg_one(struct mbuf *m, int off, int len,
 		pglen = m_epg_pagelen(m, i, pgoff);
 		if (off < pglen) {
 			count = min(pglen - off, len);
-			p = (void *)PHYS_TO_DMAP(m->m_epg_pa[i] + pgoff);
+			p = (void *)PHYS_TO_DMAP(m->m_epg_pa[i] + pgoff + off);
 			rval = f(arg, p, count);
 			if (rval)
 				return (rval);

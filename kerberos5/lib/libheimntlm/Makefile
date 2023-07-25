@@ -1,6 +1,6 @@
-# $FreeBSD: a422ef641a49e2f76109e6fa5939c3321ff7220c $
+# $FreeBSD: 03f37a6ad71ded7487075200863a034114fd43ef $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	heimntlm
 LDFLAGS=	-Wl,--no-undefined

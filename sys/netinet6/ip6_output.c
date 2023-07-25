@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c8811ca1af9be510f2db05bdc8ea57e70814d31 $");
+__FBSDID("$FreeBSD: f455c5ccbea2187cc4b94c2cd302ff97e2674cce $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -772,6 +772,8 @@ again:
 		ia = ifatoia6(nh->nh_ifa);
 		if (nh->nh_flags & NHF_GATEWAY)
 			dst->sin6_addr = nh->gw6_sa.sin6_addr;
+		else if (fwd_tag != NULL)
+			dst->sin6_addr = dst_sa.sin6_addr;
 nonh6lookup:
 		;
 	}

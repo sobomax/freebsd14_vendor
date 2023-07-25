@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f04c35a5c72f5c26145954b47b804366303f441 $");
+__FBSDID("$FreeBSD: a0b3095c9b7da422e5fa072e29c9f850d82bce87 $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: 5f04c35a5c72f5c26145954b47b804366303f441 $");
 #include <vm/pmap.h>
 
 #include <machine/frame.h>
+#include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/vmparam.h>
 
@@ -209,6 +210,9 @@ static struct sysentvec cloudabi32_elf_sysvec = {
 	.sv_fixup		= cloudabi32_fixup_tcb,
 	.sv_name		= "CloudABI ELF32",
 	.sv_coredump		= elf32_coredump,
+	.sv_elf_core_osabi	= ELFOSABI_FREEBSD,
+	.sv_elf_core_abi_vendor	= FREEBSD_ABI_VENDOR,
+	.sv_elf_core_prepare_notes = elf32_prepare_notes,
 	.sv_minuser		= FREEBSD32_MINUSER,
 	.sv_maxuser		= FREEBSD32_MAXUSER,
 	.sv_stackprot		= VM_PROT_READ | VM_PROT_WRITE,
@@ -221,6 +225,7 @@ static struct sysentvec cloudabi32_elf_sysvec = {
 	.sv_fetch_syscall_args	= cloudabi32_fetch_syscall_args,
 	.sv_syscallnames	= cloudabi32_syscallnames,
 	.sv_schedtail		= cloudabi32_schedtail,
+	.sv_set_fork_retval	= x86_set_fork_retval,
 };
 
 INIT_SYSENTVEC(elf_sysvec, &cloudabi32_elf_sysvec);

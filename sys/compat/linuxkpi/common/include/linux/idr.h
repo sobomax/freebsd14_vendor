@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 99f8fb3305acee13c5f550216ed15ea409eeead1 $
+ * $FreeBSD: 5310fcf9950c6762e8cf30f0e587178614f6f1a5 $
  */
 #ifndef	_LINUXKPI_LINUX_IDR_H_
 #define	_LINUXKPI_LINUX_IDR_H_
@@ -138,6 +138,11 @@ ida_alloc_max(struct ida *ida, unsigned int max, gfp_t gfp)
 {
 
 	return (ida_simple_get(ida, 0, max, gfp));
+}
+
+static inline int ida_alloc(struct ida *ida, gfp_t gfp)
+{
+	return (ida_alloc_max(ida, ~0u, gfp));
 }
 
 static inline bool

@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwmreg.h,v 1.4 2015/06/15 08:06:11 stsp Exp $	*/
-/*	$FreeBSD: 310b2d53a82e5362cd4426008925006beb67473b $ */
+/*	$FreeBSD: 14b79587a4d8e1aa02689f03c3e837372f624932 $ */
 
 /******************************************************************************
  *
@@ -4846,7 +4846,7 @@ struct iwm_ba_notif {
 /*
  * struct iwm_mac_beacon_cmd - beacon template command
  * @tx: the tx commands associated with the beacon frame
- * @template_id: currently equal to the mac context id of the coresponding
+ * @template_id: currently equal to the mac context id of the corresponding
  *  mac.
  * @tim_idx: the offset of the tim IE in the beacon
  * @tim_size: the length of the tim IE

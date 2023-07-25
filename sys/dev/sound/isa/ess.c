@@ -44,7 +44,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 424e757a4b006440751817c436aef474595f215d $");
+SND_DECLARE_FILE("$FreeBSD: ffdf60a8d2aa3c8b3d51127323522195bc5e59af $");
 
 #define ESS_BUFFSIZE (4096)
 #define ABS(x) (((x) < 0)? -(x) : (x))
@@ -788,14 +788,14 @@ MIXER_DECLARE(essmixer);
 static int
 ess_probe(device_t dev)
 {
-	uintptr_t func, ver, r, f;
+	uintptr_t func, ver, f;
 
 	/* The parent device has already been probed. */
-	r = BUS_READ_IVAR(device_get_parent(dev), dev, 0, &func);
+	BUS_READ_IVAR(device_get_parent(dev), dev, 0, &func);
 	if (func != SCF_PCM)
 		return (ENXIO);
 
-	r = BUS_READ_IVAR(device_get_parent(dev), dev, 1, &ver);
+	BUS_READ_IVAR(device_get_parent(dev), dev, 1, &ver);
 	f = (ver & 0xffff0000) >> 16;
 	if (!(f & BD_F_ESS))
 		return (ENXIO);
@@ -812,6 +812,7 @@ ess_attach(device_t dev)
     	char status[SND_STATUSLEN], buf[64];
 	int ver;
 
+	gone_in_dev(dev, 14, "ISA sound driver");
     	sc = malloc(sizeof(*sc), M_DEVBUF, M_WAITOK | M_ZERO);
 	sc->parent_dev = device_get_parent(dev);
 	sc->bufsize = pcm_getbuffersize(dev, 4096, ESS_BUFFSIZE, 65536);

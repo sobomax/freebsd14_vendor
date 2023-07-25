@@ -28,7 +28,7 @@
  * File : ecore_int.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbf692acfb6c9bcbb7db74018ce564055b36e636 $");
+__FBSDID("$FreeBSD: 16d3fcb3b1e65be73e10a877cb7b14e3fb27b96b $");
 
 #include "bcm_osal.h"
 #include "ecore.h"
@@ -463,7 +463,7 @@ static enum _ecore_status_t ecore_db_rec_attn(struct ecore_hwfn *p_hwfn,
 		return ECORE_TIMEOUT;
 	}
 
-	/* flush any pedning (e)dpm as they may never arrive */
+	/* flush any pending (e)dpm as they may never arrive */
 	ecore_wr(p_hwfn, p_ptt, DORQ_REG_DPM_FORCE_ABORT, 0x1);
 
 	/* release overflow sticky indication (stop silently dropping everything) */

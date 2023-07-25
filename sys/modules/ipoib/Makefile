@@ -1,4 +1,4 @@
-# $FreeBSD: 2eb9f348e91bab9ea502cad5f0db84d393153ed3 $
+# $FreeBSD: b10a9150c04afd7439b24516f1fd10f7a0d6007a $
 .PATH:  ${SRCTOP}/sys/ofed/drivers/infiniband/ulp/ipoib
 
 KMOD=	ipoib
@@ -10,7 +10,7 @@ SRCS+=	opt_inet.h opt_inet6.h opt_ofed.h
 CFLAGS+= -I${SRCTOP}/sys/ofed/drivers/infiniband/ulp/ipoib
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
-CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
+CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>
 

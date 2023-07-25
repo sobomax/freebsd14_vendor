@@ -33,13 +33,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 340977c15d93750b874451e1485cb77b2d8f243f $
+ * $FreeBSD: c5aa893b320cd071bd0e9cc09f6d170383a1eba0 $
  */
 
 /* No #pragam once since glibc can include this multiple times */
-#include <sys/cdefs.h>
-
 #include_next <stdio.h>
+
+#ifndef _BOOTSTRAP_LINUX_STDIO_H
+#define _BOOTSTRAP_LINUX_STDIO_H
+#include <sys/cdefs.h>
 
 __BEGIN_DECLS
 char *fgetln(FILE *, __SIZE_TYPE__ *);
@@ -47,3 +49,5 @@ char *fgetln(FILE *, __SIZE_TYPE__ *);
 __WCHAR_TYPE__ *fgetwln(FILE *__restrict, __SIZE_TYPE__ *__restrict);
 #endif
 __END_DECLS
+
+#endif

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: fcfd365268c374e6314e9999dffc5e0a410ff686 $
+# $FreeBSD: a682021ce5f6cf5959277fef907bbc22a9e6e9a4 $
 #
 
 # PROVIDE: cleanvar
@@ -31,15 +31,15 @@ cleanvar_start()
 {
 	if [ -d /var/run -a ! -f /var/run/clean_var ]; then
 		# Skip over logging sockets
-		find /var/run \( -type f -or -type s ! -name log -and ! -name logpriv \) -delete
+		find -x /var/run \( -type f -or -type s ! -name log -and ! -name logpriv \) -delete
 		>/var/run/clean_var
 	fi
 	if [ -d /var/spool/lock -a ! -f /var/spool/lock/clean_var ]; then
-		find /var/spool/lock -type f -delete
+		find -x /var/spool/lock -type f -delete
 		>/var/spool/lock/clean_var
 	fi
 	if [ -d /var/spool/uucp/.Temp ]; then
-		find /var/spool/uucp/.Temp -delete
+		find -x /var/spool/uucp/.Temp -delete
 	fi
 }
 

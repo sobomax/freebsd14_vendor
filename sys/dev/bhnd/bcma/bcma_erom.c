@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14a33d5a3ae95cf8c6f64dc3c7c032fa006f429e $");
+__FBSDID("$FreeBSD: 14abc49f147a5c1d458b7800ed50cc2faccab32f $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -720,13 +720,13 @@ bcma_erom_seek_matching_core(struct bcma_erom *sc,
 		return (0);
 	}
 
-	/* Not found, or a parse error occured */
+	/* Not found, or a parse error occurred */
 	return (error);
 }
 
 /**
  * Read the next core descriptor from the EROM table.
- * 
+ *
  * @param erom EROM read state.
  * @param[out] core On success, will be populated with the parsed core
  * descriptor data.

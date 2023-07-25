@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b470d7bbf7ac9f322c727a3a33fa34fcaaac3a0 $");
+__FBSDID("$FreeBSD: 61da86c098fccd0b048dc348441867df666308d4 $");
 
 #include "opt_acpi.h"
 #if defined(__amd64__)
@@ -922,7 +922,7 @@ dmar_rmrr_iter(ACPI_DMAR_HEADER *dmarh, void *arg)
 			/* The RMRR entry end address is inclusive. */
 			entry->end = resmem->EndAddress;
 			TAILQ_INSERT_TAIL(ria->rmrr_entries, entry,
-			    unroll_link);
+			    dmamap_link);
 		}
 	}
 
@@ -1158,7 +1158,7 @@ dmar_print_domain(struct dmar_domain *domain, bool show_mappings)
 	}
 }
 
-DB_FUNC(dmar_domain, db_dmar_print_domain, db_show_table, CS_OWN, NULL)
+DB_SHOW_COMMAND_FLAGS(dmar_domain, db_dmar_print_domain, CS_OWN)
 {
 	struct dmar_unit *unit;
 	struct dmar_domain *domain;

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/*$FreeBSD: ed5a88013f5b289e6a31c383829b3070a05facde $*/
+/*$FreeBSD: a46ce2fdb6aebdc527ea2d65f76a72c2d01130c1 $*/
 
 #ifndef _EM_H_DEFINED_
 #define _EM_H_DEFINED_
@@ -197,7 +197,7 @@
 #define EM_RADV		64
 
 /*
- * This parameter controls whether or not autonegotation is enabled.
+ * This parameter controls whether or not autonegotiation is enabled.
  *              0 - Disable autonegotiation
  *              1 - Enable  autonegotiation
  */

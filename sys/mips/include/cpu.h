@@ -43,7 +43,7 @@
  *
  *	from: @(#)cpu.h	8.4 (Berkeley) 1/4/94
  *	JNPR: cpu.h,v 1.9.2.2 2007/09/10 08:23:46 girish
- * $FreeBSD: b4f5c59f72f57a30fb2f75a99842d30593fe43c6 $
+ * $FreeBSD: aaec97aa25f1911154145cda538e90a61eb0ac98 $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -84,7 +84,6 @@
 extern char btext[];
 extern char etext[];
 
-void swi_vm(void *);
 void cpu_halt(void);
 void cpu_reset(void);
 

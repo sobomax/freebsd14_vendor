@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 668db4e81b02bb526fcf2c9a0cd66bf3a7cd90cb $
+ * $FreeBSD: bfd1c387eeba3a0da831b8c611468c0598556b39 $
  */
 
 /* !!ONLY FOR USE INTERNALLY TO LIBARCHIVE!! */
@@ -195,8 +195,9 @@
 
 /*
  * glibc 2.24 deprecates readdir_r
+ * bionic c deprecates readdir_r too
  */
-#if defined(HAVE_READDIR_R) && (!defined(__GLIBC__) || !defined(__GLIBC_MINOR__) || __GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 24))
+#if defined(HAVE_READDIR_R) && (!defined(__GLIBC__) || !defined(__GLIBC_MINOR__) || __GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 24)) && (!defined(__ANDROID__))
 #define	USE_READDIR_R	1
 #else
 #undef	USE_READDIR_R

@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: bfe4d042af1cc1370da8faa8ab695d389f8b6b27 $ */
+/* $FreeBSD: 2b46936f52126b0db5d4c410733e74f76a8653e3 $ */
 
 #include "oce_if.h"
 
@@ -103,7 +103,7 @@ oce_add_sysctls(POCE_SOFTC sc)
 			CTLFLAG_RW,
 			&oce_max_rsp_handled,
 			sizeof(oce_max_rsp_handled),
-			"Maximum receive frames handled per interupt");
+			"Maximum receive frames handled per interrupt");
 
 	if ((sc->function_mode & FNM_FLEX10_MODE) || 
 	    (sc->function_mode & FNM_UMC_MODE))

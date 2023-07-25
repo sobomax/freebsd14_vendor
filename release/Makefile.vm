@@ -1,5 +1,5 @@
 #
-# $FreeBSD: 67e849369596a38a4807d149873acd18245342b5 $
+# $FreeBSD: 64a3dc31b90afaa455e1128e49d4cfdcebe479bd $
 #
 #
 # Makefile for building virtual machine and cloud provider disk images.
@@ -7,7 +7,7 @@
 
 VMTARGETS=	vm-image
 VMFORMATS?=	vhd vmdk qcow2 raw
-VMSIZE?=	4096m
+VMSIZE?=	5120m
 SWAPSIZE?=	1g
 VMBASE?=	vm
 

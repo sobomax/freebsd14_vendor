@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: db84f905ff50d7889e3ac7bf073eb66fb774bf81 $
+ * $FreeBSD: 227a8e1170ebefad218fc01a213b9d5f7501594f $
  */
 
 /*
@@ -127,7 +127,7 @@ bad:
 }
 
 static int
-idad_dump(void *arg, void *virtual, vm_offset_t physical, off_t offset, size_t length)
+idad_dump(void *arg, void *virtual, off_t offset, size_t length)
 {
 
 	struct idad_softc *drv;

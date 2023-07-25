@@ -70,7 +70,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2a8d2f892807a742f95aa34f55ceb02717b3bf6d $");
+__FBSDID("$FreeBSD: 447fedeb153744058630c02eaa78a3a5f4f4856f $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -90,7 +90,6 @@ __FBSDID("$FreeBSD: 2a8d2f892807a742f95aa34f55ceb02717b3bf6d $");
 #include <sys/sched.h>
 #include <sys/sx.h>
 #include <sys/sysctl.h>
-#include <sys/sysent.h>
 #include <sys/syslog.h>
 #include <sys/sysproto.h>
 #include <sys/tty.h>

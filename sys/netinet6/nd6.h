@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: 3f9f8219b018d58016575c529d7cd11ceb59d375 $
+ * $FreeBSD: d653a432dbe4939479532ae3266514ba89b411d2 $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -243,6 +243,7 @@ struct nd_prefix {
 #define ndpr_raf		ndpr_flags
 #define ndpr_raf_onlink		ndpr_flags.onlink
 #define ndpr_raf_auto		ndpr_flags.autonomous
+#define ndpr_raf_ra_derived	ndpr_flags.ra_derived
 #define ndpr_raf_router		ndpr_flags.router
 
 struct nd_pfxrouter {

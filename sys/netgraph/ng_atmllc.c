@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1e4475ae68e0f2c1b032b09c8c62de8ceca18573 $
+ * $FreeBSD: d4a13fb83128a7f95e025c8c599f13ea114032a4 $
  */
 
 #include <sys/param.h>
@@ -92,6 +92,8 @@ static int
 ng_atmllc_constructor(node_p node)
 {
 	struct	ng_atmllc_priv *priv;
+
+	gone_in(14, "ng_atmllc");
 
 	priv = malloc(sizeof(*priv), M_NETGRAPH, M_WAITOK | M_ZERO);
 	NG_NODE_SET_PRIVATE(node, priv);

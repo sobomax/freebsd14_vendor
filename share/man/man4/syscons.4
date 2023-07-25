@@ -24,9 +24,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: c2f8cd56e0ee401b809f7194e45f8f89fbf79a7d $
+.\" $FreeBSD: bbc370ecd0d2980d0c03fde2352f70d47ecb55da $
 .\"
-.Dd June 2, 2018
+.Dd May 25, 2022
 .Dt SYSCONS 4
 .Os
 .Sh NAME
@@ -76,6 +76,14 @@ The
 .Nm
 driver provides multiple virtual terminals.
 It resembles the SCO color console driver.
+.Pp
+Note that the
+.Nm
+driver is not compatible with systems booted via
+.Xr UEFI 8 .
+Forcing use of
+.Nm
+on such systems will result in no usable console.
 .Pp
 The
 .Nm

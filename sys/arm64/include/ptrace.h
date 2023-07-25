@@ -1,1 +1,11 @@
-/* $FreeBSD: da23dbe43a4f66856b70e327ef3ea5b3495cffff $ */
+/* $FreeBSD: 0705ee6daab07a6f1bae4d429fd9a0ba385802fd $ */
+
+#ifndef _MACHINE_PTRACE_H_
+#define _MACHINE_PTRACE_H_
+
+#define __HAVE_PTRACE_MACHDEP
+
+#define PT_GETVFPREGS32	(PT_FIRSTMACH + 0)
+#define PT_SETVFPREGS32	(PT_FIRSTMACH + 1)
+
+#endif /* _MACHINE_PTRACE_H_ */

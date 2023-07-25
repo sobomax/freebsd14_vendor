@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)defs.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 894b5f3a654678faf86a03613beae5242ab0ff60 $
+ * $FreeBSD: 3a95fcf82e3b8098e9b41cac1a4e19388900388f $
  */
 
 /*
@@ -88,7 +88,7 @@ struct s_tr {
 
 /*
  * An internally compiled command.
- * Initialy, label references are stored in t, on a second pass they
+ * Initially, label references are stored in t, on a second pass they
  * are updated to pointers.
  */
 struct s_command {

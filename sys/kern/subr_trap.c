@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c2c27a4d40cb985f4f213afae4bd1ba80a12effc $");
+__FBSDID("$FreeBSD: be5041fe516f92abc1d07c656350e9dff77c3964 $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"
@@ -214,7 +214,7 @@ ast(struct trapframe *framep)
 {
 	struct thread *td;
 	struct proc *p;
-	int flags, sig;
+	int flags, old_boundary, sig;
 	bool resched_sigs;
 
 	td = curthread;
@@ -330,12 +330,15 @@ ast(struct trapframe *framep)
 	    !SIGISEMPTY(p->p_siglist)) {
 		sigfastblock_fetch(td);
 		PROC_LOCK(p);
+		old_boundary = ~TDB_BOUNDARY | (td->td_dbgflags & TDB_BOUNDARY);
+		td->td_dbgflags |= TDB_BOUNDARY;
 		mtx_lock(&p->p_sigacts->ps_mtx);
 		while ((sig = cursig(td)) != 0) {
 			KASSERT(sig >= 0, ("sig %d", sig));
 			postsig(sig);
 		}
 		mtx_unlock(&p->p_sigacts->ps_mtx);
+		td->td_dbgflags &= old_boundary;
 		PROC_UNLOCK(p);
 		resched_sigs = true;
 	} else {

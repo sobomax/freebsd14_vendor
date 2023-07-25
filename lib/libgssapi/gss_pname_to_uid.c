@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 9ee23a17c34580475117f3e4a68f3c4ec17b9df9 $ */
+/* $FreeBSD: ec2a3bd91e5445c36bf36266d2f478dac46a269d $ */
 
 #include <unistd.h>
 #include <gssapi/gssapi.h>
@@ -55,7 +55,7 @@ gss_pname_to_uid(OM_uint32 *minor_status, const gss_name_t pname,
 
 	if (m->gm_pname_to_uid == NULL)
 		return (GSS_S_UNAVAILABLE);
-    
+
 	major_status = _gss_find_mn(minor_status, name, mech, &mn);
 	if (major_status != GSS_S_COMPLETE) {
 		_gss_mg_error(m, major_status, *minor_status);

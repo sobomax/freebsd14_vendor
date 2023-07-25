@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 6a9cca23f72d38d6144cad8dc8fb6bb30450fadf $ */
+/* $FreeBSD: 0b7ea1273e4250359b12caed0c92649e4091bc00 $ */
 
 #include "smartpqi_includes.h"
 
@@ -858,7 +858,7 @@ pqisrc_force_sis(pqisrc_softstate_t *softs)
 	int ret = PQI_STATUS_SUCCESS;
 
 	if (SIS_IS_KERNEL_PANIC(softs)) {
-		DBG_INIT("Controller FW is not runnning");
+		DBG_INIT("Controller FW is not running");
 		return PQI_STATUS_FAILURE;
 	}
 

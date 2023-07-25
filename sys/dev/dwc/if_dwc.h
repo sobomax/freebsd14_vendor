@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d8c10258388a6f89fca307c724103ceaa0dad6e3 $
+ * $FreeBSD: 09455f61cea9b16a270283a9a246faa24f35ddec $
  */
 
 /*
@@ -48,6 +48,7 @@
 #define	 CONF_PS		(1 << 15)	/* GMII/MII */
 #define	 CONF_FES		(1 << 14)	/* MII speed select */
 #define	 CONF_DM		(1 << 11)	/* Full Duplex Enable */
+#define	 CONF_IPC		(1 << 10)	/* IPC checksum offload */
 #define	 CONF_ACS		(1 << 7)
 #define	 CONF_TE		(1 << 3)
 #define	 CONF_RE		(1 << 2)

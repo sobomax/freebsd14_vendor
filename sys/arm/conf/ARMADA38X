@@ -1,7 +1,7 @@
 #
 # Kernel configuration for Marvell Armada38x
 #
-# $FreeBSD: 71a2915d15b6656853fa033adc72891902b2dada $
+# $FreeBSD: 238d8189f37e366d8aa4354f52c4d11f09b0627e $
 #
 
 include 	"../mv/armada38x/std.armada38x"
@@ -22,6 +22,14 @@ options 	SCHED_ULE		# ULE scheduler
 options 	SMP
 
 options		VM_KMEM_SIZE_MAX=0x9CCD000
+
+# pseudo devices
+device		clk
+device		phy
+device		hwreset
+device		nvmem
+device		regulator
+device		syscon
 
 # Pseudo devices
 device		pty

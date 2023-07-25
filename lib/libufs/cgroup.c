@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c3e271c42950d7d41fd28aaf9d1efcbfdd778b5 $");
+__FBSDID("$FreeBSD: 41fe587531bfbadf2d992cb72f2ceeabf3c8fbd7 $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -266,6 +266,10 @@ cgwrite1(struct uufsd *disk, int cg)
 	static char errmsg[BUFSIZ];
 
 	if (cg == disk->d_cg.cg_cgx) {
+		if (ufs_disk_write(disk) == -1) {
+			ERROR(disk, "failed to open disk for writing");
+			return (-1);
+		}
 		if (cgput(disk->d_fd, &disk->d_fs, &disk->d_cg) == 0)
 			return (0);
 		ERROR(disk, NULL);

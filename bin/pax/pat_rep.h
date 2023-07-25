@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pat_rep.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: 7def28d36e300e6ef03f1aaf6de4c49cdec468d9 $
+ * $FreeBSD: e28064e6a08eda68d7bde94466c35705d7f60686 $
  */
 
 /*
@@ -41,11 +41,7 @@
  */
 typedef struct replace {
 	char		*nstr;	/* the new string we will substitute with */
-#	ifdef NET2_REGEX
-	regexp		*rcmp;	/* compiled regular expression used to match */
-#	else
 	regex_t		rcmp;	/* compiled regular expression used to match */
-#	endif
 	int		flgs;	/* print conversions? global in operation?  */
 #define	PRNT		0x1
 #define	GLOB		0x2

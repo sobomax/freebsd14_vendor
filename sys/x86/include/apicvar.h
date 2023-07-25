@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 373e7d576426d38861d3092ece8c93fbc78d88ec $
+ * $FreeBSD: fbc2d58cae048a66beca6a9a5d306ea4aedb2800 $
  */
 
 #ifndef _X86_APICVAR_H_
@@ -77,7 +77,7 @@
 
 #define	xAPIC_MAX_APIC_ID	0xfe
 #define	xAPIC_ID_ALL		0xff
-#define	MAX_APIC_ID		0x200
+#define	MAX_APIC_ID		0x800
 #define	APIC_ID_ALL		0xffffffff
 
 #define	IOAPIC_MAX_ID		xAPIC_MAX_APIC_ID

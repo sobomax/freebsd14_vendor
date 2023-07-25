@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e3f0a27ab581cfc531202627d44e252ab4a5441 $");
+__FBSDID("$FreeBSD: 6b6e65a39f75a0b08ad068fdf9711c2935f42b47 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,8 +59,6 @@ __FBSDID("$FreeBSD: 8e3f0a27ab581cfc531202627d44e252ab4a5441 $");
 #include <cam/scsi/scsi_all.h>
 #include <cam/scsi/scsi_message.h>
 #include <cam/scsi/scsi_sg.h>
-
-#include <compat/linux/linux_ioctl.h>
 
 typedef enum {
 	SG_FLAG_LOCKED		= 0x01,

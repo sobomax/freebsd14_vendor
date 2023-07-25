@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)mountd.c	8.15 (Berkeley) 5/1/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 569ea0fbf707acbc52861467c48e999eeca80a20 $");
+__FBSDID("$FreeBSD: d985dd00acf80f9e4df729c11a91578ec318b22a $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -779,7 +779,7 @@ main(int argc, char **argv)
 /*
  * This routine creates and binds sockets on the appropriate
  * addresses. It gets called one time for each transport.
- * It returns 0 upon success, 1 for ingore the call and -1 to indicate
+ * It returns 0 upon success, 1 for ignore the call and -1 to indicate
  * bind failed with EADDRINUSE.
  * Any file descriptors that have been created are stored in sock_fd and
  * the total count of them is maintained in sock_fdcnt.

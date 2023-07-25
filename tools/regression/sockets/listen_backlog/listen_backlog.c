@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2276393ee6f1bd32250da82d8e44ca23e8f3d1c9 $
+ * $FreeBSD: 9d156c36aa60118da44a96f31e8e8a89928de069 $
  */
 
 #include <sys/types.h>
@@ -44,7 +44,7 @@
  *
  * Future things to test:
  *
- * - That if we change the value of kern.ipc.somaxconn, the limits really
+ * - That if we change the value of kern.ipc.soacceptqueue, the limits really
  *   do change.
  *
  * - That limits are, approximately, enforced and implemented.
@@ -55,7 +55,7 @@
  */
 
 /*
- * We retrieve kern.ipc.somaxconn before running the tests in order to use a
+ * We retrieve kern.ipc.soacceptqueue before running the tests in order to use a
  * run-time set value of SOMAXCONN, rather than compile-time set.  We assume
  * that no other process will be simultaneously frobbing it, and these tests
  * may fail if that assumption is not held.
@@ -371,9 +371,9 @@ main(void)
 	size_t len;
 
 	len = sizeof(somaxconn);
-	if (sysctlbyname("kern.ipc.somaxconn", &somaxconn, &len, NULL, 0)
+	if (sysctlbyname("kern.ipc.soacceptqueue", &somaxconn, &len, NULL, 0)
 	    < 0)
-		err(-1, "sysctlbyname(kern.ipc.somaxconn)");
+		err(-1, "sysctlbyname(kern.ipc.soacceptqueue)");
 
 	test_defaults();
 	test_listen_update();

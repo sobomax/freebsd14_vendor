@@ -30,7 +30,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b13cf2ef23eaa3d5fcf43405339fea794958d73a $");
+__FBSDID("$FreeBSD: 88314935b82e2833dad8666481169bc7e3409feb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -490,7 +490,7 @@ arm_add_efi_map_entries(struct efi_map_header *efihdr, struct mem_region *mr,
 			break;
 
 		mr[j].mr_start = p->md_phys;
-		mr[j].mr_size = p->md_pages * PAGE_SIZE;
+		mr[j].mr_size = p->md_pages * EFI_PAGE_SIZE;
 		memory_size += mr[j].mr_size;
 	}
 

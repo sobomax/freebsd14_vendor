@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 8cfb37e700cebbf4a2f897d6f40cfdf8458539ce $
+ * $FreeBSD: 1e7a1042d237fa6e54e5dbc42eac4009e8a3d498 $
  */
 #ifndef	_LINUXKPI_LINUX_INTERRUPT_H_
 #define	_LINUXKPI_LINUX_INTERRUPT_H_
@@ -43,6 +43,9 @@
 typedef	irqreturn_t	(*irq_handler_t)(int, void *);
 
 #define	IRQF_SHARED	RF_SHAREABLE
+#define	IRQF_NOBALANCING	0
+
+#define	IRQ_DISABLE_UNLAZY	0
 
 struct irq_ent;
 
@@ -76,6 +79,14 @@ request_threaded_irq(int irq, irq_handler_t handler,
 }
 
 static inline int
+devm_request_irq(struct device *dev, int irq,
+    irq_handler_t handler, unsigned long flags, const char *name, void *arg)
+{
+
+	return (lkpi_request_irq(dev, irq, handler, NULL, flags, name, arg));
+}
+
+static inline int
 devm_request_threaded_irq(struct device *dev, int irq,
     irq_handler_t handler, irq_handler_t thread_handler,
     unsigned long flags, const char *name, void *arg)
@@ -93,6 +104,12 @@ enable_irq(unsigned int irq)
 
 static inline void
 disable_irq(unsigned int irq)
+{
+	lkpi_disable_irq(irq);
+}
+
+static inline void
+disable_irq_nosync(unsigned int irq)
 {
 	lkpi_disable_irq(irq);
 }
@@ -116,16 +133,28 @@ devm_free_irq(struct device *xdev, unsigned int irq, void *p)
 }
 
 static inline int
-irq_set_affinity_hint(int vector, cpumask_t *mask)
+irq_set_affinity_hint(int vector, const cpumask_t *mask)
 {
 	int error;
 
 	if (mask != NULL)
-		error = intr_setaffinity(vector, CPU_WHICH_IRQ, mask);
+		error = intr_setaffinity(vector, CPU_WHICH_IRQ, __DECONST(cpumask_t *, mask));
 	else
 		error = intr_setaffinity(vector, CPU_WHICH_IRQ, cpuset_root);
 
 	return (-error);
+}
+
+static inline struct msi_desc *
+irq_get_msi_desc(unsigned int irq)
+{
+
+	return (lkpi_pci_msi_desc_alloc(irq));
+}
+
+static inline void
+irq_set_status_flags(unsigned int irq __unused, unsigned long flags __unused)
+{
 }
 
 /*

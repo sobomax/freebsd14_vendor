@@ -41,7 +41,7 @@
  *
  *	@(#)ufs_vnops.c	8.7 (Berkeley) 2/3/94
  *	@(#)ufs_vnops.c 8.27 (Berkeley) 5/27/95
- * $FreeBSD: 72469040380950c8f392129db91a1aafa1593f47 $
+ * $FreeBSD: 51119ed8d52f6a1ad79b85f9e9a2e754a5d6b580 $
  */
 
 #include "opt_suiddir.h"
@@ -2212,8 +2212,9 @@ ext2_write(struct vop_write_args *ap)
 	 * Maybe this should be above the vnode op call, but so long as
 	 * file servers have no limits, I don't think it matters.
 	 */
-	if (vn_rlimit_fsize(vp, uio, uio->uio_td))
-		return (EFBIG);
+	error = vn_rlimit_fsize(vp, uio, uio->uio_td);
+	if (error != 0)
+		return (error);
 
 	resid = uio->uio_resid;
 	osize = ip->i_size;

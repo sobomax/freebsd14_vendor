@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe40003a475b769cf1da637d5aaec43b4c2b65a1 $");
+__FBSDID("$FreeBSD: c7d90a4f31d09acb20770cdc09279dc1c8147f5a $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: fe40003a475b769cf1da637d5aaec43b4c2b65a1 $");
 #include "bootstrap.h"
 #include "loader_efi.h"
 
-extern int bi_load(char *, vm_offset_t *, vm_offset_t *);
+extern int bi_load(char *, vm_offset_t *, vm_offset_t *, bool);
 
 static int
 __elfN(exec)(struct preloaded_file *fp)
@@ -66,7 +66,7 @@ __elfN(exec)(struct preloaded_file *fp)
 	printf("Kernel entry at %p...\n", entry);
 	printf("Kernel args: %s\n", fp->f_args);
 
-	if ((error = bi_load(fp->f_args, &modulep, &kernend)) != 0) {
+	if ((error = bi_load(fp->f_args, &modulep, &kernend, true)) != 0) {
 		efi_time_init();
 		return (error);
 	}

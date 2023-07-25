@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3dab2807bd925391709fd587df8025c3357989c8 $");
+__FBSDID("$FreeBSD: 441b52ea1cb0c0982a5ab9409759e4d667ab8231 $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -719,7 +719,7 @@ acpi_pci_link_srs_from_crs(struct acpi_pci_link_softc *sc, ACPI_BUFFER *srsbuf)
 	ACPI_RESOURCE *end, *res;
 	ACPI_STATUS status;
 	struct link *link;
-	int i, in_dpf;
+	int i __diagused, in_dpf;
 
 	/* Fetch the _CRS. */
 	ACPI_SERIAL_ASSERT(pci_link);
@@ -861,7 +861,7 @@ acpi_pci_link_route_irqs(device_t dev)
 	ACPI_BUFFER srsbuf;
 	ACPI_STATUS status;
 	struct link *link;
-	int i;
+	int i __diagused;
 
 	ACPI_SERIAL_ASSERT(pci_link);
 	sc = device_get_softc(dev);

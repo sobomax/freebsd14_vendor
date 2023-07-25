@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38c664228c12ba9a60f62cd532537394dcda9dec $");
+__FBSDID("$FreeBSD: ece3dbc6d82235a78c6c5120a0ee20274f3d325e $");
 
 #define __ELF_WORD_SIZE 64
 
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: 38c664228c12ba9a60f62cd532537394dcda9dec $");
 #include "bootstrap.h"
 #include "libofw.h"
 #include "openfirm.h"
+#include "modinfo.h"
 
 extern char		end[];
 extern vm_offset_t	reloc;	/* From <arch>/conf.c */

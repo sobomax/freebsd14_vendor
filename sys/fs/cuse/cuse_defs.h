@@ -1,4 +1,4 @@
-/* $FreeBSD: b5f2eba1b23e662cbcbaaf806bfc99285de05c3d $ */
+/* $FreeBSD: 4f962fc95ddbd151b049c4537b2e93f80e23225c $ */
 /*-
  * Copyright (c) 2010-2012 Hans Petter Selasky. All rights reserved.
  *
@@ -27,7 +27,7 @@
 #ifndef _CUSE_DEFS_H_
 #define	_CUSE_DEFS_H_
 
-#define	CUSE_VERSION		0x000124
+#define	CUSE_VERSION		0x000125
 
 #define	CUSE_ERR_NONE		0
 #define	CUSE_ERR_BUSY		-1

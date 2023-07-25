@@ -27,7 +27,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: e680db5faa5204058d1cacf1b824a2b02543dde6 $");
+__FBSDID("$FreeBSD: 2fbb5a10febfb2d616aa6269d2b5ef53ef29656b $");
 #endif
 
 /*
@@ -495,7 +495,7 @@ ieee80211_decap_amsdu(struct ieee80211_node *ni, struct mbuf *m)
 		}
 		if (m->m_pkthdr.len == framelen)
 			break;
-		n = m_split(m, framelen, M_NOWAIT);
+		n = m_split(m, framelen, IEEE80211_M_NOWAIT);
 		if (n == NULL) {
 			IEEE80211_DISCARD_MAC(vap, IEEE80211_MSG_ANY,
 			    ni->ni_macaddr, "a-msdu",

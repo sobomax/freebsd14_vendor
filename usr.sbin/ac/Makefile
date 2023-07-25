@@ -1,6 +1,7 @@
-# $FreeBSD: 0fac2fbdbab99d00fd2e3dac84b4693e7cd94ecb $
+# $FreeBSD: daade986de91d66a00feeddeb1111250b3f32378 $
 
 PROG=	ac
+PACKAGE=	acct
 MAN=	ac.8
 
 # If "CONSOLE_TTY" is not defined, this program is compatible with the

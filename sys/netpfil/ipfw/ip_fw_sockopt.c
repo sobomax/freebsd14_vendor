@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee057b4d83465ec0ada7bb0dfc7612f91e63b9d9 $");
+__FBSDID("$FreeBSD: 6d2a119ecbe079008f9eddc20b159dbb8bc65d6c $");
 
 /*
  * Control socket and rule management routines for ipfw.
@@ -184,7 +184,7 @@ VNET_DEFINE_STATIC(uma_zone_t, ipfw_cntr_zone);
 #define	V_ipfw_cntr_zone		VNET(ipfw_cntr_zone)
 
 void
-ipfw_init_counters()
+ipfw_init_counters(void)
 {
 
 	V_ipfw_cntr_zone = uma_zcreate("IPFW counters",
@@ -193,7 +193,7 @@ ipfw_init_counters()
 }
 
 void
-ipfw_destroy_counters()
+ipfw_destroy_counters(void)
 {
 
 	uma_zdestroy(V_ipfw_cntr_zone);
@@ -1909,6 +1909,8 @@ check_ipfw_rule_body(ipfw_insn *cmd, int cmd_len, struct rule_check_info *ci)
 			ci->object_opcodes++;
 			break;
 		case O_IP_FLOW_LOOKUP:
+		case O_MAC_DST_LOOKUP:
+		case O_MAC_SRC_LOOKUP:
 			if (cmd->arg1 >= V_fw_tables_max) {
 				printf("ipfw: invalid table number %d\n",
 				    cmd->arg1);
@@ -3238,7 +3240,7 @@ update_opcode_kidx(ipfw_insn *cmd, uint16_t idx)
 }
 
 void
-ipfw_init_obj_rewriter()
+ipfw_init_obj_rewriter(void)
 {
 
 	ctl3_rewriters = NULL;
@@ -3246,7 +3248,7 @@ ipfw_init_obj_rewriter()
 }
 
 void
-ipfw_destroy_obj_rewriter()
+ipfw_destroy_obj_rewriter(void)
 {
 
 	if (ctl3_rewriters != NULL)
@@ -3474,7 +3476,7 @@ find_unref_sh(struct ipfw_sopt_handler *psh)
 }
 
 void
-ipfw_init_sopt_handler()
+ipfw_init_sopt_handler(void)
 {
 
 	CTL3_LOCK_INIT();
@@ -3482,7 +3484,7 @@ ipfw_init_sopt_handler()
 }
 
 void
-ipfw_destroy_sopt_handler()
+ipfw_destroy_sopt_handler(void)
 {
 
 	IPFW_DEL_SOPT_HANDLER(1, scodes);

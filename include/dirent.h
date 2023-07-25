@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dirent.h	8.2 (Berkeley) 7/28/94
- * $FreeBSD: 702153e28fc0a5847d91416fef5440b9bc788568 $
+ * $FreeBSD: 751a016838c0ea29d2dfbedeb027a49bf0b7002c $
  */
 
 #ifndef _DIRENT_H_
@@ -108,6 +108,7 @@ int	 alphasort(const struct dirent **, const struct dirent **);
 int	 dirfd(DIR *);
 #endif
 #if __BSD_VISIBLE
+int	 versionsort(const struct dirent **, const struct dirent **);
 DIR	*__opendir2(const char *, int);
 int	 fdclosedir(DIR *);
 ssize_t	 getdents(int, char *, size_t);
@@ -130,6 +131,11 @@ int	 scandir_b(const char *, struct dirent ***,
 	    int (^)(const struct dirent *),
 	    int (^)(const struct dirent **, const struct dirent **));
 #endif
+#endif
+#if __BSD_VISIBLE
+int	 scandirat(int, const char *, struct dirent ***,
+	    int (*)(const struct dirent *), int (*)(const struct dirent **,
+	    const struct dirent **));
 #endif
 #if __XSI_VISIBLE
 void	 seekdir(DIR *, long);

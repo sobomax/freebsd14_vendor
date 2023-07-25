@@ -1,4 +1,4 @@
-# $FreeBSD: 80aa29949edf49b2b9f0daec6ef10317bff93a60 $
+# $FreeBSD: 995a8b461344398685f3011be9e7ca33e22a45e3 $
 
 .include <src.opts.mk>
 
@@ -35,6 +35,8 @@ ${hdr}.inc: ${LLVM_BASE}/${SRCDIR}/${hdr}.td
 	    -d ${.TARGET}.d -o ${.TARGET} ${LLVM_BASE}/${SRCDIR}/${hdr}.td
 TGHDRS+=	${hdr}.inc
 .endfor
+
+${TGHDRS}: ${LLVM_TBLGEN_BIN}
 
 DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}

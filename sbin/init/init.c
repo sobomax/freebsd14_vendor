@@ -43,7 +43,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)init.c	8.1 (Berkeley) 7/15/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: 230c141bd351a80db860db6152ef4cadf0b0dbd9 $";
+  "$FreeBSD: 3e53da6b99a72901f8b80a50c83688c5ba60c10b $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -1138,10 +1138,10 @@ run_script(const char *script)
 	do {
 		if ((wpid = waitpid(-1, &status, WUNTRACED)) != -1)
 			collect_child(wpid);
+		if (requested_transition == death_single ||
+		    requested_transition == reroot)
+			return (state_func_t) requested_transition;
 		if (wpid == -1) {
-			if (requested_transition == death_single ||
-			    requested_transition == reroot)
-				return (state_func_t) requested_transition;
 			if (errno == EINTR)
 				continue;
 			warning("wait for %s on %s failed: %m; going to "

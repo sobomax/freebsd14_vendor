@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8a6e64876b3daed8db1a67d5b1f3ec0bcd19b25a $");
+__FBSDID("$FreeBSD: 957262fc70b992020ac880ef1c8eeaf32e0267fd $");
 
 #include "opt_inet.h"
 #include "opt_route.h"
@@ -196,7 +196,7 @@ check_urpf(struct nhop_object *nh, uint32_t flags,
 {
 #ifdef ROUTE_MPATH
 	if (NH_IS_NHGRP(nh)) {
-		struct weightened_nhop *wn;
+		const struct weightened_nhop *wn;
 		uint32_t num_nhops;
 		wn = nhgrp_get_nhops((struct nhgrp_object *)nh, &num_nhops);
 			for (int i = 0; i < num_nhops; i++) {

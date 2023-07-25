@@ -28,6 +28,7 @@
  * Copyright (c) 2019 Datto Inc.
  * Copyright (c) 2019, Klara Inc.
  * Copyright (c) 2019, Allan Jude
+ * Copyright (c) 2022 Hewlett Packard Enterprise Development LP.
  */
 
 #include <sys/dmu.h>
@@ -70,12 +71,16 @@ int zfs_nopwrite_enabled = 1;
  * will wait until the next TXG.
  * A value of zero will disable this throttle.
  */
-unsigned long zfs_per_txg_dirty_frees_percent = 5;
+unsigned long zfs_per_txg_dirty_frees_percent = 30;
 
 /*
- * Enable/disable forcing txg sync when dirty in dmu_offset_next.
+ * Enable/disable forcing txg sync when dirty checking for holes with lseek().
+ * By default this is enabled to ensure accurate hole reporting, it can result
+ * in a significant performance penalty for lseek(SEEK_HOLE) heavy workloads.
+ * Disabling this option will result in holes never being reported in dirty
+ * files which is always safe.
  */
-int zfs_dmu_offset_next_sync = 0;
+int zfs_dmu_offset_next_sync = 1;
 
 /*
  * Limit the amount we can prefetch with one call to this amount.  This
@@ -1842,7 +1847,7 @@ dmu_sync(zio_t *pio, uint64_t txg, dmu_sync_cb_t *done, zgd_t *zgd)
 	dsa->dsa_tx = NULL;
 
 	zio_nowait(arc_write(pio, os->os_spa, txg,
-	    zgd->zgd_bp, dr->dt.dl.dr_data, DBUF_IS_L2CACHEABLE(db),
+	    zgd->zgd_bp, dr->dt.dl.dr_data, dbuf_is_l2cacheable(db),
 	    &zp, dmu_sync_ready, NULL, NULL, dmu_sync_done, dsa,
 	    ZIO_PRIORITY_SYNC_WRITE, ZIO_FLAG_CANFAIL, &zb));
 
@@ -1984,12 +1989,22 @@ dmu_write_policy(objset_t *os, dnode_t *dn, int level, int wp, zio_prop_t *zp)
 		    ZCHECKSUM_FLAG_EMBEDDED))
 			checksum = ZIO_CHECKSUM_FLETCHER_4;
 
-		if (os->os_redundant_metadata == ZFS_REDUNDANT_METADATA_ALL ||
-		    (os->os_redundant_metadata ==
-		    ZFS_REDUNDANT_METADATA_MOST &&
-		    (level >= zfs_redundant_metadata_most_ditto_level ||
-		    DMU_OT_IS_METADATA(type) || (wp & WP_SPILL))))
+		switch (os->os_redundant_metadata) {
+		case ZFS_REDUNDANT_METADATA_ALL:
 			copies++;
+			break;
+		case ZFS_REDUNDANT_METADATA_MOST:
+			if (level >= zfs_redundant_metadata_most_ditto_level ||
+			    DMU_OT_IS_METADATA(type) || (wp & WP_SPILL))
+				copies++;
+			break;
+		case ZFS_REDUNDANT_METADATA_SOME:
+			if (DMU_OT_IS_CRITICAL(type))
+				copies++;
+			break;
+		case ZFS_REDUNDANT_METADATA_NONE:
+			break;
+		}
 	} else if (wp & WP_NOFILL) {
 		ASSERT(level == 0);
 
@@ -2110,8 +2125,8 @@ restart:
 		 * If the zfs_dmu_offset_next_sync module option is enabled
 		 * then strict hole reporting has been requested.  Dirty
 		 * dnodes must be synced to disk to accurately report all
-		 * holes.  When disabled (the default) dirty dnodes are
-		 * reported to not have any holes which is always safe.
+		 * holes.  When disabled dirty dnodes are reported to not
+		 * have any holes which is always safe.
 		 *
 		 * When called by zfs_holey_common() the zp->z_rangelock
 		 * is held to prevent zfs_write() and mmap writeback from

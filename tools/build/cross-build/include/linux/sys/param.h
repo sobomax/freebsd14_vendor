@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: c918998e06a3c5cd2de9fae867e89a40ff909707 $
+ * $FreeBSD: 305d2767ae7e959c0167bcc223e965dde23aaf94 $
  */
 #pragma once
 #include_next <sys/param.h>
@@ -47,6 +47,3 @@
  * let's use 32 since that will work across all systems
  */
 #define MAXLOGNAME 33 /* max login name length (incl. NUL) */
-
-/* For elftoolchain (seems like on ubuntu it's in errno.h) */
-extern char *program_invocation_short_name;

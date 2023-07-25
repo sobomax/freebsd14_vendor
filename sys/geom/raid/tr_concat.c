@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dca728bf6dc498eeb2463b75289f062f1e4a13ef $");
+__FBSDID("$FreeBSD: a0a69502206f95816e4f23c57b0293a9365bcfd5 $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -286,8 +286,8 @@ failure:
 }
 
 static int
-g_raid_tr_kerneldump_concat(struct g_raid_tr_object *tr,
-    void *virtual, vm_offset_t physical, off_t boffset, size_t blength)
+g_raid_tr_kerneldump_concat(struct g_raid_tr_object *tr, void *virtual,
+    off_t boffset, size_t blength)
 {
 	struct g_raid_volume *vol;
 	struct g_raid_subdisk *sd;
@@ -314,7 +314,7 @@ g_raid_tr_kerneldump_concat(struct g_raid_tr_object *tr,
 		sd = &vol->v_subdisks[no];
 		length = MIN(sd->sd_size - offset, remain);
 		error = g_raid_subdisk_kerneldump(&vol->v_subdisks[no],
-		    addr, 0, offset, length);
+		    addr, offset, length);
 		if (error != 0)
 			return (error);
 		remain -= length;

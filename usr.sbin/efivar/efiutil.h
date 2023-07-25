@@ -22,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: dbcb598c789ece5541d980a03e81fdaf88064234 $
+ * $FreeBSD: 19e80b89ecf989af562a9c96acc898a940976ff9 $
  */
 
 /*
- * differnt routines to dump data.
+ * different routines to dump data.
  */
 
 void asciidump(uint8_t *data, size_t datalen);

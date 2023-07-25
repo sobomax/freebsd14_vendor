@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7406c92d6d0e7baeb70858a6e812f06660aa7a3f $");
+__FBSDID("$FreeBSD: 10e8f6e7e628a08685c5da55240ebc1cc4f9f4a8 $");
 
 #include "opt_wlan.h"
 
@@ -146,7 +146,7 @@ ieee80211_input_mimo_all(struct ieee80211com *ic, struct mbuf *m)
 			 * so do a deep copy of the packet.
 			 * NB: tags are copied too.
 			 */
-			mcopy = m_dup(m, M_NOWAIT);
+			mcopy = m_dup(m, IEEE80211_M_NOWAIT);
 			if (mcopy == NULL) {
 				/* XXX stat+msg */
 				continue;

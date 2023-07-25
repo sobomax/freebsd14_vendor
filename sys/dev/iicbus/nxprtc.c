@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e5162fcd39524f17a8d4f6758c562c2ba75964c $");
+__FBSDID("$FreeBSD: 2827ebc1a29e430be9fa77bbe07e19102c735726 $");
 
 /*
  * Driver for NXP real-time clock/calendar chips:
@@ -418,7 +418,7 @@ pcf8523_battery_check(struct nxprtc_softc *sc)
 		device_printf(sc->dev, "cannot write CS3 reg\n");
 		return (err);
 	}
-	pause_sbt("nxpbat", mstosbt(10), 0, 0);
+	pause_sbt("nxpbat", mstosbt(100), 0, 0);
 	if ((err = read_reg(sc, PCF8523_R_CS3, &cs3)) != 0) {
 		device_printf(sc->dev, "cannot read CS3 reg\n");
 		return (err);

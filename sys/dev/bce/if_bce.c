@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5bd8e3abf862695ac0910ceb6c7ec83afaa52db8 $");
+__FBSDID("$FreeBSD: e4c46a1443cf6910a8b6b14a3583f539a2893ade $");
 
 /*
  * The following controllers are supported by this driver:
@@ -241,12 +241,12 @@ static const struct flash_spec flash_table[] =
 	{0x19000002, 0x5b808201, 0x000500db, 0x03840253, 0xaf020406,
 	 NONBUFFERED_FLAGS, ST_MICRO_FLASH_PAGE_BITS, ST_MICRO_FLASH_PAGE_SIZE,
 	 ST_MICRO_FLASH_BYTE_ADDR_MASK, ST_MICRO_FLASH_BASE_TOTAL_SIZE*2,
-	 "Entry 0101: ST M45PE10 (128kB non-bufferred)"},
+	 "Entry 0101: ST M45PE10 (128kB non-buffered)"},
 	/* Entry 0110: ST M45PE20 (non-buffered flash)*/
 	{0x15000001, 0x57808201, 0x000500db, 0x03840253, 0xaf020406,
 	 NONBUFFERED_FLAGS, ST_MICRO_FLASH_PAGE_BITS, ST_MICRO_FLASH_PAGE_SIZE,
 	 ST_MICRO_FLASH_BYTE_ADDR_MASK, ST_MICRO_FLASH_BASE_TOTAL_SIZE*4,
-	 "Entry 0110: ST M45PE20 (256kB non-bufferred)"},
+	 "Entry 0110: ST M45PE20 (256kB non-buffered)"},
 	/* Saifun SA25F005 (non-buffered flash) */
 	/* strap, cfg1, & write1 need updates */
 	{0x1d000003, 0x5f808201, 0x00050081, 0x03840253, 0xaf020406,
@@ -7995,7 +7995,7 @@ bce_set_rx_mode(struct bce_softc *sc)
 		REG_WR(sc, BCE_EMAC_RX_MODE, rx_mode);
 	}
 
-	/* Disable and clear the exisitng sort before enabling a new sort. */
+	/* Disable and clear the existing sort before enabling a new sort. */
 	REG_WR(sc, BCE_RPM_SORT_USER0, 0x0);
 	REG_WR(sc, BCE_RPM_SORT_USER0, sort_mode);
 	REG_WR(sc, BCE_RPM_SORT_USER0, sort_mode | BCE_RPM_SORT_USER0_ENA);

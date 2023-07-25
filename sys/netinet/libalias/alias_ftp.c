@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 962194ec0a688160d8b43bfdd0d663ba19e89c65 $");
+__FBSDID("$FreeBSD: b2fcfbf2396b78e29a36fdebe5d6eff8098be94e $");
 
 /*
     Alias_ftp.c performs special processing for FTP sessions under
@@ -754,7 +754,7 @@ NewFtpMessage(struct libalias *la, struct ip *pip,
 		/* Compute TCP checksum for revised packet */
 		tc->th_sum = 0;
 #ifdef _KERNEL
-		tc->th_x2 = 1;
+		tc->th_x2 = (TH_RES1 >> 8);
 #else
 		tc->th_sum = TcpChecksum(pip);
 #endif

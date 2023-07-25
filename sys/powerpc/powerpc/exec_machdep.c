@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91cc9a98f7a7a58ecd1b7dee5fdb6d9993131090 $");
+__FBSDID("$FreeBSD: ef987c22f064663481b07d4cef57bf7bc3fc8425 $");
 
 #include "opt_fpu_emu.h"
 
@@ -76,6 +76,7 @@ __FBSDID("$FreeBSD: 91cc9a98f7a7a58ecd1b7dee5fdb6d9993131090 $");
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
+#include <sys/reg.h>
 #include <sys/signalvar.h>
 #include <sys/syscallsubr.h>
 #include <sys/syscall.h>
@@ -89,7 +90,6 @@ __FBSDID("$FreeBSD: 91cc9a98f7a7a58ecd1b7dee5fdb6d9993131090 $");
 #include <machine/elf.h>
 #include <machine/fpu.h>
 #include <machine/pcb.h>
-#include <machine/reg.h>
 #include <machine/sigframe.h>
 #include <machine/trap.h>
 #include <machine/vmparam.h>
@@ -604,7 +604,7 @@ exec_setregs(struct thread *td, struct image_params *imgp, uintptr_t stack)
 	tf->fixreg[3] = argc;
 	tf->fixreg[4] = stack + sizeof(register_t);
 	tf->fixreg[5] = stack + (2 + argc)*sizeof(register_t);
-	tf->fixreg[6] = 0;				/* auxillary vector */
+	tf->fixreg[6] = 0;				/* auxiliary vector */
 	tf->fixreg[7] = 0;				/* termination vector */
 	tf->fixreg[8] = (register_t)imgp->ps_strings;	/* NetBSD extension */
 
@@ -633,7 +633,7 @@ ppc32_setregs(struct thread *td, struct image_params *imgp, uintptr_t stack)
 	tf->fixreg[3] = argc;
 	tf->fixreg[4] = stack + sizeof(uint32_t);
 	tf->fixreg[5] = stack + (2 + argc)*sizeof(uint32_t);
-	tf->fixreg[6] = 0;				/* auxillary vector */
+	tf->fixreg[6] = 0;				/* auxiliary vector */
 	tf->fixreg[7] = 0;				/* termination vector */
 	tf->fixreg[8] = (register_t)imgp->ps_strings;	/* NetBSD extension */
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eaef95932c600c5efa071c23cf9526f017a9f142 $");
+__FBSDID("$FreeBSD: cd4761df46be2904b57ab763a7a5a39780f0fdc7 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,7 +141,6 @@ armv7_allocate_pmc(int cpu, int ri, struct pmc *pm,
 	struct armv7_cpu *pac;
 	enum pmc_event pe;
 	uint32_t config;
-	uint32_t caps;
 
 	KASSERT(cpu >= 0 && cpu < pmc_cpu_max(),
 	    ("[armv7,%d] illegal CPU value %d", __LINE__, cpu));
@@ -150,7 +149,6 @@ armv7_allocate_pmc(int cpu, int ri, struct pmc *pm,
 
 	pac = armv7_pcpu[cpu];
 
-	caps = a->pm_caps;
 	if (a->pm_class != PMC_CLASS_ARMV7)
 		return (EINVAL);
 	pe = a->pm_ev;
@@ -504,7 +502,7 @@ armv7_pcpu_fini(struct pmc_mdep *md, int cpu)
 }
 
 struct pmc_mdep *
-pmc_armv7_initialize()
+pmc_armv7_initialize(void)
 {
 	struct pmc_mdep *pmc_mdep;
 	struct pmc_classdep *pcd;

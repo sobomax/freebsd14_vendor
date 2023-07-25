@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 56952e45fe75f7d3ab4a0d7346f928ad027b62fd $
+ * $FreeBSD: 5feb3ebc9b1f0f2ec09b0cdc71677564c627004f $
  */
 
 #ifndef _SYS_INTERRUPT_H_
@@ -144,7 +144,7 @@ struct intr_event {
 #define	SWI_TTY		0
 #define	SWI_NET		1
 #define	SWI_CAMBIO	2
-#define	SWI_VM		3
+#define	SWI_BUSDMA	3
 #define	SWI_CLOCK	4
 #define	SWI_TQ_FAST	5
 #define	SWI_TQ		6
@@ -153,11 +153,9 @@ struct intr_event {
 struct proc;
 
 extern struct	intr_event *clk_intr_event;
-extern struct	intr_event *tty_intr_event;
-extern void	*vm_ih;
 
 /* Counts and names for statistics (defined in MD code). */
-extern u_long 	*intrcnt;	/* counts for for each device and stray */
+extern u_long 	*intrcnt;	/* counts for each device and stray */
 extern char 	*intrnames;	/* string table containing device names */
 extern size_t	sintrcnt;	/* size of intrcnt table */
 extern size_t	sintrnames;	/* size of intrnames table */

@@ -1,4 +1,4 @@
-# $FreeBSD: b64a1b27dccb50f66be7658245642f55546695f0 $
+# $FreeBSD: 2f452b432f42317bfb28199c809fd18ed398ec78 $
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -47,6 +47,7 @@ __DEFAULT_YES_OPTIONS = \
     SCTP_SUPPORT \
     SOURCELESS_HOST \
     SOURCELESS_UCODE \
+    SPLIT_KERNEL_DEBUG \
     TESTS \
     USB_GADGET_EXAMPLES \
     ZFS
@@ -172,6 +173,10 @@ MK_${var}_SUPPORT:= yes
 .endif
 .endif
 .endfor
+
+.if ${MK_SPLIT_KERNEL_DEBUG} == "no"
+MK_KERNEL_SYMBOLS:=	no
+.endif
 
 # Some modules only compile successfully if option FDT is set, due to #ifdef FDT
 # wrapped around declarations.  Module makefiles can optionally compile such

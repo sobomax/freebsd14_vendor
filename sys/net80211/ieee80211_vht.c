@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: b023c6de6e956b85f4061b2465204fc8c555a715 $");
+__FBSDID("$FreeBSD: b4eb901f0f13b4bfae2ea21dc4fe9316ccc02259 $");
 #endif
 
 /*
@@ -797,7 +797,7 @@ ieee80211_vht_adjust_channel(struct ieee80211com *ic,
 	struct ieee80211_channel *c;
 
 	/* First case - handle channel demotion - if VHT isn't set */
-	if ((flags & IEEE80211_FVHT_VHT) == 0) {
+	if ((flags & IEEE80211_FVHT_MASK) == 0) {
 #if 0
 		printf("%s: demoting channel %d/0x%08x\n", __func__,
 		    chan->ic_ieee, chan->ic_flags);
@@ -819,10 +819,9 @@ ieee80211_vht_adjust_channel(struct ieee80211com *ic,
 	 * Note: we don't clear the HT flags, these are the hints
 	 * for HT40U/HT40D when selecting VHT40 or larger channels.
 	 */
-	/* Start with VHT80 */
 	c = NULL;
 	if ((c == NULL) && (flags & IEEE80211_FVHT_USEVHT160))
-		c = findvhtchan(ic, chan, IEEE80211_CHAN_VHT80);
+		c = findvhtchan(ic, chan, IEEE80211_CHAN_VHT160);
 
 	if ((c == NULL) && (flags & IEEE80211_FVHT_USEVHT80P80))
 		c = findvhtchan(ic, chan, IEEE80211_CHAN_VHT80P80);

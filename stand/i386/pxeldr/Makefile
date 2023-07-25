@@ -1,4 +1,4 @@
-# $FreeBSD: 2184d391937f66e6d529cb7fd50830778fd319bd $
+# $FreeBSD: 790f5ed8f0e93dba893f513bdb32ab6fd7548781 $
 
 .include <bsd.init.mk>
 
@@ -38,6 +38,8 @@ LDFLAGS+=${LDFLAGS_BIN}
 
 CLEANFILES+= ${LOADER}
 
+# Note: pxeldr.S assumes a.out and will require changes for ELF if the output
+# format is changed to ELF.
 ${LOADER}: ${LOADERBIN} ${BTXLDR} ${BTXKERN}
 	btxld -v -f aout -e ${LOADER_ADDRESS} -o ${.TARGET} -l ${BTXLDR} \
 	    -b ${BTXKERN} ${LOADERBIN}

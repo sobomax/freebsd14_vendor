@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 5cc611fef25f4550b51e4862c6e3cedb313a09c3 $*/
+/*$FreeBSD: b489388c68a8a23ae06f83056fe83d4023568f54 $*/
 
 #ifndef _ICE_LAN_TX_RX_H_
 #define _ICE_LAN_TX_RX_H_
@@ -948,10 +948,10 @@ struct ice_tx_ctx_desc {
 	__le64 qw1;
 };
 
-#define ICE_TX_GSC_DESC_START	0  /* 7 BITS */
-#define ICE_TX_GSC_DESC_OFFSET	7  /* 4 BITS */
-#define ICE_TX_GSC_DESC_TYPE	11 /* 2 BITS */
-#define ICE_TX_GSC_DESC_ENA	13 /* 1 BIT */
+#define ICE_TX_GCS_DESC_START	0  /* 7 BITS */
+#define ICE_TX_GCS_DESC_OFFSET	7  /* 4 BITS */
+#define ICE_TX_GCS_DESC_TYPE	11 /* 2 BITS */
+#define ICE_TX_GCS_DESC_ENA	13 /* 1 BIT */
 
 #define ICE_TXD_CTX_QW1_DTYPE_S	0
 #define ICE_TXD_CTX_QW1_DTYPE_M	(0xFUL << ICE_TXD_CTX_QW1_DTYPE_S)

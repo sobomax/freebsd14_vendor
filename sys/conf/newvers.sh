@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: bf8af719c5390967be41484ddfecbc624e461a14 $
+# $FreeBSD: e2d05fc79aeb3a5b39cff806a3513facb992977b $
 
 # Command line options:
 #
@@ -53,8 +53,8 @@
 #
 
 TYPE="FreeBSD"
-REVISION="13.1"
-BRANCH="RELEASE-p8"
+REVISION="13.2"
+BRANCH="RELEASE-p1"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi
@@ -127,7 +127,7 @@ while getopts crRvV: opt; do
 		v=$OPTARG
 		eval val=\$${v}
 		echo ${v}=\"${val}\"
-		VARS_ONLY=1
+		VARS_ONLY_EXIT=1
 		;;
 	esac
 done
@@ -136,6 +136,10 @@ shift $((OPTIND - 1))
 # VARS_ONLY means no files should be generated, this is just being
 # included.
 [ -n "$VARS_ONLY" ] && return 0
+
+# VARS_ONLY_EXIT means no files should be generated, only the value of
+# variables are being output.
+[ -n "$VARS_ONLY_EXIT" ] && exit 0
 
 #
 # findvcs dir

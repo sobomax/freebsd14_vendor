@@ -1,4 +1,4 @@
-# $FreeBSD: 0e5d24bd0ec54a739f81fef467d43f23a336f0bf $
+# $FreeBSD: 7991e1964995bef94f79ec22a8d617295a0ff30e $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -30,6 +30,7 @@ ATOMIC_SRCS=	opensolaris_atomic.c
 PICFLAG=	-fPIC
 .endif
 
+PACKAGE=	zfs
 LIB=		zpool
 
 USER_C = \

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: e4239feba178470f175300f4a40fa414fa1f7322 $");
+__FBSDID("$FreeBSD: 343710cfbb16f02abf895c963f62de4bef32556c $");
 
 DEFINE_TEST(test_archive_api_feature)
 {
@@ -32,7 +32,7 @@ DEFINE_TEST(test_archive_api_feature)
 
 	/* This is the (hopefully) final versioning API. */
 	assertEqualInt(ARCHIVE_VERSION_NUMBER, archive_version_number());
-	sprintf(buff, "libarchive %d.%d.%d",
+	snprintf(buff, sizeof(buff), "libarchive %d.%d.%d",
 	    archive_version_number() / 1000000,
 	    (archive_version_number() / 1000) % 1000,
 	    archive_version_number() % 1000);

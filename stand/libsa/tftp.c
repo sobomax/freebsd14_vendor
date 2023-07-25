@@ -32,12 +32,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3f3048e025784cecbd283a9ed9130b4a11b8fb9 $");
+__FBSDID("$FreeBSD: 903537b4bbe5999a45e86570730792f9763bbeeb $");
 
 /*
  * Simple TFTP implementation for libsa.
  * Assumes:
- *  - socket descriptor (int) at open_file->f_devdata
+ *  - socket descriptor (int) at dev->d_opendata, dev stored at
+ *	open_file->f_devdata
  *  - server host IP in global rootip
  * Restrictions:
  *  - read only
@@ -54,7 +55,6 @@ __FBSDID("$FreeBSD: d3f3048e025784cecbd283a9ed9130b4a11b8fb9 $");
 
 #include <string.h>
 
-#include <bootstrap.h>
 #include "stand.h"
 #include "net.h"
 #include "netif.h"
@@ -443,6 +443,7 @@ tftp_getnextblock(struct tftp_handle *h)
 static int
 tftp_open(const char *path, struct open_file *f)
 {
+	struct devdesc *dev;
 	struct tftp_handle *tftpfile;
 	struct iodesc	*io;
 	int		res;
@@ -463,7 +464,8 @@ tftp_open(const char *path, struct open_file *f)
 		return (ENOMEM);
 
 	tftpfile->tftp_blksize = TFTP_REQUESTED_BLKSIZE;
-	tftpfile->iodesc = io = socktodesc(*(int *)(f->f_devdata));
+	dev = f->f_devdata;
+	tftpfile->iodesc = io = socktodesc(*(int *)(dev->d_opendata));
 	if (io == NULL) {
 		free(tftpfile);
 		return (EINVAL);

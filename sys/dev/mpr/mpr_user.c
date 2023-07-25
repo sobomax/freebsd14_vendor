@@ -58,11 +58,11 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: 08c2b8b39244e2fe3ada0ec95fea52684e92f97b $
+ * $FreeBSD: d04aaa24ea0b87e2d3ff1d1f02fdea1fb4347ea5 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 08c2b8b39244e2fe3ada0ec95fea52684e92f97b $");
+__FBSDID("$FreeBSD: d04aaa24ea0b87e2d3ff1d1f02fdea1fb4347ea5 $");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>
@@ -1311,7 +1311,7 @@ mpr_post_fw_diag_buffer(struct mpr_softc *sc,
 	reply = (MPI2_DIAG_BUFFER_POST_REPLY *)cm->cm_reply;
 	if (reply == NULL) {
 		mpr_printf(sc, "%s: reply is NULL, probably due to "
-		    "reinitialization", __func__);
+		    "reinitialization\n", __func__);
 		status = MPR_DIAG_FAILURE;
 		goto done;
 	}
@@ -1405,7 +1405,7 @@ mpr_release_fw_diag_buffer(struct mpr_softc *sc,
 	reply = (MPI2_DIAG_RELEASE_REPLY *)cm->cm_reply;
 	if (reply == NULL) {
 		mpr_printf(sc, "%s: reply is NULL, probably due to "
-		    "reinitialization", __func__);
+		    "reinitialization\n", __func__);
 		status = MPR_DIAG_FAILURE;
 		goto done;
 	}

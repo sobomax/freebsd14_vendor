@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67ac879d62c294e67b5bb76186ce19f074e4c156 $");
+__FBSDID("$FreeBSD: 9ee052c7c1ef1b5e65cd82936e88f845143de60d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,10 +209,8 @@ endofchecks:
 	g_label_rtrim(label, size);
 
 error:
-	if (sector0 != NULL)
-		g_free(sector0);
-	if (sector != NULL)
-		g_free(sector);
+	g_free(sector0);
+	g_free(sector);
 }
 
 struct g_label_desc g_label_msdosfs = {

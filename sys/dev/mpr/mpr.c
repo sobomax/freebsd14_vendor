@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe8ca620b7c830d1cd99a70a7c958a2562e35619 $");
+__FBSDID("$FreeBSD: c105174b0e211fa9ce79380e17da8f40529d248c $");
 
 /* Communications core for Avago Technologies (LSI) MPT3 */
 
@@ -740,7 +740,7 @@ mpr_iocfacts_allocate(struct mpr_softc *sc, uint8_t attaching)
 	 * XXX If the number of MSI-X vectors changes during re-init, this
 	 * won't see it and adjust.
 	 */
-	if (attaching && (error = mpr_pci_setup_interrupts(sc)) != 0) {
+	if ((attaching || reallocating) && (error = mpr_pci_setup_interrupts(sc)) != 0) {
 		mpr_dprint(sc, MPR_INIT|MPR_ERROR,
 		    "Failed to setup interrupts\n");
 		mpr_free(sc);

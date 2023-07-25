@@ -35,7 +35,7 @@ static char *sccsid2 = "@(#)auth_none.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)auth_none.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91597114c069e8b250c54c98ea64ead97cc58dfb $");
+__FBSDID("$FreeBSD: 87614a6b3880ad59d699778dcc1448599ff3e3fd $");
 
 /*
  * auth_none.c
@@ -103,7 +103,7 @@ authnone_init(void *dummy)
 SYSINIT(authnone_init, SI_SUB_KMEM, SI_ORDER_ANY, authnone_init, NULL);
 
 AUTH *
-authnone_create()
+authnone_create(void)
 {
 	struct authnone_private *ap = &authnone_private;
 

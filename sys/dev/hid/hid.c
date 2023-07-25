@@ -1,4 +1,4 @@
-/* $FreeBSD: f201182ac20faf42b879c447a3df8384aa5f8df2 $ */
+/* $FreeBSD: bd5fc79ff0d939816efb8a991d6e1341ddd02cc2 $ */
 /*	$NetBSD: hid.c,v 1.17 2001/11/13 06:24:53 lukem Exp $	*/
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
@@ -1075,6 +1075,12 @@ int
 hid_set_protocol(device_t dev, uint16_t protocol)
 {
 	return (HID_SET_PROTOCOL(device_get_parent(dev), protocol));
+}
+
+int
+hid_ioctl(device_t dev, unsigned long cmd, uintptr_t data)
+{
+	return (HID_IOCTL(device_get_parent(dev), cmd, data));
 }
 
 MODULE_VERSION(hid, 1);

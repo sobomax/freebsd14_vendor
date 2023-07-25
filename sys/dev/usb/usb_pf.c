@@ -1,4 +1,4 @@
-/* $FreeBSD: 6ccb5ebbc62b71a0df796b540c99805846bc6c10 $ */
+/* $FreeBSD: 0b7d1f9a02a03098d393b83089a95ba60fb66bfe $ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -203,7 +203,7 @@ usbpf_clone_create(struct if_clone *ifc, char *name, size_t len, caddr_t params)
 	ifp->if_ioctl = usbpf_ioctl;
 	if_attach(ifp);
 	ifp->if_flags |= IFF_UP;
-	rt_ifmsg(ifp);
+	rt_ifmsg_14(ifp, IFF_UP);
 	/*
 	 * XXX According to the specification of DLT_USB, it indicates
 	 * packets beginning with USB setup header. But not sure all

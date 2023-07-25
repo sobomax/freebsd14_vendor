@@ -2,8 +2,8 @@
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
  * Copyright (c) 2006 Roman Divacky
- * Copyright (c) 2013 Dmitry Chagin
  * All rights reserved.
+ * Copyright (c) 2013 Dmitry Chagin <dchagin@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: de66a7a4c82ae48308e5209133acb78be9112294 $
+ * $FreeBSD: fde97c01895f3b2692048b7b383119f6fc7e4eb2 $
  */
 
 #ifndef _LINUX_EMUL_H_
@@ -51,12 +51,11 @@ struct linux_emuldata {
 struct linux_emuldata	*em_find(struct thread *);
 
 int	linux_exec_imgact_try(struct image_params *);
-void	linux_proc_init(struct thread *, struct thread *, int);
+void	linux_proc_init(struct thread *, struct thread *, bool);
 void	linux_on_exit(struct proc *);
 void	linux_schedtail(struct thread *);
 void	linux_on_exec(struct proc *, struct image_params *);
 void	linux_thread_dtor(struct thread *);
-void	linux_thread_detach(struct thread *);
 int	linux_common_execve(struct thread *, struct image_args *);
 
 /* process emuldata flags */
@@ -70,6 +69,9 @@ struct linux_pemuldata {
 	struct sx	pem_sx;		/* lock for this struct */
 	uint32_t	persona;	/* process execution domain */
 	uint32_t	ptrace_flags;	/* used by ptrace(2) */
+	uint32_t	oom_score_adj;	/* /proc/self/oom_score_adj */
+	uint32_t	so_timestamp;	/* requested timeval */
+	uint32_t	so_timestampns;	/* requested timespec */
 };
 
 #define	LINUX_PEM_XLOCK(p)	sx_xlock(&(p)->pem_sx)

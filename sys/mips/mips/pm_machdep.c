@@ -38,12 +38,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d8cf4e1023d1836cc6b9179febe2bf67b1d0919 $");
+__FBSDID("$FreeBSD: 9fcbef14f60653ce6b966fe2485a3fece78c4a1d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/sysent.h>
 #include <sys/proc.h>
+#include <sys/reg.h>
 #include <sys/signalvar.h>
 #include <sys/exec.h>
 #include <sys/ktr.h>
@@ -62,7 +63,6 @@ __FBSDID("$FreeBSD: 8d8cf4e1023d1836cc6b9179febe2bf67b1d0919 $");
 #include <sys/uio.h>
 #include <machine/abi.h>
 #include <machine/cpuinfo.h>
-#include <machine/reg.h>
 #include <machine/md_var.h>
 #include <machine/sigframe.h>
 #include <machine/tls.h>
@@ -175,7 +175,8 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	/*
 	 * Signal trampoline code is at base of user stack.
 	 */
-	regs->ra = (register_t)(intptr_t)PS_STRINGS - *(p->p_sysent->sv_szsigcode);
+	regs->ra = (register_t)(intptr_t)PROC_PS_STRINGS(p) -
+	    *(p->p_sysent->sv_szsigcode);
 	PROC_LOCK(p);
 	mtx_lock(&psp->ps_mtx);
 }

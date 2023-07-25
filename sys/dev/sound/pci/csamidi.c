@@ -54,7 +54,7 @@
 
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: 21543e736e9f0000ccdbe210160fd700f32ebf8f $");
+SND_DECLARE_FILE("$FreeBSD: a013f8d9f3e67975dc995afab553520f159a8d9c $");
 
 /* pulled from mpu401.c */
 #define	MPU_DATAPORT	0
@@ -202,11 +202,9 @@ static int
 midicsa_attach(device_t dev)
 {
 	struct csa_midi_softc *scp;
-	struct sndcard_func *func;
 	int rc = ENXIO;
 
 	scp = device_get_softc(dev);
-	func = device_get_ivars(dev);
 
 	bzero(scp, sizeof(struct csa_midi_softc));
 	scp->dev = dev;

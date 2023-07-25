@@ -24,14 +24,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a2b96b64f456b41f66a171a593c790b5dcf1ed0 $");
+__FBSDID("$FreeBSD: d0c6535143660ccbb2234e8e9d97763ad1747f04 $");
 
 #include <efi.h>
 #include <efilib.h>
 
 /*
  * CHAR16 related functions moved from loader.
- * Perhaps we should move those to libstand afterall, but they are
+ * Perhaps we should move those to libsa afterall, but they are
  * needed only by UEFI.
  */
 

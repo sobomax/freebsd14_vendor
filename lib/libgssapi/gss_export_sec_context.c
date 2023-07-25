@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: c94e81a9a8446aa36252084b053b6f4161c2cd71 $
+ *	$FreeBSD: d5963231dbfbd94b476cdd4067d93662893b39c5 $
  */
 
 #include <gssapi/gssapi.h>
@@ -51,7 +51,7 @@ gss_export_sec_context(OM_uint32 *minor_status,
 
 	major_status = m->gm_export_sec_context(minor_status,
 	    &ctx->gc_ctx, &buf);
-	
+
 	if (major_status == GSS_S_COMPLETE) {
 		unsigned char *p;
 

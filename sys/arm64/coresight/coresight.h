@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a3aa71cb207fc896aaf061aeb86c2aa1848e3524 $
+ * $FreeBSD: adbf17ce08dffe51318df902cfe384011d03c8c1 $
  */
 
 #ifndef	_ARM64_CORESIGHT_CORESIGHT_H_
@@ -37,6 +37,7 @@
 #include "opt_platform.h"
 
 #include <sys/bus.h>
+#include <sys/malloc.h>
 
 #ifdef FDT
 #include <dev/ofw/openfirm.h>

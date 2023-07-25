@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aca0830c158bd120fd1ecb78126744762cd3be59 $");
+__FBSDID("$FreeBSD: 494a527d190b4bb250a8cde7fb0bd908cdf27228 $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -255,7 +255,8 @@ main(int ac, char **av)
 	if (tty) {
 		if (strncmp(tty, "/dev/", 5) == 0)
 			snprintf(buf, sizeof(buf), "%s", tty);
-		else if (strncmp(tty, "tty", 3) == 0)
+		else if (strncmp(tty, "tty", 3) == 0 ||
+		    strncmp(tty, "pts/", 4) == 0)
 			snprintf(buf, sizeof(buf), "/dev/%s", tty);
 		else
 			snprintf(buf, sizeof(buf), "/dev/tty%s", tty);

@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)uuencode.c	8.2 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 05ead32c7183552e342d6c8224a6346e618f02ab $");
+__FBSDID("$FreeBSD: b5eff44f16519d0b9b73c55742c91574b8319f26 $");
 
 /*
  * uuencode [input] output
@@ -58,6 +58,7 @@ __FBSDID("$FreeBSD: 05ead32c7183552e342d6c8224a6346e618f02ab $");
 #include <libgen.h>
 #include <resolv.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -68,18 +69,18 @@ static void usage(void);
 
 static FILE *output;
 static int mode;
-static char raw = 0;
+static bool raw;
 static char **av;
 
 int
 main(int argc, char *argv[])
 {
 	struct stat sb;
-	int base64;
+	bool base64;
 	int ch;
 	const char *outfile;
 
-	base64 = 0;
+	base64 = false;
 	outfile = NULL;
 
 	if (strcmp(basename(argv[0]), "b64encode") == 0)
@@ -88,13 +89,13 @@ main(int argc, char *argv[])
 	while ((ch = getopt(argc, argv, "mo:r")) != -1) {
 		switch (ch) {
 		case 'm':
-			base64 = 1;
+			base64 = true;
 			break;
 		case 'o':
 			outfile = optarg;
 			break;
 		case 'r':
-			raw = 1;
+			raw = true;
 			break;
 		case '?':
 		default:
@@ -104,7 +105,7 @@ main(int argc, char *argv[])
 	argv += optind;
 	argc -= optind;
 
-	switch(argc) {
+	switch (argc) {
 	case 2:			/* optional first argument is input file */
 		if (!freopen(*argv, "r", stdin) || fstat(fileno(stdin), &sb))
 			err(1, "%s", *argv);
@@ -179,8 +180,8 @@ base64_encode(void)
 static void
 encode(void)
 {
-	register int ch, n;
-	register char *p;
+	int ch, n;
+	char *p;
 	char buf[80];
 
 	if (!raw)

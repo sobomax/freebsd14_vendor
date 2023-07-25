@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 521ad498b19403388dd6278e4da6c19c403c8130 $");
+__FBSDID("$FreeBSD: 5c08a524b4d364d462d50e2afc789001f3ef0d9b $");
 
 #include <stand.h>
 #include <stdarg.h>
@@ -52,7 +52,9 @@ struct devsw vdisk_dev = {
 	.dv_close = vdisk_close,
 	.dv_ioctl = vdisk_ioctl,
 	.dv_print = vdisk_print,
-	.dv_cleanup = NULL
+	.dv_cleanup = nullsys,
+	.dv_fmtdev = disk_fmtdev,
+	.dv_parsedev = disk_parsedev,
 };
 
 typedef STAILQ_HEAD(vdisk_info_list, vdisk_info) vdisk_info_list_t;

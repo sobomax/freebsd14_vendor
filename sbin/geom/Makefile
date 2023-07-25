@@ -1,10 +1,10 @@
-# $FreeBSD: 0c6e6e2b95c8cdae3248733a721c53dd56908f2c $
+# $FreeBSD: 4424c757371fedb81544984af7dbd3db8f3a223a $
 
 .include <src.opts.mk>
 
 .PATH: ${.CURDIR}/core ${.CURDIR}/misc
 
-PACKAGE=runtime
+PACKAGE=geom
 PROG=		geom
 SRCS=		geom.c subr.c
 MAN=		geom.8

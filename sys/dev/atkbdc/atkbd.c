@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cee1207df973d1b6735ff92889bc7cb0ce16ac3c $");
+__FBSDID("$FreeBSD: cfaf7749a64c414adae6d7e90c20137e10351d4f $");
 
 #include "opt_kbd.h"
 #include "opt_atkbd.h"
@@ -684,6 +684,16 @@ next_code:
 #ifdef EVDEV_SUPPORT
 	/* push evdev event */
 	if (evdev_rcpt_mask & EVDEV_RCPT_HW_KBD && state->ks_evdev != NULL) {
+		/* "hancha" and "han/yong" korean keys handling */
+		if (state->ks_evdev_state == 0 &&
+		    (scancode == 0xF1 || scancode == 0xF2)) {
+			keycode = evdev_scancode2key(&state->ks_evdev_state,
+				scancode & 0x7F);
+			evdev_push_event(state->ks_evdev, EV_KEY,
+			    (uint16_t)keycode, 1);
+			evdev_sync(state->ks_evdev);
+		}
+
 		keycode = evdev_scancode2key(&state->ks_evdev_state,
 		    scancode);
 
@@ -693,6 +703,9 @@ next_code:
 			evdev_sync(state->ks_evdev);
 		}
 	}
+
+	if (state->ks_evdev != NULL && evdev_is_grabbed(state->ks_evdev))
+		return (NOKEY);
 #endif
 
 	/* return the byte as is for the K_RAW mode */
@@ -1078,6 +1091,7 @@ atkbd_ioctl(keyboard_t *kbd, u_long cmd, caddr_t arg)
 	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
 	case PIO_KEYMAPENT:	/* set keyboard translation table entry */
 	case PIO_DEADKEYMAP:	/* set accent key translation table */
+	case OPIO_DEADKEYMAP:	/* set accent key translation table (compat) */
 		state->ks_accents = 0;
 		/* FALLTHROUGH */
 	default:

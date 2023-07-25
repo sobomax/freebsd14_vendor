@@ -178,7 +178,7 @@ tags = ['functional', 'cli_root', 'zfs_destroy']
 
 [tests/functional/cli_root/zfs_diff]
 tests = ['zfs_diff_changes', 'zfs_diff_cliargs', 'zfs_diff_timestamp',
-    'zfs_diff_types', 'zfs_diff_encrypted']
+    'zfs_diff_types', 'zfs_diff_encrypted', 'zfs_diff_mangle']
 tags = ['functional', 'cli_root', 'zfs_diff']
 
 [tests/functional/cli_root/zfs_get]
@@ -747,7 +747,8 @@ tags = ['functional', 'raidz']
 
 [tests/functional/redundancy]
 tests = ['redundancy_draid', 'redundancy_draid1', 'redundancy_draid2',
-    'redundancy_draid3', 'redundancy_draid_damaged', 'redundancy_draid_spare1',
+    'redundancy_draid3', 'redundancy_draid_damaged1',
+    'redundancy_draid_damaged2', 'redundancy_draid_spare1',
     'redundancy_draid_spare2', 'redundancy_draid_spare3', 'redundancy_mirror',
     'redundancy_raidz', 'redundancy_raidz1', 'redundancy_raidz2',
     'redundancy_raidz3', 'redundancy_stripe']
@@ -821,13 +822,14 @@ tests = ['recv_dedup', 'recv_dedup_encrypted_zvol', 'rsend_001_pos',
     'send-c_lz4_disabled', 'send-c_recv_lz4_disabled',
     'send-c_mixed_compression', 'send-c_stream_size_estimate',
     'send-c_embedded_blocks', 'send-c_resume', 'send-cpL_varied_recsize',
-    'send-c_recv_dedup', 'send-L_toggle', 'send_encrypted_hierarchy',
+    'send-c_recv_dedup', 'send-L_toggle',
+    'send_encrypted_incremental.ksh', 'send_encrypted_hierarchy',
     'send_encrypted_props', 'send_encrypted_truncated_files',
     'send_freeobjects', 'send_realloc_files',
     'send_realloc_encrypted_files', 'send_spill_block', 'send_holds',
     'send_hole_birth', 'send_mixed_raw', 'send-wR_encrypted_zvol',
     'send_partial_dataset', 'send_invalid', 'send_doall',
-    'send_raw_spill_block', 'send_raw_ashift']
+    'send_raw_spill_block', 'send_raw_ashift', 'send_raw_large_blocks']
 tags = ['functional', 'rsend']
 
 [tests/functional/scrub_mirror]
@@ -891,7 +893,7 @@ tests = [
     'userquota_007_pos', 'userquota_008_pos', 'userquota_009_pos',
     'userquota_010_pos', 'userquota_011_pos', 'userquota_012_neg',
     'userspace_001_pos', 'userspace_002_pos', 'userspace_encrypted',
-    'userspace_send_encrypted']
+    'userspace_send_encrypted', 'userspace_encrypted_13709']
 tags = ['functional', 'userquota']
 
 [tests/functional/vdev_zaps]

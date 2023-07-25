@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 07a4103bd71673cd0648712f60f7ebdaeaa77ee6 $
+ * $FreeBSD: 55e51cee14d8804de0ac998f9e25cba0754a3a45 $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -35,7 +35,6 @@
 
 #include <machine/frame.h>
 #include <machine/md_var.h>
-#include <machine/reg.h>
 #include <machine/stack.h>
 #include <x86/ifunc.h>
 
@@ -502,11 +501,7 @@ dtrace_getreg(struct trapframe *rp, uint_t reg)
 		REG_SS		/* 18 SS */
 	};
 
-#ifdef illumos
-	if (reg <= SS) {
-#else	/* !illumos */
 	if (reg <= GS) {
-#endif
 		if (reg >= sizeof (regmap) / sizeof (int)) {
 			DTRACE_CPUFLAG_SET(CPU_DTRACE_ILLOP);
 			return (0);
@@ -515,11 +510,7 @@ dtrace_getreg(struct trapframe *rp, uint_t reg)
 		reg = regmap[reg];
 	} else {
 		/* This is dependent on reg.d. */
-#ifdef illumos
-		reg -= SS + 1;
-#else	/* !illumos */
 		reg -= GS + 1;
-#endif
 	}
 
 	switch (reg) {

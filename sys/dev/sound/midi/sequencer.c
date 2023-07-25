@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c80b3ec261c5ffac0fda2f3300ccfc0dd181cda $");
+__FBSDID("$FreeBSD: a351cca899995d14999d30805c0eb304be32df3d $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1092,7 +1092,7 @@ mseq_write(struct cdev *i_dev, struct uio *uio, int ioflag)
 				/*
 			         * For now, try to make midimoutain work by
 			         * forcing these events to be processed
-				 * immediatly.
+				 * immediately.
 			         */
 				seq_processevent(scp, event);
 			} else

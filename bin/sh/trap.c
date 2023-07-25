@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)trap.c	8.5 (Berkeley) 6/5/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7ef402742704583957b97d66f3555c10e61d378 $");
+__FBSDID("$FreeBSD: 2dd394035ca480b1ab4756263f0a0864eb40a30b $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -535,6 +535,9 @@ exitshell_savedstatus(void)
 		flushall();
 #if JOBS
 		setjobctl(0);
+#endif
+#ifndef NO_HISTORY
+		histsave();
 #endif
 	}
 	if (sig != 0 && sig != SIGSTOP && sig != SIGTSTP && sig != SIGTTIN &&

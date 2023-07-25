@@ -1,6 +1,6 @@
-# $FreeBSD: 767924b78b61553615d61b6ec84a1c1aa69ed5dc $
+# $FreeBSD: 9f2b9c5e24f8056d00d4c4c146a3641f73b4f9a7 $
 
-PACKAGE=runtime
+PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc
 
 GEOM_CLASS=	label

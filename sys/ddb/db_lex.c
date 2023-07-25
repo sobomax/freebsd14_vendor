@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 457790ee8605ab867eb8f7d197a4b8958500c161 $");
+__FBSDID("$FreeBSD: 093afa2238b6fc0fc350597be4d70aec27a7243b $");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -91,7 +91,7 @@ db_get_line(void)
 }
 
 static void
-db_flush_line()
+db_flush_line(void)
 {
 	db_lp = db_line;
 	db_endlp = db_line;

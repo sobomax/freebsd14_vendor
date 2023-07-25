@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e97e98180b5350640eb1f102f16790ebf1fecdc2 $");
+__FBSDID("$FreeBSD: 4d8bf0477abe9a43d27fe241bf96d72cb8a90b48 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -291,7 +291,7 @@ geode_probe(device_t self)
 			tc_init(&geode_timecounter);
 			EVENTHANDLER_REGISTER(watchdog_list, geode_watchdog,
 			    NULL, 0);
-			set_cputicker(geode_cputicks, 27000000, 0);
+			set_cputicker(geode_cputicks, 27000000, false);
 		}
 		break;
 	case 0x0510100b:

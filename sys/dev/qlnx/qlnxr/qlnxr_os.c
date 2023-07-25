@@ -29,7 +29,7 @@
  * File: qlnxr_os.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62c0f2091d2f5c5cb3c8d0388d19d0cb08aee124 $");
+__FBSDID("$FreeBSD: 22d968ce23679b2c976909bd494ab869714ea615 $");
 
 #include "qlnxr_def.h"
 
@@ -1293,7 +1293,7 @@ qlnxr_mod_load(void)
 
 	ret = qlnx_rdma_register_if(&qlnxr_drv);
 
-	return (0);
+	return (ret);
 }
 
 static int

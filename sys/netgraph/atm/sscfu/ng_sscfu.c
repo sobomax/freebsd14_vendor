@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7fe3728b7eaeac8d9575a5716b386c09a6a261ed $");
+__FBSDID("$FreeBSD: 4811f576df0bffdaaf40c87f5bae948f4061c423 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -535,6 +535,8 @@ static int
 ng_sscfu_constructor(node_p node)
 {
 	struct priv *priv;
+
+	gone_in(14, "ng_sscfu: netgraph ATM modules");
 
 	priv = malloc(sizeof(*priv), M_NG_SSCFU, M_WAITOK | M_ZERO);
 

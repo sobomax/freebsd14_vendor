@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a7f98ee222a2fb174de76d3f23a69f60219467e $
+ * $FreeBSD: 5f735152e92cd5e838a31f3eec145e0f52ca7f1f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a7f98ee222a2fb174de76d3f23a69f60219467e $");
+__FBSDID("$FreeBSD: 5f735152e92cd5e838a31f3eec145e0f52ca7f1f $");
 
 #include <sys/types.h>
 
@@ -49,7 +49,8 @@ __FBSDID("$FreeBSD: 1a7f98ee222a2fb174de76d3f23a69f60219467e $");
 static int cpu_vendor_intel, cpu_vendor_amd, cpu_vendor_hygon;
 
 int
-emulate_wrmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t val)
+emulate_wrmsr(struct vmctx *ctx __unused, int vcpu __unused, uint32_t num,
+    uint64_t val __unused)
 {
 
 	if (cpu_vendor_intel) {
@@ -103,7 +104,8 @@ emulate_wrmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t val)
 }
 
 int
-emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
+emulate_rdmsr(struct vmctx *ctx __unused, int vcpu __unused, uint32_t num,
+    uint64_t *val)
 {
 	int error = 0;
 
@@ -115,6 +117,7 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 		case MSR_PP0_ENERGY_STATUS:
 		case MSR_PP1_ENERGY_STATUS:
 		case MSR_DRAM_ENERGY_STATUS:
+		case MSR_MISC_FEATURE_ENABLES:
 			*val = 0;
 			break;
 		case MSR_RAPL_POWER_UNIT:

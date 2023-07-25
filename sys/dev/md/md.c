@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: f44a2e940faadbf1c5aeb5458bf361eb19d1a8f0 $
+ * $FreeBSD: 2e941c991ddb3bf8c1c35d542217910fe2be3940 $
  *
  */
 
@@ -911,11 +911,13 @@ mdstart_vnode(struct md_s *sc, struct bio *bp)
 	 */
 
 	if (bp->bio_cmd == BIO_FLUSH) {
-		(void) vn_start_write(vp, &mp, V_WAIT);
-		vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
-		error = VOP_FSYNC(vp, MNT_WAIT, td);
-		VOP_UNLOCK(vp);
-		vn_finished_write(mp);
+		do {
+			(void)vn_start_write(vp, &mp, V_WAIT);
+			vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
+			error = VOP_FSYNC(vp, MNT_WAIT, td);
+			VOP_UNLOCK(vp);
+			vn_finished_write(mp);
+		} while (error == ERELOOKUP);
 		return (error);
 	}
 

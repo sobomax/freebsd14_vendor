@@ -1,4 +1,4 @@
-# $FreeBSD: ade2dc962aa297cdaded8f6c4625cd98961484f8 $
+# $FreeBSD: 99da16d065097c6c9c47e3602235fcf9e8943100 $
 # This makefiles adds the necessary libc dependencies for RTLD without pulling
 # in all of the complex libc bits such as locales, etc.
 
@@ -66,8 +66,6 @@ _libc_other_objects+=syncicache abs
 # ppc64 needs __syncicache for reloc.c
 _libc_other_objects+=syncicache
 .endif
-
-_libc_other_objects+=_get_tp
 
 # Extract all the .o files from libc_nossp_pic.a. This ensures that
 # we don't accidentally pull in the interposing table or similar by linking

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2432d1911493c45f43d7358e24aed20d6ea7f1a4 $");
+__FBSDID("$FreeBSD: 0f23a277ce8e473899fac7f64dc6c6bf339d1a5d $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -249,8 +249,7 @@ g_part_bsd_destroy(struct g_part_table *basetable, struct g_part_parms *gpp)
 	struct g_part_bsd_table *table;
 
 	table = (struct g_part_bsd_table *)basetable;
-	if (table->bbarea != NULL)
-		g_free(table->bbarea);
+	g_free(table->bbarea);
 	table->bbarea = NULL;
 
 	/* Wipe the second sector to clear the partitioning. */

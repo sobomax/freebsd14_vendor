@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 21bb3ccf88f605ee534b20472659c4efaa3af010 $
+ * $FreeBSD: 6dbb988814ea45a2570c5d114b79cc14271ff389 $
  */
 
 const char *linux_syscallnames[] = {
@@ -200,7 +200,7 @@ const char *linux_syscallnames[] = {
 	"linux_semget",			/* 190 = linux_semget */
 	"linux_semctl",			/* 191 = linux_semctl */
 	"linux_semtimedop",			/* 192 = linux_semtimedop */
-	"linux_semop",			/* 193 = linux_semop */
+	"semop",			/* 193 = semop */
 	"linux_shmget",			/* 194 = linux_shmget */
 	"linux_shmctl",			/* 195 = linux_shmctl */
 	"linux_shmat",			/* 196 = linux_shmat */

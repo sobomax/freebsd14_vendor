@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 88b036a9cc24e98753979876b3a3f7c62eda2dbf $
+ * $FreeBSD: d4fa7668b5f372ee79b1a2c66da961e8cd70b105 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -36,6 +36,7 @@
 
 #include <x86/x86_var.h>
 
+extern	u_int	cpu_fxsr;
 extern	u_int	cyrix_did;
 #if defined(I586_CPU) && !defined(NO_F00F_HACK)
 extern	int	has_f00f_bug;

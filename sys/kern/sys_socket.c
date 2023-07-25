@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8ac24a048093e70ae877c1d4a161aaf487a8f635 $");
+__FBSDID("$FreeBSD: f8857d3953d4b9c5e333cc400ba9928dda7f2224 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -382,17 +382,19 @@ soo_fill_kinfo(struct file *fp, struct kinfo_file *kif, struct filedesc *fdp)
 	switch (kif->kf_un.kf_sock.kf_sock_domain0) {
 	case AF_INET:
 	case AF_INET6:
-		if (kif->kf_un.kf_sock.kf_sock_protocol0 == IPPROTO_TCP) {
-			if (so->so_pcb != NULL) {
-				inpcb = (struct inpcb *)(so->so_pcb);
-				kif->kf_un.kf_sock.kf_sock_inpcb =
-				    (uintptr_t)inpcb->inp_ppcb;
-				kif->kf_un.kf_sock.kf_sock_sendq =
-				    sbused(&so->so_snd);
-				kif->kf_un.kf_sock.kf_sock_recvq =
-				    sbused(&so->so_rcv);
-			}
+		if (so->so_pcb != NULL) {
+			inpcb = (struct inpcb *)(so->so_pcb);
+			kif->kf_un.kf_sock.kf_sock_inpcb =
+			    (uintptr_t)inpcb->inp_ppcb;
 		}
+		kif->kf_un.kf_sock.kf_sock_rcv_sb_state =
+		    so->so_rcv.sb_state;
+		kif->kf_un.kf_sock.kf_sock_snd_sb_state =
+		    so->so_snd.sb_state;
+		kif->kf_un.kf_sock.kf_sock_sendq =
+		    sbused(&so->so_snd);
+		kif->kf_un.kf_sock.kf_sock_recvq =
+		    sbused(&so->so_rcv);
 		break;
 	case AF_UNIX:
 		if (so->so_pcb != NULL) {

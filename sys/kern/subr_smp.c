@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a677075937e67f1cdd9f3fbb6c1019f7ccc81c61 $");
+__FBSDID("$FreeBSD: 7b250aeccc567b0390bda7c5ff3bb5e01eff8960 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -125,11 +125,11 @@ static void (*volatile smp_rv_teardown_func)(void *arg);
 static void *volatile smp_rv_func_arg;
 static volatile int smp_rv_waiters[4];
 
-/* 
+/*
  * Shared mutex to restrict busywaits between smp_rendezvous() and
  * smp(_targeted)_tlb_shootdown().  A deadlock occurs if both of these
  * functions trigger at once and cause multiple CPUs to busywait with
- * interrupts disabled. 
+ * interrupts disabled.
  */
 struct mtx smp_ipi_mtx;
 
@@ -148,6 +148,8 @@ mp_setmaxid(void *dummy)
 	KASSERT(mp_maxid >= mp_ncpus - 1,
 	    ("%s: counters out of sync: max %d, count %d", __func__,
 		mp_maxid, mp_ncpus));
+
+	cpusetsizemin = howmany(mp_maxid + 1, NBBY);
 }
 SYSINIT(cpu_mp_setmaxid, SI_SUB_TUNABLES, SI_ORDER_FIRST, mp_setmaxid, NULL);
 
@@ -332,7 +334,7 @@ suspend_cpus(cpuset_t map)
 #endif
 
 /*
- * Called by a CPU to restart stopped CPUs. 
+ * Called by a CPU to restart stopped CPUs.
  *
  * Usually (but not necessarily) called with 'stopped_cpus' as its arg.
  *
@@ -435,7 +437,7 @@ resume_cpus(cpuset_t map)
 #undef X86
 
 /*
- * All-CPU rendezvous.  CPUs are signalled, all execute the setup function 
+ * All-CPU rendezvous.  CPUs are signalled, all execute the setup function
  * (if specified), rendezvous, execute the action function (if specified),
  * rendezvous again, execute the teardown function (if specified), and then
  * resume.
@@ -500,8 +502,8 @@ smp_rendezvous_action(void)
 	 * function before moving on to the action function.
 	 */
 	if (local_setup_func != smp_no_rendezvous_barrier) {
-		if (smp_rv_setup_func != NULL)
-			smp_rv_setup_func(smp_rv_func_arg);
+		if (local_setup_func != NULL)
+			local_setup_func(local_func_arg);
 		atomic_add_int(&smp_rv_waiters[1], 1);
 		while (smp_rv_waiters[1] < smp_rv_ncpus)
                 	cpu_spinwait();

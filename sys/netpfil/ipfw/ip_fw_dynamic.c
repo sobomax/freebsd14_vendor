@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a76e8b1ac667da173a47e02c231aa02de8243b32 $");
+__FBSDID("$FreeBSD: 3b96a9ac019f460366e796a86e95a0f27d62a9d0 $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1851,7 +1851,7 @@ dyn_get_parent_state(const struct ipfw_flow_id *pkt, uint32_t zoneid,
 	/*
 	 * We must exit from critical section because the following code
 	 * can acquire bucket mutex.
-	 * We rely on the the 'count' field. The state will not expire
+	 * We rely on the 'count' field. The state will not expire
 	 * until it has some child states, i.e. 'count' field is not zero.
 	 * Return state pointer, it will be used by child states as parent.
 	 */

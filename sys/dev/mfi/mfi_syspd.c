@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba090e744ee17227d7b3b6cd6e7f7269485fdbff $");
+__FBSDID("$FreeBSD: f919a39b358742c51c98e4ebc2bf16e475de2f3f $");
 
 #include "opt_mfi.h"
 
@@ -266,8 +266,7 @@ mfi_syspd_strategy(struct bio *bio)
 }
 
 static int
-mfi_syspd_dump(void *arg, void *virt, vm_offset_t phys, off_t offset,
-    size_t len)
+mfi_syspd_dump(void *arg, void *virt, off_t offset, size_t len)
 {
 	struct mfi_system_pd *sc;
 	struct mfi_softc *parent_sc;

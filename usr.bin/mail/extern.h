@@ -30,7 +30,7 @@
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/20/95 
  *
- * $FreeBSD: 55b412306cdb2b6af370764337e13eeb7e5ff31a $
+ * $FreeBSD: aa31733dd26a7b8f6497215ba5f5351b1c17cdb0 $
  */
 
 struct name *cat(struct name *, struct name *);
@@ -153,7 +153,7 @@ int	 isdate(char *);
 int	 isdir(char *);
 int	 isfileaddr(char *);
 int	 ishead(char *);
-int	 isign(const char *, struct ignoretab []);
+int	 isign(const char *, struct ignoretab [2]);
 int	 isprefix(const char *, const char *);
 void	 istrncpy(char *, const char *, size_t);
 const struct cmd *

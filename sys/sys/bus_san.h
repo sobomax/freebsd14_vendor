@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 05d5ecd4b84403883bef6e3c2c19a7336b44bc60 $
+ * $FreeBSD: fd3c4c8036754c1e9b18c909249727d8064a57b6 $
  */
 
 #ifndef _SYS_BUS_SAN_H_
@@ -41,10 +41,6 @@
 
 #ifndef _MACHINE_BUS_H_
 #error do not include this header, use machine/bus.h
-#endif
-
-#ifndef BUS_SAN_PREFIX
-#error No sanitizer prefix defined
 #endif
 
 #define	BUS_SAN_MULTI(sp, rw, width, type)				\
@@ -122,7 +118,7 @@
 	BUS_SAN_MISC(sp);
 
 #define	BUS_SAN_FUNCS(width, type)					\
-	_BUS_SAN_FUNCS(BUS_SAN_PREFIX, width, type)
+	_BUS_SAN_FUNCS(SAN_INTERCEPTOR_PREFIX, width, type)
 
 BUS_SAN_FUNCS(1, uint8_t);
 BUS_SAN_FUNCS(2, uint16_t);
@@ -131,7 +127,8 @@ BUS_SAN_FUNCS(8, uint64_t);
 
 #ifndef SAN_RUNTIME
 
-#define	BUS_SAN(func)	__CONCAT(BUS_SAN_PREFIX, __CONCAT(_bus_space_, func))
+#define	BUS_SAN(func)							\
+	__CONCAT(SAN_INTERCEPTOR_PREFIX, __CONCAT(_bus_space_, func))
 
 #define	bus_space_map			BUS_SAN(map)
 #define	bus_space_unmap			BUS_SAN(unmap)
@@ -224,6 +221,6 @@ BUS_SAN_FUNCS(8, uint64_t);
 #define	bus_space_poke_8		BUS_SAN(poke_8)
 #define	bus_space_peek_8		BUS_SAN(peek_8)
 
-#endif /* !KCSAN_RUNTIME */
+#endif /* !SAN_RUNTIME */
 
 #endif /* !_SYS_BUS_SAN_H_ */

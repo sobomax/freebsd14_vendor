@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mount.h	8.21 (Berkeley) 5/20/95
- * $FreeBSD: 93193eb3e28cf5f47952b2756ff6b8e20ceec07d $
+ * $FreeBSD: 6e988a48922ef72874fd2897fb529801484fbcb2 $
  */
 
 #ifndef _SYS_MOUNT_H_
@@ -648,6 +648,7 @@ struct ovfsconf {
 #define	VFCF_DELEGADMIN	0x00800000	/* supports delegated administration */
 #define	VFCF_SBDRY	0x01000000	/* Stop at Boundary: defer stop requests
 					   to kernel->user (AST) transition */
+#define	VFCF_FILEMOUNT	0x02000000	/* allow mounting files */
 
 typedef uint32_t fsctlop_t;
 
@@ -775,6 +776,8 @@ typedef int vfs_sysctl_t(struct mount *mp, fsctlop_t op,
 typedef void vfs_susp_clean_t(struct mount *mp);
 typedef void vfs_notify_lowervp_t(struct mount *mp, struct vnode *lowervp);
 typedef void vfs_purge_t(struct mount *mp);
+struct sbuf;
+typedef int vfs_report_lockf_t(struct mount *mp, struct sbuf *sb);
 
 struct vfsops {
 	vfs_mount_t		*vfs_mount;
@@ -796,7 +799,8 @@ struct vfsops {
 	vfs_notify_lowervp_t	*vfs_reclaim_lowervp;
 	vfs_notify_lowervp_t	*vfs_unlink_lowervp;
 	vfs_purge_t		*vfs_purge;
-	vfs_mount_t		*vfs_spare[6];	/* spares for ABI compat */
+	vfs_report_lockf_t	*vfs_report_lockf;
+	vfs_mount_t		*vfs_spare[5];	/* spares for ABI compat */
 };
 
 vfs_statfs_t	__vfs_statfs;
@@ -1005,6 +1009,7 @@ int	vfs_suser(struct mount *, struct thread *);
 void	vfs_unbusy(struct mount *);
 void	vfs_unmountall(void);
 int	vfs_remount_ro(struct mount *mp);
+int	vfs_report_lockf(struct mount *mp, struct sbuf *sb);
 
 extern	TAILQ_HEAD(mntlist, mount) mountlist;	/* mounted filesystem list */
 extern	struct mtx_padalign mountlist_mtx;

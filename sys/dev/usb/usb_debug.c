@@ -1,8 +1,8 @@
-/* $FreeBSD: 5e521f7ec3a5f1b1e4aec01d372eff5f711f41be $ */
+/* $FreeBSD: 6ad8dce9a0374fc504378d3d10eed3b5c7c90cd6 $ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
+ * Copyright (c) 2008-2022 Hans Petter Selasky
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -123,6 +123,10 @@ SYSCTL_PROC(_hw_usb_timings, OID_AUTO, extra_power_up_time,
     CTLTYPE_UINT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, &usb_extra_power_up_time,
     sizeof(usb_extra_power_up_time), usb_timings_sysctl_handler, "IU",
     "Extra PowerUp Time");
+SYSCTL_PROC(_hw_usb_timings, OID_AUTO, enum_nice_time,
+    CTLTYPE_UINT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, &usb_enum_nice_time,
+    sizeof(usb_enum_nice_time), usb_timings_sysctl_handler, "IU",
+    "Enumeration thread nice time");
 #endif
 
 /*------------------------------------------------------------------------*
@@ -245,6 +249,7 @@ unsigned int usb_resume_delay		= USB_RESUME_DELAY;
 unsigned int usb_resume_wait		= USB_RESUME_WAIT;
 unsigned int usb_resume_recovery	= USB_RESUME_RECOVERY;
 unsigned int usb_extra_power_up_time	= USB_EXTRA_POWER_UP_TIME;
+unsigned int usb_enum_nice_time		= USB_ENUM_NICE_TIME;
 
 /*------------------------------------------------------------------------*
  *	usb_timings_sysctl_handler

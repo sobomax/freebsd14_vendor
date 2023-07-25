@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c2c66e08c20848455ed1a62ef34eafea8a883b91 $");
+__FBSDID("$FreeBSD: 768c2c4dd3ed61374365a7489084e251b54103eb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,7 @@ pnp_write(int d, u_char r)
  * Intel May 94.
  */
 static void
-pnp_send_initiation_key()
+pnp_send_initiation_key(void)
 {
 	int cur, i;
 

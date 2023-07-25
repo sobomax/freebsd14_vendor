@@ -1,4 +1,4 @@
-# $FreeBSD: bd85efcb1b950b868d6f7f3a38c6c5ca959e4888 $
+# $FreeBSD: e54951693c3b659a35c4a28940e9a4050df1d1c7 $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,9 @@ ATF_TESTS_C+=		dynthr_test
 ATF_TESTS_C+=		heapsort_test
 ATF_TESTS_C+=		mergesort_test
 ATF_TESTS_C+=		qsort_test
+.if ${COMPILER_TYPE} == "clang"
+ATF_TESTS_C+=		qsort_b_test
+.endif
 ATF_TESTS_C+=		qsort_r_test
 ATF_TESTS_C+=		qsort_s_test
 ATF_TESTS_C+=		set_constraint_handler_s_test
@@ -57,6 +60,12 @@ CFLAGS+=	-I${.CURDIR}
 CXXSTD.cxa_thread_atexit_test=	c++11
 CXXSTD.cxa_thread_atexit_nothr_test=	c++11
 LIBADD.cxa_thread_atexit_test+=		pthread
+
+# Tests that requires Blocks feature
+.for t in qsort_b_test
+CFLAGS.${t}.c+=		-fblocks
+LIBADD.${t}+=		BlocksRuntime
+.endfor
 
 .for t in h_getopt h_getopt_long
 CFLAGS.$t+=	-I${LIBNETBSD_SRCDIR} -I${SRCTOP}/contrib/netbsd-tests

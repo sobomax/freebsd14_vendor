@@ -1,4 +1,4 @@
-# $FreeBSD: 3732747eb64c84e2fbfdb78e9b8357b2f288d999 $
+# $FreeBSD: 6a38345e9cb04e64fa79dac3c9cd6a3e36196d94 $
 .include <src.opts.mk>
 
 PACKAGE=	tests
@@ -179,6 +179,7 @@ TESTS_SRCS= \
 	test_read_format_tar_empty_pax.c	\
 	test_read_format_tar_empty_with_gnulabel.c	\
 	test_read_format_tar_filename.c		\
+	test_read_format_tar_invalid_pax_size.c \
 	test_read_format_tbz.c			\
 	test_read_format_tgz.c			\
 	test_read_format_tlz.c			\
@@ -589,6 +590,7 @@ ${PACKAGE}FILES+=	test_read_format_tar_empty_filename.tar.uu
 ${PACKAGE}FILES+=	test_read_format_tar_empty_with_gnulabel.tar.uu
 ${PACKAGE}FILES+=	test_read_format_tar_empty_pax.tar.Z.uu
 ${PACKAGE}FILES+=	test_read_format_tar_filename_koi8r.tar.Z.uu
+${PACKAGE}FILES+=	test_read_format_tar_invalid_pax_size.tar.uu
 ${PACKAGE}FILES+=	test_read_format_ustar_filename_cp866.tar.Z.uu
 ${PACKAGE}FILES+=	test_read_format_ustar_filename_eucjp.tar.Z.uu
 ${PACKAGE}FILES+=	test_read_format_ustar_filename_koi8r.tar.Z.uu

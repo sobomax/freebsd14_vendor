@@ -1,5 +1,4 @@
 /* $OpenBSD: pathnames.h,v 1.31 2019/11/12 19:33:08 markus Exp $ */
-/* $FreeBSD: eafa7d4efa418db979b3acfd1d5b850bc96ea7b6 $ */
 
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>

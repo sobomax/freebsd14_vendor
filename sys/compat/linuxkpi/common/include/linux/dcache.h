@@ -23,14 +23,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9f9943a18dc6ecab96c6280b7c8d85c050fc120e $
+ * $FreeBSD: 512a29ec046a3fbd90760adfb06d2d7534e42e0f $
  */
 
 #ifndef _LINUXKPI_LINUX_DCACHE_H
 #define	_LINUXKPI_LINUX_DCACHE_H
 
-struct vnode;
-struct pfs_node;
+#include <sys/vnode.h>
+
+#include <fs/pseudofs/pseudofs.h>
 
 struct dentry {
 	struct vnode *d_inode;

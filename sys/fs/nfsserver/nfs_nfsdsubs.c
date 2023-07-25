@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca691941ed0d7942c0165d904d299ec9c6e4688d $");
+__FBSDID("$FreeBSD: 20f62211f53e011c4ab5261732ca6b6278aca988 $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -2121,6 +2121,14 @@ nfsd_checkrootexp(struct nfsrv_descript *nd)
 
 	if (nfs_rootfhset == 0)
 		return (NFSERR_AUTHERR | AUTH_FAILED);
+	/*
+	 * For NFSv4.1/4.2, if the client specifies SP4_NONE, then these
+	 * operations are allowed regardless of the value of the "sec=XXX"
+	 * field in the V4: exports line.
+	 * As such, these Kerberos checks only apply to NFSv4.0 mounts.
+	 */
+	if ((nd->nd_flag & ND_NFSV41) != 0)
+		goto checktls;
 	if ((nd->nd_flag & (ND_GSS | ND_EXAUTHSYS)) == ND_EXAUTHSYS)
 		goto checktls;
 	if ((nd->nd_flag & (ND_GSSINTEGRITY | ND_EXGSSINTEGRITY)) ==

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 424d7f66b056d901f618ac942331e9acf58d2402 $
+ * $FreeBSD: f552b1b653a6aa1afce7cf5b3756c9e5fc2e51b9 $
  */
 
 #ifndef _MLX5_EN_H_
@@ -754,7 +754,7 @@ struct mlx5e_rq_mbuf {
 };
 
 struct mlx5e_rq {
-	/* persistant fields */
+	/* persistent fields */
 	struct mtx mtx;
 	struct mlx5e_rq_stats stats;
 	struct callout watchdog;
@@ -841,7 +841,7 @@ enum {
 };
 
 struct mlx5e_sq {
-	/* persistant fields */
+	/* persistent fields */
 	struct	mtx lock;
 	struct	mtx comp_lock;
 	struct	mlx5e_sq_stats stats;

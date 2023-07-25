@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9826296c80c33139f4d6862045f07166662eb5a1 $
+ * $FreeBSD: ce2e155af49ab800b091b036a5eb33b01eec2a2b $
  */
 
 extern "C" {
@@ -119,6 +119,7 @@ static void* allocate_th(void* arg) {
 		return (void*)(intptr_t)errno;
 
 	r = posix_fallocate(fd, 0, 15);
+	LastLocalModify::leak(fd);
 	if (r >= 0)
 		return 0;
 	else
@@ -160,6 +161,7 @@ static void* setattr_th(void* arg) {
 		return (void*)(intptr_t)errno;
 
 	r = ftruncate(fd, 15);
+	LastLocalModify::leak(fd);
 	if (r >= 0)
 		return 0;
 	else

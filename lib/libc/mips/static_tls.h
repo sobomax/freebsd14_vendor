@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67ee8afe14c6cd1621ad87a927abcccf6fe1d9fe $
+ * $FreeBSD: b823a34eaf8b9bf7d5db9e1ef890d7449a0b0674 $
  */
 
 #ifndef _LIBC_MIPS_STATIC_TLS_H
@@ -40,23 +40,17 @@ _libc_get_static_tls_base(size_t offset)
 {
 	uintptr_t tlsbase;
 
+	__asm__ __volatile__ (
+	    ".set\tpush\n\t"
 #if defined(__mips_n64)
-	__asm__ __volatile__ (
-	    ".set\tpush\n\t"
 	    ".set\tmips64r2\n\t"
-	    "rdhwr\t%0, $29\n\t"
-	    ".set\tpop"
-	    : "=r" (tlsbase));
-	tlsbase -= TLS_TP_OFFSET + TLS_TCB_SIZE;
 #else /* mips 32 */
-	__asm__ __volatile__ (
-	    ".set\tpush\n\t"
 	    ".set\tmips32r2\n\t"
+#endif /* ! __mips_n64 */
 	    "rdhwr\t%0, $29\n\t"
 	    ".set\tpop"
 	    : "=r" (tlsbase));
 	tlsbase -= TLS_TP_OFFSET + TLS_TCB_SIZE;
-#endif /* ! __mips_n64 */
 	tlsbase += offset;
 	return (tlsbase);
 }

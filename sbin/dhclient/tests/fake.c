@@ -1,4 +1,4 @@
-/* $FreeBSD: d684f96e99d357ef82f364657c7ddd87cfe84391 $ */
+/* $FreeBSD: 6a170953beb09fce9c19b401db1e5525c287190b $ */
 
 #include <setjmp.h>
 #include <stdarg.h>
@@ -33,7 +33,7 @@ warning(const char *fmt, ...)
 
 	/*
 	 * The original warning() would return "ret" here. We do this to
-	 * check warnings explicitely.
+	 * check warnings explicitly.
 	 */
 	longjmp(env, 1);
 }

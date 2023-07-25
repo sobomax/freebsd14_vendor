@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0f27fc45d57d9b70f0951f778feffd08a1edb33d $
+ * $FreeBSD: 7b7afb50fee8b28598f707c384b6499aaf3175f7 $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -119,13 +119,6 @@ extern int64_t icache_line_size;
 #define	cpu_idcache_wbinv_range(a, s)
 #define	cpu_icache_sync_range(a, s)
 #define	cpu_icache_sync_range_checked(a, s)
-
-static __inline void
-load_satp(uint64_t val)
-{
-
-	__asm __volatile("csrw satp, %0" :: "r"(val));
-}
 
 #define	cpufunc_nullop()		riscv_nullop()
 

@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2021, Intel Corporation
+/*  Copyright (c) 2022, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: c8906d56a75a78f35203be61e81e8f9f6ffe618e $*/
+/*$FreeBSD: 4b8cc0938db505eb914c2f5afc884430bfdbfc18 $*/
 
 #ifndef _ICE_FWLOG_H_
 #define _ICE_FWLOG_H_
@@ -72,7 +72,7 @@ struct ice_fwlog_cfg {
 	/* options used to configure firmware logging */
 	u16 options;
 	/* minimum number of log events sent per Admin Receive Queue event */
-	u8 log_resolution;
+	u16 log_resolution;
 };
 
 void ice_fwlog_set_support_ena(struct ice_hw *hw);

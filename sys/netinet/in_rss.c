@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: 05659b97fe7c7b4d54134e0efd07ddc283ea0431 $");
+__FBSDID("$FreeBSD: e73d2d236f92996d9040d6a08fab6774f4667a33 $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"
@@ -215,7 +215,6 @@ rss_mbuf_software_hash_v4(const struct mbuf *m, int dir, uint32_t *hashval,
 	const struct ip *ip;
 	const struct tcphdr *th;
 	const struct udphdr *uh;
-	uint32_t flowid;
 	uint32_t flowtype;
 	uint8_t proto;
 	int iphlen;
@@ -266,7 +265,6 @@ rss_mbuf_software_hash_v4(const struct mbuf *m, int dir, uint32_t *hashval,
 	 * then we shouldn't just "trust" the 2-tuple hash.  We need
 	 * a 4-tuple hash.
 	 */
-	flowid = m->m_pkthdr.flowid;
 	flowtype = M_HASHTYPE_GET(m);
 
 	if (flowtype != M_HASHTYPE_NONE) {

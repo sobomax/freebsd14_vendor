@@ -1,4 +1,4 @@
-# $FreeBSD: 6a34efd0acb36f7223dbbdebc533a5c1385557fc $
+# $FreeBSD: bf42c26a918f5988769df829b1f849a111e946e8 $
 
 .include <bsd.init.mk>
 
@@ -7,6 +7,8 @@ LIB=		firewire
 .PATH:		${SYSDIR}/dev/dcons ${SYSDIR}/dev/firewire
 SRCS+=		firewire.c fwohci.c dconsole.c
 SRCS+=		dcons.c fwcrom.c
+
+.include	"${BOOTSRC}/veriexec.mk"
 
 CFLAGS+=	-D_BOOT
 

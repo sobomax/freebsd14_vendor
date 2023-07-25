@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60ea627e975b4f9d50d4926be9d10005b03fcd63 $");
+__FBSDID("$FreeBSD: 53ef46fb8ce5253a88fc8c02ca2069eb20acebfe $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -125,7 +125,6 @@ mount_snapshot(kthread_t *td, vnode_t **vpp, const char *fstype, char *fspath,
 	struct vfsconf *vfsp;
 	struct mount *mp;
 	vnode_t *vp, *mvp;
-	struct ucred *cr;
 	int error;
 
 	ASSERT_VOP_ELOCKED(*vpp, "mount_snapshot");
@@ -194,15 +193,8 @@ mount_snapshot(kthread_t *td, vnode_t **vpp, const char *fstype, char *fspath,
 	 * mount(8) and df(1) output.
 	 */
 	mp->mnt_flag |= MNT_IGNORE;
-	/*
-	 * XXX: This is evil, but we can't mount a snapshot as a regular user.
-	 * XXX: Is is safe when snapshot is mounted from within a jail?
-	 */
-	cr = td->td_ucred;
-	td->td_ucred = kcred;
-	error = VFS_MOUNT(mp);
-	td->td_ucred = cr;
 
+	error = VFS_MOUNT(mp);
 	if (error != 0) {
 		/*
 		 * Clear VI_MOUNT and decrement the use count "atomically",

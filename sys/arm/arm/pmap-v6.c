@@ -72,7 +72,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 445f750178a87a93e3800ef931f86d1d1886d90d $");
+__FBSDID("$FreeBSD: 51438274f1fff6f19176de30701211295aaae586 $");
 
 /*
  *	Manages physical address maps.
@@ -3873,8 +3873,7 @@ pmap_enter(pmap_t pmap, vm_offset_t va, vm_page_t m, vm_prot_t prot,
 	KASSERT(va < UPT2V_MIN_ADDRESS || va >= UPT2V_MAX_ADDRESS,
 	    ("%s: invalid to pmap_enter page table pages (va: 0x%x)", __func__,
 	    va));
-	KASSERT((m->oflags & VPO_UNMANAGED) != 0 || va < kmi.clean_sva ||
-	    va >= kmi.clean_eva,
+	KASSERT((m->oflags & VPO_UNMANAGED) != 0 || !VA_IS_CLEANMAP(va),
 	    ("%s: managed mapping within the clean submap", __func__));
 	if ((m->oflags & VPO_UNMANAGED) == 0)
 		VM_PAGE_OBJECT_BUSY_ASSERT(m);
@@ -4535,7 +4534,7 @@ pmap_enter_quick_locked(pmap_t pmap, vm_offset_t va, vm_page_t m,
 	struct spglist free;
 	uint32_t l2prot;
 
-	KASSERT(va < kmi.clean_sva || va >= kmi.clean_eva ||
+	KASSERT(!VA_IS_CLEANMAP(va) ||
 	    (m->oflags & VPO_UNMANAGED) != 0,
 	    ("%s: managed mapping within the clean submap", __func__));
 	rw_assert(&pvh_global_lock, RA_WLOCKED);

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 025694bf118107a738fa9f3f2a51f53c64329dbe $
+ * $FreeBSD: 27db9c52f31944ec290414462b734afdaa76e218 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 025694bf118107a738fa9f3f2a51f53c64329dbe $");
+__FBSDID("$FreeBSD: 27db9c52f31944ec290414462b734afdaa76e218 $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -78,7 +78,7 @@ l_jail_filter(const char *param_name, void *data __unused)
 
 	/*
 	 * Allowing lastjid will mess up our iteration over all jails on the
-	 * system, as this is a special paramter that indicates where the search
+	 * system, as this is a special parameter that indicates where the search
 	 * starts from.  We'll always add jid and name, so just silently remove
 	 * these.
 	 */

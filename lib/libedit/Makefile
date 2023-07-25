@@ -1,6 +1,6 @@
 #	$NetBSD: Makefile,v 1.56 2016/03/02 19:24:20 christos Exp $
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: e549ac15c000340ed37ca32291387f84fece989f $
+# $FreeBSD: bf7d45957356d2d0f40122f50366ee7ff703f353 $
 
 PACKAGE=clibs
 
@@ -97,3 +97,5 @@ test: tc1.o libedit.a ${DPADD} ${LIBTERMCAP}
 	${CC} ${CFLAGS} ${.ALLSRC} -o ${.TARGET} libedit.a ${LDADD}
 
 .include <bsd.lib.mk>
+
+CWARNFLAGS.chartype.c=	${NO_WUSE_AFTER_FREE}

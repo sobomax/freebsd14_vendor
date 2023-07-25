@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44eb682a40b4730b906702a7294cbb65292cafd8 $");
+__FBSDID("$FreeBSD: d71d599391245ecb094a24094de58668c44676c6 $");
 
 /*
  * Nvidia Integrated PCI/PCI-Express controller driver.
@@ -1396,7 +1396,7 @@ tegra_pcib_attach_msi(device_t dev)
 	tegra_pcib_set_bar(sc, 9, vtophys(sc->msi_page), vtophys(sc->msi_page),
 	    PAGE_SIZE, 0);
 
-	/* Disble and clear all interrupts. */
+	/* Disable and clear all interrupts. */
 	for (i = 0; i < AFI_MSI_REGS; i++) {
 		AFI_WR4(sc, AFI_MSI_EN_VEC(i), 0);
 		AFI_WR4(sc, AFI_MSI_VEC(i), 0xFFFFFFFF);

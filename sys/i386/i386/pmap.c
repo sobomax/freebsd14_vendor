@@ -83,7 +83,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa9ee33db70ee11f45716e3d74a8259ad409d82b $");
+__FBSDID("$FreeBSD: 0a70f967f008df7e0a87857db52c4baaec02dc18 $");
 
 /*
  *	Manages physical address maps.
@@ -2865,7 +2865,7 @@ pmap_demote_pde(pmap_t pmap, pd_entry_t *pde, vm_offset_t va)
 	 * If the page table page is not leftover from an earlier promotion,
 	 * initialize it.
 	 */
-	if (mpte->valid == 0)
+	if (vm_page_none_valid(mpte))
 		pmap_fill_ptp(firstpte, newpte);
 
 	KASSERT((*firstpte & PG_FRAME) == (newpte & PG_FRAME),
@@ -2940,7 +2940,7 @@ pmap_remove_kernel_pde(pmap_t pmap, pd_entry_t *pde, vm_offset_t va)
 	 * If this page table page was unmapped by a promotion, then it
 	 * contains valid mappings.  Zero it to invalidate those mappings.
 	 */
-	if (mpte->valid != 0)
+	if (vm_page_any_valid(mpte))
 		pagezero((void *)&KPTmap[i386_btop(trunc_4mpage(va))]);
 
 	/*
@@ -3004,7 +3004,7 @@ pmap_remove_pde(pmap_t pmap, pd_entry_t *pdq, vm_offset_t sva,
 	} else {
 		mpte = pmap_remove_pt_page(pmap, sva);
 		if (mpte != NULL) {
-			KASSERT(mpte->valid == VM_PAGE_BITS_ALL,
+			KASSERT(vm_page_all_valid(mpte),
 			    ("pmap_remove_pde: pte page not promoted"));
 			pmap->pm_stats.resident_count--;
 			KASSERT(mpte->ref_count == NPTEPG,
@@ -3646,7 +3646,7 @@ __CONCAT(PMTYPE, enter)(pmap_t pmap, vm_offset_t va, vm_page_t m,
 	    ("pmap_enter: invalid to pmap_enter into trampoline (va: 0x%x)",
 	    va));
 	KASSERT(pmap != kernel_pmap || (m->oflags & VPO_UNMANAGED) != 0 ||
-	    va < kmi.clean_sva || va >= kmi.clean_eva,
+	    !VA_IS_CLEANMAP(va),
 	    ("pmap_enter: managed mapping within the clean submap"));
 	if ((m->oflags & VPO_UNMANAGED) == 0)
 		VM_PAGE_OBJECT_BUSY_ASSERT(m);
@@ -4100,8 +4100,8 @@ pmap_enter_quick_locked(pmap_t pmap, vm_offset_t va, vm_page_t m,
 {
 	pt_entry_t newpte, *pte;
 
-	KASSERT(pmap != kernel_pmap || va < kmi.clean_sva ||
-	    va >= kmi.clean_eva || (m->oflags & VPO_UNMANAGED) != 0,
+	KASSERT(pmap != kernel_pmap || !VA_IS_CLEANMAP(va) ||
+	    (m->oflags & VPO_UNMANAGED) != 0,
 	    ("pmap_enter_quick_locked: managed mapping within the clean submap"));
 	rw_assert(&pvh_global_lock, RA_WLOCKED);
 	PMAP_LOCK_ASSERT(pmap, MA_OWNED);
@@ -4223,7 +4223,7 @@ __CONCAT(PMTYPE, object_init_pt)(pmap_t pmap, vm_offset_t addr,
 		if (!vm_object_populate(object, pindex, pindex + atop(size)))
 			return;
 		p = vm_page_lookup(object, pindex);
-		KASSERT(p->valid == VM_PAGE_BITS_ALL,
+		KASSERT(vm_page_all_valid(p),
 		    ("pmap_object_init_pt: invalid page %p", p));
 		pat_mode = p->md.pat_mode;
 
@@ -4243,7 +4243,7 @@ __CONCAT(PMTYPE, object_init_pt)(pmap_t pmap, vm_offset_t addr,
 		p = TAILQ_NEXT(p, listq);
 		for (pa = ptepa + PAGE_SIZE; pa < ptepa + size;
 		    pa += PAGE_SIZE) {
-			KASSERT(p->valid == VM_PAGE_BITS_ALL,
+			KASSERT(vm_page_all_valid(p),
 			    ("pmap_object_init_pt: invalid page %p", p));
 			if (pa != VM_PAGE_TO_PHYS(p) ||
 			    pat_mode != p->md.pat_mode)
@@ -4529,7 +4529,7 @@ __CONCAT(PMTYPE, zero_page)(vm_page_t m)
 }
 
 /*
- * Zero an an area within a single hardware page.  off and size must not
+ * Zero an area within a single hardware page.  off and size must not
  * cover an area beyond a single hardware page.
  */
 static void
@@ -4851,7 +4851,7 @@ __CONCAT(PMTYPE, remove_pages)(pmap_t pmap)
 					}
 					mpte = pmap_remove_pt_page(pmap, pv->pv_va);
 					if (mpte != NULL) {
-						KASSERT(mpte->valid == VM_PAGE_BITS_ALL,
+						KASSERT(vm_page_all_valid(mpte),
 						    ("pmap_remove_pages: pte page not promoted"));
 						pmap->pm_stats.resident_count--;
 						KASSERT(mpte->ref_count == NPTEPG,
@@ -5890,7 +5890,7 @@ pmap_trm_import(void *unused __unused, vmem_size_t size, int flags,
 	vmem_addr_t af, addr, prev_addr;
 	pt_entry_t *trm_pte;
 
-	prev_addr = atomic_load_long(&pmap_trm_arena_last);
+	prev_addr = atomic_load_int(&pmap_trm_arena_last);
 	size = round_page(size) + trm_guard;
 	for (;;) {
 		if (prev_addr + size < prev_addr || prev_addr + size < size ||

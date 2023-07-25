@@ -1,6 +1,6 @@
 # X1000 -- Kernel config for Ingenic X1000 boards
 #
-# $FreeBSD: 1b4ab45ce1e224d5bef28fa3cf45366d0924be5b $
+# $FreeBSD: dd751ac5159943d3af7023ffd800859ea3186de4 $
 
 #NO_UNIVERSE
 
@@ -68,7 +68,6 @@ device		fdt_pinctrl
 
 device		clk
 device		regulator
-options		EXT_RESOURCES
 
 device		gpio
 

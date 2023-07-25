@@ -26,7 +26,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD: 084f4a06829b44f51f3f5555f86bf7baf3aa4421 $
+# $FreeBSD: cf90b64f7991a727dfa0d01aaebbe5562e8d0505 $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -897,6 +897,7 @@ setup_cattool() {
 	*.gz)	cattool='/usr/bin/zcat' ;;
 	*.lzma)	cattool='/usr/bin/lzcat' ;;
 	*.xz)	cattool='/usr/bin/xzcat' ;;
+	*.zst)	cattool='/usr/bin/zstdcat' ;;
 	*)	cattool='/usr/bin/zcat -f' ;;
 	esac
 }

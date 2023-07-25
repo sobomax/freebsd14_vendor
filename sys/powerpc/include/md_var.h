@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 6e74000340b98d41416bdda4501a940426d9d0d2 $
+ * $FreeBSD: bfe3427f0712b9c1a5f265dbfe0b7fbcce2c9538 $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -48,7 +48,6 @@ int	cpu_minidumpsys(struct dumperinfo *, const struct minidumpstate *);
 #endif
 
 extern	long	Maxmem;
-extern	int	busdma_swi_pending;
 
 extern	vm_offset_t	kstack0;
 extern	vm_offset_t	kstack0_phys;
@@ -59,8 +58,6 @@ extern  int hw_direct_map;
 
 void	__syncicache(void *, int);
 
-void	busdma_swi(void);
-int	is_physical_memory(vm_offset_t addr);
 int	mem_valid(vm_offset_t addr, int len);
 
 void	decr_init(void);

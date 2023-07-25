@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4abef78c4b2e0664e8266ddac569780d96062cdd $");
+__FBSDID("$FreeBSD: 4497be8c7fb4152aa76598186ddda608afcd4652 $");
 
 /*
  * Driver for WinChipHead CH341/340, the worst USB-serial chip in the
@@ -206,6 +206,7 @@ static const STRUCT_USB_HOST_ID uchcom_devs[] = {
 	{USB_VPI(USB_VENDOR_WCH, USB_PRODUCT_WCH_CH341SER, 0)},
 	{USB_VPI(USB_VENDOR_WCH2, USB_PRODUCT_WCH2_CH341SER, 0)},
 	{USB_VPI(USB_VENDOR_WCH2, USB_PRODUCT_WCH2_CH341SER_2, 0)},
+	{USB_VPI(USB_VENDOR_WCH2, USB_PRODUCT_WCH2_CH341SER_3, 0)},
 };
 
 /* protypes */

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54353005bdc0d79c692e7393dd837c219fb13cab $");
+__FBSDID("$FreeBSD: f46d883e12ad1386892974fe4969b58bb4b52442 $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -61,10 +61,9 @@ eascan(struct inodesc *idesc, struct ufs2_dinode *dp)
 	return (0);
 #else
 	struct bufarea *bp;
-	u_int dsize, n;
+	u_int n;
 	u_char *cp;
 	long blksiz;
-	char dbuf[DIRBLKSIZ];
 
 	printf("Inode %ju extsize %ju\n",
 	   (intmax_t)idesc->id_number, (uintmax_t)dp->di_extsize);
@@ -74,8 +73,10 @@ eascan(struct inodesc *idesc, struct ufs2_dinode *dp)
 		blksiz = sblock.fs_fsize;
 	else
 		blksiz = sblock.fs_bsize;
-	printf("blksiz = %ju\n", (intmax_t)blksiz);
 	bp = getdatablk(dp->di_extb[0], blksiz, BT_EXTATTR);
+	if (bp->b_errs)
+		return (STOP);
+	printf("blksiz = %ju\n", (intmax_t)blksiz);
 	cp = (u_char *)bp->b_un.b_buf;
 	for (n = 0; n < blksiz; n++) {
 		printf("%02x", cp[n]);

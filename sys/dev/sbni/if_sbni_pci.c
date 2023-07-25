@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 10af065d22c5d8789aa308ada4d1b6d25f4a3231 $");
+__FBSDID("$FreeBSD: 22ae512a7bdc85aa82394f41570924898819a712 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -137,7 +137,7 @@ sbni_pci_attach(device_t dev)
 		goto attach_failed;
 	}
 
-	*(u_int32_t*)&flags = 0;
+	memset(&flags, 0, sizeof(flags));
 
 	error = sbni_attach(sc, device_get_unit(dev) * 2, flags);
 	if (error) {

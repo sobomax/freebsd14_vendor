@@ -1,10 +1,10 @@
-# $FreeBSD: d1fab41578bf4f92824e1182ed21f5d2009d15b0 $
+# $FreeBSD: 4092c74755528ba8510938720a08dfe8cb592b2d $
 
 SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 LIB=		be
 SHLIB_MAJOR=	1
 SHLIB_MINOR=	0

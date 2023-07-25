@@ -1,5 +1,5 @@
 /* $NetBSD: cpu.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $ */
-/* $FreeBSD: 8937a87aebeadfc669024e5797980fb4f14c81e8 $ */
+/* $FreeBSD: 14e19581b819f67a58d71822373057295b5b3a82 $ */
 
 #ifndef MACHINE_CPU_H
 #define MACHINE_CPU_H
@@ -8,7 +8,6 @@
 #include <machine/frame.h>
 
 void	cpu_halt(void);
-void	swi_vm(void *);
 
 #ifdef _KERNEL
 #include <machine/cpu-v6.h>

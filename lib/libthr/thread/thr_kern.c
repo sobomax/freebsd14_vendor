@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e633865720476410617f9840aaf81c131baa201 $");
+__FBSDID("$FreeBSD: 0b83b2dd5ac9aaf94a500ba71e8481d71b4ed6b6 $");
 
 #include <sys/types.h>
 #include <sys/signalvar.h>
@@ -158,7 +158,7 @@ _thr_alloc_wake_addr(void)
 		unsigned i;
 		unsigned pagesize = getpagesize();
 		struct wake_addr *pp = (struct wake_addr *)
-			mmap(NULL, getpagesize(), PROT_READ|PROT_WRITE,
+			mmap(NULL, pagesize, PROT_READ|PROT_WRITE,
 			MAP_ANON|MAP_PRIVATE, -1, 0);
 		for (i = 1; i < pagesize/sizeof(struct wake_addr); ++i)
 			pp[i].link = &pp[i+1];

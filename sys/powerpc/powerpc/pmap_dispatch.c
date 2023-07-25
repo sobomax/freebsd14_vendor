@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a3c227bbde7ddc59e301320c92787232c48fa776 $");
+__FBSDID("$FreeBSD: 00d4a20743279bcf42b42b1e4dd6d8e58e831e04 $");
 
 /*
  * Dispatch MI pmap calls to the appropriate MMU implementation
@@ -83,7 +83,7 @@ int vm_level_0_order = 9;
 
 SYSCTL_NODE(_vm, OID_AUTO, pmap, CTLFLAG_RD, 0, "VM/pmap parameters");
 
-int superpages_enabled = 0;
+int superpages_enabled = 1;
 SYSCTL_INT(_vm_pmap, OID_AUTO, superpages_enabled, CTLFLAG_RDTUN,
     &superpages_enabled, 0, "Enable support for transparent superpages");
 

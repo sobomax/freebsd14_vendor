@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 010560f81678016346bdc4a0761880aa26e3f797 $");
+__FBSDID("$FreeBSD: d57a2c5dbc459708096cd451ac48ed83fd0521c4 $");
 
 /*
  * NOTE: all function names beginning like "uftdi_cfg_" can only
@@ -910,6 +910,7 @@ static const STRUCT_USB_HOST_ID uftdi_devs[] = {
 	UFTDI_DEV(TESTO, USB_INTERFACE, 0),
 	UFTDI_DEV(TML, USB_SERIAL, 0),
 	UFTDI_DEV(TTI, QL355P, 0),
+	UFTDI_DEV(UBLOX, XPLR_M9, 0),
 	UFTDI_DEV(UNKNOWN4, NF_RIC, 0),
 #undef UFTDI_DEV
 };

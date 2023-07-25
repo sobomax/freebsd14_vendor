@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)cmp.c	8.3 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 83ea7ae7eee02aebb03de57115a488fdb847767d $");
+__FBSDID("$FreeBSD: 82f34803fc221fa3d115643174d7168ef3d1c4db $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -74,6 +74,17 @@ static const struct option long_opts[] =
 	{"quiet",	no_argument,		NULL, 's'},
 	{NULL,		no_argument,		NULL, 0}
 };
+
+#ifdef SIGINFO
+volatile sig_atomic_t info;
+
+static void
+siginfo(int signo)
+{
+
+	info = signo;
+}
+#endif
 
 static void usage(void);
 
@@ -240,6 +251,9 @@ main(int argc, char *argv[])
 		}
 	}
 
+#ifdef SIGINFO
+	(void)signal(SIGINFO, siginfo);
+#endif
 	if (special)
 		c_special(fd1, file1, skip1, fd2, file2, skip2, limit);
 	else {

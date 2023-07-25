@@ -8,7 +8,7 @@
  *
  * $Cronyx: tau32-ddk.h,v 1.2 2006/02/01 09:14:40 ly Exp $
  * $Rik: tau32-ddk.h,v 1.7 2006/02/28 22:33:29 rik Exp $
- * $FreeBSD: 7c2e92b0914569fb5c61e91e3669e57fe9c41c1b $
+ * $FreeBSD: 5dbd5a557801b248e368ba0fc2ab1c2e1e62cf8f $
  */
 
 #if defined(__GNUC__) || defined(__TURBOC__)
@@ -339,7 +339,7 @@ typedef struct tag_TAU32_E1_State
 
 struct tag_TAU32_UserContext
 {
-	/* fields provided by user for for TAU32_Initiaize() */
+	/* fields provided by user for TAU32_Initiaize() */
 	TAU32_Controller *pControllerObject;
 	PCI_PHYSICAL_ADDRESS ControllerObjectPhysicalAddress;
 	void *PciBar1VirtualAddress;

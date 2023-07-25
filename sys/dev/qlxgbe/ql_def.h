@@ -26,7 +26,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 5f64b05a5333929a87db2f9081e864be69e8ec8d $
+ * $FreeBSD: c8ddb4f8959bf36b668149b6ee9e441f96e45cfe $
  */
 
 /*
@@ -126,7 +126,7 @@ typedef struct _qla_tx_fp {
 } qla_tx_fp_t;
 
 /*
- * Adapter structure contains the hardware independant information of the
+ * Adapter structure contains the hardware independent information of the
  * pci function.
  */
 struct qla_host {

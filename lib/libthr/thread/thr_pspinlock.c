@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c71bdbb3f1960654eb859ba6ece1ffeb576f8935 $");
+__FBSDID("$FreeBSD: d1a53446f65480446bfb95e647491a1bd6f3954b $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -41,7 +41,7 @@ __FBSDID("$FreeBSD: c71bdbb3f1960654eb859ba6ece1ffeb576f8935 $");
 
 #include "thr_private.h"
 
-_Static_assert(sizeof(struct pthread_spinlock) <= PAGE_SIZE,
+_Static_assert(sizeof(struct pthread_spinlock) <= THR_PAGE_SIZE_MIN,
     "pthread_spinlock is too large for off-page");
 
 #define SPIN_COUNT 100000

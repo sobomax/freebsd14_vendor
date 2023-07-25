@@ -1,10 +1,11 @@
-# $FreeBSD: dfae9f698ec4841888e1bcc3db1204732c3ea17a $
+# $FreeBSD: 41900b57ce0249432cf8d20a523fb51096222c5c $
 
 PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/netinet6
 FILESDIR=	${TESTSDIR}
 
+ATF_TESTS_PYTEST=	test_ip6_output.py
 ATF_TESTS_SH=			\
 				exthdr \
 				mld \

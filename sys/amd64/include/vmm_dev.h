@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a048e05d4b7c9b40ea092e8ecd527fd49dc0ae52 $
+ * $FreeBSD: deeb125428f3817f7e1b955cec579660152e59fa $
  */
 
 #ifndef	_VMM_DEV_H_
@@ -147,7 +147,7 @@ struct vm_pptdev_mmio {
 };
 
 struct vm_pptdev_msi {
-	int		vcpu;
+	int		vcpu;		/* unused */
 	int		bus;
 	int		slot;
 	int		func;
@@ -157,7 +157,7 @@ struct vm_pptdev_msi {
 };
 
 struct vm_pptdev_msix {
-	int		vcpu;
+	int		vcpu;		/* unused */
 	int		bus;
 	int		slot;
 	int		func;
@@ -174,6 +174,7 @@ struct vm_nmi {
 #define	MAX_VM_STATS	64
 struct vm_stats {
 	int		cpuid;				/* in */
+	int		index;				/* in */
 	int		num_entries;			/* out */
 	struct timeval	tv;
 	uint64_t	statbuf[MAX_VM_STATS];

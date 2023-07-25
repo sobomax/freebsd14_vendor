@@ -1,4 +1,4 @@
-// $FreeBSD: a9a33dde6667c2c7788c3e1506abdef1a2685338 $
+// $FreeBSD: 9f50bc587a4a6322fc1b04315bd0e33955a172af $
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -14,16 +14,11 @@
 
 #define LLDB_HAVE_EL_RFUNC_T 1
 
-
-#define HAVE_SYS_TYPES_H 1
-
 #define HAVE_SYS_EVENT_H 1
 
 #define HAVE_PPOLL 1
 
 #define HAVE_PTSNAME_R 1
-
-#define HAVE_SIGACTION 1
 
 #define HAVE_PROCESS_VM_READV 0
 
@@ -50,6 +45,8 @@
 #define LLDB_ENABLE_LUA 1
 
 #define LLDB_ENABLE_PYTHON 0
+
+#define LLDB_ENABLE_FBSDVMCORE 0
 
 #define LLDB_EMBED_PYTHON_HOME 0
 

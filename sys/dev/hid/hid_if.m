@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 896308fccd17fa78b5c78106bb906a30c45caae4 $
+# $FreeBSD: 38a053b8744ec8a719a1da76a9b4dff3b9225bfd $
 #
 
 #include <sys/param.h>
@@ -77,7 +77,7 @@ METHOD int intr_stop {
 
 #
 # The following function gets called from the HID keyboard driver when
-# the system has paniced. intr_setup method with NULL passed as intr parameter
+# the system has panicked. intr_setup method with NULL passed as intr parameter
 # must be called once before to let transport driver to be prepared.
 #
 METHOD void intr_poll {
@@ -163,4 +163,14 @@ METHOD int set_idle {
 METHOD int set_protocol {
 	device_t dev;
 	uint16_t protocol;
+};
+
+#
+# Executes arbitrary transport backend command.
+# Format of command is defined by hardware transport driver.
+#
+METHOD int ioctl {
+	device_t dev;
+	unsigned long cmd;
+	uintptr_t data;
 };

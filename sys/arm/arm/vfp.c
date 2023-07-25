@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8a929dd75f277951c7bb97f5fa4cac6f69074f23 $");
+__FBSDID("$FreeBSD: 3fa53c7ae2eb40570cd54408122d1ecb5791ec09 $");
 
 #ifdef VFP
 #include <sys/param.h>
@@ -104,7 +104,7 @@ set_coprocessorACR(u_int val)
 void
 vfp_init(void)
 {
-	u_int fpsid, fpexc, tmp;
+	u_int fpsid, tmp;
 	u_int coproc, vfp_arch;
 
 	coproc = get_coprocessorACR();
@@ -112,7 +112,6 @@ vfp_init(void)
 	set_coprocessorACR(coproc);
 
 	fpsid = fmrx(fpsid);		/* read the vfp system id */
-	fpexc = fmrx(fpexc);		/* read the vfp exception reg */
 
 	if (!(fpsid & VFPSID_HARDSOFT_IMP)) {
 		vfp_exists = 1;

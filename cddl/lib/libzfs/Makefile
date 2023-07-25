@@ -1,4 +1,4 @@
-# $FreeBSD: b159955c021204913a50e714ab4444e1360ebf76 $
+# $FreeBSD: babded59199dd4fb0b4866f5b971dc8c7f66ba1f $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/icp
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zcommon
@@ -10,7 +10,7 @@
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zstd
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zstd/lib
 
-PACKAGE=	runtime
+PACKAGE=	zfs
 LIB=	zfs
 LIBADD= \
 	avl \
