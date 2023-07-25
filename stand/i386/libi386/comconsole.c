@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed1f1aa08ed7f968b17bdbcec9319efafcb6886d $");
+__FBSDID("$FreeBSD: 6d48e876fa3729a46cf7c197fb6e9040373cebdb $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -324,11 +324,12 @@ comc_setup(int speed, int port)
 	char intbuf[64];
 	int tries;
 
-	unsetenv("hw.uart.console");
 	comc_curspeed = speed;
 	comc_port = port;
 	if ((comconsole.c_flags & (C_ACTIVEIN | C_ACTIVEOUT)) == 0)
 		return;
+
+	unsetenv("hw.uart.console");
 
 #define	COMC_TEST	0xbb
 	/*
