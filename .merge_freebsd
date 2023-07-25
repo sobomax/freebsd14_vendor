@@ -2,7 +2,7 @@
 
 set -e
 
-FBSD_VER="13.1"
+FBSD_VER="13.2"
 
 _FBSD_VER="`echo ${FBSD_VER} | sed 's|[.]|_|g'`"
 FBSD_BR="releng/${FBSD_VER}"
@@ -36,6 +36,5 @@ rmdir .freebsd_import
 git add -A [^.]*
 git commit -m "Update from ${FBSD_BR}, git revision ${CHASH}."
 git tag -f "FreeBSD.${TAG_BR}.${CHASH}"
-exit 0
 echo git push origin "${OUR_BR}"
 echo git push --force origin "FreeBSD.${TAG_BR}.${CHASH}"
