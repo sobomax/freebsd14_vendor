@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3972479a581f9e0c77f737ce06233235f53d7202 $");
+__FBSDID("$FreeBSD: 3c7976297ed245be55bfb126c7f76250046ec83a $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -937,18 +937,6 @@ verify_krb_v5_tgt_begin(krb5_context context, char *pam_service, int debug,
 		if (retval != 0)
 			continue;
 		break;
-	}
-	if (retval != 0) {	/* failed to find key */
-		/* Keytab or service key does not exist */
-		if (debug) {
-			const char *msg = krb5_get_error_message(context,
-			    retval);
-			syslog(LOG_DEBUG,
-			    "pam_krb5: verify_krb_v5_tgt(): %s: %s",
-			    "krb5_kt_read_service_key()", msg);
-			krb5_free_error_message(context, msg);
-		}
-		retval = 0;
 	}
 	if (keyblock)
 		krb5_free_keyblock(context, keyblock);

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: af0b70a7add3d280eafc12bae55ef703a9b93784 $
+ * $FreeBSD: 0dea325b6436853cf1f7cb3595771dc368b905d8 $
  */
 
 #ifndef __PCIB_PRIVATE_H__
@@ -134,6 +134,7 @@ struct pcib_softc
     uint16_t	pcie_link_sta;
     uint16_t	pcie_slot_sta;
     uint32_t	pcie_slot_cap;
+    struct resource *pcie_mem;
     struct resource *pcie_irq;
     void	*pcie_ihand;
     struct task	pcie_hp_task;

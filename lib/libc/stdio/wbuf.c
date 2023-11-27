@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)wbuf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 666bbf87aadd9b8ac065b5a786684cb3425c5a97 $");
+__FBSDID("$FreeBSD: deb111162741588d977d30236dbe7a4e81b19226 $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: 666bbf87aadd9b8ac065b5a786684cb3425c5a97 $");
 int
 __swbuf(int c, FILE *fp)
 {
-	unsigned char *old_p;
 	int n;
 
 	/*
@@ -88,15 +87,8 @@ __swbuf(int c, FILE *fp)
 	}
 	fp->_w--;
 	*fp->_p++ = c;
-	old_p = fp->_p;
-	if (++n == fp->_bf._size || (fp->_flags & __SLBF && c == '\n')) {
-		if (__fflush(fp) != 0) {
-			if (fp->_p == old_p && errno == EINTR) {
-				fp->_p--;
-				fp->_w++;
-			}
+	if (++n == fp->_bf._size || (fp->_flags & __SLBF && c == '\n'))
+		if (__fflush(fp) != 0)
 			return (EOF);
-		}
-	}
 	return (c);
 }

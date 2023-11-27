@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c6abaa69faf6a0d198a3b2db309e982cbfd0cd62 $");
+__FBSDID("$FreeBSD: ca9434adc6f7a9031dd54a0dfb3698dbc6db84a0 $");
 
 #include <sys/cnv.h>
 #include <sys/dnv.h>
@@ -1234,7 +1234,7 @@ verify_name2addr_newlimits(const nvlist_t *oldlimits,
 	oldfunclimits = NULL;
 	if (oldlimits != NULL) {
 		oldfunclimits = dnvlist_get_nvlist(oldlimits,
-		    LIMIT_NV_ADDR2NAME, NULL);
+		    LIMIT_NV_NAME2ADDR, NULL);
 	}
 
 	cookie = NULL;

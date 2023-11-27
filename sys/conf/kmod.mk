@@ -1,5 +1,5 @@
 #	From: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: 2a2ab1d022778d7025cf7f582e224d83c5e32f93 $
+# $FreeBSD: b616be508ce4dea77add5fc1041add75def9f947 $
 #
 # The include file <bsd.kmod.mk> handles building and installing loadable
 # kernel modules.
@@ -166,6 +166,13 @@ CFLAGS+=	-fno-omit-frame-pointer -mno-omit-leaf-frame-pointer
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "riscv" || \
     ${MACHINE_CPUARCH} == "powerpc"
 CFLAGS+=	-fPIC
+.endif
+
+.if ${MACHINE_CPUARCH} == "aarch64"
+# https://bugs.freebsd.org/264094
+# lld >= 14 and recent GNU ld can relax adrp+add and adrp+ldr instructions,
+# which breaks VNET.
+LDFLAGS+=	--no-relax
 .endif
 
 # Temporary workaround for PR 196407, which contains the fascinating details.

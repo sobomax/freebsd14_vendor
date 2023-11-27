@@ -12,6 +12,68 @@ Items affecting the ports and packages system can be found in
 /usr/ports/UPDATING.  Please read that file before updating system packages
 and/or ports.
 
+20231108:
+	13.2-RELEASE-p5 EN-23:13.freebsd-update
+			EN-23:14.regcomp
+			SA-23:15.stdio
+			SA-23:16.cap_net
+
+	freebsd-update does not handle deep boot environments [EN-23:13.freebsd-update]
+
+	Incorrect regular expression escape handling [EN-23:14.regcomp]
+
+	libc stdio buffer overflow [SA-23:15.stdio]
+
+	Incorrect libcap_net limitation list manipulation [SA-23:16.cap_net]
+
+20231003:
+	13.2-RELEASE-p4 FreeBSD-EN-23:12.freebsd-update
+			FreeBSD-SA-23:12.msdosfs
+			FreeBSD-SA-23:13.capsicum
+			FreeBSD-SA-23:14.smccc
+
+	freebsd-update to 14.0 fails [EN-23:12.freebsd-update]
+
+	Fix msdosfs data disclosure [SA-23:12.msdosfs]
+
+	copy_file_range insufficient capability rights check [SA-23:13.capsicum]
+
+	arm64 boot CPUs may lack speculative execution protections [SA-23:14.smccc]
+
+20230906:
+	13.2-RELEASE-p3 FreeBSD-EN-23:09.freebsd-update
+			FreeBSD-EN-23:10.pci
+			FreeBSD-EN-23:11.caroot
+			FreeBSD-SA-23:10.pf
+			FreeBSD-SA-23:11.wifi
+
+	freebsd-update incorrectly merges files on upgrade [EN-23:09.freebsd-update]
+
+	PCI-e hot-plug is broken with certain devices [EN-23:10.pci-update]
+
+	Root certificate bundle update [EN-23:11.caroot]
+
+	pf incorrectly handles multiple IPv6 fragment headers [SA-23:10.pf]
+
+	Wi-Fi encryption bypass [SA-23:11.wifi]
+
+20230801:
+	13.2-RELEASE-p2	FreeBSD-EN-23:08.vnet
+			FreeBSD-SA-23:06.ipv6
+			FreeBSD-SA-23:07.bhyve
+			FreeBSD-SA-23:08.ssh
+			FreeBSD-SA-23:09.pam_krb5
+
+	VNET and DCPU modules panic on arm64 due to linker relaxation [EN-23:08.vnet]
+
+	Remote denial of service in IPv6 fragment reassembly [SA-23:06.ipv6]
+
+	bhyve privileged guest escape via fwctl [SA-23:07.bhyve]
+
+	Potential remote code execution via ssh-agent forwarding [SA-23:08.ssh]
+
+	Network authentication attack via pam_krb5 [SA-23:09.pam_krb5]
+
 20230621:
 	13.2-RELEASE-p1	FreeBSD-EN-23:06.loader
 			FreeBSD-EN-23:07.mpr
@@ -2570,4 +2632,4 @@ POSSIBILITY OF SUCH DAMAGE.
 Contact Warner Losh if you have any questions about your use of
 this document.
 
-$FreeBSD: a19fcc6cf780de76eb705d88b032df12c99dcac2 $
+$FreeBSD: 180f20d04fd5065112c6f586e55930d84813741e $
