@@ -36,5 +36,5 @@ rmdir .freebsd_import
 git add -A [^.]*
 git commit -m "Update from ${FBSD_BR}, git revision ${CHASH}."
 git tag -f "FreeBSD.${TAG_BR}.${CHASH}"
-echo git push origin "${OUR_BR}"
-echo git push --force origin "FreeBSD.${TAG_BR}.${CHASH}"
+git push origin "${OUR_BR}"
+git push --force origin "FreeBSD.${TAG_BR}.${CHASH}"
