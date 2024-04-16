@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 9dd3be3d5c4267f952a738012a877afa143ffdb2 $
+ * $FreeBSD: ac0c75b8d3f41dcb96819a1f7a121e5fd0d90beb $
  */
 
 /*
@@ -368,7 +368,7 @@ int nfsrpc_destroysession(struct nfsmount *, struct nfsclsession *,
     struct ucred *, NFSPROC_T *);
 
 /* nfs_clcomsubs.c */
-void nfsm_uiombuf(struct nfsrv_descript *, struct uio *, int);
+int nfsm_uiombuf(struct nfsrv_descript *, struct uio *, int);
 struct mbuf *nfsm_uiombuflist(struct uio *, int, u_int);
 u_int8_t *nfscl_getmyip(struct nfsmount *, struct in6_addr *, int *);
 int nfsm_getfh(struct nfsrv_descript *, struct nfsfh **);

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63d73cf7a909fc74cad1d21e9847578949be4c9d $");
+__FBSDID("$FreeBSD: 067e5a0aaa0535f866fd0d9c69f8ba4ad92e4237 $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -4209,9 +4209,7 @@ filt_sigattach(struct knote *kn)
 static void
 filt_sigdetach(struct knote *kn)
 {
-	struct proc *p = kn->kn_ptr.p_proc;
-
-	knlist_remove(p->p_klist, kn, 0);
+	knlist_remove(kn->kn_knlist, kn, 0);
 }
 
 /*

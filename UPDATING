@@ -12,6 +12,57 @@ Items affecting the ports and packages system can be found in
 /usr/ports/UPDATING.  Please read that file before updating system packages
 and/or ports.
 
+20240327:
+	13.2-RELEASE-p11 SA-24:03.unbound
+			EN-24:05.tty
+			EN-24:06.wireguard
+
+	Fix multiple vulnerabilities in unbound [SA-24:03.unbound]
+
+	Fix tty kernel panic [EN-24:05.tty]
+
+	Fix insufficient barriers in WireGuard if_wg(4) [EN-24:06.wireguard]
+
+20240214:
+	13.2-RELEASE-p10 SA-24:01.bhyveload
+			SA-24:02.tty
+			EN-24:01.tzdata
+			EN-24:02.libutil
+			EN-24:03.kqueue
+
+	Fix bhyveload host file access [SA-24:01.bhyveload]
+
+	Fix jail information leak [SA-24:02.tty]
+
+	Timezone database information update [EN-24:01.tzdata]
+
+	Fix login class resource limits and CPU mask bypass [EN-24:02.libutil]
+
+	Fix kqueue_close page fault on exit using rfork [EN-24:03.kqueue]
+
+20231212:
+	13.2-RELEASE-p9	SA-23:19.openssh
+
+	Prefix Truncation Attack in the SSH protocol [SA-23:19.openssh]
+
+20231212:
+	13.2-RELEASE-p8	SA-23:18.nfsclient
+
+	NFS client data corruption and kernel memory disclosure [SA-23:18.nfsclient]
+
+20231205:
+	13.2-RELEASE-p7	SA-23:17.pf
+			EN-23:15.sanitizer
+
+	TCP spoofing vulnerability in pf(4) [SA-23:17.pf]
+
+	Fix clang sanitizer failure with ASLR enabled [EN-23:15.sanitizer]
+
+20231130:
+        13.2-RELEASE-p6 EN-23:16.openzfs
+
+        OpenZFS data corruption [EN-23:16.openzfs]
+
 20231108:
 	13.2-RELEASE-p5 EN-23:13.freebsd-update
 			EN-23:14.regcomp
@@ -2632,4 +2683,4 @@ POSSIBILITY OF SUCH DAMAGE.
 Contact Warner Losh if you have any questions about your use of
 this document.
 
-$FreeBSD: 180f20d04fd5065112c6f586e55930d84813741e $
+$FreeBSD: 4f3424d33f8e6041e6938fffcc2b350f1fbb6889 $

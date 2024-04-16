@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8dfe5e93780f0b059d64c482de72e58f4a728baa $");
+__FBSDID("$FreeBSD: 92dee3ceefc9f4a13d54e03aee22f66dbaf4b099 $");
 
 #include "opt_capsicum.h"
 #include "opt_printf.h"
@@ -46,6 +46,7 @@ __FBSDID("$FreeBSD: 8dfe5e93780f0b059d64c482de72e58f4a728baa $");
 #ifdef COMPAT_43TTY
 #include <sys/ioctl_compat.h>
 #endif /* COMPAT_43TTY */
+#include <sys/jail.h>
 #include <sys/kernel.h>
 #include <sys/limits.h>
 #include <sys/malloc.h>
@@ -1309,9 +1310,12 @@ static int
 sysctl_kern_ttys(SYSCTL_HANDLER_ARGS)
 {
 	unsigned long lsize;
+	struct thread *td = curthread;
 	struct xtty *xtlist, *xt;
 	struct tty *tp;
+	struct proc *p;
 	int error;
+	bool cansee;
 
 	sx_slock(&tty_list_sx);
 	lsize = tty_list_count * sizeof(struct xtty);
@@ -1324,13 +1328,28 @@ sysctl_kern_ttys(SYSCTL_HANDLER_ARGS)
 
 	TAILQ_FOREACH(tp, &tty_list, t_list) {
 		tty_lock(tp);
-		tty_to_xtty(tp, xt);
+		if (tp->t_session != NULL &&
+		    (p = atomic_load_ptr(&tp->t_session->s_leader)) != NULL) {
+			PROC_LOCK(p);
+			cansee = (p_cansee(td, p) == 0);
+			PROC_UNLOCK(p);
+		} else {
+			cansee = !jailed(td->td_ucred);
+		}
+		if (cansee) {
+			tty_to_xtty(tp, xt);
+			xt++;
+		}
 		tty_unlock(tp);
-		xt++;
 	}
 	sx_sunlock(&tty_list_sx);
 
-	error = SYSCTL_OUT(req, xtlist, lsize);
+	lsize = (xt - xtlist) * sizeof(struct xtty);
+	if (lsize > 0) {
+		error = SYSCTL_OUT(req, xtlist, lsize);
+	} else {
+		error = 0;
+	}
 	free(xtlist, M_TTY);
 	return (error);
 }

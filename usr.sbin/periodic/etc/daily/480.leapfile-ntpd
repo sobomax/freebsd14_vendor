@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: a693986e0dd1dbed9e30b4ee315a0159406c50e7 $
+# $FreeBSD: f4a1edb8d5a24d9b15a6007b8393f0f05580437f $
 #
 
 # If there is a global system configuration file, suck it in.
@@ -13,9 +13,9 @@ fi
 
 case "$daily_ntpd_leapfile_enable" in
     [Yy][Ee][Ss])
-	if service ntpd oneneedfetch; then
+	if service ntpd enabled && service ntpd needfetch; then
 	    anticongestion
-	    service ntpd onefetch
+	    service ntpd fetch
 	fi
 	;;
 esac

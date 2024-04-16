@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51c7bb25d35756db44cf44c8d12caee76c431340 $");
+__FBSDID("$FreeBSD: 854fad6c56c70b47fc8cff95a9180d29fa2e7153 $");
 
 /*
  * Rpc op calls, generally called from the vnode op calls or through the
@@ -1890,7 +1890,12 @@ nfsrpc_writerpc(vnode_t vp, struct uio *uiop, int *iomode,
 			*tl++ = x;      /* total to this offset */
 			*tl = x;        /* size of this write */
 		}
-		nfsm_uiombuf(nd, uiop, len);
+		error = nfsm_uiombuf(nd, uiop, len);
+		if (error != 0) {
+			m_freem(nd->nd_mreq);
+			free(nd, M_TEMP);
+			return (error);
+		}
 		/*
 		 * Although it is tempting to do a normal Getattr Op in the
 		 * NFSv4 compound, the result can be a nearly hung client
@@ -5981,6 +5986,10 @@ nfscl_doiods(vnode_t vp, struct uio *uiop, int *iomode, int *must_commit,
 						iovlen = uiop->uio_iov->iov_len;
 						m = nfsm_uiombuflist(uiop, len,
 						    0);
+						if (m == NULL) {
+							error = EFAULT;
+							break;
+						}
 					}
 					tdrpc = drpc = malloc(sizeof(*drpc) *
 					    (mirrorcnt - 1), M_TEMP, M_WAITOK |
@@ -6553,7 +6562,11 @@ nfsrpc_writeds(vnode_t vp, struct uio *uiop, int *iomode, int *must_commit,
 		*tl++ = txdr_unsigned(len);
 	*tl++ = txdr_unsigned(*iomode);
 	*tl = txdr_unsigned(len);
-	nfsm_uiombuf(nd, uiop, len);
+	error = nfsm_uiombuf(nd, uiop, len);
+	if (error != 0) {
+		m_freem(nd->nd_mreq);
+		return (error);
+	}
 	nrp = dsp->nfsclds_sockp;
 	if (nrp == NULL)
 		/* If NULL, use the MDS socket. */
@@ -8639,7 +8652,11 @@ nfsrpc_setextattr(vnode_t vp, const char *name, struct uio *uiop,
 	nfsm_strtom(nd, name, strlen(name));
 	NFSM_BUILD(tl, uint32_t *, NFSX_UNSIGNED);
 	*tl = txdr_unsigned(uiop->uio_resid);
-	nfsm_uiombuf(nd, uiop, uiop->uio_resid);
+	error = nfsm_uiombuf(nd, uiop, uiop->uio_resid);
+	if (error != 0) {
+		m_freem(nd->nd_mreq);
+		return (error);
+	}
 	NFSM_BUILD(tl, uint32_t *, NFSX_UNSIGNED);
 	*tl = txdr_unsigned(NFSV4OP_GETATTR);
 	NFSGETATTR_ATTRBIT(&attrbits);
