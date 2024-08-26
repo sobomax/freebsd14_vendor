@@ -2,7 +2,7 @@
 
 set -e
 
-FBSD_VER="13.2"
+FBSD_VER="14.1"
 
 _FBSD_VER="`echo ${FBSD_VER} | sed 's|[.]|_|g'`"
 FBSD_BR="releng/${FBSD_VER}"
